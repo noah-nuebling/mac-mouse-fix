@@ -7,9 +7,26 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <IOKit/hid/IOHIDManager.h>
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
+@property (assign) IBOutlet NSWindow *window;
+
+
+// registered USB Device sent input report callback function
+static void Handle_InputReportCallback(void *context, IOReturn result, void *sender, IOHIDReportType type,
+                                       uint32_t reportID, uint8_t *report, CFIndex reportLength);
+
+// USB device added callback function
+static void Handle_DeviceMatchingCallback(void *context, IOReturn result, void *sender, IOHIDDeviceRef device);
+
+// USB device removed callback function
+static void Handle_DeviceRemovalCallback(void *context, IOReturn result, void *sender, IOHIDDeviceRef device);
+
+// Counts the number of devices in the device set (incudes all USB devices that match our dictionary)
+static long USBDeviceCount(IOHIDManagerRef HIDManager);
+
+// static long get_int_property(IOHIDDeviceRef device, CFStringRef key);
 
 @end
-
