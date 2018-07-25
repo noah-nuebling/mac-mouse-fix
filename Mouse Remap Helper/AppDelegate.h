@@ -11,7 +11,6 @@
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
-@property (assign) IBOutlet NSWindow *window;
 
 
 // registered USB Device sent input report callback function
