@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <IOKit/hid/IOHIDManager.h>
+#import "Mouse_Remap_Helper-Swift.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 

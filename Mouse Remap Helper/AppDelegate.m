@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 #import "IOKit/hid/IOHIDManager.h"
+#import "Mouse_Remap_Helper-Swift.h"
+@class InputProcessing;
 
 @interface AppDelegate ()
 @end
@@ -16,7 +18,9 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    NSLog(@"LOL");
+    InputProcessing *InP = [[InputProcessing alloc]init];
+    [InP test];
+
     
     initialize_everything();
     
