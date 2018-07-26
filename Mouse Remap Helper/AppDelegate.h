@@ -15,8 +15,6 @@
 
 
 // registered USB Device sent input report callback function
-static void Handle_InputReportCallback(void *context, IOReturn result, void *sender, IOHIDReportType type,
-                                       uint32_t reportID, uint8_t *report, CFIndex reportLength);
 
 // USB device added callback function
 static void Handle_DeviceMatchingCallback(void *context, IOReturn result, void *sender, IOHIDDeviceRef device);

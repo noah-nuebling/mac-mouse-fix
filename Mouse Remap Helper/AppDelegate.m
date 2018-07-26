@@ -95,14 +95,13 @@ static void initialize_everything() {
     
     
     
-    /* open the device at index 0 */
+    /* register the device at index 0 */
     // If multiple mice are attached, it will refer to a random one
     if (device_array != NULL) {
-        IOHIDDeviceRef dev_to_open = device_array[0]; // "dev_to_open" is equivalent to "dev->device_handle" in the hidapi source code
+        IOHIDDeviceRef dev_to_open = device_array[0];
         
-        NSLog(@"device to open: %@", dev_to_open);
+        registerDeviceButtonInputCallback(dev_to_open);
         
-        // TODO: Register the device input Values directly, without relying on the matching Callback (fixes not connecting when 2 devices are connected while sscript starts)
          }
     
      free (device_array);
@@ -148,6 +147,25 @@ static void Handle_InputValueCallback(void *context, IOReturn result, void *send
 }
 
 
+static void registerDeviceButtonInputCallback(IOHIDDeviceRef device) {
+    // Add callback function for the button input
+    CFMutableDictionaryRef elementMatchDict1 = CFDictionaryCreateMutable(kCFAllocatorDefault,
+                                                                         2,
+                                                                         &kCFTypeDictionaryKeyCallBacks,
+                                                                         &kCFTypeDictionaryValueCallBacks);
+    int nine = 9; // "usage Page" for Buttons
+    CFNumberRef buttonRef = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &nine);
+    CFDictionarySetValue (elementMatchDict1, CFSTR("UsagePage"), buttonRef);
+    IOHIDDeviceSetInputValueMatching(device, elementMatchDict1);
+    IOHIDDeviceRegisterInputValueCallback(device, &Handle_InputValueCallback, NULL);
+    
+    
+    CFRelease(elementMatchDict1);
+    
+    
+    // (code for adding scrollwheel input to the callback is in the USBHID Project)
+    
+}
 
 
 static void Handle_DeviceMatchingCallback (void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
@@ -157,51 +175,10 @@ static void Handle_DeviceMatchingCallback (void *context, IOReturn result, void 
     
     if (USBDeviceCount(sender) == 1) {
         
-        
-        // Add callback function for the button input
-        CFMutableDictionaryRef elementMatchDict1 = CFDictionaryCreateMutable(kCFAllocatorDefault,
-                                                                             2,
-                                                                             &kCFTypeDictionaryKeyCallBacks,
-                                                                             &kCFTypeDictionaryValueCallBacks);
-        int nine = 9; // "usage Page" for Buttons
-        CFNumberRef buttonRef = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &nine);
-        CFDictionarySetValue (elementMatchDict1, CFSTR("UsagePage"), buttonRef);
-        IOHIDDeviceSetInputValueMatching(device, elementMatchDict1);
-        IOHIDDeviceRegisterInputValueCallback(device, &Handle_InputValueCallback, NULL);
-        
-        
-        CFRelease(elementMatchDict1);
-        
-        
-        
-        
-        // Also fetching scroolwheel input
-        
-        /*
-         CFMutableDictionaryRef elementMatchDict2 = CFDictionaryCreateMutable(kCFAllocatorDefault,
-         2,
-         &kCFTypeDictionaryKeyCallBacks,
-         &kCFTypeDictionaryValueCallBacks);
-         
-         CFArrayRef elementMatches;
-         
-         
-         int one = 1; // "usage Page" for scrollwheel input
-         int fiveSix = 56; // "usage" for scrollwheel input
-         CFNumberRef genericRef = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &one);
-         CFNumberRef scrollwheelRef = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &fiveSix);
-         CFDictionarySetValue (elementMatchDict2, CFSTR("UsagePage"), genericRef);
-         CFDictionarySetValue (elementMatchDict2, CFSTR("Usage"), scrollwheelRef);
-         
-         
-         CFMutableDictionaryRef elementMatchesList[] = {elementMatchDict1, elementMatchDict2};
-         elementMatches = CFArrayCreate(kCFAllocatorDefault, (const void **)elementMatchesList, 2, NULL);
-         
-         IOHIDDeviceSetInputValueMatchingMultiple(device, elementMatches);
-         */
-        
+        registerDeviceButtonInputCallback(device);
         
     }
+    
     
     
     
@@ -338,26 +315,6 @@ static long USBDeviceCount(IOHIDManagerRef HIDManager){
     
     return 0;
 }
-
-
-static int32_t get_int_property(IOHIDDeviceRef device, CFStringRef key)
-{
-    CFTypeRef ref;
-    int32_t value;
-    
-    ref = IOHIDDeviceGetProperty(device, key);
-    if (ref) {
-        if (CFGetTypeID(ref) == CFNumberGetTypeID()) {
-            CFNumberGetValue((CFNumberRef) ref, kCFNumberSInt32Type, &value);
-            return value;
-        }
-    }
-    return 0;
-}
-
-
-
-
 
 @end
 
