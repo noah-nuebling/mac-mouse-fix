@@ -68,8 +68,9 @@ static void initialize_everything() {
     IOHIDManagerSetDeviceMatchingMultiple(HIDManager, matches);
     
     CFRelease(matches);
-    
-    
+    CFRelease(matchDict1);
+    CFRelease(matchDict2);
+    CFRelease(matchDict3);
     
     
     
@@ -100,12 +101,15 @@ static void initialize_everything() {
         IOHIDDeviceRef dev_to_open = device_array[0]; // "dev_to_open" is equivalent to "dev->device_handle" in the hidapi source code
         
         NSLog(@"device to open: %@", dev_to_open);
-    }
-    free (device_array);
+        
+        // TODO: Register the device input Values directly, without relying on the matching Callback (fixes not connecting when 2 devices are connected while sscript starts)
+         }
+    
+     free (device_array);
     
     
+
     
-    // TODO: Register the device input Values directly, without relying on the matching Callback (fixes not connecting when 2 devices are connected while sscript starts)
     
     
     
@@ -135,15 +139,12 @@ static void initialize_everything() {
 static void Handle_InputValueCallback(void *context, IOReturn result, void *sender, IOHIDValueRef value) {
     IOHIDElementRef element = IOHIDValueGetElement(value);
     int actual_value = (int) IOHIDValueGetIntegerValue(value);
-    UInt32 usagePage = IOHIDElementGetUsagePage(element);
+    //UInt32 usagePage = IOHIDElementGetUsagePage(element);
     UInt32 usage = IOHIDElementGetUsage(element);
     
-    NSString *string = [NSString stringWithFormat: @"usage page: %x, %d. Value: %d\n\n", usagePage, usage, actual_value];
-    
-    //NSLog(@"usage page: %x, %d. Value: %d\n\n", usagePage, usage, actual_value);
-    
+    // calling the swift function and passing the button and it's state to it
     InputProcessing *InP = [[InputProcessing alloc]init];
-    [InP testWithString:(NSString *)string];
+    [InP buttonInputWithButton:usage state:actual_value];
 }
 
 
@@ -162,8 +163,14 @@ static void Handle_DeviceMatchingCallback (void *context, IOReturn result, void 
                                                                              2,
                                                                              &kCFTypeDictionaryKeyCallBacks,
                                                                              &kCFTypeDictionaryValueCallBacks);
+        int nine = 9; // "usage Page" for Buttons
+        CFNumberRef buttonRef = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &nine);
+        CFDictionarySetValue (elementMatchDict1, CFSTR("UsagePage"), buttonRef);
         IOHIDDeviceSetInputValueMatching(device, elementMatchDict1);
         IOHIDDeviceRegisterInputValueCallback(device, &Handle_InputValueCallback, NULL);
+        
+        
+        CFRelease(elementMatchDict1);
         
         
         
@@ -178,9 +185,6 @@ static void Handle_DeviceMatchingCallback (void *context, IOReturn result, void 
          
          CFArrayRef elementMatches;
          
-         int nine = 9; // "usage Page" for Buttons
-         CFNumberRef buttonRef = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &nine);
-         CFDictionarySetValue (elementMatchDict1, CFSTR("UsagePage"), buttonRef);
          
          int one = 1; // "usage Page" for scrollwheel input
          int fiveSix = 56; // "usage" for scrollwheel input
@@ -217,6 +221,7 @@ static void Handle_DeviceMatchingCallback (void *context, IOReturn result, void 
           devName,
           devPrimaryUsage,
           USBDeviceCount(sender));
+    
     
     
     
