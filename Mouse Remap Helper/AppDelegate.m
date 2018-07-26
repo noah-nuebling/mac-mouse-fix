@@ -18,8 +18,6 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    InputProcessing *InP = [[InputProcessing alloc]init];
-    [InP test];
 
     
     initialize_everything();
@@ -107,6 +105,10 @@ static void initialize_everything() {
     
     
     
+    // TODO: Register the device input Values directly, without relying on the matching Callback (fixes not connecting when 2 devices are connected while sscript starts)
+    
+    
+    
     // Register a callback for USB device detection with the HID Manager
     IOHIDManagerRegisterDeviceMatchingCallback(HIDManager, &Handle_DeviceMatchingCallback, NULL);
     // Register a callback for USB device removal with the HID Manager
@@ -127,54 +129,32 @@ static void initialize_everything() {
 
 /* Callback Handlers */
 
+
+
+
 static void Handle_InputValueCallback(void *context, IOReturn result, void *sender, IOHIDValueRef value) {
     IOHIDElementRef element = IOHIDValueGetElement(value);
     int actual_value = (int) IOHIDValueGetIntegerValue(value);
     UInt32 usagePage = IOHIDElementGetUsagePage(element);
     UInt32 usage = IOHIDElementGetUsage(element);
     
-    NSLog(@"usage page: %x, %d. Value: %d\n\n", usagePage, usage, actual_value);
+    NSString *string = [NSString stringWithFormat: @"usage page: %x, %d. Value: %d\n\n", usagePage, usage, actual_value];
+    
+    //NSLog(@"usage page: %x, %d. Value: %d\n\n", usagePage, usage, actual_value);
+    
+    InputProcessing *InP = [[InputProcessing alloc]init];
+    [InP testWithString:(NSString *)string];
 }
 
 
-static void Handle_InputReportCallback(void *context,
-                                       IOReturn result,
-                                       void *sender,
-                                       IOHIDReportType type,
-                                       uint32_t reportID,
-                                       uint8_t *report,
-                                       CFIndex reportLength) {
-    
-    
-    
-    NSMutableArray *reportArray = [NSMutableArray array];
-    
-    for(int i = 0; i < reportLength; i++) {
-        [reportArray addObject:[NSNumber numberWithInt: report[i]]];
-        
-    }
-    
-    
-    NSNumber* buttonValue = (NSNumber*) reportArray[1];
-    //NSNumber *zero = [NSNumber numberWithInteger: 0];
-    
-    
-    if ([buttonValue intValue] != 0) {
-        NSLog(@"Input Report:%@\n", reportArray);
-    }
-}
 
 
 static void Handle_DeviceMatchingCallback (void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
-    
-    //Buttons:  usagePage = 9,  usage = 1-...
-    //Wheel:    usagePage = 1,  usage = 56
     
     
     // if this one is the only device attached, attach it to the run loop
     
     if (USBDeviceCount(sender) == 1) {
-        RegisterInputCallbackForDevice(device);
         
         
         // Add callback function for the button input
@@ -242,46 +222,6 @@ static void Handle_DeviceMatchingCallback (void *context, IOReturn result, void 
     
     return;
     
-    
-    
-    /*
-     CFMutableDictionaryRef elementMatchDict2 = CFDictionaryCreateMutable(kCFAllocatorDefault,
-     2,
-     &kCFTypeDictionaryKeyCallBacks,
-     &kCFTypeDictionaryValueCallBacks);
-     
-     
-     
-     CFMutableDictionaryRef matchesList[] = {elementMatchDict1, elementMatchDict2};
-     matches = CFArrayCreate(kCFAllocatorDefault, (const void **)matchesList, 2, NULL);
-     
-     NSLog(@"Setting up Element Matching Dict");
-     
-     
-     
-     CFArrayRef elements = IOHIDDeviceCopyMatchingElements(device, elementMatchDict1, 0);
-     CFIndex elementCount = CFArrayGetCount(elements);
-     
-     for (int i = 0; i < elementCount; i++) {
-     IOHIDElementRef element = (IOHIDElementRef) CFArrayGetValueAtIndex(elements, i);
-     UInt32 usagePage = IOHIDElementGetUsagePage(element);
-     UInt32 usage = IOHIDElementGetUsage(element);
-     
-     NSLog(@"usage page: %x, %d", usagePage, usage);
-     
-     
-     
-     }
-     */
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }
 
 
@@ -308,24 +248,6 @@ static void Handle_DeviceRemovalCallback(void *context, IOReturn result, void *s
     }
 }
 
-
-
-
-
-
-
-// repeated actions
-
-static void RegisterInputCallbackForDevice(IOHIDDeviceRef dev) {
-    /* Create the buffers for receiving data */
-    CFIndex max_input_report_len = (CFIndex) get_int_property(dev, CFSTR(kIOHIDMaxInputReportSizeKey));
-    uint8_t input_report_buf;
-    if (max_input_report_len > 0) {
-        //free(input_report_buf);
-        input_report_buf = calloc(max_input_report_len, sizeof(uint8_t));
-        IOHIDDeviceRegisterInputReportCallback (dev, &input_report_buf, max_input_report_len, &Handle_InputReportCallback, Nil);
-    }
-}
 
 
 static IOHIDDeviceRef* getDevicesFromManager(IOHIDManagerRef HIDManager) {
@@ -369,7 +291,7 @@ static IOHIDDeviceRef* getDevicesFromManager(IOHIDManagerRef HIDManager) {
 static long USBDeviceCount(IOHIDManagerRef HIDManager){
     
     
-    //TODO: ujust use cfset get count and subtract a global "filtered devices variable"
+    //TODO: just use cfsetgetcount and subtract a global "filtered devices variable" instead of this
     
     
     

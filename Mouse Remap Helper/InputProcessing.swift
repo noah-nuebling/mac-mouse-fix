@@ -10,7 +10,7 @@ import Cocoa
 import Foundation
 
 @objc class InputProcessing: NSObject {
-    public func test() {
-        print("lololol")
+    public func test(string: String) {
+        print(string)
     }
 }
