@@ -13,7 +13,6 @@
 		4FCECD8D21092354001F1078 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECD8C21092354001F1078 /* main.m */; };
 		4FCECD9821092354001F1078 /* Mouse_Remap_HelperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECD9721092354001F1078 /* Mouse_Remap_HelperTests.m */; };
 		4FCECDA321092354001F1078 /* Mouse_Remap_HelperUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECDA221092354001F1078 /* Mouse_Remap_HelperUITests.m */; };
-		4FCECDBC21093E48001F1078 /* InputProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECDBB21093E48001F1078 /* InputProcessing.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,8 +47,6 @@
 		4FCECD9E21092354001F1078 /* Mouse Remap HelperUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Mouse Remap HelperUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FCECDA221092354001F1078 /* Mouse_Remap_HelperUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Mouse_Remap_HelperUITests.m; sourceTree = "<group>"; };
 		4FCECDA421092354001F1078 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4FCECDBA21093E48001F1078 /* Mouse Remap Helper-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mouse Remap Helper-Bridging-Header.h"; sourceTree = "<group>"; };
-		4FCECDBB21093E48001F1078 /* InputProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputProcessing.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,7 +79,6 @@
 			children = (
 				4FCECD8221092354001F1078 /* Mouse Remap Helper */,
 				4FCECD9621092354001F1078 /* Mouse Remap HelperTests */,
-				4FCECDA121092354001F1078 /* Mouse Remap HelperUITests */,
 				4FCECD8121092354001F1078 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -100,10 +96,8 @@
 		4FCECD8221092354001F1078 /* Mouse Remap Helper */ = {
 			isa = PBXGroup;
 			children = (
-				4FCECDBB21093E48001F1078 /* InputProcessing.swift */,
-				4FCECDBA21093E48001F1078 /* Mouse Remap Helper-Bridging-Header.h */,
-				4FCECD8321092354001F1078 /* AppDelegate.h */,
 				4FCECD8421092354001F1078 /* AppDelegate.m */,
+				4FCECD8321092354001F1078 /* AppDelegate.h */,
 				4FCECD8821092354001F1078 /* MainMenu.xib */,
 				4FCECDB02109326E001F1078 /* Supporting Files */,
 			);
@@ -131,6 +125,7 @@
 		4FCECDB02109326E001F1078 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4FCECDA121092354001F1078 /* Mouse Remap HelperUITests */,
 				4FCECD8621092354001F1078 /* Assets.xcassets */,
 				4FCECD8B21092354001F1078 /* Info.plist */,
 				4FCECD8C21092354001F1078 /* main.m */,
@@ -272,7 +267,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4FCECDBC21093E48001F1078 /* InputProcessing.swift in Sources */,
 				4FCECD8D21092354001F1078 /* main.m in Sources */,
 				4FCECD8521092354001F1078 /* AppDelegate.m in Sources */,
 			);
@@ -466,7 +460,6 @@
 		4FCECDAB21092354001F1078 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -482,7 +475,6 @@
 		4FCECDAC21092354001F1078 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -498,7 +490,6 @@
 		4FCECDAE21092354001F1078 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
@@ -513,7 +504,6 @@
 		4FCECDAF21092354001F1078 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;

@@ -8,16 +8,45 @@
 
 #import "AppDelegate.h"
 #import "IOKit/hid/IOHIDManager.h"
-#import "Mouse_Remap_Helper-Swift.h"
-@class InputProcessing;
 
 @interface AppDelegate ()
 @end
 
 @implementation AppDelegate
 
+
+CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
+    // kCGMouseEventButtonNumber (which key is pressed), kCGMouseEventClickState (double clicks),
+    
+    // kCGKeyboardEventKeycode
+    
+    int64_t eventValue = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber);
+    NSLog(@"Value: %d", eventValue);
+    
+    CGEventType eventType = CGEventGetType(event);
+    NSLog(@"Type: %d", eventType);
+    
+    
+    return NULL;
+
+}
+
+NSMutableArray * pressedButtonList;
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    
+    pressedButtonList = [[NSMutableArray alloc] init];
+    
+    // Register event Tap
+    CGEventMask mask = CGEventMaskBit(kCGEventLeftMouseDown) | CGEventMaskBit(kCGEventRightMouseDown)                               |CGEventMaskBit(kCGEventOtherMouseDown) |
+    CGEventMaskBit(kCGEventLeftMouseUp) | CGEventMaskBit(kCGEventRightMouseUp) |CGEventMaskBit(kCGEventOtherMouseUp); //| CGEventMaskBit(kCGEventScrollWheel);
+    CFMachPortRef eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
+    CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0);
+    CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes);
+    
+    
+    
+    
 
     
     initialize_everything();
@@ -134,36 +163,25 @@ static void initialize_everything() {
 
 
 
-
 static void Handle_InputValueCallback(void *context, IOReturn result, void *sender, IOHIDValueRef value) {
     IOHIDElementRef element = IOHIDValueGetElement(value);
-    int actual_value = (int) IOHIDValueGetIntegerValue(value);
+    int state = (int) IOHIDValueGetIntegerValue(value);
     //UInt32 usagePage = IOHIDElementGetUsagePage(element);
-    UInt32 usage = IOHIDElementGetUsage(element);
+    UInt32 button = IOHIDElementGetUsage(element);
     
-    // calling the swift function and passing the button and it's state to it
-    InputProcessing *InP = [[InputProcessing alloc]init];
-    [InP buttonInputWithButton:usage state:actual_value];
-}
+    if (state == 1) {
+        NSLog(@"STAAAATE");
+        NSLog(@"Button: %u", (unsigned int)button);
 
-
-static void registerDeviceButtonInputCallback(IOHIDDeviceRef device) {
-    // Add callback function for the button input
-    CFMutableDictionaryRef elementMatchDict1 = CFDictionaryCreateMutable(kCFAllocatorDefault,
-                                                                         2,
-                                                                         &kCFTypeDictionaryKeyCallBacks,
-                                                                         &kCFTypeDictionaryValueCallBacks);
-    int nine = 9; // "usage Page" for Buttons
-    CFNumberRef buttonRef = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &nine);
-    CFDictionarySetValue (elementMatchDict1, CFSTR("UsagePage"), buttonRef);
-    IOHIDDeviceSetInputValueMatching(device, elementMatchDict1);
-    IOHIDDeviceRegisterInputValueCallback(device, &Handle_InputValueCallback, NULL);
+        [pressedButtonList addObject: [NSNumber numberWithInt: (unsigned int)button]];
+    }
+    else {
+        [pressedButtonList removeObject: [NSNumber numberWithInt:button]];
+    }
     
     
-    CFRelease(elementMatchDict1);
+    NSLog(@"pressedButtonList: %@", pressedButtonList);
     
-    
-    // (code for adding scrollwheel input to the callback is in the USBHID Project)
     
 }
 
@@ -211,7 +229,7 @@ static void Handle_DeviceMatchingCallback (void *context, IOReturn result, void 
 static void Handle_DeviceRemovalCallback(void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
     
     // log info
-    int matchingDeviceCount = USBDeviceCount(sender);
+    long matchingDeviceCount = USBDeviceCount(sender);
     NSLog(@"\nMatching device removed: %p\nMatching device count: %ld",
           (void *) device, matchingDeviceCount);
     
@@ -230,6 +248,31 @@ static void Handle_DeviceRemovalCallback(void *context, IOReturn result, void *s
     }
 }
 
+
+
+
+// Convenience Functions
+
+static void registerDeviceButtonInputCallback(IOHIDDeviceRef device) {
+    
+    // Add callback function for the button input
+    CFMutableDictionaryRef elementMatchDict1 = CFDictionaryCreateMutable(kCFAllocatorDefault,
+                                                                         2,
+                                                                         &kCFTypeDictionaryKeyCallBacks,
+                                                                         &kCFTypeDictionaryValueCallBacks);
+    int nine = 9; // "usage Page" for Buttons
+    CFNumberRef buttonRef = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &nine);
+    CFDictionarySetValue (elementMatchDict1, CFSTR("UsagePage"), buttonRef);
+    IOHIDDeviceSetInputValueMatching(device, elementMatchDict1);
+    IOHIDDeviceRegisterInputValueCallback(device, &Handle_InputValueCallback, NULL);
+    
+    
+    CFRelease(elementMatchDict1);
+    
+    
+    // (code for adding scrollwheel input to the callback is in the USBHID Project)
+    
+}
 
 
 static IOHIDDeviceRef* getDevicesFromManager(IOHIDManagerRef HIDManager) {

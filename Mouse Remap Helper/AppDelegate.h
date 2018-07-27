@@ -8,7 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 #import <IOKit/hid/IOHIDManager.h>
-#import "Mouse_Remap_Helper-Swift.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
@@ -25,6 +24,7 @@ static void Handle_DeviceRemovalCallback(void *context, IOReturn result, void *s
 // Counts the number of devices in the device set (incudes all USB devices that match our dictionary)
 static long USBDeviceCount(IOHIDManagerRef HIDManager);
 
-// static long get_int_property(IOHIDDeviceRef device, CFStringRef key);
+
+extern NSMutableArray *pressedButtonList;
 
 @end
