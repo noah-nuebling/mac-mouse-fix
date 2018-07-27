@@ -10,32 +10,84 @@
 #import "IOKit/hid/IOHIDManager.h"
 
 @interface AppDelegate ()
+
 @end
 
 @implementation AppDelegate
 
+
+
+
+static void postKeyDownEvents(int *keyCodes) {
+    
+    // post key Down Events
+    for (int i = 0; i < sizeof(keyCodes); i++) {
+        CGEventRef keyDown;
+        keyDown = CGEventCreateKeyboardEvent (NULL, (CGKeyCode)keyCodes[i], true);
+        CGEventPost(kCGHIDEventTap, keyDown);
+    }
+
+
+}
+static void postKeyUpEvents(int *keyCodes) {
+    
+    // post key up events
+    for (int i = 0; i < sizeof(keyCodes); i++) {
+        CGEventRef keyDown;
+        keyDown = CGEventCreateKeyboardEvent (NULL, (CGKeyCode)keyCodes[i], false);
+        CGEventPost(kCGHIDEventTap, keyDown);
+    }
+    
+}
 
 CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     // kCGMouseEventButtonNumber (which key is pressed), kCGMouseEventClickState (double clicks),
     
     // kCGKeyboardEventKeycode
     
-    int64_t eventValue = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber);
-    NSLog(@"Value: %d", eventValue);
+    /*
+     int64_t eventValue = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber);
+     NSLog(@"Value: %d", eventValue);
+     
+     CGEventType eventType = CGEventGetType(event);
+     NSLog(@"Type: %d", eventType);
+     */
     
-    CGEventType eventType = CGEventGetType(event);
-    NSLog(@"Type: %d", eventType);
     
+    if (currentPressedButton != nil) {
+        
+        
+        NSLog(@"Button: %d", currentPressedButton);
+        NSLog(@"Modifiers: %@", pressedButtonModifierList);
+        
+        CGEventType clickState = CGEventGetIntegerValueField(event, kCGMouseEventClickState);
+        NSLog(@"Click State: %d", clickState);
+        
+        int keyCodes[2] = {59,181};
+        postKeyDownEvents(keyCodes);
+        postKeyUpEvents(keyCodes);
+    }
     
-    return NULL;
+    return event;
 
 }
 
-NSMutableArray * pressedButtonList;
+// global objects
+NSMutableArray * pressedButtonModifierList;
+int currentPressedButton;
+
+
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    
+    
+    
+    // initializing global vars
     // pressed button list being filled by Handle_InputValueCallback (HIDManager)
-    pressedButtonList = [[NSMutableArray alloc] init];
+    currentPressedButton = 0;
+    pressedButtonModifierList = [[NSMutableArray alloc] init];
+    //NSTimeInterval timeStamp = [[NSDate date] timeIntervalSince1970];
     
     // Register event Tap Callback
     CGEventMask mask = CGEventMaskBit(kCGEventLeftMouseDown) | CGEventMaskBit(kCGEventRightMouseDown)                               |CGEventMaskBit(kCGEventOtherMouseDown) |
@@ -171,20 +223,29 @@ static void Handle_InputValueCallback(void *context, IOReturn result, void *send
     UInt32 button = IOHIDElementGetUsage(element);
     
     if (state == 1) {
-        NSLog(@"STAAAATE");
-        NSLog(@"Button: %u", (unsigned int)button);
-
-        [pressedButtonList addObject: [NSNumber numberWithInt: (unsigned int)button]];
+        if (currentPressedButton != 0) {
+            [pressedButtonModifierList addObject: [NSNumber numberWithInt: (unsigned int)currentPressedButton]];
+        }
+        currentPressedButton = button;
+        
+        
+        
     }
     else {
-        [pressedButtonList removeObject: [NSNumber numberWithInt:button]];
+        [pressedButtonModifierList removeObject: [NSNumber numberWithInt:button]];
+        currentPressedButton = 0;
     }
     
     
-    NSLog(@"pressedButtonList: %@", pressedButtonList);
+    
+
+    
     
     
 }
+
+
+
 
 
 static void Handle_DeviceMatchingCallback (void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {

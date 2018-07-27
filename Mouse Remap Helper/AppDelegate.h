@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <IOKit/hid/IOHIDManager.h>
 
+
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
 
@@ -25,6 +26,6 @@ static void Handle_DeviceRemovalCallback(void *context, IOReturn result, void *s
 static long USBDeviceCount(IOHIDManagerRef HIDManager);
 
 
-extern NSMutableArray *pressedButtonList;
+extern NSMutableArray *pressedButtonModifierList;
 
 @end
