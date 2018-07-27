@@ -34,10 +34,10 @@ CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef 
 NSMutableArray * pressedButtonList;
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    
+    // pressed button list being filled by Handle_InputValueCallback (HIDManager)
     pressedButtonList = [[NSMutableArray alloc] init];
     
-    // Register event Tap
+    // Register event Tap Callback
     CGEventMask mask = CGEventMaskBit(kCGEventLeftMouseDown) | CGEventMaskBit(kCGEventRightMouseDown)                               |CGEventMaskBit(kCGEventOtherMouseDown) |
     CGEventMaskBit(kCGEventLeftMouseUp) | CGEventMaskBit(kCGEventRightMouseUp) |CGEventMaskBit(kCGEventOtherMouseUp); //| CGEventMaskBit(kCGEventScrollWheel);
     CFMachPortRef eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
@@ -48,7 +48,7 @@ NSMutableArray * pressedButtonList;
     
     
 
-    
+    // Setup HID Manager and its callbacks
     initialize_everything();
     
     
@@ -90,7 +90,7 @@ static void initialize_everything() {
     CFDictionarySetValue(matchDict3, CFSTR("Transport"), CFSTR("BluetoothLowEnergy")); // add bluetooth low energy devices
     
     CFMutableDictionaryRef matchesList[] = {matchDict1, matchDict2, matchDict3};
-    matches = CFArrayCreate(kCFAllocatorDefault, (const void **)matchesList, 2, NULL);
+    matches = CFArrayCreate(kCFAllocatorDefault, (const void **)matchesList, 3, NULL);
     
     
     //Register the Matching Dictionary to the HID Manager
@@ -126,6 +126,7 @@ static void initialize_everything() {
     
     /* register the device at index 0 */
     // If multiple mice are attached, it will refer to a random one
+    
     if (device_array != NULL) {
         IOHIDDeviceRef dev_to_open = device_array[0];
         
@@ -159,7 +160,7 @@ static void initialize_everything() {
 
 
 
-/* Callback Handlers */
+/* HID Manager Callback Handlers */
 
 
 
@@ -270,7 +271,7 @@ static void registerDeviceButtonInputCallback(IOHIDDeviceRef device) {
     CFRelease(elementMatchDict1);
     
     
-    // (code for adding scrollwheel input to the callback is in the USBHID Project)
+    // v2.0 TODO: (code for adding scrollwheel input to the callback is in the USBHID Project)
     
 }
 
