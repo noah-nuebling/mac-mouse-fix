@@ -5,7 +5,6 @@
 //  Created by Noah Nübling on 25.07.18.
 //  Copyright © 2018 Noah Nuebling Enterprises Ltd. All rights reserved.
 //
-
 #import "AppDelegate.h"
 #import "IOKit/hid/IOHIDManager.h"
 
@@ -18,31 +17,27 @@
 
 
 
-static void postKeyDownEvents(int *keyCodes) {
+static void postKeyEvent(int keyCode, CGEventFlags modifierFlags, BOOL keyDownBool) {
     
-    // post key Down Events
-    for (int i = 0; i < sizeof(keyCodes); i++) {
-        CGEventRef keyDown;
-        keyDown = CGEventCreateKeyboardEvent (NULL, (CGKeyCode)keyCodes[i], true);
-        CGEventPost(kCGHIDEventTap, keyDown);
-    }
-
-
-}
-static void postKeyUpEvents(int *keyCodes) {
+    CGEventSourceRef src =
+    CGEventSourceCreate(kCGEventSourceStatePrivate);
     
-    // post key up events
-    for (int i = 0; i < sizeof(keyCodes); i++) {
-        CGEventRef keyDown;
-        keyDown = CGEventCreateKeyboardEvent (NULL, (CGKeyCode)keyCodes[i], false);
-        CGEventPost(kCGHIDEventTap, keyDown);
-    }
+    CGEventRef keyEvent;
+    keyEvent = CGEventCreateKeyboardEvent (src, (CGKeyCode)keyCode, keyDownBool);
+    CGEventSetFlags(keyEvent, modifierFlags);
+    
+    CGEventPost(kCGHIDEventTap, keyEvent);
+    
+    CFRelease(src);
+    CFRelease(keyEvent);
+    
     
 }
+
 
 CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     // kCGMouseEventButtonNumber (which key is pressed), kCGMouseEventClickState (double clicks),
-    
+
     // kCGKeyboardEventKeycode
     
     /*
@@ -63,16 +58,22 @@ CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef 
         CGEventType clickState = CGEventGetIntegerValueField(event, kCGMouseEventClickState);
         NSLog(@"Click State: %d", clickState);
         
-        int keyCodes[2] = {59,181};
-        postKeyDownEvents(keyCodes);
-        postKeyUpEvents(keyCodes);
+        int keyCode = 123;
+        CGEventFlags modifierFlags = kCGEventFlagMaskControl;
+        
+        postKeyEvent(keyCode, modifierFlags, true); // posting keyDown Event
+        postKeyEvent(keyCode, modifierFlags, false); // posting keyUp Event
+
+        
+        
+        
     }
     
     return event;
 
 }
 
-// global objects
+// global variables
 NSMutableArray * pressedButtonModifierList;
 int currentPressedButton;
 
@@ -89,12 +90,17 @@ int currentPressedButton;
     pressedButtonModifierList = [[NSMutableArray alloc] init];
     //NSTimeInterval timeStamp = [[NSDate date] timeIntervalSince1970];
     
+    
+    
+    
+    
     // Register event Tap Callback
     CGEventMask mask = CGEventMaskBit(kCGEventLeftMouseDown) | CGEventMaskBit(kCGEventRightMouseDown)                               |CGEventMaskBit(kCGEventOtherMouseDown) |
     CGEventMaskBit(kCGEventLeftMouseUp) | CGEventMaskBit(kCGEventRightMouseUp) |CGEventMaskBit(kCGEventOtherMouseUp); //| CGEventMaskBit(kCGEventScrollWheel);
     CFMachPortRef eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
     CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0);
     CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes);
+    CFRelease(runLoopSource);
     
     
     
@@ -317,22 +323,25 @@ static void Handle_DeviceRemovalCallback(void *context, IOReturn result, void *s
 
 static void registerDeviceButtonInputCallback(IOHIDDeviceRef device) {
     
-    // Add callback function for the button input
-    CFMutableDictionaryRef elementMatchDict1 = CFDictionaryCreateMutable(kCFAllocatorDefault,
-                                                                         2,
-                                                                         &kCFTypeDictionaryKeyCallBacks,
-                                                                         &kCFTypeDictionaryValueCallBacks);
-    int nine = 9; // "usage Page" for Buttons
-    CFNumberRef buttonRef = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &nine);
-    CFDictionarySetValue (elementMatchDict1, CFSTR("UsagePage"), buttonRef);
-    IOHIDDeviceSetInputValueMatching(device, elementMatchDict1);
-    IOHIDDeviceRegisterInputValueCallback(device, &Handle_InputValueCallback, NULL);
-    
-    
-    CFRelease(elementMatchDict1);
-    
-    
-    // v2.0 TODO: (code for adding scrollwheel input to the callback is in the USBHID Project)
+    if (device != NULL) {
+        // Add callback function for the button input
+        CFMutableDictionaryRef elementMatchDict1 = CFDictionaryCreateMutable(kCFAllocatorDefault,
+                                                                             2,
+                                                                             &kCFTypeDictionaryKeyCallBacks,
+                                                                             &kCFTypeDictionaryValueCallBacks);
+        int nine = 9; // "usage Page" for Buttons
+        CFNumberRef buttonRef = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &nine);
+        CFDictionarySetValue (elementMatchDict1, CFSTR("UsagePage"), buttonRef);
+        IOHIDDeviceSetInputValueMatching(device, elementMatchDict1);
+        IOHIDDeviceRegisterInputValueCallback(device, &Handle_InputValueCallback, NULL);
+        
+        
+        CFRelease(elementMatchDict1);
+        CFRelease(buttonRef);
+        
+        
+        // v2.0 TODO: (code for adding scrollwheel input to the callback is in the USBHID Project)
+    }
     
 }
 
