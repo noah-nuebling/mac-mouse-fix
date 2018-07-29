@@ -78,7 +78,6 @@
 			isa = PBXGroup;
 			children = (
 				4FCECD8221092354001F1078 /* Mouse Remap Helper */,
-				4FCECD9621092354001F1078 /* Mouse Remap HelperTests */,
 				4FCECD8121092354001F1078 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -125,6 +124,7 @@
 		4FCECDB02109326E001F1078 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4FCECD9621092354001F1078 /* Mouse Remap HelperTests */,
 				4FCECDA121092354001F1078 /* Mouse Remap HelperUITests */,
 				4FCECD8621092354001F1078 /* Assets.xcassets */,
 				4FCECD8B21092354001F1078 /* Info.plist */,
