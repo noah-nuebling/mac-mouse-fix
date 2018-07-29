@@ -36,43 +36,114 @@ static void postKeyEvent(int keyCode, CGEventFlags modifierFlags, BOOL keyDownBo
 
 
 CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
-    // kCGMouseEventButtonNumber (which key is pressed), kCGMouseEventClickState (double clicks),
-
-    // kCGKeyboardEventKeycode
-    
-    /*
-     int64_t eventValue = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber);
-     NSLog(@"Value: %d", eventValue);
-     
-     CGEventType eventType = CGEventGetType(event);
-     NSLog(@"Type: %d", eventType);
-     */
     
     
-    if (inputSourceIsRegisteredDevice) {
+    if (inputSourceIsDeviceOfInterest) {
         
         CGEventType clickState = CGEventGetIntegerValueField(event, kCGMouseEventClickState);
 
         
-        NSLog(@"Button: %d", currentPressedButton);
-        NSLog(@"Modifiers: %@", pressedButtonModifierList);
         NSLog(@"Click State: %d", clickState);
+        NSLog(@"Modifiers: %@", pressedButtonModifierList);
+        NSLog(@"State: %d", currentPressedButtonState);
+        NSLog(@"Button: %d", currentPressedButton);
         
         
         
+        if (currentPressedButtonState == 1) {
+            
+            /*
+            if (currentPressedButton == 4) {
+                if ( [pressedButtonModifierList[0] integerValue] == 2 ) {
+                    int keyCode = 123;
+                    CGEventFlags modifierFlags = kCGEventFlagMaskControl;
+                    
+                    postKeyEvent(keyCode, modifierFlags, true); // posting keyDown Event
+                    postKeyEvent(keyCode, modifierFlags, false); // posting keyUp Event
+                    
+                    inputSourceIsDeviceOfInterest = false;
+                    return NULL;
+                }
+            }
+            
+            
+            if (currentPressedButton == 5) {
+                if ( [pressedButtonModifierList[0] integerValue] == 2 )  {
+                    int keyCode = 124;
+                    CGEventFlags modifierFlags = kCGEventFlagMaskControl;
+                    
+                    postKeyEvent(keyCode, modifierFlags, true); // posting keyDown Event
+                    postKeyEvent(keyCode, modifierFlags, false); // posting keyUp Event
+                    
+                    inputSourceIsDeviceOfInterest = false;
+                    return NULL;
+                }
+            }
+
+             */
+            if (currentPressedButton == 4) {
+                
+                if ([pressedButtonModifierList count] != 0) {
+                    if ( [pressedButtonModifierList[0] integerValue] == 2 ) {
+                        int keyCode = 123;
+                        CGEventFlags modifierFlags = kCGEventFlagMaskControl;
+                        
+                        postKeyEvent(keyCode, modifierFlags, true); // posting keyDown Event
+                        postKeyEvent(keyCode, modifierFlags, false); // posting keyUp Event
+                        
+                        inputSourceIsDeviceOfInterest = false;
+                        return NULL;
+                    }
+                }
+                else {
+                    int keyCode = 22;
+                    CGEventFlags modifierFlags = 0b110000000000000000000; //kCGEventFlagMaskCommand ^ kCGEventFlagMaskAlternate;
+                    
+                    postKeyEvent(keyCode, modifierFlags, true); // posting keyDown Event
+                    postKeyEvent(keyCode, modifierFlags, false); // posting keyUp Event
+                    
+                    inputSourceIsDeviceOfInterest = false;
+                    return NULL;
+                }
+                
+            }
+            
+            
+            if (currentPressedButton == 5) {
+                
+                if ([pressedButtonModifierList count] != 0) {
+                    if ( [pressedButtonModifierList[0] integerValue] == 2 ) {
+                        int keyCode = 124;
+                        CGEventFlags modifierFlags = kCGEventFlagMaskControl;
+                        
+                        postKeyEvent(keyCode, modifierFlags, true); // posting keyDown Event
+                        postKeyEvent(keyCode, modifierFlags, false); // posting keyUp Event
+                        
+                        inputSourceIsDeviceOfInterest = false;
+                        return NULL;
+                    }
+                }
+                else {
+                
+                    int keyCode = 23;
+                    CGEventFlags modifierFlags = kCGEventFlagMaskCommand ^ kCGEventFlagMaskAlternate;
+                    
+                    postKeyEvent(keyCode, modifierFlags, true); // posting keyDown Event
+                    postKeyEvent(keyCode, modifierFlags, false); // posting keyUp Event
+                    
+                    inputSourceIsDeviceOfInterest = false;
+                    return NULL;
+                }
+                
+            }
+            
+            
+        }
         
         
-        int keyCode = 123;
-        CGEventFlags modifierFlags = kCGEventFlagMaskControl;
-        
-        postKeyEvent(keyCode, modifierFlags, true); // posting keyDown Event
-        postKeyEvent(keyCode, modifierFlags, false); // posting keyUp Event
-        
-        
-        
-        inputSourceIsRegisteredDevice = false;
-        
-        return NULL;
+        // the input event stems from our registered device, but no remap actions were sent, return the original event nad set
+        inputSourceIsDeviceOfInterest = false;
+        return event;
         
     }
     
@@ -86,7 +157,8 @@ CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef 
 // global variables
 NSMutableArray * pressedButtonModifierList;
 int currentPressedButton;
-BOOL inputSourceIsRegisteredDevice;
+int currentPressedButtonState;
+BOOL inputSourceIsDeviceOfInterest;
 
 
 
@@ -98,8 +170,9 @@ BOOL inputSourceIsRegisteredDevice;
     // initializing global vars
     // pressed button list being filled by Handle_InputValueCallback (HIDManager)
     currentPressedButton = 0;
+    currentPressedButtonState = 0;
     pressedButtonModifierList = [[NSMutableArray alloc] init];
-    inputSourceIsRegisteredDevice = false;
+    inputSourceIsDeviceOfInterest = false;
 
     //NSTimeInterval timeStamp = [[NSDate date] timeIntervalSince1970];
     
@@ -237,36 +310,34 @@ static void initialize_everything() {
 
 static void Handle_InputValueCallback(void *context, IOReturn result, void *sender, IOHIDValueRef value) {
     
-    inputSourceIsRegisteredDevice = true;
+    inputSourceIsDeviceOfInterest = true;
     
     
     
-    // 2.0 TODO: implement this funtionality into the Event Tap CAllback
+    // 2.0 TODO: implement this funtionality into the Event Tap Callback (that way you dont need as many global variables)
+    
+    
+    int previousPressedButton = currentPressedButton;
+    int previousPressedButtonState = currentPressedButtonState;
     
     IOHIDElementRef element = IOHIDValueGetElement(value);
-    int state = (int) IOHIDValueGetIntegerValue(value);
-    //UInt32 usagePage = IOHIDElementGetUsagePage(element);
-    UInt32 button = IOHIDElementGetUsage(element);
+    currentPressedButton = IOHIDElementGetUsage(element);
+    currentPressedButtonState = IOHIDValueGetIntegerValue(value);
     
-    if (state == 1) {
-        if (currentPressedButton != 0) {
-            [pressedButtonModifierList addObject: [NSNumber numberWithInt: (unsigned int)currentPressedButton]];
+    
+    
+    
+    if (currentPressedButtonState == 1) {
+        if (previousPressedButtonState != 0) {
+            [pressedButtonModifierList addObject: [NSNumber numberWithInt: (unsigned int)previousPressedButton]];
         }
-        currentPressedButton = button;
-        
-        
         
     }
     else {
-        [pressedButtonModifierList removeObject: [NSNumber numberWithInt:button]];
-        currentPressedButton = 0;
+        [pressedButtonModifierList removeObject: [NSNumber numberWithInt: currentPressedButton]];
     }
     
-    
-    
 
-    
-    
     
 }
 
