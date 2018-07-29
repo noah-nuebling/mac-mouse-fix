@@ -49,33 +49,44 @@ CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef 
      */
     
     
-    if (currentPressedButton != nil) {
+    if (inputSourceIsRegisteredDevice) {
         
+        CGEventType clickState = CGEventGetIntegerValueField(event, kCGMouseEventClickState);
+
         
         NSLog(@"Button: %d", currentPressedButton);
         NSLog(@"Modifiers: %@", pressedButtonModifierList);
-        
-        CGEventType clickState = CGEventGetIntegerValueField(event, kCGMouseEventClickState);
         NSLog(@"Click State: %d", clickState);
+        
+        
+        
+        
         
         int keyCode = 123;
         CGEventFlags modifierFlags = kCGEventFlagMaskControl;
         
         postKeyEvent(keyCode, modifierFlags, true); // posting keyDown Event
         postKeyEvent(keyCode, modifierFlags, false); // posting keyUp Event
-
         
         
+        
+        inputSourceIsRegisteredDevice = false;
+        
+        return NULL;
         
     }
     
-    return event;
+    
+    else {
+        return event;
+    }
 
 }
 
 // global variables
 NSMutableArray * pressedButtonModifierList;
 int currentPressedButton;
+BOOL inputSourceIsRegisteredDevice;
 
 
 
@@ -88,6 +99,8 @@ int currentPressedButton;
     // pressed button list being filled by Handle_InputValueCallback (HIDManager)
     currentPressedButton = 0;
     pressedButtonModifierList = [[NSMutableArray alloc] init];
+    inputSourceIsRegisteredDevice = false;
+
     //NSTimeInterval timeStamp = [[NSDate date] timeIntervalSince1970];
     
     
@@ -223,6 +236,13 @@ static void initialize_everything() {
 
 
 static void Handle_InputValueCallback(void *context, IOReturn result, void *sender, IOHIDValueRef value) {
+    
+    inputSourceIsRegisteredDevice = true;
+    
+    
+    
+    // 2.0 TODO: implement this funtionality into the Event Tap CAllback
+    
     IOHIDElementRef element = IOHIDValueGetElement(value);
     int state = (int) IOHIDValueGetIntegerValue(value);
     //UInt32 usagePage = IOHIDElementGetUsagePage(element);
