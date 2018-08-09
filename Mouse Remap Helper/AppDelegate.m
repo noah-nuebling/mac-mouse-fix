@@ -17,172 +17,144 @@
 
 
 
-static void postKeyEvent(int keyCode, CGEventFlags modifierFlags, BOOL keyDownBool) {
+static void postKeyEvent(int keyCode, CGEventFlags modifierFlags, BOOL keyDownBool, CGEventSourceRef eventSource) {
     
-    CGEventSourceRef src =
-    CGEventSourceCreate(kCGEventSourceStatePrivate);
-    
-    CGEventRef keyEvent;
-    keyEvent = CGEventCreateKeyboardEvent (src, (CGKeyCode)keyCode, keyDownBool);
-    CGEventSetFlags(keyEvent, modifierFlags);
-    
-    CGEventPost(kCGHIDEventTap, keyEvent);
-    
-    CFRelease(src);
-    CFRelease(keyEvent);
-    
+    @autoreleasepool {
+        
+        CGEventRef keyEvent = CGEventCreateKeyboardEvent (eventSource, (CGKeyCode)keyCode, keyDownBool);
+        CGEventSetFlags(keyEvent, modifierFlags);
+        CGEventTapLocation location = kCGHIDEventTap;
+        
+        CGEventPost(location, keyEvent);
+        
+        CFRelease(keyEvent);
+    }
     
 }
+
+
 
 
 CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
     
+    
+    int currentButton = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
+    int currentButtonState = CGEventGetIntegerValueField(event, kCGMouseEventPressure);
+    
+        
     if (inputSourceIsDeviceOfInterest) {
         
-        CGEventType clickState = CGEventGetIntegerValueField(event, kCGMouseEventClickState);
+        if (currentButtonState == 0) { // -> button up event
+            
+            inputSourceIsDeviceOfInterest = false;
+            return event;
+            
+        } else { // -> button down event
+    
+        
+            // Get default remap for pressed button and simulate corresponding key event
+            NSNumber * currentButtonAsNSString = [NSString stringWithFormat: @"%d", currentButton];
+            NSDictionary * remapsForCurrentButton = [buttonRemapDictFromFile objectForKey: currentButtonAsNSString];
+        
+        
+            if (remapsForCurrentButton == nil) {
+                inputSourceIsDeviceOfInterest = false;
+                return event;
+            }
+            
+            NSArray *defaultRemapForCurrentButton = [remapsForCurrentButton objectForKey: @"default remap"];
+            
+            int keyCode = [defaultRemapForCurrentButton[0] intValue];
+            int modifierFlags = [defaultRemapForCurrentButton[1] intValue];
 
         
-        NSLog(@"Click State: %d", clickState);
-        NSLog(@"Modifiers: %@", pressedButtonModifierList);
-        NSLog(@"State: %d", currentPressedButtonState);
-        NSLog(@"Button: %d", currentPressedButton);
-        
-        
-        
-        if (currentPressedButtonState == 1) {
-            
-            /*
-            if (currentPressedButton == 4) {
-                if ( [pressedButtonModifierList[0] integerValue] == 2 ) {
-                    int keyCode = 123;
-                    CGEventFlags modifierFlags = kCGEventFlagMaskControl;
-                    
-                    postKeyEvent(keyCode, modifierFlags, true); // posting keyDown Event
-                    postKeyEvent(keyCode, modifierFlags, false); // posting keyUp Event
-                    
-                    inputSourceIsDeviceOfInterest = false;
-                    return NULL;
-                }
-            }
-            
-            
-            if (currentPressedButton == 5) {
-                if ( [pressedButtonModifierList[0] integerValue] == 2 )  {
-                    int keyCode = 124;
-                    CGEventFlags modifierFlags = kCGEventFlagMaskControl;
-                    
-                    postKeyEvent(keyCode, modifierFlags, true); // posting keyDown Event
-                    postKeyEvent(keyCode, modifierFlags, false); // posting keyUp Event
-                    
-                    inputSourceIsDeviceOfInterest = false;
-                    return NULL;
-                }
-            }
 
-             */
-            if (currentPressedButton == 4) {
-                
-                if ([pressedButtonModifierList count] != 0) {
-                    if ( [pressedButtonModifierList[0] integerValue] == 2 ) {
-                        int keyCode = 123;
-                        CGEventFlags modifierFlags = kCGEventFlagMaskControl;
-                        
-                        postKeyEvent(keyCode, modifierFlags, true); // posting keyDown Event
-                        postKeyEvent(keyCode, modifierFlags, false); // posting keyUp Event
-                        
-                        inputSourceIsDeviceOfInterest = false;
-                        return NULL;
-                    }
-                }
-                else {
-                    int keyCode = 22;
-                    CGEventFlags modifierFlags = 0b110000000000000000000; //kCGEventFlagMaskCommand ^ kCGEventFlagMaskAlternate;
-                    
-                    postKeyEvent(keyCode, modifierFlags, true); // posting keyDown Event
-                    postKeyEvent(keyCode, modifierFlags, false); // posting keyUp Event
-                    
-                    inputSourceIsDeviceOfInterest = false;
-                    return NULL;
-                }
-                
-            }
+            // simulate key events
+            postKeyEvent(keyCode, modifierFlags, true, eventSource); // posting keyDown Event
+            postKeyEvent(keyCode, modifierFlags, false, eventSource); // posting keyUp Event
             
             
-            if (currentPressedButton == 5) {
-                
-                if ([pressedButtonModifierList count] != 0) {
-                    if ( [pressedButtonModifierList[0] integerValue] == 2 ) {
-                        int keyCode = 124;
-                        CGEventFlags modifierFlags = kCGEventFlagMaskControl;
-                        
-                        postKeyEvent(keyCode, modifierFlags, true); // posting keyDown Event
-                        postKeyEvent(keyCode, modifierFlags, false); // posting keyUp Event
-                        
-                        inputSourceIsDeviceOfInterest = false;
-                        return NULL;
-                    }
-                }
-                else {
-                
-                    int keyCode = 23;
-                    CGEventFlags modifierFlags = kCGEventFlagMaskCommand ^ kCGEventFlagMaskAlternate;
-                    
-                    postKeyEvent(keyCode, modifierFlags, true); // posting keyDown Event
-                    postKeyEvent(keyCode, modifierFlags, false); // posting keyUp Event
-                    
-                    inputSourceIsDeviceOfInterest = false;
-                    return NULL;
-                }
-                
-            }
             
-            
+            inputSourceIsDeviceOfInterest = false;
+            return NULL;
+        
         }
-        
-        
-        // the input event stems from our registered device, but no remap actions were sent, return the original event nad set
-        inputSourceIsDeviceOfInterest = false;
-        return event;
-        
     }
-    
-    
-    else {
+
+    else { // -> input source is *not* device of interest
         return event;
     }
 
 }
 
 // global variables
-NSMutableArray * pressedButtonModifierList;
-int currentPressedButton;
-int currentPressedButtonState;
 BOOL inputSourceIsDeviceOfInterest;
-
-
+NSDictionary * buttonRemapDictFromFile;
+CGEventSourceRef eventSource;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     
+    /* initializing global vars */
     
-    
-    // initializing global vars
-    // pressed button list being filled by Handle_InputValueCallback (HIDManager)
-    currentPressedButton = 0;
-    currentPressedButtonState = 0;
-    pressedButtonModifierList = [[NSMutableArray alloc] init];
     inputSourceIsDeviceOfInterest = false;
+    eventSource = CGEventSourceCreate(kCGEventSourceStatePrivate);
+    
+    // Import the remaps from file
+    NSBundle *thisBundle = [NSBundle bundleForClass:[AppDelegate class]];
+    NSString *remapsFilePath = [thisBundle pathForResource:@"remaps" ofType:@"plist"];
+    
+    NSData *fileData = [NSData dataWithContentsOfFile:remapsFilePath];
+    NSError *error = nil;
+    buttonRemapDictFromFile = [NSPropertyListSerialization propertyListWithData:fileData options:NSPropertyListImmutable format:NULL error:&error];
+    NSAssert([buttonRemapDictFromFile isKindOfClass:[NSDictionary class]], @"Should have read a dictionary object");
+    NSAssert(error == nil, @"Should not have encountered an error");
+    
+    
+    
+    
+    /* create Remap Dict and write it to file (not deprecated way) */
+    /*
+    NSMutableDictionary * buttonRemapDict = [NSMutableDictionary new];
+    
+    // remaps for mb4
+    NSMutableDictionary * remapsForButton = [NSMutableDictionary new];
+    
+    int keyCode = 123;
+    int modifierFlags = kCGEventFlagMaskControl;
+    NSNumber *keyCodeAsNSNumber = [NSNumber numberWithInt: keyCode];
+    NSNumber *modifierFlagsAsNSNumber = [NSNumber numberWithInt: modifierFlags];
+    
+    NSArray *defaultRemap = [NSArray arrayWithObjects: keyCodeAsNSNumber, modifierFlagsAsNSNumber, NULL];
+    
+    [remapsForButton setObject:defaultRemap forKey: @"default remap"];
+    
+    int button = 4;
+    NSString * buttonAsNSString = [NSString stringWithFormat: @"%d", button];
+    [buttonRemapDict setObject: remapsForButton forKey: buttonAsNSString];
+    
+    
+    NSBundle *thisBundle = [NSBundle bundleForClass:[AppDelegate class]];
+    NSString * remapsFilePath = [thisBundle pathForResource:@"remaps" ofType:@"plist"];
+    
+    NSError *error;
+    NSData *data = [NSPropertyListSerialization dataWithPropertyList:buttonRemapDict format:NSPropertyListXMLFormat_v1_0 options:0 error:&error];
+    NSAssert(error == nil, @"Should not have encountered an error");
+    [data writeToFile:remapsFilePath atomically:YES];
+    */
 
-    //NSTimeInterval timeStamp = [[NSDate date] timeIntervalSince1970];
     
     
     
+
+    
+
     
     
-    // Register event Tap Callback
-    CGEventMask mask = CGEventMaskBit(kCGEventLeftMouseDown) | CGEventMaskBit(kCGEventRightMouseDown)                               |CGEventMaskBit(kCGEventOtherMouseDown) |
-    CGEventMaskBit(kCGEventLeftMouseUp) | CGEventMaskBit(kCGEventRightMouseUp) |CGEventMaskBit(kCGEventOtherMouseUp); //| CGEventMaskBit(kCGEventScrollWheel);
+    /* Register event Tap Callback */
+    CGEventMask mask = CGEventMaskBit(kCGEventLeftMouseDown) | CGEventMaskBit(kCGEventRightMouseDown)                               |CGEventMaskBit(kCGEventOtherMouseDown)
+    | CGEventMaskBit(kCGEventLeftMouseUp) | CGEventMaskBit(kCGEventRightMouseUp)                               |CGEventMaskBit(kCGEventOtherMouseUp);
     CFMachPortRef eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
     CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0);
     CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes);
@@ -192,13 +164,13 @@ BOOL inputSourceIsDeviceOfInterest;
     
     
 
-    // Setup HID Manager and its callbacks
-    initialize_everything();
+    /* Setup HID Manager and its callbacks */
+    setupHIDManagerAndCallbacks();
     
     
 }
 
-static void initialize_everything() {
+static void setupHIDManagerAndCallbacks() {
     // Insert code here to initialize your application
     
     
@@ -313,32 +285,6 @@ static void Handle_InputValueCallback(void *context, IOReturn result, void *send
     inputSourceIsDeviceOfInterest = true;
     
     
-    
-    // 2.0 TODO: implement this funtionality into the Event Tap Callback (that way you dont need as many global variables)
-    
-    
-    int previousPressedButton = currentPressedButton;
-    int previousPressedButtonState = currentPressedButtonState;
-    
-    IOHIDElementRef element = IOHIDValueGetElement(value);
-    currentPressedButton = IOHIDElementGetUsage(element);
-    currentPressedButtonState = IOHIDValueGetIntegerValue(value);
-    
-    
-    
-    
-    if (currentPressedButtonState == 1) {
-        if (previousPressedButtonState != 0) {
-            [pressedButtonModifierList addObject: [NSNumber numberWithInt: (unsigned int)previousPressedButton]];
-        }
-        
-    }
-    else {
-        [pressedButtonModifierList removeObject: [NSNumber numberWithInt: currentPressedButton]];
-    }
-    
-
-    
 }
 
 
@@ -402,7 +348,7 @@ static void Handle_DeviceRemovalCallback(void *context, IOReturn result, void *s
     if (matchingDeviceCount > 0) {
         
         IOHIDManagerClose(sender, kIOHIDOptionsTypeNone);
-        initialize_everything();
+        setupHIDManagerAndCallbacks();
         
     }
 }

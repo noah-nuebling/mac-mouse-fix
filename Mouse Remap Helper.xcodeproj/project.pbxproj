@@ -13,6 +13,12 @@
 		4FCECD8D21092354001F1078 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECD8C21092354001F1078 /* main.m */; };
 		4FCECD9821092354001F1078 /* Mouse_Remap_HelperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECD9721092354001F1078 /* Mouse_Remap_HelperTests.m */; };
 		4FCECDA321092354001F1078 /* Mouse_Remap_HelperUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECDA221092354001F1078 /* Mouse_Remap_HelperUITests.m */; };
+		4FD67DDE211CC9000095A9A5 /* Mouse_Remap.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FD67DDD211CC9000095A9A5 /* Mouse_Remap.h */; };
+		4FD67DE0211CC9000095A9A5 /* Mouse_Remap.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD67DDF211CC9000095A9A5 /* Mouse_Remap.m */; };
+		4FD67DE2211CC9000095A9A5 /* Mouse_Remap.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4FD67DE1211CC9000095A9A5 /* Mouse_Remap.tiff */; };
+		4FD67DE5211CC9000095A9A5 /* Mouse_Remap.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD67DE3211CC9000095A9A5 /* Mouse_Remap.xib */; };
+		4FD67DEC211CC94B0095A9A5 /* remaps.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FD67DEB211CC94B0095A9A5 /* remaps.plist */; };
+		4FD67DED211CC94B0095A9A5 /* remaps.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FD67DEB211CC94B0095A9A5 /* remaps.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +53,13 @@
 		4FCECD9E21092354001F1078 /* Mouse Remap HelperUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Mouse Remap HelperUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FCECDA221092354001F1078 /* Mouse_Remap_HelperUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Mouse_Remap_HelperUITests.m; sourceTree = "<group>"; };
 		4FCECDA421092354001F1078 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4FD67DDB211CC9000095A9A5 /* Mouse Remap.prefPane */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Mouse Remap.prefPane"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4FD67DDD211CC9000095A9A5 /* Mouse_Remap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mouse_Remap.h; sourceTree = "<group>"; };
+		4FD67DDF211CC9000095A9A5 /* Mouse_Remap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Mouse_Remap.m; sourceTree = "<group>"; };
+		4FD67DE1211CC9000095A9A5 /* Mouse_Remap.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Mouse_Remap.tiff; sourceTree = "<group>"; };
+		4FD67DE4211CC9000095A9A5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Mouse_Remap.xib; sourceTree = "<group>"; };
+		4FD67DE6211CC9000095A9A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4FD67DEB211CC94B0095A9A5 /* remaps.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = remaps.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,13 +84,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4FD67DD7211CC9000095A9A5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		4FCECD7721092354001F1078 = {
 			isa = PBXGroup;
 			children = (
+				4FD67DEA211CC91E0095A9A5 /* Remaps */,
 				4FCECD8221092354001F1078 /* Mouse Remap Helper */,
+				4FD67DDC211CC9000095A9A5 /* Mouse Remap */,
 				4FCECD8121092354001F1078 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -88,6 +110,7 @@
 				4FCECD8021092354001F1078 /* Mouse Remap Helper.app */,
 				4FCECD9321092354001F1078 /* Mouse Remap HelperTests.xctest */,
 				4FCECD9E21092354001F1078 /* Mouse Remap HelperUITests.xctest */,
+				4FD67DDB211CC9000095A9A5 /* Mouse Remap.prefPane */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -134,7 +157,38 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		4FD67DDC211CC9000095A9A5 /* Mouse Remap */ = {
+			isa = PBXGroup;
+			children = (
+				4FD67DDD211CC9000095A9A5 /* Mouse_Remap.h */,
+				4FD67DDF211CC9000095A9A5 /* Mouse_Remap.m */,
+				4FD67DE1211CC9000095A9A5 /* Mouse_Remap.tiff */,
+				4FD67DE3211CC9000095A9A5 /* Mouse_Remap.xib */,
+				4FD67DE6211CC9000095A9A5 /* Info.plist */,
+			);
+			path = "Mouse Remap";
+			sourceTree = "<group>";
+		};
+		4FD67DEA211CC91E0095A9A5 /* Remaps */ = {
+			isa = PBXGroup;
+			children = (
+				4FD67DEB211CC94B0095A9A5 /* remaps.plist */,
+			);
+			path = Remaps;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		4FD67DD8211CC9000095A9A5 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4FD67DDE211CC9000095A9A5 /* Mouse_Remap.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		4FCECD7F21092354001F1078 /* Mouse Remap Helper */ = {
@@ -190,6 +244,24 @@
 			productReference = 4FCECD9E21092354001F1078 /* Mouse Remap HelperUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		4FD67DDA211CC9000095A9A5 /* Mouse Remap */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4FD67DE9211CC9000095A9A5 /* Build configuration list for PBXNativeTarget "Mouse Remap" */;
+			buildPhases = (
+				4FD67DD6211CC9000095A9A5 /* Sources */,
+				4FD67DD7211CC9000095A9A5 /* Frameworks */,
+				4FD67DD8211CC9000095A9A5 /* Headers */,
+				4FD67DD9211CC9000095A9A5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Mouse Remap";
+			productName = "Mouse Remap";
+			productReference = 4FD67DDB211CC9000095A9A5 /* Mouse Remap.prefPane */;
+			productType = "com.apple.product-type.bundle";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -214,6 +286,10 @@
 						ProvisioningStyle = Automatic;
 						TestTargetID = 4FCECD7F21092354001F1078;
 					};
+					4FD67DDA211CC9000095A9A5 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 4FCECD7B21092354001F1078 /* Build configuration list for PBXProject "Mouse Remap Helper" */;
@@ -232,6 +308,7 @@
 				4FCECD7F21092354001F1078 /* Mouse Remap Helper */,
 				4FCECD9221092354001F1078 /* Mouse Remap HelperTests */,
 				4FCECD9D21092354001F1078 /* Mouse Remap HelperUITests */,
+				4FD67DDA211CC9000095A9A5 /* Mouse Remap */,
 			);
 		};
 /* End PBXProject section */
@@ -242,6 +319,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FCECD8721092354001F1078 /* Assets.xcassets in Resources */,
+				4FD67DEC211CC94B0095A9A5 /* remaps.plist in Resources */,
 				4FCECD8A21092354001F1078 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -257,6 +335,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4FD67DD9211CC9000095A9A5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4FD67DE2211CC9000095A9A5 /* Mouse_Remap.tiff in Resources */,
+				4FD67DED211CC94B0095A9A5 /* remaps.plist in Resources */,
+				4FD67DE5211CC9000095A9A5 /* Mouse_Remap.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,6 +376,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4FD67DD6211CC9000095A9A5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4FD67DE0211CC9000095A9A5 /* Mouse_Remap.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -310,6 +406,14 @@
 				4FCECD8921092354001F1078 /* Base */,
 			);
 			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		4FD67DE3211CC9000095A9A5 /* Mouse_Remap.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4FD67DE4211CC9000095A9A5 /* Base */,
+			);
+			name = Mouse_Remap.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -515,6 +619,34 @@
 			};
 			name = Release;
 		};
+		4FD67DE7211CC9000095A9A5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
+				INFOPLIST_FILE = "Mouse Remap/Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/PreferencePanes";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.uebler.nuebler.Mouse-Remap";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = prefPane;
+			};
+			name = Debug;
+		};
+		4FD67DE8211CC9000095A9A5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
+				INFOPLIST_FILE = "Mouse Remap/Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/PreferencePanes";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.uebler.nuebler.Mouse-Remap";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = prefPane;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -550,6 +682,15 @@
 			buildConfigurations = (
 				4FCECDAE21092354001F1078 /* Debug */,
 				4FCECDAF21092354001F1078 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4FD67DE9211CC9000095A9A5 /* Build configuration list for PBXNativeTarget "Mouse Remap" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4FD67DE7211CC9000095A9A5 /* Debug */,
+				4FD67DE8211CC9000095A9A5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
