@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		4FCECD8521092354001F1078 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECD8421092354001F1078 /* AppDelegate.m */; };
-		4FCECD8721092354001F1078 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FCECD8621092354001F1078 /* Assets.xcassets */; };
-		4FCECD8A21092354001F1078 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FCECD8821092354001F1078 /* MainMenu.xib */; };
 		4FCECD8D21092354001F1078 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECD8C21092354001F1078 /* main.m */; };
 		4FCECD9821092354001F1078 /* Mouse_Remap_HelperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECD9721092354001F1078 /* Mouse_Remap_HelperTests.m */; };
 		4FCECDA321092354001F1078 /* Mouse_Remap_HelperUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECDA221092354001F1078 /* Mouse_Remap_HelperUITests.m */; };
@@ -17,8 +15,9 @@
 		4FD67DE0211CC9000095A9A5 /* Mouse_Remap.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD67DDF211CC9000095A9A5 /* Mouse_Remap.m */; };
 		4FD67DE2211CC9000095A9A5 /* Mouse_Remap.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4FD67DE1211CC9000095A9A5 /* Mouse_Remap.tiff */; };
 		4FD67DE5211CC9000095A9A5 /* Mouse_Remap.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD67DE3211CC9000095A9A5 /* Mouse_Remap.xib */; };
-		4FD67DEC211CC94B0095A9A5 /* remaps.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FD67DEB211CC94B0095A9A5 /* remaps.plist */; };
 		4FD67DED211CC94B0095A9A5 /* remaps.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FD67DEB211CC94B0095A9A5 /* remaps.plist */; };
+		4FD67DF3211CDD2D0095A9A5 /* Mouse Remap Helper.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4FCECD8021092354001F1078 /* Mouse Remap Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4FD67DF4211CDE4D0095A9A5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FCECD8821092354001F1078 /* MainMenu.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +35,27 @@
 			remoteGlobalIDString = 4FCECD7F21092354001F1078;
 			remoteInfo = "Mouse Remap Helper";
 		};
+		4FD67DF0211CDC930095A9A5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FCECD7821092354001F1078 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4FCECD7F21092354001F1078;
+			remoteInfo = "Mouse Remap Helper";
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4FD67DF2211CDCDE0095A9A5 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Library/LoginItems;
+			dstSubfolderSpec = 1;
+			files = (
+				4FD67DF3211CDD2D0095A9A5 /* Mouse Remap Helper.app in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		4FCECD8021092354001F1078 /* Mouse Remap Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mouse Remap Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -97,9 +116,9 @@
 		4FCECD7721092354001F1078 = {
 			isa = PBXGroup;
 			children = (
-				4FD67DEA211CC91E0095A9A5 /* Remaps */,
-				4FCECD8221092354001F1078 /* Mouse Remap Helper */,
 				4FD67DDC211CC9000095A9A5 /* Mouse Remap */,
+				4FCECD8221092354001F1078 /* Mouse Remap Helper */,
+				4FD67DEB211CC94B0095A9A5 /* remaps.plist */,
 				4FCECD8121092354001F1078 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -167,14 +186,6 @@
 				4FD67DE6211CC9000095A9A5 /* Info.plist */,
 			);
 			path = "Mouse Remap";
-			sourceTree = "<group>";
-		};
-		4FD67DEA211CC91E0095A9A5 /* Remaps */ = {
-			isa = PBXGroup;
-			children = (
-				4FD67DEB211CC94B0095A9A5 /* remaps.plist */,
-			);
-			path = Remaps;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -252,10 +263,12 @@
 				4FD67DD7211CC9000095A9A5 /* Frameworks */,
 				4FD67DD8211CC9000095A9A5 /* Headers */,
 				4FD67DD9211CC9000095A9A5 /* Resources */,
+				4FD67DF2211CDCDE0095A9A5 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				4FD67DF1211CDC930095A9A5 /* PBXTargetDependency */,
 			);
 			name = "Mouse Remap";
 			productName = "Mouse Remap";
@@ -318,9 +331,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4FCECD8721092354001F1078 /* Assets.xcassets in Resources */,
-				4FD67DEC211CC94B0095A9A5 /* remaps.plist in Resources */,
-				4FCECD8A21092354001F1078 /* MainMenu.xib in Resources */,
+				4FD67DF4211CDE4D0095A9A5 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,6 +407,11 @@
 			isa = PBXTargetDependency;
 			target = 4FCECD7F21092354001F1078 /* Mouse Remap Helper */;
 			targetProxy = 4FCECD9F21092354001F1078 /* PBXContainerItemProxy */;
+		};
+		4FD67DF1211CDC930095A9A5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4FCECD7F21092354001F1078 /* Mouse Remap Helper */;
+			targetProxy = 4FD67DF0211CDC930095A9A5 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
