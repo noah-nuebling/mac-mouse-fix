@@ -2,6 +2,22 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>3</key>
+	<dict>
+		<key>default remap</key>
+		<array>
+			<integer>126</integer>
+			<integer>262144</integer>
+		</array>
+	</dict>
+	<key>5</key>
+	<dict>
+		<key>default remap</key>
+		<array>
+			<integer>124</integer>
+			<integer>262144</integer>
+		</array>
+	</dict>
 	<key>4</key>
 	<dict>
 		<key>default remap</key>

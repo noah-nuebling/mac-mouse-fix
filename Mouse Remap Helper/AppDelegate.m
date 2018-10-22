@@ -38,11 +38,16 @@ static void postKeyEvent(int keyCode, CGEventFlags modifierFlags, BOOL keyDownBo
 CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
     
+
     
     int currentButton = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
     int currentButtonState = CGEventGetIntegerValueField(event, kCGMouseEventPressure);
     
-        
+    NSLog(@"Current Button: %d", currentButton);
+    NSLog(@"State: %d", currentButtonState);
+    NSLog(@"inputSourceIsDeviceOfInterest: %d", inputSourceIsDeviceOfInterest);
+    NSLog(@"");
+    
     if (inputSourceIsDeviceOfInterest) {
         
         if (currentButtonState == 0) { // -> button up event
@@ -52,7 +57,7 @@ CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef 
             
         } else { // -> button down event
     
-        
+            
             // Get default remap for pressed button and simulate corresponding key event
             NSNumber * currentButtonAsNSString = [NSString stringWithFormat: @"%d", currentButton];
             NSDictionary * remapsForCurrentButton = [buttonRemapDictFromFile objectForKey: currentButtonAsNSString];
@@ -96,6 +101,39 @@ CGEventSourceRef eventSource;
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     
+    
+    /* create Remap Dict and write it to file (not deprecated way) */
+    /*
+     NSMutableDictionary * buttonRemapDict = [NSMutableDictionary new];
+     
+     // remaps for mb4
+     NSMutableDictionary * remapsForButton = [NSMutableDictionary new];
+     
+     int keyCode = 123;
+     int modifierFlags = kCGEventFlagMaskControl;
+     NSNumber *keyCodeAsNSNumber = [NSNumber numberWithInt: keyCode];
+     NSNumber *modifierFlagsAsNSNumber = [NSNumber numberWithInt: modifierFlags];
+     
+     NSArray *defaultRemap = [NSArray arrayWithObjects: keyCodeAsNSNumber, modifierFlagsAsNSNumber, NULL];
+     
+     [remapsForButton setObject:defaultRemap forKey: @"default remap"];
+     
+     int button = 4;
+     NSString * buttonAsNSString = [NSString stringWithFormat: @"%d", button];
+     [buttonRemapDict setObject: remapsForButton forKey: buttonAsNSString];
+     
+     
+     NSBundle *thisBundle = [NSBundle bundleForClass:[AppDelegate class]];
+     NSString * remapsFilePath = [thisBundle pathForResource:@"remaps" ofType:@"plist"];
+     
+     NSError *error;
+     NSData *data = [NSPropertyListSerialization dataWithPropertyList:buttonRemapDict format:NSPropertyListXMLFormat_v1_0 options:0 error:&error];
+     NSAssert(error == nil, @"Should not have encountered an error");
+     [data writeToFile:remapsFilePath atomically:YES];
+     */
+
+    
+    
     /* initializing global vars */
     
     inputSourceIsDeviceOfInterest = false;
@@ -105,45 +143,22 @@ CGEventSourceRef eventSource;
     NSBundle *thisBundle = [NSBundle bundleForClass:[AppDelegate class]];
     NSString *remapsFilePath = [thisBundle pathForResource:@"remaps" ofType:@"plist"];
     
-    NSData *fileData = [NSData dataWithContentsOfFile:remapsFilePath];
+    
+    // remap file doesn't exist, terminate helper app
+    if (remapsFilePath == (id)[NSNull null] || remapsFilePath.length == 0 ) {
+        NSLog(@"No remaps.plist file - terminating helper app");
+        [[NSApplication sharedApplication] terminate: nil];
+        
+    }
+
+
+    NSData *fileData = [NSData dataWithContentsOfFile: remapsFilePath];
     NSError *error = nil;
+    
     buttonRemapDictFromFile = [NSPropertyListSerialization propertyListWithData:fileData options:NSPropertyListImmutable format:NULL error:&error];
+    
     NSAssert([buttonRemapDictFromFile isKindOfClass:[NSDictionary class]], @"Should have read a dictionary object");
     NSAssert(error == nil, @"Should not have encountered an error");
-    
-    
-    
-    
-    /* create Remap Dict and write it to file (not deprecated way) */
-    /*
-    NSMutableDictionary * buttonRemapDict = [NSMutableDictionary new];
-    
-    // remaps for mb4
-    NSMutableDictionary * remapsForButton = [NSMutableDictionary new];
-    
-    int keyCode = 123;
-    int modifierFlags = kCGEventFlagMaskControl;
-    NSNumber *keyCodeAsNSNumber = [NSNumber numberWithInt: keyCode];
-    NSNumber *modifierFlagsAsNSNumber = [NSNumber numberWithInt: modifierFlags];
-    
-    NSArray *defaultRemap = [NSArray arrayWithObjects: keyCodeAsNSNumber, modifierFlagsAsNSNumber, NULL];
-    
-    [remapsForButton setObject:defaultRemap forKey: @"default remap"];
-    
-    int button = 4;
-    NSString * buttonAsNSString = [NSString stringWithFormat: @"%d", button];
-    [buttonRemapDict setObject: remapsForButton forKey: buttonAsNSString];
-    
-    
-    NSBundle *thisBundle = [NSBundle bundleForClass:[AppDelegate class]];
-    NSString * remapsFilePath = [thisBundle pathForResource:@"remaps" ofType:@"plist"];
-    
-    NSError *error;
-    NSData *data = [NSPropertyListSerialization dataWithPropertyList:buttonRemapDict format:NSPropertyListXMLFormat_v1_0 options:0 error:&error];
-    NSAssert(error == nil, @"Should not have encountered an error");
-    [data writeToFile:remapsFilePath atomically:YES];
-    */
-
     
     
     

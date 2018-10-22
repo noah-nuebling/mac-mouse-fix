@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F0CDB63217E654500817BC1 /* remaps.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FD67DEB211CC94B0095A9A5 /* remaps.plist */; };
 		4FCECD8521092354001F1078 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECD8421092354001F1078 /* AppDelegate.m */; };
 		4FCECD8D21092354001F1078 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECD8C21092354001F1078 /* main.m */; };
 		4FCECD9821092354001F1078 /* Mouse_Remap_HelperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECD9721092354001F1078 /* Mouse_Remap_HelperTests.m */; };
@@ -331,6 +332,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F0CDB63217E654500817BC1 /* remaps.plist in Resources */,
 				4FD67DF4211CDE4D0095A9A5 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
