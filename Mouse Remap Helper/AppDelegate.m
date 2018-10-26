@@ -40,8 +40,8 @@ CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef 
     
 
     
-    int currentButton = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
-    int currentButtonState = CGEventGetIntegerValueField(event, kCGMouseEventPressure);
+    int currentButton = (int) CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
+    int currentButtonState = (int) CGEventGetIntegerValueField(event, kCGMouseEventPressure);
     
     NSLog(@"Current Button: %d", currentButton);
     NSLog(@"State: %d", currentButtonState);
@@ -59,7 +59,7 @@ CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef 
     
             
             // Get default remap for pressed button and simulate corresponding key event
-            NSNumber * currentButtonAsNSString = [NSString stringWithFormat: @"%d", currentButton];
+            NSString * currentButtonAsNSString = [NSString stringWithFormat: @"%d", currentButton];
             NSDictionary * remapsForCurrentButton = [buttonRemapDictFromFile objectForKey: currentButtonAsNSString];
         
         
@@ -93,13 +93,73 @@ CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef 
 
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // global variables
 BOOL inputSourceIsDeviceOfInterest;
 NSDictionary * buttonRemapDictFromFile;
 CGEventSourceRef eventSource;
+- (void) myTerminationHandler {
+    ;
+}
+
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+
+    
+    
+    /*
+    NSTask *enableHelperAgent = [[NSTask alloc] init];
+    enableHelperAgent.launchPath = @"/bin/launchctl";
+    enableHelperAgent.arguments = @[@"bootstrap", [NSString stringWithFormat:@"gui/%d", uid], @"/Users/Noah/Library/LaunchAgents/mouse.remap.helper.plist"];
+    
+    
+    [enableHelperAgent launch];
+     */
+    
+    
+    
+    
+    /*
+    @autoreleasepool {
+        // get Users UID
+        uid_t uid = geteuid();
+        NSLog(@"UID: %d", uid);
+        
+        NSTask *disableHelperAgent = [[NSTask alloc] init];
+        disableHelperAgent.launchPath = @"/bin/launchctl";
+        disableHelperAgent.arguments = @[@"bootout", [NSString stringWithFormat:@"gui/%d", uid], @"/Users/Noah/Library/LaunchAgents/mouse.remap.helper.plist"];
+        
+        
+        [disableHelperAgent launch];
+    }
+     */
+        
+
     
     
     /* create Remap Dict and write it to file (not deprecated way) */
