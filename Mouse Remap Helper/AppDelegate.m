@@ -14,32 +14,73 @@
 
 @implementation AppDelegate
 
+// global variables
+BOOL inputSourceIsDeviceOfInterest;
+NSDictionary * buttonRemapDictFromFile;
+CGEventSourceRef eventSource;
+CFMachPortRef eventTap;
+IOHIDManagerRef HIDManager;
 
-
-
-static void postKeyEvent(int keyCode, CGEventFlags modifierFlags, BOOL keyDownBool, CGEventSourceRef eventSource) {
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{
+    NSLog(@"running Mouse Remap Helper");
     
-    @autoreleasepool {
-        
-        CGEventRef keyEvent = CGEventCreateKeyboardEvent (eventSource, (CGKeyCode)keyCode, keyDownBool);
-        CGEventSetFlags(keyEvent, modifierFlags);
-        CGEventTapLocation location = kCGHIDEventTap;
-        
-        CGEventPost(location, keyEvent);
-        
-        CFRelease(keyEvent);
+    // initialize global variables
+    inputSourceIsDeviceOfInterest = false;
+    eventSource = CGEventSourceCreate(kCGEventSourceStatePrivate);
+
+    
+    // setup callback which monitors changes to remaps.plist
+    [self setupFSEventStreamCallback];
+    
+    // setup callbacks for mouse input
+    setupBothInputCallbacks();
+    
+    // generate dict from remaps.plist
+    buttonRemapDictFromFile = [AppDelegate fillButtonRemapDictFromFile];
+    if (buttonRemapDictFromFile == nil) {
+        NSLog(@"no remaps loaded");
     }
+}
+
+
+- (void) setupFSEventStreamCallback {
+    NSBundle *thisBundle = [NSBundle bundleForClass:[AppDelegate class]];
+    CFStringRef remapsFilePath = (__bridge CFStringRef) [thisBundle pathForResource:@"remaps" ofType:@"plist"];
+    CFArrayRef pathsToWatch = CFArrayCreate(NULL, (const void **)&remapsFilePath, 1, NULL);
+    void *callbackInfo = NULL; // could put stream-specific data here.
+    NSLog(@"pathsToWatch : %@", pathsToWatch);
     
+    CFAbsoluteTime latency = 0.3;
+    FSEventStreamRef remapsFileEventStream = FSEventStreamCreate(kCFAllocatorDefault, &Handle_FSEventStreamCallback, callbackInfo, pathsToWatch, kFSEventStreamEventIdSinceNow, latency, kFSEventStreamCreateFlagFileEvents ^ kFSEventStreamCreateFlagUseCFTypes);
+    // kFSEventStreamCreateFlagNone
+    // kFSEventStreamCreateFlagFileEvents
+    
+    FSEventStreamScheduleWithRunLoop(remapsFileEventStream, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
+    BOOL EventStreamStarted = FSEventStreamStart(remapsFileEventStream);
+    NSLog(@"EventStreamStarted: %d", EventStreamStarted);
+}
+
+
+void Handle_FSEventStreamCallback (ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents, void *eventPaths, const FSEventStreamEventFlags *eventFlags, const FSEventStreamEventId *eventIds) {
+    
+    NSLog(@"remaps.plist changed - reloading buttonRemapDictFromFile");
+    
+    buttonRemapDictFromFile = [AppDelegate fillButtonRemapDictFromFile];
+
 }
 
 
 
+CGEventRef Handle_EventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
+    
+    NSLog(@"CGEventTap Callback Called");
+    
+    if (buttonRemapDictFromFile == nil) {
+        NSLog(@"but no remaps are loaded");
+        return event;
+    }
 
-CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
-    
-    
-
-    
     int currentButton = (int) CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
     int currentButtonState = (int) CGEventGetIntegerValueField(event, kCGMouseEventPressure);
     
@@ -47,6 +88,7 @@ CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef 
     NSLog(@"State: %d", currentButtonState);
     NSLog(@"inputSourceIsDeviceOfInterest: %d", inputSourceIsDeviceOfInterest);
     NSLog(@"");
+    
     
     if (inputSourceIsDeviceOfInterest) {
         
@@ -56,204 +98,70 @@ CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef 
             return event;
             
         } else { // -> button down event
-    
             
-            // Get default remap for pressed button and simulate corresponding key event
+            
+            // Get single click remap for pressed button and simulate corresponding key event
             NSString * currentButtonAsNSString = [NSString stringWithFormat: @"%d", currentButton];
             NSDictionary * remapsForCurrentButton = [buttonRemapDictFromFile objectForKey: currentButtonAsNSString];
-        
-        
             if (remapsForCurrentButton == nil) {
                 inputSourceIsDeviceOfInterest = false;
+                NSLog(@"No remap for this button");
                 return event;
             }
             
-            NSArray *defaultRemapForCurrentButton = [remapsForCurrentButton objectForKey: @"default remap"];
+            NSArray *singleClickRemapForCurrentButton;
+            @try {
+                singleClickRemapForCurrentButton = [[remapsForCurrentButton objectForKey:@"single"] objectForKey:@"click"];
+            }
+            @catch (NSException *exception){
+                NSLog(@"%@", exception.reason);
+                NSLog(@"Couldn't get remaps for button %d, there might be something wrong with remaps.plist", currentButton);
+            }
+
+            int keyCode = [[singleClickRemapForCurrentButton objectAtIndex:0] intValue];
+            int modifierFlags = [[singleClickRemapForCurrentButton objectAtIndex:1] intValue];
             
-            int keyCode = [defaultRemapForCurrentButton[0] intValue];
-            int modifierFlags = [defaultRemapForCurrentButton[1] intValue];
-
-        
-
             // simulate key events
-            postKeyEvent(keyCode, modifierFlags, true, eventSource); // posting keyDown Event
-            postKeyEvent(keyCode, modifierFlags, false, eventSource); // posting keyUp Event
+            postKeyEvent(keyCode, modifierFlags, true, eventSource);    // posting keyDown Event
+            postKeyEvent(keyCode, modifierFlags, false, eventSource);   // posting keyUp Event
             
             
             
             inputSourceIsDeviceOfInterest = false;
             return NULL;
-        
+            
         }
     }
-
+    
     else { // -> input source is *not* device of interest
         return event;
     }
-
+    
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// global variables
-BOOL inputSourceIsDeviceOfInterest;
-NSDictionary * buttonRemapDictFromFile;
-CGEventSourceRef eventSource;
-- (void) myTerminationHandler {
-    ;
-}
-
-
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
-{
-
-    
-    
-    /*
-    NSTask *enableHelperAgent = [[NSTask alloc] init];
-    enableHelperAgent.launchPath = @"/bin/launchctl";
-    enableHelperAgent.arguments = @[@"bootstrap", [NSString stringWithFormat:@"gui/%d", uid], @"/Users/Noah/Library/LaunchAgents/mouse.remap.helper.plist"];
-    
-    
-    [enableHelperAgent launch];
-     */
-    
-    
-    
-    
-    /*
-    @autoreleasepool {
-        // get Users UID
-        uid_t uid = geteuid();
-        NSLog(@"UID: %d", uid);
-        
-        NSTask *disableHelperAgent = [[NSTask alloc] init];
-        disableHelperAgent.launchPath = @"/bin/launchctl";
-        disableHelperAgent.arguments = @[@"bootout", [NSString stringWithFormat:@"gui/%d", uid], @"/Users/Noah/Library/LaunchAgents/mouse.remap.helper.plist"];
-        
-        
-        [disableHelperAgent launch];
-    }
-     */
-        
-
-    
-    
-    /* create Remap Dict and write it to file (not deprecated way) */
-    /*
-     NSMutableDictionary * buttonRemapDict = [NSMutableDictionary new];
-     
-     // remaps for mb4
-     NSMutableDictionary * remapsForButton = [NSMutableDictionary new];
-     
-     int keyCode = 123;
-     int modifierFlags = kCGEventFlagMaskControl;
-     NSNumber *keyCodeAsNSNumber = [NSNumber numberWithInt: keyCode];
-     NSNumber *modifierFlagsAsNSNumber = [NSNumber numberWithInt: modifierFlags];
-     
-     NSArray *defaultRemap = [NSArray arrayWithObjects: keyCodeAsNSNumber, modifierFlagsAsNSNumber, NULL];
-     
-     [remapsForButton setObject:defaultRemap forKey: @"default remap"];
-     
-     int button = 4;
-     NSString * buttonAsNSString = [NSString stringWithFormat: @"%d", button];
-     [buttonRemapDict setObject: remapsForButton forKey: buttonAsNSString];
-     
-     
-     NSBundle *thisBundle = [NSBundle bundleForClass:[AppDelegate class]];
-     NSString * remapsFilePath = [thisBundle pathForResource:@"remaps" ofType:@"plist"];
-     
-     NSError *error;
-     NSData *data = [NSPropertyListSerialization dataWithPropertyList:buttonRemapDict format:NSPropertyListXMLFormat_v1_0 options:0 error:&error];
-     NSAssert(error == nil, @"Should not have encountered an error");
-     [data writeToFile:remapsFilePath atomically:YES];
-     */
-
-    
-    
-    /* initializing global vars */
-    
-    inputSourceIsDeviceOfInterest = false;
-    eventSource = CGEventSourceCreate(kCGEventSourceStatePrivate);
-    
-    // Import the remaps from file
-    NSBundle *thisBundle = [NSBundle bundleForClass:[AppDelegate class]];
-    NSString *remapsFilePath = [thisBundle pathForResource:@"remaps" ofType:@"plist"];
-    
-    
-    // remap file doesn't exist, terminate helper app
-    if (remapsFilePath == (id)[NSNull null] || remapsFilePath.length == 0 ) {
-        NSLog(@"No remaps.plist file - terminating helper app");
-        [[NSApplication sharedApplication] terminate: nil];
-        
-    }
-
-
-    NSData *fileData = [NSData dataWithContentsOfFile: remapsFilePath];
-    NSError *error = nil;
-    
-    buttonRemapDictFromFile = [NSPropertyListSerialization propertyListWithData:fileData options:NSPropertyListImmutable format:NULL error:&error];
-    
-    NSAssert([buttonRemapDictFromFile isKindOfClass:[NSDictionary class]], @"Should have read a dictionary object");
-    NSAssert(error == nil, @"Should not have encountered an error");
-    
-    
-    
-
-    
-
-    
-    
+static void setupBothInputCallbacks() {
     /* Register event Tap Callback */
     CGEventMask mask = CGEventMaskBit(kCGEventLeftMouseDown) | CGEventMaskBit(kCGEventRightMouseDown)                               |CGEventMaskBit(kCGEventOtherMouseDown)
     | CGEventMaskBit(kCGEventLeftMouseUp) | CGEventMaskBit(kCGEventRightMouseUp)                               |CGEventMaskBit(kCGEventOtherMouseUp);
-    CFMachPortRef eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
+    eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, Handle_EventTapCallback, NULL);
+    
     CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0);
-    CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes);
+    CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopDefaultMode);
     CFRelease(runLoopSource);
     
     
     
-    
-
-    /* Setup HID Manager and its callbacks */
     setupHIDManagerAndCallbacks();
-    
     
 }
 
 static void setupHIDManagerAndCallbacks() {
-    // Insert code here to initialize your application
-    
-    
     
     
     
     // Create an HID Manager
-    IOHIDManagerRef HIDManager = IOHIDManagerCreate(kCFAllocatorDefault,
+    HIDManager = IOHIDManagerCreate(kCFAllocatorDefault,
                                                     kIOHIDOptionsTypeNone);
     
     // Create a Matching Dictionary
@@ -275,10 +183,10 @@ static void setupHIDManagerAndCallbacks() {
     // Specify properties of the devices which we want to add to the HID Manager in the Matching Dictionary
     
     CFArrayRef matches;
-    CFDictionarySetValue(matchDict1, CFSTR("PrimaryUsage"), (const void *)0x227); // add mice
-    CFDictionarySetValue(matchDict1, CFSTR("Transport"), CFSTR("USB")); // add USB devices
-    CFDictionarySetValue(matchDict2, CFSTR("Transport"), CFSTR("Bluetooth")); // add Bluetooth Devices
-    CFDictionarySetValue(matchDict3, CFSTR("Transport"), CFSTR("BluetoothLowEnergy")); // add bluetooth low energy devices
+    CFDictionarySetValue(matchDict1, CFSTR("PrimaryUsage"), (const void *)0x227);       // add mice
+    CFDictionarySetValue(matchDict1, CFSTR("Transport"), CFSTR("USB"));                 // add USB devices
+    CFDictionarySetValue(matchDict2, CFSTR("Transport"), CFSTR("Bluetooth"));           // add Bluetooth Devices
+    CFDictionarySetValue(matchDict3, CFSTR("Transport"), CFSTR("BluetoothLowEnergy"));  // add bluetooth low energy devices
     
     CFMutableDictionaryRef matchesList[] = {matchDict1, matchDict2, matchDict3};
     matches = CFArrayCreate(kCFAllocatorDefault, (const void **)matchesList, 3, NULL);
@@ -304,17 +212,9 @@ static void setupHIDManagerAndCallbacks() {
     
     
     
-    
-    
-    
-    
+
     IOHIDDeviceRef* device_array = getDevicesFromManager(HIDManager);
-    
-    
-    
-    
-    
-    
+
     /* register the device at index 0 */
     // If multiple mice are attached, it will refer to a random one
     
@@ -327,27 +227,13 @@ static void setupHIDManagerAndCallbacks() {
     
      free (device_array);
     
-    
 
-    
-    
-    
-    
     // Register a callback for USB device detection with the HID Manager
     IOHIDManagerRegisterDeviceMatchingCallback(HIDManager, &Handle_DeviceMatchingCallback, NULL);
     // Register a callback for USB device removal with the HID Manager
     IOHIDManagerRegisterDeviceRemovalCallback(HIDManager, &Handle_DeviceRemovalCallback, NULL);
-    
-    
-    
+
 }
-
-
-
-
-
-
-
 
 
 
@@ -363,22 +249,17 @@ static void Handle_InputValueCallback(void *context, IOReturn result, void *send
 }
 
 
-
-
-
 static void Handle_DeviceMatchingCallback (void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
     
     
-    // if this one is the only device attached, attach it to the run loop
+    // if this one, is the only device attached, attach it to the run loop
     
     if (USBDeviceCount(sender) == 1) {
         
         registerDeviceButtonInputCallback(device);
         
     }
-    
-    
-    
+
     
     /* print stuff */
     
@@ -431,7 +312,63 @@ static void Handle_DeviceRemovalCallback(void *context, IOReturn result, void *s
 
 
 
+
+
+
 // Convenience Functions
+
+
++ (NSDictionary*) fillButtonRemapDictFromFile {
+    // Import the remaps from file
+    NSBundle *thisBundle = [NSBundle bundleForClass:[AppDelegate class]];
+    NSString *remapsFilePath = [thisBundle pathForResource:@"remaps" ofType:@"plist"];
+    
+    NSDictionary *outDict = nil;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if ( [fileManager fileExistsAtPath: remapsFilePath] == TRUE ) {
+        NSData *fileData = [NSData dataWithContentsOfFile: remapsFilePath];
+        
+        NSError *error = nil;
+        outDict = [NSPropertyListSerialization propertyListWithData:fileData options:NSPropertyListImmutable format:NULL error:&error];
+        //NSLog(@"Serialization: %@", [NSPropertyListSerialization propertyListWithData:fileData options:NSPropertyListImmutable format:NULL error:&error]);
+        if (  ![outDict isKindOfClass:[NSDictionary class]] || [[outDict allKeys] count] == 0 || (outDict == nil) || (error != nil) ) {
+            outDict = nil;
+            NSLog(@"No remaps found in remaps.plist");
+        }
+        
+    } else {
+        NSLog(@"No remaps.plist file found");
+    }
+    
+    if (outDict == nil) {
+        NSLog(@"disabling event Tap and HIDManager Callback");
+        CGEventTapEnable(eventTap, FALSE);
+        IOHIDManagerUnscheduleFromRunLoop(HIDManager, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
+    } else if (CGEventTapIsEnabled(eventTap) == FALSE) {
+        NSLog(@"enabling event Tap and HIDManager Callback");
+        CGEventTapEnable(eventTap, TRUE);
+        IOHIDManagerScheduleWithRunLoop(HIDManager, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
+    }
+
+    return outDict;
+}
+
+
+static void postKeyEvent(int keyCode, CGEventFlags modifierFlags, BOOL keyDownBool, CGEventSourceRef eventSource) {
+    
+    @autoreleasepool {
+        
+        CGEventRef keyEvent = CGEventCreateKeyboardEvent (eventSource, (CGKeyCode)keyCode, keyDownBool);
+        CGEventSetFlags(keyEvent, modifierFlags);
+        CGEventTapLocation location = kCGHIDEventTap;
+        
+        CGEventPost(location, keyEvent);
+        
+        CFRelease(keyEvent);
+    }
+    
+}
+
 
 static void registerDeviceButtonInputCallback(IOHIDDeviceRef device) {
     

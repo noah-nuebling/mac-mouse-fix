@@ -11,5 +11,6 @@
 @interface Mouse_Remap : NSPreferencePane
 
 - (void)mainViewDidLoad;
+@property (weak) IBOutlet NSButton *checkbox;
 
 @end

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4F0CDB63217E654500817BC1 /* remaps.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FD67DEB211CC94B0095A9A5 /* remaps.plist */; };
+		4FACF59F2183B956009257D4 /* default_mouse.remap.helper.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FACF59E2183B956009257D4 /* default_mouse.remap.helper.plist */; };
 		4FCECD8521092354001F1078 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECD8421092354001F1078 /* AppDelegate.m */; };
 		4FCECD8D21092354001F1078 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECD8C21092354001F1078 /* main.m */; };
 		4FCECD9821092354001F1078 /* Mouse_Remap_HelperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECD9721092354001F1078 /* Mouse_Remap_HelperTests.m */; };
@@ -16,7 +17,6 @@
 		4FD67DE0211CC9000095A9A5 /* Mouse_Remap.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD67DDF211CC9000095A9A5 /* Mouse_Remap.m */; };
 		4FD67DE2211CC9000095A9A5 /* Mouse_Remap.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4FD67DE1211CC9000095A9A5 /* Mouse_Remap.tiff */; };
 		4FD67DE5211CC9000095A9A5 /* Mouse_Remap.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD67DE3211CC9000095A9A5 /* Mouse_Remap.xib */; };
-		4FD67DED211CC94B0095A9A5 /* remaps.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FD67DEB211CC94B0095A9A5 /* remaps.plist */; };
 		4FD67DF3211CDD2D0095A9A5 /* Mouse Remap Helper.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4FCECD8021092354001F1078 /* Mouse Remap Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4FD67DF4211CDE4D0095A9A5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FCECD8821092354001F1078 /* MainMenu.xib */; };
 /* End PBXBuildFile section */
@@ -59,11 +59,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4FACF59E2183B956009257D4 /* default_mouse.remap.helper.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_mouse.remap.helper.plist; sourceTree = "<group>"; };
 		4FCECD8021092354001F1078 /* Mouse Remap Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mouse Remap Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FCECD8321092354001F1078 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4FCECD8421092354001F1078 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		4FCECD8621092354001F1078 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		4FCECD8921092354001F1078 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		4FCECD8B21092354001F1078 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4FCECD8C21092354001F1078 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4FCECD8E21092354001F1078 /* Mouse_Remap_Helper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Mouse_Remap_Helper.entitlements; sourceTree = "<group>"; };
@@ -77,9 +77,10 @@
 		4FD67DDD211CC9000095A9A5 /* Mouse_Remap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mouse_Remap.h; sourceTree = "<group>"; };
 		4FD67DDF211CC9000095A9A5 /* Mouse_Remap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Mouse_Remap.m; sourceTree = "<group>"; };
 		4FD67DE1211CC9000095A9A5 /* Mouse_Remap.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Mouse_Remap.tiff; sourceTree = "<group>"; };
-		4FD67DE4211CC9000095A9A5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Mouse_Remap.xib; sourceTree = "<group>"; };
 		4FD67DE6211CC9000095A9A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4FD67DEB211CC94B0095A9A5 /* remaps.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = remaps.plist; sourceTree = "<group>"; };
+		4FF383362184F511007F771B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Mouse_Remap.xib; sourceTree = "<group>"; };
+		4FF383372184F511007F771B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +115,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4FACF5A02183B9AA009257D4 /* Default User Agent Config File */ = {
+			isa = PBXGroup;
+			children = (
+				4FACF59E2183B956009257D4 /* default_mouse.remap.helper.plist */,
+			);
+			path = "Default User Agent Config File";
+			sourceTree = "<group>";
+		};
 		4FCECD7721092354001F1078 = {
 			isa = PBXGroup;
 			children = (
@@ -138,9 +147,8 @@
 		4FCECD8221092354001F1078 /* Mouse Remap Helper */ = {
 			isa = PBXGroup;
 			children = (
-				4FCECD8421092354001F1078 /* AppDelegate.m */,
 				4FCECD8321092354001F1078 /* AppDelegate.h */,
-				4FCECD8821092354001F1078 /* MainMenu.xib */,
+				4FCECD8421092354001F1078 /* AppDelegate.m */,
 				4FCECDB02109326E001F1078 /* Supporting Files */,
 			);
 			path = "Mouse Remap Helper";
@@ -170,8 +178,9 @@
 				4FCECD9621092354001F1078 /* Mouse Remap HelperTests */,
 				4FCECDA121092354001F1078 /* Mouse Remap HelperUITests */,
 				4FCECD8621092354001F1078 /* Assets.xcassets */,
-				4FCECD8B21092354001F1078 /* Info.plist */,
+				4FCECD8821092354001F1078 /* MainMenu.xib */,
 				4FCECD8C21092354001F1078 /* main.m */,
+				4FCECD8B21092354001F1078 /* Info.plist */,
 				4FCECD8E21092354001F1078 /* Mouse_Remap_Helper.entitlements */,
 			);
 			path = "Supporting Files";
@@ -185,6 +194,7 @@
 				4FD67DE1211CC9000095A9A5 /* Mouse_Remap.tiff */,
 				4FD67DE3211CC9000095A9A5 /* Mouse_Remap.xib */,
 				4FD67DE6211CC9000095A9A5 /* Info.plist */,
+				4FACF5A02183B9AA009257D4 /* Default User Agent Config File */,
 			);
 			path = "Mouse Remap";
 			sourceTree = "<group>";
@@ -355,8 +365,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FACF59F2183B956009257D4 /* default_mouse.remap.helper.plist in Resources */,
 				4FD67DE2211CC9000095A9A5 /* Mouse_Remap.tiff in Resources */,
-				4FD67DED211CC94B0095A9A5 /* remaps.plist in Resources */,
 				4FD67DE5211CC9000095A9A5 /* Mouse_Remap.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -421,7 +431,7 @@
 		4FCECD8821092354001F1078 /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				4FCECD8921092354001F1078 /* Base */,
+				4FF383372184F511007F771B /* Base */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -429,7 +439,7 @@
 		4FD67DE3211CC9000095A9A5 /* Mouse_Remap.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				4FD67DE4211CC9000095A9A5 /* Base */,
+				4FF383362184F511007F771B /* Base */,
 			);
 			name = Mouse_Remap.xib;
 			sourceTree = "<group>";
@@ -486,7 +496,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -536,7 +546,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 			};

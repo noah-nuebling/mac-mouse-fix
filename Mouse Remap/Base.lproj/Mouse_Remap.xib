@@ -3,35 +3,48 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="NSPreferencePane">
+        <customObject id="-2" userLabel="File's Owner" customClass="Mouse_Remap">
             <connections>
                 <outlet property="_window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
+                <outlet property="checkbox" destination="WfN-Sk-KjI" id="4J3-m8-kyf"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="≪ do not localize ≫" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" deferred="NO" oneShot="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="F0z-JX-Cv5" userLabel="PrefPane">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="176" y="715" width="668" height="368"/>
+            <rect key="contentRect" x="0.0" y="0.0" width="595" height="584"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1280" height="800"/>
             <view key="contentView" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="0.0" width="668" height="368"/>
+                <rect key="frame" x="0.0" y="0.0" width="595" height="584"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KGv-io-6e9">
-                        <rect key="frame" x="258" y="175" width="153" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="check" title="Enable Mouse Remap" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="3ou-Ss-MAm">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WfN-Sk-KjI">
+                        <rect key="frame" x="420" y="18" width="157" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="153" id="O6H-ji-dLz"/>
+                            <constraint firstAttribute="height" constant="14" id="dPm-3b-kwe"/>
+                            <constraint firstAttribute="width" secondItem="WfN-Sk-KjI" secondAttribute="height" multiplier="149:14" constant="4" id="iPZ-uZ-GcG"/>
+                        </constraints>
+                        <buttonCell key="cell" type="check" title="Enable Mouse Remap" bezelStyle="regularSquare" imagePosition="right" state="on" inset="2" id="s9l-if-KkI">
+                            <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="enableMouseRemap:" target="-2" id="4e1-SV-hSa"/>
+                        </connections>
                     </button>
                 </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="WfN-Sk-KjI" secondAttribute="trailing" constant="20" id="GXL-DX-dZg"/>
+                    <constraint firstAttribute="bottom" secondItem="WfN-Sk-KjI" secondAttribute="bottom" constant="20" id="yzO-mm-gaS"/>
+                </constraints>
             </view>
+            <point key="canvasLocation" x="97.5" y="153"/>
         </window>
     </objects>
 </document>
