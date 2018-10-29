@@ -64,7 +64,7 @@
             // convert launchctlPath to URL
             NSURL *launchctlURL = [NSURL fileURLWithPath: launchctlPath];
             
-            NSLog(@"arguments: %@ %@ %@", OnOffArgument, GUIDomainArgument, launchAgentPlistPath);
+            //NSLog(@"arguments: %@ %@ %@", OnOffArgument, GUIDomainArgument, launchAgentPlistPath);
             
             // start the cmd line tool which can enable/disable the helper
             [NSTask launchedTaskWithExecutableURL: launchctlURL arguments:@[OnOffArgument, GUIDomainArgument, launchAgentPlistPath] error: nil terminationHandler: nil];
