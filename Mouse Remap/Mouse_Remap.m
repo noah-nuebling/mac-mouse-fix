@@ -1,19 +1,28 @@
-//
-//  Mouse_Remap.m
-//  Mouse Remap
-//
-//  Created by Noah Nübling on 09.08.18.
-//  Copyright © 2018 Noah Nuebling Enterprises Ltd. All rights reserved.
-//
+
+
+// implement checkbox functionality, setup AddingField mouse tracking and other minor stuff
+
+
 
 #import <PreferencePanes/PreferencePanes.h>
 #import <ServiceManagement/SMLoginItem.h>
 #import "Mouse_Remap.h"
+#import "AddingFieldView.h"
 
 @implementation Mouse_Remap
 
+
 - (void)mainViewDidLoad {
     NSLog(@"PREF PANEEE");
+    
+    // change the position of the AddFieldLabel, if the text is wrapping into 2 lines (when it's in german)
+    CGSize drawSizeOfAddButtonLabel = [[_AddButtonLabel attributedStringValue] size];
+    if (drawSizeOfAddButtonLabel.width > 476) {
+        NSRect labelFrame = [_AddButtonLabel frame];
+        NSPoint newOrigin = labelFrame.origin;
+        newOrigin.y += 16;
+        [_AddButtonLabel setFrameOrigin: newOrigin];
+    }
     
     if ([self helperIsActive]) {
         [_checkbox setState: 1];
@@ -21,11 +30,15 @@
         [_checkbox setState: 0];
     }
     
+    
+    
+    // setup mouse tracking in AddingFieldView.h (viewDidLoad)
+    [_AddingField addTrackingRect:[_AddingField bounds] owner:_AddingField userData:NULL assumeInside:NO];
+
 }
 
 - (IBAction)enableMouseRemap:(id)sender {
     BOOL checkboxState = [sender state];
-
     [self enableHelperAsUserAgent: checkboxState];
 }
 
@@ -81,7 +94,8 @@
 
 - (void) repairUserAgentConfigFile {
     @autoreleasepool {
-
+        
+        NSLog(@"repairing User Agent Config File");
         // what this does:
         
         // get path of executable of helper app based on path of bundle of this class (prefpane bundle)
@@ -121,11 +135,15 @@
             
             // the config file doesn't exist, or the executable path within it is not correct
             if ( (LAConfigFile_exists == FALSE) || (LAConfigFile_executablePathIsCorrect == FALSE) ) {
+                NSLog(@"repairing file");
                 
                 //check if "User/Library/LaunchAgents" folder exists, if not, create it
                 NSString *launchAgentsFolderPath = [launchAgentPlistPath stringByDeletingLastPathComponent];
                 BOOL launchAgentsFolderExists = [fileManager fileExistsAtPath: launchAgentsFolderPath isDirectory: nil];
-                NSLog(@"LaunchAgentsFolderExists = %d", launchAgentsFolderExists);
+                
+                if (launchAgentsFolderExists == FALSE) {
+                    NSLog(@"LaunchAgentsFolder doesn't exist");
+                }
                 if (launchAgentsFolderExists == FALSE) {
                     NSError *error;
                     [fileManager createDirectoryAtPath:launchAgentsFolderPath withIntermediateDirectories:FALSE attributes:nil error:&error];
@@ -155,6 +173,8 @@
                 if (error != nil) {
                     NSLog(@"repairUserAgentConfigFile() -- Data Serialization Error: %@", error);
                 }
+            } else {
+                NSLog(@"nothing to repair");
             }
         }
         else {
@@ -205,7 +225,6 @@
     }
     
     
-    
     NSFileHandle * launchctlOutput_fileHandle = [launchctlOutput fileHandleForReading];
     NSData * launchctlOutput_data = [launchctlOutput_fileHandle readDataToEndOfFile];
     NSString * launchctlOutput_string = [[NSString alloc] initWithData:launchctlOutput_data encoding:NSUTF8StringEncoding];
@@ -214,7 +233,7 @@
         [launchctlOutput_string rangeOfString: @"\"LastExitStatus\" = 0;"].location != NSNotFound
         )
     {
-        NSLog(@"MOUSE REMAPOR FOUNDD AND ACTIVE") ;
+        NSLog(@"MOUSE REMAPOR FOUNDD AND ACTIVE");
         return TRUE;
     }
     else {

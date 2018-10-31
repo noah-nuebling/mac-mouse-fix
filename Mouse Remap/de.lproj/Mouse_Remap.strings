@@ -1,0 +1,9 @@
+
+/* Class = "NSWindow"; title = "≪ do not localize ≫"; ObjectID = "F0z-JX-Cv5"; */
+//"F0z-JX-Cv5.title" = "≪ do not localize ≫";
+
+/* Class = "NSTextFieldCell"; title = "Bewege den Mauszeiger über diese Fläche und Klicke die Taste, die du umbelegen möchtest."; ObjectID = "ZXs-MG-Xq4"; */
+"ZXs-MG-Xq4.title" = "Bewege den Mauszeiger über diese Fläche und Klicke die Taste, die du umbelegen möchtest.";
+
+/* Class = "NSButtonCell"; title = "Mouse Remap Einschalten"; ObjectID = "s9l-if-KkI"; */
+"s9l-if-KkI.title" = "Mouse Remap Einschalten";

@@ -12,18 +12,8 @@
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
-
-
-// registered USB Device sent input report callback function
-
 // USB device added callback function
 static void Handle_DeviceMatchingCallback(void *context, IOReturn result, void *sender, IOHIDDeviceRef device);
-
-// USB device removed callback function
-static void Handle_DeviceRemovalCallback(void *context, IOReturn result, void *sender, IOHIDDeviceRef device);
-
-// Counts the number of devices in the device set (incudes all USB devices that match our dictionary)
-static long USBDeviceCount(IOHIDManagerRef HIDManager);
 
 
 extern NSMutableArray *pressedButtonModifierList;

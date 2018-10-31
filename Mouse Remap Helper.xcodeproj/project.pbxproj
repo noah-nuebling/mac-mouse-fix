@@ -8,7 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		4F0CDB63217E654500817BC1 /* remaps.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FD67DEB211CC94B0095A9A5 /* remaps.plist */; };
+		4F9D01E721891FC5000C27B3 /* AddingFieldView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F9D01E521891FC5000C27B3 /* AddingFieldView.h */; };
+		4F9D01E821891FC5000C27B3 /* AddingFieldView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9D01E621891FC5000C27B3 /* AddingFieldView.m */; };
 		4FACF59F2183B956009257D4 /* default_mouse.remap.helper.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FACF59E2183B956009257D4 /* default_mouse.remap.helper.plist */; };
+		4FBB85C821879DAB00DD6B40 /* Add Field.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FBB85C721879DAB00DD6B40 /* Add Field.png */; };
+		4FBB85D42187C74100DD6B40 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4FBB85D22187C74100DD6B40 /* Localizable.strings */; };
 		4FCECD8521092354001F1078 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECD8421092354001F1078 /* AppDelegate.m */; };
 		4FCECD8D21092354001F1078 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECD8C21092354001F1078 /* main.m */; };
 		4FCECD9821092354001F1078 /* Mouse_Remap_HelperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECD9721092354001F1078 /* Mouse_Remap_HelperTests.m */; };
@@ -59,7 +63,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4F9D01E521891FC5000C27B3 /* AddingFieldView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AddingFieldView.h; path = "Supporting Files/AddingFieldView.h"; sourceTree = "<group>"; };
+		4F9D01E621891FC5000C27B3 /* AddingFieldView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AddingFieldView.m; path = "Supporting Files/AddingFieldView.m"; sourceTree = "<group>"; };
 		4FACF59E2183B956009257D4 /* default_mouse.remap.helper.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_mouse.remap.helper.plist; sourceTree = "<group>"; };
+		4FBB85C721879DAB00DD6B40 /* Add Field.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Add Field.png"; sourceTree = "<group>"; };
+		4FBB85CA2187C2BC00DD6B40 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Mouse_Remap.strings; sourceTree = "<group>"; };
+		4FBB85CC2187C36A00DD6B40 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		4FBB85D32187C74100DD6B40 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		4FBB85D52187CB2500DD6B40 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		4FBB85D72187D84300DD6B40 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Mouse_Remap.strings; sourceTree = "<group>"; };
 		4FCECD8021092354001F1078 /* Mouse Remap Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mouse Remap Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FCECD8321092354001F1078 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4FCECD8421092354001F1078 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -121,6 +133,18 @@
 				4FACF59E2183B956009257D4 /* default_mouse.remap.helper.plist */,
 			);
 			path = "Default User Agent Config File";
+			sourceTree = "<group>";
+		};
+		4FBB85C621879AD900DD6B40 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4FBB85D22187C74100DD6B40 /* Localizable.strings */,
+				4FBB85C721879DAB00DD6B40 /* Add Field.png */,
+				4FACF5A02183B9AA009257D4 /* Default User Agent Config File */,
+				4FD67DE1211CC9000095A9A5 /* Mouse_Remap.tiff */,
+				4FD67DE6211CC9000095A9A5 /* Info.plist */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		4FCECD7721092354001F1078 = {
@@ -191,10 +215,10 @@
 			children = (
 				4FD67DDD211CC9000095A9A5 /* Mouse_Remap.h */,
 				4FD67DDF211CC9000095A9A5 /* Mouse_Remap.m */,
-				4FD67DE1211CC9000095A9A5 /* Mouse_Remap.tiff */,
+				4F9D01E521891FC5000C27B3 /* AddingFieldView.h */,
+				4F9D01E621891FC5000C27B3 /* AddingFieldView.m */,
 				4FD67DE3211CC9000095A9A5 /* Mouse_Remap.xib */,
-				4FD67DE6211CC9000095A9A5 /* Info.plist */,
-				4FACF5A02183B9AA009257D4 /* Default User Agent Config File */,
+				4FBB85C621879AD900DD6B40 /* Supporting Files */,
 			);
 			path = "Mouse Remap";
 			sourceTree = "<group>";
@@ -207,6 +231,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FD67DDE211CC9000095A9A5 /* Mouse_Remap.h in Headers */,
+				4F9D01E721891FC5000C27B3 /* AddingFieldView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -323,6 +348,7 @@
 			knownRegions = (
 				en,
 				Base,
+				de,
 			);
 			mainGroup = 4FCECD7721092354001F1078;
 			productRefGroup = 4FCECD8121092354001F1078 /* Products */;
@@ -365,7 +391,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FBB85D42187C74100DD6B40 /* Localizable.strings in Resources */,
 				4FACF59F2183B956009257D4 /* default_mouse.remap.helper.plist in Resources */,
+				4FBB85C821879DAB00DD6B40 /* Add Field.png in Resources */,
 				4FD67DE2211CC9000095A9A5 /* Mouse_Remap.tiff in Resources */,
 				4FD67DE5211CC9000095A9A5 /* Mouse_Remap.xib in Resources */,
 			);
@@ -403,6 +431,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F9D01E821891FC5000C27B3 /* AddingFieldView.m in Sources */,
 				4FD67DE0211CC9000095A9A5 /* Mouse_Remap.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -428,10 +457,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		4FBB85D22187C74100DD6B40 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4FBB85D32187C74100DD6B40 /* en */,
+				4FBB85D52187CB2500DD6B40 /* de */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		4FCECD8821092354001F1078 /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				4FF383372184F511007F771B /* Base */,
+				4FBB85CC2187C36A00DD6B40 /* de */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -440,6 +479,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				4FF383362184F511007F771B /* Base */,
+				4FBB85CA2187C2BC00DD6B40 /* en */,
+				4FBB85D72187D84300DD6B40 /* de */,
 			);
 			name = Mouse_Remap.xib;
 			sourceTree = "<group>";
@@ -451,6 +492,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -507,6 +549,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

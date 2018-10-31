@@ -106,6 +106,8 @@ CGEventRef Handle_EventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
             if (remapsForCurrentButton == nil) {
                 inputSourceIsDeviceOfInterest = false;
                 NSLog(@"No remap for this button");
+                NSLog(@"");
+                NSLog(@"");
                 return event;
             }
             
@@ -144,7 +146,7 @@ static void setupBothInputCallbacks() {
     /* Register event Tap Callback */
     CGEventMask mask = CGEventMaskBit(kCGEventLeftMouseDown) | CGEventMaskBit(kCGEventRightMouseDown)                               |CGEventMaskBit(kCGEventOtherMouseDown)
     | CGEventMaskBit(kCGEventLeftMouseUp) | CGEventMaskBit(kCGEventRightMouseUp)                               |CGEventMaskBit(kCGEventOtherMouseUp);
-    eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, Handle_EventTapCallback, NULL);
+    eventTap = CGEventTapCreate(kCGHIDEventTap, kCGTailAppendEventTap, kCGEventTapOptionDefault, mask, Handle_EventTapCallback, NULL);
     
     CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0);
     CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopDefaultMode);
@@ -210,29 +212,17 @@ static void setupHIDManagerAndCallbacks() {
     IOReturn IOReturn = IOHIDManagerOpen(HIDManager, kIOHIDOptionsTypeNone);
     if(IOReturn) NSLog(@"IOHIDManagerOpen failed.");  //  Couldn't open the HID manager! TODO: proper error handling
     
-    
-    
 
-    IOHIDDeviceRef* device_array = getDevicesFromManager(HIDManager);
-
-    /* register the device at index 0 */
-    // If multiple mice are attached, it will refer to a random one
     
-    if (device_array != NULL) {
-        IOHIDDeviceRef dev_to_open = device_array[0];
-        
-        registerDeviceButtonInputCallback(dev_to_open);
-        
-         }
-    
-     free (device_array);
-    
-
-    // Register a callback for USB device detection with the HID Manager
+    // Register a callback for USB device detection with the HID Manager, this will in turn register an button input callback for all devices that getFilteredDevicesFromManager() returns
     IOHIDManagerRegisterDeviceMatchingCallback(HIDManager, &Handle_DeviceMatchingCallback, NULL);
+    
+    
+    
     // Register a callback for USB device removal with the HID Manager
-    IOHIDManagerRegisterDeviceRemovalCallback(HIDManager, &Handle_DeviceRemovalCallback, NULL);
-
+    //IOHIDManagerRegisterDeviceRemovalCallback(HIDManager, &Handle_DeviceRemovalCallback, NULL);
+    //CFArrayRef device_array = getFilteredDevicesFromManager(HIDManager);
+    //registerButtonInputCallbackForDevices(device_array);
 }
 
 
@@ -245,23 +235,26 @@ static void Handle_InputValueCallback(void *context, IOReturn result, void *send
     
     inputSourceIsDeviceOfInterest = true;
     
-    
+    //NSLog(@"Button Input from Registered Device %@, button: %@", sender, value);
 }
 
 
 static void Handle_DeviceMatchingCallback (void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
     
+    NSLog(@"New matching device");
     
-    // if this one, is the only device attached, attach it to the run loop
-    
-    if (USBDeviceCount(sender) == 1) {
-        
-        registerDeviceButtonInputCallback(device);
-        
+    if (devicePassesFiltering(device) ) {
+        NSLog(@"Device Passed filtering");
+        registerButtonInputCallbackForDevice(device);
     }
+    
+
 
     
-    /* print stuff */
+    
+    
+    
+    // print stuff
     
     
     // Retrieve the device name & serial number
@@ -272,11 +265,12 @@ static void Handle_DeviceMatchingCallback (void *context, IOReturn result, void 
     NSString *devPrimaryUsage = IOHIDDeviceGetProperty(device, CFSTR("PrimaryUsage"));
     
     // Log the device reference, Name, Serial Number & device count
-    NSLog(@"\nMatching device added: %p\nModel: %@\nUsage: %@\nMatching device count: %ld",
+    NSLog(@"\nMatching device added: %p\nModel: %@\nUsage: %@\nMatching",
           device,
           devName,
-          devPrimaryUsage,
-          USBDeviceCount(sender));
+          devPrimaryUsage
+          //filteredUSBDeviceCount(sender)
+          );
     
     
     
@@ -286,11 +280,11 @@ static void Handle_DeviceMatchingCallback (void *context, IOReturn result, void 
 }
 
 
-
+/*
 static void Handle_DeviceRemovalCallback(void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
     
     // log info
-    long matchingDeviceCount = USBDeviceCount(sender);
+    long matchingDeviceCount = filteredUSBDeviceCount(sender);
     NSLog(@"\nMatching device removed: %p\nMatching device count: %ld",
           (void *) device, matchingDeviceCount);
     
@@ -308,7 +302,7 @@ static void Handle_DeviceRemovalCallback(void *context, IOReturn result, void *s
         
     }
 }
-
+*/
 
 
 
@@ -370,70 +364,98 @@ static void postKeyEvent(int keyCode, CGEventFlags modifierFlags, BOOL keyDownBo
 }
 
 
-static void registerDeviceButtonInputCallback(IOHIDDeviceRef device) {
+static void registerButtonInputCallbackForDevice(IOHIDDeviceRef device) {
+
+    NSLog(@"registering device: %@", device);
+    NSCAssert(device != NULL, @"tried to register a device which equals NULL");
     
-    if (device != NULL) {
-        // Add callback function for the button input
-        CFMutableDictionaryRef elementMatchDict1 = CFDictionaryCreateMutable(kCFAllocatorDefault,
-                                                                             2,
-                                                                             &kCFTypeDictionaryKeyCallBacks,
-                                                                             &kCFTypeDictionaryValueCallBacks);
-        int nine = 9; // "usage Page" for Buttons
-        CFNumberRef buttonRef = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &nine);
-        CFDictionarySetValue (elementMatchDict1, CFSTR("UsagePage"), buttonRef);
-        IOHIDDeviceSetInputValueMatching(device, elementMatchDict1);
-        IOHIDDeviceRegisterInputValueCallback(device, &Handle_InputValueCallback, NULL);
-        
-        
-        CFRelease(elementMatchDict1);
-        CFRelease(buttonRef);
-        
-        
-        // v2.0 TODO: (code for adding scrollwheel input to the callback is in the USBHID Project)
-    }
+    
+    // Add callback function for the button input from the device
+    CFMutableDictionaryRef elementMatchDict1 = CFDictionaryCreateMutable(kCFAllocatorDefault,
+                                                                         2,
+                                                                         &kCFTypeDictionaryKeyCallBacks,
+                                                                         &kCFTypeDictionaryValueCallBacks);
+    int nine = 9; // "usage Page" for Buttons
+    CFNumberRef buttonRef = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &nine);
+    CFDictionarySetValue (elementMatchDict1, CFSTR("UsagePage"), buttonRef);
+    IOHIDDeviceSetInputValueMatching(device, elementMatchDict1);
+    IOHIDDeviceRegisterInputValueCallback(device, &Handle_InputValueCallback, NULL);
+    
+    
+    CFRelease(elementMatchDict1);
+    CFRelease(buttonRef);
+    
+    
+    // v2.0 TODO: (code for adding scrollwheel input to the callback is in the USBHID Project)
+
     
 }
 
+static BOOL devicePassesFiltering(IOHIDDeviceRef HIDDevice) {
+    
+    NSString *deviceName = [NSString stringWithUTF8String:
+                         CFStringGetCStringPtr(IOHIDDeviceGetProperty(HIDDevice, CFSTR("Product")), kCFStringEncodingMacRoman)];
+    NSString *deviceNameLower = [deviceName lowercaseString];
+    
+    if ([deviceNameLower rangeOfString:@"magic"].location == NSNotFound) {
+        return TRUE;
+    } else {
+        return FALSE;
+    }
+}
 
-static IOHIDDeviceRef* getDevicesFromManager(IOHIDManagerRef HIDManager) {
+/*
+static CFArrayRef getFilteredDevicesFromManager(IOHIDManagerRef HIDManager) {
     
     // get set of devices registered to the HID Manager (and convert it to a cArray so you can iterate over it or something like that??)
     CFSetRef device_set = IOHIDManagerCopyDevices(HIDManager);
     
+    int d_arr_fltrd_iterator = 0;
     if (device_set != NULL) {
         CFIndex num_devices = CFSetGetCount(device_set);
         
-        IOHIDDeviceRef *device_array = calloc(num_devices, sizeof(IOHIDDeviceRef));
-        CFSetGetValues(device_set, (const void **) device_array);
+        IOHIDDeviceRef *device_array_unfiltered = calloc(num_devices, sizeof(IOHIDDeviceRef));
+        CFSetGetValues(device_set, (const void **) device_array_unfiltered);
+        
+        
         CFRelease(device_set);
         
         // filter devices that have "magic" in their product string
-        IOHIDDeviceRef* device_array_filtered = calloc(num_devices, 8);
-        int d_arr_fltrd_iterator = 0;
+        IOHIDDeviceRef *device_array_filtered = calloc(num_devices, sizeof(IOHIDDeviceRef));
         for (int i = 0; i < num_devices; i++) {
-            IOHIDDeviceRef curr_device = device_array[i];
+            IOHIDDeviceRef curr_device = device_array_unfiltered[i];
+            //NSLog(@"curr_device: %@", curr_device);
             NSString *devName = [NSString stringWithUTF8String:
                                  CFStringGetCStringPtr(IOHIDDeviceGetProperty(curr_device, CFSTR("Product")), kCFStringEncodingMacRoman)];
             NSString *devNameLower = [devName lowercaseString];
             
             if ([devNameLower rangeOfString:@"magic"].location == NSNotFound) {
                 //device is not magic mouse, or magic trackpad (hopefully - cant test) don't append it to device array filtered
-                device_array_filtered[d_arr_fltrd_iterator] = device_array[0];
+                device_array_filtered[d_arr_fltrd_iterator] = curr_device;
+                //NSLog(@"tried to attach device to filtered device array");
+                //NSLog(@"d_arr_fltrd_iterator: %d", d_arr_fltrd_iterator);
+                //NSLog(@"device_array_filtered entry: %@", device_array_filtered[d_arr_fltrd_iterator]);
+                //NSLog(@"device_array_filtered size: %zd", malloc_size((void **)device_array_filtered));
+                //NSLog(@"curr_device size: %d", sizeof(IOHIDDeviceRef));
                 d_arr_fltrd_iterator += 1;
             }
         }
+
+        CFArrayRef device_array_filtered_CFArray = CFArrayCreate(kCFAllocatorDefault,(const void **)device_array_filtered, d_arr_fltrd_iterator, NULL);
         
-        free (device_array);
-        return device_array_filtered;
+        free (device_array_filtered);
+        free (device_array_unfiltered);
+        
+        return device_array_filtered_CFArray;
     }
     
     return 0;
 }
+*/
 
-
-
+/*
 // Counts the number of devices in the device set (incudes all USB devices that match our dictionary)
-static long USBDeviceCount(IOHIDManagerRef HIDManager){
+static long filteredUSBDeviceCount(IOHIDManagerRef HIDManager){
     
     
     //TODO: just use cfsetgetcount and subtract a global "filtered devices variable" instead of this
@@ -441,14 +463,14 @@ static long USBDeviceCount(IOHIDManagerRef HIDManager){
     
     
     
-    NSLog(@"USBDeviceCount Called");
+    NSLog(@"filteredUSBDeviceCount Called");
     
     // get set of devices registered to the HID Manager (and convert it to a cArray so you can iterate over it or something like that??)
     CFSetRef device_set = IOHIDManagerCopyDevices(HIDManager);
     
     if (device_set != NULL) {
-        CFIndex num_devices = CFSetGetCount(device_set);
         
+        CFIndex num_devices = CFSetGetCount(device_set);
         IOHIDDeviceRef *device_array = calloc(num_devices, sizeof(IOHIDDeviceRef));
         CFSetGetValues(device_set, (const void **) device_array);
         CFRelease(device_set);
@@ -458,8 +480,6 @@ static long USBDeviceCount(IOHIDManagerRef HIDManager){
         // filter devices that have "magic" in their product string
         
         int num_devices_filtered = 0;
-        
-        
         for (int i = 0; i < num_devices; i++) {
             IOHIDDeviceRef curr_device = device_array[i];
             NSString *devName = [NSString stringWithUTF8String:
@@ -478,6 +498,6 @@ static long USBDeviceCount(IOHIDManagerRef HIDManager){
     
     return 0;
 }
+*/
 
 @end
-
