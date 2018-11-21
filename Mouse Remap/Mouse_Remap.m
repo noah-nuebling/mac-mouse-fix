@@ -7,7 +7,6 @@
 #import <PreferencePanes/PreferencePanes.h>
 #import <ServiceManagement/SMLoginItem.h>
 #import "Mouse_Remap.h"
-#import "AddingFieldView.h"
 
 @implementation Mouse_Remap
 
@@ -15,14 +14,9 @@
 - (void)mainViewDidLoad {
     NSLog(@"PREF PANEEE");
     
-    // change the position of the AddFieldLabel, if the text is wrapping into 2 lines (when it's in german)
-    CGSize drawSizeOfAddButtonLabel = [[_AddButtonLabel attributedStringValue] size];
-    if (drawSizeOfAddButtonLabel.width > 476) {
-        NSRect labelFrame = [_AddButtonLabel frame];
-        NSPoint newOrigin = labelFrame.origin;
-        newOrigin.y += 16;
-        [_AddButtonLabel setFrameOrigin: newOrigin];
-    }
+    //setup
+    
+    // Checkbox
     
     if ([self helperIsActive]) {
         [_checkbox setState: 1];
@@ -30,11 +24,6 @@
         [_checkbox setState: 0];
     }
     
-    
-    
-    // setup mouse tracking in AddingFieldView.h (viewDidLoad)
-    [_AddingField addTrackingRect:[_AddingField bounds] owner:_AddingField userData:NULL assumeInside:NO];
-
 }
 
 - (IBAction)enableMouseRemap:(id)sender {
@@ -126,16 +115,25 @@
                 NSDictionary *LAConfigFile_dict = [NSPropertyListSerialization propertyListWithData:LAConfigFile_data options:NSPropertyListImmutable format:0 error:nil];
                 
                 // check if the executable path inside the config file is correct, if not, set flag to false
-                if ( [LAConfigFile_dict objectForKey: @"Program"] != helperExecutablePath ) {
+                
+                NSString *helperExecutablePathFromFile = [LAConfigFile_dict objectForKey: @"Program"];
+                
+                //NSLog(@"objectForKey: %@", OBJForKey);
+                //NSLog(@"helperExecutablePath: %@", helperExecutablePath);
+                //NSLog(@"OBJ == Path: %d", OBJForKey isEqualToString: helperExecutablePath);
+                
+                if ( [helperExecutablePath isEqualToString: helperExecutablePathFromFile] == FALSE ) {
                     LAConfigFile_executablePathIsCorrect = FALSE;
+                    
                 }
                 
                 
             }
             
+            NSLog(@"LAConfigFileExists %hhd, LAConfigFileIsCorrect: %hhd", LAConfigFile_exists,LAConfigFile_executablePathIsCorrect);
             // the config file doesn't exist, or the executable path within it is not correct
             if ( (LAConfigFile_exists == FALSE) || (LAConfigFile_executablePathIsCorrect == FALSE) ) {
-                NSLog(@"repairing file");
+                NSLog(@"repairing file...");
                 
                 //check if "User/Library/LaunchAgents" folder exists, if not, create it
                 NSString *launchAgentsFolderPath = [launchAgentPlistPath stringByDeletingLastPathComponent];
@@ -241,63 +239,5 @@
     }
     
 }
-
-
-
-    
-/*
- // deletes the mouse.remap.helper.plist file at User/Library/LaunchAgents
- // this messes up disabling the helper, if it's executed right after [self enableHelperAsUserAgent: FALSE]
- // (that's why there's a sleepsleepForTimeInterval here, but idk if that will work under special circumstances like under load etc.)
- // -> we don't use this function for now
- - (void) deleteUserAgentConfigFile {
-     @autoreleasepool {
-         [NSThread sleepForTimeInterval:0.5f];
- 
-         // get User Library path
-         NSArray *libraryPaths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
-         if ([libraryPaths count] == 1) {
-             // create path to launch agent config file
-             NSString *launchAgentPlistPath = [[libraryPaths objectAtIndex:0] stringByAppendingPathComponent: @"LaunchAgents/mouse.remap.helper.plist"];
-             NSFileManager *fileManager = [[NSFileManager alloc] init];
- 
-             [fileManager removeItemAtPath:launchAgentPlistPath error:nil];
-         }
-     }
- 
- }
- */
-
-
-
-/* create Remap Dict and write it to file (not deprecated way) */
-/*
- NSMutableDictionary * buttonRemapDict = [NSMutableDictionary new];
- 
- // remaps for mb4
- NSMutableDictionary * remapsForButton = [NSMutableDictionary new];
- 
- int keyCode = 123;
- int modifierFlags = kCGEventFlagMaskControl;
- NSNumber *keyCodeAsNSNumber = [NSNumber numberWithInt: keyCode];
- NSNumber *modifierFlagsAsNSNumber = [NSNumber numberWithInt: modifierFlags];
- 
- NSArray *defaultRemap = [NSArray arrayWithObjects: keyCodeAsNSNumber, modifierFlagsAsNSNumber, NULL];
- 
- [remapsForButton setObject:defaultRemap forKey: @"default remap"];
- 
- int button = 4;
- NSString * buttonAsNSString = [NSString stringWithFormat: @"%d", button];
- [buttonRemapDict setObject: remapsForButton forKey: buttonAsNSString];
- 
- 
- NSBundle *thisBundle = [NSBundle bundleForClass:[AppDelegate class]];
- NSString * remapsFilePath = [thisBundle pathForResource:@"remaps" ofType:@"plist"];
- 
- NSError *error;
- NSData *data = [NSPropertyListSerialization dataWithPropertyList:buttonRemapDict format:NSPropertyListXMLFormat_v1_0 options:0 error:&error];
- NSAssert(error == nil, @"Should not have encountered an error");
- [data writeToFile:remapsFilePath atomically:YES];
- */
 
 @end

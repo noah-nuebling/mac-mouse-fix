@@ -12,10 +12,21 @@
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
-// USB device added callback function
-static void Handle_DeviceMatchingCallback(void *context, IOReturn result, void *sender, IOHIDDeviceRef device);
+
+// Store configFile for global access from all classes
+@property (retain) NSMutableDictionary *configDictFromFile;
+- (void) repairConfigFile:(NSString *)info;
 
 
-extern NSMutableArray *pressedButtonModifierList;
+
+// InputParser.h - Global variables
+
+// - clickAndHoldGlobals
+@property (retain) NSTimer* clickAndHoldTimer;
+// - FakeSwipe Globals (Sensible Side Buttons)
+@property (retain) NSMutableDictionary<NSNumber*, NSArray<NSDictionary*>*>* swipeInfo;
+@property (retain) NSArray* nullArray;
+
+
 
 @end

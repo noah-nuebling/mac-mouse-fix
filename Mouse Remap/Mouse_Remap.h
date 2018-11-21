@@ -7,13 +7,10 @@
 //
 
 #import <PreferencePanes/PreferencePanes.h>
-#import "AddingFieldView.h"
 
 @interface Mouse_Remap : NSPreferencePane
 
 - (void)mainViewDidLoad;
 @property (weak) IBOutlet NSButton *checkbox;
-@property (weak) IBOutlet NSTextField *AddButtonLabel;
-@property (weak) IBOutlet AddingFieldView *AddingField;
 
 @end

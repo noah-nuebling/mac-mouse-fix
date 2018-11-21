@@ -1,129 +1,80 @@
 //
-//  AddingFieldView.m
-//  Mouse Remap
+//  InputReceiver.m
+//  Mouse Remap Helper
 //
-//  Created by Noah Nübling on 31.10.18.
+//  Created by Noah Nübling on 19.11.18.
 //  Copyright © 2018 Noah Nuebling Enterprises Ltd. All rights reserved.
 //
 
-#import "AddingFieldView.h"
+#import "InputReceiver.h"
 #import "IOKit/hid/IOHIDManager.h"
-#import "AppDelegate.h"
+#import "InputParser.h"
 
+@implementation InputReceiver
 
-@implementation AddingFieldView
-
-// global vars
-IOHIDManagerRef HIDManager;
+// global variables
 BOOL inputSourceIsDeviceOfInterest;
+CGEventSourceRef eventSource;
 CFMachPortRef eventTap;
+IOHIDManagerRef HIDManager;
 
-- (void)viewDidLoad {
-    NSLog(@"Adding Field View did Load");
-}
++ (void) start {
+    // initialize global variables
+    inputSourceIsDeviceOfInterest = false;
+    eventSource = CGEventSourceCreate(kCGEventSourceStatePrivate);
 
-
-// (viewDidLoad)
-- (void)drawRect:(NSRect)dirtyRect {
-    [super drawRect:dirtyRect];
+    // setup callbacks for mouse input
     setupBothInputCallbacks();
 }
-// better alternatives might be:
-// viewDidUnhide, viewDidMoveToSuperview, viewDidMoveToWindow
 
-
-
-
-//input callbacks
-
-// eventTap Callback
 CGEventRef Handle_EventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
-    NSLog(@"CGEventTap Callback Called");
-    NSLog(@"inputSourceIsDeviceOfInterest: %d", inputSourceIsDeviceOfInterest);
     
-    if (inputSourceIsDeviceOfInterest) {
-        
-        // parse input
-        
-        inputSourceIsDeviceOfInterest = FALSE;
-        return nil;
+    
+    int currentButton = (int) CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
+    int currentButtonState = (int) CGEventGetIntegerValueField(event, kCGMouseEventPressure);
+    if (currentButtonState == 255) {
+        currentButtonState = 1;
     }
+    
+    
+    if (inputSourceIsDeviceOfInterest ) {
+        if ( (3 <= currentButton) && (currentButton <= 5) ) { // is
+            
+            [InputParser parse: currentButton state:currentButtonState];
+            
+            
+            return nil;
+        }
+        inputSourceIsDeviceOfInterest = FALSE;
+    }
+    
     return event;
 }
 
-// HIDManager callback
-static void Handle_InputValueCallback(void *context, IOReturn result, void *sender, IOHIDValueRef value) {
-    NSLog(@"Button Input from Registered Device!");
-    inputSourceIsDeviceOfInterest = TRUE;
-}
-
-
-
-
-
-// enable input callbacks while the mouse pointer is over Adding Field
-- (void)mouseEntered:(NSEvent *)theEvent {
-    NSLog(@"mouse entered AddingField");
-    
-    CFSetRef devicesSet = IOHIDManagerCopyDevices(HIDManager);
-    CFIndex numOfDevices = CFSetGetCount(devicesSet);
-    IOHIDDeviceRef *deviceArray = calloc(numOfDevices, sizeof(IOHIDDeviceRef));;
-    CFSetGetValues(devicesSet, (const void **)deviceArray);
-    for (int i = 0; i < numOfDevices; i++) {
-        IOHIDDeviceRef device = deviceArray[i];
-        if (devicePassesFiltering(device) ) {
-            // Device Passed filtering
-            registerButtonInputCallbackForDevice(device);
-        }
-    }
-    CGEventTapEnable(eventTap, TRUE);
-    IOHIDManagerScheduleWithRunLoop(HIDManager, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
-} // disable, when it's not
-- (void)mouseExited:(NSEvent *)theEvent {
-    NSLog(@"mouse exited AddingField");
-    CGEventTapEnable(eventTap, FALSE);
-    IOHIDManagerUnscheduleFromRunLoop(HIDManager, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
-}
-
-
-
-
-
-
-
-
-// setting up input callbacks
 
 static void setupBothInputCallbacks() {
     /* Register event Tap Callback */
     CGEventMask mask = CGEventMaskBit(kCGEventLeftMouseDown) | CGEventMaskBit(kCGEventRightMouseDown)                               |CGEventMaskBit(kCGEventOtherMouseDown)
     | CGEventMaskBit(kCGEventLeftMouseUp) | CGEventMaskBit(kCGEventRightMouseUp)                               |CGEventMaskBit(kCGEventOtherMouseUp);
-    eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, Handle_EventTapCallback, NULL);
+    eventTap = CGEventTapCreate(kCGHIDEventTap, kCGTailAppendEventTap, kCGEventTapOptionDefault, mask, Handle_EventTapCallback, NULL);
     
     CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0);
     CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopDefaultMode);
     CFRelease(runLoopSource);
     
-    CGEventTapEnable(eventTap, FALSE);
-    
     
     
     setupHIDManagerAndCallbacks();
     
-    
 }
 
-// ----------------------------------------------------------------
-
-// setting up HIDManager callbacks - everything below this line should be mostly identical to the implementation in Mouse Remap Helper
-
 static void setupHIDManagerAndCallbacks() {
+
     
-    NSLog(@"setting up HID Manager");
-    
+    // Create an HID Manager
     HIDManager = IOHIDManagerCreate(kCFAllocatorDefault,
-                                    kIOHIDManagerOptionNone);
+                                    kIOHIDOptionsTypeNone);
     
     // Create a Matching Dictionary
     CFMutableDictionaryRef matchDict1 = CFDictionaryCreateMutable(kCFAllocatorDefault,
@@ -162,19 +113,90 @@ static void setupHIDManagerAndCallbacks() {
     CFRelease(matchDict3);
     
     
-    // schedule with runLoop
     
+    
+    // Register the HID Manager on our app’s run loop
+    IOHIDManagerScheduleWithRunLoop(HIDManager, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
     
     // Open the HID Manager
     IOReturn IOReturn = IOHIDManagerOpen(HIDManager, kIOHIDOptionsTypeNone);
     if(IOReturn) NSLog(@"IOHIDManagerOpen failed.");  //  Couldn't open the HID manager! TODO: proper error handling
     
     
-    // register device matching callback
+    
+    // Register a callback for USB device detection with the HID Manager, this will in turn register an button input callback for all devices that getFilteredDevicesFromManager() returns
     IOHIDManagerRegisterDeviceMatchingCallback(HIDManager, &Handle_DeviceMatchingCallback, NULL);
     
-
+    
+    
+    // Register a callback for USB device removal with the HID Manager
+    //IOHIDManagerRegisterDeviceRemovalCallback(HIDManager, &Handle_DeviceRemovalCallback, NULL);
+    //CFArrayRef device_array = getFilteredDevicesFromManager(HIDManager);
+    //registerButtonInputCallbackForDevices(device_array);
 }
+
+
+
+/* HID Manager Callback Handlers */
+
+
+
+static void Handle_InputValueCallback(void *context, IOReturn result, void *sender, IOHIDValueRef value) {
+    
+    inputSourceIsDeviceOfInterest = true;
+    
+    //NSLog(@"Button Input from Registered Device %@, button: %@", sender, value);
+}
+
+
+static void Handle_DeviceMatchingCallback (void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
+    
+    NSLog(@"New matching device");
+    
+    // currently filters devices with "magic" in their name string - untested
+    if (devicePassesFiltering(device) ) {
+        NSLog(@"Device Passed filtering");
+        registerButtonInputCallbackForDevice(device);
+    }
+    
+    
+    
+    
+    
+    
+    
+    // print stuff
+    
+    
+    // Retrieve the device name & serial number
+    NSString *devName = [NSString stringWithUTF8String:
+                         CFStringGetCStringPtr(IOHIDDeviceGetProperty(device, CFSTR("Product")), kCFStringEncodingMacRoman)];
+    
+    
+    NSString *devPrimaryUsage = IOHIDDeviceGetProperty(device, CFSTR("PrimaryUsage"));
+    
+    // Log the device reference, Name, Serial Number & device count
+    NSLog(@"\nMatching device added: %p\nModel: %@\nUsage: %@\nMatching",
+          device,
+          devName,
+          devPrimaryUsage
+          //filteredUSBDeviceCount(sender)
+          );
+    
+    
+    
+    
+    return;
+    
+}
+
+
+
+
+
+// Convenience Functions
+
+
 
 static void registerButtonInputCallbackForDevice(IOHIDDeviceRef device) {
     
@@ -203,17 +225,6 @@ static void registerButtonInputCallbackForDevice(IOHIDDeviceRef device) {
     
 }
 
-static void Handle_DeviceMatchingCallback (void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
-    
-    NSLog(@"New matching device");
-    
-    if (devicePassesFiltering(device) ) {
-        NSLog(@"Device Passed filtering");
-        registerButtonInputCallbackForDevice(device);
-    }
-}
-
-
 static BOOL devicePassesFiltering(IOHIDDeviceRef HIDDevice) {
     
     NSString *deviceName = [NSString stringWithUTF8String:
@@ -226,5 +237,4 @@ static BOOL devicePassesFiltering(IOHIDDeviceRef HIDDevice) {
         return FALSE;
     }
 }
-
 @end
