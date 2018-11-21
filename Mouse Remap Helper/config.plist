@@ -6,12 +6,12 @@
 	<dict>
 		<key>5</key>
 		<dict>
-			<key>hold</key>
+			<key>click</key>
 			<array>
 				<string>swipeEvent</string>
 				<string>right</string>
 			</array>
-			<key>click</key>
+			<key>hold</key>
 			<array>
 				<string>symbolicHotKey</string>
 				<integer>81</integer>
@@ -19,12 +19,12 @@
 		</dict>
 		<key>4</key>
 		<dict>
-			<key>hold</key>
+			<key>click</key>
 			<array>
 				<string>swipeEvent</string>
 				<string>left</string>
 			</array>
-			<key>click</key>
+			<key>hold</key>
 			<array>
 				<string>symbolicHotKey</string>
 				<integer>79</integer>

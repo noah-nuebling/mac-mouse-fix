@@ -187,6 +187,9 @@ CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar ke
     CGEventSetFlags(shortcutUp, (CGEventFlags)modifierFlags);
     CGEventPost(kCGHIDEventTap, shortcutDown);
     CGEventPost(kCGHIDEventTap, shortcutUp);
+    CFRelease(shortcutDown);
+    CFRelease(shortcutUp);
+    
     //NSLog(@"sent keyEvents");
     
     

@@ -22,6 +22,7 @@
 @implementation AppDelegate
 
 
+SmoothScroll *smoothScrollObject;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
@@ -32,8 +33,19 @@
     [ConfigFileMonitor fillConfigDictFromFile];
     [ConfigFileMonitor setupFSEventStreamCallback];
     
-    SmoothScroll *smoothScrollObject = [[SmoothScroll alloc] init];
-    [smoothScrollObject start];
+    
+    AnimationCurve *curve = [[AnimationCurve alloc] init];
+    [curve UnitBezierForPoint1x:0.1 point1y:0.1 point2x:0.2 point2y:1.0];
+    int pxPerStep   =   76;
+    int msBase      =   250;
+    int msMax       =   300;
+    float msFactor  =   1.09;
+    [SmoothScroll startWithAnimationCurve:curve
+                                pxPerStep:pxPerStep
+                                   msBase:msBase
+                                    msMax:msMax
+                                 msFactor:msFactor];
+    
     
     
     // setup SSB globals
@@ -60,6 +72,11 @@
 - (void) repairConfigFile:(NSString *)info {
     // TODO: actually repair config dict
     NSLog(@"repairing configDict....");
+}
+
+
+- (void) setHorizontalScroll:(BOOL)B {
+    [SmoothScroll setHorizontalScroll: B];
 }
 
 

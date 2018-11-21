@@ -9,6 +9,7 @@
 #import "InputReceiver.h"
 #import "IOKit/hid/IOHIDManager.h"
 #import "InputParser.h"
+#import "AppDelegate.h"
 
 @implementation InputReceiver
 
@@ -24,12 +25,41 @@ IOHIDManagerRef HIDManager;
     eventSource = CGEventSourceCreate(kCGEventSourceStatePrivate);
 
     // setup callbacks for mouse input
-    setupBothInputCallbacks();
+    setupMouseInputCallbacks();
+    // setup modifier key callback
+    setupModifierKeyCallback();
 }
 
-CGEventRef Handle_EventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
+static void setupModifierKeyCallback() {
+    /* Register event Tap Callback */
+    CGEventMask mask = CGEventMaskBit(kCGEventFlagsChanged);
+    eventTap = CGEventTapCreate(kCGHIDEventTap, kCGTailAppendEventTap, kCGEventTapOptionDefault, mask, Handle_ModifierChanged, NULL);
+    CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0);
+    CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopDefaultMode);
+    CFRelease(runLoopSource);
+}
+
+CGEventRef Handle_ModifierChanged(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
+    
+    AppDelegate *appDelegate = [NSApp delegate];
+    
+    int64_t keycode = CGEventGetIntegerValueField(event, kCGKeyboardEventKeycode);
+    CGEventFlags flags = CGEventGetFlags(event);
+    
+    if ( (keycode == 56) || (keycode == 60) ) {
+        if (flags != 256) {
+            [appDelegate setHorizontalScroll: TRUE];
+        } else if (flags == 256) {
+            [appDelegate setHorizontalScroll: FALSE];
+        }
+     }
     
     
+    return event;
+}
+
+CGEventRef Handle_MouseEvent(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
+ 
     
     int currentButton = (int) CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
     int currentButtonState = (int) CGEventGetIntegerValueField(event, kCGMouseEventPressure);
@@ -37,13 +67,11 @@ CGEventRef Handle_EventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         currentButtonState = 1;
     }
     
-    
-    if (inputSourceIsDeviceOfInterest ) {
-        if ( (3 <= currentButton) && (currentButton <= 5) ) { // is
-            
+    if (inputSourceIsDeviceOfInterest )
+    {
+        if ( (3 <= currentButton) && (currentButton <= 5) )
+        {
             [InputParser parse: currentButton state:currentButtonState];
-            
-            
             return nil;
         }
         inputSourceIsDeviceOfInterest = FALSE;
@@ -53,11 +81,11 @@ CGEventRef Handle_EventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 }
 
 
-static void setupBothInputCallbacks() {
+static void setupMouseInputCallbacks() {
     /* Register event Tap Callback */
     CGEventMask mask = CGEventMaskBit(kCGEventLeftMouseDown) | CGEventMaskBit(kCGEventRightMouseDown)                               |CGEventMaskBit(kCGEventOtherMouseDown)
     | CGEventMaskBit(kCGEventLeftMouseUp) | CGEventMaskBit(kCGEventRightMouseUp)                               |CGEventMaskBit(kCGEventOtherMouseUp);
-    eventTap = CGEventTapCreate(kCGHIDEventTap, kCGTailAppendEventTap, kCGEventTapOptionDefault, mask, Handle_EventTapCallback, NULL);
+    eventTap = CGEventTapCreate(kCGHIDEventTap, kCGTailAppendEventTap, kCGEventTapOptionDefault, mask, Handle_MouseEvent, NULL);
     
     CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0);
     CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopDefaultMode);
@@ -160,13 +188,7 @@ static void Handle_DeviceMatchingCallback (void *context, IOReturn result, void 
     }
     
     
-    
-    
-    
-    
-    
     // print stuff
-    
     
     // Retrieve the device name & serial number
     NSString *devName = [NSString stringWithUTF8String:

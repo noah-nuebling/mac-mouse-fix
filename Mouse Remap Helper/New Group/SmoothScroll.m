@@ -20,21 +20,13 @@
 
 #pragma mark - consts and init()
 // settings
-
-static BOOL _bezierScroll = TRUE;
 static int64_t _pxStepSizeBase = 76;
-static int64_t _pxStepSizeMax = 5000;
-static float _scrollStepSizeAddent = 0;  // this is only used when we've been continuously scrolling for a while
-static int64_t _fastScrollThreshold_asConsequtiveScrollsAtMaxSmoothing = 35;
 //
 static float _msPerScrollBase = 250;
 static float _msPerScrollMax = 250;
 static float _continuousScrollSmoothingFactor = 1.09;
 
 
-
-//static float _msPerScrollMaxBase = 400;     // longer deceleration at high speed
-//static float _msPerScrollMax = 0;          //
 
 //
 static int64_t _consequtiveScrollsAtMaxSmoothing = 0;
@@ -43,44 +35,92 @@ static int64_t   _pxStepSize = 0;
 static int64_t _pixelScrollQueue = 0;
 static float _msLeftForScroll = 0;
 static float _msBetweenFrames = 0;
+
 //
-static CVDisplayLinkRef _displayLink;
-CGEventSourceRef _eventSource = nil;
+static CVDisplayLinkRef _displayLink = nil;
+static CFMachPortRef _eventTap = nil;
+static CGEventSourceRef _eventSource = nil;
 //
 AnimationCurve * _animationCurve;
 
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        _animationCurve = [[AnimationCurve alloc] init];
-        [_animationCurve UnitBezierForPoint1x:0.2 point1y:0.2 point2x:0.2 point2y:1.0];
-              //
-        _eventSource = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
-        
-        //
-        CVDisplayLinkCreateWithCGDisplay(CGMainDisplayID(), &_displayLink);
-        CVDisplayLinkSetOutputCallback(_displayLink, displayLinkCallback, nil);
-        CVDisplayLinkStart(_displayLink);
-        
-        //
-    }
-    return self;
+
+BOOL _horizontalScrollModifierPressed;
++ (void) setHorizontalScroll: (BOOL)B {
+    NSLog(@"HORIZONTAL SCROLL SET: %d", B);
+    _horizontalScrollModifierPressed = B;
 }
 
-- (void)start {
++ (void) stop {
+    enable(FALSE);
     
-    // setup eventTap
-    CGEventMask mask = CGEventMaskBit(kCGEventScrollWheel);
-    CFMachPortRef eventTap = CGEventTapCreate(kCGAnnotatedSessionEventTap, kCGTailAppendEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
-    CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0);
-    CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes);
-    CGEventTapEnable(eventTap, true);
+    if (_displayLink) {
+        CVDisplayLinkRelease(_displayLink);
+        _displayLink = nil;
+    }
+    if (_eventTap) {
+        CFRelease(_eventTap);
+        _eventTap = nil;
+    }
+    if (_eventSource) {
+        CFRelease(_eventSource);
+        _eventSource = nil;
+     }
     
-    // setup display refresh callback
-    CVDisplayLinkRef displayLink;
-    CVDisplayLinkCreateWithCGDisplay(CGMainDisplayID(), &displayLink);
-    CVDisplayLinkSetOutputCallback(displayLink, displayLinkCallback, nil);
+}
++ (void)startWithAnimationCurve:(AnimationCurve *)curve
+                      pxPerStep:(int)pxB
+                         msBase:(int)msB
+                          msMax:(int)msM
+                       msFactor:(float)msF
+{
+    _animationCurve                     =   curve;
+    _pxStepSizeBase                     =   pxB;
+    _msPerScrollBase                    =   msB;
+    _msPerScrollMax                     =   msM;
+    _continuousScrollSmoothingFactor    =   msF;
+
+
+    
+    _horizontalScrollModifierPressed = FALSE;
+    
+    if (_eventTap == nil) {
+        CGEventMask mask = CGEventMaskBit(kCGEventScrollWheel);
+        _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
+        CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _eventTap, 0);
+        CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes);
+        CFRelease(runLoopSource);
+    }
+    if (_displayLink == nil) {
+        CVDisplayLinkCreateWithCGDisplay(CGMainDisplayID(), &_displayLink);
+        CVDisplayLinkSetOutputCallback(_displayLink, displayLinkCallback, nil);
+    }
+    if (_eventSource == nil) {
+        _eventSource = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
+    }
+    
+    enable(TRUE);
+}
+
+
+static void enable(BOOL B) {
+    
+    if (_eventTap != nil) {
+        if (B) {
+            CGEventTapEnable(_eventTap, true);
+        }
+        else {
+            CGEventTapEnable(_eventTap, false);
+        }
+    }
+    
+    if (_displayLink != nil) {
+        if (B) {
+            CVDisplayLinkStart(_displayLink);
+        }
+        else {
+            CVDisplayLinkStop(_displayLink);
+        }
+    }
     
 }
 
@@ -89,22 +129,22 @@ AnimationCurve * _animationCurve;
 
 CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
 
-    long long scrollPhase   =   CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase);
-    long long isContinuous  =   CGEventGetIntegerValueField(event, kCGScrollWheelEventIsContinuous);
-    long long momentumPhase =   CGEventGetIntegerValueField(event, kCGScrollWheelEventMomentumPhase);
     
-    if ( (scrollPhase != 0) || (isContinuous != 0) || (momentumPhase != 0) ) {
-        // scroll event doesn't come from simple scroll wheel
-        return event;
-     }
+    long long isContinuous  =   CGEventGetIntegerValueField(event, kCGScrollWheelEventIsContinuous);
     
     int64_t scrollDeltaAxis1    =   CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
+    
+    // (scrollPhase != 0) || (isContinuous != 0) || (momentumPhase != 0)
+    
+    if ( (isContinuous != 0) || (scrollDeltaAxis1 == 0) ) {
+        // scroll event doesn't come from simple scroll wheel
+        return event;
+    }
     
     BOOL scrollEventFollowsCurrentScrollingDirection
     = (scrollDeltaAxis1 >= 0 && _pixelScrollQueue > 0) || (scrollDeltaAxis1 <= 0 && _pixelScrollQueue < 0);
     
     if (
-        (_bezierScroll   == FALSE)                             ||
         CVDisplayLinkIsRunning(_displayLink) == FALSE          ||
         scrollEventFollowsCurrentScrollingDirection == FALSE
         )
@@ -112,28 +152,11 @@ CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef 
         CVDisplayLinkStart(_displayLink);
         _msPerScroll    =   _msPerScrollBase;
         _pxStepSize     =   _pxStepSizeBase;
-        // _msPerScrollMax = _msPerScrollMaxBase;                   // longer deceleration at high speed
     }
     else {
-        _msPerScroll        *=  _continuousScrollSmoothingFactor; //6 * (_msInThisContinuousScroll/_msPerScrollBase);
+        _msPerScroll        *=  _continuousScrollSmoothingFactor;
         if (_msPerScroll > _msPerScrollMax) {
             _msPerScroll    =   _msPerScrollMax;
-        }
-        // activate acceleration, after a few scrolls at max smoothing
-        if (_msPerScroll == _msPerScrollMax) {
-            _consequtiveScrollsAtMaxSmoothing += 1;
-            if (_consequtiveScrollsAtMaxSmoothing > _fastScrollThreshold_asConsequtiveScrollsAtMaxSmoothing) {
-                //NSLog(@"_consequtiveScrollsAtMaxSmoothing: %d", _consequtiveScrollsAtMaxSmoothing);
-                _pxStepSize         += _scrollStepSizeAddent;
-                if (_pxStepSize > _pxStepSizeMax) {
-                    _pxStepSize = _pxStepSizeMax;
-                }
-                
-                //_msPerScrollMax += 12;                              // longer deceleration at high speed
-                //if (_msPerScrollMax > 2000) {                       //
-                //    _msPerScrollMax = 2000;                         //
-                //}
-            }
         }
         else {
             _consequtiveScrollsAtMaxSmoothing = 0;
@@ -155,8 +178,8 @@ CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef 
 CVReturn displayLinkCallback (CVDisplayLinkRef displayLink, const CVTimeStamp *inNow, const CVTimeStamp *inOutputTime, CVOptionFlags flagsIn, CVOptionFlags *flagsOut, void *displayLinkContext) {
     
     
-    NSLog(@"_msPerScroll: %f", _msPerScroll);
-    NSLog(@"_pxStepSize : %d", _pxStepSize);
+    //NSLog(@"_msPerScroll: %f", _msPerScroll);
+    //NSLog(@"_pxStepSize : %d", _pxStepSize);
     
     // gets called every time the display is refreshed
     
@@ -174,36 +197,44 @@ CVReturn displayLinkCallback (CVDisplayLinkRef displayLink, const CVTimeStamp *i
     _msBetweenFrames = CVDisplayLinkGetActualOutputVideoRefreshPeriod(_displayLink) * 1000;
     
     int32_t pixelsToScroll;
-    if (_bezierScroll == FALSE) {
-        // linear scrolling
-        float pixelsPerMillisec =   ((float)_pixelScrollQueue/(float)_msLeftForScroll);
-        pixelsToScroll          =   round(pixelsPerMillisec * _msBetweenFrames);
-    }
-    else {
-        // curve based scrolling
-        CGFloat completedScrollTimeFractionNow // fraction of _msPerScroll weve "used up"
-        = ((CGFloat)(_msPerScroll - _msLeftForScroll)) / ((CGFloat)_msPerScroll);
-        CGFloat completedScrollTimeFractionNextFrame
-        = (CGFloat)(_msPerScroll - (_msLeftForScroll-_msBetweenFrames)) / ((CGFloat)_msPerScroll);
+
+    // curve based scrolling
+    CGFloat completedScrollTimeFractionNow // fraction of _msPerScroll weve "used up"
+    = ((CGFloat)(_msPerScroll - _msLeftForScroll)) / ((CGFloat)_msPerScroll);
+    CGFloat completedScrollTimeFractionNextFrame
+    = (CGFloat)(_msPerScroll - (_msLeftForScroll-_msBetweenFrames)) / ((CGFloat)_msPerScroll);
+
+    // calculate offset at this point during the animation - offset is in (0..1)
+    double animationOffsetNow           =   [_animationCurve solve:completedScrollTimeFractionNow epsilon:0.008];
+    double animationOffsetNextFrame     =   [_animationCurve solve:completedScrollTimeFractionNextFrame epsilon:0.008];
+    float  animationOffsetToNextFrame   =   animationOffsetNextFrame - animationOffsetNow;
+    float  animationOffsetLeft          =   1 - animationOffsetNow; // distance to maximal offset value (1)
     
-        // calculate offset at this point during the animation - offset is in (0..1)
-        double animationOffsetNow           =   [_animationCurve solve:completedScrollTimeFractionNow epsilon:0.008];
-        double animationOffsetNextFrame     =   [_animationCurve solve:completedScrollTimeFractionNextFrame epsilon:0.008];
-        float  animationOffsetToNextFrame   =   animationOffsetNextFrame - animationOffsetNow;
-        float  animationOffsetLeft          =   1 - animationOffsetNow; // distance to maximal offset value (1)
-        
-        pixelsToScroll = round( (_pixelScrollQueue/animationOffsetLeft) * animationOffsetToNextFrame );
+    pixelsToScroll = round( (_pixelScrollQueue/animationOffsetLeft) * animationOffsetToNextFrame );
     
     
         
         
-    }
+    
     
     
     // send scroll event
-    CGEventRef scrollEvent = CGEventCreateScrollWheelEvent(_eventSource, kCGScrollEventUnitPixel, 1, - pixelsToScroll);
-    //CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventIsContinuous, 1);
-    CGEventPost(kCGHIDEventTap, scrollEvent);
+    //int scrollVal = 2;
+    //NSLog(@"pixelsPerLine: %f", CGEventSourceGetPixelsPerLine(_eventSource));
+    CGEventRef scrollEvent = CGEventCreateScrollWheelEvent(_eventSource, kCGScrollEventUnitPixel, 1, 0);
+
+    if (_horizontalScrollModifierPressed == FALSE) {
+        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis1, - pixelsToScroll / 4);
+        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis1, - pixelsToScroll);
+    }
+    else if (_horizontalScrollModifierPressed == TRUE) {
+        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis2, - pixelsToScroll / 4);
+        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis2, - pixelsToScroll);
+    }
+    
+    //CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventIsContinuous, 0);
+    CGEventPost(kCGSessionEventTap, scrollEvent);
+    CFRelease(scrollEvent);
     
     _pixelScrollQueue   -=  pixelsToScroll;
     _msLeftForScroll    -=  _msBetweenFrames;

@@ -7,8 +7,17 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "AnimationCurve.h"
 
 @interface SmoothScroll : NSObject
-- (void)start;
+
++ (void)setHorizontalScroll: (BOOL)B;
+
++ (void)startWithAnimationCurve:(AnimationCurve *)curve
+                      pxPerStep:(int)pxB
+                         msBase:(int)msB
+                          msMax:(int)msM
+                       msFactor:(float)msF;
++ (void) stop;
 @end
 

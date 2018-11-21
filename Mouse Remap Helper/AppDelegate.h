@@ -18,6 +18,8 @@
 - (void) repairConfigFile:(NSString *)info;
 
 
+- (void) setHorizontalScroll:(BOOL)B;
+
 
 // InputParser.h - Global variables
 

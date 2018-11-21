@@ -15,8 +15,8 @@
 		4F8DC6ED21A3B20600E1D297 /* IOHIDEventData.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F8DC6EB21A3B20600E1D297 /* IOHIDEventData.h */; };
 		4F8DC6EE21A3B20600E1D297 /* IOHIDEventTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F8DC6EC21A3B20600E1D297 /* IOHIDEventTypes.h */; };
 		4F8DC6F621A3B60600E1D297 /* AnimationCurve.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8DC6F421A3B60600E1D297 /* AnimationCurve.m */; };
-		4F8DC6F721A3B60600E1D297 /* SmoothScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8DC6F521A3B60600E1D297 /* SmoothScroll.m */; };
 		4F8DC6F821A4A62800E1D297 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F34F9BA21A3616700104EBF /* config.plist */; };
+		4F8DC71F21A6244800E1D297 /* SmoothScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8DC71D21A6244800E1D297 /* SmoothScroll.m */; };
 		4FACF59F2183B956009257D4 /* default_mouse.remap.helper.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FACF59E2183B956009257D4 /* default_mouse.remap.helper.plist */; };
 		4FBB85D42187C74100DD6B40 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4FBB85D22187C74100DD6B40 /* Localizable.strings */; };
 		4FCECD8521092354001F1078 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECD8421092354001F1078 /* AppDelegate.m */; };
@@ -82,9 +82,9 @@
 		4F8DC6EB21A3B20600E1D297 /* IOHIDEventData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOHIDEventData.h; sourceTree = "<group>"; };
 		4F8DC6EC21A3B20600E1D297 /* IOHIDEventTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOHIDEventTypes.h; sourceTree = "<group>"; };
 		4F8DC6F221A3B60600E1D297 /* AnimationCurve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationCurve.h; sourceTree = "<group>"; };
-		4F8DC6F321A3B60600E1D297 /* SmoothScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmoothScroll.h; sourceTree = "<group>"; };
 		4F8DC6F421A3B60600E1D297 /* AnimationCurve.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimationCurve.m; sourceTree = "<group>"; };
-		4F8DC6F521A3B60600E1D297 /* SmoothScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SmoothScroll.m; sourceTree = "<group>"; };
+		4F8DC71D21A6244800E1D297 /* SmoothScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SmoothScroll.m; sourceTree = "<group>"; };
+		4F8DC71E21A6244800E1D297 /* SmoothScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmoothScroll.h; sourceTree = "<group>"; };
 		4FACF59E2183B956009257D4 /* default_mouse.remap.helper.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_mouse.remap.helper.plist; sourceTree = "<group>"; };
 		4FBB85CA2187C2BC00DD6B40 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Mouse_Remap.strings; sourceTree = "<group>"; };
 		4FBB85CC2187C36A00DD6B40 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/MainMenu.strings; sourceTree = "<group>"; };
@@ -179,8 +179,8 @@
 		4F8DC6F121A3B50900E1D297 /* Smooth Scroll Classes */ = {
 			isa = PBXGroup;
 			children = (
-				4F8DC6F321A3B60600E1D297 /* SmoothScroll.h */,
-				4F8DC6F521A3B60600E1D297 /* SmoothScroll.m */,
+				4F8DC71E21A6244800E1D297 /* SmoothScroll.h */,
+				4F8DC71D21A6244800E1D297 /* SmoothScroll.m */,
 				4F8DC6F221A3B60600E1D297 /* AnimationCurve.h */,
 				4F8DC6F421A3B60600E1D297 /* AnimationCurve.m */,
 			);
@@ -471,7 +471,7 @@
 			files = (
 				4F34F9B521A359D500104EBF /* InputReceiver.m in Sources */,
 				4F34F9BF21A366B400104EBF /* ConfigFileMonitor.m in Sources */,
-				4F8DC6F721A3B60600E1D297 /* SmoothScroll.m in Sources */,
+				4F8DC71F21A6244800E1D297 /* SmoothScroll.m in Sources */,
 				4F8DC6EA21A3B1D200E1D297 /* TouchEvents.c in Sources */,
 				4F34F9B921A35E8E00104EBF /* InputParser.m in Sources */,
 				4F34F9AF21A3590D00104EBF /* main.m in Sources */,
