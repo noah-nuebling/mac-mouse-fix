@@ -8,11 +8,6 @@
 		<dict>
 			<key>click</key>
 			<array>
-				<string>swipeEvent</string>
-				<string>right</string>
-			</array>
-			<key>hold</key>
-			<array>
 				<string>symbolicHotKey</string>
 				<integer>81</integer>
 			</array>
@@ -20,11 +15,6 @@
 		<key>4</key>
 		<dict>
 			<key>click</key>
-			<array>
-				<string>swipeEvent</string>
-				<string>left</string>
-			</array>
-			<key>hold</key>
 			<array>
 				<string>symbolicHotKey</string>
 				<integer>79</integer>
@@ -43,6 +33,17 @@
 				<integer>36</integer>
 			</array>
 		</dict>
+	</dict>
+	<key>ScrollSettings</key>
+	<dict>
+		<key>enabled</key>
+		<true/>
+		<key>values</key>
+		<array>
+			<integer>60</integer>
+			<integer>130</integer>
+			<real>1.7</real>
+		</array>
 	</dict>
 </dict>
 </plist>

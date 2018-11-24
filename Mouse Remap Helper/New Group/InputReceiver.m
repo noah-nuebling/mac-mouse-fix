@@ -67,14 +67,14 @@ CGEventRef Handle_MouseEvent(CGEventTapProxy proxy, CGEventType type, CGEventRef
         currentButtonState = 1;
     }
     
-    if (inputSourceIsDeviceOfInterest )
-    {
-        if ( (3 <= currentButton) && (currentButton <= 5) )
-        {
+    if (inputSourceIsDeviceOfInterest ) {
+        
+        if ( (3 <= currentButton) && (currentButton <= 5) ) {
             [InputParser parse: currentButton state:currentButtonState];
             return nil;
+            
+            // TODO: refactor some of the code from input parser, to allow for non-remapped events to pass through. (maybe even let clicks pass through if there is a hold remap on the same button)
         }
-        inputSourceIsDeviceOfInterest = FALSE;
     }
     
     return event;

@@ -8,11 +8,18 @@
 
 #import "ConfigFileMonitor.h"
 #import "AppDelegate.h"
+#import "MomentumScroll.h"
 
 @implementation ConfigFileMonitor
 
 
-+ (void) fillConfigDictFromFile {
++ (void)start {
+    setupFSEventStreamCallback();
+    fillConfigDictFromFile();
+    updateScrollSettings();
+}
+
+static void fillConfigDictFromFile() {
     
     NSBundle *thisBundle = [NSBundle mainBundle];
     NSString *configFilePath = [thisBundle pathForResource:@"config" ofType:@"plist"];
@@ -31,7 +38,7 @@
         
         NSLog(@"setting new prop from configMonitor: %@", config);
         
-        [appDelegate setConfigDictFromFile:config];
+        [appDelegate updateConfig:config];
         
         //NSLog(@"configDictFromFile after setting: %@", [ConfigFileMonitor configDictFromFile]);
         
@@ -41,15 +48,34 @@
     }
 }
 
+static void updateScrollSettings() {
+    AppDelegate *delegate = [NSApp delegate];
+    NSDictionary *config = [delegate configDictFromFile];
+    NSDictionary *scrollSettings = [config objectForKey:@"ScrollSettings"];
+    if ([[scrollSettings objectForKey:@"enabled"] boolValue] == TRUE) {
+        NSArray *values = [scrollSettings objectForKey:@"values"];
+        NSNumber *px = [values objectAtIndex:0];
+        NSNumber *ms = [values objectAtIndex:1];
+        NSNumber *f = [values objectAtIndex:2];
+        [MomentumScroll startWithPxPerStep:px.intValue msPerStep:ms.intValue friction:f.floatValue];
+    }
+    else {
+        [MomentumScroll stop];
+    }
+}
+
+
 
 void Handle_FSEventStreamCallback (ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents, void *eventPaths, const FSEventStreamEventFlags *eventFlags, const FSEventStreamEventId *eventIds) {
     
     NSLog(@"remaps.plist changed - reloading buttonRemapDictFromFile");
     
-    [ConfigFileMonitor fillConfigDictFromFile];
+    fillConfigDictFromFile();
+    updateScrollSettings();
 }
 
-+ (void) setupFSEventStreamCallback {
+static void setupFSEventStreamCallback() {
+    
     NSBundle *thisBundle = [NSBundle mainBundle];
     CFStringRef configFilePath = (__bridge CFStringRef) [thisBundle pathForResource:@"config" ofType:@"plist"];
     CFArrayRef pathsToWatch = CFArrayCreate(NULL, (const void **)&configFilePath, 1, NULL);

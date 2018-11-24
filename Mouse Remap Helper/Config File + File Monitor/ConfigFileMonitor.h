@@ -12,8 +12,7 @@
 
 @interface ConfigFileMonitor : NSObject
 
-+ (void) fillConfigDictFromFile;
-+ (void) setupFSEventStreamCallback;
++ (void)start;
 
 //@property (retain) NSMutableDictionary *configDictFromFile;
 

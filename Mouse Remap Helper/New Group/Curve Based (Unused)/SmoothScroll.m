@@ -26,8 +26,6 @@ static float _msPerScrollBase = 250;
 static float _msPerScrollMax = 250;
 static float _continuousScrollSmoothingFactor = 1.09;
 
-
-
 //
 static int64_t _consequtiveScrollsAtMaxSmoothing = 0;
 static float _msPerScroll = 0;
@@ -37,29 +35,29 @@ static float _msLeftForScroll = 0;
 static float _msBetweenFrames = 0;
 
 //
-static CVDisplayLinkRef _displayLink = nil;
-static CFMachPortRef _eventTap = nil;
+static CVDisplayLinkRef _displayLinkSS = nil;
+static CFMachPortRef _eventTapSS = nil;
 static CGEventSourceRef _eventSource = nil;
 //
 AnimationCurve * _animationCurve;
 
 
-BOOL _horizontalScrollModifierPressed;
+BOOL _horizontalScrollModifierPressedSS;
 + (void) setHorizontalScroll: (BOOL)B {
     NSLog(@"HORIZONTAL SCROLL SET: %d", B);
-    _horizontalScrollModifierPressed = B;
+    _horizontalScrollModifierPressedSS = B;
 }
 
 + (void) stop {
     enable(FALSE);
     
-    if (_displayLink) {
-        CVDisplayLinkRelease(_displayLink);
-        _displayLink = nil;
+    if (_displayLinkSS) {
+        CVDisplayLinkRelease(_displayLinkSS);
+        _displayLinkSS = nil;
     }
-    if (_eventTap) {
-        CFRelease(_eventTap);
-        _eventTap = nil;
+    if (_eventTapSS) {
+        CFRelease(_eventTapSS);
+        _eventTapSS = nil;
     }
     if (_eventSource) {
         CFRelease(_eventSource);
@@ -81,18 +79,18 @@ BOOL _horizontalScrollModifierPressed;
 
 
     
-    _horizontalScrollModifierPressed = FALSE;
+    _horizontalScrollModifierPressedSS = FALSE;
     
-    if (_eventTap == nil) {
+    if (_eventTapSS == nil) {
         CGEventMask mask = CGEventMaskBit(kCGEventScrollWheel);
-        _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
-        CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _eventTap, 0);
+        _eventTapSS = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallbackSS, NULL);
+        CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _eventTapSS, 0);
         CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes);
         CFRelease(runLoopSource);
     }
-    if (_displayLink == nil) {
-        CVDisplayLinkCreateWithCGDisplay(CGMainDisplayID(), &_displayLink);
-        CVDisplayLinkSetOutputCallback(_displayLink, displayLinkCallback, nil);
+    if (_displayLinkSS == nil) {
+        CVDisplayLinkCreateWithCGDisplay(CGMainDisplayID(), &_displayLinkSS);
+        CVDisplayLinkSetOutputCallback(_displayLinkSS, displayLinkCallbackSS, nil);
     }
     if (_eventSource == nil) {
         _eventSource = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
@@ -104,21 +102,21 @@ BOOL _horizontalScrollModifierPressed;
 
 static void enable(BOOL B) {
     
-    if (_eventTap != nil) {
+    if (_eventTapSS != nil) {
         if (B) {
-            CGEventTapEnable(_eventTap, true);
+            CGEventTapEnable(_eventTapSS, true);
         }
         else {
-            CGEventTapEnable(_eventTap, false);
+            CGEventTapEnable(_eventTapSS, false);
         }
     }
     
-    if (_displayLink != nil) {
+    if (_displayLinkSS != nil) {
         if (B) {
-            CVDisplayLinkStart(_displayLink);
+            CVDisplayLinkStart(_displayLinkSS);
         }
         else {
-            CVDisplayLinkStop(_displayLink);
+            CVDisplayLinkStop(_displayLinkSS);
         }
     }
     
@@ -127,7 +125,7 @@ static void enable(BOOL B) {
 
 #pragma mark - run Loop
 
-CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
+CGEventRef eventTapCallbackSS(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
 
     
     long long isContinuous  =   CGEventGetIntegerValueField(event, kCGScrollWheelEventIsContinuous);
@@ -145,11 +143,11 @@ CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef 
     = (scrollDeltaAxis1 >= 0 && _pixelScrollQueue > 0) || (scrollDeltaAxis1 <= 0 && _pixelScrollQueue < 0);
     
     if (
-        CVDisplayLinkIsRunning(_displayLink) == FALSE          ||
+        CVDisplayLinkIsRunning(_displayLinkSS) == FALSE          ||
         scrollEventFollowsCurrentScrollingDirection == FALSE
         )
     {
-        CVDisplayLinkStart(_displayLink);
+        CVDisplayLinkStart(_displayLinkSS);
         _msPerScroll    =   _msPerScrollBase;
         _pxStepSize     =   _pxStepSizeBase;
     }
@@ -175,7 +173,7 @@ CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef 
     return nil;
 }
 
-CVReturn displayLinkCallback (CVDisplayLinkRef displayLink, const CVTimeStamp *inNow, const CVTimeStamp *inOutputTime, CVOptionFlags flagsIn, CVOptionFlags *flagsOut, void *displayLinkContext) {
+CVReturn displayLinkCallbackSS(CVDisplayLinkRef displayLink, const CVTimeStamp *inNow, const CVTimeStamp *inOutputTime, CVOptionFlags flagsIn, CVOptionFlags *flagsOut, void *displayLinkContext) {
     
     
     //NSLog(@"_msPerScroll: %f", _msPerScroll);
@@ -194,7 +192,7 @@ CVReturn displayLinkCallback (CVDisplayLinkRef displayLink, const CVTimeStamp *i
     }
     
     
-    _msBetweenFrames = CVDisplayLinkGetActualOutputVideoRefreshPeriod(_displayLink) * 1000;
+    _msBetweenFrames = CVDisplayLinkGetActualOutputVideoRefreshPeriod(_displayLinkSS) * 1000;
     
     int32_t pixelsToScroll;
 
@@ -223,11 +221,11 @@ CVReturn displayLinkCallback (CVDisplayLinkRef displayLink, const CVTimeStamp *i
     //NSLog(@"pixelsPerLine: %f", CGEventSourceGetPixelsPerLine(_eventSource));
     CGEventRef scrollEvent = CGEventCreateScrollWheelEvent(_eventSource, kCGScrollEventUnitPixel, 1, 0);
 
-    if (_horizontalScrollModifierPressed == FALSE) {
+    if (_horizontalScrollModifierPressedSS == FALSE) {
         CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis1, - pixelsToScroll / 4);
         CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis1, - pixelsToScroll);
     }
-    else if (_horizontalScrollModifierPressed == TRUE) {
+    else if (_horizontalScrollModifierPressedSS == TRUE) {
         CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis2, - pixelsToScroll / 4);
         CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis2, - pixelsToScroll);
     }

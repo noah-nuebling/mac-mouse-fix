@@ -51,10 +51,14 @@ static NSDictionary *configFromFile;
     
     @try {
         
-    // single remapping
-        if ([[remapsForInputButton allKeys] count] == 1)
+        if ( ([[remapsForInputButton allKeys] count] == 0) ) {
+            //return event;
+        }
+        
+    // single click remapping
+        NSArray *clickAction = [remapsForInputButton valueForKey:@"click"];
+        if ( ([[remapsForInputButton allKeys] count] == 1) && clickAction != nil )
         {
-            NSArray *clickAction = [remapsForInputButton valueForKey:@"click"];
             NSString *eventType = clickAction[0];
             BOOL isSpaceSwitchEvent = FALSE;
             if ([eventType isEqualToString:@"symbolicHotKey"]) {
@@ -75,10 +79,14 @@ static NSDictionary *configFromFile;
             }
         }
         
-    // double remapping
+        
+    // double remapping / single hold remapping
         else if ([[remapsForInputButton allKeys] count] == 2)
         {
             if (state == 1) {
+                
+                // if clickAction == nil, save event in global var
+                
                 NSArray *holdAction = [remapsForInputButton objectForKey:@"hold"];
                 NSTimer *clickAndHoldTimer = [NSTimer scheduledTimerWithTimeInterval:0.3
                                                  target:appDelegate
@@ -90,10 +98,13 @@ static NSDictionary *configFromFile;
             } else if (state == 0) {
                 NSTimer *clickAndHoldTimer = [appDelegate clickAndHoldTimer];
                 if ([clickAndHoldTimer isValid]) {
-                    NSArray *clickAction = [remapsForInputButton objectForKey:@"click"];
-                    [InputParser handleActionArray:clickAction];
                     [[appDelegate clickAndHoldTimer] invalidate];
                     [appDelegate setClickAndHoldTimer: nil];
+                    
+                    // if clickaction == nil, send event we previously saved in global var, else:
+                    NSArray *clickAction = [remapsForInputButton objectForKey:@"click"];
+                    [InputParser handleActionArray:clickAction];
+                    // then set _savedEvent = nil
                 }
             } else
             {

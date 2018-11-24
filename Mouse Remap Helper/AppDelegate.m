@@ -9,7 +9,9 @@
 #import "InputReceiver.h"
 #import "InputParser.h"
 #import "ConfigFileMonitor.h"
-#import "SmoothScroll.h"
+
+//#import "SmoothScroll.h"
+#import "MomentumScroll.h"
 
 #import "CGSInternal/CGSHotKeys.h"
 #import "SensibleSideButtons/TouchEvents.h"
@@ -22,7 +24,6 @@
 @implementation AppDelegate
 
 
-SmoothScroll *smoothScrollObject;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
@@ -30,21 +31,9 @@ SmoothScroll *smoothScrollObject;
 
     [InputReceiver start];
     
-    [ConfigFileMonitor fillConfigDictFromFile];
-    [ConfigFileMonitor setupFSEventStreamCallback];
+    [ConfigFileMonitor start];
     
-    
-    AnimationCurve *curve = [[AnimationCurve alloc] init];
-    [curve UnitBezierForPoint1x:0.1 point1y:0.1 point2x:0.2 point2y:1.0];
-    int pxPerStep   =   76;
-    int msBase      =   250;
-    int msMax       =   300;
-    float msFactor  =   1.09;
-    [SmoothScroll startWithAnimationCurve:curve
-                                pxPerStep:pxPerStep
-                                   msBase:msBase
-                                    msMax:msMax
-                                 msFactor:msFactor];
+    [MomentumScroll startWithPxPerStep:53 msPerStep:130 friction:1.7];
     
     
     
@@ -69,14 +58,18 @@ SmoothScroll *smoothScrollObject;
     _nullArray = @[];
 }
 
+
+- (void)updateConfig:(NSMutableDictionary *)config {
+    [self setConfigDictFromFile: config];
+    
+}
+
 - (void) repairConfigFile:(NSString *)info {
     // TODO: actually repair config dict
     NSLog(@"repairing configDict....");
 }
-
-
 - (void) setHorizontalScroll:(BOOL)B {
-    [SmoothScroll setHorizontalScroll: B];
+    [MomentumScroll setHorizontalScroll: B];
 }
 
 
