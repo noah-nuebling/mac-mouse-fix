@@ -11,13 +11,22 @@
 #import "InputParser.h"
 #import "AppDelegate.h"
 
+#import "MomentumScroll.h"
+
 @implementation InputReceiver
 
+
+
 // global variables
+static BOOL _relevantDevicesAreAttached;
++ (BOOL)relevantDevicesAreAttached {
+    return _relevantDevicesAreAttached;
+}
+
 BOOL inputSourceIsDeviceOfInterest;
 CGEventSourceRef eventSource;
 CFMachPortRef eventTap;
-IOHIDManagerRef HIDManager;
+IOHIDManagerRef _hidManager;
 
 + (void) start {
     // initialize global variables
@@ -60,20 +69,25 @@ CGEventRef Handle_ModifierChanged(CGEventTapProxy proxy, CGEventType type, CGEve
 
 CGEventRef Handle_MouseEvent(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
  
+    /*
+    NSLog(@"HANDLE EVENT");
+    NSLog(@"current button: %d", currentButton);
+    NSLog(@"inputSourceIsDeviceOfInterest: %d", inputSourceIsDeviceOfInterest);
+     */
     
     int currentButton = (int) CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
     int currentButtonState = (int) CGEventGetIntegerValueField(event, kCGMouseEventPressure);
     if (currentButtonState == 255) {
         currentButtonState = 1;
     }
+
+    
     
     if (inputSourceIsDeviceOfInterest ) {
-        
         if ( (3 <= currentButton) && (currentButton <= 5) ) {
-            [InputParser parse: currentButton state:currentButtonState];
-            return nil;
             
-            // TODO: refactor some of the code from input parser, to allow for non-remapped events to pass through. (maybe even let clicks pass through if there is a hold remap on the same button)
+            CGEventRef eventPass = [InputParser parse:currentButton state:currentButtonState event:event];
+            return eventPass;
         }
     }
     
@@ -101,8 +115,7 @@ static void setupHIDManagerAndCallbacks() {
 
     
     // Create an HID Manager
-    HIDManager = IOHIDManagerCreate(kCFAllocatorDefault,
-                                    kIOHIDOptionsTypeNone);
+    _hidManager = IOHIDManagerCreate(kCFAllocatorDefault, 0);
     
     // Create a Matching Dictionary
     CFMutableDictionaryRef matchDict1 = CFDictionaryCreateMutable(kCFAllocatorDefault,
@@ -122,18 +135,28 @@ static void setupHIDManagerAndCallbacks() {
     
     // Specify properties of the devices which we want to add to the HID Manager in the Matching Dictionary
     
+    //int n = 0x227;
+    
     CFArrayRef matches;
-    CFDictionarySetValue(matchDict1, CFSTR("PrimaryUsage"), (const void *)0x227);       // add mice
+    
+    int up = 1;
+    int u = 2;
+    CFNumberRef genericDesktopPrimaryUsagePage = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &up);
+    CFNumberRef mousePrimaryUsage = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &u);
+    
+    CFDictionarySetValue(matchDict1, CFSTR("PrimaryUsage"), genericDesktopPrimaryUsagePage);
+    CFDictionarySetValue(matchDict1, CFSTR("PrimaryUsage"), mousePrimaryUsage);         // add mice
     CFDictionarySetValue(matchDict1, CFSTR("Transport"), CFSTR("USB"));                 // add USB devices
-    CFDictionarySetValue(matchDict2, CFSTR("Transport"), CFSTR("Bluetooth"));           // add Bluetooth Devices
-    CFDictionarySetValue(matchDict3, CFSTR("Transport"), CFSTR("BluetoothLowEnergy"));  // add bluetooth low energy devices
     
-    CFMutableDictionaryRef matchesList[] = {matchDict1, matchDict2, matchDict3};
-    matches = CFArrayCreate(kCFAllocatorDefault, (const void **)matchesList, 3, NULL);
+    CFMutableDictionaryRef matchesList[] = {matchDict1};
+    matches = CFArrayCreate(kCFAllocatorDefault, (const void **)matchesList, 1, NULL);
     
+    
+    NSLog(@"HIDManager: %@", _hidManager);
+    NSLog(@"matches: %@", matchDict2);
     
     //Register the Matching Dictionary to the HID Manager
-    IOHIDManagerSetDeviceMatchingMultiple(HIDManager, matches);
+    IOHIDManagerSetDeviceMatchingMultiple(_hidManager, matches);
     
     CFRelease(matches);
     CFRelease(matchDict1);
@@ -144,21 +167,22 @@ static void setupHIDManagerAndCallbacks() {
     
     
     // Register the HID Manager on our app’s run loop
-    IOHIDManagerScheduleWithRunLoop(HIDManager, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
+    IOHIDManagerScheduleWithRunLoop(_hidManager, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
     
     // Open the HID Manager
-    IOReturn IOReturn = IOHIDManagerOpen(HIDManager, kIOHIDOptionsTypeNone);
+    IOReturn IOReturn = IOHIDManagerOpen(_hidManager, kIOHIDOptionsTypeNone);
     if(IOReturn) NSLog(@"IOHIDManagerOpen failed.");  //  Couldn't open the HID manager! TODO: proper error handling
     
     
     
     // Register a callback for USB device detection with the HID Manager, this will in turn register an button input callback for all devices that getFilteredDevicesFromManager() returns
-    IOHIDManagerRegisterDeviceMatchingCallback(HIDManager, &Handle_DeviceMatchingCallback, NULL);
+    IOHIDManagerRegisterDeviceMatchingCallback(_hidManager, &Handle_DeviceMatchingCallback, NULL);
     
     
     
     // Register a callback for USB device removal with the HID Manager
-    //IOHIDManagerRegisterDeviceRemovalCallback(HIDManager, &Handle_DeviceRemovalCallback, NULL);
+    IOHIDManagerRegisterDeviceRemovalCallback(_hidManager, &Handle_DeviceRemovalCallback, NULL);
+    
     //CFArrayRef device_array = getFilteredDevicesFromManager(HIDManager);
     //registerButtonInputCallbackForDevices(device_array);
 }
@@ -176,6 +200,16 @@ static void Handle_InputValueCallback(void *context, IOReturn result, void *send
     //NSLog(@"Button Input from Registered Device %@, button: %@", sender, value);
 }
 
+static void Handle_DeviceRemovalCallback(void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
+    // MomentumScroll
+    CFSetRef devices = IOHIDManagerCopyDevices(_hidManager);
+    if (CFSetGetCount(devices) == 0) {
+        _relevantDevicesAreAttached = FALSE;
+        [MomentumScroll stop];
+    }
+    
+}
+
 
 static void Handle_DeviceMatchingCallback (void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
     
@@ -186,6 +220,17 @@ static void Handle_DeviceMatchingCallback (void *context, IOReturn result, void 
         NSLog(@"Device Passed filtering");
         registerButtonInputCallbackForDevice(device);
     }
+    
+    // MomentumScroll
+    _relevantDevicesAreAttached = TRUE;
+    NSLog(@"isEnabled:                %hhd", MomentumScroll.isEnabled);
+    NSLog(@"MomentumScroll.isRunning: %hhd", MomentumScroll.isRunning);
+
+    if (MomentumScroll.isEnabled && !MomentumScroll.isRunning) {
+        [MomentumScroll start];
+    }
+    
+    
     
     
     // print stuff
@@ -204,8 +249,6 @@ static void Handle_DeviceMatchingCallback (void *context, IOReturn result, void 
           devPrimaryUsage
           //filteredUSBDeviceCount(sender)
           );
-    
-    
     
     
     return;

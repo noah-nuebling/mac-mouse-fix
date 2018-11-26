@@ -12,9 +12,14 @@
 
 + (void)setHorizontalScroll: (BOOL)B;
 
-+ (void)startWithPxPerStep:(int)px
++ (void)configureWithPxPerStep:(int)px
                  msPerStep:(int)ms
                   friction:(float)f;
-+ (void) stop;
++ (void)start;
++ (void)stop;
+
+@property (class) BOOL isEnabled;                         // this is set by ConfigFileMonitor.h
+@property (class) BOOL isRunning;                       // this is set by MomentumScroll.h
+
 @end
 

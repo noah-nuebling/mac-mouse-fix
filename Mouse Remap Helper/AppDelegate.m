@@ -30,10 +30,9 @@
     NSLog(@"running Mouse Remap Helper");
 
     [InputReceiver start];
-    
     [ConfigFileMonitor start];
-    
-    [MomentumScroll startWithPxPerStep:53 msPerStep:130 friction:1.7];
+     
+     
     
     
     

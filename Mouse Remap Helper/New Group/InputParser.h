@@ -8,13 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import "CGSInternal/CGSHotKeys.h"
+#import "SensibleSideButtons/TouchEvents.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface InputParser : NSObject
 
-+ (void) parse: (int)mouseButton state: (int)state;
-+ (void)doSymbolicHotKeyAction:(CGSSymbolicHotKey)shk;
++ (CGEventRef)parse:(int)mouseButton state:(int)state event:(CGEventRef)event;
++ (void)doSymbolicHotKeyAction: (CGSSymbolicHotKey)shk;
 + (void)handleActionArray:(NSArray *)actionArray;
 @end
 

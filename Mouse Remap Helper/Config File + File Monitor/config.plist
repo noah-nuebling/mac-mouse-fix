@@ -6,6 +6,11 @@
 	<dict>
 		<key>5</key>
 		<dict>
+			<key>hold</key>
+			<array>
+				<string>swipeEvent</string>
+				<string>right</string>
+			</array>
 			<key>click</key>
 			<array>
 				<string>symbolicHotKey</string>
@@ -14,6 +19,11 @@
 		</dict>
 		<key>4</key>
 		<dict>
+			<key>hold</key>
+			<array>
+				<string>swipeEvent</string>
+				<string>left</string>
+			</array>
 			<key>click</key>
 			<array>
 				<string>symbolicHotKey</string>
@@ -41,8 +51,8 @@
 		<key>values</key>
 		<array>
 			<integer>60</integer>
-			<integer>130</integer>
-			<real>1.7</real>
+			<integer>120</integer>
+			<real>1.5</real>
 		</array>
 	</dict>
 </dict>

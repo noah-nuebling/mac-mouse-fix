@@ -33,26 +33,24 @@
 
 @implementation InputParser
 
-static NSDictionary *configFromFile;
+static CGEventRef   _savedEvent;
 
 
-+ (void) parse: (int)mouseButton state: (int)state {
++ (CGEventRef)parse:(int)mouseButton state:(int)state event:(CGEventRef)event {
+    
+    NSLog(@"PARSE");
     
     AppDelegate *appDelegate = [NSApp delegate];
     
     NSString *keyPath = [NSString stringWithFormat:@"ButtonRemaps.%d", mouseButton];
     
     NSDictionary *remapsForInputButton = [[appDelegate configDictFromFile] valueForKeyPath: keyPath];
-    if (remapsForInputButton == nil) {
-        NSLog(@"couldn't find remaps for this button in config file");
-        return;
-    }
-    
     
     @try {
         
         if ( ([[remapsForInputButton allKeys] count] == 0) ) {
-            //return event;
+            NSLog(@"couldn't find any remaps for this button");
+            return event;
         }
         
     // single click remapping
@@ -69,48 +67,51 @@ static NSDictionary *configFromFile;
 
             // trigger swipe events on release, not sure if I'm crazy, but I think it feels better
             if ((state == 1 && isSpaceSwitchEvent) ||
-                (state == 0 && !isSpaceSwitchEvent))
-                {
+                (state == 0 && !isSpaceSwitchEvent)){
                 [InputParser handleActionArray:clickAction];
-                if (clickAction == nil) {
-                    [appDelegate repairConfigFile:@"remaps"];
-
-                }
+                return nil;
             }
         }
         
         
     // double remapping / single hold remapping
-        else if ([[remapsForInputButton allKeys] count] == 2)
-        {
-            if (state == 1) {
-                
-                // if clickAction == nil, save event in global var
-                
-                NSArray *holdAction = [remapsForInputButton objectForKey:@"hold"];
-                NSTimer *clickAndHoldTimer = [NSTimer scheduledTimerWithTimeInterval:0.3
-                                                 target:appDelegate
-                                               selector:@selector(doClickAndHoldAction:)
-                                               userInfo:holdAction
-                                                repeats:NO];
-                [appDelegate setClickAndHoldTimer:clickAndHoldTimer];
-                
-            } else if (state == 0) {
-                NSTimer *clickAndHoldTimer = [appDelegate clickAndHoldTimer];
-                if ([clickAndHoldTimer isValid]) {
-                    [[appDelegate clickAndHoldTimer] invalidate];
-                    [appDelegate setClickAndHoldTimer: nil];
-                    
-                    // if clickaction == nil, send event we previously saved in global var, else:
-                    NSArray *clickAction = [remapsForInputButton objectForKey:@"click"];
-                    [InputParser handleActionArray:clickAction];
-                    // then set _savedEvent = nil
-                }
-            } else
-            {
-                NSLog(@"ERRÖR: InputButtonState value invalid");
-                return;
+        
+        if (state == 1) {
+            
+            // if clickAction == nil, save event in global var
+            if (clickAction == nil) {
+                _savedEvent = CGEventCreateCopy(event);
             }
+            NSArray *holdAction = [remapsForInputButton objectForKey:@"hold"];
+            NSTimer *clickAndHoldTimer = [NSTimer scheduledTimerWithTimeInterval:0.3
+                                             target:appDelegate
+                                           selector:@selector(doClickAndHoldAction:)
+                                           userInfo:holdAction
+                                            repeats:NO];
+            [appDelegate setClickAndHoldTimer:clickAndHoldTimer];
+            
+            return nil;
+            
+        } else if (state == 0) {
+            NSTimer *clickAndHoldTimer = [appDelegate clickAndHoldTimer];
+            if ([clickAndHoldTimer isValid]) {
+                [[appDelegate clickAndHoldTimer] invalidate];
+                [appDelegate setClickAndHoldTimer: nil];
+                
+                if (clickAction == nil) {
+                    CGEventPost(kCGSessionEventTap, _savedEvent);
+                    CGEventPost(kCGSessionEventTap, event);
+                    _savedEvent = nil;
+                    return nil;
+                }
+                else {
+                    [InputParser handleActionArray:clickAction];
+                    return nil;
+                }
+            }
+        } else
+        {
+            NSLog(@"ERRÖR: InputButtonState value invalid");
         }
         
         
@@ -119,10 +120,15 @@ static NSDictionary *configFromFile;
         NSLog(@"ERROR: remaps broken");
         [appDelegate repairConfigFile: @"remaps"];
     }
+    
+    return event;
 }
 
 
 + (void)handleActionArray: (NSArray *)actionArray {
+    
+    NSLog(@"HANDLE");
+    
     if ([actionArray[0] isEqualToString:@"symbolicHotKey"])
     {
         NSNumber *shk = actionArray[1];

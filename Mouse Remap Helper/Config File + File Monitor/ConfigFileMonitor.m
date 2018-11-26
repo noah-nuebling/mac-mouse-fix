@@ -8,7 +8,9 @@
 
 #import "ConfigFileMonitor.h"
 #import "AppDelegate.h"
+
 #import "MomentumScroll.h"
+#import "InputReceiver.h"
 
 @implementation ConfigFileMonitor
 
@@ -57,9 +59,16 @@ static void updateScrollSettings() {
         NSNumber *px = [values objectAtIndex:0];
         NSNumber *ms = [values objectAtIndex:1];
         NSNumber *f = [values objectAtIndex:2];
-        [MomentumScroll startWithPxPerStep:px.intValue msPerStep:ms.intValue friction:f.floatValue];
+    
+        [MomentumScroll configureWithPxPerStep:px.intValue msPerStep:ms.intValue friction:f.floatValue];
+        MomentumScroll.isEnabled = TRUE;
+        NSLog(@"MomentumScroll.isEnabled: %hhd", MomentumScroll.isEnabled);
+        if (InputReceiver.relevantDevicesAreAttached && !MomentumScroll.isRunning) {
+            [MomentumScroll start];
+        }
     }
     else {
+        MomentumScroll.isEnabled = FALSE;
         [MomentumScroll stop];
     }
 }
