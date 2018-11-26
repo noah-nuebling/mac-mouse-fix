@@ -426,7 +426,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 4FCECD7B21092354001F1078 /* Build configuration list for PBXProject "Mouse Remap Helper" */;
+			buildConfigurationList = 4FCECD7B21092354001F1078 /* Build configuration list for PBXProject "Mouse Fix" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -698,6 +698,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
+				FRAMEWORK_SEARCH_PATHS = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks;
 				INFOPLIST_FILE = "Mouse Remap Helper/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.uebler.nuebler.Mouse-Remap-Helper";
@@ -718,6 +719,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
+				FRAMEWORK_SEARCH_PATHS = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks;
 				INFOPLIST_FILE = "Mouse Remap Helper/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.uebler.nuebler.Mouse-Remap-Helper";
@@ -817,7 +819,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4FCECD7B21092354001F1078 /* Build configuration list for PBXProject "Mouse Remap Helper" */ = {
+		4FCECD7B21092354001F1078 /* Build configuration list for PBXProject "Mouse Fix" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4FCECDA521092354001F1078 /* Debug */,

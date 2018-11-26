@@ -10,6 +10,7 @@
 #import "IOKit/hid/IOHIDManager.h"
 #import "InputParser.h"
 #import "AppDelegate.h"
+#import <ApplicationServices/ApplicationServices.h>
 
 #import "MomentumScroll.h"
 

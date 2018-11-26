@@ -6,8 +6,12 @@
 //  Copyright © 2018 Noah Nuebling Enterprises Ltd. All rights reserved.
 //
 
+
 #import "MomentumScroll.h"
+#import "AppDelegate.h"
 #import "QuartzCore/CoreVideo.h"
+#import <HIServices/AXUIElement.h>
+
 
 
 @interface MomentumScroll ()
@@ -25,8 +29,8 @@
 
 // there are 3 classes and 3 global variables involved in turning on/off MomentumScroll:
 // InputReceiver and ConfigFileMonitor can enable/disable MomentumScroll
-// Input Receiver sets relevantDevicesAreAttached, ConfigFileMonitor sets isEnabled (defined below), and MomentumScroll sets isRunning
-// Based on these 3 variables ConfigFileMonitor and InputReceiver decide whether to enable / disable MomentumScroll when the config file changes or a mouse is attached / removed
+// InputReceiver sets relevantDevicesAreAttached, ConfigFileMonitor sets isEnabled (defined below), and MomentumScroll sets isRunning
+// Based on these 3 variables ConfigFileMonitor and InputReceiver decide whether to enable / disable MomentumScroll when the config file changes or a mouse is attached/removed
 static BOOL _isEnabled;
 + (BOOL)isEnabled {
     return _isEnabled;
@@ -65,7 +69,8 @@ static CGEventSourceRef _eventSource    =   nil;
 
 // any phase
 static int      _scrollPhase;
-BOOL  _horizontalScrollModifierPressed;
+static BOOL  _horizontalScrollModifierPressed;
+static NSString *_bundleIdentifierOfScrolledApp;
 // wheel phase
 static int64_t  _pixelScrollQueue       =   0;
 static double   _msLeftForScroll        =   0;
@@ -87,18 +92,22 @@ static int      _onePixelScrollsCounter =   0;
     _nOfOnePixelScrollsMax              =   2;
 }
 
-+ (void)start {
-    
-    NSLog(@"MomentumScroll started");
-    
-    _isRunning = TRUE;
-    
+static void resetDynamicGlobals() {
     _horizontalScrollModifierPressed    =   NO;
     _scrollPhase                        =   kMFWheelPhase;
     _pixelScrollQueue                   =   0;
     _msLeftForScroll                    =   0;
     _pxPerMsVelocity                    =   0;
     _onePixelScrollsCounter             =   0;
+}
+
++ (void)start {
+    
+    NSLog(@"MomentumScroll started");
+    
+    _isRunning = TRUE;
+    
+    resetDynamicGlobals();
     
     if (_eventTap == nil) {
         CGEventMask mask = CGEventMaskBit(kCGEventScrollWheel);
@@ -154,13 +163,19 @@ static int      _onePixelScrollsCounter =   0;
 
 CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
+    // return non-scroll-wheel events unaltered
     
     long long   isPixelBased        =   CGEventGetIntegerValueField(event, kCGScrollWheelEventIsContinuous);
     int64_t     scrollDeltaAxis1    =   CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
     int64_t     scrollDeltaAxis2    =   CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2);
-    
     if ( (isPixelBased != 0) || (scrollDeltaAxis1 == 0) || (scrollDeltaAxis2 != 0)) {
         // scroll event doesn't come from a simple scroll wheel
+        return event;
+    }
+    
+    //setConfigVariablesForAppUnderMousePointer();
+
+    if (_isEnabled == FALSE) {
         return event;
     }
     
@@ -212,6 +227,10 @@ CVReturn displayLinkCallback (CVDisplayLinkRef displayLink, const CVTimeStamp *i
     if (msBetweenFrames != 16.674562) {
         NSLog(@"frameTimeHike: %fms", msBetweenFrames);
     }
+    CVTime msBetweenFramesNominal = CVDisplayLinkGetNominalOutputVideoRefreshPeriod(_displayLink);
+    msBetweenFrames =
+    ( ((double)msBetweenFramesNominal.timeValue) / ((double)msBetweenFramesNominal.timeScale) ) * 1000;
+    
     
 # pragma mark Wheel Phase
     if (_scrollPhase == kMFWheelPhase)
@@ -268,12 +287,12 @@ CVReturn displayLinkCallback (CVDisplayLinkRef displayLink, const CVTimeStamp *i
     //CGEventSourceSetPixelsPerLine(_eventSource, 1);
 
     if (_horizontalScrollModifierPressed == FALSE) {
-        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis1, - pixelsToScroll / 4);
-        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis1, - pixelsToScroll);
+        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis1, pixelsToScroll / 4);
+        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis1, pixelsToScroll);
     }
     else if (_horizontalScrollModifierPressed == TRUE) {
-        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis2, - pixelsToScroll / 4);
-        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis2, - pixelsToScroll);
+        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis2, pixelsToScroll / 4);
+        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis2, pixelsToScroll);
     }
     
     CGEventPost(kCGSessionEventTap, scrollEvent);
@@ -296,3 +315,74 @@ static void Handle_displayReconfiguration(CGDirectDisplayID display, CGDisplayCh
 #pragma mark - helper functions
 
 @end
+
+
+
+
+// (in Handle_eventTapCallback) change settings, when app under mouse pointer changes
+/*
+static void setConfigVariablesForAppUnderMousePointer() {
+ 
+    // get App under mouse pointer
+    
+    CGEventRef fakeEvent = CGEventCreate(NULL);
+    CGPoint mouseLocation = CGEventGetLocation(fakeEvent);
+    CFRelease(fakeEvent);
+    
+    AXUIElementRef elementUnderMousePointer;
+    AXUIElementCopyElementAtPosition(AXUIElementCreateSystemWide(), mouseLocation.x, mouseLocation.y, &elementUnderMousePointer);
+    pid_t elementUnderMousePointerPID;
+    AXUIElementGetPid(elementUnderMousePointer, &elementUnderMousePointerPID);
+    NSRunningApplication *appUnderMousePointer = [NSRunningApplication runningApplicationWithProcessIdentifier:elementUnderMousePointerPID];
+    
+    // if app under mouse pointer changed, adjust settings
+    
+    if ([_bundleIdentifierOfScrolledApp isEqualToString:[appUnderMousePointer bundleIdentifier]] == FALSE) {
+        
+        NSLog(@"changing Scroll Settings");
+        
+        AppDelegate *delegate = [NSApp delegate];
+        NSDictionary *config = [delegate configDictFromFile];
+        NSDictionary *overrides = [config objectForKey:@"AppOverrides"];
+        NSDictionary *scrollOverrideForAppUnderMousePointer = [[overrides objectForKey:
+                                                                [appUnderMousePointer bundleIdentifier]]
+                                                               objectForKey:@"ScrollSettings"];
+        BOOL enabled;
+        NSArray *values;
+        if (scrollOverrideForAppUnderMousePointer) {
+            enabled = [[scrollOverrideForAppUnderMousePointer objectForKey:@"enabled"] boolValue];
+            values = [scrollOverrideForAppUnderMousePointer objectForKey:@"values"];
+        }
+        else {
+            NSDictionary *defaultScrollSettings = [config objectForKey:@"ScrollSettings"];
+            enabled = [[defaultScrollSettings objectForKey:@"enabled"] boolValue];
+            values = [defaultScrollSettings objectForKey:@"values"];
+        }
+        _isEnabled                          =   enabled;
+        _pxStepSize                         =   [[values objectAtIndex:0] intValue];
+        _msPerScroll                        =   [[values objectAtIndex:1] intValue];
+        _frictionCoefficient                =   [[values objectAtIndex:2] floatValue];
+    }
+    
+    _bundleIdentifierOfScrolledApp = [appUnderMousePointer bundleIdentifier];
+}
+ */
+
+
+// (in Handle_displayLinkCallback) stop displayLink when app under mouse pointer changes mid scroll
+/*
+ CGEventRef fakeEvent = CGEventCreate(NULL);
+ CGPoint mouseLocation = CGEventGetLocation(fakeEvent);
+ CFRelease(fakeEvent);
+ AXUIElementRef elementUnderMousePointer;
+ AXUIElementCopyElementAtPosition(AXUIElementCreateSystemWide(), mouseLocation.x, mouseLocation.y, &elementUnderMousePointer);
+ pid_t elementUnderMousePointerPID;
+ AXUIElementGetPid(elementUnderMousePointer, &elementUnderMousePointerPID);
+ NSRunningApplication *appUnderMousePointer = [NSRunningApplication runningApplicationWithProcessIdentifier:elementUnderMousePointerPID];
+ 
+ if ( !([_bundleIdentifierOfScrolledApp isEqualToString:[appUnderMousePointer bundleIdentifier]]) ) {
+ resetDynamicGlobals();
+ CVDisplayLinkStop(_displayLink);
+ return 0;
+ }
+ */

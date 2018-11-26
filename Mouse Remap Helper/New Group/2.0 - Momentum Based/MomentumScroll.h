@@ -18,8 +18,10 @@
 + (void)start;
 + (void)stop;
 
-@property (class) BOOL isEnabled;                         // this is set by ConfigFileMonitor.h
-@property (class) BOOL isRunning;                       // this is set by MomentumScroll.h
++ (BOOL)isEnabled;
++ (void)setIsEnabled:(BOOL)B;
+
++ (BOOL)isRunning;
 
 @end
 

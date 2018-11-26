@@ -6,11 +6,6 @@
 	<dict>
 		<key>5</key>
 		<dict>
-			<key>hold</key>
-			<array>
-				<string>swipeEvent</string>
-				<string>right</string>
-			</array>
 			<key>click</key>
 			<array>
 				<string>symbolicHotKey</string>
@@ -19,11 +14,6 @@
 		</dict>
 		<key>4</key>
 		<dict>
-			<key>hold</key>
-			<array>
-				<string>swipeEvent</string>
-				<string>left</string>
-			</array>
 			<key>click</key>
 			<array>
 				<string>symbolicHotKey</string>
@@ -50,10 +40,41 @@
 		<true/>
 		<key>values</key>
 		<array>
-			<integer>60</integer>
-			<integer>120</integer>
-			<real>1.5</real>
+			<integer>50</integer>
+			<integer>75</integer>
+			<real>1.2</real>
 		</array>
+	</dict>
+	<key>AppOverrides</key>
+	<dict>
+		<key>com.bohemiancoding.sketch3</key>
+		<dict>
+			<key>ScrollSettings</key>
+			<dict>
+				<key>enabled</key>
+				<false/>
+				<key>values</key>
+				<array>
+					<integer>50</integer>
+					<integer>75</integer>
+					<real>1.2</real>
+				</array>
+			</dict>
+		</dict>
+		<key>com.apple.dt.Xcode</key>
+		<dict>
+			<key>ScrollSettings</key>
+			<dict>
+				<key>enabled</key>
+				<false/>
+				<key>values</key>
+				<array>
+					<integer>50</integer>
+					<integer>75</integer>
+					<real>1.2</real>
+				</array>
+			</dict>
+		</dict>
 	</dict>
 </dict>
 </plist>

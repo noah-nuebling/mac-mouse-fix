@@ -6,6 +6,10 @@
 //  Copyright © 2018 Noah Nuebling Enterprises Ltd. All rights reserved.
 //
 
+
+// TODO: implement callback when frontmost application changes - change settings accordingly
+// NSWorkspaceDidActivateApplicationNotification?
+
 #import "ConfigFileMonitor.h"
 #import "AppDelegate.h"
 

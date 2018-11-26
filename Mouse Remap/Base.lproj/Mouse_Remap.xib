@@ -16,14 +16,14 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="≪ do not localize ≫" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" deferred="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="F0z-JX-Cv5" userLabel="PrefPane">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
-            <rect key="contentRect" x="0.0" y="0.0" width="668" height="578"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
+            <rect key="contentRect" x="0.0" y="0.0" width="668" height="213"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="800"/>
             <view key="contentView" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="0.0" width="668" height="578"/>
+                <rect key="frame" x="0.0" y="0.0" width="668" height="213"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button verticalHuggingPriority="750" misplaced="YES" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WfN-Sk-KjI">
-                        <rect key="frame" x="487" y="23" width="153" height="18"/>
+                        <rect key="frame" x="504" y="18" width="153" height="18"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="14" id="dPm-3b-kwe"/>
                         </constraints>
@@ -42,7 +42,7 @@
                     <constraint firstAttribute="bottom" secondItem="WfN-Sk-KjI" secondAttribute="bottom" constant="25" id="yzO-mm-gaS"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="91" y="157"/>
+            <point key="canvasLocation" x="91" y="-25.5"/>
         </window>
     </objects>
 </document>

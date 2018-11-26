@@ -16,7 +16,7 @@
 // Store configFile for global access from all classes
 @property (retain) NSMutableDictionary *configDictFromFile;
 - (void)updateConfig:(NSMutableDictionary *)config;
-- (void) repairConfigFile:(NSString *)info;
+- (void)repairConfigFile:(NSString *)info;
 
 
 - (void) setHorizontalScroll:(BOOL)B;
