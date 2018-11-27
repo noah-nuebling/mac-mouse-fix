@@ -4,12 +4,12 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Mouse Remap Helper.xcscheme</key>
+		<key>Mouse Fix Helper.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
-		<key>Mouse Remap.xcscheme</key>
+		<key>Mouse Fix.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>1</integer>

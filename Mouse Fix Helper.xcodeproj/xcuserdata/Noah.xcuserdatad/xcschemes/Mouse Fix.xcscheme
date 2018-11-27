@@ -17,7 +17,7 @@
                BlueprintIdentifier = "4FD67DDA211CC9000095A9A5"
                BuildableName = "Mouse Fix.prefPane"
                BlueprintName = "Mouse Fix"
-               ReferencedContainer = "container:Mouse Fix.xcodeproj">
+               ReferencedContainer = "container:Mouse Fix Helper.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -54,7 +54,7 @@
             BlueprintIdentifier = "4FD67DDA211CC9000095A9A5"
             BuildableName = "Mouse Fix.prefPane"
             BlueprintName = "Mouse Fix"
-            ReferencedContainer = "container:Mouse Fix.xcodeproj">
+            ReferencedContainer = "container:Mouse Fix Helper.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <EnvironmentVariables>
@@ -79,7 +79,7 @@
             BlueprintIdentifier = "4FD67DDA211CC9000095A9A5"
             BuildableName = "Mouse Fix.prefPane"
             BlueprintName = "Mouse Fix"
-            ReferencedContainer = "container:Mouse Fix.xcodeproj">
+            ReferencedContainer = "container:Mouse Fix Helper.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
