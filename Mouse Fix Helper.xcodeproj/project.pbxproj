@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4F1E52EA21A8D3D00005B817 /* MomentumScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1E52E921A8D3D00005B817 /* MomentumScroll.m */; };
+		4F2BF98D21AE052400CF6A24 /* DeviceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2BF98C21AE052400CF6A24 /* DeviceManager.m */; };
 		4F34F9AF21A3590D00104EBF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F34F9AE21A3590D00104EBF /* main.m */; };
 		4F34F9B521A359D500104EBF /* InputReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F34F9B421A359D500104EBF /* InputReceiver.m */; };
 		4F34F9B921A35E8E00104EBF /* InputParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F34F9B821A35E8E00104EBF /* InputParser.m */; };
@@ -71,6 +72,8 @@
 /* Begin PBXFileReference section */
 		4F1E52E821A8D3D00005B817 /* MomentumScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MomentumScroll.h; sourceTree = "<group>"; };
 		4F1E52E921A8D3D00005B817 /* MomentumScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MomentumScroll.m; sourceTree = "<group>"; };
+		4F2BF98B21AE052400CF6A24 /* DeviceManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeviceManager.h; sourceTree = "<group>"; };
+		4F2BF98C21AE052400CF6A24 /* DeviceManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeviceManager.m; sourceTree = "<group>"; };
 		4F34F9AE21A3590D00104EBF /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4F34F9B321A359D500104EBF /* InputReceiver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InputReceiver.h; sourceTree = "<group>"; };
 		4F34F9B421A359D500104EBF /* InputReceiver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InputReceiver.m; sourceTree = "<group>"; };
@@ -89,10 +92,7 @@
 		4F8DC71E21A6244800E1D297 /* SmoothScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmoothScroll.h; sourceTree = "<group>"; };
 		4FACF59E2183B956009257D4 /* default_mouse.fix.helper.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_mouse.fix.helper.plist; sourceTree = "<group>"; };
 		4FBB85CA2187C2BC00DD6B40 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Mouse_Remap.strings; sourceTree = "<group>"; };
-		4FBB85CC2187C36A00DD6B40 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/MainMenu.strings; sourceTree = "<group>"; };
 		4FBB85D32187C74100DD6B40 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		4FBB85D52187CB2500DD6B40 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
-		4FBB85D72187D84300DD6B40 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Mouse_Remap.strings; sourceTree = "<group>"; };
 		4FCECD8021092354001F1078 /* Mouse Fix Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mouse Fix Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FCECD8321092354001F1078 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4FCECD8421092354001F1078 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -167,7 +167,7 @@
 			path = "2.0 - Momentum Based";
 			sourceTree = "<group>";
 		};
-		4F34F9B621A359E200104EBF /* Remap Classes */ = {
+		4F34F9B621A359E200104EBF /* Remap */ = {
 			isa = PBXGroup;
 			children = (
 				4F34F9B321A359D500104EBF /* InputReceiver.h */,
@@ -175,8 +175,21 @@
 				4F34F9B721A35E8E00104EBF /* InputParser.h */,
 				4F34F9B821A35E8E00104EBF /* InputParser.m */,
 			);
-			name = "Remap Classes";
+			name = Remap;
 			path = "New Group";
+			sourceTree = "<group>";
+		};
+		4F7F863E21AE2B64007DF9A6 /* Bezel Services */ = {
+			isa = PBXGroup;
+			children = (
+				4F2BF98B21AE052400CF6A24 /* DeviceManager.h */,
+				4F2BF98C21AE052400CF6A24 /* DeviceManager.m */,
+				4F611D2621A8E230008857A8 /* config.plist */,
+				4F34F9BD21A366B400104EBF /* ConfigFileMonitor.h */,
+				4F34F9BE21A366B400104EBF /* ConfigFileMonitor.m */,
+			);
+			name = "Bezel Services";
+			path = "Config File + File Monitor";
 			sourceTree = "<group>";
 		};
 		4F8DC6EF21A3B20D00E1D297 /* SSB Private Apis */ = {
@@ -190,23 +203,13 @@
 			path = "SSB Private Apis";
 			sourceTree = "<group>";
 		};
-		4F8DC6F021A3B4B800E1D297 /* Config File + File Monitor */ = {
-			isa = PBXGroup;
-			children = (
-				4F611D2621A8E230008857A8 /* config.plist */,
-				4F34F9BE21A366B400104EBF /* ConfigFileMonitor.m */,
-				4F34F9BD21A366B400104EBF /* ConfigFileMonitor.h */,
-			);
-			path = "Config File + File Monitor";
-			sourceTree = "<group>";
-		};
-		4F8DC6F121A3B50900E1D297 /* Smooth Scroll Classes */ = {
+		4F8DC6F121A3B50900E1D297 /* Smooth Scroll */ = {
 			isa = PBXGroup;
 			children = (
 				4F1E52EB21A8D3E40005B817 /* 2.0 - Momentum Based */,
 				4F1E52E721A8D2DF0005B817 /* Curve Based (Unused) */,
 			);
-			name = "Smooth Scroll Classes";
+			name = "Smooth Scroll";
 			path = "New Group";
 			sourceTree = "<group>";
 		};
@@ -233,8 +236,8 @@
 		4FCECD7721092354001F1078 = {
 			isa = PBXGroup;
 			children = (
-				4FD67DDC211CC9000095A9A5 /* Mouse Fix */,
 				4FCECD8221092354001F1078 /* Mouse Fix Helper */,
+				4FD67DDC211CC9000095A9A5 /* Mouse Fix */,
 				4FCECD8121092354001F1078 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -255,9 +258,9 @@
 			children = (
 				4FCECD8321092354001F1078 /* AppDelegate.h */,
 				4FCECD8421092354001F1078 /* AppDelegate.m */,
-				4F8DC6F121A3B50900E1D297 /* Smooth Scroll Classes */,
-				4F34F9B621A359E200104EBF /* Remap Classes */,
-				4F8DC6F021A3B4B800E1D297 /* Config File + File Monitor */,
+				4F8DC6F121A3B50900E1D297 /* Smooth Scroll */,
+				4F34F9B621A359E200104EBF /* Remap */,
+				4F7F863E21AE2B64007DF9A6 /* Bezel Services */,
 				4FCECDB02109326E001F1078 /* Supporting Files */,
 			);
 			path = "Mouse Fix Helper";
@@ -433,7 +436,6 @@
 			knownRegions = (
 				en,
 				Base,
-				de,
 			);
 			mainGroup = 4FCECD7721092354001F1078;
 			productRefGroup = 4FCECD8121092354001F1078 /* Products */;
@@ -491,6 +493,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F1E52EA21A8D3D00005B817 /* MomentumScroll.m in Sources */,
+				4F2BF98D21AE052400CF6A24 /* DeviceManager.m in Sources */,
 				4F34F9B521A359D500104EBF /* InputReceiver.m in Sources */,
 				4F34F9BF21A366B400104EBF /* ConfigFileMonitor.m in Sources */,
 				4F8DC71F21A6244800E1D297 /* SmoothScroll.m in Sources */,
@@ -551,7 +554,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				4FBB85D32187C74100DD6B40 /* en */,
-				4FBB85D52187CB2500DD6B40 /* de */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -560,7 +562,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				4FF383372184F511007F771B /* Base */,
-				4FBB85CC2187C36A00DD6B40 /* de */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -570,7 +571,6 @@
 			children = (
 				4FF383362184F511007F771B /* Base */,
 				4FBB85CA2187C2BC00DD6B40 /* en */,
-				4FBB85D72187D84300DD6B40 /* de */,
 			);
 			name = Mouse_Remap.xib;
 			sourceTree = "<group>";

@@ -37,8 +37,8 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 {
     if (self == [PrefPaneDelegate class]) {
         _scrollSmoothnessConfigurations = @{
-            @"normal"   :   @[ @[@20,@100], @130, @1.7],
-            @"smooth"   :   @[ @[@20,@100], @110, @1.2] };
+            @"Normal"   :   @[ @[@20,@100], @130, @1.5],
+            @"Smooth"   :   @[ @[@10,@90],  @75,  @1.2] };
         
         actionsForPopupButtonTag_onlyForSideMouseButtons = @{
             @1          :   @[ @[@"symbolicHotKey", @79    ], @[@"symbolicHotKey", @81     ]],
@@ -50,33 +50,31 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 # pragma mark - IBActions
 
 - (IBAction)enableCheckBox:(id)sender {
+    //sendKeyUpForAllSymbolicHotKeysThatAMouseButtonMapsTo(self);
+    
     BOOL checkboxState = [sender state];
     [self enableHelperAsUserAgent: checkboxState];
 }
-- (IBAction)scrollCheckbox:(id)sender {
-    if ([sender state] == 1) {
-        
+
+- (IBAction)UIChanged:(id)sender {
+    //sendKeyUpForAllSymbolicHotKeysThatAMouseButtonMapsTo(self);
+    
+    [self setConfigDictToUI];
+}
+/*
+static void sendKeyUpForAllSymbolicHotKeysThatAMouseButtonMapsTo(PrefPaneDelegate *self) {
+    
+    NSDictionary *remaps = self.configDictFromFile[@"ButtonRemaps"];
+    for (NSString *key in remaps) {
+        NSArray *action = remaps[key];
+        NSString *type = action[0];
+        if ([type isEqualToString:@"symbolicHotKey"]) {
+            int shk = [action[1] intValue];
+            [InputParser performSymbolicHotKey:shk downOrUp:@"up"];
+        }
     }
 }
-- (IBAction)scrollRadioButtonGroup:(id)sender {
-}
-- (IBAction)scrollSliderStepSize:(id)sender {
-}
-
-- (IBAction)middleClickPopupButton:(id)sender {
-    [self setConfigDictToUI];
-}
-- (IBAction)middleHoldPopupButton:(id)sender {
-    [self setConfigDictToUI];
-}
-- (IBAction)sideClickPopupButton:(id)sender {
-    NSLog(@"POPUP");
-    [self setConfigDictToUI];
-}
-- (IBAction)sideHoldPopupButton:(id)sender {
-    [self setConfigDictToUI];
-}
-
+ */
 
 
 
@@ -111,7 +109,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 
 
 /* registering/unregistering the helper as a User Agent with launchd - also launches/terminates helper */
-- (void)enableHelperAsUserAgent: (BOOL) enable {
+- (void)enableHelperAsUserAgent: (BOOL)enable {
 
     // repair config file if checkbox state is changed
     [self repairUserAgentConfigFile];
@@ -313,7 +311,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
 }
 
-- (void)writeConfigDictFromFile {
+- (void)writeConfigDictToFile {
     NSError *writeErr;
     NSData *configData = [NSPropertyListSerialization dataWithPropertyList:self.configDictFromFile format:NSPropertyListXMLFormat_v1_0 options:0 error:&writeErr];
     if (writeErr) {
@@ -380,7 +378,37 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     [_configDictFromFile setValue:sideButtonHoldAction[1] forKeyPath:@"ButtonRemaps.5.hold"];
     
     
-    [self writeConfigDictFromFile];
+    // scroll Settings
+    
+    // checkbox
+    [_configDictFromFile setValue: [NSNumber numberWithBool: _scrollCheckBox.state] forKeyPath:@"ScrollSettings.enabled"];
+    
+    
+    // radio buttons and slider
+    NSArray *smoothnessConfiguration;
+    if (_scrollRadioButtonNormal.state == 1) {
+        smoothnessConfiguration = _scrollSmoothnessConfigurations[@"Normal"];
+    }
+    else if (_scrollRadioButtonSmooth.state == 1) {
+        smoothnessConfiguration = _scrollSmoothnessConfigurations[@"Smooth"];
+    }
+    NSArray     *stepSizeRange  = smoothnessConfiguration[0];
+    NSNumber    *msPerStep      = smoothnessConfiguration[1];
+    NSNumber    *friction       = smoothnessConfiguration[2];
+    
+    float scrollSliderValue = [_scrollSliderStepSize floatValue];
+    int stepSizeMin = [stepSizeRange[0] intValue];
+    int stepSizeMax = [stepSizeRange[1] intValue];
+    
+    int stepSizeActual = ( scrollSliderValue * (stepSizeMax - stepSizeMin) ) + stepSizeMin;
+    
+    NSArray *scrollValuesFromUI = @[@(stepSizeActual), msPerStep, friction];
+    
+    [_configDictFromFile setValue:scrollValuesFromUI forKeyPath:@"ScrollSettings.values"];
+    
+
+    
+    [self writeConfigDictToFile];
 }
 
 
@@ -462,16 +490,16 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     // radio buttons
     NSArray *scrollValues = scrollConfigFromFile[@"values"];
     NSString *activeScrollSmoothnessConfiguration;
-    if (([scrollValues[1] intValue] == [_scrollSmoothnessConfigurations[@"smooth"][1] intValue]) &&           // msPerStep
-        ([scrollValues[2] floatValue] == [_scrollSmoothnessConfigurations[@"smooth"][2] floatValue] )) {           // friction
+    if (([scrollValues[1] intValue] == [_scrollSmoothnessConfigurations[@"Smooth"][1] intValue]) &&           // msPerStep
+        ([scrollValues[2] floatValue] == [_scrollSmoothnessConfigurations[@"Smooth"][2] floatValue] )) {           // friction
         NSLog(@"SMOOTH");
         
         _scrollRadioButtonSmooth.state = 1;
-        activeScrollSmoothnessConfiguration = @"smooth";
+        activeScrollSmoothnessConfiguration = @"Smooth";
     }
     else {
         _scrollRadioButtonNormal.state = 1;
-        activeScrollSmoothnessConfiguration = @"normal";
+        activeScrollSmoothnessConfiguration = @"Normal";
     }
     
     // slider
