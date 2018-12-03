@@ -18,7 +18,9 @@
 
 @property (weak) IBOutlet NSButton *scrollCheckBox;
 @property (weak) IBOutlet NSButton *scrollRadioButtonNormal;
+@property (weak) IBOutlet NSButton *scrollRadioButtonSnappy;
 @property (weak) IBOutlet NSButton *scrollRadioButtonSmooth;
+
 @property (weak) IBOutlet NSSlider *scrollSliderStepSize;
 
 @property (weak) IBOutlet NSPopUpButton *middleClick;
@@ -37,8 +39,11 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 {
     if (self == [PrefPaneDelegate class]) {
         _scrollSmoothnessConfigurations = @{
-            @"Normal"   :   @[ @[@20,@100], @130, @1.5],
-            @"Smooth"   :   @[ @[@10,@90],  @75,  @1.2] };
+            @"Normal"   :   @[ @[@20,@100],  @130, @1.5],
+            @"Snappy"   :   @[ @[@10,@90],  @75,  @1.2],
+            @"Smooth"   :   @[ @[@10,@90], @190, @1.5],
+        
+            };
         
         actionsForPopupButtonTag_onlyForSideMouseButtons = @{
             @1          :   @[ @[@"symbolicHotKey", @79    ], @[@"symbolicHotKey", @81     ]],
@@ -57,24 +62,9 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 }
 
 - (IBAction)UIChanged:(id)sender {
-    //sendKeyUpForAllSymbolicHotKeysThatAMouseButtonMapsTo(self);
-    
     [self setConfigDictToUI];
+    tellHelperToUpdateItsSettings();
 }
-/*
-static void sendKeyUpForAllSymbolicHotKeysThatAMouseButtonMapsTo(PrefPaneDelegate *self) {
-    
-    NSDictionary *remaps = self.configDictFromFile[@"ButtonRemaps"];
-    for (NSString *key in remaps) {
-        NSArray *action = remaps[key];
-        NSString *type = action[0];
-        if ([type isEqualToString:@"symbolicHotKey"]) {
-            int shk = [action[1] intValue];
-            [InputParser performSymbolicHotKey:shk downOrUp:@"up"];
-        }
-    }
-}
- */
 
 
 
@@ -89,11 +79,6 @@ static void sendKeyUpForAllSymbolicHotKeysThatAMouseButtonMapsTo(PrefPaneDelegat
     [self loadHelperBundle];
     [self loadConfigDictFromFile];
     [self initializeUI];
-    
-    
-
-            
-    
     
     // enableCheckbox
     
@@ -346,6 +331,8 @@ static void sendKeyUpForAllSymbolicHotKeysThatAMouseButtonMapsTo(PrefPaneDelegat
 
 - (void)setConfigDictToUI {
     
+    NSLog(@"SET CONFIG TO UI");
+    
     // middle button        // tag equals symbolicHotKey
     
     // click
@@ -378,6 +365,7 @@ static void sendKeyUpForAllSymbolicHotKeysThatAMouseButtonMapsTo(PrefPaneDelegat
     [_configDictFromFile setValue:sideButtonHoldAction[1] forKeyPath:@"ButtonRemaps.5.hold"];
     
     
+    
     // scroll Settings
     
     // checkbox
@@ -386,11 +374,16 @@ static void sendKeyUpForAllSymbolicHotKeysThatAMouseButtonMapsTo(PrefPaneDelegat
     
     // radio buttons and slider
     NSArray *smoothnessConfiguration;
-    if (_scrollRadioButtonNormal.state == 1) {
-        smoothnessConfiguration = _scrollSmoothnessConfigurations[@"Normal"];
-    }
-    else if (_scrollRadioButtonSmooth.state == 1) {
+    
+    
+    if (_scrollRadioButtonSmooth.state == 1) {
         smoothnessConfiguration = _scrollSmoothnessConfigurations[@"Smooth"];
+    }
+    else if (_scrollRadioButtonSnappy.state == 1) {
+        smoothnessConfiguration = _scrollSmoothnessConfigurations[@"Snappy"];
+    }
+    else {
+        smoothnessConfiguration = _scrollSmoothnessConfigurations[@"Normal"];
     }
     NSArray     *stepSizeRange  = smoothnessConfiguration[0];
     NSNumber    *msPerStep      = smoothnessConfiguration[1];
@@ -492,10 +485,14 @@ static void sendKeyUpForAllSymbolicHotKeysThatAMouseButtonMapsTo(PrefPaneDelegat
     NSString *activeScrollSmoothnessConfiguration;
     if (([scrollValues[1] intValue] == [_scrollSmoothnessConfigurations[@"Smooth"][1] intValue]) &&           // msPerStep
         ([scrollValues[2] floatValue] == [_scrollSmoothnessConfigurations[@"Smooth"][2] floatValue] )) {           // friction
-        NSLog(@"SMOOTH");
-        
         _scrollRadioButtonSmooth.state = 1;
         activeScrollSmoothnessConfiguration = @"Smooth";
+    }
+    
+    else if (([scrollValues[1] intValue] == [_scrollSmoothnessConfigurations[@"Snappy"][1] intValue]) &&
+             ([scrollValues[2] floatValue] == [_scrollSmoothnessConfigurations[@"Snappy"][2] floatValue] )) {
+        _scrollRadioButtonSnappy.state = 1;
+        activeScrollSmoothnessConfiguration = @"Snappy";
     }
     else {
         _scrollRadioButtonNormal.state = 1;
@@ -512,6 +509,26 @@ static void sendKeyUpForAllSymbolicHotKeysThatAMouseButtonMapsTo(PrefPaneDelegat
     
     _scrollSliderStepSize.doubleValue = pxStepSizeRelativeToConfigRange;
     
+}
+
+
+static void tellHelperToUpdateItsSettings() {
+    CFMessagePortRef remotePort = CFMessagePortCreateRemote(kCFAllocatorDefault, CFSTR("com.uebler.nuebler.mouse.fix.port"));
+    if (remotePort == NULL) {
+        NSLog(@"there is no CFMessagePort");
+        return;
+    }
+        
+    SInt32 messageID = 0x420666; // Arbitrary
+    CFDataRef data = nil;
+    CFTimeInterval sendTimeout = 0.0;
+    CFTimeInterval recieveTimeout = 0.0;
+    CFStringRef replyMode = NULL;
+    CFDataRef returnData = nil;
+    SInt32 status = CFMessagePortSendRequest(remotePort, messageID, data, sendTimeout, recieveTimeout, replyMode, &returnData);
+    if (status != 0) {
+        NSLog(@"CFMessagePortSendRequest status: %d", status);
+    }
 }
 
 @end

@@ -14,6 +14,8 @@
 		4F34F9B921A35E8E00104EBF /* InputParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F34F9B821A35E8E00104EBF /* InputParser.m */; };
 		4F34F9BF21A366B400104EBF /* ConfigFileMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F34F9BE21A366B400104EBF /* ConfigFileMonitor.m */; };
 		4F611D2721A8E230008857A8 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F611D2621A8E230008857A8 /* config.plist */; };
+		4F7387FD21B48F7900C2F468 /* MomentumScroll.mn in Sources */ = {isa = PBXBuildFile; fileRef = 4F7387FB21B48F7900C2F468 /* MomentumScroll.mn */; };
+		4F73880021B4A79800C2F468 /* MessagePortReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F7387FF21B4A79800C2F468 /* MessagePortReceiver.m */; };
 		4F8DC6EA21A3B1D200E1D297 /* TouchEvents.c in Sources */ = {isa = PBXBuildFile; fileRef = 4F8DC6E821A3B1D200E1D297 /* TouchEvents.c */; };
 		4F8DC6ED21A3B20600E1D297 /* IOHIDEventData.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F8DC6EB21A3B20600E1D297 /* IOHIDEventData.h */; };
 		4F8DC6EE21A3B20600E1D297 /* IOHIDEventTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F8DC6EC21A3B20600E1D297 /* IOHIDEventTypes.h */; };
@@ -82,6 +84,10 @@
 		4F34F9BD21A366B400104EBF /* ConfigFileMonitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigFileMonitor.h; sourceTree = "<group>"; };
 		4F34F9BE21A366B400104EBF /* ConfigFileMonitor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigFileMonitor.m; sourceTree = "<group>"; };
 		4F611D2621A8E230008857A8 /* config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
+		4F7387FB21B48F7900C2F468 /* MomentumScroll.mn */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MomentumScroll.mn; sourceTree = "<group>"; };
+		4F7387FC21B48F7900C2F468 /* MomentumScroll.hn */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MomentumScroll.hn; sourceTree = "<group>"; };
+		4F7387FE21B4A79800C2F468 /* MessagePortReceiver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessagePortReceiver.h; sourceTree = "<group>"; };
+		4F7387FF21B4A79800C2F468 /* MessagePortReceiver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessagePortReceiver.m; sourceTree = "<group>"; };
 		4F8DC6E821A3B1D200E1D297 /* TouchEvents.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = TouchEvents.c; sourceTree = "<group>"; };
 		4F8DC6E921A3B1D200E1D297 /* TouchEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchEvents.h; sourceTree = "<group>"; };
 		4F8DC6EB21A3B20600E1D297 /* IOHIDEventData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOHIDEventData.h; sourceTree = "<group>"; };
@@ -163,6 +169,8 @@
 			children = (
 				4F1E52E821A8D3D00005B817 /* MomentumScroll.h */,
 				4F1E52E921A8D3D00005B817 /* MomentumScroll.m */,
+				4F7387FC21B48F7900C2F468 /* MomentumScroll.hn */,
+				4F7387FB21B48F7900C2F468 /* MomentumScroll.mn */,
 			);
 			path = "2.0 - Momentum Based";
 			sourceTree = "<group>";
@@ -187,6 +195,8 @@
 				4F611D2621A8E230008857A8 /* config.plist */,
 				4F34F9BD21A366B400104EBF /* ConfigFileMonitor.h */,
 				4F34F9BE21A366B400104EBF /* ConfigFileMonitor.m */,
+				4F7387FE21B4A79800C2F468 /* MessagePortReceiver.h */,
+				4F7387FF21B4A79800C2F468 /* MessagePortReceiver.m */,
 			);
 			name = "Bezel Services";
 			path = "Config File + File Monitor";
@@ -236,8 +246,8 @@
 		4FCECD7721092354001F1078 = {
 			isa = PBXGroup;
 			children = (
-				4FCECD8221092354001F1078 /* Mouse Fix Helper */,
 				4FD67DDC211CC9000095A9A5 /* Mouse Fix */,
+				4FCECD8221092354001F1078 /* Mouse Fix Helper */,
 				4FCECD8121092354001F1078 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -492,12 +502,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F7387FD21B48F7900C2F468 /* MomentumScroll.mn in Sources */,
 				4F1E52EA21A8D3D00005B817 /* MomentumScroll.m in Sources */,
 				4F2BF98D21AE052400CF6A24 /* DeviceManager.m in Sources */,
 				4F34F9B521A359D500104EBF /* InputReceiver.m in Sources */,
 				4F34F9BF21A366B400104EBF /* ConfigFileMonitor.m in Sources */,
 				4F8DC71F21A6244800E1D297 /* SmoothScroll.m in Sources */,
 				4F8DC6EA21A3B1D200E1D297 /* TouchEvents.c in Sources */,
+				4F73880021B4A79800C2F468 /* MessagePortReceiver.m in Sources */,
 				4F34F9B921A35E8E00104EBF /* InputParser.m in Sources */,
 				4F34F9AF21A3590D00104EBF /* main.m in Sources */,
 				4FCECD8521092354001F1078 /* AppDelegate.m in Sources */,
