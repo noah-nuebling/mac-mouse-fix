@@ -718,7 +718,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "Mouse Fix Helper/Mouse Remap Helper-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
-				USER_HEADER_SEARCH_PATHS = "/Users/Noah/Documents/|MyFiles/Projekte/Programmieren/Xcode/XcodePrivateHeaders";
+				USER_HEADER_SEARCH_PATHS = /Users/Noah/Documents/_MyFiles/Projekte/Programmieren/Xcode/XcodePrivateHeaders;
 			};
 			name = Debug;
 		};
@@ -738,7 +738,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Mouse Fix Helper/Mouse Remap Helper-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
-				USER_HEADER_SEARCH_PATHS = "/Users/Noah/Documents/|MyFiles/Projekte/Programmieren/Xcode/XcodePrivateHeaders";
+				USER_HEADER_SEARCH_PATHS = /Users/Noah/Documents/_MyFiles/Projekte/Programmieren/Xcode/XcodePrivateHeaders;
 			};
 			name = Release;
 		};

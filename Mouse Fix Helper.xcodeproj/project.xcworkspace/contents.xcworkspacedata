@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:/Users/Noah/Documents/|MyFiles/Projekte/Programmieren/Xcode/Xcode Projekte/Mac Mouse Fix/Mouse Fix/Mouse Fix Helper.xcodeproj">
+      location = "group:">
    </FileRef>
 </Workspace>
