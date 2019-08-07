@@ -12,6 +12,9 @@
 
 @interface ConfigFileInterface : NSObject
 
+@property (class, retain) NSMutableDictionary *config;
++ (void)repairConfigFile:(NSString *)info;
+
 //+ (void)start;
 
 + (void)reactToConfigFileChange;

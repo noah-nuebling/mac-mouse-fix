@@ -13,10 +13,6 @@
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
 
-// Store configFile for global access from all classes
-@property (retain) NSMutableDictionary *configDictFromFile;
-- (void)updateConfig:(NSMutableDictionary *)config;
-- (void)repairConfigFile:(NSString *)info;
 
 
 // InputParser.h - Global variables

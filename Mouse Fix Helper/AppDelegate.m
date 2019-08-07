@@ -68,17 +68,6 @@
 }
 
 
-- (void)updateConfig:(NSMutableDictionary *)config {
-    [self setConfigDictFromFile: config];
-    
-}
-
-- (void) repairConfigFile:(NSString *)info {
-    // TODO: actually repair config dict
-    NSLog(@"repairing configDict....");
-}
-
-
 
 // NSTimer Callbacks
 

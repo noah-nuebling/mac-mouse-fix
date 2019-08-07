@@ -18,14 +18,22 @@
 
 @implementation ConfigFileInterface
 
+static NSMutableDictionary *config;
 
++ (NSMutableDictionary *)config {
+    return config;
+}
+// TODO: Why would I ever use this?
++ (void)setConfig:(NSMutableDictionary *)new {
+    config = new;
+}
 
 + (void)reactToConfigFileChange {
-    fillConfigDictFromFile();
+    fillConfigFromFile();
     updateScrollSettings();
 }
 
-static void fillConfigDictFromFile() {
+static void fillConfigFromFile() {
     
     NSBundle *thisBundle = [NSBundle mainBundle];
     NSString *configFilePath = [thisBundle pathForResource:@"config" ofType:@"plist"];
@@ -38,13 +46,12 @@ static void fillConfigDictFromFile() {
         NSError *err;
         NSMutableDictionary *config = [NSPropertyListSerialization propertyListWithData:configFileData options:NSPropertyListMutableContainersAndLeaves format:nil error: &err];
         
-        AppDelegate *appDelegate = (AppDelegate *)[NSApp delegate];
         
-        NSLog(@"prop from configMonitor: %@", [appDelegate configDictFromFile]);
+        NSLog(@"prop from configMonitor: %@", ConfigFileInterface.config);
         
         NSLog(@"setting new prop from configMonitor: %@", config);
         
-        [appDelegate updateConfig:config];
+        ConfigFileInterface.config = config;
         
         //NSLog(@"configDictFromFile after setting: %@", [ConfigFileMonitor configDictFromFile]);
         
@@ -54,11 +61,8 @@ static void fillConfigDictFromFile() {
     }
 }
 
-
-
 static void updateScrollSettings() {
-    AppDelegate *delegate = [NSApp delegate];
-    NSDictionary *config = [delegate configDictFromFile];
+    NSDictionary *config = ConfigFileInterface.config;
     NSDictionary *scrollSettings = [config objectForKey:@"ScrollSettings"];
     if ([[scrollSettings objectForKey:@"enabled"] boolValue] == TRUE) {
         NSArray *values = [scrollSettings objectForKey:@"values"];
@@ -78,6 +82,11 @@ static void updateScrollSettings() {
         MomentumScroll.isEnabled = FALSE;
         [MomentumScroll startOrStopDecide];
     }
+}
+
++ (void) repairConfigFile:(NSString *)info {
+    // TODO: actually repair config dict
+    NSLog(@"repairing configDict....");
 }
 
 

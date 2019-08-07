@@ -28,6 +28,7 @@
 
 #import "InputParser.h"
 #import "AppDelegate.h"
+#import "ConfigFileInterface.h"
 #import "CGSInternal/CGSHotKeys.h"
 #import "SensibleSideButtons/TouchEvents.h"
 
@@ -41,11 +42,9 @@ static NSTimer      *_clickAndHoldTimer;
     
     NSLog(@"parsing input (Input Parser)");
     
-    AppDelegate *appDelegate = [NSApp delegate];
-    
     NSString *keyPath = [NSString stringWithFormat:@"ButtonRemaps.%d", mouseButton];
     
-    NSDictionary *remapsForInputButton = [[appDelegate configDictFromFile] valueForKeyPath: keyPath];
+    NSDictionary *remapsForInputButton = [ConfigFileInterface.config valueForKeyPath: keyPath];
     
     @try {
         
@@ -102,7 +101,7 @@ static NSTimer      *_clickAndHoldTimer;
         }
     } @catch (NSException *exception) {
         NSLog(@"ERROR: remaps broken (Input Parser)");
-        [appDelegate repairConfigFile: @"remaps"];
+        [ConfigFileInterface repairConfigFile: @"remaps"];
     }
     
     return event;
