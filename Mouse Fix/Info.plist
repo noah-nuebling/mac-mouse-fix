@@ -17,15 +17,15 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>10</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2018 Noah Nuebling Enterprises Ltd. All rights reserved.</string>
 	<key>NSMainNibFile</key>
 	<string>Mouse_Remap</string>
 	<key>NSPrefPaneIconFile</key>
-	<string>Mouse_Remap.tiff</string>
+	<string>Mouse_Fix.tiff</string>
 	<key>NSPrefPaneIconLabel</key>
-	<string>Mouse Remap</string>
+	<string>Mouse Fix</string>
 	<key>NSPrincipalClass</key>
 	<string>Mouse_Remap</string>
 </dict>

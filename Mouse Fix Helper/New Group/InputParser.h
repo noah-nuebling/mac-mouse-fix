@@ -17,6 +17,15 @@ NS_ASSUME_NONNULL_BEGIN
 + (CGEventRef)parse:(int)mouseButton state:(int)state event:(CGEventRef)event;
 + (void)doSymbolicHotKeyAction: (CGSSymbolicHotKey)shk;
 + (void)handleActionArray:(NSArray *)actionArray;
+
+
++ (void)clickAndHoldCallback:(NSTimer *)timer;
+
+// I started implementing a more general "click gesture recognizer", but I don't think that's really necessary
+/*
++ (void)parseClickGestureWithButton:(int)button state:(int)state level:(int)level holdCallback:(Boolean)hold clickCallback:(Boolean)ccb;
++ (CGEventRef)clickGestureRecognizer:(CGEventRef)event;
+*/
 @end
 
 NS_ASSUME_NONNULL_END

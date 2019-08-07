@@ -10,7 +10,7 @@
 #import "IOKit/hid/IOHIDManager.h"
 #import "MomentumScroll.h"
 #import "InputReceiver.h"
-#import "ConfigFileMonitor.h"
+#import "ConfigFileInterface.h"
 
 @implementation DeviceManager
 
@@ -69,7 +69,6 @@ static void setupDeviceAddedAndRemovedCallbacks() {
     matches = CFArrayCreate(kCFAllocatorDefault, (const void **)matchesList, 1, NULL);
     
     
-    NSLog(@"HIDManager: %@", _hidManager);
     NSLog(@"matches: %@", matchDict2);
     
     //Register the Matching Dictionary to the HID Manager
@@ -169,7 +168,7 @@ static void registerDeviceButtonInputCallback_InInputReceiverClass(IOHIDDeviceRe
     IOHIDDeviceSetInputValueMatching(device, elementMatchDict1);
     
     
-    [InputReceiver registerHIDDeviceCallback: device];
+    [InputReceiver Register_InputCallback_HID: device];
     
     CFRelease(elementMatchDict1);
     CFRelease(buttonRef);

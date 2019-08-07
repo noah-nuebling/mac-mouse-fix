@@ -1,48 +1,436 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="Mouse_Remap">
             <connections>
                 <outlet property="_window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
-                <outlet property="checkbox" destination="WfN-Sk-KjI" id="4J3-m8-kyf"/>
+                <outlet property="doneButton" destination="QzW-eU-2CC" id="YP4-7e-4G3"/>
+                <outlet property="enableCheckBox" destination="WfN-Sk-KjI" id="L6d-wR-v92"/>
+                <outlet property="middleClick" destination="r3v-3d-tiF" id="4qQ-ds-EaH"/>
+                <outlet property="middleHold" destination="Ozl-Aa-XIf" id="7s1-mZ-Ktl"/>
+                <outlet property="scrollCheckBox" destination="sIW-q1-lA7" id="mD8-cM-uGN"/>
+                <outlet property="scrollCheckBoxInvert" destination="BaE-Ga-kIa" id="yc4-bK-ZCz"/>
+                <outlet property="scrollEnableCheckBox" destination="Gko-fk-Ijn" id="9Ni-NR-Jln"/>
+                <outlet property="scrollSliderStepSize" destination="Rjn-nX-miX" id="aW9-bZ-oiU"/>
+                <outlet property="sheetPanel" destination="fxJ-a3-xlz" id="R3w-va-4ut"/>
+                <outlet property="sideClick" destination="SEq-9e-rkd" id="Fe5-Bo-BZe"/>
+                <outlet property="sideHold" destination="3K1-Hs-sdK" id="ZA3-94-q2r"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="≪ do not localize ≫" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" deferred="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="F0z-JX-Cv5" userLabel="PrefPane">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
-            <rect key="contentRect" x="0.0" y="0.0" width="668" height="213"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="800"/>
+            <rect key="contentRect" x="0.0" y="0.0" width="668" height="280"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="0.0" width="668" height="213"/>
+                <rect key="frame" x="0.0" y="0.0" width="668" height="280"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button verticalHuggingPriority="750" misplaced="YES" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WfN-Sk-KjI">
-                        <rect key="frame" x="504" y="18" width="153" height="18"/>
+                    <box fixedFrame="YES" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="BMu-Ko-FL9">
+                        <rect key="frame" x="17" y="55" width="634" height="185"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <view key="contentView" ambiguous="YES" id="KEQ-dX-3v2">
+                            <rect key="frame" x="3" y="3" width="628" height="179"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <button identifier="scrollCheckBox" toolTip="Enable Custom Smooth Scrolling Algorithm" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sIW-q1-lA7">
+                                    <rect key="frame" x="46" y="138" width="131" height="18"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <buttonCell key="cell" type="check" title="Improve Scrolling:" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Gko-fk-Ijn">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="UIChanged:" target="-2" id="zbe-ha-WYT"/>
+                                    </connections>
+                                </button>
+                                <slider toolTip="Changes Scrolling Speed" verticalHuggingPriority="750" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rjn-nX-miX">
+                                    <rect key="frame" x="248" y="131" width="151" height="25"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <sliderCell key="cell" alignment="left" maxValue="1" doubleValue="0.5" tickMarkPosition="below" numberOfTickMarks="7" allowsTickMarkValuesOnly="YES" sliderType="linear" id="6BY-vc-RsP"/>
+                                    <connections>
+                                        <action selector="UIChanged:" target="-2" id="X0h-ed-SzL"/>
+                                    </connections>
+                                </slider>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zwj-Ou-XyF">
+                                    <rect key="frame" x="293" y="157" width="61" height="17"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Step Size" id="Wqo-JB-J8q">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yif-b0-9zx">
+                                    <rect key="frame" x="236" y="107" width="37" height="17"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Small" id="aOF-LD-m9Z">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6HH-D6-RiE">
+                                    <rect key="frame" x="371" y="107" width="39" height="17"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Large" id="RcX-Tm-6LW">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <button toolTip="Inverts mouse scrolling direction relative to system wide scrolling direction." verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BaE-Ga-kIa">
+                                    <rect key="frame" x="449" y="138" width="115" height="18"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <buttonCell key="cell" type="check" title="Invert Direction" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="mOD-gA-hHm">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="UIChanged:" target="-2" id="rTT-y2-kNp"/>
+                                    </connections>
+                                </button>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TPG-bY-BNO">
+                                    <rect key="frame" x="66" y="60" width="111" height="17"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Mouse Buttons 3:" id="3pV-aJ-Jyd">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8kp-Cw-BI0">
+                                    <rect key="frame" x="292" y="81" width="34" height="17"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Click" id="G3R-by-6ed">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r3v-3d-tiF">
+                                    <rect key="frame" x="215" y="53" width="196" height="25"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <popUpButtonCell key="cell" type="push" title="-" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="4BD-tK-KmA" id="NWt-aH-UfN">
+                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="menu"/>
+                                        <menu key="menu" id="eTc-jQ-bpc">
+                                            <items>
+                                                <menuItem title="-" state="on" id="4BD-tK-KmA"/>
+                                                <menuItem isSeparatorItem="YES" id="kfH-7V-4Ck"/>
+                                                <menuItem title="Mission Control" tag="32" id="8ZW-kK-FcC"/>
+                                                <menuItem title="App Exposé" tag="33" id="gpY-zP-L45"/>
+                                                <menuItem title="Show Desktop" tag="36" id="ejj-IJ-om1"/>
+                                                <menuItem title="Launchpad" tag="160" id="BCd-Ru-p5Y"/>
+                                            </items>
+                                        </menu>
+                                        <connections>
+                                            <action selector="UIChanged:" target="-2" id="wbO-aj-ZKY"/>
+                                        </connections>
+                                    </popUpButtonCell>
+                                </popUpButton>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="by6-F0-DZY">
+                                    <rect key="frame" x="506" y="79" width="33" height="17"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Hold" id="hxs-mM-fJJ">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ozl-Aa-XIf">
+                                    <rect key="frame" x="437" y="53" width="174" height="25"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <popUpButtonCell key="cell" type="push" title="-" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="fuS-pI-6iE" id="9en-UD-IPS">
+                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="menu"/>
+                                        <menu key="menu" id="Kfa-q9-dxG">
+                                            <items>
+                                                <menuItem title="-" state="on" id="fuS-pI-6iE"/>
+                                                <menuItem isSeparatorItem="YES" id="tjv-xA-X6o"/>
+                                                <menuItem title="Mission Control" tag="32" id="i88-Bf-Ajz"/>
+                                                <menuItem title="App Exposé" tag="33" id="b0I-7o-OaS"/>
+                                                <menuItem title="Show Desktop" tag="36" id="g9L-sQ-3Rm"/>
+                                                <menuItem title="Launchpad" tag="160" id="IRF-T2-kRI"/>
+                                            </items>
+                                        </menu>
+                                    </popUpButtonCell>
+                                    <connections>
+                                        <action selector="UIChanged:" target="-2" id="wic-Xb-i4K"/>
+                                    </connections>
+                                </popUpButton>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ajW-pe-GgG">
+                                    <rect key="frame" x="28" y="20" width="149" height="17"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Mouse Buttons 4 and 5:" id="urG-gF-6Hk">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K4K-e9-BNf">
+                                    <rect key="frame" x="292" y="39" width="34" height="17"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Click" id="eHV-Gt-lVd">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SEq-9e-rkd">
+                                    <rect key="frame" x="210" y="13" width="201" height="25"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <popUpButtonCell key="cell" type="push" title="-" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="4uk-9u-Ots" id="MAP-un-RNI">
+                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="menu"/>
+                                        <menu key="menu" id="ElL-Gx-u5d">
+                                            <items>
+                                                <menuItem title="-" state="on" id="4uk-9u-Ots"/>
+                                                <menuItem isSeparatorItem="YES" id="Qfk-r2-zu2"/>
+                                                <menuItem title="Move between Spaces" tag="1" id="omX-iT-OCR"/>
+                                                <menuItem title="Move between Pages" tag="2" id="OXZ-3v-ehA"/>
+                                            </items>
+                                        </menu>
+                                    </popUpButtonCell>
+                                    <connections>
+                                        <action selector="UIChanged:" target="-2" id="TVh-Qj-U0h"/>
+                                    </connections>
+                                </popUpButton>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P0l-4c-pwf">
+                                    <rect key="frame" x="506" y="37" width="33" height="17"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Hold" id="oSJ-B0-rEz">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3K1-Hs-sdK">
+                                    <rect key="frame" x="437" y="13" width="176" height="25"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <popUpButtonCell key="cell" type="push" title="-" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="TLo-Ui-rNb" id="hCJ-m1-MOx">
+                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="menu"/>
+                                        <menu key="menu" id="J2u-0R-0zr">
+                                            <items>
+                                                <menuItem title="-" state="on" id="TLo-Ui-rNb"/>
+                                                <menuItem isSeparatorItem="YES" id="snu-yN-eVa"/>
+                                                <menuItem title="Move between Spaces" tag="1" id="D2I-Mk-jlf"/>
+                                                <menuItem title="Move between Pages" tag="2" id="UE3-7w-9Lo"/>
+                                            </items>
+                                        </menu>
+                                    </popUpButtonCell>
+                                    <connections>
+                                        <action selector="UIChanged:" target="-2" id="C1k-t3-aPe"/>
+                                    </connections>
+                                </popUpButton>
+                            </subviews>
+                        </view>
+                    </box>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Umd-od-KG6">
+                        <rect key="frame" x="570" y="239" width="83" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="More..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1Fe-9X-fy1">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="moreButton:" target="-2" id="or6-Z1-K62"/>
+                        </connections>
+                    </button>
+                    <button toolTip="Enable Mouse Fix for a better mouse experience!" verticalHuggingPriority="750" misplaced="YES" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WfN-Sk-KjI">
+                        <rect key="frame" x="18" y="248" width="128" height="18"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="14" id="dPm-3b-kwe"/>
                         </constraints>
-                        <buttonCell key="cell" type="check" title="Enable Mouse Remap" bezelStyle="regularSquare" imagePosition="right" state="on" inset="2" id="s9l-if-KkI">
+                        <buttonCell key="cell" type="check" title="Enable Mouse Fix" bezelStyle="regularSquare" imagePosition="left" alignment="right" state="on" inset="2" id="s9l-if-KkI">
                             <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="enableMouseRemap:" target="-2" id="4e1-SV-hSa"/>
+                            <action selector="enableCheckBox:" target="-2" id="cLf-13-hbp"/>
                         </connections>
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="WfN-Sk-KjI" secondAttribute="trailing" constant="37" id="GXL-DX-dZg"/>
-                    <constraint firstAttribute="trailing" secondItem="WfN-Sk-KjI" secondAttribute="trailing" constant="37" id="a1y-7L-cFZ"/>
-                    <constraint firstAttribute="bottom" secondItem="WfN-Sk-KjI" secondAttribute="bottom" constant="25" id="yzO-mm-gaS"/>
+                    <constraint firstAttribute="trailing" secondItem="WfN-Sk-KjI" secondAttribute="trailing" constant="524" id="GXL-DX-dZg"/>
+                    <constraint firstAttribute="trailing" secondItem="WfN-Sk-KjI" secondAttribute="trailing" constant="524" id="a1y-7L-cFZ"/>
+                    <constraint firstAttribute="bottom" secondItem="WfN-Sk-KjI" secondAttribute="bottom" constant="179" id="yzO-mm-gaS"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="91" y="-25.5"/>
+            <point key="canvasLocation" x="91" y="8"/>
+        </window>
+        <window identifier="moreSheet" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" tabbingMode="disallowed" id="fxJ-a3-xlz" customClass="NSPanel">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" utility="YES" nonactivatingPanel="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="90" y="125" width="559" height="167"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <view key="contentView" id="BHn-QT-Hdu">
+                <rect key="frame" x="0.0" y="0.0" width="559" height="167"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qpn-s9-Cfu">
+                        <rect key="frame" x="18" y="51" width="76" height="17"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" title="Disable For:" id="S5i-b1-xod">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6mM-zR-ov2">
+                        <rect key="frame" x="93" y="13" width="83" height="32"/>
+                        <buttonCell key="cell" type="push" title="Apps..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ick-OT-JXb">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                    </button>
+                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vv4-uK-Yci">
+                        <rect key="frame" x="252" y="19" width="185" height="50"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="milkshake_button" imagePosition="below" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="QPk-M0-rdf">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="milkshakeButton:" target="-2" id="oVN-dY-rNL"/>
+                        </connections>
+                    </button>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MLT-fZ-Z6O">
+                        <rect key="frame" x="382" y="42" width="51" height="26"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="paypal_logo_100px" id="i44-4U-mgB"/>
+                    </imageView>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="T3d-IG-x9B" customClass="Hyperlink">
+                        <rect key="frame" x="433" y="128" width="108" height="19"/>
+                        <textFieldCell key="cell" lineBreakMode="charWrapping" title="Visit the Website" id="fF9-He-HyT">
+                            <font key="font" size="13" name="SFProText-Regular"/>
+                            <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://noah-nuebling.github.io/mac-mouse-fix-website/"/>
+                        </userDefinedRuntimeAttributes>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jlS-aB-qRd" customClass="Hyperlink">
+                        <rect key="frame" x="421" y="106" width="120" height="17"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" title="Send me Feedback" id="9s1-Gm-vbj">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="href" value="mailto:noah.n.public@gmail.com?subject=Mac%20Mouse%20Fix%20-%20Contact&amp;"/>
+                        </userDefinedRuntimeAttributes>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oox-cM-P3o" customClass="Hyperlink">
+                        <rect key="frame" x="496" y="84" width="45" height="17"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" title="Github" id="Aoo-VC-avm">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/noah-nuebling/mac-mouse-fix-website"/>
+                            <userDefinedRuntimeAttribute type="number" keyPath="linkFrom">
+                                <integer key="value" value="-1"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="linkTo">
+                                <integer key="value" value="-1"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </textField>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QzW-eU-2CC">
+                        <rect key="frame" x="473" y="13" width="72" height="32"/>
+                        <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="zIn-og-eGC">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="doneButton:" target="-2" id="rO9-Yw-jYF"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Jel-zN-hNN">
+                        <rect key="frame" x="14" y="13" width="81" height="32"/>
+                        <buttonCell key="cell" type="push" title="Mice..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="u0u-0f-brs">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                    </button>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gP8-IL-pWC">
+                        <rect key="frame" x="118" y="130" width="124" height="17"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" title="Version 1.0 (76843)" id="5sp-4a-oce">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GUf-T0-3yw">
+                        <rect key="frame" x="18" y="130" width="100" height="17"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" title="Mac Mouse Fix" id="LHn-aR-dQs">
+                            <font key="font" metaFont="systemBold"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XlS-ss-ZsG">
+                        <rect key="frame" x="18" y="111" width="143" height="14"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" title="Created by Noah Nuebling" id="T2W-Ea-aKN">
+                            <font key="font" metaFont="smallSystem"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="jlS-aB-qRd" secondAttribute="trailing" constant="20" id="5Gi-64-jOc"/>
+                    <constraint firstItem="T3d-IG-x9B" firstAttribute="top" secondItem="BHn-QT-Hdu" secondAttribute="top" constant="20" id="6ag-OD-IyI"/>
+                    <constraint firstAttribute="trailing" secondItem="T3d-IG-x9B" secondAttribute="trailing" constant="20" id="6na-Wh-kWs"/>
+                    <constraint firstItem="Jel-zN-hNN" firstAttribute="top" secondItem="qpn-s9-Cfu" secondAttribute="bottom" constant="10" id="9XA-cl-tUD"/>
+                    <constraint firstItem="Jel-zN-hNN" firstAttribute="leading" secondItem="BHn-QT-Hdu" secondAttribute="leading" constant="20" id="9sx-tl-kOR"/>
+                    <constraint firstItem="oox-cM-P3o" firstAttribute="top" secondItem="jlS-aB-qRd" secondAttribute="bottom" constant="5" id="B0o-B5-d1s"/>
+                    <constraint firstItem="gP8-IL-pWC" firstAttribute="top" secondItem="BHn-QT-Hdu" secondAttribute="top" constant="20" id="Ive-bT-AD1"/>
+                    <constraint firstAttribute="bottom" secondItem="QzW-eU-2CC" secondAttribute="bottom" constant="20" id="OUD-Ir-Uti"/>
+                    <constraint firstItem="GUf-T0-3yw" firstAttribute="top" secondItem="BHn-QT-Hdu" secondAttribute="top" constant="20" id="Vt5-4g-UEV"/>
+                    <constraint firstAttribute="trailing" secondItem="oox-cM-P3o" secondAttribute="trailing" constant="20" id="bMz-9I-8ei"/>
+                    <constraint firstItem="jlS-aB-qRd" firstAttribute="top" secondItem="T3d-IG-x9B" secondAttribute="bottom" constant="5" id="gZQ-cj-0Vu"/>
+                    <constraint firstItem="XlS-ss-ZsG" firstAttribute="top" secondItem="gP8-IL-pWC" secondAttribute="bottom" constant="5" id="gps-ML-MLW"/>
+                    <constraint firstAttribute="bottom" secondItem="Jel-zN-hNN" secondAttribute="bottom" constant="20" id="iBG-Uj-mLk"/>
+                    <constraint firstItem="6mM-zR-ov2" firstAttribute="leading" secondItem="Jel-zN-hNN" secondAttribute="trailing" constant="10" id="j4B-3v-Ul8"/>
+                    <constraint firstItem="GUf-T0-3yw" firstAttribute="leading" secondItem="BHn-QT-Hdu" secondAttribute="leading" constant="20" id="jtY-iD-CRY"/>
+                    <constraint firstAttribute="bottom" secondItem="6mM-zR-ov2" secondAttribute="bottom" constant="20" id="rKc-Nz-ACZ"/>
+                    <constraint firstItem="XlS-ss-ZsG" firstAttribute="leading" secondItem="BHn-QT-Hdu" secondAttribute="leading" constant="20" id="uAd-FT-kIX"/>
+                    <constraint firstAttribute="trailing" secondItem="QzW-eU-2CC" secondAttribute="trailing" constant="20" id="xrj-GU-w2y"/>
+                    <constraint firstItem="qpn-s9-Cfu" firstAttribute="leading" secondItem="BHn-QT-Hdu" secondAttribute="leading" constant="20" id="y7s-6e-YLJ"/>
+                </constraints>
+                <animations>
+                    <caTransition key="subviews">
+                        <mutableData key="keyedArchiveRepresentation">
+YnBsaXN0MDDUAQIDBAUGKClYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoKsHCBMU
+FRYKDAsdI1UkbnVsbNUJCgsMDQ4PEBESViRjbGFzc1tlbmRQcm9ncmVzc1R0eXBlV3N1YnR5cGVfEBJf
+X0NBQ29kaW5nQ29udGVudHOACoACgASAA4AFIj+AAABXZnJvbVRvcFRwdXNo0hcJGBxaTlMub2JqZWN0
+c6MZGhuABoAHgAiACdIeHyAhWiRjbGFzc25hbWVYJGNsYXNzZXNXTlNBcnJheaIgIlhOU09iamVjdNIe
+HyQlXENBVHJhbnNpdGlvbqMmJyJcQ0FUcmFuc2l0aW9uW0NBQW5pbWF0aW9uXxAPTlNLZXllZEFyY2hp
+dmVy0SorVHJvb3SAAQAIABEAGgAjAC0AMgA3AEMASQBUAFsAZwBsAHQAiQCLAI0AjwCRAJMAmACgAKUA
+qgC1ALkAuwC9AL8AwQDGANEA2gDiAOUA7gDzAQABBAERAR0BLwEyATcAAAAAAAACAQAAAAAAAAAsAAAA
+AAAAAAAAAAAAAAABOQ
+</mutableData>
+                    </caTransition>
+                </animations>
+            </view>
+            <point key="canvasLocation" x="773.5" y="-76.5"/>
         </window>
     </objects>
+    <resources>
+        <image name="milkshake_button" width="920" height="120"/>
+        <image name="paypal_logo_100px" width="100" height="26"/>
+    </resources>
 </document>

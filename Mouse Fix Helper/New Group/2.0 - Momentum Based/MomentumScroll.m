@@ -10,7 +10,11 @@
 #import "MomentumScroll.h"
 #import "AppDelegate.h"
 #import "QuartzCore/CoreVideo.h"
-#import <HIServices/AXUIElement.h>
+//#import <HIServices/AXUIElement.h>
+#import "ModifierInputReceiver.h"
+
+#import "InputReceiver.h"
+#import "DeviceManager.h"
 
 
 
@@ -19,8 +23,6 @@
 @end
 
 @implementation MomentumScroll
-
-#pragma mark - Global Vars
 
 
 #pragma mark - Global Vars
@@ -31,6 +33,10 @@
 // InputReceiver and ConfigFileMonitor can enable/disable MomentumScroll
 // InputReceiver sets relevantDevicesAreAttached, ConfigFileMonitor sets isEnabled (defined below), and MomentumScroll sets isRunning
 // Based on these 3 variables ConfigFileMonitor and InputReceiver decide whether to enable / disable MomentumScroll when the config file changes or a mouse is attached/removed
+
+// version 2: (I'd like to implement this)
+// whenever relevantDevicesAreAttached or isEnabled are changed, MomentumScrolls class method startOrStopDecide is called. Start or stop decide will start / stop momentum scroll and set _isRunning
+
 static BOOL _isEnabled;
 + (BOOL)isEnabled {
     return _isEnabled;
@@ -44,7 +50,6 @@ static BOOL _isRunning;
     return _isRunning;
 }
 
-
 # pragma mark enum
 
 typedef enum {
@@ -55,8 +60,9 @@ typedef enum {
 #pragma mark config
 
 // wheel phase
-static int64_t  _pxStepSize;
+static int64_t  _pxStepSizeBase;
 static double   _msPerScroll;
+static int      _scrollDirection;
 // momentum phase
 static float    _frictionCoefficient;
 static int      _nOfOnePixelScrollsMax;
@@ -69,28 +75,18 @@ static CGEventSourceRef _eventSource    =   nil;
 
 // any phase
 static int      _scrollPhase;
-static BOOL  _horizontalScrollModifierPressed;
+static BOOL     _horizontalScrollModifierPressed;
 static NSString *_bundleIdentifierOfScrolledApp;
+static CGDirectDisplayID *_displaysUnderMousePointer;
 // wheel phase
-static int64_t  _pixelScrollQueue       =   0;
-static double   _msLeftForScroll        =   0;
+static int64_t  _pixelScrollQueue           =   0;
+static double   _msLeftForScroll            =   0;
+static long     _consecutiveScrollsCounter  =   0;
 // momentum phase
 static double   _pxPerMsVelocity        =   0;
 static int      _onePixelScrollsCounter =   0;
 
 #pragma mark - Interface
-
-
-+ (void)configureWithPxPerStep:(int)px
-                 msPerStep:(int)ms
-                  friction:(float)f
-{
-    _pxStepSize                         =   px;
-    _msPerScroll                        =   ms;
-    _frictionCoefficient                =   f;
-    
-    _nOfOnePixelScrollsMax              =   2;
-}
 
 static void resetDynamicGlobals() {
     _horizontalScrollModifierPressed    =   NO;
@@ -100,6 +96,36 @@ static void resetDynamicGlobals() {
     _pxPerMsVelocity                    =   0;
     _onePixelScrollsCounter             =   0;
 }
+
+
++ (void)configureWithPxPerStep:(int)px
+                     msPerStep:(int)ms
+                      friction:(float)f
+               scrollDirection:(MFScrollDirection)d
+{
+    _pxStepSizeBase                         =   px;
+    _msPerScroll                        =   ms;
+    _frictionCoefficient                =   f;
+    
+    _nOfOnePixelScrollsMax              =   2;
+    
+    _scrollDirection = d;
+}
+
++ (void)startOrStopDecide {
+    if ([DeviceManager relevantDevicesAreAttached] && _isEnabled) {
+        if (_isRunning == FALSE) {
+            [MomentumScroll start];
+            [ModifierInputReceiver start];
+        }
+    } else {
+        if (_isRunning == TRUE) {
+            [MomentumScroll stop];
+            [ModifierInputReceiver stop];
+        }
+    }
+}
+    
 
 + (void)start {
     
@@ -120,6 +146,7 @@ static void resetDynamicGlobals() {
     if (_displayLink == nil) {
         CVDisplayLinkCreateWithActiveCGDisplays(&_displayLink);
         CVDisplayLinkSetOutputCallback(_displayLink, displayLinkCallback, nil);
+        _displaysUnderMousePointer = malloc(sizeof(CGDirectDisplayID) * 3);
     }
     if (_eventSource == nil) {
         _eventSource = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
@@ -139,22 +166,29 @@ static void resetDynamicGlobals() {
         CVDisplayLinkStop(_displayLink);
         CVDisplayLinkRelease(_displayLink);
         _displayLink = nil;
-    }
-    if (_eventTap) {
+    } if (_eventTap) {
         CGEventTapEnable(_eventTap, false);
         CFRelease(_eventTap);
         _eventTap = nil;
-    }
-    if (_eventSource) {
+    } if (_eventSource) {
         CFRelease(_eventSource);
         _eventSource = nil;
-     }
+    }
     
      CGDisplayRemoveReconfigurationCallback(Handle_displayReconfiguration, NULL);
 }
 
 + (void)setHorizontalScroll:(BOOL)B {
     _horizontalScrollModifierPressed = B;
+}
++ (void)temporarilyDisable:(BOOL)B {
+    if (B) {
+        if (_isRunning) {
+            [MomentumScroll stop];
+        }
+    } else {
+        [MomentumScroll startOrStopDecide];
+    }
 }
 
 
@@ -163,40 +197,34 @@ static void resetDynamicGlobals() {
 
 CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
+    if (_isEnabled == FALSE) {
+        return event;
+    }
+    
     // return non-scroll-wheel events unaltered
     
     long long   isPixelBased        =   CGEventGetIntegerValueField(event, kCGScrollWheelEventIsContinuous);
     int64_t     scrollDeltaAxis1    =   CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
     int64_t     scrollDeltaAxis2    =   CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2);
     if ( (isPixelBased != 0) || (scrollDeltaAxis1 == 0) || (scrollDeltaAxis2 != 0)) {
-        // scroll event doesn't come from a simple scroll wheel
+        // scroll event doesn't come from a simple scroll wheel or doesn't contain the data we need to use
         return event;
     }
     
-    //setConfigVariablesForAppUnderMousePointer();
-
-    if (_isEnabled == FALSE) {
-        return event;
-    }
+    // start display link if necessary
     
     if (CVDisplayLinkIsRunning(_displayLink) == FALSE) {
         CVDisplayLinkStart(_displayLink);
     }
-    CGPoint mouseLocation = CGEventGetLocation(event);
-    CGDirectDisplayID *displaysUnderMousePointer = malloc(sizeof(CGDirectDisplayID) * 3);
-    uint32_t matchingDisplayCount;
-    CGGetDisplaysWithPoint(mouseLocation, 2, displaysUnderMousePointer, &matchingDisplayCount);
-    if (matchingDisplayCount > 0) {
-        CVDisplayLinkSetCurrentCGDisplay(_displayLink, displaysUnderMousePointer[0]);
+
+    // set diplaylink to the display that is actally being scrolled - not sure if this is necessary or even works, bacause I don't have monitors to test on..
+    @try {
+        setDisplayLinkToDisplayUnderMousePointer(event);
+    } @catch (NSException *e) {
+        NSLog(@"Error while trying to set display link to display under mouse pointer: %@", [e reason]);
     }
-    else if (matchingDisplayCount == 0) {
-        NSLog(@"no display for current Mouse Position");
-        CFRelease(displaysUnderMousePointer);
-        return event;
-    }
-    if (matchingDisplayCount > 1) {
-        NSLog(@"more than one display for current mouse position");
-    }
+    
+    //setConfigVariablesForAppUnderMousePointer();
     
     if (_scrollPhase == kMFMomentumPhase) {
         _pixelScrollQueue = 0;
@@ -204,19 +232,29 @@ CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef 
     _scrollPhase = kMFWheelPhase;
     
     // update global vars for wheel phase
+
+    long pxStepSize = _pxStepSizeBase;
+    
+    /*
+    if (_consecutiveScrollsCounter > 4) {
+        _consecutiveScrollsCounter *= 2;
+        pxStepSize = _pxStepSizeBase + _consecutiveScrollsCounter;
+    }
+     */
+    
     _msLeftForScroll = _msPerScroll;
     if (scrollDeltaAxis1 > 0) {
-        _pixelScrollQueue += _pxStepSize;
+        _pixelScrollQueue += pxStepSize * _scrollDirection;
     }
     else if (scrollDeltaAxis1 < 0) {
-        _pixelScrollQueue -= _pxStepSize;
+        _pixelScrollQueue -= pxStepSize * _scrollDirection;
     }
 
     // reset global vars from momentum phase
     _onePixelScrollsCounter  =   0;
     _pxPerMsVelocity        =   0;
-    return nil;
     
+    return nil;
 }
 
 CVReturn displayLinkCallback (CVDisplayLinkRef displayLink, const CVTimeStamp *inNow, const CVTimeStamp *inOutputTime, CVOptionFlags flagsIn, CVOptionFlags *flagsOut, void *displayLinkContext)
@@ -283,8 +321,12 @@ CVReturn displayLinkCallback (CVDisplayLinkRef displayLink, const CVTimeStamp *i
     }
     
 # pragma mark Send Event
+    
+    
+    
     CGEventRef scrollEvent = CGEventCreateScrollWheelEvent(_eventSource, kCGScrollEventUnitPixel, 1, 0);
-    //CGEventSourceSetPixelsPerLine(_eventSource, 1);
+    // CGEventSourceSetPixelsPerLine(_eventSource, 1);
+    // it might be a cool idea to diable scroll acceleration and then try to make the scroll events line based (kCGScrollEventUnitPixel)
 
     if (_horizontalScrollModifierPressed == FALSE) {
         CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis1, pixelsToScroll / 4);
@@ -308,6 +350,28 @@ static void Handle_displayReconfiguration(CGDirectDisplayID display, CGDisplayCh
         CVDisplayLinkRelease(_displayLink);
         CVDisplayLinkCreateWithActiveCGDisplays(&_displayLink);
         CVDisplayLinkSetOutputCallback(_displayLink, displayLinkCallback, nil);
+    }
+}
+static void setDisplayLinkToDisplayUnderMousePointer(CGEventRef event) {
+    CGPoint mouseLocation = CGEventGetLocation(event);
+    CGDirectDisplayID *newDisplaysUnderMousePointer = malloc(sizeof(CGDirectDisplayID) * 3);
+    uint32_t matchingDisplayCount;
+    CGGetDisplaysWithPoint(mouseLocation, 2, newDisplaysUnderMousePointer, &matchingDisplayCount);
+    
+    if (matchingDisplayCount > 0) {
+        if (newDisplaysUnderMousePointer[0] != _displaysUnderMousePointer[0]) {
+            CVDisplayLinkSetCurrentCGDisplay(_displayLink, _displaysUnderMousePointer[0]);
+            _displaysUnderMousePointer = newDisplaysUnderMousePointer;
+        }
+    }
+    else if (matchingDisplayCount == 0) {
+        NSException *e = [NSException exceptionWithName:NSInternalInconsistencyException reason:@"there are 0 diplays under the mouse pointer" userInfo:NULL];
+        @throw e;
+    }
+    else if (matchingDisplayCount > 1) {
+        NSLog(@"more than one display for current mouse position");
+        NSException *e = [NSException exceptionWithName:NSInternalInconsistencyException reason:[NSString stringWithFormat:@"there are %d diplays under the mouse pointer",matchingDisplayCount] userInfo:NULL];
+        @throw e;
     }
 }
 

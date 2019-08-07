@@ -25,12 +25,7 @@
 			<key>click</key>
 			<array>
 				<string>symbolicHotKey</string>
-				<integer>32</integer>
-			</array>
-			<key>hold</key>
-			<array>
-				<string>symbolicHotKey</string>
-				<integer>36</integer>
+				<string>32</string>
 			</array>
 		</dict>
 	</dict>
@@ -40,9 +35,10 @@
 		<true/>
 		<key>values</key>
 		<array>
-			<integer>50</integer>
-			<integer>75</integer>
-			<real>1.2</real>
+			<integer>60</integer>
+			<integer>130</integer>
+			<real>1.5</real>
+			<integer>-1</integer>
 		</array>
 	</dict>
 	<key>AppOverrides</key>
@@ -58,6 +54,7 @@
 					<integer>50</integer>
 					<integer>75</integer>
 					<real>1.2</real>
+					<integer>-1</integer>
 				</array>
 			</dict>
 		</dict>
@@ -72,6 +69,7 @@
 					<integer>50</integer>
 					<integer>75</integer>
 					<real>1.2</real>
+					<integer>-1</integer>
 				</array>
 			</dict>
 		</dict>

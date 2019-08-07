@@ -10,9 +10,11 @@
 
 //NS_ASSUME_NONNULL_BEGIN
 
-@interface ConfigFileMonitor : NSObject
+@interface ConfigFileInterface : NSObject
 
-+ (void)start;
+//+ (void)start;
+
++ (void)reactToConfigFileChange;
 
 //@property (retain) NSMutableDictionary *configDictFromFile;
 

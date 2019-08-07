@@ -7,16 +7,17 @@
 //
 
 #import "InputReceiver.h"
+#import "DeviceManager.h"
 #import "IOKit/hid/IOHIDManager.h"
 #import "InputParser.h"
 #import "AppDelegate.h"
 #import <ApplicationServices/ApplicationServices.h>
 
+#import "Utility.h"
+
 #import "MomentumScroll.h"
 
 @implementation InputReceiver
-
-
 
 // global variables
 static BOOL _relevantDevicesAreAttached;
@@ -26,92 +27,93 @@ static BOOL _relevantDevicesAreAttached;
 
 BOOL inputSourceIsDeviceOfInterest;
 CGEventSourceRef eventSource;
-CFMachPortRef eventTap;
-IOHIDManagerRef _hidManager;
+CFMachPortRef eventTapMouse;
 
-+ (void) start {
-    // initialize global variables
-    inputSourceIsDeviceOfInterest = false;
+
++ (void)initialize {
+    NSLog(@"initialize (InputReceiver)");
     eventSource = CGEventSourceCreate(kCGEventSourceStatePrivate);
-
-    // setup callbacks for mouse input
-    setupMouseInputCallbacks();
-    // setup modifier key callback
-    setupModifierKeyCallback();
+    setupMouseInputCallback_CGEvent();
 }
 
-static void setupModifierKeyCallback() {
-    /* Register event Tap Callback */
-    CGEventMask mask = CGEventMaskBit(kCGEventFlagsChanged);
-    eventTap = CGEventTapCreate(kCGHIDEventTap, kCGTailAppendEventTap, kCGEventTapOptionDefault, mask, Handle_ModifierChanged, NULL);
-    CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0);
++ (void)startOrStopDecide {
+    if ([DeviceManager relevantDevicesAreAttached]) {
+        NSLog(@"started (InputReceiver)");
+        [InputReceiver start];
+    } else {
+        NSLog(@"stopped (InputReceiver)");
+        [InputReceiver stop];
+    }
+}
+// we don't start/stop the IOHIDDeviceRegisterInputValueCallback.
+// I think new devices should be attached to the callback by DeviceManager if a relevant device is attached to the computer
+// I think there is no cleanup we need to do if a device is detached from the computer.
++ (void)start {
+    inputSourceIsDeviceOfInterest = false;
+    CGEventTapEnable(eventTapMouse, true);
+}
++ (void)stop {
+    CGEventTapEnable(eventTapMouse, false);
+}
+
++ (void)Register_InputCallback_HID:(IOHIDDeviceRef)device {
+    NSLog(@"Registering HID (InputReceiver)");
+    IOHIDDeviceRegisterInputValueCallback(device, &Handle_InputCallback_HID, NULL);
+}
+static void Handle_InputCallback_HID(void *context, IOReturn result, void *sender, IOHIDValueRef value) {
+    NSLog(@"Input HID (InputReceiver)");
+    
+    inputSourceIsDeviceOfInterest = true;
+        //NSLog(@"Button Input from Registered Device %@, button: %@", sender, value);
+}
+
+
+static void setupMouseInputCallback_CGEvent() {
+    NSLog(@"Registering CG (InputReceiver)");
+    
+    // Register event Tap Callback
+    CGEventMask mask = CGEventMaskBit(kCGEventOtherMouseDown) | CGEventMaskBit(kCGEventOtherMouseUp);
+
+    eventTapMouse = CGEventTapCreate(kCGHIDEventTap, kCGTailAppendEventTap, kCGEventTapOptionDefault, mask, Handle_MouseEvent_CGEvent, NULL);
+    CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTapMouse, 0);
     CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopDefaultMode);
+    
     CFRelease(runLoopSource);
 }
 
-CGEventRef Handle_ModifierChanged(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
+CGEventRef Handle_MouseEvent_CGEvent(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
+    NSLog(@"Input CG (InputReceiver)");
     
-    AppDelegate *appDelegate = [NSApp delegate];
+                                        /*
+                                        NSLog(@"HANDLE EVENT");
+                                        NSLog(@"current button: %d", currentButton);
+                                        NSLog(@"inputSourceIsDeviceOfInterest: %d", inputSourceIsDeviceOfInterest);
+                                         */
     
-    int64_t keycode = CGEventGetIntegerValueField(event, kCGKeyboardEventKeycode);
-    CGEventFlags flags = CGEventGetFlags(event);
-    
-    if ( (keycode == 56) || (keycode == 60) ) {
-        if (flags != 256) {
-            [appDelegate setHorizontalScroll: TRUE];
-        } else if (flags == 256) {
-            [appDelegate setHorizontalScroll: FALSE];
+    if (inputSourceIsDeviceOfInterest) {
+        
+        inputSourceIsDeviceOfInterest = false;
+        
+        int currentButton = (int) CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
+        int currentButtonState = (int) CGEventGetIntegerValueField(event, kCGMouseEventPressure);
+        if (currentButtonState == 255) {
+            currentButtonState = 1;
         }
-     }
-    
-    
-    return event;
-}
-
-CGEventRef Handle_MouseEvent(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
- 
-    /*
-    NSLog(@"HANDLE EVENT");
-    NSLog(@"current button: %d", currentButton);
-    NSLog(@"inputSourceIsDeviceOfInterest: %d", inputSourceIsDeviceOfInterest);
-     */
-    
-    int currentButton = (int) CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
-    int currentButtonState = (int) CGEventGetIntegerValueField(event, kCGMouseEventPressure);
-    if (currentButtonState == 255) {
-        currentButtonState = 1;
-    }
-
-    
-    
-    if (inputSourceIsDeviceOfInterest ) {
+        
         if ( (3 <= currentButton) && (currentButton <= 5) ) {
             
             CGEventRef eventPass = [InputParser parse:currentButton state:currentButtonState event:event];
+            // this doesn't really make sense - passing through events is never needed except when there are no remaps at all. It also sometimes passes through events, when releasing a button after a long press, which doesn't make sense but which also doesn't break anything
             return eventPass;
         }
     }
     
+    inputSourceIsDeviceOfInterest = false;
     return event;
 }
 
 
-static void setupMouseInputCallbacks() {
-    /* Register event Tap Callback */
-    CGEventMask mask = CGEventMaskBit(kCGEventLeftMouseDown) | CGEventMaskBit(kCGEventRightMouseDown)                               |CGEventMaskBit(kCGEventOtherMouseDown)
-    | CGEventMaskBit(kCGEventLeftMouseUp) | CGEventMaskBit(kCGEventRightMouseUp)                               |CGEventMaskBit(kCGEventOtherMouseUp);
-    eventTap = CGEventTapCreate(kCGHIDEventTap, kCGTailAppendEventTap, kCGEventTapOptionDefault, mask, Handle_MouseEvent, NULL);
-    
-    CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0);
-    CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopDefaultMode);
-    CFRelease(runLoopSource);
-    
-    
-    
-    setupHIDManagerAndCallbacks();
-    
-}
-
+/*
 static void setupHIDManagerAndCallbacks() {
 
     
@@ -176,46 +178,38 @@ static void setupHIDManagerAndCallbacks() {
     
     
     
-    // Register a callback for USB device detection with the HID Manager, this will in turn register an button input callback for all devices that getFilteredDevicesFromManager() returns
-    IOHIDManagerRegisterDeviceMatchingCallback(_hidManager, &Handle_DeviceMatchingCallback, NULL);
-    
+    // Register a callback for USB device detection with the HID Manager, this will in turn register an button input callback for all devices that pass devicePassesFiltering()
+    IOHIDManagerRegisterDeviceMatchingCallback(_hidManager, &Handle_DeviceMatchingCallbackHID, NULL);
     
     
     // Register a callback for USB device removal with the HID Manager
-    IOHIDManagerRegisterDeviceRemovalCallback(_hidManager, &Handle_DeviceRemovalCallback, NULL);
+    IOHIDManagerRegisterDeviceRemovalCallback(_hidManager, &Handle_DeviceRemovalCallbackHID, NULL);
     
-    //CFArrayRef device_array = getFilteredDevicesFromManager(HIDManager);
-    //registerButtonInputCallbackForDevices(device_array);
 }
+ */
 
 
 
 /* HID Manager Callback Handlers */
 
 
-
-static void Handle_InputValueCallback(void *context, IOReturn result, void *sender, IOHIDValueRef value) {
-    
-    inputSourceIsDeviceOfInterest = true;
-    
-    //NSLog(@"Button Input from Registered Device %@, button: %@", sender, value);
-}
-
-static void Handle_DeviceRemovalCallback(void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
+/*
+static void Handle_DeviceRemovalCallback_HID(void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
     // MomentumScroll
     CFSetRef devices = IOHIDManagerCopyDevices(_hidManager);
     if (CFSetGetCount(devices) == 0) {
         _relevantDevicesAreAttached = FALSE;
-        [MomentumScroll stop];
+        [MomentumScroll startOrStopDecide];
     }
-    
 }
+ */
 
-
-static void Handle_DeviceMatchingCallback (void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
+/*
+static void Handle_DeviceMatchingCallbackHID (void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
     
     NSLog(@"New matching device");
     
+    // register callback for button presses, if device passes filtering
     // currently filters devices with "magic" in their name string - untested
     if (devicePassesFiltering(device) ) {
         NSLog(@"Device Passed filtering");
@@ -223,13 +217,12 @@ static void Handle_DeviceMatchingCallback (void *context, IOReturn result, void 
     }
     
     // MomentumScroll
+ 
+    // 29. June 2019 - As far as I understand, we can't easily differentiate between devices that did or didn't pass filtering, so we enable / disable momentum scroll based on all devices that the IOHIDmanager attaches to)
     _relevantDevicesAreAttached = TRUE;
-    NSLog(@"isEnabled:                %hhd", MomentumScroll.isEnabled);
+    [MomentumScroll startOrStopDecide];
+    NSLog(@"MomentumScroll.isEnabled: %hhd", MomentumScroll.isEnabled);
     NSLog(@"MomentumScroll.isRunning: %hhd", MomentumScroll.isRunning);
-
-    if (MomentumScroll.isEnabled && !MomentumScroll.isRunning) {
-        [MomentumScroll start];
-    }
     
     
     
@@ -256,14 +249,14 @@ static void Handle_DeviceMatchingCallback (void *context, IOReturn result, void 
     
 }
 
-
+*/
 
 
 
 // Convenience Functions
 
 
-
+/*
 static void registerButtonInputCallbackForDevice(IOHIDDeviceRef device) {
     
     NSLog(@"registering device: %@", device);
@@ -279,7 +272,7 @@ static void registerButtonInputCallbackForDevice(IOHIDDeviceRef device) {
     CFNumberRef buttonRef = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &nine);
     CFDictionarySetValue (elementMatchDict1, CFSTR("UsagePage"), buttonRef);
     IOHIDDeviceSetInputValueMatching(device, elementMatchDict1);
-    IOHIDDeviceRegisterInputValueCallback(device, &Handle_InputValueCallback, NULL);
+    IOHIDDeviceRegisterInputValueCallback(device, &Handle_InputCallbackHID, NULL);
     
     
     CFRelease(elementMatchDict1);
@@ -290,7 +283,9 @@ static void registerButtonInputCallbackForDevice(IOHIDDeviceRef device) {
     
     
 }
+ */
 
+/*
 static BOOL devicePassesFiltering(IOHIDDeviceRef HIDDevice) {
     
     NSString *deviceName = [NSString stringWithUTF8String:
@@ -303,4 +298,5 @@ static BOOL devicePassesFiltering(IOHIDDeviceRef HIDDevice) {
         return FALSE;
     }
 }
+ */
 @end

@@ -10,16 +10,17 @@
 // TODO: implement callback when frontmost application changes - change settings accordingly
 // NSWorkspaceDidActivateApplicationNotification?
 
-#import "ConfigFileMonitor.h"
+#import "ConfigFileInterface.h"
 #import "AppDelegate.h"
 
 #import "MomentumScroll.h"
 #import "InputReceiver.h"
 
-@implementation ConfigFileMonitor
+@implementation ConfigFileInterface
 
-+ (void)start {
-    setupFSEventStreamCallback();
+
+
++ (void)reactToConfigFileChange {
     fillConfigDictFromFile();
     updateScrollSettings();
 }
@@ -53,6 +54,8 @@ static void fillConfigDictFromFile() {
     }
 }
 
+
+
 static void updateScrollSettings() {
     AppDelegate *delegate = [NSApp delegate];
     NSDictionary *config = [delegate configDictFromFile];
@@ -62,22 +65,30 @@ static void updateScrollSettings() {
         NSNumber *px = [values objectAtIndex:0];
         NSNumber *ms = [values objectAtIndex:1];
         NSNumber *f = [values objectAtIndex:2];
+        NSNumber *d = [values objectAtIndex:3];
     
-        [MomentumScroll configureWithPxPerStep:px.intValue msPerStep:ms.intValue friction:f.floatValue];
+        [MomentumScroll configureWithPxPerStep:px.intValue msPerStep:ms.intValue friction:f.floatValue scrollDirection:d.intValue];
+        
         MomentumScroll.isEnabled = TRUE;
+        [MomentumScroll startOrStopDecide];
+        
         NSLog(@"MomentumScroll.isEnabled: %hhd", MomentumScroll.isEnabled);
-        if (InputReceiver.relevantDevicesAreAttached && !MomentumScroll.isRunning) {
-            [MomentumScroll start];
-        }
-    }
-    else {
+        NSLog(@"MomentumScroll.isRunning: %hhd", MomentumScroll.isRunning);
+    } else {
         MomentumScroll.isEnabled = FALSE;
-        [MomentumScroll stop];
+        [MomentumScroll startOrStopDecide];
     }
 }
 
 
-
+/*
+ 
+ + (void)start {
+ //setupFSEventStreamCallback();
+ fillConfigDictFromFile();
+ updateScrollSettings();
+ }
+ 
 void Handle_FSEventStreamCallback (ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents, void *eventPaths, const FSEventStreamEventFlags *eventFlags, const FSEventStreamEventId *eventIds) {
     
     NSLog(@"remaps.plist changed - reloading buttonRemapDictFromFile");
@@ -101,5 +112,5 @@ static void setupFSEventStreamCallback() {
     BOOL EventStreamStarted = FSEventStreamStart(remapsFileEventStream);
     NSLog(@"EventStreamStarted: %d", EventStreamStarted);
 }
-
+*/
 @end

@@ -43,6 +43,7 @@
 			<integer>60</integer>
 			<integer>130</integer>
 			<real>1.7</real>
+			<string>-1</string>
 		</array>
 	</dict>
 	<key>AppOverrides</key>

@@ -19,12 +19,9 @@
 - (void)repairConfigFile:(NSString *)info;
 
 
-- (void) setHorizontalScroll:(BOOL)B;
-
-
 // InputParser.h - Global variables
 
-// - clickAndHoldGlobals
+// - clickAndHoldGlobal
 @property (retain) NSTimer* clickAndHoldTimer;
 // - FakeSwipe Globals (Sensible Side Buttons)
 @property (retain) NSMutableDictionary<NSNumber*, NSArray<NSDictionary*>*>* swipeInfo;

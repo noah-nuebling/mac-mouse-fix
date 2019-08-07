@@ -7,8 +7,11 @@
 //
 #import "AppDelegate.h"
 #import "InputReceiver.h"
+#import "ModifierInputReceiver.h"
 #import "InputParser.h"
-#import "ConfigFileMonitor.h"
+#import "ConfigFileInterface.h"
+#import "MessagePortReceiver.h"
+#import "DeviceManager.h"
 
 //#import "SmoothScroll.h"
 #import "MomentumScroll.h"
@@ -25,12 +28,19 @@
 
 
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
-{
-    NSLog(@"running Mouse Remap Helper");
-
-    [InputReceiver start];
-    [ConfigFileMonitor start];
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+    
+    NSLog(@"running Mouse Fix Helper");
+    
+    
+    
+    //[InputReceiver start];
+    
+    [MessagePortReceiver start];
+    
+    [DeviceManager start];
+    
+    [ConfigFileInterface reactToConfigFileChange];
      
      
     
@@ -67,16 +77,13 @@
     // TODO: actually repair config dict
     NSLog(@"repairing configDict....");
 }
-- (void) setHorizontalScroll:(BOOL)B {
-    [MomentumScroll setHorizontalScroll: B];
-}
 
 
 
 // NSTimer Callbacks
 
 // - InputParser.h
-- (void) disableSHK: (NSTimer *)timer {
+- (void) disableSHK:(NSTimer *)timer {
     CGSSymbolicHotKey shk = [[timer userInfo] intValue];
     CGSSetSymbolicHotKeyEnabled(shk, FALSE);
 }
