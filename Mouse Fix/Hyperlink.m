@@ -1,11 +1,3 @@
-//
-//  Hyperlink.m
-//  Mouse Fix
-//
-//  Created by Noah Nübling on 05.08.19.
-//  Copyright © 2019 Noah Nuebling Enterprises Ltd. All rights reserved.
-//
-
 #import "Hyperlink.h"
 IB_DESIGNABLE
 

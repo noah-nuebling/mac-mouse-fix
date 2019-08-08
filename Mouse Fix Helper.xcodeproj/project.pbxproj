@@ -17,6 +17,7 @@
 		4F611D2721A8E230008857A8 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F611D2621A8E230008857A8 /* config.plist */; };
 		4F7387FD21B48F7900C2F468 /* MomentumScroll.mn in Sources */ = {isa = PBXBuildFile; fileRef = 4F7387FB21B48F7900C2F468 /* MomentumScroll.mn */; };
 		4F73880021B4A79800C2F468 /* MessagePortReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F7387FF21B4A79800C2F468 /* MessagePortReceiver.m */; };
+		4F8AEA9222FBC7AC008C1A7C /* milkshake_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */; };
 		4F8DC6EA21A3B1D200E1D297 /* TouchEvents.c in Sources */ = {isa = PBXBuildFile; fileRef = 4F8DC6E821A3B1D200E1D297 /* TouchEvents.c */; };
 		4F8DC6ED21A3B20600E1D297 /* IOHIDEventData.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F8DC6EB21A3B20600E1D297 /* IOHIDEventData.h */; };
 		4F8DC6EE21A3B20600E1D297 /* IOHIDEventTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F8DC6EC21A3B20600E1D297 /* IOHIDEventTypes.h */; };
@@ -35,7 +36,6 @@
 		4FD67DF4211CDE4D0095A9A5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FCECD8821092354001F1078 /* MainMenu.xib */; };
 		4FD6F5F522C818C000F4841C /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD6F5F422C818C000F4841C /* Utility.m */; };
 		4FD9CB0922F7C10E0090DB98 /* paypal_logo_100px.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FD9CB0822F7C10D0090DB98 /* paypal_logo_100px.png */; };
-		4FD9CB0D22F7C6210090DB98 /* milkshake_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FD9CB0C22F7C6210090DB98 /* milkshake_button.png */; };
 		4FD9CB1322F7D48D0090DB98 /* Hyperlink.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FD9CB1122F7D48D0090DB98 /* Hyperlink.h */; };
 		4FD9CB1422F7D48D0090DB98 /* Hyperlink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9CB1222F7D48D0090DB98 /* Hyperlink.m */; };
 		4FF64F3B22F7408B0065F64F /* Mouse_Fix.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4FF64F3A22F7408A0065F64F /* Mouse_Fix.tiff */; };
@@ -97,6 +97,7 @@
 		4F7387FC21B48F7900C2F468 /* MomentumScroll.hn */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MomentumScroll.hn; sourceTree = "<group>"; };
 		4F7387FE21B4A79800C2F468 /* MessagePortReceiver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessagePortReceiver.h; sourceTree = "<group>"; };
 		4F7387FF21B4A79800C2F468 /* MessagePortReceiver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessagePortReceiver.m; sourceTree = "<group>"; };
+		4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = milkshake_button.png; sourceTree = "<group>"; };
 		4F8DC6E821A3B1D200E1D297 /* TouchEvents.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = TouchEvents.c; sourceTree = "<group>"; };
 		4F8DC6E921A3B1D200E1D297 /* TouchEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchEvents.h; sourceTree = "<group>"; };
 		4F8DC6EB21A3B20600E1D297 /* IOHIDEventData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOHIDEventData.h; sourceTree = "<group>"; };
@@ -128,7 +129,6 @@
 		4FD6F5F322C818C000F4841C /* Utility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
 		4FD6F5F422C818C000F4841C /* Utility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
 		4FD9CB0822F7C10D0090DB98 /* paypal_logo_100px.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paypal_logo_100px.png; sourceTree = "<group>"; };
-		4FD9CB0C22F7C6210090DB98 /* milkshake_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = milkshake_button.png; path = ../../../../../../../../../Desktop/milkshake_button.png; sourceTree = "<group>"; };
 		4FD9CB1122F7D48D0090DB98 /* Hyperlink.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Hyperlink.h; sourceTree = "<group>"; };
 		4FD9CB1222F7D48D0090DB98 /* Hyperlink.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Hyperlink.m; sourceTree = "<group>"; };
 		4FEA982A21AC775E0094AC51 /* default_config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = default_config.plist; sourceTree = "<group>"; };
@@ -255,7 +255,7 @@
 			children = (
 				4FD9CB1122F7D48D0090DB98 /* Hyperlink.h */,
 				4FD9CB1222F7D48D0090DB98 /* Hyperlink.m */,
-				4FD9CB0C22F7C6210090DB98 /* milkshake_button.png */,
+				4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */,
 				4FD9CB0822F7C10D0090DB98 /* paypal_logo_100px.png */,
 				4FEA982A21AC775E0094AC51 /* default_config.plist */,
 				4FBB85D22187C74100DD6B40 /* Localizable.strings */,
@@ -532,7 +532,7 @@
 				4FD9CB0922F7C10E0090DB98 /* paypal_logo_100px.png in Resources */,
 				4FBB85D42187C74100DD6B40 /* Localizable.strings in Resources */,
 				4F8F38E822F8C7A1004D0040 /* Mouse_Fix_alt.tiff in Resources */,
-				4FD9CB0D22F7C6210090DB98 /* milkshake_button.png in Resources */,
+				4F8AEA9222FBC7AC008C1A7C /* milkshake_button.png in Resources */,
 				4FACF59F2183B956009257D4 /* default_mouse.fix.helper.plist in Resources */,
 				4FD67DE5211CC9000095A9A5 /* Mouse_Remap.xib in Resources */,
 			);

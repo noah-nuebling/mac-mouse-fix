@@ -2,8 +2,6 @@
 
 // implement checkbox functionality, setup AddingField mouse tracking and other minor stuff
 
-
-
 #import <PreferencePanes/PreferencePanes.h>
 #import <ServiceManagement/SMLoginItem.h>
 #import "PrefPaneDelegate.h"
