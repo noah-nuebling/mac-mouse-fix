@@ -14,9 +14,7 @@
 CFMachPortRef _eventTapKey;
 
 + (void)initialize {
-    if (self == [ModifierInputReceiver class]) {
-        setupModifierKeyCallback();
-    }
+    setupModifierKeyCallback();
 }
 + (void)start {
     CGEventTapEnable(_eventTapKey, true);

@@ -43,24 +43,23 @@ static NSArray *_nullArray;
 static NSMutableDictionary *_swipeInfo;
 
 + (void)initialize{
-    if (self == [InputParser class]) {
-        // setup touch event constants
-        _nullArray = @[];
-        _swipeInfo = [NSMutableDictionary dictionary];
-        for (NSNumber* direction in @[ @(kTLInfoSwipeUp), @(kTLInfoSwipeDown), @(kTLInfoSwipeLeft), @(kTLInfoSwipeRight) ]) {
-            NSDictionary* swipeInfo1 = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        @(kTLInfoSubtypeSwipe), kTLInfoKeyGestureSubtype,
-                                        @(1), kTLInfoKeyGesturePhase,
-                                        nil];
-            
-            NSDictionary* swipeInfo2 = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        @(kTLInfoSubtypeSwipe), kTLInfoKeyGestureSubtype,
-                                        direction, kTLInfoKeySwipeDirection,
-                                        @(4), kTLInfoKeyGesturePhase,
-                                        nil];
-            
-            _swipeInfo[direction] = @[ swipeInfo1, swipeInfo2 ];
-        }
+    
+    // setup touch event constants
+    _nullArray = @[];
+    _swipeInfo = [NSMutableDictionary dictionary];
+    for (NSNumber* direction in @[ @(kTLInfoSwipeUp), @(kTLInfoSwipeDown), @(kTLInfoSwipeLeft), @(kTLInfoSwipeRight) ]) {
+        NSDictionary* swipeInfo1 = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    @(kTLInfoSubtypeSwipe), kTLInfoKeyGestureSubtype,
+                                    @(1), kTLInfoKeyGesturePhase,
+                                    nil];
+        
+        NSDictionary* swipeInfo2 = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    @(kTLInfoSubtypeSwipe), kTLInfoKeyGestureSubtype,
+                                    direction, kTLInfoKeySwipeDirection,
+                                    @(4), kTLInfoKeyGesturePhase,
+                                    nil];
+        
+        _swipeInfo[direction] = @[ swipeInfo1, swipeInfo2 ];
     }
 }
 
