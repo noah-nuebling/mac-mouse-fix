@@ -42,8 +42,7 @@
 static NSDictionary *_scrollSmoothnessConfigurations;
 static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 
-+ (void)initialize
-{
++ (void)initialize {
     if (self == [PrefPaneDelegate class]) {
         _scrollSmoothnessConfigurations = @{
             @"Normal"   :   @[ @[@20,@100],  @130, @1.5],

@@ -8,21 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
-//NS_ASSUME_NONNULL_BEGIN
 
 @interface ConfigFileInterface : NSObject
 
 @property (class, retain) NSMutableDictionary *config;
++ (void)reactToConfigFileChange;
 + (void)repairConfigFile:(NSString *)info;
 
+
+
 //+ (void)start;
-
-+ (void)reactToConfigFileChange;
-
 //@property (retain) NSMutableDictionary *configDictFromFile;
-
 //@property (retain) ConfigFileMonitor *selfInstance;
-
 /*
 - (void) Handle_FSEventStreamCallback: (ConstFSEventStreamRef) streamRef
                    clientCallBackInfo: (void *)clientInfo
@@ -33,4 +30,3 @@
  */
 @end
 
-//NS_ASSUME_NONNULL_END

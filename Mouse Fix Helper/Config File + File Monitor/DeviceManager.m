@@ -9,7 +9,7 @@
 #import "DeviceManager.h"
 #import "IOKit/hid/IOHIDManager.h"
 #import "MomentumScroll.h"
-#import "InputReceiver.h"
+#import "MouseInputReceiver.h"
 #import "ConfigFileInterface.h"
 
 @implementation DeviceManager
@@ -19,12 +19,13 @@ IOHIDManagerRef _hidManager;
 static BOOL _relevantDevicesAreAttached;
 
 
++ (void)load {
+    setupDeviceAddedAndRemovedCallbacks();
+}
+
 # pragma mark - Interface
 + (BOOL)relevantDevicesAreAttached {
     return _relevantDevicesAreAttached;
-}
-+ (void)start {
-    setupDeviceAddedAndRemovedCallbacks();
 }
 
 # pragma mark - Setup callbacks
@@ -113,7 +114,7 @@ static void Handle_DeviceRemovalCallback(void *context, IOReturn result, void *s
     CFRelease(devices);
     
     [MomentumScroll startOrStopDecide];
-    [InputReceiver startOrStopDecide];
+    [MouseInputReceiver startOrStopDecide];
 }
 
 
@@ -129,7 +130,7 @@ static void Handle_DeviceMatchingCallback (void *context, IOReturn result, void 
         
         _relevantDevicesAreAttached = TRUE;
         [MomentumScroll startOrStopDecide];
-        [InputReceiver startOrStopDecide];
+        [MouseInputReceiver startOrStopDecide];
     }
     
     
@@ -168,7 +169,7 @@ static void registerDeviceButtonInputCallback_InInputReceiverClass(IOHIDDeviceRe
     IOHIDDeviceSetInputValueMatching(device, elementMatchDict1);
     
     
-    [InputReceiver Register_InputCallback_HID: device];
+    [MouseInputReceiver Register_InputCallback_HID: device];
     
     CFRelease(elementMatchDict1);
     CFRelease(buttonRef);

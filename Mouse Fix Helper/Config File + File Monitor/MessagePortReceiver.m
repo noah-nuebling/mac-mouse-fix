@@ -13,7 +13,7 @@
 
 @implementation MessagePortReceiver
 
-+ (void)start {
++ (void)load {
     
     CFMessagePortRef localPort =
     CFMessagePortCreateLocal(NULL,

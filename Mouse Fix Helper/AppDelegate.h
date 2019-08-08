@@ -11,18 +11,4 @@
 
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
-
-
-
-
-// InputParser.h - Global variables
-
-// - clickAndHoldGlobal
-@property (retain) NSTimer* clickAndHoldTimer;
-// - FakeSwipe Globals (Sensible Side Buttons)
-@property (retain) NSMutableDictionary<NSNumber*, NSArray<NSDictionary*>*>* swipeInfo;
-@property (retain) NSArray* nullArray;
-
-
-
 @end

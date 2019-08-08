@@ -18,7 +18,7 @@
 
 @implementation SmoothScroll
 
-#pragma mark - consts and init()
+#pragma mark - constants
 // settings
 static int64_t _pxStepSizeBase = 76;
 //

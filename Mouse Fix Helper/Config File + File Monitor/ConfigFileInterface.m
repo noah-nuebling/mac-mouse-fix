@@ -14,11 +14,15 @@
 #import "AppDelegate.h"
 
 #import "MomentumScroll.h"
-#import "InputReceiver.h"
+#import "MouseInputReceiver.h"
 
 @implementation ConfigFileInterface
 
 static NSMutableDictionary *config;
+
++ (void)load {
+    [self reactToConfigFileChange];
+}
 
 + (NSMutableDictionary *)config {
     return config;

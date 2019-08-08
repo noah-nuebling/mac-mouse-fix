@@ -13,7 +13,7 @@
 //#import <HIServices/AXUIElement.h>
 #import "ModifierInputReceiver.h"
 
-#import "InputReceiver.h"
+#import "MouseInputReceiver.h"
 #import "DeviceManager.h"
 
 

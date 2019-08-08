@@ -34,8 +34,35 @@
 
 @implementation InputParser
 
+// input parsing
 static CGEventRef   _savedEvent;
-static NSTimer      *_clickAndHoldTimer;
+static NSTimer     *_clickAndHoldTimer;
+
+// simulating touch events
+static NSArray *_nullArray;
+static NSMutableDictionary *_swipeInfo;
+
++ (void)initialize{
+    
+    // setup touch event constants
+    _nullArray = @[];
+    _swipeInfo = [NSMutableDictionary dictionary];
+    for (NSNumber* direction in @[ @(kTLInfoSwipeUp), @(kTLInfoSwipeDown), @(kTLInfoSwipeLeft), @(kTLInfoSwipeRight) ]) {
+        NSDictionary* swipeInfo1 = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    @(kTLInfoSubtypeSwipe), kTLInfoKeyGestureSubtype,
+                                    @(1), kTLInfoKeyGesturePhase,
+                                    nil];
+        
+        NSDictionary* swipeInfo2 = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    @(kTLInfoSubtypeSwipe), kTLInfoKeyGestureSubtype,
+                                    direction, kTLInfoKeySwipeDirection,
+                                    @(4), kTLInfoKeyGesturePhase,
+                                    nil];
+        
+        _swipeInfo[direction] = @[ swipeInfo1, swipeInfo2 ];
+    }
+}
+
 
 
 + (CGEventRef)parse:(int)mouseButton state:(int)state event:(CGEventRef)event {
@@ -139,13 +166,10 @@ static NSTimer      *_clickAndHoldTimer;
                   
 static void SBFFakeSwipe(TLInfoSwipeDirection dir) {
     
-    AppDelegate *appDelegate = [NSApp delegate];
-    NSArray *nullArray = [appDelegate nullArray];
-    NSMutableDictionary * swipeInfo = [appDelegate swipeInfo];
+    NSArray *nullArray = @[];
     
-    
-    CGEventRef event1 = tl_CGEventCreateFromGesture((__bridge CFDictionaryRef)(swipeInfo[@(dir)][0]), (__bridge CFArrayRef)nullArray);
-    CGEventRef event2 = tl_CGEventCreateFromGesture((__bridge CFDictionaryRef)(swipeInfo[@(dir)][1]), (__bridge CFArrayRef)nullArray);
+    CGEventRef event1 = tl_CGEventCreateFromGesture((__bridge CFDictionaryRef)(_swipeInfo[@(dir)][0]), (__bridge CFArrayRef)nullArray);
+    CGEventRef event2 = tl_CGEventCreateFromGesture((__bridge CFDictionaryRef)(_swipeInfo[@(dir)][1]), (__bridge CFArrayRef)nullArray);
     
     CGEventPost(kCGHIDEventTap, event1);
     CGEventPost(kCGHIDEventTap, event2);
@@ -201,10 +225,10 @@ CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar ke
     
     // restore keyEnabled state after 20ms
     if (hotKeyIsEnabled == FALSE) {
-        AppDelegate *appDelegate = [NSApp delegate];
+
         NSNumber *shkNS = [NSNumber numberWithInt:shk];
         [NSTimer scheduledTimerWithTimeInterval:0.05
-                                         target:appDelegate
+                                         target:self
                                        selector:@selector(disableSHK:)
                                        userInfo:shkNS
                                         repeats:NO];
@@ -212,9 +236,17 @@ CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar ke
     
 }
 
+// NSTimer callbacks
+static void disableSHK(NSTimer *timer) {
+    CGSSymbolicHotKey shk = [[timer userInfo] intValue];
+    CGSSetSymbolicHotKeyEnabled(shk, FALSE);
+}
+static void doClickAndHoldAction(NSTimer *timer) {
+    NSArray *holdAction = [timer userInfo];
+    [InputParser handleActionArray:holdAction];
+}
+
 @end
-
-
 
 // click gesture recognizer:
 /*

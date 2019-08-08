@@ -6,7 +6,7 @@
 //  Copyright © 2018 Noah Nuebling Enterprises Ltd. All rights reserved.
 //
 
-#import "InputReceiver.h"
+#import "MouseInputReceiver.h"
 #import "DeviceManager.h"
 #import "IOKit/hid/IOHIDManager.h"
 #import "InputParser.h"
@@ -17,7 +17,7 @@
 
 #import "MomentumScroll.h"
 
-@implementation InputReceiver
+@implementation MouseInputReceiver
 
 // global variables
 static BOOL _relevantDevicesAreAttached;
@@ -31,7 +31,7 @@ CFMachPortRef eventTapMouse;
 
 
 + (void)initialize {
-    NSLog(@"initialize (InputReceiver)");
+    NSLog(@"initializing (InputReceiver)");
     eventSource = CGEventSourceCreate(kCGEventSourceStatePrivate);
     setupMouseInputCallback_CGEvent();
 }
@@ -39,10 +39,10 @@ CFMachPortRef eventTapMouse;
 + (void)startOrStopDecide {
     if ([DeviceManager relevantDevicesAreAttached]) {
         NSLog(@"started (InputReceiver)");
-        [InputReceiver start];
+        [MouseInputReceiver start];
     } else {
         NSLog(@"stopped (InputReceiver)");
-        [InputReceiver stop];
+        [MouseInputReceiver stop];
     }
 }
 // we don't start/stop the IOHIDDeviceRegisterInputValueCallback.
@@ -66,7 +66,6 @@ static void Handle_InputCallback_HID(void *context, IOReturn result, void *sende
     inputSourceIsDeviceOfInterest = true;
         //NSLog(@"Button Input from Registered Device %@, button: %@", sender, value);
 }
-
 
 static void setupMouseInputCallback_CGEvent() {
     NSLog(@"Registering CG (InputReceiver)");

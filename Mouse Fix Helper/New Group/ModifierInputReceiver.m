@@ -11,24 +11,23 @@
 
 @implementation ModifierInputReceiver
 
-CFMachPortRef eventTapKey;
-
+CFMachPortRef _eventTapKey;
 
 + (void)initialize {
     setupModifierKeyCallback();
 }
 + (void)start {
-    CGEventTapEnable(eventTapKey, true);
+    CGEventTapEnable(_eventTapKey, true);
 }
 + (void)stop {
-    CGEventTapEnable(eventTapKey, false);
+    CGEventTapEnable(_eventTapKey, false);
 }
 
 static void setupModifierKeyCallback() {
     /* Register event Tap Callback */
     CGEventMask mask = CGEventMaskBit(kCGEventFlagsChanged);
-    eventTapKey = CGEventTapCreate(kCGHIDEventTap, kCGTailAppendEventTap, kCGEventTapOptionDefault, mask, Handle_ModifierChanged, NULL);
-    CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTapKey, 0);
+    _eventTapKey = CGEventTapCreate(kCGHIDEventTap, kCGTailAppendEventTap, kCGEventTapOptionDefault, mask, Handle_ModifierChanged, NULL);
+    CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _eventTapKey, 0);
     CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopDefaultMode);
     CFRelease(runLoopSource);
 }

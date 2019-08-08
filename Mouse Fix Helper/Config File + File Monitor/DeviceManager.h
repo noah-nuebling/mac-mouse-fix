@@ -8,11 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-NS_ASSUME_NONNULL_BEGIN
 
 @interface DeviceManager : NSObject
 + (BOOL)relevantDevicesAreAttached;
-+ (void)start;
 @end
 
-NS_ASSUME_NONNULL_END

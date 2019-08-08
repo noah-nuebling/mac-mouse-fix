@@ -27,6 +27,11 @@
 				<string>symbolicHotKey</string>
 				<string>32</string>
 			</array>
+			<key>hold</key>
+			<array>
+				<string>symbolicHotKey</string>
+				<string>33</string>
+			</array>
 		</dict>
 	</dict>
 	<key>ScrollSettings</key>
