@@ -1,10 +1,3 @@
-//
-//  AppDelegate.m
-//  Mouse Remap Helper
-//
-//  Created by Noah Nübling on 25.07.18.
-//  Copyright © 2018 Noah Nuebling Enterprises Ltd. All rights reserved.
-//
 #import "AppDelegate.h"
 #import "MouseInputReceiver.h"
 #import "ModifierInputReceiver.h"

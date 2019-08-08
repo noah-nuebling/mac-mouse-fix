@@ -20,15 +20,17 @@
 	<string>-1</string>
 	<key>CFBundleVersion</key>
 	<string>-1</string>
+	<key>LSBackgroundOnly</key>
+	<false/>
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2018 Noah Nuebling Enterprises Ltd. All rights reserved. (not actually)</string>
+	<string>Copyright © 2019 Noah Nuebling (MIT License)</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
-	<key>LSBackgroundOnly</key>
-	<false/>
+	<key>NSAppleEventsUsageDescription</key>
+	<string>lol</string>
 </dict>
 </plist>

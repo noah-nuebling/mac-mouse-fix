@@ -1,11 +1,3 @@
-//
-//  DeviceManager.m
-//  Mouse Fix Helper
-//
-//  Created by Noah Nübling on 28.11.18.
-//  Copyright © 2018 Noah Nuebling Enterprises Ltd. All rights reserved.
-//
-
 #import "DeviceManager.h"
 #import "IOKit/hid/IOHIDManager.h"
 #import "MomentumScroll.h"

@@ -1,12 +1,3 @@
-//
-//  ConfigFileMonitor.m
-//  Mouse Remap Helper
-//
-//  Created by Noah Nübling on 19.11.18.
-//  Copyright © 2018 Noah Nuebling Enterprises Ltd. All rights reserved.
-//
-
-
 // TODO: implement callback when frontmost application changes - change settings accordingly
 // NSWorkspaceDidActivateApplicationNotification?
 
