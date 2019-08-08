@@ -131,7 +131,6 @@ static NSMutableDictionary *_swipeInfo;
     return;
 }
 
-
 + (void)handleActionArray: (NSArray *)actionArray {
     
     NSLog(@"handling input (Input Parser)");
@@ -154,7 +153,7 @@ static NSMutableDictionary *_swipeInfo;
         }
     }
 }
-                  
+
 static void SBFFakeSwipe(TLInfoSwipeDirection dir) {
     
     NSArray *nullArray = @[];
@@ -168,9 +167,6 @@ static void SBFFakeSwipe(TLInfoSwipeDirection dir) {
     CFRelease(event1);
     CFRelease(event2);
 }
-                  
-                  
-
 
 CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar keyEquivalent, CGKeyCode virtualKeyCode, CGSModifierFlags modifiers);
 
@@ -228,11 +224,11 @@ CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar ke
 }
 
 // NSTimer callbacks
-static void disableSHK(NSTimer *timer) {
++(void)disableSHK:(NSTimer *)timer {
     CGSSymbolicHotKey shk = [[timer userInfo] intValue];
     CGSSetSymbolicHotKeyEnabled(shk, FALSE);
 }
-static void doClickAndHoldAction(NSTimer *timer) {
++(void)doClickAndHoldAction:(NSTimer *)timer {
     NSArray *holdAction = [timer userInfo];
     [InputParser handleActionArray:holdAction];
 }
