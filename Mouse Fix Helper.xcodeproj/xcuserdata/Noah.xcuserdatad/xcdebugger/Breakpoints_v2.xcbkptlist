@@ -65,13 +65,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Mouse Fix Helper/AppDelegate.m"
-            timestampString = "586917352.226559"
+            timestampString = "586921041.356696"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "28"
-            endingLineNumber = "28"
-            landmarkName = "-applicationDidFinishLaunching:"
-            landmarkType = "7">
+            startingLineNumber = "21"
+            endingLineNumber = "21">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -98,7 +96,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Mouse Fix/PrefPaneDelegate.m"
-            timestampString = "586917352.226722"
+            timestampString = "586921041.356869"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "435"

@@ -16,16 +16,6 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 //
-
-
-//
-//  InputParser.m
-//  Mouse Remap Helper
-//
-//  Created by Noah Nübling on 19.11.18.
-//  Copyright © 2018 Noah Nuebling Enterprises Ltd. All rights reserved.
-//
-
 #import "InputParser.h"
 #import "AppDelegate.h"
 #import "ConfigFileInterface.h"
