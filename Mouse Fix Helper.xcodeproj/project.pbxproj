@@ -292,9 +292,9 @@
 			children = (
 				4FCECD8321092354001F1078 /* AppDelegate.h */,
 				4FCECD8421092354001F1078 /* AppDelegate.m */,
-				4F8DC6F121A3B50900E1D297 /* Smooth Scroll */,
-				4F34F9B621A359E200104EBF /* Remap */,
 				4F7F863E21AE2B64007DF9A6 /* Bezel Services */,
+				4F34F9B621A359E200104EBF /* Remap */,
+				4F8DC6F121A3B50900E1D297 /* Smooth Scroll */,
 				4FCECDB02109326E001F1078 /* Supporting Files */,
 			);
 			path = "Mouse Fix Helper";

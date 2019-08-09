@@ -65,11 +65,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Mouse Fix Helper/AppDelegate.m"
-            timestampString = "586921041.356696"
+            timestampString = "587002906.4727859"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
+            startingLineNumber = "9"
+            endingLineNumber = "9"
             landmarkName = "-applicationDidFinishLaunching:"
             landmarkType = "7">
          </BreakpointContent>
@@ -98,13 +98,29 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Mouse Fix/PrefPaneDelegate.m"
-            timestampString = "586926388.662511"
+            timestampString = "586927294.325665"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "433"
             endingLineNumber = "433"
             landmarkName = "-initializeUI"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Mouse Fix Helper/Config File + File Monitor/DeviceManager.m"
+            timestampString = "587008467.12991"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "131"
+            endingLineNumber = "131"
+            landmarkName = "Handle_DeviceMatchingCallback()"
+            landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
