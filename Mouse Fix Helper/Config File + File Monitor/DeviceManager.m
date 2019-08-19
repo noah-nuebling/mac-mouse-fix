@@ -130,22 +130,13 @@ static void Handle_DeviceMatchingCallback (void *context, IOReturn result, void 
     
     
     // print stuff
-    
-    CFNumberRef vendorID = IOHIDDeviceGetProperty(device, CFSTR(kIOHIDVendorIDKey));
-    CFNumberRef productID = IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductIDKey));
-    CFNumberRef version = IOHIDDeviceGetProperty(device, CFSTR(kIOHIDVersionNumberKey));
-    CFStringRef vendor = IOHIDDeviceGetProperty(device, CFSTR(kIOHIDManufacturerKey));
-    CFStringRef product = IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductKey));
-    
-    
-
-    
-    NSLog(@"\nMatching device added: %@ %@ \nVendorID:%@ \nVendorName:%@ \nVersion:%@",
-          vendor,
-          product,
-          vendorID,
-          productID,
-          version
+    NSString *devName = [NSString stringWithUTF8String:
+                         CFStringGetCStringPtr(IOHIDDeviceGetProperty(device, CFSTR("Product")), kCFStringEncodingMacRoman)];
+    NSString *devPrimaryUsage = IOHIDDeviceGetProperty(device, CFSTR("PrimaryUsage"));
+    NSLog(@"\nMatching device added: %p\nModel: %@\nUsage: %@\nMatching",
+          device,
+          devName,
+          devPrimaryUsage
           );
     
     
@@ -177,28 +168,17 @@ static void registerDeviceButtonInputCallback_InInputReceiverClass(IOHIDDeviceRe
 }
 
 
-static BOOL devicePassesFiltering(IOHIDDeviceRef device) {
+static BOOL devicePassesFiltering(IOHIDDeviceRef HIDDevice) {
     
     NSString *deviceName = [NSString stringWithUTF8String:
-                            CFStringGetCStringPtr(IOHIDDeviceGetProperty(device, CFSTR("Product")), kCFStringEncodingMacRoman)];
+                            CFStringGetCStringPtr(IOHIDDeviceGetProperty(HIDDevice, CFSTR("Product")), kCFStringEncodingMacRoman)];
     NSString *deviceNameLower = [deviceName lowercaseString];
     
-    
-    BOOL pass = YES;
-    if (!([deviceNameLower rangeOfString:@"magic"].location == NSNotFound)) {
-        pass = NO;
+    if ([deviceNameLower rangeOfString:@"magic"].location == NSNotFound) {
+        return TRUE;
     } else {
-        // check if config file disables this device
-        CFNumberRef vendorID = IOHIDDeviceGetProperty(device, CFSTR(kIOHIDVendorIDKey));
-        CFNumberRef productID = IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductIDKey));
-        NSString *deviceKey = [NSString stringWithFormat:@"VendorID:%@ ProductID:%@",vendorID,productID];
-        NSNumber *deviceEnabled = [[[ConfigFileInterface.config objectForKey:@"DeviceOverrides"] objectForKey:deviceKey] objectForKey:@"enabled"];
-        if (![deviceEnabled boolValue] && deviceEnabled != NULL) {
-            pass = NO;
-        }
+        return FALSE;
     }
-    
-    return pass;
 }
 
 @end
