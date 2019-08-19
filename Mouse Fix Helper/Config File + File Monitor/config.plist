@@ -46,48 +46,5 @@
 			<integer>-1</integer>
 		</array>
 	</dict>
-	<key>AppOverrides</key>
-	<dict>
-		<key>com.bohemiancoding.sketch3</key>
-		<dict>
-			<key>ScrollSettings</key>
-			<dict>
-				<key>enabled</key>
-				<false/>
-				<key>values</key>
-				<array>
-					<integer>50</integer>
-					<integer>75</integer>
-					<real>1.2</real>
-					<integer>-1</integer>
-				</array>
-			</dict>
-		</dict>
-		<key>com.apple.dt.Xcode</key>
-		<dict>
-			<key>ScrollSettings</key>
-			<dict>
-				<key>enabled</key>
-				<false/>
-				<key>values</key>
-				<array>
-					<integer>50</integer>
-					<integer>75</integer>
-					<real>1.2</real>
-					<integer>-1</integer>
-				</array>
-			</dict>
-		</dict>
-	</dict>
-	<key>DeviceOverrides</key>
-	<dict>
-		<key>VendorID:1133 ProductID:49271</key>
-		<dict>
-			<key>name</key>
-			<string>Logitech USB Optical Mouse</string>
-			<key>enabled</key>
-			<true/>
-		</dict>
-	</dict>
 </dict>
 </plist>
