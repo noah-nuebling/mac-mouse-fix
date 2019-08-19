@@ -72,7 +72,7 @@ static CGDirectDisplayID *_displaysUnderMousePointer;
 // wheel phase
 static int64_t  _pixelScrollQueue           =   0;
 static double   _msLeftForScroll            =   0;
-//static long     _consecutiveScrollsCounter  =   0;
+static long     _consecutiveScrollsCounter  =   0;
 // momentum phase
 static double   _pxPerMsVelocity        =   0;
 static int      _onePixelScrollsCounter =   0;

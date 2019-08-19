@@ -18,7 +18,7 @@
 		4F7387FD21B48F7900C2F468 /* MomentumScroll.mn in Sources */ = {isa = PBXBuildFile; fileRef = 4F7387FB21B48F7900C2F468 /* MomentumScroll.mn */; };
 		4F73880021B4A79800C2F468 /* MessagePortReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F7387FF21B4A79800C2F468 /* MessagePortReceiver.m */; };
 		4F8AEA9222FBC7AC008C1A7C /* milkshake_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */; };
-		4F8DC6EA21A3B1D200E1D297 /* TouchEvents.c in Sources */ = {isa = PBXBuildFile; fileRef = 4F8DC6E821A3B1D200E1D297 /* TouchEvents.c */; settings = {COMPILER_FLAGS = "-w"; }; };
+		4F8DC6EA21A3B1D200E1D297 /* TouchEvents.c in Sources */ = {isa = PBXBuildFile; fileRef = 4F8DC6E821A3B1D200E1D297 /* TouchEvents.c */; };
 		4F8DC6ED21A3B20600E1D297 /* IOHIDEventData.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F8DC6EB21A3B20600E1D297 /* IOHIDEventData.h */; };
 		4F8DC6EE21A3B20600E1D297 /* IOHIDEventTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F8DC6EC21A3B20600E1D297 /* IOHIDEventTypes.h */; };
 		4F8DC6F621A3B60600E1D297 /* AnimationCurve.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8DC6F421A3B60600E1D297 /* AnimationCurve.m */; };
