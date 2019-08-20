@@ -27,7 +27,7 @@
         <window title="≪ do not localize ≫" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" deferred="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="F0z-JX-Cv5" userLabel="PrefPane">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <rect key="contentRect" x="0.0" y="0.0" width="668" height="280"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
             <view key="contentView" id="se5-gp-TjO">
                 <rect key="frame" x="0.0" y="0.0" width="668" height="280"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -128,6 +128,7 @@
                                                 <menuItem title="App Exposé" tag="33" id="gpY-zP-L45"/>
                                                 <menuItem title="Show Desktop" tag="36" id="ejj-IJ-om1"/>
                                                 <menuItem title="Launchpad" tag="160" id="BCd-Ru-p5Y"/>
+                                                <menuItem title="Look Up" tag="70" id="SND-VN-NwX"/>
                                             </items>
                                         </menu>
                                         <connections>
@@ -158,6 +159,7 @@
                                                 <menuItem title="App Exposé" tag="33" id="b0I-7o-OaS"/>
                                                 <menuItem title="Show Desktop" tag="36" id="g9L-sQ-3Rm"/>
                                                 <menuItem title="Launchpad" tag="160" id="IRF-T2-kRI"/>
+                                                <menuItem title="Look Up" tag="70" id="HCe-cO-yfb"/>
                                             </items>
                                         </menu>
                                     </popUpButtonCell>
@@ -270,7 +272,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" utility="YES" nonactivatingPanel="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="90" y="125" width="559" height="167"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
             <view key="contentView" id="BHn-QT-Hdu">
                 <rect key="frame" x="0.0" y="0.0" width="559" height="167"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -428,6 +430,7 @@ AAAAAAAAAAAAAAABOQ
             </view>
             <point key="canvasLocation" x="773.5" y="-76.5"/>
         </window>
+        <menuItem title="Launchpad" tag="160" id="9rC-Ff-2hb"/>
     </objects>
     <resources>
         <image name="milkshake_button" width="920" height="120"/>
