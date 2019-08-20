@@ -25,12 +25,7 @@
 			<key>click</key>
 			<array>
 				<string>symbolicHotKey</string>
-				<string>70</string>
-			</array>
-			<key>hold</key>
-			<array>
-				<string>symbolicHotKey</string>
-				<string>36</string>
+				<string>32</string>
 			</array>
 		</dict>
 	</dict>
