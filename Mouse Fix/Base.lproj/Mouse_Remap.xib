@@ -41,8 +41,8 @@
                             <rect key="frame" x="3" y="3" width="628" height="179"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <button identifier="scrollCheckBox" toolTip="Enable Custom Smooth Scrolling Algorithm" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sIW-q1-lA7">
-                                    <rect key="frame" x="62" y="128" width="131" height="18"/>
+                                <button identifier="scrollCheckBox" toolTip="Enable Custom Smooth Scrolling Algorithm." verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sIW-q1-lA7">
+                                    <rect key="frame" x="54" y="128" width="131" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <buttonCell key="cell" type="check" title="Improve Scrolling:" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Gko-fk-Ijn">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -53,15 +53,15 @@
                                     </connections>
                                 </button>
                                 <slider toolTip="Changes Scrolling Speed" verticalHuggingPriority="750" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rjn-nX-miX">
-                                    <rect key="frame" x="222" y="121" width="151" height="25"/>
+                                    <rect key="frame" x="214" y="121" width="151" height="25"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <sliderCell key="cell" alignment="left" maxValue="1" doubleValue="0.5" tickMarkPosition="below" numberOfTickMarks="7" allowsTickMarkValuesOnly="YES" sliderType="linear" id="6BY-vc-RsP"/>
                                     <connections>
                                         <action selector="UIChanged:" target="-2" id="X0h-ed-SzL"/>
                                     </connections>
                                 </slider>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zwj-Ou-XyF">
-                                    <rect key="frame" x="267" y="152" width="61" height="17"/>
+                                <textField toolTip="Changes Scrolling Speed" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zwj-Ou-XyF">
+                                    <rect key="frame" x="259" y="152" width="61" height="17"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Step Size" id="Wqo-JB-J8q">
                                         <font key="font" metaFont="system"/>
@@ -69,51 +69,51 @@
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yif-b0-9zx">
-                                    <rect key="frame" x="216" y="100" width="33" height="14"/>
+                                <textField toolTip="Changes Scrolling Speed" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yif-b0-9zx">
+                                    <rect key="frame" x="208" y="100" width="33" height="14"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Small" id="aOF-LD-m9Z">
-                                        <font key="font" metaFont="system" size="11"/>
+                                        <font key="font" metaFont="smallSystem"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6HH-D6-RiE">
-                                    <rect key="frame" x="346" y="100" width="34" height="14"/>
+                                <textField toolTip="Changes Scrolling Speed" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6HH-D6-RiE">
+                                    <rect key="frame" x="338" y="100" width="34" height="14"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Large" id="RcX-Tm-6LW">
-                                        <font key="font" metaFont="system" size="11"/>
+                                        <font key="font" metaFont="smallSystem"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TPG-bY-BNO">
-                                    <rect key="frame" x="82" y="60" width="111" height="17"/>
+                                    <rect key="frame" x="92" y="60" width="93" height="17"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Mouse Buttons 3:" id="3pV-aJ-Jyd">
+                                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Middle Button:" id="3pV-aJ-Jyd">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8kp-Cw-BI0">
-                                    <rect key="frame" x="283" y="80" width="30" height="14"/>
+                                    <rect key="frame" x="275" y="80" width="30" height="14"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Click" id="G3R-by-6ed">
-                                        <font key="font" metaFont="system" size="11"/>
+                                        <font key="font" metaFont="smallSystem"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
                                 <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r3v-3d-tiF">
-                                    <rect key="frame" x="209" y="54" width="180" height="25"/>
+                                    <rect key="frame" x="201" y="54" width="180" height="25"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <popUpButtonCell key="cell" type="push" title="-" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="4BD-tK-KmA" id="NWt-aH-UfN">
                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="menu"/>
                                         <menu key="menu" id="eTc-jQ-bpc">
                                             <items>
-                                                <menuItem title="-" state="on" id="4BD-tK-KmA"/>
+                                                <menuItem title="-" state="on" toolTip="Leave button behavior unchanged." id="4BD-tK-KmA"/>
                                                 <menuItem isSeparatorItem="YES" id="kfH-7V-4Ck"/>
                                                 <menuItem title="Mission Control" tag="32" id="8ZW-kK-FcC"/>
                                                 <menuItem title="App Exposé" tag="33" id="gpY-zP-L45"/>
@@ -128,16 +128,16 @@
                                     </popUpButtonCell>
                                 </popUpButton>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="by6-F0-DZY">
-                                    <rect key="frame" x="488" y="80" width="29" height="14"/>
+                                    <rect key="frame" x="480" y="80" width="29" height="14"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Hold" id="hxs-mM-fJJ">
-                                        <font key="font" metaFont="system" size="11"/>
+                                        <font key="font" metaFont="smallSystem"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ozl-Aa-XIf">
-                                    <rect key="frame" x="413" y="54" width="180" height="25"/>
+                                <popUpButton toolTip="Leave button behavior unchanged." verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ozl-Aa-XIf">
+                                    <rect key="frame" x="405" y="54" width="180" height="25"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <popUpButtonCell key="cell" type="push" title="-" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="fuS-pI-6iE" id="9en-UD-IPS">
                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -159,25 +159,25 @@
                                     </connections>
                                 </popUpButton>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ajW-pe-GgG">
-                                    <rect key="frame" x="44" y="15" width="149" height="17"/>
+                                    <rect key="frame" x="100" y="15" width="85" height="17"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Mouse Buttons 4 and 5:" id="urG-gF-6Hk">
+                                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Side Buttons:" id="urG-gF-6Hk">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K4K-e9-BNf">
-                                    <rect key="frame" x="282" y="35" width="30" height="14"/>
+                                    <rect key="frame" x="274" y="35" width="30" height="14"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Click" id="eHV-Gt-lVd">
-                                        <font key="font" metaFont="system" size="11"/>
+                                        <font key="font" metaFont="smallSystem"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SEq-9e-rkd">
-                                    <rect key="frame" x="209" y="9" width="180" height="25"/>
+                                <popUpButton toolTip="Leave button behavior unchanged." verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SEq-9e-rkd">
+                                    <rect key="frame" x="201" y="9" width="180" height="25"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <popUpButtonCell key="cell" type="push" title="-" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="4uk-9u-Ots" id="MAP-un-RNI">
                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -196,16 +196,16 @@
                                     </connections>
                                 </popUpButton>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P0l-4c-pwf">
-                                    <rect key="frame" x="488" y="35" width="29" height="14"/>
+                                    <rect key="frame" x="480" y="35" width="29" height="14"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Hold" id="oSJ-B0-rEz">
-                                        <font key="font" metaFont="system" size="11"/>
+                                        <font key="font" metaFont="smallSystem"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3K1-Hs-sdK">
-                                    <rect key="frame" x="413" y="9" width="180" height="25"/>
+                                <popUpButton toolTip="Leave button behavior unchanged." verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3K1-Hs-sdK">
+                                    <rect key="frame" x="405" y="9" width="180" height="25"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <popUpButtonCell key="cell" type="push" title="-" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="TLo-Ui-rNb" id="hCJ-m1-MOx">
                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -224,7 +224,7 @@
                                     </connections>
                                 </popUpButton>
                                 <button toolTip="Inverts mouse scrolling direction relative to system wide scrolling direction." verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BaE-Ga-kIa">
-                                    <rect key="frame" x="445" y="128" width="115" height="18"/>
+                                    <rect key="frame" x="437" y="128" width="115" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <buttonCell key="cell" type="check" title="Invert Direction" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="mOD-gA-hHm">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -248,8 +248,8 @@
                         </connections>
                     </button>
                     <button toolTip="Enable Mouse Fix for a better mouse experience!" verticalHuggingPriority="750" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WfN-Sk-KjI">
-                        <rect key="frame" x="23" y="207" width="107" height="18"/>
-                        <buttonCell key="cell" type="check" title="Enable Mouse" bezelStyle="regularSquare" imagePosition="left" alignment="right" state="on" inset="2" id="s9l-if-KkI">
+                        <rect key="frame" x="23" y="207" width="128" height="18"/>
+                        <buttonCell key="cell" type="check" title="Enable Mouse Fix" bezelStyle="regularSquare" imagePosition="left" alignment="right" state="on" inset="2" id="s9l-if-KkI">
                             <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>

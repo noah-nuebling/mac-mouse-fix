@@ -17,7 +17,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>0.8</string>
 	<key>CFBundleVersion</key>
-	<string>102</string>
+	<string>108</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2018 Noah Nuebling Enterprises Ltd. All rights reserved.</string>
 	<key>NSMainNibFile</key>
