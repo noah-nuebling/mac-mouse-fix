@@ -40,22 +40,6 @@
 static NSDictionary *_scrollSmoothnessConfigurations;
 static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 
-+ (void)initialize {
-    if (self == [PrefPaneDelegate class]) {
-        _scrollSmoothnessConfigurations = @{
-            @"Normal"   :   @[ @[@20,@100],  @130, @1.5],
-            @"Snappy"   :   @[ @[@10,@90],  @75,  @1.2],
-            @"Smooth"   :   @[ @[@10,@90], @190, @1.5],
-        
-            };
-        
-        actionsForPopupButtonTag_onlyForSideMouseButtons = @{
-            @1          :   @[ @[@"symbolicHotKey", @79    ], @[@"symbolicHotKey", @81     ]],
-            @2          :   @[ @[@"swipeEvent"   , @"left"], @[@"swipeEvent"   , @"right"]] };
-    }
-}
-
-
 # pragma mark - IBActions
 
 - (IBAction)enableCheckBox:(id)sender {
@@ -85,27 +69,42 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 
 
 
-# pragma mark - MainViewDidLoad
+# pragma mark - initialization
+
++ (void)initialize {
+    if (self == [PrefPaneDelegate class]) {
+        _scrollSmoothnessConfigurations = @{
+                                            @"Normal"   :   @[ @[@20,@100],  @130, @1.5],
+                                            @"Snappy"   :   @[ @[@10,@90],  @75,  @1.2],
+                                            @"Smooth"   :   @[ @[@10,@90], @190, @1.5],
+                                            
+                                            };
+        
+        actionsForPopupButtonTag_onlyForSideMouseButtons = @{
+                                                             @1          :   @[ @[@"symbolicHotKey", @79    ], @[@"symbolicHotKey", @81     ]],
+                                                             @2          :   @[ @[@"swipeEvent"   , @"left"], @[@"swipeEvent"   , @"right"]] };
+    }
+}
 
 
 - (void)mainViewDidLoad {
     NSLog(@"PREF PANEEE");
     
     
-    //setup
-    
     [self loadHelperBundle];
     [self loadConfigDictFromFile];
     
     [self initializeUI];
     
-    // enableCheckbox
     
+    // enableCheckbox
     if (self.helperIsActive) {
         [_enableCheckBox setState: 1];
     } else {
         [_enableCheckBox setState: 0];
      }
+    
+    
 }
 
 # pragma mark - Helper Functions
