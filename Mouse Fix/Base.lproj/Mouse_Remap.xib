@@ -13,6 +13,7 @@
                 <outlet property="enableCheckBox" destination="WfN-Sk-KjI" id="L6d-wR-v92"/>
                 <outlet property="middleClick" destination="r3v-3d-tiF" id="4qQ-ds-EaH"/>
                 <outlet property="middleHold" destination="Ozl-Aa-XIf" id="7s1-mZ-Ktl"/>
+                <outlet property="moreSheetPanel" destination="fxJ-a3-xlz" id="JoG-KX-Pn9"/>
                 <outlet property="scrollCheckBox" destination="sIW-q1-lA7" id="mD8-cM-uGN"/>
                 <outlet property="scrollCheckBoxInvert" destination="BaE-Ga-kIa" id="yc4-bK-ZCz"/>
                 <outlet property="scrollEnableCheckBox" destination="Gko-fk-Ijn" id="9Ni-NR-Jln"/>
@@ -20,6 +21,7 @@
                 <outlet property="sheetPanel" destination="fxJ-a3-xlz" id="R3w-va-4ut"/>
                 <outlet property="sideClick" destination="SEq-9e-rkd" id="Fe5-Bo-BZe"/>
                 <outlet property="sideHold" destination="3K1-Hs-sdK" id="ZA3-94-q2r"/>
+                <outlet property="versionLabel" destination="gP8-IL-pWC" id="oMu-Yp-fzY"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>

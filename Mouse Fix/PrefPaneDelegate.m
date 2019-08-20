@@ -30,7 +30,9 @@
 @property (weak) IBOutlet NSPopUpButton *sideClick;
 @property (weak) IBOutlet NSPopUpButton *sideHold;
 
+
 @property (strong) IBOutlet NSPanel *sheetPanel;
+@property (weak) IBOutlet NSTextField *versionLabel;
 @property (weak) IBOutlet NSButton *doneButton;
 
 @end
@@ -51,6 +53,11 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 - (IBAction)moreButton:(id)sender {
     
     [[[NSApplication sharedApplication] mainWindow] beginSheet:_sheetPanel completionHandler:nil];
+
+    NSString *versionString = [NSString stringWithFormat:@"Version %@ (%@)",
+                               [[NSBundle bundleForClass:[self class]] objectForInfoDictionaryKey:@"CFBundleShortVersionString"],
+                               [[NSBundle bundleForClass:[self class]] objectForInfoDictionaryKey:@"CFBundleVersion"]];
+    [_versionLabel setStringValue:versionString];
 }
 - (IBAction)milkshakeButton:(id)sender {
     NSLog(@"BUTTTON");
@@ -104,8 +111,8 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
         [_enableCheckBox setState: 0];
      }
     
-    
 }
+
 
 # pragma mark - Helper Functions
 
