@@ -87,7 +87,7 @@
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TPG-bY-BNO">
+                                <textField toolTip="Also known as mouse button 3." horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TPG-bY-BNO">
                                     <rect key="frame" x="108" y="60" width="93" height="17"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Middle Button:" id="3pV-aJ-Jyd">
@@ -158,7 +158,7 @@
                                         <action selector="UIChanged:" target="-2" id="wic-Xb-i4K"/>
                                     </connections>
                                 </popUpButton>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ajW-pe-GgG">
+                                <textField toolTip="Also known as mouse buttons 4 and 5." horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ajW-pe-GgG">
                                     <rect key="frame" x="116" y="15" width="85" height="17"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Side Buttons:" id="urG-gF-6Hk">
