@@ -370,8 +370,8 @@ DQ
                         </buttonCell>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gP8-IL-pWC">
-                        <rect key="frame" x="118" y="130" width="124" height="17"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" title="Version 1.0 (76843)" id="5sp-4a-oce">
+                        <rect key="frame" x="118" y="130" width="79" height="17"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" title="Version - (-)" id="5sp-4a-oce">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

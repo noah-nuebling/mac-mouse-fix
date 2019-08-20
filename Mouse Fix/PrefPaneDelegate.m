@@ -53,11 +53,6 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 - (IBAction)moreButton:(id)sender {
     
     [[[NSApplication sharedApplication] mainWindow] beginSheet:_sheetPanel completionHandler:nil];
-
-    NSString *versionString = [NSString stringWithFormat:@"Version %@ (%@)",
-                               [[NSBundle bundleForClass:[self class]] objectForInfoDictionaryKey:@"CFBundleShortVersionString"],
-                               [[NSBundle bundleForClass:[self class]] objectForInfoDictionaryKey:@"CFBundleVersion"]];
-    [_versionLabel setStringValue:versionString];
 }
 - (IBAction)milkshakeButton:(id)sender {
     NSLog(@"BUTTTON");
@@ -91,6 +86,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
                                                              @1          :   @[ @[@"symbolicHotKey", @79    ], @[@"symbolicHotKey", @81     ]],
                                                              @2          :   @[ @[@"swipeEvent"   , @"left"], @[@"swipeEvent"   , @"right"]] };
     }
+    
 }
 
 
@@ -111,6 +107,11 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
         [_enableCheckBox setState: 0];
      }
     
+    //sheetPanel
+    NSString *versionString = [NSString stringWithFormat:@"Version %@ (%@)",
+                               [[NSBundle bundleForClass:[self class]] objectForInfoDictionaryKey:@"CFBundleShortVersionString"],
+                               [[NSBundle bundleForClass:[self class]] objectForInfoDictionaryKey:@"CFBundleVersion"]];
+    [_versionLabel setStringValue:versionString];
 }
 
 
