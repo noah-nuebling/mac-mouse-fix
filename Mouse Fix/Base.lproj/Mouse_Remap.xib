@@ -42,9 +42,9 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <button identifier="scrollCheckBox" toolTip="Enable Custom Smooth Scrolling Algorithm." verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sIW-q1-lA7">
-                                    <rect key="frame" x="70" y="128" width="131" height="18"/>
+                                    <rect key="frame" x="72" y="128" width="129" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <buttonCell key="cell" type="check" title="Improve Scrolling:" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Gko-fk-Ijn">
+                                    <buttonCell key="cell" type="check" title="Smooth Scrolling:" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Gko-fk-Ijn">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
@@ -116,7 +116,7 @@
                                                 <menuItem title="-" state="on" toolTip="Leave button behavior unchanged." id="4BD-tK-KmA"/>
                                                 <menuItem isSeparatorItem="YES" id="kfH-7V-4Ck"/>
                                                 <menuItem title="Mission Control" tag="32" id="8ZW-kK-FcC"/>
-                                                <menuItem title="App Exposé" tag="33" id="gpY-zP-L45"/>
+                                                <menuItem title="App Exposé" tag="33" toolTip="Expose all windows of the currently active app." id="gpY-zP-L45"/>
                                                 <menuItem title="Show Desktop" tag="36" id="ejj-IJ-om1"/>
                                                 <menuItem title="Launchpad" tag="160" id="BCd-Ru-p5Y"/>
                                                 <menuItem title="Look Up" tag="70" id="SND-VN-NwX"/>
@@ -136,7 +136,7 @@
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <popUpButton toolTip="Leave button behavior unchanged." verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ozl-Aa-XIf">
+                                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ozl-Aa-XIf">
                                     <rect key="frame" x="421" y="54" width="180" height="25"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <popUpButtonCell key="cell" type="push" title="-" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="fuS-pI-6iE" id="9en-UD-IPS">
@@ -144,10 +144,10 @@
                                         <font key="font" metaFont="menu"/>
                                         <menu key="menu" id="Kfa-q9-dxG">
                                             <items>
-                                                <menuItem title="-" state="on" id="fuS-pI-6iE"/>
+                                                <menuItem title="-" state="on" toolTip="Leave button behavior unchanged." id="fuS-pI-6iE"/>
                                                 <menuItem isSeparatorItem="YES" id="tjv-xA-X6o"/>
                                                 <menuItem title="Mission Control" tag="32" id="i88-Bf-Ajz"/>
-                                                <menuItem title="App Exposé" tag="33" id="b0I-7o-OaS"/>
+                                                <menuItem title="App Exposé" tag="33" toolTip="Expose all windows of the currently active app." id="b0I-7o-OaS"/>
                                                 <menuItem title="Show Desktop" tag="36" id="g9L-sQ-3Rm"/>
                                                 <menuItem title="Launchpad" tag="160" id="IRF-T2-kRI"/>
                                                 <menuItem title="Look Up" tag="70" id="HCe-cO-yfb"/>
@@ -176,7 +176,7 @@
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <popUpButton toolTip="Leave button behavior unchanged." verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SEq-9e-rkd">
+                                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SEq-9e-rkd">
                                     <rect key="frame" x="217" y="9" width="180" height="25"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <popUpButtonCell key="cell" type="push" title="-" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="4uk-9u-Ots" id="MAP-un-RNI">
@@ -184,7 +184,7 @@
                                         <font key="font" metaFont="menu"/>
                                         <menu key="menu" id="ElL-Gx-u5d">
                                             <items>
-                                                <menuItem title="-" state="on" id="4uk-9u-Ots"/>
+                                                <menuItem title="-" state="on" toolTip="Leave button behavior unchanged." id="4uk-9u-Ots"/>
                                                 <menuItem isSeparatorItem="YES" id="Qfk-r2-zu2"/>
                                                 <menuItem title="Move between Spaces" tag="1" id="omX-iT-OCR"/>
                                                 <menuItem title="Move between Pages" tag="2" id="OXZ-3v-ehA"/>
@@ -204,7 +204,7 @@
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <popUpButton toolTip="Leave button behavior unchanged." verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3K1-Hs-sdK">
+                                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3K1-Hs-sdK">
                                     <rect key="frame" x="421" y="9" width="180" height="25"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <popUpButtonCell key="cell" type="push" title="-" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="TLo-Ui-rNb" id="hCJ-m1-MOx">
@@ -212,7 +212,7 @@
                                         <font key="font" metaFont="menu"/>
                                         <menu key="menu" id="J2u-0R-0zr">
                                             <items>
-                                                <menuItem title="-" state="on" id="TLo-Ui-rNb"/>
+                                                <menuItem title="-" state="on" toolTip="Leave button behavior unchanged." id="TLo-Ui-rNb"/>
                                                 <menuItem isSeparatorItem="YES" id="snu-yN-eVa"/>
                                                 <menuItem title="Move between Spaces" tag="1" id="D2I-Mk-jlf"/>
                                                 <menuItem title="Move between Pages" tag="2" id="UE3-7w-9Lo"/>
@@ -292,8 +292,9 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="paypal_logo_100px" id="i44-4U-mgB"/>
                     </imageView>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="T3d-IG-x9B" customClass="Hyperlink">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T3d-IG-x9B" customClass="Hyperlink">
                         <rect key="frame" x="363" y="117" width="108" height="19"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="charWrapping" title="Visit the Website" id="fF9-He-HyT">
                             <font key="font" size="13" name="SFProText-Regular"/>
                             <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
@@ -303,8 +304,9 @@
                             <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://noah-nuebling.github.io/mac-mouse-fix-website/"/>
                         </userDefinedRuntimeAttributes>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jlS-aB-qRd" customClass="Hyperlink">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jlS-aB-qRd" customClass="Hyperlink">
                         <rect key="frame" x="351" y="95" width="120" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Send me Feedback" id="9s1-Gm-vbj">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
@@ -314,8 +316,9 @@
                             <userDefinedRuntimeAttribute type="string" keyPath="href" value="mailto:noah.n.public@gmail.com?subject=Mac%20Mouse%20Fix%20-%20Contact&amp;"/>
                         </userDefinedRuntimeAttributes>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oox-cM-P3o" customClass="Hyperlink">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oox-cM-P3o" customClass="Hyperlink">
                         <rect key="frame" x="426" y="73" width="45" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Github" id="Aoo-VC-avm">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
@@ -331,8 +334,8 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </textField>
-                    <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QzW-eU-2CC">
-                        <rect key="frame" x="394" y="13" width="81" height="32"/>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QzW-eU-2CC">
+                        <rect key="frame" x="403" y="13" width="72" height="32"/>
                         <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="zIn-og-eGC">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -344,24 +347,27 @@ DQ
                             <action selector="doneButton:" target="-2" id="rO9-Yw-jYF"/>
                         </connections>
                     </button>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gP8-IL-pWC">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gP8-IL-pWC">
                         <rect key="frame" x="128" y="119" width="79" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" title="Version - (-)" id="5sp-4a-oce">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GUf-T0-3yw">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GUf-T0-3yw">
                         <rect key="frame" x="28" y="119" width="100" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" title="Mac Mouse Fix" id="LHn-aR-dQs">
                             <font key="font" metaFont="systemBold"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XlS-ss-ZsG">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XlS-ss-ZsG">
                         <rect key="frame" x="28" y="100" width="143" height="14"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" title="Created by Noah Nuebling" id="T2W-Ea-aKN">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -370,21 +376,8 @@ DQ
                     </textField>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="QzW-eU-2CC" secondAttribute="trailing" constant="30" id="36a-DW-mpR"/>
-                    <constraint firstAttribute="trailing" secondItem="jlS-aB-qRd" secondAttribute="trailing" constant="30" id="5Gi-64-jOc"/>
-                    <constraint firstItem="T3d-IG-x9B" firstAttribute="top" secondItem="BHn-QT-Hdu" secondAttribute="top" constant="20" id="6ag-OD-IyI"/>
-                    <constraint firstAttribute="trailing" secondItem="T3d-IG-x9B" secondAttribute="trailing" constant="30" id="6na-Wh-kWs"/>
-                    <constraint firstItem="oox-cM-P3o" firstAttribute="top" secondItem="jlS-aB-qRd" secondAttribute="bottom" constant="5" id="B0o-B5-d1s"/>
-                    <constraint firstItem="gP8-IL-pWC" firstAttribute="top" secondItem="BHn-QT-Hdu" secondAttribute="top" constant="20" id="Ive-bT-AD1"/>
-                    <constraint firstAttribute="bottom" secondItem="QzW-eU-2CC" secondAttribute="bottom" constant="20" id="JXi-OX-BFD"/>
-                    <constraint firstAttribute="bottom" secondItem="QzW-eU-2CC" secondAttribute="bottom" constant="20" id="OUD-Ir-Uti"/>
-                    <constraint firstItem="GUf-T0-3yw" firstAttribute="top" secondItem="BHn-QT-Hdu" secondAttribute="top" constant="20" id="Vt5-4g-UEV"/>
-                    <constraint firstAttribute="trailing" secondItem="oox-cM-P3o" secondAttribute="trailing" constant="30" id="bMz-9I-8ei"/>
-                    <constraint firstItem="jlS-aB-qRd" firstAttribute="top" secondItem="T3d-IG-x9B" secondAttribute="bottom" constant="5" id="gZQ-cj-0Vu"/>
-                    <constraint firstItem="XlS-ss-ZsG" firstAttribute="top" secondItem="gP8-IL-pWC" secondAttribute="bottom" constant="5" id="gps-ML-MLW"/>
-                    <constraint firstItem="GUf-T0-3yw" firstAttribute="leading" secondItem="BHn-QT-Hdu" secondAttribute="leading" constant="30" id="jtY-iD-CRY"/>
-                    <constraint firstItem="XlS-ss-ZsG" firstAttribute="leading" secondItem="BHn-QT-Hdu" secondAttribute="leading" constant="30" id="uAd-FT-kIX"/>
-                    <constraint firstAttribute="trailing" secondItem="QzW-eU-2CC" secondAttribute="trailing" constant="30" id="xrj-GU-w2y"/>
+                    <constraint firstAttribute="bottom" secondItem="QzW-eU-2CC" secondAttribute="bottom" constant="20" id="S1V-m5-4c0"/>
+                    <constraint firstAttribute="trailing" secondItem="QzW-eU-2CC" secondAttribute="trailing" constant="30" id="x37-Jb-Kg7"/>
                 </constraints>
                 <animations>
                     <caTransition key="subviews">

@@ -5,6 +5,7 @@
 #import <PreferencePanes/PreferencePanes.h>
 #import <ServiceManagement/SMLoginItem.h>
 #import "PrefPaneDelegate.h"
+#import "Updater.h"
 //#import "CGSInternal/CGSHotKeys.h"
 
 @interface PrefPaneDelegate ()
@@ -45,6 +46,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 # pragma mark - IBActions
 
 - (IBAction)enableCheckBox:(id)sender {
+    
     //sendKeyUpForAllSymbolicHotKeysThatAMouseButtonMapsTo(self);
     
     BOOL checkboxState = [sender state];
@@ -112,14 +114,15 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
                                [[NSBundle bundleForClass:[self class]] objectForInfoDictionaryKey:@"CFBundleShortVersionString"],
                                [[NSBundle bundleForClass:[self class]] objectForInfoDictionaryKey:@"CFBundleVersion"]];
     [_versionLabel setStringValue:versionString];
+    
+    [Updater checkForUpdate];
 }
 
 
 # pragma mark - Helper Functions
 
-
 /* registering/unregistering the helper as a User Agent with launchd - also launches/terminates helper */
-- (void)enableHelperAsUserAgent: (BOOL)enable {
+- (void)enableHelperAsUserAgent:(BOOL)enable {
 
     // repair config file if checkbox state is changed
     [self repairUserAgentConfigFile];

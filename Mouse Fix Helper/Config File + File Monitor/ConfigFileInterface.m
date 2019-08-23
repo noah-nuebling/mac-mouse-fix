@@ -13,6 +13,7 @@ static NSMutableDictionary *config;
 
 + (void)load {
     [self reactToConfigFileChange];
+    setupFSEventStreamCallback();
 }
 
 + (NSMutableDictionary *)config {
@@ -85,28 +86,32 @@ static void updateScrollSettings() {
 }
 
 
-/*
- 
- + (void)start {
- //setupFSEventStreamCallback();
- fillConfigDictFromFile();
- updateScrollSettings();
- }
+
  
 void Handle_FSEventStreamCallback (ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents, void *eventPaths, const FSEventStreamEventFlags *eventFlags, const FSEventStreamEventId *eventIds) {
     
-    NSLog(@"remaps.plist changed - reloading buttonRemapDictFromFile");
+    NSLog(@"config.plist changed (FSMonitor)");
     
-    fillConfigDictFromFile();
-    updateScrollSettings();
+    [ConfigFileInterface reactToConfigFileChange];
 }
 
+
+/**
+ we're setting up a File System Monitor so that manual edits to the main configuration file have an effect.
+ this allows you to test your own configurations!
+ 
+ to find the main configuration file, paste one of the following in the terminal:
+    - 1. (-> if you installed Mouse Fix for the current user.)
+    open "$HOME/Library/PreferencePanes/Mouse Fix.prefPane/Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/Resources/config.plist"
+    - 2. (-> if you installed Mous Fix for all users.)
+    open "/Library/PreferencePanes/Mouse Fix.prefPane/Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/Resources/config.plist"
+ */
 static void setupFSEventStreamCallback() {
     
     NSBundle *thisBundle = [NSBundle mainBundle];
     CFStringRef configFilePath = (__bridge CFStringRef) [thisBundle pathForResource:@"config" ofType:@"plist"];
     CFArrayRef pathsToWatch = CFArrayCreate(NULL, (const void **)&configFilePath, 1, NULL);
-    void *callbackInfo = NULL; // could put stream-specific data here.
+    void *callbackInfo = NULL; // could put stream-sp ecific data here.
     NSLog(@"pathsToWatch : %@", pathsToWatch);
     
     CFAbsoluteTime latency = 0.3;
@@ -116,5 +121,4 @@ static void setupFSEventStreamCallback() {
     BOOL EventStreamStarted = FSEventStreamStart(remapsFileEventStream);
     NSLog(@"EventStreamStarted: %d", EventStreamStarted);
 }
-*/
 @end

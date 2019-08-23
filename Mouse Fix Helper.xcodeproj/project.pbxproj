@@ -14,9 +14,9 @@
 		4F34F9B521A359D500104EBF /* MouseInputReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F34F9B421A359D500104EBF /* MouseInputReceiver.m */; };
 		4F34F9B921A35E8E00104EBF /* InputParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F34F9B821A35E8E00104EBF /* InputParser.m */; };
 		4F34F9BF21A366B400104EBF /* ConfigFileInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F34F9BE21A366B400104EBF /* ConfigFileInterface.m */; };
+		4F3A8445230D3E6C0012C725 /* Updater.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F3A8443230D3E6C0012C725 /* Updater.h */; };
+		4F3A8446230D3E6C0012C725 /* Updater.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A8444230D3E6C0012C725 /* Updater.m */; };
 		4F611D2721A8E230008857A8 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F611D2621A8E230008857A8 /* config.plist */; };
-		4F72F060230B8E65007ECD6D /* moreSheetController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F72F05E230B8E65007ECD6D /* moreSheetController.h */; };
-		4F72F061230B8E65007ECD6D /* moreSheetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F72F05F230B8E65007ECD6D /* moreSheetController.m */; };
 		4F7387FD21B48F7900C2F468 /* MomentumScroll.mn in Sources */ = {isa = PBXBuildFile; fileRef = 4F7387FB21B48F7900C2F468 /* MomentumScroll.mn */; };
 		4F73880021B4A79800C2F468 /* MessagePortReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F7387FF21B4A79800C2F468 /* MessagePortReceiver.m */; };
 		4F8AEA9222FBC7AC008C1A7C /* milkshake_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */; };
@@ -94,9 +94,9 @@
 		4F34F9B821A35E8E00104EBF /* InputParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InputParser.m; sourceTree = "<group>"; };
 		4F34F9BD21A366B400104EBF /* ConfigFileInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigFileInterface.h; sourceTree = "<group>"; };
 		4F34F9BE21A366B400104EBF /* ConfigFileInterface.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigFileInterface.m; sourceTree = "<group>"; };
+		4F3A8443230D3E6C0012C725 /* Updater.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Updater.h; sourceTree = "<group>"; };
+		4F3A8444230D3E6C0012C725 /* Updater.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Updater.m; sourceTree = "<group>"; };
 		4F611D2621A8E230008857A8 /* config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
-		4F72F05E230B8E65007ECD6D /* moreSheetController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = moreSheetController.h; sourceTree = "<group>"; };
-		4F72F05F230B8E65007ECD6D /* moreSheetController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = moreSheetController.m; sourceTree = "<group>"; };
 		4F7387FB21B48F7900C2F468 /* MomentumScroll.mn */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MomentumScroll.mn; sourceTree = "<group>"; };
 		4F7387FC21B48F7900C2F468 /* MomentumScroll.hn */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MomentumScroll.hn; sourceTree = "<group>"; };
 		4F7387FE21B4A79800C2F468 /* MessagePortReceiver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessagePortReceiver.h; sourceTree = "<group>"; };
@@ -256,6 +256,8 @@
 		4FBB85C621879AD900DD6B40 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4F3A8443230D3E6C0012C725 /* Updater.h */,
+				4F3A8444230D3E6C0012C725 /* Updater.m */,
 				4FD9CB1122F7D48D0090DB98 /* Hyperlink.h */,
 				4FD9CB1222F7D48D0090DB98 /* Hyperlink.m */,
 				4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */,
@@ -341,8 +343,6 @@
 			children = (
 				4FD67DDD211CC9000095A9A5 /* PrefPaneDelegate.h */,
 				4FD67DDF211CC9000095A9A5 /* PrefPaneDelegate.m */,
-				4F72F05E230B8E65007ECD6D /* moreSheetController.h */,
-				4F72F05F230B8E65007ECD6D /* moreSheetController.m */,
 				4FD67DE3211CC9000095A9A5 /* Mouse_Remap.xib */,
 				4FBB85C621879AD900DD6B40 /* Supporting Files */,
 			);
@@ -365,8 +365,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F72F060230B8E65007ECD6D /* moreSheetController.h in Headers */,
 				4FD9CB1322F7D48D0090DB98 /* Hyperlink.h in Headers */,
+				4F3A8445230D3E6C0012C725 /* Updater.h in Headers */,
 				4FD67DDE211CC9000095A9A5 /* PrefPaneDelegate.h in Headers */,
 				4F8DC6ED21A3B20600E1D297 /* IOHIDEventData.h in Headers */,
 				4F8DC6EE21A3B20600E1D297 /* IOHIDEventTypes.h in Headers */,
@@ -611,7 +611,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FD67DE0211CC9000095A9A5 /* PrefPaneDelegate.m in Sources */,
-				4F72F061230B8E65007ECD6D /* moreSheetController.m in Sources */,
+				4F3A8446230D3E6C0012C725 /* Updater.m in Sources */,
 				4FD9CB1422F7D48D0090DB98 /* Hyperlink.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
