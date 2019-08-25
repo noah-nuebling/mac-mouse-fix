@@ -17,16 +17,11 @@
 @implementation MomentumScroll
 
 
-#pragma mark - Global Vars
+#pragma mark - Globals
 
 # pragma mark properties
 
-// there are 3 classes and 3 global variables involved in turning on/off MomentumScroll:
-// InputReceiver and ConfigFileMonitor can enable/disable MomentumScroll
-// InputReceiver sets relevantDevicesAreAttached, ConfigFileMonitor sets isEnabled (defined below), and MomentumScroll sets isRunning
-// Based on these 3 variables ConfigFileMonitor and InputReceiver decide whether to enable / disable MomentumScroll when the config file changes or a mouse is attached/removed
 
-// version 2: (I'd like to implement this)
 // whenever relevantDevicesAreAttached or isEnabled are changed, MomentumScrolls class method startOrStopDecide is called. Start or stop decide will start / stop momentum scroll and set _isRunning
 
 static BOOL _isEnabled;
@@ -248,7 +243,6 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     if (_consecutiveScrollTickCounter < _scrollSwipeThreshhold_Ticks) {
         _lastTickWasPartOfSwipe = NO;
     } else if (_lastTickWasPartOfSwipe == NO) {
-        NSLog(@"ADD CONSECUTIVE");
         _consecutiveScrollSwipeCounter  += 1;
         [_consecutiveScrollSwipeTimer invalidate];
         dispatch_async(dispatch_get_main_queue(), ^{
