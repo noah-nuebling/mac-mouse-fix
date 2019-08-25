@@ -22,5 +22,9 @@ typedef enum {
 
 + (BOOL)isRunning;
 
+
++ (void)Handle_ConsecutiveScrollTickCallback:(NSTimer *)timer;
++ (void)Handle_ConsecutiveScrollSwipeCallback:(NSTimer *)timer;
+
 @end
 

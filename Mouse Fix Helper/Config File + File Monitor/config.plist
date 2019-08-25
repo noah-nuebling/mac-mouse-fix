@@ -22,6 +22,11 @@
 		</dict>
 		<key>3</key>
 		<dict>
+			<key>hold</key>
+			<array>
+				<string>symbolicHotKey</string>
+				<string>33</string>
+			</array>
 			<key>click</key>
 			<array>
 				<string>symbolicHotKey</string>

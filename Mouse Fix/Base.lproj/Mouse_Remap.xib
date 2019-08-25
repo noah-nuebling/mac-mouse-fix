@@ -20,7 +20,6 @@
                 <outlet property="scrollSliderStepSize" destination="Rjn-nX-miX" id="aW9-bZ-oiU"/>
                 <outlet property="sheetPanel" destination="fxJ-a3-xlz" id="R3w-va-4ut"/>
                 <outlet property="sideClick" destination="SEq-9e-rkd" id="Fe5-Bo-BZe"/>
-                <outlet property="sideHold" destination="3K1-Hs-sdK" id="ZA3-94-q2r"/>
                 <outlet property="versionLabel" destination="gP8-IL-pWC" id="oMu-Yp-fzY"/>
             </connections>
         </customObject>
@@ -41,7 +40,7 @@
                             <rect key="frame" x="3" y="3" width="628" height="179"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <button identifier="scrollCheckBox" toolTip="Enable Custom Smooth Scrolling Algorithm." verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sIW-q1-lA7">
+                                <button identifier="scrollCheckBox" toolTip="Enable custom smooth scrolling algorithm." verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sIW-q1-lA7">
                                     <rect key="frame" x="72" y="128" width="129" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <buttonCell key="cell" type="check" title="Smooth Scrolling:" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Gko-fk-Ijn">
@@ -52,7 +51,7 @@
                                         <action selector="UIChanged:" target="-2" id="zbe-ha-WYT"/>
                                     </connections>
                                 </button>
-                                <slider toolTip="Changes Scrolling Speed" verticalHuggingPriority="750" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rjn-nX-miX">
+                                <slider toolTip="How many pixels to scroll for each mouse wheel tick." verticalHuggingPriority="750" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rjn-nX-miX">
                                     <rect key="frame" x="230" y="121" width="151" height="25"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <sliderCell key="cell" state="on" alignment="left" maxValue="1" doubleValue="0.5" tickMarkPosition="below" numberOfTickMarks="7" allowsTickMarkValuesOnly="YES" sliderType="linear" id="6BY-vc-RsP"/>
@@ -60,28 +59,29 @@
                                         <action selector="UIChanged:" target="-2" id="X0h-ed-SzL"/>
                                     </connections>
                                 </slider>
-                                <textField toolTip="Changes Scrolling Speed" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zwj-Ou-XyF">
-                                    <rect key="frame" x="275" y="152" width="61" height="17"/>
+                                <textField toolTip="How many pixels to scroll for each mouse wheel tick." horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zwj-Ou-XyF">
+                                    <rect key="frame" x="255" y="152" width="102" height="17"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Step Size" id="Wqo-JB-J8q">
+                                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Scrolling speed" id="Wqo-JB-J8q">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
+                                    <accessibility description="How far to scroll per mouse wheel tick."/>
                                 </textField>
-                                <textField toolTip="Changes Scrolling Speed" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yif-b0-9zx">
-                                    <rect key="frame" x="224" y="100" width="33" height="14"/>
+                                <textField toolTip="Scroll fewer pixels per mouse wheel tick." horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yif-b0-9zx">
+                                    <rect key="frame" x="224" y="100" width="29" height="14"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Small" id="aOF-LD-m9Z">
+                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Slow" id="aOF-LD-m9Z">
                                         <font key="font" metaFont="smallSystem"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <textField toolTip="Changes Scrolling Speed" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6HH-D6-RiE">
-                                    <rect key="frame" x="354" y="100" width="34" height="14"/>
+                                <textField toolTip="Scroll more pixels per mouse wheel tick." horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6HH-D6-RiE">
+                                    <rect key="frame" x="358" y="100" width="26" height="14"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Large" id="RcX-Tm-6LW">
+                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Fast" id="RcX-Tm-6LW">
                                         <font key="font" metaFont="smallSystem"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -119,6 +119,7 @@
                                                 <menuItem title="App Exposé" tag="33" toolTip="Expose all windows of the currently active app." id="gpY-zP-L45"/>
                                                 <menuItem title="Show Desktop" tag="36" id="ejj-IJ-om1"/>
                                                 <menuItem title="Launchpad" tag="160" id="BCd-Ru-p5Y"/>
+                                                <menuItem isSeparatorItem="YES" id="PRP-WD-zie"/>
                                                 <menuItem title="Look Up" tag="70" id="SND-VN-NwX"/>
                                             </items>
                                         </menu>
@@ -150,6 +151,7 @@
                                                 <menuItem title="App Exposé" tag="33" toolTip="Expose all windows of the currently active app." id="b0I-7o-OaS"/>
                                                 <menuItem title="Show Desktop" tag="36" id="g9L-sQ-3Rm"/>
                                                 <menuItem title="Launchpad" tag="160" id="IRF-T2-kRI"/>
+                                                <menuItem isSeparatorItem="YES" id="CVM-Cm-DyR"/>
                                                 <menuItem title="Look Up" tag="70" id="HCe-cO-yfb"/>
                                             </items>
                                         </menu>
@@ -193,34 +195,6 @@
                                     </popUpButtonCell>
                                     <connections>
                                         <action selector="UIChanged:" target="-2" id="TVh-Qj-U0h"/>
-                                    </connections>
-                                </popUpButton>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P0l-4c-pwf">
-                                    <rect key="frame" x="496" y="35" width="29" height="14"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Hold" id="oSJ-B0-rEz">
-                                        <font key="font" metaFont="smallSystem"/>
-                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                    </textFieldCell>
-                                </textField>
-                                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3K1-Hs-sdK">
-                                    <rect key="frame" x="421" y="9" width="180" height="25"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <popUpButtonCell key="cell" type="push" title="-" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="TLo-Ui-rNb" id="hCJ-m1-MOx">
-                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                        <font key="font" metaFont="menu"/>
-                                        <menu key="menu" id="J2u-0R-0zr">
-                                            <items>
-                                                <menuItem title="-" state="on" toolTip="Leave button behavior unchanged." id="TLo-Ui-rNb"/>
-                                                <menuItem isSeparatorItem="YES" id="snu-yN-eVa"/>
-                                                <menuItem title="Move between Spaces" tag="1" id="D2I-Mk-jlf"/>
-                                                <menuItem title="Move between Pages" tag="2" id="UE3-7w-9Lo"/>
-                                            </items>
-                                        </menu>
-                                    </popUpButtonCell>
-                                    <connections>
-                                        <action selector="UIChanged:" target="-2" id="C1k-t3-aPe"/>
                                     </connections>
                                 </popUpButton>
                                 <button toolTip="Inverts mouse scrolling direction relative to system wide scrolling direction." verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BaE-Ga-kIa">
@@ -348,7 +322,7 @@ DQ
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gP8-IL-pWC">
-                        <rect key="frame" x="128" y="119" width="79" height="17"/>
+                        <rect key="frame" x="128" y="119" width="231" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" title="Version - (-)" id="5sp-4a-oce">
                             <font key="font" metaFont="system"/>
