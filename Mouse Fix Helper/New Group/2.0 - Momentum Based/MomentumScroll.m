@@ -47,6 +47,7 @@ typedef enum {
 #pragma mark config
 
 // fast scroll
+double          _fastScrollExponentialBase          =   0;
 int             _scrollSwipeThreshhold_Ticks        =   0;
 int             _fastScrollThreshhold_Swipes        =   0;
 double          _consecutiveScrollTickMaxIntervall  =   0;
@@ -111,6 +112,7 @@ static void resetDynamicGlobals() {
     
     _nOfOnePixelScrollsMax              =   2;
     
+    _fastScrollExponentialBase          =   1.25;
     _scrollSwipeThreshhold_Ticks        =   3;
     _fastScrollThreshhold_Swipes        =   3;
     _consecutiveScrollTickMaxIntervall     =   0.03;
@@ -230,8 +232,6 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         NSLog(@"Error while trying to set display link to display under mouse pointer: %@", [e reason]);
     }
     
-    //setConfigVariablesForAppUnderMousePointer();
-    
     // fast scroll
     
     if ([_consecutiveScrollTickTimer isValid]) {
@@ -251,11 +251,8 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         _lastTickWasPartOfSwipe = YES;
     }
     
-    // NSLog(@"Consecutive Scrolls: %ld (Momentum Scroll)", _consecutiveScrollSwipeCounter);
-    
-
-    
     // reset global vars from momentum phase
+    
     if (_scrollPhase == kMFMomentumPhase) {
         _onePixelScrollsCounter  =   0;
         _pxPerMsVelocity        =   0;
@@ -280,7 +277,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     }
     
     if (_consecutiveScrollSwipeCounter > _fastScrollThreshhold_Swipes) {
-        _pixelScrollQueue = _pixelScrollQueue * pow(1.25, (int32_t)_consecutiveScrollSwipeCounter - _fastScrollThreshhold_Swipes);
+        _pixelScrollQueue = _pixelScrollQueue * pow(_fastScrollExponentialBase, (int32_t)_consecutiveScrollSwipeCounter - _fastScrollThreshhold_Swipes);
                                                 //1.125 //1.0625 // 1.09375
     }
     NSLog(@"px: %lld", _pixelScrollQueue);

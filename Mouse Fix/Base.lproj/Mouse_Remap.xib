@@ -41,9 +41,9 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <button identifier="scrollCheckBox" toolTip="Enable custom smooth scrolling algorithm." verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sIW-q1-lA7">
-                                    <rect key="frame" x="72" y="128" width="129" height="18"/>
+                                    <rect key="frame" x="72" y="128" width="128" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <buttonCell key="cell" type="check" title="Smooth Scrolling:" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Gko-fk-Ijn">
+                                    <buttonCell key="cell" type="check" title="Smooth scrolling:" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Gko-fk-Ijn">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
@@ -88,9 +88,9 @@
                                     </textFieldCell>
                                 </textField>
                                 <textField toolTip="Also known as mouse button 3." horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TPG-bY-BNO">
-                                    <rect key="frame" x="108" y="60" width="93" height="17"/>
+                                    <rect key="frame" x="109" y="60" width="92" height="17"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Middle Button:" id="3pV-aJ-Jyd">
+                                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Middle button:" id="3pV-aJ-Jyd">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -108,12 +108,12 @@
                                 <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r3v-3d-tiF">
                                     <rect key="frame" x="217" y="54" width="180" height="25"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <popUpButtonCell key="cell" type="push" title="-" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="4BD-tK-KmA" id="NWt-aH-UfN">
+                                    <popUpButtonCell key="cell" type="push" title="Middle button" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="4BD-tK-KmA" id="NWt-aH-UfN">
                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="menu"/>
                                         <menu key="menu" id="eTc-jQ-bpc">
                                             <items>
-                                                <menuItem title="-" state="on" toolTip="Leave button behavior unchanged." id="4BD-tK-KmA"/>
+                                                <menuItem title="Middle button" state="on" toolTip="Leave button behavior unchanged." id="4BD-tK-KmA"/>
                                                 <menuItem isSeparatorItem="YES" id="kfH-7V-4Ck"/>
                                                 <menuItem title="Mission Control" tag="32" id="8ZW-kK-FcC"/>
                                                 <menuItem title="App Exposé" tag="33" toolTip="Expose all windows of the currently active app." id="gpY-zP-L45"/>
@@ -163,7 +163,7 @@
                                 <textField toolTip="Also known as mouse buttons 4 and 5." horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ajW-pe-GgG">
                                     <rect key="frame" x="116" y="15" width="85" height="17"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Side Buttons:" id="urG-gF-6Hk">
+                                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Side buttons:" id="urG-gF-6Hk">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -181,12 +181,12 @@
                                 <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SEq-9e-rkd">
                                     <rect key="frame" x="217" y="9" width="180" height="25"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <popUpButtonCell key="cell" type="push" title="-" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="4uk-9u-Ots" id="MAP-un-RNI">
+                                    <popUpButtonCell key="cell" type="push" title="Side buttons" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="4uk-9u-Ots" id="MAP-un-RNI">
                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="menu"/>
                                         <menu key="menu" id="ElL-Gx-u5d">
                                             <items>
-                                                <menuItem title="-" state="on" toolTip="Leave button behavior unchanged." id="4uk-9u-Ots"/>
+                                                <menuItem title="Side buttons" state="on" toolTip="Leave button behavior unchanged." id="4uk-9u-Ots"/>
                                                 <menuItem isSeparatorItem="YES" id="Qfk-r2-zu2"/>
                                                 <menuItem title="Move between Spaces" tag="1" id="omX-iT-OCR"/>
                                                 <menuItem title="Move between Pages" tag="2" id="OXZ-3v-ehA"/>
@@ -198,9 +198,9 @@
                                     </connections>
                                 </popUpButton>
                                 <button toolTip="Inverts mouse scrolling direction relative to system wide scrolling direction." verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BaE-Ga-kIa">
-                                    <rect key="frame" x="453" y="128" width="115" height="18"/>
+                                    <rect key="frame" x="453" y="128" width="114" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <buttonCell key="cell" type="check" title="Invert Direction" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="mOD-gA-hHm">
+                                    <buttonCell key="cell" type="check" title="Invert direction" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="mOD-gA-hHm">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
@@ -222,8 +222,8 @@
                         </connections>
                     </button>
                     <button toolTip="Enable Mouse Fix for a better mouse experience!" verticalHuggingPriority="750" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WfN-Sk-KjI">
-                        <rect key="frame" x="23" y="207" width="128" height="18"/>
-                        <buttonCell key="cell" type="check" title="Enable Mouse Fix" bezelStyle="regularSquare" imagePosition="left" alignment="right" state="on" inset="2" id="s9l-if-KkI">
+                        <rect key="frame" x="23" y="207" width="157" height="18"/>
+                        <buttonCell key="cell" type="check" title="Enable Mac Mouse Fix" bezelStyle="regularSquare" imagePosition="left" alignment="right" state="on" inset="2" id="s9l-if-KkI">
                             <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
