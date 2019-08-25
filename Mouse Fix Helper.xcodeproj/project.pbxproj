@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0FFF47BFC292A2F5CF7E2220 /* Pods_Mouse_Fix.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 085501A2C25CC417A54F0B38 /* Pods_Mouse_Fix.framework */; };
+		103D1EC8149B72C5949F9E0F /* Pods_Mouse_Fix_Helper_HelperTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F62C272082E110830BDE82EC /* Pods_Mouse_Fix_Helper_HelperTests.framework */; };
+		334068331924A395A6A98B88 /* Pods_Mouse_Fix_HelperUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14CA896B03FCAE26FF2CBE2E /* Pods_Mouse_Fix_HelperUITests.framework */; };
 		4F1E52EA21A8D3D00005B817 /* MomentumScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1E52E921A8D3D00005B817 /* MomentumScroll.m */; };
 		4F1E83F322C98F03000CE5AD /* ModifierInputReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1E83F222C98F03000CE5AD /* ModifierInputReceiver.m */; };
 		4F2BF98D21AE052400CF6A24 /* DeviceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2BF98C21AE052400CF6A24 /* DeviceManager.m */; };
@@ -41,6 +44,7 @@
 		4FD9CB1322F7D48D0090DB98 /* Hyperlink.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FD9CB1122F7D48D0090DB98 /* Hyperlink.h */; };
 		4FD9CB1422F7D48D0090DB98 /* Hyperlink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9CB1222F7D48D0090DB98 /* Hyperlink.m */; };
 		4FF64F3B22F7408B0065F64F /* Mouse_Fix.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4FF64F3A22F7408A0065F64F /* Mouse_Fix.tiff */; };
+		A3AC1CF8192D9D1CB96A8C25 /* Pods_Mouse_Fix_Helper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E7BE7B7AF78FCE357E07041 /* Pods_Mouse_Fix_Helper.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +85,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		085501A2C25CC417A54F0B38 /* Pods_Mouse_Fix.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mouse_Fix.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		14CA896B03FCAE26FF2CBE2E /* Pods_Mouse_Fix_HelperUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mouse_Fix_HelperUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		20769C90A2567032B314BE68 /* Pods-Mouse Fix HelperUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mouse Fix HelperUITests.debug.xcconfig"; path = "Target Support Files/Pods-Mouse Fix HelperUITests/Pods-Mouse Fix HelperUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		36F07F56BCD8F95A021419C5 /* Pods-Mouse Fix Helper HelperTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mouse Fix Helper HelperTests.release.xcconfig"; path = "Target Support Files/Pods-Mouse Fix Helper HelperTests/Pods-Mouse Fix Helper HelperTests.release.xcconfig"; sourceTree = "<group>"; };
 		4F1E52E821A8D3D00005B817 /* MomentumScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MomentumScroll.h; sourceTree = "<group>"; };
 		4F1E52E921A8D3D00005B817 /* MomentumScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MomentumScroll.m; sourceTree = "<group>"; };
 		4F1E83F122C98F03000CE5AD /* ModifierInputReceiver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModifierInputReceiver.h; sourceTree = "<group>"; };
@@ -138,6 +146,14 @@
 		4FF383362184F511007F771B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Mouse_Remap.xib; sourceTree = "<group>"; };
 		4FF383372184F511007F771B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		4FF64F3A22F7408A0065F64F /* Mouse_Fix.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Mouse_Fix.tiff; sourceTree = "<group>"; };
+		5E7BE7B7AF78FCE357E07041 /* Pods_Mouse_Fix_Helper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mouse_Fix_Helper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		64EBE8635B9F8E7DAC3C4AC0 /* Pods-Mouse Fix Helper HelperTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mouse Fix Helper HelperTests.debug.xcconfig"; path = "Target Support Files/Pods-Mouse Fix Helper HelperTests/Pods-Mouse Fix Helper HelperTests.debug.xcconfig"; sourceTree = "<group>"; };
+		67D74B9F666D11AACF974338 /* Pods-Mouse Fix.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mouse Fix.release.xcconfig"; path = "Target Support Files/Pods-Mouse Fix/Pods-Mouse Fix.release.xcconfig"; sourceTree = "<group>"; };
+		A757F350FF9056E5DB3FD26D /* Pods-Mouse Fix Helper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mouse Fix Helper.debug.xcconfig"; path = "Target Support Files/Pods-Mouse Fix Helper/Pods-Mouse Fix Helper.debug.xcconfig"; sourceTree = "<group>"; };
+		D449703940F5833F11503D78 /* Pods-Mouse Fix.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mouse Fix.debug.xcconfig"; path = "Target Support Files/Pods-Mouse Fix/Pods-Mouse Fix.debug.xcconfig"; sourceTree = "<group>"; };
+		E705EDE31C23AFF1F86030F7 /* Pods-Mouse Fix Helper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mouse Fix Helper.release.xcconfig"; path = "Target Support Files/Pods-Mouse Fix Helper/Pods-Mouse Fix Helper.release.xcconfig"; sourceTree = "<group>"; };
+		F62C272082E110830BDE82EC /* Pods_Mouse_Fix_Helper_HelperTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mouse_Fix_Helper_HelperTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FDBC0857E7D4CC9EAF1C0292 /* Pods-Mouse Fix HelperUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mouse Fix HelperUITests.release.xcconfig"; path = "Target Support Files/Pods-Mouse Fix HelperUITests/Pods-Mouse Fix HelperUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +161,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3AC1CF8192D9D1CB96A8C25 /* Pods_Mouse_Fix_Helper.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,6 +169,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				103D1EC8149B72C5949F9E0F /* Pods_Mouse_Fix_Helper_HelperTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,6 +177,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				334068331924A395A6A98B88 /* Pods_Mouse_Fix_HelperUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,6 +185,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0FFF47BFC292A2F5CF7E2220 /* Pods_Mouse_Fix.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,6 +298,8 @@
 				4FD67DDC211CC9000095A9A5 /* Mouse Fix */,
 				4FCECD8221092354001F1078 /* Mouse Fix Helper */,
 				4FCECD8121092354001F1078 /* Products */,
+				A2BDED9F6925941EE5ACCE8E /* Pods */,
+				8964ECFC2EACD16248FB71E0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -358,6 +380,33 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
+		8964ECFC2EACD16248FB71E0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				085501A2C25CC417A54F0B38 /* Pods_Mouse_Fix.framework */,
+				5E7BE7B7AF78FCE357E07041 /* Pods_Mouse_Fix_Helper.framework */,
+				F62C272082E110830BDE82EC /* Pods_Mouse_Fix_Helper_HelperTests.framework */,
+				14CA896B03FCAE26FF2CBE2E /* Pods_Mouse_Fix_HelperUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A2BDED9F6925941EE5ACCE8E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D449703940F5833F11503D78 /* Pods-Mouse Fix.debug.xcconfig */,
+				67D74B9F666D11AACF974338 /* Pods-Mouse Fix.release.xcconfig */,
+				A757F350FF9056E5DB3FD26D /* Pods-Mouse Fix Helper.debug.xcconfig */,
+				E705EDE31C23AFF1F86030F7 /* Pods-Mouse Fix Helper.release.xcconfig */,
+				64EBE8635B9F8E7DAC3C4AC0 /* Pods-Mouse Fix Helper HelperTests.debug.xcconfig */,
+				36F07F56BCD8F95A021419C5 /* Pods-Mouse Fix Helper HelperTests.release.xcconfig */,
+				20769C90A2567032B314BE68 /* Pods-Mouse Fix HelperUITests.debug.xcconfig */,
+				FDBC0857E7D4CC9EAF1C0292 /* Pods-Mouse Fix HelperUITests.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -380,6 +429,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4FCECDA721092354001F1078 /* Build configuration list for PBXNativeTarget "Mouse Fix Helper" */;
 			buildPhases = (
+				559A3527736235388F511916 /* [CP] Check Pods Manifest.lock */,
 				4FCECD7C21092354001F1078 /* Sources */,
 				4FCECD7D21092354001F1078 /* Frameworks */,
 				4FCECD7E21092354001F1078 /* Resources */,
@@ -397,6 +447,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4FCECDAA21092354001F1078 /* Build configuration list for PBXNativeTarget "Mouse Fix Helper HelperTests" */;
 			buildPhases = (
+				1E711BC5DBC0BC3938B87520 /* [CP] Check Pods Manifest.lock */,
 				4FCECD8F21092354001F1078 /* Sources */,
 				4FCECD9021092354001F1078 /* Frameworks */,
 				4FCECD9121092354001F1078 /* Resources */,
@@ -415,6 +466,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4FCECDAD21092354001F1078 /* Build configuration list for PBXNativeTarget "Mouse Fix HelperUITests" */;
 			buildPhases = (
+				98CDE4F352B41A5C87FEA8EC /* [CP] Check Pods Manifest.lock */,
 				4FCECD9A21092354001F1078 /* Sources */,
 				4FCECD9B21092354001F1078 /* Frameworks */,
 				4FCECD9C21092354001F1078 /* Resources */,
@@ -433,6 +485,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4FD67DE9211CC9000095A9A5 /* Build configuration list for PBXNativeTarget "Mouse Fix" */;
 			buildPhases = (
+				E6C09442E38729A874173D26 /* [CP] Check Pods Manifest.lock */,
 				4FD67DD6211CC9000095A9A5 /* Sources */,
 				4FD67DD7211CC9000095A9A5 /* Frameworks */,
 				4FD67DD8211CC9000095A9A5 /* Headers */,
@@ -547,6 +600,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1E711BC5DBC0BC3938B87520 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Mouse Fix Helper HelperTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		4F2A4A7A22F9C7BF00E6CAC5 /* Increment Build Number */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -565,6 +640,72 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\n";
+		};
+		559A3527736235388F511916 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Mouse Fix Helper-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		98CDE4F352B41A5C87FEA8EC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Mouse Fix HelperUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E6C09442E38729A874173D26 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Mouse Fix-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -777,6 +918,7 @@
 		};
 		4FCECDA821092354001F1078 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A757F350FF9056E5DB3FD26D /* Pods-Mouse Fix Helper.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -801,6 +943,7 @@
 		};
 		4FCECDA921092354001F1078 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E705EDE31C23AFF1F86030F7 /* Pods-Mouse Fix Helper.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -824,6 +967,7 @@
 		};
 		4FCECDAB21092354001F1078 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 64EBE8635B9F8E7DAC3C4AC0 /* Pods-Mouse Fix Helper HelperTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -843,6 +987,7 @@
 		};
 		4FCECDAC21092354001F1078 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 36F07F56BCD8F95A021419C5 /* Pods-Mouse Fix Helper HelperTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -862,6 +1007,7 @@
 		};
 		4FCECDAE21092354001F1078 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 20769C90A2567032B314BE68 /* Pods-Mouse Fix HelperUITests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -880,6 +1026,7 @@
 		};
 		4FCECDAF21092354001F1078 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FDBC0857E7D4CC9EAF1C0292 /* Pods-Mouse Fix HelperUITests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -898,6 +1045,7 @@
 		};
 		4FD67DE7211CC9000095A9A5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D449703940F5833F11503D78 /* Pods-Mouse Fix.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -922,6 +1070,7 @@
 		};
 		4FD67DE8211CC9000095A9A5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 67D74B9F666D11AACF974338 /* Pods-Mouse Fix.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
