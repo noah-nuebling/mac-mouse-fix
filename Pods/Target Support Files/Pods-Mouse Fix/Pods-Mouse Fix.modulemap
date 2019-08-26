@@ -1,0 +1,6 @@
+framework module Pods_Mouse_Fix {
+  umbrella header "Pods-Mouse Fix-umbrella.h"
+
+  export *
+  module * { export * }
+}

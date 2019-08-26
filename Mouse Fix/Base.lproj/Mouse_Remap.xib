@@ -60,7 +60,7 @@
                                     </connections>
                                 </slider>
                                 <textField toolTip="How many pixels to scroll for each mouse wheel tick." horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zwj-Ou-XyF">
-                                    <rect key="frame" x="255" y="152" width="102" height="17"/>
+                                    <rect key="frame" x="256" y="152" width="102" height="17"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Scrolling speed" id="Wqo-JB-J8q">
                                         <font key="font" metaFont="system"/>

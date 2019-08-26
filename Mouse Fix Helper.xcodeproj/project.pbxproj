@@ -38,6 +38,7 @@
 		4FD9CB1322F7D48D0090DB98 /* Hyperlink.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FD9CB1122F7D48D0090DB98 /* Hyperlink.h */; };
 		4FD9CB1422F7D48D0090DB98 /* Hyperlink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9CB1222F7D48D0090DB98 /* Hyperlink.m */; };
 		4FF64F3B22F7408B0065F64F /* Mouse_Fix.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4FF64F3A22F7408A0065F64F /* Mouse_Fix.tiff */; };
+		A3DA8AEBD87F7B5ACDCA38B4 /* Pods_Mouse_Fix.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C65196282BC72DF1E7B1EF26 /* Pods_Mouse_Fix.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -162,6 +163,9 @@
 		4FF383362184F511007F771B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Mouse_Remap.xib; sourceTree = "<group>"; };
 		4FF383372184F511007F771B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		4FF64F3A22F7408A0065F64F /* Mouse_Fix.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Mouse_Fix.tiff; sourceTree = "<group>"; };
+		C65196282BC72DF1E7B1EF26 /* Pods_Mouse_Fix.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mouse_Fix.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EB70DB168533A48FEE0F154F /* Pods-Mouse Fix.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mouse Fix.debug.xcconfig"; path = "Target Support Files/Pods-Mouse Fix/Pods-Mouse Fix.debug.xcconfig"; sourceTree = "<group>"; };
+		F0BE4CC93D4BC3B77EB77123 /* Pods-Mouse Fix.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mouse Fix.release.xcconfig"; path = "Target Support Files/Pods-Mouse Fix/Pods-Mouse Fix.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +194,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3DA8AEBD87F7B5ACDCA38B4 /* Pods_Mouse_Fix.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -353,6 +358,8 @@
 				4FD67DDC211CC9000095A9A5 /* Mouse Fix */,
 				4FCECD8221092354001F1078 /* Mouse Fix Helper */,
 				4FCECD8121092354001F1078 /* Products */,
+				8503BC6CB01D2FA844B1840E /* Pods */,
+				51CFE2322B1A4AC4DCF8D824 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -433,6 +440,24 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
+		51CFE2322B1A4AC4DCF8D824 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C65196282BC72DF1E7B1EF26 /* Pods_Mouse_Fix.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8503BC6CB01D2FA844B1840E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				EB70DB168533A48FEE0F154F /* Pods-Mouse Fix.debug.xcconfig */,
+				F0BE4CC93D4BC3B77EB77123 /* Pods-Mouse Fix.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -506,6 +531,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4FD67DE9211CC9000095A9A5 /* Build configuration list for PBXNativeTarget "Mouse Fix" */;
 			buildPhases = (
+				49320EF9239FFF9FD9CB1984 /* [CP] Check Pods Manifest.lock */,
 				4FD67DD6211CC9000095A9A5 /* Sources */,
 				4FD67DD7211CC9000095A9A5 /* Frameworks */,
 				4FD67DD8211CC9000095A9A5 /* Headers */,
@@ -620,6 +646,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		49320EF9239FFF9FD9CB1984 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Mouse Fix-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		4F2A4A7A22F9C7BF00E6CAC5 /* Increment Build Number */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -970,6 +1018,7 @@
 		};
 		4FD67DE7211CC9000095A9A5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EB70DB168533A48FEE0F154F /* Pods-Mouse Fix.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -994,6 +1043,7 @@
 		};
 		4FD67DE8211CC9000095A9A5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F0BE4CC93D4BC3B77EB77123 /* Pods-Mouse Fix.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
