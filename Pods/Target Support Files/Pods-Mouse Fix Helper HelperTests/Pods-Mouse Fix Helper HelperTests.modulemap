@@ -1,6 +1,0 @@
-framework module Pods_Mouse_Fix_Helper_HelperTests {
-  umbrella header "Pods-Mouse Fix Helper HelperTests-umbrella.h"
-
-  export *
-  module * { export * }
-}
