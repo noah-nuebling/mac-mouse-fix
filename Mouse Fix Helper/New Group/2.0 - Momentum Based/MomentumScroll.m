@@ -381,10 +381,11 @@ static CVReturn displayLinkCallback (CVDisplayLinkRef displayLink, const CVTimeS
 + (void)Handle_ConsecutiveScrollSwipeCallback:(NSTimer *)timer {
     NSLog(@"RESET CONSECUTIVE");
     _consecutiveScrollSwipeCounter = 0;
-    [_consecutiveScrollSwipeTimer invalidate];
+    [timer invalidate];
 }
 + (void)Handle_ConsecutiveScrollTickCallback:(NSTimer *)timer {
     _consecutiveScrollTickCounter = 0;
+    [timer invalidate];
 }
 
 #pragma mark display link

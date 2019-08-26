@@ -7,6 +7,7 @@
 //
 
 #import "Updater.h"
+//#import "SSZipArchive.h"
 
 @interface Updater ()
 @property (class) NSURLSessionDownloadTask *downloadTask;
@@ -71,11 +72,57 @@ static NSURLSession *_downloadSession;
 
 + (void)update {
     
-//    self.downloadTask = [_downloadSession downloadTaskWithURL:[NSURL URLWithString: @"https://noah-nuebling.github.io/mac-mouse-fix/download/Mac%20Mouse%20Fix.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-//        NSLog(@"RESPONSE: %@",location);
-//        NSFileManager fm = [NSFileManager defaultManager];
-//        fm moveItemAtURL:location toURL: error:<#(NSError * _Nullable __autoreleasing * _Nullable)#>
-//        
+//    self.downloadTask = [_downloadSession downloadTaskWithURL:[NSURL URLWithString: @"https://noah-nuebling.github.io/mac-mouse-fix/MacMouseFix.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+//
+//
+//        if (error != NULL) {
+//            NSLog(@"Downloading error: %@", error);
+//            return;
+//        }
+//
+//        NSString *unzipDest = [[location path] stringByDeletingLastPathComponent];
+////        unzipDest = @"/Users/Noah/Desktop";
+//        NSLog(@"unzip dest: %@",unzipDest);
+//        NSError *unzipError;
+//        [SSZipArchive unzipFileAtPath:[location path] toDestination:unzipDest overwrite:YES password:NULL error:&unzipError];
+//        if (unzipError != NULL) {
+//            NSLog(@"Unzipping error: %@", unzipError);
+//            return;
+//        }
+//
+//        NSFileManager *fm = [NSFileManager defaultManager];
+//
+//
+//        NSString *prefPaneName = @"Mouse Fix.prefPane";
+//        NSURL *moveSrc = [[NSURL fileURLWithPath:unzipDest] URLByAppendingPathComponent:prefPaneName];
+//
+////        [fm replaceItemAtURL:moveDest withItemAtURL:moveOrg backupItemName:NULL options:NSFileManagerItemReplacementUsingNewMetadataOnly resultingItemURL:NULL error:&moveError];
+//
+//        NSURL *moveDest = [[NSBundle bundleForClass:self] bundleURL];
+//
+////        moveDest = [NSURL fileURLWithPath:@"/Users/Noah/Desktop/"];
+////        NSURL *moveDestFile = [moveDest URLByAppendingPathComponent:@"Mouse Fix.prefPane"];
+//        NSLog(@"move dest: %@", moveDest);
+//
+//        NSError *removeError;
+//        NSLog(@"remove URL: %@",moveDest);
+//
+//        [fm removeItemAtURL:moveDest error:&removeError];
+//        if (removeError != NULL) {
+//            NSLog(@"Removing file error: %@", removeError);
+////            return;
+//        } else {
+//        }
+//        [NSThread sleepForTimeInterval:1];
+//
+//
+//        NSError *moveError;
+//        [fm moveItemAtURL:moveSrc toURL:moveDest error:&moveError];
+//        if (moveError != NULL) {
+//            NSLog(@"Moving file error: %@", moveError);
+//            return;
+//        }
+//
 //    }];
 //    [self.downloadTask resume];
 }

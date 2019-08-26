@@ -26,8 +26,6 @@
 		4FACF59F2183B956009257D4 /* default_mouse.fix.helper.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FACF59E2183B956009257D4 /* default_mouse.fix.helper.plist */; };
 		4FBB85D42187C74100DD6B40 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4FBB85D22187C74100DD6B40 /* Localizable.strings */; };
 		4FCECD8521092354001F1078 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECD8421092354001F1078 /* AppDelegate.m */; };
-		4FCECD9821092354001F1078 /* Mouse_Remap_HelperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECD9721092354001F1078 /* Mouse_Remap_HelperTests.m */; };
-		4FCECDA321092354001F1078 /* Mouse_Remap_HelperUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECDA221092354001F1078 /* Mouse_Remap_HelperUITests.m */; };
 		4FD67DDE211CC9000095A9A5 /* PrefPaneDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FD67DDD211CC9000095A9A5 /* PrefPaneDelegate.h */; };
 		4FD67DE0211CC9000095A9A5 /* PrefPaneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD67DDF211CC9000095A9A5 /* PrefPaneDelegate.m */; };
 		4FD67DE5211CC9000095A9A5 /* Mouse_Remap.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD67DE3211CC9000095A9A5 /* Mouse_Remap.xib */; settings = {ASSET_TAGS = (0, ); }; };
@@ -38,24 +36,9 @@
 		4FD9CB1322F7D48D0090DB98 /* Hyperlink.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FD9CB1122F7D48D0090DB98 /* Hyperlink.h */; };
 		4FD9CB1422F7D48D0090DB98 /* Hyperlink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9CB1222F7D48D0090DB98 /* Hyperlink.m */; };
 		4FF64F3B22F7408B0065F64F /* Mouse_Fix.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4FF64F3A22F7408A0065F64F /* Mouse_Fix.tiff */; };
-		A3DA8AEBD87F7B5ACDCA38B4 /* Pods_Mouse_Fix.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C65196282BC72DF1E7B1EF26 /* Pods_Mouse_Fix.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		4FCECD9421092354001F1078 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4FCECD7821092354001F1078 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4FCECD7F21092354001F1078;
-			remoteInfo = "Mouse Remap Helper";
-		};
-		4FCECD9F21092354001F1078 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4FCECD7821092354001F1078 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4FCECD7F21092354001F1078;
-			remoteInfo = "Mouse Remap Helper";
-		};
 		4FD67DF0211CDC930095A9A5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4FCECD7821092354001F1078 /* Project object */;
@@ -116,6 +99,7 @@
 		4F1E83F222C98F03000CE5AD /* ModifierInputReceiver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModifierInputReceiver.m; sourceTree = "<group>"; };
 		4F2BF98B21AE052400CF6A24 /* DeviceManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeviceManager.h; sourceTree = "<group>"; };
 		4F2BF98C21AE052400CF6A24 /* DeviceManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeviceManager.m; sourceTree = "<group>"; };
+		4F32BC7E231442B700B3E6E2 /* SSZipArchive.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SSZipArchive.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F34F9AE21A3590D00104EBF /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4F34F9B321A359D500104EBF /* MouseInputReceiver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MouseInputReceiver.h; sourceTree = "<group>"; };
 		4F34F9B421A359D500104EBF /* MouseInputReceiver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MouseInputReceiver.m; sourceTree = "<group>"; };
@@ -144,12 +128,6 @@
 		4FCECD8621092354001F1078 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4FCECD8B21092354001F1078 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4FCECD8E21092354001F1078 /* Mouse_Remap_Helper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Mouse_Remap_Helper.entitlements; sourceTree = "<group>"; };
-		4FCECD9321092354001F1078 /* Mouse Fix Helper HelperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Mouse Fix Helper HelperTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4FCECD9721092354001F1078 /* Mouse_Remap_HelperTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Mouse_Remap_HelperTests.m; sourceTree = "<group>"; };
-		4FCECD9921092354001F1078 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4FCECD9E21092354001F1078 /* Mouse Fix HelperUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Mouse Fix HelperUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4FCECDA221092354001F1078 /* Mouse_Remap_HelperUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Mouse_Remap_HelperUITests.m; sourceTree = "<group>"; };
-		4FCECDA421092354001F1078 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4FD67DDB211CC9000095A9A5 /* Mouse Fix.prefPane */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Mouse Fix.prefPane"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FD67DDD211CC9000095A9A5 /* PrefPaneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefPaneDelegate.h; sourceTree = "<group>"; };
 		4FD67DDF211CC9000095A9A5 /* PrefPaneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PrefPaneDelegate.m; sourceTree = "<group>"; };
@@ -163,9 +141,6 @@
 		4FF383362184F511007F771B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Mouse_Remap.xib; sourceTree = "<group>"; };
 		4FF383372184F511007F771B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		4FF64F3A22F7408A0065F64F /* Mouse_Fix.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Mouse_Fix.tiff; sourceTree = "<group>"; };
-		C65196282BC72DF1E7B1EF26 /* Pods_Mouse_Fix.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mouse_Fix.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		EB70DB168533A48FEE0F154F /* Pods-Mouse Fix.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mouse Fix.debug.xcconfig"; path = "Target Support Files/Pods-Mouse Fix/Pods-Mouse Fix.debug.xcconfig"; sourceTree = "<group>"; };
-		F0BE4CC93D4BC3B77EB77123 /* Pods-Mouse Fix.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mouse Fix.release.xcconfig"; path = "Target Support Files/Pods-Mouse Fix/Pods-Mouse Fix.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,25 +151,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4FCECD9021092354001F1078 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4FCECD9B21092354001F1078 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		4FD67DD7211CC9000095A9A5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A3DA8AEBD87F7B5ACDCA38B4 /* Pods_Mouse_Fix.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -358,8 +318,8 @@
 				4FD67DDC211CC9000095A9A5 /* Mouse Fix */,
 				4FCECD8221092354001F1078 /* Mouse Fix Helper */,
 				4FCECD8121092354001F1078 /* Products */,
-				8503BC6CB01D2FA844B1840E /* Pods */,
-				51CFE2322B1A4AC4DCF8D824 /* Frameworks */,
+				CAD54BEC57763F62595FA982 /* Pods */,
+				537CCC3F2529BA05023A1611 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -367,8 +327,6 @@
 			isa = PBXGroup;
 			children = (
 				4FCECD8021092354001F1078 /* Mouse Fix Helper.app */,
-				4FCECD9321092354001F1078 /* Mouse Fix Helper HelperTests.xctest */,
-				4FCECD9E21092354001F1078 /* Mouse Fix HelperUITests.xctest */,
 				4FD67DDB211CC9000095A9A5 /* Mouse Fix.prefPane */,
 			);
 			name = Products;
@@ -387,24 +345,6 @@
 			path = "Mouse Fix Helper";
 			sourceTree = "<group>";
 		};
-		4FCECD9621092354001F1078 /* Mouse Remap HelperTests */ = {
-			isa = PBXGroup;
-			children = (
-				4FCECD9721092354001F1078 /* Mouse_Remap_HelperTests.m */,
-				4FCECD9921092354001F1078 /* Info.plist */,
-			);
-			path = "Mouse Remap HelperTests";
-			sourceTree = "<group>";
-		};
-		4FCECDA121092354001F1078 /* Mouse Remap HelperUITests */ = {
-			isa = PBXGroup;
-			children = (
-				4FCECDA221092354001F1078 /* Mouse_Remap_HelperUITests.m */,
-				4FCECDA421092354001F1078 /* Info.plist */,
-			);
-			path = "Mouse Remap HelperUITests";
-			sourceTree = "<group>";
-		};
 		4FCECDB02109326E001F1078 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -414,8 +354,6 @@
 				4FCECD8B21092354001F1078 /* Info.plist */,
 				4F34F9AE21A3590D00104EBF /* main.m */,
 				4FCECD8821092354001F1078 /* MainMenu.xib */,
-				4FCECD9621092354001F1078 /* Mouse Remap HelperTests */,
-				4FCECDA121092354001F1078 /* Mouse Remap HelperUITests */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -440,21 +378,18 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
-		51CFE2322B1A4AC4DCF8D824 /* Frameworks */ = {
+		537CCC3F2529BA05023A1611 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C65196282BC72DF1E7B1EF26 /* Pods_Mouse_Fix.framework */,
+				4F32BC7E231442B700B3E6E2 /* SSZipArchive.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		8503BC6CB01D2FA844B1840E /* Pods */ = {
+		CAD54BEC57763F62595FA982 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				EB70DB168533A48FEE0F154F /* Pods-Mouse Fix.debug.xcconfig */,
-				F0BE4CC93D4BC3B77EB77123 /* Pods-Mouse Fix.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -491,47 +426,10 @@
 			productReference = 4FCECD8021092354001F1078 /* Mouse Fix Helper.app */;
 			productType = "com.apple.product-type.application";
 		};
-		4FCECD9221092354001F1078 /* Mouse Fix Helper HelperTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 4FCECDAA21092354001F1078 /* Build configuration list for PBXNativeTarget "Mouse Fix Helper HelperTests" */;
-			buildPhases = (
-				4FCECD8F21092354001F1078 /* Sources */,
-				4FCECD9021092354001F1078 /* Frameworks */,
-				4FCECD9121092354001F1078 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				4FCECD9521092354001F1078 /* PBXTargetDependency */,
-			);
-			name = "Mouse Fix Helper HelperTests";
-			productName = "Mouse Remap HelperTests";
-			productReference = 4FCECD9321092354001F1078 /* Mouse Fix Helper HelperTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		4FCECD9D21092354001F1078 /* Mouse Fix HelperUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 4FCECDAD21092354001F1078 /* Build configuration list for PBXNativeTarget "Mouse Fix HelperUITests" */;
-			buildPhases = (
-				4FCECD9A21092354001F1078 /* Sources */,
-				4FCECD9B21092354001F1078 /* Frameworks */,
-				4FCECD9C21092354001F1078 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				4FCECDA021092354001F1078 /* PBXTargetDependency */,
-			);
-			name = "Mouse Fix HelperUITests";
-			productName = "Mouse Remap HelperUITests";
-			productReference = 4FCECD9E21092354001F1078 /* Mouse Fix HelperUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 		4FD67DDA211CC9000095A9A5 /* Mouse Fix */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4FD67DE9211CC9000095A9A5 /* Build configuration list for PBXNativeTarget "Mouse Fix" */;
 			buildPhases = (
-				49320EF9239FFF9FD9CB1984 /* [CP] Check Pods Manifest.lock */,
 				4FD67DD6211CC9000095A9A5 /* Sources */,
 				4FD67DD7211CC9000095A9A5 /* Frameworks */,
 				4FD67DD8211CC9000095A9A5 /* Headers */,
@@ -567,16 +465,6 @@
 						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 					};
-					4FCECD9221092354001F1078 = {
-						CreatedOnToolsVersion = 9.2;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 4FCECD7F21092354001F1078;
-					};
-					4FCECD9D21092354001F1078 = {
-						CreatedOnToolsVersion = 9.2;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 4FCECD7F21092354001F1078;
-					};
 					4FD67DDA211CC9000095A9A5 = {
 						CreatedOnToolsVersion = 9.2;
 						LastSwiftMigration = 1030;
@@ -598,8 +486,6 @@
 			projectRoot = "";
 			targets = (
 				4FCECD7F21092354001F1078 /* Mouse Fix Helper */,
-				4FCECD9221092354001F1078 /* Mouse Fix Helper HelperTests */,
-				4FCECD9D21092354001F1078 /* Mouse Fix HelperUITests */,
 				4FD67DDA211CC9000095A9A5 /* Mouse Fix */,
 			);
 		};
@@ -612,20 +498,6 @@
 			files = (
 				4F611D2721A8E230008857A8 /* config.plist in Resources */,
 				4FD67DF4211CDE4D0095A9A5 /* MainMenu.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4FCECD9121092354001F1078 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4FCECD9C21092354001F1078 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -646,28 +518,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		49320EF9239FFF9FD9CB1984 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Mouse Fix-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		4F2A4A7A22F9C7BF00E6CAC5 /* Increment Build Number */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -710,22 +560,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4FCECD8F21092354001F1078 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4FCECD9821092354001F1078 /* Mouse_Remap_HelperTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4FCECD9A21092354001F1078 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4FCECDA321092354001F1078 /* Mouse_Remap_HelperUITests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		4FD67DD6211CC9000095A9A5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -739,16 +573,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		4FCECD9521092354001F1078 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4FCECD7F21092354001F1078 /* Mouse Fix Helper */;
-			targetProxy = 4FCECD9421092354001F1078 /* PBXContainerItemProxy */;
-		};
-		4FCECDA021092354001F1078 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4FCECD7F21092354001F1078 /* Mouse Fix Helper */;
-			targetProxy = 4FCECD9F21092354001F1078 /* PBXContainerItemProxy */;
-		};
 		4FD67DF1211CDC930095A9A5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4FCECD7F21092354001F1078 /* Mouse Fix Helper */;
@@ -942,83 +766,8 @@
 			};
 			name = Release;
 		};
-		4FCECDAB21092354001F1078 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
-				INFOPLIST_FILE = "Mouse Remap HelperTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.uebler.nuebler.Mouse-Remap-HelperTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Mouse Remap Helper.app/Contents/MacOS/Mouse Remap Helper";
-			};
-			name = Debug;
-		};
-		4FCECDAC21092354001F1078 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
-				INFOPLIST_FILE = "Mouse Remap HelperTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.uebler.nuebler.Mouse-Remap-HelperTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Mouse Remap Helper.app/Contents/MacOS/Mouse Remap Helper";
-			};
-			name = Release;
-		};
-		4FCECDAE21092354001F1078 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
-				INFOPLIST_FILE = "Mouse Remap HelperUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.uebler.nuebler.Mouse-Remap-HelperUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = "Mouse Remap Helper";
-			};
-			name = Debug;
-		};
-		4FCECDAF21092354001F1078 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
-				INFOPLIST_FILE = "Mouse Remap HelperUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.uebler.nuebler.Mouse-Remap-HelperUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = "Mouse Remap Helper";
-			};
-			name = Release;
-		};
 		4FD67DE7211CC9000095A9A5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EB70DB168533A48FEE0F154F /* Pods-Mouse Fix.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1043,7 +792,6 @@
 		};
 		4FD67DE8211CC9000095A9A5 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F0BE4CC93D4BC3B77EB77123 /* Pods-Mouse Fix.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1082,24 +830,6 @@
 			buildConfigurations = (
 				4FCECDA821092354001F1078 /* Debug */,
 				4FCECDA921092354001F1078 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		4FCECDAA21092354001F1078 /* Build configuration list for PBXNativeTarget "Mouse Fix Helper HelperTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4FCECDAB21092354001F1078 /* Debug */,
-				4FCECDAC21092354001F1078 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		4FCECDAD21092354001F1078 /* Build configuration list for PBXNativeTarget "Mouse Fix HelperUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4FCECDAE21092354001F1078 /* Debug */,
-				4FCECDAF21092354001F1078 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
