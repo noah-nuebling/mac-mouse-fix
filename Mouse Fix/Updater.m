@@ -7,6 +7,7 @@
 //
 
 #import "Updater.h"
+#import "SSZipArchive.h"
 
 @interface Updater ()
 @property (class) NSURLSessionDownloadTask *downloadTask;
@@ -71,13 +72,15 @@ static NSURLSession *_downloadSession;
 
 + (void)update {
     
-//    self.downloadTask = [_downloadSession downloadTaskWithURL:[NSURL URLWithString: @"https://noah-nuebling.github.io/mac-mouse-fix/download/Mac%20Mouse%20Fix.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-//        NSLog(@"RESPONSE: %@",location);
+    self.downloadTask = [_downloadSession downloadTaskWithURL:[NSURL URLWithString: @"https://noah-nuebling.github.io/mac-mouse-fix/download/Mac%20Mouse%20Fix.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        NSLog(@"RESPONSE: %@",location);
+        SSZipArchive 
+        
 //        NSFileManager fm = [NSFileManager defaultManager];
 //        fm moveItemAtURL:location toURL: error:<#(NSError * _Nullable __autoreleasing * _Nullable)#>
-//        
-//    }];
-//    [self.downloadTask resume];
+        
+    }];
+    [self.downloadTask resume];
 }
 
 @end

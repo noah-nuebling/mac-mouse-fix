@@ -9,6 +9,7 @@ target 'Mouse Fix' do
   use_frameworks!
 
   # Pods for Mouse Fix
+  pod 'SSZipArchive'
 
   # target 'Mouse Fix HelperUITests' do
   #   inherit! :search_paths

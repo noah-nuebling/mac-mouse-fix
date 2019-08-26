@@ -454,7 +454,6 @@
 				EB70DB168533A48FEE0F154F /* Pods-Mouse Fix.debug.xcconfig */,
 				F0BE4CC93D4BC3B77EB77123 /* Pods-Mouse Fix.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -1036,7 +1035,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "Mouse Fix/Mouse Fix-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				USER_HEADER_SEARCH_PATHS = "/Users/Noah/Documents/|MyFiles/Projekte/Programmieren/Xcode/XcodePrivateHeaders";
+				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = prefPane;
 			};
 			name = Debug;
@@ -1060,7 +1059,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Mouse Fix/Mouse Fix-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
-				USER_HEADER_SEARCH_PATHS = "/Users/Noah/Documents/|MyFiles/Projekte/Programmieren/Xcode/XcodePrivateHeaders";
+				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = prefPane;
 			};
 			name = Release;
