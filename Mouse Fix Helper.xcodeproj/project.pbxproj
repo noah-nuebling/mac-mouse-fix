@@ -89,6 +89,37 @@
 		14CA896B03FCAE26FF2CBE2E /* Pods_Mouse_Fix_HelperUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mouse_Fix_HelperUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		20769C90A2567032B314BE68 /* Pods-Mouse Fix HelperUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mouse Fix HelperUITests.debug.xcconfig"; path = "Target Support Files/Pods-Mouse Fix HelperUITests/Pods-Mouse Fix HelperUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		36F07F56BCD8F95A021419C5 /* Pods-Mouse Fix Helper HelperTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mouse Fix Helper HelperTests.release.xcconfig"; path = "Target Support Files/Pods-Mouse Fix Helper HelperTests/Pods-Mouse Fix Helper HelperTests.release.xcconfig"; sourceTree = "<group>"; };
+		4F1C966B2313606200C3B9AE /* IOHIDPrivateKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOHIDPrivateKeys.h; sourceTree = "<group>"; };
+		4F1C966C2313606200C3B9AE /* IOHIDLibPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOHIDLibPrivate.h; sourceTree = "<group>"; };
+		4F1C966D2313606200C3B9AE /* IOHIDEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOHIDEvent.h; sourceTree = "<group>"; };
+		4F1C966E2313606200C3B9AE /* IOHIDLibUserClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOHIDLibUserClient.h; sourceTree = "<group>"; };
+		4F1C966F2313606200C3B9AE /* CGSPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CGSPrivate.h; sourceTree = "<group>"; };
+		4F1C96712313606200C3B9AE /* CGSTile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CGSTile.h; sourceTree = "<group>"; };
+		4F1C96722313606200C3B9AE /* CGSSurface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CGSSurface.h; sourceTree = "<group>"; };
+		4F1C96732313606200C3B9AE /* CGSTransitions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CGSTransitions.h; sourceTree = "<group>"; };
+		4F1C96742313606200C3B9AE /* CGSRegion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CGSRegion.h; sourceTree = "<group>"; };
+		4F1C96752313606200C3B9AE /* CGSWorkspace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CGSWorkspace.h; sourceTree = "<group>"; };
+		4F1C96762313606200C3B9AE /* CGSHotKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CGSHotKeys.h; sourceTree = "<group>"; };
+		4F1C96772313606200C3B9AE /* CGSAccessibility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CGSAccessibility.h; sourceTree = "<group>"; };
+		4F1C96782313606200C3B9AE /* CGSMisc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CGSMisc.h; sourceTree = "<group>"; };
+		4F1C96792313606200C3B9AE /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		4F1C967A2313606200C3B9AE /* CGSWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CGSWindow.h; sourceTree = "<group>"; };
+		4F1C967B2313606200C3B9AE /* CGSCursor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CGSCursor.h; sourceTree = "<group>"; };
+		4F1C967C2313606200C3B9AE /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		4F1C967D2313606200C3B9AE /* CGSDisplays.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CGSDisplays.h; sourceTree = "<group>"; };
+		4F1C967E2313606200C3B9AE /* CGSInternal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CGSInternal.h; sourceTree = "<group>"; };
+		4F1C967F2313606200C3B9AE /* CGSCIFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CGSCIFilter.h; sourceTree = "<group>"; };
+		4F1C96802313606200C3B9AE /* CGSConnection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CGSConnection.h; sourceTree = "<group>"; };
+		4F1C96812313606200C3B9AE /* CGSSession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CGSSession.h; sourceTree = "<group>"; };
+		4F1C96822313606200C3B9AE /* CGSDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CGSDevice.h; sourceTree = "<group>"; };
+		4F1C96832313606200C3B9AE /* CGSSpace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CGSSpace.h; sourceTree = "<group>"; };
+		4F1C96842313606200C3B9AE /* CGSEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CGSEvent.h; sourceTree = "<group>"; };
+		4F1C96852313606200C3B9AE /* CGSDebug.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CGSDebug.h; sourceTree = "<group>"; };
+		4F1C96872313606200C3B9AE /* TouchEvents.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = TouchEvents.c; sourceTree = "<group>"; };
+		4F1C96882313606200C3B9AE /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		4F1C96892313606200C3B9AE /* TouchEvents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TouchEvents.h; sourceTree = "<group>"; };
+		4F1C968A2313606200C3B9AE /* IOHIDEventData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOHIDEventData.h; sourceTree = "<group>"; };
+		4F1C968B2313606200C3B9AE /* IOHIDEventTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOHIDEventTypes.h; sourceTree = "<group>"; };
 		4F1E52E821A8D3D00005B817 /* MomentumScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MomentumScroll.h; sourceTree = "<group>"; };
 		4F1E52E921A8D3D00005B817 /* MomentumScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MomentumScroll.m; sourceTree = "<group>"; };
 		4F1E83F122C98F03000CE5AD /* ModifierInputReceiver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModifierInputReceiver.h; sourceTree = "<group>"; };
@@ -192,6 +223,68 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4F1C96692313603400C3B9AE /* External */ = {
+			isa = PBXGroup;
+			children = (
+				4F1C96702313606200C3B9AE /* CGSInternal */,
+				4F1C966F2313606200C3B9AE /* CGSPrivate.h */,
+				4F1C966A2313606200C3B9AE /* IOKit */,
+				4F1C96862313606200C3B9AE /* SensibleSideButtons */,
+			);
+			path = External;
+			sourceTree = "<group>";
+		};
+		4F1C966A2313606200C3B9AE /* IOKit */ = {
+			isa = PBXGroup;
+			children = (
+				4F1C966B2313606200C3B9AE /* IOHIDPrivateKeys.h */,
+				4F1C966C2313606200C3B9AE /* IOHIDLibPrivate.h */,
+				4F1C966D2313606200C3B9AE /* IOHIDEvent.h */,
+				4F1C966E2313606200C3B9AE /* IOHIDLibUserClient.h */,
+			);
+			path = IOKit;
+			sourceTree = "<group>";
+		};
+		4F1C96702313606200C3B9AE /* CGSInternal */ = {
+			isa = PBXGroup;
+			children = (
+				4F1C96712313606200C3B9AE /* CGSTile.h */,
+				4F1C96722313606200C3B9AE /* CGSSurface.h */,
+				4F1C96732313606200C3B9AE /* CGSTransitions.h */,
+				4F1C96742313606200C3B9AE /* CGSRegion.h */,
+				4F1C96752313606200C3B9AE /* CGSWorkspace.h */,
+				4F1C96762313606200C3B9AE /* CGSHotKeys.h */,
+				4F1C96772313606200C3B9AE /* CGSAccessibility.h */,
+				4F1C96782313606200C3B9AE /* CGSMisc.h */,
+				4F1C96792313606200C3B9AE /* README.md */,
+				4F1C967A2313606200C3B9AE /* CGSWindow.h */,
+				4F1C967B2313606200C3B9AE /* CGSCursor.h */,
+				4F1C967C2313606200C3B9AE /* .gitignore */,
+				4F1C967D2313606200C3B9AE /* CGSDisplays.h */,
+				4F1C967E2313606200C3B9AE /* CGSInternal.h */,
+				4F1C967F2313606200C3B9AE /* CGSCIFilter.h */,
+				4F1C96802313606200C3B9AE /* CGSConnection.h */,
+				4F1C96812313606200C3B9AE /* CGSSession.h */,
+				4F1C96822313606200C3B9AE /* CGSDevice.h */,
+				4F1C96832313606200C3B9AE /* CGSSpace.h */,
+				4F1C96842313606200C3B9AE /* CGSEvent.h */,
+				4F1C96852313606200C3B9AE /* CGSDebug.h */,
+			);
+			path = CGSInternal;
+			sourceTree = "<group>";
+		};
+		4F1C96862313606200C3B9AE /* SensibleSideButtons */ = {
+			isa = PBXGroup;
+			children = (
+				4F1C96872313606200C3B9AE /* TouchEvents.c */,
+				4F1C96882313606200C3B9AE /* LICENSE */,
+				4F1C96892313606200C3B9AE /* TouchEvents.h */,
+				4F1C968A2313606200C3B9AE /* IOHIDEventData.h */,
+				4F1C968B2313606200C3B9AE /* IOHIDEventTypes.h */,
+			);
+			path = SensibleSideButtons;
+			sourceTree = "<group>";
+		};
 		4F1E52E721A8D2DF0005B817 /* (Unused) */ = {
 			isa = PBXGroup;
 			children = (
@@ -348,6 +441,7 @@
 		4FCECDB02109326E001F1078 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4F1C96692313603400C3B9AE /* External */,
 				4F8DC6EF21A3B20D00E1D297 /* SSB Private Apis */,
 				4F34F9AE21A3590D00104EBF /* main.m */,
 				4FCECD9621092354001F1078 /* Mouse Remap HelperTests */,
@@ -403,7 +497,6 @@
 				20769C90A2567032B314BE68 /* Pods-Mouse Fix HelperUITests.debug.xcconfig */,
 				FDBC0857E7D4CC9EAF1C0292 /* Pods-Mouse Fix HelperUITests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -937,7 +1030,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "Mouse Fix Helper/Mouse Remap Helper-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
-				USER_HEADER_SEARCH_PATHS = /Users/Noah/Documents/_MyFiles/Projekte/Programmieren/Xcode/XcodePrivateHeaders;
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Mouse Fix Helper/Supporting Files/External\"";
 			};
 			name = Debug;
 		};
@@ -961,7 +1054,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Mouse Fix Helper/Mouse Remap Helper-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
-				USER_HEADER_SEARCH_PATHS = /Users/Noah/Documents/_MyFiles/Projekte/Programmieren/Xcode/XcodePrivateHeaders;
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Mouse Fix Helper/Supporting Files/External\"";
 			};
 			name = Release;
 		};
