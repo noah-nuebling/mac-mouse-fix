@@ -424,13 +424,13 @@
 			isa = PBXGroup;
 			children = (
 				4F1C96692313603400C3B9AE /* External */,
+				4FCECD8621092354001F1078 /* Assets.xcassets */,
+				4FCECD8E21092354001F1078 /* Mouse_Remap_Helper.entitlements */,
+				4FCECD8B21092354001F1078 /* Info.plist */,
 				4F34F9AE21A3590D00104EBF /* main.m */,
+				4FCECD8821092354001F1078 /* MainMenu.xib */,
 				4FCECD9621092354001F1078 /* Mouse Remap HelperTests */,
 				4FCECDA121092354001F1078 /* Mouse Remap HelperUITests */,
-				4FCECD8621092354001F1078 /* Assets.xcassets */,
-				4FCECD8821092354001F1078 /* MainMenu.xib */,
-				4FCECD8B21092354001F1078 /* Info.plist */,
-				4FCECD8E21092354001F1078 /* Mouse_Remap_Helper.entitlements */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
