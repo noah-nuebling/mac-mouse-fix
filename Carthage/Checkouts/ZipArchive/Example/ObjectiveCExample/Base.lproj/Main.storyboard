@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina3_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="KJF-p6-1px">
+                                <rect key="frame" x="118.5" y="46" width="83" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uTp-oA-6Sj">
+                                <rect key="frame" x="103.5" y="84" width="113" height="30"/>
+                                <state key="normal" title="Zip Sample Data"/>
+                                <connections>
+                                    <action selector="zipPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ebf-WE-3Xz"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Ts-JV-yCW">
+                                <rect key="frame" x="94.5" y="122" width="131" height="30"/>
+                                <state key="normal" title="Unzip Sample Data"/>
+                                <connections>
+                                    <action selector="unzipPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6XQ-4q-0UI"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="File1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3gB-ZC-0ON" userLabel="File1">
+                                <rect key="frame" x="16" y="160" width="288" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="File2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZxR-a0-kva" userLabel="File2">
+                                <rect key="frame" x="16" y="189" width="288" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="File3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b0V-gX-SgI" userLabel="File3">
+                                <rect key="frame" x="16" y="218" width="288" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="217-JA-Ha4">
+                                <rect key="frame" x="108" y="247" width="104" height="30"/>
+                                <state key="normal" title="Has Password?"/>
+                                <connections>
+                                    <action selector="hasPassword:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eqq-io-v9C"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="84L-OB-eyZ">
+                                <rect key="frame" x="140.5" y="285" width="39" height="30"/>
+                                <state key="normal" title="Reset"/>
+                                <connections>
+                                    <action selector="resetPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8v0-hm-kIr"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Info" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GhA-gk-XgA">
+                                <rect key="frame" x="16" y="323" width="288" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="ZxR-a0-kva" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="0Aj-Zl-ubb"/>
+                            <constraint firstItem="uTp-oA-6Sj" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="33K-W3-McX"/>
+                            <constraint firstItem="3gB-ZC-0ON" firstAttribute="top" secondItem="2Ts-JV-yCW" secondAttribute="bottom" constant="8" id="3iw-LW-JkX"/>
+                            <constraint firstItem="GhA-gk-XgA" firstAttribute="top" secondItem="84L-OB-eyZ" secondAttribute="bottom" constant="8" id="6q4-9W-Q0u"/>
+                            <constraint firstItem="b0V-gX-SgI" firstAttribute="top" secondItem="ZxR-a0-kva" secondAttribute="bottom" constant="8" id="8Av-3o-ggw"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ZxR-a0-kva" secondAttribute="trailing" id="ABK-aX-afX"/>
+                            <constraint firstItem="84L-OB-eyZ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="B64-sj-Ihu"/>
+                            <constraint firstItem="KJF-p6-1px" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="26" id="CrE-OB-0QR"/>
+                            <constraint firstItem="GhA-gk-XgA" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="FGB-bH-wRo"/>
+                            <constraint firstItem="b0V-gX-SgI" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="N3d-Wl-5jq"/>
+                            <constraint firstItem="84L-OB-eyZ" firstAttribute="top" secondItem="217-JA-Ha4" secondAttribute="bottom" constant="8" id="OPu-Av-5Ep"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="3gB-ZC-0ON" secondAttribute="trailing" id="Scb-te-5GB"/>
+                            <constraint firstItem="ZxR-a0-kva" firstAttribute="top" secondItem="3gB-ZC-0ON" secondAttribute="bottom" constant="8" id="bUv-Zd-r4D"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="b0V-gX-SgI" secondAttribute="trailing" id="epM-dg-mgw"/>
+                            <constraint firstItem="217-JA-Ha4" firstAttribute="top" secondItem="b0V-gX-SgI" secondAttribute="bottom" constant="8" id="fIF-Ob-r2b"/>
+                            <constraint firstItem="2Ts-JV-yCW" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="lEj-O2-aka"/>
+                            <constraint firstItem="2Ts-JV-yCW" firstAttribute="top" secondItem="uTp-oA-6Sj" secondAttribute="bottom" constant="8" id="mnz-Ae-5eG"/>
+                            <constraint firstItem="3gB-ZC-0ON" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="twp-26-8CL"/>
+                            <constraint firstItem="uTp-oA-6Sj" firstAttribute="top" secondItem="KJF-p6-1px" secondAttribute="bottom" constant="8" symbolic="YES" id="uLh-xJ-Xc6"/>
+                            <constraint firstItem="KJF-p6-1px" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="wVb-JQ-3pN"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="GhA-gk-XgA" secondAttribute="trailing" id="yMT-wc-roV"/>
+                            <constraint firstItem="217-JA-Ha4" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="yg5-EU-9ex"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="file1" destination="3gB-ZC-0ON" id="GUd-wx-xEa"/>
+                        <outlet property="file2" destination="ZxR-a0-kva" id="AZi-Dj-dI8"/>
+                        <outlet property="file3" destination="b0V-gX-SgI" id="zwq-l2-xZK"/>
+                        <outlet property="hasPasswordButton" destination="217-JA-Ha4" id="MVm-87-w0C"/>
+                        <outlet property="info" destination="GhA-gk-XgA" id="fPh-WG-xKt"/>
+                        <outlet property="passwordField" destination="KJF-p6-1px" id="3yT-Aw-6uA"/>
+                        <outlet property="resetButton" destination="84L-OB-eyZ" id="9VY-KX-sKi"/>
+                        <outlet property="unzipButton" destination="2Ts-JV-yCW" id="2LN-kr-Sei"/>
+                        <outlet property="zipButton" destination="uTp-oA-6Sj" id="Tl8-0B-gHY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+    </scenes>
+</document>

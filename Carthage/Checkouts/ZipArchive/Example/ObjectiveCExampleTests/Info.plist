@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<string>en</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -15,18 +15,10 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.1</string>
+	<string>1.0</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>19</string>
-	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2018 Noah Nuebling Enterprises Ltd. All rights reserved.</string>
-	<key>NSMainNibFile</key>
-	<string>Mouse_Remap</string>
-	<key>NSPrefPaneIconFile</key>
-	<string>Mouse_Fix.tiff</string>
-	<key>NSPrefPaneIconLabel</key>
-	<string>Mouse Fix</string>
-	<key>NSPrincipalClass</key>
-	<string>Mouse_Remap</string>
+	<string>1</string>
 </dict>
 </plist>

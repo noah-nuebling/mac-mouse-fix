@@ -18,6 +18,8 @@
 		4F3A8445230D3E6C0012C725 /* Updater.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F3A8443230D3E6C0012C725 /* Updater.h */; };
 		4F3A8446230D3E6C0012C725 /* Updater.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A8444230D3E6C0012C725 /* Updater.m */; };
 		4F611D2721A8E230008857A8 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F611D2621A8E230008857A8 /* config.plist */; };
+		4F6A19F32314731400E05446 /* ZipArchive.framework in My Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F6A19E92314726A00E05446 /* ZipArchive.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4F6A19F42314738C00E05446 /* ZipArchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F6A19E92314726A00E05446 /* ZipArchive.framework */; };
 		4F73880021B4A79800C2F468 /* MessagePortReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F7387FF21B4A79800C2F468 /* MessagePortReceiver.m */; };
 		4F8AEA9222FBC7AC008C1A7C /* milkshake_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */; };
 		4F8DC6F621A3B60600E1D297 /* AnimationCurve.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8DC6F421A3B60600E1D297 /* AnimationCurve.m */; };
@@ -49,6 +51,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		4F6A19F1231472B600E05446 /* My Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4F6A19F32314731400E05446 /* ZipArchive.framework in My Embed Frameworks */,
+			);
+			name = "My Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4FD67DF2211CDCDE0095A9A5 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -99,7 +112,6 @@
 		4F1E83F222C98F03000CE5AD /* ModifierInputReceiver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModifierInputReceiver.m; sourceTree = "<group>"; };
 		4F2BF98B21AE052400CF6A24 /* DeviceManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeviceManager.h; sourceTree = "<group>"; };
 		4F2BF98C21AE052400CF6A24 /* DeviceManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeviceManager.m; sourceTree = "<group>"; };
-		4F32BC7E231442B700B3E6E2 /* SSZipArchive.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SSZipArchive.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F34F9AE21A3590D00104EBF /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4F34F9B321A359D500104EBF /* MouseInputReceiver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MouseInputReceiver.h; sourceTree = "<group>"; };
 		4F34F9B421A359D500104EBF /* MouseInputReceiver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MouseInputReceiver.m; sourceTree = "<group>"; };
@@ -110,6 +122,7 @@
 		4F3A8443230D3E6C0012C725 /* Updater.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Updater.h; sourceTree = "<group>"; };
 		4F3A8444230D3E6C0012C725 /* Updater.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Updater.m; sourceTree = "<group>"; };
 		4F611D2621A8E230008857A8 /* config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
+		4F6A19E92314726A00E05446 /* ZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ZipArchive.framework; sourceTree = "<group>"; };
 		4F7387FB21B48F7900C2F468 /* MomentumScroll.mn */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MomentumScroll.mn; sourceTree = "<group>"; };
 		4F7387FC21B48F7900C2F468 /* MomentumScroll.hn */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MomentumScroll.hn; sourceTree = "<group>"; };
 		4F7387FE21B4A79800C2F468 /* MessagePortReceiver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessagePortReceiver.h; sourceTree = "<group>"; };
@@ -155,6 +168,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F6A19F42314738C00E05446 /* ZipArchive.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,6 +273,14 @@
 			path = "New Group";
 			sourceTree = "<group>";
 		};
+		4F6A19ED2314727800E05446 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4F6A19E92314726A00E05446 /* ZipArchive.framework */,
+			);
+			path = Frameworks;
+			sourceTree = "<group>";
+		};
 		4F7F863E21AE2B64007DF9A6 /* Bezel Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -315,11 +337,10 @@
 		4FCECD7721092354001F1078 = {
 			isa = PBXGroup;
 			children = (
+				4F6A19ED2314727800E05446 /* Frameworks */,
 				4FD67DDC211CC9000095A9A5 /* Mouse Fix */,
 				4FCECD8221092354001F1078 /* Mouse Fix Helper */,
 				4FCECD8121092354001F1078 /* Products */,
-				CAD54BEC57763F62595FA982 /* Pods */,
-				537CCC3F2529BA05023A1611 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -378,21 +399,6 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
-		537CCC3F2529BA05023A1611 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				4F32BC7E231442B700B3E6E2 /* SSZipArchive.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		CAD54BEC57763F62595FA982 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -436,6 +442,7 @@
 				4FD67DD9211CC9000095A9A5 /* Resources */,
 				4FD67DF2211CDCDE0095A9A5 /* CopyFiles */,
 				4F2A4A7A22F9C7BF00E6CAC5 /* Increment Build Number */,
+				4F6A19F1231472B600E05446 /* My Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -728,7 +735,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
-				FRAMEWORK_SEARCH_PATHS = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks;
+				FRAMEWORK_SEARCH_PATHS = (
+					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks,
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				INFOPLIST_FILE = "Mouse Fix Helper/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -752,7 +763,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
-				FRAMEWORK_SEARCH_PATHS = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks;
+				FRAMEWORK_SEARCH_PATHS = (
+					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks,
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				INFOPLIST_FILE = "Mouse Fix Helper/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -773,6 +788,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				INFOPLIST_FILE = "Mouse Fix/Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/PreferencePanes";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -797,6 +816,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				INFOPLIST_FILE = "Mouse Fix/Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/PreferencePanes";
 				LD_RUNPATH_SEARCH_PATHS = (
