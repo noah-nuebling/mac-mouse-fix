@@ -8,6 +8,7 @@
 
 #import "Updater.h"
 #import "ZipArchive/SSZipArchive.h"
+#import <SecurityFoundation/SFAuthorization.h>
 
 @interface Updater ()
 @property (class) NSURLSessionDownloadTask *downloadTask;
@@ -62,9 +63,6 @@ static NSURLSession *_downloadSession;
         NSLog(@"currentVersion: %ld, availableVersion: %ld", (long)currentVersion, (long)availableVersion);
         if (currentVersion != availableVersion) {
             _updateAvailable = YES;
-            
-            // TODO: only update after the user confirmed
-            [self update];
         }
     }];
     [self.downloadTask resume];
@@ -72,16 +70,46 @@ static NSURLSession *_downloadSession;
 
 + (void)update {
     
+    NSError *launchUpdaterErr;
+    
+
+
+    
+    NSTask *launchUpdaterTask = [[NSTask alloc] init];
+    NSString *mainBundleURLString = [[[NSBundle bundleForClass:self] bundleURL] absoluteString];
+    
+    
+    launchUpdaterTask.arguments = @[@"/Users/Noah/Library/Developer/Xcode/DerivedData/Mouse_Fix_Helper-ezhejwqavrjpyscxacbukqogkely/Build/Products/Debug/MouseFix.prefPane", @"/Users/Noah/Desktop"];
+    
+    NSArray *args = @[mainBundleURLString];
+    NSURL *execURL = [[[NSBundle bundleForClass:self] bundleURL] URLByAppendingPathComponent:@"Contents/Library/LaunchServices/Mouse Fix Updater"];
+    
+    if (@available(macOS 10.13, *)) {
+        [NSTask launchedTaskWithExecutableURL:execURL arguments:args error:&launchUpdaterErr terminationHandler:^(NSTask *task) {
+            NSLog(@"done launching updater: %@", launchUpdaterErr);
+        }];
+    } else {
+        [NSTask launchedTaskWithLaunchPath:[execURL path] arguments:args];
+    }
+    
+//    [NSTask launchedTaskWithLaunchPath:updaterURL arguments:args];
+    
+//    [NSTask launchedTaskWithExecutableURL:updaterURL arguments:args error:&launchUpdaterErr terminationHandler:^(NSTask * _Nonnull) {
+//        NSLog(@"updater terminated %@");
+//    }];
+//    NSLog(@"launch updater error: %@", launchUpdaterErr);
+    
     self.downloadTask = [_downloadSession downloadTaskWithURL:[NSURL URLWithString: @"https://noah-nuebling.github.io/mac-mouse-fix/MacMouseFix.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
 
-
+        
         if (error != NULL) {
             NSLog(@"Downloading error: %@", error);
             return;
         }
-
+        
+        // unzip the downloaded file
+        
         NSString *unzipDest = [[location path] stringByDeletingLastPathComponent];
-//        unzipDest = @"/Users/Noah/Desktop";
         NSLog(@"unzip dest: %@",unzipDest);
         NSError *unzipError;
         [SSZipArchive unzipFileAtPath:[location path] toDestination:unzipDest overwrite:YES password:NULL error:&unzipError];
@@ -92,37 +120,85 @@ static NSURLSession *_downloadSession;
 
         NSFileManager *fm = [NSFileManager defaultManager];
 
-
         NSString *prefPaneName = @"Mouse Fix.prefPane";
-        NSURL *moveSrc = [[NSURL fileURLWithPath:unzipDest] URLByAppendingPathComponent:prefPaneName];
-
-//        [fm replaceItemAtURL:moveDest withItemAtURL:moveOrg backupItemName:NULL options:NSFileManagerItemReplacementUsingNewMetadataOnly resultingItemURL:NULL error:&moveError];
-
-        NSURL *moveDest = [[NSBundle bundleForClass:self] bundleURL];
-
-//        moveDest = [NSURL fileURLWithPath:@"/Users/Noah/Desktop/"];
-//        NSURL *moveDestFile = [moveDest URLByAppendingPathComponent:@"Mouse Fix.prefPane"];
-        NSLog(@"move dest: %@", moveDest);
-
-        NSError *removeError;
-        NSLog(@"remove URL: %@",moveDest);
-
-        [fm removeItemAtURL:moveDest error:&removeError];
-        if (removeError != NULL) {
-            NSLog(@"Removing file error: %@", removeError);
-//            return;
-        } else {
-        }
-        [NSThread sleepForTimeInterval:1];
+        NSURL *moveSrc = [[[NSURL fileURLWithPath:unzipDest] URLByAppendingPathComponent:prefPaneName] URLByAppendingPathComponent:@"Contents"];
 
 
-        NSError *moveError;
-        [fm moveItemAtURL:moveSrc toURL:moveDest error:&moveError];
-        if (moveError != NULL) {
-            NSLog(@"Moving file error: %@", moveError);
-            return;
-        }
 
+        
+        
+        
+//        if (NO) {//([fm fileExistsAtPath:[moveDest path]]) {
+////            NSError *replaceError;
+////            [fm replaceItemAtURL:[moveDest URLByAppendingPathComponent:@"Contents"] withItemAtURL:[moveSrc URLByAppendingPathComponent:@"Contents"] backupItemName:NULL options:NSFileManagerItemReplacementUsingNewMetadataOnly resultingItemURL:NULL error:&replaceError];
+////            if (replaceError != NULL) {
+////                NSLog(@"Replace file error: %@", replaceError);
+////            }
+//        } else {
+//
+//            id authObj = [SFAuthorization authorization];
+//
+//            NSError *authObtainErr;
+//            //[authObj obtainWithRight:kAuthorizationRuleAuthenticateAsAdmin flags:(kAuthorizationFlagExtendRights | kAuthorizationFlagInteractionAllowed | kAuthorizationFlagDefaults) error:&authObtainErr];
+//            AuthorizationRights *obtainedRights;
+//
+//
+//
+//
+//            // TODO: doc says that .value has to be the path we want to execute
+//
+//            AuthorizationItem authItem = {kAuthorizationRightExecute, 0, NULL, 0};
+//            AuthorizationRights requestedRights = {1, &authItem};
+//
+//            AuthorizationFlags authFlags = kAuthorizationFlagDefaults |
+//            kAuthorizationFlagInteractionAllowed |
+//            kAuthorizationFlagPreAuthorize |
+//            kAuthorizationFlagExtendRights;
+//
+//
+//            char promptText[100] = "Authorize Mouse Fix to install updates";
+//            AuthorizationItem authEnvPrompt = {kAuthorizationEnvironmentPrompt, strlen(promptText), promptText, 0};
+//
+////            NSBundle *thisBundle = [NSBundle bundleForClass:self];
+////            const char *promptIcon = [thisBundle pathForResource:@"Mouse_Fix_alt" ofType:@"tiff"].UTF8String;
+////            AuthorizationItem authEnvIcon = {kAuthorizationEnvironmentIcon, strlen(promptIcon), (void *)promptIcon, 0};
+//            // TODO: make the Icon work
+//            // (note: will only work if the picture is accessible by everyone (permission wise)) (http://forestparklab.blogspot.com/2013/01/osx-authorizationexecutewithprivileges.html)
+//
+//            AuthorizationItem authEnvArray[1] = {authEnvPrompt};
+//            AuthorizationEnvironment authEnv = {1, authEnvArray};
+//
+//            // TODO: use environment parameter to customize prompt
+//            [authObj obtainWithRights:&requestedRights flags:authFlags environment:&authEnv authorizedRights:&obtainedRights error:&authObtainErr];
+//            NSLog(@"authentication error: %@",authObtainErr);
+//            if (obtainedRights->items) {
+//                NSLog(@"obtained right: %s", obtainedRights->items[0].name);
+//            }
+//
+//            NSError *removeError;
+//            NSLog(@"remove URL: %@",moveDest);
+//            BOOL removeResult = [fm removeItemAtURL:moveDest error:&removeError];
+//            if (removeResult == NO) {
+//                NSLog(@"Removing file error: %@", removeError);
+//                //            return;
+//            } else {
+//            }
+//            [NSThread sleepForTimeInterval:1];
+//
+//
+//            NSError *moveError;
+//            BOOL moveResult = [fm moveItemAtURL:moveSrc toURL:moveDest error:&moveError];
+//            if (moveResult == NO) {
+//                NSLog(@"Moving file error: %@", moveError);
+//                return;
+//            }
+//
+//
+//        }
+//
+//        // TODO: get modifying config working again (has it ever worked?)
+//        // TODO: use authorization services to install update if installed for all users
+//        // TODO: restart System preferences and kill the helper app
     }];
     [self.downloadTask resume];
 }

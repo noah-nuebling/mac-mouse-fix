@@ -112,7 +112,7 @@ static void resetDynamicGlobals() {
     
     _nOfOnePixelScrollsMax              =   2;
     
-    _fastScrollExponentialBase          =   1.25;
+    _fastScrollExponentialBase          =   1.09375; //1.125 //1.0625 // 1.09375
     _scrollSwipeThreshhold_Ticks        =   3;
     _fastScrollThreshhold_Swipes        =   3;
     _consecutiveScrollTickMaxIntervall     =   0.03;
@@ -278,7 +278,6 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
     if (_consecutiveScrollSwipeCounter > _fastScrollThreshhold_Swipes) {
         _pixelScrollQueue = _pixelScrollQueue * pow(_fastScrollExponentialBase, (int32_t)_consecutiveScrollSwipeCounter - _fastScrollThreshhold_Swipes);
-                                                //1.125 //1.0625 // 1.09375
     }
     NSLog(@"px: %lld", _pixelScrollQueue);
     

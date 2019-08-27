@@ -51,6 +51,9 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
     BOOL checkboxState = [sender state];
     [self enableHelperAsUserAgent: checkboxState];
+    
+    // TODO: only update after the user confirmed
+    [Updater update];
 }
 - (IBAction)moreButton:(id)sender {
     
@@ -323,15 +326,20 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 }
 
 - (void)writeConfigDictToFile {
-    NSError *writeErr;
-    NSData *configData = [NSPropertyListSerialization dataWithPropertyList:self.configDictFromFile format:NSPropertyListXMLFormat_v1_0 options:0 error:&writeErr];
-    if (writeErr) {
-        NSLog(@"ERROR serializing configDictFromFile: %@", writeErr);
+    NSError *serializeErr;
+    NSData *configData = [NSPropertyListSerialization dataWithPropertyList:self.configDictFromFile format:NSPropertyListXMLFormat_v1_0 options:0 error:&serializeErr];
+    if (serializeErr) {
+        NSLog(@"ERROR serializing configDictFromFile: %@", serializeErr);
     }
     NSString *configPath = [[self helperBundle] pathForResource:@"config" ofType:@"plist"];
-    BOOL success = [configData writeToFile:configPath atomically:YES];
-    if (!success) {
-        NSLog(@"ERROR writing configDictFromFile to file");
+//    BOOL success = [configData writeToFile:configPath atomically:YES];
+//    if (!success) {
+//        NSLog(@"ERROR writing configDictFromFile to file");
+//    }
+    NSError *writeErr;
+    [configData writeToFile:configPath options:NSDataWritingAtomic error:&writeErr];
+    if (writeErr) {
+        NSLog(@"ERROR writing configDictFromFile to file: %@", writeErr);
     }
     
     NSLog(@"FILE UPDATED");
