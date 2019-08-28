@@ -19,7 +19,7 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "# Autoinstall newly built Preference Pane&#10;&#10;#!/bin/bash&#10;&#10;SUDO_ASKPASS=/Users/Noah/Documents/_MyFiles/Projekte/Programmieren/Xcode/Xcode\ Projekte/Mac\ Mouse\ Fix/Mouse\ Fix/sudopass.sh sudo -A rm -r /Library/PreferencePanes/MouseFix.prefPane&#10;&#10;&#10;SUDO_ASKPASS=/Users/Noah/Documents/_MyFiles/Projekte/Programmieren/Xcode/Xcode\ Projekte/Mac\ Mouse\ Fix/Mouse\ Fix/sudopass.sh sudo -A cp -r /Users/Noah/Library/Developer/Xcode/DerivedData/Mouse_Fix_Helper-ezhejwqavrjpyscxacbukqogkely/Build/Products/Debug/MouseFix.prefPane /Library/PreferencePanes/&#10;&#10;SUDO_ASKPASS=&quot;&quot;&#10;">
+               scriptText = "# Autoinstall newly built Preference Pane&#10;&#10;#!/bin/bash&#10;&#10;SUDO_ASKPASS=/Users/Noah/Documents/_MyFiles/Projekte/Programmieren/Xcode/Xcode\ Projekte/Mac\ Mouse\ Fix/Mouse\ Fix/sudopass.sh sudo -A rm -r /Library/PreferencePanes/Mouse\ Fix.prefPane&#10;&#10;&#10;SUDO_ASKPASS=/Users/Noah/Documents/_MyFiles/Projekte/Programmieren/Xcode/Xcode\ Projekte/Mac\ Mouse\ Fix/Mouse\ Fix/sudopass.sh sudo -A cp -a /Users/Noah/Library/Developer/Xcode/DerivedData/Mouse_Fix_Helper-ezhejwqavrjpyscxacbukqogkely/Build/Products/Debug/Mouse\ Fix.prefPane /Library/PreferencePanes/&#10;&#10;SUDO_ASKPASS=&quot;&quot;&#10;">
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
