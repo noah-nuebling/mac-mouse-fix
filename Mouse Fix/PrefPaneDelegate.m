@@ -6,6 +6,7 @@
 #import <ServiceManagement/SMLoginItem.h>
 #import "PrefPaneDelegate.h"
 #import "Updater.h"
+#import "Update/UpdateAvailableWindow.h"
 //#import "CGSInternal/CGSHotKeys.h"
 
 @interface PrefPaneDelegate ()
@@ -52,8 +53,6 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     BOOL checkboxState = [sender state];
     [self enableHelperAsUserAgent: checkboxState];
     
-    // TODO: only update after the user confirmed
-    [Updater update];
 }
 - (IBAction)moreButton:(id)sender {
     
@@ -70,6 +69,12 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 
 
 - (IBAction)UIChanged:(id)sender {
+    
+    if ([[sender identifier] isEqualToString:@"invertScroll"]) {
+        // TODO: only update after the user confirmed
+        [Updater update];
+    }
+    
     [self setConfigDictToUI];
     tellHelperToUpdateItsSettings();
 }
@@ -128,7 +133,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 - (void)enableHelperAsUserAgent:(BOOL)enable {
 
     // repair config file if checkbox state is changed
-    [self repairUserAgentConfigFile];
+    [self repairLaunchdPlist];
 
     /* preparing strings for NSTask and then construct(we'll use NSTask for loading/unloading the helper as a User Agent) */
 
@@ -137,24 +142,15 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
     /* preparing arguments for the command-line-tool */
     
-    // path to user library
     NSArray *libraryPaths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
     if ([libraryPaths count] == 1) {
-        // argument: path to launch-agent-config-file
-        NSString *launchAgentPlistPath = [[libraryPaths objectAtIndex:0] stringByAppendingPathComponent: @"LaunchAgents/mouse.fix.helper.plist"];
+        NSString *launchAgentPlistPath = [[libraryPaths objectAtIndex:0] stringByAppendingPathComponent: @"LaunchAgents/com.nuebling.mousefix.helper.plist"];
         
-        // if macOS version 10.13+
         if (@available(macOS 10.13, *)) {
-            // argument: specifies that the target domain is the current users "gui" domain
             NSString *GUIDomainArgument = [NSString stringWithFormat:@"gui/%d", geteuid()];
-            // argument: specifies whether we want to load/unload the helper app
             NSString *OnOffArgument = (enable) ? @"bootstrap": @"bootout";
-            // convert launchctlPath to URL
             NSURL *launchctlURL = [NSURL fileURLWithPath: launchctlPath];
             
-            //NSLog(@"arguments: %@ %@ %@", OnOffArgument, GUIDomainArgument, launchAgentPlistPath);
-            
-            // start the cmd line tool which can enable/disable the helper
             [NSTask launchedTaskWithExecutableURL: launchctlURL arguments:@[OnOffArgument, GUIDomainArgument, launchAgentPlistPath] error: nil terminationHandler: nil];
         } else {
             // Fallback on earlier versions
@@ -167,7 +163,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     }
 }
 
-- (void) repairUserAgentConfigFile {
+- (void)repairLaunchdPlist {
     
     @autoreleasepool {
         
@@ -189,7 +185,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
         NSArray *libraryPaths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
         if ([libraryPaths count] == 1) {
             // create path to launch agent config file
-            NSString *launchAgentPlistPath = [[libraryPaths objectAtIndex:0] stringByAppendingPathComponent: @"LaunchAgents/mouse.fix.helper.plist"];
+            NSString *launchAgentPlistPath = [[libraryPaths objectAtIndex:0] stringByAppendingPathComponent: @"LaunchAgents/com.nuebling.mousefix.helper.plist"];
             
             // check if file exists
             NSFileManager *fileManager = [[NSFileManager alloc] init];

@@ -6,7 +6,6 @@
 #import "MessagePortReceiver.h"
 #import "DeviceManager.h"
 
-//#import "SmoothScroll.h"
 #import "MomentumScroll.h"
 
 #import "CGSInternal/CGSHotKeys.h"
@@ -14,11 +13,13 @@
 
 
 @interface AppDelegate ()
+@property (strong) IBOutlet NSWindow *addedWindow;
 
 @end
 
 @implementation AppDelegate
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+    
     NSLog(@"running Mouse Fix Helper");
 }
 @end

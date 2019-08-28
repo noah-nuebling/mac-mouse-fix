@@ -25,7 +25,7 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <window title="≪ do not localize ≫" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" deferred="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="F0z-JX-Cv5" userLabel="PrefPane">
+        <window title="≪ do not localize ≫" autorecalculatesKeyViewLoop="NO" deferred="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="F0z-JX-Cv5" userLabel="PrefPane">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <rect key="contentRect" x="0.0" y="0.0" width="668" height="238"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
@@ -145,7 +145,7 @@
                                         <font key="font" metaFont="menu"/>
                                         <menu key="menu" id="Kfa-q9-dxG">
                                             <items>
-                                                <menuItem title="-" state="on" toolTip="Leave button behavior unchanged." id="fuS-pI-6iE"/>
+                                                <menuItem title="-" state="on" toolTip="No action." id="fuS-pI-6iE"/>
                                                 <menuItem isSeparatorItem="YES" id="tjv-xA-X6o"/>
                                                 <menuItem title="Mission Control" tag="32" id="i88-Bf-Ajz"/>
                                                 <menuItem title="App Exposé" tag="33" toolTip="Expose all windows of the currently active app." id="b0I-7o-OaS"/>
@@ -197,7 +197,7 @@
                                         <action selector="UIChanged:" target="-2" id="TVh-Qj-U0h"/>
                                     </connections>
                                 </popUpButton>
-                                <button toolTip="Inverts mouse scrolling direction relative to system wide scrolling direction." verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BaE-Ga-kIa">
+                                <button identifier="invertScroll" toolTip="Inverts mouse scrolling direction relative to system wide scrolling direction." verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BaE-Ga-kIa">
                                     <rect key="frame" x="453" y="128" width="114" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <buttonCell key="cell" type="check" title="Invert direction" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="mOD-gA-hHm">

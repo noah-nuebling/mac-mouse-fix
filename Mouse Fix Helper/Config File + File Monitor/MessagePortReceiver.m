@@ -1,6 +1,8 @@
 #import "MessagePortReceiver.h"
 #import "ConfigFileInterface.h"
 
+#import <AppKit/NSWindow.h>
+
 @implementation MessagePortReceiver
 
 + (void)load {

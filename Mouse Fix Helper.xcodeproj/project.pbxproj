@@ -29,6 +29,9 @@
 		4F8F38E822F8C7A1004D0040 /* Mouse_Fix_alt.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4F8F38E722F8C7A1004D0040 /* Mouse_Fix_alt.tiff */; };
 		4FACF59F2183B956009257D4 /* default_mouse.fix.helper.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FACF59E2183B956009257D4 /* default_mouse.fix.helper.plist */; };
 		4FBB85D42187C74100DD6B40 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4FBB85D22187C74100DD6B40 /* Localizable.strings */; };
+		4FBF347F2316B95200E6CFD0 /* UpdateAvailableWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FBF347C2316B95200E6CFD0 /* UpdateAvailableWindow.h */; };
+		4FBF34802316B95200E6CFD0 /* UpdateAvailableWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBF347D2316B95200E6CFD0 /* UpdateAvailableWindow.m */; };
+		4FBF34812316B95200E6CFD0 /* UpdateAvailableWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FBF347E2316B95200E6CFD0 /* UpdateAvailableWindow.xib */; };
 		4FCECD8521092354001F1078 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECD8421092354001F1078 /* AppDelegate.m */; };
 		4FD67DDE211CC9000095A9A5 /* PrefPaneDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FD67DDD211CC9000095A9A5 /* PrefPaneDelegate.h */; };
 		4FD67DE0211CC9000095A9A5 /* PrefPaneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD67DDF211CC9000095A9A5 /* PrefPaneDelegate.m */; };
@@ -62,12 +65,12 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		4F2FDF2E2315662400C7BE14 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			buildActionMask = 12;
+			dstPath = usr/share/man/man1;
+			dstSubfolderSpec = 1;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		4F2FDF392315667700C7BE14 /* Copy Updater */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -167,6 +170,9 @@
 		4F8F38E722F8C7A1004D0040 /* Mouse_Fix_alt.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Mouse_Fix_alt.tiff; sourceTree = "<group>"; };
 		4FACF59E2183B956009257D4 /* default_mouse.fix.helper.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_mouse.fix.helper.plist; sourceTree = "<group>"; };
 		4FBB85D32187C74100DD6B40 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		4FBF347C2316B95200E6CFD0 /* UpdateAvailableWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UpdateAvailableWindow.h; sourceTree = "<group>"; };
+		4FBF347D2316B95200E6CFD0 /* UpdateAvailableWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UpdateAvailableWindow.m; sourceTree = "<group>"; };
+		4FBF347E2316B95200E6CFD0 /* UpdateAvailableWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpdateAvailableWindow.xib; sourceTree = "<group>"; };
 		4FCECD8021092354001F1078 /* Mouse Fix Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mouse Fix Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FCECD8321092354001F1078 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4FCECD8421092354001F1078 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -365,8 +371,7 @@
 		4FBB85C621879AD900DD6B40 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				4F3A8443230D3E6C0012C725 /* Updater.h */,
-				4F3A8444230D3E6C0012C725 /* Updater.m */,
+				4FBF347B2316B90800E6CFD0 /* Update */,
 				4FD9CB1122F7D48D0090DB98 /* Hyperlink.h */,
 				4FD9CB1222F7D48D0090DB98 /* Hyperlink.m */,
 				4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */,
@@ -379,6 +384,18 @@
 				4FD67DE6211CC9000095A9A5 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4FBF347B2316B90800E6CFD0 /* Update */ = {
+			isa = PBXGroup;
+			children = (
+				4F3A8443230D3E6C0012C725 /* Updater.h */,
+				4F3A8444230D3E6C0012C725 /* Updater.m */,
+				4FBF347C2316B95200E6CFD0 /* UpdateAvailableWindow.h */,
+				4FBF347D2316B95200E6CFD0 /* UpdateAvailableWindow.m */,
+				4FBF347E2316B95200E6CFD0 /* UpdateAvailableWindow.xib */,
+			);
+			path = Update;
 			sourceTree = "<group>";
 		};
 		4FCECD7721092354001F1078 = {
@@ -456,6 +473,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FD9CB1322F7D48D0090DB98 /* Hyperlink.h in Headers */,
+				4FBF347F2316B95200E6CFD0 /* UpdateAvailableWindow.h in Headers */,
 				4F3A8445230D3E6C0012C725 /* Updater.h in Headers */,
 				4FD67DDE211CC9000095A9A5 /* PrefPaneDelegate.h in Headers */,
 			);
@@ -590,6 +608,7 @@
 				4F8F38E822F8C7A1004D0040 /* Mouse_Fix_alt.tiff in Resources */,
 				4F8AEA9222FBC7AC008C1A7C /* milkshake_button.png in Resources */,
 				4FACF59F2183B956009257D4 /* default_mouse.fix.helper.plist in Resources */,
+				4FBF34812316B95200E6CFD0 /* UpdateAvailableWindow.xib in Resources */,
 				4FD67DE5211CC9000095A9A5 /* Mouse_Remap.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -653,6 +672,7 @@
 			files = (
 				4FD67DE0211CC9000095A9A5 /* PrefPaneDelegate.m in Sources */,
 				4F3A8446230D3E6C0012C725 /* Updater.m in Sources */,
+				4FBF34802316B95200E6CFD0 /* UpdateAvailableWindow.m in Sources */,
 				4FD9CB1422F7D48D0090DB98 /* Hyperlink.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -706,6 +726,10 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -719,6 +743,10 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -777,7 +805,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -830,7 +858,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 			};
@@ -846,9 +874,9 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
 				FRAMEWORK_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/Frameworks",
 					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks,
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
-					"$(PROJECT_DIR)/Frameworks",
 				);
 				INFOPLIST_FILE = "Mouse Fix Helper/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -874,9 +902,9 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
 				FRAMEWORK_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/Frameworks",
 					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks,
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
-					"$(PROJECT_DIR)/Frameworks",
 				);
 				INFOPLIST_FILE = "Mouse Fix Helper/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
