@@ -34,6 +34,10 @@
 		4FBF34812316B95200E6CFD0 /* UpdateAvailableWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FBF347E2316B95200E6CFD0 /* UpdateAvailableWindow.xib */; };
 		4FBF34F323174A8500E6CFD0 /* PayPal.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FBF34F223174A8500E6CFD0 /* PayPal.xcassets */; };
 		4FBF34F7231750B600E6CFD0 /* pureDonationButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */; };
+		4FBF34FF23183E6700E6CFD0 /* ConfigFileInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FBF34FD23183E6700E6CFD0 /* ConfigFileInterface.h */; };
+		4FBF350023183E6700E6CFD0 /* ConfigFileInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBF34FE23183E6700E6CFD0 /* ConfigFileInterface.m */; };
+		4FBF350523183FDA00E6CFD0 /* HelperInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FBF350323183FDA00E6CFD0 /* HelperInterface.h */; };
+		4FBF350623183FDA00E6CFD0 /* HelperInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBF350423183FDA00E6CFD0 /* HelperInterface.m */; };
 		4FCECD8521092354001F1078 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECD8421092354001F1078 /* AppDelegate.m */; };
 		4FD67DDE211CC9000095A9A5 /* PrefPaneDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FD67DDD211CC9000095A9A5 /* PrefPaneDelegate.h */; };
 		4FD67DE0211CC9000095A9A5 /* PrefPaneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD67DDF211CC9000095A9A5 /* PrefPaneDelegate.m */; };
@@ -176,6 +180,10 @@
 		4FBF347E2316B95200E6CFD0 /* UpdateAvailableWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpdateAvailableWindow.xib; sourceTree = "<group>"; };
 		4FBF34F223174A8500E6CFD0 /* PayPal.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PayPal.xcassets; sourceTree = "<group>"; };
 		4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pureDonationButton.png; sourceTree = "<group>"; };
+		4FBF34FD23183E6700E6CFD0 /* ConfigFileInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigFileInterface.h; sourceTree = "<group>"; };
+		4FBF34FE23183E6700E6CFD0 /* ConfigFileInterface.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigFileInterface.m; sourceTree = "<group>"; };
+		4FBF350323183FDA00E6CFD0 /* HelperInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelperInterface.h; sourceTree = "<group>"; };
+		4FBF350423183FDA00E6CFD0 /* HelperInterface.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelperInterface.m; sourceTree = "<group>"; };
 		4FCECD8021092354001F1078 /* Mouse Fix Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mouse Fix Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FCECD8321092354001F1078 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4FCECD8421092354001F1078 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -373,13 +381,14 @@
 		4FBB85C621879AD900DD6B40 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4FBF350223183FBA00E6CFD0 /* Helper */,
+				4FBF350123183F1300E6CFD0 /* Config */,
 				4FBF347B2316B90800E6CFD0 /* Update */,
 				4FD9CB1122F7D48D0090DB98 /* Hyperlink.h */,
 				4FD9CB1222F7D48D0090DB98 /* Hyperlink.m */,
 				4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */,
 				4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */,
 				4FBF34F223174A8500E6CFD0 /* PayPal.xcassets */,
-				4FEA982A21AC775E0094AC51 /* default_config.plist */,
 				4FBB85D22187C74100DD6B40 /* Localizable.strings */,
 				4FACF5A02183B9AA009257D4 /* Default User Agent Config File */,
 				4FF64F3A22F7408A0065F64F /* Mouse_Fix.tiff */,
@@ -399,6 +408,25 @@
 				4FBF347E2316B95200E6CFD0 /* UpdateAvailableWindow.xib */,
 			);
 			path = Update;
+			sourceTree = "<group>";
+		};
+		4FBF350123183F1300E6CFD0 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				4FBF34FD23183E6700E6CFD0 /* ConfigFileInterface.h */,
+				4FBF34FE23183E6700E6CFD0 /* ConfigFileInterface.m */,
+				4FEA982A21AC775E0094AC51 /* default_config.plist */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		4FBF350223183FBA00E6CFD0 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				4FBF350323183FDA00E6CFD0 /* HelperInterface.h */,
+				4FBF350423183FDA00E6CFD0 /* HelperInterface.m */,
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 		4FCECD7721092354001F1078 = {
@@ -477,7 +505,9 @@
 			files = (
 				4FD9CB1322F7D48D0090DB98 /* Hyperlink.h in Headers */,
 				4FBF347F2316B95200E6CFD0 /* UpdateAvailableWindow.h in Headers */,
+				4FBF34FF23183E6700E6CFD0 /* ConfigFileInterface.h in Headers */,
 				4F3A8445230D3E6C0012C725 /* Updater.h in Headers */,
+				4FBF350523183FDA00E6CFD0 /* HelperInterface.h in Headers */,
 				4FD67DDE211CC9000095A9A5 /* PrefPaneDelegate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -675,7 +705,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FD67DE0211CC9000095A9A5 /* PrefPaneDelegate.m in Sources */,
+				4FBF350623183FDA00E6CFD0 /* HelperInterface.m in Sources */,
 				4F3A8446230D3E6C0012C725 /* Updater.m in Sources */,
+				4FBF350023183E6700E6CFD0 /* ConfigFileInterface.m in Sources */,
 				4FBF34802316B95200E6CFD0 /* UpdateAvailableWindow.m in Sources */,
 				4FD9CB1422F7D48D0090DB98 /* Hyperlink.m in Sources */,
 			);

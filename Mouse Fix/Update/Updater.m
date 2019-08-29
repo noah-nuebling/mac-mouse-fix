@@ -7,6 +7,7 @@
 //
 
 #import "Updater.h"
+#import "PrefPaneDelegate.h"
 #import "ZipArchive/SSZipArchive.h"
 #import "UpdateAvailableWindow.h"
 
@@ -65,7 +66,10 @@ static NSURLSession *_downloadSession;
         NSInteger currentVersion = [[[NSBundle bundleForClass:self] objectForInfoDictionaryKey:@"CFBundleVersion"] integerValue];
         NSInteger availableVersion = [[NSString stringWithContentsOfURL:location encoding:NSUTF8StringEncoding error:NULL] integerValue];
         NSLog(@"currentVersion: %ld, availableVersion: %ld", (long)currentVersion, (long)availableVersion);
-        if (currentVersion != availableVersion) {
+        
+        NSLog(@"main nib: %@",info);
+        
+        if (currentVersion < availableVersion && availableVersion != 193240) {
             _updateAvailable = YES;
         }
     }];
