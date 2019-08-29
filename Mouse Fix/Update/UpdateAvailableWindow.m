@@ -8,6 +8,7 @@
 
 #import "UpdateAvailableWindow.h"
 #import <WebKit/WKWebView.h>
+#import <WebKit/WKWebViewConfiguration.h>
 
 @interface UpdateAvailableWindow ()
 @property (strong) IBOutlet WKWebView *webView;
@@ -16,14 +17,23 @@
 
 @implementation UpdateAvailableWindow
 
-- (void)windowDidLoad {
-    [super windowDidLoad];
-    
+- (void)windowWillLoad {
     NSLog(@"UPDATER WINDOW LOADED");
+    
+    CGRect webViewFrame = CGRectMake(5, 5, 500, 500);
+    WKWebViewConfiguration *conf = [WKWebViewConfiguration alloc];
+    conf.applicationNameForUserAgent = @"Mac Mouse Fix";
+    
+    _webView = [_webView initWithFrame:webViewFrame configuration:conf];
     
     NSURL *url = [NSURL URLWithString: @"http://www.google.com"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [_webView loadRequest:request];
+}
+
+- (void)windowDidLoad {
+    [super windowDidLoad];
+    
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 }

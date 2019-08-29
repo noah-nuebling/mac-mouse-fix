@@ -2,6 +2,15 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>other</key>
+	<dict>
+		<key>configVersion</key>
+		<integer>1</integer>
+		<key>checkForUpdates</key>
+		<true/>
+		<key>skippedBundleVersion</key>
+		<integer>0</integer>
+	</dict>
 	<key>ButtonRemaps</key>
 	<dict>
 		<key>5</key>

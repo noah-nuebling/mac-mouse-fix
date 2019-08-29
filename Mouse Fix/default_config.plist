@@ -2,6 +2,15 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>other</key>
+	<dict>
+		<key>configVersion</key>
+		<integer>1</integer>
+		<key>checkForUpdates</key>
+		<true/>
+		<key>skippedBundleVersion</key>
+		<integer>0</integer>
+	</dict>
 	<key>ButtonRemaps</key>
 	<dict>
 		<key>5</key>
@@ -25,12 +34,7 @@
 			<key>click</key>
 			<array>
 				<string>symbolicHotKey</string>
-				<integer>32</integer>
-			</array>
-			<key>hold</key>
-			<array>
-				<string>symbolicHotKey</string>
-				<integer>36</integer>
+				<string>36</string>
 			</array>
 		</dict>
 	</dict>
@@ -42,40 +46,9 @@
 		<array>
 			<integer>60</integer>
 			<integer>130</integer>
-			<real>1.7</real>
-			<string>-1</string>
+			<real>1.5</real>
+			<integer>-1</integer>
 		</array>
-	</dict>
-	<key>AppOverrides</key>
-	<dict>
-		<key>com.bohemiancoding.sketch3</key>
-		<dict>
-			<key>ScrollSettings</key>
-			<dict>
-				<key>enabled</key>
-				<false/>
-				<key>values</key>
-				<array>
-					<integer>50</integer>
-					<integer>75</integer>
-					<real>1.2</real>
-				</array>
-			</dict>
-		</dict>
-		<key>com.apple.dt.Xcode</key>
-		<dict>
-			<key>ScrollSettings</key>
-			<dict>
-				<key>enabled</key>
-				<false/>
-				<key>values</key>
-				<array>
-					<integer>50</integer>
-					<integer>75</integer>
-					<real>1.2</real>
-				</array>
-			</dict>
-		</dict>
 	</dict>
 </dict>
 </plist>

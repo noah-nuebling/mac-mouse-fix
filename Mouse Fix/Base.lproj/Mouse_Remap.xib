@@ -6,9 +6,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="Mouse_Remap">
+        <customObject id="-2" userLabel="File's Owner" customClass="PrefPaneDelegate">
             <connections>
                 <outlet property="_window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
+                <outlet property="checkForUpdateBox" destination="WqY-qr-B01" id="grV-DS-3Em"/>
+                <outlet property="checkForUpdateCheckBox" destination="WqY-qr-B01" id="dXH-f2-2qk"/>
                 <outlet property="doneButton" destination="QzW-eU-2CC" id="YP4-7e-4G3"/>
                 <outlet property="enableCheckBox" destination="WfN-Sk-KjI" id="L6d-wR-v92"/>
                 <outlet property="middleClick" destination="r3v-3d-tiF" id="4qQ-ds-EaH"/>
@@ -244,16 +246,16 @@
         <window identifier="moreSheet" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" tabbingMode="disallowed" id="fxJ-a3-xlz" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" utility="YES" nonactivatingPanel="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="90" y="125" width="499" height="156"/>
+            <rect key="contentRect" x="90" y="125" width="495" height="156"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
             <view key="contentView" id="BHn-QT-Hdu">
-                <rect key="frame" x="0.0" y="0.0" width="499" height="156"/>
+                <rect key="frame" x="0.0" y="0.0" width="495" height="156"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vv4-uK-Yci">
-                        <rect key="frame" x="30" y="20" width="185" height="50"/>
+                        <rect key="frame" x="190" y="20" width="185" height="50"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="milkshake_button" imagePosition="below" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="QPk-M0-rdf">
+                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="pureDonationButton" imagePosition="below" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="QPk-M0-rdf">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -262,9 +264,9 @@
                         </connections>
                     </button>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MLT-fZ-Z6O">
-                        <rect key="frame" x="160" y="41" width="51" height="26"/>
+                        <rect key="frame" x="324" y="46" width="51" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="paypal_logo_100px" id="i44-4U-mgB"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="PayPal" id="i44-4U-mgB"/>
                     </imageView>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T3d-IG-x9B" customClass="Hyperlink">
                         <rect key="frame" x="363" y="117" width="108" height="19"/>
@@ -309,7 +311,7 @@
                         </userDefinedRuntimeAttributes>
                     </textField>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QzW-eU-2CC">
-                        <rect key="frame" x="403" y="13" width="72" height="32"/>
+                        <rect key="frame" x="399" y="13" width="72" height="32"/>
                         <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="zIn-og-eGC">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -348,8 +350,20 @@ DQ
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WqY-qr-B01">
+                        <rect key="frame" x="28" y="22" width="134" height="18"/>
+                        <buttonCell key="cell" type="check" title="Check for updates" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="JgU-Ws-Sbu">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="checkForUpdateCheckBox:" target="-2" id="IMj-og-LQi"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="WqY-qr-B01" firstAttribute="leading" secondItem="BHn-QT-Hdu" secondAttribute="leading" constant="30" id="HXE-7T-J6q"/>
+                    <constraint firstAttribute="bottom" secondItem="WqY-qr-B01" secondAttribute="bottom" constant="24" id="Ncf-w2-Qmk"/>
                     <constraint firstAttribute="bottom" secondItem="QzW-eU-2CC" secondAttribute="bottom" constant="20" id="S1V-m5-4c0"/>
                     <constraint firstAttribute="trailing" secondItem="QzW-eU-2CC" secondAttribute="trailing" constant="30" id="x37-Jb-Kg7"/>
                 </constraints>
@@ -368,12 +382,12 @@ AAAAAAAAAAAAAAABOQ
                     </caTransition>
                 </animations>
             </view>
-            <point key="canvasLocation" x="743.5" y="-82"/>
+            <point key="canvasLocation" x="741.5" y="-82"/>
         </window>
         <menuItem title="Launchpad" tag="160" id="9rC-Ff-2hb"/>
     </objects>
     <resources>
-        <image name="milkshake_button" width="920" height="120"/>
-        <image name="paypal_logo_100px" width="100" height="26"/>
+        <image name="PayPal" width="100" height="26"/>
+        <image name="pureDonationButton" width="910" height="115"/>
     </resources>
 </document>

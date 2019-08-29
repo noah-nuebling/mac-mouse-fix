@@ -35,6 +35,9 @@
 
 @property (strong) IBOutlet NSPanel *sheetPanel;
 @property (weak) IBOutlet NSTextField *versionLabel;
+@property (weak) IBOutlet NSButton *checkForUpdateCheckBox;
+
+
 @property (weak) IBOutlet NSButton *doneButton;
 
 @end
@@ -58,6 +61,13 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
     [[[NSApplication sharedApplication] mainWindow] beginSheet:_sheetPanel completionHandler:nil];
 }
+- (IBAction)checkForUpdateCheckBox:(NSButton *)sender {
+    
+    if (sender.state == 1) {
+        [Updater checkForUpdate];
+    }
+    [self UIChanged:NULL];
+}
 - (IBAction)milkshakeButton:(id)sender {
     NSLog(@"BUTTTON");
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ARSTVR6KFB524&source=url"]];
@@ -70,12 +80,10 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 
 - (IBAction)UIChanged:(id)sender {
     
-    if ([[sender identifier] isEqualToString:@"invertScroll"]) {
-        // TODO: only update after the user confirmed
-        [Updater update];
-    }
-    
     [self setConfigDictToUI];
+    NSLog(@"config changed to : %@", _configDictFromFile);
+    
+    
     tellHelperToUpdateItsSettings();
 }
 
@@ -434,7 +442,12 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
     [_configDictFromFile setValue:scrollValuesFromUI forKeyPath:@"ScrollSettings.values"];
     
-
+    
+    // other
+    [_configDictFromFile setValue:[NSNumber numberWithBool:_checkForUpdateCheckBox.state] forKeyPath:@"other.checkForUpdates"];
+    
+    
+    
     
     [self writeConfigDictToFile];
 }
@@ -558,6 +571,12 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     pxStepSizeRelativeToConfigRange = (pxStepSize - lowerLm) / (upperLm - lowerLm);
     
     _scrollSliderStepSize.doubleValue = pxStepSizeRelativeToConfigRange;
+    
+    
+    // other
+    
+    // check for updates checkbox
+    _checkForUpdateCheckBox.state = [[_configDictFromFile valueForKeyPath:@"other.checkForUpdates"] boolValue];
     
 }
 
