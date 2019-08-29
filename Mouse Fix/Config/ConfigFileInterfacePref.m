@@ -6,16 +6,24 @@
 //  Copyright © 2019 Noah Nuebling. All rights reserved.
 //
 
-#import "ConfigFileInterface.h"
+#import "ConfigFileInterfacePref.h"
 #import "HelperInterface.h"
 
-@implementation ConfigFileInterface
+@implementation ConfigFileInterfacePref
+
 static NSMutableDictionary *_config;
 + (NSMutableDictionary *)config {
     return _config;
 }
 + (void)setConfig:(NSMutableDictionary *)new {
     _config = new;
+}
+
++ (void)initialize
+{
+    if (self == [ConfigFileInterfacePref class]) {
+        [self loadConfigFromFile];
+    }
 }
 
 + (void)writeConfigToFile {

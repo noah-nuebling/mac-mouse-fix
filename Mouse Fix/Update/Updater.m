@@ -7,7 +7,7 @@
 //
 
 #import "Updater.h"
-#import "PrefPaneDelegate.h"
+#import "../Config/ConfigFileInterfacePref.h"
 #import "ZipArchive/SSZipArchive.h"
 #import "UpdateAvailableWindow.h"
 
@@ -32,10 +32,6 @@ static BOOL _updateAvailable = NO;
 static NSURLSession *_downloadSession;
 
 # pragma mark - Class Methods
-
-+ (void)load {
-    [[NSBundle bundleForClass:[UpdateAvailableWindow class]] loadNibNamed:@"UpdateAvailableWindow" owner:[UpdateAvailableWindow class] topLevelObjects:NULL];
-}
 
 + (void)initialize {
     
@@ -66,9 +62,9 @@ static NSURLSession *_downloadSession;
         NSInteger currentVersion = [[[NSBundle bundleForClass:self] objectForInfoDictionaryKey:@"CFBundleVersion"] integerValue];
         NSInteger availableVersion = [[NSString stringWithContentsOfURL:location encoding:NSUTF8StringEncoding error:NULL] integerValue];
         NSLog(@"currentVersion: %ld, availableVersion: %ld", (long)currentVersion, (long)availableVersion);
+        NSInteger skippedVersion = [[ConfigFileInterfacePref.config valueForKeyPath:@"other.skippedBundleVersion"] integerValue];
         
-        
-        if (currentVersion < availableVersion && availableVersion != 193240) {
+        if (currentVersion < availableVersion && availableVersion != skippedVersion) {
             _updateAvailable = YES;
         }
     }];
