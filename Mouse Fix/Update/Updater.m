@@ -9,7 +9,6 @@
 #import "Updater.h"
 #import "../Config/ConfigFileInterfacePref.h"
 #import "ZipArchive/SSZipArchive.h"
-#import "UpdateAvailableWindow.h"
 
 @interface Updater ()
 @property (class) NSURLSession *downloadSession;
@@ -82,7 +81,6 @@ static NSURLSession *_downloadSession;
     [self.downloadTask1 resume];
 }
 + (void)downloadAndPresent {
-    
     self.downloadTask1 = [self.downloadSession downloadTaskWithURL:[NSURL URLWithString:@"https://noah-nuebling.github.io/mac-mouse-fix/maindownload/updatenotes.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (error != NULL) {
             NSLog(@"error downloading updatenotes: %@", error);
@@ -90,17 +88,16 @@ static NSURLSession *_downloadSession;
         }
         __block NSURL *unLoc = location;
         self.downloadTask2 = [self.downloadSession downloadTaskWithURL:[NSURL URLWithString: @"https://noah-nuebling.github.io/mac-mouse-fix/maindownload/MacMouseFix.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-            
-            
-            
-            
-            
-            
+            if (error != NULL) {
+                NSLog(@"error downloading prefPane: %@", error);
+                return;
+            }
+            [self presentUpdate:location withNotes:unLoc];
         }];
         [self.downloadTask2 resume];
     }];
     [self.downloadTask1 resume];
-    
+}
     
     
     
@@ -123,7 +120,12 @@ static NSURLSession *_downloadSession;
 //            return;
 //        }
 //
+
++ (void)presentUpdate:(NSURL *)update withNotes:(NSURL *)updateNotes {
+    NSLog(@"downloaded update! - presenting update to user");
+    
 }
+
 + (void)update {
     
     self.downloadTask1 = [_downloadSession downloadTaskWithURL:[NSURL URLWithString: @"https://noah-nuebling.github.io/mac-mouse-fix/maindownload/MacMouseFix.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {

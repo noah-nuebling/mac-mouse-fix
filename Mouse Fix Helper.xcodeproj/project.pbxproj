@@ -29,9 +29,6 @@
 		4F8F38E822F8C7A1004D0040 /* Mouse_Fix_alt.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4F8F38E722F8C7A1004D0040 /* Mouse_Fix_alt.tiff */; };
 		4FACF59F2183B956009257D4 /* default_mouse.fix.helper.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FACF59E2183B956009257D4 /* default_mouse.fix.helper.plist */; };
 		4FBB85D42187C74100DD6B40 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4FBB85D22187C74100DD6B40 /* Localizable.strings */; };
-		4FBF347F2316B95200E6CFD0 /* UpdateAvailableWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FBF347C2316B95200E6CFD0 /* UpdateAvailableWindow.h */; };
-		4FBF34802316B95200E6CFD0 /* UpdateAvailableWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBF347D2316B95200E6CFD0 /* UpdateAvailableWindow.m */; };
-		4FBF34812316B95200E6CFD0 /* UpdateAvailableWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FBF347E2316B95200E6CFD0 /* UpdateAvailableWindow.xib */; };
 		4FBF34F323174A8500E6CFD0 /* PayPal.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FBF34F223174A8500E6CFD0 /* PayPal.xcassets */; };
 		4FBF34F7231750B600E6CFD0 /* pureDonationButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */; };
 		4FBF34FF23183E6700E6CFD0 /* ConfigFileInterfacePref.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FBF34FD23183E6700E6CFD0 /* ConfigFileInterfacePref.h */; };
@@ -175,9 +172,6 @@
 		4F8F38E722F8C7A1004D0040 /* Mouse_Fix_alt.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Mouse_Fix_alt.tiff; sourceTree = "<group>"; };
 		4FACF59E2183B956009257D4 /* default_mouse.fix.helper.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_mouse.fix.helper.plist; sourceTree = "<group>"; };
 		4FBB85D32187C74100DD6B40 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		4FBF347C2316B95200E6CFD0 /* UpdateAvailableWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UpdateAvailableWindow.h; sourceTree = "<group>"; };
-		4FBF347D2316B95200E6CFD0 /* UpdateAvailableWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UpdateAvailableWindow.m; sourceTree = "<group>"; };
-		4FBF347E2316B95200E6CFD0 /* UpdateAvailableWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpdateAvailableWindow.xib; sourceTree = "<group>"; };
 		4FBF34F223174A8500E6CFD0 /* PayPal.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PayPal.xcassets; sourceTree = "<group>"; };
 		4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pureDonationButton.png; sourceTree = "<group>"; };
 		4FBF34FD23183E6700E6CFD0 /* ConfigFileInterfacePref.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigFileInterfacePref.h; sourceTree = "<group>"; };
@@ -403,9 +397,6 @@
 			children = (
 				4F3A8443230D3E6C0012C725 /* Updater.h */,
 				4F3A8444230D3E6C0012C725 /* Updater.m */,
-				4FBF347C2316B95200E6CFD0 /* UpdateAvailableWindow.h */,
-				4FBF347D2316B95200E6CFD0 /* UpdateAvailableWindow.m */,
-				4FBF347E2316B95200E6CFD0 /* UpdateAvailableWindow.xib */,
 			);
 			path = Update;
 			sourceTree = "<group>";
@@ -504,7 +495,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FD9CB1322F7D48D0090DB98 /* Hyperlink.h in Headers */,
-				4FBF347F2316B95200E6CFD0 /* UpdateAvailableWindow.h in Headers */,
 				4FBF34FF23183E6700E6CFD0 /* ConfigFileInterfacePref.h in Headers */,
 				4F3A8445230D3E6C0012C725 /* Updater.h in Headers */,
 				4FBF350523183FDA00E6CFD0 /* HelperInterface.h in Headers */,
@@ -642,7 +632,6 @@
 				4F8F38E822F8C7A1004D0040 /* Mouse_Fix_alt.tiff in Resources */,
 				4F8AEA9222FBC7AC008C1A7C /* milkshake_button.png in Resources */,
 				4FACF59F2183B956009257D4 /* default_mouse.fix.helper.plist in Resources */,
-				4FBF34812316B95200E6CFD0 /* UpdateAvailableWindow.xib in Resources */,
 				4FD67DE5211CC9000095A9A5 /* Mouse_Remap.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -708,7 +697,6 @@
 				4FBF350623183FDA00E6CFD0 /* HelperInterface.m in Sources */,
 				4F3A8446230D3E6C0012C725 /* Updater.m in Sources */,
 				4FBF350023183E6700E6CFD0 /* ConfigFileInterfacePref.m in Sources */,
-				4FBF34802316B95200E6CFD0 /* UpdateAvailableWindow.m in Sources */,
 				4FD9CB1422F7D48D0090DB98 /* Hyperlink.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

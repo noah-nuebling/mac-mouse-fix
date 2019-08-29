@@ -8,7 +8,6 @@
 #import "Updater.h"
 #import "Config/ConfigFileInterfacePref.h"
 #import "Helper/HelperInterface.h"
-#import "Update/UpdateAvailableWindow.h"
 //#import "CGSInternal/CGSHotKeys.h"
 
 @interface PrefPaneDelegate ()
