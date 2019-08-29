@@ -6,12 +6,13 @@
 #import <ServiceManagement/SMLoginItem.h>
 #import "PrefPaneDelegate.h"
 #import "Updater.h"
+#import "Config/ConfigFileInterface.h"
+#import "Helper/HelperInterface.h"
 #import "Update/UpdateAvailableWindow.h"
 //#import "CGSInternal/CGSHotKeys.h"
 
 @interface PrefPaneDelegate ()
 
-@property (retain) NSMutableDictionary *configDictFromFile;
 @property (retain) NSBundle *helperBundle;
 
 @property (weak) IBOutlet NSButton *enableCheckBox;
@@ -54,7 +55,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     //sendKeyUpForAllSymbolicHotKeysThatAMouseButtonMapsTo(self);
     
     BOOL checkboxState = [sender state];
-    [self enableHelperAsUserAgent: checkboxState];
+    [HelperInterface enableHelperAsUserAgent: checkboxState];
     
 }
 - (IBAction)moreButton:(id)sender {
@@ -80,11 +81,11 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 
 - (IBAction)UIChanged:(id)sender {
     
-    [self setConfigDictToUI];
-    NSLog(@"config changed to : %@", _configDictFromFile);
+    [self setConfigToUI];
+    NSLog(@"config changed to : %@", ConfigFileInterface.config);
     
     
-    tellHelperToUpdateItsSettings();
+    [HelperInterface tellHelperToUpdateItsSettings];
 }
 
 
@@ -111,15 +112,13 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 - (void)mainViewDidLoad {
     NSLog(@"PREF PANEEE");
     
-    
-    [self loadHelperBundle];
-    [self loadConfigDictFromFile];
+    [ConfigFileInterface loadConfigFromFile];
     
     [self initializeUI];
     
     
     // enableCheckbox
-    if (self.helperIsActive) {
+    if (HelperInterface.helperIsActive) {
         [_enableCheckBox setState: 1];
     } else {
         [_enableCheckBox setState: 0];
@@ -137,238 +136,8 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 
 # pragma mark - Helper Functions
 
-/* registering/unregistering the helper as a User Agent with launchd - also launches/terminates helper */
-- (void)enableHelperAsUserAgent:(BOOL)enable {
 
-    // repair config file if checkbox state is changed
-    [self repairLaunchdPlist];
-
-    /* preparing strings for NSTask and then construct(we'll use NSTask for loading/unloading the helper as a User Agent) */
-
-    /* path for the executable of the launchctl command-line-tool (which can interface with launchd) */
-    NSString *launchctlPath = @"/bin/launchctl";
-    
-    /* preparing arguments for the command-line-tool */
-    
-    NSArray *libraryPaths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
-    if ([libraryPaths count] == 1) {
-        NSString *launchAgentPlistPath = [[libraryPaths objectAtIndex:0] stringByAppendingPathComponent: @"LaunchAgents/com.nuebling.mousefix.helper.plist"];
-        
-        if (@available(macOS 10.13, *)) {
-            NSString *GUIDomainArgument = [NSString stringWithFormat:@"gui/%d", geteuid()];
-            NSString *OnOffArgument = (enable) ? @"bootstrap": @"bootout";
-            NSURL *launchctlURL = [NSURL fileURLWithPath: launchctlPath];
-            
-            [NSTask launchedTaskWithExecutableURL: launchctlURL arguments:@[OnOffArgument, GUIDomainArgument, launchAgentPlistPath] error: nil terminationHandler: nil];
-        } else {
-            // Fallback on earlier versions
-            NSString *OnOffArgumentOld = (enable) ? @"load": @"unload";
-            [NSTask launchedTaskWithLaunchPath: launchctlPath arguments: @[OnOffArgumentOld, launchAgentPlistPath] ];
-        }
-    }
-    else {
-        NSLog(@"To this program, it looks like the number of user libraries != 1. Your computer is weird...");
-    }
-}
-
-- (void)repairLaunchdPlist {
-    
-    @autoreleasepool {
-        
-        NSLog(@"repairing User Agent Config File");
-        // what this does:
-        
-        // get path of executable of helper app based on path of bundle of this class (prefpane bundle)
-        // check if the "User/Library/LaunchAgents/mouse.fix.helper.plist" UserAgent Config file exists, if the Launch Agents Folder exists, and if the exectuable path within the plist file is correct
-        // if not:
-        // create correct file based on "default_mouse.fix.helper.plist" and helperExecutablePath
-        // write correct file to "User/Library/LaunchAgents"
-        
-        // get helper executable path
-        NSBundle *prefPaneBundle = [NSBundle bundleForClass: [PrefPaneDelegate class]];
-        NSString *prefPaneBundlePath = [prefPaneBundle bundlePath];
-        NSString *helperExecutablePath = [prefPaneBundlePath stringByAppendingPathComponent: @"Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/MacOS/Mouse Fix Helper"];
-        
-        // get User Library path
-        NSArray *libraryPaths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
-        if ([libraryPaths count] == 1) {
-            // create path to launch agent config file
-            NSString *launchAgentPlistPath = [[libraryPaths objectAtIndex:0] stringByAppendingPathComponent: @"LaunchAgents/com.nuebling.mousefix.helper.plist"];
-            
-            // check if file exists
-            NSFileManager *fileManager = [[NSFileManager alloc] init];
-            BOOL LAConfigFile_exists = [fileManager fileExistsAtPath: launchAgentPlistPath isDirectory: nil];
-            BOOL LAConfigFile_executablePathIsCorrect = TRUE;
-            if (LAConfigFile_exists == TRUE) {
-                
-                // load data from launch agent config file into a dictionary
-                NSData *LAConfigFile_data = [NSData dataWithContentsOfFile:launchAgentPlistPath];
-                NSDictionary *LAConfigFile_dict = [NSPropertyListSerialization propertyListWithData:LAConfigFile_data options:NSPropertyListImmutable format:0 error:nil];
-                
-                // check if the executable path inside the config file is correct, if not, set flag to false
-                
-                NSString *helperExecutablePathFromFile = [LAConfigFile_dict objectForKey: @"Program"];
-                
-                //NSLog(@"objectForKey: %@", OBJForKey);
-                //NSLog(@"helperExecutablePath: %@", helperExecutablePath);
-                //NSLog(@"OBJ == Path: %d", OBJForKey isEqualToString: helperExecutablePath);
-                
-                if ( [helperExecutablePath isEqualToString: helperExecutablePathFromFile] == FALSE ) {
-                    LAConfigFile_executablePathIsCorrect = FALSE;
-                    
-                }
-                
-                
-            }
-            
-            NSLog(@"LAConfigFileExists %hhd, LAConfigFileIsCorrect: %hhd", LAConfigFile_exists,LAConfigFile_executablePathIsCorrect);
-            // the config file doesn't exist, or the executable path within it is not correct
-            if ( (LAConfigFile_exists == FALSE) || (LAConfigFile_executablePathIsCorrect == FALSE) ) {
-                NSLog(@"repairing file...");
-                
-                //check if "User/Library/LaunchAgents" folder exists, if not, create it
-                NSString *launchAgentsFolderPath = [launchAgentPlistPath stringByDeletingLastPathComponent];
-                BOOL launchAgentsFolderExists = [fileManager fileExistsAtPath: launchAgentsFolderPath isDirectory: nil];
-                
-                if (launchAgentsFolderExists == FALSE) {
-                    NSLog(@"LaunchAgentsFolder doesn't exist");
-                }
-                if (launchAgentsFolderExists == FALSE) {
-                    NSError *error;
-                    [fileManager createDirectoryAtPath:launchAgentsFolderPath withIntermediateDirectories:FALSE attributes:nil error:&error];
-                    if (error == nil) {
-                        NSLog(@"LaunchAgents Folder Created");
-                    } else {
-                        NSLog(@"Error while creating LaunchAgents Folder: %@", error);
-                    }
-                }
-                
-                
-                
-                
-                NSError *error;
-                // read contents of default_mouse.fix.helper.plist (aka default-launch-agent-config-file or defaultLAConfigFile) into a dictionary
-                NSString *defaultLAConfigFile_path = [prefPaneBundle pathForResource:@"default_mouse.fix.helper" ofType:@"plist"];
-                NSData *defaultLAConfigFile_data = [NSData dataWithContentsOfFile:defaultLAConfigFile_path];
-                NSMutableDictionary *newLAConfigFile_dict = [NSPropertyListSerialization propertyListWithData:defaultLAConfigFile_data options:NSPropertyListMutableContainersAndLeaves format:nil error:&error];
-                
-                // set the executable path to the correct value
-                [newLAConfigFile_dict setValue: helperExecutablePath forKey:@"Program"];
-                
-                // write the dict to User/Library/LaunchAgents/mouse.fix.helper.plist
-                NSData *newLAConfigFile_data = [NSPropertyListSerialization dataWithPropertyList:newLAConfigFile_dict format:NSPropertyListXMLFormat_v1_0 options:0 error:&error];
-                NSAssert(error == nil, @"Should not have encountered an error");
-                [newLAConfigFile_data writeToFile:launchAgentPlistPath atomically:YES];
-                if (error != nil) {
-                    NSLog(@"repairUserAgentConfigFile() -- Data Serialization Error: %@", error);
-                }
-            } else {
-                NSLog(@"nothing to repair");
-            }
-        }
-        else {
-            // no library path found
-            NSLog(@"To this program, it looks like the number of user libraries != 1. Your computer is weird...");
-        }
-    }
-}
-
-
-- (BOOL) helperIsActive {
-    
-    // using NSTask to ask launchd about mouse.fix.helper status
-    
-    NSString *launchctlPath = @"/bin/launchctl";
-    NSString *listArgument = @"list";
-    NSString *launchdHelperIdentifier = @"mouse.fix.helper";
-    
-    NSPipe * launchctlOutput;
-    
-    // macOS version 10.13+
-    
-    if (@available(macOS 10.13, *)) {
-        NSURL *launchctlURL = [NSURL fileURLWithPath: launchctlPath];
-        
-        NSTask *task = [[NSTask alloc] init];
-        [task setExecutableURL: launchctlURL];
-        [task setArguments: @[listArgument, launchdHelperIdentifier] ];
-        launchctlOutput = [NSPipe pipe];
-        [task setStandardOutput: launchctlOutput];
-        
-        [task launchAndReturnError:nil];
-        
-    } else {
-     
-        // Fallback on earlier versions
-        
-        NSTask *task = [[NSTask alloc] init];
-        [task setLaunchPath: launchctlPath];
-        [task setArguments: @[listArgument, launchdHelperIdentifier] ];
-        launchctlOutput = [NSPipe pipe];
-        [task setStandardOutput: launchctlOutput];
-        
-        [task launch];
-        
-    }
-    
-    
-    NSFileHandle * launchctlOutput_fileHandle = [launchctlOutput fileHandleForReading];
-    NSData * launchctlOutput_data = [launchctlOutput_fileHandle readDataToEndOfFile];
-    NSString * launchctlOutput_string = [[NSString alloc] initWithData:launchctlOutput_data encoding:NSUTF8StringEncoding];
-    if (
-        [launchctlOutput_string rangeOfString: @"\"Label\" = \"mouse.fix.helper\";"].location != NSNotFound &&
-        [launchctlOutput_string rangeOfString: @"\"LastExitStatus\" = 0;"].location != NSNotFound
-        )
-    {
-        NSLog(@"MOUSE REMAPOR FOUNDD AND ACTIVE");
-        return TRUE;
-    }
-    else {
-        return FALSE;
-    }
-    
-}
-
-- (void)writeConfigDictToFile {
-    NSError *serializeErr;
-    NSData *configData = [NSPropertyListSerialization dataWithPropertyList:self.configDictFromFile format:NSPropertyListXMLFormat_v1_0 options:0 error:&serializeErr];
-    if (serializeErr) {
-        NSLog(@"ERROR serializing configDictFromFile: %@", serializeErr);
-    }
-    NSString *configPath = [[self helperBundle] pathForResource:@"config" ofType:@"plist"];
-//    BOOL success = [configData writeToFile:configPath atomically:YES];
-//    if (!success) {
-//        NSLog(@"ERROR writing configDictFromFile to file");
-//    }
-    NSError *writeErr;
-    [configData writeToFile:configPath options:NSDataWritingAtomic error:&writeErr];
-    if (writeErr) {
-        NSLog(@"ERROR writing configDictFromFile to file: %@", writeErr);
-    }
-    
-    NSLog(@"FILE UPDATED");
-}
-
-- (void)loadConfigDictFromFile {
-    NSString *configPath = [[self helperBundle] pathForResource:@"config" ofType:@"plist"];
-    NSData *configData = [NSData dataWithContentsOfFile:configPath];
-    NSError *readErr;
-    NSMutableDictionary *configDict = [NSPropertyListSerialization propertyListWithData:configData options:NSPropertyListMutableContainersAndLeaves format:nil error:&readErr];
-    if (readErr) {
-        NSLog(@"ERROR Reading config File: %@", readErr);
-    }
-    
-    self.configDictFromFile = configDict;
-}
-
-- (void)loadHelperBundle {
-    NSBundle *prefPaneBundle = [NSBundle bundleForClass: [PrefPaneDelegate class]];
-    NSString *prefPaneBundlePath = [prefPaneBundle bundlePath];
-    NSString *helperBundlePath = [prefPaneBundlePath stringByAppendingPathComponent: @"Contents/Library/LoginItems/Mouse Fix Helper.app"];
-    self.helperBundle = [NSBundle bundleWithPath:helperBundlePath];
-}
-
-- (void)setConfigDictToUI {
+- (void)setConfigToUI {
     
     NSLog(@"SET CONFIG TO UI");
     
@@ -381,34 +150,34 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     if (_middleClick.selectedTag != 0) {
         middleButtonClickAction= @[@"symbolicHotKey", @(_middleClick.selectedTag)];
     }
-    [_configDictFromFile setValue:middleButtonClickAction forKeyPath:@"ButtonRemaps.3.click"];
+    [ConfigFileInterface.config setValue:middleButtonClickAction forKeyPath:@"ButtonRemaps.3.click"];
     
     // hold
     NSArray *middleButtonHoldAction;
     if (_middleHold.selectedTag != 0) {
         middleButtonHoldAction = @[@"symbolicHotKey", @(_middleHold.selectedTag)];
     }
-    [_configDictFromFile setValue:middleButtonHoldAction forKeyPath:@"ButtonRemaps.3.hold"];
+    [ConfigFileInterface.config setValue:middleButtonHoldAction forKeyPath:@"ButtonRemaps.3.hold"];
     
     
     // side buttons         // tag = 1 -> Switch Spaces, tag = 2 -> Switch Pages
     
     // click
     NSArray *sideButtonClickAction = [actionsForPopupButtonTag_onlyForSideMouseButtons objectForKey:@(_sideClick.selectedTag)];
-    [_configDictFromFile setValue:sideButtonClickAction[0] forKeyPath:@"ButtonRemaps.4.click"];
-    [_configDictFromFile setValue:sideButtonClickAction[1] forKeyPath:@"ButtonRemaps.5.click"];
+    [ConfigFileInterface.config setValue:sideButtonClickAction[0] forKeyPath:@"ButtonRemaps.4.click"];
+    [ConfigFileInterface.config setValue:sideButtonClickAction[1] forKeyPath:@"ButtonRemaps.5.click"];
     
     // hold
     NSArray *sideButtonHoldAction = [actionsForPopupButtonTag_onlyForSideMouseButtons objectForKey:@(_sideHold.selectedTag)];
-    [_configDictFromFile setValue:sideButtonHoldAction[0] forKeyPath:@"ButtonRemaps.4.hold"];
-    [_configDictFromFile setValue:sideButtonHoldAction[1] forKeyPath:@"ButtonRemaps.5.hold"];
+    [ConfigFileInterface.config setValue:sideButtonHoldAction[0] forKeyPath:@"ButtonRemaps.4.hold"];
+    [ConfigFileInterface.config setValue:sideButtonHoldAction[1] forKeyPath:@"ButtonRemaps.5.hold"];
     
     
     
     // scroll Settings
     
     // checkbox
-    [_configDictFromFile setValue: [NSNumber numberWithBool: _scrollEnableCheckBox.state] forKeyPath:@"ScrollSettings.enabled"];
+    [ConfigFileInterface.config setValue: [NSNumber numberWithBool: _scrollEnableCheckBox.state] forKeyPath:@"ScrollSettings.enabled"];
     
     
     // radio buttons and slider
@@ -440,16 +209,16 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
     NSArray *scrollValuesFromUI = @[@(stepSizeActual), msPerStep, friction, @(direction)];
     
-    [_configDictFromFile setValue:scrollValuesFromUI forKeyPath:@"ScrollSettings.values"];
+    [ConfigFileInterface.config setValue:scrollValuesFromUI forKeyPath:@"ScrollSettings.values"];
     
     
     // other
-    [_configDictFromFile setValue:[NSNumber numberWithBool:_checkForUpdateCheckBox.state] forKeyPath:@"other.checkForUpdates"];
+    [ConfigFileInterface.config setValue:[NSNumber numberWithBool:_checkForUpdateCheckBox.state] forKeyPath:@"other.checkForUpdates"];
     
     
     
     
-    [self writeConfigDictToFile];
+    [ConfigFileInterface writeConfigToFile];
 }
 
 
@@ -460,7 +229,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
     # pragma mark Popup Buttons
     
-    NSDictionary *buttonRemaps = _configDictFromFile[@"ButtonRemaps"];
+    NSDictionary *buttonRemaps = ConfigFileInterface.config[@"ButtonRemaps"];
     
     // mouse button 4 and 5
     NSLog(@"buttonRemaps: %@", buttonRemaps);
@@ -521,7 +290,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
     # pragma mark scrollSettings
     
-    NSDictionary *scrollConfigFromFile = _configDictFromFile[@"ScrollSettings"];
+    NSDictionary *scrollConfigFromFile = ConfigFileInterface.config[@"ScrollSettings"];
     
     // enabled checkbox
     if ([scrollConfigFromFile[@"enabled"] boolValue] == 1) {
@@ -576,28 +345,8 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     // other
     
     // check for updates checkbox
-    _checkForUpdateCheckBox.state = [[_configDictFromFile valueForKeyPath:@"other.checkForUpdates"] boolValue];
+    _checkForUpdateCheckBox.state = [[ConfigFileInterface.config valueForKeyPath:@"other.checkForUpdates"] boolValue];
     
-}
-
-
-static void tellHelperToUpdateItsSettings() {
-    CFMessagePortRef remotePort = CFMessagePortCreateRemote(kCFAllocatorDefault, CFSTR("com.uebler.nuebler.mouse.fix.port"));
-    if (remotePort == NULL) {
-        NSLog(@"there is no CFMessagePort");
-        return;
-    }
-        
-    SInt32 messageID = 0x420666; // Arbitrary
-    CFDataRef data = nil;
-    CFTimeInterval sendTimeout = 0.0;
-    CFTimeInterval recieveTimeout = 0.0;
-    CFStringRef replyMode = NULL;
-    CFDataRef returnData = nil;
-    SInt32 status = CFMessagePortSendRequest(remotePort, messageID, data, sendTimeout, recieveTimeout, replyMode, &returnData);
-    if (status != 0) {
-        NSLog(@"CFMessagePortSendRequest status: %d", status);
-    }
 }
 
 @end

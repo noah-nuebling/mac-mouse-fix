@@ -17,7 +17,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>0.1</string>
 	<key>CFBundleVersion</key>
-	<string>81</string>
+	<string>83</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2018 Noah Nuebling Enterprises Ltd. All rights reserved.</string>
 	<key>NSMainNibFile</key>
@@ -27,6 +27,6 @@
 	<key>NSPrefPaneIconLabel</key>
 	<string>Mouse Fix</string>
 	<key>NSPrincipalClass</key>
-	<string>Mouse_Remap</string>
+	<string>PrefPaneDelegate</string>
 </dict>
 </plist>

@@ -67,7 +67,6 @@ static NSURLSession *_downloadSession;
         NSInteger availableVersion = [[NSString stringWithContentsOfURL:location encoding:NSUTF8StringEncoding error:NULL] integerValue];
         NSLog(@"currentVersion: %ld, availableVersion: %ld", (long)currentVersion, (long)availableVersion);
         
-        NSLog(@"main nib: %@",info);
         
         if (currentVersion < availableVersion && availableVersion != 193240) {
             _updateAvailable = YES;
