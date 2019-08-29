@@ -10,10 +10,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Updater : NSObject //<NSURLSessionDelegate,NSURLSessionTaskDelegate>
-@property (class,readonly) BOOL updateAvailable;
+@interface Updater : NSObject
 + (void)checkForUpdate;
-+ (void)update;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -12,29 +12,42 @@
 #import "UpdateAvailableWindow.h"
 
 @interface Updater ()
-@property (class) NSURLSessionDownloadTask *downloadTask;
+@property (class) NSURLSession *downloadSession;
+@property (class) NSURLSessionDownloadTask *downloadTask1;
 @end
 
 @implementation Updater
 
 # pragma mark - Class Globals
+
 static NSURLSessionDownloadTask *_downloadTask;
-+ (NSURLSessionTask *)downloadTask {
++ (NSURLSessionTask *)downloadTask1 {
     return _downloadTask;
 }
-+ (void)setDownloadTask:(NSURLSessionDownloadTask *)newDownloadTask {
++ (void)setDownloadTask1:(NSURLSessionDownloadTask *)newDownloadTask {
     _downloadTask = newDownloadTask;
 }
-static BOOL _updateAvailable = NO;
-+ (BOOL)updateAvailable {
-    return _updateAvailable;
+static NSURLSessionDownloadTask *_downloadTask2;
++ (NSURLSessionTask *)downloadTask2 {
+    return _downloadTask2;
 }
++ (void)setDownloadTask2:(NSURLSessionDownloadTask *)newDownloadTask {
+    _downloadTask2 = newDownloadTask;
+}
+
 static NSURLSession *_downloadSession;
++ (NSURLSession *)downloadSession {
+    return _downloadSession;
+}
++ (void)setDownloadSession:(NSURLSession *)new {
+    _downloadSession = new;
+}
+
 
 # pragma mark - Class Methods
 
-+ (void)initialize {
-    
++ (void)initialize
+{
     if (self == [Updater class]) {
         [self setupDownloadSession];
     }
@@ -50,10 +63,7 @@ static NSURLSession *_downloadSession;
 }
 
 + (void)checkForUpdate {
-    
-    _updateAvailable = NO;
-    
-    self.downloadTask = [_downloadSession downloadTaskWithURL:[NSURL URLWithString: @"https://noah-nuebling.github.io/mac-mouse-fix/maindownload/bundleversion"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    self.downloadTask1 = [_downloadSession downloadTaskWithURL:[NSURL URLWithString: @"https://noah-nuebling.github.io/mac-mouse-fix/maindownload/bundleversion"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (error != NULL){
             NSLog(@"checking for updates failed");
 //            NSLog(@"Error: \n%@", error);
@@ -63,17 +73,60 @@ static NSURLSession *_downloadSession;
         NSInteger availableVersion = [[NSString stringWithContentsOfURL:location encoding:NSUTF8StringEncoding error:NULL] integerValue];
         NSLog(@"currentVersion: %ld, availableVersion: %ld", (long)currentVersion, (long)availableVersion);
         NSInteger skippedVersion = [[ConfigFileInterfacePref.config valueForKeyPath:@"other.skippedBundleVersion"] integerValue];
-        
         if (currentVersion < availableVersion && availableVersion != skippedVersion) {
-            _updateAvailable = YES;
+            [self downloadAndPresent];
+        } else {
+            NSLog(@"Not downloading update. Either no new version available or available version has been skipped");
         }
     }];
-    [self.downloadTask resume];
+    [self.downloadTask1 resume];
 }
-
++ (void)downloadAndPresent {
+    
+    self.downloadTask1 = [self.downloadSession downloadTaskWithURL:[NSURL URLWithString:@"https://noah-nuebling.github.io/mac-mouse-fix/maindownload/updatenotes.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (error != NULL) {
+            NSLog(@"error downloading updatenotes: %@", error);
+            return;
+        }
+        __block NSURL *unLoc = location;
+        self.downloadTask2 = [self.downloadSession downloadTaskWithURL:[NSURL URLWithString: @"https://noah-nuebling.github.io/mac-mouse-fix/maindownload/MacMouseFix.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            
+            
+            
+            
+            
+            
+        }];
+        [self.downloadTask2 resume];
+    }];
+    [self.downloadTask1 resume];
+    
+    
+    
+    
+//    self.downloadTask = [_downloadSession downloadTaskWithURL:[NSURL URLWithString: @"https://noah-nuebling.github.io/mac-mouse-fix/maindownload/MacMouseFix.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+//
+//        if (error != NULL) {
+//            NSLog(@"Downloading error: %@", error);
+//            return;
+//        }
+//        NSFileManager *fm = [NSFileManager defaultManager];
+//
+//        // unzip the downloaded file
+//        
+//        NSString *unzipDest = [[location path] stringByDeletingLastPathComponent];
+//        NSLog(@"unzip dest: %@",unzipDest);
+//        NSError *unzipError;
+//        [SSZipArchive unzipFileAtPath:[location path] toDestination:unzipDest overwrite:YES password:NULL error:&unzipError];
+//        if (unzipError != NULL) {
+//            NSLog(@"Unzipping error: %@", unzipError);
+//            return;
+//        }
+//
+}
 + (void)update {
     
-    self.downloadTask = [_downloadSession downloadTaskWithURL:[NSURL URLWithString: @"https://noah-nuebling.github.io/mac-mouse-fix/maindownload/MacMouseFix.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    self.downloadTask1 = [_downloadSession downloadTaskWithURL:[NSURL URLWithString: @"https://noah-nuebling.github.io/mac-mouse-fix/maindownload/MacMouseFix.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
 
         if (error != NULL) {
             NSLog(@"Downloading error: %@", error);
@@ -230,7 +283,7 @@ static NSURLSession *_downloadSession;
         // TODO: use authorization services to install update if installed for all users
         // TODO: restart System preferences and kill the helper app
     }];
-    [self.downloadTask resume];
+    [self.downloadTask1 resume];
 }
 
 @end
