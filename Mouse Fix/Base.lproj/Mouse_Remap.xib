@@ -241,6 +241,9 @@
                     <constraint firstAttribute="trailing" secondItem="Umd-od-KG6" secondAttribute="trailing" constant="25" id="x5u-w3-xXH"/>
                 </constraints>
             </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="NRd-Cj-iVg"/>
+            </connections>
             <point key="canvasLocation" x="91" y="-13"/>
         </window>
         <window identifier="moreSheet" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" tabbingMode="disallowed" id="fxJ-a3-xlz" customClass="NSPanel">

@@ -36,8 +36,6 @@
 @property (strong) IBOutlet NSPanel *sheetPanel;
 @property (weak) IBOutlet NSTextField *versionLabel;
 @property (weak) IBOutlet NSButton *checkForUpdateCheckBox;
-
-
 @property (weak) IBOutlet NSButton *doneButton;
 
 @end
@@ -60,13 +58,14 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
 }
 - (IBAction)moreButton:(id)sender {
-    
-    [[[NSApplication sharedApplication] mainWindow] beginSheet:_sheetPanel completionHandler:nil];
+    [self beginSheetPanel];
 }
 
 # pragma mark more panel
 
 - (IBAction)checkForUpdateCheckBox:(NSButton *)sender {
+    [ConfigFileInterfacePref.config setValue:@(0) forKeyPath:@"other.skippedBundleVersion"];
+    [ConfigFileInterfacePref writeConfigToFile];
     
     if (sender.state == 1) {
         [Updater checkForUpdate];
@@ -78,7 +77,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ARSTVR6KFB524&source=url"]];
 }
 - (IBAction)doneButton:(id)sender {
-    [[[NSApplication sharedApplication] mainWindow] endSheet:_sheetPanel];
+    [self endSheetPanel];
 }
 
 - (IBAction)UIChanged:(id)sender {
@@ -112,9 +111,10 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
     [self initializeUI];
     
-    [Updater checkForUpdate];
+    if (_checkForUpdateCheckBox.state == 1) {
+        [Updater checkForUpdate];
+    }
 }
-
 
 - (void)initializeUI {
     
@@ -334,6 +334,14 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
     
     [ConfigFileInterfacePref writeConfigToFile];
+}
+
+#pragma mark sheet
+- (void)beginSheetPanel {
+    [[[NSApplication sharedApplication] mainWindow] beginSheet:_sheetPanel completionHandler:nil];
+}
+- (void)endSheetPanel {
+    [[[NSApplication sharedApplication] mainWindow] endSheet:_sheetPanel];
 }
 
 @end

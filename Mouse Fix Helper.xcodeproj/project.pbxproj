@@ -45,6 +45,9 @@
 		4FD9CB1322F7D48D0090DB98 /* Hyperlink.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FD9CB1122F7D48D0090DB98 /* Hyperlink.h */; };
 		4FD9CB1422F7D48D0090DB98 /* Hyperlink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9CB1222F7D48D0090DB98 /* Hyperlink.m */; };
 		4FF64F3B22F7408B0065F64F /* Mouse_Fix.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4FF64F3A22F7408A0065F64F /* Mouse_Fix.tiff */; };
+		4FF873DF23197283002A897A /* UpdateWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FF873DC23197283002A897A /* UpdateWindow.h */; };
+		4FF873E023197283002A897A /* UpdateWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF873DD23197283002A897A /* UpdateWindow.m */; };
+		4FF873E123197283002A897A /* UpdateWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FF873DE23197283002A897A /* UpdateWindow.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -196,6 +199,9 @@
 		4FF383362184F511007F771B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Mouse_Remap.xib; sourceTree = "<group>"; };
 		4FF383372184F511007F771B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		4FF64F3A22F7408A0065F64F /* Mouse_Fix.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Mouse_Fix.tiff; sourceTree = "<group>"; };
+		4FF873DC23197283002A897A /* UpdateWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UpdateWindow.h; sourceTree = "<group>"; };
+		4FF873DD23197283002A897A /* UpdateWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UpdateWindow.m; sourceTree = "<group>"; };
+		4FF873DE23197283002A897A /* UpdateWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpdateWindow.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -397,6 +403,9 @@
 			children = (
 				4F3A8443230D3E6C0012C725 /* Updater.h */,
 				4F3A8444230D3E6C0012C725 /* Updater.m */,
+				4FF873DC23197283002A897A /* UpdateWindow.h */,
+				4FF873DD23197283002A897A /* UpdateWindow.m */,
+				4FF873DE23197283002A897A /* UpdateWindow.xib */,
 			);
 			path = Update;
 			sourceTree = "<group>";
@@ -497,6 +506,7 @@
 				4FD9CB1322F7D48D0090DB98 /* Hyperlink.h in Headers */,
 				4FBF34FF23183E6700E6CFD0 /* ConfigFileInterfacePref.h in Headers */,
 				4F3A8445230D3E6C0012C725 /* Updater.h in Headers */,
+				4FF873DF23197283002A897A /* UpdateWindow.h in Headers */,
 				4FBF350523183FDA00E6CFD0 /* HelperInterface.h in Headers */,
 				4FD67DDE211CC9000095A9A5 /* PrefPaneDelegate.h in Headers */,
 			);
@@ -625,6 +635,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FF873E123197283002A897A /* UpdateWindow.xib in Resources */,
 				4FF64F3B22F7408B0065F64F /* Mouse_Fix.tiff in Resources */,
 				4FBF34F7231750B600E6CFD0 /* pureDonationButton.png in Resources */,
 				4FBB85D42187C74100DD6B40 /* Localizable.strings in Resources */,
@@ -697,6 +708,7 @@
 				4FBF350623183FDA00E6CFD0 /* HelperInterface.m in Sources */,
 				4F3A8446230D3E6C0012C725 /* Updater.m in Sources */,
 				4FBF350023183E6700E6CFD0 /* ConfigFileInterfacePref.m in Sources */,
+				4FF873E023197283002A897A /* UpdateWindow.m in Sources */,
 				4FD9CB1422F7D48D0090DB98 /* Hyperlink.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

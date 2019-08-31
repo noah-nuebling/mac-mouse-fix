@@ -7,41 +7,26 @@
 //
 
 #import "Updater.h"
+#import "UpdateWindow.h"
+#import "../PrefPaneDelegate.h"
 #import "../Config/ConfigFileInterfacePref.h"
 #import "ZipArchive/SSZipArchive.h"
 
+
 @interface Updater ()
-@property (class) NSURLSession *downloadSession;
-@property (class) NSURLSessionDownloadTask *downloadTask1;
 @end
 
 @implementation Updater
 
-# pragma mark - Class Globals
+# pragma mark - Class Properties
 
-static NSURLSessionDownloadTask *_downloadTask;
-+ (NSURLSessionTask *)downloadTask1 {
-    return _downloadTask;
-}
-+ (void)setDownloadTask1:(NSURLSessionDownloadTask *)newDownloadTask {
-    _downloadTask = newDownloadTask;
-}
+static NSURLSessionDownloadTask *_downloadTask1;
 static NSURLSessionDownloadTask *_downloadTask2;
-+ (NSURLSessionTask *)downloadTask2 {
-    return _downloadTask2;
-}
-+ (void)setDownloadTask2:(NSURLSessionDownloadTask *)newDownloadTask {
-    _downloadTask2 = newDownloadTask;
-}
-
 static NSURLSession *_downloadSession;
-+ (NSURLSession *)downloadSession {
-    return _downloadSession;
-}
-+ (void)setDownloadSession:(NSURLSession *)new {
-    _downloadSession = new;
-}
-
+static UpdateWindow *_windowController;
+static NSInteger _availableVersion;
+static NSURL *_updateLocation;
+static NSURL *_updateNotesLocation;
 
 # pragma mark - Class Methods
 
@@ -62,46 +47,52 @@ static NSURLSession *_downloadSession;
 }
 
 + (void)checkForUpdate {
-    self.downloadTask1 = [_downloadSession downloadTaskWithURL:[NSURL URLWithString: @"https://noah-nuebling.github.io/mac-mouse-fix/maindownload/bundleversion"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    
+    // clean up before starting the update procedure again
+    [_windowController close];
+    
+    
+    
+    _downloadTask1 = [_downloadSession downloadTaskWithURL:[NSURL URLWithString: @"https://noah-nuebling.github.io/mac-mouse-fix/maindownload/bundleversion"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (error != NULL){
             NSLog(@"checking for updates failed");
-//            NSLog(@"Error: \n%@", error);
+            NSLog(@"Error: \n%@", error);
             return;
         }
         NSInteger currentVersion = [[[NSBundle bundleForClass:self] objectForInfoDictionaryKey:@"CFBundleVersion"] integerValue];
-        NSInteger availableVersion = [[NSString stringWithContentsOfURL:location encoding:NSUTF8StringEncoding error:NULL] integerValue];
-        NSLog(@"currentVersion: %ld, availableVersion: %ld", (long)currentVersion, (long)availableVersion);
+        _availableVersion = [[NSString stringWithContentsOfURL:location encoding:NSUTF8StringEncoding error:NULL] integerValue];
+        NSLog(@"currentVersion: %ld, availableVersion: %ld", (long)currentVersion, (long)_availableVersion);
         NSInteger skippedVersion = [[ConfigFileInterfacePref.config valueForKeyPath:@"other.skippedBundleVersion"] integerValue];
-        if (currentVersion < availableVersion && availableVersion != skippedVersion) {
+        if (currentVersion < _availableVersion && _availableVersion != skippedVersion) {
             [self downloadAndPresent];
         } else {
             NSLog(@"Not downloading update. Either no new version available or available version has been skipped");
         }
     }];
-    [self.downloadTask1 resume];
+    [_downloadTask1 resume];
 }
 + (void)downloadAndPresent {
-    self.downloadTask1 = [self.downloadSession downloadTaskWithURL:[NSURL URLWithString:@"https://noah-nuebling.github.io/mac-mouse-fix/maindownload/updatenotes.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    _downloadTask1 = [_downloadSession downloadTaskWithURL:[NSURL URLWithString:@"https://noah-nuebling.github.io/mac-mouse-fix/maindownload/updatenotes.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (error != NULL) {
             NSLog(@"error downloading updatenotes: %@", error);
             return;
         }
-        __block NSURL *unLoc = location;
-        self.downloadTask2 = [self.downloadSession downloadTaskWithURL:[NSURL URLWithString: @"https://noah-nuebling.github.io/mac-mouse-fix/maindownload/MacMouseFix.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        _updateLocation = location;
+        _downloadTask2 = [_downloadSession downloadTaskWithURL:[NSURL URLWithString: @"https://noah-nuebling.github.io/mac-mouse-fix/maindownload/MacMouseFix.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
             if (error != NULL) {
                 NSLog(@"error downloading prefPane: %@", error);
                 return;
             }
-            [self presentUpdate:location withNotes:unLoc];
+            [self presentUpdate:location withNotes:_updateNotesLocation];
         }];
-        [self.downloadTask2 resume];
+        [_downloadTask2 resume];
     }];
-    [self.downloadTask1 resume];
+    [_downloadTask1 resume];
 }
     
     
     
-//    self.downloadTask = [_downloadSession downloadTaskWithURL:[NSURL URLWithString: @"https://noah-nuebling.github.io/mac-mouse-fix/maindownload/MacMouseFix.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+//    _downloadTask = [_downloadSession downloadTaskWithURL:[NSURL URLWithString: @"https://noah-nuebling.github.io/mac-mouse-fix/maindownload/MacMouseFix.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
 //
 //        if (error != NULL) {
 //            NSLog(@"Downloading error: %@", error);
@@ -122,97 +113,114 @@ static NSURLSession *_downloadSession;
 //
 
 + (void)presentUpdate:(NSURL *)update withNotes:(NSURL *)updateNotes {
-    NSLog(@"downloaded update! - presenting update to user");
-    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        _windowController = [UpdateWindow alloc];
+        _windowController = [_windowController initWithWindowNibName:@"UpdateWindow" owner:_windowController];
+        [_windowController startStuff];
+        
+        [_windowController showWindow:nil];
+        [_windowController.window makeKeyAndOrderFront:nil];
+//        [NSApplication.sharedApplication beginModalSessionForWindow:_windowController.window];
+        
+    });
+}
+
++ (void)skipAvailableVersion {
+    [ConfigFileInterfacePref.config setValue:@(_availableVersion) forKeyPath:@"other.skippedBundleVersion"];
+    [ConfigFileInterfacePref writeConfigToFile];
+    NSLog(@"config: %@", ConfigFileInterfacePref.config);
 }
 
 + (void)update {
     
-    self.downloadTask1 = [_downloadSession downloadTaskWithURL:[NSURL URLWithString: @"https://noah-nuebling.github.io/mac-mouse-fix/maindownload/MacMouseFix.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
 
-        if (error != NULL) {
-            NSLog(@"Downloading error: %@", error);
-            return;
-        }
-        NSFileManager *fm = [NSFileManager defaultManager];
+    // TODO: find a way to close the app even if the panel is open (dismiss it first)
+//        [[[NSApplication sharedApplication] mainWindow] endSheet:NSApplication.sharedApplication.mainWindow.attachedSheet];
+//    [[[NSBundle bundleForClass:self.class] principalClass] endSheetPanel];
+//    [(PrefPaneDelegate *)NSApplication.sharedApplication.mainWindow.delegate endSheetPanel];
 
-        // unzip the downloaded file
+    NSFileManager *fm = [NSFileManager defaultManager];
 
-        NSString *unzipDest = [[location path] stringByDeletingLastPathComponent];
-        NSLog(@"unzip dest: %@",unzipDest);
-        NSError *unzipError;
-        [SSZipArchive unzipFileAtPath:[location path] toDestination:unzipDest overwrite:YES password:NULL error:&unzipError];
-        if (unzipError != NULL) {
-            NSLog(@"Unzipping error: %@", unzipError);
-            return;
-        }
-        
-        NSURL *currentBundleURL = [[NSBundle bundleForClass:self] bundleURL];
-        NSURL *currentBundleEnclosingURL = [currentBundleURL URLByDeletingLastPathComponent];
-        NSURL *updateBundleURL = [[NSURL fileURLWithPath:unzipDest] URLByAppendingPathComponent:@"Mouse Fix.prefPane"];
-        
-        
-        
-        
-        
-        
-    // prepare apple script which can install the update (executed within Mouse Fix Updater)
-        
-        
-        // copy config.plist into the updated bundle
-        
-        NSString *configPathRelative = @"/Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/Resources/config.plist";
-        NSString *currentConfigOSAPath = [[[currentBundleURL path]  stringByAppendingPathComponent:configPathRelative]stringByReplacingOccurrencesOfString:@" " withString:@"\\\\ "];
-        NSString *updateConfigOSAPath = [[[updateBundleURL path] stringByAppendingPathComponent:configPathRelative] stringByReplacingOccurrencesOfString:@" " withString:@"\\\\ "];
-        
-        // installing update
-        
-        
-        NSString *currentBundleOSAPath = [[currentBundleURL path] stringByReplacingOccurrencesOfString:@" " withString:@"\\\\ "];
-        NSString *currentBundleEnclosingOSAPath = [[[currentBundleURL path] stringByDeletingLastPathComponent] stringByReplacingOccurrencesOfString:@" " withString:@"\\\\ "];
-        NSString *updateBundleOSAPath = [[updateBundleURL path] stringByReplacingOccurrencesOfString:@" " withString:@"\\\\ "];
-        
-        NSString *adminParamOSA = @"";
-        if (![fm isWritableFileAtPath:[currentBundleEnclosingURL path]]
-            || ![fm isWritableFileAtPath:[currentBundleURL path]]
-            || ![fm isReadableFileAtPath:[updateBundleURL path]]) {
-            NSLog(@"don't have permissions to install update - adding admin rights request to installScriptOSA");
-            adminParamOSA = @" with administrator privileges";
-        }
-        
-        // assemble the script
-        
-        NSString *installScriptOSA = [NSString stringWithFormat:@"do shell script \"rm %@;cp %@ %@;rm -r %@;cp -a %@ %@\"%@",
-                                      updateConfigOSAPath,currentConfigOSAPath,updateConfigOSAPath,
-                                      currentBundleOSAPath,updateBundleOSAPath,currentBundleOSAPath,
-                                      adminParamOSA];
-        //NSString *installScriptOSA = [NSString stringWithFormat:@"do shell script \"rm -r %@;cp -a %@ %@\"%@", currentOSAPath, updateOSAPath, currentEnclosingOSAPath, adminParamOSA];
-        NSArray *args = @[installScriptOSA];
-        
-        NSLog(@"script: %@", installScriptOSA);
-        
-        // get the url to Mouse Fix Updater executable
-        
-        NSURL *updaterExecURL = [[[NSBundle bundleForClass:self] bundleURL] URLByAppendingPathComponent:@"Contents/Library/LaunchServices/Mouse Fix Updater"];
-        
-        // launch Mouse Fix Updater
-        
-        if (@available(macOS 10.13, *)) {
-            NSError *launchUpdaterErr;
-            [NSTask launchedTaskWithExecutableURL:updaterExecURL arguments:args error:&launchUpdaterErr terminationHandler:^(NSTask *task) {
-                NSLog(@"updater terminated: %@", launchUpdaterErr);
-            }];
-            if (launchUpdaterErr) {
-                NSLog(@"error launching updater: %@", launchUpdaterErr);
-            }
-        } else {
-            [NSTask launchedTaskWithLaunchPath:[updaterExecURL path] arguments:args];
-        }
-        
+    // unzip the downloaded file
 
-        
-        
-        
+    NSString *unzipDest = [[_updateLocation path] stringByDeletingLastPathComponent];
+    NSLog(@"update unzip dest: %@",unzipDest);
+    NSError *unzipError;
+    [SSZipArchive unzipFileAtPath:[_updateLocation path] toDestination:unzipDest overwrite:YES password:NULL error:&unzipError];
+    if (unzipError != NULL) {
+        NSLog(@"Error unzipping prefPane: %@", unzipError);
+        return;
+    }
+    
+    NSLog(@"_updateLocation: %@", _updateLocation);
+    
+    NSURL *currentBundleURL = [[NSBundle bundleForClass:self] bundleURL];
+    NSURL *currentBundleEnclosingURL = [currentBundleURL URLByDeletingLastPathComponent];
+    NSURL *updateBundleURL = [[NSURL fileURLWithPath:unzipDest] URLByAppendingPathComponent:@"Mouse Fix.prefPane"];
+    
+    
+    
+    
+    
+    
+// prepare apple script which can install the update (executed within Mouse Fix Updater)
+    
+    
+    // copy config.plist into the updated bundle
+    
+    NSString *configPathRelative = @"/Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/Resources/config.plist";
+    NSString *currentConfigOSAPath = [[[currentBundleURL path]  stringByAppendingPathComponent:configPathRelative]stringByReplacingOccurrencesOfString:@" " withString:@"\\\\ "];
+    NSString *updateConfigOSAPath = [[[updateBundleURL path] stringByAppendingPathComponent:configPathRelative] stringByReplacingOccurrencesOfString:@" " withString:@"\\\\ "];
+    
+    // installing update
+    
+    
+    NSString *currentBundleOSAPath = [[currentBundleURL path] stringByReplacingOccurrencesOfString:@" " withString:@"\\\\ "];
+    NSString *currentBundleEnclosingOSAPath = [[[currentBundleURL path] stringByDeletingLastPathComponent] stringByReplacingOccurrencesOfString:@" " withString:@"\\\\ "];
+    NSString *updateBundleOSAPath = [[updateBundleURL path] stringByReplacingOccurrencesOfString:@" " withString:@"\\\\ "];
+    
+    NSString *adminParamOSA = @"";
+    if (![fm isWritableFileAtPath:[currentBundleEnclosingURL path]]
+        || ![fm isWritableFileAtPath:[currentBundleURL path]]
+        || ![fm isReadableFileAtPath:[updateBundleURL path]]) {
+        NSLog(@"don't have permissions to install update - adding admin rights request to installScriptOSA");
+        adminParamOSA = @" with administrator privileges";
+    }
+    
+    // assemble the script
+    
+    NSString *installScriptOSA = [NSString stringWithFormat:@"do shell script \"rm %@;cp %@ %@;rm -r %@;cp -a %@ %@\"%@",
+                                  updateConfigOSAPath,currentConfigOSAPath,updateConfigOSAPath,
+                                  currentBundleOSAPath,updateBundleOSAPath,currentBundleOSAPath,
+                                  adminParamOSA];
+    //NSString *installScriptOSA = [NSString stringWithFormat:@"do shell script \"rm -r %@;cp -a %@ %@\"%@", currentOSAPath, updateOSAPath, currentEnclosingOSAPath, adminParamOSA];
+    NSArray *args = @[installScriptOSA];
+    
+    NSLog(@"script: %@", installScriptOSA);
+    
+    // get the url to Mouse Fix Updater executable
+    
+    NSURL *updaterExecURL = [[[NSBundle bundleForClass:self] bundleURL] URLByAppendingPathComponent:@"Contents/Library/LaunchServices/Mouse Fix Updater"];
+    
+    // launch Mouse Fix Updater
+    
+    if (@available(macOS 10.13, *)) {
+        NSError *launchUpdaterErr;
+        [NSTask launchedTaskWithExecutableURL:updaterExecURL arguments:args error:&launchUpdaterErr terminationHandler:^(NSTask *task) {
+            NSLog(@"updater terminated: %@", launchUpdaterErr);
+        }];
+        if (launchUpdaterErr) {
+            NSLog(@"error launching updater: %@", launchUpdaterErr);
+        }
+    } else {
+        [NSTask launchedTaskWithLaunchPath:[updaterExecURL path] arguments:args];
+    }
+    
+
+    
+    
+    
 //        if (NO) {//([fm fileExistsAtPath:[moveDest path]]) {
 ////            NSError *replaceError;
 ////            [fm replaceItemAtURL:[moveDest URLByAppendingPathComponent:@"Contents"] withItemAtURL:[moveSrc URLByAppendingPathComponent:@"Contents"] backupItemName:NULL options:NSFileManagerItemReplacementUsingNewMetadataOnly resultingItemURL:NULL error:&replaceError];
@@ -281,11 +289,9 @@ static NSURLSession *_downloadSession;
 //
 //        }
 
-        // TODO: get modifying config working again (has it ever worked?)
-        // TODO: use authorization services to install update if installed for all users
-        // TODO: restart System preferences and kill the helper app
-    }];
-    [self.downloadTask1 resume];
+    // TODO: get modifying config working again (has it ever worked?)
+    // TODO: use authorization services to install update if installed for all users
+    // TODO: restart System preferences and kill the helper app
 }
 
 @end
