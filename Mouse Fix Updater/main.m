@@ -31,13 +31,7 @@ int main(int argc, const char * argv[]) {
             NSLog(@"%@", installErr);
             return 0;
         }
-        
-        // kill the helper app
-        // (the updated helper application will subsequently be launched by launchd due to the keepAlive attribute in mouse fix helper's launchd.plist)
-        NSArray *helperApps = [NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.nuebling.mousefix.helper"];
-        for (NSRunningApplication *helpApp in helperApps) {
-            [helpApp terminate];
-        }
+    
         
         // kill system preferences
         
@@ -55,6 +49,14 @@ int main(int argc, const char * argv[]) {
             runningApps = [NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.apple.systempreferences"];
             i++;
         } while ([runningApps count] > 0);
+        
+        
+        // kill the helper app
+        // (the updated helper application will subsequently be launched by launchd due to the keepAlive attribute in mouse fix helper's launchd.plist)
+        NSArray *helperApps = [NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.nuebling.mousefix.helper"];
+        for (NSRunningApplication *helpApp in helperApps) {
+            [helpApp terminate];
+        }
         
         // run apple script to relaunch system preferences and navigate to the mouse fix prefPane
         

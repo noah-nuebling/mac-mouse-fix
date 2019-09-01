@@ -48,6 +48,9 @@
 		4FF873DF23197283002A897A /* UpdateWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FF873DC23197283002A897A /* UpdateWindow.h */; };
 		4FF873E023197283002A897A /* UpdateWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF873DD23197283002A897A /* UpdateWindow.m */; };
 		4FF873E123197283002A897A /* UpdateWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FF873DE23197283002A897A /* UpdateWindow.xib */; };
+		4FF873EF231A96B2002A897A /* MoreSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FF873EC231A96B2002A897A /* MoreSheet.h */; };
+		4FF873F0231A96B2002A897A /* MoreSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF873ED231A96B2002A897A /* MoreSheet.m */; };
+		4FF873F1231A96B2002A897A /* MoreSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FF873EE231A96B2002A897A /* MoreSheet.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -202,6 +205,9 @@
 		4FF873DC23197283002A897A /* UpdateWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UpdateWindow.h; sourceTree = "<group>"; };
 		4FF873DD23197283002A897A /* UpdateWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UpdateWindow.m; sourceTree = "<group>"; };
 		4FF873DE23197283002A897A /* UpdateWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpdateWindow.xib; sourceTree = "<group>"; };
+		4FF873EC231A96B2002A897A /* MoreSheet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MoreSheet.h; sourceTree = "<group>"; };
+		4FF873ED231A96B2002A897A /* MoreSheet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoreSheet.m; sourceTree = "<group>"; };
+		4FF873EE231A96B2002A897A /* MoreSheet.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MoreSheet.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -381,11 +387,11 @@
 		4FBB85C621879AD900DD6B40 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4FF873F2231A96C0002A897A /* MoreSheet */,
 				4FBF347B2316B90800E6CFD0 /* Update */,
 				4FBF350223183FBA00E6CFD0 /* Helper */,
 				4FBF350123183F1300E6CFD0 /* Config */,
-				4FD9CB1122F7D48D0090DB98 /* Hyperlink.h */,
-				4FD9CB1222F7D48D0090DB98 /* Hyperlink.m */,
+				4FF873F3231AB3AB002A897A /* Hyperlink */,
 				4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */,
 				4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */,
 				4FBF34F223174A8500E6CFD0 /* PayPal.xcassets */,
@@ -496,6 +502,25 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
+		4FF873F2231A96C0002A897A /* MoreSheet */ = {
+			isa = PBXGroup;
+			children = (
+				4FF873EC231A96B2002A897A /* MoreSheet.h */,
+				4FF873ED231A96B2002A897A /* MoreSheet.m */,
+				4FF873EE231A96B2002A897A /* MoreSheet.xib */,
+			);
+			path = MoreSheet;
+			sourceTree = "<group>";
+		};
+		4FF873F3231AB3AB002A897A /* Hyperlink */ = {
+			isa = PBXGroup;
+			children = (
+				4FD9CB1122F7D48D0090DB98 /* Hyperlink.h */,
+				4FD9CB1222F7D48D0090DB98 /* Hyperlink.m */,
+			);
+			path = Hyperlink;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -507,6 +532,7 @@
 				4FBF34FF23183E6700E6CFD0 /* ConfigFileInterfacePref.h in Headers */,
 				4F3A8445230D3E6C0012C725 /* Updater.h in Headers */,
 				4FF873DF23197283002A897A /* UpdateWindow.h in Headers */,
+				4FF873EF231A96B2002A897A /* MoreSheet.h in Headers */,
 				4FBF350523183FDA00E6CFD0 /* HelperInterface.h in Headers */,
 				4FD67DDE211CC9000095A9A5 /* PrefPaneDelegate.h in Headers */,
 			);
@@ -643,6 +669,7 @@
 				4F8F38E822F8C7A1004D0040 /* Mouse_Fix_alt.tiff in Resources */,
 				4F8AEA9222FBC7AC008C1A7C /* milkshake_button.png in Resources */,
 				4FACF59F2183B956009257D4 /* default_mouse.fix.helper.plist in Resources */,
+				4FF873F1231A96B2002A897A /* MoreSheet.xib in Resources */,
 				4FD67DE5211CC9000095A9A5 /* Mouse_Remap.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -705,6 +732,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FD67DE0211CC9000095A9A5 /* PrefPaneDelegate.m in Sources */,
+				4FF873F0231A96B2002A897A /* MoreSheet.m in Sources */,
 				4FBF350623183FDA00E6CFD0 /* HelperInterface.m in Sources */,
 				4F3A8446230D3E6C0012C725 /* Updater.m in Sources */,
 				4FBF350023183E6700E6CFD0 /* ConfigFileInterfacePref.m in Sources */,

@@ -279,14 +279,12 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     if (_consecutiveScrollSwipeCounter > _fastScrollThreshhold_Swipes) {
         _pixelScrollQueue = _pixelScrollQueue * pow(_fastScrollExponentialBase, (int32_t)_consecutiveScrollSwipeCounter - _fastScrollThreshhold_Swipes);
     }
-    NSLog(@"px: %lld", _pixelScrollQueue);
     
     return nil;
 }
 
-static CVReturn displayLinkCallback (CVDisplayLinkRef displayLink, const CVTimeStamp *inNow, const CVTimeStamp *inOutputTime, CVOptionFlags flagsIn, CVOptionFlags *flagsOut, void *displayLinkContext)
+static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp *inNow, const CVTimeStamp *inOutputTime, CVOptionFlags flagsIn, CVOptionFlags *flagsOut, void *displayLinkContext)
 {
-    
     _pixelsToScroll  = 0;
     
     
@@ -399,27 +397,29 @@ static void Handle_displayReconfiguration(CGDirectDisplayID display, CGDisplayCh
     }
 }
 static void setDisplayLinkToDisplayUnderMousePointer(CGEventRef event) {
+    
     CGPoint mouseLocation = CGEventGetLocation(event);
     CGDirectDisplayID *newDisplaysUnderMousePointer = malloc(sizeof(CGDirectDisplayID) * 3);
     uint32_t matchingDisplayCount;
     CGGetDisplaysWithPoint(mouseLocation, 2, newDisplaysUnderMousePointer, &matchingDisplayCount);
     
-    if (matchingDisplayCount > 0) {
+    if (matchingDisplayCount >= 1) {
         if (newDisplaysUnderMousePointer[0] != _displaysUnderMousePointer[0]) {
-            CVDisplayLinkSetCurrentCGDisplay(_displayLink, _displaysUnderMousePointer[0]);
             _displaysUnderMousePointer = newDisplaysUnderMousePointer;
+            //sets dsp to the master display if _displaysUnderMousePointer[0] is part of the mirror set
+            CGDirectDisplayID dsp = CGDisplayPrimaryDisplay(_displaysUnderMousePointer[0]);
+            CVDisplayLinkSetCurrentCGDisplay(_displayLink, dsp);
         }
-    }
-    else if (matchingDisplayCount == 0) {
+    } else if (matchingDisplayCount > 1) {
+        NSLog(@"more than one display for current mouse position");
+        
+    } else if (matchingDisplayCount == 0) {
         NSException *e = [NSException exceptionWithName:NSInternalInconsistencyException reason:@"there are 0 diplays under the mouse pointer" userInfo:NULL];
         @throw e;
     }
-    else if (matchingDisplayCount > 1) {
-        NSLog(@"more than one display for current mouse position");
-        NSException *e = [NSException exceptionWithName:NSInternalInconsistencyException reason:[NSString stringWithFormat:@"there are %d diplays under the mouse pointer",matchingDisplayCount] userInfo:NULL];
-        @throw e;
-    }
+    
 }
+
 
 @end
 
