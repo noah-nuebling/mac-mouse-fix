@@ -7,8 +7,8 @@
 #import "PrefPaneDelegate.h"
 #import "Updater.h"
 #import "Config/ConfigFileInterface_PrefPane.h"
-#import "Helper/HelperServices.h"
-#import "Helper/MessagePort_PrefPane.h"
+#import "HelperServices/HelperServices.h"
+#import "MessagePort/MessagePort_PrefPane.h"
 #import "MoreSheet/MoreSheet.h"
 //#import "CGSInternal/CGSHotKeys.h"
 

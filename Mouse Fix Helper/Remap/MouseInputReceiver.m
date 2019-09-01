@@ -3,7 +3,7 @@
 #import "IOKit/hid/IOHIDManager.h"
 #import "InputParser.h"
 #import "AppDelegate.h"
-#import "../BezelServices/MessagePort_HelperApp.h"
+#import "../MessagePort/MessagePort_HelperApp.h"
 #import <ApplicationServices/ApplicationServices.h>
 
 #import "Utility.h"

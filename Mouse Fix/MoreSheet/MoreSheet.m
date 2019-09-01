@@ -9,7 +9,8 @@
 #import "MoreSheet.h"
 #import "ConfigFileInterface_PrefPane.h"
 #import "../Update/Updater.h"
-#import "../Helper/MessagePort_PrefPane.h"
+#import "../MessagePort/MessagePort_PrefPane.h"
+
 
 @interface MoreSheet ()
     @property (strong) IBOutlet NSPanel *sheetPanel;

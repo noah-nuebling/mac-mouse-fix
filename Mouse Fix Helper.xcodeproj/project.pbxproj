@@ -43,6 +43,9 @@
 		4FCECD8521092354001F1078 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECD8421092354001F1078 /* AppDelegate.m */; };
 		4FD45A0F231C66CF00F75C58 /* MessagePort_PrefPane.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FD45A0D231C66CF00F75C58 /* MessagePort_PrefPane.h */; };
 		4FD45A10231C66CF00F75C58 /* MessagePort_PrefPane.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD45A0E231C66CF00F75C58 /* MessagePort_PrefPane.m */; };
+		4FD45A1B231C78B400F75C58 /* AuthorizeAccessibilityView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FD45A18231C78B400F75C58 /* AuthorizeAccessibilityView.h */; };
+		4FD45A1C231C78B400F75C58 /* AuthorizeAccessibilityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD45A19231C78B400F75C58 /* AuthorizeAccessibilityView.m */; };
+		4FD45A1D231C78B400F75C58 /* AuthorizeAccessibilityView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD45A1A231C78B400F75C58 /* AuthorizeAccessibilityView.xib */; };
 		4FD67DDE211CC9000095A9A5 /* PrefPaneDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FD67DDD211CC9000095A9A5 /* PrefPaneDelegate.h */; };
 		4FD67DE0211CC9000095A9A5 /* PrefPaneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD67DDF211CC9000095A9A5 /* PrefPaneDelegate.m */; };
 		4FD67DE5211CC9000095A9A5 /* Mouse_Remap.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD67DE3211CC9000095A9A5 /* Mouse_Remap.xib */; settings = {ASSET_TAGS = (0, ); }; };
@@ -201,6 +204,9 @@
 		4FCECD8E21092354001F1078 /* Mouse_Remap_Helper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Mouse_Remap_Helper.entitlements; sourceTree = "<group>"; };
 		4FD45A0D231C66CF00F75C58 /* MessagePort_PrefPane.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessagePort_PrefPane.h; sourceTree = "<group>"; };
 		4FD45A0E231C66CF00F75C58 /* MessagePort_PrefPane.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessagePort_PrefPane.m; sourceTree = "<group>"; };
+		4FD45A18231C78B400F75C58 /* AuthorizeAccessibilityView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AuthorizeAccessibilityView.h; sourceTree = "<group>"; };
+		4FD45A19231C78B400F75C58 /* AuthorizeAccessibilityView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AuthorizeAccessibilityView.m; sourceTree = "<group>"; };
+		4FD45A1A231C78B400F75C58 /* AuthorizeAccessibilityView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AuthorizeAccessibilityView.xib; sourceTree = "<group>"; };
 		4FD67DDB211CC9000095A9A5 /* Mouse Fix.prefPane */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Mouse Fix.prefPane"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FD67DDD211CC9000095A9A5 /* PrefPaneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefPaneDelegate.h; sourceTree = "<group>"; };
 		4FD67DDF211CC9000095A9A5 /* PrefPaneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PrefPaneDelegate.m; sourceTree = "<group>"; };
@@ -313,26 +319,11 @@
 			path = "Mouse Fix Updater";
 			sourceTree = "<group>";
 		};
-		4F32E14A231C420100199A11 /* BezelServices */ = {
-			isa = PBXGroup;
-			children = (
-				4F32E14F231C420100199A11 /* config.plist */,
-				4F32E14C231C420100199A11 /* ConfigFileInterface_HelperApp.h */,
-				4F32E151231C420100199A11 /* ConfigFileInterface_HelperApp.m */,
-				4F32E14D231C420100199A11 /* DeviceManager.h */,
-				4F32E150231C420100199A11 /* DeviceManager.m */,
-				4F32E14B231C420100199A11 /* MessagePort_HelperApp.h */,
-				4F32E14E231C420100199A11 /* MessagePort_HelperApp.m */,
-				4F32E152231C420100199A11 /* Utility */,
-			);
-			path = BezelServices;
-			sourceTree = "<group>";
-		};
 		4F32E152231C420100199A11 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
-				4F32E153231C420100199A11 /* Utility.m */,
 				4F32E154231C420100199A11 /* Utility.h */,
+				4F32E153231C420100199A11 /* Utility.m */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -419,22 +410,20 @@
 		4FBF350123183F1300E6CFD0 /* Config */ = {
 			isa = PBXGroup;
 			children = (
+				4FEA982A21AC775E0094AC51 /* default_config.plist */,
 				4FBF34FD23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h */,
 				4FBF34FE23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.m */,
-				4FEA982A21AC775E0094AC51 /* default_config.plist */,
 			);
 			path = Config;
 			sourceTree = "<group>";
 		};
-		4FBF350223183FBA00E6CFD0 /* Helper */ = {
+		4FBF350223183FBA00E6CFD0 /* HelperServices */ = {
 			isa = PBXGroup;
 			children = (
 				4FBF350323183FDA00E6CFD0 /* HelperServices.h */,
 				4FBF350423183FDA00E6CFD0 /* HelperServices.m */,
-				4FD45A0D231C66CF00F75C58 /* MessagePort_PrefPane.h */,
-				4FD45A0E231C66CF00F75C58 /* MessagePort_PrefPane.m */,
 			);
-			path = Helper;
+			path = HelperServices;
 			sourceTree = "<group>";
 		};
 		4FCECD7721092354001F1078 = {
@@ -465,7 +454,10 @@
 				4FCECD8421092354001F1078 /* AppDelegate.m */,
 				4F32E18D231C50A100199A11 /* Remap */,
 				4F32E17D231C509200199A11 /* ScrollFix */,
-				4F32E14A231C420100199A11 /* BezelServices */,
+				4FD45A14231C76DE00F75C58 /* DeviceManager */,
+				4FD45A15231C76ED00F75C58 /* MessagePort */,
+				4FD45A13231C76A700F75C58 /* Config */,
+				4F32E152231C420100199A11 /* Utility */,
 				4FCECDB02109326E001F1078 /* SupportFiles */,
 			);
 			path = "Mouse Fix Helper";
@@ -484,17 +476,65 @@
 			path = SupportFiles;
 			sourceTree = "<group>";
 		};
+		4FD45A13231C76A700F75C58 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				4F32E14F231C420100199A11 /* config.plist */,
+				4F32E14C231C420100199A11 /* ConfigFileInterface_HelperApp.h */,
+				4F32E151231C420100199A11 /* ConfigFileInterface_HelperApp.m */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		4FD45A14231C76DE00F75C58 /* DeviceManager */ = {
+			isa = PBXGroup;
+			children = (
+				4F32E14D231C420100199A11 /* DeviceManager.h */,
+				4F32E150231C420100199A11 /* DeviceManager.m */,
+			);
+			path = DeviceManager;
+			sourceTree = "<group>";
+		};
+		4FD45A15231C76ED00F75C58 /* MessagePort */ = {
+			isa = PBXGroup;
+			children = (
+				4F32E14B231C420100199A11 /* MessagePort_HelperApp.h */,
+				4F32E14E231C420100199A11 /* MessagePort_HelperApp.m */,
+			);
+			path = MessagePort;
+			sourceTree = "<group>";
+		};
+		4FD45A16231C771200F75C58 /* MessagePort */ = {
+			isa = PBXGroup;
+			children = (
+				4FD45A0D231C66CF00F75C58 /* MessagePort_PrefPane.h */,
+				4FD45A0E231C66CF00F75C58 /* MessagePort_PrefPane.m */,
+			);
+			path = MessagePort;
+			sourceTree = "<group>";
+		};
+		4FD45A17231C785F00F75C58 /* Accessibility */ = {
+			isa = PBXGroup;
+			children = (
+				4FD45A18231C78B400F75C58 /* AuthorizeAccessibilityView.h */,
+				4FD45A19231C78B400F75C58 /* AuthorizeAccessibilityView.m */,
+				4FD45A1A231C78B400F75C58 /* AuthorizeAccessibilityView.xib */,
+			);
+			path = Accessibility;
+			sourceTree = "<group>";
+		};
 		4FD67DDC211CC9000095A9A5 /* Mouse Fix */ = {
 			isa = PBXGroup;
 			children = (
 				4FD67DDD211CC9000095A9A5 /* PrefPaneDelegate.h */,
 				4FD67DDF211CC9000095A9A5 /* PrefPaneDelegate.m */,
 				4FD67DE3211CC9000095A9A5 /* Mouse_Remap.xib */,
+				4FD45A17231C785F00F75C58 /* Accessibility */,
 				4FF873F2231A96C0002A897A /* MoreSheet */,
-				4FBF347B2316B90800E6CFD0 /* Update */,
-				4FBF350223183FBA00E6CFD0 /* Helper */,
+				4FBF350223183FBA00E6CFD0 /* HelperServices */,
+				4FD45A16231C771200F75C58 /* MessagePort */,
 				4FBF350123183F1300E6CFD0 /* Config */,
-				4FF873F3231AB3AB002A897A /* Hyperlink */,
+				4FBF347B2316B90800E6CFD0 /* Update */,
 				4F32E15E231C455A00199A11 /* SupportFiles */,
 			);
 			path = "Mouse Fix";
@@ -506,6 +546,7 @@
 				4FF873EC231A96B2002A897A /* MoreSheet.h */,
 				4FF873ED231A96B2002A897A /* MoreSheet.m */,
 				4FF873EE231A96B2002A897A /* MoreSheet.xib */,
+				4FF873F3231AB3AB002A897A /* Hyperlink */,
 			);
 			path = MoreSheet;
 			sourceTree = "<group>";
@@ -526,6 +567,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FD45A1B231C78B400F75C58 /* AuthorizeAccessibilityView.h in Headers */,
 				4FD9CB1322F7D48D0090DB98 /* Hyperlink.h in Headers */,
 				4FBF34FF23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h in Headers */,
 				4F3A8445230D3E6C0012C725 /* Updater.h in Headers */,
@@ -665,6 +707,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FF873E123197283002A897A /* UpdateWindow.xib in Resources */,
+				4FD45A1D231C78B400F75C58 /* AuthorizeAccessibilityView.xib in Resources */,
 				4FF64F3B22F7408B0065F64F /* Mouse_Fix.tiff in Resources */,
 				4FBF34F7231750B600E6CFD0 /* pureDonationButton.png in Resources */,
 				4FBB85D42187C74100DD6B40 /* Localizable.strings in Resources */,
@@ -737,6 +780,7 @@
 				4FD67DE0211CC9000095A9A5 /* PrefPaneDelegate.m in Sources */,
 				4FF873F0231A96B2002A897A /* MoreSheet.m in Sources */,
 				4FD45A10231C66CF00F75C58 /* MessagePort_PrefPane.m in Sources */,
+				4FD45A1C231C78B400F75C58 /* AuthorizeAccessibilityView.m in Sources */,
 				4FBF350623183FDA00E6CFD0 /* HelperServices.m in Sources */,
 				4F3A8446230D3E6C0012C725 /* Updater.m in Sources */,
 				4FBF350023183E6700E6CFD0 /* ConfigFileInterface_PrefPane.m in Sources */,
