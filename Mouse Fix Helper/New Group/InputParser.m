@@ -19,8 +19,8 @@
 #import "InputParser.h"
 #import "AppDelegate.h"
 #import "ConfigFileInterface.h"
-#import "CGSInternal/CGSHotKeys.h"
-#import "SensibleSideButtons/TouchEvents.h"
+#import "../SupportFiles/External/CGSInternal/CGSHotKeys.h"
+#import "../SupportFiles/External/SensibleSideButtons/TouchEvents.h"
 
 @implementation InputParser
 

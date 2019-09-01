@@ -7,9 +7,6 @@
 
 #import "MomentumScroll.h"
 
-#import "CGSInternal/CGSHotKeys.h"
-#import "SensibleSideButtons/TouchEvents.h"
-
 
 @interface AppDelegate ()
 @property (strong) IBOutlet NSWindow *addedWindow;

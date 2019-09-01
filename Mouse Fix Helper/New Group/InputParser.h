@@ -1,6 +1,4 @@
 #import <Foundation/Foundation.h>
-#import "CGSInternal/CGSHotKeys.h"
-#import "SensibleSideButtons/TouchEvents.h"
 
 
 @interface InputParser : NSObject

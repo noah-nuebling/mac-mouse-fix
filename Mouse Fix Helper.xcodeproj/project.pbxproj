@@ -17,7 +17,8 @@
 		4F32E157231C420100199A11 /* DeviceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E150231C420100199A11 /* DeviceManager.m */; };
 		4F32E158231C420100199A11 /* ConfigFileInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E151231C420100199A11 /* ConfigFileInterface.m */; };
 		4F32E159231C420100199A11 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E153231C420100199A11 /* Utility.m */; };
-		4F34F9AF21A3590D00104EBF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F34F9AE21A3590D00104EBF /* main.m */; };
+		4F32E15D231C44C000199A11 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E15C231C44C000199A11 /* main.m */; };
+		4F32E15F231C45F300199A11 /* Hyperlink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9CB1222F7D48D0090DB98 /* Hyperlink.m */; };
 		4F34F9B521A359D500104EBF /* MouseInputReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F34F9B421A359D500104EBF /* MouseInputReceiver.m */; };
 		4F34F9B921A35E8E00104EBF /* InputParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F34F9B821A35E8E00104EBF /* InputParser.m */; };
 		4F3A8445230D3E6C0012C725 /* Updater.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F3A8443230D3E6C0012C725 /* Updater.h */; };
@@ -43,7 +44,6 @@
 		4FD67DF3211CDD2D0095A9A5 /* Mouse Fix Helper.app in Copy Helper */ = {isa = PBXBuildFile; fileRef = 4FCECD8021092354001F1078 /* Mouse Fix Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4FD67DF4211CDE4D0095A9A5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FCECD8821092354001F1078 /* MainMenu.xib */; };
 		4FD9CB1322F7D48D0090DB98 /* Hyperlink.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FD9CB1122F7D48D0090DB98 /* Hyperlink.h */; };
-		4FD9CB1422F7D48D0090DB98 /* Hyperlink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9CB1222F7D48D0090DB98 /* Hyperlink.m */; };
 		4FF64F3B22F7408B0065F64F /* Mouse_Fix.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4FF64F3A22F7408A0065F64F /* Mouse_Fix.tiff */; };
 		4FF873DF23197283002A897A /* UpdateWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FF873DC23197283002A897A /* UpdateWindow.h */; };
 		4FF873E023197283002A897A /* UpdateWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF873DD23197283002A897A /* UpdateWindow.m */; };
@@ -162,7 +162,7 @@
 		4F32E151231C420100199A11 /* ConfigFileInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigFileInterface.m; sourceTree = "<group>"; };
 		4F32E153231C420100199A11 /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
 		4F32E154231C420100199A11 /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
-		4F34F9AE21A3590D00104EBF /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4F32E15C231C44C000199A11 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4F34F9B321A359D500104EBF /* MouseInputReceiver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MouseInputReceiver.h; sourceTree = "<group>"; };
 		4F34F9B421A359D500104EBF /* MouseInputReceiver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MouseInputReceiver.m; sourceTree = "<group>"; };
 		4F34F9B721A35E8E00104EBF /* InputParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InputParser.h; sourceTree = "<group>"; };
@@ -352,6 +352,21 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
+		4F32E15E231C455A00199A11 /* SupportFiles */ = {
+			isa = PBXGroup;
+			children = (
+				4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */,
+				4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */,
+				4FBF34F223174A8500E6CFD0 /* PayPal.xcassets */,
+				4FBB85D22187C74100DD6B40 /* Localizable.strings */,
+				4FACF5A02183B9AA009257D4 /* Default User Agent Config File */,
+				4FF64F3A22F7408A0065F64F /* Mouse_Fix.tiff */,
+				4F8F38E722F8C7A1004D0040 /* Mouse_Fix_alt.tiff */,
+				4FD67DE6211CC9000095A9A5 /* Info.plist */,
+			);
+			path = SupportFiles;
+			sourceTree = "<group>";
+		};
 		4F34F9B621A359E200104EBF /* Remap */ = {
 			isa = PBXGroup;
 			children = (
@@ -390,26 +405,6 @@
 				4FACF59E2183B956009257D4 /* default_mouse.fix.helper.plist */,
 			);
 			path = "Default User Agent Config File";
-			sourceTree = "<group>";
-		};
-		4FBB85C621879AD900DD6B40 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				4FF873F2231A96C0002A897A /* MoreSheet */,
-				4FBF347B2316B90800E6CFD0 /* Update */,
-				4FBF350223183FBA00E6CFD0 /* Helper */,
-				4FBF350123183F1300E6CFD0 /* Config */,
-				4FF873F3231AB3AB002A897A /* Hyperlink */,
-				4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */,
-				4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */,
-				4FBF34F223174A8500E6CFD0 /* PayPal.xcassets */,
-				4FBB85D22187C74100DD6B40 /* Localizable.strings */,
-				4FACF5A02183B9AA009257D4 /* Default User Agent Config File */,
-				4FF64F3A22F7408A0065F64F /* Mouse_Fix.tiff */,
-				4F8F38E722F8C7A1004D0040 /* Mouse_Fix_alt.tiff */,
-				4FD67DE6211CC9000095A9A5 /* Info.plist */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		4FBF347B2316B90800E6CFD0 /* Update */ = {
@@ -472,22 +467,22 @@
 				4F8DC6F121A3B50900E1D297 /* Smooth Scroll */,
 				4F34F9B621A359E200104EBF /* Remap */,
 				4F32E14A231C420100199A11 /* BezelServices */,
-				4FCECDB02109326E001F1078 /* Supporting Files */,
+				4FCECDB02109326E001F1078 /* SupportFiles */,
 			);
 			path = "Mouse Fix Helper";
 			sourceTree = "<group>";
 		};
-		4FCECDB02109326E001F1078 /* Supporting Files */ = {
+		4FCECDB02109326E001F1078 /* SupportFiles */ = {
 			isa = PBXGroup;
 			children = (
 				4F1C96692313603400C3B9AE /* External */,
 				4FCECD8621092354001F1078 /* Assets.xcassets */,
 				4FCECD8E21092354001F1078 /* Mouse_Remap_Helper.entitlements */,
 				4FCECD8B21092354001F1078 /* Info.plist */,
-				4F34F9AE21A3590D00104EBF /* main.m */,
+				4F32E15C231C44C000199A11 /* main.m */,
 				4FCECD8821092354001F1078 /* MainMenu.xib */,
 			);
-			path = "Supporting Files";
+			path = SupportFiles;
 			sourceTree = "<group>";
 		};
 		4FD67DDC211CC9000095A9A5 /* Mouse Fix */ = {
@@ -496,7 +491,12 @@
 				4FD67DDD211CC9000095A9A5 /* PrefPaneDelegate.h */,
 				4FD67DDF211CC9000095A9A5 /* PrefPaneDelegate.m */,
 				4FD67DE3211CC9000095A9A5 /* Mouse_Remap.xib */,
-				4FBB85C621879AD900DD6B40 /* Supporting Files */,
+				4FF873F2231A96C0002A897A /* MoreSheet */,
+				4FBF347B2316B90800E6CFD0 /* Update */,
+				4FBF350223183FBA00E6CFD0 /* Helper */,
+				4FBF350123183F1300E6CFD0 /* Config */,
+				4FF873F3231AB3AB002A897A /* Hyperlink */,
+				4F32E15E231C455A00199A11 /* SupportFiles */,
 			);
 			path = "Mouse Fix";
 			sourceTree = "<group>";
@@ -719,9 +719,9 @@
 				4F1E83F322C98F03000CE5AD /* ModifierInputReceiver.m in Sources */,
 				4F32E158231C420100199A11 /* ConfigFileInterface.m in Sources */,
 				4F34F9B921A35E8E00104EBF /* InputParser.m in Sources */,
-				4F34F9AF21A3590D00104EBF /* main.m in Sources */,
 				4FCECD8521092354001F1078 /* AppDelegate.m in Sources */,
 				4F8DC6F621A3B60600E1D297 /* AnimationCurve.m in Sources */,
+				4F32E15D231C44C000199A11 /* main.m in Sources */,
 				4F32E159231C420100199A11 /* Utility.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -730,13 +730,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F32E15F231C45F300199A11 /* Hyperlink.m in Sources */,
 				4FD67DE0211CC9000095A9A5 /* PrefPaneDelegate.m in Sources */,
 				4FF873F0231A96B2002A897A /* MoreSheet.m in Sources */,
 				4FBF350623183FDA00E6CFD0 /* HelperInterface.m in Sources */,
 				4F3A8446230D3E6C0012C725 /* Updater.m in Sources */,
 				4FBF350023183E6700E6CFD0 /* ConfigFileInterfacePref.m in Sources */,
 				4FF873E023197283002A897A /* UpdateWindow.m in Sources */,
-				4FD9CB1422F7D48D0090DB98 /* Hyperlink.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -932,7 +932,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "Mouse Fix Helper/Supporting Files/Mouse_Remap_Helper.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Mouse Fix Helper/SupportFiles/Mouse_Remap_Helper.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
@@ -941,7 +941,7 @@
 					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks,
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
-				INFOPLIST_FILE = "Mouse Fix Helper/Supporting Files/Info.plist";
+				INFOPLIST_FILE = "Mouse Fix Helper/SupportFiles/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -951,7 +951,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "Mouse Fix Helper/Mouse Remap Helper-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Mouse Fix Helper/Supporting Files/External\"";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Mouse Fix Helper/SupportFiles/External\"";
 			};
 			name = Debug;
 		};
@@ -960,7 +960,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "Mouse Fix Helper/Supporting Files/Mouse_Remap_Helper.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Mouse Fix Helper/SupportFiles/Mouse_Remap_Helper.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
@@ -969,7 +969,7 @@
 					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks,
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
-				INFOPLIST_FILE = "Mouse Fix Helper/Supporting Files/Info.plist";
+				INFOPLIST_FILE = "Mouse Fix Helper/SupportFiles/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -978,7 +978,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Mouse Fix Helper/Mouse Remap Helper-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Mouse Fix Helper/Supporting Files/External\"";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Mouse Fix Helper/SupportFiles/External\"";
 			};
 			name = Release;
 		};
@@ -993,7 +993,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
-				INFOPLIST_FILE = "Mouse Fix/Info.plist";
+				INFOPLIST_FILE = "Mouse Fix/SupportFiles/Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/PreferencePanes";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1021,7 +1021,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
-				INFOPLIST_FILE = "Mouse Fix/Info.plist";
+				INFOPLIST_FILE = "Mouse Fix/SupportFiles/Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/PreferencePanes";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

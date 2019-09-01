@@ -6,8 +6,6 @@
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
-	<key>CFBundleIconFile</key>
-	<string></string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -15,20 +13,20 @@
 	<key>CFBundleName</key>
 	<string>$(PRODUCT_NAME)</string>
 	<key>CFBundlePackageType</key>
-	<string>APPL</string>
+	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>0.1</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
-	<key>LSMinimumSystemVersion</key>
-	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
+	<string>13</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2018 Noah Nuebling Enterprises Ltd. All rights reserved.</string>
 	<key>NSMainNibFile</key>
-	<string>MainMenu</string>
+	<string>Mouse_Remap</string>
+	<key>NSPrefPaneIconFile</key>
+	<string>Mouse_Fix.tiff</string>
+	<key>NSPrefPaneIconLabel</key>
+	<string>Mouse Fix</string>
 	<key>NSPrincipalClass</key>
-	<string>NSApplication</string>
-	<key>LSBackgroundOnly</key>
-	<false/>
+	<string>PrefPaneDelegate</string>
 </dict>
 </plist>
