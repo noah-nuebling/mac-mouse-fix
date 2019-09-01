@@ -7,8 +7,6 @@
 
 #import "Utility.h"
 
-#import "MomentumScroll.h"
-
 @implementation MouseInputReceiver
 
 // global variables
