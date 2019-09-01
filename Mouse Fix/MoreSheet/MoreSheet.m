@@ -23,11 +23,12 @@
 # pragma mark - IBActions
 - (IBAction)checkForUpdateCheckBox:(NSButton *)sender {
     NSLog(@"CHECK");
-    
+    [ConfigFileInterfacePref.config setValue:@"0" forKeyPath:@"other.skippedBundleVersion"];
+    [self UIChanged:NULL];
     if (sender.state == 1) {
         [Updater checkForUpdate];
+        
     }
-    [self UIChanged:NULL];
 }
 - (IBAction)milkshakeButton:(id)sender {
     NSLog(@"BUTTTON");

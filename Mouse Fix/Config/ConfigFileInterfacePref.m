@@ -44,7 +44,8 @@ static NSMutableDictionary *_config;
         NSLog(@"ERROR writing configDictFromFile to file: %@", writeErr);
     }
     
-    NSLog(@"FILE UPDATED");
+    NSLog(@"Config FILE UPDATED");
+    NSLog(@"config: %@", _config);
 }
 
 + (void)loadConfigFromFile {

@@ -16,15 +16,16 @@
 @end
 
 @implementation UpdateWindow
+
 - (IBAction)skip:(id)sender {
     [Updater skipAvailableVersion];
     [self close];
 }
 - (IBAction)update:(id)sender {
-    
     [Updater update];
     [self close];
 }
+
 - (void)windowWillClose:(NSNotification *)notification {
     
 }
