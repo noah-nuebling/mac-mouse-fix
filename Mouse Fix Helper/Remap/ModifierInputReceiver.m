@@ -1,5 +1,5 @@
 #import "ModifierInputReceiver.h"
-#import "MomentumScroll.h"
+#import "SmoothScroll.h"
 
 @implementation ModifierInputReceiver
 
@@ -29,9 +29,9 @@ CGEventRef Handle_ModifierChanged(CGEventTapProxy proxy, CGEventType type, CGEve
     CGEventFlags flags = CGEventGetFlags(event);
     
     if (flags & kCGEventFlagMaskShift) {    // I used 1 << 17 here - should be the same as kCGEventFlagMaskShift, idk why I didn't use that instead
-        [MomentumScroll setHorizontalScroll:TRUE];
+        [SmoothScroll setHorizontalScroll:TRUE];
     } else {
-        [MomentumScroll setHorizontalScroll:FALSE];
+        [SmoothScroll setHorizontalScroll:FALSE];
     }
     
     /*

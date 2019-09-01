@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		4F1C968C231361EF00C3B9AE /* TouchEvents.c in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C96872313606200C3B9AE /* TouchEvents.c */; };
-		4F1E52EA21A8D3D00005B817 /* MomentumScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1E52E921A8D3D00005B817 /* MomentumScroll.m */; };
-		4F1E83F322C98F03000CE5AD /* ModifierInputReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1E83F222C98F03000CE5AD /* ModifierInputReceiver.m */; };
 		4F2FDF332315662500C7BE14 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2FDF322315662500C7BE14 /* main.m */; };
 		4F2FDF3D23156AA900C7BE14 /* Mouse Fix Updater in Copy Updater */ = {isa = PBXBuildFile; fileRef = 4F2FDF302315662400C7BE14 /* Mouse Fix Updater */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4F32E155231C420100199A11 /* MessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E14E231C420100199A11 /* MessagePort.m */; };
@@ -19,15 +17,20 @@
 		4F32E159231C420100199A11 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E153231C420100199A11 /* Utility.m */; };
 		4F32E15D231C44C000199A11 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E15C231C44C000199A11 /* main.m */; };
 		4F32E15F231C45F300199A11 /* Hyperlink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9CB1222F7D48D0090DB98 /* Hyperlink.m */; };
-		4F34F9B521A359D500104EBF /* MouseInputReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F34F9B421A359D500104EBF /* MouseInputReceiver.m */; };
-		4F34F9B921A35E8E00104EBF /* InputParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F34F9B821A35E8E00104EBF /* InputParser.m */; };
+		4F32E187231C509200199A11 /* SmoothScroll.m (old) in Resources */ = {isa = PBXBuildFile; fileRef = 4F32E180231C509200199A11 /* SmoothScroll.m (old) */; };
+		4F32E188231C509200199A11 /* AnimationCurve.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E181231C509200199A11 /* AnimationCurve.m */; };
+		4F32E189231C509200199A11 /* SmoothScroll.h (old) in Resources */ = {isa = PBXBuildFile; fileRef = 4F32E182231C509200199A11 /* SmoothScroll.h (old) */; };
+		4F32E18A231C509200199A11 /* MomentumScroll.hn (old) in Resources */ = {isa = PBXBuildFile; fileRef = 4F32E184231C509200199A11 /* MomentumScroll.hn (old) */; };
+		4F32E18B231C509200199A11 /* MomentumScroll.m (old) in Resources */ = {isa = PBXBuildFile; fileRef = 4F32E185231C509200199A11 /* MomentumScroll.m (old) */; };
+		4F32E18C231C509200199A11 /* SmoothScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E186231C509200199A11 /* SmoothScroll.m */; };
+		4F32E194231C50A100199A11 /* InputParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E18E231C50A100199A11 /* InputParser.m */; };
+		4F32E195231C50A100199A11 /* ModifierInputReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E18F231C50A100199A11 /* ModifierInputReceiver.m */; };
+		4F32E196231C50A100199A11 /* MouseInputReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E193231C50A100199A11 /* MouseInputReceiver.m */; };
 		4F3A8445230D3E6C0012C725 /* Updater.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F3A8443230D3E6C0012C725 /* Updater.h */; };
 		4F3A8446230D3E6C0012C725 /* Updater.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A8444230D3E6C0012C725 /* Updater.m */; };
 		4F6A19F32314731400E05446 /* ZipArchive.framework in My Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F6A19E92314726A00E05446 /* ZipArchive.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F6A19F42314738C00E05446 /* ZipArchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F6A19E92314726A00E05446 /* ZipArchive.framework */; };
 		4F8AEA9222FBC7AC008C1A7C /* milkshake_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */; };
-		4F8DC6F621A3B60600E1D297 /* AnimationCurve.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8DC6F421A3B60600E1D297 /* AnimationCurve.m */; };
-		4F8DC71F21A6244800E1D297 /* SmoothScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8DC71D21A6244800E1D297 /* SmoothScroll.m */; };
 		4F8F38E822F8C7A1004D0040 /* Mouse_Fix_alt.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4F8F38E722F8C7A1004D0040 /* Mouse_Fix_alt.tiff */; };
 		4FACF59F2183B956009257D4 /* default_mouse.fix.helper.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FACF59E2183B956009257D4 /* default_mouse.fix.helper.plist */; };
 		4FBB85D42187C74100DD6B40 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4FBB85D22187C74100DD6B40 /* Localizable.strings */; };
@@ -147,10 +150,6 @@
 		4F1C96892313606200C3B9AE /* TouchEvents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TouchEvents.h; sourceTree = "<group>"; };
 		4F1C968A2313606200C3B9AE /* IOHIDEventData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOHIDEventData.h; sourceTree = "<group>"; };
 		4F1C968B2313606200C3B9AE /* IOHIDEventTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOHIDEventTypes.h; sourceTree = "<group>"; };
-		4F1E52E821A8D3D00005B817 /* MomentumScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MomentumScroll.h; sourceTree = "<group>"; };
-		4F1E52E921A8D3D00005B817 /* MomentumScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MomentumScroll.m; sourceTree = "<group>"; };
-		4F1E83F122C98F03000CE5AD /* ModifierInputReceiver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModifierInputReceiver.h; sourceTree = "<group>"; };
-		4F1E83F222C98F03000CE5AD /* ModifierInputReceiver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModifierInputReceiver.m; sourceTree = "<group>"; };
 		4F2FDF302315662400C7BE14 /* Mouse Fix Updater */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Mouse Fix Updater"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F2FDF322315662500C7BE14 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4F32E14B231C420100199A11 /* MessagePort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagePort.h; sourceTree = "<group>"; };
@@ -165,20 +164,24 @@
 		4F32E15C231C44C000199A11 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4F32E162231C4A7700199A11 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Mouse_Remap.xib; sourceTree = "<group>"; };
 		4F32E163231C4A7700199A11 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		4F34F9B321A359D500104EBF /* MouseInputReceiver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MouseInputReceiver.h; sourceTree = "<group>"; };
-		4F34F9B421A359D500104EBF /* MouseInputReceiver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MouseInputReceiver.m; sourceTree = "<group>"; };
-		4F34F9B721A35E8E00104EBF /* InputParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InputParser.h; sourceTree = "<group>"; };
-		4F34F9B821A35E8E00104EBF /* InputParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InputParser.m; sourceTree = "<group>"; };
+		4F32E17E231C509200199A11 /* SmoothScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmoothScroll.h; sourceTree = "<group>"; };
+		4F32E180231C509200199A11 /* SmoothScroll.m (old) */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SmoothScroll.m (old)"; sourceTree = "<group>"; };
+		4F32E181231C509200199A11 /* AnimationCurve.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimationCurve.m; sourceTree = "<group>"; };
+		4F32E182231C509200199A11 /* SmoothScroll.h (old) */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SmoothScroll.h (old)"; sourceTree = "<group>"; };
+		4F32E183231C509200199A11 /* AnimationCurve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationCurve.h; sourceTree = "<group>"; };
+		4F32E184231C509200199A11 /* MomentumScroll.hn (old) */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "MomentumScroll.hn (old)"; sourceTree = "<group>"; };
+		4F32E185231C509200199A11 /* MomentumScroll.m (old) */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "MomentumScroll.m (old)"; sourceTree = "<group>"; };
+		4F32E186231C509200199A11 /* SmoothScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SmoothScroll.m; sourceTree = "<group>"; };
+		4F32E18E231C50A100199A11 /* InputParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputParser.m; sourceTree = "<group>"; };
+		4F32E18F231C50A100199A11 /* ModifierInputReceiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifierInputReceiver.m; sourceTree = "<group>"; };
+		4F32E190231C50A100199A11 /* MouseInputReceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MouseInputReceiver.h; sourceTree = "<group>"; };
+		4F32E191231C50A100199A11 /* ModifierInputReceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifierInputReceiver.h; sourceTree = "<group>"; };
+		4F32E192231C50A100199A11 /* InputParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputParser.h; sourceTree = "<group>"; };
+		4F32E193231C50A100199A11 /* MouseInputReceiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MouseInputReceiver.m; sourceTree = "<group>"; };
 		4F3A8443230D3E6C0012C725 /* Updater.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Updater.h; sourceTree = "<group>"; };
 		4F3A8444230D3E6C0012C725 /* Updater.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Updater.m; sourceTree = "<group>"; };
 		4F6A19E92314726A00E05446 /* ZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ZipArchive.framework; sourceTree = "<group>"; };
-		4F7387FB21B48F7900C2F468 /* MomentumScroll.mn */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MomentumScroll.mn; sourceTree = "<group>"; };
-		4F7387FC21B48F7900C2F468 /* MomentumScroll.hn */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MomentumScroll.hn; sourceTree = "<group>"; };
 		4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = milkshake_button.png; sourceTree = "<group>"; };
-		4F8DC6F221A3B60600E1D297 /* AnimationCurve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationCurve.h; sourceTree = "<group>"; };
-		4F8DC6F421A3B60600E1D297 /* AnimationCurve.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimationCurve.m; sourceTree = "<group>"; };
-		4F8DC71D21A6244800E1D297 /* SmoothScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SmoothScroll.m; sourceTree = "<group>"; };
-		4F8DC71E21A6244800E1D297 /* SmoothScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmoothScroll.h; sourceTree = "<group>"; };
 		4F8F38E722F8C7A1004D0040 /* Mouse_Fix_alt.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Mouse_Fix_alt.tiff; sourceTree = "<group>"; };
 		4FACF59E2183B956009257D4 /* default_mouse.fix.helper.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_mouse.fix.helper.plist; sourceTree = "<group>"; };
 		4FBB85D32187C74100DD6B40 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -298,28 +301,6 @@
 			path = SensibleSideButtons;
 			sourceTree = "<group>";
 		};
-		4F1E52E721A8D2DF0005B817 /* (Unused) */ = {
-			isa = PBXGroup;
-			children = (
-				4F7387FC21B48F7900C2F468 /* MomentumScroll.hn */,
-				4F7387FB21B48F7900C2F468 /* MomentumScroll.mn */,
-				4F8DC71E21A6244800E1D297 /* SmoothScroll.h */,
-				4F8DC71D21A6244800E1D297 /* SmoothScroll.m */,
-				4F8DC6F221A3B60600E1D297 /* AnimationCurve.h */,
-				4F8DC6F421A3B60600E1D297 /* AnimationCurve.m */,
-			);
-			path = "(Unused)";
-			sourceTree = "<group>";
-		};
-		4F1E52EB21A8D3E40005B817 /* 2.0 - Momentum Based */ = {
-			isa = PBXGroup;
-			children = (
-				4F1E52E821A8D3D00005B817 /* MomentumScroll.h */,
-				4F1E52E921A8D3D00005B817 /* MomentumScroll.m */,
-			);
-			path = "2.0 - Momentum Based";
-			sourceTree = "<group>";
-		};
 		4F2FDF312315662500C7BE14 /* Mouse Fix Updater */ = {
 			isa = PBXGroup;
 			children = (
@@ -367,18 +348,40 @@
 			path = SupportFiles;
 			sourceTree = "<group>";
 		};
-		4F34F9B621A359E200104EBF /* Remap */ = {
+		4F32E17D231C509200199A11 /* ScrollFix */ = {
 			isa = PBXGroup;
 			children = (
-				4F34F9B321A359D500104EBF /* MouseInputReceiver.h */,
-				4F34F9B421A359D500104EBF /* MouseInputReceiver.m */,
-				4F34F9B721A35E8E00104EBF /* InputParser.h */,
-				4F34F9B821A35E8E00104EBF /* InputParser.m */,
-				4F1E83F122C98F03000CE5AD /* ModifierInputReceiver.h */,
-				4F1E83F222C98F03000CE5AD /* ModifierInputReceiver.m */,
+				4F32E17E231C509200199A11 /* SmoothScroll.h */,
+				4F32E186231C509200199A11 /* SmoothScroll.m */,
+				4F32E17F231C509200199A11 /* Unused */,
 			);
-			name = Remap;
-			path = "New Group";
+			path = ScrollFix;
+			sourceTree = "<group>";
+		};
+		4F32E17F231C509200199A11 /* Unused */ = {
+			isa = PBXGroup;
+			children = (
+				4F32E180231C509200199A11 /* SmoothScroll.m (old) */,
+				4F32E181231C509200199A11 /* AnimationCurve.m */,
+				4F32E182231C509200199A11 /* SmoothScroll.h (old) */,
+				4F32E183231C509200199A11 /* AnimationCurve.h */,
+				4F32E184231C509200199A11 /* MomentumScroll.hn (old) */,
+				4F32E185231C509200199A11 /* MomentumScroll.m (old) */,
+			);
+			path = Unused;
+			sourceTree = "<group>";
+		};
+		4F32E18D231C50A100199A11 /* Remap */ = {
+			isa = PBXGroup;
+			children = (
+				4F32E192231C50A100199A11 /* InputParser.h */,
+				4F32E18E231C50A100199A11 /* InputParser.m */,
+				4F32E191231C50A100199A11 /* ModifierInputReceiver.h */,
+				4F32E18F231C50A100199A11 /* ModifierInputReceiver.m */,
+				4F32E190231C50A100199A11 /* MouseInputReceiver.h */,
+				4F32E193231C50A100199A11 /* MouseInputReceiver.m */,
+			);
+			path = Remap;
 			sourceTree = "<group>";
 		};
 		4F6A19ED2314727800E05446 /* Frameworks */ = {
@@ -387,16 +390,6 @@
 				4F6A19E92314726A00E05446 /* ZipArchive.framework */,
 			);
 			path = Frameworks;
-			sourceTree = "<group>";
-		};
-		4F8DC6F121A3B50900E1D297 /* Smooth Scroll */ = {
-			isa = PBXGroup;
-			children = (
-				4F1E52EB21A8D3E40005B817 /* 2.0 - Momentum Based */,
-				4F1E52E721A8D2DF0005B817 /* (Unused) */,
-			);
-			name = "Smooth Scroll";
-			path = "New Group";
 			sourceTree = "<group>";
 		};
 		4FACF5A02183B9AA009257D4 /* Default User Agent Config File */ = {
@@ -464,8 +457,8 @@
 			children = (
 				4FCECD8321092354001F1078 /* AppDelegate.h */,
 				4FCECD8421092354001F1078 /* AppDelegate.m */,
-				4F8DC6F121A3B50900E1D297 /* Smooth Scroll */,
-				4F34F9B621A359E200104EBF /* Remap */,
+				4F32E18D231C50A100199A11 /* Remap */,
+				4F32E17D231C509200199A11 /* ScrollFix */,
 				4F32E14A231C420100199A11 /* BezelServices */,
 				4FCECDB02109326E001F1078 /* SupportFiles */,
 			);
@@ -652,7 +645,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F32E156231C420100199A11 /* config.plist in Resources */,
+				4F32E187231C509200199A11 /* SmoothScroll.m (old) in Resources */,
+				4F32E18A231C509200199A11 /* MomentumScroll.hn (old) in Resources */,
 				4FD67DF4211CDE4D0095A9A5 /* MainMenu.xib in Resources */,
+				4F32E18B231C509200199A11 /* MomentumScroll.m (old) in Resources */,
+				4F32E189231C509200199A11 /* SmoothScroll.h (old) in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -710,18 +707,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F32E195231C50A100199A11 /* ModifierInputReceiver.m in Sources */,
 				4F32E155231C420100199A11 /* MessagePort.m in Sources */,
 				4F1C968C231361EF00C3B9AE /* TouchEvents.c in Sources */,
-				4F1E52EA21A8D3D00005B817 /* MomentumScroll.m in Sources */,
+				4F32E18C231C509200199A11 /* SmoothScroll.m in Sources */,
 				4F32E157231C420100199A11 /* DeviceManager.m in Sources */,
-				4F34F9B521A359D500104EBF /* MouseInputReceiver.m in Sources */,
-				4F8DC71F21A6244800E1D297 /* SmoothScroll.m in Sources */,
-				4F1E83F322C98F03000CE5AD /* ModifierInputReceiver.m in Sources */,
 				4F32E158231C420100199A11 /* ConfigFileInterface.m in Sources */,
-				4F34F9B921A35E8E00104EBF /* InputParser.m in Sources */,
 				4FCECD8521092354001F1078 /* AppDelegate.m in Sources */,
-				4F8DC6F621A3B60600E1D297 /* AnimationCurve.m in Sources */,
 				4F32E15D231C44C000199A11 /* main.m in Sources */,
+				4F32E194231C50A100199A11 /* InputParser.m in Sources */,
+				4F32E196231C50A100199A11 /* MouseInputReceiver.m in Sources */,
+				4F32E188231C509200199A11 /* AnimationCurve.m in Sources */,
 				4F32E159231C420100199A11 /* Utility.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

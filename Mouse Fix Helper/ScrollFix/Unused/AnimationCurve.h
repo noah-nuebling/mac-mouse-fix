@@ -1,4 +1,5 @@
-//
+//  Copied this from open source WebKit sourcecode I think.
+
 //  AnimationCurve.h
 //  Bezier Experiement
 //

@@ -7,7 +7,7 @@
 
 #import "Utility.h"
 
-#import "MomentumScroll.h"
+#import "SmoothScroll.h"
 
 @implementation MouseInputReceiver
 
