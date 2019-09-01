@@ -1,6 +1,6 @@
 #import <Cocoa/Cocoa.h>
 
-@interface SmoothScroll : NSObject
+@interface MomentumScroll : NSObject
 
 typedef enum {
     kMFStandardScrollDirection      =   1,

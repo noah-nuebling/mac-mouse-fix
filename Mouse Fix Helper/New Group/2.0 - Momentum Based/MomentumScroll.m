@@ -1,4 +1,4 @@
-#import "SmoothScroll.h"
+#import "MomentumScroll.h"
 #import "AppDelegate.h"
 #import "QuartzCore/CoreVideo.h"
 //#import <HIServices/AXUIElement.h>
@@ -10,11 +10,11 @@
 
 
 
-@interface SmoothScroll ()
+@interface MomentumScroll ()
 
 @end
 
-@implementation SmoothScroll
+@implementation MomentumScroll
 
 
 #pragma mark - Globals
@@ -122,12 +122,12 @@ static void resetDynamicGlobals() {
 + (void)startOrStopDecide {
     if ([DeviceManager relevantDevicesAreAttached] && _isEnabled) {
         if (_isRunning == FALSE) {
-            [SmoothScroll start];
+            [MomentumScroll start];
             [ModifierInputReceiver start];
         }
     } else {
         if (_isRunning == TRUE) {
-            [SmoothScroll stop];
+            [MomentumScroll stop];
             [ModifierInputReceiver stop];
         }
     }
@@ -191,10 +191,10 @@ static void resetDynamicGlobals() {
 + (void)temporarilyDisable:(BOOL)B {
     if (B) {
         if (_isRunning) {
-            [SmoothScroll stop];
+            [MomentumScroll stop];
         }
     } else {
-        [SmoothScroll startOrStopDecide];
+        [MomentumScroll startOrStopDecide];
     }
 }
 
@@ -238,7 +238,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         _consecutiveScrollTickCounter += 1;
     }
     [_consecutiveScrollTickTimer invalidate];
-    _consecutiveScrollTickTimer = [NSTimer scheduledTimerWithTimeInterval:_consecutiveScrollTickMaxIntervall target:[SmoothScroll class] selector:@selector(Handle_ConsecutiveScrollTickCallback:) userInfo:NULL repeats:NO];
+    _consecutiveScrollTickTimer = [NSTimer scheduledTimerWithTimeInterval:_consecutiveScrollTickMaxIntervall target:[MomentumScroll class] selector:@selector(Handle_ConsecutiveScrollTickCallback:) userInfo:NULL repeats:NO];
     
     if (_consecutiveScrollTickCounter < _scrollSwipeThreshhold_Ticks) {
         _lastTickWasPartOfSwipe = NO;
@@ -246,7 +246,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         _consecutiveScrollSwipeCounter  += 1;
         [_consecutiveScrollSwipeTimer invalidate];
         dispatch_async(dispatch_get_main_queue(), ^{
-            _consecutiveScrollSwipeTimer = [NSTimer scheduledTimerWithTimeInterval:_consecutiveScrollSwipeMaxIntervall target:[SmoothScroll class] selector:@selector(Handle_ConsecutiveScrollSwipeCallback:) userInfo:NULL repeats:NO];
+            _consecutiveScrollSwipeTimer = [NSTimer scheduledTimerWithTimeInterval:_consecutiveScrollSwipeMaxIntervall target:[MomentumScroll class] selector:@selector(Handle_ConsecutiveScrollSwipeCallback:) userInfo:NULL repeats:NO];
         });
         _lastTickWasPartOfSwipe = YES;
     }

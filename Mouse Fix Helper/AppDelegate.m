@@ -5,6 +5,8 @@
 #import "ConfigFileInterface.h"
 #import "DeviceManager.h"
 
+#import "MomentumScroll.h"
+
 
 @interface AppDelegate ()
 @property (strong) IBOutlet NSWindow *addedWindow;
