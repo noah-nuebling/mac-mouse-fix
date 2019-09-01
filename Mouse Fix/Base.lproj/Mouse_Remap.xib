@@ -24,7 +24,7 @@
         <window title="≪ do not localize ≫" autorecalculatesKeyViewLoop="NO" deferred="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="F0z-JX-Cv5" userLabel="PrefPane">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <rect key="contentRect" x="0.0" y="0.0" width="668" height="238"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="se5-gp-TjO">
                 <rect key="frame" x="0.0" y="0.0" width="668" height="238"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -112,7 +112,7 @@
                                                 <menuItem title="Middle button" state="on" toolTip="Leave button behavior unchanged." id="4BD-tK-KmA"/>
                                                 <menuItem isSeparatorItem="YES" id="kfH-7V-4Ck"/>
                                                 <menuItem title="Mission Control" tag="32" id="8ZW-kK-FcC"/>
-                                                <menuItem title="App Exposé" tag="33" toolTip="Expose all windows of the currently active app." id="gpY-zP-L45"/>
+                                                <menuItem title="App Windows" tag="33" toolTip="Expose all windows of the currently active app." id="gpY-zP-L45"/>
                                                 <menuItem title="Show Desktop" tag="36" id="ejj-IJ-om1"/>
                                                 <menuItem title="Launchpad" tag="160" id="BCd-Ru-p5Y"/>
                                                 <menuItem isSeparatorItem="YES" id="PRP-WD-zie"/>
@@ -144,7 +144,7 @@
                                                 <menuItem title="-" state="on" toolTip="No action." id="fuS-pI-6iE"/>
                                                 <menuItem isSeparatorItem="YES" id="tjv-xA-X6o"/>
                                                 <menuItem title="Mission Control" tag="32" id="i88-Bf-Ajz"/>
-                                                <menuItem title="App Exposé" tag="33" toolTip="Expose all windows of the currently active app." id="b0I-7o-OaS"/>
+                                                <menuItem title="App Windows" tag="33" toolTip="Expose all windows of the currently active app." id="b0I-7o-OaS"/>
                                                 <menuItem title="Show Desktop" tag="36" id="g9L-sQ-3Rm"/>
                                                 <menuItem title="Launchpad" tag="160" id="IRF-T2-kRI"/>
                                                 <menuItem isSeparatorItem="YES" id="CVM-Cm-DyR"/>
