@@ -3,7 +3,6 @@
 #import "ModifierInputReceiver.h"
 #import "InputParser.h"
 #import "ConfigFileInterface.h"
-#import "MessagePortReceiver.h"
 #import "DeviceManager.h"
 
 #import "MomentumScroll.h"

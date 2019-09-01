@@ -45,7 +45,7 @@ static NSMutableDictionary *_config;
     }
     
     NSLog(@"Config FILE UPDATED");
-    NSLog(@"config: %@", _config);
+//    NSLog(@"config: %@", _config);
 }
 
 + (void)loadConfigFromFile {

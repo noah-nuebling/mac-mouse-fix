@@ -115,7 +115,6 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     NSDictionary *buttonRemaps = ConfigFileInterfacePref.config[@"ButtonRemaps"];
     
     // mouse button 4 and 5
-    NSLog(@"buttonRemaps: %@", buttonRemaps);
     
     // click
     long i;

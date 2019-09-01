@@ -10,19 +10,20 @@
 		4F1C968C231361EF00C3B9AE /* TouchEvents.c in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C96872313606200C3B9AE /* TouchEvents.c */; };
 		4F1E52EA21A8D3D00005B817 /* MomentumScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1E52E921A8D3D00005B817 /* MomentumScroll.m */; };
 		4F1E83F322C98F03000CE5AD /* ModifierInputReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1E83F222C98F03000CE5AD /* ModifierInputReceiver.m */; };
-		4F2BF98D21AE052400CF6A24 /* DeviceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2BF98C21AE052400CF6A24 /* DeviceManager.m */; };
 		4F2FDF332315662500C7BE14 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2FDF322315662500C7BE14 /* main.m */; };
 		4F2FDF3D23156AA900C7BE14 /* Mouse Fix Updater in Copy Updater */ = {isa = PBXBuildFile; fileRef = 4F2FDF302315662400C7BE14 /* Mouse Fix Updater */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4F32E155231C420100199A11 /* MessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E14E231C420100199A11 /* MessagePort.m */; };
+		4F32E156231C420100199A11 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F32E14F231C420100199A11 /* config.plist */; };
+		4F32E157231C420100199A11 /* DeviceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E150231C420100199A11 /* DeviceManager.m */; };
+		4F32E158231C420100199A11 /* ConfigFileInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E151231C420100199A11 /* ConfigFileInterface.m */; };
+		4F32E159231C420100199A11 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E153231C420100199A11 /* Utility.m */; };
 		4F34F9AF21A3590D00104EBF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F34F9AE21A3590D00104EBF /* main.m */; };
 		4F34F9B521A359D500104EBF /* MouseInputReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F34F9B421A359D500104EBF /* MouseInputReceiver.m */; };
 		4F34F9B921A35E8E00104EBF /* InputParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F34F9B821A35E8E00104EBF /* InputParser.m */; };
-		4F34F9BF21A366B400104EBF /* ConfigFileInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F34F9BE21A366B400104EBF /* ConfigFileInterface.m */; };
 		4F3A8445230D3E6C0012C725 /* Updater.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F3A8443230D3E6C0012C725 /* Updater.h */; };
 		4F3A8446230D3E6C0012C725 /* Updater.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A8444230D3E6C0012C725 /* Updater.m */; };
-		4F611D2721A8E230008857A8 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F611D2621A8E230008857A8 /* config.plist */; };
 		4F6A19F32314731400E05446 /* ZipArchive.framework in My Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F6A19E92314726A00E05446 /* ZipArchive.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F6A19F42314738C00E05446 /* ZipArchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F6A19E92314726A00E05446 /* ZipArchive.framework */; };
-		4F73880021B4A79800C2F468 /* MessagePortReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F7387FF21B4A79800C2F468 /* MessagePortReceiver.m */; };
 		4F8AEA9222FBC7AC008C1A7C /* milkshake_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */; };
 		4F8DC6F621A3B60600E1D297 /* AnimationCurve.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8DC6F421A3B60600E1D297 /* AnimationCurve.m */; };
 		4F8DC71F21A6244800E1D297 /* SmoothScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8DC71D21A6244800E1D297 /* SmoothScroll.m */; };
@@ -41,7 +42,6 @@
 		4FD67DE5211CC9000095A9A5 /* Mouse_Remap.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD67DE3211CC9000095A9A5 /* Mouse_Remap.xib */; settings = {ASSET_TAGS = (0, ); }; };
 		4FD67DF3211CDD2D0095A9A5 /* Mouse Fix Helper.app in Copy Helper */ = {isa = PBXBuildFile; fileRef = 4FCECD8021092354001F1078 /* Mouse Fix Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4FD67DF4211CDE4D0095A9A5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FCECD8821092354001F1078 /* MainMenu.xib */; };
-		4FD6F5F522C818C000F4841C /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD6F5F422C818C000F4841C /* Utility.m */; };
 		4FD9CB1322F7D48D0090DB98 /* Hyperlink.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FD9CB1122F7D48D0090DB98 /* Hyperlink.h */; };
 		4FD9CB1422F7D48D0090DB98 /* Hyperlink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9CB1222F7D48D0090DB98 /* Hyperlink.m */; };
 		4FF64F3B22F7408B0065F64F /* Mouse_Fix.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4FF64F3A22F7408A0065F64F /* Mouse_Fix.tiff */; };
@@ -151,25 +151,27 @@
 		4F1E52E921A8D3D00005B817 /* MomentumScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MomentumScroll.m; sourceTree = "<group>"; };
 		4F1E83F122C98F03000CE5AD /* ModifierInputReceiver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModifierInputReceiver.h; sourceTree = "<group>"; };
 		4F1E83F222C98F03000CE5AD /* ModifierInputReceiver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModifierInputReceiver.m; sourceTree = "<group>"; };
-		4F2BF98B21AE052400CF6A24 /* DeviceManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeviceManager.h; sourceTree = "<group>"; };
-		4F2BF98C21AE052400CF6A24 /* DeviceManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeviceManager.m; sourceTree = "<group>"; };
 		4F2FDF302315662400C7BE14 /* Mouse Fix Updater */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Mouse Fix Updater"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F2FDF322315662500C7BE14 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4F32E14B231C420100199A11 /* MessagePort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagePort.h; sourceTree = "<group>"; };
+		4F32E14C231C420100199A11 /* ConfigFileInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigFileInterface.h; sourceTree = "<group>"; };
+		4F32E14D231C420100199A11 /* DeviceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceManager.h; sourceTree = "<group>"; };
+		4F32E14E231C420100199A11 /* MessagePort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagePort.m; sourceTree = "<group>"; };
+		4F32E14F231C420100199A11 /* config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
+		4F32E150231C420100199A11 /* DeviceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceManager.m; sourceTree = "<group>"; };
+		4F32E151231C420100199A11 /* ConfigFileInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigFileInterface.m; sourceTree = "<group>"; };
+		4F32E153231C420100199A11 /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
+		4F32E154231C420100199A11 /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
 		4F34F9AE21A3590D00104EBF /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4F34F9B321A359D500104EBF /* MouseInputReceiver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MouseInputReceiver.h; sourceTree = "<group>"; };
 		4F34F9B421A359D500104EBF /* MouseInputReceiver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MouseInputReceiver.m; sourceTree = "<group>"; };
 		4F34F9B721A35E8E00104EBF /* InputParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InputParser.h; sourceTree = "<group>"; };
 		4F34F9B821A35E8E00104EBF /* InputParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InputParser.m; sourceTree = "<group>"; };
-		4F34F9BD21A366B400104EBF /* ConfigFileInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigFileInterface.h; sourceTree = "<group>"; };
-		4F34F9BE21A366B400104EBF /* ConfigFileInterface.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigFileInterface.m; sourceTree = "<group>"; };
 		4F3A8443230D3E6C0012C725 /* Updater.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Updater.h; sourceTree = "<group>"; };
 		4F3A8444230D3E6C0012C725 /* Updater.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Updater.m; sourceTree = "<group>"; };
-		4F611D2621A8E230008857A8 /* config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
 		4F6A19E92314726A00E05446 /* ZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ZipArchive.framework; sourceTree = "<group>"; };
 		4F7387FB21B48F7900C2F468 /* MomentumScroll.mn */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MomentumScroll.mn; sourceTree = "<group>"; };
 		4F7387FC21B48F7900C2F468 /* MomentumScroll.hn */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MomentumScroll.hn; sourceTree = "<group>"; };
-		4F7387FE21B4A79800C2F468 /* MessagePortReceiver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessagePortReceiver.h; sourceTree = "<group>"; };
-		4F7387FF21B4A79800C2F468 /* MessagePortReceiver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessagePortReceiver.m; sourceTree = "<group>"; };
 		4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = milkshake_button.png; sourceTree = "<group>"; };
 		4F8DC6F221A3B60600E1D297 /* AnimationCurve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationCurve.h; sourceTree = "<group>"; };
 		4F8DC6F421A3B60600E1D297 /* AnimationCurve.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimationCurve.m; sourceTree = "<group>"; };
@@ -194,8 +196,6 @@
 		4FD67DDD211CC9000095A9A5 /* PrefPaneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefPaneDelegate.h; sourceTree = "<group>"; };
 		4FD67DDF211CC9000095A9A5 /* PrefPaneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PrefPaneDelegate.m; sourceTree = "<group>"; };
 		4FD67DE6211CC9000095A9A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4FD6F5F322C818C000F4841C /* Utility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
-		4FD6F5F422C818C000F4841C /* Utility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
 		4FD9CB1122F7D48D0090DB98 /* Hyperlink.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Hyperlink.h; sourceTree = "<group>"; };
 		4FD9CB1222F7D48D0090DB98 /* Hyperlink.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Hyperlink.m; sourceTree = "<group>"; };
 		4FEA982A21AC775E0094AC51 /* default_config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = default_config.plist; sourceTree = "<group>"; };
@@ -328,6 +328,30 @@
 			path = "Mouse Fix Updater";
 			sourceTree = "<group>";
 		};
+		4F32E14A231C420100199A11 /* BezelServices */ = {
+			isa = PBXGroup;
+			children = (
+				4F32E14F231C420100199A11 /* config.plist */,
+				4F32E14B231C420100199A11 /* MessagePort.h */,
+				4F32E14C231C420100199A11 /* ConfigFileInterface.h */,
+				4F32E14D231C420100199A11 /* DeviceManager.h */,
+				4F32E14E231C420100199A11 /* MessagePort.m */,
+				4F32E150231C420100199A11 /* DeviceManager.m */,
+				4F32E151231C420100199A11 /* ConfigFileInterface.m */,
+				4F32E152231C420100199A11 /* Utility */,
+			);
+			path = BezelServices;
+			sourceTree = "<group>";
+		};
+		4F32E152231C420100199A11 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				4F32E153231C420100199A11 /* Utility.m */,
+				4F32E154231C420100199A11 /* Utility.h */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
 		4F34F9B621A359E200104EBF /* Remap */ = {
 			isa = PBXGroup;
 			children = (
@@ -348,22 +372,6 @@
 				4F6A19E92314726A00E05446 /* ZipArchive.framework */,
 			);
 			path = Frameworks;
-			sourceTree = "<group>";
-		};
-		4F7F863E21AE2B64007DF9A6 /* Bezel Services */ = {
-			isa = PBXGroup;
-			children = (
-				4F2BF98B21AE052400CF6A24 /* DeviceManager.h */,
-				4F2BF98C21AE052400CF6A24 /* DeviceManager.m */,
-				4F611D2621A8E230008857A8 /* config.plist */,
-				4F34F9BD21A366B400104EBF /* ConfigFileInterface.h */,
-				4F34F9BE21A366B400104EBF /* ConfigFileInterface.m */,
-				4FD6F5F222C8188E00F4841C /* Utility */,
-				4F7387FE21B4A79800C2F468 /* MessagePortReceiver.h */,
-				4F7387FF21B4A79800C2F468 /* MessagePortReceiver.m */,
-			);
-			name = "Bezel Services";
-			path = "Config File + File Monitor";
 			sourceTree = "<group>";
 		};
 		4F8DC6F121A3B50900E1D297 /* Smooth Scroll */ = {
@@ -463,7 +471,7 @@
 				4FCECD8421092354001F1078 /* AppDelegate.m */,
 				4F8DC6F121A3B50900E1D297 /* Smooth Scroll */,
 				4F34F9B621A359E200104EBF /* Remap */,
-				4F7F863E21AE2B64007DF9A6 /* Bezel Services */,
+				4F32E14A231C420100199A11 /* BezelServices */,
 				4FCECDB02109326E001F1078 /* Supporting Files */,
 			);
 			path = "Mouse Fix Helper";
@@ -491,15 +499,6 @@
 				4FBB85C621879AD900DD6B40 /* Supporting Files */,
 			);
 			path = "Mouse Fix";
-			sourceTree = "<group>";
-		};
-		4FD6F5F222C8188E00F4841C /* Utility */ = {
-			isa = PBXGroup;
-			children = (
-				4FD6F5F322C818C000F4841C /* Utility.h */,
-				4FD6F5F422C818C000F4841C /* Utility.m */,
-			);
-			path = Utility;
 			sourceTree = "<group>";
 		};
 		4FF873F2231A96C0002A897A /* MoreSheet */ = {
@@ -652,7 +651,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F611D2721A8E230008857A8 /* config.plist in Resources */,
+				4F32E156231C420100199A11 /* config.plist in Resources */,
 				4FD67DF4211CDE4D0095A9A5 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -711,19 +710,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F32E155231C420100199A11 /* MessagePort.m in Sources */,
 				4F1C968C231361EF00C3B9AE /* TouchEvents.c in Sources */,
 				4F1E52EA21A8D3D00005B817 /* MomentumScroll.m in Sources */,
-				4F2BF98D21AE052400CF6A24 /* DeviceManager.m in Sources */,
+				4F32E157231C420100199A11 /* DeviceManager.m in Sources */,
 				4F34F9B521A359D500104EBF /* MouseInputReceiver.m in Sources */,
-				4F34F9BF21A366B400104EBF /* ConfigFileInterface.m in Sources */,
 				4F8DC71F21A6244800E1D297 /* SmoothScroll.m in Sources */,
-				4F73880021B4A79800C2F468 /* MessagePortReceiver.m in Sources */,
 				4F1E83F322C98F03000CE5AD /* ModifierInputReceiver.m in Sources */,
+				4F32E158231C420100199A11 /* ConfigFileInterface.m in Sources */,
 				4F34F9B921A35E8E00104EBF /* InputParser.m in Sources */,
 				4F34F9AF21A3590D00104EBF /* main.m in Sources */,
 				4FCECD8521092354001F1078 /* AppDelegate.m in Sources */,
 				4F8DC6F621A3B60600E1D297 /* AnimationCurve.m in Sources */,
-				4FD6F5F522C818C000F4841C /* Utility.m in Sources */,
+				4F32E159231C420100199A11 /* Utility.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

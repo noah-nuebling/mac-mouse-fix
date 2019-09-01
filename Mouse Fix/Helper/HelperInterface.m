@@ -20,6 +20,9 @@
 }
 
 + (void)tellHelperToUpdateItsSettings {
+    
+    NSLog(@"TELL HELPER");
+    
     CFMessagePortRef remotePort = CFMessagePortCreateRemote(kCFAllocatorDefault, CFSTR("com.uebler.nuebler.mouse.fix.port"));
     if (remotePort == NULL) {
         NSLog(@"there is no CFMessagePort");
