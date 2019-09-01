@@ -6,10 +6,10 @@
 //  Copyright © 2019 Noah Nuebling. All rights reserved.
 //
 
-#import "ConfigFileInterfacePref.h"
-#import "MessagePortPref.h"
+#import "ConfigFileInterfacePrefPane.h"
+#import "HelperServices.h"
 
-@implementation ConfigFileInterfacePref
+@implementation ConfigFileInterfacePrefPane
 
 static NSMutableDictionary *_config;
 + (NSMutableDictionary *)config {
@@ -21,7 +21,7 @@ static NSMutableDictionary *_config;
 
 + (void)initialize
 {
-    if (self == [ConfigFileInterfacePref class]) {
+    if (self == [ConfigFileInterfacePrefPane class]) {
         [self loadConfigFromFile];
     }
 }
@@ -33,7 +33,7 @@ static NSMutableDictionary *_config;
     if (serializeErr) {
         NSLog(@"ERROR serializing configDictFromFile: %@", serializeErr);
     }
-    NSString *configPath = [[MessagePortPref helperBundle] pathForResource:@"config" ofType:@"plist"];
+    NSString *configPath = [[HelperServices helperBundle] pathForResource:@"config" ofType:@"plist"];
     //    BOOL success = [configData writeToFile:configPath atomically:YES];
     //    if (!success) {
     //        NSLog(@"ERROR writing configDictFromFile to file");
@@ -44,12 +44,12 @@ static NSMutableDictionary *_config;
         NSLog(@"ERROR writing configDictFromFile to file: %@", writeErr);
     }
     
-    NSLog(@"Config FILE UPDATED");
+    NSLog(@"Wrote config to file.");
 //    NSLog(@"config: %@", _config);
 }
 
 + (void)loadConfigFromFile {
-    NSString *configPath = [[MessagePortPref helperBundle] pathForResource:@"config" ofType:@"plist"];
+    NSString *configPath = [[HelperServices helperBundle] pathForResource:@"config" ofType:@"plist"];
     NSData *configData = [NSData dataWithContentsOfFile:configPath];
     NSError *readErr;
     NSMutableDictionary *configDict = [NSPropertyListSerialization propertyListWithData:configData options:NSPropertyListMutableContainersAndLeaves format:nil error:&readErr];

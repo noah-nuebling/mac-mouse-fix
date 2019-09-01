@@ -2,7 +2,7 @@
 #import "MouseInputReceiver.h"
 #import "ModifierInputReceiver.h"
 #import "InputParser.h"
-#import "ConfigFileInterface.h"
+#import "ConfigFileInterfaceHelper.h"
 #import "DeviceManager.h"
 
 

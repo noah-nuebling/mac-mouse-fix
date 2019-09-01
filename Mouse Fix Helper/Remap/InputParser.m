@@ -18,7 +18,7 @@
 //
 #import "InputParser.h"
 #import "AppDelegate.h"
-#import "ConfigFileInterface.h"
+#import "ConfigFileInterfaceHelper.h"
 #import "../SupportFiles/External/CGSInternal/CGSHotKeys.h"
 #import "../SupportFiles/External/SensibleSideButtons/TouchEvents.h"
 
@@ -61,7 +61,7 @@ static NSMutableDictionary *_swipeInfo;
     
     NSString *keyPath = [NSString stringWithFormat:@"ButtonRemaps.%d", mouseButton];
     
-    NSDictionary *remapsForInputButton = [ConfigFileInterface.config valueForKeyPath: keyPath];
+    NSDictionary *remapsForInputButton = [ConfigFileInterfaceHelper.config valueForKeyPath: keyPath];
     
     @try {
         
@@ -118,7 +118,7 @@ static NSMutableDictionary *_swipeInfo;
         }
     } @catch (NSException *exception) {
         NSLog(@"ERROR: remaps broken (Input Parser)");
-        [ConfigFileInterface repairConfigFile: @"remaps"];
+        [ConfigFileInterfaceHelper repairConfigFile: @"remaps"];
     }
     
     return event;

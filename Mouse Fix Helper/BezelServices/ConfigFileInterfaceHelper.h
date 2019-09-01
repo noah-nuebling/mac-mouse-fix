@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface ConfigFileInterface : NSObject
+@interface ConfigFileInterfaceHelper : NSObject
 
 @property (class, retain) NSMutableDictionary *config;
 + (void)reactToConfigFileChange;

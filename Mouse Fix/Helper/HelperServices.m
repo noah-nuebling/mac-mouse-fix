@@ -7,38 +7,16 @@
 //  Copyright © 2019 Noah Nuebling. All rights reserved.
 //
 
-#import "MessagePortPref.h"
+#import "HelperServices.h"
 #import "PrefPaneDelegate.h"
 
-@implementation MessagePortPref
+@implementation HelperServices
 
 + (NSBundle *)helperBundle {
     NSBundle *prefPaneBundle = [NSBundle bundleForClass: [PrefPaneDelegate class]];
     NSString *prefPaneBundlePath = [prefPaneBundle bundlePath];
     NSString *helperBundlePath = [prefPaneBundlePath stringByAppendingPathComponent: @"Contents/Library/LoginItems/Mouse Fix Helper.app"];
     return [NSBundle bundleWithPath:helperBundlePath];
-}
-
-+ (void)tellHelperToUpdateItsSettings {
-    
-    NSLog(@"TELL HELPER");
-    
-    CFMessagePortRef remotePort = CFMessagePortCreateRemote(kCFAllocatorDefault, CFSTR("com.uebler.nuebler.mouse.fix.port"));
-    if (remotePort == NULL) {
-        NSLog(@"there is no CFMessagePort");
-        return;
-    }
-    
-    SInt32 messageID = 0x420666; // Arbitrary
-    CFDataRef data = nil;
-    CFTimeInterval sendTimeout = 0.0;
-    CFTimeInterval recieveTimeout = 0.0;
-    CFStringRef replyMode = NULL;
-    CFDataRef returnData = nil;
-    SInt32 status = CFMessagePortSendRequest(remotePort, messageID, data, sendTimeout, recieveTimeout, replyMode, &returnData);
-    if (status != 0) {
-        NSLog(@"CFMessagePortSendRequest status: %d", status);
-    }
 }
 
 /* registering/unregistering the helper as a User Agent with launchd - also launches/terminates helper */

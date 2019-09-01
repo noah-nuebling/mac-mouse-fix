@@ -10,9 +10,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MessagePortPref : NSObject
+@interface HelperServices : NSObject
 + (NSBundle *)helperBundle;
-+ (void)tellHelperToUpdateItsSettings;
 + (void)enableHelperAsUserAgent:(BOOL)enable;
 + (BOOL)helperIsActive;
 @end
