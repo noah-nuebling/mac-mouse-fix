@@ -126,6 +126,8 @@ DQ
                     </textField>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ooo-MV-trH">
                         <rect key="frame" x="28" y="22" width="134" height="18"/>
+                        <string key="toolTip">Check for an update everytime the that the Mouse Fix Preference Pane is loaded.
+Also resets skipped update versions.</string>
                         <buttonCell key="cell" type="check" title="Check for updates" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="hbh-ID-kIW">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>

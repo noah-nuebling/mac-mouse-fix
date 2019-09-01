@@ -100,4 +100,16 @@
     }
 }
 
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
+    
+    NSLog(@"%@", navigationAction);
+    if (navigationAction.navigationType == -1) {
+        decisionHandler(WKNavigationActionPolicyAllow);
+    }
+    else {
+        decisionHandler(WKNavigationActionPolicyCancel);
+        [[NSWorkspace sharedWorkspace] openURL:navigationAction.request.URL];
+    }
+}
+
 @end

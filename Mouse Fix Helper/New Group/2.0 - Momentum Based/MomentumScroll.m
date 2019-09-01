@@ -112,7 +112,7 @@ static void resetDynamicGlobals() {
     
     _nOfOnePixelScrollsMax              =   2;
     
-    _fastScrollExponentialBase          =   1.125; //1.125 //1.0625 // 1.09375
+    _fastScrollExponentialBase          =   1.075; //1.125 //1.0625 // 1.09375
     _scrollSwipeThreshhold_Ticks        =   3;
     _fastScrollThreshhold_Swipes        =   3;
     _consecutiveScrollTickMaxIntervall     =   0.03;
