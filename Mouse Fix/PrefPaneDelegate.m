@@ -8,11 +8,12 @@
 #import "Updater.h"
 #import "Config/ConfigFileInterfacePref.h"
 #import "Helper/HelperInterface.h"
+#import "MoreSheet/MoreSheet.h"
 //#import "CGSInternal/CGSHotKeys.h"
 
 @interface PrefPaneDelegate ()
 
-@property (retain) NSBundle *helperBundle;
+//@property (retain) NSBundle *helperBundle;
 
 @property (weak) IBOutlet NSButton *enableCheckBox;
 
@@ -32,11 +33,8 @@
 @property (weak) IBOutlet NSPopUpButton *sideClick;
 @property (weak) IBOutlet NSPopUpButton *sideHold;
 
+@property (strong) MoreSheet *moreSheetDelegate;
 
-@property (strong) IBOutlet NSPanel *sheetPanel;
-@property (weak) IBOutlet NSTextField *versionLabel;
-@property (weak) IBOutlet NSButton *checkForUpdateCheckBox;
-@property (weak) IBOutlet NSButton *doneButton;
 
 @end
 
@@ -58,30 +56,11 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
 }
 - (IBAction)moreButton:(id)sender {
-    [self beginSheetPanel];
-}
-
-# pragma mark more panel
-
-- (IBAction)checkForUpdateCheckBox:(NSButton *)sender {
-    [ConfigFileInterfacePref.config setValue:@(0) forKeyPath:@"other.skippedBundleVersion"];
-    [ConfigFileInterfacePref writeConfigToFile];
-    
-    if (sender.state == 1) {
-        [Updater checkForUpdate];
-    }
-    [self UIChanged:NULL];
-}
-- (IBAction)milkshakeButton:(id)sender {
-    NSLog(@"BUTTTON");
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ARSTVR6KFB524&source=url"]];
-}
-- (IBAction)doneButton:(id)sender {
-    [self endSheetPanel];
+    [_moreSheetDelegate begin];
 }
 
 - (IBAction)UIChanged:(id)sender {
-    [self setConfigToUI];
+    [self setConfigFileToUI];
     [HelperInterface tellHelperToUpdateItsSettings];
 }
 
@@ -109,9 +88,14 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 - (void)mainViewDidLoad {
     NSLog(@"PREF PANEEE");
     
+    NSLog(@"%@",ConfigFileInterfacePref.config);
+    
+    _moreSheetDelegate = [[MoreSheet alloc] initWithWindowNibName:@"MoreSheet"];
+    
     [self initializeUI];
     
-    if (_checkForUpdateCheckBox.state == 1) {
+    BOOL checkForUpdates = [[ConfigFileInterfacePref.config valueForKeyPath:@"other.checkForUpdates"] boolValue];
+    if (checkForUpdates == YES) {
         [Updater checkForUpdate];
     }
 }
@@ -238,21 +222,10 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
     _scrollSliderStepSize.doubleValue = pxStepSizeRelativeToConfigRange;
     
-    
-    
-#pragma mark Sheet
-    
-    NSString *versionString = [NSString stringWithFormat:@"Version %@ (%@)",
-                               [[NSBundle bundleForClass:[self class]] objectForInfoDictionaryKey:@"CFBundleShortVersionString"],
-                               [[NSBundle bundleForClass:[self class]] objectForInfoDictionaryKey:@"CFBundleVersion"]];
-    [_versionLabel setStringValue:versionString];
-    
-    _checkForUpdateCheckBox.state = [[ConfigFileInterfacePref.config valueForKeyPath:@"other.checkForUpdates"] boolValue];
-    
 }
 
 
-- (void)setConfigToUI {
+- (void)setConfigFileToUI {
     
     NSLog(@"SET CONFIG TO UI");
     
@@ -327,21 +300,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     [ConfigFileInterfacePref.config setValue:scrollValuesFromUI forKeyPath:@"ScrollSettings.values"];
     
     
-    // other
-    [ConfigFileInterfacePref.config setValue:[NSNumber numberWithBool:_checkForUpdateCheckBox.state] forKeyPath:@"other.checkForUpdates"];
-    
-    
-    
-    
     [ConfigFileInterfacePref writeConfigToFile];
-}
-
-#pragma mark sheet
-- (void)beginSheetPanel {
-    [[[NSApplication sharedApplication] mainWindow] beginSheet:_sheetPanel completionHandler:nil];
-}
-- (void)endSheetPanel {
-    [[[NSApplication sharedApplication] mainWindow] endSheet:_sheetPanel];
 }
 
 @end

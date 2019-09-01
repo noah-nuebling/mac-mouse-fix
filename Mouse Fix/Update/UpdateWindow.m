@@ -8,6 +8,7 @@
 
 #import "UpdateWindow.h"
 #import "Updater.h"
+#import "../MoreSheet/MoreSheet.h"
 #import <WebKit/WebKit.h>
 
 @interface UpdateWindow ()
@@ -20,6 +21,7 @@
     [self close];
 }
 - (IBAction)update:(id)sender {
+    
     [Updater update];
     [self close];
 }
@@ -34,13 +36,13 @@
     [self.window performClose:NULL];
 }
 
-- (void)startStuff {
+- (void)startWithUpdateNotes:(NSURL *)updateNotesLocation {
     [super windowDidLoad];
     
     [NSDistributedNotificationCenter.defaultCenter addObserver:self selector:@selector(themeChanged:) name:@"AppleInterfaceThemeChangedNotification" object: nil];
     
     [super windowDidLoad];
-    [self createWebview];
+    [self createWebviewWithURL:updateNotesLocation];
     
     
     CGSize win = CGSizeMake(330, 205); //(330,[JSreturn floatValue])
@@ -49,22 +51,21 @@
     [self.window setFrame:newWinPos display:YES animate:NO];
 }
 
-- (void)createWebview {
+- (void)createWebviewWithURL:(NSURL *)updateNotesURL {
     
     [self.window setFrame:NSMakeRect(0, 0, 440, 462) display:NO animate:NO];
     NSRect WKFrm = NSMakeRect(80, 57, 340, 363); // (20, 57, 400, 332/363)
     
     
     WKWebViewConfiguration *WKConf = [[WKWebViewConfiguration alloc] init];
-    [WKConf.userContentController addScriptMessageHandler:(id)self name:@"DABIGBUM"];
+    [WKConf.userContentController addScriptMessageHandler:(id<WKScriptMessageHandler>)self name:@"DABIGBUM"];
     
     WKWebView *wv = [[WKWebView alloc] initWithFrame:WKFrm configuration:WKConf];
     [wv setNavigationDelegate:self];
 //    [wv setUIDelegate:self];
     
 
-    NSURL *updateNotesLocation = [NSURL fileURLWithPath: @"/Users/Noah/Documents/GitHub/Mac-Mouse-Fix-Website/maindownload/updatenotes/"];
-    [wv loadFileURL:[updateNotesLocation URLByAppendingPathComponent:@"index.html" isDirectory:NO] allowingReadAccessToURL:updateNotesLocation];
+    [wv loadFileURL:[updateNotesURL URLByAppendingPathComponent:@"index.html" isDirectory:NO] allowingReadAccessToURL:updateNotesURL];
     
     wv.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
     [self.window.contentView addSubview:wv];

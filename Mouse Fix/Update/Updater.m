@@ -9,8 +9,10 @@
 #import "Updater.h"
 #import "UpdateWindow.h"
 #import "../PrefPaneDelegate.h"
+#import "../MoreSheet/MoreSheet.h"
 #import "../Config/ConfigFileInterfacePref.h"
 #import "ZipArchive/SSZipArchive.h"
+
 
 
 @interface Updater ()
@@ -30,12 +32,6 @@ static NSURL *_updateNotesLocation;
 
 # pragma mark - Class Methods
 
-+ (void)initialize
-{
-    if (self == [Updater class]) {
-        [self setupDownloadSession];
-    }
-}
 + (void)setupDownloadSession {
     
     NSURLSessionConfiguration *downloadSessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
@@ -46,12 +42,28 @@ static NSURL *_updateNotesLocation;
     _downloadSession = [NSURLSession sessionWithConfiguration:downloadSessionConfiguration];
 }
 
-+ (void)checkForUpdate {
-    
-    // clean up before starting the update procedure again
++ (void)reset {
     [_windowController close];
     
+    [_downloadTask1 cancel];
+    _downloadTask1 = nil;
+    [_downloadTask2 cancel];
+    _downloadTask2 = nil;
+    [_downloadSession invalidateAndCancel];
+}
+
++ (void)checkForUpdate {
     
+//    [MoreSheet endMoreSheetAttachedToMainWindow];
+    
+    NSLog(@"checking for update...");
+    
+    // TODO: make sure this works (on a slow connection)
+    [self reset];
+    
+    [self setupDownloadSession];
+    
+    // clean up before starting the update procedure again
     
     _downloadTask1 = [_downloadSession downloadTaskWithURL:[NSURL URLWithString: @"https://noah-nuebling.github.io/mac-mouse-fix/maindownload/bundleversion"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (error != NULL){
@@ -77,13 +89,22 @@ static NSURL *_updateNotesLocation;
             NSLog(@"error downloading updatenotes: %@", error);
             return;
         }
-        _updateLocation = location;
+        NSString *unzipDest = [[location path] stringByDeletingLastPathComponent];
+        NSLog(@"update notes unzip dest: %@",unzipDest);
+        NSError *unzipError;
+        [SSZipArchive unzipFileAtPath:[location path] toDestination:unzipDest overwrite:YES password:NULL error:&unzipError];
+        if (unzipError != NULL) {
+            NSLog(@"Error unzipping update Notes: %@", unzipError);
+            return;
+        }
+        _updateNotesLocation = [[NSURL fileURLWithPath:unzipDest] URLByAppendingPathComponent:@"updatenotes"];
         _downloadTask2 = [_downloadSession downloadTaskWithURL:[NSURL URLWithString: @"https://noah-nuebling.github.io/mac-mouse-fix/maindownload/MacMouseFix.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
             if (error != NULL) {
                 NSLog(@"error downloading prefPane: %@", error);
                 return;
             }
-            [self presentUpdate:location withNotes:_updateNotesLocation];
+            _updateLocation = location;
+            [self presentUpdate];
         }];
         [_downloadTask2 resume];
     }];
@@ -112,12 +133,13 @@ static NSURL *_updateNotesLocation;
 //        }
 //
 
-+ (void)presentUpdate:(NSURL *)update withNotes:(NSURL *)updateNotes {
++ (void)presentUpdate {
     dispatch_async(dispatch_get_main_queue(), ^{
+        
         
         _windowController = [UpdateWindow alloc];
         _windowController = [_windowController initWithWindowNibName:@"UpdateWindow" owner:_windowController];
-        [_windowController startStuff];
+        [_windowController startWithUpdateNotes:_updateNotesLocation];
         
         [_windowController showWindow:nil];
         [_windowController.window makeKeyAndOrderFront:nil];
@@ -134,11 +156,15 @@ static NSURL *_updateNotesLocation;
 
 + (void)update {
     
-
-    // TODO: find a way to close the app even if the panel is open (dismiss it first)
-//        [[[NSApplication sharedApplication] mainWindow] endSheet:NSApplication.sharedApplication.mainWindow.attachedSheet];
-//    [[[NSBundle bundleForClass:self.class] principalClass] endSheetPanel];
-//    [(PrefPaneDelegate *)NSApplication.sharedApplication.mainWindow.delegate endSheetPanel];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"threadddddd: %@", NSThread.currentThread);
+        [MoreSheet endMoreSheetAttachedToMainWindow];
+    });
+    
+    // close the more sheet so it doesn't block app termination later
+//    [MoreSheet performSelectorInBackground:@selector(endMoreSheetAttachedToMainWindow) withObject:nil];
+//    
+    
 
     NSFileManager *fm = [NSFileManager defaultManager];
 
