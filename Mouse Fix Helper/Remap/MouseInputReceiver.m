@@ -3,7 +3,7 @@
 #import "IOKit/hid/IOHIDManager.h"
 #import "InputParser.h"
 #import "AppDelegate.h"
-#import "../BezelServices/MessagePortHelper.h"
+#import "../BezelServices/MessagePort_HelperApp.h"
 #import <ApplicationServices/ApplicationServices.h>
 
 #import "Utility.h"
@@ -54,9 +54,6 @@ CFMachPortRef eventTapMouse;
     IOHIDDeviceRegisterInputValueCallback(device, &Handle_InputCallback_HID, NULL);
 }
 static void Handle_InputCallback_HID(void *context, IOReturn result, void *sender, IOHIDValueRef value) {
-    
-    [MessagePortHelper sendMessageToPrefPane:@"Hi from Helper :)"];
-    
     
     NSLog(@"Input HID (InputReceiver)");
     

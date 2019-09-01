@@ -10,7 +10,7 @@
 #import "UpdateWindow.h"
 #import "../PrefPaneDelegate.h"
 #import "../MoreSheet/MoreSheet.h"
-#import "../Config/ConfigFileInterfacePrefPane.h"
+#import "../Config/ConfigFileInterface_PrefPane.h"
 #import "ZipArchive/SSZipArchive.h"
 
 
@@ -74,7 +74,7 @@ static NSURL *_updateNotesLocation;
         NSInteger currentVersion = [[[NSBundle bundleForClass:self] objectForInfoDictionaryKey:@"CFBundleVersion"] integerValue];
         _availableVersion = [[NSString stringWithContentsOfURL:location encoding:NSUTF8StringEncoding error:NULL] integerValue];
         NSLog(@"currentVersion: %ld, availableVersion: %ld", (long)currentVersion, (long)_availableVersion);
-        NSInteger skippedVersion = [[ConfigFileInterfacePrefPane.config valueForKeyPath:@"other.skippedBundleVersion"] integerValue];
+        NSInteger skippedVersion = [[ConfigFileInterface_PrefPane.config valueForKeyPath:@"other.skippedBundleVersion"] integerValue];
         if (currentVersion < _availableVersion && _availableVersion != skippedVersion) {
             [self downloadAndPresent];
         } else {
@@ -149,8 +149,8 @@ static NSURL *_updateNotesLocation;
 }
 
 + (void)skipAvailableVersion {
-    [ConfigFileInterfacePrefPane.config setValue:@(_availableVersion) forKeyPath:@"other.skippedBundleVersion"];
-    [ConfigFileInterfacePrefPane writeConfigToFile];
+    [ConfigFileInterface_PrefPane.config setValue:@(_availableVersion) forKeyPath:@"other.skippedBundleVersion"];
+    [ConfigFileInterface_PrefPane writeConfigToFile];
 }
 
 + (void)update {

@@ -6,15 +6,16 @@
 //  Copyright © 2019 Noah Nuebling. All rights reserved.
 //
 
-#import "MessagePortPrefPane.h"
+#import "MessagePort_PrefPane.h"
 
-@implementation MessagePortPrefPane
+@implementation MessagePort_PrefPane
 
-#pragma mark - local (for incoming messages)
+
+#pragma mark - local (incoming messages)
 
 + (void)load {
     
-    if (self == [MessagePortPrefPane class]) {
+    if (self == [MessagePort_PrefPane class]) {
         CFMessagePortRef localPort =
         CFMessagePortCreateLocal(NULL,
                                  CFSTR("com.nuebling.mousefix.port"),
@@ -44,7 +45,8 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
     return (__bridge CFDataRef)response;
 }
 
-#pragma mark - remote (for outgoing messages)
+
+#pragma mark - remote (outgoing messages)
 
 + (void)sendMessageToHelper:(NSString *)message {
     

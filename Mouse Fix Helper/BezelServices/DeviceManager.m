@@ -2,7 +2,7 @@
 #import "IOKit/hid/IOHIDManager.h"
 #import "SmoothScroll.h"
 #import "MouseInputReceiver.h"
-#import "ConfigFileInterfaceHelper.h"
+#import "ConfigFileInterface_HelperApp.h"
 
 @implementation DeviceManager
 

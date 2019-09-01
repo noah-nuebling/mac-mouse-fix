@@ -1,13 +1,13 @@
 // TODO: implement callback when frontmost application changes - change settings accordingly
 // NSWorkspaceDidActivateApplicationNotification?
 
-#import "ConfigFileInterfaceHelper.h"
+#import "ConfigFileInterface_HelperApp.h"
 #import "AppDelegate.h"
 
 #import "SmoothScroll.h"
 #import "MouseInputReceiver.h"
 
-@implementation ConfigFileInterfaceHelper
+@implementation ConfigFileInterface_HelperApp
 
 static NSMutableDictionary *config;
 
@@ -43,11 +43,11 @@ static void fillConfigFromFile() {
         NSMutableDictionary *config = [NSPropertyListSerialization propertyListWithData:configFileData options:NSPropertyListMutableContainersAndLeaves format:nil error: &err];
         
         
-        NSLog(@"prop from configMonitor: %@", ConfigFileInterfaceHelper.config);
+        NSLog(@"prop from configMonitor: %@", ConfigFileInterface_HelperApp.config);
         
         NSLog(@"setting new prop from configMonitor: %@", config);
         
-        ConfigFileInterfaceHelper.config = config;
+        ConfigFileInterface_HelperApp.config = config;
         
         //NSLog(@"configDictFromFile after setting: %@", [ConfigFileMonitor configDictFromFile]);
         
@@ -58,7 +58,7 @@ static void fillConfigFromFile() {
 }
 
 static void updateScrollSettings() {
-    NSDictionary *config = ConfigFileInterfaceHelper.config;
+    NSDictionary *config = ConfigFileInterface_HelperApp.config;
     NSDictionary *scrollSettings = [config objectForKey:@"ScrollSettings"];
     if ([[scrollSettings objectForKey:@"enabled"] boolValue] == TRUE) {
         NSArray *values = [scrollSettings objectForKey:@"values"];
@@ -92,7 +92,7 @@ void Handle_FSEventStreamCallback (ConstFSEventStreamRef streamRef, void *client
     
     NSLog(@"config.plist changed (FSMonitor)");
     
-    [ConfigFileInterfaceHelper reactToConfigFileChange];
+    [ConfigFileInterface_HelperApp reactToConfigFileChange];
 }
 
 

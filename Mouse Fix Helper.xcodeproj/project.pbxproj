@@ -10,10 +10,10 @@
 		4F1C968C231361EF00C3B9AE /* TouchEvents.c in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C96872313606200C3B9AE /* TouchEvents.c */; };
 		4F2FDF332315662500C7BE14 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2FDF322315662500C7BE14 /* main.m */; };
 		4F2FDF3D23156AA900C7BE14 /* Mouse Fix Updater in Copy Updater */ = {isa = PBXBuildFile; fileRef = 4F2FDF302315662400C7BE14 /* Mouse Fix Updater */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		4F32E155231C420100199A11 /* MessagePortHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E14E231C420100199A11 /* MessagePortHelper.m */; };
+		4F32E155231C420100199A11 /* MessagePort_HelperApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E14E231C420100199A11 /* MessagePort_HelperApp.m */; };
 		4F32E156231C420100199A11 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F32E14F231C420100199A11 /* config.plist */; };
 		4F32E157231C420100199A11 /* DeviceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E150231C420100199A11 /* DeviceManager.m */; };
-		4F32E158231C420100199A11 /* ConfigFileInterfaceHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E151231C420100199A11 /* ConfigFileInterfaceHelper.m */; };
+		4F32E158231C420100199A11 /* ConfigFileInterface_HelperApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E151231C420100199A11 /* ConfigFileInterface_HelperApp.m */; };
 		4F32E159231C420100199A11 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E153231C420100199A11 /* Utility.m */; };
 		4F32E15D231C44C000199A11 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E15C231C44C000199A11 /* main.m */; };
 		4F32E15F231C45F300199A11 /* Hyperlink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9CB1222F7D48D0090DB98 /* Hyperlink.m */; };
@@ -36,13 +36,13 @@
 		4FBB85D42187C74100DD6B40 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4FBB85D22187C74100DD6B40 /* Localizable.strings */; };
 		4FBF34F323174A8500E6CFD0 /* PayPal.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FBF34F223174A8500E6CFD0 /* PayPal.xcassets */; };
 		4FBF34F7231750B600E6CFD0 /* pureDonationButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */; };
-		4FBF34FF23183E6700E6CFD0 /* ConfigFileInterfacePrefPane.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FBF34FD23183E6700E6CFD0 /* ConfigFileInterfacePrefPane.h */; };
-		4FBF350023183E6700E6CFD0 /* ConfigFileInterfacePrefPane.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBF34FE23183E6700E6CFD0 /* ConfigFileInterfacePrefPane.m */; };
+		4FBF34FF23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FBF34FD23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h */; };
+		4FBF350023183E6700E6CFD0 /* ConfigFileInterface_PrefPane.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBF34FE23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.m */; };
 		4FBF350523183FDA00E6CFD0 /* HelperServices.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FBF350323183FDA00E6CFD0 /* HelperServices.h */; };
 		4FBF350623183FDA00E6CFD0 /* HelperServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBF350423183FDA00E6CFD0 /* HelperServices.m */; };
 		4FCECD8521092354001F1078 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECD8421092354001F1078 /* AppDelegate.m */; };
-		4FD45A0F231C66CF00F75C58 /* MessagePortPrefPane.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FD45A0D231C66CF00F75C58 /* MessagePortPrefPane.h */; };
-		4FD45A10231C66CF00F75C58 /* MessagePortPrefPane.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD45A0E231C66CF00F75C58 /* MessagePortPrefPane.m */; };
+		4FD45A0F231C66CF00F75C58 /* MessagePort_PrefPane.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FD45A0D231C66CF00F75C58 /* MessagePort_PrefPane.h */; };
+		4FD45A10231C66CF00F75C58 /* MessagePort_PrefPane.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD45A0E231C66CF00F75C58 /* MessagePort_PrefPane.m */; };
 		4FD67DDE211CC9000095A9A5 /* PrefPaneDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FD67DDD211CC9000095A9A5 /* PrefPaneDelegate.h */; };
 		4FD67DE0211CC9000095A9A5 /* PrefPaneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD67DDF211CC9000095A9A5 /* PrefPaneDelegate.m */; };
 		4FD67DE5211CC9000095A9A5 /* Mouse_Remap.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD67DE3211CC9000095A9A5 /* Mouse_Remap.xib */; settings = {ASSET_TAGS = (0, ); }; };
@@ -154,13 +154,13 @@
 		4F1C968B2313606200C3B9AE /* IOHIDEventTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOHIDEventTypes.h; sourceTree = "<group>"; };
 		4F2FDF302315662400C7BE14 /* Mouse Fix Updater */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Mouse Fix Updater"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F2FDF322315662500C7BE14 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		4F32E14B231C420100199A11 /* MessagePortHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagePortHelper.h; sourceTree = "<group>"; };
-		4F32E14C231C420100199A11 /* ConfigFileInterfaceHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigFileInterfaceHelper.h; sourceTree = "<group>"; };
+		4F32E14B231C420100199A11 /* MessagePort_HelperApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagePort_HelperApp.h; sourceTree = "<group>"; };
+		4F32E14C231C420100199A11 /* ConfigFileInterface_HelperApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigFileInterface_HelperApp.h; sourceTree = "<group>"; };
 		4F32E14D231C420100199A11 /* DeviceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceManager.h; sourceTree = "<group>"; };
-		4F32E14E231C420100199A11 /* MessagePortHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagePortHelper.m; sourceTree = "<group>"; };
+		4F32E14E231C420100199A11 /* MessagePort_HelperApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagePort_HelperApp.m; sourceTree = "<group>"; };
 		4F32E14F231C420100199A11 /* config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
 		4F32E150231C420100199A11 /* DeviceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceManager.m; sourceTree = "<group>"; };
-		4F32E151231C420100199A11 /* ConfigFileInterfaceHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigFileInterfaceHelper.m; sourceTree = "<group>"; };
+		4F32E151231C420100199A11 /* ConfigFileInterface_HelperApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigFileInterface_HelperApp.m; sourceTree = "<group>"; };
 		4F32E153231C420100199A11 /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
 		4F32E154231C420100199A11 /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
 		4F32E15C231C44C000199A11 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -189,8 +189,8 @@
 		4FBB85D32187C74100DD6B40 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4FBF34F223174A8500E6CFD0 /* PayPal.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PayPal.xcassets; sourceTree = "<group>"; };
 		4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pureDonationButton.png; sourceTree = "<group>"; };
-		4FBF34FD23183E6700E6CFD0 /* ConfigFileInterfacePrefPane.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigFileInterfacePrefPane.h; sourceTree = "<group>"; };
-		4FBF34FE23183E6700E6CFD0 /* ConfigFileInterfacePrefPane.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigFileInterfacePrefPane.m; sourceTree = "<group>"; };
+		4FBF34FD23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigFileInterface_PrefPane.h; sourceTree = "<group>"; };
+		4FBF34FE23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigFileInterface_PrefPane.m; sourceTree = "<group>"; };
 		4FBF350323183FDA00E6CFD0 /* HelperServices.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelperServices.h; sourceTree = "<group>"; };
 		4FBF350423183FDA00E6CFD0 /* HelperServices.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelperServices.m; sourceTree = "<group>"; };
 		4FCECD8021092354001F1078 /* Mouse Fix Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mouse Fix Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -199,8 +199,8 @@
 		4FCECD8621092354001F1078 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4FCECD8B21092354001F1078 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4FCECD8E21092354001F1078 /* Mouse_Remap_Helper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Mouse_Remap_Helper.entitlements; sourceTree = "<group>"; };
-		4FD45A0D231C66CF00F75C58 /* MessagePortPrefPane.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessagePortPrefPane.h; sourceTree = "<group>"; };
-		4FD45A0E231C66CF00F75C58 /* MessagePortPrefPane.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessagePortPrefPane.m; sourceTree = "<group>"; };
+		4FD45A0D231C66CF00F75C58 /* MessagePort_PrefPane.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessagePort_PrefPane.h; sourceTree = "<group>"; };
+		4FD45A0E231C66CF00F75C58 /* MessagePort_PrefPane.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessagePort_PrefPane.m; sourceTree = "<group>"; };
 		4FD67DDB211CC9000095A9A5 /* Mouse Fix.prefPane */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Mouse Fix.prefPane"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FD67DDD211CC9000095A9A5 /* PrefPaneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefPaneDelegate.h; sourceTree = "<group>"; };
 		4FD67DDF211CC9000095A9A5 /* PrefPaneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PrefPaneDelegate.m; sourceTree = "<group>"; };
@@ -317,12 +317,12 @@
 			isa = PBXGroup;
 			children = (
 				4F32E14F231C420100199A11 /* config.plist */,
-				4F32E14B231C420100199A11 /* MessagePortHelper.h */,
-				4F32E14E231C420100199A11 /* MessagePortHelper.m */,
-				4F32E14C231C420100199A11 /* ConfigFileInterfaceHelper.h */,
-				4F32E151231C420100199A11 /* ConfigFileInterfaceHelper.m */,
+				4F32E14C231C420100199A11 /* ConfigFileInterface_HelperApp.h */,
+				4F32E151231C420100199A11 /* ConfigFileInterface_HelperApp.m */,
 				4F32E14D231C420100199A11 /* DeviceManager.h */,
 				4F32E150231C420100199A11 /* DeviceManager.m */,
+				4F32E14B231C420100199A11 /* MessagePort_HelperApp.h */,
+				4F32E14E231C420100199A11 /* MessagePort_HelperApp.m */,
 				4F32E152231C420100199A11 /* Utility */,
 			);
 			path = BezelServices;
@@ -419,8 +419,8 @@
 		4FBF350123183F1300E6CFD0 /* Config */ = {
 			isa = PBXGroup;
 			children = (
-				4FBF34FD23183E6700E6CFD0 /* ConfigFileInterfacePrefPane.h */,
-				4FBF34FE23183E6700E6CFD0 /* ConfigFileInterfacePrefPane.m */,
+				4FBF34FD23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h */,
+				4FBF34FE23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.m */,
 				4FEA982A21AC775E0094AC51 /* default_config.plist */,
 			);
 			path = Config;
@@ -431,8 +431,8 @@
 			children = (
 				4FBF350323183FDA00E6CFD0 /* HelperServices.h */,
 				4FBF350423183FDA00E6CFD0 /* HelperServices.m */,
-				4FD45A0D231C66CF00F75C58 /* MessagePortPrefPane.h */,
-				4FD45A0E231C66CF00F75C58 /* MessagePortPrefPane.m */,
+				4FD45A0D231C66CF00F75C58 /* MessagePort_PrefPane.h */,
+				4FD45A0E231C66CF00F75C58 /* MessagePort_PrefPane.m */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -527,12 +527,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FD9CB1322F7D48D0090DB98 /* Hyperlink.h in Headers */,
-				4FBF34FF23183E6700E6CFD0 /* ConfigFileInterfacePrefPane.h in Headers */,
+				4FBF34FF23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h in Headers */,
 				4F3A8445230D3E6C0012C725 /* Updater.h in Headers */,
 				4FF873DF23197283002A897A /* UpdateWindow.h in Headers */,
 				4FF873EF231A96B2002A897A /* MoreSheet.h in Headers */,
 				4FBF350523183FDA00E6CFD0 /* HelperServices.h in Headers */,
-				4FD45A0F231C66CF00F75C58 /* MessagePortPrefPane.h in Headers */,
+				4FD45A0F231C66CF00F75C58 /* MessagePort_PrefPane.h in Headers */,
 				4FD67DDE211CC9000095A9A5 /* PrefPaneDelegate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -715,11 +715,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F32E195231C50A100199A11 /* ModifierInputReceiver.m in Sources */,
-				4F32E155231C420100199A11 /* MessagePortHelper.m in Sources */,
+				4F32E155231C420100199A11 /* MessagePort_HelperApp.m in Sources */,
 				4F1C968C231361EF00C3B9AE /* TouchEvents.c in Sources */,
 				4F32E18C231C509200199A11 /* SmoothScroll.m in Sources */,
 				4F32E157231C420100199A11 /* DeviceManager.m in Sources */,
-				4F32E158231C420100199A11 /* ConfigFileInterfaceHelper.m in Sources */,
+				4F32E158231C420100199A11 /* ConfigFileInterface_HelperApp.m in Sources */,
 				4FCECD8521092354001F1078 /* AppDelegate.m in Sources */,
 				4F32E15D231C44C000199A11 /* main.m in Sources */,
 				4F32E194231C50A100199A11 /* InputParser.m in Sources */,
@@ -736,10 +736,10 @@
 				4F32E15F231C45F300199A11 /* Hyperlink.m in Sources */,
 				4FD67DE0211CC9000095A9A5 /* PrefPaneDelegate.m in Sources */,
 				4FF873F0231A96B2002A897A /* MoreSheet.m in Sources */,
-				4FD45A10231C66CF00F75C58 /* MessagePortPrefPane.m in Sources */,
+				4FD45A10231C66CF00F75C58 /* MessagePort_PrefPane.m in Sources */,
 				4FBF350623183FDA00E6CFD0 /* HelperServices.m in Sources */,
 				4F3A8446230D3E6C0012C725 /* Updater.m in Sources */,
-				4FBF350023183E6700E6CFD0 /* ConfigFileInterfacePrefPane.m in Sources */,
+				4FBF350023183E6700E6CFD0 /* ConfigFileInterface_PrefPane.m in Sources */,
 				4FF873E023197283002A897A /* UpdateWindow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

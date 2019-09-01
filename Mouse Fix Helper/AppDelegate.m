@@ -2,7 +2,7 @@
 #import "MouseInputReceiver.h"
 #import "ModifierInputReceiver.h"
 #import "InputParser.h"
-#import "ConfigFileInterfaceHelper.h"
+#import "ConfigFileInterface_HelperApp.h"
 #import "DeviceManager.h"
 
 
@@ -12,8 +12,8 @@
 @end
 
 @implementation AppDelegate
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+
++ (void)load {
     
-    NSLog(@"running Mouse Fix Helper");
 }
 @end

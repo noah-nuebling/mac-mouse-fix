@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ConfigFileInterfacePrefPane : NSObject
+@interface ConfigFileInterface_PrefPane : NSObject
 @property (class,retain) NSMutableDictionary *config;
 + (void)writeConfigToFile;
 + (void)loadConfigFromFile;

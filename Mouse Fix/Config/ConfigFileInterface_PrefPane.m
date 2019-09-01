@@ -6,10 +6,10 @@
 //  Copyright © 2019 Noah Nuebling. All rights reserved.
 //
 
-#import "ConfigFileInterfacePrefPane.h"
+#import "ConfigFileInterface_PrefPane.h"
 #import "HelperServices.h"
 
-@implementation ConfigFileInterfacePrefPane
+@implementation ConfigFileInterface_PrefPane
 
 static NSMutableDictionary *_config;
 + (NSMutableDictionary *)config {
@@ -21,7 +21,7 @@ static NSMutableDictionary *_config;
 
 + (void)initialize
 {
-    if (self == [ConfigFileInterfacePrefPane class]) {
+    if (self == [ConfigFileInterface_PrefPane class]) {
         [self loadConfigFromFile];
     }
 }

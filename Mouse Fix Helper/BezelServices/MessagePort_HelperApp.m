@@ -1,11 +1,12 @@
-#import "MessagePortHelper.h"
-#import "ConfigFileInterfaceHelper.h"
+#import "MessagePort_HelperApp.h"
+#import "ConfigFileInterface_HelperApp.h"
 
 #import <AppKit/NSWindow.h>
 
-@implementation MessagePortHelper
+@implementation MessagePort_HelperApp
 
-#pragma mark - local (for incoming messages)
+
+#pragma mark - local (incoming messages)
 
 + (void)load {
     
@@ -34,14 +35,15 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
     NSLog(@"Helper Received Message: %@",message);
     
     if ([message isEqualToString:@"configFileChanged"]) {
-        [ConfigFileInterfaceHelper reactToConfigFileChange];
+        [ConfigFileInterface_HelperApp reactToConfigFileChange];
     }
     
     NSData *response = NULL;
     return (__bridge CFDataRef)response;
 }
 
-#pragma mark - remote (for outgoing messages)
+
+#pragma mark - remote (outgoing messages)
 
 + (void)sendMessageToPrefPane:(NSString *)message {
     

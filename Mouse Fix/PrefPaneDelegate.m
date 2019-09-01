@@ -6,9 +6,9 @@
 #import <ServiceManagement/SMLoginItem.h>
 #import "PrefPaneDelegate.h"
 #import "Updater.h"
-#import "Config/ConfigFileInterfacePrefPane.h"
+#import "Config/ConfigFileInterface_PrefPane.h"
 #import "Helper/HelperServices.h"
-#import "Helper/MessagePortPrefPane.h"
+#import "Helper/MessagePort_PrefPane.h"
 #import "MoreSheet/MoreSheet.h"
 //#import "CGSInternal/CGSHotKeys.h"
 
@@ -62,7 +62,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 
 - (IBAction)UIChanged:(id)sender {
     [self setConfigFileToUI];
-    [MessagePortPrefPane sendMessageToHelper:@"configFileChanged"];
+    [MessagePort_PrefPane sendMessageToHelper:@"configFileChanged"];
 }
 
 
@@ -89,13 +89,13 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 - (void)mainViewDidLoad {
     NSLog(@"PREF PANEEE");
     
-    NSLog(@"%@",ConfigFileInterfacePrefPane.config);
+    NSLog(@"%@",ConfigFileInterface_PrefPane.config);
     
     _moreSheetDelegate = [[MoreSheet alloc] initWithWindowNibName:@"MoreSheet"];
     
     [self initializeUI];
     
-    BOOL checkForUpdates = [[ConfigFileInterfacePrefPane.config valueForKeyPath:@"other.checkForUpdates"] boolValue];
+    BOOL checkForUpdates = [[ConfigFileInterface_PrefPane.config valueForKeyPath:@"other.checkForUpdates"] boolValue];
     if (checkForUpdates == YES) {
         [Updater checkForUpdate];
     }
@@ -113,7 +113,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
 # pragma mark Popup Buttons
     
-    NSDictionary *buttonRemaps = ConfigFileInterfacePrefPane.config[@"ButtonRemaps"];
+    NSDictionary *buttonRemaps = ConfigFileInterface_PrefPane.config[@"ButtonRemaps"];
     
     // mouse button 4 and 5
     
@@ -171,7 +171,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
 # pragma mark scrollSettings
     
-    NSDictionary *scrollConfigFromFile = ConfigFileInterfacePrefPane.config[@"ScrollSettings"];
+    NSDictionary *scrollConfigFromFile = ConfigFileInterface_PrefPane.config[@"ScrollSettings"];
     
     // enabled checkbox
     if ([scrollConfigFromFile[@"enabled"] boolValue] == 1) {
@@ -236,34 +236,34 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     if (_middleClick.selectedTag != 0) {
         middleButtonClickAction= @[@"symbolicHotKey", @(_middleClick.selectedTag)];
     }
-    [ConfigFileInterfacePrefPane.config setValue:middleButtonClickAction forKeyPath:@"ButtonRemaps.3.click"];
+    [ConfigFileInterface_PrefPane.config setValue:middleButtonClickAction forKeyPath:@"ButtonRemaps.3.click"];
     
     // hold
     NSArray *middleButtonHoldAction;
     if (_middleHold.selectedTag != 0) {
         middleButtonHoldAction = @[@"symbolicHotKey", @(_middleHold.selectedTag)];
     }
-    [ConfigFileInterfacePrefPane.config setValue:middleButtonHoldAction forKeyPath:@"ButtonRemaps.3.hold"];
+    [ConfigFileInterface_PrefPane.config setValue:middleButtonHoldAction forKeyPath:@"ButtonRemaps.3.hold"];
     
     
     // side buttons         // tag = 1 -> Switch Spaces, tag = 2 -> Switch Pages
     
     // click
     NSArray *sideButtonClickAction = [actionsForPopupButtonTag_onlyForSideMouseButtons objectForKey:@(_sideClick.selectedTag)];
-    [ConfigFileInterfacePrefPane.config setValue:sideButtonClickAction[0] forKeyPath:@"ButtonRemaps.4.click"];
-    [ConfigFileInterfacePrefPane.config setValue:sideButtonClickAction[1] forKeyPath:@"ButtonRemaps.5.click"];
+    [ConfigFileInterface_PrefPane.config setValue:sideButtonClickAction[0] forKeyPath:@"ButtonRemaps.4.click"];
+    [ConfigFileInterface_PrefPane.config setValue:sideButtonClickAction[1] forKeyPath:@"ButtonRemaps.5.click"];
     
     // hold
     NSArray *sideButtonHoldAction = [actionsForPopupButtonTag_onlyForSideMouseButtons objectForKey:@(_sideHold.selectedTag)];
-    [ConfigFileInterfacePrefPane.config setValue:sideButtonHoldAction[0] forKeyPath:@"ButtonRemaps.4.hold"];
-    [ConfigFileInterfacePrefPane.config setValue:sideButtonHoldAction[1] forKeyPath:@"ButtonRemaps.5.hold"];
+    [ConfigFileInterface_PrefPane.config setValue:sideButtonHoldAction[0] forKeyPath:@"ButtonRemaps.4.hold"];
+    [ConfigFileInterface_PrefPane.config setValue:sideButtonHoldAction[1] forKeyPath:@"ButtonRemaps.5.hold"];
     
     
     
     // scroll Settings
     
     // checkbox
-    [ConfigFileInterfacePrefPane.config setValue: [NSNumber numberWithBool: _scrollEnableCheckBox.state] forKeyPath:@"ScrollSettings.enabled"];
+    [ConfigFileInterface_PrefPane.config setValue: [NSNumber numberWithBool: _scrollEnableCheckBox.state] forKeyPath:@"ScrollSettings.enabled"];
     
     
     // radio buttons and slider
@@ -295,10 +295,10 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
     NSArray *scrollValuesFromUI = @[@(stepSizeActual), msPerStep, friction, @(direction)];
     
-    [ConfigFileInterfacePrefPane.config setValue:scrollValuesFromUI forKeyPath:@"ScrollSettings.values"];
+    [ConfigFileInterface_PrefPane.config setValue:scrollValuesFromUI forKeyPath:@"ScrollSettings.values"];
     
     
-    [ConfigFileInterfacePrefPane writeConfigToFile];
+    [ConfigFileInterface_PrefPane writeConfigToFile];
 }
 
 @end

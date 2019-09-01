@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 
-@interface MessagePortHelper : NSObject
+@interface MessagePort_HelperApp : NSObject
 + (void)sendMessageToPrefPane:(NSString *)message;
 @end
 
