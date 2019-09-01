@@ -20,7 +20,7 @@
 		4F32E187231C509200199A11 /* SmoothScroll.m (old) in Resources */ = {isa = PBXBuildFile; fileRef = 4F32E180231C509200199A11 /* SmoothScroll.m (old) */; };
 		4F32E188231C509200199A11 /* AnimationCurve.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E181231C509200199A11 /* AnimationCurve.m */; };
 		4F32E189231C509200199A11 /* SmoothScroll.h (old) in Resources */ = {isa = PBXBuildFile; fileRef = 4F32E182231C509200199A11 /* SmoothScroll.h (old) */; };
-		4F32E18A231C509200199A11 /* MomentumScroll.hn (old) in Resources */ = {isa = PBXBuildFile; fileRef = 4F32E184231C509200199A11 /* MomentumScroll.hn (old) */; };
+		4F32E18A231C509200199A11 /* MomentumScroll.h (old) in Resources */ = {isa = PBXBuildFile; fileRef = 4F32E184231C509200199A11 /* MomentumScroll.h (old) */; };
 		4F32E18B231C509200199A11 /* MomentumScroll.m (old) in Resources */ = {isa = PBXBuildFile; fileRef = 4F32E185231C509200199A11 /* MomentumScroll.m (old) */; };
 		4F32E18C231C509200199A11 /* SmoothScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E186231C509200199A11 /* SmoothScroll.m */; };
 		4F32E194231C50A100199A11 /* InputParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E18E231C50A100199A11 /* InputParser.m */; };
@@ -169,7 +169,7 @@
 		4F32E181231C509200199A11 /* AnimationCurve.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimationCurve.m; sourceTree = "<group>"; };
 		4F32E182231C509200199A11 /* SmoothScroll.h (old) */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SmoothScroll.h (old)"; sourceTree = "<group>"; };
 		4F32E183231C509200199A11 /* AnimationCurve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationCurve.h; sourceTree = "<group>"; };
-		4F32E184231C509200199A11 /* MomentumScroll.hn (old) */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "MomentumScroll.hn (old)"; sourceTree = "<group>"; };
+		4F32E184231C509200199A11 /* MomentumScroll.h (old) */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "MomentumScroll.h (old)"; sourceTree = "<group>"; };
 		4F32E185231C509200199A11 /* MomentumScroll.m (old) */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "MomentumScroll.m (old)"; sourceTree = "<group>"; };
 		4F32E186231C509200199A11 /* SmoothScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SmoothScroll.m; sourceTree = "<group>"; };
 		4F32E18E231C50A100199A11 /* InputParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputParser.m; sourceTree = "<group>"; };
@@ -362,10 +362,10 @@
 			isa = PBXGroup;
 			children = (
 				4F32E180231C509200199A11 /* SmoothScroll.m (old) */,
-				4F32E181231C509200199A11 /* AnimationCurve.m */,
 				4F32E182231C509200199A11 /* SmoothScroll.h (old) */,
 				4F32E183231C509200199A11 /* AnimationCurve.h */,
-				4F32E184231C509200199A11 /* MomentumScroll.hn (old) */,
+				4F32E181231C509200199A11 /* AnimationCurve.m */,
+				4F32E184231C509200199A11 /* MomentumScroll.h (old) */,
 				4F32E185231C509200199A11 /* MomentumScroll.m (old) */,
 			);
 			path = Unused;
@@ -646,7 +646,7 @@
 			files = (
 				4F32E156231C420100199A11 /* config.plist in Resources */,
 				4F32E187231C509200199A11 /* SmoothScroll.m (old) in Resources */,
-				4F32E18A231C509200199A11 /* MomentumScroll.hn (old) in Resources */,
+				4F32E18A231C509200199A11 /* MomentumScroll.h (old) in Resources */,
 				4FD67DF4211CDE4D0095A9A5 /* MainMenu.xib in Resources */,
 				4F32E18B231C509200199A11 /* MomentumScroll.m (old) in Resources */,
 				4F32E189231C509200199A11 /* SmoothScroll.h (old) in Resources */,
