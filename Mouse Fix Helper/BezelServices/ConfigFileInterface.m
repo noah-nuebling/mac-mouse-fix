@@ -13,7 +13,7 @@ static NSMutableDictionary *config;
 
 + (void)load {
     [self reactToConfigFileChange];
-//    setupFSEventStreamCallback();
+//    setupFSEventStreamCallback(); //
 }
 
 + (NSMutableDictionary *)config {
@@ -98,12 +98,12 @@ void Handle_FSEventStreamCallback (ConstFSEventStreamRef streamRef, void *client
 
 /**
  we're setting up a File System Monitor so that manual edits to the main configuration file have an effect.
- this allows you to test your own configurations!
+ This allows you to test your own configurations!
  
  to find the main configuration file, paste one of the following in the terminal:
-    - 1. (-> if you installed Mouse Fix for the current user.)
+    - 1. (-> if you installed Mouse Fix for the current user)
     open "$HOME/Library/PreferencePanes/Mouse Fix.prefPane/Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/Resources/config.plist"
-    - 2. (-> if you installed Mous Fix for all users.)
+    - 2. (-> if you installed Mouse Fix for all users)
     open "/Library/PreferencePanes/Mouse Fix.prefPane/Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/Resources/config.plist"
  */
 static void setupFSEventStreamCallback() {

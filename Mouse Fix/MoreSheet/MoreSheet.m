@@ -9,7 +9,7 @@
 #import "MoreSheet.h"
 #import "ConfigFileInterfacePref.h"
 #import "../Update/Updater.h"
-#import "../Helper/HelperInterface.h"
+#import "../Helper/MessagePortPref.h"
 
 @interface MoreSheet ()
     @property (strong) IBOutlet NSPanel *sheetPanel;
@@ -39,7 +39,7 @@
 }
 - (IBAction)UIChanged:(id)sender {
     [self setConfigFileToUI];
-    [HelperInterface tellHelperToUpdateItsSettings];
+    [MessagePortPref tellHelperToUpdateItsSettings];
 }
 
 #pragma mark - Class methods - Public

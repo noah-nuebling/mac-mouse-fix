@@ -7,10 +7,10 @@
 //  Copyright © 2019 Noah Nuebling. All rights reserved.
 //
 
-#import "HelperInterface.h"
+#import "MessagePortPref.h"
 #import "PrefPaneDelegate.h"
 
-@implementation HelperInterface
+@implementation MessagePortPref
 
 + (NSBundle *)helperBundle {
     NSBundle *prefPaneBundle = [NSBundle bundleForClass: [PrefPaneDelegate class]];

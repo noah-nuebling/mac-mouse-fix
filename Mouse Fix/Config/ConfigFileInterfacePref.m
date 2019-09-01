@@ -7,7 +7,7 @@
 //
 
 #import "ConfigFileInterfacePref.h"
-#import "HelperInterface.h"
+#import "MessagePortPref.h"
 
 @implementation ConfigFileInterfacePref
 
@@ -33,7 +33,7 @@ static NSMutableDictionary *_config;
     if (serializeErr) {
         NSLog(@"ERROR serializing configDictFromFile: %@", serializeErr);
     }
-    NSString *configPath = [[HelperInterface helperBundle] pathForResource:@"config" ofType:@"plist"];
+    NSString *configPath = [[MessagePortPref helperBundle] pathForResource:@"config" ofType:@"plist"];
     //    BOOL success = [configData writeToFile:configPath atomically:YES];
     //    if (!success) {
     //        NSLog(@"ERROR writing configDictFromFile to file");
@@ -49,7 +49,7 @@ static NSMutableDictionary *_config;
 }
 
 + (void)loadConfigFromFile {
-    NSString *configPath = [[HelperInterface helperBundle] pathForResource:@"config" ofType:@"plist"];
+    NSString *configPath = [[MessagePortPref helperBundle] pathForResource:@"config" ofType:@"plist"];
     NSData *configData = [NSData dataWithContentsOfFile:configPath];
     NSError *readErr;
     NSMutableDictionary *configDict = [NSPropertyListSerialization propertyListWithData:configData options:NSPropertyListMutableContainersAndLeaves format:nil error:&readErr];

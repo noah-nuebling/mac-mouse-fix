@@ -38,8 +38,8 @@
 		4FBF34F7231750B600E6CFD0 /* pureDonationButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */; };
 		4FBF34FF23183E6700E6CFD0 /* ConfigFileInterfacePref.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FBF34FD23183E6700E6CFD0 /* ConfigFileInterfacePref.h */; };
 		4FBF350023183E6700E6CFD0 /* ConfigFileInterfacePref.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBF34FE23183E6700E6CFD0 /* ConfigFileInterfacePref.m */; };
-		4FBF350523183FDA00E6CFD0 /* HelperInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FBF350323183FDA00E6CFD0 /* HelperInterface.h */; };
-		4FBF350623183FDA00E6CFD0 /* HelperInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBF350423183FDA00E6CFD0 /* HelperInterface.m */; };
+		4FBF350523183FDA00E6CFD0 /* MessagePortPref.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FBF350323183FDA00E6CFD0 /* MessagePortPref.h */; };
+		4FBF350623183FDA00E6CFD0 /* MessagePortPref.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBF350423183FDA00E6CFD0 /* MessagePortPref.m */; };
 		4FCECD8521092354001F1078 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECD8421092354001F1078 /* AppDelegate.m */; };
 		4FD67DDE211CC9000095A9A5 /* PrefPaneDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FD67DDD211CC9000095A9A5 /* PrefPaneDelegate.h */; };
 		4FD67DE0211CC9000095A9A5 /* PrefPaneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD67DDF211CC9000095A9A5 /* PrefPaneDelegate.m */; };
@@ -189,8 +189,8 @@
 		4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pureDonationButton.png; sourceTree = "<group>"; };
 		4FBF34FD23183E6700E6CFD0 /* ConfigFileInterfacePref.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigFileInterfacePref.h; sourceTree = "<group>"; };
 		4FBF34FE23183E6700E6CFD0 /* ConfigFileInterfacePref.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigFileInterfacePref.m; sourceTree = "<group>"; };
-		4FBF350323183FDA00E6CFD0 /* HelperInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelperInterface.h; sourceTree = "<group>"; };
-		4FBF350423183FDA00E6CFD0 /* HelperInterface.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelperInterface.m; sourceTree = "<group>"; };
+		4FBF350323183FDA00E6CFD0 /* MessagePortPref.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessagePortPref.h; sourceTree = "<group>"; };
+		4FBF350423183FDA00E6CFD0 /* MessagePortPref.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessagePortPref.m; sourceTree = "<group>"; };
 		4FCECD8021092354001F1078 /* Mouse Fix Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mouse Fix Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FCECD8321092354001F1078 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4FCECD8421092354001F1078 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -313,12 +313,12 @@
 			isa = PBXGroup;
 			children = (
 				4F32E14F231C420100199A11 /* config.plist */,
-				4F32E14B231C420100199A11 /* MessagePort.h */,
 				4F32E14C231C420100199A11 /* ConfigFileInterface.h */,
-				4F32E14D231C420100199A11 /* DeviceManager.h */,
-				4F32E14E231C420100199A11 /* MessagePort.m */,
-				4F32E150231C420100199A11 /* DeviceManager.m */,
 				4F32E151231C420100199A11 /* ConfigFileInterface.m */,
+				4F32E14B231C420100199A11 /* MessagePort.h */,
+				4F32E14E231C420100199A11 /* MessagePort.m */,
+				4F32E14D231C420100199A11 /* DeviceManager.h */,
+				4F32E150231C420100199A11 /* DeviceManager.m */,
 				4F32E152231C420100199A11 /* Utility */,
 			);
 			path = BezelServices;
@@ -425,8 +425,8 @@
 		4FBF350223183FBA00E6CFD0 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
-				4FBF350323183FDA00E6CFD0 /* HelperInterface.h */,
-				4FBF350423183FDA00E6CFD0 /* HelperInterface.m */,
+				4FBF350323183FDA00E6CFD0 /* MessagePortPref.h */,
+				4FBF350423183FDA00E6CFD0 /* MessagePortPref.m */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -525,7 +525,7 @@
 				4F3A8445230D3E6C0012C725 /* Updater.h in Headers */,
 				4FF873DF23197283002A897A /* UpdateWindow.h in Headers */,
 				4FF873EF231A96B2002A897A /* MoreSheet.h in Headers */,
-				4FBF350523183FDA00E6CFD0 /* HelperInterface.h in Headers */,
+				4FBF350523183FDA00E6CFD0 /* MessagePortPref.h in Headers */,
 				4FD67DDE211CC9000095A9A5 /* PrefPaneDelegate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -729,7 +729,7 @@
 				4F32E15F231C45F300199A11 /* Hyperlink.m in Sources */,
 				4FD67DE0211CC9000095A9A5 /* PrefPaneDelegate.m in Sources */,
 				4FF873F0231A96B2002A897A /* MoreSheet.m in Sources */,
-				4FBF350623183FDA00E6CFD0 /* HelperInterface.m in Sources */,
+				4FBF350623183FDA00E6CFD0 /* MessagePortPref.m in Sources */,
 				4F3A8446230D3E6C0012C725 /* Updater.m in Sources */,
 				4FBF350023183E6700E6CFD0 /* ConfigFileInterfacePref.m in Sources */,
 				4FF873E023197283002A897A /* UpdateWindow.m in Sources */,

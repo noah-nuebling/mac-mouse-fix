@@ -7,7 +7,7 @@
 #import "PrefPaneDelegate.h"
 #import "Updater.h"
 #import "Config/ConfigFileInterfacePref.h"
-#import "Helper/HelperInterface.h"
+#import "Helper/MessagePortPref.h"
 #import "MoreSheet/MoreSheet.h"
 //#import "CGSInternal/CGSHotKeys.h"
 
@@ -52,7 +52,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     //sendKeyUpForAllSymbolicHotKeysThatAMouseButtonMapsTo(self);
     
     BOOL checkboxState = [sender state];
-    [HelperInterface enableHelperAsUserAgent: checkboxState];
+    [MessagePortPref enableHelperAsUserAgent: checkboxState];
     
 }
 - (IBAction)moreButton:(id)sender {
@@ -61,7 +61,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 
 - (IBAction)UIChanged:(id)sender {
     [self setConfigFileToUI];
-    [HelperInterface tellHelperToUpdateItsSettings];
+    [MessagePortPref tellHelperToUpdateItsSettings];
 }
 
 
@@ -104,7 +104,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
 #pragma mark other
     // enableCheckbox
-    if (HelperInterface.helperIsActive) {
+    if (MessagePortPref.helperIsActive) {
         [_enableCheckBox setState: 1];
     } else {
         [_enableCheckBox setState: 0];
