@@ -1,6 +1,6 @@
-#import "Utility.h"
+#import "UtilityHelper.h"
 
-@implementation Utility
+@implementation UtilityHelper
 
 + (NSString *)binaryRepresentation:(int)value {
     long nibbleCount = sizeof(value) * 2;

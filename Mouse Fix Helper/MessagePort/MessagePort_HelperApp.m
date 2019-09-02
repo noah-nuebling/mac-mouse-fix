@@ -2,13 +2,14 @@
 #import "ConfigFileInterface_HelperApp.h"
 
 #import <AppKit/NSWindow.h>
+#import "../Accessibility/AccessibilityCheck.h"
 
 @implementation MessagePort_HelperApp
 
 
 #pragma mark - local (incoming messages)
 
-+ (void)load {
++ (void)load_Manual {
     
     CFMessagePortRef localPort =
     CFMessagePortCreateLocal(NULL,
@@ -36,6 +37,12 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
     
     if ([message isEqualToString:@"configFileChanged"]) {
         [ConfigFileInterface_HelperApp reactToConfigFileChange];
+    } else if ([message isEqualToString:@"terminate"]) {
+        [NSApp terminate:[NSApplication sharedApplication]];
+    } else if ([message isEqualToString:@"checkAccessibility"]) {
+        if (![AccessibilityCheck check]) {
+            [MessagePort_HelperApp sendMessageToPrefPane:@"accessibilityDisabled"];
+        }
     }
     
     NSData *response = NULL;

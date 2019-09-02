@@ -16,6 +16,24 @@
 @end
 
 @implementation UpdateWindow
+static NSWindow *_instance;
++ (NSWindow *)instance {
+    return _instance;
+}
++ (void)setInstance:(NSWindow *)new {
+    _instance = new;
+}
+
+- (instancetype)init
+{
+    NSLog(@"init Update Window");
+    self = [super init];
+    if (self) {
+        UpdateWindow.instance = self;
+        self = [self initWithWindowNibName:@"UpdateWindow"];
+    }
+    return self;
+}
 
 - (IBAction)skip:(id)sender {
     [Updater skipAvailableVersion];

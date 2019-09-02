@@ -1,9 +1,4 @@
 #import "AppDelegate.h"
-#import "MouseInputReceiver.h"
-#import "ModifierInputReceiver.h"
-#import "InputParser.h"
-#import "ConfigFileInterface_HelperApp.h"
-#import "DeviceManager.h"
 
 
 @interface AppDelegate ()
@@ -13,7 +8,4 @@
 
 @implementation AppDelegate
 
-+ (void)load {
-    
-}
 @end

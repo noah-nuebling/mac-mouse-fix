@@ -4,6 +4,9 @@
 @interface ConfigFileInterface_HelperApp : NSObject
 
 @property (class, retain) NSMutableDictionary *config;
+
++ (void)load_Manual;
+
 + (void)reactToConfigFileChange;
 + (void)repairConfigFile:(NSString *)info;
 

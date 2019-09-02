@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UpdateWindow : NSWindowController <NSWindowDelegate, WKNavigationDelegate>
 - (void)startWithUpdateNotes:(NSURL *)updateNotesLocation;
+@property (class, strong) UpdateWindow *instance;
 @end
 
 NS_ASSUME_NONNULL_END

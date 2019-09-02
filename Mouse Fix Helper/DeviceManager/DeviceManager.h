@@ -2,6 +2,7 @@
 
 
 @interface DeviceManager : NSObject
++ (void)load_Manual;
 + (BOOL)relevantDevicesAreAttached;
 @end
 

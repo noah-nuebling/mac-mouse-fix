@@ -6,7 +6,7 @@
 
 #import "MouseInputReceiver.h"
 #import "DeviceManager.h"
-#import "Utility.h"
+#import "UtilityHelper.h"
 
 
 
@@ -263,7 +263,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
     _scrollPhase = kMFWheelPhase;
     
-    if (![Utility sameSign_n:(scrollDeltaAxis1 * _scrollDirection) m:_pixelsToScroll]) {
+    if (![UtilityHelper sameSign_n:(scrollDeltaAxis1 * _scrollDirection) m:_pixelsToScroll]) {
         _consecutiveScrollSwipeCounter = 0;
         _pixelScrollQueue = 0;
     };

@@ -11,7 +11,7 @@
 
 static NSMutableDictionary *config;
 
-+ (void)load {
++ (void)load_Manual {
     [self reactToConfigFileChange];
 //    setupFSEventStreamCallback(); //
 }

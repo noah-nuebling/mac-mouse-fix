@@ -10,13 +10,18 @@
 #import "HelperServices/HelperServices.h"
 #import "MessagePort/MessagePort_PrefPane.h"
 #import "MoreSheet/MoreSheet.h"
+#import "Update/UpdateWindow.h"
+#import "Utility/UtilityPrefPane.h"
 //#import "CGSInternal/CGSHotKeys.h"
+
+#import "Accessibility/AuthorizeAccessibilityView.h"
 
 @interface PrefPaneDelegate ()
 
-//@property (retain) NSBundle *helperBundle;
+@property (strong) IBOutlet NSView *mainView;
 
 @property (weak) IBOutlet NSButton *enableCheckBox;
+
 
 @property (weak) IBOutlet NSButton *scrollEnableCheckBox;
 
@@ -32,7 +37,7 @@
 @property (weak) IBOutlet NSPopUpButton *middleClick;
 @property (weak) IBOutlet NSPopUpButton *middleHold;
 @property (weak) IBOutlet NSPopUpButton *sideClick;
-@property (weak) IBOutlet NSPopUpButton *sideHold;
+//@property (weak) IBOutlet NSPopUpButton *sideHold;
 
 @property (strong) MoreSheet *moreSheetDelegate;
 
@@ -41,8 +46,18 @@
 
 @implementation PrefPaneDelegate
 
+@dynamic mainView;
+static PrefPaneDelegate *_mainView;
++ (PrefPaneDelegate *)mainView {
+    return _mainView;
+}
++ (void)setMainView:(PrefPaneDelegate *)new {
+    _mainView = new;
+}
+
 static NSDictionary *_scrollSmoothnessConfigurations;
 static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
+
 
 # pragma mark - IBActions
 
@@ -51,9 +66,9 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 - (IBAction)enableCheckBox:(id)sender {
     
     //sendKeyUpForAllSymbolicHotKeysThatAMouseButtonMapsTo(self);
-    
     BOOL checkboxState = [sender state];
     [HelperServices enableHelperAsUserAgent: checkboxState];
+    [self performSelector:@selector(disableUI:) withObject:[NSNumber numberWithBool:_enableCheckBox.state] afterDelay:0.0];
     
 }
 - (IBAction)moreButton:(id)sender {
@@ -66,10 +81,24 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 }
 
 
-
 # pragma mark - main
 
+
+
+- (NSView *)loadMainView {
+    
+    [[NSBundle bundleForClass:self.class] loadNibNamed:@"Mouse_Remap" owner:self topLevelObjects:NULL];
+    PrefPaneDelegate.mainView = self.mainView;
+    
+    [self mainViewDidLoad];
+    
+    return self.mainView;
+}
+
+
 + (void)initialize {
+    NSLog(@"INIT 3");
+    
     if (self == [PrefPaneDelegate class]) {
         _scrollSmoothnessConfigurations = @{
                                             @"Normal"   :   @[ @[@20,@100],  @130, @1.5],
@@ -87,9 +116,9 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 
 
 - (void)mainViewDidLoad {
+    
     NSLog(@"PREF PANEEE");
     
-    NSLog(@"%@",ConfigFileInterface_PrefPane.config);
     
     _moreSheetDelegate = [[MoreSheet alloc] initWithWindowNibName:@"MoreSheet"];
     
@@ -99,16 +128,47 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     if (checkForUpdates == YES) {
         [Updater checkForUpdate];
     }
+    
+}
+
+- (void)willSelect {
+//    [MessagePort_PrefPane sendMessageToHelper:@"terminate"];
+    [MessagePort_PrefPane performSelector:@selector(sendMessageToHelper:) withObject:@"checkAccessibility" afterDelay:0.0];
+}
+
+
+
+- (void)willUnselect {
+    [AuthorizeAccessibilityView remove];
+    [UpdateWindow.instance close];
+}
+
+- (void)disableUI:(NSNumber *)enable {
+    
+    BOOL enb = enable.boolValue;
+    
+
+    NSArray *baseArray = [UtilityPrefPane subviewsForView:self.mainView withIdentifier:@"baseView"];
+    NSView *baseView = baseArray[0];
+    NSBox *preferenceBox = (NSBox *)[UtilityPrefPane subviewsForView:baseView withIdentifier:@"preferenceBox"][0];
+    
+    for (NSObject *v in preferenceBox.contentView.subviews) {
+        if ([[v class] isSubclassOfClass:[NSControl class]]) {
+            [(NSControl *)v setEnabled:enb];
+        }
+    }
 }
 
 - (void)initializeUI {
     
+    NSLog(@"helperactiveEEEEEE: %hhd", HelperServices.helperIsActive);
+    
 #pragma mark other
     // enableCheckbox
     if (HelperServices.helperIsActive) {
-        [_enableCheckBox setState: 1];
+        _enableCheckBox.state = 1;
     } else {
-        [_enableCheckBox setState: 0];
+        _enableCheckBox.state = 0;
     }
     
 # pragma mark Popup Buttons
@@ -144,7 +204,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     else {
         j = 0;
     }
-    [_sideHold selectItemWithTag: j];
+//    [_sideHold selectItemWithTag: j];
     
     
     // middle mouse button
@@ -222,7 +282,10 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
     _scrollSliderStepSize.doubleValue = pxStepSizeRelativeToConfigRange;
     
+    [self performSelector:@selector(disableUI:) withObject:[NSNumber numberWithBool:_enableCheckBox.state] afterDelay:0.0];
+    
 }
+
 
 
 - (void)setConfigFileToUI {
@@ -254,9 +317,9 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     [ConfigFileInterface_PrefPane.config setValue:sideButtonClickAction[1] forKeyPath:@"ButtonRemaps.5.click"];
     
     // hold
-    NSArray *sideButtonHoldAction = [actionsForPopupButtonTag_onlyForSideMouseButtons objectForKey:@(_sideHold.selectedTag)];
-    [ConfigFileInterface_PrefPane.config setValue:sideButtonHoldAction[0] forKeyPath:@"ButtonRemaps.4.hold"];
-    [ConfigFileInterface_PrefPane.config setValue:sideButtonHoldAction[1] forKeyPath:@"ButtonRemaps.5.hold"];
+//    NSArray *sideButtonHoldAction = [actionsForPopupButtonTag_onlyForSideMouseButtons objectForKey:@(_sideHold.selectedTag)];
+//    [ConfigFileInterface_PrefPane.config setValue:sideButtonHoldAction[0] forKeyPath:@"ButtonRemaps.4.hold"];
+//    [ConfigFileInterface_PrefPane.config setValue:sideButtonHoldAction[1] forKeyPath:@"ButtonRemaps.5.hold"];
     
     
     

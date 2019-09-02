@@ -138,7 +138,7 @@ static NSURL *_updateNotesLocation;
         
         
         _windowController = [UpdateWindow alloc];
-        _windowController = [_windowController initWithWindowNibName:@"UpdateWindow" owner:_windowController];
+        _windowController = [_windowController init];
         [_windowController startWithUpdateNotes:_updateNotesLocation];
         
         [_windowController showWindow:nil];

@@ -11,7 +11,10 @@ IOHIDManagerRef _hidManager;
 static BOOL _relevantDevicesAreAttached;
 
 
-+ (void)load {
+/**
+ True entry point of the program
+ */
++ (void)load_Manual {
     setupDeviceAddedAndRemovedCallbacks();
 }
 
