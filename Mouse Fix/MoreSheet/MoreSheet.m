@@ -10,6 +10,7 @@
 #import "ConfigFileInterface_PrefPane.h"
 #import "../Update/Updater.h"
 #import "../MessagePort/MessagePort_PrefPane.h"
+#import "../PrefPaneDelegate.h"
 
 
 @interface MoreSheet ()
@@ -21,7 +22,7 @@
 
 @implementation MoreSheet
 
-# pragma mark - IBActions
+# pragma mark - IBActions and Delegate
 - (IBAction)checkForUpdateCheckBox:(NSButton *)sender {
     NSLog(@"CHECK");
     [ConfigFileInterface_PrefPane.config setValue:@"0" forKeyPath:@"other.skippedBundleVersion"];
@@ -42,6 +43,15 @@
     [self setConfigFileToUI];
     [MessagePort_PrefPane sendMessageToHelper:@"configFileChanged"];
 }
+
+//- (void)mouseDown:(NSEvent *)event {
+//    NSLog(@"mousduunsn");
+//    
+//    [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
+//    [PrefPaneDelegate.mainView.window makeFirstResponder:NULL];
+//    [_sheetPanel makeKeyWindow];
+//    [_sheetPanel makeFirstResponder:NULL];
+//}
 
 #pragma mark - Class methods - Public
 

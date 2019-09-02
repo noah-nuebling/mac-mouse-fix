@@ -141,9 +141,9 @@ static NSURL *_updateNotesLocation;
         _windowController = [_windowController init];
         [_windowController startWithUpdateNotes:_updateNotesLocation];
         
-//        [_windowController showWindow:nil];
-//        [_windowController.window makeKeyAndOrderFront:nil];
-        [NSApplication.sharedApplication beginModalSessionForWindow:_windowController.window];
+        [_windowController showWindow:nil];
+        [_windowController.window makeKeyAndOrderFront:nil];
+//        [NSApplication.sharedApplication beginModalSessionForWindow:_windowController.window];
         
     });
 }
