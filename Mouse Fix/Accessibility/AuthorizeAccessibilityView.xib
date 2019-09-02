@@ -15,7 +15,7 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView identifier="accView" wantsLayer="YES" id="Hz6-mo-xeY">
             <rect key="frame" x="0.0" y="0.0" width="668" height="250"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
             <subviews>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4xE-rF-dLS">
                     <rect key="frame" x="227" y="68" width="215" height="32"/>

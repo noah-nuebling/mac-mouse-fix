@@ -128,7 +128,6 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     if (checkForUpdates == YES) {
         [Updater checkForUpdate];
     }
-    
 }
 
 - (void)willSelect {

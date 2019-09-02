@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UtilityPrefPane : NSObject
 + (NSArray *)subviewsForView:(NSView *)view withIdentifier:(NSString *)identifier;
++ (float)preferenceWindowWidth;
 @end
 
 NS_ASSUME_NONNULL_END
