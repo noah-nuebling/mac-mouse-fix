@@ -6,10 +6,10 @@
 //  Copyright © 2019 Noah Nuebling. All rights reserved.
 //
 
-#import "UtilityPrefPane.h"
+#import "Utility_PrefPane.h"
 #import <AppKit/AppKit.h>
 
-@implementation UtilityPrefPane
+@implementation Utility_PrefPane
 
 + (NSArray *)subviewsForView:(NSView *)view withIdentifier:(NSString *)identifier {
     

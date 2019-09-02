@@ -74,7 +74,6 @@ AuthorizeAccessibilityView *_accViewController;
 }
 
 + (void)add {
-    
     NSView *mainView = PrefPaneDelegate.mainView;
     
     NSView *baseView;

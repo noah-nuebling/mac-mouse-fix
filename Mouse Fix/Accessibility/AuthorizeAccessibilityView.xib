@@ -18,7 +18,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
             <subviews>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4xE-rF-dLS">
-                    <rect key="frame" x="227" y="68" width="215" height="32"/>
+                    <rect key="frame" x="227" y="61" width="215" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <buttonCell key="cell" type="push" title="Authorize Mouse Fix Helper" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="JHz-BX-05T">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -31,7 +31,7 @@
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fK8-8z-KQn">
                     <rect key="frame" x="193" y="155" width="75" height="75"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="Mouse_Fix" id="5dq-HX-ncI"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="MouseFix" id="5dq-HX-ncI"/>
                 </imageView>
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xsP-AA-VHR">
                     <rect key="frame" x="400" y="155" width="75" height="75"/>
@@ -56,11 +56,11 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sum-Rk-SFt">
-                    <rect key="frame" x="205" y="51" width="259" height="14"/>
+                    <rect key="frame" x="206" y="45" width="259" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Click the lock in the lower left to make changes." id="Zjy-1r-IDG">
                         <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="textColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
@@ -91,7 +91,7 @@
     </objects>
     <resources>
         <image name="KeyIcon" width="106" height="58"/>
-        <image name="Mouse_Fix" width="800" height="800"/>
+        <image name="MouseFix" width="800" height="800"/>
         <image name="UniversalAccessPref" width="138" height="142"/>
     </resources>
 </document>

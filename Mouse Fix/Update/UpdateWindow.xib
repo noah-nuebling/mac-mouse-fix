@@ -14,7 +14,7 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="Mouse Fix Update" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" deferred="NO" releasedWhenClosed="NO" animationBehavior="default" id="aKw-WA-SaC">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" resizable="YES"/>
+            <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="340" height="440"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
@@ -62,7 +62,7 @@ DQ
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ez9-jv-NO8">
                         <rect key="frame" x="20" y="370" width="50" height="50"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="Mouse_Fix" id="KeE-GA-mgN"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="MouseFix" id="KeE-GA-mgN"/>
                     </imageView>
                 </subviews>
                 <constraints>
@@ -84,6 +84,6 @@ DQ
         </window>
     </objects>
     <resources>
-        <image name="Mouse_Fix" width="800" height="800"/>
+        <image name="MouseFix" width="800" height="800"/>
     </resources>
 </document>

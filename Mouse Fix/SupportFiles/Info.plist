@@ -17,19 +17,15 @@
 	<key>CFBundleShortVersionString</key>
 	<string>0.1</string>
 	<key>CFBundleVersion</key>
-	<string>140</string>
+	<string>196</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2018 Noah Nuebling Enterprises Ltd. All rights reserved.</string>
 	<key>NSMainNibFile</key>
-	<string>Mouse_Remap</string>
-	<key>NSPrefPaneAllowsXAppleSystemPreferencesURLScheme</key>
-	<true/>
+	<string>MouseFix</string>
 	<key>NSPrefPaneIconFile</key>
-	<string>Mouse_Fix.tiff</string>
+	<string>MouseFix.tiff</string>
 	<key>NSPrefPaneIconLabel</key>
 	<string>Mouse Fix</string>
-	<key>NSPrefPaneSearchParameters</key>
-	<string>MouseFixSP</string>
 	<key>NSPrefPaneSupportsAutoLayout</key>
 	<false/>
 	<key>NSPrincipalClass</key>

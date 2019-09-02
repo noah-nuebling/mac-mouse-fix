@@ -11,7 +11,7 @@
 #import "MessagePort/MessagePort_PrefPane.h"
 #import "MoreSheet/MoreSheet.h"
 #import "Update/UpdateWindow.h"
-#import "Utility/UtilityPrefPane.h"
+#import "Utility/Utility_PrefPane.h"
 //#import "CGSInternal/CGSHotKeys.h"
 
 #import "Accessibility/AuthorizeAccessibilityView.h"
@@ -87,7 +87,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 
 - (NSView *)loadMainView {
     
-    [[NSBundle bundleForClass:self.class] loadNibNamed:@"Mouse_Remap" owner:self topLevelObjects:NULL];
+    [[NSBundle bundleForClass:self.class] loadNibNamed:@"MouseFix" owner:self topLevelObjects:NULL];
     PrefPaneDelegate.mainView = self.mainView;
     
     [self mainViewDidLoad];
@@ -131,7 +131,6 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 }
 
 - (void)willSelect {
-//    [MessagePort_PrefPane sendMessageToHelper:@"terminate"];
     [MessagePort_PrefPane performSelector:@selector(sendMessageToHelper:) withObject:@"checkAccessibility" afterDelay:0.0];
 }
 
@@ -147,9 +146,9 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     BOOL enb = enable.boolValue;
     
 
-    NSArray *baseArray = [UtilityPrefPane subviewsForView:self.mainView withIdentifier:@"baseView"];
+    NSArray *baseArray = [Utility_PrefPane subviewsForView:self.mainView withIdentifier:@"baseView"];
     NSView *baseView = baseArray[0];
-    NSBox *preferenceBox = (NSBox *)[UtilityPrefPane subviewsForView:baseView withIdentifier:@"preferenceBox"][0];
+    NSBox *preferenceBox = (NSBox *)[Utility_PrefPane subviewsForView:baseView withIdentifier:@"preferenceBox"][0];
     
     for (NSObject *v in preferenceBox.contentView.subviews) {
         if ([[v class] isSubclassOfClass:[NSControl class]]) {

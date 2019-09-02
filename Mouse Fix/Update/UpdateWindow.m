@@ -9,6 +9,7 @@
 #import "UpdateWindow.h"
 #import "Updater.h"
 #import "../MoreSheet/MoreSheet.h"
+#import "../PrefPaneDelegate.h"
 #import <WebKit/WebKit.h>
 
 @interface UpdateWindow ()
@@ -64,13 +65,19 @@ static NSWindow *_instance;
     [self createWebviewWithURL:updateNotesLocation];
     
     
+    NSRect prefPanewWindowFrame = PrefPaneDelegate.mainView.window.frame;
+    NSPoint ppMid = NSMakePoint(NSMidX(prefPanewWindowFrame), NSMidY(prefPanewWindowFrame));
+    
     CGSize win = CGSizeMake(330, 205); //(330,[JSreturn floatValue])
-    CGSize dsp = NSScreen.mainScreen.frame.size;
-    NSRect newWinPos = NSMakeRect((dsp.width/2.0) - (win.width/2.0), (dsp.height/2.0) - (win.height/2.0) + 50, win.width, win.height);
+    NSRect newWinPos = NSMakeRect(ppMid.x - (win.width/2.0), ppMid.y - (win.height/2.0), win.width, win.height);
+//    CGSize dsp = NSScreen.mainScreen.frame.size;
+//    NSRect newWinPos = NSMakeRect((dsp.width/2.0) - (win.width/2.0), (dsp.height/2.0) - (win.height/2.0) + 50, win.width, win.height);
     [self.window setFrame:newWinPos display:YES animate:NO];
 }
 
 - (void)createWebviewWithURL:(NSURL *)updateNotesURL {
+    
+    //    updateNotesURL = [NSURL fileURLWithPath:@"/Users/Noah/Desktop/updatenotes"];
     
     [self.window setFrame:NSMakeRect(0, 0, 440, 462) display:NO animate:NO];
     NSRect WKFrm = NSMakeRect(80, 57, 340, 363); // (20, 57, 400, 332/363)
