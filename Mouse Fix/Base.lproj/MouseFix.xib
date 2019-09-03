@@ -189,7 +189,7 @@
                                                         <menuItem title="Side buttons" state="on" toolTip="Leave button behavior unchanged." id="1a7-0y-cIV"/>
                                                         <menuItem isSeparatorItem="YES" id="4hR-Cg-H2I"/>
                                                         <menuItem title="Move between Spaces" tag="1" id="mo5-2i-ROD"/>
-                                                        <menuItem title="Move between Pages" tag="2" id="VCO-0X-gaQ"/>
+                                                        <menuItem title="Forward / Back" tag="2" id="VCO-0X-gaQ"/>
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>

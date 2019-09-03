@@ -77,7 +77,7 @@ static NSWindow *_instance;
 
 - (void)createWebviewWithURL:(NSURL *)updateNotesURL {
     
-    //    updateNotesURL = [NSURL fileURLWithPath:@"/Users/Noah/Desktop/updatenotes"];
+//    updateNotesURL = [NSURL fileURLWithPath:@"/Users/Noah/Desktop/updatenotes"];
     
     [self.window setFrame:NSMakeRect(0, 0, 440, 462) display:NO animate:NO];
     NSRect WKFrm = NSMakeRect(80, 57, 340, 363); // (20, 57, 400, 332/363)
@@ -122,6 +122,8 @@ static NSWindow *_instance;
             NSLog(@"%@",error);
             NSLog(@"%@",(NSString *)response);
         }];
+        
+//        webView.enclosingScrollView.appearance = [NSAppearance appearanceNamed:NSAppearanceNameDarkAqua];     // I'd like to make the scrollbar dark when darkmode is enabled but this doesn't work
     }
 }
 
