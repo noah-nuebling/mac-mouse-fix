@@ -65,8 +65,10 @@ static NSWindow *_instance;
     [self createWebviewWithURL:updateNotesLocation];
     
     
-    NSRect prefPanewWindowFrame = PrefPaneDelegate.mainView.window.frame;
+    
+    NSRect prefPanewWindowFrame = NSApplication.sharedApplication.mainWindow.frame;
     NSPoint ppMid = NSMakePoint(NSMidX(prefPanewWindowFrame), NSMidY(prefPanewWindowFrame));
+    
     
     CGSize win = CGSizeMake(330, 205); //(330,[JSreturn floatValue])
     NSRect newWinPos = NSMakeRect(ppMid.x - (win.width/2.0), ppMid.y - (win.height/2.0), win.width, win.height);

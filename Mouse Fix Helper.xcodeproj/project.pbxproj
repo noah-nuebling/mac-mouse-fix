@@ -10,7 +10,6 @@
 		4F1C968C231361EF00C3B9AE /* TouchEvents.c in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C96872313606200C3B9AE /* TouchEvents.c */; };
 		4F2FDF332315662500C7BE14 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2FDF322315662500C7BE14 /* main.m */; };
 		4F2FDF3D23156AA900C7BE14 /* Mouse Fix Updater in Copy Updater */ = {isa = PBXBuildFile; fileRef = 4F2FDF302315662400C7BE14 /* Mouse Fix Updater */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		4F325563231D3B3B00397221 /* MouseFix.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4FF64F3A22F7408A0065F64F /* MouseFix.tiff */; };
 		4F325567231D450300397221 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FCECD8621092354001F1078 /* Assets.xcassets */; };
 		4F32E155231C420100199A11 /* MessagePort_HelperApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E14E231C420100199A11 /* MessagePort_HelperApp.m */; };
 		4F32E156231C420100199A11 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F32E14F231C420100199A11 /* config.plist */; };
@@ -32,10 +31,11 @@
 		4F32E19A231C5BBC00199A11 /* ZipArchive.framework in My Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F32E198231C5B5100199A11 /* ZipArchive.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F3A8445230D3E6C0012C725 /* Updater.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F3A8443230D3E6C0012C725 /* Updater.h */; };
 		4F3A8446230D3E6C0012C725 /* Updater.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A8444230D3E6C0012C725 /* Updater.m */; };
+		4F3FC751231EAFCA0079774F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FCECD8621092354001F1078 /* Assets.xcassets */; };
+		4F3FC753231EB30D0079774F /* MouseFixPreferencePaneIcon.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4F3FC752231EB30D0079774F /* MouseFixPreferencePaneIcon.tiff */; };
 		4F8AEA9222FBC7AC008C1A7C /* milkshake_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */; };
 		4F8F38E822F8C7A1004D0040 /* Mouse_Fix_alt.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4F8F38E722F8C7A1004D0040 /* Mouse_Fix_alt.tiff */; };
 		4FACF59F2183B956009257D4 /* default_mouse.fix.helper.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FACF59E2183B956009257D4 /* default_mouse.fix.helper.plist */; };
-		4FBF34F323174A8500E6CFD0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FBF34F223174A8500E6CFD0 /* Images.xcassets */; };
 		4FBF34F7231750B600E6CFD0 /* pureDonationButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */; };
 		4FBF34FF23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FBF34FD23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h */; };
 		4FBF350023183E6700E6CFD0 /* ConfigFileInterface_PrefPane.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBF34FE23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.m */; };
@@ -164,7 +164,6 @@
 		4F1C968B2313606200C3B9AE /* IOHIDEventTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOHIDEventTypes.h; sourceTree = "<group>"; };
 		4F2FDF302315662400C7BE14 /* Mouse Fix Updater */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Mouse Fix Updater"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F2FDF322315662500C7BE14 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		4F325565231D42C700397221 /* MouseFix.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = MouseFix.tiff; path = ../../../../../../../../../../.Trash/MouseFix.tiff; sourceTree = "<group>"; };
 		4F32E14B231C420100199A11 /* MessagePort_HelperApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagePort_HelperApp.h; sourceTree = "<group>"; };
 		4F32E14C231C420100199A11 /* ConfigFileInterface_HelperApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigFileInterface_HelperApp.h; sourceTree = "<group>"; };
 		4F32E14D231C420100199A11 /* DeviceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceManager.h; sourceTree = "<group>"; };
@@ -194,10 +193,10 @@
 		4F32E198231C5B5100199A11 /* ZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZipArchive.framework; path = Carthage/Build/Mac/ZipArchive.framework; sourceTree = "<group>"; };
 		4F3A8443230D3E6C0012C725 /* Updater.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Updater.h; sourceTree = "<group>"; };
 		4F3A8444230D3E6C0012C725 /* Updater.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Updater.m; sourceTree = "<group>"; };
+		4F3FC752231EB30D0079774F /* MouseFixPreferencePaneIcon.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = MouseFixPreferencePaneIcon.tiff; sourceTree = "<group>"; };
 		4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = milkshake_button.png; sourceTree = "<group>"; };
 		4F8F38E722F8C7A1004D0040 /* Mouse_Fix_alt.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Mouse_Fix_alt.tiff; sourceTree = "<group>"; };
 		4FACF59E2183B956009257D4 /* default_mouse.fix.helper.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_mouse.fix.helper.plist; sourceTree = "<group>"; };
-		4FBF34F223174A8500E6CFD0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pureDonationButton.png; sourceTree = "<group>"; };
 		4FBF34FD23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigFileInterface_PrefPane.h; sourceTree = "<group>"; };
 		4FBF34FE23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigFileInterface_PrefPane.m; sourceTree = "<group>"; };
@@ -349,9 +348,8 @@
 				4FD45A25231C860100F75C58 /* UniversalAccessPref.tiff */,
 				4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */,
 				4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */,
-				4F325565231D42C700397221 /* MouseFix.tiff */,
-				4FBF34F223174A8500E6CFD0 /* Images.xcassets */,
 				4FACF5A02183B9AA009257D4 /* Default User Agent Config File */,
+				4F3FC752231EB30D0079774F /* MouseFixPreferencePaneIcon.tiff */,
 				4FF64F3A22F7408A0065F64F /* MouseFix.tiff */,
 				4F8F38E722F8C7A1004D0040 /* Mouse_Fix_alt.tiff */,
 				4FD67DE6211CC9000095A9A5 /* Info.plist */,
@@ -568,8 +566,8 @@
 				4FD45A17231C785F00F75C58 /* Accessibility */,
 				4FF873F2231A96C0002A897A /* MoreSheet */,
 				4FBF350223183FBA00E6CFD0 /* HelperServices */,
-				4FD45A16231C771200F75C58 /* MessagePort */,
 				4FBF350123183F1300E6CFD0 /* Config */,
+				4FD45A16231C771200F75C58 /* MessagePort */,
 				4FBF347B2316B90800E6CFD0 /* Update */,
 				4FD45A30231D03B800F75C58 /* Utility */,
 				4F32E15E231C455A00199A11 /* SupportFiles */,
@@ -738,7 +736,6 @@
 				4F32E18B231C509200199A11 /* MomentumScroll.m (old) in Resources */,
 				4F32E189231C509200199A11 /* SmoothScroll.h (old) in Resources */,
 				4F325567231D450300397221 /* Assets.xcassets in Resources */,
-				4F325563231D3B3B00397221 /* MouseFix.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -751,8 +748,9 @@
 				4FD45A1D231C78B400F75C58 /* AuthorizeAccessibilityView.xib in Resources */,
 				4FF64F3B22F7408B0065F64F /* MouseFix.tiff in Resources */,
 				4FBF34F7231750B600E6CFD0 /* pureDonationButton.png in Resources */,
-				4FBF34F323174A8500E6CFD0 /* Images.xcassets in Resources */,
 				4F8F38E822F8C7A1004D0040 /* Mouse_Fix_alt.tiff in Resources */,
+				4F3FC753231EB30D0079774F /* MouseFixPreferencePaneIcon.tiff in Resources */,
+				4F3FC751231EAFCA0079774F /* Assets.xcassets in Resources */,
 				4F8AEA9222FBC7AC008C1A7C /* milkshake_button.png in Resources */,
 				4FACF59F2183B956009257D4 /* default_mouse.fix.helper.plist in Resources */,
 				4FD45A2B231CD20200F75C58 /* SpinnerView.xib in Resources */,
