@@ -71,6 +71,9 @@ AuthorizeAccessibilityView *_accViewController;
     
     NSString* urlString = @"x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility";
     [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:urlString]];
+    
+    [MessagePort_PrefPane sendMessageToHelper:@"enable"];
+    
 }
 
 + (void)add {

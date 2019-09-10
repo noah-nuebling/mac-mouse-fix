@@ -7,6 +7,7 @@
 //
 
 #import "Launchd.h"
+#import <AppKit/AppKit.h>
 
 @implementation Launchd
 
@@ -41,6 +42,10 @@
     }
     else {
         NSLog(@"To this program, it looks like the number of user libraries != 1. Your computer is weird...");
+    }
+    
+    if (!enable) {
+        [NSApp terminate:NULL];
     }
 }
 
