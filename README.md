@@ -5,4 +5,4 @@
 
 ---
 
-Mouse Fix is currently under construction...
+Mouse Fix is currently under construction.
