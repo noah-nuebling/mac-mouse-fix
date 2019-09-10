@@ -1,9 +1,10 @@
 //
-//  SmoothScroll.m
-//  ScrollFix Playground in OBJC weil Swift STINKT
-//
-//  Created by Noah Nübling on 06.11.18.
-//  Copyright © 2018 Noah Nuebling Enterprises Ltd. All rights reserved.
+// --------------------------------------------------------------------------
+// MomentumScroll.m (old)
+// Created for: Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
+// Created by: Noah Nuebling in 2019
+// Licensed under MIT
+// --------------------------------------------------------------------------
 //
 
 

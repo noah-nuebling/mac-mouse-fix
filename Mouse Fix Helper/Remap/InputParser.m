@@ -1,3 +1,11 @@
+//
+// --------------------------------------------------------------------------
+// InputParser.m
+// Created for: Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
+// Created by: Noah Nuebling in 2019
+// Licensed under MIT
+// --------------------------------------------------------------------------
+//
 
 // SensibleSideButtons, a utility that fixes the navigation buttons on third-party mice in macOS
 // Copyright (C) 2018 Alexei Baboulevitch (ssb@archagon.net)
@@ -16,6 +24,7 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 //
+
 #import "InputParser.h"
 #import "AppDelegate.h"
 #import "ConfigFileInterface_HelperApp.h"

@@ -1,9 +1,10 @@
 //
-//  main.m
-//  Mouse Remap Helper
-//
-//  Created by Noah Nübling on 25.07.18.
-//  Copyright © 2018 Noah Nuebling Enterprises Ltd. All rights reserved.
+// --------------------------------------------------------------------------
+// main.m (Target: Mouse Fix Helper)
+// Created for: Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
+// Created by: Noah Nuebling in 2019
+// Licensed under MIT
+// --------------------------------------------------------------------------
 //
 
 #import <Cocoa/Cocoa.h>

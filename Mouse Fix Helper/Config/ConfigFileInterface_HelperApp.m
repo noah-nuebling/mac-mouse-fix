@@ -1,3 +1,12 @@
+//
+// --------------------------------------------------------------------------
+// ConfigFileInterface_HelperApp.m
+// Created for: Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
+// Created by: Noah Nuebling in 2019
+// Licensed under MIT
+// --------------------------------------------------------------------------
+//
+
 // TODO: implement callback when frontmost application changes - change settings accordingly
 // NSWorkspaceDidActivateApplicationNotification?
 
