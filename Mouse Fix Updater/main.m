@@ -32,7 +32,6 @@ int main(int argc, const char * argv[]) {
             return 0;
         }
     
-        
         // kill system preferences
         
         NSArray *prefApps = [NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.apple.systempreferences"];
@@ -53,6 +52,7 @@ int main(int argc, const char * argv[]) {
         
         // kill the helper app
         // (the updated helper application will subsequently be launched by launchd due to the keepAlive attribute in mouse fix helper's launchd.plist)
+        
         NSArray *helperApps = [NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.nuebling.mousefix.helper"];
         for (NSRunningApplication *helpApp in helperApps) {
             [helpApp terminate];
@@ -63,17 +63,6 @@ int main(int argc, const char * argv[]) {
         NSURL *prefPaneURL = [[[NSURL fileURLWithPath:NSProcessInfo.processInfo.arguments[0]] URLByAppendingPathComponent:@"/../../../.."] URLByStandardizingPath];
         [NSWorkspace.sharedWorkspace openURL:prefPaneURL];
         
-        
-//        // run apple script to relaunch system preferences and navigate to the mouse fix prefPane
-//
-//        NSDictionary *restartErr = [NSDictionary new];
-//        NSAppleScript *restartOSAObj = [[NSAppleScript alloc] initWithSource:@"tell application \"System Preferences\"\nactivate\nset the current pane to pane id \"com.nuebling.mousefix\"\nend tell"];
-//        if ([restartOSAObj executeAndReturnError:&restartErr]) {
-//            NSLog(@"successfully restarted!");
-//        } else {
-//            NSLog(@"failed to restart!");
-//            NSLog(@"%@", restartErr);
-//        }
         
     }
     

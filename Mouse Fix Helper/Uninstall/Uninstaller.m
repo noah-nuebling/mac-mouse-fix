@@ -34,7 +34,7 @@
 
 void Handle_FSCallback(ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents, void *eventPaths, const FSEventStreamEventFlags *eventFlags, const FSEventStreamEventId *eventIds) {
     
-    NSArray *contents = [NSFileManager.defaultManager contentsOfDirectoryAtPath:[Utility_HelperApp prefPaneBundle].bundlePath error:NULL];
+    NSArray *contents = [NSFileManager.defaultManager contentsOfDirectoryAtPath:[[Utility_HelperApp prefPaneBundle].bundlePath stringByDeletingLastPathComponent] error:NULL];
     
     if (![contents containsObject:@"Mouse Fix.prefPane"]) {
         
