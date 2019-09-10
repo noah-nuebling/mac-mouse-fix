@@ -1,9 +1,10 @@
 //
-//  UpdateWindow.h
-//  Mouse Fix
-//
-//  Created by Noah Nübling on 30.08.19.
-//  Copyright © 2019 Noah Nuebling. All rights reserved.
+// --------------------------------------------------------------------------
+// UpdateWindow.h
+// Created for: Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
+// Created by: Noah Nuebling in 2019
+// Licensed under MIT
+// --------------------------------------------------------------------------
 //
 
 #import <Cocoa/Cocoa.h>

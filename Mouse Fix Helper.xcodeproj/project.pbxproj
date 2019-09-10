@@ -35,9 +35,6 @@
 		4F3FC753231EB30D0079774F /* MouseFixPreferencePaneIcon.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4F3FC752231EB30D0079774F /* MouseFixPreferencePaneIcon.tiff */; };
 		4F8AEA9222FBC7AC008C1A7C /* milkshake_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */; };
 		4F8F38E822F8C7A1004D0040 /* Mouse_Fix_alt.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4F8F38E722F8C7A1004D0040 /* Mouse_Fix_alt.tiff */; };
-		4FA3B2BC2327F1CE002DA83E /* GreatttStuff.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FA3B2BA2327F1CE002DA83E /* GreatttStuff.h */; };
-		4FA3B2BD2327F1CE002DA83E /* GreatttStuff.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA3B2BB2327F1CE002DA83E /* GreatttStuff.m */; };
-		4FA3B2CC2327F2EA002DA83E /* moist.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FA3B2CA2327F2EA002DA83E /* moist.h */; };
 		4FACF59F2183B956009257D4 /* default_mouse.fix.helper.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FACF59E2183B956009257D4 /* default_mouse.fix.helper.plist */; };
 		4FBF34F7231750B600E6CFD0 /* pureDonationButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */; };
 		4FBF34FF23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FBF34FD23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h */; };
@@ -211,9 +208,6 @@
 		4F3FC752231EB30D0079774F /* MouseFixPreferencePaneIcon.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = MouseFixPreferencePaneIcon.tiff; sourceTree = "<group>"; };
 		4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = milkshake_button.png; sourceTree = "<group>"; };
 		4F8F38E722F8C7A1004D0040 /* Mouse_Fix_alt.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Mouse_Fix_alt.tiff; sourceTree = "<group>"; };
-		4FA3B2BA2327F1CE002DA83E /* GreatttStuff.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GreatttStuff.h; sourceTree = "<group>"; };
-		4FA3B2BB2327F1CE002DA83E /* GreatttStuff.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GreatttStuff.m; sourceTree = "<group>"; };
-		4FA3B2CA2327F2EA002DA83E /* moist.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = moist.h; sourceTree = "<group>"; };
 		4FACF59E2183B956009257D4 /* default_mouse.fix.helper.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_mouse.fix.helper.plist; sourceTree = "<group>"; };
 		4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pureDonationButton.png; sourceTree = "<group>"; };
 		4FBF34FD23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigFileInterface_PrefPane.h; sourceTree = "<group>"; };
@@ -594,9 +588,6 @@
 				4FBF347B2316B90800E6CFD0 /* Update */,
 				4FD45A30231D03B800F75C58 /* Utility */,
 				4F32E15E231C455A00199A11 /* SupportFiles */,
-				4FA3B2BA2327F1CE002DA83E /* GreatttStuff.h */,
-				4FA3B2BB2327F1CE002DA83E /* GreatttStuff.m */,
-				4FA3B2CA2327F2EA002DA83E /* moist.h */,
 			);
 			path = "Mouse Fix";
 			sourceTree = "<group>";
@@ -646,9 +637,7 @@
 				4FF873DF23197283002A897A /* UpdateWindow.h in Headers */,
 				4FF873EF231A96B2002A897A /* MoreSheet.h in Headers */,
 				4FD45A34231D097000F75C58 /* Utility_PrefPane.h in Headers */,
-				4FA3B2BC2327F1CE002DA83E /* GreatttStuff.h in Headers */,
 				4FBF350523183FDA00E6CFD0 /* HelperServices.h in Headers */,
-				4FA3B2CC2327F2EA002DA83E /* moist.h in Headers */,
 				4FD45A0F231C66CF00F75C58 /* MessagePort_PrefPane.h in Headers */,
 				4FD67DDE211CC9000095A9A5 /* PrefPaneDelegate.h in Headers */,
 			);
@@ -863,7 +852,6 @@
 				4FD45A35231D097000F75C58 /* Utility_PrefPane.m in Sources */,
 				4FD67DE0211CC9000095A9A5 /* PrefPaneDelegate.m in Sources */,
 				4FF873F0231A96B2002A897A /* MoreSheet.m in Sources */,
-				4FA3B2BD2327F1CE002DA83E /* GreatttStuff.m in Sources */,
 				4FD45A10231C66CF00F75C58 /* MessagePort_PrefPane.m in Sources */,
 				4FD45A1C231C78B400F75C58 /* AuthorizeAccessibilityView.m in Sources */,
 				4FBF350623183FDA00E6CFD0 /* HelperServices.m in Sources */,

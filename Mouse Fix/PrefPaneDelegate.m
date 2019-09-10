@@ -1,4 +1,11 @@
-
+//
+// --------------------------------------------------------------------------
+// PrefPaneDelegate.m
+// Created for: Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
+// Created by: Noah Nuebling in 2019
+// Licensed under MIT
+// --------------------------------------------------------------------------
+//
 
 // implement checkbox functionality, setup AddingField mouse tracking and other minor stuff
 
