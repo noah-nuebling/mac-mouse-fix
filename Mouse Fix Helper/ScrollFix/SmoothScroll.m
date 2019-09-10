@@ -112,7 +112,7 @@ static void resetDynamicGlobals() {
     
     _nOfOnePixelScrollsMax              =   2;
     
-    _fastScrollExponentialBase          =   1.075; //1.125 //1.0625 // 1.09375
+    _fastScrollExponentialBase          =   1.05; //1.125 //1.0625 // 1.09375
     _scrollSwipeThreshhold_Ticks        =   3;
     _fastScrollThreshhold_Swipes        =   3;
     _consecutiveScrollTickMaxIntervall     =   0.03;
@@ -376,7 +376,6 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 #pragma mark fast scroll
 
 + (void)Handle_ConsecutiveScrollSwipeCallback:(NSTimer *)timer {
-    NSLog(@"RESET CONSECUTIVE");
     _consecutiveScrollSwipeCounter = 0;
     [timer invalidate];
 }

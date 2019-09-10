@@ -160,10 +160,6 @@ static NSURL *_updateNotesLocation;
         [MoreSheet endMoreSheetAttachedToMainWindow];
     });
     
-    // close the more sheet so it doesn't block app termination later
-//    [MoreSheet performSelectorInBackground:@selector(endMoreSheetAttachedToMainWindow) withObject:nil];
-//    
-    
 
     NSFileManager *fm = [NSFileManager defaultManager];
 

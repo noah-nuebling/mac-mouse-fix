@@ -19,7 +19,7 @@
 
 + (int8_t)signOf:(int64_t)n {
     if (n == 0) {return 0;}
-    return n > 0 ? 1 : -1;
+    return n >= 0 ? 1 : -1;
 }
 + (BOOL)sameSign_n:(int64_t)n m:(int64_t)m {
     if (n == 0 || m == 0) {
