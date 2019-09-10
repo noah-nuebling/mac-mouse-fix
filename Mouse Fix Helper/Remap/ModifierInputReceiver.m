@@ -25,7 +25,6 @@ CFMachPortRef _eventTapKey;
 }
 
 static void setupModifierKeyCallback() {
-    /* Register event Tap Callback */
     CGEventMask mask = CGEventMaskBit(kCGEventFlagsChanged);
     _eventTapKey = CGEventTapCreate(kCGHIDEventTap, kCGTailAppendEventTap, kCGEventTapOptionDefault, mask, Handle_ModifierChanged, NULL);
     CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _eventTapKey, 0);
@@ -37,7 +36,7 @@ CGEventRef Handle_ModifierChanged(CGEventTapProxy proxy, CGEventType type, CGEve
     
     CGEventFlags flags = CGEventGetFlags(event);
     
-    if (flags & kCGEventFlagMaskShift) {    // I used 1 << 17 here - should be the same as kCGEventFlagMaskShift, idk why I didn't use that instead
+    if (flags & kCGEventFlagMaskShift) {
         [SmoothScroll setHorizontalScroll:TRUE];
     } else {
         [SmoothScroll setHorizontalScroll:FALSE];
