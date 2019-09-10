@@ -25,7 +25,7 @@
     
     if (!accessibilityEnabled) {
         [NSTimer scheduledTimerWithTimeInterval:0.5 repeats:NO block:^(NSTimer * _Nonnull timer) {
-        [MessagePort_HelperApp sendMessageToPrefPane:@"accessibilityDisabled"];
+            [MessagePort_HelperApp sendMessageToPrefPane:@"accessibilityDisabled"];
         }];
         [NSTimer scheduledTimerWithTimeInterval:0.5 repeats:YES block:^(NSTimer * _Nonnull timer) {
             if ([self check]) {

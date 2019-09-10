@@ -587,6 +587,7 @@
 				4FD45A16231C771200F75C58 /* MessagePort */,
 				4FBF347B2316B90800E6CFD0 /* Update */,
 				4FD45A30231D03B800F75C58 /* Utility */,
+				4FF873F3231AB3AB002A897A /* Hyperlink */,
 				4F32E15E231C455A00199A11 /* SupportFiles */,
 			);
 			path = "Mouse Fix";
@@ -609,7 +610,6 @@
 				4FF873EC231A96B2002A897A /* MoreSheet.h */,
 				4FF873ED231A96B2002A897A /* MoreSheet.m */,
 				4FF873EE231A96B2002A897A /* MoreSheet.xib */,
-				4FF873F3231AB3AB002A897A /* Hyperlink */,
 			);
 			path = MoreSheet;
 			sourceTree = "<group>";
