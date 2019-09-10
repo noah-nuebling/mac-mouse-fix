@@ -1,6 +1,5 @@
 #import "MessagePort_HelperApp.h"
 #import "ConfigFileInterface_HelperApp.h"
-#import "../Launchd/Launchd.h"
 
 #import <AppKit/NSWindow.h>
 #import "../Accessibility/AccessibilityCheck.h"
@@ -44,10 +43,6 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
         if (![AccessibilityCheck check]) {
             [MessagePort_HelperApp sendMessageToPrefPane:@"accessibilityDisabled"];
         }
-    } else if ([message isEqualToString:@"enable"]) {
-        [Launchd enableHelperAsUserAgent:YES];
-    } else if ([message isEqualToString:@"disable"]) {
-        [Launchd enableHelperAsUserAgent:NO];
     }
     
     NSData *response = NULL;

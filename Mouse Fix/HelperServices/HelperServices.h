@@ -12,7 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HelperServices : NSObject
 + (NSBundle *)helperBundle;
-+ (BOOL)helperIsRunning;
++ (void)enableHelperAsUserAgent:(BOOL)enable;
++ (BOOL)helperIsActive;
 @end
 
 NS_ASSUME_NONNULL_END

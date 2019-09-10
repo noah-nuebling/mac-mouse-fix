@@ -8,8 +8,6 @@
 
 #import "MessagePort_PrefPane.h"
 #import "../Accessibility/AuthorizeAccessibilityView.h"
-#import "../HelperServices/HelperServices.h"
-
 
 @implementation MessagePort_PrefPane
 
@@ -57,18 +55,6 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
 
 + (void)sendMessageToHelper:(NSString *)message {
     
-    // wake up helper
-    
-    BOOL helperRunning = [HelperServices helperIsRunning];
-    if (!helperRunning) {
-        [NSWorkspace.sharedWorkspace openURL:[NSBundle bundleWithIdentifier:@"com.nuebling.mousefix.helper"].bundleURL];
-    }
-    if ([message isEqualToString:@"enable"]) {
-        helperRunning = YES;
-    }
-    
-    // send message to helper
-    
     NSLog(@"Sending message to Helper");
     
     CFMessagePortRef remotePort = CFMessagePortCreateRemote(kCFAllocatorDefault, CFSTR("com.nuebling.mousefix.helper.port"));
@@ -87,36 +73,31 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
     if (status != 0) {
         NSLog(@"CFMessagePortSendRequest status: %d", status);
     }
-    
-    // terminate helper if it wasn't running before sending this message
-    if (!helperRunning) {
-        [MessagePort_PrefPane sendMessageToHelper:@"terminate"];
-    }
 }
 
-//+ (NSString *)sendMessageWithReplyToHelper:(NSString *)message {
-//
-//    NSLog(@"Sending message to Helper");
-//
-//    CFMessagePortRef remotePort = CFMessagePortCreateRemote(kCFAllocatorDefault, CFSTR("com.nuebling.mousefix.helper.port"));
-//    if (remotePort == NULL) {
-//        NSLog(@"there is no CFMessagePort");
-//        return NULL;
-//    }
-//
-//    SInt32 messageID = 0x420666; // Arbitrary
-//    CFDataRef messageData = (__bridge CFDataRef)[message dataUsingEncoding:kUnicodeUTF8Format];
-//    CFTimeInterval sendTimeout = 0.0;
-//    CFTimeInterval recieveTimeout = 1;
-//    CFStringRef replyMode = kCFRunLoopDefaultMode;
-//    CFDataRef returnData;
-//    SInt32 status = CFMessagePortSendRequest(remotePort, messageID, messageData, sendTimeout, recieveTimeout, replyMode, &returnData);
-//    if (status != 0) {
-//        NSLog(@"CFMessagePortSendRequest status: %d", status);
-//    }
-//
-//    return [[NSString alloc] initWithData:(__bridge NSData *)returnData encoding:NSUTF8StringEncoding];
-//}
++ (NSString *)sendMessageWithReplyToHelper:(NSString *)message {
+    
+    NSLog(@"Sending message to Helper");
+    
+    CFMessagePortRef remotePort = CFMessagePortCreateRemote(kCFAllocatorDefault, CFSTR("com.nuebling.mousefix.helper.port"));
+    if (remotePort == NULL) {
+        NSLog(@"there is no CFMessagePort");
+        return NULL;
+    }
+    
+    SInt32 messageID = 0x420666; // Arbitrary
+    CFDataRef messageData = (__bridge CFDataRef)[message dataUsingEncoding:kUnicodeUTF8Format];
+    CFTimeInterval sendTimeout = 0.0;
+    CFTimeInterval recieveTimeout = 1;
+    CFStringRef replyMode = kCFRunLoopDefaultMode;
+    CFDataRef returnData;
+    SInt32 status = CFMessagePortSendRequest(remotePort, messageID, messageData, sendTimeout, recieveTimeout, replyMode, &returnData);
+    if (status != 0) {
+        NSLog(@"CFMessagePortSendRequest status: %d", status);
+    }
+    
+    return [[NSString alloc] initWithData:(__bridge NSData *)returnData encoding:NSUTF8StringEncoding];
+}
 
 
 @end

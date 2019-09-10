@@ -67,12 +67,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
     //sendKeyUpForAllSymbolicHotKeysThatAMouseButtonMapsTo(self);
     BOOL checkboxState = [sender state];
-    
-    if (checkboxState == 1) {
-        [MessagePort_PrefPane sendMessageToHelper:@"enable"];
-    } else {
-        [MessagePort_PrefPane sendMessageToHelper:@"disable"];
-    }
+    [HelperServices enableHelperAsUserAgent: checkboxState];
     [self performSelector:@selector(disableUI:) withObject:[NSNumber numberWithBool:_enableCheckBox.state] afterDelay:0.0];
     
 }
@@ -136,10 +131,6 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 }
 
 - (void)willSelect {
-
-}
-
-- (void)didSelect {
     [MessagePort_PrefPane performSelector:@selector(sendMessageToHelper:) withObject:@"checkAccessibility" afterDelay:0.0];
 }
 
@@ -168,11 +159,11 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 
 - (void)initializeUI {
     
-    NSLog(@"helperactiveEEEEEE: %hhd", [HelperServices helperIsRunning]);
+    NSLog(@"helperactiveEEEEEE: %hhd", HelperServices.helperIsActive);
     
 #pragma mark other
     // enableCheckbox
-    if ([HelperServices helperIsRunning]) {
+    if (HelperServices.helperIsActive) {
         _enableCheckBox.state = 1;
     } else {
         _enableCheckBox.state = 0;
