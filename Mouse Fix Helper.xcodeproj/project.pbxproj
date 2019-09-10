@@ -489,8 +489,8 @@
 				4FD45A15231C76ED00F75C58 /* MessagePort */,
 				4FD45A13231C76A700F75C58 /* Config */,
 				4F32E152231C420100199A11 /* Utility */,
-				4FCECDB02109326E001F1078 /* SupportFiles */,
 				4FF3B2BA2327604A009E8A8E /* Uninstall */,
+				4FCECDB02109326E001F1078 /* SupportFiles */,
 			);
 			path = "Mouse Fix Helper";
 			sourceTree = "<group>";

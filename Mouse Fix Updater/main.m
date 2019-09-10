@@ -58,16 +58,22 @@ int main(int argc, const char * argv[]) {
             [helpApp terminate];
         }
         
-        // run apple script to relaunch system preferences and navigate to the mouse fix prefPane
+        // open the newly installed prefpane
         
-        NSDictionary *restartErr = [NSDictionary new];
-        NSAppleScript *restartOSAObj = [[NSAppleScript alloc] initWithSource:@"tell application \"System Preferences\"\nactivate\nset the current pane to pane id \"com.nuebling.mousefix\"\nend tell"];
-        if ([restartOSAObj executeAndReturnError:&restartErr]) {
-            NSLog(@"successfully restarted!");
-        } else {
-            NSLog(@"failed to restart!");
-            NSLog(@"%@", restartErr);
-        }
+        NSURL *prefPaneURL = [[[NSURL fileURLWithPath:NSProcessInfo.processInfo.arguments[0]] URLByAppendingPathComponent:@"/../../../.."] URLByStandardizingPath];
+        [NSWorkspace.sharedWorkspace openURL:prefPaneURL];
+        
+        
+//        // run apple script to relaunch system preferences and navigate to the mouse fix prefPane
+//
+//        NSDictionary *restartErr = [NSDictionary new];
+//        NSAppleScript *restartOSAObj = [[NSAppleScript alloc] initWithSource:@"tell application \"System Preferences\"\nactivate\nset the current pane to pane id \"com.nuebling.mousefix\"\nend tell"];
+//        if ([restartOSAObj executeAndReturnError:&restartErr]) {
+//            NSLog(@"successfully restarted!");
+//        } else {
+//            NSLog(@"failed to restart!");
+//            NSLog(@"%@", restartErr);
+//        }
         
     }
     

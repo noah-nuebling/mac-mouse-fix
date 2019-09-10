@@ -1,6 +1,6 @@
 
-// this class is a copy of the one at Mouse Fix > HelperServices > HelperServices.m
-// another reason why this is a less-than-ideal-solution, is that with this setup the launchd.plist file can't be removed when the user uninstalls the prefpane while the helper is still running
+// this class is mostly a copy of the one at Mouse Fix > HelperServices > HelperServices.m
+// another reason why this is a less-than-ideal-solution, is that with this setup the launchd.plist file can't be removed when the user uninstalls the prefpane while the helper is still running. So in this case the app leaves some minimal residue in the system, which I wanted to avoid...
 
 #import <AppKit/AppKit.h>
 #import "HelperServices_HelperApp.h"

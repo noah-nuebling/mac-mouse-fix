@@ -25,7 +25,7 @@
     for (NSURL *u in prefURLs) {
         [prefPaths addObject:u.path];
     }
-    FSEventStreamRef stream = FSEventStreamCreate(kCFAllocatorDefault, Handle_FSCallback, NULL, (__bridge CFArrayRef) prefPaths, kFSEventStreamEventIdSinceNow, 5, kFSEventStreamCreateFlagIgnoreSelf ^ kFSEventStreamCreateFlagUseCFTypes);
+    FSEventStreamRef stream = FSEventStreamCreate(kCFAllocatorDefault, Handle_FSCallback, NULL, (__bridge CFArrayRef) prefPaths, kFSEventStreamEventIdSinceNow, 1, kFSEventStreamCreateFlagIgnoreSelf ^ kFSEventStreamCreateFlagUseCFTypes);
     
     FSEventStreamScheduleWithRunLoop(stream, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
     FSEventStreamStart(stream);
