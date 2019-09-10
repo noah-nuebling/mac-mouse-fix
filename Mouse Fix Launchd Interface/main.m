@@ -1,18 +1,27 @@
 
+#import <Foundation/Foundation.h>
+#import "main.h"
 
-// this class has a copy in Mouse Fix Helper > Uninstaller > HelperServices_HelperApp
-#import "HelperServices.h"
-#import "PrefPaneDelegate.h"
-#import "../MessagePort/MessagePort_PrefPane.h"
-
-@implementation HelperServices
-
-+ (NSBundle *)helperBundle {
-    NSBundle *prefPaneBundle = [NSBundle bundleForClass: [PrefPaneDelegate class]];
-    NSString *prefPaneBundlePath = [prefPaneBundle bundlePath];
-    NSString *helperBundlePath = [prefPaneBundlePath stringByAppendingPathComponent: @"Contents/Library/LoginItems/Mouse Fix Helper.app"];
-    return [NSBundle bundleWithPath:helperBundlePath];
+int main(int argc, const char * argv[]) {
+    @autoreleasepool {
+        
+        NSMutableString *action = NSMutableString.string;
+        if (argc > 1) {
+            action = [NSMutableString stringWithCString:argv[1] encoding:NSUTF8StringEncoding];
+        }
+        if ([action isEqualToString:@"enable"]) {
+            [LDI enableHelperAsUserAgent:YES];
+        } else if ([action isEqualToString:@"disable"]) {
+            [LDI enableHelperAsUserAgent:NO];
+        }
+        
+                    [LDI enableHelperAsUserAgent:YES];
+        
+    }
+    return 0;
 }
+
+@implementation LDI
 
 /* registering/unregistering the helper as a User Agent with launchd - also launches/terminates helper */
 + (void)enableHelperAsUserAgent:(BOOL)enable {
@@ -37,7 +46,7 @@
             NSString *OnOffArgument = (enable) ? @"bootstrap": @"bootout";
             NSURL *launchctlURL = [NSURL fileURLWithPath: launchctlPath];
             
-            [NSTask launchedTaskWithExecutableURL: launchctlURL arguments:@[OnOffArgument, GUIDomainArgument, launchAgentPlistPath] error: nil terminationHandler: ^(NSTask *task) {
+            [NSTask launchedTaskWithExecutableURL: launchctlURL arguments:@[OnOffArgument, GUIDomainArgument, launchAgentPlistPath] error:nil terminationHandler: ^(NSTask *task) {
                 if (enable == NO) {
                     [self cleanup];
                 }
@@ -53,7 +62,7 @@
     }
     
     if (enable == NO) {
-//        [MessagePort_PrefPane performSelector:@selector(deleteLaunchdPlist) withObject:self afterDelay:2];
+        //        [MessagePort_PrefPane performSelector:@selector(deleteLaunchdPlist) withObject:self afterDelay:2];
     }
 }
 
@@ -76,9 +85,11 @@
         // write correct file to "User/Library/LaunchAgents"
         
         // get helper executable path
-        NSBundle *prefPaneBundle = [NSBundle bundleForClass: [PrefPaneDelegate class]];
-        NSString *prefPaneBundlePath = [prefPaneBundle bundlePath];
-        NSString *helperExecutablePath = [prefPaneBundlePath stringByAppendingPathComponent: @"Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/MacOS/Mouse Fix Helper"];
+        NSBundle *helperBundle = [NSBundle bundleForClass:LDI.class];
+        NSBundle *prefPaneBundle = [NSBundle bundleWithPath:[helperBundle.bundlePath stringByAppendingPathComponent:@"../../../../"]];
+        NSString *helperExecutablePath = helperBundle.executablePath;
+        
+        NSLog(@"HELPORRR BUNDLE: %@", helperBundle);
         
         // get User Library path
         NSArray *libraryPaths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
@@ -134,11 +145,10 @@
                     }
                 }
                 
-                
-                
-                
                 NSError *error;
+                
                 // read contents of default_mouse.fix.helper.plist (aka default-launch-agent-config-file or defaultLAConfigFile) into a dictionary
+                
                 NSString *defaultLAConfigFile_path = [prefPaneBundle pathForResource:@"default_mouse.fix.helper" ofType:@"plist"];
                 NSData *defaultLAConfigFile_data = [NSData dataWithContentsOfFile:defaultLAConfigFile_path];
                 NSMutableDictionary *newLAConfigFile_dict = [NSPropertyListSerialization propertyListWithData:defaultLAConfigFile_data options:NSPropertyListMutableContainersAndLeaves format:nil error:&error];
@@ -162,64 +172,7 @@
             NSLog(@"To this program, it looks like the number of user libraries != 1. Your computer is weird...");
         }
     }
-
-}
-
-+ (BOOL)helperIsActive {
-    
-    // using NSTask to ask launchd about mouse.fix.helper status
-    
-    NSString *launchctlPath = @"/bin/launchctl";
-    NSString *listArgument = @"list";
-    NSString *launchdHelperIdentifier = @"mouse.fix.helper";
-    
-    NSPipe * launchctlOutput;
-    
-    // macOS version 10.13+
-    
-    if (@available(macOS 10.13, *)) {
-        NSURL *launchctlURL = [NSURL fileURLWithPath: launchctlPath];
-        
-        NSTask *task = [[NSTask alloc] init];
-        [task setExecutableURL: launchctlURL];
-        [task setArguments: @[listArgument, launchdHelperIdentifier] ];
-        launchctlOutput = [NSPipe pipe];
-        [task setStandardOutput: launchctlOutput];
-        
-        [task launchAndReturnError:nil];
-        
-    } else {
-        
-        // Fallback on earlier versions
-        
-        NSTask *task = [[NSTask alloc] init];
-        [task setLaunchPath: launchctlPath];
-        [task setArguments: @[listArgument, launchdHelperIdentifier] ];
-        launchctlOutput = [NSPipe pipe];
-        [task setStandardOutput: launchctlOutput];
-        
-        [task launch];
-        
-    }
-    
-    
-    NSFileHandle * launchctlOutput_fileHandle = [launchctlOutput fileHandleForReading];
-    NSData * launchctlOutput_data = [launchctlOutput_fileHandle readDataToEndOfFile];
-    NSString * launchctlOutput_string = [[NSString alloc] initWithData:launchctlOutput_data encoding:NSUTF8StringEncoding];
-    if (
-        [launchctlOutput_string rangeOfString: @"\"Label\" = \"mouse.fix.helper\";"].location != NSNotFound &&
-        [launchctlOutput_string rangeOfString: @"\"LastExitStatus\" = 0;"].location != NSNotFound
-        )
-    {
-        NSLog(@"MOUSE REMAPOR FOUNDD AND ACTIVE");
-        return TRUE;
-    }
-    else {
-        return FALSE;
-    }
     
 }
-
-
 
 @end

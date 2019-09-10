@@ -6,7 +6,7 @@
 #import "../MessagePort/MessagePort_HelperApp.h"
 #import <ApplicationServices/ApplicationServices.h>
 
-#import "UtilityHelper.h"
+#import "Utility_HelperApp.h"
 
 #import "SmoothScroll.h"
 

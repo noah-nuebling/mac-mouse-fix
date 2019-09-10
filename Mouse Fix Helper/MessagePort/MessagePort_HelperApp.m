@@ -38,7 +38,8 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
     if ([message isEqualToString:@"configFileChanged"]) {
         [ConfigFileInterface_HelperApp reactToConfigFileChange];
     } else if ([message isEqualToString:@"terminate"]) {
-        [NSApp terminate:[NSApplication sharedApplication]];
+        [NSApp.delegate applicationWillTerminate:NULL];
+        [NSApp terminate:NULL];
     } else if ([message isEqualToString:@"checkAccessibility"]) {
         if (![AccessibilityCheck check]) {
             [MessagePort_HelperApp sendMessageToPrefPane:@"accessibilityDisabled"];

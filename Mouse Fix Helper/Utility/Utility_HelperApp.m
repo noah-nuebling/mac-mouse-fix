@@ -1,6 +1,6 @@
-#import "UtilityHelper.h"
+#import "Utility_HelperApp.h"
 
-@implementation UtilityHelper
+@implementation Utility_HelperApp
 
 + (NSString *)binaryRepresentation:(int)value {
     long nibbleCount = sizeof(value) * 2;
@@ -29,6 +29,23 @@
         return true;
     }
     return false;
+}
+
++ (NSBundle *)helperBundle {
+    return [NSBundle bundleForClass:Utility_HelperApp.class];
+}
++ (NSBundle *)prefPaneBundle {
+    
+    NSURL *prefPaneBundleURL = [self helperBundle].bundleURL;
+    for (int i = 0; i < 4; i++) {
+        prefPaneBundleURL = [prefPaneBundleURL URLByDeletingLastPathComponent];
+    }
+    NSBundle *prefPaneBundle = [NSBundle bundleWithURL:prefPaneBundleURL];
+    
+    NSLog(@"prefPaneBundleURL: %@", prefPaneBundleURL);
+    NSLog(@"prefPaneBundle: %@", prefPaneBundle);
+    
+    return prefPaneBundle;
 }
 
 @end
