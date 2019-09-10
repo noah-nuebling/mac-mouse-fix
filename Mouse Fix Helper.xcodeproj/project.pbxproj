@@ -35,7 +35,6 @@
 		4F3FC753231EB30D0079774F /* MouseFixPreferencePaneIcon.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4F3FC752231EB30D0079774F /* MouseFixPreferencePaneIcon.tiff */; };
 		4F8AEA9222FBC7AC008C1A7C /* milkshake_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */; };
 		4F8F38E822F8C7A1004D0040 /* Mouse_Fix_alt.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4F8F38E722F8C7A1004D0040 /* Mouse_Fix_alt.tiff */; };
-		4FA3B2962327D124002DA83E /* Mouse Fix Launchd Interface in Copy Launchd Interface */ = {isa = PBXBuildFile; fileRef = 4FF3B2DD23279556009E8A8E /* Mouse Fix Launchd Interface */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4FACF59F2183B956009257D4 /* default_mouse.fix.helper.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FACF59E2183B956009257D4 /* default_mouse.fix.helper.plist */; };
 		4FBF34F7231750B600E6CFD0 /* pureDonationButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */; };
 		4FBF34FF23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FBF34FD23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h */; };
@@ -62,7 +61,6 @@
 		4FD9CB1322F7D48D0090DB98 /* Hyperlink.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FD9CB1122F7D48D0090DB98 /* Hyperlink.h */; };
 		4FF3B2BD23276082009E8A8E /* Uninstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF3B2BC23276082009E8A8E /* Uninstaller.m */; };
 		4FF3B2C0232788AA009E8A8E /* HelperServices_HelperApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF3B2BF232788AA009E8A8E /* HelperServices_HelperApp.m */; };
-		4FF3B2E023279556009E8A8E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF3B2DF23279556009E8A8E /* main.m */; };
 		4FF64F3B22F7408B0065F64F /* MouseFix.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4FF64F3A22F7408A0065F64F /* MouseFix.tiff */; };
 		4FF873DF23197283002A897A /* UpdateWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FF873DC23197283002A897A /* UpdateWindow.h */; };
 		4FF873E023197283002A897A /* UpdateWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF873DD23197283002A897A /* UpdateWindow.m */; };
@@ -79,13 +77,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 4F2FDF2F2315662400C7BE14;
 			remoteInfo = "Mouse Fix Updater";
-		};
-		4FA3B2972327D12A002DA83E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4FCECD7821092354001F1078 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4FF3B2DC23279556009E8A8E;
-			remoteInfo = "Mouse Fix Launchd Interface";
 		};
 		4FD67DF0211CDC930095A9A5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -145,19 +136,9 @@
 			dstPath = Contents/Library/LaunchServices;
 			dstSubfolderSpec = 1;
 			files = (
-				4FA3B2962327D124002DA83E /* Mouse Fix Launchd Interface in Copy Launchd Interface */,
 			);
 			name = "Copy Launchd Interface";
 			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4FF3B2DB23279556009E8A8E /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -227,7 +208,6 @@
 		4F3FC752231EB30D0079774F /* MouseFixPreferencePaneIcon.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = MouseFixPreferencePaneIcon.tiff; sourceTree = "<group>"; };
 		4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = milkshake_button.png; sourceTree = "<group>"; };
 		4F8F38E722F8C7A1004D0040 /* Mouse_Fix_alt.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Mouse_Fix_alt.tiff; sourceTree = "<group>"; };
-		4FA3B2952327C9DA002DA83E /* main.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
 		4FACF59E2183B956009257D4 /* default_mouse.fix.helper.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_mouse.fix.helper.plist; sourceTree = "<group>"; };
 		4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pureDonationButton.png; sourceTree = "<group>"; };
 		4FBF34FD23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigFileInterface_PrefPane.h; sourceTree = "<group>"; };
@@ -263,8 +243,6 @@
 		4FF3B2BC23276082009E8A8E /* Uninstaller.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Uninstaller.m; sourceTree = "<group>"; };
 		4FF3B2BE232788AA009E8A8E /* HelperServices_HelperApp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelperServices_HelperApp.h; sourceTree = "<group>"; };
 		4FF3B2BF232788AA009E8A8E /* HelperServices_HelperApp.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelperServices_HelperApp.m; sourceTree = "<group>"; };
-		4FF3B2DD23279556009E8A8E /* Mouse Fix Launchd Interface */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Mouse Fix Launchd Interface"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4FF3B2DF23279556009E8A8E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4FF64F3A22F7408A0065F64F /* MouseFix.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = MouseFix.tiff; sourceTree = "<group>"; };
 		4FF873DC23197283002A897A /* UpdateWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UpdateWindow.h; sourceTree = "<group>"; };
 		4FF873DD23197283002A897A /* UpdateWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UpdateWindow.m; sourceTree = "<group>"; };
@@ -294,13 +272,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F32E199231C5B5100199A11 /* ZipArchive.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4FF3B2DA23279556009E8A8E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -491,7 +462,6 @@
 				4FD67DDC211CC9000095A9A5 /* Mouse Fix */,
 				4FCECD8221092354001F1078 /* Mouse Fix Helper */,
 				4F2FDF312315662500C7BE14 /* Mouse Fix Updater */,
-				4FF3B2DE23279556009E8A8E /* Mouse Fix Launchd Interface */,
 				4FCECD8121092354001F1078 /* Products */,
 				4F32E197231C5B5100199A11 /* Frameworks */,
 			);
@@ -503,7 +473,6 @@
 				4FCECD8021092354001F1078 /* Mouse Fix Helper.app */,
 				4FD67DDB211CC9000095A9A5 /* Mouse Fix.prefPane */,
 				4F2FDF302315662400C7BE14 /* Mouse Fix Updater */,
-				4FF3B2DD23279556009E8A8E /* Mouse Fix Launchd Interface */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -634,15 +603,6 @@
 			path = Uninstall;
 			sourceTree = "<group>";
 		};
-		4FF3B2DE23279556009E8A8E /* Mouse Fix Launchd Interface */ = {
-			isa = PBXGroup;
-			children = (
-				4FF3B2DF23279556009E8A8E /* main.m */,
-				4FA3B2952327C9DA002DA83E /* main.h */,
-			);
-			path = "Mouse Fix Launchd Interface";
-			sourceTree = "<group>";
-		};
 		4FF873F2231A96C0002A897A /* MoreSheet */ = {
 			isa = PBXGroup;
 			children = (
@@ -737,7 +697,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				4FA3B2982327D12A002DA83E /* PBXTargetDependency */,
 				4FD67DF1211CDC930095A9A5 /* PBXTargetDependency */,
 				4F2FDF3C23156A8F00C7BE14 /* PBXTargetDependency */,
 			);
@@ -745,23 +704,6 @@
 			productName = "Mouse Remap";
 			productReference = 4FD67DDB211CC9000095A9A5 /* Mouse Fix.prefPane */;
 			productType = "com.apple.product-type.bundle";
-		};
-		4FF3B2DC23279556009E8A8E /* Mouse Fix Launchd Interface */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 4FF3B2E123279556009E8A8E /* Build configuration list for PBXNativeTarget "Mouse Fix Launchd Interface" */;
-			buildPhases = (
-				4FF3B2D923279556009E8A8E /* Sources */,
-				4FF3B2DA23279556009E8A8E /* Frameworks */,
-				4FF3B2DB23279556009E8A8E /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Mouse Fix Launchd Interface";
-			productName = "Mouse Fix Launchd Interface";
-			productReference = 4FF3B2DD23279556009E8A8E /* Mouse Fix Launchd Interface */;
-			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
 
@@ -789,9 +731,6 @@
 						LastSwiftMigration = 1030;
 						ProvisioningStyle = Automatic;
 					};
-					4FF3B2DC23279556009E8A8E = {
-						CreatedOnToolsVersion = 10.3;
-					};
 				};
 			};
 			buildConfigurationList = 4FCECD7B21092354001F1078 /* Build configuration list for PBXProject "Mouse Fix Helper" */;
@@ -810,7 +749,6 @@
 				4FCECD7F21092354001F1078 /* Mouse Fix Helper */,
 				4FD67DDA211CC9000095A9A5 /* Mouse Fix */,
 				4F2FDF2F2315662400C7BE14 /* Mouse Fix Updater */,
-				4FF3B2DC23279556009E8A8E /* Mouse Fix Launchd Interface */,
 			);
 		};
 /* End PBXProject section */
@@ -923,14 +861,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4FF3B2D923279556009E8A8E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4FF3B2E023279556009E8A8E /* main.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -938,11 +868,6 @@
 			isa = PBXTargetDependency;
 			target = 4F2FDF2F2315662400C7BE14 /* Mouse Fix Updater */;
 			targetProxy = 4F2FDF3B23156A8F00C7BE14 /* PBXContainerItemProxy */;
-		};
-		4FA3B2982327D12A002DA83E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4FF3B2DC23279556009E8A8E /* Mouse Fix Launchd Interface */;
-			targetProxy = 4FA3B2972327D12A002DA83E /* PBXContainerItemProxy */;
 		};
 		4FD67DF1211CDC930095A9A5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1225,31 +1150,6 @@
 			};
 			name = Release;
 		};
-		4FF3B2E223279556009E8A8E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		4FF3B2E323279556009E8A8E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MTL_FAST_MATH = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1285,15 +1185,6 @@
 			buildConfigurations = (
 				4FD67DE7211CC9000095A9A5 /* Debug */,
 				4FD67DE8211CC9000095A9A5 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		4FF3B2E123279556009E8A8E /* Build configuration list for PBXNativeTarget "Mouse Fix Launchd Interface" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4FF3B2E223279556009E8A8E /* Debug */,
-				4FF3B2E323279556009E8A8E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

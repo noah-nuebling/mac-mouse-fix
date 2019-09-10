@@ -7,6 +7,7 @@
 //
 
 #import "Uninstaller.h"
+#import "HelperServices_HelperApp.h"
 #import "../Utility/Utility_HelperApp.h"
 #import <AppKit/AppKit.h>
 #import <Foundation/Foundation.h>
@@ -33,35 +34,11 @@
 
 void Handle_FSCallback(ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents, void *eventPaths, const FSEventStreamEventFlags *eventFlags, const FSEventStreamEventId *eventIds) {
     
+    NSArray *contents = [NSFileManager.defaultManager contentsOfDirectoryAtPath:[Utility_HelperApp prefPaneBundle].bundlePath error:NULL];
     
-    NSArray *prefPanesFolder = [NSFileManager.defaultManager contentsOfDirectoryAtPath:[[Utility_HelperApp prefPaneBundle].bundlePath stringByDeletingLastPathComponent] error:NULL];
-    
-    if (![prefPanesFolder containsObject:@"Mouse Fix.prefPane"]) {
+    if (![contents containsObject:@"Mouse Fix.prefPane"]) {
         
-        // TODO: implement "Updater" or maybe "Helper Services" Command Line Tool, so you can actually delete the launchd.plist file when uninstalling through system preferences, and so you don't have to duplicate the Helper Services Code
-//        [HelperServices_HelperApp enableHelperAsUserAgent:NO];
-        
-        
-        NSLog(@"helperBundleee: %@", [Utility_HelperApp helperBundle]);
-        NSLog(@"prefBundleee: %@", [Utility_HelperApp prefPaneBundle]);
-        
-//        NSURL *executableURL = [[Utility_HelperApp prefPaneBundle].bundleURL URLByAppendingPathComponent:@"/Contents/Library/LaunchServices/Mouse Fix Launchd Interface"];
-        NSURL *executableURL = [[NSFileManager.defaultManager homeDirectoryForCurrentUser] URLByAppendingPathComponent:@"Trash/Mouse Fix.prefPane/Contents/Library/LaunchServices/Mouse Fix Launchd Interface"];
-        NSError *launchTaskErr;
-        if (@available(macOS 10.13, *)) {
-            NSLog(@"LAUNCHTASK");
-            NSLog(@"executableURL: %@", launchTaskErr);
-
-        [NSTask launchedTaskWithExecutableURL:executableURL arguments:@[@"disable"] error:&launchTaskErr terminationHandler:^(NSTask *task) {
-            NSLog(@"Mouse Fox Launchd Interface launched");
-        }];
-        } else {
-            // Fallback on earlier versions
-        }
-        if (launchTaskErr) {
-            NSLog(@"Error launching Mouse Fix Launchd Interface: %@", launchTaskErr);
-        }
-        
+        [HelperServices_HelperApp enableHelperAsUserAgent:NO];
     }
     
 }
