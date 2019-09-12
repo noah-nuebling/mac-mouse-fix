@@ -17,7 +17,7 @@
                BlueprintIdentifier = "4FCECD7F21092354001F1078"
                BuildableName = "Mouse Fix Helper.app"
                BlueprintName = "Mouse Fix Helper"
-               ReferencedContainer = "container:Mouse Fix Helper.xcodeproj">
+               ReferencedContainer = "container:Mouse Fix.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,7 @@
                BlueprintIdentifier = "4FCECD9221092354001F1078"
                BuildableName = "Mouse Fix Helper HelperTests.xctest"
                BlueprintName = "Mouse Fix Helper HelperTests"
-               ReferencedContainer = "container:Mouse Fix Helper.xcodeproj">
+               ReferencedContainer = "container:Mouse Fix.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -45,7 +45,7 @@
                BlueprintIdentifier = "4FCECD9D21092354001F1078"
                BuildableName = "Mouse Fix HelperUITests.xctest"
                BlueprintName = "Mouse Fix HelperUITests"
-               ReferencedContainer = "container:Mouse Fix Helper.xcodeproj">
+               ReferencedContainer = "container:Mouse Fix.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,7 +55,7 @@
             BlueprintIdentifier = "4FCECD7F21092354001F1078"
             BuildableName = "Mouse Fix Helper.app"
             BlueprintName = "Mouse Fix Helper"
-            ReferencedContainer = "container:Mouse Fix Helper.xcodeproj">
+            ReferencedContainer = "container:Mouse Fix.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -80,7 +80,7 @@
             BlueprintIdentifier = "4FCECD7F21092354001F1078"
             BuildableName = "Mouse Fix Helper.app"
             BlueprintName = "Mouse Fix Helper"
-            ReferencedContainer = "container:Mouse Fix Helper.xcodeproj">
+            ReferencedContainer = "container:Mouse Fix.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <EnvironmentVariables>
@@ -106,7 +106,7 @@
             BlueprintIdentifier = "4FCECD7F21092354001F1078"
             BuildableName = "Mouse Fix Helper.app"
             BlueprintName = "Mouse Fix Helper"
-            ReferencedContainer = "container:Mouse Fix Helper.xcodeproj">
+            ReferencedContainer = "container:Mouse Fix.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

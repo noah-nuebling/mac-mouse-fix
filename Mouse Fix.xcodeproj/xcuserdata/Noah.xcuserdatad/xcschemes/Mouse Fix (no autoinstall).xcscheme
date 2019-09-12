@@ -19,14 +19,14 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "# Autoinstall newly built Preference Pane&#10;&#10;rm -r /Users/Noah/Library/PreferencePanes/Mouse\ Fix.prefPane&#10;cp -r /Users/Noah/Library/Developer/Xcode/DerivedData/Mouse_Fix_Helper-ezhejwqavrjpyscxacbukqogkely/Build/Products/Debug/Mouse\ Fix.prefPane /Users/Noah/Library/PreferencePanes/&#10;">
+               scriptText = "# Autoinstall newly built Preference Pane&#10;&#10;# rm -r /Users/Noah/Library/PreferencePanes/Mouse\ Fix.prefPane&#10;# cp -r /Users/Noah/Library/Developer/Xcode/DerivedData/Mouse_Fix_Helper-ezhejwqavrjpyscxacbukqogkely/Build/Products/Debug/Mouse\ Fix.prefPane /Users/Noah/Library/PreferencePanes/&#10;">
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
                      BlueprintIdentifier = "4FD67DDA211CC9000095A9A5"
                      BuildableName = "Mouse Fix.prefPane"
                      BlueprintName = "Mouse Fix"
-                     ReferencedContainer = "container:Mouse Fix Helper.xcodeproj">
+                     ReferencedContainer = "container:Mouse Fix.xcodeproj">
                   </BuildableReference>
                </EnvironmentBuildable>
             </ActionContent>
@@ -58,7 +58,7 @@
                BlueprintIdentifier = "4FD67DDA211CC9000095A9A5"
                BuildableName = "Mouse Fix.prefPane"
                BlueprintName = "Mouse Fix"
-               ReferencedContainer = "container:Mouse Fix Helper.xcodeproj">
+               ReferencedContainer = "container:Mouse Fix.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -76,7 +76,7 @@
             BlueprintIdentifier = "4FD67DDA211CC9000095A9A5"
             BuildableName = "Mouse Fix.prefPane"
             BlueprintName = "Mouse Fix"
-            ReferencedContainer = "container:Mouse Fix Helper.xcodeproj">
+            ReferencedContainer = "container:Mouse Fix.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -113,7 +113,7 @@
             BlueprintIdentifier = "4FD67DDA211CC9000095A9A5"
             BuildableName = "Mouse Fix.prefPane"
             BlueprintName = "Mouse Fix"
-            ReferencedContainer = "container:Mouse Fix Helper.xcodeproj">
+            ReferencedContainer = "container:Mouse Fix.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <EnvironmentVariables>
@@ -138,7 +138,7 @@
             BlueprintIdentifier = "4FD67DDA211CC9000095A9A5"
             BuildableName = "Mouse Fix.prefPane"
             BlueprintName = "Mouse Fix"
-            ReferencedContainer = "container:Mouse Fix Helper.xcodeproj">
+            ReferencedContainer = "container:Mouse Fix.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

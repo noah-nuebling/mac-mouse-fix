@@ -733,7 +733,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 4FCECD7B21092354001F1078 /* Build configuration list for PBXProject "Mouse Fix Helper" */;
+			buildConfigurationList = 4FCECD7B21092354001F1078 /* Build configuration list for PBXProject "Mouse Fix" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -1162,7 +1162,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4FCECD7B21092354001F1078 /* Build configuration list for PBXProject "Mouse Fix Helper" */ = {
+		4FCECD7B21092354001F1078 /* Build configuration list for PBXProject "Mouse Fix" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4FCECDA521092354001F1078 /* Debug */,
