@@ -35,8 +35,8 @@ static NSURL *_updateNotesLocation;
 
 + (void)setupDownloadSession {
     
-    NSURLSessionConfiguration *downloadSessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
-//        downloadSessionConfiguration.allowsCellularAccess = NO;
+    NSURLSessionConfiguration *downloadSessionConfiguration = NSURLSessionConfiguration.ephemeralSessionConfiguration;
+        downloadSessionConfiguration.allowsCellularAccess = NO;
         if (@available(macOS 10.13, *)) {
             downloadSessionConfiguration.waitsForConnectivity = YES;
         }
@@ -75,7 +75,7 @@ static NSURL *_updateNotesLocation;
         NSInteger currentVersion = [[[NSBundle bundleForClass:self] objectForInfoDictionaryKey:@"CFBundleVersion"] integerValue];
         _availableVersion = [[NSString stringWithContentsOfURL:location encoding:NSUTF8StringEncoding error:NULL] integerValue];
         NSLog(@"currentVersion: %ld, availableVersion: %ld", (long)currentVersion, (long)_availableVersion);
-        NSInteger skippedVersion = [[ConfigFileInterface_PrefPane.config valueForKeyPath:@"other.skippedBundleVersion"] integerValue];
+        NSInteger skippedVersion = [[ConfigFileInterface_PrefPane.config valueForKeyPath:@"Other.skippedBundleVersion"] integerValue];
         if (currentVersion < _availableVersion && _availableVersion != skippedVersion) {
             [self downloadAndPresent];
         } else {
@@ -150,7 +150,7 @@ static NSURL *_updateNotesLocation;
 }
 
 + (void)skipAvailableVersion {
-    [ConfigFileInterface_PrefPane.config setValue:@(_availableVersion) forKeyPath:@"other.skippedBundleVersion"];
+    [ConfigFileInterface_PrefPane.config setValue:@(_availableVersion) forKeyPath:@"Other.skippedBundleVersion"];
     [ConfigFileInterface_PrefPane writeConfigToFile];
 }
 

@@ -131,7 +131,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
     [self initializeUI];
     
-    BOOL checkForUpdates = [[ConfigFileInterface_PrefPane.config valueForKeyPath:@"other.checkForUpdates"] boolValue];
+    BOOL checkForUpdates = [[ConfigFileInterface_PrefPane.config valueForKeyPath:@"Other.checkForUpdates"] boolValue];
     if (checkForUpdates == YES) {
         [Updater checkForUpdate];
     }
@@ -184,7 +184,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
     // click
     long i;
-    NSString *eventTypeSideClick = buttonRemaps[@"4"][@"click"][0];
+    NSString *eventTypeSideClick = buttonRemaps[@"4"][@"single"][@"click"][0];
     
     if ([eventTypeSideClick isEqualToString:@"swipeEvent"]) {
         i = 2;
@@ -199,7 +199,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
     // hold
     long j;
-    NSString *eventTypeSideHold = buttonRemaps[@"4"][@"hold"][0];
+    NSString *eventTypeSideHold = buttonRemaps[@"4"][@"single"][@"hold"][0];
     if ([eventTypeSideHold isEqualToString:@"swipeEvent"]) {
         j = 2;
     }
@@ -209,12 +209,12 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     else {
         j = 0;
     }
-//    [_sideHold selectItemWithTag: j];
+    
     
     
     // middle mouse button
     
-    NSDictionary *middleButtonRemap = buttonRemaps[@"3"];
+    NSDictionary *middleButtonRemap = buttonRemaps[@"3"][@"single"];
     
     // click
     NSInteger symbolicHotKeyMiddleClick = [middleButtonRemap[@"click"][1] integerValue];
@@ -304,22 +304,22 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     if (_middleClick.selectedTag != 0) {
         middleButtonClickAction= @[@"symbolicHotKey", @(_middleClick.selectedTag)];
     }
-    [ConfigFileInterface_PrefPane.config setValue:middleButtonClickAction forKeyPath:@"ButtonRemaps.3.click"];
+    [ConfigFileInterface_PrefPane.config setValue:middleButtonClickAction forKeyPath:@"ButtonRemaps.3.single.click"];
     
     // hold
     NSArray *middleButtonHoldAction;
     if (_middleHold.selectedTag != 0) {
         middleButtonHoldAction = @[@"symbolicHotKey", @(_middleHold.selectedTag)];
     }
-    [ConfigFileInterface_PrefPane.config setValue:middleButtonHoldAction forKeyPath:@"ButtonRemaps.3.hold"];
+    [ConfigFileInterface_PrefPane.config setValue:middleButtonHoldAction forKeyPath:@"ButtonRemaps.3.single.hold"];
     
     
     // side buttons         // tag = 1 -> Switch Spaces, tag = 2 -> Switch Pages
     
     // click
     NSArray *sideButtonClickAction = [actionsForPopupButtonTag_onlyForSideMouseButtons objectForKey:@(_sideClick.selectedTag)];
-    [ConfigFileInterface_PrefPane.config setValue:sideButtonClickAction[0] forKeyPath:@"ButtonRemaps.4.click"];
-    [ConfigFileInterface_PrefPane.config setValue:sideButtonClickAction[1] forKeyPath:@"ButtonRemaps.5.click"];
+    [ConfigFileInterface_PrefPane.config setValue:sideButtonClickAction[0] forKeyPath:@"ButtonRemaps.4.single.click"];
+    [ConfigFileInterface_PrefPane.config setValue:sideButtonClickAction[1] forKeyPath:@"ButtonRemaps.5.single.click"];
     
     // hold
 //    NSArray *sideButtonHoldAction = [actionsForPopupButtonTag_onlyForSideMouseButtons objectForKey:@(_sideHold.selectedTag)];
