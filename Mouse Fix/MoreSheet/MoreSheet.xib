@@ -29,7 +29,7 @@
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QTb-LF-Uki">
                         <rect key="frame" x="190" y="20" width="185" height="50"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="pureDonationButton" imagePosition="below" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="b2D-Sd-ZB9">
+                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="milkshake_button" imagePosition="below" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="b2D-Sd-ZB9">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -38,7 +38,7 @@
                         </connections>
                     </button>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1zt-aD-hYC">
-                        <rect key="frame" x="324" y="46" width="51" height="14"/>
+                        <rect key="frame" x="319" y="46" width="51" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="PayPal" id="l8T-uX-6sc"/>
                     </imageView>
@@ -166,6 +166,6 @@ AAAAAAAAAAAAAAABOQ
     </objects>
     <resources>
         <image name="PayPal" width="100" height="26"/>
-        <image name="pureDonationButton" width="910" height="115"/>
+        <image name="milkshake_button" width="920" height="120"/>
     </resources>
 </document>
