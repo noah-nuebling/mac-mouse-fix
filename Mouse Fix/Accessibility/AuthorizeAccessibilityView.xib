@@ -77,7 +77,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="string" keyPath="href" value="mailto:noah.n.public@gmail.com?subject=Mac%20Mouse%20Fix%20-%20Contact&amp;"/>
+                        <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://noah-nuebling.github.io/mac-mouse-fix-website/about"/>
                     </userDefinedRuntimeAttributes>
                 </textField>
             </subviews>
@@ -91,7 +91,7 @@
     </objects>
     <resources>
         <image name="KeyIcon" width="106" height="58"/>
-        <image name="MouseFix" width="800" height="800"/>
+        <image name="MouseFix" width="256" height="256"/>
         <image name="UniversalAccessPref" width="138" height="142"/>
     </resources>
 </document>
