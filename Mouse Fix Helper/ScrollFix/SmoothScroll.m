@@ -216,7 +216,14 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
     
     NSLog(@"scrollPhase: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase));
-    NSLog(@"momentumPhase: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventMomentumPhase));
+    NSLog(@"momentumPhase: %lld ", CGEventGetIntegerValueField(event, kCGScrollWheelEventMomentumPhase));
+//    NSLog(@"scr: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1));
+    NSLog(@"scr_px: %lld \n\n", CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1));
+    NSLog(@"");
+    
+    
+    
+    
     
     
     if (_isEnabled == FALSE) {
@@ -300,7 +307,9 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp *inNow, const CVTimeStamp *inOutputTime, CVOptionFlags flagsIn, CVOptionFlags *flagsOut, void *displayLinkContext) {
     
     
-
+    int momentumPhaseThreshold_px = 5;
+    
+    
     
 //    _pixelsToScroll  = 0;
     
@@ -323,13 +332,16 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         _msLeftForScroll    -=  msBetweenFrames;
         
         
-        if ( (_msLeftForScroll <= 0) || (_pixelScrollQueue == 0) ) {
+        
+        if ( (_msLeftForScroll <= 0) || (llabs(_pixelScrollQueue) <= momentumPhaseThreshold_px) ) {
             
             _msLeftForScroll    =   0;
             _pixelScrollQueue   =   0;
             
             _scrollPhase = kMFMomentumPhase;
             _pxPerMsVelocity = (_pixelsToScroll / msBetweenFrames);
+            
+            return 0;
             
         }
         
@@ -351,6 +363,21 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         
         
         if (( (_pixelsToScroll == 0) || (_pxPerMsVelocity == 0) )) {
+            
+            CGEventRef scrollEvent = CGEventCreateScrollWheelEvent(_eventSource, kCGScrollEventUnitPixel, 1, 0);
+            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase, 3);
+            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 4);
+            
+            
+            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis1, 0);
+            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis1, 0);
+            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis2, 0);
+            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis2, 0);
+            
+            CGEventPost(kCGSessionEventTap, scrollEvent);
+            CFRelease(scrollEvent);
+            
+            
             CVDisplayLinkStop(_displayLink);
             return 0;
         }
@@ -358,6 +385,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     }
     
     if (abs(_pixelsToScroll) == 1) {
+        
         _onePixelScrollsCounter += 1;
         if (_onePixelScrollsCounter > _nOfOnePixelScrollsMax) {
             _onePixelScrollsCounter = 0;
@@ -375,41 +403,53 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     // set pixels
     
     if (_horizontalScrollModifierPressed == FALSE) {
-        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis1, _pixelsToScroll / 4);
+//        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis1, _pixelsToScroll / 4);
         CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis1, _pixelsToScroll);
     }
     else if (_horizontalScrollModifierPressed == TRUE) {
-        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis2, _pixelsToScroll / 4);
+//        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis2, _pixelsToScroll / 4);
         CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis2, _pixelsToScroll);
     }
     
-    // set phases
-        // the native "scrollPhase" is roughly equivalent to my "wheelPhase"
+//     set phases
+//         the native "scrollPhase" is roughly equivalent to my "wheelPhase"
     
-//    if (_scrollPhase == kMFWheelPhase) {
-//        
-//        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase, kCGMomentumScrollPhaseNone);
-//        
-//        if (_previousPhase == kMFWheelPhase) {
-//            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 2);
-//        } else if ( (_msLeftForScroll <= 0) || (_pixelScrollQueue == 0) ) {
-//            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 4);
-//        } else {
-//            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 1);
-//        }
-//        
-//    } else if (_scrollPhase == kMFMomentumPhase) {
-//        
-//        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 0);
-//        
-//        if (_previousPhase == kMFMomentumPhase) {
-//            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase, 2);
-//        } else if (( (_pixelsToScroll == 0) || (_pxPerMsVelocity == 0) )) {
-//            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase, 3);
-//        } else {
-//            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase, 1);
-//        }
-//    }
+    if (_scrollPhase == kMFWheelPhase) {
+        
+        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase, kCGMomentumScrollPhaseNone);
+        
+        if (((_msLeftForScroll - msBetweenFrames) <= 0) || (llabs(_pixelScrollQueue - _pixelsToScroll) <= momentumPhaseThreshold_px)) {
+            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 4);
+            
+//            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis1, 0);
+//            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis1, 0);
+//            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis2, 0);
+//            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis2, 0);
+        } else if (_previousPhase == kMFWheelPhase) {
+            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 2);
+        } else {
+            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 1);
+        }
+        
+    } else if (_scrollPhase == kMFMomentumPhase) {
+        
+        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 0);
+        if (( (_pixelsToScroll == 0) || (_pxPerMsVelocity == 0) )) {
+            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase, 3);
+            
+            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis1, 0);
+            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis1, 0);
+            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis2, 0);
+            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis2, 0);
+        } else if (_previousPhase == kMFMomentumPhase) {
+            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase, 2);
+        } else {
+            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase, 1);
+        }
+    }
+    
+    NSLog(@"scrollPhase: %lld", CGEventGetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase));
+    NSLog(@"momentumPhase: %lld \n", CGEventGetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase));
     
     
     CGEventPost(kCGSessionEventTap, scrollEvent);
