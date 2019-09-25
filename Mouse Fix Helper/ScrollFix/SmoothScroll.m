@@ -375,41 +375,13 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     // set pixels
     
     if (_horizontalScrollModifierPressed == FALSE) {
-        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis1, _pixelsToScroll / 4);
+//        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis1, _pixelsToScroll / 4);
         CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis1, _pixelsToScroll);
     }
     else if (_horizontalScrollModifierPressed == TRUE) {
-        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis2, _pixelsToScroll / 4);
+//        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis2, _pixelsToScroll / 4);
         CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis2, _pixelsToScroll);
     }
-    
-    // set phases
-        // the native "scrollPhase" is roughly equivalent to my "wheelPhase"
-    
-//    if (_scrollPhase == kMFWheelPhase) {
-//        
-//        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase, kCGMomentumScrollPhaseNone);
-//        
-//        if (_previousPhase == kMFWheelPhase) {
-//            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 2);
-//        } else if ( (_msLeftForScroll <= 0) || (_pixelScrollQueue == 0) ) {
-//            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 4);
-//        } else {
-//            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 1);
-//        }
-//        
-//    } else if (_scrollPhase == kMFMomentumPhase) {
-//        
-//        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 0);
-//        
-//        if (_previousPhase == kMFMomentumPhase) {
-//            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase, 2);
-//        } else if (( (_pixelsToScroll == 0) || (_pxPerMsVelocity == 0) )) {
-//            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase, 3);
-//        } else {
-//            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase, 1);
-//        }
-//    }
     
     
     CGEventPost(kCGSessionEventTap, scrollEvent);
