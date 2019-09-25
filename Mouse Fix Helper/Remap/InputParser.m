@@ -68,7 +68,7 @@ static NSMutableDictionary *_swipeInfo;
     
     NSLog(@"parsing input (Input Parser)");
     
-    NSString *keyPath = [NSString stringWithFormat:@"ButtonRemaps.%d", mouseButton];
+    NSString *keyPath = [NSString stringWithFormat:@"ButtonRemaps.%d.single", mouseButton];
     
     NSDictionary *remapsForInputButton = [ConfigFileInterface_HelperApp.config valueForKeyPath: keyPath];
     
@@ -143,20 +143,17 @@ static NSMutableDictionary *_swipeInfo;
     
     NSLog(@"handling input (Input Parser)");
     
-    if ([actionArray[0] isEqualToString:@"symbolicHotKey"])
-    {
+    if ([actionArray[0] isEqualToString:@"symbolicHotKey"]) {
         NSNumber *shk = actionArray[1];
         [InputParser doSymbolicHotKeyAction:[shk intValue]];
     }
     else if ([actionArray[0] isEqualToString:@"swipeEvent"]) {
-        NSLog(@"SWIPE");
         NSLog(@"%@", actionArray[1]);
         NSString *dirString = actionArray[1];
         
         if ([dirString isEqualToString:@"left"]) {
             SBFFakeSwipe(kTLInfoSwipeLeft);
-        }
-        else if ([dirString isEqualToString:@"right"]) {
+        } else if ([dirString isEqualToString:@"right"]) {
             SBFFakeSwipe(kTLInfoSwipeRight);
         }
     }

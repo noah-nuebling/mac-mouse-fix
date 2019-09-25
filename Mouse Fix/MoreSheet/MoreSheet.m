@@ -26,7 +26,7 @@
 # pragma mark - IBActions and Delegate
 - (IBAction)checkForUpdateCheckBox:(NSButton *)sender {
     NSLog(@"CHECK");
-    [ConfigFileInterface_PrefPane.config setValue:@"0" forKeyPath:@"other.skippedBundleVersion"];
+    [ConfigFileInterface_PrefPane.config setValue:@"0" forKeyPath:@"Other.skippedBundleVersion"];
     [self UIChanged:NULL];
     if (sender.state == 1) {
         [Updater checkForUpdate];
@@ -86,11 +86,11 @@
                                [[NSBundle bundleForClass:[self class]] objectForInfoDictionaryKey:@"CFBundleVersion"]];
     [_versionLabel setStringValue:versionString];
     
-    _checkForUpdateCheckBox.state = [[ConfigFileInterface_PrefPane.config valueForKeyPath:@"other.checkForUpdates"] boolValue];
+    _checkForUpdateCheckBox.state = [[ConfigFileInterface_PrefPane.config valueForKeyPath:@"Other.checkForUpdates"] boolValue];
 }
 
 - (void)setConfigFileToUI {
-    [ConfigFileInterface_PrefPane.config setValue:[NSNumber numberWithBool:_checkForUpdateCheckBox.state] forKeyPath:@"other.checkForUpdates"];
+    [ConfigFileInterface_PrefPane.config setValue:[NSNumber numberWithBool:_checkForUpdateCheckBox.state] forKeyPath:@"Other.checkForUpdates"];
     [ConfigFileInterface_PrefPane writeConfigToFile];
 }
 

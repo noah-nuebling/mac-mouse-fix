@@ -35,8 +35,8 @@ static NSURL *_updateNotesLocation;
 
 + (void)setupDownloadSession {
     
-    NSURLSessionConfiguration *downloadSessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
-//        downloadSessionConfiguration.allowsCellularAccess = NO;
+    NSURLSessionConfiguration *downloadSessionConfiguration = NSURLSessionConfiguration.ephemeralSessionConfiguration;
+        downloadSessionConfiguration.allowsCellularAccess = NO;
         if (@available(macOS 10.13, *)) {
             downloadSessionConfiguration.waitsForConnectivity = YES;
         }
@@ -66,7 +66,7 @@ static NSURL *_updateNotesLocation;
     
     // clean up before starting the update procedure again
     
-    _downloadTask1 = [_downloadSession downloadTaskWithURL:[NSURL URLWithString: @"https://noah-nuebling.github.io/mac-mouse-fix/maindownload/bundleversion"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    _downloadTask1 = [_downloadSession downloadTaskWithURL:[NSURL URLWithString: @"https://noah-nuebling.github.io/mac-mouse-fix-website/maindownload/bundleversion"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (error != NULL){
             NSLog(@"checking for updates failed");
             NSLog(@"Error: \n%@", error);
@@ -75,7 +75,7 @@ static NSURL *_updateNotesLocation;
         NSInteger currentVersion = [[[NSBundle bundleForClass:self] objectForInfoDictionaryKey:@"CFBundleVersion"] integerValue];
         _availableVersion = [[NSString stringWithContentsOfURL:location encoding:NSUTF8StringEncoding error:NULL] integerValue];
         NSLog(@"currentVersion: %ld, availableVersion: %ld", (long)currentVersion, (long)_availableVersion);
-        NSInteger skippedVersion = [[ConfigFileInterface_PrefPane.config valueForKeyPath:@"other.skippedBundleVersion"] integerValue];
+        NSInteger skippedVersion = [[ConfigFileInterface_PrefPane.config valueForKeyPath:@"Other.skippedBundleVersion"] integerValue];
         if (currentVersion < _availableVersion && _availableVersion != skippedVersion) {
             [self downloadAndPresent];
         } else {
@@ -85,7 +85,7 @@ static NSURL *_updateNotesLocation;
     [_downloadTask1 resume];
 }
 + (void)downloadAndPresent {
-    _downloadTask1 = [_downloadSession downloadTaskWithURL:[NSURL URLWithString:@"https://noah-nuebling.github.io/mac-mouse-fix/maindownload/updatenotes.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    _downloadTask1 = [_downloadSession downloadTaskWithURL:[NSURL URLWithString:@"https://noah-nuebling.github.io/mac-mouse-fix-website/maindownload/updatenotes.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (error != NULL) {
             NSLog(@"error downloading updatenotes: %@", error);
             return;
@@ -99,7 +99,7 @@ static NSURL *_updateNotesLocation;
             return;
         }
         _updateNotesLocation = [[NSURL fileURLWithPath:unzipDest] URLByAppendingPathComponent:@"updatenotes"];
-        _downloadTask2 = [_downloadSession downloadTaskWithURL:[NSURL URLWithString: @"https://noah-nuebling.github.io/mac-mouse-fix/maindownload/MacMouseFix.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        _downloadTask2 = [_downloadSession downloadTaskWithURL:[NSURL URLWithString: @"https://noah-nuebling.github.io/mac-mouse-fix-website/maindownload/MacMouseFix.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
             if (error != NULL) {
                 NSLog(@"error downloading prefPane: %@", error);
                 return;
@@ -114,7 +114,7 @@ static NSURL *_updateNotesLocation;
     
     
     
-//    _downloadTask = [_downloadSession downloadTaskWithURL:[NSURL URLWithString: @"https://noah-nuebling.github.io/mac-mouse-fix/maindownload/MacMouseFix.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+//    _downloadTask = [_downloadSession downloadTaskWithURL:[NSURL URLWithString: @"https://noah-nuebling.github.io/mac-mouse-fix-website/maindownload/MacMouseFix.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
 //
 //        if (error != NULL) {
 //            NSLog(@"Downloading error: %@", error);
@@ -150,7 +150,7 @@ static NSURL *_updateNotesLocation;
 }
 
 + (void)skipAvailableVersion {
-    [ConfigFileInterface_PrefPane.config setValue:@(_availableVersion) forKeyPath:@"other.skippedBundleVersion"];
+    [ConfigFileInterface_PrefPane.config setValue:@(_availableVersion) forKeyPath:@"Other.skippedBundleVersion"];
     [ConfigFileInterface_PrefPane writeConfigToFile];
 }
 
