@@ -372,6 +372,10 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     // CGEventSourceSetPixelsPerLine(_eventSource, 1);
     // it might be a cool idea to diable scroll acceleration and then try to make the scroll events line based (kCGScrollEventUnitPixel)
     
+    
+    CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 0);
+    CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase, 0);
+    
     // set pixels
     
     if (_horizontalScrollModifierPressed == FALSE) {
