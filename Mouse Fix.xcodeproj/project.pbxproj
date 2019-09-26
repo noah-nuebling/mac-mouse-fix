@@ -17,11 +17,7 @@
 		4F32E159231C420100199A11 /* Utility_HelperApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E153231C420100199A11 /* Utility_HelperApp.m */; };
 		4F32E15D231C44C000199A11 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E15C231C44C000199A11 /* main.m */; };
 		4F32E15F231C45F300199A11 /* Hyperlink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9CB1222F7D48D0090DB98 /* Hyperlink.m */; };
-		4F32E187231C509200199A11 /* SmoothScroll.m (old) in Resources */ = {isa = PBXBuildFile; fileRef = 4F32E180231C509200199A11 /* SmoothScroll.m (old) */; };
 		4F32E188231C509200199A11 /* AnimationCurve.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E181231C509200199A11 /* AnimationCurve.m */; };
-		4F32E189231C509200199A11 /* SmoothScroll.h (old) in Resources */ = {isa = PBXBuildFile; fileRef = 4F32E182231C509200199A11 /* SmoothScroll.h (old) */; };
-		4F32E18A231C509200199A11 /* MomentumScroll.h (old) in Resources */ = {isa = PBXBuildFile; fileRef = 4F32E184231C509200199A11 /* MomentumScroll.h (old) */; };
-		4F32E18B231C509200199A11 /* MomentumScroll.m (old) in Resources */ = {isa = PBXBuildFile; fileRef = 4F32E185231C509200199A11 /* MomentumScroll.m (old) */; };
 		4F32E18C231C509200199A11 /* SmoothScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E186231C509200199A11 /* SmoothScroll.m */; };
 		4F32E194231C50A100199A11 /* InputParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E18E231C50A100199A11 /* InputParser.m */; };
 		4F32E195231C50A100199A11 /* ModifierInputReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E18F231C50A100199A11 /* ModifierInputReceiver.m */; };
@@ -55,10 +51,11 @@
 		4FD67DE0211CC9000095A9A5 /* PrefPaneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD67DDF211CC9000095A9A5 /* PrefPaneDelegate.m */; };
 		4FD67DE5211CC9000095A9A5 /* MouseFix.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD67DE3211CC9000095A9A5 /* MouseFix.xib */; settings = {ASSET_TAGS = (0, ); }; };
 		4FD67DF3211CDD2D0095A9A5 /* Mouse Fix Helper.app in Copy Helper */ = {isa = PBXBuildFile; fileRef = 4FCECD8021092354001F1078 /* Mouse Fix Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		4FD67DF4211CDE4D0095A9A5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FCECD8821092354001F1078 /* MainMenu.xib */; };
 		4FD9CB1322F7D48D0090DB98 /* Hyperlink.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FD9CB1122F7D48D0090DB98 /* Hyperlink.h */; };
 		4FF3B2BD23276082009E8A8E /* Uninstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF3B2BC23276082009E8A8E /* Uninstaller.m */; };
 		4FF3B2C0232788AA009E8A8E /* HelperServices_HelperApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF3B2BF232788AA009E8A8E /* HelperServices_HelperApp.m */; };
+		4FF75A20233D82590002D8E6 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FCECD8821092354001F1078 /* MainMenu.xib */; };
+		4FF75A24233D840C0002D8E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FCECD8621092354001F1078 /* Assets.xcassets */; };
 		4FF873DF23197283002A897A /* UpdateWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FF873DC23197283002A897A /* UpdateWindow.h */; };
 		4FF873E023197283002A897A /* UpdateWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF873DD23197283002A897A /* UpdateWindow.m */; };
 		4FF873E123197283002A897A /* UpdateWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FF873DE23197283002A897A /* UpdateWindow.xib */; };
@@ -753,12 +750,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FF75A20233D82590002D8E6 /* MainMenu.xib in Resources */,
+				4FF75A24233D840C0002D8E6 /* Assets.xcassets in Resources */,
 				4F32E156231C420100199A11 /* config.plist in Resources */,
-				4F32E187231C509200199A11 /* SmoothScroll.m (old) in Resources */,
-				4F32E18A231C509200199A11 /* MomentumScroll.h (old) in Resources */,
-				4FD67DF4211CDE4D0095A9A5 /* MainMenu.xib in Resources */,
-				4F32E18B231C509200199A11 /* MomentumScroll.m (old) in Resources */,
-				4F32E189231C509200199A11 /* SmoothScroll.h (old) in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
