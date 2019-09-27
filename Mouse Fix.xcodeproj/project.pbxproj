@@ -55,7 +55,6 @@
 		4FF3B2BD23276082009E8A8E /* Uninstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF3B2BC23276082009E8A8E /* Uninstaller.m */; };
 		4FF3B2C0232788AA009E8A8E /* HelperServices_HelperApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF3B2BF232788AA009E8A8E /* HelperServices_HelperApp.m */; };
 		4FF75A20233D82590002D8E6 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FCECD8821092354001F1078 /* MainMenu.xib */; };
-		4FF75A24233D840C0002D8E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FCECD8621092354001F1078 /* Assets.xcassets */; };
 		4FF873DF23197283002A897A /* UpdateWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FF873DC23197283002A897A /* UpdateWindow.h */; };
 		4FF873E023197283002A897A /* UpdateWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF873DD23197283002A897A /* UpdateWindow.m */; };
 		4FF873E123197283002A897A /* UpdateWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FF873DE23197283002A897A /* UpdateWindow.xib */; };
@@ -751,7 +750,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FF75A20233D82590002D8E6 /* MainMenu.xib in Resources */,
-				4FF75A24233D840C0002D8E6 /* Assets.xcassets in Resources */,
 				4F32E156231C420100199A11 /* config.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -919,6 +917,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "";
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -978,6 +977,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "";
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
