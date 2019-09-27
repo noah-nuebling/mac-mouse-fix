@@ -52,6 +52,7 @@
 		4FD67DE5211CC9000095A9A5 /* MouseFix.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD67DE3211CC9000095A9A5 /* MouseFix.xib */; settings = {ASSET_TAGS = (0, ); }; };
 		4FD67DF3211CDD2D0095A9A5 /* Mouse Fix Helper.app in Copy Helper */ = {isa = PBXBuildFile; fileRef = 4FCECD8021092354001F1078 /* Mouse Fix Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4FD9CB1322F7D48D0090DB98 /* Hyperlink.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FD9CB1122F7D48D0090DB98 /* Hyperlink.h */; };
+		4FEE4B0A233D933600011CEA /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4FEE4B09233D933600011CEA /* AppIcon.icns */; };
 		4FF3B2BD23276082009E8A8E /* Uninstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF3B2BC23276082009E8A8E /* Uninstaller.m */; };
 		4FF3B2C0232788AA009E8A8E /* HelperServices_HelperApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF3B2BF232788AA009E8A8E /* HelperServices_HelperApp.m */; };
 		4FF75A20233D82590002D8E6 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FCECD8821092354001F1078 /* MainMenu.xib */; };
@@ -121,16 +122,6 @@
 				4FD67DF3211CDD2D0095A9A5 /* Mouse Fix Helper.app in Copy Helper */,
 			);
 			name = "Copy Helper";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4FF3B2D723278FCE009E8A8E /* Copy Launchd Interface */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = Contents/Library/LaunchServices;
-			dstSubfolderSpec = 1;
-			files = (
-			);
-			name = "Copy Launchd Interface";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -232,6 +223,7 @@
 		4FD67DE6211CC9000095A9A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4FD9CB1122F7D48D0090DB98 /* Hyperlink.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Hyperlink.h; sourceTree = "<group>"; };
 		4FD9CB1222F7D48D0090DB98 /* Hyperlink.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Hyperlink.m; sourceTree = "<group>"; };
+		4FEE4B09233D933600011CEA /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
 		4FF3B2BB23276082009E8A8E /* Uninstaller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Uninstaller.h; sourceTree = "<group>"; };
 		4FF3B2BC23276082009E8A8E /* Uninstaller.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Uninstaller.m; sourceTree = "<group>"; };
 		4FF3B2BE232788AA009E8A8E /* HelperServices_HelperApp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelperServices_HelperApp.h; sourceTree = "<group>"; };
@@ -492,6 +484,7 @@
 				4F1C96692313603400C3B9AE /* External */,
 				4FCECD8621092354001F1078 /* Assets.xcassets */,
 				4FCECD8E21092354001F1078 /* Mouse_Remap_Helper.entitlements */,
+				4FEE4B09233D933600011CEA /* AppIcon.icns */,
 				4FCECD8B21092354001F1078 /* Info.plist */,
 				4F32E15C231C44C000199A11 /* main.m */,
 				4FCECD8821092354001F1078 /* MainMenu.xib */,
@@ -683,7 +676,6 @@
 				4F6A19F1231472B600E05446 /* My Embed Frameworks */,
 				4FD67DF2211CDCDE0095A9A5 /* Copy Helper */,
 				4F2FDF392315667700C7BE14 /* Copy Updater */,
-				4FF3B2D723278FCE009E8A8E /* Copy Launchd Interface */,
 			);
 			buildRules = (
 			);
@@ -751,6 +743,7 @@
 			files = (
 				4FF75A20233D82590002D8E6 /* MainMenu.xib in Resources */,
 				4F32E156231C420100199A11 /* config.plist in Resources */,
+				4FEE4B0A233D933600011CEA /* AppIcon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -917,7 +910,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = "";
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -977,7 +969,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = "";
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -1035,6 +1026,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
+				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = NO;
+				ENABLE_ON_DEMAND_RESOURCES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Frameworks",
 					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks,
@@ -1063,6 +1056,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
+				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = NO;
+				ENABLE_ON_DEMAND_RESOURCES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Frameworks",
 					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks,

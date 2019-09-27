@@ -19,6 +19,9 @@
 
 + (void)load {
     
+    
+    NSLog(@"load acc check");
+    
     [MessagePort_HelperApp load_Manual];
     
     Boolean accessibilityEnabled = [self check];
