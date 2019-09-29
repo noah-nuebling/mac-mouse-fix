@@ -1,7 +1,7 @@
 # Mac Mouse Fix
 ###### A simple way to make your mouse better
 
-Download on the [Website](http://www.mousefix.org)! | [Email](mailto:noah.n.public@gmail.com?subject=Mac%20Mouse%20Fix%20-%20Contact&) | [Buy Me A Milkshake! :)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ARSTVR6KFB524&source=url)
+**Download** on the [Website](http://www.mousefix.org) | [Email](mailto:noah.n.public@gmail.com?subject=Mac%20Mouse%20Fix%20-%20Contact&) | [Buy Me A Milkshake! :)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ARSTVR6KFB524&source=url)
 
 ---
 
@@ -17,8 +17,10 @@ Mac Mouse Fix is a simple way to make your mouse better.
 
 # Questions
 
-##### Why build it? There's already apps for remapping mouse buttons and smooth scrolling.
-I was looking for a way to use spaces and mission control from my mouse. I found some great software like Steer Mouse or USB Overdrive, but none of them were free. So I decided to build my own solution. Working on the smooth scrolling algorithm was a lot of fun for me and I think it turned out really well.
+Why make it? There's already apps for smooth scrolling and remapping mouse buttons.
 
-#####Does Mouse Fix track you / have ads?
-I'm committed to your privacy. Mouse Fix does not have ads and it doesn't track any information about you. I did not make Mouse Fix to make money (but you're very welcome to [buy me a milkshake] (https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ARSTVR6KFB524&source=url) if you want to! ;))
+I was looking for a way to use Spaces and Mission Control from my mouse. I found some great software like Steer Mouse and USB Overdrive, but none of it was free. So I decided to build my own - 100% free - solution. I had a ton of fun creating my own scrolling algorithm, and I thinki t turned out really well.
+
+Does Mouse Fix track your information?
+
+I'm committed to your privacy. Mouse Fix does not have ads and it doesn't track any information about you. I did not create Mouse Fix to make money - but you're welcome to [Buy Me A Milkshake](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ARSTVR6KFB524&source=url) if you want to! ;)
