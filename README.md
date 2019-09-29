@@ -15,4 +15,4 @@
 * 100% free, light on system resources, and fully open source. Plugs into System Preferences.
 
 
-Any features that solve a common problem of 3rd party mouse users on macOS would fit well into Mac Mouse Fix.
+Any features that solve a common problem of 3rd party mouse users on macOS might be a good fit for Mac Mouse Fix.
