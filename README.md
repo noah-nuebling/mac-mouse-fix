@@ -1,13 +1,12 @@
 # Mac Mouse Fix
-###### A simple way to make your mouse better
 
-**Download** on the [Website](http://www.mousefix.org) | [Email](mailto:noah.n.public@gmail.com?subject=Mac%20Mouse%20Fix%20-%20Contact&) | [Buy Me A Milkshake! :)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ARSTVR6KFB524&source=url)
+##### **Download** on the [Website](http://www.mousefix.org) | [Email](mailto:noah.n.public@gmail.com?subject=Mac%20Mouse%20Fix%20-%20Contact&) | [Buy Me A Milkshake! :)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ARSTVR6KFB524&source=url)
 
 ---
 
 Mac Mouse Fix is a simple way to make your mouse better.
 
-# Features
+## Features
 
 * A new smooth scrolling algorithm that strikes a perfect balance between fluidity and control.
 * Invert mouse scrolling direction independently of trackpad scrolling direction.
@@ -15,7 +14,7 @@ Mac Mouse Fix is a simple way to make your mouse better.
 * 100% Free, light on system resources, and fully open source. Plugs into System Preferences.
 
 
-# Questions
+## Questions
 
 Why make it? There's already apps for smooth scrolling and remapping mouse buttons.
 
