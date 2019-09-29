@@ -15,12 +15,4 @@
 * 100% free, light on system resources, and fully open source. Plugs into System Preferences.
 
 
-## Questions
-
-**Why build it? There's already apps for smooth scrolling and remapping mouse buttons.**
-
-I was looking for a way to use Spaces and Mission Control from my mouse. I found some great software like Steer Mouse and USB Overdrive, but none of it was free. So I decided to build my own - 100% free - solution. I had a ton of fun creating my own scrolling algorithm, and I think it turned out really well.
-
-**Does Mouse Fix track your information?**
-
-I'm committed to your privacy. Mouse Fix does not have ads and it doesn't track any information about you. I did not create Mouse Fix to make money - but you're welcome to [Buy Me A Milkshake](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ARSTVR6KFB524&source=url) if you want to! ;)
+Any features that solve a common problem of 3rd party mouse users on macOS would fit well into Mac Mouse Fix.
