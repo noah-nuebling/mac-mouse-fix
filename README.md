@@ -4,17 +4,16 @@
 
 ---
 
-**Download** on the [Website](http://www.mousefix.org) | [Email](mailto:noah.n.public@gmail.com?subject=Mac%20Mouse%20Fix%20-%20Contact&) | [Buy Me A Milkshake! :)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ARSTVR6KFB524&source=url)
+**Download** on the [Website](http://www.mousefix.org) | [Send an Email](mailto:noah.n.public@gmail.com?subject=Mac%20Mouse%20Fix%20-%20Contact&) | [Buy Me A Milkshake! :)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ARSTVR6KFB524&source=url)
 
 ---
 
 
 ## Features
 
-* A new smooth scrolling algorithm that strikes a perfect balance between fluidity and control.
-* Invert mouse scrolling direction independently of trackpad scrolling direction.
-* Use Mission Control, navigate your Browser, and more. Right from your Mouse.
-* 100% Free, light on system resources, and fully open source. Plugs into System Preferences.
+* Switch Between Spaces, activate Mission Control, Launchpad, and Quick Look, or use the side buttons to navigate through pages in your browser. All of that and more. Right from your mouse.
+* New Smooth Scrolling algorithm that strikes a perfect balance between fluidity and control. Allows you to change mouse scrolling direction independently of trackpad scrolling direction.
+* 100% free, light on system resources, and fully open source. 
 
 
 ## Questions
