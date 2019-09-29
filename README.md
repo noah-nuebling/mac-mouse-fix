@@ -17,9 +17,9 @@
 
 ## Questions
 
-**Why make it? There's already apps for smooth scrolling and remapping mouse buttons.**
+**Why build it? There's already apps for smooth scrolling and remapping mouse buttons.**
 
-I was looking for a way to use Spaces and Mission Control from my mouse. I found some great software like Steer Mouse and USB Overdrive, but none of it was free. So I decided to build my own - 100% free - solution. I had a ton of fun creating my own scrolling algorithm, and I thinki t turned out really well.
+I was looking for a way to use Spaces and Mission Control from my mouse. I found some great software like Steer Mouse and USB Overdrive, but none of it was free. So I decided to build my own - 100% free - solution. I had a ton of fun creating my own scrolling algorithm, and I think it turned out really well.
 
 **Does Mouse Fix track your information?**
 
