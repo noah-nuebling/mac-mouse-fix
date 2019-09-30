@@ -10,7 +10,7 @@
 
 ## Current Features
 
-* Switch Between Spaces, activate Mission Control, Launchpad, and Quick Look, or use the side buttons to navigate through pages in your browser. All of that and more. Right from your mouse.
+* Switch between Spaces, activate Mission Control, Launchpad, and Quick Look, or use the side buttons to navigate through pages in your browser. All of that and more. Right from your mouse.
 * New Smooth Scrolling algorithm that strikes a perfect balance between fluidity and control. Allows you to change mouse scrolling direction independently of trackpad scrolling direction.
 * 100% free, light on system resources, and fully open source. Plugs into System Preferences. There is no status bar item. Mouse Fix aims to be as clutter free as possible.
 
