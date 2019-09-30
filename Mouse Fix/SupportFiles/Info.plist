@@ -15,11 +15,11 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.9.0</string>
+	<string>0.9</string>
 	<key>CFBundleVersion</key>
-	<string>36</string>
+	<string>57</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2018 Noah Nuebling Enterprises Ltd. All rights reserved.</string>
+	<string>Copyright © 2019 Noah Nuebling (MIT License)</string>
 	<key>NSMainNibFile</key>
 	<string>MouseFix</string>
 	<key>NSPrefPaneIconFile</key>
