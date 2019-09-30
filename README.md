@@ -1,6 +1,6 @@
 # Mac Mouse Fix
 
-###### Mac Mouse Fix is a simple way to make your mouse better.
+Mac Mouse Fix is a simple way to make your 3rd party mouse better.
 
 ---
 
