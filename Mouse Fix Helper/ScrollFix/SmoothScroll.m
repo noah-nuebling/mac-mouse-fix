@@ -379,14 +379,42 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     // set pixels
     
     if (_horizontalScrollModifierPressed == FALSE) {
-//        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis1, _pixelsToScroll / 4);
+        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis1, _pixelsToScroll / 8);
         CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis1, _pixelsToScroll);
     }
     else if (_horizontalScrollModifierPressed == TRUE) {
-//        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis2, _pixelsToScroll / 4);
+        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis2, _pixelsToScroll / 8);
         CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis2, _pixelsToScroll);
     }
     
+//<<<<<<< Updated upstream
+//=======
+//<<<<<<< HEAD
+////     set phases
+////         the native "scrollPhase" is roughly equivalent to my "wheelPhase"
+//    
+//    CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase, kCGMomentumScrollPhaseNone);
+//    
+//    
+//    
+//    NSLog(@"intern scrollphase: %d", _scrollPhase);
+//    if (_scrollPhase == kMFWheelPhase) {
+//        if (_previousPhase == kMFWheelPhase) {
+//                CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 2);
+//        } else {
+//                CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 1);
+//        }
+//    }
+//    if (_scrollPhase == kMFMomentumPhase) {
+//        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 2);
+//    }
+//    
+////    NSLog(@"scrollPhase: %lld", CGEventGetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase));
+////    NSLog(@"momentumPhase: %lld \n", CGEventGetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase));
+//    
+//=======
+//>>>>>>> 519321477a37764c0b95076d91d80f5238284af3
+//>>>>>>> Stashed changes
     
     CGEventPost(kCGSessionEventTap, scrollEvent);
     CFRelease(scrollEvent);
