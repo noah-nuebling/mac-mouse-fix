@@ -35,7 +35,7 @@
 }
 - (IBAction)milkshakeButton:(id)sender {
     NSLog(@"BUTTTON");
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ARSTVR6KFB524&source=url"]];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ARSTVR6KFB524&source=url&lc=en_US"]];
 }
 - (IBAction)doneButton:(id)sender {
     [self end];

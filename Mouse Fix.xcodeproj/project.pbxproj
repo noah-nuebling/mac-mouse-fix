@@ -28,6 +28,8 @@
 		4F364C75232ABE5C0084DEB0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F364C74232ABE5C0084DEB0 /* Assets.xcassets */; };
 		4F3A8445230D3E6C0012C725 /* Updater.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F3A8443230D3E6C0012C725 /* Updater.h */; };
 		4F3A8446230D3E6C0012C725 /* Updater.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A8444230D3E6C0012C725 /* Updater.m */; };
+		4F422EED23469B0F00AA6E22 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4F422EEC23469B0F00AA6E22 /* README.md */; };
+		4F422EEF23469B1800AA6E22 /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 4F422EEE23469B1700AA6E22 /* CHANGELOG.md */; };
 		4F8AEA9222FBC7AC008C1A7C /* milkshake_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */; };
 		4FACF59F2183B956009257D4 /* default_mouse.fix.helper.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FACF59E2183B956009257D4 /* default_mouse.fix.helper.plist */; };
 		4FBF34F7231750B600E6CFD0 /* pureDonationButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */; };
@@ -192,6 +194,8 @@
 		4F364C74232ABE5C0084DEB0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4F3A8443230D3E6C0012C725 /* Updater.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Updater.h; sourceTree = "<group>"; };
 		4F3A8444230D3E6C0012C725 /* Updater.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Updater.m; sourceTree = "<group>"; };
+		4F422EEC23469B0F00AA6E22 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		4F422EEE23469B1700AA6E22 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = milkshake_button.png; sourceTree = "<group>"; };
 		4FACF59E2183B956009257D4 /* default_mouse.fix.helper.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_mouse.fix.helper.plist; sourceTree = "<group>"; };
 		4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pureDonationButton.png; sourceTree = "<group>"; };
@@ -400,6 +404,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		4F422EF023469B2B00AA6E22 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				4F422EEE23469B1700AA6E22 /* CHANGELOG.md */,
+				4F422EEC23469B0F00AA6E22 /* README.md */,
+			);
+			name = Other;
+			sourceTree = "<group>";
+		};
 		4FACF5A02183B9AA009257D4 /* Default User Agent Config File */ = {
 			isa = PBXGroup;
 			children = (
@@ -447,6 +460,7 @@
 				4F2FDF312315662500C7BE14 /* Mouse Fix Updater */,
 				4FCECD8121092354001F1078 /* Products */,
 				4F32E197231C5B5100199A11 /* Frameworks */,
+				4F422EF023469B2B00AA6E22 /* Other */,
 			);
 			sourceTree = "<group>";
 		};
@@ -742,7 +756,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FF75A20233D82590002D8E6 /* MainMenu.xib in Resources */,
+				4F422EEF23469B1800AA6E22 /* CHANGELOG.md in Resources */,
 				4F32E156231C420100199A11 /* config.plist in Resources */,
+				4F422EED23469B0F00AA6E22 /* README.md in Resources */,
 				4FEE4B0A233D933600011CEA /* AppIcon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
