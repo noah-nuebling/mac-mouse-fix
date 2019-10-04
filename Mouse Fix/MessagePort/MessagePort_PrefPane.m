@@ -19,11 +19,11 @@
     
     if (self == [MessagePort_PrefPane class]) {
         CFMessagePortRef localPort =
-        CFMessagePortCreateLocal(NULL,
+        CFMessagePortCreateLocal(kCFAllocatorDefault,
                                  CFSTR("com.nuebling.mousefix.port"),
                                  didReceiveMessage,
                                  nil,
-                                 nil);
+                                 NULL);
         
         
         CFRunLoopSourceRef runLoopSource =

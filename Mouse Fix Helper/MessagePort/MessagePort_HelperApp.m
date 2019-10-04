@@ -30,7 +30,7 @@
     NSLog(@"localPort: %@ (MessagePortReceiver)", localPort);
     
     CFRunLoopSourceRef runLoopSource =
-    CFMessagePortCreateRunLoopSource(nil, localPort, 0);
+    CFMessagePortCreateRunLoopSource(kCFAllocatorDefault, localPort, 0);
     
     CFRunLoopAddSource(CFRunLoopGetCurrent(),
                        runLoopSource,

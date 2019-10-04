@@ -331,6 +331,8 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
             _scrollPhase = kMFMomentumPhase;
             _pxPerMsVelocity = (_pixelsToScroll / msBetweenFrames);
             
+            return 0;
+            
         }
         
     }
@@ -379,10 +381,17 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     // set pixels
     
     if (_horizontalScrollModifierPressed == FALSE) {
+//        if (_scrollPhase == kMFWheelPhase) {
+//            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis1, [Utility_HelperApp signOf:_pixelsToScroll]);
+//        }
+    
         CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis1, _pixelsToScroll / 8);
         CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis1, _pixelsToScroll);
     }
     else if (_horizontalScrollModifierPressed == TRUE) {
+//        if (_scrollPhase == kMFWheelPhase) {
+//            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis2, [Utility_HelperApp signOf:_pixelsToScroll]);
+//        }
         CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis2, _pixelsToScroll / 8);
         CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis2, _pixelsToScroll);
     }
