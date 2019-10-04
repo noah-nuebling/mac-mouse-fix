@@ -79,6 +79,7 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
     CFStringRef replyMode = NULL;
     CFDataRef returnData = nil;
     SInt32 status = CFMessagePortSendRequest(remotePort, messageID, messageData, sendTimeout, recieveTimeout, replyMode, &returnData);
+    CFRelease(remotePort);
     if (status != 0) {
         NSLog(@"CFMessagePortSendRequest status: %d", status);
     }

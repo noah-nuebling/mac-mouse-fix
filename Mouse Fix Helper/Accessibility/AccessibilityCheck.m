@@ -48,6 +48,8 @@
 + (Boolean)check {
     CFMutableDictionaryRef options = CFDictionaryCreateMutable(kCFAllocatorDefault, 1, NULL, NULL);
     CFDictionaryAddValue(options, kAXTrustedCheckOptionPrompt, kCFBooleanFalse);
-    return AXIsProcessTrustedWithOptions(options);
+    Boolean result = AXIsProcessTrustedWithOptions(options);
+    CFRelease(options);
+    return result;
 }
 @end

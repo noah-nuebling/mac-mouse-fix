@@ -78,7 +78,6 @@ static CGEventSourceRef _eventSource    =   nil;
 #pragma mark dynamic
 
 // fast scroll
-
 static BOOL     _lastTickWasPartOfSwipe             =   NO;
 static int      _consecutiveScrollTickCounter       =   0;
 static NSTimer  *_consecutiveScrollTickTimer        =   NULL;
@@ -95,6 +94,10 @@ static int _previousPhase;                              // which phase was activ
 // wheel phase
 static int64_t  _pixelScrollQueue           =   0;
 static double   _msLeftForScroll            =   0;
+  // (app overrides)
+static CGPoint _previousMouseLocation;
+static AXUIElementRef _systemWideAXUIElement;
+
 // momentum phase
 static double   _pxPerMsVelocity        =   0;
 static int      _onePixelScrollsCounter =   0;
@@ -133,6 +136,8 @@ static void resetDynamicGlobals() {
 + (void)load_Manual {
     [SmoothScroll start];
     [SmoothScroll stop];
+    
+    _systemWideAXUIElement = AXUIElementCreateSystemWide();
 }
 
 + (void)startOrStopDecide {
@@ -174,10 +179,10 @@ static void resetDynamicGlobals() {
     }
     
     // the eventTap sometimes breaks when replugging in the mouse too quickly. I don't know if this helps
-    @try {
-        CGEventTapEnable(_eventTap, true);
-    } @finally {
-    }
+//    @try {
+//        CGEventTapEnable(_eventTap, true);
+//    } @finally {
+//    }
     if (_displayLink == nil) {
         CVDisplayLinkCreateWithActiveCGDisplays(&_displayLink);
         CVDisplayLinkSetOutputCallback(_displayLink, displayLinkCallback, nil);
@@ -232,14 +237,13 @@ static void resetDynamicGlobals() {
 
 static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
+    CFTimeInterval ts = CACurrentMediaTime();
+
     
     
 //    NSLog(@"scrollPhase: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase));
 //    NSLog(@"momentumPhase: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventMomentumPhase));
     
-    NSLog(@"line: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1));
-    NSLog(@"pt: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1));
-    NSLog(@"fx: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1));
     
     // return non-scroll-wheel events unaltered
     
@@ -260,27 +264,45 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         _consecutiveScrollTickCounter += 1;
     } else {
         // do stuff you only wanna do once per scroll swipe
-        
-        // set app overrides
-        setConfigVariablesForAppUnderMousePointer();
+    
         
         // start display link if necessary
         
         if (CVDisplayLinkIsRunning(_displayLink) == FALSE) {
             CVDisplayLinkStart(_displayLink);
         }
-        // set diplaylink to the display that is actally being scrolled - not sure if this is necessary, because having the displaylink at 30fps on a 30fps display looks just as horrible as having the display link on 60fps, if not worse
-        @try {
-            setDisplayLinkToDisplayUnderMousePointer(event);
-        } @catch (NSException *e) {
-            NSLog(@"Error while trying to set display link to display under mouse pointer: %@", [e reason]);
-        }
+        
+         //set app overrides
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            setConfigVariablesForAppUnderMousePointer();
+//        });
+        
+//        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
+//            setConfigVariablesForAppUnderMousePointer();
+//        });
+        dispatch_queue_t serial_queue = dispatch_queue_create("com.nuebling.mousefix", DISPATCH_QUEUE_SERIAL);
+        
+        dispatch_async(serial_queue, ^{
+            setConfigVariablesForAppUnderMousePointer();
+        });
+        dispatch_async(serial_queue, ^{
+            // set diplaylink to the display that is actally being scrolled - not sure if this is necessary, because having the displaylink at 30fps on a 30fps display looks just as horrible as having the display link on 60fps, if not worse
+            @try {
+                setDisplayLinkToDisplayUnderMousePointer(event);
+            } @catch (NSException *e) {
+                NSLog(@"Error while trying to set display link to display under mouse pointer: %@", [e reason]);
+            }
+        });
+        
+        
+        
     }
     
-    // check whether enabled here, because setConfigVariablesForAppUnderMousePointer() might enable / disable
+    // check whether enabled here and not earlier, because setConfigVariablesForAppUnderMousePointer() might enable / disable
+    
     if (_isEnabled == FALSE) {
         
-        NSLog(@"NOT ENABLED");
+//        NSLog(@"NOT ENABLED");
         if (_scrollDirection == -1) {
             long long line1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
             long long point1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1);
@@ -337,21 +359,25 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         _pixelScrollQueue = _pixelScrollQueue * pow(_fastScrollExponentialBase, (int32_t)_consecutiveScrollSwipeCounter - _fastScrollThreshhold_Swipes);
     }
     
+    NSLog(@"event tap bench: %f", CACurrentMediaTime() - ts);
+    
     return nil;
 }
 
 static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp *inNow, const CVTimeStamp *inOutputTime, CVOptionFlags flagsIn, CVOptionFlags *flagsOut, void *displayLinkContext) {
     
     
-
+//    NSLog(@"display Link CALLBACK");
+    
+    CFTimeInterval ts = CACurrentMediaTime();
+    
     
 //    _pixelsToScroll  = 0;
     
-    
     double   msBetweenFrames = CVDisplayLinkGetActualOutputVideoRefreshPeriod(_displayLink) * 1000;
-    if (msBetweenFrames != 16.674562) {
-        //NSLog(@"frameTimeHike: %fms", msBetweenFrames);
-    }
+//    if (msBetweenFrames != 16.674562) {
+//        NSLog(@"frameTimeHike: %fms", msBetweenFrames);
+//    }
     CVTime msBetweenFramesNominal = CVDisplayLinkGetNominalOutputVideoRefreshPeriod(_displayLink);
     msBetweenFrames =
     ( ((double)msBetweenFramesNominal.timeValue) / ((double)msBetweenFramesNominal.timeScale) ) * 1000;
@@ -359,6 +385,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     
 # pragma mark Wheel Phase
     if (_scrollPhase == kMFWheelPhase) {
+        
         
         _pixelsToScroll = round( (_pixelScrollQueue/_msLeftForScroll) * msBetweenFrames );
         
@@ -382,6 +409,9 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     
 # pragma mark Momentum Phase
     else if (_scrollPhase == kMFMomentumPhase) {
+        
+        
+    
         
         _pixelsToScroll = round(_pxPerMsVelocity * msBetweenFrames);
         
@@ -412,6 +442,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     }
     
 # pragma mark Send Event
+    
     
     CGEventRef scrollEvent = CGEventCreateScrollWheelEvent(_eventSource, kCGScrollEventUnitPixel, 1, 0);
     // CGEventSourceSetPixelsPerLine(_eventSource, 1);
@@ -478,6 +509,8 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     
     
     
+//    NSLog(@"dispLink bench: %f", CACurrentMediaTime() - ts);
+    
     return 0;
 }
 
@@ -494,12 +527,6 @@ static void setConfigVariablesForAppUnderMousePointer() {
     
     
 CFTimeInterval ts = CACurrentMediaTime();
-    
-
-    
-    
-    
-    
     
     
     // 1. Even slower
@@ -530,20 +557,27 @@ CFTimeInterval ts = CACurrentMediaTime();
     CGPoint mouseLocation = CGEventGetLocation(fakeEvent);
     CFRelease(fakeEvent);
     
+    if (_previousMouseLocation.x == mouseLocation.x && _previousMouseLocation.y == mouseLocation.y) {
+        return;
+    }
+    _previousMouseLocation = mouseLocation;
+
     AXUIElementRef elementUnderMousePointer;
-    AXUIElementCopyElementAtPosition(AXUIElementCreateSystemWide(), mouseLocation.x, mouseLocation.y, &elementUnderMousePointer);
+    AXUIElementCopyElementAtPosition(_systemWideAXUIElement, mouseLocation.x, mouseLocation.y, &elementUnderMousePointer);
     pid_t elementUnderMousePointerPID;
     AXUIElementGetPid(elementUnderMousePointer, &elementUnderMousePointerPID);
     NSRunningApplication *appUnderMousePointer = [NSRunningApplication runningApplicationWithProcessIdentifier:elementUnderMousePointerPID];
 
+    CFRelease(elementUnderMousePointer);
     NSString *bundleIdentifierOfScrolledApp_New = appUnderMousePointer.bundleIdentifier;
+    
     
     
     // 3. fast
 //    NSString *bundleIdentifierOfScrolledApp_New = [NSWorkspace.sharedWorkspace frontmostApplication].bundleIdentifier;
-    
-    
-    NSLog(@"bench: %f", CACurrentMediaTime() - ts);
+//
+//
+//    NSLog(@"bench: %f", CACurrentMediaTime() - ts);
     
     
     
@@ -552,7 +586,6 @@ CFTimeInterval ts = CACurrentMediaTime();
     
     if ([_bundleIdentifierOfScrolledApp isEqualToString:bundleIdentifierOfScrolledApp_New] == FALSE) {
         
-        NSLog(@"changing Scroll Settings");
         
         NSDictionary *config = [ConfigFileInterface_HelperApp config];
         NSDictionary *overrides = [config objectForKey:@"AppOverrides"];
@@ -580,10 +613,17 @@ CFTimeInterval ts = CACurrentMediaTime();
         _pxStepSize                         =   [[values objectAtIndex:0] intValue];
         _msPerStep                          =   [[values objectAtIndex:1] intValue];
         _frictionCoefficient                =   [[values objectAtIndex:2] floatValue];
-        _scrollDirection                    =   [[values objectAtIndex:3] intValue];
+        if ([[values objectAtIndex:3] intValue] != 0) { // keep the old setting if no new one is specified
+            _scrollDirection                =   [[values objectAtIndex:3] intValue];
+        }
+    
+        
+        [SmoothScroll startOrStopDecide];
     }
     
     _bundleIdentifierOfScrolledApp = bundleIdentifierOfScrolledApp_New;
+    
+    NSLog(@"override bench: %f", CACurrentMediaTime() - ts);
 }
 
 #pragma mark fast scroll
@@ -629,6 +669,8 @@ static void setDisplayLinkToDisplayUnderMousePointer(CGEventRef event) {
         NSException *e = [NSException exceptionWithName:NSInternalInconsistencyException reason:@"there are 0 diplays under the mouse pointer" userInfo:NULL];
         @throw e;
     }
+    
+    free(newDisplaysUnderMousePointer);
     
 }
 
