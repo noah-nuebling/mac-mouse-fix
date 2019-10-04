@@ -1,13 +1,14 @@
 # Changelog
 
-## 0.9.0
-
-- Initial release!
-
 ## 0.9.1
 
 - Fixed scrolling and zooming in certain apps like Terminal, Launchpad, and Pixelmator, by adding non-point scroll delta values to artificial scroll events.
-- made smooth scrolling slightly more responsive.
-- disbled smooth scrolling for all adobe apps and the dock (alt-tab menu).
-- Removed the ability to remap click and hold middle buttons to 'Lookup'.
-- Removed the ability to remap mouse buttons to 'Launchpad' entirely.
+- Made smooth scrolling slightly more responsive, by only updating certain configurations on the first of each series of consecutive scrollwheel ticks.
+- Smooth scrolingl now ignores all adobe apps, as well as the the alt-tab app switcher, and the app switcher replacement Contexts.app.
+- Added the ability to invert scrolling direction without enabling smooth scrolling.
+- Removed the ability to remap clicking and holding the middle button to 'Lookup', as this option might lead to a bad user experience.
+- Removed the ability to remap to 'Launchpad' entirely, because Launchpad is already easily accessible with a mouse.
+
+## 0.9.0
+
+- Initial release!
