@@ -68,22 +68,13 @@
 				<key>enabled</key>
 				<false/>
 			</dict>
-		</dict>
-		<key>com.apple.dock</key>
-		<dict>
-			<key>ScrollSettings</key>
-			<dict>
-				<key>enabled</key>
-				<false/>
-			</dict>
-		</dict>
-		<key>com.contextsformac.Contexts</key>
-		<dict>
-			<key>ScrollSettings</key>
-			<dict>
-				<key>enabled</key>
-				<false/>
-			</dict>
+			<key>values</key>
+			<array>
+				<integer>60</integer>
+				<integer>130</integer>
+				<real>1.5</real>
+				<integer>-1</integer>
+			</array>
 		</dict>
 	</dict>
 </dict>

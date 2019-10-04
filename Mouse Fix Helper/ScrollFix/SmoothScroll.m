@@ -250,6 +250,8 @@ static void resetDynamicGlobals() {
 
 static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
+
+    
     CFTimeInterval ts = CACurrentMediaTime();
 
     
@@ -302,6 +304,8 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         
         setConfigVariablesForAppUnderMousePointer();
         
+        NSLog(@"config: %@", [ConfigFileInterface_HelperApp.config valueForKeyPath:@"ScrollSettings.values"]);
+        
         
         dispatch_async(serial_queue, ^{
             // set diplaylink to the display that is actally being scrolled - not sure if this is necessary, because having the displaylink at 30fps on a 30fps display looks just as horrible as having the display link on 60fps, if not worse
@@ -312,11 +316,9 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
             }
         });
         
-        
-        
     }
-    
-    // check whether enabled here and not earlier, because setConfigVariablesForAppUnderMousePointer() might enable / disable
+    [_consecutiveScrollTickTimer invalidate];
+    _consecutiveScrollTickTimer = [NSTimer scheduledTimerWithTimeInterval:_consecutiveScrollTickMaxIntervall target:[SmoothScroll class] selector:@selector(Handle_ConsecutiveScrollTickCallback:) userInfo:NULL repeats:NO];
     
     if (_isEnabled == FALSE) {
         
@@ -332,8 +334,6 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         return event;
     }
     
-    [_consecutiveScrollTickTimer invalidate];
-    _consecutiveScrollTickTimer = [NSTimer scheduledTimerWithTimeInterval:_consecutiveScrollTickMaxIntervall target:[SmoothScroll class] selector:@selector(Handle_ConsecutiveScrollTickCallback:) userInfo:NULL repeats:NO];
     
     if (_consecutiveScrollTickCounter < _scrollSwipeThreshhold_Ticks) {
         _lastTickWasPartOfSwipe = NO;

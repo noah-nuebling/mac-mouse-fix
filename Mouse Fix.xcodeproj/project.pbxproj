@@ -30,7 +30,6 @@
 		4F3A8445230D3E6C0012C725 /* Updater.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F3A8443230D3E6C0012C725 /* Updater.h */; };
 		4F3A8446230D3E6C0012C725 /* Updater.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A8444230D3E6C0012C725 /* Updater.m */; };
 		4F8AEA9222FBC7AC008C1A7C /* milkshake_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */; };
-		4F8F995F2347C18600B7F3B7 /* AppOverrides.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8F995E2347C18600B7F3B7 /* AppOverrides.swift */; };
 		4FACF59F2183B956009257D4 /* default_mouse.fix.helper.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FACF59E2183B956009257D4 /* default_mouse.fix.helper.plist */; };
 		4FBF34F7231750B600E6CFD0 /* pureDonationButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */; };
 		4FBF34FF23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FBF34FD23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h */; };
@@ -197,8 +196,6 @@
 		4F422EEC23469B0F00AA6E22 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F422EEE23469B1700AA6E22 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = milkshake_button.png; sourceTree = "<group>"; };
-		4F8F995E2347C18600B7F3B7 /* AppOverrides.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppOverrides.swift; sourceTree = "<group>"; };
-		4F8F99602347C5B600B7F3B7 /* Mouse_Fix_Helper-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mouse_Fix_Helper-Bridging-Header.h"; sourceTree = "<group>"; };
 		4FACF59E2183B956009257D4 /* default_mouse.fix.helper.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_mouse.fix.helper.plist; sourceTree = "<group>"; };
 		4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pureDonationButton.png; sourceTree = "<group>"; };
 		4FBF34FD23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigFileInterface_PrefPane.h; sourceTree = "<group>"; };
@@ -367,7 +364,6 @@
 			children = (
 				4F32E17E231C509200199A11 /* SmoothScroll.h */,
 				4F32E186231C509200199A11 /* SmoothScroll.m */,
-				4F8F995E2347C18600B7F3B7 /* AppOverrides.swift */,
 				4F32E17F231C509200199A11 /* Unused */,
 			);
 			path = ScrollFix;
@@ -498,7 +494,6 @@
 		4FCECDB02109326E001F1078 /* SupportFiles */ = {
 			isa = PBXGroup;
 			children = (
-				4F8F99602347C5B600B7F3B7 /* Mouse_Fix_Helper-Bridging-Header.h */,
 				4F1C96692313603400C3B9AE /* External */,
 				4FCECD8621092354001F1078 /* Assets.xcassets */,
 				4FCECD8E21092354001F1078 /* Mouse_Remap_Helper.entitlements */,
@@ -823,7 +818,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F32E195231C50A100199A11 /* ModifierInputReceiver.m in Sources */,
-				4F8F995F2347C18600B7F3B7 /* AppOverrides.swift in Sources */,
 				4F32E155231C420100199A11 /* MessagePort_HelperApp.m in Sources */,
 				4F1C968C231361EF00C3B9AE /* TouchEvents.c in Sources */,
 				4FD45A20231C7FB500F75C58 /* AccessibilityCheck.m in Sources */,
@@ -1064,7 +1058,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.nuebling.mousefix.helper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Noah/Documents/_MyFiles/Projekte/Programmieren/Xcode/Xcode Projekte/Mac Mouse Fix/Mouse Fix/Mouse Fix Helper/SupportFiles/Mouse_Fix_Helper-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Mouse Fix Helper/SupportFiles/External\"";
@@ -1095,7 +1089,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.nuebling.mousefix.helper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Noah/Documents/_MyFiles/Projekte/Programmieren/Xcode/Xcode Projekte/Mac Mouse Fix/Mouse Fix/Mouse Fix Helper/SupportFiles/Mouse_Fix_Helper-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.0;
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Mouse Fix Helper/SupportFiles/External\"";
 			};
