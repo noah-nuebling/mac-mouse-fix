@@ -59,5 +59,24 @@
 			<integer>-1</integer>
 		</array>
 	</dict>
+	<key>AppOverrides</key>
+	<dict>
+		<key>com.adobe.</key>
+		<dict>
+			<key>ScrollSettings</key>
+			<dict>
+				<key>enabled</key>
+				<false/>
+			</dict>
+		</dict>
+		<key>com.apple.dock</key>
+		<dict>
+			<key>ScrollSettings</key>
+			<dict>
+				<key>enabled</key>
+				<false/>
+			</dict>
+		</dict>
+	</dict>
 </dict>
 </plist>

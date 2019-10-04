@@ -12,6 +12,7 @@
 #import "QuartzCore/CoreVideo.h"
 //#import <HIServices/AXUIElement.h>
 #import "ModifierInputReceiver.h"
+#import "../Config/ConfigFileInterface_HelperApp.h"
 
 #import "MouseInputReceiver.h"
 #import "DeviceManager.h"
@@ -215,13 +216,11 @@ static void resetDynamicGlobals() {
 static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
     
+    
     NSLog(@"scrollPhase: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase));
     NSLog(@"momentumPhase: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventMomentumPhase));
     
     
-    if (_isEnabled == FALSE) {
-        return event;
-    }
     
     // return non-scroll-wheel events unaltered
     
@@ -230,6 +229,12 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     int64_t     scrollDeltaAxis2    =   CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2);
     if ( (isPixelBased != 0) || (scrollDeltaAxis1 == 0) || (scrollDeltaAxis2 != 0)) {
         // scroll event doesn't come from a simple scroll wheel or doesn't contain the data we need to use
+        return event;
+    }
+    
+    setConfigVariablesForAppUnderMousePointer();
+    
+    if (_isEnabled == FALSE) {
         return event;
     }
     
@@ -441,6 +446,60 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 
 #pragma mark - helper functions
 
+#pragma mark app exceptions
+
+static void setConfigVariablesForAppUnderMousePointer() {
+ 
+    // get App under mouse pointer
+    
+    CGEventRef fakeEvent = CGEventCreate(NULL);
+    CGPoint mouseLocation = CGEventGetLocation(fakeEvent);
+    CFRelease(fakeEvent);
+    
+    AXUIElementRef elementUnderMousePointer;
+    AXUIElementCopyElementAtPosition(AXUIElementCreateSystemWide(), mouseLocation.x, mouseLocation.y, &elementUnderMousePointer);
+    pid_t elementUnderMousePointerPID;
+    AXUIElementGetPid(elementUnderMousePointer, &elementUnderMousePointerPID);
+    NSRunningApplication *appUnderMousePointer = [NSRunningApplication runningApplicationWithProcessIdentifier:elementUnderMousePointerPID];
+    
+    NSString *bundleIdentifierOfScrolledApp_New = appUnderMousePointer.bundleIdentifier;
+    
+    // if app under mouse pointer changed, adjust settings
+    
+    if ([_bundleIdentifierOfScrolledApp isEqualToString:bundleIdentifierOfScrolledApp_New] == FALSE) {
+        
+        NSLog(@"changing Scroll Settings");
+        
+        NSDictionary *config = [ConfigFileInterface_HelperApp config];
+        NSDictionary *overrides = [config objectForKey:@"AppOverrides"];
+        
+        NSDictionary *scrollOverrideForAppUnderMousePointer;
+        
+        for (NSString *b in overrides.allKeys) {
+            if ([bundleIdentifierOfScrolledApp_New containsString:b]) {
+                scrollOverrideForAppUnderMousePointer = [[overrides objectForKey: b] objectForKey:@"ScrollSettings"];
+            }
+        }
+        
+        BOOL enabled;
+        NSArray *values;
+        if (scrollOverrideForAppUnderMousePointer) {
+            enabled = [[scrollOverrideForAppUnderMousePointer objectForKey:@"enabled"] boolValue];
+            values = [scrollOverrideForAppUnderMousePointer objectForKey:@"values"];
+        }
+        else {
+            NSDictionary *defaultScrollSettings = [config objectForKey:@"ScrollSettings"];
+            enabled = [[defaultScrollSettings objectForKey:@"enabled"] boolValue];
+            values = [defaultScrollSettings objectForKey:@"values"];
+        }
+        _isEnabled                          =   enabled;
+        _pxStepSize                         =   [[values objectAtIndex:0] intValue];
+        _msPerStep                          =   [[values objectAtIndex:1] intValue];
+        _frictionCoefficient                =   [[values objectAtIndex:2] floatValue];
+    }
+    
+    _bundleIdentifierOfScrolledApp = bundleIdentifierOfScrolledApp_New;
+}
 
 #pragma mark fast scroll
 
