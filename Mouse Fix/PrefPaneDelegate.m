@@ -81,6 +81,10 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 - (IBAction)moreButton:(id)sender {
     [_moreSheetDelegate begin];
 }
+- (IBAction)scrollEnableCheckBox:(id)sender {
+    [self disableScrollSettings:@(_scrollEnableCheckBox.state)];
+    [self UIChanged:NULL];
+}
 
 - (IBAction)UIChanged:(id)sender {
     [self setConfigFileToUI];
@@ -152,7 +156,6 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
     BOOL enb = enable.boolValue;
     
-
     NSArray *baseArray = [Utility_PrefPane subviewsForView:self.mainView withIdentifier:@"baseView"];
     NSView *baseView = baseArray[0];
     NSBox *preferenceBox = (NSBox *)[Utility_PrefPane subviewsForView:baseView withIdentifier:@"preferenceBox"][0];
@@ -162,6 +165,12 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
             [(NSControl *)v setEnabled:enb];
         }
     }
+    if (enb) {
+        [self disableScrollSettings:@(_scrollEnableCheckBox.state)];
+    }
+}
+- (void)disableScrollSettings:(NSNumber *)enable {
+    _scrollSliderStepSize.enabled = enable.boolValue;
 }
 
 - (void)initializeUI {

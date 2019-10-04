@@ -24,7 +24,7 @@
         <window title="≪ do not localize ≫" autorecalculatesKeyViewLoop="NO" restorable="NO" deferred="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="F0z-JX-Cv5" userLabel="PrefPane">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <rect key="contentRect" x="0.0" y="0.0" width="668" height="267"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
             <view key="contentView" identifier="mainView" id="se5-gp-TjO">
                 <rect key="frame" x="0.0" y="0.0" width="668" height="267"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -70,13 +70,13 @@
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="UIChanged:" target="-2" id="AkV-sp-rEW"/>
+                                                <action selector="scrollEnableCheckBox:" target="-2" id="0fW-vn-5K8"/>
                                             </connections>
                                         </button>
                                         <slider toolTip="How many pixels to scroll for each mouse wheel tick." verticalHuggingPriority="750" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mXj-a7-rFw">
                                             <rect key="frame" x="238" y="39" width="151" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <sliderCell key="cell" enabled="NO" state="on" alignment="left" maxValue="1" doubleValue="0.5" tickMarkPosition="below" numberOfTickMarks="7" allowsTickMarkValuesOnly="YES" sliderType="linear" id="0NZ-eS-HsP"/>
+                                            <sliderCell key="cell" enabled="NO" state="on" alignment="left" identifier="scrollSpeedSlider" maxValue="1" doubleValue="0.5" tickMarkPosition="below" numberOfTickMarks="7" allowsTickMarkValuesOnly="YES" sliderType="linear" id="0NZ-eS-HsP"/>
                                             <connections>
                                                 <action selector="UIChanged:" target="-2" id="X4P-Fp-C3H"/>
                                             </connections>
