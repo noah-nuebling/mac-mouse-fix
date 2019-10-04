@@ -72,6 +72,8 @@ static NSMutableDictionary *_config;
     NSString *currentConfigPathRelative = @"/Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/Resources/config.plist";
         NSString *defaultConfigPathRelative = @"/Contents/Resources/default_config.plist";
     
+    NSLog(@"default: %@", [NSDictionary dictionaryWithContentsOfURL:[currentBundleURL URLByAppendingPathComponent:defaultConfigPathRelative]]);
+    
     NSURL *currentConfigURL = [currentBundleURL URLByAppendingPathComponent:currentConfigPathRelative];
     NSURL *defaultConfigURL = [currentBundleURL URLByAppendingPathComponent:defaultConfigPathRelative];
     
@@ -79,9 +81,8 @@ static NSMutableDictionary *_config;
     NSNumber *defaultConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:defaultConfigURL] valueForKeyPath:@"Other.configVersion"];
     
     if (currentConfigVersion.intValue != defaultConfigVersion.intValue) {
-        NSError *error;
-        [NSFileManager.defaultManager copyItemAtURL:defaultConfigURL toURL:currentConfigURL error:&error];
-        NSLog(@"Error copying default config file to working config file location");
+        NSData *defaultData = [NSData dataWithContentsOfURL:defaultConfigURL];
+        [defaultData writeToURL:currentConfigURL atomically:YES];
         
         [MessagePort_PrefPane sendMessageToHelper:@"terminate"];
     }
