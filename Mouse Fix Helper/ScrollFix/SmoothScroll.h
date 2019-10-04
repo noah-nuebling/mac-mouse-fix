@@ -16,6 +16,8 @@ typedef enum {
     kMFInvertedScrollDirection      =  -1
 } MFScrollDirection;
 
++ (void)load_Manual;
+
 + (void)setHorizontalScroll:(BOOL)B;
 + (void)temporarilyDisable:(BOOL)B;
 

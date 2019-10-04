@@ -14,13 +14,11 @@
 #import "../DeviceManager/DeviceManager.h"
 #import "../MessagePort/MessagePort_HelperApp.h"
 #import "../Config/ConfigFileInterface_HelperApp.h"
+#import "../ScrollFix/SmoothScroll.h"
 
 @implementation AccessibilityCheck
 
 + (void)load {
-    
-    
-    NSLog(@"load acc check");
     
     [MessagePort_HelperApp load_Manual];
     
@@ -28,6 +26,7 @@
     
     if (!accessibilityEnabled) {
         [NSTimer scheduledTimerWithTimeInterval:0.5 repeats:NO block:^(NSTimer * _Nonnull timer) {
+            NSLog(@"send acc message to prefpane");
             [MessagePort_HelperApp sendMessageToPrefPane:@"accessibilityDisabled"];
         }];
         [NSTimer scheduledTimerWithTimeInterval:0.5 repeats:YES block:^(NSTimer * _Nonnull timer) {
@@ -42,6 +41,8 @@
     } else {
         [DeviceManager load_Manual];
         [ConfigFileInterface_HelperApp load_Manual];
+        [SmoothScroll load_Manual];
+        
     }
 }
 + (Boolean)check {

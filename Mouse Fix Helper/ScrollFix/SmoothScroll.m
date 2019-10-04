@@ -130,7 +130,7 @@ static void resetDynamicGlobals() {
     _consecutiveScrollSwipeMaxIntervall    =   0.5;
 }
 
-+ (void)load {
++ (void)load_Manual {
     [SmoothScroll start];
     [SmoothScroll stop];
 }
@@ -166,6 +166,7 @@ static void resetDynamicGlobals() {
     if (_eventTap == nil) {
         CGEventMask mask = CGEventMaskBit(kCGEventScrollWheel);
         _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
+        NSLog(@"_eventTap: %@", _eventTap);
         CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _eventTap, 0);
         CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes);
         CFRelease(runLoopSource);
