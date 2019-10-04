@@ -217,8 +217,8 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
     
     
-    NSLog(@"scrollPhase: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase));
-    NSLog(@"momentumPhase: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventMomentumPhase));
+//    NSLog(@"scrollPhase: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase));
+//    NSLog(@"momentumPhase: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventMomentumPhase));
     
     
     
@@ -232,36 +232,41 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         return event;
     }
     
-    setConfigVariablesForAppUnderMousePointer();
-    
-    if (_isEnabled == FALSE) {
-        return event;
-    }
-    
-    // start display link if necessary
-    
-    if (CVDisplayLinkIsRunning(_displayLink) == FALSE) {
-        CVDisplayLinkStart(_displayLink);
-    }
-
-    // set diplaylink to the display that is actally being scrolled - not sure if this is necessary or even works, bacause I don't have monitors to test on..
-    @try {
-        setDisplayLinkToDisplayUnderMousePointer(event);
-    } @catch (NSException *e) {
-        NSLog(@"Error while trying to set display link to display under mouse pointer: %@", [e reason]);
-    }
     
     // fast scroll
     
     if ([_consecutiveScrollTickTimer isValid]) {
         _consecutiveScrollTickCounter += 1;
+    } else {
+        // do stuff you only wanna do once per scroll swipe
+        
+        // set app overrides
+        setConfigVariablesForAppUnderMousePointer();
+        
+        // start display link if necessary
+        
+        if (CVDisplayLinkIsRunning(_displayLink) == FALSE) {
+            CVDisplayLinkStart(_displayLink);
+        }
+        // set diplaylink to the display that is actally being scrolled - not sure if this is necessary, because having the displaylink at 30fps on a 30fps display looks just as horrible as having the display link on 60fps, if not worse
+        @try {
+            setDisplayLinkToDisplayUnderMousePointer(event);
+        } @catch (NSException *e) {
+            NSLog(@"Error while trying to set display link to display under mouse pointer: %@", [e reason]);
+        }
     }
+    if (_isEnabled == FALSE) {
+        return event;
+    }
+    
+    
     [_consecutiveScrollTickTimer invalidate];
     _consecutiveScrollTickTimer = [NSTimer scheduledTimerWithTimeInterval:_consecutiveScrollTickMaxIntervall target:[SmoothScroll class] selector:@selector(Handle_ConsecutiveScrollTickCallback:) userInfo:NULL repeats:NO];
     
     if (_consecutiveScrollTickCounter < _scrollSwipeThreshhold_Ticks) {
         _lastTickWasPartOfSwipe = NO;
     } else if (_lastTickWasPartOfSwipe == NO) {
+
         _consecutiveScrollSwipeCounter  += 1;
         [_consecutiveScrollSwipeTimer invalidate];
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -269,6 +274,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         });
         _lastTickWasPartOfSwipe = YES;
     }
+    
     
     // reset global vars from momentum phase
     
@@ -449,20 +455,65 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 #pragma mark app exceptions
 
 static void setConfigVariablesForAppUnderMousePointer() {
+    
  
     // get App under mouse pointer
     
-    CGEventRef fakeEvent = CGEventCreate(NULL);
-    CGPoint mouseLocation = CGEventGetLocation(fakeEvent);
-    CFRelease(fakeEvent);
     
-    AXUIElementRef elementUnderMousePointer;
-    AXUIElementCopyElementAtPosition(AXUIElementCreateSystemWide(), mouseLocation.x, mouseLocation.y, &elementUnderMousePointer);
-    pid_t elementUnderMousePointerPID;
-    AXUIElementGetPid(elementUnderMousePointer, &elementUnderMousePointerPID);
-    NSRunningApplication *appUnderMousePointer = [NSRunningApplication runningApplicationWithProcessIdentifier:elementUnderMousePointerPID];
     
-    NSString *bundleIdentifierOfScrolledApp_New = appUnderMousePointer.bundleIdentifier;
+CFTimeInterval ts = CACurrentMediaTime();
+    
+
+    
+    
+    
+    
+    
+    
+    // this code is even slower, than the AXUI stuff :(
+    
+//    CGEventRef fakeEvent = CGEventCreate(NULL);
+//    CGPoint mouseLocation = CGEventGetLocation(fakeEvent);
+//    CFRelease(fakeEvent);
+    
+//    NSInteger winNUnderMouse = [NSWindow windowNumberAtPoint:(NSPoint)mouseLocation belowWindowWithWindowNumber:0];
+//    CFArrayRef windowList = CGWindowListCopyWindowInfo(kCGWindowListExcludeDesktopElements | kCGWindowListOptionOnScreenOnly, kCGNullWindowID);
+////    NSLog(@"windowList: %@", windowList);
+//    int windowPID = 0;
+//    for (int i = 0; i < CFArrayGetCount(windowList); i++) {
+//        CFDictionaryRef w = CFArrayGetValueAtIndex(windowList, i);
+//        int winN;
+//        CFNumberGetValue(CFDictionaryGetValue(w, CFSTR("kCGWindowNumber")), kCFNumberIntType, &winN);
+//        if (winN == winNUnderMouse) {
+//            CFNumberGetValue(CFDictionaryGetValue(w, CFSTR("kCGWindowOwnerPID")), kCFNumberIntType, &windowPID);
+//        }
+//    }
+//    NSRunningApplication *appUnderMousePointer = [NSRunningApplication runningApplicationWithProcessIdentifier:windowPID];
+//    NSString *bundleIdentifierOfScrolledApp_New = appUnderMousePointer.bundleIdentifier;
+  
+    
+    // this is also really slow
+    
+//    CGEventRef fakeEvent = CGEventCreate(NULL);
+//    CGPoint mouseLocation = CGEventGetLocation(fakeEvent);
+//    CFRelease(fakeEvent);
+    
+//    AXUIElementRef elementUnderMousePointer;
+//    AXUIElementCopyElementAtPosition(AXUIElementCreateSystemWide(), mouseLocation.x, mouseLocation.y, &elementUnderMousePointer);
+//    pid_t elementUnderMousePointerPID;
+//    AXUIElementGetPid(elementUnderMousePointer, &elementUnderMousePointerPID);
+//    NSRunningApplication *appUnderMousePointer = [NSRunningApplication runningApplicationWithProcessIdentifier:elementUnderMousePointerPID];
+//
+//    NSString *bundleIdentifierOfScrolledApp_New = appUnderMousePointer.bundleIdentifier;
+    
+    
+    // determining scrolled app by frontmost application for performance reasons
+    NSString *bundleIdentifierOfScrolledApp_New = [NSWorkspace.sharedWorkspace frontmostApplication].bundleIdentifier;
+    
+    NSLog(@"bench: %f", CACurrentMediaTime() - ts);
+    
+    
+    
     
     // if app under mouse pointer changed, adjust settings
     
