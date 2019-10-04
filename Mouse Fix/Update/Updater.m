@@ -23,6 +23,8 @@
 
 # pragma mark - Class Properties
 
+static NSURL *_baseRemoteURL;
+
 static NSURLSessionDownloadTask *_downloadTask1;
 static NSURLSessionDownloadTask *_downloadTask2;
 static NSURLSession *_downloadSession;
@@ -32,6 +34,10 @@ static NSURL *_updateLocation;
 static NSURL *_updateNotesLocation;
 
 # pragma mark - Class Methods
+
++(void)load {
+    _baseRemoteURL = [NSURL URLWithString:@"https://mousefix.org/maindownload/"];
+}
 
 + (void)setupDownloadSession {
     
@@ -66,7 +72,7 @@ static NSURL *_updateNotesLocation;
     
     // clean up before starting the update procedure again
     
-    _downloadTask1 = [_downloadSession downloadTaskWithURL:[NSURL URLWithString: @"https://noah-nuebling.github.io/mac-mouse-fix-website/maindownload/bundleversion"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    _downloadTask1 = [_downloadSession downloadTaskWithURL:[_baseRemoteURL URLByAppendingPathComponent:@"/bundleversion"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (error != NULL){
             NSLog(@"checking for updates failed");
             NSLog(@"Error: \n%@", error);
@@ -85,7 +91,7 @@ static NSURL *_updateNotesLocation;
     [_downloadTask1 resume];
 }
 + (void)downloadAndPresent {
-    _downloadTask1 = [_downloadSession downloadTaskWithURL:[NSURL URLWithString:@"https://noah-nuebling.github.io/mac-mouse-fix-website/maindownload/updatenotes.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    _downloadTask1 = [_downloadSession downloadTaskWithURL:[_baseRemoteURL URLByAppendingPathComponent:@"/updatenotes.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (error != NULL) {
             NSLog(@"error downloading updatenotes: %@", error);
             return;
@@ -99,7 +105,7 @@ static NSURL *_updateNotesLocation;
             return;
         }
         _updateNotesLocation = [[NSURL fileURLWithPath:unzipDest] URLByAppendingPathComponent:@"updatenotes"];
-        _downloadTask2 = [_downloadSession downloadTaskWithURL:[NSURL URLWithString: @"https://noah-nuebling.github.io/mac-mouse-fix-website/maindownload/MacMouseFix.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        _downloadTask2 = [_downloadSession downloadTaskWithURL:[_baseRemoteURL URLByAppendingPathComponent:@"/MacMouseFix.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
             if (error != NULL) {
                 NSLog(@"error downloading prefPane: %@", error);
                 return;
@@ -189,17 +195,29 @@ static NSURL *_updateNotesLocation;
 // prepare apple script which can install the update (executed within Mouse Fix Updater)
     
     
-    // copy config.plist into the updated bundle
+    // copy config.plist into the updated bundle, if the new config is compatible
     
     NSString *configPathRelative = @"/Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/Resources/config.plist";
-    NSString *currentConfigOSAPath = [[[currentBundleURL path]  stringByAppendingPathComponent:configPathRelative]stringByReplacingOccurrencesOfString:@" " withString:@"\\\\ "];
-    NSString *updateConfigOSAPath = [[[updateBundleURL path] stringByAppendingPathComponent:configPathRelative] stringByReplacingOccurrencesOfString:@" " withString:@"\\\\ "];
+    
+    NSURL *currentConfigURL = [currentBundleURL URLByAppendingPathComponent:configPathRelative];
+    NSURL *updateConfigURL = [updateBundleURL URLByAppendingPathComponent:configPathRelative];
+    
+    NSNumber *currentConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:currentConfigURL] valueForKeyPath:@"Other.configVersion"];
+    NSNumber *updateConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:updateConfigURL] valueForKeyPath:@"Other.configVersion"];
+    
+    NSString *currentConfigOSAPath = @"";
+    NSString *updateConfigOSAPath = @"";
+    if (currentConfigVersion.intValue == updateConfigVersion.intValue) { // check if both configs are compatible
+        currentConfigOSAPath = [[[currentBundleURL path]  stringByAppendingPathComponent:configPathRelative]stringByReplacingOccurrencesOfString:@" " withString:@"\\\\ "];
+        updateConfigOSAPath = [[[updateBundleURL path] stringByAppendingPathComponent:configPathRelative] stringByReplacingOccurrencesOfString:@" " withString:@"\\\\ "];
+    }
+    
+    
     
     // installing update
     
-    
     NSString *currentBundleOSAPath = [[currentBundleURL path] stringByReplacingOccurrencesOfString:@" " withString:@"\\\\ "];
-    NSString *currentBundleEnclosingOSAPath = [[[currentBundleURL path] stringByDeletingLastPathComponent] stringByReplacingOccurrencesOfString:@" " withString:@"\\\\ "];
+//    NSString *currentBundleEnclosingOSAPath = [[[currentBundleURL path] stringByDeletingLastPathComponent] stringByReplacingOccurrencesOfString:@" " withString:@"\\\\ "];
     NSString *updateBundleOSAPath = [[updateBundleURL path] stringByReplacingOccurrencesOfString:@" " withString:@"\\\\ "];
     
     NSString *adminParamOSA = @"";
