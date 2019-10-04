@@ -579,6 +579,7 @@ CFTimeInterval ts = CACurrentMediaTime();
         _pxStepSize                         =   [[values objectAtIndex:0] intValue];
         _msPerStep                          =   [[values objectAtIndex:1] intValue];
         _frictionCoefficient                =   [[values objectAtIndex:2] floatValue];
+        _scrollDirection                    =   [[values objectAtIndex:3] intValue];
     }
     
     _bundleIdentifierOfScrolledApp = bundleIdentifierOfScrolledApp_New;

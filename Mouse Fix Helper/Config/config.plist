@@ -5,7 +5,7 @@
 	<key>Other</key>
 	<dict>
 		<key>configVersion</key>
-		<integer>1</integer>
+		<integer>2</integer>
 		<key>checkForUpdates</key>
 		<true/>
 		<key>skippedBundleVersion</key>
@@ -50,7 +50,7 @@
 	<key>ScrollSettings</key>
 	<dict>
 		<key>enabled</key>
-		<false/>
+		<true/>
 		<key>values</key>
 		<array>
 			<integer>60</integer>
@@ -70,6 +70,14 @@
 			</dict>
 		</dict>
 		<key>com.apple.dock</key>
+		<dict>
+			<key>ScrollSettings</key>
+			<dict>
+				<key>enabled</key>
+				<false/>
+			</dict>
+		</dict>
+		<key>com.contextsformac.Contexts</key>
 		<dict>
 			<key>ScrollSettings</key>
 			<dict>
