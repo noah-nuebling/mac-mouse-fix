@@ -198,6 +198,7 @@
 		4F422EEE23469B1700AA6E22 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = milkshake_button.png; sourceTree = "<group>"; };
 		4F8F995E2347C18600B7F3B7 /* AppOverrides.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppOverrides.swift; sourceTree = "<group>"; };
+		4F8F99602347C5B600B7F3B7 /* Mouse_Fix_Helper-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mouse_Fix_Helper-Bridging-Header.h"; sourceTree = "<group>"; };
 		4FACF59E2183B956009257D4 /* default_mouse.fix.helper.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_mouse.fix.helper.plist; sourceTree = "<group>"; };
 		4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pureDonationButton.png; sourceTree = "<group>"; };
 		4FBF34FD23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigFileInterface_PrefPane.h; sourceTree = "<group>"; };
@@ -497,6 +498,7 @@
 		4FCECDB02109326E001F1078 /* SupportFiles */ = {
 			isa = PBXGroup;
 			children = (
+				4F8F99602347C5B600B7F3B7 /* Mouse_Fix_Helper-Bridging-Header.h */,
 				4F1C96692313603400C3B9AE /* External */,
 				4FCECD8621092354001F1078 /* Assets.xcassets */,
 				4FCECD8E21092354001F1078 /* Mouse_Remap_Helper.entitlements */,
@@ -714,7 +716,7 @@
 				KnownAssetTags = (
 					0,
 				);
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1100;
 				ORGANIZATIONNAME = "Noah Nuebling";
 				TargetAttributes = {
 					4F2FDF2F2315662400C7BE14 = {
@@ -895,6 +897,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -912,6 +915,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1032,6 +1036,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
 			};
 			name = Release;
 		};
@@ -1041,6 +1046,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Mouse Fix Helper/SupportFiles/Mouse_Remap_Helper.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
@@ -1058,9 +1064,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.nuebling.mousefix.helper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Mouse Fix Helper/Mouse Remap Helper-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Noah/Documents/_MyFiles/Projekte/Programmieren/Xcode/Xcode Projekte/Mac Mouse Fix/Mouse Fix/Mouse Fix Helper/SupportFiles/Mouse_Fix_Helper-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Mouse Fix Helper/SupportFiles/External\"";
 			};
 			name = Debug;
@@ -1071,6 +1077,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "Mouse Fix Helper/SupportFiles/Mouse_Remap_Helper.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
@@ -1088,8 +1095,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.nuebling.mousefix.helper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Mouse Fix Helper/Mouse Remap Helper-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/Noah/Documents/_MyFiles/Projekte/Programmieren/Xcode/Xcode Projekte/Mac Mouse Fix/Mouse Fix/Mouse Fix Helper/SupportFiles/Mouse_Fix_Helper-Bridging-Header.h";
+				SWIFT_VERSION = 4.0;
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Mouse Fix Helper/SupportFiles/External\"";
 			};
 			name = Release;

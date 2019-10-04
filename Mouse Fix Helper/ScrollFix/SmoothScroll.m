@@ -18,6 +18,14 @@
 #import "DeviceManager.h"
 #import "Utility_HelperApp.h"
 
+//#import "Mouse_Fix_Helper-Swift.h"
+
+
+//@class AppOverrides;
+//@interface AppOverrides : NSObject
+//- (AppOverrides *)returnSwiftObject;
+//- (NSString *)getBundleIdFromMouseLocation:(CGEventRef)event;
+//@end
 
 
 @interface SmoothScroll ()
@@ -25,6 +33,7 @@
 @end
 
 @implementation SmoothScroll
+
 
 
 #pragma mark - Globals
@@ -36,6 +45,8 @@
 
 static BOOL _isEnabled;
 + (BOOL)isEnabled {
+
+    
     return _isEnabled;
 }
 + (void)setIsEnabled:(BOOL)B {
@@ -133,11 +144,13 @@ static void resetDynamicGlobals() {
     _consecutiveScrollSwipeMaxIntervall    =   0.5;
 }
 
+//AppOverrides *_appOverrides;
 + (void)load_Manual {
     [SmoothScroll start];
     [SmoothScroll stop];
     
     _systemWideAXUIElement = AXUIElementCreateSystemWide();
+//    _appOverrides = [AppOverrides new];
 }
 
 + (void)startOrStopDecide {
@@ -282,9 +295,14 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 //        });
         dispatch_queue_t serial_queue = dispatch_queue_create("com.nuebling.mousefix", DISPATCH_QUEUE_SERIAL);
         
-        dispatch_async(serial_queue, ^{
-            setConfigVariablesForAppUnderMousePointer();
-        });
+        // dThis is very slow and incredibly inconsistent. Sometimes this takes over a second, and then the eventTap breaks. But doing it asynchronously makes the scrolling direction super jerky and switch all the time....
+//        dispatch_async(serial_queue, ^{
+//            setConfigVariablesForAppUnderMousePointer();
+//        });
+        
+        setConfigVariablesForAppUnderMousePointer();
+        
+        
         dispatch_async(serial_queue, ^{
             // set diplaylink to the display that is actally being scrolled - not sure if this is necessary, because having the displaylink at 30fps on a 30fps display looks just as horrible as having the display link on 60fps, if not worse
             @try {
@@ -359,7 +377,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         _pixelScrollQueue = _pixelScrollQueue * pow(_fastScrollExponentialBase, (int32_t)_consecutiveScrollSwipeCounter - _fastScrollThreshhold_Swipes);
     }
     
-    NSLog(@"event tap bench: %f", CACurrentMediaTime() - ts);
+//    NSLog(@"event tap bench: %f", CACurrentMediaTime() - ts);
     
     return nil;
 }
@@ -553,33 +571,42 @@ CFTimeInterval ts = CACurrentMediaTime();
     
     // 2. very slow
     
-    CGEventRef fakeEvent = CGEventCreate(NULL);
-    CGPoint mouseLocation = CGEventGetLocation(fakeEvent);
-    CFRelease(fakeEvent);
-    
-    if (_previousMouseLocation.x == mouseLocation.x && _previousMouseLocation.y == mouseLocation.y) {
-        return;
-    }
-    _previousMouseLocation = mouseLocation;
+//    CGEventRef fakeEvent = CGEventCreate(NULL);
+//    CGPoint mouseLocation = CGEventGetLocation(fakeEvent);
+//    CFRelease(fakeEvent);
 
-    AXUIElementRef elementUnderMousePointer;
-    AXUIElementCopyElementAtPosition(_systemWideAXUIElement, mouseLocation.x, mouseLocation.y, &elementUnderMousePointer);
-    pid_t elementUnderMousePointerPID;
-    AXUIElementGetPid(elementUnderMousePointer, &elementUnderMousePointerPID);
-    NSRunningApplication *appUnderMousePointer = [NSRunningApplication runningApplicationWithProcessIdentifier:elementUnderMousePointerPID];
+//    if (_previousMouseLocation.x == mouseLocation.x && _previousMouseLocation.y == mouseLocation.y) {
+//        return;
+//    }
+//    _previousMouseLocation = mouseLocation;
+//
+//    AXUIElementRef elementUnderMousePointer;
+//    AXUIElementCopyElementAtPosition(_systemWideAXUIElement, mouseLocation.x, mouseLocation.y, &elementUnderMousePointer);
+//    pid_t elementUnderMousePointerPID;
+//    AXUIElementGetPid(elementUnderMousePointer, &elementUnderMousePointerPID);
+//    NSRunningApplication *appUnderMousePointer = [NSRunningApplication runningApplicationWithProcessIdentifier:elementUnderMousePointerPID];
+//
+//    @try {
+//        CFRelease(elementUnderMousePointer);
+//    } @finally {}
+//    NSString *bundleIdentifierOfScrolledApp_New = appUnderMousePointer.bundleIdentifier;
+    
+    
+    
+//     3. fast, but only get info about frontmost application
+    
+    NSString *bundleIdentifierOfScrolledApp_New = [NSWorkspace.sharedWorkspace frontmostApplication].bundleIdentifier;
+    
+    
+    
+    // 4. swift copied from MOS - should be fast and gathers info on app under mouse pointer - I couldn't manage to import the Swift code though :/
+    
+//    CGEventRef fakeEvent = CGEventCreate(NULL);
+//    NSString *bundleIdentifierOfScrolledApp_New = [_appOverrides getBundleIdFromMouseLocation:fakeEvent];
+//    CFRelease(fakeEvent);
+    
+    
 
-    CFRelease(elementUnderMousePointer);
-    NSString *bundleIdentifierOfScrolledApp_New = appUnderMousePointer.bundleIdentifier;
-    
-    
-    
-    // 3. fast
-//    NSString *bundleIdentifierOfScrolledApp_New = [NSWorkspace.sharedWorkspace frontmostApplication].bundleIdentifier;
-//
-//
-//    NSLog(@"bench: %f", CACurrentMediaTime() - ts);
-    
-    
     
     
     // if app under mouse pointer changed, adjust settings
