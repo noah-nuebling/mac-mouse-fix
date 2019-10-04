@@ -187,7 +187,6 @@
 		4F32E192231C50A100199A11 /* InputParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputParser.h; sourceTree = "<group>"; };
 		4F32E193231C50A100199A11 /* MouseInputReceiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MouseInputReceiver.m; sourceTree = "<group>"; };
 		4F32E198231C5B5100199A11 /* ZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZipArchive.framework; path = Carthage/Build/Mac/ZipArchive.framework; sourceTree = "<group>"; };
-		4F364C70232A9BE80084DEB0 /* default_config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = default_config.plist; sourceTree = "<group>"; };
 		4F364C71232A9EBC0084DEB0 /* MouseFix.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = MouseFix.tiff; sourceTree = "<group>"; };
 		4F364C74232ABE5C0084DEB0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4F3A8443230D3E6C0012C725 /* Updater.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Updater.h; sourceTree = "<group>"; };
@@ -434,7 +433,6 @@
 		4FBF350123183F1300E6CFD0 /* Config */ = {
 			isa = PBXGroup;
 			children = (
-				4F364C70232A9BE80084DEB0 /* default_config.plist */,
 				4FBF34FD23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h */,
 				4FBF34FE23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.m */,
 			);
