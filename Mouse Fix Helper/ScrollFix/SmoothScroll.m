@@ -470,7 +470,7 @@ CFTimeInterval ts = CACurrentMediaTime();
     
     
     
-    // this code is even slower, than the AXUI stuff :(
+    // 1. Even slower
     
 //    CGEventRef fakeEvent = CGEventCreate(NULL);
 //    CGPoint mouseLocation = CGEventGetLocation(fakeEvent);
@@ -492,23 +492,24 @@ CFTimeInterval ts = CACurrentMediaTime();
 //    NSString *bundleIdentifierOfScrolledApp_New = appUnderMousePointer.bundleIdentifier;
   
     
-    // this is also really slow
+    // 2. very slow
     
-//    CGEventRef fakeEvent = CGEventCreate(NULL);
-//    CGPoint mouseLocation = CGEventGetLocation(fakeEvent);
-//    CFRelease(fakeEvent);
+    CGEventRef fakeEvent = CGEventCreate(NULL);
+    CGPoint mouseLocation = CGEventGetLocation(fakeEvent);
+    CFRelease(fakeEvent);
     
-//    AXUIElementRef elementUnderMousePointer;
-//    AXUIElementCopyElementAtPosition(AXUIElementCreateSystemWide(), mouseLocation.x, mouseLocation.y, &elementUnderMousePointer);
-//    pid_t elementUnderMousePointerPID;
-//    AXUIElementGetPid(elementUnderMousePointer, &elementUnderMousePointerPID);
-//    NSRunningApplication *appUnderMousePointer = [NSRunningApplication runningApplicationWithProcessIdentifier:elementUnderMousePointerPID];
-//
-//    NSString *bundleIdentifierOfScrolledApp_New = appUnderMousePointer.bundleIdentifier;
+    AXUIElementRef elementUnderMousePointer;
+    AXUIElementCopyElementAtPosition(AXUIElementCreateSystemWide(), mouseLocation.x, mouseLocation.y, &elementUnderMousePointer);
+    pid_t elementUnderMousePointerPID;
+    AXUIElementGetPid(elementUnderMousePointer, &elementUnderMousePointerPID);
+    NSRunningApplication *appUnderMousePointer = [NSRunningApplication runningApplicationWithProcessIdentifier:elementUnderMousePointerPID];
+
+    NSString *bundleIdentifierOfScrolledApp_New = appUnderMousePointer.bundleIdentifier;
     
     
-    // determining scrolled app by frontmost application for performance reasons
-    NSString *bundleIdentifierOfScrolledApp_New = [NSWorkspace.sharedWorkspace frontmostApplication].bundleIdentifier;
+    // 3. fast
+//    NSString *bundleIdentifierOfScrolledApp_New = [NSWorkspace.sharedWorkspace frontmostApplication].bundleIdentifier;
+    
     
     NSLog(@"bench: %f", CACurrentMediaTime() - ts);
     
