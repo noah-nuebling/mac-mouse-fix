@@ -130,6 +130,11 @@ static void resetDynamicGlobals() {
     _consecutiveScrollSwipeMaxIntervall    =   0.5;
 }
 
++ (void)load {
+    [SmoothScroll start];
+    [SmoothScroll stop];
+}
+
 + (void)startOrStopDecide {
     if ([DeviceManager relevantDevicesAreAttached] && _isEnabled) {
         if (_isRunning == FALSE) {
@@ -185,9 +190,9 @@ static void resetDynamicGlobals() {
         CVDisplayLinkRelease(_displayLink);
         _displayLink = nil;
     } if (_eventTap) {
-        CGEventTapEnable(_eventTap, false);
-        CFRelease(_eventTap);
-        _eventTap = nil;
+//        CGEventTapEnable(_eventTap, false);
+//        CFRelease(_eventTap);
+//        _eventTap = nil;
     } if (_eventSource) {
         CFRelease(_eventSource);
         _eventSource = nil;
@@ -220,7 +225,9 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 //    NSLog(@"scrollPhase: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase));
 //    NSLog(@"momentumPhase: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventMomentumPhase));
     
-    
+    NSLog(@"line: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1));
+    NSLog(@"pt: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1));
+    NSLog(@"fx: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1));
     
     // return non-scroll-wheel events unaltered
     
@@ -233,7 +240,9 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     }
     
     
-    // fast scroll
+    // recognize consecutive scroll ticks as "scroll swipes"
+    // activate fast scrolling after a number of consecutive "scroll swipes"
+    // do other stuff based on "scroll swipes"
     
     if ([_consecutiveScrollTickTimer isValid]) {
         _consecutiveScrollTickCounter += 1;
@@ -255,10 +264,21 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
             NSLog(@"Error while trying to set display link to display under mouse pointer: %@", [e reason]);
         }
     }
+    
+    // check whether enabled here, because setConfigVariablesForAppUnderMousePointer() might enable / disable
     if (_isEnabled == FALSE) {
+        
+        NSLog(@"NOT ENABLED");
+        if (_scrollDirection == -1) {
+            long long line1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
+            long long point1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1);
+            long long fixedPt1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1);
+            CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, -line1);
+            CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1, -point1);
+            CGEventSetIntegerValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1, -fixedPt1);
+        }
         return event;
     }
-    
     
     [_consecutiveScrollTickTimer invalidate];
     _consecutiveScrollTickTimer = [NSTimer scheduledTimerWithTimeInterval:_consecutiveScrollTickMaxIntervall target:[SmoothScroll class] selector:@selector(Handle_ConsecutiveScrollTickCallback:) userInfo:NULL repeats:NO];

@@ -69,7 +69,7 @@ static void fillConfigFromFile() {
 static void updateScrollSettings() {
     NSDictionary *config = ConfigFileInterface_HelperApp.config;
     NSDictionary *scrollSettings = [config objectForKey:@"ScrollSettings"];
-    if ([[scrollSettings objectForKey:@"enabled"] boolValue] == TRUE) {
+    
         NSArray *values = [scrollSettings objectForKey:@"values"];
         NSNumber *px = [values objectAtIndex:0];
         NSNumber *ms = [values objectAtIndex:1];
@@ -77,16 +77,10 @@ static void updateScrollSettings() {
         NSNumber *d = [values objectAtIndex:3];
     
         [SmoothScroll configureWithPxPerStep:px.intValue msPerStep:ms.intValue friction:f.floatValue scrollDirection:d.intValue];
-        
-        SmoothScroll.isEnabled = TRUE;
-        [SmoothScroll startOrStopDecide];
-        
-        NSLog(@"MomentumScroll.isEnabled: %hhd", SmoothScroll.isEnabled);
-        NSLog(@"MomentumScroll.isRunning: %hhd", SmoothScroll.isRunning);
-    } else {
-        SmoothScroll.isEnabled = FALSE;
-        [SmoothScroll startOrStopDecide];
-    }
+    
+    SmoothScroll.isEnabled = [[scrollSettings objectForKey:@"enabled"] boolValue];
+    [SmoothScroll startOrStopDecide];
+    
 }
 
 + (void) repairConfigFile:(NSString *)info {
