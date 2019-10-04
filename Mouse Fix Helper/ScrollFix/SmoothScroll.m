@@ -136,8 +136,12 @@ static void resetDynamicGlobals() {
 }
 
 + (void)startOrStopDecide {
+    
+    NSLog(@"Momentum start or stop");
+    
     if ([DeviceManager relevantDevicesAreAttached] && _isEnabled) {
         if (_isRunning == FALSE) {
+            
             [SmoothScroll start];
             [ModifierInputReceiver start];
         }
@@ -158,6 +162,7 @@ static void resetDynamicGlobals() {
     
     resetDynamicGlobals();
     
+    
     if (_eventTap == nil) {
         CGEventMask mask = CGEventMaskBit(kCGEventScrollWheel);
         _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
@@ -165,6 +170,12 @@ static void resetDynamicGlobals() {
         CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes);
         CFRelease(runLoopSource);
         CGEventTapEnable(_eventTap, true);
+    }
+    
+    // the eventTap sometimes breaks when replugging in the mouse too quickly. I don't know if this helps
+    @try {
+        CGEventTapEnable(_eventTap, true);
+    } @finally {
     }
     if (_displayLink == nil) {
         CVDisplayLinkCreateWithActiveCGDisplays(&_displayLink);
