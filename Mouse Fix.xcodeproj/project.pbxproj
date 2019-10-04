@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F0DF5AB2347373900E41CEB /* default_config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F0DF5AA2347373900E41CEB /* default_config.plist */; };
 		4F1C968C231361EF00C3B9AE /* TouchEvents.c in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C96872313606200C3B9AE /* TouchEvents.c */; };
 		4F2FDF332315662500C7BE14 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2FDF322315662500C7BE14 /* main.m */; };
 		4F2FDF3D23156AA900C7BE14 /* Mouse Fix Updater in Copy Updater */ = {isa = PBXBuildFile; fileRef = 4F2FDF302315662400C7BE14 /* Mouse Fix Updater */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -127,6 +128,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4F0DF5AA2347373900E41CEB /* default_config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_config.plist; sourceTree = "<group>"; };
 		4F1C966B2313606200C3B9AE /* IOHIDPrivateKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOHIDPrivateKeys.h; sourceTree = "<group>"; };
 		4F1C966C2313606200C3B9AE /* IOHIDLibPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOHIDLibPrivate.h; sourceTree = "<group>"; };
 		4F1C966D2313606200C3B9AE /* IOHIDEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOHIDEvent.h; sourceTree = "<group>"; };
@@ -433,6 +435,7 @@
 		4FBF350123183F1300E6CFD0 /* Config */ = {
 			isa = PBXGroup;
 			children = (
+				4F0DF5AA2347373900E41CEB /* default_config.plist */,
 				4FBF34FD23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h */,
 				4FBF34FE23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.m */,
 			);
@@ -771,6 +774,7 @@
 				4F364C72232A9EBC0084DEB0 /* MouseFix.tiff in Resources */,
 				4FD45A27231C860100F75C58 /* UniversalAccessPref.tiff in Resources */,
 				4FF873F1231A96B2002A897A /* MoreSheet.xib in Resources */,
+				4F0DF5AB2347373900E41CEB /* default_config.plist in Resources */,
 				4F364C75232ABE5C0084DEB0 /* Assets.xcassets in Resources */,
 				4FD67DE5211CC9000095A9A5 /* MouseFix.xib in Resources */,
 			);

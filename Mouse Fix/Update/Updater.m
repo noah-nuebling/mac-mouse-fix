@@ -37,6 +37,7 @@ static NSURL *_updateNotesLocation;
 
 +(void)load {
     _baseRemoteURL = [NSURL URLWithString:@"https://mousefix.org/maindownload/"];
+//    _baseRemoteURL = [NSURL fileURLWithPath:@"/Users/Noah/Documents/GitHub/Mac-Mouse-Fix-Website/maindownload"];
 }
 
 + (void)setupDownloadSession {
@@ -194,23 +195,16 @@ static NSURL *_updateNotesLocation;
     
 // prepare apple script which can install the update (executed within Mouse Fix Updater)
     
-    
     // copy config.plist into the updated bundle, if the new config is compatible
     
     NSString *configPathRelative = @"/Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/Resources/config.plist";
     
-    NSURL *currentConfigURL = [currentBundleURL URLByAppendingPathComponent:configPathRelative];
-    NSURL *updateConfigURL = [updateBundleURL URLByAppendingPathComponent:configPathRelative];
     
-    NSNumber *currentConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:currentConfigURL] valueForKeyPath:@"Other.configVersion"];
-    NSNumber *updateConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:updateConfigURL] valueForKeyPath:@"Other.configVersion"];
-    
-    NSString *currentConfigOSAPath = @"";
-    NSString *updateConfigOSAPath = @"";
-    if (currentConfigVersion.intValue == updateConfigVersion.intValue) { // check if both configs are compatible
-        currentConfigOSAPath = [[[currentBundleURL path]  stringByAppendingPathComponent:configPathRelative]stringByReplacingOccurrencesOfString:@" " withString:@"\\\\ "];
-        updateConfigOSAPath = [[[updateBundleURL path] stringByAppendingPathComponent:configPathRelative] stringByReplacingOccurrencesOfString:@" " withString:@"\\\\ "];
-    }
+        
+    // copy the old config over to the new bundle
+    NSString *currentConfigOSAPath = [[[currentBundleURL path]  stringByAppendingPathComponent:configPathRelative]stringByReplacingOccurrencesOfString:@" " withString:@"\\\\ "];
+    NSString* updateConfigOSAPath = [[[updateBundleURL path] stringByAppendingPathComponent:configPathRelative] stringByReplacingOccurrencesOfString:@" " withString:@"\\\\ "];
+
     
     
     

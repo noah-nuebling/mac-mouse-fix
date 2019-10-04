@@ -9,6 +9,7 @@
 
 #import "ConfigFileInterface_PrefPane.h"
 #import "HelperServices.h"
+#import "../MessagePort/MessagePort_PrefPane.h"
 
 @implementation ConfigFileInterface_PrefPane
 
@@ -50,6 +51,9 @@ static NSMutableDictionary *_config;
 }
 
 + (void)loadConfigFromFile {
+    
+    [self repairConfig];
+    
     NSString *configPath = [[HelperServices helperBundle] pathForResource:@"config" ofType:@"plist"];
     NSData *configData = [NSData dataWithContentsOfFile:configPath];
     NSError *readErr;
@@ -59,6 +63,28 @@ static NSMutableDictionary *_config;
     }
     
     self.config = configDict;
+}
+
++ (void)repairConfig {
+    
+    NSURL *currentBundleURL = [[NSBundle bundleForClass:self] bundleURL];
+    
+    NSString *currentConfigPathRelative = @"/Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/Resources/config.plist";
+        NSString *defaultConfigPathRelative = @"/Contents/Resources/default_config.plist";
+    
+    NSURL *currentConfigURL = [currentBundleURL URLByAppendingPathComponent:currentConfigPathRelative];
+    NSURL *defaultConfigURL = [currentBundleURL URLByAppendingPathComponent:defaultConfigPathRelative];
+    
+    NSNumber *currentConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:currentConfigURL] valueForKeyPath:@"Other.configVersion"];
+    NSNumber *defaultConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:defaultConfigURL] valueForKeyPath:@"Other.configVersion"];
+    
+    if (currentConfigVersion.intValue != defaultConfigVersion.intValue) {
+        NSError *error;
+        [NSFileManager.defaultManager copyItemAtURL:defaultConfigURL toURL:currentConfigURL error:&error];
+        NSLog(@"Error copying default config file to working config file location");
+        
+        [MessagePort_PrefPane sendMessageToHelper:@"terminate"];
+    }
 }
 
 
