@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4F0DF5AB2347373900E41CEB /* default_config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F0DF5AA2347373900E41CEB /* default_config.plist */; };
+		4F1A20282348EC3D00B29037 /* ScrollUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1A20272348EC3D00B29037 /* ScrollUtility.m */; };
 		4F1C968C231361EF00C3B9AE /* TouchEvents.c in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C96872313606200C3B9AE /* TouchEvents.c */; };
 		4F2FDF332315662500C7BE14 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2FDF322315662500C7BE14 /* main.m */; };
 		4F2FDF3D23156AA900C7BE14 /* Mouse Fix Updater in Copy Updater */ = {isa = PBXBuildFile; fileRef = 4F2FDF302315662400C7BE14 /* Mouse Fix Updater */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -129,6 +130,8 @@
 
 /* Begin PBXFileReference section */
 		4F0DF5AA2347373900E41CEB /* default_config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_config.plist; sourceTree = "<group>"; };
+		4F1A20262348EC3D00B29037 /* ScrollUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollUtility.h; sourceTree = "<group>"; };
+		4F1A20272348EC3D00B29037 /* ScrollUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollUtility.m; sourceTree = "<group>"; };
 		4F1C966B2313606200C3B9AE /* IOHIDPrivateKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOHIDPrivateKeys.h; sourceTree = "<group>"; };
 		4F1C966C2313606200C3B9AE /* IOHIDLibPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOHIDLibPrivate.h; sourceTree = "<group>"; };
 		4F1C966D2313606200C3B9AE /* IOHIDEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOHIDEvent.h; sourceTree = "<group>"; };
@@ -364,6 +367,8 @@
 			children = (
 				4F32E17E231C509200199A11 /* SmoothScroll.h */,
 				4F32E186231C509200199A11 /* SmoothScroll.m */,
+				4F1A20262348EC3D00B29037 /* ScrollUtility.h */,
+				4F1A20272348EC3D00B29037 /* ScrollUtility.m */,
 				4F32E17F231C509200199A11 /* Unused */,
 			);
 			path = ScrollFix;
@@ -830,6 +835,7 @@
 				4F32E194231C50A100199A11 /* InputParser.m in Sources */,
 				4F32E196231C50A100199A11 /* MouseInputReceiver.m in Sources */,
 				4F32E188231C509200199A11 /* AnimationCurve.m in Sources */,
+				4F1A20282348EC3D00B29037 /* ScrollUtility.m in Sources */,
 				4F32E159231C420100199A11 /* Utility_HelperApp.m in Sources */,
 				4FF3B2BD23276082009E8A8E /* Uninstaller.m in Sources */,
 			);

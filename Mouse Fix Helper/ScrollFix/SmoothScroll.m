@@ -8,6 +8,8 @@
 //
 
 #import "SmoothScroll.h"
+#import "ScrollUtility.h"
+
 #import "AppDelegate.h"
 #import "QuartzCore/CoreVideo.h"
 //#import <HIServices/AXUIElement.h>
@@ -105,7 +107,9 @@ static int _previousPhase;                              // which phase was activ
 // wheel phase
 static int64_t  _pixelScrollQueue           =   0;
 static double   _msLeftForScroll            =   0;
-  // (app overrides)
+    // scroll direction change
+static long long _previousScrollDeltaAxis1;
+    // (app overrides)
 static CGPoint _previousMouseLocation;
 static AXUIElementRef _systemWideAXUIElement;
 
@@ -251,13 +255,16 @@ static void resetDynamicGlobals() {
 static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
 
-    
-    CFTimeInterval ts = CACurrentMediaTime();
 
     
     
 //    NSLog(@"scrollPhase: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase));
 //    NSLog(@"momentumPhase: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventMomentumPhase));
+    
+    
+    
+//        CFTimeInterval ts = CACurrentMediaTime();
+//            NSLog(@"event tap bench: %f", CACurrentMediaTime() - ts);
     
     
     // return non-scroll-wheel events unaltered
@@ -270,100 +277,54 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         return event;
     }
     
+    NSLog(@"inp: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1));
+    NSLog(@"to scroll: %d", _pixelsToScroll);
+    NSLog(@"");
     
-    // recognize consecutive scroll ticks as "scroll swipes"
-    // activate fast scrolling after a number of consecutive "scroll swipes"
-    // do other stuff based on "scroll swipes"
+    // check if Mouse Location changed
     
-    if ([_consecutiveScrollTickTimer isValid]) {
-        _consecutiveScrollTickCounter += 1;
-    } else {
-        // do stuff you only wanna do once per scroll swipe
-    
-        
-        // start display link if necessary
-        
-        if (CVDisplayLinkIsRunning(_displayLink) == FALSE) {
-            CVDisplayLinkStart(_displayLink);
-        }
-        
-         //set app overrides
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//            setConfigVariablesForAppUnderMousePointer();
-//        });
-        
-//        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
-//            setConfigVariablesForAppUnderMousePointer();
-//        });
-        dispatch_queue_t serial_queue = dispatch_queue_create("com.nuebling.mousefix", DISPATCH_QUEUE_SERIAL);
-        
-        // dThis is very slow and incredibly inconsistent. Sometimes this takes over a second, and then the eventTap breaks. But doing it asynchronously makes the scrolling direction super jerky and switch all the time....
-//        dispatch_async(serial_queue, ^{
-//            setConfigVariablesForAppUnderMousePointer();
-//        });
-        
-        setConfigVariablesForAppUnderMousePointer();
-        
-        NSLog(@"config: %@", [ConfigFileInterface_HelperApp.config valueForKeyPath:@"ScrollSettings.values"]);
-        
-        
-        dispatch_async(serial_queue, ^{
-            // set diplaylink to the display that is actally being scrolled - not sure if this is necessary, because having the displaylink at 30fps on a 30fps display looks just as horrible as having the display link on 60fps, if not worse
-            @try {
-                setDisplayLinkToDisplayUnderMousePointer(event);
-            } @catch (NSException *e) {
-                NSLog(@"Error while trying to set display link to display under mouse pointer: %@", [e reason]);
-            }
-        });
-        
+    Boolean mouseMoved = FALSE;
+    CGPoint mouseLocation = CGEventGetLocation(event);
+    if (_previousMouseLocation.x != mouseLocation.x || _previousMouseLocation.y != mouseLocation.y) {
+        mouseMoved = TRUE;
     }
-    [_consecutiveScrollTickTimer invalidate];
-    _consecutiveScrollTickTimer = [NSTimer scheduledTimerWithTimeInterval:_consecutiveScrollTickMaxIntervall target:[SmoothScroll class] selector:@selector(Handle_ConsecutiveScrollTickCallback:) userInfo:NULL repeats:NO];
+    _previousMouseLocation = mouseLocation;
+    
+    // send event (for non-smooth scrolling)
     
     if (_isEnabled == FALSE) {
-        
-//        NSLog(@"NOT ENABLED");
-        if (_scrollDirection == -1) {
-            long long line1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
-            long long point1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1);
-            long long fixedPt1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1);
-            CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, -line1);
-            CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1, -point1);
-            CGEventSetIntegerValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1, -fixedPt1);
+        if (mouseMoved == TRUE) {
+            setConfigVariablesForActiveApp();
         }
-        return event;
+        return [ScrollUtility invertScrollEvent:event direction:_scrollDirection];
     }
-    
-    
-    if (_consecutiveScrollTickCounter < _scrollSwipeThreshhold_Ticks) {
-        _lastTickWasPartOfSwipe = NO;
-    } else if (_lastTickWasPartOfSwipe == NO) {
 
-        _consecutiveScrollSwipeCounter  += 1;
-        [_consecutiveScrollSwipeTimer invalidate];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            _consecutiveScrollSwipeTimer = [NSTimer scheduledTimerWithTimeInterval:_consecutiveScrollSwipeMaxIntervall target:[SmoothScroll class] selector:@selector(Handle_ConsecutiveScrollSwipeCallback:) userInfo:NULL repeats:NO];
-        });
-        _lastTickWasPartOfSwipe = YES;
+    // check if Scrolling Direction changed
+    
+    Boolean newScrollDirection = FALSE;
+    if (![Utility_HelperApp sameSign_n:scrollDeltaAxis1 m:_previousScrollDeltaAxis1]) {
+        newScrollDirection = TRUE;
     }
+    _previousScrollDeltaAxis1 = scrollDeltaAxis1;
     
     
-    // reset global vars from momentum phase
+    // update global vars
+
     
     if (_scrollPhase == kMFMomentumPhase) {
         _onePixelScrollsCounter  =   0;
         _pxPerMsVelocity        =   0;
         _pixelScrollQueue = 0;
     }
-    
-    // update global vars for wheel phase
-    
     _scrollPhase = kMFWheelPhase;
     
-    if (![Utility_HelperApp sameSign_n:(scrollDeltaAxis1 * _scrollDirection) m:_pixelsToScroll]) {
-        _consecutiveScrollSwipeCounter = 0;
+    if (newScrollDirection) {
         _pixelScrollQueue = 0;
+        _pixelsToScroll = 0;
+        _pxPerMsVelocity = 0;
     };
+    
+    // update scroll queue
     
     _msLeftForScroll = _msPerStep;
     if (scrollDeltaAxis1 > 0) {
@@ -377,7 +338,86 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         _pixelScrollQueue = _pixelScrollQueue * pow(_fastScrollExponentialBase, (int32_t)_consecutiveScrollSwipeCounter - _fastScrollThreshhold_Swipes);
     }
     
-//    NSLog(@"event tap bench: %f", CACurrentMediaTime() - ts);
+    
+    
+    
+    
+    // recognize consecutive scroll ticks as "scroll swipes"
+        // activate fast scrolling after a number of consecutive "scroll swipes"
+        // do other stuff based on "scroll swipes"
+    
+    if (newScrollDirection) {
+        _consecutiveScrollTickCounter = 0;
+        _consecutiveScrollSwipeCounter = 0;
+        [_consecutiveScrollTickTimer invalidate];
+        [_consecutiveScrollSwipeTimer invalidate];
+        
+    };
+    
+    if ([_consecutiveScrollTickTimer isValid]) {
+        _consecutiveScrollTickCounter += 1;
+    } else {
+        
+        // do stuff you only wanna do once per scroll swipe
+        
+        if (CVDisplayLinkIsRunning(_displayLink) == FALSE) {
+            CVDisplayLinkStart(_displayLink);
+        }
+        
+        if (mouseMoved) {
+            //set app overrides
+            setConfigVariablesForActiveApp();
+            
+            // set diplaylink to the display that is actally being scrolled - not sure if this is necessary, because having the displaylink at 30fps on a 30fps display looks just as horrible as having the display link on 60fps, if not worse
+            @try {
+                setDisplayLinkToDisplayUnderMousePointer(event);
+            } @catch (NSException *e) {
+                NSLog(@"Error while trying to set display link to display under mouse pointer: %@", [e reason]);
+            }
+        }
+        
+         //set app overrides
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            setConfigVariablesForAppUnderMousePointer();
+//        });
+        
+//        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
+//            setConfigVariablesForAppUnderMousePointer();
+//        });
+//        dispatch_queue_t serial_queue = dispatch_queue_create("com.nuebling.mousefix", DISPATCH_QUEUE_SERIAL); // this might lead to crashes?
+        
+        // dThis is very slow and incredibly inconsistent. Sometimes this takes over a second, and then the eventTap breaks. But doing it asynchronously makes the scrolling direction super jerky and switch all the time....
+//        dispatch_async(serial_queue, ^{
+//            setConfigVariablesForAppUnderMousePointer();
+//        });
+    
+        
+//        NSLog(@"config: %@", [ConfigFileInterface_HelperApp.config valueForKeyPath:@"ScrollSettings.values"]);
+    
+        
+//        dispatch_async(serial_queue, ^{
+//        });
+        
+    }
+    
+    // reset the scrolltickTimer
+    [_consecutiveScrollTickTimer invalidate];
+    _consecutiveScrollTickTimer = [NSTimer scheduledTimerWithTimeInterval:_consecutiveScrollTickMaxIntervall target:[SmoothScroll class] selector:@selector(Handle_ConsecutiveScrollTickCallback:) userInfo:NULL repeats:NO];
+    
+    
+    if (_consecutiveScrollTickCounter < _scrollSwipeThreshhold_Ticks) {
+        _lastTickWasPartOfSwipe = NO;
+    } else if (_lastTickWasPartOfSwipe == NO) {
+        _lastTickWasPartOfSwipe = YES;
+
+        _consecutiveScrollSwipeCounter  += 1;
+        [_consecutiveScrollSwipeTimer invalidate];
+        dispatch_async(dispatch_get_main_queue(), ^{ // TODO: is executing on the main thread here necessary / useful?
+            _consecutiveScrollSwipeTimer = [NSTimer scheduledTimerWithTimeInterval:_consecutiveScrollSwipeMaxIntervall target:[SmoothScroll class] selector:@selector(Handle_ConsecutiveScrollSwipeCallback:) userInfo:NULL repeats:NO];
+        });
+    }
+    
+    
     
     return nil;
 }
@@ -387,7 +427,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     
 //    NSLog(@"display Link CALLBACK");
     
-    CFTimeInterval ts = CACurrentMediaTime();
+//    CFTimeInterval ts = CACurrentMediaTime();
     
     
 //    _pixelsToScroll  = 0;
@@ -418,8 +458,6 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
             
             _scrollPhase = kMFMomentumPhase;
             _pxPerMsVelocity = (_pixelsToScroll / msBetweenFrames);
-            
-            return 0;
             
         }
         
@@ -537,14 +575,15 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 
 #pragma mark app exceptions
 
-static void setConfigVariablesForAppUnderMousePointer() {
+static void setConfigVariablesForActiveApp() {
+    
     
  
     // get App under mouse pointer
     
     
     
-CFTimeInterval ts = CACurrentMediaTime();
+//CFTimeInterval ts = CACurrentMediaTime();
     
     
     // 1. Even slower
@@ -650,7 +689,7 @@ CFTimeInterval ts = CACurrentMediaTime();
     
     _bundleIdentifierOfScrolledApp = bundleIdentifierOfScrolledApp_New;
     
-    NSLog(@"override bench: %f", CACurrentMediaTime() - ts);
+//    NSLog(@"override bench: %f", CACurrentMediaTime() - ts);
 }
 
 #pragma mark fast scroll
