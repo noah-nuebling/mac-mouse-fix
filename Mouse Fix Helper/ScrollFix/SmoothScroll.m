@@ -81,7 +81,8 @@ static int64_t  _pxStepSize;
 static double   _msPerStep;
 static int      _scrollDirection;
 // momentum phase
-static float    _frictionCoefficient;
+static double   _frictionCoefficient;
+static double   _frictionDepth;
 static int      _nOfOnePixelScrollsMax;
 // objects
 static CVDisplayLinkRef _displayLink    =   nil;
@@ -302,7 +303,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     // check if Scrolling Direction changed
     
     Boolean newScrollDirection = FALSE;
-    if (![Utility_HelperApp sameSign_n:scrollDeltaAxis1 m:_previousScrollDeltaAxis1]) {
+    if (![ScrollUtility sameSign_n:scrollDeltaAxis1 m:_previousScrollDeltaAxis1]) {
         newScrollDirection = TRUE;
     }
     _previousScrollDeltaAxis1 = scrollDeltaAxis1;
@@ -319,12 +320,13 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     _scrollPhase = kMFWheelPhase;
     
     if (newScrollDirection) {
+    
         _pixelScrollQueue = 0;
         _pixelsToScroll = 0;
         _pxPerMsVelocity = 0;
     };
     
-    // update scroll queue
+        // update scroll queue
     
     _msLeftForScroll = _msPerStep;
     if (scrollDeltaAxis1 > 0) {
@@ -467,12 +469,19 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     else if (_scrollPhase == kMFMomentumPhase) {
         
         
+        _frictionDepth = 1;
+        
+        // very smooth
+//        _frictionDepth = 0.5;
+//        _frictionCoefficient = 0.7;
+
     
         
         _pixelsToScroll = round(_pxPerMsVelocity * msBetweenFrames);
         
         double oldVel = _pxPerMsVelocity;
-        double newVel = oldVel - oldVel * (_frictionCoefficient/100) * msBetweenFrames;
+        double newVel = oldVel - [ScrollUtility signOf:oldVel] * pow(fabs(oldVel), _frictionDepth) * (_frictionCoefficient/100) * msBetweenFrames;
+        
         
         _pxPerMsVelocity = newVel;
         if ( ((newVel < 0) && (oldVel > 0)) || ((newVel > 0) && (oldVel < 0)) ) {

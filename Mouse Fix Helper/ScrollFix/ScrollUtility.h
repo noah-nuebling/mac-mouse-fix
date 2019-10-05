@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ScrollUtility : NSObject
 + (CGEventRef)invertScrollEvent:(CGEventRef)event direction:(int)dir;
++ (double)signOf:(double)n;
++ (BOOL)sameSign_n:(double)n m:(double)m;
 @end
 
 NS_ASSUME_NONNULL_END

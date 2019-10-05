@@ -19,4 +19,17 @@
     CGEventSetIntegerValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1, fixedPt * dir);
     return event;
 }
++ (double)signOf:(double)n {
+    if (n == 0) {return 0;}
+    return n >= 0 ? 1 : -1;
+}
++ (BOOL)sameSign_n:(double)n m:(double)m {
+    if (n == 0 || m == 0) {
+        return true;
+    }
+    if ([self signOf:n] == [self signOf:m]) {
+        return true;
+    }
+    return false;
+}
 @end
