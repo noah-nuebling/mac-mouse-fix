@@ -63,9 +63,8 @@ static BOOL _isRunning;
 # pragma mark enum
 
 typedef enum {
-    kMFPhaseNone        =   0,
-    kMFPhaseWheel       =   1,
-    kMFPhaseMomentum    =   2,
+    kMFWheelPhase       =   0,
+    kMFMomentumPhase    =   1,
 } MFScrollPhase;
 
 #pragma mark config
@@ -85,11 +84,6 @@ static int      _scrollDirection;
 static double   _frictionCoefficient;
 static double   _frictionDepth;
 static int      _nOfOnePixelScrollsMax;
-
-#pragma mark constant
-// wheelphase
-    //(aap overrides)
-static AXUIElementRef _systemWideAXUIElement;
 // objects
 static CVDisplayLinkRef _displayLink    =   nil;
 static CFMachPortRef    _eventTap       =   nil;
@@ -105,12 +99,12 @@ static int      _consecutiveScrollSwipeCounter      =   0;
 static NSTimer  *_consecutiveScrollSwipeTimer       =   NULL;
 
 // any phase
-static BOOL     _horizontalScrollModifierPressed;
 static int32_t  _pixelsToScroll;
-static NSString *_bundleIdentifierOfAppWhichCausesOverride;
-static CGDirectDisplayID *_displaysUnderMousePointer;                          // which phase was active the last time that displayLinkCallback was called
-static int      _previousScrollPhase;
 static int      _scrollPhase;
+static BOOL     _horizontalScrollModifierPressed;
+static NSString *_bundleIdentifierOfAppWhichCausesOverride;
+static CGDirectDisplayID *_displaysUnderMousePointer;
+static int _previousPhase;                              // which phase was active the last time that displayLinkCallback was called
 // wheel phase
 static int64_t  _pixelScrollQueue           =   0;
 static double   _msLeftForScroll            =   0;
@@ -118,6 +112,7 @@ static double   _msLeftForScroll            =   0;
 static long long _previousScrollDeltaAxis1;
     // (app overrides)
 static CGPoint _previousMouseLocation;
+static AXUIElementRef _systemWideAXUIElement;
 
 // momentum phase
 static double   _pxPerMsVelocity        =   0;
@@ -127,23 +122,11 @@ static int      _onePixelScrollsCounter =   0;
 
 static void resetDynamicGlobals() {
     _horizontalScrollModifierPressed    =   NO;
-        _pixelsToScroll = 0;
-        _bundleIdentifierOfAppWhichCausesOverride = @"";
-        _displaysUnderMousePointer = 0;
-        _previousScrollPhase = 0;
-    _scrollPhase                        =   kMFPhaseWheel;
+    _scrollPhase                        =   kMFWheelPhase;
     _pixelScrollQueue                   =   0;
     _msLeftForScroll                    =   0;
-        _previousScrollDeltaAxis1       =   0;
-        _previousMouseLocation          =   CGPointZero;
-    
     _pxPerMsVelocity                    =   0;
     _onePixelScrollsCounter             =   0;
-    
-    
-
-    
-    
 }
 
 
@@ -178,6 +161,8 @@ static void resetDynamicGlobals() {
 + (void)startOrStopDecide {
     
     NSLog(@"Momentum start or stop");
+    
+    setConfigVariablesForActiveApp();
     
     if ([DeviceManager relevantDevicesAreAttached] && _isEnabled) {
         if (_isRunning == FALSE) {
@@ -229,6 +214,7 @@ static void resetDynamicGlobals() {
     
     CGDisplayRemoveReconfigurationCallback(Handle_displayReconfiguration, NULL); // don't know if necesssary
     CGDisplayRegisterReconfigurationCallback(Handle_displayReconfiguration, NULL);
+    
 }
 
 + (void)stop {
@@ -309,7 +295,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
     if (_isEnabled == FALSE) {
         if (mouseMoved == TRUE) {
-            [SmoothScroll setConfigVariablesForActiveApp];
+            setConfigVariablesForActiveApp();
         }
         if (_scrollDirection == -1) {
             event = [ScrollUtility invertScrollEvent:event direction:_scrollDirection];
@@ -329,12 +315,12 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     // update global vars
 
     
-    if (_scrollPhase == kMFPhaseMomentum) {
+    if (_scrollPhase == kMFMomentumPhase) {
         _onePixelScrollsCounter  =   0;
         _pxPerMsVelocity        =   0;
         _pixelScrollQueue = 0;
     }
-    _scrollPhase = kMFPhaseWheel;
+    _scrollPhase = kMFWheelPhase;
     
     if (newScrollDirection) {
     
@@ -385,7 +371,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         
         if (mouseMoved) {
             //set app overrides
-            [SmoothScroll setConfigVariablesForActiveApp];
+            setConfigVariablesForActiveApp();
             
             // set diplaylink to the display that is actally being scrolled - not sure if this is necessary, because having the displaylink at 30fps on a 30fps display looks just as horrible as having the display link on 60fps, if not worse
             @try {
@@ -461,7 +447,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     
     
 # pragma mark Wheel Phase
-    if (_scrollPhase == kMFPhaseWheel) {
+    if (_scrollPhase == kMFWheelPhase) {
         
         
         _pixelsToScroll = round( (_pixelScrollQueue/_msLeftForScroll) * msBetweenFrames );
@@ -475,7 +461,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
             _msLeftForScroll    =   0;
             _pixelScrollQueue   =   0;
             
-            _scrollPhase = kMFPhaseMomentum;
+            _scrollPhase = kMFMomentumPhase;
             _pxPerMsVelocity = (_pixelsToScroll / msBetweenFrames);
             
         }
@@ -483,7 +469,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     }
     
 # pragma mark Momentum Phase
-    else if (_scrollPhase == kMFPhaseMomentum) {
+    else if (_scrollPhase == kMFMomentumPhase) {
         
         
         _frictionDepth = 1;
@@ -586,7 +572,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     
 #pragma mark Other
     
-    _previousScrollPhase = _scrollPhase;
+    _previousPhase = _scrollPhase;
     
     
     
@@ -600,7 +586,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 
 #pragma mark app exceptions
 
-+ (void)setConfigVariablesForActiveApp {
+static void setConfigVariablesForActiveApp() {
     
     
  
