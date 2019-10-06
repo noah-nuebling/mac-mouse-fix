@@ -50,7 +50,7 @@
 	<key>ScrollSettings</key>
 	<dict>
 		<key>enabled</key>
-		<false/>
+		<true/>
 		<key>values</key>
 		<array>
 			<integer>60</integer>
@@ -68,13 +68,6 @@
 				<key>enabled</key>
 				<false/>
 			</dict>
-			<key>values</key>
-			<array>
-				<integer>60</integer>
-				<integer>130</integer>
-				<real>1.5</real>
-				<integer>-1</integer>
-			</array>
 		</dict>
 	</dict>
 </dict>

@@ -30,8 +30,6 @@
 }
 + (CGEventRef)makeScrollEventHorizontal:(CGEventRef)event {
     
-    NSLog(@"FROGLAND");
-    
     long long line1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
     long long point1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1);
     long long fixedPt1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1);

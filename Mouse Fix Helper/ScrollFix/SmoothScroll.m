@@ -102,7 +102,7 @@ static NSTimer  *_consecutiveScrollSwipeTimer       =   NULL;
 static int32_t  _pixelsToScroll;
 static int      _scrollPhase;
 static BOOL     _horizontalScrollModifierPressed;
-static NSString *_bundleIdentifierOfScrolledApp;
+static NSString *_bundleIdentifierOfAppWhichCausesOverride;
 static CGDirectDisplayID *_displaysUnderMousePointer;
 static int _previousPhase;                              // which phase was active the last time that displayLinkCallback was called
 // wheel phase
@@ -153,7 +153,6 @@ static void resetDynamicGlobals() {
 + (void)load_Manual {
     [SmoothScroll start];
     [SmoothScroll stop];
-    [ModifierInputReceiver start];
     
     _systemWideAXUIElement = AXUIElementCreateSystemWide();
 //    _appOverrides = [AppOverrides new];
@@ -163,16 +162,18 @@ static void resetDynamicGlobals() {
     
     NSLog(@"Momentum start or stop");
     
+    setConfigVariablesForActiveApp();
+    
     if ([DeviceManager relevantDevicesAreAttached] && _isEnabled) {
         if (_isRunning == FALSE) {
             
             [SmoothScroll start];
-//            [ModifierInputReceiver start];
+            [ModifierInputReceiver start];
         }
     } else {
         if (_isRunning == TRUE) {
             [SmoothScroll stop];
-//            [ModifierInputReceiver stop];
+            [ModifierInputReceiver stop];
         }
     }
 }
@@ -213,6 +214,7 @@ static void resetDynamicGlobals() {
     
     CGDisplayRemoveReconfigurationCallback(Handle_displayReconfiguration, NULL); // don't know if necesssary
     CGDisplayRegisterReconfigurationCallback(Handle_displayReconfiguration, NULL);
+    
 }
 
 + (void)stop {
@@ -294,9 +296,6 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     if (_isEnabled == FALSE) {
         if (mouseMoved == TRUE) {
             setConfigVariablesForActiveApp();
-        }
-        if (_horizontalScrollModifierPressed) {
-            event = [ScrollUtility makeScrollEventHorizontal:event];
         }
         if (_scrollDirection == -1) {
             event = [ScrollUtility invertScrollEvent:event direction:_scrollDirection];
@@ -662,44 +661,54 @@ static void setConfigVariablesForActiveApp() {
     
     // if app under mouse pointer changed, adjust settings
     
-    if ([_bundleIdentifierOfScrolledApp isEqualToString:bundleIdentifierOfScrolledApp_New] == FALSE) {
+    if ([_bundleIdentifierOfAppWhichCausesOverride isEqualToString:bundleIdentifierOfScrolledApp_New] == FALSE) {
         
         
         NSDictionary *config = [ConfigFileInterface_HelperApp config];
         NSDictionary *overrides = [config objectForKey:@"AppOverrides"];
         
-        NSDictionary *scrollOverrideForAppUnderMousePointer;
+        // get default settings
+        NSDictionary *defaultScrollSettings = [config objectForKey:@"ScrollSettings"];
+        BOOL enabledDefault;
+        NSArray *valuesDefault;
+        enabledDefault = [[defaultScrollSettings objectForKey:@"enabled"] boolValue];
+        valuesDefault = [defaultScrollSettings objectForKey:@"values"];
         
+        // get app specific settings
+        NSDictionary *appOverrideScrollSettings;
         for (NSString *b in overrides.allKeys) {
             if ([bundleIdentifierOfScrolledApp_New containsString:b]) {
-                scrollOverrideForAppUnderMousePointer = [[overrides objectForKey: b] objectForKey:@"ScrollSettings"];
+                appOverrideScrollSettings = [[overrides objectForKey: b] objectForKey:@"ScrollSettings"];
+            }
+        }
+        _bundleIdentifierOfAppWhichCausesOverride = bundleIdentifierOfScrolledApp_New;
+        
+        BOOL enabledApp;
+        NSArray *valuesApp;
+        enabledApp = [[appOverrideScrollSettings objectForKey:@"enabled"] boolValue];
+        valuesApp = [appOverrideScrollSettings objectForKey:@"values"];
+        
+        if (!appOverrideScrollSettings) {
+            _isEnabled                          =   enabledDefault;
+            _pxStepSize                         =   [[valuesDefault objectAtIndex:0] intValue];
+            _msPerStep                          =   [[valuesDefault objectAtIndex:1] intValue];
+            _frictionCoefficient                =   [[valuesDefault objectAtIndex:2] floatValue];
+            _scrollDirection                    =   [[valuesDefault objectAtIndex:3] intValue];
+        } else {
+            _isEnabled                          =   enabledApp;
+            _pxStepSize                         =   [[valuesApp objectAtIndex:0] intValue];
+            _msPerStep                          =   [[valuesApp objectAtIndex:1] intValue];
+            _frictionCoefficient                =   [[valuesApp objectAtIndex:2] floatValue];
+            if ([[valuesApp objectAtIndex:3] intValue] == 0) {
+                _scrollDirection                =   [[valuesDefault objectAtIndex:3] intValue];
+            } else {
+                _scrollDirection                =   [[valuesApp objectAtIndex:3] intValue];
             }
         }
         
-        BOOL enabled;
-        NSArray *values;
-        if (scrollOverrideForAppUnderMousePointer) {
-            enabled = [[scrollOverrideForAppUnderMousePointer objectForKey:@"enabled"] boolValue];
-            values = [scrollOverrideForAppUnderMousePointer objectForKey:@"values"];
-        }
-        else {
-            NSDictionary *defaultScrollSettings = [config objectForKey:@"ScrollSettings"];
-            enabled = [[defaultScrollSettings objectForKey:@"enabled"] boolValue];
-            values = [defaultScrollSettings objectForKey:@"values"];
-        }
-        _isEnabled                          =   enabled;
-        _pxStepSize                         =   [[values objectAtIndex:0] intValue];
-        _msPerStep                          =   [[values objectAtIndex:1] intValue];
-        _frictionCoefficient                =   [[values objectAtIndex:2] floatValue];
-        if ([[values objectAtIndex:3] intValue] != 0) { // keep the old setting if no new one is specified
-            _scrollDirection                =   [[values objectAtIndex:3] intValue];
-        }
-    
-        
         [SmoothScroll startOrStopDecide];
     }
-    
-    _bundleIdentifierOfScrolledApp = bundleIdentifierOfScrolledApp_New;
+
     
 //    NSLog(@"override bench: %f", CACurrentMediaTime() - ts);
 }
