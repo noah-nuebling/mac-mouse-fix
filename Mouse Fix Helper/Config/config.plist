@@ -50,7 +50,7 @@
 	<key>ScrollSettings</key>
 	<dict>
 		<key>enabled</key>
-		<true/>
+		<false/>
 		<key>values</key>
 		<array>
 			<integer>60</integer>

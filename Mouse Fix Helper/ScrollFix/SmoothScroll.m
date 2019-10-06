@@ -153,6 +153,7 @@ static void resetDynamicGlobals() {
 + (void)load_Manual {
     [SmoothScroll start];
     [SmoothScroll stop];
+    [ModifierInputReceiver start];
     
     _systemWideAXUIElement = AXUIElementCreateSystemWide();
 //    _appOverrides = [AppOverrides new];
@@ -166,12 +167,12 @@ static void resetDynamicGlobals() {
         if (_isRunning == FALSE) {
             
             [SmoothScroll start];
-            [ModifierInputReceiver start];
+//            [ModifierInputReceiver start];
         }
     } else {
         if (_isRunning == TRUE) {
             [SmoothScroll stop];
-            [ModifierInputReceiver stop];
+//            [ModifierInputReceiver stop];
         }
     }
 }
