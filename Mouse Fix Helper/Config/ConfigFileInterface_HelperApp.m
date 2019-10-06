@@ -79,6 +79,8 @@ static void updateScrollSettings() {
         [SmoothScroll configureWithPxPerStep:px.intValue msPerStep:ms.intValue friction:f.floatValue scrollDirection:d.intValue];
     
     SmoothScroll.isEnabled = [[scrollSettings objectForKey:@"enabled"] boolValue];
+    
+    // CLEAN: all the stuff above is probably not necessary, because startOrStopDecide calls setConfigVariablesForActiveApp(), which should do also set apropriate scroll settings
     [SmoothScroll startOrStopDecide];
     
 }

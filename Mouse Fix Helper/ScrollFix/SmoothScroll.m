@@ -586,8 +586,8 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 
 #pragma mark app exceptions
 
+// CLEAN: maybe put this into ConfigFileInterface_HelperApp
 static void setConfigVariablesForActiveApp() {
-    
     
  
     // get App under mouse pointer
@@ -619,7 +619,7 @@ static void setConfigVariablesForActiveApp() {
 //    NSString *bundleIdentifierOfScrolledApp_New = appUnderMousePointer.bundleIdentifier;
   
     
-    // 2. very slow
+    // 2. very slow - but basically the way MOS does it, and MOS is fast somehow
     
 //    CGEventRef fakeEvent = CGEventCreate(NULL);
 //    CGPoint mouseLocation = CGEventGetLocation(fakeEvent);
