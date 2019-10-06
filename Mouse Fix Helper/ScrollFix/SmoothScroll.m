@@ -255,9 +255,6 @@ static void resetDynamicGlobals() {
 
 static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
-
-
-    
     
 //    NSLog(@"scrollPhase: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase));
 //    NSLog(@"momentumPhase: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventMomentumPhase));
@@ -270,17 +267,17 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
     // return non-scroll-wheel events unaltered
     
-    long long   isPixelBased        =   CGEventGetIntegerValueField(event, kCGScrollWheelEventIsContinuous);
-    int64_t     scrollDeltaAxis1    =   CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
-    int64_t     scrollDeltaAxis2    =   CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2);
-    if ( (isPixelBased != 0) || (scrollDeltaAxis1 == 0) || (scrollDeltaAxis2 != 0)) {
+    long long   isPixelBased            =   CGEventGetIntegerValueField(event, kCGScrollWheelEventIsContinuous);
+    long long   scrollPhase             =   CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase);
+    long long   scrollDeltaAxis1        =   CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
+    long long   scrollDeltaAxis2        =   CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2);
+    
+    if ( (isPixelBased != 0) || (scrollDeltaAxis1 == 0) || (scrollDeltaAxis2 != 0) || (scrollPhase != 0)) { // adding scrollphase here is untested
+        
         // scroll event doesn't come from a simple scroll wheel or doesn't contain the data we need to use
         return event;
     }
     
-    NSLog(@"inp: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1));
-    NSLog(@"to scroll: %d", _pixelsToScroll);
-    NSLog(@"");
     
     // check if Mouse Location changed
     
@@ -297,7 +294,13 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         if (mouseMoved == TRUE) {
             setConfigVariablesForActiveApp();
         }
-        return [ScrollUtility invertScrollEvent:event direction:_scrollDirection];
+        if (_horizontalScrollModifierPressed) {
+            event = [ScrollUtility makeScrollEventHorizontal:event];
+        }
+        if (_scrollDirection == -1) {
+            event = [ScrollUtility invertScrollEvent:event direction:_scrollDirection];
+        }
+        return event;
     }
 
     // check if Scrolling Direction changed
@@ -526,8 +529,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     
         CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis1, _pixelsToScroll / 8);
         CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis1, _pixelsToScroll);
-    }
-    else if (_horizontalScrollModifierPressed == TRUE) {
+    } else if (_horizontalScrollModifierPressed == TRUE) {
 //        if (_scrollPhase == kMFWheelPhase) {
 //            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis2, [Utility_HelperApp signOf:_pixelsToScroll]);
 //        }
