@@ -67,19 +67,23 @@ static void fillConfigFromFile() {
 }
 
 static void updateScrollSettings() {
-    NSDictionary *config = ConfigFileInterface_HelperApp.config;
-    NSDictionary *scrollSettings = [config objectForKey:@"ScrollSettings"];
     
-        NSArray *values = [scrollSettings objectForKey:@"values"];
-        NSNumber *px = [values objectAtIndex:0];
-        NSNumber *ms = [values objectAtIndex:1];
-        NSNumber *f = [values objectAtIndex:2];
-        NSNumber *d = [values objectAtIndex:3];
-    
-        [SmoothScroll configureWithPxPerStep:px.intValue msPerStep:ms.intValue friction:f.floatValue scrollDirection:d.intValue];
-    
-    SmoothScroll.isEnabled = [[scrollSettings objectForKey:@"enabled"] boolValue];
+    [SmoothScroll setConfigVariablesForActiveApp]; //TODO: this only sets new variables - what did i mean by that??
     [SmoothScroll startOrStopDecide];
+    
+//    NSDictionary *config = ConfigFileInterface_HelperApp.config;
+//    NSDictionary *scrollSettings = [config objectForKey:@"ScrollSettings"];
+//
+//        NSArray *values = [scrollSettings objectForKey:@"values"];
+//        NSNumber *px = [values objectAtIndex:0];
+//        NSNumber *ms = [values objectAtIndex:1];
+//        NSNumber *f = [values objectAtIndex:2];
+//        NSNumber *d = [values objectAtIndex:3];
+//
+//        [SmoothScroll configureWithPxPerStep:px.intValue msPerStep:ms.intValue friction:f.floatValue scrollDirection:d.intValue];
+//
+//    SmoothScroll.isEnabled = [[scrollSettings objectForKey:@"enabled"] boolValue];
+//    [SmoothScroll startOrStopDecide];
     
 }
 

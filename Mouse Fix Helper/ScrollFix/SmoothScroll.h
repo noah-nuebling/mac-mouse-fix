@@ -33,6 +33,8 @@ typedef enum {
 
 + (BOOL)isRunning;
 
++ (void)setConfigVariablesForActiveApp;
+
 
 + (void)Handle_ConsecutiveScrollTickCallback:(NSTimer *)timer;
 + (void)Handle_ConsecutiveScrollSwipeCallback:(NSTimer *)timer;
