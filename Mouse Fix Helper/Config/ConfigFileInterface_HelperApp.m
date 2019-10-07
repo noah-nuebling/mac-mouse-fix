@@ -80,7 +80,7 @@ static void updateScrollSettings() {
     
     SmoothScroll.isEnabled = [[scrollSettings objectForKey:@"enabled"] boolValue];
     
-    // CLEAN: all the stuff above is probably not necessary, because startOrStopDecide calls setConfigVariablesForActiveApp(), which should do also set apropriate scroll settings
+    // CLEAN: I think that all the stuff above is probably not necessary, because startOrStopDecide calls setConfigVariablesForActiveApp(), which should do also set apropriate scroll settings.
     [SmoothScroll startOrStopDecide];
     
 }
