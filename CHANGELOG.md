@@ -3,7 +3,7 @@
 ## 0.9.1
 
 - Fixed compatiblity with Catalina by fixing a bug that would occur when setting up a message port to communicate with the Mouse Fix Helper application from within the Mouse Fix prefpane.
-- Added full support for Bluetooth Mice, by improving device management code.
+- Added full support for Bluetooth mice, by improving device management code.
 - Fixed scrolling and zooming in certain apps like Terminal, Launchpad, and Pixelmator, by adding a different type of scroll delta value to the artificial scroll events.
 - Made smooth scrolling slightly more responsive by only updating display synchronization and app specific configurations on the first of each series of consecutive scrollwheel ticks.
 - Smooth scrolling now ignores all adobe apps.
