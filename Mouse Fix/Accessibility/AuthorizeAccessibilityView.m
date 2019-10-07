@@ -55,6 +55,8 @@ AuthorizeAccessibilityView *_accViewController;
 
 - (IBAction)AuthorizeButton:(NSButton *)sender {
     
+    NSLog(@"AuthorizeButton clicked");
+    
     CGSize size = CGSizeMake(16, 16);
     NSRect centeredRect = NSMakeRect((self.view.frame.size.width / 2.0) - (size.width/2.0), (self.view.frame.size.height / 2.0) - (size.height/2.0), size.width, size.height);
     NSProgressIndicator* indicator = [[NSProgressIndicator alloc] initWithFrame:centeredRect];
@@ -66,15 +68,14 @@ AuthorizeAccessibilityView *_accViewController;
     [indicator display];
     [indicator startAnimation:NULL];
     
-    
-    
-    NSLog(@"LOGGS N WOOD");
-    
     NSString* urlString = @"x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility";
     [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:urlString]];
 }
 
 + (void)add {
+    
+    NSLog(@"adding AuthorizeAccessibilityView");
+    
     NSView *mainView = PrefPaneDelegate.mainView;
     
     NSView *baseView;
@@ -103,6 +104,9 @@ AuthorizeAccessibilityView *_accViewController;
 }
 
 + (void)remove {
+    
+    NSLog(@"removing AuthorizeAccessibilityView");
+    
     NSView *mainView = PrefPaneDelegate.mainView;
     
     NSView *baseView;

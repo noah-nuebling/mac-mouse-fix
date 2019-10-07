@@ -108,7 +108,6 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 
 
 + (void)initialize {
-    NSLog(@"INIT 3");
     
     if (self == [PrefPaneDelegate class]) {
         _scrollSmoothnessConfigurations = @{
@@ -142,13 +141,12 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 }
 
 - (void)willSelect {
+    [AuthorizeAccessibilityView remove];
     [MessagePort_PrefPane performSelector:@selector(sendMessageToHelper:) withObject:@"checkAccessibility" afterDelay:0.0];
 }
 
-
-
 - (void)willUnselect {
-    [AuthorizeAccessibilityView remove];
+
     [UpdateWindow.instance close];
 }
 

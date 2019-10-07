@@ -9,31 +9,42 @@
 
 #import "MessagePort_PrefPane.h"
 #import "../Accessibility/AuthorizeAccessibilityView.h"
+#import <Foundation/Foundation.h>
 
 @implementation MessagePort_PrefPane
 
 
 #pragma mark - local (incoming messages)
 
+
 + (void)load {
     
     if (self == [MessagePort_PrefPane class]) {
         CFMessagePortRef localPort =
         CFMessagePortCreateLocal(kCFAllocatorDefault,
-                                 CFSTR("com.nuebling.mousefix.port"),
-                                 didReceiveMessage,
-                                 nil,
-                                 NULL);
+                             CFSTR("com.nuebling.mousefix.port"),
+                             didReceiveMessage,
+                             nil,
+                             NULL);
         
+        // setting the name here instead of when creating the port creates some super weird behavior, too.
+//        CFMessagePortSetName(localPort, CFSTR("com.nuebling.mousefix.port"));
+//        NSLog(@"LE MAO");
+//        NSLog(@"prefPanePort: %@", localPort);
         
-        CFRunLoopSourceRef runLoopSource =
-            CFMessagePortCreateRunLoopSource(kCFAllocatorDefault, localPort, 0);
-        
-        CFRunLoopAddSource(CFRunLoopGetMain(),
-                           runLoopSource,
-                           kCFRunLoopCommonModes);
-        
-        CFRelease(runLoopSource);
+        // on Catalina, creating the local Port returns NULL and throws a permission denied error. Trying to schedule it with the runloop yields a crash.
+        // But even if you just skip the runloop scheduling it still works somehow!
+        if (localPort != NULL) {
+            NSLog(@"NOT NULL");
+            CFRunLoopSourceRef runLoopSource =
+                CFMessagePortCreateRunLoopSource(kCFAllocatorDefault, localPort, 0);
+            
+            CFRunLoopAddSource(CFRunLoopGetMain(),
+                               runLoopSource,
+                               kCFRunLoopCommonModes);
+            
+            CFRelease(runLoopSource);
+        }
     }
 }
 
