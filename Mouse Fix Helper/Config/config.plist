@@ -61,6 +61,14 @@
 	</dict>
 	<key>AppOverrides</key>
 	<dict>
+		<key>com.bohemiancoding.sketch3</key>
+		<dict>
+			<key>ScrollSettings</key>
+			<dict>
+				<key>enabled</key>
+				<false/>
+			</dict>
+		</dict>
 		<key>com.adobe.</key>
 		<dict>
 			<key>ScrollSettings</key>
