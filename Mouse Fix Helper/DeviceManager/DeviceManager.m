@@ -8,7 +8,9 @@
 //
 
 #import "DeviceManager.h"
-#import "IOKit/hid/IOHIDManager.h"
+#import <IOKit/hid/IOHIDManager.h>
+#import <IOKit/hid/IOHIDKeys.h>
+
 #import "SmoothScroll.h"
 #import "MouseInputReceiver.h"
 #import "ConfigFileInterface_HelperApp.h"
@@ -67,16 +69,24 @@ static void setupDeviceAddedAndRemovedCallbacks() {
     CFNumberRef mousePrimaryUsage = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &U);
     
     CFDictionarySetValue(matchDict1, CFSTR("PrimaryUsagePage"), genericDesktopPrimaryUsagePage);
-    CFDictionarySetValue(matchDict1, CFSTR("PrimaryUsage"), mousePrimaryUsage);         // add mice
-    CFDictionarySetValue(matchDict1, CFSTR("Transport"), CFSTR("USB"));                 // add USB devices
+    CFDictionarySetValue(matchDict1, CFSTR("PrimaryUsage"), mousePrimaryUsage);
+    CFDictionarySetValue(matchDict1, CFSTR("Transport"), CFSTR("USB"));
+
+    CFDictionarySetValue(matchDict2, CFSTR("PrimaryUsagePage"), genericDesktopPrimaryUsagePage);
+    CFDictionarySetValue(matchDict2, CFSTR("PrimaryUsage"), mousePrimaryUsage);
+    CFDictionarySetValue(matchDict2, CFSTR("Transport"), CFSTR("Bluetooth"));
+
+    CFDictionarySetValue(matchDict3, CFSTR("PrimaryUsagePage"), genericDesktopPrimaryUsagePage);
+    CFDictionarySetValue(matchDict3, CFSTR("PrimaryUsage"), mousePrimaryUsage);
+    CFDictionarySetValue(matchDict3, CFSTR("Transport"), CFSTR("Bluetooth Low Energy"));
     
-    CFMutableDictionaryRef matchesList[] = {matchDict1};
-    matches = CFArrayCreate(kCFAllocatorDefault, (const void **)matchesList, 1, NULL);
+    CFMutableDictionaryRef matchesList[] = {matchDict1, matchDict2, matchDict3};
+    matches = CFArrayCreate(kCFAllocatorDefault, (const void **)matchesList, 3, NULL);
     
     
-    NSLog(@"matches: %@", matchDict2);
+
     
-    //Register the Matching Dictionary to the HID Manager
+    // Register the Matching Dictionary to the HID Manager
     IOHIDManagerSetDeviceMatchingMultiple(_hidManager, matches);
     
     CFRelease(matches);
@@ -98,8 +108,6 @@ static void setupDeviceAddedAndRemovedCallbacks() {
 
     // Register a callback for USB device detection with the HID Manager, this will in turn register an button input callback for all devices that getFilteredDevicesFromManager() returns
     IOHIDManagerRegisterDeviceMatchingCallback(_hidManager, &Handle_DeviceMatchingCallback, NULL);
-    
-    
     
     // Register a callback for USB device removal with the HID Manager
     IOHIDManagerRegisterDeviceRemovalCallback(_hidManager, &Handle_DeviceRemovalCallback, NULL);
@@ -137,13 +145,12 @@ static void Handle_DeviceMatchingCallback (void *context, IOReturn result, void 
         [MouseInputReceiver startOrStopDecide];
     }
     
+
     
+;
+    NSLog(@"added device info: %@", (__bridge NSString *)IOHIDDeviceGetProperty(device, CFSTR("VendorID")));
     
-    
-    
-    // print stuff
-    NSString *devName = [NSString stringWithUTF8String:
-                         CFStringGetCStringPtr(IOHIDDeviceGetProperty(device, CFSTR("Product")), kCFStringEncodingMacRoman)];
+    NSString *devName = IOHIDDeviceGetProperty(device, CFSTR("Product"));
     NSString *devPrimaryUsage = IOHIDDeviceGetProperty(device, CFSTR("PrimaryUsage"));
     NSLog(@"\nMatching device added: %p\nModel: %@\nUsage: %@\nMatching",
           device,
@@ -180,17 +187,23 @@ static void registerDeviceButtonInputCallback_InInputReceiverClass(IOHIDDeviceRe
 }
 
 
-static BOOL devicePassesFiltering(IOHIDDeviceRef HIDDevice) {
+static BOOL devicePassesFiltering(IOHIDDeviceRef device) {
+
     
-    NSString *deviceName = [NSString stringWithUTF8String:
-                            CFStringGetCStringPtr(IOHIDDeviceGetProperty(HIDDevice, CFSTR("Product")), kCFStringEncodingMacRoman)];
-    NSString *deviceNameLower = [deviceName lowercaseString];
+    NSString *deviceName = (__bridge NSString *)IOHIDDeviceGetProperty(device, CFSTR("Product"));
+    NSNumber *deviceVendorID = (__bridge NSNumber *)IOHIDDeviceGetProperty(device, CFSTR("VendorID"));
     
-    if ([deviceNameLower rangeOfString:@"magic"].location == NSNotFound) {
-        return TRUE;
-    } else {
-        return FALSE;
+    if ([deviceName.lowercaseString rangeOfString:@"magic"].location != NSNotFound) {
+        return NO;
     }
+    if ([deviceName isEqualToString:@"Apple Internal Keyboard / Trackpad"]) {
+        return NO;
+    }
+    if (deviceVendorID.integerValue == 1452) { // Apple's Vendor ID is 1452 (sometimes written as 0x5ac or 05ac)
+        return NO;
+    }
+    return YES;
+
 }
 
 @end
