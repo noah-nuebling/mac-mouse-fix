@@ -79,7 +79,7 @@ static NSWindow *_instance;
     
     
     
-    CGSize win = CGSizeMake(330, 205); //(330,[JSreturn floatValue])
+    CGSize win = CGSizeMake(330, 220); //(330,[JSreturn floatValue])
     NSRect newWinPos = NSMakeRect(prefMid.x - (win.width/2.0), prefMid.y - (win.height/2.0), win.width, win.height);
 //    CGSize dsp = NSScreen.mainScreen.frame.size;
 //    NSRect newWinPos = NSMakeRect((dsp.width/2.0) - (win.width/2.0), (dsp.height/2.0) - (win.height/2.0) + 50, win.width, win.height);

@@ -17,12 +17,12 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="340" height="440"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="6Hq-Fu-Wcb">
                 <rect key="frame" x="0.0" y="0.0" width="340" height="440"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <visualEffectView appearanceType="inheritedVibrantLight" blendingMode="behindWindow" material="sheet" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="BXp-W5-AQd">
+                    <visualEffectView appearanceType="inheritedVibrantLight" blendingMode="behindWindow" material="sidebar" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="BXp-W5-AQd">
                         <rect key="frame" x="0.0" y="0.0" width="340" height="440"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="340" id="82P-cR-AcV"/>

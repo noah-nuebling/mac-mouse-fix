@@ -37,7 +37,7 @@ static NSURL *_updateNotesLocation;
 
 +(void)load {
     _baseRemoteURL = [NSURL URLWithString:@"https://mousefix.org/maindownload/"];
-//    _baseRemoteURL = [NSURL fileURLWithPath:@"/Users/Noah/Documents/GitHub/Mac-Mouse-Fix-Website/maindownload"];s
+//    _baseRemoteURL = [NSURL fileURLWithPath:@"/Users/Noah/Documents/GitHub/Mac-Mouse-Fix-Website/maindownload"];
 }
 
 + (void)setupDownloadSession {
