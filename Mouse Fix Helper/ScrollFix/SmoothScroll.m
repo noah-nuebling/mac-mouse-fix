@@ -71,8 +71,8 @@ typedef enum {
 
 // fast scroll
 double          _fastScrollExponentialBase          =   0;
-int             _scrollSwipeThreshhold_Ticks        =   0;
-int             _fastScrollThreshhold_Swipes        =   0;
+int             _scrollSwipeThreshold_Ticks        =   0;
+int             _fastScrollThreshold_Swipes        =   0;
 double          _consecutiveScrollTickMaxIntervall  =   0;
 double          _consecutiveScrollSwipeMaxIntervall =   0;
 
@@ -144,8 +144,8 @@ static void resetDynamicGlobals() {
     _nOfOnePixelScrollsMax              =   2;
     
     _fastScrollExponentialBase          =   1.05; //1.125 //1.0625 // 1.09375
-    _scrollSwipeThreshhold_Ticks        =   4; // 3
-    _fastScrollThreshhold_Swipes        =   3;
+    _scrollSwipeThreshold_Ticks        =   4; // 3
+    _fastScrollThreshold_Swipes        =   3;
     _consecutiveScrollTickMaxIntervall     =   0.13; // == _msPerStep/1000 // oldval:0.03
     _consecutiveScrollSwipeMaxIntervall    =   0.5;
     
@@ -289,7 +289,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
     Boolean mouseMoved = FALSE;
     CGPoint mouseLocation = CGEventGetLocation(event);
-    if (_previousMouseLocation.x != mouseLocation.x || _previousMouseLocation.y != mouseLocation.y) {
+    if (![ScrollUtility point:mouseLocation isAboutTheSameAs:_previousMouseLocation threshold:10]) {
         mouseMoved = TRUE;
     }
     _previousMouseLocation = mouseLocation;
@@ -346,8 +346,8 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     }
     
     
-    if (_consecutiveScrollSwipeCounter > _fastScrollThreshhold_Swipes) {
-        _pixelScrollQueue = _pixelScrollQueue * pow(_fastScrollExponentialBase, (int32_t)_consecutiveScrollSwipeCounter - _fastScrollThreshhold_Swipes);
+    if (_consecutiveScrollSwipeCounter > _fastScrollThreshold_Swipes) {
+        _pixelScrollQueue = _pixelScrollQueue * pow(_fastScrollExponentialBase, (int32_t)_consecutiveScrollSwipeCounter - _fastScrollThreshold_Swipes);
     }
     
     
@@ -371,8 +371,6 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         
                 // accelerate
         _pixelScrollQueue = _pixelScrollQueue * _accelerationScrollQueue;
-        NSLog(@"SCROLLQUEUE: %lld", _pixelScrollQueue);
-        
         
     } else {
         
@@ -401,7 +399,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     _consecutiveScrollTickTimer = [NSTimer scheduledTimerWithTimeInterval:_consecutiveScrollTickMaxIntervall target:[SmoothScroll class] selector:@selector(Handle_ConsecutiveScrollTickCallback:) userInfo:NULL repeats:NO];
     
     
-    if (_consecutiveScrollTickCounter < _scrollSwipeThreshhold_Ticks) {
+    if (_consecutiveScrollTickCounter < _scrollSwipeThreshold_Ticks) {
         _lastTickWasPartOfSwipe = NO;
     } else {
         // stuff you wanna do on every tick after the scroll swipe started

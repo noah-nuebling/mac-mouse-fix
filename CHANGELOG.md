@@ -2,7 +2,7 @@
 
 ## 0.9.2
 
-- Added light acceleration to Smooth Scrolling to make it feel even more effortless.
+- Added light acceleration and slightly increased friction of smooth scrolling to make it feel even more responsive.
 
 ## 0.9.1
 

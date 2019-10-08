@@ -44,6 +44,13 @@
     return event;
 }
 
++ (BOOL)point:(CGPoint)p1 isAboutTheSameAs:(CGPoint)p2 threshold:(int)th {
+    if (abs((int)(p2.x - p1.x)) > th || abs((int)(p2.y - p1.y)) > th) {
+        return NO;
+    }
+    return YES;
+}
+
 + (double)signOf:(double)n {
     if (n == 0) {return 0;}
     return n >= 0 ? 1 : -1;
