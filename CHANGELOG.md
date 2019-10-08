@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.9.2
+
+- Added light acceleration to Smooth Scrolling to make it feel even more effortless.
+
 ## 0.9.1
 
 - Fixed compatiblity with Catalina by fixing a bug that would occur when setting up a message port to communicate with the Mouse Fix Helper application from within the Mouse Fix prefpane.
