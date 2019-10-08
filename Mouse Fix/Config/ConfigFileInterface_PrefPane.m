@@ -13,6 +13,8 @@
 
 @implementation ConfigFileInterface_PrefPane
 
+static NSMutableDictionary *_temporaryConfig; // private (would you say atomic?) cache for Config. For manipulating config without interference from other classes.
+
 static NSMutableDictionary *_config;
 + (NSMutableDictionary *)config {
     return _config;
@@ -24,14 +26,18 @@ static NSMutableDictionary *_config;
 + (void)initialize
 {
     if (self == [ConfigFileInterface_PrefPane class]) {
+        [self repairConfig];
         [self loadConfigFromFile];
     }
 }
 
 + (void)writeConfigToFile {
+    [self writeConfigToFile_From:_config];
+}
++ (void)writeConfigToFile_From:(NSMutableDictionary *)source {
     
     NSError *serializeErr;
-    NSData *configData = [NSPropertyListSerialization dataWithPropertyList:self.config format:NSPropertyListXMLFormat_v1_0 options:0 error:&serializeErr];
+    NSData *configData = [NSPropertyListSerialization dataWithPropertyList:source format:NSPropertyListXMLFormat_v1_0 options:0 error:&serializeErr];
     if (serializeErr) {
         NSLog(@"ERROR serializing configDictFromFile: %@", serializeErr);
     }
@@ -51,9 +57,10 @@ static NSMutableDictionary *_config;
 }
 
 + (void)loadConfigFromFile {
-    
-    [self repairConfig];
-    
+    [self loadConfigFromFile_Into:_config];
+}
++ (void)loadConfigFromFile_Into:(NSMutableDictionary *)destination {
+
     NSString *configPath = [[HelperServices helperBundle] pathForResource:@"config" ofType:@"plist"];
     NSData *configData = [NSData dataWithContentsOfFile:configPath];
     NSError *readErr;
@@ -62,17 +69,18 @@ static NSMutableDictionary *_config;
         NSLog(@"ERROR Reading config File: %@", readErr);
     }
     
-    self.config = configDict;
+    destination = configDict;
 }
 
 + (void)repairConfig {
     
+    // 1. Check the config.
+    
     NSURL *currentBundleURL = [[NSBundle bundleForClass:self] bundleURL];
     
     NSString *currentConfigPathRelative = @"/Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/Resources/config.plist";
-        NSString *defaultConfigPathRelative = @"/Contents/Resources/default_config.plist";
+    NSString *defaultConfigPathRelative = @"/Contents/Resources/default_config.plist"; // delfault_config.plist is a sort of backup that should always be compatible with the current installation
     
-    NSLog(@"default: %@", [NSDictionary dictionaryWithContentsOfURL:[currentBundleURL URLByAppendingPathComponent:defaultConfigPathRelative]]);
     
     NSURL *currentConfigURL = [currentBundleURL URLByAppendingPathComponent:currentConfigPathRelative];
     NSURL *defaultConfigURL = [currentBundleURL URLByAppendingPathComponent:defaultConfigPathRelative];
@@ -80,13 +88,55 @@ static NSMutableDictionary *_config;
     NSNumber *currentConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:currentConfigURL] valueForKeyPath:@"Other.configVersion"];
     NSNumber *defaultConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:defaultConfigURL] valueForKeyPath:@"Other.configVersion"];
     
-    if (currentConfigVersion.intValue != defaultConfigVersion.intValue) {
+    if (currentConfigVersion.intValue == defaultConfigVersion.intValue) {
+        return;
+    }
+    
+    // 2. config-conflict! - repair the config
+        // this is completely untested!!
+    
+    BOOL replace = NO;
+    
+    if (currentConfigVersion.intValue < defaultConfigVersion.intValue) {
+        if (currentConfigVersion.intValue == 2 && defaultConfigVersion.intValue == 3) {
+            [self loadConfigFromFile_Into:_temporaryConfig];
+            BOOL success = [self convertTemporaryConfigFromVersion2ToVersion3];
+            if (success) {
+                [self writeConfigToFile_From:_temporaryConfig];
+            } else {
+                replace = TRUE;
+            }
+        } else {
+            replace = TRUE;
+        }
+    }
+    else if (currentConfigVersion.intValue > defaultConfigVersion.intValue) {
+        // this should never happen - we should never update to a bundle with a lower config version
+        replace = YES;
+    }
+    
+    if (replace) {
         NSData *defaultData = [NSData dataWithContentsOfURL:defaultConfigURL];
         [defaultData writeToURL:currentConfigURL atomically:YES];
-        
-        [MessagePort_PrefPane sendMessageToHelper:@"terminate"];
     }
+    
+    [MessagePort_PrefPane sendMessageToHelper:@"terminate"];
 }
 
+
+// ------------------------------------------------------
+
+// update config files
+
++ (BOOL)convertTemporaryConfigFromVersion2ToVersion3 {
+    @try {
+        
+        [_temporaryConfig valueForKeyPath:@"ScrollSettings.values"][2] = [NSNumber numberWithDouble:1.7];
+        return YES;
+        
+    } @catch (NSError *e) {
+        return NO;
+    }
+}
 
 @end
