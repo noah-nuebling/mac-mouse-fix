@@ -80,6 +80,7 @@ double          _consecutiveScrollSwipeMaxIntervall =   0;
 static int64_t  _pxStepSize;
 static double   _msPerStep;
 static int      _scrollDirection;
+static double   _accelerationScrollQueue;
 // momentum phase
 static double   _frictionCoefficient;
 static double   _frictionDepth;
@@ -143,10 +144,12 @@ static void resetDynamicGlobals() {
     _nOfOnePixelScrollsMax              =   2;
     
     _fastScrollExponentialBase          =   1.05; //1.125 //1.0625 // 1.09375
-    _scrollSwipeThreshhold_Ticks        =   3;
+    _scrollSwipeThreshhold_Ticks        =   4; // 3
     _fastScrollThreshhold_Swipes        =   3;
-    _consecutiveScrollTickMaxIntervall     =   0.03;
+    _consecutiveScrollTickMaxIntervall     =   0.13; // == _msPerStep/1000 // oldval:0.03
     _consecutiveScrollSwipeMaxIntervall    =   0.5;
+    
+    _accelerationScrollQueue               = 1.1;
 }
 
 //AppOverrides *_appOverrides;
@@ -329,7 +332,10 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         _pxPerMsVelocity = 0;
     };
     
-        // update scroll queue
+    
+    
+    
+//    _pxStepSize = 100;
     
     _msLeftForScroll = _msPerStep;
     if (scrollDeltaAxis1 > 0) {
@@ -339,11 +345,10 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         _pixelScrollQueue -= _pxStepSize * _scrollDirection;
     }
     
+    
     if (_consecutiveScrollSwipeCounter > _fastScrollThreshhold_Swipes) {
         _pixelScrollQueue = _pixelScrollQueue * pow(_fastScrollExponentialBase, (int32_t)_consecutiveScrollSwipeCounter - _fastScrollThreshhold_Swipes);
     }
-    
-    
     
     
     
@@ -361,9 +366,17 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
     if ([_consecutiveScrollTickTimer isValid]) {
         _consecutiveScrollTickCounter += 1;
+        
+        // stuff you wanna do on every tick, except the first one (for each series of consecutive scroll ticks)
+        
+                // accelerate
+        _pixelScrollQueue = _pixelScrollQueue * _accelerationScrollQueue;
+        NSLog(@"SCROLLQUEUE: %lld", _pixelScrollQueue);
+        
+        
     } else {
         
-        // do stuff you only wanna do once per scroll swipe
+        // stuff you only wanna do on the first tick of each series of consecutive scroll ticks
         
         if (CVDisplayLinkIsRunning(_displayLink) == FALSE) {
             CVDisplayLinkStart(_displayLink);
@@ -381,28 +394,6 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
             }
         }
         
-         //set app overrides
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//            setConfigVariablesForAppUnderMousePointer();
-//        });
-        
-//        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
-//            setConfigVariablesForAppUnderMousePointer();
-//        });
-//        dispatch_queue_t serial_queue = dispatch_queue_create("com.nuebling.mousefix", DISPATCH_QUEUE_SERIAL); // this might lead to crashes?
-        
-        // dThis is very slow and incredibly inconsistent. Sometimes this takes over a second, and then the eventTap breaks. But doing it asynchronously makes the scrolling direction super jerky and switch all the time....
-//        dispatch_async(serial_queue, ^{
-//            setConfigVariablesForAppUnderMousePointer();
-//        });
-    
-        
-//        NSLog(@"config: %@", [ConfigFileInterface_HelperApp.config valueForKeyPath:@"ScrollSettings.values"]);
-    
-        
-//        dispatch_async(serial_queue, ^{
-//        });
-        
     }
     
     // reset the scrolltickTimer
@@ -412,14 +403,21 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
     if (_consecutiveScrollTickCounter < _scrollSwipeThreshhold_Ticks) {
         _lastTickWasPartOfSwipe = NO;
-    } else if (_lastTickWasPartOfSwipe == NO) {
-        _lastTickWasPartOfSwipe = YES;
+    } else {
+        // stuff you wanna do on every tick after the scroll swipe started
+        // (nothing here)
+        
+        if (_lastTickWasPartOfSwipe == NO) {
+            // stuff you wanna do once per swipe, when it starts
+            
+            _lastTickWasPartOfSwipe = YES;
 
-        _consecutiveScrollSwipeCounter  += 1;
-        [_consecutiveScrollSwipeTimer invalidate];
-        dispatch_async(dispatch_get_main_queue(), ^{ // TODO: is executing on the main thread here necessary / useful?
-            _consecutiveScrollSwipeTimer = [NSTimer scheduledTimerWithTimeInterval:_consecutiveScrollSwipeMaxIntervall target:[SmoothScroll class] selector:@selector(Handle_ConsecutiveScrollSwipeCallback:) userInfo:NULL repeats:NO];
-        });
+            _consecutiveScrollSwipeCounter  += 1;
+            [_consecutiveScrollSwipeTimer invalidate];
+            dispatch_async(dispatch_get_main_queue(), ^{ // TODO: is executing on the main thread here necessary / useful?
+                _consecutiveScrollSwipeTimer = [NSTimer scheduledTimerWithTimeInterval:_consecutiveScrollSwipeMaxIntervall target:[SmoothScroll class] selector:@selector(Handle_ConsecutiveScrollSwipeCallback:) userInfo:NULL repeats:NO];
+            });
+        }
     }
     
     
