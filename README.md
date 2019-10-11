@@ -2,8 +2,6 @@
 
 Mac Mouse Fix is a simple way to make your 3rd party mouse better.
 
----
-
 [Download](http://www.mousefix.org)
 
 ---
