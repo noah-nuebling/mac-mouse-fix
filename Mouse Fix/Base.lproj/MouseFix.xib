@@ -144,12 +144,12 @@
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jX4-ua-75H">
                                             <rect key="frame" x="225" y="157" width="180" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="-" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="U6a-n1-4au" id="Ks7-4K-rqX">
+                                            <popUpButtonCell key="cell" type="push" title="Middle Button" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="U6a-n1-4au" id="Ks7-4K-rqX">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                                 <menu key="menu" id="8up-Bb-BCh">
                                                     <items>
-                                                        <menuItem title="-" state="on" toolTip="Leave button behavior unchanged." id="U6a-n1-4au"/>
+                                                        <menuItem title="Middle Button" state="on" toolTip="Leave button behavior unchanged." id="U6a-n1-4au"/>
                                                         <menuItem isSeparatorItem="YES" id="eNY-Gi-27u"/>
                                                         <menuItem title="Mission Control" tag="32" id="gws-rg-Zk7"/>
                                                         <menuItem title="Application windows" tag="33" id="wux-ng-X0Q"/>
@@ -213,12 +213,12 @@
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hGG-fg-G7L">
                                             <rect key="frame" x="225" y="112" width="180" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="-" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="1a7-0y-cIV" id="9Hx-yi-NA0">
+                                            <popUpButtonCell key="cell" type="push" title="Side Buttons" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="1a7-0y-cIV" id="9Hx-yi-NA0">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                                 <menu key="menu" id="Ao4-cS-trT">
                                                     <items>
-                                                        <menuItem title="-" state="on" toolTip="Leave button behavior unchanged." id="1a7-0y-cIV"/>
+                                                        <menuItem title="Side Buttons" state="on" toolTip="Leave button behavior unchanged." id="1a7-0y-cIV"/>
                                                         <menuItem isSeparatorItem="YES" id="4hR-Cg-H2I"/>
                                                         <menuItem title="Move between Spaces" tag="1" id="mo5-2i-ROD"/>
                                                         <menuItem title="Back and Forward" tag="2" id="VCO-0X-gaQ"/>
