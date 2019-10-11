@@ -501,9 +501,9 @@
 				4FCECD8421092354001F1078 /* AppDelegate.m */,
 				4FD45A21231C7FBB00F75C58 /* Accessibility */,
 				4FD45A14231C76DE00F75C58 /* DeviceManager */,
-				4F95A246234EBB1E000DC7D7 /* PointerSpeed */,
 				4F32E18D231C50A100199A11 /* Remap */,
 				4F32E17D231C509200199A11 /* ScrollFix */,
+				4F95A246234EBB1E000DC7D7 /* PointerSpeed */,
 				4FD45A15231C76ED00F75C58 /* MessagePort */,
 				4FD45A13231C76A700F75C58 /* Config */,
 				4F32E152231C420100199A11 /* Utility */,
@@ -733,7 +733,7 @@
 				KnownAssetTags = (
 					0,
 				);
-				LastUpgradeCheck = 1100;
+				LastUpgradeCheck = 1110;
 				ORGANIZATIONNAME = "Noah Nuebling";
 				TargetAttributes = {
 					4F2FDF2F2315662400C7BE14 = {
@@ -742,12 +742,10 @@
 					4FCECD7F21092354001F1078 = {
 						CreatedOnToolsVersion = 9.2;
 						LastSwiftMigration = 0920;
-						ProvisioningStyle = Automatic;
 					};
 					4FD67DDA211CC9000095A9A5 = {
 						CreatedOnToolsVersion = 9.2;
 						LastSwiftMigration = 1030;
-						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -918,6 +916,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
+				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
@@ -1071,6 +1070,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_ON_DEMAND_RESOURCES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/Frameworks",
@@ -1116,6 +1116,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.nuebling.mousefix.helper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.0;
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Mouse Fix Helper/SupportFiles/External\"";
@@ -1154,7 +1155,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1170,6 +1172,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.nuebling.mousefix;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Mouse Fix/Mouse Fix-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = "/Users/Noah/Documents/|MyFiles/Projekte/Programmieren/Xcode/XcodePrivateHeaders";

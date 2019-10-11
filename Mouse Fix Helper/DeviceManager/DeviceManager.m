@@ -138,6 +138,12 @@ static void Handle_DeviceRemovalCallback(void *context, IOReturn result, void *s
 
 static void Handle_DeviceMatchingCallback (void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
     
+    
+    // TODO: Clean this up
+//    [PointerSpeed setAccelerationTo:0.5];
+//    [PointerSpeed setSensitivityTo:0 device:device];
+    
+    
     NSLog(@"New matching device");
     
     

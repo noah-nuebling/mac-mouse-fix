@@ -8,6 +8,7 @@
 //
 
 #import "AppDelegate.h"
+#import "PointerSpeed/PointerSpeed.h"
 
 @interface AppDelegate ()
 @property (strong) IBOutlet NSWindow *addedWindow;
@@ -15,8 +16,8 @@
 
 @implementation AppDelegate
 
-//- (void)applicationWillFinishLaunching:(NSNotification *)notification {
+- (void)applicationWillFinishLaunching:(NSNotification *)notification {
 //    [NSApp setActivationPolicy: NSApplicationActivationPolicyProhibited];
-//}
+}
 
 @end

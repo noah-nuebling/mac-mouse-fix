@@ -8,10 +8,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <IOKit/hid/IOHIDDevice.h>
+//#import <IOKit/hid/IOHIDKeys.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PointerSpeed : NSObject
++ (void)setSensitivityTo:(int)sens device:(IOHIDDeviceRef)dev;
 + (void)setAccelerationTo:(double)acc;
 @end
 
