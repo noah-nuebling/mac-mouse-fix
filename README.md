@@ -1,6 +1,8 @@
 # Mac Mouse Fix
 
-[Download](http://www.mousefix.org) Mac Mouse Fix - a simple way to make your 3rd party mouse better.
+A simple way to make your 3rd party mouse better.
+
+[Download](http://www.mousefix.org) Mac Mouse Fix
 
 ## Current Features
 
