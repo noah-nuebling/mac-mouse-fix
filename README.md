@@ -1,12 +1,8 @@
 # Mac Mouse Fix
 
-Mac Mouse Fix is a simple way to make your 3rd party mouse better.
+A simple way to make your 3rd party mouse better.
 
----
-
-[Download on the Website](http://www.mousefix.org) | [Send me Feedback](mailto:noah.n.public@gmail.com?subject=Mac%20Mouse%20Fix%20-%20Contact&) | [Buy Me A Milkshake! :)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ARSTVR6KFB524&source=url&lc=en_US)
-
----
+### [Download](http://www.mousefix.org)
 
 ## Current Features
 
