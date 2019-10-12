@@ -80,7 +80,7 @@ double          _consecutiveScrollSwipeMaxIntervall =   0;
 static int64_t  _pxStepSize;
 static double   _msPerStep;
 static int      _scrollDirection;
-static double   _accelerationScrollQueue;
+static double   _accelerationForScrollQueue;
 // momentum phase
 static double   _frictionCoefficient;
 static double   _frictionDepth;
@@ -149,7 +149,7 @@ static void resetDynamicGlobals() {
     _consecutiveScrollTickMaxIntervall     =   0.13; // == _msPerStep/1000 // oldval:0.03
     _consecutiveScrollSwipeMaxIntervall    =   0.5;
     
-    _accelerationScrollQueue               = 1.1;
+    _accelerationForScrollQueue               = 1.1;
 }
 
 //AppOverrides *_appOverrides;
@@ -370,7 +370,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         // stuff you wanna do on every tick, except the first one (for each series of consecutive scroll ticks)
         
                 // accelerate
-        _pixelScrollQueue = _pixelScrollQueue * _accelerationScrollQueue;
+        _pixelScrollQueue = _pixelScrollQueue * _accelerationForScrollQueue;
         
     } else {
         

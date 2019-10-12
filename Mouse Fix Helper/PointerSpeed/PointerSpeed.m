@@ -101,7 +101,7 @@ static mach_port_t _IOHIDSystemHandle;
             IOConnectSetCFProperty(drvHandle, CFSTR("HIDPointerResolution"), newPointerRefCF); // doesn't work either
               
             // --
-            
+//
             IOHIDServiceClientSetProperty(service, CFSTR("HIDPointerResolution"), newPointerRefCF); // doesn't work - its the cursor sense does it though...
             
             // --

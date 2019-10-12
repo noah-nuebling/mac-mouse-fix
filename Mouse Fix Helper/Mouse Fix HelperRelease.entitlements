@@ -5,9 +5,7 @@
 	<key>com.apple.security.app-sandbox</key>
 	<false/>
 	<key>com.apple.security.application-groups</key>
-	<array>
-		<string>$(TeamIdentifierPrefix)</string>
-	</array>
+	<array/>
 	<key>com.apple.security.automation.apple-events</key>
 	<true/>
 </dict>

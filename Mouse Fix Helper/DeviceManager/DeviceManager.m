@@ -140,7 +140,7 @@ static void Handle_DeviceMatchingCallback (void *context, IOReturn result, void 
     
     
     // TODO: Clean this up
-//    [PointerSpeed setAccelerationTo:0.5];
+//    [PointerSpeed setAccelerationTo:0.2];
 //    [PointerSpeed setSensitivityTo:0 device:device];
     
     
