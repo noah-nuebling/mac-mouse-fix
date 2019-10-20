@@ -12,4 +12,4 @@ A simple way to make your 3rd party mouse better.
 
 ---
 
-If you have suggestions or feature requests, send me an email or open an issue here on GitHub. Any feature that solves a common problem of 3rd party mouse users on macOS might be a good fit for Mac Mouse Fix.
+If you have suggestions or feature requests, please send me an email or open an issue here on GitHub. Any feature that solves a common problem of 3rd party mouse users on macOS might be a good fit for Mac Mouse Fix.
