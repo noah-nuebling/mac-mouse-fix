@@ -23,7 +23,6 @@ IB_DESIGNABLE
     [self discardCursorRects];
     [self addCursorRect:self.bounds cursor:NSCursor.pointingHandCursor];
 }
-
 - (void)mouseEntered:(NSEvent *)event {
     NSMutableAttributedString *underlinedString = [[NSMutableAttributedString alloc] initWithString: self.stringValue];
     [underlinedString addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:NSMakeRange(0, [underlinedString length])];
@@ -34,7 +33,6 @@ IB_DESIGNABLE
     [notUnderlinedString addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleNone) range:NSMakeRange(0, [notUnderlinedString length])];
     self.attributedStringValue = notUnderlinedString;
 }
-
 - (void)mouseUp:(NSEvent *)event {
     if ([self mouse:[self convertPoint:[event locationInWindow] fromView:nil] inRect:self.bounds]) {
         [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:_href]];

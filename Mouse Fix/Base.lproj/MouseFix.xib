@@ -154,6 +154,8 @@
                                                         <menuItem title="Mission Control" tag="32" id="gws-rg-Zk7"/>
                                                         <menuItem title="Application windows" tag="33" id="wux-ng-X0Q"/>
                                                         <menuItem title="Show Desktop" tag="36" id="rJY-Pt-3q5"/>
+                                                        <menuItem isSeparatorItem="YES" id="hy8-EA-lgC"/>
+                                                        <menuItem title="Look Up" tag="70" id="0P6-lc-6fr"/>
                                                     </items>
                                                 </menu>
                                                 <connections>

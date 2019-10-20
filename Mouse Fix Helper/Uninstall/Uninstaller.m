@@ -19,6 +19,8 @@
     [self setupFSMonitor];
 }
 
+
+/// Monitor possible prefpane install locations.
 + (void)setupFSMonitor {
     
     NSArray<NSURL *> *prefURLs = [NSFileManager.defaultManager URLsForDirectory:NSPreferencePanesDirectory inDomains:NSLocalDomainMask | NSUserDomainMask];
@@ -38,11 +40,13 @@ void Handle_FSCallback(ConstFSEventStreamRef streamRef, void *clientCallBackInfo
     NSArray *contents = [NSFileManager.defaultManager contentsOfDirectoryAtPath:[[Utility_HelperApp prefPaneBundle].bundlePath stringByDeletingLastPathComponent] error:NULL];
     
     if (![contents containsObject:@"Mouse Fix.prefPane"]) {
-        
-        [HelperServices_HelperApp enableHelperAsUserAgent:NO];
+        uninstall();
     }
     
 }
 
+void uninstall() {
+    [HelperServices_HelperApp enableHelperAsUserAgent:NO];
+}
 
 @end

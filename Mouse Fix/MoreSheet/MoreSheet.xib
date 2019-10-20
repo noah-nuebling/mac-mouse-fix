@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15400" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15400"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -21,7 +21,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" nonactivatingPanel="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="90" y="125" width="495" height="156"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="IZI-tD-pBD">
                 <rect key="frame" x="0.0" y="0.0" width="495" height="156"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -75,7 +75,7 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                         <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/noah-nuebling"/>
+                            <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/noah-nuebling/mac-mouse-fix"/>
                             <userDefinedRuntimeAttribute type="number" keyPath="linkFrom">
                                 <integer key="value" value="-1"/>
                             </userDefinedRuntimeAttribute>
@@ -119,7 +119,7 @@ DQ
                         <rect key="frame" x="28" y="100" width="143" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" title="Created by Noah Nuebling" id="BVP-MY-XAV">
-                            <font key="font" metaFont="smallSystem"/>
+                            <font key="font" metaFont="toolTip"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -146,13 +146,13 @@ Also resets skipped update versions.</string>
                 <animations>
                     <caTransition key="subviews">
                         <mutableData key="keyedArchiveRepresentation">
-YnBsaXN0MDDUAQIDBAUGKClYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoKsHCBMU
-FRYKDAsdI1UkbnVsbNUJCgsMDQ4PEBESViRjbGFzc1tlbmRQcm9ncmVzc1R0eXBlV3N1YnR5cGVfEBJf
-X0NBQ29kaW5nQ29udGVudHOACoACgASAA4AFIj+AAABXZnJvbVRvcFRwdXNo0hcJGBxaTlMub2JqZWN0
-c6MZGhuABoAHgAiACdIeHyAhWiRjbGFzc25hbWVYJGNsYXNzZXNXTlNBcnJheaIgIlhOU09iamVjdNIe
-HyQlXENBVHJhbnNpdGlvbqMmJyJcQ0FUcmFuc2l0aW9uW0NBQW5pbWF0aW9uXxAPTlNLZXllZEFyY2hp
-dmVy0SorVHJvb3SAAQAIABEAGgAjAC0AMgA3AEMASQBUAFsAZwBsAHQAiQCLAI0AjwCRAJMAmACgAKUA
-qgC1ALkAuwC9AL8AwQDGANEA2gDiAOUA7gDzAQABBAERAR0BLwEyATcAAAAAAAACAQAAAAAAAAAsAAAA
+YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0b3BYJG9iamVjdHMSAAGGoF8QD05T
+S2V5ZWRBcmNoaXZlctEICVRyb290gAGrCwwXGBkaDhAPISdVJG51bGzVDQ4PEBESExQVFlYkY2xhc3Nb
+ZW5kUHJvZ3Jlc3NUdHlwZVdzdWJ0eXBlXxASX19DQUNvZGluZ0NvbnRlbnRzgAqAAoAEgAOABSI/gAAA
+V2Zyb21Ub3BUcHVzaNIbDRwgWk5TLm9iamVjdHOjHR4fgAaAB4AIgAnSIiMkJVokY2xhc3NuYW1lWCRj
+bGFzc2VzV05TQXJyYXmiJCZYTlNPYmplY3TSIiMoKVxDQVRyYW5zaXRpb26jKismXENBVHJhbnNpdGlv
+bltDQUFuaW1hdGlvbgAIABEAGgAkACkAMgA3AEkATABRAFMAXwBlAHAAdwCDAIgAkAClAKcAqQCrAK0A
+rwC0ALwAwQDGANEA1QDXANkA2wDdAOIA7QD2AP4BAQEKAQ8BHAEgAS0AAAAAAAACAQAAAAAAAAAsAAAA
 AAAAAAAAAAAAAAABOQ
 </mutableData>
                     </caTransition>

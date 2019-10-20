@@ -28,6 +28,9 @@ static mach_port_t _IOHIDSystemHandle;
 
 #pragma mark Sensitivity
 
+
+
+/// Change the pointer sensitivity of a device. Doesn't work as of yet.
 + (void)setSensitivityTo:(int)sens device:(IOHIDDeviceRef)dev {
 
     io_service_t devService = IOHIDDeviceGetService(dev); // name: IOHIDUserDevice - grandchild has hidpointerresolution property (at least on the Nordic Semiconductor Mouse)
@@ -160,7 +163,7 @@ static mach_port_t _IOHIDSystemHandle;
 
 /// Sets the mouse pointer acceleration to a certain value.
 /// Changes the same value that the "Tracking Speed" option in System Preferences > Mouse or the "defaults write .GlobalPreferences com.apple.mouse.scaling x" command changes.
-/// @param acc The value to set the acceleration to. Shouldn't be much higher than 4.0 or 5.0. Negative values turn off acceleration and also seem to affect base pointer sensitivity.
+/// @param acc The value to set the acceleration to. Shouldn't be much higher than 4.0 or 5.0. Negative values turn off acceleration and also seem to affect pointer sensitivity.
 + (void)setAccelerationTo:(double)acc {
     
     
@@ -173,8 +176,7 @@ static mach_port_t _IOHIDSystemHandle;
     
 }
 
-/// Gets the actual current Mouse Acceleration value.
-/// (As opposed to the one obtained by "defaults read .GlobalPreferences com.apple.mouse.scaling".)
+/// Gets the actual current Mouse Acceleration value. (As opposed to the one obtained by "defaults read .GlobalPreferences com.apple.mouse.scaling".)
 + (double)getActualAcceleration {
     
     CFTypeRef readNumCF = NULL;
