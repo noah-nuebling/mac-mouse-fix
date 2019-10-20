@@ -4,7 +4,7 @@ A simple way to make your 3rd party mouse better.
 
 ### [Download](http://www.mousefix.org)
 
-## Current Features
+## Features
 
 * Switch between Spaces, activate Mission Control, trigger Quick Look, or use the side buttons to navigate through pages in your browser. All of that and more. Right from your mouse.
 * New Smooth Scrolling algorithm that strikes a perfect balance between fluidity and control. Allows you to change mouse scrolling direction independently of trackpad scrolling direction.
