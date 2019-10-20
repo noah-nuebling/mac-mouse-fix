@@ -1,7 +1,7 @@
 # Changelog
 
 ## 0.9.2 
-not yet released
+*not yet released*
 
 - Added light acceleration and slightly increased friction of smooth scrolling to make it feel even more responsive.
 - Added Hold Middle Mouse Button to 'Look Up' option back in.
