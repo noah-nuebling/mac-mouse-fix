@@ -25,18 +25,9 @@
     Boolean accessibilityEnabled = [self check];
     
     if (!accessibilityEnabled) {
-        [NSTimer scheduledTimerWithTimeInterval:0.5 repeats:NO block:^(NSTimer * _Nonnull timer) {
-            NSLog(@"send acc message to prefpane");
-            [MessagePort_HelperApp sendMessageToPrefPane:@"accessibilityDisabled"];
-        }];
-        [NSTimer scheduledTimerWithTimeInterval:0.5 repeats:YES block:^(NSTimer * _Nonnull timer) {
-            if ([self check]) {
-                
-                [NSWorkspace.sharedWorkspace openFile:[[NSBundle bundleForClass:self.class].bundlePath stringByAppendingPathComponent:@"/../../../.."]];
-                
-                [NSApp terminate:NULL];
-            }
-        }];
+        [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(sendAccessibilityMessageToPrefpane) userInfo:NULL repeats:NO];
+        
+        [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(openPrefPane) userInfo:NULL repeats:YES];
             
     } else {
         [DeviceManager load_Manual];
@@ -52,4 +43,24 @@
     CFRelease(options);
     return result;
 }
+
+
+// Timer Callbacks
+
++ (void)sendAccessibilityMessageToPrefpane {
+    NSLog(@"send acc message to prefpane");
+    [MessagePort_HelperApp sendMessageToPrefPane:@"accessibilityDisabled"];
+}
+
++ (void)openPrefPane {
+    
+    if ([self check]) {
+        
+        [NSWorkspace.sharedWorkspace openFile:[[NSBundle bundleForClass:self.class].bundlePath stringByAppendingPathComponent:@"/../../../.."]];
+        
+        [NSApp terminate:NULL];
+    }
+}
+
+
 @end
