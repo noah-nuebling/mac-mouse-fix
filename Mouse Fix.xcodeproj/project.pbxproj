@@ -496,7 +496,6 @@
 		4FCECD8221092354001F1078 /* Mouse Fix Helper */ = {
 			isa = PBXGroup;
 			children = (
-				4FDBC57D234F7EDF00A46517 /* Mouse Fix HelperRelease.entitlements */,
 				4FCECD8321092354001F1078 /* AppDelegate.h */,
 				4FCECD8421092354001F1078 /* AppDelegate.m */,
 				4FD45A21231C7FBB00F75C58 /* Accessibility */,
@@ -516,6 +515,7 @@
 		4FCECDB02109326E001F1078 /* SupportFiles */ = {
 			isa = PBXGroup;
 			children = (
+				4FDBC57D234F7EDF00A46517 /* Mouse Fix HelperRelease.entitlements */,
 				4F1C96692313603400C3B9AE /* External */,
 				4FCECD8621092354001F1078 /* Assets.xcassets */,
 				4FCECD8E21092354001F1078 /* Mouse_Remap_Helper.entitlements */,
@@ -1064,7 +1064,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "Mouse Fix Helper/SupportFiles/Mouse_Remap_Helper.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Mouse Fix Helper/SupportFiles/Mouse Fix HelperRelease.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1095,7 +1095,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "Mouse Fix Helper/Mouse Fix HelperRelease.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Mouse Fix Helper/SupportFiles/Mouse Fix HelperRelease.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
