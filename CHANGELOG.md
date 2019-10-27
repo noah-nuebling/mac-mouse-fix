@@ -4,7 +4,7 @@
 (Not yet released)
 
 - Fixed compatibility with 10.11.
-- Added light acceleration and slightly increased friction of smooth scrolling to make it feel even more responsive.
+- Added light acceleration to smooth scrolling in order to make it feel even more responsive.
 - Added 'Hold Middle Mouse Button to Look Up' option, which was removed in 0.9.1, back in.
 - Various small improvements.
 
