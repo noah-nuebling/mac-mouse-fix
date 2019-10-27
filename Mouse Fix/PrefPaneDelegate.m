@@ -355,7 +355,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
         smoothnessConfiguration = _scrollSmoothnessConfigurations[@"Normal"];
     }
      */
-    smoothnessConfiguration = _scrollSmoothnessConfigurations[@"Normal"];
+    smoothnessConfiguration = _scrollSmoothnessConfigurations[@"Normal"]; 
     
     NSArray     *stepSizeRange  = smoothnessConfiguration[0];
     NSNumber    *msPerStep      = smoothnessConfiguration[1];

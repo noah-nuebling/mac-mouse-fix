@@ -139,7 +139,10 @@ static void resetDynamicGlobals() {
     _pxStepSize                         =   px;
     _msPerStep                          =   ms;
     _frictionCoefficient                =   f;
+            _frictionDepth = 1; // TODO: Implement this in the config file.
     _scrollDirection                    =   d;
+    
+    _accelerationForScrollQueue               = 1.1;
     
     _nOfOnePixelScrollsMax              =   2;
     
@@ -149,7 +152,6 @@ static void resetDynamicGlobals() {
     _consecutiveScrollTickMaxIntervall     =   0.13; // == _msPerStep/1000 // oldval:0.03
     _consecutiveScrollSwipeMaxIntervall    =   0.5;
     
-    _accelerationForScrollQueue               = 1.1;
 }
 
 //AppOverrides *_appOverrides;
@@ -468,7 +470,6 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     else if (_scrollPhase == kMFMomentumPhase) {
         
         
-        _frictionDepth = 1;
         
         // very smooth
 //        _frictionDepth = 0.5;
