@@ -114,7 +114,6 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
                                             @"Normal"   :   @[ @[@20,@100],  @130, @1.5],
                                             @"Snappy"   :   @[ @[@10,@90],  @75,  @1.2],
                                             @"Smooth"   :   @[ @[@10,@90], @190, @1.5],
-                                            
                                             };
         
         actionsForPopupButtonTag_onlyForSideMouseButtons = @{
