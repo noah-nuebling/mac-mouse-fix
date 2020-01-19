@@ -253,17 +253,17 @@ static void resetDynamicGlobals() {
 }
 + (void)magnificationScrolling:(BOOL)B {
     if (_magnificationModifierIsPressed && !B) {
-        if (_scrollPhase != kMFPhaseEnd) {
+//        if (_scrollPhase != kMFPhaseEnd) {
             [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseEnded];
 //            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseBegan];
 //            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseEnded];
-        }
+//        }
     } else if (!_magnificationModifierIsPressed && B) {
-        if (_scrollPhase == kMFPhaseMomentum || _scrollPhase == kMFPhaseWheel) {
+//        if (_scrollPhase == kMFPhaseMomentum || _scrollPhase == kMFPhaseWheel) {
             [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseBegan];
 //            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseBegan];
 //            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseEnded];
-        }
+//        }
     }
     _magnificationModifierIsPressed = B;
 }
@@ -534,17 +534,15 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     
     if (_magnificationModifierIsPressed) {
         
-//        NSLog(@"%f",_pixelsToScroll/1000.0);
-        
         if (_scrollPhase == kMFPhaseStart) {
-            NSLog(@"Start Zoom");
-            
-            [TouchSimulator postEventWithMagnification:_pixelsToScroll/1000.0 phase:kIOHIDEventPhaseBegan];
+//            NSLog(@"Start Zoom");
+//
+//            [TouchSimulator postEventWithMagnification:_pixelsToScroll/1000.0 phase:kIOHIDEventPhaseBegan];
 //            [TouchSimulator postEventWithMagnification:_pixelsToScroll/1000.0 phase:kIOHIDEventPhaseChanged];
 //            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseEnded];
         } else if (_scrollPhase == kMFPhaseEnd) {
-            NSLog(@"End Zoom");
-            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseEnded];
+//            NSLog(@"End Zoom");
+//            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseEnded];
 //            [TouchSimulator postEventWithMagnification:0 phase:kIOHIDEventPhaseBegan];
 //            [TouchSimulator postEventWithMagnification:0 phase:kIOHIDEventPhaseEnded];
         } else {
