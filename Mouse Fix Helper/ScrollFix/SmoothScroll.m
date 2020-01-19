@@ -64,10 +64,10 @@ static BOOL _isRunning;
 # pragma mark enum
 
 typedef enum {
-    kMFPhaseStart       =   0,
-    kMFPhaseWheel       =   1,
-    kMFPhaseMomentum    =   2,
-    kMFPhaseEnd         =   4,
+    kMFPhaseStart       =   1,
+    kMFPhaseWheel       =   2,
+    kMFPhaseMomentum    =   4,
+    kMFPhaseEnd         =   8,
 } MFScrollPhase;
 
 #pragma mark config
@@ -283,7 +283,7 @@ static void resetDynamicGlobals() {
 static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
     
-//    NSLog(@"scrollPhase: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase));
+    NSLog(@"scrollPhase: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase));
 //    NSLog(@"momentumPhase: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventMomentumPhase));
     
     
@@ -538,9 +538,14 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         // CGEventSourceSetPixelsPerLine(_eventSource, 1);
         // it might be a cool idea to diable scroll acceleration and then try to make the scroll events line based (kCGScrollEventUnitPixel)
         
-        
-        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 0);
+        if (_scrollPhase >= kMFPhaseMomentum) {
+            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, _scrollPhase >> 1);
+        } else {
+            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, _scrollPhase);
+        }
         CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase, 0);
+        NSLog(@"%d", _scrollPhase);
+        
         
         // set pixels
         
@@ -558,6 +563,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
             CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis2, _pixelsToScroll / 8);
             CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis2, _pixelsToScroll);
         }
+
         
         CGEventPost(kCGSessionEventTap, scrollEvent);
         CFRelease(scrollEvent);
