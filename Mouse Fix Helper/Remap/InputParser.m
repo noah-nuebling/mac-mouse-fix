@@ -30,38 +30,13 @@
 #import "ConfigFileInterface_HelperApp.h"
 #import "../SupportFiles/External/CGSInternal/CGSHotKeys.h"
 #import "../SupportFiles/External/SensibleSideButtons/TouchEvents.h"
+#import "TouchSimulator.h"
 
 @implementation InputParser
 
 // input parsing
 static CGEventRef   _savedEvent;
 static NSTimer     *_clickAndHoldTimer;
-
-// simulating touch events
-static NSArray *_nullArray;
-static NSMutableDictionary *_swipeInfo;
-
-+ (void)initialize{
-    
-    // setup touch event constants
-    _nullArray = @[];
-    _swipeInfo = [NSMutableDictionary dictionary];
-    for (NSNumber* direction in @[ @(kTLInfoSwipeUp), @(kTLInfoSwipeDown), @(kTLInfoSwipeLeft), @(kTLInfoSwipeRight) ]) {
-        NSDictionary* swipeInfo1 = [NSDictionary dictionaryWithObjectsAndKeys:
-                                    @(kTLInfoSubtypeSwipe), kTLInfoKeyGestureSubtype,
-                                    @(1), kTLInfoKeyGesturePhase,
-                                    nil];
-        
-        NSDictionary* swipeInfo2 = [NSDictionary dictionaryWithObjectsAndKeys:
-                                    @(kTLInfoSubtypeSwipe), kTLInfoKeyGestureSubtype,
-                                    direction, kTLInfoKeySwipeDirection,
-                                    @(4), kTLInfoKeyGesturePhase,
-                                    nil];
-        
-        _swipeInfo[direction] = @[ swipeInfo1, swipeInfo2 ];
-    }
-}
-
 
 
 + (CGEventRef)parse:(int)mouseButton state:(int)state event:(CGEventRef)event {
@@ -152,25 +127,11 @@ static NSMutableDictionary *_swipeInfo;
         NSString *dirString = actionArray[1];
         
         if ([dirString isEqualToString:@"left"]) {
-            SBFFakeSwipe(kTLInfoSwipeLeft);
+            [TouchSimulator SBFFakeSwipe:kTLInfoSwipeLeft];
         } else if ([dirString isEqualToString:@"right"]) {
-            SBFFakeSwipe(kTLInfoSwipeRight);
+            [TouchSimulator SBFFakeSwipe:kTLInfoSwipeRight];
         }
     }
-}
-
-static void SBFFakeSwipe(TLInfoSwipeDirection dir) {
-    
-    NSArray *nullArray = @[];
-    
-    CGEventRef event1 = tl_CGEventCreateFromGesture((__bridge CFDictionaryRef)(_swipeInfo[@(dir)][0]), (__bridge CFArrayRef)nullArray);
-    CGEventRef event2 = tl_CGEventCreateFromGesture((__bridge CFDictionaryRef)(_swipeInfo[@(dir)][1]), (__bridge CFArrayRef)nullArray);
-    
-    CGEventPost(kCGHIDEventTap, event1);
-    CGEventPost(kCGHIDEventTap, event2);
-    
-    CFRelease(event1);
-    CFRelease(event2);
 }
 
 CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar keyEquivalent, CGKeyCode virtualKeyCode, CGSModifierFlags modifiers);

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4F1A20282348EC3D00B29037 /* ScrollUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1A20272348EC3D00B29037 /* ScrollUtility.m */; };
+		4F1B7C1D23D3E6D60055C007 /* TouchSimulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B7C1C23D3E6D60055C007 /* TouchSimulator.m */; };
 		4F1C968C231361EF00C3B9AE /* TouchEvents.c in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C96872313606200C3B9AE /* TouchEvents.c */; };
 		4F2FDF332315662500C7BE14 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2FDF322315662500C7BE14 /* main.m */; };
 		4F2FDF3D23156AA900C7BE14 /* Mouse Fix Updater in Copy Updater */ = {isa = PBXBuildFile; fileRef = 4F2FDF302315662400C7BE14 /* Mouse Fix Updater */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -132,6 +133,8 @@
 /* Begin PBXFileReference section */
 		4F1A20262348EC3D00B29037 /* ScrollUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollUtility.h; sourceTree = "<group>"; };
 		4F1A20272348EC3D00B29037 /* ScrollUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollUtility.m; sourceTree = "<group>"; };
+		4F1B7C1B23D3E6D60055C007 /* TouchSimulator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TouchSimulator.h; sourceTree = "<group>"; };
+		4F1B7C1C23D3E6D60055C007 /* TouchSimulator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TouchSimulator.m; sourceTree = "<group>"; };
 		4F1C966B2313606200C3B9AE /* IOHIDPrivateKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOHIDPrivateKeys.h; sourceTree = "<group>"; };
 		4F1C966C2313606200C3B9AE /* IOHIDLibPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOHIDLibPrivate.h; sourceTree = "<group>"; };
 		4F1C966D2313606200C3B9AE /* IOHIDEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOHIDEvent.h; sourceTree = "<group>"; };
@@ -273,6 +276,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4F1B7C1823D3E5640055C007 /* Touch */ = {
+			isa = PBXGroup;
+			children = (
+				4F1B7C1B23D3E6D60055C007 /* TouchSimulator.h */,
+				4F1B7C1C23D3E6D60055C007 /* TouchSimulator.m */,
+			);
+			path = Touch;
+			sourceTree = "<group>";
+		};
 		4F1C96692313603400C3B9AE /* External */ = {
 			isa = PBXGroup;
 			children = (
@@ -500,6 +512,7 @@
 				4FCECD8421092354001F1078 /* AppDelegate.m */,
 				4FD45A21231C7FBB00F75C58 /* Accessibility */,
 				4FD45A14231C76DE00F75C58 /* DeviceManager */,
+				4F1B7C1823D3E5640055C007 /* Touch */,
 				4F32E18D231C50A100199A11 /* Remap */,
 				4F32E17D231C509200199A11 /* ScrollFix */,
 				4F95A246234EBB1E000DC7D7 /* PointerSpeed */,
@@ -843,6 +856,7 @@
 				4FD45A20231C7FB500F75C58 /* AccessibilityCheck.m in Sources */,
 				4F32E18C231C509200199A11 /* SmoothScroll.m in Sources */,
 				4F32E157231C420100199A11 /* DeviceManager.m in Sources */,
+				4F1B7C1D23D3E6D60055C007 /* TouchSimulator.m in Sources */,
 				4F32E158231C420100199A11 /* ConfigFileInterface_HelperApp.m in Sources */,
 				4FCECD8521092354001F1078 /* AppDelegate.m in Sources */,
 				4F32E15D231C44C000199A11 /* main.m in Sources */,
