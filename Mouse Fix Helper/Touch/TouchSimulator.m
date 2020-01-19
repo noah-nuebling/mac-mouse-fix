@@ -51,16 +51,17 @@ static NSMutableDictionary *_swipeInfo;
 }
 
 
-+ (CGEventRef)eventWithMagnification:(double)magnification {
++ (void)postEventWithMagnification:(double)magnification phase:(IOHIDEventPhaseBits)phase {
     NSDictionary *magnifyInfo = [NSDictionary dictionaryWithObjectsAndKeys:
     @(kTLInfoSubtypeMagnify), kTLInfoKeyGestureSubtype,
-    @(kIOHIDEventPhaseBegan), kTLInfoKeyGesturePhase,
+    @(phase), kTLInfoKeyGesturePhase,
     @(magnification), kTLInfoKeyMagnification,
     nil];
     
     CGEventRef event = tl_CGEventCreateFromGesture((__bridge CFDictionaryRef)(magnifyInfo), (__bridge CFArrayRef) @[]);
     
-    return event;
+    CGEventPost(kCGHIDEventTap, event);
+    CFRelease(event);
 }
 
 @end

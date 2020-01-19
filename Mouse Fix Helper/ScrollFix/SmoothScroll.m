@@ -19,6 +19,7 @@
 #import "MouseInputReceiver.h"
 #import "DeviceManager.h"
 #import "Utility_HelperApp.h"
+#import "TouchSimulator.h"
 
 //#import "Mouse_Fix_Helper-Swift.h"
 
@@ -63,8 +64,10 @@ static BOOL _isRunning;
 # pragma mark enum
 
 typedef enum {
-    kMFWheelPhase       =   0,
-    kMFMomentumPhase    =   1,
+    kMFPhaseStart       =   0,
+    kMFPhaseWheel       =   1,
+    kMFPhaseMomentum    =   2,
+    kMFPhaseEnd         =   4,
 } MFScrollPhase;
 
 #pragma mark config
@@ -102,7 +105,8 @@ static NSTimer  *_consecutiveScrollSwipeTimer       =   NULL;
 // any phase
 static int32_t  _pixelsToScroll;
 static int      _scrollPhase;
-static BOOL     _horizontalScrollModifierPressed;
+static BOOL     _horizontalScrollModifierIsPressed;
+static BOOL     _magnificationModifierIsPressed;
 static NSString *_bundleIdentifierOfAppWhichCausesOverride;
 static CGDirectDisplayID *_displaysUnderMousePointer;
 static int _previousPhase;                              // which phase was active the last time that displayLinkCallback was called
@@ -122,8 +126,8 @@ static int      _onePixelScrollsCounter =   0;
 #pragma mark - Interface
 
 static void resetDynamicGlobals() {
-    _horizontalScrollModifierPressed    =   NO;
-    _scrollPhase                        =   kMFWheelPhase;
+    _horizontalScrollModifierIsPressed    =   NO;
+    _scrollPhase                        =   kMFPhaseWheel;
     _pixelScrollQueue                   =   0;
     _msLeftForScroll                    =   0;
     _pxPerMsVelocity                    =   0;
@@ -244,9 +248,26 @@ static void resetDynamicGlobals() {
      CGDisplayRemoveReconfigurationCallback(Handle_displayReconfiguration, NULL);
 }
 
-+ (void)setHorizontalScroll:(BOOL)B {
-    _horizontalScrollModifierPressed = B;
++ (void)horizontalScrolling:(BOOL)B {
+    _horizontalScrollModifierIsPressed = B;
 }
++ (void)magnificationScrolling:(BOOL)B {
+    if (_magnificationModifierIsPressed && !B) {
+        if (_scrollPhase != kMFPhaseEnd) {
+            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseEnded];
+//            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseBegan];
+//            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseEnded];
+        }
+    } else if (!_magnificationModifierIsPressed && B) {
+        if (_scrollPhase == kMFPhaseMomentum || _scrollPhase == kMFPhaseWheel) {
+            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseBegan];
+//            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseBegan];
+//            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseEnded];
+        }
+    }
+    _magnificationModifierIsPressed = B;
+}
+
 + (void)temporarilyDisable:(BOOL)B {
     if (B) {
         if (_isRunning) {
@@ -320,12 +341,16 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     // update global vars
 
     
-    if (_scrollPhase == kMFMomentumPhase) {
+    if (_scrollPhase != kMFPhaseWheel) {
         _onePixelScrollsCounter  =   0;
         _pxPerMsVelocity        =   0;
         _pixelScrollQueue = 0;
     }
-    _scrollPhase = kMFWheelPhase;
+    if (_scrollPhase == kMFPhaseMomentum) {
+        _scrollPhase = kMFPhaseWheel;
+    } else if (_scrollPhase == kMFPhaseEnd) {
+        _scrollPhase = kMFPhaseStart;
+    }
     
     if (newScrollDirection) {
     
@@ -445,7 +470,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     
     
 # pragma mark Wheel Phase
-    if (_scrollPhase == kMFWheelPhase) {
+    if (_scrollPhase == kMFPhaseWheel || _scrollPhase == kMFPhaseStart) {
         
         
         _pixelsToScroll = round( (_pixelScrollQueue/_msLeftForScroll) * msBetweenFrames );
@@ -453,13 +478,12 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         _pixelScrollQueue   -=  _pixelsToScroll;
         _msLeftForScroll    -=  msBetweenFrames;
         
-        
         if ( (_msLeftForScroll <= 0) || (_pixelScrollQueue == 0) ) {
             
             _msLeftForScroll    =   0;
             _pixelScrollQueue   =   0;
             
-            _scrollPhase = kMFMomentumPhase;
+            _scrollPhase = kMFPhaseMomentum;
             _pxPerMsVelocity = (_pixelsToScroll / msBetweenFrames);
             
         }
@@ -467,7 +491,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     }
     
 # pragma mark Momentum Phase
-    else if (_scrollPhase == kMFMomentumPhase) {
+    else if (_scrollPhase == kMFPhaseMomentum) {
         
         
         
@@ -490,86 +514,118 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         
         
         
-        if (( (_pixelsToScroll == 0) || (_pxPerMsVelocity == 0) )) {
-            CVDisplayLinkStop(_displayLink);
-            return 0;
+        if (_pixelsToScroll == 0 || _pxPerMsVelocity == 0) {
+            _scrollPhase = kMFPhaseEnd;
         }
         
     }
     
-    if (abs(_pixelsToScroll) == 1) {
+    if (abs(_pixelsToScroll) == 1) { // TODO: Why is this outside of the momentum phase if block
         _onePixelScrollsCounter += 1;
         if (_onePixelScrollsCounter > _nOfOnePixelScrollsMax) {
+            _scrollPhase = kMFPhaseEnd;
             _onePixelScrollsCounter = 0;
-            CVDisplayLinkStop(displayLink);
-            return 0;
         }
     }
     
+    
+    
 # pragma mark Send Event
     
-    
-    CGEventRef scrollEvent = CGEventCreateScrollWheelEvent(_eventSource, kCGScrollEventUnitPixel, 1, 0);
-    // CGEventSourceSetPixelsPerLine(_eventSource, 1);
-    // it might be a cool idea to diable scroll acceleration and then try to make the scroll events line based (kCGScrollEventUnitPixel)
-    
-    
-    CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 0);
-    CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase, 0);
-    
-    // set pixels
-    
-    if (_horizontalScrollModifierPressed == FALSE) {
-//        if (_scrollPhase == kMFWheelPhase) {
-//            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis1, [Utility_HelperApp signOf:_pixelsToScroll]);
-//        }
-    
-        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis1, _pixelsToScroll / 8);
-        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis1, _pixelsToScroll);
-    } else if (_horizontalScrollModifierPressed == TRUE) {
-//        if (_scrollPhase == kMFWheelPhase) {
-//            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis2, [Utility_HelperApp signOf:_pixelsToScroll]);
-//        }
-        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis2, _pixelsToScroll / 8);
-        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis2, _pixelsToScroll);
+    if (_magnificationModifierIsPressed) {
+        
+//        NSLog(@"%f",_pixelsToScroll/1000.0);
+        
+        if (_scrollPhase == kMFPhaseStart) {
+            NSLog(@"Start Zoom");
+            
+            [TouchSimulator postEventWithMagnification:_pixelsToScroll/1000.0 phase:kIOHIDEventPhaseBegan];
+//            [TouchSimulator postEventWithMagnification:_pixelsToScroll/1000.0 phase:kIOHIDEventPhaseChanged];
+//            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseEnded];
+        } else if (_scrollPhase == kMFPhaseEnd) {
+            NSLog(@"End Zoom");
+            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseEnded];
+//            [TouchSimulator postEventWithMagnification:0 phase:kIOHIDEventPhaseBegan];
+//            [TouchSimulator postEventWithMagnification:0 phase:kIOHIDEventPhaseEnded];
+        } else {
+            NSLog(@"Do Zoom");
+//            [TouchSimulator postEventWithMagnification:_pixelsToScroll/1000.0 phase:kIOHIDEventPhaseBegan];
+            [TouchSimulator postEventWithMagnification:_pixelsToScroll/1000.0 phase:kIOHIDEventPhaseChanged];
+//            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseEnded];
+        }
+    } else {
+        
+        CGEventRef scrollEvent = CGEventCreateScrollWheelEvent(_eventSource, kCGScrollEventUnitPixel, 1, 0);
+        // CGEventSourceSetPixelsPerLine(_eventSource, 1);
+        // it might be a cool idea to diable scroll acceleration and then try to make the scroll events line based (kCGScrollEventUnitPixel)
+        
+        
+        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 0);
+        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase, 0);
+        
+        // set pixels
+        
+        if (_horizontalScrollModifierIsPressed == FALSE) {
+    //        if (_scrollPhase == kMFWheelPhase) {
+    //            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis1, [Utility_HelperApp signOf:_pixelsToScroll]);
+    //        }
+        
+            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis1, _pixelsToScroll / 8);
+            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis1, _pixelsToScroll);
+        } else if (_horizontalScrollModifierIsPressed == TRUE) {
+    //        if (_scrollPhase == kMFWheelPhase) {
+    //            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis2, [Utility_HelperApp signOf:_pixelsToScroll]);
+    //        }
+            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis2, _pixelsToScroll / 8);
+            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis2, _pixelsToScroll);
+        }
+        
+        CGEventPost(kCGSessionEventTap, scrollEvent);
+        CFRelease(scrollEvent);
+        
+    //<<<<<<< Updated upstream
+    //=======
+    //<<<<<<< HEAD
+    ////     set phases
+    ////         the native "scrollPhase" is roughly equivalent to my "wheelPhase"
+    //
+    //    CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase, kCGMomentumScrollPhaseNone);
+    //
+    //
+    //
+    //    NSLog(@"intern scrollphase: %d", _scrollPhase);
+    //    if (_scrollPhase == kMFWheelPhase) {
+    //        if (_previousPhase == kMFWheelPhase) {
+    //                CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 2);
+    //        } else {
+    //                CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 1);
+    //        }
+    //    }
+    //    if (_scrollPhase == kMFMomentumPhase) {
+    //        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 2);
+    //    }
+    //
+    ////    NSLog(@"scrollPhase: %lld", CGEventGetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase));
+    ////    NSLog(@"momentumPhase: %lld \n", CGEventGetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase));
+    //
+    //=======
+    //>>>>>>> 519321477a37764c0b95076d91d80f5238284af3
+    //>>>>>>> Stashed changes
+        
     }
-    
-//<<<<<<< Updated upstream
-//=======
-//<<<<<<< HEAD
-////     set phases
-////         the native "scrollPhase" is roughly equivalent to my "wheelPhase"
-//    
-//    CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase, kCGMomentumScrollPhaseNone);
-//    
-//    
-//    
-//    NSLog(@"intern scrollphase: %d", _scrollPhase);
-//    if (_scrollPhase == kMFWheelPhase) {
-//        if (_previousPhase == kMFWheelPhase) {
-//                CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 2);
-//        } else {
-//                CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 1);
-//        }
-//    }
-//    if (_scrollPhase == kMFMomentumPhase) {
-//        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 2);
-//    }
-//    
-////    NSLog(@"scrollPhase: %lld", CGEventGetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase));
-////    NSLog(@"momentumPhase: %lld \n", CGEventGetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase));
-//    
-//=======
-//>>>>>>> 519321477a37764c0b95076d91d80f5238284af3
-//>>>>>>> Stashed changes
-    
-    CGEventPost(kCGSessionEventTap, scrollEvent);
-    CFRelease(scrollEvent);
     
     
 #pragma mark Other
     
-    _previousPhase = _scrollPhase;
+    if (_scrollPhase == kMFPhaseEnd) {
+        CVDisplayLinkStop(displayLink);
+        return 0;
+    }
+    
+    if (_scrollPhase == kMFPhaseStart) {
+        _scrollPhase = kMFPhaseWheel;
+    }
+//    _previousPhase = _scrollPhase;
     
     
     

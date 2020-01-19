@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TouchSimulator : NSObject
 + (void)SBFFakeSwipe:(TLInfoSwipeDirection)dir;
++ (void)postEventWithMagnification:(double)magnification phase:(IOHIDEventPhaseBits)phase;
 @end
 
 NS_ASSUME_NONNULL_END

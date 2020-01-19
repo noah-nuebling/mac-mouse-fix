@@ -408,10 +408,10 @@
 		4F32E18D231C50A100199A11 /* Remap */ = {
 			isa = PBXGroup;
 			children = (
-				4F32E190231C50A100199A11 /* MouseInputReceiver.h */,
-				4F32E193231C50A100199A11 /* MouseInputReceiver.m */,
 				4F32E191231C50A100199A11 /* ModifierInputReceiver.h */,
 				4F32E18F231C50A100199A11 /* ModifierInputReceiver.m */,
+				4F32E190231C50A100199A11 /* MouseInputReceiver.h */,
+				4F32E193231C50A100199A11 /* MouseInputReceiver.m */,
 				4F32E192231C50A100199A11 /* InputParser.h */,
 				4F32E18E231C50A100199A11 /* InputParser.m */,
 			);

@@ -18,7 +18,8 @@ typedef enum {
 
 + (void)load_Manual;
 
-+ (void)setHorizontalScroll:(BOOL)B;
++ (void)horizontalScrolling:(BOOL)B;
++ (void)magnificationScrolling:(BOOL)B;
 + (void)temporarilyDisable:(BOOL)B;
 
 + (void)configureWithPxPerStep:(int)px

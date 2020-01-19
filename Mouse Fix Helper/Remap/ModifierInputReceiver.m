@@ -37,9 +37,15 @@ CGEventRef Handle_ModifierChanged(CGEventTapProxy proxy, CGEventType type, CGEve
     CGEventFlags flags = CGEventGetFlags(event);
     
     if (flags & kCGEventFlagMaskShift) {
-        [SmoothScroll setHorizontalScroll:TRUE];
+        [SmoothScroll horizontalScrolling:YES];
     } else {
-        [SmoothScroll setHorizontalScroll:FALSE];
+        [SmoothScroll horizontalScrolling:NO];
+    }
+    
+    if (flags & kCGEventFlagMaskCommand) {
+        [SmoothScroll magnificationScrolling:YES];
+    } else {
+        [SmoothScroll magnificationScrolling:NO];
     }
     
     /*
