@@ -32,6 +32,8 @@ static void setupModifierKeyCallback() {
     CFRelease(runLoopSource);
 }
 
+
+
 CGEventRef Handle_ModifierChanged(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
     CGEventFlags flags = CGEventGetFlags(event);

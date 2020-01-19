@@ -103,7 +103,19 @@ CGEventRef Handle_MouseEvent_CGEvent(CGEventTapProxy proxy, CGEventType type, CG
         }
         
         if ( (3 <= currentButton) && (currentButton <= 5) ) {
-            
+//            if (currentButton == 4) {
+//                if (currentButtonState) {
+//                    [SmoothScroll magnificationScrolling:YES];
+//                } else {
+//                    [SmoothScroll magnificationScrolling:NO];
+//                }
+//            } else if (currentButton == 5) {
+//                if (currentButtonState) {
+//                    [SmoothScroll horizontalScrolling:YES];
+//                } else {
+//                    [SmoothScroll horizontalScrolling:NO];
+//                }
+//            }
             CGEventRef eventPass = [InputParser parse:currentButton state:currentButtonState event:event];
             // this doesn't really make sense - passing through events is never needed except when there are no remaps at all. It also sometimes passes through events, when releasing a button after a long press, which doesn't make sense but which also doesn't break anything
             return eventPass;

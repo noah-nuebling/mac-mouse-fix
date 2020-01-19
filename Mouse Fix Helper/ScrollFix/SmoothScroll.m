@@ -261,8 +261,6 @@ static void resetDynamicGlobals() {
     } else if (!_magnificationModifierIsPressed && B) {
 //        if (_scrollPhase == kMFPhaseMomentum || _scrollPhase == kMFPhaseWheel) {
             [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseBegan];
-//            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseBegan];
-//            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseEnded];
 //        }
     }
     _magnificationModifierIsPressed = B;
@@ -533,24 +531,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 # pragma mark Send Event
     
     if (_magnificationModifierIsPressed) {
-        
-        if (_scrollPhase == kMFPhaseStart) {
-//            NSLog(@"Start Zoom");
-//
-//            [TouchSimulator postEventWithMagnification:_pixelsToScroll/1000.0 phase:kIOHIDEventPhaseBegan];
-//            [TouchSimulator postEventWithMagnification:_pixelsToScroll/1000.0 phase:kIOHIDEventPhaseChanged];
-//            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseEnded];
-        } else if (_scrollPhase == kMFPhaseEnd) {
-//            NSLog(@"End Zoom");
-//            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseEnded];
-//            [TouchSimulator postEventWithMagnification:0 phase:kIOHIDEventPhaseBegan];
-//            [TouchSimulator postEventWithMagnification:0 phase:kIOHIDEventPhaseEnded];
-        } else {
-            NSLog(@"Do Zoom");
-//            [TouchSimulator postEventWithMagnification:_pixelsToScroll/1000.0 phase:kIOHIDEventPhaseBegan];
-            [TouchSimulator postEventWithMagnification:_pixelsToScroll/1000.0 phase:kIOHIDEventPhaseChanged];
-//            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseEnded];
-        }
+        [TouchSimulator postEventWithMagnification:-_pixelsToScroll/800.0 phase:kIOHIDEventPhaseChanged];
     } else {
         
         CGEventRef scrollEvent = CGEventCreateScrollWheelEvent(_eventSource, kCGScrollEventUnitPixel, 1, 0);
