@@ -82,7 +82,7 @@ double          _consecutiveScrollSwipeMaxIntervall =   0;
 // wheel phase
 static int64_t  _pxStepSize;
 static double   _msPerStep;
-static int      _scrollDirection;
+static int      _scrollDirection; // TODO: Make this type MFScrollDirection enumeration where kMFinverted = -1 and kMFnormal = 1 or sth like that.
 static double   _accelerationForScrollQueue;
 // momentum phase
 static double   _frictionCoefficient;
@@ -150,7 +150,7 @@ static void resetDynamicGlobals() {
     
     _nOfOnePixelScrollsMax              =   2;
     
-    _fastScrollExponentialBase          =   1.05; //1.125 //1.0625 // 1.09375
+    _fastScrollExponentialBase          =   1.05; // 1.05 //1.125 //1.0625 // 1.09375
     _scrollSwipeThreshold_Ticks        =   4; // 3
     _fastScrollThreshold_Swipes        =   3;
     _consecutiveScrollTickMaxIntervall     =   0.13; // == _msPerStep/1000 // oldval:0.03

@@ -11,6 +11,27 @@
 
 @implementation ScrollUtility
 
+
+/// Creates a vertical scroll event with a line delta value of 1 and a pixel value of `lineHeight`
++ (CGEventRef)normalizedEventWithPixelValue:(int)lineHeight {
+    // invert vertical
+    CGEventRef event = CGEventCreateScrollWheelEvent(NULL, kCGScrollEventUnitPixel, 1, 0);
+    CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, 1);
+    CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1, lineHeight);
+    CGEventSetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1, lineHeight);
+    
+    NSLog(@"Normalized scroll event values:");
+    NSLog(@"%lld",CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1));
+    NSLog(@"%lld",CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1));
+    NSLog(@"%f",CGEventGetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1));
+    
+    return event;
+}
+
+
+/// Inverts the diection of a given scroll event if dir is -1.
+/// @param event Event to be inverted
+/// @param dir Either 1 or -1. 1 Will leave the event unchanged.
 + (CGEventRef)invertScrollEvent:(CGEventRef)event direction:(int)dir {
     // invert vertical
     long long line1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);

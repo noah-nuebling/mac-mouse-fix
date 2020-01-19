@@ -3,9 +3,9 @@
 ## 0.9.2 
 (Not yet released)
 
-- When you hold command while scrolling Mac Mouse Fix will now let the computer think that you're performing a pinch to zoom gesture on a trackpad.  This means ultra smooth zooming almost everywhere! Working in Pro Apps like Sketch, Photoshop, or Logic Pro X has just become way better!
+- Amazingly smooth scroll wheel zooming! When you hold command while scrolling, Mac Mouse Fix will now let the computer think that you're performing a pinch to zoom gesture on a trackpad.  Working in pro apps like Sketch, Photoshop, or Logic Pro X has just become way better! 
 - Fixed compatibility with 10.11 El Capitan.
-- Added light acceleration to scrolling in order to make it feel even more responsive!
+- Added light acceleration to scrolling in order to make it feel even more responsive.
 - Added 'Hold Middle Mouse Button to Look Up' option, which was removed in 0.9.1, back in.
 - Various small improvements.
 
