@@ -69,6 +69,14 @@
 				<false/>
 			</dict>
 		</dict>
+		<key>com.apple.Preview</key>
+		<dict>
+			<key>ScrollSettings</key>
+			<dict>
+				<key>enabled</key>
+				<false/>
+			</dict>
+		</dict>
 	</dict>
 </dict>
 </plist>

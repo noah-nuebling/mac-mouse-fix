@@ -182,7 +182,7 @@ static void resetDynamicGlobals() {
     } else {
         if (_isRunning == TRUE) {
             [SmoothScroll stop];
-            [ModifierInputReceiver stop];
+//            [ModifierInputReceiver stop]; // TODO: TODO: Stop ModifierInputReceiver when appropriate (After sorting out activity states of SmoothScroll.m)
         }
     }
 }
@@ -252,6 +252,7 @@ static void resetDynamicGlobals() {
     _horizontalScrollModifierIsPressed = B;
 }
 + (void)magnificationScrolling:(BOOL)B {
+    
     if (_magnificationModifierIsPressed && !B) {
 //        if (_scrollPhase != kMFPhaseEnd) {
             [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseEnded];
@@ -324,7 +325,12 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         if (_scrollDirection == -1) {
             event = [ScrollUtility invertScrollEvent:event direction:_scrollDirection];
         }
-        return event;
+        if (_magnificationModifierIsPressed) { //TODO: TODO: Consider acitvating displayLink to send magnification events instead (After sorting out activity states of SmoothScroll.m)
+            [TouchSimulator postEventWithMagnification:CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1)/200.0 phase:kIOHIDEventPhaseChanged];
+            return nil;
+        } else {
+            return event;
+        }
     }
 
     // check if Scrolling Direction changed
@@ -437,7 +443,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 
             _consecutiveScrollSwipeCounter  += 1;
             [_consecutiveScrollSwipeTimer invalidate];
-            dispatch_async(dispatch_get_main_queue(), ^{ // TODO: is executing on the main thread here necessary / useful?
+            dispatch_async(dispatch_get_main_queue(), ^{ // TODO: TODO: is executing on the main thread here necessary / useful?
                 _consecutiveScrollSwipeTimer = [NSTimer scheduledTimerWithTimeInterval:_consecutiveScrollSwipeMaxIntervall target:[SmoothScroll class] selector:@selector(Handle_ConsecutiveScrollSwipeCallback:) userInfo:NULL repeats:NO];
             });
         }
@@ -518,7 +524,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         
     }
     
-    if (abs(_pixelsToScroll) == 1) { // TODO: Why is this outside of the momentum phase if block
+    if (abs(_pixelsToScroll) == 1) { // TODO: TODO: Why is this outside of the momentum phase if block
         _onePixelScrollsCounter += 1;
         if (_onePixelScrollsCounter > _nOfOnePixelScrollsMax) {
             _scrollPhase = kMFPhaseEnd;
