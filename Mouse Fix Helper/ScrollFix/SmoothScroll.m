@@ -283,7 +283,7 @@ static void resetDynamicGlobals() {
 static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
     
-    NSLog(@"scrollPhase: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase));
+//    NSLog(@"scrollPhase: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase));
 //    NSLog(@"momentumPhase: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventMomentumPhase));
     
     
@@ -531,18 +531,19 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 # pragma mark Send Event
     
     if (_magnificationModifierIsPressed) {
-        [TouchSimulator postEventWithMagnification:-_pixelsToScroll/800.0 phase:kIOHIDEventPhaseChanged];
+        [TouchSimulator postEventWithMagnification:_pixelsToScroll/800.0 phase:kIOHIDEventPhaseChanged];
     } else {
         
         CGEventRef scrollEvent = CGEventCreateScrollWheelEvent(_eventSource, kCGScrollEventUnitPixel, 1, 0);
         // CGEventSourceSetPixelsPerLine(_eventSource, 1);
         // it might be a cool idea to diable scroll acceleration and then try to make the scroll events line based (kCGScrollEventUnitPixel)
         
-        if (_scrollPhase >= kMFPhaseMomentum) {
-            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, _scrollPhase >> 1); // shifting bits so that values match up with appropriate NSEventPhase values.
-        } else {
-            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, _scrollPhase);
-        }
+//        if (_scrollPhase >= kMFPhaseMomentum) {
+//            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, _scrollPhase >> 1); // shifting bits so that values match up with appropriate NSEventPhase values.
+//        } else {
+//            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, _scrollPhase);
+//        }
+        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 0);
         CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase, 0);
         
         
