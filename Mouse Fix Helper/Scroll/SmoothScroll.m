@@ -333,7 +333,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         
         if (mouseMoved) {
             //set app overrides
-            [ScrollControl setConfigVariablesForActiveApp];
+            [ConfigFileInterface_HelperApp setProgramStateToConfig];
             
             // set diplaylink to the display that is actally being scrolled - not sure if this is necessary, because having the displaylink at 30fps on a 30fps display looks just as horrible as having the display link on 60fps, if not worse
             @try {

@@ -32,10 +32,9 @@ typedef enum {
 + (void)setIsSmoothEnabled: (BOOL)B;
 
 + (int)scrollDirection;
++ (void)setScrollDirection:(int)dir;
 
 + (void)decide;
-
-+ (void)setConfigVariablesForActiveApp;
 
 @end
 

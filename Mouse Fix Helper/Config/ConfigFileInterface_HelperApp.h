@@ -16,6 +16,7 @@
 + (void)load_Manual;
 
 + (void)reactToConfigFileChange;
++ (void)setProgramStateToConfig;
 + (void)repairConfigFile:(NSString *)info;
 
 

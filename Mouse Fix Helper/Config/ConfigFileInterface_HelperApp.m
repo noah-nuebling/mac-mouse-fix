@@ -19,6 +19,12 @@
 
 @implementation ConfigFileInterface_HelperApp
 
+#pragma mark Globals
+
+static NSString *_bundleIdentifierOfAppWhichCausesOverride;
+
+#pragma mark - Interface
+
 static NSMutableDictionary *config;
 
 + (void)load_Manual {
@@ -35,10 +41,85 @@ static NSMutableDictionary *config;
 }
 
 + (void)reactToConfigFileChange {
+    
     fillConfigFromFile();
-    updateScrollSettings();
+    
+    [ConfigFileInterface_HelperApp setProgramStateToConfig];
 }
 
+/// Modify the programs state according to parameters from this class' config property
++ (void)setProgramStateToConfig {
+    
+    // get App under mouse pointer
+        
+        
+        
+    //CFTimeInterval ts = CACurrentMediaTime();
+        
+        
+        // 1. Even slower
+        
+    //    CGEventRef fakeEvent = CGEventCreate(NULL);
+    //    CGPoint mouseLocation = CGEventGetLocation(fakeEvent);
+    //    CFRelease(fakeEvent);
+        
+    //    NSInteger winNUnderMouse = [NSWindow windowNumberAtPoint:(NSPoint)mouseLocation belowWindowWithWindowNumber:0];
+    //    CFArrayRef windowList = CGWindowListCopyWindowInfo(kCGWindowListExcludeDesktopElements | kCGWindowListOptionOnScreenOnly, kCGNullWindowID);
+    ////    NSLog(@"windowList: %@", windowList);
+    //    int windowPID = 0;
+    //    for (int i = 0; i < CFArrayGetCount(windowList); i++) {
+    //        CFDictionaryRef w = CFArrayGetValueAtIndex(windowList, i);
+    //        int winN;
+    //        CFNumberGetValue(CFDictionaryGetValue(w, CFSTR("kCGWindowNumber")), kCFNumberIntType, &winN);
+    //        if (winN == winNUnderMouse) {
+    //            CFNumberGetValue(CFDictionaryGetValue(w, CFSTR("kCGWindowOwnerPID")), kCFNumberIntType, &windowPID);
+    //        }
+    //    }
+    //    NSRunningApplication *appUnderMousePointer = [NSRunningApplication runningApplicationWithProcessIdentifier:windowPID];
+    //    NSString *bundleIdentifierOfScrolledApp_New = appUnderMousePointer.bundleIdentifier;
+      
+        
+        // 2. very slow - but basically the way MOS does it, and MOS is fast somehow
+        
+    //    CGEventRef fakeEvent = CGEventCreate(NULL);
+    //    CGPoint mouseLocation = CGEventGetLocation(fakeEvent);
+    //    CFRelease(fakeEvent);
+
+    //    if (_previousMouseLocation.x == mouseLocation.x && _previousMouseLocation.y == mouseLocation.y) {
+    //        return;
+    //    }
+    //    _previousMouseLocation = mouseLocation;
+    //
+    //    AXUIElementRef elementUnderMousePointer;
+    //    AXUIElementCopyElementAtPosition(_systemWideAXUIElement, mouseLocation.x, mouseLocation.y, &elementUnderMousePointer);
+    //    pid_t elementUnderMousePointerPID;
+    //    AXUIElementGetPid(elementUnderMousePointer, &elementUnderMousePointerPID);
+    //    NSRunningApplication *appUnderMousePointer = [NSRunningApplication runningApplicationWithProcessIdentifier:elementUnderMousePointerPID];
+    //
+    //    @try {
+    //        CFRelease(elementUnderMousePointer);
+    //    } @finally {}
+    //    NSString *bundleIdentifierOfScrolledApp_New = appUnderMousePointer.bundleIdentifier;
+        
+        
+        
+    //     3. fast, but only get info about frontmost application
+        
+        NSString *bundleIdentifierOfActiveApp = [NSWorkspace.sharedWorkspace frontmostApplication].bundleIdentifier;
+        
+        
+        
+        // 4. swift copied from MOS - should be fast and gathers info on app under mouse pointer - I couldn't manage to import the Swift code though :/
+        
+    //    CGEventRef fakeEvent = CGEventCreate(NULL);
+    //    NSString *bundleIdentifierOfScrolledApp_New = [_appOverrides getBundleIdFromMouseLocation:fakeEvent];
+    //    CFRelease(fakeEvent);
+    
+    [ConfigFileInterface_HelperApp updateScrollSettingsWithActiveApp:bundleIdentifierOfActiveApp];
+}
+
+
+/// Load contents of config.plist file into this class' config property
 static void fillConfigFromFile() {
     
     NSBundle *thisBundle = [NSBundle mainBundle];
@@ -67,23 +148,152 @@ static void fillConfigFromFile() {
     }
 }
 
-static void updateScrollSettings() {
-//    NSDictionary *config = ConfigFileInterface_HelperApp.config;
-//    NSDictionary *scrollSettings = [config objectForKey:@"ScrollSettings"];
+//static void updateScrollSettings() {
+////    NSDictionary *config = ConfigFileInterface_HelperApp.config;
+////    NSDictionary *scrollSettings = [config objectForKey:@"ScrollSettings"];
+////    
+////        NSArray *values = [scrollSettings objectForKey:@"values"];
+////        NSNumber *px = [values objectAtIndex:0];
+////        NSNumber *ms = [values objectAtIndex:1];
+////        NSNumber *f = [values objectAtIndex:2];
+////        NSNumber *d = [values objectAtIndex:3];
+//        
+////        [SmoothScroll configureWithPxPerStep:px.intValue msPerStep:ms.intValue friction:f.floatValue scrollDirection:d.intValue];
 //    
-//        NSArray *values = [scrollSettings objectForKey:@"values"];
-//        NSNumber *px = [values objectAtIndex:0];
-//        NSNumber *ms = [values objectAtIndex:1];
-//        NSNumber *f = [values objectAtIndex:2];
-//        NSNumber *d = [values objectAtIndex:3];
+////    ScrollControl.isSmoothEnabled = [[scrollSettings objectForKey:@"enabled"] boolValue];
+//    
+//    // CLEAN: I think that all the stuff above is probably not necessary, because decide calls setConfigVariablesForActiveApp(), which should do also set apropriate scroll settings.
+//    [SmoothScroll decide];
+//    
+//}
+
+/// will apply app specific overrides.
+/// Will only do something, if the active app has changed since the last time that this function was called
++ (void)updateScrollSettingsWithActiveApp:(NSString *)activeAppBundleIdentifier {
+    
+    
+
+    
+    
+    // if app under mouse pointer changed, adjust settings
+    
+    if ([_bundleIdentifierOfAppWhichCausesOverride isEqualToString:activeAppBundleIdentifier] == FALSE) {
         
-//        [SmoothScroll configureWithPxPerStep:px.intValue msPerStep:ms.intValue friction:f.floatValue scrollDirection:d.intValue];
+        
+        NSDictionary *config = [ConfigFileInterface_HelperApp config];
+        
+
+        // get default settings
+        
+            NSDictionary *defaultScrollSettings = [config objectForKey:@"ScrollSettings"];
+            
+            // top level
+            
+                // _disableAll = [[defaultScrollSettings objectForKey:@"disableAll"] boolValue]; // this is currently unused. Could be used as a killswitch for all scrolling interception
+                ScrollControl.scrollDirection = [[defaultScrollSettings objectForKey:@"direction"] intValue];
+                ScrollControl.isSmoothEnabled = [[defaultScrollSettings objectForKey:@"smooth"] boolValue];
+            
+            // smoothParameters
+            
+                NSDictionary *p = [defaultScrollSettings objectForKey:@"smoothParameters"];
+                int     sp1     =   [[p objectForKey:@"pxPerStep"] intValue];
+                int     sp2     =   [[p objectForKey:@"msPerStep"] intValue];
+                float   sp3     =   [[p objectForKey:@"friction"] floatValue];
+                float   sp4     =   [[p objectForKey:@"frictionDepth"] floatValue];
+                float   sp5     =   [[p objectForKey:@"acceleration"] floatValue];
+                int     sp6     =   [[p objectForKey:@"onePixelScrollsLimit"] intValue];
+                float   sp7     =   [[p objectForKey:@"fastScrollExponentialBase"] floatValue];
+                int     sp8     =   [[p objectForKey:@"fastScrollThreshold_inSwipes"] intValue];
+                int     sp9     =   [[p objectForKey:@"scrollSwipeThreshold_inTicks"] intValue];
+                float   sp10    =   [[p objectForKey:@"consecutiveScrollTickMaxIntervall"] floatValue];
+                float   sp11    =   [[p objectForKey:@"consecutiveScrollSwipeMaxIntervall"] floatValue];
+        
+            // roughParameters
+            
+                // nothing here yet
+            
+        
+        // get app specific settings
+        
+        // TODO: Continue here – 30. March 2020
+        
+            NSDictionary *overrides = [config objectForKey:@"AppOverrides"];
+            NSDictionary *appOverrideScrollSettings;
+            for (NSString *b in overrides.allKeys) {
+                if ([activeAppBundleIdentifier containsString:b]) {
+                    appOverrideScrollSettings = [[overrides objectForKey: b] objectForKey:@"ScrollSettings"];
+                }
+            }
+            
+            // If custom overrides for scrolled app exist, apply them
+        
+            if (appOverrideScrollSettings) {
+                
+                // top level
+                
+                    // Syntax explanation:
+                    // x = y ? x : y === if y is not nil then x = y
+                
+                    int dir = [[appOverrideScrollSettings objectForKey:@"direction"] intValue];
+                    ScrollControl.scrollDirection = dir ? ScrollControl.scrollDirection : dir;
+                    int sm = [[appOverrideScrollSettings objectForKey:@"smooth"] boolValue];
+                    ScrollControl.isSmoothEnabled = sm ? ScrollControl.isSmoothEnabled : sm;
+                
+                    // smoothParameters
+                    
+                    NSDictionary *p = [appOverrideScrollSettings objectForKey:@"smoothParameters"];
+                    if (p) {
+                        int     osp1     =   [[p objectForKey:@"pxPerStep"] intValue];
+                        int     osp2     =   [[p objectForKey:@"msPerStep"] intValue];
+                        float   osp3     =   [[p objectForKey:@"friction"] floatValue];
+                        float   osp4     =   [[p objectForKey:@"frictionDepth"] floatValue];
+                        float   osp5     =   [[p objectForKey:@"acceleration"] floatValue];
+                        int     osp6     =   [[p objectForKey:@"onePixelScrollsLimit"] intValue];
+                        float   osp7     =   [[p objectForKey:@"fastScrollExponentialBase"] floatValue];
+                        int     osp8     =   [[p objectForKey:@"fastScrollThreshold_inSwipes"] intValue];
+                        int     osp9     =   [[p objectForKey:@"scrollSwipeThreshold_inTicks"] intValue];
+                        float   osp10    =   [[p objectForKey:@"consecutiveScrollTickMaxIntervall"] floatValue];
+                        float   osp11    =   [[p objectForKey:@"consecutiveScrollSwipeMaxIntervall"] floatValue];
+                        
+                        sp1 = osp1 ? sp1 : osp1;
+                        sp2 = osp2 ? sp2 : osp2;
+                        sp3 = osp3 ? sp3 : osp3;
+                        sp4 = osp4 ? sp4 : osp4;
+                        sp5 = osp5 ? sp5 : osp5;
+                        sp6 = osp6 ? sp6 : osp6;
+                        sp7 = osp7 ? sp7 : osp7;
+                        sp8 = osp8 ? sp8 : osp8;
+                        sp9 = osp9 ? sp9 : osp9;
+                        sp10 = osp10 ? sp10 : osp10;
+                        sp11 = osp11 ? sp11 : osp11;
+                        
+                    }
+                
+                    // roughParameters
+                    
+                        // nothing here yet
+                    
+                
+
+            }
+        
+        [SmoothScroll configureWithPxPerStep:sp1
+                                   msPerStep:sp2
+                                    friction:sp3
+                               fricitonDepth:sp4
+                                acceleration:sp5
+                        onePixelScrollsLimit:sp6
+                   fastScrollExponentialBase:sp7
+                fastScrollThreshold_inSwipes:sp8
+                scrollSwipeThreshold_inTicks:sp9
+          consecutiveScrollSwipeMaxIntervall:sp10
+           consecutiveScrollTickMaxIntervall:sp11];
+        
+        [ScrollControl decide];
+    }
+
     
-//    ScrollControl.isSmoothEnabled = [[scrollSettings objectForKey:@"enabled"] boolValue];
-    
-    // CLEAN: I think that all the stuff above is probably not necessary, because decide calls setConfigVariablesForActiveApp(), which should do also set apropriate scroll settings.
-    [SmoothScroll decide];
-    
+//    NSLog(@"override bench: %f", CACurrentMediaTime() - ts);
 }
 
 + (void) repairConfigFile:(NSString *)info {
@@ -127,4 +337,5 @@ static void setupFSEventStreamCallback() {
     BOOL EventStreamStarted = FSEventStreamStart(remapsFileEventStream);
     NSLog(@"EventStreamStarted: %d", EventStreamStarted);
 }
+
 @end
