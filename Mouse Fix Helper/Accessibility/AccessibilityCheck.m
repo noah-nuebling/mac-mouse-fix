@@ -14,7 +14,7 @@
 #import "../DeviceManager/DeviceManager.h"
 #import "../MessagePort/MessagePort_HelperApp.h"
 #import "../Config/ConfigFileInterface_HelperApp.h"
-#import "../ScrollFix/SmoothScroll.h"
+#import "../Scroll/SmoothScroll.h"
 
 @implementation AccessibilityCheck
 
@@ -32,6 +32,7 @@
     } else {
         [DeviceManager load_Manual];
         [ConfigFileInterface_HelperApp load_Manual];
+        [ScrollControl load_Manual];
         [SmoothScroll load_Manual];
         
     }

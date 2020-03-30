@@ -18,6 +18,6 @@
                      msPerStep:(int)ms
                       friction:(float)f;
 
-+ (void)startOrStopDecide;
++ (void)decide;
 @end
 

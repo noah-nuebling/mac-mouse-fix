@@ -8,32 +8,27 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "ScrollControl.h"
 
-@interface SmoothScroll : NSObject
-
-typedef enum {
-    kMFStandardScrollDirection      =   1,
-    kMFInvertedScrollDirection      =  -1
-} MFScrollDirection;
+@interface SmoothScroll : ScrollControl
 
 + (void)load_Manual;
-
-+ (void)horizontalScrolling:(BOOL)B;
-+ (void)magnificationScrolling:(BOOL)B;
-+ (void)temporarilyDisable:(BOOL)B;
 
 + (void)configureWithPxPerStep:(int)px
                      msPerStep:(int)ms
                       friction:(float)f
-               scrollDirection:(MFScrollDirection)d;
+                 fricitonDepth:(float)fd
+                  acceleration:(float)acc
+          onePixelScrollsLimit:(int)opl
+     fastScrollExponentialBase:(float)fs_exp
+  fastScrollThreshold_inSwipes:(int)fs_thr
+  scrollSwipeThreshold_inTicks:(int)sw_thr
+consecutiveScrollSwipeMaxIntervall:(float)sw_int
+consecutiveScrollTickMaxIntervall:(float)ti_int;
 
-+ (void)startOrStopDecide;
-
-+ (BOOL)isEnabled;
-+ (void)setIsEnabled: (BOOL)B;
-
++ (void)start;
++ (void)stop;
 + (BOOL)isRunning;
-
 
 + (void)Handle_ConsecutiveScrollTickCallback:(NSTimer *)timer;
 + (void)Handle_ConsecutiveScrollSwipeCallback:(NSTimer *)timer;

@@ -135,7 +135,7 @@ static int      _onePixelScrollMax     = 10;
 }
 
 
-+ (void)startOrStopDecide {
++ (void)decide {
     if (DeviceManager.relevantDevicesAreAttached && ConfigFileMonitor.momentumScrollIsEnabled) {
         if (_isRunning == FALSE) {
             

@@ -13,6 +13,7 @@
 #import "ConfigFileInterface_HelperApp.h"
 #import "AppDelegate.h"
 
+#import "ScrollControl.h"
 #import "SmoothScroll.h"
 #import "MouseInputReceiver.h"
 
@@ -67,21 +68,21 @@ static void fillConfigFromFile() {
 }
 
 static void updateScrollSettings() {
-    NSDictionary *config = ConfigFileInterface_HelperApp.config;
-    NSDictionary *scrollSettings = [config objectForKey:@"ScrollSettings"];
+//    NSDictionary *config = ConfigFileInterface_HelperApp.config;
+//    NSDictionary *scrollSettings = [config objectForKey:@"ScrollSettings"];
+//    
+//        NSArray *values = [scrollSettings objectForKey:@"values"];
+//        NSNumber *px = [values objectAtIndex:0];
+//        NSNumber *ms = [values objectAtIndex:1];
+//        NSNumber *f = [values objectAtIndex:2];
+//        NSNumber *d = [values objectAtIndex:3];
+        
+//        [SmoothScroll configureWithPxPerStep:px.intValue msPerStep:ms.intValue friction:f.floatValue scrollDirection:d.intValue];
     
-        NSArray *values = [scrollSettings objectForKey:@"values"];
-        NSNumber *px = [values objectAtIndex:0];
-        NSNumber *ms = [values objectAtIndex:1];
-        NSNumber *f = [values objectAtIndex:2];
-        NSNumber *d = [values objectAtIndex:3];
+//    ScrollControl.isSmoothEnabled = [[scrollSettings objectForKey:@"enabled"] boolValue];
     
-        [SmoothScroll configureWithPxPerStep:px.intValue msPerStep:ms.intValue friction:f.floatValue scrollDirection:d.intValue];
-    
-    SmoothScroll.isEnabled = [[scrollSettings objectForKey:@"enabled"] boolValue];
-    
-    // CLEAN: I think that all the stuff above is probably not necessary, because startOrStopDecide calls setConfigVariablesForActiveApp(), which should do also set apropriate scroll settings.
-    [SmoothScroll startOrStopDecide];
+    // CLEAN: I think that all the stuff above is probably not necessary, because decide calls setConfigVariablesForActiveApp(), which should do also set apropriate scroll settings.
+    [SmoothScroll decide];
     
 }
 

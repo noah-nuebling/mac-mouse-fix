@@ -8,8 +8,9 @@
 //
 
 #import "ModifierInputReceiver.h"
-#import "SmoothScroll.h"
+#import "ScrollControl.h"
 
+// TODO: Rename to ScrollModifierInputReceiver
 @implementation ModifierInputReceiver
 
 CFMachPortRef _eventTapKey;
@@ -39,15 +40,15 @@ CGEventRef Handle_ModifierChanged(CGEventTapProxy proxy, CGEventType type, CGEve
     CGEventFlags flags = CGEventGetFlags(event);
     
     if (flags & kCGEventFlagMaskShift) {
-        [SmoothScroll horizontalScrolling:YES];
+        ScrollControl.horizontalScrolling = YES;
     } else {
-        [SmoothScroll horizontalScrolling:NO];
+        ScrollControl.horizontalScrolling = NO;
     }
     
     if (flags & kCGEventFlagMaskCommand) {
-        [SmoothScroll magnificationScrolling:YES];
+        ScrollControl.magnificationScrolling = YES;
     } else {
-        [SmoothScroll magnificationScrolling:NO];
+        ScrollControl.magnificationScrolling = NO;
     }
     
     /*

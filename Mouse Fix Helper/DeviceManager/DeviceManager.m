@@ -12,7 +12,7 @@
 #import <IOKit/hid/IOHIDDevice.h>
 #import <IOKit/hid/IOHIDKeys.h>
 
-#import "SmoothScroll.h"
+#import "ScrollControl.h"
 #import "MouseInputReceiver.h"
 #import "ConfigFileInterface_HelperApp.h"
 #import "../PointerSpeed/PointerSpeed.h"
@@ -132,8 +132,8 @@ static void Handle_DeviceRemovalCallback(void *context, IOReturn result, void *s
     }
     CFRelease(devices);
     
-    [SmoothScroll startOrStopDecide];
-    [MouseInputReceiver startOrStopDecide];
+    [ScrollControl decide];
+    [MouseInputReceiver decide];
 }
 
 static void Handle_DeviceMatchingCallback (void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
@@ -156,8 +156,8 @@ static void Handle_DeviceMatchingCallback (void *context, IOReturn result, void 
         registerDeviceButtonInputCallback_InInputReceiverClass(device);
         
         _relevantDevicesAreAttached = TRUE;
-        [SmoothScroll startOrStopDecide];
-        [MouseInputReceiver startOrStopDecide];
+        [ScrollControl decide];
+        [MouseInputReceiver decide];
     }
     
 

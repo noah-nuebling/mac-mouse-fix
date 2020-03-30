@@ -56,6 +56,8 @@
 		4FD67DE5211CC9000095A9A5 /* MouseFix.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD67DE3211CC9000095A9A5 /* MouseFix.xib */; settings = {ASSET_TAGS = (0, ); }; };
 		4FD67DF3211CDD2D0095A9A5 /* Mouse Fix Helper.app in Copy Helper */ = {isa = PBXBuildFile; fileRef = 4FCECD8021092354001F1078 /* Mouse Fix Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4FD9CB1322F7D48D0090DB98 /* Hyperlink.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FD9CB1122F7D48D0090DB98 /* Hyperlink.h */; };
+		4FECC88D2431DCCD001A3C4B /* RoughScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FECC88C2431DCCD001A3C4B /* RoughScroll.m */; };
+		4FECC8902431DCDF001A3C4B /* ScrollControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FECC88F2431DCDF001A3C4B /* ScrollControl.m */; };
 		4FEE4B0A233D933600011CEA /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4FEE4B09233D933600011CEA /* AppIcon.icns */; };
 		4FF3B2BD23276082009E8A8E /* Uninstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF3B2BC23276082009E8A8E /* Uninstaller.m */; };
 		4FF3B2C0232788AA009E8A8E /* HelperServices_HelperApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF3B2BF232788AA009E8A8E /* HelperServices_HelperApp.m */; };
@@ -237,6 +239,10 @@
 		4FD9CB1222F7D48D0090DB98 /* Hyperlink.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Hyperlink.m; sourceTree = "<group>"; };
 		4FDBC57D234F7EDF00A46517 /* Mouse Fix HelperRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Mouse Fix HelperRelease.entitlements"; sourceTree = "<group>"; };
 		4FDBC59A234F80C500A46517 /* Mouse Fix UpdaterRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Mouse Fix UpdaterRelease.entitlements"; sourceTree = "<group>"; };
+		4FECC88B2431DCCD001A3C4B /* RoughScroll.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RoughScroll.h; sourceTree = "<group>"; };
+		4FECC88C2431DCCD001A3C4B /* RoughScroll.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RoughScroll.m; sourceTree = "<group>"; };
+		4FECC88E2431DCDF001A3C4B /* ScrollControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollControl.h; sourceTree = "<group>"; };
+		4FECC88F2431DCDF001A3C4B /* ScrollControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollControl.m; sourceTree = "<group>"; };
 		4FEE4B09233D933600011CEA /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
 		4FF3B2BB23276082009E8A8E /* Uninstaller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Uninstaller.h; sourceTree = "<group>"; };
 		4FF3B2BC23276082009E8A8E /* Uninstaller.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Uninstaller.m; sourceTree = "<group>"; };
@@ -383,6 +389,12 @@
 		4F32E17D231C509200199A11 /* Scroll */ = {
 			isa = PBXGroup;
 			children = (
+				4FECC88E2431DCDF001A3C4B /* ScrollControl.h */,
+				4FECC88F2431DCDF001A3C4B /* ScrollControl.m */,
+				4F32E191231C50A100199A11 /* ModifierInputReceiver.h */,
+				4F32E18F231C50A100199A11 /* ModifierInputReceiver.m */,
+				4FECC88B2431DCCD001A3C4B /* RoughScroll.h */,
+				4FECC88C2431DCCD001A3C4B /* RoughScroll.m */,
 				4F32E17E231C509200199A11 /* SmoothScroll.h */,
 				4F32E186231C509200199A11 /* SmoothScroll.m */,
 				4F1A20262348EC3D00B29037 /* ScrollUtility.h */,
@@ -408,8 +420,6 @@
 		4F32E18D231C50A100199A11 /* Remap */ = {
 			isa = PBXGroup;
 			children = (
-				4F32E191231C50A100199A11 /* ModifierInputReceiver.h */,
-				4F32E18F231C50A100199A11 /* ModifierInputReceiver.m */,
 				4F32E190231C50A100199A11 /* MouseInputReceiver.h */,
 				4F32E193231C50A100199A11 /* MouseInputReceiver.m */,
 				4F32E192231C50A100199A11 /* InputParser.h */,
@@ -852,8 +862,10 @@
 			files = (
 				4F32E195231C50A100199A11 /* ModifierInputReceiver.m in Sources */,
 				4F32E155231C420100199A11 /* MessagePort_HelperApp.m in Sources */,
+				4FECC8902431DCDF001A3C4B /* ScrollControl.m in Sources */,
 				4F1C968C231361EF00C3B9AE /* TouchEvents.c in Sources */,
 				4FD45A20231C7FB500F75C58 /* AccessibilityCheck.m in Sources */,
+				4FECC88D2431DCCD001A3C4B /* RoughScroll.m in Sources */,
 				4F32E18C231C509200199A11 /* SmoothScroll.m in Sources */,
 				4F32E157231C420100199A11 /* DeviceManager.m in Sources */,
 				4F1B7C1D23D3E6D60055C007 /* TouchSimulator.m in Sources */,

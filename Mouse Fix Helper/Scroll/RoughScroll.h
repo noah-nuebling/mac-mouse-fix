@@ -1,20 +1,21 @@
 //
 // --------------------------------------------------------------------------
-// MouseInputReceiver.h
+// RoughScroll.h
 // Created for: Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
-// Created by: Noah Nuebling in 2019
+// Created by: Noah Nuebling in 2020
 // Licensed under MIT
 // --------------------------------------------------------------------------
 //
 
 #import <Foundation/Foundation.h>
-#import <Cocoa/Cocoa.h>
-#import "IOKit/hid/IOHIDManager.h"
 
+NS_ASSUME_NONNULL_BEGIN
 
-@interface MouseInputReceiver : NSObject
+// Traditional, non-smooth scrolling.
 
-+ (void)decide;
-
-+ (void)Register_InputCallback_HID:(IOHIDDeviceRef)device;
+@interface RoughScroll : NSObject
++ (void)start;
++ (void)stop;
 @end
+
+NS_ASSUME_NONNULL_END

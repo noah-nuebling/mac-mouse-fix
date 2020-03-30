@@ -44,18 +44,6 @@
 # pragma mark properties
 
 
-// whenever relevantDevicesAreAttached or isEnabled are changed, MomentumScrolls class method startOrStopDecide is called. Start or stop decide will start / stop momentum scroll and set _isRunning
-
-static BOOL _isEnabled;
-+ (BOOL)isEnabled {
-
-    
-    return _isEnabled;
-}
-+ (void)setIsEnabled:(BOOL)B {
-    _isEnabled = B;
-}
-
 static BOOL _isRunning;
 + (BOOL)isRunning {
     return _isRunning;
@@ -74,15 +62,14 @@ typedef enum {
 
 // fast scroll
 double          _fastScrollExponentialBase          =   0;
-int             _scrollSwipeThreshold_Ticks        =   0;
-int             _fastScrollThreshold_Swipes        =   0;
+int             _scrollSwipeThreshold_inTicks        =   0;
+int             _fastScrollThreshold_inSwipes        =   0;
 double          _consecutiveScrollTickMaxIntervall  =   0;
 double          _consecutiveScrollSwipeMaxIntervall =   0;
 
 // wheel phase
 static int64_t  _pxStepSize;
 static double   _msPerStep;
-static int      _scrollDirection; // TODO: Make this type MFScrollDirection enumeration where kMFinverted = -1 and kMFnormal = 1 or sth like that.
 static double   _accelerationForScrollQueue;
 // momentum phase
 static double   _frictionCoefficient;
@@ -105,28 +92,20 @@ static NSTimer  *_consecutiveScrollSwipeTimer       =   NULL;
 // any phase
 static int32_t  _pixelsToScroll;
 static int      _scrollPhase;
-static BOOL     _horizontalScrollModifierIsPressed;
-static BOOL     _magnificationModifierIsPressed;
-static NSString *_bundleIdentifierOfAppWhichCausesOverride;
+static int _previousPhase;                            // which phase was active the last time that displayLinkCallback was called
 static CGDirectDisplayID *_displaysUnderMousePointer;
-static int _previousPhase;                              // which phase was active the last time that displayLinkCallback was called
 // wheel phase
 static int64_t  _pixelScrollQueue           =   0;
 static double   _msLeftForScroll            =   0;
     // scroll direction change
 static long long _previousScrollDeltaAxis1;
-    // (app overrides)
-static CGPoint _previousMouseLocation;
-static AXUIElementRef _systemWideAXUIElement;
-
 // momentum phase
 static double   _pxPerMsVelocity        =   0;
 static int      _onePixelScrollsCounter =   0;
 
 #pragma mark - Interface
 
-static void resetDynamicGlobals() {
-    _horizontalScrollModifierIsPressed    =   NO;
++ (void)resetDynamicGlobals {
     _scrollPhase                        =   kMFPhaseWheel;
     _pixelScrollQueue                   =   0;
     _msLeftForScroll                    =   0;
@@ -138,23 +117,34 @@ static void resetDynamicGlobals() {
 + (void)configureWithPxPerStep:(int)px
                      msPerStep:(int)ms
                       friction:(float)f
-               scrollDirection:(MFScrollDirection)d
+                 fricitonDepth:(float)fd
+                  acceleration:(float)acc
+          onePixelScrollsLimit:(int)opl
+     fastScrollExponentialBase:(float)fs_exp
+  fastScrollThreshold_inSwipes:(int)fs_thr
+  scrollSwipeThreshold_inTicks:(int)sw_thr
+consecutiveScrollSwipeMaxIntervall:(float)sw_int
+consecutiveScrollTickMaxIntervall:(float)ti_int
 {
     _pxStepSize                         =   px;
     _msPerStep                          =   ms;
     _frictionCoefficient                =   f;
-            _frictionDepth = 1; // TODO: Implement this in the config file.
-    _scrollDirection                    =   d;
+    _frictionDepth                      =   fd;
+    _accelerationForScrollQueue         =   acc;
     
-    _accelerationForScrollQueue               = 1.1;
+    // After opl frames of only scrolling 1 pixel, scrolling stops.
+    _nOfOnePixelScrollsMax              =   opl;
     
-    _nOfOnePixelScrollsMax              =   2;
-    
-    _fastScrollExponentialBase          =   1.05; // 1.05 //1.125 //1.0625 // 1.09375
-    _scrollSwipeThreshold_Ticks        =   4; // 3
-    _fastScrollThreshold_Swipes        =   3;
-    _consecutiveScrollTickMaxIntervall     =   0.13; // == _msPerStep/1000 // oldval:0.03
-    _consecutiveScrollSwipeMaxIntervall    =   0.5;
+    // How quickly fast scrolling gains speed.
+    _fastScrollExponentialBase          =   fs_exp; // 1.05 //1.125 //1.0625 // 1.09375
+    // If fs_thr consecutive swipes occur, fast scrolling is enabled.
+    _fastScrollThreshold_inSwipes       =   fs_thr;
+    // If sw_thr consecutive ticks occur, they are deemed a scroll-swipe.
+    _scrollSwipeThreshold_inTicks       =   sw_thr; // 3
+    // If more than sw_int seconds passes between two scrollwheel swipes, then they aren't deemed consecutive.
+    _consecutiveScrollSwipeMaxIntervall =   sw_int;
+    // If more than ti_int seconds passes between two scrollwheel ticks, then they aren't deemed consecutive.
+    _consecutiveScrollTickMaxIntervall  =   ti_int; // == _msPerStep/1000 // oldval:0.03
     
 }
 
@@ -162,31 +152,8 @@ static void resetDynamicGlobals() {
 + (void)load_Manual {
     [SmoothScroll start];
     [SmoothScroll stop];
-    
-    _systemWideAXUIElement = AXUIElementCreateSystemWide();
 //    _appOverrides = [AppOverrides new];
 }
-
-+ (void)startOrStopDecide {
-    
-    NSLog(@"Momentum start or stop");
-    
-    setConfigVariablesForActiveApp();
-    
-    if ([DeviceManager relevantDevicesAreAttached] && _isEnabled) {
-        if (_isRunning == FALSE) {
-            
-            [SmoothScroll start];
-            [ModifierInputReceiver start];
-        }
-    } else {
-        if (_isRunning == TRUE) {
-            [SmoothScroll stop];
-//            [ModifierInputReceiver stop]; // TODO: TODO: Stop ModifierInputReceiver when appropriate (After sorting out activity states of SmoothScroll.m)
-        }
-    }
-}
-    
 
 + (void)start {
     
@@ -194,7 +161,7 @@ static void resetDynamicGlobals() {
     
     _isRunning = TRUE;
     
-    resetDynamicGlobals();
+    [SmoothScroll resetDynamicGlobals];
     
     
     if (_eventTap == nil) {
@@ -248,37 +215,6 @@ static void resetDynamicGlobals() {
      CGDisplayRemoveReconfigurationCallback(Handle_displayReconfiguration, NULL);
 }
 
-+ (void)horizontalScrolling:(BOOL)B {
-    _horizontalScrollModifierIsPressed = B;
-}
-+ (void)magnificationScrolling:(BOOL)B {
-    
-    if (_magnificationModifierIsPressed && !B) {
-//        if (_scrollPhase != kMFPhaseEnd) {
-            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseEnded];
-//            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseBegan];
-//            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseEnded];
-//        }
-    } else if (!_magnificationModifierIsPressed && B) {
-//        if (_scrollPhase == kMFPhaseMomentum || _scrollPhase == kMFPhaseWheel) {
-            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseBegan];
-//        }
-    }
-    _magnificationModifierIsPressed = B;
-}
-
-+ (void)temporarilyDisable:(BOOL)B {
-    if (B) {
-        if (_isRunning) {
-            [SmoothScroll stop];
-        }
-    } else {
-        [SmoothScroll startOrStopDecide];
-    }
-}
-
-
-
 #pragma mark - Run Loop
 
 static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
@@ -311,27 +247,11 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
     Boolean mouseMoved = FALSE;
     CGPoint mouseLocation = CGEventGetLocation(event);
-    if (![ScrollUtility point:mouseLocation isAboutTheSameAs:_previousMouseLocation threshold:10]) {
+    if (![ScrollUtility point:mouseLocation isAboutTheSameAs:ScrollControl.previousMouseLocation threshold:10]) {
         mouseMoved = TRUE;
     }
-    _previousMouseLocation = mouseLocation;
+    ScrollControl.previousMouseLocation = mouseLocation;
     
-    // send event (for non-smooth scrolling)
-    
-    if (_isEnabled == FALSE) {
-        if (mouseMoved == TRUE) {
-            setConfigVariablesForActiveApp();
-        }
-        if (_scrollDirection == -1) {
-            event = [ScrollUtility invertScrollEvent:event direction:_scrollDirection];
-        }
-        if (_magnificationModifierIsPressed) { //TODO: TODO: Consider acitvating displayLink to send magnification events instead (After sorting out activity states of SmoothScroll.m)
-            [TouchSimulator postEventWithMagnification:CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1)/200.0 phase:kIOHIDEventPhaseChanged];
-            return nil;
-        } else {
-            return event;
-        }
-    }
 
     // check if Scrolling Direction changed
     
@@ -370,15 +290,15 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
     _msLeftForScroll = _msPerStep;
     if (scrollDeltaAxis1 > 0) {
-        _pixelScrollQueue += _pxStepSize * _scrollDirection;
+        _pixelScrollQueue += _pxStepSize * ScrollControl.scrollDirection;
     }
     else if (scrollDeltaAxis1 < 0) {
-        _pixelScrollQueue -= _pxStepSize * _scrollDirection;
+        _pixelScrollQueue -= _pxStepSize * ScrollControl.scrollDirection;
     }
     
     
-    if (_consecutiveScrollSwipeCounter > _fastScrollThreshold_Swipes) {
-        _pixelScrollQueue = _pixelScrollQueue * pow(_fastScrollExponentialBase, (int32_t)_consecutiveScrollSwipeCounter - _fastScrollThreshold_Swipes);
+    if (_consecutiveScrollSwipeCounter > _fastScrollThreshold_inSwipes) {
+        _pixelScrollQueue = _pixelScrollQueue * pow(_fastScrollExponentialBase, (int32_t)_consecutiveScrollSwipeCounter - _fastScrollThreshold_inSwipes);
     }
     
     
@@ -413,7 +333,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         
         if (mouseMoved) {
             //set app overrides
-            setConfigVariablesForActiveApp();
+            [ScrollControl setConfigVariablesForActiveApp];
             
             // set diplaylink to the display that is actally being scrolled - not sure if this is necessary, because having the displaylink at 30fps on a 30fps display looks just as horrible as having the display link on 60fps, if not worse
             @try {
@@ -430,7 +350,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     _consecutiveScrollTickTimer = [NSTimer scheduledTimerWithTimeInterval:_consecutiveScrollTickMaxIntervall target:[SmoothScroll class] selector:@selector(Handle_ConsecutiveScrollTickCallback:) userInfo:NULL repeats:NO];
     
     
-    if (_consecutiveScrollTickCounter < _scrollSwipeThreshold_Ticks) {
+    if (_consecutiveScrollTickCounter < _scrollSwipeThreshold_inTicks) {
         _lastTickWasPartOfSwipe = NO;
     } else {
         // stuff you wanna do on every tick after the scroll swipe started
@@ -536,7 +456,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     
 # pragma mark Send Event
     
-    if (_magnificationModifierIsPressed) {
+    if (ScrollControl.magnificationScrolling) {
         [TouchSimulator postEventWithMagnification:_pixelsToScroll/800.0 phase:kIOHIDEventPhaseChanged];
     } else {
         
@@ -555,14 +475,14 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         
         // set pixels
         
-        if (_horizontalScrollModifierIsPressed == FALSE) {
+        if (ScrollControl.magnificationScrolling == FALSE) {
     //        if (_scrollPhase == kMFWheelPhase) {
     //            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis1, [Utility_HelperApp signOf:_pixelsToScroll]);
     //        }
         
             CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis1, _pixelsToScroll / 8);
             CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis1, _pixelsToScroll);
-        } else if (_horizontalScrollModifierIsPressed == TRUE) {
+        } else if (ScrollControl.horizontalScrolling == TRUE) {
     //        if (_scrollPhase == kMFWheelPhase) {
     //            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis2, [Utility_HelperApp signOf:_pixelsToScroll]);
     //        }
@@ -627,135 +547,6 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 
 
 #pragma mark - helper functions
-
-#pragma mark app exceptions
-
-// CLEAN: maybe put this into ConfigFileInterface_HelperApp
-static void setConfigVariablesForActiveApp() {
-    
- 
-    // get App under mouse pointer
-    
-    
-    
-//CFTimeInterval ts = CACurrentMediaTime();
-    
-    
-    // 1. Even slower
-    
-//    CGEventRef fakeEvent = CGEventCreate(NULL);
-//    CGPoint mouseLocation = CGEventGetLocation(fakeEvent);
-//    CFRelease(fakeEvent);
-    
-//    NSInteger winNUnderMouse = [NSWindow windowNumberAtPoint:(NSPoint)mouseLocation belowWindowWithWindowNumber:0];
-//    CFArrayRef windowList = CGWindowListCopyWindowInfo(kCGWindowListExcludeDesktopElements | kCGWindowListOptionOnScreenOnly, kCGNullWindowID);
-////    NSLog(@"windowList: %@", windowList);
-//    int windowPID = 0;
-//    for (int i = 0; i < CFArrayGetCount(windowList); i++) {
-//        CFDictionaryRef w = CFArrayGetValueAtIndex(windowList, i);
-//        int winN;
-//        CFNumberGetValue(CFDictionaryGetValue(w, CFSTR("kCGWindowNumber")), kCFNumberIntType, &winN);
-//        if (winN == winNUnderMouse) {
-//            CFNumberGetValue(CFDictionaryGetValue(w, CFSTR("kCGWindowOwnerPID")), kCFNumberIntType, &windowPID);
-//        }
-//    }
-//    NSRunningApplication *appUnderMousePointer = [NSRunningApplication runningApplicationWithProcessIdentifier:windowPID];
-//    NSString *bundleIdentifierOfScrolledApp_New = appUnderMousePointer.bundleIdentifier;
-  
-    
-    // 2. very slow - but basically the way MOS does it, and MOS is fast somehow
-    
-//    CGEventRef fakeEvent = CGEventCreate(NULL);
-//    CGPoint mouseLocation = CGEventGetLocation(fakeEvent);
-//    CFRelease(fakeEvent);
-
-//    if (_previousMouseLocation.x == mouseLocation.x && _previousMouseLocation.y == mouseLocation.y) {
-//        return;
-//    }
-//    _previousMouseLocation = mouseLocation;
-//
-//    AXUIElementRef elementUnderMousePointer;
-//    AXUIElementCopyElementAtPosition(_systemWideAXUIElement, mouseLocation.x, mouseLocation.y, &elementUnderMousePointer);
-//    pid_t elementUnderMousePointerPID;
-//    AXUIElementGetPid(elementUnderMousePointer, &elementUnderMousePointerPID);
-//    NSRunningApplication *appUnderMousePointer = [NSRunningApplication runningApplicationWithProcessIdentifier:elementUnderMousePointerPID];
-//
-//    @try {
-//        CFRelease(elementUnderMousePointer);
-//    } @finally {}
-//    NSString *bundleIdentifierOfScrolledApp_New = appUnderMousePointer.bundleIdentifier;
-    
-    
-    
-//     3. fast, but only get info about frontmost application
-    
-    NSString *bundleIdentifierOfScrolledApp_New = [NSWorkspace.sharedWorkspace frontmostApplication].bundleIdentifier;
-    
-    
-    
-    // 4. swift copied from MOS - should be fast and gathers info on app under mouse pointer - I couldn't manage to import the Swift code though :/
-    
-//    CGEventRef fakeEvent = CGEventCreate(NULL);
-//    NSString *bundleIdentifierOfScrolledApp_New = [_appOverrides getBundleIdFromMouseLocation:fakeEvent];
-//    CFRelease(fakeEvent);
-    
-    
-
-    
-    
-    // if app under mouse pointer changed, adjust settings
-    
-    if ([_bundleIdentifierOfAppWhichCausesOverride isEqualToString:bundleIdentifierOfScrolledApp_New] == FALSE) {
-        
-        
-        NSDictionary *config = [ConfigFileInterface_HelperApp config];
-        NSDictionary *overrides = [config objectForKey:@"AppOverrides"];
-        
-        // get default settings
-        NSDictionary *defaultScrollSettings = [config objectForKey:@"ScrollSettings"];
-        BOOL enabledDefault;
-        NSArray *valuesDefault;
-        enabledDefault = [[defaultScrollSettings objectForKey:@"enabled"] boolValue];
-        valuesDefault = [defaultScrollSettings objectForKey:@"values"];
-        
-        // get app specific settings
-        NSDictionary *appOverrideScrollSettings;
-        for (NSString *b in overrides.allKeys) {
-            if ([bundleIdentifierOfScrolledApp_New containsString:b]) {
-                appOverrideScrollSettings = [[overrides objectForKey: b] objectForKey:@"ScrollSettings"];
-            }
-        }
-        _bundleIdentifierOfAppWhichCausesOverride = bundleIdentifierOfScrolledApp_New;
-        
-        BOOL enabledApp;
-        NSArray *valuesApp;
-        enabledApp = [[appOverrideScrollSettings objectForKey:@"enabled"] boolValue];
-        valuesApp = [appOverrideScrollSettings objectForKey:@"values"];
-        
-        if (!appOverrideScrollSettings) {
-            _isEnabled                          =   enabledDefault;
-            _pxStepSize                         =   [[valuesDefault objectAtIndex:0] intValue];
-            _msPerStep                          =   [[valuesDefault objectAtIndex:1] intValue];
-            _frictionCoefficient                =   [[valuesDefault objectAtIndex:2] floatValue];
-            _scrollDirection                    =   [[valuesDefault objectAtIndex:3] intValue];
-        } else {
-            _isEnabled                          =   enabledApp;
-            _pxStepSize                         =   [[valuesApp objectAtIndex:0] intValue];
-            _msPerStep                          =   [[valuesApp objectAtIndex:1] intValue];
-            _frictionCoefficient                =   [[valuesApp objectAtIndex:2] floatValue];
-            if ([[valuesApp objectAtIndex:3] intValue] == 0) {
-                _scrollDirection                =   [[valuesDefault objectAtIndex:3] intValue];
-            } else {
-                _scrollDirection                =   [[valuesApp objectAtIndex:3] intValue];
-            }
-        }
-        
-        [SmoothScroll startOrStopDecide];
-    }
-
-    
-//    NSLog(@"override bench: %f", CACurrentMediaTime() - ts);
-}
 
 #pragma mark fast scroll
 

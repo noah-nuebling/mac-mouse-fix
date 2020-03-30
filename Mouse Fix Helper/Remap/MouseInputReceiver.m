@@ -17,7 +17,7 @@
 
 #import "Utility_HelperApp.h"
 
-#import "SmoothScroll.h"
+#import "ScrollControl.h"
 
 @implementation MouseInputReceiver
 
@@ -38,7 +38,7 @@ CFMachPortRef eventTapMouse;
     setupMouseInputCallback_CGEvent();
 }
 
-+ (void)startOrStopDecide {
++ (void)decide {
     if ([DeviceManager relevantDevicesAreAttached]) {
         NSLog(@"started (InputReceiver)");
         [MouseInputReceiver start];
@@ -213,7 +213,7 @@ static void Handle_DeviceRemovalCallback_HID(void *context, IOReturn result, voi
     CFSetRef devices = IOHIDManagerCopyDevices(_hidManager);
     if (CFSetGetCount(devices) == 0) {
         _relevantDevicesAreAttached = FALSE;
-        [MomentumScroll startOrStopDecide];
+        [MomentumScroll decide];
     }
 }
  */
@@ -234,7 +234,7 @@ static void Handle_DeviceMatchingCallbackHID (void *context, IOReturn result, vo
  
     // 29. June 2019 - As far as I understand, we can't easily differentiate between devices that did or didn't pass filtering, so we enable / disable momentum scroll based on all devices that the IOHIDmanager attaches to)
     _relevantDevicesAreAttached = TRUE;
-    [MomentumScroll startOrStopDecide];
+    [MomentumScroll decide];
     NSLog(@"MomentumScroll.isEnabled: %hhd", MomentumScroll.isEnabled);
     NSLog(@"MomentumScroll.isRunning: %hhd", MomentumScroll.isRunning);
     
