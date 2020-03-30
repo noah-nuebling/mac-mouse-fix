@@ -64,8 +64,6 @@ CFMachPortRef eventTapMouse;
 }
 static void Handle_InputCallback_HID(void *context, IOReturn result, void *sender, IOHIDValueRef value) {
     
-    NSLog(@"Input HID (InputReceiver)");
-    
     inputSourceIsDeviceOfInterest = true;
         //NSLog(@"Button Input from Registered Device %@, button: %@", sender, value);
 }

@@ -157,7 +157,11 @@ consecutiveScrollTickMaxIntervall:(float)ti_int
 
 + (void)start {
     
-    NSLog(@"MomentumScroll started");
+    if (SmoothScroll.isRunning) {
+        return;
+    }
+    
+    NSLog(@"SmoothScroll started");
     
     _isRunning = TRUE;
     
