@@ -162,7 +162,7 @@ consecutiveScrollTickMaxIntervall:(float)ti_int
 
 + (void)start {
     
-    if (SmoothScroll.isRunning) {
+    if (_isRunning) {
         return;
     }
     

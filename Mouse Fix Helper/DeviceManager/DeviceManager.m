@@ -125,13 +125,17 @@ static void setupDeviceAddedAndRemovedCallbacks() {
 
 static void Handle_DeviceRemovalCallback(void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
     
-    // disable MomentumScroll if no relevant devices are attached
+    NSLog(@"Device Removed");
+    
+    // Check if there are still relevant devices atached.
     CFSetRef devices = IOHIDManagerCopyDevices(_hidManager);
+    NSLog(@"Devices still attached: %@", devices);
     if (CFSetGetCount(devices) == 0) {
         _relevantDevicesAreAttached = FALSE;
     }
     CFRelease(devices);
     
+    // If there aren't any relevant devices attached, then we might want to turn off some parts of the program.
     [ScrollControl decide];
     [MouseInputReceiver decide];
 }

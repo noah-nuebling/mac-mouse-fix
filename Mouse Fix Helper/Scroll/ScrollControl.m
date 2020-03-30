@@ -30,8 +30,6 @@ static AXUIElementRef _systemWideAXUIElement;
     [SmoothScroll resetDynamicGlobals];
 }
 
-// ??? whenever relevantDevicesAreAttached or isEnabled are changed, MomentumScrolls class method decide is called. Start or stop decide will start / stop momentum scroll and set _isRunning
-
 // Used to switch between SmoothScroll and RoughScroll
 static BOOL _isSmoothEnabled;
 + (BOOL)isSmoothEnabled {
@@ -61,10 +59,14 @@ static int _scrollDirection;
     _scrollDirection = dir;
 }
 
+// ??? whenever relevantDevicesAreAttached or isEnabled are changed, MomentumScrolls class method decide is called. Start or stop decide will start / stop momentum scroll and set _isRunning
+
 /// Either activate SmoothScroll or RoughScroll or stop scroll interception entirely
 + (void)decide {
     
-//    [ScrollControl setConfigVariablesForActiveApp]; // TODO: Is this necessary?
+    NSLog(@"DECIDING!!!11!!!11");
+    NSLog(@"%d", [DeviceManager relevantDevicesAreAttached]);
+    
     
     BOOL disableAll =
     ![DeviceManager relevantDevicesAreAttached]
