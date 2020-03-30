@@ -105,12 +105,17 @@ static int      _onePixelScrollsCounter =   0;
 
 #pragma mark - Interface
 
+/// Do not call this directly. Call [ScrollControl resetDynamicGlobals] instead. It will in turn call this function.
 + (void)resetDynamicGlobals {
     _scrollPhase                        =   kMFPhaseWheel;
     _pixelScrollQueue                   =   0;
     _msLeftForScroll                    =   0;
     _pxPerMsVelocity                    =   0;
     _onePixelScrollsCounter             =   0;
+    _consecutiveScrollTickCounter       =   0;
+    _consecutiveScrollSwipeCounter      =   0;
+    [_consecutiveScrollTickTimer invalidate];
+    [_consecutiveScrollSwipeTimer invalidate];
 }
 
 
@@ -330,7 +335,6 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     } else {
         
         // stuff you only wanna do on the first tick of each series of consecutive scroll ticks
-        
         if (CVDisplayLinkIsRunning(_displayLink) == FALSE) {
             CVDisplayLinkStart(_displayLink);
         }
@@ -406,6 +410,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         _pixelScrollQueue   -=  _pixelsToScroll;
         _msLeftForScroll    -=  msBetweenFrames;
         
+        // Entering momentum phase
         if ( (_msLeftForScroll <= 0) || (_pixelScrollQueue == 0) ) {
             
             _msLeftForScroll    =   0;
@@ -533,6 +538,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 #pragma mark Other
     
     if (_scrollPhase == kMFPhaseEnd) {
+        [ScrollControl resetDynamicGlobals];
         CVDisplayLinkStop(displayLink);
         return 0;
     }

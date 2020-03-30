@@ -23,6 +23,8 @@ static AXUIElementRef _systemWideAXUIElement;
 
 #pragma mark - Interface
 
+/// When scrolling is in progress, there are tons of variables holding global state. This resets some of them.
+/// I determined the ones it resets through trial and error. Some misbehaviour/bugs might be caused by this not resetting all of the global variables.
 + (void)resetDynamicGlobals {
     _horizontalScrolling    =   NO;
     [SmoothScroll resetDynamicGlobals];
@@ -61,8 +63,6 @@ static int _scrollDirection;
 
 /// Either activate SmoothScroll or RoughScroll or stop scroll interception entirely
 + (void)decide {
-    
-    NSLog(@"ScrollControl decide");
     
 //    [ScrollControl setConfigVariablesForActiveApp]; // TODO: Is this necessary?
     

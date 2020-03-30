@@ -20,6 +20,8 @@ typedef enum {
 
 + (void)load_Manual;
 
++ (void)resetDynamicGlobals;
+
 + (BOOL)horizontalScrolling;
 + (void)setHorizontalScrolling:(BOOL)B;
 + (BOOL)magnificationScrolling;
