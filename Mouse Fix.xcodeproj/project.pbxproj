@@ -380,7 +380,7 @@
 			path = SupportFiles;
 			sourceTree = "<group>";
 		};
-		4F32E17D231C509200199A11 /* ScrollFix */ = {
+		4F32E17D231C509200199A11 /* Scroll */ = {
 			isa = PBXGroup;
 			children = (
 				4F32E17E231C509200199A11 /* SmoothScroll.h */,
@@ -389,7 +389,7 @@
 				4F1A20272348EC3D00B29037 /* ScrollUtility.m */,
 				4F32E17F231C509200199A11 /* Unused */,
 			);
-			path = ScrollFix;
+			path = Scroll;
 			sourceTree = "<group>";
 		};
 		4F32E17F231C509200199A11 /* Unused */ = {
@@ -514,7 +514,7 @@
 				4FD45A14231C76DE00F75C58 /* DeviceManager */,
 				4F1B7C1823D3E5640055C007 /* Touch */,
 				4F32E18D231C50A100199A11 /* Remap */,
-				4F32E17D231C509200199A11 /* ScrollFix */,
+				4F32E17D231C509200199A11 /* Scroll */,
 				4F95A246234EBB1E000DC7D7 /* PointerSpeed */,
 				4FD45A15231C76ED00F75C58 /* MessagePort */,
 				4FD45A13231C76A700F75C58 /* Config */,
