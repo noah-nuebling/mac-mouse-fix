@@ -321,18 +321,15 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         _consecutiveScrollSwipeCounter = 0;
         [_consecutiveScrollTickTimer invalidate];
         [_consecutiveScrollSwipeTimer invalidate];
-        
     };
     
     if ([_consecutiveScrollTickTimer isValid]) {
         
         _consecutiveScrollTickCounter += 1;
         
-        NSLog(@"Tick #%d", _consecutiveScrollTickCounter);
-        
         // stuff you wanna do on every tick, except the first one (for each series of consecutive scroll ticks)
         
-                // accelerate
+        // accelerate
         _pixelScrollQueue = _pixelScrollQueue * _accelerationForScrollQueue;
         
     } else {
@@ -356,7 +353,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         
     }
     
-    // reset the scrolltickTimer
+    // Reset the _consecutiveScrollTickCounter when no "consecutive" tick occurs after this one. (consecutive meaning occuring within _consecutiveScrollTickMaxIntervall after this one)
     [_consecutiveScrollTickTimer invalidate];
     _consecutiveScrollTickTimer = [NSTimer scheduledTimerWithTimeInterval:_consecutiveScrollTickMaxIntervall target:[SmoothScroll class] selector:@selector(Handle_ConsecutiveScrollTickCallback:) userInfo:NULL repeats:NO];
     
@@ -369,13 +366,13 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         
         if (_lastTickWasPartOfSwipe == NO) {
             
-            // stuff you wanna do once per swipe, on its first tick
+            // stuff you wanna do once on the first tick of the swipe
             
             _lastTickWasPartOfSwipe = YES;
 
             _consecutiveScrollSwipeCounter  += 1;
-            NSLog(@"Swipe #%d", _consecutiveScrollSwipeCounter);
             
+            // Reset the _consecutiveScrollSwipeCounter when no "consecutive" swipe occurs after this one. (consecutive meaning occuring within _consecutiveScrollSwipeMaxIntervall after this one)
             [_consecutiveScrollSwipeTimer invalidate];
             dispatch_async(dispatch_get_main_queue(), ^{ // TODO: TODO: is executing on the main thread here necessary / useful?
                 _consecutiveScrollSwipeTimer = [NSTimer scheduledTimerWithTimeInterval:_consecutiveScrollSwipeMaxIntervall target:[SmoothScroll class] selector:@selector(Handle_ConsecutiveScrollSwipeCallback:) userInfo:NULL repeats:NO];
