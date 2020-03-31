@@ -58,15 +58,15 @@
 		<key>smoothParameters</key>
 		<dict>
 			<key>pxPerStep</key>
-			<integer>30</integer>
+			<integer>60</integer>
 			<key>msPerStep</key>
-			<integer>100</integer>
+			<integer>130</integer>
 			<key>friction</key>
 			<real>1.5</real>
 			<key>frictionDepth</key>
 			<integer>1</integer>
 			<key>acceleration</key>
-			<real>1.25</real>
+			<real>1.1</real>
 			<key>onePixelScrollsLimit</key>
 			<integer>2</integer>
 			<key>fastScrollExponentialBase</key>
@@ -98,7 +98,34 @@
 			<key>ScrollSettings</key>
 			<dict>
 				<key>smooth</key>
-				<false/>
+				<true/>
+				<key>direction</key>
+				<integer>1</integer>
+				<key>smoothParameters</key>
+				<dict>
+					<key>pxPerStep</key>
+					<integer>30</integer>
+					<key>msPerStep</key>
+					<integer>100</integer>
+					<key>friction</key>
+					<integer>1</integer>
+					<key>frictionDepth</key>
+					<integer>1</integer>
+					<key>acceleration</key>
+					<real>1.25</real>
+					<key>onePixelScrollsLimit</key>
+					<integer>3</integer>
+					<key>fastScrollExponentialBase</key>
+					<real>1.1</real>
+					<key>fastScrollThreshold_inSwipes</key>
+					<integer>3</integer>
+					<key>scrollSwipeThreshold_inTicks</key>
+					<integer>4</integer>
+					<key>consecutiveScrollTickMaxIntervall</key>
+					<real>0.13</real>
+					<key>consecutiveScrollSwipeMaxIntervall</key>
+					<real>0.5</real>
+				</dict>
 			</dict>
 		</dict>
 	</dict>

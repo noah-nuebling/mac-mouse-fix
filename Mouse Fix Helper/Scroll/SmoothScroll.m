@@ -438,7 +438,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     
     if (abs(_pixelsToScroll) == 1) { // TODO: TODO: Why is this outside of the momentum phase if block
         _onePixelScrollsCounter += 1;
-        if (_onePixelScrollsCounter > _nOfOnePixelScrollsMax) {
+        if (_onePixelScrollsCounter > _nOfOnePixelScrollsMax) { // Using > instead of >= puts the actual maximum at _nOfOnePixelScrollsMax + 1. Idk why I did that.
             _scrollPhase = kMFPhaseEnd;
             _onePixelScrollsCounter = 0;
         }

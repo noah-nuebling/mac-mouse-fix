@@ -15,6 +15,7 @@
 #import "../MessagePort/MessagePort_HelperApp.h"
 #import "../Config/ConfigFileInterface_HelperApp.h"
 #import "../Scroll/SmoothScroll.h"
+#import "../Scroll/RoughScroll.h"
 
 @implementation AccessibilityCheck
 
@@ -30,10 +31,13 @@
         [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(openPrefPane) userInfo:NULL repeats:YES];
             
     } else {
+        
+        // using load_Manual instead of normal load, because creating an eventTap crashes the program, if we don't have accessibilty access (I think - I don't really remember)
         [DeviceManager load_Manual];
         [ConfigFileInterface_HelperApp load_Manual];
         [ScrollControl load_Manual];
         [SmoothScroll load_Manual];
+        [RoughScroll load_Manual];
     }
 }
 + (Boolean)check {

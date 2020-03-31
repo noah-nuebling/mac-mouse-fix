@@ -20,7 +20,8 @@
 static CFMachPortRef _eventTap;
 
 // TODO: Should this be load or load_Manual? I can't remember why I used load_Manual everywhere?
-+ (void)load {
+
++ (void)load_Manual {
     if (_eventTap == nil) {
         CGEventMask mask = CGEventMaskBit(kCGEventScrollWheel);
         _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
