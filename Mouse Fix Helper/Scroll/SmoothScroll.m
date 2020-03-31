@@ -204,7 +204,7 @@ consecutiveScrollTickMaxIntervall:(float)ti_int
 
 + (void)stop {
     
-    NSLog(@"MomentumScroll stopped");
+    NSLog(@"SmoothScroll stopped");
     
     _isRunning = FALSE;
     
@@ -213,9 +213,9 @@ consecutiveScrollTickMaxIntervall:(float)ti_int
         CVDisplayLinkRelease(_displayLink);
         _displayLink = nil;
     } if (_eventTap) {
-//        CGEventTapEnable(_eventTap, false);
-//        CFRelease(_eventTap);
-//        _eventTap = nil;
+        CGEventTapEnable(_eventTap, false);
+        CFRelease(_eventTap);
+        _eventTap = nil;
     } if (_eventSource) {
         CFRelease(_eventSource);
         _eventSource = nil;

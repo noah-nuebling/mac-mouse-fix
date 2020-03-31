@@ -44,6 +44,11 @@ static BOOL _relevantDevicesAreAttached;
 # pragma mark - Setup callbacks
 static void setupDeviceAddedAndRemovedCallbacks() {
     
+    // Reference
+    // ref1:
+        // IOHIDKeys:
+        // https://github.com/phracker/MacOSX-SDKs/blob/master/MacOSX10.6.sdk/System/Library/Frameworks/IOKit.framework/Versions/A/Headers/hid/IOHIDKeys.h
+    
     
     // Create an HID Manager
     _hidManager = IOHIDManagerCreate(kCFAllocatorDefault, 0);
@@ -72,20 +77,36 @@ static void setupDeviceAddedAndRemovedCallbacks() {
     
     int UP = 1;
     int U = 2;
-    CFNumberRef genericDesktopPrimaryUsagePage = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &UP);
-    CFNumberRef mousePrimaryUsage = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &U);
+    CFNumberRef genericDesktopUsagePage = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &UP);
+    CFNumberRef mouseUsage = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &U);
     
-    CFDictionarySetValue(matchDict1, CFSTR("PrimaryUsagePage"), genericDesktopPrimaryUsagePage);
-    CFDictionarySetValue(matchDict1, CFSTR("PrimaryUsage"), mousePrimaryUsage);
+    CFDictionarySetValue(matchDict1, CFSTR("DeviceUsagePage"), genericDesktopUsagePage);
+    CFDictionarySetValue(matchDict1, CFSTR("DeviceUsage"), mouseUsage);
     CFDictionarySetValue(matchDict1, CFSTR("Transport"), CFSTR("USB"));
 
-    CFDictionarySetValue(matchDict2, CFSTR("PrimaryUsagePage"), genericDesktopPrimaryUsagePage);
-    CFDictionarySetValue(matchDict2, CFSTR("PrimaryUsage"), mousePrimaryUsage);
+    CFDictionarySetValue(matchDict2, CFSTR("DeviceUsagePage"), genericDesktopUsagePage);
+    CFDictionarySetValue(matchDict2, CFSTR("DeviceUsage"), mouseUsage);
     CFDictionarySetValue(matchDict2, CFSTR("Transport"), CFSTR("Bluetooth"));
 
-    CFDictionarySetValue(matchDict3, CFSTR("PrimaryUsagePage"), genericDesktopPrimaryUsagePage);
-    CFDictionarySetValue(matchDict3, CFSTR("PrimaryUsage"), mousePrimaryUsage);
+    CFDictionarySetValue(matchDict3, CFSTR("DeviceUsagePage"), genericDesktopUsagePage);
+    CFDictionarySetValue(matchDict3, CFSTR("DeviceUsage"), mouseUsage);
     CFDictionarySetValue(matchDict3, CFSTR("Transport"), CFSTR("Bluetooth Low Energy"));
+  
+    // Old version - this doesn't match some mice like the mx master, bacause it only matches primary usage and usage page, not any pair of usage and usage page within the usagePairs dictionary of the device. Look to ref1 for a better explanation.
+//    CFNumberRef genericDesktopPrimaryUsagePage = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &UP);
+//    CFNumberRef mousePrimaryUsage = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &U);
+//
+//    CFDictionarySetValue(matchDict1, CFSTR("PrimaryUsagePage"), genericDesktopPrimaryUsagePage);
+//    CFDictionarySetValue(matchDict1, CFSTR("PrimaryUsage"), mousePrimaryUsage);
+//    CFDictionarySetValue(matchDict1, CFSTR("Transport"), CFSTR("USB"));
+//
+//    CFDictionarySetValue(matchDict2, CFSTR("PrimaryUsagePage"), genericDesktopPrimaryUsagePage);
+//    CFDictionarySetValue(matchDict2, CFSTR("PrimaryUsage"), mousePrimaryUsage);
+//    CFDictionarySetValue(matchDict2, CFSTR("Transport"), CFSTR("Bluetooth"));
+//
+//    CFDictionarySetValue(matchDict3, CFSTR("PrimaryUsagePage"), genericDesktopPrimaryUsagePage);
+//    CFDictionarySetValue(matchDict3, CFSTR("PrimaryUsage"), mousePrimaryUsage);
+//    CFDictionarySetValue(matchDict3, CFSTR("Transport"), CFSTR("Bluetooth Low Energy"));
     
     CFMutableDictionaryRef matchesList[] = {matchDict1, matchDict2, matchDict3};
     matches = CFArrayCreate(kCFAllocatorDefault, (const void **)matchesList, 3, NULL);
@@ -100,8 +121,8 @@ static void setupDeviceAddedAndRemovedCallbacks() {
     CFRelease(matchDict1);
     CFRelease(matchDict2);
     CFRelease(matchDict3);
-    CFRelease(mousePrimaryUsage);
-    CFRelease(genericDesktopPrimaryUsagePage);
+    CFRelease(mouseUsage);
+    CFRelease(genericDesktopUsagePage);
     
     
     
@@ -128,9 +149,9 @@ static void Handle_DeviceRemovalCallback(void *context, IOReturn result, void *s
     NSLog(@"Device Removed");
     
     // Check if there are still relevant devices atached.
-    CFSetRef devices = IOHIDManagerCopyDevices(_hidManager);
-    NSLog(@"Devices still attached: %@", devices);
-    if (CFSetGetCount(devices) == 0) {
+    CFSetRef devices = IOHIDManagerCopyDevices(_hidManager); // for some reason this copies the device which was just removed
+    NSLog(@"Devices still attached (includes device which was just removed): %@", devices);
+    if (CFSetGetCount(devices) <= 1) { // so we're accounting for that by using a 1 here instead of a 0
         _relevantDevicesAreAttached = FALSE;
     }
     CFRelease(devices);
