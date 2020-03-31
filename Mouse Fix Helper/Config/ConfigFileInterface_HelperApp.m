@@ -171,18 +171,12 @@ static void fillConfigFromFile() {
 /// Will only do something, if the active app has changed since the last time that this function was called
 + (void)updateScrollSettingsWithActiveApp:(NSString *)activeAppBundleIdentifier {
     
-    
-
-    
-    
     // if app under mouse pointer changed, adjust settings
     
     if ([_bundleIdentifierOfAppWhichCausesOverride isEqualToString:activeAppBundleIdentifier] == FALSE) {
         
-        
         NSDictionary *config = [ConfigFileInterface_HelperApp config];
         
-
         // get default settings
         
             NSDictionary *defaultScrollSettings = [config objectForKey:@"ScrollSettings"];
@@ -205,8 +199,8 @@ static void fillConfigFromFile() {
                 float   sp7     =   [[p objectForKey:@"fastScrollExponentialBase"] floatValue];
                 int     sp8     =   [[p objectForKey:@"fastScrollThreshold_inSwipes"] intValue];
                 int     sp9     =   [[p objectForKey:@"scrollSwipeThreshold_inTicks"] intValue];
-                float   sp10    =   [[p objectForKey:@"consecutiveScrollTickMaxIntervall"] floatValue];
-                float   sp11    =   [[p objectForKey:@"consecutiveScrollSwipeMaxIntervall"] floatValue];
+                float   sp10    =   [[p objectForKey:@"consecutiveScrollSwipeMaxIntervall"] floatValue];
+                float   sp11    =   [[p objectForKey:@"consecutiveScrollTickMaxIntervall"] floatValue];
         
             // roughParameters
             
@@ -252,8 +246,8 @@ static void fillConfigFromFile() {
                         float   osp7     =   [[p objectForKey:@"fastScrollExponentialBase"] floatValue];
                         int     osp8     =   [[p objectForKey:@"fastScrollThreshold_inSwipes"] intValue];
                         int     osp9     =   [[p objectForKey:@"scrollSwipeThreshold_inTicks"] intValue];
-                        float   osp10    =   [[p objectForKey:@"consecutiveScrollTickMaxIntervall"] floatValue];
-                        float   osp11    =   [[p objectForKey:@"consecutiveScrollSwipeMaxIntervall"] floatValue];
+                        float   osp10    =   [[p objectForKey:@"consecutiveScrollSwipeMaxIntervall"] floatValue];
+                        float   osp11    =   [[p objectForKey:@"consecutiveScrollTickMaxIntervall"] floatValue];
                         
                         sp1 = osp1 ? sp1 : osp1;
                         sp2 = osp2 ? sp2 : osp2;

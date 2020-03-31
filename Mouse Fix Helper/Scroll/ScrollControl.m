@@ -83,7 +83,7 @@ static int _scrollDirection;
     if (_isSmoothEnabled) {
         [SmoothScroll start];
     } else {
-//        [RoughScroll start];
+        [RoughScroll start];
     }
 }
 

@@ -172,7 +172,7 @@ consecutiveScrollTickMaxIntervall:(float)ti_int
     
     [SmoothScroll resetDynamicGlobals];
     
-    
+    // TODO: Is it really necessary to create a new event tap more than once?
     if (_eventTap == nil) {
         CGEventMask mask = CGEventMaskBit(kCGEventScrollWheel);
         _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
@@ -325,7 +325,10 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     };
     
     if ([_consecutiveScrollTickTimer isValid]) {
+        
         _consecutiveScrollTickCounter += 1;
+        
+        NSLog(@"Tick #%d", _consecutiveScrollTickCounter);
         
         // stuff you wanna do on every tick, except the first one (for each series of consecutive scroll ticks)
         
@@ -365,11 +368,14 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         // (nothing here)
         
         if (_lastTickWasPartOfSwipe == NO) {
-            // stuff you wanna do once per swipe, when it starts
+            
+            // stuff you wanna do once per swipe, on its first tick
             
             _lastTickWasPartOfSwipe = YES;
 
             _consecutiveScrollSwipeCounter  += 1;
+            NSLog(@"Swipe #%d", _consecutiveScrollSwipeCounter);
+            
             [_consecutiveScrollSwipeTimer invalidate];
             dispatch_async(dispatch_get_main_queue(), ^{ // TODO: TODO: is executing on the main thread here necessary / useful?
                 _consecutiveScrollSwipeTimer = [NSTimer scheduledTimerWithTimeInterval:_consecutiveScrollSwipeMaxIntervall target:[SmoothScroll class] selector:@selector(Handle_ConsecutiveScrollSwipeCallback:) userInfo:NULL repeats:NO];
