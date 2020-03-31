@@ -62,6 +62,13 @@ CFMachPortRef eventTapMouse;
     NSLog(@"Registering HID (InputReceiver)");
     IOHIDDeviceRegisterInputValueCallback(device, &Handle_InputCallback_HID, NULL);
 }
+/// CGEvent functions which we use to intercept and manipulate events cannot discriminate between devices. We use this IOHID function to solve the problem.
+/// This function can filter different types of devices and when an input from a relevant device occurs, this function seems to always be called very shortly before any CGEvent function responding to the same input.
+/// Then we can see if the inputSourceIsDeviceOfInterest flag is currently set from within  CGEvent functions to filter devices.
+/// Currently this mechanism is only implemented for Mouse Button input. It might be a good idea to implement it for scroll wheel input as well.
+
+/// Device filtering criteria are set within setupDeviceAddedAndRemovedCallbacks()
+/// Which specific types of input from these devices trigger this callback function is set within registerDeviceButtonInputCallback_InMouseInputReceiverClass(IOHIDDeviceRef device) (it's only buttons currently as the name suggests)
 static void Handle_InputCallback_HID(void *context, IOReturn result, void *sender, IOHIDValueRef value) {
     
     inputSourceIsDeviceOfInterest = true;

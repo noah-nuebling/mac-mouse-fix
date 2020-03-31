@@ -179,8 +179,6 @@ static void Handle_DeviceMatchingCallback (void *context, IOReturn result, void 
     
     if (devicePassesFiltering(device) ) {
     
-        
-        
         NSLog(@"Device Passed filtering");
         
         registerDeviceButtonInputCallback_InMouseInputReceiverClass(device);
@@ -211,6 +209,7 @@ static void Handle_DeviceMatchingCallback (void *context, IOReturn result, void 
 
 # pragma mark - Helper Functions
 
+/// 
 static void registerDeviceButtonInputCallback_InMouseInputReceiverClass(IOHIDDeviceRef device) {
     
     NSCAssert(device != NULL, @"tried to register a device which equals NULL");
