@@ -228,31 +228,24 @@ consecutiveScrollTickMaxIntervall:(float)ti_int
 
 static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
-    
 //    NSLog(@"scrollPhase: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase));
 //    NSLog(@"momentumPhase: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventMomentumPhase));
-    
-    
     
 //        CFTimeInterval ts = CACurrentMediaTime();
 //            NSLog(@"event tap bench: %f", CACurrentMediaTime() - ts);
     
-    
-    // return non-scroll-wheel events unaltered
+    // Return non-scroll-wheel events unaltered
     
     long long   isPixelBased            =   CGEventGetIntegerValueField(event, kCGScrollWheelEventIsContinuous);
     long long   scrollPhase             =   CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase);
     long long   scrollDeltaAxis1        =   CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
     long long   scrollDeltaAxis2        =   CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2);
-    
     if ( (isPixelBased != 0) || (scrollDeltaAxis1 == 0) || (scrollDeltaAxis2 != 0) || (scrollPhase != 0)) { // adding scrollphase here is untested
-        
         // scroll event doesn't come from a simple scroll wheel or doesn't contain the data we need to use
         return event;
     }
     
-    
-    // check if Mouse Location changed
+    // Check if Mouse Location changed
     
     Boolean mouseMoved = FALSE;
     CGPoint mouseLocation = CGEventGetLocation(event);
@@ -261,8 +254,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     }
     ScrollControl.previousMouseLocation = mouseLocation;
     
-
-    // check if Scrolling Direction changed
+    // Check if Scrolling Direction changed
     
     Boolean newScrollDirection = FALSE;
     if (![ScrollUtility sameSign_n:scrollDeltaAxis1 m:_previousScrollDeltaAxis1]) {
@@ -270,10 +262,8 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     }
     _previousScrollDeltaAxis1 = scrollDeltaAxis1;
     
-    
-    // update global vars
+    // Update global vars
 
-    
     if (_scrollPhase != kMFPhaseWheel) {
         _onePixelScrollsCounter  =   0;
         _pxPerMsVelocity        =   0;
@@ -284,19 +274,11 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     } else if (_scrollPhase == kMFPhaseEnd) {
         _scrollPhase = kMFPhaseStart;
     }
-    
     if (newScrollDirection) {
-    
         _pixelScrollQueue = 0;
         _pixelsToScroll = 0;
         _pxPerMsVelocity = 0;
     };
-    
-    
-    
-    
-//    _pxStepSize = 100;
-    
     _msLeftForScroll = _msPerStep;
     if (scrollDeltaAxis1 > 0) {
         _pixelScrollQueue += _pxStepSize * ScrollControl.scrollDirection;
@@ -304,15 +286,13 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     else if (scrollDeltaAxis1 < 0) {
         _pixelScrollQueue -= _pxStepSize * ScrollControl.scrollDirection;
     }
-    
-    
     if (_consecutiveScrollSwipeCounter > _fastScrollThreshold_inSwipes) {
         _pixelScrollQueue = _pixelScrollQueue * pow(_fastScrollExponentialBase, (int32_t)_consecutiveScrollSwipeCounter - _fastScrollThreshold_inSwipes);
     }
     
+    // Scroll ticks and scroll swipes
     
-    
-    // recognize consecutive scroll ticks as "scroll swipes"
+        // recognize consecutive scroll ticks as "scroll swipes"
         // activate fast scrolling after a number of consecutive "scroll swipes"
         // do other stuff based on "scroll swipes"
     
@@ -322,27 +302,22 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         [_consecutiveScrollTickTimer invalidate];
         [_consecutiveScrollSwipeTimer invalidate];
     };
-    
     if ([_consecutiveScrollTickTimer isValid]) {
-        
         _consecutiveScrollTickCounter += 1;
-        
-        // stuff you wanna do on every tick, except the first one (for each series of consecutive scroll ticks)
+        // stuff you wanna do on every tick, except the first one of each series of consecutive scroll ticks
         
         // accelerate
         _pixelScrollQueue = _pixelScrollQueue * _accelerationForScrollQueue;
         
     } else {
-        
         // stuff you only wanna do on the first tick of each series of consecutive scroll ticks
+        
         if (CVDisplayLinkIsRunning(_displayLink) == FALSE) {
             CVDisplayLinkStart(_displayLink);
         }
-        
         if (mouseMoved) {
             //set app overrides
             [ConfigFileInterface_HelperApp setProgramStateToConfig];
-            
             // set diplaylink to the display that is actally being scrolled - not sure if this is necessary, because having the displaylink at 30fps on a 30fps display looks just as horrible as having the display link on 60fps, if not worse
             @try {
                 setDisplayLinkToDisplayUnderMousePointer(event);
@@ -350,13 +325,10 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
                 NSLog(@"Error while trying to set display link to display under mouse pointer: %@", [e reason]);
             }
         }
-        
     }
-    
     // Reset the _consecutiveScrollTickCounter when no "consecutive" tick occurs after this one. (consecutive meaning occuring within _consecutiveScrollTickMaxIntervall after this one)
     [_consecutiveScrollTickTimer invalidate];
     _consecutiveScrollTickTimer = [NSTimer scheduledTimerWithTimeInterval:_consecutiveScrollTickMaxIntervall target:[SmoothScroll class] selector:@selector(Handle_ConsecutiveScrollTickCallback:) userInfo:NULL repeats:NO];
-    
     
     if (_consecutiveScrollTickCounter < _scrollSwipeThreshold_inTicks) {
         _lastTickWasPartOfSwipe = NO;
@@ -365,13 +337,10 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         // (nothing here)
         
         if (_lastTickWasPartOfSwipe == NO) {
-            
-            // stuff you wanna do once on the first tick of the swipe
+            // stuff you wanna do once - on the first tick of the swipe (swipe starts after _scrollSwipeThreshold_inTicks consecutive ticks have occured)
             
             _lastTickWasPartOfSwipe = YES;
-
             _consecutiveScrollSwipeCounter  += 1;
-            
             // Reset the _consecutiveScrollSwipeCounter when no "consecutive" swipe occurs after this one. (consecutive meaning occuring within _consecutiveScrollSwipeMaxIntervall after this one)
             [_consecutiveScrollSwipeTimer invalidate];
             dispatch_async(dispatch_get_main_queue(), ^{ // TODO: TODO: is executing on the main thread here necessary / useful?
@@ -379,9 +348,6 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
             });
         }
     }
-    
-    
-    
     return nil;
 }
 
