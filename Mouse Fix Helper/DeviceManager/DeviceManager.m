@@ -7,6 +7,16 @@
 // --------------------------------------------------------------------------
 //
 
+// Reference
+// ref1:
+    // IOHIDKeys:
+    // https://github.com/phracker/MacOSX-SDKs/blob/master/MacOSX10.6.sdk/System/Library/Frameworks/IOKit.framework/Versions/A/Headers/hid/IOHIDKeys.h
+
+// ref2:
+    // HID Usage table
+    // What the numbers for Usage and UsagePage mean
+    // http://www.freebsddiary.org/APC/usb_hid_usages.php
+
 #import "DeviceManager.h"
 #import <IOKit/hid/IOHIDManager.h>
 #import <IOKit/hid/IOHIDDevice.h>
@@ -43,11 +53,6 @@ static BOOL _relevantDevicesAreAttached;
 
 # pragma mark - Setup callbacks
 static void setupDeviceAddedAndRemovedCallbacks() {
-    
-    // Reference
-    // ref1:
-        // IOHIDKeys:
-        // https://github.com/phracker/MacOSX-SDKs/blob/master/MacOSX10.6.sdk/System/Library/Frameworks/IOKit.framework/Versions/A/Headers/hid/IOHIDKeys.h
     
     
     // Create an HID Manager
@@ -178,7 +183,7 @@ static void Handle_DeviceMatchingCallback (void *context, IOReturn result, void 
         
         NSLog(@"Device Passed filtering");
         
-        registerDeviceButtonInputCallback_InInputReceiverClass(device);
+        registerDeviceButtonInputCallback_InMouseInputReceiverClass(device);
         
         _relevantDevicesAreAttached = TRUE;
         [ScrollControl decide];
@@ -206,24 +211,24 @@ static void Handle_DeviceMatchingCallback (void *context, IOReturn result, void 
 
 # pragma mark - Helper Functions
 
-static void registerDeviceButtonInputCallback_InInputReceiverClass(IOHIDDeviceRef device) {
+static void registerDeviceButtonInputCallback_InMouseInputReceiverClass(IOHIDDeviceRef device) {
     
     NSCAssert(device != NULL, @"tried to register a device which equals NULL");
     
     CFMutableDictionaryRef elementMatchDict1 = CFDictionaryCreateMutable(kCFAllocatorDefault,
-                                                                         2,
+                                                                         1,
                                                                          &kCFTypeDictionaryKeyCallBacks,
                                                                          &kCFTypeDictionaryValueCallBacks);
     int nine = 9; // "usage Page" for Buttons
-    CFNumberRef buttonRef = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &nine);
-    CFDictionarySetValue (elementMatchDict1, CFSTR("UsagePage"), buttonRef);
+    CFNumberRef nineCF = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &nine);
+    CFDictionarySetValue (elementMatchDict1, CFSTR("UsagePage"), nineCF);
     IOHIDDeviceSetInputValueMatching(device, elementMatchDict1);
     
     
     [MouseInputReceiver Register_InputCallback_HID: device];
     
     CFRelease(elementMatchDict1);
-    CFRelease(buttonRef);
+    CFRelease(nineCF);
 }
 
 
