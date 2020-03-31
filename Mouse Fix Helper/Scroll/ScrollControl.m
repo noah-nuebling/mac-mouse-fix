@@ -50,7 +50,7 @@ static CGPoint _previousMouseLocation;
 + (void)load_Manual {
     _systemWideAXUIElement = AXUIElementCreateSystemWide();
 }
-
+// TODO: Change type to MFScrollDirection
 static int _scrollDirection;
 + (int)scrollDirection {
     return _scrollDirection;
@@ -63,11 +63,6 @@ static int _scrollDirection;
 
 /// Either activate SmoothScroll or RoughScroll or stop scroll interception entirely
 + (void)decide {
-    
-    NSLog(@"DECIDING!!!11!!!11");
-    NSLog(@"%d", [DeviceManager relevantDevicesAreAttached]);
-    
-    
     BOOL disableAll =
     ![DeviceManager relevantDevicesAreAttached]
     || (!_isSmoothEnabled && _scrollDirection == 1);
@@ -82,7 +77,9 @@ static int _scrollDirection;
     [ModifierInputReceiver start];
     if (_isSmoothEnabled) {
         [SmoothScroll start];
+        [RoughScroll stop];
     } else {
+        [SmoothScroll stop];
         [RoughScroll start];
     }
 }

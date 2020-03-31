@@ -244,15 +244,17 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         // scroll event doesn't come from a simple scroll wheel or doesn't contain the data we need to use
         return event;
     }
+  
     
+    // TODO: Delete this, if moving it didn't break anything
     // Check if Mouse Location changed
     
-    Boolean mouseMoved = FALSE;
-    CGPoint mouseLocation = CGEventGetLocation(event);
-    if (![ScrollUtility point:mouseLocation isAboutTheSameAs:ScrollControl.previousMouseLocation threshold:10]) {
-        mouseMoved = TRUE;
-    }
-    ScrollControl.previousMouseLocation = mouseLocation;
+//    Boolean mouseMoved = FALSE;
+//    CGPoint mouseLocation = CGEventGetLocation(event);
+//    if (![ScrollUtility point:mouseLocation isAboutTheSameAs:ScrollControl.previousMouseLocation threshold:10]) {
+//        mouseMoved = TRUE;
+//    }
+//    ScrollControl.previousMouseLocation = mouseLocation;
     
     // Check if Scrolling Direction changed
     
@@ -302,21 +304,26 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         [_consecutiveScrollTickTimer invalidate];
         [_consecutiveScrollSwipeTimer invalidate];
     };
-    if ([_consecutiveScrollTickTimer isValid]) {
-        _consecutiveScrollTickCounter += 1;
-        // stuff you wanna do on every tick, except the first one of each series of consecutive scroll ticks
-        
-        // accelerate
-        _pixelScrollQueue = _pixelScrollQueue * _accelerationForScrollQueue;
-        
-    } else {
-        // stuff you only wanna do on the first tick of each series of consecutive scroll ticks
+    if (![_consecutiveScrollTickTimer isValid]) {
+        // stuff you only wanna do once - on the first tick of each series of consecutive scroll ticks
         
         if (CVDisplayLinkIsRunning(_displayLink) == FALSE) {
             CVDisplayLinkStart(_displayLink);
         }
+        
+        // Check if Mouse Location changed
+        
+        Boolean mouseMoved = FALSE;
+        CGPoint mouseLocation = CGEventGetLocation(event);
+        if (![ScrollUtility point:mouseLocation isAboutTheSameAs:ScrollControl.previousMouseLocation threshold:10]) {
+            mouseMoved = TRUE;
+            ScrollControl.previousMouseLocation = mouseLocation;
+        }
+        
         if (mouseMoved) {
-            //set app overrides
+            
+            // TODO: Either set appOverrides regardless of mouse moved, or also set it if mouse hasn't moved but frontmost app has changed. (appOverrdides are applied by setProgramStateToConfig)
+            // set app overrides
             [ConfigFileInterface_HelperApp setProgramStateToConfig];
             // set diplaylink to the display that is actally being scrolled - not sure if this is necessary, because having the displaylink at 30fps on a 30fps display looks just as horrible as having the display link on 60fps, if not worse
             @try {
@@ -325,6 +332,12 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
                 NSLog(@"Error while trying to set display link to display under mouse pointer: %@", [e reason]);
             }
         }
+    } else {
+        _consecutiveScrollTickCounter += 1;
+        // stuff you wanna do on every tick, except the first one of each series of consecutive scroll ticks
+        
+        // accelerate
+        _pixelScrollQueue = _pixelScrollQueue * _accelerationForScrollQueue;
     }
     // Reset the _consecutiveScrollTickCounter when no "consecutive" tick occurs after this one. (consecutive meaning occuring within _consecutiveScrollTickMaxIntervall after this one)
     [_consecutiveScrollTickTimer invalidate];
@@ -333,11 +346,12 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     if (_consecutiveScrollTickCounter < _scrollSwipeThreshold_inTicks) {
         _lastTickWasPartOfSwipe = NO;
     } else {
-        // stuff you wanna do on every tick after the scroll swipe started
+        // stuff you wanna do on every tick after and including the one which started the scroll swipe. Will probably never use this.
         // (nothing here)
         
         if (_lastTickWasPartOfSwipe == NO) {
-            // stuff you wanna do once - on the first tick of the swipe (swipe starts after _scrollSwipeThreshold_inTicks consecutive ticks have occured)
+            // stuff you wanna do once - on the first tick of the swipe (swipe starts after _scrollSwipeThreshold_inTicks consecutive ticks have occured).
+            // If you want to do something once per series of consecutive scroll ticks, even if they don't pass the swipe threshold, you should use the space right under `if (![_consecutiveScrollTickTimer isValid]) {`
             
             _lastTickWasPartOfSwipe = YES;
             _consecutiveScrollSwipeCounter  += 1;

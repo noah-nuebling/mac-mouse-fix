@@ -169,11 +169,12 @@ static void fillConfigFromFile() {
 
 /// will apply app specific overrides.
 /// Will only do something, if the active app has changed since the last time that this function was called
-+ (void)updateScrollSettingsWithActiveApp:(NSString *)activeAppBundleIdentifier {
++ (void)updateScrollSettingsWithActiveApp:(NSString *)bundleIdentifierOfScrolledApp {
     
     // if app under mouse pointer changed, adjust settings
     
-    if ([_bundleIdentifierOfAppWhichCausesOverride isEqualToString:activeAppBundleIdentifier] == FALSE) {
+    if ([_bundleIdentifierOfAppWhichCausesOverride isEqualToString:bundleIdentifierOfScrolledApp] == FALSE) {
+        _bundleIdentifierOfAppWhichCausesOverride = bundleIdentifierOfScrolledApp;
         
         NSDictionary *config = [ConfigFileInterface_HelperApp config];
         
@@ -209,12 +210,10 @@ static void fillConfigFromFile() {
         
         // get app specific settings
         
-        // TODO: Continue here – 30. March 2020
-        
             NSDictionary *overrides = [config objectForKey:@"AppOverrides"];
             NSDictionary *appOverrideScrollSettings;
             for (NSString *b in overrides.allKeys) {
-                if ([activeAppBundleIdentifier containsString:b]) {
+                if ([bundleIdentifierOfScrolledApp containsString:b]) {
                     appOverrideScrollSettings = [[overrides objectForKey: b] objectForKey:@"ScrollSettings"];
                 }
             }
@@ -226,13 +225,13 @@ static void fillConfigFromFile() {
                 // top level
                 
                     // Syntax explanation:
-                    // x = y ? x : y === if y is not nil then x = y
+                    // x = y ? y : x === if y != nil then x = y, else x = x
                 
-                    int dir = [[appOverrideScrollSettings objectForKey:@"direction"] intValue];
-                    ScrollControl.scrollDirection = dir ? ScrollControl.scrollDirection : dir;
-                    int sm = [[appOverrideScrollSettings objectForKey:@"smooth"] boolValue];
-                    ScrollControl.isSmoothEnabled = sm ? ScrollControl.isSmoothEnabled : sm;
-                
+                    NSNumber *dir = [appOverrideScrollSettings objectForKey:@"direction"];
+                    ScrollControl.scrollDirection = dir ? [dir integerValue] : ScrollControl.scrollDirection;
+                    NSNumber *sm = [appOverrideScrollSettings objectForKey:@"smooth"];
+                    ScrollControl.isSmoothEnabled = sm ? [sm boolValue] : ScrollControl.isSmoothEnabled;
+                    
                     // smoothParameters
                     
                     NSDictionary *p = [appOverrideScrollSettings objectForKey:@"smoothParameters"];
@@ -249,17 +248,17 @@ static void fillConfigFromFile() {
                         float   osp10    =   [[p objectForKey:@"consecutiveScrollSwipeMaxIntervall"] floatValue];
                         float   osp11    =   [[p objectForKey:@"consecutiveScrollTickMaxIntervall"] floatValue];
                         
-                        sp1 = osp1 ? sp1 : osp1;
-                        sp2 = osp2 ? sp2 : osp2;
-                        sp3 = osp3 ? sp3 : osp3;
-                        sp4 = osp4 ? sp4 : osp4;
-                        sp5 = osp5 ? sp5 : osp5;
-                        sp6 = osp6 ? sp6 : osp6;
-                        sp7 = osp7 ? sp7 : osp7;
-                        sp8 = osp8 ? sp8 : osp8;
-                        sp9 = osp9 ? sp9 : osp9;
-                        sp10 = osp10 ? sp10 : osp10;
-                        sp11 = osp11 ? sp11 : osp11;
+                        sp1 = osp1 ? osp1 : sp1;
+                        sp2 = osp2 ? osp2 : sp2;
+                        sp3 = osp3 ? osp3 : sp3;
+                        sp4 = osp4 ? osp4 : sp4;
+                        sp5 = osp5 ? osp5 : sp5;
+                        sp6 = osp6 ? osp6 : sp6;
+                        sp7 = osp7 ? osp7 : sp7;
+                        sp8 = osp8 ? osp8 : sp8;
+                        sp9 = osp9 ? osp9 : sp9;
+                        sp10 = osp10 ? osp10 : sp10;
+                        sp11 = osp11 ? osp11 : sp11;
                         
                     }
                 

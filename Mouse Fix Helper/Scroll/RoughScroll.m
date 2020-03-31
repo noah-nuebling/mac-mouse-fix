@@ -11,6 +11,7 @@
 #import "ScrollControl.h"
 #import "TouchSimulator.h"
 #import "ScrollUtility.h"
+#import "ConfigFileInterface_HelperApp.h"
 
 @implementation RoughScroll
 
@@ -41,10 +42,13 @@ static CFMachPortRef _eventTap;
 
 static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
+    // TODO: Optimize this using mouse Moved and other techniques from SmoothScroll.m
 //    if (mouseMoved == TRUE) {
 //        setConfigVariablesForActiveApp();
 //    }
-    if (ScrollControl.scrollDirection == -1) {
+    [ConfigFileInterface_HelperApp setProgramStateToConfig];
+    
+    if (ScrollControl.scrollDirection == -1) { // TODO: Use kMFInvertedScrollDirection instead of -1
         event = [ScrollUtility invertScrollEvent:event direction:ScrollControl.scrollDirection];
     }
     if (ScrollControl.magnificationScrolling) { //TODO: TODO: Consider acitvating displayLink to send magnification events instead (After sorting out activity states of SmoothScroll.m)
