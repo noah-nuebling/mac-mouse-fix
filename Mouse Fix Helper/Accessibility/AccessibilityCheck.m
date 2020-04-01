@@ -26,6 +26,9 @@
     Boolean accessibilityEnabled = [self check];
     
     if (!accessibilityEnabled) {
+        
+        NSLog(@"Accessibility Access Disabled");
+        
         [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(sendAccessibilityMessageToPrefpane) userInfo:NULL repeats:NO];
         
         [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(openPrefPane) userInfo:NULL repeats:YES];

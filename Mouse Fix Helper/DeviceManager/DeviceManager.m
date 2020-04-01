@@ -25,7 +25,6 @@
 #import "ScrollControl.h"
 #import "MouseInputReceiver.h"
 #import "ConfigFileInterface_HelperApp.h"
-#import "../PointerSpeed/PointerSpeed.h"
 
 #import <IOKit/hidsystem/IOHIDServiceClient.h>
 #import <IOKit/hidsystem/IOHIDEventSystemClient.h>

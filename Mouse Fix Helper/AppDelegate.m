@@ -8,7 +8,6 @@
 //
 
 #import "AppDelegate.h"
-#import "PointerSpeed/PointerSpeed.h"
 
 @interface AppDelegate ()
 @property (strong) IBOutlet NSWindow *addedWindow;

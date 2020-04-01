@@ -41,8 +41,6 @@ static NSTimer     *_clickAndHoldTimer;
 
 + (CGEventRef)parse:(int)mouseButton state:(int)state event:(CGEventRef)event {
     
-    NSLog(@"parsing input (Input Parser)");
-    
     NSString *keyPath = [NSString stringWithFormat:@"ButtonRemaps.%d.single", mouseButton];
     
     NSDictionary *remapsForInputButton = [ConfigFileInterface_HelperApp.config valueForKeyPath: keyPath];
@@ -57,8 +55,6 @@ static NSTimer     *_clickAndHoldTimer;
     // single click remapping
         NSArray *clickAction = [remapsForInputButton valueForKey:@"click"];
         if ( ([[remapsForInputButton allKeys] count] == 1) && clickAction != nil ) {
-            
-            NSLog(@"SINGLE CLICK REMAPPING");
             
             if (state == 1) {
                 [InputParser handleActionArray:clickAction];
@@ -116,8 +112,6 @@ static NSTimer     *_clickAndHoldTimer;
 
 + (void)handleActionArray: (NSArray *)actionArray {
     
-    NSLog(@"handling input (Input Parser)");
-    
     if ([actionArray[0] isEqualToString:@"symbolicHotKey"]) {
         NSNumber *shk = actionArray[1];
         [InputParser doSymbolicHotKeyAction:[shk intValue]];
@@ -142,8 +136,6 @@ CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar ke
     CGKeyCode virtualKeyCode;
     CGSModifierFlags modifierFlags;
     CGSGetSymbolicHotKeyValue(shk, &keyEquivalent, &virtualKeyCode, &modifierFlags);
-    
-    NSLog(@"vkk: %d", virtualKeyCode);
     
     BOOL hotKeyIsEnabled = CGSIsSymbolicHotKeyEnabled(shk);
     BOOL oldVirtualKeyCodeIsUsable = (virtualKeyCode < 400);

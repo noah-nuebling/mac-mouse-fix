@@ -59,7 +59,6 @@ CFMachPortRef eventTapMouse;
 }
 
 + (void)Register_InputCallback_HID:(IOHIDDeviceRef)device {
-    NSLog(@"Registering HID (InputReceiver)");
     IOHIDDeviceRegisterInputValueCallback(device, &Handle_InputCallback_HID, NULL);
 }
 /// CGEvent functions which we use to intercept and manipulate events cannot discriminate between devices. We use this IOHID function to solve the problem.
@@ -76,8 +75,6 @@ static void Handle_InputCallback_HID(void *context, IOReturn result, void *sende
 }
 
 static void setupMouseInputCallback_CGEvent() {
-    NSLog(@"Registering CG (InputReceiver)");
-    
     // Register event Tap Callback
     CGEventMask mask = CGEventMaskBit(kCGEventOtherMouseDown) | CGEventMaskBit(kCGEventOtherMouseUp);
 
@@ -89,8 +86,6 @@ static void setupMouseInputCallback_CGEvent() {
 }
 
 CGEventRef Handle_MouseEvent_CGEvent(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
-    NSLog(@"Input CG (InputReceiver)");
-    
                                         /*
                                         NSLog(@"HANDLE EVENT");
                                         NSLog(@"current button: %d", currentButton);
