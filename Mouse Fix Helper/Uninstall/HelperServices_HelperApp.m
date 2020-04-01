@@ -145,6 +145,8 @@
                 
                 NSString *defaultLAConfigFile_path = [prefPaneBundle pathForResource:@"default_mouse.fix.helper" ofType:@"plist"];
                 NSData *defaultLAConfigFile_data = [NSData dataWithContentsOfFile:defaultLAConfigFile_path];
+                // TODO: This just crashed the app with "Exception: "data parameter is nil". It says that that LAConfigFileExists = NO.
+                // I was running Mouse Fix Helper standalone for debugging, not embedded in the PrefPane.
                 NSMutableDictionary *newLAConfigFile_dict = [NSPropertyListSerialization propertyListWithData:defaultLAConfigFile_data options:NSPropertyListMutableContainersAndLeaves format:nil error:&error];
                 
                 // set the executable path to the correct value

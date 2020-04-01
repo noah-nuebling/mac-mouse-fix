@@ -32,6 +32,15 @@ static mach_port_t _IOHIDSystemHandle;
 
 /// Change the pointer sensitivity of a device. Doesn't work as of yet.
 + (void)setSensitivityTo:(int)sens device:(IOHIDDeviceRef)dev {
+    
+    // Ideas:
+    // https://stackoverflow.com/questions/2615039/cant-edit-ioregistryentry
+        // Use private getEVSHandle() function and do stuff with that. Author says that's how system preferences changes trackpad settings.
+    
+    
+    
+    
+    
 
     io_service_t devService = IOHIDDeviceGetService(dev); // name: IOHIDUserDevice - grandchild has hidpointerresolution property (at least on the Nordic Semiconductor Mouse)
     io_connect_t devHandle;
@@ -86,13 +95,13 @@ static mach_port_t _IOHIDSystemHandle;
             
             
             
-            // trying to set / read from the registry entry (it's obtained through the Service Client stuff above, but it's right one - it contains HIDPointerResolution, and you can read it, but until now not write it)
+            // trying to set / read from the registry entry (it's obtained through the Service Client stuff above, but it's right one - it contains HIDPointerResolution, and you can read it, but until now, not write it)
             // None of these 3 methods seemed to have any effect. BUT I also forgot to turn steermouse off, so more testing is needed.
 
             
             
             
-            int sens = 425; // 400 is default
+            int sens = 450; // 400 is default
             int newPointerRes = IntToFixed(sens);
             CFNumberRef newPointerRefCF = CFNumberCreate(kCFAllocatorDefault, kCFNumberSInt32Type, &newPointerRes);
             kern_return_t kr = IORegistryEntrySetCFProperty(matchingService, CFSTR("HIDPointerResolution"), newPointerRefCF); // doesn't work
@@ -105,7 +114,17 @@ static mach_port_t _IOHIDSystemHandle;
               
             // --
 //
-            IOHIDServiceClientSetProperty(service, CFSTR("HIDPointerResolution"), newPointerRefCF); // doesn't work - its the cursor sense does it though...
+            IOHIDServiceClientSetProperty(service, CFSTR("HIDPointerResolution"), newPointerRefCF); // doesn't work - its the way cursor sense does it though...
+            
+            
+            // This manages to alter alter / create entries in HIDEventServiceProperties property. But creating HIDPointerResolution doesn't do anything.
+            // CursorSense also creates a HIDPointerResolution entry.
+//            CFBooleanRef falseCF = kCFBooleanFalse;
+//            IORegistryEntrySetCFProperty(matchingService, CFSTR("HIDDefaultParameters"), falseCF);
+                        CFBooleanRef falseCF = kCFBooleanFalse;
+                        IORegistryEntrySetCFProperty(matchingService, CFSTR("TrackpadMomentumScroll"), falseCF);
+            IORegistryEntrySetCFProperty(matchingService, CFSTR("HIDPointerResolution"), newPointerRefCF);
+            IORegistryEntrySetCFProperty(matchingService, CFSTR("AAATESTTTT"), newPointerRefCF);
             
             // --
             
@@ -114,11 +133,40 @@ static mach_port_t _IOHIDSystemHandle;
             int pointerRes;
             CFNumberGetValue(pointerResCF, kCFNumberSInt32Type, &pointerRes);
             
-            NSLog(@"prt res: %d", FixedToInt(pointerRes));
-            
-            
+            NSLog(@"Pointer Resolution: %d", FixedToInt(pointerRes));
             
 
+            
+            NSLog(@"Product: %@", IORegistryEntryCreateCFProperty(matchingService, CFSTR("Product"), kCFAllocatorDefault, 0));
+//            NSLog(@"Path: %@", IORegistryEntryCopyPath(matchingService, "IOService"));
+            
+            // trying to manipulate the eventserviceproperties property
+            // Using IORegistryEntrySetCFProperty() on matching service actually creates/sets keys and values in the HIDEventServiceProperties dict, so we don't need this.
+            
+            
+//            CFMutableDictionaryRef eventServiceProperties = IORegistryEntryCreateCFProperty(matchingService, CFSTR("HIDEventServiceProperties"), kCFAllocatorDefault, 0);
+//
+//            NSLog(@"HODEventServiceProperties: %@", eventServiceProperties);
+//
+//            if (eventServiceProperties) {
+//                int zero = 0;
+//                CFNumberRef zeroCF = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &zero);
+//                CFStringRef key = CFSTR("ActuateDetents");
+//                CFDictionarySetValue(eventServiceProperties, key, zeroCF);
+                
+                    // This puts a copy of the HIDEventServiceProperties dict into the HIDEventServiceProperties dict. Not what we want.
+//                IORegistryEntrySetCFProperty(matchingService, CFSTR("HIDEventServiceProperties"), eventServiceProperties);
+                
+//                NSLog(@"HODEventServiceProperties New!: %@", IORegistryEntryCreateCFProperty(matchingService, CFSTR("HIDEventServiceProperties"), kCFAllocatorDefault, 0));
+            
+//            }
+            
+            
+            
+            
+            /*
+                     service = IORegistryEntryFromPath( masterPort, kIOServicePlane ":/IOResources/IOHIDResource/IOHIDResourceDeviceUserClient/IOHIDUserDevice/IOHIDInterface/AppleUserHIDEventDriver"); // this is where the mx master is at
+             */
             
             
             
