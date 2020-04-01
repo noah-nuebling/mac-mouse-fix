@@ -135,6 +135,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 /// I determined the ones it resets through trial and error. Some misbehaviour/bugs might be caused by this not resetting all of the global variables.
 + (void)resetDynamicGlobals {
     _horizontalScrolling    =   NO;
+    _magnificationScrolling = NO;
     [SmoothScroll resetDynamicGlobals];
 }
 
