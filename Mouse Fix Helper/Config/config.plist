@@ -52,7 +52,7 @@
 		<key>disableAll (unused)</key>
 		<false/>
 		<key>smooth</key>
-		<true/>
+		<false/>
 		<key>direction</key>
 		<string>-1</string>
 		<key>smoothParameters</key>
@@ -82,6 +82,13 @@
 		</dict>
 		<key>roughParameters (unused)</key>
 		<dict/>
+		<key>modifierKeys</key>
+		<dict>
+			<key>horizontalScrollModifierKeyEnabled</key>
+			<false/>
+			<key>magnificationScrollModifierKeyEnabled</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>AppOverrides</key>
 	<dict>
@@ -97,8 +104,15 @@
 		<dict>
 			<key>ScrollSettings</key>
 			<dict>
+				<key>modifierKeys</key>
+				<dict>
+					<key>horizontalScrollModifierKeyEnabled</key>
+					<true/>
+					<key>magnificationScrollModifierKeyEnabled</key>
+					<false/>
+				</dict>
 				<key>smooth</key>
-				<false/>
+				<true/>
 				<key>direction</key>
 				<integer>1</integer>
 				<key>smoothParameters</key>

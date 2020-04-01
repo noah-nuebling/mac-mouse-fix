@@ -16,6 +16,7 @@
 #import "ScrollControl.h"
 #import "SmoothScroll.h"
 #import "MouseInputReceiver.h"
+#import "ScrollModifiers.h"
 
 @implementation ConfigFileInterface_HelperApp
 
@@ -207,6 +208,11 @@ static void fillConfigFromFile() {
             // roughParameters
             
                 // nothing here yet
+        
+            // keyboard modifier keys
+        NSDictionary *mod = [defaultScrollSettings objectForKey:@"modifierKeys"];
+        ScrollModifiers.horizontalScrollModifierKeyEnabled = [[mod objectForKey:@"horizontalScrollModifierKeyEnabled"] boolValue];
+        ScrollModifiers.magnificationScrollModifierKeyEnabled = [[mod objectForKey:@"magnificationScrollModifierKeyEnabled"] boolValue];
             
         
         // get app specific settings
@@ -267,10 +273,20 @@ static void fillConfigFromFile() {
                     
                         // nothing here yet
                     
+                    // modifierKeys
+                    
+                    NSDictionary *omod = [appOverrideScrollSettings objectForKey:@"modifierKeys"];
+                    if (omod) {
+                        BOOL hs = [[omod objectForKey:@"horizontalScrollModifierKeyEnabled"] boolValue];
+                        ScrollModifiers.horizontalScrollModifierKeyEnabled = hs ? hs : ScrollModifiers.horizontalScrollModifierKeyEnabled;
+                        BOOL ms = [[omod objectForKey:@"magnificationScrollModifierKeyEnabled"] boolValue];
+                        ScrollModifiers.magnificationScrollModifierKeyEnabled = ms ? ms : ScrollModifiers.magnificationScrollModifierKeyEnabled;
+                    }
                 
 
             }
         
+        /// TODO: Give this function one dictionary instead of so many arguments
         [SmoothScroll configureWithPxPerStep:sp1
                                    msPerStep:sp2
                                     friction:sp3

@@ -7,13 +7,34 @@
 // --------------------------------------------------------------------------
 //
 
-#import "ModifierInputReceiver.h"
+#import "ScrollModifiers.h"
 #import "ScrollControl.h"
 
-// TODO: Rename to ScrollModifierInputReceiver
-@implementation ModifierInputReceiver
+// TODO: Rename to ScrollModifierInputReceiver. Maybe merge this into ScrollControl or put the modifier properties from ScrollControl into this.
+@implementation ScrollModifiers
+
+#pragma mark - Public class variables
+
+BOOL _horizontalScrollModifierKeyEnabled = YES;
++ (BOOL)horizontalScrollModifierKeyEnabled {
+    return _horizontalScrollModifierKeyEnabled;
+}
++ (void)setHorizontalScrollModifierKeyEnabled:(BOOL)B {
+    _horizontalScrollModifierKeyEnabled = B;
+}
+BOOL _magnificationScrollModifierKeyEnabled = YES;
++ (BOOL)magnificationScrollModifierKeyEnabled {
+    return _magnificationScrollModifierKeyEnabled;
+}
++ (void)setMagnificationScrollModifierKeyEnabled:(BOOL)B {
+    _magnificationScrollModifierKeyEnabled = B;
+}
+
+#pragma mark - Private class variables
 
 CFMachPortRef _eventTapKey;
+
+#pragma mark - Public functions
 
 + (void)initialize {
     setupModifierKeyCallback();
@@ -25,6 +46,8 @@ CFMachPortRef _eventTapKey;
     CGEventTapEnable(_eventTapKey, false);
 }
 
+#pragma mark - Private functions
+
 static void setupModifierKeyCallback() {
     CGEventMask mask = CGEventMaskBit(kCGEventFlagsChanged);
     _eventTapKey = CGEventTapCreate(kCGHIDEventTap, kCGTailAppendEventTap, kCGEventTapOptionDefault, mask, Handle_ModifierChanged, NULL);
@@ -33,19 +56,14 @@ static void setupModifierKeyCallback() {
     CFRelease(runLoopSource);
 }
 
-
-
 CGEventRef Handle_ModifierChanged(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
-    
     CGEventFlags flags = CGEventGetFlags(event);
-    
-    if (flags & kCGEventFlagMaskShift) {
+    if (flags & kCGEventFlagMaskShift && _horizontalScrollModifierKeyEnabled) {
         ScrollControl.horizontalScrolling = YES;
     } else {
         ScrollControl.horizontalScrolling = NO;
     }
-    
-    if (flags & kCGEventFlagMaskCommand) {
+    if (flags & kCGEventFlagMaskCommand && _magnificationScrollModifierKeyEnabled) {
         ScrollControl.magnificationScrolling = YES;
     } else {
         ScrollControl.magnificationScrolling = NO;

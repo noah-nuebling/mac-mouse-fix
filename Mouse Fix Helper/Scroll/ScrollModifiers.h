@@ -9,7 +9,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ModifierInputReceiver : NSObject
+@interface ScrollModifiers : NSObject
++ (BOOL)horizontalScrollModifierKeyEnabled;
++ (void)setHorizontalScrollModifierKeyEnabled:(BOOL)B;
++ (BOOL)magnificationScrollModifierKeyEnabled;
++ (void)setMagnificationScrollModifierKeyEnabled:(BOOL)B;
 + (void)start;
 + (void)stop;
 @end

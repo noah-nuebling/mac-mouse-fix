@@ -12,7 +12,7 @@
 #import "SmoothScroll.h"
 #import "RoughScroll.h"
 #import "TouchSimulator.h"
-#import "ModifierInputReceiver.h"
+#import "ScrollModifiers.h"
 #import "ConfigFileInterface_HelperApp.h"
 
 @implementation ScrollControl
@@ -139,8 +139,6 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     [SmoothScroll resetDynamicGlobals];
 }
 
-// ??? whenever relevantDevicesAreAttached or isEnabled are changed, MomentumScrolls class method decide is called. Start or stop decide will start / stop momentum scroll and set _isRunning
-
 /// Either activate SmoothScroll or RoughScroll or stop scroll interception entirely
 + (void)decide {
     BOOL disableAll =
@@ -157,12 +155,12 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         // Disable other scroll classes
         [SmoothScroll stop];
         [RoughScroll stop];
-        [ModifierInputReceiver stop];
+        [ScrollModifiers stop];
     } else {
         // Enable scroll interception
         CGEventTapEnable(_eventTap, true);
         // Enable other scroll classes
-        [ModifierInputReceiver start];
+        [ScrollModifiers start];
         if (_isSmoothEnabled) {
             NSLog(@"Enabling SmoothScroll");
             [SmoothScroll start];

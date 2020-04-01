@@ -13,7 +13,7 @@
 #import "AppDelegate.h"
 #import "QuartzCore/CoreVideo.h"
 //#import <HIServices/AXUIElement.h>
-#import "ModifierInputReceiver.h"
+#import "ScrollModifiers.h"
 #import "../Config/ConfigFileInterface_HelperApp.h"
 
 #import "MouseInputReceiver.h"
