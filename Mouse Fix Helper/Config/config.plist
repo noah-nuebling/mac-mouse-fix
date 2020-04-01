@@ -98,7 +98,7 @@
 			<key>ScrollSettings</key>
 			<dict>
 				<key>smooth</key>
-				<true/>
+				<false/>
 				<key>direction</key>
 				<integer>1</integer>
 				<key>smoothParameters</key>

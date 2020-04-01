@@ -98,15 +98,16 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         // scroll event doesn't come from a simple scroll wheel or doesn't contain the data we need to use
         return event;
     }
-    
+    // `info` dictionary is used to pass data to the input handlers, so that we don't have to calculate stuff twice.
+    NSDictionary *info;
     if (_isSmoothEnabled) {
-        NSDictionary *info = @{
+        info = @{
             @"scrollDeltaAxis1": [NSNumber numberWithLongLong:scrollDeltaAxis1]
         };
-        
         return [SmoothScroll handleInput:event info:info];
     } else {
-        return [RoughScroll handleInput:event];
+        info = @{};
+        return [RoughScroll handleInput:event info:info];
     }
 }
 
@@ -142,11 +143,12 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 /// Either activate SmoothScroll or RoughScroll or stop scroll interception entirely
 + (void)decide {
     BOOL disableAll =
-    ![DeviceManager relevantDevicesAreAttached]
-    || (!_isSmoothEnabled && _scrollDirection == 1);
+    ![DeviceManager relevantDevicesAreAttached];
+    //|| (!_isSmoothEnabled && _scrollDirection == 1);
 //    || isEnabled == NO;
     
     if (disableAll) {
+        NSLog(@"Disabling scroll interception");
         
         // Disable scroll interception
         if (_eventTap) {
@@ -165,9 +167,11 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         // Enable other scroll classes
         [ModifierInputReceiver start];
         if (_isSmoothEnabled) {
+            NSLog(@"Enabling SmoothScroll");
             [SmoothScroll start];
             [RoughScroll stop];
         } else {
+            NSLog(@"Enabling RoughScroll");
             [SmoothScroll stop];
             [RoughScroll start];
         }

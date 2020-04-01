@@ -23,7 +23,7 @@
 + (void)stop {
 }
 
-+ (CGEventRef)handleInput:(CGEventRef)event {
++ (CGEventRef)handleInput:(CGEventRef)event info:(NSDictionary *)info {
     
     // TODO: Optimize this using mouseMoved and other techniques from SmoothScroll.m
     // (Probably best to move the calculation of stuff that both SmoothScroll and RoughScroll use to ScrollControl, and then pass the stuff as parameters to the respective `handleInput:` functions)
