@@ -52,6 +52,7 @@ static BOOL _isRunning;
 # pragma mark enum
 
 typedef enum {
+    kMFPhaseNone        =   0,
     kMFPhaseStart       =   1,
     kMFPhaseWheel       =   2,
     kMFPhaseMomentum    =   4,
@@ -89,14 +90,13 @@ static NSTimer  *_consecutiveScrollSwipeTimer       =   NULL;
 
 // any phase
 static int32_t  _pixelsToScroll;
-static int      _scrollPhase;
-static int _previousPhase;                            // which phase was active the last time that displayLinkCallback was called
+static int      _scrollPhase; // TODO: Change type to MFScrollPhase
+static int _previousPhase; // which phase was active the last time that displayLinkCallback was called
 static CGDirectDisplayID *_displaysUnderMousePointer;
 // wheel phase
 static int64_t  _pixelScrollQueue           =   0;
 static double   _msLeftForScroll            =   0;
-    // scroll direction change
-static long long _previousScrollDeltaAxis1;
+static long long _previousScrollDeltaAxis1; // to detect scroll direction change
 // momentum phase
 static double   _pxPerMsVelocity        =   0;
 static int      _onePixelScrollsCounter =   0;
@@ -135,7 +135,7 @@ consecutiveScrollTickMaxIntervall:(float)ti_int
     _frictionDepth                      =   fd;
     _accelerationForScrollQueue         =   acc;
     
-    // After opl frames of only scrolling 1 pixel, scrolling stops.
+    // After opl+1 frames of only scrolling 1 pixel, scrolling stops. Should probably change code to stop after opl frames.
     _nOfOnePixelScrollsMax              =   opl;
     
     // How quickly fast scrolling gains speed.
@@ -175,7 +175,6 @@ consecutiveScrollTickMaxIntervall:(float)ti_int
         CVDisplayLinkSetOutputCallback(_displayLink, displayLinkCallback, nil);
         _displaysUnderMousePointer = malloc(sizeof(CGDirectDisplayID) * 3);
     }
-    
     CGDisplayRemoveReconfigurationCallback(Handle_displayReconfiguration, NULL); // don't know if necesssary
     CGDisplayRegisterReconfigurationCallback(Handle_displayReconfiguration, NULL);
     
@@ -192,7 +191,6 @@ consecutiveScrollTickMaxIntervall:(float)ti_int
         CVDisplayLinkRelease(_displayLink);
         _displayLink = nil;
     }
-    
      CGDisplayRemoveReconfigurationCallback(Handle_displayReconfiguration, NULL);
 }
 
@@ -201,7 +199,7 @@ consecutiveScrollTickMaxIntervall:(float)ti_int
 + (CGEventRef)handleInput:(CGEventRef)event info:(NSDictionary *)info {
   
     
-    // TODO: Delete this, if moving it didn't break anything
+    // TODO: Delete this, if moving it down didn't break anything. Or maybe move it to ScrollControl -> eventTapCallback().
     // Check if Mouse Location changed
     
 //    Boolean mouseMoved = FALSE;
@@ -267,9 +265,7 @@ consecutiveScrollTickMaxIntervall:(float)ti_int
         if (CVDisplayLinkIsRunning(_displayLink) == FALSE) {
             CVDisplayLinkStart(_displayLink);
         }
-        
         // Check if Mouse Location changed
-        
         Boolean mouseMoved = FALSE;
         CGPoint mouseLocation = CGEventGetLocation(event);
         if (![ScrollUtility point:mouseLocation isAboutTheSameAs:ScrollControl.previousMouseLocation threshold:10]) {
@@ -279,7 +275,7 @@ consecutiveScrollTickMaxIntervall:(float)ti_int
         
         if (mouseMoved) {
             
-            // TODO: Either set appOverrides regardless of mouse moved, or also set it if mouse hasn't moved but frontmost app has changed. (appOverrdides are applied by setProgramStateToConfig)
+            // TODO: Either set appOverrides regardless of mouse moved, or also set it if mouse hasn't moved but frontmost app has changed. (appOverrdides are applied by setProgramStateToConfig). Otherwise, changing app without moving the mouse pointer will not lead to the proper override being applied.
             // set app overrides
             [ConfigFileInterface_HelperApp setProgramStateToConfig];
             // set diplaylink to the display that is actally being scrolled - not sure if this is necessary, because having the displaylink at 30fps on a 30fps display looks just as horrible as having the display link on 60fps, if not worse

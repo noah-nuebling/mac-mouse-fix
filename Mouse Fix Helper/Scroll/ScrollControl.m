@@ -64,7 +64,7 @@ static BOOL _magnificationScrolling;
     return _magnificationScrolling;
 }
 + (void)setMagnificationScrolling:(BOOL)B {
-    _magnificationScrolling = B;
+    
     if (_magnificationScrolling && !B) {
 //        if (_scrollPhase != kMFPhaseEnd) {
             [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseEnded];
@@ -76,6 +76,7 @@ static BOOL _magnificationScrolling;
             [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseBegan];
 //        }
     }
+    _magnificationScrolling = B;
 }
 
 #pragma mark - Private functions
@@ -149,21 +150,17 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
     if (disableAll) {
         NSLog(@"Disabling scroll interception");
-        
         // Disable scroll interception
         if (_eventTap) {
             CGEventTapEnable(_eventTap, false);
         }
-        
         // Disable other scroll classes
         [SmoothScroll stop];
         [RoughScroll stop];
         [ModifierInputReceiver stop];
     } else {
-        
         // Enable scroll interception
         CGEventTapEnable(_eventTap, true);
-        
         // Enable other scroll classes
         [ModifierInputReceiver start];
         if (_isSmoothEnabled) {

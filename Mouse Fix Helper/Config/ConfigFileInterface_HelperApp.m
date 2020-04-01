@@ -49,6 +49,7 @@ static NSMutableDictionary *config;
 
 /// Modify the programs state according to parameters from this class' config property
 + (void)setProgramStateToConfig {
+    // TODO: This function is still seems to be a huge resource hog (thinking this because RoughScroll calls this on every tick and is much more resource intensive than SmoothScroll) – even with the current optimization of only looking at the frontmost app for overrides, instead of the app under the mouse pointer.
     
     // get App under mouse pointer
         

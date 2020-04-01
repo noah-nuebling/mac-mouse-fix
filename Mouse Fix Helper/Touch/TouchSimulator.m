@@ -51,6 +51,7 @@ static NSMutableDictionary *_swipeInfo;
 }
 
 + (void)postEventWithMagnification:(double)magnification phase:(IOHIDEventPhaseBits)phase {
+    
     NSDictionary *magnifyInfo = [NSDictionary dictionaryWithObjectsAndKeys:
     @(kTLInfoSubtypeMagnify), kTLInfoKeyGestureSubtype,
     @(phase), kTLInfoKeyGesturePhase,

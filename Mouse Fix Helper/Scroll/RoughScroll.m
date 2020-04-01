@@ -38,7 +38,7 @@
     }
     if (ScrollControl.magnificationScrolling) { //TODO: TODO: Consider acitvating displayLink to send magnification events instead (After sorting out activity states of SmoothScroll.m)
         [TouchSimulator postEventWithMagnification:CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1)/200.0 phase:kIOHIDEventPhaseChanged];
-        return nil;
+        return NULL;
     } else {
         return event;
     }
