@@ -103,7 +103,7 @@ static int      _onePixelScrollsCounter =   0;
 
 #pragma mark - Interface
 
-/// Do not call this directly. Call [ScrollControl resetDynamicGlobals] instead. It will in turn call this function.
+/// Consider calling [ScrollControl resetDynamicGlobals] instead of this. It will reset not only SmoothScroll specific globals.
 + (void)resetDynamicGlobals {
     _scrollPhase                        =   kMFPhaseWheel;
     _pixelScrollQueue                   =   0;
@@ -361,34 +361,20 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     
 # pragma mark Momentum Phase
     else if (_scrollPhase == kMFPhaseMomentum) {
-        
-        
-        
         // very smooth
 //        _frictionDepth = 0.5;
 //        _frictionCoefficient = 0.7;
-
-    
-        
         _pixelsToScroll = round(_pxPerMsVelocity * msBetweenFrames);
-        
         double oldVel = _pxPerMsVelocity;
         double newVel = oldVel - [ScrollUtility signOf:oldVel] * pow(fabs(oldVel), _frictionDepth) * (_frictionCoefficient/100) * msBetweenFrames;
-        
-        
         _pxPerMsVelocity = newVel;
         if ( ((newVel < 0) && (oldVel > 0)) || ((newVel > 0) && (oldVel < 0)) ) {
             _pxPerMsVelocity = 0;
         }
-        
-        
-        
         if (_pixelsToScroll == 0 || _pxPerMsVelocity == 0) {
             _scrollPhase = kMFPhaseEnd;
         }
-        
     }
-    
     if (abs(_pixelsToScroll) == 1) { // TODO: TODO: Why is this outside of the momentum phase if block
         _onePixelScrollsCounter += 1;
         if (_onePixelScrollsCounter > _nOfOnePixelScrollsMax) { // Using > instead of >= puts the actual maximum at _nOfOnePixelScrollsMax + 1. Idk why I did that.
@@ -396,8 +382,6 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
             _onePixelScrollsCounter = 0;
         }
     }
-    
-    
     
 # pragma mark Send Event
     
@@ -416,17 +400,15 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 0);
         CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase, 0);
         
-        
-        // set pixels
-        
-        if (ScrollControl.magnificationScrolling == FALSE) {
+        // set scrollDelta
+        NSLog(@"horiz?: %d", ScrollControl.horizontalScrolling);
+        if (ScrollControl.horizontalScrolling == FALSE) {
     //        if (_scrollPhase == kMFWheelPhase) {
     //            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis1, [Utility_HelperApp signOf:_pixelsToScroll]);
     //        }
-        
             CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis1, _pixelsToScroll / 8);
             CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis1, _pixelsToScroll);
-        } else if (ScrollControl.horizontalScrolling == TRUE) {
+        } else {
     //        if (_scrollPhase == kMFWheelPhase) {
     //            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis2, [Utility_HelperApp signOf:_pixelsToScroll]);
     //        }
@@ -473,7 +455,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 #pragma mark Other
     
     if (_scrollPhase == kMFPhaseEnd) {
-        [ScrollControl resetDynamicGlobals];
+        [SmoothScroll resetDynamicGlobals]; // Note: Only resetting SmoothScroll globals, not all scroll globals (we would do that using [ScrollControl resetDynamicGlobals])
         CVDisplayLinkStop(displayLink);
         return 0;
     }

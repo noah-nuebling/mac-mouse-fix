@@ -64,7 +64,6 @@ static BOOL _magnificationScrolling;
     return _magnificationScrolling;
 }
 + (void)setMagnificationScrolling:(BOOL)B {
-    
     if (_magnificationScrolling && !B) {
 //        if (_scrollPhase != kMFPhaseEnd) {
             [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseEnded];
