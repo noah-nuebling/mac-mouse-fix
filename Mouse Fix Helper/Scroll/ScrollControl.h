@@ -18,24 +18,20 @@ typedef enum {
     kMFInvertedScrollDirection      =  -1
 } MFScrollDirection;
 
-+ (void)load_Manual;
-
-+ (void)resetDynamicGlobals;
-
++ (CGEventSourceRef)eventSource;
 + (BOOL)horizontalScrolling;
 + (void)setHorizontalScrolling:(BOOL)B;
 + (BOOL)magnificationScrolling;
 + (void)setMagnificationScrolling:(BOOL)B;
-
 + (CGPoint)previousMouseLocation;
 + (void)setPreviousMouseLocation:(CGPoint)p;
-
 + (BOOL)isSmoothEnabled;
 + (void)setIsSmoothEnabled: (BOOL)B;
-
 + (int)scrollDirection;
 + (void)setScrollDirection:(int)dir;
 
++ (void)load_Manual;
++ (void)resetDynamicGlobals;
 + (void)decide;
 
 @end

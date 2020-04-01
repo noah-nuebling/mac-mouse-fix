@@ -17,20 +17,19 @@
 
 @implementation ScrollControl
 
-#pragma mark - Globals
+#pragma mark - Private variables
 
 static AXUIElementRef _systemWideAXUIElement;
+static CFMachPortRef _eventTap       =   nil;
 
-#pragma mark - Interface
+#pragma mark - Public variables
 
-/// When scrolling is in progress, there are tons of variables holding global state. This resets some of them.
-/// I determined the ones it resets through trial and error. Some misbehaviour/bugs might be caused by this not resetting all of the global variables.
-+ (void)resetDynamicGlobals {
-    _horizontalScrolling    =   NO;
-    [SmoothScroll resetDynamicGlobals];
+static CGEventSourceRef _eventSource = nil;
++ (CGEventSourceRef)eventSource {
+    return _eventSource;
 }
-
 // Used to switch between SmoothScroll and RoughScroll
+// TODO: Rename this _smoothEnabled
 static BOOL _isSmoothEnabled;
 + (BOOL)isSmoothEnabled {
     return _isSmoothEnabled;
@@ -38,17 +37,12 @@ static BOOL _isSmoothEnabled;
 + (void)setIsSmoothEnabled:(BOOL)B {
     _isSmoothEnabled = B;
 }
-
 static CGPoint _previousMouseLocation;
 + (CGPoint)previousMouseLocation {
     return _previousMouseLocation;
 }
 + (void)setPreviousMouseLocation:(CGPoint)p {
     _previousMouseLocation = p;
-}
-
-+ (void)load_Manual {
-    _systemWideAXUIElement = AXUIElementCreateSystemWide();
 }
 // TODO: Change type to MFScrollDirection
 static int _scrollDirection;
@@ -58,40 +52,14 @@ static int _scrollDirection;
 + (void)setScrollDirection:(int)dir {
     _scrollDirection = dir;
 }
-
-// ??? whenever relevantDevicesAreAttached or isEnabled are changed, MomentumScrolls class method decide is called. Start or stop decide will start / stop momentum scroll and set _isRunning
-
-/// Either activate SmoothScroll or RoughScroll or stop scroll interception entirely
-+ (void)decide {
-    BOOL disableAll =
-    ![DeviceManager relevantDevicesAreAttached]
-    || (!_isSmoothEnabled && _scrollDirection == 1);
-//    || isEnabled == NO;
-    
-    if (disableAll) {
-        [SmoothScroll stop];
-//        [RoughScroll stop];
-        [ModifierInputReceiver stop];
-        return;
-    }
-    [ModifierInputReceiver start];
-    if (_isSmoothEnabled) {
-        [SmoothScroll start];
-        [RoughScroll stop];
-    } else {
-        [SmoothScroll stop];
-        [RoughScroll start];
-    }
-}
-
-static BOOL     _horizontalScrolling;
+static BOOL _horizontalScrolling;
 + (BOOL)horizontalScrolling {
     return _horizontalScrolling;
 }
 + (void)setHorizontalScrolling:(BOOL)B {
     _horizontalScrolling = B;
 }
-static BOOL     _magnificationScrolling;
+static BOOL _magnificationScrolling;
 + (BOOL)magnificationScrolling {
     return _magnificationScrolling;
 }
@@ -110,6 +78,100 @@ static BOOL     _magnificationScrolling;
     }
 }
 
-#pragma mark - Helper functions
+#pragma mark - Private functions
+
+static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
+    
+//    NSLog(@"scrollPhase: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase));
+//    NSLog(@"momentumPhase: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventMomentumPhase));
+    
+//        CFTimeInterval ts = CACurrentMediaTime();
+//            NSLog(@"event tap bench: %f", CACurrentMediaTime() - ts);
+    
+    // Return non-scroll-wheel events unaltered
+    
+    long long   isPixelBased            =   CGEventGetIntegerValueField(event, kCGScrollWheelEventIsContinuous);
+    long long   scrollPhase             =   CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase);
+    long long   scrollDeltaAxis1        =   CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
+    long long   scrollDeltaAxis2        =   CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2);
+    if ( (isPixelBased != 0) || (scrollDeltaAxis1 == 0) || (scrollDeltaAxis2 != 0) || (scrollPhase != 0)) { // adding scrollphase here is untested
+        // scroll event doesn't come from a simple scroll wheel or doesn't contain the data we need to use
+        return event;
+    }
+    
+    if (_isSmoothEnabled) {
+        NSDictionary *info = @{
+            @"scrollDeltaAxis1": [NSNumber numberWithLongLong:scrollDeltaAxis1]
+        };
+        
+        return [SmoothScroll handleInput:event info:info];
+    } else {
+        return [RoughScroll handleInput:event];
+    }
+}
+
+#pragma mark - Public functions
+
++ (void)load_Manual {
+    _systemWideAXUIElement = AXUIElementCreateSystemWide();
+    // Create Event source
+    if (_eventSource == nil) {
+        _eventSource = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
+    }
+    // Create/enable scrollwheel input callback
+    if (_eventTap == nil) {
+        CGEventMask mask = CGEventMaskBit(kCGEventScrollWheel);
+        _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
+        NSLog(@"_eventTap: %@", _eventTap);
+        CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _eventTap, 0);
+        CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes);
+        CFRelease(runLoopSource);
+        CGEventTapEnable(_eventTap, false); // Not sure if this does anything
+    }
+}
+
+/// When scrolling is in progress, there are tons of variables holding global state. This resets some of them.
+/// I determined the ones it resets through trial and error. Some misbehaviour/bugs might be caused by this not resetting all of the global variables.
++ (void)resetDynamicGlobals {
+    _horizontalScrolling    =   NO;
+    [SmoothScroll resetDynamicGlobals];
+}
+
+// ??? whenever relevantDevicesAreAttached or isEnabled are changed, MomentumScrolls class method decide is called. Start or stop decide will start / stop momentum scroll and set _isRunning
+
+/// Either activate SmoothScroll or RoughScroll or stop scroll interception entirely
++ (void)decide {
+    BOOL disableAll =
+    ![DeviceManager relevantDevicesAreAttached]
+    || (!_isSmoothEnabled && _scrollDirection == 1);
+//    || isEnabled == NO;
+    
+    if (disableAll) {
+        
+        // Disable scroll interception
+        if (_eventTap) {
+            CGEventTapEnable(_eventTap, false);
+        }
+        
+        // Disable other scroll classes
+        [SmoothScroll stop];
+        [RoughScroll stop];
+        [ModifierInputReceiver stop];
+    } else {
+        
+        // Enable scroll interception
+        CGEventTapEnable(_eventTap, true);
+        
+        // Enable other scroll classes
+        [ModifierInputReceiver start];
+        if (_isSmoothEnabled) {
+            [SmoothScroll start];
+            [RoughScroll stop];
+        } else {
+            [SmoothScroll stop];
+            [RoughScroll start];
+        }
+    }
+}
 
 @end

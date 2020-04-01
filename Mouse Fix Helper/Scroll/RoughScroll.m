@@ -17,33 +17,17 @@
 
 #pragma mark - Globals
 
-static CFMachPortRef _eventTap;
-
-// TODO: Should this be load or load_Manual? I can't remember why I used load_Manual everywhere?
-
-+ (void)load_Manual {
-    if (_eventTap == nil) {
-        CGEventMask mask = CGEventMaskBit(kCGEventScrollWheel);
-        _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
-        NSLog(@"_eventTap: %@", _eventTap);
-        CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _eventTap, 0);
-        CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes);
-        CFRelease(runLoopSource);
-        CGEventTapEnable(_eventTap, false); // not sure if necessary
-    }
-}
-
 + (void)start {
-    CGEventTapEnable(_eventTap, true);
 }
 
 + (void)stop {
-    CGEventTapEnable(_eventTap, false);
 }
 
-static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
++ (CGEventRef)handleInput:(CGEventRef)event {
     
-    // TODO: Optimize this using mouse Moved and other techniques from SmoothScroll.m
+    // TODO: Optimize this using mouseMoved and other techniques from SmoothScroll.m
+    // (Probably best to move the calculation of stuff that both SmoothScroll and RoughScroll use to ScrollControl, and then pass the stuff as parameters to the respective `handleInput:` functions)
+    
 //    if (mouseMoved == TRUE) {
 //        setConfigVariablesForActiveApp();
 //    }

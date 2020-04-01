@@ -30,6 +30,8 @@ consecutiveScrollTickMaxIntervall:(float)ti_int;
 + (void)stop;
 + (BOOL)isRunning;
 
++ (CGEventRef)handleInput:(CGEventRef)event info:(NSDictionary *)info;
+
 + (void)Handle_ConsecutiveScrollTickCallback:(NSTimer *)timer;
 + (void)Handle_ConsecutiveScrollSwipeCallback:(NSTimer *)timer;
 

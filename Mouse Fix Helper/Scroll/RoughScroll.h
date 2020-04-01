@@ -14,9 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 // Traditional, non-smooth scrolling.
 
 @interface RoughScroll : NSObject
-+ (void)load_Manual;
 + (void)start;
 + (void)stop;
++ (CGEventRef)handleInput:(CGEventRef)event;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -40,7 +40,6 @@
         [ConfigFileInterface_HelperApp load_Manual];
         [ScrollControl load_Manual];
         [SmoothScroll load_Manual];
-        [RoughScroll load_Manual];
     }
 }
 + (Boolean)check {

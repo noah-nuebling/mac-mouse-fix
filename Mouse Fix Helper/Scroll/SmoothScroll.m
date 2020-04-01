@@ -77,8 +77,6 @@ static double   _frictionDepth;
 static int      _nOfOnePixelScrollsMax;
 // objects
 static CVDisplayLinkRef _displayLink    =   nil;
-static CFMachPortRef    _eventTap       =   nil;
-static CGEventSourceRef _eventSource    =   nil;
 
 #pragma mark dynamic
 
@@ -172,29 +170,10 @@ consecutiveScrollTickMaxIntervall:(float)ti_int
     
     [SmoothScroll resetDynamicGlobals];
     
-    // TODO: Is it really necessary to create a new event tap more than once?
-    if (_eventTap == nil) {
-        CGEventMask mask = CGEventMaskBit(kCGEventScrollWheel);
-        _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
-        NSLog(@"_eventTap: %@", _eventTap);
-        CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _eventTap, 0);
-        CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes);
-        CFRelease(runLoopSource);
-        CGEventTapEnable(_eventTap, true);
-    }
-    
-    // the eventTap sometimes breaks when replugging in the mouse too quickly. I don't know if this helps
-//    @try {
-//        CGEventTapEnable(_eventTap, true);
-//    } @finally {
-//    }
     if (_displayLink == nil) {
         CVDisplayLinkCreateWithActiveCGDisplays(&_displayLink);
         CVDisplayLinkSetOutputCallback(_displayLink, displayLinkCallback, nil);
         _displaysUnderMousePointer = malloc(sizeof(CGDirectDisplayID) * 3);
-    }
-    if (_eventSource == nil) {
-        _eventSource = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
     }
     
     CGDisplayRemoveReconfigurationCallback(Handle_displayReconfiguration, NULL); // don't know if necesssary
@@ -212,13 +191,6 @@ consecutiveScrollTickMaxIntervall:(float)ti_int
         CVDisplayLinkStop(_displayLink);
         CVDisplayLinkRelease(_displayLink);
         _displayLink = nil;
-    } if (_eventTap) {
-        CGEventTapEnable(_eventTap, false);
-        CFRelease(_eventTap);
-        _eventTap = nil;
-    } if (_eventSource) {
-        CFRelease(_eventSource);
-        _eventSource = nil;
     }
     
      CGDisplayRemoveReconfigurationCallback(Handle_displayReconfiguration, NULL);
@@ -226,24 +198,7 @@ consecutiveScrollTickMaxIntervall:(float)ti_int
 
 #pragma mark - Run Loop
 
-static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
-    
-//    NSLog(@"scrollPhase: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase));
-//    NSLog(@"momentumPhase: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventMomentumPhase));
-    
-//        CFTimeInterval ts = CACurrentMediaTime();
-//            NSLog(@"event tap bench: %f", CACurrentMediaTime() - ts);
-    
-    // Return non-scroll-wheel events unaltered
-    
-    long long   isPixelBased            =   CGEventGetIntegerValueField(event, kCGScrollWheelEventIsContinuous);
-    long long   scrollPhase             =   CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase);
-    long long   scrollDeltaAxis1        =   CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
-    long long   scrollDeltaAxis2        =   CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2);
-    if ( (isPixelBased != 0) || (scrollDeltaAxis1 == 0) || (scrollDeltaAxis2 != 0) || (scrollPhase != 0)) { // adding scrollphase here is untested
-        // scroll event doesn't come from a simple scroll wheel or doesn't contain the data we need to use
-        return event;
-    }
++ (CGEventRef)handleInput:(CGEventRef)event info:(NSDictionary *)info {
   
     
     // TODO: Delete this, if moving it didn't break anything
@@ -257,6 +212,8 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 //    ScrollControl.previousMouseLocation = mouseLocation;
     
     // Check if Scrolling Direction changed
+    
+    long long scrollDeltaAxis1 = [(NSNumber *)[info valueForKey:@"scrollDeltaAxis1"] longLongValue];
     
     Boolean newScrollDirection = FALSE;
     if (![ScrollUtility sameSign_n:scrollDeltaAxis1 m:_previousScrollDeltaAxis1]) {
@@ -451,8 +408,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     if (ScrollControl.magnificationScrolling) {
         [TouchSimulator postEventWithMagnification:_pixelsToScroll/800.0 phase:kIOHIDEventPhaseChanged];
     } else {
-        
-        CGEventRef scrollEvent = CGEventCreateScrollWheelEvent(_eventSource, kCGScrollEventUnitPixel, 1, 0);
+        CGEventRef scrollEvent = CGEventCreateScrollWheelEvent(ScrollControl.eventSource, kCGScrollEventUnitPixel, 1, 0);
         // CGEventSourceSetPixelsPerLine(_eventSource, 1);
         // it might be a cool idea to diable scroll acceleration and then try to make the scroll events line based (kCGScrollEventUnitPixel)
         
