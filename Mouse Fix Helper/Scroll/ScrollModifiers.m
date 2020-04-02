@@ -15,19 +15,33 @@
 
 #pragma mark - Public class variables
 
-BOOL _horizontalScrollModifierKeyEnabled = YES;
+static BOOL _horizontalScrollModifierKeyEnabled = YES;
 + (BOOL)horizontalScrollModifierKeyEnabled {
     return _horizontalScrollModifierKeyEnabled;
 }
 + (void)setHorizontalScrollModifierKeyEnabled:(BOOL)B {
     _horizontalScrollModifierKeyEnabled = B;
 }
-BOOL _magnificationScrollModifierKeyEnabled = YES;
+static BOOL _magnificationScrollModifierKeyEnabled = YES;
 + (BOOL)magnificationScrollModifierKeyEnabled {
     return _magnificationScrollModifierKeyEnabled;
 }
 + (void)setMagnificationScrollModifierKeyEnabled:(BOOL)B {
     _magnificationScrollModifierKeyEnabled = B;
+}
+static CGEventFlags _horizontalScrollModifierKeyMask = 0;
+//+ (CGEventFlags)horizontalModifier {
+//    return _horizontalModifier;
+//}
++ (void)setHorizontalScrollModifierKeyMask:(CGEventFlags)F {
+    _horizontalScrollModifierKeyMask = F;
+}
+static CGEventFlags _magnificationScrollModifierKeyMask = 0;
+//+ (CGEventFlags)magnificationModifier {
+//    return _magnificationModifier;
+//}
++ (void)setMagnificationScrollModifierKeyMask:(CGEventFlags)F {
+    _magnificationScrollModifierKeyMask = F;
 }
 
 #pragma mark - Private class variables
@@ -58,12 +72,12 @@ static void setupModifierKeyCallback() {
 
 CGEventRef Handle_ModifierChanged(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     CGEventFlags flags = CGEventGetFlags(event);
-    if (flags & kCGEventFlagMaskShift && _horizontalScrollModifierKeyEnabled) {
+    if (flags & _horizontalScrollModifierKeyMask && _horizontalScrollModifierKeyEnabled) {
         ScrollControl.horizontalScrolling = YES;
     } else {
         ScrollControl.horizontalScrolling = NO;
     }
-    if (flags & kCGEventFlagMaskCommand && _magnificationScrollModifierKeyEnabled) {
+    if (flags & _magnificationScrollModifierKeyMask && _magnificationScrollModifierKeyEnabled) {
         ScrollControl.magnificationScrolling = YES;
     } else {
         ScrollControl.magnificationScrolling = NO;
@@ -79,5 +93,21 @@ CGEventRef Handle_ModifierChanged(CGEventTapProxy proxy, CGEventType type, CGEve
     
     return event;
 }
+
+//static CGEventFlags stringToEventFlagMask(NSString *string) {
+//    switch(string) {
+//        case @"command":
+//            return kCGEventFlagMaskCommand;
+//            break;
+//        case @"control":
+//            return kCGEventFlagMaskControl;
+//        case @"option":
+//            return kCGEventFlagMaskAlternate;
+//            break;
+//        case @"shift":
+//            return kCGEventFlagMaskShift;
+//            break;
+//    }
+//}
 
 @end

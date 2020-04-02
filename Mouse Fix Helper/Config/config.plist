@@ -84,10 +84,14 @@
 		<dict/>
 		<key>modifierKeys</key>
 		<dict>
+			<key>horizontalScrollModifierKey</key>
+			<string>shift</string>
+			<key>magnificationScrollModifierKey</key>
+			<string>option</string>
 			<key>horizontalScrollModifierKeyEnabled</key>
-			<false/>
+			<true/>
 			<key>magnificationScrollModifierKeyEnabled</key>
-			<false/>
+			<true/>
 		</dict>
 	</dict>
 	<key>AppOverrides</key>
@@ -97,22 +101,15 @@
 			<key>Scroll</key>
 			<dict>
 				<key>smooth</key>
-				<false/>
+				<true/>
 			</dict>
 		</dict>
 		<key>com.apple.Preview</key>
 		<dict>
 			<key>Scroll</key>
 			<dict>
-				<key>modifierKeys</key>
-				<dict>
-					<key>horizontalScrollModifierKeyEnabled</key>
-					<false/>
-					<key>magnificationScrollModifierKeyEnabled</key>
-					<true/>
-				</dict>
 				<key>smooth</key>
-				<false/>
+				<true/>
 				<key>direction</key>
 				<integer>1</integer>
 				<key>smoothParameters</key>
@@ -139,6 +136,15 @@
 					<real>0.13</real>
 					<key>consecutiveScrollSwipeMaxIntervall</key>
 					<real>0.5</real>
+				</dict>
+				<key>modifierKeys</key>
+				<dict>
+					<key>magnificationScrollModifierKey</key>
+					<string>command</string>
+					<key>horizontalScrollModifierKeyEnabled</key>
+					<true/>
+					<key>magnificationScrollModifierKeyEnabled</key>
+					<true/>
 				</dict>
 			</dict>
 		</dict>

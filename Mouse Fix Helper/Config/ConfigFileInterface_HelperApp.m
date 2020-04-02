@@ -23,12 +23,19 @@
 #pragma mark Globals
 
 static NSString *_bundleIdentifierOfAppWhichCausesOverride;
+static NSDictionary *_stringToEventFlagMask;
 
 #pragma mark - Interface
 
 + (void)load_Manual {
     [self reactToConfigFileChange];
     setupFSEventStreamCallback();
+    _stringToEventFlagMask = @{
+        @"command" : @(kCGEventFlagMaskCommand),
+        @"control" : @(kCGEventFlagMaskControl),
+        @"option" : @(kCGEventFlagMaskAlternate),
+        @"shift" : @(kCGEventFlagMaskShift),
+    };
 }
 
 static NSMutableDictionary *_config;
@@ -184,18 +191,27 @@ static void fillConfigFromFile() {
         NSDictionary *scroll = [_configWithOverridesApplied objectForKey:@"Scroll"];
         
         // top level
+        
 //        ScrollControl.disableAll = [[defaultScrollSettings objectForKey:@"disableAll"] boolValue]; // this is currently unused. Could be used as a killswitch for all scrolling interception
         ScrollControl.scrollDirection = [[scroll objectForKey:@"direction"] intValue];
         ScrollControl.isSmoothEnabled = [[scroll objectForKey:@"smooth"] boolValue];
 
         // smoothParameters
+        
         [SmoothScroll configureWithParameters:[scroll objectForKey:@"smoothParameters"]];
 
         // roughParameters
             // nothing here yet
 
-        // keyboard modifier keys
+        // Keyboard modifier keys
+        
         NSDictionary *mod = [scroll objectForKey:@"modifierKeys"];
+        // Event flag masks
+        NSString *horizontalScrollModifierKey = [mod objectForKey:@"horizontalScrollModifierKey"];
+        ScrollModifiers.horizontalScrollModifierKeyMask = (CGEventFlags)[[_stringToEventFlagMask objectForKey:horizontalScrollModifierKey] unsignedLongLongValue];
+        NSString *magnificationScrollModifierKey = [mod objectForKey:@"magnificationScrollModifierKey"];
+        ScrollModifiers.MagnificationScrollModifierKeyMask = (CGEventFlags)[[_stringToEventFlagMask objectForKey:magnificationScrollModifierKey] unsignedLongLongValue];
+        // Enabled / disabled
         ScrollModifiers.horizontalScrollModifierKeyEnabled = [[mod objectForKey:@"horizontalScrollModifierKeyEnabled"] boolValue];
         ScrollModifiers.magnificationScrollModifierKeyEnabled = [[mod objectForKey:@"magnificationScrollModifierKeyEnabled"] boolValue];
     }

@@ -10,6 +10,8 @@
 #import <Foundation/Foundation.h>
 
 @interface ScrollModifiers : NSObject
++ (void)setHorizontalScrollModifierKeyMask:(CGEventFlags)F;
++ (void)setMagnificationScrollModifierKeyMask:(CGEventFlags)F;
 + (BOOL)horizontalScrollModifierKeyEnabled;
 + (void)setHorizontalScrollModifierKeyEnabled:(BOOL)B;
 + (BOOL)magnificationScrollModifierKeyEnabled;
