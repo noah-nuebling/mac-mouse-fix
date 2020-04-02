@@ -116,6 +116,27 @@ static int      _onePixelScrollsCounter =   0;
     [_consecutiveScrollSwipeTimer invalidate];
 }
 
++ (void)configureWithParameters:(NSDictionary *)params {
+    _pxStepSize                         =   [[params objectForKey:@"pxPerStep"] intValue];
+    _msPerStep                          =   [[params objectForKey:@"msPerStep"] intValue];
+    _frictionCoefficient                =   [[params objectForKey:@"friction"] floatValue];
+    _frictionDepth                      =   [[params objectForKey:@"frictionDepth"] floatValue];
+    _accelerationForScrollQueue         =   [[params objectForKey:@"acceleration"] floatValue];
+    
+    // After opl+1 frames of only scrolling 1 pixel, scrolling stops. Should probably change code to stop after opl frames.
+    _nOfOnePixelScrollsMax              =   [[params objectForKey:@"onePixelScrollsLimit"] intValue];
+    
+    // How quickly fast scrolling gains speed.
+    _fastScrollExponentialBase          =   [[params objectForKey:@"fastScrollExponentialBase"] floatValue]; // 1.05 //1.125 //1.0625 // 1.09375
+    // If fs_thr consecutive swipes occur, fast scrolling is enabled.
+    _fastScrollThreshold_inSwipes       =   [[params objectForKey:@"fastScrollThreshold_inSwipes"] intValue];
+    // If sw_thr consecutive ticks occur, they are deemed a scroll-swipe.
+    _scrollSwipeThreshold_inTicks       =   [[params objectForKey:@"scrollSwipeThreshold_inTicks"] intValue]; // 3
+    // If more than sw_int seconds passes between two scrollwheel swipes, then they aren't deemed consecutive.
+    _consecutiveScrollSwipeMaxIntervall =   [[params objectForKey:@"consecutiveScrollSwipeMaxIntervall"] floatValue];
+    // If more than ti_int seconds passes between two scrollwheel ticks, then they aren't deemed consecutive.
+    _consecutiveScrollTickMaxIntervall  =   [[params objectForKey:@"consecutiveScrollTickMaxIntervall"] floatValue]; // == _msPerStep/1000 // oldval:0.03
+}
 
 + (void)configureWithPxPerStep:(int)px
                      msPerStep:(int)ms

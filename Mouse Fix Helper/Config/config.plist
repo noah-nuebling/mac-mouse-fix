@@ -5,7 +5,7 @@
 	<key>Other</key>
 	<dict>
 		<key>configVersion</key>
-		<integer>2</integer>
+		<integer>3</integer>
 		<key>checkForUpdates</key>
 		<true/>
 		<key>skippedBundleVersion</key>
@@ -47,14 +47,14 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>ScrollSettings</key>
+	<key>Scroll</key>
 	<dict>
 		<key>disableAll (unused)</key>
 		<false/>
 		<key>smooth</key>
-		<false/>
+		<true/>
 		<key>direction</key>
-		<string>-1</string>
+		<integer>-1</integer>
 		<key>smoothParameters</key>
 		<dict>
 			<key>pxPerStep</key>
@@ -94,7 +94,7 @@
 	<dict>
 		<key>com.adobe.</key>
 		<dict>
-			<key>ScrollSettings</key>
+			<key>Scroll</key>
 			<dict>
 				<key>smooth</key>
 				<false/>
@@ -102,17 +102,17 @@
 		</dict>
 		<key>com.apple.Preview</key>
 		<dict>
-			<key>ScrollSettings</key>
+			<key>Scroll</key>
 			<dict>
 				<key>modifierKeys</key>
 				<dict>
 					<key>horizontalScrollModifierKeyEnabled</key>
-					<true/>
-					<key>magnificationScrollModifierKeyEnabled</key>
 					<false/>
+					<key>magnificationScrollModifierKeyEnabled</key>
+					<true/>
 				</dict>
 				<key>smooth</key>
-				<true/>
+				<false/>
 				<key>direction</key>
 				<integer>1</integer>
 				<key>smoothParameters</key>

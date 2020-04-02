@@ -11,7 +11,8 @@
 
 @interface ConfigFileInterface_HelperApp : NSObject
 
-@property (class, retain) NSMutableDictionary *config;
+//@property (class, retain) NSMutableDictionary *config;
++ (NSMutableDictionary *)config;
 
 + (void)load_Manual;
 
