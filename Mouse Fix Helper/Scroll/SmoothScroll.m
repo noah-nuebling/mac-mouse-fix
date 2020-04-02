@@ -138,40 +138,6 @@ static int      _onePixelScrollsCounter =   0;
     _consecutiveScrollTickMaxIntervall  =   [[params objectForKey:@"consecutiveScrollTickMaxIntervall"] floatValue]; // == _msPerStep/1000 // oldval:0.03
 }
 
-+ (void)configureWithPxPerStep:(int)px
-                     msPerStep:(int)ms
-                      friction:(float)f
-                 fricitonDepth:(float)fd
-                  acceleration:(float)acc
-          onePixelScrollsLimit:(int)opl
-     fastScrollExponentialBase:(float)fs_exp
-  fastScrollThreshold_inSwipes:(int)fs_thr
-  scrollSwipeThreshold_inTicks:(int)sw_thr
-consecutiveScrollSwipeMaxIntervall:(float)sw_int
-consecutiveScrollTickMaxIntervall:(float)ti_int
-{
-    _pxStepSize                         =   px;
-    _msPerStep                          =   ms;
-    _frictionCoefficient                =   f;
-    _frictionDepth                      =   fd;
-    _accelerationForScrollQueue         =   acc;
-    
-    // After opl+1 frames of only scrolling 1 pixel, scrolling stops. Should probably change code to stop after opl frames.
-    _nOfOnePixelScrollsMax              =   opl;
-    
-    // How quickly fast scrolling gains speed.
-    _fastScrollExponentialBase          =   fs_exp; // 1.05 //1.125 //1.0625 // 1.09375
-    // If fs_thr consecutive swipes occur, fast scrolling is enabled.
-    _fastScrollThreshold_inSwipes       =   fs_thr;
-    // If sw_thr consecutive ticks occur, they are deemed a scroll-swipe.
-    _scrollSwipeThreshold_inTicks       =   sw_thr; // 3
-    // If more than sw_int seconds passes between two scrollwheel swipes, then they aren't deemed consecutive.
-    _consecutiveScrollSwipeMaxIntervall =   sw_int;
-    // If more than ti_int seconds passes between two scrollwheel ticks, then they aren't deemed consecutive.
-    _consecutiveScrollTickMaxIntervall  =   ti_int; // == _msPerStep/1000 // oldval:0.03
-    
-}
-
 //AppOverrides *_appOverrides;
 + (void)load_Manual {
     [SmoothScroll start];
@@ -341,7 +307,6 @@ consecutiveScrollTickMaxIntervall:(float)ti_int
 
 static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp *inNow, const CVTimeStamp *inOutputTime, CVOptionFlags flagsIn, CVOptionFlags *flagsOut, void *displayLinkContext) {
     
-    
 //    NSLog(@"display Link CALLBACK");
     
 //    CFTimeInterval ts = CACurrentMediaTime();
@@ -405,8 +370,8 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     }
     
 # pragma mark Send Event
-    
     if (ScrollControl.magnificationScrolling) {
+                    NSLog(@"Pixels TO ZOOM: %d", _pixelsToScroll);
         [TouchSimulator postEventWithMagnification:_pixelsToScroll/800.0 phase:kIOHIDEventPhaseChanged];
     } else {
         CGEventRef scrollEvent = CGEventCreateScrollWheelEvent(ScrollControl.eventSource, kCGScrollEventUnitPixel, 1, 0);

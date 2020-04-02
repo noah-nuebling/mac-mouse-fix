@@ -96,6 +96,25 @@
 	</dict>
 	<key>AppOverrides</key>
 	<dict>
+		<key>com.apple.Safari</key>
+		<dict>
+			<key>Scroll</key>
+			<dict>
+				<key>smoothParameters</key>
+				<dict>
+					<key>pxPerStep</key>
+					<integer>20</integer>
+					<key>msPerStep</key>
+					<integer>90</integer>
+					<key>friction</key>
+					<real>1.5</real>
+					<key>frictionDepth</key>
+					<integer>1</integer>
+					<key>acceleration</key>
+					<real>1.4</real>
+				</dict>
+			</dict>
+		</dict>
 		<key>com.adobe.</key>
 		<dict>
 			<key>Scroll</key>

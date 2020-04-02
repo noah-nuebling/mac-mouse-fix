@@ -64,13 +64,17 @@ static BOOL _magnificationScrolling;
     return _magnificationScrolling;
 }
 + (void)setMagnificationScrolling:(BOOL)B {
-    if (_magnificationScrolling && !B) {
+    if (_magnificationScrolling && !B) { // Magnification scrolling turned off
 //        if (_scrollPhase != kMFPhaseEnd) {
             [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseEnded];
 //            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseBegan];
 //            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseEnded];
 //        }
-    } else if (!_magnificationScrolling && B) {
+    } else if (!_magnificationScrolling && B) { // Magnification scrolling turned on
+        if (SmoothScroll.isRunning) { // Restarting SmoothScroll to avoid immediate zooming when pressing command while scrolling.
+            [SmoothScroll stop];
+            [SmoothScroll start];
+        }
 //        if (_scrollPhase == kMFPhaseMomentum || _scrollPhase == kMFPhaseWheel) {
             [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseBegan];
 //        }
