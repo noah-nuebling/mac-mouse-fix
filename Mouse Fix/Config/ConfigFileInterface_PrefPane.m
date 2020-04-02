@@ -75,7 +75,6 @@ static NSURL *_defaultConfigURL;
         NSLog(@"ERROR Reading config File: %@", readErr);
         // TODO: handle this error
     }
-    
     self.config = configDict;
 }
 
@@ -98,6 +97,5 @@ static NSURL *_defaultConfigURL;
     [defaultData writeToURL:_currentConfigURL atomically:YES];
     [MessagePort_PrefPane sendMessageToHelper:@"terminate"];
 }
-
 
 @end

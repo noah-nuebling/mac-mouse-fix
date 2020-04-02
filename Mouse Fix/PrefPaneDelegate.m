@@ -62,7 +62,7 @@ static PrefPaneDelegate *_mainView;
     _mainView = new;
 }
 
-static NSDictionary *_scrollSmoothnessConfigurations;
+static NSDictionary *_scrollConfigurations;
 static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 
 
@@ -110,11 +110,13 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 + (void)initialize {
     
     if (self == [PrefPaneDelegate class]) {
-//        _scrollSmoothnessConfigurations = @{
-//                                            @"Normal"   :   @[ @[@20,@100],  @130, @1.5],
-//                                            @"Snappy"   :   @[ @[@10,@90],  @75,  @1.2],
-//                                            @"Smooth"   :   @[ @[@10,@90], @190, @1.5],
-//                                            };
+        
+        // TODO: Update this
+        _scrollConfigurations = @{
+                                            @"Normal"   :   @[ @[@20,@100],  @130, @1.5],
+                                            @"Snappy"   :   @[ @[@10,@90],  @75,  @1.2],
+                                            @"Smooth"   :   @[ @[@10,@90], @190, @1.5],
+                                            };
         
         actionsForPopupButtonTag_onlyForSideMouseButtons =
         @{
@@ -150,6 +152,8 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 }
 
 - (void)willSelect {
+    
+    NSLog(@"BREAK PLS");
     [AuthorizeAccessibilityView remove];
     [MessagePort_PrefPane performSelector:@selector(sendMessageToHelper:) withObject:@"checkAccessibility" afterDelay:0.0];
 }
@@ -194,6 +198,8 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
 # pragma mark Popup Buttons
     
+    NSDictionary *configTest = ConfigFileInterface_PrefPane.config;
+    
     NSDictionary *buttonRemaps = ConfigFileInterface_PrefPane.config[@"ButtonRemaps"];
     
     // mouse button 4 and 5
@@ -226,8 +232,6 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
         j = 0;
     }
     
-    
-    
     // middle mouse button
     
     NSDictionary *middleButtonRemap = buttonRemaps[@"3"][@"single"];
@@ -252,24 +256,20 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
 # pragma mark scrollSettings
     
-    NSDictionary *scrollConfigFromFile = ConfigFileInterface_PrefPane.config[@"ScrollSettings"];
+    NSDictionary *scrollConfigFromFile = ConfigFileInterface_PrefPane.config[@"Scroll"];
     
     // enabled checkbox
-    if ([scrollConfigFromFile[@"enabled"] boolValue] == 1) {
+    if ([scrollConfigFromFile[@"smooth"] boolValue] == 1) {
         _scrollEnableCheckBox.state = 1;
     }
     else {
         _scrollEnableCheckBox.state = 0;
     }
     
-    NSArray *scrollValues = scrollConfigFromFile[@"values"];
+//    NSArray *scrollValues = scrollConfigFromFile[@"smoothSettings"];
     
     // invert checkbox
-    if ([scrollValues[3] intValue] == -1) {
-        _scrollCheckBoxInvert.state = 1;
-    } else {
-        _scrollCheckBoxInvert.state = 0;
-    }
+    _scrollCheckBoxInvert.state = [scrollConfigFromFile[@"direction"] integerValue];
     
     // radio buttons
     /*
@@ -295,10 +295,11 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
     // slider
     double pxStepSizeRelativeToConfigRange;
-    NSArray *range = _scrollSmoothnessConfigurations[activeScrollSmoothnessConfiguration][0];
+    NSArray *range = _scrollConfigurations[activeScrollSmoothnessConfiguration][0];
     double lowerLm = [range[0] floatValue];
     double upperLm = [range[1] floatValue];
-    double pxStepSize = [scrollValues[0] floatValue];
+    NSDictionary *smoothSettings = scrollConfigFromFile[@"smoothParameters"];
+    double pxStepSize = [smoothSettings[@"pxPerStep"] floatValue];
     pxStepSizeRelativeToConfigRange = (pxStepSize - lowerLm) / (upperLm - lowerLm);
     
     _scrollSliderStepSize.doubleValue = pxStepSizeRelativeToConfigRange;
@@ -346,9 +347,6 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
     // scroll Settings
     
-    // checkbox
-    [ConfigFileInterface_PrefPane.config setValue: [NSNumber numberWithBool: _scrollEnableCheckBox.state] forKeyPath:@"ScrollSettings.enabled"];
-    
     
     // radio buttons and slider
     NSArray *smoothnessConfiguration;
@@ -364,7 +362,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
         smoothnessConfiguration = _scrollSmoothnessConfigurations[@"Normal"];
     }
      */
-    smoothnessConfiguration = _scrollSmoothnessConfigurations[@"Normal"]; 
+    smoothnessConfiguration = _scrollConfigurations[@"Normal"]; 
     
     NSArray     *stepSizeRange  = smoothnessConfiguration[0];
     NSNumber    *msPerStep      = smoothnessConfiguration[1];
@@ -377,10 +375,20 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
     int stepSizeActual = ( scrollSliderValue * (stepSizeMax - stepSizeMin) ) + stepSizeMin;
     
-    NSArray *scrollValuesFromUI = @[@(stepSizeActual), msPerStep, friction, @(direction)];
+    NSDictionary *scrollParametersFromUI = @{
+        @"Scroll": @{
+                @"smooth": @(_scrollEnableCheckBox.state),
+                @"direction": @(direction),
+                @"smoothParameters": @{
+                        @"pxPerStep": @(stepSizeActual),
+                        @"msPerStep": msPerStep,
+                        @"friction": friction
+            }
+        }
+    };
     
-    [ConfigFileInterface_PrefPane.config setValue:scrollValuesFromUI forKeyPath:@"ScrollSettings.values"];
     
+    ConfigFileInterface_PrefPane.config = [[Utility_PrefPane applyOverridesFrom:scrollParametersFromUI to:ConfigFileInterface_PrefPane.config] mutableCopy];
     
     [ConfigFileInterface_PrefPane writeConfigToFile];
 }

@@ -17,11 +17,13 @@
 #import "SmoothScroll.h"
 #import "MouseInputReceiver.h"
 #import "ScrollModifiers.h"
+#import "Utility_HelperApp.h"
 
 @implementation ConfigFileInterface_HelperApp
 
 #pragma mark Globals
 
+static BOOL _configFileChanged;
 static NSString *_bundleIdentifierOfAppWhichCausesOverride;
 static NSDictionary *_stringToEventFlagMask;
 
@@ -56,8 +58,9 @@ static NSMutableDictionary *_configWithOverridesApplied;
 + (void)reactToConfigFileChange {
     
     fillConfigFromFile();
-    
+    _configFileChanged = YES;
     [ConfigFileInterface_HelperApp setProgramStateToConfig];
+    _configFileChanged = NO;
 }
 
 /// Load contents of config.plist file into this class' config property
@@ -93,70 +96,77 @@ static void fillConfigFromFile() {
 + (void)setProgramStateToConfig {
     // TODO: This function is still seems to be a huge resource hog (thinking this because RoughScroll calls this on every tick and is much more resource intensive than SmoothScroll) – even with the current optimization of only looking at the frontmost app for overrides, instead of the app under the mouse pointer.
     
-    // get App under mouse pointer
-        
-        
-        
-    //CFTimeInterval ts = CACurrentMediaTime();
-        
-        
-        // 1. Even slower
-        
-    //    CGEventRef fakeEvent = CGEventCreate(NULL);
-    //    CGPoint mouseLocation = CGEventGetLocation(fakeEvent);
-    //    CFRelease(fakeEvent);
-        
-    //    NSInteger winNUnderMouse = [NSWindow windowNumberAtPoint:(NSPoint)mouseLocation belowWindowWithWindowNumber:0];
-    //    CFArrayRef windowList = CGWindowListCopyWindowInfo(kCGWindowListExcludeDesktopElements | kCGWindowListOptionOnScreenOnly, kCGNullWindowID);
-    ////    NSLog(@"windowList: %@", windowList);
-    //    int windowPID = 0;
-    //    for (int i = 0; i < CFArrayGetCount(windowList); i++) {
-    //        CFDictionaryRef w = CFArrayGetValueAtIndex(windowList, i);
-    //        int winN;
-    //        CFNumberGetValue(CFDictionaryGetValue(w, CFSTR("kCGWindowNumber")), kCFNumberIntType, &winN);
-    //        if (winN == winNUnderMouse) {
-    //            CFNumberGetValue(CFDictionaryGetValue(w, CFSTR("kCGWindowOwnerPID")), kCFNumberIntType, &windowPID);
-    //        }
-    //    }
-    //    NSRunningApplication *appUnderMousePointer = [NSRunningApplication runningApplicationWithProcessIdentifier:windowPID];
-    //    NSString *bundleIdentifierOfScrolledApp_New = appUnderMousePointer.bundleIdentifier;
-      
-        
-        // 2. very slow - but basically the way MOS does it, and MOS is fast somehow
-        
-    //    CGEventRef fakeEvent = CGEventCreate(NULL);
-    //    CGPoint mouseLocation = CGEventGetLocation(fakeEvent);
-    //    CFRelease(fakeEvent);
+    NSString *bundleIdentifierOfActiveApp;
+    
+    if (_configFileChanged) {
+        bundleIdentifierOfActiveApp = nil;
+    } else {
+    
+        // get App under mouse pointer
+            
+            
+            
+        //CFTimeInterval ts = CACurrentMediaTime();
+            
+            
+            // 1. Even slower
+            
+        //    CGEventRef fakeEvent = CGEventCreate(NULL);
+        //    CGPoint mouseLocation = CGEventGetLocation(fakeEvent);
+        //    CFRelease(fakeEvent);
+            
+        //    NSInteger winNUnderMouse = [NSWindow windowNumberAtPoint:(NSPoint)mouseLocation belowWindowWithWindowNumber:0];
+        //    CFArrayRef windowList = CGWindowListCopyWindowInfo(kCGWindowListExcludeDesktopElements | kCGWindowListOptionOnScreenOnly, kCGNullWindowID);
+        ////    NSLog(@"windowList: %@", windowList);
+        //    int windowPID = 0;
+        //    for (int i = 0; i < CFArrayGetCount(windowList); i++) {
+        //        CFDictionaryRef w = CFArrayGetValueAtIndex(windowList, i);
+        //        int winN;
+        //        CFNumberGetValue(CFDictionaryGetValue(w, CFSTR("kCGWindowNumber")), kCFNumberIntType, &winN);
+        //        if (winN == winNUnderMouse) {
+        //            CFNumberGetValue(CFDictionaryGetValue(w, CFSTR("kCGWindowOwnerPID")), kCFNumberIntType, &windowPID);
+        //        }
+        //    }
+        //    NSRunningApplication *appUnderMousePointer = [NSRunningApplication runningApplicationWithProcessIdentifier:windowPID];
+        //    NSString *bundleIdentifierOfScrolledApp_New = appUnderMousePointer.bundleIdentifier;
+          
+            
+            // 2. very slow - but basically the way MOS does it, and MOS is fast somehow
+            
+        //    CGEventRef fakeEvent = CGEventCreate(NULL);
+        //    CGPoint mouseLocation = CGEventGetLocation(fakeEvent);
+        //    CFRelease(fakeEvent);
 
-    //    if (_previousMouseLocation.x == mouseLocation.x && _previousMouseLocation.y == mouseLocation.y) {
-    //        return;
-    //    }
-    //    _previousMouseLocation = mouseLocation;
-    //
-    //    AXUIElementRef elementUnderMousePointer;
-    //    AXUIElementCopyElementAtPosition(_systemWideAXUIElement, mouseLocation.x, mouseLocation.y, &elementUnderMousePointer);
-    //    pid_t elementUnderMousePointerPID;
-    //    AXUIElementGetPid(elementUnderMousePointer, &elementUnderMousePointerPID);
-    //    NSRunningApplication *appUnderMousePointer = [NSRunningApplication runningApplicationWithProcessIdentifier:elementUnderMousePointerPID];
-    //
-    //    @try {
-    //        CFRelease(elementUnderMousePointer);
-    //    } @finally {}
-    //    NSString *bundleIdentifierOfScrolledApp_New = appUnderMousePointer.bundleIdentifier;
-        
-        
-        
-    //     3. fast, but only get info about frontmost application
-        
-        NSString *bundleIdentifierOfActiveApp = [NSWorkspace.sharedWorkspace frontmostApplication].bundleIdentifier;
-        
-        
-        
-        // 4. swift copied from MOS - should be fast and gathers info on app under mouse pointer - I couldn't manage to import the Swift code though :/
-        
-    //    CGEventRef fakeEvent = CGEventCreate(NULL);
-    //    NSString *bundleIdentifierOfScrolledApp_New = [_appOverrides getBundleIdFromMouseLocation:fakeEvent];
-    //    CFRelease(fakeEvent);
+        //    if (_previousMouseLocation.x == mouseLocation.x && _previousMouseLocation.y == mouseLocation.y) {
+        //        return;
+        //    }
+        //    _previousMouseLocation = mouseLocation;
+        //
+        //    AXUIElementRef elementUnderMousePointer;
+        //    AXUIElementCopyElementAtPosition(_systemWideAXUIElement, mouseLocation.x, mouseLocation.y, &elementUnderMousePointer);
+        //    pid_t elementUnderMousePointerPID;
+        //    AXUIElementGetPid(elementUnderMousePointer, &elementUnderMousePointerPID);
+        //    NSRunningApplication *appUnderMousePointer = [NSRunningApplication runningApplicationWithProcessIdentifier:elementUnderMousePointerPID];
+        //
+        //    @try {
+        //        CFRelease(elementUnderMousePointer);
+        //    } @finally {}
+        //    NSString *bundleIdentifierOfScrolledApp_New = appUnderMousePointer.bundleIdentifier;
+            
+            
+            
+        //     3. fast, but only get info about frontmost application
+            
+            bundleIdentifierOfActiveApp = [NSWorkspace.sharedWorkspace frontmostApplication].bundleIdentifier;
+            
+            
+            
+            // 4. swift copied from MOS - should be fast and gathers info on app under mouse pointer - I couldn't manage to import the Swift code though :/
+            
+        //    CGEventRef fakeEvent = CGEventCreate(NULL);
+        //    NSString *bundleIdentifierOfScrolledApp_New = [_appOverrides getBundleIdFromMouseLocation:fakeEvent];
+        //    CFRelease(fakeEvent);
+    }
     
     [ConfigFileInterface_HelperApp updateScrollSettingsWithActiveApp:bundleIdentifierOfActiveApp];
 }
@@ -181,7 +191,7 @@ static void fillConfigFromFile() {
 //    
 //}
 
-
+/// Will only update settings if active app changed
 + (void)updateScrollSettingsWithActiveApp:(NSString *)bundleIdentifierOfScrolledApp {
     if ([_bundleIdentifierOfAppWhichCausesOverride isEqualToString:bundleIdentifierOfScrolledApp] == NO) {
         _bundleIdentifierOfAppWhichCausesOverride = bundleIdentifierOfScrolledApp;
@@ -228,29 +238,10 @@ static void loadOverridesForApp(NSString *bundleIdentifier) {
         }
     }
     if (overridesForThisApp) {
-        _configWithOverridesApplied = [applyOverrides(overridesForThisApp, _config) mutableCopy];
+        _configWithOverridesApplied = [[Utility_HelperApp applyOverridesFrom:overridesForThisApp to:_config] mutableCopy];
     } else {
         _configWithOverridesApplied = _config;
     }
-}
-
-/// Copy all leaves (elements which aren't dictionaries) from `src` to `dst`.
-/// Recursively search for leaves in `src`. For each srcLeaf found, create / replace a leaf in `dst` at a keyPath identical to the keyPath of srcLeaf and with the value of srcLeaf.
-static NSDictionary* applyOverrides(NSDictionary *src, NSDictionary *dst) {
-    NSMutableDictionary *dstMutable = [dst mutableCopy];
-    for (NSString *key in src) {
-        NSObject *dstVal = [dst valueForKey:key];
-        NSObject *srcVal = [src valueForKey:key];
-        if ([srcVal isKindOfClass:[NSDictionary class]] || [srcVal isKindOfClass:[NSMutableDictionary class]]) { // Not sure if checking for mutable dict and dict is necessary
-            // Nested dictionary found. Recursing.
-            NSDictionary *recursionResult = applyOverrides((NSDictionary *)srcVal, (NSDictionary *)dstVal);
-            [dstMutable setValue:recursionResult forKey:key];
-        } else {
-            // Leaf found
-            [dstMutable setValue:srcVal forKey:key];
-        }
-    }
-    return dstMutable;
 }
 
 // TODO: Delete this

@@ -35,17 +35,16 @@
         // on Catalina, creating the local Port returns NULL and throws a permission denied error. Trying to schedule it with the runloop yields a crash.
         // But even if you just skip the runloop scheduling it still works somehow!
         if (localPort != NULL) {
-            NSLog(@"NOT NULL");
+            // Could set up message port. Scheduling with run loop.
             CFRunLoopSourceRef runLoopSource =
                 CFMessagePortCreateRunLoopSource(kCFAllocatorDefault, localPort, 0);
             
             CFRunLoopAddSource(CFRunLoopGetMain(),
                                runLoopSource,
                                kCFRunLoopCommonModes);
-            
             CFRelease(runLoopSource);
         } else {
-            NSLog(@"Couldn't set up message port. This is bad.");
+            // Couldn't set up message port. But it'll probably work anyways for some reason.
         }
     }
 }
