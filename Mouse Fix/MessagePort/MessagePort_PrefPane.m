@@ -44,6 +44,8 @@
                                kCFRunLoopCommonModes);
             
             CFRelease(runLoopSource);
+        } else {
+            NSLog(@"Couldn't set up message port. This is bad.");
         }
     }
 }

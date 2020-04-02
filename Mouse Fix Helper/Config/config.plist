@@ -87,7 +87,7 @@
 			<key>horizontalScrollModifierKey</key>
 			<string>shift</string>
 			<key>magnificationScrollModifierKey</key>
-			<string>option</string>
+			<string>command</string>
 			<key>horizontalScrollModifierKeyEnabled</key>
 			<true/>
 			<key>magnificationScrollModifierKeyEnabled</key>
