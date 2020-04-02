@@ -5,15 +5,6 @@
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
-      <PostActions>
-         <ExecutionAction
-            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
-            <ActionContent
-               title = "Run Script"
-               scriptText = "&#10;">
-            </ActionContent>
-         </ExecutionAction>
-      </PostActions>
       <BuildActionEntries>
          <BuildActionEntry
             buildForTesting = "YES"
@@ -54,7 +45,7 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "cp -Rf ${CONFIGURATION_BUILD_DIR}/Mouse\ Fix.prefPane ~/Library/PreferencePanes&#10;">
+               scriptText = "osascript -e &apos;quit app &quot;System Preferences&quot;&apos;;&#10;cp -Rf ${CONFIGURATION_BUILD_DIR}/Mouse\ Fix.prefPane ~/Library/PreferencePanes&#10;">
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"

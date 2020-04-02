@@ -5,7 +5,7 @@
 	<key>Other</key>
 	<dict>
 		<key>configVersion</key>
-		<integer>2</integer>
+		<integer>3</integer>
 		<key>checkForUpdates</key>
 		<true/>
 		<key>skippedBundleVersion</key>
@@ -47,34 +47,69 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>ScrollSettings</key>
+	<key>Scroll</key>
 	<dict>
-		<key>enabled</key>
+		<key>disableAll (unused)</key>
+		<false/>
+		<key>smooth</key>
 		<true/>
-		<key>values</key>
-		<array>
+		<key>direction</key>
+		<integer>-1</integer>
+		<key>smoothParameters</key>
+		<dict>
+			<key>pxPerStep</key>
 			<integer>60</integer>
+			<key>msPerStep</key>
 			<integer>130</integer>
+			<key>friction</key>
 			<real>1.5</real>
-			<integer>-1</integer>
-		</array>
+			<key>frictionDepth</key>
+			<integer>1</integer>
+			<key>acceleration</key>
+			<real>1.1</real>
+			<key>onePixelScrollsLimit</key>
+			<integer>2</integer>
+			<key>fastScrollExponentialBase</key>
+			<real>1.1</real>
+			<key>fastScrollThreshold_inSwipes</key>
+			<integer>3</integer>
+			<key>scrollSwipeThreshold_inTicks</key>
+			<integer>4</integer>
+			<key>consecutiveScrollTickMaxIntervall</key>
+			<real>0.13</real>
+			<key>consecutiveScrollSwipeMaxIntervall</key>
+			<real>0.5</real>
+		</dict>
+		<key>roughParameters (unused)</key>
+		<dict/>
+		<key>modifierKeys</key>
+		<dict>
+			<key>horizontalScrollModifierKey</key>
+			<string>shift</string>
+			<key>magnificationScrollModifierKey</key>
+			<string>command</string>
+			<key>horizontalScrollModifierKeyEnabled</key>
+			<true/>
+			<key>magnificationScrollModifierKeyEnabled</key>
+			<true/>
+		</dict>
 	</dict>
 	<key>AppOverrides</key>
 	<dict>
 		<key>com.adobe.</key>
 		<dict>
-			<key>ScrollSettings</key>
+			<key>Scroll</key>
 			<dict>
-				<key>enabled</key>
+				<key>smooth</key>
 				<false/>
 			</dict>
-			<key>com.apple.Preview</key>
+		</dict>
+		<key>com.apple.Preview</key>
+		<dict>
+			<key>Scroll</key>
 			<dict>
-				<key>ScrollSettings</key>
-				<dict>
-					<key>enabled</key>
-					<false/>
-				</dict>
+				<key>smooth</key>
+				<false/>
 			</dict>
 		</dict>
 	</dict>

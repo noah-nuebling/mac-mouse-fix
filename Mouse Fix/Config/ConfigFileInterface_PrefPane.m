@@ -21,11 +21,23 @@ static NSMutableDictionary *_config;
     _config = new;
 }
 
+static NSURL *_currentConfigURL;
+static NSURL *_defaultConfigURL;
+
 + (void)initialize
 {
     if (self == [ConfigFileInterface_PrefPane class]) {
         [self loadConfigFromFile];
     }
+    
+    // load current and default config
+    
+    NSURL *currentBundleURL = [[NSBundle bundleForClass:self] bundleURL];
+    NSString *currentConfigPathRelative = @"/Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/Resources/config.plist";
+        NSString *defaultConfigPathRelative = @"/Contents/Resources/default_config.plist";
+    NSLog(@"default: %@", [NSDictionary dictionaryWithContentsOfURL:[currentBundleURL URLByAppendingPathComponent:defaultConfigPathRelative]]);
+    _currentConfigURL = [currentBundleURL URLByAppendingPathComponent:currentConfigPathRelative];
+    _defaultConfigURL = [currentBundleURL URLByAppendingPathComponent:defaultConfigPathRelative];
 }
 
 + (void)writeConfigToFile {
@@ -54,38 +66,37 @@ static NSMutableDictionary *_config;
     
     [self repairConfig];
     
+    // TODO: Make this utilize the class variable `_currentConfigURL` instead.
     NSString *configPath = [[HelperServices helperBundle] pathForResource:@"config" ofType:@"plist"];
     NSData *configData = [NSData dataWithContentsOfFile:configPath];
     NSError *readErr;
     NSMutableDictionary *configDict = [NSPropertyListSerialization propertyListWithData:configData options:NSPropertyListMutableContainersAndLeaves format:nil error:&readErr];
     if (readErr) {
         NSLog(@"ERROR Reading config File: %@", readErr);
+        // TODO: handle this error
     }
     
     self.config = configDict;
 }
 
+// TODO: Test if this still works
+/// Checks config for errors / incompatibilty and repairs it if necessary.
 + (void)repairConfig {
     
-    NSURL *currentBundleURL = [[NSBundle bundleForClass:self] bundleURL];
+    // check if config version matches
     
-    NSString *currentConfigPathRelative = @"/Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/Resources/config.plist";
-        NSString *defaultConfigPathRelative = @"/Contents/Resources/default_config.plist";
-    
-    NSLog(@"default: %@", [NSDictionary dictionaryWithContentsOfURL:[currentBundleURL URLByAppendingPathComponent:defaultConfigPathRelative]]);
-    
-    NSURL *currentConfigURL = [currentBundleURL URLByAppendingPathComponent:currentConfigPathRelative];
-    NSURL *defaultConfigURL = [currentBundleURL URLByAppendingPathComponent:defaultConfigPathRelative];
-    
-    NSNumber *currentConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:currentConfigURL] valueForKeyPath:@"Other.configVersion"];
-    NSNumber *defaultConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:defaultConfigURL] valueForKeyPath:@"Other.configVersion"];
-    
+    NSNumber *currentConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:_currentConfigURL] valueForKeyPath:@"Other.configVersion"];
+    NSNumber *defaultConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:_defaultConfigURL] valueForKeyPath:@"Other.configVersion"];
     if (currentConfigVersion.intValue != defaultConfigVersion.intValue) {
-        NSData *defaultData = [NSData dataWithContentsOfURL:defaultConfigURL];
-        [defaultData writeToURL:currentConfigURL atomically:YES];
-        
-        [MessagePort_PrefPane sendMessageToHelper:@"terminate"];
+        [self replaceCurrentConfigWithDefaultConfig];
     }
+}
+
+/// Replaces the current config file which the helper app is reading from with the default one and then terminates the helper. (Helper will restart automatically because of the KeepAlive attribute in its user agent config file.)
++ (void)replaceCurrentConfigWithDefaultConfig {
+    NSData *defaultData = [NSData dataWithContentsOfURL:_defaultConfigURL];
+    [defaultData writeToURL:_currentConfigURL atomically:YES];
+    [MessagePort_PrefPane sendMessageToHelper:@"terminate"];
 }
 
 

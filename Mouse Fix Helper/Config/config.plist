@@ -101,7 +101,7 @@
 			<key>Scroll</key>
 			<dict>
 				<key>smooth</key>
-				<true/>
+				<false/>
 			</dict>
 		</dict>
 		<key>com.apple.Preview</key>
@@ -110,44 +110,6 @@
 			<dict>
 				<key>smooth</key>
 				<false/>
-				<key>direction</key>
-				<integer>1</integer>
-				<key>smoothParameters</key>
-				<dict>
-					<key>pxPerStep</key>
-					<integer>30</integer>
-					<key>msPerStep</key>
-					<integer>100</integer>
-					<key>friction</key>
-					<integer>1</integer>
-					<key>frictionDepth</key>
-					<integer>1</integer>
-					<key>acceleration</key>
-					<real>1.25</real>
-					<key>onePixelScrollsLimit</key>
-					<integer>3</integer>
-					<key>fastScrollExponentialBase</key>
-					<real>1.1</real>
-					<key>fastScrollThreshold_inSwipes</key>
-					<integer>3</integer>
-					<key>scrollSwipeThreshold_inTicks</key>
-					<integer>4</integer>
-					<key>consecutiveScrollTickMaxIntervall</key>
-					<real>0.13</real>
-					<key>consecutiveScrollSwipeMaxIntervall</key>
-					<real>0.5</real>
-				</dict>
-				<key>modifierKeys</key>
-				<dict>
-					<key>magnificationScrollModifierKey</key>
-					<string>command</string>
-					<key>horizontalScrollModifierKey</key>
-					<string>option</string>
-					<key>horizontalScrollModifierKeyEnabled</key>
-					<true/>
-					<key>magnificationScrollModifierKeyEnabled</key>
-					<true/>
-				</dict>
 			</dict>
 		</dict>
 	</dict>
