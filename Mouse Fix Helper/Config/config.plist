@@ -109,7 +109,7 @@
 			<key>Scroll</key>
 			<dict>
 				<key>smooth</key>
-				<true/>
+				<false/>
 				<key>direction</key>
 				<integer>1</integer>
 				<key>smoothParameters</key>
@@ -141,6 +141,8 @@
 				<dict>
 					<key>magnificationScrollModifierKey</key>
 					<string>command</string>
+					<key>horizontalScrollModifierKey</key>
+					<string>option</string>
 					<key>horizontalScrollModifierKeyEnabled</key>
 					<true/>
 					<key>magnificationScrollModifierKeyEnabled</key>

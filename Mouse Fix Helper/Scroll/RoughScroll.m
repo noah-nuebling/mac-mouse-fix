@@ -40,6 +40,9 @@
         [TouchSimulator postEventWithMagnification:CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1)/200.0 phase:kIOHIDEventPhaseChanged];
         return NULL;
     } else {
+        if (ScrollControl.horizontalScrolling) {
+            [ScrollUtility makeScrollEventHorizontal:event];
+        }
         return event;
     }
 }

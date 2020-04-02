@@ -422,7 +422,6 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase, 0);
         
         // set scrollDelta
-        NSLog(@"horiz?: %d", ScrollControl.horizontalScrolling);
         if (ScrollControl.horizontalScrolling == FALSE) {
     //        if (_scrollPhase == kMFWheelPhase) {
     //            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis1, [Utility_HelperApp signOf:_pixelsToScroll]);
