@@ -16,6 +16,7 @@
 @interface ScrollOverridePanel ()
 
 @property (strong) IBOutlet NSTableView *tableView;
+@property (strong) IBOutlet NSButton *smoothEnabledCheckBox;
 
 @end
 
@@ -24,7 +25,12 @@
 #pragma mark - Public
 
 - (void)display {
-    [self.window makeKeyAndOrderFront:NULL];
+    [self fillTableViewDataModelFromConfig];
+    [self.window makeKeyAndOrderFront:NULL]; // This allocates and displays the window I believe
+    [NSApp activateIgnoringOtherApps:YES]; // Thought this might help with bringing the window to the foreground
+    [self.window orderFrontRegardless]; // Attempt #1 to bring the window to the foreground
+    [self.window makeKeyWindow]; // Attempt #2 to bring the window to the foreground
+    // Can't bring the window to the foreground.
 }
 
 - (void)windowDidLoad {
@@ -38,24 +44,72 @@
 #pragma mark TableView
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    return 15;
+    return 3;
+//    return _tableViewDataModel.count;
 }
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-    NSTableCellView *cell = [_tableView makeViewWithIdentifier:@"AppCellID" owner:nil];
-    if (cell) {
-        
-        cell.textField.stringValue = @"LEELLLELELE";
-        cell.imageView.image = [NSImage imageNamed:@"PayPal"];
+    
+    if (row >= _tableViewDataModel.count) {
+        return nil;
     }
-    return cell;
+    
+    if ([tableColumn.identifier isEqualToString:@"AppColumnID"]) {
+        NSTableCellView *appCell = [_tableView makeViewWithIdentifier:@"AppCellID" owner:nil];
+        if (appCell) {
+            NSString *bundleID = [_tableViewDataModel objectAtIndex:row][@"bundleID"];
+            NSString *appPath = [NSWorkspace.sharedWorkspace absolutePathForAppBundleWithIdentifier:bundleID];
+//            NSBundle *bundle = [NSBundle bundleWithIdentifier:bundleID]; // This doesn't work for some reason
+            NSImage *appIcon;
+            NSString *appName;
+            if (!appPath) {
+                appIcon = [NSImage imageNamed:NSImageNameStatusUnavailable];
+                appName = [NSString stringWithFormat:@"%@", bundleID];
+            } else {
+                appIcon = [NSWorkspace.sharedWorkspace iconForFile:appPath];
+                appName = [[NSBundle bundleWithPath:appPath] objectForInfoDictionaryKey:@"CFBundleName"];
+            }
+            
+            appCell.textField.stringValue = appName;
+            appCell.imageView.image = appIcon;
+            
+        }
+        return appCell;
+    } else if ([tableColumn.identifier isEqualToString:@"SmoothEnabledColumnID"]) {
+        NSTableCellView *smoothEnabledCell = [_tableView makeViewWithIdentifier:@"SmoothEnabledCellID" owner:nil];
+//        NSButton *checkBox = 
+        return smoothEnabledCell;
+    }
+    
+    return nil;
 }
 
 #pragma mark - Private
 
-NSArray *_tableViewDataModel;
+NSMutableArray *_tableViewDataModel;
 - (void)fillTableViewDataModelFromConfig {
+    _tableViewDataModel = [NSMutableArray array];
     NSDictionary *config = ConfigFileInterface_PrefPane.config;
+    if (!config) {
+        NSException *configNotLoadedException = [NSException exceptionWithName:@"ConfigNotLoadedException" reason:@"ConfigFileInterface config property is nil" userInfo:nil];
+        @throw configNotLoadedException;
+        return;
+    }
+    NSDictionary *overrides = config[@"AppOverrides"];
+    if (!overrides) {
+        NSLog(@"No overrides found in config while generating scroll override table view data model.");
+        return;
+    }
+    for (NSString *key in overrides) {
+        NSNumber *smoothEnabled = [overrides[key] valueForKeyPath:@"Scroll.smooth"];
+        if (smoothEnabled != nil) {
+            NSDictionary *rowData = @{
+                @"bundleID":key,
+                @"smoothEnabled":smoothEnabled
+            };
+            [_tableViewDataModel addObject:rowData];
+        }
+    }
 }
 
 @end

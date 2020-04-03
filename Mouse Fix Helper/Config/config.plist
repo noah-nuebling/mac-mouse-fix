@@ -100,6 +100,8 @@
 		<dict>
 			<key>Scroll</key>
 			<dict>
+				<key>smooth</key>
+				<true/>
 				<key>smoothParameters</key>
 				<dict>
 					<key>pxPerStep</key>
@@ -113,14 +115,6 @@
 					<key>acceleration</key>
 					<real>1.3</real>
 				</dict>
-			</dict>
-		</dict>
-		<key>com.adobe.</key>
-		<dict>
-			<key>Scroll</key>
-			<dict>
-				<key>smooth</key>
-				<false/>
 			</dict>
 		</dict>
 		<key>com.apple.Preview</key>

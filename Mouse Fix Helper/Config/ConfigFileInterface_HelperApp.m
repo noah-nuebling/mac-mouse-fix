@@ -233,7 +233,7 @@ static void loadOverridesForApp(NSString *bundleIdentifier) {
     NSDictionary *overrides = [_config objectForKey:@"AppOverrides"];
     NSDictionary *overridesForThisApp;
     for (NSString *b in overrides.allKeys) {
-        if ([bundleIdentifier containsString:b]) {
+        if ([bundleIdentifier isEqualToString:b]) {
                 overridesForThisApp = [overrides objectForKey: b];
         }
     }
