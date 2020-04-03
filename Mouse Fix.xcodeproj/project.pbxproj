@@ -39,6 +39,9 @@
 		4FBF350523183FDA00E6CFD0 /* HelperServices.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FBF350323183FDA00E6CFD0 /* HelperServices.h */; };
 		4FBF350623183FDA00E6CFD0 /* HelperServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBF350423183FDA00E6CFD0 /* HelperServices.m */; };
 		4FCECD8521092354001F1078 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECD8421092354001F1078 /* AppDelegate.m */; };
+		4FD36AED243741A70046DC41 /* ScrollOverridePanel.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FD36AEA243741A70046DC41 /* ScrollOverridePanel.h */; };
+		4FD36AEE243741A70046DC41 /* ScrollOverridePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD36AEB243741A70046DC41 /* ScrollOverridePanel.m */; };
+		4FD36AEF243741A70046DC41 /* ScrollOverridePanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD36AEC243741A70046DC41 /* ScrollOverridePanel.xib */; };
 		4FD45A0F231C66CF00F75C58 /* MessagePort_PrefPane.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FD45A0D231C66CF00F75C58 /* MessagePort_PrefPane.h */; };
 		4FD45A10231C66CF00F75C58 /* MessagePort_PrefPane.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD45A0E231C66CF00F75C58 /* MessagePort_PrefPane.m */; };
 		4FD45A1B231C78B400F75C58 /* AuthorizeAccessibilityView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FD45A18231C78B400F75C58 /* AuthorizeAccessibilityView.h */; };
@@ -218,6 +221,9 @@
 		4FCECD8621092354001F1078 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4FCECD8B21092354001F1078 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4FCECD8E21092354001F1078 /* Mouse_Remap_Helper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Mouse_Remap_Helper.entitlements; sourceTree = "<group>"; };
+		4FD36AEA243741A70046DC41 /* ScrollOverridePanel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollOverridePanel.h; sourceTree = "<group>"; };
+		4FD36AEB243741A70046DC41 /* ScrollOverridePanel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollOverridePanel.m; sourceTree = "<group>"; };
+		4FD36AEC243741A70046DC41 /* ScrollOverridePanel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScrollOverridePanel.xib; sourceTree = "<group>"; };
 		4FD45A0D231C66CF00F75C58 /* MessagePort_PrefPane.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessagePort_PrefPane.h; sourceTree = "<group>"; };
 		4FD45A0E231C66CF00F75C58 /* MessagePort_PrefPane.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessagePort_PrefPane.m; sourceTree = "<group>"; };
 		4FD45A18231C78B400F75C58 /* AuthorizeAccessibilityView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AuthorizeAccessibilityView.h; sourceTree = "<group>"; };
@@ -549,6 +555,16 @@
 			path = SupportFiles;
 			sourceTree = "<group>";
 		};
+		4FD36AF0243741C90046DC41 /* ScrollOverridePanel */ = {
+			isa = PBXGroup;
+			children = (
+				4FD36AEA243741A70046DC41 /* ScrollOverridePanel.h */,
+				4FD36AEB243741A70046DC41 /* ScrollOverridePanel.m */,
+				4FD36AEC243741A70046DC41 /* ScrollOverridePanel.xib */,
+			);
+			path = ScrollOverridePanel;
+			sourceTree = "<group>";
+		};
 		4FD45A13231C76A700F75C58 /* Config */ = {
 			isa = PBXGroup;
 			children = (
@@ -623,6 +639,7 @@
 				4FD67DE3211CC9000095A9A5 /* MouseFix.xib */,
 				4FD45A17231C785F00F75C58 /* Accessibility */,
 				4FF873F2231A96C0002A897A /* MoreSheet */,
+				4FD36AF0243741C90046DC41 /* ScrollOverridePanel */,
 				4FBF350223183FBA00E6CFD0 /* HelperServices */,
 				4FBF350123183F1300E6CFD0 /* Config */,
 				4FD45A16231C771200F75C58 /* MessagePort */,
@@ -672,6 +689,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FD45A1B231C78B400F75C58 /* AuthorizeAccessibilityView.h in Headers */,
+				4FD36AED243741A70046DC41 /* ScrollOverridePanel.h in Headers */,
 				4FD9CB1322F7D48D0090DB98 /* Hyperlink.h in Headers */,
 				4FBF34FF23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h in Headers */,
 				4F3A8445230D3E6C0012C725 /* Updater.h in Headers */,
@@ -815,6 +833,7 @@
 				4FD45A2B231CD20200F75C58 /* SpinnerView.xib in Resources */,
 				4F364C72232A9EBC0084DEB0 /* MouseFix.tiff in Resources */,
 				4FD45A27231C860100F75C58 /* UniversalAccessPref.tiff in Resources */,
+				4FD36AEF243741A70046DC41 /* ScrollOverridePanel.xib in Resources */,
 				4FF873F1231A96B2002A897A /* MoreSheet.xib in Resources */,
 				4F364C75232ABE5C0084DEB0 /* Assets.xcassets in Resources */,
 				4FD67DE5211CC9000095A9A5 /* MouseFix.xib in Resources */,
@@ -892,6 +911,7 @@
 				4FD45A10231C66CF00F75C58 /* MessagePort_PrefPane.m in Sources */,
 				4FD45A1C231C78B400F75C58 /* AuthorizeAccessibilityView.m in Sources */,
 				4FBF350623183FDA00E6CFD0 /* HelperServices.m in Sources */,
+				4FD36AEE243741A70046DC41 /* ScrollOverridePanel.m in Sources */,
 				4F3A8446230D3E6C0012C725 /* Updater.m in Sources */,
 				4FBF350023183E6700E6CFD0 /* ConfigFileInterface_PrefPane.m in Sources */,
 				4FF873E023197283002A897A /* UpdateWindow.m in Sources */,
@@ -1165,7 +1185,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.nuebling.mousefix;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Mouse Fix/Mouse Fix-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = "/Users/Noah/Documents/|MyFiles/Projekte/Programmieren/Xcode/XcodePrivateHeaders";
@@ -1195,7 +1214,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nuebling.mousefix;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Mouse Fix/Mouse Fix-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = "/Users/Noah/Documents/|MyFiles/Projekte/Programmieren/Xcode/XcodePrivateHeaders";
 				WRAPPER_EXTENSION = prefPane;

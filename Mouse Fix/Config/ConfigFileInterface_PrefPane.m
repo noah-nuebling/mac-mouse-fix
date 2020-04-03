@@ -11,6 +11,8 @@
 #import "HelperServices.h"
 #import "../MessagePort/MessagePort_PrefPane.h"
 
+// TODO: Implement clean function which deletes all overrides that don't change the default config. Adding and removing different apps in ScrollOverridePanel will accumulate dead entries.
+
 @implementation ConfigFileInterface_PrefPane
 
 static NSMutableDictionary *_config;

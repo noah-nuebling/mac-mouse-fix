@@ -16,7 +16,6 @@
 #import "Config/ConfigFileInterface_PrefPane.h"
 #import "HelperServices/HelperServices.h"
 #import "MessagePort/MessagePort_PrefPane.h"
-#import "MoreSheet/MoreSheet.h"
 #import "Update/UpdateWindow.h"
 #import "Utility/Utility_PrefPane.h"
 //#import "CGSInternal/CGSHotKeys.h"
@@ -46,8 +45,6 @@
 @property (weak) IBOutlet NSPopUpButton *sideClick;
 //@property (weak) IBOutlet NSPopUpButton *sideHold;
 
-@property (strong) MoreSheet *moreSheetDelegate;
-
 
 @end
 
@@ -62,6 +59,21 @@ static PrefPaneDelegate *_mainView;
     _mainView = new;
 }
 
+static MoreSheet *_moreSheetController;
++ (MoreSheet *)moreSheetController {
+    return _moreSheetController;
+}
++ (void)setMoreSheetController:(MoreSheet *)moreSheetController {
+    _moreSheetController = moreSheetController;
+}
+static ScrollOverridePanel *_scrollOverridePanelController;
++ (ScrollOverridePanel *)scrollOverridePanelController {
+    return _scrollOverridePanelController;
+}
++ (void)setScrollOverridePanelController:(ScrollOverridePanel *)scrollOverridePanelController {
+    _scrollOverridePanelController = scrollOverridePanelController;
+}
+
 static NSDictionary *_scrollConfigurations;
 static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 
@@ -71,7 +83,6 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 # pragma mark main screen
 
 - (IBAction)enableCheckBox:(id)sender {
-    
     //sendKeyUpForAllSymbolicHotKeysThatAMouseButtonMapsTo(self);
     BOOL checkboxState = [sender state];
     [HelperServices enableHelperAsUserAgent: checkboxState];
@@ -79,7 +90,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
 }
 - (IBAction)moreButton:(id)sender {
-    [_moreSheetDelegate begin];
+    [PrefPaneDelegate.moreSheetController begin];
 }
 - (IBAction)scrollEnableCheckBox:(id)sender {
     [self disableScrollSettings:@(_scrollEnableCheckBox.state)];
@@ -141,7 +152,8 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     NSLog(@"PREF PANEEE");
     
     
-    _moreSheetDelegate = [[MoreSheet alloc] initWithWindowNibName:@"MoreSheet"];
+    PrefPaneDelegate.moreSheetController = [[MoreSheet alloc] initWithWindowNibName:@"MoreSheet"];
+    PrefPaneDelegate.scrollOverridePanelController = [[ScrollOverridePanel alloc] initWithWindowNibName:@"ScrollOverridePanel"];
     
     [self initializeUI];
     

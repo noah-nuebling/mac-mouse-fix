@@ -15,7 +15,7 @@
 
 
 @interface MoreSheet ()
-    @property (strong) IBOutlet NSPanel *sheetPanel;
+    @property (strong) IBOutlet NSPanel *sheetPanel; // TODO: Remove. This should be the same as the automatically generated _window property.
     @property (weak) IBOutlet NSTextField *versionLabel;
     @property (weak) IBOutlet NSButton *checkForUpdateCheckBox;
     @property (weak) IBOutlet NSButton *doneButton;
@@ -32,6 +32,9 @@
         [Updater checkForUpdate];
         
     }
+}
+- (IBAction)smoothScrollBlacklistButton:(id)sender {
+    [PrefPaneDelegate.scrollOverridePanelController display];
 }
 - (IBAction)milkshakeButton:(id)sender {
     NSLog(@"BUTTTON");
