@@ -103,15 +103,15 @@
 				<key>smoothParameters</key>
 				<dict>
 					<key>pxPerStep</key>
-					<integer>20</integer>
+					<integer>40</integer>
 					<key>msPerStep</key>
-					<integer>90</integer>
+					<integer>115</integer>
 					<key>friction</key>
 					<real>1.5</real>
 					<key>frictionDepth</key>
 					<integer>1</integer>
 					<key>acceleration</key>
-					<real>1.4</real>
+					<real>1.3</real>
 				</dict>
 			</dict>
 		</dict>

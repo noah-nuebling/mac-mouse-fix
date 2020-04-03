@@ -1,8 +1,8 @@
 //
 // --------------------------------------------------------------------------
 // SmoothScroll.m
-// Created for: Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
-// Created by: Noah Nuebling in 2019
+// Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
+// Created by Noah Nuebling in 2019
 // Licensed under MIT
 // --------------------------------------------------------------------------
 //
@@ -96,7 +96,7 @@ static CGDirectDisplayID *_displaysUnderMousePointer;
 // wheel phase
 static int64_t  _pixelScrollQueue           =   0;
 static double   _msLeftForScroll            =   0;
-static long long _previousScrollDeltaAxis1; // to detect scroll direction change
+static long long _previousScrollDeltaAxis1  =   0;; // to detect scroll direction change
 // momentum phase
 static double   _pxPerMsVelocity        =   0;
 static int      _onePixelScrollsCounter =   0;
@@ -106,7 +106,9 @@ static int      _onePixelScrollsCounter =   0;
 /// Consider calling [ScrollControl resetDynamicGlobals] instead of this. It will reset not only SmoothScroll specific globals.
 + (void)resetDynamicGlobals {
     _scrollPhase                        =   kMFPhaseWheel;
+    _pixelsToScroll                     =   0;
     _pixelScrollQueue                   =   0;
+    _previousScrollDeltaAxis1           =   0;
     _msLeftForScroll                    =   0;
     _pxPerMsVelocity                    =   0;
     _onePixelScrollsCounter             =   0;
@@ -142,6 +144,11 @@ static int      _onePixelScrollsCounter =   0;
 + (void)load_Manual {
     [SmoothScroll start];
     [SmoothScroll stop];
+    if (_displayLink == nil) {
+        CVDisplayLinkCreateWithActiveCGDisplays(&_displayLink);
+        CVDisplayLinkSetOutputCallback(_displayLink, displayLinkCallback, nil);
+        _displaysUnderMousePointer = malloc(sizeof(CGDirectDisplayID) * 3); // TODO: Why 3?
+    }
 //    _appOverrides = [AppOverrides new];
 }
 
@@ -157,11 +164,6 @@ static int      _onePixelScrollsCounter =   0;
     
     [SmoothScroll resetDynamicGlobals];
     
-    if (_displayLink == nil) {
-        CVDisplayLinkCreateWithActiveCGDisplays(&_displayLink);
-        CVDisplayLinkSetOutputCallback(_displayLink, displayLinkCallback, nil);
-        _displaysUnderMousePointer = malloc(sizeof(CGDirectDisplayID) * 3);
-    }
     CGDisplayRemoveReconfigurationCallback(Handle_displayReconfiguration, NULL); // don't know if necesssary
     CGDisplayRegisterReconfigurationCallback(Handle_displayReconfiguration, NULL);
     
@@ -173,12 +175,8 @@ static int      _onePixelScrollsCounter =   0;
     
     _isRunning = FALSE;
     
-    if (_displayLink) {
-        CVDisplayLinkStop(_displayLink);
-        CVDisplayLinkRelease(_displayLink);
-        _displayLink = nil;
-    }
-     CGDisplayRemoveReconfigurationCallback(Handle_displayReconfiguration, NULL);
+    CVDisplayLinkStop(_displayLink);
+    CGDisplayRemoveReconfigurationCallback(Handle_displayReconfiguration, NULL);
 }
 
 #pragma mark - Run Loop
@@ -326,8 +324,12 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 # pragma mark Wheel Phase
     if (_scrollPhase == kMFPhaseWheel || _scrollPhase == kMFPhaseStart) {
         
-        
-        _pixelsToScroll = round( (_pixelScrollQueue/_msLeftForScroll) * msBetweenFrames );
+        if (_msLeftForScroll == 0.0) {
+            _pixelsToScroll = 0; // Diving by zero yields infinity, we don't want that. This should never happen, except if the displayLink is started by something other than the inputHandler.
+            NSLog(@"_msLeftForScroll was 0.0");
+        } else {
+            _pixelsToScroll = round( (_pixelScrollQueue/_msLeftForScroll) * msBetweenFrames );
+        }
         
         _pixelScrollQueue   -=  _pixelsToScroll;
         _msLeftForScroll    -=  msBetweenFrames;
@@ -444,7 +446,6 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         CVDisplayLinkStop(displayLink);
         return 0;
     }
-    
     if (_scrollPhase == kMFPhaseStart) {
         _scrollPhase = kMFPhaseWheel;
     }
@@ -474,6 +475,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 #pragma mark display link
 
 static void Handle_displayReconfiguration(CGDirectDisplayID display, CGDisplayChangeSummaryFlags flags, void *userInfo) {
+    // TODO: Is this necessary?
     if ( (flags & kCGDisplayAddFlag) || (flags & kCGDisplayRemoveFlag) ) {
         NSLog(@"display added / removed");
         CVDisplayLinkStop(_displayLink);

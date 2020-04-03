@@ -1,8 +1,8 @@
 //
 // --------------------------------------------------------------------------
 // ScrollControl.m
-// Created for: Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
-// Created by: Noah Nuebling in 2020
+// Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
+// Created by Noah Nuebling in 2020
 // Licensed under MIT
 // --------------------------------------------------------------------------
 //
@@ -64,13 +64,13 @@ static BOOL _magnificationScrolling;
     return _magnificationScrolling;
 }
 + (void)setMagnificationScrolling:(BOOL)B {
-    if (_magnificationScrolling && !B) { // Magnification scrolling turned off
+    if (_magnificationScrolling && !B) { // Magnification scrolling is being turned off
 //        if (_scrollPhase != kMFPhaseEnd) {
-            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseEnded];
+            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseEnded]; // These events are sent every time the user presses command while a relevant device is attached. Might want to change this.
 //            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseBegan];
 //            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseEnded];
 //        }
-    } else if (!_magnificationScrolling && B) { // Magnification scrolling turned on
+    } else if (!_magnificationScrolling && B) { // Magnification scrolling is being turned on
         if (SmoothScroll.isRunning) { // Restarting SmoothScroll to avoid immediate zooming when pressing command while scrolling.
             [SmoothScroll stop];
             [SmoothScroll start];
