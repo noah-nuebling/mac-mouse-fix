@@ -32,13 +32,8 @@
 		4F3A8446230D3E6C0012C725 /* Updater.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A8444230D3E6C0012C725 /* Updater.m */; };
 		4F8AEA9222FBC7AC008C1A7C /* milkshake_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */; };
 		4F95A249234EBB5D000DC7D7 /* PointerSpeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F95A248234EBB5D000DC7D7 /* PointerSpeed.m */; };
-		4FA26CE32437D5D10082D5F6 /* CheckBoxCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FA26CE12437D5D10082D5F6 /* CheckBoxCell.h */; };
-		4FA26CE42437D5D10082D5F6 /* CheckBoxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA26CE22437D5D10082D5F6 /* CheckBoxCell.m */; };
 		4FA26CE724380D1F0082D5F6 /* ClickableAppIcon.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FA26CE524380D1F0082D5F6 /* ClickableAppIcon.h */; };
 		4FA26CE824380D1F0082D5F6 /* ClickableAppIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA26CE624380D1F0082D5F6 /* ClickableAppIcon.m */; };
-		4FA26CEC2438E4910082D5F6 /* TestWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FA26CE92438E4910082D5F6 /* TestWindow.h */; };
-		4FA26CED2438E4910082D5F6 /* TestWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA26CEA2438E4910082D5F6 /* TestWindow.m */; };
-		4FA26CEE2438E4910082D5F6 /* TestWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FA26CEB2438E4910082D5F6 /* TestWindow.xib */; };
 		4FACF59F2183B956009257D4 /* default_mouse.fix.helper.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FACF59E2183B956009257D4 /* default_mouse.fix.helper.plist */; };
 		4FBF34F7231750B600E6CFD0 /* pureDonationButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */; };
 		4FBF34FF23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FBF34FD23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h */; };
@@ -216,13 +211,8 @@
 		4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = milkshake_button.png; sourceTree = "<group>"; };
 		4F95A247234EBB5D000DC7D7 /* PointerSpeed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerSpeed.h; sourceTree = "<group>"; };
 		4F95A248234EBB5D000DC7D7 /* PointerSpeed.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerSpeed.m; sourceTree = "<group>"; };
-		4FA26CE12437D5D10082D5F6 /* CheckBoxCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CheckBoxCell.h; sourceTree = "<group>"; };
-		4FA26CE22437D5D10082D5F6 /* CheckBoxCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CheckBoxCell.m; sourceTree = "<group>"; };
 		4FA26CE524380D1F0082D5F6 /* ClickableAppIcon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClickableAppIcon.h; sourceTree = "<group>"; };
 		4FA26CE624380D1F0082D5F6 /* ClickableAppIcon.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClickableAppIcon.m; sourceTree = "<group>"; };
-		4FA26CE92438E4910082D5F6 /* TestWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestWindow.h; sourceTree = "<group>"; };
-		4FA26CEA2438E4910082D5F6 /* TestWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestWindow.m; sourceTree = "<group>"; };
-		4FA26CEB2438E4910082D5F6 /* TestWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TestWindow.xib; sourceTree = "<group>"; };
 		4FACF59E2183B956009257D4 /* default_mouse.fix.helper.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_mouse.fix.helper.plist; sourceTree = "<group>"; };
 		4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pureDonationButton.png; sourceTree = "<group>"; };
 		4FBF34FD23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigFileInterface_PrefPane.h; sourceTree = "<group>"; };
@@ -575,11 +565,6 @@
 				4FD36AEA243741A70046DC41 /* ScrollOverridePanel.h */,
 				4FD36AEB243741A70046DC41 /* ScrollOverridePanel.m */,
 				4FD36AEC243741A70046DC41 /* ScrollOverridePanel.xib */,
-				4FA26CEB2438E4910082D5F6 /* TestWindow.xib */,
-				4FA26CE92438E4910082D5F6 /* TestWindow.h */,
-				4FA26CEA2438E4910082D5F6 /* TestWindow.m */,
-				4FA26CE12437D5D10082D5F6 /* CheckBoxCell.h */,
-				4FA26CE22437D5D10082D5F6 /* CheckBoxCell.m */,
 			);
 			path = ScrollOverridePanel;
 			sourceTree = "<group>";
@@ -712,12 +697,10 @@
 				4FD45A1B231C78B400F75C58 /* AuthorizeAccessibilityView.h in Headers */,
 				4FD36AED243741A70046DC41 /* ScrollOverridePanel.h in Headers */,
 				4FD9CB1322F7D48D0090DB98 /* Hyperlink.h in Headers */,
-				4FA26CE32437D5D10082D5F6 /* CheckBoxCell.h in Headers */,
 				4FBF34FF23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h in Headers */,
 				4F3A8445230D3E6C0012C725 /* Updater.h in Headers */,
 				4FF873DF23197283002A897A /* UpdateWindow.h in Headers */,
 				4FF873EF231A96B2002A897A /* MoreSheet.h in Headers */,
-				4FA26CEC2438E4910082D5F6 /* TestWindow.h in Headers */,
 				4FD45A34231D097000F75C58 /* Utility_PrefPane.h in Headers */,
 				4FA26CE724380D1F0082D5F6 /* ClickableAppIcon.h in Headers */,
 				4FBF350523183FDA00E6CFD0 /* HelperServices.h in Headers */,
@@ -849,7 +832,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FF873E123197283002A897A /* UpdateWindow.xib in Resources */,
-				4FA26CEE2438E4910082D5F6 /* TestWindow.xib in Resources */,
 				4FD45A26231C860100F75C58 /* KeyIcon.tiff in Resources */,
 				4FD45A1D231C78B400F75C58 /* AuthorizeAccessibilityView.xib in Resources */,
 				4FBF34F7231750B600E6CFD0 /* pureDonationButton.png in Resources */,
@@ -933,14 +915,12 @@
 				4FD45A35231D097000F75C58 /* Utility_PrefPane.m in Sources */,
 				4FD67DE0211CC9000095A9A5 /* PrefPaneDelegate.m in Sources */,
 				4FF873F0231A96B2002A897A /* MoreSheet.m in Sources */,
-				4FA26CE42437D5D10082D5F6 /* CheckBoxCell.m in Sources */,
 				4FD45A10231C66CF00F75C58 /* MessagePort_PrefPane.m in Sources */,
 				4FD45A1C231C78B400F75C58 /* AuthorizeAccessibilityView.m in Sources */,
 				4FA26CE824380D1F0082D5F6 /* ClickableAppIcon.m in Sources */,
 				4FBF350623183FDA00E6CFD0 /* HelperServices.m in Sources */,
 				4FD36AEE243741A70046DC41 /* ScrollOverridePanel.m in Sources */,
 				4F3A8446230D3E6C0012C725 /* Updater.m in Sources */,
-				4FA26CED2438E4910082D5F6 /* TestWindow.m in Sources */,
 				4FBF350023183E6700E6CFD0 /* ConfigFileInterface_PrefPane.m in Sources */,
 				4FF873E023197283002A897A /* UpdateWindow.m in Sources */,
 			);

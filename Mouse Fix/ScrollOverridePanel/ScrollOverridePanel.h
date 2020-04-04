@@ -13,7 +13,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ScrollOverridePanel : NSWindowController <NSTableViewDataSource, NSTableViewDelegate>
 - (void)display;
-- (void)bringToFront;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -33,8 +33,9 @@
         [self.window center];
     }
     [self.window makeKeyAndOrderFront:nil];
+    [self.window performSelector:@selector(makeKeyWindow) withObject:nil afterDelay:0.05]; // Need to do this to make the window key. Magic.
     
-    // Attempts to bring the window to the front by pressing the open button while it is open. Nothing worked reliably. Just closing it before reopening works though.
+    // Attempts to bring the window to the front when pressing the open button while it is open. Nothing worked reliably. Just closing it before reopening works though.
     
 ////    self.window.releasedWhenClosed = YES;
 ////    self.window.isReleasedWhenClosed = YES;
@@ -59,14 +60,8 @@
 ////    [self.window display];
 }
 
-- (void)bringToFront {
-    [self.window makeKeyWindow];
-}
-
 - (void)windowDidLoad {
     [super windowDidLoad];
-    
-    
 
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 }
