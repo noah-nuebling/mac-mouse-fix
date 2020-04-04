@@ -27,11 +27,40 @@
 
 - (void)display {
     [self fillTableViewDataModelFromConfig];
-    [self.window makeKeyAndOrderFront:NULL]; // This allocates and displays the window I believe
-    [NSApp activateIgnoringOtherApps:YES]; // Thought this might help with bringing the window to the foreground
-    [self.window orderFrontRegardless]; // Attempt #1 to bring the window to the foreground
-    [self.window makeKeyWindow]; // Attempt #2 to bring the window to the foreground
-    // Can't bring the window to the foreground.
+    if (self.window.isVisible) {
+        [self.window close];
+    } else {
+        [self.window center];
+    }
+    [self.window makeKeyAndOrderFront:nil];
+    
+    // Attempts to bring the window to the front by pressing the open button while it is open. Nothing worked reliably. Just closing it before reopening works though.
+    
+////    self.window.releasedWhenClosed = YES;
+////    self.window.isReleasedWhenClosed = YES;
+////    [self.window close];
+////    [self.window performClose:nil];
+//
+////    CFRelease((__bridge void *) self.window);
+//    [self.window makeKeyAndOrderFront:NULL]; // This allocates and displays the window I believe
+////    [self.window makeKeyAndOrderFront:NULL];
+//    [self.window makeKeyWindow];
+//    [self.window orderFront:nil];
+//
+//
+//    [NSApp activateIgnoringOtherApps:YES]; // Thought this might help with bringing the window to the foreground
+//    [self.window orderFrontRegardless]; // Attempt #1 to bring the window to the foreground
+//    [self.window makeKeyWindow]; // Attempt #2 to bring the window to the foreground
+////     Can't bring the window to the foreground.
+////    [self.window orderWindow:NSWindowBelow relativeTo:0];
+////    [self.window orderWindow:NSWindowAbove relativeTo:0];
+//    [self.window setOrderedIndex:0];
+//
+////    [self.window display];
+}
+
+- (void)bringToFront {
+    [self.window makeKeyWindow];
 }
 
 - (void)windowDidLoad {
@@ -90,6 +119,7 @@
             }
             
             appCell.textField.stringValue = appName;
+            appCell.textField.toolTip = appName;
             appCell.imageView.image = appIcon;
             
         }

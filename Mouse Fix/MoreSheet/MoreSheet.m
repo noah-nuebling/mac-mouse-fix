@@ -35,6 +35,7 @@
 }
 - (IBAction)smoothScrollBlacklistButton:(id)sender {
     [PrefPaneDelegate.scrollOverridePanelController display];
+    [PrefPaneDelegate.scrollOverridePanelController performSelector:@selector(bringToFront) withObject:nil afterDelay:0.05]; // For testing
 }
 - (IBAction)milkshakeButton:(id)sender {
     NSLog(@"BUTTTON");
@@ -42,9 +43,6 @@
 }
 - (IBAction)doneButton:(id)sender {
     [self end];
-}
-- (IBAction)mouseFixIcon:(id)sender {
-    
 }
 - (IBAction)UIChanged:(id)sender {
     [self setConfigFileToUI];
