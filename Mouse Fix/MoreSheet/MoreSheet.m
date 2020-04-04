@@ -43,9 +43,11 @@
 - (IBAction)doneButton:(id)sender {
     [self end];
 }
+- (IBAction)mouseFixIcon:(id)sender {
+    
+}
 - (IBAction)UIChanged:(id)sender {
     [self setConfigFileToUI];
-    [MessagePort_PrefPane sendMessageToHelper:@"configFileChanged"];
 }
 
 //- (void)mouseDown:(NSEvent *)event {

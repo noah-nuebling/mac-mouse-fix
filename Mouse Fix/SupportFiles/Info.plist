@@ -15,9 +15,9 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.9.2-beta</string>
+	<string>0.9.2-Beta</string>
 	<key>CFBundleVersion</key>
-	<string>569</string>
+	<string>633</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2019 Noah Nuebling (MIT License)</string>
 	<key>NSMainNibFile</key>

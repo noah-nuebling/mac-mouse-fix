@@ -37,12 +37,13 @@
         event = [ScrollUtility invertScrollEvent:event direction:ScrollControl.scrollDirection];
     }
     if (ScrollControl.magnificationScrolling) { //TODO: TODO: Consider acitvating displayLink to send magnification events instead (After sorting out activity states of SmoothScroll.m)
-        [TouchSimulator postEventWithMagnification:CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1)/100.0 phase:kIOHIDEventPhaseChanged];
+        [TouchSimulator postEventWithMagnification:CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1)/50.0 phase:kIOHIDEventPhaseChanged];
         return NULL;
     } else {
         if (ScrollControl.horizontalScrolling) {
             [ScrollUtility makeScrollEventHorizontal:event];
         }
+        [ScrollUtility logScrollEvent:event];
         return event;
     }
 }

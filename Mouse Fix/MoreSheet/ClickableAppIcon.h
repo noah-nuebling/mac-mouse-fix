@@ -1,21 +1,18 @@
 //
 // --------------------------------------------------------------------------
-// ConfigFileInterface_PrefPane.h
+// ClickableImageView.h
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
-// Created by Noah Nuebling in 2019
+// Created by Noah Nuebling in 2020
 // Licensed under MIT
 // --------------------------------------------------------------------------
 //
 
-#import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ConfigFileInterface_PrefPane : NSObject
-@property (class,retain) NSMutableDictionary *config;
-+ (NSURL *)configURL;
-+ (void)writeConfigToFile;
-+ (void)loadConfigFromFile;
+@interface ClickableAppIcon : NSImageView
+
 @end
 
 NS_ASSUME_NONNULL_END

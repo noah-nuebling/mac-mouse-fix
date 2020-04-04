@@ -99,7 +99,6 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 
 - (IBAction)UIChanged:(id)sender {
     [self setConfigFileToUI];
-    [MessagePort_PrefPane sendMessageToHelper:@"configFileChanged"];
 }
 
 

@@ -52,27 +52,27 @@
 		<key>disableAll (unused)</key>
 		<false/>
 		<key>smooth</key>
-		<true/>
+		<false/>
 		<key>direction</key>
 		<integer>-1</integer>
 		<key>smoothParameters</key>
 		<dict>
 			<key>pxPerStep</key>
-			<integer>60</integer>
+			<integer>40</integer>
 			<key>msPerStep</key>
-			<integer>130</integer>
+			<integer>115</integer>
 			<key>friction</key>
 			<real>1.5</real>
 			<key>frictionDepth</key>
 			<integer>1</integer>
 			<key>acceleration</key>
-			<real>1.1</real>
+			<real>1.2</real>
 			<key>onePixelScrollsLimit</key>
 			<integer>2</integer>
 			<key>fastScrollExponentialBase</key>
 			<real>1.1</real>
 			<key>fastScrollThreshold_inSwipes</key>
-			<integer>3</integer>
+			<integer>2</integer>
 			<key>scrollSwipeThreshold_inTicks</key>
 			<integer>4</integer>
 			<key>consecutiveScrollTickMaxIntervall</key>
@@ -96,6 +96,27 @@
 	</dict>
 	<key>AppOverrides</key>
 	<dict>
+		<key>com.adobe.PhotoshopElements</key>
+		<dict>
+			<key>Scroll</key>
+			<dict>
+				<key>smooth</key>
+				<false/>
+				<key>smoothParameters</key>
+				<dict>
+					<key>pxPerStep</key>
+					<integer>40</integer>
+					<key>msPerStep</key>
+					<integer>115</integer>
+					<key>friction</key>
+					<real>1.5</real>
+					<key>frictionDepth</key>
+					<integer>1</integer>
+					<key>acceleration</key>
+					<real>1.3</real>
+				</dict>
+			</dict>
+		</dict>
 		<key>com.apple.Safari</key>
 		<dict>
 			<key>Scroll</key>

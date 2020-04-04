@@ -34,6 +34,8 @@
 		4F95A249234EBB5D000DC7D7 /* PointerSpeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F95A248234EBB5D000DC7D7 /* PointerSpeed.m */; };
 		4FA26CE32437D5D10082D5F6 /* CheckBoxCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FA26CE12437D5D10082D5F6 /* CheckBoxCell.h */; };
 		4FA26CE42437D5D10082D5F6 /* CheckBoxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA26CE22437D5D10082D5F6 /* CheckBoxCell.m */; };
+		4FA26CE724380D1F0082D5F6 /* ClickableAppIcon.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FA26CE524380D1F0082D5F6 /* ClickableAppIcon.h */; };
+		4FA26CE824380D1F0082D5F6 /* ClickableAppIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA26CE624380D1F0082D5F6 /* ClickableAppIcon.m */; };
 		4FACF59F2183B956009257D4 /* default_mouse.fix.helper.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FACF59E2183B956009257D4 /* default_mouse.fix.helper.plist */; };
 		4FBF34F7231750B600E6CFD0 /* pureDonationButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */; };
 		4FBF34FF23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FBF34FD23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h */; };
@@ -213,6 +215,8 @@
 		4F95A248234EBB5D000DC7D7 /* PointerSpeed.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerSpeed.m; sourceTree = "<group>"; };
 		4FA26CE12437D5D10082D5F6 /* CheckBoxCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CheckBoxCell.h; sourceTree = "<group>"; };
 		4FA26CE22437D5D10082D5F6 /* CheckBoxCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CheckBoxCell.m; sourceTree = "<group>"; };
+		4FA26CE524380D1F0082D5F6 /* ClickableAppIcon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClickableAppIcon.h; sourceTree = "<group>"; };
+		4FA26CE624380D1F0082D5F6 /* ClickableAppIcon.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClickableAppIcon.m; sourceTree = "<group>"; };
 		4FACF59E2183B956009257D4 /* default_mouse.fix.helper.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_mouse.fix.helper.plist; sourceTree = "<group>"; };
 		4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pureDonationButton.png; sourceTree = "<group>"; };
 		4FBF34FD23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigFileInterface_PrefPane.h; sourceTree = "<group>"; };
@@ -674,6 +678,8 @@
 				4FF873EC231A96B2002A897A /* MoreSheet.h */,
 				4FF873ED231A96B2002A897A /* MoreSheet.m */,
 				4FF873EE231A96B2002A897A /* MoreSheet.xib */,
+				4FA26CE524380D1F0082D5F6 /* ClickableAppIcon.h */,
+				4FA26CE624380D1F0082D5F6 /* ClickableAppIcon.m */,
 			);
 			path = MoreSheet;
 			sourceTree = "<group>";
@@ -703,6 +709,7 @@
 				4FF873DF23197283002A897A /* UpdateWindow.h in Headers */,
 				4FF873EF231A96B2002A897A /* MoreSheet.h in Headers */,
 				4FD45A34231D097000F75C58 /* Utility_PrefPane.h in Headers */,
+				4FA26CE724380D1F0082D5F6 /* ClickableAppIcon.h in Headers */,
 				4FBF350523183FDA00E6CFD0 /* HelperServices.h in Headers */,
 				4FD45A0F231C66CF00F75C58 /* MessagePort_PrefPane.h in Headers */,
 				4FD67DDE211CC9000095A9A5 /* PrefPaneDelegate.h in Headers */,
@@ -918,6 +925,7 @@
 				4FA26CE42437D5D10082D5F6 /* CheckBoxCell.m in Sources */,
 				4FD45A10231C66CF00F75C58 /* MessagePort_PrefPane.m in Sources */,
 				4FD45A1C231C78B400F75C58 /* AuthorizeAccessibilityView.m in Sources */,
+				4FA26CE824380D1F0082D5F6 /* ClickableAppIcon.m in Sources */,
 				4FBF350623183FDA00E6CFD0 /* HelperServices.m in Sources */,
 				4FD36AEE243741A70046DC41 /* ScrollOverridePanel.m in Sources */,
 				4F3A8446230D3E6C0012C725 /* Updater.m in Sources */,

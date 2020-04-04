@@ -12,6 +12,7 @@
 
 #import "ScrollOverridePanel.h"
 #import "ConfigFileInterface_PrefPane.h"
+#import "Utility_PrefPane.h"
 
 @interface ScrollOverridePanel ()
 
@@ -43,6 +44,24 @@
 
 #pragma mark TableView
 
+- (IBAction)smoothEnableCheckBox:(NSButton *)sender {
+    NSInteger state = sender.state;
+    NSInteger row = [_tableView rowForView:sender];
+    NSString *bundleID = _tableViewDataModel[row][@"bundleID"];
+    NSDictionary *overrides = @{
+        @"AppOverrides": @{
+                bundleID: @{
+                        @"Scroll": @{
+                                @"smooth": [NSNumber numberWithInteger:state]
+                        }
+                }
+        }
+    };
+    ConfigFileInterface_PrefPane.config = [Utility_PrefPane applyOverridesFrom:overrides to:ConfigFileInterface_PrefPane.config];
+    [ConfigFileInterface_PrefPane writeConfigToFile];
+    [self fillTableViewDataModelFromConfig];
+    [_tableView reloadData];
+}
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
     return 3;
 //    return _tableViewDataModel.count;
@@ -77,7 +96,13 @@
         return appCell;
     } else if ([tableColumn.identifier isEqualToString:@"SmoothEnabledColumnID"]) {
         NSTableCellView *smoothEnabledCell = [_tableView makeViewWithIdentifier:@"SmoothEnabledCellID" owner:nil];
-//        NSButton *checkBox = 
+        if (smoothEnabledCell) {
+            BOOL smoothEnabled = [_tableViewDataModel[row][@"smoothEnabled"] boolValue];
+            NSButton *checkBox = smoothEnabledCell.subviews[0];
+            checkBox.state = smoothEnabled;
+            checkBox.target = self;
+            checkBox.action = @selector(smoothEnableCheckBox:);
+        }
         return smoothEnabledCell;
     }
     

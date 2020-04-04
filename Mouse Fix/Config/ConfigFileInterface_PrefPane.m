@@ -23,8 +23,11 @@ static NSMutableDictionary *_config;
     _config = new;
 }
 
-static NSURL *_currentConfigURL;
+static NSURL *_configURL;
 static NSURL *_defaultConfigURL;
++ (NSURL *)configURL {
+    return _configURL;
+}
 
 + (void)initialize
 {
@@ -38,7 +41,7 @@ static NSURL *_defaultConfigURL;
     NSString *currentConfigPathRelative = @"/Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/Resources/config.plist";
         NSString *defaultConfigPathRelative = @"/Contents/Resources/default_config.plist";
     NSLog(@"default: %@", [NSDictionary dictionaryWithContentsOfURL:[currentBundleURL URLByAppendingPathComponent:defaultConfigPathRelative]]);
-    _currentConfigURL = [currentBundleURL URLByAppendingPathComponent:currentConfigPathRelative];
+    _configURL = [currentBundleURL URLByAppendingPathComponent:currentConfigPathRelative];
     _defaultConfigURL = [currentBundleURL URLByAppendingPathComponent:defaultConfigPathRelative];
 }
 
@@ -59,9 +62,9 @@ static NSURL *_defaultConfigURL;
     if (writeErr) {
         NSLog(@"ERROR writing configDictFromFile to file: %@", writeErr);
     }
-    
     NSLog(@"Wrote config to file.");
 //    NSLog(@"config: %@", _config);
+    [MessagePort_PrefPane sendMessageToHelper:@"configFileChanged"];
 }
 
 + (void)loadConfigFromFile {
@@ -86,7 +89,7 @@ static NSURL *_defaultConfigURL;
     
     // check if config version matches
     
-    NSNumber *currentConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:_currentConfigURL] valueForKeyPath:@"Other.configVersion"];
+    NSNumber *currentConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:_configURL] valueForKeyPath:@"Other.configVersion"];
     NSNumber *defaultConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:_defaultConfigURL] valueForKeyPath:@"Other.configVersion"];
     if (currentConfigVersion.intValue != defaultConfigVersion.intValue) {
         [self replaceCurrentConfigWithDefaultConfig];
@@ -96,7 +99,7 @@ static NSURL *_defaultConfigURL;
 /// Replaces the current config file which the helper app is reading from with the default one and then terminates the helper. (Helper will restart automatically because of the KeepAlive attribute in its user agent config file.)
 + (void)replaceCurrentConfigWithDefaultConfig {
     NSData *defaultData = [NSData dataWithContentsOfURL:_defaultConfigURL];
-    [defaultData writeToURL:_currentConfigURL atomically:YES];
+    [defaultData writeToURL:_configURL atomically:YES];
     [MessagePort_PrefPane sendMessageToHelper:@"terminate"];
 }
 
