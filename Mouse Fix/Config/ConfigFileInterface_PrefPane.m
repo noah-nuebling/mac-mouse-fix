@@ -30,25 +30,21 @@ static NSURL *_backupConfigURL;
     return _configURL;
 }
 
-+ (void)initialize
-{
-    if (self == [ConfigFileInterface_PrefPane class]) {
-        
-        // Determine URLs of config and backupConfig
-        
-        NSURL *currentBundleURL = [[NSBundle bundleForClass:self] bundleURL];
-    //    NSString *currentConfigPathRelative = @"/Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/Resources/config.plist";
-        NSString *currentConfigPathRelative = @"/Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/Resources/config.plist";
-    //        NSString *backupConfigPathRelative = @"/Contents/Resources/backup_config.plist";
-        NSString *backupConfigPathRelative = @"/Contents/Resources/backup_config.plist";
-        NSLog(@"default: %@", [NSDictionary dictionaryWithContentsOfURL:[currentBundleURL URLByAppendingPathComponent:backupConfigPathRelative]]);
-        _configURL = [currentBundleURL URLByAppendingPathComponent:currentConfigPathRelative];
-        _backupConfigURL = [currentBundleURL URLByAppendingPathComponent:backupConfigPathRelative];
-        
-        // Load config
-        
-        [self loadConfigFromFile];
-    }
++ (void)load {
+    // Determine URLs of config and backupConfig
+    
+    NSURL *currentBundleURL = [[NSBundle bundleForClass:self] bundleURL];
+//    NSString *currentConfigPathRelative = @"/Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/Resources/config.plist";
+    NSString *currentConfigPathRelative = @"/Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/Resources/config.plist";
+//        NSString *backupConfigPathRelative = @"/Contents/Resources/backup_config.plist";
+    NSString *backupConfigPathRelative = @"/Contents/Resources/backup_config.plist";
+    NSLog(@"default: %@", [NSDictionary dictionaryWithContentsOfURL:[currentBundleURL URLByAppendingPathComponent:backupConfigPathRelative]]);
+    _configURL = [currentBundleURL URLByAppendingPathComponent:currentConfigPathRelative];
+    _backupConfigURL = [currentBundleURL URLByAppendingPathComponent:backupConfigPathRelative];
+    
+    // Load config
+    
+    [self loadConfigFromFile];
 }
 
 /**
@@ -81,6 +77,8 @@ static NSURL *_backupConfigURL;
     [MessagePort_PrefPane sendMessageToHelper:@"configFileChanged"];
 }
 
+/// Load data from plist file at _configURL into _config class variable
+/// This only really needs to be called when ConfigFileInterface_PrefPane is loaded, but I use it in other places as well, to make the program behave better, when I manually edit the config file.
 + (void)loadConfigFromFile {
     
     [self repairConfigWithProblem:kMFConfigProblemNone info:nil];

@@ -72,6 +72,7 @@ NSDictionary *_columnIdentifierToKeyPath;
     [self loadTableViewDataModelFromConfig];
     [_tableView reloadData];
 }
+
 - (void)display {
     
     _columnIdentifierToKeyPath = @{
@@ -324,25 +325,25 @@ NSMutableArray *_tableViewDataModel;
         NSLog(@"No overrides found in config while generating scroll override table data model.");
         return;
     }
-    for (NSString *key in overrides) {
+    for (NSString *bundleID in overrides) {
         
         // TODO: Put this inna loop
-        NSNumber *smoothEnabled = [overrides[key] valueForKeyPath:@"Scroll.smooth"];
-        NSNumber *magnificationEnabled = [overrides[key] valueForKeyPath:@"Scroll.modifierKeys.magnificationScrollModifierKeyEnabled"];
-        NSNumber *horizontalEnabled = [overrides[key] valueForKeyPath:@"Scroll.modifierKeys.horizontalScrollModifierKeyEnabled"];
+        NSNumber *smoothEnabled = [overrides[bundleID] valueForKeyPath:@"Scroll.smooth"];
+        NSNumber *magnificationEnabled = [overrides[bundleID] valueForKeyPath:@"Scroll.modifierKeys.magnificationScrollModifierKeyEnabled"];
+        NSNumber *horizontalEnabled = [overrides[bundleID] valueForKeyPath:@"Scroll.modifierKeys.horizontalScrollModifierKeyEnabled"];
         
         if (smoothEnabled != nil || magnificationEnabled != nil || horizontalEnabled != nil) {
             if (smoothEnabled == nil || magnificationEnabled == nil || horizontalEnabled == nil) {
                 [ConfigFileInterface_PrefPane repairConfigWithProblem:kMFConfigProblemIncompleteAppOverride info:[_columnIdentifierToKeyPath allValues]];
                 
-                smoothEnabled = [overrides[key] valueForKeyPath:@"Scroll.smooth"];
-                magnificationEnabled = [overrides[key] valueForKeyPath:@"Scroll.modifierKeys.magnificationScrollModifierKeyEnabled"];
-                horizontalEnabled = [overrides[key] valueForKeyPath:@"Scroll.modifierKeys.horizontalScrollModifierKeyEnabled"];
+                smoothEnabled = [overrides[bundleID] valueForKeyPath:@"Scroll.smooth"];
+                magnificationEnabled = [overrides[bundleID] valueForKeyPath:@"Scroll.modifierKeys.magnificationScrollModifierKeyEnabled"];
+                horizontalEnabled = [overrides[bundleID] valueForKeyPath:@"Scroll.modifierKeys.horizontalScrollModifierKeyEnabled"];
                 
                 
             }
             NSDictionary *rowData = @{
-                @"AppColumnID":key,
+                @"AppColumnID":bundleID,
                 @"SmoothEnabledColumnID":smoothEnabled,
                 @"MagnificationEnabledColumnID": magnificationEnabled,
                 @"HorizontalEnabledColumnID": horizontalEnabled

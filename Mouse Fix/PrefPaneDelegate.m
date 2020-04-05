@@ -131,7 +131,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
     NSLog(@"PREF PANEEE");
     
-    [self initializeUI];
+    [self setUIToConfigFile];
     
     BOOL checkForUpdates = [[ConfigFileInterface_PrefPane.config valueForKeyPath:@"Other.checkForUpdates"] boolValue];
     if (checkForUpdates == YES) {
@@ -172,7 +172,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     _scrollSliderStepSize.enabled = enable.boolValue;
 }
 
-- (void)initializeUI {
+- (void)setUIToConfigFile {
     
     NSLog(@"helperactiveEEEEEE: %hhd", HelperServices.helperIsActive);
     
@@ -183,6 +183,8 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     } else {
         _enableCheckBox.state = 0;
     }
+    
+    [ConfigFileInterface_PrefPane loadConfigFromFile];
     
 # pragma mark Popup Buttons
     
