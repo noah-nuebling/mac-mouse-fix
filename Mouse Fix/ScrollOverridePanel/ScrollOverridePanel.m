@@ -80,7 +80,10 @@ NSDictionary *_columnIdentifierToKeyPath;
         @"MagnificationEnabledColumnID" : @"Scroll.modifierKeys.magnificationScrollModifierKeyEnabled",
         @"HorizontalEnabledColumnID" : @"Scroll.modifierKeys.horizontalScrollModifierKeyEnabled"
     };
+    [ConfigFileInterface_PrefPane loadConfigFromFile];
     [self loadTableViewDataModelFromConfig];
+    [_tableView reloadData];
+    
     if (self.window.isVisible) {
         [self.window close];
     } else {
@@ -225,7 +228,6 @@ NSDictionary *_columnIdentifierToKeyPath;
             appCell.textField.stringValue = appName;
             appCell.textField.toolTip = appName;
             appCell.imageView.image = appIcon;
-            
         }
         return appCell;
     } else if ([tableColumn.identifier isEqualToString:@"SmoothEnabledColumnID"] ||
@@ -249,26 +251,38 @@ NSDictionary *_columnIdentifierToKeyPath;
 NSMutableArray *_tableViewDataModel;
 
 - (void)writeTableViewDataModelToConfig {
-    for (NSDictionary *rowData in _tableViewDataModel) {
-        NSString *bundleID = rowData[@"AppColumnID"];
-        NSNumber *smoothEnabled = rowData[@"SmoothEnabledColumnID"];
-        NSNumber *magnificationEnabled = rowData[@"MagnificationEnabledColumnID"];
-        NSNumber *horizontalEnabled = rowData[@"HorizontalEnabledColumnID"];
-        NSDictionary *dict = @{
-            @"AppOverrides": @{
-                    bundleID: @{
-                            @"Scroll": @{
-                                    @"smooth": smoothEnabled,
-                                    @"modifierKeys": @{
-                                            @"magnificationScrollModifierKeyEnabled": magnificationEnabled,
-                                            @"horizontalScrollModifierKeyEnabled": horizontalEnabled
-                                    }
-                            }
-                    }
-            }
-        };
-        ConfigFileInterface_PrefPane.config = [[Utility_PrefPane dictionaryWithOverridesAppliedFrom:dict to:ConfigFileInterface_PrefPane.config] mutableCopy];
+    
+    for (NSMutableDictionary *rowDict in _tableViewDataModel) {
+        NSString *bundleID = rowDict[@"AppColumnID"];
+        NSString *bundleIDEscaped = [bundleID stringByReplacingOccurrencesOfString:@"." withString:@"\\."];
+        rowDict[@"AppColumnID"] = nil; // So we don't iterate over this in the loop below
+        for (NSString *columnID in rowDict) {
+            NSObject *cellValue = rowDict[columnID];
+            NSString *defaultKeyPath = _columnIdentifierToKeyPath[columnID];
+            NSString *overrideKeyPath = [NSString stringWithFormat:@"AppOverrides.%@.%@", bundleIDEscaped, defaultKeyPath];
+            [ConfigFileInterface_PrefPane.config setObject:cellValue forCoolKeyPath:overrideKeyPath];
+        }
     }
+    [ConfigFileInterface_PrefPane writeConfigToFile];
+}
+//        NSNumber *smoothEnabled = rowDict[@"SmoothEnabledColumnID"];
+//        NSNumber *magnificationEnabled = rowDict[@"MagnificationEnabledColumnID"];
+//        NSNumber *horizontalEnabled = rowDict[@"HorizontalEnabledColumnID"];
+//        NSDictionary *dict = @{
+//            @"AppOverrides": @{
+//                    bundleID: @{
+//                            @"Scroll": @{
+//                                    @"smooth": smoothEnabled,
+//                                    @"modifierKeys": @{
+//                                            @"magnificationScrollModifierKeyEnabled": magnificationEnabled,
+//                                            @"horizontalScrollModifierKeyEnabled": horizontalEnabled
+//                                    }
+//                            }
+//                    }
+//            }
+//        };
+//        ConfigFileInterface_PrefPane.config = [[Utility_PrefPane dictionaryWithOverridesAppliedFrom:dict to:ConfigFileInterface_PrefPane.config] mutableCopy];
+//    }
 //        NSInteger state = sender.state;
 //        NSInteger row = [_tableView rowForView:sender];
 //        NSInteger column = [_tableView columnForView:sender];
@@ -289,13 +303,13 @@ NSMutableArray *_tableViewDataModel;
 //    //    };
 //    //    ConfigFileInterface_PrefPane.config = [[Utility_PrefPane applyOverridesFrom:(NSDictionary *)overrides to:ConfigFileInterface_PrefPane.config] mutableCopy];
 //        [ConfigFileInterface_PrefPane.config setObject:[NSNumber numberWithBool:state] forCoolKeyPath:compoundKeyPath];
-}
+//}
 
 
 - (void)loadTableViewDataModelFromConfig {
     _tableViewDataModel = [NSMutableArray array];
     NSDictionary *config = ConfigFileInterface_PrefPane.config;
-    if (!config) { // TODO: does this exception make sense? What is the consequence of it being thrown? Where is it caught? Should we just reload the config file instead?
+    if (!config) { // TODO: does this exception make sense? What is the consequence of it being thrown? Where is it caught? Should we just reload the config file instead? Can this even happen if ConfigFileInterface successfully loaded?
         NSException *configNotLoadedException = [NSException exceptionWithName:@"ConfigNotLoadedException" reason:@"ConfigFileInterface config property is nil" userInfo:nil];
         @throw configNotLoadedException;
         return;
@@ -305,31 +319,62 @@ NSMutableArray *_tableViewDataModel;
         NSLog(@"No overrides found in config while generating scroll override table data model.");
         return;
     }
-    for (NSString *bundleID in overrides) {
-        
-        // TODO: Put this inna loop
-        NSNumber *smoothEnabled = [overrides[bundleID] valueForKeyPath:@"Scroll.smooth"];
-        NSNumber *magnificationEnabled = [overrides[bundleID] valueForKeyPath:@"Scroll.modifierKeys.magnificationScrollModifierKeyEnabled"];
-        NSNumber *horizontalEnabled = [overrides[bundleID] valueForKeyPath:@"Scroll.modifierKeys.horizontalScrollModifierKeyEnabled"];
-        
-        if (smoothEnabled != nil || magnificationEnabled != nil || horizontalEnabled != nil) {
-            if (smoothEnabled == nil || magnificationEnabled == nil || horizontalEnabled == nil) {
-                [ConfigFileInterface_PrefPane repairConfigWithProblem:kMFConfigProblemIncompleteAppOverride info:[_columnIdentifierToKeyPath allValues]];
-                
-                smoothEnabled = [overrides[bundleID] valueForKeyPath:@"Scroll.smooth"];
-                magnificationEnabled = [overrides[bundleID] valueForKeyPath:@"Scroll.modifierKeys.magnificationScrollModifierKeyEnabled"];
-                horizontalEnabled = [overrides[bundleID] valueForKeyPath:@"Scroll.modifierKeys.horizontalScrollModifierKeyEnabled"];
-                
-                
-            }
-            NSDictionary *rowData = @{
-                @"AppColumnID":bundleID,
-                @"SmoothEnabledColumnID":smoothEnabled,
-                @"MagnificationEnabledColumnID": magnificationEnabled,
-                @"HorizontalEnabledColumnID": horizontalEnabled
-            };
-            [_tableViewDataModel addObject:[rowData mutableCopy]];
+    
+    for (NSString *bundleID in overrides) { // Every bundleID corresponds to one row
+        NSMutableDictionary *rowDict = [NSMutableDictionary dictionary];
+        NSArray *columnIDs = _columnIdentifierToKeyPath.allKeys;
+        for (NSString *columnID in columnIDs) { // Every columnID corresponds to one column (duh)
+            NSString *keyPath = _columnIdentifierToKeyPath[columnID];
+            NSObject *value = [overrides[bundleID] valueForKeyPath:keyPath];
+            rowDict[columnID] = value; // if value is nil, no entry will be added
         }
+        BOOL allNil = (rowDict.allValues.count == 0);
+        BOOL someNil = (rowDict.allValues.count < columnIDs.count);
+        
+        if (allNil) { // None of the values controlled by the table exist in this AppOverride
+            continue; // Don't add this app to the table
+        }
+        if (someNil) { // Only some of the values controlled by the table don't exist in this AppOverride
+            // Fill out missing values with default ones
+            [ConfigFileInterface_PrefPane repairConfigWithProblem:kMFConfigProblemIncompleteAppOverride info:[_columnIdentifierToKeyPath allValues]];
+            [self loadTableViewDataModelFromConfig]; // restart the whole function
+            return;
+        }
+
+        rowDict[@"AppColumnID"] = bundleID; // Add this last, so the allNil check works properly
+        
+        // rowDict will look like this: (If no new columns have been added since time of writing)
+        //            rowDict = @{
+        //                @"AppColumnID":[bundleIDString],
+        //                @"SmoothEnabledColumnID":[smoothEnabledBOOL],
+        //                @"MagnificationEnabledColumnID":[magnificationEnabledBOOL],
+        //                @"HorizontalEnabledColumnID":[horizontalEnabledBOOL]
+        //            };
+        
+        
+//        NSNumber *smoothEnabled = [overrides[bundleID] valueForKeyPath:@"Scroll.smooth"];
+//        NSNumber *magnificationEnabled = [overrides[bundleID] valueForKeyPath:@"Scroll.modifierKeys.magnificationScrollModifierKeyEnabled"];
+//        NSNumber *horizontalEnabled = [overrides[bundleID] valueForKeyPath:@"Scroll.modifierKeys.horizontalScrollModifierKeyEnabled"];
+//
+//        if (smoothEnabled != nil || magnificationEnabled != nil || horizontalEnabled != nil) {
+//
+//            // Make sure the config file is valid. If not - repair.
+//            if (smoothEnabled == nil || magnificationEnabled == nil || horizontalEnabled == nil) {
+//                [ConfigFileInterface_PrefPane repairConfigWithProblem:kMFConfigProblemIncompleteAppOverride info:[_columnIdentifierToKeyPath allValues]];
+//
+//                smoothEnabled = [overrides[bundleID] valueForKeyPath:@"Scroll.smooth"];
+//                magnificationEnabled = [overrides[bundleID] valueForKeyPath:@"Scroll.modifierKeys.magnificationScrollModifierKeyEnabled"];
+//                horizontalEnabled = [overrides[bundleID] valueForKeyPath:@"Scroll.modifierKeys.horizontalScrollModifierKeyEnabled"];
+//            }
+////            rowData = @{
+////                @"AppColumnID":bundleID,
+////                @"SmoothEnabledColumnID":smoothEnabled,
+////                @"MagnificationEnabledColumnID": magnificationEnabled,
+////                @"HorizontalEnabledColumnID": horizontalEnabled
+////            };
+//        }
+        [_tableViewDataModel addObject:rowDict];
+    
     }
 }
 

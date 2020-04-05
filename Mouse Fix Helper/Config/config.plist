@@ -52,7 +52,7 @@
 		<key>disableAll (unused)</key>
 		<false/>
 		<key>smooth</key>
-		<false/>
+		<true/>
 		<key>direction</key>
 		<integer>-1</integer>
 		<key>smoothParameters</key>
@@ -119,10 +119,15 @@
 		<dict>
 			<key>Scroll</key>
 			<dict>
-				<key>smooth</key>
+				<key>|smooth</key>
 				<true/>
 				<key>modifierKeys</key>
-				<dict/>
+				<dict>
+					<key>magnificationScrollModifierKeyEnabled</key>
+					<false/>
+					<key>|horizontalScrollModifierKeyEnabled</key>
+					<false/>
+				</dict>
 			</dict>
 		</dict>
 		<key>com.apple.Preview</key>
