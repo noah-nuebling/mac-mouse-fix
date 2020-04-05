@@ -195,7 +195,6 @@ NSDictionary *_columnIdentifierToKeyPath;
 
 /// The tableView automatically calls this. The return determines how many rows the tableView will display.
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-//    return 3; // TODO: Change this to a proper value
     return _tableViewDataModel.count;
 }
 
@@ -209,14 +208,15 @@ NSDictionary *_columnIdentifierToKeyPath;
     if ([tableColumn.identifier isEqualToString:@"AppColumnID"]) {
         NSTableCellView *appCell = [_tableView makeViewWithIdentifier:@"AppCellID" owner:nil];
         if (appCell) {
-            NSString *bundleID = [_tableViewDataModel objectAtIndex:row][@"AppColumnID"];
+            NSString *bundleID = _tableViewDataModel[row][tableColumn.identifier];
             NSString *appPath = [NSWorkspace.sharedWorkspace absolutePathForAppBundleWithIdentifier:bundleID];
 //            NSBundle *bundle = [NSBundle bundleWithIdentifier:bundleID]; // This doesn't work for some reason
             NSImage *appIcon;
             NSString *appName;
             if (!appPath) {
+                // TODO: This will happen, when the user uninstalls an app. Handle gracefully. Prolly just remove the app from config or don't display it.
                 appIcon = [NSImage imageNamed:NSImageNameStatusUnavailable];
-                appName = [NSString stringWithFormat:@"%@", bundleID];
+                appName = [NSString stringWithFormat:@"Couldn't find: %@", bundleID];
             } else {
                 appIcon = [NSWorkspace.sharedWorkspace iconForFile:appPath];
                 appName = [[NSBundle bundleWithPath:appPath] objectForInfoDictionaryKey:@"CFBundleName"];
@@ -228,38 +228,19 @@ NSDictionary *_columnIdentifierToKeyPath;
             
         }
         return appCell;
-    } else if ([tableColumn.identifier isEqualToString:@"SmoothEnabledColumnID"]) {
-        NSTableCellView *smoothEnabledCell = [_tableView makeViewWithIdentifier:@"CheckBoxCellID" owner:nil];
-        if (smoothEnabledCell) {
-            BOOL isEnabled = [_tableViewDataModel[row][@"SmoothEnabledColumnID"] boolValue];
-            NSButton *checkBox = smoothEnabledCell.subviews[0];
+    } else if ([tableColumn.identifier isEqualToString:@"SmoothEnabledColumnID"] ||
+               [tableColumn.identifier isEqualToString:@"MagnificationEnabledColumnID"] ||
+               [tableColumn.identifier isEqualToString:@"HorizontalEnabledColumnID"]) {
+        NSTableCellView *cell = [_tableView makeViewWithIdentifier:@"CheckBoxCellID" owner:nil];
+        if (cell) {
+            BOOL isEnabled = [_tableViewDataModel[row][tableColumn.identifier] boolValue];
+            NSButton *checkBox = cell.subviews[0];
             checkBox.state = isEnabled;
             checkBox.target = self;
             checkBox.action = @selector(checkBoxInCell:);
         }
-        return smoothEnabledCell;
-    } else if ([tableColumn.identifier isEqualToString:@"MagnificationEnabledColumnID"]) {
-        NSTableCellView *smoothEnabledCell = [_tableView makeViewWithIdentifier:@"CheckBoxCellID" owner:nil];
-        if (smoothEnabledCell) {
-            BOOL isEnabled = [_tableViewDataModel[row][@"MagnificationEnabledColumnID"] boolValue];
-            NSButton *checkBox = smoothEnabledCell.subviews[0];
-            checkBox.state = isEnabled;
-            checkBox.target = self;
-            checkBox.action = @selector(checkBoxInCell:);
-        }
-        return smoothEnabledCell;
-    } else if ([tableColumn.identifier isEqualToString:@"HorizontalEnabledColumnID"]) {
-        NSTableCellView *smoothEnabledCell = [_tableView makeViewWithIdentifier:@"CheckBoxCellID" owner:nil];
-        if (smoothEnabledCell) {
-            BOOL isEnabled = [_tableViewDataModel[row][@"HorizontalEnabledColumnID"] boolValue];
-            NSButton *checkBox = smoothEnabledCell.subviews[0];
-            checkBox.state = isEnabled;
-            checkBox.target = self;
-            checkBox.action = @selector(checkBoxInCell:);
-        }
-        return smoothEnabledCell;
+        return cell;
     }
-    
     return nil;
 }
 
@@ -313,7 +294,6 @@ NSMutableArray *_tableViewDataModel;
 
 - (void)loadTableViewDataModelFromConfig {
     _tableViewDataModel = [NSMutableArray array];
-    [ConfigFileInterface_PrefPane loadConfigFromFile];
     NSDictionary *config = ConfigFileInterface_PrefPane.config;
     if (!config) { // TODO: does this exception make sense? What is the consequence of it being thrown? Where is it caught? Should we just reload the config file instead?
         NSException *configNotLoadedException = [NSException exceptionWithName:@"ConfigNotLoadedException" reason:@"ConfigFileInterface config property is nil" userInfo:nil];
