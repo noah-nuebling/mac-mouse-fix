@@ -18,9 +18,10 @@ typedef enum {
 } ConfigProblem;
 @property (class,retain) NSMutableDictionary *config;
 + (NSURL *)configURL;
-+ (void)writeConfigToFile;
++ (void)writeConfigToFileAndNotifyHelper;
 + (void)loadConfigFromFile;
-+ (void)repairConfigWithProblem:(ConfigProblem)problem info:(id _Nullable)infoo;
++ (void)repairConfigWithProblem:(ConfigProblem)problem info:(id _Nullable)info;
++ (void)cleanUpConfig;
 @end
 
 NS_ASSUME_NONNULL_END

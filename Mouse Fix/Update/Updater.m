@@ -158,7 +158,7 @@ static NSURL *_updateNotesLocation;
 
 + (void)skipAvailableVersion {
     [ConfigFileInterface_PrefPane.config setValue:@(_availableVersion) forKeyPath:@"Other.skippedBundleVersion"];
-    [ConfigFileInterface_PrefPane writeConfigToFile];
+    [ConfigFileInterface_PrefPane writeConfigToFileAndNotifyHelper];
 }
 
 + (void)update {

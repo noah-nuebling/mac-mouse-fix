@@ -59,4 +59,12 @@
     return dstMutable;
 }
 
++ (BOOL)appIsInstalled:(NSString *)bundleID {
+    NSString *appPath = [NSWorkspace.sharedWorkspace absolutePathForAppBundleWithIdentifier:bundleID];
+    if (appPath) {
+        return YES;
+    }
+    return NO;
+}
+
 @end

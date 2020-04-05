@@ -7,10 +7,12 @@
 // --------------------------------------------------------------------------
 //
 
+#import <AppKit/AppKit.h>
 #import "ConfigFileInterface_PrefPane.h"
 #import "HelperServices.h"
 #import "../MessagePort/MessagePort_PrefPane.h"
 #import "NSMutableDictionary+Additions.h"
+#import "Utility_PrefPane.h"
 
 // TODO: Implement clean function which deletes all overrides that don't change the default config. Adding and removing different apps in ScrollOverridePanel will accumulate dead entries.
 
@@ -23,7 +25,7 @@ static NSMutableDictionary *_config;
 + (void)setConfig:(NSMutableDictionary *)new {
     _config = new;
 }
-
+// Backup config used to be called default config. There might still be references to default config that I missed.
 static NSURL *_configURL;
 static NSURL *_backupConfigURL;
 + (NSURL *)configURL {
@@ -55,7 +57,7 @@ static NSURL *_backupConfigURL;
  \note For every window there should be @b one function `- setConfigToUI`
  \todo Learn documentation syntax
  */
-+ (void)writeConfigToFile {
++ (void)writeConfigToFileAndNotifyHelper {
     
     NSError *serializeErr;
     NSData *configData = [NSPropertyListSerialization dataWithPropertyList:self.config format:NSPropertyListXMLFormat_v1_0 options:0 error:&serializeErr];
@@ -112,30 +114,20 @@ static NSURL *_backupConfigURL;
     // TODO: Check if this works
     // Check all AppOverrides in config for the parameters specified in `keyPaths`. If one of the parameters doesn't exist, initialize it with the default value from config.
     if (problem == kMFConfigProblemIncompleteAppOverride) {
-        if (!info || ![info isKindOfClass:[NSArray class]]) {
-            // TODO: Handle this exception
-            NSException *e = [NSException exceptionWithName:NSInvalidArgumentException reason:@"Asked to repair incomplete app override, but no key paths given as arguments" userInfo:@{@"arguments": info}];
-            @throw e;
-        }
+        NSAssert(info && [info isKindOfClass:[NSDictionary class]], @"Can't repair incomplete app override: invalid argument provided");
         
-        // Go through every combination of
-        //   - Default keyPath given in the info array
-        //   - All bundleIDs found in the config file
-        // From each combination, build the keyPath to the override value
-        // (Using "\" to escape the periods in the bundleID strings, and using custom coolKeyPath methods to handle escapes, and to set values even if some dicts along the keyPath don't exist.)
-        // If an override value doesn't exist at overrideKP, put default value at overrideKP.
-        NSArray *keyPathsToDefaultValues = info;
-        NSMutableDictionary *overrides = _config[@"AppOverrides"];
-        for (NSString *bundleID in overrides) {
-            NSString *bundleIDEscaped = [bundleID stringByReplacingOccurrencesOfString:@"." withString:@"\\."];
-            for (NSString *defaultKP in keyPathsToDefaultValues) {
-                NSString *overrideKP = [NSString stringWithFormat:@"AppOverrides.%@.%@", bundleIDEscaped, defaultKP];
-                if ([_config objectForCoolKeyPath:overrideKP] == nil) {
-                    [_config setObject:[_config objectForCoolKeyPath:defaultKP] forCoolKeyPath:overrideKP];
-                }
+        NSString *bundleID = info[@"bundleID"]; // Bundle ID of the app with the faulty override
+        NSString *bundleIDEscaped = [bundleID stringByReplacingOccurrencesOfString:@"." withString:@"\\."];
+        NSArray *keyPathsToDefaultValues = info[@"relevantKeyPaths"]; // KeyPaths to the values of which at least one is missing
+        for (NSString *defaultKP in keyPathsToDefaultValues) {
+            NSString *overrideKP = [NSString stringWithFormat:@"AppOverrides.%@.%@", bundleIDEscaped, defaultKP];
+            if ([_config objectForCoolKeyPath:overrideKP] == nil) {
+                // If an override value doesn't exist at overrideKP, put default value at overrideKP.
+                [_config setObject:[_config objectForCoolKeyPath:defaultKP] forCoolKeyPath:overrideKP];
             }
         }
-        [self writeConfigToFile];
+        [self writeConfigToFileAndNotifyHelper];
+    }
 //        for (NSString *o in overrides) {
 //            NSString *keyPath = NSString stringWithFormat:@"AppOverrides.%"
 //        }
@@ -151,15 +143,26 @@ static NSURL *_backupConfigURL;
 //            repairedOverrides[bundleID] = repairedOverride;
 //        }
 //        _config[@"AppOverrides"] = repairedOverrides;
-    }
+//    }
 }
 
-/// Replaces the current config file which the helper app is reading from with the default one and then terminates the helper. (Helper will restart automatically because of the KeepAlive attribute in its user agent config file.)
+/// Replaces the current config file which the helper app is reading from with the backup one and then terminates the helper. (Helper will restart automatically because of the KeepAlive attribute in its user agent config file.)
 + (void)replaceCurrentConfigWithBackupConfig {
     NSData *defaultData = [NSData dataWithContentsOfURL:_backupConfigURL];
     [defaultData writeToURL:_configURL atomically:YES];
     [MessagePort_PrefPane sendMessageToHelper:@"terminate"];
     [self loadConfigFromFile];
+}
+
++ (void)cleanUpConfig {
+    // Clean up overrides for uninstalled apps
+    NSMutableDictionary *appOverrides = _config[@"AppOverrides"];
+    for (NSString *bundleID in appOverrides.allKeys) {
+        if (![Utility_PrefPane appIsInstalled:bundleID]) {
+            appOverrides[bundleID] = nil;
+        }
+    }
+    [self writeConfigToFileAndNotifyHelper]; // No need to notify the helper at the time of writing
 }
 
 @end

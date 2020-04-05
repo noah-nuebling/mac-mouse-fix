@@ -106,7 +106,7 @@ static MoreSheet *_instance;
 
 - (void)setConfigFileToUI {
     [ConfigFileInterface_PrefPane.config setValue:[NSNumber numberWithBool:_checkForUpdateCheckBox.state] forKeyPath:@"Other.checkForUpdates"];
-    [ConfigFileInterface_PrefPane writeConfigToFile];
+    [ConfigFileInterface_PrefPane writeConfigToFileAndNotifyHelper];
 }
 
 @end

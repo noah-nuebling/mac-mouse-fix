@@ -379,7 +379,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
     ConfigFileInterface_PrefPane.config = [[Utility_PrefPane dictionaryWithOverridesAppliedFrom:scrollParametersFromUI to:ConfigFileInterface_PrefPane.config] mutableCopy];
     
-    [ConfigFileInterface_PrefPane writeConfigToFile];
+    [ConfigFileInterface_PrefPane writeConfigToFileAndNotifyHelper];
 }
 
 @end

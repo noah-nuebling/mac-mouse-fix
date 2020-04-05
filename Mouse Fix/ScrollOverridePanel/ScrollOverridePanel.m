@@ -68,7 +68,7 @@ NSDictionary *_columnIdentifierToKeyPath;
 }
 - (void)setConfigFileToUI {
     [self writeTableViewDataModelToConfig];
-    [ConfigFileInterface_PrefPane writeConfigToFile];
+    [ConfigFileInterface_PrefPane writeConfigToFileAndNotifyHelper];
     [self loadTableViewDataModelFromConfig];
     [_tableView reloadData];
 }
@@ -216,10 +216,11 @@ NSDictionary *_columnIdentifierToKeyPath;
 //            NSBundle *bundle = [NSBundle bundleWithIdentifier:bundleID]; // This doesn't work for some reason
             NSImage *appIcon;
             NSString *appName;
-            if (!appPath) {
+            if (![Utility_PrefPane appIsInstalled:bundleID]) {
                 // TODO: This will happen, when the user uninstalls an app. Handle gracefully. Prolly just remove the app from config or don't display it.
-                appIcon = [NSImage imageNamed:NSImageNameStatusUnavailable];
-                appName = [NSString stringWithFormat:@"Couldn't find: %@", bundleID];
+//                appIcon = [NSImage imageNamed:NSImageNameStopProgressFreestandingTemplate]; //NSImageNameStopProgressFreestandingTemplate
+                appIcon = [NSImage imageNamed:NSImageNameStopProgressFreestandingTemplate];
+                appName = [NSString stringWithFormat:@"Couldn't find app: %@", bundleID];
             } else {
                 appIcon = [NSWorkspace.sharedWorkspace iconForFile:appPath];
                 appName = [[NSBundle bundleWithPath:appPath] objectForInfoDictionaryKey:@"CFBundleName"];
@@ -263,7 +264,7 @@ NSMutableArray *_tableViewDataModel;
             [ConfigFileInterface_PrefPane.config setObject:cellValue forCoolKeyPath:overrideKeyPath];
         }
     }
-    [ConfigFileInterface_PrefPane writeConfigToFile];
+    [ConfigFileInterface_PrefPane writeConfigToFileAndNotifyHelper];
 }
 //        NSNumber *smoothEnabled = rowDict[@"SmoothEnabledColumnID"];
 //        NSNumber *magnificationEnabled = rowDict[@"MagnificationEnabledColumnID"];
@@ -320,7 +321,13 @@ NSMutableArray *_tableViewDataModel;
         return;
     }
     
-    for (NSString *bundleID in overrides) { // Every bundleID corresponds to one row
+    for (NSString *bundleID in overrides.allKeys) { // Every bundleID corresponds to one app/row
+        // Check if app exists on system
+        if (![Utility_PrefPane appIsInstalled:bundleID]) {
+            [ConfigFileInterface_PrefPane cleanUpConfig];
+            continue;
+        }
+        // Create row dict for app with `bundleID` from data in config. Every key value pair in row dict corresponds to a column. The key is the column identifier and the value is the value for the column with `columnID` and the row of the app with `bundleID`
         NSMutableDictionary *rowDict = [NSMutableDictionary dictionary];
         NSArray *columnIDs = _columnIdentifierToKeyPath.allKeys;
         for (NSString *columnID in columnIDs) { // Every columnID corresponds to one column (duh)
@@ -328,20 +335,26 @@ NSMutableArray *_tableViewDataModel;
             NSObject *value = [overrides[bundleID] valueForKeyPath:keyPath];
             rowDict[columnID] = value; // if value is nil, no entry will be added
         }
+        // Check existence / validity of generated rowDict
         BOOL allNil = (rowDict.allValues.count == 0);
         BOOL someNil = (rowDict.allValues.count < columnIDs.count);
-        
         if (allNil) { // None of the values controlled by the table exist in this AppOverride
             continue; // Don't add this app to the table
         }
         if (someNil) { // Only some of the values controlled by the table don't exist in this AppOverride
             // Fill out missing values with default ones
-            [ConfigFileInterface_PrefPane repairConfigWithProblem:kMFConfigProblemIncompleteAppOverride info:[_columnIdentifierToKeyPath allValues]];
+            [ConfigFileInterface_PrefPane repairConfigWithProblem:kMFConfigProblemIncompleteAppOverride info:@{
+                    @"bundleID": bundleID,
+                    @"relevantKeyPaths": [_columnIdentifierToKeyPath allValues],
+            }];
             [self loadTableViewDataModelFromConfig]; // restart the whole function
             return;
         }
-
         rowDict[@"AppColumnID"] = bundleID; // Add this last, so the allNil check works properly
+        
+        [_tableViewDataModel addObject:rowDict];
+    }
+}
         
         // rowDict will look like this: (If no new columns have been added since time of writing)
         //            rowDict = @{
@@ -373,9 +386,8 @@ NSMutableArray *_tableViewDataModel;
 ////                @"HorizontalEnabledColumnID": horizontalEnabled
 ////            };
 //        }
-        [_tableViewDataModel addObject:rowDict];
     
-    }
-}
+//    }
+//}
 
 @end

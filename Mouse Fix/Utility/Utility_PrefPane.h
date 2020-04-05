@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSArray *)subviewsForView:(NSView *)view withIdentifier:(NSString *)identifier;
 + (float)preferenceWindowWidth;
 + (NSDictionary *)dictionaryWithOverridesAppliedFrom:(NSDictionary *)src to: (NSDictionary *)dst;
++ (BOOL)appIsInstalled:(NSString *)bundleID;
 @end
 
 NS_ASSUME_NONNULL_END
