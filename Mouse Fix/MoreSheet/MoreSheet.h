@@ -12,12 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MoreSheet : NSWindowController
-/**
- Dismisses the more sheet currently attached to the main window.
- 
- Use this method when you don't hold a reference to the instance of more sheet you want to dismiss.
- */
-+ (void)endMoreSheetAttachedToMainWindow;
++ (MoreSheet *)instance;
 - (void)begin;
 - (void)end;
 @end

@@ -12,10 +12,15 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ConfigFileInterface_PrefPane : NSObject
+typedef enum {
+    kMFConfigProblemNone = 0,
+    kMFConfigProblemIncompleteAppOverride = 1
+} ConfigProblem;
 @property (class,retain) NSMutableDictionary *config;
 + (NSURL *)configURL;
 + (void)writeConfigToFile;
 + (void)loadConfigFromFile;
++ (void)repairConfigWithProblem:(ConfigProblem)problem info:(id _Nullable)infoo;
 @end
 
 NS_ASSUME_NONNULL_END

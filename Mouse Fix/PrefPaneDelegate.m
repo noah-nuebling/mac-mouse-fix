@@ -59,21 +59,6 @@ static PrefPaneDelegate *_mainView;
     _mainView = new;
 }
 
-static MoreSheet *_moreSheetController;
-+ (MoreSheet *)moreSheetController {
-    return _moreSheetController;
-}
-+ (void)setMoreSheetController:(MoreSheet *)moreSheetController {
-    _moreSheetController = moreSheetController;
-}
-static ScrollOverridePanel *_scrollOverridePanelController;
-+ (ScrollOverridePanel *)scrollOverridePanelController {
-    return _scrollOverridePanelController;
-}
-+ (void)setScrollOverridePanelController:(ScrollOverridePanel *)scrollOverridePanelController {
-    _scrollOverridePanelController = scrollOverridePanelController;
-}
-
 static NSDictionary *_scrollConfigurations;
 static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 
@@ -90,21 +75,17 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
 }
 - (IBAction)moreButton:(id)sender {
-    [PrefPaneDelegate.moreSheetController begin];
+    [MoreSheet.instance begin];
 }
 - (IBAction)scrollEnableCheckBox:(id)sender {
     [self disableScrollSettings:@(_scrollEnableCheckBox.state)];
     [self UIChanged:NULL];
 }
-
-- (IBAction)UIChanged:(id)sender {
+- (IBAction)UIChanged:(id)sender { // TODO: consider removing
     [self setConfigFileToUI];
 }
 
-
 # pragma mark - main
-
-
 
 - (NSView *)loadMainView {
     
@@ -150,10 +131,6 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
     NSLog(@"PREF PANEEE");
     
-    
-    PrefPaneDelegate.moreSheetController = [[MoreSheet alloc] initWithWindowNibName:@"MoreSheet"];
-    PrefPaneDelegate.scrollOverridePanelController = [[ScrollOverridePanel alloc] initWithWindowNibName:@"ScrollOverridePanel"];
-    
     [self initializeUI];
     
     BOOL checkForUpdates = [[ConfigFileInterface_PrefPane.config valueForKeyPath:@"Other.checkForUpdates"] boolValue];
@@ -170,8 +147,8 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 }
 
 - (void)willUnselect {
-
     [UpdateWindow.instance close];
+    [MoreSheet.instance end];
 }
 
 - (void)disableUI:(NSNumber *)enable {
@@ -208,8 +185,6 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     }
     
 # pragma mark Popup Buttons
-    
-    NSDictionary *configTest = ConfigFileInterface_PrefPane.config;
     
     NSDictionary *buttonRemaps = ConfigFileInterface_PrefPane.config[@"ButtonRemaps"];
     
@@ -399,7 +374,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     };
     
     
-    ConfigFileInterface_PrefPane.config = [[Utility_PrefPane applyOverridesFrom:scrollParametersFromUI to:ConfigFileInterface_PrefPane.config] mutableCopy];
+    ConfigFileInterface_PrefPane.config = [[Utility_PrefPane dictionaryWithOverridesAppliedFrom:scrollParametersFromUI to:ConfigFileInterface_PrefPane.config] mutableCopy];
     
     [ConfigFileInterface_PrefPane writeConfigToFile];
 }

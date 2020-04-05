@@ -74,10 +74,6 @@
                                                         <outlet property="textField" destination="KMO-Y7-n9b" id="nNB-UU-sRm"/>
                                                     </connections>
                                                 </tableCellView>
-                                                <tableCellView id="az9-b6-Y7G">
-                                                    <rect key="frame" x="1" y="51" width="314" height="42"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
                                         <tableColumn identifier="SmoothEnabledColumnID" width="81" minWidth="10" maxWidth="3.4028234663852886e+38" id="Vvq-tI-ONi">
@@ -92,10 +88,7 @@
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
-                                                <tableCellView id="7HO-48-dNs" customClass="CheckBoxCell">
-                                                    <string key="identifier" base64-UTF8="YES">
-U21vb3RoEEVuYWJsZWRDZWxsSUQ
-</string>
+                                                <tableCellView identifier="CheckBoxCellID" id="7HO-48-dNs" customClass="CheckBoxCell">
                                                     <rect key="frame" x="318" y="2" width="81" height="42"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
@@ -111,7 +104,7 @@ U21vb3RoEEVuYWJsZWRDZWxsSUQ
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn width="98" minWidth="10" maxWidth="3.4028234663852886e+38" headerToolTip="Hold Command (⌘) while scrolling to zoom in and out" id="6tR-q3-YQA">
+                                        <tableColumn identifier="MagnificationEnabledColumnID" width="98" minWidth="10" maxWidth="3.4028234663852886e+38" headerToolTip="Hold Command (⌘) while scrolling to zoom in and out" id="6tR-q3-YQA">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="⌘-scroll to zoom">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -122,30 +115,8 @@ U21vb3RoEEVuYWJsZWRDZWxsSUQ
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                            <prototypeCellViews>
-                                                <tableCellView id="iP0-RE-E68" customClass="CheckBoxCell">
-                                                    <string key="identifier" base64-UTF8="YES">
-U21vb3RoEEVuYWJsZWRDZWxsSUQ
-</string>
-                                                    <rect key="frame" x="402" y="2" width="98" height="42"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <subviews>
-                                                        <button identifier="CheckBoxID" verticalHuggingPriority="750" id="Y2U-gj-cXn">
-                                                            <rect key="frame" x="-1" y="1" width="98" height="40"/>
-                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                            <buttonCell key="cell" type="check" title="Check" bezelStyle="regularSquare" imagePosition="only" state="on" inset="2" id="B3K-6h-kl4">
-                                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                                <font key="font" metaFont="system"/>
-                                                            </buttonCell>
-                                                            <connections>
-                                                                <action selector="smoothEnableCheckBox:" target="-2" id="EjO-cq-GRm"/>
-                                                            </connections>
-                                                        </button>
-                                                    </subviews>
-                                                </tableCellView>
-                                            </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn width="108" minWidth="10" maxWidth="3.4028234663852886e+38" headerToolTip="Hold Shift (⇧) while scrolling to scroll horizontally" id="Aia-Ea-RJH">
+                                        <tableColumn identifier="HorizontalEnabledColumnID" width="108" minWidth="10" maxWidth="3.4028234663852886e+38" id="Aia-Ea-RJH">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="⇧-horizontal scroll">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -155,29 +126,9 @@ U21vb3RoEEVuYWJsZWRDZWxsSUQ
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
+                                            <string key="headerToolTip">Hold Shift (⇧) while scrolling to scroll horizontally
+(This option might not have an effect in some apps when smooth scroll is disabled)</string>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                            <prototypeCellViews>
-                                                <tableCellView id="nSd-qN-9nA" customClass="CheckBoxCell">
-                                                    <string key="identifier" base64-UTF8="YES">
-U21vb3RoEEVuYWJsZWRDZWxsSUQ
-</string>
-                                                    <rect key="frame" x="503" y="2" width="108" height="42"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <subviews>
-                                                        <button identifier="CheckBoxID" verticalHuggingPriority="750" id="LII-iX-wP2">
-                                                            <rect key="frame" x="-1" y="1" width="108" height="40"/>
-                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                            <buttonCell key="cell" type="check" title="Check" bezelStyle="regularSquare" imagePosition="only" state="on" inset="2" id="aXj-ep-9Gq">
-                                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                                <font key="font" metaFont="system"/>
-                                                            </buttonCell>
-                                                            <connections>
-                                                                <action selector="smoothEnableCheckBox:" target="-2" id="NMu-ar-neC"/>
-                                                            </connections>
-                                                        </button>
-                                                    </subviews>
-                                                </tableCellView>
-                                            </prototypeCellViews>
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
@@ -213,7 +164,7 @@ U21vb3RoEEVuYWJsZWRDZWxsSUQ
                         <rect key="frame" x="21" y="12" width="205" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Drag apps to the list to add them" id="Kr9-LE-kpP">
-                            <font key="font" metaFont="message" size="11"/>
+                            <font key="font" metaFont="label" size="11"/>
                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>

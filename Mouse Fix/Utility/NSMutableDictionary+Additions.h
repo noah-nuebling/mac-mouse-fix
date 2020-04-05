@@ -1,22 +1,20 @@
 //
 // --------------------------------------------------------------------------
-// Utility_PrefPane.h
+// NSDictionary+Additions.h
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
-// Created by Noah Nuebling in 2019
+// Created by Noah Nuebling in 2020
 // Licensed under MIT
 // --------------------------------------------------------------------------
 //
 
 #import <Foundation/Foundation.h>
-#import <AppKit/AppKit.h>
-
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Utility_PrefPane : NSObject
-+ (NSArray *)subviewsForView:(NSView *)view withIdentifier:(NSString *)identifier;
-+ (float)preferenceWindowWidth;
-+ (NSDictionary *)dictionaryWithOverridesAppliedFrom:(NSDictionary *)src to: (NSDictionary *)dst;
+@interface NSMutableDictionary (Additions)
+- (void)test;
+- (NSObject *)objectForCoolKeyPath:(NSString *)keyPath;
+- (void)setObject:(NSObject *)object forCoolKeyPath:(NSString *)keyPath;
 @end
 
 NS_ASSUME_NONNULL_END

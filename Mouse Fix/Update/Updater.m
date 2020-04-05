@@ -162,10 +162,9 @@ static NSURL *_updateNotesLocation;
 }
 
 + (void)update {
-    
     dispatch_async(dispatch_get_main_queue(), ^{
         NSLog(@"threadddddd: %@", NSThread.currentThread);
-        [MoreSheet endMoreSheetAttachedToMainWindow];
+        [MoreSheet.instance end];
     });
     
 

@@ -24,7 +24,7 @@
 #pragma mark Globals
 
 static BOOL _configFileChanged;
-static NSString *_bundleIdentifierOfAppWhichCausesOverride;
+static NSString *_bundleIdentifierOfAppWhichCausesAppOverride;
 static NSDictionary *_stringToEventFlagMask;
 
 #pragma mark - Interface
@@ -49,10 +49,10 @@ static NSMutableDictionary *_config;
 //    config = new;
 //}
 
-/// config with some app specific overrides applied
-static NSMutableDictionary *_configWithOverridesApplied;
-+ (NSMutableDictionary *)configWithOverridesApplied {
-    return _configWithOverridesApplied;
+/// config with some app specific AppOverrides applied
+static NSMutableDictionary *_configWithAppOverridesApplied;
++ (NSMutableDictionary *)configWithAppOverridesApplied {
+    return _configWithAppOverridesApplied;
 }
 
 + (void)reactToConfigFileChange {
@@ -94,7 +94,7 @@ static void fillConfigFromFile() {
 
 /// Modify the programs state according to parameters from this class' config property
 + (void)setProgramStateToConfig {
-    // TODO: This function is still seems to be a huge resource hog (thinking this because RoughScroll calls this on every tick and is much more resource intensive than SmoothScroll) – even with the current optimization of only looking at the frontmost app for overrides, instead of the app under the mouse pointer.
+    // TODO: This function is still seems to be a huge resource hog (thinking this because RoughScroll calls this on every tick and is much more resource intensive than SmoothScroll) – even with the current optimization of only looking at the frontmost app for AppOverrides, instead of the app under the mouse pointer.
     
     NSString *bundleIdentifierOfActiveApp;
     
@@ -193,12 +193,12 @@ static void fillConfigFromFile() {
 
 /// Will only update settings if active app changed
 + (void)updateScrollSettingsWithActiveApp:(NSString *)bundleIdentifierOfScrolledApp {
-    if ([_bundleIdentifierOfAppWhichCausesOverride isEqualToString:bundleIdentifierOfScrolledApp] == NO) {
-        _bundleIdentifierOfAppWhichCausesOverride = bundleIdentifierOfScrolledApp;
+    if ([_bundleIdentifierOfAppWhichCausesAppOverride isEqualToString:bundleIdentifierOfScrolledApp] == NO) {
+        _bundleIdentifierOfAppWhichCausesAppOverride = bundleIdentifierOfScrolledApp;
         
-        loadOverridesForApp(bundleIdentifierOfScrolledApp);
+        loadAppOverridesForApp(bundleIdentifierOfScrolledApp);
         
-        NSDictionary *scroll = [_configWithOverridesApplied objectForKey:@"Scroll"];
+        NSDictionary *scroll = [_configWithAppOverridesApplied objectForKey:@"Scroll"];
         
         // top level
         
@@ -227,9 +227,9 @@ static void fillConfigFromFile() {
     }
 }
 
-/// Applies overrides from app with `bundleIdentifier` to `_config` and writes the result into `_configWithOverridesApplied`.
-static void loadOverridesForApp(NSString *bundleIdentifier) {
-     // get overrides for scrolled app
+/// Applies AppOverrides from app with `bundleIdentifier` to `_config` and writes the result into `_configWithAppOverridesApplied`.
+static void loadAppOverridesForApp(NSString *bundleIdentifier) {
+     // get AppOverrides for scrolled app
     NSDictionary *overrides = [_config objectForKey:@"AppOverrides"];
     NSDictionary *overridesForThisApp;
     for (NSString *b in overrides.allKeys) {
@@ -238,9 +238,9 @@ static void loadOverridesForApp(NSString *bundleIdentifier) {
         }
     }
     if (overridesForThisApp) {
-        _configWithOverridesApplied = [[Utility_HelperApp applyOverridesFrom:overridesForThisApp to:_config] mutableCopy];
+        _configWithAppOverridesApplied = [[Utility_HelperApp dictionaryWithOverridesAppliedFrom:overridesForThisApp to:_config] mutableCopy];
     } else {
-        _configWithOverridesApplied = _config;
+        _configWithAppOverridesApplied = _config;
     }
 }
 

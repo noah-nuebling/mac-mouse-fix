@@ -18,6 +18,8 @@
 @end
 
 @implementation UpdateWindow
+
+// TODO: Make this variable hold the actual UpdateWindow instance instead of the NSWindow instance. The UpdateWindow instance is a window controller and therefore has a _window attribute which holds the same value as this currently does.
 static NSWindow *_instance;
 + (NSWindow *)instance {
     return _instance;
@@ -49,8 +51,6 @@ static NSWindow *_instance;
 - (void)windowWillClose:(NSNotification *)notification {
     
 }
-
-
 
 - (void)themeChanged:(NSNotification *)ntf {
     NSLog(@"Theme Changed!");

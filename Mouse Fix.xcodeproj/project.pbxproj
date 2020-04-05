@@ -34,12 +34,15 @@
 		4F95A249234EBB5D000DC7D7 /* PointerSpeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F95A248234EBB5D000DC7D7 /* PointerSpeed.m */; };
 		4FA26CE724380D1F0082D5F6 /* ClickableAppIcon.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FA26CE524380D1F0082D5F6 /* ClickableAppIcon.h */; };
 		4FA26CE824380D1F0082D5F6 /* ClickableAppIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA26CE624380D1F0082D5F6 /* ClickableAppIcon.m */; };
+		4FA26CF1243949DC0082D5F6 /* NSMutableDictionary+Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FA26CEF243949DC0082D5F6 /* NSMutableDictionary+Additions.h */; };
+		4FA26CF2243949DC0082D5F6 /* NSMutableDictionary+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA26CF0243949DC0082D5F6 /* NSMutableDictionary+Additions.m */; };
 		4FACF59F2183B956009257D4 /* default_mouse.fix.helper.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FACF59E2183B956009257D4 /* default_mouse.fix.helper.plist */; };
 		4FBF34F7231750B600E6CFD0 /* pureDonationButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */; };
 		4FBF34FF23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FBF34FD23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h */; };
 		4FBF350023183E6700E6CFD0 /* ConfigFileInterface_PrefPane.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBF34FE23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.m */; };
 		4FBF350523183FDA00E6CFD0 /* HelperServices.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FBF350323183FDA00E6CFD0 /* HelperServices.h */; };
 		4FBF350623183FDA00E6CFD0 /* HelperServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBF350423183FDA00E6CFD0 /* HelperServices.m */; };
+		4FC9D0C52439F4CF00109E7E /* backup_config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F7C281F2436675900D94D0A /* backup_config.plist */; };
 		4FCECD8521092354001F1078 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECD8421092354001F1078 /* AppDelegate.m */; };
 		4FD36AED243741A70046DC41 /* ScrollOverridePanel.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FD36AEA243741A70046DC41 /* ScrollOverridePanel.h */; };
 		4FD36AEE243741A70046DC41 /* ScrollOverridePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD36AEB243741A70046DC41 /* ScrollOverridePanel.m */; };
@@ -207,12 +210,14 @@
 		4F3A8444230D3E6C0012C725 /* Updater.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Updater.m; sourceTree = "<group>"; };
 		4F422EEC23469B0F00AA6E22 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F422EEE23469B1700AA6E22 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
-		4F7C281F2436675900D94D0A /* default_config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = default_config.plist; sourceTree = "<group>"; };
+		4F7C281F2436675900D94D0A /* backup_config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = backup_config.plist; sourceTree = "<group>"; };
 		4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = milkshake_button.png; sourceTree = "<group>"; };
 		4F95A247234EBB5D000DC7D7 /* PointerSpeed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerSpeed.h; sourceTree = "<group>"; };
 		4F95A248234EBB5D000DC7D7 /* PointerSpeed.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerSpeed.m; sourceTree = "<group>"; };
 		4FA26CE524380D1F0082D5F6 /* ClickableAppIcon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClickableAppIcon.h; sourceTree = "<group>"; };
 		4FA26CE624380D1F0082D5F6 /* ClickableAppIcon.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClickableAppIcon.m; sourceTree = "<group>"; };
+		4FA26CEF243949DC0082D5F6 /* NSMutableDictionary+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+Additions.h"; sourceTree = "<group>"; };
+		4FA26CF0243949DC0082D5F6 /* NSMutableDictionary+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+Additions.m"; sourceTree = "<group>"; };
 		4FACF59E2183B956009257D4 /* default_mouse.fix.helper.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_mouse.fix.helper.plist; sourceTree = "<group>"; };
 		4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pureDonationButton.png; sourceTree = "<group>"; };
 		4FBF34FD23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigFileInterface_PrefPane.h; sourceTree = "<group>"; };
@@ -485,7 +490,7 @@
 		4FBF350123183F1300E6CFD0 /* Config */ = {
 			isa = PBXGroup;
 			children = (
-				4F7C281F2436675900D94D0A /* default_config.plist */,
+				4F7C281F2436675900D94D0A /* backup_config.plist */,
 				4FBF34FD23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h */,
 				4FBF34FE23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.m */,
 			);
@@ -631,6 +636,8 @@
 			children = (
 				4FD45A32231D097000F75C58 /* Utility_PrefPane.h */,
 				4FD45A33231D097000F75C58 /* Utility_PrefPane.m */,
+				4FA26CEF243949DC0082D5F6 /* NSMutableDictionary+Additions.h */,
+				4FA26CF0243949DC0082D5F6 /* NSMutableDictionary+Additions.m */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -704,6 +711,7 @@
 				4FD45A34231D097000F75C58 /* Utility_PrefPane.h in Headers */,
 				4FA26CE724380D1F0082D5F6 /* ClickableAppIcon.h in Headers */,
 				4FBF350523183FDA00E6CFD0 /* HelperServices.h in Headers */,
+				4FA26CF1243949DC0082D5F6 /* NSMutableDictionary+Additions.h in Headers */,
 				4FD45A0F231C66CF00F75C58 /* MessagePort_PrefPane.h in Headers */,
 				4FD67DDE211CC9000095A9A5 /* PrefPaneDelegate.h in Headers */,
 			);
@@ -831,6 +839,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FC9D0C52439F4CF00109E7E /* backup_config.plist in Resources */,
 				4FF873E123197283002A897A /* UpdateWindow.xib in Resources */,
 				4FD45A26231C860100F75C58 /* KeyIcon.tiff in Resources */,
 				4FD45A1D231C78B400F75C58 /* AuthorizeAccessibilityView.xib in Resources */,
@@ -918,6 +927,7 @@
 				4FD45A10231C66CF00F75C58 /* MessagePort_PrefPane.m in Sources */,
 				4FD45A1C231C78B400F75C58 /* AuthorizeAccessibilityView.m in Sources */,
 				4FA26CE824380D1F0082D5F6 /* ClickableAppIcon.m in Sources */,
+				4FA26CF2243949DC0082D5F6 /* NSMutableDictionary+Additions.m in Sources */,
 				4FBF350623183FDA00E6CFD0 /* HelperServices.m in Sources */,
 				4FD36AEE243741A70046DC41 /* ScrollOverridePanel.m in Sources */,
 				4F3A8446230D3E6C0012C725 /* Updater.m in Sources */,

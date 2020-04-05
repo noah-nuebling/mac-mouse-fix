@@ -14,6 +14,4 @@
 @interface PrefPaneDelegate : NSPreferencePane
 @property (class, strong) NSView *mainView;
 - (void)mainViewDidLoad;
-@property (class, strong) MoreSheet *moreSheetController;
-@property (class, strong) ScrollOverridePanel *scrollOverridePanelController;
 @end

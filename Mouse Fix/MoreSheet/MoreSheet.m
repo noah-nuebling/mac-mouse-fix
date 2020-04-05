@@ -23,6 +23,17 @@
 
 @implementation MoreSheet
 
+#pragma mark - Class
+
++ (void)load {
+    _instance = [[MoreSheet alloc] initWithWindowNibName:@"MoreSheet"];
+}
+static MoreSheet *_instance;
++ (MoreSheet *)instance {
+    return _instance;
+}
+
+
 # pragma mark - IBActions and Delegate
 - (IBAction)checkForUpdateCheckBox:(NSButton *)sender {
     NSLog(@"CHECK");
@@ -34,7 +45,7 @@
     }
 }
 - (IBAction)smoothScrollBlacklistButton:(id)sender {
-    [PrefPaneDelegate.scrollOverridePanelController display];
+    [ScrollOverridePanel.instance display];
 }
 - (IBAction)milkshakeButton:(id)sender {
     NSLog(@"BUTTTON");
@@ -58,6 +69,7 @@
 
 #pragma mark - Class methods - Public
 
+// TODO: Remove this. Instead Move the variable holding the MoreSheet instance from PrefPaneDelegate into a MoreSheet class variable. Then you can end the sheet by calling `[MoreSheet.instance end]`.
 + (void)endMoreSheetAttachedToMainWindow {
     NSWindow *sheet = NSApplication.sharedApplication.mainWindow.attachedSheet;
     if ([sheet.delegate.class isEqual:self.class]) {
@@ -73,6 +85,7 @@
 }
 - (void)end {
     [[[NSApplication sharedApplication] mainWindow] endSheet:self.window];
+    [ScrollOverridePanel.instance.window close];
 }
 
 #pragma mark - Instance methods - Private

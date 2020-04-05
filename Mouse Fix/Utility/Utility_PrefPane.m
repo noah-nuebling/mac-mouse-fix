@@ -42,14 +42,14 @@
 }
 
 /// Copy of identically named function in `Mouse Fix Helper` > `Utility` > `Utility_HelperApp.m`
-+ (NSDictionary *)applyOverridesFrom:(NSDictionary *)src to: (NSDictionary *)dst {
++ (NSDictionary *)dictionaryWithOverridesAppliedFrom:(NSDictionary *)src to:(NSDictionary *)dst {
     NSMutableDictionary *dstMutable = [dst mutableCopy];
     for (NSString *key in src) {
         NSObject *dstVal = [dst valueForKey:key];
         NSObject *srcVal = [src valueForKey:key];
         if ([srcVal isKindOfClass:[NSDictionary class]] || [srcVal isKindOfClass:[NSMutableDictionary class]]) { // Not sure if checking for mutable dict and dict is necessary
             // Nested dictionary found. Recursing.
-            NSDictionary *recursionResult = [self applyOverridesFrom:(NSDictionary *)srcVal to:(NSDictionary *)dstVal];
+            NSDictionary *recursionResult = [self dictionaryWithOverridesAppliedFrom:(NSDictionary *)srcVal to:(NSDictionary *)dstVal];
             [dstMutable setValue:recursionResult forKey:key];
         } else {
             // Leaf found

@@ -15,6 +15,6 @@
 + (NSBundle *)helperBundle;
 + (NSBundle *)prefPaneBundle;
 
-+ (NSDictionary *)applyOverridesFrom:(NSDictionary *)src to: (NSDictionary *)dst;
++ (NSDictionary *)dictionaryWithOverridesAppliedFrom:(NSDictionary *)src to: (NSDictionary *)dst;
 @end
 
