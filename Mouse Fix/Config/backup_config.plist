@@ -115,7 +115,7 @@
 			</dict>
 			<key>meta</key>
 			<dict>
-				<key>scrollOverrideTableIndex</key>
+				<key>scrollOverridePanelTableViewOrderKey</key>
 				<integer>0</integer>
 			</dict>
 		</dict>

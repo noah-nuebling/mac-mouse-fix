@@ -201,17 +201,22 @@ NSDictionary *_columnIdentifierToKeyPath;
 NSMutableArray *_tableViewDataModel;
 
 - (void)writeTableViewDataModelToConfig {
-    
+    int orderKey = 0;
     for (NSMutableDictionary *rowDict in _tableViewDataModel) {
         NSString *bundleID = rowDict[@"AppColumnID"];
         NSString *bundleIDEscaped = [bundleID stringByReplacingOccurrencesOfString:@"." withString:@"\\."];
         rowDict[@"AppColumnID"] = nil; // So we don't iterate over this in the loop below
         for (NSString *columnID in rowDict) {
+            // Write override values
             NSObject *cellValue = rowDict[columnID];
             NSString *defaultKeyPath = _columnIdentifierToKeyPath[columnID];
             NSString *overrideKeyPath = [NSString stringWithFormat:@"AppOverrides.%@.Root.%@", bundleIDEscaped, defaultKeyPath];
             [ConfigFileInterface_PrefPane.config setObject:cellValue forCoolKeyPath:overrideKeyPath];
+            // Write order key
+            NSString *orderKeyKeyPath = [NSString stringWithFormat:@"AppOverrides.%@.meta.scrollOverridePanelTableViewOrderKey", bundleIDEscaped];
+            [ConfigFileInterface_PrefPane.config setObject:[NSNumber numberWithInt:orderKey] forCoolKeyPath:orderKeyKeyPath];
         }
+        orderKey += 1;
     }
     [ConfigFileInterface_PrefPane writeConfigToFileAndNotifyHelper];
 }
@@ -260,9 +265,13 @@ NSMutableArray *_tableViewDataModel;
             return;
         }
         rowDict[@"AppColumnID"] = bundleID; // Add this last, so the allNil check works properly
+        rowDict[@"orderKey"] = overrides[bundleID][@"meta"][@"scrollOverridePanelTableViewOrderKey"];
         
         [_tableViewDataModel addObject:rowDict];
     }
+    // Sort _tableViewDataModel by orderKey
+    NSSortDescriptor *sortDesc = [NSSortDescriptor sortDescriptorWithKey:@"orderKey" ascending:YES];
+    [_tableViewDataModel sortUsingDescriptors:@[sortDesc]];
 }
 
 @end
