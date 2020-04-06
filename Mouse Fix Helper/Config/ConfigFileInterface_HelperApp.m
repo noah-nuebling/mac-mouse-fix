@@ -196,7 +196,7 @@ static void fillConfigFromFile() {
     if ([_bundleIdentifierOfAppWhichCausesAppOverride isEqualToString:bundleIdentifierOfScrolledApp] == NO) {
         _bundleIdentifierOfAppWhichCausesAppOverride = bundleIdentifierOfScrolledApp;
         
-        loadAppOverridesForApp(bundleIdentifierOfScrolledApp);
+        loadAppOverridesForApp(bundleIdentifierOfScrolledApp); // TODO: Consider putting this into `setProgramStateToConfig`
         
         NSDictionary *scroll = [_configWithAppOverridesApplied objectForKey:@"Scroll"];
         
@@ -234,7 +234,7 @@ static void loadAppOverridesForApp(NSString *bundleIdentifier) {
     NSDictionary *overridesForThisApp;
     for (NSString *b in overrides.allKeys) {
         if ([bundleIdentifier isEqualToString:b]) {
-                overridesForThisApp = [overrides objectForKey: b];
+                overridesForThisApp = [[overrides objectForKey: b] objectForKey:@"Root"];
         }
     }
     if (overridesForThisApp) {
