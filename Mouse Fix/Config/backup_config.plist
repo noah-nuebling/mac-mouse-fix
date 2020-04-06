@@ -5,7 +5,7 @@
 	<key>Other</key>
 	<dict>
 		<key>configVersion</key>
-		<integer>3</integer>
+		<integer>4</integer>
 		<key>checkForUpdates</key>
 		<true/>
 		<key>skippedBundleVersion</key>
@@ -58,21 +58,21 @@
 		<key>smoothParameters</key>
 		<dict>
 			<key>pxPerStep</key>
-			<integer>60</integer>
+			<integer>40</integer>
 			<key>msPerStep</key>
-			<integer>130</integer>
+			<integer>115</integer>
 			<key>friction</key>
 			<real>1.5</real>
 			<key>frictionDepth</key>
 			<integer>1</integer>
 			<key>acceleration</key>
-			<real>1.1</real>
+			<real>1.15</real>
 			<key>onePixelScrollsLimit</key>
 			<integer>2</integer>
 			<key>fastScrollExponentialBase</key>
 			<real>1.1</real>
 			<key>fastScrollThreshold_inSwipes</key>
-			<integer>3</integer>
+			<integer>2</integer>
 			<key>scrollSwipeThreshold_inTicks</key>
 			<integer>4</integer>
 			<key>consecutiveScrollTickMaxIntervall</key>
@@ -96,20 +96,27 @@
 	</dict>
 	<key>AppOverrides</key>
 	<dict>
-		<key>com.adobe.</key>
-		<dict>
-			<key>Scroll</key>
-			<dict>
-				<key>smooth</key>
-				<false/>
-			</dict>
-		</dict>
 		<key>com.apple.Preview</key>
 		<dict>
-			<key>Scroll</key>
+			<key>Root</key>
 			<dict>
-				<key>smooth</key>
-				<false/>
+				<key>Scroll</key>
+				<dict>
+					<key>smooth</key>
+					<false/>
+					<key>modifierKeys</key>
+					<dict>
+						<key>horizontalScrollModifierKeyEnabled</key>
+						<true/>
+						<key>magnificationScrollModifierKeyEnabled</key>
+						<true/>
+					</dict>
+				</dict>
+			</dict>
+			<key>meta</key>
+			<dict>
+				<key>scrollOverrideTableIndex</key>
+				<integer>0</integer>
 			</dict>
 		</dict>
 	</dict>

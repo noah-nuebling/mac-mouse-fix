@@ -5,7 +5,7 @@
 	<key>Other</key>
 	<dict>
 		<key>configVersion</key>
-		<integer>3</integer>
+		<integer>4</integer>
 		<key>checkForUpdates</key>
 		<true/>
 		<key>skippedBundleVersion</key>
@@ -98,51 +98,79 @@
 	<dict>
 		<key>com.adobe.PhotoshopElements</key>
 		<dict>
-			<key>Scroll</key>
+			<key>Root</key>
 			<dict>
-				<key>smooth</key>
-				<false/>
-				<key>modifierKeys</key>
+				<key>Scroll</key>
 				<dict>
-					<key>horizontalScrollModifierKey</key>
-					<string>shift</string>
-					<key>magnificationScrollModifierKey</key>
-					<string>command</string>
-					<key>horizontalScrollModifierKeyEnabled</key>
+					<key>smooth</key>
 					<false/>
-					<key>magnificationScrollModifierKeyEnabled</key>
-					<false/>
+					<key>modifierKeys</key>
+					<dict>
+						<key>horizontalScrollModifierKey</key>
+						<string>shift</string>
+						<key>magnificationScrollModifierKey</key>
+						<string>command</string>
+						<key>horizontalScrollModifierKeyEnabled</key>
+						<false/>
+						<key>magnificationScrollModifierKeyEnabled</key>
+						<false/>
+					</dict>
 				</dict>
+			</dict>
+			<key>meta</key>
+			<dict>
+				<key>scrollOverrideTableIndex</key>
+				<integer>0</integer>
 			</dict>
 		</dict>
 		<key>com.apple.Safariu</key>
 		<dict>
-			<key>Scroll</key>
+			<key>Root</key>
 			<dict>
-				<key>|smooth</key>
-				<true/>
-				<key>modifierKeys</key>
+				<key>Scroll</key>
 				<dict>
-					<key>magnificationScrollModifierKeyEnabled</key>
+					<key>smooth</key>
 					<false/>
-					<key>|horizontalScrollModifierKeyEnabled</key>
-					<false/>
+					<key>modifierKeys</key>
+					<dict>
+						<key>horizontalScrollModifierKey</key>
+						<string>shift</string>
+						<key>magnificationScrollModifierKey</key>
+						<string>command</string>
+						<key>horizontalScrollModifierKeyEnabled</key>
+						<false/>
+						<key>magnificationScrollModifierKeyEnabled</key>
+						<false/>
+					</dict>
 				</dict>
+			</dict>
+			<key>meta</key>
+			<dict>
+				<key>scrollOverrideTableIndex</key>
+				<integer>0</integer>
 			</dict>
 		</dict>
 		<key>com.apple.Preview</key>
 		<dict>
-			<key>Scroll</key>
+			<key>Root</key>
 			<dict>
-				<key>smooth</key>
-				<false/>
-				<key>modifierKeys</key>
+				<key>Scroll</key>
 				<dict>
-					<key>horizontalScrollModifierKeyEnabled</key>
-					<true/>
-					<key>magnificationScrollModifierKeyEnabled</key>
-					<true/>
+					<key>smooth</key>
+					<false/>
+					<key>modifierKeys</key>
+					<dict>
+						<key>horizontalScrollModifierKeyEnabled</key>
+						<true/>
+						<key>magnificationScrollModifierKeyEnabled</key>
+						<true/>
+					</dict>
 				</dict>
+			</dict>
+			<key>meta</key>
+			<dict>
+				<key>scrollOverrideTableIndex</key>
+				<integer>0</integer>
 			</dict>
 		</dict>
 	</dict>

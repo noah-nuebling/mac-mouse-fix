@@ -13,6 +13,8 @@
         https://www.appcoda.com/macos-programming-tableview/
     Drag and drop for table views:
         https://www.natethompson.io/2019/03/23/nstableview-drag-and-drop.html
+    General Drag and drop tutorial:
+        https://www.raywenderlich.com/1016-drag-and-drop-tutorial-for-macos
     Uniform Type Identifiers (UTIs) Reference: https://developer.apple.com/library/archive/documentation/Miscellaneous/Reference/UTIRef/Articles/System-DeclaredUniformTypeIdentifiers.html#//apple_ref/doc/uid/TP40009259-SW1
  */
 
@@ -93,6 +95,13 @@ NSDictionary *_columnIdentifierToKeyPath;
 }
 #pragma mark TableView
 
+- (IBAction)reloadButton:(id)sender {
+    [ConfigFileInterface_PrefPane loadConfigFromFile];
+    [self loadTableViewDataModelFromConfig];
+    [_tableView beginUpdates];
+    [_tableView reloadData];
+    [_tableView endUpdates];    
+}
 - (IBAction)checkBoxInCell:(NSButton *)sender {
     NSInteger state = sender.state;
     NSInteger row = [_tableView rowForView:sender];
@@ -154,15 +163,35 @@ NSDictionary *_columnIdentifierToKeyPath;
     return nil;
 }
 
-#pragma mark Drag and drop
+#pragma mark TableView - Drag and drop
+
+// Dragging destination functions
 
 - (NSDragOperation)tableView:(NSTableView *)tableView validateDrop:(id<NSDraggingInfo>)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)dropOperation {
-    if (dropOperation == NSTableViewDropAbove) {
+    
+    NSPasteboard *pb = info.draggingPasteboard;
+    NSDictionary *options = @{NSPasteboardURLReadingContentsConformToTypesKey : @[@"com.apple.application-bundle"]};
+    BOOL URLRefersToApp = [pb canReadObjectForClasses:@[NSURL.self] options:options];
+    BOOL droppingAbove = (dropOperation == NSTableViewDropAbove);
+    BOOL accept = droppingAbove && URLRefersToApp;
+    if (accept) {
         return NSDragOperationMove;
     }
     return NSDragOperationNone;
-    
 }
+
+- (BOOL)tableView:(NSTableView *)tableView acceptDrop:(id<NSDraggingInfo>)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)dropOperation {
+    
+    NSArray *items = info.draggingPasteboard.pasteboardItems;
+    if (!items) {
+        return false;
+    }
+//    [_tableViewDataModel insertObjects: atIndexes:<#(nonnull NSIndexSet *)#>]
+    return true;
+}
+
+// Dragging source functions
+
 - (id<NSPasteboardWriting>)tableView:(NSTableView *)tableView pasteboardWriterForRow:(NSInteger)row {
     return @"Hello from table";
 }
