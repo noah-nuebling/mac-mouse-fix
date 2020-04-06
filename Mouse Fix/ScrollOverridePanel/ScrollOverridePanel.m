@@ -184,7 +184,9 @@ NSDictionary *_columnIdentifierToKeyPath;
     
     BOOL alreadyInTable = NO;
     NSString *draggedBundleID = bundleIDFromPasteboard(info.draggingPasteboard);
-    for (NSDictionary *row in _tableViewDataModel) { // TODO: ! This misbehaves when there are overrides for an app, but they are not represented in this table. Should maybe make a function `overridesRelevantForScrollOverrideTableViewExistForApp:`. Should then also use this function in other places where we do the same thing like. I can think of the `someNil` check.
+    for (NSDictionary *row in _tableViewDataModel) {
+        // The following is probably bs, I just need to remove rows properly
+        // TODO: ! This misbehaves when there are overrides for an app, but they are not represented in this table. Should maybe make a function `overridesRelevantForScrollOverrideTableViewExistForApp:`. Should then also use this function in other places where we do the same thing like. I can think of the `someNil` check.
         NSString *rowBundleID = row[@"AppColumnID"];
         if ([rowBundleID isEqualToString:draggedBundleID]) {
             alreadyInTable = YES;
@@ -245,22 +247,49 @@ static NSString *bundleIDFromPasteboard(NSPasteboard *pasteboard) {
 NSMutableArray *_tableViewDataModel;
 
 - (void)writeTableViewDataModelToConfig {
-    int orderKey = 0;
-    for (NSMutableDictionary *rowDict in _tableViewDataModel) {
-        NSString *bundleID = rowDict[@"AppColumnID"];
-        NSString *bundleIDEscaped = [bundleID stringByReplacingOccurrencesOfString:@"." withString:@"\\."];
-        [rowDict removeObjectsForKeys:@[@"AppColumnID", @"orderKey"]]; // So we don't iterate over this in the loop below
-        // Write override values
-        for (NSString *columnID in rowDict) {
-            NSObject *cellValue = rowDict[columnID];
-            NSString *defaultKeyPath = _columnIdentifierToKeyPath[columnID];
-            NSString *overrideKeyPath = [NSString stringWithFormat:@"AppOverrides.%@.Root.%@", bundleIDEscaped, defaultKeyPath];
-            [ConfigFileInterface_PrefPane.config setObject:cellValue forCoolKeyPath:overrideKeyPath];
+    NSArray *bundleIDsInConfig = ((NSDictionary *)[ConfigFileInterface_PrefPane.config valueForKeyPath:@"AppOverrides"]).allKeys;
+//    int orderKey = 0;
+    for (NSString *thisBundleID in bundleIDsInConfig) {
+        NSString *thisBundleIDEscaped = [thisBundleID stringByReplacingOccurrencesOfString:@"." withString:@"\\."];
+        
+        int indexOfTableViewRowContainingThisBundleID = -1;
+        NSMutableDictionary *rowDictContainingThisBundleID = nil;
+        int i = 0;
+        for (NSDictionary *rowDict in _tableViewDataModel) {
+            NSString *bundleIDInRow = rowDict[@"AppColumnID"];
+            if ([bundleIDInRow isEqualToString:thisBundleID]) {
+                rowDictContainingThisBundleID = rowDict.mutableCopy;
+                indexOfTableViewRowContainingThisBundleID = i;
+            }
+            i += 1;
         }
-        // Write order key
-        NSString *orderKeyKeyPath = [NSString stringWithFormat:@"AppOverrides.%@.meta.scrollOverridePanelTableViewOrderKey", bundleIDEscaped];
-        [ConfigFileInterface_PrefPane.config setObject:[NSNumber numberWithInt:orderKey] forCoolKeyPath:orderKeyKeyPath];
-        orderKey += 1;
+        if (!rowDictContainingThisBundleID) {
+            // There is no row in the _tableViewDataModel for an app with thisBundleID -> In config, delete all parameters for this AppOverride which the table controls.
+            
+            // Delete override values
+            for (NSString *rootKeyPath in _columnIdentifierToKeyPath.allValues) {
+                NSString *overrideKeyPath = [NSString stringWithFormat:@"AppOverrides.%@.Root.%@", thisBundleIDEscaped, rootKeyPath];
+                [ConfigFileInterface_PrefPane.config setObject:nil forCoolKeyPath:overrideKeyPath];
+            }
+            // Delete orderKey
+            NSString *orderKeyKeyPath = [NSString stringWithFormat:@"AppOverrides.%@.meta.ScrollOverridePanelTableViewOrderKey", thisBundleIDEscaped];
+            [ConfigFileInterface_PrefPane.config setObject:nil forCoolKeyPath:orderKeyKeyPath];
+        } else {
+            // There is a row in the _tableViewDataModel for app with thisBundleID. -> Write values for from table into the config
+            
+            [rowDictContainingThisBundleID removeObjectsForKeys:@[@"AppColumnID", @"orderKey"]]; // So we don't iterate over this in the loop below
+            // Write override values
+            for (NSString *columnID in rowDictContainingThisBundleID) {
+                NSObject *cellValue = rowDictContainingThisBundleID[columnID];
+                NSString *defaultKeyPath = _columnIdentifierToKeyPath[columnID];
+                NSString *overrideKeyPath = [NSString stringWithFormat:@"AppOverrides.%@.Root.%@", thisBundleIDEscaped, defaultKeyPath];
+                [ConfigFileInterface_PrefPane.config setObject:cellValue forCoolKeyPath:overrideKeyPath];
+            }
+            // Generate and write new order key based on order of rows in _tableViewDataModel
+            int orderKey = indexOfTableViewRowContainingThisBundleID;
+            NSString *orderKeyKeyPath = [NSString stringWithFormat:@"AppOverrides.%@.meta.scrollOverridePanelTableViewOrderKey", thisBundleIDEscaped];
+            [ConfigFileInterface_PrefPane.config setObject:[NSNumber numberWithInt:orderKey] forCoolKeyPath:orderKeyKeyPath];
+        }
     }
     [ConfigFileInterface_PrefPane writeConfigToFileAndNotifyHelper];
 }

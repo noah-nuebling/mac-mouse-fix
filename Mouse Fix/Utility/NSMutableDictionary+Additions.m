@@ -34,7 +34,7 @@ static NSArray *coolKeyPathToKeyArray(NSString * _Nonnull keyPath) {
 /// If a key in the keyPath contains "." characters they can be escaped with "\.".
 /// All "\" will be removed from keys before parsing.
 ///     -> For example he keyPath @"a\.bc.d\\\\\ef" will be treated as two keys: @"a.bc" and @"def"
-- (void)setObject:(NSObject *)object forCoolKeyPath:(NSString *)keyPath {
+- (void)setObject:(NSObject * _Nullable)object forCoolKeyPath:(NSString *)keyPath {
     if ([keyPath containsString:@"Safari"]) {
         NSLog(@"BREAK");
     }
@@ -49,7 +49,7 @@ static NSArray *coolKeyPathToKeyArray(NSString * _Nonnull keyPath) {
             NSObject *nextNode = thisNode[key];
             NSObject *newNextNode;
             if (nextNode == nil) {
-            newNextNode = [NSMutableDictionary dictionary];
+                newNextNode = [NSMutableDictionary dictionary];
             } else if ([nextNode isKindOfClass:[NSMutableDictionary class]]) {
                 newNextNode = nextNode;
             } else if ([nextNode isKindOfClass:[NSDictionary class]]) {

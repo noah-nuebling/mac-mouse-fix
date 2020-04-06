@@ -216,11 +216,11 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView identifier="AppCellID" id="3js-fh-gWx">
-                                                    <rect key="frame" x="1" y="2" width="356" height="50"/>
+                                                    <rect key="frame" x="1" y="2" width="314" height="50"/>
                                                     <autoresizingMask key="autoresizingMask" heightSizable="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nXm-bG-QXh">
-                                                            <rect key="frame" x="48" y="21" width="311" height="17"/>
+                                                            <rect key="frame" x="48" y="21" width="269" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="Mouse Fix" id="oGg-EK-Yoz">
                                                                 <font key="font" metaFont="system"/>
