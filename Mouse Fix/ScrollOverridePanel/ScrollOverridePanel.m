@@ -95,12 +95,19 @@ NSDictionary *_columnIdentifierToKeyPath;
 }
 #pragma mark TableView
 
+/// Was for testing. Not used anymore.
 - (IBAction)reloadButton:(id)sender {
     [ConfigFileInterface_PrefPane loadConfigFromFile];
     [self loadTableViewDataModelFromConfig];
     [_tableView beginUpdates];
     [_tableView reloadData];
-    [_tableView endUpdates];    
+    [_tableView endUpdates];
+}
+- (IBAction)removeRowButton:(id)sender {
+    [_tableViewDataModel removeObjectsAtIndexes:_tableView.selectedRowIndexes];
+    [self writeTableViewDataModelToConfig]; // TODO: This doesn't actually remove anything from the config file
+    [self loadTableViewDataModelFromConfig]; // Not sure if necessary
+    [_tableView removeRowsAtIndexes:_tableView.selectedRowIndexes withAnimation:NSTableViewAnimationSlideUp];
 }
 - (IBAction)checkBoxInCell:(NSButton *)sender {
     NSInteger state = sender.state;
@@ -167,26 +174,55 @@ NSDictionary *_columnIdentifierToKeyPath;
 
 // Dragging destination functions
 
+// Validate drop
 - (NSDragOperation)tableView:(NSTableView *)tableView validateDrop:(id<NSDraggingInfo>)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)dropOperation {
     
     NSPasteboard *pb = info.draggingPasteboard;
     NSDictionary *options = @{NSPasteboardURLReadingContentsConformToTypesKey : @[@"com.apple.application-bundle"]};
     BOOL URLRefersToApp = [pb canReadObjectForClasses:@[NSURL.self] options:options];
     BOOL droppingAbove = (dropOperation == NSTableViewDropAbove);
-    BOOL accept = droppingAbove && URLRefersToApp;
+    
+    BOOL alreadyInTable = NO;
+    NSString *draggedBundleID = bundleIDFromPasteboard(info.draggingPasteboard);
+    for (NSDictionary *row in _tableViewDataModel) { // TODO: ! This misbehaves when there are overrides for an app, but they are not represented in this table. Should maybe make a function `overridesRelevantForScrollOverrideTableViewExistForApp:`. Should then also use this function in other places where we do the same thing like. I can think of the `someNil` check.
+        NSString *rowBundleID = row[@"AppColumnID"];
+        if ([rowBundleID isEqualToString:draggedBundleID]) {
+            alreadyInTable = YES;
+            break;
+        }
+    }
+    BOOL accept = droppingAbove && URLRefersToApp && !alreadyInTable;
     if (accept) {
-        return NSDragOperationMove;
+        return NSDragOperationCopy;
     }
     return NSDragOperationNone;
 }
-
+// Accept drop
 - (BOOL)tableView:(NSTableView *)tableView acceptDrop:(id<NSDraggingInfo>)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)dropOperation {
     
     NSArray *items = info.draggingPasteboard.pasteboardItems;
-    if (!items) {
+    if (!items || items.count == 0) {
         return false;
     }
-//    [_tableViewDataModel insertObjects: atIndexes:<#(nonnull NSIndexSet *)#>]
+    // Retrieve bundleID of dragged app
+    NSString * bundleID = bundleIDFromPasteboard(info.draggingPasteboard);
+    
+    NSMutableDictionary *newRow = [NSMutableDictionary dictionary];
+    // Fill out new row with bundle ID and default values
+    newRow[@"AppColumnID"] = bundleID;
+    for (NSString *columnID in _columnIdentifierToKeyPath) {
+        NSString *keyPath = _columnIdentifierToKeyPath[columnID];
+        NSObject *defaultValue = [ConfigFileInterface_PrefPane.config objectForCoolKeyPath:keyPath]; // Could use valueForKeyPath as well, because there are no periods in the keys of the keyPath
+        newRow[columnID] = defaultValue;
+    }
+    
+    [_tableViewDataModel insertObject:newRow atIndex:row];
+    [self writeTableViewDataModelToConfig];
+    [self loadTableViewDataModelFromConfig]; // Not necessary. Not sure if useful. Might make things more robust, if we run all of the validity checks in `loadTableViewDataModelFromConfig` again.
+    
+    NSTableViewAnimationOptions animation = NSTableViewAnimationSlideDown;
+    [tableView insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:row] withAnimation:animation];
+    
     return true;
 }
 
@@ -195,6 +231,14 @@ NSDictionary *_columnIdentifierToKeyPath;
 - (id<NSPasteboardWriting>)tableView:(NSTableView *)tableView pasteboardWriterForRow:(NSInteger)row {
     return @"Hello from table";
 }
+
+// Other functions
+static NSString *bundleIDFromPasteboard(NSPasteboard *pasteboard) {
+    NSURL *url = [NSURL URLFromPasteboard:pasteboard];
+    NSString *bundleID = [[NSBundle bundleWithURL:url] bundleIdentifier];
+    return bundleID;
+}
+
 
 #pragma mark - Private functions
 
@@ -205,17 +249,17 @@ NSMutableArray *_tableViewDataModel;
     for (NSMutableDictionary *rowDict in _tableViewDataModel) {
         NSString *bundleID = rowDict[@"AppColumnID"];
         NSString *bundleIDEscaped = [bundleID stringByReplacingOccurrencesOfString:@"." withString:@"\\."];
-        rowDict[@"AppColumnID"] = nil; // So we don't iterate over this in the loop below
+        [rowDict removeObjectsForKeys:@[@"AppColumnID", @"orderKey"]]; // So we don't iterate over this in the loop below
+        // Write override values
         for (NSString *columnID in rowDict) {
-            // Write override values
             NSObject *cellValue = rowDict[columnID];
             NSString *defaultKeyPath = _columnIdentifierToKeyPath[columnID];
             NSString *overrideKeyPath = [NSString stringWithFormat:@"AppOverrides.%@.Root.%@", bundleIDEscaped, defaultKeyPath];
             [ConfigFileInterface_PrefPane.config setObject:cellValue forCoolKeyPath:overrideKeyPath];
-            // Write order key
-            NSString *orderKeyKeyPath = [NSString stringWithFormat:@"AppOverrides.%@.meta.scrollOverridePanelTableViewOrderKey", bundleIDEscaped];
-            [ConfigFileInterface_PrefPane.config setObject:[NSNumber numberWithInt:orderKey] forCoolKeyPath:orderKeyKeyPath];
         }
+        // Write order key
+        NSString *orderKeyKeyPath = [NSString stringWithFormat:@"AppOverrides.%@.meta.scrollOverridePanelTableViewOrderKey", bundleIDEscaped];
+        [ConfigFileInterface_PrefPane.config setObject:[NSNumber numberWithInt:orderKey] forCoolKeyPath:orderKeyKeyPath];
         orderKey += 1;
     }
     [ConfigFileInterface_PrefPane writeConfigToFileAndNotifyHelper];
