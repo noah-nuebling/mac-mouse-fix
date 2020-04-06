@@ -209,7 +209,7 @@ NSMutableArray *_tableViewDataModel;
         for (NSString *columnID in rowDict) {
             NSObject *cellValue = rowDict[columnID];
             NSString *defaultKeyPath = _columnIdentifierToKeyPath[columnID];
-            NSString *overrideKeyPath = [NSString stringWithFormat:@"AppOverrides.%@.%@", bundleIDEscaped, defaultKeyPath];
+            NSString *overrideKeyPath = [NSString stringWithFormat:@"AppOverrides.%@.Root.%@", bundleIDEscaped, defaultKeyPath];
             [ConfigFileInterface_PrefPane.config setObject:cellValue forCoolKeyPath:overrideKeyPath];
         }
     }
@@ -241,7 +241,7 @@ NSMutableArray *_tableViewDataModel;
         NSArray *columnIDs = _columnIdentifierToKeyPath.allKeys;
         for (NSString *columnID in columnIDs) { // Every columnID corresponds to one column (duh)
             NSString *keyPath = _columnIdentifierToKeyPath[columnID];
-            NSObject *value = [overrides[bundleID] valueForKeyPath:keyPath];
+            NSObject *value = [overrides[bundleID][@"Root"] valueForKeyPath:keyPath];
             rowDict[columnID] = value; // if value is nil, no entry will be added
         }
         // Check existence / validity of generated rowDict

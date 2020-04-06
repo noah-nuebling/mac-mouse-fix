@@ -106,6 +106,7 @@ static NSURL *_backupConfigURL;
     // TODO: Consider moving/copying this function to helper, so it can repair stuff as well.
     
     // check if config version matches, if not, replace with default.
+    
     NSNumber *currentConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:_configURL] valueForKeyPath:@"Other.configVersion"];
     NSNumber *backupConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:_backupConfigURL] valueForKeyPath:@"Other.configVersion"];
     if (currentConfigVersion.intValue != backupConfigVersion.intValue) {
@@ -114,6 +115,7 @@ static NSURL *_backupConfigURL;
     
     // TODO: Check if this works
     // Check all AppOverrides in config for the parameters specified in `keyPaths`. If one of the parameters doesn't exist, initialize it with the default value from config.
+    
     if (problem == kMFConfigProblemIncompleteAppOverride) {
         NSAssert(info && [info isKindOfClass:[NSDictionary class]], @"Can't repair incomplete app override: invalid argument provided");
         
@@ -121,7 +123,7 @@ static NSURL *_backupConfigURL;
         NSString *bundleIDEscaped = [bundleID stringByReplacingOccurrencesOfString:@"." withString:@"\\."];
         NSArray *keyPathsToDefaultValues = info[@"relevantKeyPaths"]; // KeyPaths to the values of which at least one is missing
         for (NSString *defaultKP in keyPathsToDefaultValues) {
-            NSString *overrideKP = [NSString stringWithFormat:@"AppOverrides.%@.%@", bundleIDEscaped, defaultKP];
+            NSString *overrideKP = [NSString stringWithFormat:@"AppOverrides.%@.Root.%@", bundleIDEscaped, defaultKP];
             if ([_config objectForCoolKeyPath:overrideKP] == nil) {
                 // If an override value doesn't exist at overrideKP, put default value at overrideKP.
                 [_config setObject:[_config objectForCoolKeyPath:defaultKP] forCoolKeyPath:overrideKP];
