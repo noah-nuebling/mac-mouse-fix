@@ -257,7 +257,6 @@ static int      _onePixelScrollsCounter =   0;
             mouseMoved = TRUE;
             ScrollControl.previousMouseLocation = mouseLocation;
         }
-        
         if (mouseMoved) {
             
             // TODO: Either set appOverrides regardless of mouse moved, or also set it if mouse hasn't moved but frontmost app has changed. (appOverrdides are applied by setProgramStateToConfig). Otherwise, changing app without moving the mouse pointer will not lead to the proper override being applied.
@@ -324,11 +323,11 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 # pragma mark Wheel Phase
     if (_scrollPhase == kMFPhaseWheel || _scrollPhase == kMFPhaseStart) {
         
-        if (_msLeftForScroll == 0.0) {
-            _pixelsToScroll = 0; // Diving by zero yields infinity, we don't want that. This should never happen, except if the displayLink is started by something other than the inputHandler.
-            NSLog(@"_msLeftForScroll was 0.0");
-        } else {
+        if (_msLeftForScroll != 0.0) {
             _pixelsToScroll = round( (_pixelScrollQueue/_msLeftForScroll) * msBetweenFrames );
+        } else {
+            _pixelsToScroll = 0; // Diving by zero yields infinity, we don't want that. This should never happen, except if the displayLink is started by something other than the inputHandler, which we prpbably don't want.
+            NSLog(@"_msLeftForScroll was 0.0");
         }
         
         _pixelScrollQueue   -=  _pixelsToScroll;

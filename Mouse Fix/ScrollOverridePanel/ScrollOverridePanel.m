@@ -7,20 +7,27 @@
 // --------------------------------------------------------------------------
 //
 
-// Tableview programming guide
-// https://www.appcoda.com/macos-programming-tableview/
+/*
+ Reference:
+    Table view programming guide:
+        https://www.appcoda.com/macos-programming-tableview/
+    Drag and drop for table views:
+        https://www.natethompson.io/2019/03/23/nstableview-drag-and-drop.html
+    Uniform Type Identifiers (UTIs) Reference: https://developer.apple.com/library/archive/documentation/Miscellaneous/Reference/UTIRef/Articles/System-DeclaredUniformTypeIdentifiers.html#//apple_ref/doc/uid/TP40009259-SW1
+ */
 
 #import "ScrollOverridePanel.h"
 #import "ConfigFileInterface_PrefPane.h"
 #import "Utility_PrefPane.h"
 #import "NSMutableDictionary+Additions.h"
+#import <Foundation/Foundation.h>
 
 @interface ScrollOverridePanel ()
 
 #pragma mark Outlets
 
 @property (strong) IBOutlet NSTableView *tableView;
-@property (strong) IBOutlet NSButton *smoothEnabledCheckBox;
+//@property (strong) IBOutlet NSButton *smoothEnabledCheckBox; // TODO: Delete if not needed
 
 @end
 
@@ -30,6 +37,7 @@
 
 + (void)load {
     _instance = [[ScrollOverridePanel alloc] initWithWindowNibName:@"ScrollOverridePanel"];
+        // Register for incoming drag and drop operation
 }
 static ScrollOverridePanel *_instance;
 + (ScrollOverridePanel *)instance {
@@ -62,19 +70,12 @@ NSDictionary *_columnIdentifierToKeyPath;
 
 #pragma mark - Public functions
 
-- (void)windowDidLoad {
+- (void)windowDidLoad { // I think I didn't use this because it gets called after `- openWindow`.
     [super windowDidLoad];
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 }
-- (void)setConfigFileToUI {
-    [self writeTableViewDataModelToConfig];
-    [ConfigFileInterface_PrefPane writeConfigToFileAndNotifyHelper];
-    [self loadTableViewDataModelFromConfig];
-    [_tableView reloadData];
-}
 
-- (void)display {
-    
+- (void)openWindow {
     _columnIdentifierToKeyPath = @{
         @"SmoothEnabledColumnID" : @"Scroll.smooth",
         @"MagnificationEnabledColumnID" : @"Scroll.modifierKeys.magnificationScrollModifierKeyEnabled",
@@ -92,6 +93,20 @@ NSDictionary *_columnIdentifierToKeyPath;
     [self.window makeKeyAndOrderFront:nil];
     [self.window performSelector:@selector(makeKeyWindow) withObject:nil afterDelay:0.05]; // Need to do this to make the window key. Magic.
     
+    // Make tableView drag and drop target
+    
+    NSString *bundleUTI = @"com.apple.bundle"; //kUTITypeBundle
+    // public.executable
+    // com.apple.application (kUTTypeApplication)
+    // com.apple.application-​bundle (kUTTypeApplicationBundle)
+    // com.apple.application-file (kUTTypeApplicationFile)
+    // @"com.apple.application-bundle", @"public.text", @"public.url", @"public.file-url"
+    
+    // @"public.file-url" makes it accept apps
+    
+    [_tableView registerForDraggedTypes:@[@"public.file-url"]];
+    [_tableView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
+}
     // Attempts to bring the window to the front when pressing the open button while it is open. Nothing worked reliably. Just closing it before reopening works though.
     
 ////    self.window.releasedWhenClosed = YES;
@@ -115,8 +130,15 @@ NSDictionary *_columnIdentifierToKeyPath;
 //    [self.window setOrderedIndex:0];
 //
 ////    [self.window display];
-}
+//}
 
+
+- (void)setConfigFileToUI {
+    [self writeTableViewDataModelToConfig];
+    [ConfigFileInterface_PrefPane writeConfigToFileAndNotifyHelper];
+    [self loadTableViewDataModelFromConfig];
+    [_tableView reloadData];
+}
 #pragma mark TableView
 
 - (IBAction)checkBoxInCell:(NSButton *)sender {
@@ -245,6 +267,19 @@ NSDictionary *_columnIdentifierToKeyPath;
         return cell;
     }
     return nil;
+}
+
+#pragma mark Drag and drop
+
+- (NSDragOperation)tableView:(NSTableView *)tableView validateDrop:(id<NSDraggingInfo>)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)dropOperation {
+    if (dropOperation == NSTableViewDropAbove) {
+        return NSDragOperationMove;
+    }
+    return NSDragOperationNone;
+    
+}
+- (id<NSPasteboardWriting>)tableView:(NSTableView *)tableView pasteboardWriterForRow:(NSInteger)row {
+    return @"Hello from table";
 }
 
 #pragma mark - Private functions

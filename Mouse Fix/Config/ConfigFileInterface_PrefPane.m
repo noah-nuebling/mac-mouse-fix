@@ -33,6 +33,7 @@ static NSURL *_backupConfigURL;
 }
 
 + (void)load {
+    
     // Determine URLs of config and backupConfig
     
     NSURL *currentBundleURL = [[NSBundle bundleForClass:self] bundleURL];

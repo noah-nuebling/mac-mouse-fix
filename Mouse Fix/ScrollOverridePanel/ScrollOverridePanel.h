@@ -13,8 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ScrollOverridePanel : NSWindowController <NSTableViewDataSource, NSTableViewDelegate>
 // Because this is a window controller, instances also have a `window` property which doesn't have to be declared here.
-- (void)display;
 + (ScrollOverridePanel *)instance;
+- (void)openWindow;
 @end
 
 NS_ASSUME_NONNULL_END
