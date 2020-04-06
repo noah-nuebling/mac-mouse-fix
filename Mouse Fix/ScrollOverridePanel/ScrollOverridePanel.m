@@ -27,7 +27,6 @@
 #pragma mark Outlets
 
 @property (strong) IBOutlet NSTableView *tableView;
-//@property (strong) IBOutlet NSButton *smoothEnabledCheckBox; // TODO: Delete if not needed
 
 @end
 
@@ -53,20 +52,6 @@ static ScrollOverridePanel *_instance;
 /// Keys are table column identifiers (These are set through interface builder). Values are keypaths to the values modified by the controls in the column with that identifier.
 /// Keypaths relative to config root give default values. Relative to config[@"AppOverrides"][@"[bundle identifier of someApp]"] they give override values for someApp.
 NSDictionary *_columnIdentifierToKeyPath;
-
-/// This is never called
-//- (instancetype)init
-//{
-//    self = [super init];
-//    if (self) {
-//        _columnIdentifierToKeyPath = @{
-//            @"SmoothEnabledColumnID" : @"Scroll.smooth",
-//            @"MagnificationEnabledColumnID" : @"Scroll.modifierKeys.magnificationScrollModifierKeyEnabled",
-//            @"HorizontalEnabledColumnID" : @"Scroll.modifierKeys.horizontalScrollModifierKeyEnabled"
-//        };
-//    }
-//    return self;
-//}
 
 #pragma mark - Public functions
 
@@ -95,43 +80,10 @@ NSDictionary *_columnIdentifierToKeyPath;
     
     // Make tableView drag and drop target
     
-    NSString *bundleUTI = @"com.apple.bundle"; //kUTITypeBundle
-    // public.executable
-    // com.apple.application (kUTTypeApplication)
-    // com.apple.application-​bundle (kUTTypeApplicationBundle)
-    // com.apple.application-file (kUTTypeApplicationFile)
-    // @"com.apple.application-bundle", @"public.text", @"public.url", @"public.file-url"
-    
-    // @"public.file-url" makes it accept apps
-    
-    [_tableView registerForDraggedTypes:@[@"public.file-url"]];
+    NSString *fileURLUTI = @"public.file-url";
+    [_tableView registerForDraggedTypes:@[fileURLUTI]]; // makes it accept apps
     [_tableView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
 }
-    // Attempts to bring the window to the front when pressing the open button while it is open. Nothing worked reliably. Just closing it before reopening works though.
-    
-////    self.window.releasedWhenClosed = YES;
-////    self.window.isReleasedWhenClosed = YES;
-////    [self.window close];
-////    [self.window performClose:nil];
-//
-////    CFRelease((__bridge void *) self.window);
-//    [self.window makeKeyAndOrderFront:NULL]; // This allocates and displays the window I believe
-////    [self.window makeKeyAndOrderFront:NULL];
-//    [self.window makeKeyWindow];
-//    [self.window orderFront:nil];
-//
-//
-//    [NSApp activateIgnoringOtherApps:YES]; // Thought this might help with bringing the window to the foreground
-//    [self.window orderFrontRegardless]; // Attempt #1 to bring the window to the foreground
-//    [self.window makeKeyWindow]; // Attempt #2 to bring the window to the foreground
-////     Can't bring the window to the foreground.
-////    [self.window orderWindow:NSWindowBelow relativeTo:0];
-////    [self.window orderWindow:NSWindowAbove relativeTo:0];
-//    [self.window setOrderedIndex:0];
-//
-////    [self.window display];
-//}
-
 
 - (void)setConfigFileToUI {
     [self writeTableViewDataModelToConfig];
@@ -147,76 +99,9 @@ NSDictionary *_columnIdentifierToKeyPath;
     NSInteger column = [_tableView columnForView:sender];
     NSString *columnIdentifier = _tableView.tableColumns[column].identifier;
     
-//    _tableViewDataModel[row][columnIdentifier] = [NSNumber numberWithBool:state]; // Throws exception
-//    NSNumber *newVal = [NSNumber numberWithBool:state];
-//    NSMutableDictionary *val1 = _tableViewDataModel[row];
-//    val1[columnIdentifier] = newVal;
-    // This causes a crash, maybe the dict is not mutable?
-    // TODO: Remove the lines above if fixed (Does the same thing as line below. Was for testing.)
-    
     [_tableViewDataModel[row] setObject: [NSNumber numberWithBool:state] forKey: columnIdentifier];
     [self setConfigFileToUI];
-  
-    
-    
-//    NSString *keyPathToValueOverridenInColumn = _columnIdentifierToKeyPath[columnIdentifier];
-    
-//    NSMutableDictionary *dict1 = [NSMutableDictionary dictionary];
-//    NSString *compoundKeyPath = [NSString stringWithFormat:@"AppOverrides.%@.%@", bundleIDForRowEscaped, keyPathToValueOverridenInColumn];
-    
-    
-//    overrides[@"AppOverrides"][bundleIDForRow][keyPathToValueOverridenInColumn] = [NSNumber numberWithBool:state]; // Doesn't work in objc sadly. Using One keyPath for everything doesn't work either because bundleIDs contain periods.
-//    NSDictionary *overrides = @{
-//        @"AppOverrides": @{
-//                bundleIDForRow: dict1
-//        }
-//    };
-//    ConfigFileInterface_PrefPane.config = [[Utility_PrefPane applyOverridesFrom:(NSDictionary *)overrides to:ConfigFileInterface_PrefPane.config] mutableCopy];
-//    [ConfigFileInterface_PrefPane.config setObject:[NSNumber numberWithBool:state] forCoolKeyPath:compoundKeyPath];
-//    [ConfigFileInterface_PrefPane writeConfigToFile];
-//    [self fillTableViewDataModelFromConfig];
-//    [_tableView reloadData];
 }
-//- (IBAction)magnificationEnabledCheckBox:(NSButton *)sender {
-//    NSInteger state = sender.state;
-//    NSInteger row = [_tableView rowForView:sender];
-//    NSString *bundleID = _tableViewDataModel[row][@"bundleID"];
-//    NSDictionary *overrides = @{
-//        @"AppOverrides": @{
-//                bundleID: @{
-//                        @"Scroll": @{
-//                                @"modifierKeys": @{
-//                                        @"magnificationScrollModifierKeyEnabled":[NSNumber numberWithInteger:state]
-//                                }
-//                        }
-//                }
-//        }
-//    };
-//    ConfigFileInterface_PrefPane.config = [Utility_PrefPane applyOverridesFrom:overrides to:ConfigFileInterface_PrefPane.config];
-//    [ConfigFileInterface_PrefPane writeConfigToFile];
-//    [self fillTableViewDataModelFromConfig];
-//    [_tableView reloadData];
-//}
-//- (IBAction)horizontalEnabledCheckBox:(NSButton *)sender {
-//    NSInteger state = sender.state;
-//    NSInteger row = [_tableView rowForView:sender];
-//    NSString *bundleID = _tableViewDataModel[row][@"bundleID"];
-//    NSDictionary *overrides = @{
-//        @"AppOverrides": @{
-//                bundleID: @{
-//                        @"Scroll": @{
-//                                @"modifierKeys": @{
-//                                        @"horizontalScrollModifierKeyEnabled":[NSNumber numberWithInteger:state]
-//                                }
-//                        }
-//                }
-//        }
-//    };
-//    ConfigFileInterface_PrefPane.config = [Utility_PrefPane applyOverridesFrom:overrides to:ConfigFileInterface_PrefPane.config];
-//    [ConfigFileInterface_PrefPane writeConfigToFile];
-//    [self fillTableViewDataModelFromConfig];
-//    [_tableView reloadData];
-//}
 
 /// The tableView automatically calls this. The return determines how many rows the tableView will display.
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
@@ -301,46 +186,6 @@ NSMutableArray *_tableViewDataModel;
     }
     [ConfigFileInterface_PrefPane writeConfigToFileAndNotifyHelper];
 }
-//        NSNumber *smoothEnabled = rowDict[@"SmoothEnabledColumnID"];
-//        NSNumber *magnificationEnabled = rowDict[@"MagnificationEnabledColumnID"];
-//        NSNumber *horizontalEnabled = rowDict[@"HorizontalEnabledColumnID"];
-//        NSDictionary *dict = @{
-//            @"AppOverrides": @{
-//                    bundleID: @{
-//                            @"Scroll": @{
-//                                    @"smooth": smoothEnabled,
-//                                    @"modifierKeys": @{
-//                                            @"magnificationScrollModifierKeyEnabled": magnificationEnabled,
-//                                            @"horizontalScrollModifierKeyEnabled": horizontalEnabled
-//                                    }
-//                            }
-//                    }
-//            }
-//        };
-//        ConfigFileInterface_PrefPane.config = [[Utility_PrefPane dictionaryWithOverridesAppliedFrom:dict to:ConfigFileInterface_PrefPane.config] mutableCopy];
-//    }
-//        NSInteger state = sender.state;
-//        NSInteger row = [_tableView rowForView:sender];
-//        NSInteger column = [_tableView columnForView:sender];
-//        NSString *columnIdentifier = _tableView.tableColumns[column].identifier;
-//        NSString *bundleIDForRow = _tableViewDataModel[row][@"AppColumnID"];
-//        NSString *bundleIDForRowEscaped = [bundleIDForRow stringByReplacingOccurrencesOfString:@"." withString:@"\\."];
-//        NSString *keyPathToValueOverridenInColumn = _columnIdentifierToKeyPath[columnIdentifier];
-//
-//    //    NSMutableDictionary *dict1 = [NSMutableDictionary dictionary];
-//        NSString *compoundKeyPath = [NSString stringWithFormat:@"AppOverrides.%@.%@", bundleIDForRowEscaped, keyPathToValueOverridenInColumn];
-//
-//
-//    //    overrides[@"AppOverrides"][bundleIDForRow][keyPathToValueOverridenInColumn] = [NSNumber numberWithBool:state]; // Doesn't work in objc sadly. Using One keyPath for everything doesn't work either because bundleIDs contain periods.
-//    //    NSDictionary *overrides = @{
-//    //        @"AppOverrides": @{
-//    //                bundleIDForRow: dict1
-//    //        }
-//    //    };
-//    //    ConfigFileInterface_PrefPane.config = [[Utility_PrefPane applyOverridesFrom:(NSDictionary *)overrides to:ConfigFileInterface_PrefPane.config] mutableCopy];
-//        [ConfigFileInterface_PrefPane.config setObject:[NSNumber numberWithBool:state] forCoolKeyPath:compoundKeyPath];
-//}
-
 
 - (void)loadTableViewDataModelFromConfig {
     _tableViewDataModel = [NSMutableArray array];
@@ -390,39 +235,5 @@ NSMutableArray *_tableViewDataModel;
         [_tableViewDataModel addObject:rowDict];
     }
 }
-        
-        // rowDict will look like this: (If no new columns have been added since time of writing)
-        //            rowDict = @{
-        //                @"AppColumnID":[bundleIDString],
-        //                @"SmoothEnabledColumnID":[smoothEnabledBOOL],
-        //                @"MagnificationEnabledColumnID":[magnificationEnabledBOOL],
-        //                @"HorizontalEnabledColumnID":[horizontalEnabledBOOL]
-        //            };
-        
-        
-//        NSNumber *smoothEnabled = [overrides[bundleID] valueForKeyPath:@"Scroll.smooth"];
-//        NSNumber *magnificationEnabled = [overrides[bundleID] valueForKeyPath:@"Scroll.modifierKeys.magnificationScrollModifierKeyEnabled"];
-//        NSNumber *horizontalEnabled = [overrides[bundleID] valueForKeyPath:@"Scroll.modifierKeys.horizontalScrollModifierKeyEnabled"];
-//
-//        if (smoothEnabled != nil || magnificationEnabled != nil || horizontalEnabled != nil) {
-//
-//            // Make sure the config file is valid. If not - repair.
-//            if (smoothEnabled == nil || magnificationEnabled == nil || horizontalEnabled == nil) {
-//                [ConfigFileInterface_PrefPane repairConfigWithProblem:kMFConfigProblemIncompleteAppOverride info:[_columnIdentifierToKeyPath allValues]];
-//
-//                smoothEnabled = [overrides[bundleID] valueForKeyPath:@"Scroll.smooth"];
-//                magnificationEnabled = [overrides[bundleID] valueForKeyPath:@"Scroll.modifierKeys.magnificationScrollModifierKeyEnabled"];
-//                horizontalEnabled = [overrides[bundleID] valueForKeyPath:@"Scroll.modifierKeys.horizontalScrollModifierKeyEnabled"];
-//            }
-////            rowData = @{
-////                @"AppColumnID":bundleID,
-////                @"SmoothEnabledColumnID":smoothEnabled,
-////                @"MagnificationEnabledColumnID": magnificationEnabled,
-////                @"HorizontalEnabledColumnID": horizontalEnabled
-////            };
-//        }
-    
-//    }
-//}
 
 @end

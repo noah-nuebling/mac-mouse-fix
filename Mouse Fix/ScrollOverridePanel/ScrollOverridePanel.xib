@@ -127,7 +127,7 @@
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <string key="headerToolTip">Hold Shift (⇧) while scrolling to scroll horizontally
-(This option might not have an effect in some apps when smooth scroll is disabled)</string>
+(When smooth scroll is disabled, turning this off might not have an effect)</string>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         </tableColumn>
                                     </tableColumns>
