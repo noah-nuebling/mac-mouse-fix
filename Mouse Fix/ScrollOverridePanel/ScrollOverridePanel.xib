@@ -24,7 +24,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qak-d3-FTO">
-                        <rect key="frame" x="611" y="4" width="23" height="22"/>
+                        <rect key="frame" x="612" y="5" width="23" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1y5-Jp-2Wx">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -35,10 +35,10 @@
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Njb-xs-9J8">
-                        <rect key="frame" x="10" y="4" width="205" height="18"/>
+                        <rect key="frame" x="10" y="9" width="205" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Drag apps to the list to add them" id="Kr9-LE-kpP">
-                            <font key="font" metaFont="controlContent" size="11"/>
+                            <font key="font" metaFont="menu" size="11"/>
                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -50,7 +50,7 @@
                             <rect key="frame" x="1" y="0.0" width="642" height="281"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="40" headerView="Ynj-HV-qgs" viewBased="YES" id="fGT-Lc-WdX">
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="40" headerView="leL-6i-FkU" viewBased="YES" id="fGT-Lc-WdX">
                                     <rect key="frame" x="0.0" y="0.0" width="642" height="256"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <size key="intercellSpacing" width="3" height="4"/>
@@ -58,7 +58,7 @@
                                     <tableViewGridLines key="gridStyleMask" vertical="YES"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn identifier="AppColumnID" width="339" minWidth="40" maxWidth="1000" id="lgf-ug-F5A">
+                                        <tableColumn identifier="AppColumnID" width="340" minWidth="40" maxWidth="1000" id="lgf-ug-F5A">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="App">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -71,11 +71,11 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView identifier="AppCellID" id="JdD-uc-D3h">
-                                                    <rect key="frame" x="1" y="2" width="339" height="45"/>
+                                                    <rect key="frame" x="1" y="2" width="340" height="45"/>
                                                     <autoresizingMask key="autoresizingMask" heightSizable="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KMO-Y7-n9b">
-                                                            <rect key="frame" x="48" y="16" width="289" height="17"/>
+                                                            <rect key="frame" x="48" y="16" width="290" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="Mouse Fix" id="qX5-aW-TaU">
                                                                 <font key="font" metaFont="system"/>
@@ -109,7 +109,7 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView identifier="CheckBoxCellID" id="7HO-48-dNs" customClass="CheckBoxCell">
-                                                    <rect key="frame" x="343" y="2" width="82" height="42"/>
+                                                    <rect key="frame" x="344" y="2" width="82" height="42"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <button identifier="CheckBoxID" verticalHuggingPriority="750" id="cg7-dr-ogU">
@@ -167,7 +167,7 @@
                             <rect key="frame" x="224" y="17" width="15" height="102"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <tableHeaderView key="headerView" id="Ynj-HV-qgs">
+                        <tableHeaderView key="headerView" id="leL-6i-FkU">
                             <rect key="frame" x="0.0" y="0.0" width="642" height="25"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </tableHeaderView>
@@ -329,7 +329,7 @@
                         <rect key="frame" x="21" y="12" width="205" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Drag apps to the list to add them" id="Rvj-qG-BxZ">
-                            <font key="font" metaFont="controlContent" size="11"/>
+                            <font key="font" metaFont="menu" size="11"/>
                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -361,6 +361,11 @@
             </connections>
             <point key="canvasLocation" x="1511" y="109"/>
         </window>
+        <visualEffectView hidden="YES" blendingMode="behindWindow" material="menu" state="followsWindowActiveState" id="lBJ-Ro-bRs">
+            <rect key="frame" x="0.0" y="0.0" width="643" height="313"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <point key="canvasLocation" x="726" y="488"/>
+        </visualEffectView>
     </objects>
     <resources>
         <image name="AppIcon" width="512" height="512"/>
