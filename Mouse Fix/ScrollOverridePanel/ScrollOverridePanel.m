@@ -247,9 +247,13 @@ static NSString *bundleIDFromPasteboard(NSPasteboard *pasteboard) {
 NSMutableArray *_tableViewDataModel;
 
 - (void)writeTableViewDataModelToConfig {
+    
+    NSMutableSet *bundleIDsInTable = [NSMutableSet set];
+    // Write table data into config
     int orderKey = 0;
     for (NSMutableDictionary *rowDict in _tableViewDataModel) {
         NSString *bundleID = rowDict[@"AppColumnID"];
+        [bundleIDsInTable addObject:bundleID];
         NSString *bundleIDEscaped = [bundleID stringByReplacingOccurrencesOfString:@"." withString:@"\\."];
         [rowDict removeObjectsForKeys:@[@"AppColumnID", @"orderKey"]]; // So we don't iterate over this in the loop below
         // Write override values
@@ -264,6 +268,24 @@ NSMutableArray *_tableViewDataModel;
         [ConfigFileInterface_PrefPane.config setObject:[NSNumber numberWithInt:orderKey] forCoolKeyPath:orderKeyKeyPath];
         orderKey += 1;
     }
+    
+    // For all overrides for apps in the config, which aren't in the table, delete all values managed by the table from the config
+    
+    NSMutableSet *bundleIDsInConfigButNotInTable = [NSMutableSet setWithArray:((NSDictionary *)[ConfigFileInterface_PrefPane.config valueForKeyPath:@"AppOverrides"]).allKeys]; // Get all bundle IDs in the config
+    [bundleIDsInConfigButNotInTable minusSet:bundleIDsInTable]; // subtract the ones from the table
+    for (NSString *bundleID in bundleIDsInConfigButNotInTable) {
+        NSString *bundleIDEscaped = [bundleID stringByReplacingOccurrencesOfString:@"." withString:@"\\."];
+        // Delete override values
+        for (NSString *rootKeyPath in _columnIdentifierToKeyPath.allValues) {
+        NSString *overrideKeyPath = [NSString stringWithFormat:@"AppOverrides.%@.Root.%@", bundleIDEscaped, rootKeyPath];
+        [ConfigFileInterface_PrefPane.config setObject:nil forCoolKeyPath:overrideKeyPath];
+        }
+        // Delete orderKey
+        NSString *orderKeyKeyPath = [NSString stringWithFormat:@"AppOverrides.%@.meta.scrollOverridePanelTableViewOrderKey", bundleIDEscaped];
+        [ConfigFileInterface_PrefPane.config setObject:nil forCoolKeyPath:orderKeyKeyPath];
+    }
+    
+    
     [ConfigFileInterface_PrefPane writeConfigToFileAndNotifyHelper];
 }
 

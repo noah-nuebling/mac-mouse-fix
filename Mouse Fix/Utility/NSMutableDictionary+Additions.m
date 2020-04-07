@@ -35,9 +35,6 @@ static NSArray *coolKeyPathToKeyArray(NSString * _Nonnull keyPath) {
 /// All "\" will be removed from keys before parsing.
 ///     -> For example he keyPath @"a\.bc.d\\\\\ef" will be treated as two keys: @"a.bc" and @"def"
 - (void)setObject:(NSObject * _Nullable)object forCoolKeyPath:(NSString *)keyPath {
-    if ([keyPath containsString:@"Safari"]) {
-        NSLog(@"BREAK");
-    }
     
     NSArray * keys = coolKeyPathToKeyArray(keyPath);
     
