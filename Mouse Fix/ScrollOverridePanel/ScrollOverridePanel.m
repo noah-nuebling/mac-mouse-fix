@@ -184,7 +184,9 @@ NSDictionary *_columnIdentifierToKeyPath;
     
     BOOL alreadyInTable = NO;
     NSString *draggedBundleID = bundleIDFromPasteboard(info.draggingPasteboard);
-    for (NSDictionary *row in _tableViewDataModel) { // TODO: ! This misbehaves when there are overrides for an app, but they are not represented in this table. Should maybe make a function `overridesRelevantForScrollOverrideTableViewExistForApp:`. Should then also use this function in other places where we do the same thing like. I can think of the `someNil` check.
+    for (NSDictionary *row in _tableViewDataModel) {
+        // The following is probably bs, I just need to remove rows properly
+        // TODO: ! This misbehaves when there are overrides for an app, but they are not represented in this table. Should maybe make a function `overridesRelevantForScrollOverrideTableViewExistForApp:`. Should then also use this function in other places where we do the same thing like. I can think of the `someNil` check.
         NSString *rowBundleID = row[@"AppColumnID"];
         if ([rowBundleID isEqualToString:draggedBundleID]) {
             alreadyInTable = YES;
