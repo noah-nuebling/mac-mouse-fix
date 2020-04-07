@@ -83,8 +83,12 @@ NSDictionary *_columnIdentifierToKeyPath;
     // Make tableView drag and drop target
     
     NSString *fileURLUTI = @"public.file-url";
-    [_tableView registerForDraggedTypes:@[fileURLUTI]]; // makes it accept apps
+    NSString *tableRowType = @"com.nuebling.mousefix.table-row";
+    [_tableView registerForDraggedTypes:@[fileURLUTI, tableRowType]]; // makes it accept apps, and table rows
+//    [_tableView setDraggingSourceOperationMask:NSDragOperationDelete forLocal:NO];
     [_tableView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
+    [_tableView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:YES];
+//    [_tableView setDraggingSourceOperationMask:NSDragOperationMove forLocal:YES];
 }
 
 - (void)setConfigFileToUI {
@@ -174,16 +178,33 @@ NSDictionary *_columnIdentifierToKeyPath;
 
 // Dragging destination functions
 
+//- (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender {
+//    NSLog(@"DRAGGING ENTERED");
+//    return NSDragOperationCopy;
+//}
+
 // Validate drop
 - (NSDragOperation)tableView:(NSTableView *)tableView validateDrop:(id<NSDraggingInfo>)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)dropOperation {
     
-    NSPasteboard *pb = info.draggingPasteboard;
-    NSDictionary *options = @{NSPasteboardURLReadingContentsConformToTypesKey : @[@"com.apple.application-bundle"]};
-    BOOL URLRefersToApp = [pb canReadObjectForClasses:@[NSURL.self] options:options];
+    NSPasteboard *pasteboard = info.draggingPasteboard;
+    
     BOOL droppingAbove = (dropOperation == NSTableViewDropAbove);
     
+    BOOL isTableRow = [pasteboard.types containsObject:@"com.nuebling.mousefix.table-row"];
+    if (isTableRow) {
+        NSArray *plist = [pasteboard.pasteboardItems[0] propertyListForType:@"com.nuebling.mousefix.table-row"];
+        NSInteger srcRow = ((NSNumber *)plist[0]).integerValue;
+        if (droppingAbove) {// && !(srcRow <= row && row <= srcRow + 1)) {
+            return NSDragOperationMove;
+        }
+        return NSDragOperationNone;
+    }
+    
+    BOOL isURL = [pasteboard.types containsObject:@"public.file-url"];
+    NSDictionary *options = @{NSPasteboardURLReadingContentsConformToTypesKey : @[@"com.apple.application-bundle"]};
+    BOOL URLRefersToApp = [pasteboard canReadObjectForClasses:@[NSURL.self] options:options];
     BOOL alreadyInTable = NO;
-    NSString *draggedBundleID = bundleIDFromPasteboard(info.draggingPasteboard);
+    NSString *draggedBundleID = bundleIDFromPasteboard(pasteboard);
     for (NSDictionary *row in _tableViewDataModel) {
         // The following is probably bs, I just need to remove rows properly
         // TODO: ! This misbehaves when there are overrides for an app, but they are not represented in this table. Should maybe make a function `overridesRelevantForScrollOverrideTableViewExistForApp:`. Should then also use this function in other places where we do the same thing like. I can think of the `someNil` check.
@@ -193,46 +214,89 @@ NSDictionary *_columnIdentifierToKeyPath;
             break;
         }
     }
-    BOOL accept = droppingAbove && URLRefersToApp && !alreadyInTable;
-    if (accept) {
+    if (droppingAbove && isURL && URLRefersToApp && !alreadyInTable ) {
         return NSDragOperationCopy;
     }
+    
     return NSDragOperationNone;
 }
 // Accept drop
 - (BOOL)tableView:(NSTableView *)tableView acceptDrop:(id<NSDraggingInfo>)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)dropOperation {
     
+//    row = 0; //
+    
+    [_tableView scrollRowToVisible:row];
+    
     NSArray *items = info.draggingPasteboard.pasteboardItems;
     if (!items || items.count == 0) {
         return false;
     }
-    // Retrieve bundleID of dragged app
-    NSString * bundleID = bundleIDFromPasteboard(info.draggingPasteboard);
     
-    NSMutableDictionary *newRow = [NSMutableDictionary dictionary];
-    // Fill out new row with bundle ID and default values
-    newRow[@"AppColumnID"] = bundleID;
-    for (NSString *columnID in _columnIdentifierToKeyPath) {
-        NSString *keyPath = _columnIdentifierToKeyPath[columnID];
-        NSObject *defaultValue = [ConfigFileInterface_PrefPane.config objectForCoolKeyPath:keyPath]; // Could use valueForKeyPath as well, because there are no periods in the keys of the keyPath
-        newRow[columnID] = defaultValue;
+    if ([info.draggingPasteboard.types containsObject:@"com.nuebling.mousefix.table-row"]) {
+        
+        NSArray *plist = [items[0] propertyListForType:@"com.nuebling.mousefix.table-row"];
+        NSInteger srcRow = ((NSNumber *)plist[0]).integerValue;
+        if (srcRow <= row && row <= srcRow + 1) {
+            return false;
+        }
+        
+        NSDictionary *srcRowObj = _tableViewDataModel[srcRow];
+//        NSDictionary *rowObj = _tableViewDataModel[row];
+        
+        [_tableViewDataModel insertObject:srcRowObj atIndex:row];
+        if (row < srcRow) {
+            [_tableViewDataModel removeObjectAtIndex:srcRow + 1];
+            [self writeTableViewDataModelToConfig];
+            [self loadTableViewDataModelFromConfig];
+            [_tableView moveRowAtIndex:srcRow toIndex:row];
+        } else {
+            [_tableViewDataModel removeObjectAtIndex:srcRow];
+            [self writeTableViewDataModelToConfig];
+            [self loadTableViewDataModelFromConfig];
+            [_tableView moveRowAtIndex:srcRow toIndex:row - 1];
+        }
+        
+         return true;
+    } else {
+        // Retrieve bundleID of dragged app
+        NSString * bundleID = bundleIDFromPasteboard(info.draggingPasteboard);
+        
+        NSMutableDictionary *newRow = [NSMutableDictionary dictionary];
+        // Fill out new row with bundle ID and default values
+        newRow[@"AppColumnID"] = bundleID;
+        for (NSString *columnID in _columnIdentifierToKeyPath) {
+            NSString *keyPath = _columnIdentifierToKeyPath[columnID];
+            NSObject *defaultValue = [ConfigFileInterface_PrefPane.config objectForCoolKeyPath:keyPath]; // Could use valueForKeyPath as well, because there are no periods in the keys of the keyPath
+            newRow[columnID] = defaultValue;
+        }
+        
+        [_tableViewDataModel insertObject:newRow atIndex:row];
+        [self writeTableViewDataModelToConfig];
+        [self loadTableViewDataModelFromConfig]; // Not necessary. Not sure if useful. Might make things more robust, if we run all of the validity checks in `loadTableViewDataModelFromConfig` again.
+        
+        NSTableViewAnimationOptions animation = NSTableViewAnimationSlideDown;
+        [tableView insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:row] withAnimation:animation];
+        
+        return true;
     }
-    
-    [_tableViewDataModel insertObject:newRow atIndex:row];
-    [self writeTableViewDataModelToConfig];
-    [self loadTableViewDataModelFromConfig]; // Not necessary. Not sure if useful. Might make things more robust, if we run all of the validity checks in `loadTableViewDataModelFromConfig` again.
-    
-    NSTableViewAnimationOptions animation = NSTableViewAnimationSlideDown;
-    [tableView insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:row] withAnimation:animation];
-    
-    return true;
 }
 
 // Dragging source functions
 
 - (id<NSPasteboardWriting>)tableView:(NSTableView *)tableView pasteboardWriterForRow:(NSInteger)row {
-    return @"Hello from table";
+    NSPasteboardItem *item = [[NSPasteboardItem alloc] init];
+    NSNumber *rowNS = [NSNumber numberWithInteger:row];
+    [item setPropertyList:@[rowNS] forType:@"com.nuebling.mousefix.table-row"];
+    return item;
 }
+
+//- (BOOL)tableView:(NSTableView *)tableView writeRowsWithIndexes:(NSIndexSet *)rowIndexes toPasteboard:(NSPasteboard *)pboard {
+//    pboard.
+//}
+
+//- (void)tableView:(NSTableView *)tableView draggingSession:(NSDraggingSession *)session endedAtPoint:(NSPoint)screenPoint operation:(NSDragOperation)operation {
+//    NSLog(@"Dragging Operation: %lu", (unsigned long)operation);
+//}
 
 // Other functions
 static NSString *bundleIDFromPasteboard(NSPasteboard *pasteboard) {

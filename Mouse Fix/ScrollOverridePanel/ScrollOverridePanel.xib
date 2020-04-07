@@ -23,6 +23,10 @@
                 <rect key="frame" x="0.0" y="0.0" width="642" height="312"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <visualEffectView fixedFrame="YES" blendingMode="withinWindow" material="titlebar" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="sMa-ht-Pf7">
+                        <rect key="frame" x="0.0" y="0.0" width="642" height="32"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </visualEffectView>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qak-d3-FTO">
                         <rect key="frame" x="612" y="5" width="23" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
