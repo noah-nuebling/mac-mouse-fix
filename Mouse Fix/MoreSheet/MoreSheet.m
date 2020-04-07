@@ -85,7 +85,7 @@ static MoreSheet *_instance;
 }
 - (void)end {
     [[[NSApplication sharedApplication] mainWindow] endSheet:self.window];
-    [ScrollOverridePanel.instance.window close];
+//    [ScrollOverridePanel.instance close];
 }
 
 #pragma mark - Instance methods - Private

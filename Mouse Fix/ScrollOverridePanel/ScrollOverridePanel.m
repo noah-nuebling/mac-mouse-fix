@@ -23,6 +23,7 @@
 #import "Utility_PrefPane.h"
 #import "NSMutableDictionary+Additions.h"
 #import <Foundation/Foundation.h>
+#import "MoreSheet.h"
 
 @interface ScrollOverridePanel ()
 
@@ -83,12 +84,18 @@ NSDictionary *_columnIdentifierToKeyPath;
     // Make tableView drag and drop target
     
     NSString *fileURLUTI = @"public.file-url";
-    NSString *tableRowType = @"com.nuebling.mousefix.table-row";
-    [_tableView registerForDraggedTypes:@[fileURLUTI, tableRowType]]; // makes it accept apps, and table rows
+//    NSString *tableRowType = @"com.nuebling.mousefix.table-row";
+    [_tableView registerForDraggedTypes:@[fileURLUTI]]; // makes it accept apps, and table rows
 //    [_tableView setDraggingSourceOperationMask:NSDragOperationDelete forLocal:NO];
-    [_tableView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:NO];
+    [_tableView setDraggingSourceOperationMask:NSDragOperationDelete forLocal:NO];
     [_tableView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:YES];
 //    [_tableView setDraggingSourceOperationMask:NSDragOperationMove forLocal:YES];
+}
+
+- (void)windowWillClose:(NSNotification *)notification {
+//    dispatch_after(0.3, dispatch_get_main_queue(), ^{
+//        [MoreSheet.instance end];
+//    });
 }
 
 - (void)setConfigFileToUI {
@@ -183,6 +190,14 @@ NSDictionary *_columnIdentifierToKeyPath;
 //    return NSDragOperationCopy;
 //}
 
+static NSMutableIndexSet *indexSetFromIndexArray(NSMutableArray *tableIndicesOfAlreadyInTable) {
+    NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
+    for (NSNumber *index in tableIndicesOfAlreadyInTable) {
+        [indexSet addIndex:index.unsignedIntegerValue];
+    }
+    return indexSet;
+}
+
 // Validate drop
 - (NSDragOperation)tableView:(NSTableView *)tableView validateDrop:(id<NSDraggingInfo>)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)dropOperation {
     
@@ -190,42 +205,62 @@ NSDictionary *_columnIdentifierToKeyPath;
     
     BOOL droppingAbove = (dropOperation == NSTableViewDropAbove);
     
-    BOOL isTableRow = [pasteboard.types containsObject:@"com.nuebling.mousefix.table-row"];
-    if (isTableRow) {
-        NSArray *plist = [pasteboard.pasteboardItems[0] propertyListForType:@"com.nuebling.mousefix.table-row"];
-        NSInteger srcRow = ((NSNumber *)plist[0]).integerValue;
-        if (droppingAbove) {// && !(srcRow <= row && row <= srcRow + 1)) {
-            return NSDragOperationMove;
-        }
-        return NSDragOperationNone;
-    }
+//    BOOL isTableRow = [pasteboard.types containsObject:@"com.nuebling.mousefix.table-row"];
+//    if (isTableRow) {
+//        NSArray *plist = [pasteboard.pasteboardItems[0] propertyListForType:@"com.nuebling.mousefix.table-row"];
+//        NSInteger srcRow = ((NSNumber *)plist[0]).integerValue;
+//        if (droppingAbove) {// && !(srcRow <= row && row <= srcRow + 1)) {
+//            return NSDragOperationMove;
+//        }
+//        return NSDragOperationNone;
+//    }
     
     BOOL isURL = [pasteboard.types containsObject:@"public.file-url"];
     NSDictionary *options = @{NSPasteboardURLReadingContentsConformToTypesKey : @[@"com.apple.application-bundle"]};
     BOOL URLRefersToApp = [pasteboard canReadObjectForClasses:@[NSURL.self] options:options];
-    BOOL alreadyInTable = NO;
-    NSString *draggedBundleID = bundleIDFromPasteboard(pasteboard);
-    for (NSDictionary *row in _tableViewDataModel) {
-        // The following is probably bs, I just need to remove rows properly
-        // TODO: ! This misbehaves when there are overrides for an app, but they are not represented in this table. Should maybe make a function `overridesRelevantForScrollOverrideTableViewExistForApp:`. Should then also use this function in other places where we do the same thing like. I can think of the `someNil` check.
-        NSString *rowBundleID = row[@"AppColumnID"];
-        if ([rowBundleID isEqualToString:draggedBundleID]) {
-            alreadyInTable = YES;
-            break;
-        }
-    }
-    if (droppingAbove && isURL && URLRefersToApp && !alreadyInTable ) {
+    
+    NSArray<NSString *> *draggedBundleIDs = bundleIDsFromPasteboard(pasteboard);
+    
+    NSDictionary *draggedBundleIDsSorted = sortByAlreadyInTable(draggedBundleIDs);
+    BOOL allAlreadyInTable = (((NSArray *)draggedBundleIDsSorted[@"notInTable"]).count == 0);
+    NSMutableArray *tableIndicesOfAlreadyInTable = [((NSArray *)draggedBundleIDsSorted[@"inTable"]) valueForKey:@"tableIndex"];
+    
+//    NSMutableSet *bundleIDsInTable = [NSMutableSet set];
+//    for (NSDictionary *row in _tableViewDataModel) {
+//        // The following is probably bs, I just need to remove rows properly
+//        // TODO: ! This misbehaves when there are overrides for an app, but they are not represented in this table. Should maybe make a function `overridesRelevantForScrollOverrideTableViewExistForApp:`. Should then also use this function in other places where we do the same thing like. I can think of the `someNil` check.
+//        NSString *rowBundleID = row[@"AppColumnID"];
+//        [bundleIDsInTable addObject:rowBundleID];
+//    }
+//
+//
+//    if ([draggedBundleIDs isSubsetOfSet:bundleIDsInTable]) {
+//        alreadyInTable = YES;
+////        rowsOfAlreadyInTable =
+//    }
+    
+//    if ([rowBundleID isEqualToString:draggedBundleID]) {
+//        alreadyInTable = YES;
+//        rowOfAlreadyInTable = [_tableViewDataModel indexOfObject:row];
+//        break;
+//    }
+    
+    NSMutableIndexSet * indexSet = indexSetFromIndexArray(tableIndicesOfAlreadyInTable);
+    [_tableView selectRowIndexes:indexSet byExtendingSelection:NO];
+    
+    if (droppingAbove && isURL && URLRefersToApp && !allAlreadyInTable ) {
         return NSDragOperationCopy;
     }
-    
+    if (allAlreadyInTable) {
+//        [NSCursor.operationNotAllowedCursor push]; // I can't find a way to reset the cursor when it leaves the tableView
+//        [_tableView scrollRowToVisible:rowOfAlreadyInTable];
+    }
     return NSDragOperationNone;
 }
+
 // Accept drop
 - (BOOL)tableView:(NSTableView *)tableView acceptDrop:(id<NSDraggingInfo>)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)dropOperation {
     
-//    row = 0; //
-    
-    [_tableView scrollRowToVisible:row];
     
     NSArray *items = info.draggingPasteboard.pasteboardItems;
     if (!items || items.count == 0) {
@@ -234,61 +269,101 @@ NSDictionary *_columnIdentifierToKeyPath;
     
     if ([info.draggingPasteboard.types containsObject:@"com.nuebling.mousefix.table-row"]) {
         
-        NSArray *plist = [items[0] propertyListForType:@"com.nuebling.mousefix.table-row"];
-        NSInteger srcRow = ((NSNumber *)plist[0]).integerValue;
-        if (srcRow <= row && row <= srcRow + 1) {
-            return false;
-        }
-        
-        NSDictionary *srcRowObj = _tableViewDataModel[srcRow];
-//        NSDictionary *rowObj = _tableViewDataModel[row];
-        
-        [_tableViewDataModel insertObject:srcRowObj atIndex:row];
-        if (row < srcRow) {
-            [_tableViewDataModel removeObjectAtIndex:srcRow + 1];
-            [self writeTableViewDataModelToConfig];
-            [self loadTableViewDataModelFromConfig];
-            [_tableView moveRowAtIndex:srcRow toIndex:row];
-        } else {
-            [_tableViewDataModel removeObjectAtIndex:srcRow];
-            [self writeTableViewDataModelToConfig];
-            [self loadTableViewDataModelFromConfig];
-            [_tableView moveRowAtIndex:srcRow toIndex:row - 1];
-        }
-        
-         return true;
+//        NSArray *plist = [items[0] propertyListForType:@"com.nuebling.mousefix.table-row"];
+//        NSInteger srcRow = ((NSNumber *)plist[0]).integerValue;
+//        if (srcRow <= row && row <= srcRow + 1) {
+//            return false;
+//        }
+//
+//        NSDictionary *srcRowObj = _tableViewDataModel[srcRow];
+////        NSDictionary *rowObj = _tableViewDataModel[row];
+//
+//        [_tableViewDataModel insertObject:srcRowObj atIndex:row];
+//        if (row < srcRow) {
+//            [_tableViewDataModel removeObjectAtIndex:srcRow + 1];
+//            [self writeTableViewDataModelToConfig];
+//            [self loadTableViewDataModelFromConfig];
+//            [_tableView moveRowAtIndex:srcRow toIndex:row];
+//        } else {
+//            [_tableViewDataModel removeObjectAtIndex:srcRow];
+//            [self writeTableViewDataModelToConfig];
+//            [self loadTableViewDataModelFromConfig];
+//            [_tableView moveRowAtIndex:srcRow toIndex:row - 1];
+//        }
+//
+//         return true;
     } else {
         // Retrieve bundleID of dragged app
-        NSString * bundleID = bundleIDFromPasteboard(info.draggingPasteboard);
         
-        NSMutableDictionary *newRow = [NSMutableDictionary dictionary];
-        // Fill out new row with bundle ID and default values
-        newRow[@"AppColumnID"] = bundleID;
-        for (NSString *columnID in _columnIdentifierToKeyPath) {
-            NSString *keyPath = _columnIdentifierToKeyPath[columnID];
-            NSObject *defaultValue = [ConfigFileInterface_PrefPane.config objectForCoolKeyPath:keyPath]; // Could use valueForKeyPath as well, because there are no periods in the keys of the keyPath
-            newRow[columnID] = defaultValue;
+        row = 0; //
+        [_tableView scrollRowToVisible:row];
+        
+        NSMutableArray *newRows = [NSMutableArray array];
+        NSArray<NSString *> * bundleIDs = bundleIDsFromPasteboard(info.draggingPasteboard);
+        NSDictionary *bundleIDsSorted = sortByAlreadyInTable(bundleIDs);
+        
+        for (NSString *bundleID in bundleIDsSorted[@"notInTable"]) {
+            NSMutableDictionary *newRow = [NSMutableDictionary dictionary];
+            // Fill out new row with bundle ID and default values
+            newRow[@"AppColumnID"] = bundleID;
+            for (NSString *columnID in _columnIdentifierToKeyPath) {
+                NSString *keyPath = _columnIdentifierToKeyPath[columnID];
+                NSObject *defaultValue = [ConfigFileInterface_PrefPane.config objectForCoolKeyPath:keyPath]; // Could use valueForKeyPath as well, because there are no periods in the keys of the keyPath
+                newRow[columnID] = defaultValue;
+            }
+            [newRows addObject:newRow];
         }
         
-        [_tableViewDataModel insertObject:newRow atIndex:row];
-        [self writeTableViewDataModelToConfig];
-        [self loadTableViewDataModelFromConfig]; // Not necessary. Not sure if useful. Might make things more robust, if we run all of the validity checks in `loadTableViewDataModelFromConfig` again.
+        NSIndexSet *newRowsIndices = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(row, ((NSArray *)bundleIDsSorted[@"notInTable"]).count)];
+        NSIndexSet *alreadyInTableRowsIndices = indexSetFromIndexArray(
+                                                                       [((NSArray *)bundleIDsSorted[@"inTable"]) valueForKey:@"tableIndex"]
+                                                                       );
         
+        [_tableView selectRowIndexes:alreadyInTableRowsIndices byExtendingSelection:NO];
+        [_tableViewDataModel insertObjects:newRows atIndexes:newRowsIndices];
+        [self writeTableViewDataModelToConfig];
+        [self loadTableViewDataModelFromConfig]; // At the time of writing: not necessary. Not sure if useful. Might make things more robust, if we run all of the validity checks in `loadTableViewDataModelFromConfig` again.
         NSTableViewAnimationOptions animation = NSTableViewAnimationSlideDown;
-        [tableView insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:row] withAnimation:animation];
+        [tableView insertRowsAtIndexes:newRowsIndices withAnimation:animation];
+        
+        [_tableView selectRowIndexes:newRowsIndices byExtendingSelection:YES];
+        
+        [self.window makeKeyWindow];
         
         return true;
     }
+    return false;
+}
+
+static NSDictionary * sortByAlreadyInTable(NSArray *bundleIDs) {
+    NSArray *bundleIDsFromTable = [_tableViewDataModel valueForKey:@"AppColumnID"];
+    NSMutableArray<NSString *> *inpNotInTable = [NSMutableArray array];
+    NSMutableArray<NSDictionary *> *inpInTable = [NSMutableArray array];
+    for (NSString *bundleID in bundleIDs) {
+        if ([bundleIDsFromTable containsObject:bundleID]) {
+            [inpInTable addObject:@{
+                @"id": bundleID,
+                @"tableIndex": [NSNumber numberWithUnsignedInteger:[bundleIDsFromTable indexOfObject:bundleID]]
+            }];
+        } else {
+            [inpNotInTable addObject:bundleID];
+        }
+    }
+    return @{
+        @"inTable": inpInTable,
+        @"notInTable": inpNotInTable
+    };
 }
 
 // Dragging source functions
 
-- (id<NSPasteboardWriting>)tableView:(NSTableView *)tableView pasteboardWriterForRow:(NSInteger)row {
-    NSPasteboardItem *item = [[NSPasteboardItem alloc] init];
-    NSNumber *rowNS = [NSNumber numberWithInteger:row];
-    [item setPropertyList:@[rowNS] forType:@"com.nuebling.mousefix.table-row"];
-    return item;
-}
+//- (id<NSPasteboardWriting>)tableView:(NSTableView *)tableView pasteboardWriterForRow:(NSInteger)row {
+//    NSPasteboardItem *item = [[NSPasteboardItem alloc] init];
+//    NSNumber *rowNS = [NSNumber numberWithInteger:row];
+//    [item setPropertyList:@[rowNS] forType:@"com.nuebling.mousefix.table-row"];
+////    return item;
+//    return NSColor.blackColor;
+//}
 
 //- (BOOL)tableView:(NSTableView *)tableView writeRowsWithIndexes:(NSIndexSet *)rowIndexes toPasteboard:(NSPasteboard *)pboard {
 //    pboard.
@@ -298,11 +373,51 @@ NSDictionary *_columnIdentifierToKeyPath;
 //    NSLog(@"Dragging Operation: %lu", (unsigned long)operation);
 //}
 
+//- (void)tableView:(NSTableView *)tableView draggingSession:(NSDraggingSession *)session endedAtPoint:(NSPoint)screenPoint operation:(NSDragOperation)operation
+
+//- (void)tableView:(NSTableView *)tableView draggingSession:(NSDraggingSession *)session willBeginAtPoint:(NSPoint)screenPoint forRowIndexes:(NSIndexSet *)rowIndexes {
+//    NSTimer *timer = [NSTimer timerWithTimeInterval:0.3 target:self selector:@selector(dragToRemoveTimerFired:) userInfo:rowIndexes repeats:NO];
+//    [NSRunLoop.currentRunLoop addTimer:timer forMode:NSDefaultRunLoopMode];
+//}
+//- (void)dragToRemoveTimerFired:(NSTimer *)timer {
+//    [NSCursor.disappearingItemCursor push];
+//}
+
+- (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender {
+    [NSCursor.closedHandCursor push];
+    return NSDragOperationDelete;
+}
+- (void)tableView:(NSTableView *)tableView updateDraggingItemsForDrag:(id<NSDraggingInfo>)draggingInfo {
+    
+    if (draggingInfo.draggingDestinationWindow != self.window) {
+        
+    } else {
+        
+    }
+}
+
+- (void)draggingExited:(id<NSDraggingInfo>)sender {
+    
+}
+
+- (void)mouseExited:(NSEvent *)event {
+    
+}
+
 // Other functions
-static NSString *bundleIDFromPasteboard(NSPasteboard *pasteboard) {
-    NSURL *url = [NSURL URLFromPasteboard:pasteboard];
-    NSString *bundleID = [[NSBundle bundleWithURL:url] bundleIdentifier];
-    return bundleID;
+static NSArray<NSString *> * bundleIDsFromPasteboard(NSPasteboard *pasteboard) {
+    NSArray *items = pasteboard.pasteboardItems;
+    NSMutableArray *bundleIDs = [NSMutableArray arrayWithCapacity:items.count];
+    for (NSPasteboardItem *item in items) {
+        NSString *urlString = [item stringForType:@"public.file-url"];
+        NSURL *url = [NSURL URLWithString:urlString];
+        NSString *bundleID = [[NSBundle bundleWithURL:url] bundleIdentifier];
+        if (bundleID) { // Adding nil to NSArray with addObject: yields a crash
+            [bundleIDs addObject:bundleID];
+        }
+    }
+//    NSURL *url = [NSURL URLFromPasteboard:pasteboard];
+    return bundleIDs;
 }
 
 

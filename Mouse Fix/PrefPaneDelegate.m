@@ -150,6 +150,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 - (void)willUnselect {
     [UpdateWindow.instance close];
     [MoreSheet.instance end];
+    [ScrollOverridePanel.instance close];
 }
 
 - (void)disableUI:(NSNumber *)enable {
