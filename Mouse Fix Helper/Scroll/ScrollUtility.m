@@ -8,6 +8,7 @@
 //
 
 #import "ScrollUtility.h"
+#import "ScrollControl.h"
 #import <Cocoa/Cocoa.h>
 
 @implementation ScrollUtility
@@ -127,5 +128,43 @@ static NSRunningApplication *_previousFrontMostApp;
     return didChange;
 }
 
-//            bundleIdentifierOfActiveApp = [NSWorkspace.sharedWorkspace frontmostApplication].bundleIdentifier;
+static int _consecutiveScrollTickCounter;
++ (int)consecutiveScrollTickCounter {
+    return _consecutiveScrollTickCounter;
+}
+static double _previousScrollTickTimeStamp;
++ (void) updateConsecutiveScrollTickCounterWithTickOccuringNow { // starts counting at 0
+    double thisScrollTickTimeStamp = CFAbsoluteTimeGetCurrent();
+    double intervall = (thisScrollTickTimeStamp - _previousScrollTickTimeStamp);
+    if (intervall > ScrollControl.consecutiveScrollTickMaxIntervall) {
+        _consecutiveScrollTickCounter = 0;
+    } else {
+        _consecutiveScrollTickCounter += 1;
+    }
+    _previousScrollTickTimeStamp = thisScrollTickTimeStamp;
+}
+
+static int _consecutiveScrollSwipeCounter;
++ (int)consecutiveScrollSwipeCounter {
+    return _consecutiveScrollSwipeCounter;
+}
+static double _previousScrollSwipeTimeStamp;
++ (void)updateConsecutiveScrollSwipeCounterWithSwipeOccuringNow { // starts counting at 0
+    double thisScrollSwipeTimeStamp = CFAbsoluteTimeGetCurrent();
+    double intervall = (thisScrollSwipeTimeStamp - _previousScrollSwipeTimeStamp);
+    if (intervall > ScrollControl.consecutiveScrollSwipeMaxIntervall) {
+        _consecutiveScrollSwipeCounter = 0;
+    } else {
+        _consecutiveScrollSwipeCounter += 1;
+    }
+    _previousScrollSwipeTimeStamp = thisScrollSwipeTimeStamp;
+}
+
++ (void)resetConsecutiveTicksAndSwipes {
+    _consecutiveScrollTickCounter = 0; // probs not necessary
+    _previousScrollTickTimeStamp = 0.0;
+    _consecutiveScrollSwipeCounter = 0; // probs not necessary
+    _previousScrollSwipeTimeStamp = 0.0;
+}
+
 @end

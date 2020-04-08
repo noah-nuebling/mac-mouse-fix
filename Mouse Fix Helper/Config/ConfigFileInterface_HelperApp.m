@@ -93,7 +93,7 @@ static void fillConfigFromFile() {
 
 /// Modify the helpers internal parameters according to _config and the currently active app.
 /// \returns YES, if internal parameters did update. NO otherwise.
-+ (MFStateDidChange)updateInternalParameters {
++ (BOOL)updateInternalParameters {
     // TODO: This function is still seems to be a huge resource hog (thinking this because RoughScroll calls this on every tick and is much more resource intensive than SmoothScroll) – even with the current optimization of only looking at the frontmost app for AppOverrides, instead of the app under the mouse pointer.
     
     NSString *bundleIDOfCurrentApp;
@@ -171,9 +171,9 @@ static void fillConfigFromFile() {
         _bundleIDOfAppWhichCausesAppOverride = bundleIDOfCurrentApp;
         loadAppOverridesForApp(bundleIDOfCurrentApp);
         [ConfigFileInterface_HelperApp updateScrollParameters];
-        return kMFStateDidChange;
+        return YES;
     }
-    return kMFStateDidNotChange;
+    return NO;
 }
 
 // TODO: Delete this
@@ -204,19 +204,24 @@ static void fillConfigFromFile() {
     // top level parameters
     
 //        ScrollControl.disableAll = [[defaultScrollSettings objectForKey:@"disableAll"] boolValue]; // this is currently unused. Could be used as a killswitch for all scrolling interception
-    ScrollControl.scrollDirection = [[scroll objectForKey:@"direction"] intValue];
-    ScrollControl.isSmoothEnabled = [[scroll objectForKey:@"smooth"] boolValue];
+    ScrollControl.scrollDirection = [scroll[@"direction"] intValue];
+    ScrollControl.isSmoothEnabled = [scroll[@"smooth"] boolValue];
+    
+    
+    // other
+    
+    [ScrollControl configureWithParameters:scroll[@"other"]];
 
     // smoothParameters
     
-    [SmoothScroll configureWithParameters:[scroll objectForKey:@"smoothParameters"]];
+    [SmoothScroll configureWithParameters:scroll[@"smoothParameters"]];
 
     // roughParameters
         // nothing here yet
 
     // Keyboard modifier keys
     
-    NSDictionary *mod = [scroll objectForKey:@"modifierKeys"];
+    NSDictionary *mod = scroll[@"modifierKeys"];
     // Event flag masks
     ScrollModifiers.horizontalScrollModifierKeyMask = (CGEventFlags)[_stringToEventFlagMask[mod[@"horizontalScrollModifierKey"]] unsignedLongLongValue];
     ScrollModifiers.magnificationScrollModifierKeyMask = (CGEventFlags)[_stringToEventFlagMask[mod[@"magnificationScrollModifierKey"]] unsignedLongLongValue];

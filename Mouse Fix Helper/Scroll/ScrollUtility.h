@@ -23,6 +23,14 @@ NS_ASSUME_NONNULL_BEGIN
 + (BOOL)sameSign_n:(double)n m:(double)m;
 + (BOOL)mouseDidMove;
 + (BOOL)frontMostAppDidChange;
+
++ (int)consecutiveScrollTickCounter;
++ (void)updateConsecutiveScrollTickCounterWithTickOccuringNow;
++ (int)consecutiveScrollSwipeCounter;
++ (void)updateConsecutiveScrollSwipeCounterWithSwipeOccuringNow;
+
++ (void)resetConsecutiveTicksAndSwipes;
+
 @end
 
 NS_ASSUME_NONNULL_END

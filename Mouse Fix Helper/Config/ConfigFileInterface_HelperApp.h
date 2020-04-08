@@ -11,18 +11,13 @@
 
 @interface ConfigFileInterface_HelperApp : NSObject
 
-typedef enum {
-    kMFStateDidNotChange = NO,
-    kMFStateDidChange = YES
-} MFStateDidChange;
-
 //@property (class, retain) NSMutableDictionary *config;
 + (NSMutableDictionary *)config;
 
 + (void)load_Manual;
 
 + (void)reactToConfigFileChange;
-+ (MFStateDidChange)updateInternalParameters;
++ (BOOL)updateInternalParameters;
 + (void)repairConfigFile:(NSString *)info;
 
 

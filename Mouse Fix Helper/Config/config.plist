@@ -5,7 +5,7 @@
 	<key>Other</key>
 	<dict>
 		<key>configVersion</key>
-		<integer>4</integer>
+		<integer>5</integer>
 		<key>checkForUpdates</key>
 		<true/>
 		<key>skippedBundleVersion</key>
@@ -69,16 +69,6 @@
 			<real>1.35</real>
 			<key>onePixelScrollsLimit</key>
 			<integer>2</integer>
-			<key>fastScrollExponentialBase</key>
-			<real>1.1</real>
-			<key>fastScrollThreshold_inSwipes</key>
-			<integer>2</integer>
-			<key>scrollSwipeThreshold_inTicks</key>
-			<integer>4</integer>
-			<key>consecutiveScrollTickMaxIntervall</key>
-			<real>0.13</real>
-			<key>consecutiveScrollSwipeMaxIntervall</key>
-			<real>0.5</real>
 		</dict>
 		<key>roughParameters (unused)</key>
 		<dict/>
@@ -92,6 +82,19 @@
 			<true/>
 			<key>magnificationScrollModifierKeyEnabled</key>
 			<true/>
+		</dict>
+		<key>other</key>
+		<dict>
+			<key>fastScrollExponentialBase</key>
+			<real>1.1</real>
+			<key>fastScrollThreshold_inSwipes</key>
+			<integer>2</integer>
+			<key>scrollSwipeThreshold_inTicks</key>
+			<integer>4</integer>
+			<key>consecutiveScrollSwipeMaxIntervall</key>
+			<real>0.5</real>
+			<key>consecutiveScrollTickMaxIntervall</key>
+			<real>0.13</real>
 		</dict>
 	</dict>
 	<key>AppOverrides</key>

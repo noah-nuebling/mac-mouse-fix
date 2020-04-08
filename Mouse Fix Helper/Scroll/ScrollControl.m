@@ -23,9 +23,10 @@ static CFMachPortRef _eventTap       =   nil;
 
 #pragma mark - Public variables
 
-#pragma mark Parameters
+#pragma mark Parameter vars
 
 // Constants
+
 static AXUIElementRef _systemWideAXUIElement;
 + (AXUIElementRef) systemWideAXUIElement {
     return _systemWideAXUIElement;
@@ -33,6 +34,30 @@ static AXUIElementRef _systemWideAXUIElement;
 static CGEventSourceRef _eventSource = nil;
 + (CGEventSourceRef)eventSource {
     return _eventSource;
+}
+
+// From config
+
+// consecutive scroll ticks, scrollSwipes, and fast scroll
+double _fastScrollExponentialBase;
+int    _scrollSwipeThreshold_inTicks;
+int    _fastScrollThreshold_inSwipes;
+double _consecutiveScrollTickMaxIntervall;
+double _consecutiveScrollSwipeMaxIntervall;
++ (double)fastScrollExponentialBase {
+    return _fastScrollExponentialBase;
+}
++ (int)scrollSwipeThreshold_inTicks {
+    return _scrollSwipeThreshold_inTicks;
+}
++ (double)fastScrollThreshold_inSwipes {
+    return _fastScrollThreshold_inSwipes;
+}
++ (double)consecutiveScrollTickMaxIntervall {
+    return _consecutiveScrollTickMaxIntervall;
+}
++ (double)consecutiveScrollSwipeMaxIntervall {
+    return _consecutiveScrollSwipeMaxIntervall;
 }
 
 // TODO: migrate consecutiveScrollTick functions and variables from SmoothScroll to ScrollControl
@@ -46,7 +71,7 @@ static CGEventSourceRef _eventSource = nil;
 //    _consecutiveScrollTickMaxIntervall = inp;
 //}
 
-#pragma mark - Dynamic
+#pragma mark Dynamic vars
 
 static BOOL _isSmoothEnabled;
 + (BOOL)isSmoothEnabled {
@@ -91,11 +116,6 @@ static BOOL _magnificationScrolling;
 //        }
     }
     _magnificationScrolling = B;
-}
-
-
-+ (CGEventRef)routeToTop:(CGEventRef)event { // TODO: Put this in a spot that makes sense
-    return eventTapCallback(nil, 0, event, nil);
 }
 
 #pragma mark - Private functions
@@ -152,12 +172,32 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     }
 }
 
++ (void)configureWithParameters:(NSDictionary *)params {
+    // How quickly fast scrolling gains speed.
+    _fastScrollExponentialBase          =   [[params objectForKey:@"fastScrollExponentialBase"] floatValue]; // 1.05 //1.125 //1.0625 // 1.09375
+    // If fs_thr consecutive swipes occur, fast scrolling is enabled.
+    _fastScrollThreshold_inSwipes       =   [[params objectForKey:@"fastScrollThreshold_inSwipes"] intValue];
+    // If sw_thr consecutive ticks occur, they are deemed a scroll-swipe.
+    _scrollSwipeThreshold_inTicks       =   [[params objectForKey:@"scrollSwipeThreshold_inTicks"] intValue]; // 3
+    // If more than sw_int seconds passes between two scrollwheel swipes, then they aren't deemed consecutive.
+    _consecutiveScrollSwipeMaxIntervall =   [[params objectForKey:@"consecutiveScrollSwipeMaxIntervall"] floatValue];
+    // If more than ti_int seconds passes between two scrollwheel ticks, then they aren't deemed consecutive.
+    _consecutiveScrollTickMaxIntervall  =   [[params objectForKey:@"consecutiveScrollTickMaxIntervall"] floatValue]; // == _msPerStep/1000 // oldval:0.03
+}
+
 /// When scrolling is in progress, there are tons of variables holding global state. This resets some of them.
 /// I determined the ones it resets through trial and error. Some misbehaviour/bugs might be caused by this not resetting all of the global variables.
 + (void)resetDynamicGlobals {
     _horizontalScrolling    =   NO;
     _magnificationScrolling = NO;
     [SmoothScroll resetDynamicGlobals];
+}
+
+/// Routes the event back to the eventTap where it originally entered the program.
+/// Use this when internal parameters change while processing an event.
+/// This will essentially restart the evaluation of the event while respecting respect the new internal parameters.
++ (CGEventRef)reinsertScrollEvent:(CGEventRef)event {
+    return eventTapCallback(nil, 0, event, nil);
 }
 
 /// Either activate SmoothScroll or RoughScroll or stop scroll interception entirely

@@ -20,6 +20,15 @@ typedef enum {
 
 + (AXUIElementRef) systemWideAXUIElement;
 + (CGEventSourceRef)eventSource;
+
++ (void)configureWithParameters:(NSDictionary *)params;
+
++ (double)fastScrollExponentialBase;
++ (int)scrollSwipeThreshold_inTicks;
++ (double)fastScrollThreshold_inSwipes;
++ (double)consecutiveScrollTickMaxIntervall;
++ (double)consecutiveScrollSwipeMaxIntervall;
+
 + (BOOL)horizontalScrolling;
 + (void)setHorizontalScrolling:(BOOL)B;
 + (BOOL)magnificationScrolling;
@@ -29,10 +38,11 @@ typedef enum {
 + (int)scrollDirection;
 + (void)setScrollDirection:(int)dir;
 
-+ (CGEventRef)routeToTop:(CGEventRef)event;
 + (void)load_Manual;
 + (void)resetDynamicGlobals;
 + (void)decide;
+
++ (CGEventRef)reinsertScrollEvent:(CGEventRef)event;
 
 @end
 
