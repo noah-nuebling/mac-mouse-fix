@@ -23,18 +23,31 @@ static CFMachPortRef _eventTap       =   nil;
 
 #pragma mark - Public variables
 
+#pragma mark Parameters
 
+// Constants
 static AXUIElementRef _systemWideAXUIElement;
 + (AXUIElementRef) systemWideAXUIElement {
     return _systemWideAXUIElement;
 }
-
 static CGEventSourceRef _eventSource = nil;
 + (CGEventSourceRef)eventSource {
     return _eventSource;
 }
-// Used to switch between SmoothScroll and RoughScroll
-// TODO: Rename this _smoothEnabled
+
+// TODO: migrate consecutiveScrollTick functions and variables from SmoothScroll to ScrollControl
+// From config
+//static float _consecutiveScrollTickMaxIntervall; // Should only be set by - updateInternalParameters.
+//// Originally part of the SmoothScroll.m, but we also need this for AppOverride loading optimization in RoughScroll.m. Sibling parameters like _consecutiveScrollSwipeMaxIntervall are still in SmoothScroll.m
+//+ (float)consecutiveScrollTickMaxIntervall {
+//    return _consecutiveScrollTickMaxIntervall;
+//}
+//+ (void)setConsecutiveScrollTickMaxIntervall:(float)inp {
+//    _consecutiveScrollTickMaxIntervall = inp;
+//}
+
+#pragma mark - Dynamic
+
 static BOOL _isSmoothEnabled;
 + (BOOL)isSmoothEnabled {
     return _isSmoothEnabled;
@@ -80,7 +93,8 @@ static BOOL _magnificationScrolling;
     _magnificationScrolling = B;
 }
 
-+ (CGEventRef)routeToTop:(CGEventRef)event {
+
++ (CGEventRef)routeToTop:(CGEventRef)event { // TODO: Put this in a spot that makes sense
     return eventTapCallback(nil, 0, event, nil);
 }
 

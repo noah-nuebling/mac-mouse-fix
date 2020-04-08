@@ -62,7 +62,7 @@
 			<key>msPerStep</key>
 			<integer>90</integer>
 			<key>friction</key>
-			<real>1.5</real>
+			<real>2</real>
 			<key>frictionDepth</key>
 			<integer>1</integer>
 			<key>acceleration</key>

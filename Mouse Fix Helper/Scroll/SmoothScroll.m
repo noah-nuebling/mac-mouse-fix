@@ -61,7 +61,7 @@ typedef enum {
 
 #pragma mark config
 
-// fast scroll
+// consecutive scroll ticks, scrollSwipes, and fast scroll
 double          _fastScrollExponentialBase          =   0;
 int             _scrollSwipeThreshold_inTicks        =   0;
 int             _fastScrollThreshold_inSwipes        =   0;
@@ -81,12 +81,12 @@ static CVDisplayLinkRef _displayLink    =   nil;
 
 #pragma mark dynamic
 
-// fast scroll
-static BOOL     _lastTickWasPartOfSwipe             =   NO;
-static int      _consecutiveScrollTickCounter       =   0;
-static NSTimer  *_consecutiveScrollTickTimer        =   NULL;
-static int      _consecutiveScrollSwipeCounter      =   0;
-static NSTimer  *_consecutiveScrollSwipeTimer       =   NULL;
+// consecutive scroll ticks, scroll swipes, and fast scroll
+//static BOOL     _lastTickWasPartOfSwipe             =   NO;
+//static int      _consecutiveScrollTickCounter       =   0;
+//static NSTimer  *_consecutiveScrollTickTimer        =   NULL;
+//static int      _consecutiveScrollSwipeCounter      =   0;
+//static NSTimer  *_consecutiveScrollSwipeTimer       =   NULL;
 
 // any phase
 static int32_t  _pixelsToScroll;
@@ -112,10 +112,10 @@ static int      _onePixelScrollsCounter =   0;
     _msLeftForScroll                    =   0;
     _pxPerMsVelocity                    =   0;
     _onePixelScrollsCounter             =   0;
-    _consecutiveScrollTickCounter       =   0;
-    _consecutiveScrollSwipeCounter      =   0;
-    [_consecutiveScrollTickTimer invalidate];
-    [_consecutiveScrollSwipeTimer invalidate];
+//    _consecutiveScrollTickCounter       =   0;
+//    _consecutiveScrollSwipeCounter      =   0;
+//    [_consecutiveScrollTickTimer invalidate];
+//    [_consecutiveScrollSwipeTimer invalidate];
 }
 
 + (void)configureWithParameters:(NSDictionary *)params {
@@ -179,6 +179,38 @@ static int      _onePixelScrollsCounter =   0;
     CGDisplayRemoveReconfigurationCallback(Handle_displayReconfiguration, NULL);
 }
 
+// TODO: move this to a sensible spot
+static double _previousScrollTickTimeStamp;
+static int _consecutiveScrollTickCounter;
++ (void) updateConsecutiveScrollTickCounterWithTickOccuringNow { // starts counting at 0
+    double thisScrollTickTimeStamp = CFAbsoluteTimeGetCurrent();
+    double intervall = (thisScrollTickTimeStamp - _previousScrollTickTimeStamp);
+    if (intervall > _consecutiveScrollTickMaxIntervall) {
+        _consecutiveScrollTickCounter = 0;
+    } else {
+        _consecutiveScrollTickCounter += 1;
+    }
+    _previousScrollTickTimeStamp = thisScrollTickTimeStamp;
+}
+static double _previousScrollSwipeTimeStamp;
+static int _consecutiveScrollSwipeCounter;
++ (void)updateConsecutiveScrollSwipeCounterWithSwipeOccuringNow { // starts counting at 0
+    double thisScrollSwipeTimeStamp = CFAbsoluteTimeGetCurrent();
+    double intervall = (thisScrollSwipeTimeStamp - _previousScrollSwipeTimeStamp);
+    if (intervall > _consecutiveScrollSwipeMaxIntervall) {
+        _consecutiveScrollSwipeCounter = 0;
+    } else {
+        _consecutiveScrollSwipeCounter += 1;
+    }
+    _previousScrollSwipeTimeStamp = thisScrollSwipeTimeStamp;
+}
++ (void)resetConsecutiveTicksAndSwipes {
+    _consecutiveScrollTickCounter = 0; // probs not necessary
+    _previousScrollTickTimeStamp = 0.0;
+    _consecutiveScrollSwipeCounter = 0; // probs not necessary
+    _previousScrollSwipeTimeStamp = 0.0;
+}
+
 #pragma mark - Run Loop
 
 + (CGEventRef)handleInput:(CGEventRef)event info:(NSDictionary *)info {
@@ -206,21 +238,22 @@ static int      _onePixelScrollsCounter =   0;
     
     
     
-    // Scroll ticks and scroll swipes
+    // Scroll ticks and scroll swipes - but with timestamps instead of timers
     
-        // recognize consecutive scroll ticks as "scroll swipes"
-        // activate fast scrolling after a number of consecutive "scroll swipes"
-        // do other stuff based on "scroll swipes"
+    // recognize consecutive scroll ticks as "scroll swipes"
+    // activate fast scrolling after a number of consecutive "scroll swipes"
+    // do other stuff based on "scroll swipes"
     
     if (newScrollDirection) {
-        _consecutiveScrollTickCounter = 0;
-        _consecutiveScrollSwipeCounter = 0;
-        [_consecutiveScrollTickTimer invalidate];
-        [_consecutiveScrollSwipeTimer invalidate];
-    };
-    if (![_consecutiveScrollTickTimer isValid]) {
+        [self resetConsecutiveTicksAndSwipes];
+    }
+    
+    [self updateConsecutiveScrollTickCounterWithTickOccuringNow];
+    int consecutiveScrollTicks = _consecutiveScrollTickCounter;
+    
+    if (consecutiveScrollTicks == 0) {
         // stuff you only wanna do once - on the first tick of each series of consecutive scroll ticks
-        
+
         if (CVDisplayLinkIsRunning(_displayLink) == FALSE) {
             CVDisplayLinkStart(_displayLink);
         }
@@ -231,14 +264,14 @@ static int      _onePixelScrollsCounter =   0;
             // Only need to check this if mouse didn't move, because of OR in (mouseMoved || frontMostAppChanged). For optimization. Not sure if significant.
         }
         if (mouseMoved || frontMostAppChanged) {
-            
+
             // TODO: Either set appOverrides regardless of mouse moved, or also set it if mouse hasn't moved but frontmost app has changed. (appOverrdides are applied by setProgramStateToConfig). Otherwise, changing app without moving the mouse pointer will not lead to the proper override being applied.
             // set app overrides
             MFStateDidChange paramsDidChange = [ConfigFileInterface_HelperApp updateInternalParameters];
             if (paramsDidChange) {
                 return [ScrollControl routeToTop:event];
             }
-            
+
             // set diplaylink to the display that is actally being scrolled - not sure if this is necessary, because having the displaylink at 30fps on a 30fps display looks just as horrible as having the display link on 60fps, if not worse
             @try {
                 setDisplayLinkToDisplayUnderMousePointer(event);
@@ -247,35 +280,88 @@ static int      _onePixelScrollsCounter =   0;
             }
         }
     } else {
-        _consecutiveScrollTickCounter += 1;
         // stuff you wanna do on every tick, except the first one of each series of consecutive scroll ticks
-        
+
         // accelerate
         _pixelScrollQueue = _pixelScrollQueue * _accelerationForScrollQueue;
     }
-    // Reset the _consecutiveScrollTickCounter when no "consecutive" tick occurs after this one. (consecutive meaning occuring within _consecutiveScrollTickMaxIntervall after this one)
-    [_consecutiveScrollTickTimer invalidate];
-    _consecutiveScrollTickTimer = [NSTimer scheduledTimerWithTimeInterval:_consecutiveScrollTickMaxIntervall target:[SmoothScroll class] selector:@selector(Handle_ConsecutiveScrollTickCallback:) userInfo:NULL repeats:NO];
     
-    if (_consecutiveScrollTickCounter < _scrollSwipeThreshold_inTicks) {
-        _lastTickWasPartOfSwipe = NO;
-    } else {
-        // stuff you wanna do on every tick after and including the one which started the scroll swipe. Will probably never use this.
-        // (nothing here)
-        
-        if (_lastTickWasPartOfSwipe == NO) {
-            // stuff you wanna do once - on the first tick of the swipe (swipe starts after _scrollSwipeThreshold_inTicks consecutive ticks have occured).
-            // If you want to do something once per series of consecutive scroll ticks, even if they don't pass the swipe threshold, you should use the space right under `if (![_consecutiveScrollTickTimer isValid]) {`
-            
-            _lastTickWasPartOfSwipe = YES;
-            _consecutiveScrollSwipeCounter  += 1;
-            // Reset the _consecutiveScrollSwipeCounter when no "consecutive" swipe occurs after this one. (consecutive meaning occuring within _consecutiveScrollSwipeMaxIntervall after this one)
-            [_consecutiveScrollSwipeTimer invalidate];
-            dispatch_async(dispatch_get_main_queue(), ^{ // TODO: TODO: is executing on the main thread here necessary / useful?
-                _consecutiveScrollSwipeTimer = [NSTimer scheduledTimerWithTimeInterval:_consecutiveScrollSwipeMaxIntervall target:[SmoothScroll class] selector:@selector(Handle_ConsecutiveScrollSwipeCallback:) userInfo:NULL repeats:NO];
-            });
-        }
+    if (consecutiveScrollTicks == _scrollSwipeThreshold_inTicks) {
+        [self updateConsecutiveScrollSwipeCounterWithSwipeOccuringNow]; // Shouldn't use _consecutiveScrollSwipeCounter before this point
     }
+//    NSLog(@"swipes: %d", _consecutiveScrollSwipeCounter);
+    
+    
+//    // Scroll ticks and scroll swipes
+//
+//        // recognize consecutive scroll ticks as "scroll swipes"
+//        // activate fast scrolling after a number of consecutive "scroll swipes"
+//        // do other stuff based on "scroll swipes"
+//
+//    if (newScrollDirection) {
+//        _consecutiveScrollTickCounter = 0;
+//        _consecutiveScrollSwipeCounter = 0;
+//        [_consecutiveScrollTickTimer invalidate];
+//        [_consecutiveScrollSwipeTimer invalidate];
+//    };
+//    if (![_consecutiveScrollTickTimer isValid]) {
+//        // stuff you only wanna do once - on the first tick of each series of consecutive scroll ticks
+//
+//        if (CVDisplayLinkIsRunning(_displayLink) == FALSE) {
+//            CVDisplayLinkStart(_displayLink);
+//        }
+//        BOOL mouseMoved = [ScrollUtility mouseDidMove];
+//        BOOL frontMostAppChanged = NO;
+//        if (!mouseMoved) {
+//            frontMostAppChanged = [ScrollUtility frontMostAppDidChange];
+//            // Only need to check this if mouse didn't move, because of OR in (mouseMoved || frontMostAppChanged). For optimization. Not sure if significant.
+//        }
+//        if (mouseMoved || frontMostAppChanged) {
+//
+//            // TODO: Either set appOverrides regardless of mouse moved, or also set it if mouse hasn't moved but frontmost app has changed. (appOverrdides are applied by setProgramStateToConfig). Otherwise, changing app without moving the mouse pointer will not lead to the proper override being applied.
+//            // set app overrides
+//            MFStateDidChange paramsDidChange = [ConfigFileInterface_HelperApp updateInternalParameters];
+//            if (paramsDidChange) {
+//                return [ScrollControl routeToTop:event];
+//            }
+//
+//            // set diplaylink to the display that is actally being scrolled - not sure if this is necessary, because having the displaylink at 30fps on a 30fps display looks just as horrible as having the display link on 60fps, if not worse
+//            @try {
+//                setDisplayLinkToDisplayUnderMousePointer(event);
+//            } @catch (NSException *e) {
+//                NSLog(@"Error while trying to set display link to display under mouse pointer: %@", [e reason]);
+//            }
+//        }
+//    } else {
+//        _consecutiveScrollTickCounter += 1;
+//        // stuff you wanna do on every tick, except the first one of each series of consecutive scroll ticks
+//
+//        // accelerate
+//        _pixelScrollQueue = _pixelScrollQueue * _accelerationForScrollQueue;
+//    }
+//    // Reset the _consecutiveScrollTickCounter when no "consecutive" tick occurs after this one. (consecutive meaning occuring within _consecutiveScrollTickMaxIntervall after this one)
+//    [_consecutiveScrollTickTimer invalidate];
+//    _consecutiveScrollTickTimer = [NSTimer scheduledTimerWithTimeInterval:_consecutiveScrollTickMaxIntervall target:[SmoothScroll class] selector:@selector(Handle_ConsecutiveScrollTickCallback:) userInfo:NULL repeats:NO];
+//
+//    if (_consecutiveScrollTickCounter < _scrollSwipeThreshold_inTicks) {
+//        _lastTickWasPartOfSwipe = NO;
+//    } else {
+//        // stuff you wanna do on every tick after and including the one which started the scroll swipe. Will probably never use this.
+//        // (nothing here)
+//
+//        if (_lastTickWasPartOfSwipe == NO) {
+//            // stuff you wanna do once - on the first tick of the swipe (swipe starts after _scrollSwipeThreshold_inTicks consecutive ticks have occured).
+//            // If you want to do something once per series of consecutive scroll ticks, even if they don't pass the swipe threshold, you should use the space right under `if (![_consecutiveScrollTickTimer isValid]) {`
+//
+//            _lastTickWasPartOfSwipe = YES;
+//            _consecutiveScrollSwipeCounter  += 1;
+//            // Reset the _consecutiveScrollSwipeCounter when no "consecutive" swipe occurs after this one. (consecutive meaning occuring within _consecutiveScrollSwipeMaxIntervall after this one)
+//            [_consecutiveScrollSwipeTimer invalidate];
+//            dispatch_async(dispatch_get_main_queue(), ^{ // TODO: TODO: is executing on the main thread here necessary / useful?
+//                _consecutiveScrollSwipeTimer = [NSTimer scheduledTimerWithTimeInterval:_consecutiveScrollSwipeMaxIntervall target:[SmoothScroll class] selector:@selector(Handle_ConsecutiveScrollSwipeCallback:) userInfo:NULL repeats:NO];
+//            });
+//        }
+//    }
     
     
     
