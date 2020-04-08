@@ -24,7 +24,7 @@
 #pragma mark Globals
 
 static BOOL _configFileChanged;
-static NSString *_bundleIdentifierOfAppWhichCausesAppOverride;
+static NSString *_bundleIDOfAppWhichCausesAppOverride;
 static NSDictionary *_stringToEventFlagMask;
 
 #pragma mark - Interface
@@ -40,7 +40,7 @@ static NSDictionary *_stringToEventFlagMask;
     };
 }
 
-static NSMutableDictionary *_config;
+static NSMutableDictionary *_config; // TODO: Make this immutable. I think helper should never modifiy this except by reloading from file.
 + (NSMutableDictionary *)config {
     return _config;
 }
@@ -56,10 +56,9 @@ static NSMutableDictionary *_configWithAppOverridesApplied;
 }
 
 + (void)reactToConfigFileChange {
-    
     fillConfigFromFile();
-    _configFileChanged = YES;
-    [ConfigFileInterface_HelperApp setProgramStateToConfig];
+    _configFileChanged = YES; // Doing this to force update of internal state, even the active app hastn't chaged
+    [ConfigFileInterface_HelperApp updateInternalParameters];
     _configFileChanged = NO;
 }
 
@@ -92,14 +91,15 @@ static void fillConfigFromFile() {
     }
 }
 
-/// Modify the programs state according to parameters from this class' config property
-+ (void)setProgramStateToConfig {
+/// Modify the helpers internal parameters according to _config and the currently active app.
+/// \returns YES, if internal parameters did update. NO otherwise.
++ (MFStateDidChange)updateInternalParameters {
     // TODO: This function is still seems to be a huge resource hog (thinking this because RoughScroll calls this on every tick and is much more resource intensive than SmoothScroll) – even with the current optimization of only looking at the frontmost app for AppOverrides, instead of the app under the mouse pointer.
     
-    NSString *bundleIdentifierOfActiveApp;
+    NSString *bundleIDOfCurrentApp;
     
     if (_configFileChanged) {
-        bundleIdentifierOfActiveApp = nil;
+        bundleIDOfCurrentApp = nil;
     } else {
     
         // get App under mouse pointer
@@ -133,31 +133,31 @@ static void fillConfigFromFile() {
             
             // 2. very slow - but basically the way MOS does it, and MOS is fast somehow
             
-        //    CGEventRef fakeEvent = CGEventCreate(NULL);
-        //    CGPoint mouseLocation = CGEventGetLocation(fakeEvent);
-        //    CFRelease(fakeEvent);
+            CGEventRef fakeEvent = CGEventCreate(NULL);
+            CGPoint mouseLocation = CGEventGetLocation(fakeEvent);
+            CFRelease(fakeEvent);
 
-        //    if (_previousMouseLocation.x == mouseLocation.x && _previousMouseLocation.y == mouseLocation.y) {
-        //        return;
-        //    }
-        //    _previousMouseLocation = mouseLocation;
-        //
-        //    AXUIElementRef elementUnderMousePointer;
-        //    AXUIElementCopyElementAtPosition(_systemWideAXUIElement, mouseLocation.x, mouseLocation.y, &elementUnderMousePointer);
-        //    pid_t elementUnderMousePointerPID;
-        //    AXUIElementGetPid(elementUnderMousePointer, &elementUnderMousePointerPID);
-        //    NSRunningApplication *appUnderMousePointer = [NSRunningApplication runningApplicationWithProcessIdentifier:elementUnderMousePointerPID];
-        //
-        //    @try {
-        //        CFRelease(elementUnderMousePointer);
-        //    } @finally {}
-        //    NSString *bundleIdentifierOfScrolledApp_New = appUnderMousePointer.bundleIdentifier;
+//            if (_previousMouseLocation.x == mouseLocation.x && _previousMouseLocation.y == mouseLocation.y) {
+//                return;
+//            }
+//            _previousMouseLocation = mouseLocation;
+        
+            AXUIElementRef elementUnderMousePointer;
+            AXUIElementCopyElementAtPosition(ScrollControl.systemWideAXUIElement, mouseLocation.x, mouseLocation.y, &elementUnderMousePointer);
+            pid_t elementUnderMousePointerPID;
+            AXUIElementGetPid(elementUnderMousePointer, &elementUnderMousePointerPID);
+            NSRunningApplication *appUnderMousePointer = [NSRunningApplication runningApplicationWithProcessIdentifier:elementUnderMousePointerPID];
+        
+            @try {
+                CFRelease(elementUnderMousePointer);
+            } @finally {}
+            bundleIDOfCurrentApp = appUnderMousePointer.bundleIdentifier;
             
             
             
         //     3. fast, but only get info about frontmost application
             
-            bundleIdentifierOfActiveApp = [NSWorkspace.sharedWorkspace frontmostApplication].bundleIdentifier;
+//            bundleIdentifierOfActiveApp = [NSWorkspace.sharedWorkspace frontmostApplication].bundleIdentifier;
             
             
             
@@ -167,8 +167,13 @@ static void fillConfigFromFile() {
         //    NSString *bundleIdentifierOfScrolledApp_New = [_appOverrides getBundleIdFromMouseLocation:fakeEvent];
         //    CFRelease(fakeEvent);
     }
-    
-    [ConfigFileInterface_HelperApp updateScrollSettingsWithActiveApp:bundleIdentifierOfActiveApp];
+    if ([_bundleIDOfAppWhichCausesAppOverride isEqualToString:bundleIDOfCurrentApp] == NO) {
+        _bundleIDOfAppWhichCausesAppOverride = bundleIDOfCurrentApp;
+        loadAppOverridesForApp(bundleIDOfCurrentApp);
+        [ConfigFileInterface_HelperApp updateScrollParameters];
+        return kMFStateDidChange;
+    }
+    return kMFStateDidNotChange;
 }
 
 // TODO: Delete this
@@ -191,40 +196,34 @@ static void fillConfigFromFile() {
 //    
 //}
 
-/// Will only update settings if active app changed
-+ (void)updateScrollSettingsWithActiveApp:(NSString *)bundleIdentifierOfScrolledApp {
-    if ([_bundleIdentifierOfAppWhichCausesAppOverride isEqualToString:bundleIdentifierOfScrolledApp] == NO) {
-        _bundleIdentifierOfAppWhichCausesAppOverride = bundleIdentifierOfScrolledApp;
-        
-        loadAppOverridesForApp(bundleIdentifierOfScrolledApp); // TODO: Consider putting this into `setProgramStateToConfig`
-        
-        NSDictionary *scroll = [_configWithAppOverridesApplied objectForKey:@"Scroll"];
-        
-        // top level
-        
+// Call loadAppOverridesForApp before calling this!
++ (void)updateScrollParameters {
+
+    NSDictionary *scroll = [_configWithAppOverridesApplied objectForKey:@"Scroll"];
+    
+    // top level parameters
+    
 //        ScrollControl.disableAll = [[defaultScrollSettings objectForKey:@"disableAll"] boolValue]; // this is currently unused. Could be used as a killswitch for all scrolling interception
-        ScrollControl.scrollDirection = [[scroll objectForKey:@"direction"] intValue];
-        ScrollControl.isSmoothEnabled = [[scroll objectForKey:@"smooth"] boolValue];
+    ScrollControl.scrollDirection = [[scroll objectForKey:@"direction"] intValue];
+    ScrollControl.isSmoothEnabled = [[scroll objectForKey:@"smooth"] boolValue];
 
-        // smoothParameters
-        
-        [SmoothScroll configureWithParameters:[scroll objectForKey:@"smoothParameters"]];
+    // smoothParameters
+    
+    [SmoothScroll configureWithParameters:[scroll objectForKey:@"smoothParameters"]];
 
-        // roughParameters
-            // nothing here yet
+    // roughParameters
+        // nothing here yet
 
-        // Keyboard modifier keys
-        
-        NSDictionary *mod = [scroll objectForKey:@"modifierKeys"];
-        // Event flag masks
-        NSString *horizontalScrollModifierKey = [mod objectForKey:@"horizontalScrollModifierKey"];
-        ScrollModifiers.horizontalScrollModifierKeyMask = (CGEventFlags)[[_stringToEventFlagMask objectForKey:horizontalScrollModifierKey] unsignedLongLongValue];
-        NSString *magnificationScrollModifierKey = [mod objectForKey:@"magnificationScrollModifierKey"];
-        ScrollModifiers.MagnificationScrollModifierKeyMask = (CGEventFlags)[[_stringToEventFlagMask objectForKey:magnificationScrollModifierKey] unsignedLongLongValue];
-        // Enabled / disabled
-        ScrollModifiers.horizontalScrollModifierKeyEnabled = [[mod objectForKey:@"horizontalScrollModifierKeyEnabled"] boolValue];
-        ScrollModifiers.magnificationScrollModifierKeyEnabled = [[mod objectForKey:@"magnificationScrollModifierKeyEnabled"] boolValue];
-    }
+    // Keyboard modifier keys
+    
+    NSDictionary *mod = [scroll objectForKey:@"modifierKeys"];
+    // Event flag masks
+    ScrollModifiers.horizontalScrollModifierKeyMask = (CGEventFlags)[_stringToEventFlagMask[mod[@"horizontalScrollModifierKey"]] unsignedLongLongValue];
+    ScrollModifiers.magnificationScrollModifierKeyMask = (CGEventFlags)[_stringToEventFlagMask[mod[@"magnificationScrollModifierKey"]] unsignedLongLongValue];
+    // Enabled / disabled
+    ScrollModifiers.horizontalScrollModifierKeyEnabled = [mod[@"horizontalScrollModifierKeyEnabled"] boolValue];
+    ScrollModifiers.magnificationScrollModifierKeyEnabled = [mod[@"magnificationScrollModifierKeyEnabled"] boolValue];
+
 }
 
 /// Applies AppOverrides from app with `bundleIdentifier` to `_config` and writes the result into `_configWithAppOverridesApplied`.
@@ -414,7 +413,7 @@ static void loadAppOverridesForApp(NSString *bundleIdentifier) {
 
 + (void) repairConfigFile:(NSString *)info {
     // TODO: actually repair config dict
-    NSLog(@"should repair configdict.... (not implemented)");
+    NSLog(@"should repair configdict.... (not implemented)"); 
 }
 
 

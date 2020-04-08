@@ -462,13 +462,13 @@
 			name = Other;
 			sourceTree = "<group>";
 		};
-		4F95A246234EBB1E000DC7D7 /* PointerSpeed */ = {
+		4F95A246234EBB1E000DC7D7 /* Pointer */ = {
 			isa = PBXGroup;
 			children = (
 				4F95A247234EBB5D000DC7D7 /* PointerSpeed.h */,
 				4F95A248234EBB5D000DC7D7 /* PointerSpeed.m */,
 			);
-			path = PointerSpeed;
+			path = Pointer;
 			sourceTree = "<group>";
 		};
 		4FACF5A02183B9AA009257D4 /* Default User Agent Config File */ = {
@@ -501,14 +501,14 @@
 			path = Config;
 			sourceTree = "<group>";
 		};
-		4FBF350223183FBA00E6CFD0 /* HelperServices */ = {
+		4FBF350223183FBA00E6CFD0 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
 				4FACF5A02183B9AA009257D4 /* Default User Agent Config File */,
 				4FBF350323183FDA00E6CFD0 /* HelperServices.h */,
 				4FBF350423183FDA00E6CFD0 /* HelperServices.m */,
 			);
-			path = HelperServices;
+			path = Helper;
 			sourceTree = "<group>";
 		};
 		4FCECD7721092354001F1078 = {
@@ -543,7 +543,7 @@
 				4F1B7C1823D3E5640055C007 /* Touch */,
 				4F32E18D231C50A100199A11 /* Remap */,
 				4F32E17D231C509200199A11 /* Scroll */,
-				4F95A246234EBB1E000DC7D7 /* PointerSpeed */,
+				4F95A246234EBB1E000DC7D7 /* Pointer */,
 				4FD45A15231C76ED00F75C58 /* MessagePort */,
 				4FD45A13231C76A700F75C58 /* Config */,
 				4F32E152231C420100199A11 /* Utility */,
@@ -646,6 +646,8 @@
 				4F8D0184243D8D6200D70076 /* NSArray+Additions.m */,
 				4FA26CE524380D1F0082D5F6 /* ClickableImageView.h */,
 				4FA26CE624380D1F0082D5F6 /* ClickableImageView.m */,
+				4FD9CB1122F7D48D0090DB98 /* Hyperlink.h */,
+				4FD9CB1222F7D48D0090DB98 /* Hyperlink.m */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -659,12 +661,11 @@
 				4FD45A17231C785F00F75C58 /* Accessibility */,
 				4FF873F2231A96C0002A897A /* MoreSheet */,
 				4FD36AF0243741C90046DC41 /* ScrollOverridePanel */,
-				4FBF350223183FBA00E6CFD0 /* HelperServices */,
+				4FBF350223183FBA00E6CFD0 /* Helper */,
 				4FBF350123183F1300E6CFD0 /* Config */,
 				4FD45A16231C771200F75C58 /* MessagePort */,
 				4FBF347B2316B90800E6CFD0 /* Update */,
 				4FD45A30231D03B800F75C58 /* Utility */,
-				4FF873F3231AB3AB002A897A /* Hyperlink */,
 				4F32E15E231C455A00199A11 /* SupportFiles */,
 			);
 			path = "Mouse Fix";
@@ -689,15 +690,6 @@
 				4FF873EE231A96B2002A897A /* MoreSheet.xib */,
 			);
 			path = MoreSheet;
-			sourceTree = "<group>";
-		};
-		4FF873F3231AB3AB002A897A /* Hyperlink */ = {
-			isa = PBXGroup;
-			children = (
-				4FD9CB1122F7D48D0090DB98 /* Hyperlink.h */,
-				4FD9CB1222F7D48D0090DB98 /* Hyperlink.m */,
-			);
-			path = Hyperlink;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

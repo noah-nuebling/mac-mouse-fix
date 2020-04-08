@@ -100,7 +100,7 @@ static NSURL *_backupConfigURL;
 
 // TODO: Test if this still works
 /// Checks config for errors / incompatibilty and repairs it if necessary.
-+ (void)repairConfigWithProblem:(ConfigProblem)problem info:(id _Nullable)info {
++ (void)repairConfigWithProblem:(MFConfigProblem)problem info:(id _Nullable)info {
     
     // TODO: Check whether all default (as opposed to override) values exist in config file. If they don't everything breaks. Maybe do this by comparing with config_backup.
     // TODO: Consider moving/copying this function to helper, so it can repair stuff as well.

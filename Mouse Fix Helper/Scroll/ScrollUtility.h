@@ -21,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (CGEventRef)makeScrollEventHorizontal:(CGEventRef)event;
 + (double)signOf:(double)n;
 + (BOOL)sameSign_n:(double)n m:(double)m;
++ (BOOL)mouseDidMove;
++ (BOOL)frontMostAppDidChange;
 @end
 
 NS_ASSUME_NONNULL_END

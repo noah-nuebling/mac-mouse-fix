@@ -31,7 +31,7 @@
 //    if (mouseMoved == TRUE) {
 //        setConfigVariablesForActiveApp();
 //    }
-    [ConfigFileInterface_HelperApp setProgramStateToConfig];
+    [ConfigFileInterface_HelperApp updateInternalParameters];
     
     if (ScrollControl.scrollDirection == -1) { // TODO: Use kMFInvertedScrollDirection instead of -1
         event = [ScrollUtility invertScrollEvent:event direction:ScrollControl.scrollDirection];

@@ -19,10 +19,15 @@
 
 #pragma mark - Private variables
 
-static AXUIElementRef _systemWideAXUIElement;
 static CFMachPortRef _eventTap       =   nil;
 
 #pragma mark - Public variables
+
+
+static AXUIElementRef _systemWideAXUIElement;
++ (AXUIElementRef) systemWideAXUIElement {
+    return _systemWideAXUIElement;
+}
 
 static CGEventSourceRef _eventSource = nil;
 + (CGEventSourceRef)eventSource {
@@ -36,13 +41,6 @@ static BOOL _isSmoothEnabled;
 }
 + (void)setIsSmoothEnabled:(BOOL)B {
     _isSmoothEnabled = B;
-}
-static CGPoint _previousMouseLocation;
-+ (CGPoint)previousMouseLocation {
-    return _previousMouseLocation;
-}
-+ (void)setPreviousMouseLocation:(CGPoint)p {
-    _previousMouseLocation = p;
 }
 // TODO: Change type to MFScrollDirection
 static int _scrollDirection;
@@ -82,6 +80,10 @@ static BOOL _magnificationScrolling;
     _magnificationScrolling = B;
 }
 
++ (CGEventRef)routeToTop:(CGEventRef)event {
+    return eventTapCallback(nil, 0, event, nil);
+}
+
 #pragma mark - Private functions
 
 static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
@@ -102,6 +104,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         // scroll event doesn't come from a simple scroll wheel or doesn't contain the data we need to use
         return event;
     }
+    
     // `info` dictionary is used to pass data to the input handlers, so that we don't have to calculate stuff twice.
     NSDictionary *info;
     if (_isSmoothEnabled) {

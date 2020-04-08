@@ -204,33 +204,7 @@ static int      _onePixelScrollsCounter =   0;
     }
     _previousScrollDeltaAxis1 = scrollDeltaAxis1;
     
-    // Update global vars
-
-    if (_scrollPhase != kMFPhaseWheel) {
-        _onePixelScrollsCounter  =   0;
-        _pxPerMsVelocity        =   0;
-        _pixelScrollQueue = 0;
-    }
-    if (_scrollPhase == kMFPhaseMomentum) {
-        _scrollPhase = kMFPhaseWheel;
-    } else if (_scrollPhase == kMFPhaseEnd) {
-        _scrollPhase = kMFPhaseStart;
-    }
-    if (newScrollDirection) {
-        _pixelScrollQueue = 0;
-        _pixelsToScroll = 0;
-        _pxPerMsVelocity = 0;
-    };
-    _msLeftForScroll = _msPerStep;
-    if (scrollDeltaAxis1 > 0) {
-        _pixelScrollQueue += _pxStepSize * ScrollControl.scrollDirection;
-    }
-    else if (scrollDeltaAxis1 < 0) {
-        _pixelScrollQueue -= _pxStepSize * ScrollControl.scrollDirection;
-    }
-    if (_consecutiveScrollSwipeCounter > _fastScrollThreshold_inSwipes) {
-        _pixelScrollQueue = _pixelScrollQueue * pow(_fastScrollExponentialBase, (int32_t)_consecutiveScrollSwipeCounter - _fastScrollThreshold_inSwipes);
-    }
+    
     
     // Scroll ticks and scroll swipes
     
@@ -250,18 +224,21 @@ static int      _onePixelScrollsCounter =   0;
         if (CVDisplayLinkIsRunning(_displayLink) == FALSE) {
             CVDisplayLinkStart(_displayLink);
         }
-        // Check if Mouse Location changed
-        Boolean mouseMoved = FALSE;
-        CGPoint mouseLocation = CGEventGetLocation(event);
-        if (![ScrollUtility point:mouseLocation isAboutTheSameAs:ScrollControl.previousMouseLocation threshold:10]) {
-            mouseMoved = TRUE;
-            ScrollControl.previousMouseLocation = mouseLocation;
+        BOOL mouseMoved = [ScrollUtility mouseDidMove];
+        BOOL frontMostAppChanged = NO;
+        if (!mouseMoved) {
+            frontMostAppChanged = [ScrollUtility frontMostAppDidChange];
+            // Only need to check this if mouse didn't move, because of OR in (mouseMoved || frontMostAppChanged). For optimization. Not sure if significant.
         }
-        if (mouseMoved) {
+        if (mouseMoved || frontMostAppChanged) {
             
             // TODO: Either set appOverrides regardless of mouse moved, or also set it if mouse hasn't moved but frontmost app has changed. (appOverrdides are applied by setProgramStateToConfig). Otherwise, changing app without moving the mouse pointer will not lead to the proper override being applied.
             // set app overrides
-            [ConfigFileInterface_HelperApp setProgramStateToConfig];
+            MFStateDidChange paramsDidChange = [ConfigFileInterface_HelperApp updateInternalParameters];
+            if (paramsDidChange) {
+                return [ScrollControl routeToTop:event];
+            }
+            
             // set diplaylink to the display that is actally being scrolled - not sure if this is necessary, because having the displaylink at 30fps on a 30fps display looks just as horrible as having the display link on 60fps, if not worse
             @try {
                 setDisplayLinkToDisplayUnderMousePointer(event);
@@ -299,6 +276,39 @@ static int      _onePixelScrollsCounter =   0;
             });
         }
     }
+    
+    
+    
+    
+    // Update global vars
+
+    if (_scrollPhase != kMFPhaseWheel) {
+        _onePixelScrollsCounter  =   0;
+        _pxPerMsVelocity        =   0;
+        _pixelScrollQueue = 0;
+    }
+    if (_scrollPhase == kMFPhaseMomentum) {
+        _scrollPhase = kMFPhaseWheel;
+    } else if (_scrollPhase == kMFPhaseEnd) {
+        _scrollPhase = kMFPhaseStart;
+    }
+    if (newScrollDirection) {
+        _pixelScrollQueue = 0;
+        _pixelsToScroll = 0;
+        _pxPerMsVelocity = 0;
+    };
+    _msLeftForScroll = _msPerStep;
+    if (scrollDeltaAxis1 > 0) {
+        _pixelScrollQueue += _pxStepSize * ScrollControl.scrollDirection;
+    }
+    else if (scrollDeltaAxis1 < 0) {
+        _pixelScrollQueue -= _pxStepSize * ScrollControl.scrollDirection;
+    }
+    if (_consecutiveScrollSwipeCounter > _fastScrollThreshold_inSwipes) {
+        _pixelScrollQueue = _pixelScrollQueue * pow(_fastScrollExponentialBase, (int32_t)_consecutiveScrollSwipeCounter - _fastScrollThreshold_inSwipes);
+    }
+    
+
     return nil;
 }
 

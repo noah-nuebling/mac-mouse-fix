@@ -15,12 +15,12 @@ NS_ASSUME_NONNULL_BEGIN
 typedef enum {
     kMFConfigProblemNone = 0,
     kMFConfigProblemIncompleteAppOverride = 1
-} ConfigProblem;
+} MFConfigProblem;
 @property (class,retain) NSMutableDictionary *config;
 + (NSURL *)configURL;
 + (void)writeConfigToFileAndNotifyHelper;
 + (void)loadConfigFromFile;
-+ (void)repairConfigWithProblem:(ConfigProblem)problem info:(id _Nullable)info;
++ (void)repairConfigWithProblem:(MFConfigProblem)problem info:(id _Nullable)info;
 + (void)cleanConfig;
 @end
 

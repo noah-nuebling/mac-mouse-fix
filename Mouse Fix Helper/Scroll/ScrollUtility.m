@@ -8,6 +8,7 @@
 //
 
 #import "ScrollUtility.h"
+#import <Cocoa/Cocoa.h>
 
 @implementation ScrollUtility
 
@@ -87,7 +88,6 @@
     
 }
 
-
 + (BOOL)point:(CGPoint)p1 isAboutTheSameAs:(CGPoint)p2 threshold:(int)th {
     if (abs((int)(p2.x - p1.x)) > th || abs((int)(p2.y - p1.y)) > th) {
         return NO;
@@ -107,4 +107,25 @@
     }
     return false;
 }
+
+static CGPoint _previousMouseLocation;
+/// Cursor did move since the last time this function was called
++ (BOOL)mouseDidMove {
+    CGPoint mouseLocation = CGEventGetLocation(CGEventCreate(nil));
+    BOOL mouseMoved = ![ScrollUtility point:mouseLocation
+                          isAboutTheSameAs:_previousMouseLocation
+                                 threshold:10];
+    _previousMouseLocation = mouseLocation;
+    return mouseMoved;
+}
+static NSRunningApplication *_previousFrontMostApp;
+/// Frontmost application changed since the last time this function was called
++ (BOOL)frontMostAppDidChange {
+    NSRunningApplication *frontMostApp = NSWorkspace.sharedWorkspace.frontmostApplication;
+    BOOL didChange = ![frontMostApp isEqual:_previousFrontMostApp];
+    _previousFrontMostApp = frontMostApp;
+    return didChange;
+}
+
+//            bundleIdentifierOfActiveApp = [NSWorkspace.sharedWorkspace frontmostApplication].bundleIdentifier;
 @end

@@ -60,13 +60,13 @@
 			<key>pxPerStep</key>
 			<integer>40</integer>
 			<key>msPerStep</key>
-			<integer>115</integer>
+			<integer>90</integer>
 			<key>friction</key>
 			<real>1.5</real>
 			<key>frictionDepth</key>
 			<integer>1</integer>
 			<key>acceleration</key>
-			<real>1.15</real>
+			<real>1.35</real>
 			<key>onePixelScrollsLimit</key>
 			<integer>2</integer>
 			<key>fastScrollExponentialBase</key>

@@ -14,7 +14,7 @@
 #import "PrefPaneDelegate.h"
 #import "Updater.h"
 #import "Config/ConfigFileInterface_PrefPane.h"
-#import "HelperServices/HelperServices.h"
+#import "Helper/HelperServices.h"
 #import "MessagePort/MessagePort_PrefPane.h"
 #import "Update/UpdateWindow.h"
 #import "Utility/Utility_PrefPane.h"
@@ -355,8 +355,8 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     smoothnessConfiguration = _scrollConfigurations[@"Normal"]; 
     
     NSArray     *stepSizeRange  = smoothnessConfiguration[0];
-    NSNumber    *msPerStep      = smoothnessConfiguration[1];
-    NSNumber    *friction       = smoothnessConfiguration[2];
+//    NSNumber    *msPerStep      = smoothnessConfiguration[1];
+//    NSNumber    *friction       = smoothnessConfiguration[2];
     int    		direction      = _scrollCheckBoxInvert.intValue ? -1 : 1;
     
     float scrollSliderValue = [_scrollSliderStepSize floatValue];
@@ -371,8 +371,8 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
                 @"direction": @(direction),
                 @"smoothParameters": @{
                         @"pxPerStep": @(stepSizeActual),
-                        @"msPerStep": msPerStep,
-                        @"friction": friction
+//                        @"msPerStep": msPerStep,
+//                        @"friction": friction
             }
         }
     };

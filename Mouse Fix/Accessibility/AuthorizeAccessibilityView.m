@@ -10,7 +10,7 @@
 #import "../PrefPaneDelegate.h"
 #import "AuthorizeAccessibilityView.h"
 #import "../MessagePort/MessagePort_PrefPane.h"
-#import "../HelperServices/HelperServices.h"
+#import "../Helper/HelperServices.h"
 
 @interface AuthorizeAccessibilityView ()
 
