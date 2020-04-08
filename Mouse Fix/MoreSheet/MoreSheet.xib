@@ -18,12 +18,12 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window identifier="moreSheet" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" tabbingMode="disallowed" id="81p-aH-nMH" customClass="NSPanel">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" nonactivatingPanel="YES"/>
+            <windowStyleMask key="styleMask" closable="YES" miniaturizable="YES" nonactivatingPanel="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="90" y="125" width="563" height="166"/>
+            <rect key="contentRect" x="90" y="125" width="563" height="168"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" id="IZI-tD-pBD">
-                <rect key="frame" x="0.0" y="0.0" width="563" height="166"/>
+                <rect key="frame" x="0.0" y="0.0" width="563" height="168"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QTb-LF-Uki">
@@ -43,7 +43,7 @@
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="PayPal" id="l8T-uX-6sc"/>
                     </imageView>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D2Z-Y7-bVq" customClass="Hyperlink">
-                        <rect key="frame" x="427" y="127" width="108" height="19"/>
+                        <rect key="frame" x="427" y="129" width="108" height="19"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="charWrapping" title="Visit the Website" id="KsZ-uF-DMp">
                             <font key="font" size="13" name="SFProText-Regular"/>
@@ -55,7 +55,7 @@
                         </userDefinedRuntimeAttributes>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PMP-fF-uAB" customClass="Hyperlink">
-                        <rect key="frame" x="415" y="105" width="120" height="17"/>
+                        <rect key="frame" x="415" y="107" width="120" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Send me Feedback" id="h6S-lt-XSY">
                             <font key="font" metaFont="system"/>
@@ -67,7 +67,7 @@
                         </userDefinedRuntimeAttributes>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Irr-ov-bxk" customClass="Hyperlink">
-                        <rect key="frame" x="490" y="83" width="45" height="17"/>
+                        <rect key="frame" x="490" y="85" width="45" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Github" id="B9O-yg-FQw">
                             <font key="font" metaFont="system"/>
@@ -84,8 +84,9 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </textField>
-                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JOS-vQ-Y5s">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JOS-vQ-Y5s">
                         <rect key="frame" x="467" y="13" width="72" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="cRp-f8-4S3">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -98,7 +99,7 @@ DQ
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xzi-d1-Q3X">
-                        <rect key="frame" x="185" y="126" width="231" height="17"/>
+                        <rect key="frame" x="185" y="128" width="231" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" title="Version - (-)" id="Ha5-pm-jeG">
                             <font key="font" metaFont="system"/>
@@ -107,7 +108,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="asO-di-NrV">
-                        <rect key="frame" x="85" y="126" width="100" height="17"/>
+                        <rect key="frame" x="85" y="128" width="100" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" title="Mac Mouse Fix" id="YTQ-ee-DVz">
                             <font key="font" metaFont="systemBold"/>
@@ -116,10 +117,10 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zdZ-sT-Ddg">
-                        <rect key="frame" x="85" y="107" width="143" height="14"/>
+                        <rect key="frame" x="85" y="109" width="143" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" title="Created by Noah Nuebling" id="BVP-MY-XAV">
-                            <font key="font" metaFont="message" size="11"/>
+                            <font key="font" metaFont="menu" size="11"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -136,7 +137,7 @@ DQ
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" id="Ooo-MV-trH">
-                        <rect key="frame" x="28" y="64" width="134" height="18"/>
+                        <rect key="frame" x="28" y="66" width="134" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <string key="toolTip">Check for an update everytime the that the Mouse Fix Preference Pane is loaded.
 Also resets skipped update versions.</string>
@@ -149,19 +150,15 @@ Also resets skipped update versions.</string>
                         </connections>
                     </button>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aUJ-XO-1Z3" customClass="ClickableImageView">
-                        <rect key="frame" x="26" y="103" width="45" height="45"/>
+                        <rect key="frame" x="26" y="105" width="45" height="45"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="MouseFix" id="7G1-o6-uvc"/>
                         <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="string" keyPath="modifiers" value="shift, command"/>
+                            <userDefinedRuntimeAttribute type="string" keyPath="modifiers" value="command, shift"/>
                             <userDefinedRuntimeAttribute type="string" keyPath="actionString" value="reveal-config"/>
                         </userDefinedRuntimeAttributes>
                     </imageView>
                 </subviews>
-                <constraints>
-                    <constraint firstAttribute="bottom" secondItem="JOS-vQ-Y5s" secondAttribute="bottom" constant="20" id="Rqi-vX-nNb"/>
-                    <constraint firstAttribute="trailing" secondItem="JOS-vQ-Y5s" secondAttribute="trailing" constant="30" id="pZK-0n-iMd"/>
-                </constraints>
                 <animations>
                     <caTransition key="subviews">
                         <mutableData key="keyedArchiveRepresentation">
@@ -180,7 +177,7 @@ AAAAAAAAAAAAAAABOQ
             <connections>
                 <outlet property="delegate" destination="-2" id="DTD-Mm-ND4"/>
             </connections>
-            <point key="canvasLocation" x="773.5" y="-56"/>
+            <point key="canvasLocation" x="773.5" y="-51"/>
         </window>
     </objects>
     <resources>

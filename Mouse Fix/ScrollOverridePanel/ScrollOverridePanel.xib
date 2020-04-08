@@ -17,14 +17,14 @@
         <window title="Change scroll settings for apps" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="XRM-Tk-uNa">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="139" y="81" width="617" height="312"/>
+            <rect key="contentRect" x="139" y="81" width="617" height="304"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" id="RsF-Ll-2x6">
-                <rect key="frame" x="0.0" y="0.0" width="617" height="312"/>
+                <rect key="frame" x="0.0" y="0.0" width="617" height="304"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <visualEffectView fixedFrame="YES" blendingMode="withinWindow" material="titlebar" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="sMa-ht-Pf7">
-                        <rect key="frame" x="0.0" y="0.0" width="617" height="29"/>
+                        <rect key="frame" x="0.0" y="0.0" width="617" height="28"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Njb-xs-9J8">
@@ -53,6 +53,9 @@
                                 <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1y5-Jp-2Wx">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+CA
+</string>
                                 </buttonCell>
                                 <connections>
                                     <action selector="removeButton:" target="-2" id="vbO-mc-frf"/>
@@ -61,14 +64,14 @@
                         </subviews>
                     </visualEffectView>
                     <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="44" horizontalPageScroll="10" verticalLineScroll="44" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hxt-ih-KEM">
-                        <rect key="frame" x="-1" y="28" width="619" height="285"/>
+                        <rect key="frame" x="-1" y="28" width="619" height="277"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="knA-8p-gvu">
-                            <rect key="frame" x="1" y="0.0" width="617" height="284"/>
+                            <rect key="frame" x="1" y="0.0" width="617" height="276"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" autosaveColumns="NO" rowHeight="40" headerView="leL-6i-FkU" viewBased="YES" id="fGT-Lc-WdX">
-                                    <rect key="frame" x="0.0" y="0.0" width="617" height="259"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="617" height="251"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <size key="intercellSpacing" width="3" height="4"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -194,7 +197,7 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="Na5-1e-6I5"/>
             </connections>
-            <point key="canvasLocation" x="713.5" y="95"/>
+            <point key="canvasLocation" x="713.5" y="91"/>
         </window>
         <window title="Mouse Fix" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="b9b-nC-737" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
