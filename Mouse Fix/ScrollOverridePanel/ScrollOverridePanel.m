@@ -81,6 +81,8 @@ NSDictionary *_columnIdentifierToKeyPath;
     [self.window makeKeyAndOrderFront:nil];
     [self.window performSelector:@selector(makeKeyWindow) withObject:nil afterDelay:0.05]; // Need to do this to make the window key. Magic.
     
+//    self.window.movableByWindowBackground = YES;
+    
     // Make tableView drag and drop target
     
     NSString *fileURLUTI = @"public.file-url";
@@ -114,7 +116,38 @@ NSDictionary *_columnIdentifierToKeyPath;
     [_tableView reloadData];
     [_tableView endUpdates];
 }
-- (IBAction)removeRowButton:(id)sender {
+- (IBAction)addButton:(id)sender {
+
+    NSOpenPanel* openDlg = [NSOpenPanel openPanel];
+
+    openDlg.canChooseFiles = YES;
+    openDlg.canChooseDirectories = NO;
+    openDlg.canCreateDirectories = NO; // Doesn't work
+    openDlg.allowsMultipleSelection = YES; // Doesn't work :/
+    openDlg.allowedFileTypes = @[@"com.apple.application"];
+    openDlg.prompt = @"Choose";
+    
+    NSString *applicationsFolderPath = NSSearchPathForDirectoriesInDomains(NSApplicationDirectory, NSLocalDomainMask, YES).firstObject;
+    openDlg.directoryURL = [NSURL fileURLWithPath:applicationsFolderPath];
+    
+    // Display the dialog.
+    [openDlg beginSheetModalForWindow:self.window
+                    completionHandler:^(NSModalResponse result) {
+        if (result != NSModalResponseOK) {  // If the OK button was pressed, process the files. Otherwise return.
+            return;
+        }
+        NSArray* urls = [openDlg URLs];
+        NSMutableArray* bundleIDs = [NSMutableArray array];
+        // Loop through all the files and process them.
+        for (NSURL *fileURL in urls) {
+            NSString* bundleID = [NSBundle bundleWithURL:fileURL].bundleIdentifier;
+            [bundleIDs addObject:bundleID];
+            // Do something with the filename.
+        }
+        [self tableAddAppsWithBundleIDs:bundleIDs atRow:0];
+    }];
+}
+- (IBAction)removeButton:(id)sender {
     [_tableViewDataModel removeObjectsAtIndexes:_tableView.selectedRowIndexes];
     [self writeTableViewDataModelToConfig]; // TODO: This doesn't actually remove anything from the config file
     [self loadTableViewDataModelFromConfig]; // Not sure if necessary
@@ -298,59 +331,64 @@ static NSMutableIndexSet *indexSetFromIndexArray(NSMutableArray *tableIndicesOfA
         row = 0; //
 //        [_tableView scrollRowToVisible:row];
         
-        NSMutableArray *newRows = [NSMutableArray array];
         NSArray<NSString *> * bundleIDs = bundleIDsFromPasteboard(info.draggingPasteboard);
-        NSDictionary *bundleIDsSorted = sortByAlreadyInTable(bundleIDs);
-        
-        for (NSString *bundleID in bundleIDsSorted[@"notInTable"]) {
-            NSMutableDictionary *newRow = [NSMutableDictionary dictionary];
-            // Fill out new row with bundle ID and default values
-            newRow[@"AppColumnID"] = bundleID;
-            for (NSString *columnID in _columnIdentifierToKeyPath) {
-                NSString *keyPath = _columnIdentifierToKeyPath[columnID];
-                NSObject *defaultValue = [ConfigFileInterface_PrefPane.config objectForCoolKeyPath:keyPath]; // Could use valueForKeyPath as well, because there are no periods in the keys of the keyPath
-                newRow[columnID] = defaultValue;
-            }
-            [newRows addObject:newRow];
-        }
-        
-        NSIndexSet *newRowsIndices = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(row, ((NSArray *)bundleIDsSorted[@"notInTable"]).count)];
-        NSIndexSet *alreadyInTableRowsIndices = indexSetFromIndexArray(
-                                                                       [((NSArray *)bundleIDsSorted[@"inTable"]) valueForKey:@"tableIndex"]
-                                                                       );
-        
-        [_tableView selectRowIndexes:alreadyInTableRowsIndices byExtendingSelection:NO];
-        
-        // Moving the rows which were already in the tableView under the newly added ones (Only makes sense because we're always adding new rows to the top of the table)
-//        NSArray *alreadyInTableRows = [_tableViewDataModel objectsAtIndexes:alreadyInTableRowsIndices];
-//        [_tableViewDataModel removeObjectsAtIndexes:alreadyInTableRowsIndices];
-//        [_tableViewDataModel insertObjects:alreadyInTableRows atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, alreadyInTableRowsIndices.count)]];
-        
-        [_tableViewDataModel insertObjects:newRows atIndexes:newRowsIndices];
-        [self writeTableViewDataModelToConfig];
-        [self loadTableViewDataModelFromConfig]; // At the time of writing: not necessary. Not sure if useful. Might make things more robust, if we run all of the validity checks in `loadTableViewDataModelFromConfig` again.
-        NSTableViewAnimationOptions animation = NSTableViewAnimationSlideDown;
-        
-        [tableView insertRowsAtIndexes:newRowsIndices withAnimation:animation];
-        
-        // This causes some weird bug where row backrounds aren't alternating
-//        // Only makes sense because we're always adding new rows to the top of the table and shift rows for apps that are already in the table to the top as well.
-//        [tableView removeRowsAtIndexes:alreadyInTableRowsIndices withAnimation:NSTableViewAnimationSlideUp];
-//        [tableView insertRowsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, bundleIDs.count)] withAnimation:animation];
-        
-        [_tableView selectRowIndexes:newRowsIndices byExtendingSelection:YES];
-        
-        if (newRowsIndices.count > 0) {
-            [_tableView scrollRowToVisible:newRowsIndices.firstIndex];
-        } else {
-            [_tableView scrollRowToVisible:alreadyInTableRowsIndices.firstIndex];
-        }
+        [self tableAddAppsWithBundleIDs:bundleIDs atRow:row];
         
         [self.window makeKeyWindow];
         
         return true;
     }
     return false;
+}
+
+- (void)tableAddAppsWithBundleIDs:(NSArray<NSString *> *)bundleIDs atRow:(NSInteger)row {
+    
+    NSMutableArray *newRows = [NSMutableArray array];
+    NSDictionary *bundleIDsSorted = sortByAlreadyInTable(bundleIDs);
+    
+    for (NSString *bundleID in bundleIDsSorted[@"notInTable"]) {
+        NSMutableDictionary *newRow = [NSMutableDictionary dictionary];
+        // Fill out new row with bundle ID and default values
+        newRow[@"AppColumnID"] = bundleID;
+        for (NSString *columnID in _columnIdentifierToKeyPath) {
+            NSString *keyPath = _columnIdentifierToKeyPath[columnID];
+            NSObject *defaultValue = [ConfigFileInterface_PrefPane.config objectForCoolKeyPath:keyPath]; // Could use valueForKeyPath as well, because there are no periods in the keys of the keyPath
+            newRow[columnID] = defaultValue;
+        }
+        [newRows addObject:newRow];
+    }
+    
+    NSIndexSet *newRowsIndices = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(row, ((NSArray *)bundleIDsSorted[@"notInTable"]).count)];
+    NSIndexSet *alreadyInTableRowsIndices = indexSetFromIndexArray(
+                                                                   [((NSArray *)bundleIDsSorted[@"inTable"]) valueForKey:@"tableIndex"]
+                                                                   );
+    
+    [_tableView selectRowIndexes:alreadyInTableRowsIndices byExtendingSelection:NO];
+    
+    // Moving the rows which were already in the tableView under the newly added ones (Only makes sense because we're always adding new rows to the top of the table)
+    //        NSArray *alreadyInTableRows = [_tableViewDataModel objectsAtIndexes:alreadyInTableRowsIndices];
+    //        [_tableViewDataModel removeObjectsAtIndexes:alreadyInTableRowsIndices];
+    //        [_tableViewDataModel insertObjects:alreadyInTableRows atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, alreadyInTableRowsIndices.count)]];
+    
+    [_tableViewDataModel insertObjects:newRows atIndexes:newRowsIndices];
+    [self writeTableViewDataModelToConfig];
+    [self loadTableViewDataModelFromConfig]; // At the time of writing: not necessary. Not sure if useful. Might make things more robust, if we run all of the validity checks in `loadTableViewDataModelFromConfig` again.
+    NSTableViewAnimationOptions animation = NSTableViewAnimationSlideDown;
+    
+    [_tableView insertRowsAtIndexes:newRowsIndices withAnimation:animation];
+    
+    // This causes some weird bug where row backrounds aren't alternating
+    //        // Only makes sense because we're always adding new rows to the top of the table and shift rows for apps that are already in the table to the top as well.
+    //        [tableView removeRowsAtIndexes:alreadyInTableRowsIndices withAnimation:NSTableViewAnimationSlideUp];
+    //        [tableView insertRowsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, bundleIDs.count)] withAnimation:animation];
+    
+    [_tableView selectRowIndexes:newRowsIndices byExtendingSelection:YES];
+    
+    if (newRowsIndices.count > 0) {
+        [_tableView scrollRowToVisible:newRowsIndices.firstIndex];
+    } else {
+        [_tableView scrollRowToVisible:alreadyInTableRowsIndices.firstIndex];
+    }
 }
 
 static NSDictionary * sortByAlreadyInTable(NSArray *bundleIDs) {
