@@ -248,12 +248,12 @@ static NSMutableIndexSet *indexSetFromIndexArray(NSMutableArray *tableIndicesOfA
     NSMutableIndexSet * indexSet = indexSetFromIndexArray(tableIndicesOfAlreadyInTable);
     [_tableView selectRowIndexes:indexSet byExtendingSelection:NO];
     
-    if (droppingAbove && isURL && URLRefersToApp && !allAlreadyInTable ) {
+    if (droppingAbove && isURL && URLRefersToApp && !allAlreadyInTable) {
         return NSDragOperationCopy;
     }
     if (allAlreadyInTable) {
-//        [NSCursor.operationNotAllowedCursor push]; // I can't find a way to reset the cursor when it leaves the tableView
-//        [_tableView scrollRowToVisible:rowOfAlreadyInTable];
+        [NSCursor.operationNotAllowedCursor push]; // I can't find a way to reset the cursor when it leaves the tableView
+        [_tableView scrollRowToVisible:((NSNumber *)tableIndicesOfAlreadyInTable[0]).integerValue];
     }
     return NSDragOperationNone;
 }
@@ -296,7 +296,7 @@ static NSMutableIndexSet *indexSetFromIndexArray(NSMutableArray *tableIndicesOfA
         // Retrieve bundleID of dragged app
         
         row = 0; //
-        [_tableView scrollRowToVisible:row];
+//        [_tableView scrollRowToVisible:row];
         
         NSMutableArray *newRows = [NSMutableArray array];
         NSArray<NSString *> * bundleIDs = bundleIDsFromPasteboard(info.draggingPasteboard);
@@ -320,13 +320,31 @@ static NSMutableIndexSet *indexSetFromIndexArray(NSMutableArray *tableIndicesOfA
                                                                        );
         
         [_tableView selectRowIndexes:alreadyInTableRowsIndices byExtendingSelection:NO];
+        
+        // Moving the rows which were already in the tableView under the newly added ones (Only makes sense because we're always adding new rows to the top of the table)
+//        NSArray *alreadyInTableRows = [_tableViewDataModel objectsAtIndexes:alreadyInTableRowsIndices];
+//        [_tableViewDataModel removeObjectsAtIndexes:alreadyInTableRowsIndices];
+//        [_tableViewDataModel insertObjects:alreadyInTableRows atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, alreadyInTableRowsIndices.count)]];
+        
         [_tableViewDataModel insertObjects:newRows atIndexes:newRowsIndices];
         [self writeTableViewDataModelToConfig];
         [self loadTableViewDataModelFromConfig]; // At the time of writing: not necessary. Not sure if useful. Might make things more robust, if we run all of the validity checks in `loadTableViewDataModelFromConfig` again.
         NSTableViewAnimationOptions animation = NSTableViewAnimationSlideDown;
+        
         [tableView insertRowsAtIndexes:newRowsIndices withAnimation:animation];
         
+        // This causes some weird bug where row backrounds aren't alternating
+//        // Only makes sense because we're always adding new rows to the top of the table and shift rows for apps that are already in the table to the top as well.
+//        [tableView removeRowsAtIndexes:alreadyInTableRowsIndices withAnimation:NSTableViewAnimationSlideUp];
+//        [tableView insertRowsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, bundleIDs.count)] withAnimation:animation];
+        
         [_tableView selectRowIndexes:newRowsIndices byExtendingSelection:YES];
+        
+        if (newRowsIndices.count > 0) {
+            [_tableView scrollRowToVisible:newRowsIndices.firstIndex];
+        } else {
+            [_tableView scrollRowToVisible:alreadyInTableRowsIndices.firstIndex];
+        }
         
         [self.window makeKeyWindow];
         
