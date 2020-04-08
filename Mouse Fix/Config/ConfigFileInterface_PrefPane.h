@@ -21,7 +21,7 @@ typedef enum {
 + (void)writeConfigToFileAndNotifyHelper;
 + (void)loadConfigFromFile;
 + (void)repairConfigWithProblem:(ConfigProblem)problem info:(id _Nullable)info;
-+ (void)cleanUpConfig;
++ (void)cleanConfig;
 @end
 
 NS_ASSUME_NONNULL_END

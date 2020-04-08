@@ -96,6 +96,52 @@
 	</dict>
 	<key>AppOverrides</key>
 	<dict>
+		<key>com.adobe.Reader</key>
+		<dict>
+			<key>Root</key>
+			<dict>
+				<key>Scroll</key>
+				<dict>
+					<key>smooth</key>
+					<false/>
+					<key>modifierKeys</key>
+					<dict>
+						<key>horizontalScrollModifierKeyEnabled</key>
+						<false/>
+						<key>magnificationScrollModifierKeyEnabled</key>
+						<false/>
+					</dict>
+				</dict>
+			</dict>
+			<key>meta</key>
+			<dict>
+				<key>scrollOverridePanelTableViewOrderKey</key>
+				<integer>0</integer>
+			</dict>
+		</dict>
+		<key>com.adobe.Photoshop</key>
+		<dict>
+			<key>Root</key>
+			<dict>
+				<key>Scroll</key>
+				<dict>
+					<key>smooth</key>
+					<false/>
+					<key>modifierKeys</key>
+					<dict>
+						<key>horizontalScrollModifierKeyEnabled</key>
+						<false/>
+						<key>magnificationScrollModifierKeyEnabled</key>
+						<false/>
+					</dict>
+				</dict>
+			</dict>
+			<key>meta</key>
+			<dict>
+				<key>scrollOverridePanelTableViewOrderKey</key>
+				<integer>0</integer>
+			</dict>
+		</dict>
 		<key>com.adobe.PhotoshopElements</key>
 		<dict>
 			<key>Root</key>
@@ -106,10 +152,6 @@
 					<false/>
 					<key>modifierKeys</key>
 					<dict>
-						<key>horizontalScrollModifierKey</key>
-						<string>shift</string>
-						<key>magnificationScrollModifierKey</key>
-						<string>command</string>
 						<key>horizontalScrollModifierKeyEnabled</key>
 						<false/>
 						<key>magnificationScrollModifierKeyEnabled</key>

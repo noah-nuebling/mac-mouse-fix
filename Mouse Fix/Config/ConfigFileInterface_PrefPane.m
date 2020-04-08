@@ -157,15 +157,32 @@ static NSURL *_backupConfigURL;
     [self loadConfigFromFile];
 }
 
-+ (void)cleanUpConfig {
-    // Clean up overrides for uninstalled apps
++ (void)cleanConfig {
+    
+    // Delete overrides for uninstalled apps
     NSMutableDictionary *appOverrides = _config[@"AppOverrides"];
     for (NSString *bundleID in appOverrides.allKeys) {
         if (![Utility_PrefPane appIsInstalled:bundleID]) {
-            appOverrides[bundleID] = nil;
+            appOverrides[bundleID] = nil; // This might delete any preinstalled overrides
         }
     }
+    // Delete
+    removeLeaflessSubDicts(appOverrides);
+    
     [self writeConfigToFileAndNotifyHelper]; // No need to notify the helper at the time of writing
+}
+
+/// Delete all paths in the dictionary which don't lead to anything
+static void removeLeaflessSubDicts(NSMutableDictionary *dict) {
+    for (NSString *key in dict.allKeys) {
+        NSObject *val = dict[key];
+        if ([val isKindOfClass:[NSMutableDictionary class]]) {
+            removeLeaflessSubDicts((NSMutableDictionary *)val);
+            if (((NSMutableDictionary *)val).count == 0) {
+                dict[key] = nil;
+            }
+        }
+    }
 }
 
 @end

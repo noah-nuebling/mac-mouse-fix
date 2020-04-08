@@ -109,34 +109,30 @@ NSDictionary *_columnIdentifierToKeyPath;
 #pragma mark TableView
 
 /// Was for testing. Not used anymore.
-- (IBAction)reloadButton:(id)sender {
-    [ConfigFileInterface_PrefPane loadConfigFromFile];
-    [self loadTableViewDataModelFromConfig];
-    [_tableView beginUpdates];
-    [_tableView reloadData];
-    [_tableView endUpdates];
+- (IBAction)cleanButton:(id)sender {
+    [ConfigFileInterface_PrefPane cleanConfig];
 }
 - (IBAction)addButton:(id)sender {
 
-    NSOpenPanel* openDlg = [NSOpenPanel openPanel];
+    NSOpenPanel* openPanel = [NSOpenPanel openPanel];
 
-    openDlg.canChooseFiles = YES;
-    openDlg.canChooseDirectories = NO;
-    openDlg.canCreateDirectories = NO; // Doesn't work
-    openDlg.allowsMultipleSelection = YES; // Doesn't work :/
-    openDlg.allowedFileTypes = @[@"com.apple.application"];
-    openDlg.prompt = @"Choose";
+    openPanel.canChooseFiles = YES;
+    openPanel.canChooseDirectories = NO;
+    openPanel.canCreateDirectories = NO; // Doesn't work
+    openPanel.allowsMultipleSelection = YES; // Doesn't work :/
+    openPanel.allowedFileTypes = @[@"com.apple.application"];
+    openPanel.prompt = @"Choose";
     
     NSString *applicationsFolderPath = NSSearchPathForDirectoriesInDomains(NSApplicationDirectory, NSLocalDomainMask, YES).firstObject;
-    openDlg.directoryURL = [NSURL fileURLWithPath:applicationsFolderPath];
+    openPanel.directoryURL = [NSURL fileURLWithPath:applicationsFolderPath];
     
     // Display the dialog.
-    [openDlg beginSheetModalForWindow:self.window
+    [openPanel beginSheetModalForWindow:self.window
                     completionHandler:^(NSModalResponse result) {
         if (result != NSModalResponseOK) {  // If the OK button was pressed, process the files. Otherwise return.
             return;
         }
-        NSArray* urls = [openDlg URLs];
+        NSArray* urls = [openPanel URLs];
         NSMutableArray* bundleIDs = [NSMutableArray array];
         // Loop through all the files and process them.
         for (NSURL *fileURL in urls) {
@@ -149,7 +145,7 @@ NSDictionary *_columnIdentifierToKeyPath;
 }
 - (IBAction)removeButton:(id)sender {
     [_tableViewDataModel removeObjectsAtIndexes:_tableView.selectedRowIndexes];
-    [self writeTableViewDataModelToConfig]; // TODO: This doesn't actually remove anything from the config file
+    [self writeTableViewDataModelToConfig];
     [self loadTableViewDataModelFromConfig]; // Not sure if necessary
     [_tableView removeRowsAtIndexes:_tableView.selectedRowIndexes withAnimation:NSTableViewAnimationSlideUp];
 }
@@ -184,8 +180,7 @@ NSDictionary *_columnIdentifierToKeyPath;
             NSImage *appIcon;
             NSString *appName;
             if (![Utility_PrefPane appIsInstalled:bundleID]) {
-                // TODO: This will happen, when the user uninstalls an app. Handle gracefully. Prolly just remove the app from config or don't display it.
-//                appIcon = [NSImage imageNamed:NSImageNameStopProgressFreestandingTemplate]; //NSImageNameStopProgressFreestandingTemplate
+                // User should never see this. We don't want to load uninstalled apps into _tableViewDataModel to begin with.
                 appIcon = [NSImage imageNamed:NSImageNameStopProgressFreestandingTemplate];
                 appName = [NSString stringWithFormat:@"Couldn't find app: %@", bundleID];
             } else {
@@ -391,7 +386,7 @@ static NSMutableIndexSet *indexSetFromIndexArray(NSMutableArray *tableIndicesOfA
     }
 }
 
-static NSDictionary * sortByAlreadyInTable(NSArray *bundleIDs) {
+static NSDictionary *sortByAlreadyInTable(NSArray *bundleIDs) {
     NSArray *bundleIDsFromTable = [_tableViewDataModel valueForKey:@"AppColumnID"];
     NSMutableArray<NSString *> *inpNotInTable = [NSMutableArray array];
     NSMutableArray<NSDictionary *> *inpInTable = [NSMutableArray array];
@@ -439,26 +434,26 @@ static NSDictionary * sortByAlreadyInTable(NSArray *bundleIDs) {
 //    [NSCursor.disappearingItemCursor push];
 //}
 
-- (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender {
-    [NSCursor.closedHandCursor push];
-    return NSDragOperationDelete;
-}
-- (void)tableView:(NSTableView *)tableView updateDraggingItemsForDrag:(id<NSDraggingInfo>)draggingInfo {
-    
-    if (draggingInfo.draggingDestinationWindow != self.window) {
-        
-    } else {
-        
-    }
-}
-
-- (void)draggingExited:(id<NSDraggingInfo>)sender {
-    
-}
-
-- (void)mouseExited:(NSEvent *)event {
-    
-}
+//- (NSDragOperation)draggingEntered:(id<NSDraggingInfo>)sender {
+//    [NSCursor.closedHandCursor push];
+//    return NSDragOperationDelete;
+//}
+//- (void)tableView:(NSTableView *)tableView updateDraggingItemsForDrag:(id<NSDraggingInfo>)draggingInfo {
+//
+//    if (draggingInfo.draggingDestinationWindow != self.window) {
+//
+//    } else {
+//
+//    }
+//}
+//
+//- (void)draggingExited:(id<NSDraggingInfo>)sender {
+//
+//}
+//
+//- (void)mouseExited:(NSEvent *)event {
+//
+//}
 
 // Other functions
 static NSArray<NSString *> * bundleIDsFromPasteboard(NSPasteboard *pasteboard) {
@@ -504,11 +499,16 @@ NSMutableArray *_tableViewDataModel;
         orderKey += 1;
     }
     
-    // For all overrides for apps in the config, which aren't in the table, delete all values managed by the table from the config
+    // For all overrides for apps in the config, which aren't in the table, and which are installed - delete all values managed by the table from the config
     
-    NSMutableSet *bundleIDsInConfigButNotInTable = [NSMutableSet setWithArray:((NSDictionary *)[ConfigFileInterface_PrefPane.config valueForKeyPath:@"AppOverrides"]).allKeys]; // Get all bundle IDs in the config
-    [bundleIDsInConfigButNotInTable minusSet:bundleIDsInTable]; // subtract the ones from the table
-    for (NSString *bundleID in bundleIDsInConfigButNotInTable) {
+    NSMutableSet *bundleIDsInConfigAndInstalledButNotInTable = [NSMutableSet setWithArray:((NSDictionary *)[ConfigFileInterface_PrefPane.config valueForKeyPath:@"AppOverrides"]).allKeys]; // Get all bundle IDs in the config
+    
+    bundleIDsInConfigAndInstalledButNotInTable = [bundleIDsInConfigAndInstalledButNotInTable filteredSetUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
+        return [Utility_PrefPane appIsInstalled:evaluatedObject];
+    }]].mutableCopy; // Filter out apps which aren't installed. We do this so we don't delete preinstalled overrides.
+    [bundleIDsInConfigAndInstalledButNotInTable minusSet:bundleIDsInTable]; // Subtract apps from table
+    
+    for (NSString *bundleID in bundleIDsInConfigAndInstalledButNotInTable) {
         NSString *bundleIDEscaped = [bundleID stringByReplacingOccurrencesOfString:@"." withString:@"\\."];
         // Delete override values
         for (NSString *rootKeyPath in _columnIdentifierToKeyPath.allValues) {
@@ -541,7 +541,7 @@ NSMutableArray *_tableViewDataModel;
     for (NSString *bundleID in overrides.allKeys) { // Every bundleID corresponds to one app/row
         // Check if app exists on system
         if (![Utility_PrefPane appIsInstalled:bundleID]) {
-            [ConfigFileInterface_PrefPane cleanUpConfig];
+//            [ConfigFileInterface_PrefPane cleanUpConfig];
             continue;
         }
         // Create row dict for app with `bundleID` from data in config. Every key value pair in row dict corresponds to a column. The key is the column identifier and the value is the value for the column with `columnID` and the row of the app with `bundleID`
