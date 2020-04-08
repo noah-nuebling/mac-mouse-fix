@@ -28,10 +28,14 @@
                         <action selector="AuthorizeButton:" target="-2" id="3Mi-hF-b4k"/>
                     </connections>
                 </button>
-                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fK8-8z-KQn">
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fK8-8z-KQn" customClass="ClickableImageView">
                     <rect key="frame" x="193" y="155" width="75" height="75"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="MouseFix" id="5dq-HX-ncI"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="modifiers" value="shift"/>
+                        <userDefinedRuntimeAttribute type="string" keyPath="actionString" value="reveal-helper"/>
+                    </userDefinedRuntimeAttributes>
                 </imageView>
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xsP-AA-VHR">
                     <rect key="frame" x="400" y="155" width="75" height="75"/>

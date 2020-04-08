@@ -158,15 +158,15 @@ static NSURL *_backupConfigURL;
 }
 
 + (void)cleanConfig {
+    NSMutableDictionary *appOverrides = _config[@"AppOverrides"];
     
     // Delete overrides for uninstalled apps
-    NSMutableDictionary *appOverrides = _config[@"AppOverrides"];
-    for (NSString *bundleID in appOverrides.allKeys) {
-        if (![Utility_PrefPane appIsInstalled:bundleID]) {
-            appOverrides[bundleID] = nil; // This might delete any preinstalled overrides
-        }
-    }
-    // Delete
+    // This might delete preinstalled overrides. So not doing that.
+//    for (NSString *bundleID in appOverrides.allKeys) {
+//        if (![Utility_PrefPane appIsInstalled:bundleID]) {
+//            appOverrides[bundleID] = nil;
+//        }
+//    }
     removeLeaflessSubDicts(appOverrides);
     
     [self writeConfigToFileAndNotifyHelper]; // No need to notify the helper at the time of writing

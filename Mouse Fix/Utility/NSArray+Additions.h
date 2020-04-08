@@ -1,17 +1,23 @@
 //
 // --------------------------------------------------------------------------
-// ClickableImageView.h
+// NSArray+Additions.h
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2020
 // Licensed under MIT
 // --------------------------------------------------------------------------
 //
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ClickableAppIcon : NSImageView
+@interface NSArray (Additions)
+
+- (NSArray *)map:(id (^)(id obj))block;
+- (NSArray *)filter:(BOOL (^)(id obj))block;
+- (id)reduce:(id)initial
+       block:(id (^)(id obj1, id obj2))block;
+- (NSArray *)flatMap:(id (^)(id obj))block;
 
 @end
 

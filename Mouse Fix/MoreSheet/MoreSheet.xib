@@ -119,7 +119,7 @@ DQ
                         <rect key="frame" x="85" y="107" width="143" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" title="Created by Noah Nuebling" id="BVP-MY-XAV">
-                            <font key="font" metaFont="menu" size="11"/>
+                            <font key="font" metaFont="message" size="11"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -148,10 +148,14 @@ Also resets skipped update versions.</string>
                             <action selector="checkForUpdateCheckBox:" target="-2" id="9oh-bZ-9YX"/>
                         </connections>
                     </button>
-                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aUJ-XO-1Z3" customClass="ClickableAppIcon">
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aUJ-XO-1Z3" customClass="ClickableImageView">
                         <rect key="frame" x="26" y="103" width="45" height="45"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="MouseFix" id="7G1-o6-uvc"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="modifiers" value="shift, command"/>
+                            <userDefinedRuntimeAttribute type="string" keyPath="actionString" value="reveal-config"/>
+                        </userDefinedRuntimeAttributes>
                     </imageView>
                 </subviews>
                 <constraints>

@@ -520,7 +520,7 @@ NSMutableArray *_tableViewDataModel;
         [ConfigFileInterface_PrefPane.config setObject:nil forCoolKeyPath:orderKeyKeyPath];
     }
     
-    
+    [ConfigFileInterface_PrefPane cleanConfig];
     [ConfigFileInterface_PrefPane writeConfigToFileAndNotifyHelper];
 }
 
@@ -537,11 +537,9 @@ NSMutableArray *_tableViewDataModel;
         NSLog(@"No overrides found in config while generating scroll override table data model.");
         return;
     }
-    
     for (NSString *bundleID in overrides.allKeys) { // Every bundleID corresponds to one app/row
         // Check if app exists on system
         if (![Utility_PrefPane appIsInstalled:bundleID]) {
-//            [ConfigFileInterface_PrefPane cleanUpConfig];
             continue;
         }
         // Create row dict for app with `bundleID` from data in config. Every key value pair in row dict corresponds to a column. The key is the column identifier and the value is the value for the column with `columnID` and the row of the app with `bundleID`
