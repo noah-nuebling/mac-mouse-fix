@@ -27,7 +27,7 @@
     NSLog(@"%lld",CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1));
     NSLog(@"%f",CGEventGetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1));
     
-    return event;
+    return event; // This is potentially a memory leak, because I'm creating a CGEvent but not releasing it
 }
 /// Inverts the diection of a given scroll event if dir is -1.
 /// @param event Event to be inverted
@@ -112,7 +112,9 @@
 static CGPoint _previousMouseLocation;
 /// Cursor did move since the last time this function was called
 + (BOOL)mouseDidMove {
-    CGPoint mouseLocation = CGEventGetLocation(CGEventCreate(nil));
+    CGEventRef event = CGEventCreate(nil);
+    CGPoint mouseLocation = CGEventGetLocation(event);
+    CFRelease(event);
     BOOL mouseMoved = ![ScrollUtility point:mouseLocation
                           isAboutTheSameAs:_previousMouseLocation
                                  threshold:10];

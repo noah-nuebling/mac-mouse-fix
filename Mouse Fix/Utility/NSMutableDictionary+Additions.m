@@ -61,7 +61,7 @@ static NSArray *coolKeyPathToKeyArray(NSString * _Nonnull keyPath) {
     }
 }
 
-- (NSObject *)objectForCoolKeyPath:(NSString *)keyPath {
+- (NSObject * _Nullable)objectForCoolKeyPath:(NSString *)keyPath {
     NSArray *keys = coolKeyPathToKeyArray(keyPath);
     if (keys == nil) {
         return nil;

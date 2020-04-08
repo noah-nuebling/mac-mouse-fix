@@ -86,6 +86,7 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
     if (status != 0) {
         NSLog(@"CFMessagePortSendRequest status: %d", status);
     }
+    CFRelease(remotePort);
 }
 
 //+ (NSString *)sendMessageWithReplyToHelper:(NSString *)message {

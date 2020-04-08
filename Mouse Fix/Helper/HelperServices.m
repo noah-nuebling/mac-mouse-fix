@@ -44,11 +44,18 @@
             NSString *OnOffArgument = (enable) ? @"bootstrap": @"bootout";
             NSURL *launchctlURL = [NSURL fileURLWithPath: launchctlPath];
             
-            [NSTask launchedTaskWithExecutableURL: launchctlURL arguments:@[OnOffArgument, GUIDomainArgument, launchAgentPlistPath] error: nil terminationHandler: ^(NSTask *task) {
+            NSError *launchedTaskError = [NSError alloc];
+            [NSTask launchedTaskWithExecutableURL: launchctlURL arguments:@[OnOffArgument, GUIDomainArgument, launchAgentPlistPath] error:&launchedTaskError terminationHandler: ^(NSTask *task) {
                 if (enable == NO) {
                     [self cleanup];
                 }
             }];
+            
+            if (launchedTaskError) {
+                NSLog(@"Error trying to register helper as user agent using launchctl executable through NSTask: %@", launchedTaskError);
+            } else {
+                NSLog(@"No errors registering helper as user agent using launchctl executable through NSTask");
+            }
         } else {
             // Fallback on earlier versions
             NSString *OnOffArgumentOld = (enable) ? @"load": @"unload";
@@ -56,7 +63,7 @@
         }
     }
     else {
-        NSLog(@"To this program, it looks like the number of user libraries != 1. Your computer is weird...");
+        NSLog(@"To this program, it looks like the number of user libraries != 1. That's weird...");
     }
     
     if (enable == NO) {
@@ -113,7 +120,8 @@
                 
                 if ( [helperExecutablePath isEqualToString: helperExecutablePathFromFile] == FALSE ) {
                     LAConfigFile_executablePathIsCorrect = FALSE;
-                    
+                    NSLog(@"executablePathActual: %@", helperExecutablePath);
+                    NSLog(@"executablePathFromFile: %@", helperExecutablePathFromFile);
                 }
                 
                 

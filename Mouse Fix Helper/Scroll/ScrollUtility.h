@@ -31,8 +31,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)resetConsecutiveTicksAndSwipes;
 
-+ (CGEventRef)updateInternalParamsAndReinsertEventIfWise:(CGEventRef _Nonnull)event;
-
 @end
 
 NS_ASSUME_NONNULL_END

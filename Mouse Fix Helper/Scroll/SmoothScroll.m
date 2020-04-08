@@ -379,9 +379,6 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         CGEventPost(kCGSessionEventTap, scrollEvent);
         CFRelease(scrollEvent);
         
-    //<<<<<<< Updated upstream
-    //=======
-    //<<<<<<< HEAD
     ////     set phases
     ////         the native "scrollPhase" is roughly equivalent to my "wheelPhase"
     //

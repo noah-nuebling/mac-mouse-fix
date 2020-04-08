@@ -157,6 +157,7 @@
                                                         <menuItem title="Mission Control" tag="32" id="gws-rg-Zk7"/>
                                                         <menuItem title="Application windows" tag="33" id="wux-ng-X0Q"/>
                                                         <menuItem title="Show Desktop" tag="36" id="rJY-Pt-3q5"/>
+                                                        <menuItem title="Launchpad" tag="160" id="D9s-9R-pDS"/>
                                                         <menuItem isSeparatorItem="YES" id="hy8-EA-lgC"/>
                                                         <menuItem title="Look Up" tag="70" id="0P6-lc-6fr"/>
                                                     </items>
@@ -188,6 +189,7 @@
                                                         <menuItem title="Mission Control" tag="32" id="4MU-HZ-ovV"/>
                                                         <menuItem title="Application windows" tag="33" id="86s-c0-bQd"/>
                                                         <menuItem title="Show Desktop" tag="36" id="EVv-bp-mbA"/>
+                                                        <menuItem title="Launchpad" tag="160" id="mNB-I6-Buo"/>
                                                         <menuItem isSeparatorItem="YES" id="8hK-BK-5D2"/>
                                                         <menuItem title="Look Up" tag="70" id="g0j-DR-0Je"/>
                                                     </items>
