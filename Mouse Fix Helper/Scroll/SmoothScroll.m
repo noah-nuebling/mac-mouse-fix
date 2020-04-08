@@ -201,12 +201,11 @@ static int      _onePixelScrollsCounter =   0;
     int consecutiveScrollTicks = ScrollUtility.consecutiveScrollTickCounter;
     
     if (consecutiveScrollTicks == 0) {
+        // This code is very similar to the code under `if (consecutiveScrollTicks == 0) {` in [RoughScroll handleInput:]
+        // Look to transfer any improvements
         
         // stuff you only wanna do once - on the first tick of each series of consecutive scroll ticks
 
-        if (CVDisplayLinkIsRunning(_displayLink) == FALSE) {
-            CVDisplayLinkStart(_displayLink);
-        }
         BOOL mouseMoved = [ScrollUtility mouseDidMove];
         BOOL frontMostAppChanged = NO;
         if (!mouseMoved) {
@@ -215,7 +214,6 @@ static int      _onePixelScrollsCounter =   0;
         }
         if (mouseMoved || frontMostAppChanged) {
 
-            // TODO: Either set appOverrides regardless of mouse moved, or also set it if mouse hasn't moved but frontmost app has changed. (appOverrdides are applied by setProgramStateToConfig). Otherwise, changing app without moving the mouse pointer will not lead to the proper override being applied.
             // set app overrides
             BOOL paramsDidChange = [ConfigFileInterface_HelperApp updateInternalParameters];
             if (paramsDidChange) {
@@ -228,6 +226,9 @@ static int      _onePixelScrollsCounter =   0;
             } @catch (NSException *e) {
                 NSLog(@"Error while trying to set display link to display under mouse pointer: %@", [e reason]);
             }
+        }
+        if (CVDisplayLinkIsRunning(_displayLink) == FALSE) {
+            CVDisplayLinkStart(_displayLink);
         }
     } else {
         

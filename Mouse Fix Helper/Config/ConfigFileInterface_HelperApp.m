@@ -167,6 +167,9 @@ static void fillConfigFromFile() {
         //    NSString *bundleIdentifierOfScrolledApp_New = [_appOverrides getBundleIdFromMouseLocation:fakeEvent];
         //    CFRelease(fakeEvent);
     }
+    
+    [ScrollControl resetDynamicGlobals];
+    
     if ([_bundleIDOfAppWhichCausesAppOverride isEqualToString:bundleIDOfCurrentApp] == NO) {
         _bundleIDOfAppWhichCausesAppOverride = bundleIDOfCurrentApp;
         loadAppOverridesForApp(bundleIDOfCurrentApp);

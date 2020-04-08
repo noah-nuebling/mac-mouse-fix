@@ -14,6 +14,7 @@
 #import "TouchSimulator.h"
 #import "ScrollModifiers.h"
 #import "ConfigFileInterface_HelperApp.h"
+#import "ScrollUtility.h"
 
 @implementation ScrollControl
 
@@ -188,8 +189,9 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 /// When scrolling is in progress, there are tons of variables holding global state. This resets some of them.
 /// I determined the ones it resets through trial and error. Some misbehaviour/bugs might be caused by this not resetting all of the global variables.
 + (void)resetDynamicGlobals {
-    _horizontalScrolling    =   NO;
-    _magnificationScrolling = NO;
+//    _horizontalScrolling    =   NO; // I can't remember why I put this here
+//    _magnificationScrolling = NO; // This too. -> TODO: Remove if commenting out didn't break anything
+    [ScrollUtility resetConsecutiveTicksAndSwipes];
     [SmoothScroll resetDynamicGlobals];
 }
 

@@ -23,23 +23,6 @@
 + (void)stop {
 }
 
-+ (CGEventRef)updateInternalParamsAndReinsertEventIfWise:(CGEventRef _Nonnull)event {
-    BOOL mouseMoved = [ScrollUtility mouseDidMove];
-    BOOL frontMostAppChanged = NO;
-    if (!mouseMoved) {
-        frontMostAppChanged = [ScrollUtility frontMostAppDidChange];
-        // Only need to check this if mouse didn't move, because of OR in (mouseMoved || frontMostAppChanged). For optimization. Not sure if significant.
-    }
-    if (mouseMoved || frontMostAppChanged) {
-        // set app overrides
-        BOOL paramsDidChange = [ConfigFileInterface_HelperApp updateInternalParameters];
-        if (paramsDidChange) {
-            return [ScrollControl reinsertScrollEvent:event];
-        }
-    }
-    return nil;
-}
-
 + (CGEventRef)handleInput:(CGEventRef)event info:(NSDictionary *)info {
     
     // TODO: Optimize this using mouseMoved and other techniques from SmoothScroll.m
@@ -52,9 +35,21 @@
     [ScrollUtility updateConsecutiveScrollTickCounterWithTickOccuringNow];
     int consecutiveScrollTicks = ScrollUtility.consecutiveScrollTickCounter;
     if (consecutiveScrollTicks == 0) {
-        CGEventRef reevaluatedEvent = [self updateInternalParamsAndReinsertEventIfWise:event];
-        if (reevaluatedEvent) {
-            return reevaluatedEvent;
+        // This code is very similar to the code under `if (consecutiveScrollTicks == 0) {` in [SmoothScroll handleInput:]
+        // Look to transfer any improvements
+        
+        BOOL mouseMoved = [ScrollUtility mouseDidMove];
+        BOOL frontMostAppChanged = NO;
+        if (!mouseMoved) {
+            frontMostAppChanged = [ScrollUtility frontMostAppDidChange];
+            // Only need to check this if mouse didn't move, because of OR in (mouseMoved || frontMostAppChanged). For optimization. Not sure if significant.
+        }
+        if (mouseMoved || frontMostAppChanged) {
+            // set app overrides
+            BOOL paramsDidChange = [ConfigFileInterface_HelperApp updateInternalParameters];
+            if (paramsDidChange) {
+                return [ScrollControl reinsertScrollEvent:event];
+            }
         }
     }
     
