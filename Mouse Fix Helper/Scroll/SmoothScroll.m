@@ -197,14 +197,22 @@ static int      _onePixelScrollsCounter =   0;
     // activate fast scrolling after a number of consecutive "scroll swipes"
     // do other stuff based on "scroll swipes"
         
-    [ScrollUtility updateConsecutiveScrollTickCounterWithTickOccuringNow];
+    [ScrollUtility updateConsecutiveScrollTickAndSwipeCountersWithTickOccuringNow];
+    
     int consecutiveScrollTicks = ScrollUtility.consecutiveScrollTickCounter;
+    int consecutiveScrollSwipes = ScrollUtility.consecutiveScrollSwipeCounter;
+    
+    NSLog(@"consecutive ticks: %d", consecutiveScrollTicks);
+    NSLog(@"consecutive swipes: %d", consecutiveScrollSwipes);
     
     if (consecutiveScrollTicks == 0) {
         // This code is very similar to the code under `if (consecutiveScrollTicks == 0) {` in [RoughScroll handleInput:]
         // Look to transfer any improvements
         
         // stuff you only wanna do once - on the first tick of each series of consecutive scroll ticks
+        
+//        [ScrollUtility updateConsecutiveScrollSwipeCounterWithSwipeOccuringNow]; // Shouldn't use _consecutiveScrollSwipeCounter before this point
+//        // TODO: Fix: 0.If you fast scroll, then wait, then scroll a few ticks again, it will still be fast, because this only updates on the 4th (or whatever scrollSwipeThreshold_inTicks is set to) consecutive tick
 
         BOOL mouseMoved = [ScrollUtility mouseDidMove];
         BOOL frontMostAppChanged = NO;
@@ -238,9 +246,10 @@ static int      _onePixelScrollsCounter =   0;
         _pixelScrollQueue = _pixelScrollQueue * _accelerationForScrollQueue;
     }
     
-    if (consecutiveScrollTicks == ScrollControl.scrollSwipeThreshold_inTicks) {
-        [ScrollUtility updateConsecutiveScrollSwipeCounterWithSwipeOccuringNow]; // Shouldn't use _consecutiveScrollSwipeCounter before this point
-    }
+//    if (consecutiveScrollTicks == ScrollControl.scrollSwipeThreshold_inTicks) {
+//        [ScrollUtility updateConsecutiveScrollSwipeCounterWithSwipeOccuringNow]; // Shouldn't use _consecutiveScrollSwipeCounter before this point
+//        // TODO: Fix: 0.If you fast scroll, then wait, then scroll a few ticks again, it will still be fast, because this only updates on the 4th (or whatever scrollSwipeThreshold_inTicks is set to) consecutive tick
+//    }
     
     
     // Update global vars
@@ -267,8 +276,8 @@ static int      _onePixelScrollsCounter =   0;
     } else if (scrollDeltaAxis1 < 0) {
         _pixelScrollQueue -= _pxStepSize * ScrollControl.scrollDirection;
     }
-    if (ScrollUtility.consecutiveScrollSwipeCounter > ScrollControl.fastScrollThreshold_inSwipes) {
-        _pixelScrollQueue = _pixelScrollQueue * pow(ScrollControl.fastScrollExponentialBase, (int32_t)ScrollUtility.consecutiveScrollSwipeCounter - ScrollControl.fastScrollThreshold_inSwipes);
+    if (consecutiveScrollSwipes > ScrollControl.fastScrollThreshold_inSwipes) {
+        _pixelScrollQueue = _pixelScrollQueue * pow(ScrollControl.fastScrollExponentialBase, (int32_t)consecutiveScrollSwipes - ScrollControl.fastScrollThreshold_inSwipes);
     }
     
 

@@ -25,9 +25,9 @@ NS_ASSUME_NONNULL_BEGIN
 + (BOOL)frontMostAppDidChange;
 
 + (int)consecutiveScrollTickCounter;
-+ (void)updateConsecutiveScrollTickCounterWithTickOccuringNow;
 + (int)consecutiveScrollSwipeCounter;
-+ (void)updateConsecutiveScrollSwipeCounterWithSwipeOccuringNow;
++ (void)updateConsecutiveScrollTickAndSwipeCountersWithTickOccuringNow;
+//+ (void)updateConsecutiveScrollSwipeCounterWithSwipeOccuringNow;
 
 + (void)resetConsecutiveTicksAndSwipes;
 

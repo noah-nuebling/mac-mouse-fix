@@ -135,10 +135,11 @@ static int _consecutiveScrollTickCounter;
     return _consecutiveScrollTickCounter;
 }
 static double _previousScrollTickTimeStamp;
-+ (void) updateConsecutiveScrollTickCounterWithTickOccuringNow { // starts counting at 0
++ (void) updateConsecutiveScrollTickAndSwipeCountersWithTickOccuringNow { // starts counting at 0
     double thisScrollTickTimeStamp = CFAbsoluteTimeGetCurrent();
     double intervall = (thisScrollTickTimeStamp - _previousScrollTickTimeStamp);
     if (intervall > ScrollControl.consecutiveScrollTickMaxIntervall) {
+        [self updateConsecutiveScrollSwipeCounterWithSwipeOccuringNow]; // Needs to be called before resetting _consecutiveScrollTickCounter = 0, because it uses data from _consecutiveScrollTickCounter to determine whether the last series of consecutive scroll ticks was a scroll swipe
         _consecutiveScrollTickCounter = 0;
     } else {
         _consecutiveScrollTickCounter += 1;
@@ -157,7 +158,11 @@ static double _previousScrollSwipeTimeStamp;
     if (intervall > ScrollControl.consecutiveScrollSwipeMaxIntervall) {
         _consecutiveScrollSwipeCounter = 0;
     } else {
-        _consecutiveScrollSwipeCounter += 1;
+        if (_consecutiveScrollTickCounter >= ScrollControl.scrollSwipeThreshold_inTicks) {
+            _consecutiveScrollSwipeCounter += 1;
+        } else {
+            _consecutiveScrollSwipeCounter = 0;
+        }
     }
     _previousScrollSwipeTimeStamp = thisScrollSwipeTimeStamp;
 }

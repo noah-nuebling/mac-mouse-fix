@@ -32,7 +32,7 @@
 //        setConfigVariablesForActiveApp();
 //    }
     
-    [ScrollUtility updateConsecutiveScrollTickCounterWithTickOccuringNow];
+    [ScrollUtility updateConsecutiveScrollTickAndSwipeCountersWithTickOccuringNow];
     int consecutiveScrollTicks = ScrollUtility.consecutiveScrollTickCounter;
     if (consecutiveScrollTicks == 0) {
         // This code is very similar to the code under `if (consecutiveScrollTicks == 0) {` in [SmoothScroll handleInput:]
