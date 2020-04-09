@@ -24,9 +24,9 @@ static CFMachPortRef _eventTap       =   nil;
 
 #pragma mark - Public variables
 
-#pragma mark Parameter vars
+#pragma mark Parameters
 
-// Constants
+// Constant
 
 static AXUIElementRef _systemWideAXUIElement;
 + (AXUIElementRef) systemWideAXUIElement {
@@ -61,17 +61,6 @@ double _consecutiveScrollSwipeMaxIntervall;
     return _consecutiveScrollSwipeMaxIntervall;
 }
 
-// TODO: migrate consecutiveScrollTick functions and variables from SmoothScroll to ScrollControl
-// From config
-//static float _consecutiveScrollTickMaxIntervall; // Should only be set by - updateInternalParameters.
-//// Originally part of the SmoothScroll.m, but we also need this for AppOverride loading optimization in RoughScroll.m. Sibling parameters like _consecutiveScrollSwipeMaxIntervall are still in SmoothScroll.m
-//+ (float)consecutiveScrollTickMaxIntervall {
-//    return _consecutiveScrollTickMaxIntervall;
-//}
-//+ (void)setConsecutiveScrollTickMaxIntervall:(float)inp {
-//    _consecutiveScrollTickMaxIntervall = inp;
-//}
-
 #pragma mark Dynamic vars
 
 static BOOL _isSmoothEnabled;
@@ -89,7 +78,7 @@ static int _scrollDirection;
 + (void)setScrollDirection:(int)dir {
     _scrollDirection = dir;
 }
-static BOOL _horizontalScrolling;
+static BOOL _horizontalScrolling; // TODO: Consider moving this stuff into ScrollModifiers.m
 + (BOOL)horizontalScrolling {
     return _horizontalScrolling;
 }
@@ -198,7 +187,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 /// Routes the event back to the eventTap where it originally entered the program.
 /// Use this when internal parameters change while processing an event.
 /// This will essentially restart the evaluation of the event while respecting respect the new internal parameters.
-+ (CGEventRef)reinsertScrollEvent:(CGEventRef)event {
++ (CGEventRef)rerouteScrollEventToTop:(CGEventRef)event {
     return eventTapCallback(nil, 0, event, nil);
 }
 

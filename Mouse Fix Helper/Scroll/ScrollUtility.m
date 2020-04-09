@@ -99,7 +99,9 @@
     if (n == 0) {return 0;}
     return n >= 0 ? 1 : -1;
 }
-+ (BOOL)sameSign_n:(double)n m:(double)m {
+
+/// \note 0 is considered both positive and negative
++ (BOOL)sameSign:(double)n and:(double)m {
     if (n == 0 || m == 0) {
         return true;
     }
@@ -130,13 +132,27 @@ static NSRunningApplication *_previousFrontMostApp;
     return didChange;
 }
 
+static long long _previousScrollValue;
+/// Whether the sign of input number is different from when this function was last called
++ (BOOL)scrollDirectionDidChange:(long long)thisScrollValue {
+    BOOL directionChanged = NO;
+    if (![ScrollUtility sameSign:thisScrollValue and:_previousScrollValue]) {
+        directionChanged = YES;
+    }
+    _previousScrollValue = thisScrollValue;
+    return directionChanged;
+}
++ (void)resetScrollDirectionDidChangeFunction {
+    _previousScrollValue = 0;
+}
+
 static int _consecutiveScrollTickCounter;
 + (int)consecutiveScrollTickCounter {
     return _consecutiveScrollTickCounter;
 }
 static double _previousScrollTickTimeStamp;
 + (void) updateConsecutiveScrollTickAndSwipeCountersWithTickOccuringNow { // starts counting at 0
-    double thisScrollTickTimeStamp = CFAbsoluteTimeGetCurrent();
+    double thisScrollTickTimeStamp = CACurrentMediaTime();
     double intervall = (thisScrollTickTimeStamp - _previousScrollTickTimeStamp);
     if (intervall > ScrollControl.consecutiveScrollTickMaxIntervall) {
         [self updateConsecutiveScrollSwipeCounterWithSwipeOccuringNow]; // Needs to be called before resetting _consecutiveScrollTickCounter = 0, because it uses data from _consecutiveScrollTickCounter to determine whether the last series of consecutive scroll ticks was a scroll swipe
@@ -153,7 +169,7 @@ static int _consecutiveScrollSwipeCounter;
 }
 static double _previousScrollSwipeTimeStamp;
 + (void)updateConsecutiveScrollSwipeCounterWithSwipeOccuringNow { // starts counting at 0
-    double thisScrollSwipeTimeStamp = CFAbsoluteTimeGetCurrent();
+    double thisScrollSwipeTimeStamp = CACurrentMediaTime();
     double intervall = (thisScrollSwipeTimeStamp - _previousScrollSwipeTimeStamp);
     if (intervall > ScrollControl.consecutiveScrollSwipeMaxIntervall) {
         _consecutiveScrollSwipeCounter = 0;

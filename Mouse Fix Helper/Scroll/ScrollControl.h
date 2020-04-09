@@ -42,7 +42,7 @@ typedef enum {
 + (void)resetDynamicGlobals;
 + (void)decide;
 
-+ (CGEventRef)reinsertScrollEvent:(CGEventRef)event;
++ (CGEventRef)rerouteScrollEventToTop:(CGEventRef)event;
 
 @end
 

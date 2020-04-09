@@ -48,7 +48,7 @@
             // set app overrides
             BOOL paramsDidChange = [ConfigFileInterface_HelperApp updateInternalParameters];
             if (paramsDidChange) {
-                return [ScrollControl reinsertScrollEvent:event];
+                return [ScrollControl rerouteScrollEventToTop:event];
             }
         }
     }

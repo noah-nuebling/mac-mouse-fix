@@ -20,15 +20,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (CGEventRef)makeScrollEventHorizontal:(CGEventRef)event;
 + (double)signOf:(double)n;
-+ (BOOL)sameSign_n:(double)n m:(double)m;
++ (BOOL)sameSign:(double)n and:(double)m;
 + (BOOL)mouseDidMove;
 + (BOOL)frontMostAppDidChange;
++ (BOOL)scrollDirectionDidChange:(long long)signedVal;
++ (void)resetScrollDirectionDidChangeFunction;
 
 + (int)consecutiveScrollTickCounter;
 + (int)consecutiveScrollSwipeCounter;
 + (void)updateConsecutiveScrollTickAndSwipeCountersWithTickOccuringNow;
-//+ (void)updateConsecutiveScrollSwipeCounterWithSwipeOccuringNow;
-
 + (void)resetConsecutiveTicksAndSwipes;
 
 @end
