@@ -135,6 +135,8 @@ static NSRunningApplication *_previousFrontMostApp;
 static long long _previousScrollValue;
 /// Whether the sign of input number is different from when this function was last called
 + (BOOL)scrollDirectionDidChange:(long long)thisScrollValue {
+    NSLog(@"This scrolldelta: %d", thisScrollValue);
+    NSLog(@"Prev scrolldelta: %d", _previousScrollValue);
     BOOL directionChanged = NO;
     if (![ScrollUtility sameSign:thisScrollValue and:_previousScrollValue]) {
         directionChanged = YES;

@@ -168,12 +168,11 @@ static void fillConfigFromFile() {
         //    CFRelease(fakeEvent);
     }
     
-    [ScrollControl resetDynamicGlobals];
-    
     if ([_bundleIDOfAppWhichCausesAppOverride isEqualToString:bundleIDOfCurrentApp] == NO) {
         _bundleIDOfAppWhichCausesAppOverride = bundleIDOfCurrentApp;
         loadAppOverridesForApp(bundleIDOfCurrentApp);
         [ConfigFileInterface_HelperApp updateScrollParameters];
+        [ScrollControl resetDynamicGlobals]; // Not entirely sure if necessary
         return YES;
     }
     return NO;
@@ -231,7 +230,6 @@ static void fillConfigFromFile() {
     // Enabled / disabled
     ScrollModifiers.horizontalScrollModifierKeyEnabled = [mod[@"horizontalScrollModifierKeyEnabled"] boolValue];
     ScrollModifiers.magnificationScrollModifierKeyEnabled = [mod[@"magnificationScrollModifierKeyEnabled"] boolValue];
-
 }
 
 /// Applies AppOverrides from app with `bundleIdentifier` to `_config` and writes the result into `_configWithAppOverridesApplied`.

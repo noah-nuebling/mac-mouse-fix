@@ -76,13 +76,14 @@ static int      _onePixelScrollsCounter;
 
 /// Consider calling [ScrollControl resetDynamicGlobals] to reset not only SmoothScroll specific globals.
 + (void)resetDynamicGlobals {
+    NSLog(@"Resetting dynamic GlobalsX");
     _scrollPhase                        =   kMFPhaseWheel;
     _pixelsToScroll                     =   0;
     _pixelScrollQueue                   =   0;
     _msLeftForScroll                    =   0;
     _pxPerMsVelocity                    =   0;
     _onePixelScrollsCounter             =   0;
-    [ScrollUtility resetScrollDirectionDidChangeFunction];
+//    [ScrollUtility resetScrollDirectionDidChangeFunction]; 
 }
 
 + (void)configureWithParameters:(NSDictionary *)params {
@@ -126,11 +127,11 @@ static BOOL _isRunning;
     // Check if scrolling direction changed
     
     long long scrollDeltaAxis1 = [(NSNumber *)[info valueForKey:@"scrollDeltaAxis1"] longLongValue];
-    Boolean scrollDirectionChanged = [ScrollUtility scrollDirectionDidChange:scrollDeltaAxis1];
+    Boolean scrollDirectionChanged = [ScrollUtility scrollDirectionDidChange:scrollDeltaAxis1]; // TODO: This doesn't work when inputting a scroll tick with a new direction near the end of a previous scroll.
     
     // Scroll ticks and scroll swipes
-    
     if (scrollDirectionChanged) {
+        NSLog(@"Scroll direction changed");
         [ScrollUtility resetConsecutiveTicksAndSwipes];
     }
     [ScrollUtility updateConsecutiveScrollTickAndSwipeCountersWithTickOccuringNow];
@@ -198,7 +199,6 @@ static BOOL _isRunning;
         _pixelScrollQueue = _pixelScrollQueue * pow(ScrollControl.fastScrollExponentialBase, (int32_t)consecutiveScrollSwipes - ScrollControl.fastScrollThreshold_inSwipes);
     }
     
-
     return nil;
 }
 
