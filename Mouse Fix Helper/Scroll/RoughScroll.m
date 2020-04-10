@@ -25,12 +25,7 @@
 
 + (CGEventRef _Nullable)handleInput:(CGEventRef)event info:(NSDictionary *)info {
     
-    // TODO: Optimize this using mouseMoved and other techniques from SmoothScroll.m
-    // (Probably best to move the calculation of stuff that both SmoothScroll and RoughScroll use to ScrollControl, and then pass the stuff as parameters to the respective `handleInput:` functions)
-    
-//    if (mouseMoved == TRUE) {
-//        setConfigVariablesForActiveApp();
-//    }
+    // Apply AppOverrides if appropriate
     
     [ScrollUtility updateConsecutiveScrollTickAndSwipeCountersWithTickOccuringNow];
     int consecutiveScrollTicks = ScrollUtility.consecutiveScrollTickCounter;
@@ -46,25 +41,25 @@
         }
         if (mouseMoved || frontMostAppChanged) {
             // set app overrides
-            BOOL paramsDidChange = [ConfigFileInterface_HelperApp updateInternalParameters];
+            BOOL paramsDidChange = [ConfigFileInterface_HelperApp updateInternalParameters_Force:YES];
             if (paramsDidChange) {
                 return [ScrollControl rerouteScrollEventToTop:event];
             }
         }
     }
     
+    // Process event
     
     if (ScrollControl.scrollDirection == -1) { // TODO: Use kMFInvertedScrollDirection instead of -1
         event = [ScrollUtility invertScrollEvent:event direction:ScrollControl.scrollDirection];
     }
-    if (ScrollControl.magnificationScrolling) { //TODO: TODO: Consider acitvating displayLink to send magnification events instead (After sorting out activity states of SmoothScroll.m)
+    if (ScrollControl.magnificationScrolling) {
         [TouchSimulator postEventWithMagnification:CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1)/50.0 phase:kIOHIDEventPhaseChanged];
         return nil;
     } else {
         if (ScrollControl.horizontalScrolling) {
             [ScrollUtility makeScrollEventHorizontal:event];
         }
-//        [ScrollUtility logScrollEvent:event];
         return event;
     }
 }

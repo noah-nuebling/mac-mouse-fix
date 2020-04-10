@@ -44,12 +44,6 @@ static NSMutableDictionary *_config; // TODO: Make this immutable. I think helpe
 + (NSMutableDictionary *)config {
     return _config;
 }
-/// TODO: Remove this
-//+ (void)setConfig:(NSMutableDictionary *)new {
-//    config = new;
-//}
-
-/// config with some app specific AppOverrides applied
 static NSMutableDictionary *_configWithAppOverridesApplied;
 + (NSMutableDictionary *)configWithAppOverridesApplied {
     return _configWithAppOverridesApplied;
@@ -58,7 +52,7 @@ static NSMutableDictionary *_configWithAppOverridesApplied;
 + (void)reactToConfigFileChange {
     fillConfigFromFile();
     _configFileChanged = YES; // Doing this to force update of internal state, even the active app hastn't chaged
-    [ConfigFileInterface_HelperApp updateInternalParameters];
+    [ConfigFileInterface_HelperApp updateInternalParameters_Force:YES];
     _configFileChanged = NO;
 }
 
@@ -71,104 +65,50 @@ static void fillConfigFromFile() {
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if ( [fileManager fileExistsAtPath: configFilePath] == TRUE ) {
         
-        NSData *configFileData = [NSData dataWithContentsOfFile:configFilePath];
-        
+        NSData *configFromFileData = [NSData dataWithContentsOfFile:configFilePath];
         NSError *err;
-        NSMutableDictionary *config = [NSPropertyListSerialization propertyListWithData:configFileData options:NSPropertyListMutableContainersAndLeaves format:nil error: &err];
+        NSMutableDictionary *configFromFile = [NSPropertyListSerialization propertyListWithData:configFromFileData options:NSPropertyListMutableContainersAndLeaves format:nil error: &err];
         
+        NSLog(@"Loading new config from file: %@", configFromFile);
         
-        NSLog(@"prop from configMonitor: %@", ConfigFileInterface_HelperApp.config);
+        _config = configFromFile;
         
-        NSLog(@"setting new prop from configMonitor: %@", config);
-        
-        _config = config;
-        
-        //NSLog(@"configDictFromFile after setting: %@", [ConfigFileMonitor configDictFromFile]);
-        
-        if ( ( ([[config allKeys] count] == 0) || (config == nil) || (err != nil) ) == FALSE ) {
-            
+        if ( ( ([[configFromFile allKeys] count] == 0) || (configFromFile == nil) || (err != nil) ) == FALSE ) {
+            // TODO: Do sth
         }
     }
 }
 
 /// Modify the helpers internal parameters according to _config and the currently active app.
+/// Used to apply appOverrides (`force == NO`), and after loading new config from file. (`force == YES`)
+/// \param force If NO, then it will only update the internal state, if the app currenly under the cursor is different to the one when this function was last called.
 /// \returns YES, if internal parameters did update. NO otherwise.
-+ (BOOL)updateInternalParameters {
-    // TODO: This function is still seems to be a huge resource hog (thinking this because RoughScroll calls this on every tick and is much more resource intensive than SmoothScroll) – even with the current optimization of only looking at the frontmost app for AppOverrides, instead of the app under the mouse pointer.
++ (BOOL)updateInternalParameters_Force:(BOOL)force {
+
+    // Get app under mouse pointer
     
     NSString *bundleIDOfCurrentApp;
-    
-    if (_configFileChanged) {
-        bundleIDOfCurrentApp = nil;
-    } else {
-    
-        // get App under mouse pointer
-            
-            
-            
-        //CFTimeInterval ts = CACurrentMediaTime();
-            
-            
-            // 1. Even slower
-            
-        //    CGEventRef fakeEvent = CGEventCreate(NULL);
-        //    CGPoint mouseLocation = CGEventGetLocation(fakeEvent);
-        //    CFRelease(fakeEvent);
-            
-        //    NSInteger winNUnderMouse = [NSWindow windowNumberAtPoint:(NSPoint)mouseLocation belowWindowWithWindowNumber:0];
-        //    CFArrayRef windowList = CGWindowListCopyWindowInfo(kCGWindowListExcludeDesktopElements | kCGWindowListOptionOnScreenOnly, kCGNullWindowID);
-        ////    NSLog(@"windowList: %@", windowList);
-        //    int windowPID = 0;
-        //    for (int i = 0; i < CFArrayGetCount(windowList); i++) {
-        //        CFDictionaryRef w = CFArrayGetValueAtIndex(windowList, i);
-        //        int winN;
-        //        CFNumberGetValue(CFDictionaryGetValue(w, CFSTR("kCGWindowNumber")), kCFNumberIntType, &winN);
-        //        if (winN == winNUnderMouse) {
-        //            CFNumberGetValue(CFDictionaryGetValue(w, CFSTR("kCGWindowOwnerPID")), kCFNumberIntType, &windowPID);
-        //        }
-        //    }
-        //    NSRunningApplication *appUnderMousePointer = [NSRunningApplication runningApplicationWithProcessIdentifier:windowPID];
-        //    NSString *bundleIdentifierOfScrolledApp_New = appUnderMousePointer.bundleIdentifier;
-          
-            
-            // 2. very slow - but basically the way MOS does it, and MOS is fast somehow
-            
-            CGEventRef fakeEvent = CGEventCreate(NULL);
-            CGPoint mouseLocation = CGEventGetLocation(fakeEvent);
-            CFRelease(fakeEvent);
+    if (!force) {
+        
+        CGEventRef fakeEvent = CGEventCreate(NULL);
+        CGPoint mouseLocation = CGEventGetLocation(fakeEvent);
+        CFRelease(fakeEvent);
 
-//            if (_previousMouseLocation.x == mouseLocation.x && _previousMouseLocation.y == mouseLocation.y) {
-//                return;
-//            }
-//            _previousMouseLocation = mouseLocation;
-        
-            AXUIElementRef elementUnderMousePointer;
-            AXUIElementCopyElementAtPosition(ScrollControl.systemWideAXUIElement, mouseLocation.x, mouseLocation.y, &elementUnderMousePointer);
-            pid_t elementUnderMousePointerPID;
-            AXUIElementGetPid(elementUnderMousePointer, &elementUnderMousePointerPID);
-            NSRunningApplication *appUnderMousePointer = [NSRunningApplication runningApplicationWithProcessIdentifier:elementUnderMousePointerPID];
-        
-            @try {
-                CFRelease(elementUnderMousePointer);
-            } @finally {}
-            bundleIDOfCurrentApp = appUnderMousePointer.bundleIdentifier;
-            
-            
-            
-        //     3. fast, but only get info about frontmost application
-            
-//            bundleIdentifierOfActiveApp = [NSWorkspace.sharedWorkspace frontmostApplication].bundleIdentifier;
-            
-            
-            
-            // 4. swift copied from MOS - should be fast and gathers info on app under mouse pointer - I couldn't manage to import the Swift code though :/
-            
-        //    CGEventRef fakeEvent = CGEventCreate(NULL);
-        //    NSString *bundleIdentifierOfScrolledApp_New = [_appOverrides getBundleIdFromMouseLocation:fakeEvent];
-        //    CFRelease(fakeEvent);
+        AXUIElementRef elementUnderMousePointer;
+        AXUIElementCopyElementAtPosition(ScrollControl.systemWideAXUIElement, mouseLocation.x, mouseLocation.y, &elementUnderMousePointer);
+        pid_t elementUnderMousePointerPID;
+        AXUIElementGetPid(elementUnderMousePointer, &elementUnderMousePointerPID);
+        NSRunningApplication *appUnderMousePointer = [NSRunningApplication runningApplicationWithProcessIdentifier:elementUnderMousePointerPID];
+        @try {
+            CFRelease(elementUnderMousePointer);
+        } @finally {}
+        bundleIDOfCurrentApp = appUnderMousePointer.bundleIdentifier;
     }
+
+    // Set internal state
     
-    if ([_bundleIDOfAppWhichCausesAppOverride isEqualToString:bundleIDOfCurrentApp] == NO) {
+    if ([_bundleIDOfAppWhichCausesAppOverride isEqualToString:bundleIDOfCurrentApp] == NO
+        || force) {
         _bundleIDOfAppWhichCausesAppOverride = bundleIDOfCurrentApp;
         loadAppOverridesForApp(bundleIDOfCurrentApp);
         [ConfigFileInterface_HelperApp updateScrollParameters];
@@ -198,7 +138,8 @@ static void fillConfigFromFile() {
 //    
 //}
 
-// Call loadAppOverridesForApp before calling this!
+/// Update internal state of scroll classes with values from _configWithAppOverridesApplied
+/// \note Call loadAppOverridesForApp() to fill _configWithAppOverridesApplied
 + (void)updateScrollParameters {
 
     NSDictionary *scroll = [_configWithAppOverridesApplied objectForKey:@"Scroll"];
@@ -434,10 +375,14 @@ void Handle_FSEventStreamCallback (ConstFSEventStreamRef streamRef, void *client
 
 
 /**
- we're setting up a File System Monitor so that manual edits to the main configuration file have an effect.
- This allows you to test your own configurations!
+ We're setting up a File System Monitor so that manual edits to the main configuration file have an effect.
+ This allows you to easily test configurations.
  
- to find the main configuration file, paste one of the following in the terminal:
+ To find the main configuration file:
+ 
+ - 1. Open the `Mouse Fix` PrefPane, and click on `More...`. Then, hold Command and Shift while clicking the Mac Mouse Fix Icon in the top left.
+ 
+ - 2. Paste one of the following in the terminal:
     - 1. (-> if you installed Mouse Fix for the current user)
     open "$HOME/Library/PreferencePanes/Mouse Fix.prefPane/Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/Resources/config.plist"
     - 2. (-> if you installed Mouse Fix for all users)

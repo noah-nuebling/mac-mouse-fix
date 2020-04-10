@@ -101,11 +101,14 @@ NSDictionary *_columnIdentifierToKeyPath;
 
 #pragma mark TableView
 
-/// Was for testing. Not used anymore.
-//- (IBAction)cleanButton:(id)sender {
-//    [ConfigFileInterface_PrefPane cleanConfig];
-//}
-- (IBAction)addButton:(id)sender {
+- (IBAction)addRemoveControl:(id)sender {
+    if ([sender selectedSegment] == 0) {
+        [self addButtonAction];
+    } else {
+        [self removeButtonAction];
+    }
+}
+- (void)addButtonAction {
 
     NSOpenPanel* openPanel = [NSOpenPanel openPanel];
 
@@ -135,7 +138,7 @@ NSDictionary *_columnIdentifierToKeyPath;
         [self tableAddAppsWithBundleIDs:bundleIDs atRow:0];
     }];
 }
-- (IBAction)removeButton:(id)sender {
+- (void)removeButtonAction {
     [_tableViewDataModel removeObjectsAtIndexes:_tableView.selectedRowIndexes];
     [self writeTableViewDataModelToConfig];
     [self loadTableViewDataModelFromConfig]; // Not sure if necessary
@@ -253,6 +256,7 @@ NSDictionary *_columnIdentifierToKeyPath;
 - (void)tableAddAppsWithBundleIDs:(NSArray<NSString *> *)bundleIDs atRow:(NSInteger)row {
     
     NSMutableArray *newRows = [NSMutableArray array];
+    bundleIDs = [bundleIDs valueForKeyPath:@"@distinctUnionOfObjects.self"]; // Remove duplicates. This is only necessary when the user drags and drops in more than one app with the same bundleID.
     NSDictionary *bundleIDsSorted = sortByAlreadyInTable(bundleIDs);
     
     for (NSString *bundleID in bundleIDsSorted[@"notInTable"]) {
@@ -322,7 +326,7 @@ NSMutableArray *_tableViewDataModel;
     bundleIDsInConfigAndInstalledButNotInTable = [bundleIDsInConfigAndInstalledButNotInTable filteredSetUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
         return [Utility_PrefPane appIsInstalled:evaluatedObject];
     }]].mutableCopy; // Filter out apps which aren't installed. We do this so we don't delete preinstalled overrides.
-    [bundleIDsInConfigAndInstalledButNotInTable minusSet:bundleIDsInTable]; // Subtract apps from table
+    [bundleIDsInConfigAndInstalledButNotInTable minusSet:bundleIDsInTable]; // Subtract apps in table
     
     for (NSString *bundleID in bundleIDsInConfigAndInstalledButNotInTable) {
         NSString *bundleIDEscaped = [bundleID stringByReplacingOccurrencesOfString:@"." withString:@"\\."];
@@ -356,15 +360,15 @@ NSMutableArray *_tableViewDataModel;
     for (NSString *bundleID in overrides.allKeys) { // Every bundleID corresponds to one app/row
         // Check if app exists on system
         if (![Utility_PrefPane appIsInstalled:bundleID]) {
-            continue;
+            continue; // If not, skip this bundleID
         }
-        // Create row dict for app with `bundleID` from data in config. Every key value pair in row dict corresponds to a column. The key is the column identifier and the value is the value for the column with `columnID` and the row of the app with `bundleID`
+        // Create rowDict for app with `bundleID` from data in config. Every key value pair in rowDict corresponds to a column. The key is the columnID and the value is the value for the column with `columnID` and the row of the app with `bundleID`
         NSMutableDictionary *rowDict = [NSMutableDictionary dictionary];
         NSArray *columnIDs = _columnIdentifierToKeyPath.allKeys;
         for (NSString *columnID in columnIDs) {
             NSString *keyPath = _columnIdentifierToKeyPath[columnID];
             NSObject *value = [overrides[bundleID][@"Root"] valueForKeyPath:keyPath];
-            rowDict[columnID] = value; // If value is nil, no entry is be added. (We use this fact in the allNil / someNil checks below)
+            rowDict[columnID] = value; // If value is nil, no entry is added. (We use this fact in the allNil / someNil checks below)
         }
         // Check existence / validity of generated rowDict
         BOOL allNil = (rowDict.allValues.count == 0);
@@ -381,7 +385,8 @@ NSMutableArray *_tableViewDataModel;
             [self loadTableViewDataModelFromConfig]; // Restart the whole function. someNil will not occur next time because we filled out all the AppOverrides with some values missing.
             return;
         }
-        rowDict[@"AppColumnID"] = bundleID; // Add everything thats not an override last, so the allNil check works properly
+        // Add everything thats not an override last, so the allNil check works properly
+        rowDict[@"AppColumnID"] = bundleID; // Not sure if the key `AppColumnID` makes sense here. Maybe it should be `bundleID` instead.
         rowDict[@"orderKey"] = overrides[bundleID][@"meta"][@"scrollOverridePanelTableViewOrderKey"];
         
         [_tableViewDataModel addObject:rowDict];
@@ -400,11 +405,10 @@ static NSArray<NSString *> * bundleIDsFromPasteboard(NSPasteboard *pasteboard) {
         NSString *urlString = [item stringForType:@"public.file-url"];
         NSURL *url = [NSURL URLWithString:urlString];
         NSString *bundleID = [[NSBundle bundleWithURL:url] bundleIdentifier];
-        if (bundleID) { // Adding nil to NSArray with addObject: yields a crash
+        if (bundleID) { // Adding nil to NSArray with `addObject:` yields a crash
             [bundleIDs addObject:bundleID];
         }
     }
-//    NSURL *url = [NSURL URLFromPasteboard:pasteboard];
     return bundleIDs;
 }
 
@@ -427,10 +431,9 @@ static NSDictionary *sortByAlreadyInTable(NSArray *bundleIDs) {
         @"notInTable": inpNotInTable
     };
 }
-
-static NSMutableIndexSet *indexSetFromIndexArray(NSMutableArray *tableIndicesOfAlreadyInTable) {
+static NSMutableIndexSet *indexSetFromIndexArray(NSArray<NSNumber *> *arrayOfIndices) {
     NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
-    for (NSNumber *index in tableIndicesOfAlreadyInTable) {
+    for (NSNumber *index in arrayOfIndices) {
         [indexSet addIndex:index.unsignedIntegerValue];
     }
     return indexSet;

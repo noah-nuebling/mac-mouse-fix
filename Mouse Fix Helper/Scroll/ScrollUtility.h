@@ -24,7 +24,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (BOOL)mouseDidMove;
 + (BOOL)frontMostAppDidChange;
 + (BOOL)scrollDirectionDidChange:(long long)signedVal;
-+ (void)resetScrollDirectionDidChangeFunction;
 
 + (int)consecutiveScrollTickCounter;
 + (int)consecutiveScrollSwipeCounter;

@@ -18,7 +18,6 @@ IB_DESIGNABLE
 @property IBInspectable NSString *modifiers;
 @property IBInspectable NSString *actionString;
 
-
 @end
 
 @implementation ClickableImageView
@@ -49,7 +48,6 @@ NSArray *_requiredModifierFlags;
     _requiredModifierFlags = modFlagArray;
 }
     
-/// Command-shift clicking the app icon in the more sheet will reveal th config.plist file in the finder.
 - (void)mouseDown:(NSEvent *)event {
     
     BOOL matchesAllRequired = YES;

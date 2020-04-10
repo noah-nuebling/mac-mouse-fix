@@ -10,11 +10,15 @@
 #import "Hyperlink.h"
 
 IB_DESIGNABLE
+@interface Hyperlink ()
+
+@property (nonatomic) IBInspectable NSString *href;
+
+@end
 
 @implementation Hyperlink
 
 - (void)awakeFromNib {
-    
     NSTrackingAreaOptions option = NSTrackingInVisibleRect | NSTrackingMouseEnteredAndExited | NSTrackingActiveInKeyWindow;
     NSTrackingArea * area = [[NSTrackingArea alloc] initWithRect:self.bounds options:option owner:self userInfo:nil];
     [self addTrackingArea:area];
@@ -37,18 +41,6 @@ IB_DESIGNABLE
     if ([self mouse:[self convertPoint:[event locationInWindow] fromView:nil] inRect:self.bounds]) {
         [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:_href]];
     }
-
-/*
-- (void)drawRect:(NSRect)dirtyRect {
-    [super drawRect:dirtyRect];
-    
-    NSLog(@"drawRect");
-    // Drawing code here.
-}
-
-- (void)initWithBundle {
-    NSLog(@"initWithBundle");
- */
 }
 
 @end

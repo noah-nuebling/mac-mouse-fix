@@ -112,22 +112,20 @@ static BOOL _magnificationScrolling;
 
 static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
-//    NSLog(@"scrollPhase: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase));
-//    NSLog(@"momentumPhase: %lld", CGEventGetIntegerValueField(event, kCGScrollWheelEventMomentumPhase));
-    
-//        CFTimeInterval ts = CACurrentMediaTime();
-//            NSLog(@"event tap bench: %f", CACurrentMediaTime() - ts);
-    
-    // Return non-scroll-wheel events unaltered
+    // Return non-scrollwheel events unaltered
     
     long long   isPixelBased            =   CGEventGetIntegerValueField(event, kCGScrollWheelEventIsContinuous);
     long long   scrollPhase             =   CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase);
     long long   scrollDeltaAxis1        =   CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
     long long   scrollDeltaAxis2        =   CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2);
-    if ( (isPixelBased != 0) || (scrollDeltaAxis1 == 0) || (scrollDeltaAxis2 != 0) || (scrollPhase != 0)) { // adding scrollphase here is untested
-        // scroll event doesn't come from a simple scroll wheel or doesn't contain the data we need to use
+    if (isPixelBased != 0 ||
+        scrollDeltaAxis1 == 0 ||
+        scrollDeltaAxis2 != 0 ||
+        scrollPhase != 0) { // adding scrollphase here is untested
         return event;
     }
+    
+    // Process event
     
     // `info` dictionary is used to pass data to the input handlers, so that we don't have to calculate stuff twice.
     NSDictionary *info;
@@ -185,6 +183,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 }
 
 /// Routes the event back to the eventTap where it originally entered the program.
+///
 /// Use this when internal parameters change while processing an event.
 /// This will essentially restart the evaluation of the event while respecting respect the new internal parameters.
 + (CGEventRef)rerouteScrollEventToTop:(CGEventRef)event {

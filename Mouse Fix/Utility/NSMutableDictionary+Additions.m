@@ -11,13 +11,10 @@
 
 @implementation NSMutableDictionary (Additions)
 
-- (void)test {
-    NSLog(@"Cool Stuff");
-}
-
+// Regex tester: https://regex101.com/
 static NSArray *coolKeyPathToKeyArray(NSString * _Nonnull keyPath) {
-    NSString *regex = @"(?<!\\\\)\\."; // Matches all "." not preceded by "\" // Actual pattern: @"(?<!\\)\."
-    NSString *tempSeparator = @"<TEMPORARY REPLACEMENT STRING>";
+    NSString *regex = @"(?<!\\\\)\\."; // Matches all "." not preceded by "\" // Actual regex pattern: @"(?<!\\)\."
+    NSString *tempSeparator = @"<;jas;jfds;lfjasdf THIS IS A TEMPORARY REPLACEMENT STRING>";
     NSString *keyPathTempSeparator = [keyPath stringByReplacingOccurrencesOfString:regex
                                                                         withString:tempSeparator
                                                                            options:NSRegularExpressionSearch
@@ -27,7 +24,6 @@ static NSArray *coolKeyPathToKeyArray(NSString * _Nonnull keyPath) {
     return keys;
 }
 
-// Regex tester: https://regex101.com/
 /// Should function similar to `- setValue:forKeyPath:`
 /// Differences:
 /// Will create all dicts in the keyPath that don't exist, yet.
@@ -40,9 +36,9 @@ static NSArray *coolKeyPathToKeyArray(NSString * _Nonnull keyPath) {
     
     NSMutableDictionary *thisNode = self;
     for (NSString *key in keys) {
-        if ([keys indexOfObject:key] == keys.count - 1) { // Last key
+        if ([keys indexOfObject:key] == keys.count - 1) { // `key` is last key
             thisNode[key] = object;
-        } else { // Inner key
+        } else { // `key` is inner key
             NSObject *nextNode = thisNode[key];
             NSObject *newNextNode;
             if (nextNode == nil) {
@@ -62,7 +58,9 @@ static NSArray *coolKeyPathToKeyArray(NSString * _Nonnull keyPath) {
 }
 
 - (NSObject * _Nullable)objectForCoolKeyPath:(NSString *)keyPath {
+    
     NSArray *keys = coolKeyPathToKeyArray(keyPath);
+    
     if (keys == nil) {
         return nil;
     }

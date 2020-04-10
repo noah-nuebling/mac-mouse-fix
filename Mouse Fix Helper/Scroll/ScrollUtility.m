@@ -135,8 +135,6 @@ static NSRunningApplication *_previousFrontMostApp;
 static long long _previousScrollValue;
 /// Whether the sign of input number is different from when this function was last called
 + (BOOL)scrollDirectionDidChange:(long long)thisScrollValue {
-    NSLog(@"This scrolldelta: %d", thisScrollValue);
-    NSLog(@"Prev scrolldelta: %d", _previousScrollValue);
     BOOL directionChanged = NO;
     if (![ScrollUtility sameSign:thisScrollValue and:_previousScrollValue]) {
         directionChanged = YES;
@@ -144,20 +142,23 @@ static long long _previousScrollValue;
     _previousScrollValue = thisScrollValue;
     return directionChanged;
 }
-+ (void)resetScrollDirectionDidChangeFunction {
-    _previousScrollValue = 0;
-}
+
+/// \note Shouldn't use this (at least when resetting dynamic globals) - leads to bugs
+//+ (void)resetScrollDirectionDidChangeFunction {
+//    _previousScrollValue = 0;
+//}
 
 static int _consecutiveScrollTickCounter;
 + (int)consecutiveScrollTickCounter {
     return _consecutiveScrollTickCounter;
 }
 static double _previousScrollTickTimeStamp;
-+ (void) updateConsecutiveScrollTickAndSwipeCountersWithTickOccuringNow { // starts counting at 0
+
++ (void) updateConsecutiveScrollTickAndSwipeCountersWithTickOccuringNow { // Starts counting at 0
     double thisScrollTickTimeStamp = CACurrentMediaTime();
     double intervall = (thisScrollTickTimeStamp - _previousScrollTickTimeStamp);
     if (intervall > ScrollControl.consecutiveScrollTickMaxIntervall) {
-        [self updateConsecutiveScrollSwipeCounterWithSwipeOccuringNow]; // Needs to be called before resetting _consecutiveScrollTickCounter = 0, because it uses data from _consecutiveScrollTickCounter to determine whether the last series of consecutive scroll ticks was a scroll swipe
+        [self updateConsecutiveScrollSwipeCounterWithSwipeOccuringNow]; // Needs to be called before resetting _consecutiveScrollTickCounter = 0, because it uses _consecutiveScrollTickCounter to determine whether the last series of consecutive scroll ticks was a scroll swipe
         _consecutiveScrollTickCounter = 0;
     } else {
         _consecutiveScrollTickCounter += 1;
@@ -170,7 +171,8 @@ static int _consecutiveScrollSwipeCounter;
     return _consecutiveScrollSwipeCounter;
 }
 static double _previousScrollSwipeTimeStamp;
-+ (void)updateConsecutiveScrollSwipeCounterWithSwipeOccuringNow { // starts counting at 0
+
++ (void)updateConsecutiveScrollSwipeCounterWithSwipeOccuringNow {
     double thisScrollSwipeTimeStamp = CACurrentMediaTime();
     double intervall = (thisScrollSwipeTimeStamp - _previousScrollSwipeTimeStamp);
     if (intervall > ScrollControl.consecutiveScrollSwipeMaxIntervall) {
@@ -186,9 +188,9 @@ static double _previousScrollSwipeTimeStamp;
 }
 
 + (void)resetConsecutiveTicksAndSwipes {
-    _consecutiveScrollTickCounter = 0; // probs not necessary
+    _consecutiveScrollTickCounter = 0; // Probs not necessary
     _previousScrollTickTimeStamp = 0.0;
-    _consecutiveScrollSwipeCounter = 0; // probs not necessary
+    _consecutiveScrollSwipeCounter = 0; // Probs not necessary
     _previousScrollSwipeTimeStamp = 0.0;
 }
 

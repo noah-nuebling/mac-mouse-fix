@@ -17,7 +17,7 @@
 + (void)load_Manual;
 
 + (void)reactToConfigFileChange;
-+ (BOOL)updateInternalParameters;
++ (BOOL)updateInternalParameters_Force:(BOOL)force;
 + (void)repairConfigFile:(NSString *)info;
 
 

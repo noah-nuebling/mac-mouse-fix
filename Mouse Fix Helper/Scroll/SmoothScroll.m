@@ -76,14 +76,12 @@ static int      _onePixelScrollsCounter;
 
 /// Consider calling [ScrollControl resetDynamicGlobals] to reset not only SmoothScroll specific globals.
 + (void)resetDynamicGlobals {
-    NSLog(@"Resetting dynamic GlobalsX");
     _scrollPhase                        =   kMFPhaseWheel;
     _pixelsToScroll                     =   0;
     _pixelScrollQueue                   =   0;
     _msLeftForScroll                    =   0;
     _pxPerMsVelocity                    =   0;
     _onePixelScrollsCounter             =   0;
-//    [ScrollUtility resetScrollDirectionDidChangeFunction]; 
 }
 
 + (void)configureWithParameters:(NSDictionary *)params {
@@ -131,7 +129,6 @@ static BOOL _isRunning;
     
     // Scroll ticks and scroll swipes
     if (scrollDirectionChanged) {
-        NSLog(@"Scroll direction changed");
         [ScrollUtility resetConsecutiveTicksAndSwipes];
     }
     [ScrollUtility updateConsecutiveScrollTickAndSwipeCountersWithTickOccuringNow];
@@ -151,7 +148,7 @@ static BOOL _isRunning;
         }
         if (mouseMoved || frontMostAppChanged) {
             // set app overrides
-            BOOL paramsDidChange = [ConfigFileInterface_HelperApp updateInternalParameters];
+            BOOL paramsDidChange = [ConfigFileInterface_HelperApp updateInternalParameters_Force:YES];
             if (paramsDidChange) {
                 return [ScrollControl rerouteScrollEventToTop:event];
             }
@@ -250,10 +247,9 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         if (_pixelsToScroll == 0 || _pxPerMsVelocity == 0) {
             _scrollPhase = kMFPhaseEnd;
         }
-        
         if (abs(_pixelsToScroll) == 1) {
             _onePixelScrollsCounter += 1;
-            if (_onePixelScrollsCounter > _nOfOnePixelScrollsMax) { // I think using > instead of >= puts the actual maximum at _nOfOnePixelScrollsMax + 1.
+            if (_onePixelScrollsCounter > _nOfOnePixelScrollsMax) { // I think using > instead of >= might put the actual maximum at _nOfOnePixelScrollsMax + 1.
                 _scrollPhase = kMFPhaseEnd;
             }
         }
@@ -288,7 +284,9 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
             CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis2, _pixelsToScroll / 8);
             CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis2, _pixelsToScroll);
         }
-
+        
+        // Post event
+        
         CGEventPost(kCGSessionEventTap, scrollEvent);
         CFRelease(scrollEvent);
         
@@ -326,7 +324,6 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     } else if (_scrollPhase == kMFPhaseStart) {
         _scrollPhase = kMFPhaseWheel;
     }
-    
     return 0;
 }
 
