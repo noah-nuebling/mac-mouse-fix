@@ -228,7 +228,7 @@ enum {
 /*!
  @typedef IOHIDMotionType
  @abstract Type of Motion event triggered.
- @discussion
+ 
  @constant kIOHIDMotionTypeNormal
  @constant kIOHIDMotionTypeShake
  */
@@ -242,7 +242,7 @@ typedef uint32_t IOHIDMotionType;
 /*!
  @typedef IOHIDMotionPath
  @abstract Type of Motion Path event triggered.
- @discussion
+ 
  @constant IOHIDMotionPathStart
  @constant IOHIDMotionPathEnd
  */
@@ -416,7 +416,6 @@ enum {
 /*!
  @typedef IOHIDPowerType
  @abstract Type of Power event triggered.
- @discussion
  @constant kIOHIDPowerTypePower
  @constant kIOHIDPowerTypeCurrent
  @constant kIOHIDPowerTypeVoltage
@@ -431,7 +430,6 @@ typedef uint32_t IOHIDPowerType;
 /*!
  @typedef IOHIDPowerSubType
  @abstract Reserved
- @discussion
  @constant kIOHIDPowerSubTypeNormal
  @constant kIOHIDPowerSubTypeCumulative
  */
@@ -450,7 +448,6 @@ enum {
 /*!
  @typedef IOHIDBiometricEventType
  @abstract Type of biometric event triggered.
- @discussion
  @constant kIOHIDBiometricEventTypeHumanProximity
  @constant kIOHIDBiometricEventTypeHumanTouch
  @constant kIOHIDBiometricEventTypeHumanForce
@@ -527,7 +524,7 @@ typedef uint32_t IOHIDEventField;
 /*!
     @typedef IOHIDSwipeMask
     @abstract Mask detailing the type of swipe detected.
-    @discussion
+    
     @constant kIOHIDSwipeUp
     @constant kIOHIDSwipeDown
     @constant kIOHIDSwipeLeft
@@ -548,7 +545,6 @@ typedef uint32_t IOHIDSwipeMask;
 
 /*!
     @typedef IOHIDGestureMotion
-    @abstract 
     @constant kIOHIDGestureMotionNone
     @constant kIOHIDGestureMotionHorizontalX
     @constant kIOHIDGestureMotionVerticalY
@@ -586,7 +582,6 @@ typedef uint16_t IOHIDGestureMotion;
 
 /*!
     @typedef IOHIDGestureFlavor
-    @abstract 
     @constant kIOHIDGestureFlavorNone
     @constant kIOHIDGestureFlavorNotificationCenterPrimary
     @constant kIOHIDGestureFlavorNotificationCenterSecondary
@@ -613,7 +608,7 @@ typedef uint16_t IOHIDGestureFlavor;
 /*!
     @typedef IOHIDProximityDetectionMask
     @abstract Proximity mask detailing the inputs that were detected.
-    @discussion
+    
     @constant kIOHIDProximityDetectionLargeBodyContact
     @constant kIOHIDProximityDetectionLargeBodyFarField
     @constant kIOHIDProximityDetectionIrregularObjects

@@ -7,12 +7,14 @@
 // --------------------------------------------------------------------------
 //
 
+#import <CoreVideo/CoreVideo.h>
+#import <Foundation/Foundation.h>
+//#import <HIServices/AXUIElement.h>
+
 #import "SmoothScroll.h"
 #import "ScrollUtility.h"
 
 #import "AppDelegate.h"
-#import "QuartzCore/CoreVideo.h"
-//#import <HIServices/AXUIElement.h>
 #import "ScrollModifiers.h"
 #import "../Config/ConfigFileInterface_HelperApp.h"
 
