@@ -41,7 +41,7 @@
         }
         if (mouseMoved || frontMostAppChanged) {
             // set app overrides
-            BOOL paramsDidChange = [ConfigFileInterface_HelperApp updateInternalParameters_Force:YES];
+            BOOL paramsDidChange = [ConfigFileInterface_HelperApp updateInternalParameters_Force:NO];
             if (paramsDidChange) {
                 return [ScrollControl rerouteScrollEventToTop:event];
             }

@@ -109,6 +109,9 @@ static void fillConfigFromFile() {
     
     if ([_bundleIDOfAppWhichCausesAppOverride isEqualToString:bundleIDOfCurrentApp] == NO
         || force) {
+//        if (bundleIDOfCurrentApp) {
+//            NSLog(@"Setting Override For App %@", bundleIDOfCurrentApp);
+//        }
         _bundleIDOfAppWhichCausesAppOverride = bundleIDOfCurrentApp;
         loadAppOverridesForApp(bundleIDOfCurrentApp);
         [ConfigFileInterface_HelperApp updateScrollParameters];
