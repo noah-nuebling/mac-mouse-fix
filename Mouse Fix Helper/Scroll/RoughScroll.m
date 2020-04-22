@@ -23,7 +23,7 @@
 + (void)stop {
 }
 
-+ (CGEventRef _Nullable)handleInput:(CGEventRef)event info:(NSDictionary *)info {
++ (void)handleInput:(CGEventRef)event info:(NSDictionary *)info {
     
     // Apply AppOverrides if appropriate
     
@@ -43,7 +43,8 @@
             // set app overrides
             BOOL paramsDidChange = [ConfigFileInterface_HelperApp updateInternalParameters_Force:NO];
             if (paramsDidChange) {
-                return [ScrollControl rerouteScrollEventToTop:event];
+                [ScrollControl rerouteScrollEventToTop:event];
+                return;
             }
         }
     }
@@ -55,12 +56,11 @@
     }
     if (ScrollControl.magnificationScrolling) {
         [TouchSimulator postEventWithMagnification:CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1)/50.0 phase:kIOHIDEventPhaseChanged];
-        return nil;
     } else {
         if (ScrollControl.horizontalScrolling) {
             [ScrollUtility makeScrollEventHorizontal:event];
         }
-        return event;
+        CGEventPost(kCGSessionEventTap, event);
     }
 }
 

@@ -20,7 +20,7 @@
 + (void)stop;
 + (BOOL)isRunning;
 
-+ (CGEventRef)handleInput:(CGEventRef)event info:(NSDictionary *)info;
++ (void)handleInput:(CGEventRef)event info:(NSDictionary *)info;
 
 @end
 

@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface RoughScroll : NSObject
 + (void)start;
 + (void)stop;
-+ (CGEventRef _Nullable)handleInput:(CGEventRef)event info:(NSDictionary *)info;
++ (void)handleInput:(CGEventRef)event info:(NSDictionary *)info;
 @end
 
 NS_ASSUME_NONNULL_END

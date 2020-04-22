@@ -133,11 +133,12 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         info = @{
             @"scrollDeltaAxis1": [NSNumber numberWithLongLong:scrollDeltaAxis1]
         };
-        return [SmoothScroll handleInput:event info:info];
+        [SmoothScroll handleInput:event info:info];
     } else {
         info = @{};
-        return [RoughScroll handleInput:event info:info];
+        [RoughScroll handleInput:event info:info];
     }
+    return nil;
 }
 
 #pragma mark - Public functions
@@ -185,9 +186,10 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 /// Routes the event back to the eventTap where it originally entered the program.
 ///
 /// Use this when internal parameters change while processing an event.
-/// This will essentially restart the evaluation of the event while respecting respect the new internal parameters.
-+ (CGEventRef)rerouteScrollEventToTop:(CGEventRef)event {
-    return eventTapCallback(nil, 0, event, nil);
+/// This will essentially restart the evaluation of the event while respecting the new internal parameters.
+/// You probably wanna return after calliing this.
++ (void)rerouteScrollEventToTop:(CGEventRef)event {
+    eventTapCallback(nil, 0, event, nil);
 }
 
 /// Either activate SmoothScroll or RoughScroll or stop scroll interception entirely

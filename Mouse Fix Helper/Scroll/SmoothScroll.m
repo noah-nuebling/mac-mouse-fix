@@ -122,7 +122,7 @@ static BOOL _isRunning;
 
 #pragma mark - Run Loop
 
-+ (CGEventRef)handleInput:(CGEventRef)event info:(NSDictionary *)info {
++ (void)handleInput:(CGEventRef)event info:(NSDictionary *)info {
     
     // Check if scrolling direction changed
     
@@ -152,7 +152,8 @@ static BOOL _isRunning;
             // set app overrides
             BOOL paramsDidChange = [ConfigFileInterface_HelperApp updateInternalParameters_Force:NO];
             if (paramsDidChange) {
-                return [ScrollControl rerouteScrollEventToTop:event];
+                [ScrollControl rerouteScrollEventToTop:event];
+                return;
             }
         }
         if (mouseMoved) {
@@ -203,8 +204,6 @@ static BOOL _isRunning;
     if (consecutiveScrollSwipes > ScrollControl.fastScrollThreshold_inSwipes) {
         _pixelScrollQueue = _pixelScrollQueue * pow(ScrollControl.fastScrollExponentialBase, (int32_t)consecutiveScrollSwipes - ScrollControl.fastScrollThreshold_inSwipes);
     }
-    
-    return nil;
 }
 
 static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp *inNow, const CVTimeStamp *inOutputTime, CVOptionFlags flagsIn, CVOptionFlags *flagsOut, void *displayLinkContext) {
