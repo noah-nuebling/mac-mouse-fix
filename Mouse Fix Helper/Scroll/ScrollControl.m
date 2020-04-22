@@ -127,13 +127,17 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
     // Process event
     
-    // (Stuff described below sadly doesn't work. It somehow leads to the events being "invalidated")
-    // (I think they might be invalidated after this function returns. Anyhow creating new events and copying relevant fields over should fix this issue)
-    // Do it on a different thread using `dispatch_async`, so we can return faster
-    // Returning fast should prevent the system from disabling this eventTap entirely when under load
-    // (at least that's what I think happens, when the scoll interception sometimes randomly stops working)
+    /// (Multithreading stuff described below doesn't work, yet. It somehow leads to the events being "invalidated")
+    /// Possible reasons and solutions:
+    /// I think events might be invalidated after this function returns. Or maybe when they're used on a different thread than the one they were created on or something like that. The `CGEventGet...` functions log "Invalid event." - so maybe an "invalid event" is just nil? Nope, testing says no. There might be some data field in the event that restricts its usage to specific situations.
+    /// Creating new events and copying relevant fields over might resolve this issue.
     
-//    dispatch_async(dispatch_get_main_queue(), ^{
+    // Do prcessing of event on a different thread using `dispatch_async`, so we can return faster
+    // Returning fast should prevent the system from disabling this eventTap entirely when under load
+//    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
+       
+        /// Regarding the "invalid Event" error when trying to use `dispatch_async`. I thought maybe the original event was freed after `eventTapCallback()` returned and that that might have caused the issue, so I created a copy named `newEvent` here. This led to different errors as far as I remember, which might be a valuable lead, but it still didn't work. There might be some data field in the event that restricts its usage to specific situations which isn't copied or.
+//        CGEventRef newEvent = CGEventCreateCopy(event);
         
         // `info` dictionary is used to pass data to the input handlers, so that we don't have to calculate stuff twice.
         NSDictionary *info;
@@ -141,7 +145,12 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
             info = @{
                 @"scrollDeltaAxis1": [NSNumber numberWithLongLong:scrollDeltaAxis1]
             };
-            [SmoothScroll handleInput:event info:info];
+            
+            /// TODO: Remove the dispatch_async stuff below. It's just for testing.
+            /// Testing reveals: Multi threading does seem to prevent the eventTap from breaking. Yay! Now we just need to get it working properly...
+//            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
+                [SmoothScroll handleInput:event info:info];
+//            });
         } else {
             info = @{};
             [RoughScroll handleInput:event info:info];
