@@ -127,17 +127,27 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
     // Process event
     
-    // `info` dictionary is used to pass data to the input handlers, so that we don't have to calculate stuff twice.
-    NSDictionary *info;
-    if (_isSmoothEnabled) {
-        info = @{
-            @"scrollDeltaAxis1": [NSNumber numberWithLongLong:scrollDeltaAxis1]
-        };
-        [SmoothScroll handleInput:event info:info];
-    } else {
-        info = @{};
-        [RoughScroll handleInput:event info:info];
-    }
+    // (Stuff described below sadly doesn't work. It somehow leads to the events being "invalidated")
+    // (I think they might be invalidated after this function returns. Anyhow creating new events and copying relevant fields over should fix this issue)
+    // Do it on a different thread using `dispatch_async`, so we can return faster
+    // Returning fast should prevent the system from disabling this eventTap entirely when under load
+    // (at least that's what I think happens, when the scoll interception sometimes randomly stops working)
+    
+//    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        // `info` dictionary is used to pass data to the input handlers, so that we don't have to calculate stuff twice.
+        NSDictionary *info;
+        if (_isSmoothEnabled) {
+            info = @{
+                @"scrollDeltaAxis1": [NSNumber numberWithLongLong:scrollDeltaAxis1]
+            };
+            [SmoothScroll handleInput:event info:info];
+        } else {
+            info = @{};
+            [RoughScroll handleInput:event info:info];
+        }
+//    });
+    
     return nil;
 }
 

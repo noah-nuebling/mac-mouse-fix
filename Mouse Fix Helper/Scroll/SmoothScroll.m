@@ -179,11 +179,12 @@ static BOOL _isRunning;
         _pixelsToScroll = 0;
         _pxPerMsVelocity = 0;
     }
-    if (_scrollPhase != kMFPhaseWheel) { // Same question
-        _onePixelScrollsCounter =   0;
-        _pxPerMsVelocity        =   0;
-        _pixelScrollQueue       =   0;
-    }
+    // TODO: Commenting this out might cause weird behaviour. Thimk about what this actually does.
+//    if (_scrollPhase != kMFPhaseWheel) { // Same question
+//        _onePixelScrollsCounter =   0;
+//        _pxPerMsVelocity        =   0;
+//        _pixelScrollQueue       =   0;
+//    }
     // Update scroll phase
     if (_scrollPhase == kMFPhaseMomentum) {
         _scrollPhase = kMFPhaseWheel;
