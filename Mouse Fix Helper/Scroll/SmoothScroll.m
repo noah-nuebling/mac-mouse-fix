@@ -167,11 +167,12 @@ static BOOL _isRunning;
             CVDisplayLinkStart(_displayLink);
         }
     } else { // stuff you wanna do on every tick, except the first one of each series of consecutive scroll ticks
-        _pixelScrollQueue = _pixelScrollQueue * _accelerationForScrollQueue;
+//        _pixelScrollQueue = _pixelScrollQueue * _accelerationForScrollQueue;
     }
-    
+
     // Update global vars
     
+    // Reset _pixelScrollQueue and related values if appropriate
     if (scrollDirectionChanged) { // Why are we resetting what we are resetting?
         _pixelScrollQueue = 0;
         _pixelsToScroll = 0;
@@ -182,18 +183,23 @@ static BOOL _isRunning;
         _pxPerMsVelocity        =   0;
         _pixelScrollQueue       =   0;
     }
+    // Update scroll phase
     if (_scrollPhase == kMFPhaseMomentum) {
         _scrollPhase = kMFPhaseWheel;
     } else if (_scrollPhase == kMFPhaseEnd) {
         _scrollPhase = kMFPhaseStart;
     }
+    // Apply acceleration to _pixelScrollQueue
+    _pixelScrollQueue = _pixelScrollQueue * _accelerationForScrollQueue;
     
+    // Apply scroll wheel input to _pixelScrollQueue
     _msLeftForScroll = _msPerStep;
     if (scrollDeltaAxis1 > 0) {
         _pixelScrollQueue += _pxStepSize * ScrollControl.scrollDirection;
     } else if (scrollDeltaAxis1 < 0) {
         _pixelScrollQueue -= _pxStepSize * ScrollControl.scrollDirection;
     }
+    // Apply fast scroll to _pixelScrollQueue if appropriate
     if (consecutiveScrollSwipes > ScrollControl.fastScrollThreshold_inSwipes) {
         _pixelScrollQueue = _pixelScrollQueue * pow(ScrollControl.fastScrollExponentialBase, (int32_t)consecutiveScrollSwipes - ScrollControl.fastScrollThreshold_inSwipes);
     }
@@ -219,7 +225,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         
         if (_msLeftForScroll == 0.0) { // Diving by zero yields infinity, we don't want that.
             NSLog(@"_msLeftForScroll was 0.0");
-            _pixelsToScroll = _pixelScrollQueue;
+            _pixelsToScroll = _pixelScrollQueue; // TODO: But it happens sometimes - check if this handles that situation well
         }
         
         _pixelScrollQueue   -=  _pixelsToScroll;
