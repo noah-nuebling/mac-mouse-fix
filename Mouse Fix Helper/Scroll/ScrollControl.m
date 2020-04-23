@@ -89,7 +89,7 @@ static BOOL _magnificationScrolling;
 + (BOOL)magnificationScrolling {
     return _magnificationScrolling;
 }
-+ (void)setMagnificationScrolling:(BOOL)B {
++ (void)setMagnificationScrolling:(BOOL)B { // TODO: This is called every time the user presses command. Check if efficient. Maybe only do this stuff, if the user actually scrolls before releasing command.
     if (_magnificationScrolling && !B) { // Magnification scrolling is being turned off
 //        if (_scrollPhase != kMFPhaseEnd) {
             [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseEnded]; // These events are sent every time the user presses command while a relevant device is attached. Might want to change this.
@@ -183,13 +183,13 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 + (void)configureWithParameters:(NSDictionary *)params {
     // How quickly fast scrolling gains speed.
     _fastScrollExponentialBase          =   [[params objectForKey:@"fastScrollExponentialBase"] floatValue]; // 1.05 //1.125 //1.0625 // 1.09375
-    // If fs_thr consecutive swipes occur, fast scrolling is enabled.
+    // If `_fastScrollThreshold_inSwipes` consecutive swipes occur, fast scrolling is enabled.
     _fastScrollThreshold_inSwipes       =   [[params objectForKey:@"fastScrollThreshold_inSwipes"] intValue];
-    // If sw_thr consecutive ticks occur, they are deemed a scroll-swipe.
+    // If `_scrollSwipeThreshold_inTicks` consecutive ticks occur, they are deemed a scroll-swipe.
     _scrollSwipeThreshold_inTicks       =   [[params objectForKey:@"scrollSwipeThreshold_inTicks"] intValue]; // 3
-    // If more than sw_int seconds passes between two scrollwheel swipes, then they aren't deemed consecutive.
+    // If more than `_consecutiveScrollSwipeMaxIntervall` seconds passes between two scrollwheel swipes, then they aren't deemed consecutive.
     _consecutiveScrollSwipeMaxIntervall =   [[params objectForKey:@"consecutiveScrollSwipeMaxIntervall"] floatValue];
-    // If more than ti_int seconds passes between two scrollwheel ticks, then they aren't deemed consecutive.
+    // If more than `_consecutiveScrollTickMaxIntervall` seconds passes between two scrollwheel ticks, then they aren't deemed consecutive.
     _consecutiveScrollTickMaxIntervall  =   [[params objectForKey:@"consecutiveScrollTickMaxIntervall"] floatValue]; // == _msPerStep/1000 // oldval:0.03
 }
 

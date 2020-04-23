@@ -568,14 +568,14 @@
 			path = SupportFiles;
 			sourceTree = "<group>";
 		};
-		4FD36AF0243741C90046DC41 /* ScrollOverridePanel */ = {
+		4FD36AF0243741C90046DC41 /* ScrollOverride */ = {
 			isa = PBXGroup;
 			children = (
 				4FD36AEA243741A70046DC41 /* ScrollOverridePanel.h */,
 				4FD36AEB243741A70046DC41 /* ScrollOverridePanel.m */,
 				4FD36AEC243741A70046DC41 /* ScrollOverridePanel.xib */,
 			);
-			path = ScrollOverridePanel;
+			path = ScrollOverride;
 			sourceTree = "<group>";
 		};
 		4FD45A13231C76A700F75C58 /* Config */ = {
@@ -660,7 +660,7 @@
 				4FD67DE3211CC9000095A9A5 /* MouseFix.xib */,
 				4FD45A17231C785F00F75C58 /* Accessibility */,
 				4FF873F2231A96C0002A897A /* MoreSheet */,
-				4FD36AF0243741C90046DC41 /* ScrollOverridePanel */,
+				4FD36AF0243741C90046DC41 /* ScrollOverride */,
 				4FBF350223183FBA00E6CFD0 /* Helper */,
 				4FBF350123183F1300E6CFD0 /* Config */,
 				4FD45A16231C771200F75C58 /* MessagePort */,

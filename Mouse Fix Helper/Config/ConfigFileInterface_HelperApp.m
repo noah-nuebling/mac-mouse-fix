@@ -99,9 +99,10 @@ static void fillConfigFromFile() {
         pid_t elementUnderMousePointerPID;
         AXUIElementGetPid(elementUnderMousePointer, &elementUnderMousePointerPID);
         NSRunningApplication *appUnderMousePointer = [NSRunningApplication runningApplicationWithProcessIdentifier:elementUnderMousePointerPID];
-        @try {
-            CFRelease(elementUnderMousePointer);
-        } @finally {}
+        
+        if (elementUnderMousePointer != nil) {
+            CFRelease(elementUnderMousePointer); // Using `@try { ... }` instead of `if (x != nil) { ... }` here results in a crash if elementUnderMousePointer is nil for some reason (Might be because it was running in debug configureation or something, or probably I just don't know how `@try` really works)
+        }
         bundleIDOfCurrentApp = appUnderMousePointer.bundleIdentifier;
     }
 

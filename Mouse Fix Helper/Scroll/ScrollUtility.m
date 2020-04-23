@@ -27,7 +27,7 @@
     NSLog(@"%lld",CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1));
     NSLog(@"%f",CGEventGetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1));
     
-    return event; // This is potentially a memory leak, because I'm creating a CGEvent but not releasing it
+    return event; // This is potentially a memory leak, because I'm creating a CGEvent but not releasing it??
 }
 /// Inverts the diection of a given scroll event if dir is -1.
 /// @param event Event to be inverted
@@ -123,6 +123,7 @@ static CGPoint _previousMouseLocation;
     _previousMouseLocation = mouseLocation;
     return mouseMoved;
 }
+
 static NSRunningApplication *_previousFrontMostApp;
 /// Frontmost application changed since the last time this function was called
 + (BOOL)frontMostAppDidChange {
