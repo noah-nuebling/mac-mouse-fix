@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
+        <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -249,5 +250,298 @@
             <point key="canvasLocation" x="91" y="0.5"/>
         </window>
         <menuItem title="Launchpad" tag="160" id="9rC-Ff-2hb"/>
+        <window title="≪ do not localize ≫" autorecalculatesKeyViewLoop="NO" restorable="NO" deferred="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="hnx-EO-N7f" userLabel="PrefPane">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
+            <rect key="contentRect" x="0.0" y="0.0" width="668" height="412"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <view key="contentView" identifier="mainView" id="qyl-y6-88V">
+                <rect key="frame" x="0.0" y="0.0" width="668" height="412"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view identifier="baseView" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qWc-ad-lHF">
+                        <rect key="frame" x="0.0" y="0.0" width="668" height="412"/>
+                        <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
+                        <subviews>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Atl-r6-Gun">
+                                <rect key="frame" x="571" y="376" width="83" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="More..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="g2O-5n-bZC">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="moreButton:" target="-2" id="3CI-op-n5G"/>
+                                </connections>
+                            </button>
+                            <button toolTip="Enable Mouse Fix for a better mouse experience!" verticalHuggingPriority="750" fixedFrame="YES" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dau-c5-62r">
+                                <rect key="frame" x="18" y="385" width="157" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Enable Mac Mouse Fix" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="aXt-SP-74D">
+                                    <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="enableCheckBox:" target="-2" id="dhE-le-N6p"/>
+                                </connections>
+                            </button>
+                            <box identifier="preferenceBox" autoresizesSubviews="NO" fixedFrame="YES" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="fUE-Uk-OBf">
+                                <rect key="frame" x="17" y="16" width="634" height="362"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
+                                <view key="contentView" id="PJA-tl-bxU">
+                                    <rect key="frame" x="3" y="3" width="628" height="356"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <button identifier="scrollCheckBox" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pfl-vp-tY0">
+                                            <rect key="frame" x="70" y="46" width="128" height="18"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <string key="toolTip">Awesome tricks: 
+- Hold Shift to scroll horizontally
+- Command-scroll to zoom</string>
+                                            <buttonCell key="cell" type="check" title="Smooth scrolling:" bezelStyle="regularSquare" imagePosition="left" enabled="NO" state="on" inset="2" id="35I-c2-8E3">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="scrollEnableCheckBox:" target="-2" id="cxP-6X-XDS"/>
+                                            </connections>
+                                        </button>
+                                        <slider toolTip="How many pixels to scroll for each mouse wheel tick." verticalHuggingPriority="750" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="obM-pq-dAO">
+                                            <rect key="frame" x="228" y="39" width="151" height="25"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <sliderCell key="cell" enabled="NO" state="on" alignment="left" identifier="scrollSpeedSlider" maxValue="1" doubleValue="0.5" tickMarkPosition="below" numberOfTickMarks="7" allowsTickMarkValuesOnly="YES" sliderType="linear" id="jmT-1v-mYA"/>
+                                            <connections>
+                                                <action selector="UIChanged:" target="-2" id="cOQ-zP-L1K"/>
+                                            </connections>
+                                        </slider>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="InC-pS-HRV">
+                                            <rect key="frame" x="254" y="70" width="102" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Scrolling speed" id="FdF-1m-fcg">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField toolTip="Scroll fewer pixels per mouse wheel tick." horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="401-2R-WHe">
+                                            <rect key="frame" x="222" y="18" width="29" height="14"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Slow" id="jQG-vI-zZQ">
+                                                <font key="font" metaFont="message" size="11"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField toolTip="Scroll more pixels per mouse wheel tick." horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3g2-8i-4lJ">
+                                            <rect key="frame" x="356" y="18" width="26" height="14"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Fast" id="XZG-4S-lXm">
+                                                <font key="font" metaFont="message" size="11"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <button identifier="invertScroll" toolTip="Inverts mouse scrolling direction relative to trackpad scrolling direction." verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C7x-61-XSg">
+                                            <rect key="frame" x="442" y="46" width="114" height="18"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <buttonCell key="cell" type="check" title="Invert direction" bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" state="on" inset="2" id="Zq7-MS-uhv">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="UIChanged:" target="-2" id="YVm-RG-hVA"/>
+                                            </connections>
+                                        </button>
+                                        <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="sfP-xW-i9D">
+                                            <rect key="frame" x="20" y="97" width="588" height="5"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </box>
+                                        <scrollView autohidesScrollers="YES" horizontalLineScroll="28" horizontalPageScroll="10" verticalLineScroll="28" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="yzu-FR-req">
+                                            <rect key="frame" x="20" y="115" width="588" height="132"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <clipView key="contentView" id="VkY-Bo-iys">
+                                                <rect key="frame" x="1" y="0.0" width="586" height="131"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <subviews>
+                                                    <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="26" headerView="ye3-vZ-MIi" viewBased="YES" id="Qfw-Ch-jQg">
+                                                        <rect key="frame" x="0.0" y="0.0" width="586" height="106"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        <size key="intercellSpacing" width="3" height="2"/>
+                                                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        <tableViewGridLines key="gridStyleMask" vertical="YES"/>
+                                                        <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                                        <tableColumns>
+                                                            <tableColumn width="289" minWidth="40" maxWidth="1000" id="uZ3-N8-kfd">
+                                                                <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Button">
+                                                                    <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                                                </tableHeaderCell>
+                                                                <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" title="Text Cell" id="dXT-Ne-pjh">
+                                                                    <font key="font" metaFont="system"/>
+                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                </textFieldCell>
+                                                                <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                                                <prototypeCellViews>
+                                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="dum-D7-Vs0">
+                                                                        <rect key="frame" x="1" y="1" width="289" height="26"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Double click Mouse Button 3" id="8sL-3X-cL7">
+                                                                            <font key="font" usesAppearanceFont="YES"/>
+                                                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                        </textFieldCell>
+                                                                    </textField>
+                                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="GUo-zh-aeF">
+                                                                        <rect key="frame" x="1" y="29" width="289" height="26"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Double click and hold Mouse Button 3" id="VdR-yP-kZ5">
+                                                                            <font key="font" usesAppearanceFont="YES"/>
+                                                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                        </textFieldCell>
+                                                                    </textField>
+                                                                </prototypeCellViews>
+                                                            </tableColumn>
+                                                            <tableColumn width="291" minWidth="10" maxWidth="3.4028234663852886e+38" id="9LP-PU-En7">
+                                                                <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Remapping">
+                                                                    <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                </tableHeaderCell>
+                                                                <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="a9t-5x-SjB">
+                                                                    <font key="font" metaFont="system"/>
+                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                </textFieldCell>
+                                                                <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                                                <prototypeCellViews>
+                                                                    <tableCellView id="mPY-TY-DRK">
+                                                                        <rect key="frame" x="293" y="1" width="291" height="26"/>
+                                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                        <subviews>
+                                                                            <popUpButton verticalHuggingPriority="750" id="eZU-IX-8cK">
+                                                                                <rect key="frame" x="4" y="0.0" width="281" height="26"/>
+                                                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                                                <popUpButtonCell key="cell" type="push" title="Mission Control" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="wF7-aY-p99" id="hHU-F8-7Fc">
+                                                                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                                                                    <font key="font" metaFont="system"/>
+                                                                                    <menu key="menu" id="sfO-3y-bKh">
+                                                                                        <items>
+                                                                                            <menuItem title="Mission Control" state="on" id="wF7-aY-p99"/>
+                                                                                            <menuItem title="App Exposé" id="IdH-GA-D7e"/>
+                                                                                            <menuItem title="Show Desktop" id="leQ-2e-eV9"/>
+                                                                                            <menuItem isSeparatorItem="YES" id="QXd-lD-vCB"/>
+                                                                                            <menuItem title="Launchpad" id="u32-oI-LHQ"/>
+                                                                                            <menuItem isSeparatorItem="YES" id="jAl-0h-Z9e"/>
+                                                                                            <menuItem title="Look up" id="MIq-1H-Rit"/>
+                                                                                            <menuItem isSeparatorItem="YES" id="fhZ-a4-MqX"/>
+                                                                                            <menuItem title="Move left a space" id="VjW-B3-LUJ"/>
+                                                                                            <menuItem title="Move right a space" id="qbH-ag-IF4"/>
+                                                                                            <menuItem isSeparatorItem="YES" id="O8J-pv-oXn"/>
+                                                                                            <menuItem title="Back" id="bzc-wE-D4w"/>
+                                                                                            <menuItem title="Forward" id="puP-bS-TRy"/>
+                                                                                            <menuItem isSeparatorItem="YES" id="a9r-2R-xih"/>
+                                                                                            <menuItem title="Two finger trackpad gesture" id="oLQ-8V-7O9"/>
+                                                                                            <menuItem title="Three finger trackpad gesture" id="CkA-nk-Jcf"/>
+                                                                                        </items>
+                                                                                    </menu>
+                                                                                </popUpButtonCell>
+                                                                            </popUpButton>
+                                                                        </subviews>
+                                                                    </tableCellView>
+                                                                    <tableCellView id="KLy-We-MR5">
+                                                                        <rect key="frame" x="293" y="29" width="291" height="26"/>
+                                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                        <subviews>
+                                                                            <popUpButton verticalHuggingPriority="750" id="Pdx-Ie-KAp">
+                                                                                <rect key="frame" x="4" y="0.0" width="281" height="26"/>
+                                                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                                                <popUpButtonCell key="cell" type="push" title="Mission Control" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="OXR-Gu-AhW" id="i7H-L0-K6H">
+                                                                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                                                                    <font key="font" metaFont="system"/>
+                                                                                    <menu key="menu" id="xLo-3T-KeY">
+                                                                                        <items>
+                                                                                            <menuItem title="Mission Control" state="on" id="OXR-Gu-AhW"/>
+                                                                                            <menuItem title="App Exposé" id="hgk-4f-AoC"/>
+                                                                                            <menuItem title="Show Desktop" id="CBm-gB-Dbx"/>
+                                                                                            <menuItem isSeparatorItem="YES" id="Csk-gt-HgI"/>
+                                                                                            <menuItem title="Launchpad" id="7vI-Gt-vGy"/>
+                                                                                            <menuItem title="Look up &amp; data detectors" id="Hlb-Ca-rNV"/>
+                                                                                            <menuItem title="Smart zoom" id="Bul-5W-Mk0"/>
+                                                                                            <menuItem isSeparatorItem="YES" id="lxC-IC-rHM"/>
+                                                                                            <menuItem title="Move left a space" id="jSt-6U-0PJ"/>
+                                                                                            <menuItem title="Move right a space" id="4kG-TJ-7pT"/>
+                                                                                            <menuItem isSeparatorItem="YES" id="52B-p5-ptG"/>
+                                                                                            <menuItem title="Back" id="ePP-bb-bZP"/>
+                                                                                            <menuItem title="Forward" id="bK1-m3-opO"/>
+                                                                                            <menuItem isSeparatorItem="YES" id="GkS-Vd-w3M"/>
+                                                                                            <menuItem title="2 finger trackpad swipe" toolTip="Scroll precisely and go back and forward by moving your mouse." id="Nve-If-2Xf"/>
+                                                                                            <menuItem title="3 finger trackpad swipe" toolTip="Use Mission Control, App Exposé, and move between spaces by moving your mouse." id="rLO-e5-ink"/>
+                                                                                        </items>
+                                                                                    </menu>
+                                                                                </popUpButtonCell>
+                                                                            </popUpButton>
+                                                                        </subviews>
+                                                                    </tableCellView>
+                                                                </prototypeCellViews>
+                                                            </tableColumn>
+                                                        </tableColumns>
+                                                    </tableView>
+                                                </subviews>
+                                            </clipView>
+                                            <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="xlW-fL-qM6">
+                                                <rect key="frame" x="1" y="119" width="250" height="15"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                            </scroller>
+                                            <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="afh-we-0BP">
+                                                <rect key="frame" x="224" y="17" width="15" height="102"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                            </scroller>
+                                            <tableHeaderView key="headerView" id="ye3-vZ-MIi">
+                                                <rect key="frame" x="0.0" y="0.0" width="586" height="25"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                            </tableHeaderView>
+                                        </scrollView>
+                                        <box fixedFrame="YES" boxType="custom" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="4md-M6-CDD">
+                                            <rect key="frame" x="38" y="254" width="552" height="54"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <view key="contentView" id="9lt-rl-PYl">
+                                                <rect key="frame" x="1" y="1" width="550" height="52"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            </view>
+                                            <color key="borderColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="fillColor" name="unemphasizedSelectedContentBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </box>
+                                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oU4-eg-YZh">
+                                            <rect key="frame" x="291" y="263" width="48" height="34"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSAddTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="Uy8-Yh-Pza">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3w1-E8-RuO">
+                                            <rect key="frame" x="99" y="326" width="464" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Put the mouse pointer over this field and click the button you want to remap" id="JbZ-EU-JZ2">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                    </subviews>
+                                </view>
+                            </box>
+                        </subviews>
+                    </view>
+                </subviews>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="VP8-NJ-ugO"/>
+            </connections>
+            <point key="canvasLocation" x="817" y="-208"/>
+        </window>
     </objects>
+    <resources>
+        <image name="NSAddTemplate" width="11" height="11"/>
+    </resources>
 </document>
