@@ -37,7 +37,7 @@
         BOOL frontMostAppChanged = NO;
         if (!mouseMoved) {
             frontMostAppChanged = [ScrollUtility frontMostAppDidChange];
-            // Only need to check this if mouse didn't move, because of OR in (mouseMoved || frontMostAppChanged). For optimization. Not sure if significant.
+            // Only checking this if mouse didn't move, because of || in (mouseMoved || frontMostAppChanged). For optimization. Not sure if significant.
         }
         if (mouseMoved || frontMostAppChanged) {
             // set app overrides
@@ -51,7 +51,7 @@
     
     // Process event
     
-    if (ScrollControl.scrollDirection == -1) { // TODO: Use kMFInvertedScrollDirection instead of -1
+    if (ScrollControl.scrollDirection == -1) { // TODO: Use kMFInvertedScrollDirection instead of -1. Implement same change where ever ScrollControl.scrollDirection is used.
         event = [ScrollUtility invertScrollEvent:event direction:ScrollControl.scrollDirection];
     }
     if (ScrollControl.magnificationScrolling) {

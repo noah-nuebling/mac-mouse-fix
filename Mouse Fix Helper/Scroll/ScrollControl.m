@@ -101,63 +101,11 @@ static BOOL _magnificationScrolling;
             [SmoothScroll stop];
             [SmoothScroll start];
         }
-//        if (_scrollPhase == kMFPhaseMomentum || _scrollPhase == kMFPhaseWheel) {
+//        if (_scrollPhase == kMFPhaseMomentum || _scrollPhase == kMFPhaseLinear) {
             [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseBegan];
 //        }
     }
     _magnificationScrolling = B;
-}
-
-#pragma mark - Private functions
-
-static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
-    
-    // Return non-scrollwheel events unaltered
-    
-    long long   isPixelBased            =   CGEventGetIntegerValueField(event, kCGScrollWheelEventIsContinuous);
-    long long   scrollPhase             =   CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase);
-    long long   scrollDeltaAxis1        =   CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
-    long long   scrollDeltaAxis2        =   CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2);
-    if (isPixelBased != 0 ||
-        scrollDeltaAxis1 == 0 ||
-        scrollDeltaAxis2 != 0 ||
-        scrollPhase != 0) { // adding scrollphase here is untested
-        return event;
-    }
-    
-    // Process event
-    
-    /// (Multithreading stuff described below doesn't work, yet. It somehow leads to the events being "invalidated")
-    /// Possible reasons and solutions:
-    /// I think events might be invalidated after this function returns. Or maybe when they're used on a different thread than the one they were created on or something like that. The `CGEventGet...` functions log "Invalid event." - so maybe an "invalid event" is just nil? Nope, testing says no. There might be some data field in the event that restricts its usage to specific situations.
-    /// Creating new events and copying relevant fields over might resolve this issue.
-    
-    // Do prcessing of event on a different thread using `dispatch_async`, so we can return faster
-    // Returning fast should prevent the system from disabling this eventTap entirely when under load
-//    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
-       
-        /// Regarding the "invalid Event" error when trying to use `dispatch_async`. I thought maybe the original event was freed after `eventTapCallback()` returned and that that might have caused the issue, so I created a copy named `newEvent` here. This led to different errors as far as I remember, which might be a valuable lead, but it still didn't work. There might be some data field in the event that restricts its usage to specific situations which isn't copied or.
-//        CGEventRef newEvent = CGEventCreateCopy(event);
-        
-        // `info` dictionary is used to pass data to the input handlers, so that we don't have to calculate stuff twice.
-        NSDictionary *info;
-        if (_isSmoothEnabled) {
-            info = @{
-                @"scrollDeltaAxis1": [NSNumber numberWithLongLong:scrollDeltaAxis1]
-            };
-            
-            /// TODO: Remove the dispatch_async stuff below. It's just for testing.
-            /// Testing reveals: Multi threading does seem to prevent the eventTap from breaking. Yay! Now we just need to get it working properly...
-//            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
-                [SmoothScroll handleInput:event info:info];
-//            });
-        } else {
-            info = @{};
-            [RoughScroll handleInput:event info:info];
-        }
-//    });
-    
-    return nil;
 }
 
 #pragma mark - Public functions
@@ -171,7 +119,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     // Create/enable scrollwheel input callback
     if (_eventTap == nil) {
         CGEventMask mask = CGEventMaskBit(kCGEventScrollWheel);
-        _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
+        _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGTailAppendEventTap /*kCGHeadInsertEventTap*/, kCGEventTapOptionDefault, mask, eventTapCallback, NULL); // Using `kCGTailAppendEventTap` instead of `kCGHeadInsertEventTap` because I think it might help with the bug of 87. It's also how MOS does things. Don't think it helps :'/
         NSLog(@"_eventTap: %@", _eventTap);
         CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _eventTap, 0);
         CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes);
@@ -243,6 +191,58 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
             [RoughScroll start];
         }
     }
+}
+
+#pragma mark - Private functions
+
+static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
+    
+    // Return non-scrollwheel events unaltered
+    
+    long long   isPixelBased            =   CGEventGetIntegerValueField(event, kCGScrollWheelEventIsContinuous);
+    long long   scrollPhase             =   CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase);
+    long long   scrollDeltaAxis1        =   CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
+    long long   scrollDeltaAxis2        =   CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2);
+    if (isPixelBased != 0 ||
+        scrollDeltaAxis1 == 0 ||
+        scrollDeltaAxis2 != 0 ||
+        scrollPhase != 0) { // adding scrollphase here is untested
+        return event;
+    }
+    
+    // Process event
+    
+    /// (Multithreading stuff described below doesn't work, yet. It somehow leads to the events being "invalidated")
+    /// Possible reasons and solutions:
+    /// I think events might be invalidated after this function returns. Or maybe when they're used on a different thread than the one they were created on or something like that. The `CGEventGet...` functions log "Invalid event." - so maybe an "invalid event" is just nil? Nope, testing says no. There might be some data field in the event that restricts its usage to specific situations.
+    /// Creating new events and copying relevant fields over might resolve this issue.
+    
+    // Do prcessing of event on a different thread using `dispatch_async`, so we can return faster
+    // Returning fast should prevent the system from disabling this eventTap entirely when under load
+//    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
+       
+        /// Regarding the "invalid Event" error when trying to use `dispatch_async`. I thought maybe the original event was freed after `eventTapCallback()` returned and that that might have caused the issue, so I created a copy named `newEvent` here. This led to different errors as far as I remember, which might be a valuable lead, but it still didn't work. There might be some data field in the event that restricts its usage to specific situations which isn't copied or.
+//        CGEventRef newEvent = CGEventCreateCopy(event);
+        
+        // `info` dictionary is used to pass data to the input handlers, so that we don't have to calculate stuff twice. (Probably an extremelyyy unnecessary complication for a super small performance gain...)
+        NSDictionary *info;
+        if (_isSmoothEnabled) {
+            info = @{
+                @"scrollDeltaAxis1": [NSNumber numberWithLongLong:scrollDeltaAxis1]
+            };
+            
+            /// TODO: Remove the dispatch_async stuff below. It's just for testing.
+            /// Testing reveals: Multi threading does seem to prevent the eventTap from breaking. Yay! Now we just need to get it working properly...
+//            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
+                [SmoothScroll handleInput:event info:info];
+//            });
+        } else {
+            info = @{};
+            [RoughScroll handleInput:event info:info];
+        }
+//    });
+    
+    return nil;
 }
 
 @end
