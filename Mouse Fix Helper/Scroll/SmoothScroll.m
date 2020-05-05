@@ -120,9 +120,9 @@ static BOOL _isRunning;
 
 #pragma mark - Run Loop
 
-+ (void)handleInput:(CGEventRef)event info:(NSDictionary *)info {
++ (void)handleInput:(CGEventRef)event info:(NSDictionary * _Nullable)info {
     
-    long long scrollDeltaAxis1 = [(NSNumber *)[info valueForKey:@"scrollDeltaAxis1"] longLongValue];
+    long long scrollDeltaAxis1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
     
     // Stuff you wanna do on the first tick of each series of consecutive scroll ticks.
     if (ScrollUtility.consecutiveScrollTickCounter == 0) {
