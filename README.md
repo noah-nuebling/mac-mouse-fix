@@ -1,5 +1,5 @@
 
-<img src="https://i.imgur.com/JoQYYjy.png">
+<img src="https://i.imgur.com/ev55sJ3.png">
 
 # Mac Mouse Fix
 
