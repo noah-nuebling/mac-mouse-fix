@@ -180,6 +180,8 @@ static BOOL _isRunning;
 
 static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp *inNow, const CVTimeStamp *inOutputTime, CVOptionFlags flagsIn, CVOptionFlags *flagsOut, void *displayLinkContext) {
     
+    
+    
     double msSinceLastFrame = CVDisplayLinkGetActualOutputVideoRefreshPeriod(_displayLink) * 1000;
     if (msSinceLastFrame != 16.674562) {
         NSLog(@"frameTimeSpike: %fms", msSinceLastFrame);

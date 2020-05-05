@@ -36,6 +36,10 @@ static CGEventSourceRef _eventSource = nil;
 + (CGEventSourceRef)eventSource {
     return _eventSource;
 }
+static dispatch_queue_t _scrollQueue;
++ (dispatch_queue_t)_scrollQueue {
+    return _scrollQueue;
+}
 
 // From config
 
@@ -82,6 +86,12 @@ static int _scrollDirection;
 #pragma mark - Public functions
 
 + (void)load_Manual {
+    
+    // Create custom dispatch queue for multithreading while still retaining control over execution order.
+    dispatch_queue_attr_t attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INTERACTIVE, -1);
+    _scrollQueue = dispatch_queue_create(NULL, attr);
+    
+    // Create AXUIElement for getting app under mouse pointer
     _systemWideAXUIElement = AXUIElementCreateSystemWide();
     // Create Event source
     if (_eventSource == nil) {
@@ -185,7 +195,9 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         
     // Do heavy processing of event on a different thread using `dispatch_async`, so we can return faster
     // Returning fast should prevent the system from disabling this eventTap entirely when under load
-    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
+    dispatch_async(_scrollQueue, ^{
+        
+        
     
         // Check if scrolling direction changed
         
