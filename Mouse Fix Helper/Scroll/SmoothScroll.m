@@ -68,7 +68,7 @@ static int      _onePixelScrollsCounter;
 
 /// Consider calling [ScrollControl resetDynamicGlobals] to reset not only SmoothScroll specific globals.
 + (void)resetDynamicGlobals {
-    _displayLinkPhase                   =   kMFPhaseNone;
+    _displayLinkPhase                   =   kMFPhaseStart; // kMFPhaseNone;
     _pxToScrollThisFrame                =   0;
     _pxScrollBuffer                     =   0;
     _msLeftForScroll                    =   0;
@@ -134,7 +134,7 @@ static BOOL _isRunning;
                 NSLog(@"Error while trying to set display link to display under mouse pointer: %@", [e reason]);
             }
         }
-        if (CVDisplayLinkIsRunning(_displayLink) == FALSE) { // Do this after setting app overrides, because that might reroute the event. Rerouting might lead to this event being processed by RoughScroll.m instead of Smoothscroll.m (If the override turns smooth scrolling off). In that case we don't want to start the displayLink.
+        if (CVDisplayLinkIsRunning(_displayLink) == FALSE) {
             CVDisplayLinkStart(_displayLink);
         }
     }

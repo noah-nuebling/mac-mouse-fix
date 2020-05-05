@@ -194,10 +194,10 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     CGEventRef eventCopy = [ScrollUtility createScrollEventWithValuesFromEvent:event];
         
     // Do heavy processing of event on a different thread using `dispatch_async`, so we can return faster
-    // Returning fast should prevent the system from disabling this eventTap entirely when under load
+    // Returning fast should prevent the system from disabling this eventTap entirely when under load. This doesn't happen in MOS for some reason, maybe there's a better solution than multithreading.
+    // With multithreading enabled, scrolling sometimes - seemingly at random - stops working entirely. So the tap still works but sending events doesn't.
+    // - Switching to an app that doesn't have smothscroll enabled seems to fix it. -> Somethings in my code must be breaking
     dispatch_async(_scrollQueue, ^{
-        
-        
     
         // Check if scrolling direction changed
         
@@ -223,7 +223,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
             }
         }
     
-    // Process event
+        // Process event
         
         if (_isSmoothEnabled) {
             [SmoothScroll handleInput:eventCopy info:NULL];
