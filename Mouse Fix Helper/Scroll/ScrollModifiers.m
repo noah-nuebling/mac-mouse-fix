@@ -9,11 +9,50 @@
 
 #import "ScrollModifiers.h"
 #import "ScrollControl.h"
+#import "SmoothScroll.h"
+#import "TouchSimulator.h"
 
 // TODO: Rename to ScrollModifierInputReceiver. Maybe merge this into ScrollControl or put the modifier properties from ScrollControl into this.
 @implementation ScrollModifiers
 
 #pragma mark - Public class variables
+
+static BOOL _magnificationScrollHasBeenUsed = NO;
++ (BOOL)magnificationScrollHasBeenUsed {
+    return _magnificationScrollHasBeenUsed;
+}
++ (void)setMagnificationScrollHasBeenUsed:(BOOL)B {
+    _magnificationScrollHasBeenUsed = B;
+}
+
+static BOOL _horizontalScrolling;
++ (BOOL)horizontalScrolling {
+    return _horizontalScrolling;
+}
++ (void)setHorizontalScrolling:(BOOL)B {
+    _horizontalScrolling = B;
+}
+static BOOL _magnificationScrolling;
++ (BOOL)magnificationScrolling {
+    return _magnificationScrolling;
+}
+/**
+   \note `_magnificationScrolling` only ever be set through `setMagnificationScrolling:`!
+*/
++ (void)setMagnificationScrolling:(BOOL)B {
+    if (!_magnificationScrolling && B) { // Magnification scrolling is being turned on
+        if (SmoothScroll.isScrolling) {
+            [SmoothScroll stop];
+            [SmoothScroll start];
+        }
+    } else if (_magnificationScrolling && !B) { // Magnification scrolling is being turned off
+        if (ScrollModifiers.magnificationScrollHasBeenUsed) {
+            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseEnded];
+            ScrollModifiers.magnificationScrollHasBeenUsed = false;
+        }
+    }
+    _magnificationScrolling = B;
+}
 
 static BOOL _horizontalScrollModifierKeyEnabled = YES;
 + (BOOL)horizontalScrollModifierKeyEnabled {
@@ -29,17 +68,12 @@ static BOOL _magnificationScrollModifierKeyEnabled = YES;
 + (void)setMagnificationScrollModifierKeyEnabled:(BOOL)B {
     _magnificationScrollModifierKeyEnabled = B;
 }
+
 static CGEventFlags _horizontalScrollModifierKeyMask = 0;
-//+ (CGEventFlags)horizontalModifier {
-//    return _horizontalModifier;
-//}
 + (void)setHorizontalScrollModifierKeyMask:(CGEventFlags)F {
     _horizontalScrollModifierKeyMask = F;
 }
 static CGEventFlags _magnificationScrollModifierKeyMask = 0;
-//+ (CGEventFlags)magnificationModifier {
-//    return _magnificationModifier;
-//}
 + (void)setMagnificationScrollModifierKeyMask:(CGEventFlags)F {
     _magnificationScrollModifierKeyMask = F;
 }
@@ -73,14 +107,14 @@ static void setupModifierKeyCallback() {
 CGEventRef Handle_ModifierChanged(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     CGEventFlags flags = CGEventGetFlags(event);
     if (flags & _horizontalScrollModifierKeyMask && _horizontalScrollModifierKeyEnabled) {
-        ScrollControl.horizontalScrolling = YES;
+        ScrollModifiers.horizontalScrolling = YES;
     } else {
-        ScrollControl.horizontalScrolling = NO;
+        ScrollModifiers.horizontalScrolling = NO;
     }
     if (flags & _magnificationScrollModifierKeyMask && _magnificationScrollModifierKeyEnabled) {
-        ScrollControl.magnificationScrolling = YES;
+        ScrollModifiers.magnificationScrolling = YES;
     } else {
-        ScrollControl.magnificationScrolling = NO;
+        ScrollModifiers.magnificationScrolling = NO;
     }
     
     /*

@@ -13,6 +13,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ScrollUtility : NSObject
 
+typedef enum {
+    kMFPhaseNone,
+    kMFPhaseStart,
+    kMFPhaseLinear,
+    kMFPhaseMomentum,
+    kMFPhaseEnd,
+} MFDisplayLinkPhase;
+
++ (NSDictionary *)MFScrollPhaseToIOHIDEventPhase;
+
 + (CGEventRef)normalizedEventWithPixelValue:(int)lineHeight;
 + (CGEventRef)invertScrollEvent:(CGEventRef)event direction:(int)dir;
 + (void)logScrollEvent:(CGEventRef)event;

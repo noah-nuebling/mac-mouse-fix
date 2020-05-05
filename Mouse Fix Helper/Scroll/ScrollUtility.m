@@ -10,9 +10,25 @@
 #import "ScrollUtility.h"
 #import "ScrollControl.h"
 #import <Cocoa/Cocoa.h>
+#import "IOHIDEventTypes.h"
 
 @implementation ScrollUtility
 
+
+static NSDictionary *_MFScrollPhaseToIOHIDEventPhase;
++ (NSDictionary *)MFScrollPhaseToIOHIDEventPhase {
+    return _MFScrollPhaseToIOHIDEventPhase;
+}
+
++ (void)load {
+    _MFScrollPhaseToIOHIDEventPhase = @{
+        @(kMFPhaseNone):       @(kIOHIDEventPhaseUndefined),
+        @(kMFPhaseStart):      @(kIOHIDEventPhaseBegan),
+        @(kMFPhaseLinear):     @(kIOHIDEventPhaseChanged),
+        @(kMFPhaseMomentum):   @(kIOHIDEventPhaseChanged),
+        @(kMFPhaseEnd):        @(kIOHIDEventPhaseEnded),
+    };
+}
 
 /// Creates a vertical scroll event with a line delta value of 1 and a pixel value of `lineHeight`
 + (CGEventRef)normalizedEventWithPixelValue:(int)lineHeight {

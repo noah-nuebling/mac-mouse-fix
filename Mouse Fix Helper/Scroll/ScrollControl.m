@@ -78,35 +78,6 @@ static int _scrollDirection;
 + (void)setScrollDirection:(int)dir {
     _scrollDirection = dir;
 }
-static BOOL _horizontalScrolling; // TODO: Consider moving this stuff into ScrollModifiers.m
-+ (BOOL)horizontalScrolling {
-    return _horizontalScrolling;
-}
-+ (void)setHorizontalScrolling:(BOOL)B {
-    _horizontalScrolling = B;
-}
-static BOOL _magnificationScrolling;
-+ (BOOL)magnificationScrolling {
-    return _magnificationScrolling;
-}
-+ (void)setMagnificationScrolling:(BOOL)B { // TODO: This is called every time the user presses command. Check if efficient. Maybe only do this stuff, if the user actually scrolls before releasing command.
-    if (_magnificationScrolling && !B) { // Magnification scrolling is being turned off
-//        if (_scrollPhase != kMFPhaseEnd) {
-            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseEnded]; // These events are sent every time the user presses command while a relevant device is attached. Might want to change this.
-//            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseBegan];
-//            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseEnded];
-//        }
-    } else if (!_magnificationScrolling && B) { // Magnification scrolling is being turned on
-        if (SmoothScroll.isRunning) { // Restarting SmoothScroll to avoid immediate zooming when pressing command while scrolling.
-            [SmoothScroll stop];
-            [SmoothScroll start];
-        }
-//        if (_scrollPhase == kMFPhaseMomentum || _scrollPhase == kMFPhaseLinear) {
-            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseBegan];
-//        }
-    }
-    _magnificationScrolling = B;
-}
 
 #pragma mark - Public functions
 

@@ -12,6 +12,7 @@
 #import "TouchSimulator.h"
 #import "ScrollUtility.h"
 #import "ConfigFileInterface_HelperApp.h"
+#import "ScrollModifiers.h"
 
 @implementation RoughScroll
 
@@ -54,10 +55,10 @@
     if (ScrollControl.scrollDirection == -1) { // TODO: Use kMFInvertedScrollDirection instead of -1. Implement same change where ever ScrollControl.scrollDirection is used.
         event = [ScrollUtility invertScrollEvent:event direction:ScrollControl.scrollDirection];
     }
-    if (ScrollControl.magnificationScrolling) {
+    if (ScrollModifiers.magnificationScrolling) {
         [TouchSimulator postEventWithMagnification:CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1)/50.0 phase:kIOHIDEventPhaseChanged];
     } else {
-        if (ScrollControl.horizontalScrolling) {
+        if (ScrollModifiers.horizontalScrolling) {
             [ScrollUtility makeScrollEventHorizontal:event];
         }
         CGEventPost(kCGSessionEventTap, event);

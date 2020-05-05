@@ -27,16 +27,6 @@
 
 #pragma mark - Globals
 
-# pragma mark enum
-
-typedef enum {
-    kMFPhaseNone,
-    kMFPhaseStart,
-    kMFPhaseLinear,
-    kMFPhaseMomentum,
-    kMFPhaseEnd,
-} MFScrollPhase;
-
 #pragma mark parameters
 
 // wheel phase
@@ -53,11 +43,11 @@ static CVDisplayLinkRef _displayLink;
 #pragma mark dynamic vars
 
 // any phase
+static MFDisplayLinkPhase _displayLinkPhase;
 static int _pxToScrollThisFrame;
-static int _scrollPhase; // TODO: Change type to MFScrollPhase
 //static int _previousPhase; // which phase was active the last time that displayLinkCallback was called. Used to compute artificial scroll phases
 static CGDirectDisplayID *_displaysUnderMousePointer;
-// wheel phase
+// linear phase
 static int      _pxScrollBuffer;
 static double   _msLeftForScroll;
 // momentum phase
@@ -78,12 +68,15 @@ static int      _onePixelScrollsCounter;
 
 /// Consider calling [ScrollControl resetDynamicGlobals] to reset not only SmoothScroll specific globals.
 + (void)resetDynamicGlobals {
-    _scrollPhase                        =   kMFPhaseNone;
-    _pxToScrollThisFrame                     =   0;
+    _displayLinkPhase                   =   kMFPhaseNone;
+    _pxToScrollThisFrame                =   0;
     _pxScrollBuffer                     =   0;
     _msLeftForScroll                    =   0;
     _pxPerMsVelocity                    =   0;
     _onePixelScrollsCounter             =   0;
+    
+    [ScrollUtility resetConsecutiveTicksAndSwipes]; // MARK: Put this here, because it fixes problem with magnification scrolling. I feel like this might lead to issues.
+    _isScrolling = false;
 }
 
 + (void)configureWithParameters:(NSDictionary *)params {
@@ -95,6 +88,10 @@ static int      _onePixelScrollsCounter;
     _nOfOnePixelScrollsMax              =   [[params objectForKey:@"onePixelScrollsLimit"] intValue]; // After opl+1 frames of only scrolling 1 pixel, scrolling stops. Should probably change code to stop after opl frames.
 }
 
+static BOOL _isScrolling = NO;
++ (BOOL)isScrolling {
+    return _isScrolling;
+}
 static BOOL _isRunning;
 + (BOOL)isRunning {
     return _isRunning;
@@ -106,7 +103,7 @@ static BOOL _isRunning;
     }
     NSLog(@"SmoothScroll started");
     
-    _isRunning = TRUE;
+    _isRunning = YES;
     [SmoothScroll resetDynamicGlobals];
     CGDisplayRemoveReconfigurationCallback(Handle_displayReconfiguration, NULL); // don't know if necesssary
     CGDisplayRegisterReconfigurationCallback(Handle_displayReconfiguration, NULL);
@@ -115,7 +112,8 @@ static BOOL _isRunning;
     
     NSLog(@"SmoothScroll stopped");
     
-    _isRunning = FALSE;
+    _isRunning = NO;
+    _isScrolling = NO;
     CVDisplayLinkStop(_displayLink);
     CGDisplayRemoveReconfigurationCallback(Handle_displayReconfiguration, NULL);
 }
@@ -135,10 +133,7 @@ static BOOL _isRunning;
     }
     [ScrollUtility updateConsecutiveScrollTickAndSwipeCountersWithTickOccuringNow];
     
-    int consecutiveScrollTicks = ScrollUtility.consecutiveScrollTickCounter;
-    int consecutiveScrollSwipes = ScrollUtility.consecutiveScrollSwipeCounter;
-    
-    if (consecutiveScrollTicks == 0) { // stuff you only wanna do once - on the first tick of each series of consecutive scroll ticks
+    if (ScrollUtility.consecutiveScrollTickCounter == 0) { // stuff you only wanna do once - on the first tick of each series of consecutive scroll ticks
     // This code is very similar to the code under `if (consecutiveScrollTicks == 0) {` in [RoughScroll handleInput:]
     // Look to transfer any improvements
 
@@ -174,6 +169,8 @@ static BOOL _isRunning;
 
     // Update global vars
     
+    _isScrolling = YES;
+    
     // Reset _pixelScrollQueue and related values if appropriate
     if (scrollDirectionChanged) { // Why are we resetting what we are resetting?
         _pxScrollBuffer = 0;
@@ -186,12 +183,9 @@ static BOOL _isRunning;
 //        _pxPerMsVelocity        =   0;
 //        _pxScrollBuffer       =   0;
 //    }
+    
     // Update scroll phase
-    if (_scrollPhase == kMFPhaseEnd || _scrollPhase == kMFPhaseNone) {
-        _scrollPhase = kMFPhaseStart;
-    } else {
-        _scrollPhase = kMFPhaseLinear;
-    }
+    _displayLinkPhase = kMFPhaseStart;
     
     // Apply scroll wheel input to _pxScrollBuffer
     _msLeftForScroll = _msPerStep;
@@ -201,21 +195,15 @@ static BOOL _isRunning;
         _pxScrollBuffer -= _pxStepSize * ScrollControl.scrollDirection;
     }
     
-//    _accelerationForScrollBuffer = 1.1;
-    
     // Apply acceleration to _pxScrollBuffer
-    if (_scrollPhase != kMFPhaseStart && _scrollPhase != kMFPhaseNone) {
+    if (ScrollUtility.consecutiveScrollTickCounter != 0) {
         _pxScrollBuffer = _pxScrollBuffer * _accelerationForScrollBuffer;
     }
     
     // Apply fast scroll to _pxScrollBuffer if appropriate
-    if (consecutiveScrollSwipes > ScrollControl.fastScrollThreshold_inSwipes) {
-        _pxScrollBuffer = _pxScrollBuffer * pow(ScrollControl.fastScrollExponentialBase, (int32_t)consecutiveScrollSwipes - ScrollControl.fastScrollThreshold_inSwipes);
+    if (ScrollUtility.consecutiveScrollSwipeCounter > ScrollControl.fastScrollThreshold_inSwipes) {
+        _pxScrollBuffer = _pxScrollBuffer * pow(ScrollControl.fastScrollExponentialBase, (int32_t)ScrollUtility.consecutiveScrollSwipeCounter - ScrollControl.fastScrollThreshold_inSwipes);
     }
-    
-    
-    NSLog(@"SCROLLPHASE: %d", _scrollPhase);
-    NSLog(@"MOUSE INPUT");
 }
 
 static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp *inNow, const CVTimeStamp *inOutputTime, CVOptionFlags flagsIn, CVOptionFlags *flagsOut, void *displayLinkContext) {
@@ -231,7 +219,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     
 # pragma mark Linear Phase
     
-    if (_scrollPhase == kMFPhaseLinear || _scrollPhase == kMFPhaseStart) {
+    if (_displayLinkPhase == kMFPhaseLinear || _displayLinkPhase == kMFPhaseStart) {
         
         _pxToScrollThisFrame = round( (_pxScrollBuffer/_msLeftForScroll) * msSinceLastFrame );
         
@@ -239,26 +227,24 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
             NSLog(@"_msLeftForScroll was 0.0");
             _pxToScrollThisFrame = _pxScrollBuffer; // TODO: But it happens sometimes - check if this handles that situation well
         }
-        
-                NSLog(@"thisframe: %d,  buffer: %d,     msleft: %f", _pxToScrollThisFrame, _pxScrollBuffer, _msLeftForScroll);
+
         
         _pxScrollBuffer   -=  _pxToScrollThisFrame;
         _msLeftForScroll    -=  msSinceLastFrame;
         
         // Entering momentum phase
         if ( (_msLeftForScroll <= 0) || (_pxScrollBuffer == 0) ) { // TODO: Why not check if _pxToScrollThisFrame == 0 here instead?
-            NSLog(@"LEAVING LINEAR PHASE");
             _msLeftForScroll    =   0; // TODO: Is this necessary?
             _pxScrollBuffer   =   0; // What about this? This stuff isn't used in momentum phase and should get reset elsewhere efore getting used again
             
-            _scrollPhase = kMFPhaseMomentum;
+            _displayLinkPhase = kMFPhaseMomentum;
             _pxPerMsVelocity = (_pxToScrollThisFrame / msSinceLastFrame);
         }
     }
     
 # pragma mark Momentum Phase
     
-    else if (_scrollPhase == kMFPhaseMomentum) {
+    else if (_displayLinkPhase == kMFPhaseMomentum) {
 //        NSLog(@"ENTERING MOMENTUM PHASE");
         _pxToScrollThisFrame = round(_pxPerMsVelocity * msSinceLastFrame);
         double oldVel = _pxPerMsVelocity;
@@ -268,19 +254,23 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
             _pxPerMsVelocity = 0;
         }
         if (_pxToScrollThisFrame == 0 || _pxPerMsVelocity == 0) {
-            _scrollPhase = kMFPhaseEnd;
+            _displayLinkPhase = kMFPhaseEnd;
         }
         if (abs(_pxToScrollThisFrame) == 1) {
             _onePixelScrollsCounter += 1;
             if (_onePixelScrollsCounter > _nOfOnePixelScrollsMax) { // I think using > instead of >= might put the actual maximum at _nOfOnePixelScrollsMax + 1.
-                _scrollPhase = kMFPhaseEnd;
+                _displayLinkPhase = kMFPhaseEnd;
             }
         }
     }
     
 # pragma mark Send Event
     
-    if (ScrollControl.magnificationScrolling) {
+    if (ScrollModifiers.magnificationScrolling) {
+        if (ScrollModifiers.magnificationScrollHasBeenUsed == false) {
+            ScrollModifiers.magnificationScrollHasBeenUsed = true;
+            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseBegan];
+        }
         [TouchSimulator postEventWithMagnification:_pxToScrollThisFrame/800.0 phase:kIOHIDEventPhaseChanged];
     } else {
         CGEventRef scrollEvent = CGEventCreateScrollWheelEvent(ScrollControl.eventSource, kCGScrollEventUnitPixel, 1, 0);
@@ -300,7 +290,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         
         // Set scrollDelta
         
-        if (ScrollControl.horizontalScrolling == FALSE) {
+        if (ScrollModifiers.horizontalScrolling == FALSE) {
             CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis1, _pxToScrollThisFrame / 8);
             CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis1, _pxToScrollThisFrame);
         } else {
@@ -340,12 +330,13 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     
 #pragma mark Other
     
-    if (_scrollPhase == kMFPhaseEnd) {
+    if (_displayLinkPhase == kMFPhaseStart) {
+        _displayLinkPhase = kMFPhaseLinear;
+    }
+    else if (_displayLinkPhase == kMFPhaseEnd) {
         [SmoothScroll resetDynamicGlobals];
         CVDisplayLinkStop(displayLink);
         return 0;
-    } else if (_scrollPhase == kMFPhaseStart) {
-        _scrollPhase = kMFPhaseLinear;
     }
     return 0;
 }
