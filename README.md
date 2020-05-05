@@ -4,6 +4,8 @@ A simple way to make your 3rd party mouse better.
 
 ### [Download](http://www.mousefix.org)
 
+[Prereleases](https://github.com/noah-nuebling/mac-mouse-fix/releases)
+
 ## Features
 
 * Switch between Spaces, activate Mission Control, trigger Quick Look, or use the side buttons to navigate through pages in your browser. All of that and more. Right from your mouse.
@@ -13,7 +15,3 @@ A simple way to make your 3rd party mouse better.
 ---
 
 If you have suggestions or feature requests, please send me an email or open an issue here on GitHub. Any feature that solves a common problem of 3rd party mouse users on macOS might be a good fit for Mac Mouse Fix.
-
---- 
-
-[Check out new features early](https://github.com/noah-nuebling/mac-mouse-fix/releases).
