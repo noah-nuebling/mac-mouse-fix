@@ -3,7 +3,7 @@
 
 # Mac Mouse Fix
 
-A simple way to make your 3rd party mouse better.
+A simple way to make your mouse better.
 
 ### [Download](http://www.mousefix.org) | [Pre-releases](https://github.com/noah-nuebling/mac-mouse-fix/releases)
 
