@@ -123,10 +123,15 @@ static BOOL _hasStarted;
 
 + (void)handleInput:(CGEventRef)event info:(NSDictionary * _Nullable)info {
     
+    
+//    _pxStepSize = 20;
+//    double _pxPerMSBaseSpeed = 0.45;
+    
+//        NSLog(@"1.");
 //    NSLog(@"CONSECCC: %d", ScrollUtility.consecutiveScrollTickCounter);
 //    NSLog(@"DLINK ON???: %d", CVDisplayLinkIsRunning(_displayLink));
 //    NSLog(@"DLINK PHASEEE: %d", _displayLinkPhase);
-//    NSLog(@"STARTEDD??: %d", _hasStarted);
+//    NSLog(@"SMOTHSTARTEDD??: %d", _hasStarted);
     
     long long scrollDeltaAxis1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
 
@@ -152,6 +157,7 @@ static BOOL _hasStarted;
     
     // Apply scroll wheel input to _pxScrollBuffer
     _msLeftForScroll = _msPerStep;
+//    _msLeftForScroll = 1 / (_pxPerMSBaseSpeed / _pxStepSize);
     if (scrollDeltaAxis1 > 0) {
         _pxScrollBuffer += _pxStepSize * ScrollControl.scrollDirection;
     } else if (scrollDeltaAxis1 < 0) {
@@ -171,22 +177,36 @@ static BOOL _hasStarted;
     // Start displaylink and stuff
     if (ScrollUtility.consecutiveScrollTickCounter == 0) {
         if (ScrollUtility.mouseDidMove) {
-            // set diplaylink to the display that is actally being scrolled - not sure if this is necessary, because having the displaylink at 30fps on a 30fps display looks just as horrible as having the display link on 60fps, if not worse
+            // Set diplaylink to the display that is actally being scrolled - not sure if this is necessary, because having the displaylink at 30fps on a 30fps display looks just as horrible as having the display link on 60fps, if not worse
             @try {
                 setDisplayLinkToDisplayUnderMousePointer(event);
             } @catch (NSException *e) {
                 NSLog(@"Error while trying to set display link to display under mouse pointer: %@", [e reason]);
             }
         }
-        if (CVDisplayLinkIsRunning(_displayLink) == FALSE) {
-            CVDisplayLinkStart(_displayLink);
+        while (CVDisplayLinkIsRunning(_displayLink) == NO) {
+            // Executing this on _scrollQueue (like the rest of this function) leads to `CVDisplayLinkStart()` failing sometimes. Once it has failed it will fail over and over again, taking a few minutes or so to start working again, if at all.
+            // Solution: I have no idea why this helps, but executing on the main queue does the trick! ^^
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                CVReturn rt = CVDisplayLinkStart(_displayLink);
+                if (rt != kCVReturnSuccess) {
+                    NSLog(@"Failed to start displayLink. Trying again.");
+                    NSLog(@"Error code: %d", rt);
+                }
+            });
         }
     }
+    
+//        NSLog(@"2.");
+//        NSLog(@"2 CONSECCC: %d", ScrollUtility.consecutiveScrollTickCounter);
+//        NSLog(@"2 DLINK ON???: %d", CVDisplayLinkIsRunning(_displayLink));
+//        NSLog(@"2 DLINK PHASEEE: %d", _displayLinkPhase);
+//        NSLog(@"2 STARTEDD??: %d", _hasStarted);
+//    NSLog(@"   ");
+    
 }
 
 static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp *inNow, const CVTimeStamp *inOutputTime, CVOptionFlags flagsIn, CVOptionFlags *flagsOut, void *displayLinkContext) {
-    
-//    NSLog(@"DPL");
     
     double msSinceLastFrame = CVDisplayLinkGetActualOutputVideoRefreshPeriod(_displayLink) * 1000;
     if (msSinceLastFrame != 16.674562) {

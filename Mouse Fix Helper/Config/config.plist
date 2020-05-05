@@ -19,8 +19,8 @@
 			<dict>
 				<key>click</key>
 				<array>
-					<string>symbolicHotKey</string>
-					<integer>81</integer>
+					<string>swipeEvent</string>
+					<string>right</string>
 				</array>
 			</dict>
 		</dict>
@@ -30,8 +30,8 @@
 			<dict>
 				<key>click</key>
 				<array>
-					<string>symbolicHotKey</string>
-					<integer>79</integer>
+					<string>swipeEvent</string>
+					<string>left</string>
 				</array>
 			</dict>
 		</dict>
