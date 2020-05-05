@@ -92,27 +92,28 @@ static BOOL _isScrolling = NO;
 + (BOOL)isScrolling {
     return _isScrolling;
 }
-static BOOL _isRunning;
-+ (BOOL)isRunning {
-    return _isRunning;
+static BOOL _hasStarted;
++ (BOOL)hasStarted {
+    return _hasStarted;
 }
 + (void)start {
-    
-    if (_isRunning) {
+    if (_hasStarted) {
         return;
     }
     NSLog(@"SmoothScroll started");
     
-    _isRunning = YES;
+    _hasStarted = YES;
     [SmoothScroll resetDynamicGlobals];
     CGDisplayRemoveReconfigurationCallback(Handle_displayReconfiguration, NULL); // don't know if necesssary
     CGDisplayRegisterReconfigurationCallback(Handle_displayReconfiguration, NULL);
 }
 + (void)stop {
-    
+    if (!_hasStarted) {
+        return;
+    }
     NSLog(@"SmoothScroll stopped");
     
-    _isRunning = NO;
+    _hasStarted = NO;
     _isScrolling = NO;
     CVDisplayLinkStop(_displayLink);
     CGDisplayRemoveReconfigurationCallback(Handle_displayReconfiguration, NULL);
@@ -122,22 +123,12 @@ static BOOL _isRunning;
 
 + (void)handleInput:(CGEventRef)event info:(NSDictionary * _Nullable)info {
     
-    long long scrollDeltaAxis1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
+//    NSLog(@"CONSECCC: %d", ScrollUtility.consecutiveScrollTickCounter);
+//    NSLog(@"DLINK ON???: %d", CVDisplayLinkIsRunning(_displayLink));
+//    NSLog(@"DLINK PHASEEE: %d", _displayLinkPhase);
+//    NSLog(@"STARTEDD??: %d", _hasStarted);
     
-    // Stuff you wanna do on the first tick of each series of consecutive scroll ticks.
-    if (ScrollUtility.consecutiveScrollTickCounter == 0) {
-        if (ScrollUtility.mouseDidMove) {
-            // set diplaylink to the display that is actally being scrolled - not sure if this is necessary, because having the displaylink at 30fps on a 30fps display looks just as horrible as having the display link on 60fps, if not worse
-            @try {
-                setDisplayLinkToDisplayUnderMousePointer(event);
-            } @catch (NSException *e) {
-                NSLog(@"Error while trying to set display link to display under mouse pointer: %@", [e reason]);
-            }
-        }
-        if (CVDisplayLinkIsRunning(_displayLink) == FALSE) {
-            CVDisplayLinkStart(_displayLink);
-        }
-    }
+    long long scrollDeltaAxis1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
 
     // Update global vars
     
@@ -176,11 +167,26 @@ static BOOL _isRunning;
     if (ScrollUtility.consecutiveScrollSwipeCounter > ScrollControl.fastScrollThreshold_inSwipes) {
         _pxScrollBuffer = _pxScrollBuffer * pow(ScrollControl.fastScrollExponentialBase, (int32_t)ScrollUtility.consecutiveScrollSwipeCounter - ScrollControl.fastScrollThreshold_inSwipes);
     }
+    
+    // Start displaylink and stuff
+    if (ScrollUtility.consecutiveScrollTickCounter == 0) {
+        if (ScrollUtility.mouseDidMove) {
+            // set diplaylink to the display that is actally being scrolled - not sure if this is necessary, because having the displaylink at 30fps on a 30fps display looks just as horrible as having the display link on 60fps, if not worse
+            @try {
+                setDisplayLinkToDisplayUnderMousePointer(event);
+            } @catch (NSException *e) {
+                NSLog(@"Error while trying to set display link to display under mouse pointer: %@", [e reason]);
+            }
+        }
+        if (CVDisplayLinkIsRunning(_displayLink) == FALSE) {
+            CVDisplayLinkStart(_displayLink);
+        }
+    }
 }
 
 static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp *inNow, const CVTimeStamp *inOutputTime, CVOptionFlags flagsIn, CVOptionFlags *flagsOut, void *displayLinkContext) {
     
-    
+//    NSLog(@"DPL");
     
     double msSinceLastFrame = CVDisplayLinkGetActualOutputVideoRefreshPeriod(_displayLink) * 1000;
     if (msSinceLastFrame != 16.674562) {
@@ -348,9 +354,7 @@ static void setDisplayLinkToDisplayUnderMousePointer(CGEventRef event) {
         NSException *e = [NSException exceptionWithName:NSInternalInconsistencyException reason:@"there are 0 diplays under the mouse pointer" userInfo:NULL];
         @throw e;
     }
-    
     free(newDisplaysUnderMousePointer);
-    
 }
 
 @end

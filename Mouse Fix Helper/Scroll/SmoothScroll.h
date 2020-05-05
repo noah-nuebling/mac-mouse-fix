@@ -18,7 +18,7 @@
 
 + (void)start;
 + (void)stop;
-+ (BOOL)isRunning;
++ (BOOL)hasStarted;
 + (BOOL)isScrolling;
 
 + (void)handleInput:(CGEventRef _Nonnull)event info:(NSDictionary * _Nullable)info;

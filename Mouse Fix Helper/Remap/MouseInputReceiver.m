@@ -236,7 +236,7 @@ static void Handle_DeviceMatchingCallbackHID (void *context, IOReturn result, vo
     _relevantDevicesAreAttached = TRUE;
     [MomentumScroll decide];
     NSLog(@"MomentumScroll.isEnabled: %hhd", MomentumScroll.isEnabled);
-    NSLog(@"MomentumScroll.isRunning: %hhd", MomentumScroll.isRunning);
+    NSLog(@"MomentumScroll.hasStarted: %hhd", MomentumScroll.hasStarted);
     
     
     

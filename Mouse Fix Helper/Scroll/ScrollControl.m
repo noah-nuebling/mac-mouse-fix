@@ -190,6 +190,15 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         scrollPhase != 0) { // adding scrollphase here is untested
         return event;
     }
+    
+    // Check if scrolling direction changed
+    
+    [ScrollUtility updateScrollDirectionDidChange:scrollDeltaAxis1];
+    
+    if (ScrollUtility.scrollDirectionDidChange) {
+        [ScrollUtility resetConsecutiveTicksAndSwipes];
+    }
+    
     // Create a copy, because the original event will become invalid and unusable in the new thread.
     CGEventRef eventCopy = [ScrollUtility createScrollEventWithValuesFromEvent:event];
         
@@ -198,14 +207,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     // With multithreading enabled, scrolling sometimes - seemingly at random - stops working entirely. So the tap still works but sending events doesn't.
     // - Switching to an app that doesn't have smothscroll enabled seems to fix it. -> Somethings in my code must be breaking
     dispatch_async(_scrollQueue, ^{
-    
-        // Check if scrolling direction changed
-        
-        [ScrollUtility updateScrollDirectionDidChange:scrollDeltaAxis1];
-        
-        if (ScrollUtility.scrollDirectionDidChange) {
-            [ScrollUtility resetConsecutiveTicksAndSwipes];
-        }
+
         
         // Set application overrides
         
@@ -219,15 +221,23 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
             }
             if (ScrollUtility.mouseDidMove || ScrollUtility.frontMostAppDidChange) {
                 // set app overrides
-                [ConfigFileInterface_HelperApp updateInternalParameters_Force:NO];
+                BOOL configChanged = [ConfigFileInterface_HelperApp updateInternalParameters_Force:NO]; // TODO: `updateInternalParameters_Force:` should (probably) reset stuff itself, if it changes anything. This whole [SmoothScroll stop] stuff is kinda messy
+                if (configChanged) {
+                    [SmoothScroll stop]; // Not sure if useful
+                    [RoughScroll stop]; // Not sure if useful
+                }
             }
         }
     
         // Process event
         
         if (_isSmoothEnabled) {
+            [SmoothScroll start];   // Not sure if useful
+            [RoughScroll stop];     // Not sure if useful
             [SmoothScroll handleInput:eventCopy info:NULL];
         } else {
+            [SmoothScroll stop];    // Not sure if useful
+            [RoughScroll stop];     // Not sure if useful
             [RoughScroll handleInput:eventCopy info:NULL];
         }
         CFRelease(eventCopy);

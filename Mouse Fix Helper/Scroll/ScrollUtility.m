@@ -181,7 +181,7 @@ static BOOL _scrollDirectionDidChange;
 static long long _previousScrollValue;
 /// Checks whether the sign of input number is different from when this function was last called. Writes result into `_frontMostAppDidChange`.
 + (void)updateScrollDirectionDidChange:(long long)thisScrollValue {
-    BOOL _scrollDirectionDidChange = NO;
+    _scrollDirectionDidChange = NO;
     if (![ScrollUtility sameSign:thisScrollValue and:_previousScrollValue]) {
         _scrollDirectionDidChange = YES;
     }
