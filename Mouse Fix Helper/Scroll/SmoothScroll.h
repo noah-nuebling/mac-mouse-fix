@@ -14,14 +14,14 @@
 
 + (void)load_Manual;
 
-+ (void)configureWithParameters:(NSDictionary *)params;
++ (void)configureWithParameters:(NSDictionary * _Nonnull)params;
 
 + (void)start;
 + (void)stop;
 + (BOOL)isRunning;
 + (BOOL)isScrolling;
 
-+ (void)handleInput:(CGEventRef)event info:(NSDictionary * _Nullable)info;
++ (void)handleInput:(CGEventRef _Nonnull)event info:(NSDictionary * _Nullable)info;
 
 @end
 

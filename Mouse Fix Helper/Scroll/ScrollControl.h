@@ -29,10 +29,6 @@ typedef enum {
 + (double)consecutiveScrollTickMaxIntervall;
 + (double)consecutiveScrollSwipeMaxIntervall;
 
-+ (BOOL)horizontalScrolling;
-+ (void)setHorizontalScrolling:(BOOL)B;
-+ (BOOL)magnificationScrolling;
-+ (void)setMagnificationScrolling:(BOOL)B;
 + (BOOL)isSmoothEnabled;
 + (void)setIsSmoothEnabled: (BOOL)B;
 + (int)scrollDirection;
