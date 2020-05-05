@@ -19,6 +19,8 @@
 + (BOOL)magnificationScrolling;
 + (void)setMagnificationScrolling:(BOOL)B;
 
++ (void)handleMagnificationScrollWithAmount:(double)amount;
+
 + (void)setHorizontalScrollModifierKeyMask:(CGEventFlags)F;
 + (void)setMagnificationScrollModifierKeyMask:(CGEventFlags)F;
 
@@ -29,5 +31,6 @@
 
 + (void)start;
 + (void)stop;
+
 @end
 

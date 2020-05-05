@@ -156,11 +156,12 @@
                                                         <menuItem title="Middle button" state="on" toolTip="Leave button behavior unchanged." id="U6a-n1-4au"/>
                                                         <menuItem isSeparatorItem="YES" id="eNY-Gi-27u"/>
                                                         <menuItem title="Mission Control" tag="32" id="gws-rg-Zk7"/>
-                                                        <menuItem title="Application windows" tag="33" id="wux-ng-X0Q"/>
+                                                        <menuItem title="App Exposé" tag="33" id="wux-ng-X0Q"/>
                                                         <menuItem title="Show Desktop" tag="36" id="rJY-Pt-3q5"/>
+                                                        <menuItem isSeparatorItem="YES" id="ruo-uz-9N7"/>
                                                         <menuItem title="Launchpad" tag="160" id="D9s-9R-pDS"/>
                                                         <menuItem isSeparatorItem="YES" id="hy8-EA-lgC"/>
-                                                        <menuItem title="Look Up" tag="70" id="0P6-lc-6fr"/>
+                                                        <menuItem title="Look Up" tag="70" toolTip="Sometimes referred to as &quot;Look Up &amp; data detectors&quot;" id="0P6-lc-6fr"/>
                                                     </items>
                                                 </menu>
                                                 <connections>
@@ -188,11 +189,12 @@
                                                         <menuItem title="-" state="on" toolTip="No action." id="gLf-sd-t5o"/>
                                                         <menuItem isSeparatorItem="YES" id="pq5-uw-FgV"/>
                                                         <menuItem title="Mission Control" tag="32" id="4MU-HZ-ovV"/>
-                                                        <menuItem title="Application windows" tag="33" id="86s-c0-bQd"/>
+                                                        <menuItem title="App Exposé" tag="33" id="86s-c0-bQd"/>
                                                         <menuItem title="Show Desktop" tag="36" id="EVv-bp-mbA"/>
+                                                        <menuItem isSeparatorItem="YES" id="CqD-Rs-Rbf"/>
                                                         <menuItem title="Launchpad" tag="160" id="mNB-I6-Buo"/>
                                                         <menuItem isSeparatorItem="YES" id="8hK-BK-5D2"/>
-                                                        <menuItem title="Look Up" tag="70" id="g0j-DR-0Je"/>
+                                                        <menuItem title="Look Up &amp; data detectors" tag="70" toolTip="Sometimes referred to as &quot;Look Up &amp; data detectors&quot;" id="g0j-DR-0Je"/>
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>

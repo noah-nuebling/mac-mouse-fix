@@ -53,6 +53,13 @@ static BOOL _magnificationScrolling;
     }
     _magnificationScrolling = B;
 }
++ (void)handleMagnificationScrollWithAmount:(double)amount {
+    if (ScrollModifiers.magnificationScrollHasBeenUsed == false) {
+        ScrollModifiers.magnificationScrollHasBeenUsed = true;
+        [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseBegan];
+    }
+    [TouchSimulator postEventWithMagnification:amount phase:kIOHIDEventPhaseChanged];
+}
 
 static BOOL _horizontalScrollModifierKeyEnabled = YES;
 + (BOOL)horizontalScrollModifierKeyEnabled {

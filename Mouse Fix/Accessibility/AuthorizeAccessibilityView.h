@@ -14,6 +14,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AuthorizeAccessibilityView : NSViewController
 + (void)add;
 + (void)remove;
-@end
+@end    
 
 NS_ASSUME_NONNULL_END

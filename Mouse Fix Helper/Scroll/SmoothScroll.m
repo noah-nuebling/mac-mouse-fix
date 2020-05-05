@@ -239,11 +239,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 # pragma mark Send Event
     
     if (ScrollModifiers.magnificationScrolling) {
-        if (ScrollModifiers.magnificationScrollHasBeenUsed == false) {
-            ScrollModifiers.magnificationScrollHasBeenUsed = true;
-            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseBegan];
-        }
-        [TouchSimulator postEventWithMagnification:_pxToScrollThisFrame/800.0 phase:kIOHIDEventPhaseChanged];
+        [ScrollModifiers handleMagnificationScrollWithAmount:_pxToScrollThisFrame/800.0];
     } else {
         CGEventRef scrollEvent = CGEventCreateScrollWheelEvent(ScrollControl.eventSource, kCGScrollEventUnitPixel, 1, 0);
         // CGEventSourceSetPixelsPerLine(_eventSource, 1);

@@ -32,7 +32,7 @@
         event = [ScrollUtility invertScrollEvent:event direction:ScrollControl.scrollDirection];
     }
     if (ScrollModifiers.magnificationScrolling) {
-        [TouchSimulator postEventWithMagnification:CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1)/50.0 phase:kIOHIDEventPhaseChanged];
+        [ScrollModifiers handleMagnificationScrollWithAmount:CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1)/50.0];
     } else {
         if (ScrollModifiers.horizontalScrolling) {
             [ScrollUtility makeScrollEventHorizontal:event];
