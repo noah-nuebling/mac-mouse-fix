@@ -127,37 +127,46 @@ static NSDictionary *_MFScrollPhaseToIOHIDEventPhase;
     return false;
 }
 
-static CGPoint _previousMouseLocation;
-/// Cursor did move since the last time this function was called
+static BOOL _mouseDidMove = NO;
 + (BOOL)mouseDidMove {
+    return _mouseDidMove;
+}
+static CGPoint _previousMouseLocation;
+/// Checks if cursor did move since the last time this function was called. Writes result into `_mouseDidMove`.
++ (void)updateMouseDidMove {
     CGEventRef event = CGEventCreate(nil);
     CGPoint mouseLocation = CGEventGetLocation(event);
     CFRelease(event);
-    BOOL mouseMoved = ![ScrollUtility point:mouseLocation
+    _mouseDidMove = ![ScrollUtility point:mouseLocation
                           isAboutTheSameAs:_previousMouseLocation
                                  threshold:10];
     _previousMouseLocation = mouseLocation;
-    return mouseMoved;
 }
 
-static NSRunningApplication *_previousFrontMostApp;
-/// Frontmost application changed since the last time this function was called
+static BOOL _frontMostAppDidChange;
 + (BOOL)frontMostAppDidChange {
+    return _frontMostAppDidChange;
+}
+static NSRunningApplication *_previousFrontMostApp;
+/// Checks if frontmost application changed since the last time this function was called. Writes result into `_frontMostAppDidChange`.
++ (void)updateFrontMostAppDidChange {
     NSRunningApplication *frontMostApp = NSWorkspace.sharedWorkspace.frontmostApplication;
-    BOOL didChange = ![frontMostApp isEqual:_previousFrontMostApp];
+    _frontMostAppDidChange = ![frontMostApp isEqual:_previousFrontMostApp];
     _previousFrontMostApp = frontMostApp;
-    return didChange;
 }
 
+static BOOL _scrollDirectionDidChange;
++ (BOOL)scrollDirectionDidChange {
+    return _scrollDirectionDidChange;
+}
 static long long _previousScrollValue;
-/// Whether the sign of input number is different from when this function was last called
-+ (BOOL)scrollDirectionDidChange:(long long)thisScrollValue {
-    BOOL directionChanged = NO;
+/// Checks whether the sign of input number is different from when this function was last called. Writes result into `_frontMostAppDidChange`.
++ (void)updateScrollDirectionDidChange:(long long)thisScrollValue {
+    BOOL _scrollDirectionDidChange = NO;
     if (![ScrollUtility sameSign:thisScrollValue and:_previousScrollValue]) {
-        directionChanged = YES;
+        _scrollDirectionDidChange = YES;
     }
     _previousScrollValue = thisScrollValue;
-    return directionChanged;
 }
 
 /// \note Shouldn't use this (at least when resetting dynamic globals) - leads to bugs

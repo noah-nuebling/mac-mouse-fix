@@ -181,6 +181,30 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         return event;
     }
     
+    // Check if scrolling direction changed
+    
+    [ScrollUtility updateScrollDirectionDidChange:scrollDeltaAxis1];
+    
+    if (ScrollUtility.scrollDirectionDidChange) {
+        [ScrollUtility resetConsecutiveTicksAndSwipes];
+    }
+    
+    // Set application overrides
+    
+    [ScrollUtility updateConsecutiveScrollTickAndSwipeCountersWithTickOccuringNow];
+    
+    if (ScrollUtility.consecutiveScrollTickCounter == 0) { // Only do this on the first of each series of consecutive scroll ticks
+        [ScrollUtility updateMouseDidMove];
+        if (!ScrollUtility.mouseDidMove) {
+            [ScrollUtility updateFrontMostAppDidChange];
+            // Only checking this if mouse didn't move, because of || in (mouseMoved || frontMostAppChanged). For optimization. Not sure if significant.
+        }
+        if (ScrollUtility.mouseDidMove || ScrollUtility.frontMostAppDidChange) {
+            // set app overrides
+            [ConfigFileInterface_HelperApp updateInternalParameters_Force:NO];
+        }
+    }
+    
     // Process event
     
     /// (Multithreading stuff described below doesn't work, yet. It somehow leads to the events being "invalidated")

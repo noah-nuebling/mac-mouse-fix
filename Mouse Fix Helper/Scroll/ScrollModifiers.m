@@ -41,14 +41,14 @@ static BOOL _magnificationScrolling;
 */
 + (void)setMagnificationScrolling:(BOOL)B {
     if (!_magnificationScrolling && B) { // Magnification scrolling is being turned on
-        if (SmoothScroll.isScrolling) {
+        ScrollModifiers.magnificationScrollHasBeenUsed = false;
+        if (SmoothScroll.isScrolling) { // To avoid random zooming when the user is pressing `magnificationScrollModifierKey` (Command) while scrolling
             [SmoothScroll stop];
             [SmoothScroll start];
         }
     } else if (_magnificationScrolling && !B) { // Magnification scrolling is being turned off
         if (ScrollModifiers.magnificationScrollHasBeenUsed) {
             [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseEnded];
-            ScrollModifiers.magnificationScrollHasBeenUsed = false;
         }
     }
     _magnificationScrolling = B;

@@ -124,35 +124,9 @@ static BOOL _isRunning;
     
     long long scrollDeltaAxis1 = [(NSNumber *)[info valueForKey:@"scrollDeltaAxis1"] longLongValue];
     
-    // Check if scrolling direction changed
-    Boolean scrollDirectionChanged = [ScrollUtility scrollDirectionDidChange:scrollDeltaAxis1]; // TODO: [I think I fixed this. Delete if no errors occur.] This doesn't work when inputting a scroll tick with a new direction near the end of a previous scroll.
-    
-    // Scroll ticks and scroll swipes
-    if (scrollDirectionChanged) {
-        [ScrollUtility resetConsecutiveTicksAndSwipes];
-    }
-    [ScrollUtility updateConsecutiveScrollTickAndSwipeCountersWithTickOccuringNow];
-    
-    if (ScrollUtility.consecutiveScrollTickCounter == 0) { // stuff you only wanna do once - on the first tick of each series of consecutive scroll ticks
-    // This code is very similar to the code under `if (consecutiveScrollTicks == 0) {` in [RoughScroll handleInput:]
-    // Look to transfer any improvements
-
-        BOOL mouseMoved = [ScrollUtility mouseDidMove];
-        BOOL frontMostAppChanged = NO;
-        if (!mouseMoved) {
-            frontMostAppChanged = [ScrollUtility frontMostAppDidChange];
-            // Only checking this if mouse didn't move, because of || in (mouseMoved || frontMostAppChanged). For optimization. Not sure if significant.
-        }
-        if (mouseMoved || frontMostAppChanged) {
-            // TODO: Move this stuff to `ScrollControl.m`. That way you can prevent duplicate code in `SmoothScroll.m` and `RoughScroll.m` as well as avoid using the `reroutScrollEventToTop:` stuff.
-            // set app overrides
-            BOOL paramsDidChange = [ConfigFileInterface_HelperApp updateInternalParameters_Force:NO];
-            if (paramsDidChange) {
-                [ScrollControl rerouteScrollEventToTop:event];
-                return;
-            }
-        }
-        if (mouseMoved) {
+    // Stuff you wanna do on the first tick of each series of consecutive scroll ticks.
+    if (ScrollUtility.consecutiveScrollTickCounter == 0) {
+        if (ScrollUtility.mouseDidMove) {
             // set diplaylink to the display that is actally being scrolled - not sure if this is necessary, because having the displaylink at 30fps on a 30fps display looks just as horrible as having the display link on 60fps, if not worse
             @try {
                 setDisplayLinkToDisplayUnderMousePointer(event);
@@ -163,8 +137,6 @@ static BOOL _isRunning;
         if (CVDisplayLinkIsRunning(_displayLink) == FALSE) { // Do this after setting app overrides, because that might reroute the event. Rerouting might lead to this event being processed by RoughScroll.m instead of Smoothscroll.m (If the override turns smooth scrolling off). In that case we don't want to start the displayLink.
             CVDisplayLinkStart(_displayLink);
         }
-    } else { // stuff you wanna do on every tick, except the first one of each series of consecutive scroll ticks
-//        _pxScrollBuffer = _pxScrollBuffer * _accelerationForScrollQueue;
     }
 
     // Update global vars
@@ -172,7 +144,7 @@ static BOOL _isRunning;
     _isScrolling = YES;
     
     // Reset _pixelScrollQueue and related values if appropriate
-    if (scrollDirectionChanged) { // Why are we resetting what we are resetting?
+    if (ScrollUtility.scrollDirectionDidChange) { // Why are we resetting what we are resetting?
         _pxScrollBuffer = 0;
         _pxToScrollThisFrame = 0;
         _pxPerMsVelocity = 0;

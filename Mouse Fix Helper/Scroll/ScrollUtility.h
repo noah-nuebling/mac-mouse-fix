@@ -32,8 +32,11 @@ typedef enum {
 + (double)signOf:(double)n;
 + (BOOL)sameSign:(double)n and:(double)m;
 + (BOOL)mouseDidMove;
++ (void)updateMouseDidMove;
 + (BOOL)frontMostAppDidChange;
-+ (BOOL)scrollDirectionDidChange:(long long)signedVal;
++ (void)updateFrontMostAppDidChange;
++ (BOOL)scrollDirectionDidChange;
++ (void)updateScrollDirectionDidChange:(long long)thisScrollValue;
 
 + (int)consecutiveScrollTickCounter;
 + (int)consecutiveScrollSwipeCounter;
