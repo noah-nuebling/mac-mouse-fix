@@ -3,11 +3,15 @@
 ## 0.9.2 
 (Not yet released)
 
-- Amazingly smooth scroll wheel zooming! When you hold command while scrolling, Mac Mouse Fix will now let the computer think that you're performing a pinch to zoom gesture on a trackpad.  Working in pro apps like Sketch, Photoshop, or Logic Pro X has just become way better! 
-- Fixed compatibility with 10.11 El Capitan.
-- Added light acceleration to scrolling in order to make it feel even more responsive.
-- Added 'Hold Middle Mouse Button to Look Up' option, which was removed in 0.9.1, back in.
-- Various small improvements.
+- Added support for macOS 10.11 El Capitan.
+- Fixed compatibilty with many mice that pretend to be keyboards or other things including the Logitech MX Master.
+- Improved scrolling performance through multi-threading.
+- Made scrolling more snappy.
+- Added a feature that disables all keyboard modifier interception when no mice are attached to your computer. CPU usage should now be at 0% at all times when no mice are attached.
+- You can now zoom in and out by holding Command (⌘) while scrolling.
+- You can now disable smooth scrolling for any app.
+- Added 'Look Up' and 'Launchpad' options which were removed in 0.9.1 back in.
+- Various small improvements and bug fixes.
 
 ## 0.9.1
 
