@@ -194,7 +194,7 @@
                                                         <menuItem isSeparatorItem="YES" id="CqD-Rs-Rbf"/>
                                                         <menuItem title="Launchpad" tag="160" id="mNB-I6-Buo"/>
                                                         <menuItem isSeparatorItem="YES" id="8hK-BK-5D2"/>
-                                                        <menuItem title="Look Up &amp; data detectors" tag="70" toolTip="Sometimes referred to as &quot;Look Up &amp; data detectors&quot;" id="g0j-DR-0Je"/>
+                                                        <menuItem title="Look Up" tag="70" toolTip="Sometimes referred to as &quot;Look Up &amp; data detectors&quot;" id="g0j-DR-0Je"/>
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
@@ -362,7 +362,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <clipView key="contentView" id="VkY-Bo-iys">
                                                 <rect key="frame" x="1" y="0.0" width="586" height="131"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <autoresizingMask key="autoresizingMask"/>
                                                 <subviews>
                                                     <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="26" headerView="ye3-vZ-MIi" viewBased="YES" id="Qfw-Ch-jQg">
                                                         <rect key="frame" x="0.0" y="0.0" width="586" height="106"/>

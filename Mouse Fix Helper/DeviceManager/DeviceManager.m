@@ -86,7 +86,7 @@ static void setupDeviceAddedAndRemovedCallbacks() {
     
     CFDictionarySetValue(matchDict1, CFSTR("DeviceUsagePage"), genericDesktopUsagePage);
     CFDictionarySetValue(matchDict1, CFSTR("DeviceUsage"), mouseUsage);
-    CFDictionarySetValue(matchDict1, CFSTR("Transport"), CFSTR("USB"));
+    CFDictionarySetValue(matchDict1, CFSTR("Transport"), CFSTR("USB")); // TODO: Shouldn't using only one matchDict instead of three and not specifying Transport work as well?
 
     CFDictionarySetValue(matchDict2, CFSTR("DeviceUsagePage"), genericDesktopUsagePage);
     CFDictionarySetValue(matchDict2, CFSTR("DeviceUsage"), mouseUsage);
@@ -115,9 +115,6 @@ static void setupDeviceAddedAndRemovedCallbacks() {
     CFMutableDictionaryRef matchesList[] = {matchDict1, matchDict2, matchDict3};
     matches = CFArrayCreate(kCFAllocatorDefault, (const void **)matchesList, 3, NULL);
     
-    
-
-    
     // Register the Matching Dictionary to the HID Manager
     IOHIDManagerSetDeviceMatchingMultiple(_hidManager, matches);
     
@@ -127,8 +124,6 @@ static void setupDeviceAddedAndRemovedCallbacks() {
     CFRelease(matchDict3);
     CFRelease(mouseUsage);
     CFRelease(genericDesktopUsagePage);
-    
-    
     
     // Register the HID Manager on our app’s run loop
     IOHIDManagerScheduleWithRunLoop(_hidManager, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
@@ -236,10 +231,10 @@ static BOOL devicePassesFiltering(IOHIDDeviceRef device) {
     NSString *deviceName = (__bridge NSString *)IOHIDDeviceGetProperty(device, CFSTR("Product"));
     NSNumber *deviceVendorID = (__bridge NSNumber *)IOHIDDeviceGetProperty(device, CFSTR("VendorID"));
     
-    if ([deviceName.lowercaseString rangeOfString:@"magic"].location != NSNotFound) {
+    if ([deviceName.lowercaseString rangeOfString:@"magic"].location != NSNotFound) { // TODO: Does it make sense? Shouldn't ignoring all Apple devices be enough? (This is untested)
         return NO;
     }
-    if ([deviceName isEqualToString:@"Apple Internal Keyboard / Trackpad"]) {
+    if ([deviceName isEqualToString:@"Apple Internal Keyboard / Trackpad"]) { // TODO: Does it make sense? Does this work on other machines that are not mine? Shouldn't ignoring all Apple devices be enough?
         return NO;
     }
     if (deviceVendorID.integerValue == 1452) { // Apple's Vendor ID is 1452 (sometimes written as 0x5ac or 05ac)

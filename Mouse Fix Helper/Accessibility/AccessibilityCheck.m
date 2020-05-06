@@ -54,7 +54,7 @@
 // Timer Callbacks
 
 + (void)sendAccessibilityMessageToPrefpane {
-    NSLog(@"send acc message to prefpane");
+    NSLog(@"Sending accessibilty disabled message to prefPane");
     [MessagePort_HelperApp sendMessageToPrefPane:@"accessibilityDisabled"];
 }
 
