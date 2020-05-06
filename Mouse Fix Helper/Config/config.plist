@@ -92,7 +92,7 @@
 			<key>scrollSwipeThreshold_inTicks</key>
 			<integer>4</integer>
 			<key>consecutiveScrollSwipeMaxIntervall</key>
-			<real>0.5</real>
+			<real>0.4</real>
 			<key>consecutiveScrollTickMaxIntervall</key>
 			<real>0.13</real>
 		</dict>
