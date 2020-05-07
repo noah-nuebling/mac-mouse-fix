@@ -9,6 +9,7 @@
 
 #import "TouchSimulator.h"
 #import <Foundation/Foundation.h>
+#import "ScrollControl.h"
 
 @implementation TouchSimulator
 
@@ -38,14 +39,10 @@ static NSMutableDictionary *_swipeInfo;
 
 + (void)SBFFakeSwipe:(TLInfoSwipeDirection)dir {
     
-    NSArray *nullArray = @[];
-    
-    CGEventRef event1 = tl_CGEventCreateFromGesture((__bridge CFDictionaryRef)(_swipeInfo[@(dir)][0]), (__bridge CFArrayRef)nullArray);
-    CGEventRef event2 = tl_CGEventCreateFromGesture((__bridge CFDictionaryRef)(_swipeInfo[@(dir)][1]), (__bridge CFArrayRef)nullArray);
-    
+    CGEventRef event1 = tl_CGEventCreateFromGesture((__bridge CFDictionaryRef)(_swipeInfo[@(dir)][0]), (__bridge CFArrayRef)@[]);
+    CGEventRef event2 = tl_CGEventCreateFromGesture((__bridge CFDictionaryRef)(_swipeInfo[@(dir)][1]), (__bridge CFArrayRef)@[]);
     CGEventPost(kCGHIDEventTap, event1);
     CGEventPost(kCGHIDEventTap, event2);
-    
     CFRelease(event1);
     CFRelease(event2);
 }
@@ -55,11 +52,10 @@ static NSMutableDictionary *_swipeInfo;
     NSDictionary *magnifyInfo = [NSDictionary dictionaryWithObjectsAndKeys:
     @(kTLInfoSubtypeMagnify), kTLInfoKeyGestureSubtype,
     @(phase), kTLInfoKeyGesturePhase,
-    @(magnification), kTLInfoKeyMagnification,
+    @(magnification /* * ScrollControl.scrollDirection */), kTLInfoKeyMagnification,
     nil];
     
     CGEventRef event = tl_CGEventCreateFromGesture((__bridge CFDictionaryRef)(magnifyInfo), (__bridge CFArrayRef) @[]);
-    
     CGEventPost(kCGHIDEventTap, event);
     CFRelease(event);
 }

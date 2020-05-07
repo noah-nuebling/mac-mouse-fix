@@ -78,9 +78,9 @@
                                             </connections>
                                         </button>
                                         <slider toolTip="How many pixels to scroll for each mouse wheel tick." verticalHuggingPriority="750" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mXj-a7-rFw">
-                                            <rect key="frame" x="238" y="39" width="151" height="25"/>
+                                            <rect key="frame" x="236" y="38" width="155" height="24"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <sliderCell key="cell" enabled="NO" state="on" alignment="left" identifier="scrollSpeedSlider" maxValue="1" doubleValue="0.5" tickMarkPosition="below" numberOfTickMarks="7" allowsTickMarkValuesOnly="YES" sliderType="linear" id="0NZ-eS-HsP"/>
+                                            <sliderCell key="cell" enabled="NO" state="on" alignment="left" identifier="scrollSpeedSlider" maxValue="1" doubleValue="0.33333333333333331" tickMarkPosition="below" numberOfTickMarks="7" allowsTickMarkValuesOnly="YES" sliderType="linear" id="0NZ-eS-HsP"/>
                                             <connections>
                                                 <action selector="UIChanged:" target="-2" id="X4P-Fp-C3H"/>
                                             </connections>
@@ -153,7 +153,9 @@
                                                 <font key="font" metaFont="system"/>
                                                 <menu key="menu" id="8up-Bb-BCh">
                                                     <items>
-                                                        <menuItem title="Middle button" state="on" toolTip="Leave button behavior unchanged." id="U6a-n1-4au"/>
+                                                        <menuItem title="Middle button" state="on" toolTip="Leave button behavior unchanged." id="U6a-n1-4au">
+                                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                                        </menuItem>
                                                         <menuItem isSeparatorItem="YES" id="eNY-Gi-27u"/>
                                                         <menuItem title="Mission Control" tag="32" id="gws-rg-Zk7"/>
                                                         <menuItem title="App Exposé" tag="33" id="wux-ng-X0Q"/>
@@ -161,7 +163,7 @@
                                                         <menuItem isSeparatorItem="YES" id="ruo-uz-9N7"/>
                                                         <menuItem title="Launchpad" tag="160" id="D9s-9R-pDS"/>
                                                         <menuItem isSeparatorItem="YES" id="hy8-EA-lgC"/>
-                                                        <menuItem title="Look Up" tag="70" toolTip="Sometimes referred to as &quot;Look Up &amp; data detectors&quot;" id="0P6-lc-6fr"/>
+                                                        <menuItem title="Look Up" tag="70" toolTip="This feature is sometimes also referred to as &quot;Look Up &amp; data detectors&quot;" id="0P6-lc-6fr"/>
                                                     </items>
                                                 </menu>
                                                 <connections>
@@ -194,7 +196,7 @@
                                                         <menuItem isSeparatorItem="YES" id="CqD-Rs-Rbf"/>
                                                         <menuItem title="Launchpad" tag="160" id="mNB-I6-Buo"/>
                                                         <menuItem isSeparatorItem="YES" id="8hK-BK-5D2"/>
-                                                        <menuItem title="Look Up" tag="70" toolTip="Sometimes referred to as &quot;Look Up &amp; data detectors&quot;" id="g0j-DR-0Je"/>
+                                                        <menuItem title="Look Up" tag="70" toolTip="This feature is sometimes also referred to as &quot;Look Up &amp; data detectors&quot;" id="g0j-DR-0Je"/>
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
@@ -230,8 +232,8 @@
                                                     <items>
                                                         <menuItem title="Side buttons" state="on" toolTip="Leave button behavior unchanged." id="1a7-0y-cIV"/>
                                                         <menuItem isSeparatorItem="YES" id="4hR-Cg-H2I"/>
-                                                        <menuItem title="Move between Spaces" tag="1" id="mo5-2i-ROD"/>
                                                         <menuItem title="Back and Forward" tag="2" id="VCO-0X-gaQ"/>
+                                                        <menuItem title="Move between Spaces" tag="1" id="mo5-2i-ROD"/>
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
