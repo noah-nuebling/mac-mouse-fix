@@ -171,8 +171,8 @@ static BOOL _hasStarted;
     }
     
     // Apply fast scroll to _pxScrollBuffer if appropriate
-    if (ScrollUtility.consecutiveScrollSwipeCounter > ScrollControl.fastScrollThreshold_inSwipes) {
-        _pxScrollBuffer = _pxScrollBuffer * pow(ScrollControl.fastScrollExponentialBase, (int32_t)ScrollUtility.consecutiveScrollSwipeCounter - ScrollControl.fastScrollThreshold_inSwipes);
+    if (ScrollUtility.consecutiveScrollSwipeCounter >= ScrollControl.fastScrollThreshold_inSwipes) {
+        _pxScrollBuffer = _pxScrollBuffer * pow(ScrollControl.fastScrollExponentialBase, (int32_t)ScrollUtility.consecutiveScrollSwipeCounter - ScrollControl.fastScrollThreshold_inSwipes + 1 );
     }
     
     // Start displaylink and stuff
@@ -197,13 +197,8 @@ static BOOL _hasStarted;
             });
         }
     }
-    
-//        NSLog(@"2.");
-//        NSLog(@"2 CONSECCC: %d", ScrollUtility.consecutiveScrollTickCounter);
-//        NSLog(@"2 DLINK ON???: %d", CVDisplayLinkIsRunning(_displayLink));
-//        NSLog(@"2 DLINK PHASEEE: %d", _displayLinkPhase);
-//        NSLog(@"2 STARTEDD??: %d", _hasStarted);
-//    NSLog(@"   ");
+    NSLog(@"%d", ScrollUtility.consecutiveScrollTickCounter);
+    NSLog(@"%d", ScrollUtility.consecutiveScrollSwipeCounter);
     
 }
 
