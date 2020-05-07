@@ -19,8 +19,8 @@
 			<dict>
 				<key>click</key>
 				<array>
-					<string>symbolicHotKey</string>
-					<integer>81</integer>
+					<string>swipeEvent</string>
+					<string>right</string>
 				</array>
 			</dict>
 		</dict>
@@ -30,8 +30,8 @@
 			<dict>
 				<key>click</key>
 				<array>
-					<string>symbolicHotKey</string>
-					<integer>79</integer>
+					<string>swipeEvent</string>
+					<string>left</string>
 				</array>
 			</dict>
 		</dict>
@@ -62,11 +62,11 @@
 			<key>msPerStep</key>
 			<integer>90</integer>
 			<key>friction</key>
-			<real>2</real>
+			<real>2.3</real>
 			<key>frictionDepth</key>
 			<integer>1</integer>
 			<key>acceleration</key>
-			<real>1.35</real>
+			<real>1.15</real>
 			<key>onePixelScrollsLimit</key>
 			<integer>2</integer>
 		</dict>
@@ -92,36 +92,13 @@
 			<key>scrollSwipeThreshold_inTicks</key>
 			<integer>4</integer>
 			<key>consecutiveScrollSwipeMaxIntervall</key>
-			<real>0.5</real>
+			<real>0.4</real>
 			<key>consecutiveScrollTickMaxIntervall</key>
 			<real>0.13</real>
 		</dict>
 	</dict>
 	<key>AppOverrides</key>
 	<dict>
-		<key>com.apple.Dock</key>
-		<dict>
-			<key>meta</key>
-			<dict>
-				<key>scrollOverridePanelTableViewOrderKey</key>
-				<integer>0</integer>
-			</dict>
-			<key>Root</key>
-			<dict>
-				<key>Scroll</key>
-				<dict>
-					<key>smooth</key>
-					<false/>
-					<key>modifierKeys</key>
-					<dict>
-						<key>horizontalScrollModifierKeyEnabled</key>
-						<false/>
-						<key>magnificationScrollModifierKeyEnabled</key>
-						<false/>
-					</dict>
-				</dict>
-			</dict>
-		</dict>
 		<key>com.adobe.Reader</key>
 		<dict>
 			<key>Root</key>
@@ -178,6 +155,33 @@
 					<false/>
 					<key>modifierKeys</key>
 					<dict>
+						<key>horizontalScrollModifierKeyEnabled</key>
+						<false/>
+						<key>magnificationScrollModifierKeyEnabled</key>
+						<false/>
+					</dict>
+				</dict>
+			</dict>
+			<key>meta</key>
+			<dict>
+				<key>scrollOverridePanelTableViewOrderKey</key>
+				<integer>0</integer>
+			</dict>
+		</dict>
+		<key>com.apple.Safariuuu</key>
+		<dict>
+			<key>Root</key>
+			<dict>
+				<key>Scroll</key>
+				<dict>
+					<key>smooth</key>
+					<false/>
+					<key>modifierKeys</key>
+					<dict>
+						<key>horizontalScrollModifierKey</key>
+						<string>shift</string>
+						<key>magnificationScrollModifierKey</key>
+						<string>command</string>
 						<key>horizontalScrollModifierKeyEnabled</key>
 						<false/>
 						<key>magnificationScrollModifierKeyEnabled</key>
