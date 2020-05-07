@@ -5,8 +5,9 @@
 
 - Added support for macOS 10.11 El Capitan.
 - Fixed compatibilty with many mice that pretend to be keyboards or other things including the Logitech MX Master.
+- Added Dark Mode support on Catalina. (Thank you @stevenguh!)
 - Improved scrolling performance through multi-threading.
-- Made scrolling more snappy.
+- Made scrolling more responsive by implementing acceleration and increasing friction.
 - Added a feature that disables all keyboard modifier interception when no mice are attached to your computer. CPU usage should now be at 0% at all times when no mice are attached.
 - You can now zoom in and out by holding Command (⌘) while scrolling.
 - You can now disable smooth scrolling for any app.
