@@ -58,7 +58,7 @@
 		<key>smoothParameters</key>
 		<dict>
 			<key>pxPerStep</key>
-			<integer>20</integer>
+			<integer>40</integer>
 			<key>msPerStep</key>
 			<integer>90</integer>
 			<key>friction</key>
@@ -66,7 +66,7 @@
 			<key>frictionDepth</key>
 			<integer>1</integer>
 			<key>acceleration</key>
-			<real>1.15</real>
+			<real>1.11</real>
 			<key>onePixelScrollsLimit</key>
 			<integer>2</integer>
 		</dict>

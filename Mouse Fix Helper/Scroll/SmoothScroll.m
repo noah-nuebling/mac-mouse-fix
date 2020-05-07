@@ -162,6 +162,8 @@ static BOOL _hasStarted;
     
     // Apply fast scroll to _pxScrollBuffer if appropriate
     if (ScrollUtility.consecutiveScrollSwipeCounter >= ScrollControl.fastScrollThreshold_inSwipes) {
+        //&& ScrollUtility.consecutiveScrollTickCounter >= ScrollControl.scrollSwipeThreshold_inTicks) {
+        NSLog(@"%d", ScrollUtility.consecutiveScrollTickCounter);
         _pxScrollBuffer = _pxScrollBuffer * pow(ScrollControl.fastScrollExponentialBase, ((int32_t)ScrollUtility.consecutiveScrollSwipeCounter - ScrollControl.fastScrollThreshold_inSwipes + 1));
     }
     
