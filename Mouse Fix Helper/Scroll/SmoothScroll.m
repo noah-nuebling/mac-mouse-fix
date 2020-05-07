@@ -162,7 +162,7 @@ static BOOL _hasStarted;
     
     // Apply fast scroll to _pxScrollBuffer if appropriate
     if (ScrollUtility.consecutiveScrollSwipeCounter >= ScrollControl.fastScrollThreshold_inSwipes) {
-        _pxScrollBuffer = _pxScrollBuffer * pow(ScrollControl.fastScrollExponentialBase, (int32_t)ScrollUtility.consecutiveScrollSwipeCounter - ScrollControl.fastScrollThreshold_inSwipes + 1);
+        _pxScrollBuffer = _pxScrollBuffer * pow(ScrollControl.fastScrollExponentialBase, ((int32_t)ScrollUtility.consecutiveScrollSwipeCounter - ScrollControl.fastScrollThreshold_inSwipes + 1));
     }
     
     // Start displaylink and stuff

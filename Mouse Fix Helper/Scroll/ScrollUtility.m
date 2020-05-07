@@ -219,7 +219,7 @@ static double _previousScrollSwipeTimeStamp;
 
 + (void)updateConsecutiveScrollSwipeCounterWithSwipeOccuringNow {
     double thisScrollSwipeTimeStamp = CACurrentMediaTime();
-    double intervall = (thisScrollSwipeTimeStamp - _previousScrollSwipeTimeStamp);
+    double intervall = thisScrollSwipeTimeStamp - _previousScrollTickTimeStamp; // Time between the last tick of the previous swipe and the first tick of the current swipe (now) // TODO: subtracting `_previousScrollTickTimeStamp` instead of `_previousScrollSwipeTimeStamp` to help trigger fast scrolling exactly when intended. But not sure if this helps or makes it worse though.
     if (intervall > ScrollControl.consecutiveScrollSwipeMaxIntervall) {
         _consecutiveScrollSwipeCounter = 0;
     } else {
