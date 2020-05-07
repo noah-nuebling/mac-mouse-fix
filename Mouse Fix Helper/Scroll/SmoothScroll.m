@@ -124,16 +124,6 @@ static BOOL _hasStarted;
 
 + (void)handleInput:(CGEventRef)event info:(NSDictionary * _Nullable)info {
     
-    
-//    _pxStepSize = 20;
-//    double _pxPerMSBaseSpeed = 0.45;
-    
-//        NSLog(@"1.");
-//    NSLog(@"CONSECCC: %d", ScrollUtility.consecutiveScrollTickCounter);
-//    NSLog(@"DLINK ON???: %d", CVDisplayLinkIsRunning(_displayLink));
-//    NSLog(@"DLINK PHASEEE: %d", _displayLinkPhase);
-//    NSLog(@"SMOTHSTARTEDD??: %d", _hasStarted);
-    
     long long scrollDeltaAxis1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
 
     // Update global vars
@@ -172,7 +162,7 @@ static BOOL _hasStarted;
     
     // Apply fast scroll to _pxScrollBuffer if appropriate
     if (ScrollUtility.consecutiveScrollSwipeCounter >= ScrollControl.fastScrollThreshold_inSwipes) {
-        _pxScrollBuffer = _pxScrollBuffer * pow(ScrollControl.fastScrollExponentialBase, (int32_t)ScrollUtility.consecutiveScrollSwipeCounter - ScrollControl.fastScrollThreshold_inSwipes + 1 );
+        _pxScrollBuffer = _pxScrollBuffer * pow(ScrollControl.fastScrollExponentialBase, (int32_t)ScrollUtility.consecutiveScrollSwipeCounter - ScrollControl.fastScrollThreshold_inSwipes + 1);
     }
     
     // Start displaylink and stuff
@@ -197,9 +187,6 @@ static BOOL _hasStarted;
             });
         }
     }
-    NSLog(@"%d", ScrollUtility.consecutiveScrollTickCounter);
-    NSLog(@"%d", ScrollUtility.consecutiveScrollSwipeCounter);
-    
 }
 
 static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp *inNow, const CVTimeStamp *inOutputTime, CVOptionFlags flagsIn, CVOptionFlags *flagsOut, void *displayLinkContext) {
@@ -224,12 +211,11 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
             _pxToScrollThisFrame = _pxScrollBuffer; // TODO: But it happens sometimes - check if this handles that situation well
         }
 
-        
         _pxScrollBuffer   -=  _pxToScrollThisFrame;
         _msLeftForScroll    -=  msSinceLastFrame;
         
         // Entering momentum phase
-        if ( (_msLeftForScroll <= 0) || (_pxScrollBuffer == 0) ) { // TODO: Why not check if _pxToScrollThisFrame == 0 here instead?
+        if (_msLeftForScroll <= 0 || _pxScrollBuffer == 0) { // TODO: Is `_pxScrollBuffer == 0` necessary? Do the conditions for entering momentum phase make sense?
             _msLeftForScroll    =   0; // TODO: Is this necessary?
             _pxScrollBuffer   =   0; // What about this? This stuff isn't used in momentum phase and should get reset elsewhere efore getting used again
             
