@@ -5,7 +5,7 @@
 	<key>Other</key>
 	<dict>
 		<key>configVersion</key>
-		<integer>5</integer>
+		<integer>6</integer>
 		<key>checkForUpdates</key>
 		<true/>
 		<key>skippedBundleVersion</key>
@@ -85,12 +85,14 @@
 		</dict>
 		<key>other</key>
 		<dict>
+			<key>fastScrollFactor</key>
+			<real>1.1</real>
 			<key>fastScrollExponentialBase</key>
-			<real>1.11</real>
+			<real>1.1</real>
 			<key>fastScrollThreshold_inSwipes</key>
-			<integer>2</integer>
+			<integer>3</integer>
 			<key>scrollSwipeThreshold_inTicks</key>
-			<integer>4</integer>
+			<integer>2</integer>
 			<key>consecutiveScrollSwipeMaxIntervall</key>
 			<real>0.35</real>
 			<key>consecutiveScrollTickMaxIntervall</key>

@@ -24,6 +24,7 @@ typedef enum {
 + (void)configureWithParameters:(NSDictionary *)params;
 
 + (double)fastScrollExponentialBase;
++ (double)fastScrollFactor;
 + (int)scrollSwipeThreshold_inTicks;
 + (double)fastScrollThreshold_inSwipes;
 + (double)consecutiveScrollTickMaxIntervall;

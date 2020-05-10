@@ -136,23 +136,29 @@ static BOOL _hasStarted;
         _pxToScrollThisFrame = 0;
         _pxPerMsVelocity = 0;
     }
-    // TODO: Commenting this out might cause weird behaviour. Thimk about what this actually does.
+    // TODO: Commenting this out might cause weird behaviour. Think about what this actually does.
 //    if (_scrollPhase != kMFPhaseLinear) { // Why are we resetting what we are resetting?
 //        _onePixelScrollsCounter =   0;
 //        _pxPerMsVelocity        =   0;
 //        _pxScrollBuffer       =   0;
 //    }
-    
-    // Update scroll phase
-    _displayLinkPhase = kMFPhaseStart;
-    
+  
+//        // Apply fast scroll to _pxStepSize
+    long long pxStepSizeWithFastScrollApplied = _pxStepSize;
+//    if (ScrollUtility.consecutiveScrollSwipeCounter >= ScrollControl.fastScrollThreshold_inSwipes
+//        && ScrollUtility.consecutiveScrollTickCounter >= ScrollControl.scrollSwipeThreshold_inTicks) {
+//        pxStepSizeWithFastScrollApplied = _pxStepSize * pow(ScrollControl.fastScrollExponentialBase, ((int32_t)ScrollUtility.consecutiveScrollSwipeCounter - ScrollControl.fastScrollThreshold_inSwipes + 1));
+//    }
+//
     // Apply scroll wheel input to _pxScrollBuffer
     _msLeftForScroll = _msPerStep;
 //    _msLeftForScroll = 1 / (_pxPerMSBaseSpeed / _pxStepSize);
     if (scrollDeltaAxis1 > 0) {
-        _pxScrollBuffer += _pxStepSize * ScrollControl.scrollDirection;
+        _pxScrollBuffer += pxStepSizeWithFastScrollApplied * ScrollControl.scrollDirection;
     } else if (scrollDeltaAxis1 < 0) {
-        _pxScrollBuffer -= _pxStepSize * ScrollControl.scrollDirection;
+        _pxScrollBuffer -= pxStepSizeWithFastScrollApplied * ScrollControl.scrollDirection;
+    } else {
+        NSLog(@"scrollDeltaAxis1 is 0. This shouldn't happen.");
     }
     
     // Apply acceleration to _pxScrollBuffer
@@ -160,14 +166,25 @@ static BOOL _hasStarted;
         _pxScrollBuffer = _pxScrollBuffer * _accelerationForScrollBuffer;
     }
     
-    // Apply fast scroll to _pxScrollBuffer if appropriate
-    if (ScrollUtility.consecutiveScrollSwipeCounter >= ScrollControl.fastScrollThreshold_inSwipes) {
+//    if (ScrollUtility.consecutiveScrollTickCounter == 0) {
+        NSLog(@"tick: %d", ScrollUtility.consecutiveScrollTickCounter);
+        NSLog(@"swip: %d", ScrollUtility.consecutiveScrollSwipeCounter);
+//    }
+    
+    // Apply fast scroll to _pxScrollBuffer
+    int fastScrollThresholdDelta = ScrollUtility.consecutiveScrollSwipeCounter - ScrollControl.fastScrollThreshold_inSwipes;
+    if (fastScrollThresholdDelta >= 0) {
         //&& ScrollUtility.consecutiveScrollTickCounter >= ScrollControl.scrollSwipeThreshold_inTicks) {
-        NSLog(@"%d", ScrollUtility.consecutiveScrollTickCounter);
-        _pxScrollBuffer = _pxScrollBuffer * pow(ScrollControl.fastScrollExponentialBase, ((int32_t)ScrollUtility.consecutiveScrollSwipeCounter - ScrollControl.fastScrollThreshold_inSwipes + 1));
+        _pxScrollBuffer = _pxScrollBuffer * ScrollControl.fastScrollFactor * pow(ScrollControl.fastScrollExponentialBase, ((int32_t)fastScrollThresholdDelta));
     }
+    NSLog(@"buff: %d", _pxScrollBuffer);
+            NSLog(@"--------------");
     
     // Start displaylink and stuff
+    
+    // Update scroll phase
+    _displayLinkPhase = kMFPhaseStart;
+    
     if (ScrollUtility.consecutiveScrollTickCounter == 0) {
         if (ScrollUtility.mouseDidMove) {
             // Set diplaylink to the display that is actally being scrolled - not sure if this is necessary, because having the displaylink at 30fps on a 30fps display looks just as horrible as having the display link on 60fps, if not worse
@@ -179,7 +196,7 @@ static BOOL _hasStarted;
         }
         while (CVDisplayLinkIsRunning(_displayLink) == NO) {
             // Executing this on _scrollQueue (like the rest of this function) leads to `CVDisplayLinkStart()` failing sometimes. Once it has failed it will fail over and over again, taking a few minutes or so to start working again, if at all.
-            // Solution: I have no idea why this helps, but executing on the main queue does the trick! ^^
+            // Solution: I have no idea why, but executing on the main queue does the trick! ^^
             dispatch_sync(dispatch_get_main_queue(), ^{
                 CVReturn rt = CVDisplayLinkStart(_displayLink);
                 if (rt != kCVReturnSuccess) {
