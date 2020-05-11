@@ -8,16 +8,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ButtonInputReceiver.h"
 
 @interface ButtonInputParser : NSObject
 
-+ (void)parseInputWithButton:(int)mouseButton trigger:(int)state;
++ (MFEventPassThroughEvaluation)parseInputWithButton:(int)button trigger:(int)trigger;
 
-
-// I started implementing a more general "click gesture recognizer" which can recognize single/double/triple/... click [and hold] gestures.
-/*
-+ (void)parseClickGestureWithButton:(int)button state:(int)state level:(int)level holdCallback:(Boolean)hold clickCallback:(Boolean)ccb;
-+ (CGEventRef)clickGestureRecognizer:(CGEventRef)event;
-*/
 @end
 

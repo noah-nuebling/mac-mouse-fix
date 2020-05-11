@@ -15,6 +15,11 @@
 @interface ButtonInputReceiver : NSObject
 
 typedef enum {
+    kMFEventPassThroughApproval,
+    kMFEventPassThroughRefusal,
+} MFEventPassThroughEvaluation;
+
+typedef enum {
     kMFActionTriggerTypeButtonDown = 0,
     kMFActionTriggerTypeButtonUp = 1,
     kMFActionTriggerTypeLevelTimerExpired = 2,

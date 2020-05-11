@@ -98,10 +98,13 @@ CGEventRef handleInput_CG(CGEventTapProxy proxy, CGEventType type, CGEventRef ev
         int buttonNumber = (int) CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
         
         long long pr = CGEventGetIntegerValueField(event, kCGMouseEventPressure);
-        MFActionTriggerType trigger = pr == 0 ? kMFActionTriggerTypeButtonUp : kMFActionTriggerTypeButtonDown;
+        MFActionTriggerType trigger = pr == 0 ? 1 : 0;
         
         if (3 <= buttonNumber) {
-            [ButtonInputParser parseInputWithButton:buttonNumber trigger:trigger];
+            MFEventPassThroughEvaluation rt = [ButtonInputParser parseInputWithButton:buttonNumber trigger:trigger];
+            if (rt == kMFEventPassThroughRefusal) {
+                return nil;
+            }
         } else {
             NSLog(@"Received input from primary / secondary mouse button. This should never happen!");
         }
