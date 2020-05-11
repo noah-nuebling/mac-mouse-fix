@@ -16,7 +16,6 @@
 @implementation AppDelegate
 
 - (void)applicationWillFinishLaunching:(NSNotification *)notification {
-//    [NSApp setActivationPolicy: NSApplicationActivationPolicyProhibited];
 }
 
 @end

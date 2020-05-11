@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-// MouseInputReceiver.h
+// ButtonInputReceiver.h
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2019
 // Licensed under MIT
@@ -12,9 +12,17 @@
 #import "IOKit/hid/IOHIDManager.h"
 
 
-@interface MouseInputReceiver : NSObject
+@interface ButtonInputReceiver : NSObject
+
+typedef enum {
+    kMFButtonInputTypeButtonUp = 1,
+    kMFButtonInputTypeButtonDown = 0,
+    kMFButtonInputTypeHoldTimerExpired = 3,
+    kMFButtonInputTypeLevelTimerExpired = 2,
+} MFButtonInputType;
 
 + (void)decide;
 
-+ (void)Register_InputCallback_HID:(IOHIDDeviceRef)device;
++ (void)registerInputCallback_HID:(IOHIDDeviceRef)device;
+
 @end

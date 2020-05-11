@@ -23,7 +23,7 @@
 #import <IOKit/hid/IOHIDKeys.h>
 
 #import "ScrollControl.h"
-#import "MouseInputReceiver.h"
+#import "ButtonInputReceiver.h"
 #import "ConfigFileInterface_HelperApp.h"
 
 #import <IOKit/hidsystem/IOHIDServiceClient.h>
@@ -34,7 +34,7 @@
 @implementation DeviceManager
 
 # pragma mark - Global vars
-IOHIDManagerRef _hidManager;
+IOHIDManagerRef _HIDManager;
 static BOOL _relevantDevicesAreAttached;
 
 
@@ -42,7 +42,7 @@ static BOOL _relevantDevicesAreAttached;
  True entry point of the program
  */
 + (void)load_Manual {
-    setupDeviceAddedAndRemovedCallbacks();
+    setupDeviceMatchingAndRemovalCallbacks();
 }
 
 # pragma mark - Interface
@@ -51,11 +51,11 @@ static BOOL _relevantDevicesAreAttached;
 }
 
 # pragma mark - Setup callbacks
-static void setupDeviceAddedAndRemovedCallbacks() {
+static void setupDeviceMatchingAndRemovalCallbacks() {
     
     
     // Create an HID Manager
-    _hidManager = IOHIDManagerCreate(kCFAllocatorDefault, 0);
+    _HIDManager = IOHIDManagerCreate(kCFAllocatorDefault, 0);
     
     // Create a Matching Dictionary
     CFMutableDictionaryRef matchDict1 = CFDictionaryCreateMutable(kCFAllocatorDefault,
@@ -116,7 +116,7 @@ static void setupDeviceAddedAndRemovedCallbacks() {
     matches = CFArrayCreate(kCFAllocatorDefault, (const void **)matchesList, 3, NULL);
     
     // Register the Matching Dictionary to the HID Manager
-    IOHIDManagerSetDeviceMatchingMultiple(_hidManager, matches);
+    IOHIDManagerSetDeviceMatchingMultiple(_HIDManager, matches);
     
     CFRelease(matches);
     CFRelease(matchDict1);
@@ -126,29 +126,29 @@ static void setupDeviceAddedAndRemovedCallbacks() {
     CFRelease(genericDesktopUsagePage);
     
     // Register the HID Manager on our app’s run loop
-    IOHIDManagerScheduleWithRunLoop(_hidManager, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
+    IOHIDManagerScheduleWithRunLoop(_HIDManager, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
     
     // Open the HID Manager
-    IOReturn IOReturn = IOHIDManagerOpen(_hidManager, kIOHIDOptionsTypeNone);
+    IOReturn IOReturn = IOHIDManagerOpen(_HIDManager, kIOHIDOptionsTypeNone);
     if(IOReturn) NSLog(@"IOHIDManagerOpen failed.");  //  Couldn't open the HID manager! TODO: proper error handling
     
 
     // Register a callback for USB device detection with the HID Manager, this will in turn register an button input callback for all devices that getFilteredDevicesFromManager() returns
-    IOHIDManagerRegisterDeviceMatchingCallback(_hidManager, &Handle_DeviceMatchingCallback, NULL);
+    IOHIDManagerRegisterDeviceMatchingCallback(_HIDManager, &handleDeviceMatching, NULL);
     
     // Register a callback for USB device removal with the HID Manager
-    IOHIDManagerRegisterDeviceRemovalCallback(_hidManager, &Handle_DeviceRemovalCallback, NULL);
+    IOHIDManagerRegisterDeviceRemovalCallback(_HIDManager, &handleDeviceRemoval, NULL);
 
 }
 
 # pragma mark - Handle callbacks
 
-static void Handle_DeviceRemovalCallback(void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
+static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
     
     NSLog(@"Device Removed");
     
     // Check if there are still relevant devices atached.
-    CFSetRef devices = IOHIDManagerCopyDevices(_hidManager); // for some reason this copies the device which was just removed
+    CFSetRef devices = IOHIDManagerCopyDevices(_HIDManager); // for some reason this copies the device which was just removed
     NSLog(@"Devices still attached (includes device which was just removed): %@", devices);
     if (CFSetGetCount(devices) <= 1) { // so we're accounting for that by using a 1 here instead of a 0
         _relevantDevicesAreAttached = FALSE;
@@ -157,10 +157,10 @@ static void Handle_DeviceRemovalCallback(void *context, IOReturn result, void *s
     
     // If there aren't any relevant devices attached, then we might want to turn off some parts of the program.
     [ScrollControl decide];
-    [MouseInputReceiver decide];
+    [ButtonInputReceiver decide];
 }
 
-static void Handle_DeviceMatchingCallback (void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
+static void handleDeviceMatching(void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
     
     
     // TODO: Clean this up
@@ -175,11 +175,13 @@ static void Handle_DeviceMatchingCallback (void *context, IOReturn result, void 
     
         NSLog(@"Device Passed filtering");
         
-        registerDeviceButtonInputCallback_InMouseInputReceiverClass(device);
+        
+        
+        [ButtonInputReceiver registerInputCallback_HID:device];
         
         _relevantDevicesAreAttached = TRUE;
         [ScrollControl decide];
-        [MouseInputReceiver decide];
+        [ButtonInputReceiver decide];
     }
     
 
@@ -202,28 +204,6 @@ static void Handle_DeviceMatchingCallback (void *context, IOReturn result, void 
 
 
 # pragma mark - Helper Functions
-
-/// 
-static void registerDeviceButtonInputCallback_InMouseInputReceiverClass(IOHIDDeviceRef device) {
-    
-    NSCAssert(device != NULL, @"tried to register a device which equals NULL");
-    
-    CFMutableDictionaryRef elementMatchDict1 = CFDictionaryCreateMutable(kCFAllocatorDefault,
-                                                                         1,
-                                                                         &kCFTypeDictionaryKeyCallBacks,
-                                                                         &kCFTypeDictionaryValueCallBacks);
-    int nine = 9; // "usage Page" for Buttons
-    CFNumberRef nineCF = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &nine);
-    CFDictionarySetValue (elementMatchDict1, CFSTR("UsagePage"), nineCF);
-    IOHIDDeviceSetInputValueMatching(device, elementMatchDict1);
-    
-    
-    [MouseInputReceiver Register_InputCallback_HID: device];
-    
-    CFRelease(elementMatchDict1);
-    CFRelease(nineCF);
-}
-
 
 static BOOL devicePassesFiltering(IOHIDDeviceRef device) {
 

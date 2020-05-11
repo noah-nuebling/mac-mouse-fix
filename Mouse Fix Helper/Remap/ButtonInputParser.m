@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-// InputParser.m
+// ButtonInputParser.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2019
 // Licensed under MIT
@@ -25,100 +25,169 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 //
 
-#import "InputParser.h"
+#import "ButtonInputParser.h"
+#import "ButtonInputReceiver.h"
 #import "AppDelegate.h"
 #import "ConfigFileInterface_HelperApp.h"
 #import "../SupportFiles/External/CGSInternal/CGSHotKeys.h"
 #import "../SupportFiles/External/SensibleSideButtons/TouchEvents.h"
 #import "TouchSimulator.h"
 
-@implementation InputParser
-
-// input parsing
-static CGEventRef   _savedEvent;
-static NSTimer     *_clickAndHoldTimer;
+@implementation ButtonInputParser
 
 
-+ (CGEventRef)parse:(int)mouseButton state:(int)state event:(CGEventRef)event {
-    
-    NSString *keyPath = [NSString stringWithFormat:@"ButtonRemaps.%d.single", mouseButton];
-    
-    NSDictionary *remapsForInputButton = [ConfigFileInterface_HelperApp.config valueForKeyPath: keyPath];
-    
-    @try {
-        
-        if ( ([[remapsForInputButton allKeys] count] == 0) ) {
-            NSLog(@"couldn't find any remaps for this button (Input Parser)");
-            return event;
-        }
-        
-    // single click remapping
-        NSArray *clickAction = [remapsForInputButton valueForKey:@"click"];
-        if ( ([[remapsForInputButton allKeys] count] == 1) && clickAction != nil ) {
-            
-            if (state == 1) {
-                [InputParser handleActionArray:clickAction];
-                return nil;
-            }
-        }
-        
-        
-    // both click *and* hold remapping, or single hold remapping
-        
-        if (state == 1) {
-            
-            if (clickAction == nil) {
-                _savedEvent = CGEventCreateCopy(event);
-            }
-            NSArray *holdAction = [remapsForInputButton objectForKey:@"hold"];
-            _clickAndHoldTimer = [NSTimer scheduledTimerWithTimeInterval:0.3
-                                             target:self
-                                           selector:@selector(clickAndHoldCallback:)
-                                           userInfo:holdAction
-                                            repeats:NO];
-            
-            return nil;
-            
-        } else if (state == 0) {
-            if ([_clickAndHoldTimer isValid]) {
-                [_clickAndHoldTimer invalidate];
-                _clickAndHoldTimer = nil;
-                
-                if (clickAction == nil) {
-                    CGEventPost(kCGSessionEventTap, _savedEvent);
-                    CGEventPost(kCGSessionEventTap, event);
-                    _savedEvent = nil;
-                } else {
-                    [InputParser handleActionArray:clickAction];
-                }
-                return nil;
-            }
-        } else {
-            NSLog(@"ERRÖR: InputButtonState value invalid (Input Parser)");
-        }
-    } @catch (NSException *exception) {
-        NSLog(@"ERROR: remaps broken (Input Parser)");
-        [ConfigFileInterface_HelperApp repairConfigFile: @"remaps"];
-    }
-    
-    return event;
+NSArray *_testRemapsDataStructure;
++ (void)load {
+    _testRemapsDataStructure = @[
+        @{
+            @"button": @(3),
+            @"level": @(1),
+            @"type": @(kMFButtonInputTypeButtonUp),
+            @"modifiers": @[],
+            @"action": @{
+                    @"type": @"symbolicHotkey",
+                    @"value": @(32),
+            },
+        },
+        @{
+            @"button": @(3),
+            @"level": @(1),
+            @"type": @(kMFButtonInputTypeHoldTimerExpired),
+            @"modifiers": @[],
+            @"action": @{
+                    @"type": @"symbolicHotkey",
+                    @"value": @(33),
+            },
+        },
+//        @{
+//            @"button": @(3),
+//            @"level": @(2),
+//            @"type": @(kMFButtonInputTypeHoldTimerExpired),
+//            @"modifiers": @[],
+//            @"action": @{
+//                    @"type": @"symbolicHotkey",
+//                    @"value": @(33),
+//            },
+//        },
+//        @{
+//            @"button": @(3),
+//            @"level": @(3),
+//            @"type": @(kMFButtonInputTypeHoldTimerExpired),
+//            @"modifiers": @[],
+//            @"action": @{
+//                    @"type": @"symbolicHotkey",
+//                    @"value": @(33),
+//            },
+//        },
+//        @{
+//            @"button": @(3),
+//            @"level": @(4),
+//            @"type": @(kMFButtonInputTypeHoldTimerExpired),
+//            @"modifiers": @[],
+//            @"action": @{
+//                    @"type": @"symbolicHotkey",
+//                    @"value": @(33),
+//            },
+//        },
+//        @{
+//            @"button": @(3),
+//            @"level": @(5),
+//            @"type": @(kMFButtonInputTypeHoldTimerExpired),
+//            @"modifiers": @[],
+//            @"action": @{
+//                    @"type": @"symbolicHotkey",
+//                    @"value": @(33),
+//            },
+//        },
+    ];
 }
 
-+ (void)clickAndHoldCallback:(NSTimer *)timer {
-    NSArray *holdAction = [timer userInfo];
-    [self handleActionArray:holdAction];
-    return;
+
+static NSTimer *_levelTimer;
+static NSTimer *_holdTimer;
+static int _clickLevel;
+
++ (void)parseInputWithButton:(int)button eventType:(int)type {
+    
+     if (type == kMFButtonInputTypeButtonDown) {
+         if ([_levelTimer isValid]) {
+            _clickLevel += 1;
+         } else {
+             _clickLevel = 1;
+         }
+         [self doActionWithButton:button eventType:type level:_clickLevel];
+        [_levelTimer invalidate];
+        [_holdTimer invalidate];
+        _holdTimer = [NSTimer scheduledTimerWithTimeInterval:0.3
+                                                      target:self
+                                                    selector:@selector(holdTimerCallback:)
+                                                    userInfo:@(button)
+                                                     repeats:NO];
+        _levelTimer = [NSTimer scheduledTimerWithTimeInterval:0.25
+                                                       target:self
+                                                     selector:@selector(levelTimerCallback:)
+                                                     userInfo:@(button)
+                                                      repeats:NO];
+     } else { // if (type == kMFButtonInputTypeButtonUp)
+         if ([_holdTimer isValid]) {
+             [self doActionWithButton:button eventType:type level:_clickLevel];
+         }
+        [_holdTimer invalidate];
+     }
+}
++ (void)holdTimerCallback:(NSTimer *)timer {
+    [_levelTimer invalidate];
+    int button = [[timer userInfo] intValue];
+    [self doActionWithButton:button eventType:kMFButtonInputTypeHoldTimerExpired level:_clickLevel];
+}
++ (void)levelTimerCallback:(NSTimer *)timer {
+    if ([_holdTimer isValid]) {
+        return;
+    }
+    int button = [[timer userInfo] intValue];
+    [self doActionWithButton:button eventType:kMFButtonInputTypeLevelTimerExpired level:_clickLevel];
 }
 
-+ (void)handleActionArray: (NSArray *)actionArray {
++ (void)doActionWithButton:(int)button eventType:(MFButtonInputType)type level:(int)level {
     
-    if ([actionArray[0] isEqualToString:@"symbolicHotKey"]) {
-        NSNumber *shk = actionArray[1];
-        [InputParser doSymbolicHotKeyAction:[shk intValue]];
+    NSArray *modifiers = @[];
+    
+//    NSPredicate *findActionForInput = [NSPredicate predicateWithFormat:
+//                                       @"button = %d AND type = %d AND level = %d AND modifiers = %d",
+//                                       button, type, level, modifiers];
+    
+    double ts = CACurrentMediaTime();
+    
+    NSPredicate *findActionForInput = [NSPredicate predicateWithFormat:
+                                       @"button = %d AND type = %d AND level = %d AND modifiers = %@",
+                                       button, type, level, modifiers];
+    
+    NSArray *actionsForInput = [_testRemapsDataStructure filteredArrayUsingPredicate:findActionForInput];
+    NSLog(@"Benchmark1: %f", CACurrentMediaTime() - ts);
+    
+    
+    if (actionsForInput.count == 0) {
+        return;
     }
-    else if ([actionArray[0] isEqualToString:@"swipeEvent"]) {
-        NSLog(@"%@", actionArray[1]);
-        NSString *dirString = actionArray[1];
+    
+    assert(actionsForInput.count == 1);
+    
+    [self handleActionDict:actionsForInput[0][@"action"]];
+    
+    NSLog(@"Benchmark2: %f", CACurrentMediaTime() - ts);
+}
+
+
+
+
++ (void)handleActionDict:(NSDictionary *)actionDict {
+    
+    if ([actionDict[@"type"] isEqualToString:@"symbolicHotkey"]) {
+        NSNumber *shk = actionDict[@"value"];
+        [ButtonInputParser doSymbolicHotKeyAction:[shk intValue]];
+    }
+    else if ([actionDict[@"type"] isEqualToString:@"twoFingerSwipeEvent"]) {
+        NSString *dirString = actionDict[@"value"];
         
         if ([dirString isEqualToString:@"left"]) {
             [TouchSimulator SBFFakeSwipe:kTLInfoSwipeLeft];
@@ -188,7 +257,7 @@ CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar ke
 }
 +(void)doClickAndHoldAction:(NSTimer *)timer {
     NSArray *holdAction = [timer userInfo];
-    [InputParser handleActionArray:holdAction];
+    [ButtonInputParser handleActionDict:holdAction];
 }
 
 @end
@@ -216,7 +285,7 @@ CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar ke
  
  clickAndHoldTimer = [NSTimer scheduledTimerWithTimeInterval:0.3
  target:self
- selector:@selector(clickAndHoldCallback:)
+ selector:@selector(holdTimerCallback:)
  userInfo:currentButton
  repeats:NO];
  multiClickTimer = [NSTimer scheduledTimerWithTimeInterval:0.25
@@ -232,7 +301,7 @@ CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar ke
  }
  return event;
  }
- + (void)clickAndHoldCallback:(NSTimer *)timer {
+ + (void)holdTimerCallback:(NSTimer *)timer {
  int button = [[timer userInfo] intValue];
  [self parseClickGestureWithButton:button state:-1 level:clickLevel holdCallback:true clickCallback:false];
  clickLevel = 0;

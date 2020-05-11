@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-// InputParser.h
+// ButtonInputParser.h
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2019
 // Licensed under MIT
@@ -9,9 +9,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface InputParser : NSObject
+@interface ButtonInputParser : NSObject
 
-+ (CGEventRef)parse:(int)mouseButton state:(int)state event:(CGEventRef)event;
++ (void)parseInputWithButton:(int)mouseButton eventType:(int)state;
 
 
 // I started implementing a more general "click gesture recognizer" which can recognize single/double/triple/... click [and hold] gestures.
