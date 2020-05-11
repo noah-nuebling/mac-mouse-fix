@@ -15,11 +15,18 @@
 @interface ButtonInputReceiver : NSObject
 
 typedef enum {
-    kMFButtonInputTypeButtonUp = 1,
-    kMFButtonInputTypeButtonDown = 0,
-    kMFButtonInputTypeHoldTimerExpired = 3,
-    kMFButtonInputTypeLevelTimerExpired = 2,
-} MFButtonInputType;
+    kMFActionTriggerTypeButtonDown = 0,
+    kMFActionTriggerTypeButtonUp = 1,
+    kMFActionTriggerTypeLevelTimerExpired = 2,
+    kMFActionTriggerTypeHoldTimerExpired = 3,
+    kMFActionTriggerTypeModifyingAction = 4,
+} MFActionTriggerType;
+
+//typedef enum {
+//    kMFUIActionTriggerTypeClick = 0,
+//    kMFUIActionTriggerTypeHold = 1,
+//    kMFUIActionTriggerTypeModifying = 2,
+//} MFUIActionTriggerType;
 
 + (void)decide;
 

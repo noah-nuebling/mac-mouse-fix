@@ -70,6 +70,7 @@
 		4FEE4B0A233D933600011CEA /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4FEE4B09233D933600011CEA /* AppIcon.icns */; };
 		4FF3B2BD23276082009E8A8E /* Uninstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF3B2BC23276082009E8A8E /* Uninstaller.m */; };
 		4FF3B2C0232788AA009E8A8E /* HelperServices_HelperApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF3B2BF232788AA009E8A8E /* HelperServices_HelperApp.m */; };
+		4FF58E2A2469952200293553 /* RemapUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF58E292469952200293553 /* RemapUtility.m */; };
 		4FF75A20233D82590002D8E6 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FCECD8821092354001F1078 /* MainMenu.xib */; };
 		4FF873DF23197283002A897A /* UpdateWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FF873DC23197283002A897A /* UpdateWindow.h */; };
 		4FF873E023197283002A897A /* UpdateWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF873DD23197283002A897A /* UpdateWindow.m */; };
@@ -266,6 +267,8 @@
 		4FF3B2BC23276082009E8A8E /* Uninstaller.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Uninstaller.m; sourceTree = "<group>"; };
 		4FF3B2BE232788AA009E8A8E /* HelperServices_HelperApp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelperServices_HelperApp.h; sourceTree = "<group>"; };
 		4FF3B2BF232788AA009E8A8E /* HelperServices_HelperApp.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelperServices_HelperApp.m; sourceTree = "<group>"; };
+		4FF58E282469952200293553 /* RemapUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapUtility.h; sourceTree = "<group>"; };
+		4FF58E292469952200293553 /* RemapUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapUtility.m; sourceTree = "<group>"; };
 		4FF873DC23197283002A897A /* UpdateWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UpdateWindow.h; sourceTree = "<group>"; };
 		4FF873DD23197283002A897A /* UpdateWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UpdateWindow.m; sourceTree = "<group>"; };
 		4FF873DE23197283002A897A /* UpdateWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpdateWindow.xib; sourceTree = "<group>"; };
@@ -441,6 +444,8 @@
 				4F32E193231C50A100199A11 /* ButtonInputReceiver.m */,
 				4F32E192231C50A100199A11 /* ButtonInputParser.h */,
 				4F32E18E231C50A100199A11 /* ButtonInputParser.m */,
+				4FF58E282469952200293553 /* RemapUtility.h */,
+				4FF58E292469952200293553 /* RemapUtility.m */,
 			);
 			path = Remap;
 			sourceTree = "<group>";
@@ -906,6 +911,7 @@
 				4F32E15D231C44C000199A11 /* main.m in Sources */,
 				4FF3B2C0232788AA009E8A8E /* HelperServices_HelperApp.m in Sources */,
 				4F32E194231C50A100199A11 /* ButtonInputParser.m in Sources */,
+				4FF58E2A2469952200293553 /* RemapUtility.m in Sources */,
 				4F32E196231C50A100199A11 /* ButtonInputReceiver.m in Sources */,
 				4F95A249234EBB5D000DC7D7 /* PointerSpeed.m in Sources */,
 				4F32E188231C509200199A11 /* AnimationCurve.m in Sources */,

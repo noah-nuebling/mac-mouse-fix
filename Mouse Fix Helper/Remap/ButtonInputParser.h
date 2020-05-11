@@ -11,7 +11,7 @@
 
 @interface ButtonInputParser : NSObject
 
-+ (void)parseInputWithButton:(int)mouseButton eventType:(int)state;
++ (void)parseInputWithButton:(int)mouseButton trigger:(int)state;
 
 
 // I started implementing a more general "click gesture recognizer" which can recognize single/double/triple/... click [and hold] gestures.
