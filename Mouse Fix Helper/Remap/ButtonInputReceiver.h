@@ -20,6 +20,11 @@ typedef enum {
 } MFEventPassThroughEvaluation;
 
 typedef enum {
+    kMFButtonInputTypeButtonDown,
+    kMFButtonInputTypeButtonUp,
+} MFButtonInputType;
+
+typedef enum {
     kMFActionTriggerTypeButtonDown = 0,
     kMFActionTriggerTypeButtonUp = 1,
     kMFActionTriggerTypeLevelTimerExpired = 2,

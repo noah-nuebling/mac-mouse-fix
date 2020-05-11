@@ -98,10 +98,10 @@ CGEventRef handleInput_CG(CGEventTapProxy proxy, CGEventType type, CGEventRef ev
         int buttonNumber = (int) CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
         
         long long pr = CGEventGetIntegerValueField(event, kCGMouseEventPressure);
-        MFActionTriggerType trigger = pr == 0 ? 1 : 0;
+        MFButtonInputType type = pr == 0 ? kMFButtonInputTypeButtonUp : kMFButtonInputTypeButtonDown;
         
         if (3 <= buttonNumber) {
-            MFEventPassThroughEvaluation rt = [ButtonInputParser parseInputWithButton:buttonNumber trigger:trigger];
+            MFEventPassThroughEvaluation rt = [ButtonInputParser generateActionTriggersWithInputFrom:buttonNumber type:type];
             if (rt == kMFEventPassThroughRefusal) {
                 return nil;
             }

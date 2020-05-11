@@ -52,7 +52,7 @@ static NSMutableDictionary *_swipeInfo;
     NSDictionary *magnifyInfo = [NSDictionary dictionaryWithObjectsAndKeys:
     @(kTLInfoSubtypeMagnify), kTLInfoKeyGestureSubtype,
     @(phase), kTLInfoKeyGesturePhase,
-    @(magnification /* * ScrollControl.scrollDirection */), kTLInfoKeyMagnification,
+    @(magnification), kTLInfoKeyMagnification,
     nil];
     
     CGEventRef event = tl_CGEventCreateFromGesture((__bridge CFDictionaryRef)(magnifyInfo), (__bridge CFArrayRef) @[]);
