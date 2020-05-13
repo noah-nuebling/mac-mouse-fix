@@ -13,19 +13,13 @@
 @implementation RemapUtility
 
 + (NSDictionary *)getCurrentModifiers {
-    NSMutableDictionary *outDict = [NSMutableDictionary dictionary];
     
-    // This is unusable, because it updates too slowly after posting a keyEvent with a modifier through `[ButtonInputParser doSymbolicHotKeyAction]`. It thinks the modifiers from the fake event are still pressed.
+    NSMutableDictionary *outDict = [NSMutableDictionary dictionary];
     NSEventModifierFlags modifierFlags = [NSEvent modifierFlags]
     & NSDeviceIndependentModifierFlagsMask; // Not sure if this does anything
-    
-    
-//    CGEventFlags modifierFlags = CGEventGetFlags(CGEventCreate(NULL))
-//    & NSDeviceIndependentModifierFlagsMask; // Not sure if this does anything
     if (modifierFlags != 0) {
         outDict[@"keyboardModifierFlags"] = @(modifierFlags);
     }
-    
     return outDict;
 }
 

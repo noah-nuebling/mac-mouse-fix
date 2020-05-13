@@ -26,13 +26,10 @@
 //
 
 #import "ButtonInputParser.h"
+#import "OneShotActions.h"
 #import "RemapUtility.h"
 #import "Utility_HelperApp.h"
-#import "AppDelegate.h"
 #import "ConfigFileInterface_HelperApp.h"
-#import "../SupportFiles/External/CGSInternal/CGSHotKeys.h"
-#import "../SupportFiles/External/SensibleSideButtons/TouchEvents.h"
-#import "TouchSimulator.h"
 
 @implementation ButtonInputParser
 
@@ -44,39 +41,80 @@ NSArray *_testRemapsUI;
         @{}: @{                                                     // Key: modifier dict
             @(4): @{                                                // Key: button
                 @(1): @{                                            // Key: level
-//                    @"click": @[                                  // Key: clic/hold, value: array of actions
+                    @"modifying": @[                                  // Key: click/hold/modifying, value: array of actions
+                        @{
+                            @"type": @"modifyingScroll",
+                            @"value": @"magnification",
+                        },
 //                        @{
-//                            @"type": @"symbolicHotkey",
-//                            @"value": @(33),
+//                            @"type": @"modifyingDrag",
+//                            @"value": @"threeFingerSwipe",
 //                        },
-//                    ],
-                    @"hold": @[                                    // Key: clic/hold, value: array of actions
+                    ],
+                    @"click": @[                                  // Key: click/hold, value: array of actions
                         @{
                             @"type": @"symbolicHotkey",
                             @"value": @(32),
                         },
                     ],
-                },
-                @(2): @{                                            // Key: level
-                    @"click": @[                                    // Key: clic/hold, value: array of actions
+                    @"hold": @[                                    // Key: click/hold, value: array of actions
                         @{
                             @"type": @"symbolicHotkey",
-                            @"value": @(64),
+                            @"value": @(36),
+                        },
+                    ],
+                },
+                @(2): @{                                            // Key: level
+                    @"click": @[                                    // Key: click/hold, value: array of actions
+                        @{
+                            @"type": @"symbolicHotkey",
+                            @"value": @(70),
                         },
                     ],
                 },
             },
+//            @(4): @{                                                // Key: button
+//                @(1): @{                                            // Key: level
+//                    @"click": @[                                  // Key: click/hold, value: array of actions
+//                        @{
+//                            @"type": @"symbolicHotkey",
+//                            @"value": @(79),
+//                        },
+//                    ],
+//                },
+//            },
+//            @(5): @{                                                // Key: button
+//                @(1): @{                                            // Key: level
+//                    @"click": @[                                  // Key: click/hold, value: array of actions
+//                        @{
+//                            @"type": @"symbolicHotkey",
+//                            @"value": @(81),
+//                        },
+//                    ],
+//                },
+//            },
+            
         },
         
         @{                                                          // Key: modifier dict
-            @"keyboardModifierFlags": @(NSEventModifierFlagCommand | NSEventModifierFlagShift),
+            @"keyboardModifierFlags": @(NSEventModifierFlagControl),
         }: @{
-            @(3): @{                                                // Key: button
+            @(4): @{                                                // Key: button
                 @(1): @{                                            // Key: level
-                    @"click": @[                                    // Key: clic/hold, value: array of actions
+                    @"click": @[                                  // Key: clic/hold, value: array of actions
                         @{
-                            @"type": @"symbolicHotkey",
-                            @"value": @(64),
+                            @"type": @"twoFingerSwipeEvent",
+                            @"value": @"left",
+                        },
+                    ],
+                },
+            },
+            @(5): @{                                                // Key: button
+                @(1): @{                                            // Key: level
+                    @"click": @[                                  // Key: clic/hold, value: array of actions
+                        @{
+                            @"type": @"twoFingerSwipeEvent",
+                            @"value": @"right",
                         },
                     ],
                 },
@@ -114,26 +152,34 @@ NSArray *_testRemapsUI;
 
 static NSTimer *_levelTimer;
 static NSTimer *_holdTimer;
+static int _previousButton;
 static int _clickLevel;
 + (void)resetInputParser {
     [_levelTimer invalidate];
     [_holdTimer invalidate];
     _clickLevel = 0;
+    _previousButton = 0;
 }
-+ (MFEventPassThroughEvaluation)generateActionTriggersWithInputFrom:(int)button type:(MFButtonInputType)type {
++ (MFEventPassThroughEvaluation)sendActionTriggersForInputWithButton:(int)button type:(MFButtonInputType)type {
     
     MFEventPassThroughEvaluation passThroughEval = kMFEventPassThroughApproval;
     
      if (type == kMFButtonInputTypeButtonDown) {
+         
+         if (button != _previousButton) {
+             [self resetInputParser];
+             _previousButton = button;
+         }
+         
          if ([_levelTimer isValid]) {
             _clickLevel += 1;
          } else {
              _clickLevel = 1;
          }
-        passThroughEval = [self doActionWithButton:button trigger:kMFActionTriggerTypeButtonDown level:_clickLevel];
+        passThroughEval = [self handleActionTriggerWithButton:button triggerType:kMFActionTriggerTypeButtonDown level:_clickLevel];
         [_levelTimer invalidate];
         [_holdTimer invalidate];
-        _holdTimer = [NSTimer scheduledTimerWithTimeInterval:0.3
+        _holdTimer = [NSTimer scheduledTimerWithTimeInterval:0.25
                                                       target:self
                                                     selector:@selector(holdTimerCallback:)
                                                     userInfo:@(button)
@@ -144,8 +190,13 @@ static int _clickLevel;
                                                      userInfo:@(button)
                                                       repeats:NO];
      } else { // if (type == kMFButtonInputTypeButtonUp)
+         
+         if (button != _previousButton) {
+             return kMFEventPassThroughApproval;
+         }
+         
          if ([_holdTimer isValid]) {
-             passThroughEval = [self doActionWithButton:button trigger:kMFActionTriggerTypeButtonUp level:_clickLevel];
+             passThroughEval = [self handleActionTriggerWithButton:button triggerType:kMFActionTriggerTypeButtonUp level:_clickLevel];
          }
         [_holdTimer invalidate];
      }
@@ -154,19 +205,19 @@ static int _clickLevel;
 + (void)holdTimerCallback:(NSTimer *)timer {
     [_levelTimer invalidate];
     int button = [[timer userInfo] intValue];
-    [self doActionWithButton:button trigger:kMFActionTriggerTypeHoldTimerExpired level:_clickLevel];
+    [self handleActionTriggerWithButton:button triggerType:kMFActionTriggerTypeHoldTimerExpired level:_clickLevel];
 }
 + (void)levelTimerCallback:(NSTimer *)timer {
     if ([_holdTimer isValid]) {
         return;
     }
     int button = [[timer userInfo] intValue];
-    [self doActionWithButton:button trigger:kMFActionTriggerTypeLevelTimerExpired level:_clickLevel];
+    [self handleActionTriggerWithButton:button triggerType:kMFActionTriggerTypeLevelTimerExpired level:_clickLevel];
 }
 
-+ (MFEventPassThroughEvaluation)doActionWithButton:(int)button trigger:(MFActionTriggerType)trigger level:(int)level {
++ (MFEventPassThroughEvaluation)handleActionTriggerWithButton:(int)button triggerType:(MFActionTriggerType)triggerType level:(int)level {
     
-    // This is the return value of the function. It determines, whether the event which caused this function call should be removed from the event stream or not. The return is only used when this function is called by `generateActionTriggersWithInputFrom:trigger:`, which itself is called as a direct result of device input.
+    // This is the return value of the function. It determines, whether the event which caused this function call should be removed from the event stream or not. The return is only used when this function is called by `sendActionTriggersWithInputButton:trigger:`, which itself is called as a direct result of device input.
     MFEventPassThroughEvaluation passThroughEval = kMFEventPassThroughRefusal;
     
     // Get remapDict and apply modifier overrides
@@ -180,16 +231,17 @@ static int _clickLevel;
     }
     
     // Get actionArray and calculate targetTrigger, that is, the trigger on which actionArray should be executed.
+    // \note It's unnecessary to calculate targetTrigger again for every call of this function. It only has to be calculated once for every "click" (as opposed to "hold") actionArray in every possible overriden remapDict including the unoverriden one. We could precalculate everything once when loading remapDict if we wanted to. This is plenty fast though so it's fine.
     
     NSArray *actionArrayForInput;
     MFActionTriggerType targetTriggerForActionArray;
     
-    if (trigger == kMFActionTriggerTypeButtonDown ||
-        trigger == kMFActionTriggerTypeButtonUp ||
-        trigger == kMFActionTriggerTypeLevelTimerExpired) {
+    if (triggerType == kMFActionTriggerTypeButtonDown ||
+        triggerType == kMFActionTriggerTypeButtonUp ||
+        triggerType == kMFActionTriggerTypeLevelTimerExpired) {
         
-        // ^ The incoming trigger is one on which "click" actions can be fired on.
-        // -> Get the relevant click action and calculate on which of the three possible triggers we want to execute it.
+        // ^ The incoming trigger is for "click" actions.
+        // -> Get the relevant "click" action and calculate on which of the three possible triggers we want to execute it.
         
         actionArrayForInput = remapDict[@(button)][@(level)][@"click"];
         
@@ -213,7 +265,7 @@ static int _clickLevel;
         }
         
         // Let the input event which caused this function call pass through, if no remaps exist for this button.
-        // (I'm not 100% sure that the condition is true if and only if no remaps exist for this button)
+        // TODO: Think about this and make sure that the condition is true if and only if no remaps exist for this button
         
         if (actionArrayForInput == nil &&
             !actionOfGreaterLevelExists &&
@@ -221,9 +273,8 @@ static int _clickLevel;
             passThroughEval = kMFEventPassThroughApproval;
         }
         
-    } else if (trigger == kMFActionTriggerTypeHoldTimerExpired) {
-        // The incoming trigger is for "hold" actions.
-        // Get the relevant "hold" action and set targetTriggerForActionArray.
+    } else if (triggerType == kMFActionTriggerTypeHoldTimerExpired) {
+        // ^ The incoming trigger is for "hold" actions.
         actionArrayForInput = remapDict[@(button)][@(level)][@"hold"];
         targetTriggerForActionArray = kMFActionTriggerTypeHoldTimerExpired;
     } else { // if (trigger == kMFActionTriggerTypeModifyingAction)
@@ -233,99 +284,12 @@ static int _clickLevel;
     
     // Execute actionArray
     
-    if (targetTriggerForActionArray == trigger) {
+    if (targetTriggerForActionArray == triggerType) {
         // v This prevents clicks that occur right after an event fires from inceasing click level further, which leads to a worse UX.
         [self resetInputParser]; // TODO: Think this through and make sure it doesn't lead to weird behaviour.
-        for (NSDictionary *actionDict in actionArrayForInput) {
-            [self handleActionDict:actionDict];
-        }
+        [OneShotActions handleActionArray:actionArrayForInput];
     }
     return passThroughEval;
-}
-
-// TODO: Extract the action stuff into its own class.
-
-+ (void)handleActionDict:(NSDictionary *)actionDict {
-    
-    if ([actionDict[@"type"] isEqualToString:@"symbolicHotkey"]) {
-        NSNumber *shk = actionDict[@"value"];
-        [ButtonInputParser doSymbolicHotKeyAction:[shk intValue]];
-    }
-    else if ([actionDict[@"type"] isEqualToString:@"twoFingerSwipeEvent"]) {
-        NSString *dirString = actionDict[@"value"];
-        
-        if ([dirString isEqualToString:@"left"]) {
-            [TouchSimulator SBFFakeSwipe:kTLInfoSwipeLeft];
-        } else if ([dirString isEqualToString:@"right"]) {
-            [TouchSimulator SBFFakeSwipe:kTLInfoSwipeRight];
-        }
-    }
-}
-
-CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar keyEquivalent, CGKeyCode virtualKeyCode, CGSModifierFlags modifiers);
-
-+ (void)doSymbolicHotKeyAction:(CGSSymbolicHotKey)shk {
-    
-    CGEventFlags originalModifierFlags = CGEventGetFlags(CGEventCreate(NULL));
-    
-    unichar keyEquivalent;
-    CGKeyCode virtualKeyCode;
-    CGSModifierFlags modifierFlags;
-    CGSGetSymbolicHotKeyValue(shk, &keyEquivalent, &virtualKeyCode, &modifierFlags);
-    
-    BOOL hotKeyIsEnabled = CGSIsSymbolicHotKeyEnabled(shk);
-    BOOL oldVirtualKeyCodeIsUsable = (virtualKeyCode < 400);
-    
-    if (hotKeyIsEnabled == FALSE) {
-        CGSSetSymbolicHotKeyEnabled(shk, TRUE);
-    }
-    if (oldVirtualKeyCodeIsUsable == FALSE) {
-        // set new parameters for shk - not accessible through actual keyboard, cause values too high
-        keyEquivalent = 65535; // TODO: Why this value? Does it event matter what value this is?
-        virtualKeyCode = (CGKeyCode)shk + 200;
-        modifierFlags = 10485760; // 0 Didn't work in my testing. This seems to be the 'empty' CGSModifierFlags value, used to signal that no modifiers are pressed.
-        CGError err = CGSSetSymbolicHotKeyValue(shk, keyEquivalent, virtualKeyCode, modifierFlags);
-        NSLog(@"(doSymbolicHotKeyAction) set shk params err: %d", err);
-        if (err != 0) {
-            // Do again or something if setting shk goes wrong
-        }
-    }
-    
-    // Post keyevents corresponding to shk
-    CGEventRef shortcutDown = CGEventCreateKeyboardEvent(NULL, virtualKeyCode, TRUE);
-    CGEventRef shortcutUp = CGEventCreateKeyboardEvent(NULL, virtualKeyCode, FALSE);
-    CGEventSetFlags(shortcutDown, (CGEventFlags)modifierFlags);
-    CGEventSetFlags(shortcutUp, originalModifierFlags); // Restore original keyboard modifier flags state. This seems to fix `[RemapUtility getCurrentModifiers]`
-    CGEventPost(kCGHIDEventTap, shortcutDown);
-    CGEventPost(kCGHIDEventTap, shortcutUp);
-    CFRelease(shortcutDown);
-    CFRelease(shortcutUp);
-    
-//     Restore original hotkey parameters state after 20ms
-    if (hotKeyIsEnabled == FALSE) { // Only really need to restore hotKeyIsEnabled. But the other stuff doesn't hurt.
-        [NSTimer scheduledTimerWithTimeInterval:0.05
-                                         target:self
-                                       selector:@selector(restoreSHK:)
-                                       userInfo:@{
-                                           @"shk": @(shk),
-                                           @"enabled": @(hotKeyIsEnabled),
-                                           @"keyEquivalent": @(keyEquivalent),
-                                           @"virtualKeyCode": @(virtualKeyCode),
-                                           @"flags": @(modifierFlags),
-                                       }
-                                        repeats:NO];
-    }
-}
-+ (void)restoreSHK:(NSTimer *)timer { // TODO: Test if this works
-    
-    CGSSymbolicHotKey shk = [timer.userInfo[@"shk"] intValue];
-    BOOL enabled = [timer.userInfo[@"enabled"] boolValue];
-    unichar kEq = [timer.userInfo[@"keyEquivalent"] unsignedCharValue];
-    CGKeyCode kCode = [timer.userInfo[@"virtualKeyCode"] unsignedIntValue];
-    CGSModifierFlags mod = [timer.userInfo[@"flags"] intValue];
-    
-    CGSSetSymbolicHotKeyEnabled(shk, enabled);
-    CGSSetSymbolicHotKeyValue(shk, kEq, kCode, mod);
 }
 
 @end

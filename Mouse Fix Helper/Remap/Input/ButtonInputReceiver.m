@@ -12,7 +12,6 @@
 #import "IOKit/hid/IOHIDManager.h"
 #import "ButtonInputParser.h"
 #import "AppDelegate.h"
-#import "../MessagePort/MessagePort_HelperApp.h"
 #import <ApplicationServices/ApplicationServices.h>
 
 #import "Utility_HelperApp.h"
@@ -34,7 +33,7 @@ CFMachPortRef eventTap;
 
 + (void)decide {
     if ([DeviceManager relevantDevicesAreAttached]) {
-        NSLog(@"started (InputReceiver)");
+        NSLog(@"started (InputReceiver)"); 
         [ButtonInputReceiver start];
     } else {
         NSLog(@"stopped (InputReceiver)");
@@ -101,7 +100,7 @@ CGEventRef handleInput_CG(CGEventTapProxy proxy, CGEventType type, CGEventRef ev
         MFButtonInputType type = pr == 0 ? kMFButtonInputTypeButtonUp : kMFButtonInputTypeButtonDown;
         
         if (3 <= buttonNumber) {
-            MFEventPassThroughEvaluation rt = [ButtonInputParser generateActionTriggersWithInputFrom:buttonNumber type:type];
+            MFEventPassThroughEvaluation rt = [ButtonInputParser sendActionTriggersForInputWithButton:buttonNumber type:type];
             if (rt == kMFEventPassThroughRefusal) {
                 return nil;
             }

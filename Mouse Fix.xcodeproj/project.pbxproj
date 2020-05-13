@@ -34,11 +34,13 @@
 		4F8D0185243D8D6200D70076 /* NSArray+Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F8D0183243D8D6200D70076 /* NSArray+Additions.h */; };
 		4F8D0186243D8D6200D70076 /* NSArray+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8D0184243D8D6200D70076 /* NSArray+Additions.m */; };
 		4F95A249234EBB5D000DC7D7 /* PointerSpeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F95A248234EBB5D000DC7D7 /* PointerSpeed.m */; };
+		4F9CA64E246CA5470042F25A /* ModifyingActions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9CA64D246CA5470042F25A /* ModifyingActions.m */; };
 		4FA26CE724380D1F0082D5F6 /* ClickableImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FA26CE524380D1F0082D5F6 /* ClickableImageView.h */; };
 		4FA26CE824380D1F0082D5F6 /* ClickableImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA26CE624380D1F0082D5F6 /* ClickableImageView.m */; };
 		4FA26CF1243949DC0082D5F6 /* NSMutableDictionary+Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FA26CEF243949DC0082D5F6 /* NSMutableDictionary+Additions.h */; };
 		4FA26CF2243949DC0082D5F6 /* NSMutableDictionary+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA26CF0243949DC0082D5F6 /* NSMutableDictionary+Additions.m */; };
 		4FACF59F2183B956009257D4 /* default_mouse.fix.helper.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FACF59E2183B956009257D4 /* default_mouse.fix.helper.plist */; };
+		4FB68B69246CA46F0059530E /* OneShotActions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB68B68246CA46F0059530E /* OneShotActions.m */; };
 		4FBF34F7231750B600E6CFD0 /* pureDonationButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */; };
 		4FBF34FF23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FBF34FD23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h */; };
 		4FBF350023183E6700E6CFD0 /* ConfigFileInterface_PrefPane.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBF34FE23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.m */; };
@@ -219,11 +221,15 @@
 		4F8D0184243D8D6200D70076 /* NSArray+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Additions.m"; sourceTree = "<group>"; };
 		4F95A247234EBB5D000DC7D7 /* PointerSpeed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerSpeed.h; sourceTree = "<group>"; };
 		4F95A248234EBB5D000DC7D7 /* PointerSpeed.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerSpeed.m; sourceTree = "<group>"; };
+		4F9CA64C246CA5470042F25A /* ModifyingActions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModifyingActions.h; sourceTree = "<group>"; };
+		4F9CA64D246CA5470042F25A /* ModifyingActions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModifyingActions.m; sourceTree = "<group>"; };
 		4FA26CE524380D1F0082D5F6 /* ClickableImageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClickableImageView.h; sourceTree = "<group>"; };
 		4FA26CE624380D1F0082D5F6 /* ClickableImageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClickableImageView.m; sourceTree = "<group>"; };
 		4FA26CEF243949DC0082D5F6 /* NSMutableDictionary+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+Additions.h"; sourceTree = "<group>"; };
 		4FA26CF0243949DC0082D5F6 /* NSMutableDictionary+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+Additions.m"; sourceTree = "<group>"; };
 		4FACF59E2183B956009257D4 /* default_mouse.fix.helper.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_mouse.fix.helper.plist; sourceTree = "<group>"; };
+		4FB68B67246CA46F0059530E /* OneShotActions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OneShotActions.h; sourceTree = "<group>"; };
+		4FB68B68246CA46F0059530E /* OneShotActions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OneShotActions.m; sourceTree = "<group>"; };
 		4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pureDonationButton.png; sourceTree = "<group>"; };
 		4FBF34FD23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigFileInterface_PrefPane.h; sourceTree = "<group>"; };
 		4FBF34FE23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigFileInterface_PrefPane.m; sourceTree = "<group>"; };
@@ -268,7 +274,7 @@
 		4FF3B2BE232788AA009E8A8E /* HelperServices_HelperApp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelperServices_HelperApp.h; sourceTree = "<group>"; };
 		4FF3B2BF232788AA009E8A8E /* HelperServices_HelperApp.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelperServices_HelperApp.m; sourceTree = "<group>"; };
 		4FF58E282469952200293553 /* RemapUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapUtility.h; sourceTree = "<group>"; };
-		4FF58E292469952200293553 /* RemapUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapUtility.m; sourceTree = "<group>"; };
+		4FF58E292469952200293553 /* RemapUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = RemapUtility.m; path = "Mouse Fix Helper/RemapUtility.m"; sourceTree = SOURCE_ROOT; };
 		4FF873DC23197283002A897A /* UpdateWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UpdateWindow.h; sourceTree = "<group>"; };
 		4FF873DD23197283002A897A /* UpdateWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UpdateWindow.m; sourceTree = "<group>"; };
 		4FF873DE23197283002A897A /* UpdateWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpdateWindow.xib; sourceTree = "<group>"; };
@@ -440,10 +446,8 @@
 		4F32E18D231C50A100199A11 /* Remap */ = {
 			isa = PBXGroup;
 			children = (
-				4F32E190231C50A100199A11 /* ButtonInputReceiver.h */,
-				4F32E193231C50A100199A11 /* ButtonInputReceiver.m */,
-				4F32E192231C50A100199A11 /* ButtonInputParser.h */,
-				4F32E18E231C50A100199A11 /* ButtonInputParser.m */,
+				4FB68B6E246CA4AF0059530E /* Input */,
+				4FB68B6D246CA4850059530E /* Actions */,
 				4FF58E282469952200293553 /* RemapUtility.h */,
 				4FF58E292469952200293553 /* RemapUtility.m */,
 			);
@@ -482,6 +486,28 @@
 				4FACF59E2183B956009257D4 /* default_mouse.fix.helper.plist */,
 			);
 			path = "Default User Agent Config File";
+			sourceTree = "<group>";
+		};
+		4FB68B6D246CA4850059530E /* Actions */ = {
+			isa = PBXGroup;
+			children = (
+				4FB68B67246CA46F0059530E /* OneShotActions.h */,
+				4FB68B68246CA46F0059530E /* OneShotActions.m */,
+				4F9CA64C246CA5470042F25A /* ModifyingActions.h */,
+				4F9CA64D246CA5470042F25A /* ModifyingActions.m */,
+			);
+			path = Actions;
+			sourceTree = "<group>";
+		};
+		4FB68B6E246CA4AF0059530E /* Input */ = {
+			isa = PBXGroup;
+			children = (
+				4F32E190231C50A100199A11 /* ButtonInputReceiver.h */,
+				4F32E193231C50A100199A11 /* ButtonInputReceiver.m */,
+				4F32E192231C50A100199A11 /* ButtonInputParser.h */,
+				4F32E18E231C50A100199A11 /* ButtonInputParser.m */,
+			);
+			path = Input;
 			sourceTree = "<group>";
 		};
 		4FBF347B2316B90800E6CFD0 /* Update */ = {
@@ -901,10 +927,12 @@
 				4F32E155231C420100199A11 /* MessagePort_HelperApp.m in Sources */,
 				4FECC8902431DCDF001A3C4B /* ScrollControl.m in Sources */,
 				4F1C968C231361EF00C3B9AE /* TouchEvents.c in Sources */,
+				4FB68B69246CA46F0059530E /* OneShotActions.m in Sources */,
 				4FD45A20231C7FB500F75C58 /* AccessibilityCheck.m in Sources */,
 				4FECC88D2431DCCD001A3C4B /* RoughScroll.m in Sources */,
 				4F32E18C231C509200199A11 /* SmoothScroll.m in Sources */,
 				4F32E157231C420100199A11 /* DeviceManager.m in Sources */,
+				4F9CA64E246CA5470042F25A /* ModifyingActions.m in Sources */,
 				4F1B7C1D23D3E6D60055C007 /* TouchSimulator.m in Sources */,
 				4F32E158231C420100199A11 /* ConfigFileInterface_HelperApp.m in Sources */,
 				4FCECD8521092354001F1078 /* AppDelegate.m in Sources */,
