@@ -1,7 +1,12 @@
+---
+tags: Github, Mac Mouse Fix
+---
+
 # Changelog
 
-## 0.9.2 
-(Not yet released)
+## Future Releases
+
+### 0.9.2 
 
 - Added support for macOS 10.11 El Capitan.
 - Fixed compatibilty with many mice that pretend to be keyboards or other things including the Logitech MX Master.
@@ -14,7 +19,9 @@
 - Added 'Look Up' and 'Launchpad' options which were removed in 0.9.1 back in.
 - Various small improvements and bug fixes.
 
-## 0.9.1
+## Past Releases
+
+### 0.9.1
 
 - Fixed compatiblity with Catalina by fixing a bug that would occur when setting up a message port to communicate with the Mouse Fix Helper application from within the Mouse Fix prefpane.
 - Added full support for Bluetooth mice, by improving device management code.
