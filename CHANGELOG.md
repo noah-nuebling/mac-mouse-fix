@@ -1,7 +1,3 @@
----
-tags: Github, Mac Mouse Fix
----
-
 # Changelog
 
 ## Future Releases
