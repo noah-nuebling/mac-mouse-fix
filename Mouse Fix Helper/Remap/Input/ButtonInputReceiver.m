@@ -73,6 +73,7 @@ CFMachPortRef eventTap;
 
 /// Device filtering criteria are set within setupDeviceMatchingAndRemovalCallbacks()
 /// Which specific types of input from these devices trigger this callback function is set within registerInputCallback_HID (it's only buttons currently)
+// TODO: Look into getting getting device information through CGEventGetIntegerValueField. There are tons of undocumented value fields and many public ones that I haven't checked out. One of them might very well contain a device id.
 static void handleInput_HID(void *context, IOReturn result, void *sender, IOHIDValueRef value) {
     _buttonEventInputSourceIsDeviceOfInterest = true;
 }

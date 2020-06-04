@@ -21,14 +21,21 @@
             NSNumber *shk = actionDict[@"value"];
             [self doSymbolicHotKeyAction:[shk intValue]];
         }
-        else if ([actionDict[@"type"] isEqualToString:@"twoFingerSwipeEvent"]) {
-            NSString *dirString = actionDict[@"value"];
+        else if ([actionDict[@"type"] isEqualToString:@"navigationSwipe"]) {
+            NSString *dirString = actionDict[@"direction"];
             
             if ([dirString isEqualToString:@"left"]) {
-                [TouchSimulator SBFFakeSwipe:kTLInfoSwipeLeft];
+                [TouchSimulator postNavigationSwipeWithDirection:kIOHIDSwipeLeft];
             } else if ([dirString isEqualToString:@"right"]) {
-                [TouchSimulator SBFFakeSwipe:kTLInfoSwipeRight];
+                [TouchSimulator postNavigationSwipeWithDirection:kIOHIDSwipeRight];
+            } else if ([dirString isEqualToString:@"up"]) {
+                [TouchSimulator postNavigationSwipeWithDirection:kIOHIDSwipeUp];
+            } else if ([dirString isEqualToString:@"down"]) {
+                [TouchSimulator postNavigationSwipeWithDirection:kIOHIDSwipeDown];
             }
+            
+        } else if ([actionDict[@"type"] isEqualToString:@"smartZoom"]) {
+            [TouchSimulator postSmartZoomEvent];
         }
     }
 }

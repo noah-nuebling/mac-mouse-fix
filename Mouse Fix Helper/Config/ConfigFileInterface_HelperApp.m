@@ -83,6 +83,7 @@ static void fillConfigFromFile() {
 /// Used to apply appOverrides (`force == NO`), and after loading new config from file. (`force == YES`)
 /// \param force If NO, then it will only update the internal state, if the app currenly under the cursor is different to the one when this function was last called.
 /// \returns YES, if internal parameters did update. NO otherwise.
+// TODO: Look into using kCGMouseEventWindowUnderMousePointer to get the window under the mouse pointer
 + (BOOL)updateInternalParameters_Force:(BOOL)force {
 
     // Get app under mouse pointer

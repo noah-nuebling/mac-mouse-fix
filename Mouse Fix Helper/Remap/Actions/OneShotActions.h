@@ -12,6 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface OneShotActions : NSObject
+
 + (void)handleActionArray:(NSArray *)actionArray;
 @end
 

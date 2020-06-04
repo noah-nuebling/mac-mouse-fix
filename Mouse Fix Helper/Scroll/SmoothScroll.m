@@ -161,14 +161,14 @@ static BOOL _hasStarted;
         NSLog(@"scrollDeltaAxis1 is 0. This shouldn't happen.");
     }
     
-    // Apply acceleration to _pxScrollBuffer
-    if (ScrollUtility.consecutiveScrollTickCounter != 0) {
-        _pxScrollBuffer = _pxScrollBuffer * _accelerationForScrollBuffer;
-    }
+//    // Apply acceleration to _pxScrollBuffer
+//    if (ScrollUtility.consecutiveScrollTickCounter != 0) {
+//        _pxScrollBuffer = _pxScrollBuffer * _accelerationForScrollBuffer;
+//    }
     
 //    if (ScrollUtility.consecutiveScrollTickCounter == 0) {
-        NSLog(@"tick: %d", ScrollUtility.consecutiveScrollTickCounter);
-        NSLog(@"swip: %d", ScrollUtility.consecutiveScrollSwipeCounter);
+//        NSLog(@"tick: %d", ScrollUtility.consecutiveScrollTickCounter);
+//        NSLog(@"swip: %d", ScrollUtility.consecutiveScrollSwipeCounter);
 //    }
     
     // Apply fast scroll to _pxScrollBuffer
@@ -177,12 +177,12 @@ static BOOL _hasStarted;
         //&& ScrollUtility.consecutiveScrollTickCounter >= ScrollControl.scrollSwipeThreshold_inTicks) {
         _pxScrollBuffer = _pxScrollBuffer * ScrollControl.fastScrollFactor * pow(ScrollControl.fastScrollExponentialBase, ((int32_t)fastScrollThresholdDelta));
     }
-    NSLog(@"buff: %d", _pxScrollBuffer);
-            NSLog(@"--------------");
+//    NSLog(@"buff: %d", _pxScrollBuffer);
+//    NSLog(@"--------------");
     
     // Start displaylink and stuff
     
-    // Update scroll phase
+    // Update display link phase
     _displayLinkPhase = kMFPhaseStart;
     
     if (ScrollUtility.consecutiveScrollTickCounter == 0) {
@@ -229,11 +229,30 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
             NSLog(@"_msLeftForScroll was 0.0");
             _pxToScrollThisFrame = _pxScrollBuffer; // TODO: But it happens sometimes - check if this handles that situation well
         }
-
+        
+        // Update buffers
+        
         _pxScrollBuffer   -=  _pxToScrollThisFrame;
         _msLeftForScroll    -=  msSinceLastFrame;
         
+        // Apply acceleration
+        
+        double _accelerationMaxScalingFactor = 2.0;
+        double _accelerationRampUp = 0.5;
+
+        double velocity = _pxToScrollThisFrame / msSinceLastFrame;
+        double defaultVelocity = _pxStepSize / _msPerStep;
+        defaultVelocity = defaultVelocity * [ScrollUtility signOf:velocity];
+        double normalizedVelocity = (velocity - defaultVelocity);
+        double acceleratedNormalizedVelocity = _accelerationMaxScalingFactor * normalizedVelocity;
+//        acceleratedRelativeVelocity = [ScrollUtility signOf:velocity] * acceleratedRelativeVelocity;
+
+        double acceleratedVelocity = acceleratedNormalizedVelocity + defaultVelocity;
+        
+        _pxToScrollThisFrame = acceleratedVelocity * msSinceLastFrame;
+        
         // Entering momentum phase
+        
         if (_msLeftForScroll <= 0 || _pxScrollBuffer == 0) { // TODO: Is `_pxScrollBuffer == 0` necessary? Do the conditions for entering momentum phase make sense?
             _msLeftForScroll    =   0; // TODO: Is this necessary?
             _pxScrollBuffer   =   0; // What about this? This stuff isn't used in momentum phase and should get reset elsewhere efore getting used again

@@ -25,6 +25,7 @@
 #import "ScrollControl.h"
 #import "ButtonInputReceiver.h"
 #import "ConfigFileInterface_HelperApp.h"
+#import "PointerSpeed.h"
 
 #import <IOKit/hidsystem/IOHIDServiceClient.h>
 #import <IOKit/hidsystem/IOHIDEventSystemClient.h>
@@ -162,18 +163,20 @@ static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IO
 
 static void handleDeviceMatching(void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
     
-    
-    // TODO: Clean this up
-//    [PointerSpeed setAccelerationTo:0.2];
-//    [PointerSpeed setSensitivityTo:0 device:device];
-    
-    
     NSLog(@"New matching device");
     
     
     if (devicePassesFiltering(device) ) {
+        
+        
     
         NSLog(@"Device Passed filtering");
+        
+        
+        // TODO: Clean this up
+//        [PointerSpeed setAccelerationTo:0.5];
+//        [PointerSpeed setSensitivityTo:200 device:device];
+        
         
         
         

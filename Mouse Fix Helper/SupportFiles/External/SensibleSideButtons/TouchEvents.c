@@ -110,6 +110,9 @@ static void appendIntegerField(CFMutableDataRef data, uint8_t field, uint32_t va
 	CFDataAppendBytes(data, (UInt8*)&swappedValue, sizeof(uint32_t));
 }
 
+/// Noah: Testing shows - this is the same as calling CGEventSetDoubleValueField(event, field, value) after creating the event from data.
+/// Idk why the natevw did it in such a fancy way.
+/// TODO: What does this tell us about how CGEvent fields work, and how CGEvents are reconstructed from CGData?
 static void appendFloatField(CFMutableDataRef data, uint8_t field, Float32 value) {
 	appendHeader(data, field, 0xC0, 1);
 	CFSwappedFloat32 swappedValue = CFConvertFloat32HostToSwapped(value);
@@ -235,7 +238,7 @@ CGEventRef tl_CGEventCreateFromGesture(CFDictionaryRef info, CFArrayRef touches)
 		
 		int32_t type;
 		CFNumberGetValue(typeVal, kCFNumberSInt32Type, &type);
-		assert(type == kIOHIDEventTypeDigitizer);	// only digitizer events currently supported
+		assert(type == kIOHIDEventTypeDigitizer);	// Only digitizer events currently supported
 		
 		IOHIDDigitizerEventData touch = {};
 		fillOutBase(touchInfo, (IOHIDEventData*)&touch);
@@ -346,7 +349,7 @@ CGEventRef tl_CGEventCreateFromGesture(CFDictionaryRef info, CFArrayRef touches)
 	if (val) {
 		CFNumberGetValue(val, kCFNumberSInt32Type, &gestureSubtype);
 	}
-	appendIntegerField(gestureData, 0x6E, gestureSubtype);
+	appendIntegerField(gestureData, 0x6E, gestureSubtype); // Noah: The values for gesture subtype (TLInfoSubtype) seem to come from IOHIDEventTypes.h
 	appendIntegerField(gestureData, 0x6F, 0);	// magic
 	appendIntegerField(gestureData, 0x70, 0);	// magic
 	
@@ -366,6 +369,7 @@ CGEventRef tl_CGEventCreateFromGesture(CFDictionaryRef info, CFArrayRef touches)
 			CFNumberGetValue(val, kCFNumberFloat32Type, &magnification);
 		}
 		appendFloatField(gestureData, 0x71, magnification);
+        // ^ Noah: Testing shows - this is the same as calling CGEventSetDoubleValueField(event, 0x71, magnification) after creating the event.
 	}
 	else if (gestureSubtype == kTLInfoSubtypeRotate) {
 		Float32 rotation = 0.0f;

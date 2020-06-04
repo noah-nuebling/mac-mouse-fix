@@ -27,6 +27,7 @@
 
 #import "ButtonInputParser.h"
 #import "OneShotActions.h"
+#import "ModifyingActions.h"
 #import "RemapUtility.h"
 #import "Utility_HelperApp.h"
 #import "ConfigFileInterface_HelperApp.h"
@@ -39,10 +40,11 @@ NSArray *_testRemapsUI;
 + (void)load {
     _testRemaps = @{
         @{}: @{                                                     // Key: modifier dict
-            @(4): @{                                                // Key: button
+            @(3): @{                                                // Key: button
                 @(1): @{                                            // Key: level
                     @"modifying": @[                                  // Key: click/hold/modifying, value: array of actions
                         @{
+                            @"type": @"smartZoom",
                             @"type": @"modifyingScroll",
                             @"value": @"magnification",
                         },
@@ -54,45 +56,54 @@ NSArray *_testRemapsUI;
                     @"click": @[                                  // Key: click/hold, value: array of actions
                         @{
                             @"type": @"symbolicHotkey",
-                            @"value": @(32),
+                            @"value": @(70),
                         },
                     ],
                     @"hold": @[                                    // Key: click/hold, value: array of actions
                         @{
-                            @"type": @"symbolicHotkey",
-                            @"value": @(36),
+                            @"type": @"smartZoom",
                         },
                     ],
                 },
-                @(2): @{                                            // Key: level
-                    @"click": @[                                    // Key: click/hold, value: array of actions
+//                @(2): @{                                            // Key: level
+//                    @"click": @[                                    // Key: click/hold, value: array of actions
+//                        @{
+//                            @"type": @"symbolicHotkey",
+//                            @"value": @(70),
+//                        },
+//                    ],
+//                },
+            },
+            @(4): @{                                                // Key: button
+                @(1): @{                                            // Key: level
+                    @"click": @[                                  // Key: click/hold, value: array of actions
                         @{
-                            @"type": @"symbolicHotkey",
-                            @"value": @(70),
+                            @"type": @"navigationSwipe",
+                            @"direction": @"left",
                         },
                     ],
                 },
             },
-//            @(4): @{                                                // Key: button
-//                @(1): @{                                            // Key: level
-//                    @"click": @[                                  // Key: click/hold, value: array of actions
-//                        @{
-//                            @"type": @"symbolicHotkey",
-//                            @"value": @(79),
-//                        },
-//                    ],
-//                },
-//            },
-//            @(5): @{                                                // Key: button
-//                @(1): @{                                            // Key: level
-//                    @"click": @[                                  // Key: click/hold, value: array of actions
-//                        @{
-//                            @"type": @"symbolicHotkey",
-//                            @"value": @(81),
-//                        },
-//                    ],
-//                },
-//            },
+            @(5): @{                                                // Key: button
+                @(1): @{                                            // Key: level
+                    @"click": @[                                  // Key: click/hold, value: array of actions
+                        @{
+                            @"type": @"navigationSwipe",
+                            @"direction": @"right",
+                        },
+                    ],
+                },
+            },
+            @(7)  : @{                                                // Key: button
+                @(1): @{                                            // Key: level
+                    @"click": @[                                  // Key: click/hold, value: array of actions
+                        @{
+                            @"type": @"symbolicHotkey",
+                            @"value": @(160),
+                        },
+                    ],
+                },
+            },
             
         },
         
@@ -230,11 +241,11 @@ static int _clickLevel;
         remapDict = [Utility_HelperApp dictionaryWithOverridesAppliedFrom:[actionsForCurrentModifiers copy] to:remapDict];
     }
     
-    // Get actionArray and calculate targetTrigger, that is, the trigger on which actionArray should be executed.
+    // Get OneShotctionArray and calculate targetTrigger, that is, the trigger on which actionArray should be executed.
     // \note It's unnecessary to calculate targetTrigger again for every call of this function. It only has to be calculated once for every "click" (as opposed to "hold") actionArray in every possible overriden remapDict including the unoverriden one. We could precalculate everything once when loading remapDict if we wanted to. This is plenty fast though so it's fine.
     
-    NSArray *actionArrayForInput;
-    MFActionTriggerType targetTriggerForActionArray;
+    NSArray *OneShotActionArrayForInput;
+    MFActionTriggerType targetTriggerForOneShotActionArray;
     
     if (triggerType == kMFActionTriggerTypeButtonDown ||
         triggerType == kMFActionTriggerTypeButtonUp ||
@@ -243,7 +254,7 @@ static int _clickLevel;
         // ^ The incoming trigger is for "click" actions.
         // -> Get the relevant "click" action and calculate on which of the three possible triggers we want to execute it.
         
-        actionArrayForInput = remapDict[@(button)][@(level)][@"click"];
+        OneShotActionArrayForInput = remapDict[@(button)][@(level)][@"click"];
         
         BOOL actionOfGreaterLevelExists = NO;
         for (NSNumber *thisLevel in ((NSDictionary *)remapDict[@(button)]).allKeys) {
@@ -257,38 +268,45 @@ static int _clickLevel;
         // Set target trigger
         
         if (actionOfGreaterLevelExists) {
-            targetTriggerForActionArray = kMFActionTriggerTypeLevelTimerExpired;
+            targetTriggerForOneShotActionArray = kMFActionTriggerTypeLevelTimerExpired;
         } else if (actionOfSameLevelWithHoldTriggerExists) {
-            targetTriggerForActionArray = kMFActionTriggerTypeButtonUp;
+            targetTriggerForOneShotActionArray = kMFActionTriggerTypeButtonUp;
         } else {
-            targetTriggerForActionArray = kMFActionTriggerTypeButtonDown;
+            targetTriggerForOneShotActionArray = kMFActionTriggerTypeButtonDown;
         }
         
         // Let the input event which caused this function call pass through, if no remaps exist for this button.
         // TODO: Think about this and make sure that the condition is true if and only if no remaps exist for this button
         
-        if (actionArrayForInput == nil &&
+        if (OneShotActionArrayForInput == nil &&
             !actionOfGreaterLevelExists &&
             !actionOfSameLevelWithHoldTriggerExists) {
             passThroughEval = kMFEventPassThroughApproval;
         }
-        
     } else if (triggerType == kMFActionTriggerTypeHoldTimerExpired) {
         // ^ The incoming trigger is for "hold" actions.
-        actionArrayForInput = remapDict[@(button)][@(level)][@"hold"];
-        targetTriggerForActionArray = kMFActionTriggerTypeHoldTimerExpired;
+        OneShotActionArrayForInput = remapDict[@(button)][@(level)][@"hold"];
+        targetTriggerForOneShotActionArray = kMFActionTriggerTypeHoldTimerExpired;
     } else { // if (trigger == kMFActionTriggerTypeModifyingAction)
-        // TODO: Implement this
-        targetTriggerForActionArray = -1;
+        NSLog(@"Error: Trigger type invalid."); // TODO: Throw an exception here or smth.
+        targetTriggerForOneShotActionArray = -1;
     }
     
-    // Execute actionArray
+    // Execute OneShotActionArray
     
-    if (targetTriggerForActionArray == triggerType) {
+    if (targetTriggerForOneShotActionArray == triggerType) {
         // v This prevents clicks that occur right after an event fires from inceasing click level further, which leads to a worse UX.
         [self resetInputParser]; // TODO: Think this through and make sure it doesn't lead to weird behaviour.
-        [OneShotActions handleActionArray:actionArrayForInput];
+        [OneShotActions handleActionArray:OneShotActionArrayForInput];
     }
+    
+    // Retrieve and execute ModifyingActionArray
+    
+    if (triggerType == kMFActionTriggerTypeButtonDown) {
+//        NSArray *modifyingActionArrayForInput = remapDict[@(button)][@(level)][@"modifying"];
+//        [ModifyingActions initializeModifiersWithActionArray:modifyingActionArrayForInput];
+    }
+    
     return passThroughEval;
 }
 

@@ -15,8 +15,22 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TouchSimulator : NSObject
-+ (void)SBFFakeSwipe:(TLInfoSwipeDirection)dir;
-+ (void)postEventWithMagnification:(double)magnification phase:(IOHIDEventPhaseBits)phase;
+
+typedef enum {
+    kMFDockSwipeTypeHorizontal = 1, // Swipe between pages
+    kMFDockSwipeTypeVertical = 2, // Mission Control & App Expose
+    kMFDockSwipeTypePinch = 3, // Show Desktop & Launchpad
+    
+} MFDockSwipeType;
+
++ (void)postNavigationSwipeWithDirection:(TLInfoSwipeDirection)dir;
+
++ (void)postSmartZoomEvent;
++ (void)postRotationEventWithRotation:(double)rotation phase:(IOHIDEventPhaseBits)phase;
++ (void)postMagnificationEventWithMagnification:(double)magnification phase:(IOHIDEventPhaseBits)phase;
++ (void)postDockSwipeEventWithDelta:(double)d type:(MFDockSwipeType)type phase:(IOHIDEventPhaseBits)phase;
+
+
 @end
 
 NS_ASSUME_NONNULL_END

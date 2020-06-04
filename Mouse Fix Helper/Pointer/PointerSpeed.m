@@ -72,7 +72,7 @@ static mach_port_t _IOHIDSystemHandle;
     IOHIDEventSystemClientRef eventSystemClient = IOHIDEventSystemClientCreate(kCFAllocatorDefault); // using this self-defined function (extern) instead of ...CreateSimpleClient - maybe you can do "privilege escalation" here.
     CFArrayRef services = IOHIDEventSystemClientCopyServices(eventSystemClient);
     
-    NSLog(@"services: %@", services);
+//    NSLog(@"services: %@", services);
     
     for (CFIndex i = 0; i < CFArrayGetCount(services); i++) {
         IOHIDServiceClientRef service = (IOHIDServiceClientRef)CFArrayGetValueAtIndex(services, i);
@@ -101,7 +101,7 @@ static mach_port_t _IOHIDSystemHandle;
             
             
             
-            int sens = 450; // 400 is default
+            int sens = 800; // 400 is default
             int newPointerRes = IntToFixed(sens);
             CFNumberRef newPointerRefCF = CFNumberCreate(kCFAllocatorDefault, kCFNumberSInt32Type, &newPointerRes);
             kern_return_t kr = IORegistryEntrySetCFProperty(matchingService, CFSTR("HIDPointerResolution"), newPointerRefCF); // doesn't work
@@ -110,6 +110,7 @@ static mach_port_t _IOHIDSystemHandle;
               
             io_connect_t drvHandle;
             IOServiceOpen(matchingService, mach_task_self(), kIOHIDParamConnectType, &drvHandle);
+            // TODO: Maybe try opening the service with other parameters like kIOHIDEventSystemConnectType, or a different owning task.
             IOConnectSetCFProperty(drvHandle, CFSTR("HIDPointerResolution"), newPointerRefCF); // doesn't work either
               
             // --
@@ -133,9 +134,12 @@ static mach_port_t _IOHIDSystemHandle;
             int pointerRes;
             CFNumberGetValue(pointerResCF, kCFNumberSInt32Type, &pointerRes);
             
-            NSLog(@"Pointer Resolution: %d", FixedToInt(pointerRes));
+            NSLog(@"Set Pointer Resolution to: %d, Actual Pointer Resolution: %d", sens, FixedToInt(pointerRes));
             
+            NSDictionary *eventServiceProps = (__bridge NSDictionary *)IORegistryEntryCreateCFProperty(matchingService, CFSTR("HIDEventServiceProperties"), kCFAllocatorDefault, 0);
+            NSLog(@"Pointer Resolution in Event Service Properties: %d", FixedToInt([eventServiceProps[@"HIDPointerResolution"] integerValue]));
 
+            
             
             NSLog(@"Product: %@", IORegistryEntryCreateCFProperty(matchingService, CFSTR("Product"), kCFAllocatorDefault, 0));
 //            NSLog(@"Path: %@", IORegistryEntryCopyPath(matchingService, "IOService"));
