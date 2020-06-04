@@ -14,12 +14,20 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ModifyingActions : NSObject
 
 typedef enum {
-    kMFModifierStateInitialized,
-    kMFModifierStateInUse,
-} MFModifierState;
+    kMFModifiedInputStateNone,
+    kMFModifiedInputStateInitialized,
+    kMFModifiedInputStateActive,
+} MFModifiedInputState;
 
-+ (void)initializeModifiersForButton:(int)button withActionArray:(NSArray *)actionArray;
+typedef enum {
+    kMFModifiedDragActivationAxisNone,
+    kMFModifiedDragActivationAxisHorizontal,
+    kMFModifiedDragActivationAxisVertical,
+} MFModifiedDragActivationAxis;
 
++ (void)initializeModifiedInputWithActionArray:(NSArray *)actionArray onButton:(int)button;
+
++ (void)deactivateAllInputModification;
 
 @end
 

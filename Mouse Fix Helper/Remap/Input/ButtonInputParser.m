@@ -43,15 +43,14 @@ NSArray *_testRemapsUI;
             @(3): @{                                                // Key: button
                 @(1): @{                                            // Key: level
                     @"modifying": @[                                  // Key: click/hold/modifying, value: array of actions
-                        @{
-                            @"type": @"smartZoom",
-                            @"type": @"modifyingScroll",
-                            @"value": @"magnification",
-                        },
 //                        @{
-//                            @"type": @"modifyingDrag",
-//                            @"value": @"threeFingerSwipe",
+//                            @"type": @"modifyingScroll",
+//                            @"value": @"magnification",
 //                        },
+                        @{
+                            @"type": @"modifiedDrag",
+                            @"value": @"threeFingerSwipe",
+                        },
                     ],
                     @"click": @[                                  // Key: click/hold, value: array of actions
                         @{
@@ -82,6 +81,12 @@ NSArray *_testRemapsUI;
                             @"direction": @"left",
                         },
                     ],
+                    @"modifying": @[
+                            @{
+                                @"type": @"modifiedDrag",
+                                @"value": @"threeFingerSwipe",
+                            }
+                    ]
                 },
             },
             @(5): @{                                                // Key: button
@@ -92,6 +97,12 @@ NSArray *_testRemapsUI;
                             @"direction": @"right",
                         },
                     ],
+                    @"modifying": @[
+                            @{
+                                @"type": @"modifiedDrag",
+                                @"value": @"twoFingerSwipe",
+                            }
+                    ]
                 },
             },
             @(7)  : @{                                                // Key: button
@@ -163,13 +174,13 @@ NSArray *_testRemapsUI;
 
 static NSTimer *_levelTimer;
 static NSTimer *_holdTimer;
-static int _previousButton;
+static int _buttonFromLastMouseDown;
 static int _clickLevel;
 + (void)resetInputParser {
     [_levelTimer invalidate];
     [_holdTimer invalidate];
     _clickLevel = 0;
-    _previousButton = 0;
+//    _buttonFromLastMouseDown = 0; // TODO: This broke ending modified drags on releasing the modifying mouse button. I'm not sure what it was good for so I commented it out.
 }
 + (MFEventPassThroughEvaluation)sendActionTriggersForInputWithButton:(int)button type:(MFButtonInputType)type {
     
@@ -177,9 +188,9 @@ static int _clickLevel;
     
      if (type == kMFButtonInputTypeButtonDown) {
          
-         if (button != _previousButton) {
+         if (button != _buttonFromLastMouseDown) {
              [self resetInputParser];
-             _previousButton = button;
+             _buttonFromLastMouseDown = button;
          }
          
          if ([_levelTimer isValid]) {
@@ -202,14 +213,18 @@ static int _clickLevel;
                                                       repeats:NO];
      } else { // if (type == kMFButtonInputTypeButtonUp)
          
-         if (button != _previousButton) {
+         if (button != _buttonFromLastMouseDown) {
              return kMFEventPassThroughApproval;
          }
          
-         if ([_holdTimer isValid]) {
+         if ([_holdTimer isValid]) { // TODO: Find a way to make click actions trigger on mouse up after hold timer expired, if the reason that the click action is triggered on mouse up is not a hold action on the same button and click level (-> if it's a modifying action)
              passThroughEval = [self handleActionTriggerWithButton:button triggerType:kMFActionTriggerTypeButtonUp level:_clickLevel];
+         } else {
+             [ModifyingActions deactivateAllInputModification];
          }
         [_holdTimer invalidate];
+         
+         
      }
     return passThroughEval;
 }
@@ -227,6 +242,8 @@ static int _clickLevel;
 }
 
 + (MFEventPassThroughEvaluation)handleActionTriggerWithButton:(int)button triggerType:(MFActionTriggerType)triggerType level:(int)level {
+    
+    [ModifyingActions deactivateAllInputModification];
     
     // This is the return value of the function. It determines, whether the event which caused this function call should be removed from the event stream or not. The return is only used when this function is called by `sendActionTriggersWithInputButton:trigger:`, which itself is called as a direct result of device input.
     MFEventPassThroughEvaluation passThroughEval = kMFEventPassThroughRefusal;
@@ -263,13 +280,13 @@ static int _clickLevel;
                 break;
             }
         }
-        BOOL actionOfSameLevelWithHoldTriggerExists = (remapDict[@(button)][@(level)][@"hold"] != nil);
+        BOOL actionOfSameLevelWithHoldTriggerOrWhichIsModifyingExists = (remapDict[@(button)][@(level)][@"hold"] != nil) || (remapDict[@(button)][@(level)][@"modifying"] != nil);
         
         // Set target trigger
         
         if (actionOfGreaterLevelExists) {
             targetTriggerForOneShotActionArray = kMFActionTriggerTypeLevelTimerExpired;
-        } else if (actionOfSameLevelWithHoldTriggerExists) {
+        } else if (actionOfSameLevelWithHoldTriggerOrWhichIsModifyingExists) {
             targetTriggerForOneShotActionArray = kMFActionTriggerTypeButtonUp;
         } else {
             targetTriggerForOneShotActionArray = kMFActionTriggerTypeButtonDown;
@@ -280,7 +297,7 @@ static int _clickLevel;
         
         if (OneShotActionArrayForInput == nil &&
             !actionOfGreaterLevelExists &&
-            !actionOfSameLevelWithHoldTriggerExists) {
+            !actionOfSameLevelWithHoldTriggerOrWhichIsModifyingExists) {
             passThroughEval = kMFEventPassThroughApproval;
         }
     } else if (triggerType == kMFActionTriggerTypeHoldTimerExpired) {
@@ -303,8 +320,10 @@ static int _clickLevel;
     // Retrieve and execute ModifyingActionArray
     
     if (triggerType == kMFActionTriggerTypeButtonDown) {
-//        NSArray *modifyingActionArrayForInput = remapDict[@(button)][@(level)][@"modifying"];
-//        [ModifyingActions initializeModifiersWithActionArray:modifyingActionArrayForInput];
+        NSArray *modifyingActionArrayForInput = remapDict[@(button)][@(level)][@"modifying"];
+        if (modifyingActionArrayForInput) {
+            [ModifyingActions initializeModifiedInputWithActionArray:modifyingActionArrayForInput onButton:button];
+        }
     }
     
     return passThroughEval;

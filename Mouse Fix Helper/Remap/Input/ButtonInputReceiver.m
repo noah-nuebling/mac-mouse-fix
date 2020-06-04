@@ -106,7 +106,7 @@ CGEventRef handleInput_CG(CGEventTapProxy proxy, CGEventType type, CGEventRef ev
                 return nil;
             }
         } else {
-            NSLog(@"Received input from primary / secondary mouse button. This should never happen!");
+            NSLog(@"Received input from primary / secondary mouse button. This should never happen! Button Number: %d", buttonNumber);
         }
     }
     return event;
