@@ -23,7 +23,7 @@ typedef enum {
     
 } MFDockSwipeType;
 
-+ (void)postNavigationSwipeWithDirection:(TLInfoSwipeDirection)dir;
++ (void)postNavigationSwipeEventWithDirection:(TLInfoSwipeDirection)dir;
 
 + (void)postSmartZoomEvent;
 + (void)postRotationEventWithRotation:(double)rotation phase:(IOHIDEventPhaseBits)phase;

@@ -25,7 +25,7 @@ static NSMutableDictionary *_swipeInfo;
 /// Navigation swipe events are actually quite complex and seem to be similar to dock swipes internally (They seem to also have an origin offset and other similar fields from what i've seen)
 /// However, this simple function replicates all of their interesting functionality, so I didn't bother reverse engineering them more thoroughly.
 /// Navigation swipes are naturally produced by three finger swipes, but only if you set "System Preferences > Trackpad > More Gestures > Swipe between pages" to "Swipe with three fingers" or to "Swipe with two or three fingers"
-+ (void)postNavigationSwipeWithDirection:(IOHIDSwipeMask)dir {
++ (void)postNavigationSwipeEventWithDirection:(IOHIDSwipeMask)dir {
     
     CGEventRef e = CGEventCreate(NULL);
     CGEventSetIntegerValueField(e, 55, NSEventTypeGesture);
@@ -63,20 +63,13 @@ static NSMutableDictionary *_swipeInfo;
 
 + (void)postMagnificationEventWithMagnification:(double)magnification phase:(IOHIDEventPhaseBits)phase { // TODO: CLEAN this up.
     
-//    NSDictionary *magnifyInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-//    @(kTLInfoSubtypeMagnify), kTLInfoKeyGestureSubtype,
-//    @(phase), kTLInfoKeyGesturePhase,
-//    @(magnification), kTLInfoKeyMagnification,
-//    nil];
-//    CGEventRef event = tl_CGEventCreateFromGesture((__bridge CFDictionaryRef)(magnifyInfo), (__bridge CFArrayRef) @[]);
-    
-    // Using undocumented CGEVentFields found through Calftrail TouchExtractor and through analyzing Calftrail TouchSynthesis to create a working magnification event from scratch
+    // Using undocumented CGEventFields found through Calftrail TouchExtractor and through analyzing Calftrail TouchSynthesis to create a working magnification event from scratch
     
     CGEventRef event = CGEventCreate(NULL);
-    CGEventSetType(event, 29); // 29 -> NSEventTypeGesture.
-    CGEventSetIntegerValueField(event, 0x84, phase);
-    CGEventSetIntegerValueField(event, 0x6E, kIOHIDEventTypeZoom);
-    CGEventSetDoubleValueField(event, 0x71, magnification);
+    CGEventSetType(event, 29); // 29 -> NSEventTypeGesture
+    CGEventSetIntegerValueField(event, 110, 8); // 8 -> kIOHIDEventTypeZoom
+    CGEventSetIntegerValueField(event, 132, phase);
+    CGEventSetDoubleValueField(event, 113, magnification);
     CGEventPost(kCGHIDEventTap, event);
     CFRelease(event);
 }
@@ -122,10 +115,10 @@ double _threeFingerSwipeOriginOffset = 0;
     } // TODO: Find the value for Type Pinch events (These values are probably an encoded version of the values in MFDockSwipeType. We can probs just convert that and put it in here)
     
     CGEventSetDoubleValueField(e30, 119, weirdTypeOrSum);
-    CGEventSetDoubleValueField(e30, 139, weirdTypeOrSum);  // TODO: Test if necessary
+    CGEventSetDoubleValueField(e30, 139, weirdTypeOrSum);  // Probs not necessary
     
     CGEventSetDoubleValueField(e30, 123, type); // Horizontal or vertical
-    CGEventSetDoubleValueField(e30, 165, type); // Horizontal or vertical // TODO: Test if necessary
+    CGEventSetDoubleValueField(e30, 165, type); // Horizontal or vertical // Probs not necessary
     
     CGEventSetDoubleValueField(e30, 136, 1); // Vertical invert
     
@@ -137,11 +130,11 @@ double _threeFingerSwipeOriginOffset = 0;
     
     // Send events
     
-    CGEventPost(kCGHIDEventTap, e30); // TODO: Check if order matters / what order they appear in in a real event.
+    CGEventPost(kCGHIDEventTap, e30); // TODO: Check if order matters
     CGEventPost(kCGHIDEventTap, e29);
     
     if (phase == kIOHIDEventPhaseEnded) {
-        CGEventPost(kCGHIDEventTap, e29); // TODO: Check if necessary
+        CGEventPost(kCGHIDEventTap, e29); // Probs not necessary
     }
     
     CFRelease(e29);

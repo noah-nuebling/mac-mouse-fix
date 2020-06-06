@@ -30,13 +30,13 @@
 #pragma mark parameters
 
 // wheel phase
-static int64_t  _pxStepSize;
+static uint8_t  _pxStepSize;
 static double   _msPerStep;
 static double   _accelerationForScrollBuffer;
 // momentum phase
 static double   _frictionCoefficient;
 static double   _frictionDepth;
-static int      _nOfOnePixelScrollsMax;
+static uint8_t  _nOfOnePixelScrollsMax;
 // objects
 static CVDisplayLinkRef _displayLink;
 
@@ -44,15 +44,15 @@ static CVDisplayLinkRef _displayLink;
 
 // any phase
 static MFDisplayLinkPhase _displayLinkPhase;
-static int _pxToScrollThisFrame;
+static int32_t _pxToScrollThisFrame;
 //static int _previousPhase; // which phase was active the last time that displayLinkCallback was called. Used to compute artificial scroll phases
 static CGDirectDisplayID *_displaysUnderMousePointer;
 // linear phase
-static int      _pxScrollBuffer;
+static int32_t      _pxScrollBuffer;
 static double   _msLeftForScroll;
 // momentum phase
 static double   _pxPerMsVelocity;
-static int      _onePixelScrollsCounter;
+static uint8_t      _onePixelScrollsCounter;
 
 #pragma mark - Interface
 
@@ -223,7 +223,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     
     if (_displayLinkPhase == kMFPhaseLinear || _displayLinkPhase == kMFPhaseStart) {
         
-        _pxToScrollThisFrame = round( (_pxScrollBuffer/_msLeftForScroll) * msSinceLastFrame );
+        _pxToScrollThisFrame = round( (_pxScrollBuffer/_msLeftForScroll) * msSinceLastFrame ); // TODO: Consider making _pxToScrollThisFrame not a global variable.
         
         if (_msLeftForScroll == 0.0) { // Diving by zero yields infinity, we don't want that.
             NSLog(@"_msLeftForScroll was 0.0");
@@ -235,21 +235,41 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         _pxScrollBuffer   -=  _pxToScrollThisFrame;
         _msLeftForScroll    -=  msSinceLastFrame;
         
+        
+        
         // Apply acceleration
-        
-        double _accelerationMaxScalingFactor = 2.0;
-        double _accelerationRampUp = 0.5;
 
-        double velocity = _pxToScrollThisFrame / msSinceLastFrame;
-        double defaultVelocity = _pxStepSize / _msPerStep;
-        defaultVelocity = defaultVelocity * [ScrollUtility signOf:velocity];
-        double normalizedVelocity = (velocity - defaultVelocity);
-        double acceleratedNormalizedVelocity = _accelerationMaxScalingFactor * normalizedVelocity;
-//        acceleratedRelativeVelocity = [ScrollUtility signOf:velocity] * acceleratedRelativeVelocity;
-
-        double acceleratedVelocity = acceleratedNormalizedVelocity + defaultVelocity;
+        // TODO: Clean this up and put parameters into the config file
         
-        _pxToScrollThisFrame = acceleratedVelocity * msSinceLastFrame;
+        double overPlusAccelerationCoefficient = 2.0; // > 0
+        double overPlusAccelerationThreshold = 1.0; // >= 0
+
+        double pxToScrollThisFrameBase = (_pxStepSize/_msPerStep) * msSinceLastFrame; // > 0
+        double pxToScrollThisFrameOverPlus = abs(_pxToScrollThisFrame) - pxToScrollThisFrameBase; // Should always be >= 0 and == 0 for the linear phase of a tick which occured when the system wasn't scrolling already, but there will be rounding errors.
+        // TODO: Consider making `_pxScrollBuffer` as well as `_pxToScrollThisFrame`, etc doubles to avoid rounding errors.
+
+        if (overPlusAccelerationThreshold < fabs(pxToScrollThisFrameOverPlus) && 0 < pxToScrollThisFrameOverPlus) { // Catch rounding errors
+            double acceleratedOverPlus = pxToScrollThisFrameOverPlus * overPlusAccelerationCoefficient;
+            _pxToScrollThisFrame = [ScrollUtility signOf: _pxToScrollThisFrame] * round(pxToScrollThisFrameBase + acceleratedOverPlus);
+        }
+        
+        
+//        double _accelerationMaxScalingFactor = 2.0;
+//        double _accelerationRampUp = 0.5;
+//
+//        double velocity = _pxToScrollThisFrame / msSinceLastFrame;
+//        double defaultVelocity = _pxStepSize / _msPerStep;
+//        defaultVelocity = defaultVelocity * [ScrollUtility signOf:velocity];
+//        double normalizedVelocity = (velocity - defaultVelocity); // "Normalized" isn't the right term here
+//        double acceleratedNormalizedVelocity = _accelerationMaxScalingFactor * normalizedVelocity;
+////        acceleratedRelativeVelocity = [ScrollUtility signOf:velocity] * acceleratedRelativeVelocity;
+//
+//        double acceleratedVelocity = acceleratedNormalizedVelocity + defaultVelocity;
+//
+//        _pxToScrollThisFrame = acceleratedVelocity * msSinceLastFrame;
+        
+        
+        
         
         // Entering momentum phase
         

@@ -44,7 +44,7 @@ IOHIDEventPhaseBits _modifiedDragGestureScrollPhase;
         CFRelease(runLoopSource);
         CGEventTapEnable(_modfiedDragTap, false);
     }
-    _modfiedDragThreshold = 10;
+    _modfiedDragThreshold = 15;
 }
 
 CGEventRef otherMouseDraggedCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
@@ -94,15 +94,19 @@ CGEventRef otherMouseDraggedCallback(CGEventTapProxy proxy, CGEventType type, CG
             if ([_modifiedDragType isEqualToString:@"threeFingerSwipe"]) {
                 if (_modfiedDragActivationAxis == kMFModifiedDragActivationAxisHorizontal) {
                     double delta = -[eNS deltaX]/1000;
+//                    delta *= 1;
                     [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeHorizontal phase:_modifiedDragDockSwipePhase];
                 } else if (_modfiedDragActivationAxis == kMFModifiedDragActivationAxisVertical) {
                     double delta = [eNS deltaY]/1000;
+//                    delta *= 2; // It's a bit harder to make large vertical movements on a mouse
                     [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeVertical phase:_modifiedDragDockSwipePhase];
                 }
                 _modifiedDragDockSwipePhase = kIOHIDEventPhaseChanged;
             } else if ([_modifiedDragType isEqualToString:@"twoFingerSwipe"]) {
-                double deltaX = [eNS deltaX]*4;
-                double deltaY = [eNS deltaY]*4;
+                int deltaX = round([eNS deltaX]);
+//                deltaX *= 1;
+                int deltaY = round([eNS deltaY]);
+//                deltaY *= 2;
                 [GestureScrollSimulator postGestureScrollEventWithGestureDeltaX:deltaX deltaY:deltaY phase:_modifiedDragGestureScrollPhase];
                 _modifiedDragGestureScrollPhase = kIOHIDEventPhaseChanged;
             }
@@ -136,6 +140,8 @@ CGEventRef otherMouseDraggedCallback(CGEventTapProxy proxy, CGEventType type, CG
 }
 + (void)deactivateAllInputModification {
     
+    [GestureScrollSimulator breakMomentumScroll]; // Momentum scroll should be started, if `deactivateAllInputModification` is called during a modified drag of type "twoFingerSwipe", but it should be stopped if momentum scroll is currently active. I haven't really thought this through, but it seems to work fine as of now.
+    
     [self deactivateModifiedDrag];
     [self deactivateModifiedScroll];
 }
@@ -155,8 +161,8 @@ CGEventRef otherMouseDraggedCallback(CGEventTapProxy proxy, CGEventType type, CG
     CGEventTapEnable(_modfiedDragTap, false);
     _modifiedDragState = kMFModifiedInputStateNone;
     
-    CGAssociateMouseAndMouseCursorPosition(true);
-    CGDisplayShowCursor(CGMainDisplayID());
+//    CGAssociateMouseAndMouseCursorPosition(true); // Doesn't work
+//    CGDisplayShowCursor(CGMainDisplayID());
     
     // TODO: CHECK if we need to add more stuff here
 }

@@ -57,9 +57,8 @@ static struct Vector _lastInputGestureVector = { .x = 0, .y = 0 };
                                                 phase:kIOHIDEventPhaseEnded
                                         momentumPhase:0];
         
-        // Didn't do any data analysis or curve fitting for the dragCoeff and dragExp parameters, but I think they feel pretty similar to the original.
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
-            startPostingMomentumScrollEventsWithInitialGestureVector(_lastInputGestureVector, 0.016, 1, 3, 1.2);
+            startPostingMomentumScrollEventsWithInitialGestureVector(_lastInputGestureVector, 0.016, 1.0, 4, 1.0);
         });
     }
 }
@@ -81,6 +80,11 @@ static struct Vector _lastInputGestureVector = { .x = 0, .y = 0 };
                               scrollVectorPoint:(struct Vector)vecScrollPoint
                                           phase:(IOHIDEventPhaseBits)phase
                                   momentumPhase:(CGMomentumScrollPhase)momentumPhase {
+    
+    
+    printf("Posting gesture scroll event with delta values:\n");
+    printf("gesture: x:%f y:%f \nscroll: x:%f y:%f \nscrollPt: x:%f y:%f\n",
+          vecGesture.x, vecGesture.y, vecScroll.x, vecScroll.y, vecScrollPoint.x, vecScrollPoint.y);
     
     int valFor41 = 33231;
     
@@ -162,11 +166,15 @@ static struct Vector _lastInputGestureVector = { .x = 0, .y = 0 };
     CFRelease(e22);
 }
 
-static bool _breakMomentumScrollFlag;
-
++ (void)breakMomentumScroll {
+    _breakMomentumScrollFlag = true;
+}
+static bool _breakMomentumScrollFlag; // Should only be manipulated by `breakMomentumScroll`
+static bool _momentumScrollIsActive; //Should only be manipulated by `startPostingMomentumScrollEventsWithInitialGestureVector()`
 static void startPostingMomentumScrollEventsWithInitialGestureVector(struct Vector initGestureVec, CFTimeInterval tick, int thresh, double dragCoeff, double dragExp) {
     
     _breakMomentumScrollFlag = false;
+    _momentumScrollIsActive = true;
     
     struct Vector emptyVec = (const struct Vector){};
     
@@ -179,7 +187,8 @@ static void startPostingMomentumScrollEventsWithInitialGestureVector(struct Vect
     while (magPt > thresh) {
         if (_breakMomentumScrollFlag == true) break;
         [GestureScrollSimulator postGestureScrollEventWithGestureVector:emptyVec
-                                         scrollVector:vec scrollVectorPoint:vecPt
+                                         scrollVector:vec
+                                    scrollVectorPoint:vecPt
                                                 phase:kIOHIDEventPhaseUndefined
                                         momentumPhase:ph];
         
@@ -199,10 +208,19 @@ static void startPostingMomentumScrollEventsWithInitialGestureVector(struct Vect
                                      scrollVector:emptyVec
                                 scrollVectorPoint:emptyVec
                                             phase:kIOHIDEventPhaseUndefined momentumPhase:kCGMomentumScrollPhaseEnd];
+    _momentumScrollIsActive = false;
     
 }
 
 struct Vector momentumScrollPointVectorWithPreviousVector(struct Vector velocity, double dragCoeff, double dragExp, double timeDelta) {
+    
+    // TODO: Testing - remove this
+    
+//    dragExp = 1.0; dragCoeff = 5; // The end of the animation feels realistic
+    //    dragExp = 0.65; dragCoeff = 10;
+    
+    dragExp = 0.8; dragCoeff = 8; // Easier to scroll far, kinda nice on a mouse, end still pretty realistic
+    
     double a = magnitudeOfVector(velocity);
     double b = pow(a, dragExp);
     double dragMagnitude = b * dragCoeff;
@@ -223,6 +241,9 @@ struct Vector momentumScrollPointVectorWithPreviousVector(struct Vector velocity
 }
 static struct Vector scrollVectorWithScrollPointVector(struct Vector vec) {
     double magIn = magnitudeOfVector(vec);
+    if (magIn == 0) { // To prevent division by 0 from producing nan
+        return (struct Vector){};
+    }
     double magOut = 0.1 * (magIn-1);
     double scale = magOut / magIn;
     struct Vector vecOut;
@@ -232,7 +253,11 @@ static struct Vector scrollVectorWithScrollPointVector(struct Vector vec) {
 }
 static struct Vector scrollPointVectorWithGestureVector(struct Vector vec) {
     double magIn = magnitudeOfVector(vec);
-    double magOut = 0.01 * pow(magIn, 2) + 0.3 * magIn;
+    if (magIn == 0) { // To prevent division by 0 from producing nan
+        return (struct Vector){};
+    }
+    double magOut = 0.01 * pow(magIn, 2) + 0.3 * magIn; // Got these values through curve fitting
+    magOut *= 4; // This makes it feel better on mouse
     double scale = magOut / magIn;
     struct Vector vecOut;
     vecOut.x = round(vec.x * scale);
@@ -241,7 +266,7 @@ static struct Vector scrollPointVectorWithGestureVector(struct Vector vec) {
 }
 
 static struct Vector initalMomentumScrollPointVectorWithGestureVector(struct Vector vec) {
-    struct Vector vecScale = scaledVector(vec, 1.4); // This is probably not very accurate to real events, as I didn't test this at all.
+    struct Vector vecScale = scaledVector(vec, 2.2); // This is probably not very accurate to real events, as I didn't test this at all.
     return scrollPointVectorWithGestureVector(vecScale);
 }
 

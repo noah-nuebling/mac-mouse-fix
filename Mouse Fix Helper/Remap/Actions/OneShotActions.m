@@ -19,19 +19,19 @@
     
         if ([actionDict[@"type"] isEqualToString:@"symbolicHotkey"]) {
             NSNumber *shk = actionDict[@"value"];
-            [self doSymbolicHotKeyAction:[shk intValue]];
+            [self triggerSymbolicHotkey:[shk intValue]];
         }
         else if ([actionDict[@"type"] isEqualToString:@"navigationSwipe"]) {
             NSString *dirString = actionDict[@"direction"];
             
             if ([dirString isEqualToString:@"left"]) {
-                [TouchSimulator postNavigationSwipeWithDirection:kIOHIDSwipeLeft];
+                [TouchSimulator postNavigationSwipeEventWithDirection:kIOHIDSwipeLeft];
             } else if ([dirString isEqualToString:@"right"]) {
-                [TouchSimulator postNavigationSwipeWithDirection:kIOHIDSwipeRight];
+                [TouchSimulator postNavigationSwipeEventWithDirection:kIOHIDSwipeRight];
             } else if ([dirString isEqualToString:@"up"]) {
-                [TouchSimulator postNavigationSwipeWithDirection:kIOHIDSwipeUp];
+                [TouchSimulator postNavigationSwipeEventWithDirection:kIOHIDSwipeUp];
             } else if ([dirString isEqualToString:@"down"]) {
-                [TouchSimulator postNavigationSwipeWithDirection:kIOHIDSwipeDown];
+                [TouchSimulator postNavigationSwipeEventWithDirection:kIOHIDSwipeDown];
             }
             
         } else if ([actionDict[@"type"] isEqualToString:@"smartZoom"]) {
@@ -40,9 +40,79 @@
     }
 }
 
+
+/*
+(Here are some old notes of mine regarding symbolic hotkeys. Might be useful for you
+ if you wanna trigger system functions in your app)
+ 
+ SymbolicHotkeys Reference:
+
+ // resources
+
+ Default Mappings with description:
+ - /System/Library/PreferencePanes/Keyboard.prefPane/Contents/Resources/English.lproj
+
+ Reverse Engineering of the CGSHotKeys.h header
+ - https://github.com/NUIKit/CGSInternal/blob/master/CGSHotKeys.h
+
+ Archived forum post
+ - https://web.archive.org/web/20141112224103/http://hintsforums.macworld.com/showthread.php?t=114785
+
+ // tested
+
+ @“Mission Control”         :   @32,
+ @"Show All Windows"        :   @33,
+ @"Show Desktop"            :   @36,
+ @"Launchpad"               :   @160,
+ @"Look Up"                 :   @70,
+ @“App Switcher”            :   @71,
+
+ @“Move left a space”       :   @79,
+ @“Move right a space”      :   @81,
+     
+ @"Cycle through Windows".  :   @27
+
+ @"Switch to Desktop {1-16}     :   @{118-133},
+
+ @“Spotlight”                   :   @64,
+
+ @“Siri”                        :   @176,
+ @“Show Notification Center”    :   @163,
+ @"Turn Do Not Disturb On/Off"  :   @175,
+
+ Others:
+ Something directed to the right: @82;
+
+ –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+
+ 
+
+ // For some (all?) system functions there are 2 (or more) shk's with → symbolicHotkey2Val = symbolicHotkey1Val + 8, and sometimes + 4
+ // These seem to be used for mapping system functions to mouse buttons directly
+ // Edit: It seems that there is only one shk for "Move right a space"... meh
+ // -> It's probably best to trigger system functions by posting keyDown events.
+
+ MB2:
+ - type         = "button"
+ - parameters     = [2, 2, 131072]
+ MB3:
+ - type         = "button"
+ - parameters     = [4, 4, 131072]
+ MB4:
+ - type         = "button"
+ - parameters     = [8, 8, 131072]
+ MB4:
+ - type         = "button"
+ - parameters     = [16, 16, 131072]
+ 
+ */
+
+// I think these two private functions are the only thing preventing the app from being allowed on the Mac App Store, so if you know a way to trigger system functions without a private API it would be awesome if you let me know! :)
+CG_EXTERN CGError CGSGetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar *outKeyEquivalent, unichar *outVirtualKeyCode, CGSModifierFlags *outModifiers);
 CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar keyEquivalent, CGKeyCode virtualKeyCode, CGSModifierFlags modifiers);
 
-+ (void)doSymbolicHotKeyAction:(CGSSymbolicHotKey)shk {
+
++ (void)triggerSymbolicHotkey:(CGSSymbolicHotKey)shk {
     
     unichar keyEquivalent;
     CGKeyCode virtualKeyCode;
@@ -61,13 +131,13 @@ CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar ke
         virtualKeyCode = (CGKeyCode)shk + 200;
         modifierFlags = 10485760; // 0 Didn't work in my testing. This seems to be the 'empty' CGSModifierFlags value, used to signal that no modifiers are pressed. TODO: Test if this works
         CGError err = CGSSetSymbolicHotKeyValue(shk, keyEquivalent, virtualKeyCode, modifierFlags);
-        NSLog(@"(doSymbolicHotKeyAction) set shk params err: %d", err);
         if (err != 0) {
+            NSLog(@"Error setting shk params: %d", err);
             // Do again or something if setting shk goes wrong
         }
     }
     
-    // Post keyevents corresponding to shk
+    // Post keyboard events corresponding to trigger shk
     CGEventRef shortcutDown = CGEventCreateKeyboardEvent(NULL, virtualKeyCode, TRUE);
     CGEventRef shortcutUp = CGEventCreateKeyboardEvent(NULL, virtualKeyCode, FALSE);
     CGEventSetFlags(shortcutDown, (CGEventFlags)modifierFlags);
@@ -82,7 +152,7 @@ CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar ke
     if (hotkeyIsEnabled == FALSE) { // Only really need to restore hotKeyIsEnabled. But the other stuff doesn't hurt.
         [NSTimer scheduledTimerWithTimeInterval:0.05
                                          target:self
-                                       selector:@selector(restoreSHK:)
+                                       selector:@selector(restoreSymbolicHotkeyParameters_timerCallback:)
                                        userInfo:@{
                                            @"shk": @(shk),
                                            @"enabled": @(hotkeyIsEnabled),
@@ -93,7 +163,8 @@ CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar ke
                                         repeats:NO];
     }
 }
-+ (void)restoreSHK:(NSTimer *)timer { // TODO: Test if this works
+
++ (void)restoreSymbolicHotkeyParameters_timerCallback:(NSTimer *)timer { // TODO: Test if this works
     
     CGSSymbolicHotKey shk = [timer.userInfo[@"shk"] intValue];
     BOOL enabled = [timer.userInfo[@"enabled"] boolValue];

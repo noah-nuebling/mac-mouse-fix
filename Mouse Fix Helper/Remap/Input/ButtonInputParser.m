@@ -64,14 +64,21 @@ NSArray *_testRemapsUI;
                         },
                     ],
                 },
-//                @(2): @{                                            // Key: level
-//                    @"click": @[                                    // Key: click/hold, value: array of actions
-//                        @{
-//                            @"type": @"symbolicHotkey",
-//                            @"value": @(70),
-//                        },
-//                    ],
-//                },
+                @(2): @{                                            // Key: level
+                        @"click": @[                                  // Key: click/hold, value: array of actions
+                            @{
+                                @"type": @"symbolicHotkey",
+                                @"value": @(36),
+                            },
+                        ],
+                    
+                        @"modifying": @[                                    // Key: click/hold, value: array of actions
+                        @{
+                            @"type": @"modifiedDrag",
+                            @"value": @"twoFingerSwipe",
+                        },
+                    ],
+                },
             },
             @(4): @{                                                // Key: button
                 @(1): @{                                            // Key: level
