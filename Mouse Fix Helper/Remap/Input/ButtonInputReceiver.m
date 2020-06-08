@@ -95,7 +95,7 @@ CGEventRef handleInput_CG(CGEventTapProxy proxy, CGEventType type, CGEventRef ev
     _buttonEventInputSourceIsDeviceOfInterest = false;
     
     if (b) {
-        int buttonNumber = (int) CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
+        int64_t buttonNumber = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
         
         long long pr = CGEventGetIntegerValueField(event, kCGMouseEventPressure);
         MFButtonInputType type = pr == 0 ? kMFButtonInputTypeButtonUp : kMFButtonInputTypeButtonDown;

@@ -15,16 +15,21 @@
 
 @implementation ModifyingActions
 
-CFMachPortRef _modfiedDragTap;
-int64_t _modfiedDragThreshold;
+struct ModifiedDragState {
+    CFMachPortRef eventTap;
+    int64_t usageThreshold;
+    
+    NSString * type;
 
-CGPoint _modfiedDragOrigin;
-MFModifiedInputState _modifiedDragState;
-MFModifiedDragActivationAxis _modfiedDragActivationAxis;
-NSString * _modifiedDragType;
+    MFModifiedInputActivationState activationState;
+    struct ActivationCondition activationCondition;
+    
+    CGPoint origin;
+    MFModifiedDragUsageAxis usageAxis;
+    IOHIDEventPhaseBits phase;
+};
 
-IOHIDEventPhaseBits _modifiedDragDockSwipePhase;
-IOHIDEventPhaseBits _modifiedDragGestureScrollPhase;
+static struct ModifiedDragState _modifiedDrag;
 
 + (void)load {
 //    modifyingState = @{
@@ -35,50 +40,50 @@ IOHIDEventPhaseBits _modifiedDragGestureScrollPhase;
 //    };
     
     // Create mouse moved input callback
-    if (_modfiedDragTap == nil) {
+    if (_modifiedDrag.eventTap == nil) {
         CGEventMask mask = CGEventMaskBit(kCGEventOtherMouseDragged); // TODO: Check which of the two is necessary
-        _modfiedDragTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, otherMouseDraggedCallback, NULL);
-        NSLog(@"_eventTap: %@", _modfiedDragTap);
-        CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _modfiedDragTap, 0);
+        _modifiedDrag.eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, otherMouseDraggedCallback, NULL);
+        NSLog(@"_eventTap: %@", _modifiedDrag.eventTap);
+        CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _modifiedDrag.eventTap, 0);
         CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes);
         CFRelease(runLoopSource);
-        CGEventTapEnable(_modfiedDragTap, false);
+        CGEventTapEnable(_modifiedDrag.eventTap, false);
     }
-    _modfiedDragThreshold = 15;
+    _modifiedDrag.usageThreshold = 15;
 }
 
 CGEventRef otherMouseDraggedCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
-    switch (_modifiedDragState) {
+    switch (_modifiedDrag.activationState) {
             
-        case kMFModifiedInputStateNone:
+        case kMFModifiedInputActivationStateNone:
         {
             // Disabling the callback triggers this function one more time apparently, aside form that case, this should never be be executed
             break;
         }
-        case kMFModifiedInputStateInitialized:
+        case kMFModifiedInputActivationStateInitialized:
         {
             CGPoint currMouseLoc = CGEventGetLocation(CGEventCreate(NULL));
             
-            double xOfs = currMouseLoc.x - _modfiedDragOrigin.x;
-            double yOfs = currMouseLoc.y - _modfiedDragOrigin.y;
+            double xOfs = currMouseLoc.x - _modifiedDrag.origin.x;
+            double yOfs = currMouseLoc.y - _modifiedDrag.origin.y;
             
             // Activate the modified drag if the mouse has been moved far enough from the point where the drag started
-            if (MAX(fabs(xOfs), fabs(yOfs)) > _modfiedDragThreshold) {
+            if (MAX(fabs(xOfs), fabs(yOfs)) > _modifiedDrag.usageThreshold) {
                 if (fabs(xOfs) < fabs(yOfs)) {
-                    _modfiedDragActivationAxis = kMFModifiedDragActivationAxisVertical;
+                    _modifiedDrag.usageAxis = kMFModifiedDragUsageAxisVertical;
                 } else {
-                    _modfiedDragActivationAxis = kMFModifiedDragActivationAxisHorizontal;
+                    _modifiedDrag.usageAxis = kMFModifiedDragUsageAxisHorizontal;
                 }
-                _modifiedDragState = kMFModifiedInputStateActive; // Activate modified drag input!
-                [ButtonInputParser resetInputParser]; // Reset input parser to prevent hold timer from firing
-                [ModifyingActions deactivateModifiedScroll]; // Deactivate other potentially initalized modified input.
+                _modifiedDrag.activationState = kMFModifiedInputActivationStateInUse; // Activate modified drag input!
+                [ButtonInputParser reset]; // Reset input parser to prevent hold timer from firing
+//                [ModifyingActions deactivateModifiedScroll]; // Deactivate other potentially initalized modified input.
                 
-                if ([_modifiedDragType isEqualToString:@"threeFingerSwipe"]) {
-                    _modifiedDragDockSwipePhase = kIOHIDEventPhaseBegan;
-                } else if ([_modifiedDragType isEqualToString:@"twoFingerSwipe"]) {
+                if ([_modifiedDrag.type isEqualToString:@"threeFingerSwipe"]) {
+                    _modifiedDrag.phase = kIOHIDEventPhaseBegan;
+                } else if ([_modifiedDrag.type isEqualToString:@"twoFingerSwipe"]) {
                     [GestureScrollSimulator postGestureScrollEventWithGestureDeltaX:0.0 deltaY:0.0 phase:kIOHIDEventPhaseMayBegin];
-                    _modifiedDragGestureScrollPhase = kIOHIDEventPhaseBegan;
+                    _modifiedDrag.phase = kIOHIDEventPhaseBegan;
                 }
                 
             } else {
@@ -87,28 +92,28 @@ CGEventRef otherMouseDraggedCallback(CGEventTapProxy proxy, CGEventType type, CG
             
             break;
         }
-        case kMFModifiedInputStateActive:
+        case kMFModifiedInputActivationStateInUse:
         {
             NSEvent *eNS = [NSEvent eventWithCGEvent:event];
             
-            if ([_modifiedDragType isEqualToString:@"threeFingerSwipe"]) {
-                if (_modfiedDragActivationAxis == kMFModifiedDragActivationAxisHorizontal) {
+            if ([_modifiedDrag.type isEqualToString:@"threeFingerSwipe"]) {
+                if (_modifiedDrag.usageAxis == kMFModifiedDragUsageAxisHorizontal) {
                     double delta = -[eNS deltaX]/1000;
 //                    delta *= 1;
-                    [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeHorizontal phase:_modifiedDragDockSwipePhase];
-                } else if (_modfiedDragActivationAxis == kMFModifiedDragActivationAxisVertical) {
+                    [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeHorizontal phase:_modifiedDrag.phase];
+                } else if (_modifiedDrag.usageAxis == kMFModifiedDragUsageAxisVertical) {
                     double delta = [eNS deltaY]/1000;
 //                    delta *= 2; // It's a bit harder to make large vertical movements on a mouse
-                    [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeVertical phase:_modifiedDragDockSwipePhase];
+                    [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeVertical phase:_modifiedDrag.phase];
                 }
-                _modifiedDragDockSwipePhase = kIOHIDEventPhaseChanged;
-            } else if ([_modifiedDragType isEqualToString:@"twoFingerSwipe"]) {
+                _modifiedDrag.phase = kIOHIDEventPhaseChanged;
+            } else if ([_modifiedDrag.type isEqualToString:@"twoFingerSwipe"]) {
                 int deltaX = round([eNS deltaX]);
 //                deltaX *= 1;
                 int deltaY = round([eNS deltaY]);
 //                deltaY *= 2;
-                [GestureScrollSimulator postGestureScrollEventWithGestureDeltaX:deltaX deltaY:deltaY phase:_modifiedDragGestureScrollPhase];
-                _modifiedDragGestureScrollPhase = kIOHIDEventPhaseChanged;
+                [GestureScrollSimulator postGestureScrollEventWithGestureDeltaX:deltaX deltaY:deltaY phase:_modifiedDrag.phase];
+                _modifiedDrag.phase = kIOHIDEventPhaseChanged;
             }
             
         }
@@ -122,56 +127,86 @@ CGEventRef otherMouseDraggedCallback(CGEventTapProxy proxy, CGEventType type, CG
     return event;
 }
 
-+ (void)initializeModifiedInputWithActionArray:(NSArray *)actionArray onButton:(int)button {
-
++ (void)initializeModifiedInputsWithActionArray:(NSArray *)actionArray withActivationCondtion:(struct ActivationCondition)activationCondition {
     for (NSDictionary *actionDict in actionArray) {
         NSString *type = actionDict[@"type"];
         NSString *subtype = actionDict[@"value"];
-        if ([type isEqualToString:@"modifiedScroll"]) {
+        
+        if ([type isEqualToString:@"modifiedDrag"]) {
+            _modifiedDrag.activationState = kMFModifiedInputActivationStateInitialized;
+            _modifiedDrag.type = subtype;
+            _modifiedDrag.activationCondition = activationCondition;
+            _modifiedDrag.origin = CGEventGetLocation(CGEventCreate(NULL));
+            CGEventTapEnable(_modifiedDrag.eventTap, true);
+        } else if ([type isEqualToString:@"modifiedScroll"]) {
             
-        } else if ([type isEqualToString:@"modifiedDrag"]) {
-            _modfiedDragOrigin = CGEventGetLocation(CGEventCreate(NULL));
-            _modifiedDragState = kMFModifiedInputStateInitialized;
-            _modifiedDragType = subtype;
-            CGEventTapEnable(_modfiedDragTap, true);
+        } else if ([type isEqualToString:@"fakeDrag"]) {
+            
         }
-//        modifiedState[@(button)][type] = @(kMFModifierStateInitialized);
     }
 }
-+ (void)deactivateAllInputModification {
-    
-    [GestureScrollSimulator breakMomentumScroll]; // Momentum scroll should be started, if `deactivateAllInputModification` is called during a modified drag of type "twoFingerSwipe", but it should be stopped if momentum scroll is currently active. I haven't really thought this through, but it seems to work fine as of now.
-    
-    [self deactivateModifiedDrag];
-    [self deactivateModifiedScroll];
+
++ (void)deactivateAllInputModificationConditionedOnButton:(int64_t)button {
+    if (_modifiedDrag.activationCondition.type == kMFActivationConditionTypeMouseButtonPressed
+        && _modifiedDrag.activationCondition.value == button) {
+        [self deactivateModifiedDrag];
+    }
+//    if (_modifiedScroll.activationCondition.type == kMFActivationConditionTypeMouseButtonPressed
+//        && _modifiedScroll.activationCondition.type.activationCondition.value == button) {
+//        [self deactivateModifiedScroll];
+//    }
+//    if (_fakeDrag.activationCondition.type == kMFActivationConditionTypeMouseButtonPressed
+//        && _fakeDrag.activationCondition.type.activationCondition.value == button) {
+//        [self deactivateFakeDrag];
+//    }
 }
 + (void)deactivateModifiedDrag {
     
-    if (_modifiedDragState == kMFModifiedInputStateActive) {
-        if ([_modifiedDragType isEqualToString:@"threeFingerSwipe"]) {
-            if (_modfiedDragActivationAxis == kMFModifiedDragActivationAxisHorizontal) {
+    if (_modifiedDrag.activationState == kMFModifiedInputActivationStateInUse) {
+        if ([_modifiedDrag.type isEqualToString:@"threeFingerSwipe"]) {
+            if (_modifiedDrag.usageAxis == kMFModifiedDragUsageAxisHorizontal) {
                 [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypeHorizontal phase:kIOHIDEventPhaseEnded];
-            } else if (_modfiedDragActivationAxis == kMFModifiedDragActivationAxisVertical) {
+            } else if (_modifiedDrag.usageAxis == kMFModifiedDragUsageAxisVertical) {
                 [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypeVertical phase:kIOHIDEventPhaseEnded];
             }
-        } else if ([_modifiedDragType isEqualToString:@"twoFingerSwipe"]) {
+        } else if ([_modifiedDrag.type isEqualToString:@"twoFingerSwipe"]) {
             [GestureScrollSimulator postGestureScrollEventWithGestureDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded];
         }
     }
-    CGEventTapEnable(_modfiedDragTap, false);
-    _modifiedDragState = kMFModifiedInputStateNone;
+    CGEventTapEnable(_modifiedDrag.eventTap, false);
+    _modifiedDrag.activationState = kMFModifiedInputActivationStateNone;
     
 //    CGAssociateMouseAndMouseCursorPosition(true); // Doesn't work
 //    CGDisplayShowCursor(CGMainDisplayID());
     
     // TODO: CHECK if we need to add more stuff here
 }
-+ (void)deactivateModifiedScroll {
+
++ (BOOL)anyModifiedInputIsInUseForButton:(int64_t)button {
+    
+    if (_modifiedDrag.activationState == kMFModifiedInputActivationStateInUse
+        && _modifiedDrag.activationCondition.type == kMFActivationConditionTypeMouseButtonPressed
+        && _modifiedDrag.activationCondition.value == button) {
+        return YES;
+    }
+    
+    // TODO: v Update this function for all modified input types
+    
+//    if (_fakeDrag.activationState == kMFModifiedInputActivationStateInUse
+//        && _fakeDrag.activationCondition.type == kMFActivationConditionTypeMouseButtonPressed
+//        && _fakeDrag.activationCondition.value == button) {
+//        return YES;
+//    }
+//
+//    if (_modifiedScroll.activationState == kMFModifiedInputActivationStateInUse
+//        && _modifiedScroll.activationCondition.type == kMFActivationConditionTypeMouseButtonPressed
+//        && _modifiedScroll.activationCondition.value == button) {
+//        return YES;
+//    }
+    
+    return NO;
     
 }
 
-+ (void)deactivateInputModificationForButton:(int)button {
-    
-}
 
 @end

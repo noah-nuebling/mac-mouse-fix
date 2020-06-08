@@ -12,8 +12,8 @@
 
 @interface ButtonInputParser : NSObject
 
-+ (MFEventPassThroughEvaluation)sendActionTriggersForInputWithButton:(int)button type:(MFButtonInputType)type;
-+ (void)resetInputParser;
++ (MFEventPassThroughEvaluation)sendActionTriggersForInputWithButton:(int64_t)button type:(MFButtonInputType)type;
++ (void)reset;
 
 @end
 

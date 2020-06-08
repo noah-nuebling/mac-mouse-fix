@@ -14,20 +14,32 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ModifyingActions : NSObject
 
 typedef enum {
-    kMFModifiedInputStateNone,
-    kMFModifiedInputStateInitialized,
-    kMFModifiedInputStateActive,
-} MFModifiedInputState;
+    kMFModifiedInputActivationStateNone,
+    kMFModifiedInputActivationStateInitialized,
+    kMFModifiedInputActivationStateInUse,
+} MFModifiedInputActivationState;
 
 typedef enum {
-    kMFModifiedDragActivationAxisNone,
-    kMFModifiedDragActivationAxisHorizontal,
-    kMFModifiedDragActivationAxisVertical,
-} MFModifiedDragActivationAxis;
+    kMFActivationConditionTypeMouseButtonPressed,
+} MFActivationConditionType;
 
-+ (void)initializeModifiedInputWithActionArray:(NSArray *)actionArray onButton:(int)button;
+typedef enum {
+    kMFModifiedDragUsageAxisNone,
+    kMFModifiedDragUsageAxisHorizontal,
+    kMFModifiedDragUsageAxisVertical,
+} MFModifiedDragUsageAxis;
 
-+ (void)deactivateAllInputModification;
+struct ActivationCondition {
+    MFActivationConditionType type;
+    int64_t value;
+};
+
++ (void)initializeModifiedInputsWithActionArray:(NSArray *)actionArray
+                         withActivationCondtion:(struct ActivationCondition)activationCondition;
+
++ (void)deactivateAllInputModificationConditionedOnButton:(int64_t)button;
+
++ (BOOL)anyModifiedInputIsInUseForButton:(int64_t)button;
 
 @end
 
