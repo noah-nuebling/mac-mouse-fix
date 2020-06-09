@@ -8,6 +8,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "InputReceiver_HID.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -24,22 +25,26 @@ typedef enum {
 } MFActivationConditionType;
 
 typedef enum {
-    kMFModifiedDragUsageAxisNone,
-    kMFModifiedDragUsageAxisHorizontal,
-    kMFModifiedDragUsageAxisVertical,
-} MFModifiedDragUsageAxis;
+    kMFAxisNone,
+    kMFAxisHorizontal,
+    kMFAxisVertical,
+} MFAxis;
 
 struct ActivationCondition {
+    IOHIDDeviceRef activatingDevice;
     MFActivationConditionType type;
     int64_t value;
 };
 
 + (void)initializeModifiedInputsWithActionArray:(NSArray *)actionArray
-                         withActivationCondtion:(struct ActivationCondition)activationCondition;
+                         withActivationCondition:(struct ActivationCondition)activationCondition;
 
 + (void)deactivateAllInputModificationConditionedOnButton:(int64_t)button;
 
 + (BOOL)anyModifiedInputIsInUseForButton:(int64_t)button;
+
+
++ (void)handleMouseInputWithDeltaX:(int64_t)deltaX deltaY:(int64_t)deltaY;
 
 @end
 

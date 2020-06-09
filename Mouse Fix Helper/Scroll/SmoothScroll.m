@@ -18,7 +18,7 @@
 #import "ScrollModifiers.h"
 #import "../Config/ConfigFileInterface_HelperApp.h"
 
-#import "ButtonInputReceiver.h"
+#import "ButtonInputReceiver_CG.h"
 #import "DeviceManager.h"
 #import "Utility_HelperApp.h"
 #import "TouchSimulator.h"

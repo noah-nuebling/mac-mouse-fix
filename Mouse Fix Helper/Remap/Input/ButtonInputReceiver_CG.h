@@ -12,7 +12,7 @@
 #import "IOKit/hid/IOHIDManager.h"
 
 
-@interface ButtonInputReceiver : NSObject
+@interface ButtonInputReceiver_CG : NSObject
 
 typedef enum {
     kMFEventPassThroughApproval,
@@ -38,8 +38,10 @@ typedef enum {
 //    kMFUIActionTriggerTypeModifying = 2,
 //} MFUIActionTriggerType;
 
++ (void)load_Manual;
+
 + (void)decide;
 
-+ (void)registerInputCallback_HID:(IOHIDDeviceRef)device;
++ (void)insertFakeEvent:(CGEventRef)event;
 
 @end

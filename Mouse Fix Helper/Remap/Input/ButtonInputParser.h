@@ -8,7 +8,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ButtonInputReceiver.h"
+#import "ButtonInputReceiver_CG.h"
 
 @interface ButtonInputParser : NSObject
 

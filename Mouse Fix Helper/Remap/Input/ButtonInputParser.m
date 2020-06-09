@@ -214,7 +214,7 @@ static int64_t _clickLevel;
                                                     selector:@selector(holdTimerCallback:)
                                                     userInfo:@(button)
                                                      repeats:NO];
-         _levelTimer = [NSTimer scheduledTimerWithTimeInterval:NSEvent.doubleClickInterval
+         _levelTimer = [NSTimer scheduledTimerWithTimeInterval:0.25 // NSEvent.doubleClickInterval
                                                        target:self
                                                      selector:@selector(levelTimerCallback:)
                                                      userInfo:@(button)
@@ -387,9 +387,13 @@ static int64_t _clickLevel;
     }
     if (triggerType == kMFActionTriggerTypeButtonDown) {
         NSArray *modifyingActionArrayForInput = remapDict[@(button)][@(level)][@"modifying"];
-        struct ActivationCondition ac = { .value = button, .type = kMFActivationConditionTypeMouseButtonPressed };
+        struct ActivationCondition ac = {
+            .type = kMFActivationConditionTypeMouseButtonPressed,
+            .value = button,
+            .activatingDevice = InputReceiver_HID.deviceWichCausedLastInput
+        };
         [ModifyingActions initializeModifiedInputsWithActionArray:modifyingActionArrayForInput
-                                           withActivationCondtion:ac]; // ??? We only activate modified inputs, they will deactivate themselves once the activation condition becomes false
+                                           withActivationCondition:ac]; // ??? We only activate modified inputs, they will deactivate themselves once the activation condition becomes false
     }
     
     return passThroughEval;

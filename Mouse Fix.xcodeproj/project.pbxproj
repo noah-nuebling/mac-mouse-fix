@@ -23,7 +23,7 @@
 		4F32E18C231C509200199A11 /* SmoothScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E186231C509200199A11 /* SmoothScroll.m */; };
 		4F32E194231C50A100199A11 /* ButtonInputParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E18E231C50A100199A11 /* ButtonInputParser.m */; };
 		4F32E195231C50A100199A11 /* ScrollModifiers.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E18F231C50A100199A11 /* ScrollModifiers.m */; };
-		4F32E196231C50A100199A11 /* ButtonInputReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E193231C50A100199A11 /* ButtonInputReceiver.m */; };
+		4F32E196231C50A100199A11 /* ButtonInputReceiver_CG.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E193231C50A100199A11 /* ButtonInputReceiver_CG.m */; };
 		4F32E199231C5B5100199A11 /* ZipArchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F32E198231C5B5100199A11 /* ZipArchive.framework */; };
 		4F32E19A231C5BBC00199A11 /* ZipArchive.framework in My Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F32E198231C5B5100199A11 /* ZipArchive.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F364C72232A9EBC0084DEB0 /* MouseFix.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4F364C71232A9EBC0084DEB0 /* MouseFix.tiff */; };
@@ -67,6 +67,7 @@
 		4FD67DE0211CC9000095A9A5 /* PrefPaneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD67DDF211CC9000095A9A5 /* PrefPaneDelegate.m */; };
 		4FD67DE5211CC9000095A9A5 /* MouseFix.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD67DE3211CC9000095A9A5 /* MouseFix.xib */; settings = {ASSET_TAGS = (0, ); }; };
 		4FD67DF3211CDD2D0095A9A5 /* Mouse Fix Helper.app in Copy Helper */ = {isa = PBXBuildFile; fileRef = 4FCECD8021092354001F1078 /* Mouse Fix Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4FD6B88E248ECE7D00AA5530 /* InputReceiver_HID.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD6B88D248ECE7D00AA5530 /* InputReceiver_HID.m */; };
 		4FD9CB1322F7D48D0090DB98 /* Hyperlink.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FD9CB1122F7D48D0090DB98 /* Hyperlink.h */; };
 		4FECC88D2431DCCD001A3C4B /* RoughScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FECC88C2431DCCD001A3C4B /* RoughScroll.m */; };
 		4FECC8902431DCDF001A3C4B /* ScrollControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FECC88F2431DCDF001A3C4B /* ScrollControl.m */; };
@@ -205,10 +206,10 @@
 		4F32E186231C509200199A11 /* SmoothScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SmoothScroll.m; sourceTree = "<group>"; };
 		4F32E18E231C50A100199A11 /* ButtonInputParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonInputParser.m; sourceTree = "<group>"; };
 		4F32E18F231C50A100199A11 /* ScrollModifiers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollModifiers.m; sourceTree = "<group>"; };
-		4F32E190231C50A100199A11 /* ButtonInputReceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonInputReceiver.h; sourceTree = "<group>"; };
+		4F32E190231C50A100199A11 /* ButtonInputReceiver_CG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonInputReceiver_CG.h; sourceTree = "<group>"; };
 		4F32E191231C50A100199A11 /* ScrollModifiers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollModifiers.h; sourceTree = "<group>"; };
 		4F32E192231C50A100199A11 /* ButtonInputParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonInputParser.h; sourceTree = "<group>"; };
-		4F32E193231C50A100199A11 /* ButtonInputReceiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonInputReceiver.m; sourceTree = "<group>"; };
+		4F32E193231C50A100199A11 /* ButtonInputReceiver_CG.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonInputReceiver_CG.m; sourceTree = "<group>"; };
 		4F32E198231C5B5100199A11 /* ZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZipArchive.framework; path = Carthage/Build/Mac/ZipArchive.framework; sourceTree = "<group>"; };
 		4F364C71232A9EBC0084DEB0 /* MouseFix.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = MouseFix.tiff; sourceTree = "<group>"; };
 		4F364C74232ABE5C0084DEB0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -264,6 +265,8 @@
 		4FD67DDD211CC9000095A9A5 /* PrefPaneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefPaneDelegate.h; sourceTree = "<group>"; };
 		4FD67DDF211CC9000095A9A5 /* PrefPaneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PrefPaneDelegate.m; sourceTree = "<group>"; };
 		4FD67DE6211CC9000095A9A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4FD6B88C248ECE7D00AA5530 /* InputReceiver_HID.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InputReceiver_HID.h; sourceTree = "<group>"; };
+		4FD6B88D248ECE7D00AA5530 /* InputReceiver_HID.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InputReceiver_HID.m; sourceTree = "<group>"; };
 		4FD9CB1122F7D48D0090DB98 /* Hyperlink.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Hyperlink.h; sourceTree = "<group>"; };
 		4FD9CB1222F7D48D0090DB98 /* Hyperlink.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Hyperlink.m; sourceTree = "<group>"; };
 		4FDBC57D234F7EDF00A46517 /* Mouse Fix HelperRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Mouse Fix HelperRelease.entitlements"; sourceTree = "<group>"; };
@@ -509,8 +512,10 @@
 		4FB68B6E246CA4AF0059530E /* Input */ = {
 			isa = PBXGroup;
 			children = (
-				4F32E190231C50A100199A11 /* ButtonInputReceiver.h */,
-				4F32E193231C50A100199A11 /* ButtonInputReceiver.m */,
+				4FD6B88C248ECE7D00AA5530 /* InputReceiver_HID.h */,
+				4FD6B88D248ECE7D00AA5530 /* InputReceiver_HID.m */,
+				4F32E190231C50A100199A11 /* ButtonInputReceiver_CG.h */,
+				4F32E193231C50A100199A11 /* ButtonInputReceiver_CG.m */,
 				4F32E192231C50A100199A11 /* ButtonInputParser.h */,
 				4F32E18E231C50A100199A11 /* ButtonInputParser.m */,
 			);
@@ -577,8 +582,8 @@
 				4FCECD8321092354001F1078 /* AppDelegate.h */,
 				4FCECD8421092354001F1078 /* AppDelegate.m */,
 				4FD45A21231C7FBB00F75C58 /* Accessibility */,
-				4FD45A14231C76DE00F75C58 /* DeviceManager */,
 				4F1B7C1823D3E5640055C007 /* Touch */,
+				4FD45A14231C76DE00F75C58 /* DeviceManager */,
 				4F32E18D231C50A100199A11 /* Remap */,
 				4F32E17D231C509200199A11 /* Scroll */,
 				4F95A246234EBB1E000DC7D7 /* Pointer */,
@@ -931,6 +936,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F32E195231C50A100199A11 /* ScrollModifiers.m in Sources */,
+				4FD6B88E248ECE7D00AA5530 /* InputReceiver_HID.m in Sources */,
 				4F32E155231C420100199A11 /* MessagePort_HelperApp.m in Sources */,
 				4FECC8902431DCDF001A3C4B /* ScrollControl.m in Sources */,
 				4F1C968C231361EF00C3B9AE /* TouchEvents.c in Sources */,
@@ -948,7 +954,7 @@
 				4F32E194231C50A100199A11 /* ButtonInputParser.m in Sources */,
 				4FF58E2A2469952200293553 /* RemapUtility.m in Sources */,
 				4F479C392488B75C00976C68 /* GestureScrollSimulator.m in Sources */,
-				4F32E196231C50A100199A11 /* ButtonInputReceiver.m in Sources */,
+				4F32E196231C50A100199A11 /* ButtonInputReceiver_CG.m in Sources */,
 				4F95A249234EBB5D000DC7D7 /* PointerSpeed.m in Sources */,
 				4F32E188231C509200199A11 /* AnimationCurve.m in Sources */,
 				4F1A20282348EC3D00B29037 /* ScrollUtility.m in Sources */,

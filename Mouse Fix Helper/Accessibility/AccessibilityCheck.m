@@ -16,6 +16,7 @@
 #import "../Config/ConfigFileInterface_HelperApp.h"
 #import "../Scroll/SmoothScroll.h"
 #import "../Scroll/RoughScroll.h"
+#import "ButtonInputReceiver_CG.h"
 
 @implementation AccessibilityCheck
 
@@ -40,6 +41,8 @@
         [ConfigFileInterface_HelperApp load_Manual];
         [ScrollControl load_Manual];
         [SmoothScroll load_Manual];
+        
+        [ButtonInputReceiver_CG load_Manual]; // TODO: Check if this is necessary. I think that not having this caused a crash when accessibility permissions were denied.
     }
 }
 + (Boolean)check {

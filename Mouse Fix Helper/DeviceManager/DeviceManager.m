@@ -23,7 +23,8 @@
 #import <IOKit/hid/IOHIDKeys.h>
 
 #import "ScrollControl.h"
-#import "ButtonInputReceiver.h"
+#import "ButtonInputReceiver_CG.h"
+#import "InputReceiver_HID.h"
 #import "ConfigFileInterface_HelperApp.h"
 #import "PointerSpeed.h"
 
@@ -47,6 +48,29 @@ static BOOL _relevantDevicesAreAttached;
 }
 
 # pragma mark - Interface
+
+static BOOL _devicesAreSeized = NO;
++ (BOOL)devicesAreSeized {
+    return _devicesAreSeized;;
+}
+
++ (void)seizeDevices:(BOOL)seize {
+    IOReturn retClose;
+    IOReturn retOpen;
+    
+    IOHIDManagerUnscheduleFromRunLoop(_HIDManager, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
+    retClose = IOHIDManagerClose(_HIDManager, kIOHIDOptionsTypeNone);
+    IOHIDManagerScheduleWithRunLoop(_HIDManager, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
+    if (seize) {
+        retOpen = IOHIDManagerOpen(_HIDManager, kIOHIDOptionsTypeSeizeDevice);
+    } else {
+        retOpen = IOHIDManagerOpen(_HIDManager, kIOHIDOptionsTypeNone);
+    }
+    _devicesAreSeized = seize;
+    NSLog(@"Seize manager close return: %d", retClose);
+    NSLog(@"Seize manager open return: %d", retOpen);
+}
+
 + (BOOL)relevantDevicesAreAttached {
     return _relevantDevicesAreAttached;
 }
@@ -57,6 +81,7 @@ static void setupDeviceMatchingAndRemovalCallbacks() {
     
     // Create an HID Manager
     _HIDManager = IOHIDManagerCreate(kCFAllocatorDefault, 0);
+//    _HIDManager = IOHIDManagerCreate(kCFAllocatorDefault, kIOHIDManagerOptionIndependentDevices); // TODO: This might be worth a try for independent seizing of devices.
     
     // Create a Matching Dictionary
     CFMutableDictionaryRef matchDict1 = CFDictionaryCreateMutable(kCFAllocatorDefault,
@@ -130,8 +155,9 @@ static void setupDeviceMatchingAndRemovalCallbacks() {
     IOHIDManagerScheduleWithRunLoop(_HIDManager, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
     
     // Open the HID Manager
-    IOReturn IOReturn = IOHIDManagerOpen(_HIDManager, kIOHIDOptionsTypeNone);
-    if(IOReturn) NSLog(@"IOHIDManagerOpen failed.");  //  Couldn't open the HID manager! TODO: proper error handling
+//    IOReturn IOReturn = IOHIDManagerOpen(_HIDManager, kIOHIDOptionsTypeNone);
+//    IOReturn IOReturn = IOHIDManagerOpen(_HIDManager, kIOHIDOptionsTypeSeizeDevice);
+//    if(IOReturn) NSLog(@"IOHIDManagerOpen failed.");  //  Couldn't open the HID manager! TODO: proper error handling
     
 
     // Register a callback for USB device detection with the HID Manager, this will in turn register an button input callback for all devices that getFilteredDevicesFromManager() returns
@@ -158,7 +184,7 @@ static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IO
     
     // If there aren't any relevant devices attached, then we might want to turn off some parts of the program.
     [ScrollControl decide];
-    [ButtonInputReceiver decide];
+    [ButtonInputReceiver_CG decide];
 }
 
 static void handleDeviceMatching(void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
@@ -180,11 +206,11 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
         
         
         
-        [ButtonInputReceiver registerInputCallback_HID:device];
+        [InputReceiver_HID registerInputCallback:device];
         
         _relevantDevicesAreAttached = TRUE;
         [ScrollControl decide];
-        [ButtonInputReceiver decide];
+        [ButtonInputReceiver_CG decide];
     }
     
 

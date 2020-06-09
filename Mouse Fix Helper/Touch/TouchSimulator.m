@@ -82,6 +82,9 @@ double _threeFingerSwipeOriginOffset = 0;
     if (phase == kIOHIDEventPhaseBegan) {
         _threeFingerSwipeOriginOffset = d;
     } else if (phase == kIOHIDEventPhaseChanged){
+        if (d == 0) {
+            return;
+        }
         _threeFingerSwipeOriginOffset += d;
     }
     

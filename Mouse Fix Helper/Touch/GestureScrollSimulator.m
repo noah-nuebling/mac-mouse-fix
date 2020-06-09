@@ -32,11 +32,15 @@ static struct Vector _lastInputGestureVector = { .x = 0, .y = 0 };
  \note In order to minimize momentum scrolling,  send an event with a very small but non-zero scroll delta before calling the function with phase kIOHIDEventPhaseEnded.
  \note For more info on which delta values and which phases to use, see the documentation for `postGestureScrollEventWithGestureDeltaX:deltaY:phase:momentumPhase:scrollDeltaConversionFunction:scrollPointDeltaConversionFunction:`. In contrast to the aforementioned function, you shouldn't need to call this function with kIOHIDEventPhaseUndefined.
 */
-+ (void)postGestureScrollEventWithGestureDeltaX:(int)dx deltaY:(int)dy phase:(IOHIDEventPhaseBits)phase {
++ (void)postGestureScrollEventWithGestureDeltaX:(int64_t)dx deltaY:(int64_t)dy phase:(IOHIDEventPhaseBits)phase {
     
     if (phase != kIOHIDEventPhaseEnded) {
         
         _breakMomentumScrollFlag = true;
+        
+        if (phase == kIOHIDEventPhaseChanged && dx == 0 && dy == 0) {
+            return;
+        }
         
         struct Vector vecGesture = { .x = dx, .y = dy };
         struct Vector vecScrollPoint = scrollPointVectorWithGestureVector(vecGesture);
@@ -58,6 +62,7 @@ static struct Vector _lastInputGestureVector = { .x = 0, .y = 0 };
                                         momentumPhase:0];
         
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
+//            startPostingMomentumScrollEventsWithInitialGestureVector(_lastInputGestureVector, 0.016, 1.0, 4, 1.0);
             startPostingMomentumScrollEventsWithInitialGestureVector(_lastInputGestureVector, 0.016, 1.0, 4, 1.0);
         });
     }
@@ -82,9 +87,9 @@ static struct Vector _lastInputGestureVector = { .x = 0, .y = 0 };
                                   momentumPhase:(CGMomentumScrollPhase)momentumPhase {
     
     
-    printf("Posting gesture scroll event with delta values:\n");
-    printf("gesture: x:%f y:%f \nscroll: x:%f y:%f \nscrollPt: x:%f y:%f\n",
-          vecGesture.x, vecGesture.y, vecScroll.x, vecScroll.y, vecScrollPoint.x, vecScrollPoint.y);
+//    printf("Posting gesture scroll event with delta values:\n");
+//    printf("gesture: x:%f y:%f \nscroll: x:%f y:%f \nscrollPt: x:%f y:%f\n",
+//          vecGesture.x, vecGesture.y, vecScroll.x, vecScroll.y, vecScrollPoint.x, vecScrollPoint.y);
     
     int valFor41 = 33231;
     
@@ -205,9 +210,10 @@ static void startPostingMomentumScrollEventsWithInitialGestureVector(struct Vect
     }
     
     [GestureScrollSimulator postGestureScrollEventWithGestureVector:emptyVec
-                                     scrollVector:emptyVec
-                                scrollVectorPoint:emptyVec
-                                            phase:kIOHIDEventPhaseUndefined momentumPhase:kCGMomentumScrollPhaseEnd];
+                                                       scrollVector:emptyVec
+                                                  scrollVectorPoint:emptyVec
+                                                              phase:kIOHIDEventPhaseUndefined
+                                                      momentumPhase:kCGMomentumScrollPhaseEnd];
     _momentumScrollIsActive = false;
     
 }
