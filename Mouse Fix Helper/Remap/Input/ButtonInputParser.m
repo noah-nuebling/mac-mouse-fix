@@ -43,68 +43,59 @@ NSArray *_testRemapsUI;
         @{}: @{                                                     // Key: modifier dict
             @(3): @{                                                // Key: button
                 @(1): @{                                            // Key: level
-                    @"modifying": @[                                  // Key: click/hold/modifying, value: array of actions
-//                        @{
-//                            @"type": @"modifyingScroll",
-//                            @"value": @"magnification",
-//                        },
-                        @{
-                            @"type": @"modifiedDrag",
-                            @"value": @"threeFingerSwipe",
-                        },
-                    ],
                     @"click": @[                                  // Key: click/hold, value: array of actions
                         @{
                             @"type": @"symbolicHotkey",
                             @"value": @(70),
                         },
                     ],
-                    @"hold": @[                                    // Key: click/hold, value: array of actions
-                        @{
-                            @"type": @"smartZoom",
-                        },
-                    ],
+//                    @"hold": @[                                  // Key: click/hold, value: array of actions
+//                        @{
+//                            @"type": @"symbolicHotkey",
+//                            @"value": @(33),
+//                        },
+//                    ],
+//                    @"modifying": @[
+//                            @{
+//                                @"type": @"modifiedDrag",
+//                                @"value": @"threeFingerSwipe",
+//                            }
+//                    ]
                 },
-                @(2): @{                                            // Key: level
-                        @"click": @[                                  // Key: click/hold, value: array of actions
-                            @{
-                                @"type": @"symbolicHotkey",
-                                @"value": @(36),
-                            },
-                        ],
-                    
-                        @"modifying": @[                                    // Key: click/hold, value: array of actions
-                        @{
-                            @"type": @"modifiedDrag",
-                            @"value": @"twoFingerSwipe",
-                        },
-                    ],
-                },
+//                @(2): @{                                            // Key: level
+//                        @"click": @[                                  // Key: click/hold, value: array of actions
+//                            @{
+//                                @"type": @"symbolicHotkey",
+//                                @"value": @(36),
+//                            },
+//                        ],
+//
+//                        @"modifying": @[                                    // Key: click/hold, value: array of actions
+//                        @{
+//                            @"type": @"modifiedDrag",
+//                            @"value": @"twoFingerSwipe",
+//                        },
+//                    ],
+//                },
             },
             @(4): @{                                                // Key: button
                 @(1): @{                                            // Key: level
-                    @"click": @[                                  // Key: click/hold, value: array of actions
-                        @{
-                            @"type": @"navigationSwipe",
-                            @"direction": @"left",
-                        },
-                    ],
                     @"modifying": @[
                             @{
                                 @"type": @"modifiedDrag",
                                 @"value": @"threeFingerSwipe",
                             }
-                    ]
+                    ],
+                    @"click": @[
+                            @{
+                                @"type": @"symbolicHotkey",
+                                @"value": @(36),
+                            }
+                    ],
                 },
             },
             @(5): @{                                                // Key: button
                 @(1): @{                                            // Key: level
-                    @"click": @[                                  // Key: click/hold, value: array of actions
-                        @{
-                            @"type": @"navigationSwipe",
-                            @"direction": @"right",
-                        },
-                    ],
                     @"modifying": @[
                             @{
                                 @"type": @"modifiedDrag",
@@ -182,7 +173,8 @@ NSArray *_testRemapsUI;
 
 static NSTimer *_levelTimer;
 static NSTimer *_holdTimer;
-static int64_t _buttonFromLastMouseDown;
+static int64_t _buttonFromLastButtonDownEvent;
+static MFDevice *_deviceFromLastButtonDownEvent;
 static int64_t _clickLevel;
 + (void)reset {
     [_levelTimer invalidate];
@@ -190,15 +182,16 @@ static int64_t _clickLevel;
     _clickLevel = 0;
 //    _buttonFromLastMouseDown = 0; // TODO: This broke ending modified drags on releasing the modifying mouse button. I'm not sure what it was good for so I commented it out.
 }
-+ (MFEventPassThroughEvaluation)sendActionTriggersForInputWithButton:(int64_t)button type:(MFButtonInputType)type {
++ (MFEventPassThroughEvaluation)sendActionTriggersForInputWithButton:(int64_t)button type:(MFButtonInputType)type inputDevice:device {
     
     MFEventPassThroughEvaluation passThroughEval = kMFEventPassThroughApproval;
     
      if (type == kMFButtonInputTypeButtonDown) {
          
-         if (button != _buttonFromLastMouseDown) {
+         if (button != _buttonFromLastButtonDownEvent || device != _deviceFromLastButtonDownEvent) {
              [self reset];
-             _buttonFromLastMouseDown = button;
+             _buttonFromLastButtonDownEvent = button;
+             _deviceFromLastButtonDownEvent = device;
          }
          
          if ([_levelTimer isValid]) {
@@ -236,11 +229,11 @@ static int64_t _clickLevel;
 }
 + (void)holdTimerCallback:(NSTimer *)timer {
 //    int button = [[timer userInfo] intValue];
-    [self handleActionTriggerWithButton:_buttonFromLastMouseDown triggerType:kMFActionTriggerTypeHoldTimerExpired level:_clickLevel];
+    [self handleActionTriggerWithButton:_buttonFromLastButtonDownEvent triggerType:kMFActionTriggerTypeHoldTimerExpired level:_clickLevel];
 }
 + (void)levelTimerCallback:(NSTimer *)timer {
 //    int button = [[timer userInfo] intValue];
-    [self handleActionTriggerWithButton:_buttonFromLastMouseDown triggerType:kMFActionTriggerTypeLevelTimerExpired level:_clickLevel];
+    [self handleActionTriggerWithButton:_buttonFromLastButtonDownEvent triggerType:kMFActionTriggerTypeLevelTimerExpired level:_clickLevel];
 }
 
 
@@ -297,7 +290,7 @@ static int64_t _clickLevel;
     
     BOOL triggerIsValid = NO;
     
-    if (_buttonFromLastMouseDown != button) { // This should only ever happen if the trigger is kMFActionTriggerTypeButtonUp
+    if (_buttonFromLastButtonDownEvent != button) { // This should only ever happen if the trigger is kMFActionTriggerTypeButtonUp
         triggerIsValid = NO;
     } else if (triggerType == kMFActionTriggerTypeButtonDown) {
         triggerIsValid = YES;
@@ -389,8 +382,8 @@ static int64_t _clickLevel;
         NSArray *modifyingActionArrayForInput = remapDict[@(button)][@(level)][@"modifying"];
         struct ActivationCondition ac = {
             .type = kMFActivationConditionTypeMouseButtonPressed,
-            .value = button,
-            .activatingDevice = InputReceiver_HID.deviceWichCausedLastInput
+            .value = _buttonFromLastButtonDownEvent, // Could also use local `button` variable I think
+            .activatingDevice = (__bridge IOHIDDeviceRef _Nonnull)(_deviceFromLastButtonDownEvent),
         };
         [ModifyingActions initializeModifiedInputsWithActionArray:modifyingActionArrayForInput
                                            withActivationCondition:ac]; // ??? We only activate modified inputs, they will deactivate themselves once the activation condition becomes false

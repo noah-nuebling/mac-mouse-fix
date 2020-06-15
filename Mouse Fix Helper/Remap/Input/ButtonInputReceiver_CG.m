@@ -8,7 +8,6 @@
 //
 
 #import "ButtonInputReceiver_CG.h"
-#import "InputReceiver_HID.h"
 #import "DeviceManager.h"
 #import <IOKit/hid/IOHIDManager.h>
 #import "ButtonInputParser.h"
@@ -43,7 +42,7 @@ CFMachPortRef eventTap;
 /// I think new devices should be attached to the callback by DeviceManager if a relevant device is attached to the computer
 /// I think there is no cleanup we need to do if a device is detached from the computer.
 + (void)start {
-    InputReceiver_HID.buttonEventInputSourceIsDeviceOfInterest = NO;
+    _deviceWhichCausedThisButtonInput = nil; // Not sure if necessary
     CGEventTapEnable(eventTap, true);
 }
 + (void)stop {
@@ -63,24 +62,42 @@ static void registerInputCallback() {
 
 + (void)insertFakeEvent:(CGEventRef)event {
     CGEventRef ret = handleInput(0,0,event,nil);
-    CGEventPost(kCGHIDEventTap, ret);
+    if (ret) {
+        CGEventPost(kCGHIDEventTap, ret);
+    }
 }
 
+/// Instances of MFDevice set this value to themselves when they receive input from the IOHIDDevice which they own.
+/// Input from the IOHIDDevice will always occur shortly before `ButtonInputReceiver::handleIput()`.
+/// Only `ButtonInputReceiver::handleIput()` Shall use this value, and it will set the value to nil after using it.
+/// This allows `ButtonInputReceiver::handleIput()` to gain information about the device causing the incoming event. It will also allow us to filter out input from devices which we didn't create an MFDevice instance for (All of those devices can be found in DeviceManager.relevantDevices).
+static MFDevice *_deviceWhichCausedThisButtonInput;
++ (void)setDeviceWhichCausedThisButtonInput:(MFDevice *)dev {
+    _deviceWhichCausedThisButtonInput = dev;
+}
 CGEventRef handleInput(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
-    BOOL b = InputReceiver_HID.buttonEventInputSourceIsDeviceOfInterest;
-    InputReceiver_HID.buttonEventInputSourceIsDeviceOfInterest = NO;
+    NSLog(@"CG Button input");
+    NSLog(@"Incoming event: %@", [NSEvent eventWithCGEvent:event]);
     
-    if (b) {
+    MFDevice *dev = _deviceWhichCausedThisButtonInput;
+    _deviceWhichCausedThisButtonInput = nil;
+    
+    if (dev) {
+        
+        NSLog(@"CG Button input comes from relevant device");
+        
         int64_t buttonNumber = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
         
         long long pr = CGEventGetIntegerValueField(event, kCGMouseEventPressure);
         MFButtonInputType type = pr == 0 ? kMFButtonInputTypeButtonUp : kMFButtonInputTypeButtonDown;
         
         if (3 <= buttonNumber) {
-            MFEventPassThroughEvaluation rt = [ButtonInputParser sendActionTriggersForInputWithButton:buttonNumber type:type];
+            MFEventPassThroughEvaluation rt = [ButtonInputParser sendActionTriggersForInputWithButton:buttonNumber type:type inputDevice:dev];
             if (rt == kMFEventPassThroughRefusal) {
                 return nil;
+            } else {
+                return event;
             }
         } else {
             NSLog(@"Received input from primary / secondary mouse button. This should never happen! Button Number: %lld", buttonNumber);

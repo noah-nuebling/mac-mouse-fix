@@ -10,6 +10,7 @@
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
 #import "IOKit/hid/IOHIDManager.h"
+#import "MFDevice.h"
 
 
 @interface ButtonInputReceiver_CG : NSObject
@@ -43,5 +44,7 @@ typedef enum {
 + (void)decide;
 
 + (void)insertFakeEvent:(CGEventRef)event;
+
++ (void)setDeviceWhichCausedThisButtonInput:(MFDevice *)dev;
 
 @end

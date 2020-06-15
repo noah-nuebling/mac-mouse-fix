@@ -14,7 +14,5 @@
 + (void)load_Manual;
 + (BOOL)relevantDevicesAreAttached;
 
-+ (BOOL)devicesAreSeized;
-+ (void)seizeDevices:(BOOL)seize;
 @end
 

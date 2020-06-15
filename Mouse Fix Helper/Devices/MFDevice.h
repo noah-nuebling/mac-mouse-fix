@@ -12,17 +12,18 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface InputReceiver_HID : NSObject
+@interface MFDevice : NSObject
 
-+ (void)registerInputCallback:(IOHIDDeviceRef)device;
+@property (atomic, assign, readonly, nonnull) IOHIDDeviceRef IOHIDDevice;
+@property (atomic, assign, readonly) BOOL isSeized;
 
-+ (IOHIDDeviceRef)deviceWichCausedLastInput;
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)new NS_UNAVAILABLE;
++ (MFDevice *)deviceWithIOHIDDevice:(IOHIDDeviceRef)IOHIDDevice;
 
-+ (BOOL)buttonEventInputSourceIsDeviceOfInterest;
-+ (void)setButtonEventInputSourceIsDeviceOfInterest:(BOOL)B;
 
-+ (void)receiveButtonInputForDevice:(IOHIDDeviceRef _Nonnull)device;
-+ (void)receiveButtonAndAxisInputForDevice:(IOHIDDeviceRef _Nonnull)device seize:(BOOL)exclusive;
+- (void)receiveOnlyButtonInput;
+- (void)receiveButtonAndAxisInputWithSeize:(BOOL)exclusive;
 
 @end
 

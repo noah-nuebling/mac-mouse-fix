@@ -24,7 +24,7 @@
 
 #import "ScrollControl.h"
 #import "ButtonInputReceiver_CG.h"
-#import "InputReceiver_HID.h"
+#import "MFDevice.h"
 #import "ConfigFileInterface_HelperApp.h"
 #import "PointerSpeed.h"
 
@@ -36,8 +36,13 @@
 @implementation DeviceManager
 
 # pragma mark - Global vars
-IOHIDManagerRef _HIDManager;
-static BOOL _relevantDevicesAreAttached;
+static IOHIDManagerRef _HIDManager;
+static NSMutableArray<MFDevice *> *_relevantDevices;
+
++ (BOOL)relevantDevicesAreAttached {
+    return _relevantDevices.count > 0;
+}
+
 
 
 /**
@@ -45,43 +50,36 @@ static BOOL _relevantDevicesAreAttached;
  */
 + (void)load_Manual {
     setupDeviceMatchingAndRemovalCallbacks();
+    _relevantDevices = [NSMutableArray array];
 }
 
 # pragma mark - Interface
 
-static BOOL _devicesAreSeized = NO;
-+ (BOOL)devicesAreSeized {
-    return _devicesAreSeized;;
-}
+//+ (void)seizeDevices:(BOOL)seize {
+//    IOReturn retClose;
+//    IOReturn retOpen;
+//    
+//    IOHIDManagerUnscheduleFromRunLoop(_HIDManager, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
+//    retClose = IOHIDManagerClose(_HIDManager, kIOHIDOptionsTypeNone);
+//    IOHIDManagerScheduleWithRunLoop(_HIDManager, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
+//    if (seize) {
+//        retOpen = IOHIDManagerOpen(_HIDManager, kIOHIDOptionsTypeSeizeDevice);
+//    } else {
+//        retOpen = IOHIDManagerOpen(_HIDManager, kIOHIDOptionsTypeNone);
+//    }
+//    _devicesAreSeized = seize;
+//    NSLog(@"Seize manager close return: %d", retClose);
+//    NSLog(@"Seize manager open return: %d", retOpen);
+//}
 
-+ (void)seizeDevices:(BOOL)seize {
-    IOReturn retClose;
-    IOReturn retOpen;
-    
-    IOHIDManagerUnscheduleFromRunLoop(_HIDManager, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
-    retClose = IOHIDManagerClose(_HIDManager, kIOHIDOptionsTypeNone);
-    IOHIDManagerScheduleWithRunLoop(_HIDManager, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
-    if (seize) {
-        retOpen = IOHIDManagerOpen(_HIDManager, kIOHIDOptionsTypeSeizeDevice);
-    } else {
-        retOpen = IOHIDManagerOpen(_HIDManager, kIOHIDOptionsTypeNone);
-    }
-    _devicesAreSeized = seize;
-    NSLog(@"Seize manager close return: %d", retClose);
-    NSLog(@"Seize manager open return: %d", retOpen);
-}
-
-+ (BOOL)relevantDevicesAreAttached {
-    return _relevantDevicesAreAttached;
-}
 
 # pragma mark - Setup callbacks
 static void setupDeviceMatchingAndRemovalCallbacks() {
     
     
     // Create an HID Manager
-    _HIDManager = IOHIDManagerCreate(kCFAllocatorDefault, 0);
-//    _HIDManager = IOHIDManagerCreate(kCFAllocatorDefault, kIOHIDManagerOptionIndependentDevices); // TODO: This might be worth a try for independent seizing of devices.
+//    _HIDManager = IOHIDManagerCreate(kCFAllocatorDefault, 0);
+    _HIDManager = IOHIDManagerCreate(kCFAllocatorDefault, kIOHIDManagerOptionIndependentDevices); // TODO: This might be worth a try for independent seizing of devices.
     
     // Create a Matching Dictionary
     CFMutableDictionaryRef matchDict1 = CFDictionaryCreateMutable(kCFAllocatorDefault,
@@ -170,65 +168,44 @@ static void setupDeviceMatchingAndRemovalCallbacks() {
 
 # pragma mark - Handle callbacks
 
-static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
-    
-    NSLog(@"Device Removed");
-    
-    // Check if there are still relevant devices atached.
-    CFSetRef devices = IOHIDManagerCopyDevices(_HIDManager); // for some reason this copies the device which was just removed
-    NSLog(@"Devices still attached (includes device which was just removed): %@", devices);
-    if (CFSetGetCount(devices) <= 1) { // so we're accounting for that by using a 1 here instead of a 0
-        _relevantDevicesAreAttached = FALSE;
-    }
-    CFRelease(devices);
-    
-    // If there aren't any relevant devices attached, then we might want to turn off some parts of the program.
-    [ScrollControl decide];
-    [ButtonInputReceiver_CG decide];
-}
-
 static void handleDeviceMatching(void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
     
     NSLog(@"New matching device");
     
-    
-    if (devicePassesFiltering(device) ) {
+    if (devicePassesFiltering(device)) {
         
-        
-    
         NSLog(@"Device Passed filtering");
         
+        MFDevice *newMFDevice = [MFDevice deviceWithIOHIDDevice:device];
+        [_relevantDevices addObject:newMFDevice];
+        NSLog(@"Added device:\n%@", newMFDevice.description);
+        NSLog(@"Relevant devices:\n%@", _relevantDevices);
         
-        // TODO: Clean this up
-//        [PointerSpeed setAccelerationTo:0.5];
-//        [PointerSpeed setSensitivityTo:200 device:device];
-        
-        
-        
-        
-        [InputReceiver_HID registerInputCallback:device];
-        
-        _relevantDevicesAreAttached = TRUE;
         [ScrollControl decide];
         [ButtonInputReceiver_CG decide];
     }
-    
 
-    
-;
-    NSLog(@"added device info: %@", (__bridge NSString *)IOHIDDeviceGetProperty(device, CFSTR("VendorID")));
-    
-    NSString *devName = IOHIDDeviceGetProperty(device, CFSTR("Product"));
-    NSString *devPrimaryUsage = IOHIDDeviceGetProperty(device, CFSTR("PrimaryUsage"));
-    NSLog(@"\nMatching device added: %p\nModel: %@\nUsage: %@\nMatching",
-          device,
-          devName,
-          devPrimaryUsage
-          );
     
     
     return;
     
+}
+
+static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
+    
+    NSLog(@"Device Removed");
+    
+//    CFSetRef devices = IOHIDManagerCopyDevices(_HIDManager); // for some reason this copies the device which was just removed
+//    NSLog(@"Devices still attached (includes device which was just removed): %@", devices);
+//    CFRelease(devices);
+    
+    MFDevice *removedMFDevice = [MFDevice deviceWithIOHIDDevice:device];
+    [_relevantDevices removeObject:removedMFDevice];
+    NSLog(@"Removed device:\n%@", removedMFDevice);
+    
+    // If there aren't any relevant devices attached, then we might want to turn off some parts of the program.
+    [ScrollControl decide];
+    [ButtonInputReceiver_CG decide];
 }
 
 

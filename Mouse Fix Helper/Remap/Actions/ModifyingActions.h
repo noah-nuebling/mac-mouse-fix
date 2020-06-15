@@ -8,7 +8,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "InputReceiver_HID.h"
+#import "MFDevice.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

@@ -10,12 +10,12 @@
 #import "AccessibilityCheck.h"
 
 #import <AppKit/AppKit.h>
-#import "../MessagePort/MessagePort_HelperApp.h"
-#import "../DeviceManager/DeviceManager.h"
-#import "../MessagePort/MessagePort_HelperApp.h"
-#import "../Config/ConfigFileInterface_HelperApp.h"
-#import "../Scroll/SmoothScroll.h"
-#import "../Scroll/RoughScroll.h"
+#import "MessagePort_HelperApp.h"
+#import "DeviceManager.h"
+#import "MessagePort_HelperApp.h"
+#import "ConfigFileInterface_HelperApp.h"
+#import "SmoothScroll.h"
+#import "RoughScroll.h"
 #import "ButtonInputReceiver_CG.h"
 
 @implementation AccessibilityCheck

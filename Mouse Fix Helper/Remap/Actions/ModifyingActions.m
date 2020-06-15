@@ -73,7 +73,8 @@ static struct ModifiedDragState _modifiedDrag;
             // Activate the modified drag if the mouse has been moved far enough from the point where the drag started
             if (MAX(fabs(xOfs), fabs(yOfs)) > _modifiedDrag.usageThreshold) {
                 
-                [InputReceiver_HID receiveButtonAndAxisInputForDevice:_modifiedDrag.activationCondition.activatingDevice seize:YES];
+                MFDevice *dev = (__bridge MFDevice *)_modifiedDrag.activationCondition.activatingDevice;
+                [dev receiveButtonAndAxisInputWithSeize:YES];
                 
                 if (fabs(xOfs) < fabs(yOfs)) {
                     _modifiedDrag.usageAxis = kMFAxisVertical;
@@ -172,7 +173,9 @@ static struct ModifiedDragState _modifiedDrag;
             
             
 //            CGEventTapEnable(_modifiedDrag.eventTap, true);
-            [InputReceiver_HID receiveButtonAndAxisInputForDevice:_modifiedDrag.activationCondition.activatingDevice seize:NO]; // Input rei
+            MFDevice *dev = (__bridge MFDevice *)(_modifiedDrag.activationCondition.activatingDevice);
+            
+            [dev receiveButtonAndAxisInputWithSeize:NO];
             
             
             
@@ -213,7 +216,8 @@ static struct ModifiedDragState _modifiedDrag;
         }
     }
 //    CGEventTapEnable(_modifiedDrag.eventTap, false);
-    [InputReceiver_HID receiveButtonInputForDevice:_modifiedDrag.activationCondition.activatingDevice];
+    MFDevice *dev = (__bridge MFDevice *)_modifiedDrag.activationCondition.activatingDevice;
+    [dev receiveOnlyButtonInput];
     _modifiedDrag.activationState = kMFModifiedInputActivationStateNone;
     
 //    CGAssociateMouseAndMouseCursorPosition(true); // Doesn't work

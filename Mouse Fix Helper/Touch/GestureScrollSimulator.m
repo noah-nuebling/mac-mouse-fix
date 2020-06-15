@@ -263,7 +263,7 @@ static struct Vector scrollPointVectorWithGestureVector(struct Vector vec) {
         return (struct Vector){};
     }
     double magOut = 0.01 * pow(magIn, 2) + 0.3 * magIn; // Got these values through curve fitting
-    magOut *= 4; // This makes it feel better on mouse
+//    magOut *= 4; // This makes it feel better on mouse
     double scale = magOut / magIn;
     struct Vector vecOut;
     vecOut.x = round(vec.x * scale);
