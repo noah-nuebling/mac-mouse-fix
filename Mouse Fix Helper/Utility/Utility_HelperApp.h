@@ -16,5 +16,7 @@
 + (NSBundle *)prefPaneBundle;
 
 + (NSDictionary *)dictionaryWithOverridesAppliedFrom:(NSDictionary *)src to: (NSDictionary *)dst;
+
++ (CGPoint)getCurrentPointerLocation_flipped;
 @end
 

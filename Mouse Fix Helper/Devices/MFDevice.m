@@ -12,6 +12,7 @@
 #import "DeviceManager.h"
 #import "ButtonInputReceiver_CG.h"
 #import "RemapUtility.h"
+#import "CFRuntime.h"
 
 @implementation MFDevice
 
@@ -44,28 +45,69 @@ static void registerInputCallbackForDevice(MFDevice *device) {
 
 - (void)openWithOption:(IOOptionBits)options {
     IOReturn ret = IOHIDDeviceOpen(self.IOHIDDevice, options);
-//    IOReturn ret = IOHIDDeviceOpen(self.IOHIDDevice, 0); // TODO: Ignoring options for testing purposes
+//    IOReturn ret = IOHIDDeviceOpen(self.IOHIDDevice, 0); // Ignoring options for testing purposes
     if (ret) {
         NSLog(@"Error opening device. Code: %x", ret);
     }
 }
 
-- (void)close {
-    IOReturn ret = IOHIDDeviceClose(self.IOHIDDevice, kIOHIDOptionsTypeNone);
+typedef struct __IOHIDDevice
+{
+    CFRuntimeBase                   cfBase;   // base CFType information
+
+    io_service_t                    service;
+    IOHIDDeviceDeviceInterface**    deviceInterface;
+    IOCFPlugInInterface **          plugInInterface;
+    CFMutableDictionaryRef          properties;
+    CFMutableSetRef                 elements;
+    CFStringRef                     rootKey;
+    CFStringRef                     UUIDKey;
+    IONotificationPortRef           notificationPort;
+    io_object_t                     notification;
+    CFTypeRef                       asyncEventSource;
+    CFRunLoopRef                    runLoop;
+    CFStringRef                     runLoopMode;
+    
+    IOHIDQueueRef                   queue;
+    CFArrayRef                      inputMatchingMultiple;
+    Boolean                         loadProperties;
+    Boolean                         isDirty;
+    
+    // For thread safety reasons, to add or remove an  element, first make a copy,
+    // then modify that copy, then replace the original
+    CFMutableArrayRef               removalCallbackArray;
+    CFMutableArrayRef               reportCallbackArray;
+    CFMutableArrayRef               inputCallbackArray;
+} __IOHIDDevice, *__IOHIDDeviceRef;
+
+// I think the `option` doesn't make any difference when closing a device I think. It definitely doesn't help with the CFData zombie bug
+- (void)closeWithOption:(IOOptionBits)option {
+//    CFRetain(self.IOHIDDevice); // Closing seems to create zombies, which leads to crashes. Retaining doesn't fix it though...
+//    IOReturn ret = IOHIDDeviceClose(self.IOHIDDevice, option);
+    IOReturn ret = (*self.IOHIDDevice->deviceInterface)->close(self.IOHIDDevice->deviceInterface, option); // This is some of what IOHIDDeviceClose() does. Might help with zombies. I got this from `IOHIDDevice.c`. Seems like it fixes the zombies issue!! :D
     if (ret) {
         NSLog(@"Error closing device. Code: %x", ret);
+        CFRelease(self.IOHIDDevice);
     }
 }
 
-/// We use this to prevent the mouse pointer from moving while modifiedDrag actions are active.
+/// Seizing device is the only way I found for preventing the mouse pointer from moving while modifiedDrag actions are active.
 /// Unfortunately this fails sometimes and does weird stuff like not properly disabling or crashing the app
+/// Closing devices seems to deallocate something (Xcode zombies analysis says its CFData, but idk what it is or what it represents etc.) which will later lead to crashes. CFRetain ing devices before closing them doesn't seem to help.
+/// I also think this leads to other weird issues e.g. I couldn't stop dragging an element once until I logged out. We create fake events and reinsert them into the event stream from within `MFDevice::handleInput()` if the device is seized, I think that caused it somehow.
 - (void)seize:(BOOL)B {
+    
+//    return;
     
     if (_isSeized == B) {
         return;
     }
     
-    [self close];
+    if (self.isSeized) {
+        [self closeWithOption:kIOHIDOptionsTypeSeizeDevice];
+    } else {
+        [self closeWithOption:0];
+    }
     
     if (B) {
         [self openWithOption:kIOHIDOptionsTypeSeizeDevice];
@@ -106,6 +148,7 @@ static void registerInputCallbackForDevice(MFDevice *device) {
     };
     
     NSArray *matchDictArray = @[buttonMatchDict, xAxisMatchDict, yAxisMatchDict];
+    
     IOHIDDeviceSetInputValueMatchingMultiple(_IOHIDDevice, (__bridge CFArrayRef)matchDictArray);
     
 }
@@ -126,7 +169,7 @@ static int64_t _previousDeltaY;
 
 static void handleInput(void *context, IOReturn result, void *sender, IOHIDValueRef value) {
     
-    NSLog(@"HID Input");
+//    NSLog(@"HID Input");
     
     MFDevice *sendingDev = (__bridge MFDevice *)context;
     
@@ -164,8 +207,12 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
                 }
             }
 
+//            CGEventRef locEvent = CGEventCreate(NULL);
             CGEventRef fakeEvent = CGEventCreateMouseEvent(NULL, mouseType, CGEventGetLocation(CGEventCreate(NULL)), button);
+//            CFRetain(fakeEvent);
             [ButtonInputReceiver_CG insertFakeEvent:fakeEvent];
+            CFRelease(fakeEvent);
+//            CFRelease(locEvent);
         }
         
         return;
@@ -180,7 +227,7 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
         MFAxis axis = isXAxis ? kMFAxisHorizontal : kMFAxisVertical;
         
         if (axis == kMFAxisVertical) {
-            _previousDeltaY = IOHIDValueGetIntegerValue(value); // Vertical axis delta seems to always be sent before horizontal axis delta
+            _previousDeltaY = IOHIDValueGetIntegerValue(value); // Vertical axis delta value seems to always be sent before horizontal axis delta
         } else {
             int64_t currentDeltaX = IOHIDValueGetIntegerValue(value);
             
@@ -195,10 +242,8 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
 #pragma mark - Default functions
 
 - (BOOL)isEqualToDevice:(MFDevice *)device {
-    
     return CFEqual(_IOHIDDevice, device.IOHIDDevice);
 }
-
 - (BOOL)isEqual:(MFDevice *)other {
     
     if (other == self) { // This checks for pointer equality
@@ -215,7 +260,8 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
 
 - (NSUInteger)hash {
     
-    return CFHash(_IOHIDDevice) << 1;
+//    return CFHash(_IOHIDDevice) << 1;
+    return (NSUInteger)self;
 }
 
 - (NSString *)description {

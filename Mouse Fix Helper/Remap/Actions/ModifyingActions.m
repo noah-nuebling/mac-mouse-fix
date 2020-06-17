@@ -25,6 +25,7 @@ struct ModifiedDragState {
     struct ActivationCondition activationCondition;
     
     CGPoint origin;
+    MFVector originOffset;
     MFAxis usageAxis;
     IOHIDEventPhaseBits phase;
 };
@@ -49,7 +50,7 @@ static struct ModifiedDragState _modifiedDrag;
 //        CFRelease(runLoopSource);
 //        CGEventTapEnable(_modifiedDrag.eventTap, false);
 //    }
-    _modifiedDrag.usageThreshold = 15;
+    _modifiedDrag.usageThreshold = 50;
 }
 
 + (void)handleMouseInputWithDeltaX:(int64_t)deltaX deltaY:(int64_t)deltaY {
@@ -65,18 +66,18 @@ static struct ModifiedDragState _modifiedDrag;
         }
         case kMFModifiedInputActivationStateInitialized:
         {
-            CGPoint currMouseLoc = CGEventGetLocation(CGEventCreate(NULL));
+            _modifiedDrag.originOffset.x += deltaX;
+            _modifiedDrag.originOffset.y += deltaY;
             
-            double xOfs = currMouseLoc.x - _modifiedDrag.origin.x;
-            double yOfs = currMouseLoc.y - _modifiedDrag.origin.y;
+            MFVector ofs = _modifiedDrag.originOffset;
             
             // Activate the modified drag if the mouse has been moved far enough from the point where the drag started
-            if (MAX(fabs(xOfs), fabs(yOfs)) > _modifiedDrag.usageThreshold) {
+            if (MAX(fabs(ofs.x), fabs(ofs.y)) > _modifiedDrag.usageThreshold) {
                 
                 MFDevice *dev = (__bridge MFDevice *)_modifiedDrag.activationCondition.activatingDevice;
                 [dev receiveButtonAndAxisInputWithSeize:YES];
                 
-                if (fabs(xOfs) < fabs(yOfs)) {
+                if (fabs(ofs.x) < fabs(ofs.y)) {
                     _modifiedDrag.usageAxis = kMFAxisVertical;
                 } else {
                     _modifiedDrag.usageAxis = kMFAxisHorizontal;
@@ -170,12 +171,13 @@ static struct ModifiedDragState _modifiedDrag;
             _modifiedDrag.type = subtype;
             _modifiedDrag.activationCondition = activationCondition;
             _modifiedDrag.origin = CGEventGetLocation(CGEventCreate(NULL));
+            _modifiedDrag.originOffset = (MFVector){};
             
             
 //            CGEventTapEnable(_modifiedDrag.eventTap, true);
             MFDevice *dev = (__bridge MFDevice *)(_modifiedDrag.activationCondition.activatingDevice);
             
-            [dev receiveButtonAndAxisInputWithSeize:NO];
+            [dev receiveButtonAndAxisInputWithSeize:YES];
             
             
             

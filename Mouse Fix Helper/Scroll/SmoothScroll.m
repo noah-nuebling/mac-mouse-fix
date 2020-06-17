@@ -46,7 +46,7 @@ static CVDisplayLinkRef _displayLink;
 static MFDisplayLinkPhase _displayLinkPhase;
 static int32_t _pxToScrollThisFrame;
 //static int _previousPhase; // which phase was active the last time that displayLinkCallback was called. Used to compute artificial scroll phases
-static CGDirectDisplayID *_displaysUnderMousePointer;
+
 // linear phase
 static int32_t      _pxScrollBuffer;
 static double   _msLeftForScroll;
@@ -62,7 +62,8 @@ static uint8_t      _onePixelScrollsCounter;
     if (_displayLink == nil) {
         CVDisplayLinkCreateWithActiveCGDisplays(&_displayLink);
         CVDisplayLinkSetOutputCallback(_displayLink, displayLinkCallback, nil);
-        _displaysUnderMousePointer = malloc(sizeof(CGDirectDisplayID) * 3); // TODO: Why 3?
+//        _displaysUnderMousePointer = malloc(sizeof(CGDirectDisplayID) * 3); // TODO: Why 3? Is this necessary at all?
+//        _numberOfDisplaysUnderMousePointer = 0;
     }
 }
 
@@ -392,29 +393,47 @@ static void Handle_displayReconfiguration(CGDirectDisplayID display, CGDisplayCh
         CVDisplayLinkSetOutputCallback(_displayLink, displayLinkCallback, nil);
     }
 }
+
+static uint32_t _numberOfDisplaysUnderMousePointer; // NEED to allways set this when setting _displaysUnderMousePointer
+static CGDirectDisplayID *_displaysUnderMousePointer;
+
 static void setDisplayLinkToDisplayUnderMousePointer(CGEventRef event) {
     
     CGPoint mouseLocation = CGEventGetLocation(event);
-    CGDirectDisplayID *newDisplaysUnderMousePointer = malloc(sizeof(CGDirectDisplayID) * 3);
-    uint32_t matchingDisplayCount;
-    CGGetDisplaysWithPoint(mouseLocation, 2, newDisplaysUnderMousePointer, &matchingDisplayCount);
+    
+    uint32_t maxNumberOfDisplays;
+    CGGetDisplaysWithPoint(mouseLocation, 0, NULL, &maxNumberOfDisplays);
+    CGDirectDisplayID *newDisplaysUnderMousePointer = malloc(sizeof(CGDirectDisplayID) * maxNumberOfDisplays);
+    uint32_t newNumberOfDisplaysUnderMousePointer;
+    CGGetDisplaysWithPoint(mouseLocation, maxNumberOfDisplays, newDisplaysUnderMousePointer, &newNumberOfDisplaysUnderMousePointer);
     // TODO: Check if this is slow. If so, check if there's a dedicated way for getting the active display. If so, consider using that instead of CGGetDisplaysWithPoint().
     
-    if (matchingDisplayCount >= 1) {
-        if (newDisplaysUnderMousePointer[0] != _displaysUnderMousePointer[0]) {
-            _displaysUnderMousePointer = newDisplaysUnderMousePointer;
+    if (newNumberOfDisplaysUnderMousePointer >= 1) {
+        if (!displayIDArraysAreEqual(_displaysUnderMousePointer, _numberOfDisplaysUnderMousePointer, newDisplaysUnderMousePointer, newNumberOfDisplaysUnderMousePointer)) {
             //sets dsp to the master display if _displaysUnderMousePointer[0] is part of the mirror set
             CGDirectDisplayID dsp = CGDisplayPrimaryDisplay(_displaysUnderMousePointer[0]);
             CVDisplayLinkSetCurrentCGDisplay(_displayLink, dsp);
+            
+            free(_displaysUnderMousePointer);
+            _displaysUnderMousePointer = newDisplaysUnderMousePointer;
+            _numberOfDisplaysUnderMousePointer = newNumberOfDisplaysUnderMousePointer;
         }
-    } else if (matchingDisplayCount > 1) {
-        NSLog(@"more than one display for current mouse position");
-        
-    } else if (matchingDisplayCount == 0) {
+        if (newNumberOfDisplaysUnderMousePointer > 1) {
+            NSLog(@"more than one display for current mouse position");
+        }
+    } else if (newNumberOfDisplaysUnderMousePointer == 0) {
         NSException *e = [NSException exceptionWithName:NSInternalInconsistencyException reason:@"there are 0 diplays under the mouse pointer" userInfo:NULL];
         @throw e;
     }
-    free(newDisplaysUnderMousePointer);
+}
+
+static bool displayIDArraysAreEqual(CGDirectDisplayID *arr1, int32_t count1, CGDirectDisplayID *arr2, int32_t count2) {
+    for (int i = 0; i < count1 && i < count2; i++) {
+        if (arr1[i] != arr2[i]) {
+            return false;
+        }
+    }
+    return true;
 }
 
 @end

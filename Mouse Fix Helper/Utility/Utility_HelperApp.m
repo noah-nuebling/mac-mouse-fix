@@ -8,6 +8,7 @@
 //
 
 #import "Utility_HelperApp.h"
+#import <AppKit/AppKit.h>
 
 @implementation Utility_HelperApp
 
@@ -66,6 +67,32 @@
         }
     }
     return dstMutable;
+}
+
+// All of the CG APIs use a flipped coordinate system
++ (CGPoint)getCurrentPointerLocation_flipped {
+    
+    NSPoint loc = [self getCurrentPointerLocation];
+    
+    NSAffineTransform* xform = [NSAffineTransform transform];
+    [xform translateXBy:0.0 yBy:NSScreen.mainScreen.frame.size.height];
+    [xform scaleXBy:1.0 yBy:-1.0];
+    [xform transformPoint:loc];
+    
+    NSLog(@"PointerLoc flipped: x:%f, y:%f", loc.x, loc.y);
+    
+    return (CGPoint)loc;
+}
+
+// All of the CG APIs use a flipped coordinate system
++ (CGPoint)getCurrentPointerLocation_flipped_slow {
+    CGEventRef locEvent = CGEventCreate(NULL);
+    CGPoint loc = CGEventGetLocation(locEvent);
+    CFRelease(locEvent);
+    return loc;
+}
++ (NSPoint)getCurrentPointerLocation {
+    return NSEvent.mouseLocation;
 }
 
 @end

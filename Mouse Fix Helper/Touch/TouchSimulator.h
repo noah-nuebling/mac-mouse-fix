@@ -23,6 +23,11 @@ typedef enum {
     
 } MFDockSwipeType;
 
+typedef struct __MFVector {
+    double x;
+    double y;
+} MFVector;
+
 + (void)postNavigationSwipeEventWithDirection:(TLInfoSwipeDirection)dir;
 
 + (void)postSmartZoomEvent;

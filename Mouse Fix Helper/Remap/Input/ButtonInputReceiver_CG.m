@@ -63,7 +63,7 @@ static void registerInputCallback() {
 + (void)insertFakeEvent:(CGEventRef)event {
     CGEventRef ret = handleInput(0,0,event,nil);
     if (ret) {
-        CGEventPost(kCGHIDEventTap, ret);
+        CGEventPost(kCGSessionEventTap, ret);
     }
 }
 
@@ -78,7 +78,7 @@ static MFDevice *_deviceWhichCausedThisButtonInput;
 CGEventRef handleInput(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
     NSLog(@"CG Button input");
-    NSLog(@"Incoming event: %@", [NSEvent eventWithCGEvent:event]);
+    NSLog(@"Incoming event: %@", [NSEvent eventWithCGEvent:event]); // TODO: Sometimes events seem to be deallocated when reaching this point, causing a crash. This is likely to do with inserting fake events.
     
     MFDevice *dev = _deviceWhichCausedThisButtonInput;
     _deviceWhichCausedThisButtonInput = nil;

@@ -232,6 +232,7 @@
 		4FA26CEF243949DC0082D5F6 /* NSMutableDictionary+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+Additions.h"; sourceTree = "<group>"; };
 		4FA26CF0243949DC0082D5F6 /* NSMutableDictionary+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+Additions.m"; sourceTree = "<group>"; };
 		4FACF59E2183B956009257D4 /* default_mouse.fix.helper.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_mouse.fix.helper.plist; sourceTree = "<group>"; };
+		4FAEEC7C249A2A3400B83AB6 /* CFRuntime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CFRuntime.h; sourceTree = "<group>"; };
 		4FB68B67246CA46F0059530E /* OneShotActions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OneShotActions.h; sourceTree = "<group>"; };
 		4FB68B68246CA46F0059530E /* OneShotActions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OneShotActions.m; sourceTree = "<group>"; };
 		4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pureDonationButton.png; sourceTree = "<group>"; };
@@ -330,6 +331,7 @@
 		4F1C96692313603400C3B9AE /* External */ = {
 			isa = PBXGroup;
 			children = (
+				4FAEEC7C249A2A3400B83AB6 /* CFRuntime.h */,
 				4F1C96702313606200C3B9AE /* CGSInternal */,
 				4F1C966F2313606200C3B9AE /* CGSPrivate.h */,
 				4F1C966A2313606200C3B9AE /* IOKit */,

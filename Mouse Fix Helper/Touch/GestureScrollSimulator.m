@@ -9,15 +9,12 @@
 
 #import "GestureScrollSimulator.h"
 #import <QuartzCore/QuartzCore.h>
+#import "TouchSimulator.h"
+#import "Utility_HelperApp.h"
 
 @implementation GestureScrollSimulator
 
-struct Vector {
-    double x;
-    double y;
-};
-
-static struct Vector _lastInputGestureVector = { .x = 0, .y = 0 };
+static MFVector _lastInputGestureVector = { .x = 0, .y = 0 };
 
 /**
  Post scroll events that behave as if they are coming from an Apple Trackpad or Magic Mouse.
@@ -33,7 +30,7 @@ static struct Vector _lastInputGestureVector = { .x = 0, .y = 0 };
  \note For more info on which delta values and which phases to use, see the documentation for `postGestureScrollEventWithGestureDeltaX:deltaY:phase:momentumPhase:scrollDeltaConversionFunction:scrollPointDeltaConversionFunction:`. In contrast to the aforementioned function, you shouldn't need to call this function with kIOHIDEventPhaseUndefined.
 */
 + (void)postGestureScrollEventWithGestureDeltaX:(int64_t)dx deltaY:(int64_t)dy phase:(IOHIDEventPhaseBits)phase {
-    
+
     if (phase != kIOHIDEventPhaseEnded) {
         
         _breakMomentumScrollFlag = true;
@@ -42,9 +39,9 @@ static struct Vector _lastInputGestureVector = { .x = 0, .y = 0 };
             return;
         }
         
-        struct Vector vecGesture = { .x = dx, .y = dy };
-        struct Vector vecScrollPoint = scrollPointVectorWithGestureVector(vecGesture);
-        struct Vector vecScroll = scrollVectorWithScrollPointVector(vecScrollPoint);
+        MFVector vecGesture = { .x = dx, .y = dy };
+        MFVector vecScrollPoint = scrollPointVectorWithGestureVector(vecGesture);
+        MFVector vecScroll = scrollVectorWithScrollPointVector(vecScrollPoint);
         
         if (phase == kIOHIDEventPhaseBegan || phase == kIOHIDEventPhaseChanged) {
             _lastInputGestureVector = vecGesture;
@@ -55,9 +52,9 @@ static struct Vector _lastInputGestureVector = { .x = 0, .y = 0 };
                                                 phase:phase
                                         momentumPhase:kCGMomentumScrollPhaseNone];
     } else {
-        [self postGestureScrollEventWithGestureVector:(struct Vector){}
-                                         scrollVector:(struct Vector){}
-                                    scrollVectorPoint:(struct Vector){}
+        [self postGestureScrollEventWithGestureVector:(MFVector){}
+                                         scrollVector:(MFVector){}
+                                    scrollVectorPoint:(MFVector){}
                                                 phase:kIOHIDEventPhaseEnded
                                         momentumPhase:0];
         
@@ -80,9 +77,9 @@ static struct Vector _lastInputGestureVector = { .x = 0, .y = 0 };
 ///     6. kIOHIDEventPhaseUndefined - Use this phase with non-0 momentumPhase values. (0 being kCGMomentumScrollPhaseNone)
 ///         - Creating artificial momentum phase events is largely untestet. Might not work properly
 
-+ (void)postGestureScrollEventWithGestureVector:(struct Vector)vecGesture
-                                   scrollVector:(struct Vector)vecScroll
-                              scrollVectorPoint:(struct Vector)vecScrollPoint
++ (void) postGestureScrollEventWithGestureVector:(MFVector)vecGesture
+                                   scrollVector:(MFVector)vecScroll
+                              scrollVectorPoint:(MFVector)vecScrollPoint
                                           phase:(IOHIDEventPhaseBits)phase
                                   momentumPhase:(CGMomentumScrollPhase)momentumPhase {
     
@@ -159,16 +156,16 @@ static struct Vector _lastInputGestureVector = { .x = 0, .y = 0 };
         CGEventSetIntegerValueField(e29, 132, phase);
         
         // Post t29s0 events
-        
+//        CGEventSetLocation(e29, [Utility_HelperApp getCurrentPointerLocation_flipped]);
         CGEventPost(kCGHIDEventTap, e29);
         //    printEvent(e29);
-        CFRelease(e29);
     }
     
     // Post t22s6 events
-    
+//    CGEventSetLocation(e22, [Utility_HelperApp getCurrentPointerLocation_flipped]);
     CGEventPost(kCGHIDEventTap, e22);
     CFRelease(e22);
+    CFRelease(e29);
 }
 
 + (void)breakMomentumScroll {
@@ -176,15 +173,15 @@ static struct Vector _lastInputGestureVector = { .x = 0, .y = 0 };
 }
 static bool _breakMomentumScrollFlag; // Should only be manipulated by `breakMomentumScroll`
 static bool _momentumScrollIsActive; //Should only be manipulated by `startPostingMomentumScrollEventsWithInitialGestureVector()`
-static void startPostingMomentumScrollEventsWithInitialGestureVector(struct Vector initGestureVec, CFTimeInterval tick, int thresh, double dragCoeff, double dragExp) {
+static void startPostingMomentumScrollEventsWithInitialGestureVector(MFVector initGestureVec, CFTimeInterval tick, int thresh, double dragCoeff, double dragExp) {
     
     _breakMomentumScrollFlag = false;
     _momentumScrollIsActive = true;
     
-    struct Vector emptyVec = (const struct Vector){};
+    MFVector emptyVec = (const MFVector){};
     
-    struct Vector vecPt = initalMomentumScrollPointVectorWithGestureVector(initGestureVec);
-    struct Vector vec = scrollVectorWithScrollPointVector(vecPt);
+    MFVector vecPt = initalMomentumScrollPointVectorWithGestureVector(initGestureVec);
+    MFVector vec = scrollVectorWithScrollPointVector(vecPt);
     double magPt = magnitudeOfVector(vecPt);
     CGMomentumScrollPhase ph = kCGMomentumScrollPhaseBegin;
     
@@ -218,7 +215,7 @@ static void startPostingMomentumScrollEventsWithInitialGestureVector(struct Vect
     
 }
 
-struct Vector momentumScrollPointVectorWithPreviousVector(struct Vector velocity, double dragCoeff, double dragExp, double timeDelta) {
+MFVector momentumScrollPointVectorWithPreviousVector(MFVector velocity, double dragCoeff, double dragExp, double timeDelta) {
     
     // TODO: Testing - remove this
     
@@ -231,48 +228,49 @@ struct Vector momentumScrollPointVectorWithPreviousVector(struct Vector velocity
     double b = pow(a, dragExp);
     double dragMagnitude = b * dragCoeff;
     
-    struct Vector unitVec = normalizedVector(velocity);
-    struct Vector dragForce = scaledVector(unitVec, dragMagnitude);
+    MFVector unitVec = normalizedVector(velocity);
+    MFVector dragForce = scaledVector(unitVec, dragMagnitude);
     dragForce = scaledVector(dragForce, -1);
     
-    struct Vector velocityDelta = scaledVector(dragForce, timeDelta);
+    MFVector velocityDelta = scaledVector(dragForce, timeDelta);
     
-    struct Vector newVelocity = addedVectors(velocity, velocityDelta);
+    MFVector newVelocity = addedVectors(velocity, velocityDelta);
     
     double dp = dotProduct(velocity, newVelocity);
     if (dp < 0) { // Vector has changed direction (crossed zero)
-        newVelocity = (const struct Vector){}; // Set to zero
+        newVelocity = (const MFVector){}; // Set to zero
     }
     return newVelocity;
 }
-static struct Vector scrollVectorWithScrollPointVector(struct Vector vec) {
+static MFVector scrollVectorWithScrollPointVector(MFVector vec) {
     double magIn = magnitudeOfVector(vec);
     if (magIn == 0) { // To prevent division by 0 from producing nan
-        return (struct Vector){};
+        return (MFVector){};
     }
     double magOut = 0.1 * (magIn-1);
     double scale = magOut / magIn;
-    struct Vector vecOut;
+    MFVector vecOut;
     vecOut.x = signof(vec.x) * floor(fabs(vec.x * scale));
     vecOut.y = signof(vec.y) * floor(fabs(vec.y * scale));
     return vecOut;
 }
-static struct Vector scrollPointVectorWithGestureVector(struct Vector vec) {
+static MFVector scrollPointVectorWithGestureVector(MFVector vec) {
     double magIn = magnitudeOfVector(vec);
     if (magIn == 0) { // To prevent division by 0 from producing nan
-        return (struct Vector){};
+        return (MFVector){};
     }
     double magOut = 0.01 * pow(magIn, 2) + 0.3 * magIn; // Got these values through curve fitting
 //    magOut *= 4; // This makes it feel better on mouse
+    magOut *= 2;
     double scale = magOut / magIn;
-    struct Vector vecOut;
+    MFVector vecOut;
     vecOut.x = round(vec.x * scale);
     vecOut.y = round(vec.y * scale);
     return vecOut;
 }
 
-static struct Vector initalMomentumScrollPointVectorWithGestureVector(struct Vector vec) {
-    struct Vector vecScale = scaledVector(vec, 2.2); // This is probably not very accurate to real events, as I didn't test this at all.
+static MFVector initalMomentumScrollPointVectorWithGestureVector(MFVector vec) {
+    MFVector vecScale = scaledVector(vec, 2.2); // This is probably not very accurate to real events, as I didn't test this at all.
     return scrollPointVectorWithGestureVector(vecScale);
 }
 
@@ -285,25 +283,25 @@ static struct Vector initalMomentumScrollPointVectorWithGestureVector(struct Vec
 //    return round(0.01 * pow(d,2) + 0.3 * d);
 //}
 
-static double magnitudeOfVector(struct Vector vec) {
+static double magnitudeOfVector(MFVector vec) {
     return sqrt(pow(vec.x, 2) + pow(vec.y, 2));
 }
-struct Vector normalizedVector(struct Vector vec) {
+MFVector normalizedVector(MFVector vec) {
     return scaledVector(vec, 1.0/magnitudeOfVector(vec));
 }
-struct Vector scaledVector(struct Vector vec, double scalar) {
-    struct Vector outVec;
+MFVector scaledVector(MFVector vec, double scalar) {
+    MFVector outVec;
     outVec.x = vec.x * scalar;
     outVec.y = vec.y * scalar;
     return outVec;
 }
-struct Vector addedVectors(struct Vector vec1, struct Vector vec2) {
-    struct Vector outVec;
+MFVector addedVectors(MFVector vec1, MFVector vec2) {
+    MFVector outVec;
     outVec.x = vec1.x + vec2.x;
     outVec.y = vec1.y + vec2.y;
     return outVec;
 }
-double dotProduct(struct Vector vec1, struct Vector vec2) {
+double dotProduct(MFVector vec1, MFVector vec2) {
     return vec1.x * vec2.x + vec1.y * vec2.y;
 }
 
