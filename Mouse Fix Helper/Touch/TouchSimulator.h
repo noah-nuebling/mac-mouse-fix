@@ -20,7 +20,6 @@ typedef enum {
     kMFDockSwipeTypeHorizontal = 1, // Swipe between pages
     kMFDockSwipeTypeVertical = 2, // Mission Control & App Expose
     kMFDockSwipeTypePinch = 3, // Show Desktop & Launchpad
-    
 } MFDockSwipeType;
 
 typedef struct __MFVector {

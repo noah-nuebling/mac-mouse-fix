@@ -102,6 +102,7 @@ static MFVector _lastInputGestureVector = { .x = 0, .y = 0 };
     CGEventSetDoubleValueField(e22, 41, valFor41);
     CGEventSetDoubleValueField(e22, 55, 22); // 22 -> NSEventTypeScrollWheel // Setting field 55 is the same as using CGEventSetType(), I'm not sure if that has weird side-effects though, so I'd rather do it this way.
     CGEventSetDoubleValueField(e22, 88, 1); // magic?
+    
     // Set dynamic fields
     
     // Scroll deltas
@@ -218,12 +219,7 @@ static void startPostingMomentumScrollEventsWithInitialGestureVector(MFVector in
 
 static MFVector momentumScrollPointVectorWithPreviousVector(MFVector velocity, double dragCoeff, double dragExp, double timeDelta) {
     
-    // TODO: Testing - remove this
-    
-//    dragExp = 1.0; dragCoeff = 5; // The end of the animation feels realistic
-    //    dragExp = 0.65; dragCoeff = 10;
-    
-    dragExp = 0.8; dragCoeff = 8; // Easier to scroll far, kinda nice on a mouse, end still pretty realistic
+    dragExp = 0.8; dragCoeff = 8; // Easier to scroll far, kinda nice on a mouse, end still pretty realistic // Got these values by just seeing what feels good
     
     double a = magnitudeOfVector(velocity);
     double b = pow(a, dragExp);
@@ -248,7 +244,7 @@ static MFVector scrollVectorWithScrollPointVector(MFVector vec) {
     if (magIn == 0) { // To prevent division by 0 from producing nan
         return (MFVector){};
     }
-    double magOut = 0.1 * (magIn-1);
+    double magOut = 0.1 * (magIn-1); // Approximation from looking at real trackpad events
     double scale = magOut / magIn;
     MFVector vecOut;
     vecOut.x = signof(vec.x) * floor(fabs(vec.x * scale));
@@ -261,8 +257,7 @@ static MFVector scrollPointVectorWithGestureVector(MFVector vec) {
         return (MFVector){};
     }
     double magOut = 0.01 * pow(magIn, 2) + 0.3 * magIn; // Got these values through curve fitting
-//    magOut *= 4; // This makes it feel better on mouse
-    magOut *= 2;
+    magOut *= 2; // This makes it feel better on mouse
     double scale = magOut / magIn;
     MFVector vecOut;
     vecOut.x = round(vec.x * scale);
