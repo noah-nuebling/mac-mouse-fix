@@ -39,7 +39,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="push" title="More..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Zt5-Jw-SMN">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
+                                    <font key="font" metaFont="label" size="13"/>
                                 </buttonCell>
                                 <connections>
                                     <action selector="moreButton:" target="-2" id="jpd-Av-fXJ"/>
@@ -50,7 +50,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="check" title="Enable Mac Mouse Fix" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="G70-nk-4Vw">
                                     <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
+                                    <font key="font" metaFont="label" size="13"/>
                                 </buttonCell>
                                 <connections>
                                     <action selector="enableCheckBox:" target="-2" id="Oco-Bw-9Zw"/>
@@ -71,7 +71,7 @@
 - Command-scroll to zoom</string>
                                             <buttonCell key="cell" type="check" title="Smooth scrolling:" bezelStyle="regularSquare" imagePosition="left" enabled="NO" state="on" inset="2" id="aqu-LA-LU4">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" metaFont="label" size="13"/>
                                             </buttonCell>
                                             <connections>
                                                 <action selector="scrollEnableCheckBox:" target="-2" id="0fW-vn-5K8"/>
@@ -89,7 +89,7 @@
                                             <rect key="frame" x="264" y="70" width="102" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Scrolling speed" id="9F6-l7-3Jh">
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" metaFont="label" size="13"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -117,7 +117,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Invert direction" bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" state="on" inset="2" id="uNi-ZH-WXu">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" metaFont="label" size="13"/>
                                             </buttonCell>
                                             <connections>
                                                 <action selector="UIChanged:" target="-2" id="6go-Qb-A3s"/>
@@ -131,7 +131,7 @@
                                             <rect key="frame" x="117" y="163" width="92" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Middle button:" id="8eH-tB-oJ9">
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" metaFont="label" size="13"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -150,7 +150,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="Middle button click" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="U6a-n1-4au" id="Ks7-4K-rqX">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" metaFont="label" size="13"/>
                                                 <menu key="menu" id="8up-Bb-BCh">
                                                     <items>
                                                         <menuItem title="Middle button click" state="on" toolTip="Leave button behavior unchanged." id="U6a-n1-4au">
@@ -185,7 +185,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="-" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="gLf-sd-t5o" id="Moi-Bx-VlN">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" metaFont="label" size="13"/>
                                                 <menu key="menu" id="FBp-La-D1V">
                                                     <items>
                                                         <menuItem title="-" state="on" toolTip="No action." id="gLf-sd-t5o"/>
@@ -208,7 +208,7 @@
                                             <rect key="frame" x="124" y="118" width="85" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Side buttons:" id="nm0-59-6Va">
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" metaFont="label" size="13"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -227,7 +227,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="Side button click" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="1a7-0y-cIV" id="9Hx-yi-NA0">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" metaFont="label" size="13"/>
                                                 <menu key="menu" id="Ao4-cS-trT">
                                                     <items>
                                                         <menuItem title="Side button click" state="on" toolTip="Leave button behavior unchanged." id="1a7-0y-cIV"/>
@@ -271,7 +271,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="More..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="g2O-5n-bZC">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
+                                    <font key="font" metaFont="label" size="13"/>
                                 </buttonCell>
                                 <connections>
                                     <action selector="moreButton:" target="-2" id="3CI-op-n5G"/>
@@ -282,7 +282,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="check" title="Enable Mac Mouse Fix" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="aXt-SP-74D">
                                     <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
+                                    <font key="font" metaFont="label" size="13"/>
                                 </buttonCell>
                                 <connections>
                                     <action selector="enableCheckBox:" target="-2" id="dhE-le-N6p"/>
@@ -303,7 +303,7 @@
 - Command-scroll to zoom</string>
                                             <buttonCell key="cell" type="check" title="Smooth scrolling:" bezelStyle="regularSquare" imagePosition="left" enabled="NO" state="on" inset="2" id="35I-c2-8E3">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" metaFont="label" size="13"/>
                                             </buttonCell>
                                             <connections>
                                                 <action selector="scrollEnableCheckBox:" target="-2" id="cxP-6X-XDS"/>
@@ -321,7 +321,7 @@
                                             <rect key="frame" x="254" y="70" width="102" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Scrolling speed" id="FdF-1m-fcg">
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" metaFont="label" size="13"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -349,7 +349,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <buttonCell key="cell" type="check" title="Invert direction" bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" state="on" inset="2" id="Zq7-MS-uhv">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" metaFont="label" size="13"/>
                                             </buttonCell>
                                             <connections>
                                                 <action selector="UIChanged:" target="-2" id="YVm-RG-hVA"/>
@@ -364,7 +364,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <clipView key="contentView" id="VkY-Bo-iys">
                                                 <rect key="frame" x="1" y="0.0" width="586" height="131"/>
-                                                <autoresizingMask key="autoresizingMask"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="26" headerView="ye3-vZ-MIi" viewBased="YES" id="Qfw-Ch-jQg">
                                                         <rect key="frame" x="0.0" y="0.0" width="586" height="106"/>
@@ -380,7 +380,7 @@
                                                                     <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                                 </tableHeaderCell>
                                                                 <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" title="Text Cell" id="dXT-Ne-pjh">
-                                                                    <font key="font" metaFont="system"/>
+                                                                    <font key="font" metaFont="label" size="13"/>
                                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
@@ -412,7 +412,7 @@
                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </tableHeaderCell>
                                                                 <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="a9t-5x-SjB">
-                                                                    <font key="font" metaFont="system"/>
+                                                                    <font key="font" metaFont="label" size="13"/>
                                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
@@ -427,7 +427,7 @@
                                                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                                 <popUpButtonCell key="cell" type="push" title="Mission Control" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="wF7-aY-p99" id="hHU-F8-7Fc">
                                                                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                                                    <font key="font" metaFont="system"/>
+                                                                                    <font key="font" metaFont="label" size="13"/>
                                                                                     <menu key="menu" id="sfO-3y-bKh">
                                                                                         <items>
                                                                                             <menuItem title="Mission Control" state="on" id="wF7-aY-p99"/>
@@ -461,7 +461,7 @@
                                                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                                 <popUpButtonCell key="cell" type="push" title="Mission Control" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="OXR-Gu-AhW" id="i7H-L0-K6H">
                                                                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                                                    <font key="font" metaFont="system"/>
+                                                                                    <font key="font" metaFont="label" size="13"/>
                                                                                     <menu key="menu" id="xLo-3T-KeY">
                                                                                         <items>
                                                                                             <menuItem title="Mission Control" state="on" id="OXR-Gu-AhW"/>
@@ -520,14 +520,14 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSAddTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="Uy8-Yh-Pza">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" metaFont="label" size="13"/>
                                             </buttonCell>
                                         </button>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3w1-E8-RuO">
                                             <rect key="frame" x="99" y="326" width="464" height="16"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Put the mouse pointer over this field and click the button you want to remap" id="JbZ-EU-JZ2">
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" metaFont="label" size="13"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>

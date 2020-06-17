@@ -9,10 +9,12 @@
 
 #import "MFDevice.h"
 #import "ModifyingActions.h"
+#import "GestureScrollSimulator.h"
 #import "DeviceManager.h"
 #import "ButtonInputReceiver_CG.h"
 #import "RemapUtility.h"
 #import "CFRuntime.h"
+
 
 @implementation MFDevice
 
@@ -99,28 +101,43 @@ typedef struct __IOHIDDevice
     
 //    return;
     
+    if (B) {
+        NSLog(@"Seize device");
+    } else {
+        NSLog(@"Unseize device");
+    }
+    
     if (_isSeized == B) {
         return;
     }
     
     if (self.isSeized) {
-        [self closeWithOption:kIOHIDOptionsTypeSeizeDevice];
+        [self closeWithOption:0];
     } else {
         [self closeWithOption:0];
     }
+  
+    // Thought this might help with the doodlebug. But it doesn't
+//    mach_timespec_t timeout = {
+//        .tv_sec = 5,
+//    };
+//    IOServiceWaitQuiet(self.IOHIDDevice->service, &timeout);
     
     if (B) {
         [self openWithOption:kIOHIDOptionsTypeSeizeDevice];
+        // This seems to lead to a weird error where the CGEventTapCallback doesn't react opening the device unseized
     } else {
         [self openWithOption:0];
     }
     
     _isSeized = B;
     
-    registerInputCallbackForDevice(self);
+//    registerInputCallbackForDevice(self);
 }
 
 - (void)receiveOnlyButtonInput {
+    
+    NSLog(@"Receive only button input");
     
     [self seize:NO];
     
@@ -132,6 +149,8 @@ typedef struct __IOHIDDevice
 
 
 - (void)receiveButtonAndAxisInputWithSeize:(BOOL)seize {
+    
+    NSLog(@"Receive button and axis input");
     
     [self seize:seize];
     
@@ -169,8 +188,6 @@ static int64_t _previousDeltaY;
 
 static void handleInput(void *context, IOReturn result, void *sender, IOHIDValueRef value) {
     
-//    NSLog(@"HID Input");
-    
     MFDevice *sendingDev = (__bridge MFDevice *)context;
     
     IOHIDElementRef elem = IOHIDValueGetElement(value);
@@ -180,39 +197,62 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
     BOOL isButton = usagePage == 9;
     
     if (isButton) {
+        
+        NSLog(@"HID Input: Button");
+        
         ButtonInputReceiver_CG.deviceWhichCausedThisButtonInput = sendingDev;
-
+        
+//        while (!ButtonInputReceiver_CG.deviceWhichCausedThisButtonInputHasBeenProcessed) {
+//            [NSThread sleepForTimeInterval:0.0001];
+//        }
+        
+        CGEventType mouseEventType = kCGEventNull;
+        int32_t button = usage - 1;
+        int64_t pressure = IOHIDValueGetIntegerValue(value);
+        
+        // Insert artificial CGEvents for button input, if the device is seized
+        
         if (sendingDev.isSeized) {
 
             NSLog(@"BUTTON INP COMES FORM SEIZED");
-
-            CGEventType mouseType = kCGEventNull;
-            int32_t button = usage - 1;
-
-            if (IOHIDValueGetIntegerValue(value) == 0) {
+            
+            if (pressure == 0) {
                 if (button == 0) {
-                    mouseType = kCGEventLeftMouseUp;
+                    mouseEventType = kCGEventLeftMouseUp;
                 } else if (button == 1) {
-                    mouseType = kCGEventRightMouseUp;
+                    mouseEventType = kCGEventRightMouseUp;
                 } else {
-                    mouseType = kCGEventOtherMouseUp;
+                    mouseEventType = kCGEventOtherMouseUp;
                 }
             } else {
                 if (button == 0) {
-                    mouseType = kCGEventLeftMouseDown;
+                    mouseEventType = kCGEventLeftMouseDown;
                 } else if (button == 1) {
-                    mouseType = kCGEventRightMouseDown;
+                    mouseEventType = kCGEventRightMouseDown;
                 } else {
-                    mouseType = kCGEventOtherMouseDown;
+                    mouseEventType = kCGEventOtherMouseDown;
                 }
             }
 
 //            CGEventRef locEvent = CGEventCreate(NULL);
-            CGEventRef fakeEvent = CGEventCreateMouseEvent(NULL, mouseType, CGEventGetLocation(CGEventCreate(NULL)), button);
+            CGEventRef fakeEvent = CGEventCreateMouseEvent(NULL, mouseEventType, CGEventGetLocation(CGEventCreate(NULL)), button);
 //            CFRetain(fakeEvent);
             [ButtonInputReceiver_CG insertFakeEvent:fakeEvent];
             CFRelease(fakeEvent);
 //            CFRelease(locEvent);
+            
+        }
+        
+        // Control modified actions
+        
+        [GestureScrollSimulator breakMomentumScroll]; // Momentum scroll is started, when when a modified drag of type "twoFingerSwipe" is deactivated. We break it on any button input.
+        if (pressure == 0) {
+            MFActivationCondition *falsifiedCondition = &((MFActivationCondition) {
+                .activatingDevice = sendingDev,
+                .type = kMFActivationConditionTypeMouseButtonPressed,
+                .value = button + 1,
+            });
+            [ModifyingActions deactivateAllInputModificationWithActivationCondition:falsifiedCondition];
         }
         
         return;
@@ -220,7 +260,6 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
     
     BOOL isXAxis = usagePage == kHIDPage_GenericDesktop && usage == kHIDUsage_GD_X;
     BOOL isYAxis = usagePage == kHIDPage_GenericDesktop && usage == kHIDUsage_GD_Y;
-    
     
     if (isXAxis || isYAxis) {
         
@@ -232,9 +271,15 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
             int64_t currentDeltaX = IOHIDValueGetIntegerValue(value);
             
             if (currentDeltaX != 0 || _previousDeltaY != 0) {
+                
                 [ModifyingActions handleMouseInputWithDeltaX:currentDeltaX deltaY:_previousDeltaY];
+                
+//                dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{ // Multithreading in hopes of preventing some issues which I assume are caused by the hid callback (this function) being processed after the CG callback when the system is under load sometimes. Not sure if the multithreading helps though.
+//                    [ModifyingActions handleMouseInputWithDeltaX:currentDeltaX deltaY:_previousDeltaY];
+//                });
             }
         }
+        
         return;
     }
 }

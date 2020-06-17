@@ -30,16 +30,16 @@ typedef enum {
     kMFAxisVertical,
 } MFAxis;
 
-struct ActivationCondition {
-    IOHIDDeviceRef activatingDevice;
+typedef struct __MFActivationCondition {
+    MFDevice *activatingDevice;
     MFActivationConditionType type;
     int64_t value;
-};
+} MFActivationCondition;
 
 + (void)initializeModifiedInputsWithActionArray:(NSArray *)actionArray
-                         withActivationCondition:(struct ActivationCondition)activationCondition;
+                         withActivationCondition:(MFActivationCondition *)activationCondition;
 
-+ (void)deactivateAllInputModificationConditionedOnButton:(int64_t)button;
++ (void)deactivateAllInputModificationWithActivationCondition:(MFActivationCondition *)condition;
 
 + (BOOL)anyModifiedInputIsInUseForButton:(int64_t)button;
 

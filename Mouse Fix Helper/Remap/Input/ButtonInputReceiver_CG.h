@@ -46,5 +46,6 @@ typedef enum {
 + (void)insertFakeEvent:(CGEventRef)event;
 
 + (void)setDeviceWhichCausedThisButtonInput:(MFDevice *)dev;
++ (BOOL)deviceWhichCausedThisButtonInputHasBeenProcessed;
 
 @end

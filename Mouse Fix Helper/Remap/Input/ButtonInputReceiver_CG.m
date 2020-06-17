@@ -20,12 +20,12 @@
 
 @implementation ButtonInputReceiver_CG
 
-CGEventSourceRef eventSource;
-CFMachPortRef eventTap;
+static CGEventSourceRef _eventSource;
+static CFMachPortRef _eventTap;
 
 
 + (void)load_Manual {
-    eventSource = CGEventSourceCreate(kCGEventSourceStatePrivate);
+    _eventSource = CGEventSourceCreate(kCGEventSourceStatePrivate);
     registerInputCallback();
 }
 
@@ -38,29 +38,30 @@ CFMachPortRef eventTap;
         [ButtonInputReceiver_CG stop];
     }
 }
-/// we don't start/stop the IOHIDDeviceRegisterInputValueCallback.
-/// I think new devices should be attached to the callback by DeviceManager if a relevant device is attached to the computer
-/// I think there is no cleanup we need to do if a device is detached from the computer.
+
 + (void)start {
     _deviceWhichCausedThisButtonInput = nil; // Not sure if necessary
-    CGEventTapEnable(eventTap, true);
+    CGEventTapEnable(_eventTap, true);
 }
 + (void)stop {
-    CGEventTapEnable(eventTap, false);
+    CGEventTapEnable(_eventTap, false);
 }
 
 static void registerInputCallback() {
     // Register event Tap Callback
     CGEventMask mask = CGEventMaskBit(kCGEventOtherMouseDown) | CGEventMaskBit(kCGEventOtherMouseUp);
 
-    eventTap = CGEventTapCreate(kCGHIDEventTap, kCGTailAppendEventTap, kCGEventTapOptionDefault, mask, handleInput, NULL);
-    CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, eventTap, 0);
+    _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGTailAppendEventTap, kCGEventTapOptionDefault, mask, handleInput, NULL);
+    CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _eventTap, 0);
     CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopDefaultMode);
     
     CFRelease(runLoopSource);
 }
 
 + (void)insertFakeEvent:(CGEventRef)event {
+    
+    NSLog(@"Inserting event");
+    
     CGEventRef ret = handleInput(0,0,event,nil);
     if (ret) {
         CGEventPost(kCGSessionEventTap, ret);
@@ -75,7 +76,20 @@ static MFDevice *_deviceWhichCausedThisButtonInput;
 + (void)setDeviceWhichCausedThisButtonInput:(MFDevice *)dev {
     _deviceWhichCausedThisButtonInput = dev;
 }
++ (BOOL)deviceWhichCausedThisButtonInputHasBeenProcessed {
+    return _deviceWhichCausedThisButtonInput == nil;
+}
+
+static int32_t _debug_entryCtr = 0;
+
 CGEventRef handleInput(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
+    
+    _debug_entryCtr += 1;
+    
+    if (_debug_entryCtr >= 2) {
+        
+    }
+    
     
     NSLog(@"CG Button input");
     NSLog(@"Incoming event: %@", [NSEvent eventWithCGEvent:event]); // TODO: Sometimes events seem to be deallocated when reaching this point, causing a crash. This is likely to do with inserting fake events.

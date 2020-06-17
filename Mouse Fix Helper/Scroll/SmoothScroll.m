@@ -22,6 +22,7 @@
 #import "DeviceManager.h"
 #import "Utility_HelperApp.h"
 #import "TouchSimulator.h"
+#import "GestureScrollSimulator.h"
 
 @implementation SmoothScroll
 
@@ -310,59 +311,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     if (ScrollModifiers.magnificationScrolling) {
         [ScrollModifiers handleMagnificationScrollWithAmount:_pxToScrollThisFrame/800.0];
     } else {
-        CGEventRef scrollEvent = CGEventCreateScrollWheelEvent(ScrollControl.eventSource, kCGScrollEventUnitPixel, 1, 0);
-        // CGEventSourceSetPixelsPerLine(_eventSource, 1);
-        // it might be a cool idea to diable scroll acceleration and then try to make the scroll events line based (kCGScrollEventUnitPixel)
-        
-        // Setting event phases
-        
-//        if (_scrollPhase >= kMFPhaseMomentum) {
-//            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, _scrollPhase >> 1); // shifting bits so that values match up with appropriate NSEventPhase values.
-//        } else {
-//            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, _scrollPhase);
-//        }
-        
-        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 0);
-        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase, 0);
-        
-        // Set scrollDelta
-        
-        if (ScrollModifiers.horizontalScrolling == FALSE) {
-            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis1, _pxToScrollThisFrame / 8);
-            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis1, _pxToScrollThisFrame);
-        } else {
-            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis2, _pxToScrollThisFrame / 8);
-            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis2, _pxToScrollThisFrame);
-        }
-        
-        // Post event
-        
-        CGEventPost(kCGSessionEventTap, scrollEvent);
-        CFRelease(scrollEvent);
-        
-    ////     set phases
-    ////         the native "scrollPhase" is roughly equivalent to my "wheelPhase"
-    //
-    //    CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase, kCGMomentumScrollPhaseNone);
-    //
-    //
-    //
-    //    NSLog(@"intern scrollphase: %d", _scrollPhase);
-    //    if (_scrollPhase == kMFWheelPhase) {
-    //        if (_previousPhase == kMFWheelPhase) {
-    //                CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 2);
-    //        } else {
-    //                CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 1);
-    //        }
-    //    }
-    //    if (_scrollPhase == kMFMomentumPhase) {
-    //        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 2);
-    //    }
-    //
-    ////    NSLog(@"scrollPhase: %lld", CGEventGetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase));
-    ////    NSLog(@"momentumPhase: %lld \n", CGEventGetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase));
-    //
-        
+        postPointBasedScrollEventWithDelta(_pxToScrollThisFrame, ScrollModifiers.horizontalScrolling);
     }
     
 #pragma mark Other
@@ -380,6 +329,63 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 
 
 #pragma mark - Utility functions
+
+static void postPointBasedScrollEventWithDelta(int32_t delta, BOOL horizontal) {
+    
+    CGEventRef scrollEvent = CGEventCreateScrollWheelEvent(NULL, kCGScrollEventUnitPixel, 1, 0);
+            // CGEventSourceSetPixelsPerLine(_eventSource, 1);
+            // it might be a cool idea to diable scroll acceleration and then try to make the scroll events line based (kCGScrollEventUnitPixel)
+            
+            // Setting event phases
+            
+    //        if (_scrollPhase >= kMFPhaseMomentum) {
+    //            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, _scrollPhase >> 1); // shifting bits so that values match up with appropriate NSEventPhase values.
+    //        } else {
+    //            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, _scrollPhase);
+    //        }
+            
+            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 0);
+            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase, 0);
+            
+            // Set scrollDelta
+            
+            if (horizontal == FALSE) {
+                CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis1, delta / 8);
+                CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis1, delta);
+            } else {
+                CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis2, delta / 8);
+                CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis2, delta);
+            }
+            
+            // Post event
+            
+            CGEventPost(kCGSessionEventTap, scrollEvent);
+            CFRelease(scrollEvent);
+            
+        ////     set phases
+        ////         the native "scrollPhase" is roughly equivalent to my "wheelPhase"
+        //
+        //    CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase, kCGMomentumScrollPhaseNone);
+        //
+        //
+        //
+        //    NSLog(@"intern scrollphase: %d", _scrollPhase);
+        //    if (_scrollPhase == kMFWheelPhase) {
+        //        if (_previousPhase == kMFWheelPhase) {
+        //                CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 2);
+        //        } else {
+        //                CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 1);
+        //        }
+        //    }
+        //    if (_scrollPhase == kMFMomentumPhase) {
+        //        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 2);
+        //    }
+        //
+        ////    NSLog(@"scrollPhase: %lld", CGEventGetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase));
+        ////    NSLog(@"momentumPhase: %lld \n", CGEventGetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase));
+        //
+}
+
 
 #pragma mark display link
 
@@ -422,7 +428,7 @@ static void setDisplayLinkToDisplayUnderMousePointer(CGEventRef event) {
             NSLog(@"more than one display for current mouse position");
         }
     } else if (newNumberOfDisplaysUnderMousePointer == 0) {
-        NSException *e = [NSException exceptionWithName:NSInternalInconsistencyException reason:@"there are 0 diplays under the mouse pointer" userInfo:NULL];
+        NSException *e = [NSException exceptionWithName:NSInternalInconsistencyException reason:@"There are 0 diplays under the mouse pointer" userInfo:NULL];
         @throw e;
     }
 }

@@ -22,7 +22,7 @@ struct ModifiedDragState {
     NSString * type;
 
     MFModifiedInputActivationState activationState;
-    struct ActivationCondition activationCondition;
+    MFActivationCondition activationCondition;
     
     CGPoint origin;
     MFVector originOffset;
@@ -50,7 +50,7 @@ static struct ModifiedDragState _modifiedDrag;
 //        CFRelease(runLoopSource);
 //        CGEventTapEnable(_modifiedDrag.eventTap, false);
 //    }
-    _modifiedDrag.usageThreshold = 50;
+    _modifiedDrag.usageThreshold = 32;
 }
 
 + (void)handleMouseInputWithDeltaX:(int64_t)deltaX deltaY:(int64_t)deltaY {
@@ -74,7 +74,7 @@ static struct ModifiedDragState _modifiedDrag;
             // Activate the modified drag if the mouse has been moved far enough from the point where the drag started
             if (MAX(fabs(ofs.x), fabs(ofs.y)) > _modifiedDrag.usageThreshold) {
                 
-                MFDevice *dev = (__bridge MFDevice *)_modifiedDrag.activationCondition.activatingDevice;
+                MFDevice *dev = _modifiedDrag.activationCondition.activatingDevice;
                 [dev receiveButtonAndAxisInputWithSeize:YES];
                 
                 if (fabs(ofs.x) < fabs(ofs.y)) {
@@ -161,23 +161,24 @@ static struct ModifiedDragState _modifiedDrag;
 //    return event;
 }
 
-+ (void)initializeModifiedInputsWithActionArray:(NSArray *)actionArray withActivationCondition:(struct ActivationCondition)activationCondition {
++ (void)initializeModifiedInputsWithActionArray:(NSArray *)actionArray withActivationCondition:(MFActivationCondition *)activationCondition {
     for (NSDictionary *actionDict in actionArray) {
         NSString *type = actionDict[@"type"];
         NSString *subtype = actionDict[@"value"];
         
         if ([type isEqualToString:@"modifiedDrag"]) {
+            
             _modifiedDrag.activationState = kMFModifiedInputActivationStateInitialized;
             _modifiedDrag.type = subtype;
-            _modifiedDrag.activationCondition = activationCondition;
+            _modifiedDrag.activationCondition = *activationCondition;
             _modifiedDrag.origin = CGEventGetLocation(CGEventCreate(NULL));
             _modifiedDrag.originOffset = (MFVector){};
             
             
 //            CGEventTapEnable(_modifiedDrag.eventTap, true);
-            MFDevice *dev = (__bridge MFDevice *)(_modifiedDrag.activationCondition.activatingDevice);
+            MFDevice *dev = _modifiedDrag.activationCondition.activatingDevice;
             
-            [dev receiveButtonAndAxisInputWithSeize:YES];
+            [dev receiveButtonAndAxisInputWithSeize:NO];
             
             
             
@@ -190,9 +191,11 @@ static struct ModifiedDragState _modifiedDrag;
     }
 }
 
-+ (void)deactivateAllInputModificationConditionedOnButton:(int64_t)button {
++ (void)deactivateAllInputModificationWithActivationCondition:(MFActivationCondition *)falsifiedCondition {
     if (_modifiedDrag.activationCondition.type == kMFActivationConditionTypeMouseButtonPressed
-        && _modifiedDrag.activationCondition.value == button) {
+        && _modifiedDrag.activationCondition.value == falsifiedCondition->value
+        && _modifiedDrag.activationCondition.activatingDevice == falsifiedCondition->activatingDevice)
+    {
         [self deactivateModifiedDrag];
     }
 //    if (_modifiedScroll.activationCondition.type == kMFActivationConditionTypeMouseButtonPressed
@@ -218,7 +221,7 @@ static struct ModifiedDragState _modifiedDrag;
         }
     }
 //    CGEventTapEnable(_modifiedDrag.eventTap, false);
-    MFDevice *dev = (__bridge MFDevice *)_modifiedDrag.activationCondition.activatingDevice;
+    MFDevice *dev = _modifiedDrag.activationCondition.activatingDevice;
     [dev receiveOnlyButtonInput];
     _modifiedDrag.activationState = kMFModifiedInputActivationStateNone;
     

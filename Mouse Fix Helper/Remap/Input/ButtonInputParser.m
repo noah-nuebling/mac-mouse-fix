@@ -89,6 +89,25 @@ NSArray *_testRemapsUI;
                     @"click": @[
                             @{
                                 @"type": @"symbolicHotkey",
+                                @"value": @(32),
+                            }
+                    ],
+                    @"hold": @[
+                            @{
+                                @"type": @"smartZoom",
+                            }
+                    ],
+                },
+                @(2): @{                                            // Key: level
+//                    @"modifying": @[
+//                            @{
+//                                @"type": @"modifiedDrag",
+//                                @"value": @"twoFingerSwipe",
+//                            }
+//                    ],
+                    @"click": @[
+                            @{
+                                @"type": @"symbolicHotkey",
                                 @"value": @(36),
                             }
                     ],
@@ -258,13 +277,6 @@ static int64_t _clickLevel;
 
 + (MFEventPassThroughEvaluation)handleActionTriggerWithButton:(int64_t)button triggerType:(MFActionTriggerType)triggerType level:(int64_t)level {
     
-    [GestureScrollSimulator breakMomentumScroll]; // Momentum scroll should be started, if when a modified drag of type "twoFingerSwipe" is deactivated. Not sure when it should be stopped. But just doing it here for now should work fine.
-    
-    if (triggerType == kMFActionTriggerTypeButtonUp) {
-        [ModifyingActions deactivateAllInputModificationConditionedOnButton:button];
-    }
-    
-    
     // This is the return value of the function. It determines, whether the event which caused this function call should be removed from the event stream or not. The return is only used when this function is called by `sendActionTriggersWithInputButton:trigger:`, which itself is called as a direct result of device input. So it's only used when the triggerType is `kMFActionTriggerTypeButtonDown` or `kMFActionTriggerTypeButtonUp`
     MFEventPassThroughEvaluation passThroughEval = kMFEventPassThroughRefusal;
     
@@ -291,15 +303,18 @@ static int64_t _clickLevel;
     BOOL triggerIsValid = NO;
     
     if (_buttonFromLastButtonDownEvent != button) { // This should only ever happen if the trigger is kMFActionTriggerTypeButtonUp
-        triggerIsValid = NO;
+        triggerIsValid = NO; // TODO: Build sth similar for when a different device inputs a value
     } else if (triggerType == kMFActionTriggerTypeButtonDown) {
         triggerIsValid = YES;
     } else if (triggerType == kMFActionTriggerTypeButtonUp) {
         
-        BOOL a = _holdTimer.isValid
-        || ![self holdActionExistsForButton:button clickLevel:_clickLevel remapDict:remapDict];
-        BOOL b = ![ModifyingActions anyModifiedInputIsInUseForButton:button]
-        || ![self modifyingActionExistsForButton:button clickLevel:_clickLevel remapDict:remapDict];
+        BOOL a1 = [self holdActionExistsForButton:button clickLevel:_clickLevel remapDict:remapDict];
+        BOOL a2 = _holdTimer.isValid;
+        BOOL a = !a1 || a2;
+        BOOL b1 = [self modifyingActionExistsForButton:button clickLevel:_clickLevel remapDict:remapDict];
+        BOOL b2 = [ModifyingActions anyModifiedInputIsInUseForButton:button];
+        BOOL b = !b1 || !b2;
+        
         if (a && b) {
             triggerIsValid = YES;
         }
@@ -370,23 +385,27 @@ static int64_t _clickLevel;
     
     if (triggerType == targetClickTriggerForOneShotActionArray) {
         NSArray *OneShotActionArrayForClickTrigger = remapDict[@(button)][@(level)][@"click"];
-        [self reset]; // I'm not sure about the order of statements here. But it probably doesn't matter.
-        [OneShotActions handleActionArray:OneShotActionArrayForClickTrigger];
+        if (OneShotActionArrayForClickTrigger) {
+            [self reset];
+            [OneShotActions handleActionArray:OneShotActionArrayForClickTrigger];
+        }
     }
     if (triggerType == kMFActionTriggerTypeHoldTimerExpired) {
         NSArray *OneShotActionArrayForHoldTrigger = remapDict[@(button)][@(level)][@"hold"];
-        [self reset];
-        [OneShotActions handleActionArray:OneShotActionArrayForHoldTrigger];
+        if (OneShotActionArrayForHoldTrigger) {
+            [self reset];
+            [OneShotActions handleActionArray:OneShotActionArrayForHoldTrigger];
+        }
     }
     if (triggerType == kMFActionTriggerTypeButtonDown) {
         NSArray *modifyingActionArrayForInput = remapDict[@(button)][@(level)][@"modifying"];
-        struct ActivationCondition ac = {
+        MFActivationCondition ac = {
             .type = kMFActivationConditionTypeMouseButtonPressed,
             .value = _buttonFromLastButtonDownEvent, // Could also use local `button` variable I think
-            .activatingDevice = (__bridge IOHIDDeviceRef _Nonnull)(_deviceFromLastButtonDownEvent),
+            .activatingDevice = _deviceFromLastButtonDownEvent,
         };
         [ModifyingActions initializeModifiedInputsWithActionArray:modifyingActionArrayForInput
-                                           withActivationCondition:ac]; // ??? We only activate modified inputs, they will deactivate themselves once the activation condition becomes false
+                                          withActivationCondition:&ac]; // ??? We only activate modified inputs, they will deactivate themselves once the activation condition becomes false
     }
     
     return passThroughEval;

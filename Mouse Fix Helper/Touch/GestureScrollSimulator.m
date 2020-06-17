@@ -9,6 +9,7 @@
 
 #import "GestureScrollSimulator.h"
 #import <QuartzCore/QuartzCore.h>
+#import <Cocoa/Cocoa.h>
 #import "TouchSimulator.h"
 #import "Utility_HelperApp.h"
 
@@ -18,7 +19,7 @@ static MFVector _lastInputGestureVector = { .x = 0, .y = 0 };
 
 /**
  Post scroll events that behave as if they are coming from an Apple Trackpad or Magic Mouse.
- This function is a wrapper for `postGestureScrollEventWithGestureDeltaX:deltaY:phase:momentumPhase:scrollDeltaConversionFunction:scrollPointDeltaConversionFunction:`
+ This function is a wrapper for `postGestureScrollEventWithGestureVector:scrollVector:scrollVectorPoint:phase:momentumPhase:`
 
  Scrolling will continue automatically but get slower over time after the function has been called with phase kIOHIDEventPhaseEnded.
  
@@ -52,6 +53,7 @@ static MFVector _lastInputGestureVector = { .x = 0, .y = 0 };
                                                 phase:phase
                                         momentumPhase:kCGMomentumScrollPhaseNone];
     } else {
+                    NSLog(@"Last gesture vec: %f %f", _lastInputGestureVector.x, _lastInputGestureVector.y);
         [self postGestureScrollEventWithGestureVector:(MFVector){}
                                          scrollVector:(MFVector){}
                                     scrollVectorPoint:(MFVector){}
@@ -69,15 +71,14 @@ static MFVector _lastInputGestureVector = { .x = 0, .y = 0 };
 /// This allows for swiping between pages in apps like Safari or Preview, and it also makes overscroll and inertial scrolling work.
 /// Phases
 ///     1. kIOHIDEventPhaseMayBegin - First event. Deltas should be 0.
-///     2. kIOHIDEventPhaseBegan - Second event. At least one delta should be non-0.
-///     4. kIOHIDEventPhaseChanged - All events in between. At least one delta should be non-0.
+///     2. kIOHIDEventPhaseBegan - Second event. At least one of the two deltas should be non-0.
+///     4. kIOHIDEventPhaseChanged - All events in between. At least one of the two deltas should be non-0.
 ///     5. kIOHIDEventPhaseEnded - Last event before momentum phase. Deltas should be 0.
-///       - If you stop sending events at this point scrolling will continue in certain apps like Xcode, but get slower with time until it stops. The initial speed and direction of this "automatic momentum phase" seems to be based on the last kIOHIDEventPhaseChanged event which contained at least one non-zero delta.
+///       - If you stop sending events at this point, scrolling will continue in certain apps like Xcode, but get slower with time until it stops. The initial speed and direction of this "automatic momentum phase" seems to be based on the last kIOHIDEventPhaseChanged event which contained at least one non-zero delta.
 ///       - To stop this from happening, either give the last kIOHIDEventPhaseChanged event very small deltas, or send an event with phase kIOHIDEventPhaseUndefined and momentumPhase kCGMomentumScrollPhaseEnd right after this one.
 ///     6. kIOHIDEventPhaseUndefined - Use this phase with non-0 momentumPhase values. (0 being kCGMomentumScrollPhaseNone)
-///         - Creating artificial momentum phase events is largely untestet. Might not work properly
 
-+ (void) postGestureScrollEventWithGestureVector:(MFVector)vecGesture
++ (void)postGestureScrollEventWithGestureVector:(MFVector)vecGesture
                                    scrollVector:(MFVector)vecScroll
                               scrollVectorPoint:(MFVector)vecScrollPoint
                                           phase:(IOHIDEventPhaseBits)phase
@@ -88,7 +89,7 @@ static MFVector _lastInputGestureVector = { .x = 0, .y = 0 };
 //    printf("gesture: x:%f y:%f \nscroll: x:%f y:%f \nscrollPt: x:%f y:%f\n",
 //          vecGesture.x, vecGesture.y, vecScroll.x, vecScroll.y, vecScrollPoint.x, vecScrollPoint.y);
     
-    int valFor41 = 33231;
+    int valFor41 = 33231; // Not sure if this does anything
     
     //
     // Create type 22 event
@@ -98,10 +99,9 @@ static MFVector _lastInputGestureVector = { .x = 0, .y = 0 };
     
     // Set static fields
     
-    CGEventSetDoubleValueField(e22, 41, valFor41); // Prolly don't help
-    CGEventSetDoubleValueField(e22, 55, 22);
+    CGEventSetDoubleValueField(e22, 41, valFor41);
+    CGEventSetDoubleValueField(e22, 55, 22); // 22 -> NSEventTypeScrollWheel // Setting field 55 is the same as using CGEventSetType(), I'm not sure if that has weird side-effects though, so I'd rather do it this way.
     CGEventSetDoubleValueField(e22, 88, 1); // magic?
-    
     // Set dynamic fields
     
     // Scroll deltas
@@ -125,19 +125,19 @@ static MFVector _lastInputGestureVector = { .x = 0, .y = 0 };
     CGEventSetDoubleValueField(e22, 142, (double)weird96copy); // ??This doesn't work
     CGEventSetIntegerValueField(e22, 142, (double)weird96copy);
     
-    //
-    // Create type 29 subtype 6 event
-    //
-    
-    CGEventRef e29 = CGEventCreate(NULL);
-    
     if (momentumPhase == 0) {
+        
+        //
+        // Create type 29 subtype 6 event
+        //
+        
+        CGEventRef e29 = CGEventCreate(NULL);
         
         // Set static fields
         
-        CGEventSetDoubleValueField(e29, 41, valFor41); // Prolly don't help
-        CGEventSetDoubleValueField(e29, 55, 29); // Same as CGEventSetType()
-        CGEventSetDoubleValueField(e29, 110, 6); // Set subtype
+        CGEventSetDoubleValueField(e29, 41, valFor41);
+        CGEventSetDoubleValueField(e29, 55, 29); // 29 -> NSEventTypeGesture // Setting field 55 is the same as using CGEventSetType()
+        CGEventSetDoubleValueField(e29, 110, 6); // Field 110 -> subtype // 6 -> kIOHIDEventTypeScroll
         
         // Set dynamic fields
         
@@ -159,20 +159,21 @@ static MFVector _lastInputGestureVector = { .x = 0, .y = 0 };
 //        CGEventSetLocation(e29, [Utility_HelperApp getCurrentPointerLocation_flipped]);
         CGEventPost(kCGHIDEventTap, e29);
         //    printEvent(e29);
+        CFRelease(e29);
     }
     
     // Post t22s6 events
 //    CGEventSetLocation(e22, [Utility_HelperApp getCurrentPointerLocation_flipped]);
     CGEventPost(kCGHIDEventTap, e22);
     CFRelease(e22);
-    CFRelease(e29);
 }
+
+static bool _momentumScrollIsActive; // Should only be manipulated by `startPostingMomentumScrollEventsWithInitialGestureVector()`
+static bool _breakMomentumScrollFlag; // Should only be manipulated by `breakMomentumScroll`
 
 + (void)breakMomentumScroll {
     _breakMomentumScrollFlag = true;
 }
-static bool _breakMomentumScrollFlag; // Should only be manipulated by `breakMomentumScroll`
-static bool _momentumScrollIsActive; //Should only be manipulated by `startPostingMomentumScrollEventsWithInitialGestureVector()`
 static void startPostingMomentumScrollEventsWithInitialGestureVector(MFVector initGestureVec, CFTimeInterval tick, int thresh, double dragCoeff, double dragExp) {
     
     _breakMomentumScrollFlag = false;
@@ -215,7 +216,7 @@ static void startPostingMomentumScrollEventsWithInitialGestureVector(MFVector in
     
 }
 
-MFVector momentumScrollPointVectorWithPreviousVector(MFVector velocity, double dragCoeff, double dragExp, double timeDelta) {
+static MFVector momentumScrollPointVectorWithPreviousVector(MFVector velocity, double dragCoeff, double dragExp, double timeDelta) {
     
     // TODO: Testing - remove this
     

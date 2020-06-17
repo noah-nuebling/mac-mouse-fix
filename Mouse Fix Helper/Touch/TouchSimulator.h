@@ -28,7 +28,7 @@ typedef struct __MFVector {
     double y;
 } MFVector;
 
-+ (void)postNavigationSwipeEventWithDirection:(TLInfoSwipeDirection)dir;
++ (void)postNavigationSwipeEventWithDirection:(IOHIDSwipeMask)dir;
 
 + (void)postSmartZoomEvent;
 + (void)postRotationEventWithRotation:(double)rotation phase:(IOHIDEventPhaseBits)phase;
