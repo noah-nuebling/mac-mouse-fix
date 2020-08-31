@@ -53,6 +53,8 @@ static void registerInputCallbackForDevice(MFDevice *device) {
     }
 }
 
+// Copied this from `IOHIDDevice.c`
+// Only using this for `closeWithOption:`
 typedef struct __IOHIDDevice
 {
     CFRuntimeBase                   cfBase;   // base CFType information
@@ -84,9 +86,9 @@ typedef struct __IOHIDDevice
 
 // I think the `option` doesn't make any difference when closing a device I think. It definitely doesn't help with the CFData zombie bug
 - (void)closeWithOption:(IOOptionBits)option {
-//    CFRetain(self.IOHIDDevice); // Closing seems to create zombies, which leads to crashes. Retaining doesn't fix it though...
-//    IOReturn ret = IOHIDDeviceClose(self.IOHIDDevice, option);
-    IOReturn ret = (*self.IOHIDDevice->deviceInterface)->close(self.IOHIDDevice->deviceInterface, option); // This is some of what IOHIDDeviceClose() does. Might help with zombies. I got this from `IOHIDDevice.c`. Seems like it fixes the zombies issue!! :D
+//    CFRetain(self.IOHIDDevice); // Retaining doesn't fix it though...
+//    IOReturn ret = IOHIDDeviceClose(self.IOHIDDevice, option); // Closing seems to create zombies, which leads to crashes.
+    IOReturn ret = (*self.IOHIDDevice->deviceInterface)->close(self.IOHIDDevice->deviceInterface, option); // This is some of what IOHIDDeviceClose() does. Might help with zombies. I got this from `IOHIDDevice.c`. Seems like it fixes the zombies issue!! :O
     if (ret) {
         NSLog(@"Error closing device. Code: %x", ret);
         CFRelease(self.IOHIDDevice);
@@ -112,7 +114,7 @@ typedef struct __IOHIDDevice
     }
     
     if (self.isSeized) {
-        [self closeWithOption:0];
+        [self closeWithOption:kIOHIDOptionsTypeSeizeDevice];
     } else {
         [self closeWithOption:0];
     }

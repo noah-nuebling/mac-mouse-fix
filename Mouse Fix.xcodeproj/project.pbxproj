@@ -828,7 +828,7 @@
 		4FCECD7821092354001F1078 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				CLASSPREFIX = "";
+				CLASSPREFIX = NN;
 				KnownAssetTags = (
 					0,
 				);

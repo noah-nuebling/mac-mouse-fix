@@ -108,8 +108,8 @@ static void setupDeviceMatchingAndRemovalCallbacks() {
     CFNumberRef genericDesktopUsagePage = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &UP);
     CFNumberRef mouseUsage = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &U);
     
-    CFDictionarySetValue(matchDict1, CFSTR("DeviceUsagePage"), genericDesktopUsagePage);
-    CFDictionarySetValue(matchDict1, CFSTR("DeviceUsage"), mouseUsage);
+    CFDictionarySetValue(matchDict1, CFSTR(kIOHIDElementUsagePageKey), kHIDPage_GenericDesktop);
+    CFDictionarySetValue(matchDict1, CFSTR("DeviceUsage"), kHIDUsage_Mouse);
     CFDictionarySetValue(matchDict1, CFSTR("Transport"), CFSTR("USB")); // TODO: Shouldn't using only one matchDict instead of three and not specifying Transport work as well?
 
     CFDictionarySetValue(matchDict2, CFSTR("DeviceUsagePage"), genericDesktopUsagePage);
@@ -120,21 +120,7 @@ static void setupDeviceMatchingAndRemovalCallbacks() {
     CFDictionarySetValue(matchDict3, CFSTR("DeviceUsage"), mouseUsage);
     CFDictionarySetValue(matchDict3, CFSTR("Transport"), CFSTR("Bluetooth Low Energy"));
   
-    // Old version - this doesn't match some mice like the mx master, bacause it only matches primary usage and usage page, not any pair of usage and usage page within the usagePairs dictionary of the device. Look to ref1 for a better explanation.
-//    CFNumberRef genericDesktopPrimaryUsagePage = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &UP);
-//    CFNumberRef mousePrimaryUsage = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &U);
-//
-//    CFDictionarySetValue(matchDict1, CFSTR("PrimaryUsagePage"), genericDesktopPrimaryUsagePage);
-//    CFDictionarySetValue(matchDict1, CFSTR("PrimaryUsage"), mousePrimaryUsage);
-//    CFDictionarySetValue(matchDict1, CFSTR("Transport"), CFSTR("USB"));
-//
-//    CFDictionarySetValue(matchDict2, CFSTR("PrimaryUsagePage"), genericDesktopPrimaryUsagePage);
-//    CFDictionarySetValue(matchDict2, CFSTR("PrimaryUsage"), mousePrimaryUsage);
-//    CFDictionarySetValue(matchDict2, CFSTR("Transport"), CFSTR("Bluetooth"));
-//
-//    CFDictionarySetValue(matchDict3, CFSTR("PrimaryUsagePage"), genericDesktopPrimaryUsagePage);
-//    CFDictionarySetValue(matchDict3, CFSTR("PrimaryUsage"), mousePrimaryUsage);
-//    CFDictionarySetValue(matchDict3, CFSTR("Transport"), CFSTR("Bluetooth Low Energy"));
+
     
     CFMutableDictionaryRef matchesList[] = {matchDict1, matchDict2, matchDict3};
     matches = CFArrayCreate(kCFAllocatorDefault, (const void **)matchesList, 3, NULL);
