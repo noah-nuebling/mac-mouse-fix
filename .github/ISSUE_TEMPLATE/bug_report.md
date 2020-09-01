@@ -7,10 +7,10 @@ assignees: ''
 
 ---
 
-## Description of the bug
+**Description of the bug**
 [Describe the bug here.]
 
-## Steps to reproduce the bug
+**Steps to reproduce the bug**
 [Give step by step instructions on how to reproduce the bug here.]
 [For example:]
 
@@ -19,10 +19,10 @@ assignees: ''
 3. Scroll down to '...'
 4. See error
 
-##  OS
+**OS**
 [Specify, which macOS version you are using here.]
 
-## Additional Info
+**Additional Info**
 [Add any other info about the problem here.]
 [E.g. screenshots, console logs (Find them at Console.app > [Your device name]), or crash reports (Find them at Console.app > Crash Reports)]
 
