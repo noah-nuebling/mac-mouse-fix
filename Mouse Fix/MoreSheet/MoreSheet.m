@@ -23,7 +23,9 @@
 
 @implementation MoreSheet
 
-#pragma mark - Class
+#pragma mark - Constants
+
+#pragma mark - Static stuff
 
 + (void)load {
     _instance = [[MoreSheet alloc] initWithWindowNibName:@"MoreSheet"];
@@ -34,7 +36,8 @@ static MoreSheet *_instance;
 }
 
 
-# pragma mark - IBActions and Delegate
+# pragma mark - IBActions
+
 - (IBAction)checkForUpdateCheckBox:(NSButton *)sender {
     NSLog(@"CHECK");
     [ConfigFileInterface_PrefPane.config setValue:@"0" forKeyPath:@"Other.skippedBundleVersion"];
@@ -44,6 +47,7 @@ static MoreSheet *_instance;
         
     }
 }
+
 - (IBAction)smoothScrollBlacklistButton:(id)sender {
     [ScrollOverridePanel.instance openWindow];
 }
@@ -69,14 +73,6 @@ static MoreSheet *_instance;
 
 #pragma mark - Class methods - Public
 
-// TODO: Remove this. Instead Move the variable holding the MoreSheet instance from PrefPaneDelegate into a MoreSheet class variable. Then you can end the sheet by calling `[MoreSheet.instance end]`.
-+ (void)endMoreSheetAttachedToMainWindow {
-    NSWindow *sheet = NSApplication.sharedApplication.mainWindow.attachedSheet;
-    if ([sheet.delegate.class isEqual:self.class]) {
-        MoreSheet *moreSheetDelegate = (MoreSheet *)sheet.delegate;
-        [moreSheetDelegate end];
-    }
-}
 
 #pragma mark - Instance methods - Public
 
@@ -110,3 +106,82 @@ static MoreSheet *_instance;
 }
 
 @end
+
+#pragma mark - Unused
+
+//- (IBAction)bugReportButton:(id)sender {
+//
+//    // Create email composing sharing service
+//    NSSharingService *service = [NSSharingService sharingServiceNamed:NSSharingServiceNameComposeEmail];
+//
+//    // Set service attributes
+//
+//    [service setRecipients:@[_feedbackMailAddress]];
+//    [service setSubject:@"Mac Mouse Fix - Bug Report"];
+//
+//    // Create message body
+//
+//    NSMutableAttributedString *messageBody = [[NSMutableAttributedString alloc] init];
+//
+//    // Create fonts
+//    NSFont *defaultFont = [NSFont systemFontOfSize:NSFont.smallSystemFontSize];
+//    NSFont *headerFont = [NSFontManager.sharedFontManager convertFont:defaultFont toHaveTrait:NSBoldFontMask];
+//    NSFont *italicFont = [NSFontManager.sharedFontManager convertFont:defaultFont toHaveTrait:NSItalicFontMask];
+//
+//    // Create string attributes
+//    NSDictionary *headerAttributes = @{
+//        NSFontAttributeName : headerFont,
+//    };
+//    NSDictionary *italicAttributes = @{
+//        NSFontAttributeName : italicFont,
+//    };
+//
+//
+//
+//    // Create attributed strings
+//
+//    NSAttributedString *header1 = [[NSAttributedString alloc] initWithString:@"Description of the bug"
+//                                                                  attributes:headerAttributes];
+//    NSAttributedString *header2 = [[NSAttributedString alloc] initWithString:@"Steps to reproduce"
+//                                                                  attributes:headerAttributes];
+//    NSAttributedString *header3 = [[NSAttributedString alloc] initWithString:@"Diagnostic data"
+//                                                                  attributes:headerAttributes];
+//
+//    NSAttributedString *subtitle1 = [[NSAttributedString alloc] initWithString:@"Fill in here"
+//                                                                    attributes:italicAttributes];
+//    NSAttributedString *subtitle2 = [[NSAttributedString alloc] initWithString:@"This might contain personal data. Delete this if you don't want to share it."
+//                                                                    attributes:italicAttributes];
+//
+//    NSAttributedString *lineBreak = [[NSAttributedString alloc] initWithString:@"\n"];
+//
+//
+//    // Merge strings to create full body string
+//    [messageBody appendAttributedString:header1];
+//    [messageBody appendAttributedString:lineBreak];
+//    [messageBody appendAttributedString:lineBreak];
+//    [messageBody appendAttributedString:subtitle1];
+//    [messageBody appendAttributedString:lineBreak];
+//    [messageBody appendAttributedString:lineBreak];
+//
+//    [messageBody appendAttributedString:header2];
+//    [messageBody appendAttributedString:lineBreak];
+//    [messageBody appendAttributedString:lineBreak];
+//    [messageBody appendAttributedString:subtitle1];
+//    [messageBody appendAttributedString:lineBreak];
+//    [messageBody appendAttributedString:lineBreak];
+//
+//    [messageBody appendAttributedString:header3];
+//    [messageBody appendAttributedString:lineBreak];
+//    [messageBody appendAttributedString:subtitle2];
+//    [messageBody appendAttributedString:lineBreak];
+//    [messageBody appendAttributedString:lineBreak];
+//
+////    NSString* htmlText = [NSString stringWithContentsOfFile:@"/Users/Noah/Desktop/test.html" encoding:NSUTF8StringEncoding error:NULL];
+//
+//
+//    // Compose email
+//
+//    [service performWithItems:@[messageBody]];
+//
+//
+//}

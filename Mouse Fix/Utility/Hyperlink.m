@@ -19,27 +19,49 @@ IB_DESIGNABLE
 @implementation Hyperlink
 
 - (void)awakeFromNib {
-    NSTrackingAreaOptions option = NSTrackingInVisibleRect | NSTrackingMouseEnteredAndExited | NSTrackingActiveInKeyWindow;
-    NSTrackingArea * area = [[NSTrackingArea alloc] initWithRect:self.bounds options:option owner:self userInfo:nil];
+    
+    // Setup tracking area
+    
+    NSTrackingAreaOptions trackingAreaOptions = NSTrackingInVisibleRect | NSTrackingMouseEnteredAndExited | NSTrackingActiveInKeyWindow;
+    NSTrackingArea * area = [[NSTrackingArea alloc] initWithRect:self.bounds options:trackingAreaOptions owner:self userInfo:nil];
     [self addTrackingArea:area];
+    
 }
 - (void)resetCursorRects {
     [self discardCursorRects];
     [self addCursorRect:self.bounds cursor:NSCursor.pointingHandCursor];
 }
 - (void)mouseEntered:(NSEvent *)event {
-    NSMutableAttributedString *underlinedString = [[NSMutableAttributedString alloc] initWithString: self.stringValue];
-    [underlinedString addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:NSMakeRange(0, [underlinedString length])];
+    
+    NSMutableAttributedString *underlinedString = [[NSMutableAttributedString alloc] initWithAttributedString: self.attributedStringValue];
+    
+    NSRange wholeStringRange = NSMakeRange(0, [underlinedString length]);
+    
+    [underlinedString addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:wholeStringRange];
+    
+//    [underlinedString setAlignment:NSTextAlignmentRight range:wholeStringRange];
+    
     self.attributedStringValue = underlinedString;
 }
 - (void)mouseExited:(NSEvent *)event {
-    NSMutableAttributedString *notUnderlinedString = [[NSMutableAttributedString alloc] initWithString: self.stringValue];
-    [notUnderlinedString addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleNone) range:NSMakeRange(0, [notUnderlinedString length])];
+    
+    NSMutableAttributedString *notUnderlinedString = [[NSMutableAttributedString alloc] initWithAttributedString: self.attributedStringValue];
+    
+    NSRange wholeStringRange = NSMakeRange(0, [notUnderlinedString length]);
+    
+    [notUnderlinedString addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleNone) range:wholeStringRange];
+    
+//    [notUnderlinedString setAlignment:NSTextAlignmentRight range:wholeStringRange];
+    
     self.attributedStringValue = notUnderlinedString;
 }
 - (void)mouseUp:(NSEvent *)event {
+    
     if ([self mouse:[self convertPoint:[event locationInWindow] fromView:nil] inRect:self.bounds]) {
+        // Open URL defined in Interface Builder
         [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:_href]];
+        // Send IBAction
+        [self sendAction:self.action to:self.target];
     }
 }
 
