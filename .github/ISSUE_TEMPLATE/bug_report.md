@@ -25,7 +25,3 @@ assignees: ''
 **Additional Info**
 [Add any other info about the problem here.]
 [E.g. screenshots, console logs (Find them at Console.app > [Your device name]), or crash reports (Find them at Console.app > Crash Reports)]
-
----
-
-Thanks for making Mac Mouse Fix better! :)
