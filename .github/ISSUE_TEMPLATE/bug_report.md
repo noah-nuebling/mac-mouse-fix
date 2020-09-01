@@ -19,8 +19,9 @@ assignees: ''
 3. Scroll down to '...'
 4. See error
 
-**OS**
-[Specify, which macOS version you are using here.]
+**Context**
+- OS: [Specify, which macOS version you are using here.]
+- Mouse: [Specify, which brand and model of mouse your are using here.]
 
 **Additional Info**
 [Add any other info about the problem here.]
