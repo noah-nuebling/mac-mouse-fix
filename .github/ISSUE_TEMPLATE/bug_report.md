@@ -7,8 +7,6 @@ assignees: ''
 
 ---
 
-Use the `instructions` as a guideline to make this report more useful.
-
 ## Description of the bug
 `Describe the bug here.`
 
