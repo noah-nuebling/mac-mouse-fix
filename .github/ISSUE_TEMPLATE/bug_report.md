@@ -8,11 +8,11 @@ assignees: ''
 ---
 
 ## Description of the bug
-`Describe the bug here.`
+[Describe the bug here.]
 
 ## Steps to reproduce the bug
-`Give step by step instructions on how to reproduce the bug here.`
-`For example:`
+[Give step by step instructions on how to reproduce the bug here.]
+[For example:]
 
 1. Go to '...'
 2. Click on '...'
@@ -20,11 +20,11 @@ assignees: ''
 4. See error
 
 ##  OS
-`Specify, which macOS version you are using here.`
+[Specify, which macOS version you are using here.]
 
 ## Additional Info
-`Add any other info about the problem here.`
-`E.g. screenshots, console logs (Find them at Console.app > [Your device name]), or crash reports (Find them at Console.app > Crash Reports)`
+[Add any other info about the problem here.]
+[E.g. screenshots, console logs (Find them at Console.app > [Your device name]), or crash reports (Find them at Console.app > Crash Reports)]
 
 ---
 
