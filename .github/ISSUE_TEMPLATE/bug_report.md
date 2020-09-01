@@ -7,29 +7,27 @@ assignees: ''
 
 ---
 
-## Description of the bug
+Use the `instructions` as a guideline to make this report more useful.
 
+## Description of the bug
 `Describe the bug here.`
 
 ## Steps to reproduce the bug
-
-`Give step by step instruction on how to reproduce the bug here.`
+`Give step by step instructions on how to reproduce the bug here.`
 `For example:`
 
 1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
+2. Click on '...'
+3. Scroll down to '...'
 4. See error
 
-## Expected behavior
-`Describe what you expected to happen here.`
-
-## Screenshots
-`Add screenshots here.`
+##  OS
+`Specify, which macOS version you are using here.`
 
 ## Additional Info
- - OS: `Specify, which macOS version you are using here - e.g. macOS 10.11.1`
+`Add any other info about the problem here.`
+`E.g. screenshots, console logs (Find them at Console.app > [Your device name]), or crash reports (Find them at Console.app > Crash Reports)`
 
+---
 
-## Additional context
-`Add any other context about the problem here.`
+Thanks for making Mac Mouse Fix better! :)
