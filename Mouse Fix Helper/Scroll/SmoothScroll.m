@@ -166,10 +166,12 @@ static BOOL _hasStarted;
         _pxScrollBuffer = _pxScrollBuffer * _accelerationForScrollBuffer;
     }
     
+#if DEBUG
 //    if (ScrollUtility.consecutiveScrollTickCounter == 0) {
         NSLog(@"tick: %d", ScrollUtility.consecutiveScrollTickCounter);
         NSLog(@"swip: %d", ScrollUtility.consecutiveScrollSwipeCounter);
 //    }
+#endif
     
     // Apply fast scroll to _pxScrollBuffer
     int fastScrollThresholdDelta = ScrollUtility.consecutiveScrollSwipeCounter - ScrollControl.fastScrollThreshold_inSwipes;
@@ -177,8 +179,11 @@ static BOOL _hasStarted;
         //&& ScrollUtility.consecutiveScrollTickCounter >= ScrollControl.scrollSwipeThreshold_inTicks) {
         _pxScrollBuffer = _pxScrollBuffer * ScrollControl.fastScrollFactor * pow(ScrollControl.fastScrollExponentialBase, ((int32_t)fastScrollThresholdDelta));
     }
+    
+#if DEBUG
     NSLog(@"buff: %d", _pxScrollBuffer);
             NSLog(@"--------------");
+#endif
     
     // Start displaylink and stuff
     
@@ -211,12 +216,15 @@ static BOOL _hasStarted;
 static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp *inNow, const CVTimeStamp *inOutputTime, CVOptionFlags flagsIn, CVOptionFlags *flagsOut, void *displayLinkContext) {
     
     double msSinceLastFrame = CVDisplayLinkGetActualOutputVideoRefreshPeriod(_displayLink) * 1000;
+    //    CVTime msBetweenFramesNominal = CVDisplayLinkGetNominalOutputVideoRefreshPeriod(_displayLink);
+    //    msSinceLastFrame =
+    //    ( ((double)msBetweenFramesNominal.timeValue) / ((double)msBetweenFramesNominal.timeScale) ) * 1000;
+    
+#if DEBUG
     if (msSinceLastFrame != 16.674562) {
         NSLog(@"frameTimeSpike: %fms", msSinceLastFrame);
     }
-//    CVTime msBetweenFramesNominal = CVDisplayLinkGetNominalOutputVideoRefreshPeriod(_displayLink);
-//    msSinceLastFrame =
-//    ( ((double)msBetweenFramesNominal.timeValue) / ((double)msBetweenFramesNominal.timeScale) ) * 1000;
+#endif
     
     
 # pragma mark Linear Phase
