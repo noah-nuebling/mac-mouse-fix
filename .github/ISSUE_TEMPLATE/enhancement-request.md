@@ -8,14 +8,14 @@ assignees: ''
 ---
 
 **Feature description**
-[Describe the feature you would like to see here.]
+[Describe the feature or improvement you would like to see here.]
 
 **Why would you like to see this feature?**
-[Describe which problem your suggestion would solve or how it might improve your experience.]
+[Describe which problem your suggestion would solve for you here.]
 
 **Other solutions**
-[Describe which other solutions to your problem you have considered and what you think of them.]
+[Describe which other solutions to your problem you have considered here.]
 
 **Additional info**
-[Add any other info about your request here.]
+[Add any further info about your request here.]
 [E.g Mockups or screenshots of other apps.]
