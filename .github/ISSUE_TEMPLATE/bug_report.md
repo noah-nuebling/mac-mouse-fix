@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Report a bug to help make Mac Mouse Fix more stable.
+about: Report a bug.
 title: "[Shortly describe the bug here]"
 labels: bug
 assignees: ''
