@@ -29,7 +29,7 @@ assignees: ''
 <!-- Specify which circumstances the bug occurs under here -->
 
 OS: <!-- Which macOS version were you using? -->
-Mouse: <!-- Which brand and model of mouse were you using? -->
+Mouse: <!-- Which model of mouse were you using? -->
 Other installed apps:  <!-- Which other apps that affect mouse behaviour were installed? (Having several such apps installed is a common source of issues.) -->
 
 
