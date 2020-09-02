@@ -13,7 +13,7 @@ assignees: ''
 
 **Steps to reproduce**
 [Give step by step instructions on how to reproduce the bug here.]
-[Please fill this out if you can reproduce the bug, as it can be extremely helpful for solving it.]
+[Please fill this out if you can reproduce the bug, as it can be extremely helpful for fixing it.]
 
 **Context**
 - OS: [Specify, which macOS version you are using here.] [Optional]
