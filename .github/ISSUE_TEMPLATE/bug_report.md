@@ -21,7 +21,7 @@ assignees: ''
 <!-- 
     1. Detail the exact steps taken to reproduce the problem
     2. Number each step
-    3. Please consider doing this as it can be very helpful for fixing your issue
+    3. Be proud of yourself knowing that you are very helpful :)
  -->
 
 
@@ -41,7 +41,7 @@ Other installed apps:  <!-- Which other apps that affect mouse behaviour were in
     To attach console logs:
         1. Go to Console.app > ((Your device name)) 
         2. Reproduce the error and note the exact time
-        3. Look for logs occurring at the time of the error
+        3. Look for logs occurring at the time of error
         4. Copy-paste them into this text field
 
     To attach crash reports:
