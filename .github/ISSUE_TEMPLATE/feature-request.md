@@ -19,3 +19,5 @@ assignees: ''
 **Additional info**
 [Add any further info about your request here.]
 [E.g Mockups or screenshots of other apps.]
+
+[Thank you for taking the time to help make Mac Mouse Fix better!]
