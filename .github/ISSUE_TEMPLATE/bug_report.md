@@ -53,7 +53,7 @@ assignees: ''
         3. Compress the reports like so: 
             1. Right-click the report you wish to export and choose "Reveal in Finder"
             2. Right-click that report in Finder and choose "Compress ((Filename))"
-    4. Drag and drop the zip file you just created into this text-field
+        4. Drag and drop the zip file you just created into this text-field
 -->
 
 
