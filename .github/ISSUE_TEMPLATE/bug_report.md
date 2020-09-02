@@ -24,7 +24,7 @@ assignees: ''
 - Mouse: [Specify, which brand and model of mouse your are using here.]
 
 **Additional Info**
-[Add any other info about the problem here.]
+[Add any extra info about the problem here.]
 [E.g. console logs, crash reports, or screenshots.]
 [To find console logs: 1. Go to Console.app > ((Your device name)) 2. Reproduce the error and note the exact time. 3. Look for logs occurring at the time of the error. 4. Copy-paste them in here.]
 [To find crash reports: 1. Go to Console.app > Crash Reports 2. Search for logs whose name contains "legacyLoader", "System Preferences", or "Mouse Fix Helper" 3. Drag and drop them in here.]
