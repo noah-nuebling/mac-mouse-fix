@@ -9,12 +9,12 @@ assignees: ''
 
 <!-- 
     This template is just a suggestion. 
-    Please feel free to leave out sections and deviate from the template in other ways as you see fit 
+    Please feel free to leave out sections and deviate from the template in other ways as you see fit.
 -->
 
 
 **Detailed description** 
-<!-- Describe the feature or improvement in more detail here. -->
+<!-- Describe the feature or improvement in more detail here -->
 
 
 **Problem** 
@@ -26,7 +26,7 @@ assignees: ''
 
 
 **Other solutions** 
-<!-- Describe which other solutions to your problem you have considered here. -->
+<!-- Describe which other solutions to your problem you have considered here -->
 
 
 **Additional info** 
