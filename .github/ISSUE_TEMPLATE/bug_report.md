@@ -7,8 +7,6 @@ assignees: ''
 
 ---
 
-[Please remove all [text surrounded by brackets] before submitting]
-
 **Description**
 [Describe the bug here.]
 

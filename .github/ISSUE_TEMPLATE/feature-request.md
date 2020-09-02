@@ -11,7 +11,7 @@ assignees: ''
 [Describe the feature or improvement you would like to see here.]
 
 **Problem**
-[Describe why you would like to see this feature or which problem your suggestion would solve for you here.]
+[Describe why you would like to see this feature. Which problem would your suggestion solve?]
 
 **Other solutions**
 [Describe which other solutions to your problem you have considered here.]
