@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a bug report to help make Mac Mouse Fix more stable.
+about: Report a bug to help make Mac Mouse Fix more stable.
 title: "[Shortly describe the bug here]"
 labels: bug
 assignees: ''
@@ -17,7 +17,7 @@ Describe the bug in more detail here.
 **Steps to reproduce**
 <!-- 
 Give step by step instructions on how to reproduce the bug here.
-(Please fill this out if you can reproduce the bug, as it can be extremely helpful for fixing it.)
+(Please fill this out if you can reproduce the bug, as it can be very helpful for fixing it.)
 -->
 
 **Context**
@@ -31,9 +31,7 @@ Give step by step instructions on how to reproduce the bug here.
 <!-- 
 Add any extra info that might help fix the issue here.
 E.g. console logs, crash reports, or screenshots.
--->
 
-<!--
 To attach console logs:
 1. Go to Console.app > ((Your device name)) 
 2. Reproduce the error and note the exact time. 
