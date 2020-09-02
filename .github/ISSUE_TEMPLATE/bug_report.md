@@ -19,9 +19,9 @@ assignees: ''
 
 **Steps to reproduce**
 <!-- 
-1. Detail the exact steps taken to reproduce the problem
-2. Number each step
-3. Please consider doing this as it can be very helpful for fixing your issue
+    1. Detail the exact steps taken to reproduce the problem
+    2. Number each step
+    3. Please consider doing this as it can be very helpful for fixing your issue
  -->
 
 
