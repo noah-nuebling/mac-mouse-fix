@@ -7,10 +7,11 @@ assignees: ''
 
 ---
 
+<!-- This template is just a suggestion. Please feel free to leave out sections and deviate from the template in other ways as you see fit -->
+
 **Detailed description**
 <!-- 
 Describe the bug in more detail here.
-(Optional)
 -->
 
 **Steps to reproduce**
@@ -21,16 +22,15 @@ Give step by step instructions on how to reproduce the bug here.
 
 **Context**
 
-- OS: <!-- Specify, which macOS version you are using here. (Optional) -->
-- Mouse: <!-- Specify, which brand and model of mouse your are using here: (Optional) -->
-- Other apps which might affect mouse behaviour: <!-- List other apps you have installed that might affect mouse behaviour. Having several such apps installed is a common source of issues. (Optional) -->
+- OS: <!-- Specify, which macOS version you are using here. -->
+- Mouse: <!-- Specify, which brand and model of mouse your are using here: -->
+- Other apps which might affect mouse behaviour: <!-- List other apps you have installed that might affect mouse behaviour. Having several such apps installed is a common source of issues. -->
 
 
 **Additional Info**
 <!-- 
 Add any extra info that might help fix the issue here.
 E.g. console logs, crash reports, or screenshots.
-(Optional)
 -->
 
 <!--
