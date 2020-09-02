@@ -13,20 +13,33 @@ assignees: ''
 -->
 
 **Detailed description**
-<!-- Describe the bug in more detail here. -->
+<!-- 
+    Describe the bug in more detail here. 
+-->
 
 **Steps to reproduce**
 <!-- 
     Give step by step instructions on how to reproduce the bug here.
-    (Please fill this out if you can reproduce the bug, as it can be very helpful for fixing it.)
+    Please fill this out if you can reproduce the bug, as it can be very helpful for fixing it.
 -->
 
 **Context**
 
-- OS: <!-- Specify, which macOS version you are using here. -->
-- Mouse: <!-- Specify, which brand and model of mouse your are using here: -->
-- Other apps which might affect mouse behaviour: <!-- List other apps you have installed that might affect mouse behaviour. Having several such apps installed is a common source of issues. -->
+<!-- 
+    Specify, which macOS version you are using here: 
+-->
+- OS: 
 
+<!-- 
+    Specify, which brand and model of mouse your are using here: 
+-->
+- Mouse:
+
+<!-- 
+    List other apps you have installed that might affect mouse behaviour. 
+    Having several such apps installed is a common source of issues. 
+-->
+- Other apps which might affect mouse behaviour:
 
 **Additional Info**
 <!-- 
@@ -48,4 +61,6 @@ assignees: ''
     4. Drag and drop the zip file you just created into this text-field.
 -->
 
-<!--  Thanks for helping to make Mac Mouse Fix better! 🚀-->
+<!--  
+    Thanks for helping to make Mac Mouse Fix better! 🚀
+-->
