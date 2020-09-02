@@ -20,4 +20,4 @@ assignees: ''
 [Add any further info about your request here.]
 [E.g Mockups or screenshots of other apps.]
 
-[Thank you for taking the time to help make Mac Mouse Fix better!]
+[Thanks for taking the time to help make Mac Mouse Fix better! 🚀]
