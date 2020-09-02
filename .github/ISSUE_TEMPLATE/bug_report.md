@@ -18,7 +18,7 @@ assignees: ''
 **Context**
 - OS: [Specify, which macOS version you are using here.] [Optional]
 - Mouse: [Specify, which brand and model of mouse your are using here.] [Optional]
-- Other apps which might affect mouse behaviour: [Describe which other apps you have installed that might affect mouse behaviour. Having several such apps installed is a common source of errors.] [Optional]
+- Other apps which might affect mouse behaviour: [Describe which other apps you have installed that might affect mouse behaviour. Having several such apps installed is a common source of issues.] [Optional]
 
 **Additional Info**
 [Add any extra info about the problem here.]
