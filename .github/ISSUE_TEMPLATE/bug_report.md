@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: Create a bug report to help make Mac Mouse Fix more stable.
-title: "[Describe the bug here]"
+title: "[Shortly describe the bug here]"
 labels: bug
 assignees: ''
 
@@ -36,6 +36,6 @@ assignees: ''
 2. Search for reports whose name contains "legacyLoader", "System Preferences", or "Mouse Fix Helper" 
 3. Drag and drop them in here.]
 
----
+[---]
 
 [Thanks for helping to make Mac Mouse Fix better! 🚀]
