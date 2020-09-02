@@ -18,10 +18,7 @@ assignees: ''
 
 
 **Steps to reproduce**
-<!-- 
-    Give step by step instructions on how to reproduce the bug here.
-    (Please fill this out if you can reproduce the bug, as it can be very helpful for fixing it.)
--->
+<!-- Give step by step instructions on how to reproduce the bug here. (Please fill this out if you can reproduce the bug, as it can be very helpful for fixing it.) -->
 
 
 **Context**
