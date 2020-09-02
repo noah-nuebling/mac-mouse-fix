@@ -9,10 +9,10 @@ assignees: ''
 
 [Please remove all [text surrounded by brackets] before submitting]
 
-**Description of the bug**
+**Description**
 [Describe the bug here.]
 
-**Steps to reproduce the bug**
+**Steps to reproduce**
 [Give step by step instructions on how to reproduce the bug here.]
 
 [For example:]

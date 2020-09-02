@@ -7,11 +7,11 @@ assignees: ''
 
 ---
 
-**Feature description**
+**Feature**
 [Describe the feature or improvement you would like to see here.]
 
-**Why would you like to see this feature?**
-[Describe which problem your suggestion would solve for you here.]
+**Problem**
+[Describe why you would like to see this feature or which problem your suggestion would solve for you here.]
 
 **Other solutions**
 [Describe which other solutions to your problem you have considered here.]
