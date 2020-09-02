@@ -26,16 +26,19 @@ assignees: ''
 
 [E.g. console logs, crash reports, or screenshots.]
 
-[To find console logs:
+[To attach console logs:
 1. Go to Console.app > ((Your device name)) 
 2. Reproduce the error and note the exact time. 
 3. Look for logs occurring at the time of the error. 
-4. Copy-paste them in here.]
+4. Copy-paste them into this text field.]
 
-[To find crash reports:
+[To attach crash reports:
 1. Go to Console.app > Crash Reports
 2. Search for reports whose name contains "legacyLoader", "System Preferences", or "Mouse Fix Helper" 
-3. Drag and drop them in here.]
+3. Compress the reports like so: 
+    1. Right-click the report you wish to export and choose "Reveal in Finder"
+    2. Right-click this report in Finder and choose "Compress [Filename]"
+4. Drag and drop the zip file you just created into this text-field.]
 
 [---]
 
