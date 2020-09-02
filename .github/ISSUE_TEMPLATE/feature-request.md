@@ -9,27 +9,27 @@ assignees: ''
 
 **Detailed description** 
 <!-- 
-(Optional)
 Describe the feature or improvement in more detail here. 
+(Optional)
 -->
 
 **Problem** 
 <!-- 
-(Optional)
 Describe why you would like to see this feature. Which problem would it solve for you? How would you use the new feature? 
+(Optional)
 -->
 
 **Other solutions** 
 <!-- 
-(Optional)
 Describe which other solutions to your problem you have considered here. 
+(Optional)
 -->
 
 **Additional info** 
 <!-- 
-(Optional)
 Add any further info about your request here.
 E.g Mockups or screenshots of other apps. 
+(Optional)
 -->
 
 <!-- Thanks for helping to make Mac Mouse Fix more useful! 🚀-->
