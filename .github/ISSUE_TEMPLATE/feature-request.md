@@ -1,8 +1,7 @@
 ---
 name: Feature request
 about: Suggest a new feature or other improvement.
-title: "[Enter a brief and clear title that expresses the feature or improvement you
-  would like to see]"
+title: "[Enter a brief and clear title that expresses the feature or improvement]"
 labels: enhancement
 assignees: ''
 
@@ -15,12 +14,12 @@ assignees: ''
 
 
 **Description** 
-<!-- Provide a descriptive summary of the feature or improvement -->
+<!-- Provide a descriptive summary of the enhancement you would like to see -->
 
 
 **Problem** 
 <!-- 
-    Describe why you would like to see this feature.
+    Describe why you would like to see this enhancement.
     Which problem would it solve for you? 
     How would you use the new feature? 
 -->
