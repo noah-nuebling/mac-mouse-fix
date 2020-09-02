@@ -8,9 +8,9 @@ assignees: ''
 ---
 
 <!-- 
-    This template is just a suggestion.
+    This template is just a suggestion. 
     Please feel free to leave out sections and deviate from the template in other ways as you see fit.
--->
+--> 
 
 
 **Description**
@@ -26,11 +26,14 @@ assignees: ''
 
 
 **Context**
-<!-- Specify which circumstances the bug occurs under here -->
-
-OS: <!-- Which macOS version were you using? -->
-Mouse: <!-- Which model of mouse were you using? -->
-Other installed apps:  <!-- Which other apps that affect mouse behaviour were installed? (Having several such apps installed is a common source of issues.) -->
+<!-- 
+    Specify which circumstances the bug occurs under here.
+    For example:
+        Which macOS version were you using?
+        Which model of mouse were you using?
+        Which other apps that affect mouse behaviour were installed? 
+            (Having several such apps installed is a common source of issues)
+-->
 
 
 **Additional Info**
