@@ -1,30 +1,28 @@
 ---
 name: Bug report
 about: Create a bug report to help make Mac Mouse Fix more stable.
-title: ''
+title: "[Describe the bug here]"
 labels: bug
 assignees: ''
 
 ---
 
-**Description**
-[Describe the bug here.]
+**Detailed description**
+[Describe the bug in more detail here.]
+[Optional]
 
 **Steps to reproduce**
 [Give step by step instructions on how to reproduce the bug here.]
-
-[For example:]
-1. [Go to '...']
-2. [Click on '...']
-3. [Scroll down to '...']
-[...]
+[Please fill this out if you can reproduce the bug, as it can be extremely helpful for solving it.]
 
 **Context**
-- OS: [Specify, which macOS version you are using here.]
-- Mouse: [Specify, which brand and model of mouse your are using here.]
+- OS: [Specify, which macOS version you are using here.] [Optional]
+- Mouse: [Specify, which brand and model of mouse your are using here.] [Optional]
 
 **Additional Info**
 [Add any extra info about the problem here.]
+[Optional]
+
 [E.g. console logs, crash reports, or screenshots.]
 
 [To find console logs:
@@ -37,5 +35,7 @@ assignees: ''
 1. Go to Console.app > Crash Reports
 2. Search for reports whose name contains "legacyLoader", "System Preferences", or "Mouse Fix Helper" 
 3. Drag and drop them in here.]
+
+---
 
 [Thanks for helping to make Mac Mouse Fix better! 🚀]
