@@ -12,8 +12,10 @@ assignees: ''
     Please feel free to leave out sections and deviate from the template in other ways as you see fit 
 -->
 
+
 **Detailed description** 
 <!-- Describe the feature or improvement in more detail here. -->
+
 
 **Problem** 
 <!-- 
@@ -22,13 +24,16 @@ assignees: ''
     How would you use the new feature? 
 -->
 
+
 **Other solutions** 
 <!-- Describe which other solutions to your problem you have considered here. -->
+
 
 **Additional info** 
 <!-- 
     Add any further info about your request here.
     E.g Mockups or screenshots of other apps. 
 -->
+
 
 <!-- Thanks for helping to make Mac Mouse Fix more useful! 🚀-->

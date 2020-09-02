@@ -27,17 +27,9 @@ assignees: ''
 **Context**
 <!-- Specify which circumstances the bug occured under here -->
 
-<!-- Which macOS version were you using? -->
-OS: 
-
-<!-- Which brand and model of mouse were you using? -->
-Mouse:
-
-<!-- 
-    Which other apps that affect mouse behaviour were installed?
-    (Having several such apps installed is a common source of issues.)
--->
-Other installed apps which might affect mouse behaviour:
+OS: <!-- Which macOS version were you using? -->
+Mouse: <!-- Which brand and model of mouse were you using? -->
+Other installed apps:  <!-- Which other apps that affect mouse behaviour were installed? (Having several such apps installed is a common source of issues.) -->
 
 
 **Additional Info**
@@ -59,5 +51,6 @@ Other installed apps which might affect mouse behaviour:
             2. Right-click that report in Finder and choose "Compress ((Filename))"
     4. Drag and drop the zip file you just created into this text-field.
 -->
+
 
 <!--  Thanks for helping to make Mac Mouse Fix better! 🚀-->
