@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: Report a bug to help Mac Mouse Fix improve.
-title: "[Shortly describe the bug here]"
+title: "[Enter a brief and clear title that expresses the problem]"
 labels: bug
 assignees: ''
 
@@ -13,12 +13,16 @@ assignees: ''
 -->
 
 
-**Detailed description**
-<!-- Describe the bug in more detail here -->
+**Description**
+<!-- Provide a descriptive summary of the problem -->
 
 
 **Steps to reproduce**
-<!-- Give step by step instructions on how to reproduce the bug here. (Please fill this out if you can reproduce the bug, as it can be very helpful for fixing it.) -->
+<!-- 
+1. Detail the exact steps taken to reproduce the problem
+2. Number each step
+3. Please consider doing this as it can be very helpful for fixing your issue
+ -->
 
 
 **Context**

@@ -1,7 +1,8 @@
 ---
 name: Feature request
 about: Suggest a new feature or other improvement.
-title: "[Shortly describe the feature or improvement you would like to see here]"
+title: "[Enter a brief and clear title that expresses the feature or improvement you
+  would like to see]"
 labels: enhancement
 assignees: ''
 
@@ -13,25 +14,21 @@ assignees: ''
 -->
 
 
-**Detailed description** 
-<!-- Describe the feature or improvement in more detail here -->
+**Description** 
+<!-- Provide a descriptive summary of the feature or improvement -->
 
 
 **Problem** 
 <!-- 
-    Describe why you would like to see this feature. 
+    Describe why you would like to see this feature.
     Which problem would it solve for you? 
     How would you use the new feature? 
 -->
 
 
-**Other solutions** 
-<!-- Describe which other solutions to your problem you have considered here -->
-
-
 **Additional info** 
 <!-- 
-    Add any further info about your request here.
+    Add any further info regarding your request here.
     E.g Mockups or screenshots of other apps. 
 -->
 
