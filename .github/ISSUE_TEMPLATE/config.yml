@@ -1,11 +1,11 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Open Feature Request
-    url: https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=feature-request
-    about: Suggest a new feature or other improvement.
   - name: Open Bug Report
     url: https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report
     about: Report a bug.
+  - name: Open Feature Request
+    url: https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=feature-request
+    about: Suggest a new feature or other improvement.
   - name: Open Other
     url: https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=other
     about: Open an issue about another topic.
