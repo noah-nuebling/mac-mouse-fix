@@ -7,5 +7,5 @@ contact_links:
     url: https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=feature-request
     about: Suggest a new feature or other improvement.
   - name: Open Other
-    url: https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=other
+    url: https://github.com/noah-nuebling/mac-mouse-fix//issues/new/?labels=other
     about: Open an issue about another topic.
