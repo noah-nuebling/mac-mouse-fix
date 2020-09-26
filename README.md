@@ -5,7 +5,7 @@
 
 A simple way to make your mouse better.
 
-### [Download](http://www.mousefix.org) | [Pre-releases](https://github.com/noah-nuebling/mac-mouse-fix/releases)
+### [Download](http://www.mousefix.org) | [All releases](https://github.com/noah-nuebling/mac-mouse-fix/releases)
 
 ## Features
 
