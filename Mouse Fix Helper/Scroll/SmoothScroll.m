@@ -221,9 +221,9 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     //    ( ((double)msBetweenFramesNominal.timeValue) / ((double)msBetweenFramesNominal.timeScale) ) * 1000;
     
 #if DEBUG
-    if (msSinceLastFrame != 16.674562) {
-        NSLog(@"frameTimeSpike: %fms", msSinceLastFrame);
-    }
+//    if (msSinceLastFrame != 16.674562) {
+//        NSLog(@"frameTimeSpike: %fms", msSinceLastFrame);
+//    }
 #endif
     
     
