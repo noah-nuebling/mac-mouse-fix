@@ -78,62 +78,32 @@ static void setupDeviceMatchingAndRemovalCallbacks() {
     
     
     // Create an HID Manager
-//    _HIDManager = IOHIDManagerCreate(kCFAllocatorDefault, 0);
-    _HIDManager = IOHIDManagerCreate(kCFAllocatorDefault, kIOHIDManagerOptionIndependentDevices); // TODO: This might be worth a try for independent seizing of devices.
     
-    // Create a Matching Dictionary
-    CFMutableDictionaryRef matchDict1 = CFDictionaryCreateMutable(kCFAllocatorDefault,
-                                                                  2,
-                                                                  &kCFTypeDictionaryKeyCallBacks,
-                                                                  &kCFTypeDictionaryValueCallBacks);
-    CFMutableDictionaryRef matchDict2 = CFDictionaryCreateMutable(kCFAllocatorDefault,
-                                                                  2,
-                                                                  &kCFTypeDictionaryKeyCallBacks,
-                                                                  &kCFTypeDictionaryValueCallBacks);
-    CFMutableDictionaryRef matchDict3 = CFDictionaryCreateMutable(kCFAllocatorDefault,
-                                                                  2,
-                                                                  &kCFTypeDictionaryKeyCallBacks,
-                                                                  &kCFTypeDictionaryValueCallBacks);
-    
-    
+    _HIDManager = IOHIDManagerCreate(kCFAllocatorDefault, kIOHIDManagerOptionNone); // TODO: kIOHIDManagerOptionIndependentDevices -> This might be worth a try for independent seizing of devices.
     
     // Specify properties of the devices which we want to add to the HID Manager in the Matching Dictionary
     
-    //int n = 0x227;
-    
-    CFArrayRef matches;
-    
-    int UP = 1;
-    int U = 2;
-    CFNumberRef genericDesktopUsagePage = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &UP);
-    CFNumberRef mouseUsage = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &U);
-    
-    CFDictionarySetValue(matchDict1, CFSTR(kIOHIDElementUsagePageKey), kHIDPage_GenericDesktop);
-    CFDictionarySetValue(matchDict1, CFSTR("DeviceUsage"), kHIDUsage_Mouse);
-    CFDictionarySetValue(matchDict1, CFSTR("Transport"), CFSTR("USB")); // TODO: Shouldn't using only one matchDict instead of three and not specifying Transport work as well?
+    NSDictionary *matchDict1 = @{
+        @(kIOHIDDeviceUsagePageKey): @(kHIDPage_GenericDesktop),
+        @(kIOHIDDeviceUsageKey): @(kHIDUsage_GD_Mouse),
+        @(kIOHIDTransportKey): @(kIOHIDTransportUSBValue),
+    };
+    NSDictionary *matchDict2 = @{
+        @(kIOHIDDeviceUsagePageKey): @(kHIDPage_GenericDesktop),
+        @(kIOHIDDeviceUsageKey): @(kHIDUsage_GD_Mouse),
+        @(kIOHIDTransportKey): @(kIOHIDTransportBluetoothValue),
+    };
+    NSDictionary *matchDict3 = @{
+        @(kIOHIDDeviceUsagePageKey): @(kHIDPage_GenericDesktop),
+        @(kIOHIDDeviceUsageKey): @(kHIDUsage_GD_Mouse),
+        @(kIOHIDTransportKey): @("Bluetooth Low Energy"), // kIOHIDTransportBluetoothLowEnergyValue doesn't work (resolves to "BluetoothLowEnergy")
+    };
 
-    CFDictionarySetValue(matchDict2, CFSTR("DeviceUsagePage"), genericDesktopUsagePage);
-    CFDictionarySetValue(matchDict2, CFSTR("DeviceUsage"), mouseUsage);
-    CFDictionarySetValue(matchDict2, CFSTR("Transport"), CFSTR("Bluetooth"));
-
-    CFDictionarySetValue(matchDict3, CFSTR("DeviceUsagePage"), genericDesktopUsagePage);
-    CFDictionarySetValue(matchDict3, CFSTR("DeviceUsage"), mouseUsage);
-    CFDictionarySetValue(matchDict3, CFSTR("Transport"), CFSTR("Bluetooth Low Energy"));
-  
-
-    
-    CFMutableDictionaryRef matchesList[] = {matchDict1, matchDict2, matchDict3};
-    matches = CFArrayCreate(kCFAllocatorDefault, (const void **)matchesList, 3, NULL);
+    NSArray *matchDicts = @[matchDict1, matchDict2, matchDict3];
     
     // Register the Matching Dictionary to the HID Manager
-    IOHIDManagerSetDeviceMatchingMultiple(_HIDManager, matches);
+    IOHIDManagerSetDeviceMatchingMultiple(_HIDManager, (__bridge CFArrayRef)matchDicts);
     
-    CFRelease(matches);
-    CFRelease(matchDict1);
-    CFRelease(matchDict2);
-    CFRelease(matchDict3);
-    CFRelease(mouseUsage);
-    CFRelease(genericDesktopUsagePage);
     
     // Register the HID Manager on our app’s run loop
     IOHIDManagerScheduleWithRunLoop(_HIDManager, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
