@@ -168,8 +168,8 @@ static BOOL _hasStarted;
     
 #if DEBUG
 //    if (ScrollUtility.consecutiveScrollTickCounter == 0) {
-        NSLog(@"tick: %d", ScrollUtility.consecutiveScrollTickCounter);
-        NSLog(@"swip: %d", ScrollUtility.consecutiveScrollSwipeCounter);
+//        NSLog(@"tick: %d", ScrollUtility.consecutiveScrollTickCounter);
+//        NSLog(@"swip: %d", ScrollUtility.consecutiveScrollSwipeCounter);
 //    }
 #endif
     
@@ -181,8 +181,8 @@ static BOOL _hasStarted;
     }
     
 #if DEBUG
-    NSLog(@"buff: %d", _pxScrollBuffer);
-            NSLog(@"--------------");
+//    NSLog(@"buff: %d", _pxScrollBuffer);
+//    NSLog(@"--------------");
 #endif
     
     // Start displaylink and stuff
