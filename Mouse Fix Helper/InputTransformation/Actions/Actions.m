@@ -1,17 +1,17 @@
 //
 // --------------------------------------------------------------------------
-// OneShotActions.m
+// Actions.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2020
 // Licensed under MIT
 // --------------------------------------------------------------------------
 //
 
-#import "OneShotActions.h"
+#import "Actions.h"
 #import "CGSHotKeys.h"
 #import "TouchSimulator.h"
 
-@implementation OneShotActions
+@implementation Actions
 
 + (void)handleActionArray:(NSArray *)actionArray {
     

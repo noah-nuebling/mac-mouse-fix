@@ -16,7 +16,7 @@
 
 #import "AppDelegate.h"
 #import "ScrollModifiers.h"
-#import "../Config/ConfigFileInterface_HelperApp.h"
+#import "../../Config/ConfigFileInterface_HelperApp.h"
 
 #import "ButtonInputReceiver_CG.h"
 #import "DeviceManager.h"
@@ -213,9 +213,11 @@ static BOOL _hasStarted;
 static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp *inNow, const CVTimeStamp *inOutputTime, CVOptionFlags flagsIn, CVOptionFlags *flagsOut, void *displayLinkContext) {
     
     double msSinceLastFrame = CVDisplayLinkGetActualOutputVideoRefreshPeriod(_displayLink) * 1000;
-    if (msSinceLastFrame != 16.674562) {
-        NSLog(@"frameTimeSpike: %fms", msSinceLastFrame);
-    }
+    
+//    if (msSinceLastFrame != 16.674562) {
+//        NSLog(@"frameTimeSpike: %fms", msSinceLastFrame);
+//    }
+    
 //    CVTime msBetweenFramesNominal = CVDisplayLinkGetNominalOutputVideoRefreshPeriod(_displayLink);
 //    msSinceLastFrame =
 //    ( ((double)msBetweenFramesNominal.timeValue) / ((double)msBetweenFramesNominal.timeScale) ) * 1000;

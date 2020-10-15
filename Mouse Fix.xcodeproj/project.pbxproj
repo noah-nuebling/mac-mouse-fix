@@ -34,6 +34,8 @@
 		4F8AEA9222FBC7AC008C1A7C /* milkshake_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */; };
 		4F8D0185243D8D6200D70076 /* NSArray+Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F8D0183243D8D6200D70076 /* NSArray+Additions.h */; };
 		4F8D0186243D8D6200D70076 /* NSArray+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8D0184243D8D6200D70076 /* NSArray+Additions.m */; };
+		4F8DBB4B2538E79400F58093 /* TransformationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8DBB4A2538E79400F58093 /* TransformationManager.m */; };
+		4F8DBB5C2538EC8300F58093 /* RemapUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8DBB5B2538EC8300F58093 /* RemapUtility.m */; };
 		4F95A249234EBB5D000DC7D7 /* PointerSpeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F95A248234EBB5D000DC7D7 /* PointerSpeed.m */; };
 		4F9CA64E246CA5470042F25A /* ModifyingActions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9CA64D246CA5470042F25A /* ModifyingActions.m */; };
 		4FA26CE724380D1F0082D5F6 /* ClickableImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FA26CE524380D1F0082D5F6 /* ClickableImageView.h */; };
@@ -41,7 +43,7 @@
 		4FA26CF1243949DC0082D5F6 /* NSMutableDictionary+Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FA26CEF243949DC0082D5F6 /* NSMutableDictionary+Additions.h */; };
 		4FA26CF2243949DC0082D5F6 /* NSMutableDictionary+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA26CF0243949DC0082D5F6 /* NSMutableDictionary+Additions.m */; };
 		4FACF59F2183B956009257D4 /* default_mouse.fix.helper.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FACF59E2183B956009257D4 /* default_mouse.fix.helper.plist */; };
-		4FB68B69246CA46F0059530E /* OneShotActions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB68B68246CA46F0059530E /* OneShotActions.m */; };
+		4FB68B69246CA46F0059530E /* Actions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB68B68246CA46F0059530E /* Actions.m */; };
 		4FBF34F7231750B600E6CFD0 /* pureDonationButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */; };
 		4FBF34FF23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FBF34FD23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h */; };
 		4FBF350023183E6700E6CFD0 /* ConfigFileInterface_PrefPane.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBF34FE23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.m */; };
@@ -74,7 +76,6 @@
 		4FEE4B0A233D933600011CEA /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4FEE4B09233D933600011CEA /* AppIcon.icns */; };
 		4FF3B2BD23276082009E8A8E /* Uninstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF3B2BC23276082009E8A8E /* Uninstaller.m */; };
 		4FF3B2C0232788AA009E8A8E /* HelperServices_HelperApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF3B2BF232788AA009E8A8E /* HelperServices_HelperApp.m */; };
-		4FF58E2A2469952200293553 /* RemapUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF58E292469952200293553 /* RemapUtility.m */; };
 		4FF75A20233D82590002D8E6 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FCECD8821092354001F1078 /* MainMenu.xib */; };
 		4FF873DF23197283002A897A /* UpdateWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FF873DC23197283002A897A /* UpdateWindow.h */; };
 		4FF873E023197283002A897A /* UpdateWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF873DD23197283002A897A /* UpdateWindow.m */; };
@@ -223,6 +224,9 @@
 		4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = milkshake_button.png; sourceTree = "<group>"; };
 		4F8D0183243D8D6200D70076 /* NSArray+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSArray+Additions.h"; sourceTree = "<group>"; };
 		4F8D0184243D8D6200D70076 /* NSArray+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Additions.m"; sourceTree = "<group>"; };
+		4F8DBB492538E79400F58093 /* TransformationManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransformationManager.h; sourceTree = "<group>"; };
+		4F8DBB4A2538E79400F58093 /* TransformationManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TransformationManager.m; sourceTree = "<group>"; };
+		4F8DBB5B2538EC8300F58093 /* RemapUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemapUtility.m; sourceTree = "<group>"; };
 		4F95A247234EBB5D000DC7D7 /* PointerSpeed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerSpeed.h; sourceTree = "<group>"; };
 		4F95A248234EBB5D000DC7D7 /* PointerSpeed.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerSpeed.m; sourceTree = "<group>"; };
 		4F9CA64C246CA5470042F25A /* ModifyingActions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModifyingActions.h; sourceTree = "<group>"; };
@@ -233,8 +237,8 @@
 		4FA26CF0243949DC0082D5F6 /* NSMutableDictionary+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+Additions.m"; sourceTree = "<group>"; };
 		4FACF59E2183B956009257D4 /* default_mouse.fix.helper.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_mouse.fix.helper.plist; sourceTree = "<group>"; };
 		4FAEEC7C249A2A3400B83AB6 /* CFRuntime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CFRuntime.h; sourceTree = "<group>"; };
-		4FB68B67246CA46F0059530E /* OneShotActions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OneShotActions.h; sourceTree = "<group>"; };
-		4FB68B68246CA46F0059530E /* OneShotActions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OneShotActions.m; sourceTree = "<group>"; };
+		4FB68B67246CA46F0059530E /* Actions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Actions.h; sourceTree = "<group>"; };
+		4FB68B68246CA46F0059530E /* Actions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Actions.m; sourceTree = "<group>"; };
 		4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pureDonationButton.png; sourceTree = "<group>"; };
 		4FBF34FD23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigFileInterface_PrefPane.h; sourceTree = "<group>"; };
 		4FBF34FE23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigFileInterface_PrefPane.m; sourceTree = "<group>"; };
@@ -282,7 +286,6 @@
 		4FF3B2BE232788AA009E8A8E /* HelperServices_HelperApp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelperServices_HelperApp.h; sourceTree = "<group>"; };
 		4FF3B2BF232788AA009E8A8E /* HelperServices_HelperApp.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelperServices_HelperApp.m; sourceTree = "<group>"; };
 		4FF58E282469952200293553 /* RemapUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapUtility.h; sourceTree = "<group>"; };
-		4FF58E292469952200293553 /* RemapUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = RemapUtility.m; path = "Mouse Fix Helper/RemapUtility.m"; sourceTree = SOURCE_ROOT; };
 		4FF873DC23197283002A897A /* UpdateWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UpdateWindow.h; sourceTree = "<group>"; };
 		4FF873DD23197283002A897A /* UpdateWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UpdateWindow.m; sourceTree = "<group>"; };
 		4FF873DE23197283002A897A /* UpdateWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpdateWindow.xib; sourceTree = "<group>"; };
@@ -455,15 +458,17 @@
 			path = Unused;
 			sourceTree = "<group>";
 		};
-		4F32E18D231C50A100199A11 /* Remap */ = {
+		4F32E18D231C50A100199A11 /* InputTransformation */ = {
 			isa = PBXGroup;
 			children = (
-				4FB68B6E246CA4AF0059530E /* Input */,
+				4F8DBB502538E95000F58093 /* Drag */,
+				4F32E17D231C509200199A11 /* Scroll */,
+				4FB68B6E246CA4AF0059530E /* Buttons */,
 				4FB68B6D246CA4850059530E /* Actions */,
-				4FF58E282469952200293553 /* RemapUtility.h */,
-				4FF58E292469952200293553 /* RemapUtility.m */,
+				4F8DBB512538E9D400F58093 /* Utility */,
+				4F8DBB522538E9E400F58093 /* TransformationManager */,
 			);
-			path = Remap;
+			path = InputTransformation;
 			sourceTree = "<group>";
 		};
 		4F32E197231C5B5100199A11 /* Frameworks */ = {
@@ -481,6 +486,33 @@
 				4F422EEC23469B0F00AA6E22 /* README.md */,
 			);
 			name = Other;
+			sourceTree = "<group>";
+		};
+		4F8DBB502538E95000F58093 /* Drag */ = {
+			isa = PBXGroup;
+			children = (
+				4F9CA64C246CA5470042F25A /* ModifyingActions.h */,
+				4F9CA64D246CA5470042F25A /* ModifyingActions.m */,
+			);
+			path = Drag;
+			sourceTree = "<group>";
+		};
+		4F8DBB512538E9D400F58093 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				4FF58E282469952200293553 /* RemapUtility.h */,
+				4F8DBB5B2538EC8300F58093 /* RemapUtility.m */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		4F8DBB522538E9E400F58093 /* TransformationManager */ = {
+			isa = PBXGroup;
+			children = (
+				4F8DBB492538E79400F58093 /* TransformationManager.h */,
+				4F8DBB4A2538E79400F58093 /* TransformationManager.m */,
+			);
+			path = TransformationManager;
 			sourceTree = "<group>";
 		};
 		4F95A246234EBB1E000DC7D7 /* Pointer */ = {
@@ -503,15 +535,13 @@
 		4FB68B6D246CA4850059530E /* Actions */ = {
 			isa = PBXGroup;
 			children = (
-				4FB68B67246CA46F0059530E /* OneShotActions.h */,
-				4FB68B68246CA46F0059530E /* OneShotActions.m */,
-				4F9CA64C246CA5470042F25A /* ModifyingActions.h */,
-				4F9CA64D246CA5470042F25A /* ModifyingActions.m */,
+				4FB68B67246CA46F0059530E /* Actions.h */,
+				4FB68B68246CA46F0059530E /* Actions.m */,
 			);
 			path = Actions;
 			sourceTree = "<group>";
 		};
-		4FB68B6E246CA4AF0059530E /* Input */ = {
+		4FB68B6E246CA4AF0059530E /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
 				4F32E190231C50A100199A11 /* ButtonInputReceiver_CG.h */,
@@ -519,7 +549,7 @@
 				4F32E192231C50A100199A11 /* ButtonInputParser.h */,
 				4F32E18E231C50A100199A11 /* ButtonInputParser.m */,
 			);
-			path = Input;
+			path = Buttons;
 			sourceTree = "<group>";
 		};
 		4FBF347B2316B90800E6CFD0 /* Update */ = {
@@ -584,8 +614,7 @@
 				4FD45A21231C7FBB00F75C58 /* Accessibility */,
 				4F1B7C1823D3E5640055C007 /* Touch */,
 				4FD45A14231C76DE00F75C58 /* Devices */,
-				4F32E18D231C50A100199A11 /* Remap */,
-				4F32E17D231C509200199A11 /* Scroll */,
+				4F32E18D231C50A100199A11 /* InputTransformation */,
 				4F95A246234EBB1E000DC7D7 /* Pointer */,
 				4FD45A15231C76ED00F75C58 /* MessagePort */,
 				4FD45A13231C76A700F75C58 /* Config */,
@@ -942,19 +971,20 @@
 				4F32E155231C420100199A11 /* MessagePort_HelperApp.m in Sources */,
 				4FECC8902431DCDF001A3C4B /* ScrollControl.m in Sources */,
 				4F1C968C231361EF00C3B9AE /* TouchEvents.c in Sources */,
-				4FB68B69246CA46F0059530E /* OneShotActions.m in Sources */,
+				4FB68B69246CA46F0059530E /* Actions.m in Sources */,
+				4F8DBB4B2538E79400F58093 /* TransformationManager.m in Sources */,
 				4FD45A20231C7FB500F75C58 /* AccessibilityCheck.m in Sources */,
 				4FECC88D2431DCCD001A3C4B /* RoughScroll.m in Sources */,
 				4F32E18C231C509200199A11 /* SmoothScroll.m in Sources */,
 				4F32E157231C420100199A11 /* DeviceManager.m in Sources */,
 				4F9CA64E246CA5470042F25A /* ModifyingActions.m in Sources */,
 				4F1B7C1D23D3E6D60055C007 /* TouchSimulator.m in Sources */,
+				4F8DBB5C2538EC8300F58093 /* RemapUtility.m in Sources */,
 				4F32E158231C420100199A11 /* ConfigFileInterface_HelperApp.m in Sources */,
 				4FCECD8521092354001F1078 /* AppDelegate.m in Sources */,
 				4F32E15D231C44C000199A11 /* main.m in Sources */,
 				4FF3B2C0232788AA009E8A8E /* HelperServices_HelperApp.m in Sources */,
 				4F32E194231C50A100199A11 /* ButtonInputParser.m in Sources */,
-				4FF58E2A2469952200293553 /* RemapUtility.m in Sources */,
 				4F479C392488B75C00976C68 /* GestureScrollSimulator.m in Sources */,
 				4F32E196231C50A100199A11 /* ButtonInputReceiver_CG.m in Sources */,
 				4F95A249234EBB5D000DC7D7 /* PointerSpeed.m in Sources */,

@@ -15,18 +15,6 @@
 
 @implementation RemapUtility
 
-+ (NSDictionary *)getCurrentModifiers {
-    
-    NSMutableDictionary *outDict = [NSMutableDictionary dictionary];
-    NSEventModifierFlags modifierFlags = [NSEvent modifierFlags]
-    & NSDeviceIndependentModifierFlagsMask; // Not sure if this does anything
-    if (modifierFlags != 0) {
-        outDict[@"keyboardModifierFlags"] = @(modifierFlags);
-    }
-    return outDict;
-}
-
-
 + (void)hideMousePointer:(BOOL)B {
     
     if (B) {
