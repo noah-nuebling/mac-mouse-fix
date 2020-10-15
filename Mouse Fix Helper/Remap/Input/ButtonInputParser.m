@@ -40,7 +40,7 @@ NSDictionary *_testRemaps;
 NSArray *_testRemapsUI;
 + (void)load {
     _testRemaps = @{
-        @{}: @{                                                     // Key: modifier dict
+        @{}: @{                                                     // Key: modifier dict (empty -> no modifiers)
             @(3): @{                                                // Key: button
                 @(1): @{                                            // Key: level
                     @"click": @[                                  // Key: click/hold, value: array of actions
@@ -151,7 +151,7 @@ NSArray *_testRemapsUI;
             },
             @(5): @{                                                // Key: button
                 @(1): @{                                            // Key: level
-                    @"click": @[                                  // Key: clic/hold, value: array of actions
+                    @"click": @[                                  // Key: click/hold, value: array of actions
                         @{
                             @"type": @"twoFingerSwipeEvent",
                             @"value": @"right",
