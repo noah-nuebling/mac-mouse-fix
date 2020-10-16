@@ -53,6 +53,11 @@ static void registerInputCallbackForDevice(MFDevice *device) {
     }
 }
 
+- (CFNumberRef)getID {
+    return IOHIDDeviceGetProperty(_IOHIDDevice, CFSTR(kIOHIDUniqueIDKey));
+}
+
+
 // Copied this from `IOHIDDevice.c`
 // Only using this for `closeWithOption:`
 typedef struct __IOHIDDevice

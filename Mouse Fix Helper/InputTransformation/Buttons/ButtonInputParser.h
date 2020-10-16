@@ -12,8 +12,10 @@
 
 @interface ButtonInputParser : NSObject
 
-+ (MFEventPassThroughEvaluation)sendActionTriggersForInputWithButton:(int64_t)button type:(MFButtonInputType)type inputDevice:device;
-+ (void)reset;
++ (MFEventPassThroughEvaluation)parseInputWithButton:(int64_t)button type:(MFButtonInputType)type inputDevice:(MFDevice *)device;
+
++ (void)handleHasHadDirectEffectWithDevice:(NSNumber *)devID button:(NSNumber *)btn;
++ (void)handleHasHadEffectAsModifierWithDevice:(NSNumber *)devID button:(NSNumber *)btn;
 
 @end
 

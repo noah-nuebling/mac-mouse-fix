@@ -80,16 +80,7 @@ static MFDevice *_deviceWhichCausedThisButtonInput;
     return _deviceWhichCausedThisButtonInput == nil;
 }
 
-static int32_t _debug_entryCtr = 0;
-
 CGEventRef handleInput(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
-    
-    _debug_entryCtr += 1;
-    
-    if (_debug_entryCtr >= 2) {
-        
-    }
-    
     
     NSLog(@"CG Button input");
     NSLog(@"Incoming event: %@", [NSEvent eventWithCGEvent:event]); // TODO: Sometimes events seem to be deallocated when reaching this point, causing a crash. This is likely to do with inserting fake events.
@@ -107,7 +98,7 @@ CGEventRef handleInput(CGEventTapProxy proxy, CGEventType type, CGEventRef event
         MFButtonInputType type = pr == 0 ? kMFButtonInputTypeButtonUp : kMFButtonInputTypeButtonDown;
         
         if (3 <= buttonNumber) {
-            MFEventPassThroughEvaluation rt = [ButtonInputParser sendActionTriggersForInputWithButton:buttonNumber type:type inputDevice:dev];
+            MFEventPassThroughEvaluation rt = [ButtonInputParser parseInputWithButton:buttonNumber type:type inputDevice:dev];
             if (rt == kMFEventPassThroughRefusal) {
                 return nil;
             } else {

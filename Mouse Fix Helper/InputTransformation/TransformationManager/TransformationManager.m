@@ -89,7 +89,7 @@
     if (triggerType == targetClickTriggerForOneShotActionArray) {
         NSArray *OneShotActionArrayForClickTrigger = remapDict[@(button)][@(level)][@"click"];
         if (OneShotActionArrayForClickTrigger) {
-            [ButtonInputParser reset];
+            [ButtonInputParser handleHasHadDirectEffectWithDevice:devID button:<#(NSNumber *)#>];
             [Actions handleActionArray:OneShotActionArrayForClickTrigger];
         }
     }

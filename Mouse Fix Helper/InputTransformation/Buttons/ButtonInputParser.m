@@ -36,71 +36,173 @@
 
 @implementation ButtonInputParser
 
+#pragma mark - State
 
+typedef struct __ButtonState {
+    NSTimer *holdTimer;
+    NSTimer *levelTimer;
+    int64_t clickLevel;
+    BOOL isZombified;
+} ButtonState;
 
-static NSTimer *_levelTimer;
-static NSTimer *_holdTimer;
-static int64_t _buttonFromLastButtonDownEvent;
-static MFDevice *_deviceFromLastButtonDownEvent;
-static int64_t _clickLevel;
-+ (void)reset {
-    [_levelTimer invalidate];
-    [_holdTimer invalidate];
-    _clickLevel = 0;
-//    _buttonFromLastMouseDown = 0; // TODO: This broke ending modified drags on releasing the modifying mouse button. I'm not sure what it was good for so I commented it out.
+/*
+deviceID:
+    buttonNumber:
+        ButtonState
+*/
+NSMutableDictionary *_state;
+
+#pragma mark - Load
+
++ (void)load {
+    _state = [NSMutableDictionary dictionary];
 }
-+ (MFEventPassThroughEvaluation)sendActionTriggersForInputWithButton:(int64_t)button type:(MFButtonInputType)type inputDevice:device {
+
+#pragma mark - Input parsing
+
++ (MFEventPassThroughEvaluation)parseInputWithButton:(int64_t)button type:(MFButtonInputType)type inputDevice:(MFDevice *)device {
+    
+    // Init passThroughEval
     
     MFEventPassThroughEvaluation passThroughEval = kMFEventPassThroughApproval;
     
+    // Get state of the incoming button
+    
+    NSNumber *devID = (__bridge NSNumber *)[device getID];
+    
+    NSValue *bsAsValue = [_state valueForKeyPath:[NSString stringWithFormat:@"%@.%@", devID, @(button)]];
+    if (bsAsValue == nil) {
+        ButtonState bs;
+        _state[devID][@(button)] = [NSValue valueWithBytes:&bs objCType:@encode(ButtonState)];
+    }
+    ButtonState bs;
+    [bsAsValue getValue:&bs];
+    
+    // Reset button state if zombified
+    
+    if (bs.isZombified) {
+        [self resetButtonState:&bs];
+    }
+    
+    // Mouse down
      if (type == kMFButtonInputTypeButtonDown) {
          
-         if (button != _buttonFromLastButtonDownEvent || device != _deviceFromLastButtonDownEvent) {
-             [self reset];
-             _buttonFromLastButtonDownEvent = button;
-             _deviceFromLastButtonDownEvent = device;
-         }
+         // Send trigger
          
-         if ([_levelTimer isValid]) {
-            _clickLevel += 1;
-         } else {
-             _clickLevel = 1;
-         }
-        passThroughEval = [TransformationManager handleButtonTriggerWithButton:button triggerType:kMFActionTriggerTypeButtonDown level:_clickLevel];
-        [_levelTimer invalidate];
-        [_holdTimer invalidate];
-        _holdTimer = [NSTimer scheduledTimerWithTimeInterval:0.25
-                                                      target:self
-                                                    selector:@selector(holdTimerCallback:)
-                                                    userInfo:@(button)
+        passThroughEval = [TransformationManager handleButtonTriggerWithButton:button triggerType:kMFActionTriggerTypeButtonDown level:bs.clickLevel];
+         
+         // Restart timers
+         
+        [bs.levelTimer invalidate];
+        [bs.holdTimer invalidate];
+         
+         NSDictionary *info = @{
+             @"devID": devID,
+             @"btn": @(button)
+         };
+        bs.holdTimer = [NSTimer scheduledTimerWithTimeInterval:0.25
+                                                        target:self
+                                                      selector:@selector(holdTimerCallback:)
+                                                      userInfo:info
                                                      repeats:NO];
-         _levelTimer = [NSTimer scheduledTimerWithTimeInterval:0.25 // NSEvent.doubleClickInterval
+         bs.levelTimer = [NSTimer scheduledTimerWithTimeInterval:0.25 // NSEvent.doubleClickInterval
                                                        target:self
                                                      selector:@selector(levelTimerCallback:)
-                                                     userInfo:@(button)
+                                                     userInfo:info
                                                       repeats:NO];
-     } else { // if (type == kMFButtonInputTypeButtonUp)
+     }
+    // Mouse up
+     else {
          
-         passThroughEval = [TransformationManager handleButtonTriggerWithButton:button triggerType:kMFActionTriggerTypeButtonUp level:_clickLevel];
+         // Send trigger
          
-//         if ([_holdTimer isValid]) { // TODO: Find a way to make click actions trigger on mouse up after hold timer expired, if the reason that the click action is triggered on mouse up is not a hold action on the same button and click level (-> if it's a modifying action)
-//             passThroughEval =
-//         } else {
-//             [ModifyingActions deactivateAllInputModification];
-//         }
-//        [_holdTimer invalidate];
-         
+         passThroughEval = [TransformationManager handleButtonTriggerWithButton:button triggerType:kMFActionTriggerTypeButtonUp level:bs.clickLevel];
          
      }
+    
+    // Return
     return passThroughEval;
 }
+
+#pragma mark - Timer callbacks
+
 + (void)holdTimerCallback:(NSTimer *)timer {
-//    int button = [[timer userInfo] intValue];
-    [TransformationManager handleButtonTriggerWithButton:_buttonFromLastButtonDownEvent triggerType:kMFActionTriggerTypeHoldTimerExpired level:_clickLevel];
+    NSNumber *devID;
+    NSNumber *btn;
+    NSNumber *lvl;
+    timerCallbackHelper(timer.userInfo, &devID, &btn, &lvl);
+    
+    [self zombifyWithDevice:devID button:btn];
+    [TransformationManager handleButtonTriggerWithButton:btn.integerValue triggerType:kMFActionTriggerTypeHoldTimerExpired level:lvl.integerValue];
 }
+
 + (void)levelTimerCallback:(NSTimer *)timer {
-//    int button = [[timer userInfo] intValue];
-    [TransformationManager handleButtonTriggerWithButton:_buttonFromLastButtonDownEvent triggerType:kMFActionTriggerTypeLevelTimerExpired level:_clickLevel];
+    NSNumber *devID;
+    NSNumber *btn;
+    NSNumber *lvl;
+    timerCallbackHelper(timer.userInfo, &devID, &btn, &lvl);
+    
+    [self resetStateWithDevice:devID button:btn];
+    [TransformationManager handleButtonTriggerWithButton:btn.integerValue triggerType:kMFActionTriggerTypeLevelTimerExpired level:lvl.integerValue];
+}
+static void timerCallbackHelper(NSDictionary *info, NSNumber **devID, NSNumber **btn,NSNumber **lvl) {
+    
+    *devID = (NSNumber *)info[@"devID"];
+    *btn = (NSNumber *)info[@"btn"];
+    
+    ButtonState bs;
+    [((NSValue *)_state[*devID][*btn]) getValue:&bs];
+    *lvl = @(bs.clickLevel);
+}
+
+#pragma mark - State control
+
+#pragma mark Reset state
+
++ (void)resetButtonState:(ButtonState *)bs {
+    [bs->holdTimer invalidate];
+    [bs->levelTimer invalidate];
+    bs->clickLevel = 0;
+    bs->isZombified = NO;
+}
+
++ (void)resetStateWithDevice:(NSNumber *)devID button:(NSNumber *)btn {
+    ButtonState bs;
+    [((NSValue *) _state[devID][btn]) getValue:&bs];
+    
+    [self resetButtonState:&bs];
+}
+
++ (void)resetAllState {
+    for (NSNumber *devKey in _state) {
+        NSDictionary *dev = _state[devKey];
+        for (NSNumber *btnKey in dev) {
+            [self resetStateWithDevice:devKey button:btnKey];
+        }
+    }
+}
+
+#pragma mark Zombify
+
+// Zombification is kinda like a 'half reset'. Everything except click level is reset and when further input occurs, the button's state is reset before the input is parsed
+// This necessary to be able to use buttons as modifiers (e.g. pressing a button to modify the function of another button)
++ (void)zombifyWithDevice:(NSNumber *)devID button:(NSNumber *)btn {
+    ButtonState bs;
+    [((NSValue *) _state[devID][btn]) getValue:&bs];
+    
+    [bs.holdTimer invalidate];
+    [bs.levelTimer invalidate];
+    bs.isZombified = YES;
+}
+
+#pragma mark - Interface
+
++ (void)handleHasHadDirectEffectWithDevice:(NSNumber *)devID button:(NSNumber *)btn {
+    [self resetStateWithDevice:devID button:btn];
+}
+
++ (void)handleHasHadEffectAsModifierWithDevice:(NSNumber *)devID button:(NSNumber *)btn {
+    [self zombifyWithDevice:devID button:btn];
 }
 
 @end
