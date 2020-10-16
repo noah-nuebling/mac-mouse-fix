@@ -29,8 +29,8 @@ typedef enum {
     kMFActionTriggerTypeNone = -1,
     kMFActionTriggerTypeButtonDown = 0,
     kMFActionTriggerTypeButtonUp = 1,
-    kMFActionTriggerTypeLevelTimerExpired = 2,
-    kMFActionTriggerTypeHoldTimerExpired = 3,
+    kMFActionTriggerTypeHoldTimerExpired = 2,
+    kMFActionTriggerTypeLevelTimerExpired = 3,
 } MFActionTriggerType;
 
 //typedef enum {

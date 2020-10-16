@@ -13,7 +13,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TransformationManager : NSObject
-+ (MFEventPassThroughEvaluation)handleButtonTriggerWithButton:(int64_t)button triggerType:(MFActionTriggerType)triggerType level:(int64_t)level;
++ (MFEventPassThroughEvaluation)handleButtonTriggerWithButton:(NSNumber *)button trigger:(MFActionTriggerType)trigger level:(NSNumber *)level device:(NSNumber *)devID;
 @end
 
 NS_ASSUME_NONNULL_END

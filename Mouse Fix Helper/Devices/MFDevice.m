@@ -205,7 +205,7 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
     
     if (isButton) {
         
-        NSLog(@"HID Input: Button");
+        //NSLog(@"HID Input: Button");
         
         ButtonInputReceiver_CG.deviceWhichCausedThisButtonInput = sendingDev;
         

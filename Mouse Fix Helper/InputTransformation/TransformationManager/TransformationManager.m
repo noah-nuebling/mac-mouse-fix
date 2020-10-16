@@ -26,77 +26,90 @@
     
 }
 
-+ (MFEventPassThroughEvaluation)handleButtonTriggerWithButton:(int64_t)button triggerType:(MFActionTriggerType)triggerType level:(int64_t)level {
+BOOL isTriggerForClickAction(MFActionTriggerType triggerType) {
+    return triggerType == kMFActionTriggerTypeButtonDown ||
+    triggerType == kMFActionTriggerTypeButtonUp ||
+    triggerType == kMFActionTriggerTypeLevelTimerExpired;
+}
+
+static void assessMappingLandscape(BOOL *actionOfGreaterLevelExists, BOOL *actionOfSameLevelWithMouseDownStateDependencyExists, NSNumber *button, NSNumber *level, NSDictionary *remaps) {
+    *actionOfSameLevelWithMouseDownStateDependencyExists = [TransformationManager holdActionExistsForButton:button clickLevel:level remapDict:remaps]
+    || [TransformationManager modifyingActionExistsForButton:button clickLevel:level remapDict:remaps];
+    *actionOfGreaterLevelExists = [TransformationManager actionOfGreaterClickLevelExistsForButton:button clickLevel:level remapDict:remaps];
+}
+
++ (MFEventPassThroughEvaluation)handleButtonTriggerWithButton:(NSNumber *)button trigger:(MFActionTriggerType)trigger level:(NSNumber *)level device:(NSNumber *)devID {
+          
+    NSLog(@"HANDLE BUTTON TRIGGER");
+    NSLog(@"button: %@, trigger: %@, level: %@, devID: %@", button, @(trigger), level, devID);
     
     MFEventPassThroughEvaluation passThroughEval = true;
     
     // Get remapDict and apply modifier overrides
     
-    NSDictionary *remapDict = _testRemaps[@{}];
+    NSDictionary *remaps = _testRemaps[@{}];
     
     NSDictionary *modifiers = [self getActiveModifiers];
     if ([modifiers isNotEqualTo:@{}]) {
-        NSDictionary *actionsForCurrentModifiers = _testRemaps[modifiers];
-        remapDict = [Utility_HelperApp dictionaryWithOverridesAppliedFrom:[actionsForCurrentModifiers copy] to:remapDict];
+        NSDictionary *remapsForActiveModifiers = _testRemaps[modifiers];
+        remaps = [Utility_HelperApp dictionaryWithOverridesAppliedFrom:[remapsForActiveModifiers copy] to:remaps];
     }
     
-    // Get OneShotActionArray for click input and calculate targetTrigger, that is, the trigger on which the click action should be executed.
+    // Asses mapping landscape
+    BOOL actionOfSameLevelWithMouseDownStateDependencyExists;
+    BOOL actionOfGreaterLevelExists;
+    assessMappingLandscape(&actionOfGreaterLevelExists, &actionOfSameLevelWithMouseDownStateDependencyExists, button, level, remaps);
+    
+    // If no remaps exist for this button, let the event which caused this function call pass through
+    
+    if (trigger == kMFActionTriggerTypeButtonDown || trigger == kMFActionTriggerTypeButtonUp) {
+        // ^ The passThroughEval return value only does anything on trigger types that are caused directly by mouse input (kMFActionTriggerTypeButtonDown and kMFActionTriggerTypeButtonUp) so this condition isn't totally necessary
+        
+        NSArray *clickAction = remaps[button][level][@"click"];
+        
+        if (clickAction == nil
+            && !actionOfSameLevelWithMouseDownStateDependencyExists
+            && !actionOfGreaterLevelExists)
+        {
+            NSLog(@"No remaps exist for this button, letting event pass through");
+            return kMFEventPassThroughApproval;
+        }
+    }
+    
+    // If trigger is for click action, calculate targetTrigger, that is, the trigger on which the click action should be executed.
+    
     // \note It's unnecessary to calculate targetTrigger on click actions again for every call of this function. It only has to be calculated once for every "click" (as opposed to "hold") actionArray in every possible overriden remapDict including the unoverriden one. We could precalculate everything once when loading remapDict if we wanted to. This is plenty fast though so it's fine.
     
-    MFActionTriggerType targetClickTriggerForOneShotActionArray = kMFActionTriggerTypeNone;
-    
-    if (triggerType == kMFActionTriggerTypeButtonDown ||
-        triggerType == kMFActionTriggerTypeButtonUp ||
-        triggerType == kMFActionTriggerTypeLevelTimerExpired) {
+    if (isTriggerForClickAction(trigger)) {
         
-        // ^ The incoming triggers is for "click" actions.
-        // -> Get the relevant "click" action and calculate on which of the three possible triggers we want to execute it.
+        // Find target trigger
         
-        BOOL actionOfGreaterLevelExists = [self actionOfGreaterClickLevelExistsForButton:button clickLevel:level remapDict:remapDict];
-        BOOL actionOfSameLevelWithHoldTriggerOrWhichIsModifyingExists
-            = [self holdActionExistsForButton:button clickLevel:level remapDict:remapDict]
-            || [self modifyingActionExistsForButton:button clickLevel:level remapDict:remapDict];
-        
-        // Set target trigger
-        
+        MFActionTriggerType targetTriggerForClickAction = kMFActionTriggerTypeNone;
         if (actionOfGreaterLevelExists) {
-            targetClickTriggerForOneShotActionArray = kMFActionTriggerTypeLevelTimerExpired;
-        } else if (actionOfSameLevelWithHoldTriggerOrWhichIsModifyingExists) {
-            targetClickTriggerForOneShotActionArray = kMFActionTriggerTypeButtonUp;
+            targetTriggerForClickAction = kMFActionTriggerTypeLevelTimerExpired;
+        } else if (actionOfSameLevelWithMouseDownStateDependencyExists) {
+            targetTriggerForClickAction = kMFActionTriggerTypeButtonUp;
         } else {
-            targetClickTriggerForOneShotActionArray = kMFActionTriggerTypeButtonDown;
+            targetTriggerForClickAction = kMFActionTriggerTypeButtonDown;
         }
         
-        // Let the input event which caused this function call pass through, if no remaps exist for this button.
-        // TODO: Think about this and make sure that the condition is true if and only if no remaps exist for this button
+        // Execute OneShotActionArray if incoming trigger matches target trigger
         
-        NSArray *OneShotActionArrayForClickTrigger = remapDict[@(button)][@(level)][@"click"];
-        if (
-            ((triggerType == kMFActionTriggerTypeButtonDown) || (triggerType == kMFActionTriggerTypeButtonUp))
-            // ^ The passThroughEval return value only does anything on trigger types that are caused directly by mouse input (kMFActionTriggerTypeButtonDown and kMFActionTriggerTypeButtonUp) so this condition isn't really necessary
-            && OneShotActionArrayForClickTrigger == nil
-            && !actionOfGreaterLevelExists
-            && !actionOfSameLevelWithHoldTriggerOrWhichIsModifyingExists
-            )
-        {
-            passThroughEval = kMFEventPassThroughApproval; // TODO: Couldn't we return here immediately?
+        if (trigger == targetTriggerForClickAction) {
+            NSArray *OneShotActionArrayForClickTrigger = remaps[button][level][@"click"];
+            if (OneShotActionArrayForClickTrigger) {
+                [ButtonInputParser handleHasHadDirectEffectWithDevice:devID button:button];
+                [Actions handleActionArray:OneShotActionArrayForClickTrigger];
+            }
         }
     }
     
+    // If trigger is for hold action, trigger is right away
     
-    // Execute OneShotActionArray
-    
-    if (triggerType == targetClickTriggerForOneShotActionArray) {
-        NSArray *OneShotActionArrayForClickTrigger = remapDict[@(button)][@(level)][@"click"];
-        if (OneShotActionArrayForClickTrigger) {
-            [ButtonInputParser handleHasHadDirectEffectWithDevice:devID button:<#(NSNumber *)#>];
-            [Actions handleActionArray:OneShotActionArrayForClickTrigger];
-        }
-    }
-    if (triggerType == kMFActionTriggerTypeHoldTimerExpired) {
-        NSArray *OneShotActionArrayForHoldTrigger = remapDict[@(button)][@(level)][@"hold"];
+    if (trigger == kMFActionTriggerTypeHoldTimerExpired) {
+        NSArray *OneShotActionArrayForHoldTrigger = remaps[button][level][@"hold"];
         if (OneShotActionArrayForHoldTrigger) {
-            [ButtonInputParser reset];
+            [ButtonInputParser handleHasHadDirectEffectWithDevice:devID button:button];
             [Actions handleActionArray:OneShotActionArrayForHoldTrigger];
         }
     }
@@ -119,18 +132,18 @@
 
 #pragma mark Determine target trigger for click actions
 
-+ (BOOL)holdActionExistsForButton:(int64_t)button clickLevel:(int64_t)level remapDict:(NSDictionary *)remapDict {
-    return remapDict[@(button)][@(level)][@"hold"] != nil;
++ (BOOL)holdActionExistsForButton:(NSNumber *)button clickLevel:(NSNumber *)level remapDict:(NSDictionary *)remapDict {
+    return remapDict[button][level][@"hold"] != nil;
 }
 
-+ (BOOL)modifyingActionExistsForButton:(int64_t)button clickLevel:(int64_t)level remapDict:(NSDictionary *)remapDict {
-    return remapDict[@(button)][@(level)][@"modifying"] != nil;
++ (BOOL)modifyingActionExistsForButton:(NSNumber *)button clickLevel:(NSNumber *)level remapDict:(NSDictionary *)remapDict {
+    return remapDict[button][level][@"modifying"] != nil;
 }
 
-+ (BOOL)actionOfGreaterClickLevelExistsForButton:(int64_t)button clickLevel:(int64_t)level remapDict:(NSDictionary *)remapDict {
++ (BOOL)actionOfGreaterClickLevelExistsForButton:(NSNumber *)button clickLevel:(NSNumber *)level remapDict:(NSDictionary *)remapDict {
     BOOL actionOfGreaterLevelExists = NO;
-    for (NSNumber *thisLevel in ((NSDictionary *)remapDict[@(button)]).allKeys) {
-        if (thisLevel.intValue > level) {
+    for (NSNumber *thisLevel in ((NSDictionary *)remapDict[button]).allKeys) {
+        if (thisLevel.intValue > level.intValue) {
             actionOfGreaterLevelExists = YES;
             break;
         }
@@ -170,15 +183,15 @@ NSArray *_testRemapsUI;
                     @"click": @[                                  // Key: click/hold, value: array of actions
                         @{
                             @"type": @"symbolicHotkey",
+                            @"value": @(33),
+                        },
+                    ],
+                    @"hold": @[                                  // Key: click/hold, value: array of actions
+                        @{
+                            @"type": @"symbolicHotkey",
                             @"value": @(70),
                         },
                     ],
-//                    @"hold": @[                                  // Key: click/hold, value: array of actions
-//                        @{
-//                            @"type": @"symbolicHotkey",
-//                            @"value": @(33),
-//                        },
-//                    ],
 //                    @"modifying": @[
 //                            @{
 //                                @"type": @"modifiedDrag",
@@ -204,12 +217,12 @@ NSArray *_testRemapsUI;
             },
             @(4): @{                                                // Key: button
                 @(1): @{                                            // Key: level
-                    @"modifying": @[
-                            @{
-                                @"type": @"modifiedDrag",
-                                @"value": @"threeFingerSwipe",
-                            }
-                    ],
+//                    @"modifying": @[
+//                            @{
+//                                @"type": @"modifiedDrag",
+//                                @"value": @"threeFingerSwipe",
+//                            }
+//                    ],
                     @"click": @[
                             @{
                                 @"type": @"symbolicHotkey",

@@ -83,7 +83,7 @@ static struct ModifiedDragState _modifiedDrag;
                     _modifiedDrag.usageAxis = kMFAxisHorizontal;
                 }
                 _modifiedDrag.activationState = kMFModifiedInputActivationStateInUse; // Activate modified drag input!
-                [ButtonInputParser reset]; // Reset input parser to prevent hold timer from firing
+                //[ButtonInputParser reset]; // Reset input parser to prevent hold timer from firing
 //                [ModifyingActions deactivateModifiedScroll]; // Deactivate other potentially initalized modified input.
                 
                 if ([_modifiedDrag.type isEqualToString:@"threeFingerSwipe"]) {
