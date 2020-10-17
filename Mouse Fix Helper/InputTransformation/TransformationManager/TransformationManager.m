@@ -26,28 +26,16 @@
     
 }
 
-BOOL isTriggerForClickAction(MFActionTriggerType triggerType) {
-    return triggerType == kMFActionTriggerTypeButtonDown ||
-    triggerType == kMFActionTriggerTypeButtonUp ||
-    triggerType == kMFActionTriggerTypeLevelTimerExpired;
-}
-
-static void assessMappingLandscape(BOOL *actionOfGreaterLevelExists, BOOL *actionOfSameLevelWithMouseDownStateDependencyExists, NSNumber *button, NSNumber *level, NSDictionary *remaps) {
-    *actionOfSameLevelWithMouseDownStateDependencyExists = [TransformationManager holdActionExistsForButton:button clickLevel:level remapDict:remaps]
-    || [TransformationManager modifyingActionExistsForButton:button clickLevel:level remapDict:remaps];
-    *actionOfGreaterLevelExists = [TransformationManager actionOfGreaterClickLevelExistsForButton:button clickLevel:level remapDict:remaps];
-}
-
 + (MFEventPassThroughEvaluation)handleButtonTriggerWithButton:(NSNumber *)button trigger:(MFActionTriggerType)trigger level:(NSNumber *)level device:(NSNumber *)devID {
           
-    //NSLog(@"HANDLE BUTTON TRIGGER - button: %@, trigger: %@, level: %@, devID: %@", button, @(trigger), level, devID);
+            //NSLog(@"HANDLE BUTTON TRIGGER - button: %@, trigger: %@, level: %@, devID: %@", button, @(trigger), level, devID);
     
-    MFEventPassThroughEvaluation passThroughEval = true;
     
-    // Get remapDict and apply modifier overrides
+    // Init passThroughEval
+    MFEventPassThroughEvaluation passThroughEval = kMFEventPassThroughApproval;
     
+    // Get remaps and apply modifier overrides
     NSDictionary *remaps = _testRemaps[@{}];
-    
     NSDictionary *modifiers = [self getActiveModifiers];
     if ([modifiers isNotEqualTo:@{}]) {
         NSDictionary *remapsForActiveModifiers = _testRemaps[modifiers];
@@ -55,44 +43,49 @@ static void assessMappingLandscape(BOOL *actionOfGreaterLevelExists, BOOL *actio
     }
     
     // Asses mapping landscape
-    BOOL actionOfSameLevelWithMouseDownStateDependencyExists;
-    BOOL actionOfGreaterLevelExists;
-    assessMappingLandscape(&actionOfGreaterLevelExists, &actionOfSameLevelWithMouseDownStateDependencyExists, button, level, remaps);
     
-    // If no remaps exist for this button, let the event which caused this function call pass through
+    // \note It's unnecessary to assess mapping landscape (that includes calculating targetTrigger) on click actions again for every call of this function. It only has to be calculated once for every "click" (as opposed to "hold") actionArray in every possible overriden remapDict including the unoverriden one. We could precalculate everything once when loading remapDict if we wanted to. This is plenty fast though so it's fine.
+    
+    BOOL clickActionOfThisLevelExists;
+    BOOL mouseDownStateOfThisLevelCanHaveEffect;
+    BOOL effectOfGreaterLevelExists;
+    assessMappingLandscape(&clickActionOfThisLevelExists, &mouseDownStateOfThisLevelCanHaveEffect, &effectOfGreaterLevelExists, button, level, remaps);
+    
+    // If no remaps exist for this button, (and if this functions was invoked as a direct result of a physical button press) let the CGEvent which caused this function call pass through
     
     if (trigger == kMFActionTriggerTypeButtonDown || trigger == kMFActionTriggerTypeButtonUp) {
-        
-        NSArray *clickAction = remaps[button][level][@"click"];
-        
-        if (clickAction == nil
-            && !actionOfSameLevelWithMouseDownStateDependencyExists
-            && !actionOfGreaterLevelExists)
-        {
+        NSDictionary *remapsForThisButton = remaps[button];
+        if (remapsForThisButton == nil) {
             NSLog(@"No remaps exist for this button, letting event pass through");
             return kMFEventPassThroughApproval;
         }
     }
     
-    // If trigger is for click action, calculate targetTrigger, that is, the trigger on which the click action should be executed.
+    NSArray *clickAction = remaps[button][level][@"click"];
     
-    // \note It's unnecessary to calculate targetTrigger on click actions again for every call of this function. It only has to be calculated once for every "click" (as opposed to "hold") actionArray in every possible overriden remapDict including the unoverriden one. We could precalculate everything once when loading remapDict if we wanted to. This is plenty fast though so it's fine.
+    if (clickAction == nil
+        && !mouseDownStateOfThisLevelCanHaveEffect
+        && !effectOfGreaterLevelExists)
+    {
+
+    }
+    
+    // If trigger is for click action, calculate targetTrigger, that is, the trigger on which the click action should be executed,
+    //      and then execute the click action array if the incoming trigger matches the target trigger
     
     if (isTriggerForClickAction(trigger)) {
         
         // Find target trigger
-        
         MFActionTriggerType targetTriggerForClickAction = kMFActionTriggerTypeNone;
-        if (actionOfGreaterLevelExists) {
+        if (effectOfGreaterLevelExists) {
             targetTriggerForClickAction = kMFActionTriggerTypeLevelTimerExpired;
-        } else if (actionOfSameLevelWithMouseDownStateDependencyExists) {
+        } else if (mouseDownStateOfThisLevelCanHaveEffect) {
             targetTriggerForClickAction = kMFActionTriggerTypeButtonUp;
         } else {
             targetTriggerForClickAction = kMFActionTriggerTypeButtonDown;
         }
         
-        // Execute OneShotActionArray if incoming trigger matches target trigger
-        
+        // Execute click action array if incoming trigger matches target trigger
         if (trigger == targetTriggerForClickAction) {
             NSArray *actionArrayForClickTrigger = remaps[button][level][@"click"];
             if (actionArrayForClickTrigger) {
@@ -102,7 +95,7 @@ static void assessMappingLandscape(BOOL *actionOfGreaterLevelExists, BOOL *actio
         }
     }
     
-    // If trigger is for hold action, trigger is right away
+    // If trigger is for hold action, execute hold action array
     
     if (trigger == kMFActionTriggerTypeHoldTimerExpired) {
         NSArray *actionArrayForHoldTrigger = remaps[button][level][@"hold"];
@@ -128,34 +121,66 @@ static void assessMappingLandscape(BOOL *actionOfGreaterLevelExists, BOOL *actio
 
 #pragma mark - Utility
 
-#pragma mark Determine target trigger for click actions
+#pragma mark Assess mapping landscape
 
-+ (BOOL)holdActionExistsForButton:(NSNumber *)button clickLevel:(NSNumber *)level remapDict:(NSDictionary *)remapDict {
-    return remapDict[button][level][@"hold"] != nil;
+static void assessMappingLandscape(BOOL *clickActionOfThisLevelExists,
+                                   BOOL *mouseDownStateOfThisLevelCanHaveEffect,
+                                   BOOL *effectOfGreaterLevelExists,
+                                   NSNumber *button,
+                                   NSNumber *level,
+                                   NSDictionary *remaps)
+{
+    *clickActionOfThisLevelExists = remaps[button][level][@"click"] != nil;
+    *mouseDownStateOfThisLevelCanHaveEffect = effectExistsForMouseDownState(button, level, remaps);
+    *effectOfGreaterLevelExists = effectOfGreaterLevelExistsFor(button, level, remaps);
 }
 
-+ (BOOL)modifyingActionExistsForButton:(NSNumber *)button clickLevel:(NSNumber *)level remapDict:(NSDictionary *)remapDict {
-    return remapDict[button][level][@"modifying"] != nil;
+static BOOL effectExistsForMouseDownState(NSNumber *button, NSNumber *level, NSDictionary *remaps) {
+    BOOL holdActionExists = remaps[button][level][@"hold"] != nil;
+    BOOL usedAsModifier = isUsedAsModifier(button, level, remaps);
+    
+    return holdActionExists || usedAsModifier;
 }
-
-+ (BOOL)actionOfGreaterClickLevelExistsForButton:(NSNumber *)button clickLevel:(NSNumber *)level remapDict:(NSDictionary *)remapDict {
+static BOOL isUsedAsModifier(NSNumber *button, NSNumber *level, NSDictionary *remaps) {
+    return NO; // TODO: Implement
+}
+static BOOL effectOfGreaterLevelExistsFor(NSNumber *button, NSNumber *level, NSDictionary *remaps) {
     BOOL actionOfGreaterLevelExists = NO;
-    for (NSNumber *thisLevel in ((NSDictionary *)remapDict[button]).allKeys) {
+    for (NSNumber *thisLevel in ((NSDictionary *)remaps[button]).allKeys) {
         if (thisLevel.intValue > level.intValue) {
             actionOfGreaterLevelExists = YES;
             break;
         }
     }
+    
+    // TODO: Check for usage as modifier on higher level
+    
     return actionOfGreaterLevelExists;
+}
+
+static BOOL isTriggerForClickAction(MFActionTriggerType triggerType) {
+    return triggerType == kMFActionTriggerTypeButtonDown ||
+    triggerType == kMFActionTriggerTypeButtonUp ||
+    triggerType == kMFActionTriggerTypeLevelTimerExpired;
 }
 
 #pragma mark Modifiers
 
 + (NSDictionary *)getActiveModifiers {
-    return @{
-        @"keyboard": @([self getActiveKeyboardModifiers]),
-        @"button": @([self getActiveButtonModifiers])
-    };
+    
+    NSMutableDictionary *outDict = [NSMutableDictionary dictionary];
+    
+    NSUInteger kb = [self getActiveKeyboardModifiers];
+    NSDictionary *btn = [self getActiveButtonModifiers];
+    
+    if (kb != 0) {
+        outDict[@"keyboard"] = @(kb);
+    }
+    if (btn != 0) {
+        outDict[@"button"] = btn;
+    }
+    
+    return outDict;
 }
 + (NSUInteger)getActiveKeyboardModifiers {
     NSEventModifierFlags modifierFlags = [NSEvent modifierFlags]
@@ -163,8 +188,8 @@ static void assessMappingLandscape(BOOL *actionOfGreaterLevelExists, BOOL *actio
     return modifierFlags;
 }
 
-+ (NSUInteger)getActiveButtonModifiers {
-    return 0;
++ (NSDictionary *)getActiveButtonModifiers {
+    return nil;
 }
 
 
@@ -272,13 +297,13 @@ NSArray *_testRemapsUI;
         },
         
         @{                                                          // Key: modifier dict
-            @"keyboardModifierFlags": @(NSEventModifierFlagControl),
+            @"keyboard": @(NSEventModifierFlagControl),
         }: @{
             @(4): @{                                                // Key: button
                 @(1): @{                                            // Key: level
                     @"click": @[                                  // Key: clic/hold, value: array of actions
                         @{
-                            @"type": @"twoFingerSwipeEvent",
+                            @"type": @"navigationSwipe",
                             @"value": @"left",
                         },
                     ],
@@ -288,7 +313,7 @@ NSArray *_testRemapsUI;
                 @(1): @{                                            // Key: level
                     @"click": @[                                  // Key: click/hold, value: array of actions
                         @{
-                            @"type": @"twoFingerSwipeEvent",
+                            @"type": @"navigationSwipe",
                             @"value": @"right",
                         },
                     ],

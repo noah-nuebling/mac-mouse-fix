@@ -22,7 +22,7 @@
             [self triggerSymbolicHotkey:[shk intValue]];
         }
         else if ([actionDict[@"type"] isEqualToString:@"navigationSwipe"]) {
-            NSString *dirString = actionDict[@"direction"];
+            NSString *dirString = actionDict[@"value"];
             
             if ([dirString isEqualToString:@"left"]) {
                 [TouchSimulator postNavigationSwipeEventWithDirection:kIOHIDSwipeLeft];
