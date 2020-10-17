@@ -69,9 +69,9 @@ static void registerInputCallback() {
 }
 
 /// Instances of MFDevice set this value to themselves when they receive input from the IOHIDDevice which they own.
-/// Input from the IOHIDDevice will always occur shortly before `ButtonInputReceiver::handleIput()`.
-/// Only `ButtonInputReceiver::handleIput()` Shall use this value, and it will set the value to nil after using it.
-/// This allows `ButtonInputReceiver::handleIput()` to gain information about the device causing the incoming event. It will also allow us to filter out input from devices which we didn't create an MFDevice instance for (All of those devices can be found in DeviceManager.relevantDevices).
+/// Input from the IOHIDDevice will always occur shortly before `ButtonInputReceiver_CG::handleIput()`.
+/// Only `ButtonInputReceiver_CG::handleIput()` Shall use this value, and it will set the value to nil after using it.
+/// This allows `ButtonInputReceiver_CG::handleIput()` to gain information about the device causing the incoming event. It will also allow us to filter out input from devices which we didn't create an MFDevice instance for (All of those devices can be found in DeviceManager.relevantDevices).
 static MFDevice *_deviceWhichCausedThisButtonInput;
 + (void)setDeviceWhichCausedThisButtonInput:(MFDevice *)dev {
     _deviceWhichCausedThisButtonInput = dev;

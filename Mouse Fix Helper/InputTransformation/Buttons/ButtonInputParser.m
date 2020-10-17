@@ -38,8 +38,8 @@
 
 /*
  deviceID:
- buttonNumber:
- ButtonState instance
+    buttonNumber:
+        ButtonState instance
  */
 static NSMutableDictionary *_state;
 
@@ -53,8 +53,8 @@ static NSMutableDictionary *_state;
 
 + (MFEventPassThroughEvaluation)parseInputWithButton:(NSNumber *)btn trigger:(MFButtonInputType)trigger inputDevice:(MFDevice *)device {
     
-    // Init passThroughEval
-    MFEventPassThroughEvaluation passThroughEval = kMFEventPassThroughApproval;
+    // Declare passThroughEval (return value)
+    MFEventPassThroughEvaluation passThroughEval;
     
     // Get incoming device id
     NSNumber *devID = (__bridge NSNumber *)[device getID];
@@ -175,7 +175,7 @@ static void timerCallbackHelper(NSDictionary *info, NSNumber **devID, NSNumber *
 
 #pragma mark Zombify
 
-// Zombification is kinda like a 'half reset'. Everything except click level is reset and when further input occurs, the button's state will reset before the input is parsed
+// Zombification is kinda like a 'half reset'. Everything except click level is reset and when further input occurs, the button's state will be fully reset before the input is parsed
 // This necessary to be able to use buttons as modifiers (e.g. pressing a button to modify the function of another button)
 + (void)zombifyWithDevice:(NSNumber *)devID button:(NSNumber *)btn {
     
@@ -183,7 +183,6 @@ static void timerCallbackHelper(NSDictionary *info, NSNumber **devID, NSNumber *
     
     [bs.holdTimer invalidate];
     [bs.levelTimer invalidate];
-    
     bs.isZombified = YES;
     
 }
