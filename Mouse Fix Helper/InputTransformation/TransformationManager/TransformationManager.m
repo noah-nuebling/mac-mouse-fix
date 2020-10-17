@@ -40,7 +40,7 @@ static void assessMappingLandscape(BOOL *actionOfGreaterLevelExists, BOOL *actio
 
 + (MFEventPassThroughEvaluation)handleButtonTriggerWithButton:(NSNumber *)button trigger:(MFActionTriggerType)trigger level:(NSNumber *)level device:(NSNumber *)devID {
           
-    NSLog(@"HANDLE BUTTON TRIGGER - button: %@, trigger: %@, level: %@, devID: %@", button, @(trigger), level, devID);
+    //NSLog(@"HANDLE BUTTON TRIGGER - button: %@, trigger: %@, level: %@, devID: %@", button, @(trigger), level, devID);
     
     MFEventPassThroughEvaluation passThroughEval = true;
     
@@ -62,7 +62,6 @@ static void assessMappingLandscape(BOOL *actionOfGreaterLevelExists, BOOL *actio
     // If no remaps exist for this button, let the event which caused this function call pass through
     
     if (trigger == kMFActionTriggerTypeButtonDown || trigger == kMFActionTriggerTypeButtonUp) {
-        // ^ The passThroughEval return value only does anything on trigger types that are caused directly by mouse input (kMFActionTriggerTypeButtonDown and kMFActionTriggerTypeButtonUp) so this condition isn't totally necessary
         
         NSArray *clickAction = remaps[button][level][@"click"];
         

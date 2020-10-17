@@ -7,24 +7,6 @@
 // --------------------------------------------------------------------------
 //
 
-// SensibleSideButtons, a utility that fixes the navigation buttons on third-party mice in macOS
-// Copyright (C) 2018 Alexei Baboulevitch (ssb@archagon.net)
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-//
-
 #import "ButtonInputParser.h"
 #import "Actions.h"
 #import "ModifyingActions.h"
@@ -55,10 +37,10 @@
 #pragma mark - Class vars
 
 /*
-deviceID:
-    buttonNumber:
-        ButtonState instance
-*/
+ deviceID:
+ buttonNumber:
+ ButtonState instance
+ */
 static NSMutableDictionary *_state;
 
 #pragma mark - Load
@@ -92,46 +74,46 @@ static NSMutableDictionary *_state;
         [self resetStateWithDevice:devID button:btn];
     }
     
-     if (trigger == kMFButtonInputTypeButtonDown) {
-         
-         // Mouse down
-         
-         // Increase click level
-         bs.clickLevel += 1;
-         
-         // Send trigger
-         passThroughEval = [TransformationManager handleButtonTriggerWithButton:btn trigger:kMFActionTriggerTypeButtonDown level:@(bs.clickLevel) device:devID];
-         
-         // Restart Timers
-         NSDictionary *timerInfo = @{
-             @"devID": devID,
-             @"btn": btn
-         };
-         [bs.holdTimer invalidate]; // Probs unnecessary cause it gets killed by mouse up anyways
-         [bs.levelTimer invalidate];
-         bs.holdTimer = [NSTimer scheduledTimerWithTimeInterval:0.25
+    if (trigger == kMFButtonInputTypeButtonDown) {
+        
+        // Mouse down
+        
+        // Increase click level
+        bs.clickLevel += 1;
+        
+        // Send trigger
+        passThroughEval = [TransformationManager handleButtonTriggerWithButton:btn trigger:kMFActionTriggerTypeButtonDown level:@(bs.clickLevel) device:devID];
+        
+        // Restart Timers
+        NSDictionary *timerInfo = @{
+            @"devID": devID,
+            @"btn": btn
+        };
+        [bs.holdTimer invalidate]; // Probs unnecessary cause it gets killed by mouse up anyways
+        [bs.levelTimer invalidate];
+        bs.holdTimer = [NSTimer scheduledTimerWithTimeInterval:0.25
                                                         target:self
                                                       selector:@selector(holdTimerCallback:)
                                                       userInfo:timerInfo
-                                                     repeats:NO];
-         bs.levelTimer = [NSTimer scheduledTimerWithTimeInterval:0.25 //NSEvent.doubleClickInterval // The possible doubleClickIntervall
-                                                                                                    // values (configurable in System Preferences) are either too long or too short
-                                                       target:self
-                                                     selector:@selector(levelTimerCallback:)
-                                                     userInfo:timerInfo
-                                                      repeats:NO];
-         
-     } else {
-         
-         // Mouse up
-         
-         // Send trigger
-         passThroughEval = [TransformationManager handleButtonTriggerWithButton:btn trigger:kMFActionTriggerTypeButtonUp level:@(bs.clickLevel) device:devID];
-         
-         // Kill hold timer
-         [bs.holdTimer invalidate];
-         
-     }
+                                                       repeats:NO];
+        bs.levelTimer = [NSTimer scheduledTimerWithTimeInterval:0.25 //NSEvent.doubleClickInterval // The possible doubleClickIntervall
+                         // values (configurable in System Preferences) are either too long or too short
+                                                         target:self
+                                                       selector:@selector(levelTimerCallback:)
+                                                       userInfo:timerInfo
+                                                        repeats:NO];
+        
+    } else {
+        
+        // Mouse up
+        
+        // Send trigger
+        passThroughEval = [TransformationManager handleButtonTriggerWithButton:btn trigger:kMFActionTriggerTypeButtonUp level:@(bs.clickLevel) device:devID];
+        
+        // Kill hold timer (not sure if necessary)
+        [bs.holdTimer invalidate];
+        
+    }
     
     // Return
     return passThroughEval;
