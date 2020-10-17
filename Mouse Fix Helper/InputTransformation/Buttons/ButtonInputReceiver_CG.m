@@ -98,7 +98,7 @@ CGEventRef handleInput(CGEventTapProxy proxy, CGEventType type, CGEventRef event
         MFButtonInputType type = pr == 0 ? kMFButtonInputTypeButtonUp : kMFButtonInputTypeButtonDown;
         
         if (3 <= buttonNumber) {
-            MFEventPassThroughEvaluation rt = [ButtonInputParser parseInputWithButton:buttonNumber trigger:type inputDevice:dev];
+            MFEventPassThroughEvaluation rt = [ButtonInputParser parseInputWithButton:@(buttonNumber) trigger:type inputDevice:dev];
             if (rt == kMFEventPassThroughRefusal) {
                 return nil;
             } else {

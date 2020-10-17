@@ -40,8 +40,7 @@ static void assessMappingLandscape(BOOL *actionOfGreaterLevelExists, BOOL *actio
 
 + (MFEventPassThroughEvaluation)handleButtonTriggerWithButton:(NSNumber *)button trigger:(MFActionTriggerType)trigger level:(NSNumber *)level device:(NSNumber *)devID {
           
-    NSLog(@"HANDLE BUTTON TRIGGER");
-    NSLog(@"button: %@, trigger: %@, level: %@, devID: %@", button, @(trigger), level, devID);
+    NSLog(@"HANDLE BUTTON TRIGGER - button: %@, trigger: %@, level: %@, devID: %@", button, @(trigger), level, devID);
     
     MFEventPassThroughEvaluation passThroughEval = true;
     
@@ -96,10 +95,10 @@ static void assessMappingLandscape(BOOL *actionOfGreaterLevelExists, BOOL *actio
         // Execute OneShotActionArray if incoming trigger matches target trigger
         
         if (trigger == targetTriggerForClickAction) {
-            NSArray *OneShotActionArrayForClickTrigger = remaps[button][level][@"click"];
-            if (OneShotActionArrayForClickTrigger) {
+            NSArray *actionArrayForClickTrigger = remaps[button][level][@"click"];
+            if (actionArrayForClickTrigger) {
                 [ButtonInputParser handleHasHadDirectEffectWithDevice:devID button:button];
-                [Actions handleActionArray:OneShotActionArrayForClickTrigger];
+                [Actions handleActionArray:actionArrayForClickTrigger];
             }
         }
     }
@@ -107,10 +106,10 @@ static void assessMappingLandscape(BOOL *actionOfGreaterLevelExists, BOOL *actio
     // If trigger is for hold action, trigger is right away
     
     if (trigger == kMFActionTriggerTypeHoldTimerExpired) {
-        NSArray *OneShotActionArrayForHoldTrigger = remaps[button][level][@"hold"];
-        if (OneShotActionArrayForHoldTrigger) {
+        NSArray *actionArrayForHoldTrigger = remaps[button][level][@"hold"];
+        if (actionArrayForHoldTrigger) {
             [ButtonInputParser handleHasHadDirectEffectWithDevice:devID button:button];
-            [Actions handleActionArray:OneShotActionArrayForHoldTrigger];
+            [Actions handleActionArray:actionArrayForHoldTrigger];
         }
     }
 //    if (triggerType == kMFActionTriggerTypeButtonDown) {

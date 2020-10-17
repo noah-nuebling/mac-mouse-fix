@@ -12,7 +12,7 @@
 
 @interface ButtonInputParser : NSObject
 
-+ (MFEventPassThroughEvaluation)parseInputWithButton:(int64_t)button trigger:(MFButtonInputType)type inputDevice:(MFDevice *)device;
++ (MFEventPassThroughEvaluation)parseInputWithButton:(NSNumber *)btn trigger:(MFButtonInputType)type inputDevice:(MFDevice *)device;
 
 + (void)handleHasHadDirectEffectWithDevice:(NSNumber *)devID button:(NSNumber *)btn;
 + (void)handleHasHadEffectAsModifierWithDevice:(NSNumber *)devID button:(NSNumber *)btn;

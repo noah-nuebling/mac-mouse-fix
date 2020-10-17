@@ -34,21 +34,30 @@
 #import "GestureScrollSimulator.h"
 #import "TransformationManager.h"
 
+#pragma mark - Definition of private helper class `Button State`
+
+// Instaces of this helper class describe the state of a single button on an input device
+// The `_state` class variable of `ButtonInputParser` is a collection of `ButtonState` instances
+@interface ButtonState : NSObject
+@property NSTimer *holdTimer;
+@property NSTimer *levelTimer;
+@property int64_t clickLevel;
+@property BOOL isZombified;
+@end
+@implementation ButtonState
+@synthesize holdTimer, levelTimer, clickLevel, isZombified;
+@end
+
+#pragma mark - Implementation of `ButtonInputParser`
+
 @implementation ButtonInputParser
 
-#pragma mark - State
-
-typedef struct __ButtonState {
-    NSTimer *holdTimer;
-    NSTimer *levelTimer;
-    int64_t clickLevel;
-    BOOL isZombified;
-} ButtonState;
+#pragma mark - Class vars
 
 /*
 deviceID:
     buttonNumber:
-        struct __ButtonState
+        ButtonState instance
 */
 static NSMutableDictionary *_state;
 
@@ -60,32 +69,27 @@ static NSMutableDictionary *_state;
 
 #pragma mark - Input parsing
 
-+ (MFEventPassThroughEvaluation)parseInputWithButton:(int64_t)button trigger:(MFButtonInputType)trigger inputDevice:(MFDevice *)device {
++ (MFEventPassThroughEvaluation)parseInputWithButton:(NSNumber *)btn trigger:(MFButtonInputType)trigger inputDevice:(MFDevice *)device {
     
     // Init passThroughEval
-    
     MFEventPassThroughEvaluation passThroughEval = kMFEventPassThroughApproval;
     
-    // Get state of the incoming button
-    
+    // Get incoming device id
     NSNumber *devID = (__bridge NSNumber *)[device getID];
     
-    NSValue *bsAsValue = _state[devID][@(button)];
-    ButtonState bs;
-    if (bsAsValue != nil) {
-        [bsAsValue getValue:&bs];
-    } else { // If no entry exists in _state for the current device and button, create one
-        // Create new struct and initialize all fields to 0
-        bs = (ButtonState) {0};
-        // Create a new entry in _state for bs
+    // Get state of the incoming button
+    ButtonState *bs = _state[devID][btn];
+    
+    // If no entry exists in _state for the current device and button, create one
+    if (bs == nil) {
+        bs = [ButtonState alloc];
         _state[devID] = [NSMutableDictionary dictionary];
-        writeBsToState(&bs, devID, @(button));
+        _state[devID][btn] = bs;
     }
     
     // Reset button state if zombified
-    
     if (bs.isZombified) {
-        [self resetStateWithDevice:devID button:@(button)];
+        [self resetStateWithDevice:devID button:btn];
     }
     
      if (trigger == kMFButtonInputTypeButtonDown) {
@@ -93,32 +97,28 @@ static NSMutableDictionary *_state;
          // Mouse down
          
          // Increase click level
-         
          bs.clickLevel += 1;
-         writeBsToState(&bs, devID, @(button));
          
          // Send trigger
+         passThroughEval = [TransformationManager handleButtonTriggerWithButton:btn trigger:kMFActionTriggerTypeButtonDown level:@(bs.clickLevel) device:devID];
          
-         passThroughEval = [TransformationManager handleButtonTriggerWithButton:@(button) trigger:kMFActionTriggerTypeButtonDown level:@(bs.clickLevel) device:devID];
-         
-         // Restart timers
-         
-        [bs.levelTimer invalidate];
-        [bs.holdTimer invalidate];
-         
-         NSDictionary *info = @{
+         // Restart Timers
+         NSDictionary *timerInfo = @{
              @"devID": devID,
-             @"btn": @(button)
+             @"btn": btn
          };
-        bs.holdTimer = [NSTimer scheduledTimerWithTimeInterval:0.25
+         [bs.holdTimer invalidate]; // Probs unnecessary cause it gets killed by mouse up anyways
+         [bs.levelTimer invalidate];
+         bs.holdTimer = [NSTimer scheduledTimerWithTimeInterval:0.25
                                                         target:self
                                                       selector:@selector(holdTimerCallback:)
-                                                      userInfo:info
+                                                      userInfo:timerInfo
                                                      repeats:NO];
-         bs.levelTimer = [NSTimer scheduledTimerWithTimeInterval:0.25 // NSEvent.doubleClickInterval
+         bs.levelTimer = [NSTimer scheduledTimerWithTimeInterval:0.25 //NSEvent.doubleClickInterval // The possible doubleClickIntervall
+                                                                                                    // values (configurable in System Preferences) are either too long or too short
                                                        target:self
                                                      selector:@selector(levelTimerCallback:)
-                                                     userInfo:info
+                                                     userInfo:timerInfo
                                                       repeats:NO];
          
      } else {
@@ -126,13 +126,14 @@ static NSMutableDictionary *_state;
          // Mouse up
          
          // Send trigger
+         passThroughEval = [TransformationManager handleButtonTriggerWithButton:btn trigger:kMFActionTriggerTypeButtonUp level:@(bs.clickLevel) device:devID];
          
-         passThroughEval = [TransformationManager handleButtonTriggerWithButton:@(button) trigger:kMFActionTriggerTypeButtonUp level:@(bs.clickLevel) device:@(devID.integerValue)];
+         // Kill hold timer
+         [bs.holdTimer invalidate];
          
      }
     
-    // Return pass through evaluation
-    
+    // Return
     return passThroughEval;
 }
 
@@ -162,38 +163,25 @@ static void timerCallbackHelper(NSDictionary *info, NSNumber **devID, NSNumber *
     *devID = (NSNumber *)info[@"devID"];
     *btn = (NSNumber *)info[@"btn"];
     
-    ButtonState bs = getBsFromState(*devID, *btn);
+    ButtonState *bs = _state[*devID][*btn];
     *lvl = @(bs.clickLevel);
 }
 
 #pragma mark - State control
 
-static ButtonState getBsFromState(NSNumber *devID, NSNumber *btn) {
-    ButtonState bs;
-    [((NSValue *) _state[devID][btn]) getValue:&bs];
-    return bs;
-}
-
-// The NSValue objects encapsulating the ButtonState structs which _state holds are immutable.
-// Use this after modifying a ButtonState object to apply the changes to _state.
-static void writeBsToState(const ButtonState *modifiedBs, NSNumber *devID, NSNumber *button) {
-    _state[devID][button] = [NSValue valueWithBytes:modifiedBs objCType:@encode(ButtonState)];
-}
-
 #pragma mark Reset state
 
 + (void)resetStateWithDevice:(NSNumber *)devID button:(NSNumber *)btn {
     
-    ButtonState bs = getBsFromState(devID, btn);
+    ButtonState *bs = _state[devID][btn];
     
     [bs.holdTimer invalidate];
     [bs.levelTimer invalidate];
     bs.clickLevel = 0;
     bs.isZombified = NO;
     
-    writeBsToState(&bs, devID, btn);
 }
-
+// Don't think we'll need this
 + (void)resetAllState {
     for (NSNumber *devKey in _state) {
         NSDictionary *dev = _state[devKey];
@@ -209,13 +197,12 @@ static void writeBsToState(const ButtonState *modifiedBs, NSNumber *devID, NSNum
 // This necessary to be able to use buttons as modifiers (e.g. pressing a button to modify the function of another button)
 + (void)zombifyWithDevice:(NSNumber *)devID button:(NSNumber *)btn {
     
-    ButtonState bs = getBsFromState(devID, btn);
+    ButtonState *bs = _state[devID][btn];
     
     [bs.holdTimer invalidate];
     [bs.levelTimer invalidate];
-    bs.isZombified = YES;
     
-    writeBsToState(&bs, devID, btn);
+    bs.isZombified = YES;
     
 }
 
@@ -228,6 +215,5 @@ static void writeBsToState(const ButtonState *modifiedBs, NSNumber *devID, NSNum
 + (void)handleHasHadEffectAsModifierWithDevice:(NSNumber *)devID button:(NSNumber *)btn {
     [self zombifyWithDevice:devID button:btn];
 }
-
 
 @end
