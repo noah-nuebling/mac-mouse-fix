@@ -7,13 +7,13 @@
 // --------------------------------------------------------------------------
 //
 
-#import "ModifyingActions.h"
+#import "ModifiedDrag.h"
 #import "ScrollModifiers.h"
 #import "ButtonInputParser.h"
 #import "TouchSimulator.h"
 #import "GestureScrollSimulator.h"
 
-@implementation ModifyingActions
+@implementation ModifiedDrag
 
 struct ModifiedDragState {
 //    CFMachPortRef eventTap;

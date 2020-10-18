@@ -8,7 +8,7 @@
 //
 
 #import "MFDevice.h"
-#import "ModifyingActions.h"
+#import "ModifiedDrag.h"
 #import "GestureScrollSimulator.h"
 #import "DeviceManager.h"
 #import "ButtonInputReceiver_CG.h"
@@ -259,7 +259,7 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
                 .type = kMFActivationConditionTypeMouseButtonPressed,
                 .value = button + 1,
             });
-            [ModifyingActions deactivateAllInputModificationWithActivationCondition:falsifiedCondition];
+            [ModifiedDrag deactivateAllInputModificationWithActivationCondition:falsifiedCondition];
         }
         
         return;
@@ -279,7 +279,7 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
             
             if (currentDeltaX != 0 || _previousDeltaY != 0) {
                 
-                [ModifyingActions handleMouseInputWithDeltaX:currentDeltaX deltaY:_previousDeltaY];
+                [ModifiedDrag handleMouseInputWithDeltaX:currentDeltaX deltaY:_previousDeltaY];
                 
 //                dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{ // Multithreading in hopes of preventing some issues which I assume are caused by the hid callback (this function) being processed after the CG callback when the system is under load sometimes. Not sure if the multithreading helps though.
 //                    [ModifyingActions handleMouseInputWithDeltaX:currentDeltaX deltaY:_previousDeltaY];

@@ -12,7 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ModifyingActions : NSObject
+@interface ModifiedDrag : NSObject
 
 typedef enum {
     kMFModifiedInputActivationStateNone,

@@ -82,8 +82,8 @@ static MFDevice *_deviceWhichCausedThisButtonInput;
 
 CGEventRef handleInput(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
-    NSLog(@"CG Button input");
-    NSLog(@"Incoming event: %@", [NSEvent eventWithCGEvent:event]); // TODO: Sometimes events seem to be deallocated when reaching this point, causing a crash. This is likely to do with inserting fake events.
+    //NSLog(@"CG Button input");
+    //NSLog(@"Incoming event: %@", [NSEvent eventWithCGEvent:event]); // TODO: Sometimes events seem to be deallocated when reaching this point, causing a crash. This is likely to do with inserting fake events.
     
     MFDevice *dev = _deviceWhichCausedThisButtonInput;
     _deviceWhichCausedThisButtonInput = nil;
@@ -92,7 +92,7 @@ CGEventRef handleInput(CGEventTapProxy proxy, CGEventType type, CGEventRef event
         
         NSLog(@"CG Button input comes from relevant device");
         
-        int64_t buttonNumber = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
+        NSUInteger buttonNumber = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
         
         long long pr = CGEventGetIntegerValueField(event, kCGMouseEventPressure);
         MFButtonInputType type = pr == 0 ? kMFButtonInputTypeButtonUp : kMFButtonInputTypeButtonDown;
@@ -105,7 +105,7 @@ CGEventRef handleInput(CGEventTapProxy proxy, CGEventType type, CGEventRef event
                 return event;
             }
         } else {
-            NSLog(@"Received input from primary / secondary mouse button. This should only happen when inserting events. Button Number: %lld", buttonNumber);
+            NSLog(@"Received input from primary / secondary mouse button. This should only happen when inserting events. Button Number: %lu", (unsigned long)buttonNumber);
         }
     }
     return event;
