@@ -76,7 +76,8 @@ static NSMutableDictionary *_state;
         if (_state[devID] == nil) {
             _state[devID] = [NSMutableDictionary dictionary];
         }
-        _state[devID][btn] = [ButtonState alloc];
+        bs = [ButtonState alloc];
+        _state[devID][btn] = bs;
     }
     
     // Zombify all other buttons of current device which are pressed

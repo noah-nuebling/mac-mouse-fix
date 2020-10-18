@@ -27,7 +27,6 @@
 + (void)handleScrollTrigger {
     
 }
-
 + (MFEventPassThroughEvaluation)handleButtonTriggerWithButton:(NSNumber *)button triggerType:(MFActionTriggerType)triggerType clickLevel:(NSNumber *)level device:(NSNumber *)devID {
           
             NSLog(@"HANDLE BUTTON TRIGGER - button: %@, trigger: %@, level: %@, devID: %@", button, @(triggerType), level, devID);
@@ -73,8 +72,8 @@
     
             NSLog(@"ACTIVE MODS UNFILTERED - %@", activeModifiersUnfiltered);
     
-    // If trigger is for click action, calculate targetTrigger, that is, the trigger on which the click action should be executed,
-    //      and then execute the click action array if the incoming trigger matches the target trigger
+    // If trigger is for click action, calculate targetTrigger based on mapping landscape assessment
+    //      and then execute the click action if the incoming trigger matches the target trigger
     
     if (isTriggerForClickAction(triggerType)) {
         
@@ -98,14 +97,16 @@
                                                                                  effectiveRemaps);
     }
     
-    // If trigger is for hold action, execute action
-    executeClickOrHoldActionIfItExists(@"hold",
-                                       devID,
-                                       button,
-                                       level,
-                                       activeModifiers,
-                                       remapsForActiveModifiers,
-                                       effectiveRemaps);
+    // If trigger is for hold action, execute hold action
+    if (triggerType == kMFActionTriggerTypeHoldTimerExpired) {
+        executeClickOrHoldActionIfItExists(@"hold",
+                                           devID,
+                                           button,
+                                           level,
+                                           activeModifiers,
+                                           remapsForActiveModifiers,
+                                           effectiveRemaps);
+    }
     
 //    if (triggerType == kMFActionTriggerTypeButtonDown) {
 //        NSArray *modifyingActionArrayForInput = remapDict[@(button)][@(level)][@"modifying"];

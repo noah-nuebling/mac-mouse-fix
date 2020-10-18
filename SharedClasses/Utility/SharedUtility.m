@@ -12,13 +12,9 @@
 @implementation SharedUtility
 
 + (void)printCallingFunctionInfo {
-    
-    NSLog(@"PRINTING INFO ON CALLING FUNCTION");
-    
-    //NSLog(@"%@", [NSThread callStackSymbols]);
-    
-    NSString *sourceString = [[NSThread callStackSymbols] objectAtIndex:2];
-    
-    NSLog(@"%@", sourceString);
+    NSLog(@"PRINTING INFO ON CALLING FUNCTION: %@", [[NSThread callStackSymbols] objectAtIndex:2]);
+}
++ (void)printStackTrace {
+    NSLog(@"PRINTING STACK TRACE: %@", [NSThread callStackSymbols]);
 }
 @end
