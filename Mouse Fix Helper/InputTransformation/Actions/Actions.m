@@ -13,7 +13,7 @@
 
 @implementation Actions
 
-+ (void)handleActionArray:(NSArray *)actionArray {
++ (void)executeActionArray:(NSArray *)actionArray {
     
     for (NSDictionary *actionDict in actionArray) {
     

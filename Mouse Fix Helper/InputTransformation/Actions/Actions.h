@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Actions : NSObject
 
-+ (void)handleActionArray:(NSArray *)actionArray;
++ (void)executeActionArray:(NSArray *)actionArray;
 @end
 
 NS_ASSUME_NONNULL_END

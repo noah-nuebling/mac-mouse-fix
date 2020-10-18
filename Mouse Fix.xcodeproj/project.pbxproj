@@ -10,6 +10,11 @@
 		4F1A20282348EC3D00B29037 /* ScrollUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1A20272348EC3D00B29037 /* ScrollUtility.m */; };
 		4F1B7C1D23D3E6D60055C007 /* TouchSimulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B7C1C23D3E6D60055C007 /* TouchSimulator.m */; };
 		4F1C968C231361EF00C3B9AE /* TouchEvents.c in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C96872313606200C3B9AE /* TouchEvents.c */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		4F1E57EC253CF29300B704E3 /* SharedUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F1E57EA253CF29300B704E3 /* SharedUtility.h */; };
+		4F1E57ED253CF29300B704E3 /* SharedUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1E57EB253CF29300B704E3 /* SharedUtility.m */; };
+		4F1E57F0253CF3D700B704E3 /* SharedUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1E57EB253CF29300B704E3 /* SharedUtility.m */; };
+		4F1E57F3253CF3F500B704E3 /* NSMutableDictionary+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA26CF0243949DC0082D5F6 /* NSMutableDictionary+Additions.m */; };
+		4F1E57F6253CF3F800B704E3 /* NSArray+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8D0184243D8D6200D70076 /* NSArray+Additions.m */; };
 		4F2FDF332315662500C7BE14 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2FDF322315662500C7BE14 /* main.m */; };
 		4F2FDF3D23156AA900C7BE14 /* Mouse Fix Updater in Copy Updater */ = {isa = PBXBuildFile; fileRef = 4F2FDF302315662400C7BE14 /* Mouse Fix Updater */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4F32E155231C420100199A11 /* MessagePort_HelperApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E14E231C420100199A11 /* MessagePort_HelperApp.m */; };
@@ -184,6 +189,8 @@
 		4F1C96882313606200C3B9AE /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		4F1C96892313606200C3B9AE /* TouchEvents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TouchEvents.h; sourceTree = "<group>"; };
 		4F1C968A2313606200C3B9AE /* IOHIDEventData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOHIDEventData.h; sourceTree = "<group>"; };
+		4F1E57EA253CF29300B704E3 /* SharedUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharedUtility.h; sourceTree = "<group>"; };
+		4F1E57EB253CF29300B704E3 /* SharedUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SharedUtility.m; sourceTree = "<group>"; };
 		4F2FDF302315662400C7BE14 /* Mouse Fix Updater */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Mouse Fix Updater"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F2FDF322315662500C7BE14 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4F32E14B231C420100199A11 /* MessagePort_HelperApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagePort_HelperApp.h; sourceTree = "<group>"; };
@@ -508,6 +515,8 @@
 				4FA26CF0243949DC0082D5F6 /* NSMutableDictionary+Additions.m */,
 				4F8D0183243D8D6200D70076 /* NSArray+Additions.h */,
 				4F8D0184243D8D6200D70076 /* NSArray+Additions.m */,
+				4F1E57EA253CF29300B704E3 /* SharedUtility.h */,
+				4F1E57EB253CF29300B704E3 /* SharedUtility.m */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -813,6 +822,7 @@
 				4FD45A34231D097000F75C58 /* Utility_PrefPane.h in Headers */,
 				4FA26CE724380D1F0082D5F6 /* ClickableImageView.h in Headers */,
 				4F4728D6253C824000846B67 /* NSMutableDictionary+Additions.h in Headers */,
+				4F1E57EC253CF29300B704E3 /* SharedUtility.h in Headers */,
 				4FBF350523183FDA00E6CFD0 /* HelperServices.h in Headers */,
 				4FD45A0F231C66CF00F75C58 /* MessagePort_PrefPane.h in Headers */,
 				4FD67DDE211CC9000095A9A5 /* PrefPaneDelegate.h in Headers */,
@@ -999,6 +1009,7 @@
 				4FD6B88E248ECE7D00AA5530 /* MFDevice.m in Sources */,
 				4F32E155231C420100199A11 /* MessagePort_HelperApp.m in Sources */,
 				4FECC8902431DCDF001A3C4B /* ScrollControl.m in Sources */,
+				4F1E57F6253CF3F800B704E3 /* NSArray+Additions.m in Sources */,
 				4F1C968C231361EF00C3B9AE /* TouchEvents.c in Sources */,
 				4FB68B69246CA46F0059530E /* Actions.m in Sources */,
 				4F8DBB4B2538E79400F58093 /* TransformationManager.m in Sources */,
@@ -1006,6 +1017,7 @@
 				4FECC88D2431DCCD001A3C4B /* RoughScroll.m in Sources */,
 				4F32E18C231C509200199A11 /* SmoothScroll.m in Sources */,
 				4F4999EE253BB82D00FC69B3 /* ModifierManager.m in Sources */,
+				4F1E57F3253CF3F500B704E3 /* NSMutableDictionary+Additions.m in Sources */,
 				4F32E157231C420100199A11 /* DeviceManager.m in Sources */,
 				4F9CA64E246CA5470042F25A /* ModifiedDrag.m in Sources */,
 				4F1B7C1D23D3E6D60055C007 /* TouchSimulator.m in Sources */,
@@ -1020,6 +1032,7 @@
 				4F95A249234EBB5D000DC7D7 /* PointerSpeed.m in Sources */,
 				4F32E188231C509200199A11 /* AnimationCurve.m in Sources */,
 				4F1A20282348EC3D00B29037 /* ScrollUtility.m in Sources */,
+				4F1E57F0253CF3D700B704E3 /* SharedUtility.m in Sources */,
 				4F32E159231C420100199A11 /* Utility_HelperApp.m in Sources */,
 				4FF3B2BD23276082009E8A8E /* Uninstaller.m in Sources */,
 			);
@@ -1040,6 +1053,7 @@
 				4FA26CF2243949DC0082D5F6 /* NSMutableDictionary+Additions.m in Sources */,
 				4FBF350623183FDA00E6CFD0 /* HelperServices.m in Sources */,
 				4FD36AEE243741A70046DC41 /* ScrollOverridePanel.m in Sources */,
+				4F1E57ED253CF29300B704E3 /* SharedUtility.m in Sources */,
 				4F3A8446230D3E6C0012C725 /* Updater.m in Sources */,
 				4FBF350023183E6700E6CFD0 /* ConfigFileInterface_PrefPane.m in Sources */,
 				4FF873E023197283002A897A /* UpdateWindow.m in Sources */,

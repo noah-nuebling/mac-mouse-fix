@@ -15,6 +15,8 @@
 #import "ConfigFileInterface_HelperApp.h"
 #import "GestureScrollSimulator.h"
 #import "TransformationManager.h"
+#import "ModifierManager.h"
+#import "SharedUtility.h"
 
 #pragma mark - Definition of private helper class `Button State`
 
@@ -23,12 +25,20 @@
 @interface ButtonState : NSObject
 @property NSTimer *holdTimer;
 @property NSTimer *levelTimer;
-@property int64_t clickLevel;
 @property BOOL isZombified;
-@property BOOL isPressed;
+@property (nonatomic) int64_t clickLevel;
+@property (nonatomic) BOOL isPressed; // NSEvent.pressedMouseButtons doesn't react fast enought (led to problems in `getActiveButtonModifiersForDevice`), so we're keeping track of pressed mouse buttons manually
 @end
 @implementation ButtonState
-@synthesize holdTimer, levelTimer, clickLevel, isZombified, isPressed;
+@synthesize holdTimer, levelTimer, isZombified, clickLevel, isPressed;
+//- (void)setClickLevel:(int64_t)clickLevel {
+//    //[ModifierManager handleButtonModifiersHaveChanged];
+//    self.clickLevel = clickLevel;
+//}
+//- (void)setIsPressed:(BOOL)isPressed {
+//    //[ModifierManager handleButtonModifiersHaveChanged];
+//    self.isPressed = isPressed;
+//}
 @end
 
 #pragma mark - Implementation of `ButtonInputParser`
@@ -79,7 +89,11 @@ static NSMutableDictionary *_state;
         // Check if zombified
         // Zombification should only occur during mouse down state, and then be removed with the consequent mouse up event
         if (bs.isZombified) {
-            @throw [NSException exceptionWithName:@"ZombifiedDuringMouseUpStateException" reason:@"Button was found to be zombified when mouse down event occured." userInfo:nil];
+            @throw [NSException exceptionWithName:@"ZombifiedDuringMouseUpStateException" reason:@"Button was found to be zombified when mouse down event occured." userInfo:@{
+                @"devID": devID,
+                @"btn": btn,
+                @"trigger": @(trigger)
+            }];
         }
         
         // Update bs
@@ -168,6 +182,10 @@ static void timerCallbackHelper(NSDictionary *info, NSNumber **devID, NSNumber *
 
 static void resetStateWithDevice(NSNumber *devID, NSNumber *btn) {
     
+    NSLog(@"RESETTING STATE - devID: %@, btn: %@", devID, btn);
+    
+    [SharedUtility printCallingFunctionInfo];
+    
     ButtonState *bs = _state[devID][btn];
     
     [bs.holdTimer invalidate];
@@ -188,9 +206,11 @@ static void resetAllState() {
 
 #pragma mark Zombify
 
-// Zombification is kinda like a 'half reset'. Everything except click level is reset and when further input occurs, the button's state will be fully reset before the input is parsed
-// This necessary to be able to use buttons as modifiers (e.g. pressing a button to modify the function of another button)
+// Zombification is kinda like a frozen mouse down state. No more triggers are sent and on the next mouse up event, state will be fully reset. But clickLevel won't be reset.
+// With the click level not being reset the button can still be used as a modifier for other triggers.
 static void zombifyWithDevice(NSNumber *devID, NSNumber *btn) {
+    
+    NSLog(@"ZOMBIFYING - devID: %@, btn: %@", devID, btn);
     
     ButtonState *bs = _state[devID][btn];
     

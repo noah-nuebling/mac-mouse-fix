@@ -12,11 +12,11 @@
 
 @implementation ModifierManager
 
-+ (NSDictionary *)getActiveModifiersWithDevice:(NSNumber *)devID filterButton:(NSNumber * __nullable)filteredButton {
++ (NSDictionary *)getActiveModifiersForDevice:(NSNumber *)devID filterButton:(NSNumber * __nullable)filteredButton {
     
     NSMutableDictionary *outDict = [NSMutableDictionary dictionary];
     
-    NSUInteger kb = [self getActiveKeyboardModifiers];
+    NSUInteger kb = getActiveKeyboardModifiers();
     NSMutableDictionary *btn = ((NSDictionary *)[ButtonInputParser getActiveButtonModifiersForDevice:devID]).mutableCopy;
     if (filteredButton != nil) {
         [btn removeObjectForKey:filteredButton];
@@ -34,10 +34,14 @@
     
     return outDict;
 }
-+ (NSUInteger)getActiveKeyboardModifiers {
+static NSUInteger getActiveKeyboardModifiers() {
     NSEventModifierFlags modifierFlags = [NSEvent modifierFlags]
         & NSDeviceIndependentModifierFlagsMask; // Not sure if this does anything
     return modifierFlags;
+}
+
++ (void)handleButtonModifiersHaveChanged {
+    // TODO: Implement
 }
 
 @end
