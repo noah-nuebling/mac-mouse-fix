@@ -28,11 +28,8 @@
     
 }
 + (MFEventPassThroughEvaluation)handleButtonTriggerWithButton:(NSNumber *)button triggerType:(MFActionTriggerType)triggerType clickLevel:(NSNumber *)level device:(NSNumber *)devID {
-          
-            NSLog(@"HANDLE BUTTON TRIGGER - button: %@, trigger: %@, level: %@, devID: %@", button, @(triggerType), level, devID);
     
-    // Init passThroughEval
-    MFEventPassThroughEvaluation passThroughEval = kMFEventPassThroughRefusal;
+            // NSLog(@"HANDLE BUTTON TRIGGER - button: %@, trigger: %@, level: %@, devID: %@", button, @(triggerType), level, devID);
     
     // Get remaps and apply modifier overrides
     NSDictionary *remaps = _testRemaps;
@@ -42,24 +39,6 @@
     if ([activeModifiers isNotEqualTo:@{}]) {
         effectiveRemaps = [Utility_HelperApp dictionaryWithOverridesAppliedFrom:[remapsForActiveModifiers copy] to:effectiveRemaps];
     }
-            NSLog(@"ACTIVE MODS FILTERED - %@", activeModifiers);
-    
-    // Asses mapping landscape
-    // \note It's unnecessary to assess mapping landscape (that includes calculating targetTrigger) on click actions again for every call of this function. It only has to be calculated once for every "click" (as opposed to "hold") actionArray in every possible overriden remapDict including the unoverriden one. We could precalculate everything once when loading remapDict if we wanted to. This is plenty fast though so it's fine.
-    NSDictionary *activeModifiersUnfiltered = [ModifierManager getActiveModifiersForDevice:devID filterButton:nil];
-    //      ^ We need to check whether the incoming button is acting as a modifier to determine
-    //          `effectForMouseDownStateOfThisLevelExists`, so we can't use `activeModifiers` because it filters out the incoming button
-    BOOL clickActionOfThisLevelExists;
-    BOOL effectForMouseDownStateOfThisLevelExists;
-    BOOL effectOfGreaterLevelExists;
-    assessMappingLandscape(&clickActionOfThisLevelExists,
-                           &effectForMouseDownStateOfThisLevelExists,
-                           &effectOfGreaterLevelExists,
-                           button,
-                           level,
-                           remaps,
-                           activeModifiersUnfiltered,
-                           effectiveRemaps);
     
     // If no remaps exist for this button, (and if this functions was invoked as a direct result of a physical button press) let the CGEvent which caused this function call pass through
     if (triggerType == kMFActionTriggerTypeButtonDown || triggerType == kMFActionTriggerTypeButtonUp) {
@@ -70,14 +49,27 @@
         }
     }
     
-            NSLog(@"ACTIVE MODS UNFILTERED - %@", activeModifiersUnfiltered);
-    
-    // If trigger is for click action, calculate targetTrigger based on mapping landscape assessment
-    //      and then execute the click action if the incoming trigger matches the target trigger
-    
     if (isTriggerForClickAction(triggerType)) {
         
-        // Find target trigger
+        // Asses mapping landscape
+        // \note It's unnecessary to assess mapping landscape (that includes calculating targetTrigger) on click actions again for every call of this function. It only has to be calculated once for every "click" (as opposed to "hold") actionArray in every possible overriden remapDict including the unoverriden one. We could precalculate everything once when loading remapDict if we wanted to. This is plenty fast though so it's fine.
+        
+        NSDictionary *activeModifiersUnfiltered = [ModifierManager getActiveModifiersForDevice:devID filterButton:nil];
+        //      ^ We need to check whether the incoming button is acting as a modifier to determine
+        //          `effectForMouseDownStateOfThisLevelExists`, so we can't use the variable `activeModifiers` defined above because it filters out the incoming button
+        BOOL clickActionOfThisLevelExists;
+        BOOL effectForMouseDownStateOfThisLevelExists;
+        BOOL effectOfGreaterLevelExists;
+        assessMappingLandscape(&clickActionOfThisLevelExists,
+                               &effectForMouseDownStateOfThisLevelExists,
+                               &effectOfGreaterLevelExists,
+                               button,
+                               level,
+                               remaps,
+                               activeModifiersUnfiltered,
+                               effectiveRemaps);
+        
+        // Find targetTriggerType based on mapping landscape assessment
         MFActionTriggerType targetTriggerType = kMFActionTriggerTypeNone;
         if (effectOfGreaterLevelExists) {
             targetTriggerType = kMFActionTriggerTypeLevelTimerExpired;
@@ -95,10 +87,10 @@
                                                                                  activeModifiers,
                                                                                  remapsForActiveModifiers,
                                                                                  effectiveRemaps);
-    }
-    
-    // If trigger is for hold action, execute hold action
-    if (triggerType == kMFActionTriggerTypeHoldTimerExpired) {
+    } else if (triggerType == kMFActionTriggerTypeHoldTimerExpired) {
+        
+        // If trigger is for hold action, execute hold action
+        
         executeClickOrHoldActionIfItExists(@"hold",
                                            devID,
                                            button,
@@ -108,18 +100,20 @@
                                            effectiveRemaps);
     }
     
-//    if (triggerType == kMFActionTriggerTypeButtonDown) {
-//        NSArray *modifyingActionArrayForInput = remapDict[@(button)][@(level)][@"modifying"];
-//        MFActivationCondition ac = {
-//            .type = kMFActivationConditionTypeMouseButtonPressed,
-//            .value = _buttonFromLastButtonDownEvent, // Could also use local `button` variable I think
-//            .activatingDevice = _deviceFromLastButtonDownEvent,
-//        };
-//        [ModifyingActions initializeModifiedInputsWithActionArray:modifyingActionArrayForInput
-//                                          withActivationCondition:&ac]; // ??? We only activate modified inputs, they will deactivate themselves once the activation condition becomes false
-//    }
+    // TODO: Implement function where ButtonState of incoming button is reset (through sending a message to ButtonInputParser) when no effects of a higher level exist
     
-    return passThroughEval;
+    //    if (triggerType == kMFActionTriggerTypeButtonDown) {
+    //        NSArray *modifyingActionArrayForInput = remapDict[@(button)][@(level)][@"modifying"];
+    //        MFActivationCondition ac = {
+    //            .type = kMFActivationConditionTypeMouseButtonPressed,
+    //            .value = _buttonFromLastButtonDownEvent, // Could also use local `button` variable I think
+    //            .activatingDevice = _deviceFromLastButtonDownEvent,
+    //        };
+    //        [ModifyingActions initializeModifiedInputsWithActionArray:modifyingActionArrayForInput
+    //                                          withActivationCondition:&ac]; // ??? We only activate modified inputs, they will deactivate themselves once the activation condition becomes false
+    //    }
+    
+    return kMFEventPassThroughRefusal;
     
 }
 
@@ -175,7 +169,7 @@ static BOOL effectOfGreaterLevelExistsFor(NSNumber *button, NSNumber *level, NSD
 
 static BOOL modificationPreconditionButtonComponentOfGreaterLevelExistsForButton(NSNumber *button, NSNumber *level, NSDictionary *remaps, NSDictionary *activeModifiers) {
     
-    // Check if modification precondition exists such that at least one of its button components has the same button as `button` and a level greater than `level`
+    // Check if modification precondition exists such that at least one of its button components has the same button as the incoming button `button` and a level greater than the incoming level `level`
     
     for (NSDictionary *modificationPrecondition in remaps.allKeys) {
         
@@ -193,7 +187,7 @@ static BOOL modificationPreconditionButtonComponentOfGreaterLevelExistsForButton
 // v Unused, replaced by `modificationPreconditionButtonComponentOfGreaterLevelExistsForButton()`
 static BOOL modificationExistsWhichWillBeCompletedByButton(NSNumber *button, NSDictionary *remaps, NSDictionary *activeModifiers) {
     
-    // Check if a modification exists, such that its precondition components will all be active once this button enters the mouse down state on a higher level
+    // Check if a modification exists, such that its precondition components will all be active once the incoming button enters the mouse down state on a higher level
     // So a modification which can be brought into effect just by clicking the incoming button some more times
     
     // Another way to phrase this: Check if a modification precondition exists such that all of its components match all the components of the active modifiers, except that the component which represents the incoming button has a higher level than the incoming level
@@ -212,7 +206,7 @@ static BOOL modificationExistsWhichWillBeCompletedByButton(NSNumber *button, NSD
             
             NSNumber *precondLvl = modificationPrecondition[@"buttonModifiers"][precondButton];
             NSNumber *incomingLvl = activeModifiers[@"buttonModifiers"][precondButton]; // The same as `level` function argument if thisButton == button
-                // ^ TODO: What happens is this is nil (when `thisButton` isn't active as a modifier)
+            // ^ TODO: What happens is this is nil (when `thisButton` isn't active as a modifier)
             
             if (precondButton.unsignedIntegerValue == button.unsignedIntegerValue) {
                 thisButtonChecksOut = precondLvl.unsignedIntegerValue > incomingLvl.unsignedIntegerValue;
@@ -243,19 +237,19 @@ static BOOL isTriggerForClickAction(MFActionTriggerType triggerType) {
 #pragma mark - Execute actions
 
 static void executeClickOrHoldActionIfItExists(NSString *clickHold,
-                                          NSNumber * _Nonnull devID,
-                                          NSNumber * _Nonnull button,
-                                          NSNumber * _Nonnull level,
-                                          NSDictionary *activeModifiers,
-                                          NSDictionary *remapsForActiveModifiers,
-                                          NSDictionary *effectiveRemaps) {
-        
+                                               NSNumber * _Nonnull devID,
+                                               NSNumber * _Nonnull button,
+                                               NSNumber * _Nonnull level,
+                                               NSDictionary *activeModifiers,
+                                               NSDictionary *remapsForActiveModifiers,
+                                               NSDictionary *effectiveRemaps) {
+    
     NSArray *effectiveActionArray = effectiveRemaps[button][level][clickHold];
-    if (effectiveActionArray) {
+    if (effectiveActionArray) { // click/hold action does exist for this button + level
         // Execute action
         [Actions executeActionArray:effectiveActionArray];
         // Notify triggering button
-        [ButtonInputParser handleHasHadDirectEffectWithDevice:devID button:button];
+        [ButtonInputParser handleButtonHasHadDirectEffectWithDevice:devID button:button];
         // Notify modifying buttons if executed action depends on active modification
         NSArray *actionArrayFromActiveModification = remapsForActiveModifiers[button][level][clickHold];
         BOOL actionStemsFromModification = [effectiveActionArray isEqual:actionArrayFromActiveModification];
@@ -269,7 +263,7 @@ static void notifyModifyingButtons(NSNumber * _Nonnull devID,
     
     // Notify all active button modifiers that they have had an effect
     for (NSNumber *precondButton in activeModifiers[@"buttonModifiers"]) {
-        [ButtonInputParser handleHasHadEffectAsModifierWithDevice:devID button:precondButton];
+        [ButtonInputParser handleButtonHasHadEffectAsModifierWithDevice:devID button:precondButton];
     }
 }
 
@@ -280,99 +274,99 @@ NSArray *_testRemapsUI;
 + (void)load {
     _testRemaps = @{
         @{}: @{                                                     // Key: modifier dict (empty -> no modifiers)
-            @(3): @{                                                // Key: button
-                @(1): @{                                            // Key: level
-                    @"click": @[                                   // Key: click/hold, value: array of actions
-                        @{
-                            @"type": @"symbolicHotkey",
-                            @"value": @(33),
+                @(3): @{                                                // Key: button
+                        @(1): @{                                            // Key: level
+                                @"click": @[                                   // Key: click/hold, value: array of actions
+                                        @{
+                                            @"type": @"symbolicHotkey",
+                                            @"value": @(33),
+                                        },
+                                ],
+                                //                    @"hold": @[                                  // Key: click/hold, value: array of actions
+                                //                        @{
+                                //                            @"type": @"symbolicHotkey",
+                                //                            @"value": @(70),
+                                //                        },
+                                //                    ],
+                                //                    @"modifying": @[
+                                //                            @{
+                                //                                @"type": @"modifiedDrag",
+                                //                                @"value": @"threeFingerSwipe",
+                                //                            }
+                                //                    ]
                         },
-                    ],
-//                    @"hold": @[                                  // Key: click/hold, value: array of actions
-//                        @{
-//                            @"type": @"symbolicHotkey",
-//                            @"value": @(70),
-//                        },
-//                    ],
-//                    @"modifying": @[
-//                            @{
-//                                @"type": @"modifiedDrag",
-//                                @"value": @"threeFingerSwipe",
-//                            }
-//                    ]
+                        //                @(2): @{                                            // Key: level
+                        //                        @"click": @[                                  // Key: click/hold, value: array of actions
+                        //                            @{
+                        //                                @"type": @"symbolicHotkey",
+                        //                                @"value": @(36),
+                        //                            },
+                        //                        ],
+                        //
+                        //                        @"modifying": @[                                    // Key: click/hold, value: array of actions
+                        //                        @{
+                        //                            @"type": @"modifiedDrag",
+                        //                            @"value": @"twoFingerSwipe",
+                        //                        },
+                        //                    ],
+                        //                },
                 },
-//                @(2): @{                                            // Key: level
-//                        @"click": @[                                  // Key: click/hold, value: array of actions
-//                            @{
-//                                @"type": @"symbolicHotkey",
-//                                @"value": @(36),
-//                            },
-//                        ],
-//
-//                        @"modifying": @[                                    // Key: click/hold, value: array of actions
-//                        @{
-//                            @"type": @"modifiedDrag",
-//                            @"value": @"twoFingerSwipe",
-//                        },
-//                    ],
-//                },
-            },
-            @(4): @{                                                // Key: button
-                @(1): @{                                            // Key: level
-//                    @"modifying": @[
-//                            @{
-//                                @"type": @"modifiedDrag",
-//                                @"value": @"threeFingerSwipe",
-//                            }
-//                    ],
-                    @"click": @[
-                            @{
-                                @"type": @"symbolicHotkey",
-                                @"value": @(32),
-                            }
-                    ],
-                    @"hold": @[
-                            @{
-                                @"type": @"smartZoom",
-                            }
-                    ],
-                },
-                @(2): @{                                            // Key: level
-//                    @"modifying": @[
-//                            @{
-//                                @"type": @"modifiedDrag",
-//                                @"value": @"twoFingerSwipe",
-//                            }
-//                    ],
-                    @"click": @[
-                            @{
-                                @"type": @"symbolicHotkey",
-                                @"value": @(36),
-                            }
-                    ],
-                },
-            },
-            @(5): @{                                                // Key: button
-                @(1): @{                                            // Key: level
-                    @"modifying": @[
-                            @{
-                                @"type": @"modifiedDrag",
-                                @"value": @"twoFingerSwipe",
-                            }
-                    ]
-                },
-            },
-            @(7)  : @{                                                // Key: button
-                @(1): @{                                            // Key: level
-                    @"click": @[                                  // Key: click/hold, value: array of actions
-                        @{
-                            @"type": @"symbolicHotkey",
-                            @"value": @(160),
+                @(4): @{                                                // Key: button
+                        @(1): @{                                            // Key: level
+                                //                    @"modifying": @[
+                                //                            @{
+                                //                                @"type": @"modifiedDrag",
+                                //                                @"value": @"threeFingerSwipe",
+                                //                            }
+                                //                    ],
+                                @"click": @[
+                                        @{
+                                            @"type": @"symbolicHotkey",
+                                            @"value": @(32),
+                                        }
+                                ],
+                                @"hold": @[
+                                        @{
+                                            @"type": @"smartZoom",
+                                        }
+                                ],
                         },
-                    ],
+                        @(2): @{                                            // Key: level
+                                //                    @"modifying": @[
+                                //                            @{
+                                //                                @"type": @"modifiedDrag",
+                                //                                @"value": @"twoFingerSwipe",
+                                //                            }
+                                //                    ],
+                                @"click": @[
+                                        @{
+                                            @"type": @"symbolicHotkey",
+                                            @"value": @(36),
+                                        }
+                                ],
+                        },
                 },
-            },
-            
+                @(5): @{                                                // Key: button
+                        @(1): @{                                            // Key: level
+                                @"modifying": @[
+                                        @{
+                                            @"type": @"modifiedDrag",
+                                            @"value": @"twoFingerSwipe",
+                                        }
+                                ]
+                        },
+                },
+                @(7)  : @{                                                // Key: button
+                        @(1): @{                                            // Key: level
+                                @"click": @[                                  // Key: click/hold, value: array of actions
+                                        @{
+                                            @"type": @"symbolicHotkey",
+                                            @"value": @(160),
+                                        },
+                                ],
+                        },
+                },
+                
         },
         
         @{                                                          // Key: modifier dict
@@ -383,54 +377,54 @@ NSArray *_testRemapsUI;
                 NSEventModifierFlagControl
                 ),
         }: @{
-            @(4): @{                                                // Key: button
-                @(1): @{                                            // Key: level
-                    @"click": @[                                  // Key: clic/hold, value: array of actions
-                        @{
-                            @"type": @"navigationSwipe",
-                            @"value": @"left",
+                @(4): @{                                                // Key: button
+                        @(1): @{                                            // Key: level
+                                @"click": @[                                  // Key: clic/hold, value: array of actions
+                                        @{
+                                            @"type": @"navigationSwipe",
+                                            @"value": @"left",
+                                        },
+                                ],
                         },
-                    ],
                 },
-            },
-            @(5): @{                                                // Key: button
-                @(1): @{                                            // Key: level
-                    @"click": @[                                  // Key: click/hold, value: array of actions
-                        @{
-                            @"type": @"navigationSwipe",
-                            @"value": @"right",
+                @(5): @{                                                // Key: button
+                        @(1): @{                                            // Key: level
+                                @"click": @[                                  // Key: click/hold, value: array of actions
+                                        @{
+                                            @"type": @"navigationSwipe",
+                                            @"value": @"right",
+                                        },
+                                ],
                         },
-                    ],
                 },
-            },
         },
     };
-//    _testRemapsUI = @[
-//        @{
-//            @"button": @(3),
-//            @"level": @(1),
-//            @"type": @"click",
-//            @"modifiers": @[],
-//            @"actions": @[
-//                @{
-//                    @"type": @"symbolicHotkey",
-//                    @"value": @(32),
-//                },
-//            ],
-//        },
-//        @{
-//            @"button": @(3),
-//            @"level": @(1),
-//            @"type": @"hold",
-//            @"modifiers": @[],
-//            @"actions": @[
-//                @{
-//                    @"type": @"symbolicHotkey",
-//                    @"value": @(33),
-//                },
-//            ],
-//        },
-//    ];
+    //    _testRemapsUI = @[
+    //        @{
+    //            @"button": @(3),
+    //            @"level": @(1),
+    //            @"type": @"click",
+    //            @"modifiers": @[],
+    //            @"actions": @[
+    //                @{
+    //                    @"type": @"symbolicHotkey",
+    //                    @"value": @(32),
+    //                },
+    //            ],
+    //        },
+    //        @{
+    //            @"button": @(3),
+    //            @"level": @(1),
+    //            @"type": @"hold",
+    //            @"modifiers": @[],
+    //            @"actions": @[
+    //                @{
+    //                    @"type": @"symbolicHotkey",
+    //                    @"value": @(33),
+    //                },
+    //            ],
+    //        },
+    //    ];
 }
 
 @end

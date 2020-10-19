@@ -90,7 +90,7 @@ CGEventRef handleInput(CGEventTapProxy proxy, CGEventType type, CGEventRef event
     
     if (dev) {
         
-        NSLog(@"CG Button input comes from relevant device");
+        //NSLog(@"CG Button input comes from relevant device");
         
         NSUInteger buttonNumber = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
         

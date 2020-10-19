@@ -26,18 +26,22 @@
 @property NSTimer *holdTimer;
 @property NSTimer *levelTimer;
 @property BOOL isZombified;
-@property (nonatomic) int64_t clickLevel;
-@property (nonatomic) BOOL isPressed; // NSEvent.pressedMouseButtons doesn't react fast enought (led to problems in `getActiveButtonModifiersForDevice`), so we're keeping track of pressed mouse buttons manually
+@property () int64_t clickLevel; // TODO: Making this nonatomic might lead to problems, should think about this again (But it's necessary to override setters)
+@property () BOOL isPressed; // NSEvent.pressedMouseButtons doesn't react fast enought (led to problems in `getActiveButtonModifiersForDevice`), so we're keeping track of pressed mouse buttons manually
 @end
 @implementation ButtonState
 @synthesize holdTimer, levelTimer, isZombified, clickLevel, isPressed;
 //- (void)setClickLevel:(int64_t)clickLevel {
-//    //[ModifierManager handleButtonModifiersHaveChanged];
 //    self.clickLevel = clickLevel;
+//
+//    [ModifierManager handleButtonModifiersHaveChanged];
 //}
 //- (void)setIsPressed:(BOOL)isPressed {
-//    //[ModifierManager handleButtonModifiersHaveChanged];
 //    self.isPressed = isPressed;
+//
+//    if (!isPressed) {
+//        [ModifierManager handleButtonModifiersHaveChanged];
+//    }
 //}
 @end
 
@@ -183,9 +187,9 @@ static void timerCallbackHelper(NSDictionary *info, NSNumber **devID, NSNumber *
 
 static void resetStateWithDevice(NSNumber *devID, NSNumber *btn) {
     
-    NSLog(@"RESETTING STATE - devID: %@, btn: %@", devID, btn);
+    //NSLog(@"RESETTING STATE - devID: %@, btn: %@", devID, btn);
     
-    [SharedUtility printCallingFunctionInfo];
+    //[SharedUtility printCallingFunctionInfo];
     
     ButtonState *bs = _state[devID][btn];
     
@@ -211,7 +215,7 @@ static void resetAllState() {
 // With the click level not being reset the button can still be used as a modifier for other triggers.
 static void zombifyWithDevice(NSNumber *devID, NSNumber *btn) {
     
-    NSLog(@"ZOMBIFYING - devID: %@, btn: %@", devID, btn);
+    //NSLog(@"ZOMBIFYING - devID: %@, btn: %@", devID, btn);
     
     ButtonState *bs = _state[devID][btn];
     
@@ -232,11 +236,11 @@ static void zombifyAllPressedButtonsOnDeviceExcept(NSNumber *devID, NSNumber *ex
 
 #pragma mark Interface
 
-+ (void)handleHasHadDirectEffectWithDevice:(NSNumber *)devID button:(NSNumber *)btn {
++ (void)handleButtonHasHadDirectEffectWithDevice:(NSNumber *)devID button:(NSNumber *)btn {
     resetStateWithDevice(devID, btn);
 }
 
-+ (void)handleHasHadEffectAsModifierWithDevice:(NSNumber *)devID button:(NSNumber *)btn {
++ (void)handleButtonHasHadEffectAsModifierWithDevice:(NSNumber *)devID button:(NSNumber *)btn {
     zombifyWithDevice(devID, btn);
 }
 
