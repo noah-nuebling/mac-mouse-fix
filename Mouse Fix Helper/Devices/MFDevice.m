@@ -53,8 +53,8 @@ static void registerInputCallbackForDevice(MFDevice *device) {
     }
 }
 
-- (CFNumberRef)getID {
-    return IOHIDDeviceGetProperty(_IOHIDDevice, CFSTR(kIOHIDUniqueIDKey));
+- (NSNumber *)uniqueID {
+    return (__bridge NSNumber *)IOHIDDeviceGetProperty(_IOHIDDevice, CFSTR(kIOHIDUniqueIDKey));
 }
 
 
@@ -159,7 +159,7 @@ typedef struct __IOHIDDevice
     
     NSLog(@"Receive button and axis input");
     
-    [self seize:seize];
+    //[self seize:seize];
     
     NSDictionary *buttonMatchDict = @{
         @(kIOHIDElementUsagePageKey): @(kHIDPage_Button)
@@ -254,12 +254,7 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
         
         [GestureScrollSimulator breakMomentumScroll]; // Momentum scroll is started, when when a modified drag of type "twoFingerSwipe" is deactivated. We break it on any button input.
         if (pressure == 0) {
-            MFActivationCondition *falsifiedCondition = &((MFActivationCondition) {
-                .activatingDevice = sendingDev,
-                .type = kMFActivationConditionTypeMouseButtonPressed,
-                .value = button + 1,
-            });
-            [ModifiedDrag deactivateAllInputModificationWithActivationCondition:falsifiedCondition];
+            [ModifiedDrag deactivate];
         }
         
         return;

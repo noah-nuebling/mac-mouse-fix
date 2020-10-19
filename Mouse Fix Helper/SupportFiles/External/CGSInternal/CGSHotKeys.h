@@ -37,13 +37,6 @@
 /// other event-generating system gestures.
 typedef enum {
     
-    // my own stuff
-    kCGSHotKeyLaunchpad             = 160,
-    kCGSHotKeySiri                  = 176,
-    kCGSHotKeyNotificationCenter    = 163,
-    kCGSHotKeyToggleDoNotDisturb    = 175,
-    
-    
 	// full keyboard access hotkeys
 	kCGSHotKeyToggleFullKeyboardAccess = 12,
 	kCGSHotKeyFocusMenubar = 7,

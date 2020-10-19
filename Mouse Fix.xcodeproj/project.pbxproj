@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F017CCD253D49E9002F149F /* Constants.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F017CCB253D49E9002F149F /* Constants.h */; };
+		4F017CCE253D49E9002F149F /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F017CCC253D49E9002F149F /* Constants.m */; };
+		4F017CCF253D49E9002F149F /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F017CCC253D49E9002F149F /* Constants.m */; };
 		4F1A20282348EC3D00B29037 /* ScrollUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1A20272348EC3D00B29037 /* ScrollUtility.m */; };
 		4F1B7C1D23D3E6D60055C007 /* TouchSimulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B7C1C23D3E6D60055C007 /* TouchSimulator.m */; };
 		4F1C968C231361EF00C3B9AE /* TouchEvents.c in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C96872313606200C3B9AE /* TouchEvents.c */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
@@ -37,7 +40,7 @@
 		4F3A8446230D3E6C0012C725 /* Updater.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A8444230D3E6C0012C725 /* Updater.m */; };
 		4F4728D6253C824000846B67 /* NSMutableDictionary+Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FA26CEF243949DC0082D5F6 /* NSMutableDictionary+Additions.h */; };
 		4F479C392488B75C00976C68 /* GestureScrollSimulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F479C382488B75C00976C68 /* GestureScrollSimulator.m */; };
-		4F4999EE253BB82D00FC69B3 /* ModifierManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4999ED253BB82D00FC69B3 /* ModifierManager.m */; };
+		4F4999EE253BB82D00FC69B3 /* Modifiers.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4999ED253BB82D00FC69B3 /* Modifiers.m */; };
 		4F8AEA9222FBC7AC008C1A7C /* milkshake_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */; };
 		4F8D0185243D8D6200D70076 /* NSArray+Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F8D0183243D8D6200D70076 /* NSArray+Additions.h */; };
 		4F8D0186243D8D6200D70076 /* NSArray+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8D0184243D8D6200D70076 /* NSArray+Additions.m */; };
@@ -154,6 +157,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4F017CCB253D49E9002F149F /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		4F017CCC253D49E9002F149F /* Constants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		4F1A20262348EC3D00B29037 /* ScrollUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollUtility.h; sourceTree = "<group>"; };
 		4F1A20272348EC3D00B29037 /* ScrollUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollUtility.m; sourceTree = "<group>"; };
 		4F1B7C1B23D3E6D60055C007 /* TouchSimulator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TouchSimulator.h; sourceTree = "<group>"; };
@@ -228,8 +233,8 @@
 		4F422EEE23469B1700AA6E22 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		4F479C372488B75C00976C68 /* GestureScrollSimulator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GestureScrollSimulator.h; sourceTree = "<group>"; };
 		4F479C382488B75C00976C68 /* GestureScrollSimulator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GestureScrollSimulator.m; sourceTree = "<group>"; };
-		4F4999EC253BB82D00FC69B3 /* ModifierManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModifierManager.h; sourceTree = "<group>"; };
-		4F4999ED253BB82D00FC69B3 /* ModifierManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModifierManager.m; sourceTree = "<group>"; };
+		4F4999EC253BB82D00FC69B3 /* Modifiers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Modifiers.h; sourceTree = "<group>"; };
+		4F4999ED253BB82D00FC69B3 /* Modifiers.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Modifiers.m; sourceTree = "<group>"; };
 		4F7C281F2436675900D94D0A /* backup_config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = backup_config.plist; sourceTree = "<group>"; };
 		4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = milkshake_button.png; sourceTree = "<group>"; };
 		4F8D0183243D8D6200D70076 /* NSArray+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSArray+Additions.h"; sourceTree = "<group>"; };
@@ -330,6 +335,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4F017CCA253D49B9002F149F /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				4F017CCB253D49E9002F149F /* Constants.h */,
+				4F017CCC253D49E9002F149F /* Constants.m */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
 		4F1B7C1823D3E5640055C007 /* Touch */ = {
 			isa = PBXGroup;
 			children = (
@@ -503,6 +517,7 @@
 		4F4728D2253C817A00846B67 /* SharedClasses */ = {
 			isa = PBXGroup;
 			children = (
+				4F017CCA253D49B9002F149F /* Constants */,
 				4F4728D3253C818D00846B67 /* Utility */,
 			);
 			path = SharedClasses;
@@ -524,8 +539,8 @@
 		4F4999EB253BB7F600FC69B3 /* Modifiers */ = {
 			isa = PBXGroup;
 			children = (
-				4F4999EC253BB82D00FC69B3 /* ModifierManager.h */,
-				4F4999ED253BB82D00FC69B3 /* ModifierManager.m */,
+				4F4999EC253BB82D00FC69B3 /* Modifiers.h */,
+				4F4999ED253BB82D00FC69B3 /* Modifiers.m */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -825,6 +840,7 @@
 				4F1E57EC253CF29300B704E3 /* SharedUtility.h in Headers */,
 				4FBF350523183FDA00E6CFD0 /* HelperServices.h in Headers */,
 				4FD45A0F231C66CF00F75C58 /* MessagePort_PrefPane.h in Headers */,
+				4F017CCD253D49E9002F149F /* Constants.h in Headers */,
 				4FD67DDE211CC9000095A9A5 /* PrefPaneDelegate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1009,6 +1025,7 @@
 				4FD6B88E248ECE7D00AA5530 /* MFDevice.m in Sources */,
 				4F32E155231C420100199A11 /* MessagePort_HelperApp.m in Sources */,
 				4FECC8902431DCDF001A3C4B /* ScrollControl.m in Sources */,
+				4F017CCE253D49E9002F149F /* Constants.m in Sources */,
 				4F1E57F6253CF3F800B704E3 /* NSArray+Additions.m in Sources */,
 				4F1C968C231361EF00C3B9AE /* TouchEvents.c in Sources */,
 				4FB68B69246CA46F0059530E /* Actions.m in Sources */,
@@ -1016,7 +1033,7 @@
 				4FD45A20231C7FB500F75C58 /* AccessibilityCheck.m in Sources */,
 				4FECC88D2431DCCD001A3C4B /* RoughScroll.m in Sources */,
 				4F32E18C231C509200199A11 /* SmoothScroll.m in Sources */,
-				4F4999EE253BB82D00FC69B3 /* ModifierManager.m in Sources */,
+				4F4999EE253BB82D00FC69B3 /* Modifiers.m in Sources */,
 				4F1E57F3253CF3F500B704E3 /* NSMutableDictionary+Additions.m in Sources */,
 				4F32E157231C420100199A11 /* DeviceManager.m in Sources */,
 				4F9CA64E246CA5470042F25A /* ModifiedDrag.m in Sources */,
@@ -1045,6 +1062,7 @@
 				4F32E15F231C45F300199A11 /* Hyperlink.m in Sources */,
 				4FD45A35231D097000F75C58 /* Utility_PrefPane.m in Sources */,
 				4FD67DE0211CC9000095A9A5 /* PrefPaneDelegate.m in Sources */,
+				4F017CCF253D49E9002F149F /* Constants.m in Sources */,
 				4FF873F0231A96B2002A897A /* MoreSheet.m in Sources */,
 				4F8D0186243D8D6200D70076 /* NSArray+Additions.m in Sources */,
 				4FD45A10231C66CF00F75C58 /* MessagePort_PrefPane.m in Sources */,

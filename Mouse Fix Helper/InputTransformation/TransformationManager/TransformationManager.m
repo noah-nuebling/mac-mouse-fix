@@ -12,9 +12,10 @@
 #import "Utility_HelperApp.h"
 #import "ButtonInputParser.h"
 #import "Actions.h"
-#import "ModifierManager.h"
+#import "Modifiers.h"
 #import "ModifiedDrag.h"
 #import "NSArray+Additions.h"
+#import "Constants.h"
 
 @implementation TransformationManager
 
@@ -32,9 +33,9 @@
             // NSLog(@"HANDLE BUTTON TRIGGER - button: %@, trigger: %@, level: %@, devID: %@", button, @(triggerType), level, devID);
     
     // Get remaps and apply modifier overrides
-    NSDictionary *remaps = _testRemaps;
+    NSDictionary *remaps = _remaps;
     NSDictionary *effectiveRemaps = remaps[@{}];
-    NSDictionary *activeModifiers = [ModifierManager getActiveModifiersForDevice:devID filterButton:button]; // The modifiers which act on the incoming button (the button can't modify itself so we filter it out)
+    NSDictionary *activeModifiers = [Modifiers getActiveModifiersForDevice:devID filterButton:button]; // The modifiers which act on the incoming button (the button can't modify itself so we filter it out)
     NSDictionary *remapsForActiveModifiers = remaps[activeModifiers];
     if ([activeModifiers isNotEqualTo:@{}]) {
         effectiveRemaps = [Utility_HelperApp dictionaryWithOverridesAppliedFrom:[remapsForActiveModifiers copy] to:effectiveRemaps];
@@ -54,7 +55,7 @@
         // Asses mapping landscape
         // \note It's unnecessary to assess mapping landscape (that includes calculating targetTrigger) on click actions again for every call of this function. It only has to be calculated once for every "click" (as opposed to "hold") actionArray in every possible overriden remapDict including the unoverriden one. We could precalculate everything once when loading remapDict if we wanted to. This is plenty fast though so it's fine.
         
-        NSDictionary *activeModifiersUnfiltered = [ModifierManager getActiveModifiersForDevice:devID filterButton:nil];
+        NSDictionary *activeModifiersUnfiltered = [Modifiers getActiveModifiersForDevice:devID filterButton:nil];
         //      ^ We need to check whether the incoming button is acting as a modifier to determine
         //          `effectForMouseDownStateOfThisLevelExists`, so we can't use the variable `activeModifiers` defined above because it filters out the incoming button
         BOOL clickActionOfThisLevelExists;
@@ -102,17 +103,6 @@
     
     // TODO: Implement function where ButtonState of incoming button is reset (through sending a message to ButtonInputParser) when no effects of a higher level exist
     
-    //    if (triggerType == kMFActionTriggerTypeButtonDown) {
-    //        NSArray *modifyingActionArrayForInput = remapDict[@(button)][@(level)][@"modifying"];
-    //        MFActivationCondition ac = {
-    //            .type = kMFActivationConditionTypeMouseButtonPressed,
-    //            .value = _buttonFromLastButtonDownEvent, // Could also use local `button` variable I think
-    //            .activatingDevice = _deviceFromLastButtonDownEvent,
-    //        };
-    //        [ModifyingActions initializeModifiedInputsWithActionArray:modifyingActionArrayForInput
-    //                                          withActivationCondition:&ac]; // ??? We only activate modified inputs, they will deactivate themselves once the activation condition becomes false
-    //    }
-    
     return kMFEventPassThroughRefusal;
     
 }
@@ -154,7 +144,6 @@ static BOOL isUsedAsModifier(NSNumber *button, NSNumber *level, NSDictionary *re
     return outVal;
 }
 
-// TODO: Test this v
 static BOOL effectOfGreaterLevelExistsFor(NSNumber *button, NSNumber *level, NSDictionary *remaps, NSDictionary *activeModifiers, NSDictionary *effectiveRemaps) {
     
     // Check if effective remaps of a higher level exist for this button
@@ -206,7 +195,7 @@ static BOOL modificationExistsWhichWillBeCompletedByButton(NSNumber *button, NSD
             
             NSNumber *precondLvl = modificationPrecondition[@"buttonModifiers"][precondButton];
             NSNumber *incomingLvl = activeModifiers[@"buttonModifiers"][precondButton]; // The same as `level` function argument if thisButton == button
-            // ^ TODO: What happens is this is nil (when `thisButton` isn't active as a modifier)
+            // ^ What happens is this is nil (when `thisButton` isn't active as a modifier)
             
             if (precondButton.unsignedIntegerValue == button.unsignedIntegerValue) {
                 thisButtonChecksOut = precondLvl.unsignedIntegerValue > incomingLvl.unsignedIntegerValue;
@@ -269,10 +258,13 @@ static void notifyModifyingButtons(NSNumber * _Nonnull devID,
 
 #pragma mark - Dummy Data
 
-NSDictionary *_testRemaps;
-NSArray *_testRemapsUI;
+NSDictionary *_remaps;
++ (NSDictionary *)remaps {
+    return _remaps;
+}
+NSArray *_remapsUI;
 + (void)load {
-    _testRemaps = @{
+    _remaps = @{
         @{}: @{                                                     // Key: modifier dict (empty -> no modifiers)
                 @(3): @{                                                // Key: button
                         @(1): @{                                            // Key: level
@@ -360,8 +352,8 @@ NSArray *_testRemapsUI;
                         @(1): @{                                            // Key: level
                                 @"click": @[                                  // Key: click/hold, value: array of actions
                                         @{
-                                            @"type": @"symbolicHotkey",
-                                            @"value": @(160),
+                                            kMFActionArrayKeyType: kMFActionArrayTypeSymbolicHotkey,
+                                            kMFActionArrayKeyVariant: @(kMFSHLaunchpad),
                                         },
                                 ],
                         },
@@ -370,13 +362,14 @@ NSArray *_testRemapsUI;
         },
         
         @{                                                          // Key: modifier dict
-            @"buttonModifiers": @{
-                    @(3): @(2),                                      // btn, lvl
+            kMFModifierKeyButtons: @{
+                    @(4): @(1),                                      // btn, lvl
             },
-            @"keyboardModifiers": @(
-                NSEventModifierFlagControl
-                ),
+//            @"keyboardModifiers": @(
+//                NSEventModifierFlagControl
+//                ),
         }: @{
+                kMFRemapsKeyModifiedDrag: kMFModifiedDragTypeThreeFingerSwipe,
                 @(4): @{                                                // Key: button
                         @(1): @{                                            // Key: level
                                 @"click": @[                                  // Key: clic/hold, value: array of actions

@@ -9,6 +9,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MFDevice.h"
+#import "Constants.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -21,28 +22,14 @@ typedef enum {
 } MFModifiedInputActivationState;
 
 typedef enum {
-    kMFActivationConditionTypeMouseButtonPressed,
-} MFActivationConditionType;
-
-typedef enum {
     kMFAxisNone,
     kMFAxisHorizontal,
     kMFAxisVertical,
 } MFAxis;
 
-typedef struct __MFActivationCondition {
-    MFDevice *activatingDevice;
-    MFActivationConditionType type;
-    int64_t value;
-} MFActivationCondition;
++ (void)initializeModifiedDragWithType:(MFStringConstant)type onDevice:(MFDevice *)dev;
 
-+ (void)initializeModifiedInputsWithActionArray:(NSArray *)actionArray
-                         withActivationCondition:(MFActivationCondition *)activationCondition;
-
-+ (void)deactivateAllInputModificationWithActivationCondition:(MFActivationCondition *)condition;
-
-+ (BOOL)anyModifiedInputIsInUseForButton:(int64_t)button;
-
++ (void)deactivate;
 
 + (void)handleMouseInputWithDeltaX:(int64_t)deltaX deltaY:(int64_t)deltaY;
 

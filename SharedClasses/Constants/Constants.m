@@ -1,22 +1,14 @@
 //
 // --------------------------------------------------------------------------
-// ModifierManager.h
+// Constants.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2020
 // Licensed under MIT
 // --------------------------------------------------------------------------
 //
 
-#import <Foundation/Foundation.h>
+#import "Constants.h"
 
-NS_ASSUME_NONNULL_BEGIN
-
-@interface ModifierManager : NSObject
-
-+ (NSDictionary *)getActiveModifiersForDevice:(NSNumber *)devID filterButton:(NSNumber * __nullable)filteredButton;
-
-+ (void)handleButtonModifiersHaveChanged;
+@implementation Constants
 
 @end
-
-NS_ASSUME_NONNULL_END

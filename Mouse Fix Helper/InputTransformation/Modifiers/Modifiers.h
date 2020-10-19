@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-// TransformationManager.h
+// ModifierManager.h
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2020
 // Licensed under MIT
@@ -8,13 +8,18 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ButtonInputReceiver_CG.h"
+#import "MFDevice.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TransformationManager : NSObject
-+ (NSDictionary *)remaps;
-+ (MFEventPassThroughEvaluation)handleButtonTriggerWithButton:(NSNumber *)button triggerType:(MFActionTriggerType)trigger clickLevel:(NSNumber *)level device:(NSNumber *)devID;
+@interface Modifiers : NSObject
+
++ (NSDictionary *)getActiveModifiersForDevice:(NSNumber *)devID filterButton:(NSNumber * __nullable)filteredButton;
+
++ (void)handleButtonModifiersHaveChangedWithDevice:(MFDevice *)devID;
+
++ (void)modifierDrivenModificationHasBeenUsedWithDevice:(MFDevice *)device;
+
 @end
 
 NS_ASSUME_NONNULL_END

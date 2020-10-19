@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)new NS_UNAVAILABLE;
 + (MFDevice *)deviceWithIOHIDDevice:(IOHIDDeviceRef)IOHIDDevice;
 
-- (CFNumberRef)getID;
+- (NSNumber *)uniqueID;
 
 - (void)receiveOnlyButtonInput;
 - (void)receiveButtonAndAxisInputWithSeize:(BOOL)exclusive;

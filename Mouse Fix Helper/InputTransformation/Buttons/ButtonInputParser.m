@@ -15,7 +15,7 @@
 #import "ConfigFileInterface_HelperApp.h"
 #import "GestureScrollSimulator.h"
 #import "TransformationManager.h"
-#import "ModifierManager.h"
+#import "Modifiers.h"
 #import "SharedUtility.h"
 
 #pragma mark - Definition of private helper class `Button State`
@@ -23,26 +23,51 @@
 // Instaces of this helper class describe the state of a single button on an input device
 // The `_state` class variable of `ButtonInputParser` is a collection of `ButtonState` instances
 @interface ButtonState : NSObject
+- (instancetype)init NS_UNAVAILABLE;
 @property NSTimer *holdTimer;
 @property NSTimer *levelTimer;
 @property BOOL isZombified;
-@property () int64_t clickLevel; // TODO: Making this nonatomic might lead to problems, should think about this again (But it's necessary to override setters)
-@property () BOOL isPressed; // NSEvent.pressedMouseButtons doesn't react fast enought (led to problems in `getActiveButtonModifiersForDevice`), so we're keeping track of pressed mouse buttons manually
+@property int64_t clickLevel; // TODO: Making this nonatomic might lead to problems, should think about this again (But it's necessary to override setters)
+@property BOOL isPressed; // NSEvent.pressedMouseButtons doesn't react fast enought (led to problems in `getActiveButtonModifiersForDevice`), so we're keeping track of pressed mouse buttons manually
+@property (readonly) MFDevice *device;
 @end
 @implementation ButtonState
-@synthesize holdTimer, levelTimer, isZombified, clickLevel, isPressed;
-//- (void)setClickLevel:(int64_t)clickLevel {
-//    self.clickLevel = clickLevel;
-//
-//    [ModifierManager handleButtonModifiersHaveChanged];
-//}
-//- (void)setIsPressed:(BOOL)isPressed {
-//    self.isPressed = isPressed;
-//
-//    if (!isPressed) {
-//        [ModifierManager handleButtonModifiersHaveChanged];
-//    }
-//}
+@synthesize clickLevel = _clickLevel, isPressed = _isPressed;
+#pragma mark Init
+- (instancetype)initWithDevice:(MFDevice *)device {
+    self = [super init];
+    if (self) {
+        _device = device;
+    }
+    return self;
+}
+#pragma mark clickLevel accessors
+- (int64_t)clickLevel {
+    @synchronized (self) {
+        return _clickLevel;
+    }
+}
+- (void)setClickLevel:(int64_t)clickLevel {
+    @synchronized (self) {
+        _clickLevel = clickLevel;
+    }
+    [Modifiers handleButtonModifiersHaveChangedWithDevice:self.device];
+}
+#pragma mark isPressed accessors
+- (BOOL)isPressed {
+    @synchronized (self) {
+        return _isPressed;
+    }
+}
+- (void)setIsPressed:(BOOL)isPressed {
+    @synchronized (self) {
+        _isPressed = isPressed;
+    }
+
+    if (!isPressed) { // Whenever isPressed becomes true, clickLevel is also modified, so we don't need to notify modifier change in that case
+        [Modifiers handleButtonModifiersHaveChangedWithDevice:self.device];
+    }
+}
 @end
 
 #pragma mark - Implementation of `ButtonInputParser`
@@ -72,7 +97,7 @@ static NSMutableDictionary *_state;
     MFEventPassThroughEvaluation passThroughEval;
     
     // Gather info from params
-    NSNumber *devID = (__bridge NSNumber *)[device getID];
+    NSNumber *devID = device.uniqueID;
     ButtonState *bs = _state[devID][btn];
     
     // If no entry exists in _state for the incoming device and button, create one
@@ -80,7 +105,7 @@ static NSMutableDictionary *_state;
         if (_state[devID] == nil) {
             _state[devID] = [NSMutableDictionary dictionary];
         }
-        bs = [ButtonState alloc];
+        bs = [[ButtonState alloc] initWithDevice:device];
         _state[devID][btn] = bs;
     }
     
@@ -90,23 +115,6 @@ static NSMutableDictionary *_state;
     if (trigger == kMFButtonInputTypeButtonDown) {
         
         // Mouse down
-        
-        // Check if zombified
-        // Zombification should only occur during mouse down state, and then be removed with the consequent mouse up event
-        if (bs.isZombified) {
-            @throw [NSException exceptionWithName:@"ZombifiedDuringMouseUpStateException" reason:@"Button was found to be zombified when mouse down event occured." userInfo:@{
-                @"devID": devID,
-                @"btn": btn,
-                @"trigger": @(trigger)
-            }];
-        }
-        
-        // Update bs
-        bs.isPressed = YES;
-        bs.clickLevel += 1;
-        
-        // Send trigger
-        passThroughEval = [TransformationManager handleButtonTriggerWithButton:btn triggerType:kMFActionTriggerTypeButtonDown clickLevel:@(bs.clickLevel) device:devID];
         
         // Restart Timers
         NSDictionary *timerInfo = @{
@@ -126,6 +134,23 @@ static NSMutableDictionary *_state;
                                                        selector:@selector(levelTimerCallback:)
                                                        userInfo:timerInfo
                                                         repeats:NO];
+        
+        // Check if zombified
+        // Zombification should only occur during mouse down state, and then be removed with the consequent mouse up event
+        if (bs.isZombified) {
+            @throw [NSException exceptionWithName:@"ZombifiedDuringMouseUpStateException" reason:@"Button was found to be zombified when mouse down event occured." userInfo:@{
+                @"devID": devID,
+                @"btn": btn,
+                @"trigger": @(trigger)
+            }];
+        }
+        
+        // Update bs
+        bs.isPressed = YES;
+        bs.clickLevel += 1;
+        
+        // Send trigger
+        passThroughEval = [TransformationManager handleButtonTriggerWithButton:btn triggerType:kMFActionTriggerTypeButtonDown clickLevel:@(bs.clickLevel) device:devID];
         
     } else {
         
@@ -215,7 +240,8 @@ static void resetAllState() {
 // With the click level not being reset the button can still be used as a modifier for other triggers.
 static void zombifyWithDevice(NSNumber *devID, NSNumber *btn) {
     
-    //NSLog(@"ZOMBIFYING - devID: %@, btn: %@", devID, btn);
+    NSLog(@"ZOMBIFYING - devID: %@, btn: %@", devID, btn);
+    [SharedUtility printCallingFunctionInfo];
     
     ButtonState *bs = _state[devID][btn];
     
