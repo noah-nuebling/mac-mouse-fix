@@ -9,7 +9,7 @@
 
 #import "TransformationManager.h"
 #import "RemapUtility.h"
-#import "Utility_HelperApp.h"
+#import "SharedUtility.h"
 #import "ButtonInputParser.h"
 #import "Actions.h"
 #import "Modifiers.h"
@@ -19,7 +19,9 @@
 
 @implementation TransformationManager
 
-#pragma mark - Trigger handling
+#pragma mark - Interface
+
+#pragma mark Trigger handling
 
 + (void)handleDragTrigger {
     
@@ -30,16 +32,13 @@
 }
 + (MFEventPassThroughEvaluation)handleButtonTriggerWithButton:(NSNumber *)button triggerType:(MFActionTriggerType)triggerType clickLevel:(NSNumber *)level device:(NSNumber *)devID {
     
-            // NSLog(@"HANDLE BUTTON TRIGGER - button: %@, trigger: %@, level: %@, devID: %@", button, @(triggerType), level, devID);
+            NSLog(@"HANDLE BUTTON TRIGGER - button: %@, trigger: %@, level: %@, devID: %@", button, @(triggerType), level, devID);
     
     // Get remaps and apply modifier overrides
     NSDictionary *remaps = _remaps;
-    NSDictionary *effectiveRemaps = remaps[@{}];
     NSDictionary *activeModifiers = [Modifiers getActiveModifiersForDevice:devID filterButton:button]; // The modifiers which act on the incoming button (the button can't modify itself so we filter it out)
+    NSDictionary *effectiveRemaps = getEffectiveRemaps(remaps, activeModifiers);
     NSDictionary *remapsForActiveModifiers = remaps[activeModifiers];
-    if ([activeModifiers isNotEqualTo:@{}]) {
-        effectiveRemaps = [Utility_HelperApp dictionaryWithOverridesAppliedFrom:[remapsForActiveModifiers copy] to:effectiveRemaps];
-    }
     
     // If no remaps exist for this button, (and if this functions was invoked as a direct result of a physical button press) let the CGEvent which caused this function call pass through
     if (triggerType == kMFActionTriggerTypeButtonDown || triggerType == kMFActionTriggerTypeButtonUp) {
@@ -50,25 +49,25 @@
         }
     }
     
+    // Asses mapping landscape
+    // \note It's unnecessary to assess mapping landscape (that includes calculating targetTrigger) on click actions again for every call of this function. It only has to be calculated once for every "click" (as opposed to "hold") actionArray in every possible overriden remapDict including the unoverriden one. We could precalculate everything once when loading remapDict if we wanted to. This is plenty fast though so it's fine.
+    
+    NSDictionary *activeModifiersUnfiltered = [Modifiers getActiveModifiersForDevice:devID filterButton:nil];
+    //      ^ We need to check whether the incoming button is acting as a modifier to determine
+    //          `effectForMouseDownStateOfThisLevelExists`, so we can't use the variable `activeModifiers` defined above because it filters out the incoming button
+    BOOL clickActionOfThisLevelExists;
+    BOOL effectForMouseDownStateOfThisLevelExists;
+    BOOL effectOfGreaterLevelExists;
+    assessMappingLandscape(&clickActionOfThisLevelExists,
+                           &effectForMouseDownStateOfThisLevelExists,
+                           &effectOfGreaterLevelExists,
+                           button,
+                           level,
+                           remaps,
+                           activeModifiersUnfiltered,
+                           effectiveRemaps);
+    
     if (isTriggerForClickAction(triggerType)) {
-        
-        // Asses mapping landscape
-        // \note It's unnecessary to assess mapping landscape (that includes calculating targetTrigger) on click actions again for every call of this function. It only has to be calculated once for every "click" (as opposed to "hold") actionArray in every possible overriden remapDict including the unoverriden one. We could precalculate everything once when loading remapDict if we wanted to. This is plenty fast though so it's fine.
-        
-        NSDictionary *activeModifiersUnfiltered = [Modifiers getActiveModifiersForDevice:devID filterButton:nil];
-        //      ^ We need to check whether the incoming button is acting as a modifier to determine
-        //          `effectForMouseDownStateOfThisLevelExists`, so we can't use the variable `activeModifiers` defined above because it filters out the incoming button
-        BOOL clickActionOfThisLevelExists;
-        BOOL effectForMouseDownStateOfThisLevelExists;
-        BOOL effectOfGreaterLevelExists;
-        assessMappingLandscape(&clickActionOfThisLevelExists,
-                               &effectForMouseDownStateOfThisLevelExists,
-                               &effectOfGreaterLevelExists,
-                               button,
-                               level,
-                               remaps,
-                               activeModifiersUnfiltered,
-                               effectiveRemaps);
         
         // Find targetTriggerType based on mapping landscape assessment
         MFActionTriggerType targetTriggerType = kMFActionTriggerTypeNone;
@@ -101,13 +100,46 @@
                                            effectiveRemaps);
     }
     
-    // TODO: Implement function where ButtonState of incoming button is reset (through sending a message to ButtonInputParser) when no effects of a higher level exist
-    
     return kMFEventPassThroughRefusal;
     
 }
 
+#pragma mark Other
+
++ (BOOL)effectOfEqualOrGreaterLevelExistsForDevice:(NSNumber *)devID button:(NSNumber *)button level:(NSNumber *)level {
+    
+    NSDictionary *remaps = _remaps;
+    NSDictionary *activeModifiers = [Modifiers getActiveModifiersForDevice:devID filterButton:nil];
+    NSDictionary *effectiveRemaps = getEffectiveRemaps(remaps, activeModifiers);
+    
+    BOOL clickActionOfThisLevelExists;
+    BOOL effectForMouseDownStateOfThisLevelExists;
+    BOOL effectOfGreaterLevelExists;
+    assessMappingLandscape(&clickActionOfThisLevelExists,
+                           &effectForMouseDownStateOfThisLevelExists,
+                           &effectOfGreaterLevelExists,
+                           button,
+                           level,
+                           remaps,
+                           activeModifiers,
+                           effectiveRemaps);
+    
+    return clickActionOfThisLevelExists || effectForMouseDownStateOfThisLevelExists || effectOfGreaterLevelExists;
+}
+
 #pragma mark - Utility
+
+#pragma mark Helper
+
+static NSDictionary *getEffectiveRemaps(NSDictionary *remaps, NSDictionary *activeModifiers) {
+    
+    NSDictionary *effectiveRemaps = remaps[@{}];
+    NSDictionary *remapsForActiveModifiers = remaps[activeModifiers];
+    if ([activeModifiers isNotEqualTo:@{}]) {
+        effectiveRemaps = [SharedUtility dictionaryWithOverridesAppliedFrom:[remapsForActiveModifiers copy] to:effectiveRemaps]; // Why do we do ` - copy` here?
+    }
+    return effectiveRemaps;
+}
 
 #pragma mark Assess mapping landscape
 
@@ -268,10 +300,10 @@ NSArray *_remapsUI;
         @{}: @{                                                     // Key: modifier dict (empty -> no modifiers)
                 @(3): @{                                                // Key: button
                         @(1): @{                                            // Key: level
-                                @"click": @[                                   // Key: click/hold, value: array of actions
+                                @"hold": @[                                   // Key: click/hold, value: array of actions
                                         @{
                                             @"type": @"symbolicHotkey",
-                                            @"value": @(33),
+                                            @"value": @(32),
                                         },
                                 ],
                                 //                    @"hold": @[                                  // Key: click/hold, value: array of actions
@@ -287,21 +319,15 @@ NSArray *_remapsUI;
                                 //                            }
                                 //                    ]
                         },
-                        //                @(2): @{                                            // Key: level
-                        //                        @"click": @[                                  // Key: click/hold, value: array of actions
-                        //                            @{
-                        //                                @"type": @"symbolicHotkey",
-                        //                                @"value": @(36),
-                        //                            },
-                        //                        ],
-                        //
-                        //                        @"modifying": @[                                    // Key: click/hold, value: array of actions
-                        //                        @{
-                        //                            @"type": @"modifiedDrag",
-                        //                            @"value": @"twoFingerSwipe",
-                        //                        },
-                        //                    ],
-                        //                },
+                        @(2): @{                                            // Key: level
+                                @"hold": @[                                  // Key: click/hold, value: array of actions
+                                        @{
+                                            @"type": @"symbolicHotkey",
+                                            @"value": @(36),
+                                        },
+                                ],
+                                
+                        },
                 },
                 @(4): @{                                                // Key: button
                         @(1): @{                                            // Key: level
@@ -365,9 +391,9 @@ NSArray *_remapsUI;
             kMFModifierKeyButtons: @{
                     @(4): @(1),                                      // btn, lvl
             },
-//            @"keyboardModifiers": @(
-//                NSEventModifierFlagControl
-//                ),
+            //            @"keyboardModifiers": @(
+            //                NSEventModifierFlagControl
+            //                ),
         }: @{
                 kMFRemapsKeyModifiedDrag: kMFModifiedDragTypeThreeFingerSwipe,
                 @(4): @{                                                // Key: button

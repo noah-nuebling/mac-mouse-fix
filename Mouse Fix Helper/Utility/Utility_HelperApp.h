@@ -15,8 +15,6 @@
 + (NSBundle *)helperBundle;
 + (NSBundle *)prefPaneBundle;
 
-+ (NSDictionary *)dictionaryWithOverridesAppliedFrom:(NSDictionary *)src to: (NSDictionary *)dst;
-
 + (CGPoint)getCurrentPointerLocation_flipped;
 
 //+ (void)coolInvalidate:(NSTimer * __strong *)timer;

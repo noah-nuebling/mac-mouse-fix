@@ -12,7 +12,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SharedUtility : NSObject
-+ (void)printCallingFunctionInfo;
++ (void)printInfoOnCaller;
++ (NSDictionary *)dictionaryWithOverridesAppliedFrom:(NSDictionary *)src to: (NSDictionary *)dst;
 @end
 
 NS_ASSUME_NONNULL_END

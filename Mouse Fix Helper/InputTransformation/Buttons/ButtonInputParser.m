@@ -149,6 +149,11 @@ static NSMutableDictionary *_state;
         bs.isPressed = YES;
         bs.clickLevel += 1;
         
+        // If new clickLevel and any following clickLevels can't lead to any effects, cycle back to the first click level
+        if (![TransformationManager effectOfEqualOrGreaterLevelExistsForDevice:devID button:btn level:@(bs.clickLevel)]) {
+            bs.clickLevel = 1;
+        }
+        
         // Send trigger
         passThroughEval = [TransformationManager handleButtonTriggerWithButton:btn triggerType:kMFActionTriggerTypeButtonDown clickLevel:@(bs.clickLevel) device:devID];
         
@@ -241,7 +246,7 @@ static void resetAllState() {
 static void zombifyWithDevice(NSNumber *devID, NSNumber *btn) {
     
     NSLog(@"ZOMBIFYING - devID: %@, btn: %@", devID, btn);
-    [SharedUtility printCallingFunctionInfo];
+    [SharedUtility printInfoOnCaller];
     
     ButtonState *bs = _state[devID][btn];
     

@@ -17,7 +17,7 @@
 #import "SmoothScroll.h"
 #import "ButtonInputReceiver_CG.h"
 #import "ScrollModifiers.h"
-#import "Utility_HelperApp.h"
+#import "SharedUtility.h"
 
 @implementation ConfigFileInterface_HelperApp
 
@@ -189,7 +189,7 @@ static void loadAppOverridesForApp(NSString *bundleIdentifier) {
         }
     }
     if (overridesForThisApp) {
-        _configWithAppOverridesApplied = [[Utility_HelperApp dictionaryWithOverridesAppliedFrom:overridesForThisApp to:_config] mutableCopy];
+        _configWithAppOverridesApplied = [[SharedUtility dictionaryWithOverridesAppliedFrom:overridesForThisApp to:_config] mutableCopy];
     } else {
         _configWithAppOverridesApplied = _config;
     }
