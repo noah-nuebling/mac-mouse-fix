@@ -64,14 +64,13 @@ static NSUInteger getActiveKeyboardModifiers() {
     // \note The precondition for the currently active modified drag can't be true anymore because
     //      we know that the activeModifers have changed (that's why this function was called)
     //      Because of this we can simply kill it without any further checks
-    
-    // TODO:! Implement
+    [ModifiedDrag deactivate];
     
     // Get active modifications and initialize any which are trigger driven
     NSDictionary *r = TransformationManager.remaps;
     NSDictionary *activeModifications = r[activeModifiers];
     if (activeModifications) {
-        // Initialize effects which are trigger driven (modified drag)
+        // Initialize effects which are trigger driven (only modified drag)
         NSString *dragType = activeModifications[kMFRemapsKeyModifiedDrag];
         if (dragType) {
             [ModifiedDrag initializeModifiedDragWithType:dragType onDevice:device];
