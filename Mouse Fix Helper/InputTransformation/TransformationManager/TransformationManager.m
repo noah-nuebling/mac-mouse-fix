@@ -47,7 +47,6 @@ NSDictionary *_remaps;
 #if DEBUG
     if (true) {
         NSLog(@"HANDLE BUTTON TRIGGER - button: %@, triggerType: %@, level: %@, devID: %@", button, @(triggerType), level, devID);
-        NSLog(@"");
     }
 #endif
     
@@ -57,12 +56,13 @@ NSDictionary *_remaps;
     NSDictionary *effectiveRemaps = getEffectiveRemaps(remaps, activeModifiers);
     NSDictionary *remapsForActiveModifiers = remaps[activeModifiers];
     
-    // If no remaps exist for this button, (and if this functions was invoked as a direct result of a physical button press) let the CGEvent which caused this function call pass through
+    // If no remaps exist for this button, let the CGEvent which caused this function call pass through (Only if this function was invoked as a direct result of a physical button press)
     if (triggerType == kMFActionTriggerTypeButtonDown || triggerType == kMFActionTriggerTypeButtonUp) {
-        NSDictionary *remapsForThisButton = effectiveRemaps[button];
-        if (remapsForThisButton == nil) {
+        if (!effectExistsForButton(button, remaps, effectiveRemaps)) {
+#if DEBUG
             NSLog(@"No remaps exist for this button, letting event pass through");
             return kMFEventPassThroughApproval;
+#endif
         }
     }
     
@@ -175,6 +175,25 @@ static NSDictionary *getEffectiveRemaps(NSDictionary *remaps, NSDictionary *acti
         effectiveRemaps = [SharedUtility dictionaryWithOverridesAppliedFrom:[remapsForActiveModifiers copy] to:effectiveRemaps]; // Why do we do ` - copy` here?
     }
     return effectiveRemaps;
+}
+
+static BOOL effectExistsForButton(NSNumber *button, NSDictionary *remaps, NSDictionary *effectiveRemaps) {
+    
+    // Check if there is a direct effect for button
+    BOOL hasDirectEffect = effectiveRemaps[button] != nil;
+    if (hasDirectEffect) {
+        return YES;
+    }
+    
+    // Check if button has effect as modifier
+    for (NSDictionary *modificationPrecondition in remaps.allKeys) {
+        NSDictionary *buttonPreconditions = modificationPrecondition[kMFModifierKeyButtons];
+        if ([buttonPreconditions.allKeys containsObject:button]) {
+            return YES;
+        }
+    }
+    
+    return NO;
 }
 
 #pragma mark Assess mapping landscape
@@ -328,14 +347,13 @@ NSArray *_remapsUI;
 + (void)load {
     _remaps = @{
         @{}: @{                                                     // Key: modifier dict (empty -> no modifiers)
-                @(3): @{                                                // Key: button
-                        @(1): @{                                            // Key: level
-                                @"hold": @[                                   // Key: click/hold, value: array of actions
-                                        @{
-                                            @"type": @"symbolicHotkey",
-                                            @"value": @(32),
-                                        },
-                                ],
+//                @(3): @{                                                // Key: button
+//                        @(1): @{                                            // Key: level
+//                                @"click": @[                                   // Key: click/hold, value: array of actions
+//                                        @{
+//                                            @"type": kMFActionArrayTypeSmartZoom,
+//                                        },
+//                                ],
                                 //                    @"hold": @[                                  // Key: click/hold, value: array of actions
                                 //                        @{
                                 //                            @"type": @"symbolicHotkey",
@@ -348,17 +366,17 @@ NSArray *_remapsUI;
                                 //                                @"value": @"threeFingerSwipe",
                                 //                            }
                                 //                    ]
-                        },
-                        @(2): @{                                            // Key: level
-                                @"hold": @[                                  // Key: click/hold, value: array of actions
-                                        @{
-                                            @"type": @"symbolicHotkey",
-                                            @"value": @(36),
-                                        },
-                                ],
-                                
-                        },
-                },
+//                        },
+//                        @(2): @{                                            // Key: level
+//                                @"hold": @[                                  // Key: click/hold, value: array of actions
+//                                        @{
+//                                            @"type": @"symbolicHotkey",
+//                                            @"value": @(36),
+//                                        },
+//                                ],
+//
+//                        },
+//                },
                 @(4): @{                                                // Key: button
                         @(1): @{                                            // Key: level
                                 //                    @"modifying": @[
@@ -419,8 +437,7 @@ NSArray *_remapsUI;
         
         @{                                                          // Key: modifier dict
             kMFModifierKeyButtons: @{
-                    @(4): @(1),                                      // btn, lvl
-                    @(5): @(2),
+                    //@(3): @(1),                                      // btn, lvl
             },
 //            @"keyboardModifiers": @(
 //                NSEventModifierFlagControl

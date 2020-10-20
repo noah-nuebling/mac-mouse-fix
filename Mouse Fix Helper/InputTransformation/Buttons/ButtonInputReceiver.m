@@ -66,16 +66,16 @@ static void registerInputCallback() {
     }
 }
 
-/// _devicesWhichCausedUnhandeledRelevantButtonInputs is a queue with one entry for each unhandled button input coming from a relevant device
+/// _buttonInputsFromRelevantDevices is a queue with one entry for each unhandled button input coming from a relevant device
 /// Instances of MFDevice insert themselves into this queue  when they receive input from the IOHIDDevice which they own.
-/// Input from the IOHIDDevice will always occur shortly before `ButtonInputReceiver_CG::handleIput()`.
-/// This allows `ButtonInputReceiver_CG::handleIput()` to gain information about the device causing the incoming event. It will also allow us to filter out input from devices which we didn't create an MFDevice instance for (All of those devices can be found in DeviceManager.relevantDevices).
+/// Input from the IOHIDDevice will always occur shortly before `ButtonInputReceiver_CG::handleIput()`. (Pretty sure)
+/// This allows `ButtonInputReceiver_CG::handleIput()` to gain information about the device causing the incoming event.
+///     It also allows us to filter out input from devices which aren't relevant
+///         (Because don't create an MFDevice instance for irrelevant devices)
+///         (All MFDevice instances for relevant devices can be found in DeviceManager.relevantDevices).
 static MFQueue<MFDevice *> *_buttonInputsFromRelevantDevices;
 + (void)handleButtonInputFromRelevantDeviceOccured:(MFDevice *)dev button:(NSNumber *)btn {
-    if ([_buttonParseBlacklist containsObject:btn]) return;
-#if DEBUG
-        //NSLog(@"HIDDD\n - btn: %@, dev: %@", btn, dev);
-#endif
+    if ([_buttonParseBlacklist containsObject:btn] || !CGEventTapIsEnabled(_eventTap)) return;
     [_buttonInputsFromRelevantDevices enqueue: dev];
 }
 + (BOOL)allRelevantButtonInputsHaveBeenProcessed {
@@ -113,7 +113,12 @@ CGEventRef handleInput(CGEventTapProxy proxy, CGEventType type, CGEventRef event
     MFButtonInputType triggertType = pr == 0 ? kMFButtonInputTypeButtonUp : kMFButtonInputTypeButtonDown;
     
     MFEventPassThroughEvaluation eval = [ButtonInputParser parseInputWithButton:@(buttonNumber) triggerType:triggertType inputDevice:dev];
-    if (eval == kMFEventPassThroughRefusal) return nil;
+    if (eval == kMFEventPassThroughRefusal) {
+#if DEBUG
+        NSLog(@"BLOCKING CGEVENT FROM PASSING THROUGH");
+#endif
+        return nil;
+    }
     
     return event;
 

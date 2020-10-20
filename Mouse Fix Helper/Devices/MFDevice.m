@@ -201,6 +201,10 @@ static int64_t _previousDeltaY;
 
 static void handleInput(void *context, IOReturn result, void *sender, IOHIDValueRef value) {
     
+#if DEBUG
+    //NSLog(@"HID");
+#endif
+    
     MFDevice *sendingDev = (__bridge MFDevice *)context;
     
     IOHIDElementRef elem = IOHIDValueGetElement(value);
@@ -217,6 +221,10 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
         
         CGEventType mouseEventType = kCGEventNull;
         int64_t pressure = IOHIDValueGetIntegerValue(value);
+        
+#if DEBUG
+        NSLog(@"BTN HIDDD - btn: %d, pressure: %lld", button, pressure);
+#endif
         
         // Post fake button input events, if the device is seized
         
