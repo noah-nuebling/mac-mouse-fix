@@ -144,7 +144,7 @@ NSDictionary *_remaps;
                            activeModifiers,
                            effectiveRemaps);
     
-#if DEBUG
+#if nopeDEBUG
     NSDictionary *info = @{
         @"devID": devID,
         @"button": button,
@@ -192,21 +192,19 @@ static void assessMappingLandscape(BOOL *clickActionOfThisLevelExists,
 
 static BOOL effectExistsForMouseDownState(NSNumber *button, NSNumber *level, NSDictionary *remaps, NSDictionary *activeModifiers, NSDictionary *effectiveRemaps) {
     BOOL holdActionExists = effectiveRemaps[button][level][@"hold"] != nil;
-    BOOL usedAsModifier = isUsedAsModifier(button, level, remaps, activeModifiers);
+    BOOL usedAsModifier = isPartOfModificationPrecondition(button, level, remaps, activeModifiers);
     
     return holdActionExists || usedAsModifier;
 }
-static BOOL isUsedAsModifier(NSNumber *button, NSNumber *level, NSDictionary *remaps, NSDictionary *activeModifiers) {
+static BOOL isPartOfModificationPrecondition(NSNumber *button, NSNumber *level, NSDictionary *remaps, NSDictionary *activeModifiers) {
     
-    BOOL outVal = NO;
-    
-    BOOL activeModifiersDoModify = remaps[activeModifiers] != nil;
-    if (activeModifiersDoModify) {
-        BOOL currentButtonAndLevelAreComponentOfActiveModifers = [activeModifiers[@"buttonModifiers"][button] isEqualToNumber: level];
-        outVal = currentButtonAndLevelAreComponentOfActiveModifers;
+    for (NSDictionary *modificationPrecondition in remaps.allKeys) {
+        if ([modificationPrecondition[kMFModifierKeyButtons][button] isEqual:level]) {
+            return YES;
+        }
     }
     
-    return outVal;
+    return NO;
 }
 
 static BOOL effectOfGreaterLevelExistsFor(NSNumber *button, NSNumber *level, NSDictionary *remaps, NSDictionary *activeModifiers, NSDictionary *effectiveRemaps) {
