@@ -13,7 +13,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Constants : NSObject
 
-#pragma mark - remaps dictionary keys
+// TODO:! Apply these thouroughly in TransformationManager and related classes
+//      - Define constants for all the strings that are used several times throughout
+//      - Maybe do a string replace
+
+#pragma mark - NSNotificationCenter notification names
+
+#define kMFNotificationNameRemapsChanged                @"remapsChanged"
+
+#pragma mark - Remaps dictionary keys
 
 typedef NSString*                                       MFStringConstant;
 
@@ -22,7 +30,7 @@ typedef NSString*                                       MFStringConstant;
 #define kMFModifiedDragTypeTwoFingerSwipe               @"twoFingerSwipe"
 #define kMFModifiedDragTypeThreeFingerSwipe             @"threeFingerSwipe"
 
-#define kMFModifierKeyButtons                           @"buttonModifiers" // Rename to kMFModifierKey...
+#define kMFModifierKeyButtons                           @"buttonModifiers" // Rename to kMFModificationPreconditionKey...
 #define kMFModifierKeyKeyboard                          @"keyboardModifiers"
 
 #define kMFActionArrayKeyType                           @"type"
@@ -37,7 +45,6 @@ typedef NSString*                                       MFStringConstant;
 #define kMFNavigationSwipeVariantLeft                   @"left"
 
 typedef enum {
-    
     kMFSHMissionControl = 32,
     kMFSHAppExpose = 33,
     kMFSHShowDesktop = 36,
@@ -69,10 +76,7 @@ typedef enum {
     kMFSHSiri = 176,
     kMFSHNotificationCenter = 163,
     kMFSHToggleDoNotDisturb = 175,
-    
 } SymbolicHotkeys;
-
-
 
 @end
 

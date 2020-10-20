@@ -24,7 +24,6 @@
 
 #import "ScrollControl.h"
 #import "ButtonInputReceiver_CG.h"
-#import "MFDevice.h"
 #import "ConfigFileInterface_HelperApp.h"
 #import "PointerSpeed.h"
 
@@ -37,20 +36,21 @@
 
 # pragma mark - Global vars
 static IOHIDManagerRef _HIDManager;
-static NSMutableArray<MFDevice *> *_relevantDevices;
+static NSMutableArray<MFDevice *> *_attachedDevices;
 
-+ (BOOL)relevantDevicesAreAttached {
-    return _relevantDevices.count > 0;
++ (BOOL)devicesAreAttached {
+    return _attachedDevices.count > 0;
 }
-
-
++ (NSArray<MFDevice *> *)attachedDevices {
+    return _attachedDevices;
+}
 
 /**
  True entry point of the program
  */
 + (void)load_Manual {
     setupDeviceMatchingAndRemovalCallbacks();
-    _relevantDevices = [NSMutableArray array];
+    _attachedDevices = [NSMutableArray array];
 }
 
 # pragma mark - Interface
@@ -75,7 +75,6 @@ static NSMutableArray<MFDevice *> *_relevantDevices;
 
 # pragma mark - Setup callbacks
 static void setupDeviceMatchingAndRemovalCallbacks() {
-    
     
     // Create an HID Manager
     
@@ -104,7 +103,6 @@ static void setupDeviceMatchingAndRemovalCallbacks() {
     // Register the Matching Dictionary to the HID Manager
     IOHIDManagerSetDeviceMatchingMultiple(_HIDManager, (__bridge CFArrayRef)matchDicts);
     
-    
     // Register the HID Manager on our app’s run loop
     IOHIDManagerScheduleWithRunLoop(_HIDManager, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
     
@@ -112,7 +110,6 @@ static void setupDeviceMatchingAndRemovalCallbacks() {
 //    IOReturn IOReturn = IOHIDManagerOpen(_HIDManager, kIOHIDOptionsTypeNone);
 //    IOReturn IOReturn = IOHIDManagerOpen(_HIDManager, kIOHIDOptionsTypeSeizeDevice);
 //    if(IOReturn) NSLog(@"IOHIDManagerOpen failed.");  //  Couldn't open the HID manager! TODO: proper error handling
-    
 
     // Register a callback for USB device detection with the HID Manager, this will in turn register an button input callback for all devices that getFilteredDevicesFromManager() returns
     IOHIDManagerRegisterDeviceMatchingCallback(_HIDManager, &handleDeviceMatching, NULL);
@@ -133,9 +130,9 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
         NSLog(@"Device Passed filtering");
         
         MFDevice *newMFDevice = [MFDevice deviceWithIOHIDDevice:device];
-        [_relevantDevices addObject:newMFDevice];
+        [_attachedDevices addObject:newMFDevice];
         NSLog(@"Added device:\n%@", newMFDevice.description);
-        NSLog(@"Relevant devices:\n%@", _relevantDevices);
+        NSLog(@"Relevant devices:\n%@", _attachedDevices);
         
         [ScrollControl decide];
         [ButtonInputReceiver_CG decide];
@@ -156,7 +153,7 @@ static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IO
 //    CFRelease(devices);
     
     MFDevice *removedMFDevice = [MFDevice deviceWithIOHIDDevice:device];
-    [_relevantDevices removeObject:removedMFDevice];
+    [_attachedDevices removeObject:removedMFDevice];
     NSLog(@"Removed device:\n%@", removedMFDevice);
     
     // If there aren't any relevant devices attached, then we might want to turn off some parts of the program.

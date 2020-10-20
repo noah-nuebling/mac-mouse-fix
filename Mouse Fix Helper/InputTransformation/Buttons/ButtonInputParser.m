@@ -138,11 +138,16 @@ static NSMutableDictionary *_state;
         // Check if zombified
         // Zombification should only occur during mouse down state, and then be removed with the consequent mouse up event
         if (bs.isZombified) {
-            @throw [NSException exceptionWithName:@"ZombifiedDuringMouseUpStateException" reason:@"Button was found to be zombified when mouse down event occured." userInfo:@{
+            NSDictionary *debugInfo = @{
                 @"devID": devID,
                 @"btn": btn,
-                @"trigger": @(trigger)
-            }];
+                @"lvl": @(bs.clickLevel),
+                @"trigger": @(trigger),
+                @"holdTimer": bs.holdTimer,
+                @"levelTimer": bs.levelTimer,
+            };
+            NSString *exceptionString = [NSString stringWithFormat:@"Button was found to be zombified when mouse down event occured: %@", debugInfo];
+            @throw [NSException exceptionWithName:@"ZombifiedDuringMouseUpStateException" reason:exceptionString userInfo:nil];
         }
         
         // Update bs
@@ -217,9 +222,10 @@ static void timerCallbackHelper(NSDictionary *info, NSNumber **devID, NSNumber *
 
 static void resetStateWithDevice(NSNumber *devID, NSNumber *btn) {
     
-    //NSLog(@"RESETTING STATE - devID: %@, btn: %@", devID, btn);
-    
-    //[SharedUtility printCallingFunctionInfo];
+#if DEBUG
+//    NSLog(@"RESETTING STATE - devID: %@, btn: %@", devID, btn);
+//    [SharedUtility printInfoOnCaller];
+#endif
     
     ButtonState *bs = _state[devID][btn];
     
@@ -245,8 +251,10 @@ static void resetAllState() {
 // With the click level not being reset the button can still be used as a modifier for other triggers.
 static void zombifyWithDevice(NSNumber *devID, NSNumber *btn) {
     
-    NSLog(@"ZOMBIFYING - devID: %@, btn: %@", devID, btn);
-    [SharedUtility printInfoOnCaller];
+#if DEBUG
+//    NSLog(@"ZOMBIFYING - devID: %@, btn: %@", devID, btn);
+//    [SharedUtility printInfoOnCaller];
+#endif
     
     ButtonState *bs = _state[devID][btn];
     
@@ -299,7 +307,9 @@ static void zombifyAllPressedButtonsOnDeviceExcept(NSNumber *devID, NSNumber *ex
 
 static BOOL buttonIsPressed(NSNumber *devID, NSNumber *btn) {
     ButtonState *bs = _state[devID][btn];
-    return [bs.holdTimer isValid] || bs.isZombified;
+    //return [bs.holdTimer isValid] || bs.isZombified;
+    return bs.isPressed;
 }
+
 
 @end

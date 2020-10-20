@@ -30,7 +30,7 @@ static CFMachPortRef _eventTap;
 }
 
 + (void)decide {
-    if ([DeviceManager relevantDevicesAreAttached]) {
+    if ([DeviceManager devicesAreAttached]) {
         NSLog(@"started (InputReceiver)"); 
         [ButtonInputReceiver_CG start];
     } else {

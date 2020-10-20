@@ -295,6 +295,7 @@
 		4FECC88C2431DCCD001A3C4B /* RoughScroll.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RoughScroll.m; sourceTree = "<group>"; };
 		4FECC88E2431DCDF001A3C4B /* ScrollControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollControl.h; sourceTree = "<group>"; };
 		4FECC88F2431DCDF001A3C4B /* ScrollControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollControl.m; sourceTree = "<group>"; };
+		4FECDE88253EF4C300D3EA51 /* SymbolicHotKeys Reference.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "SymbolicHotKeys Reference.txt"; sourceTree = "<group>"; };
 		4FEE4B09233D933600011CEA /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
 		4FF3B2BB23276082009E8A8E /* Uninstaller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Uninstaller.h; sourceTree = "<group>"; };
 		4FF3B2BC23276082009E8A8E /* Uninstaller.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Uninstaller.m; sourceTree = "<group>"; };
@@ -508,6 +509,7 @@
 		4F422EF023469B2B00AA6E22 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				4FECDE8A253EF4F200D3EA51 /* Notes */,
 				4F422EEE23469B1700AA6E22 /* CHANGELOG.md */,
 				4F422EEC23469B0F00AA6E22 /* README.md */,
 			);
@@ -796,6 +798,14 @@
 				4F32E15E231C455A00199A11 /* SupportFiles */,
 			);
 			path = "Mouse Fix";
+			sourceTree = "<group>";
+		};
+		4FECDE8A253EF4F200D3EA51 /* Notes */ = {
+			isa = PBXGroup;
+			children = (
+				4FECDE88253EF4C300D3EA51 /* SymbolicHotKeys Reference.txt */,
+			);
+			path = Notes;
 			sourceTree = "<group>";
 		};
 		4FF3B2BA2327604A009E8A8E /* Uninstall */ = {

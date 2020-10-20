@@ -178,6 +178,8 @@ static struct ModifiedDragState _drag;
 
 + (void)deactivate {
     
+    if (_drag.activationState == kMFModifiedInputActivationStateNone) return;
+    
     if (_drag.activationState == kMFModifiedInputActivationStateInUse) {
         if ([_drag.type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
             if (_drag.usageAxis == kMFAxisHorizontal) {

@@ -19,6 +19,18 @@
 
 @implementation TransformationManager
 
+#pragma mark - Remaps dictionary
+
+// Always set _remaps through `setRemaps:` so the kMFNotificationNameRemapsChanged notification is sent
+NSDictionary *_remaps;
++ (void)setRemaps:(NSDictionary *)r {
+    _remaps = r;
+    [NSNotificationCenter.defaultCenter postNotificationName:kMFNotificationNameRemapsChanged object:nil];
+}
++ (NSDictionary *)remaps {
+    return _remaps;
+}
+
 #pragma mark - Interface
 
 #pragma mark Trigger handling
@@ -32,7 +44,9 @@
 }
 + (MFEventPassThroughEvaluation)handleButtonTriggerWithButton:(NSNumber *)button triggerType:(MFActionTriggerType)triggerType clickLevel:(NSNumber *)level device:(NSNumber *)devID {
     
-            NSLog(@"HANDLE BUTTON TRIGGER - button: %@, trigger: %@, level: %@, devID: %@", button, @(triggerType), level, devID);
+#if DEBUG
+    NSLog(@"HANDLE BUTTON TRIGGER - button: %@, trigger: %@, level: %@, devID: %@", button, @(triggerType), level, devID);
+#endif
     
     // Get remaps and apply modifier overrides
     NSDictionary *remaps = _remaps;
@@ -66,6 +80,11 @@
                            remaps,
                            activeModifiersUnfiltered,
                            effectiveRemaps);
+#if DEBUG
+    NSLog(@"ACTIVE MODIFIERS - %@", activeModifiersUnfiltered);
+#endif
+    
+    // Send trigger (if apropriate)
     
     if (isTriggerForClickAction(triggerType)) {
         
@@ -100,6 +119,7 @@
                                            effectiveRemaps);
     }
     
+    
     return kMFEventPassThroughRefusal;
     
 }
@@ -123,6 +143,19 @@
                            remaps,
                            activeModifiers,
                            effectiveRemaps);
+    
+#if DEBUG
+    NSDictionary *info = @{
+        @"devID": devID,
+        @"button": button,
+        @"level": level,
+        @"clickActionOfThisLevelExists": @(clickActionOfThisLevelExists),
+        @"effectForMouseDownStateOfThisLevelExists": @(effectForMouseDownStateOfThisLevelExists),
+        @"effectOfGreaterLevelExists": @(effectOfGreaterLevelExists),
+        @"remaps": remaps,
+    };
+    NSLog(@"CHECK IF EFFECT OF EQUAL OR GREATER LEVEL EXISTS - Info: %@", info);
+#endif
     
     return clickActionOfThisLevelExists || effectForMouseDownStateOfThisLevelExists || effectOfGreaterLevelExists;
 }
@@ -290,10 +323,6 @@ static void notifyModifyingButtons(NSNumber * _Nonnull devID,
 
 #pragma mark - Dummy Data
 
-NSDictionary *_remaps;
-+ (NSDictionary *)remaps {
-    return _remaps;
-}
 NSArray *_remapsUI;
 + (void)load {
     _remaps = @{
@@ -390,32 +419,33 @@ NSArray *_remapsUI;
         @{                                                          // Key: modifier dict
             kMFModifierKeyButtons: @{
                     @(4): @(1),                                      // btn, lvl
+                    @(5): @(2),
             },
-            //            @"keyboardModifiers": @(
-            //                NSEventModifierFlagControl
-            //                ),
+//            @"keyboardModifiers": @(
+//                NSEventModifierFlagControl
+//                ),
         }: @{
                 kMFRemapsKeyModifiedDrag: kMFModifiedDragTypeThreeFingerSwipe,
-                @(4): @{                                                // Key: button
-                        @(1): @{                                            // Key: level
-                                @"click": @[                                  // Key: clic/hold, value: array of actions
-                                        @{
-                                            @"type": @"navigationSwipe",
-                                            @"value": @"left",
-                                        },
-                                ],
-                        },
-                },
-                @(5): @{                                                // Key: button
-                        @(1): @{                                            // Key: level
-                                @"click": @[                                  // Key: click/hold, value: array of actions
-                                        @{
-                                            @"type": @"navigationSwipe",
-                                            @"value": @"right",
-                                        },
-                                ],
-                        },
-                },
+//                @(4): @{                                                // Key: button
+//                        @(1): @{                                            // Key: level
+//                                @"click": @[                                  // Key: clic/hold, value: array of actions
+//                                        @{
+//                                            @"type": @"navigationSwipe",
+//                                            @"value": @"left",
+//                                        },
+//                                ],
+//                        },
+//                },
+//                @(5): @{                                                // Key: button
+//                        @(1): @{                                            // Key: level
+//                                @"click": @[                                  // Key: click/hold, value: array of actions
+//                                        @{
+//                                            @"type": @"navigationSwipe",
+//                                            @"value": @"right",
+//                                        },
+//                                ],
+//                        },
+//                },
         },
     };
     //    _testRemapsUI = @[

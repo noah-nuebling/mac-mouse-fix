@@ -13,9 +13,118 @@
 #import "ButtonInputParser.h"
 #import "TransformationManager.h"
 #import "ModifiedDrag.h"
+#import "DeviceManager.h"
 
 
 @implementation Modifiers
+
+#pragma mark - Load
+
++ (void)load {
+    
+    // Create keyboard modifier event tap
+    CGEventMask mask = CGEventMaskBit(kCGEventFlagsChanged);
+    _keyboardModifierEventTap = CGEventTapCreate(kCGHIDEventTap, kCGTailAppendEventTap, kCGEventTapOptionDefault, mask, handleKeyboardModifiersHaveChanged, NULL);
+    CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _keyboardModifierEventTap, 0);
+    CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopDefaultMode);
+    CFRelease(runLoopSource);
+    
+    // Toggle keyboard modifier callbacks based on TransformationManager.remaps
+    toggleModifierEventTapBasedOnRemaps(TransformationManager.remaps);
+    
+    // Re-toggle keyboard modifier callbacks whenever TransformationManager.remaps changes
+    // TODO:! Test if this works
+    [NSNotificationCenter.defaultCenter addObserverForName:kMFNotificationNameRemapsChanged
+                                                    object:nil
+                                                     queue:nil
+                                                usingBlock:^(NSNotification * _Nonnull note) {
+        toggleModifierEventTapBasedOnRemaps(TransformationManager.remaps);
+    }];
+}
+#pragma mark - Modifier driven modification
+
+#pragma mark Keyboard modifiers
+
+static CFMachPortRef _keyboardModifierEventTap;
+static void toggleModifierEventTapBasedOnRemaps(NSDictionary *remaps) {
+
+    // If a modification collection exists such that it contains a proactive modification and its precondition contains a keyboard modifier, then activate the event tap.
+    for (NSDictionary *modificationPrecondition in remaps) {
+        NSDictionary *modificationCollection = remaps[modificationPrecondition];
+        BOOL collectionContainsProactiveModification = modificationCollection[kMFRemapsKeyModifiedDrag] != nil;
+            // ^ proactive modification === modifier driven modification !== trigger driven modification
+        if (collectionContainsProactiveModification) {
+            BOOL modificationDependsOnKeyboardModifier = modificationPrecondition[kMFModifierKeyKeyboard] != nil;
+            if (modificationDependsOnKeyboardModifier) {
+                CGEventTapEnable(_keyboardModifierEventTap, true);
+                return;
+            }
+        }
+    }
+    CGEventTapEnable(_keyboardModifierEventTap, false);
+}
+
+CGEventRef _Nullable handleKeyboardModifiersHaveChanged(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
+    
+    CGEventTapPostEvent(proxy, event);
+    
+    NSArray<MFDevice *> *devs = DeviceManager.attachedDevices;
+    for (MFDevice *dev in devs) {
+        NSDictionary *activeModifiers = [Modifiers getActiveModifiersForDevice:dev.uniqueID filterButton:nil];
+        
+        // The keyboard component of activeModifiers doesn't update fast enough so we have to manually edit it
+        // This is kinofa hack we should maybe look into a better solution
+        NSMutableDictionary *activeModifiersNew = activeModifiers.mutableCopy;
+        activeModifiersNew[kMFModifierKeyKeyboard] = @(CGEventGetFlags(event) & NSDeviceIndependentModifierFlagsMask);
+        
+        reactToModifierChange(activeModifiersNew, dev);
+    }
+    return nil;
+}
+
+#pragma mark Button modifiers
+
++ (void)handleButtonModifiersHaveChangedWithDevice:(MFDevice *)device {
+    NSDictionary *activeModifiers = [Modifiers getActiveModifiersForDevice:device.uniqueID filterButton:nil];
+    reactToModifierChange(activeModifiers, device);
+}
+
+#pragma mark Helper
+
+static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, MFDevice * _Nonnull device) {
+    
+#if DEBUG
+    //NSLog(@"MODFIERS HAVE CHANGED TO - %@", activeModifiers);
+#endif
+    
+    // Kill the currently active modified drag
+    //      (or any other effects which are modifier driven, but currently modified drag is the only one)
+    // \note The precondition for the currently active modified drag can't be true anymore because
+    //      we know that the activeModifers have changed (that's why this function was called)
+    //      Because of this we can simply kill it without any further checks
+    [ModifiedDrag deactivate];
+    
+    // Get active modifications and initialize any which are trigger driven
+    NSDictionary *r = TransformationManager.remaps;
+    NSDictionary *activeModifications = r[activeModifiers];
+    if (activeModifications) {
+        // Initialize effects which are trigger driven (only modified drag)
+        NSString *dragType = activeModifications[kMFRemapsKeyModifiedDrag];
+        if (dragType) {
+            [ModifiedDrag initializeModifiedDragWithType:dragType onDevice:device];
+        }
+    }
+}
+
+#pragma mark Send Feedback
+
++ (void)modifierDrivenModificationHasBeenUsedWithDevice:(MFDevice *)device {
+    
+    NSDictionary *activeModifiers = [self getActiveModifiersForDevice:device.uniqueID filterButton:nil];
+    for (NSNumber *button in activeModifiers[kMFModifierKeyButtons]) {
+        [ButtonInputParser handleButtonHasHadEffectAsModifierWithDevice:device.uniqueID button:button];
+    }
+}
 
 #pragma mark - Trigger driven modification
 // Explanation: Modification of most triggers is *trigger driven*.
@@ -48,42 +157,8 @@
     return outDict;
 }
 static NSUInteger getActiveKeyboardModifiers() {
-    NSEventModifierFlags modifierFlags = [NSEvent modifierFlags]
-        & NSDeviceIndependentModifierFlagsMask; // Not sure if this does anything
+    CGEventFlags modifierFlags = CGEventGetFlags(CGEventCreate(nil)) & NSDeviceIndependentModifierFlagsMask;
     return modifierFlags;
-}
-
-#pragma mark - Modifier driven modification
-
-+ (void)handleButtonModifiersHaveChangedWithDevice:(MFDevice *)device {
-    
-    NSDictionary *activeModifiers = [self getActiveModifiersForDevice:device.uniqueID filterButton:nil];
-    
-    // Kill the currently active modified drag
-    //      (or any other effects which are modifier driven, but currently modified drag is the only one)
-    // \note The precondition for the currently active modified drag can't be true anymore because
-    //      we know that the activeModifers have changed (that's why this function was called)
-    //      Because of this we can simply kill it without any further checks
-    [ModifiedDrag deactivate];
-    
-    // Get active modifications and initialize any which are trigger driven
-    NSDictionary *r = TransformationManager.remaps;
-    NSDictionary *activeModifications = r[activeModifiers];
-    if (activeModifications) {
-        // Initialize effects which are trigger driven (only modified drag)
-        NSString *dragType = activeModifications[kMFRemapsKeyModifiedDrag];
-        if (dragType) {
-            [ModifiedDrag initializeModifiedDragWithType:dragType onDevice:device];
-        }
-    }
-}
-
-+ (void)modifierDrivenModificationHasBeenUsedWithDevice:(MFDevice *)device {
-    
-    NSDictionary *activeModifiers = [self getActiveModifiersForDevice:device.uniqueID filterButton:nil];
-    for (NSNumber *button in activeModifiers[kMFModifierKeyButtons]) {
-        [ButtonInputParser handleButtonHasHadEffectAsModifierWithDevice:device.uniqueID button:button];
-    }
 }
 
 @end

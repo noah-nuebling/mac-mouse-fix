@@ -149,7 +149,7 @@ static int _scrollDirection;
 /// Either activate SmoothScroll or RoughScroll or stop scroll interception entirely
 + (void)decide {
     BOOL disableAll =
-    ![DeviceManager relevantDevicesAreAttached];
+    ![DeviceManager devicesAreAttached];
     //|| (!_isSmoothEnabled && _scrollDirection == 1);
 //    || isEnabled == NO;
     
