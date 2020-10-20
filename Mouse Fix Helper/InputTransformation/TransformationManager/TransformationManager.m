@@ -12,7 +12,7 @@
 #import "SharedUtility.h"
 #import "ButtonInputParser.h"
 #import "Actions.h"
-#import "Modifiers.h"
+#import "ModifierManager.h"
 #import "ModifiedDrag.h"
 #import "NSArray+Additions.h"
 #import "Constants.h"
@@ -45,12 +45,15 @@ NSDictionary *_remaps;
 + (MFEventPassThroughEvaluation)handleButtonTriggerWithButton:(NSNumber *)button triggerType:(MFActionTriggerType)triggerType clickLevel:(NSNumber *)level device:(NSNumber *)devID {
     
 #if DEBUG
-    NSLog(@"HANDLE BUTTON TRIGGER - button: %@, trigger: %@, level: %@, devID: %@", button, @(triggerType), level, devID);
+    if (true) {
+        NSLog(@"HANDLE BUTTON TRIGGER - button: %@, triggerType: %@, level: %@, devID: %@", button, @(triggerType), level, devID);
+        NSLog(@"");
+    }
 #endif
     
     // Get remaps and apply modifier overrides
     NSDictionary *remaps = _remaps;
-    NSDictionary *activeModifiers = [Modifiers getActiveModifiersForDevice:devID filterButton:button]; // The modifiers which act on the incoming button (the button can't modify itself so we filter it out)
+    NSDictionary *activeModifiers = [ModifierManager getActiveModifiersForDevice:devID filterButton:button]; // The modifiers which act on the incoming button (the button can't modify itself so we filter it out)
     NSDictionary *effectiveRemaps = getEffectiveRemaps(remaps, activeModifiers);
     NSDictionary *remapsForActiveModifiers = remaps[activeModifiers];
     
@@ -66,7 +69,7 @@ NSDictionary *_remaps;
     // Asses mapping landscape
     // \note It's unnecessary to assess mapping landscape (that includes calculating targetTrigger) on click actions again for every call of this function. It only has to be calculated once for every "click" (as opposed to "hold") actionArray in every possible overriden remapDict including the unoverriden one. We could precalculate everything once when loading remapDict if we wanted to. This is plenty fast though so it's fine.
     
-    NSDictionary *activeModifiersUnfiltered = [Modifiers getActiveModifiersForDevice:devID filterButton:nil];
+    NSDictionary *activeModifiersUnfiltered = [ModifierManager getActiveModifiersForDevice:devID filterButton:nil];
     //      ^ We need to check whether the incoming button is acting as a modifier to determine
     //          `effectForMouseDownStateOfThisLevelExists`, so we can't use the variable `activeModifiers` defined above because it filters out the incoming button
     BOOL clickActionOfThisLevelExists;
@@ -81,7 +84,7 @@ NSDictionary *_remaps;
                            activeModifiersUnfiltered,
                            effectiveRemaps);
 #if DEBUG
-    NSLog(@"ACTIVE MODIFIERS - %@", activeModifiersUnfiltered);
+    // NSLog(@"ACTIVE MODIFIERS - %@", activeModifiersUnfiltered);
 #endif
     
     // Send trigger (if apropriate)
@@ -129,7 +132,7 @@ NSDictionary *_remaps;
 + (BOOL)effectOfEqualOrGreaterLevelExistsForDevice:(NSNumber *)devID button:(NSNumber *)button level:(NSNumber *)level {
     
     NSDictionary *remaps = _remaps;
-    NSDictionary *activeModifiers = [Modifiers getActiveModifiersForDevice:devID filterButton:nil];
+    NSDictionary *activeModifiers = [ModifierManager getActiveModifiersForDevice:devID filterButton:nil];
     NSDictionary *effectiveRemaps = getEffectiveRemaps(remaps, activeModifiers);
     
     BOOL clickActionOfThisLevelExists;
@@ -288,7 +291,7 @@ static BOOL isTriggerForClickAction(MFActionTriggerType triggerType) {
 
 #pragma mark - Execute actions
 
-static void executeClickOrHoldActionIfItExists(NSString *clickHold,
+static void executeClickOrHoldActionIfItExists(NSString * _Nonnull clickHold,
                                                NSNumber * _Nonnull devID,
                                                NSNumber * _Nonnull button,
                                                NSNumber * _Nonnull level,

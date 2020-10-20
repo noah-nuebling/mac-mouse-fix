@@ -23,7 +23,7 @@
 #import <IOKit/hid/IOHIDKeys.h>
 
 #import "ScrollControl.h"
-#import "ButtonInputReceiver_CG.h"
+#import "ButtonInputReceiver.h"
 #import "ConfigFileInterface_HelperApp.h"
 #import "PointerSpeed.h"
 
@@ -135,7 +135,7 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
         NSLog(@"Relevant devices:\n%@", _attachedDevices);
         
         [ScrollControl decide];
-        [ButtonInputReceiver_CG decide];
+        [ButtonInputReceiver decide];
     }
 
     
@@ -158,7 +158,7 @@ static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IO
     
     // If there aren't any relevant devices attached, then we might want to turn off some parts of the program.
     [ScrollControl decide];
-    [ButtonInputReceiver_CG decide];
+    [ButtonInputReceiver decide];
 }
 
 

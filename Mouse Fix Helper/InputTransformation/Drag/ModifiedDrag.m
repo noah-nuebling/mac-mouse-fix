@@ -13,7 +13,7 @@
 #import "ScrollModifiers.h"
 #import "TouchSimulator.h"
 #import "GestureScrollSimulator.h"
-#import "Modifiers.h"
+#import "ModifierManager.h"
 
 @implementation ModifiedDrag
 
@@ -85,7 +85,7 @@ static struct ModifiedDragState _drag;
                     _drag.usageAxis = kMFAxisHorizontal;
                 }
                 _drag.activationState = kMFModifiedInputActivationStateInUse; // Activate modified drag input!
-                [Modifiers modifierDrivenModificationHasBeenUsedWithDevice:dev];
+                [ModifierManager modifierDrivenModificationHasBeenUsedWithDevice:dev];
 //                [ModifyingActions deactivateModifiedScroll]; // Deactivate other potentially initalized modified input.
                 
                 if ([_drag.type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {

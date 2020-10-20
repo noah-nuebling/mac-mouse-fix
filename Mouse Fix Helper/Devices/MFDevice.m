@@ -11,7 +11,7 @@
 #import "ModifiedDrag.h"
 #import "GestureScrollSimulator.h"
 #import "DeviceManager.h"
-#import "ButtonInputReceiver_CG.h"
+#import "ButtonInputReceiver.h"
 #import "RemapUtility.h"
 #import "CFRuntime.h"
 
@@ -108,11 +108,13 @@ typedef struct __IOHIDDevice
     
 //    return;
     
-    if (B) {
-        NSLog(@"Seize device");
-    } else {
-        NSLog(@"Unseize device");
-    }
+#if DEBUG
+//    if (B) {
+//        NSLog(@"SEIZE DEVICE");
+//    } else {
+//        NSLog(@"UNSEIZE DEVICE");
+//    }
+#endif
     
     if (_isSeized == B) {
         return;
@@ -144,7 +146,9 @@ typedef struct __IOHIDDevice
 
 - (void)receiveOnlyButtonInput {
     
-    NSLog(@"Receive only button input");
+#if DEBUG
+    //NSLog(@"RECEIVE ONLY BUTTON INPUT");
+#endif
     
     [self seize:NO];
     
@@ -157,7 +161,9 @@ typedef struct __IOHIDDevice
 
 - (void)receiveButtonAndAxisInputWithSeize:(BOOL)seize {
     
-    NSLog(@"Receive button and axis input");
+#if DEBUG
+    //NSLog(@"RECEIVE AXIS INPUT ON TOP OF BUTTON INPUT");
+#endif
     
     //[self seize:seize];
     
@@ -205,46 +211,40 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
     
     if (isButton) {
         
-        //NSLog(@"HID Input: Button");
+        uint32_t button = usage;
         
-        ButtonInputReceiver_CG.deviceWhichCausedThisButtonInput = sendingDev;
-        
-//        while (!ButtonInputReceiver_CG.deviceWhichCausedThisButtonInputHasBeenProcessed) {
-//            [NSThread sleepForTimeInterval:0.0001];
-//        }
+        [ButtonInputReceiver handleButtonInputFromRelevantDeviceOccured:sendingDev button:@(button)];
         
         CGEventType mouseEventType = kCGEventNull;
-        int32_t button = usage - 1;
         int64_t pressure = IOHIDValueGetIntegerValue(value);
         
-        // Insert artificial CGEvents for button input, if the device is seized
+        // Post fake button input events, if the device is seized
         
         if (sendingDev.isSeized) {
 
             NSLog(@"BUTTON INP COMES FORM SEIZED");
             
             if (pressure == 0) {
-                if (button == 0) {
+                if (button == 1) {
                     mouseEventType = kCGEventLeftMouseUp;
-                } else if (button == 1) {
+                } else if (button == 2) {
                     mouseEventType = kCGEventRightMouseUp;
                 } else {
                     mouseEventType = kCGEventOtherMouseUp;
                 }
             } else {
-                if (button == 0) {
+                if (button == 1) {
                     mouseEventType = kCGEventLeftMouseDown;
-                } else if (button == 1) {
+                } else if (button == 2) {
                     mouseEventType = kCGEventRightMouseDown;
                 } else {
                     mouseEventType = kCGEventOtherMouseDown;
                 }
             }
 
-//            CGEventRef locEvent = CGEventCreate(NULL);
-            CGEventRef fakeEvent = CGEventCreateMouseEvent(NULL, mouseEventType, CGEventGetLocation(CGEventCreate(NULL)), button);
+            CGEventRef fakeEvent = CGEventCreateMouseEvent(NULL, mouseEventType, CGEventGetLocation(CGEventCreate(NULL)), button - 1);
 //            CFRetain(fakeEvent);
-            [ButtonInputReceiver_CG insertFakeEvent:fakeEvent];
+            [ButtonInputReceiver insertFakeEvent:fakeEvent];
             CFRelease(fakeEvent);
 //            CFRelease(locEvent);
             
@@ -253,9 +253,9 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
         // Control modified actions
         
         [GestureScrollSimulator breakMomentumScroll]; // Momentum scroll is started, when when a modified drag of type "twoFingerSwipe" is deactivated. We break it on any button input.
-        if (pressure == 0) {
-            [ModifiedDrag deactivate];
-        }
+//        if (pressure == 0) { // Don't think we need this if inserting fake events works properly
+//            [ModifiedDrag deactivate];
+//        }
         
         return;
     }

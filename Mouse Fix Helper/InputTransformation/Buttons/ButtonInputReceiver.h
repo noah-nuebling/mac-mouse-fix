@@ -13,7 +13,7 @@
 #import "MFDevice.h"
 
 
-@interface ButtonInputReceiver_CG : NSObject
+@interface ButtonInputReceiver : NSObject
 
 typedef enum {
     kMFEventPassThroughApproval,
@@ -45,7 +45,7 @@ typedef enum {
 
 + (void)insertFakeEvent:(CGEventRef)event;
 
-+ (void)setDeviceWhichCausedThisButtonInput:(MFDevice *)dev;
-+ (BOOL)deviceWhichCausedThisButtonInputHasBeenProcessed;
++ (void)handleButtonInputFromRelevantDeviceOccured:(MFDevice *)dev button:(NSNumber *)btn;
++ (BOOL)allRelevantButtonInputsHaveBeenProcessed;
 
 @end

@@ -15,7 +15,7 @@
 
 #import "ScrollControl.h"
 #import "SmoothScroll.h"
-#import "ButtonInputReceiver_CG.h"
+#import "ButtonInputReceiver.h"
 #import "ScrollModifiers.h"
 #import "SharedUtility.h"
 

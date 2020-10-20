@@ -15,7 +15,7 @@
 #import "ConfigFileInterface_HelperApp.h"
 #import "GestureScrollSimulator.h"
 #import "TransformationManager.h"
-#import "Modifiers.h"
+#import "ModifierManager.h"
 #import "SharedUtility.h"
 
 #pragma mark - Definition of private helper class `Button State`
@@ -51,7 +51,7 @@
     @synchronized (self) {
         _clickLevel = clickLevel;
     }
-    [Modifiers handleButtonModifiersHaveChangedWithDevice:self.device];
+    [ModifierManager handleButtonModifiersHaveChangedWithDevice:self.device];
 }
 #pragma mark isPressed accessors
 - (BOOL)isPressed {
@@ -65,7 +65,7 @@
     }
 
     if (!isPressed) { // Whenever isPressed becomes true, clickLevel is also modified, so we don't need to notify modifier change in that case
-        [Modifiers handleButtonModifiersHaveChangedWithDevice:self.device];
+        [ModifierManager handleButtonModifiersHaveChangedWithDevice:self.device];
     }
 }
 @end
@@ -91,7 +91,11 @@ static NSMutableDictionary *_state;
 
 #pragma mark - Input parsing
 
-+ (MFEventPassThroughEvaluation)parseInputWithButton:(NSNumber *)btn trigger:(MFButtonInputType)trigger inputDevice:(MFDevice *)device {
++ (MFEventPassThroughEvaluation)parseInputWithButton:(NSNumber *)btn triggerType:(MFButtonInputType)triggerType inputDevice:(MFDevice *)device {
+    
+#if DEBUG
+    //NSLog(@"BUTTON INPUT - btn: %@, trigger %@", btn, @(triggerType));
+#endif
     
     // Declare passThroughEval (return value)
     MFEventPassThroughEvaluation passThroughEval;
@@ -109,10 +113,12 @@ static NSMutableDictionary *_state;
         _state[devID][btn] = bs;
     }
     
-    // Zombify all other buttons of current device which are pressed
-    zombifyAllPressedButtonsOnDeviceExcept(devID, btn);
+    if (triggerType == kMFButtonInputTypeButtonDown && bs.clickLevel == 0) {
+        // The button might have switched -> Neuter all other buttons of current device
+        neuterAllButtonsOnDeviceExcept(devID, btn);
+    }
     
-    if (trigger == kMFButtonInputTypeButtonDown) {
+    if (triggerType == kMFButtonInputTypeButtonDown) {
         
         // Mouse down
         
@@ -142,7 +148,7 @@ static NSMutableDictionary *_state;
                 @"devID": devID,
                 @"btn": btn,
                 @"lvl": @(bs.clickLevel),
-                @"trigger": @(trigger),
+                @"trigger": @(triggerType),
                 @"holdTimer": bs.holdTimer,
                 @"levelTimer": bs.levelTimer,
             };
@@ -192,7 +198,7 @@ static NSMutableDictionary *_state;
     NSNumber *devID;
     NSNumber *btn;
     NSNumber *lvl;
-    timerCallbackHelper(timer.userInfo, &devID, &btn, &lvl);
+    getTimerCallbackInfo(timer.userInfo, &devID, &btn, &lvl);
     
     zombifyWithDevice(devID, btn);
     [TransformationManager handleButtonTriggerWithButton:btn triggerType:kMFActionTriggerTypeHoldTimerExpired clickLevel:lvl device:devID];
@@ -202,12 +208,12 @@ static NSMutableDictionary *_state;
     NSNumber *devID;
     NSNumber *btn;
     NSNumber *lvl;
-    timerCallbackHelper(timer.userInfo, &devID, &btn, &lvl);
+    getTimerCallbackInfo(timer.userInfo, &devID, &btn, &lvl);
     
     resetStateWithDevice(devID, btn);
     [TransformationManager handleButtonTriggerWithButton:btn triggerType:kMFActionTriggerTypeLevelTimerExpired clickLevel:lvl device:devID];
 }
-static void timerCallbackHelper(NSDictionary *info, NSNumber **devID, NSNumber **btn,NSNumber **lvl) {
+static void getTimerCallbackInfo(NSDictionary *info, NSNumber **devID, NSNumber **btn,NSNumber **lvl) {
     
     *devID = (NSNumber *)info[@"devID"];
     *btn = (NSNumber *)info[@"btn"];
@@ -264,11 +270,13 @@ static void zombifyWithDevice(NSNumber *devID, NSNumber *btn) {
     
 }
 
-static void zombifyAllPressedButtonsOnDeviceExcept(NSNumber *devID, NSNumber *exceptedBtn) {
+static void neuterAllButtonsOnDeviceExcept(NSNumber *devID, NSNumber *exceptedBtn) {
     for (NSNumber *btn in _state[devID]) {
         if ([btn isEqualToNumber:exceptedBtn]) continue;
         if (buttonIsPressed(devID, btn)) {
             zombifyWithDevice(devID, btn);
+        } else {
+            resetStateWithDevice(devID, btn);
         }
     }
 }

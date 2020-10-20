@@ -8,11 +8,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ButtonInputReceiver_CG.h"
+#import "ButtonInputReceiver.h"
 
 @interface ButtonInputParser : NSObject
 
-+ (MFEventPassThroughEvaluation)parseInputWithButton:(NSNumber *)btn trigger:(MFButtonInputType)type inputDevice:(MFDevice *)device;
++ (MFEventPassThroughEvaluation)parseInputWithButton:(NSNumber *)btn triggerType:(MFButtonInputType)type inputDevice:(MFDevice *)device;
 
 + (void)handleButtonHasHadDirectEffectWithDevice:(NSNumber *)devID button:(NSNumber *)btn;
 + (void)handleButtonHasHadEffectAsModifierWithDevice:(NSNumber *)devID button:(NSNumber *)btn;

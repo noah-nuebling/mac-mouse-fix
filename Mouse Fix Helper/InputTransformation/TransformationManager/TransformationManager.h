@@ -8,7 +8,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ButtonInputReceiver_CG.h"
+#import "ButtonInputReceiver.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

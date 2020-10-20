@@ -9,14 +9,14 @@
 
 #import "Constants.h"
 
-#import "Modifiers.h"
+#import "ModifierManager.h"
 #import "ButtonInputParser.h"
 #import "TransformationManager.h"
 #import "ModifiedDrag.h"
 #import "DeviceManager.h"
 
 
-@implementation Modifiers
+@implementation ModifierManager
 
 #pragma mark - Load
 
@@ -70,7 +70,7 @@ CGEventRef _Nullable handleKeyboardModifiersHaveChanged(CGEventTapProxy proxy, C
     
     NSArray<MFDevice *> *devs = DeviceManager.attachedDevices;
     for (MFDevice *dev in devs) {
-        NSDictionary *activeModifiers = [Modifiers getActiveModifiersForDevice:dev.uniqueID filterButton:nil];
+        NSDictionary *activeModifiers = [ModifierManager getActiveModifiersForDevice:dev.uniqueID filterButton:nil];
         
         // The keyboard component of activeModifiers doesn't update fast enough so we have to manually edit it
         // This is kinofa hack we should maybe look into a better solution
@@ -85,7 +85,7 @@ CGEventRef _Nullable handleKeyboardModifiersHaveChanged(CGEventTapProxy proxy, C
 #pragma mark Button modifiers
 
 + (void)handleButtonModifiersHaveChangedWithDevice:(MFDevice *)device {
-    NSDictionary *activeModifiers = [Modifiers getActiveModifiersForDevice:device.uniqueID filterButton:nil];
+    NSDictionary *activeModifiers = [ModifierManager getActiveModifiersForDevice:device.uniqueID filterButton:nil];
     reactToModifierChange(activeModifiers, device);
 }
 

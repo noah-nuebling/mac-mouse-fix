@@ -31,7 +31,7 @@
 		4F32E18C231C509200199A11 /* SmoothScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E186231C509200199A11 /* SmoothScroll.m */; };
 		4F32E194231C50A100199A11 /* ButtonInputParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E18E231C50A100199A11 /* ButtonInputParser.m */; };
 		4F32E195231C50A100199A11 /* ScrollModifiers.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E18F231C50A100199A11 /* ScrollModifiers.m */; };
-		4F32E196231C50A100199A11 /* ButtonInputReceiver_CG.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E193231C50A100199A11 /* ButtonInputReceiver_CG.m */; };
+		4F32E196231C50A100199A11 /* ButtonInputReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E193231C50A100199A11 /* ButtonInputReceiver.m */; };
 		4F32E199231C5B5100199A11 /* ZipArchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F32E198231C5B5100199A11 /* ZipArchive.framework */; };
 		4F32E19A231C5BBC00199A11 /* ZipArchive.framework in My Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F32E198231C5B5100199A11 /* ZipArchive.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F364C72232A9EBC0084DEB0 /* MouseFix.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4F364C71232A9EBC0084DEB0 /* MouseFix.tiff */; };
@@ -40,12 +40,15 @@
 		4F3A8446230D3E6C0012C725 /* Updater.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A8444230D3E6C0012C725 /* Updater.m */; };
 		4F4728D6253C824000846B67 /* NSMutableDictionary+Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FA26CEF243949DC0082D5F6 /* NSMutableDictionary+Additions.h */; };
 		4F479C392488B75C00976C68 /* GestureScrollSimulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F479C382488B75C00976C68 /* GestureScrollSimulator.m */; };
-		4F4999EE253BB82D00FC69B3 /* Modifiers.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4999ED253BB82D00FC69B3 /* Modifiers.m */; };
+		4F4999EE253BB82D00FC69B3 /* ModifierManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4999ED253BB82D00FC69B3 /* ModifierManager.m */; };
 		4F8AEA9222FBC7AC008C1A7C /* milkshake_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */; };
 		4F8D0185243D8D6200D70076 /* NSArray+Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F8D0183243D8D6200D70076 /* NSArray+Additions.h */; };
 		4F8D0186243D8D6200D70076 /* NSArray+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8D0184243D8D6200D70076 /* NSArray+Additions.m */; };
 		4F8DBB4B2538E79400F58093 /* TransformationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8DBB4A2538E79400F58093 /* TransformationManager.m */; };
 		4F8DBB5C2538EC8300F58093 /* RemapUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8DBB5B2538EC8300F58093 /* RemapUtility.m */; };
+		4F8F20F4253F3234005670D3 /* MFQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F8F20F2253F3234005670D3 /* MFQueue.h */; };
+		4F8F20F5253F3234005670D3 /* MFQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8F20F3253F3234005670D3 /* MFQueue.m */; };
+		4F8F20F6253F3234005670D3 /* MFQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8F20F3253F3234005670D3 /* MFQueue.m */; };
 		4F95A249234EBB5D000DC7D7 /* PointerSpeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F95A248234EBB5D000DC7D7 /* PointerSpeed.m */; };
 		4F9CA64E246CA5470042F25A /* ModifiedDrag.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9CA64D246CA5470042F25A /* ModifiedDrag.m */; };
 		4FA26CE724380D1F0082D5F6 /* ClickableImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FA26CE524380D1F0082D5F6 /* ClickableImageView.h */; };
@@ -220,10 +223,10 @@
 		4F32E186231C509200199A11 /* SmoothScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SmoothScroll.m; sourceTree = "<group>"; };
 		4F32E18E231C50A100199A11 /* ButtonInputParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonInputParser.m; sourceTree = "<group>"; };
 		4F32E18F231C50A100199A11 /* ScrollModifiers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollModifiers.m; sourceTree = "<group>"; };
-		4F32E190231C50A100199A11 /* ButtonInputReceiver_CG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonInputReceiver_CG.h; sourceTree = "<group>"; };
+		4F32E190231C50A100199A11 /* ButtonInputReceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonInputReceiver.h; sourceTree = "<group>"; };
 		4F32E191231C50A100199A11 /* ScrollModifiers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollModifiers.h; sourceTree = "<group>"; };
 		4F32E192231C50A100199A11 /* ButtonInputParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonInputParser.h; sourceTree = "<group>"; };
-		4F32E193231C50A100199A11 /* ButtonInputReceiver_CG.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonInputReceiver_CG.m; sourceTree = "<group>"; };
+		4F32E193231C50A100199A11 /* ButtonInputReceiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonInputReceiver.m; sourceTree = "<group>"; };
 		4F32E198231C5B5100199A11 /* ZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZipArchive.framework; path = Carthage/Build/Mac/ZipArchive.framework; sourceTree = "<group>"; };
 		4F364C71232A9EBC0084DEB0 /* MouseFix.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = MouseFix.tiff; sourceTree = "<group>"; };
 		4F364C74232ABE5C0084DEB0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -233,8 +236,8 @@
 		4F422EEE23469B1700AA6E22 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		4F479C372488B75C00976C68 /* GestureScrollSimulator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GestureScrollSimulator.h; sourceTree = "<group>"; };
 		4F479C382488B75C00976C68 /* GestureScrollSimulator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GestureScrollSimulator.m; sourceTree = "<group>"; };
-		4F4999EC253BB82D00FC69B3 /* Modifiers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Modifiers.h; sourceTree = "<group>"; };
-		4F4999ED253BB82D00FC69B3 /* Modifiers.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Modifiers.m; sourceTree = "<group>"; };
+		4F4999EC253BB82D00FC69B3 /* ModifierManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModifierManager.h; sourceTree = "<group>"; };
+		4F4999ED253BB82D00FC69B3 /* ModifierManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModifierManager.m; sourceTree = "<group>"; };
 		4F7C281F2436675900D94D0A /* backup_config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = backup_config.plist; sourceTree = "<group>"; };
 		4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = milkshake_button.png; sourceTree = "<group>"; };
 		4F8D0183243D8D6200D70076 /* NSArray+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSArray+Additions.h"; sourceTree = "<group>"; };
@@ -242,6 +245,8 @@
 		4F8DBB492538E79400F58093 /* TransformationManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransformationManager.h; sourceTree = "<group>"; };
 		4F8DBB4A2538E79400F58093 /* TransformationManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TransformationManager.m; sourceTree = "<group>"; };
 		4F8DBB5B2538EC8300F58093 /* RemapUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemapUtility.m; sourceTree = "<group>"; };
+		4F8F20F2253F3234005670D3 /* MFQueue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFQueue.h; sourceTree = "<group>"; };
+		4F8F20F3253F3234005670D3 /* MFQueue.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFQueue.m; sourceTree = "<group>"; };
 		4F95A247234EBB5D000DC7D7 /* PointerSpeed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerSpeed.h; sourceTree = "<group>"; };
 		4F95A248234EBB5D000DC7D7 /* PointerSpeed.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerSpeed.m; sourceTree = "<group>"; };
 		4F9CA64C246CA5470042F25A /* ModifiedDrag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModifiedDrag.h; sourceTree = "<group>"; };
@@ -534,6 +539,8 @@
 				4F8D0184243D8D6200D70076 /* NSArray+Additions.m */,
 				4F1E57EA253CF29300B704E3 /* SharedUtility.h */,
 				4F1E57EB253CF29300B704E3 /* SharedUtility.m */,
+				4F8F20F2253F3234005670D3 /* MFQueue.h */,
+				4F8F20F3253F3234005670D3 /* MFQueue.m */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -541,8 +548,8 @@
 		4F4999EB253BB7F600FC69B3 /* Modifiers */ = {
 			isa = PBXGroup;
 			children = (
-				4F4999EC253BB82D00FC69B3 /* Modifiers.h */,
-				4F4999ED253BB82D00FC69B3 /* Modifiers.m */,
+				4F4999EC253BB82D00FC69B3 /* ModifierManager.h */,
+				4F4999ED253BB82D00FC69B3 /* ModifierManager.m */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -603,8 +610,8 @@
 		4FB68B6E246CA4AF0059530E /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
-				4F32E190231C50A100199A11 /* ButtonInputReceiver_CG.h */,
-				4F32E193231C50A100199A11 /* ButtonInputReceiver_CG.m */,
+				4F32E190231C50A100199A11 /* ButtonInputReceiver.h */,
+				4F32E193231C50A100199A11 /* ButtonInputReceiver.m */,
 				4F32E192231C50A100199A11 /* ButtonInputParser.h */,
 				4F32E18E231C50A100199A11 /* ButtonInputParser.m */,
 			);
@@ -838,6 +845,7 @@
 			files = (
 				4FD45A1B231C78B400F75C58 /* AuthorizeAccessibilityView.h in Headers */,
 				4FD36AED243741A70046DC41 /* ScrollOverridePanel.h in Headers */,
+				4F8F20F4253F3234005670D3 /* MFQueue.h in Headers */,
 				4FD9CB1322F7D48D0090DB98 /* Hyperlink.h in Headers */,
 				4F8D0185243D8D6200D70076 /* NSArray+Additions.h in Headers */,
 				4FBF34FF23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h in Headers */,
@@ -1043,7 +1051,7 @@
 				4FD45A20231C7FB500F75C58 /* AccessibilityCheck.m in Sources */,
 				4FECC88D2431DCCD001A3C4B /* RoughScroll.m in Sources */,
 				4F32E18C231C509200199A11 /* SmoothScroll.m in Sources */,
-				4F4999EE253BB82D00FC69B3 /* Modifiers.m in Sources */,
+				4F4999EE253BB82D00FC69B3 /* ModifierManager.m in Sources */,
 				4F1E57F3253CF3F500B704E3 /* NSMutableDictionary+Additions.m in Sources */,
 				4F32E157231C420100199A11 /* DeviceManager.m in Sources */,
 				4F9CA64E246CA5470042F25A /* ModifiedDrag.m in Sources */,
@@ -1055,10 +1063,11 @@
 				4FF3B2C0232788AA009E8A8E /* HelperServices_HelperApp.m in Sources */,
 				4F32E194231C50A100199A11 /* ButtonInputParser.m in Sources */,
 				4F479C392488B75C00976C68 /* GestureScrollSimulator.m in Sources */,
-				4F32E196231C50A100199A11 /* ButtonInputReceiver_CG.m in Sources */,
+				4F32E196231C50A100199A11 /* ButtonInputReceiver.m in Sources */,
 				4F95A249234EBB5D000DC7D7 /* PointerSpeed.m in Sources */,
 				4F32E188231C509200199A11 /* AnimationCurve.m in Sources */,
 				4F1A20282348EC3D00B29037 /* ScrollUtility.m in Sources */,
+				4F8F20F5253F3234005670D3 /* MFQueue.m in Sources */,
 				4F1E57F0253CF3D700B704E3 /* SharedUtility.m in Sources */,
 				4F32E159231C420100199A11 /* Utility_HelperApp.m in Sources */,
 				4FF3B2BD23276082009E8A8E /* Uninstaller.m in Sources */,
@@ -1069,6 +1078,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F8F20F6253F3234005670D3 /* MFQueue.m in Sources */,
 				4F32E15F231C45F300199A11 /* Hyperlink.m in Sources */,
 				4FD45A35231D097000F75C58 /* Utility_PrefPane.m in Sources */,
 				4FD67DE0211CC9000095A9A5 /* PrefPaneDelegate.m in Sources */,
