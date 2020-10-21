@@ -352,8 +352,8 @@ NSArray *_remapsUI;
                                 @"click": @[                                   // Key: click/hold, value: array of actions
                                         @{
                                             kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
-                                            kMFMouseButtonClicksVariantKeyButtonNumber: @(1),
-                                            kMFMouseButtonClicksVariantKeyNumberOfClicks: @(2),
+                                            kMFActionDictKeyMouseButtonClicksVariantButtonNumber: @(1),
+                                            kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks: @(2),
                                         },
                                 ],
                                 @"hold": @[                                  // Key: click/hold, value: array of actions

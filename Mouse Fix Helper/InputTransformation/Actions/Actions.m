@@ -46,16 +46,15 @@
             
         } else if ([actionType isEqualToString:kMFActionDictTypeKeyboardShortcut]) {
             
-            NSNumber *keycode = actionDict[kMFKeyboardShortcutVariantKeyKeycode];
-            NSNumber *flags = actionDict[kMFKeyboardShortcutVariantKeyModifierFlags];
+            NSNumber *keycode = actionDict[kMFActionDictKeyKeyboardShortcutVariantKeycode];
+            NSNumber *flags = actionDict[kMFActionDictKeyKeyboardShortcutVariantModifierFlags];
             postKeyboardShortcut(keycode.intValue, flags.intValue);
             
         } else if ([actionType isEqualToString:kMFActionDictTypeMouseButtonClicks]) {
             
-            NSNumber *button = actionDict[kMFMouseButtonClicksVariantKeyButtonNumber];
-            NSNumber *nOfClicks = actionDict[kMFMouseButtonClicksVariantKeyNumberOfClicks];
+            NSNumber *button = actionDict[kMFActionDictKeyMouseButtonClicksVariantButtonNumber];
+            NSNumber *nOfClicks = actionDict[kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks];
             postMouseButtonClickSequence(button.intValue, nOfClicks.intValue);
-            
         }
     }
 }
@@ -88,7 +87,6 @@ static void postMouseButtonClickSequence(MFMouseButtonNumber button, int64_t nOf
     
     CFRelease(buttonDown);
     CFRelease(buttonUp);
-    
 }
 
 #pragma mark - Keyboard shortcuts

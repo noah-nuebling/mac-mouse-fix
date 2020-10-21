@@ -33,24 +33,26 @@ typedef NSString*                                       MFStringConstant;
 #define kMFModifierKeyButtons                           @"buttonModifiers" // Rename to kMFModificationPreconditionKey...
 #define kMFModifierKeyKeyboard                          @"keyboardModifiers"
 
-#define kMFActionDictKeyType                           @"type" // Rename to ..kMFActionDict..
-#define kMFActionDictKeyVariant                        @"value"
+#define kMFActionDictKeyType                           @"type"
+
 #define kMFActionDictTypeSymbolicHotkey                @"symbolicHotkey"
 #define kMFActionDictTypeNavigationSwipe               @"navigationSwipe"
 #define kMFActionDictTypeSmartZoom                     @"smartZoom"
 #define kMFActionDictTypeKeyboardShortcut              @"keyboardShortcut"
 #define kMFActionDictTypeMouseButtonClicks              @"mouseButton"
 
+#define kMFActionDictKeyVariant                        @"value"
+
+#define kMFActionDictKeyKeyboardShortcutVariantKeycode            @"keycode"
+#define kMFActionDictKeyKeyboardShortcutVariantModifierFlags      @"flags"
+
+#define kMFActionDictKeyMouseButtonClicksVariantButtonNumber       @"button"
+#define kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks     @"nOfClicks"
+
 #define kMFNavigationSwipeVariantUp                     @"up"
 #define kMFNavigationSwipeVariantRight                  @"right"
 #define kMFNavigationSwipeVariantDown                   @"down"
 #define kMFNavigationSwipeVariantLeft                   @"left"
-
-#define kMFKeyboardShortcutVariantKeyKeycode            @"keycode"
-#define kMFKeyboardShortcutVariantKeyModifierFlags      @"flags"
-
-#define kMFMouseButtonClicksVariantKeyButtonNumber       @"button"
-#define kMFMouseButtonClicksVariantKeyNumberOfClicks     @"nOfClicks"
 
 typedef enum {
     kMFSHMissionControl = 32,
