@@ -14,6 +14,7 @@
 #import "ButtonInputReceiver.h"
 #import "RemapUtility.h"
 #import "CFRuntime.h"
+#import "SharedUtility.h"
 
 
 @implementation MFDevice
@@ -215,7 +216,7 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
     
     if (isButton) {
         
-        uint32_t button = usage;
+        MFMouseButtonNumber button = usage;
         
         [ButtonInputReceiver handleButtonInputFromRelevantDeviceOccured:sendingDev button:@(button)];
         
@@ -232,25 +233,9 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
 
             NSLog(@"BUTTON INP COMES FORM SEIZED");
             
-            if (pressure == 0) {
-                if (button == 1) {
-                    mouseEventType = kCGEventLeftMouseUp;
-                } else if (button == 2) {
-                    mouseEventType = kCGEventRightMouseUp;
-                } else {
-                    mouseEventType = kCGEventOtherMouseUp;
-                }
-            } else {
-                if (button == 1) {
-                    mouseEventType = kCGEventLeftMouseDown;
-                } else if (button == 2) {
-                    mouseEventType = kCGEventRightMouseDown;
-                } else {
-                    mouseEventType = kCGEventOtherMouseDown;
-                }
-            }
+            mouseEventType = [SharedUtility CGEventTypeForButtonNumber:button isMouseDown:(pressure != 0)];
 
-            CGEventRef fakeEvent = CGEventCreateMouseEvent(NULL, mouseEventType, CGEventGetLocation(CGEventCreate(NULL)), button - 1);
+            CGEventRef fakeEvent = CGEventCreateMouseEvent(NULL, mouseEventType, CGEventGetLocation(CGEventCreate(NULL)), [SharedUtility CGMouseButtonFromMFMouseButtonNumber:button]);
 //            CFRetain(fakeEvent);
             [ButtonInputReceiver insertFakeEvent:fakeEvent];
             CFRelease(fakeEvent);

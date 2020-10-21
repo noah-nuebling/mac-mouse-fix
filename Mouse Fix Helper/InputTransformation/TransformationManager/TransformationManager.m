@@ -147,17 +147,17 @@ NSDictionary *_remaps;
                            activeModifiers,
                            effectiveRemaps);
     
-#if nopeDEBUG
-    NSDictionary *info = @{
-        @"devID": devID,
-        @"button": button,
-        @"level": level,
-        @"clickActionOfThisLevelExists": @(clickActionOfThisLevelExists),
-        @"effectForMouseDownStateOfThisLevelExists": @(effectForMouseDownStateOfThisLevelExists),
-        @"effectOfGreaterLevelExists": @(effectOfGreaterLevelExists),
-        @"remaps": remaps,
-    };
-    NSLog(@"CHECK IF EFFECT OF EQUAL OR GREATER LEVEL EXISTS - Info: %@", info);
+#if DEBUG
+//    NSDictionary *info = @{
+//        @"devID": devID,
+//        @"button": button,
+//        @"level": level,
+//        @"clickActionOfThisLevelExists": @(clickActionOfThisLevelExists),
+//        @"effectForMouseDownStateOfThisLevelExists": @(effectForMouseDownStateOfThisLevelExists),
+//        @"effectOfGreaterLevelExists": @(effectOfGreaterLevelExists),
+//        @"remaps": remaps,
+//    };
+//    NSLog(@"CHECK IF EFFECT OF EQUAL OR GREATER LEVEL EXISTS - Info: %@", info);
 #endif
     
     return clickActionOfThisLevelExists || effectForMouseDownStateOfThisLevelExists || effectOfGreaterLevelExists;
@@ -347,36 +347,33 @@ NSArray *_remapsUI;
 + (void)load {
     _remaps = @{
         @{}: @{                                                     // Key: modifier dict (empty -> no modifiers)
-//                @(3): @{                                                // Key: button
-//                        @(1): @{                                            // Key: level
-//                                @"click": @[                                   // Key: click/hold, value: array of actions
-//                                        @{
-//                                            @"type": kMFActionArrayTypeSmartZoom,
-//                                        },
-//                                ],
-                                //                    @"hold": @[                                  // Key: click/hold, value: array of actions
-                                //                        @{
-                                //                            @"type": @"symbolicHotkey",
-                                //                            @"value": @(70),
-                                //                        },
-                                //                    ],
-                                //                    @"modifying": @[
-                                //                            @{
-                                //                                @"type": @"modifiedDrag",
-                                //                                @"value": @"threeFingerSwipe",
-                                //                            }
-                                //                    ]
-//                        },
-//                        @(2): @{                                            // Key: level
-//                                @"hold": @[                                  // Key: click/hold, value: array of actions
-//                                        @{
-//                                            @"type": @"symbolicHotkey",
-//                                            @"value": @(36),
-//                                        },
-//                                ],
-//
-//                        },
-//                },
+                @(3): @{                                                // Key: button
+                        @(1): @{                                            // Key: level
+                                @"click": @[                                   // Key: click/hold, value: array of actions
+                                        @{
+                                            kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
+                                            kMFMouseButtonClicksVariantKeyButtonNumber: @(1),
+                                            kMFMouseButtonClicksVariantKeyNumberOfClicks: @(2),
+                                        },
+                                ],
+                                @"hold": @[                                  // Key: click/hold, value: array of actions
+                                        @{
+                                            kMFActionDictKeyType: @"symbolicHotkey",
+                                            kMFActionDictKeyVariant: @(32),
+                                        },
+                                ],
+                                
+                        },
+                        //                        @(2): @{                                            // Key: level
+                        //                                @"hold": @[                                  // Key: click/hold, value: array of actions
+                        //                                        @{
+                        //                                            @"type": @"symbolicHotkey",
+                        //                                            @"value": @(36),
+                        //                                        },
+                        //                                ],
+                        //
+                        //                        },
+                },
                 @(4): @{                                                // Key: button
                         @(1): @{                                            // Key: level
                                 //                    @"modifying": @[
@@ -426,8 +423,8 @@ NSArray *_remapsUI;
                         @(1): @{                                            // Key: level
                                 @"click": @[                                  // Key: click/hold, value: array of actions
                                         @{
-                                            kMFActionArrayKeyType: kMFActionArrayTypeSymbolicHotkey,
-                                            kMFActionArrayKeyVariant: @(kMFSHLaunchpad),
+                                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+                                            kMFActionDictKeyVariant: @(kMFSHLaunchpad),
                                         },
                                 ],
                         },
@@ -439,31 +436,31 @@ NSArray *_remapsUI;
             kMFModifierKeyButtons: @{
                     //@(3): @(1),                                      // btn, lvl
             },
-//            @"keyboardModifiers": @(
-//                NSEventModifierFlagControl
-//                ),
+            //            @"keyboardModifiers": @(
+            //                NSEventModifierFlagControl
+            //                ),
         }: @{
                 kMFRemapsKeyModifiedDrag: kMFModifiedDragTypeThreeFingerSwipe,
-//                @(4): @{                                                // Key: button
-//                        @(1): @{                                            // Key: level
-//                                @"click": @[                                  // Key: clic/hold, value: array of actions
-//                                        @{
-//                                            @"type": @"navigationSwipe",
-//                                            @"value": @"left",
-//                                        },
-//                                ],
-//                        },
-//                },
-//                @(5): @{                                                // Key: button
-//                        @(1): @{                                            // Key: level
-//                                @"click": @[                                  // Key: click/hold, value: array of actions
-//                                        @{
-//                                            @"type": @"navigationSwipe",
-//                                            @"value": @"right",
-//                                        },
-//                                ],
-//                        },
-//                },
+                //                @(4): @{                                                // Key: button
+                //                        @(1): @{                                            // Key: level
+                //                                @"click": @[                                  // Key: clic/hold, value: array of actions
+                //                                        @{
+                //                                            @"type": @"navigationSwipe",
+                //                                            @"value": @"left",
+                //                                        },
+                //                                ],
+                //                        },
+                //                },
+                //                @(5): @{                                                // Key: button
+                //                        @(1): @{                                            // Key: level
+                //                                @"click": @[                                  // Key: click/hold, value: array of actions
+                //                                        @{
+                //                                            @"type": @"navigationSwipe",
+                //                                            @"value": @"right",
+                //                                        },
+                //                                ],
+                //                        },
+                //                },
         },
     };
     //    _testRemapsUI = @[

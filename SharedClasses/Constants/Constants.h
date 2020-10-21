@@ -33,16 +33,24 @@ typedef NSString*                                       MFStringConstant;
 #define kMFModifierKeyButtons                           @"buttonModifiers" // Rename to kMFModificationPreconditionKey...
 #define kMFModifierKeyKeyboard                          @"keyboardModifiers"
 
-#define kMFActionArrayKeyType                           @"type"
-#define kMFActionArrayKeyVariant                        @"value"
-#define kMFActionArrayTypeSymbolicHotkey                @"symbolicHotkey"
-#define kMFActionArrayTypeNavigationSwipe               @"navigationSwipe"
-#define kMFActionArrayTypeSmartZoom                     @"smartZoom"
+#define kMFActionDictKeyType                           @"type" // Rename to ..kMFActionDict..
+#define kMFActionDictKeyVariant                        @"value"
+#define kMFActionDictTypeSymbolicHotkey                @"symbolicHotkey"
+#define kMFActionDictTypeNavigationSwipe               @"navigationSwipe"
+#define kMFActionDictTypeSmartZoom                     @"smartZoom"
+#define kMFActionDictTypeKeyboardShortcut              @"keyboardShortcut"
+#define kMFActionDictTypeMouseButtonClicks              @"mouseButton"
 
 #define kMFNavigationSwipeVariantUp                     @"up"
 #define kMFNavigationSwipeVariantRight                  @"right"
 #define kMFNavigationSwipeVariantDown                   @"down"
 #define kMFNavigationSwipeVariantLeft                   @"left"
+
+#define kMFKeyboardShortcutVariantKeyKeycode            @"keycode"
+#define kMFKeyboardShortcutVariantKeyModifierFlags      @"flags"
+
+#define kMFMouseButtonClicksVariantKeyButtonNumber       @"button"
+#define kMFMouseButtonClicksVariantKeyNumberOfClicks     @"nOfClicks"
 
 typedef enum {
     kMFSHMissionControl = 32,
@@ -76,7 +84,14 @@ typedef enum {
     kMFSHSiri = 176,
     kMFSHNotificationCenter = 163,
     kMFSHToggleDoNotDisturb = 175,
-} SymbolicHotkeys;
+} MFSymbolicHotkey;
+
+/// Note that CGMouseButton (and all CG APIs) assign 0 to left mouse button while MFMouseButtonNumber (and the rest of Mac Mouse Fix) assigns 1 to lmb
+typedef enum {
+    kMFMouseButtonNumberLeft = 1,
+    kMFMouseButtonNumberRight = 2,
+    kMFMouseButtonNumberMiddle = 3,
+} MFMouseButtonNumber;
 
 @end
 

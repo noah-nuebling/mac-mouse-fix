@@ -24,21 +24,21 @@ static CFMachPortRef _eventTap;
     _eventSource = CGEventSourceCreate(kCGEventSourceStatePrivate);
     registerInputCallback();
     _buttonInputsFromRelevantDevices = [MFQueue queue];
-    _buttonParseBlacklist = @[@(1),@(2)]; // Ignore inputs from left mouse button and right mouse button
+    _buttonParseBlacklist = @[@(1),@(2)]; // Ignore inputs from left and right mouse buttons
 }
 
 + (void)decide {
     if ([DeviceManager devicesAreAttached]) {
-        NSLog(@"started (InputReceiver)"); 
+        NSLog(@"started ButtonInputReceiver");
         [ButtonInputReceiver start];
     } else {
-        NSLog(@"stopped (InputReceiver)");
+        NSLog(@"stopped ButtonInputReceiver");
         [ButtonInputReceiver stop];
     }
 }
 
 + (void)start {
-    _buttonInputsFromRelevantDevices = [MFQueue queue]; // Not sure if necessary
+    _buttonInputsFromRelevantDevices = [MFQueue queue]; // Not sure if resetting here necessary
     CGEventTapEnable(_eventTap, true);
 }
 + (void)stop {
@@ -102,7 +102,7 @@ CGEventRef handleInput(CGEventTapProxy proxy, CGEventType type, CGEventRef event
     
     if ([_buttonParseBlacklist containsObject:@(buttonNumber)]) {
 #if DEBUG
-        NSLog(@"Received input from blacklisted mouse button: %lu", (unsigned long)buttonNumber); // This should only happen when inserting fake events
+//        NSLog(@"Received input from blacklisted mouse button: %lu", (unsigned long)buttonNumber); // This should only happen when inserting fake events
 #endif
         return event;
     };
@@ -114,9 +114,6 @@ CGEventRef handleInput(CGEventTapProxy proxy, CGEventType type, CGEventRef event
     
     MFEventPassThroughEvaluation eval = [ButtonInputParser parseInputWithButton:@(buttonNumber) triggerType:triggertType inputDevice:dev];
     if (eval == kMFEventPassThroughRefusal) {
-#if DEBUG
-        NSLog(@"BLOCKING CGEVENT FROM PASSING THROUGH");
-#endif
         return nil;
     }
     

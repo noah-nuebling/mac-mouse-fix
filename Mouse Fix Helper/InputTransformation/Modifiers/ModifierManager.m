@@ -99,9 +99,9 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, MFDevi
     
     // Kill the currently active modified drag
     //      (or any other effects which are modifier driven, but currently modified drag is the only one)
-    // \note The precondition for the currently active modified drag can't be true anymore because
+    // \note The precondition for any currently active modifications can't be true anymore because
     //      we know that the activeModifers have changed (that's why this function was called)
-    //      Because of this we can simply kill it without any further checks
+    //      Because of this we can simply kill everything without any further checks
     [ModifiedDrag deactivate];
     
     // Get active modifications and initialize any which are trigger driven
@@ -109,9 +109,9 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, MFDevi
     NSDictionary *activeModifications = r[activeModifiers];
     if (activeModifications) {
         // Initialize effects which are trigger driven (only modified drag)
-        NSString *dragType = activeModifications[kMFRemapsKeyModifiedDrag];
-        if (dragType) {
-            [ModifiedDrag initializeModifiedDragWithType:dragType onDevice:device];
+        NSString *modifiedDragType = activeModifications[kMFRemapsKeyModifiedDrag];
+        if (modifiedDragType) {
+            [ModifiedDrag initializeModifiedDragWithType:modifiedDragType onDevice:device];
         }
     }
 }

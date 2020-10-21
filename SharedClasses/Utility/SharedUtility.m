@@ -41,4 +41,33 @@
     return dstMutable;
 }
 
++ (CGEventType)CGEventTypeForButtonNumber:(MFMouseButtonNumber)button isMouseDown:(BOOL)isMouseDown {
+    
+    CGEventType mouseEventType;
+    
+    if (isMouseDown) {
+       if (button == kMFMouseButtonNumberLeft) {
+           mouseEventType = kCGEventLeftMouseDown;
+       } else if (button == kMFMouseButtonNumberRight) {
+           mouseEventType = kCGEventRightMouseDown;
+       } else {
+           mouseEventType = kCGEventOtherMouseDown;
+       }
+   } else {
+        if (button == kMFMouseButtonNumberLeft) {
+            mouseEventType = kCGEventLeftMouseUp;
+        } else if (button == kMFMouseButtonNumberRight) {
+            mouseEventType = kCGEventRightMouseUp;
+        } else {
+            mouseEventType = kCGEventOtherMouseUp;
+        }
+    }
+    
+    return mouseEventType;
+}
+
++ (CGMouseButton)CGMouseButtonFromMFMouseButtonNumber:(MFMouseButtonNumber)button {
+    return (CGMouseButton) button - 1;
+}
+
 @end

@@ -10,117 +10,146 @@
 #import "Actions.h"
 #import "CGSHotKeys.h"
 #import "TouchSimulator.h"
+#import "Constants.h"
+#import "SharedUtility.h"
 
 @implementation Actions
 
 + (void)executeActionArray:(NSArray *)actionArray {
     
     for (NSDictionary *actionDict in actionArray) {
+        
+        MFStringConstant actionType = actionDict[kMFActionDictKeyType];
     
-        if ([actionDict[@"type"] isEqualToString:@"symbolicHotkey"]) {
-            NSNumber *shk = actionDict[@"value"];
-            [self triggerSymbolicHotkey:[shk intValue]];
-        }
-        else if ([actionDict[@"type"] isEqualToString:@"navigationSwipe"]) {
-            NSString *dirString = actionDict[@"value"];
+        if ([actionType isEqualToString:kMFActionDictTypeSymbolicHotkey]) {
             
-            if ([dirString isEqualToString:@"left"]) {
+            MFSymbolicHotkey shk = ((NSNumber *)actionDict[kMFActionDictKeyVariant]).intValue;
+            postSymbolicHotkey((CGSSymbolicHotKey) shk);
+            
+        } else if ([actionType isEqualToString:kMFActionDictTypeNavigationSwipe]) {
+            
+            NSString *dirString = actionDict[kMFActionDictKeyVariant];
+            
+            if ([dirString isEqualToString:kMFNavigationSwipeVariantLeft]) {
                 [TouchSimulator postNavigationSwipeEventWithDirection:kIOHIDSwipeLeft];
-            } else if ([dirString isEqualToString:@"right"]) {
+            } else if ([dirString isEqualToString:kMFNavigationSwipeVariantRight]) {
                 [TouchSimulator postNavigationSwipeEventWithDirection:kIOHIDSwipeRight];
-            } else if ([dirString isEqualToString:@"up"]) {
+            } else if ([dirString isEqualToString:kMFNavigationSwipeVariantUp]) {
                 [TouchSimulator postNavigationSwipeEventWithDirection:kIOHIDSwipeUp];
-            } else if ([dirString isEqualToString:@"down"]) {
+            } else if ([dirString isEqualToString:kMFNavigationSwipeVariantDown]) {
                 [TouchSimulator postNavigationSwipeEventWithDirection:kIOHIDSwipeDown];
             }
             
-        } else if ([actionDict[@"type"] isEqualToString:@"smartZoom"]) {
+        } else if ([actionType isEqualToString:kMFActionDictTypeSmartZoom]) {
+            
             [TouchSimulator postSmartZoomEvent];
+            
+        } else if ([actionType isEqualToString:kMFActionDictTypeKeyboardShortcut]) {
+            
+            NSNumber *keycode = actionDict[kMFKeyboardShortcutVariantKeyKeycode];
+            NSNumber *flags = actionDict[kMFKeyboardShortcutVariantKeyModifierFlags];
+            postKeyboardShortcut(keycode.intValue, flags.intValue);
+            
+        } else if ([actionType isEqualToString:kMFActionDictTypeMouseButtonClicks]) {
+            
+            NSNumber *button = actionDict[kMFMouseButtonClicksVariantKeyButtonNumber];
+            NSNumber *nOfClicks = actionDict[kMFMouseButtonClicksVariantKeyNumberOfClicks];
+            postMouseButtonClickSequence(button.intValue, nOfClicks.intValue);
+            
         }
     }
 }
 
+#pragma mark - Button clicks
 
-/*
-(Here are some old notes of mine regarding symbolic hotkeys. Might be useful for you
- if you wanna trigger system functions in your app)
- 
- SymbolicHotkeys Reference:
+static void postMouseButtonClickSequence(MFMouseButtonNumber button, int64_t nOfClicks) {
+    
+    CGEventTapLocation tapLoc = kCGSessionEventTap;
+    
+    CGPoint mouseLoc = CGEventGetLocation(CGEventCreate(NULL));
+    CGEventType eventTypeDown = [SharedUtility CGEventTypeForButtonNumber:button isMouseDown:YES];
+    CGEventType eventTypeUp = [SharedUtility CGEventTypeForButtonNumber:button isMouseDown:NO];
+    CGMouseButton buttonCG = [SharedUtility CGMouseButtonFromMFMouseButtonNumber:button];
+    
+    CGEventRef buttonDown = CGEventCreateMouseEvent(NULL, eventTypeDown, mouseLoc, buttonCG);
+    CGEventRef buttonUp = CGEventCreateMouseEvent(NULL, eventTypeUp, mouseLoc, buttonCG);
+    
+    int clickLevel = 1;
+    while (clickLevel <= nOfClicks) {
+        
+        CGEventSetIntegerValueField(buttonDown, kCGMouseEventClickState, clickLevel);
+        CGEventSetIntegerValueField(buttonUp, kCGMouseEventClickState, clickLevel);
+        
+        CGEventPost(tapLoc, buttonDown);
+        CGEventPost(tapLoc, buttonUp);
+        
+        clickLevel++;
+    }
+    
+    CFRelease(buttonDown);
+    CFRelease(buttonUp);
+    
+}
 
- // resources
+#pragma mark - Keyboard shortcuts
 
- Default Mappings with description:
- - /System/Library/PreferencePanes/Keyboard.prefPane/Contents/Resources/English.lproj
+static void postKeyboardShortcut(CGKeyCode keyCode, CGSModifierFlags modifierFlags) {
+    
+    CGEventTapLocation tapLoc = kCGSessionEventTap;
+    
+    // Create key events
+    CGEventRef keyDown = CGEventCreateKeyboardEvent(NULL, keyCode, true);
+    CGEventRef keyUp = CGEventCreateKeyboardEvent(NULL, keyCode, false);
+    CGEventSetFlags(keyDown, (CGEventFlags)modifierFlags);
+    CGEventSetFlags(keyUp, (CGEventFlags)modifierFlags);
+    
+    // Create modifier restore event
+    //  (Restoring original modifier state the way postKeyboardEventsForSymbolicHotkey does leads to issues with triggering Spotlight)
+    //      (Sometimes triggered Siri instead)
+    CGEventFlags originalModifierFlags = CGEventGetFlags(CGEventCreate(NULL));
+    CGEventRef modEvent = CGEventCreate(NULL);
+    CGEventSetFlags(modEvent, originalModifierFlags);
+    
+    // Send key events
+    CGEventPost(tapLoc, keyDown);
+    CGEventPost(tapLoc, keyUp);
+    CGEventPost(tapLoc, modEvent);
+    
+    CFRelease(keyDown);
+    CFRelease(keyUp);
+    CFRelease(modEvent);
+}
 
- Reverse Engineering of the CGSHotKeys.h header
- - https://github.com/NUIKit/CGSInternal/blob/master/CGSHotKeys.h
+#pragma mark - SymbolicHotkeys
 
- Archived forum post
- - https://web.archive.org/web/20141112224103/http://hintsforums.macworld.com/showthread.php?t=114785
-
- // tested
-
- @“Mission Control”         :   @32,
- @"Show All Windows"        :   @33,
- @"Show Desktop"            :   @36,
- @"Launchpad"               :   @160,
- @"Look Up"                 :   @70,
- @“App Switcher”            :   @71,
-
- @“Move left a space”       :   @79,
- @“Move right a space”      :   @81,
-     
- @"Cycle through Windows".  :   @27
-
- @"Switch to Desktop {1-16}     :   @{118-133},
-
- @“Spotlight”                   :   @64,
-
- @“Siri”                        :   @176,
- @“Show Notification Center”    :   @163,
- @"Turn Do Not Disturb On/Off"  :   @175,
-
- Others:
- Something directed to the right: @82;
-
- –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
-
- 
-
- // For some (all?) system functions there are 2 (or more) shk's with → symbolicHotkey2Val = symbolicHotkey1Val + 8, and sometimes + 4
- // These seem to be used for mapping system functions to mouse buttons directly
- // Edit: It seems that there is only one shk for "Move right a space"... meh
- // -> It's probably best to trigger system functions by posting keyDown events.
-
- MB2:
- - type         = "button"
- - parameters     = [2, 2, 131072]
- MB3:
- - type         = "button"
- - parameters     = [4, 4, 131072]
- MB4:
- - type         = "button"
- - parameters     = [8, 8, 131072]
- MB4:
- - type         = "button"
- - parameters     = [16, 16, 131072]
- 
- */
+static void postKeyboardEventsForSymbolicHotkey(CGKeyCode keyCode, CGSModifierFlags modifierFlags) {
+    
+    CGEventTapLocation tapLoc = kCGSessionEventTap;
+    
+    CGEventRef shortcutDown = CGEventCreateKeyboardEvent(NULL, keyCode, true);
+    CGEventRef shortcutUp = CGEventCreateKeyboardEvent(NULL, keyCode, false);
+    CGEventSetFlags(shortcutDown, (CGEventFlags)modifierFlags);
+    CGEventFlags originalModifierFlags = CGEventGetFlags(CGEventCreate(NULL));
+    CGEventSetFlags(shortcutUp, originalModifierFlags); // Restore original keyboard modifier flags state on key up. This seems to fix `[ModifierManager getCurrentModifiers]`
+    CGEventPost(tapLoc, shortcutDown);
+    CGEventPost(tapLoc, shortcutUp);
+    CFRelease(shortcutDown);
+    CFRelease(shortcutUp);
+}
 
 // I think these two private functions are the only thing preventing the app from being allowed on the Mac App Store, so if you know a way to trigger system functions without a private API it would be awesome if you let me know! :)
 CG_EXTERN CGError CGSGetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar *outKeyEquivalent, unichar *outVirtualKeyCode, CGSModifierFlags *outModifiers);
 CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar keyEquivalent, CGKeyCode virtualKeyCode, CGSModifierFlags modifiers);
 
-
-+ (void)triggerSymbolicHotkey:(CGSSymbolicHotKey)shk {
+static void postSymbolicHotkey(CGSSymbolicHotKey shk) {
     
     unichar keyEquivalent;
-    CGKeyCode virtualKeyCode;
+    CGKeyCode keyCode;
     CGSModifierFlags modifierFlags;
-    CGSGetSymbolicHotKeyValue(shk, &keyEquivalent, &virtualKeyCode, &modifierFlags);
+    CGSGetSymbolicHotKeyValue(shk, &keyEquivalent, &keyCode, &modifierFlags);
     
     BOOL hotkeyIsEnabled = CGSIsSymbolicHotKeyEnabled(shk);
-    BOOL oldVirtualKeyCodeIsUsable = (virtualKeyCode < 400);
+    BOOL oldVirtualKeyCodeIsUsable = (keyCode < 400);
     
     if (hotkeyIsEnabled == FALSE) {
         CGSSetSymbolicHotKeyEnabled(shk, TRUE);
@@ -128,9 +157,9 @@ CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar ke
     if (oldVirtualKeyCodeIsUsable == FALSE) {
         // set new parameters for shk - not accessible through actual keyboard, cause values too high
         keyEquivalent = 65535; // TODO: Why this value? Does it event matter what value this is?
-        virtualKeyCode = (CGKeyCode)shk + 200;
+        keyCode = (CGKeyCode)shk + 400; // TODO: Test if 400 still works or is too much
         modifierFlags = 10485760; // 0 Didn't work in my testing. This seems to be the 'empty' CGSModifierFlags value, used to signal that no modifiers are pressed. TODO: Test if this works
-        CGError err = CGSSetSymbolicHotKeyValue(shk, keyEquivalent, virtualKeyCode, modifierFlags);
+        CGError err = CGSSetSymbolicHotKeyValue(shk, keyEquivalent, keyCode, modifierFlags);
         if (err != 0) {
             NSLog(@"Error setting shk params: %d", err);
             // Do again or something if setting shk goes wrong
@@ -138,26 +167,18 @@ CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar ke
     }
     
     // Post keyboard events corresponding to trigger shk
-    CGEventRef shortcutDown = CGEventCreateKeyboardEvent(NULL, virtualKeyCode, TRUE);
-    CGEventRef shortcutUp = CGEventCreateKeyboardEvent(NULL, virtualKeyCode, FALSE);
-    CGEventSetFlags(shortcutDown, (CGEventFlags)modifierFlags);
-    CGEventFlags originalModifierFlags = CGEventGetFlags(CGEventCreate(NULL));
-    CGEventSetFlags(shortcutUp, originalModifierFlags); // Restore original keyboard modifier flags state on key up. This seems to fix `[RemapUtility getCurrentModifiers]`
-    CGEventPost(kCGHIDEventTap, shortcutDown);
-    CGEventPost(kCGHIDEventTap, shortcutUp);
-    CFRelease(shortcutDown);
-    CFRelease(shortcutUp);
+    postKeyboardEventsForSymbolicHotkey(keyCode, modifierFlags);
     
     // Restore original hotkey parameter state after 20ms
     if (hotkeyIsEnabled == FALSE) { // Only really need to restore hotKeyIsEnabled. But the other stuff doesn't hurt.
         [NSTimer scheduledTimerWithTimeInterval:0.05
-                                         target:self
+                                         target:[Actions class]
                                        selector:@selector(restoreSymbolicHotkeyParameters_timerCallback:)
                                        userInfo:@{
                                            @"shk": @(shk),
                                            @"enabled": @(hotkeyIsEnabled),
                                            @"keyEquivalent": @(keyEquivalent),
-                                           @"virtualKeyCode": @(virtualKeyCode),
+                                           @"virtualKeyCode": @(keyCode),
                                            @"flags": @(modifierFlags),
                                        }
                                         repeats:NO];
