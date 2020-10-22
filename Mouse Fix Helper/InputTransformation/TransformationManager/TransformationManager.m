@@ -38,16 +38,13 @@ NSDictionary *_remaps;
 + (void)handleDragTrigger {
     
 }
-
 + (void)handleScrollTrigger {
     
 }
 + (MFEventPassThroughEvaluation)handleButtonTriggerWithButton:(NSNumber *)button triggerType:(MFActionTriggerType)triggerType clickLevel:(NSNumber *)level device:(NSNumber *)devID {
     
 #if DEBUG
-    if (true) {
-        NSLog(@"HANDLE BUTTON TRIGGER - button: %@, triggerType: %@, level: %@, devID: %@", button, @(triggerType), level, devID);
-    }
+    //NSLog(@"HANDLE BUTTON TRIGGER - button: %@, triggerType: %@, level: %@, devID: %@", button, @(triggerType), level, devID);
 #endif
     
     // Get remaps and apply modifier overrides

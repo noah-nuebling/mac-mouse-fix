@@ -86,7 +86,7 @@ NSArray *_buttonParseBlacklist; // Don't send inputs from these buttons to Butto
 CGEventRef handleInput(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
         
 #if DEBUG
-    NSLog(@"CGG");
+    //NSLog(@"CGG");
     //    NSLog(@"devices which produced relevant inputs: %lld", _buttonInputsFromRelevantDevices.count);
     //    NSLog(@"Incoming event: %@", [NSEvent eventWithCGEvent:event]); // TODO: Sometimes events seem to be deallocated when reaching this point, causing a crash. This is likely to do with inserting fake events.
 #endif

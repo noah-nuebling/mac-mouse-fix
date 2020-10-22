@@ -124,18 +124,22 @@ static void postKeyboardEventsForSymbolicHotkey(CGKeyCode keyCode, CGSModifierFl
     
     CGEventTapLocation tapLoc = kCGSessionEventTap;
     
-    CGEventRef shortcutDown = CGEventCreateKeyboardEvent(NULL, keyCode, true);
-    CGEventRef shortcutUp = CGEventCreateKeyboardEvent(NULL, keyCode, false);
-    CGEventSetFlags(shortcutDown, (CGEventFlags)modifierFlags);
+    // Create key events
+    CGEventRef keyDown = CGEventCreateKeyboardEvent(NULL, keyCode, true);
+    CGEventRef keyUp = CGEventCreateKeyboardEvent(NULL, keyCode, false);
+    CGEventSetFlags(keyDown, (CGEventFlags)modifierFlags);
     CGEventFlags originalModifierFlags = CGEventGetFlags(CGEventCreate(NULL));
-    CGEventSetFlags(shortcutUp, originalModifierFlags); // Restore original keyboard modifier flags state on key up. This seems to fix `[ModifierManager getCurrentModifiers]`
-    CGEventPost(tapLoc, shortcutDown);
-    CGEventPost(tapLoc, shortcutUp);
-    CFRelease(shortcutDown);
-    CFRelease(shortcutUp);
+    CGEventSetFlags(keyUp, originalModifierFlags); // Restore original keyboard modifier flags state on key up. This seems to fix `[ModifierManager getCurrentModifiers]`
+    
+    // Send key events
+    CGEventPost(tapLoc, keyDown);
+    CGEventPost(tapLoc, keyUp);
+    
+    CFRelease(keyDown);
+    CFRelease(keyUp);
 }
 
-// I think these two private functions are the only thing preventing the app from being allowed on the Mac App Store, so if you know a way to trigger system functions without a private API it would be awesome if you let me know! :)
+// I think these two private functions are the only thing preventing the app from being allowed on the Mac App Store at the time of writing, so if you know a way to trigger system functions without a private API it would be awesome if you let me know! :)
 CG_EXTERN CGError CGSGetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar *outKeyEquivalent, unichar *outVirtualKeyCode, CGSModifierFlags *outModifiers);
 CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar keyEquivalent, CGKeyCode virtualKeyCode, CGSModifierFlags modifiers);
 
@@ -153,7 +157,7 @@ static void postSymbolicHotkey(CGSSymbolicHotKey shk) {
         CGSSetSymbolicHotKeyEnabled(shk, TRUE);
     }
     if (oldVirtualKeyCodeIsUsable == FALSE) {
-        // set new parameters for shk - not accessible through actual keyboard, cause values too high
+        // set new parameters for shk - should not accessible through actual keyboard, cause values too high
         keyEquivalent = 65535; // TODO: Why this value? Does it event matter what value this is?
         keyCode = (CGKeyCode)shk + 400; // TODO: Test if 400 still works or is too much
         modifierFlags = 10485760; // 0 Didn't work in my testing. This seems to be the 'empty' CGSModifierFlags value, used to signal that no modifiers are pressed. TODO: Test if this works

@@ -224,14 +224,15 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
         int64_t pressure = IOHIDValueGetIntegerValue(value);
         
 #if DEBUG
-        NSLog(@"BTN HIDDD - btn: %d, pressure: %lld", button, pressure);
+        //NSLog(@"BTN HIDDD - btn: %d, pressure: %lld", button, pressure);
 #endif
         
         // Post fake button input events, if the device is seized
         
         if (sendingDev.isSeized) {
-
-            NSLog(@"BUTTON INP COMES FORM SEIZED");
+#if DEBUG
+            //NSLog(@"BUTTON INP COMES FORM SEIZED");
+#endif
             
             mouseEventType = [SharedUtility CGEventTypeForButtonNumber:button isMouseDown:(pressure != 0)];
 
