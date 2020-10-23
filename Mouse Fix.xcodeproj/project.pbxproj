@@ -29,7 +29,7 @@
 		4F32E15F231C45F300199A11 /* Hyperlink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9CB1222F7D48D0090DB98 /* Hyperlink.m */; };
 		4F32E188231C509200199A11 /* AnimationCurve.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E181231C509200199A11 /* AnimationCurve.m */; };
 		4F32E18C231C509200199A11 /* SmoothScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E186231C509200199A11 /* SmoothScroll.m */; };
-		4F32E194231C50A100199A11 /* ButtonInputParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E18E231C50A100199A11 /* ButtonInputParser.m */; };
+		4F32E194231C50A100199A11 /* ButtonTriggerGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E18E231C50A100199A11 /* ButtonTriggerGenerator.m */; };
 		4F32E195231C50A100199A11 /* ScrollModifiers.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E18F231C50A100199A11 /* ScrollModifiers.m */; };
 		4F32E196231C50A100199A11 /* ButtonInputReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E193231C50A100199A11 /* ButtonInputReceiver.m */; };
 		4F32E199231C5B5100199A11 /* ZipArchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F32E198231C5B5100199A11 /* ZipArchive.framework */; };
@@ -49,6 +49,7 @@
 		4F8F20F4253F3234005670D3 /* MFQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F8F20F2253F3234005670D3 /* MFQueue.h */; };
 		4F8F20F5253F3234005670D3 /* MFQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8F20F3253F3234005670D3 /* MFQueue.m */; };
 		4F8F20F6253F3234005670D3 /* MFQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8F20F3253F3234005670D3 /* MFQueue.m */; };
+		4F8F210625425ED0005670D3 /* ButtonTriggerHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8F210525425ED0005670D3 /* ButtonTriggerHandler.m */; };
 		4F95A249234EBB5D000DC7D7 /* PointerSpeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F95A248234EBB5D000DC7D7 /* PointerSpeed.m */; };
 		4F9CA64E246CA5470042F25A /* ModifiedDrag.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9CA64D246CA5470042F25A /* ModifiedDrag.m */; };
 		4FA26CE724380D1F0082D5F6 /* ClickableImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FA26CE524380D1F0082D5F6 /* ClickableImageView.h */; };
@@ -221,11 +222,11 @@
 		4F32E184231C509200199A11 /* MomentumScroll.h (old) */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "MomentumScroll.h (old)"; sourceTree = "<group>"; };
 		4F32E185231C509200199A11 /* MomentumScroll.m (old) */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "MomentumScroll.m (old)"; sourceTree = "<group>"; };
 		4F32E186231C509200199A11 /* SmoothScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SmoothScroll.m; sourceTree = "<group>"; };
-		4F32E18E231C50A100199A11 /* ButtonInputParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonInputParser.m; sourceTree = "<group>"; };
+		4F32E18E231C50A100199A11 /* ButtonTriggerGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonTriggerGenerator.m; sourceTree = "<group>"; };
 		4F32E18F231C50A100199A11 /* ScrollModifiers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollModifiers.m; sourceTree = "<group>"; };
 		4F32E190231C50A100199A11 /* ButtonInputReceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonInputReceiver.h; sourceTree = "<group>"; };
 		4F32E191231C50A100199A11 /* ScrollModifiers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollModifiers.h; sourceTree = "<group>"; };
-		4F32E192231C50A100199A11 /* ButtonInputParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonInputParser.h; sourceTree = "<group>"; };
+		4F32E192231C50A100199A11 /* ButtonTriggerGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonTriggerGenerator.h; sourceTree = "<group>"; };
 		4F32E193231C50A100199A11 /* ButtonInputReceiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonInputReceiver.m; sourceTree = "<group>"; };
 		4F32E198231C5B5100199A11 /* ZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZipArchive.framework; path = Carthage/Build/Mac/ZipArchive.framework; sourceTree = "<group>"; };
 		4F364C71232A9EBC0084DEB0 /* MouseFix.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = MouseFix.tiff; sourceTree = "<group>"; };
@@ -247,6 +248,8 @@
 		4F8DBB5B2538EC8300F58093 /* RemapUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemapUtility.m; sourceTree = "<group>"; };
 		4F8F20F2253F3234005670D3 /* MFQueue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFQueue.h; sourceTree = "<group>"; };
 		4F8F20F3253F3234005670D3 /* MFQueue.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFQueue.m; sourceTree = "<group>"; };
+		4F8F210425425ED0005670D3 /* ButtonTriggerHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonTriggerHandler.h; sourceTree = "<group>"; };
+		4F8F210525425ED0005670D3 /* ButtonTriggerHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ButtonTriggerHandler.m; sourceTree = "<group>"; };
 		4F95A247234EBB5D000DC7D7 /* PointerSpeed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerSpeed.h; sourceTree = "<group>"; };
 		4F95A248234EBB5D000DC7D7 /* PointerSpeed.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerSpeed.m; sourceTree = "<group>"; };
 		4F9CA64C246CA5470042F25A /* ModifiedDrag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModifiedDrag.h; sourceTree = "<group>"; };
@@ -612,8 +615,10 @@
 			children = (
 				4F32E190231C50A100199A11 /* ButtonInputReceiver.h */,
 				4F32E193231C50A100199A11 /* ButtonInputReceiver.m */,
-				4F32E192231C50A100199A11 /* ButtonInputParser.h */,
-				4F32E18E231C50A100199A11 /* ButtonInputParser.m */,
+				4F32E192231C50A100199A11 /* ButtonTriggerGenerator.h */,
+				4F32E18E231C50A100199A11 /* ButtonTriggerGenerator.m */,
+				4F8F210425425ED0005670D3 /* ButtonTriggerHandler.h */,
+				4F8F210525425ED0005670D3 /* ButtonTriggerHandler.m */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
@@ -1048,6 +1053,7 @@
 				4F1C968C231361EF00C3B9AE /* TouchEvents.c in Sources */,
 				4FB68B69246CA46F0059530E /* Actions.m in Sources */,
 				4F8DBB4B2538E79400F58093 /* TransformationManager.m in Sources */,
+				4F8F210625425ED0005670D3 /* ButtonTriggerHandler.m in Sources */,
 				4FD45A20231C7FB500F75C58 /* AccessibilityCheck.m in Sources */,
 				4FECC88D2431DCCD001A3C4B /* RoughScroll.m in Sources */,
 				4F32E18C231C509200199A11 /* SmoothScroll.m in Sources */,
@@ -1061,7 +1067,7 @@
 				4FCECD8521092354001F1078 /* AppDelegate.m in Sources */,
 				4F32E15D231C44C000199A11 /* main.m in Sources */,
 				4FF3B2C0232788AA009E8A8E /* HelperServices_HelperApp.m in Sources */,
-				4F32E194231C50A100199A11 /* ButtonInputParser.m in Sources */,
+				4F32E194231C50A100199A11 /* ButtonTriggerGenerator.m in Sources */,
 				4F479C392488B75C00976C68 /* GestureScrollSimulator.m in Sources */,
 				4F32E196231C50A100199A11 /* ButtonInputReceiver.m in Sources */,
 				4F95A249234EBB5D000DC7D7 /* PointerSpeed.m in Sources */,

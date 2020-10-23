@@ -10,7 +10,7 @@
 #import <Foundation/Foundation.h>
 #import "ButtonInputReceiver.h"
 
-@interface ButtonInputParser : NSObject
+@interface ButtonTriggerGenerator : NSObject
 
 + (MFEventPassThroughEvaluation)parseInputWithButton:(NSNumber *)btn triggerType:(MFButtonInputType)type inputDevice:(MFDevice *)device;
 

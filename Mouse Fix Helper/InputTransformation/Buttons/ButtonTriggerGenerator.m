@@ -7,7 +7,7 @@
 // --------------------------------------------------------------------------
 //
 
-#import "ButtonInputParser.h"
+#import "ButtonTriggerGenerator.h"
 #import "Actions.h"
 #import "ModifiedDrag.h"
 #import "RemapUtility.h"
@@ -17,6 +17,7 @@
 #import "TransformationManager.h"
 #import "ModifierManager.h"
 #import "SharedUtility.h"
+#import "ButtonTriggerHandler.h"
 
 #pragma mark - Definition of private helper class `Button State`
 
@@ -72,7 +73,7 @@
 
 #pragma mark - Implementation of `ButtonInputParser`
 
-@implementation ButtonInputParser
+@implementation ButtonTriggerGenerator
 
 #pragma mark - Class vars
 
@@ -161,12 +162,12 @@ static NSMutableDictionary *_state;
         bs.clickLevel += 1;
         
         // If new clickLevel and any following clickLevels can't lead to any effects, cycle back to the first click level
-        if (![TransformationManager effectOfEqualOrGreaterLevelExistsForDevice:devID button:btn level:@(bs.clickLevel)]) {
+        if (![ButtonTriggerHandler effectOfEqualOrGreaterLevelExistsForDevice:devID button:btn level:@(bs.clickLevel)]) {
             bs.clickLevel = 1;
         }
         
         // Send trigger
-        passThroughEval = [TransformationManager handleButtonTriggerWithButton:btn triggerType:kMFActionTriggerTypeButtonDown clickLevel:@(bs.clickLevel) device:devID];
+        passThroughEval = [ButtonTriggerHandler handleButtonTriggerWithButton:btn triggerType:kMFActionTriggerTypeButtonDown clickLevel:@(bs.clickLevel) device:devID];
         
     } else {
         
@@ -178,7 +179,7 @@ static NSMutableDictionary *_state;
         }
         
         // Send trigger
-        passThroughEval = [TransformationManager handleButtonTriggerWithButton:btn triggerType:kMFActionTriggerTypeButtonUp clickLevel:@(bs.clickLevel) device:devID];
+        passThroughEval = [ButtonTriggerHandler handleButtonTriggerWithButton:btn triggerType:kMFActionTriggerTypeButtonUp clickLevel:@(bs.clickLevel) device:devID];
         
         // Update bs
         bs.isPressed = NO;
@@ -201,7 +202,7 @@ static NSMutableDictionary *_state;
     getTimerCallbackInfo(timer.userInfo, &devID, &btn, &lvl);
     
     zombifyWithDevice(devID, btn);
-    [TransformationManager handleButtonTriggerWithButton:btn triggerType:kMFActionTriggerTypeHoldTimerExpired clickLevel:lvl device:devID];
+    [ButtonTriggerHandler handleButtonTriggerWithButton:btn triggerType:kMFActionTriggerTypeHoldTimerExpired clickLevel:lvl device:devID];
 }
 
 + (void)levelTimerCallback:(NSTimer *)timer {
@@ -211,7 +212,7 @@ static NSMutableDictionary *_state;
     getTimerCallbackInfo(timer.userInfo, &devID, &btn, &lvl);
     
     resetStateWithDevice(devID, btn);
-    [TransformationManager handleButtonTriggerWithButton:btn triggerType:kMFActionTriggerTypeLevelTimerExpired clickLevel:lvl device:devID];
+    [ButtonTriggerHandler handleButtonTriggerWithButton:btn triggerType:kMFActionTriggerTypeLevelTimerExpired clickLevel:lvl device:devID];
 }
 static void getTimerCallbackInfo(NSDictionary *info, NSNumber **devID, NSNumber **btn,NSNumber **lvl) {
     

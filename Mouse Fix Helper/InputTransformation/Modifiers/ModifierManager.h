@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)handleButtonModifiersHaveChangedWithDevice:(MFDevice *)devID;
 
-+ (void)modifierDrivenModificationHasBeenUsedWithDevice:(MFDevice *)device;
++ (void)handleModifiersHaveHadEffect:(NSNumber *)devID;
 
 @end
 

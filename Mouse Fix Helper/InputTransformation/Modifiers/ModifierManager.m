@@ -10,7 +10,7 @@
 #import "Constants.h"
 
 #import "ModifierManager.h"
-#import "ButtonInputParser.h"
+#import "ButtonTriggerGenerator.h"
 #import "TransformationManager.h"
 #import "ModifiedDrag.h"
 #import "DeviceManager.h"
@@ -38,6 +38,9 @@
                                                     object:nil
                                                      queue:nil
                                                 usingBlock:^(NSNotification * _Nonnull note) {
+#if DEBUG
+        NSLog(@"Received notification that remaps have changed");
+#endif
         toggleModifierEventTapBasedOnRemaps(TransformationManager.remaps);
     }];
 }
@@ -54,7 +57,7 @@ static void toggleModifierEventTapBasedOnRemaps(NSDictionary *remaps) {
         BOOL collectionContainsProactiveModification = modificationCollection[kMFRemapsKeyModifiedDrag] != nil;
             // ^ proactive modification === modifier driven modification !== trigger driven modification
         if (collectionContainsProactiveModification) {
-            BOOL modificationDependsOnKeyboardModifier = modificationPrecondition[kMFModifierKeyKeyboard] != nil;
+            BOOL modificationDependsOnKeyboardModifier = modificationPrecondition[kMFModificationPreconditionKeyKeyboard] != nil;
             if (modificationDependsOnKeyboardModifier) {
                 CGEventTapEnable(_keyboardModifierEventTap, true);
                 return;
@@ -75,7 +78,7 @@ CGEventRef _Nullable handleKeyboardModifiersHaveChanged(CGEventTapProxy proxy, C
         // The keyboard component of activeModifiers doesn't update fast enough so we have to manually edit it
         // This is kinofa hack we should maybe look into a better solution
         NSMutableDictionary *activeModifiersNew = activeModifiers.mutableCopy;
-        activeModifiersNew[kMFModifierKeyKeyboard] = @(CGEventGetFlags(event) & NSDeviceIndependentModifierFlagsMask);
+        activeModifiersNew[kMFModificationPreconditionKeyKeyboard] = @(CGEventGetFlags(event) & NSDeviceIndependentModifierFlagsMask);
         
         reactToModifierChange(activeModifiersNew, dev);
     }
@@ -118,11 +121,13 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, MFDevi
 
 #pragma mark Send Feedback
 
-+ (void)modifierDrivenModificationHasBeenUsedWithDevice:(MFDevice *)device {
++ (void)handleModifiersHaveHadEffect:(NSNumber *)devID {
     
-    NSDictionary *activeModifiers = [self getActiveModifiersForDevice:device.uniqueID filterButton:nil];
-    for (NSNumber *button in activeModifiers[kMFModifierKeyButtons]) {
-        [ButtonInputParser handleButtonHasHadEffectAsModifierWithDevice:device.uniqueID button:button];
+    NSDictionary *activeModifiers = [self getActiveModifiersForDevice:devID filterButton:nil];
+        
+    // Notify all active button modifiers that they have had an effect
+    for (NSNumber *precondButton in activeModifiers[kMFModificationPreconditionKeyButtons]) {
+        [ButtonTriggerGenerator handleButtonHasHadEffectAsModifierWithDevice:devID button:precondButton];
     }
 }
 
@@ -139,7 +144,7 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, MFDevi
     NSMutableDictionary *outDict = [NSMutableDictionary dictionary];
     
     NSUInteger kb = getActiveKeyboardModifiers();
-    NSMutableDictionary *btn = ((NSDictionary *)[ButtonInputParser getActiveButtonModifiersForDevice:devID]).mutableCopy;
+    NSMutableDictionary *btn = ((NSDictionary *)[ButtonTriggerGenerator getActiveButtonModifiersForDevice:devID]).mutableCopy;
     if (filteredButton != nil) {
         [btn removeObjectForKey:filteredButton];
     }
@@ -148,10 +153,10 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, MFDevi
         // You can't even produce a mouse down trigger without activating the button as a modifier... Just doesn't make sense.
     
     if (kb != 0) {
-        outDict[kMFModifierKeyKeyboard] = @(kb);
+        outDict[kMFModificationPreconditionKeyKeyboard] = @(kb);
     }
     if (btn.allKeys.count != 0) {
-        outDict[kMFModifierKeyButtons] = btn;
+        outDict[kMFModificationPreconditionKeyButtons] = btn;
     }
     
     return outDict;

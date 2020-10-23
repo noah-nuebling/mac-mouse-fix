@@ -13,46 +13,43 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Constants : NSObject
 
-// TODO:! Apply these thouroughly in TransformationManager and related classes
-//      - Define constants for all the strings that are used several times throughout
-//      - Maybe do a string replace
+typedef NSString*                                                       MFStringConstant; // Not sure if this is useful
 
 #pragma mark - NSNotificationCenter notification names
 
-#define kMFNotificationNameRemapsChanged                @"remapsChanged"
+#define kMFNotificationNameRemapsChanged                                @"remapsChanged"
 
 #pragma mark - Remaps dictionary keys
 
-typedef NSString*                                       MFStringConstant;
+#define kMFRemapsKeyModifiedDrag                                        @"modifiedDrag"
 
-#define kMFRemapsKeyModifiedDrag                        @"modifiedDrag"
+#define kMFModifiedDragTypeTwoFingerSwipe                               @"twoFingerSwipe"
+#define kMFModifiedDragTypeThreeFingerSwipe                             @"threeFingerSwipe"
 
-#define kMFModifiedDragTypeTwoFingerSwipe               @"twoFingerSwipe"
-#define kMFModifiedDragTypeThreeFingerSwipe             @"threeFingerSwipe"
+#define kMFModificationPreconditionKeyButtons                           @"buttonModifiers"
+#define kMFModificationPreconditionKeyKeyboard                          @"keyboardModifiers"
 
-#define kMFModifierKeyButtons                           @"buttonModifiers" // Rename to kMFModificationPreconditionKey...
-#define kMFModifierKeyKeyboard                          @"keyboardModifiers"
+#define kMFActionDictKeyType                                            @"type"
 
-#define kMFActionDictKeyType                           @"type"
+#define kMFActionDictTypeSymbolicHotkey                                 @"symbolicHotkey"
+#define kMFActionDictTypeNavigationSwipe                                @"navigationSwipe"
+#define kMFActionDictTypeSmartZoom                                      @"smartZoom"
+#define kMFActionDictTypeKeyboardShortcut                               @"keyboardShortcut"
+#define kMFActionDictTypeMouseButtonClicks                              @"mouseButton"
 
-#define kMFActionDictTypeSymbolicHotkey                @"symbolicHotkey"
-#define kMFActionDictTypeNavigationSwipe               @"navigationSwipe"
-#define kMFActionDictTypeSmartZoom                     @"smartZoom"
-#define kMFActionDictTypeKeyboardShortcut              @"keyboardShortcut"
-#define kMFActionDictTypeMouseButtonClicks              @"mouseButton"
+#define kMFActionDictKeyVariant                                         @"value"
+#define kMFActionDictKeyKeyboardShortcutVariantKeycode                  @"keycode"
+#define kMFActionDictKeyKeyboardShortcutVariantModifierFlags            @"flags"
+#define kMFActionDictKeyMouseButtonClicksVariantButtonNumber            @"button"
+#define kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks          @"nOfClicks"
 
-#define kMFActionDictKeyVariant                        @"value"
+#define kMFNavigationSwipeVariantUp                                     @"up"
+#define kMFNavigationSwipeVariantRight                                  @"right"
+#define kMFNavigationSwipeVariantDown                                   @"down"
+#define kMFNavigationSwipeVariantLeft                                   @"left"
 
-#define kMFActionDictKeyKeyboardShortcutVariantKeycode            @"keycode"
-#define kMFActionDictKeyKeyboardShortcutVariantModifierFlags      @"flags"
-
-#define kMFActionDictKeyMouseButtonClicksVariantButtonNumber       @"button"
-#define kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks     @"nOfClicks"
-
-#define kMFNavigationSwipeVariantUp                     @"up"
-#define kMFNavigationSwipeVariantRight                  @"right"
-#define kMFNavigationSwipeVariantDown                   @"down"
-#define kMFNavigationSwipeVariantLeft                   @"left"
+#define kMFButtonTriggerDurationClick                                   @"click"
+#define kMFButtonTriggerDurationHold                                    @"hold"
 
 typedef enum {
     kMFSHMissionControl = 32,
@@ -88,7 +85,7 @@ typedef enum {
     kMFSHToggleDoNotDisturb = 175,
 } MFSymbolicHotkey;
 
-/// Note that CGMouseButton (and all CG APIs) assign 0 to left mouse button while MFMouseButtonNumber (and the rest of Mac Mouse Fix) assigns 1 to lmb
+/// Note that CGMouseButton (and all CG APIs) assign 0 to left mouse button while MFMouseButtonNumber (and the rest of Mac Mouse Fix which doesn't use it yet) assigns 1 to lmb
 typedef enum {
     kMFMouseButtonNumberLeft = 1,
     kMFMouseButtonNumberRight = 2,

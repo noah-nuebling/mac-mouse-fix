@@ -10,7 +10,7 @@
 #import "ButtonInputReceiver.h"
 #import "DeviceManager.h"
 #import <IOKit/hid/IOHIDManager.h>
-#import "ButtonInputParser.h"
+#import "ButtonTriggerGenerator.h"
 #import "MFQueue.h"
 
 
@@ -112,7 +112,7 @@ CGEventRef handleInput(CGEventTapProxy proxy, CGEventType type, CGEventRef event
     long long pr = CGEventGetIntegerValueField(event, kCGMouseEventPressure);
     MFButtonInputType triggertType = pr == 0 ? kMFButtonInputTypeButtonUp : kMFButtonInputTypeButtonDown;
     
-    MFEventPassThroughEvaluation eval = [ButtonInputParser parseInputWithButton:@(buttonNumber) triggerType:triggertType inputDevice:dev];
+    MFEventPassThroughEvaluation eval = [ButtonTriggerGenerator parseInputWithButton:@(buttonNumber) triggerType:triggertType inputDevice:dev];
     if (eval == kMFEventPassThroughRefusal) {
         return nil;
     }

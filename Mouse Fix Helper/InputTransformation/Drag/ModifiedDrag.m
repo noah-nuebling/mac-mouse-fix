@@ -85,7 +85,7 @@ static struct ModifiedDragState _drag;
                     _drag.usageAxis = kMFAxisHorizontal;
                 }
                 _drag.activationState = kMFModifiedInputActivationStateInUse; // Activate modified drag input!
-                [ModifierManager modifierDrivenModificationHasBeenUsedWithDevice:dev];
+                [ModifierManager handleModifiersHaveHadEffect:dev.uniqueID];
 //                [ModifyingActions deactivateModifiedScroll]; // Deactivate other potentially initalized modified input.
                 
                 if ([_drag.type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
@@ -104,34 +104,6 @@ static struct ModifiedDragState _drag;
         }
         case kMFModifiedInputActivationStateInUse:
         {
-            
-
-//
-//            if ([_modifiedDrag.type isEqualToString:@"threeFingerSwipe"]) {
-//
-//                if (_modifiedDrag.usageAxis == axis) {
-//                    double delta = IOHIDValueGetIntegerValue(inputValue) / 1000.0;
-//                    if (axis == kMFAxisHorizontal) {
-//                        [TouchSimulator postDockSwipeEventWithDelta:-delta type:kMFDockSwipeTypeHorizontal phase:_modifiedDrag.phase];
-//                    } else if (axis == kMFAxisVertical) {
-//                        [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeVertical phase:_modifiedDrag.phase];
-//                    }
-//                    _modifiedDrag.phase = kIOHIDEventPhaseChanged;
-//                }
-//            } else if ([_modifiedDrag.type isEqualToString:@"twoFingerSwipe"]) {
-//
-//                int64_t deltaX = 0;
-//                int64_t deltaY = 0;
-//
-//                if (axis == kMFAxisHorizontal) {
-//                    deltaX = IOHIDValueGetIntegerValue(inputValue);
-//                }
-//                if (axis == kMFAxisVertical) {
-//                    deltaY = IOHIDValueGetIntegerValue(inputValue);
-//                }
-//                [GestureScrollSimulator postGestureScrollEventWithGestureDeltaX:deltaX deltaY:deltaY phase:_modifiedDrag.phase];
-//                _modifiedDrag.phase = kIOHIDEventPhaseChanged;
-//            }
 
             if ([_drag.type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
                 if (_drag.usageAxis == kMFAxisHorizontal) {
