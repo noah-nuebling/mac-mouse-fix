@@ -12,7 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SubPixelator : NSObject
-- (int64_t)intWithDouble:(double)inp;
+- (int64_t)intDeltaWithDoubleDelta:(double)inp;
 @end
 
 NS_ASSUME_NONNULL_END

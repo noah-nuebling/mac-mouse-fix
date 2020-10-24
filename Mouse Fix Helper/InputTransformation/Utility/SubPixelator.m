@@ -16,12 +16,12 @@
 @implementation SubPixelator
 @synthesize accumulatedRoundingError;
 
-- (int64_t)intWithDouble:(double)inp {
-    double preciseOutVal = inp + self.accumulatedRoundingError;
-    int64_t roundedOutVal = (int64_t) floor(preciseOutVal);
-    self.accumulatedRoundingError = preciseOutVal - roundedOutVal;
+- (int64_t)intDeltaWithDoubleDelta:(double)inpDelta {
+    double preciseDelta = inpDelta + self.accumulatedRoundingError;
+    int64_t roundedDelta = (int64_t) round(preciseDelta);
+    self.accumulatedRoundingError = preciseDelta - roundedDelta;
     
-    return roundedOutVal;
+    return roundedDelta;
 }
 
 @end
