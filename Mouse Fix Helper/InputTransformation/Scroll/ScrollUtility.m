@@ -11,6 +11,7 @@
 #import "ScrollControl.h"
 #import <Cocoa/Cocoa.h>
 #import "IOHIDEventTypes.h"
+#import "SharedUtility.h"
 
 @implementation ScrollUtility
 
@@ -130,17 +131,13 @@ static NSDictionary *_MFScrollPhaseToIOHIDEventPhase;
     }
     return YES;
 }
-+ (double)signOf:(double)n {
-    if (n == 0) {return 0;}
-    return n >= 0 ? 1 : -1;
-}
 
 /// \note 0 is considered both positive and negative
 + (BOOL)sameSign:(double)n and:(double)m {
     if (n == 0 || m == 0) {
         return true;
     }
-    if ([self signOf:n] == [self signOf:m]) {
+    if ([SharedUtility signOf:n] == [SharedUtility signOf:m]) {
         return true;
     }
     return false;

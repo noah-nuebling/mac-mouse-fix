@@ -24,6 +24,8 @@
 #import "TouchSimulator.h"
 #import "GestureScrollSimulator.h"
 
+#import "SharedUtility.h"
+
 @implementation SmoothScroll
 
 #pragma mark - Globals
@@ -254,7 +256,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 
         if (overPlusAccelerationThreshold < fabs(pxToScrollThisFrameOverPlus) && 0 < pxToScrollThisFrameOverPlus) { // Catch rounding errors
             double acceleratedOverPlus = pxToScrollThisFrameOverPlus * overPlusAccelerationCoefficient;
-            _pxToScrollThisFrame = [ScrollUtility signOf: _pxToScrollThisFrame] * round(pxToScrollThisFrameBase + acceleratedOverPlus);
+            _pxToScrollThisFrame = [SharedUtility signOf: _pxToScrollThisFrame] * round(pxToScrollThisFrameBase + acceleratedOverPlus);
         }
         
         
@@ -292,7 +294,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 //        NSLog(@"ENTERING MOMENTUM PHASE");
         _pxToScrollThisFrame = round(_pxPerMsVelocity * msSinceLastFrame);
         double oldVel = _pxPerMsVelocity;
-        double newVel = oldVel - [ScrollUtility signOf:oldVel] * pow(fabs(oldVel), _frictionDepth) * (_frictionCoefficient/100) * msSinceLastFrame;
+        double newVel = oldVel - [SharedUtility signOf:oldVel] * pow(fabs(oldVel), _frictionDepth) * (_frictionCoefficient/100) * msSinceLastFrame;
         _pxPerMsVelocity = newVel;
         if ( ((newVel < 0) && (oldVel > 0)) || ((newVel > 0) && (oldVel < 0)) ) {
             _pxPerMsVelocity = 0;

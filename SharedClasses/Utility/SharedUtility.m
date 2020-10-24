@@ -70,4 +70,8 @@
     return (CGMouseButton) button - 1;
 }
 
++ (int8_t)signOf:(double)x {
+    return (0 < x) - (x < 0);
+}
+
 @end

@@ -30,8 +30,9 @@
 
 #import "TouchSimulator.h"
 #import <Foundation/Foundation.h>
-#import "ScrollControl.h"
 #import <Cocoa/Cocoa.h>
+#import "ScrollControl.h"
+#import "SharedUtility.h"
 
 @implementation TouchSimulator
 
@@ -92,18 +93,29 @@ static NSMutableDictionary *_swipeInfo;
     CFRelease(event);
 }
 
-double _threeFingerSwipeOriginOffset = 0;
+double _dockSwipeOriginOffset = 0;
+double _dockSwipeLastDelta = 0;
 + (void)postDockSwipeEventWithDelta:(double)d type:(MFDockSwipeType)type phase:(IOHIDEventPhaseBits)phase {
     
     int valFor41 = 33231;
     
     if (phase == kIOHIDEventPhaseBegan) {
-        _threeFingerSwipeOriginOffset = d;
+        _dockSwipeOriginOffset = d;
     } else if (phase == kIOHIDEventPhaseChanged){
         if (d == 0) {
             return;
         }
-        _threeFingerSwipeOriginOffset += d;
+        _dockSwipeOriginOffset += d;
+    }
+    
+    // We actaually need to send kIOHIDEventPhaseEnded or kIOHIDEventPhaseCancelled depending on situation, but we don't wan't to expose that complexity to the caller
+    // We're treating phase == kIOHIDEventPhaseEnded and the phase == kIOHIDEventPhaseCancelled the exact same and then decide ouselves which of the two to send
+    if (phase == kIOHIDEventPhaseEnded || phase == kIOHIDEventPhaseCancelled) {
+        if ([SharedUtility signOf:_dockSwipeLastDelta] == [SharedUtility signOf:_dockSwipeOriginOffset]) {
+            phase = kIOHIDEventPhaseEnded;
+        } else {
+            phase = kIOHIDEventPhaseCancelled;
+        }
     }
     
     // Create type 29 (NSEventTypeGesture) event
@@ -119,10 +131,10 @@ double _threeFingerSwipeOriginOffset = 0;
     CGEventSetDoubleValueField(e30, 55,  NSEventTypeMagnify); // Set event type (idk why it's magnify but it is...)
     CGEventSetDoubleValueField(e30, 110, kIOHIDEventTypeDockSwipe); // Set subtype
     CGEventSetDoubleValueField(e30, 132, phase);
-    CGEventSetDoubleValueField(e30, 134, phase); // TODO: Check if necessary
+    CGEventSetDoubleValueField(e30, 134, phase); // Not sure if necessary
 
-    CGEventSetDoubleValueField(e30, 124, _threeFingerSwipeOriginOffset); // origin offset
-    Float32 ofsFloat32 = (Float32)_threeFingerSwipeOriginOffset;
+    CGEventSetDoubleValueField(e30, 124, _dockSwipeOriginOffset); // Origin offset
+    Float32 ofsFloat32 = (Float32)_dockSwipeOriginOffset;
     uint32_t ofsInt32; // Has to be uint32_t not int32_t!
     memcpy(&ofsInt32, &ofsFloat32, sizeof(ofsFloat32));
     int64_t ofsInt64 = (int64_t)ofsInt32;
@@ -133,7 +145,7 @@ double _threeFingerSwipeOriginOffset = 0;
     double weirdTypeOrSum = 1.401298464324817e-45; // Magic horizontal type
     if (type == kMFDockSwipeTypeVertical) {
         weirdTypeOrSum = 2.802596928649634e-45; // Magic vertical type
-    } // TODO: Find the value for Type Pinch events (These values are probably an encoded version of the values in MFDockSwipeType. We can probs just convert that and put it in here)
+    } // TODO: Find the value for Type Pinch events (These values are probably an encoded version of the values in MFDockSwipeType. We can probs somehow convert that and put it in here)
     
     CGEventSetDoubleValueField(e30, 119, weirdTypeOrSum);
     CGEventSetDoubleValueField(e30, 139, weirdTypeOrSum);  // Probs not necessary
@@ -143,24 +155,21 @@ double _threeFingerSwipeOriginOffset = 0;
     
     CGEventSetDoubleValueField(e30, 136, 1); // Vertical invert
     
-//    if (phase == kIOHIDEventPhaseEnded) {
-//        CGEventSetDoubleValueField(e30, 129, -d); // Momentum or something // Setting it doesn't seem to do anything
-//        CGEventSetDoubleValueField(e30, 130, -d); // Momentum or something
-//    }
-    
+    if (phase == kIOHIDEventPhaseEnded || phase == kIOHIDEventPhaseCancelled) {
+        CGEventSetDoubleValueField(e30, 129, _dockSwipeLastDelta*100); // 'Exit speed'
+        CGEventSetDoubleValueField(e30, 130, _dockSwipeLastDelta*100); // Probs not necessary
+            // ^ *100 cause that's closer to how the real values look, but it doesn't make a difference
+    }
     
     // Send events
     
-    CGEventPost(kCGHIDEventTap, e30); // TODO: Check if order matters
+    CGEventPost(kCGHIDEventTap, e30); // Not sure if order matters
     CGEventPost(kCGHIDEventTap, e29);
-    
-    if (phase == kIOHIDEventPhaseEnded) {
-        CGEventPost(kCGHIDEventTap, e29); // Probs not necessary
-    }
     
     CFRelease(e29);
     CFRelease(e30);
-
+    
+    _dockSwipeLastDelta = d;
 }
 
 

@@ -52,7 +52,7 @@ static struct ModifiedDragState _drag;
 //        CFRelease(runLoopSource);
 //        CGEventTapEnable(_modifiedDrag.eventTap, false);
 //    }
-    _drag.usageThreshold = 32;
+    _drag.usageThreshold = 50;
 }
 
 + (void)handleMouseInputWithDeltaX:(int64_t)deltaX deltaY:(int64_t)deltaY {

@@ -12,6 +12,7 @@
 #import <Cocoa/Cocoa.h>
 #import "TouchSimulator.h"
 #import "Utility_HelperApp.h"
+#import "SharedUtility.h"
 
 @implementation GestureScrollSimulator
 
@@ -247,8 +248,8 @@ static MFVector scrollVectorWithScrollPointVector(MFVector vec) {
     double magOut = 0.1 * (magIn-1); // Approximation from looking at real trackpad events
     double scale = magOut / magIn;
     MFVector vecOut;
-    vecOut.x = signof(vec.x) * floor(fabs(vec.x * scale));
-    vecOut.y = signof(vec.y) * floor(fabs(vec.y * scale));
+    vecOut.x = [SharedUtility signOf:vec.x] * floor(fabs(vec.x * scale));
+    vecOut.y = [SharedUtility signOf:vec.y] * floor(fabs(vec.y * scale));
     return vecOut;
 }
 static MFVector scrollPointVectorWithGestureVector(MFVector vec) {
@@ -299,10 +300,6 @@ MFVector addedVectors(MFVector vec1, MFVector vec2) {
 }
 double dotProduct(MFVector vec1, MFVector vec2) {
     return vec1.x * vec2.x + vec1.y * vec2.y;
-}
-
-int8_t signof(int64_t x) {
-    return (0 < x) - (x < 0);
 }
 
 @end

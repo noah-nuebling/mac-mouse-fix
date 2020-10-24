@@ -31,7 +31,6 @@ typedef enum {
 + (BOOL)point:(CGPoint)p1 isAboutTheSameAs:(CGPoint)p2 threshold:(int)th;
 
 + (CGEventRef)makeScrollEventHorizontal:(CGEventRef)event;
-+ (double)signOf:(double)n;
 + (BOOL)sameSign:(double)n and:(double)m;
 + (BOOL)mouseDidMove;
 + (void)updateMouseDidMove;
