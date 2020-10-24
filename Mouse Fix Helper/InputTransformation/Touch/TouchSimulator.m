@@ -98,6 +98,7 @@ double _dockSwipeLastDelta = 0;
 + (void)postDockSwipeEventWithDelta:(double)d type:(MFDockSwipeType)type phase:(IOHIDEventPhaseBits)phase {
     
     int valFor41 = 33231;
+    int vertInvert = 1;
     
     if (phase == kIOHIDEventPhaseBegan) {
         _dockSwipeOriginOffset = d;
@@ -142,10 +143,15 @@ double _dockSwipeLastDelta = 0;
     
     CGEventSetDoubleValueField(e30, 41, valFor41); // This mighttt help not sure what it do
     
-    double weirdTypeOrSum = 1.401298464324817e-45; // Magic horizontal type
-    if (type == kMFDockSwipeTypeVertical) {
-        weirdTypeOrSum = 2.802596928649634e-45; // Magic vertical type
-    } // TODO: Find the value for Type Pinch events (These values are probably an encoded version of the values in MFDockSwipeType. We can probs somehow convert that and put it in here)
+    double weirdTypeOrSum;
+    if (type == kMFDockSwipeTypeHorizontal) {
+        weirdTypeOrSum = 1.401298464324817e-45;
+    } else if (type == kMFDockSwipeTypeVertical) {
+        weirdTypeOrSum = 2.802596928649634e-45;
+    } else if (type == kMFDockSwipeTypePinch) {
+        weirdTypeOrSum = 4.203895392974451e-45;
+    }
+    // ^ These values are probably an encoded version of the values in MFDockSwipeType. We can probs somehow convert that and put it in here instead of assigning these weird constants
     
     CGEventSetDoubleValueField(e30, 119, weirdTypeOrSum);
     CGEventSetDoubleValueField(e30, 139, weirdTypeOrSum);  // Probs not necessary
@@ -153,7 +159,7 @@ double _dockSwipeLastDelta = 0;
     CGEventSetDoubleValueField(e30, 123, type); // Horizontal or vertical
     CGEventSetDoubleValueField(e30, 165, type); // Horizontal or vertical // Probs not necessary
     
-    CGEventSetDoubleValueField(e30, 136, 1); // Vertical invert
+    CGEventSetDoubleValueField(e30, 136, vertInvert); // Vertical invert
     
     if (phase == kIOHIDEventPhaseEnded || phase == kIOHIDEventPhaseCancelled) {
         CGEventSetDoubleValueField(e30, 129, _dockSwipeLastDelta*100); // 'Exit speed'
