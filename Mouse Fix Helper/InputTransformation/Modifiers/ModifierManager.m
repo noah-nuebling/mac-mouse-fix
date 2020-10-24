@@ -114,7 +114,7 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, MFDevi
         // Initialize effects which are trigger driven (only modified drag)
         NSString *modifiedDragType = activeModifications[kMFRemapsKeyModifiedDrag];
         if (modifiedDragType) {
-            [ModifiedDrag initializeModifiedDragWithType:modifiedDragType onDevice:device];
+            [ModifiedDrag initializeithType:modifiedDragType onDevice:device];
         }
     }
 }

@@ -35,12 +35,6 @@ struct ModifiedDragState {
 static struct ModifiedDragState _drag;
 
 + (void)load {
-//    modifyingState = @{
-//        @(4): @{
-//                @"modyfyingDrag": @(kMFModifierStateInitialized),
-//                @"modifyingScroll": @(kMFModifierStateInUse),
-//        }
-//    };
     
     // Create mouse moved input callback
 //    if (_modifiedDrag.eventTap == nil) {
@@ -52,101 +46,76 @@ static struct ModifiedDragState _drag;
 //        CFRelease(runLoopSource);
 //        CGEventTapEnable(_modifiedDrag.eventTap, false);
 //    }
+    
     _drag.usageThreshold = 50;
+}
+
++ (void)initializeithType:(MFStringConstant)type onDevice:(MFDevice *)dev {
+            
+    _drag.modifiedDevice = dev;
+    _drag.activationState = kMFModifiedInputActivationStateInitialized;
+    _drag.type = type;
+    _drag.origin = CGEventGetLocation(CGEventCreate(NULL));
+    _drag.originOffset = (MFVector){0};
+    
+    [dev receiveAxisInputAndDoSeizeDevice:NO];
 }
 
 + (void)handleMouseInputWithDeltaX:(int64_t)deltaX deltaY:(int64_t)deltaY {
     
 //    NSLog(@"handle mouse input. dx: %d, dy: %d", deltaX, deltaY);
     
-    switch (_drag.activationState) {
+    MFModifiedInputActivationState st = _drag.activationState;
             
-        case kMFModifiedInputActivationStateNone:
-        {
-            // Disabling the callback triggers this function one more time apparently, aside form that case, this should never be be executed
-            break;
-        }
-        case kMFModifiedInputActivationStateInitialized:
-        {
-            _drag.originOffset.x += deltaX;
-            _drag.originOffset.y += deltaY;
-            
-            MFVector ofs = _drag.originOffset;
-            
-            // Activate the modified drag if the mouse has been moved far enough from the point where the drag started
-            if (MAX(fabs(ofs.x), fabs(ofs.y)) > _drag.usageThreshold) {
-                
-                MFDevice *dev = _drag.modifiedDevice;
-                [dev receiveButtonAndAxisInputWithSeize:YES];
-                
-                if (fabs(ofs.x) < fabs(ofs.y)) {
-                    _drag.usageAxis = kMFAxisVertical;
-                } else {
-                    _drag.usageAxis = kMFAxisHorizontal;
-                }
-                _drag.activationState = kMFModifiedInputActivationStateInUse; // Activate modified drag input!
-                [ModifierManager handleModifiersHaveHadEffect:dev.uniqueID];
-//                [ModifyingActions deactivateModifiedScroll]; // Deactivate other potentially initalized modified input.
-                
-                if ([_drag.type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
-                    _drag.phase = kIOHIDEventPhaseBegan;
-                } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
-                    [GestureScrollSimulator postGestureScrollEventWithGestureDeltaX:0.0 deltaY:0.0 phase:kIOHIDEventPhaseMayBegin];
-                    _drag.phase = kIOHIDEventPhaseBegan;
-                }
-                
-            }
-//            else {
-//                return event;
-//            }
-            
-            break;
-        }
-        case kMFModifiedInputActivationStateInUse:
-        {
-
-            if ([_drag.type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
-                if (_drag.usageAxis == kMFAxisHorizontal) {
-                    double delta = -deltaX/1000.0;
-//                    delta *= 1;
-                    [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeHorizontal phase:_drag.phase];
-                } else if (_drag.usageAxis == kMFAxisVertical) {
-                    double delta = deltaY/1000.0;
-//                    delta *= 2; // It's a bit harder to make large vertical movements on a mouse
-                    [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeVertical phase:_drag.phase];
-                }
-                _drag.phase = kIOHIDEventPhaseChanged;
-            } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
-                
-                double scale = 1.0;
-                
-                [GestureScrollSimulator postGestureScrollEventWithGestureDeltaX:deltaX * scale deltaY:deltaY * scale phase:_drag.phase];
-                _drag.phase = kIOHIDEventPhaseChanged;
-            }
-            
-        }
-        default:
-        {
-            break;
-        }
-    }
-    
-    
-//    return event;
-}
-
-+ (void)initializeModifiedDragWithType:(MFStringConstant)type onDevice:(MFDevice *)dev {
-            
-    _drag.modifiedDevice = dev;
-    _drag.activationState = kMFModifiedInputActivationStateInitialized;
-    _drag.type = type;
-    _drag.origin = CGEventGetLocation(CGEventCreate(NULL));
-    _drag.originOffset = (MFVector){};
+    if (st == kMFModifiedInputActivationStateNone) {
+        // Disabling the callback triggers this function one more time apparently, aside form that case, this should never happen
         
-//            CGEventTapEnable(_modifiedDrag.eventTap, true);
-    
-    //[dev receiveButtonAndAxisInputWithSeize:NO];
-    [dev receiveButtonAndAxisInputWithSeize:YES];
+    } else if (st == kMFModifiedInputActivationStateInitialized) {
+        
+        _drag.originOffset.x += deltaX;
+        _drag.originOffset.y += deltaY;
+        
+        MFVector ofs = _drag.originOffset;
+        
+        // Activate the modified drag if the mouse has been moved far enough from the point where the drag started
+        if (MAX(fabs(ofs.x), fabs(ofs.y)) > _drag.usageThreshold) {
+            
+            MFDevice *dev = _drag.modifiedDevice;
+            [dev receiveAxisInputAndDoSeizeDevice:YES];
+            _drag.activationState = kMFModifiedInputActivationStateInUse; // Activate modified drag input!
+            [ModifierManager handleModifiersHaveHadEffect:dev.uniqueID];
+            
+            if (fabs(ofs.x) < fabs(ofs.y)) {
+                _drag.usageAxis = kMFAxisVertical;
+            } else {
+                _drag.usageAxis = kMFAxisHorizontal;
+            }
+            
+            if ([_drag.type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
+                _drag.phase = kIOHIDEventPhaseBegan;
+            } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
+                [GestureScrollSimulator postGestureScrollEventWithGestureDeltaX:0.0 deltaY:0.0 phase:kIOHIDEventPhaseMayBegin];
+                _drag.phase = kIOHIDEventPhaseBegan;
+            }
+        }
+        
+    } else if (st == kMFModifiedInputActivationStateInUse) {
+
+        if ([_drag.type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
+            if (_drag.usageAxis == kMFAxisHorizontal) {
+                double delta = -deltaX/1000.0;
+                [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeHorizontal phase:_drag.phase];
+            } else if (_drag.usageAxis == kMFAxisVertical) {
+                double delta = deltaY/1000.0;
+                [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeVertical phase:_drag.phase];
+            }
+            _drag.phase = kIOHIDEventPhaseChanged;
+        } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
+            double scale = 1.0;
+            [GestureScrollSimulator postGestureScrollEventWithGestureDeltaX:deltaX * scale deltaY:deltaY * scale phase:_drag.phase];
+        }
+        _drag.phase = kIOHIDEventPhaseChanged;
+    }
 }
 
 + (void)deactivate {

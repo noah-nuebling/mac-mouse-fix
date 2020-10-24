@@ -160,7 +160,7 @@ typedef struct __IOHIDDevice
 }
 
 
-- (void)receiveButtonAndAxisInputWithSeize:(BOOL)seize {
+- (void)receiveAxisInputAndDoSeizeDevice:(BOOL)seize {
     
 #if DEBUG
     //NSLog(@"RECEIVE AXIS INPUT ON TOP OF BUTTON INPUT");

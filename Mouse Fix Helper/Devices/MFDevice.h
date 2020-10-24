@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSNumber *)uniqueID;
 
 - (void)receiveOnlyButtonInput;
-- (void)receiveButtonAndAxisInputWithSeize:(BOOL)exclusive;
+- (void)receiveAxisInputAndDoSeizeDevice:(BOOL)exclusive;
 
 @end
 
