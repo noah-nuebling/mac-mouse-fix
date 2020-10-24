@@ -10,6 +10,7 @@
 		4F017CCD253D49E9002F149F /* Constants.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F017CCB253D49E9002F149F /* Constants.h */; };
 		4F017CCE253D49E9002F149F /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F017CCC253D49E9002F149F /* Constants.m */; };
 		4F017CCF253D49E9002F149F /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F017CCC253D49E9002F149F /* Constants.m */; };
+		4F07871D2544856800142167 /* SubPixelator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F07871C2544856800142167 /* SubPixelator.m */; };
 		4F1A20282348EC3D00B29037 /* ScrollUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1A20272348EC3D00B29037 /* ScrollUtility.m */; };
 		4F1B7C1D23D3E6D60055C007 /* TouchSimulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B7C1C23D3E6D60055C007 /* TouchSimulator.m */; };
 		4F1C968C231361EF00C3B9AE /* TouchEvents.c in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C96872313606200C3B9AE /* TouchEvents.c */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
@@ -163,6 +164,8 @@
 /* Begin PBXFileReference section */
 		4F017CCB253D49E9002F149F /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		4F017CCC253D49E9002F149F /* Constants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		4F07871B2544856800142167 /* SubPixelator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SubPixelator.h; sourceTree = "<group>"; };
+		4F07871C2544856800142167 /* SubPixelator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SubPixelator.m; sourceTree = "<group>"; };
 		4F1A20262348EC3D00B29037 /* ScrollUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollUtility.h; sourceTree = "<group>"; };
 		4F1A20272348EC3D00B29037 /* ScrollUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollUtility.m; sourceTree = "<group>"; };
 		4F1B7C1B23D3E6D60055C007 /* TouchSimulator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TouchSimulator.h; sourceTree = "<group>"; };
@@ -571,6 +574,8 @@
 			children = (
 				4FF58E282469952200293553 /* RemapUtility.h */,
 				4F8DBB5B2538EC8300F58093 /* RemapUtility.m */,
+				4F07871B2544856800142167 /* SubPixelator.h */,
+				4F07871C2544856800142167 /* SubPixelator.m */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -1063,6 +1068,7 @@
 				4F9CA64E246CA5470042F25A /* ModifiedDrag.m in Sources */,
 				4F1B7C1D23D3E6D60055C007 /* TouchSimulator.m in Sources */,
 				4F8DBB5C2538EC8300F58093 /* RemapUtility.m in Sources */,
+				4F07871D2544856800142167 /* SubPixelator.m in Sources */,
 				4F32E158231C420100199A11 /* ConfigFileInterface_HelperApp.m in Sources */,
 				4FCECD8521092354001F1078 /* AppDelegate.m in Sources */,
 				4F32E15D231C44C000199A11 /* main.m in Sources */,
