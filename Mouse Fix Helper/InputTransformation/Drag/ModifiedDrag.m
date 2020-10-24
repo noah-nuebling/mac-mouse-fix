@@ -145,7 +145,8 @@ static struct ModifiedDragState _drag;
         
 //            CGEventTapEnable(_modifiedDrag.eventTap, true);
     
-    [dev receiveButtonAndAxisInputWithSeize:NO];
+    //[dev receiveButtonAndAxisInputWithSeize:NO];
+    [dev receiveButtonAndAxisInputWithSeize:YES];
 }
 
 + (void)deactivate {

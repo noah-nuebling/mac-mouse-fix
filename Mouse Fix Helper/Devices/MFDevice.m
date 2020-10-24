@@ -166,7 +166,7 @@ typedef struct __IOHIDDevice
     //NSLog(@"RECEIVE AXIS INPUT ON TOP OF BUTTON INPUT");
 #endif
     
-    //[self seize:seize];
+    [self seize:seize];
     
     NSDictionary *buttonMatchDict = @{
         @(kIOHIDElementUsagePageKey): @(kHIDPage_Button)
