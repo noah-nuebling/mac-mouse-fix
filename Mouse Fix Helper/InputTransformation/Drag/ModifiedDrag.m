@@ -51,6 +51,10 @@ static struct ModifiedDragState _drag;
 }
 
 + (void)initializeithType:(MFStringConstant)type onDevice:(MFDevice *)dev {
+    
+#if DEBUG
+    //NSLog(@"INITIALIZING MODIFIED DRAG WITH TYPE %@ ON DEVICE %@", type, dev);
+#endif
             
     _drag.modifiedDevice = dev;
     _drag.activationState = kMFModifiedInputActivationStateInitialized;
@@ -81,7 +85,7 @@ static struct ModifiedDragState _drag;
         if (MAX(fabs(ofs.x), fabs(ofs.y)) > _drag.usageThreshold) {
             
             MFDevice *dev = _drag.modifiedDevice;
-            [dev receiveAxisInputAndDoSeizeDevice:YES];
+            [dev receiveAxisInputAndDoSeizeDevice:NO];
             _drag.activationState = kMFModifiedInputActivationStateInUse; // Activate modified drag input!
             [ModifierManager handleModifiersHaveHadEffect:dev.uniqueID];
             

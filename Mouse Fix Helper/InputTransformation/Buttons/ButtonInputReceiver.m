@@ -47,7 +47,10 @@ static CFMachPortRef _eventTap;
 
 static void registerInputCallback() {
     // Register event Tap Callback
-    CGEventMask mask = CGEventMaskBit(kCGEventOtherMouseDown) | CGEventMaskBit(kCGEventOtherMouseUp); // Note that we're not registering from events from left mouse button and right mouse button
+    CGEventMask mask =
+    CGEventMaskBit(kCGEventOtherMouseDown) | CGEventMaskBit(kCGEventOtherMouseUp)
+    | CGEventMaskBit(kCGEventLeftMouseDown) | CGEventMaskBit(kCGEventLeftMouseUp)
+    | CGEventMaskBit(kCGEventRightMouseDown) | CGEventMaskBit(kCGEventRightMouseUp);
 
     _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGTailAppendEventTap, kCGEventTapOptionDefault, mask, handleInput, NULL);
     CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _eventTap, 0);
@@ -67,16 +70,25 @@ static void registerInputCallback() {
 }
 
 /// _buttonInputsFromRelevantDevices is a queue with one entry for each unhandled button input coming from a relevant device
-/// Instances of MFDevice insert themselves into this queue  when they receive input from the IOHIDDevice which they own.
+/// Instances of MFDevice insert values into this queue  when they receive input from the IOHIDDevice which they own.
 /// Input from the IOHIDDevice will always occur shortly before `ButtonInputReceiver_CG::handleIput()`. (Pretty sure)
-/// This allows `ButtonInputReceiver_CG::handleIput()` to gain information about the device causing the incoming event.
+/// This allows `ButtonInputReceiver_CG::handleIput()` to gain information about the nature of the incoming event, especially the device it stems from.
 ///     It also allows us to filter out input from devices which aren't relevant
-///         (Because don't create an MFDevice instance for irrelevant devices)
+///         (Because don't create an MFDevice instance for irrelevant devices, and so they can't insert their events into _buttonInputsFromRelevantDevices)
 ///         (All MFDevice instances for relevant devices can be found in DeviceManager.relevantDevices).
-static MFQueue<MFDevice *> *_buttonInputsFromRelevantDevices;
-+ (void)handleButtonInputFromRelevantDeviceOccured:(MFDevice *)dev button:(NSNumber *)btn {
-    if ([_buttonParseBlacklist containsObject:btn] || !CGEventTapIsEnabled(_eventTap)) return;
-    [_buttonInputsFromRelevantDevices enqueue: dev];
+static MFQueue<NSDictionary *> *_buttonInputsFromRelevantDevices;
+/// @param stemsFromSeize
+/// When an IOHIDDevice device is seized, the system will automatically send fake mouse up CG events for each of its pressed buttons.
+/// So when seizing, MFDevice objects will call this function once for each pressed button, with the stemsFromSeize parameter set to YES.
+/// This way `handleInput()` knows whats up when these fake mouse up events occur.
++ (void)handleHIDButtonInputFromRelevantDeviceOccured:(MFDevice *)dev button:(NSNumber *)btn stemsFromDeviceSeize:(BOOL)stemsFromSeize {
+    if ([_buttonParseBlacklist containsObject:btn] && !stemsFromSeize) return;
+    if (!CGEventTapIsEnabled(_eventTap)) return;
+    
+    [_buttonInputsFromRelevantDevices enqueue: @{
+        @"dev": dev,
+        @"stemsFromSeize": @(stemsFromSeize),
+    }];
 }
 + (BOOL)allRelevantButtonInputsHaveBeenProcessed {
     return [_buttonInputsFromRelevantDevices isEmpty];
@@ -84,30 +96,20 @@ static MFQueue<MFDevice *> *_buttonInputsFromRelevantDevices;
 NSArray *_buttonParseBlacklist; // Don't send inputs from these buttons to ButtonInputParser
 
 CGEventRef handleInput(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
-        
-#if DEBUG
-    //NSLog(@"CGG");
-    //    NSLog(@"devices which produced relevant inputs: %lld", _buttonInputsFromRelevantDevices.count);
-    //    NSLog(@"Incoming event: %@", [NSEvent eventWithCGEvent:event]); // TODO: Sometimes events seem to be deallocated when reaching this point, causing a crash. This is likely to do with inserting fake events.
-#endif
     
-    if ([_buttonInputsFromRelevantDevices isEmpty]) {
-#if DEBUG
-        NSLog(@"_buttonInputsFromRelevantDevices is empty."); // This should only happen if the input comes from a device which is not relevant
-#endif
-        return event;
+    if ([_buttonInputsFromRelevantDevices isEmpty]) return event;
+    
+    NSDictionary *lastInputFromRelevantDevice = [_buttonInputsFromRelevantDevices dequeue];
+    
+    if (((NSNumber *)lastInputFromRelevantDevice[@"stemsFromSeize"]).boolValue) {
+        return nil;
     }
     
     NSUInteger buttonNumber = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
     
-    if ([_buttonParseBlacklist containsObject:@(buttonNumber)]) {
-#if DEBUG
-//        NSLog(@"Received input from blacklisted mouse button: %lu", (unsigned long)buttonNumber); // This should only happen when inserting fake events
-#endif
-        return event;
-    };
+    if ([_buttonParseBlacklist containsObject:@(buttonNumber)]) return event;
     
-    MFDevice *dev = [_buttonInputsFromRelevantDevices dequeue];
+    MFDevice *dev = lastInputFromRelevantDevice[@"dev"];
     
     long long pr = CGEventGetIntegerValueField(event, kCGMouseEventPressure);
     MFButtonInputType triggertType = pr == 0 ? kMFButtonInputTypeButtonUp : kMFButtonInputTypeButtonDown;

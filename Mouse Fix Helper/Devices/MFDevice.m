@@ -15,6 +15,7 @@
 #import "RemapUtility.h"
 #import "CFRuntime.h"
 #import "SharedUtility.h"
+#import <Cocoa/Cocoa.h>
 
 
 @implementation MFDevice
@@ -135,7 +136,8 @@ typedef struct __IOHIDDevice
     
     if (B) {
         [self openWithOption:kIOHIDOptionsTypeSeizeDevice];
-        // This seems to lead to a weird error where the CGEventTapCallback doesn't react opening the device unseized
+        dealWithAutomaticButtonUpEventsOnDeviceSeize(self);
+        // ^ This seems to lead to a weird error where the CGEventTapCallback doesn't react opening the device unseized
     } else {
         [self openWithOption:0];
     }
@@ -143,6 +145,50 @@ typedef struct __IOHIDDevice
     _isSeized = B;
     
 //    registerInputCallbackForDevice(self);
+}
+
+/// When a device is seized, button up events are sent for all pressed buttons by the system.
+/// We want to tell ButtonInputReceiver where those events came from by calling `handleButtonInputFromRelevantDeviceOccured` for each currently pressed button
+static void dealWithAutomaticButtonUpEventsOnDeviceSeize(MFDevice *dev) {
+    //NSUInteger pressedButtons = NSEvent.pressedMouseButtons; // This seems to only see buttons as pressed if a mousedown CGEvent for that button has been sent
+    NSArray *pressedButtons = getPressedButtons(dev);
+    
+    int i = 0;
+    for (NSNumber *b in pressedButtons) {
+        BOOL isPressed = b.intValue == 1;
+        if (isPressed) {
+            NSLog(@"IS PRESSED: %d", i);
+            [ButtonInputReceiver handleHIDButtonInputFromRelevantDeviceOccured:dev button:@(i+1) stemsFromDeviceSeize:YES];
+        }
+        i++;
+    }
+}
+static NSArray *getPressedButtons(MFDevice *dev) {
+    
+    NSMutableArray *outArr = [NSMutableArray array];
+    
+    NSDictionary *match = @{
+        @(kIOHIDElementUsagePageKey): @(kHIDPage_Button),
+        //@(kIOHIDElementTypeKey): @(kIOHIDElementTypeInput_Button),
+    };
+    CFArrayRef elems = IOHIDDeviceCopyMatchingElements(dev.IOHIDDevice, (__bridge CFDictionaryRef)match, 0);
+    
+    for (int i = 0; i < CFArrayGetCount(elems); i++) {
+        IOHIDElementRef elem = (IOHIDElementRef)CFArrayGetValueAtIndex(elems, i);
+        IOHIDValueRef value;
+        IOHIDDeviceGetValue(dev.IOHIDDevice, elem, &value);
+        [outArr addObject:@(IOHIDValueGetIntegerValue(value))];
+    }
+    
+//    NSUInteger outBitmask = 0;
+//
+//    for (int i = 0; i < outArr.count; i++) {
+//        if ([outArr[i] isEqual:@(1)]) {
+//            outBitmask |= 1<<i;
+//        }
+//    }
+    
+    return outArr;
 }
 
 - (void)receiveOnlyButtonInput {
@@ -154,7 +200,7 @@ typedef struct __IOHIDDevice
     [self seize:NO];
     
     NSDictionary *buttonMatchDict = @{
-        @(kIOHIDElementUsagePageKey): @(kHIDPage_Button)
+        @(kIOHIDElementUsagePageKey): @(kHIDPage_Button),
     };
     IOHIDDeviceSetInputValueMatching(_IOHIDDevice, (__bridge CFDictionaryRef)buttonMatchDict);
 }
@@ -218,7 +264,7 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
         
         MFMouseButtonNumber button = usage;
         
-        [ButtonInputReceiver handleButtonInputFromRelevantDeviceOccured:sendingDev button:@(button)];
+        [ButtonInputReceiver handleHIDButtonInputFromRelevantDeviceOccured:sendingDev button:@(button) stemsFromDeviceSeize:NO];
         
         CGEventType mouseEventType = kCGEventNull;
         int64_t pressure = IOHIDValueGetIntegerValue(value);
@@ -227,29 +273,26 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
         //NSLog(@"BTN HIDDD - btn: %d, pressure: %lld", button, pressure);
 #endif
         
-        // Post fake button input events, if the device is seized
-        
-        if (sendingDev.isSeized) {
-#if DEBUG
-            //NSLog(@"BUTTON INP COMES FORM SEIZED");
-#endif
-            
-            mouseEventType = [SharedUtility CGEventTypeForButtonNumber:button isMouseDown:(pressure != 0)];
-
-            CGEventRef fakeEvent = CGEventCreateMouseEvent(NULL, mouseEventType, CGEventGetLocation(CGEventCreate(NULL)), [SharedUtility CGMouseButtonFromMFMouseButtonNumber:button]);
-//            CFRetain(fakeEvent);
-            [ButtonInputReceiver insertFakeEvent:fakeEvent];
-            CFRelease(fakeEvent);
-//            CFRelease(locEvent);
-            
-        }
-        
         // Control modified actions
         
         [GestureScrollSimulator breakMomentumScroll]; // Momentum scroll is started, when when a modified drag of type "twoFingerSwipe" is deactivated. We break it on any button input.
 //        if (pressure == 0) { // Don't think we need this if inserting fake events works properly
 //            [ModifiedDrag deactivate];
 //        }
+        
+        // Post fake button input events, if the device is seized
+
+        if (sendingDev.isSeized) {
+#if DEBUG
+            //NSLog(@"BUTTON INP COMES FORM SEIZED");
+#endif
+            mouseEventType = [SharedUtility CGEventTypeForButtonNumber:button isMouseDown:(pressure != 0)];
+
+            CGEventRef fakeEvent = CGEventCreateMouseEvent(NULL, mouseEventType, CGEventGetLocation(CGEventCreate(NULL)), [SharedUtility CGMouseButtonFromMFMouseButtonNumber:button]);
+            [ButtonInputReceiver insertFakeEvent:fakeEvent];
+            CFRelease(fakeEvent);
+            
+        }
         
         return;
     }

@@ -45,7 +45,7 @@ typedef enum {
 
 + (void)insertFakeEvent:(CGEventRef)event;
 
-+ (void)handleButtonInputFromRelevantDeviceOccured:(MFDevice *)dev button:(NSNumber *)btn;
++ (void)handleHIDButtonInputFromRelevantDeviceOccured:(MFDevice *)dev button:(NSNumber *)btn stemsFromDeviceSeize:(BOOL)stemsFromSeize;
 + (BOOL)allRelevantButtonInputsHaveBeenProcessed;
 
 @end

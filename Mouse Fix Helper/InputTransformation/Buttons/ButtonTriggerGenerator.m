@@ -52,7 +52,7 @@
     @synchronized (self) {
         _clickLevel = clickLevel;
     }
-    [ModifierManager handleButtonModifiersHaveChangedWithDevice:self.device];
+    [ModifierManager handleButtonModifiersMightHaveChangedWithDevice:self.device];
 }
 #pragma mark isPressed accessors
 - (BOOL)isPressed {
@@ -64,9 +64,8 @@
     @synchronized (self) {
         _isPressed = isPressed;
     }
-
     if (!isPressed) { // Whenever isPressed becomes true, clickLevel is also modified, so we don't need to notify modifier change in that case
-        [ModifierManager handleButtonModifiersHaveChangedWithDevice:self.device];
+        [ModifierManager handleButtonModifiersMightHaveChangedWithDevice:self.device];
     }
 }
 @end

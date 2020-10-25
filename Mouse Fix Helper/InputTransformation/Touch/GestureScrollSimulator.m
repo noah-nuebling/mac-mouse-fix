@@ -32,6 +32,10 @@ static MFVector _lastInputGestureVector = { .x = 0, .y = 0 };
  \note For more info on which delta values and which phases to use, see the documentation for `postGestureScrollEventWithGestureDeltaX:deltaY:phase:momentumPhase:scrollDeltaConversionFunction:scrollPointDeltaConversionFunction:`. In contrast to the aforementioned function, you shouldn't need to call this function with kIOHIDEventPhaseUndefined.
 */
 + (void)postGestureScrollEventWithGestureDeltaX:(int64_t)dx deltaY:(int64_t)dy phase:(IOHIDEventPhaseBits)phase {
+    
+#if DEBUG
+    //NSLog(@"GESTURE DELTAS: %d, %d", dx, dy);
+#endif
 
     if (phase != kIOHIDEventPhaseEnded) {
         
@@ -54,7 +58,6 @@ static MFVector _lastInputGestureVector = { .x = 0, .y = 0 };
                                                 phase:phase
                                         momentumPhase:kCGMomentumScrollPhaseNone];
     } else {
-                    NSLog(@"Last gesture vec: %f %f", _lastInputGestureVector.x, _lastInputGestureVector.y);
         [self postGestureScrollEventWithGestureVector:(MFVector){}
                                          scrollVector:(MFVector){}
                                     scrollVectorPoint:(MFVector){}
@@ -190,7 +193,10 @@ static void startPostingMomentumScrollEventsWithInitialGestureVector(MFVector in
     
     CFTimeInterval prevTs = CACurrentMediaTime();
     while (magPt > thresh) {
-        if (_breakMomentumScrollFlag == true) break;
+        if (_breakMomentumScrollFlag == true) {
+            NSLog(@"BREAKING MOMENTUM SCROLL");
+            break;
+        }
         [GestureScrollSimulator postGestureScrollEventWithGestureVector:emptyVec
                                          scrollVector:vec
                                     scrollVectorPoint:vecPt

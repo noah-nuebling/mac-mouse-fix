@@ -18,6 +18,8 @@
 
 @implementation ModifierManager
 
+/// Trigger driven modification -> when the trigger to be modified comes in, we check how we want to modify it
+/// Modifier driven modification -> when the modification becomes active, we preemtively modify the triggers which it modifies
 #pragma mark - Load
 
 + (void)load {
@@ -69,6 +71,10 @@ static void toggleModifierEventTapBasedOnRemaps(NSDictionary *remaps) {
 
 CGEventRef _Nullable handleKeyboardModifiersHaveChanged(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
+#if DEBUG
+    NSLog(@"KEYBOARD MODS HAVE CHANGED");
+#endif
+    
     CGEventTapPostEvent(proxy, event);
     
     NSArray<MFDevice *> *devs = DeviceManager.attachedDevices;
@@ -87,7 +93,15 @@ CGEventRef _Nullable handleKeyboardModifiersHaveChanged(CGEventTapProxy proxy, C
 
 #pragma mark Button modifiers
 
-+ (void)handleButtonModifiersHaveChangedWithDevice:(MFDevice *)device {
+NSDictionary *_prevButtonModifiers;
++ (void)handleButtonModifiersMightHaveChangedWithDevice:(MFDevice *)device {
+    NSDictionary *buttonModifiers = [ButtonTriggerGenerator getActiveButtonModifiersForDevice:device.uniqueID];
+    if (![buttonModifiers isEqual:_prevButtonModifiers]) {
+        handleButtonModifiersHaveChangedWithDevice(device);
+    }
+    _prevButtonModifiers = buttonModifiers;
+}
+static void handleButtonModifiersHaveChangedWithDevice(MFDevice *device) {
     NSDictionary *activeModifiers = [ModifierManager getActiveModifiersForDevice:device.uniqueID filterButton:nil];
     reactToModifierChange(activeModifiers, device);
 }
@@ -107,11 +121,11 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, MFDevi
     //      Because of this we can simply kill everything without any further checks
     [ModifiedDrag deactivate];
     
-    // Get active modifications and initialize any which are trigger driven
+    // Get active modifications and initialize any which are modifier driven
     NSDictionary *r = TransformationManager.remaps;
     NSDictionary *activeModifications = r[activeModifiers];
     if (activeModifications) {
-        // Initialize effects which are trigger driven (only modified drag)
+        // Initialize effects which are modifier driven (only modified drag)
         NSString *modifiedDragType = activeModifications[kMFRemapsKeyModifiedDrag];
         if (modifiedDragType) {
             [ModifiedDrag initializeithType:modifiedDragType onDevice:device];
@@ -162,7 +176,13 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, MFDevi
     return outDict;
 }
 static NSUInteger getActiveKeyboardModifiers() {
-    CGEventFlags modifierFlags = CGEventGetFlags(CGEventCreate(nil)) & NSDeviceIndependentModifierFlagsMask;
+    
+    uint64_t mask;
+    //mask = NSEventModifierFlagDeviceIndependentFlagsMask;
+        // ^ Only allows bits 16 - 31. But 24 - 31 contained weird stuff which messed up the return value and modifiers are only on bits 16-23, so we defined our own mask
+    mask = 0xFF0000; // Only lets bits 16-23 through
+    
+    CGEventFlags modifierFlags = CGEventGetFlags(CGEventCreate(nil)) & mask;
     return modifierFlags;
 }
 
