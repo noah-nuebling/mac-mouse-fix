@@ -93,8 +93,6 @@ static MFVector _lastInputGestureVector = { .x = 0, .y = 0 };
 //    printf("gesture: x:%f y:%f \nscroll: x:%f y:%f \nscrollPt: x:%f y:%f\n",
 //          vecGesture.x, vecGesture.y, vecScroll.x, vecScroll.y, vecScrollPoint.x, vecScrollPoint.y);
     
-    int valFor41 = 33231; // Not sure if this does anything
-    
     //
     // Create type 22 event
     //
@@ -103,7 +101,6 @@ static MFVector _lastInputGestureVector = { .x = 0, .y = 0 };
     
     // Set static fields
     
-    CGEventSetDoubleValueField(e22, 41, valFor41);
     CGEventSetDoubleValueField(e22, 55, 22); // 22 -> NSEventTypeScrollWheel // Setting field 55 is the same as using CGEventSetType(), I'm not sure if that has weird side-effects though, so I'd rather do it this way.
     CGEventSetDoubleValueField(e22, 88, 1); // magic?
     
@@ -122,13 +119,10 @@ static MFVector _lastInputGestureVector = { .x = 0, .y = 0 };
     CGEventSetDoubleValueField(e22, 99, phase);
     CGEventSetDoubleValueField(e22, 123, momentumPhase);
     
-    // Field 142
-    
-    int32_t weird96copyOrigin = (int32_t)vecScrollPoint.x;
-    Float32 weird96copy;
-    memcpy(&weird96copy, &weird96copyOrigin, sizeof(weird96copyOrigin));
-    CGEventSetDoubleValueField(e22, 142, (double)weird96copy); // ??This doesn't work
-    CGEventSetIntegerValueField(e22, 142, (double)weird96copy);
+    // Post t22s0 event
+//    CGEventSetLocation(e22, [Utility_HelperApp getCurrentPointerLocation_flipped]);
+    CGEventPost(kCGHIDEventTap, e22);
+    CFRelease(e22);
     
     if (momentumPhase == 0) {
         
@@ -140,37 +134,31 @@ static MFVector _lastInputGestureVector = { .x = 0, .y = 0 };
         
         // Set static fields
         
-        CGEventSetDoubleValueField(e29, 41, valFor41);
         CGEventSetDoubleValueField(e29, 55, 29); // 29 -> NSEventTypeGesture // Setting field 55 is the same as using CGEventSetType()
         CGEventSetDoubleValueField(e29, 110, 6); // Field 110 -> subtype // 6 -> kIOHIDEventTypeScroll
         
         // Set dynamic fields
         
-        double val113 = (double)vecGesture.x;
-        if (val113 == 0) {
-            val113 = -0.0f; // The original events only contain -0 but this probs doesn't make a difference.
+        double xVec = (double)vecGesture.x;
+        if (xVec == 0) {
+            xVec = -0.0f; // The original events only contain -0 but this probs doesn't make a difference.
         }
-        CGEventSetDoubleValueField(e29, 113, val113);
+        CGEventSetDoubleValueField(e29, 116, xVec);
         
-        double val119 = (double)vecGesture.y;
-        if (val119 == 0) {
-            val119 = -0.0f; // The original events only contain -0 but this probs doesn't make a difference.
+        double yVec = (double)vecGesture.y;
+        if (yVec == 0) {
+            yVec = -0.0f; // The original events only contain -0 but this probs doesn't make a difference.
         }
-        CGEventSetDoubleValueField(e29, 119, val119);
+        CGEventSetDoubleValueField(e29, 119, yVec);
         
         CGEventSetIntegerValueField(e29, 132, phase);
         
-        // Post t29s0 events
+        // Post t29s6 events
 //        CGEventSetLocation(e29, [Utility_HelperApp getCurrentPointerLocation_flipped]);
         CGEventPost(kCGHIDEventTap, e29);
         //    printEvent(e29);
         CFRelease(e29);
     }
-    
-    // Post t22s6 events
-//    CGEventSetLocation(e22, [Utility_HelperApp getCurrentPointerLocation_flipped]);
-    CGEventPost(kCGHIDEventTap, e22);
-    CFRelease(e22);
 }
 
 static bool _momentumScrollIsActive; // Should only be manipulated by `startPostingMomentumScrollEventsWithInitialGestureVector()`

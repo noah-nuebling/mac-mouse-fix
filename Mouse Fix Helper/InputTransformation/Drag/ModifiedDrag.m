@@ -98,7 +98,8 @@ static struct ModifiedDragState _drag;
             if ([_drag.type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
                 _drag.phase = kIOHIDEventPhaseBegan;
             } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
-                [GestureScrollSimulator postGestureScrollEventWithGestureDeltaX:0.0 deltaY:0.0 phase:kIOHIDEventPhaseMayBegin];
+//                [GestureScrollSimulator postGestureScrollEventWithGestureDeltaX:0.0 deltaY:0.0 phase:kIOHIDEventPhaseMayBegin];
+                    // ^ Always sending this at the start breaks swiping between pages on some websites (Google search results)
                 _drag.phase = kIOHIDEventPhaseBegan;
             }
         }
