@@ -15,6 +15,8 @@
 #import "GestureScrollSimulator.h"
 #import "ModifierManager.h"
 
+#import "SubPixelator.h"
+
 @implementation ModifiedDrag
 
 struct ModifiedDragState {
@@ -30,6 +32,9 @@ struct ModifiedDragState {
     MFVector originOffset;
     MFAxis usageAxis;
     IOHIDEventPhaseBits phase;
+    
+    SubPixelator *subPixelatorX;
+    SubPixelator *subPixelatorY;
 };
 
 static struct ModifiedDragState _drag;
@@ -61,6 +66,8 @@ static struct ModifiedDragState _drag;
     _drag.type = type;
     _drag.origin = CGEventGetLocation(CGEventCreate(NULL));
     _drag.originOffset = (MFVector){0};
+    _drag.subPixelatorX = [SubPixelator alloc];
+    _drag.subPixelatorY = [SubPixelator alloc];
     
     [dev receiveAxisInputAndDoSeizeDevice:NO];
 }
@@ -105,8 +112,13 @@ static struct ModifiedDragState _drag;
         }
         
     } else if (st == kMFModifiedInputActivationStateInUse) {
+        
+        double s = 0.5;
+        deltaX = [_drag.subPixelatorX intDeltaWithDoubleDelta:deltaX * s];
+        deltaY = [_drag.subPixelatorY intDeltaWithDoubleDelta:deltaY * s];
 
         if ([_drag.type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
+            
             if (_drag.usageAxis == kMFAxisHorizontal) {
                 double delta = -deltaX/1000.0;
                 [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeHorizontal phase:_drag.phase];

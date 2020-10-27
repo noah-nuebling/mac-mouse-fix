@@ -14,8 +14,10 @@
 @end
 
 @implementation SubPixelator
++ (SubPixelator *) pixelator {
+    return [[self alloc] init];
+}
 @synthesize accumulatedRoundingError;
-
 - (int64_t)intDeltaWithDoubleDelta:(double)inpDelta {
     double preciseDelta = inpDelta + self.accumulatedRoundingError;
     int64_t roundedDelta = (int64_t) round(preciseDelta);

@@ -22,11 +22,6 @@ typedef enum {
     kMFDockSwipeTypePinch = 3, // Show Desktop & Launchpad
 } MFDockSwipeType;
 
-typedef struct __MFVector {
-    double x;
-    double y;
-} MFVector;
-
 + (void)postNavigationSwipeEventWithDirection:(IOHIDSwipeMask)dir;
 
 + (void)postSmartZoomEvent;

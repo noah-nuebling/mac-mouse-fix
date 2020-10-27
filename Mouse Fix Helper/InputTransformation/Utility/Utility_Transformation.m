@@ -7,13 +7,13 @@
 // --------------------------------------------------------------------------
 //
 
-#import "RemapUtility.h"
+#import "Utility_Transformation.h"
 #import <Cocoa/Cocoa.h>
 #import <Carbon/Carbon.h>
 #import <ApplicationServices/ApplicationServices.h>
 #import "CGSPrivate.h"
 
-@implementation RemapUtility
+@implementation Utility_Transformation
 
 + (void)hideMousePointer:(BOOL)B {
     

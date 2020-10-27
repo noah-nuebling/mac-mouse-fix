@@ -65,7 +65,6 @@ static MFVector _lastInputGestureVector = { .x = 0, .y = 0 };
                                         momentumPhase:0];
         
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
-//            startPostingMomentumScrollEventsWithInitialGestureVector(_lastInputGestureVector, 0.016, 1.0, 4, 1.0);
             startPostingMomentumScrollEventsWithInitialGestureVector(_lastInputGestureVector, 0.016, 1.0, 4, 1.0);
         });
     }
@@ -252,7 +251,7 @@ static MFVector scrollPointVectorWithGestureVector(MFVector vec) {
         return (MFVector){};
     }
     double magOut = 0.01 * pow(magIn, 2) + 0.3 * magIn; // Got these values through curve fitting
-    magOut *= 2; // This makes it feel better on mouse
+    magOut *= 4; // This makes it feel better on mouse
     double scale = magOut / magIn;
     MFVector vecOut;
     vecOut.x = round(vec.x * scale);

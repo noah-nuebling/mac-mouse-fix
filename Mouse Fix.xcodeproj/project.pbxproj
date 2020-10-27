@@ -46,7 +46,7 @@
 		4F8D0185243D8D6200D70076 /* NSArray+Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F8D0183243D8D6200D70076 /* NSArray+Additions.h */; };
 		4F8D0186243D8D6200D70076 /* NSArray+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8D0184243D8D6200D70076 /* NSArray+Additions.m */; };
 		4F8DBB4B2538E79400F58093 /* TransformationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8DBB4A2538E79400F58093 /* TransformationManager.m */; };
-		4F8DBB5C2538EC8300F58093 /* RemapUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8DBB5B2538EC8300F58093 /* RemapUtility.m */; };
+		4F8DBB5C2538EC8300F58093 /* Utility_Transformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8DBB5B2538EC8300F58093 /* Utility_Transformation.m */; };
 		4F8F20F4253F3234005670D3 /* MFQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F8F20F2253F3234005670D3 /* MFQueue.h */; };
 		4F8F20F5253F3234005670D3 /* MFQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8F20F3253F3234005670D3 /* MFQueue.m */; };
 		4F8F20F6253F3234005670D3 /* MFQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8F20F3253F3234005670D3 /* MFQueue.m */; };
@@ -63,6 +63,7 @@
 		4FBF350023183E6700E6CFD0 /* ConfigFileInterface_PrefPane.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBF34FE23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.m */; };
 		4FBF350523183FDA00E6CFD0 /* HelperServices.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FBF350323183FDA00E6CFD0 /* HelperServices.h */; };
 		4FBF350623183FDA00E6CFD0 /* HelperServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBF350423183FDA00E6CFD0 /* HelperServices.m */; };
+		4FC8677B25479CDA00AC1444 /* VectorSubPixelator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FC8677A25479CDA00AC1444 /* VectorSubPixelator.m */; };
 		4FC9D0C52439F4CF00109E7E /* backup_config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F7C281F2436675900D94D0A /* backup_config.plist */; };
 		4FCECD8521092354001F1078 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECD8421092354001F1078 /* AppDelegate.m */; };
 		4FD36AED243741A70046DC41 /* ScrollOverridePanel.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FD36AEA243741A70046DC41 /* ScrollOverridePanel.h */; };
@@ -248,7 +249,7 @@
 		4F8D0184243D8D6200D70076 /* NSArray+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Additions.m"; sourceTree = "<group>"; };
 		4F8DBB492538E79400F58093 /* TransformationManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransformationManager.h; sourceTree = "<group>"; };
 		4F8DBB4A2538E79400F58093 /* TransformationManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TransformationManager.m; sourceTree = "<group>"; };
-		4F8DBB5B2538EC8300F58093 /* RemapUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemapUtility.m; sourceTree = "<group>"; };
+		4F8DBB5B2538EC8300F58093 /* Utility_Transformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility_Transformation.m; sourceTree = "<group>"; };
 		4F8F20F2253F3234005670D3 /* MFQueue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFQueue.h; sourceTree = "<group>"; };
 		4F8F20F3253F3234005670D3 /* MFQueue.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFQueue.m; sourceTree = "<group>"; };
 		4F8F210425425ED0005670D3 /* ButtonTriggerHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonTriggerHandler.h; sourceTree = "<group>"; };
@@ -271,6 +272,8 @@
 		4FBF350323183FDA00E6CFD0 /* HelperServices.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelperServices.h; sourceTree = "<group>"; };
 		4FBF350423183FDA00E6CFD0 /* HelperServices.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelperServices.m; sourceTree = "<group>"; };
 		4FC550512470639400DAE835 /* NoahsTouchEventAnalysis */ = {isa = PBXFileReference; lastKnownFileType = text; path = NoahsTouchEventAnalysis; sourceTree = "<group>"; };
+		4FC8677925479CDA00AC1444 /* VectorSubPixelator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VectorSubPixelator.h; sourceTree = "<group>"; };
+		4FC8677A25479CDA00AC1444 /* VectorSubPixelator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VectorSubPixelator.m; sourceTree = "<group>"; };
 		4FCECD8021092354001F1078 /* Mouse Fix Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mouse Fix Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FCECD8321092354001F1078 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4FCECD8421092354001F1078 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -312,7 +315,7 @@
 		4FF3B2BC23276082009E8A8E /* Uninstaller.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Uninstaller.m; sourceTree = "<group>"; };
 		4FF3B2BE232788AA009E8A8E /* HelperServices_HelperApp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelperServices_HelperApp.h; sourceTree = "<group>"; };
 		4FF3B2BF232788AA009E8A8E /* HelperServices_HelperApp.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelperServices_HelperApp.m; sourceTree = "<group>"; };
-		4FF58E282469952200293553 /* RemapUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapUtility.h; sourceTree = "<group>"; };
+		4FF58E282469952200293553 /* Utility_Transformation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utility_Transformation.h; sourceTree = "<group>"; };
 		4FF873DC23197283002A897A /* UpdateWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UpdateWindow.h; sourceTree = "<group>"; };
 		4FF873DD23197283002A897A /* UpdateWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UpdateWindow.m; sourceTree = "<group>"; };
 		4FF873DE23197283002A897A /* UpdateWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpdateWindow.xib; sourceTree = "<group>"; };
@@ -572,10 +575,12 @@
 		4F8DBB512538E9D400F58093 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
-				4FF58E282469952200293553 /* RemapUtility.h */,
-				4F8DBB5B2538EC8300F58093 /* RemapUtility.m */,
+				4FF58E282469952200293553 /* Utility_Transformation.h */,
+				4F8DBB5B2538EC8300F58093 /* Utility_Transformation.m */,
 				4F07871B2544856800142167 /* SubPixelator.h */,
 				4F07871C2544856800142167 /* SubPixelator.m */,
+				4FC8677925479CDA00AC1444 /* VectorSubPixelator.h */,
+				4FC8677A25479CDA00AC1444 /* VectorSubPixelator.m */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -1067,7 +1072,8 @@
 				4F32E157231C420100199A11 /* DeviceManager.m in Sources */,
 				4F9CA64E246CA5470042F25A /* ModifiedDrag.m in Sources */,
 				4F1B7C1D23D3E6D60055C007 /* TouchSimulator.m in Sources */,
-				4F8DBB5C2538EC8300F58093 /* RemapUtility.m in Sources */,
+				4FC8677B25479CDA00AC1444 /* VectorSubPixelator.m in Sources */,
+				4F8DBB5C2538EC8300F58093 /* Utility_Transformation.m in Sources */,
 				4F07871D2544856800142167 /* SubPixelator.m in Sources */,
 				4F32E158231C420100199A11 /* ConfigFileInterface_HelperApp.m in Sources */,
 				4FCECD8521092354001F1078 /* AppDelegate.m in Sources */,

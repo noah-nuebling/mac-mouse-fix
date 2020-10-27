@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RemapUtility : NSObject
+@interface Utility_Transformation : NSObject
 + (void)hideMousePointer:(BOOL)B;
 @end
 

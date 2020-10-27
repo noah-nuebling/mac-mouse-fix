@@ -10,6 +10,7 @@
 #import <Foundation/Foundation.h>
 
 @interface Utility_HelperApp : NSObject
+
 + (NSString *)binaryRepresentation:(int)value;
 
 + (NSBundle *)helperBundle;

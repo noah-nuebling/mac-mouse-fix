@@ -10,7 +10,7 @@
 #import "ButtonTriggerGenerator.h"
 #import "Actions.h"
 #import "ModifiedDrag.h"
-#import "RemapUtility.h"
+#import "Utility_Transformation.h"
 #import "Utility_HelperApp.h"
 #import "ConfigFileInterface_HelperApp.h"
 #import "GestureScrollSimulator.h"
