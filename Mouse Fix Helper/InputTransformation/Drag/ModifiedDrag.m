@@ -114,22 +114,23 @@ static struct ModifiedDragState _drag;
     } else if (st == kMFModifiedInputActivationStateInUse) {
         
         double s = 0.5;
-        deltaX = [_drag.subPixelatorX intDeltaWithDoubleDelta:deltaX * s];
-        deltaY = [_drag.subPixelatorY intDeltaWithDoubleDelta:deltaY * s];
+        double deltaXDouble = deltaX * s;
+        double deltaYDouble = deltaY * s;
+        
+//        NSLog(@"deltaX: %f", deltaX);
 
         if ([_drag.type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
             
             if (_drag.usageAxis == kMFAxisHorizontal) {
-                double delta = -deltaX/1000.0;
+                double delta = -deltaXDouble/1000.0;
                 [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeHorizontal phase:_drag.phase];
             } else if (_drag.usageAxis == kMFAxisVertical) {
-                double delta = deltaY/1000.0;
+                double delta = deltaYDouble/1000.0;
                 [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeVertical phase:_drag.phase];
             }
             _drag.phase = kIOHIDEventPhaseChanged;
         } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
-            double scale = 1.0;
-            [GestureScrollSimulator postGestureScrollEventWithGestureDeltaX:deltaX * scale deltaY:deltaY * scale phase:_drag.phase];
+            [GestureScrollSimulator postGestureScrollEventWithGestureDeltaX:deltaXDouble deltaY:deltaYDouble phase:_drag.phase];
         }
         _drag.phase = kIOHIDEventPhaseChanged;
     }

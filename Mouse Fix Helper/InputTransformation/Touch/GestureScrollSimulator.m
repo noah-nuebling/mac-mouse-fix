@@ -13,10 +13,25 @@
 #import "TouchSimulator.h"
 #import "Utility_HelperApp.h"
 #import "SharedUtility.h"
+#import "VectorSubPixelator.h"
+
 
 @implementation GestureScrollSimulator
 
 static MFVector _lastInputGestureVector = { .x = 0, .y = 0 };
+
+static VectorSubPixelator *_gesturePixelator;
+static VectorSubPixelator *_scrollPointPixelator;
+static VectorSubPixelator *_scrollPixelator;
+
++ (void)initialize
+{
+    if (self == [GestureScrollSimulator class]) {
+        _gesturePixelator = [VectorSubPixelator pixelator];
+        _scrollPointPixelator = [VectorSubPixelator pixelator];
+        _scrollPixelator = [VectorSubPixelator pixelator];
+    }
+}
 
 /**
  Post scroll events that behave as if they are coming from an Apple Trackpad or Magic Mouse.
@@ -31,23 +46,27 @@ static MFVector _lastInputGestureVector = { .x = 0, .y = 0 };
  \note In order to minimize momentum scrolling,  send an event with a very small but non-zero scroll delta before calling the function with phase kIOHIDEventPhaseEnded.
  \note For more info on which delta values and which phases to use, see the documentation for `postGestureScrollEventWithGestureDeltaX:deltaY:phase:momentumPhase:scrollDeltaConversionFunction:scrollPointDeltaConversionFunction:`. In contrast to the aforementioned function, you shouldn't need to call this function with kIOHIDEventPhaseUndefined.
 */
-+ (void)postGestureScrollEventWithGestureDeltaX:(int64_t)dx deltaY:(int64_t)dy phase:(IOHIDEventPhaseBits)phase {
++ (void)postGestureScrollEventWithGestureDeltaX:(double)dx deltaY:(double)dy phase:(IOHIDEventPhaseBits)phase {
     
 #if DEBUG
-    //NSLog(@"GESTURE DELTAS: %d, %d", dx, dy);
+//    NSLog(@"GESTURE DELTAS: %f, %f, PHASE: %d", dx, dy, phase);
 #endif
-
+    
     if (phase != kIOHIDEventPhaseEnded) {
         
         _breakMomentumScrollFlag = true;
         
-        if (phase == kIOHIDEventPhaseChanged && dx == 0 && dy == 0) {
+        if (phase == kIOHIDEventPhaseChanged && dx == 0.0 && dy == 0.0) {
             return;
         }
         
         MFVector vecGesture = { .x = dx, .y = dy };
         MFVector vecScrollPoint = scrollPointVectorWithGestureVector(vecGesture);
         MFVector vecScroll = scrollVectorWithScrollPointVector(vecScrollPoint);
+        
+        vecGesture = [_gesturePixelator intVectorWithDoubleVector:vecGesture];
+        vecScrollPoint = [_scrollPointPixelator intVectorWithDoubleVector:vecScrollPoint];
+        vecScroll = [_scrollPixelator intVectorWithDoubleVector:vecScroll];
         
         if (phase == kIOHIDEventPhaseBegan || phase == kIOHIDEventPhaseChanged) {
             _lastInputGestureVector = vecGesture;
@@ -119,7 +138,7 @@ static MFVector _lastInputGestureVector = { .x = 0, .y = 0 };
     CGEventSetDoubleValueField(e22, 123, momentumPhase);
     
     // Post t22s0 event
-//    CGEventSetLocation(e22, [Utility_HelperApp getCurrentPointerLocation_flipped]);
+//    CGEventSetLocation(e22, loc);
     CGEventPost(kCGHIDEventTap, e22);
     CFRelease(e22);
     
@@ -153,7 +172,7 @@ static MFVector _lastInputGestureVector = { .x = 0, .y = 0 };
         CGEventSetIntegerValueField(e29, 132, phase);
         
         // Post t29s6 events
-//        CGEventSetLocation(e29, [Utility_HelperApp getCurrentPointerLocation_flipped]);
+//        CGEventSetLocation(e29, loc);
         CGEventPost(kCGHIDEventTap, e29);
         //    printEvent(e29);
         CFRelease(e29);
@@ -240,23 +259,19 @@ static MFVector scrollVectorWithScrollPointVector(MFVector vec) {
     }
     double magOut = 0.1 * (magIn-1); // Approximation from looking at real trackpad events
     double scale = magOut / magIn;
-    MFVector vecOut;
-    vecOut.x = [SharedUtility signOf:vec.x] * floor(fabs(vec.x * scale));
-    vecOut.y = [SharedUtility signOf:vec.y] * floor(fabs(vec.y * scale));
-    return vecOut;
+    return scaledVector(vec, scale);
 }
 static MFVector scrollPointVectorWithGestureVector(MFVector vec) {
     double magIn = magnitudeOfVector(vec);
-    if (magIn == 0) { // To prevent division by 0 from producing nan
-        return (MFVector){};
-    }
-    double magOut = 0.01 * pow(magIn, 2) + 0.3 * magIn; // Got these values through curve fitting
-    magOut *= 4; // This makes it feel better on mouse
+    if (magIn == 0) return (MFVector){};  // To prevent division by 0 from producing nan
+    
+
+//    double magOut = 0.01 * pow(magIn, 2) + 0.3 * magIn; // Got these values through curve fitting
+//    double magOut = 0.05 * pow(magIn, 2) + 0.8 * magIn; // These feel better for mouse
+    double magOut = 0.08 * pow(magIn, 2) + 0.8 * magIn; // Even better feel - precise and fast at the same time
+
     double scale = magOut / magIn;
-    MFVector vecOut;
-    vecOut.x = round(vec.x * scale);
-    vecOut.y = round(vec.y * scale);
-    return vecOut;
+    return scaledVector(vec, scale);
 }
 
 static MFVector initalMomentumScrollPointVectorWithGestureVector(MFVector vec) {
