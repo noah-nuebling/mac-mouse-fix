@@ -136,6 +136,10 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
         
         [ScrollControl decide];
         [ButtonInputReceiver decide];
+        
+        
+        // Testing PointerSpeed
+        //[PointerSpeed setSensitivityViaIORegTo:1000 device:device];
     }
 
     

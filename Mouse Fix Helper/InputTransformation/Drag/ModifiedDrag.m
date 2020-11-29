@@ -16,11 +16,12 @@
 #import "ModifierManager.h"
 
 #import "SubPixelator.h"
+#import <Cocoa/Cocoa.h>
 
 @implementation ModifiedDrag
 
 struct ModifiedDragState {
-//    CFMachPortRef eventTap;
+    CFMachPortRef eventTap;
     int64_t usageThreshold;
     
     MFStringConstant type;
@@ -39,20 +40,29 @@ struct ModifiedDragState {
 
 static struct ModifiedDragState _drag;
 
+BOOL inputIsPointerMovement = NO;
+// There are two different modes for how we receive mouse input, toggle to switch between the two for testing
+// Set to no, if you want input to be raw mouse input, set to yes if you want input to be mouse pointer delta
+// Raw input has better performance (?) and allows for blocking mouse pointer movement. Mouse pointer input makes all the animation follow the pointer, but it has some issues with the pointer jumping when the framerate is low which I'm not quite sure how to fix.
+//      When the pointer jumps that sometimes leads to scrolling in random directions and stuff.
+
 + (void)load {
     
-    // Create mouse moved input callback
-//    if (_modifiedDrag.eventTap == nil) {
-//        CGEventMask mask = CGEventMaskBit(kCGEventOtherMouseDragged); // TODO: Check which of the two is necessary
-//        _modifiedDrag.eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, otherMouseDraggedCallback, NULL);
-//        NSLog(@"_eventTap: %@", _modifiedDrag.eventTap);
-//        CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _modifiedDrag.eventTap, 0);
-//        CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes);
-//        CFRelease(runLoopSource);
-//        CGEventTapEnable(_modifiedDrag.eventTap, false);
-//    }
-    
-    _drag.usageThreshold = 50;
+    if (inputIsPointerMovement) {
+        // Create mouse pointer moved input callback
+        if (_drag.eventTap == nil) {
+            CGEventMask mask = CGEventMaskBit(kCGEventOtherMouseDragged); // TODO: Check which of the two is necessary
+            _drag.eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, otherMouseDraggedCallback, NULL);
+            NSLog(@"_eventTap: %@", _drag.eventTap);
+            CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _drag.eventTap, 0);
+            CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes);
+            CFRelease(runLoopSource);
+            CGEventTapEnable(_drag.eventTap, false);
+        }
+        _drag.usageThreshold = 20;
+    } else {
+        _drag.usageThreshold = 50;
+    }
 }
 
 + (void)initializeithType:(MFStringConstant)type onDevice:(MFDevice *)dev {
@@ -69,7 +79,20 @@ static struct ModifiedDragState _drag;
     _drag.subPixelatorX = [SubPixelator alloc];
     _drag.subPixelatorY = [SubPixelator alloc];
     
-    [dev receiveAxisInputAndDoSeizeDevice:NO];
+    if (inputIsPointerMovement) {
+        CGEventTapEnable(_drag.eventTap, true);
+    } else {
+        [dev receiveAxisInputAndDoSeizeDevice:YES];
+    }
+}
+
+static CGEventRef __nullable otherMouseDraggedCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef  event, void * __nullable userInfo) {
+    int64_t dx = CGEventGetIntegerValueField(event, kCGMouseEventDeltaX);
+    int64_t dy = CGEventGetIntegerValueField(event, kCGMouseEventDeltaY);
+//    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
+        [ModifiedDrag handleMouseInputWithDeltaX:dx deltaY:dy];
+//    });
+    return event;
 }
 
 + (void)handleMouseInputWithDeltaX:(int64_t)deltaX deltaY:(int64_t)deltaY {
@@ -92,7 +115,11 @@ static struct ModifiedDragState _drag;
         if (MAX(fabs(ofs.x), fabs(ofs.y)) > _drag.usageThreshold) {
             
             MFDevice *dev = _drag.modifiedDevice;
-            [dev receiveAxisInputAndDoSeizeDevice:NO];
+            if (inputIsPointerMovement) {
+                [NSCursor.closedHandCursor set]; // Doesn't work for some reason
+            } else {
+                [dev receiveAxisInputAndDoSeizeDevice:YES];
+            }
             _drag.activationState = kMFModifiedInputActivationStateInUse; // Activate modified drag input!
             [ModifierManager handleModifiersHaveHadEffect:dev.uniqueID];
             
@@ -113,24 +140,33 @@ static struct ModifiedDragState _drag;
         
     } else if (st == kMFModifiedInputActivationStateInUse) {
         
-        double s = 0.5;
-        double deltaXDouble = deltaX * s;
-        double deltaYDouble = deltaY * s;
+        double sTwoFinger;
+        double sThreeFingerH;
+        double sThreeFingerV;
+        
+        if (inputIsPointerMovement) { // With these values, the scrolling/changing spaces will follow the mouse pointer almost exactly
+            sThreeFingerH = sThreeFingerV = 3.2 / 10000.0;
+            sThreeFingerV *= 3; // Vertical doesn't follow mouse pointer anyways, so might as well scale it up
+            sTwoFinger = 1.0;
+        } else {
+            sThreeFingerH = sThreeFingerV = 5 / 10000.0;;
+            sTwoFinger = 0.5;
+        }
         
 //        NSLog(@"deltaX: %f", deltaX);
 
         if ([_drag.type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
             
             if (_drag.usageAxis == kMFAxisHorizontal) {
-                double delta = -deltaXDouble/1000.0;
+                double delta = -deltaX * sThreeFingerH;
                 [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeHorizontal phase:_drag.phase];
             } else if (_drag.usageAxis == kMFAxisVertical) {
-                double delta = deltaYDouble/1000.0;
+                double delta = deltaY * sThreeFingerV;
                 [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeVertical phase:_drag.phase];
             }
             _drag.phase = kIOHIDEventPhaseChanged;
         } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
-            [GestureScrollSimulator postGestureScrollEventWithGestureDeltaX:deltaXDouble deltaY:deltaYDouble phase:_drag.phase];
+            [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaX*sTwoFinger deltaY:deltaY*sTwoFinger phase:_drag.phase isGestureDelta:!inputIsPointerMovement];
         }
         _drag.phase = kIOHIDEventPhaseChanged;
     }
@@ -148,11 +184,15 @@ static struct ModifiedDragState _drag;
                 [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypeVertical phase:kIOHIDEventPhaseEnded];
             }
         } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
-            [GestureScrollSimulator postGestureScrollEventWithGestureDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded];
+            [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded isGestureDelta:!inputIsPointerMovement];
         }
     }
-//    CGEventTapEnable(_modifiedDrag.eventTap, false);
-    [_drag.modifiedDevice receiveOnlyButtonInput];
+    if (inputIsPointerMovement) {
+        CGEventTapEnable(_drag.eventTap, false);
+        [NSCursor.closedHandCursor pop];
+    } else {
+        [_drag.modifiedDevice receiveOnlyButtonInput];
+    }
     _drag.activationState = kMFModifiedInputActivationStateNone;
     
 //    CGAssociateMouseAndMouseCursorPosition(true); // Doesn't work

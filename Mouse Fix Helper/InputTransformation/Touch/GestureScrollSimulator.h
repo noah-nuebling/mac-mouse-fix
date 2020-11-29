@@ -17,7 +17,7 @@ typedef struct __MFVector {
     double x;
     double y;
 } MFVector;
-+ (void)postGestureScrollEventWithGestureDeltaX:(double)dx deltaY:(double)dy phase:(IOHIDEventPhaseBits)phase;
++ (void)postGestureScrollEventWithDeltaX:(double)dx deltaY:(double)dy phase:(IOHIDEventPhaseBits)phase isGestureDelta:(BOOL)isGestureDelta;
 + (void)breakMomentumScroll;
 @end
 

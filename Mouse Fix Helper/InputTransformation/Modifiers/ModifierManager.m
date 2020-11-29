@@ -22,29 +22,31 @@
 /// Modifier driven modification -> when the modification becomes active, we preemtively modify the triggers which it modifies
 #pragma mark - Load
 
-+ (void)load {
-    
-    // Create keyboard modifier event tap
-    CGEventMask mask = CGEventMaskBit(kCGEventFlagsChanged);
-    _keyboardModifierEventTap = CGEventTapCreate(kCGHIDEventTap, kCGTailAppendEventTap, kCGEventTapOptionDefault, mask, handleKeyboardModifiersHaveChanged, NULL);
-    CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _keyboardModifierEventTap, 0);
-    CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopDefaultMode);
-    CFRelease(runLoopSource);
-    
-    // Toggle keyboard modifier callbacks based on TransformationManager.remaps
-    toggleModifierEventTapBasedOnRemaps(TransformationManager.remaps);
-    
-    // Re-toggle keyboard modifier callbacks whenever TransformationManager.remaps changes
-    // TODO:! Test if this works
-    [NSNotificationCenter.defaultCenter addObserverForName:kMFNotificationNameRemapsChanged
-                                                    object:nil
-                                                     queue:nil
-                                                usingBlock:^(NSNotification * _Nonnull note) {
-#if DEBUG
-        NSLog(@"Received notification that remaps have changed");
-#endif
++ (void)initialize
+{
+    if (self == [ModifierManager class]) {
+        // Create keyboard modifier event tap
+        CGEventMask mask = CGEventMaskBit(kCGEventFlagsChanged);
+        _keyboardModifierEventTap = CGEventTapCreate(kCGHIDEventTap, kCGTailAppendEventTap, kCGEventTapOptionDefault, mask, handleKeyboardModifiersHaveChanged, NULL);
+        CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _keyboardModifierEventTap, 0);
+        CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopDefaultMode);
+        CFRelease(runLoopSource);
+        
+        // Toggle keyboard modifier callbacks based on TransformationManager.remaps
         toggleModifierEventTapBasedOnRemaps(TransformationManager.remaps);
-    }];
+        
+        // Re-toggle keyboard modifier callbacks whenever TransformationManager.remaps changes
+        // TODO:! Test if this works
+        [NSNotificationCenter.defaultCenter addObserverForName:kMFNotificationNameRemapsChanged
+                                                        object:nil
+                                                         queue:nil
+                                                    usingBlock:^(NSNotification * _Nonnull note) {
+    #if DEBUG
+            NSLog(@"Received notification that remaps have changed");
+    #endif
+            toggleModifierEventTapBasedOnRemaps(TransformationManager.remaps);
+        }];
+    }
 }
 #pragma mark - Modifier driven modification
 
@@ -178,7 +180,7 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, MFDevi
 static NSUInteger getActiveKeyboardModifiers() {
     
     uint64_t mask;
-    //mask = NSEventModifierFlagDeviceIndependentFlagsMask;
+    //mask = NSEventModifierFlagDeviceIndependentFlagsMask; // = 0xFFFF0000
         // ^ Only allows bits 16 - 31. But 24 - 31 contained weird stuff which messed up the return value and modifiers are only on bits 16-23, so we defined our own mask
     mask = 0xFF0000; // Only lets bits 16-23 through
     

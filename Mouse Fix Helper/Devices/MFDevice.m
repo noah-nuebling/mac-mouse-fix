@@ -91,6 +91,10 @@ typedef struct __IOHIDDevice
     CFMutableArrayRef               inputCallbackArray;
 } __IOHIDDevice, *__IOHIDDeviceRef;
 
+//static void printIOHIDDeviceState(IOHIDeviceRef dev) {
+//    NSLog(@"IOHID DEVICE STATE - service: %@, deviceInterface: %@, plugInInterface: %@, props: %@, elements: %@, rootKey: %@, UUIDKey: %@, notifPort:");
+//}
+
 // I think the `option` doesn't make any difference when closing a device I think. It definitely doesn't help with the CFData zombie bug
 - (void)closeWithOption:(IOOptionBits)option {
 //    CFRetain(self.IOHIDDevice); // Retaining doesn't fix it though...
@@ -108,8 +112,6 @@ typedef struct __IOHIDDevice
 /// I also think this leads to other weird issues e.g. I couldn't stop dragging an element once until I logged out. We create fake events and reinsert them into the event stream from within `MFDevice::handleInput()` if the device is seized, I think that caused it somehow.
 - (void)seize:(BOOL)B {
     
-//    return;
-    
 #if DEBUG
 //    if (B) {
 //        NSLog(@"SEIZE DEVICE");
@@ -122,45 +124,53 @@ typedef struct __IOHIDDevice
         return;
     }
     
-    if (self.isSeized) {
-        [self closeWithOption:kIOHIDOptionsTypeSeizeDevice];
-    } else {
+    // Close dev
+    if (B) {
         [self closeWithOption:0];
+    } else {
+        [self closeWithOption:kIOHIDOptionsTypeSeizeDevice];
     }
-  
-    // Thought this might help with the doodlebug. But it doesn't
-//    mach_timespec_t timeout = {
-//        .tv_sec = 5,
-//    };
-//    IOServiceWaitQuiet(self.IOHIDDevice->service, &timeout);
     
+    // Open dev
     if (B) {
         [self openWithOption:kIOHIDOptionsTypeSeizeDevice];
-        dealWithAutomaticButtonUpEventsOnDeviceSeize(self);
-        // ^ This seems to lead to a weird error where the CGEventTapCallback doesn't react opening the device unseized
+        dealWithAutomaticButtonUpEventsFromDeviceSeize(self);
     } else {
         [self openWithOption:0];
+        
+        // Trying to fix an issue where the first event after unseizing doesn't arrive in ButtonInputReceiver for some reason
+        // Solution idea 1: Tried to "initialize" IOHIDDevice after unseizing by calling functions `IOHIDDeviceGetReportWithCallback`, `IOHIDDeviceCopyMatchingElements`, `IOHIDDeviceScheduleWithRunLoop`
+        // -> Didn't work
+        // Solution idea 2: Inserting the first event after unseizing into the CG Event Stream artificially.
+        // -> Doesn't really work, because we have to translate the HID Value callbacks values into CGEvents manually - leads to problems if HID values which we are not listening to / don't know how to translate to a CGEvent change (then the next event would be sent twice, once real and once inserted)
+        // Solution idea 3: We only seize the device once the mouse pointer moves while a modified drag is active
+        // -> This stops problems from occuring in most cases but not all
+        //Solution idea 3: Try to initialize by setting a value
+        
+        CFArrayRef allElems = IOHIDDeviceCopyMatchingElements(self.IOHIDDevice, NULL, 0);
+        IOHIDElementRef firstElem = (IOHIDElementRef)CFArrayGetValueAtIndex(allElems, 0);
+        IOHIDValueRef newVal = IOHIDValueCreateWithIntegerValue(kCFAllocatorDefault, firstElem, mach_absolute_time(), 0);
+        IOHIDDeviceSetValue(self.IOHIDDevice, firstElem, newVal);
+        
     }
     
     _isSeized = B;
     
-//    registerInputCallbackForDevice(self);
 }
 
 /// When a device is seized, button up events are sent for all pressed buttons by the system.
-/// We want to tell ButtonInputReceiver where those events came from by calling `handleButtonInputFromRelevantDeviceOccured` for each currently pressed button
-static void dealWithAutomaticButtonUpEventsOnDeviceSeize(MFDevice *dev) {
-    //NSUInteger pressedButtons = NSEvent.pressedMouseButtons; // This seems to only see buttons as pressed if a mousedown CGEvent for that button has been sent
+/// We want to tell ButtonInputReceiver where those events came from by calling `handleButtonInputFromRelevantDeviceOccured` for each currently pressed button, with the `stemsFromDeviceSeize` parameter set to `YES`
+static void dealWithAutomaticButtonUpEventsFromDeviceSeize(MFDevice *dev) {
+    //NSUInteger pressedButtons = NSEvent.pressedMouseButtons; // This seems to only see buttons as pressed if a mousedown CGEvent for that button has been sent or sth
     NSArray *pressedButtons = getPressedButtons(dev);
-    
-    int i = 0;
-    for (NSNumber *b in pressedButtons) {
-        BOOL isPressed = b.intValue == 1;
+    int buttonNum = 0;
+    for (NSNumber *k in pressedButtons) {
+        BOOL isPressed = k.intValue == 1;
         if (isPressed) {
-            NSLog(@"IS PRESSED: %d", i);
-            [ButtonInputReceiver handleHIDButtonInputFromRelevantDeviceOccured:dev button:@(i+1) stemsFromDeviceSeize:YES];
+            NSLog(@"IS PRESSED WHILE SEIZING: %d", buttonNum);
+            [ButtonInputReceiver handleHIDButtonInputFromRelevantDeviceOccured:dev button:@(buttonNum+1) stemsFromDeviceSeize:YES];
         }
-        i++;
+        buttonNum++;
     }
 }
 static NSArray *getPressedButtons(MFDevice *dev) {
@@ -249,7 +259,7 @@ static int64_t _previousDeltaY;
 static void handleInput(void *context, IOReturn result, void *sender, IOHIDValueRef value) {
     
 #if DEBUG
-    //NSLog(@"HID");
+    NSLog(@"HID");
 #endif
     
     MFDevice *sendingDev = (__bridge MFDevice *)context;
@@ -266,7 +276,6 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
         
         [ButtonInputReceiver handleHIDButtonInputFromRelevantDeviceOccured:sendingDev button:@(button) stemsFromDeviceSeize:NO];
         
-        CGEventType mouseEventType = kCGEventNull;
         int64_t pressure = IOHIDValueGetIntegerValue(value);
         
 #if DEBUG
@@ -275,6 +284,7 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
         
         // Control modified actions
         
+        // v TODO: Would it be better to put this into `ButtonInputReceiver.m`? It seems to be more reliable than this function.
         [GestureScrollSimulator breakMomentumScroll]; // Momentum scroll is started, when when a modified drag of type "twoFingerSwipe" is deactivated. We break it on any button input.
 //        if (pressure == 0) { // Don't think we need this if inserting fake events works properly
 //            [ModifiedDrag deactivate];
@@ -286,42 +296,36 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
 #if DEBUG
             //NSLog(@"BUTTON INP COMES FORM SEIZED");
 #endif
-            mouseEventType = [SharedUtility CGEventTypeForButtonNumber:button isMouseDown:(pressure != 0)];
-
-            CGEventRef fakeEvent = CGEventCreateMouseEvent(NULL, mouseEventType, CGEventGetLocation(CGEventCreate(NULL)), [SharedUtility CGMouseButtonFromMFMouseButtonNumber:button]);
-            [ButtonInputReceiver insertFakeEvent:fakeEvent];
-            CFRelease(fakeEvent);
+            [ButtonInputReceiver insertFakeEventWithButton:button isMouseDown:pressure!=0];
             
         }
-        
-        return;
-    }
+    } else {
     
-    BOOL isXAxis = usagePage == kHIDPage_GenericDesktop && usage == kHIDUsage_GD_X;
-    BOOL isYAxis = usagePage == kHIDPage_GenericDesktop && usage == kHIDUsage_GD_Y;
-    
-    if (isXAxis || isYAxis) {
+        BOOL isXAxis = usagePage == kHIDPage_GenericDesktop && usage == kHIDUsage_GD_X;
+        BOOL isYAxis = usagePage == kHIDPage_GenericDesktop && usage == kHIDUsage_GD_Y;
         
-        MFAxis axis = isXAxis ? kMFAxisHorizontal : kMFAxisVertical;
-        
-        if (axis == kMFAxisVertical) {
-            _previousDeltaY = IOHIDValueGetIntegerValue(value); // Vertical axis delta value seems to always be sent before horizontal axis delta
-        } else {
-            int64_t currentDeltaX = IOHIDValueGetIntegerValue(value);
+        if (isXAxis || isYAxis) {
             
-            if (currentDeltaX != 0 || _previousDeltaY != 0) {
+            MFAxis axis = isXAxis ? kMFAxisHorizontal : kMFAxisVertical;
+            
+            if (axis == kMFAxisVertical) {
+                _previousDeltaY = IOHIDValueGetIntegerValue(value); // Vertical axis delta value seems to always be sent before horizontal axis delta
+            } else {
+                int64_t currentDeltaX = IOHIDValueGetIntegerValue(value);
                 
-                [ModifiedDrag handleMouseInputWithDeltaX:currentDeltaX deltaY:_previousDeltaY];
-                
-//                dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{ // Multithreading in hopes of preventing some issues which I assume are caused by the hid callback (this function) being processed after the CG callback when the system is under load sometimes. Not sure if the multithreading helps though.
-//                    [ModifyingActions handleMouseInputWithDeltaX:currentDeltaX deltaY:_previousDeltaY];
-//                });
+                if (currentDeltaX != 0 || _previousDeltaY != 0) {
+                    
+                    [ModifiedDrag handleMouseInputWithDeltaX:currentDeltaX deltaY:_previousDeltaY];
+                    
+    //                dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{ // Multithreading in hopes of preventing some issues which I assume are caused by the hid callback (this function) being processed after the CG callback when the system is under load sometimes. Not sure if the multithreading helps though.
+    //                    [ModifyingActions handleMouseInputWithDeltaX:currentDeltaX deltaY:_previousDeltaY];
+    //                });
+                }
             }
         }
-        
-        return;
     }
 }
+
 
 #pragma mark - Default functions
 

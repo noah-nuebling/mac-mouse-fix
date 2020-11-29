@@ -31,7 +31,7 @@ static SubPixelator *_spY;
 
 - (MFVector)intVectorWithDoubleVector:(MFVector)inpVec {
     inpVec.x = [_spX intDeltaWithDoubleDelta:inpVec.x];
-    inpVec.y = [_spX intDeltaWithDoubleDelta:inpVec.y];
+    inpVec.y = [_spY intDeltaWithDoubleDelta:inpVec.y];
     return inpVec;
 }
 

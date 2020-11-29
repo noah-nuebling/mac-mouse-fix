@@ -11,6 +11,7 @@
 #import <Cocoa/Cocoa.h>
 #import "IOKit/hid/IOHIDManager.h"
 #import "MFDevice.h"
+#import "Constants.h"
 
 
 @interface ButtonInputReceiver : NSObject
@@ -43,7 +44,7 @@ typedef enum {
 
 + (void)decide;
 
-+ (void)insertFakeEvent:(CGEventRef)event;
++ (void)insertFakeEventWithButton:(MFMouseButtonNumber)button isMouseDown:(BOOL)isMouseDown;
 
 + (void)handleHIDButtonInputFromRelevantDeviceOccured:(MFDevice *)dev button:(NSNumber *)btn stemsFromDeviceSeize:(BOOL)stemsFromSeize;
 + (BOOL)allRelevantButtonInputsHaveBeenProcessed;

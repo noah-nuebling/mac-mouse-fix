@@ -47,16 +47,14 @@
 // All of the CG APIs use a flipped coordinate system
 + (CGPoint)getCurrentPointerLocation_flipped {
     
-    NSPoint loc = [self getCurrentPointerLocation];
+    NSPoint loc = NSEvent.mouseLocation;
     
-    NSAffineTransform* xform = [NSAffineTransform transform];
-    [xform translateXBy:0.0 yBy:NSScreen.mainScreen.frame.size.height];
-    [xform scaleXBy:1.0 yBy:-1.0];
-    [xform transformPoint:loc];
+//    NSAffineTransform* xform = [NSAffineTransform transform];
+//    [xform translateXBy:0.0 yBy:NSScreen.mainScreen.frame.size.height];
+//    [xform scaleXBy:1.0 yBy:-1.0];
+//    [xform transformPoint:loc];
     
-    NSLog(@"PointerLoc flipped: x:%f, y:%f", loc.x, loc.y);
-    
-    return (CGPoint)loc;
+    return NSPointFromCGPointWithCoordinateConversion(loc);
 }
 
 // All of the CG APIs use a flipped coordinate system
@@ -66,9 +64,22 @@
     CFRelease(locEvent);
     return loc;
 }
-+ (NSPoint)getCurrentPointerLocation {
-    return NSEvent.mouseLocation;
+NSPoint NSPointFromCGPointWithCoordinateConversion(CGPoint cgPoint) {
+    return NSMakePoint(cgPoint.x, zeroScreenHeight() - cgPoint.y);
 }
+NSRect NSRectFromCGRectWithCoordinateConversion(CGRect cgRect) {
+    return NSMakeRect(cgRect.origin.x,  zeroScreenHeight() - cgRect.origin.y -
+    cgRect.size.height, cgRect.size.width, cgRect.size.height);
+}
+
+CGFloat zeroScreenHeight(void) {
+   CGFloat result = 0;
+   NSArray *screens = [NSScreen screens];
+   if ([screens count] > 0) result = NSHeight([[screens objectAtIndex:
+0] frame]);
+   return result;
+}
+
 
 // -> Might wanna use this in some situations instead of [timer invalidate]
 // After calling invalidate on a timer it is automatically released but the pointer to the timer is not set to nil

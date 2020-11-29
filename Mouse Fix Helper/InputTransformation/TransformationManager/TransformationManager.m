@@ -31,7 +31,6 @@ NSDictionary *_remaps;
     return _remaps;
 }
 
-
 #pragma mark - Dummy Data
 
 NSArray *_remapsUI;

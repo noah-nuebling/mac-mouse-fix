@@ -46,11 +46,17 @@ static VectorSubPixelator *_scrollPixelator;
  \note In order to minimize momentum scrolling,  send an event with a very small but non-zero scroll delta before calling the function with phase kIOHIDEventPhaseEnded.
  \note For more info on which delta values and which phases to use, see the documentation for `postGestureScrollEventWithGestureDeltaX:deltaY:phase:momentumPhase:scrollDeltaConversionFunction:scrollPointDeltaConversionFunction:`. In contrast to the aforementioned function, you shouldn't need to call this function with kIOHIDEventPhaseUndefined.
 */
-+ (void)postGestureScrollEventWithGestureDeltaX:(double)dx deltaY:(double)dy phase:(IOHIDEventPhaseBits)phase {
++ (void)postGestureScrollEventWithDeltaX:(double)dx deltaY:(double)dy phase:(IOHIDEventPhaseBits)phase isGestureDelta:(BOOL)isGestureDelta {
     
 #if DEBUG
 //    NSLog(@"GESTURE DELTAS: %f, %f, PHASE: %d", dx, dy, phase);
 #endif
+    
+    CGPoint loc = CGEventGetLocation(CGEventCreate(NULL));
+    if (!isGestureDelta) {
+        loc.x += dx;
+        loc.y += dy;
+    }
     
     if (phase != kIOHIDEventPhaseEnded) {
         
@@ -60,9 +66,18 @@ static VectorSubPixelator *_scrollPixelator;
             return;
         }
         
-        MFVector vecGesture = { .x = dx, .y = dy };
-        MFVector vecScrollPoint = scrollPointVectorWithGestureVector(vecGesture);
-        MFVector vecScroll = scrollVectorWithScrollPointVector(vecScrollPoint);
+        MFVector vecGesture;
+        MFVector vecScrollPoint;
+        MFVector vecScroll;
+        if (isGestureDelta) {
+            vecGesture = (MFVector){ .x = dx, .y = dy };
+            vecScrollPoint = scrollPointVectorWithGestureVector(vecGesture);
+            vecScroll = scrollVectorWithScrollPointVector(vecScrollPoint);
+        } else { // Is scroll point delta
+            vecScrollPoint = (MFVector){ .x = dx, .y = dy };
+            vecGesture = gestureVectorFromScrollPointVector(vecScrollPoint);
+            vecScroll = scrollVectorWithScrollPointVector(vecScrollPoint);
+        }
         
         vecGesture = [_gesturePixelator intVectorWithDoubleVector:vecGesture];
         vecScrollPoint = [_scrollPointPixelator intVectorWithDoubleVector:vecScrollPoint];
@@ -75,16 +90,21 @@ static VectorSubPixelator *_scrollPixelator;
                                          scrollVector:vecScroll
                                     scrollVectorPoint:vecScrollPoint
                                                 phase:phase
-                                        momentumPhase:kCGMomentumScrollPhaseNone];
+                                        momentumPhase:kCGMomentumScrollPhaseNone
+         locaction:loc];
     } else {
         [self postGestureScrollEventWithGestureVector:(MFVector){}
                                          scrollVector:(MFVector){}
                                     scrollVectorPoint:(MFVector){}
                                                 phase:kIOHIDEventPhaseEnded
-                                        momentumPhase:0];
+                                        momentumPhase:0
+                                             locaction:loc];
         
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
-            startPostingMomentumScrollEventsWithInitialGestureVector(_lastInputGestureVector, 0.016, 1.0, 4, 1.0);
+            //startPostingMomentumScrollEventsWithInitialGestureVector(_lastInputGestureVector, 0.016, 1.0, 4, 1.0);
+            double dragCoeff = 8; // Easier to scroll far, kinda nice on a mouse, end still pretty realistic // Got these values by just seeing what feels good
+            double dragExp = 0.8;
+            startPostingMomentumScrollEventsWithInitialGestureVector(_lastInputGestureVector, 0.016, 1.0, dragCoeff, dragExp);
         });
     }
 }
@@ -104,7 +124,8 @@ static VectorSubPixelator *_scrollPixelator;
                                    scrollVector:(MFVector)vecScroll
                               scrollVectorPoint:(MFVector)vecScrollPoint
                                           phase:(IOHIDEventPhaseBits)phase
-                                  momentumPhase:(CGMomentumScrollPhase)momentumPhase {
+                                  momentumPhase:(CGMomentumScrollPhase)momentumPhase
+                                      locaction:(CGPoint)loc {
     
     
 //    printf("Posting gesture scroll event with delta values:\n");
@@ -137,8 +158,14 @@ static VectorSubPixelator *_scrollPixelator;
     CGEventSetDoubleValueField(e22, 99, phase);
     CGEventSetDoubleValueField(e22, 123, momentumPhase);
     
+    // Testing
+    
+//    CGPoint flippedNSLoc = [Utility_HelperApp getCurrentPointerLocation_flipped];
+//    CGPoint CGLoc = CGEventGetLocation(CGEventCreate(NULL));
+//    NSLog(@"\nFLIPPED NS: %f, %f \nCG: %f, %f", flippedNSLoc.x, flippedNSLoc.y, CGLoc.x, CGLoc.y);
+    
     // Post t22s0 event
-//    CGEventSetLocation(e22, loc);
+    CGEventSetLocation(e22, [Utility_HelperApp getCurrentPointerLocation_flipped]);
     CGEventPost(kCGHIDEventTap, e22);
     CFRelease(e22);
     
@@ -172,7 +199,7 @@ static VectorSubPixelator *_scrollPixelator;
         CGEventSetIntegerValueField(e29, 132, phase);
         
         // Post t29s6 events
-//        CGEventSetLocation(e29, loc);
+        CGEventSetLocation(e29, [Utility_HelperApp getCurrentPointerLocation_flipped]);
         CGEventPost(kCGHIDEventTap, e29);
         //    printEvent(e29);
         CFRelease(e29);
@@ -203,11 +230,8 @@ static void startPostingMomentumScrollEventsWithInitialGestureVector(MFVector in
             NSLog(@"BREAKING MOMENTUM SCROLL");
             break;
         }
-        [GestureScrollSimulator postGestureScrollEventWithGestureVector:emptyVec
-                                         scrollVector:vec
-                                    scrollVectorPoint:vecPt
-                                                phase:kIOHIDEventPhaseUndefined
-                                        momentumPhase:ph];
+        CGPoint loc = CGEventGetLocation(CGEventCreate(NULL));
+        [GestureScrollSimulator postGestureScrollEventWithGestureVector:emptyVec scrollVector:vec scrollVectorPoint:vecPt phase:kIOHIDEventPhaseUndefined momentumPhase:ph locaction:loc];
         
         [NSThread sleepForTimeInterval:tick];
         CFTimeInterval ts = CACurrentMediaTime();
@@ -220,19 +244,18 @@ static void startPostingMomentumScrollEventsWithInitialGestureVector(MFVector in
         ph = kCGMomentumScrollPhaseContinue;
         
     }
-    
+    CGPoint loc = CGEventGetLocation(CGEventCreate(NULL));
     [GestureScrollSimulator postGestureScrollEventWithGestureVector:emptyVec
                                                        scrollVector:emptyVec
                                                   scrollVectorPoint:emptyVec
                                                               phase:kIOHIDEventPhaseUndefined
-                                                      momentumPhase:kCGMomentumScrollPhaseEnd];
+                                                      momentumPhase:kCGMomentumScrollPhaseEnd
+                                                          locaction:loc];
     _momentumScrollIsActive = false;
     
 }
 
 static MFVector momentumScrollPointVectorWithPreviousVector(MFVector velocity, double dragCoeff, double dragExp, double timeDelta) {
-    
-    dragExp = 0.8; dragCoeff = 8; // Easier to scroll far, kinda nice on a mouse, end still pretty realistic // Got these values by just seeing what feels good
     
     double a = magnitudeOfVector(velocity);
     double b = pow(a, dragExp);
@@ -252,26 +275,35 @@ static MFVector momentumScrollPointVectorWithPreviousVector(MFVector velocity, d
     }
     return newVelocity;
 }
-static MFVector scrollVectorWithScrollPointVector(MFVector vec) {
+
+typedef double (^VectorScalerFunction)(double);
+static MFVector scaledVectorWithFunction(MFVector vec, VectorScalerFunction f) {
     double magIn = magnitudeOfVector(vec);
-    if (magIn == 0) { // To prevent division by 0 from producing nan
-        return (MFVector){};
-    }
-    double magOut = 0.1 * (magIn-1); // Approximation from looking at real trackpad events
+    if (magIn == 0) return (MFVector){0};  // To prevent division by 0 from producing nan
+    double magOut = f(magIn);
     double scale = magOut / magIn;
     return scaledVector(vec, scale);
 }
+static MFVector scrollVectorWithScrollPointVector(MFVector vec) {
+    VectorScalerFunction f = ^double(double x) {
+        return 0.1 * (x-1); // Approximation from looking at real trackpad events
+    };
+    return scaledVectorWithFunction(vec, f);
+}
 static MFVector scrollPointVectorWithGestureVector(MFVector vec) {
-    double magIn = magnitudeOfVector(vec);
-    if (magIn == 0) return (MFVector){};  // To prevent division by 0 from producing nan
-    
-
-//    double magOut = 0.01 * pow(magIn, 2) + 0.3 * magIn; // Got these values through curve fitting
-//    double magOut = 0.05 * pow(magIn, 2) + 0.8 * magIn; // These feel better for mouse
-    double magOut = 0.08 * pow(magIn, 2) + 0.8 * magIn; // Even better feel - precise and fast at the same time
-
-    double scale = magOut / magIn;
-    return scaledVector(vec, scale);
+    VectorScalerFunction f = ^double(double x) {
+        //    double magOut = 0.01 * pow(magIn, 2) + 0.3 * magIn; // Got these values through curve fitting
+        //    double magOut = 0.05 * pow(magIn, 2) + 0.8 * magIn; // These feel better for mouse
+        return 0.08 * pow(x, 2) + 0.8 * x; // Even better feel - precise and fast at the same time
+    };
+    return scaledVectorWithFunction(vec, f);
+}
+static MFVector gestureVectorFromScrollPointVector(MFVector vec) {
+    VectorScalerFunction f = ^double(double x) {
+//        return 0.54 * x; // For input pixels to equal animation pixels
+        return x;
+    };
+    return scaledVectorWithFunction(vec, f);
 }
 
 static MFVector initalMomentumScrollPointVectorWithGestureVector(MFVector vec) {

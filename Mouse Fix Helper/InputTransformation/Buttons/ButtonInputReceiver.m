@@ -12,6 +12,7 @@
 #import <IOKit/hid/IOHIDManager.h>
 #import "ButtonTriggerGenerator.h"
 #import "MFQueue.h"
+#import "SharedUtility.h"
 
 
 @implementation ButtonInputReceiver
@@ -59,14 +60,20 @@ static void registerInputCallback() {
     CFRelease(runLoopSource);
 }
 
-+ (void)insertFakeEvent:(CGEventRef)event {
++ (void)insertFakeEventWithButton:(MFMouseButtonNumber)button isMouseDown:(BOOL)isMouseDown {
     
     NSLog(@"Inserting event");
     
-    CGEventRef ret = handleInput(0,0,event,nil);
+    // Create event
+    CGEventType mouseEventType = [SharedUtility CGEventTypeForButtonNumber:button isMouseDown:isMouseDown];
+    CGEventRef fakeEvent = CGEventCreateMouseEvent(NULL, mouseEventType, CGEventGetLocation(CGEventCreate(NULL)), [SharedUtility CGMouseButtonFromMFMouseButtonNumber:button]);    
+    // Insert event
+    CGEventRef ret = handleInput(0, CGEventGetType(fakeEvent), fakeEvent, nil);
     if (ret) {
         CGEventPost(kCGSessionEventTap, ret);
     }
+    
+    CFRelease(fakeEvent);
 }
 
 /// _buttonInputsFromRelevantDevices is a queue with one entry for each unhandled button input coming from a relevant device
@@ -97,6 +104,10 @@ NSArray *_buttonParseBlacklist; // Don't send inputs from these buttons to Butto
 
 CGEventRef handleInput(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
+#if DEBUG
+    NSLog(@"RECEIVING CG BUTTON INPUT - %@", [NSEvent eventWithCGEvent:event]);
+#endif
+    
     if ([_buttonInputsFromRelevantDevices isEmpty]) return event;
     
     NSDictionary *lastInputFromRelevantDevice = [_buttonInputsFromRelevantDevices dequeue];
@@ -113,7 +124,7 @@ CGEventRef handleInput(CGEventTapProxy proxy, CGEventType type, CGEventRef event
     
     long long pr = CGEventGetIntegerValueField(event, kCGMouseEventPressure);
     MFButtonInputType triggertType = pr == 0 ? kMFButtonInputTypeButtonUp : kMFButtonInputTypeButtonDown;
-    
+        
     MFEventPassThroughEvaluation eval = [ButtonTriggerGenerator parseInputWithButton:@(buttonNumber) triggerType:triggertType inputDevice:dev];
     if (eval == kMFEventPassThroughRefusal) {
         return nil;

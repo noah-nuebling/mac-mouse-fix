@@ -22,7 +22,7 @@
 #pragma mark - Definition of private helper class `Button State`
 
 // Instaces of this helper class describe the state of a single button on an input device
-// The `_state` class variable of `ButtonInputParser` is a collection of `ButtonState` instances
+// The `_state` class variable of `ButtonInputParser` (renamed to ButtonTriggerGenerator) is a collection of `ButtonState` instances
 @interface ButtonState : NSObject
 - (instancetype)init NS_UNAVAILABLE;
 @property NSTimer *holdTimer;
@@ -64,7 +64,7 @@
     @synchronized (self) {
         _isPressed = isPressed;
     }
-    if (!isPressed) { // Whenever isPressed becomes true, clickLevel is also modified, so we don't need to notify modifier change in that case
+    if (!isPressed) { // Whenever isPressed becomes true, clickLevel is also modified, so we don't need to notify for modifier change in that case
         [ModifierManager handleButtonModifiersMightHaveChangedWithDevice:self.device];
     }
 }
@@ -94,7 +94,7 @@ static NSMutableDictionary *_state;
 + (MFEventPassThroughEvaluation)parseInputWithButton:(NSNumber *)btn triggerType:(MFButtonInputType)triggerType inputDevice:(MFDevice *)device {
     
 #if DEBUG
-    //NSLog(@"BUTTON INPUT - btn: %@, trigger %@", btn, @(triggerType));
+    NSLog(@"PARSING BUTTON INPUT - btn: %@, trigger %@", btn, @(triggerType));
 #endif
     
     // Declare passThroughEval (return value)
@@ -253,8 +253,8 @@ static void resetAllState() {
 
 #pragma mark Zombify
 
-// Zombification is kinda like a frozen mouse down state. No more triggers are sent and on the next mouse up event, state will be fully reset. But clickLevel won't be reset.
-// With the click level not being reset the button can still be used as a modifier for other triggers.
+// Zombification is kinda like a frozen mouse down state. No more triggers are sent and on the next mouse up event, state will be fully reset. But clickLevel won't be reset when zombifying.
+// With the click level not being reset the button can still be used as a modifier for other triggers while it's held down.
 static void zombifyWithDevice(NSNumber *devID, NSNumber *btn) {
     
 #if DEBUG
@@ -314,8 +314,8 @@ static void neuterAllButtonsOnDeviceExcept(NSNumber *devID, NSNumber *exceptedBt
 #pragma mark - Helper
 
 static BOOL buttonIsPressed(NSNumber *devID, NSNumber *btn) {
-    ButtonState *bs = _state[devID][btn];
     //return [bs.holdTimer isValid] || bs.isZombified;
+    ButtonState *bs = _state[devID][btn];
     return bs.isPressed;
 }
 
