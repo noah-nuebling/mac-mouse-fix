@@ -190,7 +190,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     // mouse button 4 and 5
     
     // enabled checkbox
-    if ([buttonRemaps[@"inverted"] boolValue] == 1) {
+    if ([buttonRemaps[@"sideButtonsInverted"] boolValue] == 1) {
         _sideInvertedCheckBox.state = 1;
     }
     else {
@@ -331,7 +331,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
     // side buttons         // tag = 1 -> Switch Spaces, tag = 2 -> Switch Pages
     
-    [ConfigFileInterface_PrefPane.config setValue:[NSNumber numberWithBool: _sideInvertedCheckBox.state] forKeyPath:@"ButtonRemaps.inverted"];
+    [ConfigFileInterface_PrefPane.config setValue:[NSNumber numberWithBool: _sideInvertedCheckBox.state] forKeyPath:@"ButtonRemaps.sideButtonsInverted"];
     
     // click
     NSArray *sideButtonClickAction = [actionsForPopupButtonTag_onlyForSideMouseButtons objectForKey:@(_sideClick.selectedTag)];

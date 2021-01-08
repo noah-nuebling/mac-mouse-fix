@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15705" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15705"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -17,53 +17,32 @@
                 <outlet property="scrollEnableCheckBox" destination="9lG-eT-nD4" id="I9C-UC-jUf"/>
                 <outlet property="scrollSliderStepSize" destination="mXj-a7-rFw" id="M90-7j-Mao"/>
                 <outlet property="sideClick" destination="hGG-fg-G7L" id="p2t-bQ-dyM"/>
+                <outlet property="sideInvertedCheckBox" destination="JLd-cz-hi3" id="6jH-l1-T3E"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="≪ do not localize ≫" autorecalculatesKeyViewLoop="NO" restorable="NO" deferred="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="F0z-JX-Cv5" userLabel="PrefPane">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
-            <rect key="contentRect" x="0.0" y="0.0" width="668" height="267"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="contentRect" x="0.0" y="0.0" width="668" height="287"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1080"/>
             <view key="contentView" identifier="mainView" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="0.0" width="668" height="267"/>
+                <rect key="frame" x="0.0" y="0.0" width="668" height="287"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view identifier="baseView" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5ZP-Jh-Lwi">
-                        <rect key="frame" x="0.0" y="0.0" width="668" height="267"/>
+                        <rect key="frame" x="0.0" y="0.0" width="668" height="287"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X4G-pr-ROY">
-                                <rect key="frame" x="571" y="231" width="83" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="push" title="More..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Zt5-Jw-SMN">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="moreButton:" target="-2" id="jpd-Av-fXJ"/>
-                                </connections>
-                            </button>
-                            <button toolTip="Enable Mouse Fix for a better mouse experience!" verticalHuggingPriority="750" fixedFrame="YES" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vqy-WZ-nG6">
-                                <rect key="frame" x="18" y="240" width="157" height="18"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="check" title="Enable Mac Mouse Fix" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="G70-nk-4Vw">
-                                    <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="enableCheckBox:" target="-2" id="Oco-Bw-9Zw"/>
-                                </connections>
-                            </button>
                             <box identifier="preferenceBox" autoresizesSubviews="NO" fixedFrame="YES" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="nmi-Qw-Ncm">
-                                <rect key="frame" x="17" y="16" width="634" height="217"/>
+                                <rect key="frame" x="17" y="16" width="634" height="240"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" id="IVL-q6-nHn">
-                                    <rect key="frame" x="3" y="3" width="628" height="211"/>
+                                    <rect key="frame" x="3" y="3" width="628" height="234"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <button identifier="scrollCheckBox" toolTip="Awesome Tricks: Shift to scroll horizontally, Command to zoom!" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9lG-eT-nD4">
-                                            <rect key="frame" x="80" y="46" width="128" height="18"/>
+                                            <rect key="frame" x="79" y="48" width="128" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Smooth scrolling:" bezelStyle="regularSquare" imagePosition="left" enabled="NO" state="on" inset="2" id="aqu-LA-LU4">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -74,7 +53,7 @@
                                             </connections>
                                         </button>
                                         <slider toolTip="How many pixels to scroll for each mouse wheel tick." verticalHuggingPriority="750" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mXj-a7-rFw">
-                                            <rect key="frame" x="238" y="39" width="151" height="25"/>
+                                            <rect key="frame" x="237" y="41" width="151" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <sliderCell key="cell" enabled="NO" state="on" alignment="left" identifier="scrollSpeedSlider" maxValue="1" doubleValue="0.5" tickMarkPosition="below" numberOfTickMarks="7" allowsTickMarkValuesOnly="YES" sliderType="linear" id="0NZ-eS-HsP"/>
                                             <connections>
@@ -82,7 +61,7 @@
                                             </connections>
                                         </slider>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C2V-av-8kq">
-                                            <rect key="frame" x="264" y="70" width="102" height="17"/>
+                                            <rect key="frame" x="263" y="72" width="102" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Scrolling speed" id="9F6-l7-3Jh">
                                                 <font key="font" metaFont="system"/>
@@ -91,7 +70,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField toolTip="Scroll fewer pixels per mouse wheel tick." horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dzx-1i-bZ6">
-                                            <rect key="frame" x="232" y="18" width="29" height="14"/>
+                                            <rect key="frame" x="231" y="20" width="29" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Slow" id="GKV-Mh-wiX">
                                                 <font key="font" metaFont="message" size="11"/>
@@ -100,7 +79,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField toolTip="Scroll more pixels per mouse wheel tick." horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V4c-hh-3HL">
-                                            <rect key="frame" x="366" y="18" width="26" height="14"/>
+                                            <rect key="frame" x="365" y="20" width="26" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Fast" id="xi0-4q-Wib">
                                                 <font key="font" metaFont="message" size="11"/>
@@ -109,7 +88,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <button identifier="invertScroll" toolTip="Inverts mouse scrolling direction relative to trackpad scrolling direction." verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ip8-aI-or8">
-                                            <rect key="frame" x="452" y="46" width="114" height="18"/>
+                                            <rect key="frame" x="451" y="48" width="114" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Invert direction" bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" state="on" inset="2" id="uNi-ZH-WXu">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -120,11 +99,11 @@
                                             </connections>
                                         </button>
                                         <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="oyA-83-fW6">
-                                            <rect key="frame" x="20" y="97" width="588" height="5"/>
+                                            <rect key="frame" x="19" y="99" width="588" height="5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         </box>
                                         <textField toolTip="Also known as mouse button 3." horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3tH-WK-EGo">
-                                            <rect key="frame" x="117" y="163" width="92" height="17"/>
+                                            <rect key="frame" x="117" y="186" width="92" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Middle button:" id="8eH-tB-oJ9">
                                                 <font key="font" metaFont="system"/>
@@ -133,7 +112,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3PI-Jk-8AJ">
-                                            <rect key="frame" x="299" y="183" width="30" height="14"/>
+                                            <rect key="frame" x="299" y="206" width="30" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Click" id="FYX-9Z-Ok7">
                                                 <font key="font" metaFont="message" size="11"/>
@@ -142,11 +121,11 @@
                                             </textFieldCell>
                                         </textField>
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jX4-ua-75H">
-                                            <rect key="frame" x="225" y="157" width="180" height="25"/>
+                                            <rect key="frame" x="225" y="180" width="180" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="Middle button" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="U6a-n1-4au" id="Ks7-4K-rqX">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" metaFont="menu"/>
                                                 <menu key="menu" id="8up-Bb-BCh">
                                                     <items>
                                                         <menuItem title="Middle button" state="on" toolTip="Leave button behavior unchanged." id="U6a-n1-4au"/>
@@ -164,7 +143,7 @@
                                             </popUpButtonCell>
                                         </popUpButton>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8vf-dW-FZC">
-                                            <rect key="frame" x="495" y="183" width="29" height="14"/>
+                                            <rect key="frame" x="495" y="206" width="29" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Hold" id="d0e-E7-HgZ">
                                                 <font key="font" metaFont="message" size="11"/>
@@ -173,11 +152,11 @@
                                             </textFieldCell>
                                         </textField>
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eIj-eG-exO">
-                                            <rect key="frame" x="420" y="157" width="180" height="25"/>
+                                            <rect key="frame" x="420" y="180" width="180" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="-" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="gLf-sd-t5o" id="Moi-Bx-VlN">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" metaFont="menu"/>
                                                 <menu key="menu" id="FBp-La-D1V">
                                                     <items>
                                                         <menuItem title="-" state="on" toolTip="No action." id="gLf-sd-t5o"/>
@@ -195,7 +174,7 @@
                                             </connections>
                                         </popUpButton>
                                         <textField toolTip="Also known as mouse buttons 4 and 5." horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hoz-yF-xwc">
-                                            <rect key="frame" x="124" y="118" width="85" height="17"/>
+                                            <rect key="frame" x="124" y="141" width="85" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Side buttons:" id="nm0-59-6Va">
                                                 <font key="font" metaFont="system"/>
@@ -204,7 +183,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qdE-jo-bVr">
-                                            <rect key="frame" x="298" y="136" width="30" height="14"/>
+                                            <rect key="frame" x="298" y="159" width="30" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Click" id="q25-k0-Pva">
                                                 <font key="font" metaFont="message" size="11"/>
@@ -213,11 +192,11 @@
                                             </textFieldCell>
                                         </textField>
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hGG-fg-G7L">
-                                            <rect key="frame" x="225" y="112" width="180" height="25"/>
+                                            <rect key="frame" x="225" y="135" width="180" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="Side buttons" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="1a7-0y-cIV" id="9Hx-yi-NA0">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" metaFont="menu"/>
                                                 <menu key="menu" id="Ao4-cS-trT">
                                                     <items>
                                                         <menuItem title="Side buttons" state="on" toolTip="Leave button behavior unchanged." id="1a7-0y-cIV"/>
@@ -232,7 +211,7 @@
                                             </connections>
                                         </popUpButton>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JLd-cz-hi3">
-                                            <rect key="frame" x="421" y="120" width="175" height="14"/>
+                                            <rect key="frame" x="226" y="118" width="175" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Inverted" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Oyb-3u-J4U">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -245,6 +224,28 @@
                                     </subviews>
                                 </view>
                             </box>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X4G-pr-ROY">
+                                <rect key="frame" x="571" y="252" width="83" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <buttonCell key="cell" type="push" title="More..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Zt5-Jw-SMN">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="moreButton:" target="-2" id="jpd-Av-fXJ"/>
+                                </connections>
+                            </button>
+                            <button toolTip="Enable Mouse Fix for a better mouse experience!" verticalHuggingPriority="750" fixedFrame="YES" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vqy-WZ-nG6">
+                                <rect key="frame" x="18" y="261" width="157" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <buttonCell key="cell" type="check" title="Enable Mac Mouse Fix" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="G70-nk-4Vw">
+                                    <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="enableCheckBox:" target="-2" id="Oco-Bw-9Zw"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                 </subviews>
@@ -252,7 +253,7 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="NRd-Cj-iVg"/>
             </connections>
-            <point key="canvasLocation" x="91" y="0.5"/>
+            <point key="canvasLocation" x="88" y="22.5"/>
         </window>
         <menuItem title="Launchpad" tag="160" id="9rC-Ff-2hb"/>
     </objects>
