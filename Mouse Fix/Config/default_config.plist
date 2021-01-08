@@ -13,6 +13,8 @@
 	</dict>
 	<key>ButtonRemaps</key>
 	<dict>
+		<key>inverted</key>
+		<false/>
 		<key>5</key>
 		<dict>
 			<key>single</key>

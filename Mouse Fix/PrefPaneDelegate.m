@@ -44,6 +44,7 @@
 @property (weak) IBOutlet NSPopUpButton *middleClick;
 @property (weak) IBOutlet NSPopUpButton *middleHold;
 @property (weak) IBOutlet NSPopUpButton *sideClick;
+@property (weak) IBOutlet NSButton *sideInvertedCheckBox;
 //@property (weak) IBOutlet NSPopUpButton *sideHold;
 
 @property (strong) MoreSheet *moreSheetDelegate;
@@ -188,6 +189,14 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
     // mouse button 4 and 5
     
+    // enabled checkbox
+    if ([buttonRemaps[@"inverted"] boolValue] == 1) {
+        _sideInvertedCheckBox.state = 1;
+    }
+    else {
+        _sideInvertedCheckBox.state = 0;
+    }
+    
     // click
     long i;
     NSString *eventTypeSideClick = buttonRemaps[@"4"][@"single"][@"click"][0];
@@ -322,10 +331,17 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
     // side buttons         // tag = 1 -> Switch Spaces, tag = 2 -> Switch Pages
     
+    [ConfigFileInterface_PrefPane.config setValue:[NSNumber numberWithBool: _sideInvertedCheckBox.state] forKeyPath:@"ButtonRemaps.inverted"];
+    
     // click
     NSArray *sideButtonClickAction = [actionsForPopupButtonTag_onlyForSideMouseButtons objectForKey:@(_sideClick.selectedTag)];
-    [ConfigFileInterface_PrefPane.config setValue:sideButtonClickAction[0] forKeyPath:@"ButtonRemaps.4.single.click"];
-    [ConfigFileInterface_PrefPane.config setValue:sideButtonClickAction[1] forKeyPath:@"ButtonRemaps.5.single.click"];
+    if (_sideInvertedCheckBox.state == 1) {
+        [ConfigFileInterface_PrefPane.config setValue:sideButtonClickAction[0] forKeyPath:@"ButtonRemaps.5.single.click"];
+        [ConfigFileInterface_PrefPane.config setValue:sideButtonClickAction[1] forKeyPath:@"ButtonRemaps.4.single.click"];
+    } else {
+        [ConfigFileInterface_PrefPane.config setValue:sideButtonClickAction[0] forKeyPath:@"ButtonRemaps.4.single.click"];
+        [ConfigFileInterface_PrefPane.config setValue:sideButtonClickAction[1] forKeyPath:@"ButtonRemaps.5.single.click"];
+    }
     
     // hold
 //    NSArray *sideButtonHoldAction = [actionsForPopupButtonTag_onlyForSideMouseButtons objectForKey:@(_sideHold.selectedTag)];

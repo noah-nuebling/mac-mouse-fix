@@ -231,6 +231,17 @@
                                                 <action selector="UIChanged:" target="-2" id="xRU-Eq-jus"/>
                                             </connections>
                                         </popUpButton>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JLd-cz-hi3">
+                                            <rect key="frame" x="421" y="120" width="175" height="14"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="check" title="Inverted" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Oyb-3u-J4U">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="UIChanged:" target="-2" id="ckr-dA-znb"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                 </view>
                             </box>

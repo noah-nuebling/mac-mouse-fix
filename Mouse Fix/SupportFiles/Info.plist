@@ -17,7 +17,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>0.9.2</string>
 	<key>CFBundleVersion</key>
-	<string>304</string>
+	<string>314</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2019 Noah Nuebling (MIT License)</string>
 	<key>NSMainNibFile</key>
