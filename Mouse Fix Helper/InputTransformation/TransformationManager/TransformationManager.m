@@ -41,15 +41,14 @@ NSArray *_remapsUI;
                         @(1): @{                                            // Key: level
                                 kMFButtonTriggerDurationClick: @[                                   // Key: click/hold, value: array of actions
                                         @{
-                                            kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
-                                            kMFActionDictKeyMouseButtonClicksVariantButtonNumber: @(1),
-                                            kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks: @(2),
+                                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+                                            kMFActionDictKeyVariant:@(kMFSHMissionControl)
                                         },
                                 ],
                                 kMFButtonTriggerDurationHold: @[                                  // Key: click/hold, value: array of actions
                                         @{
                                             kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-                                            kMFActionDictKeyVariant: @(32),
+                                            kMFActionDictKeyVariant: @(kMFSHShowDesktop),
                                         },
                                 ],
                                 
@@ -93,7 +92,7 @@ NSArray *_remapsUI;
         
         @{                                                          // Key: modifier dict
             kMFModificationPreconditionKeyButtons: @{
-                    @(4): @(1),                                      // btn, lvl
+                    @(3): @(1),                                      // btn, lvl
             },
         }: @{
                 kMFRemapsKeyModifiedDrag: kMFModifiedDragTypeThreeFingerSwipe,
@@ -101,7 +100,7 @@ NSArray *_remapsUI;
         
         @{
             kMFModificationPreconditionKeyButtons: @{
-                    @(5): @(1),
+                    @(3): @(2),
             },
         }: @{
                 kMFRemapsKeyModifiedDrag: kMFModifiedDragTypeTwoFingerSwipe,
