@@ -40,7 +40,8 @@ struct ModifiedDragState {
 
 static struct ModifiedDragState _drag;
 
-BOOL inputIsPointerMovement = NO;
+#define scrollDispatchDelay 0 // In ms // Thought this would help when using pointer movement as input, but it doesn't
+#define inputIsPointerMovement YES
 // There are two different modes for how we receive mouse input, toggle to switch between the two for testing
 // Set to no, if you want input to be raw mouse input, set to yes if you want input to be mouse pointer delta
 // Raw input has better performance (?) and allows for blocking mouse pointer movement. Mouse pointer input makes all the animation follow the pointer, but it has some issues with the pointer jumping when the framerate is low which I'm not quite sure how to fix.
@@ -82,16 +83,14 @@ BOOL inputIsPointerMovement = NO;
     if (inputIsPointerMovement) {
         CGEventTapEnable(_drag.eventTap, true);
     } else {
-        [dev receiveAxisInputAndDoSeizeDevice:YES];
+        [dev receiveAxisInputAndDoSeizeDevice:NO];
     }
 }
 
 static CGEventRef __nullable otherMouseDraggedCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef  event, void * __nullable userInfo) {
     int64_t dx = CGEventGetIntegerValueField(event, kCGMouseEventDeltaX);
     int64_t dy = CGEventGetIntegerValueField(event, kCGMouseEventDeltaY);
-//    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
-        [ModifiedDrag handleMouseInputWithDeltaX:dx deltaY:dy];
-//    });
+    [ModifiedDrag handleMouseInputWithDeltaX:dx deltaY:dy];
     return event;
 }
 
@@ -118,7 +117,9 @@ static CGEventRef __nullable otherMouseDraggedCallback(CGEventTapProxy proxy, CG
             if (inputIsPointerMovement) {
                 [NSCursor.closedHandCursor set]; // Doesn't work for some reason
             } else {
-                [dev receiveAxisInputAndDoSeizeDevice:YES];
+                if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) { // Only seize when drag scrolling // TODO: Would be cleaner to call this further down where we check for kMFModifiedDragTypeTwoFingerSwipe anyways. Does that work too?
+                    [dev receiveAxisInputAndDoSeizeDevice:YES];
+                }
             }
             _drag.activationState = kMFModifiedInputActivationStateInUse; // Activate modified drag input!
             [ModifierManager handleModifiersHaveHadEffect:dev.uniqueID];
@@ -145,7 +146,8 @@ static CGEventRef __nullable otherMouseDraggedCallback(CGEventTapProxy proxy, CG
         double sThreeFingerV;
         
         if (inputIsPointerMovement) { // With these values, the scrolling/changing spaces will follow the mouse pointer almost exactly
-            sThreeFingerH = sThreeFingerV = 3.2 / 10000.0;
+            CGFloat screenHeight = [[NSScreen mainScreen] frame].size.height;
+            sThreeFingerH = sThreeFingerV = 0.8 / screenHeight;
             sThreeFingerV *= 3; // Vertical doesn't follow mouse pointer anyways, so might as well scale it up
             sTwoFinger = 1.0;
         } else {
@@ -166,7 +168,9 @@ static CGEventRef __nullable otherMouseDraggedCallback(CGEventTapProxy proxy, CG
             }
             _drag.phase = kIOHIDEventPhaseChanged;
         } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
-            [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaX*sTwoFinger deltaY:deltaY*sTwoFinger phase:_drag.phase isGestureDelta:!inputIsPointerMovement];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, scrollDispatchDelay * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+                [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaX*sTwoFinger deltaY:deltaY*sTwoFinger phase:_drag.phase isGestureDelta:!inputIsPointerMovement];
+            });
         }
         _drag.phase = kIOHIDEventPhaseChanged;
     }
@@ -184,7 +188,9 @@ static CGEventRef __nullable otherMouseDraggedCallback(CGEventTapProxy proxy, CG
                 [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypeVertical phase:kIOHIDEventPhaseEnded];
             }
         } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
-            [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded isGestureDelta:!inputIsPointerMovement];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, scrollDispatchDelay * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+                [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded isGestureDelta:!inputIsPointerMovement];
+            });
         }
     }
     if (inputIsPointerMovement) {
