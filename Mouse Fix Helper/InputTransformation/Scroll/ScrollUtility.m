@@ -190,6 +190,11 @@ static long long _previousScrollValue;
 //    _previousScrollValue = 0;
 //}
 
+/// In seconds
+static double _secondsBetweenLastTwoScrollTicks;
++ (double)secondsBetweenLastTwoScrollTicks {
+    return _secondsBetweenLastTwoScrollTicks;
+}
 static int _consecutiveScrollTickCounter;
 + (int)consecutiveScrollTickCounter {
     return _consecutiveScrollTickCounter;
@@ -199,6 +204,7 @@ static double _previousScrollTickTimeStamp;
 + (void) updateConsecutiveScrollTickAndSwipeCountersWithTickOccuringNow { // Starts counting at 0
     double thisScrollTickTimeStamp = CACurrentMediaTime();
     double intervall = (thisScrollTickTimeStamp - _previousScrollTickTimeStamp);
+    _secondsBetweenLastTwoScrollTicks = intervall;
     if (intervall > ScrollControl.consecutiveScrollTickMaxIntervall) {
         [self updateConsecutiveScrollSwipeCounterWithSwipeOccuringNow]; // Needs to be called before resetting _consecutiveScrollTickCounter = 0, because it uses _consecutiveScrollTickCounter to determine whether the last series of consecutive scroll ticks was a scroll swipe
         _consecutiveScrollTickCounter = 0;

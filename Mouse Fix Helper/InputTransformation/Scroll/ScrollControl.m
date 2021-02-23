@@ -104,10 +104,10 @@ static int _scrollDirection;
     // Create/enable scrollwheel input callback
     if (_eventTap == nil) {
         CGEventMask mask = CGEventMaskBit(kCGEventScrollWheel);
-        _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGTailAppendEventTap /*kCGHeadInsertEventTap*/, kCGEventTapOptionDefault, mask, eventTapCallback, NULL); // Using `kCGTailAppendEventTap` instead of `kCGHeadInsertEventTap` because I think it might help with the bug of 87. It's also how MOS does things. Don't think it helps :'/
+        _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
         NSLog(@"_eventTap: %@", _eventTap);
         CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _eventTap, 0);
-        CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes);
+        CFRunLoopAddSource(CFRunLoopGetMain(), runLoopSource, kCFRunLoopDefaultMode);
         CFRelease(runLoopSource);
         CGEventTapEnable(_eventTap, false); // Not sure if this does anything
     }
@@ -197,6 +197,12 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         return event;
     }
     
+    // Investigating time accuracy of event tap
+    static double lastCGEventTimeStamp = 0;
+    double thisCGEventTimeStamp = CACurrentMediaTime();
+    NSLog(@"TIME BETWEEN CG EVENTS: %f", (thisCGEventTimeStamp - lastCGEventTimeStamp) * 1000);
+    lastCGEventTimeStamp = thisCGEventTimeStamp;
+    
     // Check if scrolling direction changed
     
     [ScrollUtility updateScrollDirectionDidChange:scrollDeltaAxis1];
@@ -215,12 +221,21 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     // \discusson - Switching to an app that doesn't have smothscroll enabled seems to fix it. -> Somethings in my code must be breaking. -> The solution was executing displayLinkActivate() on the main thread, so idk why this happened.
     // \discusson Sometimes the scroll direction is wrong for one tick, seemingly at random. I don't think this happened before the multithreading stuff. Also, I changed other things as well around the time it started happening so not sure if it really has to do with multithreading.
     dispatch_async(_scrollQueue, ^{
+        
+        /*
+         Update tick and swipe counters
+              Updating here in the scrollQueue instead of in the eventTapCallback leads to less accurate measured time between ticks,
+              But it ensures that updateConsective...  calls aren't out of sync with the _scrollQueue.
+              Possible solution would be to call updateCons... in the eventTapCallback but save the info which updateCons... produces
+              in a queue instead of overriding it when updateCons is called again.
+              Or we'll simply call updateCons... here in the queue and deal with the inaccurate time between ticks.
+              Actually the intervall between different eventTapCallback calls is very erratic and probably not accurate either, so it shouldn't make a big difference.
+         */
+        [ScrollUtility updateConsecutiveScrollTickAndSwipeCountersWithTickOccuringNow];
 
         // Set application overrides
         
-        [ScrollUtility updateConsecutiveScrollTickAndSwipeCountersWithTickOccuringNow];
-        
-        if (ScrollUtility.consecutiveScrollTickCounter == 0) { // Only do this on the first of each series of consecutive scroll ticks
+        if (ScrollUtility.consecutiveScrollTickCounter == 0) { // Only do this stuff on the first of each series of consecutive scroll ticks
             [ScrollUtility updateMouseDidMove];
             if (!ScrollUtility.mouseDidMove) {
                 [ScrollUtility updateFrontMostAppDidChange];

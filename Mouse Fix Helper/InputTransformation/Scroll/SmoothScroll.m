@@ -33,8 +33,10 @@
 #pragma mark parameters
 
 // wheel phase
-static uint8_t  _pxStepSize;
-static double   _msPerStep;
+static uint8_t  _pxPerTick;
+static double   _msPerTickBase;
+static double   _msTillNextTickEstimate;
+static double   _movingAverageVelocity;
 static double   _accelerationForScrollBuffer;
 // momentum phase
 static double   _frictionCoefficient;
@@ -85,8 +87,8 @@ static uint8_t      _onePixelScrollsCounter;
 }
 
 + (void)configureWithParameters:(NSDictionary *)params {
-    _pxStepSize                         =   [[params objectForKey:@"pxPerStep"] intValue];
-    _msPerStep                          =   [[params objectForKey:@"msPerStep"] intValue];
+    _pxPerTick                         =   [[params objectForKey:@"pxPerStep"] intValue];
+    _msPerTickBase                          =   [[params objectForKey:@"msPerStep"] intValue];
     _frictionCoefficient                =   [[params objectForKey:@"friction"] floatValue];
     _frictionDepth                      =   [[params objectForKey:@"frictionDepth"] floatValue];
     _accelerationForScrollBuffer         =   [[params objectForKey:@"acceleration"] floatValue];
@@ -129,7 +131,14 @@ static BOOL _hasStarted;
 + (void)handleInput:(CGEventRef)event info:(NSDictionary * _Nullable)info {
     
     long long scrollDeltaAxis1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
+    long long scrollPointDeltaAxis1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1);
 
+    static double inputPixels = 0;
+    inputPixels += scrollPointDeltaAxis1;
+//    printf("input px: %f\n", inputPixels); // for comparing with realScrolledPixels
+    
+    //_pxPerTick = llabs(scrollPointDeltaAxis1);
+    
     // Update global vars
     
     _isScrolling = YES;
@@ -148,22 +157,25 @@ static BOOL _hasStarted;
 //    }
   
 //        // Apply fast scroll to _pxStepSize
-    long long pxStepSizeWithFastScrollApplied = _pxStepSize;
+    long long pxPerTickWithFastScrollApplied = _pxPerTick;
 //    if (ScrollUtility.consecutiveScrollSwipeCounter >= ScrollControl.fastScrollThreshold_inSwipes
 //        && ScrollUtility.consecutiveScrollTickCounter >= ScrollControl.scrollSwipeThreshold_inTicks) {
 //        pxStepSizeWithFastScrollApplied = _pxStepSize * pow(ScrollControl.fastScrollExponentialBase, ((int32_t)ScrollUtility.consecutiveScrollSwipeCounter - ScrollControl.fastScrollThreshold_inSwipes + 1));
 //    }
-//
-    // Apply scroll wheel input to _pxScrollBuffer
-    _msLeftForScroll = _msPerStep;
-//    _msLeftForScroll = 1 / (_pxPerMSBaseSpeed / _pxStepSize);
+    
+    
+    // Update scroll buffer
+    
+//    _pxScrollBuffer += -scrollPointDeltaAxis1;
+
     if (scrollDeltaAxis1 > 0) {
-        _pxScrollBuffer += pxStepSizeWithFastScrollApplied * ScrollControl.scrollDirection;
+        _pxScrollBuffer += pxPerTickWithFastScrollApplied * ScrollControl.scrollDirection;
     } else if (scrollDeltaAxis1 < 0) {
-        _pxScrollBuffer -= pxStepSizeWithFastScrollApplied * ScrollControl.scrollDirection;
+        _pxScrollBuffer -= pxPerTickWithFastScrollApplied * ScrollControl.scrollDirection;
     } else {
         NSLog(@"scrollDeltaAxis1 is 0. This shouldn't happen.");
     }
+    
     
 //    // Apply acceleration to _pxScrollBuffer
 //    if (ScrollUtility.consecutiveScrollTickCounter != 0) {
@@ -174,6 +186,56 @@ static BOOL _hasStarted;
 //        NSLog(@"tick: %d", ScrollUtility.consecutiveScrollTickCounter);
 //        NSLog(@"swip: %d", ScrollUtility.consecutiveScrollSwipeCounter);
 //    }
+    
+    // Update ms left for scroll
+    
+//    _msLeftForScroll = _msPerStep;
+//    _msLeftForScroll = 1 / (_pxPerMSBaseSpeed / _pxStepSize);
+    
+    // Use time between last two ticks as new msLeftForScroll
+    
+    // First we set some constants
+    double minVelocity = _pxPerTick / _msPerTickBase;
+    double tickVolatility = 0.1; // Time between ticks volatility
+    double tickTimeEstimateBias = 1.0;
+    double velocityVolatility = 1.0; // Velocity volatility
+//    volVel = 1;
+    
+    // Initialize _moving averges
+    if (ScrollUtility.consecutiveScrollTickCounter == 0) {
+        _movingAverageVelocity = minVelocity * [SharedUtility signOf:_pxScrollBuffer];
+        _msTillNextTickEstimate = _msPerTickBase;
+    }
+    
+    // Get time between last two ticks
+    /*
+     Time between ticks is very erratic (or 'volatile') and innacurate so we need to make the value less jumpy by using a moving average. `
+     We do the same thing for velocity to make scrolling a bit smoother.
+     'Moving average' is not the right term for the concept I think.
+     */
+    double msBetweenLastTwoTicks = ScrollUtility.secondsBetweenLastTwoScrollTicks * 1000.0;
+    _msTillNextTickEstimate = tickVolatility * msBetweenLastTwoTicks + (1-tickVolatility) * _msTillNextTickEstimate;
+    if (_msTillNextTickEstimate > _msPerTickBase) {
+        _msTillNextTickEstimate = _msPerTickBase;
+    }
+    NSLog(@"TIME BETWEEN TICKS actual: %f, averaged: %f", msBetweenLastTwoTicks, _msTillNextTickEstimate);
+    
+    // We use the moving average time between ticks to get a good estimate of how fast the scrollwheel is currently moving (measured ticks per ms)
+    double msPerTick = _msTillNextTickEstimate * tickTimeEstimateBias;
+    
+    /*
+     We convert msPerTick to velocity, then smooth out the velocity using a moving average, and then convert back to msPerTick
+         - We want to scroll all of _pxScrollBuffer between this and the next tick, so the unit of _pxScrollBuffer is px per tick for this purpose.
+         - Velocity has the unit px/ms
+     */
+    double targetVelocity = _pxScrollBuffer / msPerTick;
+    _movingAverageVelocity = (1-velocityVolatility)*_movingAverageVelocity + (velocityVolatility)*targetVelocity;
+    double msForThisTick = _pxScrollBuffer / _movingAverageVelocity;
+
+//    NSLog(@"targetvel: %f, moving avg vel: %f, msforthisstep: %f", targetVelocity, _movingAverageVelocity, msForThisTick);
+    
+    _msLeftForScroll = msForThisTick;
+    
     
     // Apply fast scroll to _pxScrollBuffer
     int fastScrollThresholdDelta = ScrollUtility.consecutiveScrollSwipeCounter - ScrollControl.fastScrollThreshold_inSwipes;
@@ -198,17 +260,18 @@ static BOOL _hasStarted;
                 NSLog(@"Error while trying to set display link to display under mouse pointer: %@", [e reason]);
             }
         }
-        while (CVDisplayLinkIsRunning(_displayLink) == NO) {
-            // Executing this on _scrollQueue (like the rest of this function) leads to `CVDisplayLinkStart()` failing sometimes. Once it has failed it will fail over and over again, taking a few minutes or so to start working again, if at all.
-            // Solution: I have no idea why, but executing on the main queue does the trick! ^^
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                CVReturn rt = CVDisplayLinkStart(_displayLink);
-                if (rt != kCVReturnSuccess) {
-                    NSLog(@"Failed to start displayLink. Trying again.");
-                    NSLog(@"Error code: %d", rt);
-                }
-            });
-        }
+    }
+    
+    while (CVDisplayLinkIsRunning(_displayLink) == NO) {
+        // Executing this on _scrollQueue (like the rest of this function) leads to `CVDisplayLinkStart()` failing sometimes. Once it has failed it will fail over and over again, taking a few minutes or so to start working again, if at all.
+        // Solution: I have no idea why, but executing on the main queue does the trick! ^^
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            CVReturn rt = CVDisplayLinkStart(_displayLink);
+            if (rt != kCVReturnSuccess) {
+                NSLog(@"Failed to start displayLink. Trying again.");
+                NSLog(@"Error code: %d", rt);
+            }
+        });
     }
 }
 
@@ -233,7 +296,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         
         if (_msLeftForScroll == 0.0) { // Diving by zero yields infinity, we don't want that.
             NSLog(@"_msLeftForScroll was 0.0");
-            _pxToScrollThisFrame = _pxScrollBuffer; // TODO: But it happens sometimes - check if this handles that situation well
+            _pxToScrollThisFrame = _pxScrollBuffer; // TODO: But it happens sometimes - check if this handles that situation well. What happens if _msLeftForScroll is < 0?
         }
         
         // Update buffers
@@ -247,10 +310,10 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 
         // TODO: Clean this up and put parameters into the config file
         
-        double overPlusAccelerationCoefficient = 2.0; // > 0
+        double overPlusAccelerationCoefficient = 1.5; // > 0
         double overPlusAccelerationThreshold = 1.0; // >= 0
 
-        double pxToScrollThisFrameBase = (_pxStepSize/_msPerStep) * msSinceLastFrame; // > 0
+        double pxToScrollThisFrameBase = round((_pxPerTick/_msPerTickBase) * msSinceLastFrame); // > 0
         double pxToScrollThisFrameOverPlus = abs(_pxToScrollThisFrame) - pxToScrollThisFrameBase; // Should always be >= 0 and == 0 for the linear phase of a tick which occured when the system wasn't scrolling already, but there will be rounding errors.
         // TODO: Consider making `_pxScrollBuffer` as well as `_pxToScrollThisFrame`, etc doubles to avoid rounding errors.
 
@@ -259,7 +322,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
             _pxToScrollThisFrame = [SharedUtility signOf: _pxToScrollThisFrame] * round(pxToScrollThisFrameBase + acceleratedOverPlus);
         }
         
-        
+            
 //        double _accelerationMaxScalingFactor = 2.0;
 //        double _accelerationRampUp = 0.5;
 //
@@ -280,6 +343,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         // Entering momentum phase
         
         if (_msLeftForScroll <= 0 || _pxScrollBuffer == 0) { // TODO: Is `_pxScrollBuffer == 0` necessary? Do the conditions for entering momentum phase make sense?
+//            NSLog(@"ENTERING MOM PHASE - pxBUFF: %d, MSLeft: %f", _pxScrollBuffer, _msLeftForScroll);
             _msLeftForScroll    =   0; // TODO: Is this necessary?
             _pxScrollBuffer   =   0; // What about this? This stuff isn't used in momentum phase and should get reset elsewhere efore getting used again
             
@@ -300,11 +364,13 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
             _pxPerMsVelocity = 0;
         }
         if (_pxToScrollThisFrame == 0 || _pxPerMsVelocity == 0) {
+//            NSLog(@"END PHASE BC NOTHING TO SCROLL - px: %d, vel: %f", _pxToScrollThisFrame, _pxPerMsVelocity);
             _displayLinkPhase = kMFPhaseEnd;
         }
         if (abs(_pxToScrollThisFrame) == 1) {
             _onePixelScrollsCounter += 1;
             if (_onePixelScrollsCounter > _nOfOnePixelScrollsMax) { // I think using > instead of >= might put the actual maximum at _nOfOnePixelScrollsMax + 1.
+//                NSLog(@"END PHASE DUE TO ONE PIXEL SCROLLS");
                 _displayLinkPhase = kMFPhaseEnd;
             }
         }
@@ -316,6 +382,11 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         [ScrollModifiers handleMagnificationScrollWithAmount:_pxToScrollThisFrame/800.0];
     } else {
         postPointBasedScrollEventWithDelta(_pxToScrollThisFrame, ScrollModifiers.horizontalScrolling);
+//        postGestureScrollEventWithDelta(_pxToScrollThisFrame, _displayLinkPhase, ScrollModifiers.horizontalScrolling);
+        
+        static double realScrolledPixels = 0;
+        realScrolledPixels += _pxToScrollThisFrame;
+//        printf("real scrolled px: %f\n", realScrolledPixels);
     }
     
 #pragma mark Other
@@ -324,7 +395,9 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         _displayLinkPhase = kMFPhaseLinear;
     }
     else if (_displayLinkPhase == kMFPhaseEnd) {
+//        [GestureScrollSimulator breakMomentumScroll]; // Trying to prevent momentum scrolling from kicking in, but this doesn't work
         [SmoothScroll resetDynamicGlobals];
+        NSLog(@"STOPPING DISPLY LINK");
         CVDisplayLinkStop(displayLink);
         return 0;
     }
@@ -333,6 +406,25 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 
 
 #pragma mark - Utility functions
+
+
+static void postGestureScrollEventWithDelta(int32_t delta, MFDisplayLinkPhase phase, BOOL horizontal) {
+    
+    NSDictionary *eventMapping = @{
+        @(kMFPhaseNone): @(kIOHIDEventPhaseUndefined),
+        @(kMFPhaseStart): @(kIOHIDEventPhaseBegan),
+        @(kMFPhaseLinear): @(kIOHIDEventPhaseChanged),
+        @(kMFPhaseMomentum): @(kIOHIDEventPhaseChanged),
+        @(kMFPhaseEnd): @(kIOHIDEventPhaseEnded)
+    };
+    IOHIDEventPhaseBits eventPhase = ((NSNumber *)eventMapping[@(_displayLinkPhase)]).intValue;
+    
+    if (!ScrollModifiers.horizontalScrolling) {
+        [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:delta phase:eventPhase isGestureDelta:NO];
+    } else {
+        [GestureScrollSimulator postGestureScrollEventWithDeltaX:delta deltaY:0 phase:eventPhase isGestureDelta:NO];
+    }
+}
 
 static void postPointBasedScrollEventWithDelta(int32_t delta, BOOL horizontal) {
     
@@ -365,6 +457,8 @@ static void postPointBasedScrollEventWithDelta(int32_t delta, BOOL horizontal) {
             
             CGEventPost(kCGSessionEventTap, scrollEvent);
             CFRelease(scrollEvent);
+    
+
             
         ////     set phases
         ////         the native "scrollPhase" is roughly equivalent to my "wheelPhase"
