@@ -210,7 +210,8 @@ void Handle_FSEventStreamCallback (ConstFSEventStreamRef streamRef, void *client
  */
 static void setupFSEventStreamCallback() {
     
-    CFArrayRef pathsToWatch = CFArrayCreate(NULL, (const void **)(__bridge CFStringRef)_configFilePath, 1, NULL);
+    CFStringRef cfPath = (__bridge CFStringRef)_configFilePath.copy;
+    CFArrayRef pathsToWatch = CFArrayCreate(NULL, (const void **)cfPath, 1, NULL);
     void *callbackInfo = NULL; // could put stream-sp ecific data here.
     NSLog(@"pathsToWatch : %@", pathsToWatch);
     
