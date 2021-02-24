@@ -8,29 +8,81 @@
 //
 
 #import "Hyperlink.h"
+#import "Utility_PrefPane.h"
 
 IB_DESIGNABLE
 @interface Hyperlink ()
 
 @property (nonatomic) IBInspectable NSString *href;
 
+@property IBInspectable NSNumber *tMrgn; // Top tracking margin
+@property IBInspectable NSNumber *rMrgn; // Right tracking margin
+@property IBInspectable NSNumber *bMrgn; // Bottom tracking margin
+@property IBInspectable NSNumber *lMrgn; // Left tracking margin
+
 @end
 
 @implementation Hyperlink
 
+NSRect _trackingRect;
+
 - (void)awakeFromNib {
+    
+    [NSEvent addLocalMonitorForEventsMatchingMask:NSEventMaskLeftMouseUp handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
+        NSLog(@"MOUSE UPPP");
+        NSPoint loc = [Utility_PrefPane.mainWindow.contentView convertPoint:event.locationInWindow toView:self];
+        if (NSPointInRect(loc, _trackingRect)) {
+            [self reactToClick];
+        }
+        return event;
+    }];
+    
+    // Set IBInspectible default values
+    
+    NSNumber *zeroNS = [NSNumber numberWithInt:0.0];
+    if (!_tMrgn) {
+        _tMrgn = zeroNS;
+    }
+    if (!_rMrgn) {
+        _rMrgn = zeroNS;
+    }
+    if (!_bMrgn) {
+        _bMrgn = zeroNS;
+    }
+    if (!_lMrgn) {
+        _lMrgn = zeroNS;
+    }
     
     // Setup tracking area
     
-    NSTrackingAreaOptions trackingAreaOptions = NSTrackingInVisibleRect | NSTrackingMouseEnteredAndExited | NSTrackingActiveInKeyWindow;
-    NSTrackingArea * area = [[NSTrackingArea alloc] initWithRect:self.bounds options:trackingAreaOptions owner:self userInfo:nil];
+    // Options
+    NSTrackingAreaOptions trackingAreaOptions =  NSTrackingMouseEnteredAndExited | NSTrackingActiveInKeyWindow;
+    _trackingRect = self.bounds;
+    
+    // Make area larger according to IBInspectable tracking margins
+    // Top
+    _trackingRect.origin.y -= _tMrgn.doubleValue;
+    _trackingRect.size.height += _tMrgn.doubleValue;
+    // Bottom
+    _trackingRect.size.height += _bMrgn.doubleValue;
+    // Left
+    _trackingRect.origin.x -= _lMrgn.doubleValue;
+    _trackingRect.size.width += _lMrgn.doubleValue;
+    // Right
+    _trackingRect.size.width += _rMrgn.doubleValue;
+    
+    // Add tracking area
+    NSTrackingArea * area = [[NSTrackingArea alloc] initWithRect:_trackingRect
+                                                         options:trackingAreaOptions
+                                                           owner:self
+                                                        userInfo:nil];
     [self addTrackingArea:area];
     
 }
-- (void)resetCursorRects {
-    [self discardCursorRects];
-    [self addCursorRect:self.bounds cursor:NSCursor.pointingHandCursor];
-}
+//- (void)resetCursorRects {
+//    [self discardCursorRects];
+//    [self addCursorRect:_trackingRect cursor:NSCursor.pointingHandCursor];
+//}
 - (void)mouseEntered:(NSEvent *)event {
     
     NSMutableAttributedString *underlinedString = [[NSMutableAttributedString alloc] initWithAttributedString: self.attributedStringValue];
@@ -56,13 +108,16 @@ IB_DESIGNABLE
     self.attributedStringValue = notUnderlinedString;
 }
 - (void)mouseUp:(NSEvent *)event {
-    
-    if ([self mouse:[self convertPoint:[event locationInWindow] fromView:nil] inRect:self.bounds]) {
-        // Open URL defined in Interface Builder
-        [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:_href]];
-        // Send IBAction
-        [self sendAction:self.action to:self.target];
-    }
+
 }
+
+- (void) reactToClick {
+    // Open URL defined in Interface Builder
+    NSLog(@"Opening: %@",_href);
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:_href]];
+    // Send IBAction
+    [self sendAction:self.action to:self.target];
+}
+
 
 @end
