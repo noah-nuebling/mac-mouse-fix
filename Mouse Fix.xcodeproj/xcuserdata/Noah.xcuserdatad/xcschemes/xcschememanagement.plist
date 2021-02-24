@@ -4,15 +4,10 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Build PrefPane.xcscheme</key>
+		<key>App.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>3</integer>
-		</dict>
-		<key>Debug System Preferences.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>7</integer>
+			<integer>8</integer>
 		</dict>
 		<key>Helper (wait for launch).xcscheme</key>
 		<dict>
@@ -23,26 +18,6 @@
 		<dict>
 			<key>orderHint</key>
 			<integer>4</integer>
-		</dict>
-		<key>Install and debug System Preferences.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>0</integer>
-		</dict>
-		<key>Install and debug legacyLoader (Big Sur x86).xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>2</integer>
-		</dict>
-		<key>Install and debug legacyLoader.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>1</integer>
-		</dict>
-		<key>Mac Mouse Fix.xcscheme_^#shared#^_</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>10</integer>
 		</dict>
 		<key>Mouse Fix App.xcscheme_^#shared#^_</key>
 		<dict>
@@ -62,6 +37,21 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>4F94F5ED25E5EC2500D9F24A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4F94F5FF25E5EC2800D9F24A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4F94F60A25E5EC2800D9F24A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>4FCECD7F21092354001F1078</key>
 		<dict>
 			<key>primary</key>
