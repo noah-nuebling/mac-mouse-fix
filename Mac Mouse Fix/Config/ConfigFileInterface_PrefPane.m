@@ -14,8 +14,6 @@
 #import "NSMutableDictionary+Additions.h"
 #import "Utility_PrefPane.h"
 
-// TODO: Implement clean function which deletes all overrides that don't change the default config. Adding and removing different apps in ScrollOverridePanel will accumulate dead entries.
-
 @implementation ConfigFileInterface_PrefPane
 
 static NSMutableDictionary *_config;
@@ -25,28 +23,26 @@ static NSMutableDictionary *_config;
 + (void)setConfig:(NSMutableDictionary *)new {
     _config = new;
 }
-// Backup config used to be called default config. There might still be references to default config that I missed.
 static NSURL *_configURL;
-static NSURL *_backupConfigURL;
+static NSURL *_backupConfigURL; // Backup config used to be called default config. There might still be references to default config that I missed.
 + (NSURL *)configURL {
     return _configURL;
 }
 
 + (void)load {
     
-    // Determine URLs of config and backupConfig
+    NSBundle *bundle = [NSBundle bundleForClass:self];
     
-    NSURL *currentBundleURL = [[NSBundle bundleForClass:self] bundleURL];
-//    NSString *currentConfigPathRelative = @"/Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/Resources/config.plist";
-    NSString *currentConfigPathRelative = @"/Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/Resources/config.plist";
-//        NSString *backupConfigPathRelative = @"/Contents/Resources/backup_config.plist";
-    NSString *backupConfigPathRelative = @"/Contents/Resources/backup_config.plist";
-    NSLog(@"default: %@", [NSDictionary dictionaryWithContentsOfURL:[currentBundleURL URLByAppendingPathComponent:backupConfigPathRelative]]);
-    _configURL = [currentBundleURL URLByAppendingPathComponent:currentConfigPathRelative];
-    _backupConfigURL = [currentBundleURL URLByAppendingPathComponent:backupConfigPathRelative];
+    // Get config url
+    NSURL *applicationSupportURL = [NSFileManager.defaultManager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:NULL create:YES error:nil];
+    NSString *configPathRelative = [NSString stringWithFormat:@"%@/config.plist", bundle.bundleIdentifier];
+    _configURL = [applicationSupportURL URLByAppendingPathComponent:configPathRelative];
+    
+    // Get backup config url
+    NSString *backupConfigPathRelative = @"Contents/Resources/backup_config.plist";
+    _backupConfigURL = [bundle.bundleURL URLByAppendingPathComponent:backupConfigPathRelative];
     
     // Load config
-    
     [self loadConfigFromFile];
 }
 
@@ -65,13 +61,12 @@ static NSURL *_backupConfigURL;
     if (serializeErr) {
         NSLog(@"ERROR serializing configDictFromFile: %@", serializeErr);
     }
-    NSString *configPath = [[HelperServices helperBundle] pathForResource:@"config" ofType:@"plist"];
     //    BOOL success = [configData writeToFile:configPath atomically:YES];
     //    if (!success) {
     //        NSLog(@"ERROR writing configDictFromFile to file");
     //    }
     NSError *writeErr;
-    [configData writeToFile:configPath options:NSDataWritingAtomic error:&writeErr];
+    [configData writeToURL:_configURL options:NSDataWritingAtomic error:&writeErr];
     if (writeErr) {
         NSLog(@"ERROR writing configDictFromFile to file: %@", writeErr);
     }
@@ -86,9 +81,7 @@ static NSURL *_backupConfigURL;
     
     [self repairConfigWithProblem:kMFConfigProblemNone info:nil];
     
-    // TODO: Make this utilize the class variable `_currentConfigURL` instead.
-    NSString *configPath = [[HelperServices helperBundle] pathForResource:@"config" ofType:@"plist"];
-    NSData *configData = [NSData dataWithContentsOfFile:configPath];
+    NSData *configData = [NSData dataWithContentsOfURL:_configURL];
     NSError *readErr;
     NSMutableDictionary *configDict = [NSPropertyListSerialization propertyListWithData:configData options:NSPropertyListMutableContainersAndLeaves format:nil error:&readErr];
     if (readErr) {
@@ -172,6 +165,7 @@ static NSURL *_backupConfigURL;
     [self writeConfigToFileAndNotifyHelper]; // No need to notify the helper at the time of writing
 }
 
+// TODO: Implement cleaning function which deletes all overrides that don't change the default config. Adding and removing different apps in ScrollOverridePanel will accumulate dead entries. v is that what I meant?
 /// Delete all paths in the dictionary which don't lead to anything
 static void removeLeaflessSubDicts(NSMutableDictionary *dict) {
     for (NSString *key in dict.allKeys) {
