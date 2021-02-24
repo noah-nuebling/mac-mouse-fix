@@ -244,7 +244,7 @@
         <customObject id="NxE-tZ-vxj" customClass="AppDelegate">
             <connections>
                 <outlet property="enableCheckBox" destination="vqy-WZ-nG6" id="I0c-Jz-8Rc"/>
-                <outlet property="mainView" destination="5ZP-Jh-Lwi" id="d32-p6-Lry"/>
+                <outlet property="mainView" destination="se5-gp-TjO" id="Q2f-58-WdQ"/>
                 <outlet property="middleClick" destination="jX4-ua-75H" id="msN-17-whg"/>
                 <outlet property="middleHold" destination="eIj-eG-exO" id="c2z-8j-nm5"/>
                 <outlet property="scrollCheckBoxInvert" destination="Ip8-aI-or8" id="flR-hc-vMi"/>

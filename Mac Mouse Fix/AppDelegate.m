@@ -26,10 +26,6 @@
 
 @property (strong) IBOutlet NSWindow *window;
 
-
-
-@property (strong) IBOutlet NSView *mainView;
-
 @property (weak) IBOutlet NSButton *enableCheckBox;
 
 
@@ -53,15 +49,6 @@
 @end
 
 @implementation AppDelegate
-
-@dynamic mainView;
-static AppDelegate *_mainView;
-+ (AppDelegate *)mainView {
-    return _mainView;
-}
-+ (void)setMainView:(AppDelegate *)new {
-    _mainView = new;
-}
 
 static NSDictionary *_scrollConfigurations;
 static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
@@ -90,16 +77,6 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 }
 
 # pragma mark - main
-
-- (NSView *)loadMainView {
-    
-    [[NSBundle bundleForClass:self.class] loadNibNamed:@"MouseFix" owner:self topLevelObjects:NULL];
-    AppDelegate.mainView = self.mainView;
-    
-    [self mainViewDidLoad];
-    
-    return self.mainView;
-}
 
 
 + (void)initialize {
@@ -161,7 +138,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
     BOOL enb = enable.boolValue;
     
-    NSArray *baseArray = [Utility_PrefPane subviewsForView:self.mainView withIdentifier:@"baseView"];
+    NSArray *baseArray = [Utility_PrefPane subviewsForView:self.window.contentView withIdentifier:@"baseView"];
     NSView *baseView = baseArray[0];
     NSBox *preferenceBox = (NSBox *)[Utility_PrefPane subviewsForView:baseView withIdentifier:@"preferenceBox"][0];
     

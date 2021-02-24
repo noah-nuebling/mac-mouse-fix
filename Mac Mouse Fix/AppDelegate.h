@@ -12,6 +12,5 @@
 #import "ScrollOverride/ScrollOverridePanel.h"
 
 @interface AppDelegate : NSObject<NSApplicationDelegate>
-@property (class, strong) NSView *mainView;
-- (void)mainViewDidLoad;
+//- (void)mainViewDidLoad;
 @end
