@@ -7,7 +7,7 @@
 // --------------------------------------------------------------------------
 //
 
-#import "../PrefPaneDelegate.h"
+#import "../AppDelegate.h"
 #import "AuthorizeAccessibilityView.h"
 #import "../MessagePort/MessagePort_PrefPane.h"
 #import "../Helper/HelperServices.h"
@@ -76,7 +76,7 @@ AuthorizeAccessibilityView *_accViewController;
     
     NSLog(@"adding AuthorizeAccessibilityView");
     
-    NSView *mainView = PrefPaneDelegate.mainView;
+    NSView *mainView = AppDelegate.mainView;
     
     NSView *baseView;
     for (NSView *v in mainView.subviews) {
@@ -107,7 +107,7 @@ AuthorizeAccessibilityView *_accViewController;
     
     NSLog(@"removing AuthorizeAccessibilityView");
     
-    NSView *mainView = PrefPaneDelegate.mainView;
+    NSView *mainView = AppDelegate.mainView;
     
     NSView *baseView;
     for (NSView *v in mainView.subviews) {

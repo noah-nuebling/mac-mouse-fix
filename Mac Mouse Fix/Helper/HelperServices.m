@@ -9,13 +9,13 @@
 
 // this class has a copy in Mouse Fix Helper > Uninstaller > HelperServices_HelperApp
 #import "HelperServices.h"
-#import "PrefPaneDelegate.h"
+#import "AppDelegate.h"
 #import "../MessagePort/MessagePort_PrefPane.h"
 
 @implementation HelperServices
 
 + (NSBundle *)helperBundle {
-    NSBundle *prefPaneBundle = [NSBundle bundleForClass: [PrefPaneDelegate class]];
+    NSBundle *prefPaneBundle = [NSBundle bundleForClass: [AppDelegate class]];
     NSString *prefPaneBundlePath = [prefPaneBundle bundlePath];
     NSString *helperBundlePath = [prefPaneBundlePath stringByAppendingPathComponent: @"Contents/Library/LoginItems/Mouse Fix Helper.app"];
     return [NSBundle bundleWithPath:helperBundlePath];
@@ -90,7 +90,7 @@
         // write correct file to "User/Library/LaunchAgents"
         
         // get helper executable path
-        NSBundle *prefPaneBundle = [NSBundle bundleForClass: [PrefPaneDelegate class]];
+        NSBundle *prefPaneBundle = [NSBundle bundleForClass: [AppDelegate class]];
         NSString *prefPaneBundlePath = [prefPaneBundle bundlePath];
         NSString *helperExecutablePath = [prefPaneBundlePath stringByAppendingPathComponent: @"Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/MacOS/Mouse Fix Helper"];
         

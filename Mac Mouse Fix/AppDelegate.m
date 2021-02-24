@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-// PrefPaneDelegate.m
+// AppDelegate.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2019
 // Licensed under MIT
@@ -11,7 +11,7 @@
 
 #import <PreferencePanes/PreferencePanes.h>
 #import <ServiceManagement/SMLoginItem.h>
-#import "PrefPaneDelegate.h"
+#import "AppDelegate.h"
 #import "Updater.h"
 #import "Config/ConfigFileInterface_PrefPane.h"
 #import "Helper/HelperServices.h"
@@ -22,7 +22,11 @@
 
 #import "Accessibility/AuthorizeAccessibilityView.h"
 
-@interface PrefPaneDelegate ()
+@interface AppDelegate ()
+
+@property (strong) IBOutlet NSWindow *window;
+
+
 
 @property (strong) IBOutlet NSView *mainView;
 
@@ -48,14 +52,14 @@
 
 @end
 
-@implementation PrefPaneDelegate
+@implementation AppDelegate
 
 @dynamic mainView;
-static PrefPaneDelegate *_mainView;
-+ (PrefPaneDelegate *)mainView {
+static AppDelegate *_mainView;
++ (AppDelegate *)mainView {
     return _mainView;
 }
-+ (void)setMainView:(PrefPaneDelegate *)new {
++ (void)setMainView:(AppDelegate *)new {
     _mainView = new;
 }
 
@@ -90,7 +94,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 - (NSView *)loadMainView {
     
     [[NSBundle bundleForClass:self.class] loadNibNamed:@"MouseFix" owner:self topLevelObjects:NULL];
-    PrefPaneDelegate.mainView = self.mainView;
+    AppDelegate.mainView = self.mainView;
     
     [self mainViewDidLoad];
     
@@ -100,7 +104,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 
 + (void)initialize {
     
-    if (self == [PrefPaneDelegate class]) {
+    if (self == [AppDelegate class]) {
         
         // TODO: Update this
         _scrollConfigurations = @{                                          // last two are unused now

@@ -1,4 +1,4 @@
-source 'https://github.com/CocoaPods/Specs.git'
+source 'https://cdn.cocoapods.org/'
 
 # inhibit_all_warnings!
 use_frameworks!
@@ -8,11 +8,11 @@ abstract_target 'core' do
   pod 'SSZipArchive', :path => '..'
 
   target 'ObjectiveCExample' do
-    platform :ios, '8.0'
+    platform :ios, '9.0'
   end
 
   target 'ObjectiveCExampleTests_iOS' do
-    platform :ios, '8.0'
+    platform :ios, '9.0'
   end
 
   target 'ObjectiveCExampleTests_macOS' do
@@ -24,7 +24,7 @@ abstract_target 'core' do
   end
 
   target 'SwiftExample' do
-    platform :ios, '8.0'
+    platform :ios, '9.0'
   end
   
   target 'SwiftExample_macOS' do

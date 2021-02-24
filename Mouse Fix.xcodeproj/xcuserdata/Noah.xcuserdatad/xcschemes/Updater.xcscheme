@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "4F2FDF2F2315662400C7BE14"
-               BuildableName = "Mouse Fix Updater"
-               BlueprintName = "Mouse Fix Updater"
+               BuildableName = "Mac Mouse Fix Updater"
+               BlueprintName = "Mac Mouse Fix Updater"
                ReferencedContainer = "container:Mouse Fix.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,8 +45,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4F2FDF2F2315662400C7BE14"
-            BuildableName = "Mouse Fix Updater"
-            BlueprintName = "Mouse Fix Updater"
+            BuildableName = "Mac Mouse Fix Updater"
+            BlueprintName = "Mac Mouse Fix Updater"
             ReferencedContainer = "container:Mouse Fix.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -62,8 +62,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4F2FDF2F2315662400C7BE14"
-            BuildableName = "Mouse Fix Updater"
-            BlueprintName = "Mouse Fix Updater"
+            BuildableName = "Mac Mouse Fix Updater"
+            BlueprintName = "Mac Mouse Fix Updater"
             ReferencedContainer = "container:Mouse Fix.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

@@ -14,8 +14,8 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4FD67DDA211CC9000095A9A5"
-               BuildableName = "Mouse Fix.prefPane"
+               BlueprintIdentifier = "4F94F5AA25E5EB6A00D9F24A"
+               BuildableName = "Mouse Fix.app"
                BlueprintName = "Mouse Fix"
                ReferencedContainer = "container:Mouse Fix.xcodeproj">
             </BuildableReference>
@@ -28,6 +28,26 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4F94F5BC25E5EB6D00D9F24A"
+               BuildableName = "Mouse FixTests.xctest"
+               BlueprintName = "Mouse FixTests"
+               ReferencedContainer = "container:Mouse Fix.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4F94F5C725E5EB6D00D9F24A"
+               BuildableName = "Mouse FixUITests.xctest"
+               BlueprintName = "Mouse FixUITests"
+               ReferencedContainer = "container:Mouse Fix.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
@@ -50,8 +70,8 @@
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
-                     BlueprintIdentifier = "4FD67DDA211CC9000095A9A5"
-                     BuildableName = "Mouse Fix.prefPane"
+                     BlueprintIdentifier = "4F94F5AA25E5EB6A00D9F24A"
+                     BuildableName = "Mouse Fix.app"
                      BlueprintName = "Mouse Fix"
                      ReferencedContainer = "container:Mouse Fix.xcodeproj">
                   </BuildableReference>
@@ -68,8 +88,8 @@
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
-                     BlueprintIdentifier = "4FD67DDA211CC9000095A9A5"
-                     BuildableName = "Mouse Fix.prefPane"
+                     BlueprintIdentifier = "4F94F5AA25E5EB6A00D9F24A"
+                     BuildableName = "Mouse Fix.app"
                      BlueprintName = "Mouse Fix"
                      ReferencedContainer = "container:Mouse Fix.xcodeproj">
                   </BuildableReference>
@@ -91,8 +111,8 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4FD67DDA211CC9000095A9A5"
-            BuildableName = "Mouse Fix.prefPane"
+            BlueprintIdentifier = "4F94F5AA25E5EB6A00D9F24A"
+            BuildableName = "Mouse Fix.app"
             BlueprintName = "Mouse Fix"
             ReferencedContainer = "container:Mouse Fix.xcodeproj">
          </BuildableReference>

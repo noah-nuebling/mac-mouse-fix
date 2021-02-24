@@ -11,7 +11,7 @@
 #import "ConfigFileInterface_PrefPane.h"
 #import "../Update/Updater.h"
 #import "../MessagePort/MessagePort_PrefPane.h"
-#import "../PrefPaneDelegate.h"
+#import "../AppDelegate.h"
 
 
 @interface MoreSheet ()
@@ -66,7 +66,7 @@ static MoreSheet *_instance;
 //    NSLog(@"mousduunsn");
 //    
 //    [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
-//    [PrefPaneDelegate.mainView.window makeFirstResponder:NULL];
+//    [AppDelegate.mainView.window makeFirstResponder:NULL];
 //    [_sheetPanel makeKeyWindow];
 //    [_sheetPanel makeFirstResponder:NULL];
 //}

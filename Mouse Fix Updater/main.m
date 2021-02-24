@@ -9,7 +9,7 @@
 
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKit.h>
-//#import "PrefPaneDelegate.h"
+//#import "AppDelegate.h"
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {

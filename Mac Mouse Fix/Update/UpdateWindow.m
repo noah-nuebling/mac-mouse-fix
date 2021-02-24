@@ -10,7 +10,7 @@
 #import "UpdateWindow.h"
 #import "Updater.h"
 #import "../MoreSheet/MoreSheet.h"
-#import "../PrefPaneDelegate.h"
+#import "../AppDelegate.h"
 #import <WebKit/WebKit.h>
 
 @interface UpdateWindow ()

@@ -1,31 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
         <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="PrefPaneDelegate">
+        <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
             <connections>
-                <outlet property="_window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
-                <outlet property="enableCheckBox" destination="vqy-WZ-nG6" id="Zng-2L-gG8"/>
-                <outlet property="mainView" destination="se5-gp-TjO" id="OIM-Bl-32C"/>
-                <outlet property="middleClick" destination="jX4-ua-75H" id="Trh-Wi-A3S"/>
-                <outlet property="middleHold" destination="eIj-eG-exO" id="0yv-9j-1EQ"/>
-                <outlet property="scrollCheckBoxInvert" destination="Ip8-aI-or8" id="4zO-PE-fwa"/>
-                <outlet property="scrollEnableCheckBox" destination="9lG-eT-nD4" id="I9C-UC-jUf"/>
-                <outlet property="scrollSliderStepSize" destination="mXj-a7-rFw" id="M90-7j-Mao"/>
-                <outlet property="sideClick" destination="hGG-fg-G7L" id="p2t-bQ-dyM"/>
+                <outlet property="delegate" destination="NxE-tZ-vxj" id="x7u-U8-22w"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <window title="≪ do not localize ≫" autorecalculatesKeyViewLoop="NO" restorable="NO" deferred="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="F0z-JX-Cv5" userLabel="PrefPane">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
+        <window title="mosue fixuuu" autorecalculatesKeyViewLoop="NO" restorable="NO" deferred="NO" releasedWhenClosed="NO" animationBehavior="default" id="F0z-JX-Cv5" userLabel="MainWindow">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <rect key="contentRect" x="0.0" y="0.0" width="668" height="267"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="3840" height="2135"/>
             <view key="contentView" identifier="mainView" id="se5-gp-TjO">
                 <rect key="frame" x="0.0" y="0.0" width="668" height="267"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -42,7 +33,7 @@
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="moreButton:" target="-2" id="jpd-Av-fXJ"/>
+                                    <action selector="moreButton:" target="NxE-tZ-vxj" id="BS5-z5-XPf"/>
                                 </connections>
                             </button>
                             <button toolTip="Enable Mouse Fix for a better mouse experience!" verticalHuggingPriority="750" fixedFrame="YES" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vqy-WZ-nG6">
@@ -53,7 +44,7 @@
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="enableCheckBox:" target="-2" id="Oco-Bw-9Zw"/>
+                                    <action selector="enableCheckBox:" target="NxE-tZ-vxj" id="hd0-jA-d0d"/>
                                 </connections>
                             </button>
                             <box identifier="preferenceBox" autoresizesSubviews="NO" fixedFrame="YES" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="nmi-Qw-Ncm">
@@ -74,7 +65,7 @@
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="scrollEnableCheckBox:" target="-2" id="0fW-vn-5K8"/>
+                                                <action selector="scrollEnableCheckBox:" target="NxE-tZ-vxj" id="N9U-sm-jIx"/>
                                             </connections>
                                         </button>
                                         <slider toolTip="How many pixels to scroll for each mouse wheel tick." verticalHuggingPriority="750" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mXj-a7-rFw">
@@ -82,7 +73,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <sliderCell key="cell" enabled="NO" state="on" alignment="left" identifier="scrollSpeedSlider" maxValue="1" doubleValue="0.33333333333333331" tickMarkPosition="below" numberOfTickMarks="7" allowsTickMarkValuesOnly="YES" sliderType="linear" id="0NZ-eS-HsP"/>
                                             <connections>
-                                                <action selector="UIChanged:" target="-2" id="X4P-Fp-C3H"/>
+                                                <action selector="UIChanged:" target="NxE-tZ-vxj" id="eF8-Sp-kdg"/>
                                             </connections>
                                         </slider>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C2V-av-8kq">
@@ -120,7 +111,7 @@
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="UIChanged:" target="-2" id="6go-Qb-A3s"/>
+                                                <action selector="UIChanged:" target="NxE-tZ-vxj" id="VLp-eK-KMU"/>
                                             </connections>
                                         </button>
                                         <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="oyA-83-fW6">
@@ -150,7 +141,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="Middle button" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="U6a-n1-4au" id="Ks7-4K-rqX">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" metaFont="menu"/>
                                                 <menu key="menu" id="8up-Bb-BCh">
                                                     <items>
                                                         <menuItem title="Middle button" state="on" toolTip="Leave button behavior unchanged." id="U6a-n1-4au">
@@ -166,10 +157,10 @@
                                                         <menuItem title="Look Up" tag="70" toolTip="This feature is sometimes also referred to as &quot;Look Up &amp; data detectors&quot;" id="0P6-lc-6fr"/>
                                                     </items>
                                                 </menu>
-                                                <connections>
-                                                    <action selector="UIChanged:" target="-2" id="lVo-Nz-qCC"/>
-                                                </connections>
                                             </popUpButtonCell>
+                                            <connections>
+                                                <action selector="UIChanged:" target="NxE-tZ-vxj" id="TE3-sS-kRU"/>
+                                            </connections>
                                         </popUpButton>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8vf-dW-FZC">
                                             <rect key="frame" x="495" y="183" width="29" height="14"/>
@@ -185,7 +176,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="-" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="gLf-sd-t5o" id="Moi-Bx-VlN">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" metaFont="menu"/>
                                                 <menu key="menu" id="FBp-La-D1V">
                                                     <items>
                                                         <menuItem title="-" state="on" toolTip="No action." id="gLf-sd-t5o"/>
@@ -201,7 +192,7 @@
                                                 </menu>
                                             </popUpButtonCell>
                                             <connections>
-                                                <action selector="UIChanged:" target="-2" id="5RF-HO-cBI"/>
+                                                <action selector="UIChanged:" target="NxE-tZ-vxj" id="gTo-si-9ub"/>
                                             </connections>
                                         </popUpButton>
                                         <textField toolTip="Also known as mouse buttons 4 and 5." horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hoz-yF-xwc">
@@ -227,7 +218,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="Side buttons" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="1a7-0y-cIV" id="9Hx-yi-NA0">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system"/>
+                                                <font key="font" metaFont="menu"/>
                                                 <menu key="menu" id="Ao4-cS-trT">
                                                     <items>
                                                         <menuItem title="Side buttons" state="on" toolTip="Leave button behavior unchanged." id="1a7-0y-cIV"/>
@@ -238,7 +229,7 @@
                                                 </menu>
                                             </popUpButtonCell>
                                             <connections>
-                                                <action selector="UIChanged:" target="-2" id="xRU-Eq-jus"/>
+                                                <action selector="UIChanged:" target="NxE-tZ-vxj" id="OSL-Py-xH5"/>
                                             </connections>
                                         </popUpButton>
                                     </subviews>
@@ -248,16 +239,26 @@
                     </view>
                 </subviews>
             </view>
-            <connections>
-                <outlet property="delegate" destination="-2" id="NRd-Cj-iVg"/>
-            </connections>
-            <point key="canvasLocation" x="91" y="0.5"/>
+            <point key="canvasLocation" x="86" y="2"/>
         </window>
+        <customObject id="NxE-tZ-vxj" customClass="AppDelegate">
+            <connections>
+                <outlet property="enableCheckBox" destination="vqy-WZ-nG6" id="I0c-Jz-8Rc"/>
+                <outlet property="mainView" destination="5ZP-Jh-Lwi" id="d32-p6-Lry"/>
+                <outlet property="middleClick" destination="jX4-ua-75H" id="msN-17-whg"/>
+                <outlet property="middleHold" destination="eIj-eG-exO" id="c2z-8j-nm5"/>
+                <outlet property="scrollCheckBoxInvert" destination="Ip8-aI-or8" id="flR-hc-vMi"/>
+                <outlet property="scrollEnableCheckBox" destination="9lG-eT-nD4" id="w4l-na-jZF"/>
+                <outlet property="scrollSliderStepSize" destination="mXj-a7-rFw" id="3Xl-vL-g4G"/>
+                <outlet property="sideClick" destination="hGG-fg-G7L" id="evV-wc-0Hn"/>
+                <outlet property="window" destination="F0z-JX-Cv5" id="f6c-dU-MWV"/>
+            </connections>
+        </customObject>
         <menuItem title="Launchpad" tag="160" id="9rC-Ff-2hb"/>
-        <window title="≪ do not localize ≫" autorecalculatesKeyViewLoop="NO" restorable="NO" deferred="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="hnx-EO-N7f" userLabel="PrefPane">
+        <window title="≪ do not localize ≫" autorecalculatesKeyViewLoop="NO" restorable="NO" deferred="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="hnx-EO-N7f" userLabel="MainWindowLarge">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <rect key="contentRect" x="0.0" y="0.0" width="668" height="412"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="3840" height="2135"/>
             <view key="contentView" identifier="mainView" id="qyl-y6-88V">
                 <rect key="frame" x="0.0" y="0.0" width="668" height="412"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -273,9 +274,6 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
-                                <connections>
-                                    <action selector="moreButton:" target="-2" id="3CI-op-n5G"/>
-                                </connections>
                             </button>
                             <button toolTip="Enable Mouse Fix for a better mouse experience!" verticalHuggingPriority="750" fixedFrame="YES" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dau-c5-62r">
                                 <rect key="frame" x="18" y="385" width="157" height="18"/>
@@ -284,9 +282,6 @@
                                     <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
-                                <connections>
-                                    <action selector="enableCheckBox:" target="-2" id="dhE-le-N6p"/>
-                                </connections>
                             </button>
                             <box identifier="preferenceBox" autoresizesSubviews="NO" fixedFrame="YES" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="fUE-Uk-OBf">
                                 <rect key="frame" x="17" y="16" width="634" height="362"/>
@@ -305,17 +300,11 @@
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
-                                            <connections>
-                                                <action selector="scrollEnableCheckBox:" target="-2" id="cxP-6X-XDS"/>
-                                            </connections>
                                         </button>
                                         <slider toolTip="How many pixels to scroll for each mouse wheel tick." verticalHuggingPriority="750" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="obM-pq-dAO">
                                             <rect key="frame" x="228" y="39" width="151" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <sliderCell key="cell" enabled="NO" state="on" alignment="left" identifier="scrollSpeedSlider" maxValue="1" doubleValue="0.5" tickMarkPosition="below" numberOfTickMarks="7" allowsTickMarkValuesOnly="YES" sliderType="linear" id="jmT-1v-mYA"/>
-                                            <connections>
-                                                <action selector="UIChanged:" target="-2" id="cOQ-zP-L1K"/>
-                                            </connections>
                                         </slider>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="InC-pS-HRV">
                                             <rect key="frame" x="254" y="70" width="102" height="17"/>
@@ -351,9 +340,6 @@
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
-                                            <connections>
-                                                <action selector="UIChanged:" target="-2" id="YVm-RG-hVA"/>
-                                            </connections>
                                         </button>
                                         <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="sfP-xW-i9D">
                                             <rect key="frame" x="20" y="97" width="588" height="5"/>
@@ -363,11 +349,11 @@
                                             <rect key="frame" x="20" y="115" width="588" height="132"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <clipView key="contentView" id="VkY-Bo-iys">
-                                                <rect key="frame" x="1" y="0.0" width="586" height="131"/>
+                                                <rect key="frame" x="1" y="1" width="586" height="130"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <subviews>
                                                     <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="26" headerView="ye3-vZ-MIi" viewBased="YES" id="Qfw-Ch-jQg">
-                                                        <rect key="frame" x="0.0" y="0.0" width="586" height="106"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="586" height="105"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <size key="intercellSpacing" width="3" height="2"/>
                                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -387,7 +373,7 @@
                                                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                 <prototypeCellViews>
                                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="dum-D7-Vs0">
-                                                                        <rect key="frame" x="1" y="1" width="289" height="26"/>
+                                                                        <rect key="frame" x="11" y="1" width="294" height="26"/>
                                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Double click Mouse Button 3" id="8sL-3X-cL7">
                                                                             <font key="font" usesAppearanceFont="YES"/>
@@ -396,7 +382,7 @@
                                                                         </textFieldCell>
                                                                     </textField>
                                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="GUo-zh-aeF">
-                                                                        <rect key="frame" x="1" y="29" width="289" height="26"/>
+                                                                        <rect key="frame" x="11" y="29" width="294" height="26"/>
                                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Double click and hold Mouse Button 3" id="VdR-yP-kZ5">
                                                                             <font key="font" usesAppearanceFont="YES"/>
@@ -406,7 +392,7 @@
                                                                     </textField>
                                                                 </prototypeCellViews>
                                                             </tableColumn>
-                                                            <tableColumn width="291" minWidth="10" maxWidth="3.4028234663852886e+38" id="9LP-PU-En7">
+                                                            <tableColumn width="253" minWidth="10" maxWidth="3.4028234663852886e+38" id="9LP-PU-En7">
                                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Remapping">
                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -419,15 +405,15 @@
                                                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                                 <prototypeCellViews>
                                                                     <tableCellView id="mPY-TY-DRK">
-                                                                        <rect key="frame" x="293" y="1" width="291" height="26"/>
+                                                                        <rect key="frame" x="308" y="1" width="257" height="26"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
                                                                             <popUpButton verticalHuggingPriority="750" id="eZU-IX-8cK">
-                                                                                <rect key="frame" x="4" y="0.0" width="281" height="26"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="281" height="26"/>
                                                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                                 <popUpButtonCell key="cell" type="push" title="Mission Control" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="wF7-aY-p99" id="hHU-F8-7Fc">
                                                                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                                                    <font key="font" metaFont="system"/>
+                                                                                    <font key="font" metaFont="menu"/>
                                                                                     <menu key="menu" id="sfO-3y-bKh">
                                                                                         <items>
                                                                                             <menuItem title="Mission Control" state="on" id="wF7-aY-p99"/>
@@ -453,15 +439,15 @@
                                                                         </subviews>
                                                                     </tableCellView>
                                                                     <tableCellView id="KLy-We-MR5">
-                                                                        <rect key="frame" x="293" y="29" width="291" height="26"/>
+                                                                        <rect key="frame" x="308" y="29" width="257" height="26"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
                                                                             <popUpButton verticalHuggingPriority="750" id="Pdx-Ie-KAp">
-                                                                                <rect key="frame" x="4" y="0.0" width="281" height="26"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="281" height="26"/>
                                                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                                 <popUpButtonCell key="cell" type="push" title="Mission Control" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="OXR-Gu-AhW" id="i7H-L0-K6H">
                                                                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                                                    <font key="font" metaFont="system"/>
+                                                                                    <font key="font" metaFont="menu"/>
                                                                                     <menu key="menu" id="xLo-3T-KeY">
                                                                                         <items>
                                                                                             <menuItem title="Mission Control" state="on" id="OXR-Gu-AhW"/>
@@ -500,7 +486,7 @@
                                                 <rect key="frame" x="224" y="17" width="15" height="102"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
-                                            <tableHeaderView key="headerView" id="ye3-vZ-MIi">
+                                            <tableHeaderView key="headerView" wantsLayer="YES" id="ye3-vZ-MIi">
                                                 <rect key="frame" x="0.0" y="0.0" width="586" height="25"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </tableHeaderView>
@@ -539,13 +525,10 @@
                     </view>
                 </subviews>
             </view>
-            <connections>
-                <outlet property="delegate" destination="-2" id="VP8-NJ-ugO"/>
-            </connections>
             <point key="canvasLocation" x="817" y="-208"/>
         </window>
     </objects>
     <resources>
-        <image name="NSAddTemplate" width="11" height="11"/>
+        <image name="NSAddTemplate" width="15" height="13"/>
     </resources>
 </document>

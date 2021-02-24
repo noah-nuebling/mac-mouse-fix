@@ -3,10 +3,10 @@ podfile: Example/Podfile
 xcode_workspace: Example/ZipArchiveExample.xcworkspace
 matrix:
   include:
-    - osx_image: xcode10.2 # OS X 10.14
-      env: OSX_IMAGE="xcode10.2"
+    - osx_image: xcode10.3 # OS X 10.14
+      env: OSX_IMAGE="xcode10.3"
            SDK="macosx"
-           DEVICE="OS X 10.14"
+           DEVICE="OS X 10.14.4"
            
     - osx_image: xcode9.4 # OS X 10.13
       env: OSX_IMAGE="xcode9.4"
@@ -23,10 +23,15 @@ matrix:
            SDK="macosx"
            DEVICE="OS X 10.11"
            
-    - osx_image: xcode10.2
-      env: OSX_IMAGE="xcode10.2"
+    - osx_image: xcode11.3
+      env: OSX_IMAGE="xcode11.3"
            SDK="appletvsimulator"
-           DEVICE="Apple TV 4K (at 1080p) (12.2)" # newest for tvOS 12.x
+           DEVICE="Apple TV 4K (at 1080p) (13.3)" # newest on travis for tvOS 13.x
+           
+    - osx_image: xcode10.3
+      env: OSX_IMAGE="xcode10.3"
+           SDK="appletvsimulator"
+           DEVICE="Apple TV 4K (at 1080p) (12.4)" # latest for tvOS 12.x
            
     - osx_image: xcode9.4
       env: OSX_IMAGE="xcode9.4"
@@ -48,10 +53,15 @@ matrix:
            SDK="appletvsimulator"
            DEVICE="Apple TV 1080p (9.0)" # oldest for tvOS 9.x
            
-    - osx_image: xcode10.2
-      env: OSX_IMAGE="xcode10.2"
+    - osx_image: xcode11.3
+      env: OSX_IMAGE="xcode11.3"
            SDK="iphonesimulator"
-           DEVICE="iPhone Xʀ (12.2)" # newest for iOS 12.x
+           DEVICE="iPhone 11 Pro Max (13.3)" # newest on travis for iOS 13.x
+           
+    - osx_image: xcode10.3
+      env: OSX_IMAGE="xcode10.3"
+           SDK="iphonesimulator"
+           DEVICE="iPhone Xʀ (12.4)" # latest for iOS 12.x
            
     - osx_image: xcode10.1
       env: OSX_IMAGE="xcode10.1"
@@ -82,24 +92,14 @@ matrix:
       env: OSX_IMAGE="xcode10.1"
            SDK="iphonesimulator"
            DEVICE="iPhone 4s (9.0)" # oldest for iOS 9.x
-           
-    - osx_image: xcode10.1
-      env: OSX_IMAGE="xcode10.1"
-           SDK="iphonesimulator"
-           DEVICE="iPhone 6 Plus (8.4)" # latest for iOS 8.x
-           
-    - osx_image: xcode10.1
-      env: OSX_IMAGE="xcode10.1"
-           SDK="iphonesimulator"
-           DEVICE="iPhone 4s (8.1)" # oldest for iOS 8.x
 
 before_install:
   - if [[ ${OSX_IMAGE} != "xcode1"* ]]; then
-        echo "Workaround for https://github.com/CocoaPods/CocoaPods/issues/7765";
-        gem install cocoapods -v '1.6.1';
+        echo "Workaround for https://github.com/CocoaPods/CocoaPods/issues/7765 in Xcode 9-";
+        gem install cocoapods -v '1.7.5';
     fi
-  - if [[ ${OSX_IMAGE} = "xcode1"* ]]; then
-        echo "Disabling modern build system as a workaround for target issue in Xcode 10+";
+  - if [[ ${OSX_IMAGE} = "xcode10"* ]]; then
+        echo "Disabling modern build system as a workaround for target issue in Xcode 10";
         USEMODERNBUILDSYSTEM="-UseModernBuildSystem=NO";
     fi
   - if [ ${SDK} = "macosx" ]; then
@@ -113,9 +113,11 @@ before_install:
         DESTINATION="platform=macosx";
     else
         DESTINATION_UDID=$(instruments -s devices | grep "$DEVICE \[" | sed -E 's/.*\[([0-9A-F-]+)\].*/\1/g');
-        `Prelaunching simulator to avoid timeout https://github.com/travis-ci/travis-ci/issues/6422`
-        open -a Simulator --args -CurrentDeviceUDID $DESTINATION_UDID;
         DESTINATION="id=$DESTINATION_UDID";
+    fi
+  - if [[ ${SDK} = "appletvsimulator" && (${OSX_IMAGE} = "xcode7"* || ${OSX_IMAGE} = "xcode8"*) ]]; then
+        echo "Prelaunching simulator to avoid timeout https://github.com/travis-ci/travis-ci/issues/6422 in Xcode 8-";
+        open -a Simulator --args -CurrentDeviceUDID $DESTINATION_UDID;
     fi
 
 script:

@@ -9,7 +9,7 @@
 
 #import "Updater.h"
 #import "UpdateWindow.h"
-#import "../PrefPaneDelegate.h"
+#import "../AppDelegate.h"
 #import "../MoreSheet/MoreSheet.h"
 #import "../Config/ConfigFileInterface_PrefPane.h"
 #import "ZipArchive/SSZipArchive.h"
