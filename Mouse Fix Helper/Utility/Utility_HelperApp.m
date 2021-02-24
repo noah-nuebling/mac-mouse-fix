@@ -30,16 +30,7 @@
     return [NSBundle bundleForClass:Utility_HelperApp.class];
 }
 + (NSBundle *)prefPaneBundle {
-    
-    NSURL *prefPaneBundleURL = [self helperBundle].bundleURL;
-    for (int i = 0; i < 4; i++) {
-        prefPaneBundleURL = [prefPaneBundleURL URLByDeletingLastPathComponent];
-    }
-    NSBundle *prefPaneBundle = [NSBundle bundleWithURL:prefPaneBundleURL];
-    
-    NSLog(@"prefPaneBundleURL: %@", prefPaneBundleURL);
-    NSLog(@"prefPaneBundle: %@", prefPaneBundle);
-    
+    NSBundle *prefPaneBundle = [NSBundle bundleWithIdentifier:@"com.nuebling.mac-mouse-fix"];
     return prefPaneBundle;
 }
 

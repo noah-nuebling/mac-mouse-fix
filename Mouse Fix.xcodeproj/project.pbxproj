@@ -55,6 +55,8 @@
 		4F94F72725E6098C00D9F24A /* MoreSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FF873EE231A96B2002A897A /* MoreSheet.xib */; };
 		4F94F72825E6099200D9F24A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F364C74232ABE5C0084DEB0 /* Assets.xcassets */; };
 		4F94F72925E6099700D9F24A /* MouseFix.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD67DE3211CC9000095A9A5 /* MouseFix.xib */; };
+		4F94F73D25E6146C00D9F24A /* Mac Mouse Fix Helper.app in Copy Helper */ = {isa = PBXBuildFile; fileRef = 4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4F94F74C25E614B800D9F24A /* Mac Mouse Fix Updater in Copy Updater */ = {isa = PBXBuildFile; fileRef = 4F2FDF302315662400C7BE14 /* Mac Mouse Fix Updater */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4F95A249234EBB5D000DC7D7 /* PointerSpeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F95A248234EBB5D000DC7D7 /* PointerSpeed.m */; };
 		4FCECD8521092354001F1078 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECD8421092354001F1078 /* AppDelegate.m */; };
 		4FD45A20231C7FB500F75C58 /* AccessibilityCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD45A1F231C7FB500F75C58 /* AccessibilityCheck.m */; };
@@ -81,6 +83,20 @@
 			remoteGlobalIDString = 4F94F5ED25E5EC2500D9F24A;
 			remoteInfo = "Mac Mouse Fix";
 		};
+		4F94F73525E6138800D9F24A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FCECD7821092354001F1078 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4FCECD7F21092354001F1078;
+			remoteInfo = "Mac Mouse Fix Helper";
+		};
+		4F94F73725E6138C00D9F24A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FCECD7821092354001F1078 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4F2FDF2F2315662400C7BE14;
+			remoteInfo = "Mac Mouse Fix Updater";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -104,13 +120,26 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4F94F72E25E612AB00D9F24A /* CopyFiles */ = {
+		4F94F72E25E612AB00D9F24A /* Copy Helper */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = "";
+			dstPath = Contents/Library/LoginItems;
 			dstSubfolderSpec = 1;
 			files = (
+				4F94F73D25E6146C00D9F24A /* Mac Mouse Fix Helper.app in Copy Helper */,
 			);
+			name = "Copy Helper";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4F94F74B25E6149500D9F24A /* Copy Updater */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Library/LaunchServices;
+			dstSubfolderSpec = 1;
+			files = (
+				4F94F74C25E614B800D9F24A /* Mac Mouse Fix Updater in Copy Updater */,
+			);
+			name = "Copy Updater";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -738,11 +767,15 @@
 				4F94F5EB25E5EC2500D9F24A /* Frameworks */,
 				4F94F5EC25E5EC2500D9F24A /* Resources */,
 				4F94F68E25E5EF1100D9F24A /* Embed Frameworks */,
-				4F94F72E25E612AB00D9F24A /* CopyFiles */,
+				4F94F72E25E612AB00D9F24A /* Copy Helper */,
+				4F94F74B25E6149500D9F24A /* Copy Updater */,
+				4F94F75125E614D500D9F24A /* Increment Build Number */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				4F94F73825E6138C00D9F24A /* PBXTargetDependency */,
+				4F94F73625E6138800D9F24A /* PBXTargetDependency */,
 			);
 			name = "Mac Mouse Fix";
 			productName = "Mac Mouse Fix";
@@ -910,6 +943,27 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		4F94F75125E614D500D9F24A /* Increment Build Number */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Increment Build Number";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = " \nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		4F2FDF2C2315662400C7BE14 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -996,6 +1050,16 @@
 			isa = PBXTargetDependency;
 			target = 4F94F5ED25E5EC2500D9F24A /* Mac Mouse Fix */;
 			targetProxy = 4F94F60C25E5EC2800D9F24A /* PBXContainerItemProxy */;
+		};
+		4F94F73625E6138800D9F24A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4FCECD7F21092354001F1078 /* Mac Mouse Fix Helper */;
+			targetProxy = 4F94F73525E6138800D9F24A /* PBXContainerItemProxy */;
+		};
+		4F94F73825E6138C00D9F24A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4F2FDF2F2315662400C7BE14 /* Mac Mouse Fix Updater */;
+			targetProxy = 4F94F73725E6138C00D9F24A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1315,7 +1379,7 @@
 				);
 				INFOPLIST_FILE = "Mouse Fix Helper/SupportFiles/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.nuebling.mousefix.helper;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix.helper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1343,7 +1407,7 @@
 				);
 				INFOPLIST_FILE = "Mouse Fix Helper/SupportFiles/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.nuebling.mousefix.helper;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix.helper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";

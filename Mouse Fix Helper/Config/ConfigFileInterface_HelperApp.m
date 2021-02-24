@@ -27,10 +27,18 @@ static BOOL _configFileChanged;
 static NSString *_bundleIDOfAppWhichCausesAppOverride;
 static NSDictionary *_stringToEventFlagMask;
 
+static NSString*_configFilePath;
+
 #pragma mark - Interface
 
 + (void)load_Manual {
+    // Get config file path
+    NSURL *applicationSupportURL = [NSFileManager.defaultManager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
+    NSString *configFilePathRelative = [NSString stringWithFormat:@"%@/config.plist", Utility_HelperApp.prefPaneBundle.bundleIdentifier];
+    _configFilePath = [applicationSupportURL URLByAppendingPathComponent:configFilePathRelative].path;
+    // Load config
     [self reactToConfigFileChange];
+    // Setup stuff
     setupFSEventStreamCallback();
     _stringToEventFlagMask = @{
         @"command" : @(kCGEventFlagMaskCommand),
@@ -59,13 +67,10 @@ static NSMutableDictionary *_configWithAppOverridesApplied;
 /// Load contents of config.plist file into this class' config property
 static void fillConfigFromFile() {
     
-    NSBundle *thisBundle = [NSBundle mainBundle];
-    NSString *configFilePath = [thisBundle pathForResource:@"config" ofType:@"plist"];
-    
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    if ( [fileManager fileExistsAtPath: configFilePath] == TRUE ) {
+    if ( [fileManager fileExistsAtPath: _configFilePath] == TRUE ) {
         
-        NSData *configFromFileData = [NSData dataWithContentsOfFile:configFilePath];
+        NSData *configFromFileData = [NSData dataWithContentsOfFile:_configFilePath];
         NSError *err;
         NSMutableDictionary *configFromFile = [NSPropertyListSerialization propertyListWithData:configFromFileData options:NSPropertyListMutableContainersAndLeaves format:nil error: &err];
         
@@ -122,26 +127,6 @@ static void fillConfigFromFile() {
     return NO;
 }
 
-// TODO: Delete this
-//static void updateScrollSettings() {
-////    NSDictionary *config = ConfigFileInterface_HelperApp.config;
-////    NSDictionary *scrollSettings = [config objectForKey:@"ScrollSettings"];
-////    
-////        NSArray *values = [scrollSettings objectForKey:@"values"];
-////        NSNumber *px = [values objectAtIndex:0];
-////        NSNumber *ms = [values objectAtIndex:1];
-////        NSNumber *f = [values objectAtIndex:2];
-////        NSNumber *d = [values objectAtIndex:3];
-//        
-////        [SmoothScroll configureWithPxPerStep:px.intValue msPerStep:ms.intValue friction:f.floatValue scrollDirection:d.intValue];
-//    
-////    ScrollControl.isSmoothEnabled = [[scrollSettings objectForKey:@"enabled"] boolValue];
-//    
-//    // CLEAN: I think that all the stuff above is probably not necessary, because decide calls setConfigVariablesForActiveApp(), which should do also set apropriate scroll settings.
-//    [SmoothScroll decide];
-//    
-//}
-
 /// Update internal state of scroll classes with values from _configWithAppOverridesApplied
 /// \note Call loadAppOverridesForApp() to fill _configWithAppOverridesApplied
 + (void)updateScrollParameters {
@@ -155,19 +140,16 @@ static void fillConfigFromFile() {
     ScrollControl.isSmoothEnabled = [scroll[@"smooth"] boolValue];
     
     
-    // other
-    
+    // Other
     [ScrollControl configureWithParameters:scroll[@"other"]];
 
-    // smoothParameters
-    
+    // SmoothParameters
     [SmoothScroll configureWithParameters:scroll[@"smoothParameters"]];
 
     // roughParameters
         // nothing here yet
 
     // Keyboard modifier keys
-    
     NSDictionary *mod = scroll[@"modifierKeys"];
     // Event flag masks
     ScrollModifiers.horizontalScrollModifierKeyMask = (CGEventFlags)[_stringToEventFlagMask[mod[@"horizontalScrollModifierKey"]] unsignedLongLongValue];
@@ -193,174 +175,6 @@ static void loadAppOverridesForApp(NSString *bundleIdentifier) {
         _configWithAppOverridesApplied = _config;
     }
 }
-
-// TODO: Delete this
-/// This can only work, if the source array has the same number of objects as the destination array. So only specifying the values which you want to override in the source array doesn't work. So you always have to replace the whole array anyways which the apply overrides functio for dictionaries can do as well. There is no need for this function. Just avoid puting arrays or dicts into arrays in the config file.
-//static NSArray* applyOverrides_Array(NSArray *src, NSArray *dst) {
-//    NSMutableArray *dstMutable = [dst mutableCopy];
-//    NSUInteger index = 0;
-//    for (NSObject *srcVal in src) {
-//        NSObject *dstVal = [dst objectAtIndex:index];
-//        if ([srcVal isKindOfClass:[NSDictionary class]] || [srcVal isKindOfClass:[NSMutableDictionary class]]) {
-//            NSDictionary *recursionResult = applyOverrides_Dict((NSDictionary *)srcVal, (NSDictionary *)dstVal);
-//            [dstMutable setObject:recursionResult atIndexedSubscript:index];
-//        } else if ([srcVal isKindOfClass:[NSArray class]]) {
-//            NSArray *recursionResult = applyOverrides_Array((NSArray *)srcVal, (NSArray *)dstVal);
-//            [dstMutable setObject:recursionResult atIndexedSubscript:index];
-//        } else {
-//            [dstMutable setObject:srcVal atIndexedSubscript:index];
-//        }
-//        index++;
-//    }
-//    return dstMutable;
-//}
-// TODO: Delete this
-/// will apply app specific overrides.
-/// Will only do something, if the active app has changed since the last time that this function was called
-//+ (void)updateScrollSettingsWithActiveApp:(NSString *)bundleIdentifierOfScrolledApp {
-//
-//    // if app under mouse pointer changed, adjust settings
-//
-//    if ([_bundleIdentifierOfAppWhichCausesOverride isEqualToString:bundleIdentifierOfScrolledApp] == FALSE) {
-//        _bundleIdentifierOfAppWhichCausesOverride = bundleIdentifierOfScrolledApp;
-//
-//        // get default settings
-//        NSDictionary *config = [ConfigFileInterface_HelperApp config];
-//
-//        // get overrides for scrolled app
-//            NSDictionary *overrides = [config objectForKey:@"AppOverrides"];
-//            NSDictionary *overridesForScrolledApp;
-//            for (NSString *b in overrides.allKeys) {
-//                if ([bundleIdentifierOfScrolledApp containsString:b]) {
-//                        overridesForScrolledApp = [overrides objectForKey: b];
-//                }
-//            }
-//        // apply overrides
-//        NSDictionary *config
-//
-//
-//
-//            // top level
-//
-//                // _disableAll = [[defaultScrollSettings objectForKey:@"disableAll"] boolValue]; // this is currently unused. Could be used as a killswitch for all scrolling interception
-//                ScrollControl.scrollDirection = [[defaultScrollSettings objectForKey:@"direction"] intValue];
-//                ScrollControl.isSmoothEnabled = [[defaultScrollSettings objectForKey:@"smooth"] boolValue];
-//
-//            // smoothParameters
-//
-//                NSDictionary *p = [defaultScrollSettings objectForKey:@"smoothParameters"];
-//                int     sp1     =   [[p objectForKey:@"pxPerStep"] intValue];
-//                int     sp2     =   [[p objectForKey:@"msPerStep"] intValue];
-//                float   sp3     =   [[p objectForKey:@"friction"] floatValue];
-//                float   sp4     =   [[p objectForKey:@"frictionDepth"] floatValue];
-//                float   sp5     =   [[p objectForKey:@"acceleration"] floatValue];
-//                int     sp6     =   [[p objectForKey:@"onePixelScrollsLimit"] intValue];
-//                float   sp7     =   [[p objectForKey:@"fastScrollExponentialBase"] floatValue];
-//                int     sp8     =   [[p objectForKey:@"fastScrollThreshold_inSwipes"] intValue];
-//                int     sp9     =   [[p objectForKey:@"scrollSwipeThreshold_inTicks"] intValue];
-//                float   sp10    =   [[p objectForKey:@"consecutiveScrollSwipeMaxIntervall"] floatValue];
-//                float   sp11    =   [[p objectForKey:@"consecutiveScrollTickMaxIntervall"] floatValue];
-//
-//            // roughParameters
-//
-//                // nothing here yet
-//
-//            // keyboard modifier keys
-//        NSDictionary *mod = [defaultScrollSettings objectForKey:@"modifierKeys"];
-//        ScrollModifiers.horizontalScrollModifierKeyEnabled = [[mod objectForKey:@"horizontalScrollModifierKeyEnabled"] boolValue];
-//        ScrollModifiers.magnificationScrollModifierKeyEnabled = [[mod objectForKey:@"magnificationScrollModifierKeyEnabled"] boolValue];
-//
-//
-//        // get app specific settings
-//
-//            NSDictionary *overrides = [config objectForKey:@"AppOverrides"];
-//            NSDictionary *appOverrideScrollSettings;
-//            for (NSString *b in overrides.allKeys) {
-//                if ([bundleIdentifierOfScrolledApp containsString:b]) {
-//                    appOverrideScrollSettings = [[overrides objectForKey: b] objectForKey:@"ScrollSettings"];
-//                }
-//            }
-//
-//            // If custom overrides for scrolled app exist, apply them
-//
-//            if (appOverrideScrollSettings) {
-//
-//                // top level
-//
-//                    // Syntax explanation:
-//                    // x = y ? y : x === if y != nil then x = y, else x = x
-//
-//                    NSNumber *dir = [appOverrideScrollSettings objectForKey:@"direction"];
-//                    ScrollControl.scrollDirection = dir ? [dir integerValue] : ScrollControl.scrollDirection;
-//                    NSNumber *sm = [appOverrideScrollSettings objectForKey:@"smooth"];
-//                    ScrollControl.isSmoothEnabled = sm ? [sm boolValue] : ScrollControl.isSmoothEnabled;
-//
-//                    // smoothParameters
-//
-//                    NSDictionary *p = [appOverrideScrollSettings objectForKey:@"smoothParameters"];
-//                    if (p) {
-//                        int     osp1     =   [[p objectForKey:@"pxPerStep"] intValue];
-//                        int     osp2     =   [[p objectForKey:@"msPerStep"] intValue];
-//                        float   osp3     =   [[p objectForKey:@"friction"] floatValue];
-//                        float   osp4     =   [[p objectForKey:@"frictionDepth"] floatValue];
-//                        float   osp5     =   [[p objectForKey:@"acceleration"] floatValue];
-//                        int     osp6     =   [[p objectForKey:@"onePixelScrollsLimit"] intValue];
-//                        float   osp7     =   [[p objectForKey:@"fastScrollExponentialBase"] floatValue];
-//                        int     osp8     =   [[p objectForKey:@"fastScrollThreshold_inSwipes"] intValue];
-//                        int     osp9     =   [[p objectForKey:@"scrollSwipeThreshold_inTicks"] intValue];
-//                        float   osp10    =   [[p objectForKey:@"consecutiveScrollSwipeMaxIntervall"] floatValue];
-//                        float   osp11    =   [[p objectForKey:@"consecutiveScrollTickMaxIntervall"] floatValue];
-//
-//                        sp1 = osp1 ? osp1 : sp1;
-//                        sp2 = osp2 ? osp2 : sp2;
-//                        sp3 = osp3 ? osp3 : sp3;
-//                        sp4 = osp4 ? osp4 : sp4;
-//                        sp5 = osp5 ? osp5 : sp5;
-//                        sp6 = osp6 ? osp6 : sp6;
-//                        sp7 = osp7 ? osp7 : sp7;
-//                        sp8 = osp8 ? osp8 : sp8;
-//                        sp9 = osp9 ? osp9 : sp9;
-//                        sp10 = osp10 ? osp10 : sp10;
-//                        sp11 = osp11 ? osp11 : sp11;
-//
-//                    }
-//
-//                    // roughParameters
-//
-//                        // nothing here yet
-//
-//                    // modifierKeys
-//
-//                    NSDictionary *omod = [appOverrideScrollSettings objectForKey:@"modifierKeys"];
-//                    if (omod) {
-//                        BOOL hs = [[omod objectForKey:@"horizontalScrollModifierKeyEnabled"] boolValue];
-//                        ScrollModifiers.horizontalScrollModifierKeyEnabled = hs ? hs : ScrollModifiers.horizontalScrollModifierKeyEnabled;
-//                        BOOL ms = [[omod objectForKey:@"magnificationScrollModifierKeyEnabled"] boolValue];
-//                        ScrollModifiers.magnificationScrollModifierKeyEnabled = ms ? ms : ScrollModifiers.magnificationScrollModifierKeyEnabled;
-//                    }
-//
-//
-//            }
-//
-//        /// TODO: Give this function one dictionary instead of so many arguments
-//        [SmoothScroll configureWithPxPerStep:sp1
-//                                   msPerStep:sp2
-//                                    friction:sp3
-//                               fricitonDepth:sp4
-//                                acceleration:sp5
-//                        onePixelScrollsLimit:sp6
-//                   fastScrollExponentialBase:sp7
-//                fastScrollThreshold_inSwipes:sp8
-//                scrollSwipeThreshold_inTicks:sp9
-//          consecutiveScrollSwipeMaxIntervall:sp10
-//           consecutiveScrollTickMaxIntervall:sp11];
-//
-//        [ScrollControl decide];
-//    }
-//
-//
-////    NSLog(@"override bench: %f", CACurrentMediaTime() - ts);
-//}
 
 + (void) repairConfigFile:(NSString *)info {
     // TODO: actually repair config dict
@@ -394,9 +208,7 @@ void Handle_FSEventStreamCallback (ConstFSEventStreamRef streamRef, void *client
  */
 static void setupFSEventStreamCallback() {
     
-    NSBundle *thisBundle = [NSBundle mainBundle];
-    CFStringRef configFilePath = (__bridge CFStringRef) [thisBundle pathForResource:@"config" ofType:@"plist"];
-    CFArrayRef pathsToWatch = CFArrayCreate(NULL, (const void **)&configFilePath, 1, NULL);
+    CFArrayRef pathsToWatch = CFArrayCreate(NULL, (const void **)(__bridge CFStringRef)_configFilePath, 1, NULL);
     void *callbackInfo = NULL; // could put stream-sp ecific data here.
     NSLog(@"pathsToWatch : %@", pathsToWatch);
     
