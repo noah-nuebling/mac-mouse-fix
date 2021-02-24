@@ -210,10 +210,13 @@ void Handle_FSEventStreamCallback (ConstFSEventStreamRef streamRef, void *client
  */
 static void setupFSEventStreamCallback() {
     
+    
     CFStringRef cfPath = (__bridge CFStringRef)_configFilePath.copy;
-    CFArrayRef pathsToWatch = CFArrayCreate(NULL, (const void **)cfPath, 1, NULL);
+    CFStringRef cfArray[1] = {cfPath};
+    CFArrayRef pathsToWatch = CFArrayCreate(NULL, (const void **)cfArray, 1, NULL);
     void *callbackInfo = NULL; // could put stream-sp ecific data here.
-    NSLog(@"pathsToWatch : %@", pathsToWatch);
+    
+    NSLog(@"pathsToWatch : %@", cfPath);
     
     CFAbsoluteTime latency = 0.3;
     FSEventStreamRef remapsFileEventStream = FSEventStreamCreate(kCFAllocatorDefault, &Handle_FSEventStreamCallback, callbackInfo, pathsToWatch, kFSEventStreamEventIdSinceNow, latency, kFSEventStreamCreateFlagFileEvents ^ kFSEventStreamCreateFlagUseCFTypes);

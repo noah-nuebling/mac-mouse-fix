@@ -12,6 +12,8 @@
 #import "AppDelegate.h"
 #import "../MessagePort/MessagePort_PrefPane.h"
 
+#import "Constants.h"
+
 @implementation HelperServices
 
 + (NSBundle *)helperBundle {
@@ -92,7 +94,7 @@
         // get helper executable path
         NSBundle *prefPaneBundle = [NSBundle bundleForClass: [AppDelegate class]];
         NSString *prefPaneBundlePath = [prefPaneBundle bundlePath];
-        NSString *helperExecutablePath = [prefPaneBundlePath stringByAppendingPathComponent: @"Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/MacOS/Mouse Fix Helper"];
+        NSString *helperExecutablePath = [prefPaneBundlePath stringByAppendingPathComponent: kMFHelperExecutablePath];
         
         // get User Library path
         NSArray *libraryPaths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
