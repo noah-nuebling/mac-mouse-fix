@@ -132,14 +132,12 @@
             if ( (LAConfigFile_exists == FALSE) || (LAConfigFile_executablePathIsCorrect == FALSE) ) {
                 NSLog(@"repairing file...");
                 
-                //check if "User/Library/LaunchAgents" folder exists, if not, create it
+                // Check if "User/Library/LaunchAgents" folder exists, if not, create it
                 NSString *launchAgentsFolderPath = [launchAgentPlistPath stringByDeletingLastPathComponent];
                 BOOL launchAgentsFolderExists = [fileManager fileExistsAtPath: launchAgentsFolderPath isDirectory: nil];
                 
                 if (launchAgentsFolderExists == FALSE) {
                     NSLog(@"LaunchAgentsFolder doesn't exist");
-                }
-                if (launchAgentsFolderExists == FALSE) {
                     NSError *error;
                     [fileManager createDirectoryAtPath:launchAgentsFolderPath withIntermediateDirectories:FALSE attributes:nil error:&error];
                     if (error == nil) {
@@ -151,9 +149,8 @@
                 
                 
                 
-                
                 NSError *error;
-                // read contents of default_mouse.fix.helper.plist (aka default-launch-agent-config-file or defaultLAConfigFile) into a dictionary
+                // read contents of default_mouse.fix.helper.plist
                 NSString *defaultLAConfigFile_path = [prefPaneBundle pathForResource:@"default_mouse.fix.helper" ofType:@"plist"];
                 NSData *defaultLAConfigFile_data = [NSData dataWithContentsOfFile:defaultLAConfigFile_path];
                 NSMutableDictionary *newLAConfigFile_dict = [NSPropertyListSerialization propertyListWithData:defaultLAConfigFile_data options:NSPropertyListMutableContainersAndLeaves format:nil error:&error];

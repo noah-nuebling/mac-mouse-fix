@@ -24,7 +24,7 @@ static NSMutableDictionary *_config;
     _config = new;
 }
 static NSURL *_configURL;
-static NSURL *_backupConfigURL; // Backup config used to be called default config. There might still be references to default config that I missed.
+static NSURL *_backupConfigURL; // backup_config aka default_config
 + (NSURL *)configURL {
     return _configURL;
 }
@@ -95,7 +95,14 @@ static NSURL *_backupConfigURL; // Backup config used to be called default confi
 /// Checks config for errors / incompatibilty and repairs it if necessary.
 + (void)repairConfigWithProblem:(MFConfigProblem)problem info:(id _Nullable)info {
     
-    // TODO: Check whether all default (as opposed to override) values exist in config file. If they don't everything breaks. Maybe do this by comparing with config_backup.
+    // Create config file if none exists
+    
+    if (![NSFileManager.defaultManager fileExistsAtPath:_configURL.path]) {
+        [NSFileManager.defaultManager createDirectoryAtURL:_configURL.URLByDeletingLastPathComponent withIntermediateDirectories:YES attributes:nil error:nil];
+        [self replaceCurrentConfigWithBackupConfig];
+    }
+    
+    // TODO: Check whether all default (as opposed to override) values exist in config file. If they don't everything breaks. Maybe do this by comparing with backup_config.
     // TODO: Consider moving/copying this function to helper, so it can repair stuff as well.
     
     // check if config version matches, if not, replace with default.
