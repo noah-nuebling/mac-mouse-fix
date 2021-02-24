@@ -21,7 +21,7 @@
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="90" y="125" width="613" height="184"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="3840" height="2135"/>
             <view key="contentView" wantsLayer="YES" id="IZI-tD-pBD">
                 <rect key="frame" x="0.0" y="0.0" width="613" height="184"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -162,7 +162,7 @@ Also resets skipped update versions.</string>
                         </userDefinedRuntimeAttributes>
                     </imageView>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="07Z-7Y-gHB">
-                        <rect key="frame" x="564" y="143" width="22.5" height="25"/>
+                        <rect key="frame" x="564" y="143" width="23" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="Rki-3y-WxT">
                             <imageReference key="image" image="pencil" catalog="system" symbolScale="large"/>
@@ -170,7 +170,7 @@ Also resets skipped update versions.</string>
                         <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                     </imageView>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N67-Qg-9hZ">
-                        <rect key="frame" x="567" y="117.5" width="18.5" height="29"/>
+                        <rect key="frame" x="567" y="118" width="18" height="29"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="61r-1i-7uY">
                             <imageReference key="image" image="cube.box.fill" catalog="system" symbolScale="large"/>
@@ -178,11 +178,9 @@ Also resets skipped update versions.</string>
                         <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                     </imageView>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="agt-Xi-rY6">
-                        <rect key="frame" x="567" y="94.5" width="18" height="28"/>
+                        <rect key="frame" x="565" y="97" width="21" height="24"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="Bub-iM-QnB">
-                            <imageReference key="image" image="globe" catalog="system" symbolScale="large"/>
-                        </imageCell>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="globe" catalog="system" id="Bub-iM-QnB"/>
                         <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                     </imageView>
                 </subviews>
@@ -210,9 +208,9 @@ AAAAAAAAAAAAAAABOQ
     <resources>
         <image name="MouseFix" width="256" height="256"/>
         <image name="PayPal" width="100" height="26"/>
-        <image name="cube.box.fill" catalog="system" width="20" height="20"/>
-        <image name="globe" catalog="system" width="19" height="19"/>
+        <image name="cube.box.fill" catalog="system" width="21" height="20"/>
+        <image name="globe" catalog="system" width="15" height="15"/>
         <image name="milkshake_button" width="920" height="120"/>
-        <image name="pencil" catalog="system" width="17" height="16"/>
+        <image name="pencil" catalog="system" width="16" height="16"/>
     </resources>
 </document>

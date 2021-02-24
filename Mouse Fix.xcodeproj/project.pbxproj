@@ -21,6 +21,8 @@
 		4F32E194231C50A100199A11 /* InputParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E18E231C50A100199A11 /* InputParser.m */; };
 		4F32E195231C50A100199A11 /* ScrollModifiers.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E18F231C50A100199A11 /* ScrollModifiers.m */; };
 		4F32E196231C50A100199A11 /* MouseInputReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E193231C50A100199A11 /* MouseInputReceiver.m */; };
+		4F49104F25E6BAFC00570953 /* MouseFix.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4F49104E25E6BAFC00570953 /* MouseFix.tiff */; };
+		4F89340125E6AEF70039D8A8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FCECD8621092354001F1078 /* Assets.xcassets */; };
 		4F94F5FA25E5EC2700D9F24A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F5F925E5EC2700D9F24A /* main.m */; };
 		4F94F60525E5EC2800D9F24A /* Mac_Mouse_FixTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60425E5EC2800D9F24A /* Mac_Mouse_FixTests.m */; };
 		4F94F61025E5EC2800D9F24A /* Mac_Mouse_FixUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60F25E5EC2800D9F24A /* Mac_Mouse_FixUITests.m */; };
@@ -40,7 +42,6 @@
 		4F94F68025E5EEDE00D9F24A /* Hyperlink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9CB1222F7D48D0090DB98 /* Hyperlink.m */; };
 		4F94F68C25E5EF1100D9F24A /* ZipArchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F32E198231C5B5100199A11 /* ZipArchive.framework */; };
 		4F94F68D25E5EF1100D9F24A /* ZipArchive.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F32E198231C5B5100199A11 /* ZipArchive.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4F94F6A725E5F1D000D9F24A /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4FEE4B09233D933600011CEA /* AppIcon.icns */; };
 		4F94F71825E608DC00D9F24A /* backup_config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F94F6B225E5FD8D00D9F24A /* backup_config.plist */; };
 		4F94F71925E6090D00D9F24A /* UpdateWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FF873DE23197283002A897A /* UpdateWindow.xib */; };
 		4F94F71A25E6092C00D9F24A /* KeyIcon.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4FD45A24231C860100F75C58 /* KeyIcon.tiff */; };
@@ -49,7 +50,6 @@
 		4F94F72125E6094E00D9F24A /* milkshake_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */; };
 		4F94F72225E6095A00D9F24A /* default_mouse.fix.helper.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FACF59E2183B956009257D4 /* default_mouse.fix.helper.plist */; };
 		4F94F72325E6096500D9F24A /* SpinnerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD45A2A231CD20200F75C58 /* SpinnerView.xib */; };
-		4F94F72425E6096A00D9F24A /* MouseFix.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4F364C71232A9EBC0084DEB0 /* MouseFix.tiff */; };
 		4F94F72525E6097000D9F24A /* UniversalAccessPref.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 4FD45A25231C860100F75C58 /* UniversalAccessPref.tiff */; };
 		4F94F72625E6097F00D9F24A /* ScrollOverridePanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD36AEC243741A70046DC41 /* ScrollOverridePanel.xib */; };
 		4F94F72725E6098C00D9F24A /* MoreSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FF873EE231A96B2002A897A /* MoreSheet.xib */; };
@@ -62,7 +62,6 @@
 		4FD45A20231C7FB500F75C58 /* AccessibilityCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD45A1F231C7FB500F75C58 /* AccessibilityCheck.m */; };
 		4FECC88D2431DCCD001A3C4B /* RoughScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FECC88C2431DCCD001A3C4B /* RoughScroll.m */; };
 		4FECC8902431DCDF001A3C4B /* ScrollControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FECC88F2431DCDF001A3C4B /* ScrollControl.m */; };
-		4FEE4B0A233D933600011CEA /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4FEE4B09233D933600011CEA /* AppIcon.icns */; };
 		4FF3B2BD23276082009E8A8E /* Uninstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF3B2BC23276082009E8A8E /* Uninstaller.m */; };
 		4FF3B2C0232788AA009E8A8E /* HelperServices_HelperApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF3B2BF232788AA009E8A8E /* HelperServices_HelperApp.m */; };
 		4FF75A20233D82590002D8E6 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FCECD8821092354001F1078 /* MainMenu.xib */; };
@@ -208,12 +207,12 @@
 		4F32E192231C50A100199A11 /* InputParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputParser.h; sourceTree = "<group>"; };
 		4F32E193231C50A100199A11 /* MouseInputReceiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MouseInputReceiver.m; sourceTree = "<group>"; };
 		4F32E198231C5B5100199A11 /* ZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZipArchive.framework; path = Carthage/Build/Mac/ZipArchive.framework; sourceTree = "<group>"; };
-		4F364C71232A9EBC0084DEB0 /* MouseFix.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = MouseFix.tiff; sourceTree = "<group>"; };
 		4F364C74232ABE5C0084DEB0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4F3A8443230D3E6C0012C725 /* Updater.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Updater.h; sourceTree = "<group>"; };
 		4F3A8444230D3E6C0012C725 /* Updater.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Updater.m; sourceTree = "<group>"; };
 		4F422EEC23469B0F00AA6E22 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F422EEE23469B1700AA6E22 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
+		4F49104E25E6BAFC00570953 /* MouseFix.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = MouseFix.tiff; sourceTree = "<group>"; };
 		4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = milkshake_button.png; sourceTree = "<group>"; };
 		4F8D0183243D8D6200D70076 /* NSArray+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSArray+Additions.h"; sourceTree = "<group>"; };
 		4F8D0184243D8D6200D70076 /* NSArray+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Additions.m"; sourceTree = "<group>"; };
@@ -272,7 +271,6 @@
 		4FECC88C2431DCCD001A3C4B /* RoughScroll.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RoughScroll.m; sourceTree = "<group>"; };
 		4FECC88E2431DCDF001A3C4B /* ScrollControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollControl.h; sourceTree = "<group>"; };
 		4FECC88F2431DCDF001A3C4B /* ScrollControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollControl.m; sourceTree = "<group>"; };
-		4FEE4B09233D933600011CEA /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
 		4FF3B2BB23276082009E8A8E /* Uninstaller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Uninstaller.h; sourceTree = "<group>"; };
 		4FF3B2BC23276082009E8A8E /* Uninstaller.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Uninstaller.m; sourceTree = "<group>"; };
 		4FF3B2BE232788AA009E8A8E /* HelperServices_HelperApp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelperServices_HelperApp.h; sourceTree = "<group>"; };
@@ -419,7 +417,6 @@
 			children = (
 				4FD45A24231C860100F75C58 /* KeyIcon.tiff */,
 				4FD45A25231C860100F75C58 /* UniversalAccessPref.tiff */,
-				4F364C71232A9EBC0084DEB0 /* MouseFix.tiff */,
 				4F364C74232ABE5C0084DEB0 /* Assets.xcassets */,
 				4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */,
 				4F8AEA9122FBC7AC008C1A7C /* milkshake_button.png */,
@@ -641,11 +638,11 @@
 		4FCECDB02109326E001F1078 /* SupportFiles */ = {
 			isa = PBXGroup;
 			children = (
+				4F49104E25E6BAFC00570953 /* MouseFix.tiff */,
 				4FDBC57D234F7EDF00A46517 /* Mouse Fix HelperRelease.entitlements */,
 				4F1C96692313603400C3B9AE /* External */,
 				4FCECD8621092354001F1078 /* Assets.xcassets */,
 				4FCECD8E21092354001F1078 /* Mouse_Remap_Helper.entitlements */,
-				4FEE4B09233D933600011CEA /* AppIcon.icns */,
 				4FCECD8B21092354001F1078 /* Info.plist */,
 				4F32E15C231C44C000199A11 /* main.m */,
 				4FCECD8821092354001F1078 /* MainMenu.xib */,
@@ -918,16 +915,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F94F6A725E5F1D000D9F24A /* AppIcon.icns in Resources */,
+				4F89340125E6AEF70039D8A8 /* Assets.xcassets in Resources */,
 				4F94F71825E608DC00D9F24A /* backup_config.plist in Resources */,
 				4F94F71925E6090D00D9F24A /* UpdateWindow.xib in Resources */,
 				4F94F71A25E6092C00D9F24A /* KeyIcon.tiff in Resources */,
 				4F94F71B25E6093A00D9F24A /* AuthorizeAccessibilityView.xib in Resources */,
+				4F49104F25E6BAFC00570953 /* MouseFix.tiff in Resources */,
 				4F94F71C25E6094700D9F24A /* pureDonationButton.png in Resources */,
 				4F94F72125E6094E00D9F24A /* milkshake_button.png in Resources */,
 				4F94F72225E6095A00D9F24A /* default_mouse.fix.helper.plist in Resources */,
 				4F94F72325E6096500D9F24A /* SpinnerView.xib in Resources */,
-				4F94F72425E6096A00D9F24A /* MouseFix.tiff in Resources */,
 				4F94F72525E6097000D9F24A /* UniversalAccessPref.tiff in Resources */,
 				4F94F72625E6097F00D9F24A /* ScrollOverridePanel.xib in Resources */,
 				4F94F72725E6098C00D9F24A /* MoreSheet.xib in Resources */,
@@ -954,7 +951,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4FEE4B0A233D933600011CEA /* AppIcon.icns in Resources */,
 				4FF75A20233D82590002D8E6 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
