@@ -79,7 +79,6 @@
       </PostActions>
       <PathRunnable
          runnableDebuggingMode = "0"
-         BundleIdentifier = "com.apple.systempreferences.legacyLoader.x86_64"
          FilePath = "/System/Library/Frameworks/PreferencePanes.framework/Versions/A/XPCServices/legacyLoader-x86_64.xpc">
       </PathRunnable>
    </LaunchAction>
