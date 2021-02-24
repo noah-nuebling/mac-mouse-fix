@@ -233,6 +233,7 @@
 		4FA26CE624380D1F0082D5F6 /* ClickableImageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClickableImageView.m; sourceTree = "<group>"; };
 		4FA26CEF243949DC0082D5F6 /* NSMutableDictionary+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+Additions.h"; sourceTree = "<group>"; };
 		4FA26CF0243949DC0082D5F6 /* NSMutableDictionary+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+Additions.m"; sourceTree = "<group>"; };
+		4FA4DBDC25E6235600EC9259 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		4FACF59E2183B956009257D4 /* default_mouse.fix.helper.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_mouse.fix.helper.plist; sourceTree = "<group>"; };
 		4FBF34F6231750B500E6CFD0 /* pureDonationButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pureDonationButton.png; sourceTree = "<group>"; };
 		4FBF34FD23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigFileInterface_PrefPane.h; sourceTree = "<group>"; };
@@ -534,6 +535,22 @@
 			path = Pointer;
 			sourceTree = "<group>";
 		};
+		4FA4DBDA25E6231E00EC9259 /* SharedClasses */ = {
+			isa = PBXGroup;
+			children = (
+				4FA4DBDB25E6232900EC9259 /* Constants */,
+			);
+			path = SharedClasses;
+			sourceTree = "<group>";
+		};
+		4FA4DBDB25E6232900EC9259 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				4FA4DBDC25E6235600EC9259 /* Constants.h */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
 		4FACF5A02183B9AA009257D4 /* Default User Agent Config File */ = {
 			isa = PBXGroup;
 			children = (
@@ -577,6 +594,7 @@
 		4FCECD7721092354001F1078 = {
 			isa = PBXGroup;
 			children = (
+				4FA4DBDA25E6231E00EC9259 /* SharedClasses */,
 				4FCECD8221092354001F1078 /* Mouse Fix Helper */,
 				4F2FDF312315662500C7BE14 /* Mouse Fix Updater */,
 				4F94F5EF25E5EC2500D9F24A /* Mac Mouse Fix */,

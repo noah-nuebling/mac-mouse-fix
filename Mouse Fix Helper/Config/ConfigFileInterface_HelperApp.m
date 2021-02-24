@@ -19,6 +19,8 @@
 #import "ScrollModifiers.h"
 #import "Utility_HelperApp.h"
 
+#import "Constants.h"
+
 @implementation ConfigFileInterface_HelperApp
 
 #pragma mark Globals
@@ -34,7 +36,7 @@ static NSString*_configFilePath;
 + (void)load_Manual {
     // Get config file path
     NSURL *applicationSupportURL = [NSFileManager.defaultManager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
-    NSString *configFilePathRelative = [NSString stringWithFormat:@"%@/config.plist", Utility_HelperApp.prefPaneBundle.bundleIdentifier];
+    NSString *configFilePathRelative = [NSString stringWithFormat:@"%@/config.plist", kMFBundleIDApp];
     _configFilePath = [applicationSupportURL URLByAppendingPathComponent:configFilePathRelative].path;
     // Load config
     [self reactToConfigFileChange];
