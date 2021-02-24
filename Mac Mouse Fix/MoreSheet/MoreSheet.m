@@ -12,6 +12,7 @@
 #import "../Update/Updater.h"
 #import "../MessagePort/MessagePort_PrefPane.h"
 #import "../AppDelegate.h"
+#import "Utility_PrefPane.h"
 
 
 @interface MoreSheet ()
@@ -77,10 +78,13 @@ static MoreSheet *_instance;
 #pragma mark - Instance methods - Public
 
 - (void)begin {
-    [[[NSApplication sharedApplication] mainWindow] beginSheet:self.window completionHandler:nil];
+    [Utility_PrefPane.mainWindow beginSheet:self.window completionHandler:nil];
+    [self.window makeKeyWindow]; // Doesn't work
+    
 }
 - (void)end {
-    [[[NSApplication sharedApplication] mainWindow] endSheet:self.window];
+    [Utility_PrefPane.mainWindow endSheet:self.window];
+//    [[[NSApplication sharedApplication] mainWindow] endSheet:self.window]; // There is no main window when the app isn't frontmost...
 //    [ScrollOverridePanel.instance close];
 }
 
