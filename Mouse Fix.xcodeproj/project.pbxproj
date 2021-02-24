@@ -525,6 +525,21 @@
 			path = "Mac Mouse FixUITests";
 			sourceTree = "<group>";
 		};
+		4F94F76525E6211D00D9F24A /* SharedClasses */ = {
+			isa = PBXGroup;
+			children = (
+				4F94F76625E6213100D9F24A /* Constants */,
+			);
+			path = SharedClasses;
+			sourceTree = "<group>";
+		};
+		4F94F76625E6213100D9F24A /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
 		4F95A246234EBB1E000DC7D7 /* Pointer */ = {
 			isa = PBXGroup;
 			children = (
@@ -577,6 +592,7 @@
 		4FCECD7721092354001F1078 = {
 			isa = PBXGroup;
 			children = (
+				4F94F76525E6211D00D9F24A /* SharedClasses */,
 				4FCECD8221092354001F1078 /* Mouse Fix Helper */,
 				4F2FDF312315662500C7BE14 /* Mouse Fix Updater */,
 				4F94F5EF25E5EC2500D9F24A /* Mac Mouse Fix */,
