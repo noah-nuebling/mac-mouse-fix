@@ -529,6 +529,23 @@
             </view>
             <point key="canvasLocation" x="817" y="-208"/>
         </window>
+        <menu title="Main Menu" systemMenu="main" id="DQZ-tv-r6C">
+            <items>
+                <menuItem title="Mac Mouse Fix" id="SuP-Uq-2Ln">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Mac Mouse Fix" systemMenu="apple" id="sWL-bz-rmH">
+                        <items>
+                            <menuItem title="Quit Mac Mouse Fix" keyEquivalent="q" id="5NF-pE-VIh">
+                                <connections>
+                                    <action selector="terminate:" target="-1" id="voe-IU-xtS"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="145" y="381"/>
+        </menu>
     </objects>
     <resources>
         <image name="NSAddTemplate" width="15" height="13"/>

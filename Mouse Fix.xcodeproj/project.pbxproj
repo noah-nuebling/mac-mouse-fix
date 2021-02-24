@@ -595,9 +595,9 @@
 			isa = PBXGroup;
 			children = (
 				4FA4DBDA25E6231E00EC9259 /* SharedClasses */,
+				4F94F5EF25E5EC2500D9F24A /* Mac Mouse Fix */,
 				4FCECD8221092354001F1078 /* Mouse Fix Helper */,
 				4F2FDF312315662500C7BE14 /* Mouse Fix Updater */,
-				4F94F5EF25E5EC2500D9F24A /* Mac Mouse Fix */,
 				4F94F60325E5EC2800D9F24A /* Mac Mouse FixTests */,
 				4F94F60E25E5EC2800D9F24A /* Mac Mouse FixUITests */,
 				4FCECD8121092354001F1078 /* Products */,
