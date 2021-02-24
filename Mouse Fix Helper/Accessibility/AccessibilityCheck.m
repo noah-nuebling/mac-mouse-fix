@@ -16,6 +16,7 @@
 #import "../Config/ConfigFileInterface_HelperApp.h"
 #import "../Scroll/SmoothScroll.h"
 #import "../Scroll/RoughScroll.h"
+#import "Constants.h"
 
 @implementation AccessibilityCheck
 
@@ -31,7 +32,7 @@
         
         [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(sendAccessibilityMessageToPrefpane) userInfo:NULL repeats:NO];
         
-        [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(openPrefPane) userInfo:NULL repeats:YES];
+        [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(openMainApp) userInfo:NULL repeats:YES];
             
     } else {
         
@@ -58,12 +59,16 @@
     [MessagePort_HelperApp sendMessageToPrefPane:@"accessibilityDisabled"];
 }
 
-+ (void)openPrefPane {
++ (void)openMainApp {
     
     if ([self check]) {
         
-        [NSWorkspace.sharedWorkspace openFile:[[NSBundle bundleForClass:self.class].bundlePath stringByAppendingPathComponent:@"/../../../.."]];
-        
+        // Open app
+        NSArray<NSRunningApplication *> *apps = [NSRunningApplication runningApplicationsWithBundleIdentifier:kMFBundleIDApp];
+        for (NSRunningApplication *app in apps) {
+            [app activateWithOptions:NSApplicationActivateIgnoringOtherApps];
+        }
+        // Close this app (Will be restarted immediately by launchd)
         [NSApp terminate:NULL];
     }
 }

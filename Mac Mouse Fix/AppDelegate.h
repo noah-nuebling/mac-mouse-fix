@@ -11,6 +11,6 @@
 #import "MoreSheet/MoreSheet.h"
 #import "ScrollOverride/ScrollOverridePanel.h"
 
-@interface AppDelegate : NSObject<NSApplicationDelegate>
+@interface AppDelegate : NSObject<NSApplicationDelegate, NSWindowDelegate>
 //- (void)mainViewDidLoad;
 @end

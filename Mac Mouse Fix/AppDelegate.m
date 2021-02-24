@@ -50,6 +50,7 @@
 
 @implementation AppDelegate
 
+
 static NSDictionary *_scrollConfigurations;
 static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 
@@ -109,7 +110,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 }
 
 
-- (void)mainViewDidLoad {
+- (void)applicationDidFinishLaunching:(NSNotification *)notification {
     
     NSLog(@"PREF PANEEE");
     
@@ -121,17 +122,19 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     }
 }
 
-- (void)willSelect {
-    
+- (void)windowDidBecomeKey:(NSNotification *)notification {
     NSLog(@"BREAK PLS");
     [AuthorizeAccessibilityView remove];
     [MessagePort_PrefPane performSelector:@selector(sendMessageToHelper:) withObject:@"checkAccessibility" afterDelay:0.0];
 }
+- (void)windowDidResignKey:(NSNotification *)notification {
+//    [UpdateWindow.instance close];
+//    [MoreSheet.instance end];
+//    [ScrollOverridePanel.instance close];
+}
 
-- (void)willUnselect {
-    [UpdateWindow.instance close];
-    [MoreSheet.instance end];
-    [ScrollOverridePanel.instance close];
+-(BOOL) applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)app {
+    return YES;
 }
 
 - (void)disableUI:(NSNumber *)enable {
@@ -278,8 +281,6 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     [self performSelector:@selector(disableUI:) withObject:[NSNumber numberWithBool:_enableCheckBox.state] afterDelay:0.0];
     
 }
-
-
 
 - (void)setConfigFileToUI {
     

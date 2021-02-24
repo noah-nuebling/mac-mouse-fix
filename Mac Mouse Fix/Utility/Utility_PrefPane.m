@@ -23,22 +23,13 @@
     return subviews;
 }
 
-+ (float)preferenceWindowWidth {
-    
-    float result = 668.0; // default in case something goes wrong
-    NSMutableArray *windows = (NSMutableArray *)CFBridgingRelease(CGWindowListCopyWindowInfo
-                                                                  (kCGWindowListOptionOnScreenOnly | kCGWindowListExcludeDesktopElements, kCGNullWindowID));
-    int myProcessIdentifier = [[NSProcessInfo processInfo] processIdentifier];
-    BOOL foundWidth = NO;
-    for (NSDictionary *window in windows) {
-        int windowProcessIdentifier = [[window objectForKey:@"kCGWindowOwnerPID"] intValue];
-        if ((myProcessIdentifier == windowProcessIdentifier) && (!foundWidth)) {
-            foundWidth = YES;
-            NSDictionary *bounds = [window objectForKey:@"kCGWindowBounds"];
-            result = [[bounds valueForKey:@"Width"] floatValue];
++ (NSWindow *)mainWindow {
+    for (NSWindow *w in NSApp.windows) {
+        if ([w.identifier isEqualToString:@"mainWindow"]) {
+            return w;
         }
     }
-    return result;
+    return nil;
 }
 
 /// Copy of identically named function in `Mouse Fix Helper` > `Utility` > `Utility_HelperApp.m`

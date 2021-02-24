@@ -229,6 +229,7 @@
         return TRUE;
     }
     else {
+        NSLog(@"Helper is not active");
         return FALSE;
     }
     

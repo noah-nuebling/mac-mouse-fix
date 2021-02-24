@@ -11,6 +11,7 @@
 #import "AuthorizeAccessibilityView.h"
 #import "../MessagePort/MessagePort_PrefPane.h"
 #import "../Helper/HelperServices.h"
+#import "Utility_Prefpane.h"
 
 @interface AuthorizeAccessibilityView ()
 
@@ -56,17 +57,22 @@ AuthorizeAccessibilityView *_accViewController;
 - (IBAction)AuthorizeButton:(NSButton *)sender {
     
     NSLog(@"AuthorizeButton clicked");
+  
+    // Display loading indicator
+    // We only wanted this when it was still a prefpane
     
-    CGSize size = CGSizeMake(16, 16);
-    NSRect centeredRect = NSMakeRect((self.view.frame.size.width / 2.0) - (size.width/2.0), (self.view.frame.size.height / 2.0) - (size.height/2.0), size.width, size.height);
-    NSProgressIndicator* indicator = [[NSProgressIndicator alloc] initWithFrame:centeredRect];
-    [indicator setStyle:NSProgressIndicatorSpinningStyle];
+//    CGSize size = CGSizeMake(16, 16);
+//    NSRect centeredRect = NSMakeRect((self.view.frame.size.width / 2.0) - (size.width/2.0), (self.view.frame.size.height / 2.0) - (size.height/2.0), size.width, size.height);
+//    NSProgressIndicator* indicator = [[NSProgressIndicator alloc] initWithFrame:centeredRect];
+//    [indicator setStyle:NSProgressIndicatorSpinningStyle];
+//
+//    self.view.subviews = @[];
+//    [self.view addSubview:indicator];
+//
+//    [indicator display];
+//    [indicator startAnimation:NULL];
     
-    self.view.subviews = @[];
-    [self.view addSubview:indicator];
-    
-    [indicator display];
-    [indicator startAnimation:NULL];
+    // Open privacy prefpane
     
     NSString* urlString = @"x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility";
     [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:urlString]];
@@ -76,7 +82,7 @@ AuthorizeAccessibilityView *_accViewController;
     
     NSLog(@"adding AuthorizeAccessibilityView");
     
-    NSView *mainView = NSApp.mainWindow.contentView;
+    NSView *mainView = [Utility_PrefPane mainWindow].contentView;
     
     NSView *baseView;
     for (NSView *v in mainView.subviews) {
@@ -97,17 +103,22 @@ AuthorizeAccessibilityView *_accViewController;
         accView.alphaValue = 0;
         accView.hidden = YES;
     }
+    
+    [NSAnimationContext beginGrouping];
+    [[NSAnimationContext currentContext] setDuration:0.5];
     baseView.animator.alphaValue = 0;
     baseView.hidden = YES;
     accView.animator.alphaValue = 1;
     accView.hidden = NO;
+    [NSAnimationContext endGrouping];
 }
 
 + (void)remove {
     
     NSLog(@"removing AuthorizeAccessibilityView");
     
-    NSView *mainView = NSApp.mainWindow.contentView;
+//    NSView *mainView = NSApp.mainWindow.contentView;
+    NSView *mainView = [Utility_PrefPane mainWindow].contentView;
     
     NSView *baseView;
     for (NSView *v in mainView.subviews) {
@@ -115,20 +126,33 @@ AuthorizeAccessibilityView *_accViewController;
             baseView = v;
         }
     }
+    int i = 0;
     NSView *accView;
     for (NSView *v in mainView.subviews) {
+        NSLog(@"View ID: %@", v.identifier);
         if ([v.identifier isEqualToString:@"accView"]) {
             accView = v;
+            i++;
         }
     }
+    
+    NSLog(@"NSApp: %@", NSApp);
+    NSLog(@"NSApp window: %@", NSApp.mainWindow);
+    NSLog(@"Main view: %@", mainView);
+    NSLog(@"Main view: %@, %@", mainView.subviews, mainView.superview);
+    NSLog(@"Acc view counter: %d", i);
+    
     if (accView) {
         [accView removeFromSuperview];
     }
-
+    
+    [NSAnimationContext beginGrouping];
+    [[NSAnimationContext currentContext] setDuration:0.5];
     baseView.animator.alphaValue = 1;
     baseView.hidden = NO;
     accView.animator.alphaValue = 0;
     accView.hidden = YES;
+    [NSAnimationContext endGrouping];
     
 }
 
