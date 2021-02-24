@@ -20,14 +20,14 @@
         <window identifier="moreSheet" title="MoreSheet" autorecalculatesKeyViewLoop="NO" restorable="NO" deferred="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="81p-aH-nMH" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="90" y="125" width="613" height="184"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="3840" height="2135"/>
+            <rect key="contentRect" x="90" y="125" width="576" height="184"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
             <view key="contentView" wantsLayer="YES" id="IZI-tD-pBD">
-                <rect key="frame" x="0.0" y="0.0" width="613" height="184"/>
+                <rect key="frame" x="0.0" y="0.0" width="576" height="184"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QTb-LF-Uki">
-                        <rect key="frame" x="267" y="20" width="185" height="50"/>
+                        <rect key="frame" x="249" y="20" width="185" height="50"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="milkshake_button" imagePosition="below" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="b2D-Sd-ZB9">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -38,12 +38,12 @@
                         </connections>
                     </button>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1zt-aD-hYC">
-                        <rect key="frame" x="395" y="46" width="51" height="14"/>
+                        <rect key="frame" x="377" y="46" width="51" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="PayPal" id="l8T-uX-6sc"/>
                     </imageView>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D2Z-Y7-bVq" customClass="Hyperlink">
-                        <rect key="frame" x="454" y="100" width="108" height="16"/>
+                        <rect key="frame" x="418" y="100" width="108" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="charWrapping" alignment="right" title="Visit the Website" id="KsZ-uF-DMp">
                             <font key="font" metaFont="system"/>
@@ -58,7 +58,7 @@
                         </userDefinedRuntimeAttributes>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PMP-fF-uAB" customClass="Hyperlink">
-                        <rect key="frame" x="494" y="148" width="68" height="16"/>
+                        <rect key="frame" x="458" y="148" width="68" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Reach Out" id="h6S-lt-XSY">
                             <font key="font" metaFont="system"/>
@@ -73,7 +73,7 @@
                         </userDefinedRuntimeAttributes>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Irr-ov-bxk" customClass="Hyperlink">
-                        <rect key="frame" x="390" y="124" width="171" height="16"/>
+                        <rect key="frame" x="354" y="124" width="171" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Check out the Source Code" id="B9O-yg-FQw">
                             <font key="font" metaFont="system"/>
@@ -88,7 +88,7 @@
                         </userDefinedRuntimeAttributes>
                     </textField>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JOS-vQ-Y5s">
-                        <rect key="frame" x="517" y="13" width="72" height="32"/>
+                        <rect key="frame" x="480" y="13" width="72" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="cRp-f8-4S3">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -162,7 +162,7 @@ Also resets skipped update versions.</string>
                         </userDefinedRuntimeAttributes>
                     </imageView>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="07Z-7Y-gHB">
-                        <rect key="frame" x="564" y="143" width="23" height="25"/>
+                        <rect key="frame" x="527" y="144" width="23" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="Rki-3y-WxT">
                             <imageReference key="image" image="pencil" catalog="system" symbolScale="large"/>
@@ -170,7 +170,7 @@ Also resets skipped update versions.</string>
                         <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                     </imageView>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N67-Qg-9hZ">
-                        <rect key="frame" x="567" y="118" width="18" height="29"/>
+                        <rect key="frame" x="531" y="117" width="17" height="29"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="61r-1i-7uY">
                             <imageReference key="image" image="cube.box.fill" catalog="system" symbolScale="large"/>
@@ -178,7 +178,7 @@ Also resets skipped update versions.</string>
                         <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                     </imageView>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="agt-Xi-rY6">
-                        <rect key="frame" x="565" y="97" width="21" height="24"/>
+                        <rect key="frame" x="530" y="95" width="21" height="24"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="globe" catalog="system" id="Bub-iM-QnB"/>
                         <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
@@ -202,7 +202,7 @@ AAAAAAAAAAAAAAABOQ
             <connections>
                 <outlet property="delegate" destination="-2" id="DTD-Mm-ND4"/>
             </connections>
-            <point key="canvasLocation" x="717" y="35"/>
+            <point key="canvasLocation" x="698" y="35"/>
         </window>
     </objects>
     <resources>

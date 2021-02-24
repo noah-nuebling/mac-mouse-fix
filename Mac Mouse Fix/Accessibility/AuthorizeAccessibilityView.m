@@ -105,7 +105,7 @@ AuthorizeAccessibilityView *_accViewController;
     }
     
     [NSAnimationContext beginGrouping];
-    [[NSAnimationContext currentContext] setDuration:0.5];
+    [[NSAnimationContext currentContext] setDuration:0.3];
     baseView.animator.alphaValue = 0;
     baseView.hidden = YES;
     accView.animator.alphaValue = 1;
@@ -147,7 +147,7 @@ AuthorizeAccessibilityView *_accViewController;
     }
     
     [NSAnimationContext beginGrouping];
-    [[NSAnimationContext currentContext] setDuration:0.5];
+    [[NSAnimationContext currentContext] setDuration:0.3];
     baseView.animator.alphaValue = 1;
     baseView.hidden = NO;
     accView.animator.alphaValue = 0;

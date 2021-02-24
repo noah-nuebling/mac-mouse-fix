@@ -122,12 +122,18 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     }
 }
 
-- (void)windowDidBecomeKey:(NSNotification *)notification {
-    NSLog(@"BREAK PLS");
-    [AuthorizeAccessibilityView remove];
-    [MessagePort_PrefPane performSelector:@selector(sendMessageToHelper:) withObject:@"checkAccessibility" afterDelay:0.0];
+// Use a delay to prevent jankyness when window becomes key while app is requesting accessibility. Use timer so it can be stopped once Helper sends "I still have no accessibility" message
+NSTimer *removeAccOverlayTimer;
+- (void)stopRemoveAccOverlayTimer {
+    [removeAccOverlayTimer invalidate];
 }
-- (void)windowDidResignKey:(NSNotification *)notification {
+- (void)windowDidBecomeKey:(NSNotification *)notification {
+    [MessagePort_PrefPane performSelector:@selector(sendMessageToHelper:) withObject:@"checkAccessibility" afterDelay:0.0];
+    removeAccOverlayTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 repeats:NO block:^(NSTimer * _Nonnull timer) {
+        [AuthorizeAccessibilityView remove];
+    }];
+}
+- (void)windowDidResignKey:(NSNotification *)notification { // This made sense when using prefpane (used to be called when it was unselected)
 //    [UpdateWindow.instance close];
 //    [MoreSheet.instance end];
 //    [ScrollOverridePanel.instance close];

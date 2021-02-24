@@ -13,4 +13,5 @@
 
 @interface AppDelegate : NSObject<NSApplicationDelegate, NSWindowDelegate>
 //- (void)mainViewDidLoad;
+- (void)stopRemoveAccOverlayTimer;
 @end

@@ -10,6 +10,7 @@
 #import "MessagePort_PrefPane.h"
 #import "../Accessibility/AuthorizeAccessibilityView.h"
 #import <Foundation/Foundation.h>
+#import "AppDelegate.h"
 
 @implementation MessagePort_PrefPane
 
@@ -57,6 +58,7 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
     
     if ([message isEqualToString:@"accessibilityDisabled"]) {
         [AuthorizeAccessibilityView add];
+        [(AppDelegate *)NSApp.delegate stopRemoveAccOverlayTimer]; // If App delegate is about to remove the acc overlay, stop that
     }
     
     NSData *response = NULL;
