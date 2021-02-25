@@ -51,7 +51,6 @@ static MoreSheet *_instance;
 
 - (IBAction)appOverrideButton:(id)sender {
     [OverridePanel.instance begin];
-    [self end];
 }
 - (IBAction)milkshakeButton:(id)sender {
     NSLog(@"BUTTTON");

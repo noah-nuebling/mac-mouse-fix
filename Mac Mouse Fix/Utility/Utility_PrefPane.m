@@ -32,6 +32,16 @@
     
     [win setFrameOrigin:newOrg];
 }
++ (void)openWindowWithFadeAnimation:(NSWindow *)window fadeIn:(BOOL)fadeIn fadeTime:(NSTimeInterval)time {
+    [window makeKeyAndOrderFront: self];
+    [window setAlphaValue: fadeIn ? 0.0 : 1.0];
+    [NSAnimationContext runAnimationGroup: ^(NSAnimationContext *context) {
+        [context setDuration: time];
+        [window.animator setAlphaValue:fadeIn ? 1.0 : 0.0];
+    } completionHandler:^{
+        if (!fadeIn) [window close];
+    }];
+}
 + (NSPoint)getCenterOfRect:(NSRect)rect {
     NSPoint ctr;
     ctr.x = rect.origin.x + (0.5 * rect.size.width);
