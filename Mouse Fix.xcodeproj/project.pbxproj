@@ -531,20 +531,12 @@
 			path = Pointer;
 			sourceTree = "<group>";
 		};
-		4FA4DBDA25E6231E00EC9259 /* SharedClasses */ = {
-			isa = PBXGroup;
-			children = (
-				4FA4DBDB25E6232900EC9259 /* Constants */,
-			);
-			path = SharedClasses;
-			sourceTree = "<group>";
-		};
-		4FA4DBDB25E6232900EC9259 /* Constants */ = {
+		4FA4DBDA25E6231E00EC9259 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
 				4FA4DBDC25E6235600EC9259 /* Constants.h */,
 			);
-			path = Constants;
+			path = Shared;
 			sourceTree = "<group>";
 		};
 		4FACF5A02183B9AA009257D4 /* Default User Agent Config File */ = {
@@ -590,7 +582,7 @@
 		4FCECD7721092354001F1078 = {
 			isa = PBXGroup;
 			children = (
-				4FA4DBDA25E6231E00EC9259 /* SharedClasses */,
+				4FA4DBDA25E6231E00EC9259 /* Shared */,
 				4F94F5EF25E5EC2500D9F24A /* App */,
 				4FCECD8221092354001F1078 /* Helper */,
 				4F2FDF312315662500C7BE14 /* Updater */,
