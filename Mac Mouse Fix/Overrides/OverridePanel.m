@@ -72,10 +72,7 @@ NSDictionary *_columnIdentifierToKeyPath;
     [ConfigFileInterface_PrefPane loadConfigFromFile];
     [self loadTableViewDataModelFromConfig];
     [_tableView reloadData];
-    
-    // Actually open window
-//    [self.window makeKeyAndOrderFront:nil];
-//    [self.window performSelector:@selector(makeKeyWindow) withObject:nil afterDelay:0.05]; // Need to do this to make the window key. Magic?
+
     [AppDelegate.mainWindow beginSheet:self.window completionHandler:nil];
     
     // Make tableView drag and drop target
@@ -87,12 +84,10 @@ NSDictionary *_columnIdentifierToKeyPath;
 }
 
 - (void)windowDidLoad {
-    [self centerWindowOnMainWindow];
-}
-
-- (void)centerWindowOnMainWindow {
-    NSPoint ctr = [Utility_PrefPane getCenterOfRect:AppDelegate.mainWindow.frame];
-    [Utility_PrefPane centerWindow:self.window atPoint:ctr];
+    // Resize first column so table columns take up full space of table view
+    // We set the size properly in IB, but when the first column had its `Resizing` property set to `Autoresizes with Table` (which we want it to do) then it would always end up a little smaller than the table for some reason
+    NSTableColumn *col = _tableView.tableColumns[0];
+    [col setWidth:col.maxWidth];
 }
 
 - (void)setConfigFileToUI {
