@@ -9,7 +9,7 @@
 
 #import <PreferencePanes/PreferencePanes.h>
 #import "MoreSheet/MoreSheet.h"
-#import "Overrides/ScrollOverridePanel.h"
+#import "Overrides/OverridePanel.h"
 
 @interface AppDelegate : NSObject<NSApplicationDelegate, NSWindowDelegate>
 //- (void)mainViewDidLoad;

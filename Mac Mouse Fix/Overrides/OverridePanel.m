@@ -18,14 +18,14 @@
     Uniform Type Identifiers (UTIs) Reference: https://developer.apple.com/library/archive/documentation/Miscellaneous/Reference/UTIRef/Articles/System-DeclaredUniformTypeIdentifiers.html#//apple_ref/doc/uid/TP40009259-SW1
  */
 
-#import "ScrollOverridePanel.h"
+#import "OverridePanel.h"
 #import "ConfigFileInterface_PrefPane.h"
 #import "Utility_PrefPane.h"
 #import "NSMutableDictionary+Additions.h"
 #import <Foundation/Foundation.h>
 #import "MoreSheet.h"
 
-@interface ScrollOverridePanel ()
+@interface OverridePanel ()
 
 #pragma mark Outlets
 
@@ -33,16 +33,16 @@
 
 @end
 
-@implementation ScrollOverridePanel
+@implementation OverridePanel
 
 #pragma mark - Class
 
 + (void)load {
-    _instance = [[ScrollOverridePanel alloc] initWithWindowNibName:@"ScrollOverridePanel"];
+    _instance = [[OverridePanel alloc] initWithWindowNibName:@"ScrollOverridePanel"];
         // Register for incoming drag and drop operation
 }
-static ScrollOverridePanel *_instance;
-+ (ScrollOverridePanel *)instance {
+static OverridePanel *_instance;
++ (OverridePanel *)instance {
     return _instance;
 }
 
@@ -59,38 +59,48 @@ NSDictionary *_columnIdentifierToKeyPath;
 #pragma mark - Public functions
 
 - (void)openWindow {
+    
+    // Define column-to-setting mapping
     _columnIdentifierToKeyPath = @{
         @"SmoothEnabledColumnID" : @"Scroll.smooth",
         @"MagnificationEnabledColumnID" : @"Scroll.modifierKeys.magnificationScrollModifierKeyEnabled",
         @"HorizontalEnabledColumnID" : @"Scroll.modifierKeys.horizontalScrollModifierKeyEnabled"
     };
+    
+    // Load table
     [ConfigFileInterface_PrefPane loadConfigFromFile];
     [self loadTableViewDataModelFromConfig];
     [_tableView reloadData];
     
-    if (self.window.isVisible) {
-        [self.window close];
-    } else {
-        [self.window center];
-    }
+    // Position the window
+    // Approach 1 - always center the window (works but sucks)
+//    if (self.window.isVisible) {
+//        [self.window close]; // What does this do?
+//    } else {
+//        [self.window center];
+//    }
+    // Approach 2 - restore window position (doesn't work)
+//    self.window.windowController.shouldCascadeWindows = NO;
+//    [self.window setFrameAutosaveName:self.window.representedFilename];
+//    [self.window setFrameUsingName:self.window.representedFilename];
+    // Approach 3 - center window when opening first time after launch, else let it retain its position
+    
+    // Make window visible
     [self.window makeKeyAndOrderFront:nil];
     [self.window performSelector:@selector(makeKeyWindow) withObject:nil afterDelay:0.05]; // Need to do this to make the window key. Magic?
     
-//    self.window.movableByWindowBackground = YES;
-    
     // Make tableView drag and drop target
-    
     NSString *fileURLUTI = @"public.file-url";
-//    NSString *tableRowType = @"com.nuebling.mousefix.table-row";
-    [_tableView registerForDraggedTypes:@[fileURLUTI]]; // makes it accept apps, and table rows
-//    [_tableView setDraggingSourceOperationMask:NSDragOperationCopy forLocal:YES];
+    [_tableView registerForDraggedTypes:@[fileURLUTI]]; // makes it accept apps
 }
 
-//- (void)windowWillClose:(NSNotification *)notification {
-//    dispatch_after(0.3, dispatch_get_main_queue(), ^{
-//        [MoreSheet.instance end];
-//    });
-//}
+- (void)windowDidLoad {
+    [self.window center];
+}
+- (void)windowWillClose:(NSNotification *)notification {
+    // Save window position in user defaults - doesn't work
+//    [self.window saveFrameUsingName:self.window.representedFilename];
+}
 
 - (void)setConfigFileToUI {
     [self writeTableViewDataModelToConfig];
@@ -135,7 +145,7 @@ NSDictionary *_columnIdentifierToKeyPath;
             NSString* bundleID = [NSBundle bundleWithURL:fileURL].bundleIdentifier;
             [bundleIDs addObject:bundleID];
         }
-        [self tableAddAppsWithBundleIDs:bundleIDs atRow:0];
+        [self addAppsToTableWithBundleIDs:bundleIDs atRow:0];
     }];
 }
 - (void)removeButtonAction {
@@ -213,25 +223,26 @@ NSDictionary *_columnIdentifierToKeyPath;
     
     BOOL droppingAbove = (dropOperation == NSTableViewDropAbove);
     
-    BOOL isURL = [pasteboard.types containsObject:@"public.file-url"];
+    BOOL containsURL = [pasteboard.types containsObject:@"public.file-url"];
     NSDictionary *options = @{NSPasteboardURLReadingContentsConformToTypesKey : @[@"com.apple.application-bundle"]};
-    BOOL URLRefersToApp = [pasteboard canReadObjectForClasses:@[NSURL.self] options:options];
+    BOOL containsApp = [pasteboard canReadObjectForClasses:@[NSURL.self] options:options];
     
     NSArray<NSString *> *draggedBundleIDs = bundleIDsFromPasteboard(pasteboard);
     
     NSDictionary *draggedBundleIDsSorted = sortByAlreadyInTable(draggedBundleIDs);
-    BOOL allAlreadyInTable = (((NSArray *)draggedBundleIDsSorted[@"notInTable"]).count == 0);
+    BOOL allAppsAlreadyInTable = (((NSArray *)draggedBundleIDsSorted[@"notInTable"]).count == 0);
     NSMutableArray *tableIndicesOfAlreadyInTable = [((NSArray *)draggedBundleIDsSorted[@"inTable"]) valueForKey:@"tableIndex"];
     
-    NSMutableIndexSet * indexSet = indexSetFromIndexArray(tableIndicesOfAlreadyInTable);
-    [_tableView selectRowIndexes:indexSet byExtendingSelection:NO];
-    
-    if (droppingAbove && isURL && URLRefersToApp && !allAlreadyInTable) {
+    if (droppingAbove && containsURL && containsApp && !allAppsAlreadyInTable) { // Why do we need containsURL and containsApp?
         return NSDragOperationCopy;
     }
-    if (allAlreadyInTable) {
+    if (!containsApp) {
         [NSCursor.operationNotAllowedCursor push]; // I can't find a way to reset the cursor when it leaves the tableView
+    } else if (allAppsAlreadyInTable) {
+        NSMutableIndexSet *tableIndicesOfAlreadyInTable_IndexSet = indexSetFromIndexArray(tableIndicesOfAlreadyInTable);
+        [_tableView selectRowIndexes:tableIndicesOfAlreadyInTable_IndexSet byExtendingSelection:NO];
         [_tableView scrollRowToVisible:((NSNumber *)tableIndicesOfAlreadyInTable[0]).integerValue];
+
     }
     return NSDragOperationNone;
 }
@@ -243,17 +254,18 @@ NSDictionary *_columnIdentifierToKeyPath;
     if (!items || items.count == 0) {
         return false;
     }
-    row = 0; // Always adding items at the top cause it's noice
+    row = 0; // Always add items at the top cause it's nice
     
     NSArray<NSString *> * bundleIDs = bundleIDsFromPasteboard(info.draggingPasteboard);
-    [self tableAddAppsWithBundleIDs:bundleIDs atRow:row];
+    [self addAppsToTableWithBundleIDs:bundleIDs atRow:row];
     
-    [self.window makeKeyWindow];
+    [self.window makeKeyWindow]; // Doesn't seem to work
+    // ^ After dropping you probably wanna interact with the window to set app specific settings. Also helps seing the blue selected rows.
     
     return true;
 }
 
-- (void)tableAddAppsWithBundleIDs:(NSArray<NSString *> *)bundleIDs atRow:(NSInteger)row {
+- (void)addAppsToTableWithBundleIDs:(NSArray<NSString *> *)bundleIDs atRow:(NSInteger)row {
     
     NSMutableArray *newRows = [NSMutableArray array];
     bundleIDs = [bundleIDs valueForKeyPath:@"@distinctUnionOfObjects.self"]; // Remove duplicates. This is only necessary when the user drags and drops in more than one app with the same bundleID.

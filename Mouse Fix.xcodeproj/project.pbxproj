@@ -29,7 +29,7 @@
 		4F94F62125E5EC5100D9F24A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD67DDF211CC9000095A9A5 /* AppDelegate.m */; };
 		4F94F63825E5EE8F00D9F24A /* AuthorizeAccessibilityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD45A19231C78B400F75C58 /* AuthorizeAccessibilityView.m */; };
 		4F94F63E25E5EE9500D9F24A /* MoreSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF873ED231A96B2002A897A /* MoreSheet.m */; };
-		4F94F64425E5EE9700D9F24A /* ScrollOverridePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD36AEB243741A70046DC41 /* ScrollOverridePanel.m */; };
+		4F94F64425E5EE9700D9F24A /* OverridePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD36AEB243741A70046DC41 /* OverridePanel.m */; };
 		4F94F64A25E5EEA000D9F24A /* HelperServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBF350423183FDA00E6CFD0 /* HelperServices.m */; };
 		4F94F65025E5EEA600D9F24A /* ConfigFileInterface_PrefPane.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBF34FE23183E6700E6CFD0 /* ConfigFileInterface_PrefPane.m */; };
 		4F94F65625E5EEB600D9F24A /* MessagePort_PrefPane.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD45A0E231C66CF00F75C58 /* MessagePort_PrefPane.m */; };
@@ -245,8 +245,8 @@
 		4FCECD8621092354001F1078 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4FCECD8B21092354001F1078 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4FCECD8E21092354001F1078 /* Mouse_Remap_Helper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Mouse_Remap_Helper.entitlements; sourceTree = "<group>"; };
-		4FD36AEA243741A70046DC41 /* ScrollOverridePanel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollOverridePanel.h; sourceTree = "<group>"; };
-		4FD36AEB243741A70046DC41 /* ScrollOverridePanel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollOverridePanel.m; sourceTree = "<group>"; };
+		4FD36AEA243741A70046DC41 /* OverridePanel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OverridePanel.h; sourceTree = "<group>"; };
+		4FD36AEB243741A70046DC41 /* OverridePanel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OverridePanel.m; sourceTree = "<group>"; };
 		4FD36AEC243741A70046DC41 /* ScrollOverridePanel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScrollOverridePanel.xib; sourceTree = "<group>"; };
 		4FD45A0D231C66CF00F75C58 /* MessagePort_PrefPane.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessagePort_PrefPane.h; sourceTree = "<group>"; };
 		4FD45A0E231C66CF00F75C58 /* MessagePort_PrefPane.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessagePort_PrefPane.m; sourceTree = "<group>"; };
@@ -653,8 +653,8 @@
 		4FD36AF0243741C90046DC41 /* Overrides */ = {
 			isa = PBXGroup;
 			children = (
-				4FD36AEA243741A70046DC41 /* ScrollOverridePanel.h */,
-				4FD36AEB243741A70046DC41 /* ScrollOverridePanel.m */,
+				4FD36AEA243741A70046DC41 /* OverridePanel.h */,
+				4FD36AEB243741A70046DC41 /* OverridePanel.m */,
 				4FD36AEC243741A70046DC41 /* ScrollOverridePanel.xib */,
 			);
 			path = Overrides;
@@ -995,7 +995,7 @@
 				4F94F5FA25E5EC2700D9F24A /* main.m in Sources */,
 				4F94F63825E5EE8F00D9F24A /* AuthorizeAccessibilityView.m in Sources */,
 				4F94F63E25E5EE9500D9F24A /* MoreSheet.m in Sources */,
-				4F94F64425E5EE9700D9F24A /* ScrollOverridePanel.m in Sources */,
+				4F94F64425E5EE9700D9F24A /* OverridePanel.m in Sources */,
 				4F94F64A25E5EEA000D9F24A /* HelperServices.m in Sources */,
 				4F94F65025E5EEA600D9F24A /* ConfigFileInterface_PrefPane.m in Sources */,
 				4F94F65625E5EEB600D9F24A /* MessagePort_PrefPane.m in Sources */,

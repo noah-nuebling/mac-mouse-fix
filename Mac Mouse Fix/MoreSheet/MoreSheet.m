@@ -49,8 +49,8 @@ static MoreSheet *_instance;
     }
 }
 
-- (IBAction)smoothScrollBlacklistButton:(id)sender {
-    [ScrollOverridePanel.instance openWindow];
+- (IBAction)appOverrideButton:(id)sender {
+    [OverridePanel.instance openWindow];
 }
 - (IBAction)milkshakeButton:(id)sender {
     NSLog(@"BUTTTON");

@@ -5,7 +5,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="ScrollOverridePanel">
+        <customObject id="-2" userLabel="File's Owner" customClass="OverridePanel">
             <connections>
                 <outlet property="tableView" destination="fGT-Lc-WdX" id="7Xe-15-84M"/>
                 <outlet property="window" destination="XRM-Tk-uNa" id="Mt7-4h-BqF"/>
