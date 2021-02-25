@@ -8,7 +8,7 @@
 //
 
 #import "Hyperlink.h"
-#import "Utility_PrefPane.h"
+#import "Utility_App.h"
 #import "AppDelegate.h"
 
 IB_DESIGNABLE

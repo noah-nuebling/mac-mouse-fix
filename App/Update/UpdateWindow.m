@@ -67,20 +67,20 @@ static NSWindow *_instance;
     
     
     
-    NSRect prefPanewWindowFrame = NSApplication.sharedApplication.mainWindow.frame;
+    NSRect mainWindowFrame = NSApp.mainWindow.frame;
     
-    NSPoint prefMid;
-    if (NSMidX(prefPanewWindowFrame) == 0 && NSMidY(prefPanewWindowFrame) == 0) {
+    NSPoint mainMid;
+    if (NSMidX(mainWindowFrame) == 0 && NSMidY(mainWindowFrame) == 0) {
         NSRect screenMid = NSScreen.mainScreen.frame;
-        prefMid = NSMakePoint(NSMidX(screenMid), NSMidY(screenMid)); // fall back of the prefpane window hasn't loaded, yet.
+        mainMid = NSMakePoint(NSMidX(screenMid), NSMidY(screenMid)); // fall back of the prefpane window hasn't loaded, yet.
     } else {
-        prefMid = NSMakePoint(NSMidX(prefPanewWindowFrame), NSMidY(prefPanewWindowFrame));
+        mainMid = NSMakePoint(NSMidX(mainWindowFrame), NSMidY(mainWindowFrame));
     }
     
     
     
     CGSize win = CGSizeMake(330, 220); //(330,[JSreturn floatValue])
-    NSRect newWinPos = NSMakeRect(prefMid.x - (win.width/2.0), prefMid.y - (win.height/2.0), win.width, win.height);
+    NSRect newWinPos = NSMakeRect(mainMid.x - (win.width/2.0), mainMid.y - (win.height/2.0), win.width, win.height);
 //    CGSize dsp = NSScreen.mainScreen.frame.size;
 //    NSRect newWinPos = NSMakeRect((dsp.width/2.0) - (win.width/2.0), (dsp.height/2.0) - (win.height/2.0) + 50, win.width, win.height);
     [self.window setFrame:newWinPos display:YES animate:NO];

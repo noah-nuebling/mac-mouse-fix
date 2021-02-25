@@ -8,7 +8,7 @@
 //
 
 #import "ClickableImageView.h"
-#import "ConfigFileInterface_PrefPane.h"
+#import "ConfigFileInterface_App.h"
 #import "NSArray+Additions.h"
 #import "HelperServices.h"
 
@@ -60,7 +60,7 @@ NSArray *_requiredModifierFlags;
     
     if (matchesAllRequired) {
         if ([_actionString isEqualToString:@"reveal-config"]) {
-            [NSWorkspace.sharedWorkspace activateFileViewerSelectingURLs:@[ConfigFileInterface_PrefPane.configURL]];
+            [NSWorkspace.sharedWorkspace activateFileViewerSelectingURLs:@[ConfigFileInterface_App.configURL]];
         } else if ([_actionString isEqualToString:@"reveal-helper"]) {
             [NSWorkspace.sharedWorkspace activateFileViewerSelectingURLs:@[HelperServices.helperBundle.bundleURL]];
         }

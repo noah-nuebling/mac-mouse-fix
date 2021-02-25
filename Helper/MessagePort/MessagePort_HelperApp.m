@@ -51,7 +51,7 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
         [NSApp terminate:NULL];
     } else if ([message isEqualToString:@"checkAccessibility"]) {
         if (![AccessibilityCheck check]) {
-            [MessagePort_HelperApp sendMessageToPrefPane:@"accessibilityDisabled"];
+            [MessagePort_HelperApp sendMessageToMainApp:@"accessibilityDisabled"];
         }
     }
     
@@ -62,9 +62,9 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
 
 #pragma mark - remote (outgoing messages)
 
-+ (void)sendMessageToPrefPane:(NSString *)message {
++ (void)sendMessageToMainApp:(NSString *)message {
     
-    NSLog(@"Sending message to PrefPane");
+    NSLog(@"Sending message to main app");
     
     CFMessagePortRef remotePort = CFMessagePortCreateRemote(kCFAllocatorDefault, CFSTR("com.nuebling.mousefix.port"));
     if (remotePort == NULL) {

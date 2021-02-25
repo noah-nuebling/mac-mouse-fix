@@ -8,6 +8,7 @@
 //
 
 #import "Utility_HelperApp.h"
+#import "Constants.h"
 
 @implementation Utility_HelperApp
 
@@ -29,15 +30,15 @@
 + (NSBundle *)helperBundle {
     return [NSBundle bundleForClass:Utility_HelperApp.class];
 }
-+ (NSBundle *)prefPaneBundle {
-    NSBundle *prefPaneBundle = [NSBundle bundleWithIdentifier:@"com.nuebling.mac-mouse-fix"];
++ (NSBundle *)mainAppBundle {
+    NSBundle *prefPaneBundle = [NSBundle bundleWithIdentifier:kMFBundleIDApp];
     return prefPaneBundle;
 }
 
 // TODO: Consider returning a mutable dict to avoid constantly using `- mutableCopy`. Maybe even alter `dst` in place and return nothing (And rename to `applyOverridesFrom:to:`).
 /// Copy all leaves (elements which aren't dictionaries) from `src` to `dst`. Return the result. (`dst` itself isn't altered)
 /// Recursively search for leaves in `src`. For each srcLeaf found, create / replace a leaf in `dst` at a keyPath identical to the keyPath of srcLeaf and with the value of srcLeaf.
-/// Has and exact copy in Utility_PrefPane
+/// Has and exact copy in Utility_App
 + (NSDictionary *)dictionaryWithOverridesAppliedFrom:(NSDictionary *)src to: (NSDictionary *)dst {
     NSMutableDictionary *dstMutable = [dst mutableCopy];
     for (NSString *key in src) {

@@ -13,7 +13,7 @@
 + (NSString *)binaryRepresentation:(int)value;
 
 + (NSBundle *)helperBundle;
-+ (NSBundle *)prefPaneBundle;
++ (NSBundle *)mainAppBundle;
 
 + (NSDictionary *)dictionaryWithOverridesAppliedFrom:(NSDictionary *)src to: (NSDictionary *)dst;
 @end

@@ -1,16 +1,16 @@
 //
 // --------------------------------------------------------------------------
-// Utility_PrefPane.m
+// Utility_App.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2019
 // Licensed under MIT
 // --------------------------------------------------------------------------
 //
 
-#import "Utility_PrefPane.h"
+#import "Utility_App.h"
 #import <AppKit/AppKit.h>
 
-@implementation Utility_PrefPane
+@implementation Utility_App
 
 + (NSArray *)subviewsForView:(NSView *)view withIdentifier:(NSString *)identifier {
     

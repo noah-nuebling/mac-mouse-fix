@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 #define kMFHelperExecutablePath     @"Contents/Library/LoginItems/Mac Mouse Fix Helper.app/Contents/MacOS/Mac Mouse Fix Helper"
 #define kMFUpdaterExecutablePath    @"Contents/Library/LaunchServices/Mac Mouse Fix Updater"
 
-
+#define kMFMainAppName  @"Mac Mouse Fix.app"
 
 // Remapping dictionary keywords
 

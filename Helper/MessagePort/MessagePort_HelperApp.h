@@ -13,6 +13,6 @@
 
 + (void)load_Manual;
 
-+ (void)sendMessageToPrefPane:(NSString *)message;
++ (void)sendMessageToMainApp:(NSString *)message;
 @end
 

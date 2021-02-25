@@ -9,7 +9,7 @@
 
 
 // this class is mostly a copy of the one at Mouse Fix > HelperServices > HelperServices.m
-// another reason why this is a less-than-ideal-solution, is that with this setup the launchd.plist file can't be removed when the user uninstalls the prefpane while the helper is still running. So in this case the app leaves some minimal residue in the system, which I wanted to avoid...
+// another reason why this is a less-than-ideal-solution, is that with this setup the launchd.plist file can't be removed when the user uninstalls the main app while the helper is still running. So in this case the app leaves some minimal residue in the system, which I wanted to avoid...
 
 
 #import <AppKit/AppKit.h>
@@ -58,7 +58,7 @@
     }
     
     if (enable == NO) {
-        //        [MessagePort_PrefPane performSelector:@selector(deleteLaunchdPlist) withObject:self afterDelay:2];
+        //        [MessagePort_App performSelector:@selector(deleteLaunchdPlist) withObject:self afterDelay:2];
     }
 }
 
@@ -74,7 +74,7 @@
         NSLog(@"repairing User Agent Config File");
         // what this does:
         
-        // get path of executable of helper app based on path of bundle of this class (prefpane bundle)
+        // get path of executable of helper app
         // check if the "User/Library/LaunchAgents/mouse.fix.helper.plist" UserAgent Config file exists, if the Launch Agents Folder exists, and if the exectuable path within the plist file is correct
         // if not:
         // create correct file based on "default_mouse.fix.helper.plist" and helperExecutablePath
@@ -82,7 +82,7 @@
         
         // get helper executable path
         NSBundle *helperBundle = [NSBundle bundleForClass:HelperServices_HelperApp.class];
-        NSBundle *prefPaneBundle = [NSBundle bundleWithPath:[helperBundle.bundlePath stringByAppendingPathComponent:@"../../../../"]];
+        NSBundle *mainAppBundle = [NSBundle bundleWithPath:[helperBundle.bundlePath stringByAppendingPathComponent:@"../../../../"]];
         NSString *helperExecutablePath = helperBundle.executablePath;
         
         // get User Library path
@@ -143,10 +143,10 @@
                 
                 // read contents of default_mouse.fix.helper.plist (aka default-launch-agent-config-file or defaultLAConfigFile) into a dictionary
                 
-                NSString *defaultLAConfigFile_path = [prefPaneBundle pathForResource:@"default_mouse.fix.helper" ofType:@"plist"];
+                NSString *defaultLAConfigFile_path = [mainAppBundle pathForResource:@"default_mouse.fix.helper" ofType:@"plist"];
                 NSData *defaultLAConfigFile_data = [NSData dataWithContentsOfFile:defaultLAConfigFile_path];
                 // TODO: This just crashed the app with "Exception: "data parameter is nil". It says that that LAConfigFileExists = NO.
-                // I was running Mouse Fix Helper standalone for debugging, not embedded in the PrefPane.
+                // I was running Mouse Fix Helper standalone for debugging, not embedded in the main app
                 NSMutableDictionary *newLAConfigFile_dict = [NSPropertyListSerialization propertyListWithData:defaultLAConfigFile_data options:NSPropertyListMutableContainersAndLeaves format:nil error:&error];
                 
                 // set the executable path to the correct value

@@ -8,11 +8,11 @@
 //
 
 #import "MoreSheet.h"
-#import "ConfigFileInterface_PrefPane.h"
+#import "ConfigFileInterface_App.h"
 #import "../Update/Updater.h"
-#import "../MessagePort/MessagePort_PrefPane.h"
+#import "../MessagePort/MessagePort_App.h"
 #import "../AppDelegate.h"
-#import "Utility_PrefPane.h"
+#import "Utility_App.h"
 
 
 @interface MoreSheet ()
@@ -41,7 +41,7 @@ static MoreSheet *_instance;
 
 - (IBAction)checkForUpdateCheckBox:(NSButton *)sender {
     NSLog(@"CHECK");
-    [ConfigFileInterface_PrefPane.config setValue:@"0" forKeyPath:@"Other.skippedBundleVersion"];
+    [ConfigFileInterface_App.config setValue:@"0" forKeyPath:@"Other.skippedBundleVersion"];
     [self UIChanged:NULL];
     if (sender.state == 1) {
         [Updater checkForUpdate];
@@ -101,12 +101,12 @@ static MoreSheet *_instance;
                                [[NSBundle bundleForClass:[self class]] objectForInfoDictionaryKey:@"CFBundleVersion"]];
     [_versionLabel setStringValue:versionString];
     
-    _checkForUpdateCheckBox.state = [[ConfigFileInterface_PrefPane.config valueForKeyPath:@"Other.checkForUpdates"] boolValue];
+    _checkForUpdateCheckBox.state = [[ConfigFileInterface_App.config valueForKeyPath:@"Other.checkForUpdates"] boolValue];
 }
 
 - (void)setConfigFileToUI {
-    [ConfigFileInterface_PrefPane.config setValue:[NSNumber numberWithBool:_checkForUpdateCheckBox.state] forKeyPath:@"Other.checkForUpdates"];
-    [ConfigFileInterface_PrefPane writeConfigToFileAndNotifyHelper];
+    [ConfigFileInterface_App.config setValue:[NSNumber numberWithBool:_checkForUpdateCheckBox.state] forKeyPath:@"Other.checkForUpdates"];
+    [ConfigFileInterface_App writeConfigToFileAndNotifyHelper];
 }
 
 @end

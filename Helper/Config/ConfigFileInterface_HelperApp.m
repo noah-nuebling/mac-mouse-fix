@@ -198,15 +198,7 @@ void Handle_FSEventStreamCallback (ConstFSEventStreamRef streamRef, void *client
  We're setting up a File System Monitor so that manual edits to the main configuration file have an effect.
  This allows you to easily test configurations.
  
- To find the main configuration file:
- 
- - 1. Open the `Mouse Fix` PrefPane, and click on `More...`. Then, hold Command and Shift while clicking the Mac Mouse Fix Icon in the top left.
- 
- - 2. Paste one of the following in the terminal:
-    - 1. (-> if you installed Mouse Fix for the current user)
-    open "$HOME/Library/PreferencePanes/Mouse Fix.prefPane/Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/Resources/config.plist"
-    - 2. (-> if you installed Mouse Fix for all users)
-    open "/Library/PreferencePanes/Mouse Fix.prefPane/Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/Resources/config.plist"
+ Secret trick to find the main configuration file: Open the Mac Mouse Fix app, and click on `More...`. Then, hold Command and Shift while clicking the Mac Mouse Fix Icon in the top left.
  */
 static void setupFSEventStreamCallback() {
     

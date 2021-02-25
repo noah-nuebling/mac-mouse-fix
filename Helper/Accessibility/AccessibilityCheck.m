@@ -30,7 +30,7 @@
         
         NSLog(@"Accessibility Access Disabled");
         
-        [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(sendAccessibilityMessageToPrefpane) userInfo:NULL repeats:NO];
+        [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(sendAccessibilityMessageToMainApp) userInfo:NULL repeats:NO];
         
         [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(openMainApp) userInfo:NULL repeats:YES];
             
@@ -54,9 +54,9 @@
 
 // Timer Callbacks
 
-+ (void)sendAccessibilityMessageToPrefpane {
-    NSLog(@"Sending accessibilty disabled message to prefPane");
-    [MessagePort_HelperApp sendMessageToPrefPane:@"accessibilityDisabled"];
++ (void)sendAccessibilityMessageToMainApp {
+    NSLog(@"Sending accessibilty disabled message to main app");
+    [MessagePort_HelperApp sendMessageToMainApp:@"accessibilityDisabled"];
 }
 
 + (void)openMainApp {

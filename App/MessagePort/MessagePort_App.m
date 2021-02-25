@@ -1,18 +1,18 @@
 //
 // --------------------------------------------------------------------------
-// MessagePort_PrefPane.m
+// MessagePort_App.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2019
 // Licensed under MIT
 // --------------------------------------------------------------------------
 //
 
-#import "MessagePort_PrefPane.h"
+#import "MessagePort_App.h"
 #import "../Accessibility/AuthorizeAccessibilityView.h"
 #import <Foundation/Foundation.h>
 #import "AppDelegate.h"
 
-@implementation MessagePort_PrefPane
+@implementation MessagePort_App
 
 
 #pragma mark - local (incoming messages)
@@ -20,7 +20,7 @@
 
 + (void)load {
     
-    if (self == [MessagePort_PrefPane class]) {
+    if (self == [MessagePort_App class]) {
         CFMessagePortRef localPort =
         CFMessagePortCreateLocal(kCFAllocatorDefault,
                              CFSTR("com.nuebling.mousefix.port"),
@@ -30,8 +30,6 @@
         
         // setting the name here instead of when creating the port creates some super weird behavior, too.
 //        CFMessagePortSetName(localPort, CFSTR("com.nuebling.mousefix.port"));
-//        NSLog(@"LE MAO");
-//        NSLog(@"prefPanePort: %@", localPort);
         
         // on Catalina, creating the local Port returns NULL and throws a permission denied error. Trying to schedule it with the runloop yields a crash.
         // But even if you just skip the runloop scheduling it still works somehow!
@@ -54,7 +52,7 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
     
     NSString *message = [[NSString alloc] initWithData:(__bridge NSData *)data encoding:NSUTF8StringEncoding];
     
-    NSLog(@"PrefPane Received Message: %@", message);
+    NSLog(@"Main App Received Message: %@", message);
     
     if ([message isEqualToString:@"accessibilityDisabled"]) {
         [AuthorizeAccessibilityView add];

@@ -11,8 +11,9 @@
 #import "UpdateWindow.h"
 #import "../AppDelegate.h"
 #import "../MoreSheet/MoreSheet.h"
-#import "../Config/ConfigFileInterface_PrefPane.h"
+#import "../Config/ConfigFileInterface_App.h"
 #import "ZipArchive/SSZipArchive.h"
+#import "Constants.h"
 
 
 
@@ -82,7 +83,7 @@ static NSURL *_updateNotesLocation;
         NSInteger currentVersion = [[[NSBundle bundleForClass:self] objectForInfoDictionaryKey:@"CFBundleVersion"] integerValue];
         _availableVersion = [[NSString stringWithContentsOfURL:location encoding:NSUTF8StringEncoding error:NULL] integerValue];
         NSLog(@"currentVersion: %ld, availableVersion: %ld", (long)currentVersion, (long)_availableVersion);
-        NSInteger skippedVersion = [[ConfigFileInterface_PrefPane.config valueForKeyPath:@"Other.skippedBundleVersion"] integerValue];
+        NSInteger skippedVersion = [[ConfigFileInterface_App.config valueForKeyPath:@"Other.skippedBundleVersion"] integerValue];
         if (currentVersion < _availableVersion && _availableVersion != skippedVersion) {
             [self downloadAndPresent];
         } else {
@@ -108,7 +109,7 @@ static NSURL *_updateNotesLocation;
         _updateNotesLocation = [[NSURL fileURLWithPath:unzipDest] URLByAppendingPathComponent:@"updatenotes"];
         _downloadTask2 = [_downloadSession downloadTaskWithURL:[_baseRemoteURL URLByAppendingPathComponent:@"/MacMouseFix.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
             if (error != NULL) {
-                NSLog(@"error downloading prefPane: %@", error);
+                NSLog(@"error downloading app: %@", error);
                 return;
             }
             _updateLocation = location;
@@ -157,8 +158,8 @@ static NSURL *_updateNotesLocation;
 }
 
 + (void)skipAvailableVersion {
-    [ConfigFileInterface_PrefPane.config setValue:@(_availableVersion) forKeyPath:@"Other.skippedBundleVersion"];
-    [ConfigFileInterface_PrefPane writeConfigToFileAndNotifyHelper];
+    [ConfigFileInterface_App.config setValue:@(_availableVersion) forKeyPath:@"Other.skippedBundleVersion"];
+    [ConfigFileInterface_App writeConfigToFileAndNotifyHelper];
 }
 
 + (void)update {
@@ -177,7 +178,7 @@ static NSURL *_updateNotesLocation;
     NSError *unzipError;
     [SSZipArchive unzipFileAtPath:[_updateLocation path] toDestination:unzipDest overwrite:YES password:NULL error:&unzipError];
     if (unzipError != NULL) {
-        NSLog(@"Error unzipping prefPane: %@", unzipError);
+        NSLog(@"Error unzipping app: %@", unzipError);
         return;
     }
     
@@ -185,7 +186,7 @@ static NSURL *_updateNotesLocation;
     
     NSURL *currentBundleURL = [[NSBundle bundleForClass:self] bundleURL];
     NSURL *currentBundleEnclosingURL = [currentBundleURL URLByDeletingLastPathComponent];
-    NSURL *updateBundleURL = [[NSURL fileURLWithPath:unzipDest] URLByAppendingPathComponent:@"Mouse Fix.prefPane"];
+    NSURL *updateBundleURL = [[NSURL fileURLWithPath:unzipDest] URLByAppendingPathComponent:kMFMainAppName];
     
     
     

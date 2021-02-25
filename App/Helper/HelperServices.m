@@ -10,16 +10,16 @@
 // this class has a copy in Mouse Fix Helper > Uninstaller > HelperServices_HelperApp
 #import "HelperServices.h"
 #import "AppDelegate.h"
-#import "../MessagePort/MessagePort_PrefPane.h"
+#import "../MessagePort/MessagePort_App.h"
 
 #import "Constants.h"
 
 @implementation HelperServices
 
 + (NSBundle *)helperBundle {
-    NSBundle *prefPaneBundle = [NSBundle bundleForClass: [AppDelegate class]];
-    NSString *prefPaneBundlePath = [prefPaneBundle bundlePath];
-    NSString *helperBundlePath = [prefPaneBundlePath stringByAppendingPathComponent: @"Contents/Library/LoginItems/Mouse Fix Helper.app"];
+    NSBundle *mainAppBundle = [NSBundle bundleForClass: [AppDelegate class]];
+    NSString *mainAppBundlePath = [mainAppBundle bundlePath];
+    NSString *helperBundlePath = [mainAppBundlePath stringByAppendingPathComponent: @"Contents/Library/LoginItems/Mouse Fix Helper.app"];
     return [NSBundle bundleWithPath:helperBundlePath];
 }
 
@@ -69,7 +69,7 @@
     }
     
     if (enable == NO) {
-//        [MessagePort_PrefPane performSelector:@selector(deleteLaunchdPlist) withObject:self afterDelay:2];
+//        [MessagePort_App performSelector:@selector(deleteLaunchdPlist) withObject:self afterDelay:2];
     }
 }
 
@@ -83,18 +83,19 @@
     @autoreleasepool {
         
         NSLog(@"repairing User Agent Config File");
-        // what this does:
         
-        // get path of executable of helper app based on path of bundle of this class (prefpane bundle)
-        // check if the "User/Library/LaunchAgents/mouse.fix.helper.plist" UserAgent Config file exists, if the Launch Agents Folder exists, and if the exectuable path within the plist file is correct
-        // if not:
-        // create correct file based on "default_mouse.fix.helper.plist" and helperExecutablePath
-        // write correct file to "User/Library/LaunchAgents"
+        // What this does:
         
-        // get helper executable path
-        NSBundle *prefPaneBundle = [NSBundle bundleForClass: [AppDelegate class]];
-        NSString *prefPaneBundlePath = [prefPaneBundle bundlePath];
-        NSString *helperExecutablePath = [prefPaneBundlePath stringByAppendingPathComponent: kMFHelperExecutablePath];
+        // Get path of executable of helper app
+        // Check if the "User/Library/LaunchAgents/mouse.fix.helper.plist" UserAgent Config file exists, if the Launch Agents Folder exists, and if the exectuable path within the plist file is correct
+        // If not:
+        // Create correct file based on "default_mouse.fix.helper.plist" and helperExecutablePath
+        // Write correct file to "User/Library/LaunchAgents"
+        
+        // Get helper executable path
+        NSBundle *mainAppBundle = [NSBundle bundleForClass: [AppDelegate class]];
+        NSString *mainAppBundlePath = [mainAppBundle bundlePath];
+        NSString *helperExecutablePath = [mainAppBundlePath stringByAppendingPathComponent: kMFHelperExecutablePath];
         
         // get User Library path
         NSArray *libraryPaths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
@@ -153,7 +154,7 @@
                 
                 NSError *error;
                 // read contents of default_mouse.fix.helper.plist
-                NSString *defaultLAConfigFile_path = [prefPaneBundle pathForResource:@"default_mouse.fix.helper" ofType:@"plist"];
+                NSString *defaultLAConfigFile_path = [mainAppBundle pathForResource:@"default_mouse.fix.helper" ofType:@"plist"];
                 NSData *defaultLAConfigFile_data = [NSData dataWithContentsOfFile:defaultLAConfigFile_path];
                 NSMutableDictionary *newLAConfigFile_dict = [NSPropertyListSerialization propertyListWithData:defaultLAConfigFile_data options:NSPropertyListMutableContainersAndLeaves format:nil error:&error];
                 

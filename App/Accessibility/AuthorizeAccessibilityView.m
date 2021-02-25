@@ -9,9 +9,9 @@
 
 #import "../AppDelegate.h"
 #import "AuthorizeAccessibilityView.h"
-#import "../MessagePort/MessagePort_PrefPane.h"
+#import "../MessagePort/MessagePort_App.h"
 #import "../Helper/HelperServices.h"
-#import "Utility_Prefpane.h"
+#import "Utility_App.h"
 
 @interface AuthorizeAccessibilityView ()
 
@@ -57,20 +57,6 @@ AuthorizeAccessibilityView *_accViewController;
 - (IBAction)AuthorizeButton:(NSButton *)sender {
     
     NSLog(@"AuthorizeButton clicked");
-  
-    // Display loading indicator
-    // We only wanted this when it was still a prefpane
-    
-//    CGSize size = CGSizeMake(16, 16);
-//    NSRect centeredRect = NSMakeRect((self.view.frame.size.width / 2.0) - (size.width/2.0), (self.view.frame.size.height / 2.0) - (size.height/2.0), size.width, size.height);
-//    NSProgressIndicator* indicator = [[NSProgressIndicator alloc] initWithFrame:centeredRect];
-//    [indicator setStyle:NSProgressIndicatorSpinningStyle];
-//
-//    self.view.subviews = @[];
-//    [self.view addSubview:indicator];
-//
-//    [indicator display];
-//    [indicator startAnimation:NULL];
     
     // Open privacy prefpane
     

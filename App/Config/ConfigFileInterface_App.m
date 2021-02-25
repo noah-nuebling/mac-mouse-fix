@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-// ConfigFileInterface_PrefPane.m
+// ConfigFileInterface_App.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2019
 // Licensed under MIT
@@ -8,13 +8,13 @@
 //
 
 #import <AppKit/AppKit.h>
-#import "ConfigFileInterface_PrefPane.h"
+#import "ConfigFileInterface_App.h"
 #import "HelperServices.h"
-#import "../MessagePort/MessagePort_PrefPane.h"
+#import "../MessagePort/MessagePort_App.h"
 #import "NSMutableDictionary+Additions.h"
-#import "Utility_PrefPane.h"
+#import "Utility_App.h"
 
-@implementation ConfigFileInterface_PrefPane
+@implementation ConfigFileInterface_App
 
 static NSMutableDictionary *_config;
 + (NSMutableDictionary *)config {
@@ -72,11 +72,11 @@ static NSURL *_backupConfigURL; // backup_config aka default_config
     }
     NSLog(@"Wrote config to file.");
 //    NSLog(@"config: %@", _config);
-    [MessagePort_PrefPane sendMessageToHelper:@"configFileChanged"];
+    [MessagePort_App sendMessageToHelper:@"configFileChanged"];
 }
 
 /// Load data from plist file at _configURL into _config class variable
-/// This only really needs to be called when ConfigFileInterface_PrefPane is loaded, but I use it in other places as well, to make the program behave better, when I manually edit the config file.
+/// This only really needs to be called when ConfigFileInterface_App is loaded, but I use it in other places as well, to make the program behave better, when I manually edit the config file.
 + (void)loadConfigFromFile {
     
     [self repairConfigWithProblem:kMFConfigProblemNone info:nil];
@@ -153,7 +153,7 @@ static NSURL *_backupConfigURL; // backup_config aka default_config
 + (void)replaceCurrentConfigWithBackupConfig {
     NSData *defaultData = [NSData dataWithContentsOfURL:_backupConfigURL];
     [defaultData writeToURL:_configURL atomically:YES];
-    [MessagePort_PrefPane sendMessageToHelper:@"terminate"];
+    [MessagePort_App sendMessageToHelper:@"terminate"];
     [self loadConfigFromFile];
 }
 
@@ -163,7 +163,7 @@ static NSURL *_backupConfigURL; // backup_config aka default_config
     // Delete overrides for uninstalled apps
     // This might delete preinstalled overrides. So not doing that.
 //    for (NSString *bundleID in appOverrides.allKeys) {
-//        if (![Utility_PrefPane appIsInstalled:bundleID]) {
+//        if (![Utility_App appIsInstalled:bundleID]) {
 //            appOverrides[bundleID] = nil;
 //        }
 //    }

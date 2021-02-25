@@ -59,10 +59,10 @@ int main(int argc, const char * argv[]) {
             [helpApp terminate];
         }
         
-        // open the newly installed prefpane
+        // open the newly installed app
         
-        NSURL *prefPaneURL = [[[NSURL fileURLWithPath:NSProcessInfo.processInfo.arguments[0]] URLByAppendingPathComponent:@"/../../../.."] URLByStandardizingPath];
-        [NSWorkspace.sharedWorkspace openURL:prefPaneURL];
+        NSURL *mainAppURL = [[[NSURL fileURLWithPath:NSProcessInfo.processInfo.arguments[0]] URLByAppendingPathComponent:@"/../../../.."] URLByStandardizingPath];
+        [NSWorkspace.sharedWorkspace openURL:mainAppURL];
         
         
     }

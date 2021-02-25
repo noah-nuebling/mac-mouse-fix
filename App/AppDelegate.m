@@ -13,11 +13,11 @@
 #import <ServiceManagement/SMLoginItem.h>
 #import "AppDelegate.h"
 #import "Updater.h"
-#import "Config/ConfigFileInterface_PrefPane.h"
+#import "Config/ConfigFileInterface_App.h"
 #import "Helper/HelperServices.h"
-#import "MessagePort/MessagePort_PrefPane.h"
+#import "MessagePort/MessagePort_App.h"
 #import "Update/UpdateWindow.h"
-#import "Utility/Utility_PrefPane.h"
+#import "Utility/Utility_App.h"
 //#import "CGSInternal/CGSHotKeys.h"
 
 #import "Accessibility/AuthorizeAccessibilityView.h"
@@ -121,7 +121,7 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     
     [self setUIToConfigFile];
     
-    BOOL checkForUpdates = [[ConfigFileInterface_PrefPane.config valueForKeyPath:@"Other.checkForUpdates"] boolValue];
+    BOOL checkForUpdates = [[ConfigFileInterface_App.config valueForKeyPath:@"Other.checkForUpdates"] boolValue];
     if (checkForUpdates == YES) {
         [Updater checkForUpdate];
     }
@@ -133,7 +133,7 @@ NSTimer *removeAccOverlayTimer;
     [removeAccOverlayTimer invalidate];
 }
 - (void)windowDidBecomeKey:(NSNotification *)notification {
-    [MessagePort_PrefPane performSelector:@selector(sendMessageToHelper:) withObject:@"checkAccessibility" afterDelay:0.0];
+    [MessagePort_App performSelector:@selector(sendMessageToHelper:) withObject:@"checkAccessibility" afterDelay:0.0];
     removeAccOverlayTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 repeats:NO block:^(NSTimer * _Nonnull timer) {
         [AuthorizeAccessibilityView remove];
     }];
@@ -154,9 +154,9 @@ NSTimer *removeAccOverlayTimer;
     
     BOOL enb = enable.boolValue;
     
-    NSArray *baseArray = [Utility_PrefPane subviewsForView:self.window.contentView withIdentifier:@"baseView"];
+    NSArray *baseArray = [Utility_App subviewsForView:self.window.contentView withIdentifier:@"baseView"];
     NSView *baseView = baseArray[0];
-    NSBox *preferenceBox = (NSBox *)[Utility_PrefPane subviewsForView:baseView withIdentifier:@"preferenceBox"][0];
+    NSBox *preferenceBox = (NSBox *)[Utility_App subviewsForView:baseView withIdentifier:@"preferenceBox"][0];
     
     for (NSObject *v in preferenceBox.contentView.subviews) {
         if ([[v class] isSubclassOfClass:[NSControl class]]) {
@@ -183,11 +183,11 @@ NSTimer *removeAccOverlayTimer;
         _enableCheckBox.state = 0;
     }
     
-    [ConfigFileInterface_PrefPane loadConfigFromFile];
+    [ConfigFileInterface_App loadConfigFromFile];
     
 # pragma mark Popup Buttons
     
-    NSDictionary *buttonRemaps = ConfigFileInterface_PrefPane.config[@"ButtonRemaps"];
+    NSDictionary *buttonRemaps = ConfigFileInterface_App.config[@"ButtonRemaps"];
     
     // mouse button 4 and 5
     
@@ -243,7 +243,7 @@ NSTimer *removeAccOverlayTimer;
     
 # pragma mark scrollSettings
     
-    NSDictionary *scrollConfigFromFile = ConfigFileInterface_PrefPane.config[@"Scroll"];
+    NSDictionary *scrollConfigFromFile = ConfigFileInterface_App.config[@"Scroll"];
     
     // enabled checkbox
     if ([scrollConfigFromFile[@"smooth"] boolValue] == 1) {
@@ -306,32 +306,24 @@ NSTimer *removeAccOverlayTimer;
     if (_middleClick.selectedTag != 0) {
         middleButtonClickAction= @[@"symbolicHotKey", @(_middleClick.selectedTag)];
     }
-    [ConfigFileInterface_PrefPane.config setValue:middleButtonClickAction forKeyPath:@"ButtonRemaps.3.single.click"];
+    [ConfigFileInterface_App.config setValue:middleButtonClickAction forKeyPath:@"ButtonRemaps.3.single.click"];
     
     // hold
     NSArray *middleButtonHoldAction;
     if (_middleHold.selectedTag != 0) {
         middleButtonHoldAction = @[@"symbolicHotKey", @(_middleHold.selectedTag)];
     }
-    [ConfigFileInterface_PrefPane.config setValue:middleButtonHoldAction forKeyPath:@"ButtonRemaps.3.single.hold"];
+    [ConfigFileInterface_App.config setValue:middleButtonHoldAction forKeyPath:@"ButtonRemaps.3.single.hold"];
     
     
     // side buttons         // tag = 1 -> Switch Spaces, tag = 2 -> Switch Pages
     
     // click
     NSArray *sideButtonClickAction = [actionsForPopupButtonTag_onlyForSideMouseButtons objectForKey:@(_sideClick.selectedTag)];
-    [ConfigFileInterface_PrefPane.config setValue:sideButtonClickAction[0] forKeyPath:@"ButtonRemaps.4.single.click"];
-    [ConfigFileInterface_PrefPane.config setValue:sideButtonClickAction[1] forKeyPath:@"ButtonRemaps.5.single.click"];
-    
-    // hold
-//    NSArray *sideButtonHoldAction = [actionsForPopupButtonTag_onlyForSideMouseButtons objectForKey:@(_sideHold.selectedTag)];
-//    [ConfigFileInterface_PrefPane.config setValue:sideButtonHoldAction[0] forKeyPath:@"ButtonRemaps.4.hold"];
-//    [ConfigFileInterface_PrefPane.config setValue:sideButtonHoldAction[1] forKeyPath:@"ButtonRemaps.5.hold"];
-    
-    
+    [ConfigFileInterface_App.config setValue:sideButtonClickAction[0] forKeyPath:@"ButtonRemaps.4.single.click"];
+    [ConfigFileInterface_App.config setValue:sideButtonClickAction[1] forKeyPath:@"ButtonRemaps.5.single.click"];
     
     // scroll Settings
-    
     
     // radio buttons and slider
     NSArray *smoothnessConfiguration;
@@ -373,9 +365,9 @@ NSTimer *removeAccOverlayTimer;
     };
     
     
-    ConfigFileInterface_PrefPane.config = [[Utility_PrefPane dictionaryWithOverridesAppliedFrom:scrollParametersFromUI to:ConfigFileInterface_PrefPane.config] mutableCopy];
+    ConfigFileInterface_App.config = [[Utility_App dictionaryWithOverridesAppliedFrom:scrollParametersFromUI to:ConfigFileInterface_App.config] mutableCopy];
     
-    [ConfigFileInterface_PrefPane writeConfigToFileAndNotifyHelper];
+    [ConfigFileInterface_App writeConfigToFileAndNotifyHelper];
 }
 
 @end

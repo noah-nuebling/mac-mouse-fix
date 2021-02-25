@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-// ConfigFileInterface_PrefPane.h
+// ConfigFileInterface_App.h
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2019
 // Licensed under MIT
@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ConfigFileInterface_PrefPane : NSObject
+@interface ConfigFileInterface_App : NSObject
 typedef enum {
     kMFConfigProblemNone = 0,
     kMFConfigProblemIncompleteAppOverride = 1

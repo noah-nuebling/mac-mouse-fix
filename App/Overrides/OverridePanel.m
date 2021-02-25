@@ -19,8 +19,8 @@
  */
 
 #import "OverridePanel.h"
-#import "ConfigFileInterface_PrefPane.h"
-#import "Utility_PrefPane.h"
+#import "ConfigFileInterface_App.h"
+#import "Utility_App.h"
 #import "NSMutableDictionary+Additions.h"
 #import <Foundation/Foundation.h>
 #import "MoreSheet.h"
@@ -68,12 +68,12 @@ NSDictionary *_columnIdentifierToKeyPath;
     };
     
     // Load table
-    [ConfigFileInterface_PrefPane loadConfigFromFile];
+    [ConfigFileInterface_App loadConfigFromFile];
     [self loadTableViewDataModelFromConfig];
     [_tableView reloadData];
 
     // Display window
-    [Utility_PrefPane openWindowWithFadeAnimation:self.window fadeIn:YES fadeTime:0.1];
+    [Utility_App openWindowWithFadeAnimation:self.window fadeIn:YES fadeTime:0.1];
     
     // Make window resizable
     self.window.styleMask = self.window.styleMask | NSWindowStyleMaskResizable;
@@ -88,8 +88,8 @@ NSDictionary *_columnIdentifierToKeyPath;
 }
 
 - (void)centerWindowOnMainWindow {
-    NSPoint ctr = [Utility_PrefPane getCenterOfRect:AppDelegate.mainWindow.frame];
-    [Utility_PrefPane centerWindow:self.window atPoint:ctr];
+    NSPoint ctr = [Utility_App getCenterOfRect:AppDelegate.mainWindow.frame];
+    [Utility_App centerWindow:self.window atPoint:ctr];
 }
 - (void)windowDidLoad {
     // Resize first column so table columns take up full space of table view
@@ -102,7 +102,7 @@ NSDictionary *_columnIdentifierToKeyPath;
 
 - (void)setConfigFileToUI {
     [self writeTableViewDataModelToConfig];
-    [ConfigFileInterface_PrefPane writeConfigToFileAndNotifyHelper];
+    [ConfigFileInterface_App writeConfigToFileAndNotifyHelper];
     [self loadTableViewDataModelFromConfig];
     [_tableView reloadData];
 }
@@ -110,7 +110,7 @@ NSDictionary *_columnIdentifierToKeyPath;
 #pragma mark TableView
 
 - (IBAction)back:(id)sender {
-    [Utility_PrefPane openWindowWithFadeAnimation:self.window fadeIn:NO fadeTime:0.1];
+    [Utility_App openWindowWithFadeAnimation:self.window fadeIn:NO fadeTime:0.1];
 //    [self close];
 }
 - (IBAction)addRemoveControl:(id)sender {
@@ -186,7 +186,7 @@ NSDictionary *_columnIdentifierToKeyPath;
 //            NSBundle *bundle = [NSBundle bundleWithIdentifier:bundleID]; // This doesn't work for some reason
             NSImage *appIcon;
             NSString *appName;
-            if (![Utility_PrefPane appIsInstalled:bundleID]) {
+            if (![Utility_App appIsInstalled:bundleID]) {
                 // User should never see this. We don't want to load uninstalled apps into _tableViewDataModel to begin with.
                 appIcon = [NSImage imageNamed:NSImageNameStopProgressFreestandingTemplate];
                 appName = [NSString stringWithFormat:@"Couldn't find app: %@", bundleID];
@@ -279,7 +279,7 @@ NSDictionary *_columnIdentifierToKeyPath;
         newRow[@"AppColumnID"] = bundleID;
         for (NSString *columnID in _columnIdentifierToKeyPath) {
             NSString *keyPath = _columnIdentifierToKeyPath[columnID];
-            NSObject *defaultValue = [ConfigFileInterface_PrefPane.config objectForCoolKeyPath:keyPath]; // Could use valueForKeyPath as well, because there are no periods in the keys of the keyPath
+            NSObject *defaultValue = [ConfigFileInterface_App.config objectForCoolKeyPath:keyPath]; // Could use valueForKeyPath as well, because there are no periods in the keys of the keyPath
             newRow[columnID] = defaultValue;
         }
         [newRows addObject:newRow];
@@ -325,20 +325,20 @@ NSMutableArray *_tableViewDataModel;
             NSObject *cellValue = rowDict[columnID];
             NSString *defaultKeyPath = _columnIdentifierToKeyPath[columnID];
             NSString *overrideKeyPath = [NSString stringWithFormat:@"AppOverrides.%@.Root.%@", bundleIDEscaped, defaultKeyPath];
-            [ConfigFileInterface_PrefPane.config setObject:cellValue forCoolKeyPath:overrideKeyPath];
+            [ConfigFileInterface_App.config setObject:cellValue forCoolKeyPath:overrideKeyPath];
         }
         // Write order key
         NSString *orderKeyKeyPath = [NSString stringWithFormat:@"AppOverrides.%@.meta.scrollOverridePanelTableViewOrderKey", bundleIDEscaped];
-        [ConfigFileInterface_PrefPane.config setObject:[NSNumber numberWithInt:orderKey] forCoolKeyPath:orderKeyKeyPath];
+        [ConfigFileInterface_App.config setObject:[NSNumber numberWithInt:orderKey] forCoolKeyPath:orderKeyKeyPath];
         orderKey += 1;
     }
     
     // For all overrides for apps in the config, which aren't in the table, and which are installed - delete all values managed by the table from the config
     
-    NSMutableSet *bundleIDsInConfigAndInstalledButNotInTable = [NSMutableSet setWithArray:((NSDictionary *)[ConfigFileInterface_PrefPane.config valueForKeyPath:@"AppOverrides"]).allKeys]; // Get all bundle IDs in the config
+    NSMutableSet *bundleIDsInConfigAndInstalledButNotInTable = [NSMutableSet setWithArray:((NSDictionary *)[ConfigFileInterface_App.config valueForKeyPath:@"AppOverrides"]).allKeys]; // Get all bundle IDs in the config
     
     bundleIDsInConfigAndInstalledButNotInTable = [bundleIDsInConfigAndInstalledButNotInTable filteredSetUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
-        return [Utility_PrefPane appIsInstalled:evaluatedObject];
+        return [Utility_App appIsInstalled:evaluatedObject];
     }]].mutableCopy; // Filter out apps which aren't installed. We do this so we don't delete preinstalled overrides.
     [bundleIDsInConfigAndInstalledButNotInTable minusSet:bundleIDsInTable]; // Subtract apps in table
     
@@ -347,20 +347,20 @@ NSMutableArray *_tableViewDataModel;
         // Delete override values
         for (NSString *rootKeyPath in _columnIdentifierToKeyPath.allValues) {
         NSString *overrideKeyPath = [NSString stringWithFormat:@"AppOverrides.%@.Root.%@", bundleIDEscaped, rootKeyPath];
-        [ConfigFileInterface_PrefPane.config setObject:nil forCoolKeyPath:overrideKeyPath];
+        [ConfigFileInterface_App.config setObject:nil forCoolKeyPath:overrideKeyPath];
         }
         // Delete orderKey
         NSString *orderKeyKeyPath = [NSString stringWithFormat:@"AppOverrides.%@.meta.scrollOverridePanelTableViewOrderKey", bundleIDEscaped];
-        [ConfigFileInterface_PrefPane.config setObject:nil forCoolKeyPath:orderKeyKeyPath];
+        [ConfigFileInterface_App.config setObject:nil forCoolKeyPath:orderKeyKeyPath];
     }
     
-    [ConfigFileInterface_PrefPane cleanConfig];
-    [ConfigFileInterface_PrefPane writeConfigToFileAndNotifyHelper];
+    [ConfigFileInterface_App cleanConfig];
+    [ConfigFileInterface_App writeConfigToFileAndNotifyHelper];
 }
 
 - (void)loadTableViewDataModelFromConfig {
     _tableViewDataModel = [NSMutableArray array];
-    NSDictionary *config = ConfigFileInterface_PrefPane.config;
+    NSDictionary *config = ConfigFileInterface_App.config;
     if (!config) { // TODO: does this exception make sense? What is the consequence of it being thrown? Where is it caught? Should we just reload the config file instead? Can this even happen if ConfigFileInterface successfully loaded?
         NSException *configNotLoadedException = [NSException exceptionWithName:@"ConfigNotLoadedException" reason:@"ConfigFileInterface config property is nil" userInfo:nil];
         @throw configNotLoadedException;
@@ -373,7 +373,7 @@ NSMutableArray *_tableViewDataModel;
     }
     for (NSString *bundleID in overrides.allKeys) { // Every bundleID corresponds to one app/row
         // Check if app exists on system
-        if (![Utility_PrefPane appIsInstalled:bundleID]) {
+        if (![Utility_App appIsInstalled:bundleID]) {
             continue; // If not, skip this bundleID
         }
         // Create rowDict for app with `bundleID` from data in config. Every key value pair in rowDict corresponds to a column. The key is the columnID and the value is the value for the column with `columnID` and the row of the app with `bundleID`
@@ -392,7 +392,7 @@ NSMutableArray *_tableViewDataModel;
         }
         if (someNil) { // Only some of the values controlled by the table don't exist in this AppOverride
             // Fill out missing values with default ones
-            [ConfigFileInterface_PrefPane repairConfigWithProblem:kMFConfigProblemIncompleteAppOverride info:@{
+            [ConfigFileInterface_App repairConfigWithProblem:kMFConfigProblemIncompleteAppOverride info:@{
                     @"bundleID": bundleID,
                     @"relevantKeyPaths": _columnIdentifierToKeyPath.allValues,
             }];
