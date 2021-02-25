@@ -218,7 +218,7 @@
 		4F8D0184243D8D6200D70076 /* NSArray+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Additions.m"; sourceTree = "<group>"; };
 		4F94F5EE25E5EC2500D9F24A /* Mac Mouse Fix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mac Mouse Fix.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F94F5F925E5EC2700D9F24A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		4F94F5FB25E5EC2700D9F24A /* Mac_Mouse_Fix.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Mac_Mouse_Fix.entitlements; sourceTree = "<group>"; };
+		4F94F5FB25E5EC2700D9F24A /* App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
 		4F94F60025E5EC2800D9F24A /* Mac Mouse FixTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Mac Mouse FixTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F94F60425E5EC2800D9F24A /* Mac_Mouse_FixTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Mac_Mouse_FixTests.m; sourceTree = "<group>"; };
 		4F94F60625E5EC2800D9F24A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -244,7 +244,6 @@
 		4FCECD8421092354001F1078 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		4FCECD8621092354001F1078 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4FCECD8B21092354001F1078 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4FCECD8E21092354001F1078 /* Mouse_Remap_Helper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Mouse_Remap_Helper.entitlements; sourceTree = "<group>"; };
 		4FD36AEA243741A70046DC41 /* OverridePanel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OverridePanel.h; sourceTree = "<group>"; };
 		4FD36AEB243741A70046DC41 /* OverridePanel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OverridePanel.m; sourceTree = "<group>"; };
 		4FD36AEC243741A70046DC41 /* ScrollOverridePanel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScrollOverridePanel.xib; sourceTree = "<group>"; };
@@ -265,8 +264,8 @@
 		4FD67DE6211CC9000095A9A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4FD9CB1122F7D48D0090DB98 /* Hyperlink.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Hyperlink.h; sourceTree = "<group>"; };
 		4FD9CB1222F7D48D0090DB98 /* Hyperlink.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Hyperlink.m; sourceTree = "<group>"; };
-		4FDBC57D234F7EDF00A46517 /* Mouse Fix HelperRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Mouse Fix HelperRelease.entitlements"; sourceTree = "<group>"; };
-		4FDBC59A234F80C500A46517 /* Mouse Fix UpdaterRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Mouse Fix UpdaterRelease.entitlements"; sourceTree = "<group>"; };
+		4FDBC57D234F7EDF00A46517 /* Helper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Helper.entitlements; sourceTree = "<group>"; };
+		4FDBC59A234F80C500A46517 /* Updater.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Updater.entitlements; sourceTree = "<group>"; };
 		4FECC88B2431DCCD001A3C4B /* RoughScroll.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RoughScroll.h; sourceTree = "<group>"; };
 		4FECC88C2431DCCD001A3C4B /* RoughScroll.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RoughScroll.m; sourceTree = "<group>"; };
 		4FECC88E2431DCDF001A3C4B /* ScrollControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollControl.h; sourceTree = "<group>"; };
@@ -394,13 +393,13 @@
 			path = SensibleSideButtons;
 			sourceTree = "<group>";
 		};
-		4F2FDF312315662500C7BE14 /* Mouse Fix Updater */ = {
+		4F2FDF312315662500C7BE14 /* Updater */ = {
 			isa = PBXGroup;
 			children = (
-				4FDBC59A234F80C500A46517 /* Mouse Fix UpdaterRelease.entitlements */,
+				4FDBC59A234F80C500A46517 /* Updater.entitlements */,
 				4F2FDF322315662500C7BE14 /* main.m */,
 			);
-			path = "Mouse Fix Updater";
+			path = Updater;
 			sourceTree = "<group>";
 		};
 		4F32E152231C420100199A11 /* Utility */ = {
@@ -415,6 +414,7 @@
 		4F32E15E231C455A00199A11 /* SupportFiles */ = {
 			isa = PBXGroup;
 			children = (
+				4F94F5FB25E5EC2700D9F24A /* App.entitlements */,
 				4FD45A24231C860100F75C58 /* KeyIcon.tiff */,
 				4FD45A25231C860100F75C58 /* UniversalAccessPref.tiff */,
 				4F364C74232ABE5C0084DEB0 /* Assets.xcassets */,
@@ -484,7 +484,7 @@
 			name = Other;
 			sourceTree = "<group>";
 		};
-		4F94F5EF25E5EC2500D9F24A /* Mac Mouse Fix */ = {
+		4F94F5EF25E5EC2500D9F24A /* App */ = {
 			isa = PBXGroup;
 			children = (
 				4FD67DDD211CC9000095A9A5 /* AppDelegate.h */,
@@ -500,9 +500,8 @@
 				4FD45A30231D03B800F75C58 /* Utility */,
 				4F32E15E231C455A00199A11 /* SupportFiles */,
 				4F94F5F925E5EC2700D9F24A /* main.m */,
-				4F94F5FB25E5EC2700D9F24A /* Mac_Mouse_Fix.entitlements */,
 			);
-			path = "Mac Mouse Fix";
+			path = App;
 			sourceTree = "<group>";
 		};
 		4F94F60325E5EC2800D9F24A /* Mac Mouse FixTests */ = {
@@ -592,9 +591,9 @@
 			isa = PBXGroup;
 			children = (
 				4FA4DBDA25E6231E00EC9259 /* SharedClasses */,
-				4F94F5EF25E5EC2500D9F24A /* Mac Mouse Fix */,
-				4FCECD8221092354001F1078 /* Mouse Fix Helper */,
-				4F2FDF312315662500C7BE14 /* Mouse Fix Updater */,
+				4F94F5EF25E5EC2500D9F24A /* App */,
+				4FCECD8221092354001F1078 /* Helper */,
+				4F2FDF312315662500C7BE14 /* Updater */,
 				4F94F60325E5EC2800D9F24A /* Mac Mouse FixTests */,
 				4F94F60E25E5EC2800D9F24A /* Mac Mouse FixUITests */,
 				4FCECD8121092354001F1078 /* Products */,
@@ -615,7 +614,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		4FCECD8221092354001F1078 /* Mouse Fix Helper */ = {
+		4FCECD8221092354001F1078 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
 				4FCECD8321092354001F1078 /* AppDelegate.h */,
@@ -632,17 +631,16 @@
 				4FF3B2BA2327604A009E8A8E /* Uninstall */,
 				4FCECDB02109326E001F1078 /* SupportFiles */,
 			);
-			path = "Mouse Fix Helper";
+			path = Helper;
 			sourceTree = "<group>";
 		};
 		4FCECDB02109326E001F1078 /* SupportFiles */ = {
 			isa = PBXGroup;
 			children = (
 				4F49104E25E6BAFC00570953 /* MouseFix.tiff */,
-				4FDBC57D234F7EDF00A46517 /* Mouse Fix HelperRelease.entitlements */,
+				4FDBC57D234F7EDF00A46517 /* Helper.entitlements */,
 				4F1C96692313603400C3B9AE /* External */,
 				4FCECD8621092354001F1078 /* Assets.xcassets */,
-				4FCECD8E21092354001F1078 /* Mouse_Remap_Helper.entitlements */,
 				4FCECD8B21092354001F1078 /* Info.plist */,
 				4F32E15C231C44C000199A11 /* main.m */,
 				4FCECD8821092354001F1078 /* MainMenu.xib */,
@@ -1120,7 +1118,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_ENTITLEMENTS = "Mouse Fix Updater/Mouse Fix UpdaterRelease.entitlements";
+				CODE_SIGN_ENTITLEMENTS = Updater/Updater.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LM5Z78756B;
@@ -1142,7 +1140,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CODE_SIGN_ENTITLEMENTS = "Mac Mouse Fix/Mac_Mouse_Fix.entitlements";
+				CODE_SIGN_ENTITLEMENTS = App/SupportFiles/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
@@ -1151,12 +1149,12 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
-				INFOPLIST_FILE = "Mac Mouse Fix/SupportFiles/Info.plist";
+				INFOPLIST_FILE = App/SupportFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.Mac-Mouse-Fix";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1168,7 +1166,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CODE_SIGN_ENTITLEMENTS = "Mac Mouse Fix/Mac_Mouse_Fix.entitlements";
+				CODE_SIGN_ENTITLEMENTS = App/SupportFiles/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
@@ -1177,11 +1175,11 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
-				INFOPLIST_FILE = "Mac Mouse Fix/SupportFiles/Info.plist";
+				INFOPLIST_FILE = App/SupportFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.Mac-Mouse-Fix";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -1379,7 +1377,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "Mouse Fix Helper/SupportFiles/Mouse Fix HelperRelease.entitlements";
+				CODE_SIGN_ENTITLEMENTS = Helper/SupportFiles/Helper.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1391,14 +1389,14 @@
 					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks,
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
-				INFOPLIST_FILE = "Mouse Fix Helper/SupportFiles/Info.plist";
+				INFOPLIST_FILE = Helper/SupportFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix.helper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Mouse Fix Helper/SupportFiles/External\"";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Helper/SupportFiles/External\"";
 			};
 			name = Debug;
 		};
@@ -1407,7 +1405,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "Mouse Fix Helper/SupportFiles/Mouse Fix HelperRelease.entitlements";
+				CODE_SIGN_ENTITLEMENTS = Helper/SupportFiles/Helper.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1419,14 +1417,14 @@
 					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks,
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
-				INFOPLIST_FILE = "Mouse Fix Helper/SupportFiles/Info.plist";
+				INFOPLIST_FILE = Helper/SupportFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix.helper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.0;
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Mouse Fix Helper/SupportFiles/External\"";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Helper/SupportFiles/External\"";
 			};
 			name = Release;
 		};

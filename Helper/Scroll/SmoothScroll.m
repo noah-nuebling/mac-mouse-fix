@@ -21,7 +21,7 @@
 #import "MouseInputReceiver.h"
 #import "DeviceManager.h"
 #import "Utility_HelperApp.h"
-#import "TouchSimulator.h"
+#import "../Touch/TouchSimulator.h"
 
 @implementation SmoothScroll
 
