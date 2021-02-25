@@ -65,6 +65,7 @@ NSDictionary *_columnIdentifierToKeyPath;
     _columnIdentifierToKeyPath = @{
         @"SmoothEnabledColumnID" : @"Scroll.smooth",
         @"MagnificationEnabledColumnID" : @"Scroll.modifierKeys.magnificationScrollModifierKeyEnabled",
+        @"HorizontalEnabledColumnID" : @"Scroll.modifierKeys.horizontalScrollModifierKeyEnabled"
     };
     
     // Load table
