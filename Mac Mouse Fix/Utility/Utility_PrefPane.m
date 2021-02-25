@@ -31,6 +31,23 @@
     }
     return nil;
 }
++ (void)centerWindow:(NSWindow *)win atPoint:(NSPoint)pt {
+    
+    NSRect frm = win.frame;
+    
+    NSPoint newOrg;
+    newOrg.x = pt.x - (frm.size.width / 2);
+    newOrg.y = pt.y - (frm.size.height / 2);
+    
+    [win setFrameOrigin:newOrg];
+}
++ (NSPoint)getCenterOfRect:(NSRect)rect {
+    NSPoint ctr;
+    ctr.x = rect.origin.x + (0.5 * rect.size.width);
+    ctr.y = rect.origin.y + (0.5 * rect.size.height);
+    
+    return ctr;
+}
 
 /// Copy of identically named function in `Mouse Fix Helper` > `Utility` > `Utility_HelperApp.m`
 + (NSDictionary *)dictionaryWithOverridesAppliedFrom:(NSDictionary *)src to:(NSDictionary *)dst {

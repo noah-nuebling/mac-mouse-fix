@@ -72,19 +72,6 @@ NSDictionary *_columnIdentifierToKeyPath;
     [self loadTableViewDataModelFromConfig];
     [_tableView reloadData];
     
-    // Position the window
-    // Approach 1 - always center the window (works but sucks)
-//    if (self.window.isVisible) {
-//        [self.window close]; // What does this do?
-//    } else {
-//        [self.window center];
-//    }
-    // Approach 2 - restore window position (doesn't work)
-//    self.window.windowController.shouldCascadeWindows = NO;
-//    [self.window setFrameAutosaveName:self.window.representedFilename];
-//    [self.window setFrameUsingName:self.window.representedFilename];
-    // Approach 3 - center window when opening first time after launch, else let it retain its position
-    
     // Make window visible
     [self.window makeKeyAndOrderFront:nil];
     [self.window performSelector:@selector(makeKeyWindow) withObject:nil afterDelay:0.05]; // Need to do this to make the window key. Magic?
@@ -95,11 +82,12 @@ NSDictionary *_columnIdentifierToKeyPath;
 }
 
 - (void)windowDidLoad {
-    [self.window center];
+    [self centerWindowOnMainWindow];
 }
-- (void)windowWillClose:(NSNotification *)notification {
-    // Save window position in user defaults - doesn't work
-//    [self.window saveFrameUsingName:self.window.representedFilename];
+
+- (void)centerWindowOnMainWindow {
+    NSPoint ctr = [Utility_PrefPane getCenterOfRect:Utility_PrefPane.mainWindow.frame];
+    [Utility_PrefPane centerWindow:self.window atPoint:ctr];
 }
 
 - (void)setConfigFileToUI {
