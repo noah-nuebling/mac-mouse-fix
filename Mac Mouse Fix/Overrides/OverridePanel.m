@@ -59,7 +59,7 @@ NSDictionary *_columnIdentifierToKeyPath;
 
 #pragma mark - Public functions
 
-- (void)openWindow {
+- (void)begin {
     
     // Define column-to-setting mapping
     _columnIdentifierToKeyPath = @{
@@ -73,13 +73,17 @@ NSDictionary *_columnIdentifierToKeyPath;
     [self loadTableViewDataModelFromConfig];
     [_tableView reloadData];
     
-    // Make window visible
-    [self.window makeKeyAndOrderFront:nil];
-    [self.window performSelector:@selector(makeKeyWindow) withObject:nil afterDelay:0.05]; // Need to do this to make the window key. Magic?
+    // Actually open window
+//    [self.window makeKeyAndOrderFront:nil];
+//    [self.window performSelector:@selector(makeKeyWindow) withObject:nil afterDelay:0.05]; // Need to do this to make the window key. Magic?
+    [AppDelegate.mainWindow beginSheet:self.window completionHandler:nil];
     
     // Make tableView drag and drop target
     NSString *fileURLUTI = @"public.file-url";
     [_tableView registerForDraggedTypes:@[fileURLUTI]]; // makes it accept apps
+}
+- (void)end {
+    [AppDelegate.mainWindow endSheet:self.window];
 }
 
 - (void)windowDidLoad {
@@ -100,6 +104,11 @@ NSDictionary *_columnIdentifierToKeyPath;
 
 #pragma mark TableView
 
+- (IBAction)back:(id)sender {
+    [self end];
+    [MoreSheet.instance begin];
+    
+}
 - (IBAction)addRemoveControl:(id)sender {
     if ([sender selectedSegment] == 0) {
         [self addButtonAction];

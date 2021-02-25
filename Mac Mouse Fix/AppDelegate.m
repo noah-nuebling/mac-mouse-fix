@@ -73,7 +73,7 @@
 #pragma mark - Interface funcs
 
 + (AppDelegate *)instance {
-    return (AppDelegate *)[NSApp delegate];
+    return (AppDelegate *)NSApp.delegate;
 }
 + (NSWindow *)mainWindow {
     return self.instance.window;
