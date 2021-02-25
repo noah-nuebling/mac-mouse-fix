@@ -15,7 +15,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Utility_PrefPane : NSObject
 + (NSArray *)subviewsForView:(NSView *)view withIdentifier:(NSString *)identifier;
-+ (NSWindow *)mainWindow;
 + (void)centerWindow:(NSWindow *)win atPoint:(NSPoint)pt;
 + (NSPoint)getCenterOfRect:(NSRect)rect;
 + (NSDictionary *)dictionaryWithOverridesAppliedFrom:(NSDictionary *)src to: (NSDictionary *)dst;

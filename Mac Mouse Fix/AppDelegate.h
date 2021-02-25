@@ -12,6 +12,7 @@
 #import "Overrides/OverridePanel.h"
 
 @interface AppDelegate : NSObject<NSApplicationDelegate, NSWindowDelegate>
-//- (void)mainViewDidLoad;
++ (AppDelegate *)instance;
++ (NSWindow *)mainWindow;
 - (void)stopRemoveAccOverlayTimer;
 @end

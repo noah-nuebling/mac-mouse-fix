@@ -22,15 +22,6 @@
     }
     return subviews;
 }
-
-+ (NSWindow *)mainWindow {
-    for (NSWindow *w in NSApp.windows) {
-        if ([w.identifier isEqualToString:@"mainWindow"]) {
-            return w;
-        }
-    }
-    return nil;
-}
 + (void)centerWindow:(NSWindow *)win atPoint:(NSPoint)pt {
     
     NSRect frm = win.frame;

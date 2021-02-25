@@ -78,12 +78,12 @@ static MoreSheet *_instance;
 #pragma mark - Instance methods - Public
 
 - (void)begin {
-    [Utility_PrefPane.mainWindow beginSheet:self.window completionHandler:nil];
+    [AppDelegate.mainWindow beginSheet:self.window completionHandler:nil];
     [self.window makeKeyWindow]; // Doesn't work
     
 }
 - (void)end {
-    [Utility_PrefPane.mainWindow endSheet:self.window];
+    [AppDelegate.mainWindow endSheet:self.window];
 //    [[[NSApplication sharedApplication] mainWindow] endSheet:self.window]; // There is no main window when the app isn't frontmost...
 //    [ScrollOverridePanel.instance close];
 }

@@ -9,6 +9,7 @@
 
 #import "Hyperlink.h"
 #import "Utility_PrefPane.h"
+#import "AppDelegate.h"
 
 IB_DESIGNABLE
 @interface Hyperlink ()
@@ -30,7 +31,7 @@ NSRect _trackingRect;
     
     [NSEvent addLocalMonitorForEventsMatchingMask:NSEventMaskLeftMouseUp handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
         NSLog(@"MOUSE UPPP");
-        NSPoint loc = [Utility_PrefPane.mainWindow.contentView convertPoint:event.locationInWindow toView:self];
+        NSPoint loc = [AppDelegate.mainWindow.contentView convertPoint:event.locationInWindow toView:self];
         if (NSPointInRect(loc, _trackingRect)) {
             [self reactToClick];
         }

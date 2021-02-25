@@ -82,7 +82,7 @@ AuthorizeAccessibilityView *_accViewController;
     
     NSLog(@"adding AuthorizeAccessibilityView");
     
-    NSView *mainView = [Utility_PrefPane mainWindow].contentView;
+    NSView *mainView = AppDelegate.mainWindow.contentView;
     
     NSView *baseView;
     for (NSView *v in mainView.subviews) {
@@ -118,7 +118,7 @@ AuthorizeAccessibilityView *_accViewController;
     NSLog(@"removing AuthorizeAccessibilityView");
     
 //    NSView *mainView = NSApp.mainWindow.contentView;
-    NSView *mainView = [Utility_PrefPane mainWindow].contentView;
+    NSView *mainView = AppDelegate.mainWindow.contentView;
     
     NSView *baseView;
     for (NSView *v in mainView.subviews) {

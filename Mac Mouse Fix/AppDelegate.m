@@ -50,14 +50,7 @@
 
 @implementation AppDelegate
 
-
-static NSDictionary *_scrollConfigurations;
-static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
-
-
 # pragma mark - IBActions
-
-# pragma mark main screen
 
 - (IBAction)enableCheckBox:(id)sender {
     //sendKeyUpForAllSymbolicHotKeysThatAMouseButtonMapsTo(self);
@@ -77,8 +70,20 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
     [self setConfigFileToUI];
 }
 
-# pragma mark - main
+#pragma mark - Interface funcs
 
++ (AppDelegate *)instance {
+    return (AppDelegate *)[NSApp delegate];
+}
++ (NSWindow *)mainWindow {
+    return self.instance.window;
+}
+
+#pragma mark - Init and Lifecycle
+
+// Define Globals
+static NSDictionary *_scrollConfigurations;
+static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
 
 + (void)initialize {
     
@@ -142,6 +147,8 @@ NSTimer *removeAccOverlayTimer;
 -(BOOL) applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)app {
     return YES;
 }
+
+#pragma mark - UI Logic
 
 - (void)disableUI:(NSNumber *)enable {
     

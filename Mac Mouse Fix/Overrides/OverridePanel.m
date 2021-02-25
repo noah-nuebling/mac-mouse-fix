@@ -24,6 +24,7 @@
 #import "NSMutableDictionary+Additions.h"
 #import <Foundation/Foundation.h>
 #import "MoreSheet.h"
+#import "AppDelegate.h"
 
 @interface OverridePanel ()
 
@@ -86,7 +87,7 @@ NSDictionary *_columnIdentifierToKeyPath;
 }
 
 - (void)centerWindowOnMainWindow {
-    NSPoint ctr = [Utility_PrefPane getCenterOfRect:Utility_PrefPane.mainWindow.frame];
+    NSPoint ctr = [Utility_PrefPane getCenterOfRect:AppDelegate.mainWindow.frame];
     [Utility_PrefPane centerWindow:self.window atPoint:ctr];
 }
 
