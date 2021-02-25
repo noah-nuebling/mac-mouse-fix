@@ -41,7 +41,7 @@
                                     </connections>
                                 </segmentedCell>
                             </segmentedControl>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nYS-Qc-j0P">
+                            <button wantsLayer="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nYS-Qc-j0P">
                                 <rect key="frame" x="556" y="1" width="73" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="M7C-83-IFc">
@@ -72,7 +72,7 @@ DQ
                                     <tableViewGridLines key="gridStyleMask" vertical="YES"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn identifier="AppColumnID" editable="NO" width="401" minWidth="40" maxWidth="9999" id="lgf-ug-F5A">
+                                        <tableColumn identifier="AppColumnID" editable="NO" width="257" minWidth="40" maxWidth="9999" id="lgf-ug-F5A">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="App">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -85,11 +85,11 @@ DQ
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView identifier="AppCellID" id="JdD-uc-D3h">
-                                                    <rect key="frame" x="1" y="2" width="406" height="45"/>
+                                                    <rect key="frame" x="11" y="2" width="262" height="45"/>
                                                     <autoresizingMask key="autoresizingMask" heightSizable="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KMO-Y7-n9b">
-                                                            <rect key="frame" x="46" y="16" width="365" height="17"/>
+                                                            <rect key="frame" x="46" y="16" width="221" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="Mouse Fix" id="qX5-aW-TaU">
                                                                 <font key="font" metaFont="system"/>
@@ -122,7 +122,7 @@ DQ
                                             </textFieldCell>
                                             <prototypeCellViews>
                                                 <tableCellView identifier="CheckBoxCellID" id="7HO-48-dNs" customClass="CheckBoxCell">
-                                                    <rect key="frame" x="410" y="2" width="107" height="42"/>
+                                                    <rect key="frame" x="276" y="2" width="107" height="42"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <button identifier="CheckBoxID" verticalHuggingPriority="750" id="cg7-dr-ogU">
@@ -147,6 +147,19 @@ DQ
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
+                                        </tableColumn>
+                                        <tableColumn identifier="HorizontalEnabledColumnID" editable="NO" width="112" minWidth="10" maxWidth="3.4028234663852886e+38" id="Aia-Ea-RJH">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="⇧-horizontal scroll">
+                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </tableHeaderCell>
+                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="FQU-wk-M9J">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                            <string key="headerToolTip">Hold Shift (⇧) while scrolling to scroll horizontally
+(When smooth scroll is disabled, turning this off might not have an effect)</string>
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
