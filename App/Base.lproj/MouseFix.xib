@@ -185,7 +185,7 @@ Works like Force Touch on an Apple Trackpad</string>
                                                 <font key="font" metaFont="menu"/>
                                                 <menu key="menu" id="FBp-La-D1V">
                                                     <items>
-                                                        <menuItem title="-" state="on" toolTip="Nothing special happens when you hold the middle button" id="gLf-sd-t5o"/>
+                                                        <menuItem title="-" state="on" toolTip="Nothing special happens" id="gLf-sd-t5o"/>
                                                         <menuItem isSeparatorItem="YES" id="pq5-uw-FgV"/>
                                                         <menuItem title="Mission Control" tag="32" toolTip="Show Mission Control" id="nGc-8H-5EZ"/>
                                                         <menuItem title="App Exposé" tag="33" toolTip="Reveal all windows of the current app" id="aTX-Wk-ay9"/>
@@ -234,7 +234,7 @@ Works like Force Touch on an Apple Trackpad</string>
                                                         <menuItem title="Side button click" state="on" toolTip="Don't change side button behavior" id="1a7-0y-cIV"/>
                                                         <menuItem isSeparatorItem="YES" id="4hR-Cg-H2I"/>
                                                         <menuItem title="Move between Spaces" tag="1" toolTip="Switch to other desktops and fullscreen apps" id="mo5-2i-ROD"/>
-                                                        <menuItem title="Back and Forward" tag="2" toolTip="Go back and forward in apps like Safari, Finder and others" id="VCO-0X-gaQ"/>
+                                                        <menuItem title="Back and Forward" tag="2" toolTip="Go back and forward in apps like Safari, Finder and more..." id="VCO-0X-gaQ"/>
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
