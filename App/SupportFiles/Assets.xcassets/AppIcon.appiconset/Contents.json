@@ -26,7 +26,6 @@
       "size" : "128x128"
     },
     {
-      "filename" : "128-v3@2x.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "128x128"
@@ -47,6 +46,7 @@
       "size" : "512x512"
     },
     {
+      "filename" : "512-v3@2x.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "512x512"
