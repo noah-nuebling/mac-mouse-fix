@@ -58,6 +58,7 @@
 		4F94F73D25E6146C00D9F24A /* Mac Mouse Fix Helper.app in Copy Helper */ = {isa = PBXBuildFile; fileRef = 4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4F94F74C25E614B800D9F24A /* Mac Mouse Fix Updater in Copy Updater */ = {isa = PBXBuildFile; fileRef = 4F2FDF302315662400C7BE14 /* Mac Mouse Fix Updater */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4F95A249234EBB5D000DC7D7 /* PointerSpeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F95A248234EBB5D000DC7D7 /* PointerSpeed.m */; };
+		4FA1ACE725E894CB007DB95B /* MFSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA1ACE625E894CB007DB95B /* MFSegmentedControl.m */; };
 		4FCECD8521092354001F1078 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECD8421092354001F1078 /* AppDelegate.m */; };
 		4FD45A20231C7FB500F75C58 /* AccessibilityCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD45A1F231C7FB500F75C58 /* AccessibilityCheck.m */; };
 		4FECC88D2431DCCD001A3C4B /* RoughScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FECC88C2431DCCD001A3C4B /* RoughScroll.m */; };
@@ -228,6 +229,8 @@
 		4F94F6B225E5FD8D00D9F24A /* backup_config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = backup_config.plist; sourceTree = "<group>"; };
 		4F95A247234EBB5D000DC7D7 /* PointerSpeed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerSpeed.h; sourceTree = "<group>"; };
 		4F95A248234EBB5D000DC7D7 /* PointerSpeed.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerSpeed.m; sourceTree = "<group>"; };
+		4FA1ACE525E894CB007DB95B /* MFSegmentedControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFSegmentedControl.h; sourceTree = "<group>"; };
+		4FA1ACE625E894CB007DB95B /* MFSegmentedControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFSegmentedControl.m; sourceTree = "<group>"; };
 		4FA26CE524380D1F0082D5F6 /* ClickableImageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClickableImageView.h; sourceTree = "<group>"; };
 		4FA26CE624380D1F0082D5F6 /* ClickableImageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClickableImageView.m; sourceTree = "<group>"; };
 		4FA26CEF243949DC0082D5F6 /* NSMutableDictionary+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+Additions.h"; sourceTree = "<group>"; };
@@ -662,6 +665,8 @@
 				4FD36AEA243741A70046DC41 /* OverridePanel.h */,
 				4FD36AEB243741A70046DC41 /* OverridePanel.m */,
 				4FD36AEC243741A70046DC41 /* ScrollOverridePanel.xib */,
+				4FA1ACE525E894CB007DB95B /* MFSegmentedControl.h */,
+				4FA1ACE625E894CB007DB95B /* MFSegmentedControl.m */,
 			);
 			path = Overrides;
 			sourceTree = "<group>";
@@ -1012,6 +1017,7 @@
 				4F94F67425E5EECF00D9F24A /* NSArray+Additions.m in Sources */,
 				4F94F67A25E5EEDB00D9F24A /* ClickableImageView.m in Sources */,
 				4F94F68025E5EEDE00D9F24A /* Hyperlink.m in Sources */,
+				4FA1ACE725E894CB007DB95B /* MFSegmentedControl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

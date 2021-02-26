@@ -121,6 +121,10 @@ NSDictionary *_columnIdentifierToKeyPath;
         [self removeButtonAction];
     }
 }
+- (IBAction)removeButton:(id)sender {
+    [self removeButtonAction];
+}
+
 - (void)addButtonAction {
 
     NSOpenPanel* openPanel = [NSOpenPanel openPanel];
