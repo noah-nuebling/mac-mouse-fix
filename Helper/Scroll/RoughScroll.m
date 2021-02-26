@@ -37,7 +37,7 @@
         if (ScrollModifiers.horizontalScrolling) {
             [ScrollUtility makeScrollEventHorizontal:event];
         }
-        CGEventPost(kCGSessionEventTap, event);
+        CGEventPost(kCGHIDEventTap, event);
     }
 }
 
