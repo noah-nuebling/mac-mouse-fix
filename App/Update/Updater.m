@@ -197,7 +197,7 @@ static NSURL *_updateNotesLocation;
     
     // copy config.plist into the updated bundle, if the new config is compatible
     
-    NSString *configPathRelative = @"/Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/Resources/config.plist";
+    NSString *configPathRelative = @"/Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/Resources/config.plist"; // REMOVE THIS
     
     
         

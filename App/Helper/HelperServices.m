@@ -19,7 +19,7 @@
 + (NSBundle *)helperBundle {
     NSBundle *mainAppBundle = [NSBundle bundleForClass: [AppDelegate class]];
     NSString *mainAppBundlePath = [mainAppBundle bundlePath];
-    NSString *helperBundlePath = [mainAppBundlePath stringByAppendingPathComponent: @"Contents/Library/LoginItems/Mouse Fix Helper.app"];
+    NSString *helperBundlePath = [mainAppBundlePath stringByAppendingPathComponent: kMFRelativeHelperAppPath];
     return [NSBundle bundleWithPath:helperBundlePath];
 }
 
@@ -95,7 +95,7 @@
         // Get helper executable path
         NSBundle *mainAppBundle = [NSBundle bundleForClass: [AppDelegate class]];
         NSString *mainAppBundlePath = [mainAppBundle bundlePath];
-        NSString *helperExecutablePath = [mainAppBundlePath stringByAppendingPathComponent: kMFHelperExecutablePath];
+        NSString *helperExecutablePath = [mainAppBundlePath stringByAppendingPathComponent: kMFRelativeHelperExecutablePath];
         
         // get User Library path
         NSArray *libraryPaths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);

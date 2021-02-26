@@ -50,7 +50,7 @@
     return ctr;
 }
 
-/// Copy of identically named function in `Mouse Fix Helper` > `Utility` > `Utility_HelperApp.m`
+/// Copy of identically named function in `Helper` > `Utility` > `Utility_HelperApp.m`
 + (NSDictionary *)dictionaryWithOverridesAppliedFrom:(NSDictionary *)src to:(NSDictionary *)dst {
     NSMutableDictionary *dstMutable = [dst mutableCopy];
     for (NSString *key in src) {

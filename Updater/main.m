@@ -9,7 +9,7 @@
 
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKit.h>
-//#import "AppDelegate.h"
+#import "Constants.h"
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
@@ -51,10 +51,10 @@ int main(int argc, const char * argv[]) {
         } while ([runningApps count] > 0);
         
         
-        // kill the helper app
-        // (the updated helper application will subsequently be launched by launchd due to the keepAlive attribute in mouse fix helper's launchd.plist)
+        // Kill the helper app
+        // (the updated helper application will subsequently be launched by launchd due to the keepAlive attribute in Mac Mouse Fix helper's launchd.plist)
         
-        NSArray *helperApps = [NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.nuebling.mousefix.helper"];
+        NSArray *helperApps = [NSRunningApplication runningApplicationsWithBundleIdentifier:kMFBundleIDHelper];
         for (NSRunningApplication *helpApp in helperApps) {
             [helpApp terminate];
         }

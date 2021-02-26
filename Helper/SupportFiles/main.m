@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-// main.m (Target: Mouse Fix Helper)
+// main.m (Target: Mac Mouse Fix Helper)
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2019
 // Licensed under MIT
