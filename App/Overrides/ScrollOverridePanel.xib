@@ -17,7 +17,7 @@
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="139" y="81" width="630" height="300"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="3840" height="2135"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
             <value key="minSize" type="size" width="630" height="245"/>
             <view key="contentView" wantsLayer="YES" id="RsF-Ll-2x6">
                 <rect key="frame" x="0.0" y="0.0" width="630" height="300"/>
@@ -77,7 +77,7 @@ DQ
                                     <tableViewGridLines key="gridStyleMask" vertical="YES"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn identifier="AppColumnID" editable="NO" width="257" minWidth="40" maxWidth="9999" id="lgf-ug-F5A">
+                                        <tableColumn identifier="AppColumnID" editable="NO" width="257" minWidth="40" maxWidth="9999" headerToolTip="Click on the + button or use drag and drop to add more apps" id="lgf-ug-F5A">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="App">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -115,7 +115,7 @@ DQ
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn identifier="SmoothEnabledColumnID" editable="NO" width="107" minWidth="10" maxWidth="3.4028234663852886e+38" id="Vvq-tI-ONi">
+                                        <tableColumn identifier="SmoothEnabledColumnID" editable="NO" width="107" minWidth="10" maxWidth="3.4028234663852886e+38" headerToolTip="If smooth scrolling doesn't work right for one of your apps, you can disable it here" id="Vvq-tI-ONi">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Smooth scrolling">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -142,7 +142,7 @@ DQ
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn identifier="MagnificationEnabledColumnID" editable="NO" width="102" minWidth="10" maxWidth="3.4028234663852886e+38" headerToolTip="Hold Command (⌘) while scrolling to zoom in and out" id="6tR-q3-YQA">
+                                        <tableColumn identifier="MagnificationEnabledColumnID" editable="NO" width="102" minWidth="10" maxWidth="3.4028234663852886e+38" headerToolTip="You can hold Command (⌘) while scrolling to zoom in or out" id="6tR-q3-YQA">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="⌘-scroll to zoom">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -153,7 +153,7 @@ DQ
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </tableColumn>
-                                        <tableColumn identifier="HorizontalEnabledColumnID" editable="NO" width="112" minWidth="10" maxWidth="3.4028234663852886e+38" id="Aia-Ea-RJH">
+                                        <tableColumn identifier="HorizontalEnabledColumnID" editable="NO" width="112" minWidth="10" maxWidth="3.4028234663852886e+38" headerToolTip="Hold Shift (⇧) while scrolling to scroll horizontally" id="Aia-Ea-RJH">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="⇧-horizontal scroll">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -163,8 +163,6 @@ DQ
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
-                                            <string key="headerToolTip">Hold Shift (⇧) while scrolling to scroll horizontally
-(When smooth scroll is disabled, turning this off might not have an effect)</string>
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
@@ -199,7 +197,7 @@ DQ
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="139" y="81" width="655" height="369"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="3840" height="2135"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
             <view key="contentView" id="50Y-FF-bye">
                 <rect key="frame" x="0.0" y="0.0" width="655" height="369"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -382,7 +380,7 @@ DQ
     </objects>
     <resources>
         <image name="AppIcon" width="512" height="512"/>
-        <image name="NSAddTemplate" width="15" height="13"/>
-        <image name="NSRemoveTemplate" width="15" height="4"/>
+        <image name="NSAddTemplate" width="14" height="13"/>
+        <image name="NSRemoveTemplate" width="14" height="4"/>
     </resources>
 </document>

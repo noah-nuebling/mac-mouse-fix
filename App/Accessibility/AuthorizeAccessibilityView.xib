@@ -27,7 +27,7 @@
                         <action selector="AuthorizeButton:" target="-2" id="3Mi-hF-b4k"/>
                     </connections>
                 </button>
-                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fK8-8z-KQn" customClass="ClickableImageView">
+                <imageView toolTip="Hold Shift (⇧) and click this icon to reveal 'Mouse Fix Helper' in Finder" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fK8-8z-KQn" customClass="ClickableImageView">
                     <rect key="frame" x="191" y="153" width="79" height="79"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="AppIconRound" id="5dq-HX-ncI"/>
