@@ -7,7 +7,8 @@
 // --------------------------------------------------------------------------
 //
 
-// TODO: implement callback when frontmost application changes - change settings accordingly
+// TODO: Implement callback when frontmost application changes - change settings accordingly
+// Need this when application changes but mouse doesn't move (e.g. Command-Tab). Without this the app specific settings for the new app aren't applied
 // NSWorkspaceDidActivateApplicationNotification?
 
 #import "ConfigFileInterface_HelperApp.h"
@@ -90,6 +91,7 @@ static void fillConfigFromFile() {
 /// Used to apply appOverrides (`force == NO`), and after loading new config from file. (`force == YES`)
 /// \param force If NO, then it will only update the internal state, if the app currenly under the cursor is different to the one when this function was last called.
 /// \returns YES, if internal parameters did update. NO otherwise.
+/// ... wtf was I thinking when writing this, why didn't I write 2 functions?
 + (BOOL)updateInternalParameters_Force:(BOOL)force {
 
     // Get app under mouse pointer
@@ -180,11 +182,8 @@ static void loadAppOverridesForApp(NSString *bundleIdentifier) {
 
 + (void) repairConfigFile:(NSString *)info {
     // TODO: actually repair config dict
-    NSLog(@"should repair configdict.... (not implemented)"); 
+    NSLog(@"Should repair configdict.... (not implemented)");
 }
-
-
-
  
 void Handle_FSEventStreamCallback (ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents, void *eventPaths, const FSEventStreamEventFlags *eventFlags, const FSEventStreamEventId *eventIds) {
     
@@ -198,7 +197,7 @@ void Handle_FSEventStreamCallback (ConstFSEventStreamRef streamRef, void *client
  We're setting up a File System Monitor so that manual edits to the main configuration file have an effect.
  This allows you to easily test configurations.
  
- Secret trick to find the main configuration file: Open the Mac Mouse Fix app, and click on `More...`. Then, hold Command and Shift while clicking the Mac Mouse Fix Icon in the top left.
+ Secret trick to find the main configuration file: Open the Mac Mouse Fix app, and click on "More...". Then, hold Command and Shift while clicking the Mac Mouse Fix Icon in the top left.
  */
 static void setupFSEventStreamCallback() {
     
