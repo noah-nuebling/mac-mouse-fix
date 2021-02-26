@@ -223,8 +223,8 @@
                                                     <items>
                                                         <menuItem title="Side buttons" state="on" toolTip="Leave button behavior unchanged." id="1a7-0y-cIV"/>
                                                         <menuItem isSeparatorItem="YES" id="4hR-Cg-H2I"/>
-                                                        <menuItem title="Back and Forward" tag="2" id="VCO-0X-gaQ"/>
                                                         <menuItem title="Move between Spaces" tag="1" id="mo5-2i-ROD"/>
+                                                        <menuItem title="Back and Forward" tag="2" id="VCO-0X-gaQ"/>
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
@@ -232,6 +232,17 @@
                                                 <action selector="UIChanged:" target="NxE-tZ-vxj" id="OSL-Py-xH5"/>
                                             </connections>
                                         </popUpButton>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mmL-I2-9bd">
+                                            <rect key="frame" x="440" y="117" width="138" height="18"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="check" title="Swap side buttons" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="qFR-Nt-K1n">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="UIChanged:" target="NxE-tZ-vxj" id="tCF-yP-yxC"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                 </view>
                             </box>
@@ -246,13 +257,14 @@
         </window>
         <customObject id="NxE-tZ-vxj" customClass="AppDelegate">
             <connections>
-                <outlet property="enableCheckBox" destination="vqy-WZ-nG6" id="I0c-Jz-8Rc"/>
+                <outlet property="enableMouseFixCheckBox" destination="vqy-WZ-nG6" id="I0c-Jz-8Rc"/>
+                <outlet property="invertScrollCheckBox" destination="Ip8-aI-or8" id="flR-hc-vMi"/>
                 <outlet property="middleClick" destination="jX4-ua-75H" id="msN-17-whg"/>
                 <outlet property="middleHold" destination="eIj-eG-exO" id="c2z-8j-nm5"/>
-                <outlet property="scrollCheckBoxInvert" destination="Ip8-aI-or8" id="flR-hc-vMi"/>
                 <outlet property="scrollEnableCheckBox" destination="9lG-eT-nD4" id="w4l-na-jZF"/>
-                <outlet property="scrollSliderStepSize" destination="mXj-a7-rFw" id="3Xl-vL-g4G"/>
+                <outlet property="scrollStepSizeSlider" destination="mXj-a7-rFw" id="3Xl-vL-g4G"/>
                 <outlet property="sideClick" destination="hGG-fg-G7L" id="evV-wc-0Hn"/>
+                <outlet property="swapSideButtonsCheckBox" destination="mmL-I2-9bd" id="eg9-PN-9rC"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="f6c-dU-MWV"/>
             </connections>
         </customObject>
@@ -352,7 +364,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <clipView key="contentView" id="VkY-Bo-iys">
                                                 <rect key="frame" x="1" y="1" width="586" height="130"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <autoresizingMask key="autoresizingMask"/>
                                                 <subviews>
                                                     <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="26" headerView="ye3-vZ-MIi" viewBased="YES" id="Qfw-Ch-jQg">
                                                         <rect key="frame" x="0.0" y="0.0" width="586" height="105"/>

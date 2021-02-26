@@ -18,7 +18,6 @@
 #import "MessagePort/MessagePort_App.h"
 #import "Update/UpdateWindow.h"
 #import "Utility/Utility_App.h"
-//#import "CGSInternal/CGSHotKeys.h"
 
 #import "Accessibility/AuthorizeAccessibilityView.h"
 
@@ -26,25 +25,18 @@
 
 @property (strong) IBOutlet NSWindow *window;
 
-@property (weak) IBOutlet NSButton *enableCheckBox;
+@property (weak) IBOutlet NSButton *enableMouseFixCheckBox;
 
 
 @property (weak) IBOutlet NSButton *scrollEnableCheckBox;
 
-/*
-@property (weak) IBOutlet NSButton *scrollRadioButtonNormal;
-@property (weak) IBOutlet NSButton *scrollRadioButtonSnappy;
-@property (weak) IBOutlet NSButton *scrollRadioButtonSmooth;
- */
-
-@property (weak) IBOutlet NSSlider *scrollSliderStepSize;
-@property (weak) IBOutlet NSButton *scrollCheckBoxInvert;
+@property (weak) IBOutlet NSSlider *scrollStepSizeSlider;
+@property (weak) IBOutlet NSButton *invertScrollCheckBox;
 
 @property (weak) IBOutlet NSPopUpButton *middleClick;
 @property (weak) IBOutlet NSPopUpButton *middleHold;
 @property (weak) IBOutlet NSPopUpButton *sideClick;
-//@property (weak) IBOutlet NSPopUpButton *sideHold;
-
+@property (weak) IBOutlet NSButton *swapSideButtonsCheckBox;
 
 @end
 
@@ -53,10 +45,9 @@
 # pragma mark - IBActions
 
 - (IBAction)enableCheckBox:(id)sender {
-    //sendKeyUpForAllSymbolicHotKeysThatAMouseButtonMapsTo(self);
     BOOL checkboxState = [sender state];
     [HelperServices enableHelperAsUserAgent: checkboxState];
-    [self performSelector:@selector(disableUI:) withObject:[NSNumber numberWithBool:_enableCheckBox.state] afterDelay:0.0];
+    [self performSelector:@selector(disableUI:) withObject:[NSNumber numberWithBool:_enableMouseFixCheckBox.state] afterDelay:0.0];
     
 }
 - (IBAction)moreButton:(id)sender {
@@ -83,21 +74,17 @@
 
 // Define Globals
 static NSDictionary *_scrollConfigurations;
-static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
+static NSDictionary *sideButtonActions;
 
 + (void)initialize {
     
     if (self == [AppDelegate class]) {
         
-        // TODO: Update this
-        _scrollConfigurations = @{                                          // last two are unused now
+        _scrollConfigurations = @{ // This is unused
             @"Normal"   :   @[ @[@20,@80],  @130, @1.5],
-                                    // @"Normal"   :   @[ @[@20,@100],  @130, @1.5]
-            @"Snappy"   :   @[ @[@10,@90],  @75,  @1.2],
-            @"Smooth"   :   @[ @[@10,@90], @190, @1.5],
         };
         
-        actionsForPopupButtonTag_onlyForSideMouseButtons =
+        sideButtonActions =
         @{
             @1 :
                 @[
@@ -110,6 +97,8 @@ static NSDictionary *actionsForPopupButtonTag_onlyForSideMouseButtons;
                     @[@"swipeEvent", @"right"]
                 ]
         };
+        
+        //
     }
     
 }
@@ -138,10 +127,10 @@ NSTimer *removeAccOverlayTimer;
         [AuthorizeAccessibilityView remove];
     }];
 }
-- (void)windowDidResignKey:(NSNotification *)notification { // This made sense when using prefpane (used to be called when it was unselected)
-//    [UpdateWindow.instance close];
-//    [MoreSheet.instance end];
-//    [ScrollOverridePanel.instance close];
+- (void)windowWillClose:(NSNotification *)notification {
+    [UpdateWindow.instance close];
+    [OverridePanel.instance close];
+    [MoreSheet.instance end];
 }
 
 -(BOOL) applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)app {
@@ -168,7 +157,7 @@ NSTimer *removeAccOverlayTimer;
     }
 }
 - (void)disableScrollSettings:(NSNumber *)enable {
-    _scrollSliderStepSize.enabled = enable.boolValue;
+    _scrollStepSizeSlider.enabled = enable.boolValue;
 }
 
 - (void)setUIToConfigFile {
@@ -178,9 +167,9 @@ NSTimer *removeAccOverlayTimer;
 #pragma mark other
     // enableCheckbox
     if (HelperServices.helperIsActive) {
-        _enableCheckBox.state = 1;
+        _enableMouseFixCheckBox.state = 1;
     } else {
-        _enableCheckBox.state = 0;
+        _enableMouseFixCheckBox.state = 0;
     }
     
     [ConfigFileInterface_App loadConfigFromFile];
@@ -189,9 +178,17 @@ NSTimer *removeAccOverlayTimer;
     
     NSDictionary *buttonRemaps = ConfigFileInterface_App.config[@"ButtonRemaps"];
     
-    // mouse button 4 and 5
+    // Side buttons
     
-    // click
+    // Swapped checkbox
+    if ([buttonRemaps[@"sideButtonsInverted"] boolValue] == 1) {
+        _swapSideButtonsCheckBox.state = 1;
+    }
+    else {
+        _swapSideButtonsCheckBox.state = 0;
+    }
+    
+    // Popup button
     long i;
     NSString *eventTypeSideClick = buttonRemaps[@"4"][@"single"][@"click"][0];
     
@@ -206,24 +203,11 @@ NSTimer *removeAccOverlayTimer;
     }
     [_sideClick selectItemWithTag: i];
     
-    // hold
-    long j;
-    NSString *eventTypeSideHold = buttonRemaps[@"4"][@"single"][@"hold"][0];
-    if ([eventTypeSideHold isEqualToString:@"swipeEvent"]) {
-        j = 2;
-    }
-    else if ([eventTypeSideHold isEqualToString:@"symbolicHotKey"]) {
-        j = 1;
-    }
-    else {
-        j = 0;
-    }
-    
-    // middle mouse button
+    // Middle button
     
     NSDictionary *middleButtonRemap = buttonRemaps[@"3"][@"single"];
     
-    // click
+    // Click popup buttons
     NSInteger symbolicHotKeyMiddleClick = [middleButtonRemap[@"click"][1] integerValue];
     if (symbolicHotKeyMiddleClick) {
         [_middleClick selectItemWithTag: symbolicHotKeyMiddleClick];
@@ -232,7 +216,7 @@ NSTimer *removeAccOverlayTimer;
         [_middleClick selectItemWithTag: 0];
     }
     
-    // hold
+    // Hold popup button
     NSInteger symbolicHotKeyMiddleHold = [middleButtonRemap[@"hold"][1] integerValue];
     if (symbolicHotKeyMiddleHold) {
         [_middleHold selectItemWithTag: symbolicHotKeyMiddleHold];
@@ -245,7 +229,7 @@ NSTimer *removeAccOverlayTimer;
     
     NSDictionary *scrollConfigFromFile = ConfigFileInterface_App.config[@"Scroll"];
     
-    // enabled checkbox
+    // Enabled checkbox
     if ([scrollConfigFromFile[@"smooth"] boolValue] == 1) {
         _scrollEnableCheckBox.state = 1;
     }
@@ -253,34 +237,12 @@ NSTimer *removeAccOverlayTimer;
         _scrollEnableCheckBox.state = 0;
     }
     
-//    NSArray *scrollValues = scrollConfigFromFile[@"smoothSettings"];
+    // Invert checkbox
+    _invertScrollCheckBox.state = [scrollConfigFromFile[@"direction"] integerValue];
     
-    // invert checkbox
-    _scrollCheckBoxInvert.state = [scrollConfigFromFile[@"direction"] integerValue];
-    
-    // radio buttons
-    /*
-     NSString *activeScrollSmoothnessConfiguration;
-     if (([scrollValues[1] intValue] == [_scrollSmoothnessConfigurations[@"Smooth"][1] intValue]) &&           // msPerStep
-     ([scrollValues[2] floatValue] == [_scrollSmoothnessConfigurations[@"Smooth"][2] floatValue] )) {           // friction
-     _scrollRadioButtonSmooth.state = 1;
-     activeScrollSmoothnessConfiguration = @"Smooth";
-     }
-     
-     else if (([scrollValues[1] intValue] == [_scrollSmoothnessConfigurations[@"Snappy"][1] intValue]) &&
-     ([scrollValues[2] floatValue] == [_scrollSmoothnessConfigurations[@"Snappy"][2] floatValue] )) {
-     _scrollRadioButtonSnappy.state = 1;
-     activeScrollSmoothnessConfiguration = @"Snappy";
-     }
-     else {
-     _scrollRadioButtonNormal.state = 1;
-     activeScrollSmoothnessConfiguration = @"Normal";
-     }
-     */
     NSString *activeScrollSmoothnessConfiguration = @"Normal";
     
-    
-    // slider
+    // Slider
     double pxStepSizeRelativeToConfigRange;
     NSArray *range = _scrollConfigurations[activeScrollSmoothnessConfiguration][0];
     double lowerLm = [range[0] floatValue];
@@ -289,26 +251,26 @@ NSTimer *removeAccOverlayTimer;
     double pxStepSize = [smoothSettings[@"pxPerStep"] floatValue];
     pxStepSizeRelativeToConfigRange = (pxStepSize - lowerLm) / (upperLm - lowerLm);
     
-    _scrollSliderStepSize.doubleValue = pxStepSizeRelativeToConfigRange;
+    _scrollStepSizeSlider.doubleValue = pxStepSizeRelativeToConfigRange;
     
-    [self performSelector:@selector(disableUI:) withObject:[NSNumber numberWithBool:_enableCheckBox.state] afterDelay:0.0];
+    [self performSelector:@selector(disableUI:) withObject:[NSNumber numberWithBool:_enableMouseFixCheckBox.state] afterDelay:0.0];
     
 }
 
 - (void)setConfigFileToUI {
     
-    // middle button        // tag equals symbolicHotKey
+    // Middle button
     
-    // click
+    // Tag equals symbolicHotKey
     
-    
+    // Click
     NSArray *middleButtonClickAction;
     if (_middleClick.selectedTag != 0) {
         middleButtonClickAction= @[@"symbolicHotKey", @(_middleClick.selectedTag)];
     }
     [ConfigFileInterface_App.config setValue:middleButtonClickAction forKeyPath:@"ButtonRemaps.3.single.click"];
     
-    // hold
+    // Hold
     NSArray *middleButtonHoldAction;
     if (_middleHold.selectedTag != 0) {
         middleButtonHoldAction = @[@"symbolicHotKey", @(_middleHold.selectedTag)];
@@ -316,37 +278,34 @@ NSTimer *removeAccOverlayTimer;
     [ConfigFileInterface_App.config setValue:middleButtonHoldAction forKeyPath:@"ButtonRemaps.3.single.hold"];
     
     
-    // side buttons         // tag = 1 -> Switch Spaces, tag = 2 -> Switch Pages
+    // Side buttons         // tag = 1 -> Switch Spaces, tag = 2 -> Switch Pages
     
-    // click
-    NSArray *sideButtonClickAction = [actionsForPopupButtonTag_onlyForSideMouseButtons objectForKey:@(_sideClick.selectedTag)];
-    [ConfigFileInterface_App.config setValue:sideButtonClickAction[0] forKeyPath:@"ButtonRemaps.4.single.click"];
-    [ConfigFileInterface_App.config setValue:sideButtonClickAction[1] forKeyPath:@"ButtonRemaps.5.single.click"];
+    [ConfigFileInterface_App.config setValue:[NSNumber numberWithBool: _swapSideButtonsCheckBox.state] forKeyPath:@"ButtonRemaps.sideButtonsInverted"];
     
-    // scroll Settings
+    // Click
+    NSArray *sideButtonClickAction = [sideButtonActions objectForKey:@(_sideClick.selectedTag)];
+
+    if (_swapSideButtonsCheckBox.state == 1) {
+        [ConfigFileInterface_App.config setValue:sideButtonClickAction[0] forKeyPath:@"ButtonRemaps.5.single.click"];
+        [ConfigFileInterface_App.config setValue:sideButtonClickAction[1] forKeyPath:@"ButtonRemaps.4.single.click"];
+    } else {
+        [ConfigFileInterface_App.config setValue:sideButtonClickAction[0] forKeyPath:@"ButtonRemaps.4.single.click"];
+        [ConfigFileInterface_App.config setValue:sideButtonClickAction[1] forKeyPath:@"ButtonRemaps.5.single.click"];
+    }
+    
+    // Scroll Settings
     
     // radio buttons and slider
     NSArray *smoothnessConfiguration;
     
-    /*
-    if (_scrollRadioButtonSmooth.state == 1) {
-        smoothnessConfiguration = _scrollSmoothnessConfigurations[@"Smooth"];
-    }
-    else if (_scrollRadioButtonSnappy.state == 1) {
-        smoothnessConfiguration = _scrollSmoothnessConfigurations[@"Snappy"];
-    }
-    else {
-        smoothnessConfiguration = _scrollSmoothnessConfigurations[@"Normal"];
-    }
-     */
     smoothnessConfiguration = _scrollConfigurations[@"Normal"]; 
     
     NSArray     *stepSizeRange  = smoothnessConfiguration[0];
 //    NSNumber    *msPerStep      = smoothnessConfiguration[1];
 //    NSNumber    *friction       = smoothnessConfiguration[2];
-    int    		direction      = _scrollCheckBoxInvert.intValue ? -1 : 1;
+    int    		direction      = _invertScrollCheckBox.intValue ? -1 : 1;
     
-    float scrollSliderValue = [_scrollSliderStepSize floatValue];
+    float scrollSliderValue = [_scrollStepSizeSlider floatValue];
     int stepSizeMin = [stepSizeRange[0] intValue];
     int stepSizeMax = [stepSizeRange[1] intValue];
     
