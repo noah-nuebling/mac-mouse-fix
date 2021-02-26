@@ -111,7 +111,6 @@ NSRect _trackingRect;
 - (void)mouseUp:(NSEvent *)event {
 
 }
-
 - (void) reactToClick {
     // Open URL defined in Interface Builder
     NSLog(@"Opening: %@",_href);

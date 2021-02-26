@@ -364,7 +364,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <clipView key="contentView" id="VkY-Bo-iys">
                                                 <rect key="frame" x="1" y="1" width="586" height="130"/>
-                                                <autoresizingMask key="autoresizingMask"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="26" headerView="ye3-vZ-MIi" viewBased="YES" id="Qfw-Ch-jQg">
                                                         <rect key="frame" x="0.0" y="0.0" width="586" height="105"/>

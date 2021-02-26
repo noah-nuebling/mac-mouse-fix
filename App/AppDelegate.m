@@ -127,6 +127,10 @@ NSTimer *removeAccOverlayTimer;
         [AuthorizeAccessibilityView remove];
     }];
 }
+- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
+    [OverridePanel.instance end]; // Doesn't do anything to help cmd-q from working while more sheet is showing
+    return NSTerminateNow;
+}
 - (void)windowWillClose:(NSNotification *)notification {
     [UpdateWindow.instance close];
     [OverridePanel.instance close];

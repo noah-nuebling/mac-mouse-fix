@@ -74,7 +74,7 @@ NSDictionary *_columnIdentifierToKeyPath;
     [_tableView reloadData];
 
     // Display window
-    [Utility_App openWindowWithFadeAnimation:self.window fadeIn:YES fadeTime:0.1];
+    [Utility_App openWindowWithFadeAnimation:self.window fadeIn:YES fadeTime:0.15];
     
     // Make window resizable
     self.window.styleMask = self.window.styleMask | NSWindowStyleMaskResizable;
@@ -86,6 +86,9 @@ NSDictionary *_columnIdentifierToKeyPath;
     // Make tableView drag and drop target
     NSString *fileURLUTI = @"public.file-url";
     [_tableView registerForDraggedTypes:@[fileURLUTI]]; // makes it accept apps
+}
+- (void)end {
+    [Utility_App openWindowWithFadeAnimation:self.window fadeIn:NO fadeTime:0.15];
 }
 
 - (void)centerWindowOnMainWindow {
@@ -111,8 +114,7 @@ NSDictionary *_columnIdentifierToKeyPath;
 #pragma mark TableView
 
 - (IBAction)back:(id)sender {
-    [Utility_App openWindowWithFadeAnimation:self.window fadeIn:NO fadeTime:0.1];
-//    [self close];
+    [self end];
 }
 - (IBAction)addRemoveControl:(id)sender {
     if ([sender selectedSegment] == 0) {

@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 // Because this is a window controller, instances also have a `window` property which doesn't have to be declared here.
 + (OverridePanel *)instance;
 - (void)begin;
+- (void)end;
 @end
 
 NS_ASSUME_NONNULL_END
