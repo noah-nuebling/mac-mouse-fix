@@ -74,7 +74,7 @@ NSDictionary *_columnIdentifierToKeyPath;
     [_tableView reloadData];
 
     // Display window
-    [Utility_App openWindowWithFadeAnimation:self.window fadeIn:YES fadeTime:0.15];
+    [Utility_App openWindowWithFadeAnimation:self.window fadeIn:YES fadeTime:0.1];
     
     // Make window resizable
     self.window.styleMask = self.window.styleMask | NSWindowStyleMaskResizable;
@@ -88,7 +88,7 @@ NSDictionary *_columnIdentifierToKeyPath;
     [_tableView registerForDraggedTypes:@[fileURLUTI]]; // makes it accept apps
 }
 - (void)end {
-    [Utility_App openWindowWithFadeAnimation:self.window fadeIn:NO fadeTime:0.15];
+    [Utility_App openWindowWithFadeAnimation:self.window fadeIn:NO fadeTime:0.1];
 }
 
 - (void)centerWindowOnMainWindow {
