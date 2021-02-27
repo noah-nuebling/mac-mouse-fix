@@ -12,9 +12,6 @@
 @interface Utility_HelperApp : NSObject
 + (NSString *)binaryRepresentation:(int)value;
 
-+ (NSBundle *)helperBundle;
-+ (NSBundle *)mainAppBundle;
-
 + (NSDictionary *)dictionaryWithOverridesAppliedFrom:(NSDictionary *)src to: (NSDictionary *)dst;
 @end
 

@@ -23,7 +23,11 @@ NS_ASSUME_NONNULL_BEGIN
 #define kMFRelativeHelperAppPath            @"Contents/Library/LoginItems/Mac Mouse Fix Helper.app"
 #define kMFRelativeHelperExecutablePath     @"Contents/Library/LoginItems/Mac Mouse Fix Helper.app/Contents/MacOS/Mac Mouse Fix Helper"
 
+#define kMFRelativeMainAppPathFromHelper    @"../../../../"
+
 #define kMFMainAppName  @"Mac Mouse Fix.app"
+
+#define kMFLaunchdHelperIdentifier @"mouse.fix.helper"   // Keep this in sync with `Label` value in `default_launchd.plist`
 
 // Remapping dictionary keywords
 

@@ -1,8 +1,8 @@
 //
 // --------------------------------------------------------------------------
-// HelperServices_HelperApp.h
+// BundleServices.h
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
-// Created by Noah Nuebling in 2019
+// Created by Noah Nuebling in 2021
 // Licensed under MIT
 // --------------------------------------------------------------------------
 //
@@ -11,8 +11,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface HelperServices_HelperApp : NSObject
-+ (void)enableHelperAsUserAgent:(BOOL)enable;
+@interface BundleServices : NSObject
++ (NSBundle *)mainAppBundle;
++ (NSBundle *)helperBundle;
 @end
 
 NS_ASSUME_NONNULL_END
