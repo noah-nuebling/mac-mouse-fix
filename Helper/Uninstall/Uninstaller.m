@@ -75,9 +75,14 @@ void Handle_FSCallback(ConstFSEventStreamRef streamRef, void *clientCallBackInfo
 void handleRelocation() {
     NSLog(@"Handle Mac Mouse Fix relocation...");
     [HelperServices enableHelperAsUserAgent:YES]; // TODO: Check if this works - e.g. log out and in again after moving and see if helper still running
-    setStreamToCurrentInstallLoc();
-    NSLog(@"Restaring helper");
-//    [NSApp terminate:nil]; // Restarting the app to refresh everything is probably more robust than setStreamToCurrentInstallLoc()
+//    setStreamToCurrentInstallLoc(); // Remove - this is not needed if we can restart/close the helper which we want to do
+//    [NSApp terminate:nil];
+    // ^ We want to close the helper
+    //  If we let the helper running after relocation:
+    //      - If the helper closes (crashes) it won't be restarted automatically by launchd
+    //      - Just like the functions for getting current app bundles failed (we fixed it with hax bascially), there might be other stuff that behaves badly after relocation
+    // Unfortunately, I can't find a way to make launchd restart the helper from within the helper
+    // We could create a separate executable and have that restart the helper
 }
 void uninstallCompletely() {
     NSLog(@"Uninstalling Mac Mouse Fix completely...");

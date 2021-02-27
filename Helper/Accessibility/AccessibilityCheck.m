@@ -18,9 +18,14 @@
 #import "../Scroll/RoughScroll.h"
 #import "Constants.h"
 
+#import <os/log.h>
+
 @implementation AccessibilityCheck
 
 + (void)load {
+    
+    os_log_t MFLog = os_log_create(kMFBundleIDHelper.UTF8String, "status");
+    os_log(MFLog, "Mac Mouse Fix Helper begins logging excessively...");
     
     [MessagePort_HelperApp load_Manual];
     
