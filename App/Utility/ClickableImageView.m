@@ -10,7 +10,7 @@
 #import "ClickableImageView.h"
 #import "ConfigFileInterface_App.h"
 #import "NSArray+Additions.h"
-#import "BundleServices.h"
+#import "Objects.h"
 
 IB_DESIGNABLE
 @interface ClickableImageView ()
@@ -60,9 +60,9 @@ NSArray *_requiredModifierFlags;
     
     if (matchesAllRequired) {
         if ([_actionString isEqualToString:@"reveal-config"]) {
-            [NSWorkspace.sharedWorkspace activateFileViewerSelectingURLs:@[ConfigFileInterface_App.configURL]];
+            [NSWorkspace.sharedWorkspace activateFileViewerSelectingURLs:@[Objects.configURL]];
         } else if ([_actionString isEqualToString:@"reveal-helper"]) {
-            [NSWorkspace.sharedWorkspace activateFileViewerSelectingURLs:@[BundleServices.helperBundle.bundleURL]];
+            [NSWorkspace.sharedWorkspace activateFileViewerSelectingURLs:@[Objects.helperBundle.bundleURL]];
         }
     }
 }

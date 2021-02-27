@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4FCECD7F21092354001F1078"
-               BuildableName = "Mac Mouse Fix Helper.app"
-               BlueprintName = "Mac Mouse Fix Helper"
+               BlueprintIdentifier = "4F94F5ED25E5EC2500D9F24A"
+               BuildableName = "Mac Mouse Fix.app"
+               BlueprintName = "Mac Mouse Fix"
                ReferencedContainer = "container:Mouse Fix.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -40,16 +40,10 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4FCECD7F21092354001F1078"
-            BuildableName = "Mac Mouse Fix Helper.app"
-            BlueprintName = "Mac Mouse Fix Helper"
-            ReferencedContainer = "container:Mouse Fix.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
+      <PathRunnable
+         runnableDebuggingMode = "0"
+         FilePath = "/Users/Noah/Library/Developer/Xcode/DerivedData/Mouse_Fix-efqsyfjcspmnyiftwlwinuqikmvp/Build/Products/Debug/Mac Mouse Fix.app/Contents/Library/LoginItems/Mac Mouse Fix Helper.app">
+      </PathRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -57,16 +51,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4FCECD7F21092354001F1078"
-            BuildableName = "Mac Mouse Fix Helper.app"
-            BlueprintName = "Mac Mouse Fix Helper"
+            BlueprintIdentifier = "4F94F5ED25E5EC2500D9F24A"
+            BuildableName = "Mac Mouse Fix.app"
+            BlueprintName = "Mac Mouse Fix"
             ReferencedContainer = "container:Mouse Fix.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

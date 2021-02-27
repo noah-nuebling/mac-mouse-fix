@@ -27,7 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 #define kMFMainAppName  @"Mac Mouse Fix.app"
 
-#define kMFLaunchdHelperIdentifier @"mouse.fix.helper"   // Keep this in sync with `Label` value in `default_launchd.plist`
+#define kMFLaunchdHelperIdentifier  @"mouse.fix.helper"   // Keep this in sync with `Label` value in `default_launchd.plist`
+#define kMFLaunchctlPath            @"/bin/launchctl"
 
 // Remapping dictionary keywords
 

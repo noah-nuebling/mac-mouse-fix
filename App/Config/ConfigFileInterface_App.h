@@ -17,7 +17,6 @@ typedef enum {
     kMFConfigProblemIncompleteAppOverride = 1
 } MFConfigProblem;
 @property (class,retain) NSMutableDictionary *config;
-+ (NSURL *)configURL;
 + (void)writeConfigToFileAndNotifyHelper;
 + (void)loadConfigFromFile;
 + (void)repairConfigWithProblem:(MFConfigProblem)problem info:(id _Nullable)info;

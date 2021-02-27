@@ -10,16 +10,9 @@
 #import <AppKit/AppKit.h>
 #import "HelperServices.h"
 #import "Constants.h"
-#import "BundleServices.h"
+#import "Objects.h"
 
 @implementation HelperServices
-
-// Globals
-NSURL *_launchdPlistURL;
-+ (void)initialize {
-    NSString *launchdPlistLibraryRelativePath = [NSString stringWithFormat:@"LaunchAgents/%@.plist", kMFBundleIDHelper];
-    _launchdPlistURL = [[NSFileManager.defaultManager URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask][0] URLByAppendingPathComponent:launchdPlistLibraryRelativePath];
-}
 
 // Register/unregister the helper as a User Agent with launchd so it runs in the background - also launches/terminates helper
 + (void)enableHelperAsUserAgent:(BOOL)enable {
@@ -30,27 +23,25 @@ NSURL *_launchdPlistURL;
     // Prepare strings for NSTask
     
     // Path for the executable of the launchctl command-line-tool, which we use to control launchd
-    NSString *launchctlPath = @"/bin/launchctl";
+    NSString *launchctlPath = kMFLaunchctlPath;
     
     // Prepare arguments for the launchctl command-line-tool
-    
     if (@available(macOS 10.13, *)) {
         NSString *GUIDomainArgument = [NSString stringWithFormat:@"gui/%d", geteuid()];
         NSString *OnOffArgument = (enable) ? @"bootstrap": @"bootout";
         NSURL *launchctlURL = [NSURL fileURLWithPath: launchctlPath];
-        [NSTask launchedTaskWithExecutableURL: launchctlURL arguments:@[OnOffArgument, GUIDomainArgument, _launchdPlistURL.path] error:nil terminationHandler: ^(NSTask *task) {
+        [NSTask launchedTaskWithExecutableURL: launchctlURL arguments:@[OnOffArgument, GUIDomainArgument, Objects.launchdPlistURL.path] error:nil terminationHandler: ^(NSTask *task) {
             if (enable == NO) { // Cleanup (delete launchdPlist) file after were done // We can't clean up immediately cause then launchctl will fail
                 [self cleanup];
             }
         }];
-    } else {
-        // Fallback on earlier versions
+    } else { // Fallback on earlier versions
         NSString *OnOffArgumentOld = (enable) ? @"load": @"unload";
-        [NSTask launchedTaskWithLaunchPath: launchctlPath arguments: @[OnOffArgumentOld, _launchdPlistURL.path]]; // Can't clean up here easily cause there's no termination handler
+        [NSTask launchedTaskWithLaunchPath: launchctlPath arguments: @[OnOffArgumentOld, Objects.launchdPlistURL.path]]; // Can't clean up here easily cause there's no termination handler
     }
 }
 + (void)cleanup {
-    [NSFileManager.defaultManager removeItemAtURL:_launchdPlistURL error:NULL];
+    [NSFileManager.defaultManager removeItemAtURL:Objects.launchdPlistURL error:NULL];
 }
 
 + (void)repairLaunchdPlist {
@@ -68,12 +59,12 @@ NSURL *_launchdPlistURL;
         // Write correct file to "User/Library/LaunchAgents"
         
         // Get helper executable path
-        NSBundle *helperBundle = BundleServices.helperBundle;
-        NSBundle *mainAppBundle = BundleServices.mainAppBundle;
+        NSBundle *helperBundle = Objects.helperBundle;
+        NSBundle *mainAppBundle = Objects.mainAppBundle;
         NSString *helperExecutablePath = helperBundle.executablePath;
         
         // Get path to launch agent config file (aka launchdPlist)
-        NSString *launchAgentPlistPath = _launchdPlistURL.path;
+        NSString *launchAgentPlistPath = Objects.launchdPlistURL.path;
         
         // Check if file exists
         NSFileManager *fileManager = [[NSFileManager alloc] init];
@@ -118,6 +109,7 @@ NSURL *_launchdPlistURL;
             
             // Read contents of default_launchd.plist (aka default-launch-agent-config-file or defaultLAConfigFile) into a dictionary
             
+//            NSString *defaultLAConfigFile_path = [mainAppBundle pathForResource:@"default_launchd" ofType:@"plist"];
             NSString *defaultLAConfigFile_path = [mainAppBundle pathForResource:@"default_launchd" ofType:@"plist"];
             NSData *defaultLAConfigFile_data = [NSData dataWithContentsOfFile:defaultLAConfigFile_path];
             // TODO: This just crashed the app with "Exception: "data parameter is nil". It says that that LAConfigFileExists = NO.
@@ -145,7 +137,7 @@ NSURL *_launchdPlistURL;
     
     // Using NSTask to ask launchd about helper status
     
-    NSString *launchctlPath = @"/bin/launchctl";
+    NSString *launchctlPath = kMFLaunchctlPath;
     NSString *listArgument = @"list";
     
     NSPipe * launchctlOutput;
