@@ -45,7 +45,7 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "# Launching Helper embedded into Main App via launchd.&#10;# This provides a &quot;natural&quot; environment for it for debugging &#10;&#10;#BUILD_DIR=&quot;/Users/Noah/Library/Developer/Xcode/DerivedData/Mouse_Fix-efqsyfjcspmnyiftwlwinuqikmvp/Build/Products&quot;; # Testing&#10;&#10;/bin/launchctl remove mouse.fix.helper;&#10;&#10;exec_path=&quot;${BUILD_DIR}/Debug/Mac Mouse Fix.app/Contents/Library/LoginItems/Mac Mouse Fix Helper.app/Contents/MacOS/Mac Mouse Fix Helper&quot;;&#10;&#10;launchd_plist_path=&quot;/Users/Noah/Library/LaunchAgents/com.nuebling.mac-mouse-fix.helper.plist&quot;;&#10;&#10;/usr/bin/plutil -replace Program -string &quot;${exec_path}&quot; &quot;${launchd_plist_path}&quot;;&#10;&#10;/bin/launchctl bootstrap gui/501 $launchd_plist_path;&#10;">
+               scriptText = "# Launching Helper embedded into Main App via launchd.&#10;# This provides a &quot;natural&quot; environment for it for debugging &#10;&#10;#BUILD_DIR=&quot;/Users/Noah/Library/Developer/Xcode/DerivedData/Mouse_Fix-efqsyfjcspmnyiftwlwinuqikmvp/Build/Products&quot;; # Testing&#10;&#10;/bin/launchctl remove &quot;mouse.fix.helper&quot;;&#10;&#10;exec_path=&quot;${BUILD_DIR}/Debug/Mac Mouse Fix.app/Contents/Library/LoginItems/Mac Mouse Fix Helper.app/Contents/MacOS/Mac Mouse Fix Helper&quot;;&#10;&#10;launchd_plist_path=&quot;/Users/Noah/Library/LaunchAgents/com.nuebling.mac-mouse-fix.helper.plist&quot;;&#10;&#10;/usr/bin/plutil -replace Program -string &quot;${exec_path}&quot; &quot;${launchd_plist_path}&quot;;&#10;&#10;/bin/launchctl bootstrap gui/501 $launchd_plist_path;&#10;">
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
@@ -63,14 +63,13 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "/bin/launchctl remove mouse.fix.helper&#10;">
+               scriptText = "/bin/launchctl remove &quot;mouse.fix.helper&quot;; # Doesn&apos;t work, have to do this manually after running&#10;">
             </ActionContent>
          </ExecutionAction>
       </PostActions>
       <PathRunnable
          runnableDebuggingMode = "0"
-         BundleIdentifier = "com.nuebling.mac-mouse-fix.helper"
-         FilePath = "/Users/Noah/Library/Developer/Xcode/DerivedData/Mouse_Fix-efqsyfjcspmnyiftwlwinuqikmvp/Build/Products/Debug/Mac Mouse Fix.app/Contents/Library/LoginItems/Mac Mouse Fix Helper.app">
+         FilePath = "/Users/Noah/Library/Developer/Xcode/DerivedData/Mouse_Fix-efqsyfjcspmnyiftwlwinuqikmvp/Build/Products/Debug/Mac Mouse Fix.app/Contents/Library/LoginItems/Mac Mouse Fix Helper.app/Contents/MacOS/Mac Mouse Fix Helper">
       </PathRunnable>
    </LaunchAction>
    <ProfileAction
