@@ -7,7 +7,7 @@
 // --------------------------------------------------------------------------
 //
 
-#import "Uninstaller.h"
+#import "FileMonitor.h"
 #import "HelperServices.h"
 #import "Objects.h"
 #import <AppKit/AppKit.h>
@@ -15,7 +15,7 @@
 #import "Constants.h"
 #import "SharedUtil.h"
 
-@implementation Uninstaller
+@implementation FileMonitor
 
 + (void)load {
     [self setupFSMonitor];
@@ -40,7 +40,7 @@ static void setStreamToCurrentInstallLoc() {
     FSEventStreamScheduleWithRunLoop(_stream, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
     FSEventStreamStart(_stream);
     
-    NSLog(@"Set file monitoring to:%@ App location accoring to NSWorkspace:%@", mainAppURL, [NSWorkspace.sharedWorkspace URLForApplicationWithBundleIdentifier:kMFBundleIDApp]);
+    NSLog(@"Set file monitoring to: %@ App location accoring to NSWorkspace: %@", mainAppURL.path, [NSWorkspace.sharedWorkspace URLForApplicationWithBundleIdentifier:kMFBundleIDApp].path);
 }
 
 void Handle_FSCallback(ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents, void *eventPaths, const FSEventStreamEventFlags *eventFlags, const FSEventStreamEventId *eventIds) {
@@ -51,22 +51,28 @@ void Handle_FSCallback(ConstFSEventStreamRef streamRef, void *clientCallBackInfo
     
     NSURL *installedBundleURLFromWorkspace = [NSWorkspace.sharedWorkspace URLForApplicationWithBundleIdentifier:kMFBundleIDApp];
     
-    if (installedBundleURLFromWorkspace == nil) { // Has been deleted
+    if (installedBundleURLFromWorkspace == nil) {
         NSLog(@"Mac Mouse Fix cannot be found on the system anymore");
         uninstallCompletely();
-    } else if (installedBundleURLFromWorkspace != nil) { // Has been moved
-        NSBundle *mainAppBundle = Objects.mainAppBundle;
-        BOOL isTrashed = [mainAppBundle.bundleURL.URLByDeletingLastPathComponent.lastPathComponent isEqualToString:trashFolderName()];
-        BOOL isRemoved = mainAppBundle == nil;
-        BOOL workspaceURLIsTrash = [installedBundleURLFromWorkspace.URLByDeletingLastPathComponent.lastPathComponent isEqualToString:trashFolderName()];
-        if (workspaceURLIsTrash) {
+    } else {
+        NSURL *helperURL = Objects.helperBundle.bundleURL;
+        NSURL *helperURLOld = NSBundle.mainBundle.bundleURL;
+        BOOL isInOldLocation = [helperURL isEqualTo:helperURLOld];
+        if (isInOldLocation) return; // FSCallback probably got called due to a file event unrelated to Mac Mouse Fix
+        
+        NSLog(@"Mac Mouse Fix Helper was launched at: %@ but is now at: %@", helperURLOld, helperURL);
+        NSBundle *appBundle = Objects.mainAppBundle;
+        BOOL isInTrash = [appBundle.bundleURL.URLByDeletingLastPathComponent.lastPathComponent isEqualToString:trashFolderName()];
+        BOOL isRemoved = appBundle == nil;
+        BOOL workspaceURLIsInTrash = [installedBundleURLFromWorkspace.URLByDeletingLastPathComponent.lastPathComponent isEqualToString:trashFolderName()];
+        if (workspaceURLIsInTrash) {
             NSLog(@"Workspace found Mac Mouse Fix in the trash. This probably means that Mac Mouse Fix has just been moved to the trash and that this is the only version of Mac Mouse Fix on the system.");
             uninstallCompletely();
-        } else if (!workspaceURLIsTrash && (isTrashed || isRemoved)) {
+        } else if (!workspaceURLIsInTrash && (isInTrash || isRemoved)) {
             NSLog(@"Mac Mouse Fix has been deleted but is still installed at: %@", installedBundleURLFromWorkspace);
-            removeHelper();
+            disableHelper();
         } else {
-            NSLog(@"Mac Mouse Fix has been relocated to %@", mainAppBundle.bundleURL.path);
+            NSLog(@"Mac Mouse Fix has been relocated to %@", appBundle.bundleURL.path);
             handleRelocation();
         }
     }
@@ -74,20 +80,29 @@ void Handle_FSCallback(ConstFSEventStreamRef streamRef, void *clientCallBackInfo
 
 void handleRelocation() {
     NSLog(@"Handle Mac Mouse Fix relocation...");
-    [HelperServices enableHelperAsUserAgent:YES]; // TODO: Check if this works - e.g. log out and in again after moving and see if helper still running
+    
+    // TODO: Check if this works - e.g. log out and in again after moving and see if helper still running
+    
+//    [HelperServices enableHelperAsUserAgent:YES];
 //    setStreamToCurrentInstallLoc(); // Remove - this is not needed if we can restart/close the helper which we want to do
 //    [NSApp terminate:nil];
-    // ^ We want to close the helper
+    
+    // We want to close the helper
     //  If we let the helper running after relocation:
     //      - If the helper closes (crashes) it won't be restarted automatically by launchd
     //      - Just like the functions for getting current app bundles failed (we fixed it with hax bascially), there might be other stuff that behaves badly after relocation
     // Unfortunately, I can't find a way to make launchd restart the helper from within the helper
-    // We could create a separate executable and have that restart the helper
+    // We have to use a separate executable to restart the helper
+    
+    NSLog(@"Asking Accomplice to restart Helper");
+    NSURL *accompliceURL = [Objects.mainAppBundle.bundleURL URLByAppendingPathComponent:kMFRelativeAccomplicePath];
+    NSArray *args = @[kMFAccompliceModeArgumentReloadHelper];
+    [SharedUtil launchCLT:accompliceURL withArgs:args];
 }
 void uninstallCompletely() {
     NSLog(@"Uninstalling Mac Mouse Fix completely...");
     removeResidue();
-    removeHelper();
+    disableHelper();
 }
 void removeResidue() {
     NSLog(@"Removing Mac Mouse Fix resdiue");
@@ -96,7 +111,7 @@ void removeResidue() {
     // Delete launchd plist
     [NSFileManager.defaultManager trashItemAtURL:Objects.launchdPlistURL resultingItemURL:nil error:nil];
 }
-void removeHelper() { // Kill this process
+void disableHelper() { // Kill this process
     NSLog(@"Removing helper from launchd (Byeeeee)");
     // Remove from launchd
     [SharedUtil launchCLT:[NSURL fileURLWithPath:kMFLaunchctlPath] withArgs:@[@"remove", kMFLaunchdHelperIdentifier]]; // This kills as well I think

@@ -59,11 +59,13 @@
 		4F95A249234EBB5D000DC7D7 /* PointerSpeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F95A248234EBB5D000DC7D7 /* PointerSpeed.m */; };
 		4FA1ACE725E894CB007DB95B /* MFSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA1ACE625E894CB007DB95B /* MFSegmentedControl.m */; };
 		4FA1ACFC25E92FC4007DB95B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FCECD8621092354001F1078 /* Assets.xcassets */; };
+		4FB3582625EADFD80098050B /* HelperServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F64858125E9C1E000891D69 /* HelperServices.m */; };
+		4FB3582B25EADFF60098050B /* Objects.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F64856C25E9C17400891D69 /* Objects.m */; };
 		4FCECD8521092354001F1078 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECD8421092354001F1078 /* AppDelegate.m */; };
 		4FD45A20231C7FB500F75C58 /* AccessibilityCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD45A1F231C7FB500F75C58 /* AccessibilityCheck.m */; };
 		4FECC88D2431DCCD001A3C4B /* RoughScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FECC88C2431DCCD001A3C4B /* RoughScroll.m */; };
 		4FECC8902431DCDF001A3C4B /* ScrollControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FECC88F2431DCDF001A3C4B /* ScrollControl.m */; };
-		4FF3B2BD23276082009E8A8E /* Uninstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF3B2BC23276082009E8A8E /* Uninstaller.m */; };
+		4FF3B2BD23276082009E8A8E /* FileMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF3B2BC23276082009E8A8E /* FileMonitor.m */; };
 		4FF75A20233D82590002D8E6 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FCECD8821092354001F1078 /* MainMenu.xib */; };
 /* End PBXBuildFile section */
 
@@ -271,8 +273,8 @@
 		4FECC88C2431DCCD001A3C4B /* RoughScroll.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RoughScroll.m; sourceTree = "<group>"; };
 		4FECC88E2431DCDF001A3C4B /* ScrollControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollControl.h; sourceTree = "<group>"; };
 		4FECC88F2431DCDF001A3C4B /* ScrollControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollControl.m; sourceTree = "<group>"; };
-		4FF3B2BB23276082009E8A8E /* Uninstaller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Uninstaller.h; sourceTree = "<group>"; };
-		4FF3B2BC23276082009E8A8E /* Uninstaller.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Uninstaller.m; sourceTree = "<group>"; };
+		4FF3B2BB23276082009E8A8E /* FileMonitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileMonitor.h; sourceTree = "<group>"; };
+		4FF3B2BC23276082009E8A8E /* FileMonitor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FileMonitor.m; sourceTree = "<group>"; };
 		4FF873DC23197283002A897A /* UpdateWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UpdateWindow.h; sourceTree = "<group>"; };
 		4FF873DD23197283002A897A /* UpdateWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UpdateWindow.m; sourceTree = "<group>"; };
 		4FF873DE23197283002A897A /* UpdateWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpdateWindow.xib; sourceTree = "<group>"; };
@@ -659,7 +661,7 @@
 				4FD45A15231C76ED00F75C58 /* MessagePort */,
 				4FD45A13231C76A700F75C58 /* Config */,
 				4F32E152231C420100199A11 /* Utility */,
-				4FF3B2BA2327604A009E8A8E /* Uninstall */,
+				4FF3B2BA2327604A009E8A8E /* FileMonitor */,
 				4FA1AD1625E93DDD007DB95B /* Resources */,
 				4FCECDB02109326E001F1078 /* SupportFiles */,
 			);
@@ -763,13 +765,13 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
-		4FF3B2BA2327604A009E8A8E /* Uninstall */ = {
+		4FF3B2BA2327604A009E8A8E /* FileMonitor */ = {
 			isa = PBXGroup;
 			children = (
-				4FF3B2BB23276082009E8A8E /* Uninstaller.h */,
-				4FF3B2BC23276082009E8A8E /* Uninstaller.m */,
+				4FF3B2BB23276082009E8A8E /* FileMonitor.h */,
+				4FF3B2BC23276082009E8A8E /* FileMonitor.m */,
 			);
-			path = Uninstall;
+			path = FileMonitor;
 			sourceTree = "<group>";
 		};
 		4FF873F2231A96C0002A897A /* MoreSheet */ = {
@@ -1007,6 +1009,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F2FDF332315662500C7BE14 /* main.m in Sources */,
+				4FB3582625EADFD80098050B /* HelperServices.m in Sources */,
+				4FB3582B25EADFF60098050B /* Objects.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1076,7 +1080,7 @@
 				4F32E188231C509200199A11 /* AnimationCurve.m in Sources */,
 				4F1A20282348EC3D00B29037 /* ScrollUtility.m in Sources */,
 				4F32E159231C420100199A11 /* Utility_HelperApp.m in Sources */,
-				4FF3B2BD23276082009E8A8E /* Uninstaller.m in Sources */,
+				4FF3B2BD23276082009E8A8E /* FileMonitor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

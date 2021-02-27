@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Uninstaller : NSObject
+@interface FileMonitor : NSObject
 
 @end
 

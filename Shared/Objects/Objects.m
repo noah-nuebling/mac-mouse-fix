@@ -52,19 +52,28 @@ static NSURL *_lastValidHelperFRURL;
     
     // Approach 1: NSBundle bundleForClass
     
-    NSBundle *thisBundle = [NSBundle bundleForClass:self.class]; // Probably same as [NSBundle mainBundle]
+//    NSBundle *thisBundle = [NSBundle bundleForClass:self.class]; // Probably same as [NSBundle mainBundle]
+    NSBundle *thisBundle = [NSBundle mainBundle];
     
     if ([thisBundle.bundleIdentifier isEqualToString:kMFBundleIDApp]) {
         NSString *helperPath = [thisBundle.bundleURL URLByAppendingPathComponent:kMFRelativeHelperAppPath].path;
         *mainAppBundle = thisBundle;
         *helperBundle = [NSBundle bundleWithPath:helperPath];
     } else if ([thisBundle.bundleIdentifier isEqualToString:kMFBundleIDHelper]) {
-        NSString *mainAppPath = [thisBundle.bundleURL URLByAppendingPathComponent:kMFRelativeMainAppPathFromHelper].path;
+        NSString *mainAppPath = [thisBundle.bundleURL URLByAppendingPathComponent:kMFRelativeMainAppPathFromHelperBundle].path;
         *mainAppBundle = [NSBundle bundleWithPath:mainAppPath];
         *helperBundle = thisBundle;
+    } else if ([NSFileManager.defaultManager isExecutableFileAtPath:[thisBundle.bundlePath stringByAppendingPathComponent:kMFAccompliceName]]) {
+        // Accomplice bundle doesn't have url only bundle path
+        NSString *mainAppPath =  [thisBundle.bundlePath stringByAppendingPathComponent:kMFRelativeMainAppPathFromAccompliceFolder];
+        NSString *helperPath = [mainAppPath stringByAppendingPathComponent:kMFRelativeHelperAppPath];
+        *mainAppBundle = [NSBundle bundleWithPath:mainAppPath];
+        *helperBundle = [NSBundle bundleWithPath:helperPath];
+    } else {
+        [NSException raise:@"UnknownCallerException" format:@"No handling code for caller at: %@", thisBundle.bundlePath];
     }
      // ^ I thought this would be very robust, but this stuff fails after moving the app.
-      // bundle.bundleURL wil still reports the pre-move location for some reason.
+      // bundle.bundleURL will still reports the pre-move location for some reason.
     
     // v Attempt to fix Approach 1:
     //  Store file reference URLs and fall back on last valid one if

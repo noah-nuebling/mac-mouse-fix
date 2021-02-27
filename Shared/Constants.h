@@ -18,17 +18,23 @@ NS_ASSUME_NONNULL_BEGIN
 #define kMFBundleIDApp      @"com.nuebling.mac-mouse-fix"
 #define kMFBundleIDHelper   @"com.nuebling.mac-mouse-fix.helper"
 
-#define kMFRelativeAccomplicePath              @"Contents/Library/LaunchServices/Mac Mouse Fix Accomplice"
-
+#define kMFRelativeAccomplicePath           @"Contents/Library/LaunchServices/Mac Mouse Fix Accomplice"
 #define kMFRelativeHelperAppPath            @"Contents/Library/LoginItems/Mac Mouse Fix Helper.app"
 #define kMFRelativeHelperExecutablePath     @"Contents/Library/LoginItems/Mac Mouse Fix Helper.app/Contents/MacOS/Mac Mouse Fix Helper"
 
-#define kMFRelativeMainAppPathFromHelper    @"../../../../"
+#define kMFRelativeMainAppPathFromHelperBundle          @"../../../../"
+#define kMFRelativeMainAppPathFromAccompliceFolder      @"../../../"
 
-#define kMFMainAppName  @"Mac Mouse Fix.app"
+#define kMFMainAppName      @"Mac Mouse Fix.app"
+#define kMFAccompliceName   @"Mac Mouse Fix Accomplice"
 
 #define kMFLaunchdHelperIdentifier  @"mouse.fix.helper"   // Keep this in sync with `Label` value in `default_launchd.plist`
 #define kMFLaunchctlPath            @"/bin/launchctl"
+
+// Accomplice Arguments
+
+#define kMFAccompliceModeArgumentUpdate         @"update"
+#define kMFAccompliceModeArgumentReloadHelper   @"reloadHelper"
 
 // Remapping dictionary keywords
 
