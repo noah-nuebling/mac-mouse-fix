@@ -14,6 +14,7 @@
 #import "../Config/ConfigFileInterface_App.h"
 #import "ZipArchive/SSZipArchive.h"
 #import "Constants.h"
+#import "Objects.h"
 
 
 
@@ -193,7 +194,7 @@ static NSURL *_updateNotesLocation;
     
     
     
-// prepare apple script which can install the update (executed within Mouse Fix Updater)
+// prepare apple script which can install the update (executed within Mouse Fix Accomplice)
     
     // copy config.plist into the updated bundle, if the new config is compatible
     
@@ -233,22 +234,22 @@ static NSURL *_updateNotesLocation;
     
     NSLog(@"script: %@", installScriptOSA);
     
-    // get the url to Mouse Fix Updater executable
+    // get the url to Mouse Fix Accomplice executable
     
-    NSURL *updaterExecURL = [[[NSBundle bundleForClass:self] bundleURL] URLByAppendingPathComponent:@"Contents/Library/LaunchServices/Mouse Fix Updater"];
+    NSURL *accompliceExecURL = [Objects.mainAppBundle.bundleURL URLByAppendingPathComponent:kMFRelativeAccomplicePath];
     
-    // launch Mouse Fix Updater
+    // launch Mouse Fix Accomplice
     
     if (@available(macOS 10.13, *)) {
         NSError *launchUpdaterErr;
-        [NSTask launchedTaskWithExecutableURL:updaterExecURL arguments:args error:&launchUpdaterErr terminationHandler:^(NSTask *task) {
+        [NSTask launchedTaskWithExecutableURL:accompliceExecURL arguments:args error:&launchUpdaterErr terminationHandler:^(NSTask *task) {
             NSLog(@"updater terminated: %@", launchUpdaterErr);
         }];
         if (launchUpdaterErr) {
             NSLog(@"error launching updater: %@", launchUpdaterErr);
         }
     } else {
-        [NSTask launchedTaskWithLaunchPath:[updaterExecURL path] arguments:args];
+        [NSTask launchedTaskWithLaunchPath:[accompliceExecURL path] arguments:args];
     }
     
 

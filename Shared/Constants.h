@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 #define kMFBundleIDApp      @"com.nuebling.mac-mouse-fix"
 #define kMFBundleIDHelper   @"com.nuebling.mac-mouse-fix.helper"
 
-#define kMFRelativeUpdaterPath              @"Contents/Library/LaunchServices/Mac Mouse Fix Updater"
+#define kMFRelativeAccomplicePath              @"Contents/Library/LaunchServices/Mac Mouse Fix Accomplice"
 
 #define kMFRelativeHelperAppPath            @"Contents/Library/LoginItems/Mac Mouse Fix Helper.app"
 #define kMFRelativeHelperExecutablePath     @"Contents/Library/LoginItems/Mac Mouse Fix Helper.app/Contents/MacOS/Mac Mouse Fix Helper"
