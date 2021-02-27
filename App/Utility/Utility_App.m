@@ -69,7 +69,7 @@
 }
 
 + (BOOL)appIsInstalled:(NSString *)bundleID {
-    NSString *appPath = [NSWorkspace.sharedWorkspace absolutePathForAppBundleWithIdentifier:bundleID];
+    NSString *appPath = [NSWorkspace.sharedWorkspace URLForApplicationWithBundleIdentifier:bundleID].path;
     if (appPath) {
         return YES;
     }

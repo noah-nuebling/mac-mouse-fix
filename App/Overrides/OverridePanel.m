@@ -189,7 +189,7 @@ NSDictionary *_columnIdentifierToKeyPath;
         NSTableCellView *appCell = [_tableView makeViewWithIdentifier:@"AppCellID" owner:nil];
         if (appCell) {
             NSString *bundleID = _tableViewDataModel[row][tableColumn.identifier];
-            NSString *appPath = [NSWorkspace.sharedWorkspace absolutePathForAppBundleWithIdentifier:bundleID];
+            NSString *appPath = [NSWorkspace.sharedWorkspace URLForApplicationWithBundleIdentifier:bundleID].path;
 //            NSBundle *bundle = [NSBundle bundleWithIdentifier:bundleID]; // This doesn't work for some reason
             NSImage *appIcon;
             NSString *appName;

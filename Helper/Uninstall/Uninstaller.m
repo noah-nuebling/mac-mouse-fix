@@ -8,8 +8,8 @@
 //
 
 #import "Uninstaller.h"
-#import "HelperServices_HelperApp.h"
-#import "../Utility/Utility_HelperApp.h"
+#import "HelperServices.h"
+#import "BundleServices.h"
 #import <AppKit/AppKit.h>
 #import <Foundation/Foundation.h>
 #import "Constants.h"
@@ -38,7 +38,7 @@
 
 void Handle_FSCallback(ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents, void *eventPaths, const FSEventStreamEventFlags *eventFlags, const FSEventStreamEventId *eventIds) {
     
-    NSArray *contents = [NSFileManager.defaultManager contentsOfDirectoryAtPath:[[Utility_HelperApp mainAppBundle].bundlePath stringByDeletingLastPathComponent] error:NULL];
+    NSArray *contents = [NSFileManager.defaultManager contentsOfDirectoryAtPath:[BundleServices.mainAppBundle.bundlePath stringByDeletingLastPathComponent] error:NULL];
     
     if (![contents containsObject:kMFMainAppName]) {
         uninstall();
@@ -47,7 +47,7 @@ void Handle_FSCallback(ConstFSEventStreamRef streamRef, void *clientCallBackInfo
 }
 
 void uninstall() {
-    [HelperServices_HelperApp enableHelperAsUserAgent:NO];
+    [HelperServices enableHelperAsUserAgent:NO];
 }
 
 @end

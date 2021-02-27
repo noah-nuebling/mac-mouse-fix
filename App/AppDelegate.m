@@ -14,12 +14,11 @@
 #import "AppDelegate.h"
 #import "Updater.h"
 #import "Config/ConfigFileInterface_App.h"
-#import "Helper/HelperServices.h"
 #import "MessagePort/MessagePort_App.h"
 #import "Update/UpdateWindow.h"
 #import "Utility/Utility_App.h"
-
 #import "Accessibility/AuthorizeAccessibilityView.h"
+#import "HelperServices.h"
 
 @interface AppDelegate ()
 
@@ -166,7 +165,7 @@ NSTimer *removeAccOverlayTimer;
 
 - (void)setUIToConfigFile {
     
-    NSLog(@"helperactiveEEEEEE: %hhd", HelperServices.helperIsActive);
+    NSLog(@"helperactiveEEEEEE: %hhd", [HelperServices helperIsActive]);
     
 #pragma mark other
     // enableCheckbox
