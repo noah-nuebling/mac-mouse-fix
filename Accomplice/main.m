@@ -47,6 +47,9 @@ static int update(const char *installScript) {
     } while (NO);
 //    } while (![mainApp isTerminated]); // This doesn't work for some reason
     
+    // ^ Since we're not waiting till the appis terminated, we need to make sure the app always quits quickly, or the updater won't be able to automatically restart the app
+    //      We should probably try to find another method of waiting for the app to quit as it would make things a lot more robust
+    
     NSLog(@"Main app neutralized");
     
     NSLog(@"Finding and killing Helper");
@@ -69,7 +72,7 @@ static int update(const char *installScript) {
 }
 void reloadHelper() {
     // v Disabling helper is inconsistent without waiting
-    // I think NSFileManager gives wrong values if this was triggered due to the app being relocated and we don't wait
+    //      I think it's because NSFileManager gives wrong values for a short time after the app has been relocated (this is called as a result of the app being relocated)
     [NSThread sleepForTimeInterval:0.5];
     NSLog(@"Unloading Helper from launchd...");
     [HelperServices enableHelperAsUserAgent:NO];
