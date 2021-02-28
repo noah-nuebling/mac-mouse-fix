@@ -87,14 +87,11 @@ static NSWindow *_instance;
     [self.window setFrame:NSMakeRect(0, 0, 440, 462) display:NO animate:NO];
     NSRect WKFrm = NSMakeRect(80, 57, 340, 363); // (20, 57, 400, 332/363)
     
-    
     WKWebViewConfiguration *WKConf = [[WKWebViewConfiguration alloc] init];
     [WKConf.userContentController addScriptMessageHandler:(id<WKScriptMessageHandler>)self name:@"THELARGEBOTTOM"];
     
     WKWebView *wv = [[WKWebView alloc] initWithFrame:WKFrm configuration:WKConf];
     [wv setNavigationDelegate:self];
-//    [wv setUIDelegate:self];
-    
 
     [wv loadFileURL:[updateNotesURL URLByAppendingPathComponent:@"index.html" isDirectory:NO] allowingReadAccessToURL:updateNotesURL];
     
@@ -109,32 +106,52 @@ static NSWindow *_instance;
 }
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
-    NSLog(@"FINISCHEDD NAVIGATION");
     
-    // change style according to system appearance
+    NSLog(@"Update window webview finished navigation");
+    
+    // Change style according to system appearance
     if (@available(macOS 10.14, *)) {
+        
+        NSLog(@"Running macOS 10.14+. Setting webview style according to system appearance.");
+        
+        // Find appropriate css file path
+        
         NSString *cssFileDir = @"Aqua";
         if (NSApplication.sharedApplication.effectiveAppearance == [NSAppearance appearanceNamed:NSAppearanceNameDarkAqua]) {
             cssFileDir = @"DarkAqua";
         }
-        NSString *jsDir = [NSString stringWithFormat:@"document.getElementById('styleSheetId').href='%@.css'", cssFileDir];
+        // Set webview to css file
+        
+        NSLog(@"Setting webview css to: %@", cssFileDir);
+        
+        NSString *jsDir = [NSString stringWithFormat:@"document.getElementById('styleSheetId').href='./%@.css'", cssFileDir];
         [webView evaluateJavaScript:jsDir completionHandler:^(id response, NSError *error) {
-            NSLog(@"%@",error);
-            NSLog(@"%@",(NSString *)response);
+            NSLog(@"Setting css response: %@",(NSString *)response);
+            NSLog(@"Setting css error: %@",error);
         }];
+        
+        // Get webview title
+        // Is this necessary? I think this is residue from when we wanted to present the title natively instead of in the webview
+        
+        NSLog(@"Getting html h1");
         
         [webView evaluateJavaScript:@"document.getElementsByTagName('h1')[0].textContent" completionHandler:^(id response, NSError *error) {
-            NSLog(@"%@",error);
-            NSLog(@"%@",(NSString *)response);
+            NSLog(@"Getting h1 response: %@",(NSString *)response);
+            NSLog(@"Getting h1 error: %@",error);
         }];
         
-//        webView.enclosingScrollView.appearance = [NSAppearance appearanceNamed:NSAppearanceNameDarkAqua];     // I'd like to make the scrollbar dark when darkmode is enabled but this doesn't work
+        // Make scrollbar dark when darkmode is enabled (v this doesn't work)
+        webView.enclosingScrollView.appearance = [NSAppearance appearanceNamed:NSAppearanceNameDarkAqua];
+        
+    } else {
+        NSLog(@"Running macOS 10.13 or lower. Not necessary to set webview style to system appearance, because there is no darkmode");
     }
 }
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
     
-    NSLog(@"%@", navigationAction);
+    NSLog(@"Update window webview received navigation action: %@", navigationAction);
+    
     if (navigationAction.navigationType == -1) {
         decisionHandler(WKNavigationActionPolicyAllow);
     }

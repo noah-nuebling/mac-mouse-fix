@@ -100,7 +100,7 @@ AuthorizeAccessibilityView *_accViewController;
 
 + (void)remove {
     
-    NSLog(@"removing AuthorizeAccessibilityView");
+    NSLog(@"Removing AuthorizeAccessibilityView");
     
 //    NSView *mainView = NSApp.mainWindow.contentView;
     NSView *mainView = AppDelegate.mainWindow.contentView;
@@ -114,18 +114,11 @@ AuthorizeAccessibilityView *_accViewController;
     int i = 0;
     NSView *accView;
     for (NSView *v in mainView.subviews) {
-        NSLog(@"View ID: %@", v.identifier);
         if ([v.identifier isEqualToString:@"accView"]) {
             accView = v;
             i++;
         }
     }
-    
-    NSLog(@"NSApp: %@", NSApp);
-    NSLog(@"NSApp window: %@", NSApp.mainWindow);
-    NSLog(@"Main view: %@", mainView);
-    NSLog(@"Main view: %@, %@", mainView.subviews, mainView.superview);
-    NSLog(@"Acc view counter: %d", i);
     
     if (accView) {
         [accView removeFromSuperview];
