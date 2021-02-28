@@ -45,9 +45,7 @@ static void setStreamToCurrentInstallLoc() {
 
 void Handle_FSCallback(ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents, void *eventPaths, const FSEventStreamEventFlags *eventFlags, const FSEventStreamEventId *eventIds) {
     
-    NSLog(@"Mac Mouse Fix move has been detected");
-    
-//    NSArray *installFolderContents = [NSFileManager.defaultManager contentsOfDirectoryAtPath:[Objects.mainAppBundle.bundlePath stringByDeletingLastPathComponent] error:NULL];
+    NSLog(@"File system even in Mac Mouse Fix install folder");
     
     NSURL *installedBundleURLFromWorkspace = [NSWorkspace.sharedWorkspace URLForApplicationWithBundleIdentifier:kMFBundleIDApp];
     
@@ -58,8 +56,10 @@ void Handle_FSCallback(ConstFSEventStreamRef streamRef, void *clientCallBackInfo
         NSURL *helperURL = Objects.helperBundle.bundleURL;
         NSURL *helperURLOld = NSBundle.mainBundle.bundleURL;
         BOOL isInOldLocation = [helperURL isEqualTo:helperURLOld];
-        if (isInOldLocation) return; // FSCallback probably got called due to a file event unrelated to Mac Mouse Fix
-        
+        if (isInOldLocation) {
+            NSLog(@"... File system event was probably unrelated to Mac Mouse Fix");
+            return;
+        }
         NSLog(@"Mac Mouse Fix Helper was launched at: %@ but is now at: %@", helperURLOld, helperURL);
         NSBundle *appBundle = Objects.mainAppBundle;
         BOOL isInTrash = [appBundle.bundleURL.URLByDeletingLastPathComponent.lastPathComponent isEqualToString:trashFolderName()];
@@ -80,8 +80,6 @@ void Handle_FSCallback(ConstFSEventStreamRef streamRef, void *clientCallBackInfo
 
 void handleRelocation() {
     NSLog(@"Handle Mac Mouse Fix relocation...");
-    
-    // TODO: Check if this works - e.g. log out and in again after moving and see if helper still running
     
 //    [HelperServices enableHelperAsUserAgent:YES];
 //    setStreamToCurrentInstallLoc(); // Remove - this is not needed if we can restart/close the helper which we want to do

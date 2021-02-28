@@ -36,7 +36,6 @@ static MoreSheet *_instance;
     return _instance;
 }
 
-
 # pragma mark - IBActions
 
 - (IBAction)checkForUpdateCheckBox:(NSButton *)sender {

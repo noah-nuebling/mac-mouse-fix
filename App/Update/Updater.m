@@ -169,10 +169,9 @@ static NSURL *_updateNotesLocation;
         [MoreSheet.instance end];
     });
     
-
     NSFileManager *fm = [NSFileManager defaultManager];
 
-    // unzip the downloaded file
+    // Unzip the downloaded file
 
     NSString *unzipDest = [[_updateLocation path] stringByDeletingLastPathComponent];
     NSLog(@"update unzip dest: %@",unzipDest);
@@ -185,7 +184,7 @@ static NSURL *_updateNotesLocation;
     
     NSLog(@"_updateLocation: %@", _updateLocation);
     
-    NSURL *currentBundleURL = [[NSBundle bundleForClass:self] bundleURL];
+    NSURL *currentBundleURL = [[NSBundle bundleForClass:self] bundleURL]; // TODO: Update to use Objects.h
     NSURL *currentBundleEnclosingURL = [currentBundleURL URLByDeletingLastPathComponent];
     NSURL *updateBundleURL = [[NSURL fileURLWithPath:unzipDest] URLByAppendingPathComponent:kMFMainAppName];
     
@@ -197,6 +196,8 @@ static NSURL *_updateNotesLocation;
 // prepare apple script which can install the update (executed within Mouse Fix Accomplice)
     
     // copy config.plist into the updated bundle, if the new config is compatible
+    
+    // TODO: Remove config copying
     
     NSString *configPathRelative = @"/Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/Resources/config.plist"; // REMOVE THIS
     

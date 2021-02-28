@@ -73,8 +73,11 @@ NSDictionary *_columnIdentifierToKeyPath;
     [self loadTableViewDataModelFromConfig];
     [_tableView reloadData];
 
-    // Display window
-    [Utility_App openWindowWithFadeAnimation:self.window fadeIn:YES fadeTime:0.1];
+    // Center window
+    [self centerWindowOnMainWindow];
+    
+    // Keep this window on top
+    self.window.level = NSFloatingWindowLevel;
     
     // Make window resizable
     self.window.styleMask = self.window.styleMask | NSWindowStyleMaskResizable;
@@ -86,9 +89,14 @@ NSDictionary *_columnIdentifierToKeyPath;
     // Make tableView drag and drop target
     NSString *fileURLUTI = @"public.file-url";
     [_tableView registerForDraggedTypes:@[fileURLUTI]]; // makes it accept apps
+    
+    // Display window
+    [Utility_App openWindowWithFadeAnimation:self.window fadeIn:YES fadeTime:0.1];
 }
 - (void)end {
-    [Utility_App openWindowWithFadeAnimation:self.window fadeIn:NO fadeTime:0.1];
+    if (self.window.isVisible) {
+        [Utility_App openWindowWithFadeAnimation:self.window fadeIn:NO fadeTime:0.1];
+    }
 }
 
 - (void)centerWindowOnMainWindow {
@@ -100,8 +108,6 @@ NSDictionary *_columnIdentifierToKeyPath;
     // We set the size properly in IB, but when the first column had its `Resizing` property set to `Autoresizes with Table` (which we want it to do) then it would always end up a little smaller than the table for some reason
     NSTableColumn *col = _tableView.tableColumns[0];
     [col setWidth:col.maxWidth];
-    // Center window
-    [self centerWindowOnMainWindow];
 }
 
 - (void)setConfigFileToUI {
