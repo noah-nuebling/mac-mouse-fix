@@ -15,6 +15,7 @@
 #import "ZipArchive/SSZipArchive.h"
 #import "Constants.h"
 #import "Objects.h"
+#import "SharedUtil.h"
 
 
 
@@ -164,15 +165,16 @@ static NSURL *_updateNotesLocation;
 }
 
 + (void)update {
+    
+    // Dismiss more sheet
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSLog(@"threadddddd: %@", NSThread.currentThread);
         [MoreSheet.instance end];
     });
     
+    // Get file manager
     NSFileManager *fm = [NSFileManager defaultManager];
-
+    
     // Unzip the downloaded file
-
     NSString *unzipDest = [[_updateLocation path] stringByDeletingLastPathComponent];
     NSLog(@"update unzip dest: %@",unzipDest);
     NSError *unzipError;
@@ -181,153 +183,37 @@ static NSURL *_updateNotesLocation;
         NSLog(@"Error unzipping app: %@", unzipError);
         return;
     }
+    NSLog(@"Update downloaded to temporary folder: %@", _updateLocation);
     
-    NSLog(@"_updateLocation: %@", _updateLocation);
+    // Prepare Apple Script which can install the update
     
-    NSURL *currentBundleURL = [[NSBundle bundleForClass:self] bundleURL]; // TODO: Update to use Objects.h
+    // I think the ability to get elevated permissions easily might have been one of the main reasons we chose Apple Script over NSWorkspace
+    //  But we don't need elevated permission anymore. We only needed them to update prefpanes which are installed for all users
+    // Prefpane versions of the script also moved the config file over to the newly installed prefpane
+    //  We don't need this anymore cause the config is now stored in the library. The attempts to
+    //  copy over the old config should fail gracefully, because the path to config was hardcoded and doesn't exist anymore
+    
+    NSURL *currentBundleURL = Objects.mainAppBundle.bundleURL;
     NSURL *currentBundleEnclosingURL = [currentBundleURL URLByDeletingLastPathComponent];
     NSURL *updateBundleURL = [[NSURL fileURLWithPath:unzipDest] URLByAppendingPathComponent:kMFMainAppName];
-    
-    
-    
-    
-    
-    
-// prepare apple script which can install the update (executed within Mouse Fix Accomplice)
-    
-    // copy config.plist into the updated bundle, if the new config is compatible
-    
-    // TODO: Remove config copying
-    
-    NSString *configPathRelative = @"/Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/Resources/config.plist"; // REMOVE THIS
-    
-    
-        
-    // copy the old config over to the new bundle
-    NSString *currentConfigOSAPath = [[[currentBundleURL path]  stringByAppendingPathComponent:configPathRelative]stringByReplacingOccurrencesOfString:@" " withString:@"\\\\ "];
-    NSString* updateConfigOSAPath = [[[updateBundleURL path] stringByAppendingPathComponent:configPathRelative] stringByReplacingOccurrencesOfString:@" " withString:@"\\\\ "];
-
-    
-    
-    
-    // installing update
-    
+    // Forgot why we need to quadrupel escape " "
     NSString *currentBundleOSAPath = [[currentBundleURL path] stringByReplacingOccurrencesOfString:@" " withString:@"\\\\ "];
-//    NSString *currentBundleEnclosingOSAPath = [[[currentBundleURL path] stringByDeletingLastPathComponent] stringByReplacingOccurrencesOfString:@" " withString:@"\\\\ "];
     NSString *updateBundleOSAPath = [[updateBundleURL path] stringByReplacingOccurrencesOfString:@" " withString:@"\\\\ "];
-    
     NSString *adminParamOSA = @"";
     if (![fm isWritableFileAtPath:[currentBundleEnclosingURL path]]
         || ![fm isWritableFileAtPath:[currentBundleURL path]]
         || ![fm isReadableFileAtPath:[updateBundleURL path]]) {
-        NSLog(@"don't have permissions to install update - adding admin rights request to installScriptOSA");
+        // TODO: I'm almost certain we should remove this. I think it was necessary to update prefpanes installed for all users, but with an app that shouldn't be an issue.
+        NSLog(@"We'll need elevated permissions to install update - adding admin rights request to installation script");
         adminParamOSA = @" with administrator privileges";
     }
-    
-    // assemble the script
-    
-    NSString *installScriptOSA = [NSString stringWithFormat:@"do shell script \"rm %@;cp %@ %@;rm -r %@;cp -a %@ %@\"%@",
-                                  updateConfigOSAPath,currentConfigOSAPath,updateConfigOSAPath,
-                                  currentBundleOSAPath,updateBundleOSAPath,currentBundleOSAPath,
-                                  adminParamOSA];
-    //NSString *installScriptOSA = [NSString stringWithFormat:@"do shell script \"rm -r %@;cp -a %@ %@\"%@", currentOSAPath, updateOSAPath, currentEnclosingOSAPath, adminParamOSA];
-    NSArray *args = @[installScriptOSA];
-    
-    NSLog(@"script: %@", installScriptOSA);
-    
-    // get the url to Mouse Fix Accomplice executable
-    
+    // Assemble the script
+    NSString *installScriptOSA = [NSString stringWithFormat:@"do shell script \"rm -r %@;cp -a %@ %@\"%@",
+                                  currentBundleOSAPath,updateBundleOSAPath,currentBundleOSAPath, adminParamOSA];
+    NSLog(@"Assembled update installation script: %@", installScriptOSA);
     NSURL *accompliceExecURL = [Objects.mainAppBundle.bundleURL URLByAppendingPathComponent:kMFRelativeAccomplicePath];
-    
-    // launch Mouse Fix Accomplice
-    
-    if (@available(macOS 10.13, *)) {
-        NSError *launchUpdaterErr;
-        [NSTask launchedTaskWithExecutableURL:accompliceExecURL arguments:args error:&launchUpdaterErr terminationHandler:^(NSTask *task) {
-            NSLog(@"updater terminated: %@", launchUpdaterErr);
-        }];
-        if (launchUpdaterErr) {
-            NSLog(@"error launching updater: %@", launchUpdaterErr);
-        }
-    } else {
-        [NSTask launchedTaskWithLaunchPath:[accompliceExecURL path] arguments:args];
-    }
-    
-
-    
-    
-    
-//        if (NO) {//([fm fileExistsAtPath:[moveDest path]]) {
-////            NSError *replaceError;
-////            [fm replaceItemAtURL:[moveDest URLByAppendingPathComponent:@"Contents"] withItemAtURL:[moveSrc URLByAppendingPathComponent:@"Contents"] backupItemName:NULL options:NSFileManagerItemReplacementUsingNewMetadataOnly resultingItemURL:NULL error:&replaceError];
-////            if (replaceError != NULL) {
-////                NSLog(@"Replace file error: %@", replaceError);
-////            }
-//        } else {
-//
-//            id authObj = [SFAuthorization authorization];
-//
-//            NSError *authObtainErr;
-//            //[authObj obtainWithRight:kAuthorizationRuleAuthenticateAsAdmin flags:(kAuthorizationFlagExtendRights | kAuthorizationFlagInteractionAllowed | kAuthorizationFlagDefaults) error:&authObtainErr];
-//            AuthorizationRights *obtainedRights;
-//
-//
-//
-//
-//            // TODO: doc says that .value has to be the path we want to execute
-//
-//            AuthorizationItem authItem = {kAuthorizationRightExecute, 0, NULL, 0};
-//            AuthorizationRights requestedRights = {1, &authItem};
-//
-//            AuthorizationFlags authFlags = kAuthorizationFlagDefaults |
-//            kAuthorizationFlagInteractionAllowed |
-//            kAuthorizationFlagPreAuthorize |
-//            kAuthorizationFlagExtendRights;
-//
-//
-//            char promptText[100] = "Authorize Mouse Fix to install updates";
-//            AuthorizationItem authEnvPrompt = {kAuthorizationEnvironmentPrompt, strlen(promptText), promptText, 0};
-//
-////            NSBundle *thisBundle = [NSBundle bundleForClass:self];
-////            const char *promptIcon = [thisBundle pathForResource:@"Mouse_Fix_alt" ofType:@"tiff"].UTF8String;
-////            AuthorizationItem authEnvIcon = {kAuthorizationEnvironmentIcon, strlen(promptIcon), (void *)promptIcon, 0};
-//            // TODO: make the Icon work
-//            // (note: will only work if the picture is accessible by everyone (permission wise)) (http://forestparklab.blogspot.com/2013/01/osx-authorizationexecutewithprivileges.html)
-//
-//            AuthorizationItem authEnvArray[1] = {authEnvPrompt};
-//            AuthorizationEnvironment authEnv = {1, authEnvArray};
-//
-//            // TODO: use environment parameter to customize prompt
-//            [authObj obtainWithRights:&requestedRights flags:authFlags environment:&authEnv authorizedRights:&obtainedRights error:&authObtainErr];
-//            NSLog(@"authentication error: %@",authObtainErr);
-//            if (obtainedRights->items) {
-//                NSLog(@"obtained right: %s", obtainedRights->items[0].name);
-//            }
-//
-//            NSError *removeError;
-//            NSLog(@"remove URL: %@",moveDest);
-//            BOOL removeResult = [fm removeItemAtURL:moveDest error:&removeError];
-//            if (removeResult == NO) {
-//                NSLog(@"Removing file error: %@", removeError);
-//                //            return;
-//            } else {
-//            }
-//            [NSThread sleepForTimeInterval:1];
-//
-//
-//            NSError *moveError;
-//            BOOL moveResult = [fm moveItemAtURL:moveSrc toURL:moveDest error:&moveError];
-//            if (moveResult == NO) {
-//                NSLog(@"Moving file error: %@", moveError);
-//                return;
-//            }
-//
-//
-//        }
-
-    // TODO: get modifying config working again (has it ever worked?)
-    // TODO: use authorization services to install update if installed for all users
-    // TODO: restart System preferences and kill the helper app
+    NSLog(@"Asking Accomplice to install the new update...");
+    [SharedUtil launchCLT:accompliceExecURL withArgs:@[kMFAccompliceModeUpdate, installScriptOSA]];
 }
 
 @end

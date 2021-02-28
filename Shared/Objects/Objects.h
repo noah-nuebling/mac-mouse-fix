@@ -14,6 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface Objects : NSObject
 + (NSBundle *)mainAppBundle;
 + (NSBundle *)helperBundle;
++ (NSBundle *)mainAppOriginalBundle;
++ (NSBundle *)helperOriginalBundle;
++ (NSURL *)currentExecutableURL;
 + (NSURL *)MFApplicationSupportFolderURL;
 + (NSURL *)configURL;
 + (NSURL *)launchdPlistURL;

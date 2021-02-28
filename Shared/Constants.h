@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 #define kMFRelativeHelperExecutablePath     @"Contents/Library/LoginItems/Mac Mouse Fix Helper.app/Contents/MacOS/Mac Mouse Fix Helper"
 
 #define kMFRelativeMainAppPathFromHelperBundle          @"../../../../"
+#define kMFRelativeMainAppPathFromAccomplice            @"../../../../"
 #define kMFRelativeMainAppPathFromAccompliceFolder      @"../../../"
 
 #define kMFMainAppName      @"Mac Mouse Fix.app"
@@ -33,8 +34,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 // Accomplice Arguments
 
-#define kMFAccompliceModeArgumentUpdate         @"update"
-#define kMFAccompliceModeArgumentReloadHelper   @"reloadHelper"
+#define kMFAccompliceModeUpdate         @"update"
+#define kMFAccompliceModeReloadHelper   @"reloadHelper"
 
 // Remapping dictionary keywords
 

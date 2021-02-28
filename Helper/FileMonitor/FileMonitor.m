@@ -94,7 +94,7 @@ void handleRelocation() {
     
     NSLog(@"Asking Accomplice to restart Helper");
     NSURL *accompliceURL = [Objects.mainAppBundle.bundleURL URLByAppendingPathComponent:kMFRelativeAccomplicePath];
-    NSArray *args = @[kMFAccompliceModeArgumentReloadHelper];
+    NSArray *args = @[kMFAccompliceModeReloadHelper];
     [SharedUtil launchCLT:accompliceURL withArgs:args];
 }
 void uninstallCompletely() {

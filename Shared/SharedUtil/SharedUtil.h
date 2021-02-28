@@ -12,7 +12,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SharedUtil : NSObject
-+ (void)launchCLT:(NSURL *)commandLineTool withArgs:(NSArray <NSString *> *)args;
+typedef void(*MFCTLCallback)(NSTask *task, NSPipe *output, NSError *error);
+
++ (void)launchCLT:(NSURL *)commandLineTool withArgs:(NSArray <NSString *> *)arguments;
++ (void)launchCLT:(NSURL *)commandLineTool withArgs:(NSArray <NSString *> *)arguments callback:(MFCTLCallback)callback;
 + (FSEventStreamRef)scheduleFSEventStreamOnPaths:(NSArray<NSString *> *)urls withCallback:(FSEventStreamCallback)callback;
 + (void)destroyFSEventStream:(FSEventStreamRef)stream;
 @end

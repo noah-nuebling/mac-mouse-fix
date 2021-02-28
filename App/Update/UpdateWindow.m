@@ -30,7 +30,7 @@ static NSWindow *_instance;
 
 - (instancetype)init
 {
-    NSLog(@"init Update Window");
+    NSLog(@"Initializing Update Window");
     self = [super init];
     if (self) {
         UpdateWindow.instance = self;
@@ -73,6 +73,7 @@ static NSWindow *_instance;
     if (NSMidX(mainWindowFrame) == 0 && NSMidY(mainWindowFrame) == 0) {
         NSRect screenMid = NSScreen.mainScreen.frame;
         mainMid = NSMakePoint(NSMidX(screenMid), NSMidY(screenMid)); // fall back of the prefpane window hasn't loaded, yet.
+        // TODO: Update this stuff for no prefpane
     } else {
         mainMid = NSMakePoint(NSMidX(mainWindowFrame), NSMidY(mainWindowFrame));
     }
@@ -95,7 +96,7 @@ static NSWindow *_instance;
     
     
     WKWebViewConfiguration *WKConf = [[WKWebViewConfiguration alloc] init];
-    [WKConf.userContentController addScriptMessageHandler:(id<WKScriptMessageHandler>)self name:@"DABIGBUM"];
+    [WKConf.userContentController addScriptMessageHandler:(id<WKScriptMessageHandler>)self name:@"THELARGEBOTTOM"];
     
     WKWebView *wv = [[WKWebView alloc] initWithFrame:WKFrm configuration:WKConf];
     [wv setNavigationDelegate:self];

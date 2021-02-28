@@ -25,6 +25,24 @@
     [self getBundlesForMainApp:&mainAppBundle helper:&hhh];
     return mainAppBundle;
 }
+/// Return bundle at the location at which the app was launched - even after the app has been moved while running
++ (NSBundle *)helperOriginalBundle { // Get pre-move location if moved while running
+    NSBundle *hhh;
+    NSBundle *helperBundle;
+    [self getOriginalBundlesForMainApp:&hhh helper:&helperBundle];
+    return helperBundle;
+}
+/// Return bundle at the location at which the app was launched - even after the app has been moved while running
++ (NSBundle *)mainAppOriginalBundle {
+    NSBundle *mainAppBundle;
+    NSBundle *hhh;
+    [self getOriginalBundlesForMainApp:&mainAppBundle helper:&hhh];
+    return mainAppBundle;
+}
+/// This seems to return the URL at which the app was launched - even after the app has been moved while running
++ (NSURL *)currentExecutableURL {
+    return [NSURL fileURLWithPath:NSProcessInfo.processInfo.arguments[0]];
+}
 static NSURL *_MFApplicationSupportFolderURL;
 + (NSURL *)MFApplicationSupportFolderURL {
     return _MFApplicationSupportFolderURL;
@@ -46,14 +64,10 @@ static NSURL *_configURL;
     _configURL = [_MFApplicationSupportFolderURL URLByAppendingPathComponent:@"config.plist"];
 }
 
-static NSURL *_lastValidMainAppFRURL;
-static NSURL *_lastValidHelperFRURL;
-+ (void)getBundlesForMainApp:(NSBundle **)mainAppBundle helper:(NSBundle **)helperBundle {
-    
-    // Approach 1: NSBundle bundleForClass
-    
-//    NSBundle *thisBundle = [NSBundle bundleForClass:self.class]; // Probably same as [NSBundle mainBundle]
-    NSBundle *thisBundle = [NSBundle mainBundle];
+/// This gets bundles at locations at which they were launched. These locations are incorrect if the app was moved while it or the helper is open
+/// To get (best estimate of) up-to-date bundles, use `getBundlesForMainApp:helper`
++ (void)getOriginalBundlesForMainApp:(NSBundle *__autoreleasing *)mainAppBundle helper:(NSBundle *__autoreleasing *)helperBundle {
+    NSBundle *thisBundle = NSBundle.mainBundle;
     
     if ([thisBundle.bundleIdentifier isEqualToString:kMFBundleIDApp]) {
         NSString *helperPath = [thisBundle.bundleURL URLByAppendingPathComponent:kMFRelativeHelperAppPath].path;
@@ -72,10 +86,17 @@ static NSURL *_lastValidHelperFRURL;
     } else {
         [NSException raise:@"UnknownCallerException" format:@"No handling code for caller at: %@", thisBundle.bundlePath];
     }
-     // ^ I thought this would be very robust, but this stuff fails after moving the app.
-      // bundle.bundleURL will still reports the pre-move location for some reason.
+}
+
+static NSURL *_lastValidMainAppFRURL;
+static NSURL *_lastValidHelperFRURL;
++ (void)getBundlesForMainApp:(NSBundle **)mainAppBundle helper:(NSBundle **)helperBundle {
     
-    // v Attempt to fix Approach 1:
+    [self getOriginalBundlesForMainApp:mainAppBundle helper:helperBundle];
+     // ^ I thought this would be very robust, but this stuff fails after moving the app.
+      // NSBundle.mainBundle.bundleURL will still report the pre-move location for some reason.
+    
+    // v Attempt to fix
     //  Store file reference URLs and fall back on last valid one if
     //  the bundle obtained through the default method is invalid (that happens after the app is moved while helper is open)
     NSURL *mainAppFRURL = (*mainAppBundle).bundleURL.fileReferenceURL;
@@ -90,31 +111,6 @@ static NSURL *_lastValidHelperFRURL;
     }
     *mainAppBundle = [NSBundle bundleWithURL:mainAppFRURL];
     *helperBundle = [NSBundle bundleWithURL:helperFRURL];
-    
-    
-    // Approach 2: NSWorkspace
-    
-    // v This stuff reacts to moving the app, but it's are ambiguous when several versions of the app are installed
-    //      So I worry this might fail really hard in some situations, updates might be a problem, having different versions on the computer might be really bad too
-//    *mainAppBundle = nil;
-//    *helperBundle = nil;
-//    NSURL *appURL = [NSWorkspace.sharedWorkspace URLForApplicationWithBundleIdentifier:kMFBundleIDApp];
-//    NSURL *helperURL = [NSWorkspace.sharedWorkspace URLForApplicationWithBundleIdentifier:kMFBundleIDHelper];
-//    if (appURL) {
-//        *mainAppBundle = [NSBundle bundleWithURL:[NSWorkspace.sharedWorkspace URLForApplicationWithBundleIdentifier:kMFBundleIDApp]];
-//    }
-//    if (helperURL) {
-//        *helperBundle = [NSBundle bundleWithURL:[NSWorkspace.sharedWorkspace URLForApplicationWithBundleIdentifier:kMFBundleIDHelper]];
-//    }
-    
-    // Approach 3: NSBundle bundleWithIdentifier:
-    
-    // v This doesn't work at all. I thought it would be the same as the NSWorkspace code above but it leads to immediate crash after launch. I think cause it returns nil or sth
-//    *mainAppBundle = nil;
-//    *helperBundle = nil;
-//    *mainAppBundle = [NSBundle bundleWithIdentifier:kMFBundleIDApp];
-//    *helperBundle = [NSBundle bundleWithIdentifier:kMFBundleIDHelper];
-    
 }
 
 @end

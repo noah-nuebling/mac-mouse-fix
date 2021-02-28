@@ -19,42 +19,38 @@ static int update(const char *installScript) {
     
     // Instead of applescript i could use nsworkspace https://developer.apple.com/documentation/appkit/nsworkspace/3025774-requestauthorizationoftype?language=objc
     
-    // Execute the install script (transfer the current settings to the updated bundle and then replace the current bundle with the updated one)
+    // Execute the install script (replace the current bundle with the updated one)
     NSDictionary *installErr = [NSDictionary new];
     NSAppleScript *installOSAObj = [[NSAppleScript alloc] initWithSource:[NSString stringWithCString:installScript encoding:NSUTF8StringEncoding]];
     if ([installOSAObj executeAndReturnError:&installErr]) {
-        NSLog(@"successfully installed!");
+        NSLog(@"Update successfully installed!");
     } else {
-        NSLog(@"failed to install!");
-        NSLog(@"%@", installErr);
+        NSLog(@"Failed to install update with error: %@", installErr);
         return 0;
     }
-    
-    // Kill system preferences
-    NSArray *prefApps = [NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.apple.systempreferences"];
-    for (NSRunningApplication *prefApp in prefApps) {
-        [prefApp terminate];
+    // Find main app
+    NSRunningApplication *mainApp;
+    for (NSRunningApplication *app in [NSRunningApplication runningApplicationsWithBundleIdentifier:kMFBundleIDApp]) {
+        if ([app.bundleURL isEqualTo:Objects.mainAppOriginalBundle.bundleURL]) { // Not sure if have to use `helperOriginalBundle` or `helperBundle`
+            mainApp = app;
+            break;
+        }
     }
-    
-    // Wait until system preferences terminates
-    int i = 0;
-    NSArray *runningApps;
-    do {
+    // Kill main app and wait until it terminates
+    while (!mainApp.isTerminated) {
+        [mainApp terminate];
         [NSThread sleepForTimeInterval:0.01];
-        runningApps = [NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.apple.systempreferences"];
-        i++;
-    } while ([runningApps count] > 0);
-    
-    
-    // Kill the helper app
-    // (the updated helper application will subsequently be launched by launchd due to the keepAlive attribute in Mac Mouse Fix helper's launchd.plist)
-    NSArray *helperApps = [NSRunningApplication runningApplicationsWithBundleIdentifier:kMFBundleIDHelper];
-    for (NSRunningApplication *helpApp in helperApps) {
-        [helpApp terminate];
     }
-    
-    // Open the newly installed app
-    NSURL *mainAppURL = [[[NSURL fileURLWithPath:NSProcessInfo.processInfo.arguments[0]] URLByAppendingPathComponent:@"/../../../.."] URLByStandardizingPath];
+    // Find and kill helper
+    // The updated helper application will subsequently be launched by launchd due to the keepAlive attribute in Mac Mouse Fix Helper's launchd.plist
+    for (NSRunningApplication *app in [NSRunningApplication runningApplicationsWithBundleIdentifier:kMFBundleIDHelper]) {
+        if ([app.bundleURL isEqualTo: Objects.helperOriginalBundle.bundleURL]) {
+            [app terminate];
+            break;
+        }
+    }
+    // Open the newly installed main app
+    NSURL *mainAppURL = [[Objects.currentExecutableURL URLByAppendingPathComponent:kMFRelativeMainAppPathFromAccomplice] URLByStandardizingPath];
     [NSWorkspace.sharedWorkspace openURL:mainAppURL];
     
     return 0;
@@ -76,10 +72,10 @@ int main(int argc, const char * argv[]) {
         NSLog(@"Running Accomplice at path: %@", NSBundle.mainBundle.bundlePath); // The "bundlePath" is the enclosing folder of the executable
         
         const char *mode = argv[1];
-        if ([@(mode) isEqualToString:kMFAccompliceModeArgumentUpdate]) {
+        if ([@(mode) isEqualToString:kMFAccompliceModeUpdate]) {
             const char *installScript = argv[2];
             update(installScript);
-        } else if ([@(mode) isEqualToString:kMFAccompliceModeArgumentReloadHelper]) {
+        } else if ([@(mode) isEqualToString:kMFAccompliceModeReloadHelper]) {
             reloadHelper();
         }
     }
