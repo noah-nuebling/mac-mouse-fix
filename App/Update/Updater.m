@@ -26,8 +26,6 @@
 
 # pragma mark - Class Properties
 
-static NSURL *_baseRemoteURL;
-
 static NSURLSessionDownloadTask *_downloadTask1;
 static NSURLSessionDownloadTask *_downloadTask2;
 static NSURLSession *_downloadSession;
@@ -36,11 +34,31 @@ static NSInteger _availableVersion;
 static NSURL *_updateLocation;
 static NSURL *_updateNotesLocation;
 
+# pragma mark - Hardcoded URLs
+
+static NSURL *_baseRemoteURL;
+static NSString *_bundleVersionSubpath;
+static NSString *_updateNotesSubpath;
+static NSString *_mainAppSubpath;
+static NSString *_updateNotesUnzipSubpath;
+static NSString *_mainAppUnzipSubpath;
+
++ (void)setupURLs {
+//    _baseRemoteURL = [[NSURL URLWithString:kMFWebsiteAddress] URLByAppendingPathComponent:@"maindownload-app"];
+    _baseRemoteURL = [NSURL fileURLWithPath:@"/Users/Noah/Documents/Projekte/Programmieren/Webstorm/Mac-Mouse-Fix-Website/maindownload-app"];
+    
+    _bundleVersionSubpath = @"/bundleversion-app";
+    _updateNotesSubpath = @"/updatenotes-app.zip";
+    _mainAppSubpath = @"/MacMouseFixApp.zip";
+    
+    _updateNotesUnzipSubpath = @"updatenotes-app";
+    _mainAppUnzipSubpath = kMFMainAppName;
+}
+
 # pragma mark - Class Methods
 
-+(void)load {
-//    _baseRemoteURL = [[NSURL URLWithString:kMFWebsiteAddress] URLByAppendingPathComponent:@"maindownload"];
-    _baseRemoteURL = [NSURL fileURLWithPath:@"/Users/Noah/Documents/Projekte/Programmieren/Webstorm/Mac-Mouse-Fix-Website/maindownload"];
++ (void)load {
+    [self setupURLs];
 }
 
 + (void)setupDownloadSession {
@@ -73,7 +91,7 @@ static NSURL *_updateNotesLocation;
     
     // Clean up before starting the update procedure again
     
-    _downloadTask1 = [_downloadSession downloadTaskWithURL:[_baseRemoteURL URLByAppendingPathComponent:@"/bundleversion"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    _downloadTask1 = [_downloadSession downloadTaskWithURL:[_baseRemoteURL URLByAppendingPathComponent:_bundleVersionSubpath] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (error != NULL){
             NSLog(@"checking for updates failed");
             NSLog(@"Error: \n%@", error);
@@ -93,7 +111,7 @@ static NSURL *_updateNotesLocation;
 }
 + (void)downloadAndPresent {
     NSLog(@"Downloading update notes...");
-    _downloadTask1 = [_downloadSession downloadTaskWithURL:[_baseRemoteURL URLByAppendingPathComponent:@"/updatenotes.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    _downloadTask1 = [_downloadSession downloadTaskWithURL:[_baseRemoteURL URLByAppendingPathComponent:_updateNotesSubpath] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (error != NULL) {
             NSLog(@"Error downloading update notes: %@", error);
             return;
@@ -107,10 +125,10 @@ static NSURL *_updateNotesLocation;
             NSLog(@"Error unzipping update Notes: %@", unzipError);
             return;
         }
-        _updateNotesLocation = [[NSURL fileURLWithPath:unzipDest] URLByAppendingPathComponent:@"updatenotes"];
+        _updateNotesLocation = [[NSURL fileURLWithPath:unzipDest] URLByAppendingPathComponent:_updateNotesUnzipSubpath];
         
         NSLog(@"Downloading app update...");
-        _downloadTask2 = [_downloadSession downloadTaskWithURL:[_baseRemoteURL URLByAppendingPathComponent:@"/MacMouseFix.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        _downloadTask2 = [_downloadSession downloadTaskWithURL:[_baseRemoteURL URLByAppendingPathComponent:_mainAppSubpath] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
             if (error != NULL) {
                 NSLog(@"Error downloading appupdate: %@", error);
                 return;
@@ -123,28 +141,6 @@ static NSURL *_updateNotesLocation;
     }];
     [_downloadTask1 resume];
 }
-    
-    
-    
-//    _downloadTask = [_downloadSession downloadTaskWithURL:[NSURL URLWithString: @"https://noah-nuebling.github.io/mac-mouse-fix-website/maindownload/MacMouseFix.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-//
-//        if (error != NULL) {
-//            NSLog(@"Downloading error: %@", error);
-//            return;
-//        }
-//        NSFileManager *fm = [NSFileManager defaultManager];
-//
-//        // unzip the downloaded file
-//        
-//        NSString *unzipDest = [[location path] stringByDeletingLastPathComponent];
-//        NSLog(@"unzip dest: %@",unzipDest);
-//        NSError *unzipError;
-//        [SSZipArchive unzipFileAtPath:[location path] toDestination:unzipDest overwrite:YES password:NULL error:&unzipError];
-//        if (unzipError != NULL) {
-//            NSLog(@"Unzipping error: %@", unzipError);
-//            return;
-//        }
-//
 
 + (void)presentUpdate {
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -202,7 +198,7 @@ static NSURL *_updateNotesLocation;
     
     NSURL *currentBundleURL = Objects.mainAppBundle.bundleURL;
     NSURL *currentBundleEnclosingURL = [currentBundleURL URLByDeletingLastPathComponent];
-    NSURL *updateBundleURL = [[NSURL fileURLWithPath:unzipDest] URLByAppendingPathComponent:kMFMainAppName];
+    NSURL *updateBundleURL = [[NSURL fileURLWithPath:unzipDest] URLByAppendingPathComponent:_mainAppUnzipSubpath];
     // Forgot why we need to quadrupel escape " "
     NSString *currentBundleOSAPath = [[currentBundleURL path] stringByReplacingOccurrencesOfString:@" " withString:@"\\\\ "];
     NSString *updateBundleOSAPath = [[updateBundleURL path] stringByReplacingOccurrencesOfString:@" " withString:@"\\\\ "];
