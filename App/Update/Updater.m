@@ -171,8 +171,7 @@ static NSURL *_updateNotesLocation;
     
     
     // TODO: Consider including the update origin URL in the config file
-    // This would make future update debugging easierz, cause we could easily test, what happens if an older version tries to update to a specific newer version, without having to recompile the old version
-    Consider including the whole install script, or at least the relevant paths in the download from the website
+    // This would make future update debugging easier, cause we could easily test, what happens if an older version tries to update to a specific newer version, without having to recompile the old version
     
     // Dismiss more sheet
     dispatch_async(dispatch_get_main_queue(), ^{
