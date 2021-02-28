@@ -24,11 +24,6 @@
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
-		<key>Mac Mouse Fix Accomplice.xcscheme_^#shared#^_</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>4</integer>
-		</dict>
 		<key>Mouse Fix App.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
@@ -42,6 +37,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>4F2FDF2F2315662400C7BE14</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>4F94F5ED25E5EC2500D9F24A</key>
 		<dict>
 			<key>primary</key>

@@ -12,6 +12,7 @@
 #import "../MoreSheet/MoreSheet.h"
 #import "../AppDelegate.h"
 #import <WebKit/WebKit.h>
+#import "Utility_App.h"
 
 @interface UpdateWindow ()
 
@@ -58,33 +59,25 @@ static NSWindow *_instance;
 }
 
 - (void)startWithUpdateNotes:(NSURL *)updateNotesLocation {
+    
+    NSLog(@"Starting update window with update notes at: %@", updateNotesLocation.path);
     [super windowDidLoad];
     
+    // React to darkmode/lightmode change
     [NSDistributedNotificationCenter.defaultCenter addObserver:self selector:@selector(themeChanged:) name:@"AppleInterfaceThemeChangedNotification" object: nil];
     
-    [super windowDidLoad];
+    // Create webview
     [self createWebviewWithURL:updateNotesLocation];
     
+    // Set size
+    NSRect frame = self.window.frame;
+    frame.size = CGSizeMake(330, 220);
+    [self.window setFrame:frame display:NO];
     
+    // Center update window on main window
+    [Utility_App centerWindow:self.window atPoint:[Utility_App getCenterOfRect:AppDelegate.mainWindow.frame]];
+    [Utility_App openWindowWithFadeAnimation:self.window fadeIn:YES fadeTime:0.0];
     
-    NSRect mainWindowFrame = NSApp.mainWindow.frame;
-    
-    NSPoint mainMid;
-    if (NSMidX(mainWindowFrame) == 0 && NSMidY(mainWindowFrame) == 0) {
-        NSRect screenMid = NSScreen.mainScreen.frame;
-        mainMid = NSMakePoint(NSMidX(screenMid), NSMidY(screenMid)); // fall back of the prefpane window hasn't loaded, yet.
-        // TODO: Update this stuff for no prefpane
-    } else {
-        mainMid = NSMakePoint(NSMidX(mainWindowFrame), NSMidY(mainWindowFrame));
-    }
-    
-    
-    
-    CGSize win = CGSizeMake(330, 220); //(330,[JSreturn floatValue])
-    NSRect newWinPos = NSMakeRect(mainMid.x - (win.width/2.0), mainMid.y - (win.height/2.0), win.width, win.height);
-//    CGSize dsp = NSScreen.mainScreen.frame.size;
-//    NSRect newWinPos = NSMakeRect((dsp.width/2.0) - (win.width/2.0), (dsp.height/2.0) - (win.height/2.0) + 50, win.width, win.height);
-    [self.window setFrame:newWinPos display:YES animate:NO];
 }
 
 - (void)createWebviewWithURL:(NSURL *)updateNotesURL {

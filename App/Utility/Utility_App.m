@@ -44,8 +44,8 @@
 }
 + (NSPoint)getCenterOfRect:(NSRect)rect {
     NSPoint ctr;
-    ctr.x = rect.origin.x + (0.5 * rect.size.width);
-    ctr.y = rect.origin.y + (0.5 * rect.size.height);
+    ctr.x = NSMidX(rect);
+    ctr.y = NSMidY(rect);
     
     return ctr;
 }

@@ -39,8 +39,8 @@ static NSURL *_updateNotesLocation;
 # pragma mark - Class Methods
 
 +(void)load {
-    _baseRemoteURL = [NSURL URLWithString:@"https://mousefix.org/maindownload/"];
-//    _baseRemoteURL = [NSURL fileURLWithPath:@"/Users/Noah/Documents/GitHub/Mac-Mouse-Fix-Website/maindownload"];
+//    _baseRemoteURL = [[NSURL URLWithString:kMFWebsiteAddress] URLByAppendingPathComponent:@"maindownload"];
+    _baseRemoteURL = [NSURL fileURLWithPath:@"/Users/Noah/Documents/Projekte/Programmieren/Webstorm/Mac-Mouse-Fix-Website/maindownload"];
 }
 
 + (void)setupDownloadSession {
@@ -65,16 +65,13 @@ static NSURL *_updateNotesLocation;
 
 + (void)checkForUpdate {
     
-//    [MoreSheet endMoreSheetAttachedToMainWindow];
+    NSLog(@"Checking for update...");
     
-    NSLog(@"checking for update...");
-    
-    // TODO: make sure this works (on a slow connection)
-    [self reset];
+    [self reset]; // TODO: make sure this works (on a slow connection)
     
     [self setupDownloadSession];
     
-    // clean up before starting the update procedure again
+    // Clean up before starting the update procedure again
     
     _downloadTask1 = [_downloadSession downloadTaskWithURL:[_baseRemoteURL URLByAppendingPathComponent:@"/bundleversion"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (error != NULL){
@@ -95,13 +92,15 @@ static NSURL *_updateNotesLocation;
     [_downloadTask1 resume];
 }
 + (void)downloadAndPresent {
+    NSLog(@"Downloading update notes...");
     _downloadTask1 = [_downloadSession downloadTaskWithURL:[_baseRemoteURL URLByAppendingPathComponent:@"/updatenotes.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (error != NULL) {
-            NSLog(@"error downloading updatenotes: %@", error);
+            NSLog(@"Error downloading update notes: %@", error);
             return;
         }
+        NSLog(@"Successfully downloaded update notes");
         NSString *unzipDest = [[location path] stringByDeletingLastPathComponent];
-        NSLog(@"update notes unzip dest: %@",unzipDest);
+        NSLog(@"Unzipped update notes to: %@",unzipDest);
         NSError *unzipError;
         [SSZipArchive unzipFileAtPath:[location path] toDestination:unzipDest overwrite:YES password:NULL error:&unzipError];
         if (unzipError != NULL) {
@@ -109,11 +108,14 @@ static NSURL *_updateNotesLocation;
             return;
         }
         _updateNotesLocation = [[NSURL fileURLWithPath:unzipDest] URLByAppendingPathComponent:@"updatenotes"];
+        
+        NSLog(@"Downloading app update...");
         _downloadTask2 = [_downloadSession downloadTaskWithURL:[_baseRemoteURL URLByAppendingPathComponent:@"/MacMouseFix.zip"] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
             if (error != NULL) {
-                NSLog(@"error downloading app: %@", error);
+                NSLog(@"Error downloading appupdate: %@", error);
                 return;
             }
+            NSLog(@"Successfully downloaded app update. Archive at: %@", location);
             _updateLocation = location;
             [self presentUpdate];
         }];
@@ -147,9 +149,9 @@ static NSURL *_updateNotesLocation;
 + (void)presentUpdate {
     dispatch_async(dispatch_get_main_queue(), ^{
         
+        NSLog(@"Presenting update to user...");
         
-        _windowController = [UpdateWindow alloc];
-        _windowController = [_windowController init];
+        _windowController = [[UpdateWindow alloc] init];
         [_windowController startWithUpdateNotes:_updateNotesLocation];
         
         [_windowController showWindow:nil];

@@ -37,6 +37,10 @@ NS_ASSUME_NONNULL_BEGIN
 #define kMFAccompliceModeUpdate         @"update"
 #define kMFAccompliceModeReloadHelper   @"reloadHelper"
 
+// Website
+
+#define kMFWebsiteAddress   @"https://mousefix.org"
+
 // Remapping dictionary keywords
 
 typedef NSString*                                                       MFStringConstant; // Not sure if this is useful
