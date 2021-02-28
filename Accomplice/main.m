@@ -15,9 +15,10 @@
 
 static int update(const char *installScript) {
     
-    NSLog(@"Updating Helper...");
+    NSLog(@"Installing Mac Mouse Fix Update...");
     
     // Instead of applescript i could use nsworkspace https://developer.apple.com/documentation/appkit/nsworkspace/3025774-requestauthorizationoftype?language=objc
+    // Note for debugging: Must clean build folder after running update in the build folder, otherwise Xcode will be confused and build frankensteins monster bundle
     
     // Execute the install script (replace the current bundle with the updated one)
     NSDictionary *installErr = [NSDictionary new];
@@ -28,6 +29,7 @@ static int update(const char *installScript) {
         NSLog(@"Failed to install update with error: %@", installErr);
         return 0;
     }
+    NSLog(@"Finding and killing main app");
     // Find main app
     NSRunningApplication *mainApp;
     for (NSRunningApplication *app in [NSRunningApplication runningApplicationsWithBundleIdentifier:kMFBundleIDApp]) {
@@ -36,21 +38,31 @@ static int update(const char *installScript) {
             break;
         }
     }
+    NSLog(@"Main app found at: %@", mainApp.bundleURL);
     // Kill main app and wait until it terminates
-    while (!mainApp.isTerminated) {
+    do {
+        NSLog(@"Trying to terminate main app...");
         [mainApp terminate];
-        [NSThread sleepForTimeInterval:0.01];
-    }
+        [NSThread sleepForTimeInterval:2.0];
+    } while (NO);
+//    } while (![mainApp isTerminated]); // This doesn't work for some reason
+    
+    NSLog(@"Main app neutralized");
+    
+    NSLog(@"Finding and killing Helper");
     // Find and kill helper
     // The updated helper application will subsequently be launched by launchd due to the keepAlive attribute in Mac Mouse Fix Helper's launchd.plist
     for (NSRunningApplication *app in [NSRunningApplication runningApplicationsWithBundleIdentifier:kMFBundleIDHelper]) {
         if ([app.bundleURL isEqualTo: Objects.helperOriginalBundle.bundleURL]) {
             [app terminate];
+            NSLog(@"Helper neutralized");
             break;
         }
     }
+    
     // Open the newly installed main app
     NSURL *mainAppURL = [[Objects.currentExecutableURL URLByAppendingPathComponent:kMFRelativeMainAppPathFromAccomplice] URLByStandardizingPath];
+    NSLog(@"Opening updated app at: %@", mainAppURL);
     [NSWorkspace.sharedWorkspace openURL:mainAppURL];
     
     return 0;

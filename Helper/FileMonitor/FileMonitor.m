@@ -57,7 +57,7 @@ void Handle_FSCallback(ConstFSEventStreamRef streamRef, void *clientCallBackInfo
         NSURL *helperURLOld = NSBundle.mainBundle.bundleURL;
         BOOL isInOldLocation = [helperURL isEqualTo:helperURLOld];
         if (isInOldLocation) {
-            NSLog(@"... File system event was probably unrelated to Mac Mouse Fix");
+            NSLog(@"... Mac Mouse Fix can still be found in its original location. Not doing anything");
             return;
         }
         NSLog(@"Mac Mouse Fix Helper was launched at: %@ but is now at: %@", helperURLOld, helperURL);

@@ -102,7 +102,6 @@ static NSDictionary *sideButtonActions;
     
 }
 
-
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
     
     NSLog(@"PREF PANEEE");
@@ -113,6 +112,12 @@ static NSDictionary *sideButtonActions;
     if (checkForUpdates == YES) {
         [Updater checkForUpdate];
     }
+}
+- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
+    NSLog(@"Mac Mouse Fix should terminate");
+    [OverridePanel.instance end];
+    [MoreSheet.instance end]; // Doesn't help quitting while more sheet is up 
+    return NSTerminateNow;
 }
 
 // Use a delay to prevent jankyness when window becomes key while app is requesting accessibility. Use timer so it can be stopped once Helper sends "I still have no accessibility" message
@@ -125,10 +130,6 @@ NSTimer *removeAccOverlayTimer;
     removeAccOverlayTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 repeats:NO block:^(NSTimer * _Nonnull timer) {
         [AuthorizeAccessibilityView remove];
     }];
-}
-- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
-    [OverridePanel.instance end]; // Doesn't do anything to help cmd-q from working while more sheet is showing
-    return NSTerminateNow;
 }
 - (void)windowWillClose:(NSNotification *)notification {
     [UpdateWindow.instance close];

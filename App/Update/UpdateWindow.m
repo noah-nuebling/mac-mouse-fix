@@ -63,6 +63,9 @@ static NSWindow *_instance;
     NSLog(@"Starting update window with update notes at: %@", updateNotesLocation.path);
     [super windowDidLoad];
     
+    // Disable resize button
+    [[self.window standardWindowButton:NSWindowZoomButton] setEnabled:NO];
+    
     // React to darkmode/lightmode change
     [NSDistributedNotificationCenter.defaultCenter addObserver:self selector:@selector(themeChanged:) name:@"AppleInterfaceThemeChangedNotification" object: nil];
     
@@ -77,6 +80,8 @@ static NSWindow *_instance;
     // Center update window on main window
     [Utility_App centerWindow:self.window atPoint:[Utility_App getCenterOfRect:AppDelegate.mainWindow.frame]];
     [Utility_App openWindowWithFadeAnimation:self.window fadeIn:YES fadeTime:0.0];
+    
+    
     
 }
 
