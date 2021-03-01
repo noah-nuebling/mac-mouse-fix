@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: 
+about: Hidden
 title: ''
 labels: bug
 assignees: ''
