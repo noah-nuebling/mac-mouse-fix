@@ -122,15 +122,24 @@ static NSDictionary *sideButtonActions;
 
 // Use a delay to prevent jankyness when window becomes key while app is requesting accessibility. Use timer so it can be stopped once Helper sends "I still have no accessibility" message
 NSTimer *removeAccOverlayTimer;
+- (void)removeAccOverlayTimerCallback {
+    [AuthorizeAccessibilityView remove];
+}
 - (void)stopRemoveAccOverlayTimer {
     [removeAccOverlayTimer invalidate];
 }
 - (void)windowDidBecomeKey:(NSNotification *)notification {
     [MessagePort_App performSelector:@selector(sendMessageToHelper:) withObject:@"checkAccessibility" afterDelay:0.0];
-    removeAccOverlayTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 repeats:NO block:^(NSTimer * _Nonnull timer) {
-        [AuthorizeAccessibilityView remove];
-    }];
+    if (@available(macOS 10.12, *)) {
+        removeAccOverlayTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 repeats:NO block:^(NSTimer * _Nonnull timer) {
+            [self removeAccOverlayTimerCallback];
+        }];
+    } else { // Fallback on earlier versions
+        removeAccOverlayTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(removeAccOverlayTimerCallback) userInfo:nil repeats:NO];
+    }
 }
+
+
 - (void)windowWillClose:(NSNotification *)notification {
     [UpdateWindow.instance close];
     [OverridePanel.instance close];
