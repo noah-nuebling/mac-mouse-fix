@@ -19,7 +19,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
-	<string>2265</string>
+	<string>2266</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2019 Noah Nuebling (MIT License)</string>
 	<key>NSMainNibFile</key>
