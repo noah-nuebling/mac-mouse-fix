@@ -104,7 +104,7 @@ static NSDictionary *sideButtonActions;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
     
-    NSLog(@"PREF PANEEE");
+    NSLog(@"Mac Mouse Fix finished launching");
     
     [self setUIToConfigFile];
     
@@ -166,7 +166,7 @@ NSTimer *removeAccOverlayTimer;
 
 - (void)setUIToConfigFile {
     
-    NSLog(@"helperactiveEEEEEE: %hhd", [HelperServices helperIsActive]);
+    NSLog(@"Setting Enable Mac Mouse Fix checkbox to: %hhd", [HelperServices helperIsActive]);
     
 #pragma mark other
     // enableCheckbox

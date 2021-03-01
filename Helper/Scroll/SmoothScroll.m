@@ -101,7 +101,6 @@ static BOOL _hasStarted;
     if (_hasStarted) {
         return;
     }
-    NSLog(@"SmoothScroll started");
     
     _hasStarted = YES;
     [SmoothScroll resetDynamicGlobals];
@@ -112,7 +111,6 @@ static BOOL _hasStarted;
     if (!_hasStarted) {
         return;
     }
-    NSLog(@"SmoothScroll stopped");
     
     _hasStarted = NO;
     _isScrolling = NO;
