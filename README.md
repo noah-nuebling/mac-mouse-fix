@@ -2,8 +2,6 @@
 
 <!-- # Mac Mouse Fix -->
 
-A simple way to make your mouse better.
-
 ### [Download](http://www.mousefix.org) | [All releases](https://github.com/noah-nuebling/mac-mouse-fix/releases)
 
 ## Features
