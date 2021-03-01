@@ -34,6 +34,7 @@ static NSDictionary *_MFScrollPhaseToIOHIDEventPhase;
 /// \discussion
 /// When multithreading from within `ScrollControl -> eventTapCallback()` events would become invalid and unusable in the new thread.
 /// Using CGEventCreateCopy didn't help, but this does fix the issue. Not sure why.
+/// Xcode Analysis warns of potential memory leak here, even though we have `create` in the name. Maybe we should flag the return with `CF_RETURNS_RETAINED`
 + (CGEventRef)createScrollEventWithValuesFromEvent:(CGEventRef)event {
     CGEventRef newEvent = CGEventCreateScrollWheelEvent(NULL, kCGScrollEventUnitPixel, 1, 0);
     NSArray *valueFields = @[@(kCGScrollWheelEventDeltaAxis1),
@@ -50,7 +51,8 @@ static NSDictionary *_MFScrollPhaseToIOHIDEventPhase;
 }
 
 /// Creates a vertical scroll event with a line delta value of 1 and a pixel value of `lineHeight`
-+ (CGEventRef)normalizedEventWithPixelValue:(int)lineHeight {
+/// \discussion Xcode Analysis warns of potential memory leak here, even though we have `create` in the name. Maybe we should flag the return with `CF_RETURNS_RETAINED`
++ (CGEventRef)createNormalizedEventWithPixelValue:(int)lineHeight {
     // invert vertical
     CGEventRef event = CGEventCreateScrollWheelEvent(NULL, kCGScrollEventUnitPixel, 1, 0);
     CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, 1);

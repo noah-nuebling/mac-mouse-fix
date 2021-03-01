@@ -25,7 +25,7 @@ typedef enum {
 
 
 + (CGEventRef)createScrollEventWithValuesFromEvent:(CGEventRef)event;
-+ (CGEventRef)normalizedEventWithPixelValue:(int)lineHeight;
++ (CGEventRef)createNormalizedEventWithPixelValue:(int)lineHeight;
 + (CGEventRef)invertScrollEvent:(CGEventRef)event direction:(int)dir;
 + (void)logScrollEvent:(CGEventRef)event;
 + (BOOL)point:(CGPoint)p1 isAboutTheSameAs:(CGPoint)p2 threshold:(int)th;

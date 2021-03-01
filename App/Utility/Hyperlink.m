@@ -41,16 +41,16 @@ NSRect _trackingRect;
     // Set IBInspectible default values
     
     NSNumber *zeroNS = [NSNumber numberWithInt:0.0];
-    if (!_tMrgn) {
+    if (_tMrgn == nil) {
         _tMrgn = zeroNS;
     }
-    if (!_rMrgn) {
+    if (_rMrgn == nil) {
         _rMrgn = zeroNS;
     }
-    if (!_bMrgn) {
+    if (_bMrgn == nil) {
         _bMrgn = zeroNS;
     }
-    if (!_lMrgn) {
+    if (_lMrgn == nil) {
         _lMrgn = zeroNS;
     }
     

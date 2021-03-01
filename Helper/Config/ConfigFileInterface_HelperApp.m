@@ -95,7 +95,6 @@ static void fillConfigFromFile() {
 + (BOOL)updateInternalParameters_Force:(BOOL)force {
 
     // Get app under mouse pointer
-    
     NSString *bundleIDOfCurrentApp;
     if (!force) {
         
@@ -115,18 +114,21 @@ static void fillConfigFromFile() {
         bundleIDOfCurrentApp = appUnderMousePointer.bundleIdentifier;
     }
 
-    // Set internal state
-    
-    if ([_bundleIDOfAppWhichCausesAppOverride isEqualToString:bundleIDOfCurrentApp] == NO
-        || force) {
-//        if (bundleIDOfCurrentApp) {
-//            NSLog(@"Setting Override For App %@", bundleIDOfCurrentApp);
-//        }
-        _bundleIDOfAppWhichCausesAppOverride = bundleIDOfCurrentApp;
-        loadAppOverridesForApp(bundleIDOfCurrentApp);
-        [ConfigFileInterface_HelperApp updateScrollParameters];
-        [ScrollControl resetDynamicGlobals]; // Not entirely sure if necessary
-        return YES;
+    if (bundleIDOfCurrentApp == nil) {
+        // TODO: Make this work for command line executables
+    } else {
+        // Set internal state
+        if ([_bundleIDOfAppWhichCausesAppOverride isEqualToString:bundleIDOfCurrentApp] == NO
+            || force) {
+    //        if (bundleIDOfCurrentApp) {
+    //            NSLog(@"Setting Override For App %@", bundleIDOfCurrentApp);
+    //        }
+            _bundleIDOfAppWhichCausesAppOverride = bundleIDOfCurrentApp;
+            loadAppOverridesForApp(bundleIDOfCurrentApp);
+            [ConfigFileInterface_HelperApp updateScrollParameters];
+            [ScrollControl resetDynamicGlobals]; // Not entirely sure if necessary
+            return YES;
+        }
     }
     return NO;
 }
