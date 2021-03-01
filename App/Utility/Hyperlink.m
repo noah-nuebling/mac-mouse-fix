@@ -30,7 +30,6 @@ NSRect _trackingRect;
 - (void)awakeFromNib {
     
     [NSEvent addLocalMonitorForEventsMatchingMask:NSEventMaskLeftMouseUp handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
-        NSLog(@"MOUSE UPPP");
         NSPoint loc = [AppDelegate.mainWindow.contentView convertPoint:event.locationInWindow toView:self];
         if (NSPointInRect(loc, _trackingRect)) {
             [self reactToClick];

@@ -116,20 +116,21 @@ static void fillConfigFromFile() {
 
     if (bundleIDOfCurrentApp == nil) {
         // TODO: Make this work for command line executables
-    } else {
-        // Set internal state
-        if ([_bundleIDOfAppWhichCausesAppOverride isEqualToString:bundleIDOfCurrentApp] == NO
-            || force) {
-    //        if (bundleIDOfCurrentApp) {
-    //            NSLog(@"Setting Override For App %@", bundleIDOfCurrentApp);
-    //        }
-            _bundleIDOfAppWhichCausesAppOverride = bundleIDOfCurrentApp;
-            loadAppOverridesForApp(bundleIDOfCurrentApp);
-            [ConfigFileInterface_HelperApp updateScrollParameters];
-            [ScrollControl resetDynamicGlobals]; // Not entirely sure if necessary
-            return YES;
-        }
+//        return NO; // Switching app override settings doesn't apply immediately if we return here
     }
+    
+    // Set internal state
+    if ([_bundleIDOfAppWhichCausesAppOverride isEqualToString:bundleIDOfCurrentApp] == NO || force) {
+//        if (bundleIDOfCurrentApp) {
+//            NSLog(@"Setting Override For App %@", bundleIDOfCurrentApp);
+//        }
+        _bundleIDOfAppWhichCausesAppOverride = bundleIDOfCurrentApp;
+        loadAppOverridesForApp(bundleIDOfCurrentApp);
+        [ConfigFileInterface_HelperApp updateScrollParameters];
+        [ScrollControl resetDynamicGlobals]; // Not entirely sure if necessary
+        return YES;
+    }
+    
     return NO;
 }
 

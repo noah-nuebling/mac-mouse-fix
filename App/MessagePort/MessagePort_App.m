@@ -68,7 +68,7 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
 
 + (void)sendMessageToHelper:(NSString *)message {
     
-    NSLog(@"Sending message to Helper");
+    NSLog(@"Sending message to Helper: %@", message);
     
     CFMessagePortRef remotePort = CFMessagePortCreateRemote(kCFAllocatorDefault, CFSTR("com.nuebling.mousefix.helper.port"));
     if (remotePort == NULL) {
