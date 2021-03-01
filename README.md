@@ -2,7 +2,7 @@
 
 <!-- # Mac Mouse Fix -->
 
-### [Download](http://www.mousefix.org) | [All releases](https://github.com/noah-nuebling/mac-mouse-fix/releases)
+### [Download](https://noah-nuebling.github.io/mac-mouse-fix-website) | [All releases](https://github.com/noah-nuebling/mac-mouse-fix/releases)
 
 * Switch between Spaces, activate Mission Control, trigger Quick Look, or use the side buttons to navigate through pages in your browser. All of that and more. Right from your mouse.
 * Smooth Scrolling algorithm that strikes a great balance between fluidity and control. Allows you to change mouse scrolling direction independently of trackpad scrolling direction.

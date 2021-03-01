@@ -39,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 // Website
 
-#define kMFWebsiteAddress   @"https://mousefix.org"
+#define kMFWebsiteAddress   @"https://noah-nuebling.github.io/mac-mouse-fix-website" //@"https://mousefix.org"
 
 // Remapping dictionary keywords
 
