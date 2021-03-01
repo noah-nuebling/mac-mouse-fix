@@ -890,7 +890,7 @@
 				KnownAssetTags = (
 					0,
 				);
-				LastUpgradeCheck = 1110;
+				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = "Noah Nuebling";
 				TargetAttributes = {
 					4F2FDF2F2315662400C7BE14 = {
@@ -1178,6 +1178,7 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = App/SupportFiles/App.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
@@ -1205,6 +1206,7 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = App/SupportFiles/App.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
