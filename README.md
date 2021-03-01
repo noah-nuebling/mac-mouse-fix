@@ -13,4 +13,4 @@ A simple way to make your mouse better.
 * 100% free, light on system resources, and fully open source. There is no status bar item. Mouse Fix aims to be as clutter free as possible.
 
 --- 
-Use the [Mac Mouse Fix Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=other), if you have suggestions or feature requests
+Use the [Mac Mouse Fix Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=other) if you have suggestions or feature requests
