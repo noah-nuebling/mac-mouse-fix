@@ -48,7 +48,7 @@ static int update(const char *installScript) {
 //    } while (![mainApp isTerminated]); // This doesn't work for some reason
     
     // ^ Since we're not waiting till the appis terminated, we need to make sure the app always quits quickly, or the updater won't be able to automatically restart the app
-    //      We should probably try to find another method of waiting for the app to quit as it would make things a lot more robust
+    //      TODO: We should probably try to find another method of waiting for the app to quit as it would make things a lot more robustl. (See method used in prefpane) This'll do for now. 
     
     NSLog(@"Main app neutralized");
     

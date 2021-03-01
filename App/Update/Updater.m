@@ -44,8 +44,8 @@ static NSString *_updateNotesUnzipSubpath;
 static NSString *_mainAppUnzipSubpath;
 
 + (void)setupURLs {
-//    _baseRemoteURL = [[NSURL URLWithString:kMFWebsiteAddress] URLByAppendingPathComponent:@"maindownload-app"];
-    _baseRemoteURL = [NSURL fileURLWithPath:@"/Users/Noah/Documents/Projekte/Programmieren/Webstorm/Mac-Mouse-Fix-Website/maindownload-app"];
+    _baseRemoteURL = [[NSURL URLWithString:kMFWebsiteAddress] URLByAppendingPathComponent:@"maindownload-app"];
+//    _baseRemoteURL = [NSURL fileURLWithPath:@"/Users/Noah/Documents/Projekte/Programmieren/Webstorm/Mac-Mouse-Fix-Website/maindownload-app"];
     
     _bundleVersionSubpath = @"/bundleversion-app";
     _updateNotesSubpath = @"/updatenotes-app.zip";
