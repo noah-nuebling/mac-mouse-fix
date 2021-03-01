@@ -8,7 +8,7 @@
 - Added compatibilty to many mice including the Logitech MX Master
 - You can now swap the side buttons functions if they happen to be inverted on your mouse (Shoutouts to @divadretlaw!)
 - Added Dark Mode support (Thank you @stevenguh!)
-- Mac Mouse Fix will now completely uninstall itself automatically after you move it to the trash (Just make sure that 'Enable Mac Mouse Fix' is checked before you do so) 
+- Mac Mouse Fix will now completely uninstall itself automatically after you move it to the Trash (Just make sure that 'Enable Mac Mouse Fix' is checked before you do so) 
 - Mac Mouse Fix now takes even less space and is lighter on your CPU
 - Keyboard modifier interception is now completely disabled when no mice are attached to your computer
 - You can now zoom in and out by holding Command (⌘) while scrolling
