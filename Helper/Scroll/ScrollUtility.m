@@ -35,7 +35,9 @@ static NSDictionary *_MFScrollPhaseToIOHIDEventPhase;
 /// When multithreading from within `ScrollControl -> eventTapCallback()` events would become invalid and unusable in the new thread.
 /// Using CGEventCreateCopy didn't help, but this does fix the issue. Not sure why.
 /// Xcode Analysis warns of potential memory leak here, even though we have `create` in the name. Maybe we should flag the return with `CF_RETURNS_RETAINED`
-+ (CGEventRef)createScrollEventWithValuesFromEvent:(CGEventRef)event {
+/// This doesn't produce identically behaving events (See https://github.com/noah-nuebling/mac-mouse-fix/issues/61)
+///     So we made a more general version of this function, which copies over _all_ fields, at `Utility_HelperApp:createEventWithValuesFromEvent:` ... which couldn't produce identical results either... so we're back to trying to make CGEventCreateCopy work.
++ (CGEventRef)createPixelBasedScrollEventWithValuesFromEvent:(CGEventRef)event {
     CGEventRef newEvent = CGEventCreateScrollWheelEvent(NULL, kCGScrollEventUnitPixel, 1, 0);
     NSArray *valueFields = @[@(kCGScrollWheelEventDeltaAxis1),
                              @(kCGScrollWheelEventDeltaAxis2),

@@ -12,6 +12,32 @@
 
 @implementation Utility_HelperApp
 
+/// Don't use this. This doesn't produce identical results.
+/// This is a more general / functional version of the function at `ScrollUtility -> createPixelBasedScrollEventWithValuesFromEvent:event`. See it's doc for more info. (That function failed to produce identical events, but this does too, unfortunately)
+/// This doesn't produce identical event either unfortunately
+/// Setting the fields in a different order changes the results, so from that (and based on experience from macos-touch-reverse-engineering) I think that setting certain fields changes the value of others...
++ (CGEventRef)createEventWithValuesFromEvent:(CGEventRef)event {
+    CGEventRef newEvent = CGEventCreate(NULL);
+    for (int field = 255; field >= 0; field--) { // I think there are only 256 fields, that's what we seem to have assumed in macos-touch-reverse-engineering
+        int64_t value = CGEventGetIntegerValueField(event, field);
+        CGEventSetIntegerValueField(newEvent, field, value);
+    }
+    
+//    [self printEventFieldDifferencesBetween:event and:newEvent];
+    
+    return newEvent;
+}
++ (void)printEventFieldDifferencesBetween:(CGEventRef)event1 and:(CGEventRef)event2 {
+    NSLog(@"Field differences for event: %@, and event: %@", event1, event2);
+    for (int field = 0; field < 256; field++) { // I think there are only 256 fields, that's what we seem to have assumed in macos-touch-reverse-engineering
+        int64_t value1 = CGEventGetIntegerValueField(event1, field);
+        int64_t value2 = CGEventGetIntegerValueField(event2, field);
+        if (value1 != value2) {
+            NSLog(@"%@: %@ vs %@", @(field), @(value1), @(value2));
+        }
+    }
+}
+
 + (NSString *)binaryRepresentation:(int)value {
     long nibbleCount = sizeof(value) * 2;
     NSMutableString *bitString = [NSMutableString stringWithCapacity:nibbleCount * 5];

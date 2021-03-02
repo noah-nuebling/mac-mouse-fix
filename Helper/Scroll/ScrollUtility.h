@@ -24,7 +24,7 @@ typedef enum {
 + (NSDictionary *)MFScrollPhaseToIOHIDEventPhase;
 
 
-+ (CGEventRef)createScrollEventWithValuesFromEvent:(CGEventRef)event;
++ (CGEventRef)createPixelBasedScrollEventWithValuesFromEvent:(CGEventRef)event __deprecated_msg("HHHH Use `Utility_HelperApp:createEventWithValuesFromEvent:` instead");
 + (CGEventRef)createNormalizedEventWithPixelValue:(int)lineHeight;
 + (CGEventRef)invertScrollEvent:(CGEventRef)event direction:(int)dir;
 + (void)logScrollEvent:(CGEventRef)event;

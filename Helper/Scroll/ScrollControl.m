@@ -15,6 +15,7 @@
 #import "ScrollModifiers.h"
 #import "ConfigFileInterface_HelperApp.h"
 #import "ScrollUtility.h"
+#import "Utility_HelperApp.h"
 
 @implementation ScrollControl
 
@@ -184,28 +185,30 @@ static int _scrollDirection;
 static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
     // Return non-scrollwheel events unaltered
-    
-    long long   isPixelBased            =   CGEventGetIntegerValueField(event, kCGScrollWheelEventIsContinuous);
-    long long   scrollPhase             =   CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase);
-    long long   scrollDeltaAxis1        =   CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
-    long long   scrollDeltaAxis2        =   CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2);
-    if (isPixelBased != 0 ||
-        scrollDeltaAxis1 == 0 ||
-        scrollDeltaAxis2 != 0 ||
-        scrollPhase != 0) { // adding scrollphase here is untested
+    int64_t isPixelBased     = CGEventGetIntegerValueField(event, kCGScrollWheelEventIsContinuous);
+    int64_t scrollPhase      = CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase);
+    int64_t scrollDeltaAxis1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
+    int64_t scrollDeltaAxis2 = CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2);
+    if (isPixelBased != 0
+        || scrollDeltaAxis1 == 0
+        || scrollDeltaAxis2 != 0
+        || scrollPhase != 0) { // Adding scrollphase here is untested
         return event;
     }
     
     // Check if scrolling direction changed
-    
     [ScrollUtility updateScrollDirectionDidChange:scrollDeltaAxis1];
-    
     if (ScrollUtility.scrollDirectionDidChange) {
         [ScrollUtility resetConsecutiveTicksAndSwipes];
     }
     
     // Create a copy, because the original event will become invalid and unusable in the new thread.
-    CGEventRef eventCopy = [ScrollUtility createScrollEventWithValuesFromEvent:event];
+//    CGEventRef eventCopy = [Utility_HelperApp createEventWithValuesFromEvent:event]; // This function doesn't work right
+//    CGEventRef eventCopy = [ScrollUtility createPixelBasedScrollEventWithValuesFromEvent:event]; // This doesn't either
+    CGEventRef eventCopy = CGEventCreateCopy(event);
+    // ^ I remember having trouble with the memory / multithreading stuff with this
+    //      So I wrote my own createEventWithValuesFrom... function. It doesn't work perfectly either though and caused other troubles.
+    //      So we're trying CGEventCreateCopy again, in hopes we wrongly attributed our previous troubles to it. For now it seems fine.
         
     // Do heavy processing of event on a different thread using `dispatch_async`, so we can return faster
     // Returning fast should prevent the system from disabling this eventTap entirely when under load. This doesn't happen in MOS for some reason, maybe there's a better solution than multithreading.
@@ -242,8 +245,8 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
             [RoughScroll stop];     // Not sure if useful
             [SmoothScroll handleInput:eventCopy info:NULL];
         } else {
-            [SmoothScroll stop];    // Not sure if useful
-            [RoughScroll stop];     // Not sure if useful
+            [SmoothScroll stop];
+            [RoughScroll start];
             [RoughScroll handleInput:eventCopy info:NULL];
         }
         CFRelease(eventCopy);
