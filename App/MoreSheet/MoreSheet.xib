@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -21,7 +22,7 @@
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="90" y="125" width="576" height="184"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
             <view key="contentView" wantsLayer="YES" id="IZI-tD-pBD">
                 <rect key="frame" x="0.0" y="0.0" width="576" height="184"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -73,9 +74,9 @@
                         </userDefinedRuntimeAttributes>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Irr-ov-bxk" customClass="Hyperlink">
-                        <rect key="frame" x="349" y="100" width="171" height="16"/>
+                        <rect key="frame" x="373" y="100" width="147" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Check out the Source Code" id="B9O-yg-FQw">
+                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Source Code on GitHub" id="B9O-yg-FQw">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
