@@ -7,6 +7,9 @@ contact_links:
   - name: Bug Report
     url: https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report
     about: Report a bug
-  - name: Other
+  - name: Free Form
     url: https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=other
-    about: Open an issue about another topic
+    about: Open a Free Form Issue
+  - name: Need help?
+    url: https://github.com/noah-nuebling/mac-mouse-fix/discussions/new
+    about: Start a Discussion
