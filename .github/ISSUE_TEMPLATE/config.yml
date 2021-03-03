@@ -10,3 +10,6 @@ contact_links:
   - name: Other
     url: https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=other
     about: Open an issue about another topic
+  - name: Need help?
+    url: https://github.com/noah-nuebling/mac-mouse-fix/discussions/new
+    about: Start a Discussion
