@@ -213,7 +213,6 @@
 		4F3A8443230D3E6C0012C725 /* Updater.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Updater.h; sourceTree = "<group>"; };
 		4F3A8444230D3E6C0012C725 /* Updater.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Updater.m; sourceTree = "<group>"; };
 		4F422EEC23469B0F00AA6E22 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		4F422EEE23469B1700AA6E22 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		4F64856B25E9C17400891D69 /* Objects.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Objects.h; sourceTree = "<group>"; };
 		4F64856C25E9C17400891D69 /* Objects.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Objects.m; sourceTree = "<group>"; };
 		4F64858025E9C1DF00891D69 /* HelperServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelperServices.h; sourceTree = "<group>"; };
@@ -482,7 +481,6 @@
 		4F422EF023469B2B00AA6E22 /* Other */ = {
 			isa = PBXGroup;
 			children = (
-				4F422EEE23469B1700AA6E22 /* CHANGELOG.md */,
 				4F422EEC23469B0F00AA6E22 /* README.md */,
 			);
 			name = Other;
