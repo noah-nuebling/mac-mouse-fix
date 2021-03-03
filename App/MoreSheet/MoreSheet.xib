@@ -67,7 +67,7 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                         <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose"/>
+                            <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=other"/>
                             <userDefinedRuntimeAttribute type="number" keyPath="rMrgn">
                                 <integer key="value" value="25"/>
                             </userDefinedRuntimeAttribute>
