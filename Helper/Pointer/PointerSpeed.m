@@ -104,7 +104,7 @@ static mach_port_t _IOHIDSystemHandle;
             int sens = 450; // 400 is default
             int newPointerRes = IntToFixed(sens);
             CFNumberRef newPointerRefCF = CFNumberCreate(kCFAllocatorDefault, kCFNumberSInt32Type, &newPointerRes);
-            kern_return_t kr = IORegistryEntrySetCFProperty(matchingService, CFSTR("HIDPointerResolution"), newPointerRefCF); // doesn't work
+//            kern_return_t kr = IORegistryEntrySetCFProperty(matchingService, CFSTR("HIDPointerResolution"), newPointerRefCF); // doesn't work
             
             // --
               

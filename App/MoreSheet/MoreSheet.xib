@@ -22,7 +22,7 @@
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="90" y="125" width="576" height="184"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="3840" height="2135"/>
             <view key="contentView" wantsLayer="YES" id="IZI-tD-pBD">
                 <rect key="frame" x="0.0" y="0.0" width="576" height="184"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -164,7 +164,7 @@ Turn this off and on again if you skipped an update and have changed your mind</
                         </userDefinedRuntimeAttributes>
                     </imageView>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="07Z-7Y-gHB">
-                        <rect key="frame" x="527" y="144" width="19.5" height="25"/>
+                        <rect key="frame" x="527" y="144" width="20" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="Rki-3y-WxT">
                             <imageReference key="image" image="pencil" catalog="system" symbolScale="large"/>
@@ -172,7 +172,7 @@ Turn this off and on again if you skipped an update and have changed your mind</
                         <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                     </imageView>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N67-Qg-9hZ">
-                        <rect key="frame" x="527" y="94.5" width="19" height="27"/>
+                        <rect key="frame" x="527" y="95" width="19" height="27"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="arrow.triangle.branch" catalog="system" id="61r-1i-7uY"/>
                         <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
@@ -209,8 +209,8 @@ AAAAAAAAAAAAAAABOQ
         <image name="AppIconRound" width="128" height="128"/>
         <image name="MilkshakeButton" width="185" height="27"/>
         <image name="PayPal" width="100" height="26"/>
-        <image name="arrow.triangle.branch" catalog="system" width="15" height="14"/>
-        <image name="pencil" catalog="system" width="17" height="16"/>
+        <image name="arrow.triangle.branch" catalog="system" width="16" height="14"/>
+        <image name="pencil" catalog="system" width="16" height="16"/>
         <image name="safari" catalog="system" width="15" height="15"/>
     </resources>
 </document>
