@@ -1,3 +1,4 @@
+
 //
 // --------------------------------------------------------------------------
 // SmoothScroll.m
@@ -16,13 +17,11 @@
 
 #import "AppDelegate.h"
 #import "ScrollModifiers.h"
-#import "../../Config/ConfigFileInterface_HelperApp.h"
+#import "ConfigFileInterface_App.h"
 
-#import "ButtonInputReceiver.h"
 #import "DeviceManager.h"
 #import "Utility_HelperApp.h"
-#import "TouchSimulator.h"
-#import "GestureScrollSimulator.h"
+#import "../Touch/TouchSimulator.h"
 
 #import "SharedUtility.h"
 
@@ -33,13 +32,13 @@
 #pragma mark parameters
 
 // wheel phase
-static uint8_t  _pxStepSize;
+static int64_t  _pxStepSize;
 static double   _msPerStep;
 static double   _accelerationForScrollBuffer;
 // momentum phase
 static double   _frictionCoefficient;
 static double   _frictionDepth;
-static uint8_t  _nOfOnePixelScrollsMax;
+static int      _nOfOnePixelScrollsMax;
 // objects
 static CVDisplayLinkRef _displayLink;
 
@@ -47,15 +46,15 @@ static CVDisplayLinkRef _displayLink;
 
 // any phase
 static MFDisplayLinkPhase _displayLinkPhase;
-static int32_t _pxToScrollThisFrame;
+static int _pxToScrollThisFrame;
 //static int _previousPhase; // which phase was active the last time that displayLinkCallback was called. Used to compute artificial scroll phases
-
+static CGDirectDisplayID *_displaysUnderMousePointer;
 // linear phase
-static int32_t      _pxScrollBuffer;
+static int      _pxScrollBuffer;
 static double   _msLeftForScroll;
 // momentum phase
 static double   _pxPerMsVelocity;
-static uint8_t      _onePixelScrollsCounter;
+static int      _onePixelScrollsCounter;
 
 #pragma mark - Interface
 
@@ -65,8 +64,7 @@ static uint8_t      _onePixelScrollsCounter;
     if (_displayLink == nil) {
         CVDisplayLinkCreateWithActiveCGDisplays(&_displayLink);
         CVDisplayLinkSetOutputCallback(_displayLink, displayLinkCallback, nil);
-//        _displaysUnderMousePointer = malloc(sizeof(CGDirectDisplayID) * 3); // TODO: Why 3? Is this necessary at all?
-//        _numberOfDisplaysUnderMousePointer = 0;
+        _displaysUnderMousePointer = malloc(sizeof(CGDirectDisplayID) * 3); // TODO: Why 3?
     }
 }
 
@@ -127,7 +125,7 @@ static BOOL _hasStarted;
 + (void)handleInput:(CGEventRef)event info:(NSDictionary * _Nullable)info {
     
     long long scrollDeltaAxis1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
-    
+
     // Update global vars
     
     _isScrolling = YES;
@@ -163,10 +161,10 @@ static BOOL _hasStarted;
         NSLog(@"scrollDeltaAxis1 is 0. This shouldn't happen.");
     }
     
-//    // Apply acceleration to _pxScrollBuffer
-//    if (ScrollUtility.consecutiveScrollTickCounter != 0) {
-//        _pxScrollBuffer = _pxScrollBuffer * _accelerationForScrollBuffer;
-//    }
+    // Apply acceleration to _pxScrollBuffer
+    if (ScrollUtility.consecutiveScrollTickCounter != 0) {
+        _pxScrollBuffer = _pxScrollBuffer * _accelerationForScrollBuffer;
+    }
     
 #if DEBUG
 //    if (ScrollUtility.consecutiveScrollTickCounter == 0) {
@@ -181,6 +179,7 @@ static BOOL _hasStarted;
         //&& ScrollUtility.consecutiveScrollTickCounter >= ScrollControl.scrollSwipeThreshold_inTicks) {
         _pxScrollBuffer = _pxScrollBuffer * ScrollControl.fastScrollFactor * pow(ScrollControl.fastScrollExponentialBase, ((int32_t)fastScrollThresholdDelta));
     }
+    
 #if DEBUG
 //    NSLog(@"buff: %d", _pxScrollBuffer);
 //    NSLog(@"--------------");
@@ -188,7 +187,7 @@ static BOOL _hasStarted;
     
     // Start displaylink and stuff
     
-    // Update display link phase
+    // Update scroll phase
     _displayLinkPhase = kMFPhaseStart;
     
     if (ScrollUtility.consecutiveScrollTickCounter == 0) {
@@ -200,7 +199,6 @@ static BOOL _hasStarted;
                 NSLog(@"Error while trying to set display link to display under mouse pointer: %@", [e reason]);
             }
         }
-        
         while (CVDisplayLinkIsRunning(_displayLink) == NO) {
             // Executing this on _scrollQueue (like the rest of this function) leads to `CVDisplayLinkStart()` failing sometimes. Once it has failed it will fail over and over again, taking a few minutes or so to start working again, if at all.
             // Solution: I have no idea why, but executing on the main queue does the trick! ^^
@@ -233,56 +231,17 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     
     if (_displayLinkPhase == kMFPhaseLinear || _displayLinkPhase == kMFPhaseStart) {
         
-        _pxToScrollThisFrame = round( (_pxScrollBuffer/_msLeftForScroll) * msSinceLastFrame ); // TODO: Consider making _pxToScrollThisFrame not a global variable.
+        _pxToScrollThisFrame = round( (_pxScrollBuffer/_msLeftForScroll) * msSinceLastFrame );
         
         if (_msLeftForScroll == 0.0) { // Diving by zero yields infinity, we don't want that.
             NSLog(@"_msLeftForScroll was 0.0");
             _pxToScrollThisFrame = _pxScrollBuffer; // TODO: But it happens sometimes - check if this handles that situation well
         }
 
-        // Update buffers
-        
         _pxScrollBuffer   -=  _pxToScrollThisFrame;
         _msLeftForScroll    -=  msSinceLastFrame;
         
-        
-        
-        // Apply acceleration
-
-        // TODO: Clean this up and put parameters into the config file
-        
-        double overPlusAccelerationCoefficient = 2.0; // > 0
-        double overPlusAccelerationThreshold = 1.0; // >= 0
-
-        double pxToScrollThisFrameBase = (_pxStepSize/_msPerStep) * msSinceLastFrame; // > 0
-        double pxToScrollThisFrameOverPlus = abs(_pxToScrollThisFrame) - pxToScrollThisFrameBase; // Should always be >= 0 and == 0 for the linear phase of a tick which occured when the system wasn't scrolling already, but there will be rounding errors.
-        // TODO: Consider making `_pxScrollBuffer` as well as `_pxToScrollThisFrame`, etc doubles to avoid rounding errors.
-
-        if (overPlusAccelerationThreshold < fabs(pxToScrollThisFrameOverPlus) && 0 < pxToScrollThisFrameOverPlus) { // Catch rounding errors
-            double acceleratedOverPlus = pxToScrollThisFrameOverPlus * overPlusAccelerationCoefficient;
-            _pxToScrollThisFrame = [SharedUtility signOf: _pxToScrollThisFrame] * round(pxToScrollThisFrameBase + acceleratedOverPlus);
-        }
-        
-        
-//        double _accelerationMaxScalingFactor = 2.0;
-//        double _accelerationRampUp = 0.5;
-//
-//        double velocity = _pxToScrollThisFrame / msSinceLastFrame;
-//        double defaultVelocity = _pxStepSize / _msPerStep;
-//        defaultVelocity = defaultVelocity * [ScrollUtility signOf:velocity];
-//        double normalizedVelocity = (velocity - defaultVelocity); // "Normalized" isn't the right term here
-//        double acceleratedNormalizedVelocity = _accelerationMaxScalingFactor * normalizedVelocity;
-////        acceleratedRelativeVelocity = [ScrollUtility signOf:velocity] * acceleratedRelativeVelocity;
-//
-//        double acceleratedVelocity = acceleratedNormalizedVelocity + defaultVelocity;
-//
-//        _pxToScrollThisFrame = acceleratedVelocity * msSinceLastFrame;
-        
-        
-        
-        
         // Entering momentum phase
-        
         if (_msLeftForScroll <= 0 || _pxScrollBuffer == 0) { // TODO: Is `_pxScrollBuffer == 0` necessary? Do the conditions for entering momentum phase make sense?
             _msLeftForScroll    =   0; // TODO: Is this necessary?
             _pxScrollBuffer   =   0; // What about this? This stuff isn't used in momentum phase and should get reset elsewhere efore getting used again
@@ -319,7 +278,59 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     if (ScrollModifiers.magnificationScrolling) {
         [ScrollModifiers handleMagnificationScrollWithAmount:_pxToScrollThisFrame/800.0];
     } else {
-        postPointBasedScrollEventWithDelta(_pxToScrollThisFrame, ScrollModifiers.horizontalScrolling);
+        CGEventRef scrollEvent = CGEventCreateScrollWheelEvent(ScrollControl.eventSource, kCGScrollEventUnitPixel, 1, 0);
+        // CGEventSourceSetPixelsPerLine(_eventSource, 1);
+        // it might be a cool idea to diable scroll acceleration and then try to make the scroll events line based (kCGScrollEventUnitPixel)
+        
+        // Setting event phases
+        
+//        if (_scrollPhase >= kMFPhaseMomentum) {
+//            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, _scrollPhase >> 1); // shifting bits so that values match up with appropriate NSEventPhase values.
+//        } else {
+//            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, _scrollPhase);
+//        }
+        
+        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 0);
+        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase, 0);
+        
+        // Set scrollDelta
+        
+        if (ScrollModifiers.horizontalScrolling == FALSE) {
+            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis1, _pxToScrollThisFrame / 8);
+            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis1, _pxToScrollThisFrame);
+        } else {
+            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis2, _pxToScrollThisFrame / 8);
+            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis2, _pxToScrollThisFrame);
+        }
+        
+        // Post event
+        
+        CGEventPost(kCGSessionEventTap, scrollEvent);
+        CFRelease(scrollEvent);
+        
+    ////     set phases
+    ////         the native "scrollPhase" is roughly equivalent to my "wheelPhase"
+    //
+    //    CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase, kCGMomentumScrollPhaseNone);
+    //
+    //
+    //
+    //    NSLog(@"intern scrollphase: %d", _scrollPhase);
+    //    if (_scrollPhase == kMFWheelPhase) {
+    //        if (_previousPhase == kMFWheelPhase) {
+    //                CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 2);
+    //        } else {
+    //                CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 1);
+    //        }
+    //    }
+    //    if (_scrollPhase == kMFMomentumPhase) {
+    //        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 2);
+    //    }
+    //
+    ////    NSLog(@"scrollPhase: %lld", CGEventGetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase));
+    ////    NSLog(@"momentumPhase: %lld \n", CGEventGetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase));
+    //
+        
     }
     
 #pragma mark Other
@@ -338,26 +349,6 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 
 #pragma mark - Utility functions
 
-static void postPointBasedScrollEventWithDelta(int32_t delta, BOOL horizontal) {
-    
-    CGEventRef scrollEvent = CGEventCreateScrollWheelEvent(NULL, kCGScrollEventUnitPixel, 1, 0);
-    CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 0);
-    CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase, 0);
-    
-    // Set scrollDelta
-    if (horizontal == FALSE) {
-            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis1, delta / 8);
-            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis1, delta);
-    } else {
-            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis2, delta / 8);
-            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis2, delta);
-    }
-    // Post event
-    CGEventPost(kCGSessionEventTap, scrollEvent);
-    CFRelease(scrollEvent);
-}
-
-
 #pragma mark display link
 
 // TODO: What does this do? Is this necessary?
@@ -370,47 +361,29 @@ static void Handle_displayReconfiguration(CGDirectDisplayID display, CGDisplayCh
         CVDisplayLinkSetOutputCallback(_displayLink, displayLinkCallback, nil);
     }
 }
-
-static uint32_t _numberOfDisplaysUnderMousePointer; // NEED to allways set this when setting _displaysUnderMousePointer
-static CGDirectDisplayID *_displaysUnderMousePointer;
-
 static void setDisplayLinkToDisplayUnderMousePointer(CGEventRef event) {
     
     CGPoint mouseLocation = CGEventGetLocation(event);
-    
-    uint32_t maxNumberOfDisplays;
-    CGGetDisplaysWithPoint(mouseLocation, 0, NULL, &maxNumberOfDisplays);
-    CGDirectDisplayID *newDisplaysUnderMousePointer = malloc(sizeof(CGDirectDisplayID) * maxNumberOfDisplays);
-    uint32_t newNumberOfDisplaysUnderMousePointer;
-    CGGetDisplaysWithPoint(mouseLocation, maxNumberOfDisplays, newDisplaysUnderMousePointer, &newNumberOfDisplaysUnderMousePointer);
+    CGDirectDisplayID *newDisplaysUnderMousePointer = malloc(sizeof(CGDirectDisplayID) * 3);
+    uint32_t matchingDisplayCount;
+    CGGetDisplaysWithPoint(mouseLocation, 2, newDisplaysUnderMousePointer, &matchingDisplayCount);
     // TODO: Check if this is slow. If so, check if there's a dedicated way for getting the active display. If so, consider using that instead of CGGetDisplaysWithPoint().
     
-    if (newNumberOfDisplaysUnderMousePointer >= 1) {
-        if (!displayIDArraysAreEqual(_displaysUnderMousePointer, _numberOfDisplaysUnderMousePointer, newDisplaysUnderMousePointer, newNumberOfDisplaysUnderMousePointer)) {
+    if (matchingDisplayCount >= 1) {
+        if (newDisplaysUnderMousePointer[0] != _displaysUnderMousePointer[0]) {
+            _displaysUnderMousePointer = newDisplaysUnderMousePointer;
             //sets dsp to the master display if _displaysUnderMousePointer[0] is part of the mirror set
             CGDirectDisplayID dsp = CGDisplayPrimaryDisplay(_displaysUnderMousePointer[0]);
             CVDisplayLinkSetCurrentCGDisplay(_displayLink, dsp);
-            
-            free(_displaysUnderMousePointer);
-            _displaysUnderMousePointer = newDisplaysUnderMousePointer;
-            _numberOfDisplaysUnderMousePointer = newNumberOfDisplaysUnderMousePointer;
         }
-        if (newNumberOfDisplaysUnderMousePointer > 1) {
+    } else if (matchingDisplayCount > 1) {
         NSLog(@"more than one display for current mouse position");
-        }
-    } else if (newNumberOfDisplaysUnderMousePointer == 0) {
-        NSException *e = [NSException exceptionWithName:NSInternalInconsistencyException reason:@"There are 0 diplays under the mouse pointer" userInfo:NULL];
+        
+    } else if (matchingDisplayCount == 0) {
+        NSException *e = [NSException exceptionWithName:NSInternalInconsistencyException reason:@"there are 0 diplays under the mouse pointer" userInfo:NULL];
         @throw e;
     }
-}
-
-static bool displayIDArraysAreEqual(CGDirectDisplayID *arr1, int32_t count1, CGDirectDisplayID *arr2, int32_t count2) {
-    for (int i = 0; i < count1 && i < count2; i++) {
-        if (arr1[i] != arr2[i]) {
-            return false;
-        }
-    }
-    return true;
+    free(newDisplaysUnderMousePointer);
 }
 
 @end
