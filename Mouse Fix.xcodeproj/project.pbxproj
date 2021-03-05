@@ -560,19 +560,11 @@
 			path = Pointer;
 			sourceTree = "<group>";
 		};
-		4FA1ACDF25E858CE007DB95B /* HelperTests */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = HelperTests;
-			sourceTree = "<group>";
-		};
 		4FA1ACE025E85904007DB95B /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				4F94F60325E5EC2800D9F24A /* AppTests */,
 				4F94F60E25E5EC2800D9F24A /* UITests */,
-				4FA1ACDF25E858CE007DB95B /* HelperTests */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
