@@ -1,21 +1,20 @@
 //
 // --------------------------------------------------------------------------
-// PointerSpeed.h
+// SubPixelator.h
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
-// Created by Noah Nuebling in 2019
+// Created by Noah Nuebling in 2020
 // Licensed under MIT
 // --------------------------------------------------------------------------
 //
 
 #import <Foundation/Foundation.h>
-#import <IOKit/hid/IOHIDDevice.h>
-//#import <IOKit/hid/IOHIDKeys.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface PointerSpeed : NSObject
-+ (void)setSensitivityViaIORegTo:(int)sens device:(IOHIDDeviceRef)dev;
-+ (void)setAccelerationTo:(double)acc;
+@interface SubPixelator : NSObject
++ (SubPixelator *)pixelator;
+- (instancetype)init NS_UNAVAILABLE;
+- (int64_t)intDeltaWithDoubleDelta:(double)inp;
 @end
 
 NS_ASSUME_NONNULL_END

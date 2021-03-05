@@ -16,9 +16,9 @@
 
 #import "ScrollControl.h"
 #import "SmoothScroll.h"
-#import "MouseInputReceiver.h"
+#import "ButtonInputReceiver.h"
 #import "ScrollModifiers.h"
-#import "Utility_HelperApp.h"
+#import "SharedUtility.h"
 
 #import "Constants.h"
 
@@ -92,6 +92,7 @@ static void fillConfigFromFile() {
 /// \param force If NO, then it will only update the internal state, if the app currenly under the cursor is different to the one when this function was last called.
 /// \returns YES, if internal parameters did update. NO otherwise.
 /// ... wtf was I thinking when writing this, why didn't I write 2 functions?
+// TODO: Look into using kCGMouseEventWindowUnderMousePointer to get the window under the mouse pointer
 + (BOOL)updateInternalParameters_Force:(BOOL)force {
 
     // Get app under mouse pointer
@@ -177,7 +178,7 @@ static void loadAppOverridesForApp(NSString *bundleIdentifier) {
         }
     }
     if (overridesForThisApp) {
-        _configWithAppOverridesApplied = [[Utility_HelperApp dictionaryWithOverridesAppliedFrom:overridesForThisApp to:_config] mutableCopy];
+        _configWithAppOverridesApplied = [[SharedUtility dictionaryWithOverridesAppliedFrom:overridesForThisApp to:_config] mutableCopy];
     } else {
         _configWithAppOverridesApplied = _config;
     }

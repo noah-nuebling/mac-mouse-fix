@@ -48,7 +48,7 @@ static BOOL _magnificationScrolling;
         }
     } else if (_magnificationScrolling && !B) { // Magnification scrolling is being turned off
         if (ScrollModifiers.magnificationScrollHasBeenUsed) {
-            [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseEnded];
+            [TouchSimulator postMagnificationEventWithMagnification:0.0 phase:kIOHIDEventPhaseEnded];
         }
     }
     _magnificationScrolling = B;
@@ -56,9 +56,9 @@ static BOOL _magnificationScrolling;
 + (void)handleMagnificationScrollWithAmount:(double)amount {
     if (ScrollModifiers.magnificationScrollHasBeenUsed == false) {
         ScrollModifiers.magnificationScrollHasBeenUsed = true;
-        [TouchSimulator postEventWithMagnification:0.0 phase:kIOHIDEventPhaseBegan];
+        [TouchSimulator postMagnificationEventWithMagnification:0.0 phase:kIOHIDEventPhaseBegan];
     }
-    [TouchSimulator postEventWithMagnification:amount phase:kIOHIDEventPhaseChanged];
+    [TouchSimulator postMagnificationEventWithMagnification:amount phase:kIOHIDEventPhaseChanged];
 }
 
 static BOOL _horizontalScrollModifierKeyEnabled = YES;

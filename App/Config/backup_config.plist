@@ -60,13 +60,13 @@
 			<key>pxPerStep</key>
 			<integer>40</integer>
 			<key>msPerStep</key>
-			<integer>90</integer>
+			<integer>130</integer>
 			<key>friction</key>
 			<real>2.3</real>
 			<key>frictionDepth</key>
 			<integer>1</integer>
 			<key>acceleration</key>
-			<real>1.11</real>
+			<real>1</real>
 			<key>onePixelScrollsLimit</key>
 			<integer>2</integer>
 		</dict>
@@ -101,6 +101,52 @@
 	</dict>
 	<key>AppOverrides</key>
 	<dict>
+		<key>com.apple.QuickTimePlayeruuu</key>
+		<dict>
+			<key>Root</key>
+			<dict>
+				<key>Scroll</key>
+				<dict>
+					<key>smooth</key>
+					<false/>
+					<key>modifierKeys</key>
+					<dict>
+						<key>horizontalScrollModifierKeyEnabled</key>
+						<false/>
+						<key>magnificationScrollModifierKeyEnabled</key>
+						<false/>
+					</dict>
+				</dict>
+			</dict>
+			<key>meta</key>
+			<dict>
+				<key>scrollOverridePanelTableViewOrderKey</key>
+				<integer>0</integer>
+			</dict>
+		</dict>
+		<key>com.apple.QuickTimePlayerXuuu</key>
+		<dict>
+			<key>Root</key>
+			<dict>
+				<key>Scroll</key>
+				<dict>
+					<key>smooth</key>
+					<false/>
+					<key>modifierKeys</key>
+					<dict>
+						<key>horizontalScrollModifierKeyEnabled</key>
+						<false/>
+						<key>magnificationScrollModifierKeyEnabled</key>
+						<false/>
+					</dict>
+				</dict>
+			</dict>
+			<key>meta</key>
+			<dict>
+				<key>scrollOverridePanelTableViewOrderKey</key>
+				<integer>0</integer>
+			</dict>
+		</dict>
 		<key>com.adobe.Reader</key>
 		<dict>
 			<key>Root</key>
