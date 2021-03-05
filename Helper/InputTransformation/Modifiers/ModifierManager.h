@@ -8,12 +8,7 @@
 //
 
 #import <Foundation/Foundation.h>
-<<<<<<< HEAD:Helper/Touch/TouchSimulator.h
-#import "../SupportFiles/External/SensibleSideButtons/TouchEvents.h"
-#import "../SupportFiles/External/SensibleSideButtons/IOHIDEventTypes.h"
-=======
 #import "MFDevice.h"
->>>>>>> 2.0.0:Helper/InputTransformation/Modifiers/ModifierManager.h
 
 NS_ASSUME_NONNULL_BEGIN
 

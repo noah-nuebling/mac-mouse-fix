@@ -21,14 +21,10 @@
 #import "ButtonInputReceiver.h"
 #import "DeviceManager.h"
 #import "Utility_HelperApp.h"
-<<<<<<< HEAD:Helper/Scroll/SmoothScroll.m
-#import "../Touch/TouchSimulator.h"
-=======
 #import "TouchSimulator.h"
 #import "GestureScrollSimulator.h"
 
 #import "SharedUtility.h"
->>>>>>> 2.0.0:Helper/InputTransformation/Scroll/SmoothScroll.m
 
 @implementation SmoothScroll
 
@@ -247,16 +243,10 @@ static BOOL _hasStarted;
         //&& ScrollUtility.consecutiveScrollTickCounter >= ScrollControl.scrollSwipeThreshold_inTicks) {
         _pxScrollBuffer = _pxScrollBuffer * ScrollControl.fastScrollFactor * pow(ScrollControl.fastScrollExponentialBase, ((int32_t)fastScrollThresholdDelta));
     }
-<<<<<<< HEAD:Helper/Scroll/SmoothScroll.m
-    
 #if DEBUG
 //    NSLog(@"buff: %d", _pxScrollBuffer);
 //    NSLog(@"--------------");
 #endif
-=======
-//    NSLog(@"buff: %d", _pxScrollBuffer);
-//    NSLog(@"--------------");
->>>>>>> 2.0.0:Helper/InputTransformation/Scroll/SmoothScroll.m
     
     // Start displaylink and stuff
     
@@ -290,7 +280,6 @@ static BOOL _hasStarted;
 static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp *inNow, const CVTimeStamp *inOutputTime, CVOptionFlags flagsIn, CVOptionFlags *flagsOut, void *displayLinkContext) {
     
     double msSinceLastFrame = CVDisplayLinkGetActualOutputVideoRefreshPeriod(_displayLink) * 1000;
-<<<<<<< HEAD:Helper/Scroll/SmoothScroll.m
     //    CVTime msBetweenFramesNominal = CVDisplayLinkGetNominalOutputVideoRefreshPeriod(_displayLink);
     //    msSinceLastFrame =
     //    ( ((double)msBetweenFramesNominal.timeValue) / ((double)msBetweenFramesNominal.timeScale) ) * 1000;
@@ -300,16 +289,6 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 //        NSLog(@"frameTimeSpike: %fms", msSinceLastFrame);
 //    }
 #endif
-=======
-    
-//    if (msSinceLastFrame != 16.674562) {
-//        NSLog(@"frameTimeSpike: %fms", msSinceLastFrame);
-//    }
-    
-//    CVTime msBetweenFramesNominal = CVDisplayLinkGetNominalOutputVideoRefreshPeriod(_displayLink);
-//    msSinceLastFrame =
-//    ( ((double)msBetweenFramesNominal.timeValue) / ((double)msBetweenFramesNominal.timeScale) ) * 1000;
->>>>>>> 2.0.0:Helper/InputTransformation/Scroll/SmoothScroll.m
     
     
 # pragma mark Linear Phase

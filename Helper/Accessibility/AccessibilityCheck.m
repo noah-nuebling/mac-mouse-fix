@@ -11,11 +11,11 @@
 
 #import <AppKit/AppKit.h>
 #import "../MessagePort/MessagePort_HelperApp.h"
-#import "../DeviceManager/DeviceManager.h"
+#import "../Devices/DeviceManager.h"
 #import "../MessagePort/MessagePort_HelperApp.h"
 #import "../Config/ConfigFileInterface_HelperApp.h"
-#import "../Scroll/SmoothScroll.h"
-#import "../Scroll/RoughScroll.h"
+#import "../InputTransformation/Scroll/ScrollControl.h"
+#import "../InputTransformation/Buttons/ButtonInputReceiver.h"
 #import "Constants.h"
 
 #import <os/log.h>
@@ -46,7 +46,6 @@
         [DeviceManager load_Manual];
         [ConfigFileInterface_HelperApp load_Manual];
         [ScrollControl load_Manual];
-        [SmoothScroll load_Manual];
         
         [ButtonInputReceiver load_Manual]; // TODO: Check if this is necessary. I think that not having this caused a crash when accessibility permissions were denied.
     }

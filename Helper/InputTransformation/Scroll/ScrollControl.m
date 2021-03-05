@@ -92,6 +92,8 @@ static int _scrollDirection;
 
 + (void)load_Manual {
     
+    [SmoothScroll load_Manual];
+    
     // Create custom dispatch queue for multithreading while still retaining control over execution order.
     dispatch_queue_attr_t attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INTERACTIVE, -1);
     _scrollQueue = dispatch_queue_create(NULL, attr);

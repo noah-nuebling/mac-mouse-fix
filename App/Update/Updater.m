@@ -15,7 +15,7 @@
 #import <ZipArchive/ZipArchive.h>
 #import "Constants.h"
 #import "Objects.h"
-#import "SharedUtil.h"
+#import "SharedUtility.h"
 
 
 
@@ -216,7 +216,7 @@ static NSString *_mainAppUnzipSubpath;
     NSLog(@"Assembled update installation script: %@", installScriptOSA);
     NSURL *accompliceExecURL = [Objects.mainAppBundle.bundleURL URLByAppendingPathComponent:kMFRelativeAccomplicePath];
     NSLog(@"Asking Accomplice to install the new update...");
-    [SharedUtil launchCLT:accompliceExecURL withArgs:@[kMFAccompliceModeUpdate, installScriptOSA]];
+    [SharedUtility launchCLT:accompliceExecURL withArgs:@[kMFAccompliceModeUpdate, installScriptOSA]];
 }
 
 @end

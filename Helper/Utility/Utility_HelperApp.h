@@ -13,7 +13,6 @@
 + (CGEventRef)createEventWithValuesFromEvent:(CGEventRef)event;
 + (void)printEventFieldDifferencesBetween:(CGEventRef)event1 and:(CGEventRef)event2;
 + (NSString *)binaryRepresentation:(int)value;
-+ (NSDictionary *)dictionaryWithOverridesAppliedFrom:(NSDictionary *)src to: (NSDictionary *)dst;
 + (CGPoint)getCurrentPointerLocation_flipped;
 @end
 

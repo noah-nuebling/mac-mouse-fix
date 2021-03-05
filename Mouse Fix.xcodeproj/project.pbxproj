@@ -48,7 +48,6 @@
 		4FF665FC25F2C92700689B77 /* AuthorizeAccessibilityView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FF665DF25F2C92700689B77 /* AuthorizeAccessibilityView.xib */; };
 		4FF665FD25F2C92700689B77 /* AuthorizeAccessibilityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665E025F2C92700689B77 /* AuthorizeAccessibilityView.m */; };
 		4FF665FE25F2C92700689B77 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665E325F2C92700689B77 /* main.m */; };
-		4FF665FF25F2C92700689B77 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FF665E425F2C92700689B77 /* Info.plist */; };
 		4FF6660025F2C92700689B77 /* Hyperlink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665E725F2C92700689B77 /* Hyperlink.m */; };
 		4FF6660125F2C92700689B77 /* Utility_App.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665E825F2C92700689B77 /* Utility_App.m */; };
 		4FF6660225F2C92700689B77 /* ClickableImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665EB25F2C92700689B77 /* ClickableImageView.m */; };
@@ -89,7 +88,6 @@
 		4FF666A325F2C93A00689B77 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6667225F2C93A00689B77 /* LICENSE */; };
 		4FF666A425F2C93A00689B77 /* NoahsTouchEventAnalysis in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6667325F2C93A00689B77 /* NoahsTouchEventAnalysis */; };
 		4FF666A525F2C93A00689B77 /* remaps.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6667725F2C93A00689B77 /* remaps.plist */; };
-		4FF666A625F2C93A00689B77 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6667825F2C93A00689B77 /* Info.plist */; };
 		4FF666A725F2C93A00689B77 /* MFDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6667A25F2C93A00689B77 /* MFDevice.m */; };
 		4FF666A825F2C93A00689B77 /* DeviceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6667D25F2C93A00689B77 /* DeviceManager.m */; };
 		4FF666A925F2C93A00689B77 /* Utility_HelperApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6668025F2C93A00689B77 /* Utility_HelperApp.m */; };
@@ -1077,7 +1075,6 @@
 				4FF665FC25F2C92700689B77 /* AuthorizeAccessibilityView.xib in Resources */,
 				4FF665F725F2C92700689B77 /* Assets.xcassets in Resources */,
 				4FF665F925F2C92700689B77 /* MouseFix.xib in Resources */,
-				4FF665FF25F2C92700689B77 /* Info.plist in Resources */,
 				4FF665EF25F2C92700689B77 /* ScrollOverridePanel.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1112,7 +1109,6 @@
 				4FF666A125F2C93A00689B77 /* .gitignore in Resources */,
 				4FF666A525F2C93A00689B77 /* remaps.plist in Resources */,
 				4FF6668C25F2C93A00689B77 /* SmoothScroll.h (old) in Resources */,
-				4FF666A625F2C93A00689B77 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

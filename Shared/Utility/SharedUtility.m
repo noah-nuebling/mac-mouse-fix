@@ -8,6 +8,7 @@
 //
 
 #import "SharedUtility.h"
+#import "Objects.h"
 
 @implementation SharedUtility
 

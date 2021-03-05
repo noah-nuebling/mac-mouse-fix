@@ -19,6 +19,7 @@
 #import "Utility/Utility_App.h"
 #import "Accessibility/AuthorizeAccessibilityView.h"
 #import "HelperServices.h"
+#import "SharedUtility.h"
 
 @interface AppDelegate ()
 
@@ -337,7 +338,7 @@ NSTimer *removeAccOverlayTimer;
     };
     
     
-    ConfigFileInterface_App.config = [[Utility_App dictionaryWithOverridesAppliedFrom:scrollParametersFromUI to:ConfigFileInterface_App.config] mutableCopy];
+    ConfigFileInterface_App.config = [[SharedUtility dictionaryWithOverridesAppliedFrom:scrollParametersFromUI to:ConfigFileInterface_App.config] mutableCopy];
     
     [ConfigFileInterface_App writeConfigToFileAndNotifyHelper];
 }
