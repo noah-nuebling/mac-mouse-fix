@@ -49,39 +49,70 @@ typedef NSString*                                                       MFString
 
 #define kMFNotificationNameRemapsChanged                                @"remapsChanged"
 
+
 #pragma mark - Remaps dictionary keys
 
-#define kMFRemapsKeyModifiedDrag                                        @"modifiedDrag"
-
-#define kMFModifiedDragTypeTwoFingerSwipe                               @"twoFingerSwipe"
-#define kMFModifiedDragTypeThreeFingerSwipe                             @"threeFingerSwipe"
-
+// Modification preconditions
 #define kMFModificationPreconditionKeyButtons                           @"buttonModifiers"
 #define kMFModificationPreconditionKeyKeyboard                          @"keyboardModifiers"
 
-#define kMFActionDictKeyType                                            @"type"
+// Action Tiggers
+#define kMFButtonTriggerDurationClick                                   @"click"
+#define kMFButtonTriggerDurationHold                                    @"hold"
 
+// Modification dicts
+
+// Type key
+#define kMFModificationDictKeyType                                      @"modificationType"
+// Type values
+#define kMFModificationTypeModifiedDrag                                 @"modifiedDrag"
+#define kMFModificationTypeModifiedScroll                               @"modifiedScroll"
+// Variant keys
+#define kMFModificationDictKeySingleVariant                             @"modificationVariant"
+#define kMFModificationDictKeyFakeDragSubVariantButtonNumber            @"buttonNumber"
+// Variant values
+// Modified drag variants
+#define kMFModifiedDragVariantTwoFingerSwipe                            @"twoFingerSwipe"
+#define kMFModifiedDragVariantThreeFingerSwipe                          @"threeFingerSwipe"
+#define kMFModifiedDragVariantFakeDrag                                  @"fakeDrag"
+// Modified scroll variants
+#define kMFModifiedScrollVariantZoom                                    @"zoom"
+#define kMFModifiedScrollVariantHorizontalScroll                        @"horizontal"
+#define kMFModifiedScrollVariantPrecisionScroll                         @"precision"
+#define kMFModifiedScrollVariantFastScroll                              @"fast"
+
+// Action dicts
+
+// Type key
+#define kMFActionDictKeyType                                            @"type"
+// Type values
 #define kMFActionDictTypeSymbolicHotkey                                 @"symbolicHotkey"
 #define kMFActionDictTypeNavigationSwipe                                @"navigationSwipe"
 #define kMFActionDictTypeSmartZoom                                      @"smartZoom"
 #define kMFActionDictTypeKeyboardShortcut                               @"keyboardShortcut"
 #define kMFActionDictTypeMouseButtonClicks                              @"mouseButton"
 
-#define kMFActionDictKeyVariant                                         @"value"
+// Variant keys
+
+// Generic variant key (Use when a variant consists of just one value - so when we only need one variant key)
+#define kMFActionDictKeySingleVariant                                   @"variant"
+// Keyboard shortcut variant keys
 #define kMFActionDictKeyKeyboardShortcutVariantKeycode                  @"keycode"
 #define kMFActionDictKeyKeyboardShortcutVariantModifierFlags            @"flags"
+// Button click variant keys
 #define kMFActionDictKeyMouseButtonClicksVariantButtonNumber            @"button"
 #define kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks          @"nOfClicks"
 
+// Variant values
+
+// Navigation swipe variants
 #define kMFNavigationSwipeVariantUp                                     @"up"
 #define kMFNavigationSwipeVariantRight                                  @"right"
 #define kMFNavigationSwipeVariantDown                                   @"down"
 #define kMFNavigationSwipeVariantLeft                                   @"left"
 
-#define kMFButtonTriggerDurationClick                                   @"click"
-#define kMFButtonTriggerDurationHold                                    @"hold"
-
 // Symbolic Hotkeys
+// (Used as action dict variants (for actions of type `kMFActionDictTypeSymbolicHotkey`))
 
 typedef enum {
     kMFSHMissionControl = 32,
@@ -118,7 +149,7 @@ typedef enum {
 } MFSymbolicHotkey;
 
 // Mosue Buttons
-
+// (Used as action dict variants (for actions of type `kMFActionDictTypeMouseButtonClicks`))
 /// Note that CGMouseButton (and all CG APIs) assign 0 to left mouse button while MFMouseButtonNumber (and the rest of Mac Mouse Fix which doesn't use it yet) assigns 1 to lmb
 typedef enum {
     kMFMouseButtonNumberLeft = 1,

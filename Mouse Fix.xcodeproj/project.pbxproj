@@ -434,10 +434,10 @@
 		4FCECD7721092354001F1078 = {
 			isa = PBXGroup;
 			children = (
+				4FF6652B25F2C7B000689B77 /* Shared */,
 				4FF665BE25F2C92700689B77 /* App */,
 				4FF6660725F2C93A00689B77 /* Helper */,
 				4F2FDF312315662500C7BE14 /* Accomplice */,
-				4FF6652B25F2C7B000689B77 /* Shared */,
 				4F1793A725EEC8E500E8309B /* Frameworks */,
 				4FA1ACE025E85904007DB95B /* Tests */,
 				4FCECD8121092354001F1078 /* Products */,
@@ -772,8 +772,8 @@
 		4FF6663C25F2C93A00689B77 /* TransformationManager */ = {
 			isa = PBXGroup;
 			children = (
-				4FF6663D25F2C93A00689B77 /* TransformationManager.m */,
 				4FF6663E25F2C93A00689B77 /* TransformationManager.h */,
+				4FF6663D25F2C93A00689B77 /* TransformationManager.m */,
 			);
 			path = TransformationManager;
 			sourceTree = "<group>";

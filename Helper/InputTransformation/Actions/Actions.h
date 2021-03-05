@@ -8,12 +8,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Constants.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface Actions : NSObject
 
 + (void)executeActionArray:(NSArray *)actionArray;
+
++ (void)postMouseButtonClicks:(MFMouseButtonNumber)button nOfClicks:(int64_t)nOfClicks;
+
 @end
 
 NS_ASSUME_NONNULL_END

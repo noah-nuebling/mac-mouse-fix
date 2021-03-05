@@ -10,7 +10,6 @@
 #import "Actions.h"
 #import "CGSHotKeys.h"
 #import "TouchSimulator.h"
-#import "Constants.h"
 #import "SharedUtility.h"
 
 @implementation Actions
@@ -23,12 +22,12 @@
     
         if ([actionType isEqualToString:kMFActionDictTypeSymbolicHotkey]) {
             
-            MFSymbolicHotkey shk = ((NSNumber *)actionDict[kMFActionDictKeyVariant]).intValue;
+            MFSymbolicHotkey shk = ((NSNumber *)actionDict[kMFActionDictKeySingleVariant]).intValue;
             postSymbolicHotkey((CGSSymbolicHotKey) shk);
             
         } else if ([actionType isEqualToString:kMFActionDictTypeNavigationSwipe]) {
             
-            NSString *dirString = actionDict[kMFActionDictKeyVariant];
+            NSString *dirString = actionDict[kMFActionDictKeySingleVariant];
             
             if ([dirString isEqualToString:kMFNavigationSwipeVariantLeft]) {
                 [TouchSimulator postNavigationSwipeEventWithDirection:kIOHIDSwipeLeft];
@@ -54,14 +53,14 @@
             
             NSNumber *button = actionDict[kMFActionDictKeyMouseButtonClicksVariantButtonNumber];
             NSNumber *nOfClicks = actionDict[kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks];
-            postMouseButtonClickSequence(button.intValue, nOfClicks.intValue);
+            [self postMouseButtonClicks:button.intValue nOfClicks:nOfClicks.intValue];
         }
     }
 }
 
 #pragma mark - Button clicks
 
-static void postMouseButtonClickSequence(MFMouseButtonNumber button, int64_t nOfClicks) {
++ (void)postMouseButtonClicks:(MFMouseButtonNumber)button nOfClicks:(int64_t)nOfClicks {
     
     CGEventTapLocation tapLoc = kCGSessionEventTap;
     

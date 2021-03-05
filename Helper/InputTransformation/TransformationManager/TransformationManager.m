@@ -42,13 +42,13 @@ NSArray *_remapsUI;
                                 kMFButtonTriggerDurationClick: @[                                   // Key: click/hold, value: array of actions
                                         @{
                                             kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-                                            kMFActionDictKeyVariant:@(kMFSHMissionControl)
+                                            kMFActionDictKeySingleVariant:@(kMFSHMissionControl)
                                         },
                                 ],
                                 kMFButtonTriggerDurationHold: @[                                  // Key: click/hold, value: array of actions
                                         @{
                                             kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-                                            kMFActionDictKeyVariant: @(kMFSHShowDesktop),
+                                            kMFActionDictKeySingleVariant: @(kMFSHShowDesktop),
                                         },
                                 ],
                                 
@@ -59,7 +59,7 @@ NSArray *_remapsUI;
                                 kMFButtonTriggerDurationClick: @[
                                         @{
                                             kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-                                            kMFActionDictKeyVariant: @(32),
+                                            kMFActionDictKeySingleVariant: @(32),
                                         }
                                 ],
                                 kMFButtonTriggerDurationHold: @[
@@ -72,7 +72,7 @@ NSArray *_remapsUI;
                                 kMFButtonTriggerDurationClick: @[
                                         @{
                                             kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-                                            kMFActionDictKeyVariant: @(36),
+                                            kMFActionDictKeySingleVariant: @(36),
                                         }
                                 ],
                         },
@@ -82,7 +82,7 @@ NSArray *_remapsUI;
                                 kMFButtonTriggerDurationClick: @[                                  // Key: click/hold, value: array of actions
                                         @{
                                             kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-                                            kMFActionDictKeyVariant: @(kMFSHLaunchpad),
+                                            kMFActionDictKeySingleVariant: @(kMFSHLaunchpad),
                                         },
                                 ],
                         },
@@ -95,7 +95,7 @@ NSArray *_remapsUI;
                     @(3): @(1),                                      // btn, lvl
             },
         }: @{
-                kMFRemapsKeyModifiedDrag: kMFModifiedDragTypeThreeFingerSwipe,
+                kMFModificationTypeModifiedDrag: kMFModifiedDragVariantThreeFingerSwipe,
         },
         
         @{
@@ -103,7 +103,7 @@ NSArray *_remapsUI;
                     @(3): @(2),
             },
         }: @{
-                kMFRemapsKeyModifiedDrag: kMFModifiedDragTypeTwoFingerSwipe,
+                kMFModificationTypeModifiedDrag: kMFModifiedDragVariantTwoFingerSwipe,
         }
     };
     //    _testRemapsUI = @[
