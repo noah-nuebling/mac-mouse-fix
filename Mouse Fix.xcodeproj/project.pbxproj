@@ -23,12 +23,6 @@
 		4F32E194231C50A100199A11 /* InputParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E18E231C50A100199A11 /* InputParser.m */; };
 		4F32E195231C50A100199A11 /* ScrollModifiers.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E18F231C50A100199A11 /* ScrollModifiers.m */; };
 		4F32E196231C50A100199A11 /* MouseInputReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F32E193231C50A100199A11 /* MouseInputReceiver.m */; };
-		4F64856D25E9C17400891D69 /* Objects.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F64856C25E9C17400891D69 /* Objects.m */; };
-		4F64856E25E9C17400891D69 /* Objects.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F64856C25E9C17400891D69 /* Objects.m */; };
-		4F64858225E9C1E000891D69 /* HelperServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F64858125E9C1E000891D69 /* HelperServices.m */; };
-		4F64858325E9C1E000891D69 /* HelperServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F64858125E9C1E000891D69 /* HelperServices.m */; };
-		4F6485BD25E9F63F00891D69 /* SharedUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6485BB25E9F63F00891D69 /* SharedUtil.m */; };
-		4F6485BE25E9F63F00891D69 /* SharedUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6485BB25E9F63F00891D69 /* SharedUtil.m */; };
 		4F94F5FA25E5EC2700D9F24A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F5F925E5EC2700D9F24A /* main.m */; };
 		4F94F60525E5EC2800D9F24A /* Mac_Mouse_FixTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60425E5EC2800D9F24A /* Mac_Mouse_FixTests.m */; };
 		4F94F61025E5EC2800D9F24A /* Mac_Mouse_FixUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60F25E5EC2800D9F24A /* Mac_Mouse_FixUITests.m */; };
@@ -48,7 +42,6 @@
 		4F94F71825E608DC00D9F24A /* backup_config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F94F6B225E5FD8D00D9F24A /* backup_config.plist */; };
 		4F94F71925E6090D00D9F24A /* UpdateWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FF873DE23197283002A897A /* UpdateWindow.xib */; };
 		4F94F71B25E6093A00D9F24A /* AuthorizeAccessibilityView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD45A1A231C78B400F75C58 /* AuthorizeAccessibilityView.xib */; };
-		4F94F72225E6095A00D9F24A /* default_launchd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FACF59E2183B956009257D4 /* default_launchd.plist */; };
 		4F94F72325E6096500D9F24A /* SpinnerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD45A2A231CD20200F75C58 /* SpinnerView.xib */; };
 		4F94F72625E6097F00D9F24A /* ScrollOverridePanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD36AEC243741A70046DC41 /* ScrollOverridePanel.xib */; };
 		4F94F72725E6098C00D9F24A /* MoreSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FF873EE231A96B2002A897A /* MoreSheet.xib */; };
@@ -59,13 +52,27 @@
 		4F95A249234EBB5D000DC7D7 /* PointerSpeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F95A248234EBB5D000DC7D7 /* PointerSpeed.m */; };
 		4FA1ACE725E894CB007DB95B /* MFSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA1ACE625E894CB007DB95B /* MFSegmentedControl.m */; };
 		4FA1ACFC25E92FC4007DB95B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FCECD8621092354001F1078 /* Assets.xcassets */; };
-		4FB3582625EADFD80098050B /* HelperServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F64858125E9C1E000891D69 /* HelperServices.m */; };
-		4FB3582B25EADFF60098050B /* Objects.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F64856C25E9C17400891D69 /* Objects.m */; };
 		4FCECD8521092354001F1078 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECD8421092354001F1078 /* AppDelegate.m */; };
 		4FD45A20231C7FB500F75C58 /* AccessibilityCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD45A1F231C7FB500F75C58 /* AccessibilityCheck.m */; };
 		4FECC88D2431DCCD001A3C4B /* RoughScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FECC88C2431DCCD001A3C4B /* RoughScroll.m */; };
 		4FECC8902431DCDF001A3C4B /* ScrollControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FECC88F2431DCDF001A3C4B /* ScrollControl.m */; };
 		4FF3B2BD23276082009E8A8E /* FileMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF3B2BC23276082009E8A8E /* FileMonitor.m */; };
+		4FF6654125F2C7B000689B77 /* default_launchd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6652E25F2C7B000689B77 /* default_launchd.plist */; };
+		4FF6654225F2C7B000689B77 /* default_launchd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6652E25F2C7B000689B77 /* default_launchd.plist */; };
+		4FF6654325F2C7B000689B77 /* HelperServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6652F25F2C7B000689B77 /* HelperServices.m */; };
+		4FF6654425F2C7B000689B77 /* HelperServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6652F25F2C7B000689B77 /* HelperServices.m */; };
+		4FF6654525F2C7B000689B77 /* Objects.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653225F2C7B000689B77 /* Objects.m */; };
+		4FF6654625F2C7B000689B77 /* Objects.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653225F2C7B000689B77 /* Objects.m */; };
+		4FF6654B25F2C7B000689B77 /* MFQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653A25F2C7B000689B77 /* MFQueue.m */; };
+		4FF6654C25F2C7B000689B77 /* MFQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653A25F2C7B000689B77 /* MFQueue.m */; };
+		4FF6654D25F2C7B000689B77 /* SharedUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653B25F2C7B000689B77 /* SharedUtility.m */; };
+		4FF6654E25F2C7B000689B77 /* SharedUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653B25F2C7B000689B77 /* SharedUtility.m */; };
+		4FF6654F25F2C7B000689B77 /* NSArray+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653D25F2C7B000689B77 /* NSArray+Additions.m */; };
+		4FF6655025F2C7B000689B77 /* NSArray+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653D25F2C7B000689B77 /* NSArray+Additions.m */; };
+		4FF6655125F2C7B000689B77 /* NSMutableDictionary+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6654025F2C7B000689B77 /* NSMutableDictionary+Additions.m */; };
+		4FF6655225F2C7B000689B77 /* NSMutableDictionary+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6654025F2C7B000689B77 /* NSMutableDictionary+Additions.m */; };
+		4FF6655725F2C7CA00689B77 /* HelperServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6652F25F2C7B000689B77 /* HelperServices.m */; };
+		4FF6655C25F2C7D500689B77 /* Objects.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653225F2C7B000689B77 /* Objects.m */; };
 		4FF75A20233D82590002D8E6 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FCECD8821092354001F1078 /* MainMenu.xib */; };
 /* End PBXBuildFile section */
 
@@ -213,12 +220,6 @@
 		4F3A8443230D3E6C0012C725 /* Updater.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Updater.h; sourceTree = "<group>"; };
 		4F3A8444230D3E6C0012C725 /* Updater.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Updater.m; sourceTree = "<group>"; };
 		4F422EEC23469B0F00AA6E22 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		4F64856B25E9C17400891D69 /* Objects.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Objects.h; sourceTree = "<group>"; };
-		4F64856C25E9C17400891D69 /* Objects.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Objects.m; sourceTree = "<group>"; };
-		4F64858025E9C1DF00891D69 /* HelperServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelperServices.h; sourceTree = "<group>"; };
-		4F64858125E9C1E000891D69 /* HelperServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelperServices.m; sourceTree = "<group>"; };
-		4F6485BB25E9F63F00891D69 /* SharedUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedUtil.m; sourceTree = "<group>"; };
-		4F6485BC25E9F63F00891D69 /* SharedUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedUtil.h; sourceTree = "<group>"; };
 		4F8D0183243D8D6200D70076 /* NSArray+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSArray+Additions.h"; sourceTree = "<group>"; };
 		4F8D0184243D8D6200D70076 /* NSArray+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Additions.m"; sourceTree = "<group>"; };
 		4F94F5EE25E5EC2500D9F24A /* Mac Mouse Fix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mac Mouse Fix.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -239,8 +240,6 @@
 		4FA26CE624380D1F0082D5F6 /* ClickableImageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClickableImageView.m; sourceTree = "<group>"; };
 		4FA26CEF243949DC0082D5F6 /* NSMutableDictionary+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+Additions.h"; sourceTree = "<group>"; };
 		4FA26CF0243949DC0082D5F6 /* NSMutableDictionary+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+Additions.m"; sourceTree = "<group>"; };
-		4FA4DBDC25E6235600EC9259 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
-		4FACF59E2183B956009257D4 /* default_launchd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_launchd.plist; sourceTree = "<group>"; };
 		4FBF34FD23183E6700E6CFD0 /* ConfigFileInterface_App.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigFileInterface_App.h; sourceTree = "<group>"; };
 		4FBF34FE23183E6700E6CFD0 /* ConfigFileInterface_App.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigFileInterface_App.m; sourceTree = "<group>"; };
 		4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mac Mouse Fix Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -274,6 +273,20 @@
 		4FECC88F2431DCDF001A3C4B /* ScrollControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollControl.m; sourceTree = "<group>"; };
 		4FF3B2BB23276082009E8A8E /* FileMonitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileMonitor.h; sourceTree = "<group>"; };
 		4FF3B2BC23276082009E8A8E /* FileMonitor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FileMonitor.m; sourceTree = "<group>"; };
+		4FF6652D25F2C7B000689B77 /* HelperServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelperServices.h; sourceTree = "<group>"; };
+		4FF6652E25F2C7B000689B77 /* default_launchd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_launchd.plist; sourceTree = "<group>"; };
+		4FF6652F25F2C7B000689B77 /* HelperServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelperServices.m; sourceTree = "<group>"; };
+		4FF6653125F2C7B000689B77 /* Objects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Objects.h; sourceTree = "<group>"; };
+		4FF6653225F2C7B000689B77 /* Objects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Objects.m; sourceTree = "<group>"; };
+		4FF6653325F2C7B000689B77 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		4FF6653825F2C7B000689B77 /* NSArray+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Additions.h"; sourceTree = "<group>"; };
+		4FF6653925F2C7B000689B77 /* NSMutableDictionary+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+Additions.h"; sourceTree = "<group>"; };
+		4FF6653A25F2C7B000689B77 /* MFQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MFQueue.m; sourceTree = "<group>"; };
+		4FF6653B25F2C7B000689B77 /* SharedUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedUtility.m; sourceTree = "<group>"; };
+		4FF6653D25F2C7B000689B77 /* NSArray+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Additions.m"; sourceTree = "<group>"; };
+		4FF6653E25F2C7B000689B77 /* SharedUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedUtility.h; sourceTree = "<group>"; };
+		4FF6653F25F2C7B000689B77 /* MFQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MFQueue.h; sourceTree = "<group>"; };
+		4FF6654025F2C7B000689B77 /* NSMutableDictionary+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+Additions.m"; sourceTree = "<group>"; };
 		4FF873DC23197283002A897A /* UpdateWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UpdateWindow.h; sourceTree = "<group>"; };
 		4FF873DD23197283002A897A /* UpdateWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UpdateWindow.m; sourceTree = "<group>"; };
 		4FF873DE23197283002A897A /* UpdateWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpdateWindow.xib; sourceTree = "<group>"; };
@@ -486,34 +499,6 @@
 			name = Other;
 			sourceTree = "<group>";
 		};
-		4F64857325E9C1A400891D69 /* Objects */ = {
-			isa = PBXGroup;
-			children = (
-				4F64856B25E9C17400891D69 /* Objects.h */,
-				4F64856C25E9C17400891D69 /* Objects.m */,
-			);
-			path = Objects;
-			sourceTree = "<group>";
-		};
-		4F64858825E9C1E900891D69 /* HelperServices */ = {
-			isa = PBXGroup;
-			children = (
-				4FACF59E2183B956009257D4 /* default_launchd.plist */,
-				4F64858025E9C1DF00891D69 /* HelperServices.h */,
-				4F64858125E9C1E000891D69 /* HelperServices.m */,
-			);
-			path = HelperServices;
-			sourceTree = "<group>";
-		};
-		4F6485C325E9F64400891D69 /* SharedUtil */ = {
-			isa = PBXGroup;
-			children = (
-				4F6485BC25E9F63F00891D69 /* SharedUtil.h */,
-				4F6485BB25E9F63F00891D69 /* SharedUtil.m */,
-			);
-			path = SharedUtil;
-			sourceTree = "<group>";
-		};
 		4F94F5EF25E5EC2500D9F24A /* App */ = {
 			isa = PBXGroup;
 			children = (
@@ -585,17 +570,6 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		4FA4DBDA25E6231E00EC9259 /* Shared */ = {
-			isa = PBXGroup;
-			children = (
-				4FA4DBDC25E6235600EC9259 /* Constants.h */,
-				4F64857325E9C1A400891D69 /* Objects */,
-				4F64858825E9C1E900891D69 /* HelperServices */,
-				4F6485C325E9F64400891D69 /* SharedUtil */,
-			);
-			path = Shared;
-			sourceTree = "<group>";
-		};
 		4FBF347B2316B90800E6CFD0 /* Update */ = {
 			isa = PBXGroup;
 			children = (
@@ -621,7 +595,7 @@
 		4FCECD7721092354001F1078 = {
 			isa = PBXGroup;
 			children = (
-				4FA4DBDA25E6231E00EC9259 /* Shared */,
+				4FF6652B25F2C7B000689B77 /* Shared */,
 				4F94F5EF25E5EC2500D9F24A /* App */,
 				4FCECD8221092354001F1078 /* Helper */,
 				4F2FDF312315662500C7BE14 /* Accomplice */,
@@ -770,6 +744,51 @@
 				4FF3B2BC23276082009E8A8E /* FileMonitor.m */,
 			);
 			path = FileMonitor;
+			sourceTree = "<group>";
+		};
+		4FF6652B25F2C7B000689B77 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				4FF6653325F2C7B000689B77 /* Constants.h */,
+				4FF6652C25F2C7B000689B77 /* HelperServices */,
+				4FF6653025F2C7B000689B77 /* Objects */,
+				4FF6653625F2C7B000689B77 /* Utility */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		4FF6652C25F2C7B000689B77 /* HelperServices */ = {
+			isa = PBXGroup;
+			children = (
+				4FF6652E25F2C7B000689B77 /* default_launchd.plist */,
+				4FF6652D25F2C7B000689B77 /* HelperServices.h */,
+				4FF6652F25F2C7B000689B77 /* HelperServices.m */,
+			);
+			path = HelperServices;
+			sourceTree = "<group>";
+		};
+		4FF6653025F2C7B000689B77 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				4FF6653125F2C7B000689B77 /* Objects.h */,
+				4FF6653225F2C7B000689B77 /* Objects.m */,
+			);
+			path = Objects;
+			sourceTree = "<group>";
+		};
+		4FF6653625F2C7B000689B77 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				4FF6653E25F2C7B000689B77 /* SharedUtility.h */,
+				4FF6653B25F2C7B000689B77 /* SharedUtility.m */,
+				4FF6653825F2C7B000689B77 /* NSArray+Additions.h */,
+				4FF6653D25F2C7B000689B77 /* NSArray+Additions.m */,
+				4FF6653F25F2C7B000689B77 /* MFQueue.h */,
+				4FF6653A25F2C7B000689B77 /* MFQueue.m */,
+				4FF6653925F2C7B000689B77 /* NSMutableDictionary+Additions.h */,
+				4FF6654025F2C7B000689B77 /* NSMutableDictionary+Additions.m */,
+			);
+			path = Utility;
 			sourceTree = "<group>";
 		};
 		4FF873F2231A96C0002A897A /* MoreSheet */ = {
@@ -946,12 +965,12 @@
 				4F94F71825E608DC00D9F24A /* backup_config.plist in Resources */,
 				4F94F71925E6090D00D9F24A /* UpdateWindow.xib in Resources */,
 				4F94F71B25E6093A00D9F24A /* AuthorizeAccessibilityView.xib in Resources */,
-				4F94F72225E6095A00D9F24A /* default_launchd.plist in Resources */,
 				4F94F72325E6096500D9F24A /* SpinnerView.xib in Resources */,
 				4F94F72625E6097F00D9F24A /* ScrollOverridePanel.xib in Resources */,
 				4F94F72725E6098C00D9F24A /* MoreSheet.xib in Resources */,
 				4F94F72825E6099200D9F24A /* Assets.xcassets in Resources */,
 				4F94F72925E6099700D9F24A /* MouseFix.xib in Resources */,
+				4FF6654225F2C7B000689B77 /* default_launchd.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -975,6 +994,7 @@
 			files = (
 				4FA1ACFC25E92FC4007DB95B /* Assets.xcassets in Resources */,
 				4FF75A20233D82590002D8E6 /* MainMenu.xib in Resources */,
+				4FF6654125F2C7B000689B77 /* default_launchd.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1007,8 +1027,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F2FDF332315662500C7BE14 /* main.m in Sources */,
-				4FB3582625EADFD80098050B /* HelperServices.m in Sources */,
-				4FB3582B25EADFF60098050B /* Objects.m in Sources */,
+				4FF6655725F2C7CA00689B77 /* HelperServices.m in Sources */,
+				4FF6655C25F2C7D500689B77 /* Objects.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1017,23 +1037,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F94F62125E5EC5100D9F24A /* AppDelegate.m in Sources */,
-				4F64858325E9C1E000891D69 /* HelperServices.m in Sources */,
 				4F94F5FA25E5EC2700D9F24A /* main.m in Sources */,
 				4F94F63825E5EE8F00D9F24A /* AuthorizeAccessibilityView.m in Sources */,
+				4FF6655225F2C7B000689B77 /* NSMutableDictionary+Additions.m in Sources */,
 				4F94F63E25E5EE9500D9F24A /* MoreSheet.m in Sources */,
 				4F94F64425E5EE9700D9F24A /* OverridePanel.m in Sources */,
-				4F6485BE25E9F63F00891D69 /* SharedUtil.m in Sources */,
 				4F94F65025E5EEA600D9F24A /* ConfigFileInterface_App.m in Sources */,
 				4F94F65625E5EEB600D9F24A /* MessagePort_App.m in Sources */,
+				4FF6654625F2C7B000689B77 /* Objects.m in Sources */,
 				4F94F65C25E5EEC100D9F24A /* Updater.m in Sources */,
 				4F94F66225E5EEC400D9F24A /* UpdateWindow.m in Sources */,
+				4FF6654E25F2C7B000689B77 /* SharedUtility.m in Sources */,
 				4F94F66825E5EECA00D9F24A /* Utility_App.m in Sources */,
 				4F94F66E25E5EECC00D9F24A /* NSMutableDictionary+Additions.m in Sources */,
-				4F64856E25E9C17400891D69 /* Objects.m in Sources */,
 				4F94F67425E5EECF00D9F24A /* NSArray+Additions.m in Sources */,
 				4F94F67A25E5EEDB00D9F24A /* ClickableImageView.m in Sources */,
+				4FF6654C25F2C7B000689B77 /* MFQueue.m in Sources */,
+				4FF6655025F2C7B000689B77 /* NSArray+Additions.m in Sources */,
 				4F94F68025E5EEDE00D9F24A /* Hyperlink.m in Sources */,
 				4FA1ACE725E894CB007DB95B /* MFSegmentedControl.m in Sources */,
+				4FF6654425F2C7B000689B77 /* HelperServices.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1057,9 +1080,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F6485BD25E9F63F00891D69 /* SharedUtil.m in Sources */,
 				4F32E195231C50A100199A11 /* ScrollModifiers.m in Sources */,
+				4FF6654D25F2C7B000689B77 /* SharedUtility.m in Sources */,
 				4F32E155231C420100199A11 /* MessagePort_HelperApp.m in Sources */,
+				4FF6655125F2C7B000689B77 /* NSMutableDictionary+Additions.m in Sources */,
 				4FECC8902431DCDF001A3C4B /* ScrollControl.m in Sources */,
 				4F1C968C231361EF00C3B9AE /* TouchEvents.c in Sources */,
 				4FD45A20231C7FB500F75C58 /* AccessibilityCheck.m in Sources */,
@@ -1068,15 +1092,17 @@
 				4F32E157231C420100199A11 /* DeviceManager.m in Sources */,
 				4F1B7C1D23D3E6D60055C007 /* TouchSimulator.m in Sources */,
 				4F32E158231C420100199A11 /* ConfigFileInterface_HelperApp.m in Sources */,
-				4F64858225E9C1E000891D69 /* HelperServices.m in Sources */,
 				4FCECD8521092354001F1078 /* AppDelegate.m in Sources */,
+				4FF6654F25F2C7B000689B77 /* NSArray+Additions.m in Sources */,
+				4FF6654525F2C7B000689B77 /* Objects.m in Sources */,
 				4F32E15D231C44C000199A11 /* main.m in Sources */,
 				4F32E194231C50A100199A11 /* InputParser.m in Sources */,
 				4F32E196231C50A100199A11 /* MouseInputReceiver.m in Sources */,
 				4F95A249234EBB5D000DC7D7 /* PointerSpeed.m in Sources */,
-				4F64856D25E9C17400891D69 /* Objects.m in Sources */,
+				4FF6654325F2C7B000689B77 /* HelperServices.m in Sources */,
 				4F32E188231C509200199A11 /* AnimationCurve.m in Sources */,
 				4F1A20282348EC3D00B29037 /* ScrollUtility.m in Sources */,
+				4FF6654B25F2C7B000689B77 /* MFQueue.m in Sources */,
 				4F32E159231C420100199A11 /* Utility_HelperApp.m in Sources */,
 				4FF3B2BD23276082009E8A8E /* FileMonitor.m in Sources */,
 			);
