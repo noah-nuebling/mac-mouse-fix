@@ -107,10 +107,10 @@ static int _scrollDirection;
     // Create/enable scrollwheel input callback
     if (_eventTap == nil) {
         CGEventMask mask = CGEventMaskBit(kCGEventScrollWheel);
-        _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
+        _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGTailAppendEventTap /*kCGHeadInsertEventTap*/, kCGEventTapOptionDefault, mask, eventTapCallback, NULL); // Using `kCGTailAppendEventTap` instead of `kCGHeadInsertEventTap` because I think it might help with the bug of 87. It's also how MOS does things. Don't think it helps :'/
         NSLog(@"_eventTap: %@", _eventTap);
         CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _eventTap, 0);
-        CFRunLoopAddSource(CFRunLoopGetMain(), runLoopSource, kCFRunLoopDefaultMode);
+        CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes);
         CFRelease(runLoopSource);
         CGEventTapEnable(_eventTap, false); // Not sure if this does anything
     }
@@ -199,12 +199,6 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         return event;
     }
     
-    // Investigating time accuracy of event tap
-    static double lastCGEventTimeStamp = 0;
-    double thisCGEventTimeStamp = CACurrentMediaTime();
-    NSLog(@"TIME BETWEEN CG EVENTS: %f", (thisCGEventTimeStamp - lastCGEventTimeStamp) * 1000);
-    lastCGEventTimeStamp = thisCGEventTimeStamp;
-    
     // Check if scrolling direction changed
     [ScrollUtility updateScrollDirectionDidChange:scrollDeltaAxis1];
     if (ScrollUtility.scrollDirectionDidChange) {
@@ -240,7 +234,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         
         // Set application overrides
         
-        if (ScrollUtility.consecutiveScrollTickCounter == 0) { // Only do this stuff on the first of each series of consecutive scroll ticks
+        if (ScrollUtility.consecutiveScrollTickCounter == 0) { // Only do this on the first of each series of consecutive scroll ticks
             [ScrollUtility updateMouseDidMove];
             if (!ScrollUtility.mouseDidMove) {
                 [ScrollUtility updateFrontMostAppDidChange];

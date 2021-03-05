@@ -39,7 +39,6 @@ typedef enum {
 + (BOOL)scrollDirectionDidChange;
 + (void)updateScrollDirectionDidChange:(long long)thisScrollValue;
 
-+ (double)secondsBetweenLastTwoScrollTicks;
 + (int)consecutiveScrollTickCounter;
 + (int)consecutiveScrollSwipeCounter;
 + (void)updateConsecutiveScrollTickAndSwipeCountersWithTickOccuringNow;
