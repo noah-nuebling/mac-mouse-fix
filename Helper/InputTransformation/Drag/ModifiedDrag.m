@@ -151,6 +151,7 @@ static CGEventRef __nullable otherMouseDraggedCallback(CGEventTapProxy proxy, CG
                 _drag.phase = kIOHIDEventPhaseBegan;
             } else if ([_drag.type isEqualToString:kMFModifiedDragDictTypeFakeDrag]) {
                 [Utility_Transformation postMouseButton:_drag.fakeDragButtonNumber down:YES];
+                disableMouseTracking();
             }
         }
         
@@ -210,18 +211,22 @@ static CGEventRef __nullable otherMouseDraggedCallback(CGEventTapProxy proxy, CG
             [Utility_Transformation postMouseButton:_drag.fakeDragButtonNumber down:NO];
         }
     }
-    if (inputIsPointerMovement) {
-        CGEventTapEnable(_drag.eventTap, false);
-        [NSCursor.closedHandCursor pop];
-    } else {
-        [_drag.modifiedDevice receiveOnlyButtonInput];
-    }
+    disableMouseTracking();
     _drag.activationState = kMFModifiedInputActivationStateNone;
     
 //    CGAssociateMouseAndMouseCursorPosition(true); // Doesn't work
 //    CGDisplayShowCursor(CGMainDisplayID());
     
     // TODO: CHECK if we need to add more stuff here
+}
+
+static void disableMouseTracking() {
+    if (inputIsPointerMovement) {
+        CGEventTapEnable(_drag.eventTap, false);
+        [NSCursor.closedHandCursor pop];
+    } else {
+        [_drag.modifiedDevice receiveOnlyButtonInput];
+    }
 }
 
 
