@@ -9,9 +9,9 @@
 
 #import "Updater.h"
 #import "UpdateWindow.h"
-#import "../AppDelegate.h"
-#import "../MoreSheet/MoreSheet.h"
-#import "../Config/ConfigFileInterface_App.h"
+#import "AppDelegate.h"
+#import "MoreSheet.h"
+#import "ConfigFileInterface_App.h"
 #import <ZipArchive/ZipArchive.h>
 #import "Constants.h"
 #import "Objects.h"

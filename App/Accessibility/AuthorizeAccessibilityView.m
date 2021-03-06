@@ -7,9 +7,9 @@
 // --------------------------------------------------------------------------
 //
 
-#import "../AppDelegate.h"
+#import "AppDelegate.h"
 #import "AuthorizeAccessibilityView.h"
-#import "../MessagePort/MessagePort_App.h"
+#import "MessagePort_App.h"
 #import "Utility_App.h"
 
 @interface AuthorizeAccessibilityView ()

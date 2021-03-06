@@ -9,8 +9,8 @@
 
 #import "UpdateWindow.h"
 #import "Updater.h"
-#import "../MoreSheet/MoreSheet.h"
-#import "../AppDelegate.h"
+#import "MoreSheet.h"
+#import "AppDelegate.h"
 #import <WebKit/WebKit.h>
 #import "Utility_App.h"
 

@@ -14,6 +14,7 @@
 		4F94F61025E5EC2800D9F24A /* Mac_Mouse_FixUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60F25E5EC2800D9F24A /* Mac_Mouse_FixUITests.m */; };
 		4F94F73D25E6146C00D9F24A /* Mac Mouse Fix Helper.app in Copy Helper */ = {isa = PBXBuildFile; fileRef = 4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4F94F74C25E614B800D9F24A /* Mac Mouse Fix Accomplice in Copy Updater */ = {isa = PBXBuildFile; fileRef = 4F2FDF302315662400C7BE14 /* Mac Mouse Fix Accomplice */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCA07D525F3129B00BFE209 /* RemapTableController.m */; };
 		4FF6654125F2C7B000689B77 /* default_launchd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6652E25F2C7B000689B77 /* default_launchd.plist */; };
 		4FF6654225F2C7B000689B77 /* default_launchd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6652E25F2C7B000689B77 /* default_launchd.plist */; };
 		4FF6654325F2C7B000689B77 /* HelperServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6652F25F2C7B000689B77 /* HelperServices.m */; };
@@ -180,6 +181,8 @@
 		4F94F60B25E5EC2800D9F24A /* Mac Mouse FixUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Mac Mouse FixUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F94F60F25E5EC2800D9F24A /* Mac_Mouse_FixUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Mac_Mouse_FixUITests.m; sourceTree = "<group>"; };
 		4F94F61125E5EC2800D9F24A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4FCA07D425F3129B00BFE209 /* RemapTableController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapTableController.h; sourceTree = "<group>"; };
+		4FCA07D525F3129B00BFE209 /* RemapTableController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapTableController.m; sourceTree = "<group>"; };
 		4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mac Mouse Fix Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FDBC59A234F80C500A46517 /* Accomplice.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Accomplice.entitlements; sourceTree = "<group>"; };
 		4FF6652D25F2C7B000689B77 /* HelperServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelperServices.h; sourceTree = "<group>"; };
@@ -429,6 +432,18 @@
 			path = Tests;
 			sourceTree = "<group>";
 		};
+		4FCA07D325F3125B00BFE209 /* MainWindow */ = {
+			isa = PBXGroup;
+			children = (
+				4FF665C525F2C92700689B77 /* AppDelegate.h */,
+				4FF665DB25F2C92700689B77 /* AppDelegate.m */,
+				4FF665D925F2C92700689B77 /* MouseFix.xib */,
+				4FCA07D425F3129B00BFE209 /* RemapTableController.h */,
+				4FCA07D525F3129B00BFE209 /* RemapTableController.m */,
+			);
+			path = MainWindow;
+			sourceTree = "<group>";
+		};
 		4FCECD7721092354001F1078 = {
 			isa = PBXGroup;
 			children = (
@@ -504,15 +519,13 @@
 		4FF665BE25F2C92700689B77 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				4FF665C525F2C92700689B77 /* AppDelegate.h */,
-				4FF665DB25F2C92700689B77 /* AppDelegate.m */,
-				4FF665D925F2C92700689B77 /* MouseFix.xib */,
+				4FCA07D325F3125B00BFE209 /* MainWindow */,
 				4FF665DC25F2C92700689B77 /* Accessibility */,
 				4FF665C625F2C92700689B77 /* Update */,
 				4FF665CC25F2C92700689B77 /* MoreSheet */,
+				4FF665BF25F2C92700689B77 /* Overrides */,
 				4FF665D025F2C92700689B77 /* Config */,
 				4FF665D625F2C92700689B77 /* MessagePort */,
-				4FF665BF25F2C92700689B77 /* Overrides */,
 				4FF665E525F2C92700689B77 /* Utility */,
 				4FF665D425F2C92700689B77 /* Resources */,
 				4FF665E125F2C92700689B77 /* SupportFiles */,
@@ -524,10 +537,10 @@
 			isa = PBXGroup;
 			children = (
 				4FF665C025F2C92700689B77 /* OverridePanel.h */,
-				4FF665C125F2C92700689B77 /* MFSegmentedControl.m */,
 				4FF665C225F2C92700689B77 /* OverridePanel.m */,
-				4FF665C325F2C92700689B77 /* ScrollOverridePanel.xib */,
 				4FF665C425F2C92700689B77 /* MFSegmentedControl.h */,
+				4FF665C125F2C92700689B77 /* MFSegmentedControl.m */,
+				4FF665C325F2C92700689B77 /* ScrollOverridePanel.xib */,
 			);
 			path = Overrides;
 			sourceTree = "<group>";
@@ -547,9 +560,9 @@
 		4FF665CC25F2C92700689B77 /* MoreSheet */ = {
 			isa = PBXGroup;
 			children = (
+				4FF665CF25F2C92700689B77 /* MoreSheet.h */,
 				4FF665CD25F2C92700689B77 /* MoreSheet.m */,
 				4FF665CE25F2C92700689B77 /* MoreSheet.xib */,
-				4FF665CF25F2C92700689B77 /* MoreSheet.h */,
 			);
 			path = MoreSheet;
 			sourceTree = "<group>";
@@ -1160,6 +1173,7 @@
 				4FF665ED25F2C92700689B77 /* MFSegmentedControl.m in Sources */,
 				4FF6660225F2C92700689B77 /* ClickableImageView.m in Sources */,
 				4FF6655025F2C7B000689B77 /* NSArray+Additions.m in Sources */,
+				4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */,
 				4FF665F825F2C92700689B77 /* MessagePort_App.m in Sources */,
 				4FF6660125F2C92700689B77 /* Utility_App.m in Sources */,
 				4FF665F225F2C92700689B77 /* UpdateWindow.m in Sources */,

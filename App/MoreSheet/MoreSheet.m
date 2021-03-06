@@ -11,7 +11,7 @@
 #import "ConfigFileInterface_App.h"
 #import "../Update/Updater.h"
 #import "../MessagePort/MessagePort_App.h"
-#import "../AppDelegate.h"
+#import "AppDelegate.h"
 #import "Utility_App.h"
 
 

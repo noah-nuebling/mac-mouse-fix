@@ -8,8 +8,8 @@
 //
 
 #import <PreferencePanes/PreferencePanes.h>
-#import "MoreSheet/MoreSheet.h"
-#import "Overrides/OverridePanel.h"
+#import "MoreSheet.h"
+#import "OverridePanel.h"
 
 @interface AppDelegate : NSObject<NSApplicationDelegate, NSWindowDelegate>
 + (AppDelegate *)instance;

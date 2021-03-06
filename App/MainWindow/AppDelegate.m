@@ -13,13 +13,14 @@
 #import <ServiceManagement/SMLoginItem.h>
 #import "AppDelegate.h"
 #import "Updater.h"
-#import "Config/ConfigFileInterface_App.h"
-#import "MessagePort/MessagePort_App.h"
-#import "Update/UpdateWindow.h"
-#import "Utility/Utility_App.h"
-#import "Accessibility/AuthorizeAccessibilityView.h"
+#import "ConfigFileInterface_App.h"
+#import "MessagePort_App.h"
+#import "UpdateWindow.h"
+#import "Utility_App.h"
+#import "AuthorizeAccessibilityView.h"
 #import "HelperServices.h"
 #import "SharedUtility.h"
+#import "RemapTableController.h"
 
 @interface AppDelegate ()
 
@@ -33,10 +34,7 @@
 @property (weak) IBOutlet NSSlider *scrollStepSizeSlider;
 @property (weak) IBOutlet NSButton *invertScrollCheckBox;
 
-@property (weak) IBOutlet NSPopUpButton *middleClick;
-@property (weak) IBOutlet NSPopUpButton *middleHold;
-@property (weak) IBOutlet NSPopUpButton *sideClick;
-@property (weak) IBOutlet NSButton *swapSideButtonsCheckBox;
+@property (strong) RemapTableController *tableController;
 
 @end
 
@@ -113,6 +111,7 @@ static NSDictionary *sideButtonActions;
     if (checkForUpdates == YES) {
         [Updater checkForUpdate];
     }
+    _tableController = [[RemapTableController alloc] init];
 }
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
     NSLog(@"Mac Mouse Fix should terminate");
@@ -188,57 +187,6 @@ NSTimer *removeAccOverlayTimer;
     
     [ConfigFileInterface_App loadConfigFromFile];
     
-# pragma mark Popup Buttons
-    
-    NSDictionary *buttonRemaps = ConfigFileInterface_App.config[@"ButtonRemaps"];
-    
-    // Side buttons
-    
-    // Swapped checkbox
-    if ([buttonRemaps[@"sideButtonsInverted"] boolValue] == 1) {
-        _swapSideButtonsCheckBox.state = 1;
-    }
-    else {
-        _swapSideButtonsCheckBox.state = 0;
-    }
-    
-    // Popup button
-    long i;
-    NSString *eventTypeSideClick = buttonRemaps[@"4"][@"single"][@"click"][0];
-    
-    if ([eventTypeSideClick isEqualToString:@"swipeEvent"]) {
-        i = 2;
-    }
-    else if ([eventTypeSideClick isEqualToString:@"symbolicHotKey"]) {
-        i = 1;
-    }
-    else {
-        i = 0;
-    }
-    [_sideClick selectItemWithTag: i];
-    
-    // Middle button
-    
-    NSDictionary *middleButtonRemap = buttonRemaps[@"3"][@"single"];
-    
-    // Click popup buttons
-    NSInteger symbolicHotKeyMiddleClick = [middleButtonRemap[@"click"][1] integerValue];
-    if (symbolicHotKeyMiddleClick) {
-        [_middleClick selectItemWithTag: symbolicHotKeyMiddleClick];
-    }
-    else {
-        [_middleClick selectItemWithTag: 0];
-    }
-    
-    // Hold popup button
-    NSInteger symbolicHotKeyMiddleHold = [middleButtonRemap[@"hold"][1] integerValue];
-    if (symbolicHotKeyMiddleHold) {
-        [_middleHold selectItemWithTag: symbolicHotKeyMiddleHold];
-    }
-    else {
-        [_middleHold selectItemWithTag: 0];
-    }
-    
 # pragma mark scrollSettings
     
     NSDictionary *scrollConfigFromFile = ConfigFileInterface_App.config[@"Scroll"];
@@ -273,39 +221,6 @@ NSTimer *removeAccOverlayTimer;
 
 - (void)setConfigFileToUI {
     
-    // Middle button
-    
-    // Tag equals symbolicHotKey
-    
-    // Click
-    NSArray *middleButtonClickAction;
-    if (_middleClick.selectedTag != 0) {
-        middleButtonClickAction= @[@"symbolicHotKey", @(_middleClick.selectedTag)];
-    }
-    [ConfigFileInterface_App.config setValue:middleButtonClickAction forKeyPath:@"ButtonRemaps.3.single.click"];
-    
-    // Hold
-    NSArray *middleButtonHoldAction;
-    if (_middleHold.selectedTag != 0) {
-        middleButtonHoldAction = @[@"symbolicHotKey", @(_middleHold.selectedTag)];
-    }
-    [ConfigFileInterface_App.config setValue:middleButtonHoldAction forKeyPath:@"ButtonRemaps.3.single.hold"];
-    
-    
-    // Side buttons         // tag = 1 -> Switch Spaces, tag = 2 -> Switch Pages
-    
-    [ConfigFileInterface_App.config setValue:[NSNumber numberWithBool: _swapSideButtonsCheckBox.state] forKeyPath:@"ButtonRemaps.sideButtonsInverted"];
-    
-    // Click
-    NSArray *sideButtonClickAction = [sideButtonActions objectForKey:@(_sideClick.selectedTag)];
-
-    if (_swapSideButtonsCheckBox.state == 1) {
-        [ConfigFileInterface_App.config setValue:sideButtonClickAction[0] forKeyPath:@"ButtonRemaps.5.single.click"];
-        [ConfigFileInterface_App.config setValue:sideButtonClickAction[1] forKeyPath:@"ButtonRemaps.4.single.click"];
-    } else {
-        [ConfigFileInterface_App.config setValue:sideButtonClickAction[0] forKeyPath:@"ButtonRemaps.4.single.click"];
-        [ConfigFileInterface_App.config setValue:sideButtonClickAction[1] forKeyPath:@"ButtonRemaps.5.single.click"];
-    }
     
     // Scroll Settings
     
