@@ -11,6 +11,7 @@
 #import "CGSHotKeys.h"
 #import "TouchSimulator.h"
 #import "SharedUtility.h"
+#import "Utility_Transformation.h"
 
 @implementation Actions
 
@@ -53,39 +54,9 @@
             
             NSNumber *button = actionDict[kMFActionDictKeyMouseButtonClicksVariantButtonNumber];
             NSNumber *nOfClicks = actionDict[kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks];
-            [self postMouseButtonClicks:button.intValue nOfClicks:nOfClicks.intValue];
+            [Utility_Transformation postMouseButtonClicks:button.intValue nOfClicks:nOfClicks.intValue];
         }
     }
-}
-
-#pragma mark - Button clicks
-
-+ (void)postMouseButtonClicks:(MFMouseButtonNumber)button nOfClicks:(int64_t)nOfClicks {
-    
-    CGEventTapLocation tapLoc = kCGSessionEventTap;
-    
-    CGPoint mouseLoc = CGEventGetLocation(CGEventCreate(NULL));
-    CGEventType eventTypeDown = [SharedUtility CGEventTypeForButtonNumber:button isMouseDown:YES];
-    CGEventType eventTypeUp = [SharedUtility CGEventTypeForButtonNumber:button isMouseDown:NO];
-    CGMouseButton buttonCG = [SharedUtility CGMouseButtonFromMFMouseButtonNumber:button];
-    
-    CGEventRef buttonDown = CGEventCreateMouseEvent(NULL, eventTypeDown, mouseLoc, buttonCG);
-    CGEventRef buttonUp = CGEventCreateMouseEvent(NULL, eventTypeUp, mouseLoc, buttonCG);
-    
-    int clickLevel = 1;
-    while (clickLevel <= nOfClicks) {
-        
-        CGEventSetIntegerValueField(buttonDown, kCGMouseEventClickState, clickLevel);
-        CGEventSetIntegerValueField(buttonUp, kCGMouseEventClickState, clickLevel);
-        
-        CGEventPost(tapLoc, buttonDown);
-        CGEventPost(tapLoc, buttonUp);
-        
-        clickLevel++;
-    }
-    
-    CFRelease(buttonDown);
-    CFRelease(buttonUp);
 }
 
 #pragma mark - Keyboard shortcuts

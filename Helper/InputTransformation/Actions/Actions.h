@@ -16,8 +16,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)executeActionArray:(NSArray *)actionArray;
 
-+ (void)postMouseButtonClicks:(MFMouseButtonNumber)button nOfClicks:(int64_t)nOfClicks;
-
 @end
 
 NS_ASSUME_NONNULL_END

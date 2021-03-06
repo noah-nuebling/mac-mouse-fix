@@ -58,7 +58,7 @@ static void toggleModifierEventTapBasedOnRemaps(NSDictionary *remaps) {
     // If a modification collection exists such that it contains a proactive modification and its precondition contains a keyboard modifier, then activate the event tap.
     for (NSDictionary *modificationPrecondition in remaps) {
         NSDictionary *modificationCollection = remaps[modificationPrecondition];
-        BOOL collectionContainsProactiveModification = modificationCollection[kMFModificationTypeModifiedDrag] != nil;
+        BOOL collectionContainsProactiveModification = modificationCollection[kMFTriggerKeyDrag] != nil;
             // ^ proactive modification === modifier driven modification !== trigger driven modification
         if (collectionContainsProactiveModification) {
             BOOL modificationDependsOnKeyboardModifier = modificationPrecondition[kMFModificationPreconditionKeyKeyboard] != nil;
@@ -128,9 +128,9 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, MFDevi
     NSDictionary *activeModifications = r[activeModifiers];
     if (activeModifications) {
         // Initialize effects which are modifier driven (only modified drag)
-        NSString *modifiedDragType = activeModifications[kMFModificationTypeModifiedDrag];
-        if (modifiedDragType) {
-            [ModifiedDrag initializeithType:modifiedDragType onDevice:device];
+        NSDictionary *modifiedDragDict = activeModifications[kMFTriggerKeyDrag];
+        if (modifiedDragDict) {
+            [ModifiedDrag initializeithModifiedDragDict:modifiedDragDict onDevice:device];
         }
     }
 }

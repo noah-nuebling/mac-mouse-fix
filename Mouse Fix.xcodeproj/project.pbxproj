@@ -781,12 +781,12 @@
 		4FF6663F25F2C93A00689B77 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
-				4FF6664025F2C93A00689B77 /* SubPixelator.m */,
 				4FF6664125F2C93A00689B77 /* VectorSubPixelator.m */,
-				4FF6664225F2C93A00689B77 /* Utility_Transformation.m */,
 				4FF6664325F2C93A00689B77 /* SubPixelator.h */,
+				4FF6664025F2C93A00689B77 /* SubPixelator.m */,
 				4FF6664425F2C93A00689B77 /* VectorSubPixelator.h */,
 				4FF6664525F2C93A00689B77 /* Utility_Transformation.h */,
+				4FF6664225F2C93A00689B77 /* Utility_Transformation.m */,
 			);
 			path = Utility;
 			sourceTree = "<group>";

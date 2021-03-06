@@ -45,12 +45,12 @@ NSArray *_remapsUI;
                                             kMFActionDictKeySingleVariant:@(kMFSHMissionControl)
                                         },
                                 ],
-                                kMFButtonTriggerDurationHold: @[                                  // Key: click/hold, value: array of actions
-                                        @{
-                                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-                                            kMFActionDictKeySingleVariant: @(kMFSHShowDesktop),
-                                        },
-                                ],
+//                                kMFButtonTriggerDurationHold: @[                                  // Key: click/hold, value: array of actions
+//                                        @{
+//                                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+//                                            kMFActionDictKeySingleVariant: @(kMFSHShowDesktop),
+//                                        },
+//                                ],
                                 
                         },
                 },
@@ -95,7 +95,10 @@ NSArray *_remapsUI;
                     @(3): @(1),                                      // btn, lvl
             },
         }: @{
-                kMFModificationTypeModifiedDrag: kMFModifiedDragVariantThreeFingerSwipe,
+                kMFTriggerKeyDrag: @{
+                    kMFModifiedDragDictKeyType: kMFModifiedDragDictTypeFakeDrag,
+                    kMFModifiedDragDictKeyFakeDragVariantButtonNumber: @3,
+                }
         },
         
         @{
@@ -103,7 +106,9 @@ NSArray *_remapsUI;
                     @(3): @(2),
             },
         }: @{
-                kMFModificationTypeModifiedDrag: kMFModifiedDragVariantTwoFingerSwipe,
+                kMFTriggerKeyDrag: @{
+                    kMFModifiedDragDictKeyType: kMFModifiedDragDictTypeTwoFingerSwipe,
+                }
         }
     };
     //    _testRemapsUI = @[

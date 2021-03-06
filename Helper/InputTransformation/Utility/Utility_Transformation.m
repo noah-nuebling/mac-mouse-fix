@@ -12,6 +12,7 @@
 #import <Carbon/Carbon.h>
 #import <ApplicationServices/ApplicationServices.h>
 #import "CGSPrivate.h"
+#import "SharedUtility.h"
 
 @implementation Utility_Transformation
 
@@ -32,6 +33,49 @@
     } else {
         CGDisplayShowCursor(kCGDirectMainDisplay);
     }
+}
+
+#pragma mark - Button clicks
+
++ (void)postMouseButtonClicks:(MFMouseButtonNumber)button nOfClicks:(int64_t)nOfClicks {
+    
+    CGEventTapLocation tapLoc = kCGSessionEventTap;
+    
+    CGPoint mouseLoc = CGEventGetLocation(CGEventCreate(NULL));
+    CGEventType eventTypeDown = [SharedUtility CGEventTypeForButtonNumber:button isMouseDown:YES];
+    CGEventType eventTypeUp = [SharedUtility CGEventTypeForButtonNumber:button isMouseDown:NO];
+    CGMouseButton buttonCG = [SharedUtility CGMouseButtonFromMFMouseButtonNumber:button];
+    
+    CGEventRef buttonDown = CGEventCreateMouseEvent(NULL, eventTypeDown, mouseLoc, buttonCG);
+    CGEventRef buttonUp = CGEventCreateMouseEvent(NULL, eventTypeUp, mouseLoc, buttonCG);
+    
+    int clickLevel = 1;
+    while (clickLevel <= nOfClicks) {
+        
+        CGEventSetIntegerValueField(buttonDown, kCGMouseEventClickState, clickLevel);
+        CGEventSetIntegerValueField(buttonUp, kCGMouseEventClickState, clickLevel);
+        
+        CGEventPost(tapLoc, buttonDown);
+        CGEventPost(tapLoc, buttonUp);
+        
+        clickLevel++;
+    }
+    
+    CFRelease(buttonDown);
+    CFRelease(buttonUp);
+}
++ (void)postMouseButton:(MFMouseButtonNumber)button down:(BOOL)down {
+    CGEventTapLocation tapLoc = kCGSessionEventTap;
+    
+    CGPoint mouseLoc = CGEventGetLocation(CGEventCreate(NULL));
+    CGEventType eventTypeDown = [SharedUtility CGEventTypeForButtonNumber:button isMouseDown:down];
+    CGMouseButton buttonCG = [SharedUtility CGMouseButtonFromMFMouseButtonNumber:button];
+    
+    CGEventRef event = CGEventCreateMouseEvent(NULL, eventTypeDown, mouseLoc, buttonCG);
+    CGEventSetIntegerValueField(event, kCGMouseEventClickState, 1);
+    
+    CGEventPost(tapLoc, event);
+    CFRelease(event);
 }
 
 @end

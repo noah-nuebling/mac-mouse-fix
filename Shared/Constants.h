@@ -60,26 +60,30 @@ typedef NSString*                                                       MFString
 #define kMFButtonTriggerDurationClick                                   @"click"
 #define kMFButtonTriggerDurationHold                                    @"hold"
 
-// Modification dicts
+// Modified drag dicts
 
+// Trigger key
+#define kMFTriggerKeyDrag                                               @"drag"
 // Type key
-#define kMFModificationDictKeyType                                      @"modificationType"
+#define kMFModifiedDragDictKeyType                                      @"modifiedDragType"
 // Type values
-#define kMFModificationTypeModifiedDrag                                 @"modifiedDrag"
-#define kMFModificationTypeModifiedScroll                               @"modifiedScroll"
+#define kMFModifiedDragDictTypeTwoFingerSwipe                           @"twoFingerSwipe"
+#define kMFModifiedDragDictTypeThreeFingerSwipe                         @"threeFingerSwipe"
+#define kMFModifiedDragDictTypeFakeDrag                                 @"fakeDrag"
 // Variant keys
-#define kMFModificationDictKeySingleVariant                             @"modificationVariant"
-#define kMFModificationDictKeyFakeDragSubVariantButtonNumber            @"buttonNumber"
-// Variant values
-// Modified drag variants
-#define kMFModifiedDragVariantTwoFingerSwipe                            @"twoFingerSwipe"
-#define kMFModifiedDragVariantThreeFingerSwipe                          @"threeFingerSwipe"
-#define kMFModifiedDragVariantFakeDrag                                  @"fakeDrag"
-// Modified scroll variants
-#define kMFModifiedScrollVariantZoom                                    @"zoom"
-#define kMFModifiedScrollVariantHorizontalScroll                        @"horizontal"
-#define kMFModifiedScrollVariantPrecisionScroll                         @"precision"
-#define kMFModifiedScrollVariantFastScroll                              @"fast"
+#define kMFModifiedDragDictKeyFakeDragVariantButtonNumber               @"buttonNumber"
+
+// Modified Scroll dicts
+
+// Trigger key
+#define kMFTriggerKeyScroll                                             @"scroll"
+// Type key
+#define kMFModifiedScrollDictKeyType                                    @"modifiedScrollType"
+// Type values
+#define kMFModifiedScrollTypeZoom                                       @"zoom"
+#define kMFModifiedScrollTypeHorizontalScroll                           @"horizontal"
+#define kMFModifiedScrollTypePrecisionScroll                            @"precision"
+#define kMFModifiedScrollTypeFastScroll                                 @"fast"
 
 // Action dicts
 
