@@ -699,12 +699,12 @@
 		4FF6661825F2C93A00689B77 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
-				4FF6661925F2C93A00689B77 /* ButtonTriggerGenerator.m */,
-				4FF6661A25F2C93A00689B77 /* ButtonTriggerHandler.m */,
 				4FF6661B25F2C93A00689B77 /* ButtonInputReceiver.h */,
-				4FF6661C25F2C93A00689B77 /* ButtonTriggerGenerator.h */,
-				4FF6661D25F2C93A00689B77 /* ButtonTriggerHandler.h */,
 				4FF6661E25F2C93A00689B77 /* ButtonInputReceiver.m */,
+				4FF6661C25F2C93A00689B77 /* ButtonTriggerGenerator.h */,
+				4FF6661925F2C93A00689B77 /* ButtonTriggerGenerator.m */,
+				4FF6661D25F2C93A00689B77 /* ButtonTriggerHandler.h */,
+				4FF6661A25F2C93A00689B77 /* ButtonTriggerHandler.m */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
