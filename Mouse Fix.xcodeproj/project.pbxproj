@@ -44,7 +44,6 @@
 		4FF665F825F2C92700689B77 /* MessagePort_App.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665D725F2C92700689B77 /* MessagePort_App.m */; };
 		4FF665F925F2C92700689B77 /* MouseFix.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FF665D925F2C92700689B77 /* MouseFix.xib */; };
 		4FF665FA25F2C92700689B77 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665DB25F2C92700689B77 /* AppDelegate.m */; };
-		4FF665FB25F2C92700689B77 /* SpinnerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FF665DD25F2C92700689B77 /* SpinnerView.xib */; };
 		4FF665FC25F2C92700689B77 /* AuthorizeAccessibilityView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FF665DF25F2C92700689B77 /* AuthorizeAccessibilityView.xib */; };
 		4FF665FD25F2C92700689B77 /* AuthorizeAccessibilityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665E025F2C92700689B77 /* AuthorizeAccessibilityView.m */; };
 		4FF665FE25F2C92700689B77 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665E325F2C92700689B77 /* main.m */; };
@@ -219,7 +218,6 @@
 		4FF665D825F2C92700689B77 /* MessagePort_App.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagePort_App.h; sourceTree = "<group>"; };
 		4FF665DA25F2C92700689B77 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MouseFix.xib; sourceTree = "<group>"; };
 		4FF665DB25F2C92700689B77 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		4FF665DD25F2C92700689B77 /* SpinnerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpinnerView.xib; sourceTree = "<group>"; };
 		4FF665DE25F2C92700689B77 /* AuthorizeAccessibilityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthorizeAccessibilityView.h; sourceTree = "<group>"; };
 		4FF665DF25F2C92700689B77 /* AuthorizeAccessibilityView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AuthorizeAccessibilityView.xib; sourceTree = "<group>"; };
 		4FF665E025F2C92700689B77 /* AuthorizeAccessibilityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthorizeAccessibilityView.m; sourceTree = "<group>"; };
@@ -506,18 +504,18 @@
 		4FF665BE25F2C92700689B77 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				4FF665BF25F2C92700689B77 /* Overrides */,
 				4FF665C525F2C92700689B77 /* AppDelegate.h */,
+				4FF665DB25F2C92700689B77 /* AppDelegate.m */,
+				4FF665D925F2C92700689B77 /* MouseFix.xib */,
+				4FF665DC25F2C92700689B77 /* Accessibility */,
 				4FF665C625F2C92700689B77 /* Update */,
 				4FF665CC25F2C92700689B77 /* MoreSheet */,
 				4FF665D025F2C92700689B77 /* Config */,
-				4FF665D425F2C92700689B77 /* Resources */,
 				4FF665D625F2C92700689B77 /* MessagePort */,
-				4FF665D925F2C92700689B77 /* MouseFix.xib */,
-				4FF665DB25F2C92700689B77 /* AppDelegate.m */,
-				4FF665DC25F2C92700689B77 /* Accessibility */,
-				4FF665E125F2C92700689B77 /* SupportFiles */,
+				4FF665BF25F2C92700689B77 /* Overrides */,
 				4FF665E525F2C92700689B77 /* Utility */,
+				4FF665D425F2C92700689B77 /* Resources */,
+				4FF665E125F2C92700689B77 /* SupportFiles */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -537,11 +535,11 @@
 		4FF665C625F2C92700689B77 /* Update */ = {
 			isa = PBXGroup;
 			children = (
+				4FF665C925F2C92700689B77 /* Updater.h */,
 				4FF665C725F2C92700689B77 /* Updater.m */,
 				4FF665C825F2C92700689B77 /* UpdateWindow.h */,
-				4FF665C925F2C92700689B77 /* Updater.h */,
-				4FF665CA25F2C92700689B77 /* UpdateWindow.xib */,
 				4FF665CB25F2C92700689B77 /* UpdateWindow.m */,
+				4FF665CA25F2C92700689B77 /* UpdateWindow.xib */,
 			);
 			path = Update;
 			sourceTree = "<group>";
@@ -559,9 +557,9 @@
 		4FF665D025F2C92700689B77 /* Config */ = {
 			isa = PBXGroup;
 			children = (
-				4FF665D125F2C92700689B77 /* ConfigFileInterface_App.m */,
-				4FF665D225F2C92700689B77 /* ConfigFileInterface_App.h */,
 				4FF665D325F2C92700689B77 /* backup_config.plist */,
+				4FF665D225F2C92700689B77 /* ConfigFileInterface_App.h */,
+				4FF665D125F2C92700689B77 /* ConfigFileInterface_App.m */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -586,10 +584,9 @@
 		4FF665DC25F2C92700689B77 /* Accessibility */ = {
 			isa = PBXGroup;
 			children = (
-				4FF665DD25F2C92700689B77 /* SpinnerView.xib */,
 				4FF665DE25F2C92700689B77 /* AuthorizeAccessibilityView.h */,
-				4FF665DF25F2C92700689B77 /* AuthorizeAccessibilityView.xib */,
 				4FF665E025F2C92700689B77 /* AuthorizeAccessibilityView.m */,
+				4FF665DF25F2C92700689B77 /* AuthorizeAccessibilityView.xib */,
 			);
 			path = Accessibility;
 			sourceTree = "<group>";
@@ -1069,7 +1066,6 @@
 			files = (
 				4FF665F125F2C92700689B77 /* UpdateWindow.xib in Resources */,
 				4FF6654225F2C7B000689B77 /* default_launchd.plist in Resources */,
-				4FF665FB25F2C92700689B77 /* SpinnerView.xib in Resources */,
 				4FF665F425F2C92700689B77 /* MoreSheet.xib in Resources */,
 				4FF665F625F2C92700689B77 /* backup_config.plist in Resources */,
 				4FF665FC25F2C92700689B77 /* AuthorizeAccessibilityView.xib in Resources */,
