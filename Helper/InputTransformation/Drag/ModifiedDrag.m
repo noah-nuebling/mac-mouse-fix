@@ -80,7 +80,7 @@ static struct ModifiedDragState _drag;
     }
     
     #if DEBUG
-        //NSLog(@"INITIALIZING MODIFIED DRAG WITH TYPE %@ ON DEVICE %@", type, dev);
+        NSLog(@"INITIALIZING MODIFIED DRAG WITH TYPE %@ ON DEVICE %@", type, dev);
     #endif
     
     // Init _drag struct
@@ -108,8 +108,9 @@ static CGEventRef __nullable otherMouseDraggedCallback(CGEventTapProxy proxy, CG
 }
 
 + (void)handleMouseInputWithDeltaX:(int64_t)deltaX deltaY:(int64_t)deltaY {
-    
-//    NSLog(@"handle mouse input. dx: %d, dy: %d", deltaX, deltaY);
+#if DEBUG
+    NSLog(@"handle mouse input. dx: %lld, dy: %lld", deltaX, deltaY);
+#endif
     
     MFModifiedInputActivationState st = _drag.activationState;
             
@@ -193,6 +194,10 @@ static CGEventRef __nullable otherMouseDraggedCallback(CGEventTapProxy proxy, CG
 }
 
 + (void)deactivate {
+    
+#if DEBUG
+    NSLog(@"DEACTIVE MODIFIED DRAG");
+#endif
     
     if (_drag.activationState == kMFModifiedInputActivationStateNone) return;
     

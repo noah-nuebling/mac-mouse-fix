@@ -22,8 +22,8 @@
 /// Modifier driven modification -> when the modification becomes active, we preemtively modify the triggers which it modifies
 #pragma mark - Load
 
-+ (void)initialize
-{
+/// This used to be initialize but  that didn't execute until the first mouse buttons were pressed
++ (void)load {
     if (self == [ModifierManager class]) {
         // Create keyboard modifier event tap
         CGEventMask mask = CGEventMaskBit(kCGEventFlagsChanged);
@@ -73,10 +73,6 @@ static void toggleModifierEventTapBasedOnRemaps(NSDictionary *remaps) {
 
 CGEventRef _Nullable handleKeyboardModifiersHaveChanged(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
-#if DEBUG
-    NSLog(@"KEYBOARD MODS HAVE CHANGED");
-#endif
-    
     CGEventTapPostEvent(proxy, event);
     
     NSArray<MFDevice *> *devs = DeviceManager.attachedDevices;
@@ -95,9 +91,9 @@ CGEventRef _Nullable handleKeyboardModifiersHaveChanged(CGEventTapProxy proxy, C
 
 #pragma mark Button modifiers
 
-NSDictionary *_prevButtonModifiers;
+NSArray *_prevButtonModifiers;
 + (void)handleButtonModifiersMightHaveChangedWithDevice:(MFDevice *)device {
-    NSDictionary *buttonModifiers = [ButtonTriggerGenerator getActiveButtonModifiersForDevice:device.uniqueID];
+    NSArray *buttonModifiers = [ButtonTriggerGenerator getActiveButtonModifiersForDevice:device.uniqueID];
     if (![buttonModifiers isEqual:_prevButtonModifiers]) {
         handleButtonModifiersHaveChangedWithDevice(device);
     }
@@ -113,7 +109,7 @@ static void handleButtonModifiersHaveChangedWithDevice(MFDevice *device) {
 static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, MFDevice * _Nonnull device) {
     
 #if DEBUG
-    //NSLog(@"MODFIERS HAVE CHANGED TO - %@", activeModifiers);
+    NSLog(@"MODFIERS HAVE CHANGED TO - %@", activeModifiers);
 #endif
     
     // Kill the currently active modified drag
@@ -127,6 +123,9 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, MFDevi
     NSDictionary *r = TransformationManager.remaps;
     NSDictionary *activeModifications = r[activeModifiers];
     if (activeModifications) {
+#if DEBUG
+        NSLog(@"ACTIVE MODIFICATIONS - %@", activeModifications);
+#endif
         // Initialize effects which are modifier driven (only modified drag)
         NSDictionary *modifiedDragDict = activeModifications[kMFTriggerKeyDrag];
         if (modifiedDragDict) {
@@ -142,8 +141,9 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, MFDevi
     NSDictionary *activeModifiers = [self getActiveModifiersForDevice:devID filterButton:nil];
         
     // Notify all active button modifiers that they have had an effect
-    for (NSNumber *precondButton in activeModifiers[kMFModificationPreconditionKeyButtons]) {
-        [ButtonTriggerGenerator handleButtonHasHadEffectAsModifierWithDevice:devID button:precondButton];
+    for (NSDictionary *buttonPrecondDict in activeModifiers[kMFModificationPreconditionKeyButtons]) {
+        NSNumber *precondButtonNumber = buttonPrecondDict[kMFButtonModificationPreconditionKeyButtonNumber];
+        [ButtonTriggerGenerator handleButtonHasHadEffectAsModifierWithDevice:devID button:precondButtonNumber];
     }
 }
 
@@ -160,9 +160,12 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, MFDevi
     NSMutableDictionary *outDict = [NSMutableDictionary dictionary];
     
     NSUInteger kb = getActiveKeyboardModifiers();
-    NSMutableDictionary *btn = ((NSDictionary *)[ButtonTriggerGenerator getActiveButtonModifiersForDevice:devID]).mutableCopy;
-    if (filteredButton != nil) {
-        [btn removeObjectForKey:filteredButton];
+    NSMutableArray *btn = [ButtonTriggerGenerator getActiveButtonModifiersForDevice:devID].mutableCopy;
+    if (filteredButton != nil && btn.count != 0) {
+        NSIndexSet *filterIndexes = [btn indexesOfObjectsPassingTest:^BOOL(NSDictionary *_Nonnull dict, NSUInteger idx, BOOL * _Nonnull stop) {
+            return [dict[kMFButtonModificationPreconditionKeyButtonNumber] isEqualToNumber:filteredButton];
+        }];
+        [btn removeObjectsAtIndexes:filterIndexes];
     }
     // ^ filteredButton is used by `handleButtonTriggerWithButton:trigger:level:device:` to remove modification state caused by the button causing the current input trigger.
         // Don't fully understand this but I think a button shouldn't modify its own triggers.
@@ -171,7 +174,7 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, MFDevi
     if (kb != 0) {
         outDict[kMFModificationPreconditionKeyKeyboard] = @(kb);
     }
-    if (btn.allKeys.count != 0) {
+    if (btn.count != 0) {
         outDict[kMFModificationPreconditionKeyButtons] = btn;
     }
     

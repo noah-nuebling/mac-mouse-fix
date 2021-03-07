@@ -106,6 +106,8 @@ CGEventRef handleInput(CGEventTapProxy proxy, CGEventType type, CGEventRef event
     
 #if DEBUG
     NSLog(@"RECEIVING CG BUTTON INPUT - %@", [NSEvent eventWithCGEvent:event]);
+    // ^ TODO: This crashes sometimes - investigate.
+    //      Might be connected to attaching / deatching devices
 #endif
     
     if ([_buttonInputsFromRelevantDevices isEmpty]) return event;

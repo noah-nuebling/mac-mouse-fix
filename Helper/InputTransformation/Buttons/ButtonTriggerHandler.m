@@ -191,8 +191,11 @@ static BOOL effectExistsForButton(NSNumber *button, NSDictionary *remaps, NSDict
     
     // Check if button has effect as modifier
     for (NSDictionary *modificationPrecondition in remaps.allKeys) {
-        NSDictionary *buttonPreconditions = modificationPrecondition[kMFModificationPreconditionKeyButtons];
-        if ([buttonPreconditions.allKeys containsObject:button]) {
+        NSArray *buttonPreconditions = modificationPrecondition[kMFModificationPreconditionKeyButtons];
+        NSIndexSet *buttonIndexes = [buttonPreconditions indexesOfObjectsPassingTest:^BOOL(NSDictionary *_Nonnull dict, NSUInteger idx, BOOL * _Nonnull stop) {
+            return [dict[kMFButtonModificationPreconditionKeyButtonNumber] isEqualToNumber:button];
+        }];
+        if (buttonIndexes.count != 0) {
             return YES;
         }
     }
@@ -223,9 +226,14 @@ static BOOL effectExistsForMouseDownState(NSNumber *button, NSNumber *level, NSD
     return holdActionExists || usedAsModifier;
 }
 static BOOL isPartOfModificationPrecondition(NSNumber *button, NSNumber *level, NSDictionary *remaps, NSDictionary *activeModifiers) {
-    
+    // TODO: Check if this still works after modification precondition refactor
+        // Debugged this, now it seems to work fine
+    NSDictionary *buttonPrecondition = @{
+        kMFButtonModificationPreconditionKeyButtonNumber: button,
+        kMFButtonModificationPreconditionKeyClickLevel: level
+    };
     for (NSDictionary *modificationPrecondition in remaps.allKeys) {
-        if ([modificationPrecondition[kMFModificationPreconditionKeyButtons][button] isEqual:level]) {
+        if ([((NSArray *)modificationPrecondition[kMFModificationPreconditionKeyButtons]) containsObject:buttonPrecondition]) {
             return YES;
         }
     }
@@ -250,60 +258,18 @@ static BOOL modificationPreconditionButtonComponentOfGreaterLevelExistsForButton
     // Check if modification precondition exists such that at least one of its button components has the same button as the incoming button `button` and a level greater than the incoming level `level`
     
     for (NSDictionary *modificationPrecondition in remaps.allKeys) {
+        // TODO: Check if still workds after modification precondition refactor
+        NSIndexSet *indexesContainingButton = [(NSArray *)modificationPrecondition[kMFModificationPreconditionKeyButtons] indexesOfObjectsPassingTest:^BOOL(NSDictionary *_Nonnull dict, NSUInteger idx, BOOL * _Nonnull stop) {
+            return [dict[kMFButtonModificationPreconditionKeyButtonNumber] isEqualToNumber:button];
+        }];
+        if (indexesContainingButton.count == 0) continue;
         
-        BOOL precondContainsButton = modificationPrecondition[kMFModificationPreconditionKeyButtons][button] != nil;
-        if (!precondContainsButton) continue;
-        
-        NSNumber *precondLvl = modificationPrecondition[kMFModificationPreconditionKeyButtons][button];
+        NSNumber *precondLvl = modificationPrecondition[kMFModificationPreconditionKeyButtons][indexesContainingButton.firstIndex][kMFButtonModificationPreconditionKeyClickLevel];
         if (precondLvl.unsignedIntegerValue > level.unsignedIntegerValue) {
             return YES;
         }
     }
     return NO;
-}
-
-// v Unused, replaced by `modificationPreconditionButtonComponentOfGreaterLevelExistsForButton()`
-static BOOL modificationExistsWhichWillBeCompletedByButton(NSNumber *button, NSDictionary *remaps, NSDictionary *activeModifiers) {
-    
-    // Check if a modification exists, such that its precondition components will all be active once the incoming button enters the mouse down state on a higher level
-    // So a modification which can be brought into effect just by clicking the incoming button some more times
-    
-    // Another way to phrase this: Check if a modification precondition exists such that all of its components match all the components of the active modifiers, except that the component which represents the incoming button has a higher level than the incoming level
-    
-    BOOL modificationOfHigherLevelExists = NO;
-    
-    for (NSDictionary *modificationPrecondition in remaps.allKeys) {
-        
-        BOOL keyboardPrecondComponentChecksOut = [modificationPrecondition[kMFModificationPreconditionKeyKeyboard] isEqual:activeModifiers[kMFModificationPreconditionKeyKeyboard]];
-        if (!keyboardPrecondComponentChecksOut) continue; // Keyboard modifiers don't match, so we know that this `modificationPrecondition` Does not meet our criteria, so we'll look at the next one
-        
-        BOOL buttonPrecondComponentChecksOut = YES; // True if all buttons check out
-        for (NSNumber *precondButton in modificationPrecondition[kMFModificationPreconditionKeyButtons]) {
-            
-            BOOL thisButtonChecksOut;
-            
-            NSNumber *precondLvl = modificationPrecondition[kMFModificationPreconditionKeyButtons][precondButton];
-            NSNumber *incomingLvl = activeModifiers[kMFModificationPreconditionKeyButtons][precondButton]; // The same as `level` function argument if thisButton == button
-            // ^ What happens is this is nil (when `thisButton` isn't active as a modifier)
-            
-            if (precondButton.unsignedIntegerValue == button.unsignedIntegerValue) {
-                thisButtonChecksOut = precondLvl.unsignedIntegerValue > incomingLvl.unsignedIntegerValue;
-            } else {
-                thisButtonChecksOut = precondLvl.unsignedIntegerValue == incomingLvl.unsignedIntegerValue;
-            }
-            
-            if (!thisButtonChecksOut) {
-                buttonPrecondComponentChecksOut = NO; // This button doesn't check out, so this `modificationPrecondition` Does not meet our criteria, so we'll look at the next one
-                break;
-            }
-        }
-        
-        if (buttonPrecondComponentChecksOut) { // Keyboard modifiers and all buttons checked out, so we know our criteria has been met
-            modificationOfHigherLevelExists = YES;
-        }
-    }
-    
-    return modificationOfHigherLevelExists;
 }
 
 static BOOL isTriggerForClickAction(MFActionTriggerType triggerType) {

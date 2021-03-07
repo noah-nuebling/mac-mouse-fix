@@ -30,10 +30,11 @@
 @property BOOL isZombified;
 @property int64_t clickLevel; // TODO: Making this nonatomic might lead to problems, should think about this again (But it's necessary to override setters)
 @property BOOL isPressed; // NSEvent.pressedMouseButtons doesn't react fast enought (led to problems in `getActiveButtonModifiersForDevice`), so we're keeping track of pressed mouse buttons manually
+@property (readonly) CFTimeInterval pressedAtTimeStamp; // Keep track of when a button's been pressed to obtain press order in `getActiveButtonModifiersForDevice`
 @property (readonly) MFDevice *device;
 @end
 @implementation ButtonState
-@synthesize clickLevel = _clickLevel, isPressed = _isPressed;
+@synthesize clickLevel = _clickLevel, isPressed = _isPressed, pressedAtTimeStamp = _pressedAtTimeStamp;
 #pragma mark Init
 - (instancetype)initWithDevice:(MFDevice *)device {
     self = [super init];
@@ -62,10 +63,17 @@
 }
 - (void)setIsPressed:(BOOL)isPressed {
     @synchronized (self) {
+        _pressedAtTimeStamp = CACurrentMediaTime();
         _isPressed = isPressed;
     }
     if (!isPressed) { // Whenever isPressed becomes true, clickLevel is also modified, so we don't need to notify for modifier change in that case
         [ModifierManager handleButtonModifiersMightHaveChangedWithDevice:self.device];
+    }
+}
+#pragma mark pressedAtTimeStamp accessor
+- (CFTimeInterval)pressedAtTimeStamp {
+    @synchronized (self) {
+        return _pressedAtTimeStamp;
     }
 }
 @end
@@ -291,24 +299,29 @@ static void neuterAllButtonsOnDeviceExcept(NSNumber *devID, NSNumber *exceptedBt
     zombifyWithDevice(devID, btn);
 }
 
-+ (NSDictionary *)getActiveButtonModifiersForDevice:(NSNumber *)devID {
-    
-    NSMutableDictionary *outDict = [NSMutableDictionary dictionary];
++ (NSArray *)getActiveButtonModifiersForDevice:(NSNumber *)devID {
     // NSUInteger pressedButtons = NSEvent.pressedMouseButtons; // This only updates after we use it here, which led to problems, so were keeping track of mouse down state ourselves with `bs.isPressed`
     
+    // Get state and order by press time
     NSDictionary *devState = _state[devID];
-    for (NSNumber *buttonNumber in devState) {
+//    NSArray *buttonStatesOrderedByPressTime = [devState.allValues sortedArrayUsingDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"pressedAtTimeStamp" ascending:YES]]];
+    NSArray *buttonsOrderedByPressTime = [devState keysSortedByValueUsingComparator:^NSComparisonResult(ButtonState *_Nonnull bs1, ButtonState *_Nonnull bs2) {
+        return [@(bs1.pressedAtTimeStamp) compare:@(bs2.pressedAtTimeStamp)];
+    }];
+    
+    // Fill out array
+    NSMutableArray *outArray = [NSMutableArray array];
+    for (NSNumber *buttonNumber in buttonsOrderedByPressTime) {
         ButtonState *bs = devState[buttonNumber];
-        //BOOL isPressed = (pressedButtons & (1 << (buttonNumber.unsignedIntegerValue - 1))) != 0;
-            // ^ Our button number value starts at 1 (lmb is 1) and pressedButtons starts at 0 (1 << 0 to check for lmb), so we have to do - 1 to make stuff work
-        BOOL isPressed = bs.isPressed;
-        BOOL isActive = isPressed && (bs.clickLevel != 0);
-        
+        BOOL isActive = bs.isPressed && (bs.clickLevel != 0);
         if (isActive) {
-            outDict[buttonNumber] = @(bs.clickLevel);
+            [outArray addObject:@{
+                kMFButtonModificationPreconditionKeyButtonNumber: buttonNumber,
+                kMFButtonModificationPreconditionKeyClickLevel: @(bs.clickLevel)
+            }];
         }
     }
-    return outDict;
+    return outArray;
 }
 
 #pragma mark - Helper

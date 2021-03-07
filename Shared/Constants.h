@@ -53,17 +53,18 @@ typedef NSString*                                                       MFString
 #pragma mark - Remaps dictionary keys
 
 // Modification preconditions
+// Buttons
 #define kMFModificationPreconditionKeyButtons                           @"buttonModifiers"
+#define kMFButtonModificationPreconditionKeyButtonNumber                @"button"
+#define kMFButtonModificationPreconditionKeyClickLevel                  @"level"
+// Keyboard
 #define kMFModificationPreconditionKeyKeyboard                          @"keyboardModifiers"
+// (^ Use NSModifierFlags (CGEventFlags would probably work, too) as values)
 
-// Action Tiggers
-#define kMFButtonTriggerDurationClick                                   @"click"
-#define kMFButtonTriggerDurationHold                                    @"hold"
-
-// Modified drag dicts
+// Modified drag
 
 // Trigger key
-#define kMFTriggerKeyDrag                                               @"drag"
+#define kMFTriggerKeyDrag                                               @"dragTrigger"
 // Type key
 #define kMFModifiedDragDictKeyType                                      @"modifiedDragType"
 // Type values
@@ -73,10 +74,10 @@ typedef NSString*                                                       MFString
 // Variant keys
 #define kMFModifiedDragDictKeyFakeDragVariantButtonNumber               @"buttonNumber"
 
-// Modified Scroll dicts
+// Modified Scroll
 
 // Trigger key
-#define kMFTriggerKeyScroll                                             @"scroll"
+#define kMFTriggerKeyScroll                                             @"scrollTrigger"
 // Type key
 #define kMFModifiedScrollDictKeyType                                    @"modifiedScrollType"
 // Type values
@@ -85,8 +86,16 @@ typedef NSString*                                                       MFString
 #define kMFModifiedScrollTypePrecisionScroll                            @"precision"
 #define kMFModifiedScrollTypeFastScroll                                 @"fast"
 
-// Action dicts
+// Oneshot Actions
 
+// Trigger Keys
+#define kMFTriggerKeyButton                                             @"buttonTrigger" // Probs unnecessary
+#define kMFButtonTriggerSubKeyButtonNumber                              @"button"
+#define kMFButtonTriggerSubKeyClickLevel                                @"level"
+#define kMFButtonTriggerSubKeyDuration                                  @"duration"
+// Trigger Values
+#define kMFButtonTriggerDurationClick                                   @"click"
+#define kMFButtonTriggerDurationHold                                    @"hold"
 // Type key
 #define kMFActionDictKeyType                                            @"type"
 // Type values
@@ -116,7 +125,7 @@ typedef NSString*                                                       MFString
 #define kMFNavigationSwipeVariantLeft                                   @"left"
 
 // Symbolic Hotkeys
-// (Used as action dict variants (for actions of type `kMFActionDictTypeSymbolicHotkey`))
+// (Used as oneshot action dict variants (for actions of type `kMFActionDictTypeSymbolicHotkey`))
 
 typedef enum {
     kMFSHMissionControl = 32,
@@ -153,7 +162,7 @@ typedef enum {
 } MFSymbolicHotkey;
 
 // Mosue Buttons
-// (Used as action dict variants (for actions of type `kMFActionDictTypeMouseButtonClicks`))
+// (Used as oneshot action dict variants (for actions of type `kMFActionDictTypeMouseButtonClicks`))
 /// Note that CGMouseButton (and all CG APIs) assign 0 to left mouse button while MFMouseButtonNumber (and the rest of Mac Mouse Fix which doesn't use it yet) assigns 1 to lmb
 typedef enum {
     kMFMouseButtonNumberLeft = 1,
