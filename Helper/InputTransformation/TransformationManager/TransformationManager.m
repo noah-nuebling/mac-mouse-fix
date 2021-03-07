@@ -35,6 +35,10 @@ NSDictionary *_remaps;
 
 NSArray *_remapsUI;
 + (void)load {
+    /// This fanned out dictionary representation of our remappings is what we based our helper code on.
+    /// It's not super human readable, but it should be very fast, and makes some of the operations like overrides and on the fly 'assessment of the mapping landscape' pretty handy.
+    /// Using this in Helper is definitely faster than the tableView oriented (-> array based) structure which the MainApp uses. That's because we can do a lot of O(1) dict accesses where we'd have to use O(n) array searches using the other structure. I suspect that performance gains are negligible though.
+    /// Having these 2 data structures might very well not be worth the cost of having to think about both and write a conversion function between them. But we've already built helper around this, and mainApp needs the table based structure, so we're sticking with this double-structure approach.
     _remaps = @{
         @{}: @{                                                     // Key: modifier dict (empty -> no modifiers)
                 @(3): @{                                                // Key: button
