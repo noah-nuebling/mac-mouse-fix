@@ -118,7 +118,7 @@ NSArray *_remapsUI;
             
         }: @{
                 kMFTriggerKeyDrag: @{
-                    kMFModifiedDragDictKeyType: kMFModifiedDragDictTypeTwoFingerSwipe,
+                    kMFModifiedDragDictKeyType: kMFModifiedDragDictTypeThreeFingerSwipe,
                 }
             },
         @{
