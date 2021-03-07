@@ -139,7 +139,7 @@ static void fillConfigFromFile() {
 /// \note Call loadAppOverridesForApp() to fill _configWithAppOverridesApplied
 + (void)updateScrollParameters {
 
-    NSDictionary *scroll = [_configWithAppOverridesApplied objectForKey:@"Scroll"];
+    NSDictionary *scroll = [_configWithAppOverridesApplied objectForKey:kMFConfigKeyScroll];
     
     // top level parameters
     
@@ -170,7 +170,7 @@ static void fillConfigFromFile() {
 /// Applies AppOverrides from app with `bundleIdentifier` to `_config` and writes the result into `_configWithAppOverridesApplied`.
 static void loadAppOverridesForApp(NSString *bundleIdentifier) {
      // get AppOverrides for scrolled app
-    NSDictionary *overrides = [_config objectForKey:@"AppOverrides"];
+    NSDictionary *overrides = [_config objectForKey:kMFConfigKeyAppOverrides];
     NSDictionary *overridesForThisApp;
     for (NSString *b in overrides.allKeys) {
         if ([bundleIdentifier isEqualToString:b]) {

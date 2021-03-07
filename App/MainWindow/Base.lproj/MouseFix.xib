@@ -16,7 +16,7 @@
         <window identifier="mainWindow" title="Mac Mouse Fix" separatorStyle="shadow" autorecalculatesKeyViewLoop="NO" restorable="NO" deferred="NO" releasedWhenClosed="NO" animationBehavior="default" tabbingMode="disallowed" id="F0z-JX-Cv5" userLabel="MainWindow">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <rect key="contentRect" x="0.0" y="0.0" width="668" height="422"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="3840" height="2135"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1025"/>
             <view key="contentView" identifier="mainView" id="se5-gp-TjO">
                 <rect key="frame" x="0.0" y="0.0" width="668" height="422"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -123,7 +123,7 @@ Awesome tricks:
                                                 <rect key="frame" x="0.0" y="0.0" width="588" height="228"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
-                                                    <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" tableStyle="fullWidth" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="36" rowSizeStyle="automatic" headerView="xxc-UM-Bb2" viewBased="YES" id="zJh-jy-oKM">
+                                                    <tableView identifier="remapTable" verticalHuggingPriority="750" allowsExpansionToolTips="YES" tableStyle="fullWidth" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="36" rowSizeStyle="automatic" headerView="xxc-UM-Bb2" viewBased="YES" id="zJh-jy-oKM">
                                                         <rect key="frame" x="0.0" y="0.0" width="588" height="200"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <size key="intercellSpacing" width="17" height="0.0"/>
@@ -247,8 +247,8 @@ Awesome tricks:
                                                             </tableColumn>
                                                         </tableColumns>
                                                         <connections>
-                                                            <outlet property="dataSource" destination="p2C-Qy-mgp" id="sQN-l7-pVa"/>
-                                                            <outlet property="delegate" destination="p2C-Qy-mgp" id="goh-xd-SDq"/>
+                                                            <outlet property="dataSource" destination="p2C-Qy-mgp" id="Tg4-cP-SyA"/>
+                                                            <outlet property="delegate" destination="p2C-Qy-mgp" id="2c8-Jg-yoa"/>
                                                         </connections>
                                                     </tableView>
                                                 </subviews>
@@ -305,7 +305,7 @@ Awesome tricks:
         </customObject>
         <customObject id="p2C-Qy-mgp" customClass="RemapTableController">
             <connections>
-                <outlet property="table" destination="zJh-jy-oKM" id="SuZ-2P-Lew"/>
+                <outlet property="view" destination="zJh-jy-oKM" id="GWC-PD-NjZ"/>
             </connections>
         </customObject>
         <menuItem title="Launchpad" tag="160" id="9rC-Ff-2hb"/>
@@ -326,11 +326,11 @@ Awesome tricks:
             </items>
             <point key="canvasLocation" x="145" y="381"/>
         </menu>
-        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" frameAutosaveName="" animationBehavior="default" id="IBY-H5-v5O" customClass="NSPanel">
+        <window identifier="AddWindow" title="Add Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" frameAutosaveName="" animationBehavior="default" id="IBY-H5-v5O" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="425" y="294" width="523" height="357"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="3840" height="2135"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1025"/>
             <view key="contentView" id="d2T-s7-zQK">
                 <rect key="frame" x="0.0" y="0.0" width="523" height="357"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -364,7 +364,7 @@ Awesome tricks:
                         <rect key="frame" x="18" y="14" width="223" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="You can also double click, drag and more!" id="DCZ-8O-Twu">
-                            <font key="font" metaFont="system" size="11"/>
+                            <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>

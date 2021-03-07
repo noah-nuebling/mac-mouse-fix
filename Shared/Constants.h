@@ -49,8 +49,14 @@ typedef NSString*                                                       MFString
 
 #define kMFNotificationNameRemapsChanged                                @"remapsChanged"
 
+#pragma mark - Config dict
 
-#pragma mark - Remaps dictionary keys
+#define kMFConfigKeyRemaps @"Remaps"
+#define kMFConfigKeyScroll @"Scroll"
+#define kMFConfigKeyOther @"Other" // TODO: This occurs in keypaths a few times - replace with constant (search for 'Other.')
+#define kMFConfigKeyAppOverrides @"AppOverrides"
+
+#pragma mark - Remaps dict
 
 // Modification preconditions
 // Buttons

@@ -5,13 +5,13 @@
 	<key>Other</key>
 	<dict>
 		<key>configVersion</key>
-		<integer>6</integer>
+		<integer>7</integer>
 		<key>checkForUpdates</key>
 		<true/>
 		<key>skippedBundleVersion</key>
 		<integer>0</integer>
 	</dict>
-	<key>ButtonRemaps</key>
+	<key>Remaps</key>
 	<dict>
 		<key>5</key>
 		<dict>

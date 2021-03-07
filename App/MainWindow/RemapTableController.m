@@ -8,23 +8,34 @@
 //
 
 #import "RemapTableController.h"
+#import "ConfigFileInterface_App.h"
 
 @interface RemapTableController ()
-@property (strong) IBOutlet NSTableView *table;
 @end
 
 @implementation RemapTableController
 
-- (void)viewDidLoad { // Not getting called for some reason
-    NSLog(@"SCROLL VIEWWW");
-    NSScrollView *scrollView = (NSScrollView *)_table.superview.superview;
+NSMutableArray *_data;
+
+- (void)loadDataFromConfig {
+    _data = ConfigFileInterface_App.config[remaps];
+}
+- (void)setDataToConfig {
+    
+}
+
+- (void)viewDidLoad { // Not getting called for some reason -> I had to set the view outlet of the controller object in IB to the tableView
+    // Set corner radius
+    NSScrollView *scrollView = (NSScrollView *)self.view.superview.superview;
     scrollView.wantsLayer = TRUE;
     scrollView.layer.cornerRadius = 5;
+    // Load table data from config
+    _data = confi
+    // Override table data for testing
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
     NSLog(@"SCROLL VIEWWW NUMMM");
-    [self viewDidLoad];
     return 2;
 }
 

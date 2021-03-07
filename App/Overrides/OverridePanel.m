@@ -54,7 +54,7 @@ static OverridePanel *_instance;
 #pragma mark - Private variables
 
 /// Keys are table column identifiers (These are set through interface builder). Values are keypaths to the values modified by the controls in the column with that identifier.
-/// Keypaths relative to config root give default values. Relative to config[@"AppOverrides"][@"[bundle identifier of someApp]"] they give override values for someApp.
+/// Keypaths relative to config root give default values. Relative to config[kMFConfigKeyAppOverrides][@"[bundle identifier of someApp]"] they give override values for someApp.
 NSDictionary *_columnIdentifierToKeyPath;
 
 #pragma mark - Public functions
@@ -348,7 +348,7 @@ NSMutableArray *_tableViewDataModel;
     
     // For all overrides for apps in the config, which aren't in the table, and which are installed - delete all values managed by the table from the config
     
-    NSMutableSet *bundleIDsInConfigAndInstalledButNotInTable = [NSMutableSet setWithArray:((NSDictionary *)[ConfigFileInterface_App.config valueForKeyPath:@"AppOverrides"]).allKeys]; // Get all bundle IDs in the config
+    NSMutableSet *bundleIDsInConfigAndInstalledButNotInTable = [NSMutableSet setWithArray:((NSDictionary *)[ConfigFileInterface_App.config valueForKeyPath:kMFConfigKeyAppOverrides]).allKeys]; // Get all bundle IDs in the config
     
     bundleIDsInConfigAndInstalledButNotInTable = [bundleIDsInConfigAndInstalledButNotInTable filteredSetUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
         return [Utility_App appIsInstalled:evaluatedObject];
@@ -379,7 +379,7 @@ NSMutableArray *_tableViewDataModel;
         @throw configNotLoadedException;
         return;
     }
-    NSDictionary *overrides = config[@"AppOverrides"];
+    NSDictionary *overrides = config[kMFConfigKeyAppOverrides];
     if (!overrides) {
         NSLog(@"No overrides found in config while generating scroll override table data model.");
         return;

@@ -111,7 +111,10 @@ static NSDictionary *sideButtonActions;
     if (checkForUpdates == YES) {
         [Updater checkForUpdate];
     }
+    
+    // Setting up table view. Not sure if necessary. No Idea what I'm doing.
     _tableController = [[RemapTableController alloc] init];
+    NSLog(@"TableView: %@", _tableController.view);
 }
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
     NSLog(@"Mac Mouse Fix should terminate");
@@ -189,7 +192,7 @@ NSTimer *removeAccOverlayTimer;
     
 # pragma mark scrollSettings
     
-    NSDictionary *scrollConfigFromFile = ConfigFileInterface_App.config[@"Scroll"];
+    NSDictionary *scrollConfigFromFile = ConfigFileInterface_App.config[kMFConfigKeyScroll];
     
     // Enabled checkbox
     if ([scrollConfigFromFile[@"smooth"] boolValue] == 1) {
@@ -241,7 +244,7 @@ NSTimer *removeAccOverlayTimer;
     int stepSizeActual = ( scrollSliderValue * (stepSizeMax - stepSizeMin) ) + stepSizeMin;
     
     NSDictionary *scrollParametersFromUI = @{
-        @"Scroll": @{
+        kMFConfigKeyScroll: @{
                 @"smooth": @(_scrollEnableCheckBox.state),
                 @"direction": @(direction),
                 @"smoothParameters": @{

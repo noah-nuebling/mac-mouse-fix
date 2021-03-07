@@ -135,7 +135,7 @@ static NSURL *_backupConfigURL; // backup_config aka default_config
 //            }
 //            repairedOverrides[bundleID] = repairedOverride;
 //        }
-//        _config[@"AppOverrides"] = repairedOverrides;
+//        _config[kMFConfigKeyAppOverrides] = repairedOverrides;
 //    }
 }
 
@@ -148,7 +148,7 @@ static NSURL *_backupConfigURL; // backup_config aka default_config
 }
 
 + (void)cleanConfig {
-    NSMutableDictionary *appOverrides = _config[@"AppOverrides"];
+    NSMutableDictionary *appOverrides = _config[kMFConfigKeyAppOverrides];
     
     // Delete overrides for uninstalled apps
     // This might delete preinstalled overrides. So not doing that.
