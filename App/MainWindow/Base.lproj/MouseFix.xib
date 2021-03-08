@@ -299,7 +299,7 @@ Awesome tricks:
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         </box>
                                         <customView autoresizesSubviews="NO" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y7p-rF-n2F" userLabel="TriggerGroup">
-                                            <rect key="frame" x="116" y="320" width="98" height="30"/>
+                                            <rect key="frame" x="108" y="320" width="98" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <subviews>
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sk7-uP-hcu">
@@ -322,7 +322,7 @@ Awesome tricks:
                                             </subviews>
                                         </customView>
                                         <customView autoresizesSubviews="NO" id="Izd-lv-C5y" userLabel="EffectGroup">
-                                            <rect key="frame" x="416" y="320" width="98" height="30"/>
+                                            <rect key="frame" x="423" y="320" width="98" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <subviews>
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DYF-bp-JPg">
