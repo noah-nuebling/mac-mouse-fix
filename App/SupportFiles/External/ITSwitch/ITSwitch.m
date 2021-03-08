@@ -125,7 +125,7 @@ static CGFloat const kDisabledOpacity = 0.5f;
     _knobLayer.shadowColor = [[NSColor blackColor] CGColor];
     _knobLayer.shadowOffset = (CGSize){ .width = 0.f, .height = -2.f };
     _knobLayer.shadowRadius = 1.f;
-    _knobLayer.shadowOpacity = 0.3f;
+    _knobLayer.shadowOpacity = 0.1f;
     [_rootLayer addSublayer:_knobLayer];
     
     _knobInsideLayer = [CALayer layer];

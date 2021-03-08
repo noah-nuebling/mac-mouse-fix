@@ -4,7 +4,6 @@
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
         <capability name="Image references" minToolsVersion="12.0"/>
-        <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -217,7 +216,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <slider toolTip="How fast you'll scroll" verticalHuggingPriority="750" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mXj-a7-rFw">
-                                                            <rect key="frame" x="16" y="27" width="132" height="24"/>
+                                                            <rect key="frame" x="15" y="27" width="132" height="24"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                             <sliderCell key="cell" state="on" alignment="left" identifier="scrollSpeedSlider" maxValue="1" doubleValue="0.33333333333333331" tickMarkPosition="below" numberOfTickMarks="7" allowsTickMarkValuesOnly="YES" sliderType="linear" id="0NZ-eS-HsP"/>
                                                             <connections>
@@ -295,7 +294,7 @@ Awesome tricks:
                                             </subviews>
                                         </customView>
                                         <box horizontalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="V4m-2l-meX">
-                                            <rect key="frame" x="312" y="320" width="5" height="30"/>
+                                            <rect key="frame" x="311" y="320" width="5" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         </box>
                                         <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pmR-Cq-dp4" userLabel="EffectHeader">
@@ -359,42 +358,21 @@ Awesome tricks:
                                     </subviews>
                                 </view>
                             </box>
-                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tpk-3m-Y3h">
-                                <rect key="frame" x="626" y="378" width="24" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="ellipsis.circle.fill" catalog="system" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="1FA-Q0-vfR">
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="73e-pL-X7k">
+                                <rect key="frame" x="581" y="376" width="77" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="More..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dLd-xI-ix2">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
-                                <color key="contentTintColor" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
                                 <connections>
-                                    <action selector="moreButton:" target="NxE-tZ-vxj" id="Ucq-Oq-Lr0"/>
+                                    <action selector="moreButton:" target="NxE-tZ-vxj" id="Ioj-36-Cld"/>
                                 </connections>
                             </button>
                         </subviews>
                     </view>
                 </subviews>
             </view>
-            <toolbar key="toolbar" implicitIdentifier="B25736D4-8502-46D4-8CD3-039B051F8E9E" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="B88-9d-u4R">
-                <allowedToolbarItems>
-                    <toolbarItem implicitItemIdentifier="37815771-4AB2-4852-8F87-CE1747CB0562" label="Custom View" paletteLabel="Custom View" tag="-1" sizingBehavior="auto" id="Tbo-eS-gQe">
-                        <nil key="toolTip"/>
-                        <customView key="view" id="FY2-Rg-npX" customClass="ITSwitch">
-                            <rect key="frame" x="19" y="14" width="38" height="22"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
-                                    <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
-                                </userDefinedRuntimeAttribute>
-                                <userDefinedRuntimeAttribute type="color" keyPath="disabledBorderColor">
-                                    <color key="value" name="gridColor" catalog="System" colorSpace="catalog"/>
-                                </userDefinedRuntimeAttribute>
-                            </userDefinedRuntimeAttributes>
-                        </customView>
-                    </toolbarItem>
-                </allowedToolbarItems>
-                <defaultToolbarItems/>
-            </toolbar>
             <connections>
                 <outlet property="delegate" destination="NxE-tZ-vxj" id="mRZ-zN-zML"/>
             </connections>
@@ -495,7 +473,6 @@ Gw
         <image name="NSAddTemplate" width="14" height="13"/>
         <image name="NSRemoveTemplate" width="14" height="4"/>
         <image name="cursorarrow.rays" catalog="system" width="20" height="20"/>
-        <image name="ellipsis.circle.fill" catalog="system" width="15" height="15"/>
         <image name="wand.and.stars" catalog="system" width="20" height="19"/>
     </resources>
 </document>
