@@ -184,7 +184,7 @@
                                                 </subviews>
                                             </clipView>
                                             <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="Wpn-xY-rCp">
-                                                <rect key="frame" x="1" y="183" width="628" height="16"/>
+                                                <rect key="frame" x="1" y="166" width="618" height="16"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
                                             <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="h3C-j3-pEp">
@@ -371,6 +371,22 @@ Awesome tricks:
                                     <action selector="moreButton:" target="NxE-tZ-vxj" id="Ucq-Oq-Lr0"/>
                                 </connections>
                             </button>
+                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FY2-Rg-npX" customClass="ITSwitch">
+                                <rect key="frame" x="252" y="383" width="38" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                        <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="disabledBorderColor">
+                                        <color key="value" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </customView>
+                            <switch horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="YL8-6l-WEp">
+                                <rect key="frame" x="314" y="381" width="42" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </switch>
                         </subviews>
                     </view>
                 </subviews>

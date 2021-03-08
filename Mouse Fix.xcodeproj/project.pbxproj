@@ -10,6 +10,7 @@
 		4F1793A925EEC92000E8309B /* ZipArchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F1793A825EEC90900E8309B /* ZipArchive.framework */; };
 		4F1793AA25EEC92000E8309B /* ZipArchive.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F1793A825EEC90900E8309B /* ZipArchive.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F2FDF332315662500C7BE14 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2FDF322315662500C7BE14 /* main.m */; };
+		4F75BBD525F6D8C1004B1282 /* ITSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F75BBD425F6D8C1004B1282 /* ITSwitch.m */; };
 		4F94F60525E5EC2800D9F24A /* Mac_Mouse_FixTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60425E5EC2800D9F24A /* Mac_Mouse_FixTests.m */; };
 		4F94F61025E5EC2800D9F24A /* Mac_Mouse_FixUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60F25E5EC2800D9F24A /* Mac_Mouse_FixUITests.m */; };
 		4F94F73D25E6146C00D9F24A /* Mac Mouse Fix Helper.app in Copy Helper */ = {isa = PBXBuildFile; fileRef = 4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -174,6 +175,8 @@
 		4F2FDF302315662400C7BE14 /* Mac Mouse Fix Accomplice */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Mac Mouse Fix Accomplice"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F2FDF322315662500C7BE14 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4F422EEC23469B0F00AA6E22 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		4F75BBD325F6D8C1004B1282 /* ITSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITSwitch.h; sourceTree = "<group>"; };
+		4F75BBD425F6D8C1004B1282 /* ITSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ITSwitch.m; sourceTree = "<group>"; };
 		4F94F5EE25E5EC2500D9F24A /* Mac Mouse Fix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mac Mouse Fix.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F94F60025E5EC2800D9F24A /* Mac Mouse FixTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Mac Mouse FixTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F94F60425E5EC2800D9F24A /* Mac_Mouse_FixTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Mac_Mouse_FixTests.m; sourceTree = "<group>"; };
@@ -404,6 +407,23 @@
 			name = Other;
 			sourceTree = "<group>";
 		};
+		4F75BBD125F6D8AC004B1282 /* External */ = {
+			isa = PBXGroup;
+			children = (
+				4F75BBD225F6D8C1004B1282 /* ITSwitch */,
+			);
+			path = External;
+			sourceTree = "<group>";
+		};
+		4F75BBD225F6D8C1004B1282 /* ITSwitch */ = {
+			isa = PBXGroup;
+			children = (
+				4F75BBD325F6D8C1004B1282 /* ITSwitch.h */,
+				4F75BBD425F6D8C1004B1282 /* ITSwitch.m */,
+			);
+			path = ITSwitch;
+			sourceTree = "<group>";
+		};
 		4F94F60325E5EC2800D9F24A /* AppTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -606,6 +626,7 @@
 		4FF665E125F2C92700689B77 /* SupportFiles */ = {
 			isa = PBXGroup;
 			children = (
+				4F75BBD125F6D8AC004B1282 /* External */,
 				4FF665E225F2C92700689B77 /* App.entitlements */,
 				4FF665E325F2C92700689B77 /* main.m */,
 				4FF665E425F2C92700689B77 /* Info.plist */,
@@ -1166,6 +1187,7 @@
 				4FF665FE25F2C92700689B77 /* main.m in Sources */,
 				4FF665FA25F2C92700689B77 /* AppDelegate.m in Sources */,
 				4FF665F325F2C92700689B77 /* MoreSheet.m in Sources */,
+				4F75BBD525F6D8C1004B1282 /* ITSwitch.m in Sources */,
 				4FF6660025F2C92700689B77 /* Hyperlink.m in Sources */,
 				4FF6654C25F2C7B000689B77 /* MFQueue.m in Sources */,
 				4FF665ED25F2C92700689B77 /* MFSegmentedControl.m in Sources */,
@@ -1296,7 +1318,6 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix.accomplice";
@@ -1317,7 +1338,6 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix.accomplice";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1343,7 +1363,6 @@
 				);
 				INFOPLIST_FILE = App/SupportFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MARKETING_VERSION = 1.0.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -1371,7 +1390,6 @@
 				);
 				INFOPLIST_FILE = App/SupportFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MARKETING_VERSION = 1.0.1;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix";
@@ -1507,7 +1525,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -1560,7 +1578,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
