@@ -242,12 +242,6 @@
                                             </imageCell>
                                             <color key="contentTintColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         </imageView>
-                                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M36-yC-RmC">
-                                            <rect key="frame" x="304" y="319.5" width="23" height="27"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="arrow.right" catalog="system" id="GnV-8A-OW9"/>
-                                            <color key="contentTintColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                        </imageView>
                                         <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uS5-6r-XRu" userLabel="ScrollContainer">
                                             <rect key="frame" x="0.0" y="9" width="630" height="96"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -334,6 +328,10 @@ Awesome tricks:
                                                 </customView>
                                             </subviews>
                                         </customView>
+                                        <box horizontalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="V4m-2l-meX">
+                                            <rect key="frame" x="312" y="320" width="5" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        </box>
                                     </subviews>
                                 </view>
                             </box>
@@ -452,7 +450,6 @@ Gw
     <resources>
         <image name="NSAddTemplate" width="14" height="13"/>
         <image name="NSRemoveTemplate" width="14" height="4"/>
-        <image name="arrow.right" catalog="system" width="15" height="12"/>
         <image name="cursorarrow.rays" catalog="system" width="20" height="20"/>
         <image name="ellipsis.circle.fill" catalog="system" width="15" height="15"/>
         <image name="wand.and.stars" catalog="system" width="20" height="19"/>
