@@ -371,26 +371,30 @@ Awesome tricks:
                                     <action selector="moreButton:" target="NxE-tZ-vxj" id="Ucq-Oq-Lr0"/>
                                 </connections>
                             </button>
-                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FY2-Rg-npX" customClass="ITSwitch">
-                                <rect key="frame" x="252" y="383" width="38" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
-                                        <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="disabledBorderColor">
-                                        <color key="value" name="gridColor" catalog="System" colorSpace="catalog"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </customView>
-                            <switch horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="YL8-6l-WEp">
-                                <rect key="frame" x="314" y="381" width="42" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            </switch>
                         </subviews>
                     </view>
                 </subviews>
             </view>
+            <toolbar key="toolbar" implicitIdentifier="B25736D4-8502-46D4-8CD3-039B051F8E9E" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="B88-9d-u4R">
+                <allowedToolbarItems>
+                    <toolbarItem implicitItemIdentifier="37815771-4AB2-4852-8F87-CE1747CB0562" label="Custom View" paletteLabel="Custom View" tag="-1" sizingBehavior="auto" id="Tbo-eS-gQe">
+                        <nil key="toolTip"/>
+                        <customView key="view" id="FY2-Rg-npX" customClass="ITSwitch">
+                            <rect key="frame" x="19" y="14" width="38" height="22"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                    <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="disabledBorderColor">
+                                    <color key="value" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </customView>
+                    </toolbarItem>
+                </allowedToolbarItems>
+                <defaultToolbarItems/>
+            </toolbar>
             <connections>
                 <outlet property="delegate" destination="NxE-tZ-vxj" id="mRZ-zN-zML"/>
             </connections>
