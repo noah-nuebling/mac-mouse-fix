@@ -37,7 +37,7 @@ NSMutableArray *_remaps;
     // Set corner radius
     NSScrollView *scrollView = (NSScrollView *)self.view.superview.superview;
     scrollView.wantsLayer = TRUE;
-    scrollView.layer.cornerRadius = 5;
+//    scrollView.layer.cornerRadius = 5;
     // Load table data from config
     [self loadRemapsFromConfig];
     // Override table data for testing
@@ -90,17 +90,14 @@ static void getClickAndLevelStrings(NSDictionary *clickLevelToUIString, NSNumber
     if (!*levelStr) {
         *levelStr = [NSString stringWithFormat:@"%@", lvl];
     }
-    // click
-    *clickStr = @"Click ";
-    if (![*levelStr isEqualToString:@""]) {
-        *clickStr = @"click ";
-    }
+    // click // TODO: Refactor
+    *clickStr = @"click ";
 }
 
 static NSString *getButtonString(NSDictionary *buttonNumberToUIString, NSNumber *btn) {
     NSString *buttonStr = buttonNumberToUIString[btn];
     if (!buttonStr) {
-        buttonStr = [NSString stringWithFormat:@"button %@", btn];
+        buttonStr = [NSString stringWithFormat:@"Button %@", btn];
     }
     return buttonStr;
 }
@@ -126,17 +123,17 @@ static NSString *getKeyboardModifierString(NSNumber *flags) {
         // Define Data-to-UI-String mappings
         NSDictionary *clickLevelToUIString = @{
             @1: @"",
-            @2: @"Double ",
-            @3: @"Triple ",
+            @2: @"double ",
+            @3: @"triple ",
         };
         NSDictionary *durationToUIString = @{
             kMFButtonTriggerDurationClick: @"",
             kMFButtonTriggerDurationHold: @"and hold ",
         };
         NSDictionary *buttonNumberToUIString = @{
-            @1: @"primary button",
-            @2: @"secondary button",
-            @3: @"middle button",
+            @1: @"Primary Button",
+            @2: @"Secondary Button",
+//            @3: @"middle button",
         };
         // Get trigger string from data
         NSString *tr = @"";
