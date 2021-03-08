@@ -78,7 +78,7 @@
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
                                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pzd-Fo-nrS">
-                                                                                <rect key="frame" x="1" y="11" width="315" height="16"/>
+                                                                                <rect key="frame" x="1" y="11" width="316" height="16"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                                 <textFieldCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" alignment="left" title="⌘⇧⌥⌃ + Triple Click and Drag Button 3" id="hBN-M2-pMi">
                                                                                     <font key="font" usesAppearanceFont="YES"/>
@@ -96,7 +96,7 @@
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
                                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YL4-tn-2df">
-                                                                                <rect key="frame" x="1" y="11" width="315" height="16"/>
+                                                                                <rect key="frame" x="1" y="11" width="316" height="16"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="Hold Button 3" id="y4R-Zp-sce">
                                                                                     <font key="font" usesAppearanceFont="YES"/>
@@ -184,7 +184,7 @@
                                                 </subviews>
                                             </clipView>
                                             <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="Wpn-xY-rCp">
-                                                <rect key="frame" x="1" y="166" width="618" height="16"/>
+                                                <rect key="frame" x="1" y="183" width="628" height="16"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
                                             <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="h3C-j3-pEp">
@@ -258,7 +258,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <button identifier="scrollCheckBox" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9lG-eT-nD4">
-                                                            <rect key="frame" x="15" y="32" width="127" height="18"/>
+                                                            <rect key="frame" x="14" y="32" width="127" height="18"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                             <string key="toolTip">Make scrolling animate smoothly
 
@@ -298,50 +298,62 @@ Awesome tricks:
                                             <rect key="frame" x="312" y="320" width="5" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         </box>
-                                        <customView autoresizesSubviews="NO" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y7p-rF-n2F" userLabel="TriggerGroup">
-                                            <rect key="frame" x="108" y="320" width="98" height="30"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pmR-Cq-dp4" userLabel="EffectHeader">
+                                            <rect key="frame" x="314" y="320" width="316" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <subviews>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sk7-uP-hcu">
-                                                    <rect key="frame" x="37" y="7" width="49" height="16"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Trigger" id="fwZ-t9-FD4">
-                                                        <font key="font" metaFont="system"/>
-                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                    </textFieldCell>
-                                                </textField>
-                                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xmj-S9-lrL">
-                                                    <rect key="frame" x="13" y="-1.5" width="24" height="35"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="r0m-UD-WAC">
-                                                        <imageReference key="image" image="cursorarrow.rays" catalog="system" symbolScale="large"/>
-                                                    </imageCell>
-                                                    <color key="contentTintColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                </imageView>
+                                                <customView autoresizesSubviews="NO" id="Izd-lv-C5y" userLabel="EffectGroup">
+                                                    <rect key="frame" x="109" y="0.0" width="98" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                    <subviews>
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DYF-bp-JPg">
+                                                            <rect key="frame" x="40" y="7" width="40" height="16"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Effect" id="XNz-bM-o9C">
+                                                                <font key="font" metaFont="system"/>
+                                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
+                                                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y8h-O7-VUX">
+                                                            <rect key="frame" x="16" y="-1" width="24" height="35"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="NMY-Fk-YkV">
+                                                                <imageReference key="image" image="wand.and.stars" catalog="system" symbolScale="large"/>
+                                                            </imageCell>
+                                                            <color key="contentTintColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        </imageView>
+                                                    </subviews>
+                                                </customView>
                                             </subviews>
                                         </customView>
-                                        <customView autoresizesSubviews="NO" id="Izd-lv-C5y" userLabel="EffectGroup">
-                                            <rect key="frame" x="423" y="320" width="98" height="30"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <customView id="GkX-b4-S0i" userLabel="TriggerHeader">
+                                            <rect key="frame" x="0.0" y="320" width="315" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <subviews>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DYF-bp-JPg">
-                                                    <rect key="frame" x="40" y="7" width="40" height="16"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Effect" id="XNz-bM-o9C">
-                                                        <font key="font" metaFont="system"/>
-                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                    </textFieldCell>
-                                                </textField>
-                                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y8h-O7-VUX">
-                                                    <rect key="frame" x="16" y="-1" width="24" height="35"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="NMY-Fk-YkV">
-                                                        <imageReference key="image" image="wand.and.stars" catalog="system" symbolScale="large"/>
-                                                    </imageCell>
-                                                    <color key="contentTintColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                </imageView>
+                                                <customView autoresizesSubviews="NO" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y7p-rF-n2F" userLabel="TriggerGroup">
+                                                    <rect key="frame" x="107" y="0.0" width="98" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                    <subviews>
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sk7-uP-hcu">
+                                                            <rect key="frame" x="37" y="7" width="49" height="16"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Trigger" id="fwZ-t9-FD4">
+                                                                <font key="font" metaFont="system"/>
+                                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
+                                                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xmj-S9-lrL">
+                                                            <rect key="frame" x="13" y="-1.5" width="24" height="35"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="r0m-UD-WAC">
+                                                                <imageReference key="image" image="cursorarrow.rays" catalog="system" symbolScale="large"/>
+                                                            </imageCell>
+                                                            <color key="contentTintColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        </imageView>
+                                                    </subviews>
+                                                </customView>
                                             </subviews>
                                         </customView>
                                     </subviews>
@@ -366,7 +378,7 @@ Awesome tricks:
             <connections>
                 <outlet property="delegate" destination="NxE-tZ-vxj" id="mRZ-zN-zML"/>
             </connections>
-            <point key="canvasLocation" x="378" y="-18.5"/>
+            <point key="canvasLocation" x="408" y="-18.5"/>
         </window>
         <customObject id="NxE-tZ-vxj" customClass="AppDelegate">
             <connections>
