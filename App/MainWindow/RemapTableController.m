@@ -91,7 +91,7 @@ static void getClickAndLevelStrings(NSDictionary *clickLevelToUIString, NSNumber
         *levelStr = [NSString stringWithFormat:@"%@", lvl];
     }
     // click // TODO: Refactor
-    *clickStr = @"click ";
+    *clickStr = @"Click ";
 }
 
 static NSString *getButtonString(NSDictionary *buttonNumberToUIString, NSNumber *btn) {
@@ -123,12 +123,12 @@ static NSString *getKeyboardModifierString(NSNumber *flags) {
         // Define Data-to-UI-String mappings
         NSDictionary *clickLevelToUIString = @{
             @1: @"",
-            @2: @"double ",
-            @3: @"triple ",
+            @2: @"Double ",
+            @3: @"Triple ",
         };
         NSDictionary *durationToUIString = @{
             kMFButtonTriggerDurationClick: @"",
-            kMFButtonTriggerDurationHold: @"and hold ",
+            kMFButtonTriggerDurationHold: @"and Hold ",
         };
         NSDictionary *buttonNumberToUIString = @{
             @1: @"Primary Button",
@@ -198,10 +198,10 @@ static NSString *getKeyboardModifierString(NSNumber *flags) {
             NSString *trigger = (NSString *)triggerGeneric;
             if ([trigger isEqualToString:kMFTriggerKeyDrag]) {
                 // Trigger is drag
-                triggerStr = @"and drag ";
+                triggerStr = @"and Drag ";
             } else if ([trigger isEqualToString:kMFTriggerKeyScroll]) {
                 // Trigger is scroll
-                triggerStr = @"and scroll ";
+                triggerStr = @"and Scroll ";
             } else {
                 @throw [NSException exceptionWithName:@"Unknown string trigger value" reason:@"The value for the string trigger key is unknown" userInfo:@{@"Trigger value": trigger}];
             }
