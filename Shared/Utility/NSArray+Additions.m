@@ -8,14 +8,13 @@
 //
 
 #import "NSArray+Additions.h"
+#import "NSMutableDictionary+Additions.h"
 
 @implementation NSArray (Additions)
 
 
 #pragma mark - Higher order functions
 // source: https://medium.com/@weijentu/higher-order-functions-in-objective-c-850f6c90de30
-
-
 - (NSArray *)map:(id (^)(id obj))block {
     NSMutableArray *mutableArray = [NSMutableArray new];
     [self enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -52,6 +51,36 @@
         [mutableArray addObject:_obj];
     }];
     return [mutableArray copy];
+}
+// Mutable deep copy
+// Src: https://github.com/alfonsotesauro/NSDictionary-and-NSArray-Deep-mutable-copy/
++ (NSMutableArray *)doDeepMutateArray:(NSArray *)array {
+    
+    NSMutableArray *toReturn = [NSMutableArray arrayWithArray:array];
+    
+    for (id obj in array)
+    {
+        
+        if ([obj isKindOfClass:[NSDictionary class]])
+        {
+            
+            NSMutableDictionary *theNew = [NSMutableDictionary doDeepMutateDictionary:obj];
+            
+            [toReturn replaceObjectAtIndex:[array indexOfObject:obj] withObject:theNew];
+        }
+        else
+            if ([obj isKindOfClass:[NSArray class]])
+            {
+                NSMutableArray *theNew = [self doDeepMutateArray:obj];
+                
+                [toReturn replaceObjectAtIndex:[array indexOfObject:obj] withObject:theNew];
+                
+            }
+        
+    }
+    
+    return toReturn;
+    
 }
 
 @end

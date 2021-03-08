@@ -56,6 +56,12 @@ typedef NSString*                                                       MFString
 #define kMFConfigKeyOther @"Other" // TODO: This occurs in keypaths a few times - replace with constant (search for 'Other.')
 #define kMFConfigKeyAppOverrides @"AppOverrides"
 
+#pragma mark - Remaps array
+// (^ Reuses many keys defined under "Remaps dict")
+#define kMFRemapsKeyTrigger                     @"trigger"
+#define kMFRemapsKeyModificationPrecondition    @"modifiers"
+#define kMFRemapsKeyEffect                      @"effect"
+
 #pragma mark - Remaps dict
 
 // Modification preconditions
@@ -95,10 +101,9 @@ typedef NSString*                                                       MFString
 // Oneshot Actions
 
 // Trigger Keys
-#define kMFTriggerKeyButton                                             @"buttonTrigger" // Probs unnecessary
-#define kMFButtonTriggerSubKeyButtonNumber                              @"button"
-#define kMFButtonTriggerSubKeyClickLevel                                @"level"
-#define kMFButtonTriggerSubKeyDuration                                  @"duration"
+#define kMFButtonTriggerKeyButtonNumber                              @"button"
+#define kMFButtonTriggerKeyClickLevel                                @"level"
+#define kMFButtonTriggerKeyDuration                                  @"duration"
 // Trigger Values
 #define kMFButtonTriggerDurationClick                                   @"click"
 #define kMFButtonTriggerDurationHold                                    @"hold"

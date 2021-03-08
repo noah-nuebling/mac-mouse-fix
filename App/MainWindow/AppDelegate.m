@@ -114,7 +114,7 @@ static NSDictionary *sideButtonActions;
     
     // Setting up table view. Not sure if necessary. No Idea what I'm doing.
     _tableController = [[RemapTableController alloc] init];
-    NSLog(@"TableView: %@", _tableController.view);
+//    NSLog(@"TableView: %@", _tableController.view);
 }
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
     NSLog(@"Mac Mouse Fix should terminate");

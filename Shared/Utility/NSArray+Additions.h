@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (id)reduce:(id)initial
        block:(id (^)(id obj1, id obj2))block;
 - (NSArray *)flatMap:(id (^)(id obj))block;
-
++ (NSMutableArray *)doDeepMutateArray:(NSArray *)array;
 @end
 
 NS_ASSUME_NONNULL_END

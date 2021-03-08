@@ -233,7 +233,6 @@
 		4FF665E925F2C92700689B77 /* Utility_App.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility_App.h; sourceTree = "<group>"; };
 		4FF665EA25F2C92700689B77 /* Hyperlink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Hyperlink.h; sourceTree = "<group>"; };
 		4FF665EB25F2C92700689B77 /* ClickableImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClickableImageView.m; sourceTree = "<group>"; };
-		4FF665EC25F2C92700689B77 /* UtilityPrefPane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UtilityPrefPane.h; sourceTree = "<group>"; };
 		4FF6660925F2C93A00689B77 /* FileMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileMonitor.m; sourceTree = "<group>"; };
 		4FF6660A25F2C93A00689B77 /* FileMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileMonitor.h; sourceTree = "<group>"; };
 		4FF6660B25F2C93A00689B77 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -437,9 +436,9 @@
 			children = (
 				4FF665C525F2C92700689B77 /* AppDelegate.h */,
 				4FF665DB25F2C92700689B77 /* AppDelegate.m */,
-				4FF665D925F2C92700689B77 /* MouseFix.xib */,
 				4FCA07D425F3129B00BFE209 /* RemapTableController.h */,
 				4FCA07D525F3129B00BFE209 /* RemapTableController.m */,
+				4FF665D925F2C92700689B77 /* MouseFix.xib */,
 			);
 			path = MainWindow;
 			sourceTree = "<group>";
@@ -618,12 +617,11 @@
 			isa = PBXGroup;
 			children = (
 				4FF665E625F2C92700689B77 /* ClickableImageView.h */,
-				4FF665E725F2C92700689B77 /* Hyperlink.m */,
-				4FF665E825F2C92700689B77 /* Utility_App.m */,
-				4FF665E925F2C92700689B77 /* Utility_App.h */,
-				4FF665EA25F2C92700689B77 /* Hyperlink.h */,
 				4FF665EB25F2C92700689B77 /* ClickableImageView.m */,
-				4FF665EC25F2C92700689B77 /* UtilityPrefPane.h */,
+				4FF665EA25F2C92700689B77 /* Hyperlink.h */,
+				4FF665E725F2C92700689B77 /* Hyperlink.m */,
+				4FF665E925F2C92700689B77 /* Utility_App.h */,
+				4FF665E825F2C92700689B77 /* Utility_App.m */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
