@@ -119,7 +119,7 @@ typedef NSString*                                                       MFString
 // Variant keys
 
 // Generic variant key (Use when a variant consists of just one value - so when we only need one variant key)
-#define kMFActionDictKeySingleVariant                                   @"variant"
+#define kMFActionDictKeyGenericVariant                                   @"variant"
 // Keyboard shortcut variant keys
 #define kMFActionDictKeyKeyboardShortcutVariantKeycode                  @"keycode"
 #define kMFActionDictKeyKeyboardShortcutVariantModifierFlags            @"flags"

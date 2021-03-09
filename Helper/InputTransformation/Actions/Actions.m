@@ -23,12 +23,12 @@
     
         if ([actionType isEqualToString:kMFActionDictTypeSymbolicHotkey]) {
             
-            MFSymbolicHotkey shk = ((NSNumber *)actionDict[kMFActionDictKeySingleVariant]).intValue;
+            MFSymbolicHotkey shk = ((NSNumber *)actionDict[kMFActionDictKeyGenericVariant]).intValue;
             postSymbolicHotkey((CGSSymbolicHotKey) shk);
             
         } else if ([actionType isEqualToString:kMFActionDictTypeNavigationSwipe]) {
             
-            NSString *dirString = actionDict[kMFActionDictKeySingleVariant];
+            NSString *dirString = actionDict[kMFActionDictKeyGenericVariant];
             
             if ([dirString isEqualToString:kMFNavigationSwipeVariantLeft]) {
                 [TouchSimulator postNavigationSwipeEventWithDirection:kIOHIDSwipeLeft];

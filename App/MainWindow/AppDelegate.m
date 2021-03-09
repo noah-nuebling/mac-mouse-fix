@@ -157,20 +157,20 @@ NSTimer *removeAccOverlayTimer;
 
 - (void)disableUI:(NSNumber *)enable {
     
-    BOOL enb = enable.boolValue;
-    
-    NSArray *baseArray = [Utility_App subviewsForView:self.window.contentView withIdentifier:@"baseView"];
-    NSView *baseView = baseArray[0];
-    NSBox *preferenceBox = (NSBox *)[Utility_App subviewsForView:baseView withIdentifier:@"preferenceBox"][0];
-    
-    for (NSObject *v in preferenceBox.contentView.subviews) {
-        if ([[v class] isSubclassOfClass:[NSControl class]]) {
-            [(NSControl *)v setEnabled:enb];
-        }
-    }
-    if (enb) {
-        [self disableScrollSettings:@(_scrollEnableCheckBox.state)];
-    }
+//    BOOL enb = enable.boolValue;
+//    
+//    NSArray *baseArray = [Utility_App subviewsForView:self.window.contentView withIdentifier:@"baseView"];
+//    NSView *baseView = baseArray[0];
+//    NSBox *preferenceBox = (NSBox *)[Utility_App subviewsForView:baseView withIdentifier:@"preferenceBox"][0];
+//    
+//    for (NSObject *v in preferenceBox.contentView.subviews) {
+//        if ([[v class] isSubclassOfClass:[NSControl class]]) {
+//            [(NSControl *)v setEnabled:enb];
+//        }
+//    }
+//    if (enb) {
+//        [self disableScrollSettings:@(_scrollEnableCheckBox.state)];
+//    }
 }
 - (void)disableScrollSettings:(NSNumber *)enable {
     _scrollStepSizeSlider.enabled = enable.boolValue;

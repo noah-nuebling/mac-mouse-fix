@@ -52,7 +52,7 @@ NSMutableArray *_remaps;
             kMFRemapsKeyEffect: @[
                     @{
                         kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-                        kMFActionDictKeySingleVariant: @(kMFSHLaunchpad),
+                        kMFActionDictKeyGenericVariant: @(kMFSHLaunchpad),
                     }
             ]
         },
@@ -132,7 +132,7 @@ static NSString *getKeyboardModifierTooltipString(NSNumber *flags) {
     return kb;
 }
 
-- (NSTableCellView *)getTriggerColumnTableCellWithRowDict:(NSMutableDictionary *)rowDict {
+- (NSTableCellView *)getTriggerTableCellWithRowDict:(NSMutableDictionary *)rowDict {
     // Define Data-to-UI-String mappings
     NSDictionary *clickLevelToUIString = @{
         @1: @"",
@@ -260,15 +260,99 @@ static NSString *getKeyboardModifierTooltipString(NSNumber *flags) {
     return triggerCell;
 }
 
+- (NSTableCellView *)getEffectTableCellWithRowDict:(NSDictionary *)rowDict {
+    
+    // Get info about what kind of trigger we're dealing with
+    BOOL isOneShotEffect = YES;
+    
+    if (isOneShotEffect) {
+        // Define oneShot effects table
+        NSArray *oneShotEffectsTable = @[
+            @{@"ui": @"Mission Control", @"tool": @"Show Mission Control", @"dict": @{
+                      kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+                      kMFActionDictKeyGenericVariant: @(kMFSHMissionControl)
+            }},
+            @{@"ui": @"App Exposé", @"tool": @"Show all windows of the active app", @"dict": @{
+                      kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+                      kMFActionDictKeyGenericVariant: @(kMFSHAppExpose)
+            }},
+            @{@"ui": @"Show Desktop", @"tool": @"Show the desktop", @"dict": @{
+                      kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+                      kMFActionDictKeyGenericVariant: @(kMFSHShowDesktop)
+            }},
+            @{@"noeffect": @"separator"},
+            @{@"ui": @"Move left a Space", @"tool": @"Move one Space to the left", @"dict": @{
+                      kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+                      kMFActionDictKeyGenericVariant: @(kMFSHMoveLeftASpace)
+            }},
+            @{@"ui": @"Move right a Space", @"tool": @"Move one Space to the right", @"dict": @{
+                      kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+                      kMFActionDictKeyGenericVariant: @(kMFSHMoveRightASpace)
+            }},
+            @{@"noeffect": @"separator"},
+            @{@"ui": @"Back", @"tool": @"Go back \nWorks like a horizontal three finger swipe on an Apple Trackpad if \"System Preferences\" → \"Trackpad\" → \"More Gestures\" → \"Swipe between pages\" is set to \"Swipe with three fingers\"", @"dict": @{
+                      kMFActionDictKeyType: kMFActionDictTypeNavigationSwipe,
+                      kMFActionDictKeyGenericVariant: kMFNavigationSwipeVariantLeft
+            }},
+            @{@"ui": @"Forward", @"tool": @"Go forward \nWorks like a horizontal three finger swipe on an Apple Trackpad if \"System Preferences\" → \"Trackpad\" → \"More Gestures\" → \"Swipe between pages\" is set to \"Swipe with three fingers\"", @"dict": @{
+                      kMFActionDictKeyType: kMFActionDictTypeNavigationSwipe,
+                      kMFActionDictKeyGenericVariant: kMFNavigationSwipeVariantRight
+            }},
+            @{@"noeffect": @"separator"},
+            @{@"ui": @"Launchpad", @"tool": @"Open Launchpad", @"dict": @{
+                      kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+                      kMFActionDictKeyGenericVariant: @(kMFSHLaunchpad)
+            }},
+            @{@"noeffect": @"separator"},
+            @{@"ui": @"Look Up", @"tool": @"Zoom in and out in Safari and other apps \nSimulates a two-finger double tap on an Apple Trackpad", @"dict": @{
+                      kMFActionDictKeyType: kMFActionDictTypeSmartZoom,
+            }},
+            @{@"ui": @"Smart Zoom", @"tool": @"Look up words in the dictionary, Quick Look files in Finder, and more... \nWorks like Force Touch on an Apple Trackpad", @"dict": @{
+                      kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+                      kMFActionDictKeyGenericVariant: @(kMFSHLookUp)
+            }},
+            @{@"ui": @"Open link in new tab", @"tool": @"Open Links in a new tab, paste text in the Terminal, and more... \nSimulates clicking the middle mouse button on a standard mouse", @"dict": @{
+                      kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
+                      kMFActionDictKeyMouseButtonClicksVariantButtonNumber: @3,
+                      kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks: @1,
+            }},
+        ];
+        // Create table cell view
+        NSTableCellView *triggerCell = [((NSTableView *)self.view) makeViewWithIdentifier:@"effectCell" owner:nil];
+        // Get popup button
+        NSPopUpButton *popupButton = triggerCell.subviews[0];
+        // Delete existing menu items from IB
+        [popupButton removeAllItems];
+        // Iterate oneshot effects table and fill popupButton
+        for (NSDictionary *effectDict in oneShotEffectsTable) {
+            NSMenuItem *i;
+            if ([effectDict[@"noeffect"] isEqualToString: @"separator"]) {
+                i = NSMenuItem.separatorItem;
+            } else {
+                i = [[NSMenuItem alloc] initWithTitle:effectDict[@"ui"] action:@selector(popupButton:) keyEquivalent:@""];
+                [i setToolTip:effectDict[@"tool"]];
+                // Try fix disabled
+                i.enabled = YES;
+                i.target = self;
+            }
+            [popupButton.menu addItem:i];
+        }
+        return triggerCell;
+    }
+    return nil;
+}
+
+- (IBAction)popupButton:(NSButton *)sender {
+    NSLog(@"Yay!");
+}
+
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     // Generate table cell view for this row and column
     NSMutableDictionary *rowDict = _remaps[row];
     if ([tableColumn.identifier isEqualToString:@"trigger"]) { // The trigger column should display the trigger as well as the modification precondition
-        return [self getTriggerColumnTableCellWithRowDict:rowDict];
-        
+        return [self getTriggerTableCellWithRowDict:rowDict];
     } else if ([tableColumn.identifier isEqualToString:@"effect"]) {
-        NSTableCellView *triggerCell = [((NSTableView *)self.view) makeViewWithIdentifier:@"effectCell" owner:nil];
-        return triggerCell;
+        return [self getEffectTableCellWithRowDict:rowDict];
     } else {
         @throw [NSException exceptionWithName:@"Unknown column identifier" reason:@"TableView is requesting data for a column with an unknown identifier" userInfo:@{@"requested data for column": tableColumn}];
         return nil;
