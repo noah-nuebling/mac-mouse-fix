@@ -49,14 +49,22 @@ NSArray *_remapsUI;
                                             kMFActionDictKeyGenericVariant:@(kMFSHMissionControl)
                                         },
                                 ],
-//                                kMFButtonTriggerDurationHold: @[                                  // Key: click/hold, value: array of actions
-//                                        @{
-//                                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-//                                            kMFActionDictKeyGenericVariant: @(kMFSHShowDesktop),
-//                                        },
-//                                ],
+                                kMFButtonTriggerDurationHold: @[                                  // Key: click/hold, value: array of actions
+                                        @{
+                                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+                                            kMFActionDictKeyGenericVariant: @(kMFSHShowDesktop),
+                                        },
+                                ],
                                 
                         },
+                        @(2): @{                                            // Key: level
+                                kMFButtonTriggerDurationClick: @[                                   // Key: click/hold, value: array of actions
+                                        @{
+                                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+                                            kMFActionDictKeyGenericVariant:@(kMFSHLookUp)
+                                        },
+                                ],
+                        }
                 },
                 @(4): @{                                                // Key: button
                         @(1): @{                                            // Key: level
@@ -98,7 +106,7 @@ NSArray *_remapsUI;
             kMFModificationPreconditionKeyButtons: @[
                     @{
                         kMFButtonModificationPreconditionKeyButtonNumber: @(3),
-                        kMFButtonModificationPreconditionKeyClickLevel: @(1),
+                        kMFButtonModificationPreconditionKeyClickLevel: @(2),
                     }
             ],
         }: @{
@@ -112,7 +120,7 @@ NSArray *_remapsUI;
             kMFModificationPreconditionKeyButtons: @[
                     @{
                         kMFButtonModificationPreconditionKeyButtonNumber: @(3),
-                        kMFButtonModificationPreconditionKeyClickLevel: @(2),
+                        kMFButtonModificationPreconditionKeyClickLevel: @(1),
                     },
             ],
             
