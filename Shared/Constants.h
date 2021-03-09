@@ -75,8 +75,8 @@ typedef NSString*                                                       MFString
 
 // Modified drag
 
-// Trigger key
-#define kMFTriggerKeyDrag                                               @"dragTrigger"
+// Trigger (value for key kMFRemapsKeyTrigger)
+#define kMFTriggerDrag                                               @"dragTrigger"
 // Type key
 #define kMFModifiedDragDictKeyType                                      @"modifiedDragType"
 // Type values
@@ -88,8 +88,8 @@ typedef NSString*                                                       MFString
 
 // Modified Scroll
 
-// Trigger key
-#define kMFTriggerKeyScroll                                             @"scrollTrigger"
+// Trigger (value for key kMFRemapsKeyTrigger)
+#define kMFTriggerScroll                                             @"scrollTrigger"
 // Type key
 #define kMFModifiedScrollDictKeyType                                    @"modifiedScrollType"
 // Type values
@@ -100,7 +100,7 @@ typedef NSString*                                                       MFString
 
 // Oneshot Actions
 
-// Trigger Keys
+// Trigger Keys (value for key kMFRemapsKeyTrigger is dict using these keys)
 #define kMFButtonTriggerKeyButtonNumber                              @"button"
 #define kMFButtonTriggerKeyClickLevel                                @"level"
 #define kMFButtonTriggerKeyDuration                                  @"duration"

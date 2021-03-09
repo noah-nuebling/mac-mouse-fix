@@ -110,7 +110,7 @@ NSArray *_remapsUI;
                     }
             ],
         }: @{
-                kMFTriggerKeyDrag: @{
+                kMFTriggerDrag: @{
                     kMFModifiedDragDictKeyType: kMFModifiedDragDictTypeFakeDrag,
                     kMFModifiedDragDictKeyFakeDragVariantButtonNumber: @3,
                 }
@@ -125,7 +125,7 @@ NSArray *_remapsUI;
             ],
             
         }: @{
-                kMFTriggerKeyDrag: @{
+                kMFTriggerDrag: @{
                     kMFModifiedDragDictKeyType: kMFModifiedDragDictTypeThreeFingerSwipe,
                 }
             },
@@ -142,7 +142,7 @@ NSArray *_remapsUI;
 //            ],
             kMFModificationPreconditionKeyKeyboard: @(NSShiftKeyMask | NSControlKeyMask)
         }: @{
-                kMFTriggerKeyDrag: @{
+                kMFTriggerDrag: @{
                     kMFModifiedDragDictKeyType: kMFModifiedDragDictTypeThreeFingerSwipe,
                 }
             }

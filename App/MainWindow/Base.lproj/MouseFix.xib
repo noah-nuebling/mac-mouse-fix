@@ -116,7 +116,7 @@
                                                                                 <popUpButtonCell key="cell" type="push" title="Click and Drag Button 3" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="hdW-0g-MyX" id="zPv-8e-GO1">
                                                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                                     <font key="font" metaFont="menu"/>
-                                                                                    <menu key="menu" id="D4j-Vt-Zr3">
+                                                                                    <menu key="menu" id="D4j-Vt-Zr3" customClass="MFMenu">
                                                                                         <items>
                                                                                             <menuItem title="Click and Drag Button 3" state="on" id="hdW-0g-MyX">
                                                                                                 <modifierMask key="keyEquivalentModifierMask"/>
