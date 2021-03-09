@@ -49,12 +49,10 @@ NSMutableArray *_remaps;
                     kMFButtonTriggerKeyClickLevel: @2,
                     kMFButtonTriggerKeyDuration: kMFButtonTriggerDurationClick,
             },
-            kMFRemapsKeyEffect: @[
-                    @{
-                        kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-                        kMFActionDictKeyGenericVariant: @(kMFSHLaunchpad),
-                    }
-            ]
+            kMFRemapsKeyEffect: @{
+                    kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+                    kMFActionDictKeyGenericVariant: @(kMFSHLaunchpad),
+            }
         },
         @{
             kMFRemapsKeyModificationPrecondition: @{
@@ -71,11 +69,9 @@ NSMutableArray *_remaps;
                     ],
             },
             kMFRemapsKeyTrigger: kMFTriggerDrag,
-            kMFRemapsKeyEffect: @[
-                    @{
-                        kMFModifiedDragDictKeyType: kMFModifiedDragDictTypeThreeFingerSwipe,
-                    }
-            ]
+            kMFRemapsKeyEffect: @{
+                    kMFModifiedDragDictKeyType: kMFModifiedDragDictTypeThreeFingerSwipe,
+            }
         },
     ];
     _remaps = [NSArray doDeepMutateArray:staticRemaps];
@@ -87,8 +83,38 @@ NSMutableArray *_remaps;
 
 #pragma mark  - Generate Table content
 
+static NSDictionary *separator() {
+    return @{@"noeffect": @"separator"};
+}
+static NSArray *getScrollEffectsTable() {
+    NSArray *scrollEffectsTable = @[
+        @{@"ui": @"Zoom in or out", @"tool": @"Zoom in or out in Safari, Maps, and other apps \nWorks like Pinch to Zoom on an Apple Trackpad" , @"dict": @{}
+        },
+        @{@"ui": @"Horizontal scroll", @"tool": @"Scroll horizontally \nNavigate pages in Safari, delete messages in Mail, and more \nWorks like swiping horizontally with 2 fingers on an Apple Trackpad" , @"dict": @{}
+        },
+//        @{@"ui": @"Rotate", @"tool": @"", @"dict": @{}},
+//        @{@"ui": @"Precision Scroll", @"tool": @"", @"dict": @{}},
+//        @{@"ui": @"Fast scroll", @"tool": @"", @"dict": @{}},
+    ];
+    return scrollEffectsTable;
+}
+static NSArray *getDragEffectsTable() {
+    NSArray *dragEffectsTable = @[
+        @{@"ui": @"Mission Control & Spaces", @"tool": @"Move your mouse: \n - up to show Mission Control \n - down to show App Exposé \n - left/right to move between Spaces" , @"dict": @{
+                  kMFModifiedDragDictKeyType: kMFModifiedDragDictTypeThreeFingerSwipe,
+        }},
+//        @{@"ui": @"Scroll & navigate pages", @"tool": @"Scroll by moving your mouse in any direction \nNavigate pages in Safari, delete messages in Mail, and more, by moving your mouse horizontally \nWorks like swiping with 2 fingers on an Apple Trackpad" , @"dict": @{
+//                  kMFModifiedDragDictKeyType: kMFModifiedDragDictTypeTwoFingerSwipe,
+//        }},
+        separator(),
+        @{@"ui": @"Rotate", @"tool": @"Simulates clicking and dragging the Middle Mouse Button (aka Mouse Button 3) \nUsed to rotate in some 3d software like Blender" , @"dict": @{
+                  kMFModifiedDragDictKeyType: kMFModifiedDragDictTypeFakeDrag,
+                  kMFModifiedDragDictKeyFakeDragVariantButtonNumber: @3,
+        }},
+    ];
+    return dragEffectsTable;
+}
 static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
-    NSDictionary *separator = @{@"noeffect": @"separator"};
     NSMutableArray *oneShotEffectsTable = @[
         @{@"ui": @"Mission Control", @"tool": @"Show Mission Control", @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
@@ -102,7 +128,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHShowDesktop)
         }},
-        separator,
+        separator(),
         @{@"ui": @"Move left a Space", @"tool": @"Move one Space to the left", @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHMoveLeftASpace)
@@ -111,7 +137,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHMoveRightASpace)
         }},
-        separator,
+        separator(),
         @{@"ui": @"Back", @"tool": @"Go back \nWorks like a horizontal three finger swipe on an Apple Trackpad if \"System Preferences\" → \"Trackpad\" → \"More Gestures\" → \"Swipe between pages\" is set to \"Swipe with three fingers\"", @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeNavigationSwipe,
                   kMFActionDictKeyGenericVariant: kMFNavigationSwipeVariantLeft
@@ -120,12 +146,12 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
                   kMFActionDictKeyType: kMFActionDictTypeNavigationSwipe,
                   kMFActionDictKeyGenericVariant: kMFNavigationSwipeVariantRight
         }},
-        separator,
+        separator(),
         @{@"ui": @"Launchpad", @"tool": @"Open Launchpad", @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHLaunchpad)
         }},
-        separator,
+        separator(),
         @{@"ui": @"Look Up", @"tool": @"Look up words in the dictionary, Quick Look files in Finder, and more... \nWorks like Force Touch on an Apple Trackpad", @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHLookUp)
@@ -193,36 +219,56 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
             NSAssert(YES, @"Can't determine trigger type.");
         }
     }
+    // Get effects Table
+    NSArray *effectsTable;
     if ([triggerType isEqualToString:@"button"]) {
         // We determined that trigger value is a dict -> convert to dict
         NSDictionary *buttonTriggerDict = (NSDictionary *)triggerValue;
-        // Define oneShot effects table
-        NSArray *oneShotEffectsTable = getOneShotEffectsTable(buttonTriggerDict);
-        // Create table cell view
-        NSTableCellView *triggerCell = [((NSTableView *)self.view) makeViewWithIdentifier:@"effectCell" owner:nil];
-        // Get popup button
-        NSPopUpButton *popupButton = triggerCell.subviews[0];
-        // Delete existing menu items from IB
-        [popupButton removeAllItems];
-        // Iterate oneshot effects table and fill popupButton
-        for (NSDictionary *effectDict in oneShotEffectsTable) {
-            NSMenuItem *i;
-            if ([effectDict[@"noeffect"] isEqualToString: @"separator"]) {
-                i = (NSMenuItem *)NSMenuItem.separatorItem;
-            } else {
-                i = [[NSMenuItem alloc] initWithTitle:effectDict[@"ui"] action:@selector(popupButton:) keyEquivalent:@""];
-                [i setToolTip:effectDict[@"tool"]];
-                if ([effectDict[@"alternate"] isEqualTo:@YES]) {
-                    i.alternate = YES;
-                    i.keyEquivalentModifierMask = NSEventModifierFlagOption;
-                }
-                i.target = self;
-            }
-            [popupButton.menu addItem:i];
-        }
-        return triggerCell;
+        effectsTable = getOneShotEffectsTable(buttonTriggerDict);
+    } else if ([triggerType isEqualToString:@"drag"]) {
+        effectsTable = getDragEffectsTable();
+    } else if ([triggerType isEqualToString:@"scroll"]) {
+        effectsTable = getScrollEffectsTable();
+    } else {
+        NSAssert(NO, @"");
     }
-    return nil;
+    // Create trigger cell and fill out popup button contained in it
+    NSTableCellView *triggerCell = [((NSTableView *)self.view) makeViewWithIdentifier:@"effectCell" owner:nil];
+    // Get popup button
+    NSPopUpButton *popupButton = triggerCell.subviews[0];
+    // Delete existing menu items from IB
+    [popupButton removeAllItems];
+    // Iterate oneshot effects table and fill popupButton
+    for (NSDictionary *effectDict in effectsTable) {
+        NSMenuItem *i;
+        if ([effectDict[@"noeffect"] isEqualToString: @"separator"]) {
+            i = (NSMenuItem *)NSMenuItem.separatorItem;
+        } else {
+            i = [[NSMenuItem alloc] initWithTitle:effectDict[@"ui"] action:@selector(popupButton:) keyEquivalent:@""];
+            [i setToolTip:effectDict[@"tool"]];
+            if ([effectDict[@"alternate"] isEqualTo:@YES]) {
+                i.alternate = YES;
+                i.keyEquivalentModifierMask = NSEventModifierFlagOption;
+            }
+            i.target = self;
+        }
+        [popupButton.menu addItem:i];
+    }
+    
+    // Select popup button item corresponding to datamodel
+    // Get effectDict from datamodel
+    NSDictionary *effectDict = rowDict[kMFRemapsKeyEffect];
+    // Get title for effectDict from effectsTable
+    NSIndexSet *inds = [effectsTable indexesOfObjectsPassingTest:^BOOL(NSDictionary * _Nonnull tableEntry, NSUInteger idx, BOOL * _Nonnull stop) {
+        return [tableEntry[@"dict"] isEqualToDictionary:effectDict];
+    }];
+    NSAssert(inds.count == 1, @"");
+    // TODO: React well to inds.count == 0, to support people editing remaps dict by hand (If I'm reallyyy bored)
+    NSString *title = ((NSDictionary *)effectsTable[inds.firstIndex])[@"ui"];
+    // Select item with title
+    [popupButton selectItemWithTitle:title];
+    
+    return triggerCell;
 }
 
 - (IBAction)popupButton:(NSButton *)sender {
@@ -263,7 +309,7 @@ static NSString *getKeyboardModifierString(NSNumber *flags) {
     }
     return kb;
 }
-static NSString *getKeyboardModifierTooltipString(NSNumber *flags) {
+static NSString *getKeyboardModifierToolTipString(NSNumber *flags) {
     NSString *kb = @"";
     if (flags) {
         CGEventFlags f = flags.longLongValue;
@@ -372,7 +418,7 @@ static NSString *getKeyboardModifierTooltipString(NSNumber *flags) {
     // Get keyboard modifier main string and tooltip string
     NSNumber *flags = (NSNumber *)rowDict[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyKeyboard];
     NSString *kbModRaw = getKeyboardModifierString(flags);
-    NSString *kbModTooltipRaw = getKeyboardModifierTooltipString(flags);
+    NSString *kbModTooltipRaw = getKeyboardModifierToolTipString(flags);
     NSString *kbMod = @"";
     NSString *kbModTooltip = @"";
     if (![kbModRaw isEqualToString:@""]) {
