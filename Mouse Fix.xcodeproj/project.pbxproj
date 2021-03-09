@@ -10,8 +10,6 @@
 		4F1793A925EEC92000E8309B /* ZipArchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F1793A825EEC90900E8309B /* ZipArchive.framework */; };
 		4F1793AA25EEC92000E8309B /* ZipArchive.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F1793A825EEC90900E8309B /* ZipArchive.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F2FDF332315662500C7BE14 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2FDF322315662500C7BE14 /* main.m */; };
-		4F75BC1825F804C7004B1282 /* MFMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F75BC1725F804C7004B1282 /* MFMenuItem.m */; };
-		4F75BC2B25F818CA004B1282 /* MFMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F75BC2A25F818CA004B1282 /* MFMenu.m */; };
 		4F94F60525E5EC2800D9F24A /* Mac_Mouse_FixTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60425E5EC2800D9F24A /* Mac_Mouse_FixTests.m */; };
 		4F94F61025E5EC2800D9F24A /* Mac_Mouse_FixUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60F25E5EC2800D9F24A /* Mac_Mouse_FixUITests.m */; };
 		4F94F73D25E6146C00D9F24A /* Mac Mouse Fix Helper.app in Copy Helper */ = {isa = PBXBuildFile; fileRef = 4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -176,10 +174,6 @@
 		4F2FDF302315662400C7BE14 /* Mac Mouse Fix Accomplice */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Mac Mouse Fix Accomplice"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F2FDF322315662500C7BE14 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4F422EEC23469B0F00AA6E22 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		4F75BC1625F804C7004B1282 /* MFMenuItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFMenuItem.h; sourceTree = "<group>"; };
-		4F75BC1725F804C7004B1282 /* MFMenuItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFMenuItem.m; sourceTree = "<group>"; };
-		4F75BC2925F818CA004B1282 /* MFMenu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFMenu.h; sourceTree = "<group>"; };
-		4F75BC2A25F818CA004B1282 /* MFMenu.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFMenu.m; sourceTree = "<group>"; };
 		4F94F5EE25E5EC2500D9F24A /* Mac Mouse Fix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mac Mouse Fix.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F94F60025E5EC2800D9F24A /* Mac Mouse FixTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Mac Mouse FixTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F94F60425E5EC2800D9F24A /* Mac_Mouse_FixTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Mac_Mouse_FixTests.m; sourceTree = "<group>"; };
@@ -444,10 +438,6 @@
 				4FF665DB25F2C92700689B77 /* AppDelegate.m */,
 				4FCA07D425F3129B00BFE209 /* RemapTableController.h */,
 				4FCA07D525F3129B00BFE209 /* RemapTableController.m */,
-				4F75BC1625F804C7004B1282 /* MFMenuItem.h */,
-				4F75BC1725F804C7004B1282 /* MFMenuItem.m */,
-				4F75BC2925F818CA004B1282 /* MFMenu.h */,
-				4F75BC2A25F818CA004B1282 /* MFMenu.m */,
 				4FF665D925F2C92700689B77 /* MouseFix.xib */,
 			);
 			path = MainWindow;
@@ -1186,9 +1176,7 @@
 				4FF6660125F2C92700689B77 /* Utility_App.m in Sources */,
 				4FF665F225F2C92700689B77 /* UpdateWindow.m in Sources */,
 				4FF665FD25F2C92700689B77 /* AuthorizeAccessibilityView.m in Sources */,
-				4F75BC2B25F818CA004B1282 /* MFMenu.m in Sources */,
 				4FF6654425F2C7B000689B77 /* HelperServices.m in Sources */,
-				4F75BC1825F804C7004B1282 /* MFMenuItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

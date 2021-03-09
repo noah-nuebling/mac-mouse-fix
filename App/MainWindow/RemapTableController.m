@@ -12,7 +12,6 @@
 #import "Constants.h"
 #import "Utility_App.h"
 #import "NSArray+Additions.h"
-#import "MFMenuItem.h"
 
 @interface RemapTableController ()
 @end
@@ -165,7 +164,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
 //    for (int i = 0; i < tv.numberOfRows; i++) {
 //        NSPopUpButton *pb = [tv viewAtColumn:1 row:i makeIfNecessary:YES].subviews[0];
 //        [pb removeAllItems];
-//        for (MFMenuItem *item in pb.menu.itemArray) {
+//        for (NSMenuItem *item in pb.menu.itemArray) {
 //            if (item.isHideable) {
 //                if (event.modifierFlags & NSEventModifierFlagOption || [pb.selectedItem isEqualTo:item]) {
 //                    item.hidden = NO;
@@ -207,11 +206,11 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
         [popupButton removeAllItems];
         // Iterate oneshot effects table and fill popupButton
         for (NSDictionary *effectDict in oneShotEffectsTable) {
-            MFMenuItem *i;
+            NSMenuItem *i;
             if ([effectDict[@"noeffect"] isEqualToString: @"separator"]) {
-                i = (MFMenuItem *)MFMenuItem.separatorItem;
+                i = (NSMenuItem *)NSMenuItem.separatorItem;
             } else {
-                i = [[MFMenuItem alloc] initWithTitle:effectDict[@"ui"] action:@selector(popupButton:) keyEquivalent:@""];
+                i = [[NSMenuItem alloc] initWithTitle:effectDict[@"ui"] action:@selector(popupButton:) keyEquivalent:@""];
                 [i setToolTip:effectDict[@"tool"]];
                 if ([effectDict[@"alternate"] isEqualTo:@YES]) {
                     i.alternate = YES;
