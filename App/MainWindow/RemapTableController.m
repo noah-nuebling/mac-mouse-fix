@@ -14,23 +14,46 @@
 #import "NSArray+Additions.h"
 
 @interface RemapTableController ()
+@property NSTableView *tableView;
+@property NSMutableArray *dataModel;
 @end
 
 @implementation RemapTableController
 
-// Table view data model
-
-NSMutableArray *_remaps;
+// Setup the `tableView` property
+- (NSTableView *)tableView {
+    return (NSTableView *)self.view;
+}
+- (void)setTableView:(NSTableView *)tableView {
+    self.view = tableView;
+}
 
 // Methods
 
-- (void)loadRemapsFromConfig {
+- (void)loadDataModelFromConfig {
     [ConfigFileInterface_App loadConfigFromFile]; // Not sure if necessary
-    _remaps = ConfigFileInterface_App.config[kMFConfigKeyRemaps];
+    _dataModel = ConfigFileInterface_App.config[kMFConfigKeyRemaps];
 }
-- (void)writeRemapsToConfig {
-    [ConfigFileInterface_App.config setObject:_remaps forKey:kMFConfigKeyRemaps];
+- (void)writeDataModelToConfig {
+    [ConfigFileInterface_App.config setObject:_dataModel forKey:kMFConfigKeyRemaps];
     [ConfigFileInterface_App writeConfigToFileAndNotifyHelper];
+}
+
+- (IBAction)setConfigToUI:(id)sender {
+
+    for (NSInteger row = 0; row < self.dataModel.count; row++) {
+        // Get effect dicts
+        NSTableCellView *cell = [self.tableView viewAtColumn:1 row:row makeIfNecessary:YES];
+        NSPopUpButton *pb = cell.subviews[0];
+        NSString *selectedTitle = pb.selectedItem.title;
+        // Get effects table for row of sender
+        NSArray *effectsTable = [self getEffectsTableForRowDict:self.dataModel[row]];
+        NSDictionary *effectsTableEntryForSelected = [self getEntryFromEffectsTable:effectsTable withUIString:selectedTitle];
+        NSDictionary *effectDictForSelected = effectsTableEntryForSelected[@"dict"];
+        // Write effect dict to data model and then write datamodel to file
+        _dataModel[row][kMFRemapsKeyEffect] = effectDictForSelected;
+    }
+    [self writeDataModelToConfig];
 }
 
 - (void)viewDidLoad { // Not getting called for some reason -> I had to set the view outlet of the controller object in IB to the tableView
@@ -39,46 +62,11 @@ NSMutableArray *_remaps;
     scrollView.wantsLayer = TRUE;
 //    scrollView.layer.cornerRadius = 5;
     // Load table data from config
-    [self loadRemapsFromConfig];
-    // Override table data for testing
-    NSArray *staticRemaps = @[
-        @{
-            kMFRemapsKeyModificationPrecondition: @{},
-            kMFRemapsKeyTrigger: @{
-                    kMFButtonTriggerKeyButtonNumber: @3,
-                    kMFButtonTriggerKeyClickLevel: @2,
-                    kMFButtonTriggerKeyDuration: kMFButtonTriggerDurationClick,
-            },
-            kMFRemapsKeyEffect: @{
-                    kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-                    kMFActionDictKeyGenericVariant: @(kMFSHLaunchpad),
-            }
-        },
-        @{
-            kMFRemapsKeyModificationPrecondition: @{
-                    kMFModificationPreconditionKeyKeyboard: @(kCGEventFlagMaskCommand | kCGEventFlagMaskControl),
-                    kMFModificationPreconditionKeyButtons: @[
-                            @{
-                                kMFButtonModificationPreconditionKeyButtonNumber: @(4),
-                                kMFButtonModificationPreconditionKeyClickLevel: @(2),
-                            },
-                            @{
-                                kMFButtonModificationPreconditionKeyButtonNumber: @(3),
-                                kMFButtonModificationPreconditionKeyClickLevel: @(1),
-                            },
-                    ],
-            },
-            kMFRemapsKeyTrigger: kMFTriggerDrag,
-            kMFRemapsKeyEffect: @{
-                    kMFModifiedDragDictKeyType: kMFModifiedDragDictTypeThreeFingerSwipe,
-            }
-        },
-    ];
-    _remaps = [NSArray doDeepMutateArray:staticRemaps];
+    [self loadDataModelFromConfig];
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    return _remaps.count;
+    return _dataModel.count;
 }
 
 #pragma mark  - Generate Table content
@@ -186,28 +174,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
     return oneShotEffectsTable;
 }
 
-//- (void)flagsChanged:(NSEvent *)event {
-//    NSLog(@"FLAGS ARE OPTION: %lu", event.modifierFlags & NSEventModifierFlagOption);
-//
-//    // Hide / unhide hidable effects in the popup buttons when Option key is pressed
-//    NSTableView *tv = (NSTableView *)self.view;
-//    for (int i = 0; i < tv.numberOfRows; i++) {
-//        NSPopUpButton *pb = [tv viewAtColumn:1 row:i makeIfNecessary:YES].subviews[0];
-//        [pb removeAllItems];
-//        for (NSMenuItem *item in pb.menu.itemArray) {
-//            if (item.isHideable) {
-//                if (event.modifierFlags & NSEventModifierFlagOption || [pb.selectedItem isEqualTo:item]) {
-//                    item.hidden = NO;
-//                } else {
-//                    item.hidden = YES;
-//                }
-//            }
-//        }
-//    }
-//}
-
-- (NSTableCellView *)getEffectTableCellWithRowDict:(NSDictionary *)rowDict {
-    
+- (NSArray *)getEffectsTableForRowDict:(NSDictionary *)rowDict {
     // Get info about what kind of trigger we're dealing with
     NSString *triggerType = @""; // Options "oneShot", "drag", "scroll"
     id triggerValue = rowDict[kMFRemapsKeyTrigger];
@@ -236,8 +203,13 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
     } else {
         NSAssert(NO, @"");
     }
+    return effectsTable;
+}
+
+- (NSTableCellView *)getEffectTableCellWithRowDict:(NSDictionary *)rowDict {
+    NSArray *effectsTable = [self getEffectsTableForRowDict:rowDict];
     // Create trigger cell and fill out popup button contained in it
-    NSTableCellView *triggerCell = [((NSTableView *)self.view) makeViewWithIdentifier:@"effectCell" owner:nil];
+    NSTableCellView *triggerCell = [self.tableView makeViewWithIdentifier:@"effectCell" owner:nil];
     // Get popup button
     NSPopUpButton *popupButton = triggerCell.subviews[0];
     // Delete existing menu items from IB
@@ -248,7 +220,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
         if ([effectDict[@"noeffect"] isEqualToString: @"separator"]) {
             i = (NSMenuItem *)NSMenuItem.separatorItem;
         } else {
-            i = [[NSMenuItem alloc] initWithTitle:effectDict[@"ui"] action:@selector(popupButton:) keyEquivalent:@""];
+            i = [[NSMenuItem alloc] initWithTitle:effectDict[@"ui"] action:@selector(setConfigToUI:) keyEquivalent:@""];
             [i setToolTip:effectDict[@"tool"]];
             if ([effectDict[@"alternate"] isEqualTo:@YES]) {
                 i.alternate = YES;
@@ -263,20 +235,29 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
     // Get effectDict from datamodel
     NSDictionary *effectDict = rowDict[kMFRemapsKeyEffect];
     // Get title for effectDict from effectsTable
-    NSIndexSet *inds = [effectsTable indexesOfObjectsPassingTest:^BOOL(NSDictionary * _Nonnull tableEntry, NSUInteger idx, BOOL * _Nonnull stop) {
-        return [tableEntry[@"dict"] isEqualToDictionary:effectDict];
-    }];
-    NSAssert(inds.count == 1, @"");
-    // TODO: React well to inds.count == 0, to support people editing remaps dict by hand (If I'm reallyyy bored)
-    NSString *title = ((NSDictionary *)effectsTable[inds.firstIndex])[@"ui"];
+    NSDictionary *effectsTableEntry = [self getEntryFromEffectsTable:effectsTable withEffectDict:effectDict];
+    NSString *title = effectsTableEntry[@"ui"];
     // Select item with title
     [popupButton selectItemWithTitle:title];
     
     return triggerCell;
 }
-
-- (IBAction)popupButton:(NSButton *)sender {
-    
+- (NSDictionary *)getEntryFromEffectsTable:(NSArray *)effectsTable withEffectDict:(NSDictionary *)effectDict {
+    NSIndexSet *inds = [effectsTable indexesOfObjectsPassingTest:^BOOL(NSDictionary * _Nonnull tableEntry, NSUInteger idx, BOOL * _Nonnull stop) {
+        return [tableEntry[@"dict"] isEqualToDictionary:effectDict];
+    }];
+    NSAssert(inds.count == 1, @"");
+    // TODO: React well to inds.count == 0, to support people editing remaps dict by hand (If I'm reallyyy bored)
+    NSDictionary *effectsTableEntry = (NSDictionary *)effectsTable[inds.firstIndex];
+    return effectsTableEntry;
+}
+- (NSDictionary *)getEntryFromEffectsTable:(NSArray *)effectsTable withUIString:(NSString *)uiString {
+    NSIndexSet *inds = [effectsTable indexesOfObjectsPassingTest:^BOOL(NSDictionary * _Nonnull tableEntry, NSUInteger idx, BOOL * _Nonnull stop) {
+        return [tableEntry[@"ui"] isEqualToString:uiString];
+    }];
+    NSAssert(inds.count == 1, @"");
+    NSDictionary *effectsTableEntry = effectsTable[inds.firstIndex];
+    return effectsTableEntry;
 }
 
 static void getClickAndLevelStrings(NSDictionary *clickLevelToUIString, NSNumber *lvl, NSString **clickStr, NSString **levelStr) {
@@ -475,14 +456,14 @@ static NSString *getKeyboardModifierStringToolTip(NSNumber *flags) {
     NSString *fullTriggerCellString = [NSString stringWithFormat:@"%@%@%@", kbMod, btnMod, tr];
     NSString *fullTriggerCellTooltipString = [NSString stringWithFormat:@"%@%@%@", kbModTool, btnModTool, trTool];
     // Generate view and set string to view
-    NSTableCellView *triggerCell = [((NSTableView *)self.view) makeViewWithIdentifier:@"triggerCell" owner:nil];
+    NSTableCellView *triggerCell = [self.tableView makeViewWithIdentifier:@"triggerCell" owner:nil];
     triggerCell.textField.stringValue = fullTriggerCellString;
     triggerCell.textField.toolTip = fullTriggerCellTooltipString;
     return triggerCell;
 }
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     // Generate table cell view for this row and column
-    NSMutableDictionary *rowDict = _remaps[row];
+    NSMutableDictionary *rowDict = _dataModel[row];
     if ([tableColumn.identifier isEqualToString:@"trigger"]) { // The trigger column should display the trigger as well as the modification precondition
         return [self getTriggerTableCellWithRowDict:rowDict];
     } else if ([tableColumn.identifier isEqualToString:@"effect"]) {
