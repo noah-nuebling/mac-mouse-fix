@@ -191,7 +191,7 @@
                                                             <rect key="frame" x="16" y="-2" width="24" height="35"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="NMY-Fk-YkV">
-                                                                <imageReference key="image" image="wand.and.stars" catalog="system" symbolScale="large"/>
+                                                                <imageReference key="image" image="gearshape.2.fill" catalog="system" symbolScale="large"/>
                                                             </imageCell>
                                                             <color key="contentTintColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                         </imageView>
@@ -432,6 +432,6 @@ Gw
         <image name="NSAddTemplate" width="14" height="13"/>
         <image name="NSRemoveTemplate" width="14" height="4"/>
         <image name="cursorarrow.rays" catalog="system" width="20" height="20"/>
-        <image name="wand.and.stars" catalog="system" width="20" height="19"/>
+        <image name="gearshape.2.fill" catalog="system" width="25" height="20"/>
     </resources>
 </document>
