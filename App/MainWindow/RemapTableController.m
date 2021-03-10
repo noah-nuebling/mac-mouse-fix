@@ -40,7 +40,7 @@
 }
 
 - (IBAction)setConfigToUI:(id)sender {
-
+    // Set popupbutton content to datamodel
     for (NSInteger row = 0; row < self.dataModel.count; row++) {
         // Get effect dicts
         NSTableCellView *cell = [self.tableView viewAtColumn:1 row:row makeIfNecessary:YES];
@@ -53,6 +53,7 @@
         // Write effect dict to data model and then write datamodel to file
         _dataModel[row][kMFRemapsKeyEffect] = effectDictForSelected;
     }
+    // Write datamodel to file
     [self writeDataModelToConfig];
 }
 
@@ -63,10 +64,6 @@
 //    scrollView.layer.cornerRadius = 5;
     // Load table data from config
     [self loadDataModelFromConfig];
-}
-
-- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    return _dataModel.count;
 }
 
 #pragma mark - Generate Table content
@@ -375,7 +372,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
     NSString *kbMod = @"";
     NSString *kbModTool = @"";
     if (![kbModRaw isEqualToString:@""]) {
-        kbMod = [kbModRaw stringByAppendingString:@"+ "];
+        kbMod = [kbModRaw stringByAppendingString:@""]; // @"+ "
         kbModTool = [kbModTooltipRaw stringByAppendingString:@", then "];
     }
     // Get button modifier string
@@ -419,6 +416,10 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
         @throw [NSException exceptionWithName:@"Unknown column identifier" reason:@"TableView is requesting data for a column with an unknown identifier" userInfo:@{@"requested data for column": tableColumn}];
         return nil;
     }
+}
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
+    return _dataModel.count;
 }
 
 # pragma mark - String generating helper functions
