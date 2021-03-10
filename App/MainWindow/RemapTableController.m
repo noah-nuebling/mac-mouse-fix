@@ -69,9 +69,21 @@
     return _dataModel.count;
 }
 
-#pragma mark  - Generate Table content
+#pragma mark - Generate Table content
 
-static NSDictionary *separator() {
+#pragma mark Define Effects Tables
+// ^ Effects tables are one-to-one mappings between UI stirngs and effect dicts. The effect dicts encode the exact effect in a way the helper can read
+// They are used to generate the popup button menus and relate between the data model (which contains effectDicts) and the UI (which contains UI stirngs)
+// Effects tables are arrays of dictionaries called effect table entries. Table entries currently support the folling keys:
+//  "ui" - The main UI string of the effect. This will be the title of the popupbutton-menu-item for the effect
+//  "tool" - Tooltip of the popupbutton-menu-item
+//  "dict" - The effect dict
+//  "alternate" - If set to @YES, this entry will revealed by pressing a modifier key in the popupbutton menu
+// ? TODO: Create constants for these keys
+// There are also separatorTableEntry()s which become a separator in the popupbutton-menu generated from the effectsTable
+// There are 3 different effectsTables for 3 different types of triggers
+
+static NSDictionary *separatorTableEntry() {
     return @{@"noeffect": @"separator"};
 }
 static NSArray *getScrollEffectsTable() {
@@ -94,7 +106,7 @@ static NSArray *getDragEffectsTable() {
 //        @{@"ui": @"Scroll & navigate pages", @"tool": @"Scroll by moving your mouse in any direction \nNavigate pages in Safari, delete messages in Mail, and more, by moving your mouse horizontally \nWorks like swiping with 2 fingers on an Apple Trackpad" , @"dict": @{
 //                  kMFModifiedDragDictKeyType: kMFModifiedDragDictTypeTwoFingerSwipe,
 //        }},
-        separator(),
+        separatorTableEntry(),
         @{@"ui": [NSString stringWithFormat:@"Click and Drag %@", getButtonString(3)],
           @"tool": [NSString stringWithFormat: @"Simulates clicking and dragging %@ \nUsed to rotate in some 3d software like Blender", getButtonStringToolTip(3)] ,
           @"dict": @{
@@ -118,7 +130,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHShowDesktop)
         }},
-        separator(),
+        separatorTableEntry(),
         @{@"ui": @"Move left a Space", @"tool": @"Move one Space to the left", @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHMoveLeftASpace)
@@ -127,7 +139,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHMoveRightASpace)
         }},
-        separator(),
+        separatorTableEntry(),
         @{@"ui": @"Back", @"tool": @"Go back \nWorks like a horizontal three finger swipe on an Apple Trackpad if \"System Preferences\" → \"Trackpad\" → \"More Gestures\" → \"Swipe between pages\" is set to \"Swipe with three fingers\"", @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeNavigationSwipe,
                   kMFActionDictKeyGenericVariant: kMFNavigationSwipeVariantLeft
@@ -136,12 +148,12 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
                   kMFActionDictKeyType: kMFActionDictTypeNavigationSwipe,
                   kMFActionDictKeyGenericVariant: kMFNavigationSwipeVariantRight
         }},
-        separator(),
+        separatorTableEntry(),
         @{@"ui": @"Launchpad", @"tool": @"Open Launchpad", @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHLaunchpad)
         }},
-        separator(),
+        separatorTableEntry(),
         @{@"ui": @"Look Up", @"tool": @"Look up words in the Dictionary, Quick Look files in Finder, and more... \nWorks like Force Touch on an Apple Trackpad", @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHLookUp)
@@ -173,7 +185,24 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
     // Return
     return oneShotEffectsTable;
 }
-
+// Convenience functions for effects tables
+- (NSDictionary *)getEntryFromEffectsTable:(NSArray *)effectsTable withEffectDict:(NSDictionary *)effectDict {
+    NSIndexSet *inds = [effectsTable indexesOfObjectsPassingTest:^BOOL(NSDictionary * _Nonnull tableEntry, NSUInteger idx, BOOL * _Nonnull stop) {
+        return [tableEntry[@"dict"] isEqualToDictionary:effectDict];
+    }];
+    NSAssert(inds.count == 1, @"");
+    // TODO: React well to inds.count == 0, to support people editing remaps dict by hand (If I'm reallyyy bored)
+    NSDictionary *effectsTableEntry = (NSDictionary *)effectsTable[inds.firstIndex];
+    return effectsTableEntry;
+}
+- (NSDictionary *)getEntryFromEffectsTable:(NSArray *)effectsTable withUIString:(NSString *)uiString {
+    NSIndexSet *inds = [effectsTable indexesOfObjectsPassingTest:^BOOL(NSDictionary * _Nonnull tableEntry, NSUInteger idx, BOOL * _Nonnull stop) {
+        return [tableEntry[@"ui"] isEqualToString:uiString];
+    }];
+    NSAssert(inds.count == 1, @"");
+    NSDictionary *effectsTableEntry = effectsTable[inds.firstIndex];
+    return effectsTableEntry;
+}
 - (NSArray *)getEffectsTableForRowDict:(NSDictionary *)rowDict {
     // Get info about what kind of trigger we're dealing with
     NSString *triggerType = @""; // Options "oneShot", "drag", "scroll"
@@ -206,7 +235,9 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
     return effectsTable;
 }
 
-- (NSTableCellView *)getEffectTableCellWithRowDict:(NSDictionary *)rowDict {
+#pragma mark - Filling the table
+
+- (NSTableCellView *)getEffectCellWithRowDict:(NSDictionary *)rowDict {
     NSArray *effectsTable = [self getEffectsTableForRowDict:rowDict];
     // Create trigger cell and fill out popup button contained in it
     NSTableCellView *triggerCell = [self.tableView makeViewWithIdentifier:@"effectCell" owner:nil];
@@ -242,91 +273,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
     
     return triggerCell;
 }
-- (NSDictionary *)getEntryFromEffectsTable:(NSArray *)effectsTable withEffectDict:(NSDictionary *)effectDict {
-    NSIndexSet *inds = [effectsTable indexesOfObjectsPassingTest:^BOOL(NSDictionary * _Nonnull tableEntry, NSUInteger idx, BOOL * _Nonnull stop) {
-        return [tableEntry[@"dict"] isEqualToDictionary:effectDict];
-    }];
-    NSAssert(inds.count == 1, @"");
-    // TODO: React well to inds.count == 0, to support people editing remaps dict by hand (If I'm reallyyy bored)
-    NSDictionary *effectsTableEntry = (NSDictionary *)effectsTable[inds.firstIndex];
-    return effectsTableEntry;
-}
-- (NSDictionary *)getEntryFromEffectsTable:(NSArray *)effectsTable withUIString:(NSString *)uiString {
-    NSIndexSet *inds = [effectsTable indexesOfObjectsPassingTest:^BOOL(NSDictionary * _Nonnull tableEntry, NSUInteger idx, BOOL * _Nonnull stop) {
-        return [tableEntry[@"ui"] isEqualToString:uiString];
-    }];
-    NSAssert(inds.count == 1, @"");
-    NSDictionary *effectsTableEntry = effectsTable[inds.firstIndex];
-    return effectsTableEntry;
-}
-
-static void getClickAndLevelStrings(NSDictionary *clickLevelToUIString, NSNumber *lvl, NSString **clickStr, NSString **levelStr) {
-    *levelStr = clickLevelToUIString[lvl];
-    if (!*levelStr) {
-        *levelStr = [NSString stringWithFormat:@"%@", lvl];
-    }
-    // click // TODO: Refactor, so this just returns levelStr, because click string doesn't depend to level string anymore
-    *clickStr = @"Click ";
-}
-
-static NSString *getButtonString(int buttonNumber) {
-    NSDictionary *buttonNumberToUIString = @{
-        @1: @"Primary Button",
-        @2: @"Secondary Button",
-        @3: @"Middle Button",
-    };
-    NSString *buttonStr = buttonNumberToUIString[@(buttonNumber)];
-    if (!buttonStr) {
-        buttonStr = [NSString stringWithFormat:@"Button %@", @(buttonNumber)];
-    }
-    return buttonStr;
-}
-static NSString *getButtonStringToolTip(int buttonNumber) {
-    NSDictionary *buttonNumberToUIString = @{
-        @1: @"the Primary Mouse Button (also called the Left Mouse Button or Mouse Button 1)",
-        @2: @"the Secondary Mouse Button (also called the Right Mouse Button or Mouse Button 2)",
-        @3: @"the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3)",
-    };
-    NSString *buttonStr = buttonNumberToUIString[@(buttonNumber)];
-    if (!buttonStr) {
-        buttonStr = [NSString stringWithFormat:@"Mouse Button %@", @(buttonNumber)];
-    }
-    return buttonStr;
-}
-
-static NSString *getKeyboardModifierString(NSNumber *flags) {
-    NSString *kb = @"";
-    if (flags) {
-        CGEventFlags f = flags.longLongValue;
-        kb = [NSString stringWithFormat:@"%@%@%@%@ ",
-              (f & kCGEventFlagMaskControl ?    @"^" : @""),
-              (f & kCGEventFlagMaskAlternate ?  @"⌥" : @""),
-              (f & kCGEventFlagMaskShift ?      @"⇧" : @""),
-              (f & kCGEventFlagMaskCommand ?    @"⌘" : @"")];
-    }
-    return kb;
-}
-static NSString *getKeyboardModifierStringToolTip(NSNumber *flags) {
-    NSString *kb = @"";
-    if (flags) {
-        CGEventFlags f = flags.longLongValue;
-        kb = [NSString stringWithFormat:@"%@%@%@%@",
-              (f & kCGEventFlagMaskControl ?    @"Control (^)-" : @""),
-              (f & kCGEventFlagMaskAlternate ?  @"Option (⌥)-" : @""),
-              (f & kCGEventFlagMaskShift ?      @"Shift (⇧)-" : @""),
-              (f & kCGEventFlagMaskCommand ?    @"Command (⌘)-" : @"")];
-    }
-    if (kb.length > 0) {
-        kb = [kb substringToIndex:kb.length-1]; // Delete trailing dash
-//        kb = [kb stringByAppendingString:@" "]; // Append trailing space
-        kb = [kb stringByReplacingOccurrencesOfString:@"-" withString:@" and "];
-        kb = [@"Hold " stringByAppendingString:kb];
-    }
-    
-    return kb;
-}
-
-- (NSTableCellView *)getTriggerTableCellWithRowDict:(NSMutableDictionary *)rowDict {
+- (NSTableCellView *)getTriggerCellWithRowDict:(NSMutableDictionary *)rowDict {
     // Define Data-to-UI-String mappings
     NSDictionary *clickLevelToUIString = @{
         @1: @"",
@@ -465,13 +412,82 @@ static NSString *getKeyboardModifierStringToolTip(NSNumber *flags) {
     // Generate table cell view for this row and column
     NSMutableDictionary *rowDict = _dataModel[row];
     if ([tableColumn.identifier isEqualToString:@"trigger"]) { // The trigger column should display the trigger as well as the modification precondition
-        return [self getTriggerTableCellWithRowDict:rowDict];
+        return [self getTriggerCellWithRowDict:rowDict];
     } else if ([tableColumn.identifier isEqualToString:@"effect"]) {
-        return [self getEffectTableCellWithRowDict:rowDict];
+        return [self getEffectCellWithRowDict:rowDict];
     } else {
         @throw [NSException exceptionWithName:@"Unknown column identifier" reason:@"TableView is requesting data for a column with an unknown identifier" userInfo:@{@"requested data for column": tableColumn}];
         return nil;
     }
+}
+
+# pragma mark - String generating helper functions
+
+
+static void getClickAndLevelStrings(NSDictionary *clickLevelToUIString, NSNumber *lvl, NSString **clickStr, NSString **levelStr) {
+    *levelStr = clickLevelToUIString[lvl];
+    if (!*levelStr) {
+        *levelStr = [NSString stringWithFormat:@"%@", lvl];
+    }
+    // click // TODO: Refactor, so this just returns levelStr, because click string doesn't depend to level string anymore
+    *clickStr = @"Click ";
+}
+
+static NSString *getButtonString(int buttonNumber) {
+    NSDictionary *buttonNumberToUIString = @{
+        @1: @"Primary Button",
+        @2: @"Secondary Button",
+        @3: @"Middle Button",
+    };
+    NSString *buttonStr = buttonNumberToUIString[@(buttonNumber)];
+    if (!buttonStr) {
+        buttonStr = [NSString stringWithFormat:@"Button %@", @(buttonNumber)];
+    }
+    return buttonStr;
+}
+static NSString *getButtonStringToolTip(int buttonNumber) {
+    NSDictionary *buttonNumberToUIString = @{
+        @1: @"the Primary Mouse Button (also called the Left Mouse Button or Mouse Button 1)",
+        @2: @"the Secondary Mouse Button (also called the Right Mouse Button or Mouse Button 2)",
+        @3: @"the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3)",
+    };
+    NSString *buttonStr = buttonNumberToUIString[@(buttonNumber)];
+    if (!buttonStr) {
+        buttonStr = [NSString stringWithFormat:@"Mouse Button %@", @(buttonNumber)];
+    }
+    return buttonStr;
+}
+
+static NSString *getKeyboardModifierString(NSNumber *flags) {
+    NSString *kb = @"";
+    if (flags) {
+        CGEventFlags f = flags.longLongValue;
+        kb = [NSString stringWithFormat:@"%@%@%@%@ ",
+              (f & kCGEventFlagMaskControl ?    @"^" : @""),
+              (f & kCGEventFlagMaskAlternate ?  @"⌥" : @""),
+              (f & kCGEventFlagMaskShift ?      @"⇧" : @""),
+              (f & kCGEventFlagMaskCommand ?    @"⌘" : @"")];
+    }
+    return kb;
+}
+static NSString *getKeyboardModifierStringToolTip(NSNumber *flags) {
+    NSString *kb = @"";
+    if (flags) {
+        CGEventFlags f = flags.longLongValue;
+        kb = [NSString stringWithFormat:@"%@%@%@%@",
+              (f & kCGEventFlagMaskControl ?    @"Control (^)-" : @""),
+              (f & kCGEventFlagMaskAlternate ?  @"Option (⌥)-" : @""),
+              (f & kCGEventFlagMaskShift ?      @"Shift (⇧)-" : @""),
+              (f & kCGEventFlagMaskCommand ?    @"Command (⌘)-" : @"")];
+    }
+    if (kb.length > 0) {
+        kb = [kb substringToIndex:kb.length-1]; // Delete trailing dash
+//        kb = [kb stringByAppendingString:@" "]; // Append trailing space
+        kb = [kb stringByReplacingOccurrencesOfString:@"-" withString:@" and "];
+        kb = [@"Hold " stringByAppendingString:kb];
+    }
+    
+    return kb;
 }
 
 @end
