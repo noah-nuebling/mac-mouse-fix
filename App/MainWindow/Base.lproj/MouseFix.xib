@@ -167,7 +167,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </segmentedControl>
                                         <box horizontalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="V4m-2l-meX">
-                                            <rect key="frame" x="384" y="307" width="5" height="30"/>
+                                            <rect key="frame" x="384" y="313" width="5" height="24"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         </box>
                                         <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pmR-Cq-dp4" userLabel="EffectHeader">
