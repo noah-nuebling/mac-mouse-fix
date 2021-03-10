@@ -48,14 +48,14 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="40" horizontalPageScroll="10" verticalLineScroll="40" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jLq-vs-Mpd">
-                                            <rect key="frame" x="0.0" y="118" width="620" height="186"/>
+                                            <rect key="frame" x="0.0" y="118" width="620" height="194"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <clipView key="contentView" id="S62-75-wtd">
-                                                <rect key="frame" x="1" y="1" width="618" height="184"/>
+                                                <rect key="frame" x="1" y="1" width="618" height="192"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <tableView identifier="remapTable" verticalHuggingPriority="750" allowsExpansionToolTips="YES" tableStyle="fullWidth" alternatingRowBackgroundColors="YES" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="40" rowSizeStyle="automatic" viewBased="YES" id="zJh-jy-oKM">
-                                                        <rect key="frame" x="0.0" y="0.0" width="618" height="184"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="618" height="192"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <size key="intercellSpacing" width="17" height="0.0"/>
                                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -171,15 +171,15 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         </box>
                                         <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pmR-Cq-dp4" userLabel="EffectHeader">
-                                            <rect key="frame" x="392" y="306" width="228" height="30"/>
+                                            <rect key="frame" x="392" y="312" width="228" height="24"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <subviews>
                                                 <customView autoresizesSubviews="NO" id="Izd-lv-C5y" userLabel="EffectGroup">
-                                                    <rect key="frame" x="62" y="0.0" width="98" height="30"/>
+                                                    <rect key="frame" x="62" y="-3" width="98" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DYF-bp-JPg">
-                                                            <rect key="frame" x="42" y="7" width="40" height="16"/>
+                                                            <rect key="frame" x="42" y="5" width="40" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                                             <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Effect" id="XNz-bM-o9C">
                                                                 <font key="font" metaFont="system"/>
@@ -188,7 +188,7 @@
                                                             </textFieldCell>
                                                         </textField>
                                                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y8h-O7-VUX">
-                                                            <rect key="frame" x="16" y="-2" width="24" height="35"/>
+                                                            <rect key="frame" x="16" y="-5.5" width="23.5" height="35"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="NMY-Fk-YkV">
                                                                 <imageReference key="image" image="gearshape.2.fill" catalog="system" symbolScale="large"/>
@@ -200,15 +200,15 @@
                                             </subviews>
                                         </customView>
                                         <customView id="GkX-b4-S0i" userLabel="TriggerHeader">
-                                            <rect key="frame" x="1" y="306" width="392" height="30"/>
+                                            <rect key="frame" x="1" y="312" width="392" height="24"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <subviews>
                                                 <customView autoresizesSubviews="NO" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y7p-rF-n2F" userLabel="TriggerGroup">
-                                                    <rect key="frame" x="145" y="0.0" width="98" height="30"/>
+                                                    <rect key="frame" x="145" y="-3" width="98" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sk7-uP-hcu">
-                                                            <rect key="frame" x="39" y="7" width="49" height="16"/>
+                                                            <rect key="frame" x="39" y="5" width="49" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                                             <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Trigger" id="fwZ-t9-FD4">
                                                                 <font key="font" metaFont="system"/>
@@ -217,7 +217,7 @@
                                                             </textFieldCell>
                                                         </textField>
                                                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xmj-S9-lrL">
-                                                            <rect key="frame" x="13" y="-3.5" width="24" height="35"/>
+                                                            <rect key="frame" x="13" y="-5.5" width="24" height="35"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="r0m-UD-WAC">
                                                                 <imageReference key="image" image="cursorarrow.rays" catalog="system" symbolScale="large"/>
@@ -335,7 +335,7 @@ Awesome tricks:
             <connections>
                 <outlet property="delegate" destination="NxE-tZ-vxj" id="mRZ-zN-zML"/>
             </connections>
-            <point key="canvasLocation" x="402" y="-30.5"/>
+            <point key="canvasLocation" x="402" y="-31"/>
         </window>
         <customObject id="NxE-tZ-vxj" customClass="AppDelegate">
             <connections>
