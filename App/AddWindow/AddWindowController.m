@@ -9,6 +9,7 @@
 
 #import "AddWindowController.h"
 #import "AppDelegate.h"
+#import "MessagePort_App.h"
 
 @interface AddWindowController ()
 @property (weak) IBOutlet NSBox *addField;
@@ -44,8 +45,10 @@ static AddWindowController *_instance;
 
 - (void)mouseEntered:(NSEvent *)event {
     NSLog(@"MOSUE ENTERED ADD FIELD");
+    [MessagePort_App sendMessageToHelper:@"enableAddMode"];
 }
 - (void)mouseExited:(NSEvent *)event {
     NSLog(@"MOSUE EXTITSED ADD FIELD");
+    [MessagePort_App sendMessageToHelper:@"disableAddMode"];
 }
 @end

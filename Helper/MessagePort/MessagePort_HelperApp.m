@@ -9,9 +9,9 @@
 
 #import "MessagePort_HelperApp.h"
 #import "ConfigFileInterface_HelperApp.h"
-
+#import "TransformationManager.h"
 #import <AppKit/NSWindow.h>
-#import "../Accessibility/AccessibilityCheck.h"
+#import "AccessibilityCheck.h"
 
 @implementation MessagePort_HelperApp
 
@@ -53,6 +53,12 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
         if (![AccessibilityCheck check]) {
             [MessagePort_HelperApp sendMessageToMainApp:@"accessibilityDisabled"];
         }
+    } else if ([message isEqualToString:@"enableAddMode"]) {
+        [TransformationManager enableAddMode];
+    } else if ([message isEqualToString:@"disableAddMode"]) {
+        [TransformationManager disableAddMode];
+    } else {
+        NSLog(@"Unknown message received: %@", message);
     }
     
     NSData *response = NULL;

@@ -64,7 +64,7 @@ static NSMutableDictionary *_configWithAppOverridesApplied;
 //    _configFileChanged = YES; // Remove _configFileChanged, if commenting this out didn't break anything
     [ConfigFileInterface_HelperApp applyOverridesForAppUnderMousePointer_Force:YES]; // Doing this to force update of internal state, even the active app hastn't chaged
 //    _configFileChanged = NO;
-    [self updateInputTransformationEngine];
+    [TransformationManager updateWithRemapsTableFromConfig];
 }
 
 /// Load contents of config.plist file into this class' config property
@@ -165,11 +165,6 @@ static void fillConfigFromFile() {
     // Enabled / disabled
     ScrollModifiers.horizontalScrollModifierKeyEnabled = [mod[@"horizontalScrollModifierKeyEnabled"] boolValue];
     ScrollModifiers.magnificationScrollModifierKeyEnabled = [mod[@"magnificationScrollModifierKeyEnabled"] boolValue];
-}
-
-+ (void)updateInputTransformationEngine {
-    NSArray *remapsTable = [_config objectForKey:kMFConfigKeyRemaps];
-    [TransformationManager updateWithRemapsTable:remapsTable];
 }
 
 /// Applies AppOverrides from app with `bundleIdentifier` to `_config` and writes the result into `_configWithAppOverridesApplied`.

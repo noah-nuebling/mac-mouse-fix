@@ -17,6 +17,7 @@
 #import "NSArray+Additions.h"
 #import "NSMutableDictionary+Additions.h"
 #import "Constants.h"
+#import "ConfigFileInterface_App.h"
 
 @implementation TransformationManager
 
@@ -29,11 +30,13 @@
 NSDictionary *_remaps;
 
 /// The main app uses an array of dicts (aka a table) to represent the remaps in a way that is easy to present in a table view.
-/// The remaps are also stored to file in this format.
+/// The remaps are also stored to file in this format and therefore what ConfigFileInterface_App.config contains.
 /// The helper was made to handle a dictionary format which should be more effictient among other perks.
-/// This function takes the remaps in table format, then converts it to dict format and makes that available to all the other Input Transformation classes to base their behaviour off of.
-+ (void)updateWithRemapsTable:(NSArray *)remapsTable {
-    // The kMFNotificationNameRemapsChanged notification is used by modifier manager to update itself, whenever this updates.
+/// This function takes the remaps in table format from config, then converts it to dict format and makes that available to all the other Input Transformation classes to base their behaviour off of through self.remaps.
++ (void)updateWithRemapsTableFromConfig {
+    
+    NSArray *remapsTable = [ConfigFileInterface_App.config objectForKey:kMFConfigKeyRemaps];
+    // ^ The kMFNotificationNameRemapsChanged notification is used by modifier manager to update itself, whenever this updates.
     //  (Idk why we aren't just calling an update function instead of using notifications.)
     [NSNotificationCenter.defaultCenter postNotificationName:kMFNotificationNameRemapsChanged object:self];
     // Convert remaps table to remaps dict
@@ -70,6 +73,15 @@ NSDictionary *_remaps;
 }
 + (NSDictionary *)remaps {
     return _remaps;
+}
+
+#pragma mark - Add mode
+
++ (void)enableAddMode {
+    
+}
++ (void)DisableAddMode {
+    
 }
 
 #pragma mark - Dummy Data
