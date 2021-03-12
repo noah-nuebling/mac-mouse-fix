@@ -14,6 +14,8 @@
 #import "NSArray+Additions.h"
 #import "SharedUtility.h"
 #import "AddWindowController.h"
+#import <Cocoa/Cocoa.h>
+#import "SharedUtility.h"
 
 @interface RemapTableController ()
 @property NSTableView *tableView;
@@ -39,6 +41,21 @@
 - (void)writeDataModelToConfig {
     [ConfigFileInterface_App.config setObject:_dataModel forKey:kMFConfigKeyRemaps];
     [ConfigFileInterface_App writeConfigToFileAndNotifyHelper];
+}
+
+
+- (void)viewDidLoad {
+    // Not getting called for some reason -> I had to set the view outlet of the controller object in IB to the tableView
+    // Now it's _again_ not being called, I have no clue why.
+    
+    // Set corner radius
+    NSScrollView *scrollView = (NSScrollView *)self.view.superview.superview;
+    scrollView.wantsLayer = TRUE;
+//    scrollView.layer.cornerRadius = 5;
+    // Load table data from config
+    [self loadDataModelFromConfig];
+    // Initialize sorting
+    [self initSorting];
 }
 
 // IBActions
@@ -76,15 +93,6 @@
     }
     // Write datamodel to file
     [self writeDataModelToConfig];
-}
-
-- (void)viewDidLoad { // Not getting called for some reason -> I had to set the view outlet of the controller object in IB to the tableView
-    // Set corner radius
-    NSScrollView *scrollView = (NSScrollView *)self.view.superview.superview;
-    scrollView.wantsLayer = TRUE;
-//    scrollView.layer.cornerRadius = 5;
-    // Load table data from config
-    [self loadDataModelFromConfig];
 }
 
 #pragma mark - Generate Table content
@@ -519,6 +527,137 @@ static NSString *getKeyboardModifierStringToolTip(NSNumber *flags) {
     }
     
     return kb;
+}
+
+#pragma mark - Sorting the table
+
+/// Might mutate the `tableEntryMutable` argument by deleting the last button precondition in the precond sequence. (But only if it extracted that info into the other output arguments)
+static void getTriggerValues(int *btn1, int *lvl1, NSString **dur1, NSString **type1, NSMutableDictionary *tableEntryMutable1) {
+    id trigger1 = tableEntryMutable1[kMFRemapsKeyTrigger];
+    BOOL isString1 = [trigger1 isKindOfClass:NSString.class];
+    if (!isString1) {
+        *type1 = @"button";
+        *btn1 = ((NSNumber *)trigger1[kMFButtonTriggerKeyButtonNumber]).intValue;
+        *lvl1 = ((NSNumber *)trigger1[kMFButtonTriggerKeyClickLevel]).intValue;
+        *dur1 = ((NSString *)trigger1[kMFButtonTriggerKeyDuration]);
+    } else {
+        // Extract last element from button modification precondition and use that
+        // (This is why we need it mutable)
+        NSMutableArray *buttonPreconds = ((NSArray *)tableEntryMutable1[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyButtons]).mutableCopy;
+        NSDictionary *lastButtonPress = buttonPreconds.lastObject;
+        [buttonPreconds removeLastObject];
+        tableEntryMutable1[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyButtons] = buttonPreconds;
+        *btn1 = ((NSNumber *)lastButtonPress[kMFButtonModificationPreconditionKeyButtonNumber]).intValue;
+        *lvl1 = ((NSNumber *)lastButtonPress[kMFButtonModificationPreconditionKeyClickLevel]).intValue;
+        *dur1 = @"";
+        if ([(NSString *)trigger1 isEqualToString:kMFTriggerDrag]) {
+            *type1 = @"drag";
+        } else if ([(NSString *)trigger1 isEqualToString:kMFTriggerScroll]) {
+            *type1 = @"scroll";
+        }
+    }
+}
+
+- (void)initSorting {
+    NSTableColumn *effectsColumn = self.tableView.tableColumns[[self.tableView columnWithIdentifier:@"effect"]];
+    NSSortDescriptor *sd = [NSSortDescriptor sortDescriptorWithKey:nil ascending:YES comparator:^NSComparisonResult(NSDictionary * _Nonnull tableEntry1, NSDictionary * _Nonnull tableEntry2) {
+        
+        // Create mutable deep copies so we don't mess table up accidentally
+        NSMutableDictionary *tableEntryMutable1 = (NSMutableDictionary *)[SharedUtility deepCopyOf:tableEntry1].mutableCopy;
+        NSMutableDictionary *tableEntryMutable2 = (NSMutableDictionary *)[SharedUtility deepCopyOf:tableEntry2].mutableCopy;
+        
+        // Get trigger info (button and level, duration, type)
+        int btn1;
+        int lvl1;
+        NSString *dur1;
+        NSString *type1;
+        getTriggerValues(&btn1, &lvl1, &dur1, &type1, tableEntryMutable1);
+        int btn2;
+        int lvl2;
+        NSString *dur2;
+        NSString *type2;
+        getTriggerValues(&btn2, &lvl2, &dur2, &type2, tableEntryMutable2);
+        
+        // 1. Sort by button
+        if (btn1 > btn2) {
+            return NSOrderedDescending;
+        } else if (btn1 < btn2) {
+            return NSOrderedAscending;
+        }
+        // 1.1. Sort by trigger type (drag, scroll, button)
+        NSArray *orderedTypes = @[@"drag", @"scroll", @"button"];
+        NSUInteger typeIndex1 = [orderedTypes indexOfObject:type1];
+        NSUInteger typeIndex2 = [orderedTypes indexOfObject:type2];
+        if (typeIndex1 > typeIndex2) {
+            return NSOrderedDescending;
+        } else if (typeIndex1 < typeIndex2) {
+            return NSOrderedDescending;
+        }
+        // 1.2 Sort by click level
+        if (lvl1 > lvl2) {
+            return NSOrderedDescending;
+        } else if (lvl1 < lvl2) {
+            return NSOrderedAscending;
+        }
+        // 1.3 Sort by duration
+        NSArray *orderedDurations = @[kMFButtonTriggerDurationClick, kMFButtonTriggerDurationHold];
+        NSUInteger durationIndex1 = [orderedDurations indexOfObject:dur1];
+        NSUInteger durationIndex2 = [orderedDurations indexOfObject:dur2];
+        if (durationIndex1 > durationIndex2) {
+            return NSOrderedDescending;
+        } else if (durationIndex1 < durationIndex2) {
+            return NSOrderedDescending;
+        }
+        // Get modification precondition info
+        NSDictionary *preconds1 = tableEntryMutable1[kMFRemapsKeyModificationPrecondition];
+        NSDictionary *preconds2 = tableEntryMutable2[kMFRemapsKeyModificationPrecondition];
+        // 2.1 Sort by button precond
+        NSArray *buttonSequence1 = preconds1[kMFModificationPreconditionKeyButtons];
+        NSArray *buttonSequence2 = preconds2[kMFModificationPreconditionKeyButtons];
+        uint64_t iterMax = MAX(buttonSequence1.count, buttonSequence2.count);
+        for (int i = 0; i < iterMax; i++) {
+            NSDictionary *buttonPress1 = buttonSequence1[i];
+            NSDictionary *buttonPress2 = buttonSequence2[i];
+            int btn1 = ((NSNumber *)buttonPress1[kMFButtonModificationPreconditionKeyButtonNumber]).intValue;
+            int btn2 = ((NSNumber *)buttonPress2[kMFButtonModificationPreconditionKeyButtonNumber]).intValue;
+            int lvl1 = ((NSNumber *)buttonPress1[kMFButtonModificationPreconditionKeyClickLevel]).intValue;
+            int lvl2 = ((NSNumber *)buttonPress2[kMFButtonModificationPreconditionKeyClickLevel]).intValue;
+            if (btn1 > btn2) {
+                return NSOrderedDescending;
+            } else if (btn1 < btn2) {
+                return NSOrderedAscending;
+            }
+            if (lvl1 > lvl2) {
+                return NSOrderedDescending;
+            } else if (lvl1 < lvl2){
+                return NSOrderedAscending;
+            }
+        }
+        // If len is different, but everything up until iterMax is equal, take the shorter one
+        if (buttonSequence1.count > buttonSequence2.count) {
+            return NSOrderedDescending;
+        } else if (buttonSequence1.count < buttonSequence2.count) {
+            return NSOrderedAscending;
+        }
+        // 2.2 Sort by keyboard precond
+        NSNumber *modifierFlags1 = preconds1[kMFModificationPreconditionKeyKeyboard];
+        NSNumber *modifierFlags2 = preconds2[kMFModificationPreconditionKeyKeyboard];
+        if (modifierFlags1.integerValue > modifierFlags2.integerValue) {
+            return NSOrderedDescending;
+        } else if (modifierFlags1.integerValue < modifierFlags2.integerValue) {
+            return NSOrderedAscending;
+        }
+        return NSOrderedSame;
+    }];
+    [effectsColumn setSortDescriptorPrototype:sd];
+}
+
+- (void)tableView:(NSTableView *)tableView sortDescriptorsDidChange:(NSArray<NSSortDescriptor *> *)oldDescriptors {
+#if DEBUG
+    NSLog(@"Sorting tableView dataModel with sortDescriptor: %@, oldDescriptors: %@", self.tableView.sortDescriptors, oldDescriptors);
+#endif
+    self.dataModel = [self.dataModel sortedArrayUsingDescriptors:self.tableView.sortDescriptors].mutableCopy;
+    [self.tableView reloadData];
 }
 
 @end
