@@ -245,7 +245,6 @@ static BOOL isPartOfModificationPrecondition(NSNumber *button, NSNumber *level, 
 }
 
 static BOOL effectOfGreaterLevelExistsFor(NSNumber *button, NSNumber *level, NSDictionary *remaps, NSDictionary *activeModifiers, NSDictionary *effectiveRemaps) {
-    
     // Check if effective remaps of a higher level exist for this button
     for (NSNumber *thisLevel in ((NSDictionary *)effectiveRemaps[button]).allKeys) {
         if (thisLevel.intValue > level.intValue) {

@@ -113,6 +113,10 @@ NSDictionary *_remaps;
 ///             I have a relatively strong suspicion, that we need to change around other stuff to really make this work, but I have no clue what exactly that could be.
 ///             With this complex intertwining code and everything depending on nested dictionaries with no compiler checks or anything so many things could break due to sth like this.
 ///             Let's just hope for the best!
+///                 I just found sth that's broken! Capturing drags with only kb modifiers active doesn't work. I assume that's because the `ModifierManager` -> `toggleModifierEventTapBasedOnRemaps` broke somehow.
+///                 Other places that I think probably don't work with this:
+///                 - ButtonLandscapeAssessment code in ButtonTriggerHandler. Checking if button is used as modifier at a higher clicklevel and stuff is surelyyy broken. But that might not matter.
+///                 -  `ModifierManager` -> `toggleModifierEventTapBasedOnRemaps` along with other functions from `ModifierManager` are probably broken, too.
 + (void)enableAddMode {
     NSMutableDictionary *triggerToEffectDict_DemandsMods = [NSMutableDictionary dictionary];
     // Fill out triggerToEffectDictWithNeedForModifier with all triggers that users can map to
