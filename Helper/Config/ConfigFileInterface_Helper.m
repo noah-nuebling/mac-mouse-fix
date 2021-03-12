@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-// ConfigFileInterface_HelperApp.m
+// ConfigFileInterface_Helper.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2019
 // Licensed under MIT
@@ -11,7 +11,7 @@
 // Need this when application changes but mouse doesn't move (e.g. Command-Tab). Without this the app specific settings for the new app aren't applied
 // NSWorkspaceDidActivateApplicationNotification?
 
-#import "ConfigFileInterface_HelperApp.h"
+#import "ConfigFileInterface_Helper.h"
 #import "AppDelegate.h"
 #import "ScrollControl.h"
 #import "SmoothScroll.h"
@@ -21,7 +21,7 @@
 #import "TransformationManager.h"
 #import "Constants.h"
 
-@implementation ConfigFileInterface_HelperApp
+@implementation ConfigFileInterface_Helper
 
 #pragma mark Globals
 
@@ -62,9 +62,9 @@ static NSMutableDictionary *_configWithAppOverridesApplied;
 + (void)reactToConfigFileChange {
     fillConfigFromFile();
 //    _configFileChanged = YES; // Remove _configFileChanged, if commenting this out didn't break anything
-    [ConfigFileInterface_HelperApp applyOverridesForAppUnderMousePointer_Force:YES]; // Doing this to force update of internal state, even the active app hastn't chaged
+    [ConfigFileInterface_Helper applyOverridesForAppUnderMousePointer_Force:YES]; // Doing this to force update of internal state, even the active app hastn't chaged
 //    _configFileChanged = NO;
-    [TransformationManager updateWithRemapsTableFromConfig];
+    [TransformationManager loadRemapsFromConfig];
 }
 
 /// Load contents of config.plist file into this class' config property
@@ -127,7 +127,7 @@ static void fillConfigFromFile() {
 //        }
         _bundleIDOfAppWhichCausesAppOverride = bundleIDOfCurrentApp;
         loadAppOverridesForApp(bundleIDOfCurrentApp);
-        [ConfigFileInterface_HelperApp updateScrollParameters];
+        [ConfigFileInterface_Helper updateScrollParameters];
         [ScrollControl resetDynamicGlobals]; // Not entirely sure if necessary
         return YES;
     }
@@ -216,7 +216,7 @@ void Handle_FSEventStreamCallback (ConstFSEventStreamRef streamRef, void *client
     
     NSLog(@"config.plist changed (FSMonitor)");
     
-    [ConfigFileInterface_HelperApp reactToConfigFileChange];
+    [ConfigFileInterface_Helper reactToConfigFileChange];
 }
 
 

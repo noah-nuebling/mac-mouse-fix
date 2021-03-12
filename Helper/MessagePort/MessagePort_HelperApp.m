@@ -8,13 +8,15 @@
 //
 
 #import "MessagePort_HelperApp.h"
-#import "ConfigFileInterface_HelperApp.h"
+#import "ConfigFileInterface_Helper.h"
 #import "TransformationManager.h"
 #import <AppKit/NSWindow.h>
 #import "AccessibilityCheck.h"
+#import "Constants.h"
+
+#import <CoreFoundation/CoreFoundation.h>
 
 @implementation MessagePort_HelperApp
-
 
 #pragma mark - local (incoming messages)
 
@@ -45,13 +47,13 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
     NSLog(@"Helper Received Message: %@",message);
     
     if ([message isEqualToString:@"configFileChanged"]) {
-        [ConfigFileInterface_HelperApp reactToConfigFileChange];
+        [ConfigFileInterface_Helper reactToConfigFileChange];
     } else if ([message isEqualToString:@"terminate"]) {
         [NSApp.delegate applicationWillTerminate:[[NSNotification alloc] init]];
         [NSApp terminate:NULL];
     } else if ([message isEqualToString:@"checkAccessibility"]) {
         if (![AccessibilityCheck check]) {
-            [MessagePort_HelperApp sendMessageToMainApp:@"accessibilityDisabled"];
+            [MessagePort_HelperApp sendMessageToMainApp:@"accessibilityDisabled" withPayload:nil];
         }
     } else if ([message isEqualToString:@"enableAddMode"]) {
         [TransformationManager enableAddMode];
@@ -68,18 +70,44 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
 
 #pragma mark - remote (outgoing messages)
 
-+ (void)sendMessageToMainApp:(NSString *)message {
+//+ (void)sendMessageToMainApp:(NSString *)message {
+//    
+//    NSLog(@"Sending message to main app: %@", message);
+//    
+//    CFMessagePortRef remotePort = CFMessagePortCreateRemote(kCFAllocatorDefault, CFSTR("com.nuebling.mousefix.port"));
+//    if (remotePort == NULL) {
+//        NSLog(@"there is no CFMessagePort");
+//        return;
+//    }
+//    
+//    SInt32 messageID = 0x420666; // Arbitrary
+//    CFDataRef messageData = (__bridge CFDataRef)[message dataUsingEncoding:kUnicodeUTF8Format];
+//    CFTimeInterval sendTimeout = 0.0;
+//    CFTimeInterval recieveTimeout = 0.0;
+//    CFStringRef replyMode = NULL;
+//    CFDataRef returnData = nil;
+//    SInt32 status = CFMessagePortSendRequest(remotePort, messageID, messageData, sendTimeout, recieveTimeout, replyMode, &returnData);
+//    CFRelease(remotePort);
+//    if (status != 0) {
+//        NSLog(@"CFMessagePortSendRequest status: %d", status);
+//    }
+//}
+
++ (void)sendMessageToMainApp:(NSString *)message withPayload:(NSObject <NSCoding> * _Nullable)payload {
+    NSDictionary *messageDict = @{
+        kMFMessageKeyMessage: message,
+        kMFMessageKeyPayload: payload,
+    };
     
-    NSLog(@"Sending message to main app: %@", message);
+    NSLog(@"Sending message to main app: %@ with payload: %@", message, payload);
     
     CFMessagePortRef remotePort = CFMessagePortCreateRemote(kCFAllocatorDefault, CFSTR("com.nuebling.mousefix.port"));
     if (remotePort == NULL) {
         NSLog(@"there is no CFMessagePort");
         return;
     }
-    
     SInt32 messageID = 0x420666; // Arbitrary
-    CFDataRef messageData = (__bridge CFDataRef)[message dataUsingEncoding:kUnicodeUTF8Format];
+    CFDataRef messageData = (__bridge CFDataRef)[NSKeyedArchiver archivedDataWithRootObject:messageDict];;
     CFTimeInterval sendTimeout = 0.0;
     CFTimeInterval recieveTimeout = 0.0;
     CFStringRef replyMode = NULL;
@@ -89,6 +117,7 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
     if (status != 0) {
         NSLog(@"CFMessagePortSendRequest status: %d", status);
     }
+    
 }
 
 @end

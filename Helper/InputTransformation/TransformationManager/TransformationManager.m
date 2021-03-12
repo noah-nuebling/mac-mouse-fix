@@ -17,7 +17,7 @@
 #import "NSArray+Additions.h"
 #import "NSMutableDictionary+Additions.h"
 #import "Constants.h"
-#import "ConfigFileInterface_App.h"
+#import "ConfigFileInterface_Helper.h"
 
 @implementation TransformationManager
 
@@ -29,16 +29,22 @@
 
 NSDictionary *_remaps;
 
+/// Always set remaps through this, so that the kMFNotificationNameRemapsChanged notification is posted
+/// The notification is used by ModifierManager to update itself, whenever _remaps updates.
+///  (Idk why we aren't just calling an update function instead of using a notification)
++ (void)setRemaps:(NSDictionary *)remapsDict {
+    [NSNotificationCenter.defaultCenter postNotificationName:kMFNotificationNameRemapsChanged object:self];
+    _remaps = remapsDict;
+}
+
 /// The main app uses an array of dicts (aka a table) to represent the remaps in a way that is easy to present in a table view.
 /// The remaps are also stored to file in this format and therefore what ConfigFileInterface_App.config contains.
 /// The helper was made to handle a dictionary format which should be more effictient among other perks.
 /// This function takes the remaps in table format from config, then converts it to dict format and makes that available to all the other Input Transformation classes to base their behaviour off of through self.remaps.
-+ (void)updateWithRemapsTableFromConfig {
++ (void)loadRemapsFromConfig {
     
-    NSArray *remapsTable = [ConfigFileInterface_App.config objectForKey:kMFConfigKeyRemaps];
-    // ^ The kMFNotificationNameRemapsChanged notification is used by modifier manager to update itself, whenever this updates.
-    //  (Idk why we aren't just calling an update function instead of using notifications.)
-    [NSNotificationCenter.defaultCenter postNotificationName:kMFNotificationNameRemapsChanged object:self];
+    NSArray *remapsTable = [ConfigFileInterface_Helper.config objectForKey:kMFConfigKeyRemaps];
+    
     // Convert remaps table to remaps dict
     NSMutableDictionary *remapsDict = [NSMutableDictionary dictionary];
     for (NSDictionary *tableEntry in remapsTable) {
@@ -62,14 +68,15 @@ NSDictionary *_remaps;
         id effect = tableEntry[kMFRemapsKeyEffect]; // This is always dict
         if ([trigger isKindOfClass:NSDictionary.class]) {
             effect = @[effect];
-            // ^ For some reason we built one shot effect handling code around arrays of effects. So we need to wrap our effect in an array.
+            // ^ For some reason we built one shot effect handling code around _arrays_ of effects. So we need to wrap our effect in an array.
             //  This doesn't make sense. We should clean this up at some point and remove the array.
         }
         // Put it all together
         NSArray *keyArray = [@[modificationPrecondition] arrayByAddingObjectsFromArray:triggerKeyArray];
         [remapsDict setObject:effect forCoolKeyArray:keyArray];
     }
-    _remaps = remapsDict;
+    
+    [self setRemaps:remapsDict];
 }
 + (NSDictionary *)remaps {
     return _remaps;
@@ -78,10 +85,35 @@ NSDictionary *_remaps;
 #pragma mark - Add mode
 
 + (void)enableAddMode {
+    NSMutableDictionary *triggerToEffectDict = [NSMutableDictionary dictionary];
     
+    // Fill out triggerToEffectDict with all triggers that users can map to
+    // String based triggers
+    triggerToEffectDict[kMFTriggerDrag] = kMFModifiedDragTypeAddModeFeedback;
+//    triggerToEffectDict[kMFTriggerScroll] = kMFModifiedScrollTypeAddModeFeedback;
+    // Button triggers (dict based)
+    for (int btn = 1; btn <= 32; btn++) {
+        for (int lvl = 1; lvl <= 3; lvl++) {
+            for (NSString *dur in @[kMFButtonTriggerDurationClick, kMFButtonTriggerDurationHold]) {
+                NSMutableDictionary *addModeFeedbackDict = @{
+                    kMFActionDictKeyType: kMFActionDictTypeAddModeFeedback,
+                    kMFRemapsKeyTrigger: @{
+                        kMFButtonTriggerKeyButtonNumber: @(btn),
+                        kMFButtonTriggerKeyClickLevel: @(lvl),
+                        kMFButtonTriggerKeyDuration: dur,
+                    }
+                }.mutableCopy;
+                // ^ The key `kMFRemapsKeyModificationPrecondition` and corresponding values are added to `addModeFeedbackDict` in the function `executeClickOrHoldActionIfItExists`. That's also why we need to make this mutable.
+                [triggerToEffectDict setObject:addModeFeedbackDict forCoolKeyArray:@[@(btn),@(lvl),dur]];
+            }
+        }
+    }
+    
+    // Set _remaps to generated
+    self.remaps = @{@{}:triggerToEffectDict};
 }
-+ (void)DisableAddMode {
-    
++ (void)disableAddMode {
+    [self loadRemapsFromConfig];
 }
 
 #pragma mark - Dummy Data
@@ -163,7 +195,7 @@ static void loadTestRemaps() {
             ],
         }: @{
                 kMFTriggerDrag: @{
-                        kMFModifiedDragDictKeyType: kMFModifiedDragDictTypeFakeDrag,
+                        kMFModifiedDragDictKeyType: kMFModifiedDragTypeFakeDrag,
                         kMFModifiedDragDictKeyFakeDragVariantButtonNumber: @3,
                 }
         },
@@ -178,7 +210,7 @@ static void loadTestRemaps() {
             
         }: @{
                 kMFTriggerDrag: @{
-                        kMFModifiedDragDictKeyType: kMFModifiedDragDictTypeThreeFingerSwipe,
+                        kMFModifiedDragDictKeyType: kMFModifiedDragTypeThreeFingerSwipe,
                 }
         },
         @{
@@ -195,7 +227,7 @@ static void loadTestRemaps() {
             kMFModificationPreconditionKeyKeyboard: @(NSShiftKeyMask | NSControlKeyMask)
         }: @{
                 kMFTriggerDrag: @{
-                        kMFModifiedDragDictKeyType: kMFModifiedDragDictTypeThreeFingerSwipe,
+                        kMFModifiedDragDictKeyType: kMFModifiedDragTypeThreeFingerSwipe,
                 }
         }
     };

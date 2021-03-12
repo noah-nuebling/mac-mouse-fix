@@ -54,7 +54,7 @@
 		4FF6660125F2C92700689B77 /* Utility_App.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665E825F2C92700689B77 /* Utility_App.m */; };
 		4FF6660225F2C92700689B77 /* ClickableImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665EB25F2C92700689B77 /* ClickableImageView.m */; };
 		4FF6668125F2C93A00689B77 /* FileMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6660925F2C93A00689B77 /* FileMonitor.m */; };
-		4FF6668225F2C93A00689B77 /* ConfigFileInterface_HelperApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6660E25F2C93A00689B77 /* ConfigFileInterface_HelperApp.m */; };
+		4FF6668225F2C93A00689B77 /* ConfigFileInterface_Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6660E25F2C93A00689B77 /* ConfigFileInterface_Helper.m */; };
 		4FF6668325F2C93A00689B77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6661025F2C93A00689B77 /* Assets.xcassets */; };
 		4FF6668425F2C93A00689B77 /* MessagePort_HelperApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6661325F2C93A00689B77 /* MessagePort_HelperApp.m */; };
 		4FF6668525F2C93A00689B77 /* ModifierManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6661725F2C93A00689B77 /* ModifierManager.m */; };
@@ -241,8 +241,8 @@
 		4FF6660925F2C93A00689B77 /* FileMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileMonitor.m; sourceTree = "<group>"; };
 		4FF6660A25F2C93A00689B77 /* FileMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileMonitor.h; sourceTree = "<group>"; };
 		4FF6660B25F2C93A00689B77 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		4FF6660D25F2C93A00689B77 /* ConfigFileInterface_HelperApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigFileInterface_HelperApp.h; sourceTree = "<group>"; };
-		4FF6660E25F2C93A00689B77 /* ConfigFileInterface_HelperApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigFileInterface_HelperApp.m; sourceTree = "<group>"; };
+		4FF6660D25F2C93A00689B77 /* ConfigFileInterface_Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigFileInterface_Helper.h; sourceTree = "<group>"; };
+		4FF6660E25F2C93A00689B77 /* ConfigFileInterface_Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigFileInterface_Helper.m; sourceTree = "<group>"; };
 		4FF6661025F2C93A00689B77 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4FF6661225F2C93A00689B77 /* MessagePort_HelperApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagePort_HelperApp.h; sourceTree = "<group>"; };
 		4FF6661325F2C93A00689B77 /* MessagePort_HelperApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagePort_HelperApp.m; sourceTree = "<group>"; };
@@ -601,8 +601,8 @@
 		4FF665D625F2C92700689B77 /* MessagePort */ = {
 			isa = PBXGroup;
 			children = (
-				4FF665D725F2C92700689B77 /* MessagePort_App.m */,
 				4FF665D825F2C92700689B77 /* MessagePort_App.h */,
+				4FF665D725F2C92700689B77 /* MessagePort_App.m */,
 			);
 			path = MessagePort;
 			sourceTree = "<group>";
@@ -673,8 +673,8 @@
 		4FF6660C25F2C93A00689B77 /* Config */ = {
 			isa = PBXGroup;
 			children = (
-				4FF6660D25F2C93A00689B77 /* ConfigFileInterface_HelperApp.h */,
-				4FF6660E25F2C93A00689B77 /* ConfigFileInterface_HelperApp.m */,
+				4FF6660D25F2C93A00689B77 /* ConfigFileInterface_Helper.h */,
+				4FF6660E25F2C93A00689B77 /* ConfigFileInterface_Helper.m */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -1219,7 +1219,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FF6654D25F2C7B000689B77 /* SharedUtility.m in Sources */,
-				4FF6668225F2C93A00689B77 /* ConfigFileInterface_HelperApp.m in Sources */,
+				4FF6668225F2C93A00689B77 /* ConfigFileInterface_Helper.m in Sources */,
 				4FF6669625F2C93A00689B77 /* Actions.m in Sources */,
 				4FF6669325F2C93A00689B77 /* TouchSimulator.m in Sources */,
 				4FF6669725F2C93A00689B77 /* TransformationManager.m in Sources */,
@@ -1359,7 +1359,7 @@
 				);
 				INFOPLIST_FILE = App/SupportFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 2.0.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix";
@@ -1386,7 +1386,7 @@
 				);
 				INFOPLIST_FILE = App/SupportFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 2.0.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix";
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -81,12 +81,7 @@ BOOL _mouseDownOverThis = NO;
                                                            owner:self
                                                         userInfo:nil];
     [self addTrackingArea:area];
-    
 }
-//- (void)resetCursorRects {
-//    [self discardCursorRects];
-//    [self addCursorRect:_trackingRect cursor:NSCursor.pointingHandCursor];
-//}
 - (void)mouseEntered:(NSEvent *)event {
     
     _mouseInside = YES;
@@ -97,9 +92,9 @@ BOOL _mouseDownOverThis = NO;
     
     [underlinedString addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:wholeStringRange];
     
-//    [underlinedString setAlignment:NSTextAlignmentRight range:wholeStringRange];
-    
     self.attributedStringValue = underlinedString;
+    
+//    [NSCursor.pointingHandCursor push]; // This is maybe a little tacky, cause nothing else in the UI does this
 }
 - (void)mouseExited:(NSEvent *)event {
     
@@ -111,9 +106,9 @@ BOOL _mouseDownOverThis = NO;
     
     [notUnderlinedString addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleNone) range:wholeStringRange];
     
-//    [notUnderlinedString setAlignment:NSTextAlignmentRight range:wholeStringRange];
-    
     self.attributedStringValue = notUnderlinedString;
+    
+//    [NSCursor.pointingHandCursor pop];
 }
 - (void)mouseDown:(NSEvent *)event {
     if (_mouseInside) {

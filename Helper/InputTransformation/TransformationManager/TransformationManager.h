@@ -13,10 +13,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TransformationManager : NSObject
-+ (void)updateWithRemapsTableFromConfig;
++ (void)loadRemapsFromConfig;
 + (NSDictionary *)remaps;
 + (void)enableAddMode;
-+ (void)DisableAddMode;
++ (void)disableAddMode;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -13,6 +13,6 @@
 
 + (void)load_Manual;
 
-+ (void)sendMessageToMainApp:(NSString *)message;
++ (void)sendMessageToMainApp:(NSString *)message withPayload:(NSObject <NSCoding> * _Nullable)payload;
 @end
 

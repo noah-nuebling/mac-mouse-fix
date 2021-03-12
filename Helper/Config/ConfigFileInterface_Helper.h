@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-// ConfigFileInterface_HelperApp.h
+// ConfigFileInterface_Helper.h
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2019
 // Licensed under MIT
@@ -9,7 +9,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ConfigFileInterface_HelperApp : NSObject
+@interface ConfigFileInterface_Helper : NSObject
 
 //@property (class, retain) NSMutableDictionary *config;
 + (NSMutableDictionary *)config;

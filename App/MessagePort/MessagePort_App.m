@@ -8,9 +8,13 @@
 //
 
 #import "MessagePort_App.h"
-#import "../Accessibility/AuthorizeAccessibilityView.h"
+#import "AuthorizeAccessibilityView.h"
 #import <Foundation/Foundation.h>
 #import "AppDelegate.h"
+#import "Constants.h"
+#import "RemapTableController.h"
+#import "AddWindowController.h"
+
 
 @implementation MessagePort_App
 
@@ -50,13 +54,18 @@
 
 static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDataRef data, void *info) {
     
-    NSString *message = [[NSString alloc] initWithData:(__bridge NSData *)data encoding:NSUTF8StringEncoding];
+    NSDictionary *messageDict = [NSKeyedUnarchiver unarchiveObjectWithData:(__bridge NSData *)data];
     
-    NSLog(@"Main App Received Message: %@", message);
+    NSString *message = messageDict[kMFMessageKeyMessage];
+    NSObject *payload = messageDict[kMFMessageKeyPayload];
+    
+    NSLog(@"Main App Received Message: %@ with payload: %@", message, payload);
     
     if ([message isEqualToString:@"accessibilityDisabled"]) {
         [AuthorizeAccessibilityView add];
         [(AppDelegate *)NSApp.delegate stopRemoveAccOverlayTimer]; // If App delegate is about to remove the acc overlay, stop that
+    } else if ([message isEqualToString:@"addModeFeedback"]) {
+        [AddWindowController handleReceivedAddModeFeedbackFromHelperWithPayload:(NSDictionary *)payload];
     }
     
     NSData *response = NULL;

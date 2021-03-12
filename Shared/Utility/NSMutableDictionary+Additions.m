@@ -58,6 +58,7 @@ static NSArray *coolKeyPathToKeyArray(NSString * _Nonnull keyPath) {
     return thisNode;
 }
 
+/// Will create 
 - (void)setObject:(NSObject * _Nullable)object forCoolKeyArray:(NSArray *)keys {
     NSMutableDictionary *thisNode = self;
     for (NSString *key in keys) {

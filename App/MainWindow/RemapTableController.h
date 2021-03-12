@@ -13,7 +13,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface RemapTableController :  NSViewController <NSTableViewDataSource, NSTableViewDelegate>
-
 @end
 
 NS_ASSUME_NONNULL_END

@@ -75,7 +75,7 @@ static struct ModifiedDragState _drag;
     // Get values from dict
     MFStringConstant type = dict[kMFModifiedDragDictKeyType];
     MFMouseButtonNumber fakeDragButtonNumber = -1;
-    if ([type isEqualToString:kMFModifiedDragDictTypeFakeDrag]) {
+    if ([type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
         fakeDragButtonNumber = ((NSNumber *)dict[kMFModifiedDragDictKeyFakeDragVariantButtonNumber]).intValue;
     }
     
@@ -131,7 +131,7 @@ static CGEventRef __nullable otherMouseDraggedCallback(CGEventTapProxy proxy, CG
             if (inputIsPointerMovement) {
                 [NSCursor.closedHandCursor set]; // Doesn't work for some reason
             } else {
-                if ([_drag.type isEqualToString:kMFModifiedDragDictTypeTwoFingerSwipe]) { // Only seize when drag scrolling // TODO: Would be cleaner to call this further down where we check for kMFModifiedDragVariantTwoFingerSwipe anyways. Does that work too?
+                if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) { // Only seize when drag scrolling // TODO: Would be cleaner to call this further down where we check for kMFModifiedDragVariantTwoFingerSwipe anyways. Does that work too?
                     [dev receiveAxisInputAndDoSeizeDevice:YES];
                 }
             }
@@ -144,13 +144,13 @@ static CGEventRef __nullable otherMouseDraggedCallback(CGEventTapProxy proxy, CG
                 _drag.usageAxis = kMFAxisHorizontal;
             }
             
-            if ([_drag.type isEqualToString:kMFModifiedDragDictTypeThreeFingerSwipe]) {
+            if ([_drag.type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
                 _drag.phase = kIOHIDEventPhaseBegan;
-            } else if ([_drag.type isEqualToString:kMFModifiedDragDictTypeTwoFingerSwipe]) {
+            } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
 //                [GestureScrollSimulator postGestureScrollEventWithGestureDeltaX:0.0 deltaY:0.0 phase:kIOHIDEventPhaseMayBegin];
                     // ^ Always sending this at the start breaks swiping between pages on some websites (Google search results)
                 _drag.phase = kIOHIDEventPhaseBegan;
-            } else if ([_drag.type isEqualToString:kMFModifiedDragDictTypeFakeDrag]) {
+            } else if ([_drag.type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
                 [Utility_Transformation postMouseButton:_drag.fakeDragButtonNumber down:YES];
                 disableMouseTracking();
             }
@@ -174,7 +174,7 @@ static CGEventRef __nullable otherMouseDraggedCallback(CGEventTapProxy proxy, CG
         
 //        NSLog(@"deltaX: %f", deltaX);
 
-        if ([_drag.type isEqualToString:kMFModifiedDragDictTypeThreeFingerSwipe]) {
+        if ([_drag.type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
             
             if (_drag.usageAxis == kMFAxisHorizontal) {
                 double delta = -deltaX * sThreeFingerH;
@@ -184,7 +184,7 @@ static CGEventRef __nullable otherMouseDraggedCallback(CGEventTapProxy proxy, CG
                 [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeVertical phase:_drag.phase];
             }
             _drag.phase = kIOHIDEventPhaseChanged;
-        } else if ([_drag.type isEqualToString:kMFModifiedDragDictTypeTwoFingerSwipe]) {
+        } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, scrollDispatchDelay * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
                 [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaX*sTwoFinger deltaY:deltaY*sTwoFinger phase:_drag.phase isGestureDelta:!inputIsPointerMovement];
             });
@@ -202,17 +202,17 @@ static CGEventRef __nullable otherMouseDraggedCallback(CGEventTapProxy proxy, CG
     if (_drag.activationState == kMFModifiedInputActivationStateNone) return;
     
     if (_drag.activationState == kMFModifiedInputActivationStateInUse) {
-        if ([_drag.type isEqualToString:kMFModifiedDragDictTypeThreeFingerSwipe]) {
+        if ([_drag.type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
             if (_drag.usageAxis == kMFAxisHorizontal) {
                 [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypeHorizontal phase:kIOHIDEventPhaseEnded];
             } else if (_drag.usageAxis == kMFAxisVertical) {
                 [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypeVertical phase:kIOHIDEventPhaseEnded];
             }
-        } else if ([_drag.type isEqualToString:kMFModifiedDragDictTypeTwoFingerSwipe]) {
+        } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, scrollDispatchDelay * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
                 [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded isGestureDelta:!inputIsPointerMovement];
             });
-        } else if ([_drag.type isEqualToString:kMFModifiedDragDictTypeFakeDrag]) {
+        } else if ([_drag.type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
             [Utility_Transformation postMouseButton:_drag.fakeDragButtonNumber down:NO];
         }
     }

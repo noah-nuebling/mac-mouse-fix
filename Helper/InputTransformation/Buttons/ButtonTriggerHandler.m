@@ -77,8 +77,7 @@
         }
         
         // Execute action if incoming trigger matches target trigger
-        if (triggerType == targetTriggerType) executeClickOrHoldActionIfItExists(
-                                                                                 kMFButtonTriggerDurationClick,
+        if (triggerType == targetTriggerType) executeClickOrHoldActionIfItExists(kMFButtonTriggerDurationClick,
                                                                                  devID,
                                                                                  button,
                                                                                  level,
@@ -105,7 +104,7 @@
 
 #pragma mark - Execute actions
 
-static void executeClickOrHoldActionIfItExists(NSString * _Nonnull clickHold,
+static void executeClickOrHoldActionIfItExists(NSString * _Nonnull duration,
                                                NSNumber * _Nonnull devID,
                                                NSNumber * _Nonnull button,
                                                NSNumber * _Nonnull level,
@@ -113,14 +112,18 @@ static void executeClickOrHoldActionIfItExists(NSString * _Nonnull clickHold,
                                                NSDictionary *remapsForActiveModifiers,
                                                NSDictionary *effectiveRemaps) {
     
-    NSArray *effectiveActionArray = effectiveRemaps[button][level][clickHold];
+    NSArray *effectiveActionArray = effectiveRemaps[button][level][duration];
     if (effectiveActionArray) { // click/hold action does exist for this button + level
+        // Add modificationPrecondition, if action is addModeFeedback
+        if ([effectiveActionArray[0][kMFActionDictKeyType] isEqualToString: kMFActionDictTypeAddModeFeedback]) {
+            effectiveActionArray[0][kMFRemapsKeyModificationPrecondition] = activeModifiers;
+        }
         // Execute action
         [Actions executeActionArray:effectiveActionArray];
         // Notify triggering button
         [ButtonTriggerGenerator handleButtonHasHadDirectEffectWithDevice:devID button:button];
         // Notify modifying buttons if executed action depends on active modification
-        NSArray *actionArrayFromActiveModification = remapsForActiveModifiers[button][level][clickHold];
+        NSArray *actionArrayFromActiveModification = remapsForActiveModifiers[button][level][duration];
         BOOL actionStemsFromModification = [effectiveActionArray isEqual:actionArrayFromActiveModification];
         if (actionStemsFromModification) {
             [ModifierManager handleModifiersHaveHadEffect:devID];

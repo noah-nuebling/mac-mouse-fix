@@ -37,6 +37,11 @@ NS_ASSUME_NONNULL_BEGIN
 #define kMFAccompliceModeUpdate         @"update"
 #define kMFAccompliceModeReloadHelper   @"reloadHelper"
 
+// Message dict keys
+
+#define kMFMessageKeyMessage    @"message"
+#define kMFMessageKeyPayload    @"payload"
+
 // Website
 
 #define kMFWebsiteAddress   @"https://noah-nuebling.github.io/mac-mouse-fix-website" //@"https://mousefix.org"
@@ -76,20 +81,21 @@ typedef NSString*                                                       MFString
 // Modified drag
 
 // Trigger (value for key kMFRemapsKeyTrigger)
-#define kMFTriggerDrag                                               @"dragTrigger"
+#define kMFTriggerDrag                                                  @"dragTrigger"
 // Type key
 #define kMFModifiedDragDictKeyType                                      @"modifiedDragType"
 // Type values
-#define kMFModifiedDragDictTypeTwoFingerSwipe                           @"twoFingerSwipe"
-#define kMFModifiedDragDictTypeThreeFingerSwipe                         @"threeFingerSwipe"
-#define kMFModifiedDragDictTypeFakeDrag                                 @"fakeDrag"
+#define kMFModifiedDragTypeTwoFingerSwipe                               @"twoFingerSwipe"
+#define kMFModifiedDragTypeThreeFingerSwipe                             @"threeFingerSwipe"
+#define kMFModifiedDragTypeFakeDrag                                     @"fakeDrag"
+#define kMFModifiedDragTypeAddModeFeedback                              @"addModeDrag"
 // Variant keys
 #define kMFModifiedDragDictKeyFakeDragVariantButtonNumber               @"buttonNumber"
 
 // Modified Scroll
 
 // Trigger (value for key kMFRemapsKeyTrigger)
-#define kMFTriggerScroll                                             @"scrollTrigger"
+#define kMFTriggerScroll                                                @"scrollTrigger"
 // Type key
 #define kMFModifiedScrollDictKeyType                                    @"modifiedScrollType"
 // Type values
@@ -97,13 +103,15 @@ typedef NSString*                                                       MFString
 #define kMFModifiedScrollTypeHorizontalScroll                           @"horizontal"
 #define kMFModifiedScrollTypePrecisionScroll                            @"precision"
 #define kMFModifiedScrollTypeFastScroll                                 @"fast"
+#define kMFModifiedScrollTypeAddModeFeedback                            @"addModeScroll"
 
 // Oneshot Actions
+// TODO: Used to be named ActionDict... Rename to OneShot..., or OneShotDict
 
 // Trigger Keys (value for key kMFRemapsKeyTrigger is dict using these keys)
-#define kMFButtonTriggerKeyButtonNumber                              @"button"
-#define kMFButtonTriggerKeyClickLevel                                @"level"
-#define kMFButtonTriggerKeyDuration                                  @"duration"
+#define kMFButtonTriggerKeyButtonNumber                                 @"button"
+#define kMFButtonTriggerKeyClickLevel                                   @"level"
+#define kMFButtonTriggerKeyDuration                                     @"duration"
 // Trigger Values
 #define kMFButtonTriggerDurationClick                                   @"click"
 #define kMFButtonTriggerDurationHold                                    @"hold"
@@ -115,6 +123,7 @@ typedef NSString*                                                       MFString
 #define kMFActionDictTypeSmartZoom                                      @"smartZoom"
 #define kMFActionDictTypeKeyboardShortcut                               @"keyboardShortcut"
 #define kMFActionDictTypeMouseButtonClicks                              @"mouseButton"
+#define kMFActionDictTypeAddModeFeedback                                @"addModeAction"
 
 // Variant keys
 

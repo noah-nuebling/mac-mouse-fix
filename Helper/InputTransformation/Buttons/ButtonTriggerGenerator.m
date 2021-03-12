@@ -12,7 +12,7 @@
 #import "ModifiedDrag.h"
 #import "Utility_Transformation.h"
 #import "Utility_HelperApp.h"
-#import "ConfigFileInterface_HelperApp.h"
+#import "ConfigFileInterface_Helper.h"
 #import "GestureScrollSimulator.h"
 #import "TransformationManager.h"
 #import "ModifierManager.h"

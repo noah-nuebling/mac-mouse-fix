@@ -17,14 +17,12 @@
 
 @implementation AddWindowController
 
+// Init
+
 static AddWindowController *_instance;
-+ (AddWindowController *)instance {
-    return _instance;
-}
 + (void)initialize {
     _instance = [[AddWindowController alloc] initWithWindowNibName:@"AddWindow"];
 }
-
 - (void)windowDidLoad {
     [super windowDidLoad];
     // Setup tracking area
@@ -33,16 +31,11 @@ static AddWindowController *_instance;
     [self.window.contentView addTrackingArea:addTrackingArea];
 }
 
-- (void)begin {
-    [AppDelegate.mainWindow beginSheet:self.window completionHandler:nil];
-}
-- (void)end {
-    [AppDelegate.mainWindow endSheet:self.window];
-}
-- (IBAction)cancelButton:(id)sender {
-    [self end];
-}
+// UI callbacks
 
+- (IBAction)cancelButton:(id)sender {
+    [AddWindowController end];
+}
 - (void)mouseEntered:(NSEvent *)event {
     NSLog(@"MOSUE ENTERED ADD FIELD");
     [MessagePort_App sendMessageToHelper:@"enableAddMode"];
@@ -51,4 +44,21 @@ static AddWindowController *_instance;
     NSLog(@"MOSUE EXTITSED ADD FIELD");
     [MessagePort_App sendMessageToHelper:@"disableAddMode"];
 }
+
+// Interface
+
++ (void)begin {
+    [AppDelegate.mainWindow beginSheet:_instance.window completionHandler:nil];
+}
++ (void)end {
+    [AppDelegate.mainWindow endSheet:_instance.window];
+}
++ (void)handleReceivedAddModeFeedbackFromHelperWithPayload:(NSDictionary *)payload {
+    // The payload is an almost finished remapsTable (aka _dataModel) entry with the kMFRemapsKeyEffect key and value missing
+    [self end];
+}
+
+
+
 @end
+
