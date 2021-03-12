@@ -20,6 +20,7 @@
 
 #import "Utility_Transformation.h"
 #import "MessagePort_HelperApp.h"
+#import "TransformationManager.h"
 
 @implementation ModifiedDrag
 
@@ -160,6 +161,7 @@ static CGEventRef __nullable otherMouseDraggedCallback(CGEventTapProxy proxy, CG
                 disableMouseTracking();
             } else if ([_drag.type isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
                 [MessagePort_HelperApp sendMessageToMainApp:@"addModeFeedback" withPayload:_drag.addModePayload];
+                [TransformationManager disableAddMode];
             }
         }
         
