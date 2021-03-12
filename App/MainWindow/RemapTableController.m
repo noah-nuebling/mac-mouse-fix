@@ -32,14 +32,6 @@
 - (void)setTableView:(NSTableView *)tableView {
     self.view = tableView;
 }
-// Setup `dataModel` property
-// We made a cusotm setter and getter to sort datamodel in the setter,  but we're not doing that now, so we can remove this
-//- (void)setDataModel:(NSArray *)dataModel {
-//    _dataModel = dataModel;
-//}
-//- (NSArray *)dataModel {
-//    return _dataModel;
-//}
 
 // Methods
 
@@ -319,7 +311,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
     return triggerCell;
 }
 - (NSTableCellView *)getTriggerCellWithRowDict:(NSDictionary *)rowDict {
-    rowDict = rowDict.mutableCopy; // This is necessary for some of this hacky mess to work // Somehow the datamodel is still modified, when we
+    rowDict = rowDict.mutableCopy; // This is necessary for some of this hacky mess to work // However, this is not a deep copy, so the _dataModel is still changed when we change some nested object. Watch out!
     // Define Data-to-UI-String mappings
     NSDictionary *clickLevelToUIString = @{
         @1: @"",
