@@ -13,6 +13,7 @@
 #import "Utility_App.h"
 #import "NSArray+Additions.h"
 #import "SharedUtility.h"
+#import "AddWindowController.h"
 
 @interface RemapTableController ()
 @property NSTableView *tableView;
@@ -50,7 +51,7 @@
 }
 
 - (void)addButtonAction {
-    
+    [AddWindowController.instance begin];
 }
 - (void)removeButtonAction {
     [self.dataModel removeObjectsAtIndexes:self.tableView.selectedRowIndexes];

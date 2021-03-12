@@ -142,7 +142,6 @@ NSTimer *removeAccOverlayTimer;
     }
 }
 
-
 - (void)windowWillClose:(NSNotification *)notification {
     [UpdateWindow.instance close];
     [OverridePanel.instance close];

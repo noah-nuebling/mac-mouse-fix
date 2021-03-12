@@ -109,7 +109,7 @@ static CGEventRef __nullable otherMouseDraggedCallback(CGEventTapProxy proxy, CG
 
 + (void)handleMouseInputWithDeltaX:(int64_t)deltaX deltaY:(int64_t)deltaY {
 #if DEBUG
-    NSLog(@"handle mouse input. dx: %lld, dy: %lld", deltaX, deltaY);
+    NSLog(@"Handling mouse input. dx: %lld, dy: %lld", deltaX, deltaY);
 #endif
     
     MFModifiedInputActivationState st = _drag.activationState;
