@@ -24,21 +24,18 @@
 //    loadTestRemaps();
 }
 
-#pragma mark - Interface and remaps dictionary
+#pragma mark - Remaps dictionary and interface
 
-// Always set _remaps through `setRemaps:` so the kMFNotificationNameRemapsChanged notification is sent
-//      The kMFNotificationNameRemapsChanged notification is used by modifier manager to update itself, whenever this updates.
-//      Idk why we aren't just calling an update function instead of using notifications.
 NSDictionary *_remaps;
-+ (void)setRemaps:(NSDictionary *)r {
-    _remaps = r;
-    [NSNotificationCenter.defaultCenter postNotificationName:kMFNotificationNameRemapsChanged object:self];
-}
+
 /// The main app uses an array of dicts (aka a table) to represent the remaps in a way that is easy to present in a table view.
 /// The remaps are also stored to file in this format.
 /// The helper was made to handle a dictionary format which should be more effictient among other perks.
 /// This function takes the remaps in table format, then converts it to dict format and makes that available to all the other Input Transformation classes to base their behaviour off of.
 + (void)updateWithRemapsTable:(NSArray *)remapsTable {
+    // The kMFNotificationNameRemapsChanged notification is used by modifier manager to update itself, whenever this updates.
+    //  (Idk why we aren't just calling an update function instead of using notifications.)
+    [NSNotificationCenter.defaultCenter postNotificationName:kMFNotificationNameRemapsChanged object:self];
     // Convert remaps table to remaps dict
     NSMutableDictionary *remapsDict = [NSMutableDictionary dictionary];
     for (NSDictionary *tableEntry in remapsTable) {
@@ -59,15 +56,18 @@ NSDictionary *_remaps;
             triggerKeyArray = @[buttonNum, level, duration];
         } else NSAssert(NO, @"");
         // Get effect
-        NSDictionary *effect = tableEntry[kMFRemapsKeyEffect];
+        id effect = tableEntry[kMFRemapsKeyEffect]; // This is always dict
+        if ([trigger isKindOfClass:NSDictionary.class]) {
+            effect = @[effect];
+            // ^ For some reason we built one shot effect handling code around arrays of effects. So we need to wrap our effect in an array.
+            //  This doesn't make sense. We should clean this up at some point and remove the array.
+        }
         // Put it all together
         NSArray *keyArray = [@[modificationPrecondition] arrayByAddingObjectsFromArray:triggerKeyArray];
-        [remapsDict setObject:@[effect] forCoolKeyArray:keyArray];
-            // ^ For some reason we built the helper around arrays of effects. That doesn't make sense. We should clean that up at some point.
+        [remapsDict setObject:effect forCoolKeyArray:keyArray];
     }
     _remaps = remapsDict;
 }
-
 + (NSDictionary *)remaps {
     return _remaps;
 }
