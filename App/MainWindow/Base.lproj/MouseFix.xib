@@ -165,13 +165,16 @@
                                                     <integer key="value" value="51"/>
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <action selector="addRemoveControl:" target="p2C-Qy-mgp" id="klS-40-MDb"/>
+                                            </connections>
                                         </segmentedControl>
                                         <box horizontalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="V4m-2l-meX">
-                                            <rect key="frame" x="384" y="313" width="5" height="24"/>
+                                            <rect key="frame" x="383" y="313" width="5" height="24"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         </box>
                                         <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pmR-Cq-dp4" userLabel="EffectHeader">
-                                            <rect key="frame" x="392" y="313" width="228" height="24"/>
+                                            <rect key="frame" x="391" y="313" width="229" height="24"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <subviews>
                                                 <customView autoresizesSubviews="NO" id="Izd-lv-C5y" userLabel="EffectGroup">
@@ -188,7 +191,7 @@
                                                             </textFieldCell>
                                                         </textField>
                                                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y8h-O7-VUX">
-                                                            <rect key="frame" x="16" y="-5.5" width="23.5" height="35"/>
+                                                            <rect key="frame" x="16" y="-5" width="24" height="35"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="NMY-Fk-YkV">
                                                                 <imageReference key="image" image="wand.and.stars" catalog="system" symbolScale="large"/>
@@ -200,11 +203,11 @@
                                             </subviews>
                                         </customView>
                                         <customView id="GkX-b4-S0i" userLabel="TriggerHeader">
-                                            <rect key="frame" x="1" y="313" width="392" height="24"/>
+                                            <rect key="frame" x="0.0" y="313" width="392" height="24"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <subviews>
                                                 <customView autoresizesSubviews="NO" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y7p-rF-n2F" userLabel="TriggerGroup">
-                                                    <rect key="frame" x="145" y="0.0" width="98" height="30"/>
+                                                    <rect key="frame" x="146" y="0.0" width="98" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sk7-uP-hcu">
@@ -229,7 +232,7 @@
                                             </subviews>
                                         </customView>
                                         <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uS5-6r-XRu" userLabel="ScrollGroup">
-                                            <rect key="frame" x="34" y="17" width="554" height="82"/>
+                                            <rect key="frame" x="33" y="17" width="554" height="82"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <subviews>
                                                 <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O3G-yl-07J" userLabel="Speed">

@@ -537,8 +537,6 @@
 			children = (
 				4FF665C025F2C92700689B77 /* OverridePanel.h */,
 				4FF665C225F2C92700689B77 /* OverridePanel.m */,
-				4FF665C425F2C92700689B77 /* MFSegmentedControl.h */,
-				4FF665C125F2C92700689B77 /* MFSegmentedControl.m */,
 				4FF665C325F2C92700689B77 /* ScrollOverridePanel.xib */,
 			);
 			path = Overrides;
@@ -616,6 +614,8 @@
 		4FF665E525F2C92700689B77 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				4FF665C425F2C92700689B77 /* MFSegmentedControl.h */,
+				4FF665C125F2C92700689B77 /* MFSegmentedControl.m */,
 				4FF665E625F2C92700689B77 /* ClickableImageView.h */,
 				4FF665EB25F2C92700689B77 /* ClickableImageView.m */,
 				4FF665EA25F2C92700689B77 /* Hyperlink.h */,

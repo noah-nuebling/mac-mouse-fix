@@ -12,6 +12,7 @@
 #import "Constants.h"
 #import "Utility_App.h"
 #import "NSArray+Additions.h"
+#import "SharedUtility.h"
 
 @interface RemapTableController ()
 @property NSTableView *tableView;
@@ -37,6 +38,25 @@
 - (void)writeDataModelToConfig {
     [ConfigFileInterface_App.config setObject:_dataModel forKey:kMFConfigKeyRemaps];
     [ConfigFileInterface_App writeConfigToFileAndNotifyHelper];
+}
+
+// IBActions
+- (IBAction)addRemoveControl:(id)sender {
+    if ([sender selectedSegment] == 0) {
+        [self addButtonAction];
+    } else {
+        [self removeButtonAction];
+    }
+}
+
+- (void)addButtonAction {
+    
+}
+- (void)removeButtonAction {
+    [self.dataModel removeObjectsAtIndexes:self.tableView.selectedRowIndexes];
+    [self writeDataModelToConfig];
+    [self loadDataModelFromConfig]; // Not sure if necessary
+    [self.tableView removeRowsAtIndexes:self.tableView.selectedRowIndexes withAnimation:NSTableViewAnimationSlideUp];
 }
 
 - (IBAction)setConfigToUI:(id)sender {
@@ -235,6 +255,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
 #pragma mark - Filling the table
 
 - (NSTableCellView *)getEffectCellWithRowDict:(NSDictionary *)rowDict {
+    rowDict = rowDict.mutableCopy; // Not sure if necessary
     NSArray *effectsTable = [self getEffectsTableForRowDict:rowDict];
     // Create trigger cell and fill out popup button contained in it
     NSTableCellView *triggerCell = [self.tableView makeViewWithIdentifier:@"effectCell" owner:nil];
@@ -270,7 +291,8 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
     
     return triggerCell;
 }
-- (NSTableCellView *)getTriggerCellWithRowDict:(NSMutableDictionary *)rowDict {
+- (NSTableCellView *)getTriggerCellWithRowDict:(NSDictionary *)rowDict {
+    rowDict = rowDict.mutableCopy; // This is necessary for some of this hacky mess to work // Somehow the datamodel is still modified, when we
     // Define Data-to-UI-String mappings
     NSDictionary *clickLevelToUIString = @{
         @1: @"",
@@ -405,9 +427,17 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
     triggerCell.textField.toolTip = fullTriggerCellTooltipString;
     return triggerCell;
 }
+
+#pragma mark - TableViewDataSource functions
+
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-    // Generate table cell view for this row and column
-    NSMutableDictionary *rowDict = _dataModel[row];
+    // Get data for this row
+    NSDictionary *rowDict = _dataModel[row];
+    // Create deep copy of row.
+    //  `getTriggerCellWithRowDict` is written badly and needs to manipulate some values nested in rowDict.
+    //  I we don't deep copy, the changes to rowDict will reflect into self.dataModel and be written to file causing corruption.
+    //      (The fact that rowDict is NSDictionary not NSMutableDictionary doesn't help, cause the stuff being manipulated is nested)
+    rowDict = (NSDictionary *)[SharedUtility deepCopyOf:rowDict];
     if ([tableColumn.identifier isEqualToString:@"trigger"]) { // The trigger column should display the trigger as well as the modification precondition
         return [self getTriggerCellWithRowDict:rowDict];
     } else if ([tableColumn.identifier isEqualToString:@"effect"]) {
@@ -423,7 +453,6 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
 }
 
 # pragma mark - String generating helper functions
-
 
 static void getClickAndLevelStrings(NSDictionary *clickLevelToUIString, NSNumber *lvl, NSString **clickStr, NSString **levelStr) {
     *levelStr = clickLevelToUIString[lvl];

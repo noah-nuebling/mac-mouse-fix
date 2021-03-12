@@ -45,7 +45,7 @@
         [NSTask launchedTaskWithExecutableURL:commandLineTool arguments:args error:nil terminationHandler:nil];
         
     } else { // Fallback on earlier versions
-        [NSTask launchedTaskWithLaunchPath:commandLineTool.path arguments: args]; // Can't clean up here easily cause there's no termination handler
+        [NSTask launchedTaskWithLaunchPath:commandLineTool.path arguments: args];
     }
 }
 + (FSEventStreamRef)scheduleFSEventStreamOnPaths:(NSArray<NSString *> *)paths withCallback:(FSEventStreamCallback)callback {
@@ -61,7 +61,9 @@
     }
 }
 
-// --- v From experiments ^ from 1.0
++ (NSObject *)deepCopyOf:(NSObject *)object {
+    return [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:object]];
+}
 
 + (void)printInfoOnCaller {
     NSLog(@"CALLING FUNCTION: %@", [[NSThread callStackSymbols] objectAtIndex:2]);

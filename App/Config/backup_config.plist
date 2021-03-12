@@ -224,6 +224,27 @@
 			<key>trigger</key>
 			<string>dragTrigger</string>
 		</dict>
+		<dict>
+			<key>effect</key>
+			<dict>
+				<key>modifiedDragType</key>
+				<string>threeFingerSwipe</string>
+			</dict>
+			<key>modifiers</key>
+			<dict>
+				<key>buttonModifiers</key>
+				<array>
+					<dict>
+						<key>button</key>
+						<integer>5</integer>
+						<key>level</key>
+						<integer>1</integer>
+					</dict>
+				</array>
+			</dict>
+			<key>trigger</key>
+			<string>dragTrigger</string>
+		</dict>
 	</array>
 	<key>Scroll</key>
 	<dict>
@@ -245,13 +266,13 @@
 		<key>other</key>
 		<dict>
 			<key>consecutiveScrollSwipeMaxIntervall</key>
-			<real>0.34999999999999998</real>
+			<real>0.35</real>
 			<key>consecutiveScrollTickMaxIntervall</key>
 			<real>0.13</real>
 			<key>fastScrollExponentialBase</key>
-			<real>1.1000000000000001</real>
+			<real>1.1</real>
 			<key>fastScrollFactor</key>
-			<real>1.1000000000000001</real>
+			<real>1.1</real>
 			<key>fastScrollThreshold_inSwipes</key>
 			<integer>3</integer>
 			<key>scrollSwipeThreshold_inTicks</key>
@@ -264,9 +285,9 @@
 		<key>smoothParameters</key>
 		<dict>
 			<key>acceleration</key>
-			<real>1.1100000000000001</real>
+			<real>1.11</real>
 			<key>friction</key>
-			<real>2.2999999999999998</real>
+			<real>2.3</real>
 			<key>frictionDepth</key>
 			<integer>1</integer>
 			<key>msPerStep</key>

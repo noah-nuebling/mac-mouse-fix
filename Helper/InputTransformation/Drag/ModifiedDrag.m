@@ -70,7 +70,7 @@ static struct ModifiedDragState _drag;
     }
 }
 
-+ (void)initializeithModifiedDragDict:(NSDictionary *)dict onDevice:(MFDevice *)dev {
++ (void)initializeWithModifiedDragDict:(NSDictionary *)dict onDevice:(MFDevice *)dev {
     
     // Get values from dict
     MFStringConstant type = dict[kMFModifiedDragDictKeyType];

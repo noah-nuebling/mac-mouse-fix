@@ -129,7 +129,7 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, MFDevi
         // Initialize effects which are modifier driven (only modified drag)
         NSDictionary *modifiedDragDict = activeModifications[kMFTriggerDrag];
         if (modifiedDragDict) {
-            [ModifiedDrag initializeithModifiedDragDict:modifiedDragDict onDevice:device];
+            [ModifiedDrag initializeWithModifiedDragDict:modifiedDragDict onDevice:device];
         }
     }
 }

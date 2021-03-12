@@ -61,7 +61,7 @@ static NSMutableDictionary *_configWithAppOverridesApplied;
 
 + (void)reactToConfigFileChange {
     fillConfigFromFile();
-//    _configFileChanged = YES; // Remove _configFileChanged, if commenting this didn't break anything
+//    _configFileChanged = YES; // Remove _configFileChanged, if commenting this out didn't break anything
     [ConfigFileInterface_HelperApp applyOverridesForAppUnderMousePointer_Force:YES]; // Doing this to force update of internal state, even the active app hastn't chaged
 //    _configFileChanged = NO;
     [self updateInputTransformationEngine];
