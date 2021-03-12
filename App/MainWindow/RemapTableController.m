@@ -19,10 +19,11 @@
 
 @interface RemapTableController ()
 @property NSTableView *tableView;
-@property NSMutableArray *dataModel;
+@property NSArray *dataModel; // Is actually an NSMutableArray I think. Take care not to accidentally corrupt this!
 @end
 
 @implementation RemapTableController
+@synthesize dataModel = _dataModel;
 
 // Setup the `tableView` property
 - (NSTableView *)tableView {
@@ -31,15 +32,23 @@
 - (void)setTableView:(NSTableView *)tableView {
     self.view = tableView;
 }
+// Setup `dataModel` property
+// We made a cusotm setter and getter to sort datamodel in the setter,  but we're not doing that now, so we can remove this
+//- (void)setDataModel:(NSArray *)dataModel {
+//    _dataModel = dataModel;
+//}
+//- (NSArray *)dataModel {
+//    return _dataModel;
+//}
 
 // Methods
 
 - (void)loadDataModelFromConfig {
     [ConfigFileInterface_App loadConfigFromFile]; // Not sure if necessary
-    _dataModel = ConfigFileInterface_App.config[kMFConfigKeyRemaps];
+    self.dataModel = ConfigFileInterface_App.config[kMFConfigKeyRemaps];
 }
 - (void)writeDataModelToConfig {
-    [ConfigFileInterface_App.config setObject:_dataModel forKey:kMFConfigKeyRemaps];
+    [ConfigFileInterface_App.config setObject:self.dataModel forKey:kMFConfigKeyRemaps];
     [ConfigFileInterface_App writeConfigToFileAndNotifyHelper];
 }
 
@@ -48,14 +57,21 @@
     // Not getting called for some reason -> I had to set the view outlet of the controller object in IB to the tableView
     // Now it's _again_ not being called, I have no clue why.
     
+#if DEBUG
+    NSLog(@"RemapTableView did load.");
+#endif
+    
     // Set corner radius
-    NSScrollView *scrollView = (NSScrollView *)self.view.superview.superview;
+    NSScrollView *scrollView = (NSScrollView *)self.tableView.superview.superview;
     scrollView.wantsLayer = TRUE;
-//    scrollView.layer.cornerRadius = 5;
+    scrollView.layer.cornerRadius = 5;
     // Load table data from config
     [self loadDataModelFromConfig];
     // Initialize sorting
     [self initSorting];
+    // Do first sorting (Not sure where soring and reloading is appropriate but this seems fine)
+    [self sortDataModel];
+    [self.tableView reloadData];
 }
 
 // IBActions
@@ -71,7 +87,9 @@
     [AddWindowController begin];
 }
 - (void)removeButtonAction {
-    [self.dataModel removeObjectsAtIndexes:self.tableView.selectedRowIndexes];
+    NSMutableArray *mutableDataModel = self.dataModel.mutableCopy;
+    [mutableDataModel removeObjectsAtIndexes:self.tableView.selectedRowIndexes];
+    self.dataModel = (NSArray *)mutableDataModel;
     [self writeDataModelToConfig];
     [self loadDataModelFromConfig]; // Not sure if necessary
     [self.tableView removeRowsAtIndexes:self.tableView.selectedRowIndexes withAnimation:NSTableViewAnimationSlideUp];
@@ -89,7 +107,7 @@
         NSDictionary *effectsTableEntryForSelected = [self getEntryFromEffectsTable:effectsTable withUIString:selectedTitle];
         NSDictionary *effectDictForSelected = effectsTableEntryForSelected[@"dict"];
         // Write effect dict to data model and then write datamodel to file
-        _dataModel[row][kMFRemapsKeyEffect] = effectDictForSelected;
+        self.dataModel[row][kMFRemapsKeyEffect] = effectDictForSelected;
     }
     // Write datamodel to file
     [self writeDataModelToConfig];
@@ -441,7 +459,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     // Get data for this row
-    NSDictionary *rowDict = _dataModel[row];
+    NSDictionary *rowDict = self.dataModel[row];
     // Create deep copy of row.
     //  `getTriggerCellWithRowDict` is written badly and needs to manipulate some values nested in rowDict.
     //  I we don't deep copy, the changes to rowDict will reflect into self.dataModel and be written to file causing corruption.
@@ -458,7 +476,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    return _dataModel.count;
+    return self.dataModel.count;
 }
 
 # pragma mark - String generating helper functions
@@ -531,7 +549,11 @@ static NSString *getKeyboardModifierStringToolTip(NSNumber *flags) {
 
 #pragma mark - Sorting the table
 
-/// Might mutate the `tableEntryMutable` argument by deleting the last button precondition in the precond sequence. (But only if it extracted that info into the other output arguments)
+- (void)sortDataModel {
+    self.dataModel = [self.dataModel sortedArrayUsingDescriptors:self.tableView.sortDescriptors];
+}
+
+/// Might mutate the `tableEntryMutable` argument by deleting the last button precondition in the precond sequence. (But only if it extracted that info into the output arguments)
 static void getTriggerValues(int *btn1, int *lvl1, NSString **dur1, NSString **type1, NSMutableDictionary *tableEntryMutable1) {
     id trigger1 = tableEntryMutable1[kMFRemapsKeyTrigger];
     BOOL isString1 = [trigger1 isKindOfClass:NSString.class];
@@ -557,9 +579,7 @@ static void getTriggerValues(int *btn1, int *lvl1, NSString **dur1, NSString **t
         }
     }
 }
-
 - (void)initSorting {
-    NSTableColumn *effectsColumn = self.tableView.tableColumns[[self.tableView columnWithIdentifier:@"effect"]];
     NSSortDescriptor *sd = [NSSortDescriptor sortDescriptorWithKey:nil ascending:YES comparator:^NSComparisonResult(NSDictionary * _Nonnull tableEntry1, NSDictionary * _Nonnull tableEntry2) {
         
         // Create mutable deep copies so we don't mess table up accidentally
@@ -591,7 +611,7 @@ static void getTriggerValues(int *btn1, int *lvl1, NSString **dur1, NSString **t
         if (typeIndex1 > typeIndex2) {
             return NSOrderedDescending;
         } else if (typeIndex1 < typeIndex2) {
-            return NSOrderedDescending;
+            return NSOrderedAscending;
         }
         // 1.2 Sort by click level
         if (lvl1 > lvl2) {
@@ -606,7 +626,7 @@ static void getTriggerValues(int *btn1, int *lvl1, NSString **dur1, NSString **t
         if (durationIndex1 > durationIndex2) {
             return NSOrderedDescending;
         } else if (durationIndex1 < durationIndex2) {
-            return NSOrderedDescending;
+            return NSOrderedAscending;
         }
         // Get modification precondition info
         NSDictionary *preconds1 = tableEntryMutable1[kMFRemapsKeyModificationPrecondition];
@@ -649,15 +669,16 @@ static void getTriggerValues(int *btn1, int *lvl1, NSString **dur1, NSString **t
         }
         return NSOrderedSame;
     }];
-    [effectsColumn setSortDescriptorPrototype:sd];
+    [self.tableView setSortDescriptors:@[sd]];
 }
-
-- (void)tableView:(NSTableView *)tableView sortDescriptorsDidChange:(NSArray<NSSortDescriptor *> *)oldDescriptors {
-#if DEBUG
-    NSLog(@"Sorting tableView dataModel with sortDescriptor: %@, oldDescriptors: %@", self.tableView.sortDescriptors, oldDescriptors);
-#endif
-    self.dataModel = [self.dataModel sortedArrayUsingDescriptors:self.tableView.sortDescriptors].mutableCopy;
-    [self.tableView reloadData];
-}
+// v I think this is meant for user controlled per-column sorting
+//      For our purposes we should probably just do the sorting on init or sth
+//- (void)tableView:(NSTableView *)tableView sortDescriptorsDidChange:(NSArray<NSSortDescriptor *> *)oldDescriptors {
+//#if DEBUG
+//    NSLog(@"Sorting tableView dataModel with sortDescriptor: %@, oldDescriptors: %@", self.tableView.sortDescriptors, oldDescriptors);
+//#endif
+//    self.dataModel = [self.dataModel sortedArrayUsingDescriptors:self.tableView.sortDescriptors].mutableCopy;
+//    [self.tableView reloadData];
+//}
 
 @end

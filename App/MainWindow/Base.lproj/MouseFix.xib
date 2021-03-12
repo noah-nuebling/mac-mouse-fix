@@ -116,7 +116,7 @@
                                                                                 <popUpButtonCell key="cell" type="push" title="Click and Drag Button 3" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="hdW-0g-MyX" id="zPv-8e-GO1">
                                                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                                     <font key="font" metaFont="menu"/>
-                                                                                    <menu key="menu" id="D4j-Vt-Zr3" customClass="MFMenu">
+                                                                                    <menu key="menu" id="D4j-Vt-Zr3">
                                                                                         <items>
                                                                                             <menuItem title="Click and Drag Button 3" state="on" id="hdW-0g-MyX">
                                                                                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -170,15 +170,15 @@
                                             </connections>
                                         </segmentedControl>
                                         <box horizontalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="V4m-2l-meX">
-                                            <rect key="frame" x="383" y="313" width="5" height="24"/>
+                                            <rect key="frame" x="382" y="313" width="5" height="24"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         </box>
                                         <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pmR-Cq-dp4" userLabel="EffectHeader">
-                                            <rect key="frame" x="391" y="313" width="229" height="24"/>
+                                            <rect key="frame" x="390" y="313" width="230" height="24"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <subviews>
                                                 <customView autoresizesSubviews="NO" id="Izd-lv-C5y" userLabel="EffectGroup">
-                                                    <rect key="frame" x="62" y="0.0" width="98" height="30"/>
+                                                    <rect key="frame" x="63" y="0.0" width="98" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DYF-bp-JPg">
@@ -203,11 +203,11 @@
                                             </subviews>
                                         </customView>
                                         <customView id="GkX-b4-S0i" userLabel="TriggerHeader">
-                                            <rect key="frame" x="0.0" y="313" width="392" height="24"/>
+                                            <rect key="frame" x="0.0" y="313" width="391" height="24"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <subviews>
                                                 <customView autoresizesSubviews="NO" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y7p-rF-n2F" userLabel="TriggerGroup">
-                                                    <rect key="frame" x="146" y="0.0" width="98" height="30"/>
+                                                    <rect key="frame" x="145" y="0.0" width="98" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sk7-uP-hcu">
@@ -240,7 +240,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                                     <subviews>
                                                         <slider toolTip="How fast you'll scroll" verticalHuggingPriority="750" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mXj-a7-rFw">
-                                                            <rect key="frame" x="15" y="27" width="128" height="24"/>
+                                                            <rect key="frame" x="15" y="27" width="127" height="24"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                             <sliderCell key="cell" state="on" alignment="left" identifier="scrollSpeedSlider" maxValue="1" doubleValue="0.33333333333333331" tickMarkPosition="below" numberOfTickMarks="7" allowsTickMarkValuesOnly="YES" sliderType="linear" id="0NZ-eS-HsP"/>
                                                             <connections>
