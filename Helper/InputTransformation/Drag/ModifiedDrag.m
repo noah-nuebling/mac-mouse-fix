@@ -58,7 +58,7 @@ static struct ModifiedDragState _drag;
     if (inputIsPointerMovement) {
         // Create mouse pointer moved input callback
         if (_drag.eventTap == nil) {
-            CGEventMask mask = CGEventMaskBit(kCGEventOtherMouseDragged); // TODO: Check which of the two is necessary
+            CGEventMask mask = CGEventMaskBit(kCGEventOtherMouseDragged) | CGEventMaskBit(kCGEventMouseMoved); // kCGEventMouseMoved is only necessary for keyboard only drag modification, and maybe for AddMode to work.
             _drag.eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, otherMouseDraggedCallback, NULL);
             NSLog(@"_eventTap: %@", _drag.eventTap);
             CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _drag.eventTap, 0);
@@ -115,7 +115,7 @@ static CGEventRef __nullable otherMouseDraggedCallback(CGEventTapProxy proxy, CG
 
 + (void)handleMouseInputWithDeltaX:(int64_t)deltaX deltaY:(int64_t)deltaY {
 #if DEBUG
-    NSLog(@"Handling mouse input. dx: %lld, dy: %lld", deltaX, deltaY);
+//    NSLog(@"Handling mouse input. dx: %lld, dy: %lld", deltaX, deltaY);
 #endif
     
     MFModifiedInputActivationState st = _drag.activationState;

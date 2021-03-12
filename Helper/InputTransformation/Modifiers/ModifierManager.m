@@ -109,7 +109,7 @@ static void handleButtonModifiersHaveChangedWithDevice(MFDevice *device) {
 static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, MFDevice * _Nonnull device) {
     
 #if DEBUG
-    NSLog(@"MODFIERS HAVE CHANGED TO - %@", activeModifiers);
+    NSLog(@"MODIFERS HAVE CHANGED TO - %@", activeModifiers);
 #endif
     
     // Kill the currently active modified drag
