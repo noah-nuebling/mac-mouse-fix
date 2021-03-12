@@ -161,7 +161,7 @@ static CGEventRef __nullable otherMouseDraggedCallback(CGEventTapProxy proxy, CG
                 disableMouseTracking();
             } else if ([_drag.type isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
                 [MessagePort_HelperApp sendMessageToMainApp:@"addModeFeedback" withPayload:_drag.addModePayload];
-                [TransformationManager disableAddMode];
+                disableMouseTracking();
             }
         }
         
@@ -223,6 +223,8 @@ static CGEventRef __nullable otherMouseDraggedCallback(CGEventTapProxy proxy, CG
             });
         } else if ([_drag.type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
             [Utility_Transformation postMouseButton:_drag.fakeDragButtonNumber down:NO];
+        } else if ([_drag.type isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
+            [TransformationManager disableAddMode];
         }
     }
     disableMouseTracking();

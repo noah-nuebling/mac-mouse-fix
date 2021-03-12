@@ -42,6 +42,9 @@ NS_ASSUME_NONNULL_BEGIN
 #define kMFMessageKeyMessage    @"message"
 #define kMFMessageKeyPayload    @"payload"
 
+// Other AddMode keys (more below)
+#define kMFAddModeModificationPrecondition  @"addModeModifier"
+
 // Website
 
 #define kMFWebsiteAddress   @"https://noah-nuebling.github.io/mac-mouse-fix-website" //@"https://mousefix.org"

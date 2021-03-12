@@ -82,8 +82,10 @@ CGEventRef _Nullable handleKeyboardModifiersHaveChanged(CGEventTapProxy proxy, C
         // The keyboard component of activeModifiers doesn't update fast enough so we have to manually edit it
         // This is kinofa hack we should maybe look into a better solution
         NSMutableDictionary *activeModifiersNew = activeModifiers.mutableCopy;
-        activeModifiersNew[kMFModificationPreconditionKeyKeyboard] = @(CGEventGetFlags(event) & NSDeviceIndependentModifierFlagsMask);
-        
+        CGEventFlags flags = CGEventGetFlags(event) & NSDeviceIndependentModifierFlagsMask;
+        if (flags != 0) {
+            activeModifiersNew[kMFModificationPreconditionKeyKeyboard] = @(flags);
+        }
         reactToModifierChange(activeModifiersNew, dev);
     }
     return nil;
@@ -120,8 +122,13 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, MFDevi
     [ModifiedDrag deactivate];
     
     // Get active modifications and initialize any which are modifier driven
-    NSDictionary *r = TransformationManager.remaps;
-    NSDictionary *activeModifications = r[activeModifiers];
+    NSDictionary *activeModifications = TransformationManager.remaps[activeModifiers];
+    // Do weird stuff if AddMode is active.
+    if (TransformationManager.remaps[@{kMFAddModeModificationPrecondition:@YES}] != nil) { // This means AddMode is active
+            if (activeModifiers.allKeys.count != 0) { // We activate modifications, if activeModifiers isn't _completely_ empty
+                activeModifications = TransformationManager.remaps[@{kMFAddModeModificationPrecondition: @YES}];
+            }
+    }
     if (activeModifications) {
 #if DEBUG
         NSLog(@"ACTIVE MODIFICATIONS - %@", activeModifications);

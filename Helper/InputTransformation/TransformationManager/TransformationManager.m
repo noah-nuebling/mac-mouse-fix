@@ -106,14 +106,22 @@ NSDictionary *_remaps;
 ///     - kMFRemapsKeyModificationPrecondition
 /// So it's _almost_ a tableEntry which can be used by the mainApp's remap tableview's dataModel, it's just lacking the kMFRemapsKeyEffect key and values.
 /// This makes sense, because The effect is then to be chosen by the user in the main app's GUI
+///
+/// It doesn't make sense to capture drag triggers (and scroll triggers, but that's not yet implemented at this point) when no modifier is present,
+///     But if any modifier is present, we want to capture them, no matter what the modifier is specifically. We implemented this by using the new kMFAddModeModificationPrecondition key
+///         and by making some changes to `ModifierManager` -> `reactToModifierChange()` to work with this new key.
+///             I have a relatively strong suspicion, that we need to change around other stuff to really make this work, but I have no clue what exactly that could be.
+///             With this complex intertwining code and everything depending on nested dictionaries with no compiler checks or anything so many things could break due to sth like this.
+///             Let's just hope for the best!
 + (void)enableAddMode {
-    NSMutableDictionary *triggerToEffectDict = [NSMutableDictionary dictionary];
-    // Fill out triggerToEffectDict with all triggers that users can map to
+    NSMutableDictionary *triggerToEffectDict_DemandsMods = [NSMutableDictionary dictionary];
+    // Fill out triggerToEffectDictWithNeedForModifier with all triggers that users can map to
     // String based triggers (Only one - drag - atm)
-    triggerToEffectDict[kMFTriggerDrag] = @{
+    triggerToEffectDict_DemandsMods[kMFTriggerDrag] = @{
         kMFModifiedDragDictKeyType: kMFModifiedDragTypeAddModeFeedback,
         kMFRemapsKeyTrigger: kMFTriggerDrag,
     };
+    NSMutableDictionary *triggerToEffectDict_NoModsRequired = [NSMutableDictionary dictionary];
     // Button triggers (dict based)
     for (int btn = 1; btn <= 32; btn++) {
         for (int lvl = 1; lvl <= 3; lvl++) {
@@ -126,7 +134,7 @@ NSDictionary *_remaps;
                         kMFButtonTriggerKeyDuration: dur,
                     }
                 }.mutableCopy; // The key `kMFRemapsKeyModificationPrecondition` and corresponding values are added to `addModeFeedbackDict` in the function `executeClickOrHoldActionIfItExists`. That's also why we need to make this mutable.
-                [triggerToEffectDict setObject:@[addModeFeedbackDict] forCoolKeyArray:@[@(btn),@(lvl),dur]];
+                [triggerToEffectDict_NoModsRequired setObject:@[addModeFeedbackDict] forCoolKeyArray:@[@(btn),@(lvl),dur]];
                 //  ^ We're wrapping `addModeFeedbackDict` in an array here because we started building helper with dicts of several effects in mind.
                 //      This doesn't make sense though and we should remove it.
             }
@@ -134,7 +142,10 @@ NSDictionary *_remaps;
     }
     
     // Set _remaps to generated
-    self.remaps = @{@{}:triggerToEffectDict};
+    self.remaps = @{
+        @{}: triggerToEffectDict_NoModsRequired,
+        @{kMFAddModeModificationPrecondition:@YES}: triggerToEffectDict_DemandsMods,
+    };
 }
 + (void)disableAddMode {
     [self loadRemapsFromConfig];
