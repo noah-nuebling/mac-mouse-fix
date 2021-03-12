@@ -505,10 +505,10 @@
 			children = (
 				4FF6653E25F2C7B000689B77 /* SharedUtility.h */,
 				4FF6653B25F2C7B000689B77 /* SharedUtility.m */,
-				4FF6653825F2C7B000689B77 /* NSArray+Additions.h */,
-				4FF6653D25F2C7B000689B77 /* NSArray+Additions.m */,
 				4FF6653F25F2C7B000689B77 /* MFQueue.h */,
 				4FF6653A25F2C7B000689B77 /* MFQueue.m */,
+				4FF6653825F2C7B000689B77 /* NSArray+Additions.h */,
+				4FF6653D25F2C7B000689B77 /* NSArray+Additions.m */,
 				4FF6653925F2C7B000689B77 /* NSMutableDictionary+Additions.h */,
 				4FF6654025F2C7B000689B77 /* NSMutableDictionary+Additions.m */,
 			);
@@ -631,11 +631,11 @@
 			children = (
 				4FF6660825F2C93A00689B77 /* FileMonitor */,
 				4FF6660B25F2C93A00689B77 /* AppDelegate.h */,
+				4FF6664625F2C93A00689B77 /* AppDelegate.m */,
 				4FF6660C25F2C93A00689B77 /* Config */,
 				4FF6660F25F2C93A00689B77 /* Resources */,
 				4FF6661125F2C93A00689B77 /* MessagePort */,
 				4FF6661425F2C93A00689B77 /* InputTransformation */,
-				4FF6664625F2C93A00689B77 /* AppDelegate.m */,
 				4FF6664725F2C93A00689B77 /* Pointer */,
 				4FF6664A25F2C93A00689B77 /* Accessibility */,
 				4FF6664D25F2C93A00689B77 /* SupportFiles */,
@@ -683,13 +683,13 @@
 		4FF6661425F2C93A00689B77 /* InputTransformation */ = {
 			isa = PBXGroup;
 			children = (
+				4FF6663C25F2C93A00689B77 /* TransformationManager */,
 				4FF6661525F2C93A00689B77 /* Modifiers */,
 				4FF6661825F2C93A00689B77 /* Buttons */,
 				4FF6661F25F2C93A00689B77 /* Scroll */,
 				4FF6663125F2C93A00689B77 /* Touch */,
 				4FF6663625F2C93A00689B77 /* Drag */,
 				4FF6663925F2C93A00689B77 /* Actions */,
-				4FF6663C25F2C93A00689B77 /* TransformationManager */,
 				4FF6663F25F2C93A00689B77 /* Utility */,
 			);
 			path = InputTransformation;

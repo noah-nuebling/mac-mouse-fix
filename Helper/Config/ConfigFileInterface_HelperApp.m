@@ -13,13 +13,12 @@
 
 #import "ConfigFileInterface_HelperApp.h"
 #import "AppDelegate.h"
-
 #import "ScrollControl.h"
 #import "SmoothScroll.h"
 #import "ButtonInputReceiver.h"
 #import "ScrollModifiers.h"
 #import "SharedUtility.h"
-
+#import "TransformationManager.h"
 #import "Constants.h"
 
 @implementation ConfigFileInterface_HelperApp
@@ -62,9 +61,10 @@ static NSMutableDictionary *_configWithAppOverridesApplied;
 
 + (void)reactToConfigFileChange {
     fillConfigFromFile();
-    _configFileChanged = YES; // Doing this to force update of internal state, even the active app hastn't chaged
-    [ConfigFileInterface_HelperApp updateInternalParameters_Force:YES];
-    _configFileChanged = NO;
+//    _configFileChanged = YES; // Remove _configFileChanged, if commenting this didn't break anything
+    [ConfigFileInterface_HelperApp applyOverridesForAppUnderMousePointer_Force:YES]; // Doing this to force update of internal state, even the active app hastn't chaged
+//    _configFileChanged = NO;
+    [self updateInputTransformationEngine];
 }
 
 /// Load contents of config.plist file into this class' config property
@@ -93,7 +93,7 @@ static void fillConfigFromFile() {
 /// \returns YES, if internal parameters did update. NO otherwise.
 /// ... wtf was I thinking when writing this, why didn't I write 2 functions?
 // TODO: Look into using kCGMouseEventWindowUnderMousePointer to get the window under the mouse pointer
-+ (BOOL)updateInternalParameters_Force:(BOOL)force {
++ (BOOL)applyOverridesForAppUnderMousePointer_Force:(BOOL)force {
 
     // Get app under mouse pointer
     NSString *bundleIDOfCurrentApp;
@@ -167,6 +167,11 @@ static void fillConfigFromFile() {
     ScrollModifiers.magnificationScrollModifierKeyEnabled = [mod[@"magnificationScrollModifierKeyEnabled"] boolValue];
 }
 
++ (void)updateInputTransformationEngine {
+    NSArray *remapsTable = [_config objectForKey:kMFConfigKeyRemaps];
+    [TransformationManager updateWithRemapsTable:remapsTable];
+}
+
 /// Applies AppOverrides from app with `bundleIdentifier` to `_config` and writes the result into `_configWithAppOverridesApplied`.
 static void loadAppOverridesForApp(NSString *bundleIdentifier) {
      // get AppOverrides for scrolled app
@@ -188,14 +193,6 @@ static void loadAppOverridesForApp(NSString *bundleIdentifier) {
     // TODO: actually repair config dict
     NSLog(@"Should repair configdict.... (not implemented)");
 }
- 
-void Handle_FSEventStreamCallback (ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents, void *eventPaths, const FSEventStreamEventFlags *eventFlags, const FSEventStreamEventId *eventIds) {
-    
-    NSLog(@"config.plist changed (FSMonitor)");
-    
-    [ConfigFileInterface_HelperApp reactToConfigFileChange];
-}
-
 
 /**
  We're setting up a File System Monitor so that manual edits to the main configuration file have an effect.
@@ -220,5 +217,12 @@ static void setupFSEventStreamCallback() {
     BOOL EventStreamStarted = FSEventStreamStart(remapsFileEventStream);
     NSLog(@"EventStreamStarted: %d", EventStreamStarted);
 }
+void Handle_FSEventStreamCallback (ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents, void *eventPaths, const FSEventStreamEventFlags *eventFlags, const FSEventStreamEventId *eventIds) {
+    
+    NSLog(@"config.plist changed (FSMonitor)");
+    
+    [ConfigFileInterface_HelperApp reactToConfigFileChange];
+}
+
 
 @end

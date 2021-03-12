@@ -242,7 +242,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
             }
             if (ScrollUtility.mouseDidMove || ScrollUtility.frontMostAppDidChange) {
                 // set app overrides
-                BOOL configChanged = [ConfigFileInterface_HelperApp updateInternalParameters_Force:NO]; // TODO: `updateInternalParameters_Force:` should (probably) reset stuff itself, if it changes anything. This whole [SmoothScroll stop] stuff is kinda messy
+                BOOL configChanged = [ConfigFileInterface_HelperApp applyOverridesForAppUnderMousePointer_Force:NO]; // TODO: `updateInternalParameters_Force:` should (probably) reset stuff itself, if it changes anything. This whole [SmoothScroll stop] stuff is kinda messy
                 if (configChanged) {
                     [SmoothScroll stop]; // Not sure if useful
                     [RoughScroll stop]; // Not sure if useful

@@ -35,27 +35,7 @@ static NSArray *coolKeyPathToKeyArray(NSString * _Nonnull keyPath) {
     
     NSArray * keys = coolKeyPathToKeyArray(keyPath);
     
-    NSMutableDictionary *thisNode = self;
-    for (NSString *key in keys) {
-        if ([keys indexOfObject:key] == keys.count - 1) { // `key` is last key
-            thisNode[key] = object;
-        } else { // `key` is inner key
-            NSObject *nextNode = thisNode[key];
-            NSObject *newNextNode;
-            if (nextNode == nil) {
-                newNextNode = [NSMutableDictionary dictionary];
-            } else if ([nextNode isKindOfClass:[NSMutableDictionary class]]) {
-                newNextNode = nextNode;
-            } else if ([nextNode isKindOfClass:[NSDictionary class]]) {
-                newNextNode = [nextNode mutableCopy];
-            } else {
-                NSException *exception = [NSException exceptionWithName:@"Invalid keyPath" reason:@"An inner key in the keyPath was not nil and not a dictionary." userInfo:@{@"dictionary": self, @"keyPath": keyPath}];
-                @throw exception;
-            }
-            thisNode[key] = newNextNode;
-            thisNode = (NSMutableDictionary *)newNextNode;
-        }
-    }
+    [self setObject:object forCoolKeyArray:keys];
 }
 
 - (NSObject * _Nullable)objectForCoolKeyPath:(NSString *)keyPath {
@@ -76,6 +56,30 @@ static NSArray *coolKeyPathToKeyArray(NSString * _Nonnull keyPath) {
         }
     }
     return thisNode;
+}
+
+- (void)setObject:(NSObject * _Nullable)object forCoolKeyArray:(NSArray *)keys {
+    NSMutableDictionary *thisNode = self;
+    for (NSString *key in keys) {
+        if ([keys indexOfObject:key] == keys.count - 1) { // `key` is last key
+            thisNode[key] = object;
+        } else { // `key` is inner key
+            NSObject *nextNode = thisNode[key];
+            NSObject *newNextNode;
+            if (nextNode == nil) {
+                newNextNode = [NSMutableDictionary dictionary];
+            } else if ([nextNode isKindOfClass:[NSMutableDictionary class]]) {
+                newNextNode = nextNode;
+            } else if ([nextNode isKindOfClass:[NSDictionary class]]) {
+                newNextNode = [nextNode mutableCopy];
+            } else {
+                NSException *exception = [NSException exceptionWithName:@"Invalid keyPath" reason:@"An inner key in the key array was not nil and not a dictionary." userInfo:@{@"dictionary": self, @"keyArray": keys}];
+                @throw exception;
+            }
+            thisNode[key] = newNextNode;
+            thisNode = (NSMutableDictionary *)newNextNode;
+        }
+    }
 }
 
 + (NSMutableDictionary *)doDeepMutateDictionary:(NSDictionary *)dict {
