@@ -8,6 +8,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AddWindowController">
             <connections>
+                <outlet property="addField" destination="jvk-Wi-QYO" id="Pts-Bz-gIS"/>
                 <outlet property="window" destination="9Tp-rg-GbO" id="Afc-n8-G0d"/>
             </connections>
         </customObject>
@@ -22,7 +23,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="523" height="357"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <box fixedFrame="YES" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="jvk-Wi-QYO">
+                    <box identifier="addField" fixedFrame="YES" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="jvk-Wi-QYO">
                         <rect key="frame" x="17" y="36" width="489" height="282"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <view key="contentView" id="dnZ-10-afR">

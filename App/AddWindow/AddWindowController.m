@@ -11,7 +11,7 @@
 #import "AppDelegate.h"
 
 @interface AddWindowController ()
-
+@property (weak) IBOutlet NSBox *addField;
 @end
 
 @implementation AddWindowController
@@ -26,6 +26,10 @@ static AddWindowController *_instance;
 
 - (void)windowDidLoad {
     [super windowDidLoad];
+    // Setup tracking area
+    NSTrackingArea *addTrackingArea = [[NSTrackingArea alloc] initWithRect:self.addField.bounds options:NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways | NSTrackingInVisibleRect | NSTrackingEnabledDuringMouseDrag owner:self userInfo:nil];
+    // (Well I can't use ad tracking cause I claim to be privacy focused on the website, but at least I can use add tracking! Hmu if you can think of a way to monetize that.)
+    [self.window.contentView addTrackingArea:addTrackingArea];
 }
 
 - (void)begin {
@@ -36,5 +40,12 @@ static AddWindowController *_instance;
 }
 - (IBAction)cancelButton:(id)sender {
     [self end];
+}
+
+- (void)mouseEntered:(NSEvent *)event {
+    NSLog(@"MOSUE ENTERED ADD FIELD");
+}
+- (void)mouseExited:(NSEvent *)event {
+    NSLog(@"MOSUE EXTITSED ADD FIELD");
 }
 @end

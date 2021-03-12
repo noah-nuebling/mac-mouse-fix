@@ -27,13 +27,17 @@ IB_DESIGNABLE
 
 NSRect _trackingRect;
 
+BOOL _mouseInside = NO;
+BOOL _mouseDownOverThis = NO;
+
 - (void)awakeFromNib {
-    
+        
+    [NSEvent addLocalMonitorForEventsMatchingMask:NSEventMaskLeftMouseDown handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
+        [self mouseDown:event];
+        return event;
+    }];
     [NSEvent addLocalMonitorForEventsMatchingMask:NSEventMaskLeftMouseUp handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
-        NSPoint loc = [AppDelegate.mainWindow.contentView convertPoint:event.locationInWindow toView:self];
-        if (NSPointInRect(loc, _trackingRect)) {
-            [self reactToClick];
-        }
+        [self mouseUp:event];
         return event;
     }];
     
@@ -56,7 +60,7 @@ NSRect _trackingRect;
     // Setup tracking area
     
     // Options
-    NSTrackingAreaOptions trackingAreaOptions =  NSTrackingMouseEnteredAndExited | NSTrackingActiveInKeyWindow;
+    NSTrackingAreaOptions trackingAreaOptions =  NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways | NSTrackingEnabledDuringMouseDrag;
     _trackingRect = self.bounds;
     
     // Make area larger according to IBInspectable tracking margins
@@ -85,6 +89,8 @@ NSRect _trackingRect;
 //}
 - (void)mouseEntered:(NSEvent *)event {
     
+    _mouseInside = YES;
+    
     NSMutableAttributedString *underlinedString = [[NSMutableAttributedString alloc] initWithAttributedString: self.attributedStringValue];
     
     NSRange wholeStringRange = NSMakeRange(0, [underlinedString length]);
@@ -97,6 +103,8 @@ NSRect _trackingRect;
 }
 - (void)mouseExited:(NSEvent *)event {
     
+    _mouseInside = NO;
+    
     NSMutableAttributedString *notUnderlinedString = [[NSMutableAttributedString alloc] initWithAttributedString: self.attributedStringValue];
     
     NSRange wholeStringRange = NSMakeRange(0, [notUnderlinedString length]);
@@ -107,8 +115,16 @@ NSRect _trackingRect;
     
     self.attributedStringValue = notUnderlinedString;
 }
+- (void)mouseDown:(NSEvent *)event {
+    if (_mouseInside) {
+        _mouseDownOverThis = YES;
+    }
+}
 - (void)mouseUp:(NSEvent *)event {
-
+    if (_mouseDownOverThis && _mouseInside) {
+        [self reactToClick];
+    }
+    _mouseDownOverThis = NO;
 }
 - (void) reactToClick {
     // Open URL defined in Interface Builder
@@ -117,6 +133,5 @@ NSRect _trackingRect;
     // Send IBAction
     [self sendAction:self.action to:self.target];
 }
-
 
 @end
