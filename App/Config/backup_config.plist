@@ -184,10 +184,71 @@
 		<dict>
 			<key>effect</key>
 			<dict>
+				<key>modifiedDragType</key>
+				<string>threeFingerSwipe</string>
+			</dict>
+			<key>modifiers</key>
+			<dict>
+				<key>buttonModifiers</key>
+				<array>
+					<dict>
+						<key>button</key>
+						<integer>3</integer>
+						<key>level</key>
+						<integer>1</integer>
+					</dict>
+				</array>
+			</dict>
+			<key>trigger</key>
+			<string>dragTrigger</string>
+		</dict>
+		<dict>
+			<key>effect</key>
+			<dict>
 				<key>type</key>
 				<string>symbolicHotkey</string>
 				<key>variant</key>
-				<integer>81</integer>
+				<integer>70</integer>
+			</dict>
+			<key>modifiers</key>
+			<dict/>
+			<key>trigger</key>
+			<dict>
+				<key>button</key>
+				<integer>3</integer>
+				<key>duration</key>
+				<string>click</string>
+				<key>level</key>
+				<integer>1</integer>
+			</dict>
+		</dict>
+		<dict>
+			<key>effect</key>
+			<dict>
+				<key>type</key>
+				<string>symbolicHotkey</string>
+				<key>variant</key>
+				<integer>160</integer>
+			</dict>
+			<key>modifiers</key>
+			<dict/>
+			<key>trigger</key>
+			<dict>
+				<key>button</key>
+				<integer>3</integer>
+				<key>duration</key>
+				<string>hold</string>
+				<key>level</key>
+				<integer>1</integer>
+			</dict>
+		</dict>
+		<dict>
+			<key>effect</key>
+			<dict>
+				<key>type</key>
+				<string>symbolicHotkey</string>
+				<key>variant</key>
+				<integer>36</integer>
 			</dict>
 			<key>modifiers</key>
 			<dict/>
@@ -204,46 +265,42 @@
 		<dict>
 			<key>effect</key>
 			<dict>
-				<key>modifiedDragType</key>
-				<string>threeFingerSwipe</string>
+				<key>type</key>
+				<string>navigationSwipe</string>
+				<key>variant</key>
+				<string>left</string>
 			</dict>
 			<key>modifiers</key>
-			<dict>
-				<key>buttonModifiers</key>
-				<array>
-					<dict>
-						<key>button</key>
-						<integer>4</integer>
-						<key>level</key>
-						<integer>2</integer>
-					</dict>
-				</array>
-				<key>keyboardModifiers</key>
-				<integer>1310720</integer>
-			</dict>
+			<dict/>
 			<key>trigger</key>
-			<string>dragTrigger</string>
+			<dict>
+				<key>button</key>
+				<integer>4</integer>
+				<key>duration</key>
+				<string>click</string>
+				<key>level</key>
+				<integer>1</integer>
+			</dict>
 		</dict>
 		<dict>
 			<key>effect</key>
 			<dict>
-				<key>modifiedDragType</key>
-				<string>threeFingerSwipe</string>
+				<key>type</key>
+				<string>navigationSwipe</string>
+				<key>variant</key>
+				<string>right</string>
 			</dict>
 			<key>modifiers</key>
-			<dict>
-				<key>buttonModifiers</key>
-				<array>
-					<dict>
-						<key>button</key>
-						<integer>5</integer>
-						<key>level</key>
-						<integer>1</integer>
-					</dict>
-				</array>
-			</dict>
+			<dict/>
 			<key>trigger</key>
-			<string>dragTrigger</string>
+			<dict>
+				<key>button</key>
+				<integer>5</integer>
+				<key>duration</key>
+				<string>click</string>
+				<key>level</key>
+				<integer>1</integer>
+			</dict>
 		</dict>
 	</array>
 	<key>Scroll</key>
