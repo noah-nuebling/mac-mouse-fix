@@ -114,7 +114,7 @@ static void executeClickOrHoldActionIfItExists(NSString * _Nonnull duration,
     
     NSArray *effectiveActionArray = effectiveRemaps[button][level][duration];
     if (effectiveActionArray) { // click/hold action does exist for this button + level
-        // Add modificationPrecondition, if action is addModeFeedback
+        // // Add modificationPrecondition info for addMode. See TransformationManager -> AddMode for context
         if ([effectiveActionArray[0][kMFActionDictKeyType] isEqualToString: kMFActionDictTypeAddModeFeedback]) {
             effectiveActionArray[0][kMFRemapsKeyModificationPrecondition] = activeModifiers;
         }

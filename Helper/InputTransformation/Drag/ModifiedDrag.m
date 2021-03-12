@@ -19,6 +19,7 @@
 #import <Cocoa/Cocoa.h>
 
 #import "Utility_Transformation.h"
+#import "MessagePort_HelperApp.h"
 
 @implementation ModifiedDrag
 
@@ -39,9 +40,9 @@ struct ModifiedDragState {
     SubPixelator *subPixelatorX;
     SubPixelator *subPixelatorY;
     
-    MFMouseButtonNumber fakeDragButtonNumber; // Button number for the fake drag type
+    MFMouseButtonNumber fakeDragButtonNumber; // Button number. Only used with modified drag of type kMFModifiedDragTypeFakeDrag.
+    NSDictionary *addModePayload; // Payload to send to the mainApp. Only used with modified drag of type kMFModifiedDragTypeAddModeFeedback.
 };
-
 static struct ModifiedDragState _drag;
 
 #define scrollDispatchDelay 0 // In ms // Thought this would help when using pointer movement as input, but it doesn't
@@ -78,6 +79,9 @@ static struct ModifiedDragState _drag;
     if ([type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
         fakeDragButtonNumber = ((NSNumber *)dict[kMFModifiedDragDictKeyFakeDragVariantButtonNumber]).intValue;
     }
+    // Prepare payload to send to mainApp during addMode. See TransformationManager -> AddMode for context
+    NSMutableDictionary *payload = dict.mutableCopy;
+    [payload removeObjectForKey:kMFTriggerDrag];
     
     #if DEBUG
         NSLog(@"INITIALIZING MODIFIED DRAG WITH TYPE %@ ON DEVICE %@", type, dev);
@@ -92,6 +96,7 @@ static struct ModifiedDragState _drag;
     _drag.subPixelatorX = [SubPixelator alloc];
     _drag.subPixelatorY = [SubPixelator alloc];
     _drag.fakeDragButtonNumber = fakeDragButtonNumber;
+    _drag.addModePayload = payload;
     
     if (inputIsPointerMovement) {
         CGEventTapEnable(_drag.eventTap, true);
@@ -129,7 +134,7 @@ static CGEventRef __nullable otherMouseDraggedCallback(CGEventTapProxy proxy, CG
             
             MFDevice *dev = _drag.modifiedDevice;
             if (inputIsPointerMovement) {
-                [NSCursor.closedHandCursor set]; // Doesn't work for some reason
+                [NSCursor.closedHandCursor push]; // Doesn't work for some reason
             } else {
                 if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) { // Only seize when drag scrolling // TODO: Would be cleaner to call this further down where we check for kMFModifiedDragVariantTwoFingerSwipe anyways. Does that work too?
                     [dev receiveAxisInputAndDoSeizeDevice:YES];
@@ -153,6 +158,8 @@ static CGEventRef __nullable otherMouseDraggedCallback(CGEventTapProxy proxy, CG
             } else if ([_drag.type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
                 [Utility_Transformation postMouseButton:_drag.fakeDragButtonNumber down:YES];
                 disableMouseTracking();
+            } else if ([_drag.type isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
+                [MessagePort_HelperApp sendMessageToMainApp:@"addModeFeedback" withPayload:_drag.addModePayload];
             }
         }
         

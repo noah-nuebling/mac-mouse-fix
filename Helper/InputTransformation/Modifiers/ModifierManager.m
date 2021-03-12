@@ -127,9 +127,14 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, MFDevi
         NSLog(@"ACTIVE MODIFICATIONS - %@", activeModifications);
 #endif
         // Initialize effects which are modifier driven (only modified drag)
-        NSDictionary *modifiedDragDict = activeModifications[kMFTriggerDrag];
-        if (modifiedDragDict) {
-            [ModifiedDrag initializeWithModifiedDragDict:modifiedDragDict onDevice:device];
+        NSMutableDictionary *modifiedDragEffect = activeModifications[kMFTriggerDrag]; // Probably not truly mutable at this point
+        if (modifiedDragEffect) {
+            // Add modificationPrecondition info for addMode. See TransformationManager -> AddMode for context
+            if ([modifiedDragEffect[kMFModifiedDragDictKeyType] isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
+                modifiedDragEffect = modifiedDragEffect.mutableCopy;
+                modifiedDragEffect[kMFRemapsKeyModificationPrecondition] = activeModifiers;
+            }
+            [ModifiedDrag initializeWithModifiedDragDict:modifiedDragEffect onDevice:device];
         }
     }
 }
