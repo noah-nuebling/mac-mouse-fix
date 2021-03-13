@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
-        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -48,14 +47,14 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="40" horizontalPageScroll="10" verticalLineScroll="40" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jLq-vs-Mpd">
-                                            <rect key="frame" x="0.0" y="119" width="620" height="194"/>
+                                            <rect key="frame" x="0.0" y="119" width="620" height="218"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <clipView key="contentView" id="S62-75-wtd">
-                                                <rect key="frame" x="1" y="1" width="618" height="192"/>
+                                                <rect key="frame" x="1" y="1" width="618" height="216"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <tableView identifier="remapTable" verticalHuggingPriority="750" allowsExpansionToolTips="YES" tableStyle="fullWidth" alternatingRowBackgroundColors="YES" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="40" rowSizeStyle="automatic" viewBased="YES" id="zJh-jy-oKM">
-                                                        <rect key="frame" x="0.0" y="0.0" width="618" height="192"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="618" height="216"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <size key="intercellSpacing" width="17" height="0.0"/>
                                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -173,64 +172,6 @@
                                             <rect key="frame" x="382" y="313" width="5" height="24"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         </box>
-                                        <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pmR-Cq-dp4" userLabel="EffectHeader">
-                                            <rect key="frame" x="390" y="313" width="230" height="24"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <subviews>
-                                                <customView autoresizesSubviews="NO" id="Izd-lv-C5y" userLabel="EffectGroup">
-                                                    <rect key="frame" x="63" y="0.0" width="98" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                                    <subviews>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DYF-bp-JPg">
-                                                            <rect key="frame" x="42" y="5" width="40" height="16"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Effect" id="XNz-bM-o9C">
-                                                                <font key="font" metaFont="system"/>
-                                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            </textFieldCell>
-                                                        </textField>
-                                                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y8h-O7-VUX">
-                                                            <rect key="frame" x="16" y="-5" width="24" height="35"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="NMY-Fk-YkV">
-                                                                <imageReference key="image" image="wand.and.stars" catalog="system" symbolScale="large"/>
-                                                            </imageCell>
-                                                            <color key="contentTintColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                        </imageView>
-                                                    </subviews>
-                                                </customView>
-                                            </subviews>
-                                        </customView>
-                                        <customView id="GkX-b4-S0i" userLabel="TriggerHeader">
-                                            <rect key="frame" x="0.0" y="313" width="391" height="24"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <subviews>
-                                                <customView autoresizesSubviews="NO" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y7p-rF-n2F" userLabel="TriggerGroup">
-                                                    <rect key="frame" x="145" y="0.0" width="98" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                                    <subviews>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sk7-uP-hcu">
-                                                            <rect key="frame" x="39" y="5" width="49" height="16"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Trigger" id="fwZ-t9-FD4">
-                                                                <font key="font" metaFont="system"/>
-                                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            </textFieldCell>
-                                                        </textField>
-                                                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xmj-S9-lrL">
-                                                            <rect key="frame" x="13" y="-5.5" width="24" height="35"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="r0m-UD-WAC">
-                                                                <imageReference key="image" image="cursorarrow.rays" catalog="system" symbolScale="large"/>
-                                                            </imageCell>
-                                                            <color key="contentTintColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                        </imageView>
-                                                    </subviews>
-                                                </customView>
-                                            </subviews>
-                                        </customView>
                                         <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uS5-6r-XRu" userLabel="ScrollGroup">
                                             <rect key="frame" x="33" y="17" width="554" height="82"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -377,7 +318,5 @@ Awesome tricks:
     <resources>
         <image name="NSAddTemplate" width="14" height="13"/>
         <image name="NSRemoveTemplate" width="14" height="4"/>
-        <image name="cursorarrow.rays" catalog="system" width="20" height="20"/>
-        <image name="wand.and.stars" catalog="system" width="20" height="19"/>
     </resources>
 </document>
