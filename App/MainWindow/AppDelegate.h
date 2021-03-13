@@ -10,8 +10,10 @@
 #import <PreferencePanes/PreferencePanes.h>
 #import "MoreSheet.h"
 #import "OverridePanel.h"
+#import "RemapTableController.h"
 
 @interface AppDelegate : NSObject<NSApplicationDelegate, NSWindowDelegate>
+@property (weak) IBOutlet NSTableView *remapsTable;
 + (AppDelegate *)instance;
 + (NSWindow *)mainWindow;
 - (void)stopRemoveAccOverlayTimer;

@@ -20,7 +20,6 @@
 #import "AuthorizeAccessibilityView.h"
 #import "HelperServices.h"
 #import "SharedUtility.h"
-#import "RemapTableController.h"
 
 @interface AppDelegate ()
 
@@ -33,8 +32,6 @@
 
 @property (weak) IBOutlet NSSlider *scrollStepSizeSlider;
 @property (weak) IBOutlet NSButton *invertScrollCheckBox;
-
-@property (strong) RemapTableController *tableController;
 
 @end
 
@@ -111,10 +108,6 @@ static NSDictionary *sideButtonActions;
     if (checkForUpdates == YES) {
         [Updater checkForUpdate];
     }
-    
-    // Setting up table view. Not sure if necessary. No Idea what I'm doing.
-    _tableController = [[RemapTableController alloc] init];
-//    NSLog(@"TableView: %@", _tableController.view);
 }
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
     NSLog(@"Mac Mouse Fix should terminate");

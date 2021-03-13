@@ -344,6 +344,7 @@ Awesome tricks:
             <connections>
                 <outlet property="enableMouseFixCheckBox" destination="vqy-WZ-nG6" id="I0c-Jz-8Rc"/>
                 <outlet property="invertScrollCheckBox" destination="Ip8-aI-or8" id="flR-hc-vMi"/>
+                <outlet property="remapsTable" destination="zJh-jy-oKM" id="bVs-R0-966"/>
                 <outlet property="scrollEnableCheckBox" destination="9lG-eT-nD4" id="w4l-na-jZF"/>
                 <outlet property="scrollStepSizeSlider" destination="mXj-a7-rFw" id="3Xl-vL-g4G"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="f6c-dU-MWV"/>

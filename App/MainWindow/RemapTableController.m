@@ -74,10 +74,6 @@
         [self removeButtonAction];
     }
 }
-
-- (void)addButtonAction {
-    [AddWindowController begin];
-}
 - (void)removeButtonAction {
     NSMutableArray *mutableDataModel = self.dataModel.mutableCopy;
     [mutableDataModel removeObjectsAtIndexes:self.tableView.selectedRowIndexes];
@@ -85,6 +81,39 @@
     [self writeDataModelToConfig];
     [self loadDataModelFromConfig]; // Not sure if necessary
     [self.tableView removeRowsAtIndexes:self.tableView.selectedRowIndexes withAnimation:NSTableViewAnimationSlideUp];
+}
+- (void)addButtonAction {
+    [AddWindowController begin];
+}
+- (void)addRowWithHelperPayload:(NSDictionary *)payload {
+    NSLog(@"ADD ROWWIWOWOW");
+    // ((Check if payload is valid tableEntry))
+    // Check if already in table
+    NSIndexSet *existingIndexes = [self.dataModel indexesOfObjectsPassingTest:^BOOL(NSDictionary * _Nonnull tableEntry, NSUInteger idx, BOOL * _Nonnull stop) {
+        BOOL triggerMatches = [tableEntry[kMFRemapsKeyTrigger] isEqualTo:payload[kMFRemapsKeyTrigger]];
+        BOOL modificationPreconditionMatches = [tableEntry[kMFRemapsKeyModificationPrecondition] isEqualTo:payload[kMFRemapsKeyModificationPrecondition]];
+        return triggerMatches && modificationPreconditionMatches;
+    }];
+    NSAssert(existingIndexes.count <= 1, @"Duplicate remap triggers found in table");
+    NSIndexSet *toHighlightIndexSet;
+    if (existingIndexes.count == 0) {
+        // Add new row to data model
+        self.dataModel = [self.dataModel arrayByAddingObject:payload];
+        // Sort data model
+        [self sortDataModel];
+        // Display new row with animation and highlight by selecting it
+        NSUInteger insertedIndex = [self.dataModel indexOfObject:payload];
+        toHighlightIndexSet = [NSIndexSet indexSetWithIndex:insertedIndex];
+        [self.tableView insertRowsAtIndexes:toHighlightIndexSet withAnimation:NSTableViewAnimationSlideDown];
+    } else {
+        toHighlightIndexSet = existingIndexes;
+    }
+    [self.tableView selectRowIndexes:toHighlightIndexSet byExtendingSelection:NO];
+    [self.tableView scrollRowToVisible:toHighlightIndexSet.firstIndex];
+    // Open the NSMenu on the newly created row's popup button
+    NSInteger tableColumn = [self.tableView columnWithIdentifier:@"effect"];
+    NSPopUpButton *popUpButton = [self.tableView viewAtColumn:tableColumn row:toHighlightIndexSet.firstIndex makeIfNecessary:NO].subviews[0];
+//    [popUpButton performSelector:@selector(performClick:) withObject:nil afterDelay:0.2];
 }
 
 - (IBAction)setConfigToUI:(id)sender {
@@ -302,11 +331,13 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
     // Select popup button item corresponding to datamodel
     // Get effectDict from datamodel
     NSDictionary *effectDict = rowDict[kMFRemapsKeyEffect];
-    // Get title for effectDict from effectsTable
-    NSDictionary *effectsTableEntry = [self getEntryFromEffectsTable:effectsTable withEffectDict:effectDict];
-    NSString *title = effectsTableEntry[@"ui"];
-    // Select item with title
-    [popupButton selectItemWithTitle:title];
+    if (effectDict) { // When inserting new rows through AddMode, there is no effectDict at first
+        // Get title for effectDict from effectsTable
+        NSDictionary *effectsTableEntry = [self getEntryFromEffectsTable:effectsTable withEffectDict:effectDict];
+        NSString *title = effectsTableEntry[@"ui"];
+        // Select item with title
+        [popupButton selectItemWithTitle:title];
+    }
     
     return triggerCell;
 }
@@ -590,39 +621,10 @@ static void getTriggerValues(int *btn1, int *lvl1, NSString **dur1, NSString **t
         NSString *type2;
         getTriggerValues(&btn2, &lvl2, &dur2, &type2, tableEntryMutable2);
         
-        // 1. Sort by button
-        if (btn1 > btn2) {
-            return NSOrderedDescending;
-        } else if (btn1 < btn2) {
-            return NSOrderedAscending;
-        }
-        // 1.1. Sort by trigger type (drag, scroll, button)
-        NSArray *orderedTypes = @[@"drag", @"scroll", @"button"];
-        NSUInteger typeIndex1 = [orderedTypes indexOfObject:type1];
-        NSUInteger typeIndex2 = [orderedTypes indexOfObject:type2];
-        if (typeIndex1 > typeIndex2) {
-            return NSOrderedDescending;
-        } else if (typeIndex1 < typeIndex2) {
-            return NSOrderedAscending;
-        }
-        // 1.2 Sort by click level
-        if (lvl1 > lvl2) {
-            return NSOrderedDescending;
-        } else if (lvl1 < lvl2) {
-            return NSOrderedAscending;
-        }
-        // 1.3 Sort by duration
-        NSArray *orderedDurations = @[kMFButtonTriggerDurationClick, kMFButtonTriggerDurationHold];
-        NSUInteger durationIndex1 = [orderedDurations indexOfObject:dur1];
-        NSUInteger durationIndex2 = [orderedDurations indexOfObject:dur2];
-        if (durationIndex1 > durationIndex2) {
-            return NSOrderedDescending;
-        } else if (durationIndex1 < durationIndex2) {
-            return NSOrderedAscending;
-        }
         // Get modification precondition info
         NSDictionary *preconds1 = tableEntryMutable1[kMFRemapsKeyModificationPrecondition];
         NSDictionary *preconds2 = tableEntryMutable2[kMFRemapsKeyModificationPrecondition];
+        
         // 2.1 Sort by button precond
         NSArray *buttonSequence1 = preconds1[kMFModificationPreconditionKeyButtons];
         NSArray *buttonSequence2 = preconds2[kMFModificationPreconditionKeyButtons];
@@ -657,6 +659,37 @@ static void getTriggerValues(int *btn1, int *lvl1, NSString **dur1, NSString **t
         if (modifierFlags1.integerValue > modifierFlags2.integerValue) {
             return NSOrderedDescending;
         } else if (modifierFlags1.integerValue < modifierFlags2.integerValue) {
+            return NSOrderedAscending;
+        }
+        
+        // 1. Sort by button
+        if (btn1 > btn2) {
+            return NSOrderedDescending;
+        } else if (btn1 < btn2) {
+            return NSOrderedAscending;
+        }
+        // 1.1. Sort by trigger type (drag, scroll, button)
+        NSArray *orderedTypes = @[@"drag", @"scroll", @"button"];
+        NSUInteger typeIndex1 = [orderedTypes indexOfObject:type1];
+        NSUInteger typeIndex2 = [orderedTypes indexOfObject:type2];
+        if (typeIndex1 > typeIndex2) {
+            return NSOrderedDescending;
+        } else if (typeIndex1 < typeIndex2) {
+            return NSOrderedAscending;
+        }
+        // 1.2 Sort by click level
+        if (lvl1 > lvl2) {
+            return NSOrderedDescending;
+        } else if (lvl1 < lvl2) {
+            return NSOrderedAscending;
+        }
+        // 1.3 Sort by duration
+        NSArray *orderedDurations = @[kMFButtonTriggerDurationClick, kMFButtonTriggerDurationHold];
+        NSUInteger durationIndex1 = [orderedDurations indexOfObject:dur1];
+        NSUInteger durationIndex2 = [orderedDurations indexOfObject:dur2];
+        if (durationIndex1 > durationIndex2) {
+            return NSOrderedDescending;
+        } else if (durationIndex1 < durationIndex2) {
             return NSOrderedAscending;
         }
         return NSOrderedSame;

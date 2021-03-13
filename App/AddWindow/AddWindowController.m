@@ -10,6 +10,7 @@
 #import "AddWindowController.h"
 #import "AppDelegate.h"
 #import "MessagePort_App.h"
+#import "RemapTableController.h"
 
 @interface AddWindowController ()
 @property (weak) IBOutlet NSBox *addField;
@@ -54,8 +55,9 @@ static AddWindowController *_instance;
     [AppDelegate.mainWindow endSheet:_instance.window];
 }
 + (void)handleReceivedAddModeFeedbackFromHelperWithPayload:(NSDictionary *)payload {
-    // The payload is an almost finished remapsTable (aka _dataModel) entry with the kMFRemapsKeyEffect key and value missing
     [self end];
+    // The payload is an almost finished remapsTable (aka RemapTableController.dataModel) entry with the kMFRemapsKeyEffect key missing
+    [((RemapTableController *)AppDelegate.instance.remapsTable.delegate) addRowWithHelperPayload:(NSDictionary *)payload];
 }
 
 
