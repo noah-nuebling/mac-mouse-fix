@@ -30,7 +30,7 @@ static AddWindowController *_instance;
 - (void)windowDidLoad {
     [super windowDidLoad];
     // Setup tracking area
-    NSTrackingArea *addTrackingArea = [[NSTrackingArea alloc] initWithRect:self.addField.bounds options:NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways | NSTrackingInVisibleRect | NSTrackingEnabledDuringMouseDrag owner:self userInfo:nil];
+    NSTrackingArea *addTrackingArea = [[NSTrackingArea alloc] initWithRect:self.addField.frame options:NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways | NSTrackingEnabledDuringMouseDrag owner:self userInfo:nil];
     // (Well I can't use ad tracking cause I claim to be privacy focused on the website, but at least I can use add tracking! Hmu if you can think of a way to monetize that.)
     [self.window.contentView addTrackingArea:addTrackingArea];
 }
