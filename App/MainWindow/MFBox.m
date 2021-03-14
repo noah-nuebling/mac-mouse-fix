@@ -19,15 +19,16 @@
     [self drawBoxBorder:dirtyRect];
 }
 
+// See https://stackoverflow.com/questions/15184133/add-a-border-outside-of-a-uiview-instead-of-inside for more ways to draw external border
 - (void)drawBoxBorder:(NSRect)rect {
-    CGFloat cornerRadius = self.cornerRadius;
-    NSRect borderRect = NSMakeRect(rect.origin.x-1, rect.origin.y-1, rect.size.width+2, rect.size.height+2);
-    
-    NSBezierPath *borderPath = [NSBezierPath bezierPathWithRoundedRect:borderRect xRadius:cornerRadius yRadius:cornerRadius];
-    [borderPath setLineWidth:5.0];
-    NSColor *borderColor = NSColor.greenColor;
-    [borderColor set];
-    [borderPath stroke];
+//    CGFloat cornerRadius = self.cornerRadius;
+//    NSRect borderRect = NSMakeRect(rect.origin.x-1, rect.origin.y-1, rect.size.width+2, rect.size.height+2);
+//    
+//    NSBezierPath *borderPath = [NSBezierPath bezierPathWithRoundedRect:borderRect xRadius:cornerRadius yRadius:cornerRadius];
+//    [borderPath setLineWidth:5.0];
+//    NSColor *borderColor = NSColor.greenColor;
+//    [borderColor set];
+//    [borderPath stroke];
 }
 
 @end

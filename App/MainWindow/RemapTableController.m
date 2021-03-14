@@ -55,20 +55,21 @@
     NSLog(@"RemapTableView did load.");
 #endif
     
-    double cr = 10.0;
+    double cr = self.box.cornerRadius;
     
     // Set corner radius
     NSClipView *clipView = (NSClipView *)self.tableView.superview;
     NSScrollView *scrollView = (NSScrollView *)clipView.superview;
-//    self.tableView.wantsLayer = YES;
-//    self.tableView.layer.cornerRadius = cr;
-//    clipView.wantsLayer = YES;
-//    clipView.layer.cornerRadius = cr;
-//    scrollView.wantsLayer = YES;
-//    scrollView.layer.cornerRadius = cr;
-    // ^ None if this works (but it used to ?)
+    scrollView.wantsLayer = YES;
+//    scrollView.borderType = NSLineBorder;
+    // ^ This draws border with rounded corners, but we can't adjust color
+    // v This doesn't work at all
+    scrollView.layer.borderWidth = 5.0;
+    scrollView.layer.cornerRadius = cr;
+    scrollView.layer.borderColor = NSColor.greenColor.CGColor; //self.box.layer.borderColor;
     
-    // Set NSBox clipping
+    // Set NSBox clipping (Should do this in the "MFBox" subclass)
+    //  This stuff seems to only work, when box is type Custom, (not Primary) it seems
     self.box.wantsLayer = YES;
     self.box.layer.masksToBounds = YES;
     self.box.layer.cornerRadius = cr;
