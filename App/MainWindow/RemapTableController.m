@@ -46,17 +46,20 @@
 
 
 - (void)viewDidLoad {
-    // Not getting called for some reason -> I had to set the view outlet of the controller object in IB to the tableView
-    // Now it's _again_ not being called, I have no clue why.
+    // Not getting called for some reason -> I had to set the view outlet of the controller object in IB to the tableView.
     
 #if DEBUG
     NSLog(@"RemapTableView did load.");
 #endif
     
+    // Set rounded corners and appropriate border
+    
     NSClipView *clipView = (NSClipView *)self.tableView.superview;
     NSScrollView *scrollView = (NSScrollView *)clipView.superview;
     
-    CGFloat cr = 5.0; // Should be equal to cornerRadius of surrounding NSBox
+    CGFloat cr = 5.0;
+    // ^ Should be equal to cornerRadius of surrounding NSBox
+    //   Hardcoding this might lead to bad visuals on pre-BigSur macOS versions with lower corner radius, but idk how to access the NSBox's effective cornerRadius
     
     scrollView.borderType = NSNoBorder;
     scrollView.wantsLayer = YES;
