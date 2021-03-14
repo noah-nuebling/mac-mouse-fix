@@ -56,5 +56,19 @@
     }
     return NO;
 }
++ (NSImage *)tintedImage:(NSImage *)image withColor:(NSColor *)tint {
+    image = image.copy;
+    if (tint) {
+        [image lockFocus];
+        
+        NSRect imageRect = NSMakeRect(0, 0, image.size.width, image.size.height);
+        [image drawInRect:imageRect fromRect:imageRect operation:NSCompositingOperationSourceOver fraction:tint.alphaComponent];
+        [[tint colorWithAlphaComponent:1] set];
+        NSRectFillUsingOperation(imageRect, NSCompositingOperationSourceAtop);
+        [image unlockFocus];
+    }
+    [image setTemplate:NO];
+    return image;
+}
 
 @end

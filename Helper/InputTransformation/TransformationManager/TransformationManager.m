@@ -18,6 +18,7 @@
 #import "NSMutableDictionary+Additions.h"
 #import "Constants.h"
 #import "ConfigFileInterface_Helper.h"
+#import "MessagePort_HelperApp.h"
 
 @implementation TransformationManager
 
@@ -153,6 +154,12 @@ NSDictionary *_remaps;
 }
 + (void)disableAddMode {
     [self loadRemapsFromConfig];
+}
++ (void)concludeAddModeWithPayload:(NSDictionary *)payload {
+    [MessagePort_HelperApp sendMessageToMainApp:@"addModeFeedback" withPayload:payload];
+//    [TransformationManager performSelector:@selector(disableAddMode) withObject:nil afterDelay:0.5];
+    // ^ We did this to keep the remapping disabled for a little while after adding a new row, but it leads to adding several entries at once when trying to input button modification precondition, if you're not fast enough.
+    [TransformationManager disableAddMode];
 }
 
 #pragma mark - Dummy Data

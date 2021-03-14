@@ -9,6 +9,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="AddWindowController">
             <connections>
                 <outlet property="addField" destination="jvk-Wi-QYO" id="Pts-Bz-gIS"/>
+                <outlet property="plusIconView" destination="7dr-xS-3z8" id="VkK-3u-mi2"/>
                 <outlet property="window" destination="9Tp-rg-GbO" id="Afc-n8-G0d"/>
             </connections>
         </customObject>
@@ -23,14 +24,14 @@
                 <rect key="frame" x="0.0" y="0.0" width="523" height="357"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <box identifier="addField" fixedFrame="YES" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="jvk-Wi-QYO">
+                    <box identifier="addField" fixedFrame="YES" borderType="bezel" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="jvk-Wi-QYO">
                         <rect key="frame" x="17" y="36" width="489" height="282"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <view key="contentView" id="dnZ-10-afR">
                             <rect key="frame" x="3" y="3" width="483" height="276"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7dr-xS-3z8">
+                                <imageView identifier="PlusIcon" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7dr-xS-3z8">
                                     <rect key="frame" x="209" y="104" width="64" height="68"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="NSAddTemplate" id="9r2-lE-jzC"/>

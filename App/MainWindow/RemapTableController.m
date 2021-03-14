@@ -16,10 +16,12 @@
 #import "AddWindowController.h"
 #import <Cocoa/Cocoa.h>
 #import "SharedUtility.h"
+#import "MFBox.h"
 
 @interface RemapTableController ()
 @property NSTableView *tableView;
 @property NSArray *dataModel; // Is actually an NSMutableArray I think. Take care not to accidentally corrupt this!
+@property (weak) IBOutlet MFBox *box;
 @end
 
 @implementation RemapTableController
@@ -53,10 +55,25 @@
     NSLog(@"RemapTableView did load.");
 #endif
     
+    double cr = 10.0;
+    
     // Set corner radius
-    NSScrollView *scrollView = (NSScrollView *)self.tableView.superview.superview;
-    scrollView.wantsLayer = TRUE;
-    scrollView.layer.cornerRadius = 5;
+    NSClipView *clipView = (NSClipView *)self.tableView.superview;
+    NSScrollView *scrollView = (NSScrollView *)clipView.superview;
+//    self.tableView.wantsLayer = YES;
+//    self.tableView.layer.cornerRadius = cr;
+//    clipView.wantsLayer = YES;
+//    clipView.layer.cornerRadius = cr;
+//    scrollView.wantsLayer = YES;
+//    scrollView.layer.cornerRadius = cr;
+    // ^ None if this works (but it used to ?)
+    
+    // Set NSBox clipping
+    self.box.wantsLayer = YES;
+    self.box.layer.masksToBounds = YES;
+    self.box.layer.cornerRadius = cr;
+    
+    
     // Load table data from config
     [self loadDataModelFromConfig];
     // Initialize sorting
@@ -87,24 +104,30 @@
 }
 - (void)addRowWithHelperPayload:(NSDictionary *)payload {
     NSLog(@"ADD ROWWIWOWOW");
+    NSMutableDictionary *pl = payload.mutableCopy;
     // ((Check if payload is valid tableEntry))
     // Check if already in table
     NSIndexSet *existingIndexes = [self.dataModel indexesOfObjectsPassingTest:^BOOL(NSDictionary * _Nonnull tableEntry, NSUInteger idx, BOOL * _Nonnull stop) {
-        BOOL triggerMatches = [tableEntry[kMFRemapsKeyTrigger] isEqualTo:payload[kMFRemapsKeyTrigger]];
-        BOOL modificationPreconditionMatches = [tableEntry[kMFRemapsKeyModificationPrecondition] isEqualTo:payload[kMFRemapsKeyModificationPrecondition]];
+        BOOL triggerMatches = [tableEntry[kMFRemapsKeyTrigger] isEqualTo:pl[kMFRemapsKeyTrigger]];
+        BOOL modificationPreconditionMatches = [tableEntry[kMFRemapsKeyModificationPrecondition] isEqualTo:pl[kMFRemapsKeyModificationPrecondition]];
         return triggerMatches && modificationPreconditionMatches;
     }];
     NSAssert(existingIndexes.count <= 1, @"Duplicate remap triggers found in table");
     NSIndexSet *toHighlightIndexSet;
     if (existingIndexes.count == 0) {
+        // Fill out effect in payload with first effect from effects table (to make behaviour appropriate when user doesn't choose any effect)
+        //      We could also consider removing the tableEntry, if the user just dismisses the popup menu without choosing an effect, instead of this.
+        pl[kMFRemapsKeyEffect] = [self getEffectsTableForRemapsTableEntry:pl][0][@"dict"];
         // Add new row to data model
-        self.dataModel = [self.dataModel arrayByAddingObject:payload];
+        self.dataModel = [self.dataModel arrayByAddingObject:pl];
         // Sort data model
         [self sortDataModel];
         // Display new row with animation and highlight by selecting it
-        NSUInteger insertedIndex = [self.dataModel indexOfObject:payload];
+        NSUInteger insertedIndex = [self.dataModel indexOfObject:pl];
         toHighlightIndexSet = [NSIndexSet indexSetWithIndex:insertedIndex];
         [self.tableView insertRowsAtIndexes:toHighlightIndexSet withAnimation:NSTableViewAnimationSlideDown];
+        // Set config to file (to make behaviour appropriate when user doesn't choose any effect)
+        [self setConfigToUI:nil];
     } else {
         toHighlightIndexSet = existingIndexes;
     }
@@ -113,7 +136,7 @@
     // Open the NSMenu on the newly created row's popup button
     NSInteger tableColumn = [self.tableView columnWithIdentifier:@"effect"];
     NSPopUpButton *popUpButton = [self.tableView viewAtColumn:tableColumn row:toHighlightIndexSet.firstIndex makeIfNecessary:NO].subviews[0];
-//    [popUpButton performSelector:@selector(performClick:) withObject:nil afterDelay:0.2];
+    [popUpButton performSelector:@selector(performClick:) withObject:nil afterDelay:0.2];
 }
 
 - (IBAction)setConfigToUI:(id)sender {
@@ -124,7 +147,7 @@
         NSPopUpButton *pb = cell.subviews[0];
         NSString *selectedTitle = pb.selectedItem.title;
         // Get effects table for row of sender
-        NSArray *effectsTable = [self getEffectsTableForRowDict:self.dataModel[row]];
+        NSArray *effectsTable = [self getEffectsTableForRemapsTableEntry:self.dataModel[row]];
         NSDictionary *effectsTableEntryForSelected = [self getEntryFromEffectsTable:effectsTable withUIString:selectedTitle];
         NSDictionary *effectDictForSelected = effectsTableEntryForSelected[@"dict"];
         // Write effect dict to data model and then write datamodel to file
@@ -268,10 +291,10 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
     NSDictionary *effectsTableEntry = effectsTable[inds.firstIndex];
     return effectsTableEntry;
 }
-- (NSArray *)getEffectsTableForRowDict:(NSDictionary *)rowDict {
+- (NSArray *)getEffectsTableForRemapsTableEntry:(NSDictionary *)tableEntry {
     // Get info about what kind of trigger we're dealing with
     NSString *triggerType = @""; // Options "oneShot", "drag", "scroll"
-    id triggerValue = rowDict[kMFRemapsKeyTrigger];
+    id triggerValue = tableEntry[kMFRemapsKeyTrigger];
     if ([triggerValue isKindOfClass:NSDictionary.class]) {
         triggerType = @"button";
     } else if ([triggerValue isKindOfClass:NSString.class]) {
@@ -304,7 +327,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
 
 - (NSTableCellView *)getEffectCellWithRowDict:(NSDictionary *)rowDict {
     rowDict = rowDict.mutableCopy; // Not sure if necessary
-    NSArray *effectsTable = [self getEffectsTableForRowDict:rowDict];
+    NSArray *effectsTable = [self getEffectsTableForRemapsTableEntry:rowDict];
     // Create trigger cell and fill out popup button contained in it
     NSTableCellView *triggerCell = [self.tableView makeViewWithIdentifier:@"effectCell" owner:nil];
     // Get popup button
@@ -628,7 +651,9 @@ static void getTriggerValues(int *btn1, int *lvl1, NSString **dur1, NSString **t
         // 2.1 Sort by button precond
         NSArray *buttonSequence1 = preconds1[kMFModificationPreconditionKeyButtons];
         NSArray *buttonSequence2 = preconds2[kMFModificationPreconditionKeyButtons];
-        uint64_t iterMax = MAX(buttonSequence1.count, buttonSequence2.count);
+        uint64_t iterMax = MIN(buttonSequence1.count, buttonSequence2.count);
+        NSLog(@"DEBUG - buttonSequence1: %@, buttonSequence2: %@, iterMax: %@", buttonSequence1, buttonSequence2, @(iterMax));
+        // ^ We sometimes get a "index 0 beyond bounds for empty array" error for the `buttonSequence1[i]` instruction. Seemingly at random.
         for (int i = 0; i < iterMax; i++) {
             NSDictionary *buttonPress1 = buttonSequence1[i];
             NSDictionary *buttonPress2 = buttonSequence2[i];

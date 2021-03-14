@@ -60,15 +60,13 @@
             [Utility_Transformation postMouseButtonClicks:button.intValue nOfClicks:nOfClicks.intValue];
         
         } else if ([actionType isEqualToString:kMFActionDictTypeAddModeFeedback]) {
-            
             NSMutableDictionary *payload = ((NSMutableDictionary *)actionDict.mutableCopy);
             [payload removeObjectForKey:kMFActionDictKeyType];
             // ^ Payload has the kMFRemapsKeyTrigger and kMFRemapsKeyModificationPrecondition keys.
             // It is almost a valid remaps table entry.
             // All that the main app has to do with the payload in order to make it a valid entry of the remap table's
             //  dataModel is to add the kMFRemapsKeyEffect key and corresponding values
-            [MessagePort_HelperApp sendMessageToMainApp:@"addModeFeedback" withPayload:payload];
-            [TransformationManager disableAddMode];
+            [TransformationManager concludeAddModeWithPayload:payload];
             
         }
     }

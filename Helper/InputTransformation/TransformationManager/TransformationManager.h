@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSDictionary *)remaps;
 + (void)enableAddMode;
 + (void)disableAddMode;
++ (void)concludeAddModeWithPayload:(NSMutableDictionary *)payload;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -160,6 +160,7 @@ static CGEventRef __nullable otherMouseDraggedCallback(CGEventTapProxy proxy, CG
                 [Utility_Transformation postMouseButton:_drag.fakeDragButtonNumber down:YES];
                 disableMouseTracking();
             } else if ([_drag.type isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
+//                [TransformationManager concludeAddModeWithPayload:_drag.addModePayload];
                 [MessagePort_HelperApp sendMessageToMainApp:@"addModeFeedback" withPayload:_drag.addModePayload];
                 disableMouseTracking();
             }

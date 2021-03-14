@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)openWindowWithFadeAnimation:(NSWindow *)window fadeIn:(BOOL)fadeIn fadeTime:(NSTimeInterval)time;
 + (NSPoint)getCenterOfRect:(NSRect)rect;
 + (BOOL)appIsInstalled:(NSString *)bundleID;
++ (NSImage *)tintedImage:(NSImage *)image withColor:(NSColor *)tint;
 @end
 
 NS_ASSUME_NONNULL_END
