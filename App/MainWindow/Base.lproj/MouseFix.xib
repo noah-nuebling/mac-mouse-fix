@@ -16,20 +16,20 @@
         <window identifier="mainWindow" title="Mac Mouse Fix" autorecalculatesKeyViewLoop="NO" restorable="NO" deferred="NO" releasedWhenClosed="NO" animationBehavior="default" tabbingMode="disallowed" id="F0z-JX-Cv5" userLabel="MainWindow">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenNone="YES"/>
-            <rect key="contentRect" x="0.0" y="0.0" width="660" height="394"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1025"/>
+            <rect key="contentRect" x="0.0" y="0.0" width="660" height="378"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="775"/>
             <value key="minSize" type="size" width="660" height="400"/>
             <value key="maxSize" type="size" width="660" height="1000"/>
             <view key="contentView" identifier="mainView" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="0.0" width="660" height="394"/>
+                <rect key="frame" x="0.0" y="0.0" width="660" height="378"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view identifier="baseView" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5ZP-Jh-Lwi">
-                        <rect key="frame" x="0.0" y="0.0" width="660" height="394"/>
+                        <rect key="frame" x="0.0" y="0.0" width="660" height="378"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button toolTip="Enable Mouse Fix for a better mouse experience!" verticalHuggingPriority="750" fixedFrame="YES" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vqy-WZ-nG6">
-                                <rect key="frame" x="18" y="366" width="157" height="18"/>
+                                <rect key="frame" x="18" y="349" width="157" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="check" title="Enable Mac Mouse Fix" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="G70-nk-4Vw">
                                     <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
@@ -39,29 +39,40 @@
                                     <action selector="enableCheckBox:" target="NxE-tZ-vxj" id="hd0-jA-d0d"/>
                                 </connections>
                             </button>
-                            <box identifier="preferenceBox" autoresizesSubviews="NO" fixedFrame="YES" boxType="custom" borderType="line" cornerRadius="5" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="nmi-Qw-Ncm" customClass="MFBox">
-                                <rect key="frame" x="20" y="20" width="620" height="339"/>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="73e-pL-X7k">
+                                <rect key="frame" x="571" y="341" width="77" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="More..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dLd-xI-ix2">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="moreButton:" target="NxE-tZ-vxj" id="Ioj-36-Cld"/>
+                                </connections>
+                            </button>
+                            <box identifier="preferenceBox" autoresizesSubviews="NO" fixedFrame="YES" borderType="line" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="nmi-Qw-Ncm">
+                                <rect key="frame" x="17" y="16" width="626" height="323"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <view key="contentView" id="IVL-q6-nHn">
-                                    <rect key="frame" x="1" y="1" width="618" height="337"/>
+                                    <rect key="frame" x="3" y="3" width="620" height="317"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="40" horizontalPageScroll="10" verticalLineScroll="40" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jLq-vs-Mpd">
-                                            <rect key="frame" x="0.0" y="119" width="618" height="218"/>
+                                        <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="40" horizontalPageScroll="10" verticalLineScroll="40" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jLq-vs-Mpd" customClass="MFScrollView">
+                                            <rect key="frame" x="0.0" y="120" width="620" height="198"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <clipView key="contentView" drawsBackground="NO" id="S62-75-wtd">
-                                                <rect key="frame" x="0.0" y="0.0" width="618" height="218"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="620" height="198"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <tableView identifier="remapTable" verticalHuggingPriority="750" allowsExpansionToolTips="YES" tableStyle="fullWidth" alternatingRowBackgroundColors="YES" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="40" rowSizeStyle="automatic" viewBased="YES" id="zJh-jy-oKM">
-                                                        <rect key="frame" x="0.0" y="0.0" width="618" height="218"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="620" height="198"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <size key="intercellSpacing" width="17" height="0.0"/>
                                                         <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         <tableViewGridLines key="gridStyleMask" vertical="YES"/>
                                                         <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                         <tableColumns>
-                                                            <tableColumn identifier="trigger" width="353.5" minWidth="40" maxWidth="1000" id="zj7-YT-yKp">
+                                                            <tableColumn identifier="trigger" width="354.5" minWidth="40" maxWidth="1000" id="zj7-YT-yKp">
                                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Trigger">
                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -74,11 +85,11 @@
                                                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                                                 <prototypeCellViews>
                                                                     <tableCellView identifier="triggerCell" id="PcD-th-uol">
-                                                                        <rect key="frame" x="18" y="0.0" width="351" height="40"/>
+                                                                        <rect key="frame" x="18" y="0.0" width="353" height="40"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
                                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pzd-Fo-nrS">
-                                                                                <rect key="frame" x="1" y="13" width="370" height="16"/>
+                                                                                <rect key="frame" x="1" y="12" width="372" height="16"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                                 <textFieldCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" alignment="left" title="⌘⇧⌥⌃ + Triple Click and Drag Button 3" id="hBN-M2-pMi">
                                                                                     <font key="font" usesAppearanceFont="YES"/>
@@ -93,7 +104,7 @@
                                                                     </tableCellView>
                                                                 </prototypeCellViews>
                                                             </tableColumn>
-                                                            <tableColumn identifier="effect" width="215.5" minWidth="40" maxWidth="1000" id="hfG-kJ-PIF">
+                                                            <tableColumn identifier="effect" width="216.5" minWidth="40" maxWidth="1000" id="hfG-kJ-PIF">
                                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Effect">
                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -106,11 +117,11 @@
                                                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                                                 <prototypeCellViews>
                                                                     <tableCellView identifier="effectCell" id="5PH-4e-aAm">
-                                                                        <rect key="frame" x="386.5" y="0.0" width="213" height="40"/>
+                                                                        <rect key="frame" x="387.5" y="0.0" width="213" height="40"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
                                                                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7A6-Ou-8wk">
-                                                                                <rect key="frame" x="0.0" y="4" width="214" height="25"/>
+                                                                                <rect key="frame" x="0.0" y="6" width="214" height="25"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                                                 <popUpButtonCell key="cell" type="push" title="Click and Drag Button 3" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="hdW-0g-MyX" id="zPv-8e-GO1">
                                                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -170,7 +181,7 @@
                                             </connections>
                                         </segmentedControl>
                                         <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uS5-6r-XRu" userLabel="ScrollGroup">
-                                            <rect key="frame" x="32" y="17" width="554" height="82"/>
+                                            <rect key="frame" x="33" y="17" width="554" height="82"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O3G-yl-07J" userLabel="Speed">
@@ -257,20 +268,7 @@ Awesome tricks:
                                         </customView>
                                     </subviews>
                                 </view>
-                                <color key="borderColor" name="gridColor" catalog="System" colorSpace="catalog"/>
-                                <color key="fillColor" name="underPageBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </box>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="73e-pL-X7k">
-                                <rect key="frame" x="571" y="358" width="77" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="More..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dLd-xI-ix2">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="moreButton:" target="NxE-tZ-vxj" id="Ioj-36-Cld"/>
-                                </connections>
-                            </button>
                         </subviews>
                     </view>
                 </subviews>
@@ -278,7 +276,7 @@ Awesome tricks:
             <connections>
                 <outlet property="delegate" destination="NxE-tZ-vxj" id="mRZ-zN-zML"/>
             </connections>
-            <point key="canvasLocation" x="402" y="-34"/>
+            <point key="canvasLocation" x="402" y="-42"/>
         </window>
         <customObject id="NxE-tZ-vxj" customClass="AppDelegate">
             <connections>

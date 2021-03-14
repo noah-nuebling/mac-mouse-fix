@@ -11,10 +11,28 @@
 
 @implementation MFBox
 
+//- (id)initWithFrame:(NSRect)frame {
+//    self = [super initWithFrame:frame];
+//    if (self) {
+//        self.wantsLayer = YES;
+//        self.layer = [self makeBackingLayer];
+//        [self.layer setDelegate:self];
+//    }
+//    return self;
+//}
+//
+//- (void)drawLayer:(CALayer *)layer inContext:(CGContextRef)ctx {
+//    NSRect rect = self.bounds;
+//    rect.origin.x = 0;
+//    rect.origin.y = 0;
+//    [self drawRect:rect];
+//}
+
 - (void)drawRect:(NSRect)dirtyRect { //  This is not called for some reason
     [super drawRect:dirtyRect];
+    
+    NSLog(@"DRAWING NSBOXUX");
 #if DEBUG
-    NSLog(@"DRAWING RECT");
 #endif
     [self drawBoxBorder:dirtyRect];
 }

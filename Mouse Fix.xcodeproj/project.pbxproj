@@ -12,7 +12,8 @@
 		4F2F5DA825FB6FFD0037660A /* AddWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F5DA725FB6FFD0037660A /* AddWindowController.m */; };
 		4F2F5DB225FB723D0037660A /* AddWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F2F5DB125FB723D0037660A /* AddWindow.xib */; };
 		4F2FDF332315662500C7BE14 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2FDF322315662500C7BE14 /* main.m */; };
-		4F37FACD25FDE22D004C34C4 /* MFBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F37FACC25FDE22D004C34C4 /* MFBox.m */; };
+		4F37FAD825FDFDC5004C34C4 /* MFScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */; };
+		4F37FAE525FE076C004C34C4 /* MFBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F37FACC25FDE22D004C34C4 /* MFBox.m */; };
 		4F75BC4D25F857C4004B1282 /* backup_config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F75BC4C25F857C4004B1282 /* backup_config.plist */; };
 		4F94F60525E5EC2800D9F24A /* Mac_Mouse_FixTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60425E5EC2800D9F24A /* Mac_Mouse_FixTests.m */; };
 		4F94F61025E5EC2800D9F24A /* Mac_Mouse_FixUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60F25E5EC2800D9F24A /* Mac_Mouse_FixUITests.m */; };
@@ -181,6 +182,8 @@
 		4F2FDF322315662500C7BE14 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4F37FACB25FDE22D004C34C4 /* MFBox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFBox.h; sourceTree = "<group>"; };
 		4F37FACC25FDE22D004C34C4 /* MFBox.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFBox.m; sourceTree = "<group>"; };
+		4F37FAD625FDFDC4004C34C4 /* MFScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFScrollView.h; sourceTree = "<group>"; };
+		4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFScrollView.m; sourceTree = "<group>"; };
 		4F422EEC23469B0F00AA6E22 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F75BC4C25F857C4004B1282 /* backup_config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = backup_config.plist; sourceTree = "<group>"; };
 		4F94F5EE25E5EC2500D9F24A /* Mac Mouse Fix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mac Mouse Fix.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -458,6 +461,8 @@
 				4FCA07D525F3129B00BFE209 /* RemapTableController.m */,
 				4F37FACB25FDE22D004C34C4 /* MFBox.h */,
 				4F37FACC25FDE22D004C34C4 /* MFBox.m */,
+				4F37FAD625FDFDC4004C34C4 /* MFScrollView.h */,
+				4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */,
 				4FF665D925F2C92700689B77 /* MouseFix.xib */,
 			);
 			path = MainWindow;
@@ -1191,10 +1196,12 @@
 				4FF6660025F2C92700689B77 /* Hyperlink.m in Sources */,
 				4FF6654C25F2C7B000689B77 /* MFQueue.m in Sources */,
 				4FF665ED25F2C92700689B77 /* MFSegmentedControl.m in Sources */,
+				4F37FAE525FE076C004C34C4 /* MFBox.m in Sources */,
 				4FF6660225F2C92700689B77 /* ClickableImageView.m in Sources */,
 				4F2F5DA825FB6FFD0037660A /* AddWindowController.m in Sources */,
 				4FF6655025F2C7B000689B77 /* NSArray+Additions.m in Sources */,
 				4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */,
+				4F37FAD825FDFDC5004C34C4 /* MFScrollView.m in Sources */,
 				4FF665F825F2C92700689B77 /* MessagePort_App.m in Sources */,
 				4FF6660125F2C92700689B77 /* Utility_App.m in Sources */,
 				4FF665F225F2C92700689B77 /* UpdateWindow.m in Sources */,
@@ -1253,7 +1260,6 @@
 				4FF6654F25F2C7B000689B77 /* NSArray+Additions.m in Sources */,
 				4FF6654525F2C7B000689B77 /* Objects.m in Sources */,
 				4FF666A925F2C93A00689B77 /* Utility_HelperApp.m in Sources */,
-				4F37FACD25FDE22D004C34C4 /* MFBox.m in Sources */,
 				4FF6668B25F2C93A00689B77 /* AnimationCurve.m in Sources */,
 				4FF6654325F2C7B000689B77 /* HelperServices.m in Sources */,
 				4FF6654B25F2C7B000689B77 /* MFQueue.m in Sources */,
