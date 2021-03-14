@@ -45,7 +45,6 @@
 }
 
 - (void)awakeFromNib {
-    NSLog(@"AwakefromNOBBBB");
     // Force Autohiding scrollers - to keep layout consistent (doesn't work)
     self.scrollView.autohidesScrollers = YES;
     self.scrollView.scrollerStyle = NSScrollerStyleOverlay;
