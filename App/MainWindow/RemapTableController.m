@@ -16,12 +16,10 @@
 #import "AddWindowController.h"
 #import <Cocoa/Cocoa.h>
 #import "SharedUtility.h"
-#import "MFBox.h"
 
 @interface RemapTableController ()
 @property NSTableView *tableView;
 @property NSArray *dataModel; // Is actually an NSMutableArray I think. Take care not to accidentally corrupt this!
-@property (weak) IBOutlet MFBox *box;
 @end
 
 @implementation RemapTableController
@@ -55,37 +53,10 @@
     NSLog(@"RemapTableView did load.");
 #endif
     
-    double cr = 5.0; // self.box.cornerRadius;
-    
-    // Set corner radius
     NSClipView *clipView = (NSClipView *)self.tableView.superview;
     NSScrollView *scrollView = (NSScrollView *)clipView.superview;
-//    scrollView.wantsLayer = YES;
-//    scrollView.borderType = NSLineBorder;
-    // ^ This draws border with rounded corners, but we can't adjust color
-    // v This doesn't work at all
-//    scrollView.layer.borderWidth = 5.0;
-//    scrollView.layer.cornerRadius = cr;
-//    scrollView.layer.borderColor = NSColor.greenColor.CGColor; //self.box.layer.borderColor;
     
-    // Set NSBox clipping
-    //  This stuff seems to only work properly with the box borders, when box is type Custom, (not Primary) it seems.
-    //  You can't replicate the default NSBox's look with a custom box, because there are no system colors for that.
-    //      The existing system colors that are close look decent in light mode but really bad in darkmode.
-    //          (Closest ones I've found: Under Page Background, and Grid Color)
-    //          I don't want to depend on handcoded replicas of the original colors. I'd have to get all the colors for previous macOS versions as well and set them depending on macOS version, and if the colors change in the future I'd have to update that as well. It's just not worth it.
-    // -> I see 2 solutions
-    //  - We have rounded corners but no border around tableView
-    //  - We have borders around tableView but no rounded corners
-    //  - (We have both but it looks glitchy)
-    //  -> I feel like border is most important
-//    self.box.boxType = NSBoxCustom;
-//    self.box.borderType = NSNoBorder; // This somehow removes the backkground as well
-//    self.box.wantsLayer = YES;
-//    self.box.layer.masksToBounds = YES;
-//    self.box.layer.cornerRadius = cr; // cr;
-//    self.box.layer.borderColor = NSColor.gridColor.CGColor;
-//    self.box.layer.borderWidth = 1.0;
+    CGFloat cr = 5.0; // Should be equal to cornerRadius of surrounding NSBox
     
     scrollView.borderType = NSNoBorder;
     scrollView.wantsLayer = YES;

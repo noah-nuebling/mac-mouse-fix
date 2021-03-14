@@ -17,6 +17,7 @@
     // Even if we don't do anything here, using this subclass allows us to set border color using view.layer.borderColor = ...
     // I have no clue why
     
+    
 //    // We're going to be modifying the state for this,
 //    // so allow it to be restored later
 //    [NSGraphicsContext saveGraphicsState];
