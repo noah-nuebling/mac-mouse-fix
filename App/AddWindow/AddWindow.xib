@@ -18,22 +18,22 @@
         <window identifier="AddWindow" title="AddWindow" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="9Tp-rg-GbO" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="425" y="294" width="523" height="357"/>
+            <rect key="contentRect" x="425" y="294" width="465" height="329"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1025"/>
             <view key="contentView" id="c9F-E0-775">
-                <rect key="frame" x="0.0" y="0.0" width="523" height="357"/>
+                <rect key="frame" x="0.0" y="0.0" width="465" height="329"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <box identifier="addField" fixedFrame="YES" borderType="bezel" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="jvk-Wi-QYO">
-                        <rect key="frame" x="17" y="36" width="489" height="282"/>
+                        <rect key="frame" x="17" y="36" width="431" height="254"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <view key="contentView" id="dnZ-10-afR">
-                            <rect key="frame" x="3" y="3" width="483" height="276"/>
+                            <rect key="frame" x="3" y="3" width="425" height="248"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <imageView identifier="PlusIcon" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7dr-xS-3z8">
-                                    <rect key="frame" x="209" y="104" width="64" height="68"/>
-                                    <autoresizingMask key="autoresizingMask"/>
+                                    <rect key="frame" x="181" y="93.5" width="64.5" height="68"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="NSAddTemplate" id="9r2-lE-jzC"/>
                                     <color key="contentTintColor" name="quaternaryLabelColor" catalog="System" colorSpace="catalog"/>
                                 </imageView>
@@ -41,7 +41,7 @@
                         </view>
                     </box>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OwK-ma-X2g">
-                        <rect key="frame" x="18" y="330" width="232" height="16"/>
+                        <rect key="frame" x="18" y="302" width="232" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Click a Button over this field to add it:" id="eL1-qA-LQy">
                             <font key="font" usesAppearanceFont="YES"/>
@@ -59,7 +59,7 @@
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sfy-Z5-wBq">
-                        <rect key="frame" x="434" y="3" width="76" height="32"/>
+                        <rect key="frame" x="376" y="3" width="76" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dF7-Dm-6Mx">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -77,7 +77,7 @@ Gw
             <connections>
                 <outlet property="delegate" destination="-2" id="fMy-AI-2Wz"/>
             </connections>
-            <point key="canvasLocation" x="414" y="462"/>
+            <point key="canvasLocation" x="442.5" y="447.5"/>
         </window>
     </objects>
     <resources>
