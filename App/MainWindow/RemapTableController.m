@@ -44,6 +44,18 @@
     [ConfigFileInterface_App writeConfigToFileAndNotifyHelper];
 }
 
+- (void)awakeFromNib {
+    NSLog(@"AwakefromNOBBBB");
+    // Force Autohiding scrollers - to keep layout consistent (doesn't work)
+    self.scrollView.autohidesScrollers = YES;
+    self.scrollView.scrollerStyle = NSScrollerStyleOverlay;
+}
+
+- (NSScrollView *)scrollView {
+    NSClipView *clipView = (NSClipView *)self.tableView.superview;
+    NSScrollView *scrollView = (NSScrollView *)clipView.superview;
+    return scrollView;
+}
 
 - (void)viewDidLoad {
     // Not getting called for some reason -> I had to set the view outlet of the controller object in IB to the tableView.
@@ -54,8 +66,7 @@
     
     // Set rounded corners and appropriate border
     
-    NSClipView *clipView = (NSClipView *)self.tableView.superview;
-    NSScrollView *scrollView = (NSScrollView *)clipView.superview;
+    NSScrollView * scrollView = self.scrollView;
     
     CGFloat cr = 5.0;
     // ^ Should be equal to cornerRadius of surrounding NSBox
