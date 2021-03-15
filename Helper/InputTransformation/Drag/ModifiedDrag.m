@@ -228,17 +228,18 @@ static CGEventRef __nullable mouseMovedOrDraggedCallback(CGEventTapProxy proxy, 
 //        NSLog(@"deltaX: %f", deltaX);
 
         if ([_drag.type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
-            // When we dispatch this to another queue, nothing works at all. I think it's because we didn't understand how block capture variables. See https://stackoverflow.com/questions/15117992/why-does-this-block-not-capture-variable-value-at-time-of-creation
+            // When we dispatch this to another queue, nothing works at all.
+            //      -> I think it's because we didn't understand how block capture variables. See https://stackoverflow.com/questions/15117992/why-does-this-block-not-capture-variable-value-at-time-of-creation
             //      We figured the block stuff out, but its slower than just doing everything sequentially I think, and the bug with fake 3fingerswipes getting stuck still occurs
+            
             // Create local copies of variables, so that block captures the values at the current time (at declaration time, not at time of execution)
             struct ModifiedDragState localDrag = _drag;
             double localSThreeFingerH = sThreeFingerH;
             double localSThreeFingerV = sThreeFingerV;
             double localDeltaX = deltaX;
             double localDeltaY = deltaY;
-//            NSLog(@"BEFORE DISPATCH (3-finger-swipe-changed) queue %@, thread: %@", [SharedUtility currentDispatchQueueDescription], NSThread.currentThread);
-//            dispatch_async(_fakeInputQueue, ^{
-//                NSLog(@"AFTER DISPATCH (3-finger-swipe-changed) queue %@, thread: %@", [SharedUtility currentDispatchQueueDescription], NSThread.currentThread);
+            
+            dispatch_async(_fakeInputQueue, ^{
                 if (localDrag.usageAxis == kMFAxisHorizontal) {
                     double delta = -localDeltaX * localSThreeFingerH;
                     [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeHorizontal phase:localDrag.phase];
@@ -252,7 +253,7 @@ static CGEventRef __nullable mouseMovedOrDraggedCallback(CGEventTapProxy proxy, 
                     //      It just occured and this wasn't triggered
                 }
                 _drag.phase = kIOHIDEventPhaseChanged;
-//            });
+            });
         } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, scrollDispatchDelay * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
                 [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaX*sTwoFinger deltaY:deltaY*sTwoFinger phase:_drag.phase isGestureDelta:!inputIsPointerMovement];
@@ -269,20 +270,22 @@ static CGEventRef __nullable mouseMovedOrDraggedCallback(CGEventTapProxy proxy, 
 #endif
     
     if (_drag.activationState == kMFModifiedInputActivationStateNone) return;
+
+    // TODO: Investigate - Moving this code up here causes stuck bug every time
+//    _drag.activationState = kMFModifiedInputActivationStateNone;
+//    disableMouseTracking();
     
     if (_drag.activationState == kMFModifiedInputActivationStateInUse) {
         if ([_drag.type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
 //            NSLog(@"BEFORE DISPATCH (swipeDeactivated) queue %@, thread: %@", [SharedUtility currentDispatchQueueDescription], NSThread.currentThread);
             struct ModifiedDragState localDrag = _drag;
-//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.0 * NSEC_PER_SEC), _fakeInputQueue, ^{ // Adding delay here doesn't help against stuck-bug
-//            dispatch_async(_fakeInputQueue, ^{
-//                NSLog(@"AFTER DISPATCH (swipeDeactivated) queue %@, thread: %@", [SharedUtility currentDispatchQueueDescription], NSThread.currentThread);
+            dispatch_async(_fakeInputQueue, ^{
                 if (localDrag.usageAxis == kMFAxisHorizontal) {
                     [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypeHorizontal phase:kIOHIDEventPhaseEnded];
                 } else if (localDrag.usageAxis == kMFAxisVertical) {
                     [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypeVertical phase:kIOHIDEventPhaseEnded];
                 }
-//            });
+            });
         } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, scrollDispatchDelay * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
                 [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded isGestureDelta:!inputIsPointerMovement];
@@ -293,8 +296,9 @@ static CGEventRef __nullable mouseMovedOrDraggedCallback(CGEventTapProxy proxy, 
             [TransformationManager disableAddMode];
         }
     }
-    disableMouseTracking();
+    
     _drag.activationState = kMFModifiedInputActivationStateNone;
+    disableMouseTracking();
     
 //    CGAssociateMouseAndMouseCursorPosition(true); // Doesn't work
 //    CGDisplayShowCursor(CGMainDisplayID());
