@@ -127,5 +127,8 @@
 + (int8_t)signOf:(double)x {
     return (0 < x) - (x < 0);
 }
++ (NSString *)currentDispatchQueueDescription {
+    return dispatch_get_current_queue().description;
+}
 
 @end

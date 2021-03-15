@@ -773,9 +773,9 @@
 			isa = PBXGroup;
 			children = (
 				4FF6663225F2C93A00689B77 /* GestureScrollSimulator.h */,
-				4FF6663325F2C93A00689B77 /* TouchSimulator.m */,
 				4FF6663425F2C93A00689B77 /* GestureScrollSimulator.m */,
 				4FF6663525F2C93A00689B77 /* TouchSimulator.h */,
+				4FF6663325F2C93A00689B77 /* TouchSimulator.m */,
 			);
 			path = Touch;
 			sourceTree = "<group>";

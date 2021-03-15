@@ -26,6 +26,7 @@ typedef void(*MFCTLCallback)(NSTask *task, NSPipe *output, NSError *error);
 + (CGEventType)CGEventTypeForButtonNumber:(MFMouseButtonNumber)button isMouseDown:(BOOL)isMouseDown;
 + (CGMouseButton)CGMouseButtonFromMFMouseButtonNumber:(MFMouseButtonNumber)button;
 + (int8_t)signOf:(double)x;
++ (NSString *)currentDispatchQueueDescription;
 @end
 
 NS_ASSUME_NONNULL_END

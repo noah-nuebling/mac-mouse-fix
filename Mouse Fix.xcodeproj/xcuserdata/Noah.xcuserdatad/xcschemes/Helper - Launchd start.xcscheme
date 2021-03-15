@@ -63,20 +63,14 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "/bin/launchctl remove &quot;mouse.fix.helper&quot;; # Doesn&apos;t work, have to do this manually after running&#10;&#10;">
+               scriptText = "/bin/launchctl remove &quot;mouse.fix.helper&quot;; &#10;# Doesn&apos;t work, have to do this manually after running&#10;#   I think that&apos;s cause this is only called when the executable is quit &quot;naturally&quot; not by pressing the stop button in Xcode...&#10;&#10;">
             </ActionContent>
          </ExecutionAction>
       </PostActions>
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4FCECD7F21092354001F1078"
-            BuildableName = "Mac Mouse Fix Helper.app"
-            BlueprintName = "Mac Mouse Fix Helper"
-            ReferencedContainer = "container:Mouse Fix.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
+      <PathRunnable
+         runnableDebuggingMode = "0"
+         FilePath = "/Users/Noah/Library/Developer/Xcode/DerivedData/Mouse_Fix-efqsyfjcspmnyiftwlwinuqikmvp/Build/Products/Release/Mac Mouse Fix.app/Contents/Library/LoginItems/Mac Mouse Fix Helper.app">
+      </PathRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

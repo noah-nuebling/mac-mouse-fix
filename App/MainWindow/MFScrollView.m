@@ -14,6 +14,7 @@
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];
     
+    
     // Even if we don't do anything here, using this subclass allows us to set border color using view.layer.borderColor = ...
     // I have no clue why
     
