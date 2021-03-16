@@ -354,19 +354,26 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
 
 - (NSString *)description {
     
-    IOHIDDeviceRef device = self.IOHIDDevice;
-    
-    NSString *vendorID = IOHIDDeviceGetProperty(device, CFSTR("VendorID"));
-    NSString *devName = IOHIDDeviceGetProperty(device, CFSTR("Product"));
-    NSString *devPrimaryUsage = IOHIDDeviceGetProperty(device, CFSTR("PrimaryUsage"));
-    
-    NSString *outString = [NSString stringWithFormat:
-                           @"Device Info:\n"
-                           "    Model: %@\n"
-                           "    VendorID: %@\n"
-                           "    Usage: %@",
-                           devName, vendorID, devPrimaryUsage];
-    return outString;
+    @try {
+        IOHIDDeviceRef device = self.IOHIDDevice;
+        
+        NSString *vendorID = IOHIDDeviceGetProperty(device, CFSTR("VendorID"));
+        NSString *devName = IOHIDDeviceGetProperty(device, CFSTR("Product"));
+        NSString *devPrimaryUsage = IOHIDDeviceGetProperty(device, CFSTR("PrimaryUsage"));
+        
+        NSString *outString = [NSString stringWithFormat:
+                               @"Device Info:\n"
+                               "    Model: %@\n"
+                               "    VendorID: %@\n"
+                               "    Usage: %@",
+                               devName, vendorID, devPrimaryUsage];
+        return outString;
+    } @catch (NSException *exception) {
+        NSLog(@"Exception while getting MFDevice description: %@", exception);
+        // After waking computer from sleep I just had a EXC_BAD_ACCESS exception. The debugger says the MFDevice is still allocated in debugger (I can look at all its properties and of the IOHIDDevice as well)) but the "properties" dict of the IOHIDDevice is a NULL pointer for some reason. Really strange. I don't know how to handle this situation, crashing is proabably better than to keep going in this weird state.
+        NSLog(@"Rethrowing exception because crashing the app is probably best in this situation.");
+        @throw exception;
+    }
 }
 
 @end
