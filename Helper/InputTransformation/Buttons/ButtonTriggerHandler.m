@@ -31,6 +31,10 @@
     NSDictionary *effectiveRemaps = getEffectiveRemaps(remaps, activeModifiers);
     NSDictionary *remapsForActiveModifiers = remaps[activeModifiers];
     
+#if DEBUG
+    NSLog(@"\nActive mods: %@, \nremapsForActiveMods: %@", activeModifiers, remapsForActiveModifiers);
+#endif
+    
     // If no remaps exist for this button, let the CGEvent which caused this function call pass through (Only if this function was invoked as a direct result of a physical button press)
     if (triggerType == kMFActionTriggerTypeButtonDown || triggerType == kMFActionTriggerTypeButtonUp) {
         if (!effectExistsForButton(button, remaps, effectiveRemaps)) {
@@ -136,10 +140,13 @@ static void executeClickOrHoldActionIfItExists(NSString * _Nonnull duration,
 
 #pragma mark Other
 
-+ (BOOL)effectOfEqualOrGreaterLevelExistsForDevice:(NSNumber *)devID button:(NSNumber *)button level:(NSNumber *)level {
+/// This is used by ButtonTriggerGenerator to reset the click cycle, if we know the button can't be used this click cycle anyways.
+/// \discussion We used to call [ModifierManager getActiveModifiersForDevice:filterButton:event:] with the filterButton argument set to nil.
+///     This lead to issues with the click cycle being reset prematurely sometimes. We set filterBUtton to button, now. Hopefully this doesn't break stuff in other ways. I don't think so though.
++ (BOOL)buttonCouldStillBeUsedThisClickCycle:(NSNumber *)devID button:(NSNumber *)button level:(NSNumber *)level {
     
     NSDictionary *remaps = TransformationManager.remaps;
-    NSDictionary *activeModifiers = [ModifierManager getActiveModifiersForDevice:devID filterButton:nil event:nil];
+    NSDictionary *activeModifiers = [ModifierManager getActiveModifiersForDevice:devID filterButton:button event:nil];
     NSDictionary *effectiveRemaps = getEffectiveRemaps(remaps, activeModifiers);
     
     BOOL clickActionOfThisLevelExists;

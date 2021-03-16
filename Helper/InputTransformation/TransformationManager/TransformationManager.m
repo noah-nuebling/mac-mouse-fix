@@ -174,54 +174,54 @@ NSDictionary *_remaps;
     /// Having these 2 data structures might very well not be worth the cost of having to think about both and write a conversion function between them. But we've already built helper around this, and mainApp needs the table based structure, so we're sticking with this double-structure approach.
     return @{
         @{}: @{                                                     // Key: modifier dict (empty -> no modifiers)
-                @(3): @{                                                // Key: button
-                        @(1): @{                                            // Key: level
-                                kMFButtonTriggerDurationClick: @[                                   // Key: click/hold, value: array of actions
-                                        @{
-                                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-                                            kMFActionDictKeyGenericVariant:@(kMFSHMissionControl)
-                                        },
-                                ],
-                                kMFButtonTriggerDurationHold: @[                                  // Key: click/hold, value: array of actions
-                                        @{
-                                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-                                            kMFActionDictKeyGenericVariant: @(kMFSHShowDesktop),
-                                        },
-                                ],
-                                
-                        },
-                        @(2): @{                                            // Key: level
-                                kMFButtonTriggerDurationClick: @[                                   // Key: click/hold, value: array of actions
-                                        @{
-                                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-                                            kMFActionDictKeyGenericVariant:@(kMFSHLookUp)
-                                        },
-                                ],
-                        }
-                },
-                @(4): @{                                                // Key: button
-                        @(1): @{                                            // Key: level
-                                kMFButtonTriggerDurationClick: @[
-                                        @{
-                                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-                                            kMFActionDictKeyGenericVariant: @(32),
-                                        }
-                                ],
-                                kMFButtonTriggerDurationHold: @[
-                                        @{
-                                            kMFActionDictKeyType: kMFActionDictTypeSmartZoom,
-                                        }
-                                ],
-                        },
-//                        @(2): @{                                            // Key: level
+//                @(3): @{                                                // Key: button
+//                        @(1): @{                                            // Key: level
+//                                kMFButtonTriggerDurationClick: @[                                   // Key: click/hold, value: array of actions
+//                                        @{
+//                                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+//                                            kMFActionDictKeyGenericVariant:@(kMFSHMissionControl)
+//                                        },
+//                                ],
+//                                kMFButtonTriggerDurationHold: @[                                  // Key: click/hold, value: array of actions
+//                                        @{
+//                                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+//                                            kMFActionDictKeyGenericVariant: @(kMFSHShowDesktop),
+//                                        },
+//                                ],
+//
+//                        },
+////                        @(2): @{                                            // Key: level
+////                                kMFButtonTriggerDurationClick: @[                                   // Key: click/hold, value: array of actions
+////                                        @{
+////                                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+////                                            kMFActionDictKeyGenericVariant:@(kMFSHLookUp)
+////                                        },
+////                                ],
+////                        }
+//                },
+//                @(4): @{                                                // Key: button
+//                        @(1): @{                                            // Key: level
 //                                kMFButtonTriggerDurationClick: @[
 //                                        @{
 //                                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-//                                            kMFActionDictKeyGenericVariant: @(36),
+//                                            kMFActionDictKeyGenericVariant: @(32),
+//                                        }
+//                                ],
+//                                kMFButtonTriggerDurationHold: @[
+//                                        @{
+//                                            kMFActionDictKeyType: kMFActionDictTypeSmartZoom,
 //                                        }
 //                                ],
 //                        },
-                },
+////                        @(2): @{                                            // Key: level
+////                                kMFButtonTriggerDurationClick: @[
+////                                        @{
+////                                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+////                                            kMFActionDictKeyGenericVariant: @(36),
+////                                        }
+////                                ],
+////                        },
+//                },
                 @(7)  : @{                                                // Key: button
                         @(1): @{                                            // Key: level
                                 kMFButtonTriggerDurationClick: @[                                  // Key: click/hold, value: array of actions
@@ -235,19 +235,19 @@ NSDictionary *_remaps;
                 
         },
         
-        @{                                                          // Key: modifier dict
-            kMFModificationPreconditionKeyButtons: @[
-                    @{
-                        kMFButtonModificationPreconditionKeyButtonNumber: @(3),
-                        kMFButtonModificationPreconditionKeyClickLevel: @(2),
-                    }
-            ],
-        }: @{
-                kMFTriggerDrag: @{
-                        kMFModifiedDragDictKeyType: kMFModifiedDragTypeFakeDrag,
-                        kMFModifiedDragDictKeyFakeDragVariantButtonNumber: @3,
-                }
-        },
+//        @{                                                          // Key: modifier dict
+//            kMFModificationPreconditionKeyButtons: @[
+//                    @{
+//                        kMFButtonModificationPreconditionKeyButtonNumber: @(3),
+//                        kMFButtonModificationPreconditionKeyClickLevel: @(2),
+//                    }
+//            ],
+//        }: @{
+//                kMFTriggerDrag: @{
+//                        kMFModifiedDragDictKeyType: kMFModifiedDragTypeFakeDrag,
+//                        kMFModifiedDragDictKeyFakeDragVariantButtonNumber: @3,
+//                }
+//        },
         
         @{
             kMFModificationPreconditionKeyButtons: @[
@@ -261,16 +261,24 @@ NSDictionary *_remaps;
                 kMFTriggerDrag: @{
                         kMFModifiedDragDictKeyType: kMFModifiedDragTypeThreeFingerSwipe,
                 },
-//                @(4): @{                                                // Key: button
-//                        @(1): @{                                            // Key: level
-//                                kMFButtonTriggerDurationClick: @[
-//                                        @{
-//                                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-//                                            kMFActionDictKeyGenericVariant: @(70),
-//                                        }
-//                                ],
-//                        },
-//                },
+                @(3): @{                                                // Key: button
+                        @(1): @{                                            // Key: level
+                                kMFButtonTriggerDurationClick: @[
+                                        @{
+                                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+                                            kMFActionDictKeyGenericVariant: @(kMFSHSpotlight),
+                                        }
+                                ],
+                        },
+                        @(2): @{                                            // Key: level
+                                kMFButtonTriggerDurationClick: @[
+                                        @{
+                                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+                                            kMFActionDictKeyGenericVariant: @(kMFSHSiri),
+                                        }
+                                ],
+                        },
+                },
         },
         @{
             //            kMFModificationPreconditionKeyButtons: @[

@@ -20,6 +20,10 @@
 
 + (void)executeActionArray:(NSArray *)actionArray {
     
+#if DEBUG
+    NSLog(@"Executing action array: %@", actionArray);
+#endif
+    
     for (NSDictionary *actionDict in actionArray) {
         
         MFStringConstant actionType = actionDict[kMFActionDictKeyType];

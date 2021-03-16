@@ -50,6 +50,9 @@
     }
 }
 - (void)setClickLevel:(int64_t)clickLevel {
+#if DEBUG
+    NSLog(@"Setting clickLevel to: %lld", clickLevel);
+#endif
     @synchronized (self) {
         _clickLevel = clickLevel;
     }
@@ -169,7 +172,7 @@ static NSMutableDictionary *_state;
         bs.clickLevel += 1;
         
         // If new clickLevel and any following clickLevels can't lead to any effects, cycle back to the first click level
-        if (![ButtonTriggerHandler effectOfEqualOrGreaterLevelExistsForDevice:devID button:btn level:@(bs.clickLevel)]) {
+        if (![ButtonTriggerHandler buttonCouldStillBeUsedThisClickCycle:devID button:btn level:@(bs.clickLevel)]) {
             bs.clickLevel = 1;
         }
         

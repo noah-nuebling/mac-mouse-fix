@@ -52,20 +52,20 @@ struct ModifiedDragState {
     NSString *output = @"";
     @try {
         output = [NSString stringWithFormat:
-@"\n\
-eventTap: %@\n\
-usageThreshold: %lld\n\
-type: %@\n\
-activationState: %u\n\
-modifiedDevice: \n%@\n\
-origin: (%f, %f)\n\
-originOffset: (%f, %f)\n\
-usageAxis: %u\n\
-phase: %hu\n\
-subPixelatorX: %@\n\
-subPixelatorY: %@\n\
-fakeDragButtonNumber: %u\n\
-addModePayload: %@\n",
+        @"\n\
+        eventTap: %@\n\
+        usageThreshold: %lld\n\
+        type: %@\n\
+        activationState: %u\n\
+        modifiedDevice: \n%@\n\
+        origin: (%f, %f)\n\
+        originOffset: (%f, %f)\n\
+        usageAxis: %u\n\
+        phase: %hu\n\
+        subPixelatorX: %@\n\
+        subPixelatorY: %@\n\
+        fakeDragButtonNumber: %u\n\
+        addModePayload: %@\n",
                   drag.eventTap, drag.usageThreshold, drag.type, drag.activationState, drag.modifiedDevice, drag.origin.x, drag.origin.y, drag.originOffset.x, drag.originOffset.y, drag.usageAxis, drag.phase, drag.subPixelatorX, drag.subPixelatorY, drag.fakeDragButtonNumber, drag.addModePayload
                   ];
     } @catch (NSException *exception) {
@@ -241,7 +241,7 @@ static void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY) {
 + (void)deactivate {
     
 #if DEBUG
-    NSLog(@"Deactivating modified drag with state: %@", [self modifiedDragStateDescription:_drag]);
+//    NSLog(@"Deactivating modified drag with state: %@", [self modifiedDragStateDescription:_drag]);
 #endif
     
     if (_drag.activationState == kMFModifiedInputActivationStateNone) return;
