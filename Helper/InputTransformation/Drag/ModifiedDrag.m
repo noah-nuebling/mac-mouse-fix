@@ -79,7 +79,6 @@ static struct ModifiedDragState _drag;
 dispatch_queue_t _fakeInputQueue;
 
 #define scrollDispatchDelay 0 // In ms // Thought this would help when using pointer movement as input, but it doesn't
-#define navigationDispatchDelay 0 // In ms // This seems to help against navigation-swipe-modified-drags getting stuck. But maybe it's the threading/using queues we used to facilitate this.
 #define inputIsPointerMovement YES
 // There are two different modes for how we receive mouse input, toggle to switch between the two for testing
 // Set to no, if you want input to be raw mouse input, set to yes if you want input to be mouse pointer delta
@@ -100,9 +99,9 @@ dispatch_queue_t _fakeInputQueue;
             CGEventMask mask = CGEventMaskBit(kCGEventOtherMouseDragged) | CGEventMaskBit(kCGEventMouseMoved); // kCGEventMouseMoved is only necessary for keyboard only drag modification, and maybe for AddMode to work.
             _drag.eventTap = CGEventTapCreate(kCGHIDEventTap, kCGTailAppendEventTap, kCGEventTapOptionDefault, mask, mouseMovedOrDraggedCallback, NULL);
             // ^ Make sure to use the same EventTapLocation and EventTapPlacement here as you do in ButtonInputReceiver, otherwise there'll be timing and ordering issues!
-            //      This fixed the stuck-bug! (I think) (The bug where fake navigation swipes would sometimes get stuck mid animation after releasing the modifying button)
+            //      This fixed the stuck-bug! (I think) (The bug where fake dockSwipes would sometimes get stuck mid animation after releasing the modifying button)
             //      As well as the problem, where mouse movement capturing would still be active after releasing the button leading to weird UX.
-            //      -> Nopee it didn't fix the stuck-bug. It seems to have fixed it on horizontal navigation swipes, but on vertical ones it's worse than ever.
+            //      -> Nopee it didn't fix the stuck-bug. It seems to have fixed it on horizontal dockSwipes, but on vertical ones it's worse than ever.
             NSLog(@"_eventTap: %@", _drag.eventTap);
             CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _drag.eventTap, 0);
             CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes);
@@ -215,52 +214,33 @@ static CGEventRef __nullable mouseMovedOrDraggedCallback(CGEventTapProxy proxy, 
         
     } else if (st == kMFModifiedInputActivationStateInUse) {
         
-        double sTwoFinger;
-        double sThreeFingerH;
-        double sThreeFingerV;
+        double twoFingerScale;
+        double threeFingerScaleH;
+        double threeFingerScaleV;
         
         if (inputIsPointerMovement) { // With these values, the scrolling/changing spaces will follow the mouse pointer almost exactly
-            CGFloat screenHeight = [[NSScreen mainScreen] frame].size.width;
-            sThreeFingerH = sThreeFingerV = 1.2 / screenHeight;
-//            sThreeFingerV *= 3; // Vertical doesn't follow mouse pointer anyways, so might as well scale it up
-            sTwoFinger = 1.0;
+            CGFloat screenWidth = NSScreen.mainScreen.frame.size.width;
+            threeFingerScaleH = threeFingerScaleV = 1.2 / screenWidth;
+            // ^ This makes horizontal dockSwipes (switch between spaces) follow the pointer exactly. We should maybe use screenHeight to scale vertical dockSwipes (Mission Control and App Windows), but on a normal screen I this feels perfectly fine.
+            // ^ TODO: Test this on a vertical screen
+            twoFingerScale = 1.0; // This makes pointer scrolling follow the mouse pointer exactly
         } else {
-            sThreeFingerH = sThreeFingerV = 5 / 10000.0;;
-            sTwoFinger = 0.5;
+            threeFingerScaleH = threeFingerScaleV = 5 / 10000.0;;
+            twoFingerScale = 0.5;
         }
-        
-//        NSLog(@"deltaX: %f", deltaX);
 
         if ([_drag.type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
-            // When we dispatch this to another queue, nothing works at all.
-            //      -> I think it's because we didn't understand how block capture variables. See https://stackoverflow.com/questions/15117992/why-does-this-block-not-capture-variable-value-at-time-of-creation
-            //      We figured the block stuff out, but its slower than just doing everything sequentially I think, and the bug with fake 3fingerswipes getting stuck still occurs
-            
-            // Create local copies of variables, so that block captures the values at the current time (at declaration time, not at time of execution)
-            struct ModifiedDragState localDrag = _drag;
-            double localSThreeFingerH = sThreeFingerH;
-            double localSThreeFingerV = sThreeFingerV;
-            double localDeltaX = deltaX;
-            double localDeltaY = deltaY;
-            
-//            dispatch_async(_fakeInputQueue, ^{
-                if (localDrag.usageAxis == kMFAxisHorizontal) {
-                    double delta = -localDeltaX * localSThreeFingerH;
-                    [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeHorizontal phase:localDrag.phase];
-                } else if (localDrag.usageAxis == kMFAxisVertical) {
-                    double delta = localDeltaY * localSThreeFingerV;
-                    [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeVertical phase:localDrag.phase];
-                }
-                if (!(localDrag.activationState == kMFModifiedInputActivationStateInUse)) {
-                    NSLog(@"Modified drag not found in 'in-use' state right after sending mid-swipe event");
-                    // ^ This hints at some race condition which might be causing stuck-bug
-                    //      It just occured and this wasn't triggered
+                if (_drag.usageAxis == kMFAxisHorizontal) {
+                    double delta = -deltaX * threeFingerScaleH;
+                    [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeHorizontal phase:_drag.phase];
+                } else if (_drag.usageAxis == kMFAxisVertical) {
+                    double delta = deltaY * threeFingerScaleV;
+                    [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeVertical phase:_drag.phase];
                 }
                 _drag.phase = kIOHIDEventPhaseChanged;
-//            });
         } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, scrollDispatchDelay * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
-                [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaX*sTwoFinger deltaY:deltaY*sTwoFinger phase:_drag.phase isGestureDelta:!inputIsPointerMovement];
+                [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaX*twoFingerScale deltaY:deltaY*twoFingerScale phase:_drag.phase isGestureDelta:!inputIsPointerMovement];
             });
         }
         _drag.phase = kIOHIDEventPhaseChanged;
@@ -290,7 +270,7 @@ static CGEventRef __nullable mouseMovedOrDraggedCallback(CGEventTapProxy proxy, 
                 if (localDrag.usageAxis == kMFAxisHorizontal) {
                     [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypeHorizontal phase:kIOHIDEventPhaseEnded];
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                        // The inital navigation swipe will be ignored by the system when the it is under load (I called this the "stuck bug" in other places). Sending the event with a delay of 200ms prevents this almost always. Sending the event twice at different times gives us the best of both responsiveness when the system is not under load, and reliability when the system is under load (In those cases, you don't even notice the delay because the UI is stuttery and delayed anyways)
+                        // The inital dockSwipe will be ignored by the system when the it is under load (I called this the "stuck bug" in other places). Sending the event with a delay of 200ms prevents this almost always. Sending the event twice at different times gives us the best of both responsiveness when the system is not under load, and reliability when the system is under load (In those cases, you don't even notice the delay because the UI is stuttery and delayed anyways)
                         [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypeHorizontal phase:kIOHIDEventPhaseEnded];
                     });
                 } else if (localDrag.usageAxis == kMFAxisVertical) {

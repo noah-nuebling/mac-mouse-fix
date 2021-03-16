@@ -178,7 +178,7 @@ double _dockSwipeLastDelta = 0.0;
     if (phase == kIOHIDEventPhaseEnded || phase == kIOHIDEventPhaseCancelled) {
 #if DEBUG
         NSLog(@"EXIT SPEED: %f, originOffset: %f, phase: %hu", _dockSwipeLastDelta, _dockSwipeOriginOffset, phase);
-        // ^ Debugging of stuck-bug. When the stuck bug occurs, This always seems to be called and in the appropriate order (The fake navigation swipe with the end-phase is always called after all other phases).
+        // ^ Debugging of stuck-bug. When the stuck bug occurs, This always seems to be called and in the appropriate order (The fake dockSwipe with the end-phase is always called after all other phases).
         //      Random observation: I just got it stuck with just the trackpad! Right after getting it stuck with mouse.
         //      This makes me think the bug is about timing / how slow the events are sent, and not in which order the events are sent or with on which thread the events are sent as I suspected initially.
         //          Another hint towards this is, that the stuck-bug seems to occur more, the slower and more stuttery the UI is (the longer the computer has been running)
@@ -199,7 +199,7 @@ double _dockSwipeLastDelta = 0.0;
     
     if (phase != kIOHIDEventPhaseEnded) {
         // Doing this if condition, so we can send identical kIOHIDEventPhaseEnded events twice to combat stuck bug
-        // This is an ugly solution and we should probably just create a separate function which returns a navigationSwipeEvent instead of sending it immediately
+        // This is an ugly solution and we should probably just create a separate function which returns a dockSwipeEvent instead of sending it immediately
         _dockSwipeLastDelta = d;
     }
 }
