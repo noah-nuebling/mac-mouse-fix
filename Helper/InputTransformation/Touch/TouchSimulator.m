@@ -33,6 +33,7 @@
 #import <Cocoa/Cocoa.h>
 #import "ScrollControl.h"
 #import "SharedUtility.h"
+#import <Foundation/Foundation.h>
 
 @implementation TouchSimulator
 
@@ -93,12 +94,13 @@ static NSMutableDictionary *_swipeInfo;
     CFRelease(event);
 }
 
-double _dockSwipeOriginOffset = 0;
-double _dockSwipeLastDelta = 0;
+CFTimeInterval _dockSwipeLastTimeStamp = 0.0;
+double _dockSwipeOriginOffset = 0.0;
+double _dockSwipeLastDelta = 0.0;
 + (void)postDockSwipeEventWithDelta:(double)d type:(MFDockSwipeType)type phase:(IOHIDEventPhaseBits)phase {
-    
+        
 #if DEBUG
-    NSLog(@"Requested to send dockSwipe with delta: %@, lastDelta: %@, prevOriginOffset: %@ type: %@, phase: %@", @(d), @(_dockSwipeLastDelta), @(_dockSwipeOriginOffset), @(type), @(phase));
+    NSLog(@"Request to send dockswipe");
 #endif
     
     int valFor41 = 33231;
@@ -112,6 +114,13 @@ double _dockSwipeLastDelta = 0;
         }
         _dockSwipeOriginOffset += d;
     }
+    
+#if DEBUG
+    CFTimeInterval ts = CACurrentMediaTime();
+    CFTimeInterval timeDiff = ts - _dockSwipeLastTimeStamp;
+    _dockSwipeLastTimeStamp = ts;
+    NSLog(@"Sending dockSwipe with \ndelta: %@, \nlastDelta: %@, \nprevOriginOffset: %@ \ntype: %@, \nphase: %@, \ntimeSinceLastEvent: %@", @(d), @(_dockSwipeLastDelta), @(_dockSwipeOriginOffset), @(type), @(phase), @(timeDiff));
+#endif
     
     // We actually need to send kIOHIDEventPhaseEnded or kIOHIDEventPhaseCancelled depending on situation, but we don't wan't to expose that complexity to the caller
     // We're treating phase == kIOHIDEventPhaseEnded and the phase == kIOHIDEventPhaseCancelled the exact same and then decide ouselves which of the two to send
@@ -188,7 +197,11 @@ double _dockSwipeLastDelta = 0;
     CFRelease(e29);
     CFRelease(e30);
     
-    _dockSwipeLastDelta = d;
+    if (phase != kIOHIDEventPhaseEnded) {
+        // Doing this if condition, so we can send identical kIOHIDEventPhaseEnded events twice to combat stuck bug
+        // This is an ugly solution and we should probably just create a separate function which returns a navigationSwipeEvent instead of sending it immediately
+        _dockSwipeLastDelta = d;
+    }
 }
 
 

@@ -23,6 +23,8 @@
 #import "TransformationManager.h"
 #import "SharedUtility.h"
 
+#import <Cocoa/Cocoa.h>
+
 @implementation ModifiedDrag
 
 struct ModifiedDragState {
@@ -158,14 +160,16 @@ static CGEventRef __nullable mouseMovedOrDraggedCallback(CGEventTapProxy proxy, 
 }
 
 + (void)handleMouseInputWithDeltaX:(int64_t)deltaX deltaY:(int64_t)deltaY {
-#if DEBUG
-    NSLog(@"Handling mouse input. dx: %lld, dy: %lld", deltaX, deltaY);
-#endif
     
     MFModifiedInputActivationState st = _drag.activationState;
+    
+#if DEBUG
+    NSLog(@"Handling mouse input. dx: %lld, dy: %lld, activationState: %@", deltaX, deltaY, @(st));
+#endif
             
     if (st == kMFModifiedInputActivationStateNone) {
         // Disabling the callback triggers this function one more time apparently, aside form that case, this should never happen
+        // When we're using dispatch queues to send off our fake events, this also gets called
         
     } else if (st == kMFModifiedInputActivationStateInitialized) {
         
@@ -216,9 +220,9 @@ static CGEventRef __nullable mouseMovedOrDraggedCallback(CGEventTapProxy proxy, 
         double sThreeFingerV;
         
         if (inputIsPointerMovement) { // With these values, the scrolling/changing spaces will follow the mouse pointer almost exactly
-            CGFloat screenHeight = [[NSScreen mainScreen] frame].size.height;
-            sThreeFingerH = sThreeFingerV = 0.8 / screenHeight;
-            sThreeFingerV *= 3; // Vertical doesn't follow mouse pointer anyways, so might as well scale it up
+            CGFloat screenHeight = [[NSScreen mainScreen] frame].size.width;
+            sThreeFingerH = sThreeFingerV = 1.2 / screenHeight;
+//            sThreeFingerV *= 3; // Vertical doesn't follow mouse pointer anyways, so might as well scale it up
             sTwoFinger = 1.0;
         } else {
             sThreeFingerH = sThreeFingerV = 5 / 10000.0;;
@@ -239,7 +243,7 @@ static CGEventRef __nullable mouseMovedOrDraggedCallback(CGEventTapProxy proxy, 
             double localDeltaX = deltaX;
             double localDeltaY = deltaY;
             
-            dispatch_async(_fakeInputQueue, ^{
+//            dispatch_async(_fakeInputQueue, ^{
                 if (localDrag.usageAxis == kMFAxisHorizontal) {
                     double delta = -localDeltaX * localSThreeFingerH;
                     [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeHorizontal phase:localDrag.phase];
@@ -253,7 +257,7 @@ static CGEventRef __nullable mouseMovedOrDraggedCallback(CGEventTapProxy proxy, 
                     //      It just occured and this wasn't triggered
                 }
                 _drag.phase = kIOHIDEventPhaseChanged;
-            });
+//            });
         } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, scrollDispatchDelay * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
                 [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaX*sTwoFinger deltaY:deltaY*sTwoFinger phase:_drag.phase isGestureDelta:!inputIsPointerMovement];
@@ -271,21 +275,31 @@ static CGEventRef __nullable mouseMovedOrDraggedCallback(CGEventTapProxy proxy, 
     
     if (_drag.activationState == kMFModifiedInputActivationStateNone) return;
 
-    // TODO: Investigate - Moving this code up here causes stuck bug every time
+    // Investigate - Moving this code up here causes stuck bug every time
+    //  -> Duh it's because we change the activation state and the kIOHIDEventPhaseEnded event is never sent
 //    _drag.activationState = kMFModifiedInputActivationStateNone;
 //    disableMouseTracking();
+    
+    disableMouseTracking(); // Moved up here to minimize kIOHIDEventPhaseChanged events being sent after kIOHIDEventPhaseEnded, which I thought might be causing stuck-bug. But it still occurs.
     
     if (_drag.activationState == kMFModifiedInputActivationStateInUse) {
         if ([_drag.type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
 //            NSLog(@"BEFORE DISPATCH (swipeDeactivated) queue %@, thread: %@", [SharedUtility currentDispatchQueueDescription], NSThread.currentThread);
             struct ModifiedDragState localDrag = _drag;
-            dispatch_async(_fakeInputQueue, ^{
+//            dispatch_async(_fakeInputQueue, ^{
                 if (localDrag.usageAxis == kMFAxisHorizontal) {
                     [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypeHorizontal phase:kIOHIDEventPhaseEnded];
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                        // The inital navigation swipe will be ignored by the system when the it is under load (I called this the "stuck bug" in other places). Sending the event with a delay of 200ms prevents this almost always. Sending the event twice at different times gives us the best of both responsiveness when the system is not under load, and reliability when the system is under load (In those cases, you don't even notice the delay because the UI is stuttery and delayed anyways)
+                        [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypeHorizontal phase:kIOHIDEventPhaseEnded];
+                    });
                 } else if (localDrag.usageAxis == kMFAxisVertical) {
                     [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypeVertical phase:kIOHIDEventPhaseEnded];
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                        [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypeVertical phase:kIOHIDEventPhaseEnded];
+                    });
                 }
-            });
+//            });
         } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, scrollDispatchDelay * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
                 [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded isGestureDelta:!inputIsPointerMovement];
@@ -296,12 +310,12 @@ static CGEventRef __nullable mouseMovedOrDraggedCallback(CGEventTapProxy proxy, 
             [TransformationManager disableAddMode];
         }
     }
-    
     _drag.activationState = kMFModifiedInputActivationStateNone;
-    disableMouseTracking();
+//    disableMouseTracking();
     
-//    CGAssociateMouseAndMouseCursorPosition(true); // Doesn't work
-//    CGDisplayShowCursor(CGMainDisplayID());
+    //    CGAssociateMouseAndMouseCursorPosition(true); // Doesn't work
+
+    //    CGDisplayShowCursor(CGMainDisplayID());
     
     // TODO: CHECK if we need to add more stuff here
 }
