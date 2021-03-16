@@ -28,11 +28,9 @@ typedef enum {
 } MFAxis;
 
 + (void)initializeDragWithModifiedDragDict:(NSDictionary *)dict onDevice:(MFDevice *)dev;
-
 + (void)deactivate;
 
 + (void)handleMouseInputWithDeltaX:(int64_t)deltaX deltaY:(int64_t)deltaY;
-
 @end
 
 NS_ASSUME_NONNULL_END
