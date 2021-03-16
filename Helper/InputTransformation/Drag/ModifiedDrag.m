@@ -139,25 +139,28 @@ static struct ModifiedDragState _drag;
 }
 
 static CGEventRef __nullable mouseMovedOrDraggedCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef  event, void * __nullable userInfo) {
-    
     int64_t dx = CGEventGetIntegerValueField(event, kCGMouseEventDeltaX);
     int64_t dy = CGEventGetIntegerValueField(event, kCGMouseEventDeltaY);
+    [ModifiedDrag handleMouseInputWithDeltaX:dx deltaY:dy];
+    return event;
+}
+
++ (void)handleMouseInputWithDeltaX:(int64_t)deltaX deltaY:(int64_t)deltaY {
+    
     MFModifiedInputActivationState st = _drag.activationState;
     
 #if DEBUG
-    NSLog(@"Handling mouse input. dx: %lld, dy: %lld, activationState: %@", dx, dy, @(st));
+    NSLog(@"Handling mouse input. dx: %lld, dy: %lld, activationState: %@", deltaX, deltaY, @(st));
 #endif
             
     if (st == kMFModifiedInputActivationStateNone) {
         // Disabling the callback triggers this function one more time apparently, aside form that case, this should never happen I think
     } else if (st == kMFModifiedInputActivationStateInitialized) {
-        handleMouseInputWhileInitialized(dx, dy);
+        handleMouseInputWhileInitialized(deltaX, deltaY);
     } else if (st == kMFModifiedInputActivationStateInUse) {
-        handleMouseInputWhileInUse(dx, dy);
+        handleMouseInputWhileInUse(deltaX, deltaY);
     }
-    return event;
 }
-
 static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY) {
     _drag.originOffset.x += deltaX;
     _drag.originOffset.y += deltaY;
