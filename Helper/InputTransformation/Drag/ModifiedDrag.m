@@ -75,10 +75,6 @@ addModePayload: %@\n",
 }
 
 static struct ModifiedDragState _drag;
-
-dispatch_queue_t _fakeInputQueue;
-
-#define scrollDispatchDelay 0 // In ms // Thought this would help when using pointer movement as input, but it doesn't
 #define inputIsPointerMovement YES
 // There are two different modes for how we receive mouse input, toggle to switch between the two for testing
 // Set to no, if you want input to be raw mouse input, set to yes if you want input to be mouse pointer delta
@@ -87,22 +83,13 @@ dispatch_queue_t _fakeInputQueue;
 
 + (void)load {
     
-    // Setup fakeInputQueue
-    // Create custom dispatch queue so we have control over execution order and stuff
-    dispatch_queue_attr_t attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INTERACTIVE, -1);
-    _fakeInputQueue = dispatch_queue_create("mf.fake.input.queue", attr);
-    
     // Setup input callback and related
     if (inputIsPointerMovement) {
         // Create mouse pointer moved input callback
         if (_drag.eventTap == nil) {
-            CGEventMask mask = CGEventMaskBit(kCGEventOtherMouseDragged) | CGEventMaskBit(kCGEventMouseMoved); // kCGEventMouseMoved is only necessary for keyboard only drag modification, and maybe for AddMode to work.
+            CGEventMask mask = CGEventMaskBit(kCGEventOtherMouseDragged) | CGEventMaskBit(kCGEventMouseMoved); // kCGEventMouseMoved is only necessary for keyboard-only drag-modification, and maybe for AddMode to work.
             _drag.eventTap = CGEventTapCreate(kCGHIDEventTap, kCGTailAppendEventTap, kCGEventTapOptionDefault, mask, mouseMovedOrDraggedCallback, NULL);
-            // ^ Make sure to use the same EventTapLocation and EventTapPlacement here as you do in ButtonInputReceiver, otherwise there'll be timing and ordering issues!
-            //      This fixed the stuck-bug! (I think) (The bug where fake dockSwipes would sometimes get stuck mid animation after releasing the modifying button)
-            //      As well as the problem, where mouse movement capturing would still be active after releasing the button leading to weird UX.
-            //      -> Nopee it didn't fix the stuck-bug. It seems to have fixed it on horizontal dockSwipes, but on vertical ones it's worse than ever.
-            NSLog(@"_eventTap: %@", _drag.eventTap);
+            // ^ Make sure to use the same EventTapLocation and EventTapPlacement here as you do in ButtonInputReceiver, otherwise there'll be timing and ordering issues! (This was one of the causes for the stuck bug and also caused other issues)
             CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _drag.eventTap, 0);
             CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes);
             CFRelease(runLoopSource);
@@ -114,7 +101,7 @@ dispatch_queue_t _fakeInputQueue;
     }
 }
 
-+ (void)initializeWithModifiedDragDict:(NSDictionary *)dict onDevice:(MFDevice *)dev {
++ (void)initializeDragWithModifiedDragDict:(NSDictionary *)dict onDevice:(MFDevice *)dev {
     
     // Get values from dict
     MFStringConstant type = dict[kMFModifiedDragDictKeyType];
@@ -167,83 +154,84 @@ static CGEventRef __nullable mouseMovedOrDraggedCallback(CGEventTapProxy proxy, 
 #endif
             
     if (st == kMFModifiedInputActivationStateNone) {
-        // Disabling the callback triggers this function one more time apparently, aside form that case, this should never happen
-        // When we're using dispatch queues to send off our fake events, this also gets called
-        
+        // Disabling the callback triggers this function one more time apparently, aside form that case, this should never happen I think
     } else if (st == kMFModifiedInputActivationStateInitialized) {
-        
-        _drag.originOffset.x += deltaX;
-        _drag.originOffset.y += deltaY;
-        
-        MFVector ofs = _drag.originOffset;
-        
-        // Activate the modified drag if the mouse has been moved far enough from the point where the drag started
-        if (MAX(fabs(ofs.x), fabs(ofs.y)) > _drag.usageThreshold) {
-            
-            MFDevice *dev = _drag.modifiedDevice;
-            if (inputIsPointerMovement) {
-                [NSCursor.closedHandCursor push]; // Doesn't work for some reason
-            } else {
-                if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) { // Only seize when drag scrolling // TODO: Would be cleaner to call this further down where we check for kMFModifiedDragVariantTwoFingerSwipe anyways. Does that work too?
-                    [dev receiveAxisInputAndDoSeizeDevice:YES];
-                }
-            }
-            _drag.activationState = kMFModifiedInputActivationStateInUse; // Activate modified drag input!
-            [ModifierManager handleModifiersHaveHadEffect:dev.uniqueID];
-            
-            if (fabs(ofs.x) < fabs(ofs.y)) {
-                _drag.usageAxis = kMFAxisVertical;
-            } else {
-                _drag.usageAxis = kMFAxisHorizontal;
-            }
-            
-            if ([_drag.type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
-                _drag.phase = kIOHIDEventPhaseBegan;
-            } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
-//                [GestureScrollSimulator postGestureScrollEventWithGestureDeltaX:0.0 deltaY:0.0 phase:kIOHIDEventPhaseMayBegin];
-                    // ^ Always sending this at the start breaks swiping between pages on some websites (Google search results)
-                _drag.phase = kIOHIDEventPhaseBegan;
-            } else if ([_drag.type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
-                [Utility_Transformation postMouseButton:_drag.fakeDragButtonNumber down:YES];
-                disableMouseTracking();
-            } else if ([_drag.type isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
-                [MessagePort_HelperApp sendMessageToMainApp:@"addModeFeedback" withPayload:_drag.addModePayload];
-                disableMouseTracking();
-            }
-        }
-        
+        handleMouseInputWhileInitialized(deltaX, deltaY);
     } else if (st == kMFModifiedInputActivationStateInUse) {
+        handleMouseInputWhileInUse(deltaX, deltaY);
+    }
+}
+static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY) {
+    _drag.originOffset.x += deltaX;
+    _drag.originOffset.y += deltaY;
+    
+    MFVector ofs = _drag.originOffset;
+    
+    // Activate the modified drag if the mouse has been moved far enough from the point where the drag started
+    if (MAX(fabs(ofs.x), fabs(ofs.y)) > _drag.usageThreshold) {
         
-        double twoFingerScale;
-        double threeFingerScaleH;
-        double threeFingerScaleV;
-        if (inputIsPointerMovement) { // With these values, the scrolling/changing spaces will follow the mouse pointer almost exactly
-            CGFloat screenWidth = NSScreen.mainScreen.frame.size.width;
-            threeFingerScaleH = threeFingerScaleV = 1.2 / screenWidth;
-            // ^ This makes horizontal dockSwipes (switch between spaces) follow the pointer exactly. We should maybe use screenHeight to scale vertical dockSwipes (Mission Control and App Windows), but on a normal screen, this feels perfectly fine.
-            // ^ TODO: Test this on a vertical screen
-            twoFingerScale = 1.0; // This makes pointer scrolling follow the mouse pointer exactly
+        MFDevice *dev = _drag.modifiedDevice;
+        if (inputIsPointerMovement) {
+            [NSCursor.closedHandCursor push]; // Doesn't work for some reason
         } else {
-            threeFingerScaleH = threeFingerScaleV = 5 / 10000.0;
-            twoFingerScale = 0.5;
+            if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) { // Only seize when drag scrolling // TODO: Would be cleaner to call this further down where we check for kMFModifiedDragVariantTwoFingerSwipe anyways. Does that work too?
+                [dev receiveAxisInputAndDoSeizeDevice:YES];
+            }
         }
-
+        _drag.activationState = kMFModifiedInputActivationStateInUse; // Activate modified drag input!
+        [ModifierManager handleModifiersHaveHadEffect:dev.uniqueID];
+        
+        if (fabs(ofs.x) < fabs(ofs.y)) {
+            _drag.usageAxis = kMFAxisVertical;
+        } else {
+            _drag.usageAxis = kMFAxisHorizontal;
+        }
+        
         if ([_drag.type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
-                if (_drag.usageAxis == kMFAxisHorizontal) {
-                    double delta = -deltaX * threeFingerScaleH;
-                    [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeHorizontal phase:_drag.phase];
-                } else if (_drag.usageAxis == kMFAxisVertical) {
-                    double delta = deltaY * threeFingerScaleV;
-                    [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeVertical phase:_drag.phase];
-                }
-                _drag.phase = kIOHIDEventPhaseChanged;
+            _drag.phase = kIOHIDEventPhaseBegan;
         } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, scrollDispatchDelay * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
-                [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaX*twoFingerScale deltaY:deltaY*twoFingerScale phase:_drag.phase isGestureDelta:!inputIsPointerMovement];
-            });
+            //                [GestureScrollSimulator postGestureScrollEventWithGestureDeltaX:0.0 deltaY:0.0 phase:kIOHIDEventPhaseMayBegin];
+            // ^ Always sending this at the start breaks swiping between pages on some websites (Google search results)
+            _drag.phase = kIOHIDEventPhaseBegan;
+        } else if ([_drag.type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
+            [Utility_Transformation postMouseButton:_drag.fakeDragButtonNumber down:YES];
+            disableMouseTracking();
+        } else if ([_drag.type isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
+            [MessagePort_HelperApp sendMessageToMainApp:@"addModeFeedback" withPayload:_drag.addModePayload];
+            disableMouseTracking();
+        }
+    }
+}
+static void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY) {
+    double twoFingerScale;
+    double threeFingerScaleH;
+    double threeFingerScaleV;
+    if (inputIsPointerMovement) { // With these values, the scrolling/changing spaces will follow the mouse pointer almost exactly
+        CGFloat screenWidth = NSScreen.mainScreen.frame.size.width;
+        threeFingerScaleH = threeFingerScaleV = 1.2 / screenWidth;
+        // ^ This makes horizontal dockSwipes (switch between spaces) follow the pointer exactly. We should maybe use screenHeight to scale vertical dockSwipes (Mission Control and App Windows), but on a normal screen, this feels perfectly fine.
+        // ^ TODO: Test this on a vertical screen
+        twoFingerScale = 1.0; // This makes pointer scrolling follow the mouse pointer exactly
+    } else {
+        threeFingerScaleH = threeFingerScaleV = 5 / 10000.0;
+        twoFingerScale = 0.5;
+    }
+    
+    if ([_drag.type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
+        if (_drag.usageAxis == kMFAxisHorizontal) {
+            double delta = -deltaX * threeFingerScaleH;
+            [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeHorizontal phase:_drag.phase];
+        } else if (_drag.usageAxis == kMFAxisVertical) {
+            double delta = deltaY * threeFingerScaleV;
+            [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeVertical phase:_drag.phase];
         }
         _drag.phase = kIOHIDEventPhaseChanged;
+    } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.0 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+            [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaX*twoFingerScale deltaY:deltaY*twoFingerScale phase:_drag.phase isGestureDelta:!inputIsPointerMovement];
+        });
     }
+    _drag.phase = kIOHIDEventPhaseChanged;
 }
 
 + (void)deactivate {
@@ -257,32 +245,38 @@ static CGEventRef __nullable mouseMovedOrDraggedCallback(CGEventTapProxy proxy, 
     disableMouseTracking(); // Moved this up here instead of at the end of the function to minimize mouseMovedOrDraggedCallback() being called when we don't need that anymore. Not sure if it makes a difference.
     
     if (_drag.activationState == kMFModifiedInputActivationStateInUse) {
-        if ([_drag.type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
-            struct ModifiedDragState localDrag = _drag;
-                if (localDrag.usageAxis == kMFAxisHorizontal) {
-                    [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypeHorizontal phase:kIOHIDEventPhaseEnded];
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                        [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypeHorizontal phase:kIOHIDEventPhaseEnded];
-                    });
-                    // ^ The inital dockSwipe event we post will be ignored by the system when it is under load (I called this the "stuck bug" in other places). Sending the event again with a delay of 200ms (0.2s) gets it unstuck almost always. Sending the event twice gives us the best of both responsiveness and reliability.
-                } else if (localDrag.usageAxis == kMFAxisVertical) {
-                    [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypeVertical phase:kIOHIDEventPhaseEnded];
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                        [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypeVertical phase:kIOHIDEventPhaseEnded];
-                    });
-                }
-        } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, scrollDispatchDelay * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
-                [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded isGestureDelta:!inputIsPointerMovement];
-            });
-        } else if ([_drag.type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
-            [Utility_Transformation postMouseButton:_drag.fakeDragButtonNumber down:NO];
-        } else if ([_drag.type isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
-            [TransformationManager disableAddMode];
-        }
+        handleDeactivationWhileInUse();
     }
     _drag.activationState = kMFModifiedInputActivationStateNone;
 }
+
+static void handleDeactivationWhileInUse() {
+    if ([_drag.type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
+        struct ModifiedDragState localDrag = _drag;
+        if (localDrag.usageAxis == kMFAxisHorizontal) {
+            [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypeHorizontal phase:kIOHIDEventPhaseEnded];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypeHorizontal phase:kIOHIDEventPhaseEnded];
+            });
+            // ^ The inital dockSwipe event we post will be ignored by the system when it is under load (I called this the "stuck bug" in other places). Sending the event again with a delay of 200ms (0.2s) gets it unstuck almost always. Sending the event twice gives us the best of both responsiveness and reliability.
+        } else if (localDrag.usageAxis == kMFAxisVertical) {
+            [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypeVertical phase:kIOHIDEventPhaseEnded];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypeVertical phase:kIOHIDEventPhaseEnded];
+            });
+        }
+    } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.0 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+            [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded isGestureDelta:!inputIsPointerMovement];
+        });
+    } else if ([_drag.type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
+        [Utility_Transformation postMouseButton:_drag.fakeDragButtonNumber down:NO];
+    } else if ([_drag.type isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
+        [TransformationManager disableAddMode];
+    }
+}
+
+#pragma mark - Helper functions
 
 static void disableMouseTracking() {
     if (inputIsPointerMovement) {

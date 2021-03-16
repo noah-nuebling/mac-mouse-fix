@@ -141,7 +141,7 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, MFDevi
                 modifiedDragEffect = modifiedDragEffect.mutableCopy;
                 modifiedDragEffect[kMFRemapsKeyModificationPrecondition] = activeModifiers;
             }
-            [ModifiedDrag initializeWithModifiedDragDict:modifiedDragEffect onDevice:device];
+            [ModifiedDrag initializeDragWithModifiedDragDict:modifiedDragEffect onDevice:device];
         }
     }
 }
