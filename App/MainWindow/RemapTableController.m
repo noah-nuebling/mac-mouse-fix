@@ -334,6 +334,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
 #pragma mark - Filling the table
 
 - (NSTableCellView *)getEffectCellWithRowDict:(NSDictionary *)rowDict {
+    
     rowDict = rowDict.mutableCopy; // Not sure if necessary
     NSArray *effectsTable = [self getEffectsTableForRemapsTableEntry:rowDict];
     // Create trigger cell and fill out popup button contained in it
@@ -372,6 +373,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
     
     return triggerCell;
 }
+
 - (NSTableCellView *)getTriggerCellWithRowDict:(NSDictionary *)rowDict {
     rowDict = rowDict.mutableCopy; // This is necessary for some of this hacky mess to work // However, this is not a deep copy, so the _dataModel is still changed when we change some nested object. Watch out!
     
@@ -383,8 +385,8 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
     };
     
     // Get trigger string from data
-    NSString *tr = @"";
-    NSString *trTool = @"";
+    NSMutableAttributedString *tr;
+    NSMutableAttributedString *trTool;
     id triggerGeneric = rowDict[kMFRemapsKeyTrigger];
     
     if ([triggerGeneric isKindOfClass:NSDictionary.class]) { // Trigger is button input
@@ -428,8 +430,12 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
         
         // Form trigger string from substrings
         
-        tr = [NSString stringWithFormat:@"%@%@%@", levelStr, durationStr, buttonStr];
-        trTool = [NSString stringWithFormat:@"%@%@%@", levelStr, durationStr, buttonStrTool];
+        NSString *trRaw = [NSString stringWithFormat:@"%@%@%@", levelStr, durationStr, buttonStr];
+        NSString *trToolRaw = [NSString stringWithFormat:@"%@%@%@", levelStr, durationStr, buttonStrTool];
+        
+        // Turn into attributedString and highlight button substrings
+        tr = [self addBoldForSubstring:buttonStr inString:trRaw];
+        trTool = [self addBoldForSubstring:buttonStrTool inString:trToolRaw];
         
     } else if ([triggerGeneric isKindOfClass:NSString.class]) { // Trigger is drag or scroll
         // We need part of the modification precondition to form the main trigger string here.
@@ -478,8 +484,13 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
         }
         
         // Form full trigger cell string from substrings
-        tr = [NSString stringWithFormat:@"%@%@%@%@%@", levelStr, clickStr, keyboardModStr, triggerStr, buttonStr];
-        trTool = [NSString stringWithFormat:@"%@%@%@%@%@", levelStr, clickStr, keyboardModStrTool, triggerStr, buttonStrTool];
+        
+        NSString *trRaw = [NSString stringWithFormat:@"%@%@%@%@%@", levelStr, clickStr, keyboardModStr, triggerStr, buttonStr];
+        NSString *trToolRaw = [NSString stringWithFormat:@"%@%@%@%@%@", levelStr, clickStr, keyboardModStrTool, triggerStr, buttonStrTool];
+        
+        // Turn into attributedString and highlight button substrings
+        tr = [self addBoldForSubstring:buttonStr inString:trRaw];
+        trTool = [self addBoldForSubstring:buttonStrTool inString:trToolRaw];
         
     } else {
         NSLog(@"Trigger value: %@, class: %@", triggerGeneric, [triggerGeneric class]);
@@ -519,13 +530,18 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
     }
     NSString *btnMod = [buttonModifierStrings componentsJoinedByString:@""];
     NSString *btnModTool = [buttonModifierStringsTool componentsJoinedByString:@""];
+    
     // Join all substrings to get result string
-    NSString *fullTriggerCellString = [NSString stringWithFormat:@"%@%@%@", kbMod, btnMod, tr];
-    NSString *fullTriggerCellTooltipString = [NSString stringWithFormat:@"%@%@%@", kbModTool, btnModTool, trTool];
+    NSMutableAttributedString *fullTriggerCellString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@", kbMod, btnMod]];
+    NSMutableAttributedString *fullTriggerCellTooltipString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@", kbModTool, btnModTool]];
+    [fullTriggerCellString appendAttributedString:tr];
+    [fullTriggerCellTooltipString appendAttributedString:trTool];
+    
+    
     // Generate view and set string to view
     NSTableCellView *triggerCell = [self.tableView makeViewWithIdentifier:@"triggerCell" owner:nil];
-    triggerCell.textField.stringValue = fullTriggerCellString;
-    triggerCell.textField.toolTip = fullTriggerCellTooltipString;
+    triggerCell.textField.attributedStringValue = fullTriggerCellString;
+    triggerCell.textField.toolTip = fullTriggerCellTooltipString.string;
     return triggerCell;
 }
 
@@ -610,6 +626,14 @@ static NSString *getKeyboardModifierStringToolTip(NSNumber *flags) {
     }
     
     return kb;
+}
+- (NSMutableAttributedString *)addBoldForSubstring:(NSString *)subStr inString:(NSString *)baseStr {
+    
+    NSMutableAttributedString *ret = [[NSMutableAttributedString alloc] initWithString:baseStr];
+    NSFont *boldFont = [NSFont boldSystemFontOfSize:NSFont.systemFontSize];
+    NSRange subStrRange = [baseStr rangeOfString:subStr];
+    [ret addAttribute:NSFontAttributeName value:boldFont range:subStrRange];
+    return ret;
 }
 
 #pragma mark - Sorting the table
