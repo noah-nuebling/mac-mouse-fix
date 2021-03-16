@@ -34,9 +34,12 @@ NSDictionary *_remaps;
 /// The notification is used by ModifierManager to update itself, whenever _remaps updates.
 ///  (Idk why we aren't just calling an update function instead of using a notification)
 + (void)setRemaps:(NSDictionary *)remapsDict {
-    [NSNotificationCenter.defaultCenter postNotificationName:kMFNotificationNameRemapsChanged object:self];
     _remaps = remapsDict;
-//    loadTestRemaps(); // TESTING
+    _remaps = self.testRemaps; // TESTING
+    [NSNotificationCenter.defaultCenter postNotificationName:kMFNotificationNameRemapsChanged object:self];
+#if DEBUG
+    NSLog(@"Set remaps to: %@", _remaps);
+#endif
 }
 
 /// The main app uses an array of dicts (aka a table) to represent the remaps in a way that is easy to present in a table view.
@@ -164,12 +167,12 @@ NSDictionary *_remaps;
 
 #pragma mark - Dummy Data
 
-static void loadTestRemaps() {
++ (NSDictionary *)testRemaps {
     /// This fanned out dictionary representation of our remappings is what we based our helper code on.
     /// It's not super human readable, but it should be very fast, and makes some of the operations like overrides and on the fly 'assessment of the mapping landscape' pretty handy.
     /// Using this in Helper is definitely faster than the tableView oriented (-> array based) structure which the MainApp uses. That's because we can do a lot of O(1) dict accesses where we'd have to use O(n) array searches using the other structure. I suspect that performance gains are negligible though.
     /// Having these 2 data structures might very well not be worth the cost of having to think about both and write a conversion function between them. But we've already built helper around this, and mainApp needs the table based structure, so we're sticking with this double-structure approach.
-    _remaps = @{
+    return @{
         @{}: @{                                                     // Key: modifier dict (empty -> no modifiers)
                 @(3): @{                                                // Key: button
                         @(1): @{                                            // Key: level
@@ -210,14 +213,14 @@ static void loadTestRemaps() {
                                         }
                                 ],
                         },
-                        @(2): @{                                            // Key: level
-                                kMFButtonTriggerDurationClick: @[
-                                        @{
-                                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-                                            kMFActionDictKeyGenericVariant: @(36),
-                                        }
-                                ],
-                        },
+//                        @(2): @{                                            // Key: level
+//                                kMFButtonTriggerDurationClick: @[
+//                                        @{
+//                                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+//                                            kMFActionDictKeyGenericVariant: @(36),
+//                                        }
+//                                ],
+//                        },
                 },
                 @(7)  : @{                                                // Key: button
                         @(1): @{                                            // Key: level
@@ -249,7 +252,7 @@ static void loadTestRemaps() {
         @{
             kMFModificationPreconditionKeyButtons: @[
                     @{
-                        kMFButtonModificationPreconditionKeyButtonNumber: @(3),
+                        kMFButtonModificationPreconditionKeyButtonNumber: @(4),
                         kMFButtonModificationPreconditionKeyClickLevel: @(1),
                     },
             ],
@@ -257,7 +260,17 @@ static void loadTestRemaps() {
         }: @{
                 kMFTriggerDrag: @{
                         kMFModifiedDragDictKeyType: kMFModifiedDragTypeThreeFingerSwipe,
-                }
+                },
+//                @(4): @{                                                // Key: button
+//                        @(1): @{                                            // Key: level
+//                                kMFButtonTriggerDurationClick: @[
+//                                        @{
+//                                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+//                                            kMFActionDictKeyGenericVariant: @(70),
+//                                        }
+//                                ],
+//                        },
+//                },
         },
         @{
             //            kMFModificationPreconditionKeyButtons: @[

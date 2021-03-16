@@ -77,16 +77,18 @@ CGEventRef _Nullable handleKeyboardModifiersHaveChanged(CGEventTapProxy proxy, C
     
     NSArray<MFDevice *> *devs = DeviceManager.attachedDevices;
     for (MFDevice *dev in devs) {
-        NSDictionary *activeModifiers = [ModifierManager getActiveModifiersForDevice:dev.uniqueID filterButton:nil];
+        NSDictionary *activeModifiers = [ModifierManager getActiveModifiersForDevice:dev.uniqueID filterButton:nil event:event];
+        // ^ Need to pass in event here as source for keyboard modifers, otherwise the returned kb-modifiers won't be up-to-date.
         
-        // The keyboard component of activeModifiers doesn't update fast enough so we have to manually edit it
-        // This is kinofa hack we should maybe look into a better solution
-        NSMutableDictionary *activeModifiersNew = activeModifiers.mutableCopy;
-        CGEventFlags flags = CGEventGetFlags(event) & NSDeviceIndependentModifierFlagsMask;
-        if (flags != 0) {
-            activeModifiersNew[kMFModificationPreconditionKeyKeyboard] = @(flags);
-        }
-        reactToModifierChange(activeModifiersNew, dev);
+//        // The keyboard component of activeModifiers doesn't update fast enough so we have to update it again here using the event.
+//        // This is kinofa hack we should clean this up
+//        NSMutableDictionary *activeModifiersNew = activeModifiers.mutableCopy;
+//        CGEventFlags flags = [ModifierManager getActiveKeyboardModifiersWithEvent:event];
+////        if (flags != 0) { // Why check for 0 here?
+//            activeModifiersNew[kMFModificationPreconditionKeyKeyboard] = @(flags);
+////        }
+        
+        reactToModifierChange(activeModifiers, dev);
     }
     return nil;
 }
@@ -102,7 +104,7 @@ NSArray *_prevButtonModifiers;
     _prevButtonModifiers = buttonModifiers;
 }
 static void handleButtonModifiersHaveChangedWithDevice(MFDevice *device) {
-    NSDictionary *activeModifiers = [ModifierManager getActiveModifiersForDevice:device.uniqueID filterButton:nil];
+    NSDictionary *activeModifiers = [ModifierManager getActiveModifiersForDevice:device.uniqueID filterButton:nil event:nil];
     reactToModifierChange(activeModifiers, device);
 }
 
@@ -150,7 +152,7 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, MFDevi
 
 + (void)handleModifiersHaveHadEffect:(NSNumber *)devID {
     
-    NSDictionary *activeModifiers = [self getActiveModifiersForDevice:devID filterButton:nil];
+    NSDictionary *activeModifiers = [self getActiveModifiersForDevice:devID filterButton:nil event:nil];
         
     // Notify all active button modifiers that they have had an effect
     for (NSDictionary *buttonPrecondDict in activeModifiers[kMFModificationPreconditionKeyButtons]) {
@@ -166,12 +168,13 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, MFDevi
 //      In those cases we'll use *modifier driven* modification.
 //      That means we listen for changes to the active modifiers and when they match a modifications' precondition, we'll initialize the modification components which are modifier driven.
 //      Then, when they do send their first trigger, they'll call modifierDrivenModificationHasBeenUsedWithDevice which will in turn notify the modifying buttons that they've had an effect
+// \discussion If you pass in an a CGEvent via the `event` argument, the returned keyboard modifiers will be more up-to-date. This is sometimes necessary to get correct data when calling this right after the keyboard modifiers have changes.
 
-+ (NSDictionary *)getActiveModifiersForDevice:(NSNumber *)devID filterButton:(NSNumber * __nullable)filteredButton {
++ (NSDictionary *)getActiveModifiersForDevice:(NSNumber *)devID filterButton:(NSNumber * _Nullable)filteredButton event:(CGEventRef _Nullable) event {
     
     NSMutableDictionary *outDict = [NSMutableDictionary dictionary];
     
-    NSUInteger kb = getActiveKeyboardModifiers();
+    NSUInteger kb = [self getActiveKeyboardModifiersWithEvent:nil];
     NSMutableArray *btn = [ButtonTriggerGenerator getActiveButtonModifiersForDevice:devID].mutableCopy;
     if (filteredButton != nil && btn.count != 0) {
         NSIndexSet *filterIndexes = [btn indexesOfObjectsPassingTest:^BOOL(NSDictionary *_Nonnull dict, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -192,14 +195,17 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, MFDevi
     
     return outDict;
 }
-static NSUInteger getActiveKeyboardModifiers() {
++ (NSUInteger) getActiveKeyboardModifiersWithEvent:(CGEventRef _Nullable) event {
     
-    uint64_t mask;
-    //mask = NSEventModifierFlagDeviceIndependentFlagsMask; // = 0xFFFF0000
-        // ^ Only allows bits 16 - 31. But 24 - 31 contained weird stuff which messed up the return value and modifiers are only on bits 16-23, so we defined our own mask
-    mask = 0xFF0000; // Only lets bits 16-23 through
+    if (event == nil) {
+        event = CGEventCreate(nil);
+    }
     
-    CGEventFlags modifierFlags = CGEventGetFlags(CGEventCreate(nil)) & mask;
+    uint64_t mask = 0xFF0000; // Only lets bits 16-23 through
+    // NSEventModifierFlagDeviceIndependentFlagsMask == 0xFFFF0000 -> it only allows bits 16 - 31.
+    //  But bits 24 - 31 contained weird stuff which messed up the return value and modifiers are only on bits 16-23, so we defined our own mask
+    
+    CGEventFlags modifierFlags = CGEventGetFlags(event) & mask;
     return modifierFlags;
 }
 
