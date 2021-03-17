@@ -415,7 +415,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
             if (lvl.intValue == 1) {
                 durationStr = @"Hold ";
             } else {
-                durationStr = @"and Hold ";
+                durationStr = @"Click and Hold ";
             }
         }
         if (!durationStr) {
@@ -590,8 +590,8 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
     CGFloat result = textHeight + margin;
     if (result == templateView.bounds.size.height) {
         return result;
-    } else // This should occur, if the text doesn't fit the line. I don't know why +2 is necessary
-        return result + 2;
+    } else // This should occur, if the text doesn't fit the line. I don't know why + 2 is necessary (+4 If we don't use bold substrings)
+        return result + 4;
 }
 
 # pragma mark - String generating helper functions
@@ -657,7 +657,7 @@ static NSString *getKeyboardModifierStringToolTip(NSNumber *flags) {
     NSMutableAttributedString *ret = [[NSMutableAttributedString alloc] initWithString:baseStr];
     NSFont *boldFont = [NSFont boldSystemFontOfSize:NSFont.systemFontSize];
     NSRange subStrRange = [baseStr rangeOfString:subStr];
-    [ret addAttribute:NSFontAttributeName value:boldFont range:subStrRange];
+//    [ret addAttribute:NSFontAttributeName value:boldFont range:subStrRange]; // Commenting this out means the function doesn't do anything
     return ret;
 }
 
