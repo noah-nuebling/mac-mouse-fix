@@ -569,6 +569,31 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
     return self.dataModel.count;
 }
 
+- (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row {
+    
+    // Calculate trigger cell text height
+    NSDictionary *rowDict = self.dataModel[row];
+    rowDict = (NSDictionary *)[SharedUtility deepCopyOf:rowDict];
+    NSTableCellView *view = [self getTriggerCellWithRowDict:rowDict];
+    // ^ These lines are copied from `tableView:viewForTableColumn:row:`. Should change this cause copied code is bad.
+    NSTextField *textField = view.subviews[0];
+    NSAttributedString *string = textField.attributedStringValue;
+    NSRect bounds = [string boundingRectWithSize:NSMakeSize(textField.bounds.size.width, 1000) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading];
+    CGFloat textHeight = bounds.size.height;
+    
+    // Get top and bottom margins around text from IB template
+    NSTableCellView *templateView = [self.tableView makeViewWithIdentifier:@"triggerCell" owner:nil];
+    NSTextField *templateTextField = templateView.subviews[0];
+    double margin = templateView.bounds.size.height - templateTextField.bounds.size.height;
+    
+    // Add margins and text height to get result
+    CGFloat result = textHeight + margin;
+    if (result == templateView.bounds.size.height) {
+        return result;
+    } else // This should occur, if the text doesn't fit the line. I don't know why +2 is necessary
+        return result + 2;
+}
+
 # pragma mark - String generating helper functions
 
 static NSString *getButtonString(int buttonNumber) {

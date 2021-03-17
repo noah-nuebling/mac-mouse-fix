@@ -194,7 +194,7 @@ static NSMutableDictionary *_state;
         // Update bs
         bs.isPressed = NO;
         
-        // Kill hold timer. This is only necessary if the hold timer zombifies I think.
+        // Kill hold timer. This is only necessary if the hold timer zombified I think.
         [bs.holdTimer invalidate];
 
     }
@@ -307,7 +307,6 @@ static void neuterAllButtonsOnDeviceExcept(NSNumber *devID, NSNumber *exceptedBt
     
     // Get state and order by press time
     NSDictionary *devState = _state[devID];
-//    NSArray *buttonStatesOrderedByPressTime = [devState.allValues sortedArrayUsingDescriptors:@[[[NSSortDescriptor alloc] initWithKey:@"pressedAtTimeStamp" ascending:YES]]];
     NSArray *buttonsOrderedByPressTime = [devState keysSortedByValueUsingComparator:^NSComparisonResult(ButtonState *_Nonnull bs1, ButtonState *_Nonnull bs2) {
         return [@(bs1.pressedAtTimeStamp) compare:@(bs2.pressedAtTimeStamp)];
     }];

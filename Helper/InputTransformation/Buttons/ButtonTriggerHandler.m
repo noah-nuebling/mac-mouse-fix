@@ -142,7 +142,7 @@ static void executeClickOrHoldActionIfItExists(NSString * _Nonnull duration,
 
 /// This is used by ButtonTriggerGenerator to reset the click cycle, if we know the button can't be used this click cycle anyways.
 /// \discussion We used to call [ModifierManager getActiveModifiersForDevice:filterButton:event:] with the filterButton argument set to nil.
-///     This lead to issues with the click cycle being reset prematurely sometimes. We set filterBUtton to button, now. Hopefully this doesn't break stuff in other ways. I don't think so though.
+///     This lead to issues with the click cycle being reset prematurely sometimes. We set filterBUtton to button, now. Hopefully this doesn't break stuff in other ways. I don't think so.
 + (BOOL)buttonCouldStillBeUsedThisClickCycle:(NSNumber *)devID button:(NSNumber *)button level:(NSNumber *)level {
     
     NSDictionary *remaps = TransformationManager.remaps;
