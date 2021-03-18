@@ -87,11 +87,8 @@ BOOL _mouseDownOverThis = NO;
     _mouseInside = YES;
     
     NSMutableAttributedString *underlinedString = [[NSMutableAttributedString alloc] initWithAttributedString: self.attributedStringValue];
-    
     NSRange wholeStringRange = NSMakeRange(0, [underlinedString length]);
-    
     [underlinedString addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:wholeStringRange];
-    
     self.attributedStringValue = underlinedString;
     
 //    [NSCursor.pointingHandCursor push]; // This is maybe a little tacky, cause nothing else in the UI does this
@@ -101,9 +98,7 @@ BOOL _mouseDownOverThis = NO;
     _mouseInside = NO;
     
     NSMutableAttributedString *notUnderlinedString = [[NSMutableAttributedString alloc] initWithAttributedString: self.attributedStringValue];
-    
     NSRange wholeStringRange = NSMakeRange(0, [notUnderlinedString length]);
-    
     [notUnderlinedString addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleNone) range:wholeStringRange];
     
     self.attributedStringValue = notUnderlinedString;
