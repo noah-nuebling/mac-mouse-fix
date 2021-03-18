@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4F1793A925EEC92000E8309B /* ZipArchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F1793A825EEC90900E8309B /* ZipArchive.framework */; };
 		4F1793AA25EEC92000E8309B /* ZipArchive.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F1793A825EEC90900E8309B /* ZipArchive.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4F2A1F8E2603EAED0067691A /* MFMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2A1F8D2603EAED0067691A /* MFMenuItem.m */; };
 		4F2F5DA825FB6FFD0037660A /* AddWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F5DA725FB6FFD0037660A /* AddWindowController.m */; };
 		4F2F5DB225FB723D0037660A /* AddWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F2F5DB125FB723D0037660A /* AddWindow.xib */; };
 		4F2FDF332315662500C7BE14 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2FDF322315662500C7BE14 /* main.m */; };
@@ -174,6 +175,8 @@
 
 /* Begin PBXFileReference section */
 		4F1793A825EEC90900E8309B /* ZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ZipArchive.framework; sourceTree = "<group>"; };
+		4F2A1F822603E8C50067691A /* MFMenuItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFMenuItem.h; sourceTree = "<group>"; };
+		4F2A1F8D2603EAED0067691A /* MFMenuItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFMenuItem.m; sourceTree = "<group>"; };
 		4F2F5DA625FB6FFD0037660A /* AddWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddWindowController.h; sourceTree = "<group>"; };
 		4F2F5DA725FB6FFD0037660A /* AddWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddWindowController.m; sourceTree = "<group>"; };
 		4F2F5DB125FB723D0037660A /* AddWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddWindow.xib; sourceTree = "<group>"; };
@@ -456,8 +459,6 @@
 				4FF665DB25F2C92700689B77 /* AppDelegate.m */,
 				4FCA07D425F3129B00BFE209 /* RemapTableController.h */,
 				4FCA07D525F3129B00BFE209 /* RemapTableController.m */,
-				4F37FAD625FDFDC4004C34C4 /* MFScrollView.h */,
-				4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */,
 				4FF665D925F2C92700689B77 /* MouseFix.xib */,
 			);
 			path = MainWindow;
@@ -635,6 +636,10 @@
 		4FF665E525F2C92700689B77 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				4F37FAD625FDFDC4004C34C4 /* MFScrollView.h */,
+				4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */,
+				4F2A1F822603E8C50067691A /* MFMenuItem.h */,
+				4F2A1F8D2603EAED0067691A /* MFMenuItem.m */,
 				4FF665C425F2C92700689B77 /* MFSegmentedControl.h */,
 				4FF665C125F2C92700689B77 /* MFSegmentedControl.m */,
 				4FF665E625F2C92700689B77 /* ClickableImageView.h */,
@@ -1189,6 +1194,7 @@
 				4FF665FA25F2C92700689B77 /* AppDelegate.m in Sources */,
 				4FF665F325F2C92700689B77 /* MoreSheet.m in Sources */,
 				4FF6660025F2C92700689B77 /* Hyperlink.m in Sources */,
+				4F2A1F8E2603EAED0067691A /* MFMenuItem.m in Sources */,
 				4FF6654C25F2C7B000689B77 /* MFQueue.m in Sources */,
 				4FF665ED25F2C92700689B77 /* MFSegmentedControl.m in Sources */,
 				4FF6660225F2C92700689B77 /* ClickableImageView.m in Sources */,

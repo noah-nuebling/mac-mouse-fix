@@ -16,6 +16,7 @@
 #import "AddWindowController.h"
 #import <Cocoa/Cocoa.h>
 #import "SharedUtility.h"
+#import "MFMenuItem.h"
 
 @interface RemapTableController ()
 @property NSTableView *tableView;
@@ -213,7 +214,10 @@ static NSArray *getDragEffectsTable() {
     return dragEffectsTable;
 }
 static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
-    NSMutableArray *oneShotEffectsTable = @[
+    
+    int buttonNumber = ((NSNumber *)buttonTriggerDict[kMFButtonTriggerKeyButtonNumber]).intValue;
+    
+    NSArray *oneShotEffectsTable = @[
         @{@"ui": @"Mission Control", @"tool": @"Show Mission Control", @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHMissionControl)
@@ -239,8 +243,8 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
         @{@"ui": @"Smart Zoom", @"tool": @"Zoom in and out in Safari and other apps \nSimulates a two-finger double tap on an Apple Trackpad", @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSmartZoom,
         }},
-        @{@"ui": @"Open link in new tab",
-          @"tool": [NSString stringWithFormat:@"Open Links in a new tab, paste text in the Terminal, and more... \nSimulates clicking %@ on a standard mouse", getButtonStringToolTip(3)],
+        @{@"ui": @"Open Link in New Tab",
+          @"tool": [NSString stringWithFormat:@"Open Links in a New Tab, Paste Text in the Terminal, and more... \nSimulates clicking %@ on a standard mouse", getButtonStringToolTip(3)],
           @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
                   kMFActionDictKeyMouseButtonClicksVariantButtonNumber: @3,
@@ -264,21 +268,23 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
                   kMFActionDictKeyType: kMFActionDictTypeNavigationSwipe,
                   kMFActionDictKeyGenericVariant: kMFNavigationSwipeVariantRight
         }},
-    ].mutableCopy;
-    // Create button specific entry
-    NSMutableDictionary *buttonClickEntry = [NSMutableDictionary dictionary];
-    int buttonNumber = ((NSNumber *)buttonTriggerDict[kMFButtonTriggerKeyButtonNumber]).intValue;
-    buttonClickEntry[@"ui"] = [NSString stringWithFormat:@"%@ click", getButtonString(buttonNumber)];
-    buttonClickEntry[@"tool"] = [NSString stringWithFormat:@"Simulate clicking %@", getButtonStringToolTip(buttonNumber)];
-    buttonClickEntry[@"dict"] = @{
-        kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
-        kMFActionDictKeyMouseButtonClicksVariantButtonNumber: @(buttonNumber),
-        kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks: @1,
-    };
-    buttonClickEntry[@"alternate"] = @YES; // Press Option to see this entry
-    // Add button sppecific entry(s) to effects table
-    [oneShotEffectsTable insertObject:buttonClickEntry atIndex:15];
-    // Return
+    ];
+    
+    if (buttonNumber != 3) { // We already have the "Open Link in New Tab" entry for button 3
+        NSDictionary *buttonClickEntry = @{
+           @"ui": [NSString stringWithFormat:@"%@ Click", getButtonString(buttonNumber)],
+           @"tool": [NSString stringWithFormat:@"Simulate Clicking %@", getButtonStringToolTip(buttonNumber)],
+           @"hidable": @YES,
+    //        @"alternate": @YES,
+           @"dict": @{
+               kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
+               kMFActionDictKeyMouseButtonClicksVariantButtonNumber: @(buttonNumber),
+               kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks: @1,
+           }
+        };
+        oneShotEffectsTable = [oneShotEffectsTable arrayByAddingObjectsFromArray:@[separatorTableEntry(), buttonClickEntry]];
+    }
+    
     return oneShotEffectsTable;
 }
 // Convenience functions for effects tables
@@ -345,15 +351,20 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
     [popupButton removeAllItems];
     // Iterate oneshot effects table and fill popupButton
     for (NSDictionary *effectDict in effectsTable) {
-        NSMenuItem *i;
+        MFMenuItem *i;
         if ([effectDict[@"noeffect"] isEqualToString: @"separator"]) {
-            i = (NSMenuItem *)NSMenuItem.separatorItem;
+            i = (MFMenuItem *)NSMenuItem.separatorItem;
         } else {
-            i = [[NSMenuItem alloc] initWithTitle:effectDict[@"ui"] action:@selector(setConfigToUI:) keyEquivalent:@""];
+            i = [[MFMenuItem alloc] initWithTitle:effectDict[@"ui"] action:@selector(setConfigToUI:) keyEquivalent:@""];
             [i setToolTip:effectDict[@"tool"]];
             if ([effectDict[@"alternate"] isEqualTo:@YES]) {
                 i.alternate = YES;
                 i.keyEquivalentModifierMask = NSEventModifierFlagOption;
+            }
+            if ([effectDict[@"hidable"] isEqualTo:@YES]) {
+                i.hidable = YES;
+            } else {
+                i.hidable = NO;
             }
             i.target = self;
         }
@@ -372,6 +383,18 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
     }
     
     return triggerCell;
+}
+
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem {
+    MFMenuItem *i = (MFMenuItem *)menuItem;
+    if (i.hidable) {
+        if (NSApp.currentEvent.modifierFlags & NSEventModifierFlagOption) {
+            i.hidden = NO;
+        } else {
+            i.hidden = YES;
+        }
+    }
+    return YES;
 }
 
 - (NSTableCellView *)getTriggerCellWithRowDict:(NSDictionary *)rowDict {
