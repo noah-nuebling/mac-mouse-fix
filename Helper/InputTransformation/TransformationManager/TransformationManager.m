@@ -89,6 +89,11 @@ NSDictionary *_remaps;
 
 #pragma mark - AddMode
 
+BOOL _addModeIsEnabled = NO;
++ (BOOL)addModeIsEnabled {
+    return _addModeIsEnabled;
+}
+
 /// \discussion  Add mode configures the helper such that it remaps to "add mode feedback effects" instead of normal effects.
 /// When "add mode feedback effects" are triggered, the helper will send information about how exactly the effect was triggered to the main app.
 /// This allows us to capture triggers that the user performs and use them in the main app to add new rows to the remaps table view
@@ -122,6 +127,7 @@ NSDictionary *_remaps;
 ///                 - ButtonLandscapeAssessment code in ButtonTriggerHandler. Checking if button is used as modifier at a higher clicklevel and stuff is surelyyy broken. But that might not matter.
 ///                 -  `ModifierManager` -> `toggleModifierEventTapBasedOnRemaps` along with other functions from `ModifierManager` are probably broken, too.
 + (void)enableAddMode {
+    _addModeIsEnabled = YES;
     NSMutableDictionary *triggerToEffectDict_DemandsMods = [NSMutableDictionary dictionary];
     // Fill out triggerToEffectDictWithNeedForModifier with all triggers that users can map to
     // String based triggers (Only one - drag - atm)
@@ -156,6 +162,7 @@ NSDictionary *_remaps;
     };
 }
 + (void)disableAddMode {
+    _addModeIsEnabled = NO;
     [self loadRemapsFromConfig];
 }
 + (void)concludeAddModeWithPayload:(NSDictionary *)payload {

@@ -65,8 +65,8 @@
     return [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:object]];
 }
 
-+ (void)printInfoOnCaller {
-    NSLog(@"CALLING FUNCTION: %@", [[NSThread callStackSymbols] objectAtIndex:2]);
++ (NSString *)getInfoOnCaller {
+    return [NSString stringWithFormat:@" - %@", [[NSThread callStackSymbols] objectAtIndex:2]];
 }
 + (void)printStackTrace {
     NSLog(@"PRINTING STACK TRACE: %@", [NSThread callStackSymbols]);

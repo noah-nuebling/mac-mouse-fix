@@ -227,24 +227,6 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
                   kMFActionDictKeyGenericVariant: @(kMFSHShowDesktop)
         }},
         separatorTableEntry(),
-        @{@"ui": @"Move left a Space", @"tool": @"Move one Space to the left", @"dict": @{
-                  kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-                  kMFActionDictKeyGenericVariant: @(kMFSHMoveLeftASpace)
-        }},
-        @{@"ui": @"Move right a Space", @"tool": @"Move one Space to the right", @"dict": @{
-                  kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-                  kMFActionDictKeyGenericVariant: @(kMFSHMoveRightASpace)
-        }},
-        separatorTableEntry(),
-        @{@"ui": @"Back", @"tool": @"Go back \nWorks like a horizontal three finger swipe on an Apple Trackpad if \"System Preferences\" → \"Trackpad\" → \"More Gestures\" → \"Swipe between pages\" is set to \"Swipe with three fingers\"", @"dict": @{
-                  kMFActionDictKeyType: kMFActionDictTypeNavigationSwipe,
-                  kMFActionDictKeyGenericVariant: kMFNavigationSwipeVariantLeft
-        }},
-        @{@"ui": @"Forward", @"tool": @"Go forward \nWorks like a horizontal three finger swipe on an Apple Trackpad if \"System Preferences\" → \"Trackpad\" → \"More Gestures\" → \"Swipe between pages\" is set to \"Swipe with three fingers\"", @"dict": @{
-                  kMFActionDictKeyType: kMFActionDictTypeNavigationSwipe,
-                  kMFActionDictKeyGenericVariant: kMFNavigationSwipeVariantRight
-        }},
-        separatorTableEntry(),
         @{@"ui": @"Launchpad", @"tool": @"Open Launchpad", @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHLaunchpad)
@@ -263,6 +245,24 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
                   kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
                   kMFActionDictKeyMouseButtonClicksVariantButtonNumber: @3,
                   kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks: @1,
+          }},
+        separatorTableEntry(),
+        @{@"ui": @"Move left a Space", @"tool": @"Move one Space to the left", @"dict": @{
+                  kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+                  kMFActionDictKeyGenericVariant: @(kMFSHMoveLeftASpace)
+        }},
+        @{@"ui": @"Move right a Space", @"tool": @"Move one Space to the right", @"dict": @{
+                  kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+                  kMFActionDictKeyGenericVariant: @(kMFSHMoveRightASpace)
+        }},
+        separatorTableEntry(),
+        @{@"ui": @"Back", @"tool": @"Go back \nWorks like a horizontal three finger swipe on an Apple Trackpad if \"System Preferences\" → \"Trackpad\" → \"More Gestures\" → \"Swipe between pages\" is set to \"Swipe with three fingers\"", @"dict": @{
+                  kMFActionDictKeyType: kMFActionDictTypeNavigationSwipe,
+                  kMFActionDictKeyGenericVariant: kMFNavigationSwipeVariantLeft
+        }},
+        @{@"ui": @"Forward", @"tool": @"Go forward \nWorks like a horizontal three finger swipe on an Apple Trackpad if \"System Preferences\" → \"Trackpad\" → \"More Gestures\" → \"Swipe between pages\" is set to \"Swipe with three fingers\"", @"dict": @{
+                  kMFActionDictKeyType: kMFActionDictTypeNavigationSwipe,
+                  kMFActionDictKeyGenericVariant: kMFNavigationSwipeVariantRight
         }},
     ].mutableCopy;
     // Create button specific entry
@@ -331,7 +331,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
     return effectsTable;
 }
 
-#pragma mark - Filling the table
+#pragma mark - Filling the tableView
 
 - (NSTableCellView *)getEffectCellWithRowDict:(NSDictionary *)rowDict {
     
@@ -584,14 +584,20 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
     // Get top and bottom margins around text from IB template
     NSTableCellView *templateView = [self.tableView makeViewWithIdentifier:@"triggerCell" owner:nil];
     NSTextField *templateTextField = templateView.subviews[0];
-    double margin = templateView.bounds.size.height - templateTextField.bounds.size.height;
+    CGFloat templateViewHeight = templateView.bounds.size.height;
+    CGFloat templateTextFieldHeight = templateTextField.bounds.size.height;
+    double margin = templateViewHeight - templateTextFieldHeight;
     
     // Add margins and text height to get result
     CGFloat result = textHeight + margin;
-    if (result == templateView.bounds.size.height) {
-        return result;
-    } else // This should occur, if the text doesn't fit the line. I don't know why + 2 is necessary (+4 If we don't use bold substrings)
-        return result + 4;
+    if (result <= templateView.bounds.size.height) {
+        return templateView.bounds.size.height;
+    } else {
+        // This should occur, if the text doesn't fit the line. I don't know why + 2 is necessary (+ 4 If we don't use bold substrings)
+        //  + 4 also wasn't enough in some cases. This doesn't seem like a very reliable method.
+        // TODO: Find better solution than this + 10 stuff
+            return result + 10;
+    }
 }
 
 # pragma mark - String generating helper functions

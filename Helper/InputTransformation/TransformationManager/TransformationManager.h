@@ -13,6 +13,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TransformationManager : NSObject
+@property (class, readonly) BOOL addModeIsEnabled;
 + (void)loadRemapsFromConfig;
 + (NSDictionary *)remaps;
 + (void)enableAddMode;

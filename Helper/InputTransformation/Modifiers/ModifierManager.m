@@ -14,6 +14,7 @@
 #import "TransformationManager.h"
 #import "ModifiedDrag.h"
 #import "DeviceManager.h"
+#import "SharedUtility.h"
 
 
 @implementation ModifierManager
@@ -27,12 +28,12 @@
     if (self == [ModifierManager class]) {
         // Create keyboard modifier event tap
         CGEventMask mask = CGEventMaskBit(kCGEventFlagsChanged);
-        _keyboardModifierEventTap = CGEventTapCreate(kCGHIDEventTap, kCGTailAppendEventTap, kCGEventTapOptionDefault, mask, handleKeyboardModifiersHaveChanged, NULL);
+        _keyboardModifierEventTap = CGEventTapCreate(kCGHIDEventTap, kCGTailAppendEventTap, kCGEventTapOptionListenOnly, mask, handleKeyboardModifiersHaveChanged, NULL);
         CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _keyboardModifierEventTap, 0);
         CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopDefaultMode);
         CFRelease(runLoopSource);
-        
-        // Toggle keyboard modifier callbacks based on TransformationManager.remaps
+        // Enable/Disable eventTap based on TransformationManager.remaps
+        CGEventTapEnable(_keyboardModifierEventTap, false); // Disable eventTap first (Might prevent `_keyboardModifierEventTap` from always being called twice - Nope doesn't make a difference)
         toggleModifierEventTapBasedOnRemaps(TransformationManager.remaps);
         
         // Re-toggle keyboard modifier callbacks whenever TransformationManager.remaps changes
@@ -54,6 +55,11 @@
 
 static CFMachPortRef _keyboardModifierEventTap;
 static void toggleModifierEventTapBasedOnRemaps(NSDictionary *remaps) {
+    
+    if (TransformationManager.addModeIsEnabled) {
+        CGEventTapEnable(_keyboardModifierEventTap, true);
+        return;
+    }
 
     // If a modification collection exists such that it contains a proactive modification and its precondition contains a keyboard modifier, then activate the event tap.
     for (NSDictionary *modificationPrecondition in remaps) {
@@ -73,24 +79,15 @@ static void toggleModifierEventTapBasedOnRemaps(NSDictionary *remaps) {
 
 CGEventRef _Nullable handleKeyboardModifiersHaveChanged(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
-    CGEventTapPostEvent(proxy, event);
+//    CGEventTapPostEvent(proxy, event); // Why were we doing that? (Maybe it made sense when the eventTap was not listenOnly?)
     
     NSArray<MFDevice *> *devs = DeviceManager.attachedDevices;
     for (MFDevice *dev in devs) {
         NSDictionary *activeModifiers = [ModifierManager getActiveModifiersForDevice:dev.uniqueID filterButton:nil event:event];
         // ^ Need to pass in event here as source for keyboard modifers, otherwise the returned kb-modifiers won't be up-to-date.
-        
-//        // The keyboard component of activeModifiers doesn't update fast enough so we have to update it again here using the event.
-//        // This is kinofa hack we should clean this up
-//        NSMutableDictionary *activeModifiersNew = activeModifiers.mutableCopy;
-//        CGEventFlags flags = [ModifierManager getActiveKeyboardModifiersWithEvent:event];
-////        if (flags != 0) { // Why check for 0 here?
-//            activeModifiersNew[kMFModificationPreconditionKeyKeyboard] = @(flags);
-////        }
-        
         reactToModifierChange(activeModifiers, dev);
     }
-    return nil;
+    return nil; // This is a passive listener, so it doesn't matter what we return
 }
 
 #pragma mark Button modifiers
@@ -109,11 +106,12 @@ static void handleButtonModifiersHaveChangedWithDevice(MFDevice *device) {
 }
 
 #pragma mark Helper
-
 static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, MFDevice * _Nonnull device) {
     
 #if DEBUG
     NSLog(@"MODIFERS HAVE CHANGED TO - %@", activeModifiers);
+    NSLog(@"...ON DEVICE - %@", device);
+//    NSLog(@"...CALLED BY %@", [SharedUtility getInfoOnCaller]);
 #endif
     
     // Kill the currently active modified drag
@@ -124,21 +122,24 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, MFDevi
     [ModifiedDrag deactivate];
     
     // Get active modifications and initialize any which are modifier driven
+    
     NSDictionary *activeModifications = TransformationManager.remaps[activeModifiers];
+    
     // Do weird stuff if AddMode is active.
-    if (TransformationManager.remaps[@{kMFAddModeModificationPrecondition:@YES}] != nil) { // This means AddMode is active
+    if (TransformationManager.addModeIsEnabled) {
             if (activeModifiers.allKeys.count != 0) { // We activate modifications, if activeModifiers isn't _completely_ empty
                 activeModifications = TransformationManager.remaps[@{kMFAddModeModificationPrecondition: @YES}];
             }
     }
+    
     if (activeModifications) {
 #if DEBUG
         NSLog(@"ACTIVE MODIFICATIONS - %@", activeModifications);
 #endif
-        // Initialize effects which are modifier driven (only modified drag)
+        // Initialize effects which are modifier driven (only modified drag at this point)
         NSMutableDictionary *modifiedDragEffect = activeModifications[kMFTriggerDrag]; // Probably not truly mutable at this point
         if (modifiedDragEffect) {
-            // Add modificationPrecondition info for addMode. See TransformationManager -> AddMode for context
+            // Add modificationPrecondition info for addMode. See TransformationManager.m -> AddMode for context
             if ([modifiedDragEffect[kMFModifiedDragDictKeyType] isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
                 modifiedDragEffect = modifiedDragEffect.mutableCopy;
                 modifiedDragEffect[kMFRemapsKeyModificationPrecondition] = activeModifiers;
@@ -174,7 +175,7 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, MFDevi
     
     NSMutableDictionary *outDict = [NSMutableDictionary dictionary];
     
-    NSUInteger kb = [self getActiveKeyboardModifiersWithEvent:nil];
+    NSUInteger kb = [self getActiveKeyboardModifiersWithEvent:event];
     NSMutableArray *btn = [ButtonTriggerGenerator getActiveButtonModifiersForDevice:devID].mutableCopy;
     if (filteredButton != nil && btn.count != 0) {
         NSIndexSet *filterIndexes = [btn indexesOfObjectsPassingTest:^BOOL(NSDictionary *_Nonnull dict, NSUInteger idx, BOOL * _Nonnull stop) {

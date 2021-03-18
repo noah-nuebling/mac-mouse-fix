@@ -17,6 +17,9 @@
 #import "SharedUtility.h"
 #import <Cocoa/Cocoa.h>
 
+// TODO: Consider refactoring
+//  - There is device specific state scattered around the program (I can think of the the ButtonStates in ButtonTriggerGenerator, as well as the ModifedDragStates in ModiferManager). This state should probably be owned by MFDevice instances instead.
+//  - This class is cluttered up with code using the IOHID framework, intended to capture mouse moved input while preventing the mouse pointer from moving. This is used for ModifiedDrags which stop the mouse pointer from moving. We should probably move this code to some other class, which MFDevice's can own instances of, to make stuff less cluttered.
 
 @implementation MFDevice
 
@@ -41,6 +44,8 @@
     }
     return self;
 }
+
+#pragma mark - Capture input using IOHID
 
 static void registerInputCallbackForDevice(MFDevice *device) {
     IOHIDDeviceScheduleWithRunLoop(device.IOHIDDevice, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
@@ -330,7 +335,7 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
 #pragma mark - Default functions
 
 - (BOOL)isEqualToDevice:(MFDevice *)device {
-    return CFEqual(_IOHIDDevice, device.IOHIDDevice);
+    return CFEqual(self.IOHIDDevice, device.IOHIDDevice);
 }
 - (BOOL)isEqual:(MFDevice *)other {
     
@@ -347,7 +352,6 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
 }
 
 - (NSUInteger)hash {
-    
 //    return CFHash(_IOHIDDevice) << 1;
     return (NSUInteger)self;
 }
