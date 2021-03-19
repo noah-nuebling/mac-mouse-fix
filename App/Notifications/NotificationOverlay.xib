@@ -8,33 +8,42 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MFNotificationOverlayController">
             <connections>
-                <outlet property="label" destination="YM5-Ix-lRi" id="Uua-BZ-EYJ"/>
-                <outlet property="view" destination="hJr-K5-EGy" id="h7s-xf-A0R"/>
+                <outlet property="label" destination="UeI-0a-I8A" id="lfa-T1-oqW"/>
+                <outlet property="window" destination="ngO-y9-uog" id="1J9-yq-qOm"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView id="hJr-K5-EGy" userLabel="NotificationOverlayView">
-            <rect key="frame" x="0.0" y="0.0" width="316" height="106"/>
-            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-            <subviews>
-                <visualEffectView fixedFrame="YES" blendingMode="withinWindow" material="sidebar" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="rUD-91-eSR">
-                    <rect key="frame" x="0.0" y="0.0" width="316" height="106"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    <subviews>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YM5-Ix-lRi">
-                            <rect key="frame" x="140" y="45" width="37" height="16"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                            <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="t7W-we-9UN">
-                                <font key="font" usesAppearanceFont="YES"/>
-                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                    </subviews>
-                </visualEffectView>
-            </subviews>
-            <point key="canvasLocation" x="924" y="-248"/>
-        </customView>
+        <window title="Notification Overlay Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="ngO-y9-uog" customClass="NSPanel">
+            <windowStyleMask key="styleMask" titled="YES" nonactivatingPanel="YES" fullSizeContentView="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="167" y="106" width="204" height="34"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1025"/>
+            <view key="contentView" id="Vvh-MN-Ozv">
+                <rect key="frame" x="0.0" y="0.0" width="204" height="34"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <visualEffectView fixedFrame="YES" blendingMode="withinWindow" material="sidebar" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="lhE-YX-XCp">
+                        <rect key="frame" x="0.0" y="0.0" width="204" height="34"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UeI-0a-I8A">
+                                <rect key="frame" x="-2" y="9" width="208" height="16"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Welcome to Mac Mouse Fix!" id="Mo0-jm-fyt">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                    </visualEffectView>
+                </subviews>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="DNG-3l-gE4"/>
+            </connections>
+            <point key="canvasLocation" x="1236" y="-353"/>
+        </window>
     </objects>
 </document>

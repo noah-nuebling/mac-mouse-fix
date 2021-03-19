@@ -58,12 +58,8 @@ static AddWindowController *_instance;
     [AppDelegate.mainWindow beginSheet:_instance.window completionHandler:nil];
     
     // Testing
-    NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"AddddDd"];
-    NSView *notif = [MFNotificationOverlayController getNotificationWithMessage:message];
-    notif.frame = NSMakeRect(-20, -20, 300, 100);
-    [_instance.window.contentView addSubview:notif];
-    _instance.window.contentView.wantsLayer = YES;
-    _instance.window.contentView.layer.masksToBounds = NO;
+    NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Primary Mouse Button can not be remapped."];
+    [MFNotificationOverlayController attachNotificationWithMessage:message toWindow:_instance.window];
 }
 + (void)end {
     [AppDelegate.mainWindow endSheet:_instance.window];

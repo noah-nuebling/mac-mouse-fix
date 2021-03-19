@@ -111,9 +111,8 @@ static NSDictionary *sideButtonActions;
     }
     
     // Testing
-    NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Hhhhhh"];
-    NSView *notif = [MFNotificationOverlayController getNotificationWithMessage:message];
-    [self.window.contentView addSubview:notif];
+    NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Welcome to Mac Mouse Fix!"];
+    [MFNotificationOverlayController attachNotificationWithMessage:message toWindow:self.window];
 }
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
     NSLog(@"Mac Mouse Fix should terminate");
