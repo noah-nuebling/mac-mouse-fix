@@ -13,6 +13,7 @@
 #import "RemapTableController.h"
 #import "Utility_App.h"
 #import "SharedUtility.h"
+#import "MFNotificationOverlayController.h"
 
 @interface AddWindowController ()
 @property (weak) IBOutlet NSBox *addField;
@@ -55,6 +56,14 @@ static AddWindowController *_instance;
 
 + (void)begin {
     [AppDelegate.mainWindow beginSheet:_instance.window completionHandler:nil];
+    
+    // Testing
+    NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"AddddDd"];
+    NSView *notif = [MFNotificationOverlayController getNotificationWithMessage:message];
+    notif.frame = NSMakeRect(-20, -20, 300, 100);
+    [_instance.window.contentView addSubview:notif];
+    _instance.window.contentView.wantsLayer = YES;
+    _instance.window.contentView.layer.masksToBounds = NO;
 }
 + (void)end {
     [AppDelegate.mainWindow endSheet:_instance.window];

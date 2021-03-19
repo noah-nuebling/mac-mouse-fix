@@ -14,6 +14,8 @@
 		4F2FDF332315662500C7BE14 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2FDF322315662500C7BE14 /* main.m */; };
 		4F37FAD825FDFDC5004C34C4 /* MFScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */; };
 		4F75BC4D25F857C4004B1282 /* backup_config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F75BC4C25F857C4004B1282 /* backup_config.plist */; };
+		4F79A7EF26042E2E00076A7E /* NotificationOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F79A7EE26042E2E00076A7E /* NotificationOverlay.xib */; };
+		4F79A81C2604317200076A7E /* MFNotificationOverlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A81B2604317200076A7E /* MFNotificationOverlayController.m */; };
 		4F94F60525E5EC2800D9F24A /* Mac_Mouse_FixTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60425E5EC2800D9F24A /* Mac_Mouse_FixTests.m */; };
 		4F94F61025E5EC2800D9F24A /* Mac_Mouse_FixUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60F25E5EC2800D9F24A /* Mac_Mouse_FixUITests.m */; };
 		4F94F73D25E6146C00D9F24A /* Mac Mouse Fix Helper.app in Copy Helper */ = {isa = PBXBuildFile; fileRef = 4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -183,6 +185,9 @@
 		4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFScrollView.m; sourceTree = "<group>"; };
 		4F422EEC23469B0F00AA6E22 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F75BC4C25F857C4004B1282 /* backup_config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = backup_config.plist; sourceTree = "<group>"; };
+		4F79A7EE26042E2E00076A7E /* NotificationOverlay.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationOverlay.xib; sourceTree = "<group>"; };
+		4F79A81A2604317200076A7E /* MFNotificationOverlayController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFNotificationOverlayController.h; sourceTree = "<group>"; };
+		4F79A81B2604317200076A7E /* MFNotificationOverlayController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFNotificationOverlayController.m; sourceTree = "<group>"; };
 		4F94F5EE25E5EC2500D9F24A /* Mac Mouse Fix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mac Mouse Fix.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F94F60025E5EC2800D9F24A /* Mac Mouse FixTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Mac Mouse FixTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F94F60425E5EC2800D9F24A /* Mac_Mouse_FixTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Mac_Mouse_FixTests.m; sourceTree = "<group>"; };
@@ -388,6 +393,16 @@
 			path = Frameworks;
 			sourceTree = "<group>";
 		};
+		4F2A1FA726042ACB0067691A /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				4F79A81A2604317200076A7E /* MFNotificationOverlayController.h */,
+				4F79A81B2604317200076A7E /* MFNotificationOverlayController.m */,
+				4F79A7EE26042E2E00076A7E /* NotificationOverlay.xib */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
 		4F2FDF312315662500C7BE14 /* Accomplice */ = {
 			isa = PBXGroup;
 			children = (
@@ -536,6 +551,7 @@
 		4FF665BE25F2C92700689B77 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				4F2A1FA726042ACB0067691A /* Notifications */,
 				4FCA07D325F3125B00BFE209 /* MainWindow */,
 				4F46EAA625FB770D0003423A /* AddWindow */,
 				4FF665DC25F2C92700689B77 /* Accessibility */,
@@ -1100,6 +1116,7 @@
 				4FF6654225F2C7B000689B77 /* default_launchd.plist in Resources */,
 				4FF665F425F2C92700689B77 /* MoreSheet.xib in Resources */,
 				4FF665FC25F2C92700689B77 /* AuthorizeAccessibilityView.xib in Resources */,
+				4F79A7EF26042E2E00076A7E /* NotificationOverlay.xib in Resources */,
 				4F75BC4D25F857C4004B1282 /* backup_config.plist in Resources */,
 				4F2F5DB225FB723D0037660A /* AddWindow.xib in Resources */,
 				4FF665F725F2C92700689B77 /* Assets.xcassets in Resources */,
@@ -1192,6 +1209,7 @@
 				4FF6654C25F2C7B000689B77 /* MFQueue.m in Sources */,
 				4FF665ED25F2C92700689B77 /* MFSegmentedControl.m in Sources */,
 				4FF6660225F2C92700689B77 /* ClickableImageView.m in Sources */,
+				4F79A81C2604317200076A7E /* MFNotificationOverlayController.m in Sources */,
 				4F2F5DA825FB6FFD0037660A /* AddWindowController.m in Sources */,
 				4FF6655025F2C7B000689B77 /* NSArray+Additions.m in Sources */,
 				4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */,

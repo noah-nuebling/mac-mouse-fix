@@ -20,6 +20,7 @@
 #import "AuthorizeAccessibilityView.h"
 #import "HelperServices.h"
 #import "SharedUtility.h"
+#import "MFNotificationOverlayController.h"
 
 @interface AppDelegate ()
 
@@ -108,6 +109,11 @@ static NSDictionary *sideButtonActions;
     if (checkForUpdates == YES) {
         [Updater checkForUpdate];
     }
+    
+    // Testing
+    NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Hhhhhh"];
+    NSView *notif = [MFNotificationOverlayController getNotificationWithMessage:message];
+    [self.window.contentView addSubview:notif];
 }
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
     NSLog(@"Mac Mouse Fix should terminate");
