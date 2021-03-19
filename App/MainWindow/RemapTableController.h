@@ -12,7 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RemapTableController :  NSViewController <NSTableViewDataSource, NSTableViewDelegate, NSMenuItemValidation>
+@interface RemapTableController :  NSViewController <NSTableViewDataSource, NSTableViewDelegate>
 - (void)addRowWithHelperPayload:(NSDictionary *)payload;
 @end
 

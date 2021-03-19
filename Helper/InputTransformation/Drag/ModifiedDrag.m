@@ -234,6 +234,8 @@ static void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.0 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
             [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaX*twoFingerScale deltaY:deltaY*twoFingerScale phase:_drag.phase isGestureDelta:!inputIsPointerMovement];
         });
+    } else if ([_drag.type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
+        // Should probably send mousemoved events.
     }
     _drag.phase = kIOHIDEventPhaseChanged;
 }

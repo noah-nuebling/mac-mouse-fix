@@ -16,7 +16,6 @@
 #import "AddWindowController.h"
 #import <Cocoa/Cocoa.h>
 #import "SharedUtility.h"
-#import "MFMenuItem.h"
 
 @interface RemapTableController ()
 @property NSTableView *tableView;
@@ -180,9 +179,13 @@
 // There are also separatorTableEntry()s which become a separator in the popupbutton-menu generated from the effectsTable
 // There are 3 different effectsTables for 3 different types of triggers
 
-static NSDictionary *separatorTableEntry() {
+static NSDictionary *separatorEffectsTableEntry() {
     return @{@"noeffect": @"separator"};
 }
+// Hideablility doesn't seem to work on separators
+//static NSDictionary *hideableSeparatorEffectsTableEntry() {
+//    return @{@"noeffect": @"separator", @"hideable": @YES};
+//}
 static NSArray *getScrollEffectsTable() {
     NSArray *scrollEffectsTable = @[
         @{@"ui": @"Zoom in or out", @"tool": @"Zoom in or out in Safari, Maps, and other apps \nWorks like Pinch to Zoom on an Apple Trackpad" , @"dict": @{}
@@ -197,15 +200,16 @@ static NSArray *getScrollEffectsTable() {
 }
 static NSArray *getDragEffectsTable() {
     NSArray *dragEffectsTable = @[
-        @{@"ui": @"Mission Control & Spaces", @"tool": @"Move your mouse: \n - up to show Mission Control \n - down to show App Exposé \n - left/right to move between Spaces" , @"dict": @{
+        @{@"ui": @"Mission Control & Spaces", @"tool": @"Move your mouse: \n - up to show Mission Control \n - down to show Application windows \n - left/right to move between Spaces" , @"dict": @{
                   kMFModifiedDragDictKeyType: kMFModifiedDragTypeThreeFingerSwipe,
         }},
 //        @{@"ui": @"Scroll & navigate pages", @"tool": @"Scroll by moving your mouse in any direction \nNavigate pages in Safari, delete messages in Mail, and more, by moving your mouse horizontally \nWorks like swiping with 2 fingers on an Apple Trackpad" , @"dict": @{
 //                  kMFModifiedDragDictKeyType: kMFModifiedDragTypeTwoFingerSwipe,
 //        }},
-        separatorTableEntry(),
+//        separatorEffectsTableEntry(),
         @{@"ui": [NSString stringWithFormat:@"Click and Drag %@", getButtonString(3)],
-          @"tool": [NSString stringWithFormat: @"Simulates clicking and dragging %@ \nUsed to rotate in some 3d software like Blender", getButtonStringToolTip(3)] ,
+          @"tool": [NSString stringWithFormat: @"Simulates clicking and dragging %@ \nUsed to rotate in some 3d software like Blender", getButtonStringToolTip(3)],
+          @"hideable": @YES,
           @"dict": @{
                   kMFModifiedDragDictKeyType: kMFModifiedDragTypeFakeDrag,
                   kMFModifiedDragDictKeyFakeDragVariantButtonNumber: @3,
@@ -222,7 +226,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHMissionControl)
         }},
-        @{@"ui": @"App Exposé", @"tool": @"Show all windows of the active app", @"dict": @{
+        @{@"ui": @"Application Windows", @"tool": @"Show all windows of the active app", @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHAppExpose)
         }},
@@ -230,41 +234,41 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHShowDesktop)
         }},
-        separatorTableEntry(),
+        separatorEffectsTableEntry(),
         @{@"ui": @"Launchpad", @"tool": @"Open Launchpad", @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHLaunchpad)
         }},
-        separatorTableEntry(),
+        separatorEffectsTableEntry(),
         @{@"ui": @"Look Up", @"tool": @"Look up words in the Dictionary, Quick Look files in Finder, and more... \nWorks like Force Touch on an Apple Trackpad", @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHLookUp)
         }},
-        @{@"ui": @"Smart Zoom", @"tool": @"Zoom in and out in Safari and other apps \nSimulates a two-finger double tap on an Apple Trackpad", @"dict": @{
+        @{@"ui": @"Smart Zoom", @"tool": @"Zoom in or out in Safari and other apps \nSimulates a two-finger double tap on an Apple Trackpad", @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSmartZoom,
         }},
         @{@"ui": @"Open Link in New Tab",
-          @"tool": [NSString stringWithFormat:@"Open Links in a New Tab, Paste Text in the Terminal, and more... \nSimulates clicking %@ on a standard mouse", getButtonStringToolTip(3)],
+          @"tool": [NSString stringWithFormat:@"Open links in a new tab, paste text in the Terminal, and more... \nSimulates clicking %@", getButtonStringToolTip(3)],
           @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
                   kMFActionDictKeyMouseButtonClicksVariantButtonNumber: @3,
                   kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks: @1,
           }},
-        separatorTableEntry(),
-        @{@"ui": @"Move left a Space", @"tool": @"Move one Space to the left", @"dict": @{
+        separatorEffectsTableEntry(),
+        @{@"ui": @"Move Left a Space", @"tool": @"Move one Space to the left", @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHMoveLeftASpace)
         }},
-        @{@"ui": @"Move right a Space", @"tool": @"Move one Space to the right", @"dict": @{
+        @{@"ui": @"Move Right a Space", @"tool": @"Move one Space to the right", @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHMoveRightASpace)
         }},
-        separatorTableEntry(),
-        @{@"ui": @"Back", @"tool": @"Go back \nWorks like a horizontal three finger swipe on an Apple Trackpad if \"System Preferences\" → \"Trackpad\" → \"More Gestures\" → \"Swipe between pages\" is set to \"Swipe with three fingers\"", @"dict": @{
+        separatorEffectsTableEntry(),
+        @{@"ui": @"Back", @"tool": @"Go back one page in Safari and other apps", @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeNavigationSwipe,
                   kMFActionDictKeyGenericVariant: kMFNavigationSwipeVariantLeft
         }},
-        @{@"ui": @"Forward", @"tool": @"Go forward \nWorks like a horizontal three finger swipe on an Apple Trackpad if \"System Preferences\" → \"Trackpad\" → \"More Gestures\" → \"Swipe between pages\" is set to \"Swipe with three fingers\"", @"dict": @{
+        @{@"ui": @"Forward", @"tool": @"Go forward one page in Safari and other apps", @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeNavigationSwipe,
                   kMFActionDictKeyGenericVariant: kMFNavigationSwipeVariantRight
         }},
@@ -274,15 +278,16 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
         NSDictionary *buttonClickEntry = @{
            @"ui": [NSString stringWithFormat:@"%@ Click", getButtonString(buttonNumber)],
            @"tool": [NSString stringWithFormat:@"Simulate Clicking %@", getButtonStringToolTip(buttonNumber)],
-           @"hidable": @YES,
-    //        @"alternate": @YES,
+           @"hideable": @YES,
            @"dict": @{
                kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
                kMFActionDictKeyMouseButtonClicksVariantButtonNumber: @(buttonNumber),
                kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks: @1,
            }
         };
-        oneShotEffectsTable = [oneShotEffectsTable arrayByAddingObjectsFromArray:@[separatorTableEntry(), buttonClickEntry]];
+        NSMutableArray *temp = oneShotEffectsTable.mutableCopy;
+        [temp insertObject:buttonClickEntry atIndex:9];
+        oneShotEffectsTable = temp;
     }
     
     return oneShotEffectsTable;
@@ -351,20 +356,22 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
     [popupButton removeAllItems];
     // Iterate oneshot effects table and fill popupButton
     for (NSDictionary *effectDict in effectsTable) {
-        MFMenuItem *i;
+        NSMenuItem *i;
         if ([effectDict[@"noeffect"] isEqualToString: @"separator"]) {
-            i = (MFMenuItem *)NSMenuItem.separatorItem;
+            i = (NSMenuItem *)NSMenuItem.separatorItem;
         } else {
-            i = [[MFMenuItem alloc] initWithTitle:effectDict[@"ui"] action:@selector(setConfigToUI:) keyEquivalent:@""];
-            [i setToolTip:effectDict[@"tool"]];
+            i = [[NSMenuItem alloc] initWithTitle:effectDict[@"ui"] action:@selector(setConfigToUI:) keyEquivalent:@""];
+            i.toolTip = effectDict[@"tool"];
             if ([effectDict[@"alternate"] isEqualTo:@YES]) {
                 i.alternate = YES;
                 i.keyEquivalentModifierMask = NSEventModifierFlagOption;
             }
-            if ([effectDict[@"hidable"] isEqualTo:@YES]) {
-                i.hidable = YES;
-            } else {
-                i.hidable = NO;
+            if ([effectDict[@"hideable"] isEqualTo:@YES]) {
+                NSMenuItem *h = [[NSMenuItem alloc] init];
+                h.view = [[NSView alloc] initWithFrame:NSZeroRect];
+                [popupButton.menu addItem:h];
+                i.alternate = YES;
+                i.keyEquivalentModifierMask = NSEventModifierFlagOption;
             }
             i.target = self;
         }
@@ -383,18 +390,6 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
     }
     
     return triggerCell;
-}
-
-- (BOOL)validateMenuItem:(NSMenuItem *)menuItem {
-    MFMenuItem *i = (MFMenuItem *)menuItem;
-    if (i.hidable) {
-        if (NSApp.currentEvent.modifierFlags & NSEventModifierFlagOption) {
-            i.hidden = NO;
-        } else {
-            i.hidden = YES;
-        }
-    }
-    return YES;
 }
 
 - (NSTableCellView *)getTriggerCellWithRowDict:(NSDictionary *)rowDict {
