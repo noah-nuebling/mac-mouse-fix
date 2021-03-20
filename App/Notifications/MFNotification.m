@@ -14,4 +14,10 @@
 - (BOOL)canBecomeKeyWindow {
     return NO;
 }
+
+- (void)mouseDown:(NSEvent *)event {
+    NSLog(@"MOUSEEE DOWNUHH");
+    NSView *targetView = [self.contentView hitTest:event.locationInWindow];
+//    [targetView mouseDown:event];
+}
 @end

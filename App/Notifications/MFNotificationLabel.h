@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MFNotificationLabel : NSTextField
+@interface MFNotificationLabel : NSTextView
 
 @end
 

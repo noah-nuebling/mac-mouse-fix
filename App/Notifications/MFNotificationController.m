@@ -14,11 +14,12 @@
 #import "AppDelegate.h"
 #import "Utility_App.h"
 #import "MFNotification.h"
-#import "NSTextField+Additions.h"
+//#import "NSTextField+Additions.h"
+#import "MFNotificationLabel.h"
 #import "NSAttributedString+Additions.h"
 
 @interface MFNotificationController ()
-@property (weak) IBOutlet NSTextField *label;
+@property (unsafe_unretained) IBOutlet MFNotificationLabel *label;
 @end
 
 @implementation MFNotificationController
@@ -42,10 +43,15 @@ MFNotificationController *_instance;
         w.styleMask =  NSTitledWindowMask | NSFullSizeContentViewWindowMask;
         w.titlebarAppearsTransparent  =   YES;
         w.titleVisibility             =   NSWindowTitleHidden;
-        w.showsToolbarButton          =   NO;
         w.movable = NO;
-//        w setCan
-//        w.ignoresMouseEvents = YES;
+        
+        // Remove scrollView edge insets, because those are nothing but trouble (cause links to be not clickable and stuff)
+        NSScrollView *scrollView = (NSScrollView *)_instance.label.superview.superview;
+        scrollView.automaticallyAdjustsContentInsets = NO; // Doesn't remove insets // Probably calling this too late
+        scrollView.contentInsets = NSEdgeInsetsMake(0, 0, 0, 0);
+        // Disable scrollView elasticity while we're at it to make it seem like it's not even there
+        scrollView.verticalScrollElasticity = NSScrollElasticityNone;
+        scrollView.horizontalScrollElasticity = NSScrollElasticityNone;
     }
 }
 
@@ -76,23 +82,25 @@ double _animationDuration = 0.4;
     NSMutableParagraphStyle *p = [NSMutableParagraphStyle new];
     p.alignment = NSTextAlignmentCenter;
     [m addAttributes:@{NSParagraphStyleAttributeName: p} range:NSMakeRange(0, m.length)];
-    _instance.label.attributedStringValue = m;
+    
+    // Set message text to label
+    [_instance.label.textStorage setAttributedString:m];
 
     // Set notification frame
     
     // Calc size to fit content
     NSRect newNotifFrame = w.frame;
     // Get insets around label
-    NSTextField *label = _instance.label;
+    MFNotificationLabel *label = _instance.label;
     NSRect notifFrame = w.frame;
 #if DEBUG
-    CGFloat sh = label.superview.frame.size.height;
-    CGFloat sw = label.superview.frame.size.width;
+    CGFloat sh = label.superview.superview.superview.frame.size.height;
+    CGFloat sw = label.superview.superview.superview.frame.size.width;
     CGFloat nh = notifFrame.size.height;
     CGFloat nw = notifFrame.size.width;
     assert(sh == nh && sw == nw);
 #endif
-    NSRect labelFrame = label.frame;
+    NSRect labelFrame = label.superview.superview.frame;
     CGFloat bottomInset = labelFrame.origin.y;
     CGFloat topInset = notifFrame.size.height - (labelFrame.size.height + bottomInset);
     CGFloat leftInset = labelFrame.origin.x;
@@ -100,8 +108,9 @@ double _animationDuration = 0.4;
     assert(leftInset == rightInset);
     // Calculate new label size
     CGFloat maxLabelWidth = mainW.frame.size.width - 2*sideMargin - leftInset - rightInset;
-    NSSize labelSize = [label.effectiveAttributedStringValue sizeAtMaxWidth:maxLabelWidth];
-    NSSize newNotifSize = NSMakeSize(labelSize.width + leftInset + rightInset, labelSize.height + topInset + bottomInset);
+    NSSize newLabelSize = [label.attributedString sizeAtMaxWidth:maxLabelWidth];
+    NSLog(@"LABEL ATTRIBUTED STRING: %@", label.attributedString);
+    NSSize newNotifSize = NSMakeSize(newLabelSize.width + leftInset + rightInset, newLabelSize.height + topInset + bottomInset);
     newNotifFrame.size = newNotifSize;
     
     // Calc Position
@@ -114,10 +123,10 @@ double _animationDuration = 0.4;
     [w setFrame:newNotifFrame display:YES];
     
     // Set label frame (Don't need this if we set autoresizeing for the label in IB)
-    NSRect newLabelFrame = label.frame;
-    newLabelFrame.size = labelSize;
-    newLabelFrame.origin.x = NSMidX(label.superview.bounds) - (labelSize.width / 2);
-    newLabelFrame.origin.y = NSMidY(label.superview.bounds) - (labelSize.height / 2);
+    NSRect newLabelFrame = label.superview.superview.frame;
+    newLabelFrame.size = newLabelSize;
+    newLabelFrame.origin.x = NSMidX(label.superview.bounds) - (newLabelSize.width / 2);
+    newLabelFrame.origin.y = NSMidY(label.superview.bounds) - (newLabelSize.height / 2);
     [label setFrame:newLabelFrame];
     
     // Attach notif as child window to attachWindow

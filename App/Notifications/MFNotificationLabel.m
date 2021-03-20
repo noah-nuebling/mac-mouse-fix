@@ -15,16 +15,11 @@
 {
     self = [super init];
     if (self) {
-        [self setAllowsEditingTextAttributes: YES];
+        NSLog(@"LABEL INIT");
         [self setSelectable: YES];
+        [self setEditable:YES];
     }
     return self;
-}
-
-- (void)mouseDown:(NSEvent *)theEvent {
-    NSLog(@"MOUSE DOWN ON NOTIF LABEL");
-    [self sendAction:[self action] to:[self target]];
-    [super mouseDown:theEvent];
 }
 
 @end
