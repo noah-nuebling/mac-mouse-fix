@@ -14,7 +14,7 @@
 		4F2F5DB225FB723D0037660A /* AddWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F2F5DB125FB723D0037660A /* AddWindow.xib */; };
 		4F2FDF332315662500C7BE14 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2FDF322315662500C7BE14 /* main.m */; };
 		4F37FAD825FDFDC5004C34C4 /* MFScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */; };
-		4F75BC4D25F857C4004B1282 /* backup_config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F75BC4C25F857C4004B1282 /* backup_config.plist */; };
+		4F44FEF82606A5C100926A5E /* backup_config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F44FEF72606A5C100926A5E /* backup_config.plist */; };
 		4F79A7EF26042E2E00076A7E /* MFNotification.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F79A7EE26042E2E00076A7E /* MFNotification.xib */; };
 		4F79A81C2604317200076A7E /* MFNotificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A81B2604317200076A7E /* MFNotificationController.m */; };
 		4F79A82B2605074000076A7E /* NSAttributedString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A82A2605074000076A7E /* NSAttributedString+Additions.m */; };
@@ -191,7 +191,7 @@
 		4F37FAD625FDFDC4004C34C4 /* MFScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFScrollView.h; sourceTree = "<group>"; };
 		4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFScrollView.m; sourceTree = "<group>"; };
 		4F422EEC23469B0F00AA6E22 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		4F75BC4C25F857C4004B1282 /* backup_config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = backup_config.plist; sourceTree = "<group>"; };
+		4F44FEF72606A5C100926A5E /* backup_config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = backup_config.plist; sourceTree = "<group>"; };
 		4F79A7EE26042E2E00076A7E /* MFNotification.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MFNotification.xib; sourceTree = "<group>"; };
 		4F79A81A2604317200076A7E /* MFNotificationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFNotificationController.h; sourceTree = "<group>"; };
 		4F79A81B2604317200076A7E /* MFNotificationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFNotificationController.m; sourceTree = "<group>"; };
@@ -630,7 +630,7 @@
 		4FF665D025F2C92700689B77 /* Config */ = {
 			isa = PBXGroup;
 			children = (
-				4F75BC4C25F857C4004B1282 /* backup_config.plist */,
+				4F44FEF72606A5C100926A5E /* backup_config.plist */,
 				4FF665D225F2C92700689B77 /* ConfigFileInterface_App.h */,
 				4FF665D125F2C92700689B77 /* ConfigFileInterface_App.m */,
 			);
@@ -1149,8 +1149,8 @@
 				4FF6654225F2C7B000689B77 /* default_launchd.plist in Resources */,
 				4FF665F425F2C92700689B77 /* MoreSheet.xib in Resources */,
 				4FF665FC25F2C92700689B77 /* AuthorizeAccessibilityView.xib in Resources */,
+				4F44FEF82606A5C100926A5E /* backup_config.plist in Resources */,
 				4F79A7EF26042E2E00076A7E /* MFNotification.xib in Resources */,
-				4F75BC4D25F857C4004B1282 /* backup_config.plist in Resources */,
 				4F2F5DB225FB723D0037660A /* AddWindow.xib in Resources */,
 				4FF665F725F2C92700689B77 /* Assets.xcassets in Resources */,
 				4FF665F925F2C92700689B77 /* MouseFix.xib in Resources */,
