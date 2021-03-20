@@ -51,6 +51,9 @@
                                                 </fragment>
                                             </attributedString>
                                             <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <connections>
+                                                <outlet property="delegate" destination="Hm0-rM-QPq" id="kCZ-4R-Ui8"/>
+                                            </connections>
                                         </textView>
                                     </subviews>
                                 </clipView>
