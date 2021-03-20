@@ -19,6 +19,7 @@
 		4F79A81C2604317200076A7E /* MFNotificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A81B2604317200076A7E /* MFNotificationController.m */; };
 		4F79A82B2605074000076A7E /* NSAttributedString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A82A2605074000076A7E /* NSAttributedString+Additions.m */; };
 		4F79A83626051E4A00076A7E /* MFNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A83526051E4A00076A7E /* MFNotification.m */; };
+		4F7AB0552606698A0008055E /* UIStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F7AB0542606698A0008055E /* UIStrings.m */; };
 		4F94F60525E5EC2800D9F24A /* Mac_Mouse_FixTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60425E5EC2800D9F24A /* Mac_Mouse_FixTests.m */; };
 		4F94F61025E5EC2800D9F24A /* Mac_Mouse_FixUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60F25E5EC2800D9F24A /* Mac_Mouse_FixUITests.m */; };
 		4F94F73D25E6146C00D9F24A /* Mac Mouse Fix Helper.app in Copy Helper */ = {isa = PBXBuildFile; fileRef = 4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -198,6 +199,8 @@
 		4F79A82A2605074000076A7E /* NSAttributedString+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+Additions.m"; sourceTree = "<group>"; };
 		4F79A83426051E4A00076A7E /* MFNotification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFNotification.h; sourceTree = "<group>"; };
 		4F79A83526051E4A00076A7E /* MFNotification.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFNotification.m; sourceTree = "<group>"; };
+		4F7AB0532606698A0008055E /* UIStrings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIStrings.h; sourceTree = "<group>"; };
+		4F7AB0542606698A0008055E /* UIStrings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UIStrings.m; sourceTree = "<group>"; };
 		4F94F5EE25E5EC2500D9F24A /* Mac Mouse Fix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mac Mouse Fix.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F94F60025E5EC2800D9F24A /* Mac Mouse FixTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Mac Mouse FixTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F94F60425E5EC2800D9F24A /* Mac_Mouse_FixTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Mac_Mouse_FixTests.m; sourceTree = "<group>"; };
@@ -453,6 +456,15 @@
 			path = AddWindow;
 			sourceTree = "<group>";
 		};
+		4F7AB0522606692C0008055E /* UIStrings */ = {
+			isa = PBXGroup;
+			children = (
+				4F7AB0532606698A0008055E /* UIStrings.h */,
+				4F7AB0542606698A0008055E /* UIStrings.m */,
+			);
+			path = UIStrings;
+			sourceTree = "<group>";
+		};
 		4F94F60325E5EC2800D9F24A /* AppTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -665,6 +677,7 @@
 		4FF665E525F2C92700689B77 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				4F7AB0522606692C0008055E /* UIStrings */,
 				4F1C51D8260543DD007F4930 /* NSTextField+Additions.h */,
 				4F1C51D9260543DD007F4930 /* NSTextField+Additions.m */,
 				4F79A8292605074000076A7E /* NSAttributedString+Additions.h */,
@@ -1238,6 +1251,7 @@
 				4F37FAD825FDFDC5004C34C4 /* MFScrollView.m in Sources */,
 				4FF665F825F2C92700689B77 /* MessagePort_App.m in Sources */,
 				4F79A82B2605074000076A7E /* NSAttributedString+Additions.m in Sources */,
+				4F7AB0552606698A0008055E /* UIStrings.m in Sources */,
 				4FF6660125F2C92700689B77 /* Utility_App.m in Sources */,
 				4FF665F225F2C92700689B77 /* UpdateWindow.m in Sources */,
 				4F79A83626051E4A00076A7E /* MFNotification.m in Sources */,

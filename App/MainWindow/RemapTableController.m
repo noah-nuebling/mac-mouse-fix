@@ -18,6 +18,7 @@
 #import "SharedUtility.h"
 #import "NSAttributedString+Additions.h"
 #import "NSTextField+Additions.h"
+#import "UIStrings.h"
 
 @interface RemapTableController ()
 @property NSTableView *tableView;
@@ -209,7 +210,7 @@ static NSArray *getDragEffectsTable() {
 //                  kMFModifiedDragDictKeyType: kMFModifiedDragTypeTwoFingerSwipe,
 //        }},
 //        separatorEffectsTableEntry(),
-        @{@"ui": [NSString stringWithFormat:@"Click and Drag %@", getButtonString(3)],
+        @{@"ui": [NSString stringWithFormat:@"Click and Drag %@", [UIStrings getButtonString:3]],
           @"tool": [NSString stringWithFormat: @"Simulates clicking and dragging %@ \nUsed to rotate in some 3d software like Blender", getButtonStringToolTip(3)],
           @"hideable": @YES,
           @"dict": @{
@@ -278,7 +279,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
     
     if (buttonNumber != 3) { // We already have the "Open Link in New Tab" entry for button 3
         NSDictionary *buttonClickEntry = @{
-           @"ui": [NSString stringWithFormat:@"%@ Click", getButtonString(buttonNumber)],
+           @"ui": [NSString stringWithFormat:@"%@ Click", [UIStrings getButtonString:buttonNumber]],
            @"tool": [NSString stringWithFormat:@"Simulate Clicking %@", getButtonStringToolTip(buttonNumber)],
            @"hideable": @YES,
            @"dict": @{
@@ -442,7 +443,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
             @throw [NSException exceptionWithName:@"Invalid duration" reason:@"Remaps contain invalid duration" userInfo:@{@"Trigger dict containing invalid value": trigger}];
         }
         // btn
-        NSString * buttonStr = getButtonString(btn.intValue);
+        NSString * buttonStr = [UIStrings getButtonString:btn.intValue];
         NSString * buttonStrTool = getButtonStringToolTip(btn.intValue);
         if (btn.intValue < 1) {
             @throw [NSException exceptionWithName:@"Invalid button number" reason:@"Remaps contain invalid button number" userInfo:@{@"Trigger dict containing invalid value": trigger}];
@@ -481,7 +482,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
             NSNumber *lvl = lastButtonPress[kMFButtonModificationPreconditionKeyClickLevel];
             levelStr = clickLevelToUIString[lvl];
             clickStr = @"Click ";
-            buttonStr = getButtonString(btn.intValue);
+            buttonStr = [UIStrings getButtonString:btn.intValue];
             buttonStrTool = getButtonStringToolTip(btn.intValue);
         } else if (keyboardModifiers) {
             // Extract keyboard modifiers
@@ -540,7 +541,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
         NSString *levelStr;
         NSString *buttonStr;
         NSString *buttonStrTool;
-        buttonStr = getButtonString(btn.intValue);
+        buttonStr = [UIStrings getButtonString:btn.intValue];
         buttonStrTool = getButtonStringToolTip(btn.intValue);
         levelStr = clickLevelToUIString[lvl];
         NSString *buttonModString = [NSString stringWithFormat:@"%@Click %@ + ", levelStr, buttonStr];
@@ -629,18 +630,6 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
 
 # pragma mark - String generating helper functions
 
-static NSString *getButtonString(int buttonNumber) {
-    NSDictionary *buttonNumberToUIString = @{
-        @1: @"Primary Button",
-        @2: @"Secondary Button",
-        @3: @"Middle Button",
-    };
-    NSString *buttonStr = buttonNumberToUIString[@(buttonNumber)];
-    if (!buttonStr) {
-        buttonStr = [NSString stringWithFormat:@"Button %@", @(buttonNumber)];
-    }
-    return buttonStr;
-}
 static NSString *getButtonStringToolTip(int buttonNumber) {
     NSDictionary *buttonNumberToUIString = @{
         @1: @"the Primary Mouse Button (also called the Left Mouse Button or Mouse Button 1)",

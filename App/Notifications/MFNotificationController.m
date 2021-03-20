@@ -70,6 +70,7 @@ double _animationDuration = 0.4;
     NSTimeInterval showDuration = 3.0;
     double mainWindowTitleBarHeight = 30;
     double topEdgeMargin = 1.0;
+//    double topEdgeMargin = -25;
     double sideMargin = 20;
     
     // Execution

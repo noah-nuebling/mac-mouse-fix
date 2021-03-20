@@ -15,6 +15,7 @@
 #import "SharedUtility.h"
 #import "MFNotificationController.h"
 #import "NSAttributedString+Additions.h"
+#import "UIStrings.h"
 
 @interface AddWindowController ()
 @property (weak) IBOutlet NSBox *addField;
@@ -23,11 +24,12 @@
 
 @implementation AddWindowController
 
-// Init
-
 static AddWindowController *_instance;
+static BOOL _pointerIsInsideAddField;
+// Init
 + (void)initialize {
     _instance = [[AddWindowController alloc] initWithWindowNibName:@"AddWindow"];
+    _pointerIsInsideAddField = NO;
 }
 - (void)windowDidLoad {
     [super windowDidLoad];
@@ -43,12 +45,12 @@ static AddWindowController *_instance;
     [AddWindowController end];
 }
 - (void)mouseEntered:(NSEvent *)event {
-    NSLog(@"MOSUE ENTERED ADD FIELD");
+    _pointerIsInsideAddField = YES;
     [AddWindowController enableAddFieldHoverEffect:YES];
     [MessagePort_App sendMessageToHelper:@"enableAddMode"];
 }
 - (void)mouseExited:(NSEvent *)event {
-    NSLog(@"MOSUE EXTITSED ADD FIELD");
+    _pointerIsInsideAddField = NO;
     [AddWindowController enableAddFieldHoverEffect:NO];
     [MessagePort_App sendMessageToHelper:@"disableAddMode"];
 }
@@ -60,11 +62,6 @@ static AddWindowController *_instance;
         dispatch_async(dispatch_get_main_queue(), ^{
         });
     }];
-    
-    // Testing
-    NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Primary Mouse Button can not be remapped."];
-    message = [message attributedStringByAddingLinkWithURL:[NSURL URLWithString:@"https://google.com"] forSubstring:@"Primary Mouse"];
-    [MFNotificationController attachNotificationWithMessage:message toWindow:_instance.window];
 }
 + (void)end {
     [AppDelegate.mainWindow endSheet:_instance.window];
@@ -72,7 +69,6 @@ static AddWindowController *_instance;
 + (void)handleReceivedAddModeFeedbackFromHelperWithPayload:(NSDictionary *)payload {
     // Tint plus icon to give visual feedback
     NSImageView *plusIconViewCopy;
-//    if (NO) {
     if (@available(macOS 10.14, *)) {
         plusIconViewCopy = (NSImageView *)[SharedUtility deepCopyOf:_instance.plusIconView];
         [_instance.plusIconView.superview addSubview:plusIconViewCopy];
@@ -80,7 +76,6 @@ static AddWindowController *_instance;
         plusIconViewCopy.contentTintColor = NSColor.controlAccentColor;
         [NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull context) {
             NSAnimationContext.currentContext.duration = 0.2;
-//            _instance.plusIconView.animator.alphaValue = 0.0;
             plusIconViewCopy.animator.alphaValue = 0.3;
             [NSThread sleepForTimeInterval:NSAnimationContext.currentContext.duration];
         }];
@@ -136,5 +131,20 @@ static AddWindowController *_instance;
         
     }
 }
+
+// TODO: Use format strings and shared functions from UIStrings.m to obtain button names
+
+- (void)mouseUp:(NSEvent *)event {
+    if (!_pointerIsInsideAddField) return;
+    NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Primary Button can't be added. Please try another Button."];
+//    message = [message attributedStringByAddingLinkWithURL:[NSURL URLWithString:@"https://google.com"] forSubstring:@"Primary Mouse"];
+    [MFNotificationController attachNotificationWithMessage:message toWindow:_instance.window];
+}
+- (void)rightMouseUp:(NSEvent *)event {
+    if (!_pointerIsInsideAddField) return;
+    NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Secondary Button can't be added. Please try another Button."];
+    [MFNotificationController attachNotificationWithMessage:message toWindow:_instance.window];
+}
+
 @end
 
