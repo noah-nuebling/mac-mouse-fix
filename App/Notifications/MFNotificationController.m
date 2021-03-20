@@ -85,9 +85,11 @@ double _animationDuration = 0.4;
 //    p.alignment = NSTextAlignmentCenter;
 //    [m addAttributes:@{NSParagraphStyleAttributeName: p} range:NSMakeRange(0, m.length)];
     
-    // Set message text to label
+    // Set message text and text attributes to label
     NSMutableAttributedString *m = message.mutableCopy;
     [m addAttributes:_labelAttributesFromIB range:NSMakeRange(0, m.length)];
+    // ^ Attributes of m which are also defined in _labelAttributesFromIB will be overriden by this.
+    //      E.g. boldness I think. This is not ideal but works for now.
     [_instance.label.textStorage setAttributedString:m];
 
     // Set notification frame
