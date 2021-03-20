@@ -20,7 +20,7 @@
 #import "AuthorizeAccessibilityView.h"
 #import "HelperServices.h"
 #import "SharedUtility.h"
-#import "MFNotificationOverlayController.h"
+#import "MFNotificationController.h"
 
 @interface AppDelegate ()
 
@@ -112,7 +112,7 @@ static NSDictionary *sideButtonActions;
     
     // Testing
     NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Welcome to Mac Mouse Fix!"];
-    [MFNotificationOverlayController attachNotificationWithMessage:message toWindow:self.window];
+    [MFNotificationController attachNotificationWithMessage:message toWindow:self.window];
 }
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
     NSLog(@"Mac Mouse Fix should terminate");

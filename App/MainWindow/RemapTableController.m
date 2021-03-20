@@ -16,6 +16,8 @@
 #import "AddWindowController.h"
 #import <Cocoa/Cocoa.h>
 #import "SharedUtility.h"
+#import "NSAttributedString+Additions.h"
+#import "NSTextField+Additions.h"
 
 @interface RemapTableController ()
 @property NSTableView *tableView;
@@ -595,9 +597,11 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
     NSTableCellView *view = [self getTriggerCellWithRowDict:rowDict];
     // ^ These lines are copied from `tableView:viewForTableColumn:row:`. Should change this cause copied code is bad.
     NSTextField *textField = view.subviews[0];
-    NSAttributedString *string = textField.attributedStringValue;
-    NSRect bounds = [string boundingRectWithSize:NSMakeSize(textField.bounds.size.width, 1000) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading];
-    CGFloat textHeight = bounds.size.height;
+    NSMutableAttributedString *string = textField.effectiveAttributedStringValue.mutableCopy;
+    NSLog(@"STRINGGGGGG HAS ATTRIBUTES: %@", [string attributesAtIndex:0 effectiveRange:nil]);
+    
+    CGFloat wdth = textField.bounds.size.width; // 326 for some reason, in IB it's 323
+    CGFloat textHeight = [string heightAtWidth:wdth];
     
     // Get top and bottom margins around text from IB template
     NSTableCellView *templateView = [self.tableView makeViewWithIdentifier:@"triggerCell" owner:nil];
@@ -608,13 +612,17 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
     
     // Add margins and text height to get result
     CGFloat result = textHeight + margin;
-    if (result <= templateView.bounds.size.height) {
-        return templateView.bounds.size.height;
+    if (result == templateViewHeight) {
+        return result;
     } else {
+#if DEBUG
+        NSLog(@"Height of row %ld is non-standard - Template: %f, Actual: %f", (long)row, templateViewHeight, result);
+#endif
         // This should occur, if the text doesn't fit the line. I don't know why + 2 is necessary (+ 4 If we don't use bold substrings)
         //  + 4 also wasn't enough in some cases. This doesn't seem like a very reliable method.
         // TODO: Find better solution than this + 10 stuff
-            return result + 10;
+//            return result + 10;
+        return result;
     }
 }
 

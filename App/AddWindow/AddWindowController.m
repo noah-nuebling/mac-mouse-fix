@@ -13,7 +13,8 @@
 #import "RemapTableController.h"
 #import "Utility_App.h"
 #import "SharedUtility.h"
-#import "MFNotificationOverlayController.h"
+#import "MFNotificationController.h"
+#import "NSAttributedString+Additions.h"
 
 @interface AddWindowController ()
 @property (weak) IBOutlet NSBox *addField;
@@ -55,11 +56,15 @@ static AddWindowController *_instance;
 // Interface
 
 + (void)begin {
-    [AppDelegate.mainWindow beginSheet:_instance.window completionHandler:nil];
+    [AppDelegate.mainWindow beginSheet:_instance.window completionHandler:^(NSModalResponse returnCode) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+        });
+    }];
     
     // Testing
     NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Primary Mouse Button can not be remapped."];
-    [MFNotificationOverlayController attachNotificationWithMessage:message toWindow:_instance.window];
+    message = [message attributedStringByAddingLinkWithURL:[NSURL URLWithString:@"https://google.com"] forSubstring:@"Primary Mouse"];
+    [MFNotificationController attachNotificationWithMessage:message toWindow:_instance.window];
 }
 + (void)end {
     [AppDelegate.mainWindow endSheet:_instance.window];

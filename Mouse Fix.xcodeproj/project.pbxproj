@@ -9,19 +9,22 @@
 /* Begin PBXBuildFile section */
 		4F1793A925EEC92000E8309B /* ZipArchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F1793A825EEC90900E8309B /* ZipArchive.framework */; };
 		4F1793AA25EEC92000E8309B /* ZipArchive.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F1793A825EEC90900E8309B /* ZipArchive.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4F1C51DA260543DD007F4930 /* NSTextField+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C51D9260543DD007F4930 /* NSTextField+Additions.m */; };
 		4F2F5DA825FB6FFD0037660A /* AddWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F5DA725FB6FFD0037660A /* AddWindowController.m */; };
 		4F2F5DB225FB723D0037660A /* AddWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F2F5DB125FB723D0037660A /* AddWindow.xib */; };
 		4F2FDF332315662500C7BE14 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2FDF322315662500C7BE14 /* main.m */; };
 		4F37FAD825FDFDC5004C34C4 /* MFScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */; };
 		4F75BC4D25F857C4004B1282 /* backup_config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F75BC4C25F857C4004B1282 /* backup_config.plist */; };
-		4F79A7EF26042E2E00076A7E /* NotificationOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F79A7EE26042E2E00076A7E /* NotificationOverlay.xib */; };
-		4F79A81C2604317200076A7E /* MFNotificationOverlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A81B2604317200076A7E /* MFNotificationOverlayController.m */; };
+		4F79A7EF26042E2E00076A7E /* MFNotification.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F79A7EE26042E2E00076A7E /* MFNotification.xib */; };
+		4F79A81C2604317200076A7E /* MFNotificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A81B2604317200076A7E /* MFNotificationController.m */; };
 		4F79A82B2605074000076A7E /* NSAttributedString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A82A2605074000076A7E /* NSAttributedString+Additions.m */; };
+		4F79A83626051E4A00076A7E /* MFNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A83526051E4A00076A7E /* MFNotification.m */; };
 		4F94F60525E5EC2800D9F24A /* Mac_Mouse_FixTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60425E5EC2800D9F24A /* Mac_Mouse_FixTests.m */; };
 		4F94F61025E5EC2800D9F24A /* Mac_Mouse_FixUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60F25E5EC2800D9F24A /* Mac_Mouse_FixUITests.m */; };
 		4F94F73D25E6146C00D9F24A /* Mac Mouse Fix Helper.app in Copy Helper */ = {isa = PBXBuildFile; fileRef = 4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4F94F74C25E614B800D9F24A /* Mac Mouse Fix Accomplice in Copy Updater */ = {isa = PBXBuildFile; fileRef = 4F2FDF302315662400C7BE14 /* Mac Mouse Fix Accomplice */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCA07D525F3129B00BFE209 /* RemapTableController.m */; };
+		4FD82DDB260575B100664D6F /* MFNotificationLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD82DDA260575B100664D6F /* MFNotificationLabel.m */; };
 		4FF6654125F2C7B000689B77 /* default_launchd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6652E25F2C7B000689B77 /* default_launchd.plist */; };
 		4FF6654225F2C7B000689B77 /* default_launchd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6652E25F2C7B000689B77 /* default_launchd.plist */; };
 		4FF6654325F2C7B000689B77 /* HelperServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6652F25F2C7B000689B77 /* HelperServices.m */; };
@@ -177,6 +180,8 @@
 
 /* Begin PBXFileReference section */
 		4F1793A825EEC90900E8309B /* ZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ZipArchive.framework; sourceTree = "<group>"; };
+		4F1C51D8260543DD007F4930 /* NSTextField+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSTextField+Additions.h"; sourceTree = "<group>"; };
+		4F1C51D9260543DD007F4930 /* NSTextField+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSTextField+Additions.m"; sourceTree = "<group>"; };
 		4F2F5DA625FB6FFD0037660A /* AddWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddWindowController.h; sourceTree = "<group>"; };
 		4F2F5DA725FB6FFD0037660A /* AddWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddWindowController.m; sourceTree = "<group>"; };
 		4F2F5DB125FB723D0037660A /* AddWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddWindow.xib; sourceTree = "<group>"; };
@@ -186,11 +191,13 @@
 		4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFScrollView.m; sourceTree = "<group>"; };
 		4F422EEC23469B0F00AA6E22 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F75BC4C25F857C4004B1282 /* backup_config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = backup_config.plist; sourceTree = "<group>"; };
-		4F79A7EE26042E2E00076A7E /* NotificationOverlay.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationOverlay.xib; sourceTree = "<group>"; };
-		4F79A81A2604317200076A7E /* MFNotificationOverlayController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFNotificationOverlayController.h; sourceTree = "<group>"; };
-		4F79A81B2604317200076A7E /* MFNotificationOverlayController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFNotificationOverlayController.m; sourceTree = "<group>"; };
+		4F79A7EE26042E2E00076A7E /* MFNotification.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MFNotification.xib; sourceTree = "<group>"; };
+		4F79A81A2604317200076A7E /* MFNotificationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFNotificationController.h; sourceTree = "<group>"; };
+		4F79A81B2604317200076A7E /* MFNotificationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFNotificationController.m; sourceTree = "<group>"; };
 		4F79A8292605074000076A7E /* NSAttributedString+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+Additions.h"; sourceTree = "<group>"; };
 		4F79A82A2605074000076A7E /* NSAttributedString+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+Additions.m"; sourceTree = "<group>"; };
+		4F79A83426051E4A00076A7E /* MFNotification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFNotification.h; sourceTree = "<group>"; };
+		4F79A83526051E4A00076A7E /* MFNotification.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFNotification.m; sourceTree = "<group>"; };
 		4F94F5EE25E5EC2500D9F24A /* Mac Mouse Fix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mac Mouse Fix.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F94F60025E5EC2800D9F24A /* Mac Mouse FixTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Mac Mouse FixTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F94F60425E5EC2800D9F24A /* Mac_Mouse_FixTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Mac_Mouse_FixTests.m; sourceTree = "<group>"; };
@@ -201,6 +208,8 @@
 		4FCA07D425F3129B00BFE209 /* RemapTableController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapTableController.h; sourceTree = "<group>"; };
 		4FCA07D525F3129B00BFE209 /* RemapTableController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapTableController.m; sourceTree = "<group>"; };
 		4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mac Mouse Fix Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4FD82DD9260575B100664D6F /* MFNotificationLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFNotificationLabel.h; sourceTree = "<group>"; };
+		4FD82DDA260575B100664D6F /* MFNotificationLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFNotificationLabel.m; sourceTree = "<group>"; };
 		4FDBC59A234F80C500A46517 /* Accomplice.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Accomplice.entitlements; sourceTree = "<group>"; };
 		4FF6652D25F2C7B000689B77 /* HelperServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelperServices.h; sourceTree = "<group>"; };
 		4FF6652E25F2C7B000689B77 /* default_launchd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_launchd.plist; sourceTree = "<group>"; };
@@ -399,9 +408,13 @@
 		4F2A1FA726042ACB0067691A /* Notifications */ = {
 			isa = PBXGroup;
 			children = (
-				4F79A81A2604317200076A7E /* MFNotificationOverlayController.h */,
-				4F79A81B2604317200076A7E /* MFNotificationOverlayController.m */,
-				4F79A7EE26042E2E00076A7E /* NotificationOverlay.xib */,
+				4F79A81A2604317200076A7E /* MFNotificationController.h */,
+				4F79A81B2604317200076A7E /* MFNotificationController.m */,
+				4F79A83426051E4A00076A7E /* MFNotification.h */,
+				4F79A83526051E4A00076A7E /* MFNotification.m */,
+				4FD82DD9260575B100664D6F /* MFNotificationLabel.h */,
+				4FD82DDA260575B100664D6F /* MFNotificationLabel.m */,
+				4F79A7EE26042E2E00076A7E /* MFNotification.xib */,
 			);
 			path = Notifications;
 			sourceTree = "<group>";
@@ -652,6 +665,8 @@
 		4FF665E525F2C92700689B77 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				4F1C51D8260543DD007F4930 /* NSTextField+Additions.h */,
+				4F1C51D9260543DD007F4930 /* NSTextField+Additions.m */,
 				4F79A8292605074000076A7E /* NSAttributedString+Additions.h */,
 				4F79A82A2605074000076A7E /* NSAttributedString+Additions.m */,
 				4F37FAD625FDFDC4004C34C4 /* MFScrollView.h */,
@@ -1121,7 +1136,7 @@
 				4FF6654225F2C7B000689B77 /* default_launchd.plist in Resources */,
 				4FF665F425F2C92700689B77 /* MoreSheet.xib in Resources */,
 				4FF665FC25F2C92700689B77 /* AuthorizeAccessibilityView.xib in Resources */,
-				4F79A7EF26042E2E00076A7E /* NotificationOverlay.xib in Resources */,
+				4F79A7EF26042E2E00076A7E /* MFNotification.xib in Resources */,
 				4F75BC4D25F857C4004B1282 /* backup_config.plist in Resources */,
 				4F2F5DB225FB723D0037660A /* AddWindow.xib in Resources */,
 				4FF665F725F2C92700689B77 /* Assets.xcassets in Resources */,
@@ -1208,13 +1223,15 @@
 				4FF6654E25F2C7B000689B77 /* SharedUtility.m in Sources */,
 				4FF665F025F2C92700689B77 /* Updater.m in Sources */,
 				4FF665FE25F2C92700689B77 /* main.m in Sources */,
+				4FD82DDB260575B100664D6F /* MFNotificationLabel.m in Sources */,
 				4FF665FA25F2C92700689B77 /* AppDelegate.m in Sources */,
 				4FF665F325F2C92700689B77 /* MoreSheet.m in Sources */,
 				4FF6660025F2C92700689B77 /* Hyperlink.m in Sources */,
 				4FF6654C25F2C7B000689B77 /* MFQueue.m in Sources */,
 				4FF665ED25F2C92700689B77 /* MFSegmentedControl.m in Sources */,
 				4FF6660225F2C92700689B77 /* ClickableImageView.m in Sources */,
-				4F79A81C2604317200076A7E /* MFNotificationOverlayController.m in Sources */,
+				4F79A81C2604317200076A7E /* MFNotificationController.m in Sources */,
+				4F1C51DA260543DD007F4930 /* NSTextField+Additions.m in Sources */,
 				4F2F5DA825FB6FFD0037660A /* AddWindowController.m in Sources */,
 				4FF6655025F2C7B000689B77 /* NSArray+Additions.m in Sources */,
 				4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */,
@@ -1223,6 +1240,7 @@
 				4F79A82B2605074000076A7E /* NSAttributedString+Additions.m in Sources */,
 				4FF6660125F2C92700689B77 /* Utility_App.m in Sources */,
 				4FF665F225F2C92700689B77 /* UpdateWindow.m in Sources */,
+				4F79A83626051E4A00076A7E /* MFNotification.m in Sources */,
 				4FF665FD25F2C92700689B77 /* AuthorizeAccessibilityView.m in Sources */,
 				4FF6654425F2C7B000689B77 /* HelperServices.m in Sources */,
 			);
