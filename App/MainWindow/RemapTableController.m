@@ -601,6 +601,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
     NSLog(@"STRINGGGGGG HAS ATTRIBUTES: %@", [string attributesAtIndex:0 effectiveRange:nil]);
     
     CGFloat wdth = textField.bounds.size.width; // 326 for some reason, in IB it's 323
+    // ^ TODO: Test method from [Utility_App actualTextViewWidth]
     CGFloat textHeight = [string heightAtWidth:wdth];
     
     // Get top and bottom margins around text from IB template

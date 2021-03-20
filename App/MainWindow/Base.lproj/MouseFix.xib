@@ -85,11 +85,11 @@
                                                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                                                 <prototypeCellViews>
                                                                     <tableCellView identifier="triggerCell" id="PcD-th-uol">
-                                                                        <rect key="frame" x="8" y="0.0" width="329" height="39"/>
+                                                                        <rect key="frame" x="8" y="0.0" width="328" height="39"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
                                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pzd-Fo-nrS">
-                                                                                <rect key="frame" x="1" y="12" width="327" height="16"/>
+                                                                                <rect key="frame" x="1" y="12" width="326" height="16"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="⌘⇧⌥⌃ + Triple Click and Drag Button 3" id="hBN-M2-pMi">
                                                                                     <font key="font" metaFont="system"/>
@@ -117,11 +117,11 @@
                                                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                                                 <prototypeCellViews>
                                                                     <tableCellView identifier="effectCell" id="5PH-4e-aAm">
-                                                                        <rect key="frame" x="354" y="0.0" width="223" height="39"/>
+                                                                        <rect key="frame" x="353" y="0.0" width="224" height="39"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
                                                                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7A6-Ou-8wk">
-                                                                                <rect key="frame" x="0.0" y="6" width="224" height="25"/>
+                                                                                <rect key="frame" x="0.0" y="6" width="225" height="25"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                                 <popUpButtonCell key="cell" type="push" title="Click and Drag Button 3" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="hdW-0g-MyX" id="zPv-8e-GO1">
                                                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -312,26 +312,6 @@ Awesome tricks:
             </items>
             <point key="canvasLocation" x="145" y="381"/>
         </menu>
-        <textField verticalHuggingPriority="750" id="Kw1-bF-Z80">
-            <rect key="frame" x="0.0" y="0.0" width="285" height="32"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="HELLO FROM THE OUTSIDEEE IT MUST HAVA CALLED A THOUGSND GGG" drawsBackground="YES" id="mct-0i-tvH">
-                <font key="font" usesAppearanceFont="YES"/>
-                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-            </textFieldCell>
-            <point key="canvasLocation" x="-108.5" y="-371"/>
-        </textField>
-        <textField verticalHuggingPriority="750" id="hSr-ao-0jV">
-            <rect key="frame" x="0.0" y="0.0" width="285" height="16"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="HELLO FROM THE OUTSIDEEE IT MUST" drawsBackground="YES" id="dvp-DZ-w3b">
-                <font key="font" usesAppearanceFont="YES"/>
-                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-            </textFieldCell>
-            <point key="canvasLocation" x="226.5" y="-378"/>
-        </textField>
     </objects>
     <resources>
         <image name="NSAddTemplate" width="14" height="13"/>

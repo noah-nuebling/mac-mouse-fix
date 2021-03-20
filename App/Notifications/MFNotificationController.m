@@ -25,17 +25,16 @@
 @implementation MFNotificationController
 
 MFNotificationController *_instance;
+NSDictionary *_labelAttributesFromIB;
 
 + (void)initialize {
     
     if (self == [MFNotificationController class]) {
         
         // Setup window closing notification
-        
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(windowResignKey:) name:NSWindowDidResignKeyNotification object:nil];
         
         // Setup notfication window
-        
         _instance = [[MFNotificationController alloc] initWithWindowNibName:@"MFNotification"];
         
         NSPanel *w = (NSPanel *)_instance.window;
@@ -52,6 +51,9 @@ MFNotificationController *_instance;
         // Disable scrollView elasticity while we're at it to make it seem like it's not even there
         scrollView.verticalScrollElasticity = NSScrollElasticityNone;
         scrollView.horizontalScrollElasticity = NSScrollElasticityNone;
+        
+        // Get default label text attributes
+        _labelAttributesFromIB = [_instance.label.attributedString attributesAtIndex:0 effectiveRange:nil];
     }
 }
 
@@ -77,13 +79,15 @@ double _animationDuration = 0.4;
     NSWindow *mainW = AppDelegate.mainWindow;
     [w close];
     
-    // Make label text centered
-    NSMutableAttributedString *m = message.mutableCopy;
-    NSMutableParagraphStyle *p = [NSMutableParagraphStyle new];
-    p.alignment = NSTextAlignmentCenter;
-    [m addAttributes:@{NSParagraphStyleAttributeName: p} range:NSMakeRange(0, m.length)];
+    // Make label text centered (Don't need this with NSTextView)
+//    NSMutableAttributedString *m = message.mutableCopy;
+//    NSMutableParagraphStyle *p = [NSMutableParagraphStyle new];
+//    p.alignment = NSTextAlignmentCenter;
+//    [m addAttributes:@{NSParagraphStyleAttributeName: p} range:NSMakeRange(0, m.length)];
     
     // Set message text to label
+    NSMutableAttributedString *m = message.mutableCopy;
+    [m addAttributes:_labelAttributesFromIB range:NSMakeRange(0, m.length)];
     [_instance.label.textStorage setAttributedString:m];
 
     // Set notification frame
@@ -173,13 +177,13 @@ NSTimer *_closeTimer;
 /// What we really want to do here is to close the notification as soon as the window whcih is it's parent becomes invisible, but I haven't found a way to do that. So we're resorting to tracking key status.
 /// This hacky solution might cause more weirdness and jank than it's worth.
 + (void)windowResignKey:(NSNotification *)notification {
-//    NSWindow *closedWindow = notification.object;
-//#if DEBUG
-//    NSLog(@"RESIGNED KEY: %@", closedWindow.title);
-//#endif
-//    if ([_instance.window.parentWindow isEqual:closedWindow]) {
-//        [_closeTimer invalidate];
-//        [self closeNotificationImmediately];
-//    }
+    NSWindow *closedWindow = notification.object;
+#if DEBUG
+    NSLog(@"RESIGNED KEY: %@", closedWindow.title);
+#endif
+    if ([_instance.window.parentWindow isEqual:closedWindow]) {
+        [_closeTimer invalidate];
+        [self closeNotificationImmediately];
+    }
 }
 @end

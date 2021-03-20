@@ -15,9 +15,9 @@
 {
     self = [super init];
     if (self) {
-        NSLog(@"LABEL INIT");
-        [self setSelectable: YES];
-        [self setEditable:YES];
+//        NSLog(@"LABEL INIT");
+//        [self setSelectable: YES];
+//        [self setEditable:YES];
     }
     return self;
 }

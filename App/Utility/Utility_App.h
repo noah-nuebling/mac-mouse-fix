@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSPoint)getCenterOfRect:(NSRect)rect;
 + (BOOL)appIsInstalled:(NSString *)bundleID;
 + (NSImage *)tintedImage:(NSImage *)image withColor:(NSColor *)tint;
++ (CGFloat)actualTextViewWidth:(NSTextView *)textView;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -71,4 +71,11 @@
     return image;
 }
 
+// Source: https://stackoverflow.com/a/25941139/10601702
++ (CGFloat)actualTextViewWidth:(NSTextView *)textView {
+    CGFloat padding = textView.textContainer.lineFragmentPadding;
+    CGFloat  actualPageWidth = textView.bounds.size.width - padding * 2;
+    return actualPageWidth;
+}
+
 @end
