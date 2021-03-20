@@ -17,6 +17,7 @@
 #import "../InputTransformation/Scroll/ScrollControl.h"
 #import "../InputTransformation/Buttons/ButtonInputReceiver.h"
 #import "Constants.h"
+#import "ModifiedDrag.h"
 
 #import <os/log.h>
 
@@ -46,6 +47,7 @@
         [DeviceManager load_Manual];
         [ConfigFileInterface_Helper load_Manual];
         [ScrollControl load_Manual];
+        [ModifiedDrag load_Manual];
         
         [ButtonInputReceiver load_Manual]; // TODO: Check if this is necessary. I think that not having this caused a crash when accessibility permissions were denied.
     }

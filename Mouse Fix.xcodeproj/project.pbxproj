@@ -567,9 +567,9 @@
 		4FF665BE25F2C92700689B77 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				4F2A1FA726042ACB0067691A /* Notifications */,
 				4FCA07D325F3125B00BFE209 /* MainWindow */,
 				4F46EAA625FB770D0003423A /* AddWindow */,
+				4F2A1FA726042ACB0067691A /* Notifications */,
 				4FF665DC25F2C92700689B77 /* Accessibility */,
 				4FF665C625F2C92700689B77 /* Update */,
 				4FF665CC25F2C92700689B77 /* MoreSheet */,
@@ -686,16 +686,16 @@
 		4FF6660725F2C93A00689B77 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
-				4FF6660825F2C93A00689B77 /* FileMonitor */,
 				4FF6660B25F2C93A00689B77 /* AppDelegate.h */,
 				4FF6664625F2C93A00689B77 /* AppDelegate.m */,
+				4FF6664A25F2C93A00689B77 /* Accessibility */,
+				4FF6660825F2C93A00689B77 /* FileMonitor */,
 				4FF6660C25F2C93A00689B77 /* Config */,
 				4FF6660F25F2C93A00689B77 /* Resources */,
 				4FF6661125F2C93A00689B77 /* MessagePort */,
 				4FF6667925F2C93A00689B77 /* Devices */,
 				4FF6661425F2C93A00689B77 /* InputTransformation */,
 				4FF6664725F2C93A00689B77 /* Pointer */,
-				4FF6664A25F2C93A00689B77 /* Accessibility */,
 				4FF6664D25F2C93A00689B77 /* SupportFiles */,
 				4FF6667E25F2C93A00689B77 /* Utility */,
 			);
@@ -868,8 +868,8 @@
 		4FF6664A25F2C93A00689B77 /* Accessibility */ = {
 			isa = PBXGroup;
 			children = (
-				4FF6664B25F2C93A00689B77 /* AccessibilityCheck.m */,
 				4FF6664C25F2C93A00689B77 /* AccessibilityCheck.h */,
+				4FF6664B25F2C93A00689B77 /* AccessibilityCheck.m */,
 			);
 			path = Accessibility;
 			sourceTree = "<group>";

@@ -81,7 +81,7 @@ static struct ModifiedDragState _drag;
 // Raw input has better performance (?) and allows for blocking mouse pointer movement. Mouse pointer input makes all the animation follow the pointer, but it has some issues with the pointer jumping when the framerate is low which I'm not quite sure how to fix.
 //      When the pointer jumps that sometimes leads to scrolling in random directions and stuff.
 
-+ (void)load {
++ (void)load_Manual {
     
     // Setup input callback and related
     if (inputIsPointerMovement) {

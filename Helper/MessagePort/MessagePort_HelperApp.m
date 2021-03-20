@@ -94,10 +94,17 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
 //}
 
 + (void)sendMessageToMainApp:(NSString *)message withPayload:(NSObject <NSCoding> * _Nullable)payload {
-    NSDictionary *messageDict = @{
-        kMFMessageKeyMessage: message,
-        kMFMessageKeyPayload: payload,
-    };
+    NSDictionary *messageDict;
+    if (payload) {
+        messageDict = @{
+            kMFMessageKeyMessage: message,
+            kMFMessageKeyPayload: payload, // This crashes if payload is nil for some reason
+        };
+    } else {
+        messageDict = @{
+            kMFMessageKeyMessage: message,
+        };
+    }
     
     NSLog(@"Sending message to main app: %@ with payload: %@", message, payload);
     

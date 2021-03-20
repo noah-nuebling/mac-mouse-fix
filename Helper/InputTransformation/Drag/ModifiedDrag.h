@@ -27,6 +27,8 @@ typedef enum {
     kMFAxisVertical,
 } MFAxis;
 
++ (void)load_Manual;
+
 + (void)initializeDragWithModifiedDragDict:(NSDictionary *)dict onDevice:(MFDevice *)dev;
 + (void)deactivate;
 

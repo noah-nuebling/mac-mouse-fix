@@ -109,10 +109,6 @@ static NSDictionary *sideButtonActions;
     if (checkForUpdates == YES) {
         [Updater checkForUpdate];
     }
-    
-    // Testing
-    NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Welcome to Mac Mouse Fix!"];
-    [MFNotificationController attachNotificationWithMessage:message toWindow:self.window];
 }
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
     NSLog(@"Mac Mouse Fix should terminate");

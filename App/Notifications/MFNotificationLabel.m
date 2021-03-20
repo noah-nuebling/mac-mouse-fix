@@ -22,7 +22,7 @@
     return self;
 }
 
-// Override text selection methods to disallow selection
+// Override text selection method to disallow selection
 - (void)setSelectedRanges:(NSArray<NSValue *> *)ranges
                  affinity:(NSSelectionAffinity)affinity
            stillSelecting:(BOOL)stillSelectingFlag {
