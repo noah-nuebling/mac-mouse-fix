@@ -88,6 +88,28 @@ AuthorizeAccessibilityView *_accViewController;
         [mainView addSubview:accView];
         accView.alphaValue = 0;
         accView.hidden = YES;
+        // Center in superview
+//        mainView.translatesAutoresizingMaskIntoConstraints = NO;
+        accView.translatesAutoresizingMaskIntoConstraints = NO;
+        NSLog(@"mainView frame: %@, accView frame: %@", [NSValue valueWithRect:mainView.frame], [NSValue valueWithRect:accView.frame]);
+        [mainView addConstraints:@[
+            [NSLayoutConstraint constraintWithItem:mainView
+                                         attribute:NSLayoutAttributeCenterX
+                                         relatedBy:NSLayoutRelationEqual
+                                            toItem:accView
+                                         attribute:NSLayoutAttributeCenterX
+                                        multiplier:1
+                                          constant:0],
+            [NSLayoutConstraint constraintWithItem:mainView
+                                         attribute:NSLayoutAttributeCenterY
+                                         relatedBy:NSLayoutRelationEqual
+                                            toItem:accView
+                                         attribute:NSLayoutAttributeCenterY
+                                        multiplier:1
+                                          constant:0],
+        ]];
+        [mainView layout];
+        NSLog(@"mainView frame: %@, accView frame: %@", [NSValue valueWithRect:mainView.frame], [NSValue valueWithRect:accView.frame]);
     }
     
     [NSAnimationContext beginGrouping];

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -12,12 +13,11 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView identifier="accView" wantsLayer="YES" id="Hz6-mo-xeY">
-            <rect key="frame" x="0.0" y="0.0" width="668" height="250"/>
-            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+        <customView identifier="accView" autoresizesSubviews="NO" wantsLayer="YES" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="579" height="250"/>
             <subviews>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4xE-rF-dLS">
-                    <rect key="frame" x="229" y="61" width="210" height="32"/>
+                    <rect key="frame" x="184" y="59" width="210" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <buttonCell key="cell" type="push" title="Open Privacy Preferences" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="JHz-BX-05T">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -28,7 +28,7 @@
                     </connections>
                 </button>
                 <imageView toolTip="Hold Shift (⇧) and click this icon to reveal 'Mouse Fix Helper' in Finder" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fK8-8z-KQn" customClass="ClickableImageView">
-                    <rect key="frame" x="191" y="153" width="79" height="79"/>
+                    <rect key="frame" x="146" y="151" width="79" height="79"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="AppIconRound" id="5dq-HX-ncI"/>
                     <userDefinedRuntimeAttributes>
@@ -37,12 +37,12 @@
                     </userDefinedRuntimeAttributes>
                 </imageView>
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xsP-AA-VHR">
-                    <rect key="frame" x="400" y="155" width="75" height="75"/>
+                    <rect key="frame" x="354" y="153" width="75" height="75"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="UniversalAccess" id="Erm-4Z-KOe"/>
                 </imageView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3VE-AW-Zcd">
-                    <rect key="frame" x="163" y="125" width="341" height="17"/>
+                    <rect key="frame" x="119" y="123" width="341" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Grant Accessibility Access to Mac Mouse Fix Helper" id="OSk-Cl-izW">
                         <font key="font" metaFont="system"/>
@@ -50,8 +50,9 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p4R-bp-vKk">
-                    <rect key="frame" x="112" y="111" width="445" height="14"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p4R-bp-vKk">
+                    <rect key="frame" x="67" y="109" width="445" height="14"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Mac Mouse Fix uses this to simulate mouse, keyboard, and touch input (                 )" id="qIG-vG-jGf">
                         <font key="font" metaFont="message" size="11"/>
                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -59,12 +60,13 @@
                     </textFieldCell>
                 </textField>
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qdi-fY-QB7">
-                    <rect key="frame" x="307" y="179" width="53" height="28"/>
+                    <rect key="frame" x="263" y="177" width="53" height="28"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="KeyIcon" id="lx6-2v-x2x"/>
                 </imageView>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" verifyAmbiguity="off" translatesAutoresizingMaskIntoConstraints="NO" id="ehG-P7-Fzq" customClass="Hyperlink">
-                    <rect key="frame" x="494" y="111" width="54" height="14"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" verifyAmbiguity="off" translatesAutoresizingMaskIntoConstraints="NO" id="ehG-P7-Fzq" customClass="Hyperlink">
+                    <rect key="frame" x="450" y="109" width="54" height="14"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="more info" id="0lz-be-kpl">
                         <font key="font" metaFont="message" size="11"/>
                         <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
@@ -75,9 +77,9 @@
                     </userDefinedRuntimeAttributes>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g4H-g7-Zd7">
-                    <rect key="frame" x="169" y="32" width="331" height="28"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" alignment="center" title="Then select 'Mac Mouse Fix Helper' from the list on the right" id="04N-yp-Qg1">
+                    <rect key="frame" x="124" y="30" width="331" height="28"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" alignment="center" title="Select 'Mac Mouse Fix Helper' from the list on the right" id="04N-yp-Qg1">
                         <font key="font" metaFont="message" size="11"/>
                         <color key="textColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -85,11 +87,10 @@
                 </textField>
             </subviews>
             <constraints>
-                <constraint firstItem="p4R-bp-vKk" firstAttribute="centerY" secondItem="Hz6-mo-xeY" secondAttribute="centerY" constant="7" id="8Go-BG-vIb"/>
-                <constraint firstItem="p4R-bp-vKk" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="ZyV-LB-C7A"/>
-                <constraint firstItem="p4R-bp-vKk" firstAttribute="trailing" secondItem="ehG-P7-Fzq" secondAttribute="trailing" priority="1" constant="9" id="dBy-VP-kou"/>
+                <constraint firstAttribute="height" constant="250" id="Dt8-Tr-JFb"/>
+                <constraint firstAttribute="width" constant="579" id="TDT-vn-R8e"/>
             </constraints>
-            <point key="canvasLocation" x="91" y="162"/>
+            <point key="canvasLocation" x="46.5" y="162"/>
         </customView>
     </objects>
     <resources>
