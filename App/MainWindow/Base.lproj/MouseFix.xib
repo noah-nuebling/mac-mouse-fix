@@ -51,21 +51,21 @@
                                 </connections>
                             </button>
                             <box identifier="preferenceBox" autoresizesSubviews="NO" fixedFrame="YES" borderType="line" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="nmi-Qw-Ncm">
-                                <rect key="frame" x="17" y="16" width="592" height="335"/>
+                                <rect key="frame" x="17" y="16" width="592" height="336"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <view key="contentView" id="IVL-q6-nHn">
-                                    <rect key="frame" x="3" y="3" width="586" height="329"/>
+                                    <rect key="frame" x="3" y="3" width="586" height="330"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="39" horizontalPageScroll="10" verticalLineScroll="39" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jLq-vs-Mpd" customClass="MFScrollView">
-                                            <rect key="frame" x="0.0" y="120" width="586" height="210"/>
+                                            <rect key="frame" x="0.0" y="120" width="586" height="211"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <clipView key="contentView" drawsBackground="NO" id="S62-75-wtd">
-                                                <rect key="frame" x="0.0" y="0.0" width="586" height="210"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="586" height="211"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <tableView identifier="remapTable" verticalHuggingPriority="750" allowsExpansionToolTips="YES" tableStyle="fullWidth" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="39" rowSizeStyle="automatic" viewBased="YES" id="zJh-jy-oKM">
-                                                        <rect key="frame" x="0.0" y="0.0" width="586" height="210"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="586" height="211"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <size key="intercellSpacing" width="17" height="0.0"/>
                                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>

@@ -28,18 +28,18 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView fixedFrame="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="5lV-bX-8UE">
-                                <rect key="frame" x="11" y="11" width="180" height="16"/>
+                                <rect key="frame" x="10" y="10" width="182" height="18"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <clipView key="contentView" drawsBackground="NO" id="cXg-GO-OZi">
-                                    <rect key="frame" x="0.0" y="0.0" width="180" height="16"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="182" height="18"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textView editable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" verticallyResizable="NO" allowsCharacterPickerTouchBarItem="NO" linkDetection="YES" textCompletion="NO" spellingCorrection="YES" smartInsertDelete="YES" id="DKZ-39-jMI" customClass="MFNotificationLabel">
-                                            <rect key="frame" x="0.0" y="0.0" width="180" height="16"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="182" height="18"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            <size key="minSize" width="180" height="16"/>
+                                            <size key="minSize" width="182" height="18"/>
                                             <size key="maxSize" width="240" height="10000000"/>
                                             <attributedString key="textStorage">
                                                 <fragment content="Welcome to Mac Mouse Fix!">
@@ -73,7 +73,7 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="DNG-3l-gE4"/>
             </connections>
-            <point key="canvasLocation" x="1235" y="-351.5"/>
+            <point key="canvasLocation" x="1235" y="-353"/>
         </window>
         <customObject id="Hm0-rM-QPq" customClass="MFNotificationLabel"/>
     </objects>
