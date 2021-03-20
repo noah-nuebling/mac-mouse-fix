@@ -148,8 +148,8 @@ AuthorizeAccessibilityView *_accViewController;
         [NSAnimationContext beginGrouping];
         [NSAnimationContext.currentContext setDuration:0.3];
         [NSAnimationContext.currentContext setCompletionHandler:^{
-            NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Welcome to Mac Mouse Fix!"];
-            [MFNotificationController attachNotificationWithMessage:message toWindow:AppDelegate.mainWindow];
+//            NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Welcome to Mac Mouse Fix!"];
+//            [MFNotificationController attachNotificationWithMessage:message toWindow:AppDelegate.mainWindow];
         }];
         baseView.animator.alphaValue = 1;
         baseView.hidden = NO;
@@ -157,15 +157,6 @@ AuthorizeAccessibilityView *_accViewController;
         accView.hidden = YES;
         [NSAnimationContext endGrouping];
     }
-    
-//    [NSAnimationContext beginGrouping];
-//    [[NSAnimationContext currentContext] setDuration:0.3];
-//    baseView.animator.alphaValue = 1;
-//    baseView.hidden = NO;
-//    accView.animator.alphaValue = 0;
-//    accView.hidden = YES;
-//    [NSAnimationContext endGrouping];
-    
 }
 
 @end

@@ -23,14 +23,16 @@ IB_DESIGNABLE
 
 @end
 
-@implementation Hyperlink
-
-NSRect _trackingRect;
-
-BOOL _mouseInside = NO;
-BOOL _mouseDownOverThis = NO;
+@implementation Hyperlink {
+    BOOL _mouseIsOverSelf;
+    BOOL _mouseDownOverSelf;
+    NSRect _trackingRect;
+}
 
 - (void)awakeFromNib {
+    
+    _mouseIsOverSelf = NO;
+    _mouseDownOverSelf = NO;
         
     [NSEvent addLocalMonitorForEventsMatchingMask:NSEventMaskLeftMouseDown handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
         [self mouseDown:event];
@@ -84,7 +86,7 @@ BOOL _mouseDownOverThis = NO;
 }
 - (void)mouseEntered:(NSEvent *)event {
     
-    _mouseInside = YES;
+    _mouseIsOverSelf = YES;
     
     NSMutableAttributedString *underlinedString = [[NSMutableAttributedString alloc] initWithAttributedString: self.attributedStringValue];
     NSRange wholeStringRange = NSMakeRange(0, [underlinedString length]);
@@ -95,7 +97,7 @@ BOOL _mouseDownOverThis = NO;
 }
 - (void)mouseExited:(NSEvent *)event {
     
-    _mouseInside = NO;
+    _mouseIsOverSelf = NO;
     
     NSMutableAttributedString *notUnderlinedString = [[NSMutableAttributedString alloc] initWithAttributedString: self.attributedStringValue];
     NSRange wholeStringRange = NSMakeRange(0, [notUnderlinedString length]);
@@ -106,15 +108,15 @@ BOOL _mouseDownOverThis = NO;
 //    [NSCursor.pointingHandCursor pop];
 }
 - (void)mouseDown:(NSEvent *)event {
-    if (_mouseInside) {
-        _mouseDownOverThis = YES;
+    if (_mouseIsOverSelf) {
+        _mouseDownOverSelf = YES;
     }
 }
 - (void)mouseUp:(NSEvent *)event {
-    if (_mouseDownOverThis && _mouseInside) {
+    if (_mouseDownOverSelf && _mouseIsOverSelf) {
         [self reactToClick];
     }
-    _mouseDownOverThis = NO;
+    _mouseDownOverSelf = NO;
 }
 - (void) reactToClick {
     // Open URL defined in Interface Builder
