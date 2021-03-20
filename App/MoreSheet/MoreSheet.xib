@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -21,7 +22,7 @@
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="90" y="125" width="576" height="184"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="3840" height="2135"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1025"/>
             <view key="contentView" wantsLayer="YES" id="IZI-tD-pBD">
                 <rect key="frame" x="0.0" y="0.0" width="576" height="184"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -43,7 +44,7 @@
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="PayPal" id="l8T-uX-6sc"/>
                     </imageView>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D2Z-Y7-bVq" customClass="Hyperlink">
-                        <rect key="frame" x="412" y="124" width="108" height="16"/>
+                        <rect key="frame" x="412" y="148" width="108" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="charWrapping" alignment="right" title="Visit the Website" id="KsZ-uF-DMp">
                             <font key="font" metaFont="system"/>
@@ -58,9 +59,9 @@
                         </userDefinedRuntimeAttributes>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PMP-fF-uAB" customClass="Hyperlink">
-                        <rect key="frame" x="455" y="148" width="65" height="16"/>
+                        <rect key="frame" x="400" y="124" width="120" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Reach out" id="h6S-lt-XSY">
+                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Send me Feedback" id="h6S-lt-XSY">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -73,9 +74,9 @@
                         </userDefinedRuntimeAttributes>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Irr-ov-bxk" customClass="Hyperlink">
-                        <rect key="frame" x="373" y="100" width="147" height="16"/>
+                        <rect key="frame" x="378" y="100" width="142" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Source Code on GitHub" id="B9O-yg-FQw">
+                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Check it out on GitHub" id="B9O-yg-FQw">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -163,7 +164,7 @@ Turn this off and on again if you skipped an update and have changed your mind</
                         </userDefinedRuntimeAttributes>
                     </imageView>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="07Z-7Y-gHB">
-                        <rect key="frame" x="527" y="144" width="20" height="25"/>
+                        <rect key="frame" x="527" y="119" width="19.5" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="Rki-3y-WxT">
                             <imageReference key="image" image="pencil" catalog="system" symbolScale="large"/>
@@ -171,13 +172,13 @@ Turn this off and on again if you skipped an update and have changed your mind</
                         <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                     </imageView>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N67-Qg-9hZ">
-                        <rect key="frame" x="527" y="95" width="19" height="27"/>
+                        <rect key="frame" x="527" y="94.5" width="19" height="27"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="arrow.triangle.branch" catalog="system" id="61r-1i-7uY"/>
                         <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                     </imageView>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="agt-Xi-rY6">
-                        <rect key="frame" x="527" y="118" width="19" height="28"/>
+                        <rect key="frame" x="526" y="141" width="19" height="28"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="safari" catalog="system" id="Bub-iM-QnB"/>
                         <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
@@ -208,8 +209,8 @@ AAAAAAAAAAAAAAABOQ
         <image name="AppIconRound" width="128" height="128"/>
         <image name="MilkshakeButton" width="185" height="27"/>
         <image name="PayPal" width="100" height="26"/>
-        <image name="arrow.triangle.branch" catalog="system" width="16" height="14"/>
-        <image name="pencil" catalog="system" width="16" height="16"/>
+        <image name="arrow.triangle.branch" catalog="system" width="15" height="14"/>
+        <image name="pencil" catalog="system" width="17" height="16"/>
         <image name="safari" catalog="system" width="15" height="15"/>
     </resources>
 </document>
