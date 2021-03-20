@@ -27,22 +27,5 @@
                  affinity:(NSSelectionAffinity)affinity
            stillSelecting:(BOOL)stillSelectingFlag {
 }
-//- (NSArray<NSValue *> *)textView:(NSTextView *)textView willChangeSelectionFromCharacterRanges:(NSArray<NSValue *> *)oldSelectedCharRanges toCharacterRanges:(NSArray<NSValue *> *)newSelectedCharRanges {
-//
-//    NSValue *nullRangeValue = [NSValue valueWithRange:NSMakeRange(0, 0)];
-//    return @[nullRangeValue];
-//}
-
-- (void)mouseDragged:(NSEvent *)event {
-    
-}
-//- (void)mouseDown:(NSEvent *)event {
-//    NSLog(@"MMMHOUSUH DOWNNNUHH");
-//    [super mouseDown:event];
-//}
-//
-//- (void)clickedOnLink:(id)link atIndex:(NSUInteger)charIndex {
-//    NSLog(@"CLICKED ONUH LINKKKKKUHHHH");
-//}
 
 @end
