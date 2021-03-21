@@ -9,7 +9,7 @@
 
 #import "AddWindowController.h"
 #import "AppDelegate.h"
-#import "MessagePort_App.h"
+#import "SharedMessagePort.h"
 #import "RemapTableController.h"
 #import "Utility_App.h"
 #import "SharedUtility.h"
@@ -47,12 +47,12 @@ static BOOL _pointerIsInsideAddField;
 - (void)mouseEntered:(NSEvent *)event {
     _pointerIsInsideAddField = YES;
     [AddWindowController enableAddFieldHoverEffect:YES];
-    [MessagePort_App sendMessageToHelper:@"enableAddMode"];
+    [SharedMessagePort sendMessage:@"enableAddMode" withPayload:nil expectingReply:NO];
 }
 - (void)mouseExited:(NSEvent *)event {
     _pointerIsInsideAddField = NO;
     [AddWindowController enableAddFieldHoverEffect:NO];
-    [MessagePort_App sendMessageToHelper:@"disableAddMode"];
+    [SharedMessagePort sendMessage:@"disableAddMode" withPayload:nil expectingReply:NO];
 }
 
 // Interface

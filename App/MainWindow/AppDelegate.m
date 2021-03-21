@@ -14,7 +14,7 @@
 #import "AppDelegate.h"
 #import "Updater.h"
 #import "ConfigFileInterface_App.h"
-#import "MessagePort_App.h"
+#import "SharedMessagePort.h"
 #import "UpdateWindow.h"
 #import "Utility_App.h"
 #import "AuthorizeAccessibilityView.h"
@@ -126,7 +126,7 @@ NSTimer *removeAccOverlayTimer;
     [removeAccOverlayTimer invalidate];
 }
 - (void)windowDidBecomeKey:(NSNotification *)notification {
-    [MessagePort_App performSelector:@selector(sendMessageToHelper:) withObject:@"checkAccessibility" afterDelay:0.0];
+    [SharedMessagePort sendMessage:@"checkAccessibility" withPayload:nil expectingReply:NO];
     if (@available(macOS 10.12, *)) {
         removeAccOverlayTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 repeats:NO block:^(NSTimer * _Nonnull timer) {
             [self removeAccOverlayTimerCallback];

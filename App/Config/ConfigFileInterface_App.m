@@ -10,7 +10,7 @@
 #import <AppKit/AppKit.h>
 #import "ConfigFileInterface_App.h"
 #import "HelperServices.h"
-#import "../MessagePort/MessagePort_App.h"
+#import "SharedMessagePort.h"
 #import "NSMutableDictionary+Additions.h"
 #import "Utility_App.h"
 #import "Objects.h"
@@ -63,7 +63,7 @@ static NSURL *_backupConfigURL; // backup_config aka default_config
     }
     NSLog(@"Wrote config to file.");
 //    NSLog(@"config: %@", _config);
-    [MessagePort_App sendMessageToHelper:@"configFileChanged"];
+    [SharedMessagePort sendMessage:@"configFileChanged" withPayload:nil expectingReply:NO];
 }
 
 /// Load data from plist file at _configURL into _config class variable
@@ -144,7 +144,7 @@ static NSURL *_backupConfigURL; // backup_config aka default_config
 + (void)replaceCurrentConfigWithBackupConfig {
     NSData *defaultData = [NSData dataWithContentsOfURL:_backupConfigURL];
     [defaultData writeToURL:Objects.configURL atomically:YES];
-    [MessagePort_App sendMessageToHelper:@"terminate"];
+    [SharedMessagePort sendMessage:@"terminate" withPayload:nil expectingReply:NO];
     [self loadConfigFromFile];
 }
 

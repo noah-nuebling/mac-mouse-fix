@@ -10,12 +10,12 @@
 #import "AccessibilityCheck.h"
 
 #import <AppKit/AppKit.h>
-#import "../MessagePort/MessagePort_HelperApp.h"
-#import "../Devices/DeviceManager.h"
-#import "../MessagePort/MessagePort_HelperApp.h"
-#import "../Config/ConfigFileInterface_Helper.h"
-#import "../InputTransformation/Scroll/ScrollControl.h"
-#import "../InputTransformation/Buttons/ButtonInputReceiver.h"
+#import "SharedMessagePort.h"
+#import "MessagePort_HelperApp.h"
+#import "DeviceManager.h"
+#import "ConfigFileInterface_Helper.h"
+#import "ScrollControl.h"
+#import "ButtonInputReceiver.h"
 #import "Constants.h"
 #import "ModifiedDrag.h"
 
@@ -65,7 +65,7 @@
 
 + (void)sendAccessibilityMessageToMainApp {
     NSLog(@"Sending accessibilty disabled message to main app");
-    [MessagePort_HelperApp sendMessageToMainApp:@"accessibilityDisabled" withPayload:nil];
+    [SharedMessagePort sendMessage:@"accessibilityDisabled" withPayload:nil expectingReply:NO];
 }
 
 + (void)openMainApp {

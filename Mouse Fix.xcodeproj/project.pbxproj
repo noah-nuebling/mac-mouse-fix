@@ -15,6 +15,8 @@
 		4F2FDF332315662500C7BE14 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2FDF322315662500C7BE14 /* main.m */; };
 		4F37FAD825FDFDC5004C34C4 /* MFScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */; };
 		4F44FEF82606A5C100926A5E /* backup_config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F44FEF72606A5C100926A5E /* backup_config.plist */; };
+		4F44FF042606D73D00926A5E /* SharedMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* SharedMessagePort.m */; };
+		4F44FF052606D73D00926A5E /* SharedMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* SharedMessagePort.m */; };
 		4F79A7EF26042E2E00076A7E /* MFNotification.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F79A7EE26042E2E00076A7E /* MFNotification.xib */; };
 		4F79A81C2604317200076A7E /* MFNotificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A81B2604317200076A7E /* MFNotificationController.m */; };
 		4F79A82B2605074000076A7E /* NSAttributedString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A82A2605074000076A7E /* NSAttributedString+Additions.m */; };
@@ -192,6 +194,8 @@
 		4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFScrollView.m; sourceTree = "<group>"; };
 		4F422EEC23469B0F00AA6E22 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F44FEF72606A5C100926A5E /* backup_config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = backup_config.plist; sourceTree = "<group>"; };
+		4F44FF022606D73D00926A5E /* SharedMessagePort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharedMessagePort.h; sourceTree = "<group>"; };
+		4F44FF032606D73D00926A5E /* SharedMessagePort.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SharedMessagePort.m; sourceTree = "<group>"; };
 		4F79A7EE26042E2E00076A7E /* MFNotification.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MFNotification.xib; sourceTree = "<group>"; };
 		4F79A81A2604317200076A7E /* MFNotificationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFNotificationController.h; sourceTree = "<group>"; };
 		4F79A81B2604317200076A7E /* MFNotificationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFNotificationController.m; sourceTree = "<group>"; };
@@ -446,6 +450,15 @@
 			name = Other;
 			sourceTree = "<group>";
 		};
+		4F44FF012606D6FD00926A5E /* MessagePort */ = {
+			isa = PBXGroup;
+			children = (
+				4F44FF022606D73D00926A5E /* SharedMessagePort.h */,
+				4F44FF032606D73D00926A5E /* SharedMessagePort.m */,
+			);
+			path = MessagePort;
+			sourceTree = "<group>";
+		};
 		4F46EAA625FB770D0003423A /* AddWindow */ = {
 			isa = PBXGroup;
 			children = (
@@ -537,6 +550,7 @@
 				4FF6653325F2C7B000689B77 /* Constants.h */,
 				4FF6652C25F2C7B000689B77 /* HelperServices */,
 				4FF6653025F2C7B000689B77 /* Objects */,
+				4F44FF012606D6FD00926A5E /* MessagePort */,
 				4FF6653625F2C7B000689B77 /* Utility */,
 			);
 			path = Shared;
@@ -1248,6 +1262,7 @@
 				4F2F5DA825FB6FFD0037660A /* AddWindowController.m in Sources */,
 				4FF6655025F2C7B000689B77 /* NSArray+Additions.m in Sources */,
 				4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */,
+				4F44FF052606D73D00926A5E /* SharedMessagePort.m in Sources */,
 				4F37FAD825FDFDC5004C34C4 /* MFScrollView.m in Sources */,
 				4FF665F825F2C92700689B77 /* MessagePort_App.m in Sources */,
 				4F79A82B2605074000076A7E /* NSAttributedString+Additions.m in Sources */,
@@ -1283,6 +1298,7 @@
 				4FF6654D25F2C7B000689B77 /* SharedUtility.m in Sources */,
 				4FF6668225F2C93A00689B77 /* ConfigFileInterface_Helper.m in Sources */,
 				4FF6669625F2C93A00689B77 /* Actions.m in Sources */,
+				4F44FF042606D73D00926A5E /* SharedMessagePort.m in Sources */,
 				4FF6669325F2C93A00689B77 /* TouchSimulator.m in Sources */,
 				4FF6669725F2C93A00689B77 /* TransformationManager.m in Sources */,
 				4FF6668F25F2C93A00689B77 /* SmoothScroll.m in Sources */,

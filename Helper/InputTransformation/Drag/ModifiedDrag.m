@@ -19,7 +19,7 @@
 #import <Cocoa/Cocoa.h>
 
 #import "Utility_Transformation.h"
-#import "MessagePort_HelperApp.h"
+#import "SharedMessagePort.h"
 #import "TransformationManager.h"
 #import "SharedUtility.h"
 
@@ -199,7 +199,7 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY) {
             disableMouseTracking();
         } else if ([_drag.type isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
             if (_drag.addModePayload != nil) {
-                [MessagePort_HelperApp sendMessageToMainApp:@"addModeFeedback" withPayload:_drag.addModePayload];
+                [SharedMessagePort sendMessage:@"addModeFeedback" withPayload:_drag.addModePayload expectingReply:NO];
                 disableMouseTracking();
             } else {
                 @throw [NSException exceptionWithName:@"InvalidAddModeFeedbackPayload" reason:@"_drag.addModePayload is nil. Something went wrong!" userInfo:nil]; // Throw exception to cause crash

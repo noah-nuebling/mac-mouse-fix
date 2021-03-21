@@ -13,6 +13,7 @@
 #import <AppKit/NSWindow.h>
 #import "AccessibilityCheck.h"
 #import "Constants.h"
+#import "SharedMessagePort.h"
 
 #import <CoreFoundation/CoreFoundation.h>
 
@@ -43,8 +44,12 @@
 
 static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDataRef data, void *info) {
     
-    NSString *message = [[NSString alloc] initWithData:(__bridge NSData *)data encoding:NSUTF8StringEncoding];
-    NSLog(@"Helper Received Message: %@",message);
+    NSDictionary *messageDict = [NSKeyedUnarchiver unarchiveObjectWithData:(__bridge NSData *)data];
+    
+    NSString *message = messageDict[kMFMessageKeyMessage];
+    NSObject *payload = messageDict[kMFMessageKeyPayload];
+    
+    NSLog(@"Helper Received Message: %@ with payload: %@", message, payload);
     
     if ([message isEqualToString:@"configFileChanged"]) {
         [ConfigFileInterface_Helper reactToConfigFileChange];
@@ -53,78 +58,20 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
         [NSApp terminate:NULL];
     } else if ([message isEqualToString:@"checkAccessibility"]) {
         if (![AccessibilityCheck check]) {
-            [MessagePort_HelperApp sendMessageToMainApp:@"accessibilityDisabled" withPayload:nil];
+            [SharedMessagePort sendMessage:@"accessibilityDisabled" withPayload:nil expectingReply:NO];
         }
     } else if ([message isEqualToString:@"enableAddMode"]) {
         [TransformationManager enableAddMode];
     } else if ([message isEqualToString:@"disableAddMode"]) {
         [TransformationManager disableAddMode];
+    } else if ([message isEqual:@""]) {
+        
     } else {
         NSLog(@"Unknown message received: %@", message);
     }
     
-    NSData *response = NULL;
+    NSData *response = nil;
     return (__bridge CFDataRef)response;
-}
-
-
-#pragma mark - remote (outgoing messages)
-
-//+ (void)sendMessageToMainApp:(NSString *)message {
-//    
-//    NSLog(@"Sending message to main app: %@", message);
-//    
-//    CFMessagePortRef remotePort = CFMessagePortCreateRemote(kCFAllocatorDefault, CFSTR("com.nuebling.mousefix.port"));
-//    if (remotePort == NULL) {
-//        NSLog(@"there is no CFMessagePort");
-//        return;
-//    }
-//    
-//    SInt32 messageID = 0x420666; // Arbitrary
-//    CFDataRef messageData = (__bridge CFDataRef)[message dataUsingEncoding:kUnicodeUTF8Format];
-//    CFTimeInterval sendTimeout = 0.0;
-//    CFTimeInterval recieveTimeout = 0.0;
-//    CFStringRef replyMode = NULL;
-//    CFDataRef returnData = nil;
-//    SInt32 status = CFMessagePortSendRequest(remotePort, messageID, messageData, sendTimeout, recieveTimeout, replyMode, &returnData);
-//    CFRelease(remotePort);
-//    if (status != 0) {
-//        NSLog(@"CFMessagePortSendRequest status: %d", status);
-//    }
-//}
-
-+ (void)sendMessageToMainApp:(NSString *)message withPayload:(NSObject <NSCoding> * _Nullable)payload {
-    NSDictionary *messageDict;
-    if (payload) {
-        messageDict = @{
-            kMFMessageKeyMessage: message,
-            kMFMessageKeyPayload: payload, // This crashes if payload is nil for some reason
-        };
-    } else {
-        messageDict = @{
-            kMFMessageKeyMessage: message,
-        };
-    }
-    
-    NSLog(@"Sending message to main app: %@ with payload: %@", message, payload);
-    
-    CFMessagePortRef remotePort = CFMessagePortCreateRemote(kCFAllocatorDefault, CFSTR("com.nuebling.mousefix.port"));
-    if (remotePort == NULL) {
-        NSLog(@"there is no CFMessagePort");
-        return;
-    }
-    SInt32 messageID = 0x420666; // Arbitrary
-    CFDataRef messageData = (__bridge CFDataRef)[NSKeyedArchiver archivedDataWithRootObject:messageDict];;
-    CFTimeInterval sendTimeout = 0.0;
-    CFTimeInterval recieveTimeout = 0.0;
-    CFStringRef replyMode = NULL;
-    CFDataRef returnData = nil;
-    SInt32 status = CFMessagePortSendRequest(remotePort, messageID, messageData, sendTimeout, recieveTimeout, replyMode, &returnData);
-    CFRelease(remotePort);
-    if (status != 0) {
-        NSLog(@"CFMessagePortSendRequest status: %d", status);
-    }
-    
 }
 
 @end

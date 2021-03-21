@@ -12,7 +12,5 @@
 @interface MessagePort_HelperApp : NSObject
 
 + (void)load_Manual;
-
-+ (void)sendMessageToMainApp:(NSString *)message withPayload:(NSObject <NSCoding> * _Nullable)payload;
 @end
 
