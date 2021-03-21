@@ -55,13 +55,14 @@
     NSDictionary *activeModifiersUnfiltered = [ModifierManager getActiveModifiersForDevice:devID filterButton:nil event:nil];
     //      ^ We need to check whether the incoming button is acting as a modifier to determine
     //          `effectForMouseDownStateOfThisLevelExists`, so we can't use the variable `activeModifiers` defined above because it filters out the incoming button
+    //      Noah from future: TODO: But why do we pass the old value for `effectiveRemaps` - which is not based on `activeModifiersUnfiltered` - to ButtonLandscapeAssessor?
     BOOL clickActionOfThisLevelExists;
     BOOL effectForMouseDownStateOfThisLevelExists;
     BOOL effectOfGreaterLevelExists;
     [ButtonLandscapeAssessor assessMappingLandscapeWithbutton:button
                                                         level:level
-                                                       remaps:remaps
                                               activeModifiers:activeModifiersUnfiltered
+                                                       remaps:remaps
                                               effectiveRemaps:effectiveRemaps
                                                 thisClickDoBe:&clickActionOfThisLevelExists
                                                  thisDownDoBe:&effectForMouseDownStateOfThisLevelExists

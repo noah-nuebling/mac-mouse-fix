@@ -16,10 +16,14 @@
 
 #pragma mark - Main
 
+/// Why do we have arguments `activeModifiers`, `remaps` as well as `effectiveRemaps`?
+///     `activeModifiers` and `remaps` should determine `effectiveRemaps`. Does this make any sense?
+///     -> Yes, it seems to kind of make sense. activeModifiers is expected to be unfilitered, so containing `button`, while `effectiveRemaps` are the remaps for the modifiers that are _acting on_ `button`, so the active modifiers without `button`.
+///        TODO: This is super confusing and it lead us to code `buttonCouldStillBeUsedThisClickCycle:` in a wrong way (I'm pretty sure). We need to move that logic inside of this function.
 + (void)assessMappingLandscapeWithbutton:(NSNumber *)button
                                    level:(NSNumber *)level
-                                  remaps:(NSDictionary *)remaps
                          activeModifiers:(NSDictionary *)activeModifiers
+                                  remaps:(NSDictionary *)remaps
                           effectiveRemaps:(NSDictionary *)effectiveRemaps
                            thisClickDoBe:(BOOL *)clickActionOfThisLevelExists
                             thisDownDoBe:(BOOL *)effectForMouseDownStateOfThisLevelExists
@@ -87,6 +91,7 @@ static BOOL modificationPreconditionButtonComponentOfGreaterLevelExistsForButton
 /// This is used by ButtonTriggerGenerator to reset the click cycle, if we know the button can't be used this click cycle anyways.
 /// \discussion We used to call [ModifierManager getActiveModifiersForDevice:filterButton:event:] with the filterButton argument set to nil.
 ///     This lead to issues with the click cycle being reset prematurely sometimes. We set filterBUtton to button, now. Hopefully this doesn't break stuff in other ways. I don't think so.
+///             -> Noah from future: I'm pretty sure it actually will break stuff. See docs on  `assessMappingLandscapeWithbutton:..`
 + (BOOL)buttonCouldStillBeUsedThisClickCycle:(NSNumber *)devID button:(NSNumber *)button level:(NSNumber *)level {
     
     NSDictionary *remaps = TransformationManager.remaps;
@@ -98,8 +103,8 @@ static BOOL modificationPreconditionButtonComponentOfGreaterLevelExistsForButton
     BOOL effectOfGreaterLevelExists;
     [self assessMappingLandscapeWithbutton:button
                                      level:level
-                                    remaps:remaps
                            activeModifiers:activeModifiers
+                                    remaps:remaps
                            effectiveRemaps:effectiveRemaps
                              thisClickDoBe:&clickActionOfThisLevelExists
                               thisDownDoBe:&effectForMouseDownStateOfThisLevelExists
@@ -149,6 +154,14 @@ static BOOL modificationPreconditionButtonComponentOfGreaterLevelExistsForButton
         effectiveRemaps = [SharedUtility dictionaryWithOverridesAppliedFrom:[remapsForActiveModifiers copy] to:effectiveRemaps]; // Why do we do ` - copy` here?
     }
     return effectiveRemaps;
+}
+
++ (NSSet<NSNumber *> *)getCapturedButtons {
+    NSMutableSet<NSNumber *> *capturedButtons = [NSMutableSet set];
+    for (int b = 1; b <= kMFMaxButtonNumber; b++) {
+//        if (self buttonCouldStillBeUsedThisClickCycle:<#(nonnull NSNumber *)#> button:<#(nonnull NSNumber *)#> level:<#(nonnull NSNumber *)#>)
+    }
+    return capturedButtons;
 }
 
 @end
