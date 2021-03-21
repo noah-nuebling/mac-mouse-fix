@@ -16,6 +16,10 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)hideMousePointer:(BOOL)B;
 + (void)postMouseButtonClicks:(MFMouseButtonNumber)button nOfClicks:(int64_t)nOfClicks;
 + (void)postMouseButton:(MFMouseButtonNumber)button down:(BOOL)down;
+
+/// `MFEffectiveRemapsMethod`s are blocks that take `remaps` and `activeModifiers` as input and return `effectiveRemaps` based on those.
+typedef NSDictionary *_Nonnull (^MFEffectiveRemapsMethod)(NSDictionary *_Nonnull, NSDictionary *_Nonnull);
++ (MFEffectiveRemapsMethod)effectiveRemapsMethod_Override;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -11,23 +11,27 @@
 #import "TransformationManager.h"
 #import "SharedUtility.h"
 #import "ModifierManager.h"
+#import "Utility_Transformation.h"
 
 @implementation ButtonLandscapeAssessor
 
 #pragma mark - Main
 
-/// `activeModifiers` Are the active modifiers including `button`
+/// `activeModifiers` are the active modifiers including `button`
 /// `activeModifiersActingOnThisButton` are the active modifiers with `button` filtered out
+/// `effectiveRemapsMethod` is a block taking `remaps` and `activeModifiersActingOnThisButton` and returning what the effective remaps acting on the button are.
+///     Should normally pass `[Utility Transform + effectiveRemapsMethod_Override]` I think other stuff will break if we use sth else.
 + (void)assessMappingLandscapeWithButton:(NSNumber *)button
                                    level:(NSNumber *)level
                          activeModifiers:(NSDictionary *)activeModifiers
                  activeModifiersFiltered:(NSDictionary *)activeModifiersActingOnThisButton
+                   effectiveRemapsMethod:(MFEffectiveRemapsMethod)effectiveRemapsMethod
                                   remaps:(NSDictionary *)remaps
                            thisClickDoBe:(BOOL *)clickActionOfThisLevelExists
                             thisDownDoBe:(BOOL *)effectForMouseDownStateOfThisLevelExists
                              greaterDoBe:(BOOL *)effectOfGreaterLevelExists {
     
-    NSDictionary *remapsActingOnThisButton = remaps[activeModifiersActingOnThisButton];
+    NSDictionary *remapsActingOnThisButton = effectiveRemapsMethod(remaps, activeModifiersActingOnThisButton);
     
     *clickActionOfThisLevelExists = remapsActingOnThisButton[button][level][kMFButtonTriggerDurationClick] != nil;
     *effectForMouseDownStateOfThisLevelExists = effectExistsForMouseDownState(button, level, remaps, activeModifiers, remapsActingOnThisButton);
@@ -57,8 +61,6 @@ static BOOL isPartOfModificationPrecondition(NSNumber *button, NSNumber *level, 
 }
 
 static BOOL effectOfGreaterLevelExistsFor(NSNumber *button, NSNumber *level, NSDictionary *remaps, NSDictionary *activeModifiers, NSDictionary *remapsActingOnThisButton) {
-    
-    
     
     // Check if effective remaps of a higher level exist for this button
     for (NSNumber *thisLevel in ((NSDictionary *)remapsActingOnThisButton[button]).allKeys) {
@@ -105,6 +107,7 @@ static BOOL modificationPreconditionButtonComponentOfGreaterLevelExistsForButton
                                      level:level
                            activeModifiers:activeModifiers
                    activeModifiersFiltered:activeModifiersActingOnThisButton
+                     effectiveRemapsMethod:Utility_Transformation.effectiveRemapsMethod_Override
                                     remaps:remaps
                              thisClickDoBe:&clickActionOfThisLevelExists
                               thisDownDoBe:&effectForMouseDownStateOfThisLevelExists
@@ -126,6 +129,7 @@ static BOOL modificationPreconditionButtonComponentOfGreaterLevelExistsForButton
 }
 
 /// Used by `ButtonTriggerHandler` to determine `MFEventPassThroughEvaluation`
+/// TODO: Why aren't we reusing `assessMappingLandscapeWithButton:` here?
 + (BOOL)effectExistsForButton:(NSNumber *)button remaps:(NSDictionary *)remaps effectiveRemaps:(NSDictionary *)effectiveRemaps {
     
     // Check if there is a direct effect for button
@@ -149,7 +153,7 @@ static BOOL modificationPreconditionButtonComponentOfGreaterLevelExistsForButton
     return NO;
 }
 
-/// Used by `MessagePort_Helper` to send back to main app
+/// Used by `MessagePort_Helper` to get requested information for the main app
 + (NSSet<NSNumber *> *)getCapturedButtons {
     NSMutableSet<NSNumber *> *capturedButtons = [NSMutableSet set];
     for (int b = 1; b <= kMFMaxButtonNumber; b++) {

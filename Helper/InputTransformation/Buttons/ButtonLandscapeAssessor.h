@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
                                    level:(NSNumber *)level
                          activeModifiers:(NSDictionary *)activeModifiers
                  activeModifiersFiltered:(NSDictionary *)activeModifiersActingOnThisButton
+                   effectiveRemapsMethod:(NSDictionary * (^) (NSDictionary *, NSDictionary *))effectiveRemapsMethod
                                   remaps:(NSDictionary *)remaps
                            thisClickDoBe:(BOOL *)clickActionOfThisLevelExists
                             thisDownDoBe:(BOOL *)effectForMouseDownStateOfThisLevelExists
