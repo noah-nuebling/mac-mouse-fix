@@ -146,7 +146,7 @@ static NSMutableDictionary *_state;
                                                       userInfo:timerInfo
                                                        repeats:NO];
         bs.levelTimer = [NSTimer scheduledTimerWithTimeInterval:0.25 //NSEvent.doubleClickInterval // The possible doubleClickIntervall
-                         // values (configurable in System Preferences) are either too long or too short
+                         // values (configurable in System Preferences) are either too long or too short. I prefer 0.25
                                                          target:self
                                                        selector:@selector(levelTimerCallback:)
                                                        userInfo:timerInfo
