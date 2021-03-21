@@ -76,7 +76,8 @@ static BOOL _pointerIsInsideAddField;
         plusIconViewCopy.contentTintColor = NSColor.controlAccentColor;
         [NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull context) {
             NSAnimationContext.currentContext.duration = 0.2;
-            plusIconViewCopy.animator.alphaValue = 0.3;
+            plusIconViewCopy.animator.alphaValue = 0.6;
+//            _instance.plusIconView.animator.alphaValue = 0.0;
             [NSThread sleepForTimeInterval:NSAnimationContext.currentContext.duration];
         }];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
