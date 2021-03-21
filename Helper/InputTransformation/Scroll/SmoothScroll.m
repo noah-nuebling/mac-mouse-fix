@@ -20,7 +20,7 @@
 #import "ConfigFileInterface_App.h"
 
 #import "DeviceManager.h"
-#import "Utility_HelperApp.h"
+#import "Utility_Helper.h"
 #import "../Touch/TouchSimulator.h"
 
 #import "SharedUtility.h"

@@ -1,13 +1,13 @@
 //
 // --------------------------------------------------------------------------
-// MessagePort_HelperApp.m
+// MessagePort_Helper.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2019
 // Licensed under MIT
 // --------------------------------------------------------------------------
 //
 
-#import "MessagePort_HelperApp.h"
+#import "MessagePort_Helper.h"
 #import "ConfigFileInterface_Helper.h"
 #import "TransformationManager.h"
 #import <AppKit/NSWindow.h>
@@ -17,7 +17,7 @@
 
 #import <CoreFoundation/CoreFoundation.h>
 
-@implementation MessagePort_HelperApp
+@implementation MessagePort_Helper
 
 #pragma mark - local (incoming messages)
 

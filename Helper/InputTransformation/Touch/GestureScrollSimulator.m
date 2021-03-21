@@ -11,7 +11,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import <Cocoa/Cocoa.h>
 #import "TouchSimulator.h"
-#import "Utility_HelperApp.h"
+#import "Utility_Helper.h"
 #import "SharedUtility.h"
 #import "VectorSubPixelator.h"
 
@@ -160,12 +160,12 @@ static VectorSubPixelator *_scrollPixelator;
     
     // Testing
     
-//    CGPoint flippedNSLoc = [Utility_HelperApp getCurrentPointerLocation_flipped];
+//    CGPoint flippedNSLoc = [Utility_Helper getCurrentPointerLocation_flipped];
 //    CGPoint CGLoc = CGEventGetLocation(CGEventCreate(NULL));
 //    NSLog(@"\nFLIPPED NS: %f, %f \nCG: %f, %f", flippedNSLoc.x, flippedNSLoc.y, CGLoc.x, CGLoc.y);
     
     // Post t22s0 event
-    CGEventSetLocation(e22, [Utility_HelperApp getCurrentPointerLocation_flipped]);
+    CGEventSetLocation(e22, [Utility_Helper getCurrentPointerLocation_flipped]);
     CGEventPost(kCGHIDEventTap, e22);
     CFRelease(e22);
     
@@ -199,7 +199,7 @@ static VectorSubPixelator *_scrollPixelator;
         CGEventSetIntegerValueField(e29, 132, phase);
         
         // Post t29s6 events
-        CGEventSetLocation(e29, [Utility_HelperApp getCurrentPointerLocation_flipped]);
+        CGEventSetLocation(e29, [Utility_Helper getCurrentPointerLocation_flipped]);
         CGEventPost(kCGHIDEventTap, e29);
         //    printEvent(e29);
         CFRelease(e29);

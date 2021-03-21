@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-// Utility_HelperApp.m
+// Utility_Helper.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2019
 // Licensed under MIT
@@ -8,10 +8,10 @@
 //
 
 #import <AppKit/AppKit.h>
-#import "Utility_HelperApp.h"
+#import "Utility_Helper.h"
 #import "Constants.h"
 
-@implementation Utility_HelperApp
+@implementation Utility_Helper
 
 /// Don't use this. This doesn't produce identical results.
 /// This is a more general / functional version of the function at `ScrollUtility -> createPixelBasedScrollEventWithValuesFromEvent:event`. See it's doc for more info. (That function failed to produce identical events, but this does too, unfortunately)

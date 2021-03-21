@@ -15,7 +15,7 @@
 #import "ScrollModifiers.h"
 #import "ConfigFileInterface_Helper.h"
 #import "ScrollUtility.h"
-#import "Utility_HelperApp.h"
+#import "Utility_Helper.h"
 
 @implementation ScrollControl
 
@@ -206,7 +206,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     }
     
     // Create a copy, because the original event will become invalid and unusable in the new thread.
-//    CGEventRef eventCopy = [Utility_HelperApp createEventWithValuesFromEvent:event]; // This function doesn't work right
+//    CGEventRef eventCopy = [Utility_Helper createEventWithValuesFromEvent:event]; // This function doesn't work right
 //    CGEventRef eventCopy = [ScrollUtility createPixelBasedScrollEventWithValuesFromEvent:event]; // This doesn't either
     CGEventRef eventCopy = CGEventCreateCopy(event);
     // ^ I remember having trouble with the memory / multithreading stuff with this

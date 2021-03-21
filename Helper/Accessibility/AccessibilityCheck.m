@@ -11,7 +11,7 @@
 
 #import <AppKit/AppKit.h>
 #import "SharedMessagePort.h"
-#import "MessagePort_HelperApp.h"
+#import "MessagePort_Helper.h"
 #import "DeviceManager.h"
 #import "ConfigFileInterface_Helper.h"
 #import "ScrollControl.h"
@@ -28,7 +28,7 @@
     os_log_t MFLog = os_log_create(kMFBundleIDHelper.UTF8String, "status");
     os_log(MFLog, "Mac Mouse Fix Helper begins logging excessively...");
     
-    [MessagePort_HelperApp load_Manual];
+    [MessagePort_Helper load_Manual];
     
     Boolean accessibilityEnabled = [self check];
     
