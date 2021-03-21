@@ -12,7 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ButtonLandscapeAssessor : NSObject
-+ (void)assessMappingLandscapeWithbutton:(NSNumber *)button
++ (void)assessMappingLandscapeWithButton:(NSNumber *)button
                                    level:(NSNumber *)level
                          activeModifiers:(NSDictionary *)activeModifiers
                                   remaps:(NSDictionary *)remaps

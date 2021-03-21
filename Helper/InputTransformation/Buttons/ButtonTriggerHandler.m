@@ -59,7 +59,7 @@
     BOOL clickActionOfThisLevelExists;
     BOOL effectForMouseDownStateOfThisLevelExists;
     BOOL effectOfGreaterLevelExists;
-    [ButtonLandscapeAssessor assessMappingLandscapeWithbutton:button
+    [ButtonLandscapeAssessor assessMappingLandscapeWithButton:button
                                                         level:level
                                               activeModifiers:activeModifiersUnfiltered
                                                        remaps:remaps
