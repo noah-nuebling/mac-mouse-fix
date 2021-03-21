@@ -15,6 +15,7 @@
 #import "ModifiedDrag.h"
 #import "DeviceManager.h"
 #import "SharedUtility.h"
+#import <os/signpost.h>
 
 
 @implementation ModifierManager
@@ -87,13 +88,19 @@ CGEventRef _Nullable handleKeyboardModifiersHaveChanged(CGEventTapProxy proxy, C
         // ^ Need to pass in event here as source for keyboard modifers, otherwise the returned kb-modifiers won't be up-to-date.
         reactToModifierChange(activeModifiers, dev);
     }
+    
     return nil; // This is a passive listener, so it doesn't matter what we return
 }
 
 #pragma mark Button modifiers
 
+os_log_t _log;
+os_signpost_id_t _log_id;
+
 NSArray *_prevButtonModifiers;
+/// Analyzing this with `os_signpost` reveals it is called 3 times per button click - we should look into optimizing this.
 + (void)handleButtonModifiersMightHaveChangedWithDevice:(MFDevice *)device {
+    
     NSArray *buttonModifiers = [ButtonTriggerGenerator getActiveButtonModifiersForDevice:device.uniqueID];
     if (![buttonModifiers isEqual:_prevButtonModifiers]) {
         handleButtonModifiersHaveChangedWithDevice(device);
@@ -170,8 +177,13 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, MFDevi
 //      That means we listen for changes to the active modifiers and when they match a modifications' precondition, we'll initialize the modification components which are modifier driven.
 //      Then, when they do send their first trigger, they'll call modifierDrivenModificationHasBeenUsedWithDevice which will in turn notify the modifying buttons that they've had an effect
 // \discussion If you pass in an a CGEvent via the `event` argument, the returned keyboard modifiers will be more up-to-date. This is sometimes necessary to get correct data when calling this right after the keyboard modifiers have changed.
-
+// Analyzing with os_signpost reveals this is called 9 times per button click and takes around 20% of the time.
+//      That's over a third of the time which is used by our code (I think) - We should look into optimizing this (if we have too much time - the program is plenty fast). Maybe caching the values or calling it less, or making it faster.
 + (NSDictionary *)getActiveModifiersForDevice:(NSNumber *)devID filterButton:(NSNumber * _Nullable)filteredButton event:(CGEventRef _Nullable) event {
+    
+#if DEBUG
+    printf("ActiveModifiers requested by: %s\n", SharedUtility.callerInfo.UTF8String);
+#endif
     
     NSMutableDictionary *outDict = [NSMutableDictionary dictionary];
     

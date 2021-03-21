@@ -25,8 +25,8 @@
 
 + (void)load {
     
-    os_log_t MFLog = os_log_create(kMFBundleIDHelper.UTF8String, "status");
-    os_log(MFLog, "Mac Mouse Fix Helper begins logging excessively...");
+//    os_log_t MFLog = os_log_create(kMFBundleIDHelper.UTF8String, "status");
+//    os_log(MFLog, "Mac Mouse Fix Helper begins logging excessively...");
     
     [MessagePort_Helper load_Manual];
     
