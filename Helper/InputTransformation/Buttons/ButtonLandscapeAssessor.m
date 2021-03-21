@@ -16,26 +16,26 @@
 
 #pragma mark - Main
 
-/// Why do we have arguments `activeModifiers`, `remaps` as well as `effectiveRemaps`?
-///     `activeModifiers` and `remaps` should determine `effectiveRemaps`. Does this make any sense?
-///     -> Yes, it seems to kind of make sense. activeModifiers is expected to be unfilitered, so containing `button`, while `effectiveRemaps` are the remaps for the modifiers that are _acting on_ `button`, so the active modifiers without `button`.
-///        TODO: This is super confusing and it lead us to code `buttonCouldStillBeUsedThisClickCycle:` in a wrong way (I'm pretty sure). We need to move that logic inside of this function.
+/// `activeModifiers` Are the active modifiers including `button`
+/// `activeModifiersActingOnThisButton` are the active modifiers with `button` filtered out
 + (void)assessMappingLandscapeWithButton:(NSNumber *)button
                                    level:(NSNumber *)level
                          activeModifiers:(NSDictionary *)activeModifiers
+                 activeModifiersFiltered:(NSDictionary *)activeModifiersActingOnThisButton
                                   remaps:(NSDictionary *)remaps
-                          effectiveRemaps:(NSDictionary *)effectiveRemaps
                            thisClickDoBe:(BOOL *)clickActionOfThisLevelExists
                             thisDownDoBe:(BOOL *)effectForMouseDownStateOfThisLevelExists
                              greaterDoBe:(BOOL *)effectOfGreaterLevelExists {
     
-    *clickActionOfThisLevelExists = effectiveRemaps[button][level][kMFButtonTriggerDurationClick] != nil;
-    *effectForMouseDownStateOfThisLevelExists = effectExistsForMouseDownState(button, level, remaps, activeModifiers, effectiveRemaps);
-    *effectOfGreaterLevelExists = effectOfGreaterLevelExistsFor(button, level, remaps, activeModifiers, effectiveRemaps);
+    NSDictionary *remapsActingOnThisButton = remaps[activeModifiersActingOnThisButton];
+    
+    *clickActionOfThisLevelExists = remapsActingOnThisButton[button][level][kMFButtonTriggerDurationClick] != nil;
+    *effectForMouseDownStateOfThisLevelExists = effectExistsForMouseDownState(button, level, remaps, activeModifiers, remapsActingOnThisButton);
+    *effectOfGreaterLevelExists = effectOfGreaterLevelExistsFor(button, level, remaps, activeModifiers, remapsActingOnThisButton);
 }
 
-static BOOL effectExistsForMouseDownState(NSNumber *button, NSNumber *level, NSDictionary *remaps, NSDictionary *activeModifiers, NSDictionary *effectiveRemaps) {
-    BOOL holdActionExists = effectiveRemaps[button][level][kMFButtonTriggerDurationHold] != nil;
+static BOOL effectExistsForMouseDownState(NSNumber *button, NSNumber *level, NSDictionary *remaps, NSDictionary *activeModifiers, NSDictionary *remapsActingOnThisButton) {
+    BOOL holdActionExists = remapsActingOnThisButton[button][level][kMFButtonTriggerDurationHold] != nil;
     BOOL usedAsModifier = isPartOfModificationPrecondition(button, level, remaps, activeModifiers);
     
     return holdActionExists || usedAsModifier;
@@ -56,9 +56,12 @@ static BOOL isPartOfModificationPrecondition(NSNumber *button, NSNumber *level, 
     return NO;
 }
 
-static BOOL effectOfGreaterLevelExistsFor(NSNumber *button, NSNumber *level, NSDictionary *remaps, NSDictionary *activeModifiers, NSDictionary *effectiveRemaps) {
+static BOOL effectOfGreaterLevelExistsFor(NSNumber *button, NSNumber *level, NSDictionary *remaps, NSDictionary *activeModifiers, NSDictionary *remapsActingOnThisButton) {
+    
+    
+    
     // Check if effective remaps of a higher level exist for this button
-    for (NSNumber *thisLevel in ((NSDictionary *)effectiveRemaps[button]).allKeys) {
+    for (NSNumber *thisLevel in ((NSDictionary *)remapsActingOnThisButton[button]).allKeys) {
         if (thisLevel.intValue > level.intValue) {
             return YES;
         }
@@ -70,9 +73,9 @@ static BOOL effectOfGreaterLevelExistsFor(NSNumber *button, NSNumber *level, NSD
 static BOOL modificationPreconditionButtonComponentOfGreaterLevelExistsForButton(NSNumber *button, NSNumber *level, NSDictionary *remaps, NSDictionary *activeModifiers) {
     
     // Check if modification precondition exists such that at least one of its button components has the same button as the incoming button `button` and a level greater than the incoming level `level`
+    // We're passing in `activeModifiers` even though we don't need it. Why is that? Hints towards us messing sth up in some refactor.
     
     for (NSDictionary *modificationPrecondition in remaps.allKeys) {
-        // TODO: Check if still workds after modification precondition refactor
         NSIndexSet *indexesContainingButton = [(NSArray *)modificationPrecondition[kMFModificationPreconditionKeyButtons] indexesOfObjectsPassingTest:^BOOL(NSDictionary *_Nonnull dict, NSUInteger idx, BOOL * _Nonnull stop) {
             return [dict[kMFButtonModificationPreconditionKeyButtonNumber] isEqualToNumber:button];
         }];
@@ -86,17 +89,14 @@ static BOOL modificationPreconditionButtonComponentOfGreaterLevelExistsForButton
     return NO;
 }
 
-#pragma mark - Convenience functions
+#pragma mark - Other Interface functions
 
-/// This is used by ButtonTriggerGenerator to reset the click cycle, if we know the button can't be used this click cycle anyways.
-/// \discussion We used to call [ModifierManager getActiveModifiersForDevice:filterButton:event:] with the filterButton argument set to nil.
-///     This lead to issues with the click cycle being reset prematurely sometimes. We set filterBUtton to button, now. Hopefully this doesn't break stuff in other ways. I don't think so.
-///             -> Noah from future: I'm pretty sure it actually will break stuff. See docs on  `assessMappingLandscapeWithButton:..`
+/// Used by `ButtonTriggerGenerator` to reset the click cycle, if we know the button can't be used this click cycle anyways.
 + (BOOL)buttonCouldStillBeUsedThisClickCycle:(NSNumber *)devID button:(NSNumber *)button level:(NSNumber *)level {
     
     NSDictionary *remaps = TransformationManager.remaps;
-    NSDictionary *activeModifiers = [ModifierManager getActiveModifiersForDevice:devID filterButton:button event:nil];
-    NSDictionary *effectiveRemaps = [self getEffectiveRemaps:remaps activeModifiers:activeModifiers];
+    NSDictionary *activeModifiers = [ModifierManager getActiveModifiersForDevice:devID filterButton:nil event:nil];
+    NSDictionary *activeModifiersActingOnThisButton = [ModifierManager getActiveModifiersForDevice:devID filterButton:button event:nil];
     
     BOOL clickActionOfThisLevelExists;
     BOOL effectForMouseDownStateOfThisLevelExists;
@@ -104,8 +104,8 @@ static BOOL modificationPreconditionButtonComponentOfGreaterLevelExistsForButton
     [self assessMappingLandscapeWithButton:button
                                      level:level
                            activeModifiers:activeModifiers
+                   activeModifiersFiltered:activeModifiersActingOnThisButton
                                     remaps:remaps
-                           effectiveRemaps:effectiveRemaps
                              thisClickDoBe:&clickActionOfThisLevelExists
                               thisDownDoBe:&effectForMouseDownStateOfThisLevelExists
                                greaterDoBe:&effectOfGreaterLevelExists];
@@ -124,6 +124,8 @@ static BOOL modificationPreconditionButtonComponentOfGreaterLevelExistsForButton
     
     return clickActionOfThisLevelExists || effectForMouseDownStateOfThisLevelExists || effectOfGreaterLevelExists;
 }
+
+/// Used by `ButtonTriggerHandler` to determine `MFEventPassThroughEvaluation`
 + (BOOL)effectExistsForButton:(NSNumber *)button remaps:(NSDictionary *)remaps effectiveRemaps:(NSDictionary *)effectiveRemaps {
     
     // Check if there is a direct effect for button
@@ -131,8 +133,9 @@ static BOOL modificationPreconditionButtonComponentOfGreaterLevelExistsForButton
     if (hasDirectEffect) {
         return YES;
     }
-    // Check if button has effect as modifier // TODO: Maybe we should only check for button preconds with a higher clickLevel than current?
-    //  But maybe that wouldn't make a diff because clickLevel is reset when `buttonCouldStillBeUsedThisClickCycle:` returns true? (I think)
+    // Check if button has effect as modifier
+    //  TODO: Maybe we should only check for button preconds with a higher clickLevel than current?
+    //      But maybe that wouldn't make a diff because clickLevel is reset when `buttonCouldStillBeUsedThisClickCycle:` returns true? (I think)
     for (NSDictionary *modificationPrecondition in remaps.allKeys) {
         NSArray *buttonPreconditions = modificationPrecondition[kMFModificationPreconditionKeyButtons];
         NSIndexSet *buttonIndexes = [buttonPreconditions indexesOfObjectsPassingTest:^BOOL(NSDictionary *_Nonnull dict, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -146,17 +149,7 @@ static BOOL modificationPreconditionButtonComponentOfGreaterLevelExistsForButton
     return NO;
 }
 
-/// TODO: Move this to Utility_Transformations
-+ (NSDictionary *)getEffectiveRemaps:(NSDictionary *)remaps activeModifiers:(NSDictionary *)activeModifiers {
-    
-    NSDictionary *effectiveRemaps = remaps[@{}];
-    NSDictionary *remapsForActiveModifiers = remaps[activeModifiers];
-    if ([activeModifiers isNotEqualTo:@{}]) {
-        effectiveRemaps = [SharedUtility dictionaryWithOverridesAppliedFrom:[remapsForActiveModifiers copy] to:effectiveRemaps]; // Why do we do ` - copy` here?
-    }
-    return effectiveRemaps;
-}
-
+/// Used by `MessagePort_Helper` to send back to main app
 + (NSSet<NSNumber *> *)getCapturedButtons {
     NSMutableSet<NSNumber *> *capturedButtons = [NSMutableSet set];
     for (int b = 1; b <= kMFMaxButtonNumber; b++) {

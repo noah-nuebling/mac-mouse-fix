@@ -29,12 +29,12 @@
     
     // Get remaps and apply modifier overrides
     NSDictionary *remaps = TransformationManager.remaps;
-    NSDictionary *activeModifiers = [ModifierManager getActiveModifiersForDevice:devID filterButton:button event:nil]; // The modifiers which act on the incoming button (the button can't modify itself so we filter it out)
-    NSDictionary *effectiveRemaps = [ButtonLandscapeAssessor getEffectiveRemaps:remaps activeModifiers:activeModifiers];
-    NSDictionary *remapsForActiveModifiers = remaps[activeModifiers];
+    NSDictionary *activeModifiersActingOnThisButton = [ModifierManager getActiveModifiersForDevice:devID filterButton:button event:nil]; // The modifiers which act on the incoming button (the button can't modify itself so we filter it out)
+    NSDictionary *effectiveRemaps = [self getEffectiveRemaps:remaps activeModifiers:activeModifiersActingOnThisButton];
+    NSDictionary *remapsForActiveModifiers = remaps[activeModifiersActingOnThisButton];
     
 #if DEBUG
-    NSLog(@"\nActive mods: %@, \nremapsForActiveMods: %@", activeModifiers, remapsForActiveModifiers);
+    NSLog(@"\nActive mods: %@, \nremapsForActiveMods: %@", activeModifiersActingOnThisButton, remapsForActiveModifiers);
 #endif
     
     // If no remaps exist for this button, let the CGEvent which caused this function call pass through (Only if this function was invoked as a direct result of a physical button press)
@@ -52,7 +52,7 @@
     // Asses mapping landscape
     // \note It's unnecessary to assess mapping landscape (that includes calculating targetTrigger) on click actions again for every call of this function. It only has to be calculated once for every "click" (as opposed to "hold") actionArray in every possible overriden remapDict including the unoverriden one. We could precalculate everything once when loading remapDict if we wanted to. This is plenty fast though so it's fine.
     
-    NSDictionary *activeModifiersUnfiltered = [ModifierManager getActiveModifiersForDevice:devID filterButton:nil event:nil];
+    NSDictionary *activeModifiers = [ModifierManager getActiveModifiersForDevice:devID filterButton:nil event:nil];
     //      ^ We need to check whether the incoming button is acting as a modifier to determine
     //          `effectForMouseDownStateOfThisLevelExists`, so we can't use the variable `activeModifiers` defined above because it filters out the incoming button
     //      Noah from future: TODO: But why do we pass the old value for `effectiveRemaps` - which is not based on `activeModifiersUnfiltered` - to ButtonLandscapeAssessor?
@@ -61,9 +61,9 @@
     BOOL effectOfGreaterLevelExists;
     [ButtonLandscapeAssessor assessMappingLandscapeWithButton:button
                                                         level:level
-                                              activeModifiers:activeModifiersUnfiltered
+                                              activeModifiers:activeModifiers
+                                      activeModifiersFiltered:activeModifiersActingOnThisButton
                                                        remaps:remaps
-                                              effectiveRemaps:effectiveRemaps
                                                 thisClickDoBe:&clickActionOfThisLevelExists
                                                  thisDownDoBe:&effectForMouseDownStateOfThisLevelExists
                                                   greaterDoBe:&effectOfGreaterLevelExists];
@@ -91,7 +91,7 @@
                                                                                  devID,
                                                                                  button,
                                                                                  level,
-                                                                                 activeModifiers,
+                                                                                 activeModifiersActingOnThisButton,
                                                                                  remapsForActiveModifiers,
                                                                                  effectiveRemaps);
     } else if (triggerType == kMFActionTriggerTypeHoldTimerExpired) {
@@ -102,7 +102,7 @@
                                            devID,
                                            button,
                                            level,
-                                           activeModifiers,
+                                           activeModifiersActingOnThisButton,
                                            remapsForActiveModifiers,
                                            effectiveRemaps);
     }
@@ -149,4 +149,16 @@ static BOOL isTriggerForClickAction(MFActionTriggerType triggerType) {
     triggerType == kMFActionTriggerTypeLevelTimerExpired;
 }
 
+/// Method for obtaining `effectiveRemaps` from `remaps` and `activeModifiers`
+/// Currently takes the default remaps (with an empty precondition) and overrides it with remappings defined for a precondition of `activeModifiers`.
+/// We should probably move this over to replace instead of override, cause it's a little nicer for usability, but that might break other stuff so not now.
++ (NSDictionary *)getEffectiveRemaps:(NSDictionary *)remaps activeModifiers:(NSDictionary *)activeModifiers {
+    
+    NSDictionary *effectiveRemaps = remaps[@{}];
+    NSDictionary *remapsForActiveModifiers = remaps[activeModifiers];
+    if ([activeModifiers isNotEqualTo:@{}]) {
+        effectiveRemaps = [SharedUtility dictionaryWithOverridesAppliedFrom:[remapsForActiveModifiers copy] to:effectiveRemaps]; // Why do we do ` - copy` here?
+    }
+    return effectiveRemaps;
+}
 @end

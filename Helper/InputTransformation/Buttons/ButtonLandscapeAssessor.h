@@ -15,14 +15,13 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)assessMappingLandscapeWithButton:(NSNumber *)button
                                    level:(NSNumber *)level
                          activeModifiers:(NSDictionary *)activeModifiers
+                 activeModifiersFiltered:(NSDictionary *)activeModifiersActingOnThisButton
                                   remaps:(NSDictionary *)remaps
-                          effectiveRemaps:(NSDictionary *)effectiveRemaps
                            thisClickDoBe:(BOOL *)clickActionOfThisLevelExists
                             thisDownDoBe:(BOOL *)effectForMouseDownStateOfThisLevelExists
                              greaterDoBe:(BOOL *)effectOfGreaterLevelExists;
 
 + (BOOL)effectExistsForButton:(NSNumber *)button remaps:(NSDictionary *)remaps effectiveRemaps:(NSDictionary *)effectiveRemaps;
-+ (NSDictionary *)getEffectiveRemaps:(NSDictionary *)remaps activeModifiers:(NSDictionary *)activeModifiers;
 + (BOOL)buttonCouldStillBeUsedThisClickCycle:(NSNumber *)devID button:(NSNumber *)button level:(NSNumber *)level;
 
 @end
