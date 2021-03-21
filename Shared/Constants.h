@@ -193,6 +193,8 @@ typedef enum {
     kMFMouseButtonNumberMiddle = 3,
 } MFMouseButtonNumber;
 
+#define kMFMaxButtonNumber 32
+
 @end
 
 NS_ASSUME_NONNULL_END

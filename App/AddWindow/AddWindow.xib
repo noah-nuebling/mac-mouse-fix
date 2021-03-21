@@ -46,7 +46,7 @@
                         <textFieldCell key="cell" alignment="center" id="eL1-qA-LQy">
                             <font key="font" metaFont="system"/>
                             <string key="title">Move the mouse pointer inside the '+' field, and then 
-click a mouse button, to assign a function to it.</string>
+click a mouse button, to assign a new function to it.</string>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>

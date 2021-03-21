@@ -137,7 +137,7 @@ BOOL _addModeIsEnabled = NO;
     };
     NSMutableDictionary *triggerToEffectDict_NoModsRequired = [NSMutableDictionary dictionary];
     // Button triggers (dict based)
-    for (int btn = 1; btn <= 32; btn++) {
+    for (int btn = 1; btn <= kMFMaxButtonNumber; btn++) {
         for (int lvl = 1; lvl <= 3; lvl++) {
             for (NSString *dur in @[kMFButtonTriggerDurationClick, kMFButtonTriggerDurationHold]) {
                 NSMutableDictionary *addModeFeedbackDict = @{
