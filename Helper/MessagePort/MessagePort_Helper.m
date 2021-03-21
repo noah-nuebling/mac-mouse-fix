@@ -64,7 +64,7 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
         [TransformationManager enableAddMode];
     } else if ([message isEqualToString:@"disableAddMode"]) {
         [TransformationManager disableAddMode];
-    } else if ([message isEqual:@""]) {
+    } else if ([message isEqual:@"getCapturedButtons"]) {
         
     } else {
         NSLog(@"Unknown message received: %@", message);

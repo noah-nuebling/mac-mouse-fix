@@ -18,6 +18,7 @@
 #import "ModifierManager.h"
 #import "SharedUtility.h"
 #import "ButtonTriggerHandler.h"
+#import "ButtonLandscapeAssessor.h"
 
 #pragma mark - Definition of private helper class `Button State`
 
@@ -172,7 +173,7 @@ static NSMutableDictionary *_state;
         bs.clickLevel += 1;
         
         // If new clickLevel and any following clickLevels can't lead to any effects, cycle back to the first click level
-        if (![ButtonTriggerHandler buttonCouldStillBeUsedThisClickCycle:devID button:btn level:@(bs.clickLevel)]) {
+        if (![ButtonLandscapeAssessor buttonCouldStillBeUsedThisClickCycle:devID button:btn level:@(bs.clickLevel)]) {
             bs.clickLevel = 1;
         }
         

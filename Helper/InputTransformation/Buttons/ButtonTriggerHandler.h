@@ -14,8 +14,11 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ButtonTriggerHandler : NSObject
+
 + (MFEventPassThroughEvaluation)handleButtonTriggerWithButton:(NSNumber *)button triggerType:(MFActionTriggerType)trigger clickLevel:(NSNumber *)level device:(NSNumber *)devID;
-+ (BOOL)buttonCouldStillBeUsedThisClickCycle:(NSNumber *)devID button:(NSNumber *)button level:(NSNumber *)level;
+
+//+ (BOOL)buttonCouldStillBeUsedThisClickCycle:(NSNumber *)devID button:(NSNumber *)button level:(NSNumber *)level;
+
 @end
 
 NS_ASSUME_NONNULL_END
