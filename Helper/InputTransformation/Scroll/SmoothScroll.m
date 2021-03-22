@@ -58,14 +58,18 @@ static int      _onePixelScrollsCounter;
 
 #pragma mark - Interface
 
-+ (void)load_Manual {
-    [SmoothScroll start];
-    [SmoothScroll stop];
+static void createDisplayLink() {
     if (_displayLink == nil) {
         CVDisplayLinkCreateWithActiveCGDisplays(&_displayLink);
         CVDisplayLinkSetOutputCallback(_displayLink, displayLinkCallback, nil);
         _displaysUnderMousePointer = malloc(sizeof(CGDirectDisplayID) * 3); // TODO: Why 3?
     }
+}
+
++ (void)load_Manual {
+    [SmoothScroll start];
+    [SmoothScroll stop];
+    createDisplayLink();
 }
 
 /// Consider calling [ScrollControl resetDynamicGlobals] to reset not only SmoothScroll specific globals.
@@ -202,7 +206,13 @@ static BOOL _hasStarted;
         while (CVDisplayLinkIsRunning(_displayLink) == NO) {
             // Executing this on _scrollQueue (like the rest of this function) leads to `CVDisplayLinkStart()` failing sometimes. Once it has failed it will fail over and over again, taking a few minutes or so to start working again, if at all.
             // Solution: I have no idea why, but executing on the main queue does the trick! ^^
+            // This actually still occurs sometimes after waking the computer from sleep. It fails over and over with the return code -6661 = kCVReturnInvalidArgument
             dispatch_sync(dispatch_get_main_queue(), ^{
+                
+                if (_displayLink == nil) { // Hopefully prevent the error where it fails with kCVReturnInvalidArgument
+                    createDisplayLink();
+                }
+                
                 CVReturn rt = CVDisplayLinkStart(_displayLink);
                 if (rt != kCVReturnSuccess) {
                     NSLog(@"Failed to start displayLink. Trying again.");
