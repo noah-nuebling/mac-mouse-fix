@@ -105,12 +105,23 @@
     }
 }
 - (void)removeButtonAction {
+    NSSet<NSNumber *> *capturedButtonsBefore = [NSKeyedUnarchiver unarchiveObjectWithData:
+                                                [SharedMessagePort sendMessage:@"getCapturedButtons"
+                                                                   withPayload:nil
+                                                                expectingReply:YES]];
+    
     NSMutableArray *mutableDataModel = self.dataModel.mutableCopy;
     [mutableDataModel removeObjectsAtIndexes:self.tableView.selectedRowIndexes];
     self.dataModel = (NSArray *)mutableDataModel;
     [self writeDataModelToConfig];
     [self loadDataModelFromConfig]; // Not sure if necessary
     [self.tableView removeRowsAtIndexes:self.tableView.selectedRowIndexes withAnimation:NSTableViewAnimationSlideUp];
+    
+    NSSet *capturedButtonsAfter = [NSKeyedUnarchiver unarchiveObjectWithData:
+                                  [SharedMessagePort sendMessage:@"getCapturedButtons"
+                                                     withPayload:nil
+                                                  expectingReply:YES]];
+    [CaptureNotifications showButtonCaptureNotificationWithBeforeSet:capturedButtonsBefore afterSet:capturedButtonsAfter];
 }
 - (void)addButtonAction {
     [AddWindowController begin];
