@@ -71,8 +71,8 @@ double _animationDuration = 0.4;
         showDuration = 3.0;
     }
     double mainWindowTitleBarHeight = 30;
-    double topEdgeMargin = 1.0;
-//    double topEdgeMargin = -25;
+//    double topEdgeMargin = 1.0;
+    double topEdgeMargin = -25;
     double sideMargin = 40;
     
     // Execution
@@ -124,9 +124,9 @@ double _animationDuration = 0.4;
     
     // Calc Position
     // Center horizontally
-    newNotifFrame.origin.x = NSMidX(mainW.frame) - (newNotifFrame.size.width / 2);
+    newNotifFrame.origin.x = NSMidX(mainW.frame) - (newNotifSize.width / 2);
     // Align with top edge of main window
-    newNotifFrame.origin.y = (mainW.frame.origin.y + mainW.frame.size.height - (mainWindowTitleBarHeight + topEdgeMargin)) - w.frame.size.height;
+    newNotifFrame.origin.y = (mainW.frame.origin.y + mainW.frame.size.height - (mainWindowTitleBarHeight + topEdgeMargin)) - newNotifSize.height;
     
     // Set new notification frame
     [w setFrame:newNotifFrame display:YES];
