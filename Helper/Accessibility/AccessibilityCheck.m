@@ -23,6 +23,8 @@
 
 @implementation AccessibilityCheck
 
+NSTimer *_openMainAppTimer;
+
 + (void)load {
     
 //    os_log_t MFLog = os_log_create(kMFBundleIDHelper.UTF8String, "status");
@@ -38,7 +40,7 @@
         
         [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(sendAccessibilityMessageToMainApp) userInfo:NULL repeats:NO];
         
-        [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(openMainApp) userInfo:NULL repeats:YES];
+        _openMainAppTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(openMainApp) userInfo:NULL repeats:YES];
             
     } else {
         
@@ -78,8 +80,9 @@
             [app activateWithOptions:NSApplicationActivateIgnoringOtherApps];
         }
         // Close this app (Will be restarted immediately by launchd)
-        [NSApp terminate:NULL];
-//        [self load]; // TESTING
+//        [NSApp terminate:NULL];
+        [self load]; // TESTING
+        [_openMainAppTimer invalidate]; // TESTING
     }
 }
 
