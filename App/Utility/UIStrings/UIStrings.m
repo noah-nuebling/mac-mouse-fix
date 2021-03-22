@@ -12,6 +12,7 @@
 @implementation UIStrings
 
 /// Other code for obtaining UI strings found in RemapTableController
+/// Function for getting extended button string for tooltips found in RemapTableController
 
 + (NSString *)getButtonString:(int)buttonNumber {
     NSDictionary *buttonNumberToUIString = @{

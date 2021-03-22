@@ -14,6 +14,7 @@
 #import "AccessibilityCheck.h"
 #import "Constants.h"
 #import "SharedMessagePort.h"
+#import "ButtonLandscapeAssessor.h"
 
 #import <CoreFoundation/CoreFoundation.h>
 
@@ -49,6 +50,8 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
     NSString *message = messageDict[kMFMessageKeyMessage];
     NSObject *payload = messageDict[kMFMessageKeyPayload];
     
+    NSData *response = nil;
+    
     NSLog(@"Helper Received Message: %@ with payload: %@", message, payload);
     
     if ([message isEqualToString:@"configFileChanged"]) {
@@ -65,12 +68,13 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
     } else if ([message isEqualToString:@"disableAddMode"]) {
         [TransformationManager disableAddMode];
     } else if ([message isEqual:@"getCapturedButtons"]) {
-        
+        NSSet *capturedButtons = [ButtonLandscapeAssessor getCapturedButtonsWithRemaps:TransformationManager.remaps];
+        NSLog(@"CapturedButtons are: %@", capturedButtons);
+        response = [NSKeyedArchiver archivedDataWithRootObject:capturedButtons];
     } else {
         NSLog(@"Unknown message received: %@", message);
     }
-    
-    NSData *response = nil;
+
     return (__bridge CFDataRef)response;
 }
 

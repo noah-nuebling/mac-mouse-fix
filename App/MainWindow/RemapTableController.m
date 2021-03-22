@@ -19,6 +19,8 @@
 #import "NSAttributedString+Additions.h"
 #import "NSTextField+Additions.h"
 #import "UIStrings.h"
+#import "SharedMessagePort.h"
+#import "CaptureNotifications.h"
 
 @interface RemapTableController ()
 @property NSTableView *tableView;
@@ -114,7 +116,12 @@
     [AddWindowController begin];
 }
 - (void)addRowWithHelperPayload:(NSDictionary *)payload {
-    NSLog(@"ADD ROWWIWOWOW");
+    
+    NSSet<NSNumber *> *capturedButtonsBefore = [NSKeyedUnarchiver unarchiveObjectWithData:
+                                                [SharedMessagePort sendMessage:@"getCapturedButtons"
+                                                                   withPayload:nil
+                                                                expectingReply:YES]];
+    
     NSMutableDictionary *pl = payload.mutableCopy;
     // ((Check if payload is valid tableEntry))
     // Check if already in table
@@ -147,7 +154,19 @@
     // Open the NSMenu on the newly created row's popup button
     NSInteger tableColumn = [self.tableView columnWithIdentifier:@"effect"];
     NSPopUpButton *popUpButton = [self.tableView viewAtColumn:tableColumn row:toHighlightIndexSet.firstIndex makeIfNecessary:NO].subviews[0];
-    [popUpButton performSelector:@selector(performClick:) withObject:nil afterDelay:0.2];
+    
+    NSSet<NSNumber *> *capturedButtonsAfter = [NSKeyedUnarchiver unarchiveObjectWithData:
+                                               [SharedMessagePort sendMessage:@"getCapturedButtons"
+                                                                  withPayload:nil
+                                                               expectingReply:YES]];
+    [CaptureNotifications showButtonCaptureNotificationWithBeforeSet:capturedButtonsBefore afterSet:capturedButtonsAfter];
+    
+    if ([capturedButtonsBefore isEqual:capturedButtonsAfter]) {
+        // If they aren't equal then `showButtonCaptureNotificationWithBeforeSet:` will show a notification
+        //      This notification will not be interactable if we also open the popup button menu. 
+        [popUpButton performSelector:@selector(performClick:) withObject:nil afterDelay:0.2];
+    }
+
 }
 
 - (IBAction)setConfigToUI:(id)sender {

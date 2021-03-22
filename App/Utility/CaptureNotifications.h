@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-// SharedMessagePort.h
+// CaptureNotifications.h
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2021
 // Licensed under MIT
@@ -11,8 +11,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SharedMessagePort : NSObject
-+ (NSData *_Nullable)sendMessage:(NSString * _Nonnull)message withPayload:(NSObject <NSCoding> * _Nullable)payload expectingReply:(BOOL)replyExpected;
+@interface CaptureNotifications : NSObject
++ (void)showButtonCaptureNotificationWithBeforeSet:(NSSet<NSNumber *> *)beforeSet afterSet:(NSSet<NSNumber *> *)afterSet;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -15,8 +15,9 @@
 
 @implementation ButtonLandscapeAssessor
 
-#pragma mark - Main
+#pragma mark - Main Assess Button Landscape Function
 
+/// Primarily used for `[ButtonTriggerHandler + handleButtonTriggerWithButton:...]` to help figure out when to fire clickEffects
 /// `activeModifiers` are the active modifiers including `button`
 /// `activeModifiersActingOnThisButton` are the active modifiers with `button` filtered out
 /// `effectiveRemapsMethod` is a block taking `remaps` and `activeModifiersActingOnThisButton` and returning what the effective remaps acting on the button are.
@@ -37,6 +38,8 @@
     *effectForMouseDownStateOfThisLevelExists = effectExistsForMouseDownState(button, level, remaps, activeModifiers, remapsActingOnThisButton);
     *effectOfGreaterLevelExists = effectOfGreaterLevelExistsFor(button, level, remaps, activeModifiers, remapsActingOnThisButton);
 }
+
+#pragma mark Helper functions for Main Assess Button Landscape Function
 
 static BOOL effectExistsForMouseDownState(NSNumber *button, NSNumber *level, NSDictionary *remaps, NSDictionary *activeModifiers, NSDictionary *remapsActingOnThisButton) {
     BOOL holdActionExists = remapsActingOnThisButton[button][level][kMFButtonTriggerDurationHold] != nil;
@@ -91,7 +94,7 @@ static BOOL modificationPreconditionButtonComponentOfGreaterLevelExistsForButton
     return NO;
 }
 
-#pragma mark - Other Interface functions
+#pragma mark - Other Landscape Assessment Functions
 
 /// Used by `ButtonTriggerGenerator` to reset the click cycle, if we know the button can't be used this click cycle anyways.
 + (BOOL)buttonCouldStillBeUsedThisClickCycle:(NSNumber *)devID button:(NSNumber *)button level:(NSNumber *)level {
@@ -129,7 +132,10 @@ static BOOL modificationPreconditionButtonComponentOfGreaterLevelExistsForButton
 }
 
 /// Used by `ButtonTriggerHandler` to determine `MFEventPassThroughEvaluation`
-/// TODO: Why aren't we reusing `assessMappingLandscapeWithButton:` here?
+///     Noah from future: Why aren't we reusing `assessMappingLandscapeWithButton:` here?
+///         -> I guess it's because we don't care about most of the arguments which have to be provided to `assessMappingLandscapeWithButton:`
+///             For example we don't care about clickLevel and to use `assessMappingLandscapeWithButton:` we'd have to call it for each clickLevel and stuff.
+///     Noah from even more in future: Maybe we should refactor the code for  `MFEventPassThroughEvaluation` and call this function from ButtonTriggerGenerator directly? As it is we're passing the `MFEventPassThroughEvaluation` through like 3 classes which is a little ugly.
 + (BOOL)effectExistsForButton:(NSNumber *)button remaps:(NSDictionary *)remaps effectiveRemaps:(NSDictionary *)effectiveRemaps {
     
     // Check if there is a direct effect for button
@@ -138,14 +144,11 @@ static BOOL modificationPreconditionButtonComponentOfGreaterLevelExistsForButton
         return YES;
     }
     // Check if button has effect as modifier
-    //  TODO: Maybe we should only check for button preconds with a higher clickLevel than current?
-    //      But maybe that wouldn't make a diff because clickLevel is reset when `buttonCouldStillBeUsedThisClickCycle:` returns true? (I think)
+    //      Noah from future: Maybe we should only check for button preconds with a higher clickLevel than current?
+    //          -> But maybe that wouldn't make a diff because clickLevel is reset when `buttonCouldStillBeUsedThisClickCycle:` returns true? (I think)
+    //          (I feel like we probs thought this through when we wrote it I just don't understand it anymore)
     for (NSDictionary *modificationPrecondition in remaps.allKeys) {
-        NSArray *buttonPreconditions = modificationPrecondition[kMFModificationPreconditionKeyButtons];
-        NSIndexSet *buttonIndexes = [buttonPreconditions indexesOfObjectsPassingTest:^BOOL(NSDictionary *_Nonnull dict, NSUInteger idx, BOOL * _Nonnull stop) {
-            return [dict[kMFButtonModificationPreconditionKeyButtonNumber] isEqualToNumber:button];
-        }];
-        if (buttonIndexes.count != 0) {
+        if (buttonIsPartOfModificationPrecondition(button, modificationPrecondition)) {
             return YES;
         }
     }
@@ -153,13 +156,41 @@ static BOOL modificationPreconditionButtonComponentOfGreaterLevelExistsForButton
     return NO;
 }
 
-/// Used by `MessagePort_Helper` to get requested information for the main app
-+ (NSSet<NSNumber *> *)getCapturedButtons {
+/// Used by `MessagePort_Helper` to get information for the main app
++ (NSSet<NSNumber *> *)getCapturedButtonsWithRemaps:(NSDictionary *)remaps {
+    
     NSMutableSet<NSNumber *> *capturedButtons = [NSMutableSet set];
+    
     for (int b = 1; b <= kMFMaxButtonNumber; b++) {
-//        if (self buttonCouldStillBeUsedThisClickCycle:<#(nonnull NSNumber *)#> button:<#(nonnull NSNumber *)#> level:<#(nonnull NSNumber *)#>)
+        
+        // Go through all preconds and corresponding modifications and check if button occurs anywhere
+        for (NSDictionary *modificationPrecondition in remaps) {
+            
+            NSDictionary *modification = remaps[modificationPrecondition];
+            
+            BOOL buttonIsPartOfModification = modification[@(b)] != nil;
+            if (buttonIsPartOfModification) {
+                [capturedButtons addObject:@(b)];
+                goto nextButton;
+            }
+            if (buttonIsPartOfModificationPrecondition(@(b), modificationPrecondition)) {
+                [capturedButtons addObject:@(b)];
+                goto nextButton;
+            }
+        }
+    nextButton:;
     }
     return capturedButtons;
+}
+
+#pragma mark Helper Functions for Other Assessment Functions
+
+static BOOL buttonIsPartOfModificationPrecondition(NSNumber * _Nonnull button, NSDictionary *modificationPrecondition) {
+    NSArray *buttonPreconditions = modificationPrecondition[kMFModificationPreconditionKeyButtons];
+    NSIndexSet *buttonIndexes = [buttonPreconditions indexesOfObjectsPassingTest:^BOOL(NSDictionary *_Nonnull dict, NSUInteger idx, BOOL * _Nonnull stop) {
+        return [dict[kMFButtonModificationPreconditionKeyButtonNumber] isEqualToNumber:button];
+    }];
+    return buttonIndexes.count != 0;
 }
 
 @end

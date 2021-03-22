@@ -13,7 +13,7 @@
 
 @implementation SharedMessagePort
 
-+ (CFDataRef _Nullable)sendMessage:(NSString * _Nonnull)message withPayload:(NSObject <NSCoding> * _Nullable)payload expectingReply:(BOOL)replyExpected {
++ (NSData *_Nullable)sendMessage:(NSString * _Nonnull)message withPayload:(NSObject <NSCoding> * _Nullable)payload expectingReply:(BOOL)replyExpected {
     
     NSDictionary *messageDict;
     if (payload) {
@@ -56,7 +56,12 @@
     if (status != 0) {
         NSLog(@"Non-zero CFMessagePortSendRequest status: %d", status);
     }
-    return returnData;
+    
+    NSData *returnDataNS = nil;
+    if (replyExpected) {
+        returnDataNS = (__bridge NSData *)returnData;
+    }
+    return returnDataNS;
 }
 //
 //+ (CFDataRef _Nullable)sendMessage:(NSString *_Nonnull)message expectingReply:(BOOL)expectingReply {
