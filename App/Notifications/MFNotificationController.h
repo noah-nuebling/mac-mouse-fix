@@ -12,7 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MFNotificationController : NSWindowController <NSWindowDelegate>
-+ (void)attachNotificationWithMessage:(NSAttributedString *)message toWindow:(NSWindow *)window;
++ (void)attachNotificationWithMessage:(NSAttributedString *)message toWindow:(NSWindow *)window forDuration:(NSTimeInterval)showDuration;
 @end
 
 NS_ASSUME_NONNULL_END

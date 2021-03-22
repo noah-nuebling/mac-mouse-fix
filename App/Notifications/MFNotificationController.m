@@ -59,15 +59,17 @@ NSDictionary *_labelAttributesFromIB;
 
 double _animationDuration = 0.4;
 
-+ (void)attachNotificationWithMessage:(NSAttributedString *)message toWindow:(NSWindow *)attachWindow {
+/// Pass 0 to showDuration to get the default duration
++ (void)attachNotificationWithMessage:(NSAttributedString *)message toWindow:(NSWindow *)attachWindow forDuration:(NSTimeInterval)showDuration {
     
 #if DEBUG
     NSLog(@"Attaching notification: %@", message);
 #endif
     
     // Constants
-    
-    NSTimeInterval showDuration = 3.0;
+    if (showDuration <= 0) {
+        showDuration = 3.0;
+    }
     double mainWindowTitleBarHeight = 30;
     double topEdgeMargin = 1.0;
 //    double topEdgeMargin = -25;

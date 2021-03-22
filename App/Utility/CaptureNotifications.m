@@ -85,7 +85,7 @@ static NSString *buttonStringFromButtonArray(NSArray *buttonArray) {
         NSAttributedString *attrNotifString = [[NSAttributedString alloc] initWithString:notifString];
         attrNotifString = [attrNotifString attributedStringByAddingLinkWithURL:[NSURL URLWithString:@"https://placeholder.com/"] forSubstring:@"Learn More"];
         
-        [MFNotificationController attachNotificationWithMessage:attrNotifString toWindow:AppDelegate.mainWindow];
+        [MFNotificationController attachNotificationWithMessage:attrNotifString toWindow:AppDelegate.mainWindow forDuration:5.0];
     }
 }
 @end
