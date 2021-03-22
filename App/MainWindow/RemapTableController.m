@@ -105,10 +105,7 @@
     }
 }
 - (void)removeButtonAction {
-    NSSet<NSNumber *> *capturedButtonsBefore = [NSKeyedUnarchiver unarchiveObjectWithData:
-                                                [SharedMessagePort sendMessage:@"getCapturedButtons"
-                                                                   withPayload:nil
-                                                                expectingReply:YES]];
+    NSSet<NSNumber *> *capturedButtonsBefore = (NSSet *)[SharedMessagePort sendMessage:@"getCapturedButtons" withPayload:nil expectingReply:YES];
     
     NSMutableArray *mutableDataModel = self.dataModel.mutableCopy;
     [mutableDataModel removeObjectsAtIndexes:self.tableView.selectedRowIndexes];
@@ -117,10 +114,7 @@
     [self loadDataModelFromConfig]; // Not sure if necessary
     [self.tableView removeRowsAtIndexes:self.tableView.selectedRowIndexes withAnimation:NSTableViewAnimationSlideUp];
     
-    NSSet *capturedButtonsAfter = [NSKeyedUnarchiver unarchiveObjectWithData:
-                                  [SharedMessagePort sendMessage:@"getCapturedButtons"
-                                                     withPayload:nil
-                                                  expectingReply:YES]];
+    NSSet *capturedButtonsAfter = (NSSet *)[SharedMessagePort sendMessage:@"getCapturedButtons" withPayload:nil expectingReply:YES];
     [CaptureNotifications showButtonCaptureNotificationWithBeforeSet:capturedButtonsBefore afterSet:capturedButtonsAfter];
 }
 - (void)addButtonAction {
@@ -128,10 +122,7 @@
 }
 - (void)addRowWithHelperPayload:(NSDictionary *)payload {
     
-    NSSet<NSNumber *> *capturedButtonsBefore = [NSKeyedUnarchiver unarchiveObjectWithData:
-                                                [SharedMessagePort sendMessage:@"getCapturedButtons"
-                                                                   withPayload:nil
-                                                                expectingReply:YES]];
+    NSSet<NSNumber *> *capturedButtonsBefore = (NSSet *)[SharedMessagePort sendMessage:@"getCapturedButtons" withPayload:nil expectingReply:YES];
     
     NSMutableDictionary *pl = payload.mutableCopy;
     // ((Check if payload is valid tableEntry))
@@ -167,10 +158,7 @@
     NSPopUpButton *popUpButton = [self.tableView viewAtColumn:tableColumn row:toHighlightIndexSet.firstIndex makeIfNecessary:NO].subviews[0];
     [popUpButton performSelector:@selector(performClick:) withObject:nil afterDelay:0.2];
     
-    NSSet<NSNumber *> *capturedButtonsAfter = [NSKeyedUnarchiver unarchiveObjectWithData:
-                                               [SharedMessagePort sendMessage:@"getCapturedButtons"
-                                                                  withPayload:nil
-                                                               expectingReply:YES]];
+    NSSet<NSNumber *> *capturedButtonsAfter = (NSSet *)[SharedMessagePort sendMessage:@"getCapturedButtons" withPayload:nil expectingReply:YES];
     [CaptureNotifications showButtonCaptureNotificationWithBeforeSet:capturedButtonsBefore afterSet:capturedButtonsAfter];
     
 //    if ([capturedButtonsBefore isEqual:capturedButtonsAfter]) {

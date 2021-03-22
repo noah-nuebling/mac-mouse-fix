@@ -13,7 +13,7 @@
 
 @implementation SharedMessagePort
 
-+ (NSData *_Nullable)sendMessage:(NSString * _Nonnull)message withPayload:(NSObject <NSCoding> * _Nullable)payload expectingReply:(BOOL)replyExpected {
++ (NSObject *_Nullable)sendMessage:(NSString * _Nonnull)message withPayload:(NSObject <NSCoding> * _Nullable)payload expectingReply:(BOOL)replyExpected {
     
     NSDictionary *messageDict;
     if (payload) {
@@ -38,9 +38,10 @@
     
     CFMessagePortRef remotePort = CFMessagePortCreateRemote(kCFAllocatorDefault, (__bridge CFStringRef)remotePortName);
     if (remotePort == NULL) {
-        NSLog(@"there is no CFMessagePort");
+        NSLog(@"Can't send message, because there is no CFMessagePort");
         return nil;
     }
+    
     SInt32 messageID = 0x420666; // Arbitrary
     CFDataRef messageData = (__bridge CFDataRef)[NSKeyedArchiver archivedDataWithRootObject:messageDict];;
     CFTimeInterval sendTimeout = 0.0;
@@ -48,7 +49,7 @@
     CFStringRef replyMode = NULL;
     CFDataRef returnData;
     if (replyExpected) {
-        recieveTimeout = 0.1; // 1.0;
+        recieveTimeout = 1.0;
         replyMode = kCFRunLoopDefaultMode;
     }
     SInt32 status = CFMessagePortSendRequest(remotePort, messageID, messageData, sendTimeout, recieveTimeout, replyMode, &returnData);
@@ -57,11 +58,11 @@
         NSLog(@"Non-zero CFMessagePortSendRequest status: %d", status);
     }
     
-    NSData *returnDataNS = nil;
-    if (replyExpected) {
-        returnDataNS = (__bridge NSData *)returnData;
+    NSObject *returnObject = nil;
+    if (replyExpected && status == 0) {
+        returnObject = [NSKeyedUnarchiver unarchiveObjectWithData:(__bridge NSData *)returnData];
     }
-    return returnDataNS;
+    return returnObject;
 }
 //
 //+ (CFDataRef _Nullable)sendMessage:(NSString *_Nonnull)message expectingReply:(BOOL)expectingReply {

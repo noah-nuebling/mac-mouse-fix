@@ -12,6 +12,8 @@
 #import "MessagePort_App.h"
 #import "Utility_App.h"
 #import "MFNotificationController.h"
+#import "SharedMessagePort.h"
+#import "CaptureNotifications.h"
 
 @interface AuthorizeAccessibilityView ()
 
@@ -149,7 +151,13 @@ AuthorizeAccessibilityView *_accViewController;
         [NSAnimationContext.currentContext setDuration:0.3];
         [NSAnimationContext.currentContext setCompletionHandler:^{
 //            NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Welcome to Mac Mouse Fix!"];
-//            [MFNotificationController attachNotificationWithMessage:message toWindow:AppDelegate.mainWindow];
+//            [MFNotificationController attachNotificationWithMessage:message toWindow:AppDelegate.mainWindow forDuration:-1];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.0), dispatch_get_main_queue(), ^{
+                // v This usually fails because the remote message port can't be created...
+                //      That doesn't seem to happen if we don't kill the helper when it has gained acc access, but that can leads to other problems. It used to work though??
+                NSSet *capturedButtons = (NSSet *)[SharedMessagePort sendMessage:@"getCapturedButtons" withPayload:nil expectingReply:YES];
+                [CaptureNotifications showButtonCaptureNotificationWithBeforeSet:NSSet.set afterSet:capturedButtons];
+            });
         }];
         baseView.animator.alphaValue = 1;
         baseView.hidden = NO;

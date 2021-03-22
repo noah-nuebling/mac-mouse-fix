@@ -79,6 +79,7 @@
         }
         // Close this app (Will be restarted immediately by launchd)
         [NSApp terminate:NULL];
+//        [self load]; // TESTING
     }
 }
 

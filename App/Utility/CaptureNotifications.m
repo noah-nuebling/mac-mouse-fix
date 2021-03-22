@@ -81,7 +81,8 @@ static NSString *buttonStringFromButtonArray(NSArray *buttonArray) {
     }
     
     if (newlyUncapturedButtons.count > 0 || newlyCapturedButtons.count > 0) {
-        NSString *notifString = [NSString stringWithFormat:@"%@%@Learn More.", capString, uncapString];
+        NSString *notifString = [NSString stringWithFormat:@"%@%@\nLearn More", capString, uncapString];
+//        NSString *notifString = [NSString stringWithFormat:@"%@%@", capString, uncapString];
         NSAttributedString *attrNotifString = [[NSAttributedString alloc] initWithString:notifString];
         attrNotifString = [attrNotifString attributedStringByAddingLinkWithURL:[NSURL URLWithString:@"https://placeholder.com/"] forSubstring:@"Learn More"];
         
