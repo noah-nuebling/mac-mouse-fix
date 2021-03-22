@@ -251,7 +251,7 @@ NSTimer *removeAccOverlayTimer;
     }
     
     // Invert checkbox
-    _invertScrollCheckBox.state = [scrollConfigFromFile[@"direction"] integerValue];
+    _invertScrollCheckBox.state = [scrollConfigFromFile[@"direction"] integerValue] == -1 ? 1 : 0;
     
     NSString *activeScrollSmoothnessConfiguration = @"Normal";
     
