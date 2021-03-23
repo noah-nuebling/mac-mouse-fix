@@ -199,8 +199,10 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY) {
             disableMouseTracking();
         } else if ([_drag.type isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
             if (_drag.addModePayload != nil) {
-                [SharedMessagePort sendMessage:@"addModeFeedback" withPayload:_drag.addModePayload expectingReply:NO];
-                disableMouseTracking();
+                if ([TransformationManager addModePayloadIsValid:_drag.addModePayload]) {
+                    [SharedMessagePort sendMessage:@"addModeFeedback" withPayload:_drag.addModePayload expectingReply:NO];
+                    disableMouseTracking();
+                }
             } else {
                 @throw [NSException exceptionWithName:@"InvalidAddModeFeedbackPayload" reason:@"_drag.addModePayload is nil. Something went wrong!" userInfo:nil]; // Throw exception to cause crash
             }
@@ -286,7 +288,9 @@ static void handleDeactivationWhileInUse() {
     } else if ([_drag.type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
         [Utility_Transformation postMouseButton:_drag.fakeDragButtonNumber down:NO];
     } else if ([_drag.type isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
-        [TransformationManager disableAddMode];
+        if ([TransformationManager addModePayloadIsValid:_drag.addModePayload]) { // If it's valid, then we sent the payload off to the MainApp
+            [TransformationManager disableAddMode]; // Why disable it here and not when sending the payload?
+        }
     }
 }
 

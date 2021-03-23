@@ -172,6 +172,18 @@ BOOL _addModeIsEnabled = NO;
     [TransformationManager disableAddMode];
 }
 
+/// Using this to prevent payloads containing a modified drag with a keyboard-modifier-only precondition, or an empty precondition from being sent to the main app
+/// Empty preconditions only happen when weird bugs occur so this is just an extra safety net for that
+/// Keyboard-modifier-only modified drags work in principle but they cause some smaller bugs and issues in the mainApp UI. We don't wan't to polish that up so we're just disabling the ability to add them.
++ (BOOL)addModePayloadIsValid:(NSDictionary *)payload {
+    if ([payload[kMFRemapsKeyTrigger] isEqual:kMFTriggerDrag]) {
+        NSArray *buttonPreconds = payload[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyButtons];
+        if (buttonPreconds == nil || buttonPreconds.count == 0) {
+            return NO;
+        }
+    }
+    return YES;
+}
 #pragma mark - Dummy Data
 
 + (NSDictionary *)testRemaps {
