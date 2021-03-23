@@ -2,7 +2,7 @@
 
 <!-- # Mac Mouse Fix -->
 
-__A simple way to make your mouse better.__
+__Mac Mouse Fix is a simple way to make your mouse better.__
 
 ### [Download](https://noah-nuebling.github.io/mac-mouse-fix-website) | [All releases](https://github.com/noah-nuebling/mac-mouse-fix/releases)
 
