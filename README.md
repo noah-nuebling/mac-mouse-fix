@@ -1,4 +1,4 @@
-![gh-header](https://user-images.githubusercontent.com/40808343/109487857-12d32a80-7a85-11eb-8a74-d1e161077b4b.png)
+![gh-header-v2](https://user-images.githubusercontent.com/40808343/112161606-9814af80-8beb-11eb-9d2e-3105b4486bab.png)
 
 <!-- # Mac Mouse Fix -->
 
