@@ -65,13 +65,7 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
         [AuthorizeAccessibilityView add];
         [(AppDelegate *)NSApp.delegate stopRemoveAccOverlayTimer]; // If App delegate is about to remove the acc overlay, stop that
     } else if ([message isEqualToString:@"addModeFeedback"]) {
-        if (AddWindowController.expectingAddModeFeedback) {
-            [AddWindowController handleReceivedAddModeFeedbackFromHelperWithPayload:(NSDictionary *)payload];
-        } else if (AppDelegate.remapTableController.expectingAddModeFeedback) {
-            [AppDelegate.remapTableController handleReceivedAddModeFeedbackFromHelperWithPayload:(NSDictionary *)payload];
-        } else {
-            @throw [NSException exceptionWithName:@"CannotDetermineAddModeFeedbackRequesterError" reason:@"" userInfo:nil];
-        }
+        [AddWindowController handleReceivedAddModeFeedbackFromHelperWithPayload:(NSDictionary *)payload];
     }
     
     NSData *response = NULL;

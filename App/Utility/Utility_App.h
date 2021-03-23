@@ -21,7 +21,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (BOOL)appIsInstalled:(NSString *)bundleID;
 + (NSImage *)tintedImage:(NSImage *)image withColor:(NSColor *)tint;
 + (CGFloat)actualTextViewWidth:(NSTextView *)textView;
-+ (void)attachAddModeTrackingAreaToView:(NSView *)view withOwner:(id)owner;
 @end
 
 NS_ASSUME_NONNULL_END

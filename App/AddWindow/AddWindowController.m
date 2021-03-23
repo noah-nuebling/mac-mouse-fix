@@ -31,12 +31,12 @@ static BOOL _pointerIsInsideAddField;
     _instance = [[AddWindowController alloc] initWithWindowNibName:@"AddWindow"];
     _pointerIsInsideAddField = NO;
 }
-
 - (void)windowDidLoad {
     [super windowDidLoad];
-    
     // Setup tracking area
-    [Utility_App attachAddModeTrackingAreaToView:self.window.contentView withOwner:self];
+    NSTrackingArea *addTrackingArea = [[NSTrackingArea alloc] initWithRect:self.addField.frame options:NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways | NSTrackingEnabledDuringMouseDrag owner:self userInfo:nil];
+    // (Well I can't use ad tracking cause I claim to be privacy focused on the website, but at least I can use add tracking! Hmu if you can think of a way to monetize that.)
+    [self.window.contentView addTrackingArea:addTrackingArea];
 }
 
 // UI callbacks
@@ -66,11 +66,6 @@ static BOOL _pointerIsInsideAddField;
 + (void)end {
     [AppDelegate.mainWindow endSheet:_instance.window];
 }
-
-+ (BOOL)expectingAddModeFeedback {
-    return [AppDelegate.mainWindow.attachedSheet isEqual: _instance.window];
-}
-
 + (void)handleReceivedAddModeFeedbackFromHelperWithPayload:(NSDictionary *)payload {
     // Tint plus icon to give visual feedback
     NSImageView *plusIconViewCopy;
@@ -97,7 +92,7 @@ static BOOL _pointerIsInsideAddField;
     [self end];
     // Send payload to RemapTableController
     //      The payload is an almost finished remapsTable (aka RemapTableController.dataModel) entry with the kMFRemapsKeyEffect key missing
-    [((RemapTableController *)AppDelegate.instance.remapsTable.delegate) handleHelperPayload:(NSDictionary *)payload addRows:YES];
+    [((RemapTableController *)AppDelegate.instance.remapsTable.delegate) addRowWithHelperPayload:(NSDictionary *)payload];
     // Reset plus image tint
     if (@available(macOS 10.14, *)) {
         plusIconViewCopy.alphaValue = 0.0;

@@ -81,10 +81,4 @@
 //    // Don't know how to make this work
 //}
 
-+ (void)attachAddModeTrackingAreaToView:(NSView *)view withOwner:(id)owner {
-    NSTrackingArea *addTrackingArea = [[NSTrackingArea alloc] initWithRect:view.frame options:NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways | NSTrackingEnabledDuringMouseDrag owner:owner userInfo:nil];
-    // (Well I can't use ad tracking cause I claim to be privacy focused on the website, but at least I can use add tracking! Hmu if you can think of a way to monetize that.)
-    [view addTrackingArea:addTrackingArea];
-}
-
 @end

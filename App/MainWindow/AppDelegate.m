@@ -21,7 +21,6 @@
 #import "HelperServices.h"
 #import "SharedUtility.h"
 #import "MFNotificationController.h"
-#import "RemapTableController.h"
 
 @interface AppDelegate ()
 
@@ -64,9 +63,6 @@
 }
 + (NSWindow *)mainWindow {
     return self.instance.window;
-}
-+ (RemapTableController *)remapTableController {
-    return (RemapTableController *)self.instance.remapsTable.delegate;
 }
 
 #pragma mark - Init and Lifecycle
