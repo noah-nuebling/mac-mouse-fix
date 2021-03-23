@@ -30,15 +30,21 @@
 @implementation RemapTableController
 @synthesize dataModel = _dataModel;
 
-// Setup the `tableView` property
+#pragma mark Get and set objects
+
 - (NSTableView *)tableView {
     return (NSTableView *)self.view;
 }
 - (void)setTableView:(NSTableView *)tableView {
     self.view = tableView;
 }
+- (NSScrollView *)scrollView {
+    NSClipView *clipView = (NSClipView *)self.tableView.superview;
+    NSScrollView *scrollView = (NSScrollView *)clipView.superview;
+    return scrollView;
+}
 
-// Methods
+#pragma mark Interact with config
 
 - (void)loadDataModelFromConfig {
     [ConfigFileInterface_App loadConfigFromFile]; // Not sure if necessary
@@ -49,16 +55,30 @@
     [ConfigFileInterface_App writeConfigToFileAndNotifyHelper];
 }
 
+- (IBAction)setConfigToUI:(id)sender {
+    // Set popupbutton content to datamodel
+    for (NSInteger row = 0; row < self.dataModel.count; row++) {
+        // Get effect dicts
+        NSTableCellView *cell = [self.tableView viewAtColumn:1 row:row makeIfNecessary:YES];
+        NSPopUpButton *pb = cell.subviews[0];
+        NSString *selectedTitle = pb.selectedItem.title;
+        // Get effects table for row of sender
+        NSArray *effectsTable = [self getEffectsTableForRemapsTableEntry:self.dataModel[row]];
+        NSDictionary *effectsTableEntryForSelected = [self getEntryFromEffectsTable:effectsTable withUIString:selectedTitle];
+        NSDictionary *effectDictForSelected = effectsTableEntryForSelected[@"dict"];
+        // Write effect dict to data model and then write datamodel to file
+        self.dataModel[row][kMFRemapsKeyEffect] = effectDictForSelected;
+    }
+    // Write datamodel to file
+    [self writeDataModelToConfig];
+}
+
+#pragma mark Lifecycle
+
 - (void)awakeFromNib {
     // Force Autohiding scrollers - to keep layout consistent (doesn't work)
     self.scrollView.autohidesScrollers = YES;
     self.scrollView.scrollerStyle = NSScrollerStyleOverlay;
-}
-
-- (NSScrollView *)scrollView {
-    NSClipView *clipView = (NSClipView *)self.tableView.superview;
-    NSScrollView *scrollView = (NSScrollView *)clipView.superview;
-    return scrollView;
 }
 
 - (void)viewDidLoad {
@@ -96,6 +116,8 @@
     [self.tableView reloadData];
 }
 
+#pragma mark - IBActions
+
 // IBActions
 - (IBAction)addRemoveControl:(id)sender {
     if ([sender selectedSegment] == 0) {
@@ -120,6 +142,9 @@
 - (void)addButtonAction {
     [AddWindowController begin];
 }
+
+#pragma mark Interface functions
+
 - (void)addRowWithHelperPayload:(NSDictionary *)payload {
     
     NSSet<NSNumber *> *capturedButtonsBefore = (NSSet *)[SharedMessagePort sendMessage:@"getCapturedButtons" withPayload:nil expectingReply:YES];
@@ -169,25 +194,7 @@
 
 }
 
-- (IBAction)setConfigToUI:(id)sender {
-    // Set popupbutton content to datamodel
-    for (NSInteger row = 0; row < self.dataModel.count; row++) {
-        // Get effect dicts
-        NSTableCellView *cell = [self.tableView viewAtColumn:1 row:row makeIfNecessary:YES];
-        NSPopUpButton *pb = cell.subviews[0];
-        NSString *selectedTitle = pb.selectedItem.title;
-        // Get effects table for row of sender
-        NSArray *effectsTable = [self getEffectsTableForRemapsTableEntry:self.dataModel[row]];
-        NSDictionary *effectsTableEntryForSelected = [self getEntryFromEffectsTable:effectsTable withUIString:selectedTitle];
-        NSDictionary *effectDictForSelected = effectsTableEntryForSelected[@"dict"];
-        // Write effect dict to data model and then write datamodel to file
-        self.dataModel[row][kMFRemapsKeyEffect] = effectDictForSelected;
-    }
-    // Write datamodel to file
-    [self writeDataModelToConfig];
-}
-
-#pragma mark - Generate Table content
+#pragma mark - Table content
 
 #pragma mark Define Effects Tables
 // ^ Effects tables are one-to-one mappings between UI stirngs and effect dicts. The effect dicts encode the exact effect in a way the helper can read
@@ -364,7 +371,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
     return effectsTable;
 }
 
-#pragma mark - Filling the tableView
+#pragma mark - Fill the tableView
 
 - (NSTableCellView *)getEffectCellWithRowDict:(NSDictionary *)rowDict {
     
@@ -585,7 +592,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
     return triggerCell;
 }
 
-#pragma mark - TableViewDataSource functions
+#pragma mark TableViewDataSource functions
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     // Get data for this row
@@ -647,7 +654,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
     }
 }
 
-# pragma mark - String generating helper functions
+# pragma mark - String generation helper functions
 
 static NSString *getButtonStringToolTip(int buttonNumber) {
     NSDictionary *buttonNumberToUIString = @{
