@@ -16,5 +16,6 @@
 @property (weak) IBOutlet NSTableView *remapsTable;
 + (AppDelegate *)instance;
 + (NSWindow *)mainWindow;
++ (void)handleHelperEnabledMessage;
 - (void)stopRemoveAccOverlayTimer;
 @end

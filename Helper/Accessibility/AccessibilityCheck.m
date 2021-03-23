@@ -52,6 +52,8 @@ NSTimer *_openMainAppTimer;
         [ModifiedDrag load_Manual];
         
         [ButtonInputReceiver load_Manual]; // TODO: Check if this is necessary. I think that not having this caused a crash when accessibility permissions were denied.
+        
+        [SharedMessagePort sendMessage:@"helperEnabled" withPayload:nil expectingReply:NO];
     }
 }
 + (Boolean)check {

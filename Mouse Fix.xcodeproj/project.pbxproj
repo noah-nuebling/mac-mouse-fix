@@ -514,7 +514,7 @@
 			path = Tests;
 			sourceTree = "<group>";
 		};
-		4FCA07D325F3125B00BFE209 /* MainWindow */ = {
+		4FCA07D325F3125B00BFE209 /* Main */ = {
 			isa = PBXGroup;
 			children = (
 				4FF665C525F2C92700689B77 /* AppDelegate.h */,
@@ -525,7 +525,7 @@
 				4F79C2E9260976950067B381 /* RemapTableTranslator.m */,
 				4FF665D925F2C92700689B77 /* MouseFix.xib */,
 			);
-			path = MainWindow;
+			path = Main;
 			sourceTree = "<group>";
 		};
 		4FCECD7721092354001F1078 = {
@@ -604,7 +604,7 @@
 		4FF665BE25F2C92700689B77 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				4FCA07D325F3125B00BFE209 /* MainWindow */,
+				4FCA07D325F3125B00BFE209 /* Main */,
 				4F46EAA625FB770D0003423A /* AddWindow */,
 				4F2A1FA726042ACB0067691A /* Notifications */,
 				4FF665DC25F2C92700689B77 /* Accessibility */,

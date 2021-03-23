@@ -42,7 +42,7 @@
 - (IBAction)enableCheckBox:(id)sender {
     BOOL checkboxState = [sender state];
     [HelperServices enableHelperAsUserAgent: checkboxState];
-    [self performSelector:@selector(disableUI:) withObject:[NSNumber numberWithBool:_enableMouseFixCheckBox.state] afterDelay:0.0];
+    [self performSelector:@selector(disableUI:) withObject:@(_enableMouseFixCheckBox.state) afterDelay:0.0];
     
 }
 - (IBAction)moreButton:(id)sender {
@@ -63,6 +63,13 @@
 }
 + (NSWindow *)mainWindow {
     return self.instance.window;
+}
++ (void)handleHelperEnabledMessage {
+    NSButton *checkBox = self.instance.enableMouseFixCheckBox;
+    if (checkBox.state == 0) {
+        checkBox.state = 1;
+        [self.instance disableUI:@(1)];
+    }
 }
 
 #pragma mark - Init and Lifecycle
@@ -141,11 +148,13 @@ NSTimer *removeAccOverlayTimer;
     [MoreSheet.instance end];
 }
 
--(BOOL) applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)app {
+- (BOOL) applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)app {
     return YES;
 }
 
 #pragma mark - UI Logic
+
+
 
 - (void)disableUI:(NSNumber *)enable {
     
@@ -168,6 +177,7 @@ NSTimer *removeAccOverlayTimer;
     _scrollStepSizeSlider.enabled = enable.boolValue;
 }
 
+/// TODO: Rename to loadUIFromConfigFile - this is confusing
 - (void)setUIToConfigFile {
     
     NSLog(@"Setting Enable Mac Mouse Fix checkbox to: %hhd", [HelperServices helperIsActive]);

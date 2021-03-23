@@ -66,6 +66,8 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
         [(AppDelegate *)NSApp.delegate stopRemoveAccOverlayTimer]; // If App delegate is about to remove the acc overlay, stop that
     } else if ([message isEqualToString:@"addModeFeedback"]) {
         [AddWindowController handleReceivedAddModeFeedbackFromHelperWithPayload:(NSDictionary *)payload];
+    } else if ([message isEqualToString:@"helperEnabled"]) {
+        [AppDelegate handleHelperEnabledMessage];
     }
     
     NSData *response = NULL;
