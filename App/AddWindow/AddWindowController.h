@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AddWindowController : NSWindowController <NSWindowDelegate>
 + (void)begin;
 + (void)end;
++ (BOOL)expectingAddModeFeedback;
 + (void)handleReceivedAddModeFeedbackFromHelperWithPayload:(NSDictionary *)payload;
 @end
 

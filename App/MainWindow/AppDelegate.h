@@ -16,5 +16,6 @@
 @property (weak) IBOutlet NSTableView *remapsTable;
 + (AppDelegate *)instance;
 + (NSWindow *)mainWindow;
++ (RemapTableController *)remapTableController;
 - (void)stopRemoveAccOverlayTimer;
 @end

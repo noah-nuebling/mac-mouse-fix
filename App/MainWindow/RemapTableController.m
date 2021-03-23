@@ -22,9 +22,14 @@
 #import "SharedMessagePort.h"
 #import "CaptureNotifications.h"
 #import "RemapTableTranslator.h"
+#import "AppDelegate.h"
+#import "MFSegmentedControl.h"
 
 @interface RemapTableController ()
+
 @property NSTableView *tableView;
+@property (weak) IBOutlet MFSegmentedControl *addRemoveControl;
+
 @end
 
 @implementation RemapTableController
@@ -120,6 +125,11 @@
     [self.tableView reloadData];
     
     [RemapTableTranslator initializeWithTableView:self.tableView];
+    
+    // Setup tracking area
+    [Utility_App attachAddModeTrackingAreaToView:self.tableView withOwner:self];
+    // ^ Commenting this out disables a feature where, when the user presses a button over the remaps table, a corresponding row is highlighted.
+    //      I don't like the feature. Also the first implementation is janky when inputing mod drags.
 }
 
 #pragma mark - IBActions
@@ -149,9 +159,33 @@
     [AddWindowController begin];
 }
 
+#pragma mark - AddMode tracking (should be renamed to "CaptureMode")
+
+- (void)mouseEntered:(NSEvent *)event {
+    [SharedMessagePort sendMessage:@"enableAddMode" withPayload:nil expectingReply:NO];
+}
+- (void)mouseExited:(NSEvent *)event {
+    [SharedMessagePort sendMessage:@"disableAddMode" withPayload:nil expectingReply:NO];
+}
+- (BOOL)expectingAddModeFeedback {
+    NSWindow *sheet = AppDelegate.mainWindow.attachedSheet;
+    return sheet == nil;
+}
+- (void)handleReceivedAddModeFeedbackFromHelperWithPayload:(NSDictionary *)payload {
+    [self handleHelperPayload:payload addRows:NO];
+    [SharedMessagePort sendMessage:@"enableAddMode" withPayload:nil expectingReply:NO];
+    // ^ Helper auto-disables AddMode after sending the payload
+}
+
+
 #pragma mark Interface functions
 
-- (void)addRowWithHelperPayload:(NSDictionary *)payload {
+/// If the row described by the payload already exists, highlight it.
+/// If the row doesn't exist
+///     if `addRows` == YES then add new row to the table
+///     if `addRows` == NO then highlight the plus button
+/// This methos is called by methods named `handleReceivedAddModeFeedbackFromHelperWithPayload:` from self and from AddWindowController
+- (void)handleHelperPayload:(NSDictionary *)payload addRows:(BOOL)addRows {
     
     NSSet<NSNumber *> *capturedButtonsBefore = (NSSet *)[SharedMessagePort sendMessage:@"getCapturedButtons" withPayload:nil expectingReply:YES];
     
@@ -165,29 +199,42 @@
     }];
     NSAssert(existingIndexes.count <= 1, @"Duplicate remap triggers found in table");
     NSIndexSet *toHighlightIndexSet;
+    
     if (existingIndexes.count == 0) {
-        // Fill out effect in payload with first effect from effects table (to make behaviour appropriate when user doesn't choose any effect)
-        //      We could also consider removing the tableEntry, if the user just dismisses the popup menu without choosing an effect, instead of this.
-        pl[kMFRemapsKeyEffect] = [RemapTableTranslator getEffectsTableForRemapsTableEntry:pl][0][@"dict"];
-        // Add new row to data model
-        self.dataModel = [self.dataModel arrayByAddingObject:pl];
-        // Sort data model
-        [self sortDataModel];
-        // Display new row with animation and highlight by selecting it
-        NSUInteger insertedIndex = [self.dataModel indexOfObject:pl];
-        toHighlightIndexSet = [NSIndexSet indexSetWithIndex:insertedIndex];
-        [self.tableView insertRowsAtIndexes:toHighlightIndexSet withAnimation:NSTableViewAnimationSlideDown];
-        // Set config to file (to make behaviour appropriate when user doesn't choose any effect)
-        [self setConfigToUI:nil];
+        if (addRows) {
+            // Fill out effect in payload with first effect from effects table (to make behaviour appropriate when user doesn't choose any effect)
+            //      We could also consider removing the tableEntry, if the user just dismisses the popup menu without choosing an effect, instead of this.
+            pl[kMFRemapsKeyEffect] = [RemapTableTranslator getEffectsTableForRemapsTableEntry:pl][0][@"dict"];
+            // Add new row to data model
+            self.dataModel = [self.dataModel arrayByAddingObject:pl];
+            // Sort data model
+            [self sortDataModel];
+            // Display new row with animation and highlight by selecting it
+            NSUInteger insertedIndex = [self.dataModel indexOfObject:pl];
+            toHighlightIndexSet = [NSIndexSet indexSetWithIndex:insertedIndex];
+            [self.tableView insertRowsAtIndexes:toHighlightIndexSet withAnimation:NSTableViewAnimationSlideDown];
+            // Set config to file (to make behaviour appropriate when user doesn't choose any effect)
+            [self setConfigToUI:nil];
+        }
     } else {
         toHighlightIndexSet = existingIndexes;
     }
-    [self.tableView selectRowIndexes:toHighlightIndexSet byExtendingSelection:NO];
-    [self.tableView scrollRowToVisible:toHighlightIndexSet.firstIndex];
-    // Open the NSMenu on the newly created row's popup button
-    NSInteger tableColumn = [self.tableView columnWithIdentifier:@"effect"];
-    NSPopUpButton *popUpButton = [self.tableView viewAtColumn:tableColumn row:toHighlightIndexSet.firstIndex makeIfNecessary:NO].subviews[0];
-    [popUpButton performSelector:@selector(performClick:) withObject:nil afterDelay:0.2];
+    
+    if (toHighlightIndexSet != nil) {
+        // Select row(s) corresponding to payload
+        [self.tableView selectRowIndexes:toHighlightIndexSet byExtendingSelection:NO];
+        [self.tableView scrollRowToVisible:toHighlightIndexSet.firstIndex];
+    } else if (addRows == NO && toHighlightIndexSet.count == 0) {
+        // Highlight '+' button
+        [self.addRemoveControl becomeFirstResponder];
+        [AppDelegate.mainWindow makeFirstResponder:self.addRemoveControl];
+    }
+    if (addRows) {
+        // Open the NSMenu on the selected rows popup button
+        NSInteger tableColumn = [self.tableView columnWithIdentifier:@"effect"];
+        NSPopUpButton *popUpButton = [self.tableView viewAtColumn:tableColumn row:toHighlightIndexSet.firstIndex makeIfNecessary:NO].subviews[0];
+        [popUpButton performSelector:@selector(performClick:) withObject:nil afterDelay:0.2];
+    }
     
     NSSet<NSNumber *> *capturedButtonsAfter = (NSSet *)[SharedMessagePort sendMessage:@"getCapturedButtons" withPayload:nil expectingReply:YES];
     [CaptureNotifications showButtonCaptureNotificationWithBeforeSet:capturedButtonsBefore afterSet:capturedButtonsAfter];
