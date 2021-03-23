@@ -11,4 +11,6 @@ __Features__
 * Smooth Scrolling algorithm that strikes a great balance between fluidity and control. Allows you to change mouse scrolling direction independently of trackpad scrolling direction.
 * 100% free, light on system resources, and fully open source. There is no status bar item. Mac Mouse Fix aims to be as clutter free as possible.
 
-Click [here](https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose) if you have feedback or need help with anything.
+
+
+If you have feedback or need help with anything click [here](https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose).
