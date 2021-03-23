@@ -12,8 +12,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RemapTableController :  NSViewController <NSTableViewDataSource, NSTableViewDelegate>
+@interface RemapTableController :  NSViewController <NSTableViewDelegate>
 - (void)addRowWithHelperPayload:(NSDictionary *)payload;
+@property NSArray *dataModel;
+//      ^ Is actually an NSMutableArray I think. Take care not to accidentally corrupt this!
+//      ^ Exposing this so RemapTableDataSource can use it. Might not be the cleanest solution.
 @end
 
 NS_ASSUME_NONNULL_END

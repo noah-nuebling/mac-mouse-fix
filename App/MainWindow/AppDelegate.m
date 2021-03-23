@@ -28,7 +28,6 @@
 
 @property (weak) IBOutlet NSButton *enableMouseFixCheckBox;
 
-
 @property (weak) IBOutlet NSButton *scrollEnableCheckBox;
 
 @property (weak) IBOutlet NSSlider *scrollStepSizeSlider;
