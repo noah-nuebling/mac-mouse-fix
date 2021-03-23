@@ -2,9 +2,9 @@
 
 <!-- # Mac Mouse Fix -->
 
-### [Download](https://noah-nuebling.github.io/mac-mouse-fix-website) | [All releases](https://github.com/noah-nuebling/mac-mouse-fix/releases)
-
 Mac Mouse Fix is a simple way to make your mouse better.
+
+### [Download](https://noah-nuebling.github.io/mac-mouse-fix-website) | [All releases](https://github.com/noah-nuebling/mac-mouse-fix/releases)
 
 __Features__
 * Switch between Spaces, activate Mission Control, trigger Quick Look, or use the side buttons to navigate through pages in your browser. All of that and more. Right from your mouse.
