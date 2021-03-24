@@ -74,7 +74,8 @@
 #if DEBUG
     NSLog(@"NSAttributedString height for width: %f - layoutManager: %f, boundingRect: %f", width, result1, result2);
 #endif
-    return ceil(result1);
+    return ceil(result2);
+    // ^ Using `result1` has multiline NSTextFields clipping their last line. `result2` seems to work perfectly.
 }
 
 - (CGFloat)width {
