@@ -109,7 +109,7 @@ static struct ModifiedDragState _drag;
     if ([type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
         fakeDragButtonNumber = ((NSNumber *)dict[kMFModifiedDragDictKeyFakeDragVariantButtonNumber]).intValue;
     }
-    // Prepare payload to send to mainApp during addMode. See TransformationManager -> AddMode for context
+    // Prepare payload to send to mainApp during AddMode. See TransformationManager -> AddMode for context
     NSMutableDictionary *payload = nil;
     if ([type isEqualToString:kMFModifiedDragTypeAddModeFeedback]){
         payload = dict.mutableCopy;
@@ -247,10 +247,11 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
         });
     } else if ([_drag.type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
         CGPoint location;
-        if (event)
+        if (event) {
             location = CGEventGetLocation(event); // I feel using `event` passed in from eventTap here makes things slighly more responsive that using `CGEventCreate(NULL)`
-        else
+        } else {
             location = CGEventGetLocation(CGEventCreate(NULL));
+        }
         CGMouseButton button = [SharedUtility CGMouseButtonFromMFMouseButtonNumber:_drag.fakeDragButtonNumber];
         CGEventRef draggedEvent = CGEventCreateMouseEvent(NULL, kCGEventOtherMouseDragged, location, button);
         CGEventPost(kCGSessionEventTap, draggedEvent);
