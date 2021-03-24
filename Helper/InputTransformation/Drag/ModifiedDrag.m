@@ -159,7 +159,7 @@ static CGEventRef __nullable mouseMovedOrDraggedCallback(CGEventTapProxy proxy, 
     } else if (st == kMFModifiedInputActivationStateInitialized) {
         handleMouseInputWhileInitialized(deltaX, deltaY);
     } else if (st == kMFModifiedInputActivationStateInUse) {
-        handleMouseInputWhileInUse(deltaX, deltaY);
+        handleMouseInputWhileInUse(deltaX, deltaY, event);
     }
 }
 static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY) {
@@ -197,7 +197,7 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY) {
             _drag.phase = kIOHIDEventPhaseBegan;
         } else if ([_drag.type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
             [Utility_Transformation postMouseButton:_drag.fakeDragButtonNumber down:YES];
-            disableMouseTracking();
+//            disableMouseTracking();
         } else if ([_drag.type isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
             if (_drag.addModePayload != nil) {
                 if ([TransformationManager addModePayloadIsValid:_drag.addModePayload]) {
@@ -210,7 +210,7 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY) {
         }
     }
 }
-void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY) {
+void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event) {
     
     double twoFingerScale;
     double threeFingerScaleH;
@@ -247,11 +247,11 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY) {
         });
     } else if ([_drag.type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
 //        if ([TransformationManager addModePayloadIsValid:_drag.addModePayload]) {
-//            NSLog(@"POSTING FAKE MOUSE DRAGGED EVENT");
-//            CGPoint location = CGEventGetLocation(event); // I feel using `event` passed in from eventTap here makes things slighly more responsive that using `CGEventCreate(NULL)` //
-//            CGMouseButton button = [SharedUtility CGMouseButtonFromMFMouseButtonNumber:_drag.fakeDragButtonNumber];
-//            CGEventRef draggedEvent = CGEventCreateMouseEvent(NULL, kCGEventOtherMouseDragged, location, button);
-//            CGEventPost(kCGSessionEventTap, draggedEvent);
+            NSLog(@"POSTING FAKE MOUSE DRAGGED EVENT");
+            CGPoint location = CGEventGetLocation(event); // I feel using `event` passed in from eventTap here makes things slighly more responsive that using `CGEventCreate(NULL)`
+            CGMouseButton button = [SharedUtility CGMouseButtonFromMFMouseButtonNumber:_drag.fakeDragButtonNumber];
+            CGEventRef draggedEvent = CGEventCreateMouseEvent(NULL, kCGEventOtherMouseDragged, location, button);
+            CGEventPost(kCGSessionEventTap, draggedEvent);
 //        }
     }
     _drag.phase = kIOHIDEventPhaseChanged;
