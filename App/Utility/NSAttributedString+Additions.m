@@ -17,11 +17,48 @@
     NSMutableAttributedString *str = self.mutableCopy;
     
      NSRange foundRange = [str.mutableString rangeOfString:substring];
-     if (foundRange.location != NSNotFound) {
-         NSAttributedString *linkString = [NSAttributedString hyperlinkFromString:substring withURL:linkURL];
-         [str replaceCharactersInRange:foundRange withAttributedString:linkString];
-     }
+     NSAttributedString *linkString = [NSAttributedString hyperlinkFromString:substring withURL:linkURL];
+     [str replaceCharactersInRange:foundRange withAttributedString:linkString];
+    
      return str;
+}
+
+- (NSAttributedString *)attributedStringByAddingSymbolicFontTraits:(NSFontDescriptorSymbolicTraits)traits forSubstring:(NSString *)subStr {
+    NSDictionary *originalAttributes = [self attributesAtIndex:0 effectiveRange:nil];
+    NSFont *originalFont = originalAttributes[NSFontAttributeName];
+    if (originalFont == nil) {
+        originalFont = [NSFont systemFontOfSize:NSFont.systemFontSize];
+    }
+    NSFontDescriptor *newFontDescriptor = [originalFont.fontDescriptor fontDescriptorWithSymbolicTraits:traits];
+    NSFont *newFont = [NSFont fontWithDescriptor:newFontDescriptor size:originalFont.pointSize];
+    
+    NSRange subStrRange = [self.string rangeOfString:subStr];
+    
+    NSMutableAttributedString *ret = [[NSMutableAttributedString alloc] initWithAttributedString:self];
+    [ret addAttribute:NSFontAttributeName value:newFont range:subStrRange];
+    
+    return ret;
+}
+
+- (NSAttributedString *)attributedStringByAddingBoldForSubstring:(NSString *)subStr {
+  
+    NSFontDescriptorSymbolicTraits traits = NSFontDescriptorTraitBold;
+    
+    return [self attributedStringByAddingSymbolicFontTraits:traits forSubstring:subStr];
+    
+//    NSFont *boldFont = [NSFont boldSystemFontOfSize:NSFont.systemFontSize];
+//    NSRange subStrRange = [self.string rangeOfString:subStr];
+//
+//    NSMutableAttributedString *ret = [[NSMutableAttributedString alloc] initWithAttributedString:self];
+//    [ret addAttribute:NSFontAttributeName value:boldFont range:subStrRange];
+//    return ret;
+}
+
+- (NSAttributedString *)attributedStringByAddingItalicForSubstring:(NSString *)subStr {
+    
+    NSFontDescriptorSymbolicTraits traits = NSFontDescriptorTraitItalic;
+    
+    return [self attributedStringByAddingSymbolicFontTraits:traits forSubstring:subStr];
 }
 
 +(id)hyperlinkFromString:(NSString *)inString withURL:(NSURL *)aURL {

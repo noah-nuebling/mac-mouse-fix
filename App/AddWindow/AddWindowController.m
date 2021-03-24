@@ -137,13 +137,14 @@ static BOOL _pointerIsInsideAddField;
 
 - (void)mouseUp:(NSEvent *)event {
     if (!_pointerIsInsideAddField) return;
-    NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Mac Mouse Fix can't assign functions to the Primary Mouse Button. \nPlease try another Button."];
-//    message = [message attributedStringByAddingLinkWithURL:[NSURL URLWithString:@"https://google.com"] forSubstring:@"Primary Mouse"];
+    NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Primary Mouse Button can't be assigned functions by Mac Mouse Fix. \nPlease try another Button."];
+//    message = [message attributedStringByAddingBoldForSubstring:@"Primary Mouse Button"];
     [MFNotificationController attachNotificationWithMessage:message toWindow:_instance.window forDuration:-1];
 }
 - (void)rightMouseUp:(NSEvent *)event {
     if (!_pointerIsInsideAddField) return;
-    NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Mac Mouse Fix can't assign functions to the Secondary Mouse Button. \nPlease try another Button."];
+    NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Secondary Mouse Button can't be assigned functions by Mac Mouse Fix. \nPlease try another Button."];
+//    message = [message attributedStringByAddingBoldForSubstring:@"Secondary Mouse Button"];
     [MFNotificationController attachNotificationWithMessage:message toWindow:_instance.window forDuration:-1];
 }
 

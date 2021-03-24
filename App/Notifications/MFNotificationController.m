@@ -91,8 +91,9 @@ double _animationDuration = 0.4;
     // Set message text and text attributes to label
     NSMutableAttributedString *m = message.mutableCopy;
     [m addAttributes:_labelAttributesFromIB range:NSMakeRange(0, m.length)];
-    // ^ Attributes of m which are also defined in _labelAttributesFromIB will be overriden by this.
-    //      E.g. boldness I think. This is not ideal but works for now.
+    [message enumerateAttributesInRange:NSMakeRange(0, m.length) options:0 usingBlock:^(NSDictionary<NSAttributedStringKey,id> * _Nonnull attrs, NSRange range, BOOL * _Nonnull stop) {
+        [m addAttributes:attrs range:range];
+    }];
     [_instance.label.textStorage setAttributedString:m];
 
     // Set notification frame

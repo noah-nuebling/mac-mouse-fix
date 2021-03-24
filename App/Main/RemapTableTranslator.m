@@ -278,8 +278,8 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
     };
     
     // Get trigger string from data
-    NSMutableAttributedString *tr;
-    NSMutableAttributedString *trTool;
+    NSAttributedString *tr;
+    NSAttributedString *trTool;
     id triggerGeneric = rowDict[kMFRemapsKeyTrigger];
     
     if ([triggerGeneric isKindOfClass:NSDictionary.class]) { // Trigger is button input
@@ -327,8 +327,10 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
         NSString *trToolRaw = [NSString stringWithFormat:@"%@%@%@", levelStr, durationStr, buttonStrTool];
         
         // Turn into attributedString and highlight button substrings
-        tr = [self addBoldForSubstring:buttonStr inString:trRaw];
-        trTool = [self addBoldForSubstring:buttonStrTool inString:trToolRaw];
+        tr = [[NSAttributedString alloc] initWithString:trRaw];
+        trTool = [[NSAttributedString alloc] initWithString:trToolRaw];
+//        tr = [tr attributedStringByAddingBoldForSubstring:buttonStr];
+//        trTool = [trTool attributedStringByAddingBoldForSubstring:buttonStrTool];
         
     } else if ([triggerGeneric isKindOfClass:NSString.class]) { // Trigger is drag or scroll
         // We need part of the modification precondition to form the main trigger string here.
@@ -382,8 +384,10 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
         NSString *trToolRaw = [NSString stringWithFormat:@"%@%@%@%@%@", levelStr, clickStr, keyboardModStrTool, triggerStr, buttonStrTool];
         
         // Turn into attributedString and highlight button substrings
-        tr = [self addBoldForSubstring:buttonStr inString:trRaw];
-        trTool = [self addBoldForSubstring:buttonStrTool inString:trToolRaw];
+        tr = [[NSAttributedString alloc] initWithString:trRaw];
+        trTool = [[NSAttributedString alloc] initWithString:trToolRaw];
+//        tr = [tr attributedStringByAddingBoldForSubstring:buttonStr];
+//        trTool = [trTool attributedStringByAddingBoldForSubstring:buttonStrTool];
         
     } else {
         NSLog(@"Trigger value: %@, class: %@", triggerGeneric, [triggerGeneric class]);
@@ -483,14 +487,6 @@ static NSString *getKeyboardModifierStringToolTip(NSNumber *flags) {
     }
     
     return kb;
-}
-+ (NSMutableAttributedString *)addBoldForSubstring:(NSString *)subStr inString:(NSString *)baseStr {
-    
-    NSMutableAttributedString *ret = [[NSMutableAttributedString alloc] initWithString:baseStr];
-    NSFont *boldFont = [NSFont boldSystemFontOfSize:NSFont.systemFontSize];
-    NSRange subStrRange = [baseStr rangeOfString:subStr];
-//    [ret addAttribute:NSFontAttributeName value:boldFont range:subStrRange]; // Commenting this out means the function doesn't do anything
-    return ret;
 }
 
 @end
