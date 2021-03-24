@@ -117,7 +117,7 @@
                                                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                                                 <prototypeCellViews>
                                                                     <tableCellView identifier="effectCell" id="5PH-4e-aAm">
-                                                                        <rect key="frame" x="353.5" y="0.0" width="223" height="39"/>
+                                                                        <rect key="frame" x="354" y="0.0" width="223" height="39"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
                                                                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7A6-Ou-8wk">
@@ -181,89 +181,71 @@
                                             </connections>
                                         </segmentedControl>
                                         <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uS5-6r-XRu" userLabel="ScrollGroup">
-                                            <rect key="frame" x="32" y="17" width="554" height="82"/>
+                                            <rect key="frame" x="0.0" y="17" width="586" height="82"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
-                                                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O3G-yl-07J" userLabel="Speed">
-                                                    <rect key="frame" x="195" y="0.0" width="163" height="82"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                                    <subviews>
-                                                        <slider toolTip="How fast you'll scroll" verticalHuggingPriority="750" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mXj-a7-rFw">
-                                                            <rect key="frame" x="15" y="27" width="127" height="24"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                                            <sliderCell key="cell" state="on" alignment="left" identifier="scrollSpeedSlider" maxValue="1" doubleValue="0.33333333333333331" tickMarkPosition="below" numberOfTickMarks="7" allowsTickMarkValuesOnly="YES" sliderType="linear" id="0NZ-eS-HsP"/>
-                                                            <connections>
-                                                                <action selector="UIChanged:" target="NxE-tZ-vxj" id="eF8-Sp-kdg"/>
-                                                            </connections>
-                                                        </slider>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C2V-av-8kq">
-                                                            <rect key="frame" x="31" y="57" width="101" height="17"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Scrolling speed" id="9F6-l7-3Jh">
-                                                                <font key="font" metaFont="system"/>
-                                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            </textFieldCell>
-                                                        </textField>
-                                                        <textField toolTip="Scroll more pixels per mouse wheel tick." horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V4c-hh-3HL">
-                                                            <rect key="frame" x="131" y="11" width="27" height="14"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Fast" id="xi0-4q-Wib">
-                                                                <font key="font" metaFont="message" size="11"/>
-                                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            </textFieldCell>
-                                                        </textField>
-                                                        <textField toolTip="Scroll fewer pixels per mouse wheel tick." horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dzx-1i-bZ6">
-                                                            <rect key="frame" x="5" y="11" width="29" height="14"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Slow" id="GKV-Mh-wiX">
-                                                                <font key="font" metaFont="message" size="11"/>
-                                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            </textFieldCell>
-                                                        </textField>
-                                                    </subviews>
-                                                </customView>
-                                                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jpE-bh-qxK" userLabel="Smooth">
-                                                    <rect key="frame" x="0.0" y="0.0" width="157" height="82"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                                    <subviews>
-                                                        <button identifier="scrollCheckBox" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9lG-eT-nD4">
-                                                            <rect key="frame" x="13" y="32" width="127" height="18"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                                            <string key="toolTip">Make scrolling animate smoothly
+                                                <slider toolTip="How fast you'll scroll" verticalHuggingPriority="750" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mXj-a7-rFw">
+                                                    <rect key="frame" x="230" y="27" width="127" height="24"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                    <sliderCell key="cell" alignment="left" identifier="scrollSpeedSlider" maxValue="1" doubleValue="0.16666666666666666" tickMarkPosition="below" numberOfTickMarks="7" allowsTickMarkValuesOnly="YES" sliderType="linear" id="0NZ-eS-HsP"/>
+                                                    <connections>
+                                                        <action selector="UIChanged:" target="NxE-tZ-vxj" id="eF8-Sp-kdg"/>
+                                                    </connections>
+                                                </slider>
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C2V-av-8kq">
+                                                    <rect key="frame" x="242" y="58" width="102" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Scroll speed" id="9F6-l7-3Jh">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <textField toolTip="Scroll more pixels per mouse wheel tick." horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V4c-hh-3HL">
+                                                    <rect key="frame" x="332" y="11" width="26" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Fast" id="xi0-4q-Wib">
+                                                        <font key="font" metaFont="message" size="11"/>
+                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <textField toolTip="Scroll fewer pixels per mouse wheel tick." horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dzx-1i-bZ6">
+                                                    <rect key="frame" x="231" y="11" width="29" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Slow" id="GKV-Mh-wiX">
+                                                        <font key="font" metaFont="message" size="11"/>
+                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <button identifier="scrollCheckBox" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9lG-eT-nD4">
+                                                    <rect key="frame" x="42" y="32" width="127" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                    <string key="toolTip">Make scrolling animate smoothly
 
-Awesome tricks: 
+Tips: 
 - Hold Shift (⇧) to scroll horizontally
 - Hold Command (⌘) and scroll to zoom in or out</string>
-                                                            <buttonCell key="cell" type="check" title="Smooth scrolling" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="aqu-LA-LU4">
-                                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                                <font key="font" metaFont="system"/>
-                                                            </buttonCell>
-                                                            <connections>
-                                                                <action selector="scrollEnableCheckBox:" target="NxE-tZ-vxj" id="N9U-sm-jIx"/>
-                                                            </connections>
-                                                        </button>
-                                                    </subviews>
-                                                </customView>
-                                                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ETw-LV-YpO" userLabel="Invert">
-                                                    <rect key="frame" x="398" y="0.0" width="156" height="82"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                                    <subviews>
-                                                        <button identifier="invertScroll" toolTip="Reverse mouse scrolling direction" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ip8-aI-or8">
-                                                            <rect key="frame" x="20" y="32" width="118" height="18"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                                            <buttonCell key="cell" type="check" title="Invert direction" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="uNi-ZH-WXu">
-                                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                                <font key="font" metaFont="system"/>
-                                                            </buttonCell>
-                                                            <connections>
-                                                                <action selector="UIChanged:" target="NxE-tZ-vxj" id="VLp-eK-KMU"/>
-                                                            </connections>
-                                                        </button>
-                                                    </subviews>
-                                                </customView>
+                                                    <buttonCell key="cell" type="check" title="Smooth scrolling" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="aqu-LA-LU4">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="scrollEnableCheckBox:" target="NxE-tZ-vxj" id="N9U-sm-jIx"/>
+                                                    </connections>
+                                                </button>
+                                                <button identifier="invertScroll" toolTip="Reverse mouse scroll direction while leaving trackpad scroll direction unchanged." verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ip8-aI-or8">
+                                                    <rect key="frame" x="402" y="32" width="154" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                    <buttonCell key="cell" type="check" title="Invert scroll direction" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="uNi-ZH-WXu">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="UIChanged:" target="NxE-tZ-vxj" id="VLp-eK-KMU"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                         </customView>
                                     </subviews>
