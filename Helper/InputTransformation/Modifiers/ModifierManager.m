@@ -78,16 +78,37 @@ static void toggleModifierEventTapBasedOnRemaps(NSDictionary *remaps) {
     CGEventTapEnable(_keyboardModifierEventTap, false);
 }
 
+/// Helper function for `handleKeyboardModifiersHaveChanged()`.
+/// If several mice are attached, they can have different modifier states (if different buttons are pressed on each device)
+/// This function figures out, which mouse's' activeModifiers we want to send to `reactToModiferChange()`, when the kb mods change.
+/// It's a heuristic which just returns the first device (and its active modifiers) it finds, which has any buttons pressed (or equivalently, which has a non-nil button component in its modification precondition). Or it returns the last devices precond, if none of them have a button pressed.
+/// This is what this heuristic does in the three different possible scenarios:
+///     - 1. No device has any pressed buttons -> Returns activeModifiers of last device it finds. This works well, because in this case, all devices' activeModifiers are the same and it doesn't matter which one it returns.
+///     - 2.  Only one device has pressed buttons -> It will return that device and its activeModifers. This makes sense because if a device has pressed buttons, that's almost certainly the device which the user is currently using.
+///     - 3. Several devices have pressed buttons -> In this case it will return an arbitrary device and its activeModifiers. This is not ideal, but this scenario is extremely unlikely so it's fine.
+void getActiveModifiersForDeviceWithPressedButtons(CGEventRef event, NSDictionary **activeModifiers, MFDevice **device) {
+    NSArray *devices = DeviceManager.attachedDevices;
+    for (int i = 0; i < devices.count; i++) {
+        BOOL isLast = devices.count-1 == i;
+        MFDevice *thisDevice = devices[i];
+        NSDictionary *activeModifiersForThisDevice = [ModifierManager getActiveModifiersForDevice:thisDevice.uniqueID filterButton:nil event:event];
+        if (activeModifiersForThisDevice[kMFModificationPreconditionKeyButtons] != nil || isLast) {
+            *activeModifiers = activeModifiersForThisDevice;
+            *device = thisDevice;
+            return;
+        }
+    }
+    assert(false);
+}
 CGEventRef _Nullable handleKeyboardModifiersHaveChanged(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
 //    CGEventTapPostEvent(proxy, event); // Why were we doing that? (Maybe it made sense when the eventTap was not listenOnly?)
     
-    NSArray<MFDevice *> *devs = DeviceManager.attachedDevices;
-    for (MFDevice *dev in devs) {
-        NSDictionary *activeModifiers = [ModifierManager getActiveModifiersForDevice:dev.uniqueID filterButton:nil event:event];
-        // ^ Need to pass in event here as source for keyboard modifers, otherwise the returned kb-modifiers won't be up-to-date.
-        reactToModifierChange(activeModifiers, dev);
-    }
+    NSDictionary *activeModifiers;
+    MFDevice *device;
+    getActiveModifiersForDeviceWithPressedButtons(event, &activeModifiers, &device);
+    // ^ Need to pass in event here as source for keyboard modifers, otherwise the returned kb-modifiers won't be up-to-date.
+    reactToModifierChange(activeModifiers, device);
     
     return nil; // This is a passive listener, so it doesn't matter what we return
 }
@@ -208,6 +229,7 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, MFDevi
     
     return outDict;
 }
+
 + (NSUInteger) getActiveKeyboardModifiersWithEvent:(CGEventRef _Nullable) event {
     
     if (event == nil) {

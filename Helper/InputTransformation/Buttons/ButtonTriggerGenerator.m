@@ -306,14 +306,16 @@ static void neuterAllButtonsOnDeviceExcept(NSNumber *devID, NSNumber *exceptedBt
 + (NSArray *)getActiveButtonModifiersForDevice:(NSNumber *)devID {
     // NSUInteger pressedButtons = NSEvent.pressedMouseButtons; // This only updates after we use it here, which led to problems, so were keeping track of mouse down state ourselves with `bs.isPressed`
     
-    // Get state and order by press time
+    NSMutableArray *outArray = [NSMutableArray array];
+    
     NSDictionary *devState = _state[devID];
+    if (devState == nil) return outArray; // Not sure if necessary
+    // Get state and order by press time
     NSArray *buttonsOrderedByPressTime = [devState keysSortedByValueUsingComparator:^NSComparisonResult(ButtonState *_Nonnull bs1, ButtonState *_Nonnull bs2) {
         return [@(bs1.pressedAtTimeStamp) compare:@(bs2.pressedAtTimeStamp)];
     }];
     
     // Fill out array
-    NSMutableArray *outArray = [NSMutableArray array];
     for (NSNumber *buttonNumber in buttonsOrderedByPressTime) {
         ButtonState *bs = devState[buttonNumber];
         BOOL isActive = bs.isPressed && (bs.clickLevel != 0);
