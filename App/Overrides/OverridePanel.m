@@ -104,10 +104,13 @@ NSDictionary *_columnIdentifierToKeyPath;
     [Utility_App centerWindow:self.window atPoint:ctr];
 }
 - (void)windowDidLoad {
+    
+    // v This solution caused other weird issues. When changing system appearance and then restarting the app, the first column sometimes became incredibly wide.
+    //     We fixed the issue by setting the tableView 'Style' to 'Full Width' in IB
     // Resize first column so table columns take up full space of table view
     // We set the size properly in IB, but when the first column had its `Resizing` property set to `Autoresizes with Table` (which we want it to do) then it would always end up a little smaller than the table for some reason
-    NSTableColumn *col = _tableView.tableColumns[0];
-    [col setWidth:col.maxWidth];
+//    NSTableColumn *col = _tableView.tableColumns[0];
+//    [col setWidth:col.maxWidth];
 }
 
 - (void)setConfigFileToUI {
