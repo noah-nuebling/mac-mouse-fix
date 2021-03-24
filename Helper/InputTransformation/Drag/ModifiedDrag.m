@@ -141,11 +141,12 @@ static struct ModifiedDragState _drag;
 static CGEventRef __nullable mouseMovedOrDraggedCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef  event, void * __nullable userInfo) {
     int64_t dx = CGEventGetIntegerValueField(event, kCGMouseEventDeltaX);
     int64_t dy = CGEventGetIntegerValueField(event, kCGMouseEventDeltaY);
-    [ModifiedDrag handleMouseInputWithDeltaX:dx deltaY:dy];
-    return event;
+    [ModifiedDrag handleMouseInputWithDeltaX:dx deltaY:dy event:event];
+    
+    return event; // Sending event or NULL here doesn't seem to make a difference. If you alter the event and send that it does have an effect though
 }
 
-+ (void)handleMouseInputWithDeltaX:(int64_t)deltaX deltaY:(int64_t)deltaY {
++ (void)handleMouseInputWithDeltaX:(int64_t)deltaX deltaY:(int64_t)deltaY event:(CGEventRef)event {
     
     MFModifiedInputActivationState st = _drag.activationState;
     
@@ -201,7 +202,7 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY) {
             if (_drag.addModePayload != nil) {
                 if ([TransformationManager addModePayloadIsValid:_drag.addModePayload]) {
                     [SharedMessagePort sendMessage:@"addModeFeedback" withPayload:_drag.addModePayload expectingReply:NO];
-                    disableMouseTracking();
+                    disableMouseTracking(); // Not sure if should be here
                 }
             } else {
                 @throw [NSException exceptionWithName:@"InvalidAddModeFeedbackPayload" reason:@"_drag.addModePayload is nil. Something went wrong!" userInfo:nil]; // Throw exception to cause crash
@@ -209,7 +210,7 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY) {
         }
     }
 }
-static void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY) {
+void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY) {
     
     double twoFingerScale;
     double threeFingerScaleH;
@@ -239,13 +240,19 @@ static void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY) {
             double delta = deltaY * threeFingerScaleV;
             [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeVertical phase:_drag.phase];
         }
-        _drag.phase = kIOHIDEventPhaseChanged;
+//        _drag.phase = kIOHIDEventPhaseChanged;
     } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.0 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
             [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaX*twoFingerScale deltaY:deltaY*twoFingerScale phase:_drag.phase isGestureDelta:!inputIsPointerMovement];
         });
     } else if ([_drag.type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
-        // Should probably send mousemoved events.
+//        if ([TransformationManager addModePayloadIsValid:_drag.addModePayload]) {
+//            NSLog(@"POSTING FAKE MOUSE DRAGGED EVENT");
+//            CGPoint location = CGEventGetLocation(event); // I feel using `event` passed in from eventTap here makes things slighly more responsive that using `CGEventCreate(NULL)` //
+//            CGMouseButton button = [SharedUtility CGMouseButtonFromMFMouseButtonNumber:_drag.fakeDragButtonNumber];
+//            CGEventRef draggedEvent = CGEventCreateMouseEvent(NULL, kCGEventOtherMouseDragged, location, button);
+//            CGEventPost(kCGSessionEventTap, draggedEvent);
+//        }
     }
     _drag.phase = kIOHIDEventPhaseChanged;
 }
