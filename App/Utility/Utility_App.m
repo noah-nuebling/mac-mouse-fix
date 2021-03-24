@@ -9,6 +9,7 @@
 
 #import "Utility_App.h"
 #import <AppKit/AppKit.h>
+#import "NSArray+Additions.h"
 
 @implementation Utility_App
 
@@ -22,6 +23,16 @@
     }
     return subviews;
 }
++ (NSArray<NSView *> *)subviewsRecursiveForView:(NSView *)view {
+    
+    NSArray<NSView *> *subviews = view.subviews;
+    NSArray<NSArray<NSView *> *> *recursiveSubviews = [subviews map:^id _Nonnull(NSView *mappedView) {
+        return [self subviewsRecursiveForView:mappedView];
+    }];
+    NSArray<NSView *> *recursiveSubviewsFlat = [recursiveSubviews flattenedArray];
+    return [view.subviews arrayByAddingObjectsFromArray:recursiveSubviewsFlat];
+}
+
 + (void)centerWindow:(NSWindow *)win atPoint:(NSPoint)pt {
     
     NSRect frm = win.frame;

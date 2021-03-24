@@ -39,6 +39,7 @@
     }];
     return obj;
 }
+/// Noah: I might be misunderstanding but this doesn't seem to work
 - (NSArray *)flatMap:(id (^)(id obj))block {
     NSMutableArray *mutableArray = [NSMutableArray new];
     [self enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -52,6 +53,18 @@
     }];
     return [mutableArray copy];
 }
+
+- (NSArray *)flattenedArray {
+    if (self.count > 0 && ![self.firstObject isKindOfClass:NSArray.class]) {
+        @throw [NSException exceptionWithName:@"ArrayDoesntConsistOfArraysException" reason:nil userInfo:nil];
+    }
+    NSMutableArray *flatArray = [NSMutableArray new];
+    for (NSArray *sub in self) {
+        [flatArray addObjectsFromArray:sub];
+    }
+    return flatArray.copy;
+}
+
 // Mutable deep copy
 // Src: https://github.com/alfonsotesauro/NSDictionary-and-NSArray-Deep-mutable-copy/
 + (NSMutableArray *)doDeepMutateArray:(NSArray *)array {
