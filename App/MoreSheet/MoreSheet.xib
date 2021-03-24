@@ -22,7 +22,7 @@
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="90" y="125" width="576" height="184"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1025"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="875"/>
             <view key="contentView" wantsLayer="YES" id="IZI-tD-pBD">
                 <rect key="frame" x="0.0" y="0.0" width="576" height="184"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -44,7 +44,7 @@
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="PayPal" id="l8T-uX-6sc"/>
                     </imageView>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D2Z-Y7-bVq" customClass="Hyperlink">
-                        <rect key="frame" x="412" y="148" width="108" height="16"/>
+                        <rect key="frame" x="412" y="100" width="108" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="charWrapping" alignment="right" title="Visit the Website" id="KsZ-uF-DMp">
                             <font key="font" metaFont="system"/>
@@ -59,7 +59,7 @@
                         </userDefinedRuntimeAttributes>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PMP-fF-uAB" customClass="Hyperlink">
-                        <rect key="frame" x="400" y="124" width="120" height="16"/>
+                        <rect key="frame" x="400" y="148" width="120" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Send me Feedback" id="h6S-lt-XSY">
                             <font key="font" metaFont="system"/>
@@ -74,7 +74,7 @@
                         </userDefinedRuntimeAttributes>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Irr-ov-bxk" customClass="Hyperlink">
-                        <rect key="frame" x="378" y="100" width="142" height="16"/>
+                        <rect key="frame" x="378" y="124" width="142" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Check it out on GitHub" id="B9O-yg-FQw">
                             <font key="font" metaFont="system"/>
@@ -164,7 +164,7 @@ Turn this off and on again if you skipped an update and have changed your mind</
                         </userDefinedRuntimeAttributes>
                     </imageView>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="07Z-7Y-gHB">
-                        <rect key="frame" x="527" y="119" width="19.5" height="25"/>
+                        <rect key="frame" x="526" y="144" width="19.5" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="Rki-3y-WxT">
                             <imageReference key="image" image="pencil" catalog="system" symbolScale="large"/>
@@ -172,13 +172,13 @@ Turn this off and on again if you skipped an update and have changed your mind</
                         <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                     </imageView>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N67-Qg-9hZ">
-                        <rect key="frame" x="527" y="94.5" width="19" height="27"/>
+                        <rect key="frame" x="526" y="117.5" width="19" height="27"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="arrow.triangle.branch" catalog="system" id="61r-1i-7uY"/>
                         <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                     </imageView>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="agt-Xi-rY6">
-                        <rect key="frame" x="526" y="141" width="19" height="28"/>
+                        <rect key="frame" x="527" y="93" width="19" height="28"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="safari" catalog="system" id="Bub-iM-QnB"/>
                         <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
