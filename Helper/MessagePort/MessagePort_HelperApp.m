@@ -12,6 +12,7 @@
 
 #import <AppKit/NSWindow.h>
 #import "../Accessibility/AccessibilityCheck.h"
+#import "Constants.h"
 
 @implementation MessagePort_HelperApp
 
@@ -22,7 +23,7 @@
     
     CFMessagePortRef localPort =
     CFMessagePortCreateLocal(NULL,
-                             CFSTR("com.nuebling.mousefix.helper.port"),
+                             (__bridge CFStringRef)kMFBundleIDHelper,
                              didReceiveMessage,
                              nil,
                              nil);
@@ -66,7 +67,7 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
     
     NSLog(@"Sending message to main app: %@", message);
     
-    CFMessagePortRef remotePort = CFMessagePortCreateRemote(kCFAllocatorDefault, CFSTR("com.nuebling.mousefix.port"));
+    CFMessagePortRef remotePort = CFMessagePortCreateRemote(kCFAllocatorDefault, (__bridge CFStringRef)kMFBundleIDApp);
     if (remotePort == NULL) {
         NSLog(@"there is no CFMessagePort");
         return;
