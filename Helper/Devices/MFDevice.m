@@ -320,7 +320,7 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
                 
                 if (currentDeltaX != 0 || _previousDeltaY != 0) {
                     
-                    [ModifiedDrag handleMouseInputWithDeltaX:currentDeltaX deltaY:_previousDeltaY];
+                    [ModifiedDrag handleMouseInputWithDeltaX:currentDeltaX deltaY:_previousDeltaY event:nil];
                     
     //                dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{ // Multithreading in hopes of preventing some issues which I assume are caused by the hid callback (this function) being processed after the CG callback when the system is under load sometimes. Not sure if the multithreading helps though.
     //                    [ModifyingActions handleMouseInputWithDeltaX:currentDeltaX deltaY:_previousDeltaY];

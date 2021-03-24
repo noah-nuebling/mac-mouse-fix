@@ -32,7 +32,7 @@ typedef enum {
 + (void)initializeDragWithModifiedDragDict:(NSDictionary *)dict onDevice:(MFDevice *)dev;
 + (void)deactivate;
 
-+ (void)handleMouseInputWithDeltaX:(int64_t)deltaX deltaY:(int64_t)deltaY;
++ (void)handleMouseInputWithDeltaX:(int64_t)deltaX deltaY:(int64_t)deltaY event:(CGEventRef _Nullable)event;
 @end
 
 NS_ASSUME_NONNULL_END
