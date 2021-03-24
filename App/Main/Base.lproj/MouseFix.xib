@@ -14,7 +14,7 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window identifier="mainWindow" title="Mac Mouse Fix" autorecalculatesKeyViewLoop="NO" restorable="NO" deferred="NO" releasedWhenClosed="NO" animationBehavior="default" tabbingMode="disallowed" id="F0z-JX-Cv5" userLabel="MainWindow">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" resizable="YES"/>
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenNone="YES"/>
             <rect key="contentRect" x="0.0" y="0.0" width="626" height="390"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="875"/>
@@ -117,7 +117,7 @@
                                                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                                                 <prototypeCellViews>
                                                                     <tableCellView identifier="effectCell" id="5PH-4e-aAm">
-                                                                        <rect key="frame" x="354" y="0.0" width="223" height="39"/>
+                                                                        <rect key="frame" x="353.5" y="0.0" width="223" height="39"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
                                                                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7A6-Ou-8wk">
@@ -235,7 +235,7 @@ Tips:
                                                         <action selector="scrollEnableCheckBox:" target="NxE-tZ-vxj" id="N9U-sm-jIx"/>
                                                     </connections>
                                                 </button>
-                                                <button identifier="invertScroll" toolTip="Reverse mouse scroll direction while leaving trackpad scroll direction unchanged." verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ip8-aI-or8">
+                                                <button identifier="invertScroll" toolTip="Reverse mouse scroll direction while leaving trackpad scroll direction as is." verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ip8-aI-or8">
                                                     <rect key="frame" x="402" y="32" width="154" height="18"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <buttonCell key="cell" type="check" title="Invert scroll direction" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="uNi-ZH-WXu">
