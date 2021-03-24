@@ -82,9 +82,9 @@ NSTimer *_openMainAppTimer;
             [app activateWithOptions:NSApplicationActivateIgnoringOtherApps];
         }
         // Close this app (Will be restarted immediately by launchd)
-//        [NSApp terminate:NULL];
-        [self load]; // TESTING
-        [_openMainAppTimer invalidate]; // TESTING
+        [NSApp terminate:NULL];
+//        [self load]; // TESTING - to make button capture notification work
+//        [_openMainAppTimer invalidate]; // TESTING
     }
 }
 

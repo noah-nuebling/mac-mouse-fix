@@ -16,39 +16,12 @@
 
 @implementation CaptureNotifications
 
-static NSString *buttonStringFromButtonArray(NSArray *buttonArray) {
-    
-    NSMutableArray<NSNumber *> *ba = buttonArray.mutableCopy;
-    
-    NSString *buttonString;
-    
-    if (ba.count == 0) {
-        
-        buttonString = @"";
-        
-    } else if (ba.count == 1) {
-        
-        buttonString = [UIStrings getButtonString:ba[0].intValue];
-        
-    } else if (ba.count > 1) {
-        
-        NSNumber *lastButton = ba.lastObject;
-        [ba removeLastObject];
-        
-        NSArray *firstButtonStrings = [ba map:^id _Nonnull(NSNumber * _Nonnull button) {
-            return [UIStrings getButtonString:button.intValue];
-        }];
-        NSString *lastButtonString = [UIStrings getButtonString:lastButton.intValue];
-        
-        buttonString = [[firstButtonStrings componentsJoinedByString:@", "] stringByAppendingFormat:@" and %@", lastButtonString];
-    }
-    
-    return buttonString;
-}
-
 /// Called by [RemapTableController - addRowWithHelperPayload:]
 /// Creates notifications to inform the user about newly caputred / uncaptured buttons after the user added a new row to the remapsTable
 + (void)showButtonCaptureNotificationWithBeforeSet:(NSSet<NSNumber *> *)beforeSet afterSet:(NSSet<NSNumber *> *)afterSet {
+    
+    return;
+    // ^ We don't like capture notifications after all. Also they didn't work in app welcome flow (after granting accessibility access)
     
     NSMutableSet *newlyUncapturedButtons = beforeSet.mutableCopy;
     [newlyUncapturedButtons minusSet:afterSet];
@@ -88,5 +61,35 @@ static NSString *buttonStringFromButtonArray(NSArray *buttonArray) {
         
         [MFNotificationController attachNotificationWithMessage:attrNotifString toWindow:AppDelegate.mainWindow forDuration:5.0];
     }
+}
+
+static NSString *buttonStringFromButtonArray(NSArray *buttonArray) {
+    
+    NSMutableArray<NSNumber *> *ba = buttonArray.mutableCopy;
+    
+    NSString *buttonString;
+    
+    if (ba.count == 0) {
+        
+        buttonString = @"";
+        
+    } else if (ba.count == 1) {
+        
+        buttonString = [UIStrings getButtonString:ba[0].intValue];
+        
+    } else if (ba.count > 1) {
+        
+        NSNumber *lastButton = ba.lastObject;
+        [ba removeLastObject];
+        
+        NSArray *firstButtonStrings = [ba map:^id _Nonnull(NSNumber * _Nonnull button) {
+            return [UIStrings getButtonString:button.intValue];
+        }];
+        NSString *lastButtonString = [UIStrings getButtonString:lastButton.intValue];
+        
+        buttonString = [[firstButtonStrings componentsJoinedByString:@", "] stringByAppendingFormat:@" and %@", lastButtonString];
+    }
+    
+    return buttonString;
 }
 @end

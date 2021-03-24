@@ -153,8 +153,8 @@ AuthorizeAccessibilityView *_accViewController;
 //            NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Welcome to Mac Mouse Fix!"];
 //            [MFNotificationController attachNotificationWithMessage:message toWindow:AppDelegate.mainWindow forDuration:-1];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.0), dispatch_get_main_queue(), ^{
-                // v This usually fails because the remote message port can't be created...
-                //      That doesn't seem to happen if we don't kill the helper when it has gained acc access, but that can leads to other problems. It used to work though??
+                // v This usually fails because the remote message port can't be created
+                //      I think it happens because the helper kills itself after gaining accessibility access and is restarted by launchd too slowly. Weirdly, I think I remember that this used to work.
                 NSSet *capturedButtons = (NSSet *)[SharedMessagePort sendMessage:@"getCapturedButtons" withPayload:nil expectingReply:YES];
                 [CaptureNotifications showButtonCaptureNotificationWithBeforeSet:NSSet.set afterSet:capturedButtons];
             });
