@@ -514,18 +514,15 @@
 			path = Tests;
 			sourceTree = "<group>";
 		};
-		4FCA07D325F3125B00BFE209 /* Main */ = {
+		4FA911E4260D00CB00553CA8 /* RemapTable */ = {
 			isa = PBXGroup;
 			children = (
-				4FF665C525F2C92700689B77 /* AppDelegate.h */,
-				4FF665DB25F2C92700689B77 /* AppDelegate.m */,
 				4FCA07D425F3129B00BFE209 /* RemapTableController.h */,
 				4FCA07D525F3129B00BFE209 /* RemapTableController.m */,
 				4F79C2E8260976950067B381 /* RemapTableTranslator.h */,
 				4F79C2E9260976950067B381 /* RemapTableTranslator.m */,
-				4FF665D925F2C92700689B77 /* MouseFix.xib */,
 			);
-			path = Main;
+			path = RemapTable;
 			sourceTree = "<group>";
 		};
 		4FCECD7721092354001F1078 = {
@@ -604,7 +601,10 @@
 		4FF665BE25F2C92700689B77 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				4FCA07D325F3125B00BFE209 /* Main */,
+				4FF665C525F2C92700689B77 /* AppDelegate.h */,
+				4FF665DB25F2C92700689B77 /* AppDelegate.m */,
+				4FF665D925F2C92700689B77 /* MouseFix.xib */,
+				4FA911E4260D00CB00553CA8 /* RemapTable */,
 				4F46EAA625FB770D0003423A /* AddWindow */,
 				4F2A1FA726042ACB0067691A /* Notifications */,
 				4FF665DC25F2C92700689B77 /* Accessibility */,
