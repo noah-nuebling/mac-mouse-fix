@@ -47,7 +47,6 @@
     BOOL checkboxState = [sender state];
     [HelperServices enableHelperAsUserAgent: checkboxState];
     [self performSelector:@selector(disableUI:) withObject:[NSNumber numberWithBool:_enableMouseFixCheckBox.state] afterDelay:0.0];
-    
 }
 - (IBAction)moreButton:(id)sender {
     [MoreSheet.instance begin];

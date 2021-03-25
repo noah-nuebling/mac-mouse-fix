@@ -174,8 +174,19 @@
     NSData *launchctlOutput_data = [launchctlOutput_fileHandle readDataToEndOfFile];
     NSString *launchctlOutput_string = [[NSString alloc] initWithData:launchctlOutput_data encoding:NSUTF8StringEncoding];
     NSString *labelSearchString = [NSString stringWithFormat: @"\"Label\" = \"%@\";", kMFLaunchdHelperIdentifier];
-    if ([launchctlOutput_string rangeOfString: labelSearchString].location != NSNotFound
-        && [launchctlOutput_string rangeOfString: @"\"LastExitStatus\" = 0;"].location != NSNotFound) {
+    NSString *prefPaneSearchString = @"/PreferencePanes/Mouse Fix.prefPane/Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/MacOS/Mouse Fix Helper";
+    
+    BOOL labelFound = [launchctlOutput_string rangeOfString: labelSearchString].location != NSNotFound;
+    BOOL exitStatusIsZero = [launchctlOutput_string rangeOfString: @"\"LastExitStatus\" = 0;"].location != NSNotFound; // Not sure if useful
+    BOOL isInPrefpane = [launchctlOutput_string rangeOfString:prefPaneSearchString].location != NSNotFound;
+    
+    if (labelFound && isInPrefpane) { // Prefpane helper is running
+        NSLog(@"Found helper running in prefpane. Removing it from launchd and closing it.");
+         // Just kill helper. Doing this here is not the cleanest solution, but it should be fine.
+        [self enableHelperAsUserAgent:NO];
+    }
+    
+    if (labelFound && exitStatusIsZero && !isInPrefpane) { // Why check for exit status here?
         NSLog(@"MOUSE REMAPOR FOUNDD AND ACTIVE");
         return TRUE;
     } else {
