@@ -255,6 +255,7 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
         CGMouseButton button = [SharedUtility CGMouseButtonFromMFMouseButtonNumber:_drag.fakeDragButtonNumber];
         CGEventRef draggedEvent = CGEventCreateMouseEvent(NULL, kCGEventOtherMouseDragged, location, button);
         CGEventPost(kCGSessionEventTap, draggedEvent);
+        CFRelease(draggedEvent);
     }
     _drag.phase = kIOHIDEventPhaseChanged;
 }

@@ -120,7 +120,7 @@ static void fillConfigFromFile() {
     }
     
     // Set internal state
-    if ([_bundleIDOfAppWhichCausesAppOverride isEqualToString:bundleIDOfCurrentApp] == NO || force) {
+    if ([_bundleIDOfAppWhichCausesAppOverride isEqual:bundleIDOfCurrentApp] == NO || force) {
 //        if (bundleIDOfCurrentApp) {
 //            NSLog(@"Setting Override For App %@", bundleIDOfCurrentApp);
 //        }

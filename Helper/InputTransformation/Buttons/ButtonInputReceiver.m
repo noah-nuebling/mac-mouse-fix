@@ -71,11 +71,10 @@ static void registerInputCallback() {
     CGEventRef fakeEvent = CGEventCreateMouseEvent(NULL, mouseEventType, mouseLoc, [SharedUtility CGMouseButtonFromMFMouseButtonNumber:button]);    
     // Insert event
     CGEventRef ret = handleInput(0, CGEventGetType(fakeEvent), fakeEvent, nil);
+    CFRelease(fakeEvent);
     if (ret) {
         CGEventPost(kCGSessionEventTap, ret);
     }
-    
-    CFRelease(fakeEvent);
 }
 
 /// _buttonInputsFromRelevantDevices is a queue with one entry for each unhandled button input coming from a relevant device

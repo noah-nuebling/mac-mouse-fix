@@ -358,7 +358,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
             clickStr = @"Click ";
             buttonStr = [UIStrings getButtonString:btn.intValue];
             buttonStrTool = getButtonStringToolTip(btn.intValue);
-        } else if (keyboardModifiers) {
+        } else if (keyboardModifiers != nil) {
             // Extract keyboard modifiers
             keyboardModStr = getKeyboardModifierString(keyboardModifiers);
             keyboardModStrTool = getKeyboardModifierStringToolTip(keyboardModifiers);
@@ -459,7 +459,7 @@ static NSString *getButtonStringToolTip(int buttonNumber) {
 
 static NSString *getKeyboardModifierString(NSNumber *flags) {
     NSString *kb = @"";
-    if (flags) {
+    if (flags != nil) {
         CGEventFlags f = flags.longLongValue;
         kb = [NSString stringWithFormat:@"%@%@%@%@ ",
               (f & kCGEventFlagMaskControl ?    @"^" : @""),
@@ -471,7 +471,7 @@ static NSString *getKeyboardModifierString(NSNumber *flags) {
 }
 static NSString *getKeyboardModifierStringToolTip(NSNumber *flags) {
     NSString *kb = @"";
-    if (flags) {
+    if (flags != nil) {
         CGEventFlags f = flags.longLongValue;
         kb = [NSString stringWithFormat:@"%@%@%@%@",
               (f & kCGEventFlagMaskControl ?    @"Control (^)-" : @""),

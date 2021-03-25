@@ -154,8 +154,10 @@ typedef struct __IOHIDDevice
         
         CFArrayRef allElems = IOHIDDeviceCopyMatchingElements(self.IOHIDDevice, NULL, 0);
         IOHIDElementRef firstElem = (IOHIDElementRef)CFArrayGetValueAtIndex(allElems, 0);
+        CFRelease(allElems);
         IOHIDValueRef newVal = IOHIDValueCreateWithIntegerValue(kCFAllocatorDefault, firstElem, mach_absolute_time(), 0);
         IOHIDDeviceSetValue(self.IOHIDDevice, firstElem, newVal);
+        CFRelease(newVal);
         
     }
     
@@ -194,6 +196,8 @@ static NSArray *getPressedButtons(MFDevice *dev) {
         IOHIDDeviceGetValue(dev.IOHIDDevice, elem, &value);
         [outArr addObject:@(IOHIDValueGetIntegerValue(value))];
     }
+    
+    CFRelease(elems);
     
 //    NSUInteger outBitmask = 0;
 //
