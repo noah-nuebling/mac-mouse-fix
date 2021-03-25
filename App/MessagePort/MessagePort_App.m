@@ -15,7 +15,6 @@
 #import "RemapTableController.h"
 #import "AddWindowController.h"
 
-
 @implementation MessagePort_App
 
 
@@ -27,7 +26,7 @@
     if (self == [MessagePort_App class]) {
         CFMessagePortRef localPort =
         CFMessagePortCreateLocal(kCFAllocatorDefault,
-                             CFSTR("com.nuebling.mousefix.port"),
+                             (__bridge CFStringRef)kMFBundleIDApp,
                              didReceiveMessage,
                              nil,
                              NULL);

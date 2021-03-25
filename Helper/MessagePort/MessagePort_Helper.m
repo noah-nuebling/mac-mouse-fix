@@ -27,7 +27,7 @@
     
     CFMessagePortRef localPort =
     CFMessagePortCreateLocal(NULL,
-                             CFSTR("com.nuebling.mousefix.helper.port"),
+                             (__bridge CFStringRef)kMFBundleIDHelper,
                              didReceiveMessage,
                              nil,
                              nil);
@@ -75,7 +75,7 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
     } else {
         NSLog(@"Unknown message received: %@", message);
     }
-
+    
     return (__bridge CFDataRef)response;
 }
 

@@ -31,9 +31,9 @@
     
     NSString *remotePortName;
     if ([NSBundle.mainBundle.bundleIdentifier isEqual:kMFBundleIDApp]) {
-        remotePortName = @"com.nuebling.mousefix.helper.port";
+        remotePortName = kMFBundleIDHelper;
     } else if ([NSBundle.mainBundle.bundleIdentifier isEqual:kMFBundleIDHelper]) {
-        remotePortName = @"com.nuebling.mousefix.port";
+        remotePortName = kMFBundleIDApp;
     }
     
     CFMessagePortRef remotePort = CFMessagePortCreateRemote(kCFAllocatorDefault, (__bridge CFStringRef)remotePortName);

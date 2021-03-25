@@ -18,7 +18,7 @@
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="139" y="81" width="630" height="300"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1025"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="875"/>
             <value key="minSize" type="size" width="630" height="245"/>
             <view key="contentView" wantsLayer="YES" id="RsF-Ll-2x6">
                 <rect key="frame" x="0.0" y="0.0" width="630" height="300"/>
@@ -70,7 +70,7 @@ DQ
                             <rect key="frame" x="1" y="1" width="628" height="264"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" autosaveColumns="NO" rowHeight="40" headerView="leL-6i-FkU" viewBased="YES" id="fGT-Lc-WdX">
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" tableStyle="fullWidth" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" autosaveColumns="NO" rowHeight="40" headerView="leL-6i-FkU" viewBased="YES" id="fGT-Lc-WdX">
                                     <rect key="frame" x="0.0" y="0.0" width="628" height="239"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <size key="intercellSpacing" width="3" height="4"/>
@@ -78,7 +78,7 @@ DQ
                                     <tableViewGridLines key="gridStyleMask" vertical="YES"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn identifier="AppColumnID" editable="NO" width="257" minWidth="40" maxWidth="9999" headerToolTip="Click on the + button or use drag and drop to add more apps" id="lgf-ug-F5A">
+                                        <tableColumn identifier="AppColumnID" editable="NO" width="286" minWidth="40" maxWidth="9999" headerToolTip="Click on the + button or use drag and drop to add more apps" id="lgf-ug-F5A">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="App">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -91,11 +91,11 @@ DQ
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView identifier="AppCellID" id="JdD-uc-D3h">
-                                                    <rect key="frame" x="11" y="2" width="262" height="45"/>
+                                                    <rect key="frame" x="1" y="2" width="291" height="45"/>
                                                     <autoresizingMask key="autoresizingMask" heightSizable="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KMO-Y7-n9b">
-                                                            <rect key="frame" x="46" y="16" width="221" height="17"/>
+                                                            <rect key="frame" x="46" y="16" width="250" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="Mouse Fix" id="qX5-aW-TaU">
                                                                 <font key="font" metaFont="system"/>
@@ -128,7 +128,7 @@ DQ
                                             </textFieldCell>
                                             <prototypeCellViews>
                                                 <tableCellView identifier="CheckBoxCellID" id="7HO-48-dNs">
-                                                    <rect key="frame" x="276" y="2" width="107" height="42"/>
+                                                    <rect key="frame" x="295" y="2" width="107" height="42"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <button identifier="CheckBoxID" verticalHuggingPriority="750" id="cg7-dr-ogU">
@@ -175,7 +175,7 @@ DQ
                             <nil key="backgroundColor"/>
                         </clipView>
                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="baR-5v-iZa">
-                            <rect key="frame" x="1" y="259" width="357" height="15"/>
+                            <rect key="frame" x="1" y="249" width="628" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="MWm-wF-UKR">
