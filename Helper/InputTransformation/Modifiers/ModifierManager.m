@@ -232,8 +232,10 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, MFDevi
 
 + (NSUInteger) getActiveKeyboardModifiersWithEvent:(CGEventRef _Nullable) event {
     
+    BOOL passedInEventIsNil = NO;
     if (event == nil) {
-        event = CGEventCreate(nil);
+        passedInEventIsNil = YES;
+        event = CGEventCreate(NULL);
     }
     
     uint64_t mask = 0xFF0000; // Only lets bits 16-23 through
@@ -241,6 +243,9 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, MFDevi
     //  But bits 24 - 31 contained weird stuff which messed up the return value and modifiers are only on bits 16-23, so we defined our own mask
     
     CGEventFlags modifierFlags = CGEventGetFlags(event) & mask;
+    
+    if (passedInEventIsNil) CFRelease(event);
+    
     return modifierFlags;
 }
 

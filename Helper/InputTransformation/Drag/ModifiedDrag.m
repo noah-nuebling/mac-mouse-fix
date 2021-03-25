@@ -124,7 +124,7 @@ static struct ModifiedDragState _drag;
     _drag.modifiedDevice = dev;
     _drag.activationState = kMFModifiedInputActivationStateInitialized;
     _drag.type = type;
-    _drag.origin = CGEventGetLocation(CGEventCreate(NULL));
+    _drag.origin = Utility_Transformation.CGMouseLocationWithoutEvent;
     _drag.originOffset = (MFVector){0};
     _drag.subPixelatorX = [SubPixelator alloc];
     _drag.subPixelatorY = [SubPixelator alloc];
@@ -248,9 +248,9 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
     } else if ([_drag.type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
         CGPoint location;
         if (event) {
-            location = CGEventGetLocation(event); // I feel using `event` passed in from eventTap here makes things slighly more responsive that using `CGEventCreate(NULL)`
+            location = CGEventGetLocation(event); // I feel using `event` passed in from eventTap here makes things slighly more responsive that using `Utility_Transformation.CGMouseLocationWithoutEvent`
         } else {
-            location = CGEventGetLocation(CGEventCreate(NULL));
+            location = Utility_Transformation.CGMouseLocationWithoutEvent;
         }
         CGMouseButton button = [SharedUtility CGMouseButtonFromMFMouseButtonNumber:_drag.fakeDragButtonNumber];
         CGEventRef draggedEvent = CGEventCreateMouseEvent(NULL, kCGEventOtherMouseDragged, location, button);

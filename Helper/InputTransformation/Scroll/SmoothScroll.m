@@ -397,22 +397,3 @@ static void setDisplayLinkToDisplayUnderMousePointer(CGEventRef event) {
 }
 
 @end
-
-// ((From displayLinkCallback))
-// stop displayLink when app under mouse pointer changes mid scroll
-/*
- CGEventRef fakeEvent = CGEventCreate(NULL);
- CGPoint mouseLocation = CGEventGetLocation(fakeEvent);
- CFRelease(fakeEvent);
- AXUIElementRef elementUnderMousePointer;
- AXUIElementCopyElementAtPosition(AXUIElementCreateSystemWide(), mouseLocation.x, mouseLocation.y, &elementUnderMousePointer);
- pid_t elementUnderMousePointerPID;
- AXUIElementGetPid(elementUnderMousePointer, &elementUnderMousePointerPID);
- NSRunningApplication *appUnderMousePointer = [NSRunningApplication runningApplicationWithProcessIdentifier:elementUnderMousePointerPID];
- 
- if ( !([_bundleIdentifierOfScrolledApp isEqualToString:[appUnderMousePointer bundleIdentifier]]) ) {
- resetDynamicGlobals();
- CVDisplayLinkStop(_displayLink);
- return 0;
- }
- */

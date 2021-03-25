@@ -13,6 +13,7 @@
 #import "ButtonTriggerGenerator.h"
 #import "MFQueue.h"
 #import "SharedUtility.h"
+#import "Utility_Transformation.h"
 
 
 @implementation ButtonInputReceiver
@@ -66,7 +67,8 @@ static void registerInputCallback() {
     
     // Create event
     CGEventType mouseEventType = [SharedUtility CGEventTypeForButtonNumber:button isMouseDown:isMouseDown];
-    CGEventRef fakeEvent = CGEventCreateMouseEvent(NULL, mouseEventType, CGEventGetLocation(CGEventCreate(NULL)), [SharedUtility CGMouseButtonFromMFMouseButtonNumber:button]);    
+    CGPoint mouseLoc = Utility_Transformation.CGMouseLocationWithoutEvent;
+    CGEventRef fakeEvent = CGEventCreateMouseEvent(NULL, mouseEventType, mouseLoc, [SharedUtility CGMouseButtonFromMFMouseButtonNumber:button]);    
     // Insert event
     CGEventRef ret = handleInput(0, CGEventGetType(fakeEvent), fakeEvent, nil);
     if (ret) {

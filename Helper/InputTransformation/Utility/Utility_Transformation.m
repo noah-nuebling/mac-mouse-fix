@@ -41,7 +41,7 @@
     
     CGEventTapLocation tapLoc = kCGSessionEventTap;
     
-    CGPoint mouseLoc = CGEventGetLocation(CGEventCreate(NULL));
+    CGPoint mouseLoc = Utility_Transformation.CGMouseLocationWithoutEvent;
     CGEventType eventTypeDown = [SharedUtility CGEventTypeForButtonNumber:button isMouseDown:YES];
     CGEventType eventTypeUp = [SharedUtility CGEventTypeForButtonNumber:button isMouseDown:NO];
     CGMouseButton buttonCG = [SharedUtility CGMouseButtonFromMFMouseButtonNumber:button];
@@ -67,7 +67,7 @@
 + (void)postMouseButton:(MFMouseButtonNumber)button down:(BOOL)down {
     CGEventTapLocation tapLoc = kCGSessionEventTap;
     
-    CGPoint mouseLoc = CGEventGetLocation(CGEventCreate(NULL));
+    CGPoint mouseLoc = Utility_Transformation.CGMouseLocationWithoutEvent;
     CGEventType eventTypeDown = [SharedUtility CGEventTypeForButtonNumber:button isMouseDown:down];
     CGMouseButton buttonCG = [SharedUtility CGMouseButtonFromMFMouseButtonNumber:button];
     
@@ -93,6 +93,19 @@
         }
         return effectiveRemaps;
     };
+}
+
++ (CGPoint)CGMouseLocationWithoutEvent {
+    CGEventRef locEvent = CGEventCreate(NULL);
+    CGPoint mouseLoc = CGEventGetLocation(locEvent);
+    CFRelease(locEvent);
+    return mouseLoc;
+}
++ (CGEventFlags)CGModifierFlagsWithoutEvent {
+    CGEventRef flagEvent = CGEventCreate(NULL);
+    CGEventFlags flags = CGEventGetFlags(flagEvent);
+    CFRelease(flagEvent);
+    return flags;
 }
 
 @end

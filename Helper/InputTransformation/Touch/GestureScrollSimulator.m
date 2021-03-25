@@ -14,6 +14,7 @@
 #import "Utility_Helper.h"
 #import "SharedUtility.h"
 #import "VectorSubPixelator.h"
+#import "Utility_Transformation.h"
 
 
 @implementation GestureScrollSimulator
@@ -52,7 +53,7 @@ static VectorSubPixelator *_scrollPixelator;
 //    NSLog(@"GESTURE DELTAS: %f, %f, PHASE: %d", dx, dy, phase);
 #endif
     
-    CGPoint loc = CGEventGetLocation(CGEventCreate(NULL));
+    CGPoint loc = Utility_Transformation.CGMouseLocationWithoutEvent;
     if (!isGestureDelta) {
         loc.x += dx;
         loc.y += dy;
@@ -161,7 +162,7 @@ static VectorSubPixelator *_scrollPixelator;
     // Testing
     
 //    CGPoint flippedNSLoc = [Utility_Helper getCurrentPointerLocation_flipped];
-//    CGPoint CGLoc = CGEventGetLocation(CGEventCreate(NULL));
+//    CGPoint CGLoc = Utility_Transformation.CG
 //    NSLog(@"\nFLIPPED NS: %f, %f \nCG: %f, %f", flippedNSLoc.x, flippedNSLoc.y, CGLoc.x, CGLoc.y);
     
     // Post t22s0 event
@@ -230,7 +231,7 @@ static void startPostingMomentumScrollEventsWithInitialGestureVector(MFVector in
             NSLog(@"BREAKING MOMENTUM SCROLL");
             break;
         }
-        CGPoint loc = CGEventGetLocation(CGEventCreate(NULL));
+        CGPoint loc = Utility_Transformation.CGMouseLocationWithoutEvent;
         [GestureScrollSimulator postGestureScrollEventWithGestureVector:emptyVec scrollVector:vec scrollVectorPoint:vecPt phase:kIOHIDEventPhaseUndefined momentumPhase:ph locaction:loc];
         
         [NSThread sleepForTimeInterval:tick];
@@ -244,7 +245,7 @@ static void startPostingMomentumScrollEventsWithInitialGestureVector(MFVector in
         ph = kCGMomentumScrollPhaseContinue;
         
     }
-    CGPoint loc = CGEventGetLocation(CGEventCreate(NULL));
+    CGPoint loc = Utility_Transformation.CGMouseLocationWithoutEvent;
     [GestureScrollSimulator postGestureScrollEventWithGestureVector:emptyVec
                                                        scrollVector:emptyVec
                                                   scrollVectorPoint:emptyVec

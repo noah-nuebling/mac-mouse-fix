@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// `MFEffectiveRemapsMethod`s are blocks that take `remaps` and `activeModifiers` as input and return `effectiveRemaps` based on those.
 typedef NSDictionary *_Nonnull (^MFEffectiveRemapsMethod)(NSDictionary *_Nonnull, NSDictionary *_Nonnull);
 + (MFEffectiveRemapsMethod)effectiveRemapsMethod_Override;
++ (CGPoint)CGMouseLocationWithoutEvent;
++ (CGEventFlags)CGModifierFlagsWithoutEvent;
 @end
 
 NS_ASSUME_NONNULL_END

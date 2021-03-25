@@ -10,6 +10,7 @@
 #import <AppKit/AppKit.h>
 #import "Utility_Helper.h"
 #import "Constants.h"
+#import "Utility_Transformation.h"
 
 @implementation Utility_Helper
 
@@ -69,10 +70,7 @@
 
 // All of the CG APIs use a flipped coordinate system
 + (CGPoint)getCurrentPointerLocation_flipped_slow {
-    CGEventRef locEvent = CGEventCreate(NULL);
-    CGPoint loc = CGEventGetLocation(locEvent);
-    CFRelease(locEvent);
-    return loc;
+    return Utility_Transformation.CGMouseLocationWithoutEvent;
 }
 NSPoint NSPointFromCGPointWithCoordinateConversion(CGPoint cgPoint) {
     return NSMakePoint(cgPoint.x, zeroScreenHeight() - cgPoint.y);

@@ -91,9 +91,9 @@ static void postKeyboardShortcut(CGKeyCode keyCode, CGSModifierFlags modifierFla
     // Create modifier restore event
     //  (Restoring original modifier state the way postKeyboardEventsForSymbolicHotkey does leads to issues with triggering Spotlight)
     //      (Sometimes triggered Siri instead)
-    CGEventFlags originalModifierFlags = CGEventGetFlags(CGEventCreate(NULL));
+//    CGEventFlags originalModifierFlags = CGEventGetFlags(CGEventCreate(NULL));
     CGEventRef modEvent = CGEventCreate(NULL);
-    CGEventSetFlags(modEvent, originalModifierFlags);
+//    CGEventSetFlags(modEvent, originalModifierFlags);
     
     // Send key events
     CGEventPost(tapLoc, keyDown);
@@ -115,7 +115,7 @@ static void postKeyboardEventsForSymbolicHotkey(CGKeyCode keyCode, CGSModifierFl
     CGEventRef keyDown = CGEventCreateKeyboardEvent(NULL, keyCode, true);
     CGEventRef keyUp = CGEventCreateKeyboardEvent(NULL, keyCode, false);
     CGEventSetFlags(keyDown, (CGEventFlags)modifierFlags);
-    CGEventFlags originalModifierFlags = CGEventGetFlags(CGEventCreate(NULL));
+    CGEventFlags originalModifierFlags = Utility_Transformation.CGModifierFlagsWithoutEvent;
     CGEventSetFlags(keyUp, originalModifierFlags); // Restore original keyboard modifier flags state on key up. This seems to fix `[ModifierManager getCurrentModifiers]`
     
     // Send key events

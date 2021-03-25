@@ -12,6 +12,7 @@
 #import <Cocoa/Cocoa.h>
 #import "IOHIDEventTypes.h"
 #import "SharedUtility.h"
+#import "Utility_Transformation.h"
 
 @implementation ScrollUtility
 
@@ -154,9 +155,7 @@ static BOOL _mouseDidMove = NO;
 static CGPoint _previousMouseLocation;
 /// Checks if cursor did move since the last time this function was called. Writes result into `_mouseDidMove`.
 + (void)updateMouseDidMove {
-    CGEventRef event = CGEventCreate(nil);
-    CGPoint mouseLocation = CGEventGetLocation(event);
-    CFRelease(event);
+    CGPoint mouseLocation = Utility_Transformation.CGMouseLocationWithoutEvent;
     _mouseDidMove = ![ScrollUtility point:mouseLocation
                           isAboutTheSameAs:_previousMouseLocation
                                  threshold:10];
