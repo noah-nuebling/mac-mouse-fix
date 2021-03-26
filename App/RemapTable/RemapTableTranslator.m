@@ -501,6 +501,7 @@ static NSString *getKeyboardModifierStringToolTip(NSNumber *flags) {
               (f & kCGEventFlagMaskCommand ?    @"Command (⌘)-" : @"")];
     }
     if (kb.length > 0) {
+        // TODO: Use our function for creating proper natural language lists (with commas as well as 'and' before the last element)
         kb = [kb substringToIndex:kb.length-1]; // Delete trailing dash
 //        kb = [kb stringByAppendingString:@" "]; // Append trailing space
         kb = [kb stringByReplacingOccurrencesOfString:@"-" withString:@" and "];

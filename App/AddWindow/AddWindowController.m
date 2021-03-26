@@ -64,7 +64,9 @@ static BOOL _pointerIsInsideAddField;
     }];
 }
 + (void)end {
-    [AppDelegate.mainWindow endSheet:_instance.window];
+//    [AppDelegate.mainWindow endSheet:_instance.window];
+    // @4332weizi had trouble closing the window. I have now clue why. Maybe using this v instead of this ^ helps.
+    [_instance.window close];
 }
 + (void)handleReceivedAddModeFeedbackFromHelperWithPayload:(NSDictionary *)payload {
     // Tint plus icon to give visual feedback
