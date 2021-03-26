@@ -53,6 +53,7 @@ NSTableView *_tableView;
 // ? TODO: Create constants for these keys
 // There are also separatorTableEntry()s which become a separator in the popupbutton-menu generated from the effectsTable
 // There are 3 different effectsTables for 3 different types of triggers
+// Noah from future: an 'effectsTable' should probably be called an 'effectButtonMenuModel' or 'effectsMenuModel' or 'effectOptionsModel' or something else that's more descriptive and less close to 'remapsTable'
 
 static NSDictionary *separatorEffectsTableEntry() {
     return @{@"noeffect": @"separator"};
@@ -63,9 +64,9 @@ static NSDictionary *separatorEffectsTableEntry() {
 //}
 static NSArray *getScrollEffectsTable() {
     NSArray *scrollEffectsTable = @[
-        @{@"ui": @"Zoom in or out", @"tool": @"Zoom in or out in Safari, Maps, and other apps \nWorks like Pinch to Zoom on an Apple Trackpad" , @"dict": @{}
+        @{@"ui": @"Zoom in or out", @"tool": @"Zoom in or out in Safari, Maps, and other apps \n \nWorks like Pinch to Zoom on an Apple Trackpad" , @"dict": @{}
         },
-        @{@"ui": @"Horizontal scroll", @"tool": @"Scroll horizontally \nNavigate pages in Safari, delete messages in Mail, and more \nWorks like swiping horizontally with 2 fingers on an Apple Trackpad" , @"dict": @{}
+        @{@"ui": @"Horizontal scroll", @"tool": @"Scroll horizontally \nNavigate pages in Safari, delete messages in Mail, and more \n \nWorks like swiping horizontally with 2 fingers on an Apple Trackpad" , @"dict": @{}
         },
 //        @{@"ui": @"Rotate", @"tool": @"", @"dict": @{}},
 //        @{@"ui": @"Precision Scroll", @"tool": @"", @"dict": @{}},
@@ -75,15 +76,15 @@ static NSArray *getScrollEffectsTable() {
 }
 static NSArray *getDragEffectsTable() {
     NSArray *dragEffectsTable = @[
-        @{@"ui": @"Mission Control & Spaces", @"tool": @"Move your mouse: \n - Up to show Mission Control \n - Down to show Application Windows \n - Left or Right to move between Spaces" , @"dict": @{
+        @{@"ui": @"Mission Control & Spaces", @"tool": @"Move your mouse: \n - Up to show Mission Control \n - Down to show Application Windows \n - Left or Right to move between Spaces\n \n \nWorks like swiping with 3 fingers on an Apple Trackpad" , @"dict": @{
                   kMFModifiedDragDictKeyType: kMFModifiedDragTypeThreeFingerSwipe,
         }},
-//        @{@"ui": @"Scroll & navigate pages", @"tool": @"Scroll by moving your mouse in any direction \nNavigate pages in Safari, delete messages in Mail, and more, by moving your mouse horizontally \nWorks like swiping with 2 fingers on an Apple Trackpad" , @"dict": @{
+//        @{@"ui": @"Scroll & navigate pages", @"tool": @"Scroll by moving your mouse in any direction \nNavigate pages in Safari, delete messages in Mail, and more, by moving your mouse horizontally \n \nWorks like swiping with 2 fingers on an Apple Trackpad" , @"dict": @{
 //                  kMFModifiedDragDictKeyType: kMFModifiedDragTypeTwoFingerSwipe,
 //        }},
 //        separatorEffectsTableEntry(),
         @{@"ui": [NSString stringWithFormat:@"Click and Drag %@", [UIStrings getButtonString:3]],
-          @"tool": [NSString stringWithFormat: @"Simulates clicking and dragging %@ \nUsed to rotate in some 3d software like Blender", getButtonStringToolTip(3)],
+          @"tool": [NSString stringWithFormat: @"Works like clicking and dragging %@\nUsed to rotate in some 3D software like Blender", getButtonStringToolTip(3)],
           @"hideable": @YES,
           @"dict": @{
                   kMFModifiedDragDictKeyType: kMFModifiedDragTypeFakeDrag,
@@ -115,15 +116,15 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
                   kMFActionDictKeyGenericVariant: @(kMFSHLaunchpad)
         }},
         separatorEffectsTableEntry(),
-        @{@"ui": @"Look Up", @"tool": @"Look up words in the Dictionary, Quick Look files in Finder, and more... \nWorks like Force Touch on an Apple Trackpad", @"dict": @{
+        @{@"ui": @"Look Up", @"tool": @"Look up words in the Dictionary, Quick Look files in Finder, and more. \n \nWorks like Force Touch on an Apple Trackpad.", @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHLookUp)
         }},
-        @{@"ui": @"Smart Zoom", @"tool": @"Zoom in or out in Safari and other apps \nSimulates a two-finger double tap on an Apple Trackpad", @"dict": @{
+        @{@"ui": @"Smart Zoom", @"tool": @"Zoom in or out in Safari and other apps. \n \nWorks like a two-finger double tap on an Apple Trackpad.", @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSmartZoom,
         }},
         @{@"ui": @"Open Link in New Tab",
-          @"tool": [NSString stringWithFormat:@"Open links in a new tab, paste text in the Terminal, and more... \nSimulates clicking %@", getButtonStringToolTip(3)],
+          @"tool": [NSString stringWithFormat:@"Open links in a new tab, paste text in the Terminal, and more. \n \nWorks like clicking %@ on a standard mouse.", getButtonStringToolTip(3)],
           @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
                   kMFActionDictKeyMouseButtonClicksVariantButtonNumber: @3,
@@ -147,6 +148,8 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
                   kMFActionDictKeyType: kMFActionDictTypeNavigationSwipe,
                   kMFActionDictKeyGenericVariant: kMFNavigationSwipeVariantRight
         }},
+        separatorEffectsTableEntry(),
+        @{@"ui": @"Keyboard shortcut...", @"tool": @"Use a keyboard shortcut right from your mouse", @"enterKeystrokeEntry": @YES},
     ];
     
     if (buttonNumber != 3) { // We already have the "Open Link in New Tab" entry for button 3
@@ -219,6 +222,18 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
 
 #pragma mark - Fill the tableView
 
+static NSString *effectTitleForRowDict(NSDictionary * _Nonnull rowDict) {
+    NSArray *effectsTable = [RemapTableTranslator getEffectsTableForRemapsTableEntry:rowDict];
+    NSDictionary *effectDict = rowDict[kMFRemapsKeyEffect];
+    NSString *title;
+    if (effectDict) { // When inserting new rows through AddMode, there is no effectDict at first
+        // Get title for effectDict from effectsTable
+        NSDictionary *effectsTableEntry = [RemapTableTranslator getEntryFromEffectsTable:effectsTable withEffectDict:effectDict];
+        title = effectsTableEntry[@"ui"];
+    }
+    return title;
+}
+
 + (NSTableCellView *)getEffectCellWithRowDict:(NSDictionary *)rowDict {
     
     rowDict = rowDict.mutableCopy; // Not sure if necessary
@@ -236,31 +251,32 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
             i = (NSMenuItem *)NSMenuItem.separatorItem;
         } else {
             i = [[NSMenuItem alloc] initWithTitle:effectDict[@"ui"] action:@selector(setConfigToUI:) keyEquivalent:@""];
+            i.target = self.tableView.delegate;
             i.toolTip = effectDict[@"tool"];
-            if ([effectDict[@"alternate"] isEqualTo:@YES]) {
+            
+            if ([effectDict[@"enterKeystrokeEntry"] isEqual:@YES]) {
+                i.action = @selector(handleEnterKeystrokeOptionSelected:);
+            }
+            if ([effectDict[@"alternate"] isEqual:@YES]) {
                 i.alternate = YES;
                 i.keyEquivalentModifierMask = NSEventModifierFlagOption;
             }
-            if ([effectDict[@"hideable"] isEqualTo:@YES]) {
+            if ([effectDict[@"hideable"] isEqual:@YES]) {
                 NSMenuItem *h = [[NSMenuItem alloc] init];
                 h.view = [[NSView alloc] initWithFrame:NSZeroRect];
                 [popupButton.menu addItem:h];
                 i.alternate = YES;
                 i.keyEquivalentModifierMask = NSEventModifierFlagOption;
             }
-            i.target = self.tableView.delegate;
+//            i.target = self.tableView.delegate;
         }
         [popupButton.menu addItem:i];
     }
     
     // Select popup button item corresponding to datamodel
     // Get effectDict from datamodel
-    NSDictionary *effectDict = rowDict[kMFRemapsKeyEffect];
-    if (effectDict) { // When inserting new rows through AddMode, there is no effectDict at first
-        // Get title for effectDict from effectsTable
-        NSDictionary *effectsTableEntry = [self getEntryFromEffectsTable:effectsTable withEffectDict:effectDict];
-        NSString *title = effectsTableEntry[@"ui"];
-        // Select item with title
+    NSString * title = effectTitleForRowDict(rowDict);
+    if (title) {
         [popupButton selectItemWithTitle:title];
     }
     
@@ -268,6 +284,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
 }
 
 + (NSTableCellView *)getTriggerCellWithRowDict:(NSDictionary *)rowDict {
+    
     rowDict = rowDict.mutableCopy; // This is necessary for some of this hacky mess to work // However, this is not a deep copy, so the _dataModel is still changed when we change some nested object. Watch out!
     
     // Define Data-to-UI-String mappings
@@ -428,11 +445,15 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
     NSString *btnMod = [buttonModifierStrings componentsJoinedByString:@""];
     NSString *btnModTool = [buttonModifierStringsTool componentsJoinedByString:@""];
     
+    // Get effect string
+    NSString *effectString = [NSString stringWithFormat:@" to use '%@'", effectTitleForRowDict(rowDict)];
+    
     // Join all substrings to get result string
     NSMutableAttributedString *fullTriggerCellString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@", kbMod, btnMod]];
     NSMutableAttributedString *fullTriggerCellTooltipString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@", kbModTool, btnModTool]];
     [fullTriggerCellString appendAttributedString:tr];
     [fullTriggerCellTooltipString appendAttributedString:trTool];
+    [fullTriggerCellTooltipString appendAttributedString:[[NSMutableAttributedString alloc] initWithString:effectString]];
     
     
     // Generate view and set string to view

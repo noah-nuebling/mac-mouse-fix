@@ -29,6 +29,7 @@
 		4F94F61025E5EC2800D9F24A /* Mac_Mouse_FixUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60F25E5EC2800D9F24A /* Mac_Mouse_FixUITests.m */; };
 		4F94F73D25E6146C00D9F24A /* Mac Mouse Fix Helper.app in Copy Helper */ = {isa = PBXBuildFile; fileRef = 4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4F94F74C25E614B800D9F24A /* Mac Mouse Fix Accomplice in Copy Updater */ = {isa = PBXBuildFile; fileRef = 4F2FDF302315662400C7BE14 /* Mac Mouse Fix Accomplice */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4FA9121D260D631700553CA8 /* MFKeystrokeCaptureField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA9121C260D631700553CA8 /* MFKeystrokeCaptureField.m */; };
 		4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCA07D525F3129B00BFE209 /* RemapTableController.m */; };
 		4FD82DDB260575B100664D6F /* MFNotificationLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD82DDA260575B100664D6F /* MFNotificationLabel.m */; };
 		4FF6654125F2C7B000689B77 /* default_launchd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6652E25F2C7B000689B77 /* default_launchd.plist */; };
@@ -221,6 +222,8 @@
 		4F94F60B25E5EC2800D9F24A /* Mac Mouse FixUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Mac Mouse FixUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F94F60F25E5EC2800D9F24A /* Mac_Mouse_FixUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Mac_Mouse_FixUITests.m; sourceTree = "<group>"; };
 		4F94F61125E5EC2800D9F24A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4FA9121B260D631700553CA8 /* MFKeystrokeCaptureField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFKeystrokeCaptureField.h; sourceTree = "<group>"; };
+		4FA9121C260D631700553CA8 /* MFKeystrokeCaptureField.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFKeystrokeCaptureField.m; sourceTree = "<group>"; };
 		4FCA07D425F3129B00BFE209 /* RemapTableController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapTableController.h; sourceTree = "<group>"; };
 		4FCA07D525F3129B00BFE209 /* RemapTableController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapTableController.m; sourceTree = "<group>"; };
 		4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mac Mouse Fix Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -521,6 +524,8 @@
 				4FCA07D525F3129B00BFE209 /* RemapTableController.m */,
 				4F79C2E8260976950067B381 /* RemapTableTranslator.h */,
 				4F79C2E9260976950067B381 /* RemapTableTranslator.m */,
+				4FA9121B260D631700553CA8 /* MFKeystrokeCaptureField.h */,
+				4FA9121C260D631700553CA8 /* MFKeystrokeCaptureField.m */,
 			);
 			path = RemapTable;
 			sourceTree = "<group>";
@@ -1258,6 +1263,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FA9121D260D631700553CA8 /* MFKeystrokeCaptureField.m in Sources */,
 				4FF6655225F2C7B000689B77 /* NSMutableDictionary+Additions.m in Sources */,
 				4FF6654625F2C7B000689B77 /* Objects.m in Sources */,
 				4FF665EE25F2C92700689B77 /* OverridePanel.m in Sources */,

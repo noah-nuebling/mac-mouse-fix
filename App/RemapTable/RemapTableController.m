@@ -59,6 +59,32 @@
     [ConfigFileInterface_App writeConfigToFileAndNotifyHelper];
 }
 
+- (IBAction)handleEnterKeystrokeOptionSelected:(id)sender {
+    
+    // Get MFKeystrokeCaptureField from IB
+    NSTableCellView *keyStrokeCaptureCell = [self.tableView makeViewWithIdentifier:@"keystrokeCaptureCell" owner:self];
+    
+    // Replace popup button with capture field
+    
+    // Find popupbutton for sender
+    NSPopUpButton *popupButton;
+    NSMenuItem *item = (NSMenuItem *)sender;
+    NSMenu *menu = item.menu;
+    for (NSInteger row = 0; row < self.dataModel.count; row++) {
+        NSTableCellView *cell = [self.tableView viewAtColumn:1 row:row makeIfNecessary:YES];
+        NSPopUpButton *pb = cell.subviews[0];
+        if ([pb.menu isEqual:menu]) {
+            popupButton = pb;
+            break;
+        }
+    }
+    assert(popupButton != nil);
+    
+    // Replace popupbutton with keystroke capture field
+    NSTableCellView *currentCell = (NSTableCellView *)popupButton.superview;
+    [currentCell setSubviews:keyStrokeCaptureCell.subviews];
+}
+
 - (IBAction)setConfigToUI:(id)sender {
     // Set popupbutton content to datamodel
     for (NSInteger row = 0; row < self.dataModel.count; row++) {
@@ -75,6 +101,10 @@
     }
     // Write datamodel to file
     [self writeDataModelToConfig];
+    
+    // Reload tableView so that trigger cell tooltips update
+    //  It's super inefficient to update everything but computer fast
+    [self.tableView reloadDataForRowIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.tableView.numberOfRows)] columnIndexes:[NSIndexSet indexSetWithIndex:0]];
 }
 
 #pragma mark Lifecycle

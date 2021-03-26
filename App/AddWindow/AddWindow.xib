@@ -32,7 +32,7 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <imageView identifier="PlusIcon" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7dr-xS-3z8">
-                                    <rect key="frame" x="176" y="85.5" width="64.5" height="68"/>
+                                    <rect key="frame" x="175" y="85.5" width="64.5" height="68"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="NSAddTemplate" id="9r2-lE-jzC"/>
                                     <color key="contentTintColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -81,7 +81,7 @@ Gw
             <connections>
                 <outlet property="delegate" destination="-2" id="fMy-AI-2Wz"/>
             </connections>
-            <point key="canvasLocation" x="436.5" y="456"/>
+            <point key="canvasLocation" x="526" y="463"/>
         </window>
     </objects>
     <resources>

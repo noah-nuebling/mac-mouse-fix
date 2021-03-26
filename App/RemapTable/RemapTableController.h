@@ -17,6 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property NSArray *dataModel;
 //      ^ Is actually an NSMutableArray I think. Take care not to accidentally corrupt this!
 //      ^ Exposing this so RemapTableDataSource can use it. Might not be the cleanest solution.
+
+- (IBAction)handleEnterKeystrokeOptionSelected:(id)sender;
+- (IBAction)setConfigToUI:(id)sender;
 @end
 
 NS_ASSUME_NONNULL_END
