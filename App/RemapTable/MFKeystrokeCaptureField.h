@@ -12,8 +12,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MFKeystrokeCaptureField : NSTextField <NSTextFieldDelegate>
+typedef void (^CaptureHandler) (CGKeyCode keyCode, CGEventFlags flags);
+typedef void (^CancelHandler) (void);
+typedef void (^ClearButtonHandler) (void);
 
+@interface MFKeystrokeCaptureField : NSTextField <NSTextFieldDelegate, NSControlTextEditingDelegate>
+
+- (void)setupWithText:(NSString *)text captureHandler:(CaptureHandler)captureHandler cancelHandler:(CancelHandler)cancelHandler clearButtonHandler:(ClearButtonHandler)clearButtonHandler;
 @end
 
 NS_ASSUME_NONNULL_END

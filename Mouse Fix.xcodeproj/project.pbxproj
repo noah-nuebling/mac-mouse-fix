@@ -25,6 +25,7 @@
 		4F79A83626051E4A00076A7E /* MFNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A83526051E4A00076A7E /* MFNotification.m */; };
 		4F79C2EA260976950067B381 /* RemapTableTranslator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79C2E9260976950067B381 /* RemapTableTranslator.m */; };
 		4F7AB0552606698A0008055E /* UIStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F7AB0542606698A0008055E /* UIStrings.m */; };
+		4F92A708260F4BF000529D1F /* MFTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F92A707260F4BF000529D1F /* MFTableView.m */; };
 		4F94F60525E5EC2800D9F24A /* Mac_Mouse_FixTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60425E5EC2800D9F24A /* Mac_Mouse_FixTests.m */; };
 		4F94F61025E5EC2800D9F24A /* Mac_Mouse_FixUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60F25E5EC2800D9F24A /* Mac_Mouse_FixUITests.m */; };
 		4F94F73D25E6146C00D9F24A /* Mac Mouse Fix Helper.app in Copy Helper */ = {isa = PBXBuildFile; fileRef = 4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -215,6 +216,8 @@
 		4F79C2E9260976950067B381 /* RemapTableTranslator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapTableTranslator.m; sourceTree = "<group>"; };
 		4F7AB0532606698A0008055E /* UIStrings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIStrings.h; sourceTree = "<group>"; };
 		4F7AB0542606698A0008055E /* UIStrings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UIStrings.m; sourceTree = "<group>"; };
+		4F92A706260F4BF000529D1F /* MFTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFTableView.h; sourceTree = "<group>"; };
+		4F92A707260F4BF000529D1F /* MFTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFTableView.m; sourceTree = "<group>"; };
 		4F94F5EE25E5EC2500D9F24A /* Mac Mouse Fix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mac Mouse Fix.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F94F60025E5EC2800D9F24A /* Mac Mouse FixTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Mac Mouse FixTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F94F60425E5EC2800D9F24A /* Mac_Mouse_FixTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Mac_Mouse_FixTests.m; sourceTree = "<group>"; };
@@ -526,6 +529,8 @@
 				4F79C2E9260976950067B381 /* RemapTableTranslator.m */,
 				4FA9121B260D631700553CA8 /* MFKeystrokeCaptureField.h */,
 				4FA9121C260D631700553CA8 /* MFKeystrokeCaptureField.m */,
+				4F92A706260F4BF000529D1F /* MFTableView.h */,
+				4F92A707260F4BF000529D1F /* MFTableView.m */,
 			);
 			path = RemapTable;
 			sourceTree = "<group>";
@@ -1285,6 +1290,7 @@
 				4FF6655025F2C7B000689B77 /* NSArray+Additions.m in Sources */,
 				4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */,
 				4F44FF052606D73D00926A5E /* SharedMessagePort.m in Sources */,
+				4F92A708260F4BF000529D1F /* MFTableView.m in Sources */,
 				4F37FAD825FDFDC5004C34C4 /* MFScrollView.m in Sources */,
 				4FF665F825F2C92700689B77 /* MessagePort_App.m in Sources */,
 				4F79A82B2605074000076A7E /* NSAttributedString+Additions.m in Sources */,

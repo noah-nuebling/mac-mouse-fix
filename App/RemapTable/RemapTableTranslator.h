@@ -18,12 +18,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)initializeWithTableView:(NSTableView *)tableView;
 
-+ (NSDictionary *)getEntryFromEffectsTable:(NSArray *)effectsTable withEffectDict:(NSDictionary *)effectDict;
++ (NSDictionary *)getEntryFromEffectsMenuModel:(NSArray *)effectsTable withEffectDict:(NSDictionary *)effectDict;
 + (NSDictionary *)getEntryFromEffectsTable:(NSArray *)effectsTable withUIString:(NSString *)uiString;
 + (NSArray *)getEffectsTableForRemapsTableEntry:(NSDictionary *)tableEntry;
 
 + (NSTableCellView *)getTriggerCellWithRowDict:(NSDictionary *)rowDict;
-+ (NSTableCellView *)getEffectCellWithRowDict:(NSDictionary *)rowDict;
++ (NSTableCellView *)getEffectCellWithRowDict:(NSDictionary *)rowDict row:(NSUInteger)row;
 
 @end
 

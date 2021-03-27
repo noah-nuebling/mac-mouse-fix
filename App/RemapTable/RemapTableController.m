@@ -59,30 +59,41 @@
     [ConfigFileInterface_App writeConfigToFileAndNotifyHelper];
 }
 
+/// Helper function for `handleEnterKeystrokeOptionSelected`
+- (void)reloadDataWithTemporaryDataModel:(NSArray *)tempDataModel {
+    
+    NSArray *store = self.dataModel;
+    self.dataModel = tempDataModel;
+    [self.tableView reloadData];
+    [self.tableView displayIfNeeded]; // Need to do this because reloadData is async
+    self.dataModel = store;
+}
+
 - (IBAction)handleEnterKeystrokeOptionSelected:(id)sender {
     
-    // Get MFKeystrokeCaptureField from IB
-    NSTableCellView *keyStrokeCaptureCell = [self.tableView makeViewWithIdentifier:@"keystrokeCaptureCell" owner:self];
+    // Find table row for sender
+    NSInteger rowOfSender = -1;
     
-    // Replace popup button with capture field
-    
-    // Find popupbutton for sender
-    NSPopUpButton *popupButton;
     NSMenuItem *item = (NSMenuItem *)sender;
     NSMenu *menu = item.menu;
     for (NSInteger row = 0; row < self.dataModel.count; row++) {
         NSTableCellView *cell = [self.tableView viewAtColumn:1 row:row makeIfNecessary:YES];
         NSPopUpButton *pb = cell.subviews[0];
         if ([pb.menu isEqual:menu]) {
-            popupButton = pb;
+            rowOfSender = row;
             break;
         }
     }
-    assert(popupButton != nil);
+    assert(rowOfSender != -1);
     
-    // Replace popupbutton with keystroke capture field
-    NSTableCellView *currentCell = (NSTableCellView *)popupButton.superview;
-    [currentCell setSubviews:keyStrokeCaptureCell.subviews];
+    // Draw keystroke-capture-field
+    NSArray *dataModelWithCaptureCell = (NSArray *)[SharedUtility deepCopyOf:self.dataModel];
+    dataModelWithCaptureCell[rowOfSender][kMFRemapsKeyEffect] = @{
+        kMFActionDictKeyType: kMFActionDictTypeKeyboardShortcut,
+    };
+    [self reloadDataWithTemporaryDataModel:dataModelWithCaptureCell];
+//    [self.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:rowOfSender] byExtendingSelection:NO];
+    
 }
 
 - (IBAction)setConfigToUI:(id)sender {
@@ -230,7 +241,7 @@
 
 }
 
-#pragma mark TableViewDataSource functions
+#pragma mark - TableView data source functions
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     // Get data for this row
@@ -243,7 +254,7 @@
     if ([tableColumn.identifier isEqualToString:@"trigger"]) { // The trigger column should display the trigger as well as the modification precondition
         return [RemapTableTranslator getTriggerCellWithRowDict:rowDict];
     } else if ([tableColumn.identifier isEqualToString:@"effect"]) {
-        return [RemapTableTranslator getEffectCellWithRowDict:rowDict];
+        return [RemapTableTranslator getEffectCellWithRowDict:rowDict row:row];
     } else {
         @throw [NSException exceptionWithName:@"Unknown column identifier" reason:@"TableView is requesting data for a column with an unknown identifier" userInfo:@{@"requested data for column": tableColumn}];
         return nil;
@@ -263,7 +274,6 @@
     // ^ These lines are copied from `tableView:viewForTableColumn:row:`. Should change this cause copied code is bad.
     NSTextField *textField = view.subviews[0];
     NSMutableAttributedString *string = textField.effectiveAttributedStringValue.mutableCopy;
-    NSLog(@"STRINGGGGGG HAS ATTRIBUTES: %@", [string attributesAtIndex:0 effectiveRange:nil]);
     
     CGFloat wdth = textField.bounds.size.width; // 326 for some reason, in IB it's 323
     // ^ TODO: Test method from [Utility_App actualTextViewWidth]
