@@ -14,6 +14,7 @@
 #import "MFNotificationController.h"
 #import "AppDelegate.h"
 
+// TODO: Rename to `CaptureNotificationCreator` or `NotificationCreator` or something 
 @implementation CaptureNotifications
 
 /// Called by [RemapTableController - addRowWithHelperPayload:]

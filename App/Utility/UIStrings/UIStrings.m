@@ -8,6 +8,9 @@
 //
 
 #import "UIStrings.h"
+#import <Carbon/Carbon.h>
+#import "MASShortcut.h"
+
 
 @implementation UIStrings
 
@@ -25,6 +28,44 @@
         buttonStr = [NSString stringWithFormat:@"Button %@", @(buttonNumber)];
     }
     return buttonStr;
+}
+
+///// Returns string representation of key, if it is printable.
+///// Source: https://stackoverflow.com/a/12548163/10601702
+//+ (NSString *)stringForKey:(CGKeyCode)keyCode
+//{
+//    TISInputSourceRef currentKeyboard = TISCopyCurrentKeyboardInputSource();
+//    CFDataRef layoutData =
+//        TISGetInputSourceProperty(currentKeyboard,
+//                                  kTISPropertyUnicodeKeyLayoutData);
+//    const UCKeyboardLayout *keyboardLayout =
+//        (const UCKeyboardLayout *)CFDataGetBytePtr(layoutData);
+//
+//    UInt32 keysDown = 0;
+//    UniChar chars[4];
+//    UniCharCount realLength;
+//
+//    UCKeyTranslate(keyboardLayout,
+//                   keyCode,
+//                   kUCKeyActionDisplay,
+//                   0,
+//                   LMGetKbdType(),
+//                   kUCKeyTranslateNoDeadKeysBit,
+//                   &keysDown,
+//                   sizeof(chars) / sizeof(chars[0]),
+//                   &realLength,
+//                   chars);
+//    CFRelease(currentKeyboard);
+//
+//    CFStringRef outStrCF = CFStringCreateWithCharacters(kCFAllocatorDefault, chars, 1);
+//
+//    return (__bridge_transfer NSString *)outStrCF;
+//}
+
++ (NSString *)stringForKeyCode:(NSInteger *)keyCode {
+    MASShortcut *shortcut = [MASShortcut shortcutWithKeyCode:keyCode modifierFlags:0];
+    NSString *keyStr = shortcut.keyCodeString;
+    return keyStr;
 }
 
 @end

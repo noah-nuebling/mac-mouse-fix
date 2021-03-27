@@ -117,11 +117,11 @@
                                                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                                                 <prototypeCellViews>
                                                                     <tableCellView identifier="effectCell" id="5PH-4e-aAm">
-                                                                        <rect key="frame" x="353.5" y="0.0" width="224" height="39"/>
+                                                                        <rect key="frame" x="353.5" y="0.0" width="223" height="39"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
                                                                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7A6-Ou-8wk">
-                                                                                <rect key="frame" x="0.0" y="6" width="225" height="25"/>
+                                                                                <rect key="frame" x="0.0" y="6" width="224" height="25"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                                 <popUpButtonCell key="cell" type="push" title="Click and Drag Button 3" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="hdW-0g-MyX" id="zPv-8e-GO1">
                                                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -142,36 +142,61 @@
                                                                         </subviews>
                                                                     </tableCellView>
                                                                     <tableCellView identifier="keystrokeCaptureCell" id="ppe-fA-Qpm">
-                                                                        <rect key="frame" x="353.5" y="39" width="224" height="39"/>
+                                                                        <rect key="frame" x="353.5" y="39" width="223" height="39"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
-                                                                            <textField identifier="textField" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AQR-iV-gH6" customClass="MFKeystrokeCaptureField">
-                                                                                <rect key="frame" x="3" y="10" width="218" height="19"/>
-                                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" alignment="left" placeholderString="Enter keyboard shortcut" drawsBackground="YES" id="ImX-ib-EwN">
-                                                                                    <font key="font" metaFont="system"/>
-                                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                                    <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                                </textFieldCell>
-                                                                                <connections>
-                                                                                    <outlet property="clearButton" destination="iZc-Rb-Ylg" id="UP7-U7-O8j"/>
-                                                                                </connections>
-                                                                            </textField>
                                                                             <button identifier="clearButton" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iZc-Rb-Ylg">
-                                                                                <rect key="frame" x="202" y="10" width="14" height="20"/>
+                                                                                <rect key="frame" x="203" y="9" width="14" height="20"/>
                                                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                                 <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="xmark.circle.fill" catalog="system" imagePosition="overlaps" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="OkB-Bt-Myi">
                                                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                                     <font key="font" metaFont="system"/>
                                                                                 </buttonCell>
                                                                                 <connections>
-                                                                                    <action selector="clearButton:" target="AQR-iV-gH6" id="Srs-bk-pWn"/>
+                                                                                    <action selector="handleClearButtonAction:" target="JcL-EN-Rma" id="BS2-kJ-go1"/>
                                                                                 </connections>
                                                                             </button>
+                                                                            <scrollView focusRingType="exterior" fixedFrame="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gEj-y5-p9Y">
+                                                                                <rect key="frame" x="3" y="11" width="217" height="16"/>
+                                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                                                <clipView key="contentView" focusRingType="exterior" drawsBackground="NO" id="2dn-db-91A">
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="217" height="16"/>
+                                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                                    <subviews>
+                                                                                        <textView identifier="keystrokeCaptureView" focusRingType="exterior" drawsBackground="NO" importsGraphics="NO" richText="NO" verticallyResizable="YES" spellingCorrection="YES" smartInsertDelete="YES" id="JcL-EN-Rma" customClass="MFKeystrokeCaptureView">
+                                                                                            <rect key="frame" x="0.0" y="0.0" width="217" height="16"/>
+                                                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                                            <size key="minSize" width="217" height="16"/>
+                                                                                            <size key="maxSize" width="240" height="10000000"/>
+                                                                                            <attributedString key="textStorage">
+                                                                                                <fragment content="Text go here">
+                                                                                                    <attributes>
+                                                                                                        <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                                                        <font key="NSFont" metaFont="system"/>
+                                                                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                                                    </attributes>
+                                                                                                </fragment>
+                                                                                            </attributedString>
+                                                                                            <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                                            <connections>
+                                                                                                <outlet property="clearButton" destination="iZc-Rb-Ylg" id="gRj-z1-6xC"/>
+                                                                                            </connections>
+                                                                                        </textView>
+                                                                                    </subviews>
+                                                                                    <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                </clipView>
+                                                                                <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="52x-d1-y0Y">
+                                                                                    <rect key="frame" x="-100" y="-100" width="240" height="16"/>
+                                                                                    <autoresizingMask key="autoresizingMask"/>
+                                                                                </scroller>
+                                                                                <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="MDL-nX-3AX">
+                                                                                    <rect key="frame" x="201" y="0.0" width="16" height="16"/>
+                                                                                    <autoresizingMask key="autoresizingMask"/>
+                                                                                </scroller>
+                                                                            </scrollView>
                                                                         </subviews>
-                                                                        <connections>
-                                                                            <outlet property="textField" destination="AQR-iV-gH6" id="HiO-21-CT8"/>
-                                                                        </connections>
                                                                     </tableCellView>
                                                                 </prototypeCellViews>
                                                             </tableColumn>

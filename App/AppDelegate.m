@@ -21,6 +21,7 @@
 #import "HelperServices.h"
 #import "SharedUtility.h"
 #import "MFNotificationController.h"
+#import "NSView+Additions.h"
 
 @interface AppDelegate ()
 
@@ -159,12 +160,11 @@ NSTimer *removeAccOverlayTimer;
     
     BOOL enb = enable.boolValue;
     
-    NSArray *baseArray = [Utility_App subviewsForView:self.window.contentView withIdentifier:@"baseView"];
-    NSView *baseView = baseArray[0];
-    NSBox *preferenceBox = (NSBox *)[Utility_App subviewsForView:baseView withIdentifier:@"preferenceBox"][0];
+    NSView *baseView = [self.window.contentView subviewsWithIdentifier:@"baseView"][0];
+    NSBox *preferenceBox = (NSBox *)[baseView subviewsWithIdentifier:@"preferenceBox"][0]; // Should use outlets instead of this
     
     
-    NSArray<NSView *> *recursiveSubviews = [Utility_App subviewsRecursiveForView:preferenceBox.contentView];
+    NSArray<NSView *> *recursiveSubviews = [preferenceBox.contentView nestedSubviews];
     for (NSObject *v in recursiveSubviews) {
         if ([[v class] isSubclassOfClass:[NSControl class]]) {
             [(NSControl *)v setEnabled:enb];

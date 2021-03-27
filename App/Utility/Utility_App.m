@@ -13,26 +13,6 @@
 
 @implementation Utility_App
 
-+ (NSArray *)subviewsForView:(NSView *)view withIdentifier:(NSString *)identifier {
-    
-    NSMutableArray *subviews = [[NSMutableArray alloc] init];
-    for (NSView *v in view.subviews) {
-        if ([v.identifier isEqualToString:identifier]) {
-            [subviews addObject:v];
-        }
-    }
-    return subviews;
-}
-+ (NSArray<NSView *> *)subviewsRecursiveForView:(NSView *)view {
-    
-    NSArray<NSView *> *subviews = view.subviews;
-    NSArray<NSArray<NSView *> *> *recursiveSubviews = [subviews map:^id _Nonnull(NSView *mappedView) {
-        return [self subviewsRecursiveForView:mappedView];
-    }];
-    NSArray<NSView *> *recursiveSubviewsFlat = [recursiveSubviews flattenedArray];
-    return [view.subviews arrayByAddingObjectsFromArray:recursiveSubviewsFlat];
-}
-
 + (void)centerWindow:(NSWindow *)win atPoint:(NSPoint)pt {
     
     NSRect frm = win.frame;

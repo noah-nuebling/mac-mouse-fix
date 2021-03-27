@@ -1,38 +1,38 @@
 //
 // --------------------------------------------------------------------------
-// MFKeystrokeCaptureField.m
+// MFKeystrokeCaptureView.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2021
 // Licensed under MIT
 // --------------------------------------------------------------------------
 //
 
-#import "MFKeystrokeCaptureField.h"
+#import "MFKeystrokeCaptureView.h"
 #import "AppDelegate.h"
-#import "SharedUtility.h"
 
-@interface MFKeystrokeCaptureField ()
+@interface MFKeystrokeCaptureView ()
 
 @property IBOutlet NSButton *clearButton;
 
 @end
 
-@implementation MFKeystrokeCaptureField {
-
+@implementation MFKeystrokeCaptureView {
+    
     CaptureHandler _captureHandler;
     CancelHandler _cancelHandler;
     ClearButtonHandler _clearButtonHandler;
-    NSEvent *capturedEvent;
+//    NSEvent *capturedEvent;
 }
+
 
 - (void)setupWithText:(NSString *)text captureHandler:(CaptureHandler)captureHandler cancelHandler:(CancelHandler)cancelHandler clearButtonHandler:(ClearButtonHandler)clearButtonHandler {
 
 #if DEBUG
-    NSLog(@"Setting up keystroke capture field");
+    NSLog(@"Setting up keystroke capture view");
 #endif
 
     self.delegate = self;
-    self.stringValue = text;
+    self.string = text;
     _captureHandler = captureHandler;
     _cancelHandler = cancelHandler;
     _clearButtonHandler = clearButtonHandler;
@@ -49,7 +49,7 @@
     self.clearButton.hidden = NO;
 }
 
-- (IBAction)clearButton:(id)sender {
+- (IBAction)handleClearButtonAction:(id)sender {
     _clearButtonHandler();
 }
 
@@ -69,7 +69,7 @@
 
 - (void)controlTextDidChange:(NSNotification *)obj {
 
-    if ([self.stringValue isEqual:@""]) {
+    if ([self.string isEqual:@""]) {
         self.clearButton.hidden = YES;
     } else {
         self.clearButton.hidden = NO;
@@ -84,7 +84,7 @@
 }
 
 - (void)handleResignedFirstResponder {
-    if (self.stringValue == nil || [self.stringValue isEqual:@""]) {
+    if (self.string == nil || [self.string isEqual:@""]) {
         _cancelHandler();
     }
 }
@@ -103,29 +103,10 @@
     
     return superBOOL;
 }
-
-- (void)textDidEndEditing:(NSNotification *)notification {
-    [super textDidEndEditing:notification];
-    
-    [self handleResignedFirstResponder];
-    
-#if DEBUG
-    NSLog(@"DID END EDITING");
-#endif
-    
-}
-
-
-/// This is never called at all
-- (void)textDidBeginEditing:(NSNotification *)notification {
-    [super textDidBeginEditing:notification];
-    
-#if DEBUG
-    NSLog(@"DID BEGIN EDIT");
-#endif
-}
 /// This is called too often and at weird times (always right before the `becomeFirstResponder` call)
 - (BOOL)resignFirstResponder {
+    
+    [self handleResignedFirstResponder];
 
 #if DEBUG
     NSLog(@"RESIGN FIRST RESPONDER");
@@ -134,6 +115,15 @@
     BOOL superBOOL = [super resignFirstResponder];
 
     return superBOOL;
+}
+
+#pragma mark - Draw focus ring
+
+- (void)drawFocusRingMask {
+  NSRectFill([self bounds]);
+}
+- (NSRect)focusRingMaskBounds {
+  return [self bounds];
 }
 
 @end

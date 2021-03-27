@@ -15,8 +15,9 @@
 #import "NSTextField+Additions.h"
 #import "ConfigFileInterface_App.h"
 #import "RemapTableController.h"
-#import "MFKeystrokeCaptureField.h"
+#import "MFKeystrokeCaptureView.h"
 #import "AppDelegate.h"
+#import "NSView+Additions.h"
 
 @interface RemapTableTranslator ()
 
@@ -251,11 +252,7 @@ static NSString *getStringForKeyStroke(NSNumber *keyCodeFromDataModel, NSNumber 
     } else {
         // Get key string
         CGKeyCode keyCode = keyCodeFromDataModel.unsignedShortValue;
-        CGEventRef e = CGEventCreateKeyboardEvent(nil, keyCode, NO);
-//        CGEventFlags flags = flagsFromDataModel.unsignedLongValue;
-//        CGEventSetFlags(e, flags);
-        NSEvent *eNS = [NSEvent eventWithCGEvent:e];
-        NSString *keyStr = eNS.characters.capitalizedString;
+        NSString *keyStr = [UIStrings stringForKeyCode:keyCode];
         // Get modifier string
         NSString *flagsStr = getKeyboardModifierString(flagsFromDataModel);
         captureFieldContent = [NSString stringWithFormat:@"%@%@",flagsStr, keyStr];
@@ -286,13 +283,7 @@ static NSString *getStringForKeyStroke(NSNumber *keyCodeFromDataModel, NSNumber 
         // Get MFKeystrokeCaptureCell instance from IB
         NSTableCellView *keyStrokeCaptureCell = [self.tableView makeViewWithIdentifier:@"keystrokeCaptureCell" owner:self];
         // Get capture field
-        MFKeystrokeCaptureField *keyStrokeCaptureField = (MFKeystrokeCaptureField *)keyStrokeCaptureCell.textField;
-        
-        
-        // Using dispatch_async to execute this after the tableView has loaded, otherwise crash.
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            [AppDelegate.mainWindow makeFirstResponder:keyStrokeCaptureField];
-//        });
+        MFKeystrokeCaptureView *keyStrokeCaptureField = (MFKeystrokeCaptureView *)[keyStrokeCaptureCell nestedSubviewsWithIdentifier:@"keystrokeCaptureView"][0];
         
         [keyStrokeCaptureField setupWithText:captureFieldContent captureHandler:^(CGKeyCode keyCode, CGEventFlags flags) {
             
