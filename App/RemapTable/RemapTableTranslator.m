@@ -60,12 +60,8 @@ NSTableView *_tableView;
 // Noah from future: an 'effectsTable' should probably be called an 'effectButtonMenuModel' or 'effectsMenuModel' or 'effectOptionsModel' or something else that's more descriptive and less close to 'remapsTable'
 
 static NSDictionary *separatorEffectsTableEntry() {
-    return @{@"noeffect": @"separator"};
+    return @{@"isSeparator": @YES};
 }
-// Hideablility doesn't seem to work on separators
-//static NSDictionary *hideableSeparatorEffectsTableEntry() {
-//    return @{@"noeffect": @"separator", @"hideable": @YES};
-//}
 static NSArray *getScrollEffectsTable() {
     NSArray *scrollEffectsTable = @[
         @{@"ui": @"Zoom in or out", @"tool": @"Zoom in or out in Safari, Maps, and other apps \n \nWorks like Pinch to Zoom on an Apple Trackpad" , @"dict": @{}
@@ -97,9 +93,12 @@ static NSArray *getDragEffectsTable() {
     ];
     return dragEffectsTable;
 }
-static NSArray *getOneShotEffectsTable(MFMouseButtonNumber buttonNumber) {
+static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
     
-    NSArray *oneShotEffectsTable = @[
+    MFMouseButtonNumber buttonNumber = ((NSNumber *)rowDict[kMFRemapsKeyTrigger][kMFButtonTriggerKeyButtonNumber]).unsignedIntValue;
+    NSDictionary *effectDict = rowDict[kMFRemapsKeyEffect];
+    
+    NSMutableArray *oneShotEffectsTable = @[
         @{@"ui": @"Mission Control", @"tool": @"Show Mission Control", @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHMissionControl)
@@ -151,24 +150,47 @@ static NSArray *getOneShotEffectsTable(MFMouseButtonNumber buttonNumber) {
                   kMFActionDictKeyGenericVariant: kMFNavigationSwipeVariantRight
         }},
         separatorEffectsTableEntry(),
-        @{@"ui": @"Keyboard shortcut...", @"tool": @"Use a keyboard shortcut right from your mouse", @"enterKeystrokeEntry": @YES},
-    ];
+        @{@"ui": @"Keyboard shortcut...", @"tool": @"Use a keyboard shortcut right from your mouse", @"keyCaptureEntry": @YES},
+    ].mutableCopy;
     
-    if (buttonNumber != 3) { // We already have the "Open Link in New Tab" entry for button 3
-        NSDictionary *buttonClickEntry = @{
-           @"ui": [NSString stringWithFormat:@"%@ Click", [UIStrings getButtonString:buttonNumber]],
-           @"tool": [NSString stringWithFormat:@"Simulate Clicking %@", [UIStrings getButtonStringToolTip:buttonNumber]],
-           @"hideable": @YES,
-           @"dict": @{
-               kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
-               kMFActionDictKeyMouseButtonClicksVariantButtonNumber: @(buttonNumber),
-               kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks: @1,
-           }
-        };
-        NSMutableArray *temp = oneShotEffectsTable.mutableCopy;
-        [temp insertObject:buttonClickEntry atIndex:9];
-        oneShotEffectsTable = temp;
-    }
+    // Insert button specific entry
+    
+//    if (buttonNumber != 3) { // We already have the "Open Link in New Tab" entry for button 3
+    NSDictionary *buttonClickEntry = @{
+       @"ui": [NSString stringWithFormat:@"%@ Click", [UIStrings getButtonString:buttonNumber]],
+       @"tool": [NSString stringWithFormat:@"Simulate Clicking %@", [UIStrings getButtonStringToolTip:buttonNumber]],
+       @"hideable": @NO,
+       @"dict": @{
+           kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
+           kMFActionDictKeyMouseButtonClicksVariantButtonNumber: @(buttonNumber),
+           kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks: @1,
+       }
+    };
+    [oneShotEffectsTable insertObject:buttonClickEntry atIndex:9];
+//    }
+    
+    // Insert entry for keyboard shortcut effect
+    
+    if ([effectDict[kMFActionDictKeyType] isEqual:kMFActionDictTypeKeyboardShortcut]) {
+        // Get index for new entry (right after keyCaptureEntry)
+        NSIndexSet *keyCaptureIndexes = [oneShotEffectsTable indexesOfObjectsPassingTest:^BOOL(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            return [obj[@"keyCaptureEntry"] isEqual:@YES];
+        }];
+        assert(keyCaptureIndexes.count == 1);
+        NSUInteger shortcutIndex = keyCaptureIndexes.firstIndex + 1;
+        // Get keycode and flags
+        CGKeyCode keyCode = ((NSNumber *)effectDict[kMFActionDictKeyKeyboardShortcutVariantKeycode]).unsignedShortValue;
+        CGEventFlags flags = ((NSNumber *)effectDict[kMFActionDictKeyKeyboardShortcutVariantModifierFlags]).unsignedLongValue;
+        // Get shortcut string
+        NSString *shortcutString = [UIStrings getStringForKeyCode:keyCode flags:flags];
+        // Create and insert new entry
+        [oneShotEffectsTable insertObject:@{
+            @"ui": shortcutString,
+            @"tool": fstring(@"Use the '%@' shortcut", shortcutString),
+            @"dict": effectDict,
+            @"indentation": @1,
+        } atIndex:shortcutIndex];
+    };
     
     return oneShotEffectsTable;
 }
@@ -192,10 +214,12 @@ static NSArray *getOneShotEffectsTable(MFMouseButtonNumber buttonNumber) {
     NSDictionary *effectsTableEntry = effectsTable[inds.firstIndex];
     return effectsTableEntry;
 }
-+ (NSArray *)getEffectsTableForRemapsTableEntry:(NSDictionary *)tableEntry {
+
++ (NSArray *)getEffectsTableForRemapsTableEntry:(NSDictionary *)rowDict {
+    
     // Get info about what kind of trigger we're dealing with
     NSString *triggerType = @""; // Options "oneShot", "drag", "scroll"
-    id triggerValue = tableEntry[kMFRemapsKeyTrigger];
+    id triggerValue = rowDict[kMFRemapsKeyTrigger];
     if ([triggerValue isKindOfClass:NSDictionary.class]) {
         triggerType = @"button";
     } else if ([triggerValue isKindOfClass:NSString.class]) {
@@ -213,8 +237,7 @@ static NSArray *getOneShotEffectsTable(MFMouseButtonNumber buttonNumber) {
     if ([triggerType isEqualToString:@"button"]) {
         // We determined that trigger value is a dict -> convert to dict
         NSDictionary *buttonTriggerDict = (NSDictionary *)triggerValue;
-        MFMouseButtonNumber buttonNumber = ((NSNumber *)buttonTriggerDict[kMFButtonTriggerKeyButtonNumber]).intValue;
-        effectsTable = getOneShotEffectsTable(buttonNumber);
+        effectsTable = getOneShotEffectsTable(rowDict);
     } else if ([triggerType isEqualToString:@"drag"]) {
         effectsTable = getDragEffectsTable();
     } else if ([triggerType isEqualToString:@"scroll"]) {
@@ -249,13 +272,13 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
 + (NSTableCellView *)getEffectCellWithRowDict:(NSDictionary *)rowDict row:(NSUInteger)row {
     
     rowDict = rowDict.mutableCopy; // Not sure if necessary
-    NSArray *effectsMenuModel = [self getEffectsTableForRemapsTableEntry:rowDict];
+    NSArray *effectTable = [self getEffectsTableForRemapsTableEntry:rowDict];
     // Create trigger cell and fill out popup button contained in it
     NSTableCellView *triggerCell = [self.tableView makeViewWithIdentifier:@"effectCell" owner:nil];
     
     NSDictionary *effectDict = rowDict[kMFRemapsKeyEffect];
     
-    if ([effectDict[kMFActionDictKeyType] isEqual:kMFActionDictTypeKeyboardShortcut]) {
+    if (false) {
 
         NSNumber *keyCodeFromDataModel = effectDict[kMFActionDictKeyKeyboardShortcutVariantKeycode];
         NSNumber *flagsFromDataModel = effectDict[kMFActionDictKeyKeyboardShortcutVariantModifierFlags];
@@ -292,8 +315,8 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
             
         } clearButtonHandler:^{
             
-            MFMouseButtonNumber buttonNumber = [RemapTableUtility triggerButtonForRow:row tableViewDataModel:self.dataModel];
-            self.dataModel[row][kMFRemapsKeyEffect] = getOneShotEffectsTable(buttonNumber)[0][@"dict"];
+//            MFMouseButtonNumber buttonNumber = [RemapTableUtility triggerButtonForRow:row tableViewDataModel:self.dataModel];
+            self.dataModel[row][kMFRemapsKeyEffect] = getOneShotEffectsTable(rowDict)[0][@"dict"];
             
             [self.tableView reloadData];
             [self.controller setConfigToUI:nil];
@@ -311,30 +334,34 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         // Delete existing menu items from IB
         [popupButton removeAllItems];
         // Iterate oneshot effects table and fill popupButton
-        for (NSDictionary *effectsMenuEntryDescriptor in effectsMenuModel) {
+        for (NSDictionary *effectTableEntry in effectTable) {
             NSMenuItem *i;
-            if ([effectsMenuEntryDescriptor[@"noeffect"] isEqualToString: @"separator"]) {
+            if ([effectTableEntry[@"isSeparator"] isEqual: @YES]) {
                 i = (NSMenuItem *)NSMenuItem.separatorItem;
             } else {
-                i = [[NSMenuItem alloc] initWithTitle:effectsMenuEntryDescriptor[@"ui"] action:@selector(setConfigToUI:) keyEquivalent:@""];
+                i = [[NSMenuItem alloc] init];
+                i.title = effectTableEntry[@"ui"];
+                i.action = @selector(setConfigToUI:);
                 i.target = self.tableView.delegate;
-                i.toolTip = effectsMenuEntryDescriptor[@"tool"];
+                i.toolTip = effectTableEntry[@"tool"];
                 
-                if ([effectsMenuEntryDescriptor[@"enterKeystrokeEntry"] isEqual:@YES]) {
+                if ([effectTableEntry[@"keyCaptureEntry"] isEqual:@YES]) {
                     i.action = @selector(handleEnterKeystrokeOptionSelected:);
                 }
-                if ([effectsMenuEntryDescriptor[@"alternate"] isEqual:@YES]) {
+                if ([effectTableEntry[@"alternate"] isEqual:@YES]) {
                     i.alternate = YES;
                     i.keyEquivalentModifierMask = NSEventModifierFlagOption;
                 }
-                if ([effectsMenuEntryDescriptor[@"hideable"] isEqual:@YES]) {
+                if ([effectTableEntry[@"hideable"] isEqual:@YES]) {
                     NSMenuItem *h = [[NSMenuItem alloc] init];
                     h.view = [[NSView alloc] initWithFrame:NSZeroRect];
                     [popupButton.menu addItem:h];
                     i.alternate = YES;
                     i.keyEquivalentModifierMask = NSEventModifierFlagOption;
                 }
-    //            i.target = self.tableView.delegate;
+                if (effectTableEntry[@"indentation"] != nil) {
+                    i.indentationLevel = ((NSNumber *)effectTableEntry[@"indentation"]).unsignedIntegerValue;
+                }
             }
             [popupButton.menu addItem:i];
         }
@@ -445,9 +472,9 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
             buttonStrTool = [UIStrings getButtonStringToolTip:btn.intValue];
         } else if (keyboardModifiers != nil) {
             // Extract keyboard modifiers
-            keyboardModStr = [UIStrings getKeyboardModifierString:keyboardModifiers];
+            keyboardModStr = [UIStrings getKeyboardModifierString:((NSNumber *)keyboardModifiers).unsignedIntegerValue];
             keyboardModStr = [keyboardModStr stringByAppendingString:@" "];
-            keyboardModStrTool = [UIStrings getKeyboardModifierStringToolTip:keyboardModifiers];
+            keyboardModStrTool = [UIStrings getKeyboardModifierStringToolTip:((NSNumber *)keyboardModifiers).unsignedIntegerValue];
             rowDict[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyKeyboard] = nil;
         } else {
             @throw [NSException exceptionWithName:@"No precondition" reason:@"Modified drag or scroll has no preconditions" userInfo:@{@"Precond dict": (rowDict[kMFRemapsKeyModificationPrecondition])}];
@@ -483,9 +510,9 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     // Get keyboard modifier strings
     
     NSNumber *flags = (NSNumber *)rowDict[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyKeyboard];
-    NSString *kbModRaw = [UIStrings getKeyboardModifierString:flags];
+    NSString *kbModRaw = [UIStrings getKeyboardModifierString:((NSNumber *)flags).unsignedIntegerValue];
     kbModRaw = [kbModRaw stringByAppendingString:@" "];
-    NSString *kbModTooltipRaw = [UIStrings getKeyboardModifierStringToolTip:flags];
+    NSString *kbModTooltipRaw = [UIStrings getKeyboardModifierStringToolTip:((NSNumber *)flags).unsignedIntegerValue];
     NSString *kbMod = @"";
     NSString *kbModTool = @"";
     if (![kbModRaw isEqualToString:@""]) {

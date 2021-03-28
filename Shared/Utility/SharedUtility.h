@@ -12,6 +12,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+#define fstring(format, ...) [NSString stringWithFormat:(format), ##__VA_ARGS__]
+
 @interface SharedUtility : NSObject
 
 typedef void(*MFCTLCallback)(NSTask *task, NSPipe *output, NSError *error);
