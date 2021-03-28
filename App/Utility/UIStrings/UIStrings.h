@@ -8,13 +8,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Constants.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface UIStrings : NSObject
 
-+ (NSString *)getButtonString:(int)buttonNumber;
-+ (NSString *)stringForKeyCode:(NSInteger *)keyCode;
++ (NSString *)stringForKeyCode:(NSInteger)keyCode;
++ (NSString *)getButtonString:(MFMouseButtonNumber)buttonNumber;
++ (NSString *)getButtonStringToolTip:(MFMouseButtonNumber)buttonNumber;
++ (NSString *)getKeyboardModifierString:(CGEventFlags)flags;
++ (NSString *)getKeyboardModifierStringToolTip:(CGEventFlags)flags;
++ (NSString *)getStringForKeyCode:(CGKeyCode)keyCode flags:(CGEventFlags)flags;
 
 @end
 

@@ -76,9 +76,14 @@ static NSURL *_backupConfigURL; // backup_config aka default_config
     NSError *readErr;
     NSMutableDictionary *configDict = [NSPropertyListSerialization propertyListWithData:configData options:NSPropertyListMutableContainersAndLeaves format:nil error:&readErr];
     if (readErr) {
-        NSLog(@"ERROR Reading config File: %@", readErr);
+        NSLog(@"Error Reading config File: %@", readErr);
         // TODO: handle this error
     }
+    
+#if DEBUG
+    NSLog(@"Loaded config from file: %@", configDict);
+#endif
+    
     self.config = configDict;
 }
 

@@ -15,9 +15,10 @@
 #import "NSTextField+Additions.h"
 #import "ConfigFileInterface_App.h"
 #import "RemapTableController.h"
-#import "MFKeystrokeCaptureView.h"
+#import "MFKeystrokeCaptureTextView.h"
 #import "AppDelegate.h"
 #import "NSView+Additions.h"
+#import "RemapTableUtility.h"
 
 @interface RemapTableTranslator ()
 
@@ -87,7 +88,7 @@ static NSArray *getDragEffectsTable() {
 //        }},
 //        separatorEffectsTableEntry(),
         @{@"ui": [NSString stringWithFormat:@"Click and Drag %@", [UIStrings getButtonString:3]],
-          @"tool": [NSString stringWithFormat: @"Works like clicking and dragging %@\nUsed to rotate in some 3D software like Blender", getButtonStringToolTip(3)],
+          @"tool": [NSString stringWithFormat: @"Works like clicking and dragging %@\nUsed to rotate in some 3D software like Blender", [UIStrings getButtonStringToolTip:3]],
           @"hideable": @YES,
           @"dict": @{
                   kMFModifiedDragDictKeyType: kMFModifiedDragTypeFakeDrag,
@@ -96,9 +97,7 @@ static NSArray *getDragEffectsTable() {
     ];
     return dragEffectsTable;
 }
-static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
-    
-    int buttonNumber = ((NSNumber *)buttonTriggerDict[kMFButtonTriggerKeyButtonNumber]).intValue;
+static NSArray *getOneShotEffectsTable(MFMouseButtonNumber buttonNumber) {
     
     NSArray *oneShotEffectsTable = @[
         @{@"ui": @"Mission Control", @"tool": @"Show Mission Control", @"dict": @{
@@ -127,7 +126,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
                   kMFActionDictKeyType: kMFActionDictTypeSmartZoom,
         }},
         @{@"ui": @"Open Link in New Tab",
-          @"tool": [NSString stringWithFormat:@"Open links in a new tab, paste text in the Terminal, and more. \n \nWorks like clicking %@ on a standard mouse.", getButtonStringToolTip(3)],
+          @"tool": [NSString stringWithFormat:@"Open links in a new tab, paste text in the Terminal, and more. \n \nWorks like clicking %@ on a standard mouse.", [UIStrings getButtonStringToolTip:3]],
           @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
                   kMFActionDictKeyMouseButtonClicksVariantButtonNumber: @3,
@@ -158,7 +157,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
     if (buttonNumber != 3) { // We already have the "Open Link in New Tab" entry for button 3
         NSDictionary *buttonClickEntry = @{
            @"ui": [NSString stringWithFormat:@"%@ Click", [UIStrings getButtonString:buttonNumber]],
-           @"tool": [NSString stringWithFormat:@"Simulate Clicking %@", getButtonStringToolTip(buttonNumber)],
+           @"tool": [NSString stringWithFormat:@"Simulate Clicking %@", [UIStrings getButtonStringToolTip:buttonNumber]],
            @"hideable": @YES,
            @"dict": @{
                kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
@@ -214,7 +213,8 @@ static NSArray *getOneShotEffectsTable(NSDictionary *buttonTriggerDict) {
     if ([triggerType isEqualToString:@"button"]) {
         // We determined that trigger value is a dict -> convert to dict
         NSDictionary *buttonTriggerDict = (NSDictionary *)triggerValue;
-        effectsTable = getOneShotEffectsTable(buttonTriggerDict);
+        MFMouseButtonNumber buttonNumber = ((NSNumber *)buttonTriggerDict[kMFButtonTriggerKeyButtonNumber]).intValue;
+        effectsTable = getOneShotEffectsTable(buttonNumber);
     } else if ([triggerType isEqualToString:@"drag"]) {
         effectsTable = getDragEffectsTable();
     } else if ([triggerType isEqualToString:@"scroll"]) {
@@ -235,7 +235,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         if ([effectDict[kMFActionDictKeyType] isEqual:kMFActionDictTypeKeyboardShortcut]) {
             NSNumber *keyCode = effectDict[kMFActionDictKeyKeyboardShortcutVariantKeycode];
             NSNumber *flags = effectDict[kMFActionDictKeyKeyboardShortcutVariantModifierFlags];
-            name = getStringForKeyStroke(keyCode, flags);
+            name = [UIStrings getStringForKeyCode:keyCode.unsignedIntValue flags:flags.unsignedIntValue];
         } else {
             // Get title for effectDict from effectsTable
             NSDictionary *effectsMenuModelEntry = [RemapTableTranslator getEntryFromEffectsMenuModel:effectsTable withEffectDict:effectDict];
@@ -243,21 +243,6 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         }
     }
     return name;
-}
-
-static NSString *getStringForKeyStroke(NSNumber *keyCodeFromDataModel, NSNumber *flagsFromDataModel) {
-    NSString *captureFieldContent;
-    if (keyCodeFromDataModel == nil || flagsFromDataModel == nil) {
-        captureFieldContent = @"";
-    } else {
-        // Get key string
-        CGKeyCode keyCode = keyCodeFromDataModel.unsignedShortValue;
-        NSString *keyStr = [UIStrings stringForKeyCode:keyCode];
-        // Get modifier string
-        NSString *flagsStr = getKeyboardModifierString(flagsFromDataModel);
-        captureFieldContent = [NSString stringWithFormat:@"%@%@",flagsStr, keyStr];
-    }
-    return captureFieldContent;
 }
 
 /// \discussion We only need the `row` parameter to insert data into the datamodel, which we shouldn't be doing from this function to begin with
@@ -275,17 +260,16 @@ static NSString *getStringForKeyStroke(NSNumber *keyCodeFromDataModel, NSNumber 
         NSNumber *keyCodeFromDataModel = effectDict[kMFActionDictKeyKeyboardShortcutVariantKeycode];
         NSNumber *flagsFromDataModel = effectDict[kMFActionDictKeyKeyboardShortcutVariantModifierFlags];
         
-        // Get text content for the captureField
-        NSString *captureFieldContent = getStringForKeyStroke(keyCodeFromDataModel, flagsFromDataModel);
-        
         // Create captureField
         
         // Get MFKeystrokeCaptureCell instance from IB
         NSTableCellView *keyStrokeCaptureCell = [self.tableView makeViewWithIdentifier:@"keystrokeCaptureCell" owner:self];
         // Get capture field
-        MFKeystrokeCaptureView *keyStrokeCaptureField = (MFKeystrokeCaptureView *)[keyStrokeCaptureCell nestedSubviewsWithIdentifier:@"keystrokeCaptureView"][0];
+        MFKeystrokeCaptureTextView *keyStrokeCaptureField = (MFKeystrokeCaptureTextView *)[keyStrokeCaptureCell nestedSubviewsWithIdentifier:@"keystrokeCaptureView"][0];
         
-        [keyStrokeCaptureField setupWithText:captureFieldContent captureHandler:^(CGKeyCode keyCode, CGEventFlags flags) {
+        [keyStrokeCaptureField setupWithCapturedKeyCode:keyCodeFromDataModel
+                                  capturedModifierFlags:flagsFromDataModel
+         captureHandler:^(CGKeyCode keyCode, CGEventFlags flags) {
             
             // Create new effectDict
             NSDictionary *newEffectDict = @{
@@ -298,6 +282,7 @@ static NSString *getStringForKeyStroke(NSNumber *keyCodeFromDataModel, NSNumber 
             //  Manipulating the datamodel should probably be done by RemapTableController, not RemapTableTranslator, and definitely not in this method, but oh well.
             self.dataModel[row][kMFRemapsKeyEffect] = newEffectDict;
             [self.tableView reloadData];
+            [self.controller setConfigToUI:nil];
             
         } cancelHandler:^{
             
@@ -306,7 +291,16 @@ static NSString *getStringForKeyStroke(NSNumber *keyCodeFromDataModel, NSNumber 
             //  This used to restore original state if the capture field has been created through `reloadDataWithTemporaryDataModel:`
             
         } clearButtonHandler:^{
-            return;
+            
+            MFMouseButtonNumber buttonNumber = [RemapTableUtility triggerButtonForRow:row tableViewDataModel:self.dataModel];
+            self.dataModel[row][kMFRemapsKeyEffect] = getOneShotEffectsTable(buttonNumber)[0][@"dict"];
+            
+            [self.tableView reloadData];
+            [self.controller setConfigToUI:nil];
+            
+            NSPopUpButton *popUpButton = [RemapTableUtility getPopUpButtonAtRow:row fromTableView:self.tableView];
+            [popUpButton performClick:nil];
+            
         }];
         
         triggerCell = keyStrokeCaptureCell;
@@ -351,6 +345,7 @@ static NSString *getStringForKeyStroke(NSNumber *keyCodeFromDataModel, NSNumber 
         if (title) {
             [popupButton selectItemWithTitle:title];
         }
+       
     }
     
     return triggerCell;
@@ -406,7 +401,7 @@ static NSString *getStringForKeyStroke(NSNumber *keyCodeFromDataModel, NSNumber 
         }
         // btn
         NSString * buttonStr = [UIStrings getButtonString:btn.intValue];
-        NSString * buttonStrTool = getButtonStringToolTip(btn.intValue);
+        NSString * buttonStrTool = [UIStrings getButtonStringToolTip:btn.intValue];
         if (btn.intValue < 1) {
             @throw [NSException exceptionWithName:@"Invalid button number" reason:@"Remaps contain invalid button number" userInfo:@{@"Trigger dict containing invalid value": trigger}];
         }
@@ -447,12 +442,12 @@ static NSString *getStringForKeyStroke(NSNumber *keyCodeFromDataModel, NSNumber 
             levelStr = clickLevelToUIString[lvl];
             clickStr = @"Click ";
             buttonStr = [UIStrings getButtonString:btn.intValue];
-            buttonStrTool = getButtonStringToolTip(btn.intValue);
+            buttonStrTool = [UIStrings getButtonStringToolTip:btn.intValue];
         } else if (keyboardModifiers != nil) {
             // Extract keyboard modifiers
-            keyboardModStr = getKeyboardModifierString(keyboardModifiers);
+            keyboardModStr = [UIStrings getKeyboardModifierString:keyboardModifiers];
             keyboardModStr = [keyboardModStr stringByAppendingString:@" "];
-            keyboardModStrTool = getKeyboardModifierStringToolTip(keyboardModifiers);
+            keyboardModStrTool = [UIStrings getKeyboardModifierStringToolTip:keyboardModifiers];
             rowDict[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyKeyboard] = nil;
         } else {
             @throw [NSException exceptionWithName:@"No precondition" reason:@"Modified drag or scroll has no preconditions" userInfo:@{@"Precond dict": (rowDict[kMFRemapsKeyModificationPrecondition])}];
@@ -488,9 +483,9 @@ static NSString *getStringForKeyStroke(NSNumber *keyCodeFromDataModel, NSNumber 
     // Get keyboard modifier strings
     
     NSNumber *flags = (NSNumber *)rowDict[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyKeyboard];
-    NSString *kbModRaw = getKeyboardModifierString(flags);
+    NSString *kbModRaw = [UIStrings getKeyboardModifierString:flags];
     kbModRaw = [kbModRaw stringByAppendingString:@" "];
-    NSString *kbModTooltipRaw = getKeyboardModifierStringToolTip(flags);
+    NSString *kbModTooltipRaw = [UIStrings getKeyboardModifierStringToolTip:flags];
     NSString *kbMod = @"";
     NSString *kbModTool = @"";
     if (![kbModRaw isEqualToString:@""]) {
@@ -510,7 +505,7 @@ static NSString *getStringForKeyStroke(NSNumber *keyCodeFromDataModel, NSNumber 
         NSString *buttonStr;
         NSString *buttonStrTool;
         buttonStr = [UIStrings getButtonString:btn.intValue];
-        buttonStrTool = getButtonStringToolTip(btn.intValue);
+        buttonStrTool = [UIStrings getButtonStringToolTip:btn.intValue];
         levelStr = clickLevelToUIString[lvl];
         NSString *buttonModString = [NSString stringWithFormat:@"%@Click %@ + ", levelStr, buttonStr];
         NSString *buttonModStringTool = [NSString stringWithFormat:@"%@Click and Hold %@, then ", levelStr, buttonStrTool];
@@ -537,54 +532,6 @@ static NSString *getStringForKeyStroke(NSNumber *keyCodeFromDataModel, NSNumber 
     triggerCell.textField.attributedStringValue = fullTriggerCellString;
     triggerCell.textField.toolTip = fullTriggerCellTooltipString.string;
     return triggerCell;
-}
-
-# pragma mark - String generation helper functions
-
-static NSString *getButtonStringToolTip(int buttonNumber) {
-    NSDictionary *buttonNumberToUIString = @{
-        @1: @"the Primary Mouse Button (also called the Left Mouse Button or Mouse Button 1)",
-        @2: @"the Secondary Mouse Button (also called the Right Mouse Button or Mouse Button 2)",
-        @3: @"the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3)",
-    };
-    NSString *buttonStr = buttonNumberToUIString[@(buttonNumber)];
-    if (!buttonStr) {
-        buttonStr = [NSString stringWithFormat:@"Mouse Button %@", @(buttonNumber)];
-    }
-    return buttonStr;
-}
-
-static NSString *getKeyboardModifierString(NSNumber *flags) {
-    NSString *kb = @"";
-    if (flags != nil) {
-        CGEventFlags f = flags.longLongValue;
-        kb = [NSString stringWithFormat:@"%@%@%@%@",
-              (f & kCGEventFlagMaskControl ?    @"^" : @""),
-              (f & kCGEventFlagMaskAlternate ?  @"⌥" : @""),
-              (f & kCGEventFlagMaskShift ?      @"⇧" : @""),
-              (f & kCGEventFlagMaskCommand ?    @"⌘" : @"")];
-    }
-    return kb;
-}
-static NSString *getKeyboardModifierStringToolTip(NSNumber *flags) {
-    NSString *kb = @"";
-    if (flags != nil) {
-        CGEventFlags f = flags.longLongValue;
-        kb = [NSString stringWithFormat:@"%@%@%@%@",
-              (f & kCGEventFlagMaskControl ?    @"Control (^)-" : @""),
-              (f & kCGEventFlagMaskAlternate ?  @"Option (⌥)-" : @""),
-              (f & kCGEventFlagMaskShift ?      @"Shift (⇧)-" : @""),
-              (f & kCGEventFlagMaskCommand ?    @"Command (⌘)-" : @"")];
-    }
-    if (kb.length > 0) {
-        // TODO: Use our function for creating proper natural language lists (with commas as well as 'and' before the last element)
-        kb = [kb substringToIndex:kb.length-1]; // Delete trailing dash
-//        kb = [kb stringByAppendingString:@" "]; // Append trailing space
-        kb = [kb stringByReplacingOccurrencesOfString:@"-" withString:@" and "];
-        kb = [@"Hold " stringByAppendingString:kb];
-    }
-    
-    return kb;
 }
 
 @end

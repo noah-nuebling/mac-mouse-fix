@@ -15,9 +15,17 @@ typedef void (^CaptureHandler) (CGKeyCode keyCode, CGEventFlags flags);
 typedef void (^CancelHandler) (void);
 typedef void (^ClearButtonHandler) (void);
 
-@interface MFKeystrokeCaptureView : NSTextView <NSTextViewDelegate>
+@interface MFKeystrokeCaptureTextView : NSTextView <NSTextViewDelegate>
 
-- (void)setupWithText:(NSString *)text captureHandler:(CaptureHandler)captureHandler cancelHandler:(CancelHandler)cancelHandler clearButtonHandler:(ClearButtonHandler)clearButtonHandler;
+- (void)setupWithCapturedKeyCode:(NSNumber *)keyCodeNS
+           capturedModifierFlags:(NSNumber *)flagsNS
+                  captureHandler:(CaptureHandler)captureHandler
+                   cancelHandler:(CancelHandler)cancelHandler
+              clearButtonHandler:(ClearButtonHandler)clearButtonHandler;
+
+@property NSNumber *capturedKeyCode;
+@property NSNumber *capturedModifierFlags;
+@property BOOL empty;
 
 @end
 

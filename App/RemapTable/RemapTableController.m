@@ -22,6 +22,9 @@
 #import "SharedMessagePort.h"
 #import "CaptureNotifications.h"
 #import "RemapTableTranslator.h"
+#import "NSView+Additions.h"
+#import "MFKeystrokeCaptureTextView.h"
+#import "RemapTableUtility.h"
 
 @interface RemapTableController ()
 @property NSTableView *tableView;
@@ -96,19 +99,33 @@
     
 }
 
-- (IBAction)setConfigToUI:(id)sender {
-    // Set popupbutton content to datamodel
+- (IBAction)setConfigToUI:(id _Nullable)sender {
+    // Set each rows effect content to datamodel
     for (NSInteger row = 0; row < self.dataModel.count; row++) {
         // Get effect dicts
         NSTableCellView *cell = [self.tableView viewAtColumn:1 row:row makeIfNecessary:YES];
-        NSPopUpButton *pb = cell.subviews[0];
-        NSString *selectedTitle = pb.selectedItem.title;
-        // Get effects table for row of sender
-        NSArray *effectsTable = [RemapTableTranslator getEffectsTableForRemapsTableEntry:self.dataModel[row]];
-        NSDictionary *effectsTableEntryForSelected = [RemapTableTranslator getEntryFromEffectsTable:effectsTable withUIString:selectedTitle];
-        NSDictionary *effectDictForSelected = effectsTableEntryForSelected[@"dict"];
-        // Write effect dict to data model
-        self.dataModel[row][kMFRemapsKeyEffect] = effectDictForSelected;
+        if ([cell.identifier isEqual:@"effectCell"]) {
+            NSPopUpButton *pb = cell.subviews[0];
+            NSString *selectedTitle = pb.selectedItem.title;
+            // Get effects table for row of sender
+            NSArray *effectsTable = [RemapTableTranslator getEffectsTableForRemapsTableEntry:self.dataModel[row]];
+            NSDictionary *effectsTableEntryForSelected = [RemapTableTranslator getEntryFromEffectsTable:effectsTable withUIString:selectedTitle];
+            NSDictionary *effectDictForSelected = effectsTableEntryForSelected[@"dict"];
+            // Write effect dict to data model
+            self.dataModel[row][kMFRemapsKeyEffect] = effectDictForSelected;
+        } else if ([cell.identifier isEqual:@"keystrokeCaptureCell"]) {
+            MFKeystrokeCaptureTextView *captureView = (MFKeystrokeCaptureTextView *)[cell nestedSubviewsWithIdentifier:@"keystrokeCaptureView"][0];
+            CGKeyCode keyCode = captureView.capturedKeyCode.unsignedIntValue;
+            CGEventFlags flags = captureView.capturedModifierFlags.unsignedLongValue;
+            assert(!captureView.empty);
+            self.dataModel[row][kMFRemapsKeyEffect] = @{
+                kMFActionDictKeyType: kMFActionDictTypeKeyboardShortcut,
+                kMFActionDictKeyKeyboardShortcutVariantKeycode:@(keyCode),
+                kMFActionDictKeyKeyboardShortcutVariantModifierFlags:@(flags),
+            };
+        } else {
+            assert(false);
+        }
     }
     // Write datamodel to file
     [self writeDataModelToConfig];
@@ -226,8 +243,9 @@
     [self.tableView selectRowIndexes:toHighlightIndexSet byExtendingSelection:NO];
     [self.tableView scrollRowToVisible:toHighlightIndexSet.firstIndex];
     // Open the NSMenu on the newly created row's popup button
-    NSInteger tableColumn = [self.tableView columnWithIdentifier:@"effect"];
-    NSPopUpButton *popUpButton = [self.tableView viewAtColumn:tableColumn row:toHighlightIndexSet.firstIndex makeIfNecessary:NO].subviews[0];
+    NSUInteger openPopupRow = toHighlightIndexSet.firstIndex;
+    NSTableView *tv = self.tableView;
+    NSPopUpButton * popUpButton = [RemapTableUtility getPopUpButtonAtRow:openPopupRow fromTableView:tv];
     [popUpButton performSelector:@selector(performClick:) withObject:nil afterDelay:0.2];
     
     NSSet<NSNumber *> *capturedButtonsAfter = (NSSet *)[SharedMessagePort sendMessage:@"getCapturedButtons" withPayload:nil expectingReply:YES];
