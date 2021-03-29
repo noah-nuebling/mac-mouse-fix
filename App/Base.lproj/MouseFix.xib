@@ -146,31 +146,34 @@
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
                                                                             <button focusRingType="exterior" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bGK-d6-do3" customClass="KeyCaptureViewBackground">
-                                                                                <rect key="frame" x="-4" y="2" width="231" height="32"/>
+                                                                                <rect key="frame" x="-4" y="3" width="231" height="32"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                                 <buttonCell key="cell" type="push" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" focusRingType="exterior" imageScaling="proportionallyDown" inset="2" id="wcb-vJ-PiZ">
                                                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                                     <font key="font" metaFont="system"/>
                                                                                 </buttonCell>
+                                                                                <connections>
+                                                                                    <outlet property="captureView" destination="JcL-EN-Rma" id="ITL-H1-8hi"/>
+                                                                                </connections>
                                                                             </button>
                                                                             <scrollView focusRingType="exterior" fixedFrame="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="gEj-y5-p9Y">
-                                                                                <rect key="frame" x="3" y="9" width="217" height="20"/>
+                                                                                <rect key="frame" x="3" y="10" width="217" height="20"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                                 <clipView key="contentView" focusRingType="exterior" drawsBackground="NO" id="2dn-db-91A">
                                                                                     <rect key="frame" x="0.0" y="0.0" width="217" height="20"/>
                                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                     <subviews>
-                                                                                        <textView identifier="keystrokeCaptureView" focusRingType="exterior" editable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" verticallyResizable="YES" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="JcL-EN-Rma" customClass="KeyCaptureView">
+                                                                                        <textView identifier="keystrokeCaptureView" focusRingType="exterior" editable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" verticallyResizable="NO" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="JcL-EN-Rma" customClass="KeyCaptureView">
                                                                                             <rect key="frame" x="0.0" y="0.0" width="212" height="19"/>
                                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                                             <size key="minSize" width="214" height="19"/>
                                                                                             <size key="maxSize" width="240" height="10000000"/>
                                                                                             <attributedString key="textStorage">
                                                                                                 <fragment content="Text go here">
                                                                                                     <attributes>
-                                                                                                        <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                                                        <color key="NSColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                                                         <font key="NSFont" metaFont="system"/>
                                                                                                         <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                                                                     </attributes>

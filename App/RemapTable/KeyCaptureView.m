@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "UIStrings.h"
 #import "KeyCaptureViewBackground.h"
+#import <Carbon/Carbon.h>
 
 @interface KeyCaptureView ()
 
@@ -46,6 +47,7 @@
     NSLog(@"Setting up keystroke capture view");
 #endif
     
+    self.wantsLayer = NO;
     
     self.delegate = self;
     _captureHandler = captureHandler;
@@ -65,46 +67,41 @@
     if (_attributesFromIB == nil) {
         _attributesFromIB = [self.attributedString attributesAtIndex:0 effectiveRange:nil];
     }
-    self.focusRingType = NSFocusRingTypeNone;
-}
-
-- (void)drawRect:(NSRect)dirtyRect {
-    [super drawRect:dirtyRect];
-
-    BOOL focus = AppDelegate.mainWindow.firstResponder == self;
-
-    if (true) {
-        NSRect bounds = self.bounds;
-        NSRect outerRect = NSMakeRect(bounds.origin.x - 2,
-                                      bounds.origin.y - 2,
-                                      bounds.size.width + 4,
-                                      bounds.size.height + 4);
-
-        NSRect innerRect = NSInsetRect(outerRect, 1, 1);
-
-        NSBezierPath *clipPath = [NSBezierPath bezierPathWithRect:outerRect];
-        [clipPath appendBezierPath:[NSBezierPath bezierPathWithRect:innerRect]];
-
-        [clipPath setWindingRule:NSEvenOddWindingRule];
-        [clipPath setClip];
-
-        [[NSColor colorWithCalibratedWhite:0.6 alpha:1.0] setFill];
-        [[NSBezierPath bezierPathWithRect:outerRect] fill];
-    }
+//    self.focusRingType = NSFocusRingTypeExterior;
+        self.focusRingType = NSFocusRingTypeNone;
 }
 
 - (void)drawEmptyAppearance {
     
     self.coolString = @"Enter keyboard shortcut";
-//    self.textColor = NSColor.placeholderTextColor;
     
     [self selectAll:nil];
+}
+
+- (void)drawFocusRingMask { // This is never called for some reason
+    
+    NSGraphicsContext* contextMgr = [NSGraphicsContext currentContext];
+    CGContextRef drawingContext = (CGContextRef)[contextMgr graphicsPort];
+    
+//    HIThemeBeginFocus(drawingContext, kHIThemeFocusRingOnly, NULL);
+
+    int pad = -10;
+    
+    NSRect bounds = self.bounds;
+    NSRect innerRect = NSMakeRect(bounds.origin.x - pad,
+                                  bounds.origin.y - pad,
+                                  bounds.size.width + 2*pad,
+                                  bounds.size.height + 2*pad);
+    NSRectFill(innerRect);
+    
+    
+//    HIThemeEndFocus(drawingContext);
 }
 
 #pragma mark FirstResponderStatus handlers
 
 - (BOOL)becomeFirstResponder {
-
+    
 #if DEBUG
     NSLog(@"BECOME FIRST RESPONDER");
 #endif
@@ -113,6 +110,7 @@
     
     if (superAccepts) {
         
+        [self.backgroundButton display];
         [self drawEmptyAppearance];
         
         _localEventMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:(NSEventMaskKeyDown | NSEventMaskFlagsChanged) handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
@@ -121,11 +119,7 @@
             CGKeyCode keyCode = CGEventGetIntegerValueField(e, kCGKeyboardEventKeycode);
             CGEventFlags flags = CGEventGetFlags(e);
             
-            
-            self.textColor = NSColor.labelColor;
-            
             if (event.type == NSEventTypeKeyDown) {
-//                [AppDelegate.mainWindow makeFirstResponder:nil];
                 self->_captureHandler(keyCode, flags); // This should undraw this view
                 
             } else {

@@ -8,32 +8,44 @@
 //
 
 #import "KeyCaptureViewBackground.h"
+#import "KeyCaptureView.h"
 #import "AppDelegate.h"
+#import <Carbon/Carbon.h>
+
+@interface KeyCaptureViewBackground ()
+
+@property IBOutlet KeyCaptureView *captureView;
+
+@end
 
 @implementation KeyCaptureViewBackground
 
+// We meant to draw an artificial focusRing around, this but for some reason, self.bounds alwyas contained the bounds of the superView. So we're drawing the focusRing around KeyCaptureView instead
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];
 
-    BOOL focus = AppDelegate.mainWindow.firstResponder == self;
+    BOOL focus = AppDelegate.mainWindow.firstResponder == self.captureView;
 
-    if (focus) {
-        NSRect bounds = self.bounds;
-        NSRect outerRect = NSMakeRect(bounds.origin.x - 2,
-                                      bounds.origin.y - 2,
-                                      bounds.size.width + 4,
-                                      bounds.size.height + 4);
+    if (focus) { // This check isn't necessary, bc focus should always be true when this is drawing
 
-        NSRect innerRect = NSInsetRect(outerRect, 1, 1);
+        NSGraphicsContext* contextMgr = [NSGraphicsContext currentContext];
+        CGContextRef drawingContext = (CGContextRef)[contextMgr graphicsPort];
 
-        NSBezierPath *clipPath = [NSBezierPath bezierPathWithRect:outerRect];
-        [clipPath appendBezierPath:[NSBezierPath bezierPathWithRect:innerRect]];
+        int padX = 7; // Values from IB (Actually, those don't work, wtf is goin on?)
+        int padY = 5;
+        int cornerRadius = 5.0;
 
-        [clipPath setWindingRule:NSEvenOddWindingRule];
-        [clipPath setClip];
-
-        [[NSColor colorWithCalibratedWhite:0.6 alpha:1.0] setFill];
-        [[NSBezierPath bezierPathWithRect:outerRect] fill];
+        NSRect frame = NSInsetRect(self.bounds, padX, padY); // self.frame and self.bounds don't work, so we need to get the frame manually
+        frame.origin.y -= 1;
+        
+//        NSRect bounds = self.bounds; // for some reason, self.bounds alwyas contains the bounds of the superView. The drawing coordinate system seems to be of the superview, too.
+//        NSRect frame = self.captureView.frame; // Should have the same frame and bounds as this view. Size is correct but origin is always (0,0)?
+        
+        NSBezierPath *clipPath = [NSBezierPath bezierPathWithRoundedRect:frame xRadius:cornerRadius yRadius:cornerRadius];
+        
+        HIThemeBeginFocus(drawingContext, kHIThemeFocusRingOnly, NULL);
+        [clipPath fill];
+        HIThemeEndFocus(drawingContext);
     }
 }
 
