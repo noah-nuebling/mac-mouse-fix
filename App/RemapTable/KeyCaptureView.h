@@ -19,6 +19,8 @@ typedef void (^CancelHandler) (void);
 - (void)setupWithCaptureHandler:(CaptureHandler)captureHandler
                   cancelHandler:(CancelHandler)cancelHandler;
 
++ (void)handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload;
+
 @end
 
 NS_ASSUME_NONNULL_END

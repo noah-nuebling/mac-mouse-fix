@@ -184,6 +184,47 @@ BOOL _addModeIsEnabled = NO;
     }
     return YES;
 }
+
+#pragma mark - keyCaptureMode
+
+CFMachPortRef _keyCaptureEventTap;
+
++ (void)enableKeyCaptureMode {
+    if (_keyCaptureEventTap == nil) {
+        _keyCaptureEventTap = [Utility_Transformation createEventTapWithLocation:kCGHIDEventTap mask:CGEventMaskBit(kCGEventKeyDown) option:kCGEventTapOptionDefault placement:kCGTailAppendEventTap callback:keyCaptureModeCallback];
+    }
+    CGEventTapEnable(_keyCaptureEventTap, true);
+}
+
++ (void)disableKeyCaptureMode {
+    CGEventTapEnable(_keyCaptureEventTap, false);
+}
+
+CGEventRef  _Nullable keyCaptureModeCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
+    
+    CGKeyCode keyCode = CGEventGetIntegerValueField(event, kCGKeyboardEventKeycode);
+    CGEventFlags flags  = CGEventGetFlags(event);
+    
+    if (!keyCaptureModePayloadIsValidWithKeyCode(keyCode, flags)) return nil;
+    
+    NSDictionary *payload = @{
+        @"keyCode": @(keyCode),
+        @"flags": @(flags),
+    };
+    
+    [SharedMessagePort sendMessage:@"keyCaptureModeFeedback" withPayload:payload expectingReply:NO];
+    
+    [TransformationManager disableKeyCaptureMode];
+    return nil;
+}
+Boolean keyCaptureModePayloadIsValidWithKeyCode(CGKeyCode keyCode, CGEventFlags flags) {
+    
+    if (keyCode == 0) {
+        return false;
+    }
+    return true;
+}
+
 #pragma mark - Dummy Data
 
 + (NSDictionary *)testRemaps {

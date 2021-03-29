@@ -290,9 +290,9 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         // Create captureField
         
         // Get MFKeystrokeCaptureCell instance from IB
-        NSTableCellView *keyStrokeCaptureCell = [self.tableView makeViewWithIdentifier:@"keystrokeCaptureCell" owner:self];
+        NSTableCellView *keyCaptureCell = [self.tableView makeViewWithIdentifier:@"keyCaptureCell" owner:self];
         // Get capture field
-        KeyCaptureView *keyStrokeCaptureField = (KeyCaptureView *)[keyStrokeCaptureCell nestedSubviewsWithIdentifier:@"keystrokeCaptureView"][0];
+        KeyCaptureView *keyStrokeCaptureField = (KeyCaptureView *)[keyCaptureCell nestedSubviewsWithIdentifier:@"keyCaptureView"][0];
         
         [keyStrokeCaptureField setupWithCaptureHandler:^(CGKeyCode keyCode, CGEventFlags flags) {
             
@@ -317,7 +317,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
             
         }];
         
-        triggerCell = keyStrokeCaptureCell;
+        triggerCell = keyCaptureCell;
         
     } else {
         // Get popup button

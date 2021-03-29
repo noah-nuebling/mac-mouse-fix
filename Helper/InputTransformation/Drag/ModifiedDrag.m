@@ -76,6 +76,7 @@ struct ModifiedDragState {
 
 static struct ModifiedDragState _drag;
 #define inputIsPointerMovement YES
+
 // There are two different modes for how we receive mouse input, toggle to switch between the two for testing
 // Set to no, if you want input to be raw mouse input, set to yes if you want input to be mouse pointer delta
 // Raw input has better performance (?) and allows for blocking mouse pointer movement. Mouse pointer input makes all the animation follow the pointer, but it has some issues with the pointer jumping when the framerate is low which I'm not quite sure how to fix.
@@ -87,13 +88,15 @@ static struct ModifiedDragState _drag;
     if (inputIsPointerMovement) {
         // Create mouse pointer moved input callback
         if (_drag.eventTap == nil) {
+            
+            CGEventTapLocation location = kCGHIDEventTap;
+            CGEventTapPlacement placement = kCGTailAppendEventTap;
+            CGEventTapOptions option = kCGEventTapOptionDefault;
             CGEventMask mask = CGEventMaskBit(kCGEventOtherMouseDragged) | CGEventMaskBit(kCGEventMouseMoved); // kCGEventMouseMoved is only necessary for keyboard-only drag-modification, and maybe for AddMode to work.
-            _drag.eventTap = CGEventTapCreate(kCGHIDEventTap, kCGTailAppendEventTap, kCGEventTapOptionDefault, mask, mouseMovedOrDraggedCallback, NULL);
-            // ^ Make sure to use the same EventTapLocation and EventTapPlacement here as you do in ButtonInputReceiver, otherwise there'll be timing and ordering issues! (This was one of the causes for the stuck bug and also caused other issues)
-            CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _drag.eventTap, 0);
-            CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes);
-            CFRelease(runLoopSource);
-            CGEventTapEnable(_drag.eventTap, false);
+            
+            CFMachPortRef eventTap = [Utility_Transformation createEventTapWithLocation:location mask:mask option:option placement:placement callback:mouseMovedOrDraggedCallback];
+            
+            _drag.eventTap = eventTap;
         }
         _drag.usageThreshold = 20;
     } else {

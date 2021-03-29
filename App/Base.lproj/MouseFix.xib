@@ -117,7 +117,7 @@
                                                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                                                 <prototypeCellViews>
                                                                     <tableCellView identifier="effectCell" id="5PH-4e-aAm">
-                                                                        <rect key="frame" x="354" y="0.0" width="223" height="39"/>
+                                                                        <rect key="frame" x="353.5" y="0.0" width="223" height="39"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
                                                                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7A6-Ou-8wk">
@@ -141,8 +141,8 @@
                                                                             </popUpButton>
                                                                         </subviews>
                                                                     </tableCellView>
-                                                                    <tableCellView identifier="keystrokeCaptureCell" id="ppe-fA-Qpm">
-                                                                        <rect key="frame" x="354" y="39" width="223" height="39"/>
+                                                                    <tableCellView identifier="keyCaptureCell" id="ppe-fA-Qpm">
+                                                                        <rect key="frame" x="353.5" y="39" width="223" height="39"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
                                                                             <button hidden="YES" focusRingType="exterior" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bGK-d6-do3">
@@ -163,12 +163,12 @@
                                                                                     <rect key="frame" x="0.0" y="0.0" width="217" height="20"/>
                                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                     <subviews>
-                                                                                        <textView identifier="keystrokeCaptureView" focusRingType="exterior" editable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" verticallyResizable="NO" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="JcL-EN-Rma" customClass="KeyCaptureView">
-                                                                                            <rect key="frame" x="0.0" y="0.0" width="212" height="18"/>
+                                                                                        <textView identifier="keyCaptureView" focusRingType="exterior" editable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" verticallyResizable="NO" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="JcL-EN-Rma" customClass="KeyCaptureView">
+                                                                                            <rect key="frame" x="0.0" y="0.0" width="212" height="19"/>
                                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                                            <size key="minSize" width="214" height="19"/>
+                                                                                            <size key="minSize" width="212" height="19"/>
                                                                                             <size key="maxSize" width="240" height="10000000"/>
                                                                                             <attributedString key="textStorage">
                                                                                                 <fragment content="Text go here">

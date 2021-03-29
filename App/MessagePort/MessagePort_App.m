@@ -14,6 +14,7 @@
 #import "Constants.h"
 #import "RemapTableController.h"
 #import "AddWindowController.h"
+#import "KeyCaptureView.h"
 
 @implementation MessagePort_App
 
@@ -65,6 +66,8 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
         [(AppDelegate *)NSApp.delegate stopRemoveAccOverlayTimer]; // If App delegate is about to remove the acc overlay, stop that
     } else if ([message isEqualToString:@"addModeFeedback"]) {
         [AddWindowController handleReceivedAddModeFeedbackFromHelperWithPayload:(NSDictionary *)payload];
+    } else if ([message isEqualToString:@"keyCaptureModeFeedback"]) {
+        [KeyCaptureView handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload];        
     } else if ([message isEqualToString:@"helperEnabled"]) {
         [AppDelegate handleHelperEnabledMessage];
     }

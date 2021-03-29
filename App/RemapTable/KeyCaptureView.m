@@ -11,12 +11,16 @@
 #import "AppDelegate.h"
 #import "UIStrings.h"
 #import <Carbon/Carbon.h>
+#import "SharedMessagePort.h"
+#import "NSView+Additions.h"
 
 @interface KeyCaptureView ()
 
 @end
 
 @implementation KeyCaptureView {
+    
+    BOOL _isCapturing;
     
     CaptureHandler _captureHandler;
     CancelHandler _cancelHandler;
@@ -43,8 +47,6 @@
 #if DEBUG
     NSLog(@"Setting up keystroke capture view");
 #endif
-    
-//    self.wantsLayer = NO;
     
     self.delegate = self;
     _captureHandler = captureHandler;
@@ -74,6 +76,43 @@
     [self selectAll:nil];
 }
 
+#pragma mark keyCaptureModeFeedback
+
++ (void)handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload {
+    
+    // Find keyCaptureField instance in remapsTable
+    
+    NSTableView *remapsTable = AppDelegate.instance.remapsTable;
+    NSInteger effectColumn = [remapsTable columnWithIdentifier:@"effect"];
+    NSMutableIndexSet *indexes = [NSMutableIndexSet new];
+    for (int r = 0; r < remapsTable.numberOfRows; r++) {
+        NSView *effectView = [AppDelegate.instance.remapsTable viewAtColumn:effectColumn row:r makeIfNecessary:NO];
+        if ([effectView.identifier isEqual:@"keyCaptureCell"]) {
+            [indexes addIndex:r];
+        }
+    }
+    assert(indexes.count <= 1);
+    if (indexes.count == 0) return;
+    
+    NSTableCellView *keyCaptureCell = [AppDelegate.instance.remapsTable viewAtColumn:effectColumn row:indexes.firstIndex makeIfNecessary:NO];
+    KeyCaptureView *keyCaptureView = (KeyCaptureView *)[keyCaptureCell nestedSubviewsWithIdentifier:@"keyCaptureView"].firstObject;
+    
+    // Send payload to found instance
+    
+    [keyCaptureView handleKeyCaptureModeFeedbackWithPayload:payload];
+}
+
+- (void)handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload {
+    
+    _isCapturing = NO; // Helper disabled keyCaptureMode after sending payload
+    
+    CGKeyCode keyCode = ((NSNumber *)payload[@"keyCode"]).unsignedShortValue;
+    CGEventFlags flags = ((NSNumber *)payload[@"flags"]).unsignedLongValue;
+    
+    [AppDelegate.mainWindow makeFirstResponder:nil]; // Important to call this before capture handler, otherwise `resignFirstResponder:` (our teardown function) isn't called
+    _captureHandler(keyCode, flags); // This should undraw the view
+}
+
 #pragma mark FirstResponderStatus handlers
 
 - (BOOL)becomeFirstResponder {
@@ -84,23 +123,20 @@
     
     BOOL superAccepts = [super becomeFirstResponder];
     
+    _isCapturing = YES;
+    
     if (superAccepts) {
         
-//        [AppDelegate.mainWindow makeFirstResponder:self.backgroundButton];
+        [SharedMessagePort sendMessage:@"enableKeyCaptureMode" withPayload:@"" expectingReply:NO];
+        
         [self drawEmptyAppearance];
         
-        _localEventMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:(NSEventMaskKeyDown | NSEventMaskFlagsChanged) handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
+        _localEventMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:(NSEventMaskFlagsChanged | NSEventMaskKeyDown) handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
             CGEventRef e = event.CGEvent;
+            // User is playing around with modifier keys
             
-            CGKeyCode keyCode = CGEventGetIntegerValueField(e, kCGKeyboardEventKeycode);
-            CGEventFlags flags = CGEventGetFlags(e);
-            
-            if (event.type == NSEventTypeKeyDown) {
-                [AppDelegate.mainWindow makeFirstResponder:nil];
-                self->_captureHandler(keyCode, flags); // This should undraw this view
-                
-            } else {
-                // User is playing around with modifier keys
+            if (event.type == NSEventTypeFlagsChanged) {
+                CGEventFlags flags = CGEventGetFlags(e);
                 
                 NSString *modString = [UIStrings getKeyboardModifierString:flags];
                 if (modString.length > 0) {
@@ -108,8 +144,8 @@
                 } else {
                     [self drawEmptyAppearance];
                 }
-                
-                
+            } else if (event.type == NSEventTypeKeyDown) {
+                assert(!self->_isCapturing); // _isCapturing should be set to NO by `handleKeyCaptureModeFeedbackWithPayload:` before this is executed.
             }
             
             return nil;
@@ -127,6 +163,9 @@
     BOOL superResigns = [super resignFirstResponder];
 
     if (superResigns) {
+        
+        [SharedMessagePort sendMessage:@"disableKeyCaptureMode" withPayload:nil expectingReply:NO];
+        
         [NSEvent removeMonitor:_localEventMonitor];
         _cancelHandler();
     }
@@ -142,7 +181,7 @@
     [NSCursor.arrowCursor set]; // Prevent text insertion cursor from appearing on mouseover
 }
 - (void)scrollWheel:(NSEvent *)event {
-    [NSCursor.arrowCursor set];
+    [NSCursor.arrowCursor set]; // Prevent text insertion cursor from appearing on scroll
 }
 
 @end

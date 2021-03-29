@@ -13,13 +13,21 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TransformationManager : NSObject
+
 @property (class, readonly) BOOL addModeIsEnabled;
+
 + (void)loadRemapsFromConfig;
 + (NSDictionary *)remaps;
+
 + (void)enableAddMode;
 + (void)disableAddMode;
+
++ (void)enableKeyCaptureMode;
++ (void)disableKeyCaptureMode;
+
 + (void)concludeAddModeWithPayload:(NSDictionary *)payload;
 + (BOOL)addModePayloadIsValid:(NSDictionary *)payload;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -13,6 +13,13 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface Utility_Transformation : NSObject
+
++ (CFMachPortRef)createEventTapWithLocation:(CGEventTapLocation)location
+                                       mask:(CGEventMask)mask
+                                     option:(CGEventTapOptions)option
+                                  placement:(CGEventTapPlacement)placement
+                                   callback:(CGEventTapCallBack)callback;
+
 + (void)hideMousePointer:(BOOL)B;
 + (void)postMouseButtonClicks:(MFMouseButtonNumber)button nOfClicks:(int64_t)nOfClicks;
 + (void)postMouseButton:(MFMouseButtonNumber)button down:(BOOL)down;
