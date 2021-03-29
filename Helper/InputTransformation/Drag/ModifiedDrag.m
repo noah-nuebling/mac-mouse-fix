@@ -146,7 +146,7 @@ static CGEventRef __nullable mouseMovedOrDraggedCallback(CGEventTapProxy proxy, 
     int64_t dy = CGEventGetIntegerValueField(event, kCGMouseEventDeltaY);
     [ModifiedDrag handleMouseInputWithDeltaX:dx deltaY:dy event:event];
     
-    return event; // Sending event or NULL here doesn't seem to make a difference. If you alter the event and send that it does have an effect though
+    return NULL; // Sending event or NULL here doesn't seem to make a difference. If you alter the event and send that it does have an effect though
 }
 
 + (void)handleMouseInputWithDeltaX:(int64_t)deltaX deltaY:(int64_t)deltaY event:(CGEventRef)event {
@@ -199,6 +199,7 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY) {
             // ^ Always sending this at the start breaks swiping between pages on some websites (Google search results)
             _drag.phase = kIOHIDEventPhaseBegan;
         } else if ([_drag.type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
+            
             [Utility_Transformation postMouseButton:_drag.fakeDragButtonNumber down:YES];
         } else if ([_drag.type isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
             if (_drag.addModePayload != nil) {

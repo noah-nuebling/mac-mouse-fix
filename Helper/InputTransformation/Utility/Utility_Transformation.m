@@ -79,6 +79,11 @@
     CFRelease(buttonUp);
 }
 + (void)postMouseButton:(MFMouseButtonNumber)button down:(BOOL)down {
+    
+#if DEBUG
+    NSLog(@"POSTING FAKE MOUSE BUTTON EVENT. btn: %d, down: %d", button, down);
+#endif
+    
     CGEventTapLocation tapLoc = kCGSessionEventTap;
     
     CGPoint mouseLoc = Utility_Transformation.CGMouseLocationWithoutEvent;

@@ -129,9 +129,14 @@ CGEventRef handleInput(CGEventTapProxy proxy, CGEventType type, CGEventRef event
     MFButtonInputType triggertType = pr == 0 ? kMFButtonInputTypeButtonUp : kMFButtonInputTypeButtonDown;
         
     MFEventPassThroughEvaluation eval = [ButtonTriggerGenerator parseInputWithButton:@(buttonNumber) triggerType:triggertType inputDevice:dev];
+    
     if (eval == kMFEventPassThroughRefusal) {
         return nil;
     }
+    
+#if DEBUG
+    NSLog(@"Letting event %@ pass through", [NSEvent eventWithCGEvent:event]);
+#endif
     
     return event;
 
