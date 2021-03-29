@@ -28,8 +28,11 @@ static AddWindowController *_instance;
 static BOOL _pointerIsInsideAddField;
 // Init
 + (void)initialize {
-    _instance = [[AddWindowController alloc] initWithWindowNibName:@"AddWindow"];
-    _pointerIsInsideAddField = NO;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _instance = [[AddWindowController alloc] initWithWindowNibName:@"AddWindow"];
+        _pointerIsInsideAddField = NO;
+    });
 }
 - (void)windowDidLoad {
     [super windowDidLoad];
