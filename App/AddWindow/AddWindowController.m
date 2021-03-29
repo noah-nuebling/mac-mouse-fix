@@ -28,6 +28,7 @@ static AddWindowController *_instance;
 static BOOL _pointerIsInsideAddField;
 // Init
 + (void)initialize {
+    // This initialize function was apparently called twice (but weirdly only on some machines) leading to issues. See https://github.com/noah-nuebling/mac-mouse-fix/pull/80
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _instance = [[AddWindowController alloc] initWithWindowNibName:@"AddWindow"];
@@ -65,9 +66,6 @@ static BOOL _pointerIsInsideAddField;
 }
 + (void)end {
     [AppDelegate.mainWindow endSheet:_instance.window];
-    // @4332weizi had trouble closing the window. I have now clue why. Maybe using this v instead of just this ^ helps.
-    [_instance.window close];
-    [_instance.window orderOut:nil];
 }
 + (void)handleReceivedAddModeFeedbackFromHelperWithPayload:(NSDictionary *)payload {
     // Tint plus icon to give visual feedback
