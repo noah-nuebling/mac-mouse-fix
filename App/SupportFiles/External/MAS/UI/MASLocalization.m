@@ -9,6 +9,9 @@ static NSString *const MASPlaceholderLocalizationString = @"XXX";
 // and the Localized.strings file won’t be bundled correctly.
 // See https://github.com/shpakovski/MASShortcut/issues/74
 NSString *MASLocalizedString(NSString *key, NSString *comment) {
+    
+    
+    
     static NSBundle *localizationBundle = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{

@@ -102,7 +102,7 @@ static NSString *const MASShortcutModifierFlags = @"ModifierFlags";
         case kVK_F17: return @"F17";
         case kVK_F18: return @"F18";
         case kVK_F19: return @"F19";
-        case kVK_Space: return MASLocalizedString(@"Space", @"Shortcut glyph name for SPACE key");
+        case kVK_Space: return @"   Space";
         case kVK_Escape: return NSStringFromMASKeyCode(kMASShortcutGlyphEscape);
         case kVK_Delete: return NSStringFromMASKeyCode(kMASShortcutGlyphDeleteLeft);
         case kVK_ForwardDelete: return NSStringFromMASKeyCode(kMASShortcutGlyphDeleteRight);
