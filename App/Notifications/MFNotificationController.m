@@ -62,18 +62,34 @@ double _animationDuration = 0.4;
 /// Pass 0 to showDuration to get the default duration
 + (void)attachNotificationWithMessage:(NSAttributedString *)message toWindow:(NSWindow *)attachWindow forDuration:(NSTimeInterval)showDuration {
     
+    return;
+    
 #if DEBUG
     NSLog(@"Attaching notification: %@", message);
 #endif
+    
+    BOOL topMiddleAligned = YES;
     
     // Constants
     if (showDuration <= 0) {
         showDuration = 3.0;
     }
-    double mainWindowTitleBarHeight = 30;
-    double topEdgeMargin = 0.0;
-//    double topEdgeMargin = -25;
-    double sideMargin = 40;
+    
+    double mainWindowTitleBarHeight;
+    double topEdgeMargin;
+    double sideMargin;
+    double bottomMargin;
+    
+    if (topMiddleAligned) {
+        // For top middle algnment
+        mainWindowTitleBarHeight = 30;
+        topEdgeMargin = 0.0;
+    //    topEdgeMargin = -25;
+        sideMargin = 40;
+    } else {
+        // For bottom right alignment
+        sideMargin = bottomMargin = 10;
+    }
     
     // Execution
     
@@ -124,10 +140,18 @@ double _animationDuration = 0.4;
     newNotifFrame.size = newNotifSize;
     
     // Calc Position
-    // Center horizontally
-    newNotifFrame.origin.x = NSMidX(mainW.frame) - (newNotifSize.width / 2);
-    // Align with top edge of main window
-    newNotifFrame.origin.y = (mainW.frame.origin.y + mainW.frame.size.height - (mainWindowTitleBarHeight + topEdgeMargin)) - newNotifSize.height;
+    
+    if (topMiddleAligned) {
+        // Top middle alignment
+        newNotifFrame.origin.x = NSMidX(mainW.frame) - (newNotifSize.width / 2);
+        newNotifFrame.origin.y = (mainW.frame.origin.y + mainW.frame.size.height - (mainWindowTitleBarHeight + topEdgeMargin)) - newNotifSize.height;
+    } else {
+        // Bottom right alignment
+        newNotifFrame.origin.x = mainW.frame.origin.x + mainW.frame.size.width - newNotifFrame.size.width - sideMargin;
+        newNotifFrame.origin.y = mainW.frame.origin.y + bottomMargin;
+    }
+    
+    // Testing
     
     // Set new notification frame
     [w setFrame:newNotifFrame display:YES];
@@ -192,4 +216,5 @@ NSTimer *_closeTimer;
         [self closeNotificationImmediately];
     }
 }
+
 @end
