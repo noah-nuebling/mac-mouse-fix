@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 //      ^ Exposing this so RemapTableDataSource can use it. Might not be the cleanest solution.
 
 - (IBAction)handleEnterKeystrokeOptionSelected:(id)sender;
-- (IBAction)setConfigToUI:(id _Nullable)sender;
+- (IBAction)updateTableAndWriteToConfig:(id _Nullable)sender;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -102,7 +102,9 @@
     
 }
 
-- (IBAction)setConfigToUI:(id _Nullable)sender {
+// Helper for functions below. Shouldn't need to call directly.
+- (void)storeEffectsFromUIInDataModel {
+    
     // Set each rows effect content to datamodel
     for (NSInteger row = 0; row < self.dataModel.count; row++) {
         // Get effect dicts
@@ -120,12 +122,27 @@
             assert(false);
         }
     }
+}
+
+/// Need this sometimes instead of `updateTableAndWriteToConfig:` when we update the table some other way (e.g. adding a row with an animation)
+- (void)writeToConfig {
+    [self storeEffectsFromUIInDataModel];
+    
     // Write datamodel to file
     [self writeDataModelToConfig];
+}
+
+/// Called when user clicks chooses most effects
+- (IBAction)updateTableAndWriteToConfig:(id _Nullable)sender {
+
+    [self writeToConfig];
+
+    // Reload tableView so that
+    //  - Trigger-cell tooltips update to newly chosen effect
+    //  - NSMenus update to remove keyboard shortcuts that are unselected
+    //  It's super inefficient to update everything but computer fast (We should pass this a specific row to update)
+    [self.tableView reloadData];
     
-    // Reload tableView so that trigger cell tooltips update
-    //  It's super inefficient to update everything but computer fast
-    [self.tableView reloadDataForRowIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.tableView.numberOfRows)] columnIndexes:[NSIndexSet indexSetWithIndex:0]];
 }
 
 #pragma mark Lifecycle
@@ -228,8 +245,8 @@
         NSUInteger insertedIndex = [self.dataModel indexOfObject:pl];
         toHighlightIndexSet = [NSIndexSet indexSetWithIndex:insertedIndex];
         [self.tableView insertRowsAtIndexes:toHighlightIndexSet withAnimation:NSTableViewAnimationSlideDown];
-        // Set config to file (to make behaviour appropriate when user doesn't choose any effect)
-        [self setConfigToUI:nil];
+        // Write new row to file (to make behaviour appropriate when user doesn't choose any effect)
+        [self writeToConfig];
     } else {
         toHighlightIndexSet = existingIndexes;
     }

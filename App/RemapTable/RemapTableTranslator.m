@@ -124,7 +124,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
         @{@"ui": @"Smart Zoom", @"tool": @"Zoom in or out in Safari and other apps. \n \nWorks like a two-finger double tap on an Apple Trackpad.", @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSmartZoom,
         }},
-        @{@"ui": @"Open Link in New Tab",
+        @{@"ui": fstring(@"%@ Click", [UIStrings getButtonString:3]),
           @"tool": [NSString stringWithFormat:@"Open links in a new tab, paste text in the Terminal, and more. \n \nWorks like clicking %@ on a standard mouse.", [UIStrings getButtonStringToolTip:3]],
           @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
@@ -155,19 +155,20 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
     
     // Insert button specific entry
     
-//    if (buttonNumber != 3) { // We already have the "Open Link in New Tab" entry for button 3
-    NSDictionary *buttonClickEntry = @{
-       @"ui": [NSString stringWithFormat:@"%@ Click", [UIStrings getButtonString:buttonNumber]],
-       @"tool": [NSString stringWithFormat:@"Simulate Clicking %@", [UIStrings getButtonStringToolTip:buttonNumber]],
-       @"hideable": @NO,
-       @"dict": @{
-           kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
-           kMFActionDictKeyMouseButtonClicksVariantButtonNumber: @(buttonNumber),
-           kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks: @1,
-       }
-    };
-    [oneShotEffectsTable insertObject:buttonClickEntry atIndex:9];
-//    }
+    if (buttonNumber != 3) { // We already have the "Open Link in New Tab" entry for button 3
+        NSDictionary *buttonClickEntry = @{
+           @"ui": [NSString stringWithFormat:@"%@ Click", [UIStrings getButtonString:buttonNumber]],
+           @"tool": [NSString stringWithFormat:@"Simulate Clicking %@", [UIStrings getButtonStringToolTip:buttonNumber]],
+           @"hideable": @NO,
+           @"alternate": @YES,
+           @"dict": @{
+               kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
+               kMFActionDictKeyMouseButtonClicksVariantButtonNumber: @(buttonNumber),
+               kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks: @1,
+           }
+        };
+        [oneShotEffectsTable insertObject:buttonClickEntry atIndex:9];
+    }
     
     // Insert entry for keyboard shortcut effect
     
@@ -188,7 +189,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
             @"ui": shortcutString,
             @"tool": fstring(@"Use the '%@' shortcut", shortcutString),
             @"dict": effectDict,
-            @"indentation": @1,
+            @"indentation": @0,
         } atIndex:shortcutIndex];
     };
     
@@ -284,7 +285,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     
     NSDictionary *effectDict = rowDict[kMFRemapsKeyEffect];
     
-    if ([effectDict[@"drawKeyCaptureView"] isEqual:@YES]) {
+    if ([effectDict[@"drawKeyCaptureView"] isEqual:@YES]) { // This is not a real effectDict, but instead an instruction to draw a key capture view
         
         // Create captureField
         
@@ -306,7 +307,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
             //  Manipulating the datamodel should probably be done by RemapTableController, not RemapTableTranslator, and definitely not in this method, but oh well.
             self.dataModel[row][kMFRemapsKeyEffect] = newEffectDict;
             [self.tableView reloadData];
-            [self.controller setConfigToUI:nil];
+            [self.controller updateTableAndWriteToConfig:nil];
             
         } cancelHandler:^{
             
@@ -331,7 +332,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
             } else {
                 i = [[NSMenuItem alloc] init];
                 i.title = effectTableEntry[@"ui"];
-                i.action = @selector(setConfigToUI:);
+                i.action = @selector(updateTableAndWriteToConfig:);
                 i.target = self.tableView.delegate;
                 i.toolTip = effectTableEntry[@"tool"];
                 

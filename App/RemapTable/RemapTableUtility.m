@@ -32,7 +32,8 @@
 
 + (NSPopUpButton *)getPopUpButtonAtRow:(NSUInteger)popUpRow fromTableView:(NSTableView *)tv {
     NSInteger tableColumn = [tv columnWithIdentifier:@"effect"];
-    NSPopUpButton *popUpButton = [tv viewAtColumn:tableColumn row:popUpRow makeIfNecessary:NO].subviews[0];
+    NSView *cell = [tv viewAtColumn:tableColumn row:popUpRow makeIfNecessary:NO];
+    NSPopUpButton *popUpButton = cell.subviews[0];
     
     if (![popUpButton isKindOfClass:NSPopUpButton.class]) {
         @throw [NSException exceptionWithName:@"RowDoesntContainPopupButtonException" reason:nil userInfo:nil];
