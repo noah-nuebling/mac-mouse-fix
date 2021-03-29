@@ -58,15 +58,13 @@ static BOOL _pointerIsInsideAddField;
 // Interface
 
 + (void)begin {
-    [AppDelegate.mainWindow beginSheet:_instance.window completionHandler:^(NSModalResponse returnCode) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-        });
-    }];
+    [AppDelegate.mainWindow beginSheet:_instance.window completionHandler:nil];
 }
 + (void)end {
-//    [AppDelegate.mainWindow endSheet:_instance.window];
-    // @4332weizi had trouble closing the window. I have now clue why. Maybe using this v instead of this ^ helps.
+    [AppDelegate.mainWindow endSheet:_instance.window];
+    // @4332weizi had trouble closing the window. I have now clue why. Maybe using this v instead of just this ^ helps.
     [_instance.window close];
+    [_instance.window orderOut:nil];
 }
 + (void)handleReceivedAddModeFeedbackFromHelperWithPayload:(NSDictionary *)payload {
     // Tint plus icon to give visual feedback
