@@ -145,7 +145,7 @@
                                                                         <rect key="frame" x="354" y="39" width="223" height="39"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
-                                                                            <button focusRingType="exterior" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bGK-d6-do3" customClass="KeyCaptureViewBackground">
+                                                                            <button hidden="YES" focusRingType="exterior" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bGK-d6-do3">
                                                                                 <rect key="frame" x="-4" y="3" width="231" height="32"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                                 <buttonCell key="cell" type="push" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" focusRingType="exterior" imageScaling="proportionallyDown" inset="2" id="wcb-vJ-PiZ">
@@ -156,7 +156,7 @@
                                                                                     <outlet property="captureView" destination="JcL-EN-Rma" id="ITL-H1-8hi"/>
                                                                                 </connections>
                                                                             </button>
-                                                                            <scrollView focusRingType="exterior" fixedFrame="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="gEj-y5-p9Y">
+                                                                            <scrollView focusRingType="exterior" fixedFrame="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="gEj-y5-p9Y" customClass="KeyCaptureScrollView">
                                                                                 <rect key="frame" x="3" y="10" width="217" height="20"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                                 <clipView key="contentView" focusRingType="exterior" drawsBackground="NO" id="2dn-db-91A">
@@ -164,7 +164,7 @@
                                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                     <subviews>
                                                                                         <textView identifier="keystrokeCaptureView" focusRingType="exterior" editable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" verticallyResizable="NO" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="JcL-EN-Rma" customClass="KeyCaptureView">
-                                                                                            <rect key="frame" x="0.0" y="0.0" width="212" height="19"/>
+                                                                                            <rect key="frame" x="0.0" y="0.0" width="212" height="18"/>
                                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -179,7 +179,7 @@
                                                                                                     </attributes>
                                                                                                 </fragment>
                                                                                             </attributedString>
-                                                                                            <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                                            <color key="insertionPointColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                                             <connections>
                                                                                                 <outlet property="backgroundButton" destination="bGK-d6-do3" id="ICS-cY-bwL"/>
                                                                                             </connections>
@@ -192,8 +192,8 @@
                                                                                     <rect key="frame" x="-100" y="-100" width="240" height="16"/>
                                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                                 </scroller>
-                                                                                <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="MDL-nX-3AX">
-                                                                                    <rect key="frame" x="201" y="1" width="16" height="19"/>
+                                                                                <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="MDL-nX-3AX">
+                                                                                    <rect key="frame" x="-100" y="-100" width="16" height="19"/>
                                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                                 </scroller>
                                                                             </scrollView>

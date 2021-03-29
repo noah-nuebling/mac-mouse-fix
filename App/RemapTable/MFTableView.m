@@ -13,8 +13,8 @@
 
 // (?) Need this to make keystroke capture field first responder
 // See https://stackoverflow.com/questions/29986224/editable-nstextfield-in-nstableview
-- (BOOL)validateProposedFirstResponder:(NSResponder *)responder forEvent:(NSEvent *)event {
-    return YES;
-}
+//- (BOOL)validateProposedFirstResponder:(NSResponder *)responder forEvent:(NSEvent *)event {
+//    return YES;
+//}
 
 @end

@@ -10,12 +10,9 @@
 #import "KeyCaptureView.h"
 #import "AppDelegate.h"
 #import "UIStrings.h"
-#import "KeyCaptureViewBackground.h"
 #import <Carbon/Carbon.h>
 
 @interface KeyCaptureView ()
-
-@property IBOutlet KeyCaptureViewBackground *backgroundButton;
 
 @end
 
@@ -47,7 +44,7 @@
     NSLog(@"Setting up keystroke capture view");
 #endif
     
-    self.wantsLayer = NO;
+//    self.wantsLayer = NO;
     
     self.delegate = self;
     _captureHandler = captureHandler;
@@ -67,35 +64,14 @@
     if (_attributesFromIB == nil) {
         _attributesFromIB = [self.attributedString attributesAtIndex:0 effectiveRange:nil];
     }
-//    self.focusRingType = NSFocusRingTypeExterior;
-        self.focusRingType = NSFocusRingTypeNone;
 }
 
 - (void)drawEmptyAppearance {
     
     self.coolString = @"Type a Keyboard Shortcut";
+    self.textColor = NSColor.placeholderTextColor;
     
     [self selectAll:nil];
-}
-
-- (void)drawFocusRingMask { // This is never called for some reason
-    
-    NSGraphicsContext* contextMgr = [NSGraphicsContext currentContext];
-    CGContextRef drawingContext = (CGContextRef)[contextMgr graphicsPort];
-    
-//    HIThemeBeginFocus(drawingContext, kHIThemeFocusRingOnly, NULL);
-
-    int pad = -10;
-    
-    NSRect bounds = self.bounds;
-    NSRect innerRect = NSMakeRect(bounds.origin.x - pad,
-                                  bounds.origin.y - pad,
-                                  bounds.size.width + 2*pad,
-                                  bounds.size.height + 2*pad);
-    NSRectFill(innerRect);
-    
-    
-//    HIThemeEndFocus(drawingContext);
 }
 
 #pragma mark FirstResponderStatus handlers
@@ -110,7 +86,7 @@
     
     if (superAccepts) {
         
-        [self.backgroundButton display];
+//        [AppDelegate.mainWindow makeFirstResponder:self.backgroundButton];
         [self drawEmptyAppearance];
         
         _localEventMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:(NSEventMaskKeyDown | NSEventMaskFlagsChanged) handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
@@ -142,7 +118,6 @@
     
     return superAccepts;
 }
-/// This is called too often and at weird times (always right before the `becomeFirstResponder` call)
 - (BOOL)resignFirstResponder {
 
 #if DEBUG
@@ -165,6 +140,9 @@
 }
 - (void)mouseMoved:(NSEvent *)event {
     [NSCursor.arrowCursor set]; // Prevent text insertion cursor from appearing on mouseover
+}
+- (void)scrollWheel:(NSEvent *)event {
+    [NSCursor.arrowCursor set];
 }
 
 @end
