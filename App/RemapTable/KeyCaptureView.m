@@ -59,7 +59,7 @@
     
 }
 
-#pragma mark - Init and drawing
+#pragma mark - Lifecycle and drawing
 
 - (void)awakeFromNib {
     
@@ -68,12 +68,17 @@
     }
 }
 
-- (void)drawEmptyAppearance {
+- (void)drawEmptyAppearance { // Not really drawing in the NSFillRect sense, probably a bad name
     
     self.coolString = @"Type a Keyboard Shortcut";
     self.textColor = NSColor.placeholderTextColor;
     
     [self selectAll:nil];
+}
+
+- (void)dealloc {
+    
+    [NSNotificationCenter.defaultCenter removeObserver:self];
 }
 
 #pragma mark keyCaptureModeFeedback
@@ -127,6 +132,7 @@
         
         _isCapturing = YES;
         
+        // If the window goes to the background, resign key
         [NSNotificationCenter.defaultCenter addObserverForName:NSWindowDidResignKeyNotification object:AppDelegate.mainWindow queue:nil usingBlock:^(NSNotification * _Nonnull note) {
                     [AppDelegate.mainWindow makeFirstResponder:nil];
         }];
@@ -135,7 +141,7 @@
         
         [self drawEmptyAppearance];
         
-        _localEventMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:(NSEventMaskFlagsChanged | NSEventMaskKeyDown) handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
+        _localEventMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:(NSEventMaskFlagsChanged | NSEventMaskKeyDown | NSEventMaskLeftMouseDown) handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
             CGEventRef e = event.CGEvent;
             // User is playing around with modifier keys
             
@@ -150,6 +156,9 @@
                 }
             } else if (event.type == NSEventTypeKeyDown) {
                 assert(!self->_isCapturing); // _isCapturing should be set to NO by `handleKeyCaptureModeFeedbackWithPayload:` before this is executed.
+            } else if (event.type == NSEventTypeLeftMouseDown) {
+                // If the user clicks anything, resign key. -> To prevent weird states. E.g. where Mac Mouse Fix is disabled while the field is still up
+                [AppDelegate.mainWindow makeFirstResponder:nil];
             }
             
             return nil;
