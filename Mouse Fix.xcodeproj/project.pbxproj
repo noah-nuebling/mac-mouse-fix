@@ -33,6 +33,7 @@
 		4F94F73D25E6146C00D9F24A /* Mac Mouse Fix Helper.app in Copy Helper */ = {isa = PBXBuildFile; fileRef = 4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4F94F74C25E614B800D9F24A /* Mac Mouse Fix Accomplice in Copy Updater */ = {isa = PBXBuildFile; fileRef = 4F2FDF302315662400C7BE14 /* Mac Mouse Fix Accomplice */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4FB4F9FE260FDBC800806DDD /* RemapTableUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB4F9FD260FDBC800806DDD /* RemapTableUtility.m */; };
+		4FB4FA0D26116B6B00806DDD /* KeyCaptureViewBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB4FA0C26116B6B00806DDD /* KeyCaptureViewBackground.m */; };
 		4FBC943B260F8AA60062F186 /* MASShortcut.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC9434260F8AA60062F186 /* MASShortcut.m */; };
 		4FBC943C260F8AA60062F186 /* MASShortcutValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC9435260F8AA60062F186 /* MASShortcutValidator.m */; };
 		4FBC9453260F8D020062F186 /* MASLocalization.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC9452260F8D020062F186 /* MASLocalization.m */; };
@@ -236,6 +237,8 @@
 		4F94F61125E5EC2800D9F24A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4FB4F9FC260FDBC800806DDD /* RemapTableUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapTableUtility.h; sourceTree = "<group>"; };
 		4FB4F9FD260FDBC800806DDD /* RemapTableUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapTableUtility.m; sourceTree = "<group>"; };
+		4FB4FA0B26116B6B00806DDD /* KeyCaptureViewBackground.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyCaptureViewBackground.h; sourceTree = "<group>"; };
+		4FB4FA0C26116B6B00806DDD /* KeyCaptureViewBackground.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KeyCaptureViewBackground.m; sourceTree = "<group>"; };
 		4FBC9434260F8AA60062F186 /* MASShortcut.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASShortcut.m; sourceTree = "<group>"; };
 		4FBC9435260F8AA60062F186 /* MASShortcutValidator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASShortcutValidator.m; sourceTree = "<group>"; };
 		4FBC9436260F8AA60062F186 /* MASShortcut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASShortcut.h; sourceTree = "<group>"; };
@@ -552,6 +555,8 @@
 				4F92A707260F4BF000529D1F /* MFTableView.m */,
 				4F92A71C260F667F00529D1F /* KeyCaptureView.h */,
 				4F92A71D260F667F00529D1F /* KeyCaptureView.m */,
+				4FB4FA0B26116B6B00806DDD /* KeyCaptureViewBackground.h */,
+				4FB4FA0C26116B6B00806DDD /* KeyCaptureViewBackground.m */,
 			);
 			path = RemapTable;
 			sourceTree = "<group>";
@@ -1365,6 +1370,7 @@
 				4FB4F9FE260FDBC800806DDD /* RemapTableUtility.m in Sources */,
 				4FF665FD25F2C92700689B77 /* AuthorizeAccessibilityView.m in Sources */,
 				4F92A72D260F6C7800529D1F /* NSView+Additions.m in Sources */,
+				4FB4FA0D26116B6B00806DDD /* KeyCaptureViewBackground.m in Sources */,
 				4F92A73A260F73C600529D1F /* KeyCaptureView.m in Sources */,
 				4FF6654425F2C7B000689B77 /* HelperServices.m in Sources */,
 			);

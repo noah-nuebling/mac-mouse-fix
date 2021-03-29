@@ -10,10 +10,11 @@
 #import "KeyCaptureView.h"
 #import "AppDelegate.h"
 #import "UIStrings.h"
+#import "KeyCaptureViewBackground.h"
 
 @interface KeyCaptureView ()
 
-@property IBOutlet NSButton *backgroundButton;
+@property IBOutlet KeyCaptureViewBackground *backgroundButton;
 
 @end
 
@@ -34,14 +35,6 @@
     NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:string attributes:_attributesFromIB];
     
     self.textStorage.attributedString = attributedString;
-}
-
-#pragma mark - Init
-
-- (void)awakeFromNib {
-    if (_attributesFromIB == nil) {
-        _attributesFromIB = [self.attributedString attributesAtIndex:0 effectiveRange:nil];
-    }
 }
 
 #pragma mark - Setup
@@ -65,10 +58,39 @@
     
 }
 
-#pragma mark Drawing
+#pragma mark - Init and drawing
+
+- (void)awakeFromNib {
+    
+    if (_attributesFromIB == nil) {
+        _attributesFromIB = [self.attributedString attributesAtIndex:0 effectiveRange:nil];
+    }
+    self.focusRingType = NSFocusRingTypeNone;
+}
 
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];
+
+    BOOL focus = AppDelegate.mainWindow.firstResponder == self;
+
+    if (true) {
+        NSRect bounds = self.bounds;
+        NSRect outerRect = NSMakeRect(bounds.origin.x - 2,
+                                      bounds.origin.y - 2,
+                                      bounds.size.width + 4,
+                                      bounds.size.height + 4);
+
+        NSRect innerRect = NSInsetRect(outerRect, 1, 1);
+
+        NSBezierPath *clipPath = [NSBezierPath bezierPathWithRect:outerRect];
+        [clipPath appendBezierPath:[NSBezierPath bezierPathWithRect:innerRect]];
+
+        [clipPath setWindingRule:NSEvenOddWindingRule];
+        [clipPath setClip];
+
+        [[NSColor colorWithCalibratedWhite:0.6 alpha:1.0] setFill];
+        [[NSBezierPath bezierPathWithRect:outerRect] fill];
+    }
 }
 
 - (void)drawEmptyAppearance {
@@ -141,6 +163,13 @@
     return superResigns;
 }
 
+#pragma mark - Disable MouseDown and mouseover cursor
 
+- (void)mouseDown:(NSEvent *)event {
+    // Ignore
+}
+- (void)mouseMoved:(NSEvent *)event {
+    [NSCursor.arrowCursor set]; // Prevent text insertion cursor from appearing on mouseover
+}
 
 @end
