@@ -1,4 +1,3 @@
-#import "MASLocalization.h"
 #import "MASShortcutValidator.h"
 
 @implementation MASShortcutValidator
