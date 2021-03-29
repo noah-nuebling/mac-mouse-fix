@@ -150,7 +150,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
                   kMFActionDictKeyGenericVariant: kMFNavigationSwipeVariantRight
         }},
         separatorEffectsTableEntry(),
-        @{@"ui": @"Keyboard Shortcut...", @"tool": @"Use a keyboard shortcut right from your mouse", @"keyCaptureEntry": @YES},
+        @{@"ui": @"Keyboard Shortcut...", @"tool": @"Type a keyboard shortcut, then use it from your mouse. As simple as that!", @"keyCaptureEntry": @YES},
     ].mutableCopy;
     
     // Insert button specific entry
@@ -187,7 +187,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
         // Create and insert new entry
         [oneShotEffectsTable insertObject:@{
             @"ui": shortcutString,
-            @"tool": fstring(@"Use the '%@' shortcut", shortcutString),
+            @"tool": fstring(@"Works like pressing '%@' on your keyboard", shortcutString),
             @"dict": effectDict,
             @"indentation": @1,
         } atIndex:shortcutIndex];
