@@ -73,7 +73,7 @@
 
 - (void)drawEmptyAppearance {
     
-    self.coolString = @"Enter keyboard shortcut";
+    self.coolString = @"Type a Keyboard Shortcut";
     
     [self selectAll:nil];
 }
