@@ -124,13 +124,6 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
         @{@"ui": @"Smart Zoom", @"tool": @"Zoom in or out in Safari and other apps. \n \nWorks like a two-finger double tap on an Apple Trackpad.", @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSmartZoom,
         }},
-        @{@"ui": fstring(@"%@ Click", [UIStrings getButtonString:3]),
-          @"tool": [NSString stringWithFormat:@"Open links in a new tab, paste text in the Terminal, and more. \n \nWorks like clicking %@ on a standard mouse.", [UIStrings getButtonStringToolTip:3]],
-          @"dict": @{
-                  kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
-                  kMFActionDictKeyMouseButtonClicksVariantButtonNumber: @3,
-                  kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks: @1,
-          }},
         separatorEffectsTableEntry(),
         @{@"ui": @"Move Left a Space", @"tool": @"Move one Space to the left", @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
@@ -150,6 +143,13 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
                   kMFActionDictKeyGenericVariant: kMFNavigationSwipeVariantRight
         }},
         separatorEffectsTableEntry(),
+        @{@"ui": fstring(@"%@ Click", [UIStrings getButtonString:3]),
+          @"tool": [NSString stringWithFormat:@"Open links in a new tab, paste text in the Terminal, and more. \n \nWorks like clicking %@ on a standard mouse.", [UIStrings getButtonStringToolTip:3]],
+          @"dict": @{
+                  kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
+                  kMFActionDictKeyMouseButtonClicksVariantButtonNumber: @3,
+                  kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks: @1,
+          }},
         @{@"ui": @"Keyboard shortcut...", @"tool": @"Use a keyboard shortcut right from your mouse", @"keyCaptureEntry": @YES},
     ].mutableCopy;
     
@@ -167,7 +167,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
                kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks: @1,
            }
         };
-        [oneShotEffectsTable insertObject:buttonClickEntry atIndex:9];
+        [oneShotEffectsTable insertObject:buttonClickEntry atIndex:16];
     }
     
     // Insert entry for keyboard shortcut effect
@@ -189,7 +189,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
             @"ui": shortcutString,
             @"tool": fstring(@"Use the '%@' shortcut", shortcutString),
             @"dict": effectDict,
-            @"indentation": @0,
+            @"indentation": @1,
         } atIndex:shortcutIndex];
     };
     
