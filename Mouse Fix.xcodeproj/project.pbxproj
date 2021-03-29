@@ -35,7 +35,6 @@
 		4FB4F9FE260FDBC800806DDD /* RemapTableUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB4F9FD260FDBC800806DDD /* RemapTableUtility.m */; };
 		4FB4FA202611DD6000806DDD /* KeyCaptureScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB4FA1F2611DD6000806DDD /* KeyCaptureScrollView.m */; };
 		4FBC943B260F8AA60062F186 /* MASShortcut.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC9434260F8AA60062F186 /* MASShortcut.m */; };
-		4FBC943C260F8AA60062F186 /* MASShortcutValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC9435260F8AA60062F186 /* MASShortcutValidator.m */; };
 		4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCA07D525F3129B00BFE209 /* RemapTableController.m */; };
 		4FD82DDB260575B100664D6F /* MFNotificationLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD82DDA260575B100664D6F /* MFNotificationLabel.m */; };
 		4FF6654125F2C7B000689B77 /* default_launchd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6652E25F2C7B000689B77 /* default_launchd.plist */; };
@@ -239,10 +238,8 @@
 		4FB4FA1E2611DD6000806DDD /* KeyCaptureScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyCaptureScrollView.h; sourceTree = "<group>"; };
 		4FB4FA1F2611DD6000806DDD /* KeyCaptureScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KeyCaptureScrollView.m; sourceTree = "<group>"; };
 		4FBC9434260F8AA60062F186 /* MASShortcut.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASShortcut.m; sourceTree = "<group>"; };
-		4FBC9435260F8AA60062F186 /* MASShortcutValidator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASShortcutValidator.m; sourceTree = "<group>"; };
 		4FBC9436260F8AA60062F186 /* MASShortcut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASShortcut.h; sourceTree = "<group>"; };
 		4FBC9437260F8AA60062F186 /* MASKeyMasks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASKeyMasks.h; sourceTree = "<group>"; };
-		4FBC9438260F8AA60062F186 /* MASShortcutValidator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASShortcutValidator.h; sourceTree = "<group>"; };
 		4FBC9439260F8AA60062F186 /* MASKeyCodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASKeyCodes.h; sourceTree = "<group>"; };
 		4FCA07D425F3129B00BFE209 /* RemapTableController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapTableController.h; sourceTree = "<group>"; };
 		4FCA07D525F3129B00BFE209 /* RemapTableController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapTableController.m; sourceTree = "<group>"; };
@@ -582,8 +579,6 @@
 				4FBC9439260F8AA60062F186 /* MASKeyCodes.h */,
 				4FBC9436260F8AA60062F186 /* MASShortcut.h */,
 				4FBC9434260F8AA60062F186 /* MASShortcut.m */,
-				4FBC9438260F8AA60062F186 /* MASShortcutValidator.h */,
-				4FBC9435260F8AA60062F186 /* MASShortcutValidator.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1341,7 +1336,6 @@
 				4FD82DDB260575B100664D6F /* MFNotificationLabel.m in Sources */,
 				4FF665FA25F2C92700689B77 /* AppDelegate.m in Sources */,
 				4FF665F325F2C92700689B77 /* MoreSheet.m in Sources */,
-				4FBC943C260F8AA60062F186 /* MASShortcutValidator.m in Sources */,
 				4FF6660025F2C92700689B77 /* Hyperlink.m in Sources */,
 				4FF6654C25F2C7B000689B77 /* MFQueue.m in Sources */,
 				4FF665ED25F2C92700689B77 /* MFSegmentedControl.m in Sources */,
