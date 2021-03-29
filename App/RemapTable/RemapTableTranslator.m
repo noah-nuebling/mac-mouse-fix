@@ -502,12 +502,11 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     
     NSNumber *flags = (NSNumber *)rowDict[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyKeyboard];
     NSString *kbModRaw = [UIStrings getKeyboardModifierString:((NSNumber *)flags).unsignedIntegerValue];
-    kbModRaw = [kbModRaw stringByAppendingString:@" "];
     NSString *kbModTooltipRaw = [UIStrings getKeyboardModifierStringToolTip:((NSNumber *)flags).unsignedIntegerValue];
     NSString *kbMod = @"";
     NSString *kbModTool = @"";
     if (![kbModRaw isEqualToString:@""]) {
-        kbMod = [kbModRaw stringByAppendingString:@""]; // @"+ "
+        kbMod = [kbModRaw stringByAppendingString:@" "]; // @"+ "
         kbModTool = [kbModTooltipRaw stringByAppendingString:@", then "];
     }
     
