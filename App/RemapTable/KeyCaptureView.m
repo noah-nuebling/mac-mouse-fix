@@ -120,6 +120,7 @@
             CGEventFlags flags = CGEventGetFlags(e);
             
             if (event.type == NSEventTypeKeyDown) {
+                [AppDelegate.mainWindow makeFirstResponder:nil];
                 self->_captureHandler(keyCode, flags); // This should undraw this view
                 
             } else {
