@@ -15,7 +15,7 @@
 #import "NSTextField+Additions.h"
 #import "ConfigFileInterface_App.h"
 #import "RemapTableController.h"
-#import "MFKeystrokeCaptureTextView.h"
+#import "KeyCaptureView.h"
 #import "AppDelegate.h"
 #import "NSView+Additions.h"
 #import "RemapTableUtility.h"
@@ -292,7 +292,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         // Get MFKeystrokeCaptureCell instance from IB
         NSTableCellView *keyStrokeCaptureCell = [self.tableView makeViewWithIdentifier:@"keystrokeCaptureCell" owner:self];
         // Get capture field
-        MFKeystrokeCaptureTextView *keyStrokeCaptureField = (MFKeystrokeCaptureTextView *)[keyStrokeCaptureCell nestedSubviewsWithIdentifier:@"keystrokeCaptureView"][0];
+        KeyCaptureView *keyStrokeCaptureField = (KeyCaptureView *)[keyStrokeCaptureCell nestedSubviewsWithIdentifier:@"keystrokeCaptureView"][0];
         
         [keyStrokeCaptureField setupWithCaptureHandler:^(CGKeyCode keyCode, CGEventFlags flags) {
             

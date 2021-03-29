@@ -12,6 +12,18 @@
 
 @implementation NSAttributedString (Additions)
 
+/// Create string by adding values from `baseAttributes`, without overriding any of the attributes set for `self`
+- (NSAttributedString *)attributedStringByAddingBaseAttributes:(NSDictionary *)baseAttributes {
+    
+    NSMutableAttributedString *s = self.mutableCopy;
+    
+    [s addAttributes:baseAttributes range:NSMakeRange(0, s.length)]; // Base attributes will override string attributes
+    [self enumerateAttributesInRange:NSMakeRange(0, s.length) options:0 usingBlock:^(NSDictionary<NSAttributedStringKey,id> * _Nonnull attrs, NSRange range, BOOL * _Nonnull stop) {
+        [s addAttributes:attrs range:range];
+    }]; // Override base attributes with original string attributes to undo overrides of original string attributes
+    return s.copy;
+}
+
 - (NSAttributedString *)attributedStringByAddingLinkWithURL:(NSURL *)linkURL forSubstring:(NSString *)substring {
     
     NSMutableAttributedString *str = self.mutableCopy;
@@ -59,26 +71,6 @@
     NSFontDescriptorSymbolicTraits traits = NSFontDescriptorTraitItalic;
     
     return [self attributedStringByAddingSymbolicFontTraits:traits forSubstring:subStr];
-}
-
-+(id)hyperlinkFromString:(NSString *)inString withURL:(NSURL *)aURL {
-    
-    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:inString.mutableCopy];
-    NSRange range = NSMakeRange(0, attrString.length);
- 
-    [attrString beginEditing];
-    [attrString addAttribute:NSLinkAttributeName value:aURL.absoluteString range:range];
- 
-    // make the text appear in blue
-    [attrString addAttribute:NSForegroundColorAttributeName value:[NSColor blueColor] range:range];
- 
-    // next make the text appear with an underline
-    [attrString addAttribute:
-            NSUnderlineStyleAttributeName value:[NSNumber numberWithInt:NSUnderlineStyleSingle] range:range];
- 
-    [attrString endEditing];
- 
-    return attrString;
 }
 
 - (NSSize)sizeAtMaxWidth:(CGFloat)maxWidth {
@@ -129,5 +121,25 @@
     return ceil(result1);
 }
 
+/// Copy pasted this from somewhere
++ (NSAttributedString *)hyperlinkFromString:(NSString *)inString withURL:(NSURL *)aURL {
+    
+    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:inString.mutableCopy];
+    NSRange range = NSMakeRange(0, attrString.length);
+ 
+    [attrString beginEditing];
+    [attrString addAttribute:NSLinkAttributeName value:aURL.absoluteString range:range];
+ 
+    // make the text appear in blue
+    [attrString addAttribute:NSForegroundColorAttributeName value:[NSColor blueColor] range:range];
+ 
+    // next make the text appear with an underline
+    [attrString addAttribute:
+            NSUnderlineStyleAttributeName value:[NSNumber numberWithInt:NSUnderlineStyleSingle] range:range];
+ 
+    [attrString endEditing];
+ 
+    return attrString;
+}
 
 @end

@@ -89,11 +89,11 @@ double _animationDuration = 0.4;
 //    [m addAttributes:@{NSParagraphStyleAttributeName: p} range:NSMakeRange(0, m.length)];
     
     // Set message text and text attributes to label
-    NSMutableAttributedString *m = message.mutableCopy;
-    [m addAttributes:_labelAttributesFromIB range:NSMakeRange(0, m.length)];
-    [message enumerateAttributesInRange:NSMakeRange(0, m.length) options:0 usingBlock:^(NSDictionary<NSAttributedStringKey,id> * _Nonnull attrs, NSRange range, BOOL * _Nonnull stop) {
-        [m addAttributes:attrs range:range];
-    }];
+    
+    NSDictionary *baseAttributes = _labelAttributesFromIB;
+    
+    NSAttributedString *m = [message attributedStringByAddingBaseAttributes:baseAttributes];
+    
     [_instance.label.textStorage setAttributedString:m];
 
     // Set notification frame

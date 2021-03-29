@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 typedef void (^CaptureHandler) (CGKeyCode keyCode, CGEventFlags flags);
 typedef void (^CancelHandler) (void);
 
-@interface MFKeystrokeCaptureTextView : NSTextView <NSTextViewDelegate>
+@interface KeyCaptureView : NSTextView <NSTextViewDelegate>
 
 - (void)setupWithCaptureHandler:(CaptureHandler)captureHandler
                   cancelHandler:(CancelHandler)cancelHandler;

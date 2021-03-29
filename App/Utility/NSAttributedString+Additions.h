@@ -12,13 +12,14 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NSAttributedString (Additions)
-+ (id)hyperlinkFromString:(NSString *)inString withURL:(NSURL *)aURL;
+- (NSAttributedString *)attributedStringByAddingBaseAttributes:(NSDictionary *)baseAttributes;
 - (NSAttributedString *)attributedStringByAddingLinkWithURL:(NSURL *)linkURL forSubstring:(NSString *)substring;
 - (NSAttributedString *)attributedStringByAddingBoldForSubstring:(NSString *)subStr;
 - (NSAttributedString *)attributedStringByAddingItalicForSubstring:(NSString *)subStr;
 - (NSSize)sizeAtMaxWidth:(CGFloat)maxWidth;
 - (CGFloat)heightAtWidth:(CGFloat)width;
 - (CGFloat)width;
++ (NSAttributedString *)hyperlinkFromString:(NSString *)inString withURL:(NSURL *)aURL;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -23,7 +23,7 @@
 #import "CaptureNotifications.h"
 #import "RemapTableTranslator.h"
 #import "NSView+Additions.h"
-#import "MFKeystrokeCaptureTextView.h"
+#import "KeyCaptureView.h"
 #import "RemapTableUtility.h"
 
 @interface RemapTableController ()

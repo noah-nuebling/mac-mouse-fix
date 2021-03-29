@@ -7,22 +7,41 @@
 // --------------------------------------------------------------------------
 //
 
-#import "MFKeystrokeCaptureTextView.h"
+#import "KeyCaptureView.h"
 #import "AppDelegate.h"
 #import "UIStrings.h"
 
-@interface MFKeystrokeCaptureTextView ()
+@interface KeyCaptureView ()
 
 @property IBOutlet NSButton *backgroundButton;
 
 @end
 
-@implementation MFKeystrokeCaptureTextView {
+@implementation KeyCaptureView {
     
     CaptureHandler _captureHandler;
     CancelHandler _cancelHandler;
     
     id _localEventMonitor;
+    
+    NSDictionary *_attributesFromIB;
+}
+
+#pragma mark - (Pseudo) Properties
+
+- (void)setCoolString:(NSString *)string {
+    
+    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:string attributes:_attributesFromIB];
+    
+    self.textStorage.attributedString = attributedString;
+}
+
+#pragma mark - Init
+
+- (void)awakeFromNib {
+    if (_attributesFromIB == nil) {
+        _attributesFromIB = [self.attributedString attributesAtIndex:0 effectiveRange:nil];
+    }
 }
 
 #pragma mark - Setup
@@ -54,8 +73,8 @@
 
 - (void)drawEmptyAppearance {
     
-    self.string = @"Enter keyboard shortcut";
-    self.textColor = NSColor.placeholderTextColor;
+    self.coolString = @"Enter keyboard shortcut";
+//    self.textColor = NSColor.placeholderTextColor;
     
     [self selectAll:nil];
 }
@@ -92,7 +111,7 @@
                 
                 NSString *modString = [UIStrings getKeyboardModifierString:flags];
                 if (modString.length > 0) {
-                    self.string = modString;
+                    self.coolString = modString;
                 } else {
                     [self drawEmptyAppearance];
                 }
@@ -121,5 +140,7 @@
     }
     return superResigns;
 }
+
+
 
 @end
