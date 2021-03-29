@@ -64,33 +64,12 @@
     }
 }
 
-static NSString *buttonStringFromButtonArray(NSArray *buttonArray) {
-    
-    NSMutableArray<NSNumber *> *ba = buttonArray.mutableCopy;
-    
-    NSString *buttonString;
-    
-    if (ba.count == 0) {
-        
-        buttonString = @"";
-        
-    } else if (ba.count == 1) {
-        
-        buttonString = [UIStrings getButtonString:ba[0].intValue];
-        
-    } else if (ba.count > 1) {
-        
-        NSNumber *lastButton = ba.lastObject;
-        [ba removeLastObject];
-        
-        NSArray *firstButtonStrings = [ba map:^id _Nonnull(NSNumber * _Nonnull button) {
-            return [UIStrings getButtonString:button.intValue];
-        }];
-        NSString *lastButtonString = [UIStrings getButtonString:lastButton.intValue];
-        
-        buttonString = [[firstButtonStrings componentsJoinedByString:@", "] stringByAppendingFormat:@" and %@", lastButtonString];
-    }
-    
-    return buttonString;
+static NSString *buttonStringFromButtonArray(NSArray<NSNumber *> *buttons) {
+
+    NSArray *buttonStrings = [buttons map:^id _Nonnull(NSNumber * _Nonnull button) {
+        return [UIStrings getButtonString:button.intValue];
+    }];
+    return [UIStrings naturalLanguageListFromStringArray:buttonStrings];
 }
+
 @end

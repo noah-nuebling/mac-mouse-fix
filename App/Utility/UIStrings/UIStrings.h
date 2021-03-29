@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString *)getKeyboardModifierString:(CGEventFlags)flags;
 + (NSString *)getKeyboardModifierStringToolTip:(CGEventFlags)flags;
 + (NSString *)getStringForKeyCode:(CGKeyCode)keyCode flags:(CGEventFlags)flags;
++ (NSString *)naturalLanguageListFromStringArray:(NSArray<NSString *> *)stringArray;
 
 @end
 

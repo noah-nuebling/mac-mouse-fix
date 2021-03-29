@@ -22,7 +22,7 @@
     return keyStr;
 }
 
-+ (NSString *)getButtonString:(int)buttonNumber {
++ (NSString *)getButtonString:(MFMouseButtonNumber)buttonNumber {
     NSDictionary *buttonNumberToUIString = @{
         @1: @"Primary Button",
         @2: @"Secondary Button",
@@ -35,7 +35,7 @@
     return buttonStr;
 }
 
-+ (NSString *)getButtonStringToolTip:(int)buttonNumber {
++ (NSString *)getButtonStringToolTip:(MFMouseButtonNumber)buttonNumber {
     NSDictionary *buttonNumberToUIString = @{
         @1: @"the Primary Mouse Button (also called the Left Mouse Button or Mouse Button 1)",
         @2: @"the Secondary Mouse Button (also called the Right Mouse Button or Mouse Button 2)",
@@ -68,10 +68,9 @@
           (f & kCGEventFlagMaskShift ?      @"Shift (⇧)-" : @""),
           (f & kCGEventFlagMaskCommand ?    @"Command (⌘)-" : @"")];
     if (kb.length > 0) {
-        // TODO: Use our function for creating proper natural language lists (with commas as well as 'and' before the last element)
         kb = [kb substringToIndex:kb.length-1]; // Delete trailing dash
-//        kb = [kb stringByAppendingString:@" "]; // Append trailing space
-        kb = [kb stringByReplacingOccurrencesOfString:@"-" withString:@" and "];
+        NSArray *stringArray = [kb componentsSeparatedByString:@"-"];
+        kb = [self naturalLanguageListFromStringArray:stringArray];
         kb = [@"Hold " stringByAppendingString:kb];
     }
     
@@ -89,37 +88,31 @@
     return captureFieldContent;
 }
 
-///// Returns string representation of key, if it is printable.
-/// Doesn't work properly
-///// Source: https://stackoverflow.com/a/12548163/10601702
-//+ (NSString *)stringForKey:(CGKeyCode)keyCode
-//{
-//    TISInputSourceRef currentKeyboard = TISCopyCurrentKeyboardInputSource();
-//    CFDataRef layoutData =
-//        TISGetInputSourceProperty(currentKeyboard,
-//                                  kTISPropertyUnicodeKeyLayoutData);
-//    const UCKeyboardLayout *keyboardLayout =
-//        (const UCKeyboardLayout *)CFDataGetBytePtr(layoutData);
-//
-//    UInt32 keysDown = 0;
-//    UniChar chars[4];
-//    UniCharCount realLength;
-//
-//    UCKeyTranslate(keyboardLayout,
-//                   keyCode,
-//                   kUCKeyActionDisplay,
-//                   0,
-//                   LMGetKbdType(),
-//                   kUCKeyTranslateNoDeadKeysBit,
-//                   &keysDown,
-//                   sizeof(chars) / sizeof(chars[0]),
-//                   &realLength,
-//                   chars);
-//    CFRelease(currentKeyboard);
-//
-//    CFStringRef outStrCF = CFStringCreateWithCharacters(kCFAllocatorDefault, chars, 1);
-//
-//    return (__bridge_transfer NSString *)outStrCF;
-//}
++ (NSString *)naturalLanguageListFromStringArray:(NSArray<NSString *> *)stringArray {
+    
+    NSMutableArray<NSString *> *sa = stringArray.mutableCopy;
+    
+    NSString *outString;
+    
+    if (sa.count == 0) {
+        
+        outString = @"";
+        
+    } else if (sa.count == 1) {
+        
+        outString = sa[0];
+        
+    } else if (sa.count > 1) {
+        
+        NSString *lastString = sa.lastObject;
+        [sa removeLastObject];
+        
+        NSArray *firstStrings = sa;
+        
+        outString = [[firstStrings componentsJoinedByString:@", "] stringByAppendingFormat:@" and %@", lastString];
+    }
+    
+    return outString;
+}
 
 @end
