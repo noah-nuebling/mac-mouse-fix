@@ -123,9 +123,13 @@
     
     BOOL superAccepts = [super becomeFirstResponder];
     
-    _isCapturing = YES;
-    
     if (superAccepts) {
+        
+        _isCapturing = YES;
+        
+        [NSNotificationCenter.defaultCenter addObserverForName:NSWindowDidResignKeyNotification object:AppDelegate.mainWindow queue:nil usingBlock:^(NSNotification * _Nonnull note) {
+                    [AppDelegate.mainWindow makeFirstResponder:nil];
+        }];
         
         [SharedMessagePort sendMessage:@"enableKeyCaptureMode" withPayload:@"" expectingReply:NO];
         
