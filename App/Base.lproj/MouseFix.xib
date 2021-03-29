@@ -117,7 +117,7 @@
                                                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                                                 <prototypeCellViews>
                                                                     <tableCellView identifier="effectCell" id="5PH-4e-aAm">
-                                                                        <rect key="frame" x="354" y="0.0" width="223" height="39"/>
+                                                                        <rect key="frame" x="353.5" y="0.0" width="223" height="39"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
                                                                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7A6-Ou-8wk">
@@ -142,7 +142,7 @@
                                                                         </subviews>
                                                                     </tableCellView>
                                                                     <tableCellView identifier="keystrokeCaptureCell" id="ppe-fA-Qpm">
-                                                                        <rect key="frame" x="354" y="39" width="223" height="39"/>
+                                                                        <rect key="frame" x="353.5" y="39" width="223" height="39"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
                                                                             <button focusRingType="exterior" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bGK-d6-do3">
@@ -179,7 +179,6 @@
                                                                                             <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                                                             <connections>
                                                                                                 <outlet property="backgroundButton" destination="bGK-d6-do3" id="ICS-cY-bwL"/>
-                                                                                                <outlet property="clearButton" destination="iZc-Rb-Ylg" id="gRj-z1-6xC"/>
                                                                                             </connections>
                                                                                         </textView>
                                                                                     </subviews>
@@ -195,17 +194,6 @@
                                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                                 </scroller>
                                                                             </scrollView>
-                                                                            <button identifier="clearButton" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iZc-Rb-Ylg">
-                                                                                <rect key="frame" x="200" y="10" width="13" height="19"/>
-                                                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                                                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="xmark.circle.fill" catalog="system" imagePosition="overlaps" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="OkB-Bt-Myi">
-                                                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                                                    <font key="font" metaFont="system"/>
-                                                                                </buttonCell>
-                                                                                <connections>
-                                                                                    <action selector="handleClearButtonAction:" target="JcL-EN-Rma" id="BS2-kJ-go1"/>
-                                                                                </connections>
-                                                                            </button>
                                                                         </subviews>
                                                                     </tableCellView>
                                                                 </prototypeCellViews>
@@ -365,6 +353,5 @@ Tips:
     <resources>
         <image name="NSAddTemplate" width="14" height="13"/>
         <image name="NSRemoveTemplate" width="14" height="4"/>
-        <image name="xmark.circle.fill" catalog="system" width="15" height="15"/>
     </resources>
 </document>

@@ -197,13 +197,18 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
 // Convenience functions for effects tables
 
 // We wanted to rename 'effects table' to 'effects menu model', but we only did it in a few places. Thats why this is named weird
-+ (NSDictionary *)getEntryFromEffectsMenuModel:(NSArray *)effectsTable withEffectDict:(NSDictionary *)effectDict {
-    NSIndexSet *inds = [effectsTable indexesOfObjectsPassingTest:^BOOL(NSDictionary * _Nonnull tableEntry, NSUInteger idx, BOOL * _Nonnull stop) {
++ (NSDictionary *)getEntryFromEffectTable:(NSArray *)effectTable withEffectDict:(NSDictionary *)effectDict {
+    
+    if ([effectDict[@"drawKeyCaptureView"] isEqual: @YES]) {
+        return nil;
+    }
+    
+    NSIndexSet *inds = [effectTable indexesOfObjectsPassingTest:^BOOL(NSDictionary * _Nonnull tableEntry, NSUInteger idx, BOOL * _Nonnull stop) {
         return [tableEntry[@"dict"] isEqualToDictionary:effectDict];
     }];
     NSAssert(inds.count == 1, @"Inds: %@", inds);
     // TODO: React well to inds.count == 0, to support people editing remaps dict by hand (If I'm reallyyy bored)
-    NSDictionary *effectsTableEntry = (NSDictionary *)effectsTable[inds.firstIndex];
+    NSDictionary *effectsTableEntry = (NSDictionary *)effectTable[inds.firstIndex];
     return effectsTableEntry;
 }
 + (NSDictionary *)getEntryFromEffectsTable:(NSArray *)effectsTable withUIString:(NSString *)uiString {
@@ -255,15 +260,16 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     NSDictionary *effectDict = rowDict[kMFRemapsKeyEffect];
     NSString *name;
     if (effectDict) { // When inserting new rows through AddMode, there is no effectDict at first // Noah from future: are you sure? I think this has changed.
-        if ([effectDict[kMFActionDictKeyType] isEqual:kMFActionDictTypeKeyboardShortcut]) {
-            NSNumber *keyCode = effectDict[kMFActionDictKeyKeyboardShortcutVariantKeycode];
-            NSNumber *flags = effectDict[kMFActionDictKeyKeyboardShortcutVariantModifierFlags];
-            name = [UIStrings getStringForKeyCode:keyCode.unsignedIntValue flags:flags.unsignedIntValue];
-        } else {
+//        if ([effectDict[kMFActionDictKeyType] isEqual:kMFActionDictTypeKeyboardShortcut]) {
+//            NSNumber *keyCode = effectDict[kMFActionDictKeyKeyboardShortcutVariantKeycode];
+//            NSNumber *flags = effectDict[kMFActionDictKeyKeyboardShortcutVariantModifierFlags];
+//            name = [UIStrings getStringForKeyCode:keyCode.unsignedIntValue flags:flags.unsignedIntValue];
+//        } else
+//        {
             // Get title for effectDict from effectsTable
-            NSDictionary *effectsMenuModelEntry = [RemapTableTranslator getEntryFromEffectsMenuModel:effectsTable withEffectDict:effectDict];
+            NSDictionary *effectsMenuModelEntry = [RemapTableTranslator getEntryFromEffectTable:effectsTable withEffectDict:effectDict];
             name = effectsMenuModelEntry[@"ui"];
-        }
+//        }
     }
     return name;
 }
@@ -278,10 +284,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     
     NSDictionary *effectDict = rowDict[kMFRemapsKeyEffect];
     
-    if (false) {
-
-        NSNumber *keyCodeFromDataModel = effectDict[kMFActionDictKeyKeyboardShortcutVariantKeycode];
-        NSNumber *flagsFromDataModel = effectDict[kMFActionDictKeyKeyboardShortcutVariantModifierFlags];
+    if ([effectDict[@"drawKeyCaptureView"] isEqual:@YES]) {
         
         // Create captureField
         
@@ -290,9 +293,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         // Get capture field
         MFKeystrokeCaptureTextView *keyStrokeCaptureField = (MFKeystrokeCaptureTextView *)[keyStrokeCaptureCell nestedSubviewsWithIdentifier:@"keystrokeCaptureView"][0];
         
-        [keyStrokeCaptureField setupWithCapturedKeyCode:keyCodeFromDataModel
-                                  capturedModifierFlags:flagsFromDataModel
-         captureHandler:^(CGKeyCode keyCode, CGEventFlags flags) {
+        [keyStrokeCaptureField setupWithCaptureHandler:^(CGKeyCode keyCode, CGEventFlags flags) {
             
             // Create new effectDict
             NSDictionary *newEffectDict = @{
@@ -312,17 +313,6 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
             [self.tableView reloadData];
             // Restore tableView to the ground truth dataModel
             //  This used to restore original state if the capture field has been created through `reloadDataWithTemporaryDataModel:`
-            
-        } clearButtonHandler:^{
-            
-//            MFMouseButtonNumber buttonNumber = [RemapTableUtility triggerButtonForRow:row tableViewDataModel:self.dataModel];
-            self.dataModel[row][kMFRemapsKeyEffect] = getOneShotEffectsTable(rowDict)[0][@"dict"];
-            
-            [self.tableView reloadData];
-            [self.controller setConfigToUI:nil];
-            
-            NSPopUpButton *popUpButton = [RemapTableUtility getPopUpButtonAtRow:row fromTableView:self.tableView];
-            [popUpButton performClick:nil];
             
         }];
         

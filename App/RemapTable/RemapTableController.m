@@ -92,10 +92,13 @@
     // Draw keystroke-capture-field
     NSArray *dataModelWithCaptureCell = (NSArray *)[SharedUtility deepCopyOf:self.dataModel];
     dataModelWithCaptureCell[rowOfSender][kMFRemapsKeyEffect] = @{
-        kMFActionDictKeyType: kMFActionDictTypeKeyboardShortcut,
+        @"drawKeyCaptureView": @YES
     };
     [self reloadDataWithTemporaryDataModel:dataModelWithCaptureCell];
-//    [self.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:rowOfSender] byExtendingSelection:NO];
+    
+    // ^ Changing the datamodel and redrawing the whole table to insert a temporary view for capturing keyboardShortcuts is a bit ugly I feel, but 'The tableView needs to own it's views' afaik so this is the only way.
+    //      We need to make sure we never write this rowDict to file, because that's probably gonna crash the helper or lead to unexpected behaviour.
+    //      Actually creating/inserting the captureView into the table is done in `getEffectCellWithRowDict:row:`
     
 }
 
@@ -113,16 +116,6 @@
             NSDictionary *effectDictForSelected = effectsTableEntryForSelected[@"dict"];
             // Write effect dict to data model
             self.dataModel[row][kMFRemapsKeyEffect] = effectDictForSelected;
-        } else if ([cell.identifier isEqual:@"keystrokeCaptureCell"]) {
-            MFKeystrokeCaptureTextView *captureView = (MFKeystrokeCaptureTextView *)[cell nestedSubviewsWithIdentifier:@"keystrokeCaptureView"][0];
-            CGKeyCode keyCode = captureView.capturedKeyCode.unsignedIntValue;
-            CGEventFlags flags = captureView.capturedModifierFlags.unsignedLongValue;
-            assert(!captureView.empty);
-            self.dataModel[row][kMFRemapsKeyEffect] = @{
-                kMFActionDictKeyType: kMFActionDictTypeKeyboardShortcut,
-                kMFActionDictKeyKeyboardShortcutVariantKeycode:@(keyCode),
-                kMFActionDictKeyKeyboardShortcutVariantModifierFlags:@(flags),
-            };
         } else {
             assert(false);
         }
