@@ -21,7 +21,6 @@
 /// Creates notifications to inform the user about newly caputred / uncaptured buttons after the user added a new row to the remapsTable
 + (void)showButtonCaptureNotificationWithBeforeSet:(NSSet<NSNumber *> *)beforeSet afterSet:(NSSet<NSNumber *> *)afterSet {
     
-    return;
     // ^ We don't like capture notifications after all. Also they didn't work in app welcome flow (after granting accessibility access)
     
     NSMutableSet *newlyUncapturedButtons = beforeSet.mutableCopy;
