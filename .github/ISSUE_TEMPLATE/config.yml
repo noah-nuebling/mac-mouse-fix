@@ -1,15 +1,15 @@
 blank_issues_enabled: false
 
 contact_links:
-  - name: Enhancement Request
+  - name: Enhancement request
     url: https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=feature-request
     about: Suggest a new feature or other improvement
-  - name: Bug Report
+  - name: Bug report
     url: https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report
     about: Report a bug
-  - name: Free Form
+  - name: Free form
     url: https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=other
-    about: Open a Free Form Issue
+    about: Open a free form Issue
   - name: Need help?
     url: https://github.com/noah-nuebling/mac-mouse-fix/discussions
-    about: Start a Discussion
+    about: Start a discussion
