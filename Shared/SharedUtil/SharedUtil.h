@@ -9,6 +9,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define fstring(format, ...) [NSString stringWithFormat:(format), ##__VA_ARGS__]
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SharedUtil : NSObject
