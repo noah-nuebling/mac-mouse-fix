@@ -11,6 +11,7 @@
 #import "HelperServices.h"
 #import "Constants.h"
 #import "Objects.h"
+#import "SharedUtil.h"
 
 @implementation HelperServices
 
@@ -173,7 +174,8 @@
     NSFileHandle *launchctlOutput_fileHandle = [launchctlOutput fileHandleForReading];
     NSData *launchctlOutput_data = [launchctlOutput_fileHandle readDataToEndOfFile];
     NSString *launchctlOutput_string = [[NSString alloc] initWithData:launchctlOutput_data encoding:NSUTF8StringEncoding];
-    NSString *labelSearchString = [NSString stringWithFormat: @"\"Label\" = \"%@\";", kMFLaunchdHelperIdentifier];
+    
+    NSString *labelSearchString = fstring(@"\"Label\" = \"%@\";", kMFLaunchdHelperIdentifier);
     NSString *prefPaneSearchString = @"/PreferencePanes/Mouse Fix.prefPane/Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/MacOS/Mouse Fix Helper";
     
     BOOL labelFound = [launchctlOutput_string rangeOfString: labelSearchString].location != NSNotFound;
