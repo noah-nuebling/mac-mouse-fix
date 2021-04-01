@@ -29,9 +29,12 @@ NS_ASSUME_NONNULL_BEGIN
 #define kMFMainAppName      @"Mac Mouse Fix.app"
 #define kMFAccompliceName   @"Mac Mouse Fix Accomplice"
 
-#define kMFLaunchdHelperIdentifier  @"com.nuebling.mac-mouse-fix.helper"
+#define kMFLaunchdHelperIdentifier  @"mouse.fix.helper"
     // ^ Keep this in sync with `Label` value in `default_launchd.plist`
     // ^ The old value @"mouse.fix.helper" was also used with the old prefpane version which could lead to conflicts. See Mail beginning with 'I attached the system log. Happening with this version too'.
+
+// #define kMFLaunchdHelperIdentifier  @"com.nuebling.mac-mouse-fix.helper"
+//      ^ We meant to move the launchd label over to a new one to avoid conlicts when upgrading from the old prefpane, but I think it can lead to more complications. Also we'd fragment things, because the first few versions of the app version already shipped with the old "mouse.fix.helper" label
 
 #define kMFLaunchctlPath            @"/bin/launchctl"
 
