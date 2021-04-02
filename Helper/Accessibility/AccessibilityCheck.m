@@ -18,6 +18,7 @@
 #import "ButtonInputReceiver.h"
 #import "Constants.h"
 #import "ModifiedDrag.h"
+#import "ModifierManager.h"
 
 #import <os/log.h>
 
@@ -50,6 +51,7 @@ NSTimer *_openMainAppTimer;
         [ConfigFileInterface_Helper load_Manual];
         [ScrollControl load_Manual];
         [ModifiedDrag load_Manual];
+        [ModifierManager load_Manual];
         
         [ButtonInputReceiver load_Manual]; // TODO: Check if this is necessary. I think that not having this caused a crash when accessibility permissions were denied.
         

@@ -190,6 +190,9 @@ BOOL _addModeIsEnabled = NO;
 CFMachPortRef _keyCaptureEventTap;
 
 + (void)enableKeyCaptureMode {
+    
+    NSLog(@"Enabling keyCaptureMode");
+    
     if (_keyCaptureEventTap == nil) {
         _keyCaptureEventTap = [Utility_Transformation createEventTapWithLocation:kCGHIDEventTap mask:CGEventMaskBit(kCGEventKeyDown) option:kCGEventTapOptionDefault placement:kCGTailAppendEventTap callback:keyCaptureModeCallback];
     }

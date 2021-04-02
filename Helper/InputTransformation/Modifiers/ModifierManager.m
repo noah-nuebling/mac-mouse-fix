@@ -25,7 +25,8 @@
 #pragma mark - Load
 
 /// This used to be initialize but  that didn't execute until the first mouse buttons were pressed
-+ (void)load {
+/// Then it was load, but that led to '"Mac Mouse Fix Helper" would like to receive keystrokes from any application' prompt. (I think)
++ (void)load_Manual {
     if (self == [ModifierManager class]) {
         // Create keyboard modifier event tap
         CGEventMask mask = CGEventMaskBit(kCGEventFlagsChanged);

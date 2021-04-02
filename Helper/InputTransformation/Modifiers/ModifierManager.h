@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ModifierManager : NSObject
 
++ (void)load_Manual;
+
 + (NSDictionary *)getActiveModifiersForDevice:(NSNumber *)devID filterButton:(NSNumber * _Nullable)filteredButton event:(CGEventRef _Nullable)event;
 
 + (void)handleButtonModifiersMightHaveChangedWithDevice:(MFDevice *)device;
