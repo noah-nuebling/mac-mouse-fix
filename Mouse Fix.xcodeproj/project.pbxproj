@@ -516,8 +516,8 @@
 		4F8CE6FE2617738A00D70A76 /* AppTranslocation */ = {
 			isa = PBXGroup;
 			children = (
-				4F8CE6FF2617738A00D70A76 /* AppTranslocationManager.m */,
 				4F8CE7002617738A00D70A76 /* AppTranslocationManager.h */,
+				4F8CE6FF2617738A00D70A76 /* AppTranslocationManager.m */,
 			);
 			path = AppTranslocation;
 			sourceTree = "<group>";

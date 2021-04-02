@@ -98,7 +98,7 @@ void getActiveModifiersForDeviceWithPressedButtons(CGEventRef event, NSDictionar
             return;
         }
     }
-    assert(false);
+//    assert(false); // This leads to crash loop. I think if accessibility isn't enabled.
 }
 CGEventRef _Nullable handleKeyboardModifiersHaveChanged(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
