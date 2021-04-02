@@ -149,7 +149,7 @@
     
     // Using NSTask to ask launchd about helper status
     NSURL *launchctlURL = [NSURL fileURLWithPath: kMFLaunchctlPath];
-    NSString * launchctlOutput = [SharedUtil launchCTL:launchctlURL withArguments:@[@"list", kMFLaunchdHelperIdentifier] error:nil];
+    NSString * launchctlOutput = [SharedUtility launchCTL:launchctlURL withArguments:@[@"list", kMFLaunchdHelperIdentifier] error:nil];
     return launchctlOutput;
 }
 
@@ -225,7 +225,7 @@
 + (void)removeHelperFromLaunchd {
     NSURL *launchctlURL = [NSURL fileURLWithPath:kMFLaunchctlPath];
     NSError *err;
-    [SharedUtil launchCTL:launchctlURL withArguments:@[@"remove", kMFLaunchdHelperIdentifier] error:&err];
+    [SharedUtility launchCTL:launchctlURL withArguments:@[@"remove", kMFLaunchdHelperIdentifier] error:&err];
     if (err != nil) {
         NSLog(@"Error removing Helper from launchd: %@", err);
     }

@@ -27,8 +27,8 @@
 		4F64856E25E9C17400891D69 /* Objects.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F64856C25E9C17400891D69 /* Objects.m */; };
 		4F64858225E9C1E000891D69 /* HelperServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F64858125E9C1E000891D69 /* HelperServices.m */; };
 		4F64858325E9C1E000891D69 /* HelperServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F64858125E9C1E000891D69 /* HelperServices.m */; };
-		4F6485BD25E9F63F00891D69 /* SharedUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6485BB25E9F63F00891D69 /* SharedUtil.m */; };
-		4F6485BE25E9F63F00891D69 /* SharedUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6485BB25E9F63F00891D69 /* SharedUtil.m */; };
+		4F6485BD25E9F63F00891D69 /* SharedUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6485BB25E9F63F00891D69 /* SharedUtility.m */; };
+		4F6485BE25E9F63F00891D69 /* SharedUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6485BB25E9F63F00891D69 /* SharedUtility.m */; };
 		4F94F5FA25E5EC2700D9F24A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F5F925E5EC2700D9F24A /* main.m */; };
 		4F94F60525E5EC2800D9F24A /* Mac_Mouse_FixTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60425E5EC2800D9F24A /* Mac_Mouse_FixTests.m */; };
 		4F94F61025E5EC2800D9F24A /* Mac_Mouse_FixUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60F25E5EC2800D9F24A /* Mac_Mouse_FixUITests.m */; };
@@ -61,7 +61,7 @@
 		4FA1ACFC25E92FC4007DB95B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FCECD8621092354001F1078 /* Assets.xcassets */; };
 		4FB3582625EADFD80098050B /* HelperServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F64858125E9C1E000891D69 /* HelperServices.m */; };
 		4FB3582B25EADFF60098050B /* Objects.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F64856C25E9C17400891D69 /* Objects.m */; };
-		4FBA312D26174527006C20F3 /* SharedUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6485BB25E9F63F00891D69 /* SharedUtil.m */; };
+		4FBA312D26174527006C20F3 /* SharedUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6485BB25E9F63F00891D69 /* SharedUtility.m */; };
 		4FCECD8521092354001F1078 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECD8421092354001F1078 /* AppDelegate.m */; };
 		4FD45A20231C7FB500F75C58 /* AccessibilityCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD45A1F231C7FB500F75C58 /* AccessibilityCheck.m */; };
 		4FECC88D2431DCCD001A3C4B /* RoughScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FECC88C2431DCCD001A3C4B /* RoughScroll.m */; };
@@ -218,8 +218,8 @@
 		4F64856C25E9C17400891D69 /* Objects.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Objects.m; sourceTree = "<group>"; };
 		4F64858025E9C1DF00891D69 /* HelperServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelperServices.h; sourceTree = "<group>"; };
 		4F64858125E9C1E000891D69 /* HelperServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelperServices.m; sourceTree = "<group>"; };
-		4F6485BB25E9F63F00891D69 /* SharedUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedUtil.m; sourceTree = "<group>"; };
-		4F6485BC25E9F63F00891D69 /* SharedUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedUtil.h; sourceTree = "<group>"; };
+		4F6485BB25E9F63F00891D69 /* SharedUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedUtility.m; sourceTree = "<group>"; };
+		4F6485BC25E9F63F00891D69 /* SharedUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedUtility.h; sourceTree = "<group>"; };
 		4F8D0183243D8D6200D70076 /* NSArray+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSArray+Additions.h"; sourceTree = "<group>"; };
 		4F8D0184243D8D6200D70076 /* NSArray+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Additions.m"; sourceTree = "<group>"; };
 		4F94F5EE25E5EC2500D9F24A /* Mac Mouse Fix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mac Mouse Fix.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -506,13 +506,13 @@
 			path = HelperServices;
 			sourceTree = "<group>";
 		};
-		4F6485C325E9F64400891D69 /* SharedUtil */ = {
+		4F6485C325E9F64400891D69 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
-				4F6485BC25E9F63F00891D69 /* SharedUtil.h */,
-				4F6485BB25E9F63F00891D69 /* SharedUtil.m */,
+				4F6485BC25E9F63F00891D69 /* SharedUtility.h */,
+				4F6485BB25E9F63F00891D69 /* SharedUtility.m */,
 			);
-			path = SharedUtil;
+			path = Utility;
 			sourceTree = "<group>";
 		};
 		4F94F5EF25E5EC2500D9F24A /* App */ = {
@@ -600,7 +600,7 @@
 				4FA4DBDC25E6235600EC9259 /* Constants.h */,
 				4F64857325E9C1A400891D69 /* Objects */,
 				4F64858825E9C1E900891D69 /* HelperServices */,
-				4F6485C325E9F64400891D69 /* SharedUtil */,
+				4F6485C325E9F64400891D69 /* Utility */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -1015,7 +1015,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4FBA312D26174527006C20F3 /* SharedUtil.m in Sources */,
+				4FBA312D26174527006C20F3 /* SharedUtility.m in Sources */,
 				4F2FDF332315662500C7BE14 /* main.m in Sources */,
 				4FB3582625EADFD80098050B /* HelperServices.m in Sources */,
 				4FB3582B25EADFF60098050B /* Objects.m in Sources */,
@@ -1032,7 +1032,7 @@
 				4F94F63825E5EE8F00D9F24A /* AuthorizeAccessibilityView.m in Sources */,
 				4F94F63E25E5EE9500D9F24A /* MoreSheet.m in Sources */,
 				4F94F64425E5EE9700D9F24A /* OverridePanel.m in Sources */,
-				4F6485BE25E9F63F00891D69 /* SharedUtil.m in Sources */,
+				4F6485BE25E9F63F00891D69 /* SharedUtility.m in Sources */,
 				4F94F65025E5EEA600D9F24A /* ConfigFileInterface_App.m in Sources */,
 				4F94F65625E5EEB600D9F24A /* MessagePort_App.m in Sources */,
 				4F94F65C25E5EEC100D9F24A /* Updater.m in Sources */,
@@ -1067,7 +1067,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F6485BD25E9F63F00891D69 /* SharedUtil.m in Sources */,
+				4F6485BD25E9F63F00891D69 /* SharedUtility.m in Sources */,
 				4F32E195231C50A100199A11 /* ScrollModifiers.m in Sources */,
 				4F32E155231C420100199A11 /* MessagePort_HelperApp.m in Sources */,
 				4FECC8902431DCDF001A3C4B /* ScrollControl.m in Sources */,
