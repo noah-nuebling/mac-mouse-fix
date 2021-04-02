@@ -79,7 +79,7 @@ static NSDictionary *sideButtonActions;
     
     if (self == [AppDelegate class]) {
         
-        [AppTranslocationManager removeTranslocation]; // Might be good to call this in main.c so it's called faster
+        [AppTranslocationManager removeTranslocation]; // Need to call this before MessagePort_App is initialized, otherwise stuff breaks if app is translocated
         
         _scrollConfigurations = @{ // This is unused
             @"Normal"   :   @[ @[@20,@80],  @130, @1.5],
