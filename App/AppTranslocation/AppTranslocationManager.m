@@ -39,7 +39,7 @@ bool getIsTranslocated() {
     mySecTranslocateIsTranslocatedURL = getFunctionFromSecurityFramework("SecTranslocateIsTranslocatedURL");
     
     // Invoke it
-    CFErrorRef err;
+    CFErrorRef err = NULL;
     mySecTranslocateIsTranslocatedURL(getAppURL(), &isTranslocated, &err);
     NSError *error = (__bridge NSError *)err;
     if (error != nil) {
@@ -62,10 +62,10 @@ NSURL *getUntranslocatedURL() {
     mySecTranslocateCreateOriginalPathForURL = getFunctionFromSecurityFramework("SecTranslocateCreateOriginalPathForURL");
     
     // Get original URL
-    CFErrorRef err;
+    CFErrorRef err = NULL;
     untranslocatedURL = (__bridge NSURL*)mySecTranslocateCreateOriginalPathForURL(getAppURL(), &err);
-    NSError *error = (__bridge NSError *)err;
-    if (error != nil) {
+    if (err != NULL) {
+        NSError *error = (__bridge NSError *)err;
         NSLog(@"Error getting untranslocated URL: %@", error);
     }
     
