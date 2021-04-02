@@ -80,6 +80,7 @@ static NSDictionary *sideButtonActions;
     if (self == [AppDelegate class]) {
         
         [AppTranslocationManager removeTranslocation]; // Need to call this before MessagePort_App is initialized, otherwise stuff breaks if app is translocated
+        [MessagePort_App load_Manual];
         
         _scrollConfigurations = @{ // This is unused
             @"Normal"   :   @[ @[@20,@80],  @130, @1.5],
