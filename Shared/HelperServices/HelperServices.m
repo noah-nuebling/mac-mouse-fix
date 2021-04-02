@@ -15,11 +15,14 @@
 
 @implementation HelperServices
 
-// Register/unregister the helper as a User Agent with launchd so it runs in the background - also launches/terminates helper
+/// Register/unregister the helper as a User Agent with launchd so it runs in the background - also launches/terminates helper
 + (void)enableHelperAsUserAgent:(BOOL)enable {
     
     // Repair/generate launchdPlist so that the following code works for sure
     [self repairLaunchdPlist];
+    
+    // If an old version of Mac Mouse Fix is still running and stuff, clean that up to prevent issues
+    [self runPreviousVersionCleanup];
     
     // Prepare strings for NSTask
     
@@ -142,60 +145,159 @@
     
 }
 
-+ (BOOL)helperIsActive {
++ (NSString *)helperInfoFromLaunchd {
     
     // Using NSTask to ask launchd about helper status
+    NSURL *launchctlURL = [NSURL fileURLWithPath: kMFLaunchctlPath];
+    NSString * launchctlOutput = [SharedUtil launchCTL:launchctlURL withArguments:@[@"list", kMFLaunchdHelperIdentifier] error:nil];
+    return launchctlOutput;
+}
+
++ (BOOL)helperIsActive {
     
-    NSString *launchctlPath = kMFLaunchctlPath;
-    NSString *listArgument = @"list";
+    NSString *launchctlOutput = [self helperInfoFromLaunchd];
     
-    NSPipe * launchctlOutput;
+    // Analyze output
     
-    if (@available(macOS 10.13, *)) { // macOS version 10.13+
-        NSURL *launchctlURL = [NSURL fileURLWithPath: launchctlPath];
-        
-        NSTask *task = [[NSTask alloc] init];
-        [task setExecutableURL: launchctlURL];
-        [task setArguments: @[listArgument, kMFLaunchdHelperIdentifier] ];
-        launchctlOutput = [NSPipe pipe];
-        [task setStandardOutput: launchctlOutput];
-        
-        [task launchAndReturnError:nil];
-    } else { // Fallback on earlier versions
-        NSTask *task = [[NSTask alloc] init];
-        [task setLaunchPath: launchctlPath];
-        [task setArguments: @[listArgument, kMFLaunchdHelperIdentifier] ];
-        launchctlOutput = [NSPipe pipe];
-        [task setStandardOutput: launchctlOutput];
-        
-        [task launch];
-    }
-    
-    NSFileHandle *launchctlOutput_fileHandle = [launchctlOutput fileHandleForReading];
-    NSData *launchctlOutput_data = [launchctlOutput_fileHandle readDataToEndOfFile];
-    NSString *launchctlOutput_string = [[NSString alloc] initWithData:launchctlOutput_data encoding:NSUTF8StringEncoding];
-    
+    // Check if label exists. This should always be found if the helper is registered with launchd. Or equavalently, if the output isn't "Could not find service "mouse.fix.helper" in domain for port"
     NSString *labelSearchString = fstring(@"\"Label\" = \"%@\";", kMFLaunchdHelperIdentifier);
-    NSString *prefPaneSearchString = @"/PreferencePanes/Mouse Fix.prefPane/Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/MacOS/Mouse Fix Helper";
+    BOOL labelFound = [launchctlOutput rangeOfString: labelSearchString].location != NSNotFound;
     
-    BOOL labelFound = [launchctlOutput_string rangeOfString: labelSearchString].location != NSNotFound;
-    BOOL exitStatusIsZero = [launchctlOutput_string rangeOfString: @"\"LastExitStatus\" = 0;"].location != NSNotFound; // Not sure if useful
-    BOOL isInPrefpane = [launchctlOutput_string rangeOfString:prefPaneSearchString].location != NSNotFound;
+    // Check exit status. Not sure if useful
+    BOOL exitStatusIsZero = [launchctlOutput rangeOfString: @"\"LastExitStatus\" = 0;"].location != NSNotFound;
     
-    if (labelFound && isInPrefpane) { // Prefpane helper is running
-        NSLog(@"Found helper running in prefpane. Removing it from launchd and closing it.");
-         // Just kill helper. Doing this here is not the cleanest solution, but it should be fine.
-        [self enableHelperAsUserAgent:NO];
+    if (self.strangeHelperIsRegisteredWithLaunchd) {
+        NSLog(@"Found helper running somewhere else.");
+        return NO;
     }
     
-    if (labelFound && exitStatusIsZero && !isInPrefpane) { // Why check for exit status here?
+    if (labelFound && exitStatusIsZero) { // Why check for exit status here?
         NSLog(@"MOUSE REMAPOR FOUNDD AND ACTIVE");
-        return TRUE;
+        return YES;
     } else {
         NSLog(@"Helper is not active");
-        return FALSE;
+        return NO;
     }
     
 }
+
+#pragma mark - Clean up legacy stuff
+
++ (void)runPreviousVersionCleanup {
+    
+#if DEBUG
+    NSLog(@"Cleaning up stuff from previous versions");
+#endif
+    
+    if (self.strangeHelperIsRegisteredWithLaunchd) {
+        [self removeHelperFromLaunchd];
+    }
+    
+    [self removeLegacyLaunchdPlist];
+    // ^ Could also do this in the if block but users have been having some weirdd issues after upgrading to the app version and I don't know why. I feel like this might make things slightly more robust.
+}
+
+/// Check if helper is registered with launchd from some other location
++ (BOOL)strangeHelperIsRegisteredWithLaunchd {
+    
+    NSString *launchdPath = [self helperExecutablePathFromLaunchd];
+    BOOL launchdPathExists = launchdPath.length != 0;
+    
+    BOOL launchdPathIsBundlePath = [Objects.helperBundle.executablePath isEqual:launchdPath];
+    
+    if (!launchdPathIsBundlePath && launchdPathExists) {
+        
+#if DEBUG
+        NSLog(@"Strange helper: found at: %@ \nbundleExecutable at: %@", launchdPath, Objects.helperBundle.executablePath);
+#endif
+        return YES;
+    }
+    
+#if DEBUG
+    NSLog(@"Strange Helper: not found");
+#endif
+    
+    return NO;
+}
+
+/// Remove currently running helper from launchd
+/// From my testing this does the same as the `bootout` command, but it doesn't rely on a launchd plist file
++ (void)removeHelperFromLaunchd {
+    NSURL *launchctlURL = [NSURL fileURLWithPath:kMFLaunchctlPath];
+    NSError *err;
+    [SharedUtil launchCTL:launchctlURL withArguments:@[@"remove", kMFLaunchdHelperIdentifier] error:&err];
+    if (err != nil) {
+        NSLog(@"Error removing Helper from launchd: %@", err);
+    }
+}
+
+/// Remove legacy launchd plist file if it exists
+/// The launchd plist file used to be at `~/Library/LaunchAgents/com.nuebling.mousefix.helper.plist` when the app was still a prefpane
+/// Now, with the app version, it's moved to `~/Library/LaunchAgents/com.nuebling.mac-mouse-fix.helper.plist`
+/// Having the old version still can lead to the old helper being started at startup, and I think other conflicts, too.
++ (void)removeLegacyLaunchdPlist {
+    
+#if DEBUG
+    NSLog(@"Removing legacy launchd plist");
+#endif
+    
+    // Find user library
+    NSArray<NSString *> *libraryPaths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+    assert(libraryPaths.count == 1);
+    NSMutableString *libraryPath = libraryPaths.firstObject.mutableCopy;
+    NSString *legacyLaunchdPlistPath = [libraryPath stringByAppendingPathComponent:@"LaunchAgents/com.nuebling.mousefix.helper.plist"];
+    NSError *err;
+    // Remove old file
+    if ([NSFileManager.defaultManager fileExistsAtPath:legacyLaunchdPlistPath]) {
+        [NSFileManager.defaultManager removeItemAtPath:legacyLaunchdPlistPath error:&err];
+        if (err) {
+            NSLog(@"Error while removing legacy launchd plist file: %@", err);
+        }
+    } else  {
+        NSLog(@"No legacy launchd plist file found at: %@", legacyLaunchdPlistPath);
+    }
+}
+
++ (NSString *)helperExecutablePathFromLaunchd {
+    
+    // Using NSTask to ask launchd about helper status
+    NSString * launchctlOutput = [self helperInfoFromLaunchd];
+    
+    NSString *executablePathRegEx = @"(?<=\"Program\" = \").*(?=\";)";
+    //    NSRegularExpression executablePathRegEx =
+    NSRange executablePathRange = [launchctlOutput rangeOfString:executablePathRegEx options:NSRegularExpressionSearch];
+    if (executablePathRange.location == NSNotFound) return @"";
+    NSString *executablePath = [launchctlOutput substringWithRange:executablePathRange];
+    
+    return executablePath;
+}
+
+// Example output of the `launchctl list mouse.fix.helper` command
+
+/*
+ {
+     "StandardOutPath" = "/dev/null";
+     "LimitLoadToSessionType" = "Aqua";
+     "StandardErrorPath" = "/dev/null";
+     "MachServices" = {
+         "com.nuebling.mac-mouse-fix.helper" = mach-port-object;
+     };
+     "Label" = "mouse.fix.helper";
+     "OnDemand" = false;
+     "LastExitStatus" = 0;
+     "PID" = 709;
+     "Program" = "/Applications/Mac Mouse Fix.app/Contents/Library/LoginItems/Mac Mouse Fix Helper.app/Contents/MacOS/Mac Mouse Fix Helper";
+     "PerJobMachServices" = {
+         "com.apple.tsm.portname" = mach-port-object;
+         "com.apple.axserver" = mach-port-object;
+     };
+ };
+ */
+
+// Old stuff
+
+/*
+ //    NSString *prefPaneSearchString = @"/PreferencePanes/Mouse Fix.prefPane/Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/MacOS/Mouse Fix Helper";
+ */
 
 @end

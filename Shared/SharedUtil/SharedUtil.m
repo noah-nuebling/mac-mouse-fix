@@ -13,6 +13,41 @@
 
 @implementation SharedUtil
 
+/// This returns the output of the CLT, in contrast to the `launchCTL` functions further down
++ (NSString *)launchCTL:(NSURL *)executableURL withArguments:(NSArray<NSString *> *)arguments error:(NSError ** _Nullable)error {
+    
+    NSPipe * launchctlOutput = [NSPipe pipe];
+    
+    if (@available(macOS 10.13, *)) { // macOS version 10.13+
+        
+        NSTask *task = [[NSTask alloc] init];
+        [task setExecutableURL: executableURL.absoluteURL];
+        [task setArguments: arguments];
+        [task setStandardOutput: launchctlOutput];
+        
+        [task launchAndReturnError:error];
+    } else { // Fallback on earlier versions
+        NSTask *task = [[NSTask alloc] init];
+        [task setLaunchPath: executableURL.path];
+        [task setArguments: arguments];
+        [task setStandardOutput: launchctlOutput];
+        
+        [task launch];
+    }
+    
+    // Get output
+    
+    NSFileHandle *output_fileHandle = [launchctlOutput fileHandleForReading];
+    NSData *output_data = [output_fileHandle readDataToEndOfFile];
+    NSString *output_string = [[NSString alloc] initWithData:output_data encoding:NSUTF8StringEncoding];
+    
+    if (output_string == nil) {
+        output_string = @"";
+    }
+    
+    return output_string;
+}
+
 + (void)launchCLT:(NSURL *)commandLineTool
          withArgs:(NSArray <NSString *> *)args {
     [self launchCLT:commandLineTool withArgs:args callback:nil];

@@ -61,6 +61,7 @@
 		4FA1ACFC25E92FC4007DB95B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FCECD8621092354001F1078 /* Assets.xcassets */; };
 		4FB3582625EADFD80098050B /* HelperServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F64858125E9C1E000891D69 /* HelperServices.m */; };
 		4FB3582B25EADFF60098050B /* Objects.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F64856C25E9C17400891D69 /* Objects.m */; };
+		4FBA312D26174527006C20F3 /* SharedUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6485BB25E9F63F00891D69 /* SharedUtil.m */; };
 		4FCECD8521092354001F1078 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECD8421092354001F1078 /* AppDelegate.m */; };
 		4FD45A20231C7FB500F75C58 /* AccessibilityCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD45A1F231C7FB500F75C58 /* AccessibilityCheck.m */; };
 		4FECC88D2431DCCD001A3C4B /* RoughScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FECC88C2431DCCD001A3C4B /* RoughScroll.m */; };
@@ -1014,6 +1015,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FBA312D26174527006C20F3 /* SharedUtil.m in Sources */,
 				4F2FDF332315662500C7BE14 /* main.m in Sources */,
 				4FB3582625EADFD80098050B /* HelperServices.m in Sources */,
 				4FB3582B25EADFF60098050B /* Objects.m in Sources */,
