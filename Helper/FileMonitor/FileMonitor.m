@@ -13,7 +13,7 @@
 #import <AppKit/AppKit.h>
 #import <Foundation/Foundation.h>
 #import "Constants.h"
-#import "SharedUtility.h"
+#import "SharedUtil.h"
 
 @implementation FileMonitor
 
@@ -95,7 +95,7 @@ void handleRelocation() {
     NSLog(@"Asking Accomplice to restart Helper");
     NSURL *accompliceURL = [Objects.mainAppBundle.bundleURL URLByAppendingPathComponent:kMFRelativeAccomplicePath];
     NSArray *args = @[kMFAccompliceModeReloadHelper];
-    [SharedUtility launchCLT:accompliceURL withArgs:args];
+    [SharedUtil launchCLT:accompliceURL withArgs:args];
 }
 void uninstallCompletely() {
     NSLog(@"Uninstalling Mac Mouse Fix completely...");
@@ -112,7 +112,7 @@ void removeResidue() {
 void disableHelper() { // Kill this process
     NSLog(@"Removing helper from launchd (Byeeeee)");
     // Remove from launchd
-    [SharedUtility launchCLT:[NSURL fileURLWithPath:kMFLaunchctlPath] withArgs:@[@"remove", kMFLaunchdHelperIdentifier]]; // This kills as well I think
+    [SharedUtil launchCLT:[NSURL fileURLWithPath:kMFLaunchctlPath] withArgs:@[@"remove", kMFLaunchdHelperIdentifier]]; // This kills as well I think
     // Kill self
 //    [NSApp terminate:nil];
 }

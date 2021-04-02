@@ -1,17 +1,17 @@
 //
 // --------------------------------------------------------------------------
-// SharedUtility.m
+// SharedUtil.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2021
 // Licensed under MIT
 // --------------------------------------------------------------------------
 //
 
-#import "SharedUtility.h"
+#import "SharedUtil.h"
 #import "Objects.h"
 
 
-@implementation SharedUtility
+@implementation SharedUtil
 
 /// This returns the output of the CLT, in contrast to the `launchCTL` functions further down
 + (NSString *)launchCTL:(NSURL *)executableURL withArguments:(NSArray<NSString *> *)arguments error:(NSError ** _Nullable)error {

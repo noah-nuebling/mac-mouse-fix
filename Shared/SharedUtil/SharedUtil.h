@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-// SharedUtility.h
+// SharedUtil.h
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2021
 // Licensed under MIT
@@ -13,7 +13,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SharedUtility : NSObject
+@interface SharedUtil : NSObject
 typedef void(*MFCTLCallback)(NSTask *task, NSPipe *output, NSError *error);
 
 + (NSString *)launchCTL:(NSURL *)executableURL withArguments:(NSArray<NSString *> *)arguments error:(NSError ** _Nullable)error;
