@@ -62,6 +62,7 @@
 		4FB3582625EADFD80098050B /* HelperServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F64858125E9C1E000891D69 /* HelperServices.m */; };
 		4FB3582B25EADFF60098050B /* Objects.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F64856C25E9C17400891D69 /* Objects.m */; };
 		4FBA312D26174527006C20F3 /* SharedUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6485BB25E9F63F00891D69 /* SharedUtil.m */; };
+		4FBA315E26175B7C006C20F3 /* AppTranslocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBA315D26175B7C006C20F3 /* AppTranslocationManager.m */; };
 		4FCECD8521092354001F1078 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCECD8421092354001F1078 /* AppDelegate.m */; };
 		4FD45A20231C7FB500F75C58 /* AccessibilityCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD45A1F231C7FB500F75C58 /* AccessibilityCheck.m */; };
 		4FECC88D2431DCCD001A3C4B /* RoughScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FECC88C2431DCCD001A3C4B /* RoughScroll.m */; };
@@ -242,6 +243,8 @@
 		4FA26CF0243949DC0082D5F6 /* NSMutableDictionary+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+Additions.m"; sourceTree = "<group>"; };
 		4FA4DBDC25E6235600EC9259 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		4FACF59E2183B956009257D4 /* default_launchd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_launchd.plist; sourceTree = "<group>"; };
+		4FBA315C26175B7C006C20F3 /* AppTranslocationManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppTranslocationManager.h; sourceTree = "<group>"; };
+		4FBA315D26175B7C006C20F3 /* AppTranslocationManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppTranslocationManager.m; sourceTree = "<group>"; };
 		4FBF34FD23183E6700E6CFD0 /* ConfigFileInterface_App.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigFileInterface_App.h; sourceTree = "<group>"; };
 		4FBF34FE23183E6700E6CFD0 /* ConfigFileInterface_App.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConfigFileInterface_App.m; sourceTree = "<group>"; };
 		4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mac Mouse Fix Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -521,6 +524,7 @@
 				4FD67DDD211CC9000095A9A5 /* AppDelegate.h */,
 				4FD67DDF211CC9000095A9A5 /* AppDelegate.m */,
 				4FD67DE3211CC9000095A9A5 /* MouseFix.xib */,
+				4FBA315B26175B2B006C20F3 /* AppTranslocation */,
 				4FD45A17231C785F00F75C58 /* Accessibility */,
 				4FF873F2231A96C0002A897A /* MoreSheet */,
 				4FD36AF0243741C90046DC41 /* Overrides */,
@@ -603,6 +607,15 @@
 				4F6485C325E9F64400891D69 /* SharedUtil */,
 			);
 			path = Shared;
+			sourceTree = "<group>";
+		};
+		4FBA315B26175B2B006C20F3 /* AppTranslocation */ = {
+			isa = PBXGroup;
+			children = (
+				4FBA315C26175B7C006C20F3 /* AppTranslocationManager.h */,
+				4FBA315D26175B7C006C20F3 /* AppTranslocationManager.m */,
+			);
+			path = AppTranslocation;
 			sourceTree = "<group>";
 		};
 		4FBF347B2316B90800E6CFD0 /* Update */ = {
@@ -1033,6 +1046,7 @@
 				4F94F63E25E5EE9500D9F24A /* MoreSheet.m in Sources */,
 				4F94F64425E5EE9700D9F24A /* OverridePanel.m in Sources */,
 				4F6485BE25E9F63F00891D69 /* SharedUtil.m in Sources */,
+				4FBA315E26175B7C006C20F3 /* AppTranslocationManager.m in Sources */,
 				4F94F65025E5EEA600D9F24A /* ConfigFileInterface_App.m in Sources */,
 				4F94F65625E5EEB600D9F24A /* MessagePort_App.m in Sources */,
 				4F94F65C25E5EEC100D9F24A /* Updater.m in Sources */,

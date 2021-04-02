@@ -37,6 +37,9 @@ NS_ASSUME_NONNULL_BEGIN
 //      ^ We meant to move the launchd label over to a new one to avoid conlicts when upgrading from the old prefpane, but I think it can lead to more complications. Also we'd fragment things, because the first few versions of the app version already shipped with the old "mouse.fix.helper" label
 
 #define kMFLaunchctlPath            @"/bin/launchctl"
+#define kMFXattrPath                @"/usr/bin/xattr"
+#define kMFOpenCLTPath              @"/usr/bin/open"
+
 
 // Accomplice Arguments
 

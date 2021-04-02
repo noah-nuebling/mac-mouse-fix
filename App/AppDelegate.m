@@ -19,6 +19,7 @@
 #import "Utility/Utility_App.h"
 #import "Accessibility/AuthorizeAccessibilityView.h"
 #import "HelperServices.h"
+#import "AppTranslocationManager.h"
 
 @interface AppDelegate ()
 
@@ -77,6 +78,8 @@ static NSDictionary *sideButtonActions;
 + (void)initialize {
     
     if (self == [AppDelegate class]) {
+        
+        [AppTranslocationManager removeTranslocation]; // Might be good to call this in main.c so it's called faster
         
         _scrollConfigurations = @{ // This is unused
             @"Normal"   :   @[ @[@20,@80],  @130, @1.5],
