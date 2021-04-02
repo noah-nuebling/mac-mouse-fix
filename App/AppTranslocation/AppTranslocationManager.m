@@ -1,0 +1,127 @@
+//
+// --------------------------------------------------------------------------
+// AppTranslocationManager.m
+// Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
+// Created by Noah Nuebling in 2021
+// Licensed under MIT
+// --------------------------------------------------------------------------
+//
+
+#import "AppTranslocationManager.h"
+#import <dlfcn.h>
+#import "SharedUtility.h"
+#import "Constants.h"
+#import <Cocoa/Cocoa.h>
+
+@implementation AppTranslocationManager
+
+CFURLRef getAppURL() {
+    return (__bridge CFURLRef)[NSURL fileURLWithPath:NSBundle.mainBundle.bundlePath];
+}
+
+void *getFunctionFromSecurityFramework(const char *functionName) {
+    
+    // Open security framework
+    void *handle = NULL;
+    handle = dlopen("/System/Library/Frameworks/Security.framework/Security", RTLD_LAZY);
+    // Return function pointer
+    return dlsym(handle, functionName);
+}
+
+bool getIsTranslocated(void) {
+    
+    bool isTranslocated = false;
+    
+    // Declare function for ‘SecTranslocateIsTranslocatedURL’
+    Boolean (*mySecTranslocateIsTranslocatedURL)(CFURLRef path, bool *isTranslocated, CFErrorRef * __nullable error); // Flag for API request
+    
+    // Get function from security framework
+    mySecTranslocateIsTranslocatedURL = getFunctionFromSecurityFramework("SecTranslocateIsTranslocatedURL");
+    
+    // Invoke it
+    CFErrorRef err;
+    mySecTranslocateIsTranslocatedURL(getAppURL(), &isTranslocated, &err);
+    NSError *error = (__bridge NSError *)err;
+    if (error != nil) {
+        NSLog(@"Error checking if app is translocated: %@", err);
+    }
+    
+    return isTranslocated;
+}
+
+NSURL *getUntranslocatedURL() {
+    
+    NSURL* untranslocatedURL = nil;
+    
+    // Get current application path
+    
+    // Declare function for ‘SecTranslocateCreateOriginalPathForURL’
+    CFURLRef __nullable (*mySecTranslocateCreateOriginalPathForURL)(CFURLRef translocatedPath, CFErrorRef * __nullable error);
+    
+    // Get function from security framework
+    mySecTranslocateCreateOriginalPathForURL = getFunctionFromSecurityFramework("SecTranslocateCreateOriginalPathForURL");
+    
+    // Get original URL
+    CFErrorRef err;
+    untranslocatedURL = (__bridge NSURL*)mySecTranslocateCreateOriginalPathForURL(getAppURL(), &err);
+    NSError *error = (__bridge NSError *)err;
+    if (error != nil) {
+        NSLog(@"Error getting untranslocated URL: %@", error);
+    }
+    
+    return untranslocatedURL;
+}
+
+void removeQuarantineFlagAndRestart(NSURL* untranslocatedURL) {
+
+    assert(untranslocatedURL != nil);
+    
+    NSURL *xattrURL = [NSURL fileURLWithPath:kMFXattrPath];
+    NSURL *openURL = [NSURL fileURLWithPath:kMFOpenCLTPath];
+    
+    NSError *error;
+    
+    // Remove quarantine attributes of original
+    [SharedUtility launchCTL:xattrURL withArguments:@[@"-cr", untranslocatedURL.path] error:&error];
+    
+    if (error != nil) {
+        NSLog(@"Error while removing quarantine: %@", error);
+        return;
+    }
+    
+    // Relaunch app at original (untranslocated) location
+    //  -> Use ‘open’ as allows two instances of app (this instance is exiting)
+    [SharedUtility launchCTL:openURL withArguments:@[@"-n", @"-a", untranslocatedURL.path] error:&error];
+    
+    if (error != nil) {
+        NSLog(@"Error while relaunching app: %@", error);
+        return;
+    }
+    
+    NSLog(@"Terminating translocated instance of the app");
+    
+    // End this instance of the app
+    [NSApp terminate:nil];
+    
+}
+
+/// If the app is translocated, then remove the qurantine flag and restart it.
+/// This effectively removes the translocation.
+/// Credits: https://www.synack.com/blog/untranslocating-apps/
+/// \discussion As far as I understand, if we ever run executables in the same folder as the app then this poses a security risk, but I don't think we do that so it should be fine.
+/// \discussion If we can't remove translocation, this will result in an infinte restarting loop.
++ (void)removeTranslocation {
+    
+    bool translocated = getIsTranslocated();
+    
+    NSLog(@"Mac Mouse Fix is translocated: %d", translocated);
+    
+    if (translocated) {
+        NSURL *originalURL = getUntranslocatedURL();
+        NSLog(@"Untranslocated URL: %@", originalURL);
+        removeQuarantineFlagAndRestart(originalURL);
+    }
+    
+}
+
+@end

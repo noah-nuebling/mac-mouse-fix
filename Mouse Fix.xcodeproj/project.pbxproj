@@ -25,6 +25,7 @@
 		4F79A83626051E4A00076A7E /* MFNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A83526051E4A00076A7E /* MFNotification.m */; };
 		4F79C2EA260976950067B381 /* RemapTableTranslator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79C2E9260976950067B381 /* RemapTableTranslator.m */; };
 		4F7AB0552606698A0008055E /* UIStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F7AB0542606698A0008055E /* UIStrings.m */; };
+		4F8CE7012617738A00D70A76 /* AppTranslocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CE6FF2617738A00D70A76 /* AppTranslocationManager.m */; };
 		4F92A708260F4BF000529D1F /* MFTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F92A707260F4BF000529D1F /* MFTableView.m */; };
 		4F92A72D260F6C7800529D1F /* NSView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F92A72C260F6C7800529D1F /* NSView+Additions.m */; };
 		4F92A73A260F73C600529D1F /* KeyCaptureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F92A71D260F667F00529D1F /* KeyCaptureView.m */; };
@@ -221,6 +222,8 @@
 		4F79C2E9260976950067B381 /* RemapTableTranslator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapTableTranslator.m; sourceTree = "<group>"; };
 		4F7AB0532606698A0008055E /* UIStrings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIStrings.h; sourceTree = "<group>"; };
 		4F7AB0542606698A0008055E /* UIStrings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UIStrings.m; sourceTree = "<group>"; };
+		4F8CE6FF2617738A00D70A76 /* AppTranslocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppTranslocationManager.m; sourceTree = "<group>"; };
+		4F8CE7002617738A00D70A76 /* AppTranslocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppTranslocationManager.h; sourceTree = "<group>"; };
 		4F92A706260F4BF000529D1F /* MFTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFTableView.h; sourceTree = "<group>"; };
 		4F92A707260F4BF000529D1F /* MFTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFTableView.m; sourceTree = "<group>"; };
 		4F92A71C260F667F00529D1F /* KeyCaptureView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyCaptureView.h; sourceTree = "<group>"; };
@@ -510,6 +513,15 @@
 			path = UIStrings;
 			sourceTree = "<group>";
 		};
+		4F8CE6FE2617738A00D70A76 /* AppTranslocation */ = {
+			isa = PBXGroup;
+			children = (
+				4F8CE6FF2617738A00D70A76 /* AppTranslocationManager.m */,
+				4F8CE7002617738A00D70A76 /* AppTranslocationManager.h */,
+			);
+			path = AppTranslocation;
+			sourceTree = "<group>";
+		};
 		4F94F60325E5EC2800D9F24A /* AppTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -670,6 +682,7 @@
 				4FF665C525F2C92700689B77 /* AppDelegate.h */,
 				4FF665DB25F2C92700689B77 /* AppDelegate.m */,
 				4FF665D925F2C92700689B77 /* MouseFix.xib */,
+				4F8CE6FE2617738A00D70A76 /* AppTranslocation */,
 				4FA911E4260D00CB00553CA8 /* RemapTable */,
 				4F46EAA625FB770D0003423A /* AddWindow */,
 				4F2A1FA726042ACB0067691A /* Notifications */,
@@ -1333,6 +1346,7 @@
 				4FF665F525F2C92700689B77 /* ConfigFileInterface_App.m in Sources */,
 				4FF6654E25F2C7B000689B77 /* SharedUtility.m in Sources */,
 				4FF665F025F2C92700689B77 /* Updater.m in Sources */,
+				4F8CE7012617738A00D70A76 /* AppTranslocationManager.m in Sources */,
 				4FF665FE25F2C92700689B77 /* main.m in Sources */,
 				4F1B832D26081A5500AEAF37 /* CaptureNotifications.m in Sources */,
 				4FD82DDB260575B100664D6F /* MFNotificationLabel.m in Sources */,
