@@ -39,7 +39,7 @@ bool getIsTranslocated() {
     mySecTranslocateIsTranslocatedURL = getFunctionFromSecurityFramework("SecTranslocateIsTranslocatedURL");
     
     // Invoke it
-    CFErrorRef err;
+    CFErrorRef err = NULL;
     mySecTranslocateIsTranslocatedURL(getAppURL(), &isTranslocated, &err);
     NSError *error = (__bridge NSError *)err;
     if (error != nil) {
@@ -62,10 +62,10 @@ NSURL *getUntranslocatedURL() {
     mySecTranslocateCreateOriginalPathForURL = getFunctionFromSecurityFramework("SecTranslocateCreateOriginalPathForURL");
     
     // Get original URL
-    CFErrorRef err;
+    CFErrorRef err = NULL; // Need to initialize this to NULL, else this will be random memory when no error occurs (I think)
     untranslocatedURL = (__bridge NSURL*)mySecTranslocateCreateOriginalPathForURL(getAppURL(), &err);
-    NSError *error = (__bridge NSError *)err;
-    if (error != nil) {
+    if (err != NULL) {
+        NSError *error = (__bridge NSError *)err;
         NSLog(@"Error getting untranslocated URL: %@", error);
     }
     
@@ -79,7 +79,7 @@ void removeQuarantineFlagAndRestart(NSURL* untranslocatedURL) {
     NSURL *xattrURL = [NSURL fileURLWithPath:kMFXattrPath];
     NSURL *openURL = [NSURL fileURLWithPath:kMFOpenCLTPath];
     
-    NSError *error;
+    NSError *error = nil;
     
     // Remove quarantine attributes of original
     [SharedUtility launchCTL:xattrURL withArguments:@[@"-cr", untranslocatedURL.path] error:&error];

@@ -11,6 +11,7 @@
 
 
 @interface MessagePort_App : NSObject
-//+ (CFDataRef _Nullable)sendMessage:(NSString *_Nonnull)message expectingReply:(BOOL)expectingReply;
-//+ (NSString *)sendMessageWithReplyToHelper:(NSString *)message;
+
++ (void)load_Manual;
+
 @end
