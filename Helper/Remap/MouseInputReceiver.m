@@ -33,9 +33,12 @@ CFMachPortRef eventTapMouse;
 
 
 + (void)initialize {
-    NSLog(@"initializing (InputReceiver)");
-    eventSource = CGEventSourceCreate(kCGEventSourceStatePrivate);
-    setupMouseInputCallback_CGEvent();
+    
+    if (self == MouseInputReceiver.class) {
+        NSLog(@"initializing (InputReceiver)");
+        eventSource = CGEventSourceCreate(kCGEventSourceStatePrivate);
+        setupMouseInputCallback_CGEvent();
+    }
 }
 
 + (void)decide {

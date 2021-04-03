@@ -92,7 +92,10 @@ CFMachPortRef _eventTapKey;
 #pragma mark - Public functions
 
 + (void)initialize {
-    setupModifierKeyCallback();
+    
+    if (self == ScrollModifiers.class) {
+        setupModifierKeyCallback();
+    }
 }
 + (void)start {
     CGEventTapEnable(_eventTapKey, true);
