@@ -16,9 +16,11 @@
 @implementation AppTranslocationManager
 
 CFURLRef getAppURL() {
+    
     return (__bridge CFURLRef)[NSURL fileURLWithPath:NSBundle.mainBundle.bundlePath];
 }
 
+/// \discussion We should probably do some more error handling, and use `dlclose()` to prevent memory leak. But this is only called once and it works fine so whatevs.
 void *getFunctionFromSecurityFramework(const char *functionName) {
     
     // Open security framework
