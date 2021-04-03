@@ -83,7 +83,7 @@ static NSArray *getDragEffectsTable() {
 //                  kMFModifiedDragDictKeyType: kMFModifiedDragTypeTwoFingerSwipe,
 //        }},
 //        separatorEffectsTableEntry(),
-        @{@"ui": [NSString stringWithFormat:@"Click and Drag %@", [UIStrings getButtonString:3]],
+        @{@"ui": [NSString stringWithFormat:@"%@ Click and Drag", [UIStrings getButtonString:3]],
           @"tool": [NSString stringWithFormat: @"Works like clicking and dragging %@\nUsed to rotate in some 3D software like Blender", [UIStrings getButtonStringToolTip:3]],
           @"hideable": @YES,
           @"dict": @{
@@ -124,13 +124,15 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
         @{@"ui": @"Smart Zoom", @"tool": @"Zoom in or out in Safari and other apps. \n \nWorks like a two-finger double tap on an Apple Trackpad.", @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSmartZoom,
         }},
-        @{@"ui": fstring(@"%@ Click", [UIStrings getButtonString:3]),
-          @"tool": [NSString stringWithFormat:@"Open links in a new tab, paste text in the Terminal, and more. \n \nWorks like clicking %@ on a standard mouse.", [UIStrings getButtonStringToolTip:3]],
-          @"dict": @{
-                  kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
-                  kMFActionDictKeyMouseButtonClicksVariantButtonNumber: @3,
-                  kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks: @1,
-          }},
+        @{
+//            @"ui": fstring(@"%@ Click", [UIStrings getButtonString:3]),
+            @"ui": fstring(@"Middle Click"),
+            @"tool": [NSString stringWithFormat:@"Open links in a new tab, paste text in the Terminal, and more. \n \nWorks like clicking %@ on a standard mouse.", [UIStrings getButtonStringToolTip:3]],
+            @"dict": @{
+                    kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
+                    kMFActionDictKeyMouseButtonClicksVariantButtonNumber: @3,
+                    kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks: @1,
+            }},
         separatorEffectsTableEntry(),
         @{@"ui": @"Move Left a Space", @"tool": @"Move one Space to the left", @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
@@ -157,15 +159,15 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
     
     if (buttonNumber != 3) { // We already have the "Open Link in New Tab" entry for button 3
         NSDictionary *buttonClickEntry = @{
-           @"ui": [NSString stringWithFormat:@"%@ Click", [UIStrings getButtonString:buttonNumber]],
-           @"tool": [NSString stringWithFormat:@"Simulate Clicking %@", [UIStrings getButtonStringToolTip:buttonNumber]],
-           @"hideable": @NO,
-           @"alternate": @YES,
-           @"dict": @{
-               kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
-               kMFActionDictKeyMouseButtonClicksVariantButtonNumber: @(buttonNumber),
-               kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks: @1,
-           }
+            @"ui": [NSString stringWithFormat:@"%@ Click", [UIStrings getButtonString:buttonNumber]],
+            @"tool": [NSString stringWithFormat:@"Simulate Clicking %@", [UIStrings getButtonStringToolTip:buttonNumber]],
+            @"hideable": @NO,
+            @"alternate": @YES,
+            @"dict": @{
+                    kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
+                    kMFActionDictKeyMouseButtonClicksVariantButtonNumber: @(buttonNumber),
+                    kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks: @1,
+            }
         };
         [oneShotEffectsTable insertObject:buttonClickEntry atIndex:9];
     }
