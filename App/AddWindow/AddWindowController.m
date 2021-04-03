@@ -29,6 +29,7 @@ static BOOL _pointerIsInsideAddField;
 // Init
 + (void)initialize {
     // This initialize function was apparently called twice (but weirdly only on some machines) leading to issues. See https://github.com/noah-nuebling/mac-mouse-fix/pull/80
+    // I guess this is what the typical "if (self == [<ClassName> class])" checks are there to prevent.
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _instance = [[AddWindowController alloc] initWithWindowNibName:@"AddWindow"];

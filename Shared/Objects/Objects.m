@@ -58,10 +58,13 @@ static NSURL *_configURL;
 }
 
 + (void)initialize {
-    // Get appSupportURL & configURL
-    NSURL *applicationSupportURL = [NSFileManager.defaultManager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:NULL create:YES error:nil];
-    _MFApplicationSupportFolderURL = [applicationSupportURL URLByAppendingPathComponent:self.mainAppBundle.bundleIdentifier];
-    _configURL = [_MFApplicationSupportFolderURL URLByAppendingPathComponent:@"config.plist"];
+    
+    if (self == [Objects class]) {
+        // Get appSupportURL & configURL
+        NSURL *applicationSupportURL = [NSFileManager.defaultManager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:NULL create:YES error:nil];
+        _MFApplicationSupportFolderURL = [applicationSupportURL URLByAppendingPathComponent:self.mainAppBundle.bundleIdentifier];
+        _configURL = [_MFApplicationSupportFolderURL URLByAppendingPathComponent:@"config.plist"];
+    }
 }
 
 /// This gets bundles at locations at which they were launched. These locations are incorrect if the app was moved while it or the helper is open
