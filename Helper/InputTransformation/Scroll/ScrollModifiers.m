@@ -93,7 +93,7 @@ CFMachPortRef _eventTapKey;
 
 + (void)initialize {
     
-    if (self == [ScrollModifiers class]) {
+    if (self == ScrollModifiers.class) {
         setupModifierKeyCallback();
     }
 }
