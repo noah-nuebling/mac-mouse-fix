@@ -36,6 +36,7 @@
 }
 
 - (NSAttributedString *)attributedStringByAddingSymbolicFontTraits:(NSFontDescriptorSymbolicTraits)traits forSubstring:(NSString *)subStr {
+    
     NSDictionary *originalAttributes = [self attributesAtIndex:0 effectiveRange:nil];
     NSFont *originalFont = originalAttributes[NSFontAttributeName];
     if (originalFont == nil) {
@@ -73,6 +74,64 @@
     return [self attributedStringByAddingSymbolicFontTraits:traits forSubstring:subStr];
 }
 
+- (NSAttributedString *)attributedStringByAligningSubstring:(NSString *)subStr alignment:(NSTextAlignment)alignment {
+    
+    NSMutableAttributedString *ret = [[NSMutableAttributedString alloc] initWithAttributedString:self];
+    NSRange subRange = [self.string rangeOfString:subStr];
+    
+    [self enumerateAttribute:NSParagraphStyleAttributeName inRange:subRange options:0 usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
+        NSMutableParagraphStyle *newParagraphStyle = ((NSParagraphStyle *)value).mutableCopy;
+        if (newParagraphStyle == nil) {
+            newParagraphStyle = [NSMutableParagraphStyle new];
+        }
+        newParagraphStyle.alignment = alignment;
+        [ret addAttribute:NSParagraphStyleAttributeName value:newParagraphStyle range:range];
+    }];
+    
+    return ret.copy;
+}
+
+- (NSMutableAttributedString *)attributedStringBySettingWeight:(NSInteger)weight forSubstring:(NSString * _Nonnull)subStr {
+    
+    NSMutableAttributedString *ret = self.mutableCopy;
+    NSRange subRange = [self.string rangeOfString:subStr];
+    
+    [self enumerateAttribute:NSFontAttributeName inRange:subRange options:0 usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
+        NSFont *currentFont = (NSFont *)value;
+        
+        if (currentFont == nil) {
+            currentFont = [NSFont systemFontOfSize:NSFont.systemFontSize];
+        }
+        
+        NSString *fontFamily = currentFont.familyName;
+        NSFontTraitMask traits = [NSFontManager.sharedFontManager traitsOfFont:currentFont];
+//        NSInteger originalWeight = [NSFontManager.sharedFontManager weightOfFont:currentFont];
+        CGFloat size = currentFont.pointSize;
+        
+        NSFont *newFont = [NSFontManager.sharedFontManager fontWithFamily:fontFamily traits:traits weight:weight size:size];
+        
+        [ret addAttribute:NSFontAttributeName value:newFont range:range];
+    }];
+    return ret;
+}
+
+- (NSAttributedString *)attributedStringByAddingThinForSubstring:(NSString *)subStr {
+    
+    NSInteger weight = 3;
+    
+    return [self attributedStringBySettingWeight:weight forSubstring:subStr];
+}
+
+- (NSAttributedString *)attributedStringBySettingSecondaryButtonTextColorForSubstring:(NSString *)subStr {
+    
+    NSMutableAttributedString *ret = self.mutableCopy;
+    NSRange subRange = [self.string  rangeOfString:subStr];
+    
+    [ret addAttribute:NSForegroundColorAttributeName value:NSColor.secondaryLabelColor range:subRange];
+    
+    return ret;
+}
+
 - (NSSize)sizeAtMaxWidth:(CGFloat)maxWidth {
     
     CGFloat width = self.width <= maxWidth ? self.width : maxWidth;
@@ -105,6 +164,7 @@
 #endif
     return ceil(result2);
     // ^ Using `result1` has multiline NSTextFields clipping their last line. `result2` seems to work perfectly.
+    //      > `result1` seems to be slightly too small
 }
 
 - (CGFloat)width {

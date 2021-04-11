@@ -83,8 +83,11 @@ static NSArray *getDragEffectsTable() {
 //                  kMFModifiedDragDictKeyType: kMFModifiedDragTypeTwoFingerSwipe,
 //        }},
 //        separatorEffectsTableEntry(),
-        @{@"ui": [NSString stringWithFormat:@"%@ Click and Drag", [UIStrings getButtonString:3]],
-          @"tool": [NSString stringWithFormat: @"Works like clicking and dragging %@\nUsed to rotate in some 3D software like Blender", [UIStrings getButtonStringToolTip:3]],
+        @{
+//          @"ui": [NSString stringWithFormat:@"%@ Click and Drag", [UIStrings getButtonString:3]],
+          @"ui": [NSString stringWithFormat:@"Middle Click and Drag"],
+//          @"ui": [NSString stringWithFormat:@"%@ Drag", [UIStrings getButtonString:3]],
+          @"tool": [NSString stringWithFormat: @"Works like clicking and dragging %@\nUsed to orbit in some 3D software like Blender", [UIStrings getButtonStringToolTip:3]],
           @"hideable": @YES,
           @"dict": @{
                   kMFModifiedDragDictKeyType: kMFModifiedDragTypeFakeDrag,
@@ -434,8 +437,8 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         // Turn into attributedString and highlight button substrings
         tr = [[NSAttributedString alloc] initWithString:trRaw];
         trTool = [[NSAttributedString alloc] initWithString:trToolRaw];
-//        tr = [tr attributedStringByAddingBoldForSubstring:buttonStr];
-//        trTool = [trTool attributedStringByAddingBoldForSubstring:buttonStrTool];
+        tr = [tr attributedStringBySettingSecondaryButtonTextColorForSubstring:buttonStr];
+        trTool = [trTool attributedStringBySettingSecondaryButtonTextColorForSubstring:buttonStrTool];
         
     } else if ([triggerGeneric isKindOfClass:NSString.class]) { // Trigger is drag or scroll
         // We need part of the modification precondition to form the main trigger string here.
@@ -492,8 +495,8 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         // Turn into attributedString and highlight button substrings
         tr = [[NSAttributedString alloc] initWithString:trRaw];
         trTool = [[NSAttributedString alloc] initWithString:trToolRaw];
-//        tr = [tr attributedStringByAddingBoldForSubstring:buttonStr];
-//        trTool = [trTool attributedStringByAddingBoldForSubstring:buttonStrTool];
+        tr = [tr attributedStringBySettingSecondaryButtonTextColorForSubstring:buttonStr];
+//        trTool = [trTool attributedStringBySettingSecondaryLabelColorForSubstring:buttonStrTool];
         
     } else {
         NSLog(@"Trigger value: %@, class: %@", triggerGeneric, [triggerGeneric class]);

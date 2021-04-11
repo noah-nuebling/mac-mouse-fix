@@ -9,6 +9,9 @@
 
 // Medium article on views with rounded corners and shadows:
 //      https://medium.com/swifty-tim/views-with-rounded-corners-and-shadows-c3adc0085182
+//      -> Using overlay window instead
+
+// This is really the same thing as a "toast" or a "snackbar"
 
 #import "MFNotificationController.h"
 #import "AppDelegate.h"
@@ -22,10 +25,12 @@
 @property (unsafe_unretained) IBOutlet MFNotificationLabel *label;
 @end
 
-@implementation MFNotificationController
+@implementation MFNotificationController {
+}
 
 MFNotificationController *_instance;
 NSDictionary *_labelAttributesFromIB;
+id _localEventMonitor;
 
 + (void)initialize {
     
@@ -57,39 +62,44 @@ NSDictionary *_labelAttributesFromIB;
     }
 }
 
-double _animationDuration = 0.4;
+double _animationDurationFadeIn = 0.4;
+double _animationDurationFadeOut = 0.3;
+double _toastAnimationOffset = 20;
 
 /// Pass 0 to showDuration to get the default duration
 + (void)attachNotificationWithMessage:(NSAttributedString *)message toWindow:(NSWindow *)attachWindow forDuration:(NSTimeInterval)showDuration {
     
-    return;
+//    return;
     
 #if DEBUG
     NSLog(@"Attaching notification: %@", message);
 #endif
     
-    BOOL topMiddleAligned = YES;
+    NSString *alignment = @"bottomMiddle";
     
     // Constants
     if (showDuration <= 0) {
-        showDuration = 3.0;
+        showDuration = message.length * 0.08;
     }
     
-    double mainWindowTitleBarHeight;
-    double topEdgeMargin;
-    double sideMargin;
-    double bottomMargin;
+    double mainWindowTitleBarHeight = 0.0;
+    double topEdgeMargin = 0.0;
+    double sideMargin = 0.0;
+    double bottomMargin = 0.0;
     
-    if (topMiddleAligned) {
+    if ([alignment isEqual:@"topMiddle"]) {
         // For top middle algnment
         mainWindowTitleBarHeight = 30;
         topEdgeMargin = 0.0;
     //    topEdgeMargin = -25;
         sideMargin = 40;
-    } else {
+    } else if ([alignment isEqual:@"bottomRight"]){
         // For bottom right alignment
         sideMargin = bottomMargin = 10;
-    }
+    } else if ([alignment isEqual:@"bottomMiddle"]) {
+        bottomMargin = 10;
+        sideMargin = 40;
+    } else assert(false);
     
     // Execution
     
@@ -97,12 +107,6 @@ double _animationDuration = 0.4;
     NSPanel *w = (NSPanel *)_instance.window;
     NSWindow *mainW = AppDelegate.mainWindow;
     [w close];
-    
-    // Make label text centered (Don't need this with NSTextView)
-//    NSMutableAttributedString *m = message.mutableCopy;
-//    NSMutableParagraphStyle *p = [NSMutableParagraphStyle new];
-//    p.alignment = NSTextAlignmentCenter;
-//    [m addAttributes:@{NSParagraphStyleAttributeName: p} range:NSMakeRange(0, m.length)];
     
     // Set message text and text attributes to label
     
@@ -141,17 +145,18 @@ double _animationDuration = 0.4;
     
     // Calc Position
     
-    if (topMiddleAligned) {
+    if ([alignment isEqual:@"topMiddle"]) {
         // Top middle alignment
         newNotifFrame.origin.x = NSMidX(mainW.frame) - (newNotifSize.width / 2);
         newNotifFrame.origin.y = (mainW.frame.origin.y + mainW.frame.size.height - (mainWindowTitleBarHeight + topEdgeMargin)) - newNotifSize.height;
-    } else {
+    } else if ([alignment isEqual:@"bottomRight"]) {
         // Bottom right alignment
         newNotifFrame.origin.x = mainW.frame.origin.x + mainW.frame.size.width - newNotifFrame.size.width - sideMargin;
         newNotifFrame.origin.y = mainW.frame.origin.y + bottomMargin;
-    }
-    
-    // Testing
+    } else if ([alignment isEqual:@"bottomMiddle"]) {
+        newNotifFrame.origin.x = NSMidX(mainW.frame) - (newNotifSize.width / 2);
+        newNotifFrame.origin.y = mainW.frame.origin.y + bottomMargin;
+    } else assert(false);
     
     // Set new notification frame
     [w setFrame:newNotifFrame display:YES];
@@ -167,12 +172,31 @@ double _animationDuration = 0.4;
     [attachWindow addChildWindow:w ordered:NSWindowAbove];
     [attachWindow makeKeyWindow];
     
-    // Fade in notification window
+    // Fade in and animate upwards notification window
+    // Set pre animation alpha
     w.alphaValue = 0.0;
+    // Set pre animation position
+    NSRect targetFrame = w.frame;
+    NSRect preAnimFrame = w.frame;
+    preAnimFrame.origin.y -= _toastAnimationOffset;
+    [w setFrame:preAnimFrame display:NO];
+    // Animate
     [NSAnimationContext beginGrouping];
-    NSAnimationContext.currentContext.duration = _animationDuration;
+    NSAnimationContext.currentContext.duration = _animationDurationFadeIn;
     w.animator.alphaValue = 1.0;
+    [w.animator setFrame:targetFrame display:YES];
     [NSAnimationContext endGrouping];
+    
+    // Fade out if user clicks elsewhere
+    _localEventMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:(NSEventMaskLeftMouseDown) handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
+        
+        if ([NSWindow windowNumberAtPoint:NSEvent.mouseLocation belowWindowWithWindowNumber:0] != _instance.window.windowNumber) {
+            [_closeTimer invalidate];
+            [self closeNotification:nil];
+        }
+        
+        return event;
+    }];
     
     // Fade out after showDuration
     [_closeTimer invalidate];
@@ -182,20 +206,37 @@ double _animationDuration = 0.4;
 NSTimer *_closeTimer;
 + (void)closeNotification:(NSTimer *)timer {
     [self closeNotificationWithFadeOut];
+//    [self closeNotificationImmediately];
+}
+
+static void removeLocalEventMonitor() {
+    if (_localEventMonitor != nil) {
+        [NSEvent removeMonitor:_localEventMonitor];
+        _localEventMonitor = nil;
+    }
 }
 
 + (void)closeNotificationWithFadeOut {
+    
+    removeLocalEventMonitor();
+    
     NSPanel *w = (NSPanel *)_instance.window;
     [NSAnimationContext beginGrouping];
-    NSAnimationContext.currentContext.duration = _animationDuration;
+    NSAnimationContext.currentContext.duration = _animationDurationFadeOut;
     NSAnimationContext.currentContext.completionHandler = (void (^) (void)) ^{
-        [w orderOut:nil];
+//        [w orderOut:nil]; // This breaks displaying new notfication while old one is fading out
     };
     w.animator.alphaValue = 0.0;
+    NSRect postAnimFrame = w.frame;
+    postAnimFrame.origin.y -= _toastAnimationOffset;
+    [w.animator setFrame:postAnimFrame display:YES];
     [NSAnimationContext endGrouping];
 }
 
 + (void)closeNotificationImmediately {
+    
+    removeLocalEventMonitor();
+    
     NSPanel *w = (NSPanel *)_instance.window;
     [w orderOut:nil];
 }

@@ -13,6 +13,7 @@
 #import "NSAttributedString+Additions.h"
 #import "MFNotificationController.h"
 #import "AppDelegate.h"
+#import "SharedUtility.h"
 
 // TODO: Rename to `CaptureNotificationCreator` or `NotificationCreator` or something 
 @implementation CaptureNotifications
@@ -33,32 +34,44 @@
     NSString *uncapturedButtonString = buttonStringFromButtonArray(uncapturedArray);
     NSString *capturedButtonString = buttonStringFromButtonArray(capturedArray);
     
-    NSString *uncapPluralString = @"";
-    if (uncapturedArray.count > 0) {
-        uncapPluralString = uncapturedArray.count == 1 ? @"is" : @"are";
-    }
-    NSString *capPluralString  = @"";
-    if (capturedArray.count > 0) {
-        capPluralString = capturedArray.count == 1 ? @"has" : @"have";
-    }
-    
+    NSString *linkString = @"Learn More";
     
     NSString *uncapString = @"";
     if (newlyUncapturedButtons.count > 0) {
-        uncapString = [uncapturedButtonString stringByAppendingFormat:@" %@ no longer captured by Mac Mouse Fix. ", uncapPluralString];
+        NSString *uncapPluralString = uncapturedArray.count == 1 ? @"is" : @"are";
+//        NSString *buttonPluralString = uncapturedArray.count == 1 ? @"it" : @"them";
+        
+        uncapString = [uncapturedButtonString stringByAppendingFormat:@" %@ no longer captured by Mac Mouse Fix.", uncapPluralString];
     }
     NSString *capString = @"";
     if (newlyCapturedButtons.count > 0) {
-        capString = [capturedButtonString stringByAppendingFormat:@" %@ been captured by Mac Mouse Fix. ", capPluralString];
+        NSString *pluralString = capturedArray.count == 1 ? @"has" : @"have";
+        NSString *buttonPluralString = capturedArray.count == 1 ? @"it" : @"them";
+        NSString *buttonPluralString2 = capturedArray.count == 1 ? @"this button" : @"these buttons";
+        
+        linkString = fstring(@"I want to use %@ with other apps", buttonPluralString2);
+        
+        capString = [capturedButtonString stringByAppendingFormat:@" %@ been captured by Mac Mouse Fix. \nOther apps can't see %@ anymore. ", pluralString, buttonPluralString];
     }
     
     if (newlyUncapturedButtons.count > 0 || newlyCapturedButtons.count > 0) {
-        NSString *notifString = [NSString stringWithFormat:@"%@%@\nLearn More", capString, uncapString];
+        
+        NSString *notifString = [NSString stringWithFormat:@"%@%@\n\n%@", capString, uncapString, linkString];
 //        NSString *notifString = [NSString stringWithFormat:@"%@%@", capString, uncapString];
         NSAttributedString *attrNotifString = [[NSAttributedString alloc] initWithString:notifString];
-        attrNotifString = [attrNotifString attributedStringByAddingLinkWithURL:[NSURL URLWithString:@"https://placeholder.com/"] forSubstring:@"Learn More"];
+        // Add link to linkString
+        attrNotifString = [attrNotifString attributedStringByAddingLinkWithURL:[NSURL URLWithString:@"https://placeholder.com/"] forSubstring:linkString];
+        // Add bold for button string
+        if ([attrNotifString.string rangeOfString:uncapturedButtonString].location != NSNotFound) {
+            attrNotifString = [attrNotifString attributedStringByAddingBoldForSubstring:uncapturedButtonString];
+        }
+        if ([attrNotifString.string rangeOfString:capturedButtonString].location != NSNotFound) {
+            attrNotifString = [attrNotifString attributedStringByAddingBoldForSubstring:capturedButtonString];
+        }
         
-        [MFNotificationController attachNotificationWithMessage:attrNotifString toWindow:AppDelegate.mainWindow forDuration:5.0];
+        double duration = notifString.length * 0.08;
+        
+        [MFNotificationController attachNotificationWithMessage:attrNotifString toWindow:AppDelegate.mainWindow forDuration:duration];
     }
 }
 
