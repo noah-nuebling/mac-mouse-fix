@@ -351,6 +351,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
                 if ([effectTableEntry[@"hideable"] isEqual:@YES]) {
                     NSMenuItem *h = [[NSMenuItem alloc] init];
                     h.view = [[NSView alloc] initWithFrame:NSZeroRect];
+                    h.enabled = NO; // Trying to prevent the zero-height item from being selected by keyboard. This only works if "autoenablesItems" is turned off for the PopUpButton
                     [popupButton.menu addItem:h];
                     i.alternate = YES;
                     i.keyEquivalentModifierMask = NSEventModifierFlagOption;

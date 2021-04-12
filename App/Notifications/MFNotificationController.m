@@ -62,8 +62,8 @@ id _localEventMonitor;
     }
 }
 
-double _animationDurationFadeIn = 0.4;
-double _animationDurationFadeOut = 0.3;
+double _animationDurationFadeIn = 0.3;
+double _animationDurationFadeOut = 0.2;
 double _toastAnimationOffset = 20;
 
 /// Pass 0 to showDuration to get the default duration
@@ -75,7 +75,7 @@ double _toastAnimationOffset = 20;
     NSLog(@"Attaching notification: %@", message);
 #endif
     
-    NSString *alignment = @"bottomMiddle";
+    NSString *alignment = @"topMiddle";
     
     // Constants
     if (showDuration <= 0) {
@@ -93,12 +93,17 @@ double _toastAnimationOffset = 20;
         topEdgeMargin = 0.0;
     //    topEdgeMargin = -25;
         sideMargin = 40;
+        _toastAnimationOffset = 20;
     } else if ([alignment isEqual:@"bottomRight"]){
         // For bottom right alignment
         sideMargin = bottomMargin = 10;
+        
+        _toastAnimationOffset = -20;
     } else if ([alignment isEqual:@"bottomMiddle"]) {
         bottomMargin = 10;
         sideMargin = 40;
+        
+        _toastAnimationOffset = -20;
     } else assert(false);
     
     // Execution
@@ -178,7 +183,7 @@ double _toastAnimationOffset = 20;
     // Set pre animation position
     NSRect targetFrame = w.frame;
     NSRect preAnimFrame = w.frame;
-    preAnimFrame.origin.y -= _toastAnimationOffset;
+    preAnimFrame.origin.y += _toastAnimationOffset;
     [w setFrame:preAnimFrame display:NO];
     // Animate
     [NSAnimationContext beginGrouping];
@@ -228,7 +233,7 @@ static void removeLocalEventMonitor() {
     };
     w.animator.alphaValue = 0.0;
     NSRect postAnimFrame = w.frame;
-    postAnimFrame.origin.y -= _toastAnimationOffset;
+    postAnimFrame.origin.y += _toastAnimationOffset;
     [w.animator setFrame:postAnimFrame display:YES];
     [NSAnimationContext endGrouping];
 }

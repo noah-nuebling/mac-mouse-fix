@@ -17,7 +17,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenNone="YES"/>
             <rect key="contentRect" x="0.0" y="0.0" width="626" height="400"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="875"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="3840" height="2135"/>
             <value key="minSize" type="size" width="626" height="400"/>
             <value key="maxSize" type="size" width="626" height="1000"/>
             <view key="contentView" identifier="mainView" translatesAutoresizingMaskIntoConstraints="NO" id="se5-gp-TjO">
@@ -72,7 +72,7 @@
                                                         <tableViewGridLines key="gridStyleMask" vertical="YES"/>
                                                         <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                         <tableColumns>
-                                                            <tableColumn identifier="trigger" width="330.5" minWidth="40" maxWidth="1000" id="zj7-YT-yKp">
+                                                            <tableColumn identifier="trigger" width="329.5" minWidth="40" maxWidth="1000" id="zj7-YT-yKp">
                                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Trigger">
                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -85,11 +85,11 @@
                                                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                                                 <prototypeCellViews>
                                                                     <tableCellView identifier="triggerCell" id="PcD-th-uol">
-                                                                        <rect key="frame" x="8" y="0.0" width="329" height="39"/>
+                                                                        <rect key="frame" x="8" y="0.0" width="328" height="39"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
                                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pzd-Fo-nrS">
-                                                                                <rect key="frame" x="1" y="11" width="327" height="17"/>
+                                                                                <rect key="frame" x="1" y="11" width="326" height="17"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="⌘⇧⌥⌃ + Triple Click and Drag Button 3" id="hBN-M2-pMi">
                                                                                     <font key="font" metaFont="system"/>
@@ -117,16 +117,16 @@
                                                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                                                 <prototypeCellViews>
                                                                     <tableCellView identifier="effectCell" id="5PH-4e-aAm">
-                                                                        <rect key="frame" x="354" y="0.0" width="223" height="39"/>
+                                                                        <rect key="frame" x="353" y="0.0" width="224" height="39"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
                                                                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7A6-Ou-8wk">
-                                                                                <rect key="frame" x="0.0" y="6" width="224" height="25"/>
+                                                                                <rect key="frame" x="0.0" y="6" width="225" height="25"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                                                                <popUpButtonCell key="cell" type="push" title="Click and Drag Button 3" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="hdW-0g-MyX" id="zPv-8e-GO1">
+                                                                                <popUpButtonCell key="cell" type="push" title="Click and Drag Button 3" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="hdW-0g-MyX" id="zPv-8e-GO1">
                                                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                                     <font key="font" metaFont="menu"/>
-                                                                                    <menu key="menu" id="D4j-Vt-Zr3">
+                                                                                    <menu key="menu" autoenablesItems="NO" id="D4j-Vt-Zr3">
                                                                                         <items>
                                                                                             <menuItem title="Click and Drag Button 3" state="on" id="hdW-0g-MyX">
                                                                                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -142,11 +142,11 @@
                                                                         </subviews>
                                                                     </tableCellView>
                                                                     <tableCellView identifier="keyCaptureCell" id="ppe-fA-Qpm">
-                                                                        <rect key="frame" x="354" y="39" width="223" height="39"/>
+                                                                        <rect key="frame" x="353" y="39" width="224" height="39"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
                                                                             <button hidden="YES" focusRingType="exterior" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bGK-d6-do3">
-                                                                                <rect key="frame" x="-4" y="3" width="231" height="32"/>
+                                                                                <rect key="frame" x="-4" y="3" width="232" height="32"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                                 <buttonCell key="cell" type="push" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" focusRingType="exterior" imageScaling="proportionallyDown" inset="2" id="wcb-vJ-PiZ">
                                                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -157,18 +157,18 @@
                                                                                 </connections>
                                                                             </button>
                                                                             <scrollView focusRingType="exterior" fixedFrame="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="gEj-y5-p9Y" customClass="KeyCaptureScrollView">
-                                                                                <rect key="frame" x="3" y="10" width="217" height="20"/>
+                                                                                <rect key="frame" x="3" y="10" width="218" height="20"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                                 <clipView key="contentView" focusRingType="exterior" drawsBackground="NO" id="2dn-db-91A">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="217" height="20"/>
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="218" height="20"/>
                                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                     <subviews>
                                                                                         <textView identifier="keyCaptureView" focusRingType="exterior" editable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" verticallyResizable="NO" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="JcL-EN-Rma" customClass="KeyCaptureView">
-                                                                                            <rect key="frame" x="0.0" y="0.0" width="212" height="19"/>
+                                                                                            <rect key="frame" x="0.0" y="0.0" width="213" height="19"/>
                                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                                            <size key="minSize" width="212" height="19"/>
+                                                                                            <size key="minSize" width="213" height="19"/>
                                                                                             <size key="maxSize" width="240" height="10000000"/>
                                                                                             <attributedString key="textStorage">
                                                                                                 <fragment content="Text go here">
@@ -211,7 +211,7 @@
                                                 <nil key="backgroundColor"/>
                                             </clipView>
                                             <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="Wpn-xY-rCp">
-                                                <rect key="frame" x="0.0" y="178" width="576" height="16"/>
+                                                <rect key="frame" x="0.0" y="188" width="576" height="16"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
                                             <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="h3C-j3-pEp">
@@ -354,7 +354,7 @@ Tips:
         </menu>
     </objects>
     <resources>
-        <image name="NSAddTemplate" width="14" height="13"/>
-        <image name="NSRemoveTemplate" width="14" height="4"/>
+        <image name="NSAddTemplate" width="15" height="13"/>
+        <image name="NSRemoveTemplate" width="15" height="4"/>
     </resources>
 </document>
