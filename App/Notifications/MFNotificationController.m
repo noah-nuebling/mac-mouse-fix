@@ -90,7 +90,7 @@ double _toastAnimationOffset = 20;
     if ([alignment isEqual:@"topMiddle"]) {
         // For top middle algnment
         mainWindowTitleBarHeight = 30;
-        topEdgeMargin = 0.0;
+        topEdgeMargin = 5.0; // 0.0 // -25.0
     //    topEdgeMargin = -25;
         sideMargin = 40;
         _toastAnimationOffset = 20;
