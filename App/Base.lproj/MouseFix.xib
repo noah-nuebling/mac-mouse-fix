@@ -16,20 +16,20 @@
         <window identifier="mainWindow" title="Mac Mouse Fix" autorecalculatesKeyViewLoop="NO" deferred="NO" releasedWhenClosed="NO" animationBehavior="default" tabbingMode="disallowed" id="F0z-JX-Cv5" userLabel="MainWindow">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenNone="YES"/>
-            <rect key="contentRect" x="0.0" y="0.0" width="580" height="410"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
+            <rect key="contentRect" x="0.0" y="0.0" width="580" height="429"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1025"/>
             <value key="minSize" type="size" width="580" height="300"/>
             <value key="maxSize" type="size" width="580" height="1000"/>
             <view key="contentView" identifier="mainView" translatesAutoresizingMaskIntoConstraints="NO" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="0.0" width="580" height="410"/>
+                <rect key="frame" x="0.0" y="0.0" width="580" height="429"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view identifier="baseView" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5ZP-Jh-Lwi">
-                        <rect key="frame" x="0.0" y="0.0" width="580" height="410"/>
+                        <rect key="frame" x="0.0" y="0.0" width="580" height="429"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button toolTip="Enable Mouse Fix for a better mouse experience!" verticalHuggingPriority="750" fixedFrame="YES" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vqy-WZ-nG6">
-                                <rect key="frame" x="18" y="381" width="157" height="18"/>
+                                <rect key="frame" x="18" y="400" width="157" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="check" title="Enable Mac Mouse Fix" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="G70-nk-4Vw">
                                     <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
@@ -40,7 +40,7 @@
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="73e-pL-X7k">
-                                <rect key="frame" x="491" y="373" width="77" height="32"/>
+                                <rect key="frame" x="491" y="392" width="77" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="More..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dLd-xI-ix2">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -51,14 +51,14 @@
                                 </connections>
                             </button>
                             <box identifier="preferenceBox" autoresizesSubviews="NO" fixedFrame="YES" borderType="line" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="nmi-Qw-Ncm">
-                                <rect key="frame" x="17" y="16" width="546" height="356"/>
+                                <rect key="frame" x="17" y="16" width="546" height="375"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <view key="contentView" id="IVL-q6-nHn">
-                                    <rect key="frame" x="3" y="3" width="540" height="350"/>
+                                    <rect key="frame" x="3" y="3" width="540" height="369"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="39" horizontalPageScroll="10" verticalLineScroll="39" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jLq-vs-Mpd" customClass="MFScrollView">
-                                            <rect key="frame" x="0.0" y="97" width="540" height="254"/>
+                                            <rect key="frame" x="0.0" y="116" width="540" height="254"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <clipView key="contentView" drawsBackground="NO" id="S62-75-wtd">
                                                 <rect key="frame" x="0.0" y="0.0" width="540" height="254"/>
@@ -106,10 +106,10 @@
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
                                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZkS-6b-dCZ">
-                                                                                <rect key="frame" x="-8" y="6" width="295" height="16"/>
+                                                                                <rect key="frame" x="-3" y="4" width="295" height="16"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                                                                <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="left" title="Button X" id="Jbj-n8-l11">
-                                                                                    <font key="font" metaFont="system"/>
+                                                                                <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="center" title="Button X" id="Jbj-n8-l11">
+                                                                                    <font key="font" metaFont="smallSystem"/>
                                                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                                 </textFieldCell>
@@ -237,7 +237,7 @@
                                             </scroller>
                                         </scrollView>
                                         <segmentedControl verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xGK-PH-XPN" customClass="MFSegmentedControl">
-                                            <rect key="frame" x="3" y="67" width="47" height="24"/>
+                                            <rect key="frame" x="3" y="86" width="47" height="24"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="momentary" id="btI-2i-s2J">
                                                 <font key="font" metaFont="system"/>
@@ -256,7 +256,7 @@
                                             </connections>
                                         </segmentedControl>
                                         <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uS5-6r-XRu" userLabel="ScrollGroup">
-                                            <rect key="frame" x="0.0" y="3" width="540" height="82"/>
+                                            <rect key="frame" x="0.0" y="16" width="540" height="82"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <slider toolTip="How fast you'll scroll" verticalHuggingPriority="750" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mXj-a7-rFw">
@@ -333,7 +333,7 @@ Tips:
             <connections>
                 <outlet property="delegate" destination="NxE-tZ-vxj" id="mRZ-zN-zML"/>
             </connections>
-            <point key="canvasLocation" x="359" y="-26"/>
+            <point key="canvasLocation" x="359" y="-16.5"/>
         </window>
         <customObject id="NxE-tZ-vxj" customClass="AppDelegate">
             <connections>
