@@ -19,14 +19,16 @@
     NSRectClip(clippingRect);
     
     // Draw background
-//    [NSColor.alternatingContentBackgroundColor setFill];
-//    NSRectFill(dirtyRect);
+//    [NSColor.gridColor setFill];
+    [[NSColor colorWithWhite:0.0 alpha:0.04] setFill];
+    NSRectFill(dirtyRect);
     
     // Draw border
 
     NSBezierPath *borderPath = [NSBezierPath bezierPathWithRect:dirtyRect];
     borderPath.lineWidth = 2;
     [NSColor.gridColor setStroke];
+//    [[NSColor colorWithWhite:0.0 alpha:0.15] setStroke];
     [borderPath stroke];
 }
 
