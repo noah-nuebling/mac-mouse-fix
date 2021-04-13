@@ -307,14 +307,14 @@
                                                     </connections>
                                                 </button>
                                                 <button identifier="scrollCheckBox" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9lG-eT-nD4">
-                                                    <rect key="frame" x="39" y="32" width="127" height="18"/>
+                                                    <rect key="frame" x="39" y="32" width="132" height="18"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <string key="toolTip">Make scrolling animate smoothly
 
 Tips: 
 - Hold Shift (⇧) to scroll horizontally
 - Hold Command (⌘) and scroll to zoom in or out</string>
-                                                    <buttonCell key="cell" type="check" title="Smooth scrolling" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="aqu-LA-LU4">
+                                                    <buttonCell key="cell" type="check" title="Smooth scrolling:" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="aqu-LA-LU4">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>

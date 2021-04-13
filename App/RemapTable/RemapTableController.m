@@ -491,13 +491,18 @@ static void getTriggerValues(int *btn1, int *lvl1, NSString **dur1, NSString **t
     MFMouseButtonNumber currentButton = -1;
     int r = 0;
     int insertedCount = 0;
+    BOOL firstHasBeenOmitted = YES; // Set to no to omit first group row
     for (NSDictionary *rowDict in dataModel) {
         MFMouseButtonNumber rowButton = [RemapTableUtility triggerButtonForRow:rowDict];
         if ((int)rowButton > (int)currentButton) {
             currentButton = rowButton;
-            // Insert group row into groupedDataModel
-            [groupedDataModel insertObject:RemapTableUtility.buttonGroupRowDict atIndex:r+insertedCount];
-            insertedCount++;
+            if (!firstHasBeenOmitted) {
+                firstHasBeenOmitted = YES;
+            } else {
+                // Insert group row into groupedDataModel
+                [groupedDataModel insertObject:RemapTableUtility.buttonGroupRowDict atIndex:r+insertedCount];
+                insertedCount++;
+            }
             
         } else if ((int)rowButton < (int)currentButton) {
             // The datamodel isn't sorted by Button
@@ -513,8 +518,6 @@ static void getTriggerValues(int *btn1, int *lvl1, NSString **dur1, NSString **t
     NSDictionary *rowDict = self.groupedDataModel[row];
     
     if ([rowDict isEqual:RemapTableUtility.buttonGroupRowDict]) {
-        
-        ButtonGroupRowView *groupRowView = [ButtonGroupRowView new];
         
         return [ButtonGroupRowView new];
     // v None of this does anything

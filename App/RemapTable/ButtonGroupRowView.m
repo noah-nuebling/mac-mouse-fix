@@ -29,11 +29,11 @@
         backgroundColor = NSColor.controlAlternatingRowBackgroundColors[1];
     }
 //    backgroundColor = [[NSColor colorWithWhite:0.0 alpha:0.02] setFill];
-    CGFloat originalAlpha = backgroundColor.alphaComponent;
-    NSLog(@"Background color has alpha: %f", originalAlpha);
+    CGFloat alpha = backgroundColor.alphaComponent;
+    NSLog(@"Background color has alpha: %f", alpha);
     if ([NSAppearance.currentAppearance.name isEqual:NSAppearanceNameAqua]) {
-        CGFloat newAlpha = originalAlpha / 3;
-        backgroundColor = [backgroundColor colorWithAlphaComponent:newAlpha];
+        alpha = alpha / 2;
+        backgroundColor = [backgroundColor colorWithAlphaComponent:alpha];
     }
     [backgroundColor setFill];
     NSRectFill(dirtyRect);

@@ -546,7 +546,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     
     // Append buttonStr
     
-    if (![btnMod isEqual:@""]) {
+    if (![btnMod isEqual:@""]) { // Only display main button string if there are button modifiers
         NSMutableAttributedString *trMutable = tr.mutableCopy;
         [trMutable appendAttributedString:[[NSAttributedString alloc] initWithString:mainButtonStr]];
         tr = [trMutable attributedStringBySettingSecondaryButtonTextColorForSubstring:mainButtonStr];
