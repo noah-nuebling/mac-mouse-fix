@@ -12,8 +12,7 @@
 
 @implementation RemapTableUtility
 
-+ (MFMouseButtonNumber)triggerButtonForRow:(NSUInteger)row tableViewDataModel:(NSArray *)dataModel {
-    NSDictionary *rowDict = dataModel[row];
++ (MFMouseButtonNumber)triggerButtonForRow:(NSDictionary *)rowDict {
     
     id triggerGeneric = rowDict[kMFRemapsKeyTrigger];
     
@@ -31,6 +30,7 @@
 }
 
 + (NSPopUpButton *)getPopUpButtonAtRow:(NSUInteger)popUpRow fromTableView:(NSTableView *)tv {
+    
     NSInteger tableColumn = [tv columnWithIdentifier:@"effect"];
     NSView *cell = [tv viewAtColumn:tableColumn row:popUpRow makeIfNecessary:NO];
     NSPopUpButton *popUpButton = cell.subviews[0];
@@ -40,6 +40,11 @@
     }
     
     return popUpButton;
+}
+
++ (NSDictionary *)buttonGroupRowDict {
+    
+    return @{@"buttonGroupRow": @YES};
 }
 
 @end

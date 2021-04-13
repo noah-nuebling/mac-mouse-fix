@@ -25,6 +25,7 @@
 #import "NSView+Additions.h"
 #import "KeyCaptureView.h"
 #import "RemapTableUtility.h"
+#import "ButtonGroupRowView.h"
 
 @interface RemapTableController ()
 @property NSTableView *tableView;
@@ -273,13 +274,21 @@
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     // Get data for this row
-    NSDictionary *rowDict = self.dataModel[row];
+    NSDictionary *rowDict = self.groupedDataModel[row];
     // Create deep copy of row.
     //  `getTriggerCellWithRowDict` is written badly and needs to manipulate some values nested in rowDict.
     //  I we don't deep copy, the changes to rowDict will reflect into self.dataModel and be written to file causing corruption.
     //      (The fact that rowDict is NSDictionary not NSMutableDictionary doesn't help, cause the stuff being manipulated is nested)
     rowDict = (NSDictionary *)[SharedUtility deepCopyOf:rowDict];
-    if ([tableColumn.identifier isEqualToString:@"trigger"]) { // The trigger column should display the trigger as well as the modification precondition
+    
+    if ([rowDict isEqual:RemapTableUtility.buttonGroupRowDict]) {
+        MFMouseButtonNumber groupButtonNumber = [RemapTableUtility triggerButtonForRow:self.groupedDataModel[row+1]];
+        NSTableCellView *buttonGroupCell = [self.tableView makeViewWithIdentifier:@"buttonGroupCell" owner:self];
+//        NSTextField *groupTextField = buttonGroupCell.textField; // If we link the textField via the textField prop, the tableView will override our text styling, so we're linking to it via the nextKeyView prop
+        NSTextField *groupTextField = (NSTextField *)buttonGroupCell.nextKeyView;
+        groupTextField.stringValue = fstring(@"  %@", [UIStrings getButtonString:groupButtonNumber]);
+        return buttonGroupCell;
+    } else if ([tableColumn.identifier isEqualToString:@"trigger"]) { // The trigger column should display the trigger as well as the modification precondition
         return [RemapTableTranslator getTriggerCellWithRowDict:rowDict];
     } else if ([tableColumn.identifier isEqualToString:@"effect"]) {
         return [RemapTableTranslator getEffectCellWithRowDict:rowDict row:row];
@@ -290,13 +299,19 @@
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    return self.dataModel.count;
+    return self.groupedDataModel.count;
 }
 
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row {
     
     // Calculate trigger cell text height
-    NSDictionary *rowDict = self.dataModel[row];
+    NSDictionary *rowDict = self.groupedDataModel[row];
+    
+    if ([rowDict isEqual:RemapTableUtility.buttonGroupRowDict]) {
+        NSTableCellView *buttonGroupCell = [self.tableView makeViewWithIdentifier:@"buttonGroupCell" owner:self];
+        return buttonGroupCell.frame.size.height;
+    }
+    
     rowDict = (NSDictionary *)[SharedUtility deepCopyOf:rowDict];
     NSTableCellView *view = [RemapTableTranslator getTriggerCellWithRowDict:rowDict];
     // ^ These lines are copied from `tableView:viewForTableColumn:row:`. Should change this cause copied code is bad.
@@ -381,6 +396,14 @@ static void getTriggerValues(int *btn1, int *lvl1, NSString **dur1, NSString **t
         NSString *type2;
         getTriggerValues(&btn2, &lvl2, &dur2, &type2, tableEntryMutable2);
         
+        // 1. Sort by button
+        //  Need to sort by button on top level to make button group rows work
+        if (btn1 > btn2) {
+            return NSOrderedDescending;
+        } else if (btn1 < btn2) {
+            return NSOrderedAscending;
+        }
+        
         // Get modification precondition info
         NSDictionary *preconds1 = tableEntryMutable1[kMFRemapsKeyModificationPrecondition];
         NSDictionary *preconds2 = tableEntryMutable2[kMFRemapsKeyModificationPrecondition];
@@ -424,14 +447,8 @@ static void getTriggerValues(int *btn1, int *lvl1, NSString **dur1, NSString **t
             return NSOrderedAscending;
         }
         
-        // 1. Sort by button
-        if (btn1 > btn2) {
-            return NSOrderedDescending;
-        } else if (btn1 < btn2) {
-            return NSOrderedAscending;
-        }
         // 1.1. Sort by trigger type (drag, scroll, button)
-        NSArray *orderedTypes = @[@"button", @"drag", @"scroll"];
+        NSArray *orderedTypes = @[@"drag", @"scroll", @"button"];
         NSUInteger typeIndex1 = [orderedTypes indexOfObject:type1];
         NSUInteger typeIndex2 = [orderedTypes indexOfObject:type2];
         if (typeIndex1 > typeIndex2) {
@@ -459,5 +476,69 @@ static void getTriggerValues(int *btn1, int *lvl1, NSString **dur1, NSString **t
     [self.tableView setSortDescriptors:@[sd]];
 }
 
+#pragma mark - Group rows
+
+- (NSArray *)groupedDataModel { // Maybe turn this into a property
+    return [self dataModelByInsertingButtonGroupRowsIntoDataModel:self.dataModel];
+}
+
+/// Return a grouped dataModel with group row entries for each button
+- (NSArray *)dataModelByInsertingButtonGroupRowsIntoDataModel:(NSArray *)dataModel {
+    
+    [self sortDataModel]; // Not sure if necessary
+    NSMutableArray *groupedDataModel = dataModel.mutableCopy;
+    
+    MFMouseButtonNumber currentButton = -1;
+    int r = 0;
+    int insertedCount = 0;
+    for (NSDictionary *rowDict in dataModel) {
+        MFMouseButtonNumber rowButton = [RemapTableUtility triggerButtonForRow:rowDict];
+        if ((int)rowButton > (int)currentButton) {
+            currentButton = rowButton;
+            // Insert group row into groupedDataModel
+            [groupedDataModel insertObject:RemapTableUtility.buttonGroupRowDict atIndex:r+insertedCount];
+            insertedCount++;
+            
+        } else if ((int)rowButton < (int)currentButton) {
+            // The datamodel isn't sorted by Button
+            @throw [NSException exceptionWithName:@"DataModelNotSortedByButtonException" reason:nil userInfo:@{@"dataModel": dataModel}];
+        }
+        r++;
+    }
+    
+    return groupedDataModel;
+}
+- (NSTableRowView *)tableView:(NSTableView *)tableView rowViewForRow:(NSInteger)row {
+    
+    NSDictionary *rowDict = self.groupedDataModel[row];
+    
+    if ([rowDict isEqual:RemapTableUtility.buttonGroupRowDict]) {
+        
+        ButtonGroupRowView *groupRowView = [ButtonGroupRowView new];
+        
+        return [ButtonGroupRowView new];
+    // v None of this does anything
+//        groupRowView.groupRowStyle = YES;
+//        groupRowView.emphasized = YES;
+//        groupRowView.backgroundColor = NSColor.redColor;
+//        groupRowView.wantsLayer = YES;
+//        groupRowView.layer.backgroundColor = (__bridge CGColorRef)NSColor.redColor;
+    }
+
+    return [self.tableView rowViewAtRow:row makeIfNecessary:YES];
+}
+- (BOOL)tableView:(NSTableView *)tableView isGroupRow:(NSInteger)row {
+    return [self.groupedDataModel[row] isEqual:RemapTableUtility.buttonGroupRowDict];
+//    return NO;
+}
+
+- (void)tableView:(NSTableView *)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+    
+    if ([self.groupedDataModel[row] isEqual:RemapTableUtility.buttonGroupRowDict]) { // Try to make groupRow text black. Doesn't work. The function is never called.
+        NSTableCellView *cellView = cell;
+        cellView.textField.textColor = NSColor.labelColor;
+    }
+    
+}
 
 @end

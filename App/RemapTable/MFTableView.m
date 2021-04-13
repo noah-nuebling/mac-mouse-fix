@@ -17,4 +17,9 @@
 //    return YES;
 //}
 
+//- (void)drawGridInClipRect:(NSRect)clipRect {
+//    [NSColor.redColor setFill];
+//    NSRectFill(clipRect);
+//}
+
 @end

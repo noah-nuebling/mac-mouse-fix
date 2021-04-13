@@ -389,6 +389,8 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     // Get trigger string from data
     NSAttributedString *tr;
     NSAttributedString *trTool;
+    NSString *mainButtonStr = @"";
+    
     id triggerGeneric = rowDict[kMFRemapsKeyTrigger];
     
     if ([triggerGeneric isKindOfClass:NSDictionary.class]) { // Trigger is button input
@@ -424,22 +426,22 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
             @throw [NSException exceptionWithName:@"Invalid duration" reason:@"Remaps contain invalid duration" userInfo:@{@"Trigger dict containing invalid value": trigger}];
         }
         // btn
-        NSString * buttonStr = [UIStrings getButtonString:btn.intValue];
-        NSString * buttonStrTool = [UIStrings getButtonStringToolTip:btn.intValue];
+        mainButtonStr = [UIStrings getButtonString:btn.intValue];
+        NSString *mainButtonStrTool = [UIStrings getButtonStringToolTip:btn.intValue];
         if (btn.intValue < 1) {
             @throw [NSException exceptionWithName:@"Invalid button number" reason:@"Remaps contain invalid button number" userInfo:@{@"Trigger dict containing invalid value": trigger}];
         }
         
         // Form trigger string from substrings
         
-        NSString *trRaw = [NSString stringWithFormat:@"%@%@%@", levelStr, durationStr, buttonStr];
-        NSString *trToolRaw = [NSString stringWithFormat:@"%@%@%@", levelStr, durationStr, buttonStrTool];
+        NSString *trRaw = [NSString stringWithFormat:@"%@%@", levelStr, durationStr]; // Append buttonStr later depending on whether there are button preconds
+        NSString *trToolRaw = [NSString stringWithFormat:@"%@%@%@", levelStr, durationStr, mainButtonStrTool];
         
         // Turn into attributedString and highlight button substrings
         tr = [[NSAttributedString alloc] initWithString:trRaw];
         trTool = [[NSAttributedString alloc] initWithString:trToolRaw];
-        tr = [tr attributedStringBySettingSecondaryButtonTextColorForSubstring:buttonStr];
-        trTool = [trTool attributedStringBySettingSecondaryButtonTextColorForSubstring:buttonStrTool];
+//        tr = [tr attributedStringBySettingSecondaryButtonTextColorForSubstring:buttonStr];
+//        trTool = [trTool attributedStringBySettingSecondaryButtonTextColorForSubstring:buttonStrTool];
         
     } else if ([triggerGeneric isKindOfClass:NSString.class]) { // Trigger is drag or scroll
         // We need part of the modification precondition to form the main trigger string here.
@@ -447,9 +449,9 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         // Get button strings from last button precond, or, if no button preconds exist, get keyboard modifier string
         NSString *levelStr = @"";
         NSString *clickStr = @"";
-        NSString *buttonStr = @"";
+        mainButtonStr = @"";
         NSString *keyboardModStr = @"";
-        NSString *buttonStrTool = @"";
+        NSString *mainButtonStrTool = @"";
         NSString *keyboardModStrTool = @"";
         
         // Extract last button press from button-modification-precondition. If it doesn't exist, get kb mod string
@@ -465,8 +467,8 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
             NSNumber *lvl = lastButtonPress[kMFButtonModificationPreconditionKeyClickLevel];
             levelStr = clickLevelToUIString[lvl];
             clickStr = @"Click ";
-            buttonStr = [UIStrings getButtonString:btn.intValue];
-            buttonStrTool = [UIStrings getButtonStringToolTip:btn.intValue];
+            mainButtonStr = [UIStrings getButtonString:btn.intValue];
+            mainButtonStrTool = [UIStrings getButtonStringToolTip:btn.intValue];
         } else if (keyboardModifiers != nil) {
             // Extract keyboard modifiers
             keyboardModStr = [UIStrings getKeyboardModifierString:((NSNumber *)keyboardModifiers).unsignedIntegerValue];
@@ -490,13 +492,13 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         
         // Form full trigger cell string from substrings
         
-        NSString *trRaw = [NSString stringWithFormat:@"%@%@%@%@%@", levelStr, clickStr, keyboardModStr, triggerStr, buttonStr];
-        NSString *trToolRaw = [NSString stringWithFormat:@"%@%@%@%@%@", levelStr, clickStr, keyboardModStrTool, triggerStr, buttonStrTool];
+        NSString *trRaw = [NSString stringWithFormat:@"%@%@%@%@", levelStr, clickStr, keyboardModStr, triggerStr]; // Append buttonStr later depending on whether there are button preconds
+        NSString *trToolRaw = [NSString stringWithFormat:@"%@%@%@%@%@", levelStr, clickStr, keyboardModStrTool, triggerStr, mainButtonStrTool];
         
         // Turn into attributedString and highlight button substrings
         tr = [[NSAttributedString alloc] initWithString:trRaw];
         trTool = [[NSAttributedString alloc] initWithString:trToolRaw];
-        tr = [tr attributedStringBySettingSecondaryButtonTextColorForSubstring:buttonStr];
+//        tr = [tr attributedStringBySettingSecondaryButtonTextColorForSubstring:buttonStr];
 //        trTool = [trTool attributedStringBySettingSecondaryLabelColorForSubstring:buttonStrTool];
         
     } else {
@@ -541,6 +543,14 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     // Get effect string
     NSString *effectString = [NSString stringWithFormat:@" to use '%@'", effectNameForRowDict(rowDict)];
 //    NSString *effectString = @""; // TODO: For debugging - undo this
+    
+    // Append buttonStr
+    
+    if (![btnMod isEqual:@""]) {
+        NSMutableAttributedString *trMutable = tr.mutableCopy;
+        [trMutable appendAttributedString:[[NSAttributedString alloc] initWithString:mainButtonStr]];
+        tr = [trMutable attributedStringBySettingSecondaryButtonTextColorForSubstring:mainButtonStr];
+    }
     
     // Join all substrings to get result string
     NSMutableAttributedString *fullTriggerCellString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@", kbMod, btnMod]];
