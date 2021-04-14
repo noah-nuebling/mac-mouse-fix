@@ -491,7 +491,7 @@ static void getTriggerValues(int *btn1, int *lvl1, NSString **dur1, NSString **t
     MFMouseButtonNumber currentButton = -1;
     int r = 0;
     int insertedCount = 0;
-    BOOL firstHasBeenOmitted = NO; // Set to NO to omit first group row
+    BOOL firstHasBeenOmitted = YES; // Set to no to omit first group row
     for (NSDictionary *rowDict in dataModel) {
         MFMouseButtonNumber rowButton = [RemapTableUtility triggerButtonForRow:rowDict];
         if ((int)rowButton > (int)currentButton) {
