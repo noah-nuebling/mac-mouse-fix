@@ -103,11 +103,11 @@
                                                                         </connections>
                                                                     </tableCellView>
                                                                     <tableCellView identifier="buttonGroupCell" id="gRD-nG-q8J">
-                                                                        <rect key="frame" x="8" y="39" width="288" height="22"/>
+                                                                        <rect key="frame" x="8" y="39" width="288" height="3"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
-                                                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZkS-6b-dCZ">
-                                                                                <rect key="frame" x="-7" y="3" width="295" height="16"/>
+                                                                            <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZkS-6b-dCZ">
+                                                                                <rect key="frame" x="-7" y="-6" width="295" height="16"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="left" title="Button X" id="Jbj-n8-l11">
                                                                                     <font key="font" metaFont="systemSemibold" size="11"/>

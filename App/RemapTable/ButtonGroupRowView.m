@@ -15,43 +15,48 @@
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];
     
+    // Get grid color
+//    NSColor *gridColor = AppDelegate.instance.remapsTable.gridColor;
+    NSColor *gridColor = NSColor.gridColor;
     
-    // Clip so drawing doesn't spill out on the sides
-    NSRect clippingRect = NSInsetRect(dirtyRect, 1, 0); // Clip side borders
-    
-    NSRectClip(clippingRect);
-    
-    // Draw background
+    // Get backgroundColor
     NSColor *backgroundColor;
     if (@available(macOS 10.14, *)) {
         backgroundColor = NSColor.alternatingContentBackgroundColors[1];
     } else {
         backgroundColor = NSColor.controlAlternatingRowBackgroundColors[1];
     }
-//    backgroundColor = [[NSColor colorWithWhite:0.0 alpha:0.02] setFill];
     CGFloat alpha = backgroundColor.alphaComponent;
-    NSLog(@"Background color has alpha: %f", alpha);
     if ([NSAppearance.currentAppearance.name isEqual:NSAppearanceNameAqua]) {
         alpha = alpha / 2;
         backgroundColor = [backgroundColor colorWithAlphaComponent:alpha];
     }
+    
+    // Set clipping for background drawing. 
+    NSRect clippingRect = NSInsetRect(dirtyRect, 1, 0); // Clip side borders
+    NSRectClip(clippingRect);
+    
+    // Draw background
     [backgroundColor setFill];
     NSRectFill(dirtyRect);
     
-    // Draw border
+    // Override background to border color
+//    [gridColor setFill];
+//    NSRectFill(dirtyRect);
 
+    // Set clipping for border drawing
     clippingRect.size.height -= 1; // Clip top border
     clippingRect.origin.y += 1;
     NSRectClip(clippingRect);
     
-//    NSColor *gridColor = AppDelegate.instance.remapsTable.gridColor;
-    NSColor *gridColor = NSColor.gridColor;
+    // Draw border
     
     NSBezierPath *borderPath = [NSBezierPath bezierPathWithRect:dirtyRect];
     borderPath.lineWidth = 2;
     [gridColor setStroke];
 //    [[NSColor colorWithWhite:0.0 alpha:0.15] setStroke];
     [borderPath stroke];
+    
 }
 
 //- (void)drawSeparatorInRect:(NSRect)dirtyRect {
