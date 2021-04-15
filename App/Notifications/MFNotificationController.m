@@ -210,7 +210,18 @@ double _toastAnimationOffset = 20;
     // Fade out if user clicks elsewhere
     _localEventMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:(NSEventMaskLeftMouseDown) handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
         
-        if ([NSWindow windowNumberAtPoint:NSEvent.mouseLocation belowWindowWithWindowNumber:0] != _instance.window.windowNumber) {
+        NSPoint loc = NSEvent.mouseLocation;
+        
+        // Check if mouse is over main window content view area
+        NSView *mainContentView = AppDelegate.mainWindow.contentView;
+        NSPoint windowLoc = [AppDelegate.mainWindow convertRectFromScreen:(NSRect){.origin=loc}].origin; // convertPointFromScreen: only available in 10.12+
+        
+        NSPoint contentViewLoc = [mainContentView convertPoint:windowLoc fromView:nil];
+        
+        BOOL locIsOverNotification = [NSWindow windowNumberAtPoint:NSEvent.mouseLocation belowWindowWithWindowNumber:0] == _instance.window.windowNumber; // So notification isn't dismissed when we click on it. Not sure if necessary for that to work.
+        BOOL locIsOverMainWindowContentView = [mainContentView hitTest:contentViewLoc] != nil; // So that we can drag the window by its titlebar without dismission the notification.
+        
+        if (!locIsOverNotification && locIsOverMainWindowContentView) {
             [_closeTimer invalidate];
             [self closeNotification:nil];
         }

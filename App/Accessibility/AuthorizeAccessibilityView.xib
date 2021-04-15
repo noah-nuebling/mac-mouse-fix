@@ -76,14 +76,17 @@
                         <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://noah-nuebling.github.io/mac-mouse-fix-website/about/"/>
                     </userDefinedRuntimeAttributes>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g4H-g7-Zd7">
-                    <rect key="frame" x="124" y="30" width="331" height="28"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g4H-g7-Zd7" customClass="Hyperlink">
+                    <rect key="frame" x="270" y="44" width="38" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" alignment="center" title="Select 'Mac Mouse Fix Helper' from the list on the right" id="04N-yp-Qg1">
+                    <textFieldCell key="cell" alignment="center" title="Help" id="04N-yp-Qg1">
                         <font key="font" metaFont="message" size="11"/>
-                        <color key="textColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://placeholder.com/"/>
+                    </userDefinedRuntimeAttributes>
                 </textField>
             </subviews>
             <constraints>
