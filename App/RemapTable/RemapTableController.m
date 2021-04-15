@@ -516,7 +516,7 @@ static void getTriggerValues(int *btn1, int *lvl1, NSString **dur1, NSString **t
         }
         
         // 1.1. Sort by trigger type (drag, scroll, button)
-        NSArray *orderedTypes = @[@"drag", @"scroll", @"button"];
+        NSArray *orderedTypes = @[@"button", @"drag", @"scroll"];
         NSUInteger typeIndex1 = [orderedTypes indexOfObject:type1];
         NSUInteger typeIndex2 = [orderedTypes indexOfObject:type2];
         if (typeIndex1 > typeIndex2) {
