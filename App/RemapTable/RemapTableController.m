@@ -214,18 +214,54 @@
     }
 }
 - (void)removeButtonAction {
+    
+    // Capture notifs
     NSSet<NSNumber *> *capturedButtonsBefore = [RemapTableUtility getCapturedButtons];
     
+    // Get selected table index
+    if (self.tableView.selectedRowIndexes.count == 0) return;
+    assert(self.tableView.selectedRowIndexes.count == 1);
+    NSUInteger selectedTableIndex = self.tableView.selectedRowIndexes.firstIndex;
+    
+    // Get base data model index corresponding to selected table index
+    NSUInteger selectedDataModelIndex = [RemapTableUtility baseDataModelIndexFromGroupedDataModelIndex:selectedTableIndex withGroupedDataModel:self.groupedDataModel];
+    
+    // Save rowDict to be removed for later
+    NSDictionary *removedRowDict = self.dataModel[selectedDataModelIndex];
+    
+    // Remove object from data model at selected index, and write to file
     NSMutableArray *mutableDataModel = self.dataModel.mutableCopy;
-    [mutableDataModel removeObjectsAtIndexes:self.tableView.selectedRowIndexes];
+    [mutableDataModel removeObjectAtIndex:selectedDataModelIndex];
     self.dataModel = (NSArray *)mutableDataModel;
     [self writeDataModelToConfig];
     [self loadDataModelFromConfig]; // Not sure if necessary
-    [self.tableView removeRowsAtIndexes:self.tableView.selectedRowIndexes withAnimation:NSTableViewAnimationSlideUp];
     
+    // Remove rows from table with animation
+    
+    NSMutableIndexSet *rowsToRemoveWithAnimation = [[NSMutableIndexSet alloc] initWithIndex:selectedTableIndex];
+    
+    // Check if a buttonGroupRow should be with animation removed, too
+    MFMouseButtonNumber removedRowTriggerButton = [RemapTableUtility triggerButtonForRow:removedRowDict];
+    BOOL buttonIsStillTriggerInDataModel = NO;
+    for (NSDictionary *rowDict in self.dataModel) {
+        if ([RemapTableUtility triggerButtonForRow:rowDict] == removedRowTriggerButton) {
+            buttonIsStillTriggerInDataModel = YES;
+            break;
+        }
+    }
+    if (!buttonIsStillTriggerInDataModel) { // Yes, we want to remove a group row, too
+        [rowsToRemoveWithAnimation addIndex:selectedTableIndex-1];
+        
+    }
+    
+    // Do remove rows with animation
+    [self.tableView removeRowsAtIndexes:rowsToRemoveWithAnimation withAnimation:NSTableViewAnimationSlideUp];
+    
+    // Capture notifs
     NSSet *capturedButtonsAfter = [RemapTableUtility getCapturedButtons];
     [CaptureNotifications showButtonCaptureNotificationWithBeforeSet:capturedButtonsBefore afterSet:capturedButtonsAfter];
 }
+
 - (void)addButtonAction {
     [AddWindowController begin];
 }

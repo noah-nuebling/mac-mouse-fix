@@ -145,6 +145,7 @@
     return ret;
 }
 
+// Copied from here https://stackoverflow.com/a/33903242/10601702
 - (NSSize)sizeAtMaxWidth:(CGFloat)maxWidth {
     
     NSTextContainer *textContainer = [[NSTextContainer alloc] initWithSize:CGSizeMake(maxWidth, CGFLOAT_MAX)];
@@ -172,7 +173,7 @@
     return NSMakeSize(width, height);
 }
 
-// Derived from https://stackoverflow.com/questions/2282629/how-to-get-height-for-nsattributedstring-at-a-fixed-width/2460091#2460091
+// Derived from sizeAtMaxWidth
 - (CGFloat)heightAtWidth:(CGFloat)width {
     
     // Method 1
