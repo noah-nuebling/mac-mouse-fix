@@ -12,6 +12,19 @@
 
 @implementation NSAttributedString (Additions)
 
+/// Fill out default attributes, because layout code won't work if the string doesn't have a font and a textColor attribute on every character. See https://stackoverflow.com/questions/13621084/boundingrectwithsize-for-nsattributedstring-returning-wrong-size
+- (NSAttributedString *)attributedStringByFillingOutDefaultAttributes {
+    
+    NSFont *font = [NSFont systemFontOfSize:NSFont.systemFontSize];
+    NSColor *color = NSColor.labelColor;
+    NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+                                         font, NSFontAttributeName,
+                                         color, NSForegroundColorAttributeName,
+                                         nil];
+    
+    return [self attributedStringByAddingBaseAttributes:attributesDictionary];
+}
+
 /// Create string by adding values from `baseAttributes`, without overriding any of the attributes set for `self`
 - (NSAttributedString *)attributedStringByAddingBaseAttributes:(NSDictionary *)baseAttributes {
     
@@ -54,7 +67,7 @@
 }
 
 - (NSAttributedString *)attributedStringByAddingBoldForSubstring:(NSString *)subStr {
-  
+    
     NSFontDescriptorSymbolicTraits traits = NSFontDescriptorTraitBold;
     
     return [self attributedStringByAddingSymbolicFontTraits:traits forSubstring:subStr];
@@ -134,20 +147,37 @@
 
 - (NSSize)sizeAtMaxWidth:(CGFloat)maxWidth {
     
-    CGFloat width = self.width <= maxWidth ? self.width : maxWidth;
+    NSTextContainer *textContainer = [[NSTextContainer alloc] initWithSize:CGSizeMake(maxWidth, CGFLOAT_MAX)];
+    NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
+    [layoutManager addTextContainer:textContainer];
+
+    NSTextStorage *textStorage = [[NSTextStorage alloc] initWithAttributedString:self];
+    [textStorage addLayoutManager:layoutManager];
+    [layoutManager glyphRangeForTextContainer:textContainer];
+    
+    NSSize size = [layoutManager usedRectForTextContainer:textContainer].size;
+    
+    return size;
+}
+
+/// Old function for getting size at some max width. Cleaner than the new one in principle becuase it reuses other functions. b
+/// Unfortunately it doesn't work properly because we can't get self.preferredWidth to work properly.
+- (NSSize)sizeAtMaxWidthOld:(CGFloat)maxWidth {
+    
+    CGFloat preferredWidth = self.preferredWidth;
+    
+    CGFloat width = preferredWidth <= maxWidth ? preferredWidth : maxWidth;
     CGFloat height = [self heightAtWidth:width];
     
     return NSMakeSize(width, height);
 }
 
 // Derived from https://stackoverflow.com/questions/2282629/how-to-get-height-for-nsattributedstring-at-a-fixed-width/2460091#2460091
-// 
 - (CGFloat)heightAtWidth:(CGFloat)width {
     
     // Method 1
     NSTextStorage *textStorage = [[NSTextStorage alloc] initWithAttributedString:self];
-    NSTextContainer *textContainer = [[NSTextContainer alloc] initWithContainerSize:
-        NSMakeSize(width, FLT_MAX)];
+    NSTextContainer *textContainer = [[NSTextContainer alloc] initWithContainerSize:NSMakeSize(width, FLT_MAX)];
     NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
     [layoutManager addTextContainer:textContainer];
     [textStorage addLayoutManager:layoutManager];
@@ -167,18 +197,28 @@
     //      > `result1` seems to be slightly too small
 }
 
-- (CGFloat)width {
+/// Width of the string if we don't introduce any extra line breaks.
+/// Can't get this to work properly
+- (CGFloat)preferredWidth {
     // Method 1
     NSTextStorage *textStorage = [[NSTextStorage alloc] initWithAttributedString:self];
-    NSTextContainer *textContainer = [[NSTextContainer alloc] initWithContainerSize:
-        NSMakeSize(FLT_MAX, FLT_MAX)];
+    NSTextContainer *textContainer = [[NSTextContainer alloc] initWithContainerSize:NSMakeSize(FLT_MAX, FLT_MAX)];
     NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
     [layoutManager addTextContainer:textContainer];
     [textStorage addLayoutManager:layoutManager];
     [layoutManager glyphRangeForTextContainer:textContainer];
     CGFloat result1 = [layoutManager usedRectForTextContainer:textContainer].size.width;
     
-    return ceil(result1);
+    // Method 2
+    NSRect bounds = [self boundingRectWithSize:NSMakeSize(FLT_MAX, FLT_MAX) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading];
+    bounds = NSIntegralRect(bounds);
+    CGFloat result2 = bounds.size.width; //CGRectIntegral(bounds).size.height;
+    
+//    return floor(result1); // Need this for sizeAtMaxWidth: to work on short "Primary Button can't be used" notifications. Using result2, we'll underestimate the width needed, leading to a line break we didn't expect, leading to our calculated height to be incorrect, leading to clipping the last line.
+    
+    return result2 + 0;
+    // Underestimates preferred width for short lines.
+    // Need this for sizeAtMaxWidth: to work properly for some button capture notifications with long lines which need to be broken. Using result1, sometimes the returned line width is too wide and we end up clipping the last line because sizeAtMaxWidth doesn't get that there needs to be a line break. (That's my theory at least)
 }
 
 /// Copy-pasted this from somewhere

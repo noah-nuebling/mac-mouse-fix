@@ -13,6 +13,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NSAttributedString (Additions)
+
+- (NSAttributedString *)attributedStringByFillingOutDefaultAttributes;
+
 - (NSAttributedString *)attributedStringByAddingBaseAttributes:(NSDictionary *)baseAttributes;
 - (NSAttributedString *)attributedStringByAddingLinkWithURL:(NSURL *)linkURL forSubstring:(NSString *)substring;
 - (NSAttributedString *)attributedStringByAddingBoldForSubstring:(NSString *)subStr;
@@ -20,10 +23,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSAttributedString *)attributedStringByAligningSubstring:(NSString *)subStr alignment:(NSTextAlignment)alignment;
 - (NSAttributedString *)attributedStringByAddingThinForSubstring:(NSString *)subStr;
 - (NSAttributedString *)attributedStringBySettingSecondaryButtonTextColorForSubstring:(NSString *)subStr;
++ (NSAttributedString *)hyperlinkFromString:(NSString *)inString withURL:(NSURL *)aURL;
+
 - (NSSize)sizeAtMaxWidth:(CGFloat)maxWidth;
 - (CGFloat)heightAtWidth:(CGFloat)width;
-- (CGFloat)width;
-+ (NSAttributedString *)hyperlinkFromString:(NSString *)inString withURL:(NSURL *)aURL;
+//- (CGFloat)preferredWidth;
+
 @end
 
 NS_ASSUME_NONNULL_END

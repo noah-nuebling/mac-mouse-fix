@@ -51,7 +51,7 @@
         
         linkString = fstring(@"I want to use %@ with other apps", buttonPluralString2);
         
-        capString = [capturedButtonString stringByAppendingFormat:@" %@ been captured by Mac Mouse Fix. \nOther apps can't see %@ anymore. ", pluralString, buttonPluralString];
+        capString = [capturedButtonString stringByAppendingFormat:@" %@ been captured by Mac Mouse Fix.\nOther apps can't see %@ anymore. ", pluralString, buttonPluralString];
     }
     
     if (newlyUncapturedButtons.count > 0 || newlyCapturedButtons.count > 0) {

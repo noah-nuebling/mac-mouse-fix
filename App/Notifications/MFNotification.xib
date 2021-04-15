@@ -18,7 +18,7 @@
             <windowStyleMask key="styleMask" titled="YES" fullSizeContentView="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="167" y="106" width="202" height="38"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1025"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
             <view key="contentView" id="Vvh-MN-Ozv">
                 <rect key="frame" x="0.0" y="0.0" width="202" height="38"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -34,12 +34,12 @@
                                     <rect key="frame" x="0.0" y="0.0" width="182" height="18"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textView editable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" verticallyResizable="NO" allowsCharacterPickerTouchBarItem="NO" linkDetection="YES" textCompletion="NO" spellingCorrection="YES" smartInsertDelete="YES" id="DKZ-39-jMI" customClass="MFNotificationLabel">
+                                        <textView editable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" verticallyResizable="NO" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="DKZ-39-jMI" customClass="MFNotificationLabel">
                                             <rect key="frame" x="0.0" y="0.0" width="182" height="18"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            <size key="minSize" width="182" height="18"/>
+                                            <size key="minSize" width="18" height="18"/>
                                             <size key="maxSize" width="240" height="10000000"/>
                                             <attributedString key="textStorage">
                                                 <fragment content="Welcome to Mac Mouse Fix!">

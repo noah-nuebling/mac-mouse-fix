@@ -71,10 +71,6 @@ double _toastAnimationOffset = 20;
     
 //    return;
     
-#if DEBUG
-    NSLog(@"Attaching notification: %@", message);
-#endif
-    
     NSString *alignment = @"topMiddle";
     
     // Constants
@@ -116,11 +112,15 @@ double _toastAnimationOffset = 20;
     // Set message text and text attributes to label
     
     NSDictionary *baseAttributes = _labelAttributesFromIB;
-    
     NSAttributedString *m = [message attributedStringByAddingBaseAttributes:baseAttributes];
+    m = [m attributedStringByFillingOutDefaultAttributes];
     
     [_instance.label.textStorage setAttributedString:m];
 
+#if DEBUG
+    NSLog(@"Attaching notification with attributed string: %@", m);
+#endif
+    
     // Set notification frame
     
     // Calc size to fit content
@@ -144,7 +144,14 @@ double _toastAnimationOffset = 20;
     // Calculate new label size
     CGFloat maxLabelWidth = mainW.frame.size.width - 2*sideMargin - leftInset - rightInset;
     NSSize newLabelSize = [label.attributedString sizeAtMaxWidth:maxLabelWidth];
-    NSLog(@"LABEL ATTRIBUTED STRING: %@", label.attributedString);
+    
+    // Setting actual width for newLabelSize. See https://stackoverflow.com/questions/13621084/boundingrectwithsize-for-nsattributedstring-returning-wrong-size
+    //  ... Actually this breaks short "Primary Mouse Button can't be used" notifications.
+//    CGFloat padding = label.textContainer.lineFragmentPadding;
+//    newLabelSize.width -= padding * 2;
+    
+//    NSLog(@"LABEL ATTRIBUTED STRING: %@", label.attributedString);
+    // Calculate new notification window frame
     NSSize newNotifSize = NSMakeSize(newLabelSize.width + leftInset + rightInset, newLabelSize.height + topInset + bottomInset);
     newNotifFrame.size = newNotifSize;
     
@@ -172,6 +179,14 @@ double _toastAnimationOffset = 20;
     newLabelFrame.origin.x = NSMidX(label.superview.bounds) - (newLabelSize.width / 2);
     newLabelFrame.origin.y = NSMidY(label.superview.bounds) - (newLabelSize.height / 2);
     [label setFrame:newLabelFrame];
+    
+    // Testing
+    
+//    NSSize hhhh = label.textContainerInset;
+//    NSEdgeInsets hhh;
+////    hhh = label.alignmentRectInsets;
+////    hhh = label.safeAreaInsets;
+//    CGFloat ddd = label.textContainer.lineFragmentPadding;
     
     // Attach notif as child window to attachWindow
     [attachWindow addChildWindow:w ordered:NSWindowAbove];
