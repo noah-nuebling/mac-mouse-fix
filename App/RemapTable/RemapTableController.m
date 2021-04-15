@@ -29,13 +29,14 @@
 
 @interface RemapTableController ()
 @property NSTableView *tableView;
+@property (readonly) NSArray *groupedDataModel;
 @end
 
 @implementation RemapTableController
 
 #pragma mark (Pseudo) Properties
 
-@synthesize dataModel = _dataModel;
+@synthesize dataModel = _dataModel, groupedDataModel = _groupedDataModel;
 
 - (NSTableView *)tableView {
     return (NSTableView *)self.view;
@@ -107,9 +108,15 @@
 - (void)storeEffectsFromUIInDataModel {
     
     // Set each rows effect content to datamodel
-    for (NSInteger row = 0; row < self.dataModel.count; row++) {
+    NSInteger row = 0; // Index for trueDataModel
+    for (NSInteger rowGrouped = 0; rowGrouped < self.groupedDataModel.count; rowGrouped++) { // rowGrouped is index for groupedDataModel
+        
+        if ([self.groupedDataModel[rowGrouped] isEqual:RemapTableUtility.buttonGroupRowDict]) {
+            continue;
+        }
+        
         // Get effect dicts
-        NSTableCellView *cell = [self.tableView viewAtColumn:1 row:row makeIfNecessary:YES];
+        NSTableCellView *cell = [self.tableView viewAtColumn:1 row:rowGrouped makeIfNecessary:YES];
         if ([cell.identifier isEqual:@"effectCell"]) {
             NSPopUpButton *pb = cell.subviews[0];
             NSString *selectedTitle = pb.selectedItem.title;
@@ -122,6 +129,8 @@
         } else {
             assert(false);
         }
+        
+        row++;
     }
 }
 
@@ -337,10 +346,6 @@
 #if DEBUG
         NSLog(@"Height of row %ld is non-standard - Template: %f, Actual: %f", (long)row, templateViewHeight, result);
 #endif
-        // This should occur, if the text doesn't fit the line. I don't know why + 2 is necessary (+ 4 If we don't use bold substrings)
-        //  + 4 also wasn't enough in some cases. This doesn't seem like a very reliable method.
-        // TODO: Find better solution than this + 10 stuff
-//            return result + 10;
         return result;
     }
 }
@@ -348,7 +353,11 @@
 #pragma mark - Sorting the table
 
 - (void)sortDataModel {
-    self.dataModel = [self.dataModel sortedArrayUsingDescriptors:self.tableView.sortDescriptors];
+    self.dataModel = [self sortedDataModel:self.dataModel];
+}
+
+- (NSArray *)sortedDataModel:(NSArray *)dataModel {
+    return [dataModel sortedArrayUsingDescriptors:self.tableView.sortDescriptors];
 }
 
 /// Might mutate the `tableEntryMutable` argument by deleting the last button precondition in the precond sequence. (But only if it extracted that info into the output arguments)
@@ -478,14 +487,36 @@ static void getTriggerValues(int *btn1, int *lvl1, NSString **dur1, NSString **t
 
 #pragma mark - Group rows
 
-- (NSArray *)groupedDataModel { // Maybe turn this into a property
-    return [self dataModelByInsertingButtonGroupRowsIntoDataModel:self.dataModel];
-}
+NSArray *baseDataModel_FromLastGroupedDataModelAccess;
+NSArray *groupedDataModel_FromLastGroupedDataModelAccess;
 
+/// This applies `dataModelByInsertingButtonGroupRowsIntoDataModel:` to `self.dataModel`. It also caches the result. and only recalculates when self.dataModel has changed since the last invocation.
+- (NSArray *)groupedDataModel {
+    
+//    [SharedUtility printInvocationCountWithId:@"groupedDataModel access"];
+    
+    BOOL baseDataModelHasChanged = NO;
+    if (baseDataModel_FromLastGroupedDataModelAccess == nil)
+        baseDataModelHasChanged = YES;
+    else if (![baseDataModel_FromLastGroupedDataModelAccess isEqual:self.dataModel])
+        baseDataModelHasChanged = YES;
+    
+    if (baseDataModelHasChanged) {
+        baseDataModel_FromLastGroupedDataModelAccess = (NSArray *)[SharedUtility deepCopyOf:self.dataModel];
+        NSArray *newGroupedDataModel = [self dataModelByInsertingButtonGroupRowsIntoDataModel:self.dataModel];
+        groupedDataModel_FromLastGroupedDataModelAccess = newGroupedDataModel;
+        
+        return newGroupedDataModel;
+    } else {
+        return groupedDataModel_FromLastGroupedDataModelAccess;
+    }
+}
 /// Return a grouped dataModel with group row entries for each button
+/// "dataModel" needs to be sorted by button for this to work. Otherwise crash.
 - (NSArray *)dataModelByInsertingButtonGroupRowsIntoDataModel:(NSArray *)dataModel {
     
-    [self sortDataModel]; // Not sure if necessary
+//    [SharedUtility printInvocationCountWithId:@"groupedDataModel recalc"];
+    
     NSMutableArray *groupedDataModel = dataModel.mutableCopy;
     
     MFMouseButtonNumber currentButton = -1;
@@ -518,17 +549,17 @@ static void getTriggerValues(int *btn1, int *lvl1, NSString **dur1, NSString **t
     NSDictionary *rowDict = self.groupedDataModel[row];
     
     if ([rowDict isEqual:RemapTableUtility.buttonGroupRowDict]) {
-        
-        return [ButtonGroupRowView new];
-    // v None of this does anything
-//        groupRowView.groupRowStyle = YES;
-//        groupRowView.emphasized = YES;
-//        groupRowView.backgroundColor = NSColor.redColor;
-//        groupRowView.wantsLayer = YES;
-//        groupRowView.layer.backgroundColor = (__bridge CGColorRef)NSColor.redColor;
-    }
 
-    return [self.tableView rowViewAtRow:row makeIfNecessary:YES];
+        return [ButtonGroupRowView new];
+    }
+    
+    return nil;
+
+//    return [self.tableView rowViewAtRow:row makeIfNecessary:YES];
+    // This line is involved in some weird `EXC_BAD_ACCESS (code=2` crash.
+    // The crash occurs seemingly at random when switching back and forth between different effects
+    // There seems to be an infinte loop in the stacktrace. Maybe.
+    // Crash doesn't seem to occur when returning `[NSTableRowView new]` or `nil` instead
 }
 - (BOOL)tableView:(NSTableView *)tableView isGroupRow:(NSInteger)row {
     return [self.groupedDataModel[row] isEqual:RemapTableUtility.buttonGroupRowDict];

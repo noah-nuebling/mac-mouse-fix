@@ -30,6 +30,7 @@ typedef void(*MFCTLCallback)(NSTask *task, NSPipe *output, NSError *error);
 + (CGMouseButton)CGMouseButtonFromMFMouseButtonNumber:(MFMouseButtonNumber)button;
 + (int8_t)signOf:(double)x;
 + (NSString *)currentDispatchQueueDescription;
++ (void)printInvocationCountWithId:(NSString *)strId;
 @end
 
 NS_ASSUME_NONNULL_END

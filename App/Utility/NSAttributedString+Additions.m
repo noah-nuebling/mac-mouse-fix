@@ -181,7 +181,7 @@
     return ceil(result1);
 }
 
-/// Copy pasted this from somewhere
+/// Copy-pasted this from somewhere
 + (NSAttributedString *)hyperlinkFromString:(NSString *)inString withURL:(NSURL *)aURL {
     
     NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:inString.mutableCopy];
@@ -190,12 +190,11 @@
     [attrString beginEditing];
     [attrString addAttribute:NSLinkAttributeName value:aURL.absoluteString range:range];
  
-    // make the text appear in blue
-    [attrString addAttribute:NSForegroundColorAttributeName value:[NSColor blueColor] range:range];
+    // Make the text appear in blue
+//    [attrString addAttribute:NSForegroundColorAttributeName value:[NSColor blueColor] range:range];
  
-    // next make the text appear with an underline
-    [attrString addAttribute:
-            NSUnderlineStyleAttributeName value:[NSNumber numberWithInt:NSUnderlineStyleSingle] range:range];
+    // Next make the text appear with an underline
+//    [attrString addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:range];
  
     [attrString endEditing];
  

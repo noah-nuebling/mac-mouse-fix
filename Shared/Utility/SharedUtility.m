@@ -166,4 +166,32 @@
     return dispatch_get_current_queue().description;
 }
 
+// For debugging.
++ (void)printInvocationCountWithId:(NSString *)strId {
+    
+    static NSMutableDictionary<NSString *, NSNumber *> *ids;
+    static BOOL hasBeenInited = NO;
+    
+    if (hasBeenInited == NO) {
+        ids = [NSMutableDictionary dictionary];
+        hasBeenInited = YES;
+    }
+    
+    int counterForId;
+    
+    NSNumber *counterForIdFromDict = ids[strId];
+    if (counterForIdFromDict == nil) {
+        counterForId = 0;
+    } else {
+        counterForId = counterForIdFromDict.intValue;
+    }
+    
+    counterForId++;
+    
+    NSLog(@"%@: %d", strId, counterForId);
+    
+    ids[strId] = @(counterForId);
+    
+}
+
 @end
