@@ -184,6 +184,66 @@
 		<dict>
 			<key>effect</key>
 			<dict>
+				<key>type</key>
+				<string>symbolicHotkey</string>
+				<key>variant</key>
+				<integer>70</integer>
+			</dict>
+			<key>modifiers</key>
+			<dict/>
+			<key>trigger</key>
+			<dict>
+				<key>button</key>
+				<integer>3</integer>
+				<key>duration</key>
+				<string>click</string>
+				<key>level</key>
+				<integer>1</integer>
+			</dict>
+		</dict>
+		<dict>
+			<key>effect</key>
+			<dict>
+				<key>type</key>
+				<string>symbolicHotkey</string>
+				<key>variant</key>
+				<integer>36</integer>
+			</dict>
+			<key>modifiers</key>
+			<dict/>
+			<key>trigger</key>
+			<dict>
+				<key>button</key>
+				<integer>3</integer>
+				<key>duration</key>
+				<string>hold</string>
+				<key>level</key>
+				<integer>1</integer>
+			</dict>
+		</dict>
+		<dict>
+			<key>effect</key>
+			<dict>
+				<key>type</key>
+				<string>symbolicHotkey</string>
+				<key>variant</key>
+				<integer>160</integer>
+			</dict>
+			<key>modifiers</key>
+			<dict/>
+			<key>trigger</key>
+			<dict>
+				<key>button</key>
+				<integer>3</integer>
+				<key>duration</key>
+				<string>click</string>
+				<key>level</key>
+				<integer>2</integer>
+			</dict>
+		</dict>
+		<dict>
+			<key>effect</key>
+			<dict>
 				<key>modifiedDragType</key>
 				<string>threeFingerSwipe</string>
 			</dict>
@@ -201,26 +261,6 @@
 			</dict>
 			<key>trigger</key>
 			<string>dragTrigger</string>
-		</dict>
-		<dict>
-			<key>effect</key>
-			<dict>
-				<key>type</key>
-				<string>symbolicHotkey</string>
-				<key>variant</key>
-				<integer>70</integer>
-			</dict>
-			<key>modifiers</key>
-			<dict/>
-			<key>trigger</key>
-			<dict>
-				<key>button</key>
-				<integer>3</integer>
-				<key>duration</key>
-				<string>click</string>
-				<key>level</key>
-				<integer>1</integer>
-			</dict>
 		</dict>
 		<dict>
 			<key>effect</key>
