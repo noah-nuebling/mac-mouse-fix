@@ -11,9 +11,11 @@
 #import "MoreSheet.h"
 #import "OverridePanel.h"
 #import "RemapTableController.h"
+#import "MFTableView.h"
 
 @interface AppDelegate : NSObject<NSApplicationDelegate, NSWindowDelegate>
-@property (weak) IBOutlet NSTableView *remapsTable;
+@property (weak, readwrite) IBOutlet MFTableView *remapsTable; // 
+@property (weak, readonly) RemapTableController *remapTableController;
 + (AppDelegate *)instance;
 + (NSWindow *)mainWindow;
 + (void)handleHelperEnabledMessage;

@@ -24,7 +24,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (BOOL)effectExistsForButton:(NSNumber *)button remaps:(NSDictionary *)remaps effectiveRemaps:(NSDictionary *)effectiveRemaps;
 + (BOOL)buttonCouldStillBeUsedThisClickCycle:(NSNumber *)devID button:(NSNumber *)button level:(NSNumber *)level;
-+ (NSSet<NSNumber *> *)getCapturedButtonsWithRemaps:(NSDictionary *)remaps;
 
 @end
 

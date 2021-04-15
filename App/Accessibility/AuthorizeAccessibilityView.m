@@ -14,6 +14,7 @@
 #import "MFNotificationController.h"
 #import "SharedMessagePort.h"
 #import "CaptureNotifications.h"
+#import "RemapTableUtility.h"
 
 @interface AuthorizeAccessibilityView ()
 
@@ -155,7 +156,7 @@ AuthorizeAccessibilityView *_accViewController;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.0), dispatch_get_main_queue(), ^{
                 // v This usually fails because the remote message port can't be created
                 //      I think it happens because the helper kills itself after gaining accessibility access and is restarted by launchd too slowly. Weirdly, I think I remember that this used to work.
-                NSSet *capturedButtons = (NSSet *)[SharedMessagePort sendMessage:@"getCapturedButtons" withPayload:nil expectingReply:YES];
+                NSSet *capturedButtons = [RemapTableUtility getCapturedButtons];
                 [CaptureNotifications showButtonCaptureNotificationWithBeforeSet:NSSet.set afterSet:capturedButtons];
             });
         }];

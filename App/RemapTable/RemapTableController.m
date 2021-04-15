@@ -214,7 +214,7 @@
     }
 }
 - (void)removeButtonAction {
-    NSSet<NSNumber *> *capturedButtonsBefore = (NSSet *)[SharedMessagePort sendMessage:@"getCapturedButtons" withPayload:nil expectingReply:YES];
+    NSSet<NSNumber *> *capturedButtonsBefore = [RemapTableUtility getCapturedButtons];
     
     NSMutableArray *mutableDataModel = self.dataModel.mutableCopy;
     [mutableDataModel removeObjectsAtIndexes:self.tableView.selectedRowIndexes];
@@ -223,7 +223,7 @@
     [self loadDataModelFromConfig]; // Not sure if necessary
     [self.tableView removeRowsAtIndexes:self.tableView.selectedRowIndexes withAnimation:NSTableViewAnimationSlideUp];
     
-    NSSet *capturedButtonsAfter = (NSSet *)[SharedMessagePort sendMessage:@"getCapturedButtons" withPayload:nil expectingReply:YES];
+    NSSet *capturedButtonsAfter = [RemapTableUtility getCapturedButtons];
     [CaptureNotifications showButtonCaptureNotificationWithBeforeSet:capturedButtonsBefore afterSet:capturedButtonsAfter];
 }
 - (void)addButtonAction {
@@ -234,7 +234,7 @@
 
 - (void)addRowWithHelperPayload:(NSDictionary *)payload {
     
-    NSSet<NSNumber *> *capturedButtonsBefore = (NSSet *)[SharedMessagePort sendMessage:@"getCapturedButtons" withPayload:nil expectingReply:YES];
+    NSSet<NSNumber *> *capturedButtonsBefore = [RemapTableUtility getCapturedButtons];
     
     NSMutableDictionary *pl = payload.mutableCopy;
     // ((Check if payload is valid tableEntry))
@@ -271,7 +271,7 @@
     NSPopUpButton * popUpButton = [RemapTableUtility getPopUpButtonAtRow:openPopupRow fromTableView:tv];
     [popUpButton performSelector:@selector(performClick:) withObject:nil afterDelay:0.2];
     
-    NSSet<NSNumber *> *capturedButtonsAfter = (NSSet *)[SharedMessagePort sendMessage:@"getCapturedButtons" withPayload:nil expectingReply:YES];
+    NSSet<NSNumber *> *capturedButtonsAfter =  [RemapTableUtility getCapturedButtons];
     [CaptureNotifications showButtonCaptureNotificationWithBeforeSet:capturedButtonsBefore afterSet:capturedButtonsAfter];
     
 //    if ([capturedButtonsBefore isEqual:capturedButtonsAfter]) {

@@ -148,49 +148,12 @@ static BOOL modificationPreconditionButtonComponentOfGreaterLevelExistsForButton
     //          -> But maybe that wouldn't make a diff because clickLevel is reset when `buttonCouldStillBeUsedThisClickCycle:` returns true? (I think)
     //          (I feel like we probs thought this through when we wrote it I just don't understand it anymore)
     for (NSDictionary *modificationPrecondition in remaps.allKeys) {
-        if (buttonIsPartOfModificationPrecondition(button, modificationPrecondition)) {
+        if ([SharedUtility button:button isPartOfModificationPrecondition:modificationPrecondition]) {
             return YES;
         }
     }
     
     return NO;
-}
-
-/// Used by `MessagePort_Helper` to get information for the main app
-+ (NSSet<NSNumber *> *)getCapturedButtonsWithRemaps:(NSDictionary *)remaps {
-    
-    NSMutableSet<NSNumber *> *capturedButtons = [NSMutableSet set];
-    
-    for (int b = 1; b <= kMFMaxButtonNumber; b++) {
-        
-        // Go through all preconds and corresponding modifications and check if button occurs anywhere
-        for (NSDictionary *modificationPrecondition in remaps) {
-            
-            NSDictionary *modification = remaps[modificationPrecondition];
-            
-            BOOL buttonIsPartOfModification = modification[@(b)] != nil;
-            if (buttonIsPartOfModification) {
-                [capturedButtons addObject:@(b)];
-                goto nextButton;
-            }
-            if (buttonIsPartOfModificationPrecondition(@(b), modificationPrecondition)) {
-                [capturedButtons addObject:@(b)];
-                goto nextButton;
-            }
-        }
-    nextButton:;
-    }
-    return capturedButtons;
-}
-
-#pragma mark Helper Functions for Other Assessment Functions
-
-static BOOL buttonIsPartOfModificationPrecondition(NSNumber * _Nonnull button, NSDictionary *modificationPrecondition) {
-    NSArray *buttonPreconditions = modificationPrecondition[kMFModificationPreconditionKeyButtons];
-    NSIndexSet *buttonIndexes = [buttonPreconditions indexesOfObjectsPassingTest:^BOOL(NSDictionary *_Nonnull dict, NSUInteger idx, BOOL * _Nonnull stop) {
-        return [dict[kMFButtonModificationPreconditionKeyButtonNumber] isEqualToNumber:button];
-    }];
-    return buttonIndexes.count != 0;
 }
 
 @end

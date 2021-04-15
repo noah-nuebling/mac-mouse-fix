@@ -73,6 +73,10 @@
         [self.instance disableUI:@(1)];
     }
 }
+- (RemapTableController *)remapTableController {
+    RemapTableController *controller = (RemapTableController *)self.remapsTable.delegate;
+    return controller;
+}
 
 #pragma mark - Init and Lifecycle
 

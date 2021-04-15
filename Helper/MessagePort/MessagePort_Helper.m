@@ -72,10 +72,6 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
         [TransformationManager enableKeyCaptureMode];
     } else if ([message isEqualToString:@"disableKeyCaptureMode"]) {
         [TransformationManager disableKeyCaptureMode];
-    } else if ([message isEqual:@"getCapturedButtons"]) {
-        NSSet *capturedButtons = [ButtonLandscapeAssessor getCapturedButtonsWithRemaps:TransformationManager.remaps];
-        NSLog(@"CapturedButtons are: %@", capturedButtons);
-        response = [NSKeyedArchiver archivedDataWithRootObject:capturedButtons];
     } else {
         NSLog(@"Unknown message received: %@", message);
     }

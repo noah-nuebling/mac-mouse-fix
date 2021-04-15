@@ -194,4 +194,14 @@
     
 }
 
+#pragma mark - remaps (-TableViewDataModel) assessment
+
++ (BOOL)button:(NSNumber * _Nonnull)button isPartOfModificationPrecondition:(NSDictionary *)modificationPrecondition {
+    NSArray *buttonPreconditions = modificationPrecondition[kMFModificationPreconditionKeyButtons];
+    NSIndexSet *buttonIndexes = [buttonPreconditions indexesOfObjectsPassingTest:^BOOL(NSDictionary *_Nonnull dict, NSUInteger idx, BOOL * _Nonnull stop) {
+        return [dict[kMFButtonModificationPreconditionKeyButtonNumber] isEqualToNumber:button];
+    }];
+    return buttonIndexes.count != 0;
+}
+
 @end
