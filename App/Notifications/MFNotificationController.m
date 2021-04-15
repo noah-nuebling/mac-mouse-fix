@@ -88,7 +88,7 @@ double _toastAnimationOffset = 20;
         mainWindowTitleBarHeight = 30;
         topEdgeMargin = 5.0; // 0.0 // -25.0
     //    topEdgeMargin = -25;
-        sideMargin = 40;
+        sideMargin = 20;
         _toastAnimationOffset = 20;
     } else if ([alignment isEqual:@"bottomRight"]){
         // For bottom right alignment
@@ -97,7 +97,7 @@ double _toastAnimationOffset = 20;
         _toastAnimationOffset = -20;
     } else if ([alignment isEqual:@"bottomMiddle"]) {
         bottomMargin = 10;
-        sideMargin = 40;
+        sideMargin = 20;
         
         _toastAnimationOffset = -20;
     } else assert(false);
