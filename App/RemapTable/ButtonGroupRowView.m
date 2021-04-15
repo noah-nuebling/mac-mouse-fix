@@ -15,44 +15,53 @@
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];
     
-    
-    // Clip so drawing doesn't spill out on the sides
+    // Clip for background drawing
     NSRect clippingRect = NSInsetRect(dirtyRect, 1, 0); // Clip side borders
-    
+    clippingRect.size.height -= 1; // Clip bottom border
     NSRectClip(clippingRect);
     
-    // Draw background
+    // Get background color
     NSColor *backgroundColor;
     if (@available(macOS 10.14, *)) {
         backgroundColor = NSColor.alternatingContentBackgroundColors[1];
     } else {
         backgroundColor = NSColor.controlAlternatingRowBackgroundColors[1];
     }
-//    backgroundColor = [[NSColor colorWithWhite:0.0 alpha:0.02] setFill];
     CGFloat alpha = backgroundColor.alphaComponent;
-    NSLog(@"Background color has alpha: %f", alpha);
     if ([NSAppearance.currentAppearance.name isEqual:NSAppearanceNameAqua]) {
-        alpha = alpha / 2;
+        alpha = alpha / 3;
         backgroundColor = [backgroundColor colorWithAlphaComponent:alpha];
     }
+    
+    // Draw background
     [backgroundColor setFill];
     NSRectFill(dirtyRect);
+        
     
-    // Draw border
-
-    clippingRect.size.height -= 1; // Clip top border
-    clippingRect.origin.y += 1;
-    NSRectClip(clippingRect);
-    
-//    NSColor *gridColor = AppDelegate.instance.remapsTable.gridColor;
-    NSColor *gridColor = NSColor.gridColor;
-    
-    NSBezierPath *borderPath = [NSBezierPath bezierPathWithRect:dirtyRect];
-    borderPath.lineWidth = 2;
-    [gridColor setStroke];
-//    [[NSColor colorWithWhite:0.0 alpha:0.15] setStroke];
-    [borderPath stroke];
+    if (NO) { // Don't need to draw border manually when using horizontal grid
+        
+        // Clip for border drawing
+        NSRect clippingRect = NSInsetRect(dirtyRect, 1, 0); // Clip side borders
+        clippingRect.size.height -= 1; // Clip top border
+        clippingRect.origin.y += 1;
+        NSRectClip(clippingRect);
+        
+        // Get border color
+        NSColor *gridColor;
+        if (@available(macOS 10.14, *)) {
+             gridColor = NSColor.separatorColor;
+        } else {
+            gridColor = AppDelegate.instance.remapsTable.gridColor; // Should be same as NSColor.gridColor
+        }
+        
+        // Draw border
+        NSBezierPath *borderPath = [NSBezierPath bezierPathWithRect:dirtyRect];
+        borderPath.lineWidth = 2;
+        [gridColor setStroke];
+        [borderPath stroke];
+    }
 }
+
 
 //- (void)drawSeparatorInRect:(NSRect)dirtyRect {
 //    // v Doesn't work
