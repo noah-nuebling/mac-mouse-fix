@@ -257,7 +257,7 @@
                                             </connections>
                                         </segmentedControl>
                                         <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uS5-6r-XRu" userLabel="ScrollGroup">
-                                            <rect key="frame" x="0.0" y="16" width="540" height="82"/>
+                                            <rect key="frame" x="0.0" y="15" width="540" height="82"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <slider toolTip="How fast you'll scroll" verticalHuggingPriority="750" fixedFrame="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mXj-a7-rFw">
@@ -287,7 +287,7 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <textField toolTip="Scroll fewer pixels per mouse wheel tick." horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dzx-1i-bZ6">
-                                                    <rect key="frame" x="206" y="11" width="27" height="14"/>
+                                                    <rect key="frame" x="205" y="11" width="27" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Slow" id="GKV-Mh-wiX">
                                                         <font key="font" metaFont="message" size="11"/>

@@ -18,21 +18,21 @@
         <window identifier="AddWindow" title="AddWindow" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="9Tp-rg-GbO" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES" fullSizeContentView="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="425" y="294" width="453" height="356"/>
+            <rect key="contentRect" x="425" y="294" width="424" height="389"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
             <view key="contentView" id="c9F-E0-775">
-                <rect key="frame" x="0.0" y="0.0" width="453" height="356"/>
+                <rect key="frame" x="0.0" y="0.0" width="424" height="389"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <box identifier="addField" fixedFrame="YES" borderType="bezel" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="jvk-Wi-QYO">
-                        <rect key="frame" x="17" y="57" width="419" height="246"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                        <rect key="frame" x="17" y="57" width="390" height="279"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <view key="contentView" id="dnZ-10-afR">
-                            <rect key="frame" x="3" y="3" width="413" height="240"/>
+                            <rect key="frame" x="3" y="3" width="384" height="273"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <imageView identifier="PlusIcon" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7dr-xS-3z8">
-                                    <rect key="frame" x="175" y="85.5" width="64.5" height="68"/>
+                                    <rect key="frame" x="158" y="101.5" width="64.5" height="68"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="NSAddTemplate" id="9r2-lE-jzC"/>
                                     <color key="contentTintColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -41,7 +41,7 @@
                         </view>
                     </box>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OwK-ma-X2g">
-                        <rect key="frame" x="18" y="311" width="417" height="34"/>
+                        <rect key="frame" x="18" y="344" width="388" height="34"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" alignment="center" id="eL1-qA-LQy">
                             <font key="font" metaFont="system"/>
@@ -52,10 +52,10 @@ click a mouse button to assign an action to it.</string>
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4sw-Pk-wXE">
-                        <rect key="frame" x="18" y="25" width="347" height="28"/>
+                        <rect key="frame" x="18" y="25" width="318" height="28"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" id="rhJ-0E-In2">
-                            <font key="font" metaFont="smallSystem"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" allowsEditingTextAttributes="YES" id="rhJ-0E-In2">
+                            <font key="font" metaFont="system" size="11"/>
                             <string key="title">To assign additional actions to a button, you can also 
 Click and Hold, Double Click, Click and Drag, and more.</string>
                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -63,7 +63,7 @@ Click and Hold, Double Click, Click and Drag, and more.</string>
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sfy-Z5-wBq">
-                        <rect key="frame" x="364" y="13" width="76" height="32"/>
+                        <rect key="frame" x="335" y="13" width="76" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dF7-Dm-6Mx">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -81,7 +81,7 @@ Gw
             <connections>
                 <outlet property="delegate" destination="-2" id="fMy-AI-2Wz"/>
             </connections>
-            <point key="canvasLocation" x="526" y="463"/>
+            <point key="canvasLocation" x="511" y="479.5"/>
         </window>
     </objects>
     <resources>
