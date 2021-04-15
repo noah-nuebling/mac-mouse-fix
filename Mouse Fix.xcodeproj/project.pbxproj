@@ -1124,11 +1124,11 @@
 			buildPhases = (
 				4F94F5EA25E5EC2500D9F24A /* Sources */,
 				4F94F5EB25E5EC2500D9F24A /* Frameworks */,
+				4F94F75125E614D500D9F24A /* Increment Build Number */,
 				4F94F5EC25E5EC2500D9F24A /* Resources */,
 				4F94F68E25E5EF1100D9F24A /* Embed Frameworks */,
 				4F94F72E25E612AB00D9F24A /* Copy Helper */,
 				4F94F74B25E6149500D9F24A /* Copy Updater */,
-				4F94F75125E614D500D9F24A /* Increment Build Number */,
 			);
 			buildRules = (
 			);
