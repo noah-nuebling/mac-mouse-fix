@@ -270,14 +270,15 @@
 
 - (void)addRowWithHelperPayload:(NSDictionary *)payload {
     
+    // Capture notifs
     NSSet<NSNumber *> *capturedButtonsBefore = [RemapTableUtility getCapturedButtons];
     
-    NSMutableDictionary *pl = payload.mutableCopy;
+    NSMutableDictionary *rowDictToAdd = payload.mutableCopy;
     // ((Check if payload is valid tableEntry))
     // Check if already in table
-    NSIndexSet *existingIndexes = [self.dataModel indexesOfObjectsPassingTest:^BOOL(NSDictionary * _Nonnull tableEntry, NSUInteger idx, BOOL * _Nonnull stop) {
-        BOOL triggerMatches = [tableEntry[kMFRemapsKeyTrigger] isEqualTo:pl[kMFRemapsKeyTrigger]];
-        BOOL modificationPreconditionMatches = [tableEntry[kMFRemapsKeyModificationPrecondition] isEqualTo:pl[kMFRemapsKeyModificationPrecondition]];
+    NSIndexSet *existingIndexes = [self.groupedDataModel indexesOfObjectsPassingTest:^BOOL(NSDictionary * _Nonnull tableEntry, NSUInteger idx, BOOL * _Nonnull stop) {
+        BOOL triggerMatches = [tableEntry[kMFRemapsKeyTrigger] isEqualTo:rowDictToAdd[kMFRemapsKeyTrigger]];
+        BOOL modificationPreconditionMatches = [tableEntry[kMFRemapsKeyModificationPrecondition] isEqualTo:rowDictToAdd[kMFRemapsKeyModificationPrecondition]];
         return triggerMatches && modificationPreconditionMatches;
     }];
     NSAssert(existingIndexes.count <= 1, @"Duplicate remap triggers found in table");
@@ -285,15 +286,33 @@
     if (existingIndexes.count == 0) {
         // Fill out effect in payload with first effect from effects table (to make behaviour appropriate when user doesn't choose any effect)
         //      We could also consider removing the tableEntry, if the user just dismisses the popup menu without choosing an effect, instead of this.
-        pl[kMFRemapsKeyEffect] = [RemapTableTranslator getEffectsTableForRemapsTableEntry:pl][0][@"dict"];
+        rowDictToAdd[kMFRemapsKeyEffect] = [RemapTableTranslator getEffectsTableForRemapsTableEntry:rowDictToAdd][0][@"dict"];
         // Add new row to data model
-        self.dataModel = [self.dataModel arrayByAddingObject:pl];
+        self.dataModel = [self.dataModel arrayByAddingObject:rowDictToAdd];
         // Sort data model
         [self sortDataModel];
+        
         // Display new row with animation and highlight by selecting it
-        NSUInteger insertedIndex = [self.dataModel indexOfObject:pl];
+        NSUInteger insertedIndex = [self.groupedDataModel indexOfObject:rowDictToAdd];
+        NSMutableIndexSet *toInsertWithAnimationIndexSet = [NSMutableIndexSet indexSetWithIndex:insertedIndex];
         toHighlightIndexSet = [NSIndexSet indexSetWithIndex:insertedIndex];
-        [self.tableView insertRowsAtIndexes:toHighlightIndexSet withAnimation:NSTableViewAnimationSlideDown];
+        // Check if there are new group row we'd like to insert with animation, too
+        BOOL buttonIsNewlyTriggerInDataModel = YES;
+        MFMouseButtonNumber triggerButtonForAddedRow = [RemapTableUtility triggerButtonForRow:rowDictToAdd];
+        for (NSDictionary *rowDict in self.dataModel) {
+            if ([rowDict isEqual:rowDictToAdd]) continue;
+            MFMouseButtonNumber triggerButton = [RemapTableUtility triggerButtonForRow:rowDict];
+            if (triggerButton == triggerButtonForAddedRow) {
+                buttonIsNewlyTriggerInDataModel = NO;
+                break;
+            }
+        }
+        if (buttonIsNewlyTriggerInDataModel) { // There is a group row to add with animation
+            [toInsertWithAnimationIndexSet addIndex:insertedIndex-1];
+        }
+        // Do insert with animation
+        [self.tableView insertRowsAtIndexes:toInsertWithAnimationIndexSet withAnimation:NSTableViewAnimationSlideDown];
+        
         // Write new row to file (to make behaviour appropriate when user doesn't choose any effect)
         [self writeToConfig];
     } else {
@@ -307,6 +326,7 @@
     NSPopUpButton * popUpButton = [RemapTableUtility getPopUpButtonAtRow:openPopupRow fromTableView:tv];
     [popUpButton performSelector:@selector(performClick:) withObject:nil afterDelay:0.2];
     
+    // Capture notifs
     NSSet<NSNumber *> *capturedButtonsAfter =  [RemapTableUtility getCapturedButtons];
     [CaptureNotifications showButtonCaptureNotificationWithBeforeSet:capturedButtonsBefore afterSet:capturedButtonsAfter];
     
