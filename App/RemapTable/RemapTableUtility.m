@@ -42,9 +42,41 @@
     return popUpButton;
 }
 
+#pragma mark - Group rows
+
+/// This stuff is accessed by both RemapTableController and RemapTableTranslator, but nothing else.
+/// Those two have tons of interplay and access to eachothers properties which no other part of the app needs access to.
+/// I feel like they are screaming to be one class - it would allow us to make lots of properties and functions private - but I split them up because RemapsTableController was getting wayy too big.
+/// If they were one class this stuff v would be part of that class.
+
 + (NSDictionary *)buttonGroupRowDict {
     
     return @{@"buttonGroupRow": @YES};
+}
+
+/// Use this when you want to mutate the base data model (self.dataModel) based on an index from the table.
+/// self.groupedDataModel as well as the tableView have extra group rows which make the indexes of corresponding rows shifted compared to the base data model
+/// We only want to mutate the base data model (`self.dataModel`). The groupedDataModel as well as the table are derived from it.
+/// @param groupedModelIndex The index to convert. Function will crash if this param is the index of a group row.
++ (NSInteger)baseDataModelIndexFromGroupedDataModelIndex:(NSInteger)groupedModelIndex withGroupedDataModel:(NSArray *)groupedDataModel {
+    
+    int i = 0;
+    int groupRowCtr = 0;
+    
+    while (true) {
+        if ([groupedDataModel[i] isEqual:RemapTableUtility.buttonGroupRowDict]) {
+            groupRowCtr++;
+            
+            NSAssert(i != groupedModelIndex, @"Invalid input: groupedModelIndex is index of a group row");
+        }
+        
+        if (i == groupedModelIndex)
+            break;
+        
+        i++;
+    }
+    
+    return groupedModelIndex - groupRowCtr;
 }
 
 @end

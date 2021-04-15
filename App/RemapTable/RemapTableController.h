@@ -12,13 +12,18 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+// Were exposing most of this just so RemapTableTranslator can use it. Might not be the cleanest solution.
+
 @interface RemapTableController :  NSViewController <NSTableViewDelegate>
-- (void)addRowWithHelperPayload:(NSDictionary *)payload;
+
 @property NSArray *dataModel;
 //      ^ Is actually an NSMutableArray I think. Take care not to accidentally corrupt this!
-//      ^ Exposing this so RemapTableDataSource can use it. Might not be the cleanest solution.
+@property (readonly) NSArray *groupedDataModel;
 
-- (IBAction)handleEnterKeystrokeOptionSelected:(id)sender;
+- (void)insertRowDict:(NSDictionary *)rowDict intoGroupedDataModelAtIndex:(NSInteger)index;
+
+- (void)addRowWithHelperPayload:(NSDictionary *)payload;
+- (IBAction)handleKeystrokeMenuItemSelected:(id)sender;
 - (IBAction)updateTableAndWriteToConfig:(id _Nullable)sender;
 @end
 

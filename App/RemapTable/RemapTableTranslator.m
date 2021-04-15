@@ -42,8 +42,11 @@ NSTableView *_tableView;
 + (NSArray *)dataModel {
     return self.controller.dataModel;
 }
-+ (void)setDataModel:(NSArray *)newModel {
-    self.controller.dataModel = newModel;
+//+ (void)setGroupedDataModel:(NSArray *)newModel {
+//    self.controller.dataModel = newModel;
+//}
++ (NSArray *)groupedDataModel {
+    return self.controller.groupedDataModel;
 }
 
 #pragma mark Define Effects Tables
@@ -310,7 +313,10 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
             
             // Insert new effectDict into dataModel and reload table
             //  Manipulating the datamodel should probably be done by RemapTableController, not RemapTableTranslator, and definitely not in this method, but oh well.
-            self.dataModel[row][kMFRemapsKeyEffect] = newEffectDict;
+            
+            NSInteger rowBaseDataModel = [RemapTableUtility baseDataModelIndexFromGroupedDataModelIndex:row withGroupedDataModel:self.groupedDataModel];
+            
+            self.dataModel[rowBaseDataModel][kMFRemapsKeyEffect] = newEffectDict;
             [self.tableView reloadData];
             [self.controller updateTableAndWriteToConfig:nil];
             
@@ -342,7 +348,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
                 i.toolTip = effectTableEntry[@"tool"];
                 
                 if ([effectTableEntry[@"keyCaptureEntry"] isEqual:@YES]) {
-                    i.action = @selector(handleEnterKeystrokeOptionSelected:);
+                    i.action = @selector(handleKeystrokeMenuItemSelected:);
                 }
                 if ([effectTableEntry[@"alternate"] isEqual:@YES]) {
                     i.alternate = YES;

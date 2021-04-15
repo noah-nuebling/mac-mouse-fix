@@ -29,7 +29,6 @@
 
 @interface RemapTableController ()
 @property NSTableView *tableView;
-@property (readonly) NSArray *groupedDataModel;
 @end
 
 @implementation RemapTableController
@@ -74,7 +73,7 @@
     self.dataModel = store;
 }
 
-- (IBAction)handleEnterKeystrokeOptionSelected:(id)sender {
+- (IBAction)handleKeystrokeMenuItemSelected:(id)sender {
     
     // Find table row for sender
     NSInteger rowOfSender = -1;
@@ -82,7 +81,7 @@
     NSMenuItem *item = (NSMenuItem *)sender;
     NSMenu *menu = item.menu;
     for (NSInteger row = 0; row < self.groupedDataModel.count; row++) {
-        NSTableCellView *cell = [self.tableView viewAtColumn:1 row:row makeIfNecessary:YES];
+        NSTableCellView *cell = [self.tableView viewAtColumn:1 row:row makeIfNecessary:YES]; // Not sure if makeIfNecessary is appropriate here
         NSPopUpButton *pb = cell.subviews[0];
         if ([pb.menu isEqual:menu]) {
             rowOfSender = row;
@@ -92,7 +91,8 @@
     
     assert(rowOfSender != -1);
     
-    rowOfSender = [self baseDataModelIndexFromGroupedDataModelIndex:rowOfSender];
+    // Convert rowOfSender to base data model index
+    rowOfSender = [RemapTableUtility baseDataModelIndexFromGroupedDataModelIndex:rowOfSender withGroupedDataModel:self.groupedDataModel];
     
     // Draw keystroke-capture-field
     NSArray *dataModelWithCaptureCell = (NSArray *)[SharedUtility deepCopyOf:self.dataModel];
@@ -489,33 +489,6 @@ static void getTriggerValues(int *btn1, int *lvl1, NSString **dur1, NSString **t
 }
 
 #pragma mark - Group rows
-
-/// Use this when you want to mutate the base data model (self.dataModel) based on an index from the table.
-/// self.groupedDataModel as well as the tableView have extra group rows which make the indexes of corresponding rows shifted compared to the base data model
-/// We only want to mutate the base data model (`self.dataModel`). The groupedDataModel as well as the table are derived from it.
-/// @param groupedModelIndex The index to convert. Function will crash if this param is the index of a group row.
-- (NSInteger)baseDataModelIndexFromGroupedDataModelIndex:(NSInteger)groupedModelIndex {
-    
-    NSArray *groupedDataModel = self.groupedDataModel;
-    
-    int i = 0;
-    int groupRowCtr = 0;
-    
-    while (true) {
-        if ([groupedDataModel[i] isEqual:RemapTableUtility.buttonGroupRowDict]) {
-            groupRowCtr++;
-            
-            NSAssert(i != groupedModelIndex, @"Invalid input: groupedModelIndex is index of a group row");
-        }
-        
-        if (i == groupedModelIndex)
-            break;
-        
-        i++;
-    }
-    
-    return groupedModelIndex - groupRowCtr;
-}
 
 NSArray *baseDataModel_FromLastGroupedDataModelAccess;
 NSArray *groupedDataModel_FromLastGroupedDataModelAccess;
