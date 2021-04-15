@@ -81,7 +81,7 @@
     
     NSMenuItem *item = (NSMenuItem *)sender;
     NSMenu *menu = item.menu;
-    for (NSInteger row = 0; row < self.dataModel.count; row++) {
+    for (NSInteger row = 0; row < self.groupedDataModel.count; row++) {
         NSTableCellView *cell = [self.tableView viewAtColumn:1 row:row makeIfNecessary:YES];
         NSPopUpButton *pb = cell.subviews[0];
         if ([pb.menu isEqual:menu]) {
@@ -89,7 +89,10 @@
             break;
         }
     }
+    
     assert(rowOfSender != -1);
+    
+    rowOfSender = [self baseDataModelIndexFromGroupedDataModelIndex:rowOfSender];
     
     // Draw keystroke-capture-field
     NSArray *dataModelWithCaptureCell = (NSArray *)[SharedUtility deepCopyOf:self.dataModel];
@@ -487,13 +490,40 @@ static void getTriggerValues(int *btn1, int *lvl1, NSString **dur1, NSString **t
 
 #pragma mark - Group rows
 
+/// Use this when you want to mutate the base data model (self.dataModel) based on an index from the table.
+/// self.groupedDataModel as well as the tableView have extra group rows which make the indexes of corresponding rows shifted compared to the base data model
+/// We only want to mutate the base data model (`self.dataModel`). The groupedDataModel as well as the table are derived from it.
+/// @param groupedModelIndex The index to convert. Function will crash if this param is the index of a group row.
+- (NSInteger)baseDataModelIndexFromGroupedDataModelIndex:(NSInteger)groupedModelIndex {
+    
+    NSArray *groupedDataModel = self.groupedDataModel;
+    
+    int i = 0;
+    int groupRowCtr = 0;
+    
+    while (true) {
+        if ([groupedDataModel[i] isEqual:RemapTableUtility.buttonGroupRowDict]) {
+            groupRowCtr++;
+            
+            NSAssert(i != groupedModelIndex, @"Invalid input: groupedModelIndex is index of a group row");
+        }
+        
+        if (i == groupedModelIndex)
+            break;
+        
+        i++;
+    }
+    
+    return groupedModelIndex - groupRowCtr;
+}
+
 NSArray *baseDataModel_FromLastGroupedDataModelAccess;
 NSArray *groupedDataModel_FromLastGroupedDataModelAccess;
 
-/// This applies `dataModelByInsertingButtonGroupRowsIntoDataModel:` to `self.dataModel`. It also caches the result. and only recalculates when self.dataModel has changed since the last invocation.
+/// This applies `dataModelByInsertingButtonGroupRowsIntoDataModel:` to `self.dataModel` and returns the result. It also caches the result. and only recalculates when self.dataModel has changed since the last invocation.
 - (NSArray *)groupedDataModel {
     
-//    [SharedUtility printInvocationCountWithId:@"groupedDataModel access"];
+//    [SharedUtility printInvocationCountWithId:@"groupedDataModel access count"];
     
     BOOL baseDataModelHasChanged = NO;
     if (baseDataModel_FromLastGroupedDataModelAccess == nil)
@@ -515,7 +545,7 @@ NSArray *groupedDataModel_FromLastGroupedDataModelAccess;
 /// "dataModel" needs to be sorted by button for this to work. Otherwise crash.
 - (NSArray *)dataModelByInsertingButtonGroupRowsIntoDataModel:(NSArray *)dataModel {
     
-//    [SharedUtility printInvocationCountWithId:@"groupedDataModel recalc"];
+//    [SharedUtility printInvocationCountWithId:@"groupedDataModel recalc count"];
     
     NSMutableArray *groupedDataModel = dataModel.mutableCopy;
     
