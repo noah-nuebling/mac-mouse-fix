@@ -84,21 +84,16 @@ double _toastAnimationOffset = 20;
     double bottomMargin = 0.0;
     
     if ([alignment isEqual:@"topMiddle"]) {
-        // For top middle algnment
         mainWindowTitleBarHeight = 30;
         topEdgeMargin = 5.0; // 0.0 // -25.0
-    //    topEdgeMargin = -25;
         sideMargin = 20;
         _toastAnimationOffset = 20;
     } else if ([alignment isEqual:@"bottomRight"]){
-        // For bottom right alignment
         sideMargin = bottomMargin = 10;
-        
         _toastAnimationOffset = -20;
     } else if ([alignment isEqual:@"bottomMiddle"]) {
         bottomMargin = 10;
         sideMargin = 20;
-        
         _toastAnimationOffset = -20;
     } else assert(false);
     
@@ -110,7 +105,6 @@ double _toastAnimationOffset = 20;
     [w close];
     
     // Set message text and text attributes to label
-    
     NSDictionary *baseAttributes = _labelAttributesFromIB;
     NSAttributedString *m = [message attributedStringByAddingBaseAttributes:baseAttributes];
     m = [m attributedStringByFillingOutDefaultAttributes];
@@ -150,7 +144,6 @@ double _toastAnimationOffset = 20;
 //    CGFloat padding = label.textContainer.lineFragmentPadding;
 //    newLabelSize.width -= padding * 2;
     
-//    NSLog(@"LABEL ATTRIBUTED STRING: %@", label.attributedString);
     // Calculate new notification window frame
     NSSize newNotifSize = NSMakeSize(newLabelSize.width + leftInset + rightInset, newLabelSize.height + topInset + bottomInset);
     newNotifFrame.size = newNotifSize;
@@ -173,26 +166,18 @@ double _toastAnimationOffset = 20;
     // Set new notification frame
     [w setFrame:newNotifFrame display:YES];
     
-    // Set label frame (Don't need this if we set autoresizeing for the label in IB)
+    // Set label frame (Don't actually need this if we set autoresizing for the label in IB, which we do)
     NSRect newLabelFrame = label.superview.superview.frame;
     newLabelFrame.size = newLabelSize;
     newLabelFrame.origin.x = NSMidX(label.superview.bounds) - (newLabelSize.width / 2);
     newLabelFrame.origin.y = NSMidY(label.superview.bounds) - (newLabelSize.height / 2);
     [label setFrame:newLabelFrame];
     
-    // Testing
-    
-//    NSSize hhhh = label.textContainerInset;
-//    NSEdgeInsets hhh;
-////    hhh = label.alignmentRectInsets;
-////    hhh = label.safeAreaInsets;
-//    CGFloat ddd = label.textContainer.lineFragmentPadding;
-    
     // Attach notif as child window to attachWindow
     [attachWindow addChildWindow:w ordered:NSWindowAbove];
     [attachWindow makeKeyWindow];
     
-    // Fade in and animate upwards notification window
+    // Fade and animate the notification window in
     // Set pre animation alpha
     w.alphaValue = 0.0;
     // Set pre animation position
@@ -207,19 +192,20 @@ double _toastAnimationOffset = 20;
     [w.animator setFrame:targetFrame display:YES];
     [NSAnimationContext endGrouping];
     
-    // Fade out if user clicks elsewhere
+    // Close if user clicks elsewhere
     _localEventMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:(NSEventMaskLeftMouseDown) handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
         
         NSPoint loc = NSEvent.mouseLocation;
         
-        // Check if mouse is over main window content view area
+        // Check where mouse is located relative to other stuff
+        
+        // Get mouse location in the main content views' coordinate system. Need this to do a hit-test later.
         NSView *mainContentView = AppDelegate.mainWindow.contentView;
-        NSPoint windowLoc = [AppDelegate.mainWindow convertRectFromScreen:(NSRect){.origin=loc}].origin; // convertPointFromScreen: only available in 10.12+
+        NSPoint locWindow = [AppDelegate.mainWindow convertRectFromScreen:(NSRect){.origin=loc}].origin; // convertPointFromScreen: only available in 10.12+
+        NSPoint locContentView = [mainContentView convertPoint:locWindow fromView:nil];
         
-        NSPoint contentViewLoc = [mainContentView convertPoint:windowLoc fromView:nil];
-        
-        BOOL locIsOverNotification = [NSWindow windowNumberAtPoint:NSEvent.mouseLocation belowWindowWithWindowNumber:0] == _instance.window.windowNumber; // So notification isn't dismissed when we click on it. Not sure if necessary for that to work.
-        BOOL locIsOverMainWindowContentView = [mainContentView hitTest:contentViewLoc] != nil; // So that we can drag the window by its titlebar without dismission the notification.
+        BOOL locIsOverNotification = [NSWindow windowNumberAtPoint:NSEvent.mouseLocation belowWindowWithWindowNumber:0] == _instance.window.windowNumber; // So notification isn't dismissed when we click on it. Not sure if necessary when we're using `locIsOverMainWindowContentView`.
+        BOOL locIsOverMainWindowContentView = [mainContentView hitTest:locContentView] != nil; // So that we can drag the window by its titlebar without dismissing the notification.
         
         if (!locIsOverNotification && locIsOverMainWindowContentView) {
             [_closeTimer invalidate];
@@ -229,7 +215,7 @@ double _toastAnimationOffset = 20;
         return event;
     }];
     
-    // Fade out after showDuration
+    // Close after showDuration
     [_closeTimer invalidate];
     _closeTimer = [NSTimer scheduledTimerWithTimeInterval:showDuration target:self selector:@selector(closeNotification:) userInfo:nil repeats:NO];
 }
@@ -237,7 +223,6 @@ double _toastAnimationOffset = 20;
 NSTimer *_closeTimer;
 + (void)closeNotification:(NSTimer *)timer {
     [self closeNotificationWithFadeOut];
-//    [self closeNotificationImmediately];
 }
 
 static void removeLocalEventMonitor() {
@@ -285,6 +270,7 @@ static void removeLocalEventMonitor() {
 #endif
     if ([_instance.window.parentWindow isEqual:closedWindow]) {
         [_closeTimer invalidate];
+//        [self closeNotificationWithFadeOut];
         [self closeNotificationImmediately];
     }
 }

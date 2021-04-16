@@ -69,9 +69,7 @@
             attrNotifString = [attrNotifString attributedStringByAddingBoldForSubstring:capturedButtonString];
         }
         
-        double duration = notifString.length * 0.08;
-        
-        [MFNotificationController attachNotificationWithMessage:attrNotifString toWindow:AppDelegate.mainWindow forDuration:duration];
+        [MFNotificationController attachNotificationWithMessage:attrNotifString toWindow:AppDelegate.mainWindow forDuration:-1];
     }
 }
 
