@@ -227,13 +227,13 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
         CGFloat screenWidth = NSScreen.mainScreen.frame.size.width;
         threeFingerScaleH = threeFingerScaleV = 1.45 / screenWidth; // 1.15
         // ^ This makes horizontal dockSwipes (switch between spaces) follow the pointer exactly. We should maybe use screenHeight to scale vertical dockSwipes (Mission Control and App Windows), but on a normal screen, this feels perfectly fine.
-        //      This actually doesn't follow the pointer very closely anymore for some reason. It's way slower. Idk what changed.
+        //      1.15 actually doesn't follow the pointer very closely anymore for some reason. It's way slower. Idk what changed. 1.45 works though.
         // ^ TODO: Test this on a vertical screen
         
-        threeFingerScaleV *= 1.0; // Vertical doesn't follow pointer anyways. This makes it feel a little nicer
+        threeFingerScaleV *= 1.0; // Vertical doesn't follow pointer anyways. So we can change it to make it feel nicer.
         
         twoFingerScale = 1.0; // This makes pointer scrolling follow the mouse pointer exactly
-    } else {
+    } else { // Input is raw mouse events
         threeFingerScaleH = threeFingerScaleV = 5 / 10000.0;
         twoFingerScale = 0.5;
     }
