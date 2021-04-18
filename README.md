@@ -12,4 +12,4 @@ __Features__
 * 100% free, light on system resources, and fully open source. There is no status bar item. Mac Mouse Fix aims to be as clutter free as possible.
 
 ---
-🚀 You can now test the new [ Mac Mouse Fix 2 Beta](https://github.com/noah-nuebling/mac-mouse-fix/releases)! 🚀
+#### You can now test the new [ Mac Mouse Fix 2](https://github.com/noah-nuebling/mac-mouse-fix/releases) Beta!
