@@ -18,7 +18,7 @@
     // Clip for background drawing
     NSRect clippingRect = NSInsetRect(dirtyRect, 1, 0); // Clip side borders
     clippingRect.size.height -= 1; // Clip bottom border
-    NSRectClip(clippingRect);
+//    NSRectClip(clippingRect);
     
     // Get background color
     NSColor *backgroundColor;
@@ -36,14 +36,13 @@
     // Draw background
     [backgroundColor setFill];
     NSRectFill(dirtyRect);
-        
     
-    if (NO) { // Don't need to draw border manually when using horizontal grid
+    if (YES) { // NO becuase we don't need to draw border manually when using horizontal grid
         
-        // Clip for border drawing
+//         Clip for border drawing
         NSRect clippingRect = NSInsetRect(dirtyRect, 1, 0); // Clip side borders
-        clippingRect.size.height -= 1; // Clip top border
-        clippingRect.origin.y += 1;
+//        clippingRect.size.height -= 1; // Clip top border
+//        clippingRect.origin.y += 1;
         NSRectClip(clippingRect);
         
         // Get border color
@@ -54,12 +53,17 @@
             gridColor = AppDelegate.instance.remapsTable.gridColor; // Should be same as NSColor.gridColor
         }
         
+        NSRect strokeRect = dirtyRect;
+        strokeRect.origin.y += 0;
+        
+        
         // Draw border
-        NSBezierPath *borderPath = [NSBezierPath bezierPathWithRect:dirtyRect];
-        borderPath.lineWidth = 2;
+        NSBezierPath *borderPath = [NSBezierPath bezierPathWithRect:strokeRect];
+        borderPath.lineWidth = 2; // Doesn't make a difference
         [gridColor setStroke];
         [borderPath stroke];
     }
+    
 }
 
 
