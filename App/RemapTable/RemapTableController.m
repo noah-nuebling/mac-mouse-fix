@@ -620,14 +620,26 @@ NSArray *groupedDataModel_FromLastGroupedDataModelAccess;
     // There seems to be an infinte loop in the stacktrace. Maybe.
     // Crash doesn't seem to occur when returning `[NSTableRowView new]` or `nil` instead
 }
+
+/// Helper function for determining if a row is a group row
+static BOOL isGroupRow(NSArray *groupedDataModel, NSInteger row) {
+    return [groupedDataModel[row] isEqual:RemapTableUtility.buttonGroupRowDict];
+}
+/// Tell the tableView which rows are groupRows
 - (BOOL)tableView:(NSTableView *)tableView isGroupRow:(NSInteger)row {
-    return [self.groupedDataModel[row] isEqual:RemapTableUtility.buttonGroupRowDict];
-//    return NO;
+    return isGroupRow(self.groupedDataModel, row);
+}
+/// Disable selection of groupRows. This prevents users from deleting group rows which leads to problems.
+- (BOOL)tableView:(NSTableView *)tableView shouldSelectRow:(NSInteger)row {
+    return !isGroupRow(self.groupedDataModel, row);
 }
 
+/// The tableview will apply its own style to the NSTableCellViews' textField property in group rows.
+/// This is an attempt at customizing the text style of group rows to our own liking but it didn't work.
+/// The solution was to set the text field to a property other than `textField` so the tableView can't find the text field and override its style.
 - (void)tableView:(NSTableView *)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     
-    if ([self.groupedDataModel[row] isEqual:RemapTableUtility.buttonGroupRowDict]) { // Try to make groupRow text black. Doesn't work. The function is never called.
+    if (isGroupRow(self.groupedDataModel, row)) { // Try to make groupRow text black. Doesn't work. The function is never called.
         NSTableCellView *cellView = cell;
         cellView.textField.textColor = NSColor.labelColor;
     }
