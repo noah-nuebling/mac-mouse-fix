@@ -106,7 +106,7 @@ NSArray *_buttonParseBlacklist; // Don't send inputs from these buttons to Butto
 CGEventRef handleInput(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
 #if DEBUG
-     NSLog(@"RECEIVING CG BUTTON INPUT - %@", [NSEvent eventWithCGEvent:event]);
+     NSLog(@"Received CG Button Input - %@", [NSEvent eventWithCGEvent:event]);
     // ^ TODO: This crashes sometimes - investigate.
     //      Might be connected to attaching / deatching devices
 #endif

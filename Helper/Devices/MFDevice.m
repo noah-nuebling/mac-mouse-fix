@@ -267,10 +267,6 @@ static int64_t _previousDeltaY;
 
 static void handleInput(void *context, IOReturn result, void *sender, IOHIDValueRef value) {
     
-#if DEBUG
-    NSLog(@"HID");
-#endif
-    
     MFDevice *sendingDev = (__bridge MFDevice *)context;
     
     IOHIDElementRef elem = IOHIDValueGetElement(value);
@@ -278,6 +274,10 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
     uint32_t usagePage = IOHIDElementGetUsagePage(elem);
     
     BOOL isButton = usagePage == 9;
+    
+#if DEBUG
+    NSLog(@"Received HID input - usagePage: %d usage: %d value: %ld from device: %@", usagePage, usage, (long)IOHIDValueGetIntegerValue(value), sendingDev.description);
+#endif
     
     if (isButton) {
         
