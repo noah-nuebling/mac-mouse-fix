@@ -284,7 +284,10 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
 }
 
 /// \discussion We only need the `row` parameter to insert data into the datamodel, which we shouldn't be doing from this function to begin with
-+ (NSTableCellView *)getEffectCellWithRowDict:(NSDictionary *)rowDict row:(NSUInteger)row {
+/// \discussion We need the `tableViewEnabled` parameter to enabled / disable contained popUpButtons depending on whether the table view is enabled
+///         We used to use the function 'disableUI:' in App Delegate to recursively go over all controls and disable them. But disabling controls contained in the table view sometimes didn't work, when they weren't scrolled into view. (It worked when disableUI: was called in response to toggling the "Enabled Mac Mouse Fix" checkbox, but it didn't work when it was called in response to the app launching. I'm not sure why.)
+///            For a clean solution, the tableView should reload it's content, whenever tableView.enabled changes, so that this function is called again. I don't think it does this (automatically) though. However, things still seem to work fine. I assume, that's because we're still doing the recursive enabling/disabling from AppDelegate - disableUI:, and both that function and this one work together in some way I don't understand to enable/disable everything properly.
++ (NSTableCellView *)getEffectCellWithRowDict:(NSDictionary *)rowDict row:(NSUInteger)row tableViewEnabled:(BOOL)tableViewEnabled {
     
     rowDict = rowDict.mutableCopy; // Not sure if necessary
     NSArray *effectTable = [self getEffectsTableForRemapsTableEntry:rowDict];
@@ -375,6 +378,9 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         if (title) {
             [popupButton selectItemWithTitle:title];
         }
+        
+        // Disable popupbutton, if tableView is disabled
+        popupButton.enabled = tableViewEnabled;
        
     }
     

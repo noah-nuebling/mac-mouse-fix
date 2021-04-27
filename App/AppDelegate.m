@@ -43,6 +43,7 @@
 # pragma mark - IBActions
 
 - (IBAction)enableCheckBox:(id)sender {
+    
     BOOL checkboxState = [sender state];
     [HelperServices enableHelperAsUserAgent: checkboxState];
     [self performSelector:@selector(disableUI:) withObject:@(_enableMouseFixCheckBox.state) afterDelay:0.0];
@@ -163,8 +164,6 @@ NSTimer *removeAccOverlayTimer;
 
 #pragma mark - UI Logic
 
-
-
 - (void)disableUI:(NSNumber *)enable {
     
     BOOL enb = enable.boolValue;
@@ -230,7 +229,7 @@ NSTimer *removeAccOverlayTimer;
     
     _scrollStepSizeSlider.doubleValue = pxStepSizeRelativeToConfigRange;
     
-    [self performSelector:@selector(disableUI:) withObject:[NSNumber numberWithBool:_enableMouseFixCheckBox.state] afterDelay:0.0];
+    [self performSelector:@selector(disableUI:) withObject:@(_enableMouseFixCheckBox.state) afterDelay:0.0];
     
 }
 

@@ -359,7 +359,7 @@
     } else if ([tableColumn.identifier isEqualToString:@"trigger"]) { // The trigger column should display the trigger as well as the modification precondition
         return [RemapTableTranslator getTriggerCellWithRowDict:rowDict];
     } else if ([tableColumn.identifier isEqualToString:@"effect"]) {
-        return [RemapTableTranslator getEffectCellWithRowDict:rowDict row:row];
+        return [RemapTableTranslator getEffectCellWithRowDict:rowDict row:row tableViewEnabled:tableView.enabled];
     } else {
         @throw [NSException exceptionWithName:@"Unknown column identifier" reason:@"TableView is requesting data for a column with an unknown identifier" userInfo:@{@"requested data for column": tableColumn}];
         return nil;
