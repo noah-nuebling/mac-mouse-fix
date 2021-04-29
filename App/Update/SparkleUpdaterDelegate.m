@@ -8,13 +8,25 @@
 //
 
 #import "SparkleUpdaterDelegate.h"
+#import "AppDelegate.h"
 
 // See https://sparkle-project.org/documentation/customization/
 
 @implementation SparkleUpdaterDelegate
 
+
 - (BOOL)updaterShouldPromptForPermissionToCheckForUpdates:(SUUpdater *)updater {
     return NO;
 }
+
+// We use this from `AppDelegate - applicationDidFinishLaunching`.
+//  This needs to be called before that code for it to work. Not sure that's the case.
+- (void)updaterDidRelaunchApplication:(SUUpdater *)updater {
+    
+    NSLog(@"Launched by Sparkle Updater");
+    
+    appState().updaterDidRelaunchApplication = YES;
+}
+
 
 @end

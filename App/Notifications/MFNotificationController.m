@@ -28,9 +28,9 @@
 @implementation MFNotificationController {
 }
 
-MFNotificationController *_instance;
-NSDictionary *_labelAttributesFromIB;
-id _localEventMonitor;
+static MFNotificationController *_instance;
+static NSDictionary *_labelAttributesFromIB;
+static id _localEventMonitor;
 
 + (void)initialize {
     
@@ -62,9 +62,9 @@ id _localEventMonitor;
     }
 }
 
-double _animationDurationFadeIn = 0.3;
-double _animationDurationFadeOut = 0.2;
-double _toastAnimationOffset = 20;
+static double _animationDurationFadeIn = 0.3;
+static double _animationDurationFadeOut = 0.2;
+static double _toastAnimationOffset = 20;
 
 /// Pass 0 to showDuration to get the default duration
 + (void)attachNotificationWithMessage:(NSAttributedString *)message toWindow:(NSWindow *)attachWindow forDuration:(NSTimeInterval)showDuration {
@@ -220,7 +220,7 @@ double _toastAnimationOffset = 20;
     _closeTimer = [NSTimer scheduledTimerWithTimeInterval:showDuration target:self selector:@selector(closeNotification:) userInfo:nil repeats:NO];
 }
 
-NSTimer *_closeTimer;
+static NSTimer *_closeTimer;
 + (void)closeNotification:(NSTimer *)timer {
     [self closeNotificationWithFadeOut];
 }

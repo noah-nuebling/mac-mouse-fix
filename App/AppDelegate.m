@@ -117,32 +117,89 @@ static NSDictionary *sideButtonActions;
 }
 
 - (void)applicationWillFinishLaunching:(NSNotification *)notification {
-    
-    // Update app launch counter
-    
-    NSInteger currentBundleVersion = 
-    
-    // Configure Sparkle Updater
-    // See https://sparkle-project.org/documentation/customization/
-    
-    SUUpdater *up = SUUpdater.sharedUpdater;
-    
-    up.automaticallyChecksForUpdates = NO;
-    
-    BOOL checkForUpdates = [config(@"Other.checkForUpdates") boolValue];
-    BOOL checkForPrereleases = [config(@"Other.checkForPrereleases") boolValue];
-    
-    if (checkForUpdates == YES) {
-        [Updater checkForUpdate];
-    }
-    
+
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
     
     NSLog(@"Mac Mouse Fix finished launching");
     
+    // Load UI
+    
     [self setUIToConfigFile];
+    
+    // Update app-launch counters
+    
+    NSInteger launchesOverall;
+    NSInteger launchesOfCurrentBundleVersion;
+    
+    launchesOverall = [config(@"Other.launchesOverall") integerValue];
+    launchesOfCurrentBundleVersion = [config(@"Other.launchesOfCurrentBundleVersion") integerValue];
+    NSInteger lastLaunchedBundleVersion = [config(@"Other.lastLaunchedBundleVersion") integerValue];
+    NSInteger currentBundleVersion = Utility_App.bundleVersion;
+    
+    launchesOverall += 1;
+    
+    if (currentBundleVersion != lastLaunchedBundleVersion) {
+        launchesOfCurrentBundleVersion = 0;
+    }
+    launchesOfCurrentBundleVersion += 1;
+    
+    setConfig(@"Other.launchesOfCurrentBundleVersion", @(launchesOfCurrentBundleVersion));
+    setConfig(@"Other.launchesOverall", @(launchesOverall));
+    setConfig(@"Other.lastLaunchedBundleVersion", @(currentBundleVersion));
+    
+    
+    BOOL firstAppLaunch = launchesOverall == 1; // App is launched for the first time
+    BOOL firstVersionLaunch = launchesOfCurrentBundleVersion == 1; // Last time that the app was launched was a different bundle version
+    
+    // Configure Sparkle Updater
+    //  (See https://sparkle-project.org/documentation/customization/)
+    
+    SUUpdater *up = SUUpdater.sharedUpdater;
+    
+    up.automaticallyChecksForUpdates = NO;
+    up.sendsSystemProfile = NO;
+    up.automaticallyDownloadsUpdates = NO;
+    
+    BOOL checkForUpdates = [config(@"Other.checkForUpdates") boolValue];
+    
+    BOOL checkForPrereleases = [config(@"Other.checkForPrereleases") boolValue];
+    
+    if (firstVersionLaunch && !appState().updaterDidRelaunchApplication) {
+        // TODO: Test if updaterDidRelaunchApplication works.
+        //  It will only work if `SparkleUpdaterDelegate - updaterDidRelaunchApplication:` is called before this
+        // The app (or this version of it) has probably been downloaded from the internet and is running for the first time.
+        //  -> Override check-for-prereleases setting
+        if (SharedUtility.runningPreRelease) {
+            // If this is a pre-release version itself, we activate updates to pre-releases
+            checkForPrereleases = YES;
+        } else {
+            // If this is not a pre-release, then we'll *deactivate* updates to pre-releases
+            checkForPrereleases = NO;
+        }
+        setConfig(@"Other.checkForPrereleases", @(checkForPrereleases));
+    }
+    
+    // Write changes to we made to config through setConfig() to file. Also notifies helper app, which is probably unnecessary.
+    commitConfig();
+    
+    // Check for udates
+    
+    if (checkForUpdates) {
+        
+        NSString *feedURLString;
+        
+        if (checkForPrereleases) {
+            feedURLString = fstring(@"%@%@", kMFWebsiteAddress, kSUFeedURLSubBeta);
+        } else {
+            feedURLString = fstring(@"%@%@", kMFWebsiteAddress, kSUFeedURLSub);
+        }
+        
+        up.feedURL = [NSURL URLWithString:feedURLString];
+        
+        [up checkForUpdatesInBackground];
+    }
     
 }
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {

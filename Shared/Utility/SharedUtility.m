@@ -14,6 +14,21 @@
 
 @implementation SharedUtility
 
+#pragma mark - Check if this is a prerelease version
+
++ (BOOL)runningPreRelease {
+    
+    BOOL runningPrerelease;
+    
+    // This is a pretty crude way of checking whether this is a pre-release, but it should work for now
+#if DEBUG 
+    runningPrerelease = YES;
+#else
+    runningPrerelease = NO;
+#endif
+    
+    return runningPrerelease;
+}
 
 #pragma mark - Check which executable is running
 

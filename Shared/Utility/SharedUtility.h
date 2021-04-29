@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef void(*MFCTLCallback)(NSTask *task, NSPipe *output, NSError *error);
 
++ (BOOL)runningPreRelease;
+
 + (BOOL)runningMainApp;
 + (BOOL)runningHelper;
 + (BOOL)runningAccomplice;
