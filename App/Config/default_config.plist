@@ -174,7 +174,7 @@
 	<dict>
 		<key>checkForUpdates</key>
 		<true/>
-		<key>checkForPreReleases</key>
+		<key>checkForPrereleases</key>
 		<false/>
 		<key>configVersion</key>
 		<integer>8</integer>
