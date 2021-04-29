@@ -352,6 +352,7 @@ Tips:
                 <outlet property="view" destination="zJh-jy-oKM" id="GWC-PD-NjZ"/>
             </connections>
         </customObject>
+        <customObject id="6iu-bA-WM9" customClass="SUUpdater"/>
         <menuItem title="Launchpad" tag="160" id="9rC-Ff-2hb"/>
         <menu title="Main Menu" systemMenu="main" id="DQZ-tv-r6C">
             <items>
@@ -362,6 +363,12 @@ Tips:
                             <menuItem title="Quit Mac Mouse Fix" keyEquivalent="q" id="5NF-pE-VIh">
                                 <connections>
                                     <action selector="terminate:" target="-1" id="voe-IU-xtS"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Check for Updates..." id="xgK-bl-zXP">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="checkForUpdates:" target="6iu-bA-WM9" id="zmw-X4-ah8"/>
                                 </connections>
                             </menuItem>
                         </items>
