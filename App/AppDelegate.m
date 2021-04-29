@@ -120,7 +120,7 @@ static NSDictionary *sideButtonActions;
     
     // Update app launch counter
     
-    //...
+    NSInteger currentBundleVersion = 
     
     // Configure Sparkle Updater
     // See https://sparkle-project.org/documentation/customization/

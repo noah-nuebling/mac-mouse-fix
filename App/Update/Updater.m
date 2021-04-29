@@ -16,6 +16,7 @@
 #import "Constants.h"
 #import "Objects.h"
 #import "SharedUtility.h"
+#import "Utility_App.h"
 
 
 
@@ -97,7 +98,7 @@ static NSString *_mainAppUnzipSubpath;
             NSLog(@"Error: \n%@", error);
             return;
         }
-        NSInteger currentVersion = [[[NSBundle bundleForClass:self] objectForInfoDictionaryKey:@"CFBundleVersion"] integerValue];
+        NSInteger currentVersion = Utility_App.bundleVersion;
         _availableVersion = [[NSString stringWithContentsOfURL:location encoding:NSUTF8StringEncoding error:NULL] integerValue];
         NSLog(@"currentVersion: %ld, availableVersion: %ld", (long)currentVersion, (long)_availableVersion);
         NSInteger skippedVersion = [[ConfigFileInterface_App.config valueForKeyPath:@"Other.skippedBundleVersion"] integerValue];

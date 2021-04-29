@@ -14,12 +14,17 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface Utility_App : NSObject
+
++ (NSInteger)bundleVersion;
++ (NSInteger)bundleVersionShort;
+
 + (void)centerWindow:(NSWindow *)win atPoint:(NSPoint)pt;
 + (void)openWindowWithFadeAnimation:(NSWindow *)window fadeIn:(BOOL)fadeIn fadeTime:(NSTimeInterval)time;
 + (NSPoint)getCenterOfRect:(NSRect)rect;
 + (BOOL)appIsInstalled:(NSString *)bundleID;
 + (NSImage *)tintedImage:(NSImage *)image withColor:(NSColor *)tint;
 + (CGFloat)actualTextViewWidth:(NSTextView *)textView;
+
 @end
 
 NS_ASSUME_NONNULL_END

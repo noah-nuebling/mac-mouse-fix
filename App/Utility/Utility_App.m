@@ -13,6 +13,13 @@
 
 @implementation Utility_App
 
++ (NSInteger)bundleVersion {
+    return [[[NSBundle bundleForClass:self] objectForInfoDictionaryKey:@"CFBundleVersion"] integerValue];
+}
++ (NSInteger)bundleVersionShort {
+    return [[[NSBundle bundleForClass:self] objectForInfoDictionaryKey:@"CFBundleShortVersionString"] integerValue];
+}
+
 + (void)centerWindow:(NSWindow *)win atPoint:(NSPoint)pt {
     
     NSRect frm = win.frame;

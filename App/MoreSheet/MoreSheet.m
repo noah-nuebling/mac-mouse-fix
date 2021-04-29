@@ -95,9 +95,9 @@ static MoreSheet *_instance;
 }
 
 - (void)initializeUI {
-    NSString *versionString = [NSString stringWithFormat:@"Version %@ (%@)",
-                               [[NSBundle bundleForClass:[self class]] objectForInfoDictionaryKey:@"CFBundleShortVersionString"],
-                               [[NSBundle bundleForClass:[self class]] objectForInfoDictionaryKey:@"CFBundleVersion"]];
+    NSString *versionString = [NSString stringWithFormat:@"Version %ld (%ld)",
+                               (long)Utility_App.bundleVersionShort,
+                               (long)Utility_App.bundleVersion];
     [_versionLabel setStringValue:versionString];
     
     _checkForUpdateCheckBox.state = [[ConfigFileInterface_App.config valueForKeyPath:@"Other.checkForUpdates"] boolValue];
