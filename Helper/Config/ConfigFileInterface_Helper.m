@@ -51,6 +51,12 @@ static NSString*_configFilePath;
     };
 }
 
+// Convenience function for accessing config quicker
+
+id config(NSString *keyPath) {
+    return [ConfigFileInterface_Helper.config valueForKeyPath:keyPath];
+}
+
 static NSMutableDictionary *_config; // TODO: Make this immutable. I think helper should never modifiy this except by reloading from file.
 + (NSMutableDictionary *)config {
     return _config;

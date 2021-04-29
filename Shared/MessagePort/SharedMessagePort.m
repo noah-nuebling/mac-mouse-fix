@@ -10,6 +10,7 @@
 #import "SharedMessagePort.h"
 #import <Cocoa/Cocoa.h>
 #import "Constants.h"
+#import "SharedUtility.h"
 
 @implementation SharedMessagePort
 
@@ -30,9 +31,9 @@
     NSLog(@"Sending message: %@ with payload: %@ from bundle: %@ via message port", message, payload, NSBundle.mainBundle.bundleIdentifier);
     
     NSString *remotePortName;
-    if ([NSBundle.mainBundle.bundleIdentifier isEqual:kMFBundleIDApp]) {
+    if (SharedUtility.runningMainApp) {
         remotePortName = kMFBundleIDHelper;
-    } else if ([NSBundle.mainBundle.bundleIdentifier isEqual:kMFBundleIDHelper]) {
+    } else if (SharedUtility.runningHelper) {
         remotePortName = kMFBundleIDApp;
     }
     

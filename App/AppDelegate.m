@@ -129,9 +129,8 @@ static NSDictionary *sideButtonActions;
     
     up.automaticallyChecksForUpdates = NO;
     
-    BOOL checkForUpdates = [[ConfigFileInterface_App.config valueForKeyPath:@"Other.checkForUpdates"] boolValue];
-    
-    BOOL checkForPrereleases = [ConfigFileInterface_App.config[kMFConfigKeyOther][@"checkForPrereleases"] boolValue];
+    BOOL checkForUpdates = [config(@"Other.checkForUpdates") boolValue];
+    BOOL checkForPrereleases = [config(@"Other.checkForPrereleases") boolValue];
     
     if (checkForUpdates == YES) {
         [Updater checkForUpdate];

@@ -18,6 +18,10 @@
 
 @implementation ConfigFileInterface_App
 
+// Convenience function for accessing config easier
+id config(NSString *keyPath) {
+    return [ConfigFileInterface_App.config valueForKeyPath:keyPath];
+}
 static NSMutableDictionary *_config;
 + (NSMutableDictionary *)config {
     return _config;

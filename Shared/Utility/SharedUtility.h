@@ -18,6 +18,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef void(*MFCTLCallback)(NSTask *task, NSPipe *output, NSError *error);
 
++ (BOOL)runningMainApp;
++ (BOOL)runningHelper;
++ (BOOL)runningAccomplice;
+
 + (NSString *)launchCTL:(NSURL *)executableURL withArguments:(NSArray<NSString *> *)arguments error:(NSError ** _Nullable)error;
 + (void)launchCLT:(NSURL *)commandLineTool withArgs:(NSArray <NSString *> *)arguments;
 + (void)launchCLT:(NSURL *)commandLineTool withArgs:(NSArray <NSString *> *)arguments callback:(MFCTLCallback _Nullable)callback;
@@ -32,6 +36,7 @@ typedef void(*MFCTLCallback)(NSTask *task, NSPipe *output, NSError *error);
 + (NSString *)currentDispatchQueueDescription;
 + (void)printInvocationCountWithId:(NSString *)strId;
 + (BOOL)button:(NSNumber * _Nonnull)button isPartOfModificationPrecondition:(NSDictionary *)modificationPrecondition;
+
 @end
 
 NS_ASSUME_NONNULL_END

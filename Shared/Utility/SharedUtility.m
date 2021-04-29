@@ -9,8 +9,28 @@
 
 #import "SharedUtility.h"
 #import "Objects.h"
+#import "ConfigFileInterface_App.h"
+#import "ConfigFileInterface_Helper.h"
 
 @implementation SharedUtility
+
+
+#pragma mark - Check which executable is running
+
+// Return YES if called by main app
++ (BOOL)runningMainApp {
+    return [NSBundle.mainBundle.bundleIdentifier isEqual:kMFBundleIDApp];
+}
+// Return YES if called by helper app
++ (BOOL)runningHelper {
+    return [NSBundle.mainBundle.bundleIdentifier isEqual:kMFBundleIDHelper];
+}
+// Return YES if called by accomplice
++ (BOOL)runningAccomplice {
+    return [NSFileManager.defaultManager isExecutableFileAtPath:[NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:kMFAccompliceName]];
+}
+
+#pragma mark - Use command-line tools
 
 /// This returns the output of the CLT, in contrast to the `launchCTL` functions further down
 + (NSString *)launchCTL:(NSURL *)executableURL withArguments:(NSArray<NSString *> *)arguments error:(NSError ** _Nullable)error {
@@ -83,6 +103,9 @@
         [NSTask launchedTaskWithLaunchPath:commandLineTool.path arguments: args];
     }
 }
+
+#pragma mark - Monitor file system
+
 + (FSEventStreamRef)scheduleFSEventStreamOnPaths:(NSArray<NSString *> *)paths withCallback:(FSEventStreamCallback)callback {
     FSEventStreamRef stream = FSEventStreamCreate(kCFAllocatorDefault, callback, NULL, (__bridge CFArrayRef)paths, kFSEventStreamEventIdSinceNow, 1, kFSEventStreamCreateFlagIgnoreSelf ^ kFSEventStreamCreateFlagUseCFTypes);
     FSEventStreamScheduleWithRunLoop(stream, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
@@ -96,9 +119,7 @@
     }
 }
 
-+ (NSObject *)deepCopyOf:(NSObject *)object {
-    return [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:object]];
-}
+#pragma mark - Debug
 
 + (NSString *)callerInfo {
     return [NSString stringWithFormat:@" - %@", [[NSThread callStackSymbols] objectAtIndex:2]];
@@ -107,61 +128,6 @@
     NSLog(@"PRINTING STACK TRACE: %@", [NSThread callStackSymbols]);
 }
 
-// TODO: Consider returning a mutable dict to avoid constantly using `- mutableCopy`. Maybe even alter `dst` in place and return nothing (And rename to `applyOverridesFrom:to:`).
-/// Copy all leaves (elements which aren't dictionaries) from `src` to `dst`. Return the result. (`dst` itself isn't altered)
-/// Recursively search for leaves in `src`. For each srcLeaf found, create / replace a leaf in `dst` at a keyPath identical to the keyPath of srcLeaf and with the value of srcLeaf.
-+ (NSDictionary *)dictionaryWithOverridesAppliedFrom:(NSDictionary *)src to: (NSDictionary *)dst {
-    NSMutableDictionary *dstMutable = [dst mutableCopy];
-    if (dstMutable == nil) {
-        dstMutable = [NSMutableDictionary dictionary];
-    }
-    for (id<NSCopying> key in src) {
-        NSObject *dstVal = dst[key];
-        NSObject *srcVal = src[key];
-        if ([srcVal isKindOfClass:[NSDictionary class]] || [srcVal isKindOfClass:[NSMutableDictionary class]]) { // Not sure if checking for mutable dict AND dict is necessary
-            // Nested dictionary found. Recursing.
-            NSDictionary *recursionResult = [self dictionaryWithOverridesAppliedFrom:(NSDictionary *)srcVal to:(NSDictionary *)dstVal];
-            dstMutable[key] = recursionResult;
-        } else {
-            // Leaf found
-            dstMutable[key] = srcVal;
-        }
-    }
-    return dstMutable;
-}
-
-+ (CGEventType)CGEventTypeForButtonNumber:(MFMouseButtonNumber)button isMouseDown:(BOOL)isMouseDown {
-    
-    CGEventType mouseEventType;
-    
-    if (isMouseDown) {
-       if (button == kMFMouseButtonNumberLeft) {
-           mouseEventType = kCGEventLeftMouseDown;
-       } else if (button == kMFMouseButtonNumberRight) {
-           mouseEventType = kCGEventRightMouseDown;
-       } else {
-           mouseEventType = kCGEventOtherMouseDown;
-       }
-   } else {
-        if (button == kMFMouseButtonNumberLeft) {
-            mouseEventType = kCGEventLeftMouseUp;
-        } else if (button == kMFMouseButtonNumberRight) {
-            mouseEventType = kCGEventRightMouseUp;
-        } else {
-            mouseEventType = kCGEventOtherMouseUp;
-        }
-    }
-    
-    return mouseEventType;
-}
-
-+ (CGMouseButton)CGMouseButtonFromMFMouseButtonNumber:(MFMouseButtonNumber)button {
-    return (CGMouseButton) button - 1;
-}
-
-+ (int8_t)signOf:(double)x {
-    return (0 < x) - (x < 0);
-}
 + (NSString *)currentDispatchQueueDescription {
     return dispatch_get_current_queue().description;
 }
@@ -194,7 +160,38 @@
     
 }
 
-#pragma mark - remaps (-TableViewDataModel) assessment
+#pragma mark - Button Numbers
+
++ (CGEventType)CGEventTypeForButtonNumber:(MFMouseButtonNumber)button isMouseDown:(BOOL)isMouseDown {
+    
+    CGEventType mouseEventType;
+    
+    if (isMouseDown) {
+       if (button == kMFMouseButtonNumberLeft) {
+           mouseEventType = kCGEventLeftMouseDown;
+       } else if (button == kMFMouseButtonNumberRight) {
+           mouseEventType = kCGEventRightMouseDown;
+       } else {
+           mouseEventType = kCGEventOtherMouseDown;
+       }
+   } else {
+        if (button == kMFMouseButtonNumberLeft) {
+            mouseEventType = kCGEventLeftMouseUp;
+        } else if (button == kMFMouseButtonNumberRight) {
+            mouseEventType = kCGEventRightMouseUp;
+        } else {
+            mouseEventType = kCGEventOtherMouseUp;
+        }
+    }
+    
+    return mouseEventType;
+}
+
++ (CGMouseButton)CGMouseButtonFromMFMouseButtonNumber:(MFMouseButtonNumber)button {
+    return (CGMouseButton) button - 1;
+}
+
+#pragma mark - Remaps data model assessment
 
 + (BOOL)button:(NSNumber * _Nonnull)button isPartOfModificationPrecondition:(NSDictionary *)modificationPrecondition {
     NSArray *buttonPreconditions = modificationPrecondition[kMFModificationPreconditionKeyButtons];
@@ -202,6 +199,38 @@
         return [dict[kMFButtonModificationPreconditionKeyButtonNumber] isEqualToNumber:button];
     }];
     return buttonIndexes.count != 0;
+}
+
+#pragma mark - Other
+
++ (NSObject *)deepCopyOf:(NSObject *)object {
+    return [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:object]];
+}
+// TODO: Consider returning a mutable dict to avoid constantly using `- mutableCopy`. Maybe even alter `dst` in place and return nothing (And rename to `applyOverridesFrom:to:`).
+/// Copy all leaves (elements which aren't dictionaries) from `src` to `dst`. Return the result. (`dst` itself isn't altered)
+/// Recursively search for leaves in `src`. For each srcLeaf found, create / replace a leaf in `dst` at a keyPath identical to the keyPath of srcLeaf and with the value of srcLeaf.
++ (NSDictionary *)dictionaryWithOverridesAppliedFrom:(NSDictionary *)src to: (NSDictionary *)dst {
+    NSMutableDictionary *dstMutable = [dst mutableCopy];
+    if (dstMutable == nil) {
+        dstMutable = [NSMutableDictionary dictionary];
+    }
+    for (id<NSCopying> key in src) {
+        NSObject *dstVal = dst[key];
+        NSObject *srcVal = src[key];
+        if ([srcVal isKindOfClass:[NSDictionary class]] || [srcVal isKindOfClass:[NSMutableDictionary class]]) { // Not sure if checking for mutable dict AND dict is necessary
+            // Nested dictionary found. Recursing.
+            NSDictionary *recursionResult = [self dictionaryWithOverridesAppliedFrom:(NSDictionary *)srcVal to:(NSDictionary *)dstVal];
+            dstMutable[key] = recursionResult;
+        } else {
+            // Leaf found
+            dstMutable[key] = srcVal;
+        }
+    }
+    return dstMutable;
+}
+
++ (int8_t)signOf:(double)x {
+    return (0 < x) - (x < 0);
 }
 
 @end

@@ -642,9 +642,9 @@
 			isa = PBXGroup;
 			children = (
 				4FF6653325F2C7B000689B77 /* Constants.h */,
+				4F44FF012606D6FD00926A5E /* MessagePort */,
 				4FF6652C25F2C7B000689B77 /* HelperServices */,
 				4FF6653025F2C7B000689B77 /* Objects */,
-				4F44FF012606D6FD00926A5E /* MessagePort */,
 				4FF6653625F2C7B000689B77 /* Utility */,
 			);
 			path = Shared;
