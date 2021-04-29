@@ -58,6 +58,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 #define kMFWebsiteAddress   @"https://noah-nuebling.github.io/mac-mouse-fix-website" //@"https://mousefix.org"
 
+// Sparkle
+
+// Only the main app deals with Sparkle, so maybe we shouldn't put these constants in this shared class
+
+// Public encryption key for signing Sparkle Updates
+//  Also found in Info.plist
+#define kSUPublicEDKey ZC69ciDfGYN4t3kwRiPc2SC7J4hchv9w+FfVv59r4+U=
+
+// Sub-URLs that, when appended to kMFWebsiteAddress, will point to an RSS Feed (.xml file) describing Sparkle Updates.
+//  SUFeedURL is also found in Info.plist
+//  Also see https://sparkle-project.org/documentation/customization/
+#define kSUFeedURLSub @"/appcast.xml"
+#define kSUFeedURLSubBeta @"/appcast-beta.xml"
+
 // Remapping dictionary keywords
 
 typedef NSString*                                                       MFStringConstant; // Not sure if this is useful

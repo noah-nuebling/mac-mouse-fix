@@ -28,6 +28,8 @@
 	<string>MouseFix</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>SUFeedURL</key>
+	<string>https://noah-nuebling.github.io/mac-mouse-fix-website/appcast.xml</string>
 	<key>SUPublicEDKey</key>
 	<string>ZC69ciDfGYN4t3kwRiPc2SC7J4hchv9w+FfVv59r4+U=</string>
 </dict>
