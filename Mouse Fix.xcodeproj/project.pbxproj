@@ -19,6 +19,7 @@
 		4F37FAD825FDFDC5004C34C4 /* MFScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */; };
 		4F39BC26263AC31600FDF692 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F39BC24263AC2E800FDF692 /* Sparkle.framework */; };
 		4F39BC27263AC31600FDF692 /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F39BC24263AC2E800FDF692 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4F39BC3B263AF2B000FDF692 /* SparkleUpdaterDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F39BC3A263AF2B000FDF692 /* SparkleUpdaterDelegate.m */; };
 		4F44FEF82606A5C100926A5E /* default_config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F44FEF72606A5C100926A5E /* default_config.plist */; };
 		4F44FF042606D73D00926A5E /* SharedMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* SharedMessagePort.m */; };
 		4F44FF052606D73D00926A5E /* SharedMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* SharedMessagePort.m */; };
@@ -215,6 +216,8 @@
 		4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFScrollView.m; sourceTree = "<group>"; };
 		4F39BC24263AC2E800FDF692 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		4F39BC2C263AC48C00FDF692 /* Sparkle-1.26.0.tar.xz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Sparkle-1.26.0.tar.xz"; sourceTree = "<group>"; };
+		4F39BC39263AF2B000FDF692 /* SparkleUpdaterDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SparkleUpdaterDelegate.h; sourceTree = "<group>"; };
+		4F39BC3A263AF2B000FDF692 /* SparkleUpdaterDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SparkleUpdaterDelegate.m; sourceTree = "<group>"; };
 		4F422EEC23469B0F00AA6E22 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F44FEF72606A5C100926A5E /* default_config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_config.plist; sourceTree = "<group>"; };
 		4F44FF022606D73D00926A5E /* SharedMessagePort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharedMessagePort.h; sourceTree = "<group>"; };
@@ -722,6 +725,8 @@
 				4FF665C825F2C92700689B77 /* UpdateWindow.h */,
 				4FF665CB25F2C92700689B77 /* UpdateWindow.m */,
 				4FF665CA25F2C92700689B77 /* UpdateWindow.xib */,
+				4F39BC39263AF2B000FDF692 /* SparkleUpdaterDelegate.h */,
+				4F39BC3A263AF2B000FDF692 /* SparkleUpdaterDelegate.m */,
 			);
 			path = Update;
 			sourceTree = "<group>";
@@ -1366,6 +1371,7 @@
 				4FF665ED25F2C92700689B77 /* MFSegmentedControl.m in Sources */,
 				4FF6660225F2C92700689B77 /* ClickableImageView.m in Sources */,
 				4F79A81C2604317200076A7E /* MFNotificationController.m in Sources */,
+				4F39BC3B263AF2B000FDF692 /* SparkleUpdaterDelegate.m in Sources */,
 				4F1C51DA260543DD007F4930 /* NSTextField+Additions.m in Sources */,
 				4F2F5DA825FB6FFD0037660A /* AddWindowController.m in Sources */,
 				4FF6655025F2C7B000689B77 /* NSArray+Additions.m in Sources */,

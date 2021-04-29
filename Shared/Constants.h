@@ -67,8 +67,7 @@ NS_ASSUME_NONNULL_BEGIN
 #define kSUPublicEDKey ZC69ciDfGYN4t3kwRiPc2SC7J4hchv9w+FfVv59r4+U=
 
 // Sub-URLs that, when appended to kMFWebsiteAddress, will point to an RSS Feed (.xml file) describing Sparkle Updates.
-//  SUFeedURL is also found in Info.plist
-//  Also see https://sparkle-project.org/documentation/customization/
+//  SUFeedURL is also found in Info.plist. Also see https://sparkle-project.org/documentation/customization/.
 #define kSUFeedURLSub @"/appcast.xml"
 #define kSUFeedURLSubBeta @"/appcast-beta.xml"
 

@@ -24,6 +24,7 @@
 #import "NSView+Additions.h"
 #import "AppTranslocationManager.h"
 #import "MessagePort_App.h"
+#import <Sparkle/Sparkle.h>
 
 @interface AppDelegate ()
 
@@ -115,16 +116,35 @@ static NSDictionary *sideButtonActions;
     
 }
 
+- (void)applicationWillFinishLaunching:(NSNotification *)notification {
+    
+    // Update app launch counter
+    
+    //...
+    
+    // Configure Sparkle Updater
+    // See https://sparkle-project.org/documentation/customization/
+    
+    SUUpdater *up = SUUpdater.sharedUpdater;
+    
+    up.automaticallyChecksForUpdates = NO;
+    
+    BOOL checkForUpdates = [[ConfigFileInterface_App.config valueForKeyPath:@"Other.checkForUpdates"] boolValue];
+    
+    BOOL checkForPrereleases = [ConfigFileInterface_App.config[kMFConfigKeyOther][@"checkForPrereleases"] boolValue];
+    
+    if (checkForUpdates == YES) {
+        [Updater checkForUpdate];
+    }
+    
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
     
     NSLog(@"Mac Mouse Fix finished launching");
     
     [self setUIToConfigFile];
     
-    BOOL checkForUpdates = [[ConfigFileInterface_App.config valueForKeyPath:@"Other.checkForUpdates"] boolValue];
-    if (checkForUpdates == YES) {
-        [Updater checkForUpdate];
-    }
 }
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
     NSLog(@"Mac Mouse Fix should terminate");

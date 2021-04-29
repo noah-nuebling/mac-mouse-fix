@@ -352,7 +352,12 @@ Tips:
                 <outlet property="view" destination="zJh-jy-oKM" id="GWC-PD-NjZ"/>
             </connections>
         </customObject>
-        <customObject id="6iu-bA-WM9" customClass="SUUpdater"/>
+        <customObject id="6iu-bA-WM9" customClass="SUUpdater">
+            <connections>
+                <outlet property="delegate" destination="iab-hA-K07" id="gdw-fE-nvv"/>
+            </connections>
+        </customObject>
+        <customObject id="iab-hA-K07" customClass="SparkleUpdaterDelegate"/>
         <menuItem title="Launchpad" tag="160" id="9rC-Ff-2hb"/>
         <menu title="Main Menu" systemMenu="main" id="DQZ-tv-r6C">
             <items>

@@ -174,10 +174,18 @@
 	<dict>
 		<key>checkForUpdates</key>
 		<true/>
+		<key>checkForPreReleases</key>
+		<false/>
 		<key>configVersion</key>
 		<integer>7</integer>
 		<key>skippedBundleVersion</key>
 		<integer>0</integer>
+		<key>launchesOverall</key>
+		<string>0</string>
+		<key>lastLaunchedBundleVersion</key>
+		<integer>-1</integer>
+		<key>launchesOfCurrentBundleVersion</key>
+		<string>0</string>
 	</dict>
 	<key>Remaps</key>
 	<array>
@@ -323,13 +331,13 @@
 		<key>other</key>
 		<dict>
 			<key>consecutiveScrollSwipeMaxIntervall</key>
-			<real>0.34999999999999998</real>
+			<real>0.35</real>
 			<key>consecutiveScrollTickMaxIntervall</key>
 			<real>0.13</real>
 			<key>fastScrollExponentialBase</key>
-			<real>1.1000000000000001</real>
+			<real>1.1</real>
 			<key>fastScrollFactor</key>
-			<real>1.1000000000000001</real>
+			<real>1.1</real>
 			<key>fastScrollThreshold_inSwipes</key>
 			<integer>3</integer>
 			<key>scrollSwipeThreshold_inTicks</key>
@@ -342,9 +350,9 @@
 		<key>smoothParameters</key>
 		<dict>
 			<key>acceleration</key>
-			<real>1.1100000000000001</real>
+			<real>1.11</real>
 			<key>friction</key>
-			<real>2.2999999999999998</real>
+			<real>2.3</real>
 			<key>frictionDepth</key>
 			<integer>1</integer>
 			<key>msPerStep</key>
