@@ -220,6 +220,14 @@
 		4F39BC49263B179200FDF692 /* AppState.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppState.m; sourceTree = "<group>"; };
 		4F39BC5C263B401E00FDF692 /* generate_appcasts.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = generate_appcasts.sh; sourceTree = "<group>"; };
 		4F39BC62263B49B300FDF692 /* generate_appcasts.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = generate_appcasts.py; sourceTree = "<group>"; };
+		4F39BC89263B692100FDF692 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
+		4F39BC8A263B693300FDF692 /* MainAppRelease.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = MainAppRelease.xcconfig; sourceTree = "<group>"; };
+		4F39BC8B263B697200FDF692 /* HelperRelease.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = HelperRelease.xcconfig; sourceTree = "<group>"; };
+		4F39BC8C263B6A8800FDF692 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
+		4F39BC8D263B6A9100FDF692 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		4F39BCA4263B6DC200FDF692 /* MainAppDebug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = MainAppDebug.xcconfig; sourceTree = "<group>"; };
+		4F39BCA5263B6DDA00FDF692 /* HelperDebug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = HelperDebug.xcconfig; sourceTree = "<group>"; };
+		4F39BCA6263B6E8000FDF692 /* Accomplice.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Accomplice.xcconfig; sourceTree = "<group>"; };
 		4F422EEC23469B0F00AA6E22 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F44FEF72606A5C100926A5E /* default_config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_config.plist; sourceTree = "<group>"; };
 		4F44FF022606D73D00926A5E /* SharedMessagePort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharedMessagePort.h; sourceTree = "<group>"; };
@@ -490,9 +498,26 @@
 			path = Scripts;
 			sourceTree = "<group>";
 		};
+		4F39BC88263B68F400FDF692 /* xcconfig */ = {
+			isa = PBXGroup;
+			children = (
+				4F39BC89263B692100FDF692 /* Base.xcconfig */,
+				4F39BC8C263B6A8800FDF692 /* Release.xcconfig */,
+				4F39BC8D263B6A9100FDF692 /* Debug.xcconfig */,
+				4F39BC8A263B693300FDF692 /* MainAppRelease.xcconfig */,
+				4F39BCA4263B6DC200FDF692 /* MainAppDebug.xcconfig */,
+				4F39BC8B263B697200FDF692 /* HelperRelease.xcconfig */,
+				4F39BCA5263B6DDA00FDF692 /* HelperDebug.xcconfig */,
+				4F39BCA6263B6E8000FDF692 /* Accomplice.xcconfig */,
+			);
+			path = xcconfig;
+			sourceTree = "<group>";
+		};
 		4F422EF023469B2B00AA6E22 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				4F39BC88263B68F400FDF692 /* xcconfig */,
+				4F39BC5B263B3FCC00FDF692 /* Scripts */,
 				4F422EEC23469B0F00AA6E22 /* README.md */,
 			);
 			name = Other;
@@ -628,7 +653,6 @@
 				4FA1ACE025E85904007DB95B /* Tests */,
 				4F1793A725EEC8E500E8309B /* Frameworks */,
 				4FCECD8121092354001F1078 /* Products */,
-				4F39BC5B263B3FCC00FDF692 /* Scripts */,
 				4F422EF023469B2B00AA6E22 /* Other */,
 			);
 			sourceTree = "<group>";
@@ -1505,6 +1529,7 @@
 /* Begin XCBuildConfiguration section */
 		4F2FDF352315662500C7BE14 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4F39BCA6263B6E8000FDF692 /* Accomplice.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = Accomplice/Accomplice.entitlements;
@@ -1525,6 +1550,7 @@
 		};
 		4F2FDF362315662500C7BE14 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4F39BCA6263B6E8000FDF692 /* Accomplice.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = Accomplice/Accomplice.entitlements;
@@ -1544,6 +1570,7 @@
 		};
 		4F94F61325E5EC2800D9F24A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4F39BCA4263B6DC200FDF692 /* MainAppDebug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1571,6 +1598,7 @@
 		};
 		4F94F61425E5EC2800D9F24A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4F39BC8A263B693300FDF692 /* MainAppRelease.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1723,7 +1751,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -1776,7 +1803,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -1785,6 +1811,7 @@
 		};
 		4FCECDA821092354001F1078 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4F39BCA5263B6DDA00FDF692 /* HelperDebug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconRound;
 				CLANG_ENABLE_MODULES = YES;
@@ -1814,6 +1841,7 @@
 		};
 		4FCECDA921092354001F1078 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4F39BC8B263B697200FDF692 /* HelperRelease.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconRound;
 				CLANG_ENABLE_MODULES = YES;
