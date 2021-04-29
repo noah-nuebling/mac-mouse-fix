@@ -10,12 +10,9 @@
 // implement checkbox functionality, setup AddingField mouse tracking and other minor stuff
 
 #import <PreferencePanes/PreferencePanes.h>
-#import <ServiceManagement/SMLoginItem.h>
 #import "AppDelegate.h"
-#import "Updater.h"
 #import "ConfigFileInterface_App.h"
 #import "SharedMessagePort.h"
-#import "UpdateWindow.h"
 #import "Utility_App.h"
 #import "AuthorizeAccessibilityView.h"
 #import "HelperServices.h"
@@ -229,7 +226,7 @@ NSTimer *removeAccOverlayTimer;
 }
 
 - (void)windowWillClose:(NSNotification *)notification {
-    [UpdateWindow.instance close];
+//    [UpdateWindow.instance close]; Can't find a way to close Sparkle Window
     [OverridePanel.instance close];
     [MoreSheet.instance end];
 }

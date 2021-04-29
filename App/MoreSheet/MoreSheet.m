@@ -9,10 +9,10 @@
 
 #import "MoreSheet.h"
 #import "ConfigFileInterface_App.h"
-#import "../Update/Updater.h"
-#import "../MessagePort/MessagePort_App.h"
+#import "MessagePort_App.h"
 #import "AppDelegate.h"
 #import "Utility_App.h"
+#import <Sparkle/Sparkle.h>
 
 
 @interface MoreSheet ()
@@ -40,10 +40,10 @@ static MoreSheet *_instance;
 
 - (IBAction)checkForUpdateCheckBox:(NSButton *)sender {
     NSLog(@"CHECK");
-    [ConfigFileInterface_App.config setValue:@"0" forKeyPath:@"Other.skippedBundleVersion"];
+    setConfig(@"Other.skippedBundleVersion", @"0");
     [self UIChanged:NULL];
     if (sender.state == 1) {
-        [Updater checkForUpdate];
+        [SUUpdater.sharedUpdater checkForUpdatesInBackground];
         
     }
 }
@@ -104,8 +104,8 @@ static MoreSheet *_instance;
 }
 
 - (void)setConfigFileToUI {
-    [ConfigFileInterface_App.config setValue:[NSNumber numberWithBool:_checkForUpdateCheckBox.state] forKeyPath:@"Other.checkForUpdates"];
-    [ConfigFileInterface_App writeConfigToFileAndNotifyHelper];
+    setConfig(@"Other.checkForUpdates", @(_checkForUpdateCheckBox.state));
+    commitConfig();
 }
 
 @end

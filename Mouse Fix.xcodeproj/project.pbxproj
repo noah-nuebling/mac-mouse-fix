@@ -63,9 +63,6 @@
 		4FF665ED25F2C92700689B77 /* MFSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665C125F2C92700689B77 /* MFSegmentedControl.m */; };
 		4FF665EE25F2C92700689B77 /* OverridePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665C225F2C92700689B77 /* OverridePanel.m */; };
 		4FF665EF25F2C92700689B77 /* ScrollOverridePanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FF665C325F2C92700689B77 /* ScrollOverridePanel.xib */; };
-		4FF665F025F2C92700689B77 /* Updater.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665C725F2C92700689B77 /* Updater.m */; };
-		4FF665F125F2C92700689B77 /* UpdateWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FF665CA25F2C92700689B77 /* UpdateWindow.xib */; };
-		4FF665F225F2C92700689B77 /* UpdateWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665CB25F2C92700689B77 /* UpdateWindow.m */; };
 		4FF665F325F2C92700689B77 /* MoreSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665CD25F2C92700689B77 /* MoreSheet.m */; };
 		4FF665F425F2C92700689B77 /* MoreSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FF665CE25F2C92700689B77 /* MoreSheet.xib */; };
 		4FF665F525F2C92700689B77 /* ConfigFileInterface_App.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665D125F2C92700689B77 /* ConfigFileInterface_App.m */; };
@@ -285,11 +282,6 @@
 		4FF665C325F2C92700689B77 /* ScrollOverridePanel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScrollOverridePanel.xib; sourceTree = "<group>"; };
 		4FF665C425F2C92700689B77 /* MFSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MFSegmentedControl.h; sourceTree = "<group>"; };
 		4FF665C525F2C92700689B77 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		4FF665C725F2C92700689B77 /* Updater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Updater.m; sourceTree = "<group>"; };
-		4FF665C825F2C92700689B77 /* UpdateWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateWindow.h; sourceTree = "<group>"; };
-		4FF665C925F2C92700689B77 /* Updater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Updater.h; sourceTree = "<group>"; };
-		4FF665CA25F2C92700689B77 /* UpdateWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UpdateWindow.xib; sourceTree = "<group>"; };
-		4FF665CB25F2C92700689B77 /* UpdateWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateWindow.m; sourceTree = "<group>"; };
 		4FF665CD25F2C92700689B77 /* MoreSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreSheet.m; sourceTree = "<group>"; };
 		4FF665CE25F2C92700689B77 /* MoreSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MoreSheet.xib; sourceTree = "<group>"; };
 		4FF665CF25F2C92700689B77 /* MoreSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreSheet.h; sourceTree = "<group>"; };
@@ -723,11 +715,6 @@
 		4FF665C625F2C92700689B77 /* Update */ = {
 			isa = PBXGroup;
 			children = (
-				4FF665C925F2C92700689B77 /* Updater.h */,
-				4FF665C725F2C92700689B77 /* Updater.m */,
-				4FF665C825F2C92700689B77 /* UpdateWindow.h */,
-				4FF665CB25F2C92700689B77 /* UpdateWindow.m */,
-				4FF665CA25F2C92700689B77 /* UpdateWindow.xib */,
 				4F39BC39263AF2B000FDF692 /* SparkleUpdaterDelegate.h */,
 				4F39BC3A263AF2B000FDF692 /* SparkleUpdaterDelegate.m */,
 			);
@@ -1273,7 +1260,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4FF665F125F2C92700689B77 /* UpdateWindow.xib in Resources */,
 				4FF6654225F2C7B000689B77 /* default_launchd.plist in Resources */,
 				4FF665F425F2C92700689B77 /* MoreSheet.xib in Resources */,
 				4FF665FC25F2C92700689B77 /* AuthorizeAccessibilityView.xib in Resources */,
@@ -1365,7 +1351,6 @@
 				4FF665EE25F2C92700689B77 /* OverridePanel.m in Sources */,
 				4FF665F525F2C92700689B77 /* ConfigFileInterface_App.m in Sources */,
 				4FF6654E25F2C7B000689B77 /* SharedUtility.m in Sources */,
-				4FF665F025F2C92700689B77 /* Updater.m in Sources */,
 				4F8CE7012617738A00D70A76 /* AppTranslocationManager.m in Sources */,
 				4FF665FE25F2C92700689B77 /* main.m in Sources */,
 				4F1B832D26081A5500AEAF37 /* CaptureNotifications.m in Sources */,
@@ -1391,7 +1376,6 @@
 				4F79A82B2605074000076A7E /* NSAttributedString+Additions.m in Sources */,
 				4F7AB0552606698A0008055E /* UIStrings.m in Sources */,
 				4FF6660125F2C92700689B77 /* Utility_App.m in Sources */,
-				4FF665F225F2C92700689B77 /* UpdateWindow.m in Sources */,
 				4F79A83626051E4A00076A7E /* MFNotification.m in Sources */,
 				4F79C2EA260976950067B381 /* RemapTableTranslator.m in Sources */,
 				4FB4F9FE260FDBC800806DDD /* RemapTableUtility.m in Sources */,
