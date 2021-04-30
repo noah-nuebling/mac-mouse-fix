@@ -238,9 +238,9 @@ def generate():
     {}
   </channel>
 </rss>'''
-        items_joined = '\n'.format(appcast_items)
+        items_joined = '\n'.join(appcast_items)
         appcast_content_string = appcast_format_string.format(appcast_url, items_joined)
-        pre_items_joined = '\n'.format(appcast_pre_items)
+        pre_items_joined = '\n'.join(appcast_pre_items)
         appcast_pre_content_string = appcast_pre_format_string.format(appcast_pre_url, pre_items_joined)
 
         # Write to file
