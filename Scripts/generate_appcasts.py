@@ -136,7 +136,9 @@ def generate():
 
             # Get edSignature
             signature_and_length = subprocess.check_output(f"./{sparkle_project_path}/bin/sign_update {download_zip_path}", shell=True).decode('utf-8')
-            print(os.getcwd())
+            signature_and_length = signature_and_length[0:-1]
+
+            # Unzip update
             os.system(f'ditto -V -x -k --sequesterRsrc --rsrc "{download_zip_path}" "{download_folder}"') # This works, while subprocess.check_output doesn't for some reason
 
             app_path = f'{download_folder}/{app_bundle_name}'
