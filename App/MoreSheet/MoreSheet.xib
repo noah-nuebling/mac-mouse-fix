@@ -185,14 +185,14 @@ Turn this off and on again if you skipped an update and have changed your mind</
                         <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                     </imageView>
                     <button verticalHuggingPriority="750" id="Opz-In-sXR">
-                        <rect key="frame" x="31" y="67" width="147" height="16"/>
+                        <rect key="frame" x="31" y="71" width="124" height="11"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <string key="toolTip">Check for an update every time you open Mac Mouse Fix
 
 Turn this off and on again if you skipped an update and have changed your mind</string>
-                        <buttonCell key="cell" type="check" title="Update to beta versions" bezelStyle="regularSquare" imagePosition="left" controlSize="small" inset="2" id="XE3-Wv-ejl">
+                        <buttonCell key="cell" type="check" title="Update to beta versions" bezelStyle="regularSquare" imagePosition="left" controlSize="mini" inset="2" id="XE3-Wv-ejl">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="smallSystem"/>
+                            <font key="font" metaFont="miniSystem"/>
                         </buttonCell>
                         <connections>
                             <action selector="prereleaseCheckBox:" target="-2" id="5Sj-6S-70X"/>
