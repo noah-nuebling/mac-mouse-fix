@@ -7,6 +7,341 @@
     <description>Prereleases of Mac Mouse Fix</description>
     <language>en</language>
     
+    <item>
+        <title>2.0.0 Beta 5 available!</title>
+        <pubDate>2021-04-30T02:39:21Z</pubDate>
+        <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
+        <description><![CDATA[
+            <p>Don’t download this, this release is meant to test a new update mechanism.</p>
 
+        ]]>
+        </description>
+        <enclosure
+            url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.0.0-Beta-5/MacMouseFixApp.zip"
+            sparkle:version="5906"
+            sparkle:shortVersionString="2.0.0 Beta 5"
+            sparkle:edSignature="uk08EjTG9o2UTYcN00e9XHRUmaDLo5Nn3z26i0Qr9eJxA61MlOEvtf78PJj1Cxjch2l4jsIwXnsTts4N4Y+cDQ==" length="2840765"
+            type="application/octet-stream"
+        />
+    </item>
+
+    <item>
+        <title>2.0.0 Beta 4 available!</title>
+        <pubDate>2021-04-15T20:52:08Z</pubDate>
+        <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
+        <description><![CDATA[
+            <h3 id="changes-in-beta-4">Changes in Beta 4</h3>
+<ul>
+<li>Various improvements to the user experience.</li>
+<li>The remap table is now grouped by button, making it much easier to parse, especially when using many actions on the same button.</li>
+<li>The default configuration now features lots more actions mapped to the Middle Button. Namely ‘Look Up’, ‘Show Desktop’, ‘Launchpad’, and ‘Mission Control &amp; Spaces’. I think that, with the new cleaned-up layout, this is not overwhelming to new users like it would have been with the old layout. It teaches users about the possibilities and it empowers users who don’t like to spend much time setting things up.</li>
+<li>Introduces toast notifications. These allow Mac Mouse Fix to show peripheral and contextual information without obstructing what the user wants to do.</li>
+<li>When a button is captured or uncaptured by Mac Mouse Fix a toast appears with info on what’s happening and a link to a help page. (Link is not currently working)</li>
+<li>When the user tries to assign an action to the Primary or Secondary Mouse Button - which is not currently supported - a toast appears providing appropriate feedback.</li>
+<li>Many other small improvements.</li>
+</ul>
+<h3 id="how-you-can-help">How you can help</h3>
+<ul>
+<li>Describe your thoughts and experiences with the new UI in general. Have you found anything confusing or struggled to make the app work how you want it to? Let me know!</li>
+<li>Share your opinions and improvement ideas on new UI text.<br />
+There is quite a lot of new text in the app. I’d love for it to strike a great balance between unambiguity and simplicity. I’m not great at writing so if anything strikes you as suboptimal, let me know!</li>
+<li>File a bug report if something goes wrong.</li>
+<li>If you have any other ideas or opinions, I’d love to hear them, too!</li>
+</ul>
+<p>You can use <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose">Mac Mouse Fix Feedback Assistant</a> to help you create great enhancement requests and bug reports.</p>
+<p><a href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/82">GitHub Discussions</a> is a great place for you to share any other thoughts.</p>
+<p>Thanks for helping to make Mac Mouse Fix better! :)</p>
+
+        ]]>
+        </description>
+        <enclosure
+            url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.0.0-Beta-4/MacMouseFixApp.zip"
+            sparkle:version="5842"
+            sparkle:shortVersionString="2.0.0 Beta 4"
+            sparkle:edSignature="BBIdcgIE0IFe1HCDrV5pF8wkQKCN/ZFEskHpVSCn0x4tHmW2Bp6hjlz90l3ons2fhWRwrvKeSseyHxw2uCHFAw==" length="1854145"
+            type="application/octet-stream"
+        />
+    </item>
+
+    <item>
+        <title>2.0.0 Beta 3 available!</title>
+        <pubDate>2021-04-06T19:34:19Z</pubDate>
+        <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
+        <description><![CDATA[
+            <h3 id="changes-in-beta-3">Changes in Beta 3</h3>
+<ul>
+<li>Fixed some issues when upgrading from the old prefpane version of the app to the new app version</li>
+<li>Fixed some issues when running the app without moving it out of the Downloads folder</li>
+<li>Minor UI and UX improvements. Click and Drag should now follow the mouse pointer super closely.</li>
+</ul>
+<h3 id="how-you-can-help">How you can help</h3>
+<ul>
+<li>Stress test the remapping engine.</li>
+<li>Describe your thoughts and experiences with the new UI in general. Do you have any ideas on how to improve things? Have you struggled making the app work how you want it to? Let me know!</li>
+<li>File a bug report if something goes wrong.</li>
+<li>If you have any other ideas or opinions, I’d love to hear them, too!</li>
+</ul>
+<p>You can use <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose">Mac Mouse Fix Feedback Assistant</a> to help you create amazing feedback.</p>
+<p>Thanks for helping to make Mac Mouse Fix better! :)</p>
+
+        ]]>
+        </description>
+        <enclosure
+            url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.0.0-Beta-3/MacMouseFixApp.zip"
+            sparkle:version="5150"
+            sparkle:shortVersionString="2.0.0 Beta 3"
+            sparkle:edSignature="CSr2TnEV462625GHjji+Xj5JQWGcW18bE2FRyPEnYAPKzqSmbpV58U42E/DBemhXLuDpDJqwtYRF/3XK57faCA==" length="1833252"
+            type="application/octet-stream"
+        />
+    </item>
+
+    <item>
+        <title>2.0.0 Beta 2 available!</title>
+        <pubDate>2021-03-29T16:15:58Z</pubDate>
+        <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
+        <description><![CDATA[
+            <h3 id="changes-in-beta-2">Changes in Beta 2</h3>
+<ul>
+<li>Use keyboard shortcuts right from your mouse! I made sure this feature is super easy to use and incredibly flexible, just like the rest of the new remapping engine. I think you’ll love it!</li>
+<li>Various small tweaks to UI text and layout.</li>
+<li>Fixes a bug where some users couldn’t close the Add Window. (Thanks <span class="citation" data-cites="4332weizi">@4332weizi</span>!)</li>
+</ul>
+<h3 id="how-you-can-help">How you can help</h3>
+<ul>
+<li>Stress test the remapping engine.</li>
+<li>Describe your thoughts and experiences with the new UI in general. Have you found anything unintuitive, cumbersome, etc? Have you struggled making the app work how you want it to? Let me know!</li>
+<li>Share your opinions and improvement ideas on new UI text.
+<ul>
+<li>There is quite a lot of new text in the app. I’d love for it to strike a great balance between unambiguity and simplicity. It’s not quite there yet, I think.</li>
+</ul></li>
+<li>File a bug report if something goes wrong.</li>
+<li>If you have any other ideas or opinions, I’d love to hear them, too!</li>
+</ul>
+<p>You can use <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose">Mac Mouse Fix Feedback Assistant</a> to help you create amazing feedback.</p>
+<p>Thanks for helping to make Mac Mouse Fix even better! :)</p>
+
+        ]]>
+        </description>
+        <enclosure
+            url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.0.0-Beta-2/MacMouseFixApp.zip"
+            sparkle:version="5082"
+            sparkle:shortVersionString="2.0.0 Beta 2"
+            sparkle:edSignature="KQDaDRvgCzlsnWncuNk+Js1MFLaZ7KkkY5q3owPTZ7IsDUNdBcZzJsA1/fxWCmm+1tH33nYNiC0LfVfvMf8/DA==" length="1821019"
+            type="application/octet-stream"
+        />
+    </item>
+
+    <item>
+        <title>2.0.0 Beta 1 available!</title>
+        <pubDate>2021-03-25T03:33:24Z</pubDate>
+        <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
+        <description><![CDATA[
+            <h3 id="features-in-2.0.0">Features in 2.0.0</h3>
+<ul>
+<li>Click and drag to use Mission Control, switch between Spaces or see Application Windows from a single button in a highly responsive and intuitive way. This is made possible because due to reverse engineering the way that touch input is processed by macOS to enable for unparalleled simulation of 3 finger swipes on an Apple Trackpad.</li>
+<li>Brand new, best-in-class remapping engine that lets you configure your mouse buttons in whatever way you want in a super easy way. Fully supports mice with up to 32 buttons. Use double click, click and hold, click and drag, keyboard modifiers and more to make your mouse super useful.</li>
+<li>Added an option to use ‘Smart Zoom’ right from your mouse.</li>
+<li>Added options to use the default functions of Mouse Buttons alongside the additional ones that Mac Mouse Fix provides.
+<ul>
+<li>Added option to simulate mouse button click input. Hold the Option (⌥) key while choosing a function for a mouse button to see this option. (Use the ‘Open Link in new Tab’ option to simulate clicks of the Middle Mouse Button) (Strings have been changed in later Betas)</li>
+<li>Added an option to simulate mouse button 3 click and drag, so you can use Blender and other software alongside the other features provided by Mac Mouse Fix. Hold the Option (⌥) key while choosing a function for a click and drag input to see this option.</li>
+</ul></li>
+</ul>
+<h3 id="how-you-can-help">How you can help</h3>
+<ul>
+<li>Stress test the remapping engine.</li>
+<li>Describe your thoughts and experiences with the new UI in general. Have you found anything unintuitive, cumbersome, etc? Have you struggled making the app work how you want it to? Let me know!</li>
+<li>Share your opinions and improvement ideas on new UI text.
+<ul>
+<li>There is quite a lot of new text in the app. I’d love for it to strike a great balance between unambiguity and simplicity. It’s not quite there yet, I think.</li>
+</ul></li>
+<li>File a bug report if something goes wrong.</li>
+<li>If you have any other ideas or opinions, I’d love to hear them, too!</li>
+</ul>
+<p>You can use <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose">Mac Mouse Fix Feedback Assistant</a> to help you create amazing feedback.</p>
+<p>Thanks for helping to make Mac Mouse Fix even better! :)</p>
+
+        ]]>
+        </description>
+        <enclosure
+            url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.0.0-Beta-1/MacMouseFixApp.zip"
+            sparkle:version="4455"
+            sparkle:shortVersionString="2.0.0 Beta 1"
+            sparkle:edSignature="8BA7xcnkUjZtuWZnK2mN97AYJ8k0DTO1Ah6fXFKVrGtUZuuz9r36IsCjsR04Ep6XevSiMVGCKr7mJR7NQS9OCg==" length="1790884"
+            type="application/octet-stream"
+        />
+    </item>
+
+    <item>
+        <title>1.0.3 available!</title>
+        <pubDate>2021-03-25T00:35:32Z</pubDate>
+        <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
+        <description><![CDATA[
+            <h3 id="changes">Changes</h3>
+<ul>
+<li>Fixes an issue where the app-specific settings table would sometimes display its first column super wide after switching to dark mode</li>
+<li>Fixes several issues that would occur when installing the app version of Mac Mouse Fix while the old preference pane version was still running. Resolves #67.</li>
+</ul>
+
+        ]]>
+        </description>
+        <enclosure
+            url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/1.0.3/MacMouseFixApp.zip"
+            sparkle:version="2335"
+            sparkle:shortVersionString="1.0.3"
+            sparkle:edSignature="JYYtb7cP5HFE8fo8JJm/qT1xLDw3pHUjmMFKSiU0x0/UqTnxAmw60fI8t1pyq1dajglD1PMeZNyChbRGLWOtBg==" length="1743017"
+            type="application/octet-stream"
+        />
+    </item>
+
+    <item>
+        <title>1.0.2 available!</title>
+        <pubDate>2021-03-22T23:00:40Z</pubDate>
+        <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
+        <description><![CDATA[
+            <h3 id="changes">Changes</h3>
+<p>This release fixes an issue where the “Invert scrolling direction” option would always re-enable itself after launching the app. (See #68)</p>
+
+        ]]>
+        </description>
+        <enclosure
+            url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/1.0.2/MacMouseFixApp.zip"
+            sparkle:version="2325"
+            sparkle:shortVersionString="1.0.2"
+            sparkle:edSignature="lMQ5DMXfrT1dGgrf6tQ+l+/4UJ0/O5SXEIkOz5i+6k6VXARVKSvOHb5bgNRdo2ZuYZv4IPT3lAAzvTB9ExoCAQ==" length="1742433"
+            type="application/octet-stream"
+        />
+    </item>
+
+    <item>
+        <title>1.0.1 available!</title>
+        <pubDate>2021-03-03T00:20:23Z</pubDate>
+        <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
+        <description><![CDATA[
+            <h3 id="changes">Changes</h3>
+<ul>
+<li>Icons on the ‘More…’ sheet are now displayed properly on older macOS versions.</li>
+<li>Mac Mouse Fix is now a Universal Binary running natively on M1 Macs.</li>
+<li>Improved scrolling behaviour when Smooth Scrolling is turned off. Fixes #61.</li>
+</ul>
+
+        ]]>
+        </description>
+        <enclosure
+            url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/1.0.1/MacMouseFixApp.zip"
+            sparkle:version="2309"
+            sparkle:shortVersionString="1.0.1"
+            sparkle:edSignature="JABjbX4bGMfagl3Ph+eTLk0nAQ1whno9Kv7z0aEg/wM8X8DFZhkHulP2tQUauUYPzG6cn9ax348emTYFqfrZBw==" length="1742389"
+            type="application/octet-stream"
+        />
+    </item>
+
+    <item>
+        <title>1.0.1 Beta 2 available!</title>
+        <pubDate>2021-03-02T19:49:52Z</pubDate>
+        <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
+        <description><![CDATA[
+            <h3 id="changes">Changes</h3>
+<ul>
+<li>Mac Mouse Fix is now a universal binary running natively on M1 Macs</li>
+</ul>
+<h3 id="help-feedback">Help &amp; Feedback</h3>
+<p>If you have any feedback feel free to:</p>
+<ul>
+<li><a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/new">Open an issue here on GitHub</a></li>
+<li><a href="mailto:noah.n.public@gmail.com?subject=Mac%20Mouse%20Fix%200.9.2%20Beta%204%20-%20Issue%20report">Reach out at noah.n.public@gmail.com</a></li>
+</ul>
+<p>Thanks for making Mac Mouse Fix better! :)</p>
+
+        ]]>
+        </description>
+        <enclosure
+            url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/1.0.1-Beta-2/MacMouseFixApp.zip"
+            sparkle:version="2304"
+            sparkle:shortVersionString="1.0.1 Beta 2"
+            sparkle:edSignature="7vBG7p4aDszB1cdS+w/Dk+ZH0N6rPSuokI7HWhCFiEH3ha5Ui+Sr17Pg5d9rllwQeLIKjQuYezsa9SbwwQ2IBA==" length="1645483"
+            type="application/octet-stream"
+        />
+    </item>
+
+    <item>
+        <title>1.0.1 Beta 1 available!</title>
+        <pubDate>2021-03-02T17:49:14Z</pubDate>
+        <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
+        <description><![CDATA[
+            <h3 id="changes">Changes</h3>
+<ul>
+<li>Improved scrolling behaviour when Smooth Scrolling is turned off. Might make scrolling less reliable in general. Fixes <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/61">this issue</a>.</li>
+</ul>
+<h3 id="help-feedback">Help &amp; Feedback</h3>
+<p>If you have any feedback feel free to:</p>
+<ul>
+<li><a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/new">Open an issue here on GitHub</a></li>
+<li><a href="mailto:noah.n.public@gmail.com?subject=Mac%20Mouse%20Fix%200.9.2%20Beta%204%20-%20Issue%20report">Reach out at noah.n.public@gmail.com</a></li>
+</ul>
+<p>Thanks for making Mac Mouse Fix better! :)</p>
+
+        ]]>
+        </description>
+        <enclosure
+            url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/1.0.1-Beta-1/MacMouseFixApp.zip"
+            sparkle:version="2300"
+            sparkle:shortVersionString="1.0.1 Beta 1"
+            sparkle:edSignature="tcvT98vwvg39utIBvj9/KNEZBpbuPa4SGC99EZg2Hlq61QA+GkrLnh9u83Z8uXfU7QG+t62OhueG3GanOX9MCg==" length="1472049"
+            type="application/octet-stream"
+        />
+    </item>
+
+    <item>
+        <title>1.0.0 available!</title>
+        <pubDate>2021-03-01T15:28:34Z</pubDate>
+        <sparkle:minimumSystemVersion>11.0</sparkle:minimumSystemVersion>
+        <description><![CDATA[
+            <pre class="objc"><code>1.0.0 is here! 🚀</code></pre>
+<h3 id="features">Features</h3>
+<ul>
+<li>Mac Mouse Fix is now an App instead of a Preference Pane</li>
+<li>Updated and optimized for macOS 11 BigSur</li>
+<li>Added support for macOS 10.11 El Capitan</li>
+<li>Added compatibilty for many mice including the Logitech MX Master</li>
+<li>You can now swap the side buttons’ functionality if they are inverted on your mouse (Shoutouts to <span class="citation" data-cites="divadretlaw">@divadretlaw</span>!)</li>
+<li>Added Dark Mode support (Thank you <span class="citation" data-cites="stevenguh">@stevenguh</span>!)</li>
+<li>Mac Mouse Fix will now completely uninstall itself automatically after you move it to the trash (Just make sure that ‘Enable Mac Mouse Fix’ is checked before you do so)</li>
+<li>Keyboard modifier interception is now completely disabled when no mice are attached to your computer</li>
+<li>You can now zoom in and out by holding Command (⌘) while scrolling</li>
+<li>Updated App Icon</li>
+<li>You can now disable smooth scrolling for specific apps</li>
+<li>Added ‘Look Up’ and ‘Launchpad’ options, which were removed in 0.9.1, back in</li>
+<li>New and improved ‘More…’ screen</li>
+<li>Even more responsive scrolling through use of multi-threading and other techniques</li>
+<li>Various other bug fixes and under-the-hood improvements</li>
+</ul>
+<hr />
+<p>The original 1.0.0 release was set to only run on Big Sur. I then released a tiny update removing that setting. These two versions are both described by this GitHub release</p>
+<ul>
+<li>Big Sur only release
+<ul>
+<li>Binary: MacMouseFixApp-BigSurOnly.zip</li>
+<li>Bundle Version: 2265</li>
+<li>Commit: 14e8efc24e1d0f130371bf9dd79912475b005108</li>
+</ul></li>
+<li>Tiny update:
+<ul>
+<li>Binary: MacMouseFixApp.zip</li>
+<li>Bundle Version 2267</li>
+<li>Commit: 29bd47c41adaa9cc257b9ddc291b872cd2cc6b6e</li>
+</ul></li>
+</ul>
+
+        ]]>
+        </description>
+        <enclosure
+            url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/1.0.0/MacMouseFixApp-BigSurOnly.zip"
+            sparkle:version="2265"
+            sparkle:shortVersionString="1.0.0"
+            sparkle:edSignature="wTwagnPmrk87pojX5DJL3CWAu1lm8YYd9Fik3PrHuEAbJwEHirIpLncmbyO4KOB6PQdkJM9386CEEff6kyCgCQ==" length="925632"
+            type="application/octet-stream"
+        />
+    </item>
   </channel>
 </rss>
