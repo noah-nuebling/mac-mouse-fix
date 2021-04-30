@@ -34,6 +34,7 @@ base_xcconfig_path = "xcconfig/Base.xcconfig"
 sparkle_project_path = "Frameworks/Sparkle-1.26.0" # This is dangerously hardcoded
 download_folder = "generate_appcasts_downloads" # We want to delete this on exit
 app_bundle_name = "Mac Mouse Fix.app"
+prefpane_bundle_name = "Mouse Fix.prefpane"
 info_plist_app_subpath = "Contents/Info.plist"
 current_directory = os.getcwd()
 download_folder_absolute = os.path.join(current_directory, download_folder)
@@ -153,8 +154,16 @@ def generate():
             # Unzip update
             os.system(f'ditto -V -x -k --sequesterRsrc --rsrc "{download_zip_path}" "{download_folder}"') # This works, while subprocess.check_output doesn't for some reason
 
-            # Find Info.plist in app bundle
+            
+            # Find app bundle
+            # Maybe we could just name the unzipped folder instead of guessing here
             app_path = f'{download_folder}/{app_bundle_name}'
+            if not os.path.exists(app_path):
+                app_path = f'{download_folder}/{prefpane_bundle_name}'
+                if not os.path.exists(app_path):
+                    raise Exception('Unknown bundle name after unzipping')
+
+            # Find Info.plist in app bundle
             info_plist_path = f'{app_path}/{info_plist_app_subpath}'
 
             # Read stuff from Info.plist
