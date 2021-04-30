@@ -78,6 +78,13 @@
   }
 
   @media (prefers-color-scheme: dark) {
+
+      body {
+          background-color: #1e1e1e; 
+          /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
+              This is the color of the text field background in Apple Mail on macOS 11 BigSur */
+      }
+
       h1 {
           color: #D9D9D9;
       }
@@ -184,6 +191,13 @@
   }
 
   @media (prefers-color-scheme: dark) {
+
+      body {
+          background-color: #1e1e1e; 
+          /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
+              This is the color of the text field background in Apple Mail on macOS 11 BigSur */
+      }
+
       h1 {
           color: #D9D9D9;
       }
@@ -287,6 +301,13 @@
   }
 
   @media (prefers-color-scheme: dark) {
+
+      body {
+          background-color: #1e1e1e; 
+          /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
+              This is the color of the text field background in Apple Mail on macOS 11 BigSur */
+      }
+
       h1 {
           color: #D9D9D9;
       }
@@ -394,6 +415,13 @@
   }
 
   @media (prefers-color-scheme: dark) {
+
+      body {
+          background-color: #1e1e1e; 
+          /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
+              This is the color of the text field background in Apple Mail on macOS 11 BigSur */
+      }
+
       h1 {
           color: #D9D9D9;
       }
