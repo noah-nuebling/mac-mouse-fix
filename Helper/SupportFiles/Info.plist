@@ -17,9 +17,9 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>-1</string>
+	<string>3.0.0 Beta 6</string>
 	<key>CFBundleVersion</key>
-	<string>-1</string>
+	<string>265</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSBackgroundOnly</key>

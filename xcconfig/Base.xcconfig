@@ -17,6 +17,10 @@
 
 MACOSX_DEPLOYMENT_TARGET = 10.11
 
+// Analog/Equivelent to INFOPLIST_FILE (Depending on which target is building INFOPLIST_FILE will point to a different file). I use this when copying bundle versions from main app to helper
+INFOPLIST_FILE_MAINAPP = App/SupportFiles/Info.plist // This might break without us noticing if we refactor the Info.plist files.
+INFOPLIST_FILE_HELPER = Helper/SupportFiles/Info.plist
+
 // Xcode randomly replaced my bundle versions with these env variables and it broke a lot of things.
 //  I thought maybe I could override them to take control of them but it lead to more cryptic errors
 //CURRENT_PROJECT_VERSION = 222
