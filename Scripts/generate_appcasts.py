@@ -93,7 +93,7 @@ def generate():
             # Get commit number
             # commit = os.system(f"git rev-list -n 1 {tag_name}") # Can't capture the output of this for some reason
             commit_number = subprocess.check_output(f"git rev-list -n 1 {tag_name}", shell=True)
-            commit_number = commit[0:-1] # There's a linebreak at the end
+            commit_number = commit_number[0:-1] # There's a linebreak at the end
 
             # Check out commit
             # This would probably be a lot faster if we only checked out the files we need
