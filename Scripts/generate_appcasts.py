@@ -184,7 +184,7 @@ def generate():
             shutil.rmtree(app_path)
 
             # Assemble collected data into appcast-ready item-string
-            item_string = f"""
+            item_string = f"""\
     <item>
         <title>{title}</title>
         <pubDate>{publising_date}</pubDate>

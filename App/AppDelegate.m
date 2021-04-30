@@ -188,9 +188,9 @@ static NSDictionary *sideButtonActions;
         NSString *feedURLString;
         
         if (checkForPrereleases) {
-            feedURLString = fstring(@"%@%@", kMFRawRepoAddress, kSUFeedURLSubBeta);
+            feedURLString = fstring(@"%@/%@", kMFRawRepoAddress, kSUFeedURLSubBeta);
         } else {
-            feedURLString = fstring(@"%@%@", kMFRawRepoAddress, kSUFeedURLSub);
+            feedURLString = fstring(@"%@/%@", kMFRawRepoAddress, kSUFeedURLSub);
         }
         
         up.feedURL = [NSURL URLWithString:feedURLString];
