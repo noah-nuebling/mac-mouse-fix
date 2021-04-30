@@ -36,13 +36,13 @@
       /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
 
       root {
-          font-size: 8px; /* 1 rem is this much */
+          font-size: 4px; /* 1 rem is this much */
       }
 
       body {
           background-color: transparent;
           margin: 0.2rem 1.2rem;
-          padding: 0px;
+          padding: 0rem;
           font-family: -apple-system;
           font-size: 1.3rem;
       }
@@ -163,13 +163,13 @@
       /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
 
       root {
-          font-size: 8px; /* 1 rem is this much */
+          font-size: 4px; /* 1 rem is this much */
       }
 
       body {
           background-color: transparent;
           margin: 0.2rem 1.2rem;
-          padding: 0px;
+          padding: 0rem;
           font-family: -apple-system;
           font-size: 1.3rem;
       }
@@ -304,13 +304,13 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
       /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
 
       root {
-          font-size: 8px; /* 1 rem is this much */
+          font-size: 4px; /* 1 rem is this much */
       }
 
       body {
           background-color: transparent;
           margin: 0.2rem 1.2rem;
-          padding: 0px;
+          padding: 0rem;
           font-family: -apple-system;
           font-size: 1.3rem;
       }
@@ -439,13 +439,13 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
       /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
 
       root {
-          font-size: 8px; /* 1 rem is this much */
+          font-size: 4px; /* 1 rem is this much */
       }
 
       body {
           background-color: transparent;
           margin: 0.2rem 1.2rem;
-          padding: 0px;
+          padding: 0rem;
           font-family: -apple-system;
           font-size: 1.3rem;
       }
@@ -578,13 +578,13 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
       /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
 
       root {
-          font-size: 8px; /* 1 rem is this much */
+          font-size: 4px; /* 1 rem is this much */
       }
 
       body {
           background-color: transparent;
           margin: 0.2rem 1.2rem;
-          padding: 0px;
+          padding: 0rem;
           font-family: -apple-system;
           font-size: 1.3rem;
       }
@@ -722,13 +722,13 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
       /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
 
       root {
-          font-size: 8px; /* 1 rem is this much */
+          font-size: 4px; /* 1 rem is this much */
       }
 
       body {
           background-color: transparent;
           margin: 0.2rem 1.2rem;
-          padding: 0px;
+          padding: 0rem;
           font-family: -apple-system;
           font-size: 1.3rem;
       }
@@ -847,13 +847,13 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
       /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
 
       root {
-          font-size: 8px; /* 1 rem is this much */
+          font-size: 4px; /* 1 rem is this much */
       }
 
       body {
           background-color: transparent;
           margin: 0.2rem 1.2rem;
-          padding: 0px;
+          padding: 0rem;
           font-family: -apple-system;
           font-size: 1.3rem;
       }
@@ -969,13 +969,13 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
       /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
 
       root {
-          font-size: 8px; /* 1 rem is this much */
+          font-size: 4px; /* 1 rem is this much */
       }
 
       body {
           background-color: transparent;
           margin: 0.2rem 1.2rem;
-          padding: 0px;
+          padding: 0rem;
           font-family: -apple-system;
           font-size: 1.3rem;
       }
@@ -1095,13 +1095,13 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
       /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
 
       root {
-          font-size: 8px; /* 1 rem is this much */
+          font-size: 4px; /* 1 rem is this much */
       }
 
       body {
           background-color: transparent;
           margin: 0.2rem 1.2rem;
-          padding: 0px;
+          padding: 0rem;
           font-family: -apple-system;
           font-size: 1.3rem;
       }
@@ -1226,13 +1226,13 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
       /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
 
       root {
-          font-size: 8px; /* 1 rem is this much */
+          font-size: 4px; /* 1 rem is this much */
       }
 
       body {
           background-color: transparent;
           margin: 0.2rem 1.2rem;
-          padding: 0px;
+          padding: 0rem;
           font-family: -apple-system;
           font-size: 1.3rem;
       }
@@ -1357,13 +1357,13 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
       /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
 
       root {
-          font-size: 8px; /* 1 rem is this much */
+          font-size: 4px; /* 1 rem is this much */
       }
 
       body {
           background-color: transparent;
           margin: 0.2rem 1.2rem;
-          padding: 0px;
+          padding: 0rem;
           font-family: -apple-system;
           font-size: 1.3rem;
       }
