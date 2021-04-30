@@ -103,7 +103,7 @@ def generate():
             try:
                 os.subprocess.check_output(bash_string)
             except Exception as e:
-                print(f"Exception while checking out commit {commit_number}: {e}. Skipping this release.")
+                print(f"Exception while checking out commit {commit_number} ({short_version}): {e}. Skipping this release.")
                 continue
 
             # Get version
