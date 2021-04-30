@@ -21,6 +21,14 @@ os.chdir('..') # Run this script from the Scripts folder, it will then automatic
 
 releases_api_url = "https://api.github.com/repos/noah-nuebling/mac-mouse-fix/releases"
 
+raw_github_url = "https://raw.githubusercontent.com/noah-nuebling/mac-mouse-fix/master"
+
+appcast_file_name = "appcast.xml"
+appcast_pre_file_name = "appcast-pre.xml"
+
+appcast_url = f"{raw_github_url}/{appcast_file_name}"
+appcast_pre_url = f"{raw_github_url}/{appcast_pre_file_name}"
+
 info_plist_path = "App/SupportFiles/Info.plist"
 base_xcconfig_path = "xcconfig/Base.xcconfig"
 sparkle_project_path = "Frameworks/Sparkle-1.26.0" # This is dangerously hardcoded
@@ -30,6 +38,7 @@ info_plist_app_subpath = "Contents/Info.plist"
 current_directory = os.getcwd()
 download_folder_absolute = os.path.join(current_directory, download_folder)
 files_to_checkout = [info_plist_path, base_xcconfig_path]
+
 
 def generate():
     try:
@@ -47,7 +56,7 @@ def generate():
 
         # We'll be iterating over all releases and collecting data to put into the appcast
         appcast_items = []
-        appcast_items_pre = [] # Items for the pre-release channel
+        appcast_pre_items = [] # Items for the pre-release channel
 
         for r in releases:
 
@@ -99,6 +108,9 @@ def generate():
             commit_number = subprocess.check_output(f"git rev-list -n 1 {tag_name}", shell=True).decode('utf-8')
             commit_number = commit_number[0:-1] # There's a linebreak at the end
 
+            # Tried to checkout each commit and then read bundle version and minimum compatible macOS version from the local Xcode source files. 
+            # I had trouble making this approach work, though, so we went over to just unzipping each update and reading that data directly from the bundle
+
             # # Check out commit
             # # This would probably be a lot faster if we only checked out the files we need
             # os.system("git stash")
@@ -141,13 +153,16 @@ def generate():
             # Unzip update
             os.system(f'ditto -V -x -k --sequesterRsrc --rsrc "{download_zip_path}" "{download_folder}"') # This works, while subprocess.check_output doesn't for some reason
 
+            # Find Info.plist in app bundle
             app_path = f'{download_folder}/{app_bundle_name}'
             info_plist_path = f'{app_path}/{info_plist_app_subpath}'
 
+            # Read stuff from Info.plist
             bundle_version = subprocess.check_output(f"/usr/libexec/PlistBuddy '{info_plist_path}' -c 'Print CFBundleVersion'", shell=True).decode('utf-8')
             minimum_macos_version = subprocess.check_output(f"/usr/libexec/PlistBuddy '{info_plist_path}' -c 'Print LSMinimumSystemVersion'", shell=True).decode('utf-8')
             bundle_version = bundle_version[0:-1]
             minimum_macos_version = minimum_macos_version[0:-1]
+
 
             # Assemble collected data into appcast-ready item-string
             item_string = f"""
@@ -169,13 +184,55 @@ def generate():
     </item>"""
 
             # Append item_string to arrays
-            appcast_items_pre.append(item_string)
+            appcast_pre_items.append(item_string)
             if not is_prerelease:
                 appcast_items.append(item_string)
 
             print(item_string)
 
-        # clean_up(download_folder)
+        # Clean up downloaded files
+        clean_up(download_folder)
+
+        # Assemble item strings into final appcast strings
+
+
+        appcast_format_string = '''
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle"  xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>Mac Mouse Fix Update Feed</title>
+    <link>{}</link>
+    <description>Stable releases of Mac Mouse Fix</description>
+    <language>en</language>
+    {}
+  </channel>
+</rss>'''.format(appcast_url)
+
+        appcast_pre_format_string = '''
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle"  xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>Mac Mouse Fix Update Feed for Prereleases</title>
+    <link>{}</link>
+    <description>Prereleases of Mac Mouse Fix</description>
+    <language>en</language>
+    {}
+  </channel>
+</rss>'''.format(appcast_pre_url)
+
+        appcast_content_string = appcast_format_string.format('\n'.format(appcast_items))
+        appcast_pre_content_string = appcast_pre_format_string.format('\n'.format(appcast_pre_items))
+
+        # Write to file
+
+        file1 = open(appcast_file_name,"w")
+        L = file1.write(appcast_content_string)
+        file1.close()
+
+        file2 = open(appcast_pre_file_name,"w")
+        L = file2.write(appcast_pre_content_string)
+        file2.close()
+
 
     except Exception as e: # Exit immediately if anything goes wrong
         print(e)
