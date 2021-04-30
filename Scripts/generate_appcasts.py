@@ -1,10 +1,24 @@
 #!/usr/bin/python3
 
+
+# Imports
+
+import os
+# import requests # Only ships with python2 on mac it seems
+import urllib.request
+import urllib.parse
+
+import json
+
+from pprint import pprint
+
+import subprocess
+
 try:
 
     # Check if there are uncommited changes
     # This script uses git stash several times, so they'd be lost
-    uncommitted_changes = subprocess.check_output('git diff-index HEAD --')
+    uncommitted_changes = subprocess.check_output('git diff-index HEAD --', shell=True)
     if (len(uncommitted_changes) != 0):
         raise Exception('There are uncommited changes. Please commit or stash them before running this script.')
     
@@ -17,18 +31,6 @@ try:
     info_plist_path = "App/SupportFiles/Info.plist"
     base_xcconfig_path = "xcconfig/Base.xcconfig"
     sparkle_project_path = "Frameworks/Sparkle-1.26.0" # This is dangerously hardcoded
-
-
-    # Imports
-
-    import os
-    # import requests # Only ships with python2 on mac it seems
-    import urllib.request
-    import urllib.parse
-
-    import json
-
-    from pprint import pprint
 
     # Script
 
@@ -108,7 +110,8 @@ try:
         signature_and_length = subprocess.check_output(f"./{sparkle_project_path}/bin/sign_update {download_destination}", shell=True)
 
 
-except: # Exit immediately if anything goes wrong
+except Exception as e: # Exit immediately if anything goes wrong
 
+    print(e)
     exit(1)
 
