@@ -7,13 +7,21 @@
 // --------------------------------------------------------------------------
 //
 
-#import "SparkleUpdaterDelegate.h"
+#import "SparkleUpdaterController.h"
 #import "AppDelegate.h"
+#import "SharedUtility.h"
 
 // See https://sparkle-project.org/documentation/customization/
 
-@implementation SparkleUpdaterDelegate
+@implementation SparkleUpdaterController
 
++ (void)enablePrereleaseChannel:(BOOL)pre {
+    if (pre) {
+        SUUpdater.sharedUpdater.feedURL = [NSURL URLWithString:fstring(@"%@/%@", kMFRawRepoAddress, kSUFeedURLSubBeta)];
+    } else {
+        SUUpdater.sharedUpdater.feedURL = [NSURL URLWithString:fstring(@"%@/%@", kMFRawRepoAddress, kSUFeedURLSub)];
+    }
+}
 
 - (BOOL)updaterShouldPromptForPermissionToCheckForUpdates:(SUUpdater *)updater {
     return NO;

@@ -12,7 +12,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SparkleUpdaterDelegate : NSObject <SUUpdaterDelegate>
+@interface SparkleUpdaterController : NSObject <SUUpdaterDelegate>
+
++ (void)enablePrereleaseChannel:(BOOL)pre;
+
 @end
 
 NS_ASSUME_NONNULL_END

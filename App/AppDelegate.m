@@ -22,6 +22,7 @@
 #import "AppTranslocationManager.h"
 #import "MessagePort_App.h"
 #import <Sparkle/Sparkle.h>
+#import "SparkleUpdaterController.h"
 
 @interface AppDelegate ()
 
@@ -187,13 +188,7 @@ static NSDictionary *sideButtonActions;
         
         NSString *feedURLString;
         
-        if (checkForPrereleases) {
-            feedURLString = fstring(@"%@/%@", kMFRawRepoAddress, kSUFeedURLSubBeta);
-        } else {
-            feedURLString = fstring(@"%@/%@", kMFRawRepoAddress, kSUFeedURLSub);
-        }
-        
-        up.feedURL = [NSURL URLWithString:feedURLString];
+        [SparkleUpdaterController enablePrereleaseChannel:checkForPrereleases];
         
         [up checkForUpdatesInBackground];
     }

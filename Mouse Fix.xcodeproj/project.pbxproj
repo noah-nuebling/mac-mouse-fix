@@ -19,7 +19,7 @@
 		4F37FAD825FDFDC5004C34C4 /* MFScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */; };
 		4F39BC26263AC31600FDF692 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F39BC24263AC2E800FDF692 /* Sparkle.framework */; };
 		4F39BC27263AC31600FDF692 /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F39BC24263AC2E800FDF692 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4F39BC3B263AF2B000FDF692 /* SparkleUpdaterDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F39BC3A263AF2B000FDF692 /* SparkleUpdaterDelegate.m */; };
+		4F39BC3B263AF2B000FDF692 /* SparkleUpdaterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F39BC3A263AF2B000FDF692 /* SparkleUpdaterController.m */; };
 		4F39BC4A263B179200FDF692 /* AppState.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F39BC49263B179200FDF692 /* AppState.m */; };
 		4F44FEF82606A5C100926A5E /* default_config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F44FEF72606A5C100926A5E /* default_config.plist */; };
 		4F44FF042606D73D00926A5E /* SharedMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* SharedMessagePort.m */; };
@@ -213,8 +213,8 @@
 		4F37FAD625FDFDC4004C34C4 /* MFScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFScrollView.h; sourceTree = "<group>"; };
 		4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFScrollView.m; sourceTree = "<group>"; };
 		4F39BC24263AC2E800FDF692 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
-		4F39BC39263AF2B000FDF692 /* SparkleUpdaterDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SparkleUpdaterDelegate.h; sourceTree = "<group>"; };
-		4F39BC3A263AF2B000FDF692 /* SparkleUpdaterDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SparkleUpdaterDelegate.m; sourceTree = "<group>"; };
+		4F39BC39263AF2B000FDF692 /* SparkleUpdaterController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SparkleUpdaterController.h; sourceTree = "<group>"; };
+		4F39BC3A263AF2B000FDF692 /* SparkleUpdaterController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SparkleUpdaterController.m; sourceTree = "<group>"; };
 		4F39BC48263B179200FDF692 /* AppState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppState.h; sourceTree = "<group>"; };
 		4F39BC49263B179200FDF692 /* AppState.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppState.m; sourceTree = "<group>"; };
 		4F39BC5C263B401E00FDF692 /* generate_appcasts.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = generate_appcasts.sh; sourceTree = "<group>"; };
@@ -811,8 +811,8 @@
 		4FF665C625F2C92700689B77 /* Update */ = {
 			isa = PBXGroup;
 			children = (
-				4F39BC39263AF2B000FDF692 /* SparkleUpdaterDelegate.h */,
-				4F39BC3A263AF2B000FDF692 /* SparkleUpdaterDelegate.m */,
+				4F39BC39263AF2B000FDF692 /* SparkleUpdaterController.h */,
+				4F39BC3A263AF2B000FDF692 /* SparkleUpdaterController.m */,
 			);
 			path = Update;
 			sourceTree = "<group>";
@@ -1458,7 +1458,7 @@
 				4FF665ED25F2C92700689B77 /* MFSegmentedControl.m in Sources */,
 				4FF6660225F2C92700689B77 /* ClickableImageView.m in Sources */,
 				4F79A81C2604317200076A7E /* MFNotificationController.m in Sources */,
-				4F39BC3B263AF2B000FDF692 /* SparkleUpdaterDelegate.m in Sources */,
+				4F39BC3B263AF2B000FDF692 /* SparkleUpdaterController.m in Sources */,
 				4F1C51DA260543DD007F4930 /* NSTextField+Additions.m in Sources */,
 				4F2F5DA825FB6FFD0037660A /* AddWindowController.m in Sources */,
 				4FF6655025F2C7B000689B77 /* NSArray+Additions.m in Sources */,
@@ -1640,6 +1640,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 320;
 				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1668,6 +1669,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 320;
 				DEVELOPMENT_TEAM = H6Z6W2F7ZZ;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (

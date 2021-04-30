@@ -13,6 +13,7 @@
 #import "AppDelegate.h"
 #import "Utility_App.h"
 #import <Sparkle/Sparkle.h>
+#import "SparkleUpdaterController.h"
 
 
 @interface MoreSheet ()
@@ -50,7 +51,8 @@ static MoreSheet *_instance;
 }
 - (IBAction)prereleaseCheckBox:(NSButton *)sender {
     [self updateConfigFileToUIState];
-    if (sender.state == 1) {
+    [SparkleUpdaterController enablePrereleaseChannel:sender.state];
+    if (sender.state == 1) {  
         [SUUpdater.sharedUpdater checkForUpdatesInBackground];
     }
 }
