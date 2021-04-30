@@ -53,7 +53,7 @@ try:
         # Get release notes
         release_notes = r['body'] # This is markdown
         # Convert to HTML
-        release_notes = subprocess.check_output(f"echo $'{release_notes}' | pandoc -f markdown -t html]", shell=True)
+        release_notes = subprocess.check_output(f"echo $'{release_notes}' | pandoc -f markdown -t html", shell=True)
             # The $'' are actually super important, otherwise bash won't presever the newlines for some reason
 
         # Get title
