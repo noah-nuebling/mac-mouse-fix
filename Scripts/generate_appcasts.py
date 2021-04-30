@@ -23,6 +23,8 @@ info_plist_path = "App/SupportFiles/Info.plist"
 base_xcconfig_path = "xcconfig/Base.xcconfig"
 sparkle_project_path = "Frameworks/Sparkle-1.26.0" # This is dangerously hardcoded
 download_folder = "generate_appcasts_downloads" # We want to delete this on exit
+current_directory = os.getcwd()
+download_folder_absolute = os.path.join(current_directory, download_folder)
 
 def generate():
     try:
@@ -34,10 +36,6 @@ def generate():
             raise Exception('There are uncommited changes. Please commit or stash them before running this script.')
 
         # Script
-
-        current_directory = os.getcwd()
-        dir_to_create = os.path.join(current_directory, download_folder)
-        os.makedirs(dir_to_create, exist_ok=True)
 
         request = urllib.request.urlopen(releases_api_url)
         releases = json.load(request)
@@ -63,6 +61,7 @@ def generate():
             release_notes = r['body'] # This is markdown
 
             # Write release notes to file. As a plain string I had trouble passing it to pandoc, because I couldn't escape it properly
+            os.makedirs(download_folder_absolute, exist_ok=True)
             text_file = open(f"{download_folder}/release_notes.md", "w")
             n = text_file.write(release_notes)
             text_file.close()
@@ -119,6 +118,7 @@ def generate():
             download_link = r['assets'][0]['browser_download_url']
 
             # Download update
+            os.makedirs(download_folder_absolute, exist_ok=True)
             download_name = download_link.rsplit('/', 1)[-1]
             download_destination = f'{download_folder}/{download_name}'
             urllib.request.urlretrieve(download_link, download_destination)
