@@ -58,8 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #define kMFWebsiteAddress  @"https://noah-nuebling.github.io/mac-mouse-fix-website" //@"https://mousefix.org"
 
-#define kMFRawRepoAddress @"https://raw.githubusercontent.com/noah-nuebling/mac-mouse-fix/feature-remap"
-//  Change this to master or sth before shipping. Make sure to also change the address in Info.plist
+#define kMFUpdateFeedRepoAddressRaw @"https://raw.githubusercontent.com/noah-nuebling/mac-mouse-fix/update-feed/"
 
 // Sparkle
 
