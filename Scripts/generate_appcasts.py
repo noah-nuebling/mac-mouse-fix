@@ -100,7 +100,11 @@ def generate():
             os.system("git stash")
             files_string = ' '.join(files_to_checkout)
             bash_string = f"git checkout {commit_number} {files_string}"
-            os.system(bash_string)
+            try:
+                os.system(bash_string)
+            except Exception as e:
+                print(f"Exception while checking out commit {commit_number}: {e}. Skipping this release.")
+                continue
 
             # Get version
             #   Get from Info.plist file
