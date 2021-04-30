@@ -152,13 +152,14 @@ try:
 
 
 
-    clean_up()
+    clean_up(download_folder)
 
 except Exception as e: # Exit immediately if anything goes wrong
-    clean_up()
+    clean_up(download_folder)
     print(e)
     exit(1)
 
-def clean_up():
+def clean_up(download_folder):
+    print(f"DDD: {download_folder}")
     if download_folder != "":
         os.system(f'rm -R {download_folder}')
