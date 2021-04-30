@@ -225,7 +225,7 @@ def generate():
     <language>en</language>
     {}
   </channel>
-</rss>'''.format(appcast_url)
+</rss>'''
 
         appcast_pre_format_string = '''
 <?xml version="1.0" encoding="utf-8"?>
@@ -237,10 +237,10 @@ def generate():
     <language>en</language>
     {}
   </channel>
-</rss>'''.format(appcast_pre_url)
+</rss>'''
 
-        appcast_content_string = appcast_format_string.format('\n'.format(appcast_items))
-        appcast_pre_content_string = appcast_pre_format_string.format('\n'.format(appcast_pre_items))
+        appcast_content_string = appcast_format_string.format(appcast_url, '\n'.format(appcast_items))
+        appcast_pre_content_string = appcast_pre_format_string.format(appcast_pre_url, '\n'.format(appcast_pre_items))
 
         # Write to file
 
