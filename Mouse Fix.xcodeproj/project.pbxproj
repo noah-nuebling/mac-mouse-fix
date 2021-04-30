@@ -213,7 +213,6 @@
 		4F37FAD625FDFDC4004C34C4 /* MFScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFScrollView.h; sourceTree = "<group>"; };
 		4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFScrollView.m; sourceTree = "<group>"; };
 		4F39BC24263AC2E800FDF692 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
-		4F39BC2C263AC48C00FDF692 /* Sparkle-1.26.0.tar.xz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Sparkle-1.26.0.tar.xz"; sourceTree = "<group>"; };
 		4F39BC39263AF2B000FDF692 /* SparkleUpdaterDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SparkleUpdaterDelegate.h; sourceTree = "<group>"; };
 		4F39BC3A263AF2B000FDF692 /* SparkleUpdaterDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SparkleUpdaterDelegate.m; sourceTree = "<group>"; };
 		4F39BC48263B179200FDF692 /* AppState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppState.h; sourceTree = "<group>"; };
@@ -228,6 +227,25 @@
 		4F39BCA4263B6DC200FDF692 /* MainAppDebug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = MainAppDebug.xcconfig; sourceTree = "<group>"; };
 		4F39BCA5263B6DDA00FDF692 /* HelperDebug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = HelperDebug.xcconfig; sourceTree = "<group>"; };
 		4F39BCA6263B6E8000FDF692 /* Accomplice.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Accomplice.xcconfig; sourceTree = "<group>"; };
+		4F39BCD3263B713400FDF692 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		4F39BCD5263B7B0500FDF692 /* Sparkle Test App.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; path = "Sparkle Test App.app"; sourceTree = "<group>"; };
+		4F39BCD6263B7B0500FDF692 /* Sparkle.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = Sparkle.framework.dSYM; sourceTree = "<group>"; };
+		4F39BCD7263B7B0500FDF692 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		4F39BCD9263B7B0500FDF692 /* BinaryDelta */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = BinaryDelta; sourceTree = "<group>"; };
+		4F39BCDA263B7B0500FDF692 /* generate_appcast */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = generate_appcast; sourceTree = "<group>"; };
+		4F39BCDB263B7B0500FDF692 /* sign_update */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = sign_update; sourceTree = "<group>"; };
+		4F39BCDC263B7B0500FDF692 /* generate_appcast.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = generate_appcast.dSYM; sourceTree = "<group>"; };
+		4F39BCDD263B7B0500FDF692 /* generate_keys.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = generate_keys.dSYM; sourceTree = "<group>"; };
+		4F39BCDE263B7B0500FDF692 /* generate_keys */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = generate_keys; sourceTree = "<group>"; };
+		4F39BCE0263B7B0500FDF692 /* sign_update */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = sign_update; sourceTree = "<group>"; };
+		4F39BCE1263B7B0500FDF692 /* generate_dsa_keys_macos_10.12_only */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = generate_dsa_keys_macos_10.12_only; sourceTree = "<group>"; };
+		4F39BCE2263B7B0500FDF692 /* BinaryDelta.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = BinaryDelta.dSYM; sourceTree = "<group>"; };
+		4F39BCE3263B7B0500FDF692 /* sign_update.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = sign_update.dSYM; sourceTree = "<group>"; };
+		4F39BCE4263B7B0500FDF692 /* CHANGELOG */ = {isa = PBXFileReference; lastKnownFileType = text; path = CHANGELOG; sourceTree = "<group>"; };
+		4F39BCE5263B7B0500FDF692 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
+		4F39BCE6263B7B0500FDF692 /* SampleAppcast.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = SampleAppcast.xml; sourceTree = "<group>"; };
+		4F39BCE7263B7B0500FDF692 /* Sparkle Test App.app.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = "Sparkle Test App.app.dSYM"; sourceTree = "<group>"; };
+		4F39BCE8263B7B1500FDF692 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F422EEC23469B0F00AA6E22 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F44FEF72606A5C100926A5E /* default_config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_config.plist; sourceTree = "<group>"; };
 		4F44FF022606D73D00926A5E /* SharedMessagePort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharedMessagePort.h; sourceTree = "<group>"; };
@@ -459,7 +477,8 @@
 			children = (
 				4F1793A825EEC90900E8309B /* ZipArchive.framework */,
 				4F39BC24263AC2E800FDF692 /* Sparkle.framework */,
-				4F39BC2C263AC48C00FDF692 /* Sparkle-1.26.0.tar.xz */,
+				4F39BCD4263B7B0500FDF692 /* Sparkle-1.26.0 */,
+				4F39BCE8263B7B1500FDF692 /* README.md */,
 			);
 			path = Frameworks;
 			sourceTree = "<group>";
@@ -509,8 +528,49 @@
 				4F39BC8B263B697200FDF692 /* HelperRelease.xcconfig */,
 				4F39BCA5263B6DDA00FDF692 /* HelperDebug.xcconfig */,
 				4F39BCA6263B6E8000FDF692 /* Accomplice.xcconfig */,
+				4F39BCD3263B713400FDF692 /* README.md */,
 			);
 			path = xcconfig;
+			sourceTree = "<group>";
+		};
+		4F39BCD4263B7B0500FDF692 /* Sparkle-1.26.0 */ = {
+			isa = PBXGroup;
+			children = (
+				4F39BCD5263B7B0500FDF692 /* Sparkle Test App.app */,
+				4F39BCD6263B7B0500FDF692 /* Sparkle.framework.dSYM */,
+				4F39BCD7263B7B0500FDF692 /* LICENSE */,
+				4F39BCD8263B7B0500FDF692 /* bin */,
+				4F39BCE4263B7B0500FDF692 /* CHANGELOG */,
+				4F39BCE5263B7B0500FDF692 /* Sparkle.framework */,
+				4F39BCE6263B7B0500FDF692 /* SampleAppcast.xml */,
+				4F39BCE7263B7B0500FDF692 /* Sparkle Test App.app.dSYM */,
+			);
+			path = "Sparkle-1.26.0";
+			sourceTree = "<group>";
+		};
+		4F39BCD8263B7B0500FDF692 /* bin */ = {
+			isa = PBXGroup;
+			children = (
+				4F39BCD9263B7B0500FDF692 /* BinaryDelta */,
+				4F39BCDA263B7B0500FDF692 /* generate_appcast */,
+				4F39BCDB263B7B0500FDF692 /* sign_update */,
+				4F39BCDC263B7B0500FDF692 /* generate_appcast.dSYM */,
+				4F39BCDD263B7B0500FDF692 /* generate_keys.dSYM */,
+				4F39BCDE263B7B0500FDF692 /* generate_keys */,
+				4F39BCDF263B7B0500FDF692 /* old_dsa_scripts */,
+				4F39BCE2263B7B0500FDF692 /* BinaryDelta.dSYM */,
+				4F39BCE3263B7B0500FDF692 /* sign_update.dSYM */,
+			);
+			path = bin;
+			sourceTree = "<group>";
+		};
+		4F39BCDF263B7B0500FDF692 /* old_dsa_scripts */ = {
+			isa = PBXGroup;
+			children = (
+				4F39BCE0263B7B0500FDF692 /* sign_update */,
+				4F39BCE1263B7B0500FDF692 /* generate_dsa_keys_macos_10.12_only */,
+			);
+			path = old_dsa_scripts;
 			sourceTree = "<group>";
 		};
 		4F422EF023469B2B00AA6E22 /* Other */ = {
