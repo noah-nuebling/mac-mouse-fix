@@ -82,7 +82,7 @@ def generate():
             text_file = open(f"{download_folder}/release_notes.md", "w")
             n = text_file.write(release_notes)
             text_file.close()
-            text_file.flush() # Make sure stuff is written to file before we proceed. Doesn't work either
+            # text_file.flush() # Make sure stuff is written to file before we proceed. Doesn't work either
             
             # Convert to HTML
             release_notes = subprocess.check_output(f"cat {download_folder}/release_notes.md | pandoc -f markdown -t html", shell=True).decode('utf-8')
