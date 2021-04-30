@@ -136,7 +136,7 @@ try:
     <enclosure
         url=\"{download_link}\"
         sparkle:version=\"{bundle_version}}\"
-        sparkle:shortVersionString=\"{short_version}}\"
+        sparkle:shortVersionString=\"{short_version}\"
         {signature_and_length}
         type=\"{type}}\"
     />
