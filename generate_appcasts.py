@@ -40,6 +40,7 @@ info_plist_app_subpath = "Contents/Info.plist"
 current_directory = os.getcwd()
 download_folder_absolute = os.path.join(current_directory, download_folder)
 files_to_checkout = [info_plist_path, base_xcconfig_path]
+css_file_path = "update-notes.css"
 
 
 def generate():
@@ -82,9 +83,9 @@ def generate():
             n = text_file.write(release_notes)
             text_file.close()
             # Convert to HTML
-            release_notes = subprocess.check_output(f"cat {download_folder}/release_notes.md | pandoc -f markdown -t html", shell=True).decode('utf-8')
-                # The $'' are actually super important, otherwise bash won't presever the newlines for some reason
-
+            # release_notes = subprocess.check_output(f"cat {download_folder}/release_notes.md | pandoc -f markdown -t html", shell=True).decode('utf-8')
+            # Convert to HTML (standalone, including style sheet - that's the only way to style the update notes in the app cast using embedded html)
+            release_notes = subprocess.check_output(f"cat {download_folder}/release_notes.md | pandoc -f markdown -t html -H {css_file_path} -s").decode('utf-8')
 
             # Get title
             title = f"{short_version} available!"
