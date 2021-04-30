@@ -31,11 +31,16 @@ try:
     info_plist_path = "App/SupportFiles/Info.plist"
     base_xcconfig_path = "xcconfig/Base.xcconfig"
     sparkle_project_path = "Frameworks/Sparkle-1.26.0" # This is dangerously hardcoded
+    download_folder = "generate_appcasts_downloads" # We want to delete this on exit
 
     # Script
 
     request = urllib.request.urlopen(releases_api_url)
     releases = json.load(request)
+
+    # We'll be iterating over all releases and collecting data to put into the appcast
+    appcast_items = []
+    appcast_items_pre = [] # Items for the pre-release channel
 
     for r in releases:
 
@@ -54,14 +59,13 @@ try:
         release_notes = r['body'] # This is markdown
 
         # Write release notes to file. As a plain string I had trouble passing it to pandoc, because I couldn't escape it properly
-        text_file = open("release_notes.md", "w")
+        text_file = open(f"{download_folder}/release_notes.md", "w")
         n = text_file.write(release_notes)
         text_file.close()
-
-
         # Convert to HTML
         release_notes = subprocess.check_output(f"cat release_notes.md | pandoc -f markdown -t html", shell=True)
             # The $'' are actually super important, otherwise bash won't presever the newlines for some reason
+
 
         # Get title
         title = f"Version {short_version} available!"
@@ -84,8 +88,8 @@ try:
 
         # Get commit number
         # commit = os.system(f"git rev-list -n 1 {tag_name}") # Can't capture the output of this for some reason
-        commit = subprocess.check_output(f"git rev-list -n 1 {tag_name}", shell=True)
-        commit = commit[0:-1] # There's a linebreak at the end
+        commit_number = subprocess.check_output(f"git rev-list -n 1 {tag_name}", shell=True)
+        commit_number = commit[0:-1] # There's a linebreak at the end
 
         # Check out commit
         # This would probably be a lot faster if we only checked out the files we need
@@ -112,15 +116,49 @@ try:
 
         # Download update
         download_name = download_link.rsplit('/', 1)[-1]
-        download_destination = download_name
+        download_destination = f'{download_folder}/{download_name}'
         urllib.request.urlretrieve(download_link, download_destination)
 
         # Get edSignature
         signature_and_length = subprocess.check_output(f"./{sparkle_project_path}/bin/sign_update {download_destination}", shell=True)
 
 
-except Exception as e: # Exit immediately if anything goes wrong
+        # Assemble collected data into appcast-ready item-string
+        item_string = f"""
+<item>
+    <title>{title}</title>
+    <pubDate>{publising_date}</pubDate>
+    <sparkle:minimumSystemVersion>{minimum_macos_version}</sparkle:minimumSystemVersion>
+    <description><![CDATA[
+        {release_notes}
+    ]]>
+    </description>
+    <enclosure
+        url=\"{download_link}\"
+        sparkle:version=\"{bundle_version}}\"
+        sparkle:shortVersionString=\"{short_version}}\"
+        {signature_and_length}
+        type=\"{type}}\"
+    />
+</item>"""
 
+        # Append item_string to arrays
+        appcast_items_pre.append(item_string)
+        if not is_prerelease:
+            appcast_items.append(item_string)
+
+        print(item_string)
+
+
+
+    clean_up()
+
+
+def clean_up():
+    os.system(f'rm -R {download_folder}')
+
+except Exception as e: # Exit immediately if anything goes wrong
+    clean_up()
     print(e)
     exit(1)
 
