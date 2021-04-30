@@ -16,8 +16,8 @@
 + (NSInteger)bundleVersion {
     return [[[NSBundle bundleForClass:self] objectForInfoDictionaryKey:@"CFBundleVersion"] integerValue];
 }
-+ (NSInteger)bundleVersionShort {
-    return [[[NSBundle bundleForClass:self] objectForInfoDictionaryKey:@"CFBundleShortVersionString"] integerValue];
++ (NSString *)bundleVersionShort {
+    return (NSString *)[NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
 }
 
 + (void)centerWindow:(NSWindow *)win atPoint:(NSPoint)pt {

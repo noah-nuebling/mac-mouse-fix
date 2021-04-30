@@ -103,8 +103,8 @@ static MoreSheet *_instance;
 - (void)updateUI {
     
     // Load version label
-    NSString *versionString = [NSString stringWithFormat:@"Version %ld (%ld)",
-                               (long)Utility_App.bundleVersionShort,
+    NSString *versionString = [NSString stringWithFormat:@"Version %@ (%ld)",
+                               (NSString *)Utility_App.bundleVersionShort,
                                (long)Utility_App.bundleVersion];
     [self.versionLabel setStringValue:versionString];
     

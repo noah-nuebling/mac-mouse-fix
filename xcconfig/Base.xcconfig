@@ -17,6 +17,11 @@
 
 MACOSX_DEPLOYMENT_TARGET = 10.11
 
+// Xcode randomly replaced my bundle versions with these env variables and it broke a lot of things.
+//  I thought maybe I could override them to take control of them but it lead to more cryptic errors
+//CURRENT_PROJECT_VERSION = 222
+//MARKETING_VERSION = 2.0.0 Beta 5
+
 //SWIFT_VERSION = 5.0
 //FRAMEWORK_SEARCH_PATHS[config=*] = $(inherited) /System/Library/PrivateFrameworks // for SkyLight.framework
 //ENABLE_HARDENED_RUNTIME = YES // for notarization
