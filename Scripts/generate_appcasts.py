@@ -72,7 +72,7 @@ def generate():
 
 
             # Get title
-            title = f"Version {short_version} available!"
+            title = f"{short_version} available!"
 
             # Get publishing date
             publising_date = r['published_at'];
@@ -95,31 +95,31 @@ def generate():
             commit_number = subprocess.check_output(f"git rev-list -n 1 {tag_name}", shell=True).decode('utf-8')
             commit_number = commit_number[0:-1] # There's a linebreak at the end
 
-            # Check out commit
-            # This would probably be a lot faster if we only checked out the files we need
-            os.system("git stash")
-            files_string = ' '.join(files_to_checkout)
-            bash_string = f"git checkout {commit_number} {files_string}"
-            try:
-                subprocess.check_output(bash_string)
-            except Exception as e:
-                print(f"Exception while checking out commit {commit_number} ({short_version}): {e}. Skipping this release.")
-                continue
+            # # Check out commit
+            # # This would probably be a lot faster if we only checked out the files we need
+            # os.system("git stash")
+            # files_string = ' '.join(files_to_checkout)
+            # bash_string = f"git checkout {commit_number} {files_string}"
+            # try:
+            #     subprocess.check_output(bash_string)
+            # except Exception as e:
+            #     print(f"Exception while checking out commit {commit_number} ({short_version}): {e}. Skipping this release.")
+            #     continue
 
-            # Get version
-            #   Get from Info.plist file
-            bundle_version = subprocess.check_output(f"/usr/libexec/PlistBuddy {info_plist_path} -c 'Print CFBundleVersion'", shell=True).decode('utf-8')
+            # # Get version
+            # #   Get from Info.plist file
+            # bundle_version = subprocess.check_output(f"/usr/libexec/PlistBuddy {info_plist_path} -c 'Print CFBundleVersion'", shell=True).decode('utf-8')
 
-            # Get minimum macOS version
-            #   The environment variable buried deep within project.pbxproj. No practical way to get at this
-            #   Instead, we're going to hardcode this for old versions and define a new env variable via xcconfig we can reference here for newer verisons
-            #   See how alt-tab-macos did it here: https://github.com/lwouis/alt-tab-macos/blob/master/config/base.xcconfig
-            minimum_macos_version = ""
-            try:
-                minimum_macos_version = subprocess.check_output(f"awk -F ' = ' '/MACOSX_DEPLOYMENT_TARGET/ {{ print $2; }}' < {base_xcconfig_path}", shell=True).decode('utf-8')
-                minimum_macos_version = minimum_macos_version[0:-1] # Remove trailing \n character
-            except:
-                minimum_macos_version = 10.11
+            # # Get minimum macOS version
+            # #   The environment variable buried deep within project.pbxproj. No practical way to get at this
+            # #   Instead, we're going to hardcode this for old versions and define a new env variable via xcconfig we can reference here for newer verisons
+            # #   See how alt-tab-macos did it here: https://github.com/lwouis/alt-tab-macos/blob/master/config/base.xcconfig
+            # minimum_macos_version = ""
+            # try:
+            #     minimum_macos_version = subprocess.check_output(f"awk -F ' = ' '/MACOSX_DEPLOYMENT_TARGET/ {{ print $2; }}' < {base_xcconfig_path}", shell=True).decode('utf-8')
+            #     minimum_macos_version = minimum_macos_version[0:-1] # Remove trailing \n character
+            # except:
+            #     minimum_macos_version = 10.11
 
             # Get download link
             download_link = r['assets'][0]['browser_download_url']
@@ -132,6 +132,10 @@ def generate():
 
             # Get edSignature
             signature_and_length = subprocess.check_output(f"./{sparkle_project_path}/bin/sign_update {download_destination}", shell=True).decode('utf-8')
+
+            unzip_output = subprocess.check_output(f'ditto -V -x -k --sequesterRsrc --rsrc {download_destination} {download_folder}')
+
+            
 
 
             # Assemble collected data into appcast-ready item-string
@@ -168,7 +172,6 @@ def generate():
         exit(1)
 
 def clean_up(download_folder):
-    print(f"DDD: {download_folder}")
     if download_folder != "":
         try:
             os.system(f'rm -R {download_folder}')
