@@ -48,6 +48,8 @@ try:
         # Get short version
         short_version = r['name']
 
+        print(f'Processing release {short_version}...')
+
         # Get release notes
         release_notes = r['body'] # This is markdown
         # Convert to HTML
