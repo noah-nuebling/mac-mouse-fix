@@ -18,7 +18,7 @@ import subprocess
 # Constants
 #   Paths are relative to project root.
 
-os.chdir('..') # Run this script from the Scripts folder, it will then automatically chdir to the root dir
+#os.chdir('..') # Run this script from the Scripts folder, it will then automatically chdir to the root dir # This doesn't make sense anymore now that we've moved it to the update-feed branch
 
 releases_api_url = "https://api.github.com/repos/noah-nuebling/mac-mouse-fix/releases"
 
