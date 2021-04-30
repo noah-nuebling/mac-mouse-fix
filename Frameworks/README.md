@@ -1,2 +1,2 @@
 
-- If you update or refactor Sparkle, make sure to update the `generate_appcasts.py` script. It's hardcoded to reference `Frameworks/Sparkle-1.26.0`
+- In the update-feed branch, we're using command line tools from the Sparkle project. It might be good if the copy of the Sparkle project in update-feed is the same version as Sparkle.framework in this branch.
