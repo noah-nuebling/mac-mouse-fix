@@ -36,7 +36,7 @@
       /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
 
       root {
-          font-size: 10px; /* 1 rem is this much */
+          font-size: 8px; /* 1 rem is this much */
       }
 
       body {
@@ -71,6 +71,8 @@
           margin-left: 0;
           margin-top: 0;
           margin-bottom: 0.8rem;
+
+          font-size: 1.1rem
       }
       .annotation {
           font-size: 1.1rem;
@@ -159,7 +161,7 @@
       /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
 
       root {
-          font-size: 10px; /* 1 rem is this much */
+          font-size: 8px; /* 1 rem is this much */
       }
 
       body {
@@ -194,6 +196,8 @@
           margin-left: 0;
           margin-top: 0;
           margin-bottom: 0.8rem;
+
+          font-size: 1.1rem
       }
       .annotation {
           font-size: 1.1rem;
@@ -279,7 +283,7 @@
       /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
 
       root {
-          font-size: 10px; /* 1 rem is this much */
+          font-size: 8px; /* 1 rem is this much */
       }
 
       body {
@@ -314,6 +318,8 @@
           margin-left: 0;
           margin-top: 0;
           margin-bottom: 0.8rem;
+
+          font-size: 1.1rem
       }
       .annotation {
           font-size: 1.1rem;
@@ -403,7 +409,7 @@
       /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
 
       root {
-          font-size: 10px; /* 1 rem is this much */
+          font-size: 8px; /* 1 rem is this much */
       }
 
       body {
@@ -438,6 +444,8 @@
           margin-left: 0;
           margin-top: 0;
           margin-bottom: 0.8rem;
+
+          font-size: 1.1rem
       }
       .annotation {
           font-size: 1.1rem;
