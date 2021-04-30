@@ -161,6 +161,9 @@ def generate():
 def clean_up(download_folder):
     print(f"DDD: {download_folder}")
     if download_folder != "":
-        os.system(f'rm -R {download_folder}')
+        try:
+            os.system(f'rm -R {download_folder}')
+        except:
+            pass
 
 generate()
