@@ -14,6 +14,9 @@ from pprint import pprint
 
 import subprocess
 
+def clean_up():
+    os.system(f'rm -R {download_folder}')
+
 try:
 
     # Check if there are uncommited changes
@@ -160,6 +163,3 @@ except Exception as e: # Exit immediately if anything goes wrong
     print(e)
     exit(1)
 
-
-def clean_up():
-    os.system(f'rm -R {download_folder}')
