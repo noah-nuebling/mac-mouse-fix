@@ -157,11 +157,18 @@ def generate():
             
             # Find app bundle
             # Maybe we could just name the unzipped folder instead of guessing here
+            # Well we also use this to determine if the download is a prefpane or an app. There might be better ways to infer this but this should work
+            is_prefpane = False
             app_path = f'{download_folder}/{app_bundle_name}'
             if not os.path.exists(app_path):
                 app_path = f'{download_folder}/{prefpane_bundle_name}'
                 if not os.path.exists(app_path):
                     raise Exception('Unknown bundle name after unzipping')
+                else:
+                    is_prefpane = True
+
+            if is_prefpane:
+                continue
 
             # Find Info.plist in app bundle
             info_plist_path = f'{app_path}/{info_plist_app_subpath}'
