@@ -1,1 +1,0 @@
-Don't download this, this release is meant to test a new update mechanism.
