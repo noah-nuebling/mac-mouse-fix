@@ -87,7 +87,7 @@ def generate():
             # Convert to HTML
             # release_notes = subprocess.check_output(f"cat {download_folder}/release_notes.md | pandoc -f markdown -t html", shell=True).decode('utf-8')
             # Convert to HTML (standalone, including style sheet - that's the only way to style the update notes in the app cast using embedded html)
-            release_notes = subprocess.check_output(f"""cat {download_folder}/release_notes.md | pandoc -f markdown -t html -s""").decode('utf-8')
+            release_notes = subprocess.check_output(f"""cat {download_folder}/release_notes.md | pandoc -f markdown -t html -H ./{css_file_path} -s""", shell=True).decode('utf-8')
 
             # Get title
             title = f"{short_version} available!"
