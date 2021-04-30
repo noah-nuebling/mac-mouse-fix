@@ -29,7 +29,7 @@ def generate():
 
         # Check if there are uncommited changes
         # This script uses git stash several times, so they'd be lost
-        uncommitted_changes = subprocess.check_output('git diff-index HEAD --', shell=True)
+        uncommitted_changes = subprocess.check_output('git diff-index HEAD --', shell=True).decode('utf-8')
         if (len(uncommitted_changes) != 0):
             raise Exception('There are uncommited changes. Please commit or stash them before running this script.')
 
@@ -67,7 +67,7 @@ def generate():
             n = text_file.write(release_notes)
             text_file.close()
             # Convert to HTML
-            release_notes = subprocess.check_output(f"cat {download_folder}/release_notes.md | pandoc -f markdown -t html", shell=True)
+            release_notes = subprocess.check_output(f"cat {download_folder}/release_notes.md | pandoc -f markdown -t html", shell=True).decode('utf-8')
                 # The $'' are actually super important, otherwise bash won't presever the newlines for some reason
 
 
@@ -102,7 +102,7 @@ def generate():
 
             # Get version
             #   Get from Info.plist file
-            bundle_version = subprocess.check_output(f"/usr/libexec/PlistBuddy {info_plist_path} -c 'Print CFBundleVersion'", shell=True)
+            bundle_version = subprocess.check_output(f"/usr/libexec/PlistBuddy {info_plist_path} -c 'Print CFBundleVersion'", shell=True).decode('utf-8')
 
             # Get minimum macOS version
             #   The environment variable buried deep within project.pbxproj. No practical way to get at this
@@ -110,7 +110,7 @@ def generate():
             #   See how alt-tab-macos did it here: https://github.com/lwouis/alt-tab-macos/blob/master/config/base.xcconfig
             minimum_macos_version = ""
             try:
-                minimum_macos_version = subprocess.check_output(f"awk -F ' = ' '/MACOSX_DEPLOYMENT_TARGET/ {{ print $2; }}' < {base_xcconfig_path}", shell=True)
+                minimum_macos_version = subprocess.check_output(f"awk -F ' = ' '/MACOSX_DEPLOYMENT_TARGET/ {{ print $2; }}' < {base_xcconfig_path}", shell=True).decode('utf-8')
                 minimum_macos_version = minimum_macos_version[0:-1] # Remove trailing \n character
             except:
                 minimum_macos_version = 10.11
@@ -124,7 +124,7 @@ def generate():
             urllib.request.urlretrieve(download_link, download_destination)
 
             # Get edSignature
-            signature_and_length = subprocess.check_output(f"./{sparkle_project_path}/bin/sign_update {download_destination}", shell=True)
+            signature_and_length = subprocess.check_output(f"./{sparkle_project_path}/bin/sign_update {download_destination}", shell=True).decode('utf-8')
 
 
             # Assemble collected data into appcast-ready item-string
