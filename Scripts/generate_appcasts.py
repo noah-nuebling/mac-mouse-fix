@@ -35,6 +35,8 @@ try:
 
     # Script
 
+    os.makedirs(os.path.dirname(download_folder), exist_ok=True)
+
     request = urllib.request.urlopen(releases_api_url)
     releases = json.load(request)
 
