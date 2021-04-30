@@ -101,7 +101,7 @@ def generate():
             files_string = ' '.join(files_to_checkout)
             bash_string = f"git checkout {commit_number} {files_string}"
             try:
-                os.subprocess.check_output(bash_string)
+                subprocess.check_output(bash_string)
             except Exception as e:
                 print(f"Exception while checking out commit {commit_number} ({short_version}): {e}. Skipping this release.")
                 continue
