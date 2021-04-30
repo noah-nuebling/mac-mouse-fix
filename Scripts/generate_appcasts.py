@@ -67,7 +67,7 @@ def generate():
             n = text_file.write(release_notes)
             text_file.close()
             # Convert to HTML
-            release_notes = subprocess.check_output(f"cat release_notes.md | pandoc -f markdown -t html", shell=True)
+            release_notes = subprocess.check_output(f"cat {download_folder}/release_notes.md | pandoc -f markdown -t html", shell=True)
                 # The $'' are actually super important, otherwise bash won't presever the newlines for some reason
 
 
