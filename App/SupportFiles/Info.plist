@@ -19,7 +19,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
-	<string>5906</string>
+	<string>5913</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>NSHumanReadableCopyright</key>
@@ -29,7 +29,7 @@
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>SUFeedURL</key>
-	<string>https://noah-nuebling.github.io/mac-mouse-fix-website/appcast.xml</string>
+	<string>https://raw.githubusercontent.com/noah-nuebling/mac-mouse-fix/feature-remap/appcast.xml</string>
 	<key>SUPublicEDKey</key>
 	<string>ZC69ciDfGYN4t3kwRiPc2SC7J4hchv9w+FfVv59r4+U=</string>
 </dict>
