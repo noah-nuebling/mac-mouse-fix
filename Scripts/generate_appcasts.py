@@ -24,10 +24,6 @@ base_xcconfig_path = "xcconfig/Base.xcconfig"
 sparkle_project_path = "Frameworks/Sparkle-1.26.0" # This is dangerously hardcoded
 download_folder = "generate_appcasts_downloads" # We want to delete this on exit
 
-def clean_up(download_folder):
-    print(f"DDD: {download_folder}")
-    if download_folder != "":
-        os.system(f'rm -R {download_folder}')
 def generate():
     try:
 
@@ -161,5 +157,10 @@ def generate():
         clean_up(download_folder)
         print(e)
         exit(1)
+
+def clean_up(download_folder):
+    print(f"DDD: {download_folder}")
+    if download_folder != "":
+        os.system(f'rm -R {download_folder}')
 
 generate()
