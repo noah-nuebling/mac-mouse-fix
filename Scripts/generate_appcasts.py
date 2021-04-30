@@ -169,7 +169,7 @@ def generate():
         # clean_up(download_folder)
 
     except Exception as e: # Exit immediately if anything goes wrong
-        # clean_up(download_folder)
+        clean_up(download_folder)
         print(e)
         exit(1)
 
