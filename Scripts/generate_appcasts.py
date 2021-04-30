@@ -142,8 +142,8 @@ def generate():
             app_path = f'{download_folder}/{app_bundle_name}'
             info_plist_path = f'{app_path}/{info_plist_app_subpath}'
 
-            bundle_version = subprocess.check_output(f"/usr/libexec/PlistBuddy {info_plist_path} -c 'Print CFBundleVersion'", shell=True).decode('utf-8')
-            minimum_macos_version = subprocess.check_output(f"/usr/libexec/PlistBuddy {info_plist_path} -c 'Print LSMinimumSystemVersion'", shell=True).decode('utf-8')
+            bundle_version = subprocess.check_output(f"/usr/libexec/PlistBuddy '{info_plist_path}' -c 'Print CFBundleVersion'", shell=True).decode('utf-8')
+            minimum_macos_version = subprocess.check_output(f"/usr/libexec/PlistBuddy '{info_plist_path}' -c 'Print LSMinimumSystemVersion'", shell=True).decode('utf-8')
 
             # Assemble collected data into appcast-ready item-string
             item_string = f"""
