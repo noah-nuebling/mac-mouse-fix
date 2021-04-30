@@ -98,7 +98,7 @@ def generate():
             # Check out commit
             # This would probably be a lot faster if we only checked out the files we need
             os.system("git stash")
-            os.system("git checkout {commit_number}")
+            os.system(f"git checkout {commit_number}")
 
             # Get version
             #   Get from Info.plist file
