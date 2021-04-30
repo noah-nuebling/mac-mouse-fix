@@ -1,0 +1,24 @@
+//
+// --------------------------------------------------------------------------
+// SmoothScroll.m (old)
+// Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
+// Created by Noah Nuebling in 2019
+// Licensed under MIT
+// --------------------------------------------------------------------------
+//
+
+#import <Cocoa/Cocoa.h>
+#import "AnimationCurve.h"
+
+@interface SmoothScroll : NSObject
+
++ (void)setHorizontalScroll: (BOOL)B;
+
++ (void)startWithAnimationCurve:(AnimationCurve *)curve
+                      pxPerStep:(int)pxB
+                         msBase:(int)msB
+                          msMax:(int)msM
+                       msFactor:(float)msF;
++ (void) stop;
+@end
+

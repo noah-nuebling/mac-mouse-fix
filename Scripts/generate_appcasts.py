@@ -144,6 +144,8 @@ def generate():
 
             bundle_version = subprocess.check_output(f"/usr/libexec/PlistBuddy '{info_plist_path}' -c 'Print CFBundleVersion'", shell=True).decode('utf-8')
             minimum_macos_version = subprocess.check_output(f"/usr/libexec/PlistBuddy '{info_plist_path}' -c 'Print LSMinimumSystemVersion'", shell=True).decode('utf-8')
+            bundle_version = bundle_version[0:-1]
+            minimum_macos_version = minimum_macos_version[0:-1]
 
             # Assemble collected data into appcast-ready item-string
             item_string = f"""
