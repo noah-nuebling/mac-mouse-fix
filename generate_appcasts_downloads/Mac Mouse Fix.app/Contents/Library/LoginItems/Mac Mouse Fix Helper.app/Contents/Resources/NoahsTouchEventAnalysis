@@ -1,0 +1,33 @@
+
+Under macOS 10.15.4 Catalina the following trackpad inputs produce CGEvents of this type:
+
+trackpad input      type
+
+2 finger swipe      29, 22 (in tandem)
+3 finger swipe      29, 30 (in tandem)
+
+2 finger pinch      29
+4 finger pinch      29, 30 (in tandem)
+
+rotate              I forgot
+force touch         I forgot
+double tap          29 (iirc)
+
+
+
+
+
+
+22: NSEventTypeScrollWheel
+29: NSEventTypeGesture
+30: NSEventTypeMagnify, but that doesn't make sense?
+
+
+Weirdly aren't used:
+NSEventTypeSwipe
+NSEventTypeRotate
+NSEventTypeSmartMagnify
+NSEventTypePressure
+NSEventTypeQuickLook
+
+-> Maybe these types are only used for NSEvents not for CGEvents

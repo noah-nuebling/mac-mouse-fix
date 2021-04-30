@@ -1,0 +1,488 @@
+//
+// --------------------------------------------------------------------------
+// MomentumScroll.m (old)
+// Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
+// Created by Noah Nuebling in 2019
+// Licensed under MIT
+// --------------------------------------------------------------------------
+//
+
+
+
+#import "MomentumScroll.h"
+#import "QuartzCore/CoreVideo.h"
+#import "AnimationCurve.h"
+#import <math.h>
+#import "DeviceManager.h"
+#import "ConfigFileMonitor.h"
+
+@interface MomentumScroll ()
+
+@end
+
+@implementation MomentumScroll
+
+
+
+
+#pragma mark - Global Vars
+
+typedef enum {
+    kMFWheelPhase       =   0,
+    kMFMomentumPhase    =   1,
+} MFScrollPhase;
+
+
+#pragma mark config
+
+// scroll smoothing
+int _msScrollSmoothingThreshold;
+double _scrollSmoothingMagnitudeP1;
+double _scrollSmoothingMagnitudeP2;
+// any phase
+BOOL _horizontalScrollModifierPressed;
+// wheel phase
+static int64_t  _pxStepSize;
+static double   _msPerScrollBase;
+// momentum phase
+static BOOL     _momentumScroll;
+static float    _frictionCoefficient;
+static float    _frictionVelocityExponent;
+static int      _scrollPhase;
+// objects
+static CVDisplayLinkRef _displayLink                    =   nil;
+static CFMachPortRef    _eventTap                       =   nil;
+static CGEventSourceRef _eventSource                    =   nil;
+AnimationCurve     *    _animationCurve                 =   nil;
+NSArray            *    _initialAnimationCurveValues    =   nil;
+
+
+#pragma mark dynamic
+
+
+static BOOL _isRunning = FALSE;
+// scroll smoothing
+static double   _msLastEventTimeStamp           =   0;
+static double   _msContinuousScrollTimeStamp    =   0;
+// wheel phase
+static int64_t  _pixelScrollQueue               =   0;
+static double   _msLeftForScroll                =   0;
+// momentum phase
+static double   _pxPerMsVelocity   =   0;
+static int      _onePixelScrollCounter = 0;
+static int      _onePixelScrollMax     = 10;
+
+#pragma mark - Interface
+
++ (void)configureWithPxPerStep:(int)px
+                     msPerStep:(int)ms
+                      friction:(float)f;
+{
+    
+// Floaty Flicks
+
+    _pxStepSize                         =   px;
+    _msPerScrollBase                    =   ms;
+    _momentumScroll                     =   TRUE;
+    _frictionVelocityExponent           =   1;
+    _frictionCoefficient                =   f;
+    _msScrollSmoothingThreshold         =   10000;
+    
+    
+    _initialAnimationCurveValues = @[@0.0, @0.0, @0.0, @0.0];
+    
+    _animationCurve                     =   [[AnimationCurve alloc] init];
+    
+    double p1x = [_initialAnimationCurveValues[0] doubleValue];
+    double p1y = [_initialAnimationCurveValues[1] doubleValue];
+    double p2x = [_initialAnimationCurveValues[2] doubleValue];
+    double p2y = [_initialAnimationCurveValues[3] doubleValue];
+    
+    [_animationCurve UnitBezierForPoint1x:p1x point1y:p1y point2x:p2x point2y:p2y];
+    
+    
+    
+    
+    _scrollSmoothingMagnitudeP1         =   0.0;
+    _scrollSmoothingMagnitudeP2         =   0.3;
+
+    
+    
+    
+    
+    _onePixelScrollMax = 3;
+    
+    _scrollPhase                        =   kMFWheelPhase;
+    _pxPerMsVelocity                    =   0;
+    _horizontalScrollModifierPressed    =   NO;
+    
+    if (_eventTap == nil) {
+        CGEventMask mask = CGEventMaskBit(kCGEventScrollWheel);
+        _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
+        CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _eventTap, 0);
+        CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes);
+        CFRelease(runLoopSource);
+    }
+    if (_displayLink == nil) {
+        CVDisplayLinkCreateWithCGDisplay(CGMainDisplayID(), &_displayLink);
+        CVDisplayLinkSetOutputCallback(_displayLink, displayLinkCallback, nil);
+    }
+    if (_eventSource == nil) {
+        _eventSource = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
+    }
+    
+    enable(TRUE);
+}
+
+
++ (void)decide {
+    if (DeviceManager.relevantDevicesAreAttached && ConfigFileMonitor.momentumScrollIsEnabled) {
+        if (_isRunning == FALSE) {
+            
+            start();
+        }
+    } else {
+        if (_isRunning == TRUE) {
+            
+            stop();
+        }
+    }
+}
+
+
++ (void)setHorizontalScroll:(BOOL)B {
+    _horizontalScrollModifierPressed = B;
+}
+
+static void enable(BOOL B) {
+    
+    if (_eventTap != nil) {
+        if (B) {
+            CGEventTapEnable(_eventTap, true);
+        }
+        else {
+            CGEventTapEnable(_eventTap, false);
+        }
+    }
+    
+    if (_displayLink != nil) {
+        if (!B) {
+            CVDisplayLinkStop(_displayLink);
+        }
+    }
+    
+}
+
+
+
+#pragma mark - Run Loop
+
+CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
+    
+    
+    _onePixelScrollCounter = 0;
+    
+    long long   isPixelBased        =   CGEventGetIntegerValueField(event, kCGScrollWheelEventIsContinuous);
+    int64_t     scrollDeltaAxis1    =   CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
+    
+    if ( (isPixelBased != 0) || (scrollDeltaAxis1 == 0) ) {
+        return event;
+    }
+    
+    _msLeftForScroll = _msPerScrollBase;
+    
+    
+    if (CVDisplayLinkIsRunning(_displayLink) == FALSE) {
+        CVDisplayLinkStart(_displayLink);
+    }
+    
+    
+    if (scrollDeltaAxis1 > 0) {
+        _pixelScrollQueue += _pxStepSize;
+    }
+    else if (scrollDeltaAxis1 < 0) {
+        _pixelScrollQueue -= _pxStepSize;
+    }
+    
+    _scrollPhase = kMFWheelPhase;
+    
+    
+    BOOL scrollEventFollowsCurrentScrollingDirection =  (_pixelScrollQueue == 0) ||
+                                                        (scrollDeltaAxis1 >= 0 && _pixelScrollQueue > 0) ||
+                                                        (scrollDeltaAxis1 <= 0 && _pixelScrollQueue < 0);
+    
+    double msThisEventTimeStamp     =   CGEventGetTimestamp(event) / 1000000;
+    double msSinceLastEvent         =  msThisEventTimeStamp - _msLastEventTimeStamp;
+        _msLastEventTimeStamp = msThisEventTimeStamp;
+    
+    /*
+    if ((msSinceLastEvent > _msScrollSmoothingThreshold)    ||
+        (_pixelScrollQueue == 0)                            ||
+        (_msLeftForScroll == 0)                             ||
+        (scrollEventFollowsCurrentScrollingDirection == FALSE))
+    {
+     */
+    if (TRUE ||
+        (msSinceLastEvent > _msScrollSmoothingThreshold)    ||
+        (_pxPerMsVelocity == 0)                             ||
+        (scrollEventFollowsCurrentScrollingDirection == FALSE))
+    {
+        NSLog(@"INITIAL CURVE");
+        
+        double p1x = [_initialAnimationCurveValues[0] doubleValue];
+        double p1y = [_initialAnimationCurveValues[1] doubleValue];
+        double p2x = [_initialAnimationCurveValues[2] doubleValue];
+        double p2y = [_initialAnimationCurveValues[3] doubleValue];
+        
+        [_animationCurve UnitBezierForPoint1x:p1x point1y:p1y point2x:p2x point2y:p2y];
+    }
+    else {
+        
+        NSLog(@"DYNAMIC CURVE");
+
+        double m = (((float)_pxPerMsVelocity/_pixelScrollQueue) * _msLeftForScroll);
+        
+        double p1x = _scrollSmoothingMagnitudeP1/( pow((m*m)+1, 0.5) );
+        double p1y = p1x * m;
+        double p2x = (1.41421356237 - _scrollSmoothingMagnitudeP2)/( pow(2, 0.5) );
+        double p2y = p2x;
+        
+        [_animationCurve UnitBezierForPoint1x:p1x point1y:p1y point2x:p2x point2y:p2y];
+        
+        NSLog(@"STEIGUNG: %f", m);
+    }
+    
+    
+    
+    return nil;
+}
+
+
+
+
+
+
+CVReturn displayLinkCallback (CVDisplayLinkRef displayLink, const CVTimeStamp *inNow, const CVTimeStamp *inOutputTime, CVOptionFlags flagsIn, CVOptionFlags *flagsOut, void *displayLinkContext)
+{
+    
+    int32_t pixelsToScroll  = 0;
+    double msBetweenFrames  = CVDisplayLinkGetActualOutputVideoRefreshPeriod(_displayLink) * 1000;
+    CVTime nominalTimeCV = CVDisplayLinkGetNominalOutputVideoRefreshPeriod(_displayLink);
+    msBetweenFrames = ((float)nominalTimeCV.timeValue/nominalTimeCV.timeScale) * 1000;
+    //NSLog(@"msBetweenFrames: %f", msBetweenFrames);
+    
+    
+    double timeSinceScrollStarted = (inNow->hostTime/1000000.0) - _msContinuousScrollTimeStamp;
+    
+# pragma mark Wheel Phase
+    if (_scrollPhase == kMFWheelPhase)
+    {
+        
+        double scrollTime               = _msPerScrollBase;
+        CGFloat completedScrollTimeFractionNow // fraction of scrollTime weve "used up"
+        = ((CGFloat)(scrollTime - _msLeftForScroll)) / ((CGFloat)scrollTime);
+        CGFloat completedScrollTimeFractionNextFrame
+        = (CGFloat)(scrollTime - (_msLeftForScroll-msBetweenFrames)) / ((CGFloat)scrollTime);
+        
+        //NSLog(@"fracNow : %f", completedScrollTimeFractionNow);
+        //NSLog(@"fracNext: %f", completedScrollTimeFractionNextFrame);
+
+        // calculate offset at this point during the animation - offset is in (0..1)
+        double animationOffsetNow           =   [_animationCurve solve:completedScrollTimeFractionNow epsilon:0.008];
+        double animationOffsetNextFrame     =   [_animationCurve solve:completedScrollTimeFractionNextFrame epsilon:0.008];
+        double  animationOffsetToNextFrame   =   animationOffsetNextFrame - animationOffsetNow;
+        double  animationOffsetLeft          =   1 - animationOffsetNow; // distance to maximal offset value (1)
+    
+        pixelsToScroll = round( (_pixelScrollQueue/animationOffsetLeft) * animationOffsetToNextFrame ) ;
+        _pixelScrollQueue   -=  pixelsToScroll;
+        _msLeftForScroll    -=  msBetweenFrames;
+        
+        
+        _pxPerMsVelocity = (pixelsToScroll / msBetweenFrames);
+        
+        
+        if ( (_msLeftForScroll <= 0) || (_pixelScrollQueue == 0) )
+        {
+            _msLeftForScroll    =   0;
+            _pixelScrollQueue   =   0;
+            
+            
+            if (_momentumScroll) {
+                _scrollPhase = kMFMomentumPhase;
+            }
+            else {
+                CVDisplayLinkStop(displayLink);
+                return 0;
+            }
+            
+        }
+    }
+    
+    
+# pragma mark Momentum Phase
+    else if (_scrollPhase == kMFMomentumPhase)
+    {
+        
+        double oldVel = _pxPerMsVelocity;
+        double newVel = oldVel - friction(oldVel) * msBetweenFrames;
+        
+        _pxPerMsVelocity = newVel;
+        if ( ((newVel < 0) && (oldVel > 0)) || ((newVel > 0) && (oldVel < 0)) ) {
+            _pxPerMsVelocity = 0;
+        }
+        
+        pixelsToScroll = round(_pxPerMsVelocity * msBetweenFrames);
+        
+        
+        if ( (pixelsToScroll == 0) || (_pxPerMsVelocity == 0) )
+        {
+            CVDisplayLinkStop(_displayLink);
+            
+            //_msLeftForScroll    =   0;
+            //_pixelScrollQueue   =   0;
+            
+            _pxPerMsVelocity = 0;
+            return 0;
+        }
+        
+        
+    }
+    
+
+    
+    if (abs(pixelsToScroll) == 1) {
+        _onePixelScrollCounter += 1;
+        
+        if (_onePixelScrollCounter > _onePixelScrollMax) {
+            _onePixelScrollCounter = 0;
+            CVDisplayLinkStop(displayLink);
+            
+            _pxPerMsVelocity = 0;
+            return 0;
+        }
+    }
+    NSLog(@"pixelsToScroll: %d", pixelsToScroll);
+    
+# pragma mark Send Event
+    CGEventRef scrollEvent = CGEventCreateScrollWheelEvent(_eventSource, kCGScrollEventUnitPixel, 1, 0);
+
+    if (_horizontalScrollModifierPressed == FALSE) {
+        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis1, - pixelsToScroll / 4);
+        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis1, - pixelsToScroll);
+    }
+    else if (_horizontalScrollModifierPressed == TRUE) {
+        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis2, - pixelsToScroll / 4);
+        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis2, - pixelsToScroll);
+    }
+    
+    CGEventPost(kCGSessionEventTap, scrollEvent);
+    CFRelease(scrollEvent);
+    
+    return 0;
+}
+
+#pragma mark - helper functions
+
+static double friction(double velocity) {
+    int s = 1;
+    if (velocity < 0) {
+        s = -1;
+    }
+    double negativeAcceleration = s * powf(fabs(velocity), _frictionVelocityExponent) * _frictionCoefficient/100;
+    return negativeAcceleration;
+}
+
+static void resetDynamicGlobals() {
+    _horizontalScrollModifierPressed    =   NO;
+    _scrollPhase                        =   kMFWheelPhase;
+    _pixelScrollQueue                   =   0;
+    _msLeftForScroll                    =   0;
+    _pxPerMsVelocity                    =   0;
+    _onePixelScrollCounter             =   0;
+}
+
+static void start() {
+    
+    NSLog(@"MomentumScroll started");
+    
+    _isRunning = TRUE;
+    
+    resetDynamicGlobals();
+    
+    if (_eventTap == nil) {
+        CGEventMask mask = CGEventMaskBit(kCGEventScrollWheel);
+        _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
+        CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _eventTap, 0);
+        CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes);
+        CFRelease(runLoopSource);
+        CGEventTapEnable(_eventTap, true);
+    }
+    if (_displayLink == nil) {
+        CVDisplayLinkCreateWithActiveCGDisplays(&_displayLink);
+        CVDisplayLinkSetOutputCallback(_displayLink, displayLinkCallback, nil);
+    }
+    if (_eventSource == nil) {
+        _eventSource = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
+    }
+    
+    //CGDisplayRemoveReconfigurationCallback(Handle_displayReconfiguration, NULL); // don't know if necesssary
+    //CGDisplayRegisterReconfigurationCallback(Handle_displayReconfiguration, NULL);
+}
+
+static void stop() {
+    
+    NSLog(@"MomentumScroll stopped");
+    
+    _isRunning = FALSE;
+    
+    if (_displayLink) {
+        CVDisplayLinkStop(_displayLink);
+        CVDisplayLinkRelease(_displayLink);
+        _displayLink = nil;
+    }
+    if (_eventTap) {
+        CGEventTapEnable(_eventTap, false);
+        CFRelease(_eventTap);
+        _eventTap = nil;
+    }
+    if (_eventSource) {
+        CFRelease(_eventSource);
+        _eventSource = nil;
+    }
+}
+
+
+
+/*
+static double msUntilVelocityIsX(double velocity, int X) {
+    //return (velocity - 1) / (_frictionCoefficient/100);
+    //return (fabs(velocity) - X) / (friction(X));
+    
+    return math.ln( X/velocity ) / _frictionCoefficient;
+    // -> assuming that _frictionVelocityExponent == 1...
+ 
+    // tried to use differential equations to calculate the pixels that momentum scroll would scroll, in order enforce a fixed scroll distance per scrollwheel tick - but I'm too dumb and that probably wouldn't actually feel that great anyways...
+    
+}
+ */
+
+@end
+
+
+
+
+
+
+
+
+
+
+/*
+ int64_t scrollDeltaAxis1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
+ int64_t scrollDeltaAxis1Pixel = CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1);
+ double scrollDeltaAxis1double = CGEventGetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1);
+ 
+ NSLog(@"scrollDeltaAxis1: %lld", scrollDeltaAxis1);
+ NSLog(@"scrollDeltaAxis1Pixel: %lld", scrollDeltaAxis1Pixel);
+ NSLog(@"scrollDeltaAxis1Float: %f", scrollDeltaAxis1double * 10);
+ */

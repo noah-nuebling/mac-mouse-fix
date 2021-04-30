@@ -179,6 +179,8 @@ def generate():
             bundle_version = bundle_version[0:-1]
             minimum_macos_version = minimum_macos_version[0:-1]
 
+            # Delete bundle we just processed so that we won't accidentally process it again next round (that happens if the next bundle has prefpane_bundle_name instead of app_bundle_name)
+            os.remove(app_path)
 
             # Assemble collected data into appcast-ready item-string
             item_string = f"""
