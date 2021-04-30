@@ -52,8 +52,15 @@ try:
 
         # Get release notes
         release_notes = r['body'] # This is markdown
+
+        # Write release notes to file. As a plain string I had trouble passing it to pandoc, because I couldn't escape it properly
+        text_file = open("release_notes.md", "w")
+        n = text_file.write(release_notes)
+        text_file.close()
+
+
         # Convert to HTML
-        release_notes = subprocess.check_output(f"echo '{release_notes}' | pandoc -f markdown -t html", shell=True)
+        release_notes = subprocess.check_output(f"cat release_notes.md | pandoc -f markdown -t html", shell=True)
             # The $'' are actually super important, otherwise bash won't presever the newlines for some reason
 
         # Get title
