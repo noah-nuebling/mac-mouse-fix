@@ -15,7 +15,9 @@ from pprint import pprint
 import subprocess
 
 # Constants
-#   Paths are relative to project root. -> Run this from project root.
+#   Paths are relative to project root.
+
+os.chdir('..') # Run this script from the Scripts folder, it will then automatically chdir to the root dir
 
 releases_api_url = "https://api.github.com/repos/noah-nuebling/mac-mouse-fix/releases"
 
@@ -135,7 +137,7 @@ def generate():
 
             unzip_output = subprocess.check_output(f'ditto -V -x -k --sequesterRsrc --rsrc {download_destination} {download_folder}')
 
-            
+
 
 
             # Assemble collected data into appcast-ready item-string
