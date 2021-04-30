@@ -25,6 +25,7 @@ sparkle_project_path = "Frameworks/Sparkle-1.26.0" # This is dangerously hardcod
 download_folder = "generate_appcasts_downloads" # We want to delete this on exit
 current_directory = os.getcwd()
 download_folder_absolute = os.path.join(current_directory, download_folder)
+files_to_checkout = [info_plist_path, base_xcconfig_path]
 
 def generate():
     try:
@@ -97,7 +98,7 @@ def generate():
             # Check out commit
             # This would probably be a lot faster if we only checked out the files we need
             os.system("git stash")
-            os.system(f"git checkout {commit_number}")
+            os.system(f"git checkout {commit_number} {files_to_checkout.join(' ')}")
 
             # Get version
             #   Get from Info.plist file
