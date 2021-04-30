@@ -35,67 +35,77 @@
 
       /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
 
-  body {
-      background-color: transparent;
-      margin: 0px 0px 0px 10px;
-      padding: 0px;
-      font-family: -apple-system;
-      font-size: 13px
-  }
-
-  h1 {
-      font-size: 13px;
-      font: bold;
-      margin-top: 0px;
-      margin-bottom: 10px;
-  }
-
-  ul {
-      padding-left: 20px;
-      margin-top: 0px;
-      margin-bottom: 20px;
-  }
-  li, p {
-
-      margin-left: 0px;
-      margin-top: 0px;
-      margin-bottom: 8px;
-  }
-  .annotation {
-      font-size: 11px;
-  }
-
-  @media (prefers-color-scheme: light) {
-
-      h1 {
-          color: #272727;
+      root {
+          font-size: 10px; /* 1 rem is this much */
       }
-
-      a {
-          color: #0948be;
-          /*margin-left: 5px;*/
-      }
-  }
-
-  @media (prefers-color-scheme: dark) {
 
       body {
-          background-color: #1e1e1e; 
-          /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
-              This is the color of the text field background in Apple Mail on macOS 11 BigSur */
+          background-color: transparent;
+          margin: 0.2rem 1.2rem;
+          padding: 0px;
+          font-family: -apple-system;
+          font-size: 1.3rem;
       }
 
       h1 {
-          color: #D9D9D9;
+          font-size: 2.0rem;
+      }
+
+      h2 {
+          font-size: 1.7rem;
+      }
+
+      h3 {
+          font-size: 1.3rem;
+          /* margin-top: 0px; */
+          /* margin-bottom: 10px; */
+      }
+
+      ul {
+          padding-left: 2.0rem;
+          margin-top: 0rem;
+          margin-bottom: 2.0rem;
       }
       li, p {
-          color:#FFFFFF;
+
+          margin-left: 0;
+          margin-top: 0;
+          margin-bottom: 0.8rem;
       }
-      a {
-          color: #3586FF;
-          /*margin-left: 5px;*/
+      .annotation {
+          font-size: 1.1rem;
       }
-  }
+
+      @media (prefers-color-scheme: light) {
+
+          h1 {
+              color: #272727;
+          }
+
+          a {
+              color: #0948be;
+              /*margin-left: 5px;*/
+          }
+      }
+
+      @media (prefers-color-scheme: dark) {
+
+          body {
+              background-color: #1e1e1e; 
+              /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
+                  This is the color of the text field background in Apple Mail on macOS 11 BigSur */
+
+              color: #D9D9D9; /* For titles */
+          }
+
+          li, p {
+              color:#FFFFFF;
+          }
+          a {
+              color: #3586FF;
+              /*margin-left: 5px;*/
+          }
+      }
 
   </style>
 </head>
@@ -148,67 +158,77 @@
 
       /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
 
-  body {
-      background-color: transparent;
-      margin: 0px 0px 0px 10px;
-      padding: 0px;
-      font-family: -apple-system;
-      font-size: 13px
-  }
-
-  h1 {
-      font-size: 13px;
-      font: bold;
-      margin-top: 0px;
-      margin-bottom: 10px;
-  }
-
-  ul {
-      padding-left: 20px;
-      margin-top: 0px;
-      margin-bottom: 20px;
-  }
-  li, p {
-
-      margin-left: 0px;
-      margin-top: 0px;
-      margin-bottom: 8px;
-  }
-  .annotation {
-      font-size: 11px;
-  }
-
-  @media (prefers-color-scheme: light) {
-
-      h1 {
-          color: #272727;
+      root {
+          font-size: 10px; /* 1 rem is this much */
       }
-
-      a {
-          color: #0948be;
-          /*margin-left: 5px;*/
-      }
-  }
-
-  @media (prefers-color-scheme: dark) {
 
       body {
-          background-color: #1e1e1e; 
-          /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
-              This is the color of the text field background in Apple Mail on macOS 11 BigSur */
+          background-color: transparent;
+          margin: 0.2rem 1.2rem;
+          padding: 0px;
+          font-family: -apple-system;
+          font-size: 1.3rem;
       }
 
       h1 {
-          color: #D9D9D9;
+          font-size: 2.0rem;
+      }
+
+      h2 {
+          font-size: 1.7rem;
+      }
+
+      h3 {
+          font-size: 1.3rem;
+          /* margin-top: 0px; */
+          /* margin-bottom: 10px; */
+      }
+
+      ul {
+          padding-left: 2.0rem;
+          margin-top: 0rem;
+          margin-bottom: 2.0rem;
       }
       li, p {
-          color:#FFFFFF;
+
+          margin-left: 0;
+          margin-top: 0;
+          margin-bottom: 0.8rem;
       }
-      a {
-          color: #3586FF;
-          /*margin-left: 5px;*/
+      .annotation {
+          font-size: 1.1rem;
       }
-  }
+
+      @media (prefers-color-scheme: light) {
+
+          h1 {
+              color: #272727;
+          }
+
+          a {
+              color: #0948be;
+              /*margin-left: 5px;*/
+          }
+      }
+
+      @media (prefers-color-scheme: dark) {
+
+          body {
+              background-color: #1e1e1e; 
+              /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
+                  This is the color of the text field background in Apple Mail on macOS 11 BigSur */
+
+              color: #D9D9D9; /* For titles */
+          }
+
+          li, p {
+              color:#FFFFFF;
+          }
+          a {
+              color: #3586FF;
+              /*margin-left: 5px;*/
+          }
+      }
 
   </style>
 </head>
@@ -258,67 +278,77 @@
 
       /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
 
-  body {
-      background-color: transparent;
-      margin: 0px 0px 0px 10px;
-      padding: 0px;
-      font-family: -apple-system;
-      font-size: 13px
-  }
-
-  h1 {
-      font-size: 13px;
-      font: bold;
-      margin-top: 0px;
-      margin-bottom: 10px;
-  }
-
-  ul {
-      padding-left: 20px;
-      margin-top: 0px;
-      margin-bottom: 20px;
-  }
-  li, p {
-
-      margin-left: 0px;
-      margin-top: 0px;
-      margin-bottom: 8px;
-  }
-  .annotation {
-      font-size: 11px;
-  }
-
-  @media (prefers-color-scheme: light) {
-
-      h1 {
-          color: #272727;
+      root {
+          font-size: 10px; /* 1 rem is this much */
       }
-
-      a {
-          color: #0948be;
-          /*margin-left: 5px;*/
-      }
-  }
-
-  @media (prefers-color-scheme: dark) {
 
       body {
-          background-color: #1e1e1e; 
-          /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
-              This is the color of the text field background in Apple Mail on macOS 11 BigSur */
+          background-color: transparent;
+          margin: 0.2rem 1.2rem;
+          padding: 0px;
+          font-family: -apple-system;
+          font-size: 1.3rem;
       }
 
       h1 {
-          color: #D9D9D9;
+          font-size: 2.0rem;
+      }
+
+      h2 {
+          font-size: 1.7rem;
+      }
+
+      h3 {
+          font-size: 1.3rem;
+          /* margin-top: 0px; */
+          /* margin-bottom: 10px; */
+      }
+
+      ul {
+          padding-left: 2.0rem;
+          margin-top: 0rem;
+          margin-bottom: 2.0rem;
       }
       li, p {
-          color:#FFFFFF;
+
+          margin-left: 0;
+          margin-top: 0;
+          margin-bottom: 0.8rem;
       }
-      a {
-          color: #3586FF;
-          /*margin-left: 5px;*/
+      .annotation {
+          font-size: 1.1rem;
       }
-  }
+
+      @media (prefers-color-scheme: light) {
+
+          h1 {
+              color: #272727;
+          }
+
+          a {
+              color: #0948be;
+              /*margin-left: 5px;*/
+          }
+      }
+
+      @media (prefers-color-scheme: dark) {
+
+          body {
+              background-color: #1e1e1e; 
+              /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
+                  This is the color of the text field background in Apple Mail on macOS 11 BigSur */
+
+              color: #D9D9D9; /* For titles */
+          }
+
+          li, p {
+              color:#FFFFFF;
+          }
+          a {
+              color: #3586FF;
+              /*margin-left: 5px;*/
+          }
+      }
 
   </style>
 </head>
@@ -372,67 +402,77 @@
 
       /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
 
-  body {
-      background-color: transparent;
-      margin: 0px 0px 0px 10px;
-      padding: 0px;
-      font-family: -apple-system;
-      font-size: 13px
-  }
-
-  h1 {
-      font-size: 13px;
-      font: bold;
-      margin-top: 0px;
-      margin-bottom: 10px;
-  }
-
-  ul {
-      padding-left: 20px;
-      margin-top: 0px;
-      margin-bottom: 20px;
-  }
-  li, p {
-
-      margin-left: 0px;
-      margin-top: 0px;
-      margin-bottom: 8px;
-  }
-  .annotation {
-      font-size: 11px;
-  }
-
-  @media (prefers-color-scheme: light) {
-
-      h1 {
-          color: #272727;
+      root {
+          font-size: 10px; /* 1 rem is this much */
       }
-
-      a {
-          color: #0948be;
-          /*margin-left: 5px;*/
-      }
-  }
-
-  @media (prefers-color-scheme: dark) {
 
       body {
-          background-color: #1e1e1e; 
-          /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
-              This is the color of the text field background in Apple Mail on macOS 11 BigSur */
+          background-color: transparent;
+          margin: 0.2rem 1.2rem;
+          padding: 0px;
+          font-family: -apple-system;
+          font-size: 1.3rem;
       }
 
       h1 {
-          color: #D9D9D9;
+          font-size: 2.0rem;
+      }
+
+      h2 {
+          font-size: 1.7rem;
+      }
+
+      h3 {
+          font-size: 1.3rem;
+          /* margin-top: 0px; */
+          /* margin-bottom: 10px; */
+      }
+
+      ul {
+          padding-left: 2.0rem;
+          margin-top: 0rem;
+          margin-bottom: 2.0rem;
       }
       li, p {
-          color:#FFFFFF;
+
+          margin-left: 0;
+          margin-top: 0;
+          margin-bottom: 0.8rem;
       }
-      a {
-          color: #3586FF;
-          /*margin-left: 5px;*/
+      .annotation {
+          font-size: 1.1rem;
       }
-  }
+
+      @media (prefers-color-scheme: light) {
+
+          h1 {
+              color: #272727;
+          }
+
+          a {
+              color: #0948be;
+              /*margin-left: 5px;*/
+          }
+      }
+
+      @media (prefers-color-scheme: dark) {
+
+          body {
+              background-color: #1e1e1e; 
+              /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
+                  This is the color of the text field background in Apple Mail on macOS 11 BigSur */
+
+              color: #D9D9D9; /* For titles */
+          }
+
+          li, p {
+              color:#FFFFFF;
+          }
+          a {
+              color: #3586FF;
+              /*margin-left: 5px;*/
+          }
+      }
 
   </style>
 </head>
