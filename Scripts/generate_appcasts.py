@@ -35,7 +35,9 @@ def generate():
 
         # Script
 
-        os.makedirs(os.path.dirname(download_folder), exist_ok=True)
+        current_directory = os.getcwd()
+        dir_to_create = os.path.join(current_directory, download_folder)
+        os.makedirs(dir_to_create, exist_ok=True)
 
         request = urllib.request.urlopen(releases_api_url)
         releases = json.load(request)
