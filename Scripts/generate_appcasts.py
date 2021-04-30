@@ -15,7 +15,8 @@ from pprint import pprint
 import subprocess
 
 def clean_up():
-    os.system(f'rm -R {download_folder}')
+    if downloads_folder is not "":
+        os.system(f'rm -R {download_folder}')
 
 try:
 
