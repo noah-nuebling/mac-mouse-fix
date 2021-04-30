@@ -4,6 +4,7 @@
 # Imports
 
 import os
+import shutil
 # import requests # Only ships with python2 on mac it seems
 import urllib.request
 import urllib.parse
