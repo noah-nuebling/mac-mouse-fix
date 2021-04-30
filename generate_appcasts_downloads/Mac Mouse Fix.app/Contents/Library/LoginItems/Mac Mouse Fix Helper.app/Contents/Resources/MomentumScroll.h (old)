@@ -1,0 +1,23 @@
+//
+// --------------------------------------------------------------------------
+// MomentumScroll.h (old)
+// Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
+// Created by Noah Nuebling in 2019
+// Licensed under MIT
+// --------------------------------------------------------------------------
+//
+
+#import <Cocoa/Cocoa.h>
+#import "AnimationCurve.h"
+
+@interface MomentumScroll : NSObject
+
++ (void)setHorizontalScroll: (BOOL)B;
+
++ (void)configureWithPxPerStep:(int)px
+                     msPerStep:(int)ms
+                      friction:(float)f;
+
++ (void)decide;
+@end
+

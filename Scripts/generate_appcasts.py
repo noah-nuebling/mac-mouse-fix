@@ -135,7 +135,8 @@ def generate():
             # Get edSignature
             signature_and_length = subprocess.check_output(f"./{sparkle_project_path}/bin/sign_update {download_destination}", shell=True).decode('utf-8')
             print(os.getcwd())
-            unzip_output = subprocess.check_output(f'ditto -V -x -k --sequesterRsrc --rsrc "{download_destination}" "{download_folder}"')
+            os.system(f'ditto -V -x -k --sequesterRsrc --rsrc "{download_destination}" "{download_folder}"')
+            # unzip_output = subprocess.check_output(f'ditto -V -x -k --sequesterRsrc --rsrc "{download_destination}" "{download_folder}"')
 
 
 
