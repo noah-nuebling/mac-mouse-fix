@@ -131,15 +131,15 @@ def generate():
             # Download update
             os.makedirs(download_folder_absolute, exist_ok=True)
             download_name = download_link.rsplit('/', 1)[-1]
-            download_destination = f'{download_folder}/{download_name}'
-            urllib.request.urlretrieve(download_link, download_destination)
+            download_zip_path = f'{download_folder}/{download_name}'
+            urllib.request.urlretrieve(download_link, download_zip_path)
 
             # Get edSignature
-            signature_and_length = subprocess.check_output(f"./{sparkle_project_path}/bin/sign_update {download_destination}", shell=True).decode('utf-8')
+            signature_and_length = subprocess.check_output(f"./{sparkle_project_path}/bin/sign_update {download_zip_path}", shell=True).decode('utf-8')
             print(os.getcwd())
-            os.system(f'ditto -V -x -k --sequesterRsrc --rsrc "{download_destination}" "{download_folder}"') # This works, while subprocess.check_output doesn't for some reason
+            os.system(f'ditto -V -x -k --sequesterRsrc --rsrc "{download_zip_path}" "{download_folder}"') # This works, while subprocess.check_output doesn't for some reason
 
-            app_path = f'{download_destination}/{app_bundle_name}'
+            app_path = f'{download_folder}/{app_bundle_name}'
             info_plist_path = f'{app_path}/{info_plist_app_subpath}'
 
             bundle_version = subprocess.check_output(f"/usr/libexec/PlistBuddy {info_plist_path} -c 'Print CFBundleVersion'", shell=True).decode('utf-8')
