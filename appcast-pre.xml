@@ -6,8 +6,7 @@
     <link>https://raw.githubusercontent.com/noah-nuebling/mac-mouse-fix/master/appcast-pre.xml</link>
     <description>Prereleases of Mac Mouse Fix</description>
     <language>en</language>
-    
-    <item>
+        <item>
         <title>2.0.0 Beta 5 available!</title>
         <pubDate>2021-04-30T02:39:21Z</pubDate>
         <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
@@ -24,7 +23,6 @@
             type="application/octet-stream"
         />
     </item>
-
     <item>
         <title>2.0.0 Beta 4 available!</title>
         <pubDate>2021-04-15T20:52:08Z</pubDate>
@@ -62,7 +60,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
             type="application/octet-stream"
         />
     </item>
-
     <item>
         <title>2.0.0 Beta 3 available!</title>
         <pubDate>2021-04-06T19:34:19Z</pubDate>
@@ -94,7 +91,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
             type="application/octet-stream"
         />
     </item>
-
     <item>
         <title>2.0.0 Beta 2 available!</title>
         <pubDate>2021-03-29T16:15:58Z</pubDate>
@@ -130,7 +126,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
             type="application/octet-stream"
         />
     </item>
-
     <item>
         <title>2.0.0 Beta 1 available!</title>
         <pubDate>2021-03-25T03:33:24Z</pubDate>
@@ -171,7 +166,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
             type="application/octet-stream"
         />
     </item>
-
     <item>
         <title>1.0.3 available!</title>
         <pubDate>2021-03-25T00:35:32Z</pubDate>
@@ -193,7 +187,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
             type="application/octet-stream"
         />
     </item>
-
     <item>
         <title>1.0.2 available!</title>
         <pubDate>2021-03-22T23:00:40Z</pubDate>
@@ -212,7 +205,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
             type="application/octet-stream"
         />
     </item>
-
     <item>
         <title>1.0.1 available!</title>
         <pubDate>2021-03-03T00:20:23Z</pubDate>
@@ -235,7 +227,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
             type="application/octet-stream"
         />
     </item>
-
     <item>
         <title>1.0.1 Beta 2 available!</title>
         <pubDate>2021-03-02T19:49:52Z</pubDate>
@@ -263,7 +254,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
             type="application/octet-stream"
         />
     </item>
-
     <item>
         <title>1.0.1 Beta 1 available!</title>
         <pubDate>2021-03-02T17:49:14Z</pubDate>
@@ -291,7 +281,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
             type="application/octet-stream"
         />
     </item>
-
     <item>
         <title>1.0.0 available!</title>
         <pubDate>2021-03-01T15:28:34Z</pubDate>
