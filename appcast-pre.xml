@@ -10,7 +10,92 @@
         <pubDate>2021-04-30T02:39:21Z</pubDate>
         <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
         <description><![CDATA[
-            <p>Don’t download this, this release is meant to test a new update mechanism.</p>
+            <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>-</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+
+  <style>
+
+      /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
+
+  body {
+      background-color: transparent;
+      margin: 0px 0px 0px 10px;
+      padding: 0px;
+      font-family: -apple-system;
+      font-size: 13px
+  }
+
+  h1 {
+      font-size: 13px;
+      font: bold;
+      margin-top: 0px;
+      margin-bottom: 10px;
+  }
+
+  ul {
+      padding-left: 20px;
+      margin-top: 0px;
+      margin-bottom: 20px;
+  }
+  li, p {
+
+      margin-left: 0px;
+      margin-top: 0px;
+      margin-bottom: 8px;
+  }
+  .annotation {
+      font-size: 11px;
+  }
+
+  @media (prefers-color-scheme: light) {
+
+      h1 {
+          color: #272727;
+      }
+
+      a {
+          color: #0948be;
+          /*margin-left: 5px;*/
+      }
+  }
+
+  @media (prefers-color-scheme: dark) {
+      h1 {
+          color: #D9D9D9;
+      }
+      li, p {
+          color:#FFFFFF;
+      }
+      a {
+          color: #3586FF;
+          /*margin-left: 5px;*/
+      }
+  }
+
+  </style>
+</head>
+<body>
+<p>Don’t download this, this release is meant to test a new update mechanism.</p>
+</body>
+</html>
 
         ]]>
         </description>
@@ -27,7 +112,90 @@
         <pubDate>2021-04-15T20:52:08Z</pubDate>
         <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
         <description><![CDATA[
-            <h3 id="changes-in-beta-4">Changes in Beta 4</h3>
+            <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>-</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+
+  <style>
+
+      /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
+
+  body {
+      background-color: transparent;
+      margin: 0px 0px 0px 10px;
+      padding: 0px;
+      font-family: -apple-system;
+      font-size: 13px
+  }
+
+  h1 {
+      font-size: 13px;
+      font: bold;
+      margin-top: 0px;
+      margin-bottom: 10px;
+  }
+
+  ul {
+      padding-left: 20px;
+      margin-top: 0px;
+      margin-bottom: 20px;
+  }
+  li, p {
+
+      margin-left: 0px;
+      margin-top: 0px;
+      margin-bottom: 8px;
+  }
+  .annotation {
+      font-size: 11px;
+  }
+
+  @media (prefers-color-scheme: light) {
+
+      h1 {
+          color: #272727;
+      }
+
+      a {
+          color: #0948be;
+          /*margin-left: 5px;*/
+      }
+  }
+
+  @media (prefers-color-scheme: dark) {
+      h1 {
+          color: #D9D9D9;
+      }
+      li, p {
+          color:#FFFFFF;
+      }
+      a {
+          color: #3586FF;
+          /*margin-left: 5px;*/
+      }
+  }
+
+  </style>
+</head>
+<body>
+<h3 id="changes-in-beta-4">Changes in Beta 4</h3>
 <ul>
 <li>Various improvements to the user experience.</li>
 <li>The remap table is now grouped by button, making it much easier to parse, especially when using many actions on the same button.</li>
@@ -48,6 +216,8 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 <p>You can use <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose">Mac Mouse Fix Feedback Assistant</a> to help you create great enhancement requests and bug reports.</p>
 <p><a href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/82">GitHub Discussions</a> is a great place for you to share any other thoughts.</p>
 <p>Thanks for helping to make Mac Mouse Fix better! :)</p>
+</body>
+</html>
 
         ]]>
         </description>
@@ -64,7 +234,90 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
         <pubDate>2021-04-06T19:34:19Z</pubDate>
         <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
         <description><![CDATA[
-            <h3 id="changes-in-beta-3">Changes in Beta 3</h3>
+            <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>-</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+
+  <style>
+
+      /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
+
+  body {
+      background-color: transparent;
+      margin: 0px 0px 0px 10px;
+      padding: 0px;
+      font-family: -apple-system;
+      font-size: 13px
+  }
+
+  h1 {
+      font-size: 13px;
+      font: bold;
+      margin-top: 0px;
+      margin-bottom: 10px;
+  }
+
+  ul {
+      padding-left: 20px;
+      margin-top: 0px;
+      margin-bottom: 20px;
+  }
+  li, p {
+
+      margin-left: 0px;
+      margin-top: 0px;
+      margin-bottom: 8px;
+  }
+  .annotation {
+      font-size: 11px;
+  }
+
+  @media (prefers-color-scheme: light) {
+
+      h1 {
+          color: #272727;
+      }
+
+      a {
+          color: #0948be;
+          /*margin-left: 5px;*/
+      }
+  }
+
+  @media (prefers-color-scheme: dark) {
+      h1 {
+          color: #D9D9D9;
+      }
+      li, p {
+          color:#FFFFFF;
+      }
+      a {
+          color: #3586FF;
+          /*margin-left: 5px;*/
+      }
+  }
+
+  </style>
+</head>
+<body>
+<h3 id="changes-in-beta-3">Changes in Beta 3</h3>
 <ul>
 <li>Fixed some issues when upgrading from the old prefpane version of the app to the new app version</li>
 <li>Fixed some issues when running the app without moving it out of the Downloads folder</li>
@@ -79,6 +332,8 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 </ul>
 <p>You can use <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose">Mac Mouse Fix Feedback Assistant</a> to help you create amazing feedback.</p>
 <p>Thanks for helping to make Mac Mouse Fix better! :)</p>
+</body>
+</html>
 
         ]]>
         </description>
@@ -95,7 +350,90 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
         <pubDate>2021-03-29T16:15:58Z</pubDate>
         <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
         <description><![CDATA[
-            <h3 id="changes-in-beta-2">Changes in Beta 2</h3>
+            <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>-</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+
+  <style>
+
+      /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
+
+  body {
+      background-color: transparent;
+      margin: 0px 0px 0px 10px;
+      padding: 0px;
+      font-family: -apple-system;
+      font-size: 13px
+  }
+
+  h1 {
+      font-size: 13px;
+      font: bold;
+      margin-top: 0px;
+      margin-bottom: 10px;
+  }
+
+  ul {
+      padding-left: 20px;
+      margin-top: 0px;
+      margin-bottom: 20px;
+  }
+  li, p {
+
+      margin-left: 0px;
+      margin-top: 0px;
+      margin-bottom: 8px;
+  }
+  .annotation {
+      font-size: 11px;
+  }
+
+  @media (prefers-color-scheme: light) {
+
+      h1 {
+          color: #272727;
+      }
+
+      a {
+          color: #0948be;
+          /*margin-left: 5px;*/
+      }
+  }
+
+  @media (prefers-color-scheme: dark) {
+      h1 {
+          color: #D9D9D9;
+      }
+      li, p {
+          color:#FFFFFF;
+      }
+      a {
+          color: #3586FF;
+          /*margin-left: 5px;*/
+      }
+  }
+
+  </style>
+</head>
+<body>
+<h3 id="changes-in-beta-2">Changes in Beta 2</h3>
 <ul>
 <li>Use keyboard shortcuts right from your mouse! I made sure this feature is super easy to use and incredibly flexible, just like the rest of the new remapping engine. I think you’ll love it!</li>
 <li>Various small tweaks to UI text and layout.</li>
@@ -114,6 +452,8 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 </ul>
 <p>You can use <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose">Mac Mouse Fix Feedback Assistant</a> to help you create amazing feedback.</p>
 <p>Thanks for helping to make Mac Mouse Fix even better! :)</p>
+</body>
+</html>
 
         ]]>
         </description>
@@ -130,7 +470,90 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
         <pubDate>2021-03-25T03:33:24Z</pubDate>
         <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
         <description><![CDATA[
-            <h3 id="features-in-2.0.0">Features in 2.0.0</h3>
+            <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>-</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+
+  <style>
+
+      /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
+
+  body {
+      background-color: transparent;
+      margin: 0px 0px 0px 10px;
+      padding: 0px;
+      font-family: -apple-system;
+      font-size: 13px
+  }
+
+  h1 {
+      font-size: 13px;
+      font: bold;
+      margin-top: 0px;
+      margin-bottom: 10px;
+  }
+
+  ul {
+      padding-left: 20px;
+      margin-top: 0px;
+      margin-bottom: 20px;
+  }
+  li, p {
+
+      margin-left: 0px;
+      margin-top: 0px;
+      margin-bottom: 8px;
+  }
+  .annotation {
+      font-size: 11px;
+  }
+
+  @media (prefers-color-scheme: light) {
+
+      h1 {
+          color: #272727;
+      }
+
+      a {
+          color: #0948be;
+          /*margin-left: 5px;*/
+      }
+  }
+
+  @media (prefers-color-scheme: dark) {
+      h1 {
+          color: #D9D9D9;
+      }
+      li, p {
+          color:#FFFFFF;
+      }
+      a {
+          color: #3586FF;
+          /*margin-left: 5px;*/
+      }
+  }
+
+  </style>
+</head>
+<body>
+<h3 id="features-in-2.0.0">Features in 2.0.0</h3>
 <ul>
 <li>Click and drag to use Mission Control, switch between Spaces or see Application Windows from a single button in a highly responsive and intuitive way. This is made possible because due to reverse engineering the way that touch input is processed by macOS to enable for unparalleled simulation of 3 finger swipes on an Apple Trackpad.</li>
 <li>Brand new, best-in-class remapping engine that lets you configure your mouse buttons in whatever way you want in a super easy way. Fully supports mice with up to 32 buttons. Use double click, click and hold, click and drag, keyboard modifiers and more to make your mouse super useful.</li>
@@ -154,6 +577,8 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 </ul>
 <p>You can use <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose">Mac Mouse Fix Feedback Assistant</a> to help you create amazing feedback.</p>
 <p>Thanks for helping to make Mac Mouse Fix even better! :)</p>
+</body>
+</html>
 
         ]]>
         </description>
@@ -170,11 +595,96 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
         <pubDate>2021-03-25T00:35:32Z</pubDate>
         <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
         <description><![CDATA[
-            <h3 id="changes">Changes</h3>
+            <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>-</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+
+  <style>
+
+      /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
+
+  body {
+      background-color: transparent;
+      margin: 0px 0px 0px 10px;
+      padding: 0px;
+      font-family: -apple-system;
+      font-size: 13px
+  }
+
+  h1 {
+      font-size: 13px;
+      font: bold;
+      margin-top: 0px;
+      margin-bottom: 10px;
+  }
+
+  ul {
+      padding-left: 20px;
+      margin-top: 0px;
+      margin-bottom: 20px;
+  }
+  li, p {
+
+      margin-left: 0px;
+      margin-top: 0px;
+      margin-bottom: 8px;
+  }
+  .annotation {
+      font-size: 11px;
+  }
+
+  @media (prefers-color-scheme: light) {
+
+      h1 {
+          color: #272727;
+      }
+
+      a {
+          color: #0948be;
+          /*margin-left: 5px;*/
+      }
+  }
+
+  @media (prefers-color-scheme: dark) {
+      h1 {
+          color: #D9D9D9;
+      }
+      li, p {
+          color:#FFFFFF;
+      }
+      a {
+          color: #3586FF;
+          /*margin-left: 5px;*/
+      }
+  }
+
+  </style>
+</head>
+<body>
+<h3 id="changes">Changes</h3>
 <ul>
 <li>Fixes an issue where the app-specific settings table would sometimes display its first column super wide after switching to dark mode</li>
 <li>Fixes several issues that would occur when installing the app version of Mac Mouse Fix while the old preference pane version was still running. Resolves #67.</li>
 </ul>
+</body>
+</html>
 
         ]]>
         </description>
@@ -191,8 +701,93 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
         <pubDate>2021-03-22T23:00:40Z</pubDate>
         <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
         <description><![CDATA[
-            <h3 id="changes">Changes</h3>
+            <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>-</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+
+  <style>
+
+      /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
+
+  body {
+      background-color: transparent;
+      margin: 0px 0px 0px 10px;
+      padding: 0px;
+      font-family: -apple-system;
+      font-size: 13px
+  }
+
+  h1 {
+      font-size: 13px;
+      font: bold;
+      margin-top: 0px;
+      margin-bottom: 10px;
+  }
+
+  ul {
+      padding-left: 20px;
+      margin-top: 0px;
+      margin-bottom: 20px;
+  }
+  li, p {
+
+      margin-left: 0px;
+      margin-top: 0px;
+      margin-bottom: 8px;
+  }
+  .annotation {
+      font-size: 11px;
+  }
+
+  @media (prefers-color-scheme: light) {
+
+      h1 {
+          color: #272727;
+      }
+
+      a {
+          color: #0948be;
+          /*margin-left: 5px;*/
+      }
+  }
+
+  @media (prefers-color-scheme: dark) {
+      h1 {
+          color: #D9D9D9;
+      }
+      li, p {
+          color:#FFFFFF;
+      }
+      a {
+          color: #3586FF;
+          /*margin-left: 5px;*/
+      }
+  }
+
+  </style>
+</head>
+<body>
+<h3 id="changes">Changes</h3>
 <p>This release fixes an issue where the “Invert scrolling direction” option would always re-enable itself after launching the app. (See #68)</p>
+</body>
+</html>
 
         ]]>
         </description>
@@ -209,12 +804,97 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
         <pubDate>2021-03-03T00:20:23Z</pubDate>
         <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
         <description><![CDATA[
-            <h3 id="changes">Changes</h3>
+            <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>-</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+
+  <style>
+
+      /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
+
+  body {
+      background-color: transparent;
+      margin: 0px 0px 0px 10px;
+      padding: 0px;
+      font-family: -apple-system;
+      font-size: 13px
+  }
+
+  h1 {
+      font-size: 13px;
+      font: bold;
+      margin-top: 0px;
+      margin-bottom: 10px;
+  }
+
+  ul {
+      padding-left: 20px;
+      margin-top: 0px;
+      margin-bottom: 20px;
+  }
+  li, p {
+
+      margin-left: 0px;
+      margin-top: 0px;
+      margin-bottom: 8px;
+  }
+  .annotation {
+      font-size: 11px;
+  }
+
+  @media (prefers-color-scheme: light) {
+
+      h1 {
+          color: #272727;
+      }
+
+      a {
+          color: #0948be;
+          /*margin-left: 5px;*/
+      }
+  }
+
+  @media (prefers-color-scheme: dark) {
+      h1 {
+          color: #D9D9D9;
+      }
+      li, p {
+          color:#FFFFFF;
+      }
+      a {
+          color: #3586FF;
+          /*margin-left: 5px;*/
+      }
+  }
+
+  </style>
+</head>
+<body>
+<h3 id="changes">Changes</h3>
 <ul>
 <li>Icons on the ‘More…’ sheet are now displayed properly on older macOS versions.</li>
 <li>Mac Mouse Fix is now a Universal Binary running natively on M1 Macs.</li>
 <li>Improved scrolling behaviour when Smooth Scrolling is turned off. Fixes #61.</li>
 </ul>
+</body>
+</html>
 
         ]]>
         </description>
@@ -231,7 +911,90 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
         <pubDate>2021-03-02T19:49:52Z</pubDate>
         <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
         <description><![CDATA[
-            <h3 id="changes">Changes</h3>
+            <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>-</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+
+  <style>
+
+      /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
+
+  body {
+      background-color: transparent;
+      margin: 0px 0px 0px 10px;
+      padding: 0px;
+      font-family: -apple-system;
+      font-size: 13px
+  }
+
+  h1 {
+      font-size: 13px;
+      font: bold;
+      margin-top: 0px;
+      margin-bottom: 10px;
+  }
+
+  ul {
+      padding-left: 20px;
+      margin-top: 0px;
+      margin-bottom: 20px;
+  }
+  li, p {
+
+      margin-left: 0px;
+      margin-top: 0px;
+      margin-bottom: 8px;
+  }
+  .annotation {
+      font-size: 11px;
+  }
+
+  @media (prefers-color-scheme: light) {
+
+      h1 {
+          color: #272727;
+      }
+
+      a {
+          color: #0948be;
+          /*margin-left: 5px;*/
+      }
+  }
+
+  @media (prefers-color-scheme: dark) {
+      h1 {
+          color: #D9D9D9;
+      }
+      li, p {
+          color:#FFFFFF;
+      }
+      a {
+          color: #3586FF;
+          /*margin-left: 5px;*/
+      }
+  }
+
+  </style>
+</head>
+<body>
+<h3 id="changes">Changes</h3>
 <ul>
 <li>Mac Mouse Fix is now a universal binary running natively on M1 Macs</li>
 </ul>
@@ -242,6 +1005,8 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 <li><a href="mailto:noah.n.public@gmail.com?subject=Mac%20Mouse%20Fix%200.9.2%20Beta%204%20-%20Issue%20report">Reach out at noah.n.public@gmail.com</a></li>
 </ul>
 <p>Thanks for making Mac Mouse Fix better! :)</p>
+</body>
+</html>
 
         ]]>
         </description>
@@ -258,7 +1023,90 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
         <pubDate>2021-03-02T17:49:14Z</pubDate>
         <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
         <description><![CDATA[
-            <h3 id="changes">Changes</h3>
+            <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>-</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+
+  <style>
+
+      /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
+
+  body {
+      background-color: transparent;
+      margin: 0px 0px 0px 10px;
+      padding: 0px;
+      font-family: -apple-system;
+      font-size: 13px
+  }
+
+  h1 {
+      font-size: 13px;
+      font: bold;
+      margin-top: 0px;
+      margin-bottom: 10px;
+  }
+
+  ul {
+      padding-left: 20px;
+      margin-top: 0px;
+      margin-bottom: 20px;
+  }
+  li, p {
+
+      margin-left: 0px;
+      margin-top: 0px;
+      margin-bottom: 8px;
+  }
+  .annotation {
+      font-size: 11px;
+  }
+
+  @media (prefers-color-scheme: light) {
+
+      h1 {
+          color: #272727;
+      }
+
+      a {
+          color: #0948be;
+          /*margin-left: 5px;*/
+      }
+  }
+
+  @media (prefers-color-scheme: dark) {
+      h1 {
+          color: #D9D9D9;
+      }
+      li, p {
+          color:#FFFFFF;
+      }
+      a {
+          color: #3586FF;
+          /*margin-left: 5px;*/
+      }
+  }
+
+  </style>
+</head>
+<body>
+<h3 id="changes">Changes</h3>
 <ul>
 <li>Improved scrolling behaviour when Smooth Scrolling is turned off. Might make scrolling less reliable in general. Fixes <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/61">this issue</a>.</li>
 </ul>
@@ -269,6 +1117,8 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 <li><a href="mailto:noah.n.public@gmail.com?subject=Mac%20Mouse%20Fix%200.9.2%20Beta%204%20-%20Issue%20report">Reach out at noah.n.public@gmail.com</a></li>
 </ul>
 <p>Thanks for making Mac Mouse Fix better! :)</p>
+</body>
+</html>
 
         ]]>
         </description>
@@ -285,7 +1135,90 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
         <pubDate>2021-03-01T15:28:34Z</pubDate>
         <sparkle:minimumSystemVersion>11.0</sparkle:minimumSystemVersion>
         <description><![CDATA[
-            <pre class="objc"><code>1.0.0 is here! 🚀</code></pre>
+            <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>-</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+
+  <style>
+
+      /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
+
+  body {
+      background-color: transparent;
+      margin: 0px 0px 0px 10px;
+      padding: 0px;
+      font-family: -apple-system;
+      font-size: 13px
+  }
+
+  h1 {
+      font-size: 13px;
+      font: bold;
+      margin-top: 0px;
+      margin-bottom: 10px;
+  }
+
+  ul {
+      padding-left: 20px;
+      margin-top: 0px;
+      margin-bottom: 20px;
+  }
+  li, p {
+
+      margin-left: 0px;
+      margin-top: 0px;
+      margin-bottom: 8px;
+  }
+  .annotation {
+      font-size: 11px;
+  }
+
+  @media (prefers-color-scheme: light) {
+
+      h1 {
+          color: #272727;
+      }
+
+      a {
+          color: #0948be;
+          /*margin-left: 5px;*/
+      }
+  }
+
+  @media (prefers-color-scheme: dark) {
+      h1 {
+          color: #D9D9D9;
+      }
+      li, p {
+          color:#FFFFFF;
+      }
+      a {
+          color: #3586FF;
+          /*margin-left: 5px;*/
+      }
+  }
+
+  </style>
+</head>
+<body>
+<pre class="objc"><code>1.0.0 is here! 🚀</code></pre>
 <h3 id="features">Features</h3>
 <ul>
 <li>Mac Mouse Fix is now an App instead of a Preference Pane</li>
@@ -320,6 +1253,8 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 <li>Commit: 29bd47c41adaa9cc257b9ddc291b872cd2cc6b6e</li>
 </ul></li>
 </ul>
+</body>
+</html>
 
         ]]>
         </description>
