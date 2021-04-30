@@ -135,10 +135,10 @@ try:
     </description>
     <enclosure
         url=\"{download_link}\"
-        sparkle:version=\"{bundle_version}}\"
+        sparkle:version=\"{bundle_version}\"
         sparkle:shortVersionString=\"{short_version}\"
         {signature_and_length}
-        type=\"{type}}\"
+        type=\"{type}\"
     />
 </item>"""
 
@@ -153,12 +153,11 @@ try:
 
     clean_up()
 
-
-def clean_up():
-    os.system(f'rm -R {download_folder}')
-
 except Exception as e: # Exit immediately if anything goes wrong
     clean_up()
     print(e)
     exit(1)
 
+
+def clean_up():
+    os.system(f'rm -R {download_folder}')
