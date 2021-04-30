@@ -25,6 +25,8 @@ info_plist_path = "App/SupportFiles/Info.plist"
 base_xcconfig_path = "xcconfig/Base.xcconfig"
 sparkle_project_path = "Frameworks/Sparkle-1.26.0" # This is dangerously hardcoded
 download_folder = "generate_appcasts_downloads" # We want to delete this on exit
+app_bundle_name = "Mac Mouse Fix.app"
+info_plist_app_subpath = "Contents/Info.plist"
 current_directory = os.getcwd()
 download_folder_absolute = os.path.join(current_directory, download_folder)
 files_to_checkout = [info_plist_path, base_xcconfig_path]
@@ -135,11 +137,13 @@ def generate():
             # Get edSignature
             signature_and_length = subprocess.check_output(f"./{sparkle_project_path}/bin/sign_update {download_destination}", shell=True).decode('utf-8')
             print(os.getcwd())
-            os.system(f'ditto -V -x -k --sequesterRsrc --rsrc "{download_destination}" "{download_folder}"')
-            # unzip_output = subprocess.check_output(f'ditto -V -x -k --sequesterRsrc --rsrc "{download_destination}" "{download_folder}"')
+            os.system(f'ditto -V -x -k --sequesterRsrc --rsrc "{download_destination}" "{download_folder}"') # This works, while subprocess.check_output doesn't for some reason
 
+            app_path = f'{download_destination}/{app_bundle_name}'
+            info_plist_path = f'{app_path}/{info_plist_app_subpath}'
 
-
+            bundle_version = subprocess.check_output(f"/usr/libexec/PlistBuddy {info_plist_path} -c 'Print CFBundleVersion'", shell=True).decode('utf-8')
+            minimum_macos_version = subprocess.check_output(f"/usr/libexec/PlistBuddy {info_plist_path} -c 'Print LSMinimumSystemVersion'", shell=True).decode('utf-8')
 
             # Assemble collected data into appcast-ready item-string
             item_string = f"""
