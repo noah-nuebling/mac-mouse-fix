@@ -14,6 +14,16 @@ from pprint import pprint
 
 import subprocess
 
+# Constants
+#   Paths are relative to project root. -> Run this from project root.
+
+releases_api_url = "https://api.github.com/repos/noah-nuebling/mac-mouse-fix/releases"
+
+info_plist_path = "App/SupportFiles/Info.plist"
+base_xcconfig_path = "xcconfig/Base.xcconfig"
+sparkle_project_path = "Frameworks/Sparkle-1.26.0" # This is dangerously hardcoded
+download_folder = "generate_appcasts_downloads" # We want to delete this on exit
+
 def clean_up():
     if downloads_folder != "":
         os.system(f'rm -R {download_folder}')
@@ -25,17 +35,6 @@ try:
     uncommitted_changes = subprocess.check_output('git diff-index HEAD --', shell=True)
     if (len(uncommitted_changes) != 0):
         raise Exception('There are uncommited changes. Please commit or stash them before running this script.')
-    
-
-    # Constants
-    #   Paths are relative to project root. -> Run this from project root.
-
-    releases_api_url = "https://api.github.com/repos/noah-nuebling/mac-mouse-fix/releases"
-
-    info_plist_path = "App/SupportFiles/Info.plist"
-    base_xcconfig_path = "xcconfig/Base.xcconfig"
-    sparkle_project_path = "Frameworks/Sparkle-1.26.0" # This is dangerously hardcoded
-    download_folder = "generate_appcasts_downloads" # We want to delete this on exit
 
     # Script
 
