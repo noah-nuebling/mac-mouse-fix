@@ -82,6 +82,7 @@ def generate():
             text_file = open(f"{download_folder}/release_notes.md", "w")
             n = text_file.write(release_notes)
             text_file.close()
+            text_file.flush() # Make sure stuff is written to file before we proceed
             # Convert to HTML
             # release_notes = subprocess.check_output(f"cat {download_folder}/release_notes.md | pandoc -f markdown -t html", shell=True).decode('utf-8')
             # Convert to HTML (standalone, including style sheet - that's the only way to style the update notes in the app cast using embedded html)
