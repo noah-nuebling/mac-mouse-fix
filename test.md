@@ -13,3 +13,7 @@ Yay!
 ### Badabuum pau!
 
 #### Badabuum pau!
+
+<!-- Render this using
+cat test.md | pandoc -f markdown -t html -H update-notes.css -s -o test.html; open test.html
+-->

@@ -23,18 +23,18 @@
 
       /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
 
-      root {
+      :root {
           font-size: 10px; /* 1 rem is this much */
       }
 
       body {
           background-color: transparent;
-          margin: 0.2rem 1.2rem;
-          padding: 0px;
+          margin: 1.2rem 1.2rem;
+          padding: 0rem;
           font-family: -apple-system;
           font-size: 1.3rem;
       }
-
+      
       h1 {
           font-size: 2.0rem;
       }
@@ -59,6 +59,8 @@
           margin-left: 0;
           margin-top: 0;
           margin-bottom: 0.8rem;
+
+          font-size: 1.1rem
       }
       .annotation {
           font-size: 1.1rem;
@@ -109,5 +111,8 @@
 </ul>
 <h3 id="badabuum-pau">Badabuum pau!</h3>
 <h4 id="badabuum-pau-1">Badabuum pau!</h4>
+<!-- Render this using
+cat test.md | pandoc -f markdown -t html -H update-notes.css -s -o test.html; open test.html
+-->
 </body>
 </html>
