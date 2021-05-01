@@ -35,7 +35,7 @@
 
       /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
 
-      root {
+      :root {
           font-size: 4px; /* 1 rem is this much */
       }
 
@@ -160,7 +160,7 @@
 
       /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
 
-      root {
+      :root {
           font-size: 4px; /* 1 rem is this much */
       }
 
@@ -282,7 +282,7 @@
 
       /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
 
-      root {
+      :root {
           font-size: 4px; /* 1 rem is this much */
       }
 
@@ -408,7 +408,7 @@
 
       /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
 
-      root {
+      :root {
           font-size: 4px; /* 1 rem is this much */
       }
 
