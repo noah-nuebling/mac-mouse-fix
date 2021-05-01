@@ -15,8 +15,8 @@
 	<key>Nice</key>
 	<integer>-10</integer>
 	<key>StandardErrorPath</key>
-	<string>/dev/null</string>
+	<string>/tmp/mmf_launchd_log.err</string>
 	<key>StandardOutPath</key>
-	<string>/dev/null</string>
+	<string>/tmp/mmf_launchd_log.err</string>
 </dict>
 </plist>
