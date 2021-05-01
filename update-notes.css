@@ -14,8 +14,10 @@
         padding: 0rem;
         font-family: -apple-system;
         font-size: 1.3rem;
+
+        line-height: 1.15em;
     }
-    
+
     h1 {
         font-size: 2.0rem;
     }
