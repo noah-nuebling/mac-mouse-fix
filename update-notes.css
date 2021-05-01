@@ -5,7 +5,7 @@
     /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
 
     :root {
-        font-size: 4px; /* 1 rem is this much */
+        font-size: 10px; /* 1 rem is this much */
     }
 
     body {
