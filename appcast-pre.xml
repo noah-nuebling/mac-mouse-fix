@@ -41,12 +41,12 @@
 
       body {
           background-color: transparent;
-          margin: 0.2rem 1.2rem;
+          margin: 1.2rem 1.2rem;
           padding: 0rem;
           font-family: -apple-system;
           font-size: 1.3rem;
       }
-
+      
       h1 {
           font-size: 2.0rem;
       }
@@ -168,12 +168,12 @@
 
       body {
           background-color: transparent;
-          margin: 0.2rem 1.2rem;
+          margin: 1.2rem 1.2rem;
           padding: 0rem;
           font-family: -apple-system;
           font-size: 1.3rem;
       }
-
+      
       h1 {
           font-size: 2.0rem;
       }
@@ -309,12 +309,12 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
       body {
           background-color: transparent;
-          margin: 0.2rem 1.2rem;
+          margin: 1.2rem 1.2rem;
           padding: 0rem;
           font-family: -apple-system;
           font-size: 1.3rem;
       }
-
+      
       h1 {
           font-size: 2.0rem;
       }
@@ -444,12 +444,12 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
       body {
           background-color: transparent;
-          margin: 0.2rem 1.2rem;
+          margin: 1.2rem 1.2rem;
           padding: 0rem;
           font-family: -apple-system;
           font-size: 1.3rem;
       }
-
+      
       h1 {
           font-size: 2.0rem;
       }
@@ -583,12 +583,12 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
       body {
           background-color: transparent;
-          margin: 0.2rem 1.2rem;
+          margin: 1.2rem 1.2rem;
           padding: 0rem;
           font-family: -apple-system;
           font-size: 1.3rem;
       }
-
+      
       h1 {
           font-size: 2.0rem;
       }
@@ -727,12 +727,12 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
       body {
           background-color: transparent;
-          margin: 0.2rem 1.2rem;
+          margin: 1.2rem 1.2rem;
           padding: 0rem;
           font-family: -apple-system;
           font-size: 1.3rem;
       }
-
+      
       h1 {
           font-size: 2.0rem;
       }
@@ -852,12 +852,12 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
       body {
           background-color: transparent;
-          margin: 0.2rem 1.2rem;
+          margin: 1.2rem 1.2rem;
           padding: 0rem;
           font-family: -apple-system;
           font-size: 1.3rem;
       }
-
+      
       h1 {
           font-size: 2.0rem;
       }
@@ -974,12 +974,12 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
       body {
           background-color: transparent;
-          margin: 0.2rem 1.2rem;
+          margin: 1.2rem 1.2rem;
           padding: 0rem;
           font-family: -apple-system;
           font-size: 1.3rem;
       }
-
+      
       h1 {
           font-size: 2.0rem;
       }
@@ -1100,12 +1100,12 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
       body {
           background-color: transparent;
-          margin: 0.2rem 1.2rem;
+          margin: 1.2rem 1.2rem;
           padding: 0rem;
           font-family: -apple-system;
           font-size: 1.3rem;
       }
-
+      
       h1 {
           font-size: 2.0rem;
       }
@@ -1231,12 +1231,12 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
       body {
           background-color: transparent;
-          margin: 0.2rem 1.2rem;
+          margin: 1.2rem 1.2rem;
           padding: 0rem;
           font-family: -apple-system;
           font-size: 1.3rem;
       }
-
+      
       h1 {
           font-size: 2.0rem;
       }
@@ -1362,12 +1362,12 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
       body {
           background-color: transparent;
-          margin: 0.2rem 1.2rem;
+          margin: 1.2rem 1.2rem;
           padding: 0rem;
           font-family: -apple-system;
           font-size: 1.3rem;
       }
-
+      
       h1 {
           font-size: 2.0rem;
       }
