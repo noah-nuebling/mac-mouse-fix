@@ -156,9 +156,8 @@ def generate():
             signature_and_length = signature_and_length[0:-1]
 
             # Unzip update
-            os.system(f'ditto -V -x -k --sequesterRsrc --rsrc "{download_zip_path}" "{download_folder}"') # This works, while subprocess.check_output() doesn't for some reason
+            os.system(f'ditto -x -k --sequesterRsrc --rsrc "{download_zip_path}" "{download_folder}"') # This works, while subprocess.check_output() doesn't for some reason
 
-            
             # Find app bundle
             # Maybe we could just name the unzipped folder instead of guessing here
             # Well we also use this to determine if the download is a prefpane or an app. There might be better ways to infer this but this should work

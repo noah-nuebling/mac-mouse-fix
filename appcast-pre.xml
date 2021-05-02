@@ -59,8 +59,6 @@
 
       h3 {
           font-size: 1.3rem;
-          /* margin-top: 0px; */
-          /* margin-bottom: 10px; */
       }
 
       ul {
@@ -88,7 +86,6 @@
 
           a {
               color: #0948be;
-              /*margin-left: 5px;*/
           }
       }
 
@@ -99,7 +96,7 @@
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur */
 
-              color: #D9D9D9; /* For titles */
+              color: #D9D9D9; /* For headers */
           }
 
           li, p {
@@ -107,7 +104,6 @@
           }
           a {
               color: #3586FF;
-              /*margin-left: 5px;*/
           }
       }
 
@@ -188,8 +184,6 @@
 
       h3 {
           font-size: 1.3rem;
-          /* margin-top: 0px; */
-          /* margin-bottom: 10px; */
       }
 
       ul {
@@ -217,7 +211,6 @@
 
           a {
               color: #0948be;
-              /*margin-left: 5px;*/
           }
       }
 
@@ -228,7 +221,7 @@
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur */
 
-              color: #D9D9D9; /* For titles */
+              color: #D9D9D9; /* For headers */
           }
 
           li, p {
@@ -236,7 +229,6 @@
           }
           a {
               color: #3586FF;
-              /*margin-left: 5px;*/
           }
       }
 
@@ -331,8 +323,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
       h3 {
           font-size: 1.3rem;
-          /* margin-top: 0px; */
-          /* margin-bottom: 10px; */
       }
 
       ul {
@@ -360,7 +350,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
           a {
               color: #0948be;
-              /*margin-left: 5px;*/
           }
       }
 
@@ -371,7 +360,7 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur */
 
-              color: #D9D9D9; /* For titles */
+              color: #D9D9D9; /* For headers */
           }
 
           li, p {
@@ -379,7 +368,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
           }
           a {
               color: #3586FF;
-              /*margin-left: 5px;*/
           }
       }
 
@@ -468,8 +456,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
       h3 {
           font-size: 1.3rem;
-          /* margin-top: 0px; */
-          /* margin-bottom: 10px; */
       }
 
       ul {
@@ -497,7 +483,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
           a {
               color: #0948be;
-              /*margin-left: 5px;*/
           }
       }
 
@@ -508,7 +493,7 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur */
 
-              color: #D9D9D9; /* For titles */
+              color: #D9D9D9; /* For headers */
           }
 
           li, p {
@@ -516,7 +501,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
           }
           a {
               color: #3586FF;
-              /*margin-left: 5px;*/
           }
       }
 
@@ -609,8 +593,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
       h3 {
           font-size: 1.3rem;
-          /* margin-top: 0px; */
-          /* margin-bottom: 10px; */
       }
 
       ul {
@@ -638,7 +620,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
           a {
               color: #0948be;
-              /*margin-left: 5px;*/
           }
       }
 
@@ -649,7 +630,7 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur */
 
-              color: #D9D9D9; /* For titles */
+              color: #D9D9D9; /* For headers */
           }
 
           li, p {
@@ -657,7 +638,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
           }
           a {
               color: #3586FF;
-              /*margin-left: 5px;*/
           }
       }
 
@@ -755,8 +735,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
       h3 {
           font-size: 1.3rem;
-          /* margin-top: 0px; */
-          /* margin-bottom: 10px; */
       }
 
       ul {
@@ -784,7 +762,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
           a {
               color: #0948be;
-              /*margin-left: 5px;*/
           }
       }
 
@@ -795,7 +772,7 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur */
 
-              color: #D9D9D9; /* For titles */
+              color: #D9D9D9; /* For headers */
           }
 
           li, p {
@@ -803,14 +780,13 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
           }
           a {
               color: #3586FF;
-              /*margin-left: 5px;*/
           }
       }
 
   </style>
 </head>
 <body>
-<h3 id="changes">Changes</h3>
+<h3 id="changes-in-1.0.3">Changes in 1.0.3</h3>
 <ul>
 <li>Fixes an issue where the app-specific settings table would sometimes display its first column super wide after switching to dark mode</li>
 <li>Fixes several issues that would occur when installing the app version of Mac Mouse Fix while the old preference pane version was still running. Resolves #67.</li>
@@ -882,8 +858,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
       h3 {
           font-size: 1.3rem;
-          /* margin-top: 0px; */
-          /* margin-bottom: 10px; */
       }
 
       ul {
@@ -911,7 +885,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
           a {
               color: #0948be;
-              /*margin-left: 5px;*/
           }
       }
 
@@ -922,7 +895,7 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur */
 
-              color: #D9D9D9; /* For titles */
+              color: #D9D9D9; /* For headers */
           }
 
           li, p {
@@ -930,7 +903,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
           }
           a {
               color: #3586FF;
-              /*margin-left: 5px;*/
           }
       }
 
@@ -1006,8 +978,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
       h3 {
           font-size: 1.3rem;
-          /* margin-top: 0px; */
-          /* margin-bottom: 10px; */
       }
 
       ul {
@@ -1035,7 +1005,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
           a {
               color: #0948be;
-              /*margin-left: 5px;*/
           }
       }
 
@@ -1046,7 +1015,7 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur */
 
-              color: #D9D9D9; /* For titles */
+              color: #D9D9D9; /* For headers */
           }
 
           li, p {
@@ -1054,7 +1023,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
           }
           a {
               color: #3586FF;
-              /*margin-left: 5px;*/
           }
       }
 
@@ -1134,8 +1102,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
       h3 {
           font-size: 1.3rem;
-          /* margin-top: 0px; */
-          /* margin-bottom: 10px; */
       }
 
       ul {
@@ -1163,7 +1129,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
           a {
               color: #0948be;
-              /*margin-left: 5px;*/
           }
       }
 
@@ -1174,7 +1139,7 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur */
 
-              color: #D9D9D9; /* For titles */
+              color: #D9D9D9; /* For headers */
           }
 
           li, p {
@@ -1182,7 +1147,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
           }
           a {
               color: #3586FF;
-              /*margin-left: 5px;*/
           }
       }
 
@@ -1267,8 +1231,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
       h3 {
           font-size: 1.3rem;
-          /* margin-top: 0px; */
-          /* margin-bottom: 10px; */
       }
 
       ul {
@@ -1296,7 +1258,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
           a {
               color: #0948be;
-              /*margin-left: 5px;*/
           }
       }
 
@@ -1307,7 +1268,7 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur */
 
-              color: #D9D9D9; /* For titles */
+              color: #D9D9D9; /* For headers */
           }
 
           li, p {
@@ -1315,7 +1276,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
           }
           a {
               color: #3586FF;
-              /*margin-left: 5px;*/
           }
       }
 
@@ -1400,8 +1360,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
       h3 {
           font-size: 1.3rem;
-          /* margin-top: 0px; */
-          /* margin-bottom: 10px; */
       }
 
       ul {
@@ -1429,7 +1387,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
           a {
               color: #0948be;
-              /*margin-left: 5px;*/
           }
       }
 
@@ -1440,7 +1397,7 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
               /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
                   This is the color of the text field background in Apple Mail on macOS 11 BigSur */
 
-              color: #D9D9D9; /* For titles */
+              color: #D9D9D9; /* For headers */
           }
 
           li, p {
@@ -1448,7 +1405,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
           }
           a {
               color: #3586FF;
-              /*margin-left: 5px;*/
           }
       }
 
