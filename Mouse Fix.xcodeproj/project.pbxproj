@@ -217,8 +217,6 @@
 		4F39BC3A263AF2B000FDF692 /* SparkleUpdaterController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SparkleUpdaterController.m; sourceTree = "<group>"; };
 		4F39BC48263B179200FDF692 /* AppState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppState.h; sourceTree = "<group>"; };
 		4F39BC49263B179200FDF692 /* AppState.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppState.m; sourceTree = "<group>"; };
-		4F39BC5C263B401E00FDF692 /* generate_appcasts.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = generate_appcasts.sh; sourceTree = "<group>"; };
-		4F39BC62263B49B300FDF692 /* generate_appcasts.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = generate_appcasts.py; sourceTree = "<group>"; };
 		4F39BC89263B692100FDF692 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
 		4F39BC8A263B693300FDF692 /* MainAppRelease.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = MainAppRelease.xcconfig; sourceTree = "<group>"; };
 		4F39BC8B263B697200FDF692 /* HelperRelease.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = HelperRelease.xcconfig; sourceTree = "<group>"; };
@@ -508,15 +506,6 @@
 			path = Accomplice;
 			sourceTree = "<group>";
 		};
-		4F39BC5B263B3FCC00FDF692 /* Scripts */ = {
-			isa = PBXGroup;
-			children = (
-				4F39BC5C263B401E00FDF692 /* generate_appcasts.sh */,
-				4F39BC62263B49B300FDF692 /* generate_appcasts.py */,
-			);
-			path = Scripts;
-			sourceTree = "<group>";
-		};
 		4F39BC88263B68F400FDF692 /* xcconfig */ = {
 			isa = PBXGroup;
 			children = (
@@ -577,7 +566,6 @@
 			isa = PBXGroup;
 			children = (
 				4F39BC88263B68F400FDF692 /* xcconfig */,
-				4F39BC5B263B3FCC00FDF692 /* Scripts */,
 				4F422EEC23469B0F00AA6E22 /* README.md */,
 			);
 			name = Other;
