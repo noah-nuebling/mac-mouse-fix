@@ -41,4 +41,4 @@ To use the automatically generated appcasts from within your macos app you can u
 To publish a new update:
 - Create a GitHub release for the new update
 - Checkout this repo / branch and run `generate_appcasts.py`
-- Commit and push the new appcast files.
+- Commit and push the changes that were made to the appcast files.
