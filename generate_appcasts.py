@@ -25,7 +25,7 @@ appcast_file_name = "appcast.xml" # Path to the appcast for stable releases
 appcast_pre_file_name = "appcast-pre.xml" # Path to the appcast for prereleases
 css_file_path = "update-notes.css"
 
-sparkle_project_path = "Frameworks/Sparkle-1.26.0" # Need this to use Sparkles code-signing tool # This is dangerously hardcoded
+sparkle_project_path = "Frameworks/Sparkle-1.26.0" # Need this to use Sparkles code-signing tool # This is dangerously hardcoded # Might be smart to keep this in sync with the Sparkle version in the app.
 download_folder = "generate_appcasts_downloads" # This is were we download old app versions to, and then unzip them. We want to delete this on exit.
 app_bundle_name = "Mac Mouse Fix.app" # This is the name of the app bundle after unzipping it
 
