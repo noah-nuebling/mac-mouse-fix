@@ -1,7 +1,7 @@
 # About
 
 This repo contains the script `generate_appcasts.py` which can automatically create appcast.xml files to be read by the Sparkle updater framework based on GitHub releases.
-That way you can have your apps updates be hosted by github releases.
+That way you can have your in-app updates be hosted through GitHub releases.
 
 See the [Sparkle docs](https://sparkle-project.org/documentation/) for more about appcasts.
 
