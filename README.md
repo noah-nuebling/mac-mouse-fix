@@ -5,9 +5,6 @@ That way you can have your in-app updates be hosted through GitHub releases.
 
 See the [Sparkle docs](https://sparkle-project.org/documentation/) for more about appcasts.
 
-Every time you run it, `generate_appcasts.py` will download all GitHub releases. It needs to do this to sign the releases for Sparkle. It will also unzip the releases to access their Info.plist files.\
-This is very inefficient, but it's fast enough for me for now. In the future I might add a mode where it only processes the latest release to speed things up.
-
 # Tutorial
 
 
@@ -42,3 +39,8 @@ To publish a new update:
 - Create a GitHub release for the new update
 - Checkout this repo / branch and run `generate_appcasts.py`
 - Commit and push the changes that were made to the appcast files.
+
+# Note
+
+Every time you run it, `generate_appcasts.py` will download all GitHub releases. It needs to do this to sign the releases for Sparkle. It will also unzip the releases to access their Info.plist files.\
+This is very inefficient, but it's fast enough for me for now. In the future I might add a mode where it only processes the latest release to speed things up.
