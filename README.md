@@ -25,11 +25,10 @@ To adopt this for your own app you'll want to change the following things: (Unte
   - Replacing the paths and URLs at the top
   - Adjust the code further to fit your needs. 
     - The script is written for a simple app bundle that's shipped in a zip file, if you ship in a dmg or something you'll have to adjust it.
-    - The code involving `prefpane_bundle_name` is only there because my app moved from being a prefpane to being a normal app bundle. You'll probably want to remove it.
-    - Maybe other things I can't think of.
+    - The code involving `prefpane_bundle_name` is only there because my app moved from being a prefpane to being a normal app bundle in the past. You'll probably want to remove it.
+    - Maybe other things I can't think of right now.
 - Adjust `update-notes.css` to your liking
 - Replace the URL in `print_download_counts.py` if you want to use that script.
-
 
 To use the automatically generated appcasts from within your macos app you can use these URLs:
   - https://raw.githubusercontent.com/[owner]/[repo]/update-feed/appcast.xml
@@ -42,5 +41,6 @@ To publish a new update:
 
 # Note
 
-Every time you run it, `generate_appcasts.py` will download all GitHub releases. It needs to do this to sign the releases for Sparkle. It will also unzip the releases to access their Info.plist files.\
-This is very inefficient, but it's fast enough for me for now. In the future I might add a mode where it only processes the latest release to speed things up.
+- Every time you run `generate_appcasts.py`, it will download all GitHub releases. It needs to do this to sign the releases for Sparkle. It will also unzip the releases to access their Info.plist files.\
+    - This is very inefficient, but it's fast enough for me for now. In the future I might add a mode where it only processes the latest release to speed things up.
+- Please be careful when using this, it's not well tested at all. I just wrote it for myself and thought it might be helpful to share.
