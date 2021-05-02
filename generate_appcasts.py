@@ -16,32 +16,38 @@ from pprint import pprint
 import subprocess
 
 # Constants
-#   Paths are relative to project root.
-
-#os.chdir('..') # Run this script from the Scripts folder, it will then automatically chdir to the root dir # This doesn't make sense anymore now that we've moved it to the update-feed branch
+#   Paths are relative to project root or to each other.
 
 releases_api_url = "https://api.github.com/repos/noah-nuebling/mac-mouse-fix/releases"
-
 raw_github_url = "https://raw.githubusercontent.com/noah-nuebling/mac-mouse-fix/master"
 
-appcast_file_name = "appcast.xml"
-appcast_pre_file_name = "appcast-pre.xml"
+appcast_file_name = "appcast.xml" # Path to the appcast for stable releases
+appcast_pre_file_name = "appcast-pre.xml" # Path to the appcast for prereleases
+css_file_path = "update-notes.css"
+
+sparkle_project_path = "Frameworks/Sparkle-1.26.0" # Need this to use Sparkles code-signing tool # This is dangerously hardcoded
+download_folder = "generate_appcasts_downloads" # This is were we download old app versions to, and then unzip them. We want to delete this on exit.
+app_bundle_name = "Mac Mouse Fix.app" # This is the name of the app bundle after unzipping it
+
+info_plist_app_subpath = "Contents/Info.plist" # Where to look fo the Info.plist file within the unzipped app bundle
 
 appcast_url = f"{raw_github_url}/{appcast_file_name}"
 appcast_pre_url = f"{raw_github_url}/{appcast_pre_file_name}"
 
-info_plist_path = "App/SupportFiles/Info.plist"
-base_xcconfig_path = "xcconfig/Base.xcconfig"
-sparkle_project_path = "Frameworks/Sparkle-1.26.0" # This is dangerously hardcoded
-download_folder = "generate_appcasts_downloads" # We want to delete this on exit
-app_bundle_name = "Mac Mouse Fix.app"
-prefpane_bundle_name = "Mouse Fix.prefpane"
-info_plist_app_subpath = "Contents/Info.plist"
 current_directory = os.getcwd()
 download_folder_absolute = os.path.join(current_directory, download_folder)
-files_to_checkout = [info_plist_path, base_xcconfig_path]
-css_file_path = "update-notes.css"
 
+prefpane_bundle_name = "Mouse Fix.prefpane" # App has been renamed, this is the old name
+
+# Stuff for reading directly from the project source files. We went over to downloading and unzipping all old bundles instead.
+# info_plist_path = "App/SupportFiles/Info.plist"
+# base_xcconfig_path = "xcconfig/Base.xcconfig"
+# files_to_checkout = [info_plist_path, base_xcconfig_path]
+
+# Note: Accessing Xcode environment variables is night impossible it seems
+# The only way to do it I found is described here:
+#   https://stackoverflow.com/questions/6523655/how-do-you-access-xcode-environment-and-build-variables-from-an-external-script
+#   And that's not feasible to do for old versions.
 
 def generate():
     try:
@@ -62,12 +68,6 @@ def generate():
         appcast_pre_items = [] # Items for the pre-release channel
 
         for r in releases:
-
-            # Accessing Xcode environment variables is night impossible it seems
-            # The only way to do it I found is described here:
-            #   https://stackoverflow.com/questions/6523655/how-do-you-access-xcode-environment-and-build-variables-from-an-external-scrip
-            #   And that's not feasible to do for old versions.
-
 
             # Get short version
             short_version = r['name']
@@ -156,7 +156,7 @@ def generate():
             signature_and_length = signature_and_length[0:-1]
 
             # Unzip update
-            os.system(f'ditto -V -x -k --sequesterRsrc --rsrc "{download_zip_path}" "{download_folder}"') # This works, while subprocess.check_output doesn't for some reason
+            os.system(f'ditto -V -x -k --sequesterRsrc --rsrc "{download_zip_path}" "{download_folder}"') # This works, while subprocess.check_output() doesn't for some reason
 
             
             # Find app bundle
@@ -186,7 +186,7 @@ def generate():
             # Delete bundle we just processed so that we won't accidentally process it again next round (that happens if the next bundle has prefpane_bundle_name instead of app_bundle_name)
             shutil.rmtree(app_path)
 
-            # Assemble collected data into appcast-ready item-string
+            # Assemble collected data into appcast.xml-ready item-string
             item_string = f"""\
     <item>
         <title>{title}</title>
@@ -206,17 +206,15 @@ def generate():
     </item>"""
 
             # Append item_string to arrays
-            appcast_pre_items.append(item_string)
             if not is_prerelease:
                 appcast_items.append(item_string)
 
-            print(item_string)
+            appcast_pre_items.append(item_string)
 
         # Clean up downloaded files
         clean_up(download_folder)
 
         # Assemble item strings into final appcast strings
-
 
         appcast_format_string = '''\
 <?xml version="1.0" encoding="utf-8"?>
@@ -256,17 +254,16 @@ def generate():
         L = file2.write(appcast_pre_content_string)
         file2.close()
 
-
     except Exception as e: # Exit immediately if anything goes wrong
         print(e)
         clean_up(download_folder)
         exit(1)
 
 def clean_up(download_folder):
-    if download_folder != "":
-        try:
-            os.system(f'rm -R {download_folder}')
-        except:
-            pass
+    try:
+        os.system(f'rm -R {download_folder}')
+    except Exception as e:
+        print(f'Clean up failed: {e}')
+
 
 generate()
