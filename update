@@ -1,10 +1,12 @@
 #!/bin/bash
 
+# Update appcast files
 python3 ./generate_appcasts;
 git add .;
 git commit -m "Updated appcasts";
 git push;
 
+# Record stats
 python3 ./stats record
 git add .;
 git commit -m "Recorded stats"
