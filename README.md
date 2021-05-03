@@ -51,7 +51,7 @@ To adopt this stuff for your own app you'll want to do the following things: (Un
 - Replace the repo URL at the top of the `stats` script if you want to use it
 - Possibly install some command line tools this depends on. I recommend you use [Homebrew](https://brew.sh/) for that.
 
-To use the automatically generated appcast files from within your macOS app you can use these URLs:
+To use the automatically generated appcast files from within your macOS app you can use these URLs: (See the [Sparkle docs](https://sparkle-project.org/documentation/) for more info)
   - https://raw.githubusercontent.com/[owner]/[repo]/update-feed/appcast.xml
   - https://raw.githubusercontent.com/[owner]/[repo]/update-feed/appcast-pre.xml
 
