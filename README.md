@@ -39,7 +39,7 @@ to display the recorded download counts from `stats_history.json`
   - Record stats 
   - Commit and push everything
 
-To adopt this stuff for your own app you'll want to change the following things: (Untested)
+To adopt this stuff for your own app you'll want to do the following things: (Untested)
 - Adjust `generate_appcasts`, by 
   - Replacing the paths and URLs at the top, to reflect your repo URL, app bundle name, ...
   - Adjust the code further to fit your needs. 
@@ -49,21 +49,23 @@ To adopt this stuff for your own app you'll want to change the following things:
     - There are probably other things I can't think of right now.
 - Adjust `update-notes.css` to your liking
 - Replace the repo URL at the top of the `stats` script if you want to use it
+- Possibly install some command line tools this depends on. I recommend you use [Homebrew](https://brew.sh/) for that.
 
-To use the automatically generated appcastf files from within your macOS app you can use these URLs:
+To use the automatically generated appcast files from within your macOS app you can use these URLs:
   - https://raw.githubusercontent.com/[owner]/[repo]/update-feed/appcast.xml
   - https://raw.githubusercontent.com/[owner]/[repo]/update-feed/appcast-pre.xml
 
 To publish a new update you would then:
 - Create a GitHub release for the new update
-- Checkout this repo / branch and run `generate_appcasts`
+- Checkout this repo / branch 
+- Run `python3 generate_appcasts`
 - Commit and push the changes that were made to the appcast files.
-- (Alternatively you can just run `./update`, which will run generate appcasts, record stats, and then push the changes to remote automatically.)
-- If everthing went well, your update will now show up in-app through Sparkle!
+- (Alternatively to the last 2 steps you can just run `./update`, which will run `generate_appcasts` as well as `stats`, and then push the changes)
+- If everthing went well, the new update will now show up in your app when you check for updates with through the Sparkle Updater framework!
 
 # Notes
 
 - Every time you run `generate_appcasts`, it will generate the appcasts from scratch. For that it needs to download *all* GitHub releases which can be very slow. It needs to download the releases primarily to sign them for Sparkle. It will also unzip the downloaded releases and then access their Info.plist files to read the bundle version and the minimum compatible macOS version.\
 All of this is very inefficient, but it's fast enough for Mac Mouse Fix for now. In the future I might add a mode where only the latest release is processed to speed things up.
-- Use a URL like `https://github.com/[owner]/[repo]/releases/latest/download/[AssetName].zip` to link to your latest release download from an external website.
-- See the [Sparkle docs](https://sparkle-project.org/documentation/) for more about appcasts.
+- Use a URL like `https://github.com/[owner]/[repo]/releases/latest/download/[AssetName].zip` to link to your latest release download from an external website. Downloads from that external website will also count towards your GitHub Releases' download counts.
+- Also see the [Sparkle docs](https://sparkle-project.org/documentation/) more about appcasts and other things
