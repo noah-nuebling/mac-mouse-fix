@@ -53,7 +53,7 @@ static MoreSheet *_instance;
     [self updateConfigFileToUIState];
     [SparkleUpdaterController enablePrereleaseChannel:sender.state];
     if (sender.state == 1) {  
-        [SUUpdater.sharedUpdater checkForUpdates:nil];
+        [SUUpdater.sharedUpdater checkForUpdatesInBackground];
     }
 }
 
