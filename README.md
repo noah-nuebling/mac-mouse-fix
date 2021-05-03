@@ -11,7 +11,7 @@ This repo contains the script `stats` to easily display and record download coun
 
 `generate_appcasts` creates 2 appcast files. `appcast.xml` which contains only stable releases and `appcast-pre.xml` which contains prereleases as well. This allows you to let users opt-in to beta testing your app.
 
-Update notes will be automatically generated based on your GitHub Release's descriptions. The style is neutral, it supports dark mode, and they are easy to adjust.
+Update notes will be automatically generated based on your GitHub Release's descriptions. The style is neutral, supports dark mode, and it's easy to adjust.
 
 # Tutorial
 
