@@ -153,11 +153,16 @@ static NSDictionary *sideButtonActions;
     
     // Configure Sparkle Updater
     //  (See https://sparkle-project.org/documentation/customization/)
+    // Some configuration is done via Info.plist, and seemingly can't be done from code
     
     SUUpdater *up = SUUpdater.sharedUpdater;
     
     up.automaticallyChecksForUpdates = NO;
-    up.sendsSystemProfile = NO;
+    // ^ We set this to NO because we just always check when the app starts. That's simpler and it's how the old non-Sparkle updater did it so it's a little easier to deal with.
+    //   We also use the `updaterShouldPromptForPermissionToCheckForUpdates:` delegate method to make sure no Sparkle prompt occurs asking the user if they want automatic checks.
+    //   You could also disable this from Info.plist using `SUEnableAutomaticChecks` but that's unnecessary
+    
+//    up.sendsSystemProfile = NO; // This is no by default
     up.automaticallyDownloadsUpdates = NO;
     
     BOOL checkForUpdates = [config(@"Other.checkForUpdates") boolValue];

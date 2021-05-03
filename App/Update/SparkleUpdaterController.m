@@ -10,6 +10,7 @@
 #import "SparkleUpdaterController.h"
 #import "AppDelegate.h"
 #import "SharedUtility.h"
+#import "Objects.h"
 
 // See https://sparkle-project.org/documentation/customization/
 
@@ -27,14 +28,36 @@
     return NO;
 }
 
-// We use this from `AppDelegate - applicationDidFinishLaunching`.
-//  This needs to be called before that code for it to work. Not sure that's the case.
 - (void)updaterDidRelaunchApplication:(SUUpdater *)updater {
     
-    NSLog(@"Launched by Sparkle Updater");
+    NSLog(@"Has been launched by Sparkle Updater");
+    
+    // Log the fact that updater launched the application in appState()
     
     appState().updaterDidRelaunchApplication = YES;
+    // ^ We use this from `AppDelegate - applicationDidFinishLaunching`.
+    
+    // Find and kill helper
+    
+    // The updated helper application will subsequently be launched by launchd due to the keepAlive attribute in Mac Mouse Fix Helper's launchd.plist
+    // It might be more robust and simple to find and kill any strange helpers *whenever* the app starts, but this should work, too.
+    BOOL helperNeutralized = NO;
+    for (NSRunningApplication *app in [NSRunningApplication runningApplicationsWithBundleIdentifier:kMFBundleIDHelper]) {
+        if ([app.bundleURL isEqualTo: Objects.helperOriginalBundle.bundleURL]) {
+            [app terminate];
+            helperNeutralized = YES;
+            break;
+        }
+    }
+    
+    if (helperNeutralized) {
+        NSLog(@"Helper has been neutralized");
+    } else {
+        NSLog(@"No helper found to neutralize");
+    }
+    
 }
+
 
 
 @end
