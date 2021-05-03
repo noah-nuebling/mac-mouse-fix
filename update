@@ -5,6 +5,6 @@ git add .;
 git commit -m "Updated appcasts";
 git push;
 
-python3 ./record
+python3 ./stats record
 git add .;
 git commit -m "Recorded stats"
