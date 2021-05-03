@@ -45,7 +45,7 @@ static MoreSheet *_instance;
     [self updateConfigFileToUIState];
     [self updateUI]; // So that prereleaseCheckBox gets disabled/enabled
     if (sender.state == 1) {
-        [SUUpdater.sharedUpdater checkForUpdatesInBackground];
+        [SUUpdater.sharedUpdater checkForUpdates:nil];
         
     }
 }
@@ -53,7 +53,7 @@ static MoreSheet *_instance;
     [self updateConfigFileToUIState];
     [SparkleUpdaterController enablePrereleaseChannel:sender.state];
     if (sender.state == 1) {  
-        [SUUpdater.sharedUpdater checkForUpdatesInBackground];
+        [SUUpdater.sharedUpdater checkForUpdates:nil];
     }
 }
 
