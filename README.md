@@ -1,3 +1,5 @@
+This repo makes it easier to publish updates to Mac Mouse Fix. I documented it here in case anyone wants to adopt a similar system for their app.
+
 # Overview
 
 This repo contains the script `generate_appcasts` which can automatically create appcast.xml files to be read by the Sparkle updater framework based on GitHub releases.
