@@ -25,7 +25,15 @@
 }
 
 - (BOOL)updaterShouldPromptForPermissionToCheckForUpdates:(SUUpdater *)updater {
+    // We don't use Sparkles automatic scheduled updates anyways. Instead we simply check every time the app is started. So what the user chooses in this prompt doesn't make difference anyways. So were disabling the prompts.
     return NO;
+}
+
+- (void)updater:(SUUpdater *)updater willInstallUpdate:(SUAppcastItem *)update {
+    
+    NSLog(@"About to install update");
+    
+    [MoreSheet.instance end]; // Close more sheet so it doesn't block popup
 }
 
 - (void)updaterDidRelaunchApplication:(SUUpdater *)updater {
