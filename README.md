@@ -61,7 +61,7 @@ To publish a new update you would then:
 - Run `python3 generate_appcasts`
 - Commit and push the changes that were made to the appcast files.
 - (Alternatively to the last 2 steps you can just run `./update`, which will run `./generate_appcasts` as well as `./stats record`, and then push the changes)
-- If everthing went well, the new update will now show up in your app when you check for updates with through the Sparkle Updater framework!
+- If everthing went well, the new update will now show up in your app once the Sparkle updater framework checks for updates!
 
 # Notes
 
