@@ -1,4 +1,4 @@
-This repo makes it easier to publish updates to Mac Mouse Fix. I documented it here in case anyone wants to adopt a similar system for their app.
+This repo makes it easier to publish updates to Mac Mouse Fix. I documented it here to hopefully help people who want to adopt a similar system for their app.
 
 # Overview
 
