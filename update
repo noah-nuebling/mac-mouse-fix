@@ -10,3 +10,4 @@ git push;
 python3 ./stats record
 git add .;
 git commit -m "Recorded stats"
+git push
