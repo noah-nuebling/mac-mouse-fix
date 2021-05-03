@@ -37,7 +37,7 @@ static BOOL _magnificationScrolling;
     return _magnificationScrolling;
 }
 /**
-   \note `_magnificationScrolling` only ever be set through `setMagnificationScrolling:`!
+   \note `_magnificationScrolling` should only ever be set through `setMagnificationScrolling:`!
 */
 + (void)setMagnificationScrolling:(BOOL)B {
     if (!_magnificationScrolling && B) { // Magnification scrolling is being turned on

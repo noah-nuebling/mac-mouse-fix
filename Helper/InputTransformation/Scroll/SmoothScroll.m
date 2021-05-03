@@ -264,7 +264,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 # pragma mark Momentum Phase
     
     else if (_displayLinkPhase == kMFPhaseMomentum) {
-//        NSLog(@"ENTERING MOMENTUM PHASE");
+        
         _pxToScrollThisFrame = round(_pxPerMsVelocity * msSinceLastFrame);
         double oldVel = _pxPerMsVelocity;
         double newVel = oldVel - [SharedUtility signOf:oldVel] * pow(fabs(oldVel), _frictionDepth) * (_frictionCoefficient/100) * msSinceLastFrame;
