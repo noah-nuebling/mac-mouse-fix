@@ -90,7 +90,7 @@ static struct ModifiedDragState _drag;
         if (_drag.eventTap == nil) {
             
             CGEventTapLocation location = kCGSessionEventTap;
-            CGEventTapPlacement placement = kCGTailAppendEventTap;
+            CGEventTapPlacement placement = kCGHeadInsertEventTap;
             CGEventTapOptions option = kCGEventTapOptionDefault;
             CGEventMask mask = CGEventMaskBit(kCGEventOtherMouseDragged) | CGEventMaskBit(kCGEventMouseMoved); // kCGEventMouseMoved is only necessary for keyboard-only drag-modification, and maybe for AddMode to work.
             
@@ -144,12 +144,12 @@ static struct ModifiedDragState _drag;
 static CGEventRef __nullable mouseMovedOrDraggedCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef  event, void * __nullable userInfo) {
     int64_t dx = CGEventGetIntegerValueField(event, kCGMouseEventDeltaX);
     int64_t dy = CGEventGetIntegerValueField(event, kCGMouseEventDeltaY);
-    [ModifiedDrag handleMouseInputWithDeltaX:dx deltaY:dy event:event];
+    [ModifiedDrag handleMouseInputWithDeltaX:dx deltaY:dy event:event eventTapProxy:proxy];
     
     return NULL; // Sending event or NULL here doesn't seem to make a difference. If you alter the event and send that it does have an effect though
 }
 
-+ (void)handleMouseInputWithDeltaX:(int64_t)deltaX deltaY:(int64_t)deltaY event:(CGEventRef)event {
++ (void)handleMouseInputWithDeltaX:(int64_t)deltaX deltaY:(int64_t)deltaY event:(CGEventRef)event eventTapProxy:(CGEventTapProxy)eventTapProxy {
     
     MFModifiedInputActivationState st = _drag.activationState;
     
@@ -162,9 +162,10 @@ static CGEventRef __nullable mouseMovedOrDraggedCallback(CGEventTapProxy proxy, 
     } else if (st == kMFModifiedInputActivationStateInitialized) {
         handleMouseInputWhileInitialized(deltaX, deltaY);
     } else if (st == kMFModifiedInputActivationStateInUse) {
-        handleMouseInputWhileInUse(deltaX, deltaY, event);
+        handleMouseInputWhileInUse(deltaX, deltaY, event, eventTapProxy);
     }
 }
+
 static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY) {
     
     _drag.originOffset.x += deltaX;
@@ -214,7 +215,7 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY) {
     }
 }
 // Only passing in event to obtain event location to get slightly better behaviour for fakeDrag
-void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event) {
+void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event, CGEventTapProxy eventTapProxy) {
     
     double twoFingerScale;
     double threeFingerScaleH;
@@ -260,7 +261,7 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
         }
         CGMouseButton button = [SharedUtility CGMouseButtonFromMFMouseButtonNumber:_drag.fakeDragButtonNumber];
         CGEventRef draggedEvent = CGEventCreateMouseEvent(NULL, kCGEventOtherMouseDragged, location, button);
-        CGEventPost(kCGSessionEventTap, draggedEvent);
+        CGEventTapPostEvent(eventTapProxy, draggedEvent); // Using eventTapProxy so we can post right after the event tap. Otherwise there will be a loop
         CFRelease(draggedEvent);
     }
     _drag.phase = kIOHIDEventPhaseChanged;
