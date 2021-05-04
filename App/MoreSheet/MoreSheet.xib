@@ -146,7 +146,7 @@ DQ
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <string key="toolTip">Check for an update every time you open Mac Mouse Fix
 
-Turn this off and on again if you skipped an update and have changed your mind</string>
+You can turn this off and on again to check for updates immediately.</string>
                         <buttonCell key="cell" type="check" title="Check for updates" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="hbh-ID-kIW">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -184,12 +184,9 @@ Turn this off and on again if you skipped an update and have changed your mind</
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="safari" catalog="system" id="Bub-iM-QnB"/>
                         <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                     </imageView>
-                    <button verticalHuggingPriority="750" id="Opz-In-sXR">
+                    <button toolTip="Help make Mac Mouse Fix better by testing new features and improvements early" verticalHuggingPriority="750" id="Opz-In-sXR">
                         <rect key="frame" x="31" y="71" width="124" height="11"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <string key="toolTip">Check for an update every time you open Mac Mouse Fix
-
-Turn this off and on again if you skipped an update and have changed your mind</string>
                         <buttonCell key="cell" type="check" title="Update to beta versions" bezelStyle="regularSquare" imagePosition="left" controlSize="mini" inset="2" id="XE3-Wv-ejl">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="miniSystem"/>
