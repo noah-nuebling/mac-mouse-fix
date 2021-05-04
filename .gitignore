@@ -4,9 +4,10 @@
 xcuserdata/
 
 # White-listing xcschemes folder. (.gitignore whitelisting is a huge hassle but this works)
-!Mouse Fix.xcodeproj/xcuserdata/
-!Mouse Fix.xcodeproj/xcuserdata/Noah.xcuserdatad/
-!Mouse Fix.xcodeproj/xcuserdata/Noah.xcuserdatad/xcschemes/*
-Mouse Fix.xcodeproj/xcuserdata/Noah.xcuserdatad/xcdebugger/*
+# -> We don't need this anymore, because instead we just moved the build schemes to shared
+# !Mouse Fix.xcodeproj/xcuserdata/
+# !Mouse Fix.xcodeproj/xcuserdata/Noah.xcuserdatad/
+# !Mouse Fix.xcodeproj/xcuserdata/Noah.xcuserdatad/xcschemes/*
+# Mouse Fix.xcodeproj/xcuserdata/Noah.xcuserdatad/xcdebugger/*
 
 sudopass.sh
