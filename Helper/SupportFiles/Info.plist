@@ -17,9 +17,9 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.0.0 Beta 7</string>
+	<string>2.0.0 Beta 8</string>
 	<key>CFBundleVersion</key>
-	<string>6026</string>
+	<string>6024</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSBackgroundOnly</key>
