@@ -6,6 +6,265 @@
     <description>Prereleases of Mac Mouse Fix</description>
     <language>en</language>
         <item>
+        <title>2.0.0 Beta 8 available!</title>
+        <pubDate>2021-05-05T23:09:25Z</pubDate>
+        <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
+        <description><![CDATA[
+            <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>-</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+
+  <style>
+
+      /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
+
+      :root {
+          font-size: 10px; /* 1 rem is this much */
+      }
+
+      body {
+          background-color: transparent;
+          margin: 1.2rem 1.2rem;
+          padding: 0rem;
+          font-family: -apple-system;
+          font-size: 1.3rem;
+
+          line-height: 1.15em;
+      }
+
+      h1 {
+          font-size: 2.0rem;
+      }
+
+      h2 {
+          font-size: 1.7rem;
+      }
+
+      h3 {
+          font-size: 1.3rem;
+      }
+
+      ul {
+          padding-left: 2.0rem;
+          margin-top: 0rem;
+          margin-bottom: 2.0rem;
+      }
+      li, p {
+
+          margin-left: 0;
+          margin-top: 0;
+          margin-bottom: 0.8rem;
+
+          font-size: 1.1rem
+      }
+      .annotation {
+          font-size: 1.1rem;
+      }
+
+      @media (prefers-color-scheme: light) {
+
+          h1 {
+              color: #272727;
+          }
+
+          a {
+              color: #0948be;
+          }
+      }
+
+      @media (prefers-color-scheme: dark) {
+
+          body {
+              background-color: #1e1e1e; 
+              /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
+                  This is the color of the text field background in Apple Mail on macOS 11 BigSur */
+
+              color: #D9D9D9; /* For headers */
+          }
+
+          li, p {
+              color:#FFFFFF;
+          }
+          a {
+              color: #3586FF;
+          }
+      }
+
+  </style>
+</head>
+<body>
+<h3 id="changes-in-beta-8">Changes in Beta 8</h3>
+<ul>
+<li>Reverted changes to input processing introduced in Beta 6 because it lead to issues where the mouse pointer would get stuck in place. See this <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/93">Github Issue</a> for more info.</li>
+<li>Added a help link to the ‘Grant Accessibility Access’ screen</li>
+</ul>
+<h3 id="how-you-can-help">How you can help</h3>
+<ul>
+<li>File a Bug Report if anything is wrong or not quite right with the new updating mechanism</li>
+<li>Describe your thoughts and experiences with the new UI in general. Have you found anything confusing or struggled to make the app work how you want it to? Let me know!</li>
+<li>Share your opinions and improvement ideas on new UI text.<br />
+There is quite a lot of new text in the app. I’d love for it to strike a great balance between unambiguity and simplicity. If anything strikes you as suboptimal, let me know!</li>
+<li>File a bug report if anything else goes wrong.</li>
+<li>If you have any other ideas or opinions, I’d love to hear them, too!</li>
+</ul>
+<p>You can use <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose">Mac Mouse Fix Feedback Assistant</a> to help you create great enhancement requests and bug reports.</p>
+<p><a href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/82">GitHub Discussions</a> is a great place for you to share any other thoughts.</p>
+<p>Thanks for helping to make Mac Mouse Fix better! :)</p>
+</body>
+</html>
+
+        ]]>
+        </description>
+        <enclosure
+            url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.0.0-Beta-8/MacMouseFixApp.zip"
+            sparkle:version="6024"
+            sparkle:shortVersionString="2.0.0 Beta 8"
+            sparkle:edSignature="+tmWM8sEiEktwq6/OqVkHBXg4qYw2MkKzJtZHR03WXnmN0nM2XtUXu0w3qo0EdD/2eGqHQ6mIjfW49pa4ZgoBA==" length="3121577"
+            type="application/octet-stream"
+        />
+    </item>
+    <item>
+        <title>1.0.4 available!</title>
+        <pubDate>2021-05-05T22:07:02Z</pubDate>
+        <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
+        <description><![CDATA[
+            <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>-</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+
+  <style>
+
+      /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
+
+      :root {
+          font-size: 10px; /* 1 rem is this much */
+      }
+
+      body {
+          background-color: transparent;
+          margin: 1.2rem 1.2rem;
+          padding: 0rem;
+          font-family: -apple-system;
+          font-size: 1.3rem;
+
+          line-height: 1.15em;
+      }
+
+      h1 {
+          font-size: 2.0rem;
+      }
+
+      h2 {
+          font-size: 1.7rem;
+      }
+
+      h3 {
+          font-size: 1.3rem;
+      }
+
+      ul {
+          padding-left: 2.0rem;
+          margin-top: 0rem;
+          margin-bottom: 2.0rem;
+      }
+      li, p {
+
+          margin-left: 0;
+          margin-top: 0;
+          margin-bottom: 0.8rem;
+
+          font-size: 1.1rem
+      }
+      .annotation {
+          font-size: 1.1rem;
+      }
+
+      @media (prefers-color-scheme: light) {
+
+          h1 {
+              color: #272727;
+          }
+
+          a {
+              color: #0948be;
+          }
+      }
+
+      @media (prefers-color-scheme: dark) {
+
+          body {
+              background-color: #1e1e1e; 
+              /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
+                  This is the color of the text field background in Apple Mail on macOS 11 BigSur */
+
+              color: #D9D9D9; /* For headers */
+          }
+
+          li, p {
+              color:#FFFFFF;
+          }
+          a {
+              color: #3586FF;
+          }
+      }
+
+  </style>
+</head>
+<body>
+<h3 id="changes">Changes</h3>
+<ul>
+<li>Signed the app with a new certificate. The old certificate was revoked which renders old versions of Mac Mouse Fix unusable. See <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/95">this GitHub Issue</a> for more info.</li>
+<li>Fixed an issue where Mac Mouse Fix wouldn’t work properly when it was launched from the Downloads folder</li>
+<li>Added a help link to the ‘Grant Accessibility Access to Mac Mouse Fix Helper’ screen</li>
+</ul>
+</body>
+</html>
+
+        ]]>
+        </description>
+        <enclosure
+            url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/1.0.4/MacMouseFixApp.zip"
+            sparkle:version="2406"
+            sparkle:shortVersionString="1.0.4"
+            sparkle:edSignature="79PL/c4RRt5zF8RnY/I5ws2n2iwKQQXIFhQzsRAu8G6QzXpOnyJRwjPY4pI314Syh8bQktexHBaEEZyLpQJiAg==" length="1757317"
+            type="application/octet-stream"
+        />
+    </item>
+    <item>
         <title>2.0.0 Beta 7 available!</title>
         <pubDate>2021-05-05T16:12:23Z</pubDate>
         <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
@@ -112,7 +371,7 @@
 <body>
 <h3 id="changes-in-beta-7">Changes in Beta 7</h3>
 <ul>
-<li>Signed the app with a new certificate. The old certificate was revoked which lead to problems. See #95.</li>
+<li>Signed the app with a new certificate. The old certificate was revoked which lead to problems. See <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/95">this GitHub Issue</a>.</li>
 <li>This and future Mac Mouse Fix Beta releases will run natively on M1 Macs.</li>
 <li>Small bug fixes and improvements.</li>
 </ul>
