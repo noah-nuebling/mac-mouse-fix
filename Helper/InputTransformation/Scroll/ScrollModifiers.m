@@ -109,7 +109,7 @@ CFMachPortRef _eventTapKey;
 
 static void setupModifierKeyCallback() {
     CGEventMask mask = CGEventMaskBit(kCGEventFlagsChanged);
-    _eventTapKey = CGEventTapCreate(kCGSessionEventTap, kCGTailAppendEventTap, kCGEventTapOptionDefault, mask, Handle_ModifierChanged, NULL);
+    _eventTapKey = CGEventTapCreate(kCGHIDEventTap, kCGTailAppendEventTap, kCGEventTapOptionDefault, mask, Handle_ModifierChanged, NULL);
     CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _eventTapKey, 0);
     CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopDefaultMode);
     CFRelease(runLoopSource);

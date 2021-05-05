@@ -89,8 +89,8 @@ static struct ModifiedDragState _drag;
         // Create mouse pointer moved input callback
         if (_drag.eventTap == nil) {
             
-            CGEventTapLocation location = kCGSessionEventTap;
-            CGEventTapPlacement placement = kCGHeadInsertEventTap;
+            CGEventTapLocation location = kCGHIDEventTap;
+            CGEventTapPlacement placement = kCGTailAppendEventTap;
             CGEventTapOptions option = kCGEventTapOptionDefault;
             CGEventMask mask = CGEventMaskBit(kCGEventOtherMouseDragged) | CGEventMaskBit(kCGEventMouseMoved); // kCGEventMouseMoved is only necessary for keyboard-only drag-modification, and maybe for AddMode to work.
             

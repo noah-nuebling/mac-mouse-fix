@@ -194,7 +194,7 @@ CFMachPortRef _keyCaptureEventTap;
     NSLog(@"Enabling keyCaptureMode");
     
     if (_keyCaptureEventTap == nil) {
-        _keyCaptureEventTap = [Utility_Transformation createEventTapWithLocation:kCGSessionEventTap mask:CGEventMaskBit(kCGEventKeyDown) option:kCGEventTapOptionDefault placement:kCGTailAppendEventTap callback:keyCaptureModeCallback];
+        _keyCaptureEventTap = [Utility_Transformation createEventTapWithLocation:kCGHIDEventTap mask:CGEventMaskBit(kCGEventKeyDown) option:kCGEventTapOptionDefault placement:kCGTailAppendEventTap callback:keyCaptureModeCallback];
     }
     CGEventTapEnable(_keyCaptureEventTap, true);
 }

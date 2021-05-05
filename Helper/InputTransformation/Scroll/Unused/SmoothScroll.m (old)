@@ -84,7 +84,7 @@ BOOL _horizontalScrollModifierPressedSS;
     
     if (_eventTapSS == nil) {
         CGEventMask mask = CGEventMaskBit(kCGEventScrollWheel);
-        _eventTapSS = CGEventTapCreate(kCGSessionEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallbackSS, NULL);
+        _eventTapSS = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallbackSS, NULL);
         CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _eventTapSS, 0);
         CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes);
         CFRelease(runLoopSource);

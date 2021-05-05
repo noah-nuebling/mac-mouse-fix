@@ -167,7 +167,7 @@ static VectorSubPixelator *_scrollPixelator;
     
     // Post t22s0 event
     CGEventSetLocation(e22, [Utility_Helper getCurrentPointerLocation_flipped]);
-    CGEventPost(kCGSessionEventTap, e22);
+    CGEventPost(kCGHIDEventTap, e22);
     CFRelease(e22);
     
     if (momentumPhase == 0) {
@@ -201,7 +201,7 @@ static VectorSubPixelator *_scrollPixelator;
         
         // Post t29s6 events
         CGEventSetLocation(e29, [Utility_Helper getCurrentPointerLocation_flipped]);
-        CGEventPost(kCGSessionEventTap, e29);
+        CGEventPost(kCGHIDEventTap, e29);
         //    printEvent(e29);
         CFRelease(e29);
     }
