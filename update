@@ -1,13 +1,16 @@
 #!/bin/bash
 
 # Check if there are uncommited changes
-# This script uses git stash several times, so they'd be lost
+# generate_appcasts uses git stash several times, so they'd be lost
 uncommitted_changes=$(git diff-index HEAD --);
 if [ -n "$uncommitted_changes" ] # If uncommited_changes is not empty
 then
     echo 'There are uncommited changes. Please commit or stash them before running this script.';
     exit 1;
 fi
+
+# Pull Release tags
+git pull;
 
 # Update appcast files
 python3 ./generate_appcasts;
