@@ -1,11 +1,11 @@
-![gh-header-v2](https://user-images.githubusercontent.com/40808343/112161606-9814af80-8beb-11eb-9d2e-3105b4486bab.png)
-
-<!-- # Mac Mouse Fix -->
-
 New version fixing 'will damage your computer' message [now available](https://github.com/noah-nuebling/mac-mouse-fix/releases/latest/download/MacMouseFixApp.zip)! \
 [Learn what's going on](https://github.com/noah-nuebling/mac-mouse-fix/issues/95).
 
 ---
+
+![gh-header-v2](https://user-images.githubusercontent.com/40808343/112161606-9814af80-8beb-11eb-9d2e-3105b4486bab.png)
+
+<!-- # Mac Mouse Fix -->
 
 Mac Mouse Fix is a simple way to make your mouse better.
 
