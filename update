@@ -16,17 +16,17 @@ git pull;
 # Update appcast files
 echo 'Generating appcasts...'
 python3 ./generate_appcasts;
-echo 'Pushing...'
+echo 'Pushing new appcasts...'
 git add .;
 git commit -m "Updated appcasts";
 git push;
 
 # Record stats
 echo 'Recording stats...'
-python3 ./stats record
-echo 'Pushing...'
+python3 ./stats record;
+echo 'Pushing new stats...'
 git add .;
-git commit -m "Recorded stats"
-git push
+git commit -m "Recorded stats";
+git push;
 
 echo 'Done!'
