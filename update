@@ -10,16 +10,23 @@ then
 fi
 
 # Pull Release tags
+echo 'Pulling...'
 git pull;
 
 # Update appcast files
+echo 'Generating appcasts...'
 python3 ./generate_appcasts;
+echo 'Pushing...'
 git add .;
 git commit -m "Updated appcasts";
 git push;
 
 # Record stats
+echo 'Recording stats...'
 python3 ./stats record
+echo 'Pushing...'
 git add .;
 git commit -m "Recorded stats"
 git push
+
+echo 'Done!'
