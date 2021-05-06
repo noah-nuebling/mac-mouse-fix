@@ -107,7 +107,7 @@ static int _scrollDirection;
     // Create/enable scrollwheel input callback
     if (_eventTap == nil) {
         CGEventMask mask = CGEventMaskBit(kCGEventScrollWheel);
-        _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGTailAppendEventTap /*kCGHeadInsertEventTap*/, kCGEventTapOptionDefault, mask, eventTapCallback, NULL); // Using `kCGTailAppendEventTap` instead of `kCGHeadInsertEventTap` because I think it might help with the bug of 87. It's also how MOS does things. Don't think it helps :'/
+        _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
         NSLog(@"_eventTap: %@", _eventTap);
         CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _eventTap, 0);
         CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes);
