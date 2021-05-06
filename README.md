@@ -3,7 +3,7 @@
 <!-- # Mac Mouse Fix -->
 
 New version fixing 'will damage your computer' message [now available](https://github.com/noah-nuebling/mac-mouse-fix/releases/latest/download/MacMouseFixApp.zip)! \
-[Learn what's going on](https://github.com/noah-nuebling/mac-mouse-fix/issues/95)
+[Learn what's going on](https://github.com/noah-nuebling/mac-mouse-fix/issues/95).
 
 ---
 
