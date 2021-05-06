@@ -110,9 +110,6 @@
   </style>
 </head>
 <body>
-<header id="title-block-header">
-<h1 class="title">-</h1>
-</header>
 <h3 id="changes-in-beta-9">Changes in Beta 9</h3>
 <p>This beta features some bug fixes and quality of life improvements when running in a multi-user environment.<br />
 See this <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/93">Github Issue</a> for more info.</p>
@@ -246,9 +243,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
   </style>
 </head>
 <body>
-<header id="title-block-header">
-<h1 class="title">-</h1>
-</header>
 <h3 id="changes-in-beta-8">Changes in Beta 8</h3>
 <ul>
 <li>Reverted changes to input processing introduced in Beta 6 because it lead to issues where the mouse pointer would get stuck in place. See this <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/93">Github Issue</a> for more info.</li>
@@ -384,9 +378,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
   </style>
 </head>
 <body>
-<header id="title-block-header">
-<h1 class="title">-</h1>
-</header>
 <h3 id="changes">Changes</h3>
 <ul>
 <li>Signed the app with a new certificate. The old certificate was revoked which renders old versions of Mac Mouse Fix unusable. See this <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/95">GitHub Issue</a> for more info.</li>
@@ -511,9 +502,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
   </style>
 </head>
 <body>
-<header id="title-block-header">
-<h1 class="title">-</h1>
-</header>
 <h3 id="changes-in-beta-7">Changes in Beta 7</h3>
 <ul>
 <li>Signed the app with a new certificate. The old certificate was revoked which lead to problems. See <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/95">this GitHub Issue</a>.</li>
@@ -650,9 +638,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
   </style>
 </head>
 <body>
-<header id="title-block-header">
-<h1 class="title">-</h1>
-</header>
 <h3 id="changes-in-beta-6">Changes in Beta 6</h3>
 <ul>
 <li>Now using Sparkle for updates. This brings the following improvements:
@@ -795,9 +780,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
   </style>
 </head>
 <body>
-<header id="title-block-header">
-<h1 class="title">-</h1>
-</header>
 <p>This release is meant to test a new update mechanism, you can safely ignore it.</p>
 </body>
 </html>
@@ -917,9 +899,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
   </style>
 </head>
 <body>
-<header id="title-block-header">
-<h1 class="title">-</h1>
-</header>
 <h3 id="changes-in-beta-4">Changes in Beta 4</h3>
 <ul>
 <li>Various improvements to the user experience.</li>
@@ -1059,9 +1038,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
   </style>
 </head>
 <body>
-<header id="title-block-header">
-<h1 class="title">-</h1>
-</header>
 <h3 id="changes-in-beta-3">Changes in Beta 3</h3>
 <ul>
 <li>Fixed some issues when upgrading from the old prefpane version of the app to the new app version</li>
@@ -1195,9 +1171,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
   </style>
 </head>
 <body>
-<header id="title-block-header">
-<h1 class="title">-</h1>
-</header>
 <h3 id="changes-in-beta-2">Changes in Beta 2</h3>
 <ul>
 <li>Use keyboard shortcuts right from your mouse! I made sure this feature is super easy to use and incredibly flexible, just like the rest of the new remapping engine. I think you’ll love it!</li>
@@ -1335,9 +1308,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
   </style>
 </head>
 <body>
-<header id="title-block-header">
-<h1 class="title">-</h1>
-</header>
 <h3 id="features-in-2.0.0">Features in 2.0.0</h3>
 <ul>
 <li>Click and drag to use Mission Control, switch between Spaces or see Application Windows from a single button in a highly responsive and intuitive way. This is made possible because due to reverse engineering the way that touch input is processed by macOS to enable for unparalleled simulation of 3 finger swipes on an Apple Trackpad.</li>
@@ -1480,9 +1450,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
   </style>
 </head>
 <body>
-<header id="title-block-header">
-<h1 class="title">-</h1>
-</header>
 <h3 id="changes-in-1.0.3">Changes in 1.0.3</h3>
 <ul>
 <li>Fixes an issue where the app-specific settings table would sometimes display its first column super wide after switching to dark mode</li>
@@ -1606,9 +1573,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
   </style>
 </head>
 <body>
-<header id="title-block-header">
-<h1 class="title">-</h1>
-</header>
 <h3 id="changes">Changes</h3>
 <p>This release fixes an issue where the “Invert scrolling direction” option would always re-enable itself after launching the app. (See #68)</p>
 </body>
@@ -1729,9 +1693,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
   </style>
 </head>
 <body>
-<header id="title-block-header">
-<h1 class="title">-</h1>
-</header>
 <h3 id="changes">Changes</h3>
 <ul>
 <li>Icons on the ‘More…’ sheet are now displayed properly on older macOS versions.</li>
@@ -1856,9 +1817,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
   </style>
 </head>
 <body>
-<header id="title-block-header">
-<h1 class="title">-</h1>
-</header>
 <h3 id="changes">Changes</h3>
 <ul>
 <li>Mac Mouse Fix is now a universal binary running natively on M1 Macs</li>
@@ -1988,9 +1946,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
   </style>
 </head>
 <body>
-<header id="title-block-header">
-<h1 class="title">-</h1>
-</header>
 <h3 id="changes">Changes</h3>
 <ul>
 <li>Improved scrolling behaviour when Smooth Scrolling is turned off. Might make scrolling less reliable in general. Fixes <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/61">this issue</a>.</li>
@@ -2120,9 +2075,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
   </style>
 </head>
 <body>
-<header id="title-block-header">
-<h1 class="title">-</h1>
-</header>
 <pre class="objc"><code>1.0.0 is here! 🚀</code></pre>
 <h3 id="features">Features</h3>
 <ul>
