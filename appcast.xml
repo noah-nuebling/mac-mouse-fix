@@ -110,6 +110,9 @@
   </style>
 </head>
 <body>
+<header id="title-block-header">
+<h1 class="title">-</h1>
+</header>
 <h3 id="changes">Changes</h3>
 <ul>
 <li>Signed the app with a new certificate. The old certificate was revoked which renders old versions of Mac Mouse Fix unusable. See this <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/95">GitHub Issue</a> for more info.</li>
@@ -234,6 +237,9 @@
   </style>
 </head>
 <body>
+<header id="title-block-header">
+<h1 class="title">-</h1>
+</header>
 <h3 id="changes-in-1.0.3">Changes in 1.0.3</h3>
 <ul>
 <li>Fixes an issue where the app-specific settings table would sometimes display its first column super wide after switching to dark mode</li>
@@ -357,6 +363,9 @@
   </style>
 </head>
 <body>
+<header id="title-block-header">
+<h1 class="title">-</h1>
+</header>
 <h3 id="changes">Changes</h3>
 <p>This release fixes an issue where the “Invert scrolling direction” option would always re-enable itself after launching the app. (See #68)</p>
 </body>
@@ -477,6 +486,9 @@
   </style>
 </head>
 <body>
+<header id="title-block-header">
+<h1 class="title">-</h1>
+</header>
 <h3 id="changes">Changes</h3>
 <ul>
 <li>Icons on the ‘More…’ sheet are now displayed properly on older macOS versions.</li>
@@ -601,6 +613,9 @@
   </style>
 </head>
 <body>
+<header id="title-block-header">
+<h1 class="title">-</h1>
+</header>
 <pre class="objc"><code>1.0.0 is here! 🚀</code></pre>
 <h3 id="features">Features</h3>
 <ul>
