@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.0.0 Beta 8</string>
+	<string>2.0.0 Beta 9</string>
 	<key>CFBundleVersion</key>
 	<string>6026</string>
 	<key>LSApplicationCategoryType</key>
