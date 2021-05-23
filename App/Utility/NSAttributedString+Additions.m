@@ -26,7 +26,7 @@
 }
 
 /// Create string by adding values from `baseAttributes`, without overriding any of the attributes set for `self`
-- (NSAttributedString *)attributedStringByAddingBaseAttributes:(NSDictionary *)baseAttributes {
+- (NSAttributedString *)attributedStringByAddingBaseAttributes:(NSDictionary<NSAttributedStringKey, id> *)baseAttributes {
     
     NSMutableAttributedString *s = self.mutableCopy;
     
@@ -125,6 +125,28 @@
         
         [ret addAttribute:NSFontAttributeName value:newFont range:range];
     }];
+    return ret;
+}
+
+
+- (NSAttributedString *)attributedStringBySettingFontSize:(CGFloat)size {
+    
+    NSMutableAttributedString *ret = self.mutableCopy;
+    NSRange enumerateRange = NSMakeRange(0, self.length);
+    
+    [self enumerateAttribute:NSFontAttributeName inRange:enumerateRange options:0 usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
+        
+        NSFont *currentFont = (NSFont *)value;
+        if (currentFont == nil) {
+            currentFont = [NSFont systemFontOfSize:NSFont.systemFontSize];
+        }
+            
+        NSFont *newFont = [NSFont fontWithDescriptor:currentFont.fontDescriptor size:size];
+        
+        [ret addAttribute:NSFontAttributeName value:newFont range:range];
+    }];
+    
+    
     return ret;
 }
 

@@ -158,6 +158,8 @@ AuthorizeAccessibilityView *_accViewController;
                 //      I think it happens because the helper kills itself after gaining accessibility access and is restarted by launchd too slowly. Weirdly, I think I remember that this used to work.
                 NSSet *capturedButtons = [RemapTableUtility getCapturedButtons];
                 [CaptureNotifications showButtonCaptureNotificationWithBeforeSet:NSSet.set afterSet:capturedButtons];
+//                NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Mac Mouse Fix will stay enabled after you restart your Mac"];
+//                [MFNotificationController attachNotificationWithMessage:message toWindow:AppDelegate.mainWindow forDuration:-1];
             });
         }];
         baseView.animator.alphaValue = 1;

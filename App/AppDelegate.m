@@ -23,6 +23,7 @@
 #import "MessagePort_App.h"
 #import <Sparkle/Sparkle.h>
 #import "SparkleUpdaterController.h"
+#import "NSAttributedString+Additions.h"
 
 @interface AppDelegate ()
 
@@ -43,25 +44,30 @@
 
 - (IBAction)enableCheckBox:(NSButton *)sender {
     
-    BOOL isBeingEnabled = sender.state;
+    BOOL beingEnabled = sender.state;
+    sender.state = !sender.state; // Prevent user from changing checkbox state directly. Instead, we'll do that through the `enableUI` method.
     
-    if (isBeingEnabled) {
-        sender.state = !sender.state; // Prevent this action from changing checkbox state right away
-        // In this case, we'll enable the UI and the checkbox after the Helper sends an "I'm actually enabled" message
-    }
-    if (!isBeingEnabled) {
-        [self enableUI:@(0)];
+    if (beingEnabled) {
+        // We won't enable the UI here directly. Instead, we'll do that from the `handleHelperEnabledMessage` method
+    } else { // Being disabled
+        [self enableUI:@NO];
     }
     
-    [HelperServices enableHelperAsUserAgent:isBeingEnabled];
+    [HelperServices enableHelperAsUserAgent:beingEnabled];
     // ^ We enable/disable the helper.
-    //  After enabling, the helper will send a message to the main app confirming that it has been enabled (received by `AppDelegate + handleHelperEnabledMessage`). Only when that message is received, will we change the state of the checkbox to enabled.
+    //  After enabling, the helper will send a message to the main app confirming that it has been enabled (received by `AppDelegate + handleHelperEnabledMessage`). Only when that message is received, will we change the state of the checkbox and the rest of the UI to enabled.
     //  This should make the checkbox state more accurately reflect what's going on when something goes wrong with enabling the helper, making things less confusing to users who experience issues enabling MMF.
     //  We only do this for enabling and not for disabling, because disabling always seems to work. Another reason we're not applying this for disabling is that it could lead to issues if the helper just crashes and doesn't send an "I'm being disabled" message before quitting. In that case the checkbox would just stay enabled.
 }
 + (void)handleHelperEnabledMessage {
+    
     if (self.instance.UIDisabled) {
-        [self.instance enableUI:@(1)];
+        // Enable UI
+        [self.instance enableUI:@YES];
+        // Flash Notification
+//        NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Mac Mouse Fix will stay enabled after you restart your Mac"];
+//        message = [message attributedStringBySettingFontSize:NSFont.smallSystemFontSize];
+//        [MFNotificationController attachNotificationWithMessage:message toWindow:AppDelegate.mainWindow forDuration:-1 alignment:kMFNotificationAlignmentBottomMiddle];
     }
 }
 

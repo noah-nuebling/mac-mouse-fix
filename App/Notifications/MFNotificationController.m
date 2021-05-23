@@ -66,12 +66,17 @@ static double _animationDurationFadeIn = 0.3;
 static double _animationDurationFadeOut = 0.2;
 static double _toastAnimationOffset = 20;
 
-/// Pass 0 to showDuration to get the default duration
-+ (void)attachNotificationWithMessage:(NSAttributedString *)message toWindow:(NSWindow *)attachWindow forDuration:(NSTimeInterval)showDuration {
+// Convenience function
++ (void)attachNotificationWithMessage:(NSAttributedString *)message toWindow:(NSWindow *)window forDuration:(NSTimeInterval)showDuration {
     
-//    return;
+    [self attachNotificationWithMessage:message toWindow:window forDuration:showDuration alignment:kMFNotificationAlignmentTopMiddle];
+}
+
+/// Pass 0 to `showDuration` to get the default duration
++ (void)attachNotificationWithMessage:(NSAttributedString *)message toWindow:(NSWindow *)attachWindow forDuration:(NSTimeInterval)showDuration alignment:(MFNotificationAlignment)alignment {
     
-    NSString *alignment = @"topMiddle";
+    // Override default font size from interface builder. This also overrides font size we set to `message` before passing it to this function which might be bad.
+//    message = [message attributedStringBySettingFontSize:NSFont.smallSystemFontSize];
     
     // Constants
     if (showDuration <= 0) {
@@ -83,15 +88,15 @@ static double _toastAnimationOffset = 20;
     double sideMargin = 0.0;
     double bottomMargin = 0.0;
     
-    if ([alignment isEqual:@"topMiddle"]) {
+    if (alignment == kMFNotificationAlignmentTopMiddle) {
         mainWindowTitleBarHeight = 30;
         topEdgeMargin = 5.0; // 0.0 // -25.0
         sideMargin = 20;
         _toastAnimationOffset = 20;
-    } else if ([alignment isEqual:@"bottomRight"]){
+    } else if (alignment == kMFNotificationAlignmentBottomRight){
         sideMargin = bottomMargin = 10;
         _toastAnimationOffset = -20;
-    } else if ([alignment isEqual:@"bottomMiddle"]) {
+    } else if (alignment == kMFNotificationAlignmentBottomMiddle) {
         bottomMargin = 10;
         sideMargin = 20;
         _toastAnimationOffset = -20;
@@ -150,15 +155,15 @@ static double _toastAnimationOffset = 20;
     
     // Calc Position
     
-    if ([alignment isEqual:@"topMiddle"]) {
+    if (alignment == kMFNotificationAlignmentTopMiddle) {
         // Top middle alignment
         newNotifFrame.origin.x = NSMidX(mainW.frame) - (newNotifSize.width / 2);
         newNotifFrame.origin.y = (mainW.frame.origin.y + mainW.frame.size.height - (mainWindowTitleBarHeight + topEdgeMargin)) - newNotifSize.height;
-    } else if ([alignment isEqual:@"bottomRight"]) {
+    } else if (alignment == kMFNotificationAlignmentBottomRight) {
         // Bottom right alignment
         newNotifFrame.origin.x = mainW.frame.origin.x + mainW.frame.size.width - newNotifFrame.size.width - sideMargin;
         newNotifFrame.origin.y = mainW.frame.origin.y + bottomMargin;
-    } else if ([alignment isEqual:@"bottomMiddle"]) {
+    } else if (alignment == kMFNotificationAlignmentBottomMiddle) {
         newNotifFrame.origin.x = NSMidX(mainW.frame) - (newNotifSize.width / 2);
         newNotifFrame.origin.y = mainW.frame.origin.y + bottomMargin;
     } else assert(false);

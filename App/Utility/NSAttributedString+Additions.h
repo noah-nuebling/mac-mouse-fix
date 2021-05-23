@@ -16,12 +16,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSAttributedString *)attributedStringByFillingOutDefaultAttributes;
 
-- (NSAttributedString *)attributedStringByAddingBaseAttributes:(NSDictionary *)baseAttributes;
+- (NSAttributedString *)attributedStringByAddingBaseAttributes:(NSDictionary<NSAttributedStringKey, id> *)baseAttributes;
 - (NSAttributedString *)attributedStringByAddingLinkWithURL:(NSURL *)linkURL forSubstring:(NSString *)substring;
 - (NSAttributedString *)attributedStringByAddingBoldForSubstring:(NSString *)subStr;
 - (NSAttributedString *)attributedStringByAddingItalicForSubstring:(NSString *)subStr;
 - (NSAttributedString *)attributedStringByAligningSubstring:(NSString *)subStr alignment:(NSTextAlignment)alignment;
 - (NSAttributedString *)attributedStringByAddingThinForSubstring:(NSString *)subStr;
+- (NSAttributedString *)attributedStringBySettingFontSize:(CGFloat)size;
 - (NSAttributedString *)attributedStringBySettingSecondaryButtonTextColorForSubstring:(NSString *)subStr;
 + (NSAttributedString *)hyperlinkFromString:(NSString *)inString withURL:(NSURL *)aURL;
 
