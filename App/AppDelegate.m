@@ -41,12 +41,30 @@
 
 # pragma mark - IBActions
 
-- (IBAction)enableCheckBox:(id)sender {
+- (IBAction)enableCheckBox:(NSButton *)sender {
     
-    BOOL checkboxState = [sender state];
-    [HelperServices enableHelperAsUserAgent: checkboxState];
-    [self performSelector:@selector(disableUI:) withObject:@(_enableMouseFixCheckBox.state) afterDelay:0.0];
+    BOOL isBeingEnabled = sender.state;
+    
+    if (isBeingEnabled) {
+        sender.state = !sender.state; // Prevent this action from changing checkbox state right away
+        // In this case, we'll enable the UI and the checkbox after the Helper sends an "I'm actually enabled" message
+    }
+    if (!isBeingEnabled) {
+        [self enableUI:@(0)];
+    }
+    
+    [HelperServices enableHelperAsUserAgent:isBeingEnabled];
+    // ^ We enable/disable the helper.
+    //  After enabling, the helper will send a message to the main app confirming that it has been enabled (received by `AppDelegate + handleHelperEnabledMessage`). Only when that message is received, will we change the state of the checkbox to enabled.
+    //  This should make the checkbox state more accurately reflect what's going on when something goes wrong with enabling the helper, making things less confusing to users who experience issues enabling MMF.
+    //  We only do this for enabling and not for disabling, because disabling always seems to work. Another reason we're not applying this for disabling is that it could lead to issues if the helper just crashes and doesn't send an "I'm being disabled" message before quitting. In that case the checkbox would just stay enabled.
 }
++ (void)handleHelperEnabledMessage {
+    if (self.instance.UIDisabled) {
+        [self.instance enableUI:@(1)];
+    }
+}
+
 - (IBAction)moreButton:(id)sender {
     [MoreSheet.instance begin];
 }
@@ -65,13 +83,6 @@
 }
 + (NSWindow *)mainWindow {
     return self.instance.window;
-}
-+ (void)handleHelperEnabledMessage {
-    NSButton *checkBox = self.instance.enableMouseFixCheckBox;
-    if (checkBox.state == 0) {
-        checkBox.state = 1;
-        [self.instance disableUI:@(1)];
-    }
 }
 - (RemapTableController *)remapTableController {
     RemapTableController *controller = (RemapTableController *)self.remapsTable.delegate;
@@ -237,9 +248,14 @@ NSTimer *removeAccOverlayTimer;
 
 #pragma mark - UI Logic
 
-- (void)disableUI:(NSNumber *)enable {
+- (BOOL)UIDisabled {
+    return !self.enableMouseFixCheckBox.state;
+}
+- (void)enableUI:(NSNumber *)enable {
     
     BOOL enb = enable.boolValue;
+    
+    self.enableMouseFixCheckBox.state = enb;
     
     NSView *baseView = [self.window.contentView subviewsWithIdentifier:@"baseView"][0];
     NSBox *preferenceBox = (NSBox *)[baseView subviewsWithIdentifier:@"preferenceBox"][0]; // Should use outlets instead of this
@@ -302,7 +318,7 @@ NSTimer *removeAccOverlayTimer;
     
     _scrollStepSizeSlider.doubleValue = pxStepSizeRelativeToConfigRange;
     
-    [self performSelector:@selector(disableUI:) withObject:@(_enableMouseFixCheckBox.state) afterDelay:0.0];
+//    [self performSelector:@selector(enableUI:) withObject:@(_enableMouseFixCheckBox.state) afterDelay:0.0];
     
 }
 
