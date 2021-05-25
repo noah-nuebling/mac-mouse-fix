@@ -112,7 +112,6 @@
 		4FF666A225F2C93A00689B77 /* TouchEvents.c in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6667125F2C93A00689B77 /* TouchEvents.c */; };
 		4FF666A325F2C93A00689B77 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6667225F2C93A00689B77 /* LICENSE */; };
 		4FF666A425F2C93A00689B77 /* NoahsTouchEventAnalysis in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6667325F2C93A00689B77 /* NoahsTouchEventAnalysis */; };
-		4FF666A525F2C93A00689B77 /* remaps.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6667725F2C93A00689B77 /* remaps.plist */; };
 		4FF666A725F2C93A00689B77 /* MFDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6667A25F2C93A00689B77 /* MFDevice.m */; };
 		4FF666A825F2C93A00689B77 /* DeviceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6667D25F2C93A00689B77 /* DeviceManager.m */; };
 		4FF666A925F2C93A00689B77 /* Utility_Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6668025F2C93A00689B77 /* Utility_Helper.m */; };
@@ -419,7 +418,6 @@
 		4FF6667425F2C93A00689B77 /* TouchEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchEvents.h; sourceTree = "<group>"; };
 		4FF6667525F2C93A00689B77 /* IOHIDEventData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOHIDEventData.h; sourceTree = "<group>"; };
 		4FF6667625F2C93A00689B77 /* IOHIDEventTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOHIDEventTypes.h; sourceTree = "<group>"; };
-		4FF6667725F2C93A00689B77 /* remaps.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = remaps.plist; sourceTree = "<group>"; };
 		4FF6667825F2C93A00689B77 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4FF6667A25F2C93A00689B77 /* MFDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MFDevice.m; sourceTree = "<group>"; };
 		4FF6667B25F2C93A00689B77 /* DeviceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceManager.h; sourceTree = "<group>"; };
@@ -1089,7 +1087,6 @@
 				4FF6664F25F2C93A00689B77 /* MainMenu.xib */,
 				4FF6665125F2C93A00689B77 /* main.m */,
 				4FF6665225F2C93A00689B77 /* External */,
-				4FF6667725F2C93A00689B77 /* remaps.plist */,
 				4FF6667825F2C93A00689B77 /* Info.plist */,
 			);
 			path = SupportFiles;
@@ -1384,7 +1381,6 @@
 				4FF666A025F2C93A00689B77 /* README.md in Resources */,
 				4FF666A425F2C93A00689B77 /* NoahsTouchEventAnalysis in Resources */,
 				4FF666A125F2C93A00689B77 /* .gitignore in Resources */,
-				4FF666A525F2C93A00689B77 /* remaps.plist in Resources */,
 				4FF6668C25F2C93A00689B77 /* SmoothScroll.h (old) in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
