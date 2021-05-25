@@ -98,7 +98,7 @@ static struct ModifiedDragState _drag;
             
             _drag.eventTap = eventTap;
         }
-        _drag.usageThreshold = 1; // 20
+        _drag.usageThreshold = 5; // 20
     } else {
         _drag.usageThreshold = 50;
     }
