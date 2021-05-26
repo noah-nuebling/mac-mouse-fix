@@ -179,15 +179,12 @@ static void printDevices() {
 
 # pragma mark - Helper Functions
 
-static BOOL devicePassesFiltering(IOHIDDeviceRef device) {
 
+static BOOL devicePassesFiltering(IOHIDDeviceRef device) {
     
     NSString *deviceName = (__bridge NSString *)IOHIDDeviceGetProperty(device, CFSTR("Product"));
     NSNumber *deviceVendorID = (__bridge NSNumber *)IOHIDDeviceGetProperty(device, CFSTR("VendorID"));
     
-    if ([deviceName.lowercaseString rangeOfString:@"magic"].location != NSNotFound) { // TODO: Does it make sense? Shouldn't ignoring all Apple devices be enough? (This is untested)
-        return NO;
-    }
     if ([deviceName isEqualToString:@"Apple Internal Keyboard / Trackpad"]) { // TODO: Does it make sense? Does this work on other machines that are not mine? Shouldn't ignoring all Apple devices be enough?
         return NO;
     }
