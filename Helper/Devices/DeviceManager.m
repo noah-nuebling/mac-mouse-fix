@@ -123,26 +123,30 @@ static void setupDeviceMatchingAndRemovalCallbacks() {
 
 static void handleDeviceMatching(void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
     
-    NSLog(@"New matching device");
+#if DEBUG
+    NSLog(@"New matching IOHIDDevice: %@", device);
+#endif
     
     if (devicePassesFiltering(device)) {
         
-        NSLog(@"Device Passed filtering");
         
         MFDevice *newMFDevice = [MFDevice deviceWithIOHIDDevice:device];
         [_attachedDevices addObject:newMFDevice];
-        NSLog(@"Added device:\n%@", newMFDevice.description);
-        NSLog(@"Relevant devices:\n%@", _attachedDevices);
         
         [ScrollControl decide];
         [ButtonInputReceiver decide];
         
+        NSLog(@"New matching IOHIDDevice passed filtering and corresponding MFDevice was attached to device manager:\n%@", newMFDevice);
         
         // Testing PointerSpeed
         //[PointerSpeed setSensitivityViaIORegTo:1000 device:device];
+    } else {
+        NSLog(@"New matching IOHIDDevice device didn't pass filtering");
     }
-
     
+#if DEBUG
+    printDevices();
+#endif
     
     return;
     
@@ -150,21 +154,27 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
 
 static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
     
-    NSLog(@"Device Removed");
-    
-//    CFSetRef devices = IOHIDManagerCopyDevices(_HIDManager); // for some reason this copies the device which was just removed
-//    NSLog(@"Devices still attached (includes device which was just removed): %@", devices);
-//    CFRelease(devices);
-    
     MFDevice *removedMFDevice = [MFDevice deviceWithIOHIDDevice:device];
-    [_attachedDevices removeObject:removedMFDevice];
-    NSLog(@"Removed device:\n%@", removedMFDevice);
+    [_attachedDevices removeObject:removedMFDevice]; // This might do nothing if this device wasn't contained in _attachedDevice (that's if it didn't pass filtering in `handleDeviceMatching()`)
     
     // If there aren't any relevant devices attached, then we might want to turn off some parts of the program.
     [ScrollControl decide];
     [ButtonInputReceiver decide];
+    
+    NSLog(@"Matching IOHIDDevice was removed:\n%@", device);
+    
+#if DEBUG
+    printDevices();
+#endif
+    
 }
 
+static void printDevices() {
+    NSLog(@"Relevant devices:\n%@", _attachedDevices);
+    CFSetRef devices = IOHIDManagerCopyDevices(_HIDManager);
+    NSLog(@"Matching devices: %@", devices);
+    CFRelease(devices);
+}
 
 # pragma mark - Helper Functions
 
