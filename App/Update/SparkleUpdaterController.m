@@ -18,9 +18,9 @@
 
 + (void)enablePrereleaseChannel:(BOOL)pre {
     if (pre) {
-        SUUpdater.sharedUpdater.feedURL = [NSURL URLWithString:fstring(@"%@/%@", kMFUpdateFeedRepoAddressRaw, kSUFeedURLSubBeta)];
+        SUUpdater.sharedUpdater.feedURL = [NSURL URLWithString:stringf(@"%@/%@", kMFUpdateFeedRepoAddressRaw, kSUFeedURLSubBeta)];
     } else {
-        SUUpdater.sharedUpdater.feedURL = [NSURL URLWithString:fstring(@"%@/%@", kMFUpdateFeedRepoAddressRaw, kSUFeedURLSub)];
+        SUUpdater.sharedUpdater.feedURL = [NSURL URLWithString:stringf(@"%@/%@", kMFUpdateFeedRepoAddressRaw, kSUFeedURLSub)];
     }
 }
 

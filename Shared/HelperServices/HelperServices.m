@@ -162,7 +162,7 @@
     // Analyze info
     
     // Check if label exists. This should always be found if the helper is registered with launchd. Or equavalently, if the output isn't "Could not find service "mouse.fix.helper" in domain for port"
-    NSString *labelSearchString = fstring(@"\"Label\" = \"%@\";", kMFLaunchdHelperIdentifier);
+    NSString *labelSearchString = stringf(@"\"Label\" = \"%@\";", kMFLaunchdHelperIdentifier);
     BOOL labelFound = [launchctlOutput rangeOfString: labelSearchString].location != NSNotFound;
     
     // Check exit status. Not sure if useful

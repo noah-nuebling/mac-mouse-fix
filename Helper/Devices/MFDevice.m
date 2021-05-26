@@ -365,16 +365,24 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
     @try {
         IOHIDDeviceRef device = self.IOHIDDevice;
         
-        NSString *vendorID = IOHIDDeviceGetProperty(device, CFSTR("VendorID"));
-        NSString *devName = IOHIDDeviceGetProperty(device, CFSTR("Product"));
-        NSString *devPrimaryUsage = IOHIDDeviceGetProperty(device, CFSTR("PrimaryUsage"));
+        NSString *product = IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductKey));
+        NSString *manufacturer = IOHIDDeviceGetProperty(device, CFSTR(kIOHIDManufacturerKey));
+        NSString *usagePairs = IOHIDDeviceGetProperty(device, CFSTR(kIOHIDDeviceUsagePairsKey));
         
-        NSString *outString = [NSString stringWithFormat:
-                               @"Device Info:\n"
-                               "    Model: %@\n"
-                               "    VendorID: %@\n"
-                               "    Usage: %@",
-                               devName, vendorID, devPrimaryUsage];
+        NSString *productID = IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductIDKey));
+        NSString *vendorID = IOHIDDeviceGetProperty(device, CFSTR(kIOHIDVendorIDKey));
+        
+        NSString *outString = [NSString stringWithFormat:@"Device Info:\n"
+                               "    Product: %@\n"
+                               "    Manufacturer: %@\n"
+                               "    UsagePairs: %@\n"
+                               "    ProductID: %@\n"
+                               "    VendorID: %@\n",
+                               product,
+                               manufacturer,
+                               usagePairs,
+                               productID,
+                               vendorID];
         return outString;
     } @catch (NSException *exception) {
         NSLog(@"Exception while getting MFDevice description: %@", exception);

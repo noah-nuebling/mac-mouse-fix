@@ -131,8 +131,8 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
                   kMFActionDictKeyType: kMFActionDictTypeSmartZoom,
         }},
         @{
-//            @"ui": fstring(@"%@ Click", [UIStrings getButtonString:3]),
-            @"ui": fstring(@"Middle Click"),
+//            @"ui": stringf(@"%@ Click", [UIStrings getButtonString:3]),
+            @"ui": stringf(@"Middle Click"),
             @"tool": [NSString stringWithFormat:@"Open links in a new tab, paste text in the Terminal, and more. \n \nWorks like clicking %@ on a standard mouse.", [UIStrings getButtonStringToolTip:3]],
             @"dict": @{
                     kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
@@ -195,7 +195,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
         // Create and insert new entry
         [oneShotEffectsTable insertObject:@{
             @"ui": shortcutString,
-            @"tool": fstring(@"Works like pressing '%@' on your keyboard", shortcutString),
+            @"tool": stringf(@"Works like pressing '%@' on your keyboard", shortcutString),
             @"dict": effectDict,
             @"indentation": @1,
         } atIndex:shortcutIndex];

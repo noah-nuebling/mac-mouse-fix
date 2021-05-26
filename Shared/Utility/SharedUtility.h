@@ -10,7 +10,7 @@
 #import <Foundation/Foundation.h>
 #import "Constants.h"
 
-#define fstring(format, ...) [NSString stringWithFormat:(format), ##__VA_ARGS__]
+#define stringf(format, ...) [NSString stringWithFormat:(format), ##__VA_ARGS__]
 
 NS_ASSUME_NONNULL_BEGIN
 

@@ -169,8 +169,9 @@ static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IO
     
 }
 
+/// This function is only used for debugging
 static void printDevices() {
-    NSLog(@"Relevant devices:\n%@", _attachedDevices);
+    NSLog(@"Relevant devices:\n%@", _attachedDevices); // Relevant devices are those that are matching the match dicts defined in setupDeviceMatchingAndRemovalCallbacks() and which also pass the filtering in handleDeviceMatching()
     CFSetRef devices = IOHIDManagerCopyDevices(_HIDManager);
     NSLog(@"Matching devices: %@", devices);
     CFRelease(devices);

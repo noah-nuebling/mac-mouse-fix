@@ -354,7 +354,7 @@
         NSTableCellView *buttonGroupCell = [self.tableView makeViewWithIdentifier:@"buttonGroupCell" owner:self];
 //        NSTextField *groupTextField = buttonGroupCell.textField; // If we link the textField via the textField prop, the tableView will override our text styling, so we're linking to it via the nextKeyView prop
         NSTextField *groupTextField = (NSTextField *)buttonGroupCell.nextKeyView;
-        groupTextField.stringValue = fstring(@"  %@", [UIStrings getButtonString:groupButtonNumber]);
+        groupTextField.stringValue = stringf(@"  %@", [UIStrings getButtonString:groupButtonNumber]);
         return buttonGroupCell;
     } else if ([tableColumn.identifier isEqualToString:@"trigger"]) { // The trigger column should display the trigger as well as the modification precondition
         return [RemapTableTranslator getTriggerCellWithRowDict:rowDict];
