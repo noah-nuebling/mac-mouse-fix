@@ -53,6 +53,8 @@ static void registerInputCallback() {
     CGEventMaskBit(kCGEventOtherMouseDown) | CGEventMaskBit(kCGEventOtherMouseUp)
     | CGEventMaskBit(kCGEventLeftMouseDown) | CGEventMaskBit(kCGEventLeftMouseUp)
     | CGEventMaskBit(kCGEventRightMouseDown) | CGEventMaskBit(kCGEventRightMouseUp);
+    
+    // ^ I think we need to also listen to lmb and rmb here (even though we don't use them for remapping) to keep some stuff in sync with the HID callbacks / _buttonInputsFromRelevantDevices. Not sure though.
 
     _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, handleInput, NULL);
     CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _eventTap, 0);
