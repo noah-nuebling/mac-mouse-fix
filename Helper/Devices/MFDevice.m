@@ -276,7 +276,7 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
     BOOL isButton = usagePage == 9;
     
 #if DEBUG
-    NSLog(@"Received HID input - usagePage: %d usage: %d value: %ld from device: %@", usagePage, usage, (long)IOHIDValueGetIntegerValue(value), sendingDev.description);
+    NSLog(@"Received HID input - usagePage: %d usage: %d value: %ld from device: %@", usagePage, usage, (long)IOHIDValueGetIntegerValue(value), sendingDev.name);
 #endif
     
     if (isButton) {
@@ -358,6 +358,16 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
 - (NSUInteger)hash {
 //    return CFHash(_IOHIDDevice) << 1;
     return (NSUInteger)self;
+}
+
+- (NSString *)name {
+    
+    IOHIDDeviceRef device = self.IOHIDDevice;
+    NSString *product = IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductKey));
+    NSString *manufacturer = IOHIDDeviceGetProperty(device, CFSTR(kIOHIDManufacturerKey));
+    
+    return [NSString stringWithFormat:@"%@ – %@", product, manufacturer];
+    
 }
 
 - (NSString *)description {

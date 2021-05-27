@@ -22,6 +22,9 @@ NS_ASSUME_NONNULL_BEGIN
 + (MFDevice *)deviceWithIOHIDDevice:(IOHIDDeviceRef)IOHIDDevice;
 
 - (NSNumber *)uniqueID;
+- (NSString *)name;
+- (NSString *)description;
+
 
 - (void)receiveOnlyButtonInput;
 - (void)receiveAxisInputAndDoSeizeDevice:(BOOL)exclusive;
