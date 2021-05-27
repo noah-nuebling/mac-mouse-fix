@@ -31,8 +31,11 @@
     NSArray *uncapturedArray = [newlyUncapturedButtons sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"" ascending:YES]]];
     NSArray *capturedArray = [newlyCapturedButtons sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"" ascending:YES]]];
     
-    NSString *uncapturedButtonString = buttonStringFromButtonArray(uncapturedArray);
-    NSString *capturedButtonString = buttonStringFromButtonArray(capturedArray);
+    NSString *uncapturedButtonString = buttonStringFromButtonNumberArray(uncapturedArray);
+    NSString *capturedButtonString = buttonStringFromButtonNumberArray(capturedArray);
+    
+    NSArray<NSString *> *uncapturedButtonStringArray = buttonStringArrayFromButtonNumberArray(uncapturedArray); // Only need these for adding bold to the button strings
+    NSArray<NSString *> *capturedButtonStringArray = buttonStringArrayFromButtonNumberArray(capturedArray);
     
     NSString *linkString = @"Learn More";
     
@@ -60,23 +63,24 @@
         NSAttributedString *attrNotifString = [[NSAttributedString alloc] initWithString:notifString];
         // Add link to linkString
         attrNotifString = [attrNotifString attributedStringByAddingLinkWithURL:[NSURL URLWithString:@"https://placeholder.com/"] forSubstring:linkString];
-        // Add bold for button string
-        if ([attrNotifString.string rangeOfString:uncapturedButtonString].location != NSNotFound) {
-            attrNotifString = [attrNotifString attributedStringByAddingBoldForSubstring:uncapturedButtonString];
-        }
-        if ([attrNotifString.string rangeOfString:capturedButtonString].location != NSNotFound) {
-            attrNotifString = [attrNotifString attributedStringByAddingBoldForSubstring:capturedButtonString];
+        
+        // Add bold for button strings
+        for (NSString *buttonString in [uncapturedButtonStringArray arrayByAddingObjectsFromArray:capturedButtonStringArray]) {
+            attrNotifString = [attrNotifString attributedStringByAddingBoldForSubstring:buttonString];
         }
         
         [MFNotificationController attachNotificationWithMessage:attrNotifString toWindow:AppDelegate.mainWindow forDuration:-1];
     }
 }
 
-static NSString *buttonStringFromButtonArray(NSArray<NSNumber *> *buttons) {
-
-    NSArray *buttonStrings = [buttons map:^id _Nonnull(NSNumber * _Nonnull button) {
+static NSArray *buttonStringArrayFromButtonNumberArray(NSArray<NSNumber *> *buttons) {
+    return [buttons map:^id _Nonnull(NSNumber * _Nonnull button) {
         return [UIStrings getButtonString:button.intValue];
     }];
+}
+static NSString *buttonStringFromButtonNumberArray(NSArray<NSNumber *> *buttons) {
+    
+    NSArray *buttonStrings = buttonStringArrayFromButtonNumberArray(buttons);
     return [UIStrings naturalLanguageListFromStringArray:buttonStrings];
 }
 
