@@ -47,9 +47,8 @@
     if (newlyCapturedButtons.count > 0) {
         NSString *pluralString = capturedArray.count == 1 ? @"has" : @"have";
         NSString *buttonPluralString = capturedArray.count == 1 ? @"it" : @"them";
-        NSString *buttonPluralString2 = capturedArray.count == 1 ? @"this button" : @"these buttons";
-        
-        linkString = stringf(@"I want to use %@ with other apps", buttonPluralString2);
+//        NSString *buttonPluralString2 = capturedArray.count == 1 ? @"this button" : @"these buttons";
+//        linkString = stringf(@"I want to use %@ with other apps", buttonPluralString2);
         
         capString = [capturedButtonString stringByAppendingFormat:@" %@ been captured by Mac Mouse Fix.\nOther apps can't see %@ anymore. ", pluralString, buttonPluralString];
     }
