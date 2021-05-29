@@ -62,7 +62,7 @@
 //        NSString *notifString = [NSString stringWithFormat:@"%@%@", capString, uncapString];
         NSAttributedString *attrNotifString = [[NSAttributedString alloc] initWithString:notifString];
         // Add link to linkString
-        attrNotifString = [attrNotifString attributedStringByAddingLinkWithURL:[NSURL URLWithString:@"https://placeholder.com/"] forSubstring:linkString];
+        attrNotifString = [attrNotifString attributedStringByAddingLinkWithURL:[NSURL URLWithString:@"https://github.com/noah-nuebling/mac-mouse-fix/discussions/112"] forSubstring:linkString];
         
         // Add bold for button strings
         for (NSString *buttonString in [uncapturedButtonStringArray arrayByAddingObjectsFromArray:capturedButtonStringArray]) {
