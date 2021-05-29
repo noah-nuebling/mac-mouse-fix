@@ -104,7 +104,7 @@ static MFQueue<NSDictionary *> *_buttonInputsFromRelevantDevices;
 }
 NSArray *_buttonParseBlacklist; // Don't send inputs from these buttons to ButtonInputParser
 
-CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
+static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
 #if DEBUG
     @try {

@@ -38,6 +38,7 @@ struct ModifiedDragState {
     
     CGPoint origin;
     MFVector originOffset;
+    CGPoint usageOrigin; // Point at which the modified drag changed its activationState to inUse
     MFAxis usageAxis;
     IOHIDEventPhaseBits phase;
     
@@ -183,6 +184,8 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY) {
     // Activate the modified drag if the mouse has been moved far enough from the point where the drag started
     if (MAX(fabs(ofs.x), fabs(ofs.y)) > _drag.usageThreshold) {
         
+        _drag.usageOrigin = NSMakePoint(_drag.origin.x + ofs.x, _drag.origin.y + ofs.y); // This is just the current pointer location
+        
         MFDevice *dev = _drag.modifiedDevice;
         if (inputIsPointerMovement) {
             [NSCursor.closedHandCursor push]; // Doesn't work for some reason
@@ -227,24 +230,18 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
     double twoFingerScale;
     double threeFingerScaleH;
     double threeFingerScaleV;
-    if (inputIsPointerMovement) { // With these values, the scrolling/changing spaces will follow the mouse pointer almost exactly
-        // Method 1
-//        CGFloat screenHeight = NSScreen.mainScreen.frame.size.height;
-//        threeFingerScaleH = threeFingerScaleV = 0.8 / screenHeight;
-        // Method 2
-        CGFloat screenWidth = NSScreen.mainScreen.frame.size.width;
-        threeFingerScaleH = threeFingerScaleV = 1.45 / screenWidth; // 1.15
-        // ^ This makes horizontal dockSwipes (switch between spaces) follow the pointer exactly. We should maybe use screenHeight to scale vertical dockSwipes (Mission Control and App Windows), but on a normal screen, this feels perfectly fine.
-        //      1.15 actually doesn't follow the pointer very closely anymore for some reason. It's way slower. Idk what changed. 1.45 works though.
-        // ^ TODO: Test this on a vertical screen
         
-        threeFingerScaleV *= 1.0; // Vertical doesn't follow pointer anyways. So we can change it to make it feel nicer.
-        
-        twoFingerScale = 1.0; // This makes pointer scrolling follow the mouse pointer exactly
-    } else { // Input is raw mouse events
-        threeFingerScaleH = threeFingerScaleV = 5 / 10000.0;
-        twoFingerScale = 0.5;
-    }
+    // With these values, the scrolling/changing spaces will follow the mouse pointer almost exactly... Actually not the scaling seems to constantly be shifting (what ?)
+
+    CGFloat screenWidth = NSScreen.mainScreen.frame.size.width;
+    threeFingerScaleH = threeFingerScaleV = 1.45 / screenWidth; // 1.15
+    // ^ This makes horizontal dockSwipes (switch between spaces) follow the pointer exactly. We should maybe use screenHeight to scale vertical dockSwipes (Mission Control and App Windows), but on a normal screen, this feels perfectly fine.
+    //      1.15 actually doesn't follow the pointer very closely anymore for some reason. It's way slower. Idk what changed. 1.45 works though.
+    // ^ TODO: Test this on a vertical screen
+    
+    threeFingerScaleV *= 1.0; // Vertical doesn't follow pointer anyways. So we can change it to make it feel nicer.
+    
+    twoFingerScale = 1.0;
     
     if ([_drag.type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
         if (_drag.usageAxis == kMFAxisHorizontal) {
@@ -256,6 +253,10 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
         }
 //        _drag.phase = kIOHIDEventPhaseChanged;
     } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
+        
+        // Warp pointer to origin to prevent cursor movement
+        CGWarpMouseCursorPosition(_drag.usageOrigin);
+        
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.0 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
             [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaX*twoFingerScale deltaY:deltaY*twoFingerScale phase:_drag.phase isGestureDelta:!inputIsPointerMovement];
         });
