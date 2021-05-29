@@ -113,17 +113,17 @@
 <h3 id="changes-in-beta-10">Changes in Beta 10</h3>
 <p>This update features many small refinements</p>
 <ul>
-<li>Reworked the “Grant Accessibility Access” screen</li>
+<li>Reworked the ‘Grant Accessibility Access’ screen</li>
 <li>Improved responsiveness of Click and Drag actions</li>
 <li>Added a ‘Get Help’ link to the ‘More…’ view</li>
-<li>Fixed an issue where Mac Mouse Fix Actions sometimes stopped working when the system was under heavy load. Might fix this <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/111">GitHub Issue</a></li>
+<li>Fixed an issue where Mac Mouse Fix Actions sometimes stopped working when the system was under heavy load. Might fix this <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/111">GitHub Issue</a>.</li>
 <li>Made previously dead links link to the new <a href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/categories/guides">Guides</a> on GitHub</li>
 <li>Improved enabling mechanism. The ‘Enable Mac Mouse Fix’ checkbox will now only be checked once Mac Mouse Fix Helper has successfully launched. This should provide the user better feedback if something goes wrong.</li>
 <li>Many other small under-the-hood and UI improvements</li>
 </ul>
 <h3 id="how-you-can-help">How you can help</h3>
 <ul>
-<li>I renamed the “Mission Control &amp; Spaces” action to “Three Finger Swipe”. I’m not quite sure about that. What do you think?</li>
+<li>I renamed the ‘Mission Control &amp; Spaces’ action to ‘Three Finger Swipe’. I’m not quite sure about that. What do you think?</li>
 </ul>
 <p>Thanks for helping to make Mac Mouse Fix better! :)</p>
 </body>
