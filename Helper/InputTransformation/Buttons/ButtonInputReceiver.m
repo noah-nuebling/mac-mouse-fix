@@ -21,7 +21,6 @@
 static CGEventSourceRef _eventSource;
 static CFMachPortRef _eventTap;
 
-
 + (void)load_Manual {
     _eventSource = CGEventSourceCreate(kCGEventSourceStatePrivate);
     registerInputCallback();
@@ -56,7 +55,7 @@ static void registerInputCallback() {
     
     // ^ I think we need to also listen to lmb and rmb here (even though we don't use them for remapping) to keep some stuff in sync with the HID callbacks / _buttonInputsFromRelevantDevices. Not sure though.
 
-    _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, handleInput, NULL);
+    _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
     CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _eventTap, 0);
     CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopDefaultMode);
     
@@ -72,7 +71,7 @@ static void registerInputCallback() {
     CGPoint mouseLoc = Utility_Transformation.CGMouseLocationWithoutEvent;
     CGEventRef fakeEvent = CGEventCreateMouseEvent(NULL, mouseEventType, mouseLoc, [SharedUtility CGMouseButtonFromMFMouseButtonNumber:button]);    
     // Insert event
-    CGEventRef ret = handleInput(0, CGEventGetType(fakeEvent), fakeEvent, nil);
+    CGEventRef ret = eventTapCallback(0, CGEventGetType(fakeEvent), fakeEvent, nil);
     CFRelease(fakeEvent);
     if (ret) {
         CGEventPost(kCGSessionEventTap, ret);
@@ -105,7 +104,7 @@ static MFQueue<NSDictionary *> *_buttonInputsFromRelevantDevices;
 }
 NSArray *_buttonParseBlacklist; // Don't send inputs from these buttons to ButtonInputParser
 
-CGEventRef handleInput(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
+CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
 #if DEBUG
     @try {
@@ -120,6 +119,13 @@ CGEventRef handleInput(CGEventTapProxy proxy, CGEventType type, CGEventRef event
         NSLog(@"Received CG Button Input which can't be printed normally - Exception while printing: %@", exception);
     }
 #endif
+    
+    // Re-enable on timeout
+    // Maybe it would be better to do the heavy lifting on a background queue, so this never times out, but this is easier, and it times out quite rarely anyways so this should be fine.
+    if (type == kCGEventTapDisabledByTimeout) {
+        NSLog(@"ButtonInputReceiver eventTap timed out. Re-enabling.");
+        CGEventTapEnable(_eventTap, true);
+    }
     
     if ([_buttonInputsFromRelevantDevices isEmpty]) return event;
     
