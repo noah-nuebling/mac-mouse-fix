@@ -22,10 +22,10 @@
         <window identifier="moreSheet" title="MoreSheet" autorecalculatesKeyViewLoop="NO" restorable="NO" deferred="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="81p-aH-nMH" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="90" y="125" width="580" height="192"/>
+            <rect key="contentRect" x="90" y="125" width="580" height="210"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
             <view key="contentView" wantsLayer="YES" id="IZI-tD-pBD">
-                <rect key="frame" x="0.0" y="0.0" width="580" height="192"/>
+                <rect key="frame" x="0.0" y="0.0" width="580" height="210"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button autoresizesSubviews="NO" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QTb-LF-Uki">
@@ -45,7 +45,7 @@
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="PayPal" id="l8T-uX-6sc"/>
                     </imageView>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D2Z-Y7-bVq" customClass="Hyperlink">
-                        <rect key="frame" x="416" y="130" width="108" height="16"/>
+                        <rect key="frame" x="416" y="120" width="108" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="charWrapping" alignment="right" title="Visit the Website" id="KsZ-uF-DMp">
                             <font key="font" metaFont="system"/>
@@ -60,7 +60,7 @@
                         </userDefinedRuntimeAttributes>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PMP-fF-uAB" customClass="Hyperlink">
-                        <rect key="frame" x="459" y="156" width="65" height="16"/>
+                        <rect key="frame" x="459" y="172" width="65" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Reach out" id="h6S-lt-XSY">
                             <font key="font" metaFont="system"/>
@@ -75,7 +75,7 @@
                         </userDefinedRuntimeAttributes>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Irr-ov-bxk" customClass="Hyperlink">
-                        <rect key="frame" x="382" y="104" width="142" height="16"/>
+                        <rect key="frame" x="382" y="94" width="142" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Check it out on GitHub" id="B9O-yg-FQw">
                             <font key="font" metaFont="system"/>
@@ -104,7 +104,7 @@ DQ
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xzi-d1-Q3X">
-                        <rect key="frame" x="183" y="155" width="231" height="17"/>
+                        <rect key="frame" x="183" y="171" width="231" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" title="Version - (-)" id="Ha5-pm-jeG">
                             <font key="font" metaFont="system"/>
@@ -113,7 +113,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="asO-di-NrV">
-                        <rect key="frame" x="83" y="155" width="100" height="17"/>
+                        <rect key="frame" x="83" y="173" width="100" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" title="Mac Mouse Fix" id="YTQ-ee-DVz">
                             <font key="font" metaFont="systemBold"/>
@@ -122,7 +122,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zdZ-sT-Ddg">
-                        <rect key="frame" x="83" y="136" width="143" height="14"/>
+                        <rect key="frame" x="83" y="154" width="143" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" title="Created by Noah Nuebling" id="BVP-MY-XAV">
                             <font key="font" metaFont="menu" size="11"/>
@@ -142,7 +142,7 @@ DQ
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" id="Ooo-MV-trH">
-                        <rect key="frame" x="29" y="89" width="134" height="18"/>
+                        <rect key="frame" x="29" y="99" width="134" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <string key="toolTip">Check for an update every time you open Mac Mouse Fix
 
@@ -156,7 +156,7 @@ You can turn this off and on again to check for updates immediately.</string>
                         </connections>
                     </button>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aUJ-XO-1Z3" customClass="ClickableImageView">
-                        <rect key="frame" x="20" y="128" width="53" height="53"/>
+                        <rect key="frame" x="20" y="146" width="53" height="53"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="AppIconRound" id="7G1-o6-uvc"/>
                         <userDefinedRuntimeAttributes>
@@ -165,7 +165,7 @@ You can turn this off and on again to check for updates immediately.</string>
                         </userDefinedRuntimeAttributes>
                     </imageView>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="07Z-7Y-gHB">
-                        <rect key="frame" x="530" y="152" width="19.5" height="25"/>
+                        <rect key="frame" x="530" y="170" width="19.5" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="Rki-3y-WxT">
                             <imageReference key="image" image="pencil" catalog="system" symbolScale="large"/>
@@ -173,19 +173,42 @@ You can turn this off and on again to check for updates immediately.</string>
                         <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                     </imageView>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N67-Qg-9hZ">
-                        <rect key="frame" x="530" y="98.5" width="19" height="27"/>
+                        <rect key="frame" x="530" y="91.5" width="19" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="arrow.triangle.branch" catalog="system" id="61r-1i-7uY"/>
                         <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                     </imageView>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ean-nS-cFV" customClass="Hyperlink">
+                        <rect key="frame" x="466" y="146" width="58" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Get Help" id="rK1-Wg-ZIf">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/noah-nuebling/mac-mouse-fix/discussions/categories/guides"/>
+                            <userDefinedRuntimeAttribute type="number" keyPath="rMrgn">
+                                <integer key="value" value="25"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </textField>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="frB-aV-9yi">
+                        <rect key="frame" x="529" y="141.5" width="19" height="27"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="cA1-Yr-TyR">
+                            <imageReference key="image" image="questionmark" catalog="system" symbolScale="large"/>
+                        </imageCell>
+                        <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
+                    </imageView>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="agt-Xi-rY6">
-                        <rect key="frame" x="530" y="123" width="19" height="28"/>
+                        <rect key="frame" x="530" y="116" width="19" height="27"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="safari" catalog="system" id="Bub-iM-QnB"/>
                         <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                     </imageView>
                     <button toolTip="Help make Mac Mouse Fix better by testing new features and improvements early" verticalHuggingPriority="750" id="Opz-In-sXR">
-                        <rect key="frame" x="31" y="71" width="124" height="11"/>
+                        <rect key="frame" x="31" y="81" width="124" height="11"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="check" title="Update to beta versions" bezelStyle="regularSquare" imagePosition="left" controlSize="mini" inset="2" id="XE3-Wv-ejl">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -214,7 +237,7 @@ AAAAAAAAAAAAAAABOQ
             <connections>
                 <outlet property="delegate" destination="-2" id="DTD-Mm-ND4"/>
             </connections>
-            <point key="canvasLocation" x="698" y="39"/>
+            <point key="canvasLocation" x="698" y="63"/>
         </window>
     </objects>
     <resources>
@@ -223,6 +246,7 @@ AAAAAAAAAAAAAAABOQ
         <image name="PayPal" width="100" height="26"/>
         <image name="arrow.triangle.branch" catalog="system" width="15" height="14"/>
         <image name="pencil" catalog="system" width="17" height="16"/>
+        <image name="questionmark" catalog="system" width="12" height="18"/>
         <image name="safari" catalog="system" width="15" height="15"/>
     </resources>
 </document>
