@@ -104,7 +104,7 @@ DQ
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xzi-d1-Q3X">
-                        <rect key="frame" x="183" y="171" width="231" height="17"/>
+                        <rect key="frame" x="183" y="173" width="231" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" title="Version - (-)" id="Ha5-pm-jeG">
                             <font key="font" metaFont="system"/>
