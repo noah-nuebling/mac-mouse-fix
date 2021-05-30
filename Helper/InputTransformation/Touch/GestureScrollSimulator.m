@@ -94,19 +94,28 @@ static VectorSubPixelator *_scrollPixelator;
                                         momentumPhase:kCGMomentumScrollPhaseNone
          locaction:loc];
     } else {
-        [self postGestureScrollEventWithGestureVector:(MFVector){}
-                                         scrollVector:(MFVector){}
-                                    scrollVectorPoint:(MFVector){}
-                                                phase:kIOHIDEventPhaseEnded
-                                        momentumPhase:0
-                                             locaction:loc];
-        
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
-            //startPostingMomentumScrollEventsWithInitialGestureVector(_lastInputGestureVector, 0.016, 1.0, 4, 1.0);
-            double dragCoeff = 8; // Easier to scroll far, kinda nice on a mouse, end still pretty realistic // Got these values by just seeing what feels good
-            double dragExp = 0.8;
-            startPostingMomentumScrollEventsWithInitialGestureVector(_lastInputGestureVector, 0.016, 1.0, dragCoeff, dragExp);
-        });
+        if (isZeroVector(_lastInputGestureVector)) {
+            [self postGestureScrollEventWithGestureVector:(MFVector){}
+                                             scrollVector:(MFVector){}
+                                        scrollVectorPoint:(MFVector){}
+                                                    phase:kIOHIDEventPhaseEnded
+                                            momentumPhase:0
+                                                 locaction:loc];
+            
+            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
+                //startPostingMomentumScrollEventsWithInitialGestureVector(_lastInputGestureVector, 0.016, 1.0, 4, 1.0);
+                double dragCoeff = 8; // Easier to scroll far, kinda nice on a mouse, end still pretty realistic // Got these values by just seeing what feels good
+                double dragExp = 0.8;
+                startPostingMomentumScrollEventsWithInitialGestureVector(_lastInputGestureVector, 0.016, 1.0, dragCoeff, dragExp);
+            });
+        } else {
+            [self postGestureScrollEventWithGestureVector:(MFVector){}
+                                             scrollVector:(MFVector){}
+                                        scrollVectorPoint:(MFVector){}
+                                                    phase:kIOHIDEventPhaseEnded
+                                            momentumPhase:0
+                                                locaction:loc];
+        }
     }
 }
 
@@ -341,6 +350,10 @@ MFVector addedVectors(MFVector vec1, MFVector vec2) {
 }
 double dotProduct(MFVector vec1, MFVector vec2) {
     return vec1.x * vec2.x + vec1.y * vec2.y;
+}
+
+bool isZeroVector(MFVector vec) {
+    return vec.x == 0 && vec.y == 0;
 }
 
 @end

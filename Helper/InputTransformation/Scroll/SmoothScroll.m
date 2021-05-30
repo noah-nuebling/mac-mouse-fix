@@ -25,6 +25,8 @@
 
 #import "SharedUtility.h"
 
+#import "GestureScrollSimulator.h"
+
 @implementation SmoothScroll
 
 #pragma mark - Globals
@@ -139,6 +141,7 @@ static BOOL _hasStarted;
         _pxScrollBuffer = 0;
         _pxToScrollThisFrame = 0;
         _pxPerMsVelocity = 0;
+        
     }
     // TODO: Commenting this out might cause weird behaviour. Think about what this actually does.
 //    if (_scrollPhase != kMFPhaseLinear) { // Why are we resetting what we are resetting?
@@ -212,6 +215,7 @@ static BOOL _hasStarted;
                     NSLog(@"Failed to start displayLink. Trying again.");
                     NSLog(@"Error code: %d", rt);
                 }
+                
             });
         }
     }
@@ -285,58 +289,32 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     if (ScrollModifiers.magnificationScrolling) {
         [ScrollModifiers handleMagnificationScrollWithAmount:_pxToScrollThisFrame/800.0];
     } else {
-        CGEventRef scrollEvent = CGEventCreateScrollWheelEvent(ScrollControl.eventSource, kCGScrollEventUnitPixel, 1, 0);
-        // CGEventSourceSetPixelsPerLine(_eventSource, 1);
-        // it might be a cool idea to diable scroll acceleration and then try to make the scroll events line based (kCGScrollEventUnitPixel)
         
-        // Setting event phases
-        
-//        if (_scrollPhase >= kMFPhaseMomentum) {
-//            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, _scrollPhase >> 1); // shifting bits so that values match up with appropriate NSEventPhase values.
-//        } else {
-//            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, _scrollPhase);
-//        }
-        
-        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 0);
-        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase, 0);
-        
-        // Set scrollDelta
-        
-        if (ScrollModifiers.horizontalScrolling == FALSE) {
-            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis1, _pxToScrollThisFrame / 8);
-            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis1, _pxToScrollThisFrame);
+        // Get 2d delta
+        double dx = 0;
+        double dy = 0;
+        if (ScrollModifiers.horizontalScrolling) {
+            dx = _pxToScrollThisFrame;
         } else {
-            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventDeltaAxis2, _pxToScrollThisFrame / 8);
-            CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventPointDeltaAxis2, _pxToScrollThisFrame);
+            dy = _pxToScrollThisFrame;
         }
         
-        // Post event
+        // Get phase
         
-        CGEventPost(kCGSessionEventTap, scrollEvent);
-        CFRelease(scrollEvent);
+        IOHIDEventPhaseBits phase = IOHIDPhaseFromMFPhase(_displayLinkPhase);
         
-    ////     set phases
-    ////         the native "scrollPhase" is roughly equivalent to my "wheelPhase"
-    //
-    //    CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase, kCGMomentumScrollPhaseNone);
-    //
-    //
-    //
-    //    NSLog(@"intern scrollphase: %d", _scrollPhase);
-    //    if (_scrollPhase == kMFWheelPhase) {
-    //        if (_previousPhase == kMFWheelPhase) {
-    //                CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 2);
-    //        } else {
-    //                CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 1);
-    //        }
-    //    }
-    //    if (_scrollPhase == kMFMomentumPhase) {
-    //        CGEventSetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase, 2);
-    //    }
-    //
-    ////    NSLog(@"scrollPhase: %lld", CGEventGetIntegerValueField(scrollEvent, kCGScrollWheelEventScrollPhase));
-    ////    NSLog(@"momentumPhase: %lld \n", CGEventGetIntegerValueField(scrollEvent, kCGScrollWheelEventMomentumPhase));
-    //
+#if DEBUG
+//        NSLog(@"displayLinkPhase: %u", _displayLinkPhase);
+//        NSLog(@"IOHIDEventPhase: %hu \n", phase);
+#endif
+        
+        if (phase != kIOHIDEventPhaseEnded) { // TODO: Remove. Sending it again here is a hack to make it stop scrolling.
+            [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:phase isGestureDelta:NO];
+        } else {
+            [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseChanged isGestureDelta:NO];
+            [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded isGestureDelta:NO];
+        }
+        
         
     }
     
@@ -344,8 +322,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     
     if (_displayLinkPhase == kMFPhaseStart) {
         _displayLinkPhase = kMFPhaseLinear;
-    }
-    else if (_displayLinkPhase == kMFPhaseEnd) {
+    } else if (_displayLinkPhase == kMFPhaseEnd) {
         [SmoothScroll resetDynamicGlobals];
         CVDisplayLinkStop(displayLink);
         return 0;
@@ -355,6 +332,21 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 
 
 #pragma mark - Utility functions
+
+static IOHIDEventPhaseBits IOHIDPhaseFromMFPhase(MFDisplayLinkPhase MFPhase) {
+    
+    if (MFPhase == kMFPhaseNone) {
+        return kIOHIDEventPhaseUndefined;
+    } else if (MFPhase == kMFPhaseStart) {
+        return kIOHIDEventPhaseBegan;
+    } else if (MFPhase == kMFPhaseLinear || MFPhase == kMFPhaseMomentum) {
+        return kIOHIDEventPhaseChanged;
+    } else if (MFPhase == kMFPhaseEnd) {
+        return kIOHIDEventPhaseEnded;
+    } else {
+        @throw [NSException exceptionWithName:@"UnknownPhaseArgumentException" reason:nil userInfo:nil];
+    }
+}
 
 #pragma mark display link
 
