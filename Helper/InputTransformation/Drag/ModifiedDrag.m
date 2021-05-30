@@ -202,17 +202,27 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY) {
         } else {
             _drag.usageAxis = kMFAxisHorizontal;
         }
+    
+        NSLog(@"SETTING DRAG PHASE TO BEGAN");
+        
+        _drag.phase = kIOHIDEventPhaseBegan;
         
         if ([_drag.type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
-            _drag.phase = kIOHIDEventPhaseBegan;
+            
+//            _drag.phase = kIOHIDEventPhaseBegan;
+            
         } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
+            
             //                [GestureScrollSimulator postGestureScrollEventWithGestureDeltaX:0.0 deltaY:0.0 phase:kIOHIDEventPhaseMayBegin];
             // ^ Always sending this at the start breaks swiping between pages on some websites (Google search results)
-            _drag.phase = kIOHIDEventPhaseBegan;
+            
+//            _drag.phase = kIOHIDEventPhaseBegan;
         } else if ([_drag.type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
             
             [Utility_Transformation postMouseButton:_drag.fakeDragButtonNumber down:YES];
+            
         } else if ([_drag.type isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
+            
             if (_drag.addModePayload != nil) {
                 if ([TransformationManager addModePayloadIsValid:_drag.addModePayload]) {
                     [SharedMessagePort sendMessage:@"addModeFeedback" withPayload:_drag.addModePayload expectingReply:NO];
@@ -222,6 +232,7 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY) {
                 @throw [NSException exceptionWithName:@"InvalidAddModeFeedbackPayload" reason:@"_drag.addModePayload is nil. Something went wrong!" userInfo:nil]; // Throw exception to cause crash
             }
         }
+        
     }
 }
 // Only passing in event to obtain event location to get slightly better behaviour for fakeDrag
@@ -257,9 +268,9 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
         // Warp pointer to origin to prevent cursor movement
 //        CGWarpMouseCursorPosition(_drag.usageOrigin);
         
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.0 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.0 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{ // dispatching on another queue causes _drag.phase 1 (began) to be skipped, and seems to be unnecessary.
             [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaX*twoFingerScale deltaY:deltaY*twoFingerScale phase:_drag.phase isGestureDelta:!inputIsPointerMovement];
-        });
+//        });
     } else if ([_drag.type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
         CGPoint location;
         if (event) {
@@ -293,6 +304,7 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
 
 static void handleDeactivationWhileInUse() {
     if ([_drag.type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
+        
         struct ModifiedDragState localDrag = _drag;
         if (localDrag.usageAxis == kMFAxisHorizontal) {
             [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypeHorizontal phase:kIOHIDEventPhaseEnded];
@@ -306,13 +318,19 @@ static void handleDeactivationWhileInUse() {
                 [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypeVertical phase:kIOHIDEventPhaseEnded];
             });
         }
+        
     } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
+        
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.0 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
             [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded isGestureDelta:!inputIsPointerMovement];
         });
+        
     } else if ([_drag.type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
+        
         [Utility_Transformation postMouseButton:_drag.fakeDragButtonNumber down:NO];
+        
     } else if ([_drag.type isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
+        
         if ([TransformationManager addModePayloadIsValid:_drag.addModePayload]) { // If it's valid, then we sent the payload off to the MainApp
             [TransformationManager disableAddMode]; // Why disable it here and not when sending the payload?
         }

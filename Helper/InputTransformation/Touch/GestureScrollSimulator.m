@@ -50,7 +50,7 @@ static VectorSubPixelator *_scrollPixelator;
 + (void)postGestureScrollEventWithDeltaX:(double)dx deltaY:(double)dy phase:(IOHIDEventPhaseBits)phase isGestureDelta:(BOOL)isGestureDelta {
     
 #if DEBUG
-//    NSLog(@"GESTURE DELTAS: %f, %f, PHASE: %d", dx, dy, phase);
+    NSLog(@"GESTURE DELTAS: %f, %f, PHASE: %d", dx, dy, phase);
 #endif
     
     CGPoint loc = Utility_Transformation.CGMouseLocationWithoutEvent;
