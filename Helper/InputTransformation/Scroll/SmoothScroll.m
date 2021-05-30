@@ -147,20 +147,15 @@ static BOOL _hasStarted;
 //        _pxScrollBuffer       =   0;
 //    }
   
-//        // Apply fast scroll to _pxStepSize
-    long long pxStepSizeWithFastScrollApplied = _pxStepSize;
-//    if (ScrollUtility.consecutiveScrollSwipeCounter >= ScrollControl.fastScrollThreshold_inSwipes
-//        && ScrollUtility.consecutiveScrollTickCounter >= ScrollControl.scrollSwipeThreshold_inTicks) {
-//        pxStepSizeWithFastScrollApplied = _pxStepSize * pow(ScrollControl.fastScrollExponentialBase, ((int32_t)ScrollUtility.consecutiveScrollSwipeCounter - ScrollControl.fastScrollThreshold_inSwipes + 1));
-//    }
-//
+
     // Apply scroll wheel input to _pxScrollBuffer
+    
     _msLeftForScroll = _msPerStep;
 //    _msLeftForScroll = 1 / (_pxPerMSBaseSpeed / _pxStepSize);
     if (scrollDeltaAxis1 > 0) {
-        _pxScrollBuffer += pxStepSizeWithFastScrollApplied * ScrollControl.scrollDirection;
+        _pxScrollBuffer += _pxStepSize * ScrollControl.scrollDirection;
     } else if (scrollDeltaAxis1 < 0) {
-        _pxScrollBuffer -= pxStepSizeWithFastScrollApplied * ScrollControl.scrollDirection;
+        _pxScrollBuffer -= _pxStepSize * ScrollControl.scrollDirection;
     } else {
         NSLog(@"scrollDeltaAxis1 is 0. This shouldn't happen.");
     }
@@ -177,7 +172,6 @@ static BOOL _hasStarted;
 //    }
 #endif
     
-    // Apply fast scroll to _pxScrollBuffer
     int fastScrollThresholdDelta = ScrollUtility.consecutiveScrollSwipeCounter - ScrollControl.fastScrollThreshold_inSwipes;
     if (fastScrollThresholdDelta >= 0) {
         //&& ScrollUtility.consecutiveScrollTickCounter >= ScrollControl.scrollSwipeThreshold_inTicks) {
@@ -266,15 +260,18 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     else if (_displayLinkPhase == kMFPhaseMomentum) {
         
         _pxToScrollThisFrame = round(_pxPerMsVelocity * msSinceLastFrame);
-        double oldVel = _pxPerMsVelocity;
-        double newVel = oldVel - [SharedUtility signOf:oldVel] * pow(fabs(oldVel), _frictionDepth) * (_frictionCoefficient/100) * msSinceLastFrame;
-        _pxPerMsVelocity = newVel;
-        if ( ((newVel < 0) && (oldVel > 0)) || ((newVel > 0) && (oldVel < 0)) ) {
+        double thisVel = _pxPerMsVelocity;
+        double nextVel = thisVel - [SharedUtility signOf:thisVel] * pow(fabs(thisVel), _frictionDepth) * (_frictionCoefficient/100) * msSinceLastFrame;
+        
+        _pxPerMsVelocity = nextVel;
+        if ( ((nextVel < 0) && (thisVel > 0)) || ((nextVel > 0) && (thisVel < 0)) ) {
             _pxPerMsVelocity = 0;
         }
+        
         if (_pxToScrollThisFrame == 0 || _pxPerMsVelocity == 0) {
             _displayLinkPhase = kMFPhaseEnd;
         }
+        
         if (abs(_pxToScrollThisFrame) == 1) {
             _onePixelScrollsCounter += 1;
             if (_onePixelScrollsCounter > _nOfOnePixelScrollsMax) { // I think using > instead of >= might put the actual maximum at _nOfOnePixelScrollsMax + 1.
