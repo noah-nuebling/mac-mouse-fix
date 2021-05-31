@@ -49,10 +49,6 @@ static VectorSubPixelator *_scrollPixelator;
 */
 + (void)postGestureScrollEventWithDeltaX:(double)dx deltaY:(double)dy phase:(IOHIDEventPhaseBits)phase isGestureDelta:(BOOL)isGestureDelta {
     
-#if DEBUG
-    NSLog(@"GESTURE DELTAS: %f, %f, PHASE: %d", dx, dy, phase);
-#endif
-    
     CGPoint loc = Utility_Transformation.CGMouseLocationWithoutEvent;
     if (!isGestureDelta) {
         loc.x += dx;
@@ -94,7 +90,7 @@ static VectorSubPixelator *_scrollPixelator;
                                         momentumPhase:kCGMomentumScrollPhaseNone
          locaction:loc];
     } else {
-        if (isZeroVector(_lastInputGestureVector)) {
+        if (isZeroVector(_lastInputGestureVector)) { // This will never be called, because zero vectors will never be recorded into _lastInputGestureVector. Read the doc above to learn why. TODO: remove.
             [self postGestureScrollEventWithGestureVector:(MFVector){}
                                              scrollVector:(MFVector){}
                                         scrollVectorPoint:(MFVector){}
@@ -115,7 +111,14 @@ static VectorSubPixelator *_scrollPixelator;
                                                     phase:kIOHIDEventPhaseEnded
                                             momentumPhase:0
                                                 locaction:loc];
+            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
+                //startPostingMomentumScrollEventsWithInitialGestureVector(_lastInputGestureVector, 0.016, 1.0, 4, 1.0);
+                double dragCoeff = 8; // Easier to scroll far, kinda nice on a mouse, end still pretty realistic // Got these values by just seeing what feels good
+                double dragExp = 0.8;
+                startPostingMomentumScrollEventsWithInitialGestureVector(_lastInputGestureVector, 0.016, 1.0, dragCoeff, dragExp);
+            });
         }
+        
     }
 }
 
@@ -143,6 +146,12 @@ static VectorSubPixelator *_scrollPixelator;
 //          vecGesture.x, vecGesture.y, vecScroll.x, vecScroll.y, vecScrollPoint.x, vecScrollPoint.y);
     
     //
+    //  Get stuff we need for both the type 22 and the type 29 event
+    //
+    
+    CGPoint eventLocation = [Utility_Helper getCurrentPointerLocation_flipped];
+    
+    //
     // Create type 22 event
     //
     
@@ -151,17 +160,17 @@ static VectorSubPixelator *_scrollPixelator;
     // Set static fields
     
     CGEventSetDoubleValueField(e22, 55, 22); // 22 -> NSEventTypeScrollWheel // Setting field 55 is the same as using CGEventSetType(), I'm not sure if that has weird side-effects though, so I'd rather do it this way.
-    CGEventSetDoubleValueField(e22, 88, 1); // magic?
+    CGEventSetDoubleValueField(e22, 88, 1); // 88 -> kCGScrollWheelEventIsContinuous
     
     // Set dynamic fields
     
     // Scroll deltas
+    // Not sure the rounding / flooring is necessary
+    CGEventSetDoubleValueField(e22, 11, floor(vecScroll.y)); // 11 -> kCGScrollWheelEventDeltaAxis1
+    CGEventSetDoubleValueField(e22, 96, round(vecScrollPoint.y)); // 96 -> kCGScrollWheelEventPointDeltaAxis1
     
-    CGEventSetDoubleValueField(e22, kCGScrollWheelEventDeltaAxis1, floor(vecScroll.y));
-    CGEventSetDoubleValueField(e22, kCGScrollWheelEventPointDeltaAxis1, round(vecScrollPoint.y));
-    
-    CGEventSetDoubleValueField(e22, kCGScrollWheelEventDeltaAxis2, floor(vecScroll.x));
-    CGEventSetDoubleValueField(e22, kCGScrollWheelEventPointDeltaAxis2, round(vecScrollPoint.x));
+    CGEventSetDoubleValueField(e22, 12, floor(vecScroll.x)); // 12 -> kCGScrollWheelEventDeltaAxis2
+    CGEventSetDoubleValueField(e22, 97, round(vecScrollPoint.x)); // 97 -> kCGScrollWheelEventPointDeltaAxis2
     
     // Phase
     
@@ -175,8 +184,9 @@ static VectorSubPixelator *_scrollPixelator;
 //    NSLog(@"\nFLIPPED NS: %f, %f \nCG: %f, %f", flippedNSLoc.x, flippedNSLoc.y, CGLoc.x, CGLoc.y);
     
     // Post t22s0 event
-    CGEventSetLocation(e22, [Utility_Helper getCurrentPointerLocation_flipped]);
-    CGEventPost(kCGHIDEventTap, e22);
+    
+    CGEventSetLocation(e22, eventLocation);
+    CGEventPost(kCGHIDEventTap, e22); // Needs to be kCGHIDEventTap instead of kCGSessionEventTap to work with Swish
     CFRelease(e22);
     
     if (momentumPhase == 0) {
@@ -190,28 +200,27 @@ static VectorSubPixelator *_scrollPixelator;
         // Set static fields
         
         CGEventSetDoubleValueField(e29, 55, 29); // 29 -> NSEventTypeGesture // Setting field 55 is the same as using CGEventSetType()
-        CGEventSetDoubleValueField(e29, 110, 6); // Field 110 -> subtype // 6 -> kIOHIDEventTypeScroll
+        CGEventSetDoubleValueField(e29, 110, 6); // 110 -> subtype // 6 -> kIOHIDEventTypeScroll
         
         // Set dynamic fields
         
-        double xVec = (double)vecGesture.x;
-        if (xVec == 0) {
-            xVec = -0.0f; // The original events only contain -0 but this probs doesn't make a difference.
+        double dxGesture = (double)vecGesture.x;
+        double dyGesture = (double)vecGesture.y;
+        if (dxGesture == 0) {
+            dxGesture = -0.0f; // The original events only contain -0 but this probs doesn't make a difference.
         }
-        CGEventSetDoubleValueField(e29, 116, xVec);
-        
-        double yVec = (double)vecGesture.y;
-        if (yVec == 0) {
-            yVec = -0.0f; // The original events only contain -0 but this probs doesn't make a difference.
+        if (dyGesture == 0) {
+            dyGesture = -0.0f; // The original events only contain -0 but this probs doesn't make a difference.
         }
-        CGEventSetDoubleValueField(e29, 119, yVec);
+        CGEventSetDoubleValueField(e29, 116, dxGesture);
+        CGEventSetDoubleValueField(e29, 119, dyGesture);
         
         CGEventSetIntegerValueField(e29, 132, phase);
         
         // Post t29s6 events
-        CGEventSetLocation(e29, [Utility_Helper getCurrentPointerLocation_flipped]);
+        CGEventSetLocation(e29, eventLocation);
         CGEventPost(kCGHIDEventTap, e29);
-        //    printEvent(e29);
+
         CFRelease(e29);
     }
 }
@@ -243,7 +252,7 @@ static void startPostingMomentumScrollEventsWithInitialGestureVector(MFVector in
         CGPoint loc = Utility_Transformation.CGMouseLocationWithoutEvent;
         [GestureScrollSimulator postGestureScrollEventWithGestureVector:emptyVec scrollVector:vec scrollVectorPoint:vecPt phase:kIOHIDEventPhaseUndefined momentumPhase:ph locaction:loc];
         
-        [NSThread sleepForTimeInterval:tick];
+        [NSThread sleepForTimeInterval:tick]; // Not sure if it's good to pause the whole thread here, using a display link or ns timer or sth is probably much faster. But this seems to work fine so whatevs.
         CFTimeInterval ts = CACurrentMediaTime();
         CFTimeInterval timeDelta = ts - prevTs;
         prevTs = ts;
@@ -310,7 +319,7 @@ static MFVector scrollPointVectorWithGestureVector(MFVector vec) {
 }
 static MFVector gestureVectorFromScrollPointVector(MFVector vec) {
     VectorScalerFunction f = ^double(double x) {
-//        return 0.54 * x; // For input pixels to equal animation pixels
+//        x = 0.54 * x; // Tried to make input pixels to equal animation pixels, but the scaling seems to always be different and be dependent on page size. Might as well just leave it like it is because it feels decent enough
         return x;
     };
     return scaledVectorWithFunction(vec, f);
@@ -331,6 +340,14 @@ static MFVector initalMomentumScrollPointVectorWithGestureVector(MFVector vec) {
 //}
 
 static double magnitudeOfVector(MFVector vec) {
+    
+    // Handle simple cases separately for optimization
+    if (vec.x == 0) {
+        return vec.y;
+    } else if (vec.y == 0) {
+        return vec.x;
+    }
+    
     return sqrt(pow(vec.x, 2) + pow(vec.y, 2));
 }
 MFVector normalizedVector(MFVector vec) {
