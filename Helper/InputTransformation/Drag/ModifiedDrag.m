@@ -153,6 +153,9 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
     
     int64_t dx = CGEventGetIntegerValueField(event, kCGMouseEventDeltaX);
     int64_t dy = CGEventGetIntegerValueField(event, kCGMouseEventDeltaY);
+    
+    // ^ These are truly integer values, I'm not rounding anything / losing any info here
+    
     [ModifiedDrag handleMouseInputWithDeltaX:dx deltaY:dy event:event];
     
     return NULL; // Sending event or NULL here doesn't seem to make a difference. If you alter the event and send that it does have an effect though
@@ -241,17 +244,29 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
     double twoFingerScale;
     double threeFingerScaleH;
     double threeFingerScaleV;
-        
-    // With these values, the scrolling/changing spaces will follow the mouse pointer almost exactly... Actually not the scaling seems to constantly be shifting (what ?)
-
+    
+    /*
+     Horizontal dockSwipe scaling
+        This makes horizontal dockSwipes (switch between spaces) follow the pointer exactly.
+        From my observations, when _dockSwipeOriginOffset (inside TouchSimulator) reaches exactly 1.25, then the screen will have moved to the next space exactly. Covering the distance of the previous space plus the black spaceSeparator.
+        The spaceSeparator width seems to be constant and not dependent on screen width. I arrived at the concrete value through testing documented in the NotePlan note "MMF - Scraps - Testing spaceSeparatorWidth"
+        TODO: Test this on a vertical screen
+     */
+    
     CGFloat screenWidth = NSScreen.mainScreen.frame.size.width;
-    threeFingerScaleH = threeFingerScaleV = 1.45 / screenWidth; // 1.15
-    // ^ This makes horizontal dockSwipes (switch between spaces) follow the pointer exactly. We should maybe use screenHeight to scale vertical dockSwipes (Mission Control and App Windows), but on a normal screen, this feels perfectly fine.
-    //      1.15 actually doesn't follow the pointer very closely anymore for some reason. It's way slower. Idk what changed. 1.45 works though.
-    // ^ TODO: Test this on a vertical screen
+    double spaceSeparatorWidth = 63;
+    threeFingerScaleH = threeFingerScaleV = 1.25 / (screenWidth + spaceSeparatorWidth);
     
-    threeFingerScaleV *= 1.0; // Vertical doesn't follow pointer anyways. So we can change it to make it feel nicer.
+    // Vertical dockSwipe scaling
+    // We should maybe use screenHeight to scale vertical dockSwipes (Mission Control and App Windows), but since they don't follow the mouse pointer anyways, this is fine;
+    threeFingerScaleV *= 1.0;
     
+    /*
+     scrollSwipe scaling
+        A scale of 1.0 will make the pixel based animations (normal scrolling) follow the mouse pointer.
+        Gesture based animations (swiping between pages in Safari etc.) seem to be scaled separately such that swiping 3/4 (or so) of the way across the Trackpad equals one whole page. No matter how wide the page is.
+        So to scale the gesture deltas such that the page-change-animations follow the mouse pointer exactly, we'd somehow have to get the width of the underlying scrollview. This might be possible using the _systemWideAXUIElement we created in ScrollControl, but it'll probably be really slow. I should maybe investigate this more.
+    */
     twoFingerScale = 1.0;
     
     if ([_drag.type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
