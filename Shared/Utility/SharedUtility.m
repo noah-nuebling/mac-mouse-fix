@@ -269,7 +269,7 @@
 #if DEBUG
     DDFileLogger *fileLogger = [[DDFileLogger alloc] init];
     fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
-    fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
+    fileLogger.logFileManager.maximumNumberOfLogFiles = 2;
 
     [DDLog addLogger:fileLogger];
     
