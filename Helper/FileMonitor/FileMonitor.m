@@ -108,6 +108,11 @@ void removeResidue() {
     [NSFileManager.defaultManager trashItemAtURL:Objects.MFApplicationSupportFolderURL resultingItemURL:nil error:nil];
     // Delete launchd plist
     [NSFileManager.defaultManager trashItemAtURL:Objects.launchdPlistURL resultingItemURL:nil error:nil];
+    // Delete logging folder // TODO: Test if this works
+    DDFileLogger *fileLogger = [[DDFileLogger alloc] init];
+    NSString *logsDirectoryPath = fileLogger.logFileManager.logsDirectory;
+    NSURL *logsDirectoryURL = [NSURL fileURLWithPath:logsDirectoryPath isDirectory:YES];
+    [NSFileManager.defaultManager trashItemAtURL:logsDirectoryURL resultingItemURL:nil error:nil];
 }
 void disableHelper() { // Kill this process
     DDLogInfo(@"Removing helper from launchd (Byeeeee)");

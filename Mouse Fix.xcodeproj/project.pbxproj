@@ -915,8 +915,8 @@
 		4FF6660825F2C93A00689B77 /* FileMonitor */ = {
 			isa = PBXGroup;
 			children = (
-				4FF6660925F2C93A00689B77 /* FileMonitor.m */,
 				4FF6660A25F2C93A00689B77 /* FileMonitor.h */,
+				4FF6660925F2C93A00689B77 /* FileMonitor.m */,
 			);
 			path = FileMonitor;
 			sourceTree = "<group>";
