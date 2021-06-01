@@ -105,8 +105,20 @@ static NSDictionary *sideButtonActions;
     
     if (self == [AppDelegate class]) {
         
+        // I think this is the entrypoint of the app
+        
+        // Setup CocoaLumberjack
+        [SharedUtility setupBasicCocoaLumberjackLogging];
+        DDLogInfo(@"Main App starting up...");
+        DDLogDebug(@"DEBUG STUFF");
+        
+        // Remove restart the app untranslocated if it's currently translocated
         [AppTranslocationManager removeTranslocation]; // Need to call this before MessagePort_App is initialized, otherwise stuff breaks if app is translocated
+        // Start parts of the app that depend on the initialization we just did
         [MessagePort_App load_Manual];
+        
+        // Do unnecessary stuff
+        // TODO: Remove the unused stuff below
         
         _scrollConfigurations = @{ // This is unused
             @"Normal"   :   @[ @[@20,@80],  @130, @1.5],

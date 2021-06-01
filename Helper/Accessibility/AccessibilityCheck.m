@@ -20,7 +20,7 @@
 #import "ModifiedDrag.h"
 #import "ModifierManager.h"
 
-#import <os/log.h>
+#import "SharedUtility.h"
 
 @implementation AccessibilityCheck
 
@@ -28,8 +28,9 @@ NSTimer *_openMainAppTimer;
 
 + (void)load {
     
-//    os_log_t MFLog = os_log_create(kMFBundleIDHelper.UTF8String, "status");
-//    os_log(MFLog, "Mac Mouse Fix Helper begins logging excessively...");
+    // Set up CocoaLumberjack
+    [SharedUtility setupBasicCocoaLumberjackLogging];
+    NSLog(@"Mac Mosue Fix begins logging excessively");
     
     [MessagePort_Helper load_Manual];
     

@@ -248,4 +248,17 @@
     return (0 < x) - (x < 0);
 }
 
+// Start logging to console and to Xcode output
+// Call this at the entry point of an app, so that DDLog statements work.
++ (void)setupBasicCocoaLumberjackLogging {
+    
+    if (@available(macOS 10.12, *)) {
+        [DDLog addLogger:DDOSLogger.sharedInstance]; // Use os_log
+    } else {
+        // Fallback on earlier versions
+        [DDLog addLogger:DDASLLogger.sharedInstance]; // Log to Apple System Log (Console.app)
+        [DDLog addLogger:DDTTYLogger.sharedInstance]; // Log to terminal / Xcode output
+    }
+}
+
 @end
