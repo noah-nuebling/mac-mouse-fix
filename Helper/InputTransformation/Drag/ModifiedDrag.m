@@ -247,15 +247,15 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
     
     /*
      Horizontal dockSwipe scaling
-        This makes horizontal dockSwipes (switch between spaces) follow the pointer exactly.
-        From my observations, when _dockSwipeOriginOffset (inside TouchSimulator) reaches exactly 1.25, then the screen will have moved to the next space exactly. Covering the distance of the previous space plus the black spaceSeparator.
-        The spaceSeparator width seems to be constant and not dependent on screen width. I arrived at the concrete value through testing documented in the NotePlan note "MMF - Scraps - Testing spaceSeparatorWidth"
+        This makes horizontal dockSwipes (switch between spaces) follow the pointer exactly. (If everything works)
+        I arrived at these value through testing documented in the NotePlan note "MMF - Scraps - Testing DockSwipe scaling"
         TODO: Test this on a vertical screen
      */
     
+    double originOffsetForOneSpace = 2.0;  // Sometimes it's 1.25, not sure why
     CGFloat screenWidth = NSScreen.mainScreen.frame.size.width;
     double spaceSeparatorWidth = 63;
-    threeFingerScaleH = threeFingerScaleV = 1.25 / (screenWidth + spaceSeparatorWidth);
+    threeFingerScaleH = threeFingerScaleV = originOffsetForOneSpace / (screenWidth + spaceSeparatorWidth);
     
     // Vertical dockSwipe scaling
     // We should maybe use screenHeight to scale vertical dockSwipes (Mission Control and App Windows), but since they don't follow the mouse pointer anyways, this is fine;
@@ -265,7 +265,7 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
      scrollSwipe scaling
         A scale of 1.0 will make the pixel based animations (normal scrolling) follow the mouse pointer.
         Gesture based animations (swiping between pages in Safari etc.) seem to be scaled separately such that swiping 3/4 (or so) of the way across the Trackpad equals one whole page. No matter how wide the page is.
-        So to scale the gesture deltas such that the page-change-animations follow the mouse pointer exactly, we'd somehow have to get the width of the underlying scrollview. This might be possible using the _systemWideAXUIElement we created in ScrollControl, but it'll probably be really slow. I should maybe investigate this more.
+        So to scale the gesture deltas such that the page-change-animations follow the mouse pointer exactly, we'd somehow have to get the width of the underlying scrollview. This might be possible using the _systemWideAXUIElement we created in ScrollControl, but it'll probably be really slow. 
     */
     twoFingerScale = 1.0;
     
