@@ -117,13 +117,11 @@ typedef struct __IOHIDDevice
 /// I also think this leads to other weird issues e.g. I couldn't stop dragging an element once until I logged out. We create fake events and reinsert them into the event stream from within `MFDevice::handleInput()` if the device is seized, I think that caused it somehow.
 - (void)seize:(BOOL)B {
     
-#if DEBUG
 //    if (B) {
-//        NSLog(@"SEIZE DEVICE");
+//        DDLogDebug(@"SEIZE DEVICE");
 //    } else {
-//        NSLog(@"UNSEIZE DEVICE");
+//        DDLogDebug(@"UNSEIZE DEVICE");
 //    }
-#endif
     
     if (_isSeized == B) {
         return;
@@ -212,9 +210,7 @@ static NSArray *getPressedButtons(MFDevice *dev) {
 
 - (void)receiveOnlyButtonInput {
     
-#if DEBUG
-    //NSLog(@"RECEIVE ONLY BUTTON INPUT");
-#endif
+    //DDLogDebug(@"RECEIVE ONLY BUTTON INPUT");
     
     [self seize:NO];
     
@@ -227,9 +223,7 @@ static NSArray *getPressedButtons(MFDevice *dev) {
 
 - (void)receiveAxisInputAndDoSeizeDevice:(BOOL)seize {
     
-#if DEBUG
-    //NSLog(@"RECEIVE AXIS INPUT ON TOP OF BUTTON INPUT");
-#endif
+    //DDLogDebug(@"RECEIVE AXIS INPUT ON TOP OF BUTTON INPUT");
     
     [self seize:seize];
     
@@ -275,9 +269,7 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
     
     BOOL isButton = usagePage == 9;
     
-#if DEBUG
-    NSLog(@"Received HID input - usagePage: %d usage: %d value: %ld from device: %@", usagePage, usage, (long)IOHIDValueGetIntegerValue(value), sendingDev.name);
-#endif
+    DDLogDebug(@"Received HID input - usagePage: %d usage: %d value: %ld from device: %@", usagePage, usage, (long)IOHIDValueGetIntegerValue(value), sendingDev.name);
     
     if (isButton) {
         
@@ -287,9 +279,7 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
         
         int64_t pressure = IOHIDValueGetIntegerValue(value);
         
-#if DEBUG
-        //NSLog(@"BTN HIDDD - btn: %d, pressure: %lld", button, pressure);
-#endif
+        //DDLogDebug(@"BTN HIDDD - btn: %d, pressure: %lld", button, pressure);
         
         // Control modified actions
         
@@ -302,9 +292,7 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
         // Post fake button input events, if the device is seized
 
         if (sendingDev.isSeized) {
-#if DEBUG
-            //NSLog(@"BUTTON INP COMES FORM SEIZED");
-#endif
+            //DDLogDebug(@"BUTTON INP COMES FORM SEIZED");
             [ButtonInputReceiver insertFakeEventWithButton:button isMouseDown:pressure!=0];
             
         }

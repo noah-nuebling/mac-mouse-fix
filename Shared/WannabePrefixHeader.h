@@ -1,14 +1,14 @@
 //
 // --------------------------------------------------------------------------
-// GlobalImports.h
+// WannabePrefixHeader.h
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2021
 // Licensed under MIT
 // --------------------------------------------------------------------------
 //
 
-#ifndef SharedHeader_h
-#define SharedHeader_h
+#ifndef WannabePrefixHeader_h
+#define WannabePrefixHeader_h
 
 // I tried to use a prefix header but it didn't work for some reason. (see PrefixHeader.pch)
 // So now this is the place for stuff I want to import/define everywhere. (Since it's not a prefix header I'll also have to import this everywhere)
@@ -30,4 +30,4 @@ static const DDLogLevel ddLogLevel = DDLogLevelDebug;
 static const DDLogLevel ddLogLevel = DDLogLevelInfo;
 #endif
 
-#endif /* GlobalImports_h */
+#endif /* WannabePrefixHeader_h */

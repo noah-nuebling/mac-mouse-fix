@@ -20,6 +20,7 @@
 //#import "NSTextField+Additions.h"
 #import "MFNotificationLabel.h"
 #import "NSAttributedString+Additions.h"
+#import "WannabePrefixHeader.h"
 
 @interface MFNotificationController ()
 @property (unsafe_unretained) IBOutlet MFNotificationLabel *label;
@@ -116,9 +117,7 @@ static double _toastAnimationOffset = 20;
     
     [_instance.label.textStorage setAttributedString:m];
 
-#if DEBUG
-    NSLog(@"Attaching notification with attributed string: %@", m);
-#endif
+    DDLogDebug(@"Attaching notification with attributed string: %@", m);
     
     // Set notification frame
     
@@ -270,9 +269,8 @@ static void removeLocalEventMonitor() {
 /// This hacky solution might cause more weirdness and jank than it's worth.
 + (void)windowResignKey:(NSNotification *)notification {
     NSWindow *closedWindow = notification.object;
-#if DEBUG
-    NSLog(@"RESIGNED KEY: %@", closedWindow.title);
-#endif
+    
+    DDLogDebug(@"RESIGNED KEY: %@", closedWindow.title);
     if ([_instance.window.parentWindow isEqual:closedWindow]) {
         [_closeTimer invalidate];
 //        [self closeNotificationWithFadeOut];

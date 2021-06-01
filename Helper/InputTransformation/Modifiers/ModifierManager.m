@@ -44,9 +44,7 @@
                                                         object:nil
                                                          queue:nil
                                                     usingBlock:^(NSNotification * _Nonnull note) {
-    #if DEBUG
-            NSLog(@"Received notification that remaps have changed");
-    #endif
+            DDLogDebug(@"Received notification that remaps have changed");
             toggleModifierEventTapBasedOnRemaps(TransformationManager.remaps);
         }];
     }
@@ -137,11 +135,9 @@ static void handleButtonModifiersHaveChangedWithDevice(MFDevice *device) {
 #pragma mark Helper
 static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, MFDevice * _Nonnull device) {
     
-#if DEBUG
-    NSLog(@"MODIFERS HAVE CHANGED TO - %@", activeModifiers);
-    NSLog(@"...ON DEVICE - %@", device);
-//    NSLog(@"...CALLED BY %@", [SharedUtility getInfoOnCaller]);
-#endif
+    DDLogDebug(@"MODIFERS HAVE CHANGED TO - %@", activeModifiers);
+    DDLogDebug(@"...ON DEVICE - %@", device);
+//    DDLogDebug(@"...CALLED BY %@", [SharedUtility getInfoOnCaller]);
     
     // Kill the currently active modified drag
     //      (or any other effects which are modifier driven, but currently modified drag is the only one)
@@ -162,9 +158,7 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, MFDevi
     }
     
     if (activeModifications) {
-#if DEBUG
-        NSLog(@"ACTIVE MODIFICATIONS - %@", activeModifications);
-#endif
+        DDLogDebug(@"ACTIVE MODIFICATIONS - %@", activeModifications);
         // Initialize effects which are modifier driven (only modified drag at this point)
         NSMutableDictionary *modifiedDragEffect = activeModifications[kMFTriggerDrag]; // Probably not truly mutable at this point
         if (modifiedDragEffect) {
@@ -203,9 +197,7 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, MFDevi
 //      That's over a third of the time which is used by our code (I think) - We should look into optimizing this (if we have too much time - the program is plenty fast). Maybe caching the values or calling it less, or making it faster.
 + (NSDictionary *)getActiveModifiersForDevice:(NSNumber *)devID filterButton:(NSNumber * _Nullable)filteredButton event:(CGEventRef _Nullable) event {
     
-#if DEBUG
-    printf("ActiveModifiers requested by: %s\n", SharedUtility.callerInfo.UTF8String);
-#endif
+    DDLogDebug(@"ActiveModifiers requested by: %s\n", SharedUtility.callerInfo.UTF8String);
     
     NSMutableDictionary *outDict = [NSMutableDictionary dictionary];
     

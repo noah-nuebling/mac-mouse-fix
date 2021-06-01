@@ -30,6 +30,8 @@
 #import <IOKit/hidsystem/IOHIDServiceClient.h>
 #import <IOKit/hidsystem/IOHIDEventSystemClient.h>
 
+#import "SharedUtility.h"
+
 
 
 @implementation DeviceManager
@@ -123,9 +125,7 @@ static void setupDeviceMatchingAndRemovalCallbacks() {
 
 static void handleDeviceMatching(void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
     
-#if DEBUG
-    NSLog(@"New matching IOHIDDevice: %@", device);
-#endif
+    DDLogDebug(@"New matching IOHIDDevice: %@", device);
     
     if (devicePassesFiltering(device)) {
         
@@ -144,9 +144,7 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
         NSLog(@"New matching IOHIDDevice device didn't pass filtering");
     }
     
-#if DEBUG
-    printDevices();
-#endif
+    DDLogDebug(@"%@", deviceInfo());
     
     return;
     
@@ -163,18 +161,19 @@ static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IO
     
     NSLog(@"Matching IOHIDDevice was removed:\n%@", device);
     
-#if DEBUG
-    printDevices();
-#endif
+    DDLogDebug(@"%@", deviceInfo());
     
 }
 
 /// This function is only used for debugging
-static void printDevices() {
-    NSLog(@"Relevant devices:\n%@", _attachedDevices); // Relevant devices are those that are matching the match dicts defined in setupDeviceMatchingAndRemovalCallbacks() and which also pass the filtering in handleDeviceMatching()
+static NSString *deviceInfo() {
+    
+    NSString *relevantDevices = stringf(@"Relevant devices:\n%@", _attachedDevices); // Relevant devices are those that are matching the match dicts defined in setupDeviceMatchingAndRemovalCallbacks() and which also pass the filtering in handleDeviceMatching()
     CFSetRef devices = IOHIDManagerCopyDevices(_HIDManager);
-    NSLog(@"Matching devices: %@", devices);
+    NSString *matchingDevices = stringf(@"Matching devices: %@", devices);
     CFRelease(devices);
+    
+    return [relevantDevices stringByAppendingFormat:@"%@\n", matchingDevices];
 }
 
 # pragma mark - Helper Functions

@@ -99,9 +99,7 @@ double _dockSwipeOriginOffset = 0.0;
 double _dockSwipeLastDelta = 0.0;
 + (void)postDockSwipeEventWithDelta:(double)d type:(MFDockSwipeType)type phase:(IOHIDEventPhaseBits)phase {
         
-#if DEBUG
-    NSLog(@"Request to send dockswipe");
-#endif
+    DDLogDebug(@"Request to send dockswipe");
     
     int valFor41 = 33231;
     int vertInvert = 1;
@@ -115,12 +113,10 @@ double _dockSwipeLastDelta = 0.0;
         _dockSwipeOriginOffset += d;
     }
     
-#if DEBUG
     CFTimeInterval ts = CACurrentMediaTime();
     CFTimeInterval timeDiff = ts - _dockSwipeLastTimeStamp;
     _dockSwipeLastTimeStamp = ts;
-    NSLog(@"Sending dockSwipe with \ndelta: %@, \nlastDelta: %@, \nprevOriginOffset: %@ \ntype: %@, \nphase: %@, \ntimeSinceLastEvent: %@", @(d), @(_dockSwipeLastDelta), @(_dockSwipeOriginOffset), @(type), @(phase), @(timeDiff));
-#endif
+    DDLogDebug(@"Sending dockSwipe with \ndelta: %@, \nlastDelta: %@, \nprevOriginOffset: %@ \ntype: %@, \nphase: %@, \ntimeSinceLastEvent: %@", @(d), @(_dockSwipeLastDelta), @(_dockSwipeOriginOffset), @(type), @(phase), @(timeDiff));
     
     // We actually need to send kIOHIDEventPhaseEnded or kIOHIDEventPhaseCancelled depending on situation, but we don't wan't to expose that complexity to the caller
     // We're treating phase == kIOHIDEventPhaseEnded and the phase == kIOHIDEventPhaseCancelled the exact same and then decide ouselves which of the two to send
@@ -176,14 +172,12 @@ double _dockSwipeLastDelta = 0.0;
     CGEventSetDoubleValueField(e30, 136, vertInvert); // Vertical invert
     
     if (phase == kIOHIDEventPhaseEnded || phase == kIOHIDEventPhaseCancelled) {
-#if DEBUG
-        NSLog(@"EXIT SPEED: %f, originOffset: %f, phase: %hu", _dockSwipeLastDelta, _dockSwipeOriginOffset, phase);
+        DDLogDebug(@"EXIT SPEED: %f, originOffset: %f, phase: %hu", _dockSwipeLastDelta, _dockSwipeOriginOffset, phase);
         // ^ Debugging of stuck-bug. When the stuck bug occurs, This always seems to be called and in the appropriate order (The fake dockSwipe with the end-phase is always called after all other phases).
         //      Random observation: I just got it stuck with just the trackpad! Right after getting it stuck with mouse.
         //      This makes me think the bug is about timing / how slow the events are sent, and not in which order the events are sent or with on which thread the events are sent as I suspected initially.
         //          Another hint towards this is, that the stuck-bug seems to occur more, the slower and more stuttery the UI is (the longer the computer has been running)
         // I fixed the stuck-bug now. (See the comment with "This fixed the stuck-bug!" in ModifiedDrag.m) But I still don't know what caused it exactly.
-#endif
         CGEventSetDoubleValueField(e30, 129, _dockSwipeLastDelta*100); // 'Exit speed'
         CGEventSetDoubleValueField(e30, 130, _dockSwipeLastDelta*100); // Probs not necessary
             // ^ *100 cause that's closer to how the real values look, but it doesn't make a difference

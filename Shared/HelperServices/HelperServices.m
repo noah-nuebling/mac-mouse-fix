@@ -187,9 +187,7 @@
 
 + (void)runPreviousVersionCleanup {
     
-#if DEBUG
-    NSLog(@"Cleaning up stuff from previous versions");
-#endif
+    DDLogDebug(@"Cleaning up stuff from previous versions");
     
     if (self.strangeHelperIsRegisteredWithLaunchd) {
         [self removeHelperFromLaunchd];
@@ -209,15 +207,11 @@
     
     if (!launchdPathIsBundlePath && launchdPathExists) {
         
-#if DEBUG
-        NSLog(@"Strange helper: found at: %@ \nbundleExecutable at: %@", launchdPath, Objects.helperBundle.executablePath);
-#endif
+        DDLogDebug(@"Strange helper: found at: %@ \nbundleExecutable at: %@", launchdPath, Objects.helperBundle.executablePath);
         return YES;
     }
     
-#if DEBUG
-    NSLog(@"Strange Helper: not found");
-#endif
+    DDLogDebug(@"Strange Helper: not found");
     
     return NO;
 }
@@ -239,9 +233,7 @@
 /// Having the old version still can lead to the old helper being started at startup, and I think other conflicts, too.
 + (void)removeLegacyLaunchdPlist {
     
-#if DEBUG
-    NSLog(@"Removing legacy launchd plist");
-#endif
+    DDLogDebug(@"Removing legacy launchd plist");
     
     // Find user library
     NSArray<NSString *> *libraryPaths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);

@@ -37,9 +37,7 @@ NSDictionary *_remaps;
     _remaps = remapsDict;
 //    _remaps = self.testRemaps; // TESTING
     [NSNotificationCenter.defaultCenter postNotificationName:kMFNotificationNameRemapsChanged object:self];
-#if DEBUG
-    NSLog(@"Set remaps to: %@", _remaps);
-#endif
+    DDLogDebug(@"Set remaps to: %@", _remaps);
 }
 
 /// The main app uses an array of dicts (aka a table) to represent the remaps in a way that is easy to present in a table view.

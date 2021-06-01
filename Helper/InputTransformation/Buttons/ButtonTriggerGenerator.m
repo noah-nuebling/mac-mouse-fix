@@ -51,9 +51,7 @@
     }
 }
 - (void)setClickLevel:(int64_t)clickLevel {
-#if DEBUG
-    NSLog(@"Setting clickLevel to: %lld", clickLevel);
-#endif
+    DDLogDebug(@"Setting clickLevel to: %lld", clickLevel);
     @synchronized (self) {
         _clickLevel = clickLevel;
     }
@@ -105,9 +103,7 @@ static NSMutableDictionary *_state;
 
 + (MFEventPassThroughEvaluation)parseInputWithButton:(NSNumber *)btn triggerType:(MFButtonInputType)triggerType inputDevice:(MFDevice *)device {
     
-#if DEBUG
-    NSLog(@"PARSING BUTTON INPUT - btn: %@, trigger %@", btn, @(triggerType));
-#endif
+    DDLogDebug(@"PARSING BUTTON INPUT - btn: %@, trigger %@", btn, @(triggerType));
     
     // Declare passThroughEval (return value)
     MFEventPassThroughEvaluation passThroughEval;
@@ -240,10 +236,7 @@ static void getTimerCallbackInfo(NSDictionary *info, NSNumber **devID, NSNumber 
 
 static void resetStateWithDevice(NSNumber *devID, NSNumber *btn) {
     
-#if DEBUG
-//    NSLog(@"RESETTING STATE - devID: %@, btn: %@", devID, btn);
-//    [SharedUtility printInfoOnCaller];
-#endif
+//    DDLogDebug(@"RESETTING STATE - devID: %@, btn: %@", devID, btn);
     
     ButtonState *bs = _state[devID][btn];
     
@@ -269,10 +262,7 @@ static void resetAllState() {
 // With the click level not being reset the button can still be used as a modifier for other triggers while it's held down.
 static void zombifyWithDevice(NSNumber *devID, NSNumber *btn) {
     
-#if DEBUG
-//    NSLog(@"ZOMBIFYING - devID: %@, btn: %@", devID, btn);
-//    [SharedUtility printInfoOnCaller];
-#endif
+//    DDLogDebug(@"ZOMBIFYING - devID: %@, btn: %@", devID, btn);
     
     ButtonState *bs = _state[devID][btn];
     

@@ -13,6 +13,7 @@
 #import <Carbon/Carbon.h>
 #import "SharedMessagePort.h"
 #import "NSView+Additions.h"
+#import "WannabePrefixHeader.h"
 
 @interface KeyCaptureView ()
 
@@ -44,9 +45,7 @@
 - (void)setupWithCaptureHandler:(CaptureHandler)captureHandler
                    cancelHandler:(CancelHandler)cancelHandler {
     
-#if DEBUG
-    NSLog(@"Setting up keystroke capture view");
-#endif
+    DDLogDebug(@"Setting up keystroke capture view");
     
     self.delegate = self;
     _captureHandler = captureHandler;
@@ -122,9 +121,7 @@
 
 - (BOOL)becomeFirstResponder {
     
-#if DEBUG
-    NSLog(@"BECOME FIRST RESPONDER");
-#endif
+    DDLogDebug(@"BECOME FIRST RESPONDER");
     
     BOOL superAccepts = [super becomeFirstResponder];
     
@@ -169,9 +166,7 @@
 }
 - (BOOL)resignFirstResponder {
 
-#if DEBUG
-    NSLog(@"RESIGN FIRST RESPONDER");
-#endif
+    DDLogDebug(@"RESIGN FIRST RESPONDER");
     
     BOOL superResigns = [super resignFirstResponder];
 

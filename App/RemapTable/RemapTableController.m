@@ -169,9 +169,7 @@
 - (void)viewDidLoad {
     // Not getting called for some reason -> I had to set the view outlet of the controller object in IB to the tableView.
     
-#if DEBUG
-    NSLog(@"RemapTableView did load.");
-#endif
+    DDLogDebug(@"RemapTableView did load.");
     
     // Set rounded corners and appropriate border
     
@@ -402,9 +400,7 @@
     if (result == templateViewHeight) {
         return result;
     } else {
-#if DEBUG
-        NSLog(@"Height of row %ld is non-standard - Template: %f, Actual: %f", (long)row, templateViewHeight, result);
-#endif
+        DDLogDebug(@"Height of row %ld is non-standard - Template: %f, Actual: %f", (long)row, templateViewHeight, result);
         return result;
     }
 }

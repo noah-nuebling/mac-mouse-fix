@@ -19,9 +19,9 @@
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
 // -> All targets reference this file
 
-// I moved all the CocoaLumberjack setup from this file to SharedHeader.h.
+// I moved all the CocoaLumberjack setup from this file to WannabePrefixHeader.h.
 // For some reason there was a cryptic error saying "Could not build module 'CocoaLumberjack'" along with over 30 of other errors like "Unknown type name 'NSString' - NSObjcRuntime.h" as soon as I imported <CocoaLumberjack/CocoaLumberjack.h> here. I could not Google these errors at all
-//  So instead I moved the CocoaLumberjack setup to SharedHeader.h, until I can get this to work
+//  So instead I moved the CocoaLumberjack setup to WannabePrefixHeader.h, until I can get this to work
 
 
 

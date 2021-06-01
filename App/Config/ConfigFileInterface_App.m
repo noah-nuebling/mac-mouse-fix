@@ -15,6 +15,7 @@
 #import "Utility_App.h"
 #import "Objects.h"
 #import "Constants.h"
+#import "WannabePrefixHeader.h"
 
 @implementation ConfigFileInterface_App
 
@@ -93,9 +94,7 @@ static NSURL *_defaultConfigURL; // default_config aka backup_config
         // TODO: handle this error
     }
     
-#if DEBUG
-    NSLog(@"Loaded config from file: %@", configDict);
-#endif
+    DDLogDebug(@"Loaded config from file: %@", configDict);
     
     self.config = configDict;
 }

@@ -20,9 +20,7 @@
 
 + (void)executeActionArray:(NSArray *)actionArray {
     
-#if DEBUG
-    NSLog(@"Executing action array: %@", actionArray);
-#endif
+    DDLogDebug(@"Executing action array: %@", actionArray);
     
     for (NSDictionary *actionDict in actionArray) {
         

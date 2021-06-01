@@ -115,7 +115,6 @@ static BOOL modificationPreconditionButtonComponentOfGreaterLevelExistsForButton
                              thisClickDoBe:&clickActionOfThisLevelExists
                               thisDownDoBe:&effectForMouseDownStateOfThisLevelExists
                                greaterDoBe:&effectOfGreaterLevelExists];
-#if DEBUG
 //    NSDictionary *info = @{
 //        @"devID": devID,
 //        @"button": button,
@@ -125,8 +124,7 @@ static BOOL modificationPreconditionButtonComponentOfGreaterLevelExistsForButton
 //        @"effectOfGreaterLevelExists": @(effectOfGreaterLevelExists),
 //        @"remaps": remaps,
 //    };
-//    NSLog(@"CHECK IF EFFECT OF EQUAL OR GREATER LEVEL EXISTS - Info: %@", info);
-#endif
+//    DDLogDebug(@"CHECK IF EFFECT OF EQUAL OR GREATER LEVEL EXISTS - Info: %@", info);
     
     return clickActionOfThisLevelExists || effectForMouseDownStateOfThisLevelExists || effectOfGreaterLevelExists;
 }

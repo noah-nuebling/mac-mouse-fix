@@ -168,12 +168,10 @@ static BOOL _hasStarted;
         _pxScrollBuffer = _pxScrollBuffer * _accelerationForScrollBuffer;
     }
     
-#if DEBUG
 //    if (ScrollUtility.consecutiveScrollTickCounter == 0) {
-//        NSLog(@"tick: %d", ScrollUtility.consecutiveScrollTickCounter);
-//        NSLog(@"swip: %d", ScrollUtility.consecutiveScrollSwipeCounter);
+//        DDLogDebug(@"tick: %d", ScrollUtility.consecutiveScrollTickCounter);
+//        DDLogDebug(@"swip: %d", ScrollUtility.consecutiveScrollSwipeCounter);
 //    }
-#endif
     
     int fastScrollThresholdDelta = ScrollUtility.consecutiveScrollSwipeCounter - ScrollControl.fastScrollThreshold_inSwipes;
     if (fastScrollThresholdDelta >= 0) {
@@ -181,10 +179,8 @@ static BOOL _hasStarted;
         _pxScrollBuffer = _pxScrollBuffer * ScrollControl.fastScrollFactor * pow(ScrollControl.fastScrollExponentialBase, ((int32_t)fastScrollThresholdDelta));
     }
     
-#if DEBUG
-//    NSLog(@"buff: %d", _pxScrollBuffer);
-//    NSLog(@"--------------");
-#endif
+//    DDLogDebug(@"buff: %d", _pxScrollBuffer);
+//    DDLogDebug(@"--------------");
     
     // Start displaylink and stuff
     
@@ -228,11 +224,9 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     //    msSinceLastFrame =
     //    ( ((double)msBetweenFramesNominal.timeValue) / ((double)msBetweenFramesNominal.timeScale) ) * 1000;
     
-#if DEBUG
 //    if (msSinceLastFrame != 16.674562) {
-//        NSLog(@"frameTimeSpike: %fms", msSinceLastFrame);
+//        DDLogDebug(@"frameTimeSpike: %fms", msSinceLastFrame);
 //    }
-#endif
     
     
 # pragma mark Linear Phase
@@ -303,10 +297,8 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         
         IOHIDEventPhaseBits phase = IOHIDPhaseFromMFPhase(_displayLinkPhase);
         
-#if DEBUG
-//        NSLog(@"displayLinkPhase: %u", _displayLinkPhase);
-//        NSLog(@"IOHIDEventPhase: %hu \n", phase);
-#endif
+//        DDLogDebug(@"displayLinkPhase: %u", _displayLinkPhase);
+//        DDLogDebug(@"IOHIDEventPhase: %hu \n", phase);
         
         if (phase != kIOHIDEventPhaseEnded) { // TODO: Remove. Sending it again here is a hack to make it stop scrolling.
             [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:phase isGestureDelta:NO];

@@ -121,9 +121,7 @@ static struct ModifiedDragState _drag;
         [payload removeObjectForKey:kMFModifiedDragDictKeyType];
     }
     
-    #if DEBUG
-        NSLog(@"INITIALIZING MODIFIED DRAG WITH TYPE %@ ON DEVICE %@", type, dev);
-    #endif
+    DDLogDebug(@"INITIALIZING MODIFIED DRAG WITH TYPE %@ ON DEVICE %@", type, dev);
     
     // Init _drag struct
     _drag.modifiedDevice = dev;
@@ -165,9 +163,7 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
     
     MFModifiedInputActivationState st = _drag.activationState;
     
-#if DEBUG
-//    NSLog(@"Handling mouse input. dx: %lld, dy: %lld, activationState: %@", deltaX, deltaY, @(st));
-#endif
+//    DDLogDebug(@"Handling mouse input. dx: %lld, dy: %lld, activationState: %@", deltaX, deltaY, @(st));
             
     if (st == kMFModifiedInputActivationStateNone) {
         // Disabling the callback triggers this function one more time apparently, aside form that case, this should never happen I think
@@ -303,9 +299,7 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
 
 + (void)deactivate {
     
-#if DEBUG
-//    NSLog(@"Deactivating modified drag with state: %@", [self modifiedDragStateDescription:_drag]);
-#endif
+//    DDLogDebug(@"Deactivating modified drag with state: %@", [self modifiedDragStateDescription:_drag]);
     
     if (_drag.activationState == kMFModifiedInputActivationStateNone) return;
     
