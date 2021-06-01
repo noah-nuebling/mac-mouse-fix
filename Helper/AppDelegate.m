@@ -8,6 +8,7 @@
 //
 
 #import "AppDelegate.h"
+#import <ReactiveObjC.h>
 
 @interface AppDelegate ()
 @property (strong) IBOutlet NSWindow *addedWindow;

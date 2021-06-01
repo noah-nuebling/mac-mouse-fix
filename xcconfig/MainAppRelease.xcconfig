@@ -10,11 +10,7 @@
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 
+#include "Pods/Target Support Files/Pods-Mac Mouse Fix/Pods-Mac Mouse Fix.release.xcconfig"
+
+#include "MainApp.xcconfig"
 #include "Release.xcconfig"
-
-PRODUCT_NAME = Mac Mouse Fix
-PRODUCT_BUNDLE_IDENTIFIER = com.nuebling.mac-mouse-fix
-
-INFOPLIST_FILE = App/SupportFiles/Info.plist
-
-CODE_SIGN_ENTITLEMENTS = App/SupportFiles/App.entitlements
