@@ -267,9 +267,9 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
     uint32_t usage = IOHIDElementGetUsage(elem);
     uint32_t usagePage = IOHIDElementGetUsagePage(elem);
     
-    BOOL isButton = usagePage == 9;
-    
     DDLogDebug(@"Received HID input - usagePage: %d usage: %d value: %ld from device: %@", usagePage, usage, (long)IOHIDValueGetIntegerValue(value), sendingDev.name);
+    
+    BOOL isButton = usagePage == 9;
     
     if (isButton) {
         
@@ -279,7 +279,9 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
         
         int64_t pressure = IOHIDValueGetIntegerValue(value);
         
-        //DDLogDebug(@"BTN HIDDD - btn: %d, pressure: %lld", button, pressure);
+        if (button != 1 && button != 2) { // Don't print left and right click as to not clog up the logs
+            DDLogDebug(@"Received HID Button Input - btn: %d, pressure: %lld", button, pressure);
+        }
         
         // Control modified actions
         
