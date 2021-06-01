@@ -3,7 +3,7 @@ platform :osx, '10.11'
 
 # Pods for all targets
 pod 'RHAdditions'
-
+pod 'CocoaLumberjack'
 
 target 'Mac Mouse Fix' do
   # Comment the next line if you don't want to use dynamic frameworks
