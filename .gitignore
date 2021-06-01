@@ -1,0 +1,19 @@
+
+# macOS stuff
+.DS_Store
+
+# Folders named xcuserdata
+xcuserdata/
+
+# Password file
+sudopass.sh
+
+# Carthage derived data
+Carthage/
+
+# White-listing xcschemes folder. (.gitignore whitelisting is a huge hassle but this works)
+# -> We don't need this anymore, because instead we just moved the build schemes to shared
+# !Mouse Fix.xcodeproj/xcuserdata/
+# !Mouse Fix.xcodeproj/xcuserdata/Noah.xcuserdatad/
+# !Mouse Fix.xcodeproj/xcuserdata/Noah.xcuserdatad/xcschemes/*
+# Mouse Fix.xcodeproj/xcuserdata/Noah.xcuserdatad/xcdebugger/*
