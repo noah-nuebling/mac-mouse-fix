@@ -14,6 +14,7 @@
 #import <IOKit/hidsystem/IOHIDTypes.h>
 #import <IOKit/hid/IOHIDKeys.h>
 #import <IOKit/hid/IOHIDProperties.h>
+#import "WannabePrefixHeader.h"
 
 
 @implementation PointerSpeed
@@ -53,7 +54,7 @@ kern_return_t IOHIDSetHIDParameterToEventSystem(io_connect_t handle, CFStringRef
     }
     if (kr) {
 //        os_log_error(_IOHIDLog(), "Fail to set parameter with status 0x%x", kr);
-        NSLog(@"Fail to set parameter with status 0x%x", kr);
+        DDLogInfo(@"Fail to set parameter with status 0x%x", kr);
     }
     return kr;
 }
@@ -126,7 +127,7 @@ static mach_port_t _IOHIDSystemHandle;
     IOReturn childRet = IORegistryEntryGetChildEntry(devService, kIOServicePlane, &devServiceChild);
     IOReturn gcRet = IORegistryEntryGetChildEntry(devServiceChild, kIOServicePlane, &devServiceGrandChild);
     
-    NSLog(@"ChildRet: %ud, GCRet: %ud", childRet, gcRet);
+    DDLogInfo(@"ChildRet: %ud, GCRet: %ud", childRet, gcRet);
     
     io_connect_t devConnect;
     IOReturn ret = IOServiceOpen(devService, mach_task_self(), 0, &devConnect); // This always fails for some reason
@@ -139,7 +140,7 @@ static mach_port_t _IOHIDSystemHandle;
     // Public values for connectTyp seem to end with 'ConnectType'
     
     if (ret != kIOReturnSuccess) {
-        NSLog(@"Open dev failed - dev: %@, IOReturn: %ud", dev, ret);
+        DDLogInfo(@"Open dev failed - dev: %@, IOReturn: %ud", dev, ret);
         return;
     }
     
@@ -167,8 +168,8 @@ static mach_port_t _IOHIDSystemHandle;
     // Check what values actually are
     NSNumber *pointerResNS = (__bridge NSNumber *) IOHIDDeviceGetProperty(dev, CFSTR(kIOHIDPointerResolutionKey));
     int pointerRes = pointerResNS.intValue;
-    NSLog(@"Set Pointer Resolution of device %@ to: %d, Actual Pointer Resolution: %d", dev, sens, FixedToInt(pointerRes));
-    NSLog(@"Set Pointer Resolution of device %@ to: %d, Actual Pointer Resolution: %d", dev, sens, pointerRes);
+    DDLogInfo(@"Set Pointer Resolution of device %@ to: %d, Actual Pointer Resolution: %d", dev, sens, FixedToInt(pointerRes));
+    DDLogInfo(@"Set Pointer Resolution of device %@ to: %d, Actual Pointer Resolution: %d", dev, sens, pointerRes);
     
 }
 
@@ -206,7 +207,7 @@ static mach_port_t _IOHIDSystemHandle;
     IORegistryEntryCopyPath(devService, "IOService"); // works
 //    IORegistryEntryCreateCFProperty(devService, CFSTR("ReportDescriptor"), kCFAllocatorDefault, 0) // works
     
-    NSLog(@"NAMEEE: %@", IORegistryEntryCopyPath(devService, "IOService"));
+    DDLogInfo(@"NAMEEE: %@", IORegistryEntryCopyPath(devService, "IOService"));
     
     
     // Getting service clients from Event system client
@@ -214,7 +215,7 @@ static mach_port_t _IOHIDSystemHandle;
     IOHIDEventSystemClientRef eventSystemClient = IOHIDEventSystemClientCreate(kCFAllocatorDefault); // using this self-defined function (extern) instead of ...CreateSimpleClient - maybe you can do "privilege escalation" here.
     CFArrayRef services = IOHIDEventSystemClientCopyServices(eventSystemClient);
     
-//    NSLog(@"services: %@", services);
+//    DDLogInfo(@"services: %@", services);
     
     for (CFIndex i = 0; i < CFArrayGetCount(services); i++) {
         IOHIDServiceClientRef service = (IOHIDServiceClientRef)CFArrayGetValueAtIndex(services, i);
@@ -255,7 +256,7 @@ static mach_port_t _IOHIDSystemHandle;
             IOReturn rt = IOServiceOpen(matchingService, mach_task_self(), kIOHIDParamConnectType, &drvHandle);
             // TODO: Maybe try opening the service with other parameters like kIOHIDEventSystemConnectType, or a different owning task.
             if (rt) {
-                NSLog(@"Opening device service failed with error code: %ud", rt);
+                DDLogInfo(@"Opening device service failed with error code: %ud", rt);
             }
             
             // --
@@ -289,15 +290,15 @@ static mach_port_t _IOHIDSystemHandle;
             int pointerRes;
             CFNumberGetValue(pointerResCF, kCFNumberSInt32Type, &pointerRes);
             
-            NSLog(@"Set Pointer Resolution to: %d, Actual Pointer Resolution: %d", sens, FixedToInt(pointerRes));
+            DDLogInfo(@"Set Pointer Resolution to: %d, Actual Pointer Resolution: %d", sens, FixedToInt(pointerRes));
             
             NSDictionary *eventServiceProps = (__bridge NSDictionary *)IORegistryEntryCreateCFProperty(matchingService, CFSTR("HIDEventServiceProperties"), kCFAllocatorDefault, 0);
-            NSLog(@"Pointer Resolution in Event Service Properties: %d", FixedToInt([eventServiceProps[@"HIDPointerResolution"] integerValue]));
+            DDLogInfo(@"Pointer Resolution in Event Service Properties: %d", FixedToInt([eventServiceProps[@"HIDPointerResolution"] integerValue]));
 
             
             
-            NSLog(@"Product: %@", IORegistryEntryCreateCFProperty(matchingService, CFSTR("Product"), kCFAllocatorDefault, 0));
-//            NSLog(@"Path: %@", IORegistryEntryCopyPath(matchingService, "IOService"));
+            DDLogInfo(@"Product: %@", IORegistryEntryCreateCFProperty(matchingService, CFSTR("Product"), kCFAllocatorDefault, 0));
+//            DDLogInfo(@"Path: %@", IORegistryEntryCopyPath(matchingService, "IOService"));
             
             // trying to manipulate the eventserviceproperties property
             // Using IORegistryEntrySetCFProperty() on matching service actually creates/sets keys and values in the HIDEventServiceProperties dict, so we don't need this.
@@ -305,7 +306,7 @@ static mach_port_t _IOHIDSystemHandle;
             
 //            CFMutableDictionaryRef eventServiceProperties = IORegistryEntryCreateCFProperty(matchingService, CFSTR("HIDEventServiceProperties"), kCFAllocatorDefault, 0);
 //
-//            NSLog(@"HODEventServiceProperties: %@", eventServiceProperties);
+//            DDLogInfo(@"HODEventServiceProperties: %@", eventServiceProperties);
 //
 //            if (eventServiceProperties) {
 //                int zero = 0;
@@ -316,7 +317,7 @@ static mach_port_t _IOHIDSystemHandle;
                     // This puts a copy of the HIDEventServiceProperties dict into the HIDEventServiceProperties dict. Not what we want.
 //                IORegistryEntrySetCFProperty(matchingService, CFSTR("HIDEventServiceProperties"), eventServiceProperties);
                 
-//                NSLog(@"HODEventServiceProperties New!: %@", IORegistryEntryCreateCFProperty(matchingService, CFSTR("HIDEventServiceProperties"), kCFAllocatorDefault, 0));
+//                DDLogInfo(@"HODEventServiceProperties New!: %@", IORegistryEntryCreateCFProperty(matchingService, CFSTR("HIDEventServiceProperties"), kCFAllocatorDefault, 0));
             
 //            }
             
@@ -337,11 +338,11 @@ static mach_port_t _IOHIDSystemHandle;
                 
 //                CFTypeRef prop = IOHIDServiceClientCopyProperty((IOHIDServiceClientRef)service, CFSTR("HIDPointerResolution"));
 //                int ptrRes;
-//                NSLog(@"type: %@", CFNumberGetType(prop));
+//                DDLogInfo(@"type: %@", CFNumberGetType(prop));
 //
 //                CFNumberGetValue(prop, kCFNumberSInt32Type, &ptrRes);
 //
-//                NSLog(@"RES: %d", ptrRes);
+//                DDLogInfo(@"RES: %d", ptrRes);
 //                prop = IOHIDServiceClientCopyProperty(service, CFSTR("HIDPointerResolution"));
 //                CFNumberRef entryIdCF = IOHIDServiceClientGetRegistryID(service);
 //                int64_t entryId;
@@ -358,9 +359,9 @@ static mach_port_t _IOHIDSystemHandle;
 //
 ////                (matchingService, CFSTR("HIDPointerResolution"), (__bridge CFNumberRef)[NSNumber numberWithInt:26214400]);
 //
-//                NSLog(@"DEV NAME: %s", matchingServiceName);
-////                NSLog(@"WRITE ERR: %d", writeError);
-//                NSLog(@"DEVS: %@", IORegistryEntrySearchCFProperty(matchingService, kIOServicePlane, CFSTR(kIOHIDPointerAccelerationKey), kCFAllocatorDefault, kIORegistryIterateRecursively));
+//                DDLogInfo(@"DEV NAME: %s", matchingServiceName);
+////                DDLogInfo(@"WRITE ERR: %d", writeError);
+//                DDLogInfo(@"DEVS: %@", IORegistryEntrySearchCFProperty(matchingService, kIOServicePlane, CFSTR(kIOHIDPointerAccelerationKey), kCFAllocatorDefault, kIORegistryIterateRecursively));
 //            }
 //        }
     
@@ -374,12 +375,12 @@ static mach_port_t _IOHIDSystemHandle;
 + (void)setAccelerationTo:(double)acc {
     
     
-    NSLog(@"Current Pointer Acceleration: %f", [self getActualAcceleration]);
+    DDLogInfo(@"Current Pointer Acceleration: %f", [self getActualAcceleration]);
     
     IOHIDSetCFTypeParameter(_IOHIDSystemHandle, CFSTR("HIDMouseAcceleration"), (__bridge CFNumberRef)[NSNumber numberWithDouble: FloatToFixed(acc)]);
     // reading values
     
-    NSLog(@"Current Pointer Acceleration: %f", [self getActualAcceleration]);
+    DDLogInfo(@"Current Pointer Acceleration: %f", [self getActualAcceleration]);
     
 }
 
@@ -518,9 +519,9 @@ NXEventHandle myNXOpenEventStatus(void) {
 //
 //        //                (matchingService, CFSTR("HIDPointerResolution"), (__bridge CFNumberRef)[NSNumber numberWithInt:26214400]);
 //
-//                        NSLog(@"DEV NAME: %s", matchingServiceName);
-//                        NSLog(@"WRITE ERR: %d", writeError);
-//                        NSLog(@"DEVS: %@", IORegistryEntrySearchCFProperty(matchingService, kIOServicePlane, CFSTR(kIOHIDPointerAccelerationKey), kCFAllocatorDefault, kIORegistryIterateRecursively));
+//                        DDLogInfo(@"DEV NAME: %s", matchingServiceName);
+//                        DDLogInfo(@"WRITE ERR: %d", writeError);
+//                        DDLogInfo(@"DEVS: %@", IORegistryEntrySearchCFProperty(matchingService, kIOServicePlane, CFSTR(kIOHIDPointerAccelerationKey), kCFAllocatorDefault, kIORegistryIterateRecursively));
 //                    }
 //                }
 //

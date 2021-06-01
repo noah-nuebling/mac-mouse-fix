@@ -11,6 +11,7 @@
 #import "Utility_Helper.h"
 #import "Constants.h"
 #import "Utility_Transformation.h"
+#import "WannabePrefixHeader.h"
 
 @implementation Utility_Helper
 
@@ -30,12 +31,12 @@
     return newEvent;
 }
 + (void)printEventFieldDifferencesBetween:(CGEventRef)event1 and:(CGEventRef)event2 {
-    NSLog(@"Field differences for event: %@, and event: %@", event1, event2);
+    DDLogInfo(@"Field differences for event: %@, and event: %@", event1, event2);
     for (int field = 0; field < 256; field++) { // I think there are only 256 fields, that's what we seem to have assumed in macos-touch-reverse-engineering
         int64_t value1 = CGEventGetIntegerValueField(event1, field);
         int64_t value2 = CGEventGetIntegerValueField(event2, field);
         if (value1 != value2) {
-            NSLog(@"%@: %@ vs %@", @(field), @(value1), @(value2));
+            DDLogInfo(@"%@: %@ vs %@", @(field), @(value1), @(value2));
         }
     }
 }

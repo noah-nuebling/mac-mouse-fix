@@ -28,7 +28,7 @@
         };
     }
     
-    NSLog(@"Sending message: %@ with payload: %@ from bundle: %@ via message port", message, payload, NSBundle.mainBundle.bundleIdentifier);
+    DDLogInfo(@"Sending message: %@ with payload: %@ from bundle: %@ via message port", message, payload, NSBundle.mainBundle.bundleIdentifier);
     
     NSString *remotePortName;
     if (SharedUtility.runningMainApp) {
@@ -39,7 +39,7 @@
     
     CFMessagePortRef remotePort = CFMessagePortCreateRemote(kCFAllocatorDefault, (__bridge CFStringRef)remotePortName);
     if (remotePort == NULL) {
-        NSLog(@"Can't send message, because there is no CFMessagePort");
+        DDLogInfo(@"Can't send message, because there is no CFMessagePort");
         return nil;
     }
     
@@ -56,7 +56,7 @@
     SInt32 status = CFMessagePortSendRequest(remotePort, messageID, messageData, sendTimeout, recieveTimeout, replyMode, &returnData);
     CFRelease(remotePort);
     if (status != 0) {
-        NSLog(@"Non-zero CFMessagePortSendRequest status: %d", status);
+        DDLogInfo(@"Non-zero CFMessagePortSendRequest status: %d", status);
     }
     
     NSObject *returnObject = nil;
@@ -68,11 +68,11 @@
 //
 //+ (CFDataRef _Nullable)sendMessage:(NSString *_Nonnull)message expectingReply:(BOOL)expectingReply {
 //
-//    NSLog(@"Sending message: %@ via message port from bundle: %@", message, NSBundle.mainBundle);
+//    DDLogInfo(@"Sending message: %@ via message port from bundle: %@", message, NSBundle.mainBundle);
 //
 //    CFMessagePortRef remotePort = CFMessagePortCreateRemote(kCFAllocatorDefault, CFSTR("com.nuebling.mousefix.helper.port"));
 //    if (remotePort == NULL) {
-//        NSLog(@"There is no CFMessagePort");
+//        DDLogInfo(@"There is no CFMessagePort");
 //        return nil;
 //    }
 //
@@ -88,7 +88,7 @@
 //    }
 //    SInt32 status = CFMessagePortSendRequest(remotePort, messageID, messageData, sendTimeout, receiveTimeout, replyMode, &returnData);
 //    if (status != 0) {
-//        NSLog(@"Non-zero CFMessagePortSendRequest status: %d", status);
+//        DDLogInfo(@"Non-zero CFMessagePortSendRequest status: %d", status);
 //    }
 //    CFRelease(remotePort);
 //

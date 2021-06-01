@@ -148,7 +148,7 @@ static void postSymbolicHotkey(CGSSymbolicHotKey shk) {
         modifierFlags = 10485760; // 0 Didn't work in my testing. This seems to be the 'empty' CGSModifierFlags value, used to signal that no modifiers are pressed. TODO: Test if this works
         CGError err = CGSSetSymbolicHotKeyValue(shk, keyEquivalent, keyCode, modifierFlags);
         if (err != 0) {
-            NSLog(@"Error setting shk params: %d", err);
+            DDLogInfo(@"Error setting shk params: %d", err);
             // Do again or something if setting shk goes wrong
         }
     }

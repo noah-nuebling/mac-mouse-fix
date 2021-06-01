@@ -56,7 +56,7 @@ static void registerInputCallbackForDevice(MFDevice *device) {
     IOReturn ret = IOHIDDeviceOpen(self.IOHIDDevice, options);
 //    IOReturn ret = IOHIDDeviceOpen(self.IOHIDDevice, 0); // Ignoring options for testing purposes
     if (ret) {
-        NSLog(@"Error opening device. Code: %x", ret);
+        DDLogInfo(@"Error opening device. Code: %x", ret);
     }
 }
 
@@ -97,7 +97,7 @@ typedef struct __IOHIDDevice
 } __IOHIDDevice, *__IOHIDDeviceRef;
 
 //static void printIOHIDDeviceState(IOHIDeviceRef dev) {
-//    NSLog(@"IOHID DEVICE STATE - service: %@, deviceInterface: %@, plugInInterface: %@, props: %@, elements: %@, rootKey: %@, UUIDKey: %@, notifPort:");
+//    DDLogInfo(@"IOHID DEVICE STATE - service: %@, deviceInterface: %@, plugInInterface: %@, props: %@, elements: %@, rootKey: %@, UUIDKey: %@, notifPort:");
 //}
 
 // I think the `option` doesn't make any difference when closing a device I think. It definitely doesn't help with the CFData zombie bug
@@ -106,7 +106,7 @@ typedef struct __IOHIDDevice
 //    IOReturn ret = IOHIDDeviceClose(self.IOHIDDevice, option); // Closing seems to create zombies, which leads to crashes.
     IOReturn ret = (*self.IOHIDDevice->deviceInterface)->close(self.IOHIDDevice->deviceInterface, option); // This is some of what IOHIDDeviceClose() does. Might help with zombies. I got this from `IOHIDDevice.c`. Seems like it fixes the zombies issue!! :O
     if (ret) {
-        NSLog(@"Error closing device. Code: %x", ret);
+        DDLogInfo(@"Error closing device. Code: %x", ret);
         CFRelease(self.IOHIDDevice);
     }
 }
@@ -172,7 +172,7 @@ static void dealWithAutomaticButtonUpEventsFromDeviceSeize(MFDevice *dev) {
     for (NSNumber *k in pressedButtons) {
         BOOL isPressed = k.intValue == 1;
         if (isPressed) {
-            NSLog(@"IS PRESSED WHILE SEIZING: %d", buttonNum);
+            DDLogInfo(@"IS PRESSED WHILE SEIZING: %d", buttonNum);
             [ButtonInputReceiver handleHIDButtonInputFromRelevantDeviceOccured:dev button:@(buttonNum+1) stemsFromDeviceSeize:YES];
         }
         buttonNum++;
@@ -383,9 +383,9 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
                                vendorID];
         return outString;
     } @catch (NSException *exception) {
-        NSLog(@"Exception while getting MFDevice description: %@", exception);
+        DDLogInfo(@"Exception while getting MFDevice description: %@", exception);
         // After waking computer from sleep I just had a EXC_BAD_ACCESS exception. The debugger says the MFDevice is still allocated in debugger (I can look at all its properties and of the IOHIDDevice as well)) but the "properties" dict of the IOHIDDevice is a NULL pointer for some reason. Really strange. I don't know how to handle this situation, crashing is proabably better than to keep going in this weird state.
-        NSLog(@"Rethrowing exception because crashing the app is probably best in this situation.");
+        DDLogInfo(@"Rethrowing exception because crashing the app is probably best in this situation.");
         @throw exception;
     }
 }

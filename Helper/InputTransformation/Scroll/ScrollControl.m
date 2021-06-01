@@ -16,6 +16,7 @@
 #import "ConfigFileInterface_Helper.h"
 #import "ScrollUtility.h"
 #import "Utility_Helper.h"
+#import "WannabePrefixHeader.h"
 
 @implementation ScrollControl
 
@@ -108,7 +109,7 @@ static int _scrollDirection;
     if (_eventTap == nil) {
         CGEventMask mask = CGEventMaskBit(kCGEventScrollWheel);
         _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
-        NSLog(@"_eventTap: %@", _eventTap);
+        DDLogInfo(@"_eventTap: %@", _eventTap);
         CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _eventTap, 0);
         CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes);
         CFRelease(runLoopSource);
@@ -157,7 +158,7 @@ static int _scrollDirection;
 //    || isEnabled == NO;
     
     if (disableAll) {
-        NSLog(@"Disabling scroll interception");
+        DDLogInfo(@"Disabling scroll interception");
         // Disable scroll interception
         if (_eventTap) {
             CGEventTapEnable(_eventTap, false);
@@ -172,11 +173,11 @@ static int _scrollDirection;
         // Enable other scroll classes
         [ScrollModifiers start];
         if (_isSmoothEnabled) {
-            NSLog(@"Enabling SmoothScroll");
+            DDLogInfo(@"Enabling SmoothScroll");
             [SmoothScroll start];
             [RoughScroll stop];
         } else {
-            NSLog(@"Enabling RoughScroll");
+            DDLogInfo(@"Enabling RoughScroll");
             [SmoothScroll stop];
             [RoughScroll start];
         }

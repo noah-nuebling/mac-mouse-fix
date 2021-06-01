@@ -30,10 +30,10 @@ static CFMachPortRef _eventTap;
 
 + (void)decide {
     if ([DeviceManager devicesAreAttached]) {
-        NSLog(@"started ButtonInputReceiver");
+        DDLogInfo(@"started ButtonInputReceiver");
         [ButtonInputReceiver start];
     } else {
-        NSLog(@"stopped ButtonInputReceiver");
+        DDLogInfo(@"stopped ButtonInputReceiver");
         [ButtonInputReceiver stop];
     }
 }
@@ -64,7 +64,7 @@ static void registerInputCallback() {
 
 + (void)insertFakeEventWithButton:(MFMouseButtonNumber)button isMouseDown:(BOOL)isMouseDown {
     
-    NSLog(@"Inserting event");
+    DDLogInfo(@"Inserting event");
     
     // Create event
     CGEventType mouseEventType = [SharedUtility CGEventTypeForButtonNumber:button isMouseDown:isMouseDown];
@@ -129,7 +129,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     // Re-enable on timeout
     // Maybe it would be better to do the heavy lifting on a background queue, so this never times out, but this is easier, and it times out quite rarely anyways so this should be fine.
     if (type == kCGEventTapDisabledByTimeout) {
-        NSLog(@"ButtonInputReceiver eventTap timed out. Re-enabling.");
+        DDLogInfo(@"ButtonInputReceiver eventTap timed out. Re-enabling.");
         CGEventTapEnable(_eventTap, true);
     }
     

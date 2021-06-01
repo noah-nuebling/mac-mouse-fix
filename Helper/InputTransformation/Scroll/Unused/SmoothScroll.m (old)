@@ -45,7 +45,7 @@ AnimationCurve * _animationCurve;
 
 BOOL _horizontalScrollModifierPressedSS;
 + (void) setHorizontalScroll: (BOOL)B {
-    NSLog(@"HORIZONTAL SCROLL SET: %d", B);
+    DDLogInfo(@"HORIZONTAL SCROLL SET: %d", B);
     _horizontalScrollModifierPressedSS = B;
 }
 
@@ -177,8 +177,8 @@ CGEventRef eventTapCallbackSS(CGEventTapProxy proxy, CGEventType type, CGEventRe
 CVReturn displayLinkCallbackSS(CVDisplayLinkRef displayLink, const CVTimeStamp *inNow, const CVTimeStamp *inOutputTime, CVOptionFlags flagsIn, CVOptionFlags *flagsOut, void *displayLinkContext) {
     
     
-    //NSLog(@"_msPerScroll: %f", _msPerScroll);
-    //NSLog(@"_pxStepSize : %d", _pxStepSize);
+    //DDLogInfo(@"_msPerScroll: %f", _msPerScroll);
+    //DDLogInfo(@"_pxStepSize : %d", _pxStepSize);
     
     // gets called every time the display is refreshed
     
@@ -219,7 +219,7 @@ CVReturn displayLinkCallbackSS(CVDisplayLinkRef displayLink, const CVTimeStamp *
     
     // send scroll event
     //int scrollVal = 2;
-    //NSLog(@"pixelsPerLine: %f", CGEventSourceGetPixelsPerLine(_eventSource));
+    //DDLogInfo(@"pixelsPerLine: %f", CGEventSourceGetPixelsPerLine(_eventSource));
     CGEventRef scrollEvent = CGEventCreateScrollWheelEvent(_eventSource, kCGScrollEventUnitPixel, 1, 0);
 
     if (_horizontalScrollModifierPressedSS == FALSE) {
@@ -258,7 +258,7 @@ CVReturn displayLinkCallbackSS(CVDisplayLinkRef displayLink, const CVTimeStamp *
  int64_t scrollDeltaAxis1Pixel = CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1);
  double scrollDeltaAxis1Float = CGEventGetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1);
  
- NSLog(@"scrollDeltaAxis1: %lld", scrollDeltaAxis1);
- NSLog(@"scrollDeltaAxis1Pixel: %lld", scrollDeltaAxis1Pixel);
- NSLog(@"scrollDeltaAxis1Float: %f", scrollDeltaAxis1Float * 10);
+ DDLogInfo(@"scrollDeltaAxis1: %lld", scrollDeltaAxis1);
+ DDLogInfo(@"scrollDeltaAxis1Pixel: %lld", scrollDeltaAxis1Pixel);
+ DDLogInfo(@"scrollDeltaAxis1Float: %f", scrollDeltaAxis1Float * 10);
  */

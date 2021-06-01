@@ -30,7 +30,7 @@ NSTimer *_openMainAppTimer;
     
     // Set up CocoaLumberjack
     [SharedUtility setupBasicCocoaLumberjackLogging];
-    NSLog(@"Mac Mosue Fix begins logging excessively");
+    DDLogInfo(@"Mac Mosue Fix begins logging excessively");
     
     [MessagePort_Helper load_Manual];
     
@@ -38,7 +38,7 @@ NSTimer *_openMainAppTimer;
     
     if (!accessibilityEnabled) {
         
-        NSLog(@"Accessibility Access Disabled");
+        DDLogInfo(@"Accessibility Access Disabled");
         
         [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(sendAccessibilityMessageToMainApp) userInfo:NULL repeats:NO];
         
@@ -71,7 +71,7 @@ NSTimer *_openMainAppTimer;
 // Timer Callbacks
 
 + (void)sendAccessibilityMessageToMainApp {
-    NSLog(@"Sending accessibilty disabled message to main app");
+    DDLogInfo(@"Sending accessibilty disabled message to main app");
     [SharedMessagePort sendMessage:@"accessibilityDisabled" withPayload:nil expectingReply:NO];
 }
 

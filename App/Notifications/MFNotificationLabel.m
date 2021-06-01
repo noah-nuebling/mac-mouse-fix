@@ -8,6 +8,7 @@
 //
 
 #import "MFNotificationLabel.h"
+#import "WannabePrefixHeader.h"
 
 @implementation MFNotificationLabel
 
@@ -15,7 +16,7 @@
 {
     self = [super init];
     if (self) {
-        NSLog(@"INIT LABEL");
+        DDLogInfo(@"INIT LABEL");
 //        [self setSelectable: YES]; // Need this to make links work // This doesn't work, need to set this in IB
 //        self.delegate = self; // This doesn't work, need to set this in IB
     }

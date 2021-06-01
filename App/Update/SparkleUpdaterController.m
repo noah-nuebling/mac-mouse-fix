@@ -31,14 +31,14 @@
 
 - (void)updater:(SUUpdater *)updater willInstallUpdate:(SUAppcastItem *)update {
     
-    NSLog(@"About to install update");
+    DDLogInfo(@"About to install update");
     
     [MoreSheet.instance end]; // Close more sheet so it doesn't block popup
 }
 
 - (void)updaterDidRelaunchApplication:(SUUpdater *)updater {
     
-    NSLog(@"Has been launched by Sparkle Updater");
+    DDLogInfo(@"Has been launched by Sparkle Updater");
     
     // Log the fact that updater launched the application in appState()
     
@@ -60,9 +60,9 @@
     }
     
     if (helperNeutralized) {
-        NSLog(@"Helper has been neutralized");
+        DDLogInfo(@"Helper has been neutralized");
     } else {
-        NSLog(@"No helper found to neutralize");
+        DDLogInfo(@"No helper found to neutralize");
     }
     
 }

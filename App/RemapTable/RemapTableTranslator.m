@@ -512,7 +512,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
 //        trTool = [trTool attributedStringBySettingSecondaryLabelColorForSubstring:buttonStrTool];
         
     } else {
-        NSLog(@"Trigger value: %@, class: %@", triggerGeneric, [triggerGeneric class]);
+        DDLogInfo(@"Trigger value: %@, class: %@", triggerGeneric, [triggerGeneric class]);
         @throw [NSException exceptionWithName:@"Invalid trigger value type" reason:@"The value for the trigger key is not a String and not a dictionary" userInfo:@{@"Trigger value": triggerGeneric}];
     }
     

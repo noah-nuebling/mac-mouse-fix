@@ -181,7 +181,7 @@ static VectorSubPixelator *_scrollPixelator;
     
 //    CGPoint flippedNSLoc = [Utility_Helper getCurrentPointerLocation_flipped];
 //    CGPoint CGLoc = Utility_Transformation.CG
-//    NSLog(@"\nFLIPPED NS: %f, %f \nCG: %f, %f", flippedNSLoc.x, flippedNSLoc.y, CGLoc.x, CGLoc.y);
+//    DDLogInfo(@"\nFLIPPED NS: %f, %f \nCG: %f, %f", flippedNSLoc.x, flippedNSLoc.y, CGLoc.x, CGLoc.y);
     
     // Post t22s0 event
     
@@ -246,7 +246,7 @@ static void startPostingMomentumScrollEventsWithInitialGestureVector(MFVector in
     CFTimeInterval prevTs = CACurrentMediaTime();
     while (magPt > thresh) {
         if (_breakMomentumScrollFlag == true) {
-            NSLog(@"BREAKING MOMENTUM SCROLL");
+            DDLogInfo(@"BREAKING MOMENTUM SCROLL");
             break;
         }
         CGPoint loc = Utility_Transformation.CGMouseLocationWithoutEvent;

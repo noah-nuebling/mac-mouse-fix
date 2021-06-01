@@ -26,6 +26,7 @@
 #import "MoreSheet.h"
 #import "AppDelegate.h"
 #import "Constants.h"
+#import "WannabePrefixHeader.h"
 
 @interface OverridePanel ()
 
@@ -385,7 +386,7 @@ NSMutableArray *_tableViewDataModel;
     }
     NSDictionary *overrides = config[kMFConfigKeyAppOverrides];
     if (!overrides) {
-        NSLog(@"No overrides found in config while generating scroll override table data model.");
+        DDLogInfo(@"No overrides found in config while generating scroll override table data model.");
         return;
     }
     for (NSString *bundleID in overrides.allKeys) { // Every bundleID corresponds to one app/row

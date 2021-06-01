@@ -109,8 +109,7 @@ static NSDictionary *sideButtonActions;
         
         // Setup CocoaLumberjack
         [SharedUtility setupBasicCocoaLumberjackLogging];
-        DDLogInfo(@"Main App starting up...");
-        DDLogDebug(@"DEBUG STUFF");
+        DDLogInfo(@"Main App starting up...");     
         
         // Remove restart the app untranslocated if it's currently translocated
         [AppTranslocationManager removeTranslocation]; // Need to call this before MessagePort_App is initialized, otherwise stuff breaks if app is translocated
@@ -149,7 +148,7 @@ static NSDictionary *sideButtonActions;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
     
-    NSLog(@"Mac Mouse Fix finished launching");
+    DDLogInfo(@"Mac Mouse Fix finished launching");
     
     // Load UI
     
@@ -229,7 +228,7 @@ static NSDictionary *sideButtonActions;
     
 }
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
-    NSLog(@"Mac Mouse Fix should terminate");
+    DDLogInfo(@"Mac Mouse Fix should terminate");
     [OverridePanel.instance end];
     [MoreSheet.instance end]; // Doesn't help quitting while more sheet is up 
     return NSTerminateNow;
@@ -296,7 +295,7 @@ NSTimer *removeAccOverlayTimer;
 /// TODO: Rename to loadUIFromConfigFile - this is confusing
 - (void)setUIToConfigFile {
     
-    NSLog(@"Setting Enable Mac Mouse Fix checkbox to: %hhd", [HelperServices helperIsActive]);
+    DDLogInfo(@"Setting Enable Mac Mouse Fix checkbox to: %hhd", [HelperServices helperIsActive]);
     
 #pragma mark other
     // enableCheckbox

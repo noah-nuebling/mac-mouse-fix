@@ -476,7 +476,7 @@ static void getTriggerValues(int *btn1, int *lvl1, NSString **dur1, NSString **t
         NSArray *buttonSequence1 = preconds1[kMFModificationPreconditionKeyButtons];
         NSArray *buttonSequence2 = preconds2[kMFModificationPreconditionKeyButtons];
         uint64_t iterMax = MIN(buttonSequence1.count, buttonSequence2.count);
-        NSLog(@"DEBUG - buttonSequence1: %@, buttonSequence2: %@, iterMax: %@", buttonSequence1, buttonSequence2, @(iterMax));
+        DDLogInfo(@"DEBUG - buttonSequence1: %@, buttonSequence2: %@, iterMax: %@", buttonSequence1, buttonSequence2, @(iterMax));
         // ^ We sometimes get a "index 0 beyond bounds for empty array" error for the `buttonSequence1[i]` instruction. Seemingly at random.
         for (int i = 0; i < iterMax; i++) {
             NSDictionary *buttonPress1 = buttonSequence1[i];

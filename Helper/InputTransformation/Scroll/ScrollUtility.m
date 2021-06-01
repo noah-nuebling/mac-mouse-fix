@@ -63,10 +63,10 @@ static NSDictionary *_MFScrollPhaseToIOHIDEventPhase;
     CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1, lineHeight);
     CGEventSetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1, lineHeight);
     
-    NSLog(@"Normalized scroll event values:");
-    NSLog(@"%lld",CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1));
-    NSLog(@"%lld",CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1));
-    NSLog(@"%f",CGEventGetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1));
+    DDLogInfo(@"Normalized scroll event values:");
+    DDLogInfo(@"%lld",CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1));
+    DDLogInfo(@"%lld",CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1));
+    DDLogInfo(@"%f",CGEventGetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1));
     
     return event; // This is potentially a memory leak, because I'm creating a CGEvent but not releasing it??
 }
@@ -118,15 +118,15 @@ static NSDictionary *_MFScrollPhaseToIOHIDEventPhase;
     long long fixedPt2 = CGEventGetIntegerValueField(event, kCGScrollWheelEventFixedPtDeltaAxis2);
 
     
-    NSLog(@"Axis 1:");
-    NSLog(@"  Line: %lld", line1);
-    NSLog(@"  Point: %lld", point1);
-    NSLog(@"  FixedPt: %lld", fixedPt1);
+    DDLogInfo(@"Axis 1:");
+    DDLogInfo(@"  Line: %lld", line1);
+    DDLogInfo(@"  Point: %lld", point1);
+    DDLogInfo(@"  FixedPt: %lld", fixedPt1);
     
-    NSLog(@"Axis 2:");
-    NSLog(@"  Line: %lld", line2);
-    NSLog(@"  Point: %lld", point2);
-    NSLog(@"  FixedPt: %lld", fixedPt2);
+    DDLogInfo(@"Axis 2:");
+    DDLogInfo(@"  Line: %lld", line2);
+    DDLogInfo(@"  Point: %lld", point2);
+    DDLogInfo(@"  FixedPt: %lld", fixedPt2);
     
 }
 

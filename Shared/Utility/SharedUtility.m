@@ -93,7 +93,7 @@
     
     if (@available(macOS 10.13, *)) {
         
-        NSLog(@"Launching CLT at: %@, with args: %@, from bundle at: %@, from thread: %@", commandLineTool, args, Objects.mainAppBundle.bundleURL, NSThread.currentThread);
+        DDLogInfo(@"Launching CLT at: %@, with args: %@, from bundle at: %@, from thread: %@", commandLineTool, args, Objects.mainAppBundle.bundleURL, NSThread.currentThread);
         
 //        NSTask *task = [[NSTask alloc] init];
 //        task.executableURL = commandLineTool;
@@ -103,7 +103,7 @@
 //        task.standardOutput = pipe;
 //        NSError *error;
 //        task.terminationHandler = ^(NSTask *task) {
-//            NSLog(@"CLT %@ terminated with stdout/stderr: %@, error: %@", commandLineTool.lastPathComponent, [NSString.alloc initWithData:pipe.fileHandleForReading.readDataToEndOfFile encoding:NSUTF8StringEncoding], error);
+//            DDLogInfo(@"CLT %@ terminated with stdout/stderr: %@, error: %@", commandLineTool.lastPathComponent, [NSString.alloc initWithData:pipe.fileHandleForReading.readDataToEndOfFile encoding:NSUTF8StringEncoding], error);
 //            callback(task, pipe, error);
 //        };
 //        [task launchAndReturnError:&error]; // [task launch];
@@ -141,7 +141,7 @@
     return [NSString stringWithFormat:@" - %@", [[NSThread callStackSymbols] objectAtIndex:2]];
 }
 + (void)printStackTrace {
-    NSLog(@"PRINTING STACK TRACE: %@", [NSThread callStackSymbols]);
+    DDLogInfo(@"PRINTING STACK TRACE: %@", [NSThread callStackSymbols]);
 }
 
 + (NSString *)currentDispatchQueueDescription {
@@ -170,7 +170,7 @@
     
     counterForId++;
     
-    NSLog(@"%@: %d", strId, counterForId);
+    DDLogInfo(@"%@: %d", strId, counterForId);
     
     ids[strId] = @(counterForId);
     
@@ -254,12 +254,27 @@
 + (void)setupBasicCocoaLumberjackLogging {
     
     if (@available(macOS 10.12, *)) {
-        [DDLog addLogger:DDOSLogger.sharedInstance]; // Use os_log
+        [DDLog addLogger:DDOSLogger.sharedInstance]; // Use os_log // This should log to console and terminal and be faster than the old methods
+            // Need to enable Console.app > Action > Include Info Messages & Include Debug Messages to see these messages in Console. See https://stackoverflow.com/questions/65205310/ddoslogger-sharedinstance-logging-only-seems-to-log-error-level-logging-in-conso
+            // Will have to update instructions on Mac Mouse Fix Feedback Assistant when this releases.
     } else {
         // Fallback on earlier versions
         [DDLog addLogger:DDASLLogger.sharedInstance]; // Log to Apple System Log (Console.app)
         [DDLog addLogger:DDTTYLogger.sharedInstance]; // Log to terminal / Xcode output
     }
+    
+    // Enable logging to file
+    // Copied this from https://github.com/CocoaLumberjack/CocoaLumberjack/blob/master/Documentation/GettingStarted.md
+    // Haven't thought about whether the exact settings make sense.
+#if DEBUG
+    DDFileLogger *fileLogger = [[DDFileLogger alloc] init];
+    fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
+    fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
+
+    [DDLog addLogger:fileLogger];
+    
+    DDLogInfo(@"Logging to directory: %@", fileLogger.logFileManager.logsDirectory);
+#endif
 }
 
 @end

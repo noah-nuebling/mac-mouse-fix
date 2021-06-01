@@ -44,7 +44,7 @@
             if (enable == NO) { // Cleanup (delete launchdPlist) file after were done // We can't clean up immediately cause then launchctl will fail
                 [self cleanup];
             }
-            NSLog(@"launchctl terminated with stdout/stderr: %@, error: %@", [NSString.alloc initWithData:pipe.fileHandleForReading.readDataToEndOfFile encoding:NSUTF8StringEncoding], error);
+            DDLogInfo(@"launchctl terminated with stdout/stderr: %@, error: %@", [NSString.alloc initWithData:pipe.fileHandleForReading.readDataToEndOfFile encoding:NSUTF8StringEncoding], error);
         };
         [task launchAndReturnError:&error];
         
@@ -61,7 +61,7 @@
     
     @autoreleasepool {
         
-        NSLog(@"repairing User Agent Config File");
+        DDLogInfo(@"repairing User Agent Config File");
         // What this does:
         
         // Get path of executable of helper app
@@ -94,27 +94,27 @@
             if ( [helperExecutablePath isEqualToString: helperExecutablePathFromFile] == FALSE ) {
                 launchdPlist_executablePathIsCorrect = FALSE;
             }
-            //NSLog(@"objectForKey: %@", OBJForKey);
-            //NSLog(@"helperExecutablePath: %@", helperExecutablePath);
-            //NSLog(@"OBJ == Path: %d", OBJForKey isEqualToString: helperExecutablePath);
+            //DDLogInfo(@"objectForKey: %@", OBJForKey);
+            //DDLogInfo(@"helperExecutablePath: %@", helperExecutablePath);
+            //DDLogInfo(@"OBJ == Path: %d", OBJForKey isEqualToString: helperExecutablePath);
         }
         
-        NSLog(@"launchdPlistExists %hhd, launchdPlistIsCorrect: %hhd", launchdPlist_exists,launchdPlist_executablePathIsCorrect);
+        DDLogInfo(@"launchdPlistExists %hhd, launchdPlistIsCorrect: %hhd", launchdPlist_exists,launchdPlist_executablePathIsCorrect);
         // The config file doesn't exist, or the executable path within it is not correct
         if ((launchdPlist_exists == FALSE) || (launchdPlist_executablePathIsCorrect == FALSE)) {
-            NSLog(@"repairing file...");
+            DDLogInfo(@"repairing file...");
             
             // Check if "User/Library/LaunchAgents" folder exists, if not, create it
             NSString *launchAgentsFolderPath = [launchAgentPlistPath stringByDeletingLastPathComponent];
             BOOL launchAgentsFolderExists = [fileManager fileExistsAtPath: launchAgentsFolderPath isDirectory: nil];
             if (launchAgentsFolderExists == FALSE) {
-                NSLog(@"LaunchAgentsFolder doesn't exist");
+                DDLogInfo(@"LaunchAgentsFolder doesn't exist");
                 NSError *error;
                 [fileManager createDirectoryAtPath:launchAgentsFolderPath withIntermediateDirectories:FALSE attributes:nil error:&error];
                 if (error == nil) {
-                    NSLog(@"LaunchAgents Folder Created");
+                    DDLogInfo(@"LaunchAgents Folder Created");
                 } else {
-                    NSLog(@"Error while creating LaunchAgents Folder: %@", error);
+                    DDLogInfo(@"Error while creating LaunchAgents Folder: %@", error);
                 }
             }
             
@@ -136,10 +136,10 @@
             NSAssert(error == nil, @"Should not have encountered an error");
             [newLaunchdPlist_data writeToFile:launchAgentPlistPath atomically:YES];
             if (error != nil) {
-                NSLog(@"repairUserAgentConfigFile() -- Data Serialization Error: %@", error);
+                DDLogInfo(@"repairUserAgentConfigFile() -- Data Serialization Error: %@", error);
             }
         } else {
-            NSLog(@"nothing to repair");
+            DDLogInfo(@"nothing to repair");
         }
     }
     
@@ -169,15 +169,15 @@
     BOOL exitStatusIsZero = [launchctlOutput rangeOfString: @"\"LastExitStatus\" = 0;"].location != NSNotFound;
     
     if (self.strangeHelperIsRegisteredWithLaunchd) {
-        NSLog(@"Found helper running somewhere else.");
+        DDLogInfo(@"Found helper running somewhere else.");
         return NO;
     }
     
     if (labelFound && exitStatusIsZero) { // Why check for exit status here?
-        NSLog(@"MOUSE REMAPOR FOUNDD AND ACTIVE");
+        DDLogInfo(@"MOUSE REMAPOR FOUNDD AND ACTIVE");
         return YES;
     } else {
-        NSLog(@"Helper is not active");
+        DDLogInfo(@"Helper is not active");
         return NO;
     }
     
@@ -223,7 +223,7 @@
     NSError *err;
     [SharedUtility launchCTL:launchctlURL withArguments:@[@"remove", kMFLaunchdHelperIdentifier] error:&err];
     if (err != nil) {
-        NSLog(@"Error removing Helper from launchd: %@", err);
+        DDLogInfo(@"Error removing Helper from launchd: %@", err);
     }
 }
 
@@ -245,10 +245,10 @@
     if ([NSFileManager.defaultManager fileExistsAtPath:legacyLaunchdPlistPath]) {
         [NSFileManager.defaultManager removeItemAtPath:legacyLaunchdPlistPath error:&err];
         if (err) {
-            NSLog(@"Error while removing legacy launchd plist file: %@", err);
+            DDLogInfo(@"Error while removing legacy launchd plist file: %@", err);
         }
     } else  {
-        NSLog(@"No legacy launchd plist file found at: %@", legacyLaunchdPlistPath);
+        DDLogInfo(@"No legacy launchd plist file found at: %@", legacyLaunchdPlistPath);
     }
 }
 

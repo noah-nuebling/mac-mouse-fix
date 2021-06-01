@@ -14,7 +14,7 @@
 #import "Utility_App.h"
 #import <Sparkle/Sparkle.h>
 #import "SparkleUpdaterController.h"
-
+#import "WannabePrefixHeader.h"
 
 @interface MoreSheet ()
 @property (strong) IBOutlet NSPanel *sheetPanel; // TODO: Remove. This should be the same as the automatically generated _window property.
@@ -61,7 +61,7 @@ static MoreSheet *_instance;
     [OverridePanel.instance begin];
 }
 - (IBAction)milkshakeButton:(id)sender {
-    NSLog(@"BUTTTON");
+    DDLogInfo(@"BUTTTON");
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ARSTVR6KFB524&source=url&lc=en_US"]];
 }
 - (IBAction)doneButton:(id)sender {
@@ -69,7 +69,7 @@ static MoreSheet *_instance;
 }
 
 //- (void)mouseDown:(NSEvent *)event {
-//    NSLog(@"mousduunsn");
+//    DDLogInfo(@"mousduunsn");
 //    
 //    [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
 //    [AppDelegate.mainView.window makeFirstResponder:NULL];

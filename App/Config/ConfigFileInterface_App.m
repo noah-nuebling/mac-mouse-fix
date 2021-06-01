@@ -64,19 +64,19 @@ static NSURL *_defaultConfigURL; // default_config aka backup_config
     NSError *serializeErr;
     NSData *configData = [NSPropertyListSerialization dataWithPropertyList:self.config format:NSPropertyListXMLFormat_v1_0 options:0 error:&serializeErr];
     if (serializeErr) {
-        NSLog(@"ERROR serializing configDictFromFile: %@", serializeErr);
+        DDLogInfo(@"ERROR serializing configDictFromFile: %@", serializeErr);
     }
     //    BOOL success = [configData writeToFile:configPath atomically:YES];
     //    if (!success) {
-    //        NSLog(@"ERROR writing configDictFromFile to file");
+    //        DDLogInfo(@"ERROR writing configDictFromFile to file");
     //    }
     NSError *writeErr;
     [configData writeToURL:Objects.configURL options:NSDataWritingAtomic error:&writeErr];
     if (writeErr) {
-        NSLog(@"ERROR writing configDictFromFile to file: %@", writeErr);
+        DDLogInfo(@"ERROR writing configDictFromFile to file: %@", writeErr);
     }
-    NSLog(@"Wrote config to file.");
-//    NSLog(@"config: %@", _config);
+    DDLogInfo(@"Wrote config to file.");
+//    DDLogInfo(@"config: %@", _config);
     [SharedMessagePort sendMessage:@"configFileChanged" withPayload:nil expectingReply:NO];
 }
 
@@ -90,7 +90,7 @@ static NSURL *_defaultConfigURL; // default_config aka backup_config
     NSError *readErr;
     NSMutableDictionary *configDict = [NSPropertyListSerialization propertyListWithData:configData options:NSPropertyListMutableContainersAndLeaves format:nil error:&readErr];
     if (readErr) {
-        NSLog(@"Error Reading config File: %@", readErr);
+        DDLogInfo(@"Error Reading config File: %@", readErr);
         // TODO: handle this error
     }
     

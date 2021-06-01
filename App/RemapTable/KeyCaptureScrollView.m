@@ -8,6 +8,7 @@
 //
 
 #import "KeyCaptureScrollView.h"
+#import "WannabePrefixHeader.h"
 
 @implementation KeyCaptureScrollView
 
@@ -46,13 +47,13 @@
 }
 
 - (BOOL)becomeFirstResponder {
-    NSLog(@"SCROLLVIEW BECOME FIRST");
+    DDLogInfo(@"SCROLLVIEW BECOME FIRST");
     
     return [super becomeFirstResponder];
 }
 
 - (BOOL)resignFirstResponder {
-    NSLog(@"SCROLLVIEW RESIGN FIRST");
+    DDLogInfo(@"SCROLLVIEW RESIGN FIRST");
     return [super resignFirstResponder];
 }
 

@@ -15,6 +15,7 @@
 #import "SharedMessagePort.h"
 #import "CaptureNotifications.h"
 #import "RemapTableUtility.h"
+#import "WannabePrefixHeader.h"
 
 @interface AuthorizeAccessibilityView ()
 
@@ -50,7 +51,7 @@ AuthorizeAccessibilityView *_accViewController;
 //
 //    accView.hidden = YES;
 //
-//    NSLog(@"subviews: %@", prefWindow.contentView.subviews);
+//    DDLogInfo(@"subviews: %@", prefWindow.contentView.subviews);
 }
 
 - (void)viewDidLoad {
@@ -59,7 +60,7 @@ AuthorizeAccessibilityView *_accViewController;
 
 - (IBAction)AuthorizeButton:(NSButton *)sender {
     
-    NSLog(@"AuthorizeButton clicked");
+    DDLogInfo(@"AuthorizeButton clicked");
     
     // Open privacy prefpane
     
@@ -69,7 +70,7 @@ AuthorizeAccessibilityView *_accViewController;
 
 + (void)add {
     
-    NSLog(@"adding AuthorizeAccessibilityView");
+    DDLogInfo(@"adding AuthorizeAccessibilityView");
     
     NSView *mainView = AppDelegate.mainWindow.contentView;
     
@@ -94,7 +95,7 @@ AuthorizeAccessibilityView *_accViewController;
         // Center in superview
 //        mainView.translatesAutoresizingMaskIntoConstraints = NO;
         accView.translatesAutoresizingMaskIntoConstraints = NO;
-        NSLog(@"mainView frame: %@, accView frame: %@", [NSValue valueWithRect:mainView.frame], [NSValue valueWithRect:accView.frame]);
+        DDLogInfo(@"mainView frame: %@, accView frame: %@", [NSValue valueWithRect:mainView.frame], [NSValue valueWithRect:accView.frame]);
         [mainView addConstraints:@[
             [NSLayoutConstraint constraintWithItem:mainView
                                          attribute:NSLayoutAttributeCenterX
@@ -112,7 +113,7 @@ AuthorizeAccessibilityView *_accViewController;
                                           constant:0],
         ]];
         [mainView layout];
-        NSLog(@"mainView frame: %@, accView frame: %@", [NSValue valueWithRect:mainView.frame], [NSValue valueWithRect:accView.frame]);
+        DDLogInfo(@"mainView frame: %@, accView frame: %@", [NSValue valueWithRect:mainView.frame], [NSValue valueWithRect:accView.frame]);
     }
     
     [NSAnimationContext beginGrouping];
@@ -126,7 +127,7 @@ AuthorizeAccessibilityView *_accViewController;
 
 + (void)remove {
     
-    NSLog(@"Removing AuthorizeAccessibilityView");
+    DDLogInfo(@"Removing AuthorizeAccessibilityView");
     
     NSView *mainView = AppDelegate.mainWindow.contentView;
     

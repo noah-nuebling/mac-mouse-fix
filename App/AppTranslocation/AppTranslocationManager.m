@@ -45,7 +45,7 @@ bool getIsTranslocated() {
     mySecTranslocateIsTranslocatedURL(getAppURL(), &isTranslocated, &err);
     NSError *error = (__bridge NSError *)err;
     if (error != nil) {
-        NSLog(@"Error checking if app is translocated: %@", err);
+        DDLogInfo(@"Error checking if app is translocated: %@", err);
     }
     
     return isTranslocated;
@@ -68,7 +68,7 @@ NSURL *getUntranslocatedURL() {
     untranslocatedURL = (__bridge NSURL*)mySecTranslocateCreateOriginalPathForURL(getAppURL(), &err);
     if (err != NULL) {
         NSError *error = (__bridge NSError *)err;
-        NSLog(@"Error getting untranslocated URL: %@", error);
+        DDLogInfo(@"Error getting untranslocated URL: %@", error);
     }
     
     return untranslocatedURL;
@@ -87,7 +87,7 @@ void removeQuarantineFlagAndRestart(NSURL* untranslocatedURL) {
     [SharedUtility launchCTL:xattrURL withArguments:@[@"-cr", untranslocatedURL.path] error:&error];
     
     if (error != nil) {
-        NSLog(@"Error while removing quarantine: %@", error);
+        DDLogInfo(@"Error while removing quarantine: %@", error);
         return;
     }
     
@@ -98,11 +98,11 @@ void removeQuarantineFlagAndRestart(NSURL* untranslocatedURL) {
     // ^ We need to make sure not to use MessagePort_App from within any `load` methods, as that would lead to MessagePort_App being initialized before this is called, leading to the same issue. (This is currently being called from [AppDelegate + initialize])
     
     if (error != nil) {
-        NSLog(@"Error while relaunching app: %@", error);
+        DDLogInfo(@"Error while relaunching app: %@", error);
         return;
     }
     
-    NSLog(@"Terminating translocated instance of the app");
+    DDLogInfo(@"Terminating translocated instance of the app");
     
     [NSApplication.sharedApplication terminate:nil];
 }
@@ -116,11 +116,11 @@ void removeQuarantineFlagAndRestart(NSURL* untranslocatedURL) {
     
     bool translocated = getIsTranslocated();
     
-    NSLog(@"Mac Mouse Fix is translocated: %d", translocated);
+    DDLogInfo(@"Mac Mouse Fix is translocated: %d", translocated);
     
     if (translocated) {
         NSURL *originalURL = getUntranslocatedURL();
-        NSLog(@"Untranslocated URL: %@", originalURL);
+        DDLogInfo(@"Untranslocated URL: %@", originalURL);
         removeQuarantineFlagAndRestart(originalURL);
     }
     

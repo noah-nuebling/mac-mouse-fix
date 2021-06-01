@@ -10,6 +10,7 @@
 #import "Hyperlink.h"
 #import "Utility_App.h"
 #import "AppDelegate.h"
+#import "WannabePrefixHeader.h"
 
 IB_DESIGNABLE
 @interface Hyperlink ()
@@ -120,7 +121,7 @@ IB_DESIGNABLE
 }
 - (void) reactToClick {
     // Open URL defined in Interface Builder
-    NSLog(@"Opening: %@",_href);
+    DDLogInfo(@"Opening: %@",_href);
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:_href]];
     // Send IBAction
     [self sendAction:self.action to:self.target];

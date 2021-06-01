@@ -15,6 +15,7 @@
 #import "RemapTableController.h"
 #import "AddWindowController.h"
 #import "KeyCaptureView.h"
+#import "WannabePrefixHeader.h"
 
 @implementation MessagePort_App
 
@@ -28,7 +29,7 @@
     
     if (self == [MessagePort_App class]) {
         
-        NSLog(@"Initializing MessagePort...");
+        DDLogInfo(@"Initializing MessagePort...");
         
         CFMessagePortRef localPort =
         CFMessagePortCreateLocal(kCFAllocatorDefault,
@@ -64,7 +65,7 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
     NSString *message = messageDict[kMFMessageKeyMessage];
     NSObject *payload = messageDict[kMFMessageKeyPayload];
     
-    NSLog(@"Main App Received Message: %@ with payload: %@", message, payload);
+    DDLogInfo(@"Main App Received Message: %@ with payload: %@", message, payload);
     
     if ([message isEqualToString:@"accessibilityDisabled"]) {
         [AuthorizeAccessibilityView add];

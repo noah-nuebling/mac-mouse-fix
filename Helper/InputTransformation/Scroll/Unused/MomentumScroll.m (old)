@@ -227,7 +227,7 @@ CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef 
         (_pxPerMsVelocity == 0)                             ||
         (scrollEventFollowsCurrentScrollingDirection == FALSE))
     {
-        NSLog(@"INITIAL CURVE");
+        DDLogInfo(@"INITIAL CURVE");
         
         double p1x = [_initialAnimationCurveValues[0] doubleValue];
         double p1y = [_initialAnimationCurveValues[1] doubleValue];
@@ -238,7 +238,7 @@ CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef 
     }
     else {
         
-        NSLog(@"DYNAMIC CURVE");
+        DDLogInfo(@"DYNAMIC CURVE");
 
         double m = (((float)_pxPerMsVelocity/_pixelScrollQueue) * _msLeftForScroll);
         
@@ -249,7 +249,7 @@ CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef 
         
         [_animationCurve UnitBezierForPoint1x:p1x point1y:p1y point2x:p2x point2y:p2y];
         
-        NSLog(@"STEIGUNG: %f", m);
+        DDLogInfo(@"STEIGUNG: %f", m);
     }
     
     
@@ -269,7 +269,7 @@ CVReturn displayLinkCallback (CVDisplayLinkRef displayLink, const CVTimeStamp *i
     double msBetweenFrames  = CVDisplayLinkGetActualOutputVideoRefreshPeriod(_displayLink) * 1000;
     CVTime nominalTimeCV = CVDisplayLinkGetNominalOutputVideoRefreshPeriod(_displayLink);
     msBetweenFrames = ((float)nominalTimeCV.timeValue/nominalTimeCV.timeScale) * 1000;
-    //NSLog(@"msBetweenFrames: %f", msBetweenFrames);
+    //DDLogInfo(@"msBetweenFrames: %f", msBetweenFrames);
     
     
     double timeSinceScrollStarted = (inNow->hostTime/1000000.0) - _msContinuousScrollTimeStamp;
@@ -284,8 +284,8 @@ CVReturn displayLinkCallback (CVDisplayLinkRef displayLink, const CVTimeStamp *i
         CGFloat completedScrollTimeFractionNextFrame
         = (CGFloat)(scrollTime - (_msLeftForScroll-msBetweenFrames)) / ((CGFloat)scrollTime);
         
-        //NSLog(@"fracNow : %f", completedScrollTimeFractionNow);
-        //NSLog(@"fracNext: %f", completedScrollTimeFractionNextFrame);
+        //DDLogInfo(@"fracNow : %f", completedScrollTimeFractionNow);
+        //DDLogInfo(@"fracNext: %f", completedScrollTimeFractionNextFrame);
 
         // calculate offset at this point during the animation - offset is in (0..1)
         double animationOffsetNow           =   [_animationCurve solve:completedScrollTimeFractionNow epsilon:0.008];
@@ -361,7 +361,7 @@ CVReturn displayLinkCallback (CVDisplayLinkRef displayLink, const CVTimeStamp *i
             return 0;
         }
     }
-    NSLog(@"pixelsToScroll: %d", pixelsToScroll);
+    DDLogInfo(@"pixelsToScroll: %d", pixelsToScroll);
     
 # pragma mark Send Event
     CGEventRef scrollEvent = CGEventCreateScrollWheelEvent(_eventSource, kCGScrollEventUnitPixel, 1, 0);
@@ -403,7 +403,7 @@ static void resetDynamicGlobals() {
 
 static void start() {
     
-    NSLog(@"MomentumScroll started");
+    DDLogInfo(@"MomentumScroll started");
     
     _isRunning = TRUE;
     
@@ -431,7 +431,7 @@ static void start() {
 
 static void stop() {
     
-    NSLog(@"MomentumScroll stopped");
+    DDLogInfo(@"MomentumScroll stopped");
     
     _isRunning = FALSE;
     
@@ -482,7 +482,7 @@ static double msUntilVelocityIsX(double velocity, int X) {
  int64_t scrollDeltaAxis1Pixel = CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1);
  double scrollDeltaAxis1double = CGEventGetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1);
  
- NSLog(@"scrollDeltaAxis1: %lld", scrollDeltaAxis1);
- NSLog(@"scrollDeltaAxis1Pixel: %lld", scrollDeltaAxis1Pixel);
- NSLog(@"scrollDeltaAxis1Float: %f", scrollDeltaAxis1double * 10);
+ DDLogInfo(@"scrollDeltaAxis1: %lld", scrollDeltaAxis1);
+ DDLogInfo(@"scrollDeltaAxis1Pixel: %lld", scrollDeltaAxis1Pixel);
+ DDLogInfo(@"scrollDeltaAxis1Float: %f", scrollDeltaAxis1double * 10);
  */

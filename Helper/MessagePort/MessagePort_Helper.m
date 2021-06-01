@@ -17,6 +17,7 @@
 #import "ButtonLandscapeAssessor.h"
 
 #import <CoreFoundation/CoreFoundation.h>
+#import "WannabePrefixHeader.h"
 
 @implementation MessagePort_Helper
 
@@ -32,7 +33,7 @@
                              nil,
                              nil);
     
-    NSLog(@"localPort: %@ (MessagePortReceiver)", localPort);
+    DDLogInfo(@"localPort: %@ (MessagePortReceiver)", localPort);
     
     CFRunLoopSourceRef runLoopSource =
 	    CFMessagePortCreateRunLoopSource(kCFAllocatorDefault, localPort, 0);
@@ -53,7 +54,7 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
     
     NSData *response = nil;
     
-    NSLog(@"Helper Received Message: %@ with payload: %@", message, payload);
+    DDLogInfo(@"Helper Received Message: %@ with payload: %@", message, payload);
     
     if ([message isEqualToString:@"configFileChanged"]) {
         [ConfigFileInterface_Helper reactToConfigFileChange];
@@ -73,7 +74,7 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
     } else if ([message isEqualToString:@"disableKeyCaptureMode"]) {
         [TransformationManager disableKeyCaptureMode];
     } else {
-        NSLog(@"Unknown message received: %@", message);
+        DDLogInfo(@"Unknown message received: %@", message);
     }
     
     return (__bridge CFDataRef)response;

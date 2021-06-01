@@ -160,7 +160,7 @@ static BOOL _hasStarted;
     } else if (scrollDeltaAxis1 < 0) {
         _pxScrollBuffer -= _pxStepSize * ScrollControl.scrollDirection;
     } else {
-        NSLog(@"scrollDeltaAxis1 is 0. This shouldn't happen.");
+        DDLogInfo(@"scrollDeltaAxis1 is 0. This shouldn't happen.");
     }
     
     // Apply acceleration to _pxScrollBuffer
@@ -193,7 +193,7 @@ static BOOL _hasStarted;
             @try {
                 setDisplayLinkToDisplayUnderMousePointer(event);
             } @catch (NSException *e) {
-                NSLog(@"Error while trying to set display link to display under mouse pointer: %@", [e reason]);
+                DDLogInfo(@"Error while trying to set display link to display under mouse pointer: %@", [e reason]);
             }
         }
         while (CVDisplayLinkIsRunning(_displayLink) == NO) {
@@ -208,8 +208,8 @@ static BOOL _hasStarted;
                 
                 CVReturn rt = CVDisplayLinkStart(_displayLink);
                 if (rt != kCVReturnSuccess) {
-                    NSLog(@"Failed to start displayLink. Trying again.");
-                    NSLog(@"Error code: %d", rt);
+                    DDLogInfo(@"Failed to start displayLink. Trying again.");
+                    DDLogInfo(@"Error code: %d", rt);
                 }
                 
             });
@@ -236,7 +236,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         _pxToScrollThisFrame = round( (_pxScrollBuffer/_msLeftForScroll) * msSinceLastFrame );
         
         if (_msLeftForScroll == 0.0) { // Diving by zero yields infinity, we don't want that.
-            NSLog(@"_msLeftForScroll was 0.0");
+            DDLogInfo(@"_msLeftForScroll was 0.0");
             _pxToScrollThisFrame = _pxScrollBuffer; // TODO: But it happens sometimes - check if this handles that situation well
         }
 
@@ -345,7 +345,7 @@ static IOHIDEventPhaseBits IOHIDPhaseFromMFPhase(MFDisplayLinkPhase MFPhase) {
 // TODO: What does this do? Is this necessary?
 static void Handle_displayReconfiguration(CGDirectDisplayID display, CGDisplayChangeSummaryFlags flags, void *userInfo) {
     if ( (flags & kCGDisplayAddFlag) || (flags & kCGDisplayRemoveFlag) ) {
-        NSLog(@"display added / removed");
+        DDLogInfo(@"display added / removed");
         CVDisplayLinkStop(_displayLink);
         CVDisplayLinkRelease(_displayLink);
         CVDisplayLinkCreateWithActiveCGDisplays(&_displayLink);
@@ -368,7 +368,7 @@ static void setDisplayLinkToDisplayUnderMousePointer(CGEventRef event) {
             CVDisplayLinkSetCurrentCGDisplay(_displayLink, dsp);
         }
     } else if (matchingDisplayCount > 1) {
-        NSLog(@"more than one display for current mouse position");
+        DDLogInfo(@"more than one display for current mouse position");
         
     } else if (matchingDisplayCount == 0) {
         NSException *e = [NSException exceptionWithName:NSInternalInconsistencyException reason:@"there are 0 diplays under the mouse pointer" userInfo:NULL];

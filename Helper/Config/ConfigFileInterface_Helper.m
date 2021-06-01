@@ -84,7 +84,7 @@ static void fillConfigFromFile() {
         NSError *err;
         NSMutableDictionary *configFromFile = [NSPropertyListSerialization propertyListWithData:configFromFileData options:NSPropertyListMutableContainersAndLeaves format:nil error: &err];
         
-        NSLog(@"Loading new config from file: %@", configFromFile);
+        DDLogInfo(@"Loading new config from file: %@", configFromFile);
         
         _config = configFromFile;
         
@@ -128,7 +128,7 @@ static void fillConfigFromFile() {
     // Set internal state
     if ([_bundleIDOfAppWhichCausesAppOverride isEqual:bundleIDOfCurrentApp] == NO || force) {
 //        if (bundleIDOfCurrentApp) {
-//            NSLog(@"Setting Override For App %@", bundleIDOfCurrentApp);
+//            DDLogInfo(@"Setting Override For App %@", bundleIDOfCurrentApp);
 //        }
         _bundleIDOfAppWhichCausesAppOverride = bundleIDOfCurrentApp;
         loadAppOverridesForApp(bundleIDOfCurrentApp);
@@ -191,7 +191,7 @@ static void loadAppOverridesForApp(NSString *bundleIdentifier) {
 
 + (void) repairConfigFile:(NSString *)info {
     // TODO: actually repair config dict
-    NSLog(@"Should repair configdict.... (not implemented)");
+    DDLogInfo(@"Should repair configdict.... (not implemented)");
 }
 
 /**
@@ -208,18 +208,18 @@ static void setupFSEventStreamCallback() {
     CFArrayRef pathsToWatch = CFArrayCreate(NULL, (const void **)cfArray, 1, NULL);
     void *callbackInfo = NULL; // could put stream-sp ecific data here.
     
-    NSLog(@"pathsToWatch : %@", cfPath);
+    DDLogInfo(@"pathsToWatch : %@", cfPath);
     
     CFAbsoluteTime latency = 0.3;
     FSEventStreamRef remapsFileEventStream = FSEventStreamCreate(kCFAllocatorDefault, &Handle_FSEventStreamCallback, callbackInfo, pathsToWatch, kFSEventStreamEventIdSinceNow, latency, kFSEventStreamCreateFlagFileEvents ^ kFSEventStreamCreateFlagUseCFTypes);
     
     FSEventStreamScheduleWithRunLoop(remapsFileEventStream, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
     BOOL EventStreamStarted = FSEventStreamStart(remapsFileEventStream);
-    NSLog(@"EventStreamStarted: %d", EventStreamStarted);
+    DDLogInfo(@"EventStreamStarted: %d", EventStreamStarted);
 }
 void Handle_FSEventStreamCallback (ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents, void *eventPaths, const FSEventStreamEventFlags *eventFlags, const FSEventStreamEventId *eventIds) {
     
-    NSLog(@"config.plist changed (FSMonitor)");
+    DDLogInfo(@"config.plist changed (FSMonitor)");
     
     [ConfigFileInterface_Helper reactToConfigFileChange];
 }

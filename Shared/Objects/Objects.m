@@ -108,7 +108,7 @@ static NSURL *_lastValidHelperFRURL;
     if (!mainAppFRURL || !helperFRURL) {
         mainAppFRURL = _lastValidMainAppFRURL;
         helperFRURL = _lastValidHelperFRURL;
-        NSLog(@"((Found that app bundles are invalid while retrieving app bundles. Resorting to last valid fileReferenceURLs to obtain bundles. This probably means the app moved.))");
+        DDLogInfo(@"((Found that app bundles are invalid while retrieving app bundles. Resorting to last valid fileReferenceURLs to obtain bundles. This probably means the app moved.))");
     } else {
         _lastValidMainAppFRURL = mainAppFRURL;
         _lastValidHelperFRURL = helperFRURL;

@@ -70,7 +70,7 @@ struct ModifiedDragState {
                   drag.eventTap, drag.usageThreshold, drag.type, drag.activationState, drag.modifiedDevice, drag.origin.x, drag.origin.y, drag.originOffset.x, drag.originOffset.y, drag.usageAxis, drag.phase, drag.subPixelatorX, drag.subPixelatorY, drag.fakeDragButtonNumber, drag.addModePayload
                   ];
     } @catch (NSException *exception) {
-        NSLog(@"Exception while generating string description of ModifiedDragState: %@", exception);
+        DDLogInfo(@"Exception while generating string description of ModifiedDragState: %@", exception);
     }
     return output;
 }
@@ -145,7 +145,7 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
     
     // Re-enable on timeout (Not sure if this ever times out)
     if (type == kCGEventTapDisabledByTimeout) {
-        NSLog(@"ButtonInputReceiver eventTap timed out. Re-enabling.");
+        DDLogInfo(@"ButtonInputReceiver eventTap timed out. Re-enabling.");
         CGEventTapEnable(_drag.eventTap, true);
     }
     
@@ -202,7 +202,7 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY) {
             _drag.usageAxis = kMFAxisHorizontal;
         }
     
-        NSLog(@"SETTING DRAG PHASE TO BEGAN");
+        DDLogInfo(@"SETTING DRAG PHASE TO BEGAN");
         
         _drag.phase = kIOHIDEventPhaseBegan;
         

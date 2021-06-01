@@ -70,8 +70,8 @@ static NSMutableArray<MFDevice *> *_attachedDevices;
 //        retOpen = IOHIDManagerOpen(_HIDManager, kIOHIDOptionsTypeNone);
 //    }
 //    _devicesAreSeized = seize;
-//    NSLog(@"Seize manager close return: %d", retClose);
-//    NSLog(@"Seize manager open return: %d", retOpen);
+//    DDLogInfo(@"Seize manager close return: %d", retClose);
+//    DDLogInfo(@"Seize manager open return: %d", retOpen);
 //}
 
 
@@ -111,7 +111,7 @@ static void setupDeviceMatchingAndRemovalCallbacks() {
     // Open the HID Manager
 //    IOReturn IOReturn = IOHIDManagerOpen(_HIDManager, kIOHIDOptionsTypeNone);
 //    IOReturn IOReturn = IOHIDManagerOpen(_HIDManager, kIOHIDOptionsTypeSeizeDevice);
-//    if(IOReturn) NSLog(@"IOHIDManagerOpen failed.");  //  Couldn't open the HID manager! TODO: proper error handling
+//    if(IOReturn) DDLogInfo(@"IOHIDManagerOpen failed.");  //  Couldn't open the HID manager! TODO: proper error handling
 
     // Register a callback for USB device detection with the HID Manager, this will in turn register an button input callback for all devices that getFilteredDevicesFromManager() returns
     IOHIDManagerRegisterDeviceMatchingCallback(_HIDManager, &handleDeviceMatching, NULL);
@@ -136,12 +136,12 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
         [ScrollControl decide];
         [ButtonInputReceiver decide];
         
-        NSLog(@"New matching IOHIDDevice passed filtering and corresponding MFDevice was attached to device manager:\n%@", newMFDevice);
+        DDLogInfo(@"New matching IOHIDDevice passed filtering and corresponding MFDevice was attached to device manager:\n%@", newMFDevice);
         
         // Testing PointerSpeed
         //[PointerSpeed setSensitivityViaIORegTo:1000 device:device];
     } else {
-        NSLog(@"New matching IOHIDDevice device didn't pass filtering");
+        DDLogInfo(@"New matching IOHIDDevice device didn't pass filtering");
     }
     
     DDLogDebug(@"%@", deviceInfo());
@@ -159,7 +159,7 @@ static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IO
     [ScrollControl decide];
     [ButtonInputReceiver decide];
     
-    NSLog(@"Matching IOHIDDevice was removed:\n%@", device);
+    DDLogInfo(@"Matching IOHIDDevice was removed:\n%@", device);
     
     DDLogDebug(@"%@", deviceInfo());
     
