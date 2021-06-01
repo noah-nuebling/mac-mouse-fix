@@ -1,16 +1,20 @@
 PODS:
   - ReactiveObjC (3.1.1)
+  - RHAdditions (1.3.0)
 
 DEPENDENCIES:
   - ReactiveObjC (~> 3.1)
+  - RHAdditions
 
 SPEC REPOS:
   trunk:
     - ReactiveObjC
+    - RHAdditions
 
 SPEC CHECKSUMS:
   ReactiveObjC: 011caa393aa0383245f2dcf9bf02e86b80b36040
+  RHAdditions: 13ef6284b6e8eb919c6fbcef63ebae35eda385ff
 
-PODFILE CHECKSUM: af303e19a58b4fabe4270980a566bd3f9fef9db6
+PODFILE CHECKSUM: f0c23185361e1f0ff07cadeab681dd5f327d6cd2
 
 COCOAPODS: 1.10.1

@@ -1,0 +1,6 @@
+framework module RHAdditions {
+  umbrella header "RHAdditions-framework-umbrella.h"
+
+  export *
+  module * { export * }
+}

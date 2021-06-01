@@ -1211,6 +1211,7 @@
 				4F94F68E25E5EF1100D9F24A /* Embed Frameworks */,
 				4F94F72E25E612AB00D9F24A /* Copy Helper */,
 				4F94F74B25E6149500D9F24A /* Copy Updater */,
+				A4F8B1855B9296F8E910AACD /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1250,6 +1251,7 @@
 				4F94F60725E5EC2800D9F24A /* Sources */,
 				4F94F60825E5EC2800D9F24A /* Frameworks */,
 				4F94F60925E5EC2800D9F24A /* Resources */,
+				0FE4D9D41AE2F615617CC638 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1392,6 +1394,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0FE4D9D41AE2F615617CC638 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Mac Mouse Fix-Mac Mouse FixUITests/Pods-Mac Mouse Fix-Mac Mouse FixUITests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/RHAdditions-framework/RHAdditions.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RHAdditions.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Mac Mouse Fix-Mac Mouse FixUITests/Pods-Mac Mouse Fix-Mac Mouse FixUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		25357DD01C59597ECA10336C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1465,10 +1485,12 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Mac Mouse Fix Helper/Pods-Mac Mouse Fix Helper-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/RHAdditions-framework/RHAdditions.framework",
 				"${BUILT_PRODUCTS_DIR}/ReactiveObjC/ReactiveObjC.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RHAdditions.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveObjC.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1534,6 +1556,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A4F8B1855B9296F8E910AACD /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Mac Mouse Fix/Pods-Mac Mouse Fix-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/RHAdditions-framework/RHAdditions.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RHAdditions.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Mac Mouse Fix/Pods-Mac Mouse Fix-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C2315ADAD49C47F4111BD63E /* [CP] Check Pods Manifest.lock */ = {

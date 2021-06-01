@@ -1,6 +1,8 @@
 # Uncomment the next line to define a global platform for your project
 platform :osx, '10.11'
 
+# Pods for all targets
+pod 'RHAdditions'
 
 
 target 'Mac Mouse Fix' do

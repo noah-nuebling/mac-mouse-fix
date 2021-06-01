@@ -1,0 +1,1 @@
+../../../RHAdditions/RHAdditions/NSBundle+RHLaunchAtLoginAdditions.h
