@@ -17,7 +17,6 @@
 
 #import "AppDelegate.h"
 #import "ScrollModifiers.h"
-#import "ConfigFileInterface_App.h"
 
 #import "DeviceManager.h"
 #import "Utility_Helper.h"

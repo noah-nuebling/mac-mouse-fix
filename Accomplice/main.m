@@ -10,8 +10,8 @@
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKit.h>
 #import "Constants.h"
-#import "HelperServices.h"
-#import "Objects.h"
+#import "HelperServices/HelperServices.h"
+#import "Objects/Objects.h"
 #import "WannabePrefixHeader.h"
 
 static int update(const char *installScript) {
