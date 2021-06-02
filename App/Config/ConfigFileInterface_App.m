@@ -8,7 +8,7 @@
 //
 
 #import <AppKit/AppKit.h>
-#import "ConfigInterface_App.h"
+#import "ConfigFileInterface_App.h"
 #import "HelperServices.h"
 #import "SharedMessagePort.h"
 #import "NSMutableDictionary+Additions.h"
@@ -17,19 +17,19 @@
 #import "Constants.h"
 #import "WannabePrefixHeader.h"
 
-@implementation ConfigInterface_App
+@implementation ConfigFileInterface_App
 
 // Convenience function for accessing config
 id config(NSString *keyPath) {
-    return [ConfigInterface_App.config valueForKeyPath:keyPath];
+    return [ConfigFileInterface_App.config valueForKeyPath:keyPath];
 }
 // Convenience function for modifying config
 void setConfig(NSString *keyPath, NSObject *object) {
-    [ConfigInterface_App.config setValue:object forKeyPath:keyPath];
+    [ConfigFileInterface_App.config setValue:object forKeyPath:keyPath];
 }
 // Convenience function for writing config to file and notifying the helper app
 void commitConfig() {
-    [ConfigInterface_App writeConfigToFileAndNotifyHelper];
+    [ConfigFileInterface_App writeConfigToFileAndNotifyHelper];
 }
 
 static NSMutableDictionary *_config;

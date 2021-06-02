@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ConfigInterface_App : NSObject
+@interface ConfigFileInterface_App : NSObject
 
 typedef enum {
     kMFConfigProblemNone = 0,
