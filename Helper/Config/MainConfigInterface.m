@@ -132,12 +132,34 @@ static void fillConfigFromFile() {
 //        }
         _bundleIDOfAppWhichCausesAppOverride = bundleIDOfCurrentApp;
         loadAppOverridesForApp(bundleIDOfCurrentApp);
-//        [MainConfigInterface updateScrollParameters];
+        [MainConfigInterface updateScrollParameters];
         [ScrollControl resetDynamicGlobals]; // Not entirely sure if necessary
         return YES;
     }
     
     return NO;
+}
+
+/// Update internal state of scroll classes with values from _configWithAppOverridesApplied
+/// \note Call loadAppOverridesForApp() to fill _configWithAppOverridesApplied
++ (void)updateScrollParameters {
+
+    NSDictionary *scroll = [_configWithAppOverridesApplied objectForKey:kMFConfigKeyScroll];
+    
+    // SmoothParameters
+    [SmoothScroll configureWithParameters:scroll[@"smoothParameters"]];
+
+    // roughParameters
+        // nothing here yet
+
+    // Keyboard modifier keys
+    NSDictionary *mod = scroll[@"modifierKeys"];
+    // Event flag masks
+    ScrollModifiers.horizontalScrollModifierKeyMask = (CGEventFlags)[_stringToEventFlagMask[mod[@"horizontalScrollModifierKey"]] unsignedLongLongValue];
+    ScrollModifiers.magnificationScrollModifierKeyMask = (CGEventFlags)[_stringToEventFlagMask[mod[@"magnificationScrollModifierKey"]] unsignedLongLongValue];
+    // Enabled / disabled
+    ScrollModifiers.horizontalScrollModifierKeyEnabled = [mod[@"horizontalScrollModifierKeyEnabled"] boolValue];
+    ScrollModifiers.magnificationScrollModifierKeyEnabled = [mod[@"magnificationScrollModifierKeyEnabled"] boolValue];
 }
 
 /// Applies AppOverrides from app with `bundleIdentifier` to `_config` and writes the result into `_configWithAppOverridesApplied`.

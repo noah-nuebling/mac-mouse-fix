@@ -24,6 +24,12 @@
     // If an old version of Mac Mouse Fix is still running and stuff, clean that up to prevent issues
     [self runPreviousVersionCleanup];
     
+    // Sometimes there's a weird bug where the main app won't recognize the helper as enabled even though it is. The following code for enabling will then fail, when the user tries to check the enable checkbox.
+    //  So we're removing the helper from launchd before trying to enable to hopefully fix this. Edit: seems to fix it!
+    if (enable) {
+        [self removeHelperFromLaunchd];
+    }
+    
     // Prepare strings for NSTask
     
     // Path for the executable of the launchctl command-line-tool, which we use to control launchd
