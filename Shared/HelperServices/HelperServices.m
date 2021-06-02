@@ -24,8 +24,11 @@
     // If an old version of Mac Mouse Fix is still running and stuff, clean that up to prevent issues
     [self runPreviousVersionCleanup];
     
-    // Sometimes there's a weird bug where the main app won't recognize the helper as enabled even though it is. The following code for enabling will then fail, when the user tries to check the enable checkbox.
-    //  So we're removing the helper from launchd before trying to enable to hopefully fix this. Edit: seems to fix it!
+    /**
+         Sometimes there's a weird bug where the main app won't recognize the helper as enabled even though it is. The code down below for enabling will then fail, when the user tries to check the enable checkbox.
+         So we're removing the helper from launchd before trying to enable to hopefully fix this. Edit: seems to fix it!
+         I'm pretty sure that if we didn't check for `launchdPathIsBundlePath` in `strangeHelperIsRegisteredWithLaunchd` this issue wouldn't have occured and we wouldn't need this workaround. But I'm not sure anymore why we do that so it's not smart to remove it.
+     */
     if (enable) {
         [self removeHelperFromLaunchd];
     }
