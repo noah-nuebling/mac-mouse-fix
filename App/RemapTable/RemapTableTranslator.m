@@ -13,7 +13,7 @@
 #import "SharedUtility.h"
 #import "NSAttributedString+Additions.h"
 #import "NSTextField+Additions.h"
-#import "MainConfigInterface.h"
+#import "ConfigInterface.h"
 #import "RemapTableController.h"
 #import "KeyCaptureView.h"
 #import "AppDelegate.h"

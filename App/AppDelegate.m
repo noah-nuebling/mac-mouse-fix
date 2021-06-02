@@ -11,7 +11,7 @@
 
 #import <PreferencePanes/PreferencePanes.h>
 #import "AppDelegate.h"
-#import "MainConfigInterface.h"
+#import "ConfigInterface.h"
 #import "SharedMessagePort.h"
 #import "Utility_App.h"
 #import "AuthorizeAccessibilityView.h"
@@ -305,11 +305,11 @@ NSTimer *removeAccOverlayTimer;
         _enableMouseFixCheckBox.state = 0;
     }
     
-    [MainConfigInterface loadConfigFromFile];
+    [ConfigInterface loadConfigFromFile];
     
 # pragma mark scrollSettings
     
-    NSDictionary *scrollConfigFromFile = MainConfigInterface.config[kMFConfigKeyScroll];
+    NSDictionary *scrollConfigFromFile = ConfigInterface.config[kMFConfigKeyScroll];
     
     // Enabled checkbox
     if ([scrollConfigFromFile[@"smooth"] boolValue] == 1) {
@@ -373,9 +373,9 @@ NSTimer *removeAccOverlayTimer;
     };
     
     
-    MainConfigInterface.config = [[SharedUtility dictionaryWithOverridesAppliedFrom:scrollParametersFromUI to:MainConfigInterface.config] mutableCopy];
+    ConfigInterface.config = [[SharedUtility dictionaryWithOverridesAppliedFrom:scrollParametersFromUI to:ConfigInterface.config] mutableCopy];
     
-    [MainConfigInterface writeConfigToFileAndNotifyHelper];
+    [ConfigInterface writeConfigToFileAndNotifyHelper];
 }
 
 @end

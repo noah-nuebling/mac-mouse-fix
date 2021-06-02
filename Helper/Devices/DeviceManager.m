@@ -24,7 +24,7 @@
 
 #import "ScrollControl.h"
 #import "ButtonInputReceiver.h"
-#import "MainConfigInterface.h"
+#import "ConfigInterface.h"
 #import "PointerSpeed.h"
 
 #import <IOKit/hidsystem/IOHIDServiceClient.h>

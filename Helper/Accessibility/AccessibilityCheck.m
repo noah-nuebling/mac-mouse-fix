@@ -13,7 +13,7 @@
 #import "SharedMessagePort.h"
 #import "MessagePort_Helper.h"
 #import "DeviceManager.h"
-#import "MainConfigInterface.h"
+#import "ConfigInterface.h"
 #import "ScrollControl.h"
 #import "ButtonInputReceiver.h"
 #import "Constants.h"
@@ -49,7 +49,7 @@ NSTimer *_openMainAppTimer;
         // Using load_Manual instead of normal load, because creating an eventTap crashes the program, if we don't have accessibilty access (I think - I don't really remember)
         // TODO: Look into using `+ initialize` instead of `+ load`. The way we have things set up there are like a bajillion entry points to the program (one for every `+ load` function) which is kinda sucky. Might be better to have just one entry point to the program and then start everything that needs to be started with `+ start` functions and let `+ initialize` do the rest
         [DeviceManager load_Manual];
-        [MainConfigInterface load_Manual];
+        [ConfigInterface load_Manual];
         [ScrollControl load_Manual];
         [ModifiedDrag load_Manual];
         [ModifierManager load_Manual];
