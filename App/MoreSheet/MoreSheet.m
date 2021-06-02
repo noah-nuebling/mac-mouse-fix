@@ -8,7 +8,7 @@
 //
 
 #import "MoreSheet.h"
-#import "ConfigFileInterface_App.h"
+#import "MainConfigInterface.h"
 #import "MessagePort_App.h"
 #import "AppDelegate.h"
 #import "Utility_App.h"
