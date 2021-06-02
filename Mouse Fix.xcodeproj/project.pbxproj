@@ -246,7 +246,6 @@
 		4F44FEF72606A5C100926A5E /* default_config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_config.plist; sourceTree = "<group>"; };
 		4F44FF022606D73D00926A5E /* SharedMessagePort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharedMessagePort.h; sourceTree = "<group>"; };
 		4F44FF032606D73D00926A5E /* SharedMessagePort.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SharedMessagePort.m; sourceTree = "<group>"; };
-		4F6C187B2666D45E003B9567 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PrefixHeader.pch; path = Shared/PrefixHeader.pch; sourceTree = SOURCE_ROOT; };
 		4F79A7EE26042E2E00076A7E /* ToastNotification.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToastNotification.xib; sourceTree = "<group>"; };
 		4F79A81A2604317200076A7E /* ToastNotificationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToastNotificationController.h; sourceTree = "<group>"; };
 		4F79A81B2604317200076A7E /* ToastNotificationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ToastNotificationController.m; sourceTree = "<group>"; };
@@ -430,6 +429,7 @@
 		4FF6667D25F2C93A00689B77 /* DeviceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceManager.m; sourceTree = "<group>"; };
 		4FF6667F25F2C93A00689B77 /* Utility_Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility_Helper.h; sourceTree = "<group>"; };
 		4FF6668025F2C93A00689B77 /* Utility_Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility_Helper.m; sourceTree = "<group>"; };
+		4FFBC5732667DCE4001D389B /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		6F95F061BB6B4119E691F93D /* Pods-Mac Mouse Fix Accomplice.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mac Mouse Fix Accomplice.release.xcconfig"; path = "Target Support Files/Pods-Mac Mouse Fix Accomplice/Pods-Mac Mouse Fix Accomplice.release.xcconfig"; sourceTree = "<group>"; };
 		7F6C0C78F914061497F31F88 /* Pods-Mac Mouse Fix-Mac Mouse FixUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mac Mouse Fix-Mac Mouse FixUITests.debug.xcconfig"; path = "Target Support Files/Pods-Mac Mouse Fix-Mac Mouse FixUITests/Pods-Mac Mouse Fix-Mac Mouse FixUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		800D11E9E63D6D95B0A59A66 /* Pods_Mac_Mouse_Fix_Helper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mac_Mouse_Fix_Helper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -742,12 +742,11 @@
 			isa = PBXGroup;
 			children = (
 				4FF6653325F2C7B000689B77 /* Constants.h */,
+				4FFBC56E2667DC76001D389B /* PrefixHeader */,
 				4F44FF012606D6FD00926A5E /* MessagePort */,
 				4FF6652C25F2C7B000689B77 /* HelperServices */,
 				4FF6653025F2C7B000689B77 /* Objects */,
 				4FF6653625F2C7B000689B77 /* Utility */,
-				4F6C187B2666D45E003B9567 /* PrefixHeader.pch */,
-				4FBE18BA2666EC4A002A6771 /* WannabePrefixHeader.h */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -1198,6 +1197,15 @@
 				4FF6668025F2C93A00689B77 /* Utility_Helper.m */,
 			);
 			path = Utility;
+			sourceTree = "<group>";
+		};
+		4FFBC56E2667DC76001D389B /* PrefixHeader */ = {
+			isa = PBXGroup;
+			children = (
+				4FFBC5732667DCE4001D389B /* PrefixHeader.pch */,
+				4FBE18BA2666EC4A002A6771 /* WannabePrefixHeader.h */,
+			);
+			path = PrefixHeader;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2043,7 +2051,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/Shared/PrefixHeader.pch";
+				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -2107,7 +2115,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/Shared/PrefixHeader.pch";
+				GCC_PREFIX_HEADER = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
