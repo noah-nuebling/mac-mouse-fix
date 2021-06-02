@@ -45,6 +45,15 @@ typedef enum {
 + (double)fastScrollExponentialBase;
 + (double)fastScrollFactor;
 
+// Smooth scroll
+
++ (NSUInteger)pxStepSize;
++ (NSUInteger)msPerStep;
++ (double)frictionCoefficient;
++ (double)frictionDepth;
++ (double)accelerationForScrollBuffer;
++ (NSUInteger)nOfOnePixelScrollsMax;
+
 @end
 
 NS_ASSUME_NONNULL_END

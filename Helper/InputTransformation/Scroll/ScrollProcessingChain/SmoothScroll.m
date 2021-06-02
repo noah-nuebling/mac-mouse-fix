@@ -31,22 +31,13 @@
 
 @implementation SmoothScroll
 
-#pragma mark - Globals
+#pragma mark - Vars
 
-#pragma mark parameters
+// Static
 
-// wheel phase
-static int64_t  _pxStepSize;
-static double   _msPerStep;
-static double   _accelerationForScrollBuffer;
-// momentum phase
-static double   _frictionCoefficient;
-static double   _frictionDepth;
-static int      _nOfOnePixelScrollsMax;
-// objects
 static CVDisplayLinkRef _displayLink;
 
-#pragma mark dynamic vars
+// Dynamic
 
 // any phase
 static MFDisplayLinkPhase _displayLinkPhase;
@@ -88,15 +79,6 @@ static void createDisplayLink() {
 //    [ScrollUtility resetConsecutiveTicksAndSwipes]; // MARK: Put this here, because it fixes problem with magnification scrolling. I feel like this might lead to issues. UPDATE: Yep, this breaks fast scrolling. I disabled it now and magnifications scrolling still seems to work.
     // TODO: Delete this if no problems occur.
     _isScrolling = false;
-}
-
-+ (void)configureWithParameters:(NSDictionary *)params {
-    _pxStepSize                         =   [[params objectForKey:@"pxPerStep"] intValue];
-    _msPerStep                          =   [[params objectForKey:@"msPerStep"] intValue];
-    _frictionCoefficient                =   [[params objectForKey:@"friction"] floatValue];
-    _frictionDepth                      =   [[params objectForKey:@"frictionDepth"] floatValue];
-    _accelerationForScrollBuffer         =   [[params objectForKey:@"acceleration"] floatValue];
-    _nOfOnePixelScrollsMax              =   [[params objectForKey:@"onePixelScrollsLimit"] intValue]; // After opl+1 frames of only scrolling 1 pixel, scrolling stops. Should probably change code to stop after opl frames.
 }
 
 static BOOL _isScrolling = NO;
@@ -155,19 +137,19 @@ static BOOL _hasStarted;
 
     // Apply scroll wheel input to _pxScrollBuffer
     
-    _msLeftForScroll = _msPerStep;
+    _msLeftForScroll = ScrollConfig.msPerStep;
 //    _msLeftForScroll = 1 / (_pxPerMSBaseSpeed / _pxStepSize);
     if (scrollDeltaAxis1 > 0) {
-        _pxScrollBuffer += _pxStepSize * ScrollControl.scrollDirection;
+        _pxScrollBuffer += ScrollConfig.pxStepSize * ScrollControl.scrollDirection;
     } else if (scrollDeltaAxis1 < 0) {
-        _pxScrollBuffer -= _pxStepSize * ScrollControl.scrollDirection;
+        _pxScrollBuffer -= ScrollConfig.pxStepSize * ScrollControl.scrollDirection;
     } else {
         DDLogInfo(@"scrollDeltaAxis1 is 0. This shouldn't happen.");
     }
     
     // Apply acceleration to _pxScrollBuffer
     if (ScrollAnalyzer.consecutiveScrollTickCounter != 0) {
-        _pxScrollBuffer = _pxScrollBuffer * _accelerationForScrollBuffer;
+        _pxScrollBuffer = _pxScrollBuffer * ScrollConfig.accelerationForScrollBuffer;
     }
     
 //    if (ScrollUtility.consecutiveScrollTickCounter == 0) {
@@ -262,7 +244,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         
         _pxToScrollThisFrame = round(_pxPerMsVelocity * msSinceLastFrame);
         double thisVel = _pxPerMsVelocity;
-        double nextVel = thisVel - [SharedUtility signOf:thisVel] * pow(fabs(thisVel), _frictionDepth) * (_frictionCoefficient/100) * msSinceLastFrame;
+        double nextVel = thisVel - [SharedUtility signOf:thisVel] * pow(fabs(thisVel), ScrollConfig.frictionDepth) * (ScrollConfig.frictionCoefficient/100) * msSinceLastFrame;
         
         _pxPerMsVelocity = nextVel;
         if ( ((nextVel < 0) && (thisVel > 0)) || ((nextVel > 0) && (thisVel < 0)) ) {
@@ -275,7 +257,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         
         if (abs(_pxToScrollThisFrame) == 1) {
             _onePixelScrollsCounter += 1;
-            if (_onePixelScrollsCounter > _nOfOnePixelScrollsMax) { // I think using > instead of >= might put the actual maximum at _nOfOnePixelScrollsMax + 1.
+            if (_onePixelScrollsCounter > ScrollConfig.nOfOnePixelScrollsMax) { // I think using > instead of >= might put the actual maximum at _nOfOnePixelScrollsMax + 1.
                 _displayLinkPhase = kMFPhaseEnd;
             }
         }

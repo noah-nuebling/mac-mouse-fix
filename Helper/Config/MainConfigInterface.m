@@ -145,12 +145,6 @@ static void fillConfigFromFile() {
 + (void)updateScrollParameters {
 
     NSDictionary *scroll = [_configWithAppOverridesApplied objectForKey:kMFConfigKeyScroll];
-    
-    // SmoothParameters
-    [SmoothScroll configureWithParameters:scroll[@"smoothParameters"]];
-
-    // roughParameters
-        // nothing here yet
 
     // Keyboard modifier keys
     NSDictionary *mod = scroll[@"modifierKeys"];

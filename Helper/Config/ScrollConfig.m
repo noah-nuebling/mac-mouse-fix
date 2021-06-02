@@ -64,6 +64,25 @@ static NSDictionary *mod() {
 // Smooth scrolling params
 
 
++ (NSUInteger)pxStepSize {
+    return [[smooth() objectForKey:@"pxPerStep"] intValue];
+}
++ (NSUInteger)msPerStep {
+    return [[smooth() objectForKey:@"msPerStep"] intValue];
+}
++ (double)frictionCoefficient {
+    return [[smooth() objectForKey:@"friction"] doubleValue];
+}
++ (double)frictionDepth {
+    return [[smooth() objectForKey:@"frictionDepth"] doubleValue];
+}
++ (double)accelerationForScrollBuffer {
+    return [[smooth() objectForKey:@"acceleration"] doubleValue];
+}
++ (NSUInteger)nOfOnePixelScrollsMax {
+    return [[smooth() objectForKey:@"onePixelScrollsLimit"] intValue]; // After opl+1 frames of only scrolling 1 pixel, scrolling stops. Should probably change code to stop after opl frames.
+}
+
 
 
 /*

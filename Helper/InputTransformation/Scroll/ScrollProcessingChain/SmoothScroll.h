@@ -14,8 +14,6 @@
 
 + (void)load_Manual;
 
-+ (void)configureWithParameters:(NSDictionary * _Nonnull)params;
-
 + (void)start;
 + (void)stop;
 + (BOOL)hasStarted;
