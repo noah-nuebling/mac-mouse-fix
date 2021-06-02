@@ -21,13 +21,13 @@
 
 + (void)handleMagnificationScrollWithAmount:(double)amount;
 
-+ (void)setHorizontalScrollModifierKeyMask:(CGEventFlags)F;
-+ (void)setMagnificationScrollModifierKeyMask:(CGEventFlags)F;
-
-+ (BOOL)horizontalScrollModifierKeyEnabled;
-+ (void)setHorizontalScrollModifierKeyEnabled:(BOOL)B;
-+ (BOOL)magnificationScrollModifierKeyEnabled;
-+ (void)setMagnificationScrollModifierKeyEnabled:(BOOL)B;
+//+ (void)setHorizontalScrollModifierKeyMask:(CGEventFlags)F;
+//+ (void)setMagnificationScrollModifierKeyMask:(CGEventFlags)F;
+//
+//+ (BOOL)horizontalScrollModifierKeyEnabled;
+//+ (void)setHorizontalScrollModifierKeyEnabled:(BOOL)B;
+//+ (BOOL)magnificationScrollModifierKeyEnabled;
+//+ (void)setMagnificationScrollModifierKeyEnabled:(BOOL)B;
 
 + (void)start;
 + (void)stop;

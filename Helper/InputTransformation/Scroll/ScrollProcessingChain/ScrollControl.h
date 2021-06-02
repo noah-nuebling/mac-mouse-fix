@@ -16,11 +16,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (AXUIElementRef) systemWideAXUIElement;
 + (CGEventSourceRef)eventSource;
 
-+ (BOOL)isSmoothEnabled;
-+ (void)setIsSmoothEnabled: (BOOL)B;
-+ (int)scrollDirection;
-+ (void)setScrollDirection:(int)dir;
-
 + (void)load_Manual;
 + (void)resetDynamicGlobals;
 + (void)decide;

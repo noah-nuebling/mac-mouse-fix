@@ -13,6 +13,7 @@
 #import "ScrollUtility.h"
 #import "MainConfigInterface.h"
 #import "ScrollModifiers.h"
+#import "ScrollConfigInterface.h"
 
 @implementation RoughScroll
 
@@ -28,8 +29,8 @@
     
     // Process event
     
-    if (ScrollControl.scrollDirection == -1) { // TODO: Use kMFInvertedScrollDirection instead of -1. Implement same change where ever ScrollControl.scrollDirection is used.
-        event = [ScrollUtility invertScrollEvent:event direction:ScrollControl.scrollDirection];
+    if (ScrollConfigInterface.scrollDirection == -1) { // TODO: Use kMFInvertedScrollDirection instead of -1. Implement same change where ever ScrollControl.scrollDirection is used.
+        event = [ScrollUtility invertScrollEvent:event direction:ScrollConfigInterface.scrollDirection];
     }
     if (ScrollModifiers.magnificationScrolling) {
         [ScrollModifiers handleMagnificationScrollWithAmount:CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1)/50.0];

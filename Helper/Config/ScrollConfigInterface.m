@@ -7,11 +7,29 @@
 // --------------------------------------------------------------------------
 //
 
-#import "ScrollConfig.h"
+#import "ScrollConfigInterface.h"
 #import "MainConfigInterface.h"
 #import "Constants.h"
 
-@implementation ScrollConfig
+@implementation ScrollConfigInterface
+
+// Constants
+
+NSDictionary *_stringToEventFlagMask;
+
+// Initialize
+
++ (void)initialize
+{
+    if (self == [ScrollConfigInterface class]) {
+        _stringToEventFlagMask = @{
+            @"command" : @(kCGEventFlagMaskCommand),
+            @"control" : @(kCGEventFlagMaskControl),
+            @"option" : @(kCGEventFlagMaskAlternate),
+            @"shift" : @(kCGEventFlagMaskShift),
+        };
+    }
+}
 
 // Convenience functions for accessing top level dict and different sub-dicts
 
@@ -27,6 +45,8 @@ static NSDictionary *smooth() {
 static NSDictionary *mod() {
     return topLevel()[@"modifierKeys"];
 }
+
+// Interface
 
 // General
 
@@ -83,11 +103,28 @@ static NSDictionary *mod() {
     return [[smooth() objectForKey:@"onePixelScrollsLimit"] intValue]; // After opl+1 frames of only scrolling 1 pixel, scrolling stops. Should probably change code to stop after opl frames.
 }
 
+// Keyboard modifiers
+
+// Event flag masks
++ (CGEventFlags)horizontalScrollModifierKeyMask {
+    return (CGEventFlags)[_stringToEventFlagMask[mod()[@"horizontalScrollModifierKey"]] unsignedLongLongValue];
+}
++ (CGEventFlags)magnificationScrollModifierKeyMask {
+    return (CGEventFlags)[_stringToEventFlagMask[mod()[@"magnificationScrollModifierKey"]] unsignedLongLongValue];
+}
+// Modifier enabled
++ (BOOL)horizontalScrollModifierKeyEnabled {
+    return [mod()[@"horizontalScrollModifierKeyEnabled"] boolValue];
+}
++ (BOOL)magnificationScrollModifierKeyEnabled {
+    return [mod()[@"magnificationScrollModifierKeyEnabled"] boolValue];
+}
 
 
 /*
  
  Old function from MainConfigInterface for reference:
+ This class superseeds this function. This is for reference if sth goes wrong.
  
  NSDictionary *scroll = [_configWithAppOverridesApplied objectForKey:kMFConfigKeyScroll];
  
