@@ -18,7 +18,7 @@
 #import "Utility_Helper.h"
 #import "WannabePrefixHeader.h"
 #import "ScrollAnalyzer.h"
-#import "ScrollConfig.h"
+#import "ScrollConfigInterface.h"
 
 @implementation ScrollControl
 
@@ -111,7 +111,7 @@ static dispatch_queue_t _scrollQueue;
         CGEventTapEnable(_eventTap, true);
         // Enable other scroll classes
         [ScrollModifiers start];
-        if (ScrollConfig.smoothEnabled) {
+        if (ScrollConfigInterface.smoothEnabled) {
             DDLogInfo(@"Enabling SmoothScroll");
             [SmoothScroll start];
             [RoughScroll stop];
@@ -195,7 +195,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         
         int16_t pxToScrollForThisTick = scrollDeltaAxis1;
         
-        if (ScrollConfig.smoothEnabled) {
+        if (ScrollConfigInterface.smoothEnabled) {
             [SmoothScroll start];   // Not sure if useful
             [RoughScroll stop];     // Not sure if useful
             [SmoothScroll handleInput:eventCopy info:NULL];

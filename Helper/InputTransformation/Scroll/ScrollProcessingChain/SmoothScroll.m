@@ -27,7 +27,7 @@
 
 #import "GestureScrollSimulator.h"
 #import "ScrollAnalyzer.h"
-#import "ScrollConfig.h"
+#import "ScrollConfigInterface.h"
 
 @implementation SmoothScroll
 
@@ -137,19 +137,19 @@ static BOOL _hasStarted;
 
     // Apply scroll wheel input to _pxScrollBuffer
     
-    _msLeftForScroll = ScrollConfig.msPerStep;
+    _msLeftForScroll = ScrollConfigInterface.msPerStep;
 //    _msLeftForScroll = 1 / (_pxPerMSBaseSpeed / _pxStepSize);
     if (scrollDeltaAxis1 > 0) {
-        _pxScrollBuffer += ScrollConfig.pxStepSize * ScrollControl.scrollDirection;
+        _pxScrollBuffer += ScrollConfigInterface.pxStepSize * ScrollConfigInterface.scrollDirection;
     } else if (scrollDeltaAxis1 < 0) {
-        _pxScrollBuffer -= ScrollConfig.pxStepSize * ScrollControl.scrollDirection;
+        _pxScrollBuffer -= ScrollConfigInterface.pxStepSize * ScrollConfigInterface.scrollDirection;
     } else {
         DDLogInfo(@"scrollDeltaAxis1 is 0. This shouldn't happen.");
     }
     
     // Apply acceleration to _pxScrollBuffer
     if (ScrollAnalyzer.consecutiveScrollTickCounter != 0) {
-        _pxScrollBuffer = _pxScrollBuffer * ScrollConfig.accelerationForScrollBuffer;
+        _pxScrollBuffer = _pxScrollBuffer * ScrollConfigInterface.accelerationForScrollBuffer;
     }
     
 //    if (ScrollUtility.consecutiveScrollTickCounter == 0) {
@@ -157,10 +157,10 @@ static BOOL _hasStarted;
 //        DDLogDebug(@"swip: %d", ScrollUtility.consecutiveScrollSwipeCounter);
 //    }
     
-    int fastScrollThresholdDelta = ScrollAnalyzer.consecutiveScrollSwipeCounter - (unsigned int)ScrollConfig.fastScrollThreshold_inSwipes;
+    int fastScrollThresholdDelta = ScrollAnalyzer.consecutiveScrollSwipeCounter - (unsigned int)ScrollConfigInterface.fastScrollThreshold_inSwipes;
     if (fastScrollThresholdDelta >= 0) {
         //&& ScrollUtility.consecutiveScrollTickCounter >= ScrollControl.scrollSwipeThreshold_inTicks) {
-        _pxScrollBuffer = _pxScrollBuffer * ScrollConfig.fastScrollFactor * pow(ScrollConfig.fastScrollExponentialBase, ((int32_t)fastScrollThresholdDelta));
+        _pxScrollBuffer = _pxScrollBuffer * ScrollConfigInterface.fastScrollFactor * pow(ScrollConfigInterface.fastScrollExponentialBase, ((int32_t)fastScrollThresholdDelta));
     }
     
 //    DDLogDebug(@"buff: %d", _pxScrollBuffer);
@@ -244,7 +244,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         
         _pxToScrollThisFrame = round(_pxPerMsVelocity * msSinceLastFrame);
         double thisVel = _pxPerMsVelocity;
-        double nextVel = thisVel - [SharedUtility signOf:thisVel] * pow(fabs(thisVel), ScrollConfig.frictionDepth) * (ScrollConfig.frictionCoefficient/100) * msSinceLastFrame;
+        double nextVel = thisVel - [SharedUtility signOf:thisVel] * pow(fabs(thisVel), ScrollConfigInterface.frictionDepth) * (ScrollConfigInterface.frictionCoefficient/100) * msSinceLastFrame;
         
         _pxPerMsVelocity = nextVel;
         if ( ((nextVel < 0) && (thisVel > 0)) || ((nextVel > 0) && (thisVel < 0)) ) {
@@ -257,7 +257,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         
         if (abs(_pxToScrollThisFrame) == 1) {
             _onePixelScrollsCounter += 1;
-            if (_onePixelScrollsCounter > ScrollConfig.nOfOnePixelScrollsMax) { // I think using > instead of >= might put the actual maximum at _nOfOnePixelScrollsMax + 1.
+            if (_onePixelScrollsCounter > ScrollConfigInterface.nOfOnePixelScrollsMax) { // I think using > instead of >= might put the actual maximum at _nOfOnePixelScrollsMax + 1.
                 _displayLinkPhase = kMFPhaseEnd;
             }
         }

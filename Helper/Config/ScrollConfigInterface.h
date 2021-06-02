@@ -11,11 +11,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ScrollConfig : NSObject
+@interface ScrollConfigInterface : NSObject
 /**
  Function:
     This class expose values from the config dict that are relevant for scrolling via readonly class properties.
-        (So maybe it should be called ScrollConfigInterface, but that's harder to write)
  Motivation:
     - We used to have a copy of the relevant config values in the ScrollControl / SmoothScroll. They were filled by MainConfigInterface. This was bad because:
         That made it cumbersome to add new scroll values to the config and we duplicated state which is generally bad because you have to manually keep it in sync and things can go wrong.
@@ -53,6 +52,13 @@ typedef enum {
 + (double)frictionDepth;
 + (double)accelerationForScrollBuffer;
 + (NSUInteger)nOfOnePixelScrollsMax;
+
+// Keyboard modifers
+
++ (CGEventFlags)horizontalScrollModifierKeyMask;
++ (CGEventFlags)magnificationScrollModifierKeyMask;
++ (BOOL)horizontalScrollModifierKeyEnabled;
++ (BOOL)magnificationScrollModifierKeyEnabled;
 
 @end
 
