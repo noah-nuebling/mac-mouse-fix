@@ -9,7 +9,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface MainConfigInterface : NSObject
+@interface ConfigFileInterface_Helper : NSObject
 
 + (void)load_Manual;
 

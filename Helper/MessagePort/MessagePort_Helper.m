@@ -8,7 +8,7 @@
 //
 
 #import "MessagePort_Helper.h"
-#import "ConfigInterface.h"
+#import "ConfigFileInterface_Helper.h"
 #import "TransformationManager.h"
 #import <AppKit/NSWindow.h>
 #import "AccessibilityCheck.h"
@@ -57,7 +57,7 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
     DDLogInfo(@"Helper Received Message: %@ with payload: %@", message, payload);
     
     if ([message isEqualToString:@"configFileChanged"]) {
-        [ConfigInterface reactToConfigFileChange];
+        [ConfigFileInterface_Helper reactToConfigFileChange];
     } else if ([message isEqualToString:@"terminate"]) {
         [NSApp.delegate applicationWillTerminate:[[NSNotification alloc] init]];
         [NSApp terminate:NULL];

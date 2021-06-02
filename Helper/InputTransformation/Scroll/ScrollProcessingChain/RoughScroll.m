@@ -11,7 +11,7 @@
 #import "ScrollControl.h"
 #import "TouchSimulator.h"
 #import "ScrollUtility.h"
-#import "ConfigInterface.h"
+#import "ConfigFileInterface_Helper.h"
 #import "ScrollModifiers.h"
 
 @implementation RoughScroll

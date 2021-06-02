@@ -13,7 +13,7 @@
 #import "RoughScroll.h"
 #import "TouchSimulator.h"
 #import "ScrollModifiers.h"
-#import "ConfigInterface.h"
+#import "ConfigFileInterface_Helper.h"
 #import "ScrollUtility.h"
 #import "Utility_Helper.h"
 #import "WannabePrefixHeader.h"
@@ -246,7 +246,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
             }
             if (ScrollUtility.mouseDidMove || ScrollUtility.frontMostAppDidChange) {
                 // set app overrides
-                BOOL configChanged = [ConfigInterface applyOverridesForAppUnderMousePointer_Force:NO]; // TODO: `updateInternalParameters_Force:` should (probably) reset stuff itself, if it changes anything. This whole [SmoothScroll stop] stuff is kinda messy
+                BOOL configChanged = [ConfigFileInterface_Helper applyOverridesForAppUnderMousePointer_Force:NO]; // TODO: `updateInternalParameters_Force:` should (probably) reset stuff itself, if it changes anything. This whole [SmoothScroll stop] stuff is kinda messy
                 if (configChanged) {
                     [SmoothScroll stop]; // Not sure if useful
                     [RoughScroll stop]; // Not sure if useful

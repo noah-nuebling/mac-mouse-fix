@@ -8,7 +8,7 @@
 //
 
 #import <AppKit/AppKit.h>
-#import "MainConfigInterface.h"
+#import "ConfigFileInterface_App.h"
 #import "HelperServices.h"
 #import "SharedMessagePort.h"
 #import "NSMutableDictionary+Additions.h"
@@ -17,31 +17,19 @@
 #import "Constants.h"
 #import "WannabePrefixHeader.h"
 
-@implementation MainConfigInterface
+@implementation ConfigFileInterface_App
 
-+ (void)load {
-    
-    // Get backup config url
-    NSString *defaultConfigPathRelative = @"Contents/Resources/default_config.plist";
-    _defaultConfigURL = [Objects.mainAppBundle.bundleURL URLByAppendingPathComponent:defaultConfigPathRelative];
-    
-    // Load config
-    [self loadConfigFromFile];
-}
-
-/* Convenience function for accessing the config dictionary directly
-    When other code accesses this directly it will then most then likely reference the internal structure of the config dictionary directly. That is really bad, because that's super hard to refactor. We're already too deep in it for it to be sensible to change it without a really good reason, but eventually we should make this private and only expose the content of the config dictionary as simple, non-nested dicts/arrays. For nested structures we should expose custom objects / structs.
- */
+// Convenience function for accessing config
 id config(NSString *keyPath) {
-    return [MainConfigInterface.config valueForKeyPath:keyPath];
+    return [ConfigFileInterface_App.config valueForKeyPath:keyPath];
 }
 // Convenience function for modifying config
 void setConfig(NSString *keyPath, NSObject *object) {
-    [MainConfigInterface.config setValue:object forKeyPath:keyPath];
+    [ConfigFileInterface_App.config setValue:object forKeyPath:keyPath];
 }
 // Convenience function for writing config to file and notifying the helper app
 void commitConfig() {
-    [MainConfigInterface writeConfigToFileAndNotifyHelper];
+    [ConfigFileInterface_App writeConfigToFileAndNotifyHelper];
 }
 
 static NSMutableDictionary *_config;
@@ -52,6 +40,16 @@ static NSMutableDictionary *_config;
     _config = new;
 }
 static NSURL *_defaultConfigURL; // default_config aka backup_config
+
++ (void)load {
+    
+    // Get backup config url
+    NSString *defaultConfigPathRelative = @"Contents/Resources/default_config.plist";
+    _defaultConfigURL = [Objects.mainAppBundle.bundleURL URLByAppendingPathComponent:defaultConfigPathRelative];
+    
+    // Load config
+    [self loadConfigFromFile];
+}
 
 /**
  Writes the _config dicitonary to the plist file at _configURL

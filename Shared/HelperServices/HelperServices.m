@@ -10,7 +10,7 @@
 #import <AppKit/AppKit.h>
 #import "HelperServices.h"
 #import "Constants.h"
-#import "Objects/Objects.h"
+#import "Objects.h"
 #import "SharedUtility.h"
 
 @implementation HelperServices

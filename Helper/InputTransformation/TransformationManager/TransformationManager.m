@@ -17,7 +17,7 @@
 #import "NSArray+Additions.h"
 #import "NSMutableDictionary+Additions.h"
 #import "Constants.h"
-#import "ConfigInterface.h"
+#import "ConfigFileInterface_Helper.h"
 #import "SharedMessagePort.h"
 
 @implementation TransformationManager
@@ -46,7 +46,7 @@ NSDictionary *_remaps;
 /// This function takes the remaps in table format from config, then converts it to dict format and makes that available to all the other Input Transformation classes to base their behaviour off of through self.remaps.
 + (void)loadRemapsFromConfig {
     
-    NSArray *remapsTable = [ConfigInterface.config objectForKey:kMFConfigKeyRemaps];
+    NSArray *remapsTable = [ConfigFileInterface_Helper.config objectForKey:kMFConfigKeyRemaps];
     
     // Convert remaps table to remaps dict
     NSMutableDictionary *remapsDict = [NSMutableDictionary dictionary];
