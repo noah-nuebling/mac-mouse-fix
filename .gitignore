@@ -2,7 +2,7 @@
 # macOS stuff
 .DS_Store
 
-# Folders named xcuserdata
+# All contents of folders named xcuserdata
 xcuserdata/
 
 # Password file
