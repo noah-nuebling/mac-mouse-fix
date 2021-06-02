@@ -28,15 +28,15 @@ static CFMachPortRef _eventTap       =   nil;
 
 // Constant
 
-static AXUIElementRef _systemWideAXUIElement;
+static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this to MainConfigInterface
 + (AXUIElementRef) systemWideAXUIElement {
     return _systemWideAXUIElement;
 }
-static CGEventSourceRef _eventSource = nil;
+static CGEventSourceRef _eventSource = nil; // TODO: Does this need to be public?
 + (CGEventSourceRef)eventSource {
     return _eventSource;
 }
-static dispatch_queue_t _scrollQueue;
+static dispatch_queue_t _scrollQueue; // TODO: Does this need to be public?
 + (dispatch_queue_t)_scrollQueue {
     return _scrollQueue;
 }
@@ -72,8 +72,6 @@ static dispatch_queue_t _scrollQueue;
 /// When scrolling is in progress, there are tons of variables holding global state. This resets some of them.
 /// I determined the ones it resets through trial and error. Some misbehaviour/bugs might be caused by this not resetting all of the global variables.
 + (void)resetDynamicGlobals {
-//    _horizontalScrolling    =   NO; // I can't remember why I put this here
-//    _magnificationScrolling = NO; // This too. -> TODO: Remove if commenting out didn't break anything
     [ScrollAnalyzer resetConsecutiveTicksAndSwipes];
     [SmoothScroll resetDynamicGlobals];
 }

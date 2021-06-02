@@ -76,8 +76,6 @@ static void createDisplayLink() {
     _pxPerMsVelocity                    =   0;
     _onePixelScrollsCounter             =   0;
     
-//    [ScrollUtility resetConsecutiveTicksAndSwipes]; // MARK: Put this here, because it fixes problem with magnification scrolling. I feel like this might lead to issues. UPDATE: Yep, this breaks fast scrolling. I disabled it now and magnifications scrolling still seems to work.
-    // TODO: Delete this if no problems occur.
     _isScrolling = false;
 }
 
