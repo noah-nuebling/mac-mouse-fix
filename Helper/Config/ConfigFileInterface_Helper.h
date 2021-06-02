@@ -11,10 +11,10 @@
 
 @interface ConfigFileInterface_Helper : NSObject
 
++ (void)load_Manual;
+
 id config(NSString *keyPath);
 + (NSMutableDictionary *)config;
-
-+ (void)load_Manual;
 
 + (void)reactToConfigFileChange;
 + (BOOL)applyOverridesForAppUnderMousePointer_Force:(BOOL)force;

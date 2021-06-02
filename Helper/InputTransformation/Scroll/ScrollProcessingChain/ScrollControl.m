@@ -190,48 +190,49 @@ static int _scrollDirection;
 
 static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
+    // Handle eventTapDisabled messages
+    if (type == kCGEventTapDisabledByTimeout || type == kCGEventTapDisabledByUserInput) {
+        
+        if (type == kCGEventTapDisabledByUserInput) {
+            DDLogInfo(@"ScrollControl eventTap was disabled by timeout. Re-enabling");
+            CGEventTapEnable(_eventTap, true);
+        } else if (type == kCGEventTapDisabledByUserInput) {
+            DDLogInfo(@"ScrollControl eventTap was disabled by user input.");
+        }
+        
+        return event;
+    }
+    
     // Return non-scrollwheel events unaltered
     int64_t isPixelBased     = CGEventGetIntegerValueField(event, kCGScrollWheelEventIsContinuous);
     int64_t scrollPhase      = CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase);
     int64_t scrollDeltaAxis1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
     int64_t scrollDeltaAxis2 = CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2);
+    bool isDiagonal = scrollDeltaAxis1 != 0 && scrollDeltaAxis2 != 0;
     if (isPixelBased != 0
-        || scrollDeltaAxis1 == 0
-        || scrollDeltaAxis2 != 0 // Ignore horizontal scroll-events // TODO: Remove this to support horizontal scroll wheel
+        || isDiagonal // Ignore diagonal scroll-events
         || scrollPhase != 0) { // Adding scrollphase here is untested
         return event;
     }
     
-    // Check if scrolling direction changed
-    [ScrollAnalyzer updateScrollDirectionDidChange:scrollDeltaAxis1];
-    if (ScrollAnalyzer.scrollDirectionDidChange) {
-        [ScrollAnalyzer resetConsecutiveTicksAndSwipes];
-    }
-    
     // Create a copy, because the original event will become invalid and unusable in the new thread.
-//    CGEventRef eventCopy = [Utility_Helper createEventWithValuesFromEvent:event]; // This function doesn't work right
-//    CGEventRef eventCopy = [ScrollUtility createPixelBasedScrollEventWithValuesFromEvent:event]; // This doesn't either
     CGEventRef eventCopy = CGEventCreateCopy(event);
-    // ^ I remember having trouble with the memory / multithreading stuff with this
-    //      So I wrote my own createEventWithValuesFrom... function. It doesn't work perfectly either though and caused other troubles.
-    //      So we're trying CGEventCreateCopy again, in hopes we wrongly attributed our previous troubles to it. For now it seems fine.
         
-    // Do heavy processing of event on a different thread using `dispatch_async`, so we can return faster
-    // Returning fast should prevent the system from disabling this eventTap entirely when under load. This doesn't happen in MOS for some reason, maybe there's a better solution than multithreading.
+    //  Executing heavy stuff on a different thread to prevent the eventTap from timing out. We wrote this before knowing that you can just re-enable the eventTap when it times out. But this doesn't hurt.
     
-    // \discusson With multithreading enabled, scrolling sometimes - seemingly at random - stops working entirely. So the tap still works but sending events doesn't.
-    // \discusson - Switching to an app that doesn't have smothscroll enabled seems to fix it. -> Somethings in my code must be breaking. -> The solution was executing displayLinkActivate() on the main thread, so idk why this happened.
-    // \discusson Sometimes the scroll direction is wrong for one tick, seemingly at random. I don't think this happened before the multithreading stuff. Also, I changed other things as well around the time it started happening so not sure if it really has to do with multithreading.
     dispatch_async(_scrollQueue, ^{
 
+        // Check if scroll dir changed
+        //   Reset tick and swipe counters if yes
+        [ScrollAnalyzer updateScrollDirectionDidChange:scrollDeltaAxis1];
+        if (ScrollAnalyzer.scrollDirectionDidChange) {
+            [ScrollAnalyzer resetConsecutiveTicksAndSwipes];
+        }
+        
         /*
          Update tick and swipe counters
-              Updating here in the scrollQueue instead of in the eventTapCallback leads to less accurate measured time between ticks,
-              But it ensures that updateConsective...  calls aren't out of sync with the _scrollQueue.
-              Possible solution would be to call updateCons... in the eventTapCallback but save the info which updateCons... produces
-              in a queue instead of overriding it when updateCons is called again.
-              Or we'll simply call updateCons... here in the queue and deal with the inaccurate time between ticks.
-              Actually the intervall between different eventTapCallback calls is very erratic and probably not accurate either, so it shouldn't make a big difference.
+            Need to updating here in the scrollQueue instead of in the eventTapCallback so that the calls aren't out of sync with the _scrollQueue.
+            Calling it here leads to less accurate measured time between ticks, but the intervall between different eventTapCallback calls is very erratic and seemingly not accurate anyways, so it shouldn't make a big difference.
          */
         [ScrollAnalyzer updateConsecutiveScrollTickAndSwipeCountersWithTickOccuringNow];
         
@@ -255,6 +256,8 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
         // Process event
         
+        int16_t pxToScrollForThisTick = scrollDeltaAxis1;
+        
         if (_isSmoothEnabled) {
             [SmoothScroll start];   // Not sure if useful
             [RoughScroll stop];     // Not sure if useful
@@ -268,5 +271,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     });
     return nil;
 }
+
+
 
 @end

@@ -201,6 +201,7 @@ static BOOL _hasStarted;
             // Executing this on _scrollQueue (like the rest of this function) leads to `CVDisplayLinkStart()` failing sometimes. Once it has failed it will fail over and over again, taking a few minutes or so to start working again, if at all.
             // Solution: I have no idea why, but executing on the main queue does the trick! ^^
             // This actually still occurs sometimes after waking the computer from sleep. It fails over and over with the return code -6661 = kCVReturnInvalidArgument
+            // There also used to be a bug I wrote about in ScrollControl.h where sending events would stop working at random until switching to an app that doesnt have SmoothScroll enabled. It was also fixed by calling CVDisplayLinkStart() on the main thread. It was probably the same issue.
             dispatch_sync(dispatch_get_main_queue(), ^{
                 
                 if (_displayLink == nil) { // Hopefully prevent the error where it fails with kCVReturnInvalidArgument
