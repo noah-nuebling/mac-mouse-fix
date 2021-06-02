@@ -36,13 +36,6 @@ typedef enum {
 + (void)updateMouseDidMove;
 + (BOOL)frontMostAppDidChange;
 + (void)updateFrontMostAppDidChange;
-+ (BOOL)scrollDirectionDidChange;
-+ (void)updateScrollDirectionDidChange:(long long)thisScrollValue;
-
-+ (int)consecutiveScrollTickCounter;
-+ (int)consecutiveScrollSwipeCounter;
-+ (void)updateConsecutiveScrollTickAndSwipeCountersWithTickOccuringNow;
-+ (void)resetConsecutiveTicksAndSwipes;
 
 @end
 

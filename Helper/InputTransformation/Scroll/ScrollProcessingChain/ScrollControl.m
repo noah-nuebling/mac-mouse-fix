@@ -17,6 +17,7 @@
 #import "ScrollUtility.h"
 #import "Utility_Helper.h"
 #import "WannabePrefixHeader.h"
+#import "ScrollAnalyzer.h"
 
 @implementation ScrollControl
 
@@ -136,7 +137,7 @@ static int _scrollDirection;
 + (void)resetDynamicGlobals {
 //    _horizontalScrolling    =   NO; // I can't remember why I put this here
 //    _magnificationScrolling = NO; // This too. -> TODO: Remove if commenting out didn't break anything
-    [ScrollUtility resetConsecutiveTicksAndSwipes];
+    [ScrollAnalyzer resetConsecutiveTicksAndSwipes];
     [SmoothScroll resetDynamicGlobals];
 }
 
@@ -151,6 +152,7 @@ static int _scrollDirection;
 }
 
 /// Either activate SmoothScroll or RoughScroll or stop scroll interception entirely
+/// Call this whenever a value which the decision depends on changes
 + (void)decide {
     BOOL disableAll =
     ![DeviceManager devicesAreAttached];
@@ -195,15 +197,15 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     int64_t scrollDeltaAxis2 = CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2);
     if (isPixelBased != 0
         || scrollDeltaAxis1 == 0
-        || scrollDeltaAxis2 != 0 // Ignore horizontal scroll-events
+        || scrollDeltaAxis2 != 0 // Ignore horizontal scroll-events // TODO: Remove this to support horizontal scroll wheel
         || scrollPhase != 0) { // Adding scrollphase here is untested
         return event;
     }
     
     // Check if scrolling direction changed
-    [ScrollUtility updateScrollDirectionDidChange:scrollDeltaAxis1];
-    if (ScrollUtility.scrollDirectionDidChange) {
-        [ScrollUtility resetConsecutiveTicksAndSwipes];
+    [ScrollAnalyzer updateScrollDirectionDidChange:scrollDeltaAxis1];
+    if (ScrollAnalyzer.scrollDirectionDidChange) {
+        [ScrollAnalyzer resetConsecutiveTicksAndSwipes];
     }
     
     // Create a copy, because the original event will become invalid and unusable in the new thread.
@@ -231,11 +233,11 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
               Or we'll simply call updateCons... here in the queue and deal with the inaccurate time between ticks.
               Actually the intervall between different eventTapCallback calls is very erratic and probably not accurate either, so it shouldn't make a big difference.
          */
-        [ScrollUtility updateConsecutiveScrollTickAndSwipeCountersWithTickOccuringNow];
+        [ScrollAnalyzer updateConsecutiveScrollTickAndSwipeCountersWithTickOccuringNow];
         
         // Set application overrides
         
-        if (ScrollUtility.consecutiveScrollTickCounter == 0) { // Only do this on the first of each series of consecutive scroll ticks
+        if (ScrollAnalyzer.consecutiveScrollTickCounter == 0) { // Only do this on the first of each series of consecutive scroll ticks
             [ScrollUtility updateMouseDidMove];
             if (!ScrollUtility.mouseDidMove) {
                 [ScrollUtility updateFrontMostAppDidChange];

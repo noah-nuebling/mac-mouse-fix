@@ -21,11 +21,12 @@
 
 #import "DeviceManager.h"
 #import "Utility_Helper.h"
-#import "../Touch/TouchSimulator.h"
+#import "TouchSimulator.h"
 
 #import "SharedUtility.h"
 
 #import "GestureScrollSimulator.h"
+#import "ScrollAnalyzer.h"
 
 @implementation SmoothScroll
 
@@ -137,7 +138,7 @@ static BOOL _hasStarted;
     _isScrolling = YES;
     
     // Reset _pixelScrollQueue and related values if appropriate
-    if (ScrollUtility.scrollDirectionDidChange) { // Why are we resetting what we are resetting?
+    if (ScrollAnalyzer.scrollDirectionDidChange) { // Why are we resetting what we are resetting?
         _pxScrollBuffer = 0;
         _pxToScrollThisFrame = 0;
         _pxPerMsVelocity = 0;
@@ -164,7 +165,7 @@ static BOOL _hasStarted;
     }
     
     // Apply acceleration to _pxScrollBuffer
-    if (ScrollUtility.consecutiveScrollTickCounter != 0) {
+    if (ScrollAnalyzer.consecutiveScrollTickCounter != 0) {
         _pxScrollBuffer = _pxScrollBuffer * _accelerationForScrollBuffer;
     }
     
@@ -173,7 +174,7 @@ static BOOL _hasStarted;
 //        DDLogDebug(@"swip: %d", ScrollUtility.consecutiveScrollSwipeCounter);
 //    }
     
-    int fastScrollThresholdDelta = ScrollUtility.consecutiveScrollSwipeCounter - ScrollControl.fastScrollThreshold_inSwipes;
+    int fastScrollThresholdDelta = ScrollAnalyzer.consecutiveScrollSwipeCounter - ScrollControl.fastScrollThreshold_inSwipes;
     if (fastScrollThresholdDelta >= 0) {
         //&& ScrollUtility.consecutiveScrollTickCounter >= ScrollControl.scrollSwipeThreshold_inTicks) {
         _pxScrollBuffer = _pxScrollBuffer * ScrollControl.fastScrollFactor * pow(ScrollControl.fastScrollExponentialBase, ((int32_t)fastScrollThresholdDelta));
@@ -187,7 +188,7 @@ static BOOL _hasStarted;
     // Update scroll phase
     _displayLinkPhase = kMFPhaseStart;
     
-    if (ScrollUtility.consecutiveScrollTickCounter == 0) {
+    if (ScrollAnalyzer.consecutiveScrollTickCounter == 0) {
         if (ScrollUtility.mouseDidMove) {
             // Set diplaylink to the display that is actally being scrolled - not sure if this is necessary, because having the displaylink at 30fps on a 30fps display looks just as horrible as having the display link on 60fps, if not worse
             @try {
