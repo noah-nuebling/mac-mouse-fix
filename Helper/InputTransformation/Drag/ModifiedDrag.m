@@ -37,7 +37,7 @@ struct ModifiedDragState {
     Device *modifiedDevice;
     
     CGPoint origin;
-    MFVector originOffset;
+    Vector originOffset;
     CGPoint usageOrigin; // Point at which the modified drag changed its activationState to inUse
     MFAxis usageAxis;
     IOHIDEventPhaseBits phase;
@@ -128,7 +128,7 @@ static struct ModifiedDragState _drag;
     _drag.activationState = kMFModifiedInputActivationStateInitialized;
     _drag.type = type;
     _drag.origin = Utility_Transformation.CGMouseLocationWithoutEvent;
-    _drag.originOffset = (MFVector){0};
+    _drag.originOffset = (Vector){0};
     _drag.subPixelatorX = [SubPixelator alloc];
     _drag.subPixelatorY = [SubPixelator alloc];
     _drag.fakeDragButtonNumber = fakeDragButtonNumber;
@@ -178,7 +178,7 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY) {
     _drag.originOffset.x += deltaX;
     _drag.originOffset.y += deltaY;
     
-    MFVector ofs = _drag.originOffset;
+    Vector ofs = _drag.originOffset;
     
     // Activate the modified drag if the mouse has been moved far enough from the point where the drag started
     if (MAX(fabs(ofs.x), fabs(ofs.y)) > _drag.usageThreshold) {

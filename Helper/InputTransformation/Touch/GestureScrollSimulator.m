@@ -19,7 +19,7 @@
 
 @implementation GestureScrollSimulator
 
-static MFVector _lastInputGestureVector = { .x = 0, .y = 0 };
+static Vector _lastInputGestureVector = { .x = 0, .y = 0 };
 
 static VectorSubPixelator *_gesturePixelator;
 static VectorSubPixelator *_scrollPointPixelator;
@@ -63,15 +63,15 @@ static VectorSubPixelator *_scrollPixelator;
             return;
         }
         
-        MFVector vecGesture;
-        MFVector vecScrollPoint;
-        MFVector vecScroll;
+        Vector vecGesture;
+        Vector vecScrollPoint;
+        Vector vecScroll;
         if (isGestureDelta) {
-            vecGesture = (MFVector){ .x = dx, .y = dy };
+            vecGesture = (Vector){ .x = dx, .y = dy };
             vecScrollPoint = scrollPointVectorWithGestureVector(vecGesture);
             vecScroll = scrollVectorWithScrollPointVector(vecScrollPoint);
         } else { // Is scroll point delta
-            vecScrollPoint = (MFVector){ .x = dx, .y = dy };
+            vecScrollPoint = (Vector){ .x = dx, .y = dy };
             vecGesture = gestureVectorFromScrollPointVector(vecScrollPoint);
             vecScroll = scrollVectorWithScrollPointVector(vecScrollPoint);
         }
@@ -91,9 +91,9 @@ static VectorSubPixelator *_scrollPixelator;
          locaction:loc];
     } else {
         if (isZeroVector(_lastInputGestureVector)) { // This will never be called, because zero vectors will never be recorded into _lastInputGestureVector. Read the doc above to learn why. TODO: remove.
-            [self postGestureScrollEventWithGestureVector:(MFVector){}
-                                             scrollVector:(MFVector){}
-                                        scrollVectorPoint:(MFVector){}
+            [self postGestureScrollEventWithGestureVector:(Vector){}
+                                             scrollVector:(Vector){}
+                                        scrollVectorPoint:(Vector){}
                                                     phase:kIOHIDEventPhaseEnded
                                             momentumPhase:0
                                                  locaction:loc];
@@ -105,9 +105,9 @@ static VectorSubPixelator *_scrollPixelator;
                 startPostingMomentumScrollEventsWithInitialGestureVector(_lastInputGestureVector, 0.016, 1.0, dragCoeff, dragExp);
             });
         } else {
-            [self postGestureScrollEventWithGestureVector:(MFVector){}
-                                             scrollVector:(MFVector){}
-                                        scrollVectorPoint:(MFVector){}
+            [self postGestureScrollEventWithGestureVector:(Vector){}
+                                             scrollVector:(Vector){}
+                                        scrollVectorPoint:(Vector){}
                                                     phase:kIOHIDEventPhaseEnded
                                             momentumPhase:0
                                                 locaction:loc];
@@ -133,9 +133,9 @@ static VectorSubPixelator *_scrollPixelator;
 ///       - To stop this from happening, either give the last kIOHIDEventPhaseChanged event very small deltas, or send an event with phase kIOHIDEventPhaseUndefined and momentumPhase kCGMomentumScrollPhaseEnd right after this one.
 ///     6. kIOHIDEventPhaseUndefined - Use this phase with non-0 momentumPhase values. (0 being kCGMomentumScrollPhaseNone)
 
-+ (void)postGestureScrollEventWithGestureVector:(MFVector)vecGesture
-                                   scrollVector:(MFVector)vecScroll
-                              scrollVectorPoint:(MFVector)vecScrollPoint
++ (void)postGestureScrollEventWithGestureVector:(Vector)vecGesture
+                                   scrollVector:(Vector)vecScroll
+                              scrollVectorPoint:(Vector)vecScrollPoint
                                           phase:(IOHIDEventPhaseBits)phase
                                   momentumPhase:(CGMomentumScrollPhase)momentumPhase
                                       locaction:(CGPoint)loc {
@@ -231,15 +231,15 @@ static bool _breakMomentumScrollFlag; // Should only be manipulated by `breakMom
 + (void)breakMomentumScroll {
     _breakMomentumScrollFlag = true;
 }
-static void startPostingMomentumScrollEventsWithInitialGestureVector(MFVector initGestureVec, CFTimeInterval tick, int thresh, double dragCoeff, double dragExp) {
+static void startPostingMomentumScrollEventsWithInitialGestureVector(Vector initGestureVec, CFTimeInterval tick, int thresh, double dragCoeff, double dragExp) {
     
     _breakMomentumScrollFlag = false;
     _momentumScrollIsActive = true;
     
-    MFVector emptyVec = (const MFVector){};
+    Vector emptyVec = (const Vector){};
     
-    MFVector vecPt = initalMomentumScrollPointVectorWithGestureVector(initGestureVec);
-    MFVector vec = scrollVectorWithScrollPointVector(vecPt);
+    Vector vecPt = initalMomentumScrollPointVectorWithGestureVector(initGestureVec);
+    Vector vec = scrollVectorWithScrollPointVector(vecPt);
     double magPt = magnitudeOfVector(vecPt);
     CGMomentumScrollPhase ph = kCGMomentumScrollPhaseBegin;
     
@@ -274,42 +274,42 @@ static void startPostingMomentumScrollEventsWithInitialGestureVector(MFVector in
     
 }
 
-static MFVector momentumScrollPointVectorWithPreviousVector(MFVector velocity, double dragCoeff, double dragExp, double timeDelta) {
+static Vector momentumScrollPointVectorWithPreviousVector(Vector velocity, double dragCoeff, double dragExp, double timeDelta) {
     
     double a = magnitudeOfVector(velocity);
     double b = pow(a, dragExp);
     double dragMagnitude = b * dragCoeff;
     
-    MFVector unitVec = normalizedVector(velocity);
-    MFVector dragForce = scaledVector(unitVec, dragMagnitude);
+    Vector unitVec = normalizedVector(velocity);
+    Vector dragForce = scaledVector(unitVec, dragMagnitude);
     dragForce = scaledVector(dragForce, -1);
     
-    MFVector velocityDelta = scaledVector(dragForce, timeDelta);
+    Vector velocityDelta = scaledVector(dragForce, timeDelta);
     
-    MFVector newVelocity = addedVectors(velocity, velocityDelta);
+    Vector newVelocity = addedVectors(velocity, velocityDelta);
     
     double dp = dotProduct(velocity, newVelocity);
     if (dp < 0) { // Vector has changed direction (crossed zero)
-        newVelocity = (const MFVector){}; // Set to zero
+        newVelocity = (const Vector){}; // Set to zero
     }
     return newVelocity;
 }
 
 typedef double (^VectorScalerFunction)(double);
-static MFVector scaledVectorWithFunction(MFVector vec, VectorScalerFunction f) {
+static Vector scaledVectorWithFunction(Vector vec, VectorScalerFunction f) {
     double magIn = magnitudeOfVector(vec);
-    if (magIn == 0) return (MFVector){0};  // To prevent division by 0 from producing nan
+    if (magIn == 0) return (Vector){0};  // To prevent division by 0 from producing nan
     double magOut = f(magIn);
     double scale = magOut / magIn;
     return scaledVector(vec, scale);
 }
-static MFVector scrollVectorWithScrollPointVector(MFVector vec) {
+static Vector scrollVectorWithScrollPointVector(Vector vec) {
     VectorScalerFunction f = ^double(double x) {
         return 0.1 * (x-1); // Approximation from looking at real trackpad events
     };
     return scaledVectorWithFunction(vec, f);
 }
-static MFVector scrollPointVectorWithGestureVector(MFVector vec) {
+static Vector scrollPointVectorWithGestureVector(Vector vec) {
     VectorScalerFunction f = ^double(double x) {
         //    double magOut = 0.01 * pow(magIn, 2) + 0.3 * magIn; // Got these values through curve fitting
         //    double magOut = 0.05 * pow(magIn, 2) + 0.8 * magIn; // These feel better for mouse
@@ -317,7 +317,7 @@ static MFVector scrollPointVectorWithGestureVector(MFVector vec) {
     };
     return scaledVectorWithFunction(vec, f);
 }
-static MFVector gestureVectorFromScrollPointVector(MFVector vec) {
+static Vector gestureVectorFromScrollPointVector(Vector vec) {
     VectorScalerFunction f = ^double(double x) {
 //        x = 0.54 * x; // Tried to make input pixels to equal animation pixels, but the scaling seems to always be different and be dependent on page size. Might as well just leave it like it is because it feels decent enough
         return x;
@@ -325,8 +325,8 @@ static MFVector gestureVectorFromScrollPointVector(MFVector vec) {
     return scaledVectorWithFunction(vec, f);
 }
 
-static MFVector initalMomentumScrollPointVectorWithGestureVector(MFVector vec) {
-    MFVector vecScale = scaledVector(vec, 2.2); // This is probably not very accurate to real events, as I didn't test this at all.
+static Vector initalMomentumScrollPointVectorWithGestureVector(Vector vec) {
+    Vector vecScale = scaledVector(vec, 2.2); // This is probably not very accurate to real events, as I didn't test this at all.
     return scrollPointVectorWithGestureVector(vecScale);
 }
 
@@ -339,7 +339,7 @@ static MFVector initalMomentumScrollPointVectorWithGestureVector(MFVector vec) {
 //    return round(0.01 * pow(d,2) + 0.3 * d);
 //}
 
-static double magnitudeOfVector(MFVector vec) {
+static double magnitudeOfVector(Vector vec) {
     
     // Handle simple cases separately for optimization
     if (vec.x == 0) {
@@ -350,26 +350,26 @@ static double magnitudeOfVector(MFVector vec) {
     
     return sqrt(pow(vec.x, 2) + pow(vec.y, 2));
 }
-MFVector normalizedVector(MFVector vec) {
+Vector normalizedVector(Vector vec) {
     return scaledVector(vec, 1.0/magnitudeOfVector(vec));
 }
-MFVector scaledVector(MFVector vec, double scalar) {
-    MFVector outVec;
+Vector scaledVector(Vector vec, double scalar) {
+    Vector outVec;
     outVec.x = vec.x * scalar;
     outVec.y = vec.y * scalar;
     return outVec;
 }
-MFVector addedVectors(MFVector vec1, MFVector vec2) {
-    MFVector outVec;
+Vector addedVectors(Vector vec1, Vector vec2) {
+    Vector outVec;
     outVec.x = vec1.x + vec2.x;
     outVec.y = vec1.y + vec2.y;
     return outVec;
 }
-double dotProduct(MFVector vec1, MFVector vec2) {
+double dotProduct(Vector vec1, Vector vec2) {
     return vec1.x * vec2.x + vec1.y * vec2.y;
 }
 
-bool isZeroVector(MFVector vec) {
+bool isZeroVector(Vector vec) {
     return vec.x == 0 && vec.y == 0;
 }
 

@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface VectorSubPixelator : NSObject
 + (VectorSubPixelator *)pixelator;
 - (instancetype)init NS_UNAVAILABLE;
-- (MFVector)intVectorWithDoubleVector:(MFVector)inpVec;
+- (Vector)intVectorWithDoubleVector:(Vector)inpVec;
 @end
 
 NS_ASSUME_NONNULL_END
