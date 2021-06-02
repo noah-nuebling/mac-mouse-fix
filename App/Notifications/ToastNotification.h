@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-// MFNotification.h
+// ToastNotification.h
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2021
 // Licensed under MIT
@@ -12,7 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MFNotification : NSPanel
+@interface ToastNotification : NSPanel
 @property ToastNotificationController *controller;
 @end
 

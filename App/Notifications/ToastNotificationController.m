@@ -16,14 +16,14 @@
 #import "ToastNotificationController.h"
 #import "AppDelegate.h"
 #import "Utility_App.h"
-#import "MFNotification.h"
+#import "ToastNotification.h"
 //#import "NSTextField+Additions.h"
-#import "MFNotificationLabel.h"
+#import "ToastNotificationLabel.h"
 #import "NSAttributedString+Additions.h"
 #import "WannabePrefixHeader.h"
 
 @interface ToastNotificationController ()
-@property (unsafe_unretained) IBOutlet MFNotificationLabel *label;
+@property (unsafe_unretained) IBOutlet ToastNotificationLabel *label;
 @end
 
 @implementation ToastNotificationController {
@@ -41,7 +41,7 @@ static id _localEventMonitor;
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(windowResignKey:) name:NSWindowDidResignKeyNotification object:nil];
         
         // Setup notfication window
-        _instance = [[ToastNotificationController alloc] initWithWindowNibName:@"MFNotification"];
+        _instance = [[ToastNotificationController alloc] initWithWindowNibName:@"ToastNotification"];
         
         NSPanel *w = (NSPanel *)_instance.window;
         
@@ -70,11 +70,11 @@ static double _toastAnimationOffset = 20;
 // Convenience function
 + (void)attachNotificationWithMessage:(NSAttributedString *)message toWindow:(NSWindow *)window forDuration:(NSTimeInterval)showDuration {
     
-    [self attachNotificationWithMessage:message toWindow:window forDuration:showDuration alignment:kMFNotificationAlignmentTopMiddle];
+    [self attachNotificationWithMessage:message toWindow:window forDuration:showDuration alignment:kToastNotificationAlignmentTopMiddle];
 }
 
 /// Pass 0 to `showDuration` to get the default duration
-+ (void)attachNotificationWithMessage:(NSAttributedString *)message toWindow:(NSWindow *)attachWindow forDuration:(NSTimeInterval)showDuration alignment:(MFNotificationAlignment)alignment {
++ (void)attachNotificationWithMessage:(NSAttributedString *)message toWindow:(NSWindow *)attachWindow forDuration:(NSTimeInterval)showDuration alignment:(ToastNotificationAlignment)alignment {
     
     // Override default font size from interface builder. This also overrides font size we set to `message` before passing it to this function which might be bad.
 //    message = [message attributedStringBySettingFontSize:NSFont.smallSystemFontSize];
@@ -89,15 +89,15 @@ static double _toastAnimationOffset = 20;
     double sideMargin = 0.0;
     double bottomMargin = 0.0;
     
-    if (alignment == kMFNotificationAlignmentTopMiddle) {
+    if (alignment == kToastNotificationAlignmentTopMiddle) {
         mainWindowTitleBarHeight = 30;
         topEdgeMargin = 5.0; // 0.0 // -25.0
         sideMargin = 20;
         _toastAnimationOffset = 20;
-    } else if (alignment == kMFNotificationAlignmentBottomRight){
+    } else if (alignment == kToastNotificationAlignmentBottomRight){
         sideMargin = bottomMargin = 10;
         _toastAnimationOffset = -20;
-    } else if (alignment == kMFNotificationAlignmentBottomMiddle) {
+    } else if (alignment == kToastNotificationAlignmentBottomMiddle) {
         bottomMargin = 10;
         sideMargin = 20;
         _toastAnimationOffset = -20;
@@ -124,7 +124,7 @@ static double _toastAnimationOffset = 20;
     // Calc size to fit content
     NSRect newNotifFrame = w.frame;
     // Get insets around label
-    MFNotificationLabel *label = _instance.label;
+    ToastNotificationLabel *label = _instance.label;
     NSRect notifFrame = w.frame;
 #if DEBUG
     CGFloat sh = label.superview.superview.superview.frame.size.height;
@@ -154,15 +154,15 @@ static double _toastAnimationOffset = 20;
     
     // Calc Position
     
-    if (alignment == kMFNotificationAlignmentTopMiddle) {
+    if (alignment == kToastNotificationAlignmentTopMiddle) {
         // Top middle alignment
         newNotifFrame.origin.x = NSMidX(mainW.frame) - (newNotifSize.width / 2);
         newNotifFrame.origin.y = (mainW.frame.origin.y + mainW.frame.size.height - (mainWindowTitleBarHeight + topEdgeMargin)) - newNotifSize.height;
-    } else if (alignment == kMFNotificationAlignmentBottomRight) {
+    } else if (alignment == kToastNotificationAlignmentBottomRight) {
         // Bottom right alignment
         newNotifFrame.origin.x = mainW.frame.origin.x + mainW.frame.size.width - newNotifFrame.size.width - sideMargin;
         newNotifFrame.origin.y = mainW.frame.origin.y + bottomMargin;
-    } else if (alignment == kMFNotificationAlignmentBottomMiddle) {
+    } else if (alignment == kToastNotificationAlignmentBottomMiddle) {
         newNotifFrame.origin.x = NSMidX(mainW.frame) - (newNotifSize.width / 2);
         newNotifFrame.origin.y = mainW.frame.origin.y + bottomMargin;
     } else assert(false);

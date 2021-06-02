@@ -67,7 +67,8 @@
         // Flash Notification
 //        NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Mac Mouse Fix will stay enabled after you restart your Mac"];
 //        message = [message attributedStringBySettingFontSize:NSFont.smallSystemFontSize];
-//        [MFNotificationController attachNotificationWithMessage:message toWindow:AppDelegate.mainWindow forDuration:-1 alignment:kMFNotificationAlignmentBottomMiddle];
+//        [Toast
+//        NotificationController attachNotificationWithMessage:message toWindow:AppDelegate.mainWindow forDuration:-1 alignment:kToastNotificationAlignmentBottomMiddle];
     }
 }
 

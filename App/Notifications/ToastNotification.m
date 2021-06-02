@@ -1,16 +1,16 @@
 //
 // --------------------------------------------------------------------------
-// MFNotification.m
+// ToastNotification.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2021
 // Licensed under MIT
 // --------------------------------------------------------------------------
 //
 
-#import "MFNotification.h"
+#import "ToastNotification.h"
 #import "AppDelegate.h"
 
-@implementation MFNotification {
+@implementation ToastNotification {
     id _localEventMonitor;
 }
 
@@ -34,7 +34,7 @@
 //            // Dismiss notification on click
 //            NSView *viewUnderMousePointer = [AppDelegate.mainWindow.contentView hitTest:event.locationInWindow];
 //            if ([viewUnderMousePointer isEqual:self.contentView]) {
-//                [MFNotificationController closeNotificationWithFadeOut];
+//                [ToastNotificationController closeNotificationWithFadeOut];
 //            }
 //
 //            return event;

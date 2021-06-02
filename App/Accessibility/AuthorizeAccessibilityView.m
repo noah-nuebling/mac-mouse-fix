@@ -153,14 +153,14 @@ AuthorizeAccessibilityView *_accViewController;
         [NSAnimationContext.currentContext setDuration:0.3];
         [NSAnimationContext.currentContext setCompletionHandler:^{
 //            NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Welcome to Mac Mouse Fix!"];
-//            [MFNotificationController attachNotificationWithMessage:message toWindow:AppDelegate.mainWindow forDuration:-1];
+//            [ToastNotificationController attachNotificationWithMessage:message toWindow:AppDelegate.mainWindow forDuration:-1];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.0), dispatch_get_main_queue(), ^{
                 // v This usually fails because the remote message port can't be created
                 //      I think it happens because the helper kills itself after gaining accessibility access and is restarted by launchd too slowly. Weirdly, I think I remember that this used to work.
                 NSSet *capturedButtons = [RemapTableUtility getCapturedButtons];
                 [CaptureNotifications showButtonCaptureNotificationWithBeforeSet:NSSet.set afterSet:capturedButtons];
 //                NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Mac Mouse Fix will stay enabled after you restart your Mac"];
-//                [MFNotificationController attachNotificationWithMessage:message toWindow:AppDelegate.mainWindow forDuration:-1];
+//                [ToastNotificationController attachNotificationWithMessage:message toWindow:AppDelegate.mainWindow forDuration:-1];
             });
         }];
         baseView.animator.alphaValue = 1;

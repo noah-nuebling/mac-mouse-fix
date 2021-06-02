@@ -26,10 +26,10 @@
 		4F44FEF82606A5C100926A5E /* default_config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F44FEF72606A5C100926A5E /* default_config.plist */; };
 		4F44FF042606D73D00926A5E /* SharedMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* SharedMessagePort.m */; };
 		4F44FF052606D73D00926A5E /* SharedMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* SharedMessagePort.m */; };
-		4F79A7EF26042E2E00076A7E /* MFNotification.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F79A7EE26042E2E00076A7E /* MFNotification.xib */; };
+		4F79A7EF26042E2E00076A7E /* ToastNotification.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F79A7EE26042E2E00076A7E /* ToastNotification.xib */; };
 		4F79A81C2604317200076A7E /* ToastNotificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A81B2604317200076A7E /* ToastNotificationController.m */; };
 		4F79A82B2605074000076A7E /* NSAttributedString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A82A2605074000076A7E /* NSAttributedString+Additions.m */; };
-		4F79A83626051E4A00076A7E /* MFNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A83526051E4A00076A7E /* MFNotification.m */; };
+		4F79A83626051E4A00076A7E /* ToastNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A83526051E4A00076A7E /* ToastNotification.m */; };
 		4F79C2EA260976950067B381 /* RemapTableTranslator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79C2E9260976950067B381 /* RemapTableTranslator.m */; };
 		4F7AB0552606698A0008055E /* UIStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F7AB0542606698A0008055E /* UIStrings.m */; };
 		4F8CE7012617738A00D70A76 /* AppTranslocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CE6FF2617738A00D70A76 /* AppTranslocationManager.m */; };
@@ -46,7 +46,7 @@
 		4FBA3152261758C1006C20F3 /* SharedUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653B25F2C7B000689B77 /* SharedUtility.m */; };
 		4FBC943B260F8AA60062F186 /* MASShortcut.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC9434260F8AA60062F186 /* MASShortcut.m */; };
 		4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCA07D525F3129B00BFE209 /* RemapTableController.m */; };
-		4FD82DDB260575B100664D6F /* MFNotificationLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD82DDA260575B100664D6F /* MFNotificationLabel.m */; };
+		4FD82DDB260575B100664D6F /* ToastNotificationLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD82DDA260575B100664D6F /* ToastNotificationLabel.m */; };
 		4FF6654125F2C7B000689B77 /* default_launchd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6652E25F2C7B000689B77 /* default_launchd.plist */; };
 		4FF6654225F2C7B000689B77 /* default_launchd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6652E25F2C7B000689B77 /* default_launchd.plist */; };
 		4FF6654325F2C7B000689B77 /* HelperServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6652F25F2C7B000689B77 /* HelperServices.m */; };
@@ -246,13 +246,13 @@
 		4F44FF022606D73D00926A5E /* SharedMessagePort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharedMessagePort.h; sourceTree = "<group>"; };
 		4F44FF032606D73D00926A5E /* SharedMessagePort.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SharedMessagePort.m; sourceTree = "<group>"; };
 		4F6C187B2666D45E003B9567 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PrefixHeader.pch; path = Shared/PrefixHeader.pch; sourceTree = SOURCE_ROOT; };
-		4F79A7EE26042E2E00076A7E /* MFNotification.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MFNotification.xib; sourceTree = "<group>"; };
+		4F79A7EE26042E2E00076A7E /* ToastNotification.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToastNotification.xib; sourceTree = "<group>"; };
 		4F79A81A2604317200076A7E /* ToastNotificationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToastNotificationController.h; sourceTree = "<group>"; };
 		4F79A81B2604317200076A7E /* ToastNotificationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ToastNotificationController.m; sourceTree = "<group>"; };
 		4F79A8292605074000076A7E /* NSAttributedString+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+Additions.h"; sourceTree = "<group>"; };
 		4F79A82A2605074000076A7E /* NSAttributedString+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+Additions.m"; sourceTree = "<group>"; };
-		4F79A83426051E4A00076A7E /* MFNotification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFNotification.h; sourceTree = "<group>"; };
-		4F79A83526051E4A00076A7E /* MFNotification.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFNotification.m; sourceTree = "<group>"; };
+		4F79A83426051E4A00076A7E /* ToastNotification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToastNotification.h; sourceTree = "<group>"; };
+		4F79A83526051E4A00076A7E /* ToastNotification.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ToastNotification.m; sourceTree = "<group>"; };
 		4F79C2E8260976950067B381 /* RemapTableTranslator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapTableTranslator.h; sourceTree = "<group>"; };
 		4F79C2E9260976950067B381 /* RemapTableTranslator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapTableTranslator.m; sourceTree = "<group>"; };
 		4F7AB0532606698A0008055E /* UIStrings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIStrings.h; sourceTree = "<group>"; };
@@ -286,8 +286,8 @@
 		4FCA07D425F3129B00BFE209 /* RemapTableController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapTableController.h; sourceTree = "<group>"; };
 		4FCA07D525F3129B00BFE209 /* RemapTableController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapTableController.m; sourceTree = "<group>"; };
 		4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mac Mouse Fix Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4FD82DD9260575B100664D6F /* MFNotificationLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFNotificationLabel.h; sourceTree = "<group>"; };
-		4FD82DDA260575B100664D6F /* MFNotificationLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFNotificationLabel.m; sourceTree = "<group>"; };
+		4FD82DD9260575B100664D6F /* ToastNotificationLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToastNotificationLabel.h; sourceTree = "<group>"; };
+		4FD82DDA260575B100664D6F /* ToastNotificationLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ToastNotificationLabel.m; sourceTree = "<group>"; };
 		4FDBC59A234F80C500A46517 /* Accomplice.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Accomplice.entitlements; sourceTree = "<group>"; };
 		4FF6652D25F2C7B000689B77 /* HelperServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelperServices.h; sourceTree = "<group>"; };
 		4FF6652E25F2C7B000689B77 /* default_launchd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_launchd.plist; sourceTree = "<group>"; };
@@ -527,11 +527,11 @@
 			children = (
 				4F79A81A2604317200076A7E /* ToastNotificationController.h */,
 				4F79A81B2604317200076A7E /* ToastNotificationController.m */,
-				4F79A83426051E4A00076A7E /* MFNotification.h */,
-				4F79A83526051E4A00076A7E /* MFNotification.m */,
-				4FD82DD9260575B100664D6F /* MFNotificationLabel.h */,
-				4FD82DDA260575B100664D6F /* MFNotificationLabel.m */,
-				4F79A7EE26042E2E00076A7E /* MFNotification.xib */,
+				4F79A83426051E4A00076A7E /* ToastNotification.h */,
+				4F79A83526051E4A00076A7E /* ToastNotification.m */,
+				4FD82DD9260575B100664D6F /* ToastNotificationLabel.h */,
+				4FD82DDA260575B100664D6F /* ToastNotificationLabel.m */,
+				4F79A7EE26042E2E00076A7E /* ToastNotification.xib */,
 				4F1B832B26081A5400AEAF37 /* CaptureNotifications.h */,
 				4F1B832C26081A5500AEAF37 /* CaptureNotifications.m */,
 			);
@@ -1368,7 +1368,7 @@
 				4FF665F425F2C92700689B77 /* MoreSheet.xib in Resources */,
 				4FF665FC25F2C92700689B77 /* AuthorizeAccessibilityView.xib in Resources */,
 				4F44FEF82606A5C100926A5E /* default_config.plist in Resources */,
-				4F79A7EF26042E2E00076A7E /* MFNotification.xib in Resources */,
+				4F79A7EF26042E2E00076A7E /* ToastNotification.xib in Resources */,
 				4F2F5DB225FB723D0037660A /* AddWindow.xib in Resources */,
 				4FF665F725F2C92700689B77 /* Assets.xcassets in Resources */,
 				4FF665F925F2C92700689B77 /* MouseFix.xib in Resources */,
@@ -1649,7 +1649,7 @@
 				4F8CE7012617738A00D70A76 /* AppTranslocationManager.m in Sources */,
 				4FF665FE25F2C92700689B77 /* main.m in Sources */,
 				4F1B832D26081A5500AEAF37 /* CaptureNotifications.m in Sources */,
-				4FD82DDB260575B100664D6F /* MFNotificationLabel.m in Sources */,
+				4FD82DDB260575B100664D6F /* ToastNotificationLabel.m in Sources */,
 				4FF665FA25F2C92700689B77 /* AppDelegate.m in Sources */,
 				4FF665F325F2C92700689B77 /* MoreSheet.m in Sources */,
 				4FF6660025F2C92700689B77 /* Hyperlink.m in Sources */,
@@ -1671,7 +1671,7 @@
 				4F79A82B2605074000076A7E /* NSAttributedString+Additions.m in Sources */,
 				4F7AB0552606698A0008055E /* UIStrings.m in Sources */,
 				4FF6660125F2C92700689B77 /* Utility_App.m in Sources */,
-				4F79A83626051E4A00076A7E /* MFNotification.m in Sources */,
+				4F79A83626051E4A00076A7E /* ToastNotification.m in Sources */,
 				4F79C2EA260976950067B381 /* RemapTableTranslator.m in Sources */,
 				4FB4F9FE260FDBC800806DDD /* RemapTableUtility.m in Sources */,
 				4FF665FD25F2C92700689B77 /* AuthorizeAccessibilityView.m in Sources */,

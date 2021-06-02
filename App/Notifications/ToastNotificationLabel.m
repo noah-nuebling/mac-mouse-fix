@@ -1,16 +1,16 @@
 //
 // --------------------------------------------------------------------------
-// MFNotificationLabel.m
+// ToastNotificationLabel.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2021
 // Licensed under MIT
 // --------------------------------------------------------------------------
 //
 
-#import "MFNotificationLabel.h"
+#import "ToastNotificationLabel.h"
 #import "WannabePrefixHeader.h"
 
-@implementation MFNotificationLabel
+@implementation ToastNotificationLabel
 
 - (instancetype)init
 {
