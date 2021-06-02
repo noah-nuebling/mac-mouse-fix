@@ -13,7 +13,7 @@
 #import "Utility_App.h"
 #import "ToastNotificationController.h"
 #import "SharedMessagePort.h"
-#import "CaptureNotifications.h"
+#import "CaptureNotificationCreator.h"
 #import "RemapTableUtility.h"
 #import "WannabePrefixHeader.h"
 
@@ -158,7 +158,7 @@ AuthorizeAccessibilityView *_accViewController;
                 // v This usually fails because the remote message port can't be created
                 //      I think it happens because the helper kills itself after gaining accessibility access and is restarted by launchd too slowly. Weirdly, I think I remember that this used to work.
                 NSSet *capturedButtons = [RemapTableUtility getCapturedButtons];
-                [CaptureNotifications showButtonCaptureNotificationWithBeforeSet:NSSet.set afterSet:capturedButtons];
+                [CaptureNotificationCreator showButtonCaptureNotificationWithBeforeSet:NSSet.set afterSet:capturedButtons];
 //                NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Mac Mouse Fix will stay enabled after you restart your Mac"];
 //                [ToastNotificationController attachNotificationWithMessage:message toWindow:AppDelegate.mainWindow forDuration:-1];
             });

@@ -20,7 +20,7 @@
 #import "NSTextField+Additions.h"
 #import "UIStrings.h"
 #import "SharedMessagePort.h"
-#import "CaptureNotifications.h"
+#import "CaptureNotificationCreator.h"
 #import "RemapTableTranslator.h"
 #import "NSView+Additions.h"
 #import "KeyCaptureView.h"
@@ -257,7 +257,7 @@
     
     // Capture notifs
     NSSet *capturedButtonsAfter = [RemapTableUtility getCapturedButtons];
-    [CaptureNotifications showButtonCaptureNotificationWithBeforeSet:capturedButtonsBefore afterSet:capturedButtonsAfter];
+    [CaptureNotificationCreator showButtonCaptureNotificationWithBeforeSet:capturedButtonsBefore afterSet:capturedButtonsAfter];
 }
 
 - (void)addButtonAction {
@@ -326,7 +326,7 @@
     
     // Capture notifs
     NSSet<NSNumber *> *capturedButtonsAfter =  [RemapTableUtility getCapturedButtons];
-    [CaptureNotifications showButtonCaptureNotificationWithBeforeSet:capturedButtonsBefore afterSet:capturedButtonsAfter];
+    [CaptureNotificationCreator showButtonCaptureNotificationWithBeforeSet:capturedButtonsBefore afterSet:capturedButtonsAfter];
     
 //    if ([capturedButtonsBefore isEqual:capturedButtonsAfter]) {
         // If they aren't equal then `showButtonCaptureNotificationWithBeforeSet:` will show a notification

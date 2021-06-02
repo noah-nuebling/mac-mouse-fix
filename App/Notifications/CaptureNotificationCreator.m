@@ -7,7 +7,7 @@
 // --------------------------------------------------------------------------
 //
 
-#import "CaptureNotifications.h"
+#import "CaptureNotificationCreator.h"
 #import "UIStrings.h"
 #import "NSArray+Additions.h"
 #import "NSAttributedString+Additions.h"
@@ -15,8 +15,7 @@
 #import "AppDelegate.h"
 #import "SharedUtility.h"
 
-// TODO: Rename to `CaptureNotificationCreator` or `NotificationCreator` or something 
-@implementation CaptureNotifications
+@implementation CaptureNotificationCreator
 
 /// Called by [RemapTableController - addRowWithHelperPayload:]
 /// Creates notifications to inform the user about newly caputred / uncaptured buttons after the user added a new row to the remapsTable
