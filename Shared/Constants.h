@@ -79,7 +79,7 @@ typedef NSString*                                                       MFString
 
 #pragma mark - NSNotificationCenter notification names
 
-#define kMFNotificationNameRemapsChanged                                @"remapsChanged"
+#define kMFNotifCenterNotificationNameRemapsChanged                                @"remapsChanged"
 
 #pragma mark - Config dict
 

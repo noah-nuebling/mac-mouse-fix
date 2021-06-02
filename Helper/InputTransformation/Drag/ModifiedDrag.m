@@ -34,7 +34,7 @@ struct ModifiedDragState {
     MFStringConstant type;
 
     MFModifiedInputActivationState activationState;
-    MFDevice *modifiedDevice;
+    Device *modifiedDevice;
     
     CGPoint origin;
     MFVector originOffset;
@@ -106,7 +106,7 @@ static struct ModifiedDragState _drag;
     }
 }
 
-+ (void)initializeDragWithModifiedDragDict:(NSDictionary *)dict onDevice:(MFDevice *)dev {
++ (void)initializeDragWithModifiedDragDict:(NSDictionary *)dict onDevice:(Device *)dev {
     
     // Get values from dict
     MFStringConstant type = dict[kMFModifiedDragDictKeyType];
@@ -185,7 +185,7 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY) {
         
         _drag.usageOrigin = NSMakePoint(_drag.origin.x + ofs.x, _drag.origin.y + ofs.y); // This is just the current pointer location
         
-        MFDevice *dev = _drag.modifiedDevice;
+        Device *dev = _drag.modifiedDevice;
         if (inputIsPointerMovement) {
             [NSCursor.closedHandCursor push]; // Doesn't work for some reason
         } else {

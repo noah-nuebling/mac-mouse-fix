@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MFNotificationController : NSWindowController <NSWindowDelegate>
+@interface ToastNotificationController : NSWindowController <NSWindowDelegate>
 
 typedef enum {
     kMFNotificationAlignmentTopMiddle,

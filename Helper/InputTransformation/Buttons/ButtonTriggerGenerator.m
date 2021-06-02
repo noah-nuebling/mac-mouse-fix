@@ -32,12 +32,12 @@
 @property int64_t clickLevel; // TODO: Making this nonatomic might lead to problems, should think about this again (But it's necessary to override setters)
 @property BOOL isPressed; // NSEvent.pressedMouseButtons doesn't react fast enought (led to problems in `getActiveButtonModifiersForDevice`), so we're keeping track of pressed mouse buttons manually
 @property (readonly) CFTimeInterval pressedAtTimeStamp; // Keep track of when a button's been pressed to obtain press order in `getActiveButtonModifiersForDevice`
-@property (readonly) MFDevice *device;
+@property (readonly) Device *device;
 @end
 @implementation ButtonState
 @synthesize clickLevel = _clickLevel, isPressed = _isPressed, pressedAtTimeStamp = _pressedAtTimeStamp;
 #pragma mark Init
-- (instancetype)initWithDevice:(MFDevice *)device {
+- (instancetype)initWithDevice:(Device *)device {
     self = [super init];
     if (self) {
         _device = device;
@@ -101,7 +101,7 @@ static NSMutableDictionary *_state;
 
 #pragma mark - Input parsing
 
-+ (MFEventPassThroughEvaluation)parseInputWithButton:(NSNumber *)btn triggerType:(MFButtonInputType)triggerType inputDevice:(MFDevice *)device {
++ (MFEventPassThroughEvaluation)parseInputWithButton:(NSNumber *)btn triggerType:(MFButtonInputType)triggerType inputDevice:(Device *)device {
     
     DDLogDebug(@"PARSING BUTTON INPUT - btn: %@, trigger %@", btn, @(triggerType));
     

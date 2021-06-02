@@ -30,13 +30,13 @@
 
 NSDictionary *_remaps;
 
-/// Always set remaps through this, so that the kMFNotificationNameRemapsChanged notification is posted
+/// Always set remaps through this, so that the kMFNotifCenterNotificationNameRemapsChanged notification is posted
 /// The notification is used by ModifierManager to update itself, whenever _remaps updates.
 ///  (Idk why we aren't just calling an update function instead of using a notification)
 + (void)setRemaps:(NSDictionary *)remapsDict {
     _remaps = remapsDict;
 //    _remaps = self.testRemaps; // TESTING
-    [NSNotificationCenter.defaultCenter postNotificationName:kMFNotificationNameRemapsChanged object:self];
+    [NSNotificationCenter.defaultCenter postNotificationName:kMFNotifCenterNotificationNameRemapsChanged object:self];
     DDLogDebug(@"Set remaps to: %@", _remaps);
 }
 

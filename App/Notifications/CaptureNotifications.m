@@ -11,7 +11,7 @@
 #import "UIStrings.h"
 #import "NSArray+Additions.h"
 #import "NSAttributedString+Additions.h"
-#import "MFNotificationController.h"
+#import "ToastNotificationController.h"
 #import "AppDelegate.h"
 #import "SharedUtility.h"
 
@@ -69,7 +69,7 @@
             attrNotifString = [attrNotifString attributedStringByAddingBoldForSubstring:buttonString];
         }
         
-        [MFNotificationController attachNotificationWithMessage:attrNotifString toWindow:AppDelegate.mainWindow forDuration:-1];
+        [ToastNotificationController attachNotificationWithMessage:attrNotifString toWindow:AppDelegate.mainWindow forDuration:-1];
     }
 }
 

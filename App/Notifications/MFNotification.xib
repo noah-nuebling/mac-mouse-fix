@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="MFNotificationController">
+        <customObject id="-2" userLabel="File's Owner" customClass="ToastNotificationController">
             <connections>
                 <outlet property="label" destination="DKZ-39-jMI" id="nOf-eA-Dpd"/>
                 <outlet property="window" destination="ngO-y9-uog" id="0Md-wT-W0s"/>
@@ -18,7 +17,7 @@
             <windowStyleMask key="styleMask" titled="YES" fullSizeContentView="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="167" y="106" width="202" height="38"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="775"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
             <view key="contentView" id="Vvh-MN-Ozv">
                 <rect key="frame" x="0.0" y="0.0" width="202" height="38"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -32,7 +31,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <clipView key="contentView" drawsBackground="NO" id="cXg-GO-OZi">
                                     <rect key="frame" x="0.0" y="0.0" width="182" height="18"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textView editable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" verticallyResizable="NO" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="DKZ-39-jMI" customClass="MFNotificationLabel">
                                             <rect key="frame" x="0.0" y="0.0" width="182" height="18"/>

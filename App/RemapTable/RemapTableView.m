@@ -7,9 +7,9 @@
 // --------------------------------------------------------------------------
 //
 
-#import "MFTableView.h"
+#import "RemapTableView.h"
 
-@implementation MFTableView
+@implementation RemapTableView
 
 // (?) Need this to make keystroke capture field first responder
 // See https://stackoverflow.com/questions/29986224/editable-nstextfield-in-nstableview

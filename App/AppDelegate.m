@@ -17,7 +17,7 @@
 #import "AuthorizeAccessibilityView.h"
 #import "HelperServices.h"
 #import "SharedUtility.h"
-#import "MFNotificationController.h"
+#import "ToastNotificationController.h"
 #import "NSView+Additions.h"
 #import "AppTranslocationManager.h"
 #import "MessagePort_App.h"

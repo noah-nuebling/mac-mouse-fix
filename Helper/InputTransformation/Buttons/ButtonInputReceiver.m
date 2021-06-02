@@ -11,7 +11,7 @@
 #import "DeviceManager.h"
 #import <IOKit/hid/IOHIDManager.h>
 #import "ButtonTriggerGenerator.h"
-#import "MFQueue.h"
+#import "Queue.h"
 #import "SharedUtility.h"
 #import "Utility_Transformation.h"
 
@@ -24,7 +24,7 @@ static CFMachPortRef _eventTap;
 + (void)load_Manual {
     _eventSource = CGEventSourceCreate(kCGEventSourceStatePrivate);
     registerInputCallback();
-    _buttonInputsFromRelevantDevices = [MFQueue queue];
+    _buttonInputsFromRelevantDevices = [Queue queue];
     _buttonParseBlacklist = @[@(1),@(2)]; // Ignore inputs from left and right mouse buttons
 }
 
@@ -39,7 +39,7 @@ static CFMachPortRef _eventTap;
 }
 
 + (void)start {
-    _buttonInputsFromRelevantDevices = [MFQueue queue]; // Not sure if resetting here necessary
+    _buttonInputsFromRelevantDevices = [Queue queue]; // Not sure if resetting here necessary
     CGEventTapEnable(_eventTap, true);
 }
 + (void)stop {
@@ -85,12 +85,12 @@ static void registerInputCallback() {
 ///     It also allows us to filter out input from devices which aren't relevant
 ///         (Because don't create an MFDevice instance for irrelevant devices, and so they can't insert their events into _buttonInputsFromRelevantDevices)
 ///         (All MFDevice instances for relevant devices can be found in DeviceManager.relevantDevices).
-static MFQueue<NSDictionary *> *_buttonInputsFromRelevantDevices;
+static Queue<NSDictionary *> *_buttonInputsFromRelevantDevices;
 /// @param stemsFromSeize
 /// When an IOHIDDevice device is seized, the system will automatically send fake mouse up CG events for each of its pressed buttons.
 /// So when seizing, MFDevice objects will call this function once for each pressed button, with the stemsFromSeize parameter set to YES.
 /// This way `handleInput()` knows whats up when these fake mouse up events occur.
-+ (void)handleHIDButtonInputFromRelevantDeviceOccured:(MFDevice *)dev button:(NSNumber *)btn stemsFromDeviceSeize:(BOOL)stemsFromSeize {
++ (void)handleHIDButtonInputFromRelevantDeviceOccured:(Device *)dev button:(NSNumber *)btn stemsFromDeviceSeize:(BOOL)stemsFromSeize {
     if ([_buttonParseBlacklist containsObject:btn] && !stemsFromSeize) return;
     if (!CGEventTapIsEnabled(_eventTap)) return;
     
@@ -143,7 +143,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
     if ([_buttonParseBlacklist containsObject:@(buttonNumber)]) return event;
     
-    MFDevice *dev = lastInputFromRelevantDevice[@"dev"];
+    Device *dev = lastInputFromRelevantDevice[@"dev"];
     
     long long pr = CGEventGetIntegerValueField(event, kCGMouseEventPressure);
     MFButtonInputType triggertType = pr == 0 ? kMFButtonInputTypeButtonUp : kMFButtonInputTypeButtonDown;

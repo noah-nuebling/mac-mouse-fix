@@ -40,7 +40,7 @@
         
         // Re-toggle keyboard modifier callbacks whenever TransformationManager.remaps changes
         // TODO:! Test if this works
-        [NSNotificationCenter.defaultCenter addObserverForName:kMFNotificationNameRemapsChanged
+        [NSNotificationCenter.defaultCenter addObserverForName:kMFNotifCenterNotificationNameRemapsChanged
                                                         object:nil
                                                          queue:nil
                                                     usingBlock:^(NSNotification * _Nonnull note) {
@@ -85,11 +85,11 @@ static void toggleModifierEventTapBasedOnRemaps(NSDictionary *remaps) {
 ///     - 1. No device has any pressed buttons -> Returns activeModifiers of last device it finds. This works well, because in this case, all devices' activeModifiers are the same and it doesn't matter which one it returns.
 ///     - 2.  Only one device has pressed buttons -> It will return that device and its activeModifers. This makes sense because if a device has pressed buttons, that's almost certainly the device which the user is currently using.
 ///     - 3. Several devices have pressed buttons -> In this case it will return an arbitrary device and its activeModifiers. This is not ideal, but this scenario is extremely unlikely so it's fine.
-void getActiveModifiersForDeviceWithPressedButtons(CGEventRef event, NSDictionary **activeModifiers, MFDevice **device) {
+void getActiveModifiersForDeviceWithPressedButtons(CGEventRef event, NSDictionary **activeModifiers, Device **device) {
     NSArray *devices = DeviceManager.attachedDevices;
     for (int i = 0; i < devices.count; i++) {
         BOOL isLast = devices.count-1 == i;
-        MFDevice *thisDevice = devices[i];
+        Device *thisDevice = devices[i];
         NSDictionary *activeModifiersForThisDevice = [ModifierManager getActiveModifiersForDevice:thisDevice.uniqueID filterButton:nil event:event];
         if (activeModifiersForThisDevice[kMFModificationPreconditionKeyButtons] != nil || isLast) {
             *activeModifiers = activeModifiersForThisDevice;
@@ -104,7 +104,7 @@ CGEventRef _Nullable handleKeyboardModifiersHaveChanged(CGEventTapProxy proxy, C
 //    CGEventTapPostEvent(proxy, event); // Why were we doing that? (Maybe it made sense when the eventTap was not listenOnly?)
     
     NSDictionary *activeModifiers;
-    MFDevice *device;
+    Device *device;
     getActiveModifiersForDeviceWithPressedButtons(event, &activeModifiers, &device);
     // ^ Need to pass in event here as source for keyboard modifers, otherwise the returned kb-modifiers won't be up-to-date.
     reactToModifierChange(activeModifiers, device);
@@ -119,7 +119,7 @@ os_signpost_id_t _log_id;
 
 NSArray *_prevButtonModifiers;
 /// Analyzing this with `os_signpost` reveals it is called 3 times per button click - we should look into optimizing this.
-+ (void)handleButtonModifiersMightHaveChangedWithDevice:(MFDevice *)device {
++ (void)handleButtonModifiersMightHaveChangedWithDevice:(Device *)device {
     
     NSArray *buttonModifiers = [ButtonTriggerGenerator getActiveButtonModifiersForDevice:device.uniqueID];
     if (![buttonModifiers isEqual:_prevButtonModifiers]) {
@@ -127,13 +127,13 @@ NSArray *_prevButtonModifiers;
     }
     _prevButtonModifiers = buttonModifiers;
 }
-static void handleButtonModifiersHaveChangedWithDevice(MFDevice *device) {
+static void handleButtonModifiersHaveChangedWithDevice(Device *device) {
     NSDictionary *activeModifiers = [ModifierManager getActiveModifiersForDevice:device.uniqueID filterButton:nil event:nil];
     reactToModifierChange(activeModifiers, device);
 }
 
 #pragma mark Helper
-static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, MFDevice * _Nonnull device) {
+static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device * _Nonnull device) {
     
     DDLogDebug(@"MODIFERS HAVE CHANGED TO - %@", activeModifiers);
     DDLogDebug(@"...ON DEVICE - %@", device);

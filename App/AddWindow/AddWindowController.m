@@ -13,7 +13,7 @@
 #import "RemapTableController.h"
 #import "Utility_App.h"
 #import "SharedUtility.h"
-#import "MFNotificationController.h"
+#import "ToastNotificationController.h"
 #import "NSAttributedString+Additions.h"
 #import "UIStrings.h"
 
@@ -141,13 +141,13 @@ static BOOL _pointerIsInsideAddField;
     if (!_pointerIsInsideAddField) return;
     NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Primary Mouse Button can't be used. \nBut you can try another Button!"];
     message = [message attributedStringByAddingBoldForSubstring:@"Primary Mouse Button"];
-    [MFNotificationController attachNotificationWithMessage:message toWindow:_instance.window forDuration:-1];
+    [ToastNotificationController attachNotificationWithMessage:message toWindow:_instance.window forDuration:-1];
 }
 - (void)rightMouseUp:(NSEvent *)event {
     if (!_pointerIsInsideAddField) return;
     NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Secondary Mouse Button can't be used. \nBut you can try another Button!"];
     message = [message attributedStringByAddingBoldForSubstring:@"Secondary Mouse Button"];
-    [MFNotificationController attachNotificationWithMessage:message toWindow:_instance.window forDuration:-1];
+    [ToastNotificationController attachNotificationWithMessage:message toWindow:_instance.window forDuration:-1];
 }
 
 @end

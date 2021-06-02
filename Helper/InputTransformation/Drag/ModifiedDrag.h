@@ -8,7 +8,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MFDevice.h"
+#import "Device.h"
 #import "Constants.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -29,7 +29,7 @@ typedef enum {
 
 + (void)load_Manual;
 
-+ (void)initializeDragWithModifiedDragDict:(NSDictionary *)dict onDevice:(MFDevice *)dev;
++ (void)initializeDragWithModifiedDragDict:(NSDictionary *)dict onDevice:(Device *)dev;
 + (void)deactivate;
 
 + (void)handleMouseInputWithDeltaX:(int64_t)deltaX deltaY:(int64_t)deltaY event:(CGEventRef _Nullable)event;

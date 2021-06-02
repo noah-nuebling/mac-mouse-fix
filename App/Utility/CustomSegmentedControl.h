@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MFSegmentedControl : NSSegmentedControl
+@interface CustomSegmentedControl : NSSegmentedControl
 
 @end
 

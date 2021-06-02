@@ -8,13 +8,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MFDevice.h"
+#import "Device.h"
 
 @interface DeviceManager : NSObject
 
 + (void)load_Manual;
 + (BOOL)devicesAreAttached;
-+ (NSArray<MFDevice *> *)attachedDevices;
++ (NSArray<Device *> *)attachedDevices;
 
 @end
 

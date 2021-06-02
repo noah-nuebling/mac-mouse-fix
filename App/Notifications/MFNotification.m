@@ -47,7 +47,7 @@
 }
 
 - (void)mouseDown:(NSEvent *)event { // Is never never called
-    [MFNotificationController closeNotificationWithFadeOut];
+    [ToastNotificationController closeNotificationWithFadeOut];
 }
 
 @end

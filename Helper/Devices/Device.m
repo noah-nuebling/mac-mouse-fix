@@ -7,7 +7,7 @@
 // --------------------------------------------------------------------------
 //
 
-#import "MFDevice.h"
+#import "Device.h"
 #import "ModifiedDrag.h"
 #import "GestureScrollSimulator.h"
 #import "DeviceManager.h"
@@ -21,16 +21,16 @@
 //  - There is device specific state scattered around the program (I can think of the the ButtonStates in ButtonTriggerGenerator, as well as the ModifedDragStates in ModiferManager). This state should probably be owned by MFDevice instances instead.
 //  - This class is cluttered up with code using the IOHID framework, intended to capture mouse moved input while preventing the mouse pointer from moving. This is used for ModifiedDrags which stop the mouse pointer from moving. We should probably move this code to some other class, which MFDevice's can own instances of, to make stuff less cluttered.
 
-@implementation MFDevice
+@implementation Device
 
 /// Create instances with this function
 /// DeviceManager calls this for each relevant device it finds
-+ (MFDevice *)deviceWithIOHIDDevice:(IOHIDDeviceRef)IOHIDDevice {
-    MFDevice *newDevice = [[MFDevice alloc] initWithIOHIDDevice:IOHIDDevice];
++ (Device *)deviceWithIOHIDDevice:(IOHIDDeviceRef)IOHIDDevice {
+    Device *newDevice = [[Device alloc] initWithIOHIDDevice:IOHIDDevice];
     return newDevice;
 }
 
-- (MFDevice *)initWithIOHIDDevice:(IOHIDDeviceRef)IOHIDDevice {
+- (Device *)initWithIOHIDDevice:(IOHIDDeviceRef)IOHIDDevice {
     self = [super init];
     if (self) {
         _IOHIDDevice = IOHIDDevice;
@@ -47,7 +47,7 @@
 
 #pragma mark - Capture input using IOHID
 
-static void registerInputCallbackForDevice(MFDevice *device) {
+static void registerInputCallbackForDevice(Device *device) {
     IOHIDDeviceScheduleWithRunLoop(device.IOHIDDevice, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
     IOHIDDeviceRegisterInputValueCallback(device.IOHIDDevice, &handleInput, (__bridge void * _Nullable)(device));
 }
@@ -165,7 +165,7 @@ typedef struct __IOHIDDevice
 
 /// When a device is seized, button up events are sent for all pressed buttons by the system.
 /// We want to tell ButtonInputReceiver where those events came from by calling `handleButtonInputFromRelevantDeviceOccured` for each currently pressed button, with the `stemsFromDeviceSeize` parameter set to `YES`
-static void dealWithAutomaticButtonUpEventsFromDeviceSeize(MFDevice *dev) {
+static void dealWithAutomaticButtonUpEventsFromDeviceSeize(Device *dev) {
     //NSUInteger pressedButtons = NSEvent.pressedMouseButtons; // This seems to only see buttons as pressed if a mousedown CGEvent for that button has been sent or sth
     NSArray *pressedButtons = getPressedButtons(dev);
     int buttonNum = 0;
@@ -178,7 +178,7 @@ static void dealWithAutomaticButtonUpEventsFromDeviceSeize(MFDevice *dev) {
         buttonNum++;
     }
 }
-static NSArray *getPressedButtons(MFDevice *dev) {
+static NSArray *getPressedButtons(Device *dev) {
     
     NSMutableArray *outArr = [NSMutableArray array];
     
@@ -261,7 +261,7 @@ static int64_t _previousDeltaY;
 
 static void handleInput(void *context, IOReturn result, void *sender, IOHIDValueRef value) {
     
-    MFDevice *sendingDev = (__bridge MFDevice *)context;
+    Device *sendingDev = (__bridge Device *)context;
     
     IOHIDElementRef elem = IOHIDValueGetElement(value);
     uint32_t usage = IOHIDElementGetUsage(elem);
@@ -328,10 +328,10 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
 
 #pragma mark - Default functions
 
-- (BOOL)isEqualToDevice:(MFDevice *)device {
+- (BOOL)isEqualToDevice:(Device *)device {
     return CFEqual(self.IOHIDDevice, device.IOHIDDevice);
 }
-- (BOOL)isEqual:(MFDevice *)other {
+- (BOOL)isEqual:(Device *)other {
     
     if (other == self) { // This checks for pointer equality
         return YES;

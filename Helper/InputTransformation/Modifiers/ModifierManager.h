@@ -8,7 +8,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MFDevice.h"
+#import "Device.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSDictionary *)getActiveModifiersForDevice:(NSNumber *)devID filterButton:(NSNumber * _Nullable)filteredButton event:(CGEventRef _Nullable)event;
 
-+ (void)handleButtonModifiersMightHaveChangedWithDevice:(MFDevice *)device;
++ (void)handleButtonModifiersMightHaveChangedWithDevice:(Device *)device;
 
 + (void)handleModifiersHaveHadEffect:(NSNumber *)devID;
 

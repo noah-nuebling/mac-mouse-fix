@@ -7,14 +7,14 @@
 // --------------------------------------------------------------------------
 //
 
-#import "MFQueue.h"
+#import "Queue.h"
 
-@implementation MFQueue
+@implementation Queue
 
 NSMutableArray *_storage;
 
 + (id)queue {
-    return [[MFQueue alloc] init];
+    return [[Queue alloc] init];
 }
 
 - (instancetype)init

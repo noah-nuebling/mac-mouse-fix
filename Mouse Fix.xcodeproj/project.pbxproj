@@ -18,7 +18,7 @@
 		4F2F5DB225FB723D0037660A /* AddWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F2F5DB125FB723D0037660A /* AddWindow.xib */; };
 		4F2FDF332315662500C7BE14 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2FDF322315662500C7BE14 /* main.m */; };
 		4F319CBB26252A2D004E5F63 /* ButtonGroupRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F319CBA26252A2D004E5F63 /* ButtonGroupRowView.m */; };
-		4F37FAD825FDFDC5004C34C4 /* MFScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */; };
+		4F37FAD825FDFDC5004C34C4 /* CustomScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F37FAD725FDFDC4004C34C4 /* CustomScrollView.m */; };
 		4F39BC26263AC31600FDF692 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F39BC24263AC2E800FDF692 /* Sparkle.framework */; };
 		4F39BC27263AC31600FDF692 /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F39BC24263AC2E800FDF692 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F39BC3B263AF2B000FDF692 /* SparkleUpdaterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F39BC3A263AF2B000FDF692 /* SparkleUpdaterController.m */; };
@@ -27,13 +27,13 @@
 		4F44FF042606D73D00926A5E /* SharedMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* SharedMessagePort.m */; };
 		4F44FF052606D73D00926A5E /* SharedMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* SharedMessagePort.m */; };
 		4F79A7EF26042E2E00076A7E /* MFNotification.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F79A7EE26042E2E00076A7E /* MFNotification.xib */; };
-		4F79A81C2604317200076A7E /* MFNotificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A81B2604317200076A7E /* MFNotificationController.m */; };
+		4F79A81C2604317200076A7E /* ToastNotificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A81B2604317200076A7E /* ToastNotificationController.m */; };
 		4F79A82B2605074000076A7E /* NSAttributedString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A82A2605074000076A7E /* NSAttributedString+Additions.m */; };
 		4F79A83626051E4A00076A7E /* MFNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A83526051E4A00076A7E /* MFNotification.m */; };
 		4F79C2EA260976950067B381 /* RemapTableTranslator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79C2E9260976950067B381 /* RemapTableTranslator.m */; };
 		4F7AB0552606698A0008055E /* UIStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F7AB0542606698A0008055E /* UIStrings.m */; };
 		4F8CE7012617738A00D70A76 /* AppTranslocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CE6FF2617738A00D70A76 /* AppTranslocationManager.m */; };
-		4F92A708260F4BF000529D1F /* MFTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F92A707260F4BF000529D1F /* MFTableView.m */; };
+		4F92A708260F4BF000529D1F /* RemapTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F92A707260F4BF000529D1F /* RemapTableView.m */; };
 		4F92A72D260F6C7800529D1F /* NSView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F92A72C260F6C7800529D1F /* NSView+Additions.m */; };
 		4F92A73A260F73C600529D1F /* KeyCaptureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F92A71D260F667F00529D1F /* KeyCaptureView.m */; };
 		4F94F60525E5EC2800D9F24A /* Mac_Mouse_FixTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60425E5EC2800D9F24A /* Mac_Mouse_FixTests.m */; };
@@ -53,8 +53,8 @@
 		4FF6654425F2C7B000689B77 /* HelperServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6652F25F2C7B000689B77 /* HelperServices.m */; };
 		4FF6654525F2C7B000689B77 /* Objects.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653225F2C7B000689B77 /* Objects.m */; };
 		4FF6654625F2C7B000689B77 /* Objects.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653225F2C7B000689B77 /* Objects.m */; };
-		4FF6654B25F2C7B000689B77 /* MFQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653A25F2C7B000689B77 /* MFQueue.m */; };
-		4FF6654C25F2C7B000689B77 /* MFQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653A25F2C7B000689B77 /* MFQueue.m */; };
+		4FF6654B25F2C7B000689B77 /* Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653A25F2C7B000689B77 /* Queue.m */; };
+		4FF6654C25F2C7B000689B77 /* Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653A25F2C7B000689B77 /* Queue.m */; };
 		4FF6654D25F2C7B000689B77 /* SharedUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653B25F2C7B000689B77 /* SharedUtility.m */; };
 		4FF6654E25F2C7B000689B77 /* SharedUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653B25F2C7B000689B77 /* SharedUtility.m */; };
 		4FF6654F25F2C7B000689B77 /* NSArray+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653D25F2C7B000689B77 /* NSArray+Additions.m */; };
@@ -63,7 +63,7 @@
 		4FF6655225F2C7B000689B77 /* NSMutableDictionary+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6654025F2C7B000689B77 /* NSMutableDictionary+Additions.m */; };
 		4FF6655725F2C7CA00689B77 /* HelperServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6652F25F2C7B000689B77 /* HelperServices.m */; };
 		4FF6655C25F2C7D500689B77 /* Objects.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653225F2C7B000689B77 /* Objects.m */; };
-		4FF665ED25F2C92700689B77 /* MFSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665C125F2C92700689B77 /* MFSegmentedControl.m */; };
+		4FF665ED25F2C92700689B77 /* CustomSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665C125F2C92700689B77 /* CustomSegmentedControl.m */; };
 		4FF665EE25F2C92700689B77 /* OverridePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665C225F2C92700689B77 /* OverridePanel.m */; };
 		4FF665EF25F2C92700689B77 /* ScrollOverridePanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FF665C325F2C92700689B77 /* ScrollOverridePanel.xib */; };
 		4FF665F325F2C92700689B77 /* MoreSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665CD25F2C92700689B77 /* MoreSheet.m */; };
@@ -115,7 +115,7 @@
 		4FF666A225F2C93A00689B77 /* TouchEvents.c in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6667125F2C93A00689B77 /* TouchEvents.c */; };
 		4FF666A325F2C93A00689B77 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6667225F2C93A00689B77 /* LICENSE */; };
 		4FF666A425F2C93A00689B77 /* NoahsTouchEventAnalysis in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6667325F2C93A00689B77 /* NoahsTouchEventAnalysis */; };
-		4FF666A725F2C93A00689B77 /* MFDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6667A25F2C93A00689B77 /* MFDevice.m */; };
+		4FF666A725F2C93A00689B77 /* Device.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6667A25F2C93A00689B77 /* Device.m */; };
 		4FF666A825F2C93A00689B77 /* DeviceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6667D25F2C93A00689B77 /* DeviceManager.m */; };
 		4FF666A925F2C93A00689B77 /* Utility_Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6668025F2C93A00689B77 /* Utility_Helper.m */; };
 		B6504A8DC1F7AC097CAD076B /* Pods_Mac_Mouse_Fix_Helper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 800D11E9E63D6D95B0A59A66 /* Pods_Mac_Mouse_Fix_Helper.framework */; };
@@ -224,8 +224,8 @@
 		4F2FDF322315662500C7BE14 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4F319CB926252A2D004E5F63 /* ButtonGroupRowView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonGroupRowView.h; sourceTree = "<group>"; };
 		4F319CBA26252A2D004E5F63 /* ButtonGroupRowView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ButtonGroupRowView.m; sourceTree = "<group>"; };
-		4F37FAD625FDFDC4004C34C4 /* MFScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFScrollView.h; sourceTree = "<group>"; };
-		4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFScrollView.m; sourceTree = "<group>"; };
+		4F37FAD625FDFDC4004C34C4 /* CustomScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomScrollView.h; sourceTree = "<group>"; };
+		4F37FAD725FDFDC4004C34C4 /* CustomScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomScrollView.m; sourceTree = "<group>"; };
 		4F39BC24263AC2E800FDF692 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		4F39BC39263AF2B000FDF692 /* SparkleUpdaterController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SparkleUpdaterController.h; sourceTree = "<group>"; };
 		4F39BC3A263AF2B000FDF692 /* SparkleUpdaterController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SparkleUpdaterController.m; sourceTree = "<group>"; };
@@ -247,8 +247,8 @@
 		4F44FF032606D73D00926A5E /* SharedMessagePort.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SharedMessagePort.m; sourceTree = "<group>"; };
 		4F6C187B2666D45E003B9567 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PrefixHeader.pch; path = Shared/PrefixHeader.pch; sourceTree = SOURCE_ROOT; };
 		4F79A7EE26042E2E00076A7E /* MFNotification.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MFNotification.xib; sourceTree = "<group>"; };
-		4F79A81A2604317200076A7E /* MFNotificationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFNotificationController.h; sourceTree = "<group>"; };
-		4F79A81B2604317200076A7E /* MFNotificationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFNotificationController.m; sourceTree = "<group>"; };
+		4F79A81A2604317200076A7E /* ToastNotificationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToastNotificationController.h; sourceTree = "<group>"; };
+		4F79A81B2604317200076A7E /* ToastNotificationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ToastNotificationController.m; sourceTree = "<group>"; };
 		4F79A8292605074000076A7E /* NSAttributedString+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+Additions.h"; sourceTree = "<group>"; };
 		4F79A82A2605074000076A7E /* NSAttributedString+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+Additions.m"; sourceTree = "<group>"; };
 		4F79A83426051E4A00076A7E /* MFNotification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFNotification.h; sourceTree = "<group>"; };
@@ -259,8 +259,8 @@
 		4F7AB0542606698A0008055E /* UIStrings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UIStrings.m; sourceTree = "<group>"; };
 		4F8CE6FF2617738A00D70A76 /* AppTranslocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppTranslocationManager.m; sourceTree = "<group>"; };
 		4F8CE7002617738A00D70A76 /* AppTranslocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppTranslocationManager.h; sourceTree = "<group>"; };
-		4F92A706260F4BF000529D1F /* MFTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFTableView.h; sourceTree = "<group>"; };
-		4F92A707260F4BF000529D1F /* MFTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFTableView.m; sourceTree = "<group>"; };
+		4F92A706260F4BF000529D1F /* RemapTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapTableView.h; sourceTree = "<group>"; };
+		4F92A707260F4BF000529D1F /* RemapTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapTableView.m; sourceTree = "<group>"; };
 		4F92A71C260F667F00529D1F /* KeyCaptureView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyCaptureView.h; sourceTree = "<group>"; };
 		4F92A71D260F667F00529D1F /* KeyCaptureView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KeyCaptureView.m; sourceTree = "<group>"; };
 		4F92A72B260F6C7800529D1F /* NSView+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSView+Additions.h"; sourceTree = "<group>"; };
@@ -297,17 +297,17 @@
 		4FF6653325F2C7B000689B77 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		4FF6653825F2C7B000689B77 /* NSArray+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Additions.h"; sourceTree = "<group>"; };
 		4FF6653925F2C7B000689B77 /* NSMutableDictionary+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+Additions.h"; sourceTree = "<group>"; };
-		4FF6653A25F2C7B000689B77 /* MFQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MFQueue.m; sourceTree = "<group>"; };
+		4FF6653A25F2C7B000689B77 /* Queue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Queue.m; sourceTree = "<group>"; };
 		4FF6653B25F2C7B000689B77 /* SharedUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedUtility.m; sourceTree = "<group>"; };
 		4FF6653D25F2C7B000689B77 /* NSArray+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Additions.m"; sourceTree = "<group>"; };
 		4FF6653E25F2C7B000689B77 /* SharedUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedUtility.h; sourceTree = "<group>"; };
-		4FF6653F25F2C7B000689B77 /* MFQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MFQueue.h; sourceTree = "<group>"; };
+		4FF6653F25F2C7B000689B77 /* Queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Queue.h; sourceTree = "<group>"; };
 		4FF6654025F2C7B000689B77 /* NSMutableDictionary+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+Additions.m"; sourceTree = "<group>"; };
 		4FF665C025F2C92700689B77 /* OverridePanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverridePanel.h; sourceTree = "<group>"; };
-		4FF665C125F2C92700689B77 /* MFSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MFSegmentedControl.m; sourceTree = "<group>"; };
+		4FF665C125F2C92700689B77 /* CustomSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomSegmentedControl.m; sourceTree = "<group>"; };
 		4FF665C225F2C92700689B77 /* OverridePanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverridePanel.m; sourceTree = "<group>"; };
 		4FF665C325F2C92700689B77 /* ScrollOverridePanel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScrollOverridePanel.xib; sourceTree = "<group>"; };
-		4FF665C425F2C92700689B77 /* MFSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MFSegmentedControl.h; sourceTree = "<group>"; };
+		4FF665C425F2C92700689B77 /* CustomSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomSegmentedControl.h; sourceTree = "<group>"; };
 		4FF665C525F2C92700689B77 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4FF665CD25F2C92700689B77 /* MoreSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreSheet.m; sourceTree = "<group>"; };
 		4FF665CE25F2C92700689B77 /* MoreSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MoreSheet.xib; sourceTree = "<group>"; };
@@ -421,9 +421,9 @@
 		4FF6667525F2C93A00689B77 /* IOHIDEventData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOHIDEventData.h; sourceTree = "<group>"; };
 		4FF6667625F2C93A00689B77 /* IOHIDEventTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOHIDEventTypes.h; sourceTree = "<group>"; };
 		4FF6667825F2C93A00689B77 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4FF6667A25F2C93A00689B77 /* MFDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MFDevice.m; sourceTree = "<group>"; };
+		4FF6667A25F2C93A00689B77 /* Device.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Device.m; sourceTree = "<group>"; };
 		4FF6667B25F2C93A00689B77 /* DeviceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceManager.h; sourceTree = "<group>"; };
-		4FF6667C25F2C93A00689B77 /* MFDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MFDevice.h; sourceTree = "<group>"; };
+		4FF6667C25F2C93A00689B77 /* Device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Device.h; sourceTree = "<group>"; };
 		4FF6667D25F2C93A00689B77 /* DeviceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceManager.m; sourceTree = "<group>"; };
 		4FF6667F25F2C93A00689B77 /* Utility_Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility_Helper.h; sourceTree = "<group>"; };
 		4FF6668025F2C93A00689B77 /* Utility_Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility_Helper.m; sourceTree = "<group>"; };
@@ -525,8 +525,8 @@
 		4F2A1FA726042ACB0067691A /* Notifications */ = {
 			isa = PBXGroup;
 			children = (
-				4F79A81A2604317200076A7E /* MFNotificationController.h */,
-				4F79A81B2604317200076A7E /* MFNotificationController.m */,
+				4F79A81A2604317200076A7E /* ToastNotificationController.h */,
+				4F79A81B2604317200076A7E /* ToastNotificationController.m */,
 				4F79A83426051E4A00076A7E /* MFNotification.h */,
 				4F79A83526051E4A00076A7E /* MFNotification.m */,
 				4FD82DD9260575B100664D6F /* MFNotificationLabel.h */,
@@ -652,8 +652,8 @@
 				4FB4FA1F2611DD6000806DDD /* KeyCaptureScrollView.m */,
 				4FB4F9FC260FDBC800806DDD /* RemapTableUtility.h */,
 				4FB4F9FD260FDBC800806DDD /* RemapTableUtility.m */,
-				4F92A706260F4BF000529D1F /* MFTableView.h */,
-				4F92A707260F4BF000529D1F /* MFTableView.m */,
+				4F92A706260F4BF000529D1F /* RemapTableView.h */,
+				4F92A707260F4BF000529D1F /* RemapTableView.m */,
 				4F319CB926252A2D004E5F63 /* ButtonGroupRowView.h */,
 				4F319CBA26252A2D004E5F63 /* ButtonGroupRowView.m */,
 			);
@@ -773,8 +773,8 @@
 			children = (
 				4FF6653E25F2C7B000689B77 /* SharedUtility.h */,
 				4FF6653B25F2C7B000689B77 /* SharedUtility.m */,
-				4FF6653F25F2C7B000689B77 /* MFQueue.h */,
-				4FF6653A25F2C7B000689B77 /* MFQueue.m */,
+				4FF6653F25F2C7B000689B77 /* Queue.h */,
+				4FF6653A25F2C7B000689B77 /* Queue.m */,
 				4FF6653825F2C7B000689B77 /* NSArray+Additions.h */,
 				4FF6653D25F2C7B000689B77 /* NSArray+Additions.m */,
 				4FF6653925F2C7B000689B77 /* NSMutableDictionary+Additions.h */,
@@ -893,10 +893,10 @@
 				4F1C51D9260543DD007F4930 /* NSTextField+Additions.m */,
 				4F79A8292605074000076A7E /* NSAttributedString+Additions.h */,
 				4F79A82A2605074000076A7E /* NSAttributedString+Additions.m */,
-				4F37FAD625FDFDC4004C34C4 /* MFScrollView.h */,
-				4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */,
-				4FF665C425F2C92700689B77 /* MFSegmentedControl.h */,
-				4FF665C125F2C92700689B77 /* MFSegmentedControl.m */,
+				4F37FAD625FDFDC4004C34C4 /* CustomScrollView.h */,
+				4F37FAD725FDFDC4004C34C4 /* CustomScrollView.m */,
+				4FF665C425F2C92700689B77 /* CustomSegmentedControl.h */,
+				4FF665C125F2C92700689B77 /* CustomSegmentedControl.m */,
 				4FF665E625F2C92700689B77 /* ClickableImageView.h */,
 				4FF665EB25F2C92700689B77 /* ClickableImageView.m */,
 				4FF665EA25F2C92700689B77 /* Hyperlink.h */,
@@ -1180,8 +1180,8 @@
 			children = (
 				4FF6667B25F2C93A00689B77 /* DeviceManager.h */,
 				4FF6667D25F2C93A00689B77 /* DeviceManager.m */,
-				4FF6667C25F2C93A00689B77 /* MFDevice.h */,
-				4FF6667A25F2C93A00689B77 /* MFDevice.m */,
+				4FF6667C25F2C93A00689B77 /* Device.h */,
+				4FF6667A25F2C93A00689B77 /* Device.m */,
 			);
 			path = Devices;
 			sourceTree = "<group>";
@@ -1653,10 +1653,10 @@
 				4FF665FA25F2C92700689B77 /* AppDelegate.m in Sources */,
 				4FF665F325F2C92700689B77 /* MoreSheet.m in Sources */,
 				4FF6660025F2C92700689B77 /* Hyperlink.m in Sources */,
-				4FF6654C25F2C7B000689B77 /* MFQueue.m in Sources */,
-				4FF665ED25F2C92700689B77 /* MFSegmentedControl.m in Sources */,
+				4FF6654C25F2C7B000689B77 /* Queue.m in Sources */,
+				4FF665ED25F2C92700689B77 /* CustomSegmentedControl.m in Sources */,
 				4FF6660225F2C92700689B77 /* ClickableImageView.m in Sources */,
-				4F79A81C2604317200076A7E /* MFNotificationController.m in Sources */,
+				4F79A81C2604317200076A7E /* ToastNotificationController.m in Sources */,
 				4F39BC3B263AF2B000FDF692 /* SparkleUpdaterController.m in Sources */,
 				4F1C51DA260543DD007F4930 /* NSTextField+Additions.m in Sources */,
 				4F2F5DA825FB6FFD0037660A /* AddWindowController.m in Sources */,
@@ -1664,8 +1664,8 @@
 				4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */,
 				4F44FF052606D73D00926A5E /* SharedMessagePort.m in Sources */,
 				4FB4FA202611DD6000806DDD /* KeyCaptureScrollView.m in Sources */,
-				4F92A708260F4BF000529D1F /* MFTableView.m in Sources */,
-				4F37FAD825FDFDC5004C34C4 /* MFScrollView.m in Sources */,
+				4F92A708260F4BF000529D1F /* RemapTableView.m in Sources */,
+				4F37FAD825FDFDC5004C34C4 /* CustomScrollView.m in Sources */,
 				4FF665F825F2C92700689B77 /* MessagePort_App.m in Sources */,
 				4F319CBB26252A2D004E5F63 /* ButtonGroupRowView.m in Sources */,
 				4F79A82B2605074000076A7E /* NSAttributedString+Additions.m in Sources */,
@@ -1711,7 +1711,7 @@
 				4FF6668F25F2C93A00689B77 /* SmoothScroll.m in Sources */,
 				4FF6669A25F2C93A00689B77 /* Utility_Transformation.m in Sources */,
 				4FF6669D25F2C93A00689B77 /* AccessibilityCheck.m in Sources */,
-				4FF666A725F2C93A00689B77 /* MFDevice.m in Sources */,
+				4FF666A725F2C93A00689B77 /* Device.m in Sources */,
 				4FF6669C25F2C93A00689B77 /* PointerSpeed.m in Sources */,
 				4FF6668425F2C93A00689B77 /* MessagePort_Helper.m in Sources */,
 				4FF6669225F2C93A00689B77 /* RoughScroll.m in Sources */,
@@ -1736,7 +1736,7 @@
 				4FF6668B25F2C93A00689B77 /* AnimationCurve.m in Sources */,
 				4FF6654325F2C7B000689B77 /* HelperServices.m in Sources */,
 				4FA994BE26678AC90007F003 /* ScrollAnalyzer.m in Sources */,
-				4FF6654B25F2C7B000689B77 /* MFQueue.m in Sources */,
+				4FF6654B25F2C7B000689B77 /* Queue.m in Sources */,
 				4FF6668625F2C93A00689B77 /* ButtonTriggerGenerator.m in Sources */,
 				4FF6669425F2C93A00689B77 /* GestureScrollSimulator.m in Sources */,
 			);

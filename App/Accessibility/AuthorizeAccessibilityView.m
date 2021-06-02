@@ -11,7 +11,7 @@
 #import "AuthorizeAccessibilityView.h"
 #import "MessagePort_App.h"
 #import "Utility_App.h"
-#import "MFNotificationController.h"
+#import "ToastNotificationController.h"
 #import "SharedMessagePort.h"
 #import "CaptureNotifications.h"
 #import "RemapTableUtility.h"

@@ -13,7 +13,7 @@
 
 // This is really the same thing as a "toast" or a "snackbar"
 
-#import "MFNotificationController.h"
+#import "ToastNotificationController.h"
 #import "AppDelegate.h"
 #import "Utility_App.h"
 #import "MFNotification.h"
@@ -22,26 +22,26 @@
 #import "NSAttributedString+Additions.h"
 #import "WannabePrefixHeader.h"
 
-@interface MFNotificationController ()
+@interface ToastNotificationController ()
 @property (unsafe_unretained) IBOutlet MFNotificationLabel *label;
 @end
 
-@implementation MFNotificationController {
+@implementation ToastNotificationController {
 }
 
-static MFNotificationController *_instance;
+static ToastNotificationController *_instance;
 static NSDictionary *_labelAttributesFromIB;
 static id _localEventMonitor;
 
 + (void)initialize {
     
-    if (self == [MFNotificationController class]) {
+    if (self == [ToastNotificationController class]) {
         
         // Setup window closing notification
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(windowResignKey:) name:NSWindowDidResignKeyNotification object:nil];
         
         // Setup notfication window
-        _instance = [[MFNotificationController alloc] initWithWindowNibName:@"MFNotification"];
+        _instance = [[ToastNotificationController alloc] initWithWindowNibName:@"MFNotification"];
         
         NSPanel *w = (NSPanel *)_instance.window;
         
