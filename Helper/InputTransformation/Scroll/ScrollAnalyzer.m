@@ -11,6 +11,7 @@
 #import <Cocoa/Cocoa.h>
 #import "ScrollControl.h"
 #import "ScrollUtility.h"
+#import "ScrollConfig.h"
 
 @implementation ScrollAnalyzer
 
@@ -43,7 +44,7 @@ static double _previousScrollTickTimeStamp;
 + (void) updateConsecutiveScrollTickAndSwipeCountersWithTickOccuringNow { // Starts counting at 0
     double thisScrollTickTimeStamp = CACurrentMediaTime();
     double intervall = (thisScrollTickTimeStamp - _previousScrollTickTimeStamp);
-    if (intervall > ScrollControl.consecutiveScrollTickMaxIntervall) {
+    if (intervall > ScrollConfig.consecutiveScrollTickMaxInterval) {
         [self updateConsecutiveScrollSwipeCounterWithSwipeOccuringNow]; // Needs to be called before resetting _consecutiveScrollTickCounter = 0, because it uses _consecutiveScrollTickCounter to determine whether the last series of consecutive scroll ticks was a scroll swipe
         _consecutiveScrollTickCounter = 0;
     } else {
@@ -62,10 +63,10 @@ static double _previousScrollSwipeTimeStamp;
     
     double thisScrollSwipeTimeStamp = CACurrentMediaTime();
     double intervall = thisScrollSwipeTimeStamp - _previousScrollTickTimeStamp; // Time between the last tick of the previous swipe and the first tick of the current swipe (now)
-    if (intervall > ScrollControl.consecutiveScrollSwipeMaxIntervall) {
+    if (intervall > ScrollConfig.consecutiveScrollSwipeMaxInterval) {
         _consecutiveScrollSwipeCounter = 0;
     } else {
-        if (_consecutiveScrollTickCounter >= ScrollControl.scrollSwipeThreshold_inTicks) {
+        if (_consecutiveScrollTickCounter >= ScrollConfig.scrollSwipeThreshold_inTicks) {
             _consecutiveScrollSwipeCounter += 1;
         } else {
             _consecutiveScrollSwipeCounter = 0;

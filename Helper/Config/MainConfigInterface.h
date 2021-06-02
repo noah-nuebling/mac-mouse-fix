@@ -9,12 +9,13 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ConfigInterface_Helper : NSObject
+@interface MainConfigInterface : NSObject
 
 + (void)load_Manual;
 
 id config(NSString *keyPath);
-+ (NSMutableDictionary *)config;
++ (NSMutableDictionary *)config; // Should we expose this? Isn't it enough to expose configWithAppOverridesApplied?
++ (NSMutableDictionary *)configWithAppOverridesApplied;
 
 + (void)reactToConfigFileChange;
 + (BOOL)applyOverridesForAppUnderMousePointer_Force:(BOOL)force;

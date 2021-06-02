@@ -13,22 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ScrollControl : NSObject
 
-typedef enum {
-    kMFStandardScrollDirection      =   1,
-    kMFInvertedScrollDirection      =  -1
-} MFScrollDirection;
-
 + (AXUIElementRef) systemWideAXUIElement;
 + (CGEventSourceRef)eventSource;
-
-+ (void)configureWithParameters:(NSDictionary *)params;
-
-+ (double)fastScrollExponentialBase;
-+ (double)fastScrollFactor;
-+ (int)scrollSwipeThreshold_inTicks;
-+ (double)fastScrollThreshold_inSwipes;
-+ (double)consecutiveScrollTickMaxIntervall;
-+ (double)consecutiveScrollSwipeMaxIntervall;
 
 + (BOOL)isSmoothEnabled;
 + (void)setIsSmoothEnabled: (BOOL)B;

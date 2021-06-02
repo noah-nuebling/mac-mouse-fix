@@ -11,7 +11,7 @@
 // Need this when application changes but mouse doesn't move (e.g. Command-Tab). Without this the app specific settings for the new app aren't applied
 // NSWorkspaceDidActivateApplicationNotification?
 
-#import "ConfigInterface_Helper.h"
+#import "MainConfigInterface.h"
 #import "AppDelegate.h"
 #import "ScrollControl.h"
 #import "SmoothScroll.h"
@@ -22,7 +22,7 @@
 #import "Constants.h"
 #import "Utility_Transformation.h"
 
-@implementation ConfigInterface_Helper
+@implementation MainConfigInterface
 
 #pragma mark Globals
 
@@ -54,7 +54,7 @@ static NSString*_configFilePath;
 // Convenience function for accessing config quicker
 
 id config(NSString *keyPath) {
-    return [ConfigInterface_Helper.config valueForKeyPath:keyPath];
+    return [MainConfigInterface.config valueForKeyPath:keyPath];
 }
 
 static NSMutableDictionary *_config; // TODO: Make this immutable. I think helper should never modifiy this except by reloading from file.
@@ -69,7 +69,7 @@ static NSMutableDictionary *_configWithAppOverridesApplied;
 + (void)reactToConfigFileChange {
     fillConfigFromFile();
 //    _configFileChanged = YES; // Remove _configFileChanged, if commenting this out didn't break anything
-    [ConfigInterface_Helper applyOverridesForAppUnderMousePointer_Force:YES]; // Doing this to force update of internal state, even the active app hastn't chaged
+    [MainConfigInterface applyOverridesForAppUnderMousePointer_Force:YES]; // Doing this to force update of internal state, even the active app hastn't chaged
 //    _configFileChanged = NO;
     [TransformationManager loadRemapsFromConfig];
 }
@@ -132,44 +132,12 @@ static void fillConfigFromFile() {
 //        }
         _bundleIDOfAppWhichCausesAppOverride = bundleIDOfCurrentApp;
         loadAppOverridesForApp(bundleIDOfCurrentApp);
-        [ConfigInterface_Helper updateScrollParameters];
+//        [MainConfigInterface updateScrollParameters];
         [ScrollControl resetDynamicGlobals]; // Not entirely sure if necessary
         return YES;
     }
     
     return NO;
-}
-
-/// Update internal state of scroll classes with values from _configWithAppOverridesApplied
-/// \note Call loadAppOverridesForApp() to fill _configWithAppOverridesApplied
-+ (void)updateScrollParameters {
-
-    NSDictionary *scroll = [_configWithAppOverridesApplied objectForKey:kMFConfigKeyScroll];
-    
-    // top level parameters
-    
-//        ScrollControl.disableAll = [[defaultScrollSettings objectForKey:@"disableAll"] boolValue]; // this is currently unused. Could be used as a killswitch for all scrolling interception
-    ScrollControl.scrollDirection = [scroll[@"direction"] intValue];
-    ScrollControl.isSmoothEnabled = [scroll[@"smooth"] boolValue];
-    
-    
-    // Other
-    [ScrollControl configureWithParameters:scroll[@"other"]];
-
-    // SmoothParameters
-    [SmoothScroll configureWithParameters:scroll[@"smoothParameters"]];
-
-    // roughParameters
-        // nothing here yet
-
-    // Keyboard modifier keys
-    NSDictionary *mod = scroll[@"modifierKeys"];
-    // Event flag masks
-    ScrollModifiers.horizontalScrollModifierKeyMask = (CGEventFlags)[_stringToEventFlagMask[mod[@"horizontalScrollModifierKey"]] unsignedLongLongValue];
-    ScrollModifiers.magnificationScrollModifierKeyMask = (CGEventFlags)[_stringToEventFlagMask[mod[@"magnificationScrollModifierKey"]] unsignedLongLongValue];
-    // Enabled / disabled
-    ScrollModifiers.horizontalScrollModifierKeyEnabled = [mod[@"horizontalScrollModifierKeyEnabled"] boolValue];
-    ScrollModifiers.magnificationScrollModifierKeyEnabled = [mod[@"magnificationScrollModifierKeyEnabled"] boolValue];
 }
 
 /// Applies AppOverrides from app with `bundleIdentifier` to `_config` and writes the result into `_configWithAppOverridesApplied`.
@@ -221,7 +189,7 @@ void Handle_FSEventStreamCallback (ConstFSEventStreamRef streamRef, void *client
     
     DDLogInfo(@"config.plist changed (FSMonitor)");
     
-    [ConfigInterface_Helper reactToConfigFileChange];
+    [MainConfigInterface reactToConfigFileChange];
 }
 
 

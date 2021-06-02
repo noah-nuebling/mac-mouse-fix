@@ -27,6 +27,7 @@
 
 #import "GestureScrollSimulator.h"
 #import "ScrollAnalyzer.h"
+#import "ScrollConfig.h"
 
 @implementation SmoothScroll
 
@@ -174,10 +175,10 @@ static BOOL _hasStarted;
 //        DDLogDebug(@"swip: %d", ScrollUtility.consecutiveScrollSwipeCounter);
 //    }
     
-    int fastScrollThresholdDelta = ScrollAnalyzer.consecutiveScrollSwipeCounter - ScrollControl.fastScrollThreshold_inSwipes;
+    int fastScrollThresholdDelta = ScrollAnalyzer.consecutiveScrollSwipeCounter - (unsigned int)ScrollConfig.fastScrollThreshold_inSwipes;
     if (fastScrollThresholdDelta >= 0) {
         //&& ScrollUtility.consecutiveScrollTickCounter >= ScrollControl.scrollSwipeThreshold_inTicks) {
-        _pxScrollBuffer = _pxScrollBuffer * ScrollControl.fastScrollFactor * pow(ScrollControl.fastScrollExponentialBase, ((int32_t)fastScrollThresholdDelta));
+        _pxScrollBuffer = _pxScrollBuffer * ScrollConfig.fastScrollFactor * pow(ScrollConfig.fastScrollExponentialBase, ((int32_t)fastScrollThresholdDelta));
     }
     
 //    DDLogDebug(@"buff: %d", _pxScrollBuffer);

@@ -13,21 +13,18 @@
 #import "RoughScroll.h"
 #import "TouchSimulator.h"
 #import "ScrollModifiers.h"
-#import "ConfigInterface_Helper.h"
+#import "MainConfigInterface.h"
 #import "ScrollUtility.h"
 #import "Utility_Helper.h"
 #import "WannabePrefixHeader.h"
 #import "ScrollAnalyzer.h"
+#import "ScrollConfig.h"
 
 @implementation ScrollControl
 
-#pragma mark - Private variables
+#pragma mark - Variables
 
 static CFMachPortRef _eventTap       =   nil;
-
-#pragma mark - Public variables
-
-#pragma mark Parameters
 
 // Constant
 
@@ -42,52 +39,6 @@ static CGEventSourceRef _eventSource = nil;
 static dispatch_queue_t _scrollQueue;
 + (dispatch_queue_t)_scrollQueue {
     return _scrollQueue;
-}
-
-// From config
-
-// consecutive scroll ticks, scrollSwipes, and fast scroll
-double _fastScrollExponentialBase;
-double _fastScrollFactor;
-int    _scrollSwipeThreshold_inTicks;
-int    _fastScrollThreshold_inSwipes;
-double _consecutiveScrollTickMaxIntervall;
-double _consecutiveScrollSwipeMaxIntervall;
-+ (double)fastScrollExponentialBase {
-    return _fastScrollExponentialBase;
-}
-+ (double)fastScrollFactor {
-    return _fastScrollFactor;
-}
-+ (int)scrollSwipeThreshold_inTicks {
-    return _scrollSwipeThreshold_inTicks;
-}
-+ (double)fastScrollThreshold_inSwipes {
-    return _fastScrollThreshold_inSwipes;
-}
-+ (double)consecutiveScrollTickMaxIntervall {
-    return _consecutiveScrollTickMaxIntervall;
-}
-+ (double)consecutiveScrollSwipeMaxIntervall {
-    return _consecutiveScrollSwipeMaxIntervall;
-}
-
-#pragma mark Dynamic vars
-
-static BOOL _isSmoothEnabled;
-+ (BOOL)isSmoothEnabled {
-    return _isSmoothEnabled;
-}
-+ (void)setIsSmoothEnabled:(BOOL)B {
-    _isSmoothEnabled = B;
-}
-// TODO: Change type to MFScrollDirection
-static int _scrollDirection;
-+ (int)scrollDirection {
-    return _scrollDirection;
-}
-+ (void)setScrollDirection:(int)dir {
-    _scrollDirection = dir;
 }
 
 #pragma mark - Public functions
@@ -116,20 +67,6 @@ static int _scrollDirection;
         CFRelease(runLoopSource);
         CGEventTapEnable(_eventTap, false); // Not sure if this does anything
     }
-}
-
-+ (void)configureWithParameters:(NSDictionary *)params {
-    // How quickly fast scrolling gains speed.
-    _fastScrollExponentialBase          =   [params[@"fastScrollExponentialBase"] doubleValue]; // 1.05 //1.125 //1.0625 // 1.09375
-    _fastScrollFactor                   =   [params[@"fastScrollFactor"] doubleValue];
-    // If `_fastScrollThreshold_inSwipes` consecutive swipes occur, fast scrolling is enabled.
-    _fastScrollThreshold_inSwipes       =   [params[@"fastScrollThreshold_inSwipes"] intValue];
-    // If `_scrollSwipeThreshold_inTicks` consecutive ticks occur, they are deemed a scroll-swipe.
-    _scrollSwipeThreshold_inTicks       =   [params [@"scrollSwipeThreshold_inTicks"] intValue]; // 3
-    // If more than `_consecutiveScrollSwipeMaxIntervall` seconds passes between two scrollwheel swipes, then they aren't deemed consecutive.
-    _consecutiveScrollSwipeMaxIntervall =   [params[@"consecutiveScrollSwipeMaxIntervall"] doubleValue];
-    // If more than `_consecutiveScrollTickMaxIntervall` seconds passes between two scrollwheel ticks, then they aren't deemed consecutive.
-    _consecutiveScrollTickMaxIntervall  =   [params[@"consecutiveScrollTickMaxIntervall"] doubleValue]; // == _msPerStep/1000 // oldval:0.03
 }
 
 /// When scrolling is in progress, there are tons of variables holding global state. This resets some of them.
@@ -174,7 +111,7 @@ static int _scrollDirection;
         CGEventTapEnable(_eventTap, true);
         // Enable other scroll classes
         [ScrollModifiers start];
-        if (_isSmoothEnabled) {
+        if (ScrollConfig.smoothEnabled) {
             DDLogInfo(@"Enabling SmoothScroll");
             [SmoothScroll start];
             [RoughScroll stop];
@@ -246,7 +183,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
             }
             if (ScrollUtility.mouseDidMove || ScrollUtility.frontMostAppDidChange) {
                 // set app overrides
-                BOOL configChanged = [ConfigInterface_Helper applyOverridesForAppUnderMousePointer_Force:NO]; // TODO: `updateInternalParameters_Force:` should (probably) reset stuff itself, if it changes anything. This whole [SmoothScroll stop] stuff is kinda messy
+                BOOL configChanged = [MainConfigInterface applyOverridesForAppUnderMousePointer_Force:NO]; // TODO: `updateInternalParameters_Force:` should (probably) reset stuff itself, if it changes anything. This whole [SmoothScroll stop] stuff is kinda messy
                 if (configChanged) {
                     [SmoothScroll stop]; // Not sure if useful
                     [RoughScroll stop]; // Not sure if useful
@@ -258,7 +195,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         
         int16_t pxToScrollForThisTick = scrollDeltaAxis1;
         
-        if (_isSmoothEnabled) {
+        if (ScrollConfig.smoothEnabled) {
             [SmoothScroll start];   // Not sure if useful
             [RoughScroll stop];     // Not sure if useful
             [SmoothScroll handleInput:eventCopy info:NULL];
