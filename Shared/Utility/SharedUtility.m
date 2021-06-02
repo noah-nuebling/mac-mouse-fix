@@ -9,8 +9,8 @@
 
 #import "SharedUtility.h"
 #import "Objects.h"
-#import "ConfigFileInterface_App.h"
-#import "ConfigFileInterface_Helper.h"
+#import "ConfigInterface_App.h"
+#import "ConfigInterface_Helper.h"
 #import "SharedUtility.h"
 
 @implementation SharedUtility

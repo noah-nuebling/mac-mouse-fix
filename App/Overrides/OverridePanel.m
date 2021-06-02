@@ -19,7 +19,7 @@
  */
 
 #import "OverridePanel.h"
-#import "ConfigFileInterface_App.h"
+#import "ConfigInterface_App.h"
 #import "Utility_App.h"
 #import "NSMutableDictionary+Additions.h"
 #import <Foundation/Foundation.h>
@@ -71,7 +71,7 @@ NSDictionary *_columnIdentifierToKeyPath;
     };
     
     // Load table
-    [ConfigFileInterface_App loadConfigFromFile];
+    [ConfigInterface_App loadConfigFromFile];
     [self loadTableViewDataModelFromConfig];
     [_tableView reloadData];
 
@@ -117,7 +117,7 @@ NSDictionary *_columnIdentifierToKeyPath;
 
 - (void)setConfigFileToUI {
     [self writeTableViewDataModelToConfig];
-    [ConfigFileInterface_App writeConfigToFileAndNotifyHelper];
+    [ConfigInterface_App writeConfigToFileAndNotifyHelper];
     [self loadTableViewDataModelFromConfig];
     [_tableView reloadData];
 }
@@ -297,7 +297,7 @@ NSDictionary *_columnIdentifierToKeyPath;
         newRow[@"AppColumnID"] = bundleID;
         for (NSString *columnID in _columnIdentifierToKeyPath) {
             NSString *keyPath = _columnIdentifierToKeyPath[columnID];
-            NSObject *defaultValue = [ConfigFileInterface_App.config objectForCoolKeyPath:keyPath]; // Could use valueForKeyPath as well, because there are no periods in the keys of the keyPath
+            NSObject *defaultValue = [ConfigInterface_App.config objectForCoolKeyPath:keyPath]; // Could use valueForKeyPath as well, because there are no periods in the keys of the keyPath
             newRow[columnID] = defaultValue;
         }
         [newRows addObject:newRow];
@@ -343,17 +343,17 @@ NSMutableArray *_tableViewDataModel;
             NSObject *cellValue = rowDict[columnID];
             NSString *defaultKeyPath = _columnIdentifierToKeyPath[columnID];
             NSString *overrideKeyPath = [NSString stringWithFormat:@"AppOverrides.%@.Root.%@", bundleIDEscaped, defaultKeyPath];
-            [ConfigFileInterface_App.config setObject:cellValue forCoolKeyPath:overrideKeyPath];
+            [ConfigInterface_App.config setObject:cellValue forCoolKeyPath:overrideKeyPath];
         }
         // Write order key
         NSString *orderKeyKeyPath = [NSString stringWithFormat:@"AppOverrides.%@.meta.scrollOverridePanelTableViewOrderKey", bundleIDEscaped];
-        [ConfigFileInterface_App.config setObject:[NSNumber numberWithInt:orderKey] forCoolKeyPath:orderKeyKeyPath];
+        [ConfigInterface_App.config setObject:[NSNumber numberWithInt:orderKey] forCoolKeyPath:orderKeyKeyPath];
         orderKey += 1;
     }
     
     // For all overrides for apps in the config, which aren't in the table, and which are installed - delete all values managed by the table from the config
     
-    NSMutableSet *bundleIDsInConfigAndInstalledButNotInTable = [NSMutableSet setWithArray:((NSDictionary *)[ConfigFileInterface_App.config valueForKeyPath:kMFConfigKeyAppOverrides]).allKeys]; // Get all bundle IDs in the config
+    NSMutableSet *bundleIDsInConfigAndInstalledButNotInTable = [NSMutableSet setWithArray:((NSDictionary *)[ConfigInterface_App.config valueForKeyPath:kMFConfigKeyAppOverrides]).allKeys]; // Get all bundle IDs in the config
     
     bundleIDsInConfigAndInstalledButNotInTable = [bundleIDsInConfigAndInstalledButNotInTable filteredSetUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
         return [Utility_App appIsInstalled:evaluatedObject];
@@ -365,20 +365,20 @@ NSMutableArray *_tableViewDataModel;
         // Delete override values
         for (NSString *rootKeyPath in _columnIdentifierToKeyPath.allValues) {
         NSString *overrideKeyPath = [NSString stringWithFormat:@"AppOverrides.%@.Root.%@", bundleIDEscaped, rootKeyPath];
-        [ConfigFileInterface_App.config setObject:nil forCoolKeyPath:overrideKeyPath];
+        [ConfigInterface_App.config setObject:nil forCoolKeyPath:overrideKeyPath];
         }
         // Delete orderKey
         NSString *orderKeyKeyPath = [NSString stringWithFormat:@"AppOverrides.%@.meta.scrollOverridePanelTableViewOrderKey", bundleIDEscaped];
-        [ConfigFileInterface_App.config setObject:nil forCoolKeyPath:orderKeyKeyPath];
+        [ConfigInterface_App.config setObject:nil forCoolKeyPath:orderKeyKeyPath];
     }
     
-    [ConfigFileInterface_App cleanConfig];
-    [ConfigFileInterface_App writeConfigToFileAndNotifyHelper];
+    [ConfigInterface_App cleanConfig];
+    [ConfigInterface_App writeConfigToFileAndNotifyHelper];
 }
 
 - (void)loadTableViewDataModelFromConfig {
     _tableViewDataModel = [NSMutableArray array];
-    NSDictionary *config = ConfigFileInterface_App.config;
+    NSDictionary *config = ConfigInterface_App.config;
     if (!config) { // TODO: does this exception make sense? What is the consequence of it being thrown? Where is it caught? Should we just reload the config file instead? Can this even happen if ConfigFileInterface successfully loaded?
         NSException *configNotLoadedException = [NSException exceptionWithName:@"ConfigNotLoadedException" reason:@"ConfigFileInterface config property is nil" userInfo:nil];
         @throw configNotLoadedException;
@@ -410,7 +410,7 @@ NSMutableArray *_tableViewDataModel;
         }
         if (someNil) { // Only some of the values controlled by the table don't exist in this AppOverride
             // Fill out missing values with default ones
-            [ConfigFileInterface_App repairConfigWithProblem:kMFConfigProblemIncompleteAppOverride info:@{
+            [ConfigInterface_App repairConfigWithProblem:kMFConfigProblemIncompleteAppOverride info:@{
                     @"bundleID": bundleID,
                     @"relevantKeyPaths": _columnIdentifierToKeyPath.allValues,
             }];
