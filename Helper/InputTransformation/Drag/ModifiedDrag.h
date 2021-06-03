@@ -21,12 +21,6 @@ typedef enum {
     kMFModifiedInputActivationStateInUse,
 } MFModifiedInputActivationState;
 
-typedef enum {
-    kMFAxisNone,
-    kMFAxisHorizontal,
-    kMFAxisVertical,
-} MFAxis;
-
 + (void)load_Manual;
 
 + (void)initializeDragWithModifiedDragDict:(NSDictionary *)dict onDevice:(Device *)dev;

@@ -13,7 +13,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Constants : NSObject
 
-// Other
+// Input processing
+
+typedef enum {
+    kMFAxisNone,
+    kMFAxisHorizontal,
+    kMFAxisVertical,
+} MFAxis;
+
+// Bundles and Bezelservices
 
 #define kMFBundleIDApp      @"com.nuebling.mac-mouse-fix"
 #define kMFBundleIDHelper   @"com.nuebling.mac-mouse-fix.helper"

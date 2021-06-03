@@ -19,6 +19,7 @@
 #import "WannabePrefixHeader.h"
 #import "ScrollAnalyzer.h"
 #import "ScrollConfigInterface.h"
+#import "Constants.h"
 
 @implementation ScrollControl
 
@@ -126,6 +127,7 @@ static dispatch_queue_t _scrollQueue; // TODO: Does this need to be public?
 static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
     // Handle eventTapDisabled messages
+    
     if (type == kCGEventTapDisabledByTimeout || type == kCGEventTapDisabledByUserInput) {
         
         if (type == kCGEventTapDisabledByUserInput) {
@@ -139,6 +141,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     }
     
     // Return non-scrollwheel events unaltered
+    
     int64_t isPixelBased     = CGEventGetIntegerValueField(event, kCGScrollWheelEventIsContinuous);
     int64_t scrollPhase      = CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase);
     int64_t scrollDeltaAxis1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
@@ -158,6 +161,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     dispatch_async(_scrollQueue, ^{
 
         // Check if scroll dir changed
+        
         //   Reset tick and swipe counters if yes
         [ScrollAnalyzer updateScrollDirectionDidChange:scrollDeltaAxis1];
         if (ScrollAnalyzer.scrollDirectionDidChange) {
@@ -191,22 +195,52 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
         // Process event
         
-        int16_t pxToScrollForThisTick = scrollDeltaAxis1;
+        processEvent(eventCopy);
         
-        if (ScrollConfigInterface.smoothEnabled) {
-            [SmoothScroll start];   // Not sure if useful
-            [RoughScroll stop];     // Not sure if useful
-            [SmoothScroll handleInput:eventCopy info:NULL];
-        } else {
-            [SmoothScroll stop];
-            [RoughScroll start];
-            [RoughScroll handleInput:eventCopy info:NULL];
-        }
-        CFRelease(eventCopy);
     });
     return nil;
 }
 
+static void processEvent(CGEventRef event) {
+    
+    // Get raw data from event
+    
+    int64_t scrollDeltaAxis1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
+    int64_t scrollDeltaAxis2 = CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2);
+    
+    // Get scrollAxis
+    MFAxis scrollAxis = kMFAxisVertical;
+    if (scrollDeltaAxis2 != 0) {
+        scrollAxis = kMFAxisHorizontal;
+    }
+    NSAssert(scrollDeltaAxis1 == 0 || scrollDeltaAxis2 == 0, @"Scroll event is not parallel to an axis.");
+    
+    // Get scrollDeltas
+    int64_t scrollDelta;
+    int64_t scrollDeltaPoint;
+    if (scrollAxis == kMFAxisVertical) {
+        scrollDelta = scrollDeltaAxis1;
+        scrollDeltaPoint = CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1);
+    } else if (scrollAxis == kMFAxisHorizontal) {
+        scrollDelta = scrollDeltaAxis2;
+        scrollDeltaPoint = CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis2);
+    }
+    
+    // Get pixels to scroll for this event (or 'for this tick' because this event was caused by a scrollwheel tick)
+    
+    int16_t pxToScrollForThisTick;
+    
+    if (ScrollConfigInterface.smoothEnabled) {
+        [SmoothScroll start];   // Not sure if useful
+        [RoughScroll stop];     // Not sure if useful
+        [SmoothScroll handleInput:event info:NULL];
+    } else {
+        [SmoothScroll stop];
+        [RoughScroll start];
+        [RoughScroll handleInput:event info:NULL];
+    }
+    CFRelease(eventCopy);
+}
 
 
 @end
