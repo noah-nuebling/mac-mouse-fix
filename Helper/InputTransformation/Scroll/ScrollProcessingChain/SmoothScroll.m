@@ -138,9 +138,9 @@ static BOOL _hasStarted;
     _msLeftForScroll = ScrollConfigInterface.msPerStep;
 //    _msLeftForScroll = 1 / (_pxPerMSBaseSpeed / _pxStepSize);
     if (scrollDeltaAxis1 > 0) {
-        _pxScrollBuffer += ScrollConfigInterface.pxStepSize * ScrollConfigInterface.scrollDirection;
+        _pxScrollBuffer += ScrollConfigInterface.pxPerTickBase * ScrollConfigInterface.scrollDirection;
     } else if (scrollDeltaAxis1 < 0) {
-        _pxScrollBuffer -= ScrollConfigInterface.pxStepSize * ScrollConfigInterface.scrollDirection;
+        _pxScrollBuffer -= ScrollConfigInterface.pxPerTickBase * ScrollConfigInterface.scrollDirection;
     } else {
         DDLogInfo(@"scrollDeltaAxis1 is 0. This shouldn't happen.");
     }
@@ -149,11 +149,7 @@ static BOOL _hasStarted;
     if (ScrollAnalyzer.consecutiveScrollTickCounter != 0) {
         _pxScrollBuffer = _pxScrollBuffer * ScrollConfigInterface.accelerationForScrollBuffer;
     }
-    
-//    if (ScrollUtility.consecutiveScrollTickCounter == 0) {
-//        DDLogDebug(@"tick: %d", ScrollUtility.consecutiveScrollTickCounter);
-//        DDLogDebug(@"swip: %d", ScrollUtility.consecutiveScrollSwipeCounter);
-//    }
+
     
     int fastScrollThresholdDelta = ScrollAnalyzer.consecutiveScrollSwipeCounter - (unsigned int)ScrollConfigInterface.fastScrollThreshold_inSwipes;
     if (fastScrollThresholdDelta >= 0) {

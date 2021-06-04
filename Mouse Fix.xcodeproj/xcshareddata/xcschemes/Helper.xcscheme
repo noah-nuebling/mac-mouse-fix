@@ -49,16 +49,10 @@
             </ActionContent>
          </ExecutionAction>
       </PreActions>
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4FCECD7F21092354001F1078"
-            BuildableName = "Mac Mouse Fix Helper.app"
-            BlueprintName = "Mac Mouse Fix Helper"
-            ReferencedContainer = "container:Mouse Fix.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
+      <PathRunnable
+         runnableDebuggingMode = "0"
+         FilePath = "/Users/Noah/Library/Developer/Xcode/DerivedData/Mouse_Fix-hapdaoboyongufbwskccfykbnrlk/Build/Products/Debug/Mac Mouse Fix.app/Contents/Library/LoginItems/Mac Mouse Fix Helper.app">
+      </PathRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

@@ -21,5 +21,5 @@
 + (AppDelegate *)instance;
 + (NSWindow *)mainWindow;
 + (void)handleHelperEnabledMessage;
-- (void)stopRemoveAccOverlayTimer;
+- (void)handleAccessibilityDisabledMessage;
 @end

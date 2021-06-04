@@ -119,6 +119,7 @@
 		4FF666A725F2C93A00689B77 /* Device.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6667A25F2C93A00689B77 /* Device.m */; };
 		4FF666A825F2C93A00689B77 /* DeviceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6667D25F2C93A00689B77 /* DeviceManager.m */; };
 		4FF666A925F2C93A00689B77 /* Utility_Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6668025F2C93A00689B77 /* Utility_Helper.m */; };
+		4FFBC5A8266977CA001D389B /* DoubleExponentialSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */; };
 		B6504A8DC1F7AC097CAD076B /* Pods_Mac_Mouse_Fix_Helper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 800D11E9E63D6D95B0A59A66 /* Pods_Mac_Mouse_Fix_Helper.framework */; };
 		E70853FB40E31D4B5C1E3BA2 /* Pods_Mac_Mouse_Fix_Mac_Mouse_FixUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A3F1A28C5067038BABBB6CE /* Pods_Mac_Mouse_Fix_Mac_Mouse_FixUITests.framework */; };
 		FD225EF3B9BBF33DD4EB5820 /* Pods_Mac_Mouse_FixTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D51B40A4C81B56E735056A1 /* Pods_Mac_Mouse_FixTests.framework */; };
@@ -430,6 +431,8 @@
 		4FF6667F25F2C93A00689B77 /* Utility_Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility_Helper.h; sourceTree = "<group>"; };
 		4FF6668025F2C93A00689B77 /* Utility_Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility_Helper.m; sourceTree = "<group>"; };
 		4FFBC5732667DCE4001D389B /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		4FFBC5A6266977CA001D389B /* Mac Mouse Fix Helper-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mac Mouse Fix Helper-Bridging-Header.h"; sourceTree = "<group>"; };
+		4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExponentialSmoother.swift; sourceTree = "<group>"; };
 		6F95F061BB6B4119E691F93D /* Pods-Mac Mouse Fix Accomplice.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mac Mouse Fix Accomplice.release.xcconfig"; path = "Target Support Files/Pods-Mac Mouse Fix Accomplice/Pods-Mac Mouse Fix Accomplice.release.xcconfig"; sourceTree = "<group>"; };
 		7F6C0C78F914061497F31F88 /* Pods-Mac Mouse Fix-Mac Mouse FixUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mac Mouse Fix-Mac Mouse FixUITests.debug.xcconfig"; path = "Target Support Files/Pods-Mac Mouse Fix-Mac Mouse FixUITests/Pods-Mac Mouse Fix-Mac Mouse FixUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		800D11E9E63D6D95B0A59A66 /* Pods_Mac_Mouse_Fix_Helper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mac_Mouse_Fix_Helper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1016,7 +1019,9 @@
 				4FF6662F25F2C93A00689B77 /* ScrollUtility.m */,
 				4FA994BC26678AC90007F003 /* ScrollAnalyzer.h */,
 				4FA994BD26678AC90007F003 /* ScrollAnalyzer.m */,
+				4FF937552669B043003A52EA /* Curves */,
 				4FF6662225F2C93A00689B77 /* Unused */,
+				4FFBC5B126697E8D001D389B /* Smoothing */,
 			);
 			path = Scroll;
 			sourceTree = "<group>";
@@ -1025,9 +1030,7 @@
 			isa = PBXGroup;
 			children = (
 				4FF6662325F2C93A00689B77 /* SmoothScroll.m (old) */,
-				4FF6662425F2C93A00689B77 /* AnimationCurve.m */,
 				4FF6662525F2C93A00689B77 /* SmoothScroll.h (old) */,
-				4FF6662625F2C93A00689B77 /* AnimationCurve.h */,
 				4FF6662725F2C93A00689B77 /* MomentumScroll.h (old) */,
 				4FF6662825F2C93A00689B77 /* MomentumScroll.m (old) */,
 			);
@@ -1106,6 +1109,7 @@
 		4FF6664D25F2C93A00689B77 /* SupportFiles */ = {
 			isa = PBXGroup;
 			children = (
+				4FFBC5A6266977CA001D389B /* Mac Mouse Fix Helper-Bridging-Header.h */,
 				4FF6664E25F2C93A00689B77 /* Helper.entitlements */,
 				4FF6664F25F2C93A00689B77 /* MainMenu.xib */,
 				4FF6665125F2C93A00689B77 /* main.m */,
@@ -1199,6 +1203,15 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
+		4FF937552669B043003A52EA /* Curves */ = {
+			isa = PBXGroup;
+			children = (
+				4FF6662625F2C93A00689B77 /* AnimationCurve.h */,
+				4FF6662425F2C93A00689B77 /* AnimationCurve.m */,
+			);
+			path = Curves;
+			sourceTree = "<group>";
+		};
 		4FFBC56E2667DC76001D389B /* PrefixHeader */ = {
 			isa = PBXGroup;
 			children = (
@@ -1206,6 +1219,14 @@
 				4FBE18BA2666EC4A002A6771 /* WannabePrefixHeader.h */,
 			);
 			path = PrefixHeader;
+			sourceTree = "<group>";
+		};
+		4FFBC5B126697E8D001D389B /* Smoothing */ = {
+			isa = PBXGroup;
+			children = (
+				4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */,
+			);
+			path = Smoothing;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1345,7 +1366,7 @@
 					};
 					4FCECD7F21092354001F1078 = {
 						CreatedOnToolsVersion = 9.2;
-						LastSwiftMigration = 0920;
+						LastSwiftMigration = 1240;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -1716,6 +1737,7 @@
 			files = (
 				4FF6654D25F2C7B000689B77 /* SharedUtility.m in Sources */,
 				4FF6668225F2C93A00689B77 /* MainConfigInterface.m in Sources */,
+				4FFBC5A8266977CA001D389B /* DoubleExponentialSmoother.swift in Sources */,
 				4FF6669625F2C93A00689B77 /* Actions.m in Sources */,
 				4F44FF042606D73D00926A5E /* SharedMessagePort.m in Sources */,
 				4FF6669325F2C93A00689B77 /* TouchSimulator.m in Sources */,
@@ -1848,6 +1870,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4F39BCA4263B6DC200FDF692 /* MainAppDebug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -1881,6 +1904,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4F39BC8A263B693300FDF692 /* MainAppRelease.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -2159,7 +2183,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix.helper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Helper/SupportFiles/Mac Mouse Fix Helper-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Helper/SupportFiles/External\"";
@@ -2194,7 +2218,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix.helper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Helper/SupportFiles/Mac Mouse Fix Helper-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Helper/SupportFiles/External\"";
 			};

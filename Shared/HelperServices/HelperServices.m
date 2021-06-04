@@ -28,6 +28,7 @@
          Sometimes there's a weird bug where the main app won't recognize the helper as enabled even though it is. The code down below for enabling will then fail, when the user tries to check the enable checkbox.
          So we're removing the helper from launchd before trying to enable to hopefully fix this. Edit: seems to fix it!
          I'm pretty sure that if we didn't check for `launchdPathIsBundlePath` in `strangeHelperIsRegisteredWithLaunchd` this issue wouldn't have occured and we wouldn't need this workaround. But I'm not sure anymore why we do that so it's not smart to remove it.
+         Edit: I think the specific issue I saw only happens when there are two instances of MMF open at the same time.
      */
     if (enable) {
         [self removeHelperFromLaunchd];
@@ -62,7 +63,7 @@
         [NSTask launchedTaskWithLaunchPath: kMFLaunchctlPath arguments: @[OnOffArgumentOld, Objects.launchdPlistURL.path]]; // Can't clean up here easily cause there's no termination handler
     }
 }
-+ (void)cleanup {
++ (void)cleanup { // TODO: Make this a c function to signify private nature of it
     [NSFileManager.defaultManager removeItemAtURL:Objects.launchdPlistURL error:NULL];
 }
 

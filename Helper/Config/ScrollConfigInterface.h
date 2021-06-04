@@ -35,7 +35,7 @@ typedef enum {
 + (MFScrollDirection)scrollDirection;
 + (BOOL)disableAll;
 
-// Scroll ticks/wipes, and fast scroll
+// Scroll ticks/swipes, fast scroll, and ticksPerSecond
 
 + (NSUInteger)scrollSwipeThreshold_inTicks;
 + (NSUInteger)fastScrollThreshold_inSwipes;
@@ -43,10 +43,12 @@ typedef enum {
 + (NSTimeInterval)consecutiveScrollSwipeMaxInterval;
 + (double)fastScrollExponentialBase;
 + (double)fastScrollFactor;
++ (double)ticksPerSecondSmoothingInputValueWeight;
++ (double)ticksPerSecondSmoothingTrendWeight;
 
 // Smooth scroll
 
-+ (NSUInteger)pxStepSize;
++ (NSUInteger)pxPerTickBase;
 + (NSUInteger)msPerStep;
 + (double)frictionCoefficient;
 + (double)frictionDepth;

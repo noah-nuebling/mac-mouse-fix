@@ -8,18 +8,25 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Constants.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ScrollAnalyzer : NSObject
 
-+ (BOOL)scrollDirectionDidChange;
-+ (void)updateScrollDirectionDidChange:(long long)thisScrollValue;
+// Input
+
++ (void)updateWithTickOccuringNowWithDelta:(int64_t)delta axis:(MFAxis)axis;
+
++ (void)resetState;
+
+// Analysis results
 
 + (int)consecutiveScrollTickCounter;
 + (int)consecutiveScrollSwipeCounter;
-+ (void)updateConsecutiveScrollTickAndSwipeCountersWithTickOccuringNow;
-+ (void)resetConsecutiveTicksAndSwipes;
++ (BOOL)scrollDirectionDidChange;
++ (double)ticksPerSecond;
++ (double)ticksPerSecondRaw;
 
 @end
 

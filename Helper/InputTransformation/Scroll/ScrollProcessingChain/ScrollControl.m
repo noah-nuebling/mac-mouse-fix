@@ -19,7 +19,7 @@
 #import "WannabePrefixHeader.h"
 #import "ScrollAnalyzer.h"
 #import "ScrollConfigInterface.h"
-#import "Constants.h"
+#import <Cocoa/Cocoa.h>
 
 @implementation ScrollControl
 
@@ -73,7 +73,7 @@ static dispatch_queue_t _scrollQueue; // TODO: Does this need to be public?
 /// When scrolling is in progress, there are tons of variables holding global state. This resets some of them.
 /// I determined the ones it resets through trial and error. Some misbehaviour/bugs might be caused by this not resetting all of the global variables.
 + (void)resetDynamicGlobals {
-    [ScrollAnalyzer resetConsecutiveTicksAndSwipes];
+    [ScrollAnalyzer resetState];
     [SmoothScroll resetDynamicGlobals];
 }
 
@@ -159,41 +159,6 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     //  Executing heavy stuff on a different thread to prevent the eventTap from timing out. We wrote this before knowing that you can just re-enable the eventTap when it times out. But this doesn't hurt.
     
     dispatch_async(_scrollQueue, ^{
-
-        // Check if scroll dir changed
-        
-        //   Reset tick and swipe counters if yes
-        [ScrollAnalyzer updateScrollDirectionDidChange:scrollDeltaAxis1];
-        if (ScrollAnalyzer.scrollDirectionDidChange) {
-            [ScrollAnalyzer resetConsecutiveTicksAndSwipes];
-        }
-        
-        /*
-         Update tick and swipe counters
-            Need to updating here in the scrollQueue instead of in the eventTapCallback so that the calls aren't out of sync with the _scrollQueue.
-            Calling it here leads to less accurate measured time between ticks, but the intervall between different eventTapCallback calls is very erratic and seemingly not accurate anyways, so it shouldn't make a big difference.
-         */
-        [ScrollAnalyzer updateConsecutiveScrollTickAndSwipeCountersWithTickOccuringNow];
-        
-        // Set application overrides
-        
-        if (ScrollAnalyzer.consecutiveScrollTickCounter == 0) { // Only do this on the first of each series of consecutive scroll ticks
-            [ScrollUtility updateMouseDidMove];
-            if (!ScrollUtility.mouseDidMove) {
-                [ScrollUtility updateFrontMostAppDidChange];
-                // Only checking this if mouse didn't move, because of || in (mouseMoved || frontMostAppChanged). For optimization. Not sure if significant.
-            }
-            if (ScrollUtility.mouseDidMove || ScrollUtility.frontMostAppDidChange) {
-                // set app overrides
-                BOOL configChanged = [MainConfigInterface applyOverridesForAppUnderMousePointer_Force:NO]; // TODO: `updateInternalParameters_Force:` should (probably) reset stuff itself, if it changes anything. This whole [SmoothScroll stop] stuff is kinda messy
-                if (configChanged) {
-                    [SmoothScroll stop]; // Not sure if useful
-                    [RoughScroll stop]; // Not sure if useful
-                }
-            }
-        }
-    
-        // Process event
         
         processEvent(eventCopy);
         
@@ -209,26 +174,63 @@ static void processEvent(CGEventRef event) {
     int64_t scrollDeltaAxis2 = CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2);
     
     // Get scrollAxis
-    MFAxis scrollAxis = kMFAxisVertical;
-    if (scrollDeltaAxis2 != 0) {
-        scrollAxis = kMFAxisHorizontal;
-    }
-    NSAssert(scrollDeltaAxis1 == 0 || scrollDeltaAxis2 == 0, @"Scroll event is not parallel to an axis.");
+    
+    MFAxis scrollAxis = [ScrollUtility axisForVerticalDelta:scrollDeltaAxis1 horizontalDelta:scrollDeltaAxis2];
     
     // Get scrollDeltas
-    int64_t scrollDelta;
-    int64_t scrollDeltaPoint;
+    
+    int64_t scrollDelta = 0; // Only initing this to 0 to silence Xcode warnings
+    int64_t scrollDeltaPoint = 0;
+    
     if (scrollAxis == kMFAxisVertical) {
         scrollDelta = scrollDeltaAxis1;
         scrollDeltaPoint = CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1);
     } else if (scrollAxis == kMFAxisHorizontal) {
         scrollDelta = scrollDeltaAxis2;
         scrollDeltaPoint = CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis2);
+    } else {
+        NSCAssert(NO, @"Invalid scroll axis");
     }
     
-    // Get pixels to scroll for this event (or 'for this tick' because this event was caused by a scrollwheel tick)
+    /*
+     Update ScrollAnalyzer
+        Need to updating here in the scrollQueue instead of in the eventTapCallback so that the calls aren't out of sync with the _scrollQueue.
+        Calling it here leads to less accurate measured time between ticks, but the intervall between different eventTapCallback calls is very erratic and seemingly not accurate anyways, so it shouldn't make a big difference.
+     */
     
-    int16_t pxToScrollForThisTick;
+    [ScrollAnalyzer updateWithTickOccuringNowWithDelta:scrollDelta axis:scrollAxis];
+    
+    // Set application overrides
+    
+    if (ScrollAnalyzer.consecutiveScrollTickCounter == 0) { // Only do this on the first of each series of consecutive scroll ticks
+        [ScrollUtility updateMouseDidMove];
+        if (!ScrollUtility.mouseDidMove) {
+            [ScrollUtility updateFrontMostAppDidChange];
+            // Only checking this if mouse didn't move, because of || in (mouseMoved || frontMostAppChanged). For optimization. Not sure if significant.
+        }
+        if (ScrollUtility.mouseDidMove || ScrollUtility.frontMostAppDidChange) {
+            // set app overrides
+            BOOL configChanged = [MainConfigInterface applyOverridesForAppUnderMousePointer_Force:NO]; // TODO: `updateInternalParameters_Force:` should (probably) reset stuff itself, if it changes anything. This whole [SmoothScroll stop] stuff is kinda messy
+            if (configChanged) {
+                [SmoothScroll stop]; // Not sure if useful
+                [RoughScroll stop]; // Not sure if useful
+            }
+        }
+    }
+
+    // Process event
+    
+    // Get pixels to scroll for this event
+    //  (aka 'for this tick' because this event was caused by a scrollwheel tick)
+    
+    int64_t pxToScrollForThisTick;
+    pxToScrollForThisTick = pxToScrollThisTick(ScrollAnalyzer.ticksPerSecond, ScrollConfigInterface.pxPerTickBase);
+//    pxToScrollForThisTick = scrollDeltaPoint;
+    
+    DDLogDebug(@"Scroll speed unsmoothed: %f", ScrollAnalyzer.ticksPerSecondRaw);
+    DDLogDebug(@"Scroll speed: %f", ScrollAnalyzer.ticksPerSecond);
+    DDLogDebug(@"Tick ctr: %d", ScrollAnalyzer.consecutiveScrollTickCounter);
+    DDLogDebug(@"Swip ctr: %d", ScrollAnalyzer.consecutiveScrollSwipeCounter);
     
     if (ScrollConfigInterface.smoothEnabled) {
         [SmoothScroll start];   // Not sure if useful
@@ -239,7 +241,11 @@ static void processEvent(CGEventRef event) {
         [RoughScroll start];
         [RoughScroll handleInput:event info:NULL];
     }
-    CFRelease(eventCopy);
+    CFRelease(event);
+}
+
+static int64_t pxToScrollThisTick(double ticksPerSecond, int64_t pxPerTickBase) {
+    return 0; // TODO change this
 }
 
 

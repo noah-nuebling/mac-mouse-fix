@@ -148,6 +148,18 @@ static NSDictionary *_MFScrollPhaseToIOHIDEventPhase;
     return false;
 }
 
++ (MFAxis)axisForVerticalDelta:(int64_t)deltaV horizontalDelta:(int64_t)deltaH {
+    
+    NSCAssert(deltaV == 0 || deltaH == 0, @"Scroll event is not parallel to an axis.");
+    
+    MFAxis axis = kMFAxisVertical;
+    if (deltaH != 0) {
+        axis = kMFAxisHorizontal;
+    }
+    
+    return axis;
+}
+
 static BOOL _mouseDidMove = NO;
 + (BOOL)mouseDidMove {
     return _mouseDidMove;

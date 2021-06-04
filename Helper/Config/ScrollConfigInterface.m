@@ -60,7 +60,7 @@ static NSDictionary *mod() {
     return [topLevel()[@"disableAll"] boolValue]; // This is currently unused. Could be used as a killswitch for all scrolling interception
 }
 
-// Scroll ticks/wipes, and fast scroll
+// Scroll ticks/swipes, fast scroll, and ticksPerSecond
 
 + (NSUInteger)scrollSwipeThreshold_inTicks { // If `_scrollSwipeThreshold_inTicks` consecutive ticks occur, they are deemed a scroll-swipe.
     return [other()[@"scrollSwipeThreshold_inTicks"] intValue]; // 3
@@ -80,11 +80,23 @@ static NSDictionary *mod() {
 + (double)fastScrollFactor {
     return [other()[@"fastScrollFactor"] doubleValue];
 }
++ (double)ticksPerSecondSmoothingInputValueWeight {
+    return 0.7;
+}
++ (double)ticksPerSecondSmoothingTrendWeight {
+    return 0.2;
+}
+//+ (double)ticksPerSecondSmoothingInitialLevel {
+//    return 0.0;
+//}
+//+ (double)ticksPerSecondSmoothingInitialTrend {
+//    return 0.0;
+//}
 
 // Smooth scrolling params
 
 
-+ (NSUInteger)pxStepSize {
++ (NSUInteger)pxPerTickBase {
     return [[smooth() objectForKey:@"pxPerStep"] intValue];
 }
 + (NSUInteger)msPerStep {
