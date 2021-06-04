@@ -194,11 +194,24 @@ static void processEvent(CGEventRef event) {
     
     /*
      Update ScrollAnalyzer
-        Need to updating here in the scrollQueue instead of in the eventTapCallback so that the calls aren't out of sync with the _scrollQueue.
+        Need to updating here in the scrollQueue instead of in the eventTapCallback thread so that the calls aren't out of sync with the _scrollQueue.
         Calling it here leads to less accurate measured time between ticks, but the intervall between different eventTapCallback calls is very erratic and seemingly not accurate anyways, so it shouldn't make a big difference.
+        Alternatively, we could calculate this before the dispatching to scrollQueue, and put the results in a Queue to make sure things don't go out of sync.
      */
     
-    [ScrollAnalyzer updateWithTickOccuringNowWithDelta:scrollDelta axis:scrollAxis];
+    int64_t consecutiveScrollTickCounter;
+    int64_t consecutiveScrollSwipeCounter;
+    BOOL scrollDirectionDidChange;
+    double ticksPerSecond;
+    double ticksPerSecondRaw;
+    
+    [ScrollAnalyzer updateWithTickOccuringNowWithDelta:scrollDelta
+                                                  axis:scrollAxis
+                      out_consecutiveScrollTickCounter:&consecutiveScrollTickCounter
+                     out_consecutiveScrollSwipeCounter:&consecutiveScrollTickCounter
+                          out_scrollDirectionDidChange:&scrollDirectionDidChange
+                                    out_ticksPerSecond:&ticksPerSecond
+                                 out_ticksPerSecondRaw:&ticksPerSecondRaw];
     
     // Set application overrides
     
