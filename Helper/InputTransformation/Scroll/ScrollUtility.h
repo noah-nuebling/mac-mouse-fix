@@ -35,7 +35,7 @@ typedef enum {
 + (BOOL)sameSign:(double)n and:(double)m;
 + (MFAxis)axisForVerticalDelta:(int64_t)deltaV horizontalDelta:(int64_t)deltaH;
 + (BOOL)mouseDidMove;
-+ (void)updateMouseDidMove;
++ (void)updateMouseDidMoveWithEvent:(CGEventRef)event;
 + (BOOL)frontMostAppDidChange;
 + (void)updateFrontMostAppDidChange;
 

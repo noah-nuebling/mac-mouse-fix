@@ -144,8 +144,8 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     int64_t scrollDeltaAxis2 = CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2);
     bool isDiagonal = scrollDeltaAxis1 != 0 && scrollDeltaAxis2 != 0;
     if (isPixelBased != 0
-        || isDiagonal // Ignore diagonal scroll-events
-        || scrollPhase != 0) { // Adding scrollphase here is untested
+        || scrollPhase != 0 // Adding scrollphase here is untested
+        || isDiagonal) { // Ignore diagonal scroll-events
         return event;
     }
     
@@ -153,7 +153,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
     MFAxis scrollAxis = [ScrollUtility axisForVerticalDelta:scrollDeltaAxis1 horizontalDelta:scrollDeltaAxis2];
     
-    // Get scrollDeltas
+    // Get scrollDelta
     
     int64_t scrollDelta = 0; // Only initing this to 0 to silence Xcode warnings
     int64_t scrollDeltaPoint = 0;
@@ -175,7 +175,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
     //  Executing heavy stuff on a different thread to prevent the eventTap from timing out. We wrote this before knowing that you can just re-enable the eventTap when it times out. But this doesn't hurt.
     
-    CGEventRef eventCopy = CGEventCreateCopy(event); // Create a copy, because the original event will become invalid and unusable in the new thread.
+    CGEventRef eventCopy = CGEventCreateCopy(event); // Create a copy, because the original event will become invalid and unusable in the new queue.
     
     dispatch_async(_scrollQueue, ^{
         
@@ -187,9 +187,10 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 static void processEvent(CGEventRef event, ScrollAnalysisResult scrollAnalysisResult) {
     
     // Set application overrides
+    //  Checking which app is under the mouse pointer is really slow, so we do some optimizations
     
     if (scrollAnalysisResult.consecutiveScrollTickCounter == 0) { // Only do this on the first of each series of consecutive scroll ticks
-        [ScrollUtility updateMouseDidMove];
+        [ScrollUtility updateMouseDidMoveWithEvent:event];
         if (!ScrollUtility.mouseDidMove) {
             [ScrollUtility updateFrontMostAppDidChange];
             // Only checking this if mouse didn't move, because of || in (mouseMoved || frontMostAppChanged). For optimization. Not sure if significant.
@@ -207,7 +208,6 @@ static void processEvent(CGEventRef event, ScrollAnalysisResult scrollAnalysisRe
     // Process event
     
     // Get pixels to scroll for this event
-    //  (aka 'for this tick' because this event was caused by a scrollwheel tick)
     
     int64_t pxToScrollForThisTick;
     pxToScrollForThisTick = pxToScrollThisTick(scrollAnalysisResult.ticksPerSecond, ScrollConfigInterface.pxPerTickBase);
