@@ -9,6 +9,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "ScrollControl.h"
+#import "ScrollAnalyzer.h"
 
 @interface SmoothScroll : ScrollControl
 
@@ -19,7 +20,7 @@
 + (BOOL)hasStarted;
 + (BOOL)isScrolling;
 
-+ (void)handleInput:(CGEventRef _Nonnull)event info:(NSDictionary * _Nullable)info;
++ (void)handleInput:(CGEventRef)event scrollAnalysisResult:(ScrollAnalysisResult)scrollAnalysisResult;
 
 @end
 

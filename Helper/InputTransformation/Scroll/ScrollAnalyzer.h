@@ -14,13 +14,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ScrollAnalyzer : NSObject
 
-+ (void)updateWithTickOccuringNowWithDelta:(int64_t)delta
-                                      axis:(MFAxis)axis
-          out_consecutiveScrollTickCounter:(int64_t *)out_consecutiveScrollTickCounter
-         out_consecutiveScrollSwipeCounter:(int64_t *)out_consecutiveScrollSwipeCounter
-              out_scrollDirectionDidChange:(BOOL *)out_scrollDirectionDidChange
-                        out_ticksPerSecond:(double *)out_ticksPerSecond
-                     out_ticksPerSecondRaw:(double *)out_ticksPerSecondRaw;
+typedef struct {
+    
+    int64_t consecutiveScrollTickCounter;
+    int64_t consecutiveScrollSwipeCounter;
+    BOOL scrollDirectionDidChange;
+    double ticksPerSecond;
+    double ticksPerSecondUnsmoothed;
+    
+} ScrollAnalysisResult;
+
++ (ScrollAnalysisResult)updateWithTickOccuringNowWithDelta:(int64_t)delta
+                                                      axis:(MFAxis)axis;
 
 + (void)resetState;
 

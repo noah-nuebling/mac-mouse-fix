@@ -25,7 +25,7 @@
 + (void)stop {
 }
 
-+ (void)handleInput:(CGEventRef)event info:(NSDictionary * _Nullable)info {
++ (void)handleInput:(CGEventRef)event {
     
     // Process event
     

@@ -15,7 +15,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ScrollControl : NSObject
 
 + (AXUIElementRef) systemWideAXUIElement;
-+ (CGEventSourceRef)eventSource;
 
 + (void)load_Manual;
 + (void)resetDynamicGlobals;

@@ -26,7 +26,6 @@
 #import "SharedUtility.h"
 
 #import "GestureScrollSimulator.h"
-#import "ScrollAnalyzer.h"
 #import "ScrollConfigInterface.h"
 
 @implementation SmoothScroll
@@ -110,7 +109,7 @@ static BOOL _hasStarted;
 
 #pragma mark - Run Loop
 
-+ (void)handleInput:(CGEventRef)event info:(NSDictionary * _Nullable)info {
++ (void)handleInput:(CGEventRef)event scrollAnalysisResult:(ScrollAnalysisResult)scrollAnalysisResult { // TODO: Remove the scrollAnalysisResult argument once we moved that functionality over to ScrollControl
     
     long long scrollDeltaAxis1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
 
@@ -119,7 +118,7 @@ static BOOL _hasStarted;
     _isScrolling = YES;
     
     // Reset _pixelScrollQueue and related values if appropriate
-    if (ScrollAnalyzer.scrollDirectionDidChange) { // Why are we resetting what we are resetting?
+    if (scrollAnalysisResult.scrollDirectionDidChange) { // Why are we resetting what we are resetting?
         _pxScrollBuffer = 0;
         _pxToScrollThisFrame = 0;
         _pxPerMsVelocity = 0;
@@ -146,12 +145,12 @@ static BOOL _hasStarted;
     }
     
     // Apply acceleration to _pxScrollBuffer
-    if (ScrollAnalyzer.consecutiveScrollTickCounter != 0) {
+    if (scrollAnalysisResult.consecutiveScrollTickCounter != 0) {
         _pxScrollBuffer = _pxScrollBuffer * ScrollConfigInterface.accelerationForScrollBuffer;
     }
 
     
-    int fastScrollThresholdDelta = ScrollAnalyzer.consecutiveScrollSwipeCounter - (unsigned int)ScrollConfigInterface.fastScrollThreshold_inSwipes;
+    int64_t fastScrollThresholdDelta = scrollAnalysisResult.consecutiveScrollSwipeCounter - (unsigned int)ScrollConfigInterface.fastScrollThreshold_inSwipes;
     if (fastScrollThresholdDelta >= 0) {
         //&& ScrollUtility.consecutiveScrollTickCounter >= ScrollControl.scrollSwipeThreshold_inTicks) {
         _pxScrollBuffer = _pxScrollBuffer * ScrollConfigInterface.fastScrollFactor * pow(ScrollConfigInterface.fastScrollExponentialBase, ((int32_t)fastScrollThresholdDelta));
@@ -165,7 +164,7 @@ static BOOL _hasStarted;
     // Update scroll phase
     _displayLinkPhase = kMFPhaseStart;
     
-    if (ScrollAnalyzer.consecutiveScrollTickCounter == 0) {
+    if (scrollAnalysisResult.consecutiveScrollTickCounter == 0) {
         if (ScrollUtility.mouseDidMove) {
             // Set diplaylink to the display that is actally being scrolled - not sure if this is necessary, because having the displaylink at 30fps on a 30fps display looks just as horrible as having the display link on 60fps, if not worse
             @try {

@@ -81,7 +81,7 @@ static NSDictionary *mod() {
     return [other()[@"fastScrollFactor"] doubleValue];
 }
 + (double)ticksPerSecondSmoothingInputValueWeight {
-    return 0.7;
+    return 0.5;
 }
 + (double)ticksPerSecondSmoothingTrendWeight {
     return 0.2;

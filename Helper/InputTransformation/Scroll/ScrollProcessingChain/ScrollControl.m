@@ -20,35 +20,31 @@
 #import "ScrollAnalyzer.h"
 #import "ScrollConfigInterface.h"
 #import <Cocoa/Cocoa.h>
+#import "Queue.h"
 
 @implementation ScrollControl
 
 #pragma mark - Variables
 
-static CFMachPortRef _eventTap       =   nil;
+static CFMachPortRef _eventTap;
+static CGEventSourceRef _eventSource;
 
-// Constant
+static dispatch_queue_t _scrollQueue;
 
-static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this to MainConfigInterface
+static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this to MainConfigInterface or some sort of OverrideManager class
 + (AXUIElementRef) systemWideAXUIElement {
     return _systemWideAXUIElement;
-}
-static CGEventSourceRef _eventSource = nil; // TODO: Does this need to be public?
-+ (CGEventSourceRef)eventSource {
-    return _eventSource;
-}
-static dispatch_queue_t _scrollQueue; // TODO: Does this need to be public?
-+ (dispatch_queue_t)_scrollQueue {
-    return _scrollQueue;
 }
 
 #pragma mark - Public functions
 
 + (void)load_Manual {
     
+    // Load SmoothScroll
     [SmoothScroll load_Manual];
     
-    // Create custom dispatch queue for multithreading while still retaining control over execution order.
+    // Setup dispatch queue
+    //  For multithreading while still retaining control over execution order.
     dispatch_queue_attr_t attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INTERACTIVE, -1);
     _scrollQueue = dispatch_queue_create(NULL, attr);
     
@@ -153,26 +149,6 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         return event;
     }
     
-    // Create a copy, because the original event will become invalid and unusable in the new thread.
-    CGEventRef eventCopy = CGEventCreateCopy(event);
-        
-    //  Executing heavy stuff on a different thread to prevent the eventTap from timing out. We wrote this before knowing that you can just re-enable the eventTap when it times out. But this doesn't hurt.
-    
-    dispatch_async(_scrollQueue, ^{
-        
-        processEvent(eventCopy);
-        
-    });
-    return nil;
-}
-
-static void processEvent(CGEventRef event) {
-    
-    // Get raw data from event
-    
-    int64_t scrollDeltaAxis1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
-    int64_t scrollDeltaAxis2 = CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2);
-    
     // Get scrollAxis
     
     MFAxis scrollAxis = [ScrollUtility axisForVerticalDelta:scrollDeltaAxis1 horizontalDelta:scrollDeltaAxis2];
@@ -192,30 +168,27 @@ static void processEvent(CGEventRef event) {
         NSCAssert(NO, @"Invalid scroll axis");
     }
     
-    /*
-     Update ScrollAnalyzer
-        Need to updating here in the scrollQueue instead of in the eventTapCallback thread so that the calls aren't out of sync with the _scrollQueue.
-        Calling it here leads to less accurate measured time between ticks, but the intervall between different eventTapCallback calls is very erratic and seemingly not accurate anyways, so it shouldn't make a big difference.
-        Alternatively, we could calculate this before the dispatching to scrollQueue, and put the results in a Queue to make sure things don't go out of sync.
-     */
+    // Run scrollAnalysis
+    //  We want to do this here, not in _scrollQueue for more accurate timing
     
-    int64_t consecutiveScrollTickCounter;
-    int64_t consecutiveScrollSwipeCounter;
-    BOOL scrollDirectionDidChange;
-    double ticksPerSecond;
-    double ticksPerSecondRaw;
+    ScrollAnalysisResult scrollAnalysisResult = [ScrollAnalyzer updateWithTickOccuringNowWithDelta:scrollDelta axis:scrollAxis];
     
-    [ScrollAnalyzer updateWithTickOccuringNowWithDelta:scrollDelta
-                                                  axis:scrollAxis
-                      out_consecutiveScrollTickCounter:&consecutiveScrollTickCounter
-                     out_consecutiveScrollSwipeCounter:&consecutiveScrollTickCounter
-                          out_scrollDirectionDidChange:&scrollDirectionDidChange
-                                    out_ticksPerSecond:&ticksPerSecond
-                                 out_ticksPerSecondRaw:&ticksPerSecondRaw];
+    //  Executing heavy stuff on a different thread to prevent the eventTap from timing out. We wrote this before knowing that you can just re-enable the eventTap when it times out. But this doesn't hurt.
+    
+    CGEventRef eventCopy = CGEventCreateCopy(event); // Create a copy, because the original event will become invalid and unusable in the new thread.
+    
+    dispatch_async(_scrollQueue, ^{
+        
+        processEvent(eventCopy, scrollAnalysisResult);
+    });
+    return nil;
+}
+
+static void processEvent(CGEventRef event, ScrollAnalysisResult scrollAnalysisResult) {
     
     // Set application overrides
     
-    if (ScrollAnalyzer.consecutiveScrollTickCounter == 0) { // Only do this on the first of each series of consecutive scroll ticks
+    if (scrollAnalysisResult.consecutiveScrollTickCounter == 0) { // Only do this on the first of each series of consecutive scroll ticks
         [ScrollUtility updateMouseDidMove];
         if (!ScrollUtility.mouseDidMove) {
             [ScrollUtility updateFrontMostAppDidChange];
@@ -237,22 +210,22 @@ static void processEvent(CGEventRef event) {
     //  (aka 'for this tick' because this event was caused by a scrollwheel tick)
     
     int64_t pxToScrollForThisTick;
-    pxToScrollForThisTick = pxToScrollThisTick(ScrollAnalyzer.ticksPerSecond, ScrollConfigInterface.pxPerTickBase);
+    pxToScrollForThisTick = pxToScrollThisTick(scrollAnalysisResult.ticksPerSecond, ScrollConfigInterface.pxPerTickBase);
 //    pxToScrollForThisTick = scrollDeltaPoint;
     
-    DDLogDebug(@"Scroll speed unsmoothed: %f", ScrollAnalyzer.ticksPerSecondRaw);
-    DDLogDebug(@"Scroll speed: %f", ScrollAnalyzer.ticksPerSecond);
-    DDLogDebug(@"Tick ctr: %d", ScrollAnalyzer.consecutiveScrollTickCounter);
-    DDLogDebug(@"Swip ctr: %d", ScrollAnalyzer.consecutiveScrollSwipeCounter);
+    DDLogDebug(@"Scroll speed unsmoothed: %f", scrollAnalysisResult.ticksPerSecondUnsmoothed);
+    DDLogDebug(@"Scroll speed: %f", scrollAnalysisResult.ticksPerSecond);
+    DDLogDebug(@"Tick ctr: %lld", scrollAnalysisResult.consecutiveScrollTickCounter);
+    DDLogDebug(@"Swip ctr: %lld", scrollAnalysisResult.consecutiveScrollSwipeCounter);
     
     if (ScrollConfigInterface.smoothEnabled) {
         [SmoothScroll start];   // Not sure if useful
         [RoughScroll stop];     // Not sure if useful
-        [SmoothScroll handleInput:event info:NULL];
+        [SmoothScroll handleInput:event scrollAnalysisResult:scrollAnalysisResult];
     } else {
         [SmoothScroll stop];
         [RoughScroll start];
-        [RoughScroll handleInput:event info:NULL];
+        [RoughScroll handleInput:event];
     }
     CFRelease(event);
 }

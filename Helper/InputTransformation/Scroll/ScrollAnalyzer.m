@@ -65,13 +65,8 @@ static int _consecutiveScrollSwipeCounter;
 }
 
 /// This is the main input function which should be called on each scrollwheel tick event
-+ (void)updateWithTickOccuringNowWithDelta:(int64_t)delta
-                                      axis:(MFAxis)axis
-          out_consecutiveScrollTickCounter:(int64_t *)out_consecutiveScrollTickCounter
-         out_consecutiveScrollSwipeCounter:(int64_t *)out_consecutiveScrollSwipeCounter
-              out_scrollDirectionDidChange:(BOOL *)out_scrollDirectionDidChange
-                        out_ticksPerSecond:(double *)out_ticksPerSecond
-                     out_ticksPerSecondRaw:(double *)out_ticksPerSecondRaw
++ (ScrollAnalysisResult)updateWithTickOccuringNowWithDelta:(int64_t)delta
+                                                      axis:(MFAxis)axis
 {
     
     // Update directionDidChange
@@ -122,11 +117,15 @@ static int _consecutiveScrollSwipeCounter;
     
     // Output
     
-    *out_consecutiveScrollTickCounter = _consecutiveScrollTickCounter;
-    *out_consecutiveScrollSwipeCounter = _consecutiveScrollSwipeCounter;
-    *out_scrollDirectionDidChange = scrollDirectionDidChange;
-    *out_ticksPerSecond = ticksPerSecond;
-    *out_ticksPerSecondRaw = ticksPerSecondRaw;
+    ScrollAnalysisResult result = (ScrollAnalysisResult) {
+        .consecutiveScrollTickCounter = _consecutiveScrollTickCounter,
+        .consecutiveScrollSwipeCounter = _consecutiveScrollSwipeCounter,
+        .scrollDirectionDidChange = scrollDirectionDidChange,
+        .ticksPerSecond = ticksPerSecond,
+        .ticksPerSecondUnsmoothed = ticksPerSecondRaw,
+    };
+    
+    return result;
 }
 
 static void updateConsecutiveScrollSwipeCounterWithSwipeOccuringNow() {
