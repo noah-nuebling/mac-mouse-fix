@@ -35,14 +35,16 @@ import ReactiveSwift
 
 /// # references
 /// De-Casteljau's algorithm | German Wikipedia
-/// https://en.wikipedia.org/wiki/De_Casteljau%27s_algorithm
+///     https://en.wikipedia.org/wiki/De_Casteljau%27s_algorithm
 /// Bezier Curves | Wikipedia (German page is really good, too)
-/// https://en.wikipedia.org/wiki/Bézier_curve#Derivative
+///     https://en.wikipedia.org/wiki/Bézier_curve#Derivative
 /// AnimationCurve.m | Apple Webkit
-/// I can't find this on Google anymore but it's included with this Project
+///     I can't find this on Google anymore but it's included with this Project
 /// Visual editor for higher order Bezier Curves | Desmos
-/// https://www.desmos.com/calculator/xlpbe9bgll
-/// https://www.desmos.com/calculator/jbhmbwqnf3 <- edited to only have 5 control point, not 10
+///     https://www.desmos.com/calculator/xlpbe9bgll
+///     https://www.desmos.com/calculator/jbhmbwqnf3 <- edited to only have 5 control point, not 10
+/// Article on how to implement cubic bezier curves more efficiently
+///     http://devmag.org.za/2011/04/05/bzier-curves-a-tutorial/
 
 @objc class BezierCurve: NSObject, Curve {
 
