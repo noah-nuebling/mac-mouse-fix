@@ -79,7 +79,7 @@ static int      _onePixelScrollsCounter;
                                @(NSMakePoint(0.0, 0.0)),
                                @(NSMakePoint(0.9, 1.0)),
                                @(NSMakePoint(1.0, 1.0))];
-    _animationCurve = [[BezierCurve alloc] initWithControlNSPoints:controlPoints];
+    _animationCurve = [[BezierCurve alloc] initWithControlNSPoints:controlPoints defaultEpsilon: 0.001];
     
     
     _animationCurveLegacy = [AnimationCurve alloc];
@@ -264,8 +264,14 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         
         // Get scrolledPixelsTarget (How many pixels should be scrolled at this moment according to the animationCurve)
         
-        double normalizedScrolledPixelsTarget = [_animationCurve evaluateAtX:normalizedTimeSinceAnimationStart epsilon:0.001];
-//        double normalizedScrolledPixelsTargetLegacy = [_animationCurveLegacy evaluateAtX:normalizedTimeSinceAnimationStart epsilon:0.01]; // For time profile
+        CFTimeInterval swiftCurveBeforeTS = CACurrentMediaTime();
+        double normalizedScrolledPixelsTarget = [_animationCurve evaluateAt:normalizedTimeSinceAnimationStart epsilon:0.001];
+        CFTimeInterval swiftCurveAfterTS = CACurrentMediaTime();
+        CFTimeInterval legacyCurveBeforeTS = CACurrentMediaTime();
+        double normalizedScrolledPixelsTargetLegacy = [_animationCurveLegacy evaluateAtX:normalizedTimeSinceAnimationStart epsilon:0.001]; // For time profile
+        CFTimeInterval legacyCurveAfterTS = CACurrentMediaTime();
+        
+        DDLogDebug(@"swiftCurveTime: %f, legacyCurveTime: %f", swiftCurveAfterTS - swiftCurveBeforeTS, legacyCurveAfterTS - legacyCurveBeforeTS);
         
         double scrolledPixelsTarget = normalizedScrolledPixelsTarget * _pxScrollBuffer;
         

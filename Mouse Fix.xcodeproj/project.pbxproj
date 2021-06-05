@@ -1043,8 +1043,6 @@
 		4FF6662225F2C93A00689B77 /* Unused */ = {
 			isa = PBXGroup;
 			children = (
-				4FF6662625F2C93A00689B77 /* AnimationCurve.h */,
-				4FF6662425F2C93A00689B77 /* AnimationCurve.m */,
 				4FF6662525F2C93A00689B77 /* SmoothScroll.h (old) */,
 				4FF6662325F2C93A00689B77 /* SmoothScroll.m (old) */,
 				4FF6662725F2C93A00689B77 /* MomentumScroll.h (old) */,
@@ -1230,6 +1228,8 @@
 				4F3A40B0266BBC5000436821 /* Curve.swift */,
 				4FF0BD4A266A8B7E003935EA /* BezierCurve.swift */,
 				4F3A40AA266BBB6200436821 /* ExtrapolatedBezierCurve.swift */,
+				4FF6662625F2C93A00689B77 /* AnimationCurve.h */,
+				4FF6662425F2C93A00689B77 /* AnimationCurve.m */,
 			);
 			path = Curves;
 			sourceTree = "<group>";

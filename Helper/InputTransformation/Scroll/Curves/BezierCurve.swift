@@ -23,9 +23,15 @@ import ReactiveSwift
 ///
 /// It's also likely muchhh slower than the Apple code, because in the Apple code they somehow transform the bezier curve into a polynomial which allows them to samlpe the curve value and derivative in a single line of c code.
 /// We, on the other hand, use De-Casteljau's algorithm, which has nested for-loops and is probably in O(n^2)
-/// Edit: Actually, from my (superficial) testing, this seems to be faster than AnimationCurve.m! Not sure how that can be. Is it just the ObjC method calling overhead?
+/// Edit: Actually, from my (superficial) testing using the Apple Time Profile, this seems to be faster than AnimationCurve.m! Not sure how that's possible'
+/// Edit2: Using simple time profiling with CACurrentMediatime, the Swift implementation is 50 - 200 times slower than the Objc implementation. That's closer to what I expected.
+///     I tested on the same curve, with a 0.001 epsilon on my Early 2015 MBP
+///     BezierCurve.swift usually took around 0.0001s (= 100 microseconds = 0.1 milliseconds) to get y(x), while AnimationCurve.m usually took around 0.000001s (= 1 microsecond = 0.001 milliseconds)
+///     -> 60 fps is 16.66 ms per frame so the Swift implemenation should be fast enough
 
 /// For optimization, we usually only evaluate the x or the y values for our functions, even though these functions are formally defined to work on points. That's what the MFAxis parameters in some of these functions are for
+
+/// It would be quite a bit nicer to have this be a struct instead of a class because of value semantics and less weird rules around initializing. But alas Swift structs aresn't compatible with Objc
 
 /// # references
 /// De-Casteljau's algorithm | German Wikipedia
@@ -50,9 +56,10 @@ import ReactiveSwift
     let controlPointsX: [Double]
     let controlPointsY: [Double]
     
-    var defaultEpsilon: Double = 0.01 // Have to make this var to prevent compiler errors in init. Not sure why
+    let defaultEpsilon: Double // Epsilon to be used when none is specified in evaluate(at:) call // Have to make this var to prevent compiler errors in init. Not sure why
     
-    func controlPoints(onAxis axis: MFAxis) -> [Double] {
+    /// Helper function to initializer the controlPointsX and controlPointsY properties.
+    fileprivate func controlPoints(onAxis axis: MFAxis) -> [Double] {
         
         switch axis {
         case xAxis:
@@ -80,25 +87,33 @@ import ReactiveSwift
     
     let xValueRange: ContinuousRange
     
-    @objc convenience init(controlNSPoints: [NSPoint]) {
-        
-        // Convert NSPoint based control points to Point based
-        
-        let controlPoints: [Point] = controlNSPoints.map { (pointNS) -> Point in
+    /// Helper function for objc wrapper init functions
+    fileprivate class func convertNSPointsToPoints(_ controlNSPoints: [NSPoint]) -> [BezierCurve.Point] {
+        return controlNSPoints.map { (pointNS) -> Point in
             var point: Point = Point.init()
             point.x = Double(pointNS.x)
             point.y = Double(pointNS.y)
             return point
         }
-        
-        // Call normal initializer
-        
+    }
+    
+    // Objc compatible wrappers for the below initializer functions
+    
+    @objc convenience init(controlNSPoints: [NSPoint]) {
+        let controlPoints: [Point] = BezierCurve.convertNSPointsToPoints(controlNSPoints)
         self.init(controlPoints: controlPoints)
     }
     
-    convenience init(controlPoints: [Point], defaultEpsilon: Double) {
-        self.init(controlPoints: controlPoints)
-        self.defaultEpsilon = defaultEpsilon
+    @objc convenience init(controlNSPoints: [NSPoint], defaultEpsilon: Double) {
+        let controlPoints: [Point] = BezierCurve.convertNSPointsToPoints(controlNSPoints)
+        self.init(controlPoints: controlPoints, defaultEpsilon: defaultEpsilon)
+    }
+    
+    // Normal init functions
+    
+    ///  Sets defaultEpsilon to a default value
+    convenience init(controlPoints: [Point]) {
+        self.init(controlPoints: controlPoints, defaultEpsilon: 0.001)
     }
     
     /// You should make sure you only pass in control points describing curves where
@@ -107,11 +122,15 @@ import ReactiveSwift
     ///     - This actually implies the first point
     ///     - There is a proper mathsy name for this but I forgot
     /// If it's not the case, it won't necessarily throw an error, but things might behave unpredicably.
-    init(controlPoints: [Point]) {
+    init(controlPoints: [Point], defaultEpsilon: Double) {
         
         // Make sure that there are at least 2 points
         
         assert(controlPoints.count >= 2, "There need to be at least 2 controlPoints");
+        
+        // Set defaultEpsilon
+        
+        self.defaultEpsilon = defaultEpsilon
         
         // Fill self.controlPoints
         
@@ -216,7 +235,7 @@ import ReactiveSwift
         
         for i in 0...n-1 {
             
-            sum += bernsteinBasisPolynomial(i, n-1, t) * (points1D[i+1] - points1D[i])
+            sum += bernsteinBasisPolynomial(i, n-1, t) * (points1D[i+1] - points1D[i]) // Maybe we
         }
         
         return Double(n) * sum
@@ -247,16 +266,17 @@ import ReactiveSwift
             
             let sampledXShifted = sampleCurve(onAxis: xAxis, atT: t) - x
             
-//            print("sampled x: \(sampledXShifted + x) at t: \(t)")
+//            print("Sampling took: \(sampleTime) sampled x: \(sampledXShifted + x) at t: \(t)")
             
             let error = abs(sampledXShifted)
             if error < epsilon {
 //                print("Found t(x) using newtons method!")
                 return t
             }
+            
             let sampledDerivative = sampleDerivative(on: xAxis, at: t)
             
-//            print("sampled dx: \(sampledDerivative) at t: \(t)")
+//            print("Derivative sampling took: \(derivativeTime), sampled dx: \(sampledDerivative) at t: \(t)")
             
             if abs(sampledDerivative) < 1e-6 {
 //                print("Derivative too small - aborting newtons method")

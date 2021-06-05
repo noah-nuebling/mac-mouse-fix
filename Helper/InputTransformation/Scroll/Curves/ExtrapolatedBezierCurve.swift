@@ -18,17 +18,18 @@ class ExtrapolatedBezierCurve: BezierCurve {
     var preLine: Line
     var postLine: Line
     
-    override init(controlPoints: [BezierCurve.Point]) {
+    override init(controlPoints: [BezierCurve.Point], defaultEpsilon: Double) {
         
         // Init lines so we can call super.init. This is the only reason the lines are var and not let. Swift is weird.
         // See here for an explanation of this problem: https://stackoverflow.com/questions/24021093/error-in-swift-class-property-not-initialized-at-super-init-call
+        // See https://docs.swift.org/swift-book/LanguageGuide/Initialization.html -> Two-phase initialization for an explanation why this is necessary
         
         self.preLine = Line.init(a: 0, b: 0)
         self.postLine = preLine
         
         // Init super
         
-        super.init(controlPoints: controlPoints)
+        super.init(controlPoints: controlPoints, defaultEpsilon: defaultEpsilon)
         
         // Define lines
         
