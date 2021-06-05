@@ -50,6 +50,8 @@ import ReactiveSwift
     let controlPointsX: [Double]
     let controlPointsY: [Double]
     
+    var defaultEpsilon: Double = 0.01 // Have to make this var to prevent compiler errors in init. Not sure why
+    
     func controlPoints(onAxis axis: MFAxis) -> [Double] {
         
         switch axis {
@@ -94,6 +96,10 @@ import ReactiveSwift
         self.init(controlPoints: controlPoints)
     }
     
+    convenience init(controlPoints: [Point], defaultEpsilon: Double) {
+        self.init(controlPoints: controlPoints)
+        self.defaultEpsilon = defaultEpsilon
+    }
     
     /// You should make sure you only pass in control points describing curves where
     /// 1. The x values of the first and last point are the two extreme (minimal and maximal) x values among all control points x values
@@ -299,7 +305,11 @@ import ReactiveSwift
         
     }
     
-    @objc func evaluate(atX x: Double, epsilon: Double) -> Double {
+    @objc func evaluate(at x: Double) -> Double {
+        self.evaluate(at: x, epsilon: self.defaultEpsilon)
+    }
+    
+    @objc func evaluate(at x: Double, epsilon: Double) -> Double {
         
 //        print("Evaluating at x = \(x)")
         

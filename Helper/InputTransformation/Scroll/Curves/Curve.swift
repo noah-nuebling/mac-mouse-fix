@@ -11,5 +11,5 @@ import Cocoa
 
 @objc protocol Curve {
 
-    @objc func evaluate(atX x: Double, epsilon: Double) -> Double
+    @objc func evaluate(at x: Double) -> Double
 }

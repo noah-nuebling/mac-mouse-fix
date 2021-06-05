@@ -79,10 +79,10 @@ class ExtrapolatedBezierCurve: BezierCurve {
         
     }
     
-    override func evaluate(atX x: Double, epsilon: Double) -> Double {
+    override func evaluate(at x: Double, epsilon: Double) -> Double {
         
         if self.xValueRange.contains(x) {
-            return super.evaluate(atX: x, epsilon: epsilon)
+            return super.evaluate(at: x, epsilon: epsilon)
         } else if x < self.xValueRange.lower {
             return self.preLine.evaluate(at: x)
         } else {
