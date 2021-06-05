@@ -37,7 +37,7 @@
 // Constant
 
 static CVDisplayLinkRef _displayLink;
-static AnimationCurve *_animationCurve;
+static BezierCurve *_animationCurve;
 
 // Dynamic
 
@@ -77,9 +77,9 @@ static int      _onePixelScrollsCounter;
                                @(NSMakePoint(0.9, 0.9)),
                                @(NSMakePoint(1.0, 1.0))];
     
-//    _animationCurve = [[BezierCurve alloc] initWithControlNSPoints:controlPoints];
-    _animationCurve = [AnimationCurve alloc];
-    [_animationCurve UnitBezierForPoint1x:0.1 point1y:0.1 point2x:0.9 point2y:0.9];
+    _animationCurve = [[BezierCurve alloc] initWithControlNSPoints:controlPoints];
+//    _animationCurve = [AnimationCurve alloc];
+//    [_animationCurve UnitBezierForPoint1x:0.1 point1y:0.1 point2x:0.9 point2y:0.9];
 }
 
 static void createDisplayLink() {
@@ -283,10 +283,11 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 //        DDLogDebug(@"now: %@", @(now));
 //        DDLogDebug(@"anim start time: %@", @(_animationStartTime));
 //        DDLogDebug(@"anim duration: %@", @(_animationDuration));
-//        DDLogDebug(@"normalized scrolled pixels target: %@", @(normalizedScrolledPixelsTarget));
-//        DDLogDebug(@"Scrolled pixels target: %@", @(scrolledPixelsTarget));
-//        DDLogDebug(@"Already scrolled pixels: %@", @(_animationAlreadyScrolledPixels));
 //        DDLogDebug(@"normalized time since anim start: %@", @(normalizedTimeSinceAnimationStart));
+//        DDLogDebug(@"normalized scrolled pixels target: %@", @(normalizedScrolledPixelsTarget));
+//        DDLogDebug(@"Already scrolled pixels target: %@", @(scrolledPixelsTarget));
+//        DDLogDebug(@"Already scrolled pixels: %@", @(_animationAlreadyScrolledPixels));
+//        DDLogDebug(@"Scrolled pixels target: %@", @(_pxScrollBuffer));
 //        DDLogDebug(@"---");
         
         // Entering momentum phase
@@ -302,6 +303,8 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 # pragma mark Momentum Phase
     
     else if (_displayLinkPhase == kMFPhaseMomentum) {
+        
+//        DDLogDebug(@"Momentum scrolling with velocity: %f", _pxPerMsVelocity);
         
         pxToScrollThisFrame = round(_pxPerMsVelocity * msSinceLastFrame);
         double thisVel = _pxPerMsVelocity;
