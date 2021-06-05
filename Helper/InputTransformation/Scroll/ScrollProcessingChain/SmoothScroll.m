@@ -264,7 +264,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         
         // Get scrolledPixelsTarget (How many pixels should be scrolled at this moment according to the animationCurve)
         
-        double normalizedScrolledPixelsTarget = [_animationCurve evaluateAtX:normalizedTimeSinceAnimationStart epsilon:0.01];
+        double normalizedScrolledPixelsTarget = [_animationCurve evaluateAtX:normalizedTimeSinceAnimationStart epsilon:0.001];
 //        double normalizedScrolledPixelsTargetLegacy = [_animationCurveLegacy evaluateAtX:normalizedTimeSinceAnimationStart epsilon:0.01]; // For time profile
         
         double scrolledPixelsTarget = normalizedScrolledPixelsTarget * _pxScrollBuffer;

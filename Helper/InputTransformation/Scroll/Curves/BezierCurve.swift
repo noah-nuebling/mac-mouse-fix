@@ -34,6 +34,9 @@ import ReactiveSwift
 /// https://en.wikipedia.org/wiki/Bézier_curve#Derivative
 /// AnimationCurve.m | Apple Webkit
 /// I can't find this on Google anymore but it's included with this Project
+/// Visual editor for higher order Bezier Curves | Desmos
+/// https://www.desmos.com/calculator/xlpbe9bgll
+/// https://www.desmos.com/calculator/jbhmbwqnf3 <- edited to only have 5 control point, not 10
 
 @objc class BezierCurve: NSObject, Curve {
 
