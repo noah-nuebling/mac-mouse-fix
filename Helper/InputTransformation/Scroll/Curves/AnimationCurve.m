@@ -110,8 +110,7 @@ double solveCurveX(double x, double epsilon)
     return t2;
 }
 
-- (double) solve: (double) x epsilon:(double)epsilon
-{
+- (double)evaluateAtX:(double)x epsilon:(double)epsilon {
     return sampleCurveY(solveCurveX(x, epsilon));
 }
 

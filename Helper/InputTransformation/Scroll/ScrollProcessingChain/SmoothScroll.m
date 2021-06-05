@@ -27,30 +27,60 @@
 
 #import "GestureScrollSimulator.h"
 #import "ScrollConfigInterface.h"
+#import "Mac_Mouse_Fix_Helper-Swift.h"
+#import "AnimationCurve.h"
 
 @implementation SmoothScroll
 
 #pragma mark - Vars
 
-// Static
+// Constant
 
 static CVDisplayLinkRef _displayLink;
+static BezierCurve *_animationCurve;
 
 // Dynamic
 
-// any phase
+// Any phase
 static MFDisplayLinkPhase _displayLinkPhase;
-static int _pxToScrollThisFrame;
+//static int pxToScrollThisFrame;
 //static int _previousPhase; // which phase was active the last time that displayLinkCallback was called. Used to compute artificial scroll phases
 static CGDirectDisplayID *_displaysUnderMousePointer;
-// linear phase
+// Animation phase
 static int      _pxScrollBuffer;
-static double   _msLeftForScroll;
-// momentum phase
+static CFTimeInterval _animationStartTime;
+static CFTimeInterval _animationDuration;
+static int64_t _animationAlreadyScrolledPixels;
+
+// Momentum phase
 static double   _pxPerMsVelocity;
 static int      _onePixelScrollsCounter;
 
 #pragma mark - Interface
+
++ (void)load_Manual {
+    [SmoothScroll start];
+    [SmoothScroll stop];
+    createDisplayLink();
+    
+//    NSArray *controlPoints = @[@(NSMakePoint(0, 0)),
+//                               @(NSMakePoint(0.2, 0.12)),
+//                               @(NSMakePoint(0.18, 0.75)),
+//                               @(NSMakePoint(1.0, 1.0))];
+    
+//    NSArray *controlPoints = @[@(NSMakePoint(0, 0)),
+//                               @(NSMakePoint(0.29, 0.51)),
+//                               @(NSMakePoint(0.5, 0.96)),
+//                               @(NSMakePoint(1.0, 1.0))];
+    NSArray *controlPoints = @[@(NSMakePoint(0, 0)),
+                               @(NSMakePoint(0.1, 0.1)),
+                               @(NSMakePoint(0.9, 0.9)),
+                               @(NSMakePoint(1.0, 1.0))];
+    
+    _animationCurve = [[BezierCurve alloc] initWithControlNSPoints:controlPoints];
+//    _animationCurve = [AnimationCurve alloc];
+//    [_animationCurve UnitBezierForPoint1x:0.1 point1y:0.1 point2x:0.9 point2y:0.9];
+}
 
 static void createDisplayLink() {
     if (_displayLink == nil) {
@@ -60,18 +90,11 @@ static void createDisplayLink() {
     }
 }
 
-+ (void)load_Manual {
-    [SmoothScroll start];
-    [SmoothScroll stop];
-    createDisplayLink();
-}
-
 /// Consider calling [ScrollControl resetDynamicGlobals] to reset not only SmoothScroll specific globals.
 + (void)resetDynamicGlobals {
     _displayLinkPhase                   =   kMFPhaseStart; // kMFPhaseNone;
-    _pxToScrollThisFrame                =   0;
     _pxScrollBuffer                     =   0;
-    _msLeftForScroll                    =   0;
+    _animationAlreadyScrolledPixels     =   0;
     _pxPerMsVelocity                    =   0;
     _onePixelScrollsCounter             =   0;
     
@@ -120,7 +143,6 @@ static BOOL _hasStarted;
     // Reset _pixelScrollQueue and related values if appropriate
     if (scrollAnalysisResult.scrollDirectionDidChange) { // Why are we resetting what we are resetting?
         _pxScrollBuffer = 0;
-        _pxToScrollThisFrame = 0;
         _pxPerMsVelocity = 0;
         
     }
@@ -132,9 +154,12 @@ static BOOL _hasStarted;
 //    }
   
 
+    // Update ms left for scroll
+    
+//    _msLeftForScroll = ScrollConfigInterface.msPerStep;
+    
     // Apply scroll wheel input to _pxScrollBuffer
     
-    _msLeftForScroll = ScrollConfigInterface.msPerStep;
 //    _msLeftForScroll = 1 / (_pxPerMSBaseSpeed / _pxStepSize);
     if (scrollDeltaAxis1 > 0) {
         _pxScrollBuffer += ScrollConfigInterface.pxPerTickBase * ScrollConfigInterface.scrollDirection;
@@ -144,17 +169,24 @@ static BOOL _hasStarted;
         DDLogInfo(@"scrollDeltaAxis1 is 0. This shouldn't happen.");
     }
     
-    // Apply acceleration to _pxScrollBuffer
-    if (scrollAnalysisResult.consecutiveScrollTickCounter != 0) {
-        _pxScrollBuffer = _pxScrollBuffer * ScrollConfigInterface.accelerationForScrollBuffer;
-    }
+    // Apply acceleration
+//    if (scrollAnalysisResult.consecutiveScrollTickCounter != 0) {
+//        _pxScrollBuffer = _pxScrollBuffer * ScrollConfigInterface.accelerationForScrollBuffer;
+//    }
 
+    // Apply fast scroll
     
     int64_t fastScrollThresholdDelta = scrollAnalysisResult.consecutiveScrollSwipeCounter - (unsigned int)ScrollConfigInterface.fastScrollThreshold_inSwipes;
     if (fastScrollThresholdDelta >= 0) {
         //&& ScrollUtility.consecutiveScrollTickCounter >= ScrollControl.scrollSwipeThreshold_inTicks) {
         _pxScrollBuffer = _pxScrollBuffer * ScrollConfigInterface.fastScrollFactor * pow(ScrollConfigInterface.fastScrollExponentialBase, ((int32_t)fastScrollThresholdDelta));
     }
+    
+    // Update animationCurve stuff
+    
+    _animationStartTime = CACurrentMediaTime();
+    _animationDuration = ScrollConfigInterface.msPerStep / 1000.0; // Don't need to set this every time
+    _animationAlreadyScrolledPixels = 0;
     
 //    DDLogDebug(@"buff: %d", _pxScrollBuffer);
 //    DDLogDebug(@"--------------");
@@ -206,28 +238,64 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 //        DDLogDebug(@"frameTimeSpike: %fms", msSinceLastFrame);
 //    }
     
+    int64_t pxToScrollThisFrame = 0;
     
-# pragma mark Linear Phase
+# pragma mark Animation curve phase
     
     if (_displayLinkPhase == kMFPhaseLinear || _displayLinkPhase == kMFPhaseStart) {
         
-        _pxToScrollThisFrame = round( (_pxScrollBuffer/_msLeftForScroll) * msSinceLastFrame );
+        // Get time offset
         
-        if (_msLeftForScroll == 0.0) { // Diving by zero yields infinity, we don't want that.
-            DDLogInfo(@"_msLeftForScroll was 0.0");
-            _pxToScrollThisFrame = _pxScrollBuffer; // TODO: But it happens sometimes - check if this handles that situation well
+        CFTimeInterval now = CACurrentMediaTime();
+        
+        // Normalize time offset
+        
+        ContinuousRange *sourceRange = [[ContinuousRange alloc] initWithLocation:_animationStartTime length:_animationDuration];
+        double normalizedTimeSinceAnimationStart;
+        if (now < sourceRange.upper) { // ScaleWithValue will throw an exception if we don't do this
+            normalizedTimeSinceAnimationStart= [Math scaleWithValue:now fromRange:sourceRange toRange:ContinuousRange.normalRange];
+        } else {
+            normalizedTimeSinceAnimationStart = 1.0;
         }
-
-        _pxScrollBuffer   -=  _pxToScrollThisFrame;
-        _msLeftForScroll    -=  msSinceLastFrame;
+        
+        // Get scrolledPixelsTarget (How many pixels should be scrolled at this moment according to the animationCurve)
+        
+        double normalizedScrolledPixelsTarget = [_animationCurve evaluateAtX:normalizedTimeSinceAnimationStart epsilon:0.01];
+        double scrolledPixelsTarget = normalizedScrolledPixelsTarget * _pxScrollBuffer;
+        
+        // Get pixels to scroll this frame
+        
+        pxToScrollThisFrame = round(scrolledPixelsTarget - _animationAlreadyScrolledPixels);
+        
+        // Update already scrolled px
+        
+        _animationAlreadyScrolledPixels += pxToScrollThisFrame;
+        
+        // Analyze state
+        
+        int64_t pxLeftToScroll = _pxScrollBuffer - _animationAlreadyScrolledPixels;
+        double msLeftForScroll = (_animationStartTime + _animationDuration) - now;
+        
+//        DDLogDebug(@"px left to scroll: %@", @(pxLeftToScroll));
+//        DDLogDebug(@"pxToScrollThisFrame: %@", @(pxToScrollThisFrame));
+//        DDLogDebug(@"pxToScrollThisFrame: %@", @(pxToScrollThisFrame));
+//        DDLogDebug(@"ms left for scroll: %@", @(msLeftForScroll));
+//        DDLogDebug(@"now: %@", @(now));
+//        DDLogDebug(@"anim start time: %@", @(_animationStartTime));
+//        DDLogDebug(@"anim duration: %@", @(_animationDuration));
+//        DDLogDebug(@"normalized scrolled pixels target: %@", @(normalizedScrolledPixelsTarget));
+//        DDLogDebug(@"Scrolled pixels target: %@", @(scrolledPixelsTarget));
+//        DDLogDebug(@"Already scrolled pixels: %@", @(_animationAlreadyScrolledPixels));
+//        DDLogDebug(@"normalized time since anim start: %@", @(normalizedTimeSinceAnimationStart));
+//        DDLogDebug(@"---");
         
         // Entering momentum phase
-        if (_msLeftForScroll <= 0 || _pxScrollBuffer == 0) { // TODO: Is `_pxScrollBuffer == 0` necessary? Do the conditions for entering momentum phase make sense?
-            _msLeftForScroll    =   0; // TODO: Is this necessary?
+        
+        if (msLeftForScroll <= 0 || pxLeftToScroll == 0) { // TODO: Is `_pxScrollBuffer == 0` necessary? Do the conditions for entering momentum phase make sense?
             _pxScrollBuffer   =   0; // What about this? This stuff isn't used in momentum phase and should get reset elsewhere efore getting used again
             
             _displayLinkPhase = kMFPhaseMomentum;
-            _pxPerMsVelocity = (_pxToScrollThisFrame / msSinceLastFrame);
+            _pxPerMsVelocity = (pxToScrollThisFrame / msSinceLastFrame);
         }
     }
     
@@ -235,7 +303,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     
     else if (_displayLinkPhase == kMFPhaseMomentum) {
         
-        _pxToScrollThisFrame = round(_pxPerMsVelocity * msSinceLastFrame);
+        pxToScrollThisFrame = round(_pxPerMsVelocity * msSinceLastFrame);
         double thisVel = _pxPerMsVelocity;
         double nextVel = thisVel - [SharedUtility signOf:thisVel] * pow(fabs(thisVel), ScrollConfigInterface.frictionDepth) * (ScrollConfigInterface.frictionCoefficient/100) * msSinceLastFrame;
         
@@ -244,11 +312,11 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
             _pxPerMsVelocity = 0;
         }
         
-        if (_pxToScrollThisFrame == 0 || _pxPerMsVelocity == 0) {
+        if (pxToScrollThisFrame == 0 || _pxPerMsVelocity == 0) {
             _displayLinkPhase = kMFPhaseEnd;
         }
         
-        if (abs(_pxToScrollThisFrame) == 1) {
+        if (llabs(pxToScrollThisFrame) == 1) {
             _onePixelScrollsCounter += 1;
             if (_onePixelScrollsCounter > ScrollConfigInterface.nOfOnePixelScrollsMax) { // I think using > instead of >= might put the actual maximum at _nOfOnePixelScrollsMax + 1.
                 _displayLinkPhase = kMFPhaseEnd;
@@ -259,16 +327,16 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 # pragma mark Send Event
     
     if (ScrollModifiers.magnificationScrolling) {
-        [ScrollModifiers handleMagnificationScrollWithAmount:_pxToScrollThisFrame/800.0];
+        [ScrollModifiers handleMagnificationScrollWithAmount:pxToScrollThisFrame/800.0];
     } else {
         
         // Get 2d delta
         double dx = 0;
         double dy = 0;
         if (ScrollModifiers.horizontalScrolling) {
-            dx = _pxToScrollThisFrame;
+            dx = pxToScrollThisFrame;
         } else {
-            dy = _pxToScrollThisFrame;
+            dy = pxToScrollThisFrame;
         }
         
         // Get phase

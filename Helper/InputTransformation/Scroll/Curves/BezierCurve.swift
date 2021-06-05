@@ -53,8 +53,10 @@ typealias Point = Vector;
     }
     
     var degree: Int {
-        return controlPoints.count
+        controlPoints.count - 1
     }
+    var n: Int { degree }
+    
     var startPoint: Point {
         return controlPoints.first!
     }
@@ -150,7 +152,9 @@ typealias Point = Vector;
             }
         }
         
-        assert(points1D.count == 1)
+//        print("Sampling at t = \(t) -> \(points1D[0])")
+        
+//        assert(points1D.count == 1) // This assertion doesn't make sense, because we're always writing into the same array and it doesn't shrink in size
         return points1D[0]
         
     }
@@ -166,48 +170,49 @@ typealias Point = Vector;
         return a * b * c
     }
     
+    
+    /// Derivative according to German Wikipedia
     private func sampleDerivative(onAxis axis: MFAxis, atT t: Double) -> Double {
         
         let points1D: [Double] = controlPoints(onAxis: axis)
         
-        let n = self.degree
         var sum: Double = 0
         
-        for i in 0..<n {
+        for i in 0...n {
+            
+            sum += bernsteinBasisPolynomial(i, n, t) * points1D[i]
+        }
+        
+        return sum
+    }
+    
+    /// Derivative according to English Wikipedia
+    private func sampleDerivativeAlternative(onAxis axis: MFAxis, atT t: Double) -> Double {
+        
+        let points1D: [Double] = controlPoints(onAxis: axis)
+        
+        var sum: Double = 0
+        
+        for i in 0...n-1 {
+            
             sum += bernsteinBasisPolynomial(i, n-1, t) * (points1D[i+1] - points1D[i])
         }
         
         return Double(n) * sum
     }
     
+    
+    
     /// This function is mostly copied from AnimationCurve.m by Apple
     private func solveForT(x: Double, epsilon: Double) -> Double {
         
         let axis = kMFAxisHorizontal
         
-        // Try Newtons method
-        
-        let maxNewtonIterations: Int = 8
-        
         var t: Double = Math.scale(value: x, fromRange: self.xValueRange, toRange: ContinuousRange.normalRange())
         // ^ Our initial guess for t.
-        // In Apples AnimationCurve.m this was set to x which is an informed guess that's just as good as this one. There, the xValueRange is implicitly 0...1.
+        // In Apples AnimationCurve.m this was set to x which is an informed guess that's just as good as this one. There, the xValueRange is implicitly 0...1
         
-        for _ in 0..<maxNewtonIterations {
-            let sampledX = sampleCurve(onAxis: axis, atT: t)
-            let error = abs(x - sampledX)
-            if error < epsilon {
-                return t
-            }
-            let sampledDerivative = sampleDerivative(onAxis: axis, atT: t)
-            if abs(sampledDerivative) < 1e-6 {
-                break
-            }
-            
-            t = t - sampledX / sampledDerivative
-        }
-        
-        // Fall back to the bisection method for reliability.
+        // Try bisection method
         
         var searchRange = ContinuousRange.normalRange()
         
@@ -232,18 +237,49 @@ typealias Point = Vector;
             t = Math.scale(value: 0.5, fromRange: ContinuousRange.normalRange(), toRange: searchRange)
         }
         
+        // Try Newtons method
+        
+        let maxNewtonIterations: Int = 8
+        
+        for _ in 0..<maxNewtonIterations {
+            let sampledX = sampleCurve(onAxis: axis, atT: t)
+            let error = abs(x - sampledX)
+            if error < epsilon {
+                return t
+            }
+            let sampledDerivative = sampleDerivative(onAxis: axis, atT: t)
+            
+//            print("sampled Derivative: \(sampledDerivative) at t: \(t)")
+            
+            if abs(sampledDerivative) < 1e-6 {
+                break
+            }
+            
+            t = t - sampledX / sampledDerivative
+        }
+        
+        
         // Failure
         
 //        DDLogDebug("Failed to solve for x. Input value: \(x). Best sampledValue: \(sampleCurve(onAxis: axis, atT: t))") // TODO: Can't import CocoaLumberjack right now. Uncomment once it's imported.
+        
+        print("Failed to solve for x = \(x). Resulting t = \(t)")
         
         return t
         
     }
     
-    public func evaluate(atX x: Double, epsilon: Double) -> Double {
+    @objc public func evaluate(atX x: Double, epsilon: Double) -> Double {
+        
+//        print("Evaluating at x = \(x)")
+        
         let yAxis = kMFAxisVertical
         let t: Double = solveForT(x: x, epsilon: epsilon)
-        return sampleCurve(onAxis: yAxis, atT: t)
+        let y: Double = sampleCurve(onAxis: yAxis, atT: t)
+        
+//        print("Evaluation complete: f(x:\(x)) = y:\(y)")
+        
+        return y
     }
     
 }

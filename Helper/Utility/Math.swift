@@ -11,18 +11,44 @@ import Cocoa
 
 @objc class Math: NSObject {
 
+//    /// Source https://blog.plover.com/math/choose.html
+//    @objc class func choose(_ nArg: Int, _ k: Int) -> Int {
+//        var n: Int = nArg
+//        var r: Int = 1
+//        
+//        if k > n { return 0 }
+//        
+//        for d in 1...k {
+//            r *= n
+//            r /= d
+//            n -= 1
+//        }
+//        return r;
+//    }
+    
     /// Source https://blog.plover.com/math/choose.html
     @objc class func choose(_ nArg: Int, _ k: Int) -> Int {
-        var n: Int = nArg
+        
+        var n: Int = nArg // Copying because we want to mutate it
         var r: Int = 1
         
-        if k > n { return 0 }
+        assert(n >= 0)
+        assert(k >= 0)
+        
+        if k < 0 { return 0 }
+        if n < k { return 0 }
+        
+        if k == 0 { return 1 }
+        if k == n { return 1 }
         
         for d in 1...k {
             r *= n
             r /= d
             n -= 1
         }
+        
+//        print("n:\(nArg) choose k:\(k) = \(r)")
+        
         return r;
     }
     
@@ -45,23 +71,23 @@ import Cocoa
     let location: Double
     let length: Double
     
-    var lower: Double {
+    @objc var lower: Double {
         location
     }
-    var upper: Double {
+    @objc var upper: Double {
         location + length
     }
     
-    class func normalRange() -> ContinuousRange {
+    @objc class func normalRange() -> ContinuousRange {
         return self.init(lower: 0.0, upper: 1.0)
     }
     
-    required init(lower: Double, upper: Double) {
+    @objc required init(lower: Double, upper: Double) {
         self.location = lower
         self.length = upper - lower
     }
     
-    init(location: Double, length: Double) {
+    @objc init(location: Double, length: Double) {
         self.location = location
         self.length = length
     }
