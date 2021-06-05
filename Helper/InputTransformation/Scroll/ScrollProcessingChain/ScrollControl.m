@@ -210,7 +210,7 @@ static void processEvent(CGEventRef event, ScrollAnalysisResult scrollAnalysisRe
     // Get pixels to scroll for this event
     
     int64_t pxToScrollForThisTick;
-    pxToScrollForThisTick = pxToScrollThisTick(scrollAnalysisResult.ticksPerSecond, ScrollConfigInterface.pxPerTickBase);
+    pxToScrollForThisTick = accelerate(scrollAnalysisResult.ticksPerSecond, ScrollConfigInterface.pxPerTickBase);
 //    pxToScrollForThisTick = scrollDeltaPoint;
     
     DDLogDebug(@"Scroll speed unsmoothed: %f", scrollAnalysisResult.ticksPerSecondUnsmoothed);
@@ -230,7 +230,13 @@ static void processEvent(CGEventRef event, ScrollAnalysisResult scrollAnalysisRe
     CFRelease(event);
 }
 
-static int64_t pxToScrollThisTick(double ticksPerSecond, int64_t pxPerTickBase) {
+
+/// Accelerate px to scroll for one tick (aka step size)
+/// @param ticksPerSecond scrolling speed in ticks per second
+/// @param pxPerTickBase minimum (aka base) step size
+/// @return Sensitivity. How many px to scroll for one scroll wheel tick.
+/// @discussion See the RawAccel guide for more info on acceleration curves https://github.com/a1xd/rawaccel/blob/master/doc/Guide.md
+static int64_t accelerate(double ticksPerSecond, int64_t pxPerTickBase) {
     return 0; // TODO change this
 }
 

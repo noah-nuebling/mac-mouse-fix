@@ -48,6 +48,10 @@
 		4FBC943B260F8AA60062F186 /* MASShortcut.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC9434260F8AA60062F186 /* MASShortcut.m */; };
 		4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCA07D525F3129B00BFE209 /* RemapTableController.m */; };
 		4FD82DDB260575B100664D6F /* ToastNotificationLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD82DDA260575B100664D6F /* ToastNotificationLabel.m */; };
+		4FF0BD4B266A8B7E003935EA /* BezierCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD4A266A8B7E003935EA /* BezierCurve.swift */; };
+		4FF0BD51266AC10C003935EA /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD50266AC10C003935EA /* Math.swift */; };
+		4FF0BD58266ACE32003935EA /* VectorUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD57266ACE32003935EA /* VectorUtility.m */; };
+		4FF0BD5F266ADFE5003935EA /* MathObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD5E266ADFE5003935EA /* MathObjc.m */; };
 		4FF6654125F2C7B000689B77 /* default_launchd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6652E25F2C7B000689B77 /* default_launchd.plist */; };
 		4FF6654225F2C7B000689B77 /* default_launchd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6652E25F2C7B000689B77 /* default_launchd.plist */; };
 		4FF6654325F2C7B000689B77 /* HelperServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6652F25F2C7B000689B77 /* HelperServices.m */; };
@@ -292,6 +296,12 @@
 		4FD82DD9260575B100664D6F /* ToastNotificationLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToastNotificationLabel.h; sourceTree = "<group>"; };
 		4FD82DDA260575B100664D6F /* ToastNotificationLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ToastNotificationLabel.m; sourceTree = "<group>"; };
 		4FDBC59A234F80C500A46517 /* Accomplice.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Accomplice.entitlements; sourceTree = "<group>"; };
+		4FF0BD4A266A8B7E003935EA /* BezierCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierCurve.swift; sourceTree = "<group>"; };
+		4FF0BD50266AC10C003935EA /* Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
+		4FF0BD56266ACE32003935EA /* VectorUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VectorUtility.h; sourceTree = "<group>"; };
+		4FF0BD57266ACE32003935EA /* VectorUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VectorUtility.m; sourceTree = "<group>"; };
+		4FF0BD5D266ADFE5003935EA /* MathObjc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MathObjc.h; sourceTree = "<group>"; };
+		4FF0BD5E266ADFE5003935EA /* MathObjc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MathObjc.m; sourceTree = "<group>"; };
 		4FF6652D25F2C7B000689B77 /* HelperServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelperServices.h; sourceTree = "<group>"; };
 		4FF6652E25F2C7B000689B77 /* default_launchd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_launchd.plist; sourceTree = "<group>"; };
 		4FF6652F25F2C7B000689B77 /* HelperServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelperServices.m; sourceTree = "<group>"; };
@@ -927,8 +937,8 @@
 				4FF6667925F2C93A00689B77 /* Devices */,
 				4FF6661425F2C93A00689B77 /* InputTransformation */,
 				4FF6664725F2C93A00689B77 /* Pointer */,
-				4FF6664D25F2C93A00689B77 /* SupportFiles */,
 				4FF6667E25F2C93A00689B77 /* Utility */,
+				4FF6664D25F2C93A00689B77 /* SupportFiles */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -1029,8 +1039,8 @@
 		4FF6662225F2C93A00689B77 /* Unused */ = {
 			isa = PBXGroup;
 			children = (
-				4FF6662325F2C93A00689B77 /* SmoothScroll.m (old) */,
 				4FF6662525F2C93A00689B77 /* SmoothScroll.h (old) */,
+				4FF6662325F2C93A00689B77 /* SmoothScroll.m (old) */,
 				4FF6662725F2C93A00689B77 /* MomentumScroll.h (old) */,
 				4FF6662825F2C93A00689B77 /* MomentumScroll.m (old) */,
 			);
@@ -1199,6 +1209,11 @@
 			children = (
 				4FF6667F25F2C93A00689B77 /* Utility_Helper.h */,
 				4FF6668025F2C93A00689B77 /* Utility_Helper.m */,
+				4FF0BD50266AC10C003935EA /* Math.swift */,
+				4FF0BD5D266ADFE5003935EA /* MathObjc.h */,
+				4FF0BD5E266ADFE5003935EA /* MathObjc.m */,
+				4FF0BD56266ACE32003935EA /* VectorUtility.h */,
+				4FF0BD57266ACE32003935EA /* VectorUtility.m */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -1208,6 +1223,7 @@
 			children = (
 				4FF6662625F2C93A00689B77 /* AnimationCurve.h */,
 				4FF6662425F2C93A00689B77 /* AnimationCurve.m */,
+				4FF0BD4A266A8B7E003935EA /* BezierCurve.swift */,
 			);
 			path = Curves;
 			sourceTree = "<group>";
@@ -1748,10 +1764,12 @@
 				4FF6669D25F2C93A00689B77 /* AccessibilityCheck.m in Sources */,
 				4FF666A725F2C93A00689B77 /* Device.m in Sources */,
 				4FF6669C25F2C93A00689B77 /* PointerSpeed.m in Sources */,
+				4FF0BD5F266ADFE5003935EA /* MathObjc.m in Sources */,
 				4FF6668425F2C93A00689B77 /* MessagePort_Helper.m in Sources */,
 				4FF6669225F2C93A00689B77 /* RoughScroll.m in Sources */,
 				4FF6668725F2C93A00689B77 /* ButtonTriggerHandler.m in Sources */,
 				4FF6669825F2C93A00689B77 /* SubPixelator.m in Sources */,
+				4FF0BD51266AC10C003935EA /* Math.swift in Sources */,
 				4FF6669F25F2C93A00689B77 /* main.m in Sources */,
 				4FF6668925F2C93A00689B77 /* ScrollControl.m in Sources */,
 				4FF6669525F2C93A00689B77 /* ModifiedDrag.m in Sources */,
@@ -1761,11 +1779,13 @@
 				4FF6668525F2C93A00689B77 /* ModifierManager.m in Sources */,
 				4F96E1202667BB020064ADC0 /* ScrollConfigInterface.m in Sources */,
 				4FF6669925F2C93A00689B77 /* VectorSubPixelator.m in Sources */,
+				4FF0BD4B266A8B7E003935EA /* BezierCurve.swift in Sources */,
 				4FF6668125F2C93A00689B77 /* FileMonitor.m in Sources */,
 				4FF666A225F2C93A00689B77 /* TouchEvents.c in Sources */,
 				4FF6669125F2C93A00689B77 /* ScrollUtility.m in Sources */,
 				4FF666A825F2C93A00689B77 /* DeviceManager.m in Sources */,
 				4FF6669B25F2C93A00689B77 /* AppDelegate.m in Sources */,
+				4FF0BD58266ACE32003935EA /* VectorUtility.m in Sources */,
 				4FF6654F25F2C7B000689B77 /* NSArray+Additions.m in Sources */,
 				4FF6654525F2C7B000689B77 /* Objects.m in Sources */,
 				4FF666A925F2C93A00689B77 /* Utility_Helper.m in Sources */,

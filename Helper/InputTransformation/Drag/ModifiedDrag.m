@@ -24,6 +24,7 @@
 #import "SharedUtility.h"
 
 #import <Cocoa/Cocoa.h>
+#import "VectorUtility.h"
 
 @implementation ModifiedDrag
 

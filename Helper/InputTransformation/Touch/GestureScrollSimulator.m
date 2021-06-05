@@ -295,14 +295,6 @@ static Vector momentumScrollPointVectorWithPreviousVector(Vector velocity, doubl
     return newVelocity;
 }
 
-typedef double (^VectorScalerFunction)(double);
-static Vector scaledVectorWithFunction(Vector vec, VectorScalerFunction f) {
-    double magIn = magnitudeOfVector(vec);
-    if (magIn == 0) return (Vector){0};  // To prevent division by 0 from producing nan
-    double magOut = f(magIn);
-    double scale = magOut / magIn;
-    return scaledVector(vec, scale);
-}
 static Vector scrollVectorWithScrollPointVector(Vector vec) {
     VectorScalerFunction f = ^double(double x) {
         return 0.1 * (x-1); // Approximation from looking at real trackpad events
@@ -338,39 +330,5 @@ static Vector initalMomentumScrollPointVectorWithGestureVector(Vector vec) {
 //static int scrollPointDeltaWithGestureDelta(int d) {
 //    return round(0.01 * pow(d,2) + 0.3 * d);
 //}
-
-static double magnitudeOfVector(Vector vec) {
-    
-    // Handle simple cases separately for optimization
-    if (vec.x == 0) {
-        return vec.y;
-    } else if (vec.y == 0) {
-        return vec.x;
-    }
-    
-    return sqrt(pow(vec.x, 2) + pow(vec.y, 2));
-}
-Vector normalizedVector(Vector vec) {
-    return scaledVector(vec, 1.0/magnitudeOfVector(vec));
-}
-Vector scaledVector(Vector vec, double scalar) {
-    Vector outVec;
-    outVec.x = vec.x * scalar;
-    outVec.y = vec.y * scalar;
-    return outVec;
-}
-Vector addedVectors(Vector vec1, Vector vec2) {
-    Vector outVec;
-    outVec.x = vec1.x + vec2.x;
-    outVec.y = vec1.y + vec2.y;
-    return outVec;
-}
-double dotProduct(Vector vec1, Vector vec2) {
-    return vec1.x * vec2.x + vec1.y * vec2.y;
-}
-
-bool isZeroVector(Vector vec) {
-    return vec.x == 0 && vec.y == 0;
-}
 
 @end

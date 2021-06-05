@@ -1,0 +1,6 @@
+module Pods_Mac_Mouse_Fix_Accomplice {
+  umbrella header "Pods-Mac Mouse Fix Accomplice-umbrella.h"
+
+  export *
+  module * { export * }
+}
