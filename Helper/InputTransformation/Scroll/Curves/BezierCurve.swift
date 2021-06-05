@@ -55,6 +55,8 @@ import ReactiveSwift
         default:
             assert(false, "Invalid axis")
         }
+        
+        return [-1.0]; // This will never happen. Just to silence compiler.
     }
     
     var degree: Int {
@@ -73,7 +75,7 @@ import ReactiveSwift
     
     @objc convenience init(controlNSPoints: [NSPoint]) {
         
-        // Convert NSPonit based control points to Point based
+        // Convert NSPoint based control points to Point based
         
         let controlPoints: [Point] = controlNSPoints.map { (pointNS) -> Point in
             var point: Point = Point.init()
@@ -82,7 +84,7 @@ import ReactiveSwift
             return point
         }
         
-        // Call designated initializer
+        // Call normal initializer
         
         self.init(controlPoints: controlPoints)
     }

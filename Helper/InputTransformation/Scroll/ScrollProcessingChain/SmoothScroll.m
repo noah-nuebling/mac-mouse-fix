@@ -37,7 +37,8 @@
 // Constant
 
 static CVDisplayLinkRef _displayLink;
-static BezierCurve *_animationCurve;
+static id _animationCurve;
+static id _animationCurveLegacy;
 
 // Dynamic
 
@@ -72,14 +73,17 @@ static int      _onePixelScrollsCounter;
 //                               @(NSMakePoint(0.29, 0.51)),
 //                               @(NSMakePoint(0.5, 0.96)),
 //                               @(NSMakePoint(1.0, 1.0))];
-    NSArray *controlPoints = @[@(NSMakePoint(0, 0)),
-                               @(NSMakePoint(0.1, 0.1)),
-                               @(NSMakePoint(0.9, 0.9)),
-                               @(NSMakePoint(1.0, 1.0))];
     
+    
+    NSArray *controlPoints = @[@(NSMakePoint(0, 0)),
+                               @(NSMakePoint(0.0, 0.0)),
+                               @(NSMakePoint(0.9, 1.0)),
+                               @(NSMakePoint(1.0, 1.0))];
     _animationCurve = [[BezierCurve alloc] initWithControlNSPoints:controlPoints];
-//    _animationCurve = [AnimationCurve alloc];
-//    [_animationCurve UnitBezierForPoint1x:0.1 point1y:0.1 point2x:0.9 point2y:0.9];
+    
+    
+    _animationCurveLegacy = [AnimationCurve alloc];
+    [_animationCurveLegacy UnitBezierForPoint1x:0.0 point1y:0.0 point2x:0.9 point2y:1.0];
 }
 
 static void createDisplayLink() {
@@ -261,6 +265,8 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         // Get scrolledPixelsTarget (How many pixels should be scrolled at this moment according to the animationCurve)
         
         double normalizedScrolledPixelsTarget = [_animationCurve evaluateAtX:normalizedTimeSinceAnimationStart epsilon:0.01];
+//        double normalizedScrolledPixelsTargetLegacy = [_animationCurveLegacy evaluateAtX:normalizedTimeSinceAnimationStart epsilon:0.01]; // For time profile
+        
         double scrolledPixelsTarget = normalizedScrolledPixelsTarget * _pxScrollBuffer;
         
         // Get pixels to scroll this frame
