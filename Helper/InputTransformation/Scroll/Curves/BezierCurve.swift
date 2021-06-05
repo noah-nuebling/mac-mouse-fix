@@ -20,10 +20,12 @@ import ReactiveSwift
 
 /// This class works similar to the AnimationCurve class I copied from WebKit
 /// The difference is that this doesn't have fixed start and end controlPoints at (0,0) and (1,1), and the number of  control points isn't locked at 4
-/// It's also likely muchhh slower than the Apple code, becuase in the Apple code they somehow transform the bezier curve into a polynomial which allows them to samlpe the curve value and derivative in a single line of c code.
+///
+/// It's also likely muchhh slower than the Apple code, because in the Apple code they somehow transform the bezier curve into a polynomial which allows them to samlpe the curve value and derivative in a single line of c code.
 /// We, on the other hand, use De-Casteljau's algorithm, which has nested for-loops and is probably in O(n^2)
+/// Edit: Actually, from my (superficial) testing, this seems to be faster than AnimationCurve.m! Not sure how that can be. Is it just the ObjC method calling overhead?
 
-/// For optimization, we usually only evaluate the x or the y values for our functions, even though they are formally defined to work on points. That's what the MFAxis parameters in some of these functions are for
+/// For optimization, we usually only evaluate the x or the y values for our functions, even though these functions are formally defined to work on points. That's what the MFAxis parameters in some of these functions are for
 
 /// # references
 /// De-Casteljau's algorithm | German Wikipedia
@@ -33,7 +35,7 @@ import ReactiveSwift
 /// AnimationCurve.m | Apple Webkit
 /// I can't find this on Google anymore but it's included with this Project
 
-@objc class BezierCurve: NSObject {
+@objc class BezierCurve: NSObject, Curve {
 
     typealias Point = Vector;
     let xAxis = kMFAxisHorizontal
@@ -89,6 +91,13 @@ import ReactiveSwift
         self.init(controlPoints: controlPoints)
     }
     
+    
+    /// You should make sure you only pass in control points describing curves where
+    /// 1. The x values of the first and last point are the two extreme (minimal and maximal) x values among all control points x values
+    /// 2. The curves x values are monotonically increasing / decreasing along the y axis, so that there are no x coordinates for which there are several points on the curve
+    ///     - This actually implies the first point
+    ///     - There is a proper mathsy name for this but I forgot
+    /// If it's not the case, it won't necessarily throw an error, but things might behave unpredicably.
     init(controlPoints: [Point]) {
         
         // Make sure that there are at least 2 points
@@ -111,20 +120,15 @@ import ReactiveSwift
         self.controlPointsX = controlPointsX
         self.controlPointsY = controlPointsY
         
-        // Make sure that X values are monotonically increasing
-        // This is not a general restriction on Bezier curves but makes a ton of sense for how we want to use them
-        
-        var previousXValue: Double = self.controlPointsX.first!
-        for i in 1..<self.controlPointsX.count {
-            let xValue: Double = self.controlPointsX[i]
-            assert(previousXValue <= xValue)
-            previousXValue = xValue
-        }
-        
-        // Now we know what minX and maxX are!
+        // Get x values of the start and end points!
         
         let startX = controlPointsX.first!
         let endX = controlPointsX.last!
+        
+        
+        // Get x value range
+        // This assumes that the curves extreme x values are startX and endX which is not necessarily the case
+        // But you shouldn't do that. This code assumes that x values are
         
         self.xValueRange = ContinuousRange.init(lower: startX, upper: endX)
         
@@ -292,7 +296,7 @@ import ReactiveSwift
         
     }
     
-    @objc public func evaluate(atX x: Double, epsilon: Double) -> Double {
+    @objc func evaluate(atX x: Double, epsilon: Double) -> Double {
         
 //        print("Evaluating at x = \(x)")
         
