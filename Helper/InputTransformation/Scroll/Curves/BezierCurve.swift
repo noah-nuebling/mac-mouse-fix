@@ -14,7 +14,9 @@
 
 import Cocoa
 import simd // Vector stuff
-//import CocoaLumberjack
+//import CocoaLumberjack // Doesn't work for some reason
+import Reactive
+
 
 typealias Point = Vector;
 
@@ -187,9 +189,10 @@ typealias Point = Vector;
     }
     
     /// Derivative according to English Wikipedia
-    private func sampleDerivativeAlternative(onAxis axis: MFAxis, atT t: Double) -> Double {
+    /// Shiftable along the x axis to support Newtons method
+    private func sampleDerivativeAlternative(onAxis axis: MFAxis, atT t: Double, shiftX: Double) -> Double {
         
-        let points1D: [Double] = controlPoints(onAxis: axis)
+        let points1D: [Double] = controlPoints(onAxis: axis).
         
         var sum: Double = 0
         
@@ -211,6 +214,32 @@ typealias Point = Vector;
         var t: Double = Math.scale(value: x, fromRange: self.xValueRange, toRange: ContinuousRange.normalRange())
         // ^ Our initial guess for t.
         // In Apples AnimationCurve.m this was set to x which is an informed guess that's just as good as this one. There, the xValueRange is implicitly 0...1
+        
+        
+        // Try Newtons method
+        // This is copied from Apple AnimationCurve.m
+        // Newtons method -> Find and input for which the output is 0
+        // So this should only work after shifting the curve along the output axis such the the desired output (the value for the x argument in this case) is 0
+        
+        let maxNewtonIterations: Int = 8
+        
+        for _ in 0..<maxNewtonIterations {
+            
+            let sampledX = sampleCurve(onAxis: axis, atT: t)
+            let error = abs(x - sampledX)
+            if error < epsilon {
+                return t
+            }
+            let sampledDerivative = sampleDerivative(onAxis: axis, atT: t)
+            
+//            print("sampled Derivative: \(sampledDerivative) at t: \(t)")
+            
+            if abs(sampledDerivative) < 1e-6 {
+                break
+            }
+            
+            t = t - sampledX / sampledDerivative
+        }
         
         // Try bisection method
         
@@ -235,27 +264,6 @@ typealias Point = Vector;
                 searchRange = ContinuousRange.init(lower: searchRange.lower, upper: t)
             }
             t = Math.scale(value: 0.5, fromRange: ContinuousRange.normalRange(), toRange: searchRange)
-        }
-        
-        // Try Newtons method
-        
-        let maxNewtonIterations: Int = 8
-        
-        for _ in 0..<maxNewtonIterations {
-            let sampledX = sampleCurve(onAxis: axis, atT: t)
-            let error = abs(x - sampledX)
-            if error < epsilon {
-                return t
-            }
-            let sampledDerivative = sampleDerivative(onAxis: axis, atT: t)
-            
-//            print("sampled Derivative: \(sampledDerivative) at t: \(t)")
-            
-            if abs(sampledDerivative) < 1e-6 {
-                break
-            }
-            
-            t = t - sampledX / sampledDerivative
         }
         
         

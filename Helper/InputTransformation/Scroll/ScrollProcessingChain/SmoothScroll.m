@@ -37,7 +37,7 @@
 // Constant
 
 static CVDisplayLinkRef _displayLink;
-static BezierCurve *_animationCurve;
+static AnimationCurve *_animationCurve;
 
 // Dynamic
 
@@ -77,9 +77,9 @@ static int      _onePixelScrollsCounter;
                                @(NSMakePoint(0.9, 0.9)),
                                @(NSMakePoint(1.0, 1.0))];
     
-    _animationCurve = [[BezierCurve alloc] initWithControlNSPoints:controlPoints];
-//    _animationCurve = [AnimationCurve alloc];
-//    [_animationCurve UnitBezierForPoint1x:0.1 point1y:0.1 point2x:0.9 point2y:0.9];
+//    _animationCurve = [[BezierCurve alloc] initWithControlNSPoints:controlPoints];
+    _animationCurve = [AnimationCurve alloc];
+    [_animationCurve UnitBezierForPoint1x:0.1 point1y:0.1 point2x:0.9 point2y:0.9];
 }
 
 static void createDisplayLink() {

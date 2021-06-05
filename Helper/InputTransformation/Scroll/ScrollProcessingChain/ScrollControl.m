@@ -213,10 +213,10 @@ static void processEvent(CGEventRef event, ScrollAnalysisResult scrollAnalysisRe
     pxToScrollForThisTick = accelerate(scrollAnalysisResult.ticksPerSecond, ScrollConfigInterface.pxPerTickBase);
 //    pxToScrollForThisTick = scrollDeltaPoint;
     
-    DDLogDebug(@"Scroll speed unsmoothed: %f", scrollAnalysisResult.ticksPerSecondUnsmoothed);
-    DDLogDebug(@"Scroll speed: %f", scrollAnalysisResult.ticksPerSecond);
-    DDLogDebug(@"Tick ctr: %lld", scrollAnalysisResult.consecutiveScrollTickCounter);
-    DDLogDebug(@"Swip ctr: %lld", scrollAnalysisResult.consecutiveScrollSwipeCounter);
+//    DDLogDebug(@"Scroll speed unsmoothed: %f", scrollAnalysisResult.ticksPerSecondUnsmoothed);
+//    DDLogDebug(@"Scroll speed: %f", scrollAnalysisResult.ticksPerSecond);
+//    DDLogDebug(@"Tick ctr: %lld", scrollAnalysisResult.consecutiveScrollTickCounter);
+//    DDLogDebug(@"Swip ctr: %lld", scrollAnalysisResult.consecutiveScrollSwipeCounter);
     
     if (ScrollConfigInterface.smoothEnabled) {
         [SmoothScroll start];   // Not sure if useful
