@@ -55,7 +55,7 @@ import Cocoa
     
     @objc class func factorial(_ n: Int) -> Int {
         
-        assert(n > 0)
+        assert(n >= 0)
         
         switch n {
         case 0:
@@ -127,6 +127,7 @@ import Cocoa
 }
 
 // MARK: Exponent operator
+/// I actually think `pow()` is more readable than this, so I probably won't use this
 
 precedencegroup ExponentialPrecedence {
     higherThan: MultiplicationPrecedence
@@ -141,13 +142,12 @@ func ** (lhs: Double, rhs: Double) -> Double {
 
 infix operator **= : AssignmentPrecedence
 func **= (lhs: inout Double, rhs: Double) {
-    lhs = lhs ^ rhs
+    lhs = lhs ** rhs
 }
 
 // MARK: Factorial operator
-/// You can't use !, so I went with this, Because factorial sort of a mix of repeated multiplication (aka exponentiation) and subtraction
+/// You can't use ! as a postfix operator, so I went with this as a shorthand
 
-postfix operator **-
-postfix func **- (rhs: Int) -> Int {
-    return Math.factorial(rhs)
+func fac(_ n: Int) -> Int {
+    return Math.factorial(n)
 }

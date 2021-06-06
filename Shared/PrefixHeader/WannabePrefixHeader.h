@@ -25,9 +25,9 @@
 //      And therefore the only interesting log _levels_ are also Info and Debug
 
 #if DEBUG
-static const DDLogLevel ddLogLevel = DDLogLevelDebug; // These definitions might make more sense in Constants.h
+static DDLogLevel ddLogLevel = DDLogLevelDebug; // These definitions might make more sense in Constants.h
 #else
-static const DDLogLevel ddLogLevel = DDLogLevelInfo;
+static DDLogLevel ddLogLevel = DDLogLevelInfo;
 #endif
 
 #endif /* WannabePrefixHeader_h */

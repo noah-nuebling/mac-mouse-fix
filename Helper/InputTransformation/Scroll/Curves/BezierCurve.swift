@@ -28,6 +28,10 @@ import ReactiveSwift
 ///     I tested on the same curve, with a 0.001 epsilon on my Early 2015 MBP
 ///     BezierCurve.swift usually took around 0.0001s (= 100 microseconds = 0.1 ms) to get y(x), while AnimationCurve.m usually took around 0.000001s (= 1 microsecond = 0.001 ms)
 ///     -> 60 fps is 16.66 ms per frame so the Swift implemenation should be fast enough
+/// Edit3: Did some more optimitzations by implementing formulas for the polynomial form of the Bezier Curve and precalculating the coefficients. Now it's super fast to evaluate!
+///     With the new algorithms Swift is only around 5 times slower than ObjC.
+///         (Another thing that affected these results is that before I was building for Debug and for these tests I was building for release. - that made Swift a lot faster while barely affecting C IIRC)
+///     Swift now takes around 0.01 ms to evaluate, which is very important becuase 0.1 ms was way to slow. I officially overengineered this lol.
 
 /// For optimization, we usually only evaluate the x or the y values for our functions, even though these functions are formally defined to work on points. That's what the MFAxis parameters in some of these functions are for
 
@@ -52,32 +56,32 @@ import ReactiveSwift
     let xAxis = kMFAxisHorizontal
     let yAxis = kMFAxisVertical
     
-    let controlPoints: [Point]
+    // Control points
     
+    let controlPoints: [Point]
     let controlPointsX: [Double]
     let controlPointsY: [Double]
-    
-    var P: [Point] { controlPoints }
-    
-    /// Helper function to initializer the controlPointsX and controlPointsY properties.
-    fileprivate func controlPoints(onAxis axis: MFAxis) -> [Double] {
-        
-        switch axis {
-        case xAxis:
-            return controlPointsX
-        case yAxis:
-            return controlPointsY
-        default:
-            assert(false, "Invalid axis")
-        }
-        
-        return [-1.0]; // This will never happen. Just to silence compiler.
+    func controlPoints(_ axis: MFAxis) -> [Double] { /// Would be more elegant to use a dict or an enum (enums do that in Swift I think?)
+        if axis == xAxis { return controlPointsX }
+        else if axis == yAxis { return controlPointsY }
+        assert(false, "Invalid axis")
+        return [] // This will never happen. Just to silence compiler
     }
     
-    let maxPolynomialDegree: Int = 20
-    /// ^ Wikipedia says that "high order curves may lack numeric stability" in polynomial form, and to use Casteljau instead if that happens. Not sure where exactly we should make the cutoff
+    // Polynomial coefficients
     
-    var polynomialCoefficients: [Point]
+    var polynomialCoefficients: [Point] // Needs to be var to fill it based on other instance properties in initializer bc Swift is weird
+    var polynomialCoefficientsX: [Double]
+    var polynomialCoefficientsY: [Double]
+    func polynomialCoefficients(_ axis: MFAxis) -> [Double] {
+        if axis == xAxis { return polynomialCoefficientsX }
+        else if axis == yAxis { return polynomialCoefficientsY }
+        assert(false, "Invalid axis")
+        return []
+    }
+    
+    let maxDegreeForPolynomialApproach: Int = 20
+    /// ^ Wikipedia says that "high order curves may lack numeric stability" in polynomial form, and to use Casteljau instead if that happens. Not sure where exactly we should make the cutoff
     
     let defaultEpsilon: Double // Epsilon to be used when none is specified in evaluate(at:) call // Have to make this var to prevent compiler errors in init. Not sure why
     
@@ -98,8 +102,9 @@ import ReactiveSwift
     
     // MARK: Init
     
-    /// Helper function for objc  init functions
-    fileprivate class func convertNSPointsToPoints(_ controlNSPoints: [NSPoint]) -> [BezierCurve.Point] {
+    private class func convertNSPointsToPoints(_ controlNSPoints: [NSPoint]) -> [BezierCurve.Point] {
+        /// Helper function for objc  init functions
+        
         return controlNSPoints.map { (pointNS) -> Point in
             var point: Point = Point.init()
             point.x = Double(pointNS.x)
@@ -122,32 +127,34 @@ import ReactiveSwift
     
     // Swift init functions
     
-    ///  Sets defaultEpsilon to a default value
     convenience init(controlPoints: [Point]) {
+        ///  Sets defaultEpsilon to a default value
+        
         self.init(controlPoints: controlPoints, defaultEpsilon: 0.001)
     }
     
-    /// You should make sure you only pass in control points describing curves where
-    /// 1. The x values of the first and last point are the two extreme (minimal and maximal) x values among all control points x values
-    /// 2. The curves x values are monotonically increasing / decreasing along the y axis, so that there are no x coordinates for which there are several points on the curve
-    ///     - This actually implies the first point
-    ///     - There is a proper mathsy name for this but I forgot
-    /// If it's not the case, it won't necessarily throw an error, but things might behave unpredicably.
     init(controlPoints: [Point], defaultEpsilon: Double) {
         
-        // Make sure that there are at least 2 points
+        /// You should make sure you only pass in control points describing curves where
+        /// 1. The x values of the first and last point are the two extreme (minimal and maximal) x values among all control points x values
+        /// 2. The curves x values are monotonically increasing / decreasing along the y axis, so that there are no x coordinates for which there are several points on the curve
+        ///     - This actually implies the first point
+        ///     - There is a proper mathsy name for this but I forgot
+        /// If it's not the case, it won't necessarily throw an error, but things might behave unpredicably.
+        
+        /// Make sure that there are at least 2 points
         
         assert(controlPoints.count >= 2, "There need to be at least 2 controlPoints");
         
-        // Set defaultEpsilon
+        /// Set defaultEpsilon
         
         self.defaultEpsilon = defaultEpsilon
         
-        // Fill self.controlPoints
+        /// Fill self.controlPoints
         
         self.controlPoints = controlPoints
         
-        // Fill self.controlPointsX and self.controlPointsY
+        /// Fill self.controlPointsX and self.controlPointsY
         
         var controlPointsX: [Double] = []
         var controlPointsY: [Double] = []
@@ -156,49 +163,93 @@ import ReactiveSwift
             controlPointsX.append(point.x)
             controlPointsY.append(point.y)
         }
+        
         self.controlPointsX = controlPointsX
         self.controlPointsY = controlPointsY
         
-        // Get x values of the start and end points!
+        /// Get x values of the start and end points!
         
         let startX = controlPointsX.first!
         let endX = controlPointsX.last!
         
-        // Get x value range
-        // This assumes that the curves extreme x values are startX and endX which is not necessarily the case
-        // You should only pass in curves where that's the case
+        /// Get x value range
+        /// This (and other parts of the code which rely on `xValueRange`) assumes that the curves extreme x values are startX and endX
+        /// You should only pass in curves where that's the case
         
         self.xValueRange = ContinuousRange.init(lower: startX, upper: endX)
         
-        // Set polynomialCoefficients to anything so we can call super.init()
-        // After we called super init, we can access 
+        /// Set polynomialCoefficients to anything so we can call super.init()
+        /// Only after we called super init, can we access instance properties, which is neat for calculating the real polynomialCoefficients
         
         self.polynomialCoefficients = []
+        self.polynomialCoefficientsX = []
+        self.polynomialCoefficientsY = []
         
-        // Init super
+        /// Init super
         
         super.init()
         
-        // Precalculate coefficients of the polynomial form
-        // Formula according to Wikipedia
+        /// Precalculate coefficients of the polynomial form of the Bezier Curve
+        /// Formula according to English Wikipedia
+        
+        let P: [Point] = self.controlPoints /// To make maths formulas more readable
+        
+        /// Fill out the polynomialCoefficient arrays with default values, so we can simply go
+        ///   `polynomialCoefficients[i] = v`, later, instead of having to use `.append`
+        ///   This is super ugly but there doesn't seem to be a better way in swift
+        
+        let defaultPoint = Point.init(x:-1, y:-1)
+        let defaultPointArray: [Point] = [Point](repeating: defaultPoint, count: n+1)
+        let defaultDoubleArray: [Double] = [Double](repeating: 0.0, count: n+1)
+        
+        self.polynomialCoefficients = defaultPointArray
+        self.polynomialCoefficientsX = defaultDoubleArray
+        self.polynomialCoefficientsY = defaultDoubleArray
         
         for j in 0...n {
-            for i in 0...j {
-                
-                let a: Double = (-1 ** Double((i+j))) / Double(fac(i) * fac(j-i))
+            
+            /// Get product
+            
+            var product: Int = 1
+            if j > 0 { // Otherwise the range will be 0...-1 which Swift doesn't like
+                for m in 0...j-1 {
+                    product *= n-m
+                }
             }
+            
+            /// Get sum
+            
+            var sumX: Double = 0
+            var sumY: Double = 0
+            
+            for i in 0...j {
+                let a: Double = pow(-1, Double(i+j)) / Double(fac(i) * fac(j-i))
+                sumX += a * P[i].x
+                sumY += a * P[i].y
+            }
+            
+            /// Put it all together
+            
+            let xCoefficient: Double = Double(product) * sumX
+            let yCoefficient: Double = Double(product) * sumY
+            
+            /// Fill instance properties
+            
+            self.polynomialCoefficientsX[j] = xCoefficient
+            self.polynomialCoefficientsY[j] = yCoefficient
+            self.polynomialCoefficients[j] = Point.init(x: xCoefficient, y: yCoefficient)
         }
     }
     
     // MARK: Sample curve
     
     /// - Parameters:
-    ///   - axis: Axis which to sample
+    ///   - axis: Axis which to sample. Either `xAxis` or `yAxis`
     ///   - t: Where to evaluate the curve. Valid values ranges from 0 to 1
     /// - Returns: The x or y value for the input t
     private func sampleCurve(onAxis axis: MFAxis, atT t: Double) -> Double {
         
-        if (degree > maxPolynomialDegree) {
+        if (degree > maxDegreeForPolynomialApproach) {
             return sampleCurveCasteljau(axis, t)
         } else {
             return sampleCurvePolynomial(axis, t)
@@ -206,7 +257,21 @@ import ReactiveSwift
     }
     
     fileprivate func sampleCurvePolynomial(_ axis: MFAxis, _ t: Double) -> Double {
-        return 0
+        
+        let C: [Double] = self.polynomialCoefficients(axis)
+        
+        var sum: Double = 0
+        
+        /// Applying Horners Rule for optimization
+        /// Horners Rule: https://www.math10.com/en/algebra/horner.html
+        /// Original Formula: https://wikimedia.org/api/rest_v1/media/math/render/svg/1263b2329c8a60a78a433731dfd88b55d6a37eb0
+        for j in (1...n).reversed() {
+            sum += C[j]
+            sum *= t
+        }
+        sum += C[0]
+        
+        return sum
     }
     
     /// Source: English Wikipedia on Bezier Curves
@@ -215,7 +280,7 @@ import ReactiveSwift
         
         // Extract x or y values from controlPoints
         
-        let P: [Double] = controlPoints(onAxis: axis)
+        let P: [Double] = controlPoints(axis)
         
         // Calculate using explicit formula
         
@@ -233,7 +298,7 @@ import ReactiveSwift
     fileprivate func sampleCurveCasteljau(_ axis: MFAxis, _ t: Double) -> Double {
         // Extract x or y values from controlPoints
         
-        var points1D: [Double] = controlPoints(onAxis: axis)
+        var points1D: [Double] = controlPoints(axis)
         
         // Apply De-Casteljau's algorithm
         
@@ -257,7 +322,7 @@ import ReactiveSwift
     
     private func sampleDerivative(on axis: MFAxis, at t: Double) -> Double {
         
-        if (degree > maxPolynomialDegree) {
+        if (degree > maxDegreeForPolynomialApproach) {
             return sampleDerivativeExplicit(axis, t)
         } else {
             return sampleDerivativePolynomial(axis, t)
@@ -266,13 +331,31 @@ import ReactiveSwift
     }
     
     private func sampleDerivativePolynomial(_ axis: MFAxis, _ t: Double) -> Double {
-        return 0
+        
+        let C: [Double] = self.polynomialCoefficients(axis)
+        
+        var sum: Double = 0
+        
+        /// We take the derivative of the original formula and get
+        ///     ```
+        ///     sum_{j=1}^{n} t^{j-1} * j * C_j
+        ///     ```
+        ///     To optimize, we then we apply Horners rule and arrive at the algorithm below
+        /// Original Formula: https://wikimedia.org/api/rest_v1/media/math/render/svg/1263b2329c8a60a78a433731dfd88b55d6a37eb0
+        for j in (2...n).reversed() {
+            sum += C[j] * Double(j)
+            sum *= t
+        }
+        sum += C[1]
+        
+        return sum
+        
     }
     
     /// Implemented according to the explicit derivative formula found on English Wikipedia
     private func sampleDerivativeExplicit(_ axis: MFAxis, _ t: Double) -> Double {
         
-        let points1D: [Double] = controlPoints(onAxis: axis)
+        let points1D: [Double] = controlPoints(axis)
         
         var sum: Double = 0
         
@@ -288,7 +371,7 @@ import ReactiveSwift
     /// Doesn't work
     private func sampleDerivativeExplicitAlternative(on axis: MFAxis, at t: Double) -> Double {
         
-        let points1D: [Double] = controlPoints(onAxis: axis)
+        let points1D: [Double] = controlPoints(axis)
         
         var sum: Double = 0
         

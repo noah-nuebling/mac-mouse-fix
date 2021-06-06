@@ -38,6 +38,7 @@
 
 static CVDisplayLinkRef _displayLink;
 static id<Curve> _animationCurve;
+static id<Curve> _animationCurveLegacy;
 
 // Dynamic
 
@@ -59,6 +60,7 @@ static int      _onePixelScrollsCounter;
 #pragma mark - Interface
 
 + (void)load_Manual {
+    
     [SmoothScroll start];
     [SmoothScroll stop];
     createDisplayLink();
@@ -70,12 +72,18 @@ static int      _onePixelScrollsCounter;
     NSPoint p2 = NSMakePoint(0.9, 1.0);
     NSPoint p3 = NSMakePoint(1.0, 1.0);
     
-//    AnimationCurve *animationCurve = [AnimationCurve alloc];
-//    [_animationCurve UnitBezierForPoint1x:p1.x point1y:p1.y point2x:p2.x point2y:p2.y];
+    AnimationCurve *animationCurve = [AnimationCurve alloc];
+    [animationCurve UnitBezierForPoint1x:p1.x point1y:p1.y point2x:p2.x point2y:p2.y];
     
-    BezierCurve *animationCurve = [[BezierCurve alloc] initWithControlNSPoints:@[@(p0), @(p1), @(p2), @(p3)] defaultEpsilon:0.008];
+    BezierCurve *bezierCurve = [[BezierCurve alloc] initWithControlNSPoints:@[@(p0), @(p1), @(p2), @(p3)] defaultEpsilon:0.008];
     
-    _animationCurve = animationCurve;
+    _animationCurve = bezierCurve;
+    _animationCurveLegacy = animationCurve;
+    
+    /// Override logLevel for time profiling release builds. Remove this later.
+    
+    ddLogLevel = DDLogLevelDebug;
+    
 }
 
 static void createDisplayLink() {
@@ -260,7 +268,17 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         double normalizedScrolledPixelsTarget = [_animationCurve evaluateAt:normalizedTimeSinceAnimationStart];
         CFTimeInterval ts2 = CACurrentMediaTime();
         
-        DDLogDebug(@"Animation Curve took %fs to evaluate", ts2 - ts1);
+        CFTimeInterval ts3 = CACurrentMediaTime();
+        double normalizedScrolledPixelsTargetLegacy = [_animationCurveLegacy evaluateAt:normalizedTimeSinceAnimationStart];
+        CFTimeInterval ts4 = CACurrentMediaTime();
+        
+        DDLogDebug(@"\n\
+Swift Curve time: %.7fs\n\
+ObjC Curve time:  %.7fs\n\
+Ratio: %f",
+                   ts2 - ts1,
+                   ts4 - ts3,
+                   (ts2 - ts1) / (ts4 - ts3));
         
         double scrolledPixelsTarget = normalizedScrolledPixelsTarget * _pxScrollBuffer;
         
