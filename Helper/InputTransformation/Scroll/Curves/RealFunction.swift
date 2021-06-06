@@ -9,7 +9,7 @@
 
 import Cocoa
 
-@objc protocol Curve {
+@objc protocol RealFunction {
 
     @objc func evaluate(at x: Double) -> Double
 }

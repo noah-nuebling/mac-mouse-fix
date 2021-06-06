@@ -10,21 +10,6 @@
 import Cocoa
 
 @objc class Math: NSObject {
-
-//    /// Source https://blog.plover.com/math/choose.html
-//    @objc class func choose(_ nArg: Int, _ k: Int) -> Int {
-//        var n: Int = nArg
-//        var r: Int = 1
-//        
-//        if k > n { return 0 }
-//        
-//        for d in 1...k {
-//            r *= n
-//            r /= d
-//            n -= 1
-//        }
-//        return r;
-//    }
     
     @objc class func choose(_ nArg: Int, _ k: Int) -> Int {
         /// Aka binomial coefficient
@@ -36,19 +21,17 @@ import Cocoa
         assert(n >= 0)
         assert(k >= 0)
         
-        if k < 0 { return 0 }
-        if n < k { return 0 }
+        if      k < 0 { return 0 }
+        else if n < k { return 0 }
         
-        if k == 0 { return 1 }
-        if k == n { return 1 }
+        if      k == 0 { return 1 }
+        else if k == n { return 1 }
         
         for d in 1...k {
             r *= n
             r /= d
             n -= 1
         }
-        
-//        print("n:\(nArg) choose k:\(k) = \(r)")
         
         return r;
     }
@@ -75,7 +58,7 @@ import Cocoa
         
         // Scale normalized value to targetRange
         
-        return normalizedValue * targetRange.length + targetRange.lower
+        return (normalizedValue * targetRange.length) + targetRange.lower
     }
 }
 
@@ -84,12 +67,8 @@ import Cocoa
     let location: Double
     let length: Double
     
-    @objc var lower: Double {
-        location
-    }
-    @objc var upper: Double {
-        location + length
-    }
+    @objc var lower: Double { location }
+    @objc var upper: Double { location + length }
     
     @objc class func normalRange() -> ContinuousRange {
         return self.init(lower: 0.0, upper: 1.0)
@@ -106,7 +85,7 @@ import Cocoa
     }
     
     func contains(_ value: Double) -> Bool {
-        return location <= value && value <= upper
+        return lower <= value && value <= upper
     }
 }
 
@@ -114,6 +93,8 @@ import Cocoa
     
     let a: Double
     let b: Double
+    
+    var slope: Double { a }
     
     // Function looks like ax + b
     @objc init(a: Double, b: Double) {

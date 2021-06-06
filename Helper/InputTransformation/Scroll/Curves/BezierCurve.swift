@@ -30,7 +30,7 @@ import ReactiveSwift
 ///     -> 60 fps is 16.66 ms per frame so the Swift implemenation should be fast enough
 /// Edit3: Did some more optimitzations by implementing formulas for the polynomial form of the Bezier Curve and precalculating the coefficients. Now it's super fast to evaluate!
 ///     With the new algorithms Swift is only around 5 times slower than ObjC.
-///         (Another thing that affected these results is that before I was building for Debug and for these tests I was building for release. - that made Swift a lot faster while barely affecting C IIRC)
+///         (Another thing that affected these results is that before I was building for Debug and for these tests I was building for release. - that made Swift a lot faster while barely affecting C IIRC - Edit: Yep, when running an unoptimized DEBUG build, Swift is still around 40 times slower than C)
 ///     Swift now takes around 0.01 ms to evaluate testing with a 0.08 epsilon, which is very important becuase 0.1 ms was way to slow. I officially overengineered this lol.
 
 /// For optimization, we usually only evaluate the x or the y values for our functions, even though these functions are formally defined to work on points. That's what the MFAxis parameters in some of these functions are for
@@ -52,7 +52,7 @@ import ReactiveSwift
 ///     It should be faster than the derivative of the explicit form which we currently use
 ///     https://www.clear.rice.edu/comp360/lectures/old/BezText.pdf
 
-@objc class BezierCurve: NSObject, Curve {
+@objc class BezierCurve: NSObject, RealFunction {
 
     typealias Point = Vector;
     let xAxis = kMFAxisHorizontal

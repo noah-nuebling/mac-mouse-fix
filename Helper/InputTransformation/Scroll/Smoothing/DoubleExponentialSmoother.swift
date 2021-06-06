@@ -24,8 +24,8 @@ import Cocoa
         
     /// init
     /// - Parameters:
-    ///   - a: Weight for input value
-    ///   - y: Weight for trend
+    ///   - a: Weight for input value aka "data smoothing factor"
+    ///   - y: Weight for trend aka "trend smoothing factor"
     @objc init(a: Double, y: Double) {
         
         self.a = a
@@ -42,10 +42,10 @@ import Cocoa
     
     @objc func smooth(value: Double) -> Double {
         
-        let Yt = value
-        
-        var Lt: Double = -1;
-        var Tt: Double = -1;
+        let Yt = value /// Input value
+
+        var Lt: Double = -1; /// Smoothed value
+        var Tt: Double = -1; /// Trend
         
         switch usageCounter {
         case 0: // There is no Lprev nor Tprev, so we can't smooth

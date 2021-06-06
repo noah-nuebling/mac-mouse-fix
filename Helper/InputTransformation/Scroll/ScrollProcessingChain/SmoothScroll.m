@@ -37,8 +37,8 @@
 // Constant
 
 static CVDisplayLinkRef _displayLink;
-static id<Curve> _animationCurve;
-static id<Curve> _animationCurveLegacy;
+static id<RealFunction> _animationCurve;
+static id<RealFunction> _animationCurveLegacy;
 
 // Dynamic
 
