@@ -25,12 +25,16 @@
     [self runPreviousVersionCleanup];
     
     /**
-     Sometimes there's a weird bug where the main app won't recognize the helper as enabled even though it is. The code down below for enabling will then fail, when the user tries to check the enable checkbox.
-     So we're removing the helper from launchd before trying to enable to hopefully fix this. Edit: seems to fix it!
-     I'm pretty sure that if we didn't check for `launchdPathIsBundlePath` in `strangeHelperIsRegisteredWithLaunchd` this issue wouldn't have occured and we wouldn't need this workaround. But I'm not sure anymore why we do that so it's not smart to remove it.
+         Sometimes there's a weird bug where the main app won't recognize the helper as enabled even though it is. The code down below for enabling will then fail, when the user tries to check the enable checkbox.
+         So we're removing the helper from launchd before trying to enable to hopefully fix this. Edit: seems to fix it!
+         I'm pretty sure that if we didn't check for `launchdPathIsBundlePath` in `strangeHelperIsRegisteredWithLaunchd` this issue wouldn't have occured and we wouldn't need this workaround. But I'm not sure anymore why we do that so it's not smart to remove it.
+         Edit: I think the specific issue I saw only happens when there are two instances of MMF open at the same time.
      */
     if (enable) {
         [self removeHelperFromLaunchd];
+        
+        // Any Mac Mouse Fix Helper processes that were started by launchd should have been quit by now. But if there are Helpers which weren't started by launchd they will still be running which causes problems. Terminate them now.
+        [self terminateOtherHelperInstances];
     }
     
     // Prepare strings for NSTask
@@ -62,7 +66,7 @@
         [NSTask launchedTaskWithLaunchPath: kMFLaunchctlPath arguments: @[OnOffArgumentOld, Objects.launchdPlistURL.path]]; // Can't clean up here easily cause there's no termination handler
     }
 }
-+ (void)cleanup {
++ (void)cleanup { // TODO: Make this a c function to signify private nature of it
     [NSFileManager.defaultManager removeItemAtURL:Objects.launchdPlistURL error:NULL];
 }
 
@@ -196,9 +200,7 @@
 
 + (void)runPreviousVersionCleanup {
     
-#if DEBUG
     NSLog(@"Cleaning up stuff from previous versions");
-#endif
     
     if (self.strangeHelperIsRegisteredWithLaunchd) {
         [self removeHelperFromLaunchd];
@@ -218,22 +220,40 @@
     
     if (!launchdPathIsBundlePath && launchdPathExists) {
         
-#if DEBUG
         NSLog(@"Strange helper: found at: %@ \nbundleExecutable at: %@", launchdPath, Objects.helperBundle.executablePath);
-#endif
         return YES;
     }
     
-#if DEBUG
     NSLog(@"Strange Helper: not found");
-#endif
     
     return NO;
 }
 
++ (void)terminateOtherHelperInstances {
+    /// Terminate any other running instances of the app
+    /// Only call this after after removing the Helper from launchd
+    /// This only works to terminate instances of the Helper which weren't started by launchd.
+    /// Launchd-started instances will immediately be restarted after they are terminated
+    /// This is almost an exact copy from Mac Mouse Fix Accomplice
+    
+    NSLog(@"Terminating other Helper instances");
+    
+    NSArray<NSRunningApplication *> *instances = [NSRunningApplication runningApplicationsWithBundleIdentifier:kMFBundleIDHelper];
+    
+    NSLog(@"%lu other running Helper instances found", (unsigned long)instances.count);
+        
+    for (NSRunningApplication *instance in instances) {
+        [instance terminate]; // Consider using forceTerminate instead
+    }
+    
+}
+
 /// Remove currently running helper from launchd
-/// From my testing this does the same as the `bootout` command, but it doesn't rely on a launchd plist file
+/// From my testing this does the same as the `bootout` command, but it doesn't rely on a valid launchd.plist file to exist in the library, so it should be more robust.
 + (void)removeHelperFromLaunchd {
+    
+    NSLog(@"Removing Helper from launchd");
+    
     NSURL *launchctlURL = [NSURL fileURLWithPath:kMFLaunchctlPath];
     NSError *err;
     [SharedUtility launchCTL:launchctlURL withArguments:@[@"remove", kMFLaunchdHelperIdentifier] error:&err];
@@ -248,9 +268,7 @@
 /// Having the old version still can lead to the old helper being started at startup, and I think other conflicts, too.
 + (void)removeLegacyLaunchdPlist {
     
-#if DEBUG
     NSLog(@"Removing legacy launchd plist");
-#endif
     
     // Find user library
     NSArray<NSString *> *libraryPaths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);

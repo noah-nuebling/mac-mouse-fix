@@ -25,6 +25,8 @@
 /// I'm not sure this is supposed to be load_Manual instead of load
 + (void)load_Manual {
     
+    NSLog(@"Initializing MessagePort...");
+    
     CFMessagePortRef localPort =
     CFMessagePortCreateLocal(NULL,
                              (__bridge CFStringRef)kMFBundleIDHelper,
@@ -34,14 +36,24 @@
     
     NSLog(@"localPort: %@ (MessagePortReceiver)", localPort);
     
-    CFRunLoopSourceRef runLoopSource =
-	    CFMessagePortCreateRunLoopSource(kCFAllocatorDefault, localPort, 0);
+    if (localPort != NULL) {
+        /// CFMessagePortCreateRunLoopSource() used to crash when another instance of MMF Helper was already running.
+        /// It would log this: `*** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x1b03, name = 'com.nuebling.mac-mouse-fix.helper'`
+        /// I think the reason for this messate is that the existing instance would already 'occupy' the kMFBundleIDHelper name.
+        /// Checking if `localPort != nil` should detect this case
     
-    CFRunLoopAddSource(CFRunLoopGetCurrent(),
-                       runLoopSource,
-                       kCFRunLoopCommonModes);
-    
-    CFRelease(runLoopSource);
+        CFRunLoopSourceRef runLoopSource =
+            CFMessagePortCreateRunLoopSource(kCFAllocatorDefault, localPort, 0);
+        
+        CFRunLoopAddSource(CFRunLoopGetCurrent(),
+                           runLoopSource,
+                           kCFRunLoopCommonModes);
+        
+        CFRelease(runLoopSource);
+    } else {
+        NSLog(@"Failed to create a local message port. This might be because there is another instance of Helper already running. Crashing the app.");
+        @throw [NSException exceptionWithName:@"NoMessagePortException" reason:@"Couldn't create a local CFMessagePort. Can't function properly without local CFMessagePort" userInfo:nil];
+    }
 }
 
 static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDataRef data, void *info) {
