@@ -22,7 +22,7 @@ import ReactiveSwift
 /// The difference is that this doesn't have fixed start and end controlPoints at (0,0) and (1,1), and the number of  control points isn't locked at 4
 ///
 /// It's also likely muchhh slower than the Apple code, because in the Apple code they somehow transform the bezier curve into a polynomial which allows them to samlpe the curve value and derivative in a single line of c code.
-/// We, on the other hand, use De-Casteljau's algorithm, which has nested for-loops and is probably in O(n^2) (Where n is the number of controlPoints describing the curve)
+/// We, on the other hand, use De-Casteljau's algorithm, which has nested for-loops and is probably in O(n*2) (Where n is the number of controlPoints describing the curve)
 /// Edit: Actually, from my (superficial) testing using the Apple Time Profiler, this seems to be faster than AnimationCurve.m! Not sure how that's possible'
 /// Edit2: Using simple time profiling with CACurrentMediatime(), the Swift implementation is 50 - 200 times slower than the Objc implementation. That's closer to what I expected.
 ///     I tested on the same curve, with a 0.001 epsilon on my Early 2015 MBP
@@ -31,7 +31,7 @@ import ReactiveSwift
 /// Edit3: Did some more optimitzations by implementing formulas for the polynomial form of the Bezier Curve and precalculating the coefficients. Now it's super fast to evaluate!
 ///     With the new algorithms Swift is only around 5 times slower than ObjC.
 ///         (Another thing that affected these results is that before I was building for Debug and for these tests I was building for release. - that made Swift a lot faster while barely affecting C IIRC)
-///     Swift now takes around 0.01 ms to evaluate, which is very important becuase 0.1 ms was way to slow. I officially overengineered this lol.
+///     Swift now takes around 0.01 ms to evaluate testing with a 0.08 epsilon, which is very important becuase 0.1 ms was way to slow. I officially overengineered this lol.
 
 /// For optimization, we usually only evaluate the x or the y values for our functions, even though these functions are formally defined to work on points. That's what the MFAxis parameters in some of these functions are for
 
@@ -179,7 +179,7 @@ import ReactiveSwift
         self.xValueRange = ContinuousRange.init(lower: startX, upper: endX)
         
         /// Set polynomialCoefficients to anything so we can call super.init()
-        /// Only after we called super init, can we access instance properties, which is neat for calculating the real polynomialCoefficients
+        /// Only after we called super init, can we access instance properties, which we want to use for calculating the real polynomialCoefficients
         
         self.polynomialCoefficients = []
         self.polynomialCoefficientsX = []
@@ -194,24 +194,25 @@ import ReactiveSwift
         
         let P: [Point] = self.controlPoints /// To make maths formulas more readable
         
-        /// Fill out the polynomialCoefficient arrays with default values, so we can simply go
-        ///   `polynomialCoefficients[i] = v`, later, instead of having to use `.append`
+        /// Fill out the polynomialCoefficient arrays with placeholder values, so we can simply go
+        ///   `array[i] = v`, later, instead of having to use `array.append(v)`
         ///   This is super ugly but there doesn't seem to be a better way in swift
+        ///     Ideally we'd just allocate space for n+1 elements in the array instead of this but that doesn't seem to be possible in Swift
         
-        let defaultPoint = Point.init(x:-1, y:-1)
-        let defaultPointArray: [Point] = [Point](repeating: defaultPoint, count: n+1)
-        let defaultDoubleArray: [Double] = [Double](repeating: 0.0, count: n+1)
+        let placeholderPoint = Point.init(x:-1, y:-1)
+        let placeholderPointArray: [Point] = [Point](repeating: placeholderPoint, count: n+1)
+        let placeholderDoubleArray: [Double] = [Double](repeating: -1.0, count: n+1)
         
-        self.polynomialCoefficients = defaultPointArray
-        self.polynomialCoefficientsX = defaultDoubleArray
-        self.polynomialCoefficientsY = defaultDoubleArray
+        self.polynomialCoefficients = placeholderPointArray
+        self.polynomialCoefficientsX = placeholderDoubleArray
+        self.polynomialCoefficientsY = placeholderDoubleArray
         
         for j in 0...n {
             
             /// Get product
             
             var product: Int = 1
-            if j > 0 { // Otherwise the range will be 0...-1 which Swift doesn't like
+            if 0 <= j-1 { // Otherwise the range will be 0...-1 which Swift doesn't like
                 for m in 0...j-1 {
                     product *= n-m
                 }
@@ -274,28 +275,9 @@ import ReactiveSwift
         return sum
     }
     
-    /// Source: English Wikipedia on Bezier Curves
-    /// This should be even slower than Casteljau
-    fileprivate func sampleCurveExplicit(onAxis axis: MFAxis, atT t: Double) -> Double {
-        
-        // Extract x or y values from controlPoints
-        
-        let P: [Double] = controlPoints(axis)
-        
-        // Calculate using explicit formula
-        
-        var sum: Double = 0
-        
-        for i: Int in 0...n {
-            sum += bernsteinBasisPolynomial(i, n, t) * P[i]
-        }
-        
-        return sum
-        
-    }
-    
-    /// Evaluate at t with De-Casteljau's algorithm. I thonk it's in O(n!).
     fileprivate func sampleCurveCasteljau(_ axis: MFAxis, _ t: Double) -> Double {
+        /// Evaluate at t with De-Casteljau's algorithm. I thonk it's in O(n!).
+        
         // Extract x or y values from controlPoints
         
         var points1D: [Double] = controlPoints(axis)
@@ -341,7 +323,8 @@ import ReactiveSwift
         ///     sum_{j=1}^{n} t^{j-1} * j * C_j
         ///     ```
         ///     To optimize, we then we apply Horners rule and arrive at the algorithm below
-        /// Original Formula: https://wikimedia.org/api/rest_v1/media/math/render/svg/1263b2329c8a60a78a433731dfd88b55d6a37eb0
+        ///     Also see: original formula: https://wikimedia.org/api/rest_v1/media/math/render/svg/1263b2329c8a60a78a433731dfd88b55d6a37eb0
+        
         for j in (2...n).reversed() {
             sum += C[j] * Double(j)
             sum *= t
@@ -352,8 +335,8 @@ import ReactiveSwift
         
     }
     
-    /// Implemented according to the explicit derivative formula found on English Wikipedia
     private func sampleDerivativeExplicit(_ axis: MFAxis, _ t: Double) -> Double {
+        /// Implemented according to the explicit derivative formula found on English Wikipedia
         
         let points1D: [Double] = controlPoints(axis)
         
@@ -365,22 +348,6 @@ import ReactiveSwift
         }
         
         return Double(n) * sum
-    }
-    
-    /// Derivative according to German Wikipedia
-    /// Doesn't work
-    private func sampleDerivativeExplicitAlternative(on axis: MFAxis, at t: Double) -> Double {
-        
-        let points1D: [Double] = controlPoints(axis)
-        
-        var sum: Double = 0
-        
-        for i in 0...n {
-            
-            sum += bernsteinBasisPolynomial(i, n, t) * points1D[i]
-        }
-        
-        return sum
     }
     
     // MARK: Bernstein Basis Polynomial
@@ -402,20 +369,16 @@ import ReactiveSwift
     
     private func solveForT(x: Double, epsilon: Double) -> Double {
         /// This function is mostly copied from AnimationCurve.m by Apple
-        /// It's a numerical inverse finder. Finds the parameter t for a function value x through educated guesses
+        /// It's a numerical inverse finder. It basically finds the parameter t for a function value x through educated guesses
         
         let initialGuess: Double = Math.scale(value: x, fromRange: self.xValueRange, toRange: ContinuousRange.normalRange())
         // ^ Our initial guess for t.
-        // In Apples AnimationCurve.m this was set to x which is an informed guess that's just as good as this one. There, the xValueRange is implicitly 0...1
+        // In Apples AnimationCurve.m this was set to x which is an informed guess. We extended the same logic to a general case. In the Apple implementation, the xValueRange is implicitly 0...1
         
         // Try Newtons method
         // Newtons method finds an input for which the output is 0
         // So to use this for finding x, we need to shift the curve along the xAxis such the the desired x value is at 0
-        // To achieve that, we subtract x from the sampleCurve() result. We don't need to apply this shifting to sampleDerivative(), because shifting won't affect the derivative
-        
-//        print("Finding t, given x = \(x)")
-//        print("Initial guess for t: \(t)")
-//        print("Trying Newtons method:")
+        // To achieve that, we subtract x from the sampleCurve() result. We don't need to apply this shifting to sampleDerivative(), because shifting along the xAxis won't affect the derivative with respect to x
         
         let maxNewtonIterations: Int = 8
         var t = initialGuess
@@ -424,27 +387,19 @@ import ReactiveSwift
             
             let sampledXShifted = sampleCurve(onAxis: xAxis, atT: t) - x
             
-//            print("Sampling took: \(sampleTime) sampled x: \(sampledXShifted + x) at t: \(t)")
-            
             let error = abs(sampledXShifted)
             if error < epsilon {
-//                print("Found t(x) using newtons method!")
                 return t
             }
             
             let sampledDerivative = sampleDerivative(on: xAxis, at: t)
             
-//            print("Derivative sampling took: \(derivativeTime), sampled dx: \(sampledDerivative) at t: \(t)")
-            
             if abs(sampledDerivative) < 1e-6 {
-//                print("Derivative too small - aborting newtons method")
                 break
             }
             
             t = t - sampledXShifted / sampledDerivative
         }
-        
-//        print("Newtons method didn't work. Try bisection instead")
         
         // Try bisection method for reliability
         
