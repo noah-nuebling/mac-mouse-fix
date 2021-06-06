@@ -234,7 +234,7 @@
     /// Only call this after after removing the Helper from launchd
     /// This only works to terminate instances of the Helper which weren't started by launchd.
     /// Launchd-started instances will immediately be restarted after they are terminated
-    /// This is almost an exact copy from Mac Mouse Fix Accomplice
+    /// Mac Mouse Fix Accomplice does something similar to this in update()
     
     NSLog(@"Terminating other Helper instances");
     

@@ -15,6 +15,7 @@
 #import "WannabePrefixHeader.h"
 
 static int update(const char *installScript) {
+    /// Unused now that wer're using Sparkle for updates
     
     DDLogInfo(@"Installing Mac Mouse Fix Update...");
     
