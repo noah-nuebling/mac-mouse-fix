@@ -83,7 +83,7 @@ import ReactiveSwift
     let maxDegreeForPolynomialApproach: Int = 20
     /// ^ Wikipedia says that "high order curves may lack numeric stability" in polynomial form, and to use Casteljau instead if that happens. Not sure where exactly we should make the cutoff
     
-    let defaultEpsilon: Double // Epsilon to be used when none is specified in evaluate(at:) call // Have to make this var to prevent compiler errors in init. Not sure why
+    let defaultEpsilon: Double // Epsilon to be used when none is specified in evaluate(at:) call
     
     var degree: Int {
         controlPoints.count - 1
@@ -129,8 +129,7 @@ import ReactiveSwift
     
     convenience init(controlPoints: [Point]) {
         ///  Sets defaultEpsilon to a default value
-        
-        self.init(controlPoints: controlPoints, defaultEpsilon: 0.001)
+        self.init(controlPoints: controlPoints, defaultEpsilon: 0.008)
     }
     
     init(controlPoints: [Point], defaultEpsilon: Double) {
