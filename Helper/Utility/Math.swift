@@ -26,9 +26,9 @@ import Cocoa
 //        return r;
 //    }
     
-    /// Aka binomial coefficient
-    /// Source https://blog.plover.com/math/choose.html
     @objc class func choose(_ nArg: Int, _ k: Int) -> Int {
+        /// Aka binomial coefficient
+        /// Source https://blog.plover.com/math/choose.html
         
         var n: Int = nArg // Copying because we want to mutate it
         var r: Int = 1
@@ -51,6 +51,18 @@ import Cocoa
 //        print("n:\(nArg) choose k:\(k) = \(r)")
         
         return r;
+    }
+    
+    @objc class func fac(_ n: Int) -> Int {
+        
+        assert(n > 0)
+        
+        switch n {
+        case 0:
+            return 1
+        default:
+            return n * factorial(n-1)
+        }
     }
     
     @objc class func scale(value: Double, fromRange sourceRange: ContinuousRange, toRange targetRange: ContinuousRange) -> Double {

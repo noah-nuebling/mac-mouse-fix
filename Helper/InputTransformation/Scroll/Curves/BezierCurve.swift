@@ -52,13 +52,12 @@ import ReactiveSwift
     let xAxis = kMFAxisHorizontal
     let yAxis = kMFAxisVertical
     
-    
     let controlPoints: [Point]
     
     let controlPointsX: [Double]
     let controlPointsY: [Double]
     
-    let defaultEpsilon: Double // Epsilon to be used when none is specified in evaluate(at:) call // Have to make this var to prevent compiler errors in init. Not sure why
+    var P: [Point] { controlPoints }
     
     /// Helper function to initializer the controlPointsX and controlPointsY properties.
     fileprivate func controlPoints(onAxis axis: MFAxis) -> [Double] {
@@ -75,6 +74,13 @@ import ReactiveSwift
         return [-1.0]; // This will never happen. Just to silence compiler.
     }
     
+    let maxPolynomialDegree: Int = 20
+    /// ^ Wikipedia says that "high order curves may lack numeric stability" in polynomial form, and to use Casteljau instead if that happens. Not sure where exactly we should make the cutoff
+    
+    let polynomialCoefficients: [Point]
+    
+    let defaultEpsilon: Double // Epsilon to be used when none is specified in evaluate(at:) call // Have to make this var to prevent compiler errors in init. Not sure why
+    
     var degree: Int {
         controlPoints.count - 1
     }
@@ -89,7 +95,10 @@ import ReactiveSwift
     
     let xValueRange: ContinuousRange
     
-    /// Helper function for objc wrapper init functions
+    
+    // MARK: Init
+    
+    /// Helper function for objc  init functions
     fileprivate class func convertNSPointsToPoints(_ controlNSPoints: [NSPoint]) -> [BezierCurve.Point] {
         return controlNSPoints.map { (pointNS) -> Point in
             var point: Point = Point.init()
@@ -99,7 +108,7 @@ import ReactiveSwift
         }
     }
     
-    // Objc compatible wrappers for the below initializer functions
+    // Objc compatible wrappers for the Swift init functions
     
     @objc convenience init(controlNSPoints: [NSPoint]) {
         let controlPoints: [Point] = BezierCurve.convertNSPointsToPoints(controlNSPoints)
@@ -111,7 +120,7 @@ import ReactiveSwift
         self.init(controlPoints: controlPoints, defaultEpsilon: defaultEpsilon)
     }
     
-    // Normal init functions
+    // Swift init functions
     
     ///  Sets defaultEpsilon to a default value
     convenience init(controlPoints: [Point]) {
@@ -155,20 +164,49 @@ import ReactiveSwift
         let startX = controlPointsX.first!
         let endX = controlPointsX.last!
         
-        
         // Get x value range
         // This assumes that the curves extreme x values are startX and endX which is not necessarily the case
         // You should only pass in curves where that's the case
         
         self.xValueRange = ContinuousRange.init(lower: startX, upper: endX)
         
+        // Precalculate coefficients of the polynomial form
+        // Formula according to Wikipedia
+        
+        for j in 0...n {
+            for i in 0...j {
+                
+                pow(-1, i+j) / 
+            }
+        }
+        
         // Init super
         
         super.init()
     }
     
-    /// Source: English Wikipedia on Bezier Curves
+    // MARK: Sample curve
+    
+    /// - Parameters:
+    ///   - axis: Axis which to sample
+    ///   - t: Where to evaluate the curve. Valid values ranges from 0 to 1
+    /// - Returns: The x or y value for the input t
     private func sampleCurve(onAxis axis: MFAxis, atT t: Double) -> Double {
+        
+        if (degree > maxPolynomialDegree) {
+            return sampleCurveCasteljau(axis, t)
+        } else {
+            return sampleCurvePolynomial(axis, t)
+        }
+    }
+    
+    fileprivate func sampleCurvePolynomial(_ axis: MFAxis, _ t: Double) -> Double {
+        return 0
+    }
+    
+    /// Source: English Wikipedia on Bezier Curves
+    /// This should be even slower than Casteljau
+    fileprivate func sampleCurveExplicit(onAxis axis: MFAxis, atT t: Double) -> Double {
         
         // Extract x or y values from controlPoints
         
@@ -187,12 +225,7 @@ import ReactiveSwift
     }
     
     /// Evaluate at t with De-Casteljau's algorithm. I thonk it's in O(n!).
-    /// - Parameters:
-    ///   - axis: Axis which to sample
-    ///   - t: Where to evaluate the curve. Valid values ranges from 0 to 1
-    /// - Returns: The x or y value for the input t
-    private func sampleCurveCasteljau(onAxis axis: MFAxis, atT t: Double) -> Double {
-        
+    fileprivate func sampleCurveCasteljau(_ axis: MFAxis, _ t: Double) -> Double {
         // Extract x or y values from controlPoints
         
         var points1D: [Double] = controlPoints(onAxis: axis)
@@ -212,44 +245,27 @@ import ReactiveSwift
             }
         }
         
-//        print("Sampling at t = \(t) -> \(points1D[0])")
-        
-//        assert(points1D.count == 1) // This assertion doesn't make sense, because we're always writing into the same array and it doesn't shrink in size
-        
         return points1D[0]
-        
     }
     
-    private func bernsteinBasisPolynomial(_ i: Int, _ n: Int, _ t: Double) -> Double {
-        
-        assert((0...n).contains(i))
-        
-        let a: Double = Double(Math.choose(n, i))
-        let b: Double = pow(t, Double(i))
-        let c: Double = pow(1-t, Double(n-i))
-        
-        return a * b * c
-    }
+    // MARK: Derivative
     
-    
-    /// Derivative according to German Wikipedia
-    /// Doesn't work
-    private func sampleDerivativeAlternative(on axis: MFAxis, at t: Double) -> Double {
+    private func sampleDerivative(on axis: MFAxis, at t: Double) -> Double {
         
-        let points1D: [Double] = controlPoints(onAxis: axis)
-        
-        var sum: Double = 0
-        
-        for i in 0...n {
-            
-            sum += bernsteinBasisPolynomial(i, n, t) * points1D[i]
+        if (degree > maxPolynomialDegree) {
+            return sampleDerivativeExplicit(axis, t)
+        } else {
+            return sampleDerivativePolynomial(axis, t)
         }
         
-        return sum
     }
     
-    /// Derivative according to English Wikipedia
-    private func sampleDerivative(on axis: MFAxis, at t: Double) -> Double {
+    private func sampleDerivativePolynomial(_ axis: MFAxis, _ t: Double) -> Double {
+        return 0
+    }
+    
+    /// Implemented according to the explicit derivative formula found on English Wikipedia
+    private func sampleDerivativeExplicit(_ axis: MFAxis, _ t: Double) -> Double {
         
         let points1D: [Double] = controlPoints(onAxis: axis)
         
@@ -263,10 +279,42 @@ import ReactiveSwift
         return Double(n) * sum
     }
     
+    /// Derivative according to German Wikipedia
+    /// Doesn't work
+    private func sampleDerivativeExplicitAlternative(on axis: MFAxis, at t: Double) -> Double {
+        
+        let points1D: [Double] = controlPoints(onAxis: axis)
+        
+        var sum: Double = 0
+        
+        for i in 0...n {
+            
+            sum += bernsteinBasisPolynomial(i, n, t) * points1D[i]
+        }
+        
+        return sum
+    }
+    
+    // MARK: Bernstein Basis Polynomial
+    
+    private func bernsteinBasisPolynomial(_ i: Int, _ n: Int, _ t: Double) -> Double {
+        /// Helper function for eplicit definitions
+        
+        assert((0...n).contains(i))
+        
+        let a: Double = Double(Math.choose(n, i))
+        let b: Double = pow(t, Double(i))
+        let c: Double = pow(1-t, Double(n-i))
+        
+        return a * b * c
+    }
     
     
-    /// This function is mostly copied from AnimationCurve.m by Apple
+    // MARK: Get t(x)
+    
     private func solveForT(x: Double, epsilon: Double) -> Double {
+        /// This function is mostly copied from AnimationCurve.m by Apple
+        /// It's a numerical inverse finder. Finds the parameter t for a function value x through educated guesses
         
         let initialGuess: Double = Math.scale(value: x, fromRange: self.xValueRange, toRange: ContinuousRange.normalRange())
         // ^ Our initial guess for t.
@@ -346,6 +394,9 @@ import ReactiveSwift
         return t
         
     }
+    
+    // MARK: Evaluate
+    /// Get y(x)
     
     @objc func evaluate(at x: Double) -> Double {
         self.evaluate(at: x, epsilon: self.defaultEpsilon)
