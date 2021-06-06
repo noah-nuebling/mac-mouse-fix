@@ -492,12 +492,8 @@ import ReactiveSwift
     
     @objc func evaluate(at x: Double, epsilon: Double) -> Double {
         
-//        print("Evaluating at x = \(x)")
-        
         let t: Double = solveForT(x: x, epsilon: epsilon)
         let y: Double = sampleCurve(onAxis: yAxis, atT: t)
-        
-//        print("Evaluation complete: x:\(x) -> t:\(t) -> y:\(y)")
         
         return y
     }

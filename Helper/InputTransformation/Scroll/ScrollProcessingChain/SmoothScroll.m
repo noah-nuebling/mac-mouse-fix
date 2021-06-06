@@ -80,10 +80,6 @@ static int      _onePixelScrollsCounter;
     _animationCurve = bezierCurve;
     _animationCurveLegacy = animationCurve;
     
-    /// Override logLevel for time profiling release builds. Remove this later.
-    
-    ddLogLevel = DDLogLevelDebug;
-    
 }
 
 static void createDisplayLink() {
