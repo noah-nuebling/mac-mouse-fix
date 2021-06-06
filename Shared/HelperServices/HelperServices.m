@@ -229,6 +229,9 @@
 /// Remove currently running helper from launchd
 /// From my testing this does the same as the `bootout` command, but it doesn't rely on a launchd plist file
 + (void)removeHelperFromLaunchd {
+    
+    DDLogDebug(@"Removing Helper from launchd");
+    
     NSURL *launchctlURL = [NSURL fileURLWithPath:kMFLaunchctlPath];
     NSError *err;
     [SharedUtility launchCTL:launchctlURL withArguments:@[@"remove", kMFLaunchdHelperIdentifier] error:&err];

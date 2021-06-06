@@ -36,6 +36,7 @@ typedef enum {
 
 #define kMFMainAppName      @"Mac Mouse Fix.app"
 #define kMFAccompliceName   @"Mac Mouse Fix Accomplice"
+#define kMFHelperName       @"Mac Mouse Fix Helper.app"
 
 #define kMFLaunchdHelperIdentifier  @"mouse.fix.helper" // Should rename to `kMFLaunchdHelperLabel`
     // ^ Keep this in sync with `Label` value in `default_launchd.plist`
