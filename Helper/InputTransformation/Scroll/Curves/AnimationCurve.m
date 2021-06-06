@@ -118,7 +118,7 @@ double solveCurveX(double x, double epsilon)
 }
 
 - (double)evaluateAt:(double)x {
-    return sampleCurveY(solveCurveX(x, 0.001));
+    return sampleCurveY(solveCurveX(x, 0.008)); // Used this epsilon value in the old Unused MomentumScroll.m. Not sure how I arrived at it.
 }
 
 @end

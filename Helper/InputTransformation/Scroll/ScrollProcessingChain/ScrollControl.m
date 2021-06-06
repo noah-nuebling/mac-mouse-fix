@@ -21,6 +21,7 @@
 #import "ScrollConfigInterface.h"
 #import <Cocoa/Cocoa.h>
 #import "Queue.h"
+#import "Mac_Mouse_Fix_Helper-Swift.h"
 
 @implementation ScrollControl
 

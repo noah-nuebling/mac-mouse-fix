@@ -25,6 +25,8 @@
 		4F39BC4A263B179200FDF692 /* AppState.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F39BC49263B179200FDF692 /* AppState.m */; };
 		4F3A40AB266BBB6200436821 /* ExtrapolatedBezierCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A40AA266BBB6200436821 /* ExtrapolatedBezierCurve.swift */; };
 		4F3A40B1266BBC5000436821 /* Curve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A40B0266BBC5000436821 /* Curve.swift */; };
+		4F3A40C3266C41E100436821 /* DisplayLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A40C2266C41E100436821 /* DisplayLink.swift */; };
+		4F3A40CB266C44D100436821 /* DisplayLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A40CA266C44D100436821 /* DisplayLink.m */; };
 		4F44FEF82606A5C100926A5E /* default_config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F44FEF72606A5C100926A5E /* default_config.plist */; };
 		4F44FF042606D73D00926A5E /* SharedMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* SharedMessagePort.m */; };
 		4F44FF052606D73D00926A5E /* SharedMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* SharedMessagePort.m */; };
@@ -251,6 +253,9 @@
 		4F39BCE8263B7B1500FDF692 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F3A40AA266BBB6200436821 /* ExtrapolatedBezierCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtrapolatedBezierCurve.swift; sourceTree = "<group>"; };
 		4F3A40B0266BBC5000436821 /* Curve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Curve.swift; sourceTree = "<group>"; };
+		4F3A40C2266C41E100436821 /* DisplayLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayLink.swift; sourceTree = "<group>"; };
+		4F3A40C9266C44D100436821 /* DisplayLink.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DisplayLink.h; sourceTree = "<group>"; };
+		4F3A40CA266C44D100436821 /* DisplayLink.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DisplayLink.m; sourceTree = "<group>"; };
 		4F422EEC23469B0F00AA6E22 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F44FEF72606A5C100926A5E /* default_config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_config.plist; sourceTree = "<group>"; };
 		4F44FF022606D73D00926A5E /* SharedMessagePort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharedMessagePort.h; sourceTree = "<group>"; };
@@ -583,6 +588,16 @@
 				4F39BCD3263B713400FDF692 /* README.md */,
 			);
 			path = xcconfig;
+			sourceTree = "<group>";
+		};
+		4F3A40C8266C448500436821 /* DisplayLink */ = {
+			isa = PBXGroup;
+			children = (
+				4F3A40C2266C41E100436821 /* DisplayLink.swift */,
+				4F3A40C9266C44D100436821 /* DisplayLink.h */,
+				4F3A40CA266C44D100436821 /* DisplayLink.m */,
+			);
+			path = DisplayLink;
 			sourceTree = "<group>";
 		};
 		4F422EF023469B2B00AA6E22 /* Other */ = {
@@ -1026,6 +1041,7 @@
 		4FF6661F25F2C93A00689B77 /* Scroll */ = {
 			isa = PBXGroup;
 			children = (
+				4F3A40C8266C448500436821 /* DisplayLink */,
 				4FA994BB266789BF0007F003 /* ScrollProcessingChain */,
 				4FF6662925F2C93A00689B77 /* ScrollModifiers.h */,
 				4FF6662E25F2C93A00689B77 /* ScrollModifiers.m */,
@@ -1789,6 +1805,7 @@
 				4FF6669025F2C93A00689B77 /* ScrollModifiers.m in Sources */,
 				4FF6655125F2C7B000689B77 /* NSMutableDictionary+Additions.m in Sources */,
 				4FF6668525F2C93A00689B77 /* ModifierManager.m in Sources */,
+				4F3A40CB266C44D100436821 /* DisplayLink.m in Sources */,
 				4F96E1202667BB020064ADC0 /* ScrollConfigInterface.m in Sources */,
 				4FF6669925F2C93A00689B77 /* VectorSubPixelator.m in Sources */,
 				4FF0BD4B266A8B7E003935EA /* BezierCurve.swift in Sources */,
@@ -1797,6 +1814,7 @@
 				4FF6669125F2C93A00689B77 /* ScrollUtility.m in Sources */,
 				4FF666A825F2C93A00689B77 /* DeviceManager.m in Sources */,
 				4FF6669B25F2C93A00689B77 /* AppDelegate.m in Sources */,
+				4F3A40C3266C41E100436821 /* DisplayLink.swift in Sources */,
 				4FF0BD58266ACE32003935EA /* VectorUtility.m in Sources */,
 				4FF6654F25F2C7B000689B77 /* NSArray+Additions.m in Sources */,
 				4FF6654525F2C7B000689B77 /* Objects.m in Sources */,
