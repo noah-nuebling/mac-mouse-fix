@@ -14,6 +14,7 @@
 #import "Objects.h"
 
 static int update(const char *installScript) {
+    /// This is unused now because we're using Sparkle for updates
     
     NSLog(@"Installing Mac Mouse Fix Update...");
     
