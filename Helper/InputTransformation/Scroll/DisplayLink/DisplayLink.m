@@ -142,7 +142,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     DisplayLink *self = (__bridge DisplayLink *)displayLinkContext;
         
     // Call block
-    self.block(*inNow);
+    self.block(*inNow); // Consider also passing inOutputTime.
     
     // Return
     return kCVReturnSuccess;

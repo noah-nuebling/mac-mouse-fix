@@ -698,7 +698,6 @@
 		4FA994BB266789BF0007F003 /* ScrollProcessingChain */ = {
 			isa = PBXGroup;
 			children = (
-				4FF6662925F2C93A00689B77 /* ScrollModifiers.h */,
 				4FF6662C25F2C93A00689B77 /* ScrollControl.h */,
 				4FF6662125F2C93A00689B77 /* ScrollControl.m */,
 				4FF6662025F2C93A00689B77 /* SmoothScroll.h */,
@@ -1042,16 +1041,17 @@
 		4FF6661F25F2C93A00689B77 /* Scroll */ = {
 			isa = PBXGroup;
 			children = (
-				4F3A40C8266C448500436821 /* DisplayLink */,
 				4FA994BB266789BF0007F003 /* ScrollProcessingChain */,
+				4FF6662925F2C93A00689B77 /* ScrollModifiers.h */,
 				4FF6662E25F2C93A00689B77 /* ScrollModifiers.m */,
 				4FF6662B25F2C93A00689B77 /* ScrollUtility.h */,
 				4FF6662F25F2C93A00689B77 /* ScrollUtility.m */,
 				4FA994BC26678AC90007F003 /* ScrollAnalyzer.h */,
 				4FA994BD26678AC90007F003 /* ScrollAnalyzer.m */,
+				4F3A40C8266C448500436821 /* DisplayLink */,
 				4FF937552669B043003A52EA /* Curves */,
-				4FF6662225F2C93A00689B77 /* Unused */,
 				4FFBC5B126697E8D001D389B /* Smoothing */,
+				4FF6662225F2C93A00689B77 /* Unused */,
 			);
 			path = Scroll;
 			sourceTree = "<group>";
