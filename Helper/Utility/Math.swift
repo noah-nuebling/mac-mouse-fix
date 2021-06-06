@@ -53,7 +53,7 @@ import Cocoa
         return r;
     }
     
-    @objc class func fac(_ n: Int) -> Int {
+    @objc class func factorial(_ n: Int) -> Int {
         
         assert(n > 0)
         
@@ -124,4 +124,30 @@ import Cocoa
     @objc func evaluate(at x: Double) -> Double {
         return a * x + b
     }
+}
+
+// MARK: Exponent operator
+
+precedencegroup ExponentialPrecedence {
+    higherThan: MultiplicationPrecedence
+    associativity: right
+}
+
+infix operator ** : ExponentialPrecedence
+
+func ** (lhs: Double, rhs: Double) -> Double {
+    return pow(lhs, rhs)
+}
+
+infix operator **= : AssignmentPrecedence
+func **= (lhs: inout Double, rhs: Double) {
+    lhs = lhs ^ rhs
+}
+
+// MARK: Factorial operator
+/// You can't use !, so I went with this, Because factorial sort of a mix of repeated multiplication (aka exponentiation) and subtraction
+
+postfix operator **-
+postfix func **- (rhs: Int) -> Int {
+    return Math.factorial(rhs)
 }

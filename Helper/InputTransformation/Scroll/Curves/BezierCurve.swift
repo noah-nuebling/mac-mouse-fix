@@ -77,7 +77,7 @@ import ReactiveSwift
     let maxPolynomialDegree: Int = 20
     /// ^ Wikipedia says that "high order curves may lack numeric stability" in polynomial form, and to use Casteljau instead if that happens. Not sure where exactly we should make the cutoff
     
-    let polynomialCoefficients: [Point]
+    var polynomialCoefficients: [Point]
     
     let defaultEpsilon: Double // Epsilon to be used when none is specified in evaluate(at:) call // Have to make this var to prevent compiler errors in init. Not sure why
     
@@ -170,19 +170,24 @@ import ReactiveSwift
         
         self.xValueRange = ContinuousRange.init(lower: startX, upper: endX)
         
+        // Set polynomialCoefficients to anything so we can call super.init()
+        // After we called super init, we can access 
+        
+        self.polynomialCoefficients = []
+        
+        // Init super
+        
+        super.init()
+        
         // Precalculate coefficients of the polynomial form
         // Formula according to Wikipedia
         
         for j in 0...n {
             for i in 0...j {
                 
-                pow(-1, i+j) / 
+                let a: Double = (-1 ** Double((i+j))) / Double(fac(i) * fac(j-i))
             }
         }
-        
-        // Init super
-        
-        super.init()
     }
     
     // MARK: Sample curve
