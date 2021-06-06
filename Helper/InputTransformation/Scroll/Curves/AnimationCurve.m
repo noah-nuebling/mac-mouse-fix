@@ -39,6 +39,9 @@ double cy;
 
 - (void) UnitBezierForPoint1x:(double)p1x point1y:(double)p1y point2x:(double)p2x point2y:(double)p2y {
     // Calculate the polynomial coefficients, implicit first and last control points are (0,0) and (1,1).
+    /// Noah: I get what they are doing now! They just took the explicit definition for Bezier Curves (find on Wikipedia) and plugged in the known values (n, P0, and P3), and then they rearranged everything so there's only one t^1, one t^2, and one t^3 term. a, b, c are the coefficients of these terms. Then they rearrange the coefficients definitions to reuse the other coefficients for optimization. All they do in this function is precalculated the coefficients using these optimized definitions. I recalculated this and arrived at the same definitions! My Math isn't as rusty as I though it would be! :)
+    /// 
+    
     cx = 3.0 * p1x;
     bx = 3.0 * (p2x - p1x) - cx;
     ax = 1.0 - cx -bx;

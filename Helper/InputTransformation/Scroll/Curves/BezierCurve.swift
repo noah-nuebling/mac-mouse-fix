@@ -22,11 +22,11 @@ import ReactiveSwift
 /// The difference is that this doesn't have fixed start and end controlPoints at (0,0) and (1,1), and the number of  control points isn't locked at 4
 ///
 /// It's also likely muchhh slower than the Apple code, because in the Apple code they somehow transform the bezier curve into a polynomial which allows them to samlpe the curve value and derivative in a single line of c code.
-/// We, on the other hand, use De-Casteljau's algorithm, which has nested for-loops and is probably in O(n^2)
-/// Edit: Actually, from my (superficial) testing using the Apple Time Profile, this seems to be faster than AnimationCurve.m! Not sure how that's possible'
-/// Edit2: Using simple time profiling with CACurrentMediatime, the Swift implementation is 50 - 200 times slower than the Objc implementation. That's closer to what I expected.
+/// We, on the other hand, use De-Casteljau's algorithm, which has nested for-loops and is probably in O(n^2) (Where n is the number of controlPoints describing the curve)
+/// Edit: Actually, from my (superficial) testing using the Apple Time Profiler, this seems to be faster than AnimationCurve.m! Not sure how that's possible'
+/// Edit2: Using simple time profiling with CACurrentMediatime(), the Swift implementation is 50 - 200 times slower than the Objc implementation. That's closer to what I expected.
 ///     I tested on the same curve, with a 0.001 epsilon on my Early 2015 MBP
-///     BezierCurve.swift usually took around 0.0001s (= 100 microseconds = 0.1 milliseconds) to get y(x), while AnimationCurve.m usually took around 0.000001s (= 1 microsecond = 0.001 milliseconds)
+///     BezierCurve.swift usually took around 0.0001s (= 100 microseconds = 0.1 ms) to get y(x), while AnimationCurve.m usually took around 0.000001s (= 1 microsecond = 0.001 ms)
 ///     -> 60 fps is 16.66 ms per frame so the Swift implemenation should be fast enough
 
 /// For optimization, we usually only evaluate the x or the y values for our functions, even though these functions are formally defined to work on points. That's what the MFAxis parameters in some of these functions are for
@@ -158,7 +158,7 @@ import ReactiveSwift
         
         // Get x value range
         // This assumes that the curves extreme x values are startX and endX which is not necessarily the case
-        // But you shouldn't do that. This code assumes that x values are
+        // You should only pass in curves where that's the case
         
         self.xValueRange = ContinuousRange.init(lower: startX, upper: endX)
         
@@ -167,12 +167,31 @@ import ReactiveSwift
         super.init()
     }
     
-    /// Evaluate at t with De-Casteljau's algorithm
+    /// Source: English Wikipedia on Bezier Curves
+    private func sampleCurve(onAxis axis: MFAxis, atT t: Double) -> Double {
+        
+        // Extract x or y values from controlPoints
+        
+        let P: [Double] = controlPoints(onAxis: axis)
+        
+        // Calculate using explicit formula
+        
+        var sum: Double = 0
+        
+        for i: Int in 0...n {
+            sum += bernsteinBasisPolynomial(i, n, t) * P[i]
+        }
+        
+        return sum
+        
+    }
+    
+    /// Evaluate at t with De-Casteljau's algorithm. I thonk it's in O(n!).
     /// - Parameters:
     ///   - axis: Axis which to sample
     ///   - t: Where to evaluate the curve. Valid values ranges from 0 to 1
     /// - Returns: The x or y value for the input t
-    private func sampleCurve(onAxis axis: MFAxis, atT t: Double) -> Double {
+    private func sampleCurveCasteljau(onAxis axis: MFAxis, atT t: Double) -> Double {
         
         // Extract x or y values from controlPoints
         
@@ -196,6 +215,7 @@ import ReactiveSwift
 //        print("Sampling at t = \(t) -> \(points1D[0])")
         
 //        assert(points1D.count == 1) // This assertion doesn't make sense, because we're always writing into the same array and it doesn't shrink in size
+        
         return points1D[0]
         
     }

@@ -26,6 +26,7 @@ import Cocoa
 //        return r;
 //    }
     
+    /// Aka binomial coefficient
     /// Source https://blog.plover.com/math/choose.html
     @objc class func choose(_ nArg: Int, _ k: Int) -> Int {
         
