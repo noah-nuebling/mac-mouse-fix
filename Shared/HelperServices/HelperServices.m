@@ -322,10 +322,4 @@
  };
  */
 
-// Old stuff
-
-/*
- //    NSString *prefPaneSearchString = @"/PreferencePanes/Mouse Fix.prefPane/Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/MacOS/Mouse Fix Helper";
- */
-
 @end
