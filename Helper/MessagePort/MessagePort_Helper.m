@@ -39,8 +39,8 @@
     
     if (localPort != NULL) {
         /// CFMessagePortCreateRunLoopSource() used to crash when another instance of MMF Helper was already running.
-        /// Before, it would log this `*** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x1b03, name = 'com.nuebling.mac-mouse-fix.helper'`
-        /// I think the reason is that the existing instance would already 'occupy' the kMFBundleIDHelper name.
+        /// It would log this: `*** CFMessagePort: bootstrap_register(): failed 1100 (0x44c) 'Permission denied', port = 0x1b03, name = 'com.nuebling.mac-mouse-fix.helper'`
+        /// I think the reason for this messate is that the existing instance would already 'occupy' the kMFBundleIDHelper name.
         /// Checking if `localPort != nil` should detect this case
     
         CFRunLoopSourceRef runLoopSource =
@@ -53,7 +53,7 @@
         CFRelease(runLoopSource);
     } else {
         DDLogError(@"Failed to create a local message port. This might be because there is another instance of %@ already running. Crashing the app.", kMFHelperName);
-        @throw [NSException exceptionWithName:@"NoMessagePortError" reason:@"Couldn't create a local CFMessagePort. Can't function properly without local CFMessagePort" userInfo:nil];
+        @throw [NSException exceptionWithName:@"NoMessagePortException" reason:@"Couldn't create a local CFMessagePort. Can't function properly without local CFMessagePort" userInfo:nil];
     }
 }
 

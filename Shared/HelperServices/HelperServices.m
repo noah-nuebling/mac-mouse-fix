@@ -235,11 +235,15 @@
     /// This only works to terminate instances of the Helper which weren't started by launchd.
     /// Launchd-started instances will immediately be restarted after they are terminated
     /// This is almost an exact copy from Mac Mouse Fix Accomplice
-
-    for (NSRunningApplication *app in [NSRunningApplication runningApplicationsWithBundleIdentifier:kMFBundleIDHelper]) {
-        if ([app.bundleURL isEqualTo: Objects.helperOriginalBundle.bundleURL]) {
-            [app terminate]; // Consider using forceTerminate instead
-        }
+    
+    NSArray<NSRunningApplication *> *instances = [NSRunningApplication runningApplicationsWithBundleIdentifier:kMFBundleIDHelper];
+    
+    if (instances.count > 0) {
+        DDLogDebug(@"%lu other running Helper instances found. Terminating them now.", (unsigned long)instances.count);
+    }
+        
+    for (NSRunningApplication *instance in instances) {
+        [instance terminate]; // Consider using forceTerminate instead
     }
     
 }
