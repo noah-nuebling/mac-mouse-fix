@@ -32,6 +32,9 @@
      */
     if (enable) {
         [self removeHelperFromLaunchd];
+        
+        // Any Mac Mouse Fix Helper processes that were started by launchd should have been quit by now. But if there are Helpers which weren't started by launchd they will still be running which causes problems. Terminate them now.
+        [self terminateOtherHelperInstances];
     }
     
     // Prepare strings for NSTask
@@ -226,8 +229,23 @@
     return NO;
 }
 
++ (void)terminateOtherHelperInstances {
+    /// Terminate any other running instances of the app
+    /// Only call this after after removing the Helper from launchd
+    /// This only works to terminate instances of the Helper which weren't started by launchd.
+    /// Launchd-started instances will immediately be restarted after they are terminated
+    /// This is almost an exact copy from Mac Mouse Fix Accomplice
+
+    for (NSRunningApplication *app in [NSRunningApplication runningApplicationsWithBundleIdentifier:kMFBundleIDHelper]) {
+        if ([app.bundleURL isEqualTo: Objects.helperOriginalBundle.bundleURL]) {
+            [app terminate]; // Consider using forceTerminate instead
+        }
+    }
+    
+}
+
 /// Remove currently running helper from launchd
-/// From my testing this does the same as the `bootout` command, but it doesn't rely on a launchd plist file
+/// From my testing this does the same as the `bootout` command, but it doesn't rely on a valid launchd.plist file to exist in the library, so it should be more robust.
 + (void)removeHelperFromLaunchd {
     
     DDLogDebug(@"Removing Helper from launchd");

@@ -56,6 +56,7 @@ static int update(const char *installScript) {
     DDLogInfo(@"Finding and killing Helper");
     // Find and kill helper
     // The updated helper application will subsequently be launched by launchd due to the keepAlive attribute in Mac Mouse Fix Helper's launchd.plist
+    // This is (almost exactly) copied in HelperServices.m
     for (NSRunningApplication *app in [NSRunningApplication runningApplicationsWithBundleIdentifier:kMFBundleIDHelper]) {
         if ([app.bundleURL isEqualTo: Objects.helperOriginalBundle.bundleURL]) {
             [app terminate];
