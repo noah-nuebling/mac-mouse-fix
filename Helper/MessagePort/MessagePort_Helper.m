@@ -26,7 +26,7 @@
 /// I'm not sure this is supposed to be load_Manual instead of load
 + (void)load_Manual {
     
-    DDLogInfo(@"Initializing MessagePort...")
+    DDLogInfo(@"Initializing MessagePort...");
     
     CFMessagePortRef localPort =
     CFMessagePortCreateLocal(NULL,
