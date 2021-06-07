@@ -113,22 +113,32 @@ import ReactiveSwift
             return point
         }
     }
+    private class func convertPointArraysToPoints(_ controlPointsAsArrays: [[Double]]) -> [BezierCurve.Point] {
+        /// Helper function for objc  init functions
+        
+        return controlPointsAsArrays.map { (pointArray: [Double]) -> Point in
+            var point: Point = Point.init()
+            point.x = Double(pointArray[0])
+            point.y = Double(pointArray[1])
+            return point
+        }
+    }
     
     // Objc compatible wrappers for the Swift init functions
     
-    @objc convenience init(controlNSPoints: [NSPoint],
-                               defaultEpsilon: Double = 0.08,
+    @objc convenience init(controlPointsAsArrays: [[Double]],
                                xInterval: Interval = Interval.unitInterval(),
                                yInterval: Interval = Interval.unitInterval()) {
+        /// `controlPointsAsArrays` is expected to have this structure: `[[x,y],[x,y],[x,y],...]`
         
-        let controlPoints: [Point] = BezierCurve.convertNSPointsToPoints(controlNSPoints)
-        self.init(controlPoints: controlPoints, defaultEpsilon: defaultEpsilon, xInterval: xInterval, yInterval: yInterval)
+        
+        let controlPoints: [Point] = BezierCurve.convertPointArraysToPoints(controlPointsAsArrays)
+        self.init(controlPoints: controlPoints, xInterval: xInterval, yInterval: yInterval)
     }
-    @objc convenience init(controlNSPoints: [NSPoint],
-                               defaultEpsilon: Double = 0.08) {
+    @objc convenience init(controlPointsAsArrays: [[Double]]) {
         
-        let controlPoints: [Point] = BezierCurve.convertNSPointsToPoints(controlNSPoints)
-        self.init(controlPoints: controlPoints, defaultEpsilon: defaultEpsilon)
+        let controlPoints: [Point] = BezierCurve.convertPointArraysToPoints(controlPointsAsArrays)
+        self.init(controlPoints: controlPoints)
     }
     
     // Swift init

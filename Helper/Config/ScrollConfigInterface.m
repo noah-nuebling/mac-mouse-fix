@@ -114,9 +114,11 @@ static NSDictionary *mod() {
 }
 + (id<RealFunction>)accelerationCurve {
     
-//    NSArray *controlPoints
+    NSArray *controlPoints = @[@[@(0.0),@(0.0)], @[@(0.0),@(0.0)], @[@(0.7),@(1.0)], @[@(1.0),@(1.0)]];
+    Interval *scrollTickSpeedInterval = [[Interval alloc] initWithStart:0.0 end:50.0];
+    Interval *animationSpeedInterval = [[Interval alloc] initWithStart:self.pxPerTickBase end:300.0];
     
-    return nil;
+    return [[ExtrapolatedBezierCurve alloc] initWithControlPointsAsArrays:controlPoints xInterval:scrollTickSpeedInterval yInterval:animationSpeedInterval];
 }
 
 + (NSUInteger)nOfOnePixelScrollsMax {
