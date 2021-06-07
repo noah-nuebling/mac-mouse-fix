@@ -1,0 +1,52 @@
+//
+// --------------------------------------------------------------------------
+// DerivedValueGenerator.swift
+// Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
+// Created by Noah Nuebling in 2021
+// Licensed under MIT
+// --------------------------------------------------------------------------
+//
+
+import Cocoa
+
+
+
+
+@objc class DerivedValueGenerator: NSObject {
+    /// A derived value is a block that takes no arguments and returns a value when called
+    /// The returned value is calculated based on other values
+    /// Here's the useful bit: The block will only re-calculate its value if any of the base values have changed since the last invocation. Otherwise it will return a cached value
+    /// That way you can have things like computed properties and other derived values without worrying about efficiency
+    ///
+    /// See:
+    /// Sample code on how to mutate Array values from within a function: https://stackoverflow.com/questions/45109161/is-there-a-way-to-override-the-copy-on-write-behavior-for-swift-arrays
+    
+    fileprivate func hash(_ values: [AnyHashable]) -> Int {
+        
+        var hasher = Hasher()
+        
+        for value in values {
+            value.hash(into: &hasher)
+        }
+        
+        return hasher.finalize()
+    }
+
+    /// The `baseValues ` can be anything but there are 2 constraints
+    ///     - They need to be passed in by reference, not by value, so we see when they are mutated. Objects are always passed by reference in Swift (as opposed to struct and most other types in swift) so we require that the baseValues are Objects
+    ///     - I hope to get around the copy on write stuff by using a Pointer. So I can see changes to the pointee. Not sure what I'm doing, this is dangerous.
+    func value<T>(derivedFrom baseValues: AnyHashable..., derivationFunction derive: ([AnyHashable]) -> T) -> () -> T {
+        
+        let pointer = baseValues.withUnsafeBufferPointer { (<#UnsafeBufferPointer<AnyHashable>#>) -> R in
+            <#code#>
+        }
+        
+        var lastHash: Int = self.hash(baseValues)
+        
+        return { () -> T in
+            let currentHash: Int = self.hash(baseValues)
+        }
+        
+    }
+    
+}
