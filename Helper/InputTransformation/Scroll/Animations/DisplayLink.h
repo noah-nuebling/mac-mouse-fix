@@ -12,13 +12,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void(^DisplayLinkBlock)(CVTimeStamp);
+typedef void(^DisplayLinkCallback)(CVTimeStamp);
 
 @interface DisplayLink : NSObject
 
-@property (copy) DisplayLinkBlock block;
+@property (copy) DisplayLinkCallback callback;
 
-+ (instancetype)displayLinkWithBlock:(DisplayLinkBlock)block;
++ (instancetype)displayLinkWithCallback:(DisplayLinkCallback)callback;
 - (void)start;
 - (void)stop;
 - (CVReturn)setToMainScreen;

@@ -9,4 +9,26 @@
 
 import Foundation
 
-//let curve: Curve
+@objc class Animator : NSObject{
+    
+    typealias AnimatorCallback = () -> ()
+    
+    // A
+    
+    var callback: AnimatorCallback
+    var animationCurve: RealFunction
+    
+    init(callback: @escaping AnimatorCallback, animationCurve: RealFunction) {
+        
+        self.callback = callback
+        self.animationCurve = animationCurve
+        
+        super.init()
+    }
+    
+    // B
+    
+    var animationDuration: Double = 0
+    var animationRange: ContinuousRange = ContinuousRange.normalRange()
+    
+}

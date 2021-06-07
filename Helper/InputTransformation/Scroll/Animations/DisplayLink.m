@@ -26,11 +26,11 @@
 
 // Convenience init
 
-+ (instancetype)displayLinkWithBlock:(DisplayLinkBlock)block {
++ (instancetype)displayLinkWithCallback:(DisplayLinkCallback)callback {
     /// The passed in block will be executed every time the display refreshes until `- stop` is called or this instance is deallocated.
     /// Call `setToMainScreen` to link with the screen that currently has keyboard focus.
     
-    DisplayLink *instance = [[DisplayLink alloc] initWithBlock:block];
+    DisplayLink *instance = [[DisplayLink alloc] initWithBlock:callback];
     [instance start];
     
     return instance;
@@ -38,14 +38,14 @@
 
 // Init
 
-- (instancetype)initWithBlock:(DisplayLinkBlock)block
+- (instancetype)initWithBlock:(DisplayLinkCallback)callback
 {
     self = [super init];
     if (self) {
         
         // Assign block
         
-        self.block = block;
+        self.callback = callback;
         
         // Setup internal CVDisplayLink
         
@@ -142,7 +142,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     DisplayLink *self = (__bridge DisplayLink *)displayLinkContext;
         
     // Call block
-    self.block(*inNow); // Consider also passing inOutputTime.
+    self.callback(*inNow); // Consider also passing inOutputTime.
     
     // Return
     return kCVReturnSuccess;
