@@ -99,7 +99,7 @@ import ReactiveSwift
         return controlPoints.last!
     }
     
-    let xValueRange: ContinuousRange
+    let xValueRange: Interval
     
     // MARK: Init
     
@@ -176,7 +176,7 @@ import ReactiveSwift
         /// This (and other parts of the code which rely on `xValueRange`) assumes that the curves extreme x values are startX and endX
         /// You should only pass in curves where that's the case
         
-        self.xValueRange = ContinuousRange.init(lower: startX, upper: endX)
+        self.xValueRange = Interval.init(start: startX, end: endX)
         
         /// Set polynomialCoefficients to anything so we can call super.init()
         /// Only after we called super init, can we access instance properties, which we want to use for calculating the real polynomialCoefficients
@@ -371,7 +371,7 @@ import ReactiveSwift
         /// This function is mostly copied from AnimationCurve.m by Apple
         /// It's a numerical inverse finder. It basically finds the parameter t for a function value x through educated guesses
         
-        let initialGuess: Double = Math.scale(value: x, fromRange: self.xValueRange, toRange: ContinuousRange.normalRange())
+        let initialGuess: Double = Math.scale(value: x, from: self.xValueRange, to: Interval.unitInterval())
         // ^ Our initial guess for t.
         // In Apples AnimationCurve.m this was set to x which is an informed guess. We extended the same logic to a general case. In the Apple implementation, the xValueRange is implicitly 0...1
         
@@ -405,9 +405,9 @@ import ReactiveSwift
         
         t = initialGuess
         
-        var searchRange = ContinuousRange.normalRange()
+        var searchRange = Interval.unitInterval()
         
-        if t <= searchRange.lower {
+        if (t <= searchRange.lower) {
             return searchRange.lower
         } else if searchRange.upper <= t {
             return searchRange.upper
@@ -422,11 +422,11 @@ import ReactiveSwift
                 return t
             }
             if sampledX < x {
-                searchRange = ContinuousRange.init(lower: t, upper: searchRange.upper)
+                searchRange = Interval.init(start: t, end: searchRange.upper)
             } else {
-                searchRange = ContinuousRange.init(lower: searchRange.lower, upper: t)
+                searchRange = Interval.init(start: searchRange.lower, end: t)
             }
-            t = Math.scale(value: 0.5, fromRange: ContinuousRange.normalRange(), toRange: searchRange)
+            t = Math.scale(value: 0.5, from: Interval.unitInterval(), to: searchRange)
         }
         
         

@@ -12,7 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void(^DisplayLinkCallback)(CVTimeStamp);
+typedef void(^DisplayLinkCallback)(void);
 
 @interface DisplayLink : NSObject
 
@@ -21,9 +21,9 @@ typedef void(^DisplayLinkCallback)(CVTimeStamp);
 + (instancetype)displayLinkWithCallback:(DisplayLinkCallback)callback;
 - (void)start;
 - (void)stop;
-- (CVReturn)setToMainScreen;
+- (CVReturn)linkToMainScreen;
 
-- (CVReturn)setToDisplayUnderMousePointerWithEvent:(CGEventRef)event;
+- (CVReturn)linkToDisplayUnderMousePointerWithEvent:(CGEventRef)event;
 
 @end
 

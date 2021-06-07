@@ -31,7 +31,6 @@
     /// Call `setToMainScreen` to link with the screen that currently has keyboard focus.
     
     DisplayLink *instance = [[DisplayLink alloc] initWithBlock:callback];
-    [instance start];
     
     return instance;
 }
@@ -82,14 +81,14 @@
 
 // Set display to mouse location
 
-- (CVReturn)setToMainScreen {
+- (CVReturn)linkToMainScreen {
     /// Simple alternative to .`setDisplayToDisplayUnderMousePointerWithEvent:`.
     /// TODO: Test which is faster by setting
     
     return [self setDisplay:NSScreen.mainScreen.displayID];
 }
 
-- (CVReturn)setToDisplayUnderMousePointerWithEvent:(CGEventRef)event {
+- (CVReturn)linkToDisplayUnderMousePointerWithEvent:(CGEventRef)event {
     /// Pass in a CGEvent to get pointer location from. Not sure if signification optimization
     
     CGPoint mouseLocation = CGEventGetLocation(event);
@@ -142,7 +141,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     DisplayLink *self = (__bridge DisplayLink *)displayLinkContext;
         
     // Call block
-    self.callback(*inNow); // Consider also passing inOutputTime.
+    self.callback(); // Not passing in anything. None of it is useful. Use CACurrentMediatime() to get current time.
     
     // Return
     return kCVReturnSuccess;

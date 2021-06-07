@@ -31,7 +31,7 @@ double magnitudeOfVector(Vector vec) {
     
     return sqrt(pow(vec.x, 2) + pow(vec.y, 2));
 }
-Vector normalizedVector(Vector vec) {
+Vector unitVector(Vector vec) {
     return scaledVector(vec, 1.0/magnitudeOfVector(vec));
 }
 Vector scaledVector(Vector vec, double scalar) {

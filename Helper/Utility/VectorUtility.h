@@ -22,7 +22,7 @@ typedef struct __Vector {
 
 Vector scaledVectorWithFunction(Vector vec, VectorScalerFunction f);
 double magnitudeOfVector(Vector vec);
-Vector normalizedVector(Vector vec);
+Vector unitVector(Vector vec);
 Vector scaledVector(Vector vec, double scalar);
 Vector addedVectors(Vector vec1, Vector vec2);
 double dotProduct(Vector vec1, Vector vec2);

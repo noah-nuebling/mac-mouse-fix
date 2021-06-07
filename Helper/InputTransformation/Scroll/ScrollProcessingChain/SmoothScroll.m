@@ -250,10 +250,10 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         
         // Normalize time offset
         
-        ContinuousRange *sourceRange = [[ContinuousRange alloc] initWithLocation:_animationStartTime length:_animationDuration];
+        Interval *sourceRange = [[Interval alloc] initWithLocation:_animationStartTime length:_animationDuration];
         double normalizedTimeSinceAnimationStart;
         if (now < sourceRange.upper) { // ScaleWithValue will throw an exception if we don't do this
-            normalizedTimeSinceAnimationStart= [Math scaleWithValue:now fromRange:sourceRange toRange:ContinuousRange.normalRange];
+            normalizedTimeSinceAnimationStart = [Math scaleWithValue:now from:sourceRange to:Interval.normalInterval];
         } else {
             normalizedTimeSinceAnimationStart = 1.0;
         }

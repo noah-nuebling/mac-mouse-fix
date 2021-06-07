@@ -280,7 +280,7 @@ static Vector momentumScrollPointVectorWithPreviousVector(Vector velocity, doubl
     double b = pow(a, dragExp);
     double dragMagnitude = b * dragCoeff;
     
-    Vector unitVec = normalizedVector(velocity);
+    Vector unitVec = unitVector(velocity);
     Vector dragForce = scaledVector(unitVec, dragMagnitude);
     dragForce = scaledVector(dragForce, -1);
     

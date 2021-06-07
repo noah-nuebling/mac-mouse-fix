@@ -48,40 +48,64 @@ import Cocoa
         }
     }
     
-    @objc class func scale(value: Double, fromRange sourceRange: ContinuousRange, toRange targetRange: ContinuousRange) -> Double {
+    @objc class func scale(value: Double, from originInterval: Interval, to targetInterval: Interval) -> Double {
+        /// Should probably move this into Interval
         
-        assert(sourceRange.contains(value))
+        assert(originInterval.contains(value))
         
-        // Normalize value (between 0 and 1)
+        // Normalize value between 0 and 1
     
-        let normalizedValue: Double = (value - sourceRange.lower) / sourceRange.length
+        let unitValue: Double = abs(value - originInterval.start) / originInterval.length
         
-        // Scale normalized value to targetRange
+        // Scale unitValue to targetRange
         
-        return (normalizedValue * targetRange.length) + targetRange.lower
+        return targetInterval.start + (unitValue * targetInterval.directedLength)
     }
 }
 
-@objc class ContinuousRange: NSObject {
+@objc class Interval: NSObject {
+    /// Defines an Interval of real values
+    /// Defines only closed Intervals. We don't need open or half-open intervals
+    /// Also stores a direction, which Maths Intervals don't usually do, but it's useful for us.
     
-    let location: Double
-    let length: Double
+    let start: Double
+    let end: Double
     
-    @objc var lower: Double { location }
-    @objc var upper: Double { location + length }
-    
-    @objc class func normalRange() -> ContinuousRange {
-        return self.init(lower: 0.0, upper: 1.0)
+    var direction: MFIntervalDirection {
+        if start == end {
+            return kMFIntervalDirectionNone
+        } else if start < end {
+            return kMFIntervalDirectionAscending
+        } else {
+            return kMFIntervalDirectionDescending
+        }
     }
     
-    @objc required init(lower: Double, upper: Double) {
-        self.location = lower
-        self.length = upper - lower
+    var location: Double { lower }
+    var length: Double { upper - lower }
+    var directedLength: Double { end - start }
+    
+    @objc var lower: Double { direction == kMFIntervalDirectionAscending ? start : end }
+    @objc var upper: Double { direction == kMFIntervalDirectionAscending ? end : start }
+    
+    @objc class func unitInterval() -> Interval {
+        /// Scale to this interval to normalize a value
+        return self.init(start: 0, end: 1)
     }
     
-    @objc init(location: Double, length: Double) {
-        self.location = location
-        self.length = length
+    @objc required init(start: Double, end: Double) {
+        self.start = start
+        self.end = end
+    }
+    
+    @objc convenience init(location: Double, length: Double) {
+        self.init(lower: location, upper: location + length)
+    }
+    
+    @objc init(lower: Double, upper: Double) {
+        assert(lower < upper)
+        self.start = lower
+        self.end = upper
     }
     
     func contains(_ value: Double) -> Bool {
