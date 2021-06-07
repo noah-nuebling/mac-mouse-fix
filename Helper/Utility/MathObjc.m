@@ -9,10 +9,6 @@
 
 #import "MathObjc.h"
 
-// When in doubt, use Math.swift instead of this
-// This is only used to do stuff that you can't do in Swift
-// Like define a struct that can be used in Objc and Swift
-
 @implementation MathObjc
 
 @end

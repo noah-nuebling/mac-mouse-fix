@@ -40,7 +40,7 @@ import Foundation
     // Vars - DisplayLink
     
     var lastAnimationTime: Double = -1 /// Time at which the displayLink was last called
-    var lastAnimationValue: Double = -1 /// What the animationValue was when the displayLink was last called
+    var lastAnimationValue: Double = -1 /// animationValue when the displayLink was last called
     var animationPhase: MFAnimationPhase = kMFAnimationPhaseNone
     
     // Vars -  Interface
@@ -55,7 +55,7 @@ import Foundation
     // Start
     
     func startAnimation(duration: CFTimeInterval, valueInterval: Interval) {
-        /// The use of 'Interval' in CFTimeInterval is kind of confusing. It really just describes a point in time
+        /// The use of 'Interval' in CFTimeInterval is kind of confusing, since its also used to spedify points in time (It's just a `Double`), and also it has nothing to do with our `Interval` class, which is much closer to an Interval in the Mathematical sense.
         
         let now: CFTimeInterval = CACurrentMediaTime()
         
@@ -98,8 +98,8 @@ import Foundation
         
         /// Get change since last frame aka `delta`
         
-        let animationTimeDelta = now - lastAnimationTime
-        let animationValueDelta = animationValue - lastAnimationValue
+        let animationTimeDelta: CFTimeInterval = now - lastAnimationTime
+        let animationValueDelta: Double = animationValue - lastAnimationValue
         
         /// Call the callback
         

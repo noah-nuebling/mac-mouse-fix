@@ -50,6 +50,7 @@ import Cocoa
     
     @objc class func scale(value: Double, from originInterval: Interval, to targetInterval: Interval) -> Double {
         /// Should probably move this into Interval
+        /// Works as expected on Intervals with different directions
         
         assert(originInterval.contains(value))
         
@@ -66,7 +67,7 @@ import Cocoa
 @objc class Interval: NSObject {
     /// Defines an Interval of real values
     /// Defines only closed Intervals. We don't need open or half-open intervals
-    /// Also stores a direction, which Maths Intervals don't usually do, but it's useful for us.
+    /// Also stores a direction, which Maths Intervals don't usually do, but it's real useful for us.
     
     let start: Double
     let end: Double
