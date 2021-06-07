@@ -42,9 +42,9 @@ class ExtrapolatedBezierCurve: BezierCurve {
          - Has the same slope that the bezier curve does in its last control point
          
          - The slope between the first 2 control points is equal to the slope of the BezierCurve in the first point. (src Wikipedia)
-         - The slope between the  last two control points is equal to the slope of the BezierCurve in the last point.
-         - Once the slope `a` is determined, we then find `b` such that the curve passes through some point c:
-            y = ax + b -> c.y = a c.x + b -> b = c.y - a * c.x
+         - The slope between the  last 2 control points is equal to the slope of the BezierCurve in the last point.
+         - Once the slope `a` is determined, we then find `b` such that the curve passes through some point c with this simple formula:
+            y = ax + b -> b = y - ax -> b = c.y - a * c.x
          
          */
         

@@ -55,6 +55,7 @@ static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this
     if (_eventSource == nil) {
         _eventSource = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
     }
+    
     // Create/enable scrollwheel input callback
     if (_eventTap == nil) {
         CGEventMask mask = CGEventMaskBit(kCGEventScrollWheel);
@@ -65,28 +66,33 @@ static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this
         CFRelease(runLoopSource);
         CGEventTapEnable(_eventTap, false); // Not sure if this does anything
     }
+    
+    //
 }
 
-/// When scrolling is in progress, there are tons of variables holding global state. This resets some of them.
-/// I determined the ones it resets through trial and error. Some misbehaviour/bugs might be caused by this not resetting all of the global variables.
 + (void)resetDynamicGlobals {
+    /// When scrolling is in progress, there are tons of variables holding global state. This resets some of them.
+    /// I determined the ones it resets through trial and error. Some misbehaviour/bugs might be caused by this not resetting all of the global variables.
+    
     [ScrollAnalyzer resetState];
     [SmoothScroll resetDynamicGlobals];
 }
 
-/// Routes the event back to the eventTap where it originally entered the program.
-///
-/// Use this when internal parameters change while processing an event.
-/// This will essentially restart the evaluation of the event while respecting the new internal parameters.
-/// You probably wanna return after calliing this.
-// TODO: This shouldn't be neede anymore. Delete if so.
 + (void)rerouteScrollEventToTop:(CGEventRef)event {
+    /// Routes the event back to the eventTap where it originally entered the program.
+    ///
+    /// Use this when internal parameters change while processing an event.
+    /// This will essentially restart the evaluation of the event while respecting the new internal parameters.
+    /// You probably wanna return after calliing this.
+    // TODO: This shouldn't be neede anymore. Delete if so.
+    
     eventTapCallback(nil, 0, event, nil);
 }
 
-/// Either activate SmoothScroll or RoughScroll or stop scroll interception entirely
-/// Call this whenever a value which the decision depends on changes
 + (void)decide {
+    /// Either activate SmoothScroll or RoughScroll or stop scroll interception entirely
+    /// Call this whenever a value which the decision depends on changes
+    
     BOOL disableAll =
     ![DeviceManager devicesAreAttached];
     //|| (!_isSmoothEnabled && _scrollDirection == 1);
@@ -180,15 +186,15 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
     dispatch_async(_scrollQueue, ^{
         
-        processEvent(eventCopy, scrollAnalysisResult);
+        heavyProcessing(eventCopy, scrollAnalysisResult);
     });
     return nil;
 }
 
-static void processEvent(CGEventRef event, ScrollAnalysisResult scrollAnalysisResult) {
+static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysisResult) {
     
-    // Set application overrides
-    //  Checking which app is under the mouse pointer is really slow, so we do some optimizations
+    // Update application overrides if necessary
+    //  Checking which app is under the mouse pointer is really slow, so we try to only do it when necessary
     
     if (scrollAnalysisResult.consecutiveScrollTickCounter == 0) { // Only do this on the first of each series of consecutive scroll ticks
         [ScrollUtility updateMouseDidMoveWithEvent:event];
@@ -231,13 +237,17 @@ static void processEvent(CGEventRef event, ScrollAnalysisResult scrollAnalysisRe
     CFRelease(event);
 }
 
-
-/// Accelerate px to scroll for one tick (aka step size)
-/// @param ticksPerSecond scrolling speed in ticks per second
-/// @param pxPerTickBase minimum (aka base) step size
-/// @return Sensitivity. How many px to scroll for one scroll wheel tick.
-/// @discussion See the RawAccel guide for more info on acceleration curves https://github.com/a1xd/rawaccel/blob/master/doc/Guide.md
 static int64_t accelerate(double ticksPerSecond, int64_t pxPerTickBase) {
+    /// Accelerate px to scroll for one tick (aka step size)
+    /// @param ticksPerSecond scrolling speed in ticks per second
+    /// @param pxPerTickBase minimum (aka base) step size
+    /// @return Sensitivity. How many px to scroll for one scroll wheel tick.
+    /// @discussion See the RawAccel guide for more info on acceleration curves https://github.com/a1xd/rawaccel/blob/master/doc/Guide.md
+    ///     -> Edit: I read up on it and I don't see why the sensitivity-based approach that RawAccel uses is useful.
+    ///     They define the base curve as for sensitivity, but then go through complex maths and many hurdles to make the implied outputVelocity(inputVelocity function and its derivative smooth. Because that is what makes the acceleration feel predictable and nice. (See their "Gain" algorithm)
+    ///     Then why not just define the the outputVelocity(inputVelocity) curve to be a smooth curve to begin with? Why does sensitivity matter? It doesn't make sens to me.
+    ///     I'm just gonna use a BezierCurve to define the outputVelocity(inputVelocity) curve. Then I'll extrapolate the curve linearly at the end, so its defined everywhere. That is guaranteed to be smooth and easy to configure!
+    
     return 0; // TODO change this
 }
 
