@@ -237,16 +237,16 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
     CFRelease(event);
 }
 
-static int64_t accelerate(double ticksPerSecond, int64_t pxPerTickBase) {
-    /// Accelerate px to scroll for one tick (aka step size)
-    /// @param ticksPerSecond scrolling speed in ticks per second
-    /// @param pxPerTickBase minimum (aka base) step size
-    /// @return Sensitivity. How many px to scroll for one scroll wheel tick.
+static int64_t accelerate(CFTimeInterval timeBetweenTicks) {
     /// @discussion See the RawAccel guide for more info on acceleration curves https://github.com/a1xd/rawaccel/blob/master/doc/Guide.md
     ///     -> Edit: I read up on it and I don't see why the sensitivity-based approach that RawAccel uses is useful.
     ///     They define the base curve as for sensitivity, but then go through complex maths and many hurdles to make the implied outputVelocity(inputVelocity function and its derivative smooth. Because that is what makes the acceleration feel predictable and nice. (See their "Gain" algorithm)
     ///     Then why not just define the the outputVelocity(inputVelocity) curve to be a smooth curve to begin with? Why does sensitivity matter? It doesn't make sens to me.
     ///     I'm just gonna use a BezierCurve to define the outputVelocity(inputVelocity) curve. Then I'll extrapolate the curve linearly at the end, so its defined everywhere. That is guaranteed to be smooth and easy to configure!
+    
+    double tickSpeed = 1/timeBetweenTicks;
+    
+    ScrollConfigInterface.scrollAccelerationCurve;
     
     return 0; // TODO change this
 }

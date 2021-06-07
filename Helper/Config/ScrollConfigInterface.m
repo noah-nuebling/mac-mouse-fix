@@ -10,6 +10,7 @@
 #import "ScrollConfigInterface.h"
 #import "MainConfigInterface.h"
 #import "Constants.h"
+#import "Mac_Mouse_Fix_Helper-Swift.h"
 
 @implementation ScrollConfigInterface
 
@@ -108,12 +109,21 @@ static NSDictionary *mod() {
 + (double)frictionDepth {
     return [[smooth() objectForKey:@"frictionDepth"] doubleValue];
 }
-+ (double)accelerationForScrollBuffer {
++ (double)accelerationForScrollBuffer { // TODO: Unused, remove
     return [[smooth() objectForKey:@"acceleration"] doubleValue];
 }
++ (id<RealFunction>)accelerationCurve {
+    
+//    NSArray *controlPoints
+    
+    return [ExtrapolatedBezierCurve alloc] initWithControlNSPoints:@
+}
+
 + (NSUInteger)nOfOnePixelScrollsMax {
     return [[smooth() objectForKey:@"onePixelScrollsLimit"] intValue]; // After opl+1 frames of only scrolling 1 pixel, scrolling stops. Should probably change code to stop after opl frames.
 }
+
+
 
 // Keyboard modifiers
 

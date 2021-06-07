@@ -19,8 +19,8 @@ typedef struct {
     int64_t consecutiveScrollTickCounter;
     int64_t consecutiveScrollSwipeCounter;
     BOOL scrollDirectionDidChange;
-    double ticksPerSecond;
-    double ticksPerSecondUnsmoothed;
+    CFTimeInterval smoothedTimeBetweenTicks;
+    CFTimeInterval timeSinceLastTick; /// Only use this for debugging. Use `smoothedTimeBetweenTicks` for everything else. If `smoothedTimeBetweenTicks` doesn't work, adjust the smoothing parameters until it does
     
 } ScrollAnalysisResult;
 

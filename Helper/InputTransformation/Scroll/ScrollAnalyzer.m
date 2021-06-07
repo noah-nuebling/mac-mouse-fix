@@ -21,7 +21,7 @@
 + (void)initialize
 {
     if (self == [ScrollAnalyzer class]) {
-        _smoother = [[DoubleExponentialSmoother alloc] initWithA:ScrollConfigInterface.ticksPerSecondSmoothingInputValueWeight y:ScrollConfigInterface.ticksPerSecondSmoothingTrendWeight];
+        _tickTimeSmoother = [[DoubleExponentialSmoother alloc] initWithA:ScrollConfigInterface.ticksPerSecondSmoothingInputValueWeight y:ScrollConfigInterface.ticksPerSecondSmoothingTrendWeight];
     }
 }
 
@@ -29,7 +29,7 @@
 
 // Constant
 
-static DoubleExponentialSmoother *_smoother;
+static DoubleExponentialSmoother *_tickTimeSmoother;
 
 // Dynamic
 
@@ -85,34 +85,34 @@ static int _consecutiveScrollSwipeCounter;
     if (scrollDirectionDidChange) {
         [self resetState];
     }
-    
-    // Update tick and swipe counters
 
+    // Get seconds since last tick
+    
     double thisScrollTickTimeStamp = CACurrentMediaTime();
     double secondsSinceLastTick = (thisScrollTickTimeStamp - _previousScrollTickTimeStamp);
+    _previousScrollTickTimeStamp = thisScrollTickTimeStamp;
+    
+    // Update tick and swipe counters
+    
     if (secondsSinceLastTick > ScrollConfigInterface.consecutiveScrollTickMaxInterval) {
         updateConsecutiveScrollSwipeCounterWithSwipeOccuringNow(); // Needs to be called before resetting _consecutiveScrollTickCounter = 0, because it uses _consecutiveScrollTickCounter to determine whether the last series of consecutive scroll ticks was a scroll swipe
         _consecutiveScrollTickCounter = 0;
-        secondsSinceLastTick = 0; // Not sure if thise makes sense here
     } else {
         _consecutiveScrollTickCounter += 1;
     }
-    _previousScrollTickTimeStamp = thisScrollTickTimeStamp;
     
-    // Update ticks per second
+    // Get smoothed time between ticks
     
-    double ticksPerSecond;
-    double ticksPerSecondRaw;
+    double smoothedTimeBetweenTicks = -1;
     
     if (_consecutiveScrollTickCounter == 0) {
-        ticksPerSecond = 0; // Why are we resetting this here?
-        ticksPerSecondRaw = 0;
+        secondsSinceLastTick = DBL_MAX;
+        smoothedTimeBetweenTicks = DBL_MAX;
     } else {
         if (_consecutiveScrollTickCounter == 1) {
-            [_smoother resetState];
+            [_tickTimeSmoother resetState]; /// The first `smoothed` value after resetting will always be equal to the input value
         }
-        ticksPerSecondRaw = 1/secondsSinceLastTick;
-        ticksPerSecond = [_smoother smoothWithValue:ticksPerSecondRaw];
+        smoothedTimeBetweenTicks = [_tickTimeSmoother smoothWithValue:secondsSinceLastTick];
     }
     
     // Output
@@ -121,8 +121,8 @@ static int _consecutiveScrollSwipeCounter;
         .consecutiveScrollTickCounter = _consecutiveScrollTickCounter,
         .consecutiveScrollSwipeCounter = _consecutiveScrollSwipeCounter,
         .scrollDirectionDidChange = scrollDirectionDidChange,
-        .ticksPerSecond = ticksPerSecond,
-        .ticksPerSecondUnsmoothed = ticksPerSecondRaw,
+        .smoothedTimeBetweenTicks = smoothedTimeBetweenTicks,
+        .timeSinceLastTick = secondsSinceLastTick,
     };
     
     return result;
