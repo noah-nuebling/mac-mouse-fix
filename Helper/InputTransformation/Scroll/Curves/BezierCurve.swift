@@ -116,26 +116,63 @@ import ReactiveSwift
     
     // Objc compatible wrappers for the Swift init functions
     
-    @objc convenience init(controlNSPoints: [NSPoint]) {
+    @objc convenience init(controlNSPoints: [NSPoint],
+                               defaultEpsilon: Double = 0.08,
+                               xInterval: Interval = Interval.unitInterval(),
+                               yInterval: Interval = Interval.unitInterval()) {
+        
         let controlPoints: [Point] = BezierCurve.convertNSPointsToPoints(controlNSPoints)
-        self.init(controlPoints: controlPoints)
+        self.init(controlPoints: controlPoints, defaultEpsilon: defaultEpsilon, xInterval: xInterval, yInterval: yInterval)
     }
-    
-    @objc convenience init(controlNSPoints: [NSPoint], defaultEpsilon: Double) {
+    @objc convenience init(controlNSPoints: [NSPoint],
+                               defaultEpsilon: Double = 0.08) {
+        
         let controlPoints: [Point] = BezierCurve.convertNSPointsToPoints(controlNSPoints)
         self.init(controlPoints: controlPoints, defaultEpsilon: defaultEpsilon)
     }
     
-    // Swift init functions
+    // Swift init
+    
+    convenience init(controlPoints: [Point],
+                     defaultEpsilon: Double = 0.08,
+                     xInterval: Interval,
+                     yInterval: Interval) {
+        /**
+        This convenience initializer scales the controlPoints' x values to xInterval and the y values to yInterval before creating a curve
+         More specifically scales the x values of all controlpoints from the interval spanning from the first to the last controlpoints' x values, and does the same for y values.
+         */
+        
+        assert(controlPoints.count >= 2, "There need to be at least 2 controlPoints") // Code duplication, but idk how to avoid it here
+        
+        let pFirst = controlPoints.first!
+        let pLast = controlPoints.last!
+        
+        let xIntervalOrigin = Interval.init(start: pFirst.x, end: pLast.x) // Should we use Interval.init(lower:upper) instead, to make sure the x values are ascending?
+        let yIntervalOrigin = Interval.init(start: pFirst.y, end: pLast.y)
+        
+        let pointsInTargetInterval: [Point] = controlPoints.map { (point: Point) -> Point in
+            let x = Math.scale(value: point.x, from: xIntervalOrigin, to: xInterval)
+            let y = Math.scale(value: point.y, from: yIntervalOrigin, to: yInterval)
+            
+            return Point(x: x, y: y)
+        }
+        
+        self.init(controlPoints: pointsInTargetInterval, defaultEpsilon: defaultEpsilon)
+        
+    }
     
     init(controlPoints: [Point], defaultEpsilon: Double = 0.08) {
         
-        /// You should make sure you only pass in control points describing curves where
-        /// 1. The x values of the first and last point are the two extreme (minimal and maximal) x values among all control points x values
-        /// 2. The curves x values are monotonically increasing / decreasing along the y axis, so that there are no x coordinates for which there are several points on the curve
-        ///     - This actually implies the first point
-        ///     - There is a proper mathsy name for this but I forgot
-        /// If it's not the case, it won't necessarily throw an error, but things might behave unpredicably.
+        /**
+         - You should make sure you only pass in control points describing curves where
+            - 1. The x values of the first and last point are the two extreme (minimal and maximal) x values among all control points x values
+            - 2. The curves x values are monotonically increasing / decreasing along the y axis, so that there are no x coordinates for which there are several points on the curve
+                - This actually implies 1.
+                - There is a proper mathsy name for this but I forgot
+                - If it's not the case, it won't necessarily throw an error, but things might behave unpredicably.
+         */
+        
+        
         
         /// Make sure that there are at least 2 points
         
