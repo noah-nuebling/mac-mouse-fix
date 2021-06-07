@@ -65,14 +65,15 @@ import Cocoa
 }
 
 @objc class Interval: NSObject {
-    /// Defines an Interval of real values
-    /// Defines only closed Intervals. We don't need open or half-open intervals
-    /// Also stores a direction, which Maths Intervals don't usually do, but it's real useful for us.
+    /// - Defines an Interval of real values
+    /// - Defines only closed Intervals. We don't need open or half-open intervals
+    /// - Also stores a direction, which Maths Intervals don't usually do, but it's real useful for us. If the caller want to ignore this they can use `lower` and `upper` instead of `start` and `end`
+    /// - This is used a lot for BezierCurve and Animator, which means tons of these are instantiated every second while scrolling -> Might be worth looking into optimizing
     
-    let start: Double
-    let end: Double
+    @objc let start: Double
+    @objc let end: Double
     
-    var direction: MFIntervalDirection {
+    @objc var direction: MFIntervalDirection {
         if start == end {
             return kMFIntervalDirectionNone
         } else if start < end {
@@ -82,19 +83,22 @@ import Cocoa
         }
     }
     
-    var location: Double { lower }
-    var length: Double { upper - lower }
-    var directedLength: Double { end - start }
+    @objc var location: Double { lower }
+    @objc var length: Double { upper - lower }
+    @objc var directedLength: Double { end - start }
     
     @objc var lower: Double { direction == kMFIntervalDirectionAscending ? start : end }
     @objc var upper: Double { direction == kMFIntervalDirectionAscending ? end : start }
     
     @objc class func unitInterval() -> Interval {
         /// Scale to this interval to normalize a value
+        /// I use this a lot in performance-critical code. It might be good to only create the unitInterval only once instead of this. But maybe swift already optimizes that automatically.
+        
         return self.init(start: 0, end: 1)
     }
     
     @objc required init(start: Double, end: Double) {
+        
         self.start = start
         self.end = end
     }
@@ -103,18 +107,17 @@ import Cocoa
         self.init(lower: location, upper: location + length)
     }
     
-    @objc init(lower: Double, upper: Double) {
+    @objc convenience init(lower: Double, upper: Double) {
         assert(lower < upper)
-        self.start = lower
-        self.end = upper
+        self.init(start: lower, end: upper)
     }
     
-    func contains(_ value: Double) -> Bool {
+    @objc func contains(_ value: Double) -> Bool {
         return lower <= value && value <= upper
     }
 }
 
-@objc class Line: NSObject {
+@objc class Line: NSObject, RealFunction {
     
     let a: Double
     let b: Double

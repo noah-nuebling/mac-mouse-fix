@@ -253,7 +253,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         Interval *sourceRange = [[Interval alloc] initWithLocation:_animationStartTime length:_animationDuration];
         double normalizedTimeSinceAnimationStart;
         if (now < sourceRange.upper) { // ScaleWithValue will throw an exception if we don't do this
-            normalizedTimeSinceAnimationStart = [Math scaleWithValue:now from:sourceRange to:Interval.normalInterval];
+            normalizedTimeSinceAnimationStart = [Math scaleWithValue:now from:sourceRange to:Interval.unitInterval];
         } else {
             normalizedTimeSinceAnimationStart = 1.0;
         }

@@ -87,7 +87,7 @@ import Foundation
             now = animationTimeInterval.end
         }
         
-        /// Scale time to unit and get unit animation value
+        /// Get normalized time and value
         
         let animationTimeUnit: Double = Math.scale(value: now, from: animationTimeInterval, to: Interval.unitInterval()) /// From 0 to 1
         let animationValueUnit: Double = self.animationCurve.evaluate(at: animationTimeUnit) /// From 0 to 1

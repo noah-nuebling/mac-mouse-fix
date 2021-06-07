@@ -176,7 +176,7 @@ import ReactiveSwift
         /// This (and other parts of the code which rely on `xValueRange`) assumes that the curves extreme x values are startX and endX
         /// You should only pass in curves where that's the case
         
-        self.xValueRange = Interval.init(start: startX, end: endX)
+        self.xValueRange = Interval.init(lower: startX, upper: endX)
         
         /// Set polynomialCoefficients to anything so we can call super.init()
         /// Only after we called super init, can we access instance properties, which we want to use for calculating the real polynomialCoefficients
@@ -422,9 +422,9 @@ import ReactiveSwift
                 return t
             }
             if sampledX < x {
-                searchRange = Interval.init(start: t, end: searchRange.upper)
+                searchRange = Interval.init(lower: t, upper: searchRange.upper)
             } else {
-                searchRange = Interval.init(start: searchRange.lower, end: t)
+                searchRange = Interval.init(lower: searchRange.lower, upper: t)
             }
             t = Math.scale(value: 0.5, from: Interval.unitInterval(), to: searchRange)
         }
