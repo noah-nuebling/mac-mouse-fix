@@ -128,12 +128,7 @@ import ReactiveSwift
     
     // Swift init functions
     
-    convenience init(controlPoints: [Point]) {
-        ///  Sets defaultEpsilon to a default value
-        self.init(controlPoints: controlPoints, defaultEpsilon: 0.008)
-    }
-    
-    init(controlPoints: [Point], defaultEpsilon: Double) {
+    init(controlPoints: [Point], defaultEpsilon: Double = 0.08) {
         
         /// You should make sure you only pass in control points describing curves where
         /// 1. The x values of the first and last point are the two extreme (minimal and maximal) x values among all control points x values

@@ -217,7 +217,7 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
     // Get pixels to scroll for this event
     
     int64_t pxToScrollForThisTick;
-    pxToScrollForThisTick = accelerate(scrollAnalysisResult.ticksPerSecond, ScrollConfigInterface.pxPerTickBase);
+    pxToScrollForThisTick = accelerate(scrollAnalysisResult.smoothedTimeBetweenTicks);
 //    pxToScrollForThisTick = scrollDeltaPoint;
     
 //    DDLogDebug(@"Scroll speed unsmoothed: %f", scrollAnalysisResult.ticksPerSecondUnsmoothed);
@@ -246,7 +246,7 @@ static int64_t accelerate(CFTimeInterval timeBetweenTicks) {
     
     double tickSpeed = 1/timeBetweenTicks;
     
-    ScrollConfigInterface.scrollAccelerationCurve;
+//    ScrollConfigInterface.scrollAccelerationCurve;
     
     return 0; // TODO change this
 }

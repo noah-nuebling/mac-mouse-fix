@@ -116,7 +116,7 @@ static NSDictionary *mod() {
     
 //    NSArray *controlPoints
     
-    return [ExtrapolatedBezierCurve alloc] initWithControlNSPoints:@
+    return nil;
 }
 
 + (NSUInteger)nOfOnePixelScrollsMax {
