@@ -94,7 +94,7 @@ import Cocoa
     @objc var accelerationForScrollBuffer: Double { // TODO: Unused, remove
         smooth["acceleration"] as! Double;
     }
-    @objc lazy var accelerationCurve: (() -> RealFunction) = DerivedProperties.derivedProperty(on: self, given: [\Self.pxPerTickBase], compute: { (args) -> RealFunction in
+    @objc lazy var accelerationCurve: (() -> RealFunction) = DerivedProperty.create(on: self, given: [\Self.pxPerTickBase], compute: { () -> RealFunction in
         
         typealias P = BezierCurve.Point
         

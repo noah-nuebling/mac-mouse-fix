@@ -55,7 +55,7 @@
 		4FD8607C266E65E9004F76C8 /* DerivedValueGenerator.swift old in Sources */ = {isa = PBXBuildFile; fileRef = 4FD8607B266E65E9004F76C8 /* DerivedValueGenerator.swift old */; };
 		4FD86083266E71A6004F76C8 /* DerivedValueGeneratorObjC.m old in Sources */ = {isa = PBXBuildFile; fileRef = 4FD86082266E71A6004F76C8 /* DerivedValueGeneratorObjC.m old */; };
 		4FD86089266E819A004F76C8 /* Pointers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD86088266E819A004F76C8 /* Pointers.swift */; };
-		4FD860AA266EC24E004F76C8 /* DerivedProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860A9266EC24E004F76C8 /* DerivedProperties.swift */; };
+		4FD860AA266EC24E004F76C8 /* DerivedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860A9266EC24E004F76C8 /* DerivedProperty.swift */; };
 		4FD860CC266EF55A004F76C8 /* ScrollConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860CB266EF55A004F76C8 /* ScrollConfig.swift */; };
 		4FF0BD4B266A8B7E003935EA /* BezierCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD4A266A8B7E003935EA /* BezierCurve.swift */; };
 		4FF0BD51266AC10C003935EA /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD50266AC10C003935EA /* Math.swift */; };
@@ -314,7 +314,7 @@
 		4FD86081266E71A5004F76C8 /* DerivedValueGeneratorObjC.h old */ = {isa = PBXFileReference; lastKnownFileType = text; path = "DerivedValueGeneratorObjC.h old"; sourceTree = "<group>"; };
 		4FD86082266E71A6004F76C8 /* DerivedValueGeneratorObjC.m old */ = {isa = PBXFileReference; lastKnownFileType = text; path = "DerivedValueGeneratorObjC.m old"; sourceTree = "<group>"; };
 		4FD86088266E819A004F76C8 /* Pointers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pointers.swift; sourceTree = "<group>"; };
-		4FD860A9266EC24E004F76C8 /* DerivedProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DerivedProperties.swift; sourceTree = "<group>"; };
+		4FD860A9266EC24E004F76C8 /* DerivedProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DerivedProperty.swift; sourceTree = "<group>"; };
 		4FD860CB266EF55A004F76C8 /* ScrollConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollConfig.swift; sourceTree = "<group>"; };
 		4FD860DA266EFD64004F76C8 /* ScrollConfigInterfaceObjC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollConfigInterfaceObjC.h; sourceTree = "<group>"; };
 		4FDBC59A234F80C500A46517 /* Accomplice.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Accomplice.entitlements; sourceTree = "<group>"; };
@@ -834,7 +834,7 @@
 				4FF6653B25F2C7B000689B77 /* SharedUtility.m */,
 				4FF6653F25F2C7B000689B77 /* Queue.h */,
 				4FF6653A25F2C7B000689B77 /* Queue.m */,
-				4FD860A9266EC24E004F76C8 /* DerivedProperties.swift */,
+				4FD860A9266EC24E004F76C8 /* DerivedProperty.swift */,
 				4FF6653825F2C7B000689B77 /* NSArray+Additions.h */,
 				4FF6653D25F2C7B000689B77 /* NSArray+Additions.m */,
 				4FF6653925F2C7B000689B77 /* NSMutableDictionary+Additions.h */,
@@ -1814,7 +1814,7 @@
 				4FD85F7B266CC9C5004F76C8 /* Animator.swift in Sources */,
 				4FF6669325F2C93A00689B77 /* TouchSimulator.m in Sources */,
 				4F3A40AB266BBB6200436821 /* ExtrapolatedBezierCurve.swift in Sources */,
-				4FD860AA266EC24E004F76C8 /* DerivedProperties.swift in Sources */,
+				4FD860AA266EC24E004F76C8 /* DerivedProperty.swift in Sources */,
 				4FF6669725F2C93A00689B77 /* TransformationManager.m in Sources */,
 				4F1B83062606E68300AEAF37 /* ButtonLandscapeAssessor.m in Sources */,
 				4FF6668F25F2C93A00689B77 /* SmoothScroll.m in Sources */,
