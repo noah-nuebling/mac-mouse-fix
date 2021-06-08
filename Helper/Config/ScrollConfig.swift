@@ -21,7 +21,7 @@ import Cocoa
     // Convenience functions for accessing top level dict and different sub-dicts
 
     @objc static var topLevel: NSDictionary {
-        MainConfigInterface.configWithAppOverridesApplied()[kMFConfigKeyScroll] as! NSDictionary
+        Config.configWithAppOverridesApplied()[kMFConfigKeyScroll] as! NSDictionary
     }
     @objc static var other: NSDictionary {
         topLevel["other"] as! NSDictionary

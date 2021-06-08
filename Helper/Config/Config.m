@@ -11,7 +11,7 @@
 // Need this when application changes but mouse doesn't move (e.g. Command-Tab). Without this the app specific settings for the new app aren't applied
 // NSWorkspaceDidActivateApplicationNotification?
 
-#import "MainConfigInterface.h"
+#import "Config.h"
 #import "AppDelegate.h"
 #import "ScrollControl.h"
 #import "SmoothScroll.h"
@@ -22,7 +22,7 @@
 #import "Constants.h"
 #import "Utility_Transformation.h"
 
-@implementation MainConfigInterface
+@implementation Config
 
 #pragma mark Globals
 
@@ -47,7 +47,7 @@ static NSString*_configFilePath;
 // Convenience function for accessing config quicker
 
 id config(NSString *keyPath) {
-    return [MainConfigInterface.config valueForKeyPath:keyPath];
+    return [Config.config valueForKeyPath:keyPath];
 }
 
 static NSMutableDictionary *_config; // TODO: Make this immutable. I think helper should never modifiy this except by reloading from file.
@@ -62,7 +62,7 @@ static NSMutableDictionary *_configWithAppOverridesApplied;
 + (void)reactToConfigFileChange {
     fillConfigFromFile();
 //    _configFileChanged = YES; // Remove _configFileChanged, if commenting this out didn't break anything
-    [MainConfigInterface applyOverridesForAppUnderMousePointer_Force:YES]; // Doing this to force update of internal state, even the active app hastn't chaged
+    [Config applyOverridesForAppUnderMousePointer_Force:YES]; // Doing this to force update of internal state, even the active app hastn't chaged
 //    _configFileChanged = NO;
     [TransformationManager loadRemapsFromConfig];
 }
@@ -125,7 +125,7 @@ static void fillConfigFromFile() {
 //        }
         _bundleIDOfAppWhichCausesAppOverride = bundleIDOfCurrentApp;
         loadAppOverridesForApp(bundleIDOfCurrentApp);
-//        [MainConfigInterface updateScrollParameters];
+//        [Config updateScrollParameters];
         [ScrollControl resetDynamicGlobals]; // Not entirely sure if necessary
         return YES;
     }
@@ -182,7 +182,7 @@ void Handle_FSEventStreamCallback (ConstFSEventStreamRef streamRef, void *client
     
     DDLogInfo(@"config.plist changed (FSMonitor)");
     
-    [MainConfigInterface reactToConfigFileChange];
+    [Config reactToConfigFileChange];
 }
 
 

@@ -13,12 +13,12 @@
 #import "RoughScroll.h"
 #import "TouchSimulator.h"
 #import "ScrollModifiers.h"
-#import "MainConfigInterface.h"
+#import "Config.h"
 #import "ScrollUtility.h"
 #import "Utility_Helper.h"
 #import "WannabePrefixHeader.h"
 #import "ScrollAnalyzer.h"
-#import "ScrollConfigInterfaceObjC.h"
+#import "ScrollConfigObjC.h"
 #import <Cocoa/Cocoa.h>
 #import "Queue.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
@@ -32,7 +32,7 @@ static CGEventSourceRef _eventSource;
 
 static dispatch_queue_t _scrollQueue;
 
-static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this to MainConfigInterface or some sort of OverrideManager class
+static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this to Config or some sort of OverrideManager class
 + (AXUIElementRef) systemWideAXUIElement {
     return _systemWideAXUIElement;
 }
@@ -204,7 +204,7 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
         }
         if (ScrollUtility.mouseDidMove || ScrollUtility.frontMostAppDidChange) {
             // set app overrides
-            BOOL configChanged = [MainConfigInterface applyOverridesForAppUnderMousePointer_Force:NO]; // TODO: `updateInternalParameters_Force:` should (probably) reset stuff itself, if it changes anything. This whole [SmoothScroll stop] stuff is kinda messy
+            BOOL configChanged = [Config applyOverridesForAppUnderMousePointer_Force:NO]; // TODO: `updateInternalParameters_Force:` should (probably) reset stuff itself, if it changes anything. This whole [SmoothScroll stop] stuff is kinda messy
             if (configChanged) {
                 [SmoothScroll stop]; // Not sure if useful
                 [RoughScroll stop]; // Not sure if useful

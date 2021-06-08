@@ -26,7 +26,7 @@
 #import "SharedUtility.h"
 
 #import "GestureScrollSimulator.h"
-#import "ScrollConfigInterfaceObjC.h"
+#import "ScrollConfigObjC.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "AnimationCurve.h"
 

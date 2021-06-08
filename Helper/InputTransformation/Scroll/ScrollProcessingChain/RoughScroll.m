@@ -11,7 +11,7 @@
 #import "ScrollControl.h"
 #import "TouchSimulator.h"
 #import "ScrollUtility.h"
-#import "MainConfigInterface.h"
+#import "Config.h"
 #import "ScrollModifiers.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 

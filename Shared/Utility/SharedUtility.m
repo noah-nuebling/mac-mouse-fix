@@ -10,7 +10,7 @@
 #import "SharedUtility.h"
 #import "Objects.h"
 #import "ConfigInterface_App.h"
-#import "MainConfigInterface.h"
+#import "Config.h"
 #import "SharedUtility.h"
 
 @implementation SharedUtility

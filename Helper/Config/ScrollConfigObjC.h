@@ -10,13 +10,11 @@
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
-
-@interface ScrollConfigInterfaceObjC : NSObject
 /**
  Function:
     This class expose values from the config dict that are relevant for scrolling via readonly class properties.
  Motivation:
-    - We used to have a copy of the relevant config values in the ScrollControl / SmoothScroll. They were filled by MainConfigInterface. This was bad because:
+    - We used to have a copy of the relevant config values in the ScrollControl / SmoothScroll. They were filled by Config. This was bad because:
         That made it cumbersome to add new scroll values to the config and we duplicated state which is generally bad because you have to manually keep it in sync and things can go wrong.
     - We learned our lesson (unfortunately too late) while writing the advanced remapping engine that referencing the internal structure of a complex dictionary in tons of different places is bad because it makes things really hard to change.
         So what we're doing here is exposing the values from the dict as class properties, (which are super easy to refactor), and only referencing the internal structure of the dictionary here.
@@ -29,6 +27,5 @@ typedef enum {
     kMFInvertedScrollDirection      =  -1
 } MFScrollDirection;
 
-@end
 
 NS_ASSUME_NONNULL_END
