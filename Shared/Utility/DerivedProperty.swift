@@ -64,6 +64,10 @@ fileprivate func getProperties(on owner: NSObject, at keyPaths: [String]) -> [An
 
 fileprivate func getDerivedValue<S, T>(owner: S, givenProperties: [AnyHashable], compute: () -> T, lastHash: inout Int, lastValue: inout T?) -> T {
     
+    #if DEBUG
+    print("Getting derived value...")
+    #endif
+    
     /// Get hash of current property values
     
     let hash = hashOfArray(givenProperties)
@@ -71,6 +75,11 @@ fileprivate func getDerivedValue<S, T>(owner: S, givenProperties: [AnyHashable],
     /// Return cached value if hash hasn't changed
     
     if (hash == lastHash) {
+        
+        #if DEBUG
+        print("Given properties haven't changed. Reusing previous value \(String(describing: lastValue))")
+        #endif
+        
         return lastValue!
     }
     
@@ -82,6 +91,10 @@ fileprivate func getDerivedValue<S, T>(owner: S, givenProperties: [AnyHashable],
     
     lastHash = hash
     lastValue = derivedValue
+    
+    #if DEBUG
+    print("Given properties did change. Recalculated derived value: \(derivedValue)")
+    #endif
     
     /// Return new value
     
