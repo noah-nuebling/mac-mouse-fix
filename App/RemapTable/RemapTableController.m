@@ -26,6 +26,7 @@
 #import "KeyCaptureView.h"
 #import "RemapTableUtility.h"
 #import "ButtonGroupRowView.h"
+#import "Mac_Mouse_Fix-Swift.h"
 
 @interface RemapTableController ()
 @property NSTableView *tableView;
@@ -546,26 +547,29 @@ NSArray *baseDataModel_FromLastGroupedDataModelAccess;
 NSArray *groupedDataModel_FromLastGroupedDataModelAccess;
 
 /// This applies `dataModelByInsertingButtonGroupRowsIntoDataModel:` to `self.dataModel` and returns the result. It also caches the result. and only recalculates when self.dataModel has changed since the last invocation.
-- (NSArray *)groupedDataModel {
-    
+- (NSArray *)groupedDataModel
+{
+
 //    [SharedUtility printInvocationCountWithId:@"groupedDataModel access count"];
-    
+
     BOOL baseDataModelHasChanged = NO;
     if (baseDataModel_FromLastGroupedDataModelAccess == nil)
         baseDataModelHasChanged = YES;
     else if (![baseDataModel_FromLastGroupedDataModelAccess isEqual:self.dataModel])
         baseDataModelHasChanged = YES;
-    
+
     if (baseDataModelHasChanged) {
         baseDataModel_FromLastGroupedDataModelAccess = (NSArray *)[SharedUtility deepCopyOf:self.dataModel];
         NSArray *newGroupedDataModel = [self dataModelByInsertingButtonGroupRowsIntoDataModel:self.dataModel];
         groupedDataModel_FromLastGroupedDataModelAccess = newGroupedDataModel;
-        
+
         return newGroupedDataModel;
     } else {
         return groupedDataModel_FromLastGroupedDataModelAccess;
     }
 }
+
+
 /// Return a grouped dataModel with group row entries for each button
 /// "dataModel" needs to be sorted by button for this to work. Otherwise crash.
 - (NSArray *)dataModelByInsertingButtonGroupRowsIntoDataModel:(NSArray *)dataModel {
