@@ -55,7 +55,7 @@ fileprivate func getProperties<S>(on owner: S, at keyPaths: [PartialKeyPath<S>])
 }
 
 /// I don't know how to cast the ObjC-compatible, String-based keyPaths to Swifts PartialKeyPaths which we use in the other `getProperties` implementation. So we just implement it twice.
-fileprivate func getProperties(on owner: NSObject, at keyPaths: [String]) -> [AnyHashable] {
+fileprivate func getProperties(on owner: AnyObject, at keyPaths: [String]) -> [AnyHashable] {
     
     return keyPaths.map({ (keyPath) -> AnyHashable in
         return owner.value(forKeyPath: keyPath) as! AnyHashable
@@ -141,14 +141,24 @@ extension DerivedPropertyCreator {
 
 // MARK: Class implementation
 /// Use this to create static derived properties. The protocol extension won't work with static properties.
+/// Actually, this won't work with static properties, either, because keyPaths don't work for static properties 😑. At least the swift implementation. Maybe the ObjC implementation works with static properties. Edit: In createC, I had to change the `NSObject` typed values to `AnyObject` so I can pass in Type.self from Swift. But the string based keyValue coding still works on AnyType apparently (there are no compiler errors at least). Awesome! Remember to use #keyPath(). Edit2: But the lack of type saftey still makes it a little iffy to use createC. Maybe I should just use singletons and avoid static methods. Edit3: Ended up creating 2 functions from createC: `create_kvc` and `create_objc`
 
 @objc class DerivedProperty: NSObject {
     
-    /// ObjC
     
-    @objc class func create(on owner: NSObject, given keyPaths: [String], compute: @escaping () -> Any) -> () -> Any {
+    /// ObjC
+    /// Wrapper around create_kvc which gets rid of generics to be compatible with ObjC
+    
+    @objc class func create_objc(on owner: AnyObject, given keyPaths: [String], compute: @escaping () -> AnyObject) -> () -> AnyObject {
+        self.create_kvc(on: owner, given: keyPaths, compute: compute)
+    }
+    
+    /// Key-value coding
+    /// Uses strings as keypaths. Can be used with static properties. Normal Swift keyPaths can't point to static properties for some reason.
+    
+    class func create_kvc<T>(on owner: AnyObject, given keyPaths: [String], compute: @escaping () -> T) -> () -> T {
         /// ObjC compatible version of `create()`, but without Swifts neat keyPaths or generics
-        /// Since we can only convert Swift keyPaths to string-based, ObjC compatible keyPaths, and not the other way around, we might make this ObjC compatible version of the create function the base implementation, and have the normal Swift version call it. Otherwise there'd have to be either a lot of code duplication or another layer of closure nesting / passing them as arguments making everything confusing.
+        /// Since we can only convert Swift keyPaths to string-based, kvc compatible keyPaths, and not the other way around, we might make this kvc compatible version of the create function the base implementation, and have the normal Swift version call it. Otherwise there'd have to be either a lot of code duplication or another layer of closure nesting / passing them as arguments making everything confusing.
         /// Edit: But then we'd have to expose all properties we pass to the Swift function via @objc, so that's not a solution, either.
         ///     See https://stackoverflow.com/questions/46529015/getting-string-from-swift-4-new-key-path-syntax
         ///     We'll just implement it twice then...
@@ -159,11 +169,11 @@ extension DerivedPropertyCreator {
         assert(allHashable(values: givenProperties), "All given properties need to be Hashable")
         
         var lastHash: Int = 0
-        var lastValue: Any?
+        var lastValue: T?
         
         /// Return closure
         
-        return { [weak owner] () -> Any in
+        return { [weak owner] () -> T in
             
             guard let owner = owner else {
                 print("Self is nil. Something went wrong. Crashing the program.")
