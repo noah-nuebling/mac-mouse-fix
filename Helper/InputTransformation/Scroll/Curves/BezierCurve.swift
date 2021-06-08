@@ -105,6 +105,7 @@ import ReactiveSwift
     
     private class func convertNSPointsToPoints(_ controlNSPoints: [NSPoint]) -> [BezierCurve.Point] {
         /// Helper function for objc  init functions
+        /// Unused - remove
         
         return controlNSPoints.map { (pointNS) -> Point in
             var point: Point = Point.init()
@@ -254,7 +255,7 @@ import ReactiveSwift
             /// Get product
             
             var product: Int = 1
-            if 0 <= j-1 { // Otherwise the range will be 0...-1 which Swift doesn't like
+            if 0 <= j-1 { // Otherwise the range can be be 0...-1 which, just means "skip this" in Maths, but Swift doesn't like it
                 for m in 0...j-1 {
                     product *= n-m
                 }
@@ -318,7 +319,7 @@ import ReactiveSwift
     }
     
     fileprivate func sampleCurveCasteljau(_ axis: MFAxis, _ t: Double) -> Double {
-        /// Evaluate at t with De-Casteljau's algorithm. I thonk it's in O(n!).
+        /// Evaluate at t with De-Casteljau's algorithm. I thonk it's in O(n!)?
         
         // Extract x or y values from controlPoints
         

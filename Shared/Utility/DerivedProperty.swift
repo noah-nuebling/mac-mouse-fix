@@ -36,7 +36,7 @@ fileprivate func allHashable(values: [Any]) -> Bool {
     return true
 }
 
-fileprivate func hashWithArray(_ values: [AnyHashable]) -> Int {
+fileprivate func hashOfArray(_ values: [AnyHashable]) -> Int {
     /// Needs to have long `withArray` name to avoid naming conflicts in the closure below
     
     var hasher = Hasher()
@@ -66,7 +66,7 @@ fileprivate func getDerivedValue<S, T>(owner: S, givenProperties: [AnyHashable],
     
     /// Get hash of current property values
     
-    let hash = hashWithArray(givenProperties)
+    let hash = hashOfArray(givenProperties)
     
     /// Return cached value if hash hasn't changed
     
@@ -131,37 +131,48 @@ extension DerivedPropertyCreator {
 
 @objc class DerivedProperty: NSObject {
     
-    var test: Int = 77
+    /// ObjC
     
-//    @objc class func createObjC(on owner: NSObject, given keyPaths: [String], compute: @escaping () -> Any) -> () -> Any {
-//        
-//        /// Guard hashable
-//        
-//        let givenProperties = getProperties(on: owner, at: keyPaths)
-//        assert(allHashable(values: givenProperties), "All given properties need to be Hashable")
-//        
-//        var lastHash: Int = 0
-//        var lastValue: T?
-//        
-//        /// Return closure
-//        
-//        return { [weak owner] () -> T in
-//            
-//            guard let owner = owner else {
-//                print("Self is nil. Something went wrong. Crashing the program.")
-//                assert(false)
-//            }
-//            
-//            
-//            let givenProperties: [AnyHashable] = getProperties(on: owner, at: keyPaths)
-//            return getDerivedValue(owner: owner, givenProperties:givenProperties, compute: compute, lastHash: &lastHash, lastValue: &lastValue)
-//        }
-//    }
+    @objc class func create(on owner: NSObject, given keyPaths: [String], compute: @escaping () -> Any) -> () -> Any {
+        /// ObjC compatible version of `create()`, but without Swifts neat keyPaths or generics
+        /// Since we can only convert Swift keyPaths to string-based, ObjC compatible keyPaths, and not the other way around, we might make this ObjC compatible version of the create function the base implementation, and have the normal Swift version call it. Otherwise there'd have to be either a lot of code duplication or another layer of closure nesting / passing them as arguments making everything confusing.
+        /// Edit: But then we'd have to expose all properties we pass to the Swift function via @objc, so that's not a solution, either.
+        ///     See https://stackoverflow.com/questions/46529015/getting-string-from-swift-4-new-key-path-syntax
+        ///     We'll just implement it twice then...
+        
+        /// Guard hashable
+        
+        let givenProperties = getProperties(on: owner, at: keyPaths)
+        assert(allHashable(values: givenProperties), "All given properties need to be Hashable")
+        
+        var lastHash: Int = 0
+        var lastValue: Any?
+        
+        /// Return closure
+        
+        return { [weak owner] () -> Any in
+            
+            guard let owner = owner else {
+                print("Self is nil. Something went wrong. Crashing the program.")
+                assert(false)
+            }
+            
+            let givenProperties: [AnyHashable] = getProperties(on: owner, at: keyPaths)
+            return getDerivedValue(owner: owner, givenProperties:givenProperties, compute: compute, lastHash: &lastHash, lastValue: &lastValue)
+        }
+    }
+    
+    /// Swift
     
     class func create<S:AnyObject, T>(on owner: S, given keyPaths: [PartialKeyPath<S>], compute: @escaping () -> T) -> () -> T {
         /// - Parameters:
-        ///   - given: KeyPaths to the properties which the derived property is based on. Relative to the calling class. `given` should be `KeyPath<S, Hashable>` but that doesn't work because Swift is weird.
-        ///   - compute: Closure taking the properties references by given and returning the derived property
+        ///   - given: KeyPaths to the properties which the derived property is based on. Relative to the `owner` object. `given` should be `KeyPath<S, Hashable>` but that doesn't work because Swift is weird.
+        ///   - compute: Closure that calculates the derived property.
+        ///         You should only use other mutable instance properties in the closure by referencing them via the keyPaths specified in `given`. You shoudn't access the other properties directly, because then they will get captured by the closure and won't update to their real value on successive closure invocations. If you don't specify a mutable properties you use in the closure by adding its keyPath to `given`, then the closure won't be recalculated when invoked that property changed.
+        ///             -> So the gist is: 1. Specify all mutable values from outside the closures scope in the `given` array. 2. Only access them by reference (via keyPath) in the closure, so you don't accidentally capture them.
+        ///             -> Edit: Actually this is BS. See here for a great article on how capturing works. https://marcosantadev.com/capturing-values-swift-closures/
+///                         In reality, even value types, when used in a closure, will see outside changes. So the value types will be references. Which is super confusing. The only way to get an immutable copy of a value in the closure is using capture lists on value types as far as I understood. (But what happens when the value types which are used in the closure are deallocated? For reference types you can control this using weak, strong, unowned in the capture list, but what about value types?)
+///                     -> Something else we should make sure when calling this is to only capture self weakly in the `compute` closure, if we want to assgn the result of this function method call to a property of self. Otherwise that will be a strong ref cycle. Even though we already specified weak in the return closure. Ughh this is a lot.
         /// - Returns: A block which returns the derived property when invoked. The derived property can be invoked to retrieve its value. It will use a cached value if the `given` properties haven't changed since the last invocation.
         /// - Discussion: Derived property block holds a weak reference to self. So be careful passing the it around. It's intended to be assigned to a property of the caller.
         ///     If we pass in a reference type for S, we should use `weak`  to caputure it in the closure. Otherwise there'll likely be a reference cycle. But in order to use weak, we need to S to be a reference type (with  `AnyObject`).
@@ -184,7 +195,6 @@ extension DerivedPropertyCreator {
                 print("Self is nil. Something went wrong. Crashing the program.")
                 assert(false)
             }
-            
             
             let givenProperties: [AnyHashable] = getProperties(on: owner, at: keyPaths)
             return getDerivedValue(owner: owner, givenProperties:givenProperties, compute: compute, lastHash: &lastHash, lastValue: &lastValue)
