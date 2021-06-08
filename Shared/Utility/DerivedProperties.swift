@@ -23,13 +23,9 @@
 import Foundation
 
 
-protocol DerivedProperties : AnyObject {
+class DerivedProperties {
     
-}
-
-extension DerivedProperties {
-    
-    private func hash(_ values: [AnyHashable]) -> Int {
+    private class func hash(_ values: [AnyHashable]) -> Int {
         
         var hasher = Hasher()
         
@@ -46,12 +42,13 @@ extension DerivedProperties {
     ///   - compute: Closure taking the properties described by given as input and returning the derived property.
     /// - Returns: A block which returns the derived property when invoked. Will use a cached value if the `given` properties haven't changed since the last invocation.
     /// - Derived property block holds a weak reference to self. So be careful passing the it around. It's intended to be assigned to a property of the caller.
-    func derivedProperty<T>(given: [PartialKeyPath<Self>], compute: @escaping ([AnyHashable]) -> T) -> () -> T {
+    /// If we pass in a reference type for S, we should use `weak`  to caputure it in the closure. Otherwise there'll likely be a reference cycle. But in order to use weak, we need to __force__ S to be a reference type (with  `AnyObject`). Ugh.
+    class func derivedProperty<S:AnyObject, T>(on owner: S, given: [PartialKeyPath<S>], compute: @escaping ([AnyHashable]) -> T) -> () -> T {
         
         /// Check if all properties are hashable
         
         for keyPath in given {
-            if !(self[keyPath: keyPath] is AnyHashable) {
+            if !(owner[keyPath: keyPath] is AnyHashable) {
                 assert(false, "All given properties need to be Hashable")
             }
         }
@@ -63,9 +60,9 @@ extension DerivedProperties {
         
         /// Return closure
         
-        return { [weak self] () -> T in
+        return { [weak owner] () -> T in
          
-            guard let self = self else {
+            guard let owner = owner else {
                 print("Self is nil. Something went wrong. Crashing the program.")
                 assert(false)
             }
@@ -73,12 +70,12 @@ extension DerivedProperties {
             /// Get current property values at givenPropertyKeyPaths
             
             let givenProperties: [AnyHashable] = given.map({ (keyPath) -> AnyHashable in
-                self[keyPath: keyPath] as! AnyHashable
+                owner[keyPath: keyPath] as! AnyHashable
             })
             
             /// Get hash of current property values
             
-            let hash = self.hash(givenProperties)
+            let hash = owner.hash(givenProperties)
             
             /// Return cached value if hash hasn't changed
             

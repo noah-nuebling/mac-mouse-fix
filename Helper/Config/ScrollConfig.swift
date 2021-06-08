@@ -9,7 +9,7 @@
 
 import Cocoa
 
-@objc class ScrollConfig: NSObject, DerivedProperties {
+@objc class ScrollConfig: NSObject {
     
     
     /// Contstants
@@ -94,7 +94,18 @@ import Cocoa
     @objc var accelerationForScrollBuffer: Double { // TODO: Unused, remove
         smooth["acceleration"] as! Double;
     }
-    @objc var accelerationCurve: (() -> RealFunction)?
+    @objc lazy var accelerationCurve: (() -> RealFunction) = DerivedProperties.derivedProperty(on: self, given: [\Self.pxPerTickBase], compute: { (args) -> RealFunction in
+        
+        typealias P = BezierCurve.Point
+        
+        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:0.7,y:1), P(x:1,y:1)]
+        
+        let scrollTickSpeedInterval: Interval = Interval.init(start: 0.0, end: 50.0)
+        let animationSpeedInterval: Interval = Interval.init(start: Double(self.pxPerTickBase), end: 300.0)
+        
+        return ExtrapolatedBezierCurve.init(controlPoints: controlPoints, xInterval: scrollTickSpeedInterval, yInterval: animationSpeedInterval)
+    })
+    
 //    {
 //
 //        typealias P = BezierCurve.Point
@@ -135,23 +146,4 @@ import Cocoa
     
     @objc class var shared: ScrollConfig { ScrollConfig.init() }
     
-    @objc private override init() {
-        
-        self.accelerationCurve = nil
-        
-        super.init()
-        
-        self.accelerationCurve = self.derivedProperty(given: [\Self.pxPerTickBase], compute: { (args) -> RealFunction in
-            
-            typealias P = BezierCurve.Point
-            
-            let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:0.7,y:1), P(x:1,y:1)]
-            
-            let scrollTickSpeedInterval: Interval = Interval.init(start: 0.0, end: 50.0)
-            let animationSpeedInterval: Interval = Interval.init(start: Double(self.pxPerTickBase), end: 300.0)
-            
-            return ExtrapolatedBezierCurve.init(controlPoints: controlPoints, xInterval: scrollTickSpeedInterval, yInterval: animationSpeedInterval)
-        })
-        
-    }
 }
