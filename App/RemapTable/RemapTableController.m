@@ -536,6 +536,7 @@ static void getTriggerValues(int *btn1, int *lvl1, NSString **dur1, NSString **t
         } else if (durationIndex1 < durationIndex2) {
             return NSOrderedAscending;
         }
+        
         return NSOrderedSame;
     }];
     [self.tableView setSortDescriptors:@[sd]];

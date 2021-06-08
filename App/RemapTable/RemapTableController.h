@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 //      ^ Is actually an NSMutableArray I think. Take care not to accidentally corrupt this!
 @property (readonly) NSArray *groupedDataModel;
 
-- (void)insertRowDict:(NSDictionary *)rowDict intoGroupedDataModelAtIndex:(NSInteger)index;
+//- (void)insertRowDict:(NSDictionary *)rowDict intoGroupedDataModelAtIndex:(NSInteger)index;
 
 - (void)addRowWithHelperPayload:(NSDictionary *)payload;
 - (IBAction)handleKeystrokeMenuItemSelected:(id)sender;
