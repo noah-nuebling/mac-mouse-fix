@@ -18,7 +18,7 @@
 #import "Utility_Helper.h"
 #import "WannabePrefixHeader.h"
 #import "ScrollAnalyzer.h"
-#import "ScrollConfigInterface.h"
+#import "ScrollConfigInterfaceObjC.h"
 #import <Cocoa/Cocoa.h>
 #import "Queue.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
@@ -113,7 +113,7 @@ static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this
         CGEventTapEnable(_eventTap, true);
         // Enable other scroll classes
         [ScrollModifiers start];
-        if (ScrollConfigInterface.smoothEnabled) {
+        if (ScrollConfig.shared.smoothEnabled) {
             DDLogInfo(@"Enabling SmoothScroll");
             [SmoothScroll start];
             [RoughScroll stop];
@@ -225,7 +225,7 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
 //    DDLogDebug(@"Tick ctr: %lld", scrollAnalysisResult.consecutiveScrollTickCounter);
 //    DDLogDebug(@"Swip ctr: %lld", scrollAnalysisResult.consecutiveScrollSwipeCounter);
     
-    if (ScrollConfigInterface.smoothEnabled) {
+    if (ScrollConfig.shared.smoothEnabled) {
         [SmoothScroll start];   // Not sure if useful
         [RoughScroll stop];     // Not sure if useful
         [SmoothScroll handleInput:event scrollAnalysisResult:scrollAnalysisResult];
@@ -246,7 +246,7 @@ static int64_t accelerate(CFTimeInterval timeBetweenTicks) {
     
     double tickSpeed = 1/timeBetweenTicks;
     
-//    ScrollConfigInterface.scrollAccelerationCurve;
+//    ScrollConfig.shared.scrollAccelerationCurve;
     
     return 0; // TODO change this
 }

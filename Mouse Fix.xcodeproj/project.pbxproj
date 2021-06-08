@@ -44,7 +44,6 @@
 		4F94F61025E5EC2800D9F24A /* Mac_Mouse_FixUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60F25E5EC2800D9F24A /* Mac_Mouse_FixUITests.m */; };
 		4F94F73D25E6146C00D9F24A /* Mac Mouse Fix Helper.app in Copy Helper */ = {isa = PBXBuildFile; fileRef = 4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4F94F74C25E614B800D9F24A /* Mac Mouse Fix Accomplice in Copy Updater */ = {isa = PBXBuildFile; fileRef = 4F2FDF302315662400C7BE14 /* Mac Mouse Fix Accomplice */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		4F96E1202667BB020064ADC0 /* ScrollConfigInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F96E11F2667BB020064ADC0 /* ScrollConfigInterface.m */; };
 		4FA994BE26678AC90007F003 /* ScrollAnalyzer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA994BD26678AC90007F003 /* ScrollAnalyzer.m */; };
 		4FB4F9FE260FDBC800806DDD /* RemapTableUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB4F9FD260FDBC800806DDD /* RemapTableUtility.m */; };
 		4FB4FA202611DD6000806DDD /* KeyCaptureScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB4FA1F2611DD6000806DDD /* KeyCaptureScrollView.m */; };
@@ -57,6 +56,7 @@
 		4FD86083266E71A6004F76C8 /* DerivedValueGeneratorObjC.m old in Sources */ = {isa = PBXBuildFile; fileRef = 4FD86082266E71A6004F76C8 /* DerivedValueGeneratorObjC.m old */; };
 		4FD86089266E819A004F76C8 /* Pointers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD86088266E819A004F76C8 /* Pointers.swift */; };
 		4FD860AA266EC24E004F76C8 /* DerivedProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860A9266EC24E004F76C8 /* DerivedProperties.swift */; };
+		4FD860CC266EF55A004F76C8 /* ScrollConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860CB266EF55A004F76C8 /* ScrollConfig.swift */; };
 		4FF0BD4B266A8B7E003935EA /* BezierCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD4A266A8B7E003935EA /* BezierCurve.swift */; };
 		4FF0BD51266AC10C003935EA /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD50266AC10C003935EA /* Math.swift */; };
 		4FF0BD58266ACE32003935EA /* VectorUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD57266ACE32003935EA /* VectorUtility.m */; };
@@ -292,8 +292,6 @@
 		4F94F60B25E5EC2800D9F24A /* Mac Mouse FixUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Mac Mouse FixUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F94F60F25E5EC2800D9F24A /* Mac_Mouse_FixUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Mac_Mouse_FixUITests.m; sourceTree = "<group>"; };
 		4F94F61125E5EC2800D9F24A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4F96E11E2667BB020064ADC0 /* ScrollConfigInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollConfigInterface.h; sourceTree = "<group>"; };
-		4F96E11F2667BB020064ADC0 /* ScrollConfigInterface.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollConfigInterface.m; sourceTree = "<group>"; };
 		4FA994BC26678AC90007F003 /* ScrollAnalyzer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollAnalyzer.h; sourceTree = "<group>"; };
 		4FA994BD26678AC90007F003 /* ScrollAnalyzer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollAnalyzer.m; sourceTree = "<group>"; };
 		4FB4F9FC260FDBC800806DDD /* RemapTableUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapTableUtility.h; sourceTree = "<group>"; };
@@ -317,6 +315,8 @@
 		4FD86082266E71A6004F76C8 /* DerivedValueGeneratorObjC.m old */ = {isa = PBXFileReference; lastKnownFileType = text; path = "DerivedValueGeneratorObjC.m old"; sourceTree = "<group>"; };
 		4FD86088266E819A004F76C8 /* Pointers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pointers.swift; sourceTree = "<group>"; };
 		4FD860A9266EC24E004F76C8 /* DerivedProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DerivedProperties.swift; sourceTree = "<group>"; };
+		4FD860CB266EF55A004F76C8 /* ScrollConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollConfig.swift; sourceTree = "<group>"; };
+		4FD860DA266EFD64004F76C8 /* ScrollConfigInterfaceObjC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollConfigInterfaceObjC.h; sourceTree = "<group>"; };
 		4FDBC59A234F80C500A46517 /* Accomplice.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Accomplice.entitlements; sourceTree = "<group>"; };
 		4FF0BD4A266A8B7E003935EA /* BezierCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierCurve.swift; sourceTree = "<group>"; };
 		4FF0BD50266AC10C003935EA /* Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
@@ -787,6 +787,7 @@
 		4FD860C2266EEA94004F76C8 /* Unused */ = {
 			isa = PBXGroup;
 			children = (
+				4FD86088266E819A004F76C8 /* Pointers.swift */,
 				4FD8607B266E65E9004F76C8 /* DerivedValueGenerator.swift old */,
 				4FD86081266E71A5004F76C8 /* DerivedValueGeneratorObjC.h old */,
 				4FD86082266E71A6004F76C8 /* DerivedValueGeneratorObjC.m old */,
@@ -834,7 +835,6 @@
 				4FF6653F25F2C7B000689B77 /* Queue.h */,
 				4FF6653A25F2C7B000689B77 /* Queue.m */,
 				4FD860A9266EC24E004F76C8 /* DerivedProperties.swift */,
-				4FD86088266E819A004F76C8 /* Pointers.swift */,
 				4FF6653825F2C7B000689B77 /* NSArray+Additions.h */,
 				4FF6653D25F2C7B000689B77 /* NSArray+Additions.m */,
 				4FF6653925F2C7B000689B77 /* NSMutableDictionary+Additions.h */,
@@ -1003,8 +1003,8 @@
 			children = (
 				4FF6660D25F2C93A00689B77 /* MainConfigInterface.h */,
 				4FF6660E25F2C93A00689B77 /* MainConfigInterface.m */,
-				4F96E11E2667BB020064ADC0 /* ScrollConfigInterface.h */,
-				4F96E11F2667BB020064ADC0 /* ScrollConfigInterface.m */,
+				4FD860CB266EF55A004F76C8 /* ScrollConfig.swift */,
+				4FD860DA266EFD64004F76C8 /* ScrollConfigInterfaceObjC.h */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -1838,8 +1838,8 @@
 				4FF6669025F2C93A00689B77 /* ScrollModifiers.m in Sources */,
 				4FF6655125F2C7B000689B77 /* NSMutableDictionary+Additions.m in Sources */,
 				4FF6668525F2C93A00689B77 /* ModifierManager.m in Sources */,
+				4FD860CC266EF55A004F76C8 /* ScrollConfig.swift in Sources */,
 				4F3A40CB266C44D100436821 /* DisplayLink.m in Sources */,
-				4F96E1202667BB020064ADC0 /* ScrollConfigInterface.m in Sources */,
 				4FF6669925F2C93A00689B77 /* VectorSubPixelator.m in Sources */,
 				4FF0BD4B266A8B7E003935EA /* BezierCurve.swift in Sources */,
 				4FD8607C266E65E9004F76C8 /* DerivedValueGenerator.swift old in Sources */,

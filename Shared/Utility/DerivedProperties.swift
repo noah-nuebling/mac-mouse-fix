@@ -46,7 +46,7 @@ extension DerivedProperties {
     ///   - compute: Closure taking the properties described by given as input and returning the derived property.
     /// - Returns: A block which returns the derived property when invoked. Will use a cached value if the `given` properties haven't changed since the last invocation.
     /// - Derived property block holds a weak reference to self. So be careful passing the it around. It's intended to be assigned to a property of the caller.
-    func derivedProperty<T>(given: PartialKeyPath<Self>..., compute: @escaping (AnyHashable...) -> T) -> () -> T {
+    func derivedProperty<T>(given: [PartialKeyPath<Self>], compute: @escaping ([AnyHashable]) -> T) -> () -> T {
         
         /// Check if all properties are hashable
         
@@ -72,7 +72,7 @@ extension DerivedProperties {
             
             /// Get current property values at givenPropertyKeyPaths
             
-            let givenProperties = given.map({ (keyPath) -> AnyHashable in
+            let givenProperties: [AnyHashable] = given.map({ (keyPath) -> AnyHashable in
                 self[keyPath: keyPath] as! AnyHashable
             })
             
@@ -88,7 +88,7 @@ extension DerivedProperties {
             
             /// Calculated new derivedValue if givenProperties have changed
             
-            let derivedValue = compute(givenProperties)
+            let derivedValue = compute(givenProperties) /// Passing in an argument here is sort of unnecessary
             
             /// Update cached values
             

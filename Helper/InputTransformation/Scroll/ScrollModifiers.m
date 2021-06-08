@@ -11,8 +11,9 @@
 #import "ScrollControl.h"
 #import "SmoothScroll.h"
 #import "TouchSimulator.h"
-#import "ScrollConfigInterface.h"
+#import "ScrollConfigInterfaceObjC.h"
 #import "WannabePrefixHeader.h"
+#import "Mac_Mouse_Fix_Helper-Swift.h"
 
 // TODO: Rename to ScrollModifierInputReceiver. Maybe merge this into ScrollControl or put the modifier properties from ScrollControl into this.
 @implementation ScrollModifiers
@@ -98,12 +99,12 @@ static void setupModifierKeyCallback() {
 CGEventRef Handle_ModifierChanged(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
     CGEventFlags flags = CGEventGetFlags(event);
-    if (flags & ScrollConfigInterface.horizontalScrollModifierKeyMask && ScrollConfigInterface.horizontalScrollModifierKeyEnabled) {
+    if (flags & ScrollConfig.shared.horizontalScrollModifierKeyMask && ScrollConfig.shared.horizontalScrollModifierKeyEnabled) {
         ScrollModifiers.horizontalScrolling = YES;
     } else {
         ScrollModifiers.horizontalScrolling = NO;
     }
-    if (flags & ScrollConfigInterface.magnificationScrollModifierKeyMask && ScrollConfigInterface.magnificationScrollModifierKeyEnabled) {
+    if (flags & ScrollConfig.shared.magnificationScrollModifierKeyMask && ScrollConfig.shared.magnificationScrollModifierKeyEnabled) {
         ScrollModifiers.magnificationScrolling = YES;
     } else {
         ScrollModifiers.magnificationScrolling = NO;

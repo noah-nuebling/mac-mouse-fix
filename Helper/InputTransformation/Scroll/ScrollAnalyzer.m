@@ -10,7 +10,7 @@
 #import "ScrollAnalyzer.h"
 #import <Cocoa/Cocoa.h>
 #import "ScrollControl.h"
-#import "ScrollConfigInterface.h"
+#import "ScrollConfigInterfaceObjC.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "ScrollUtility.h"
 
@@ -21,7 +21,7 @@
 + (void)initialize
 {
     if (self == [ScrollAnalyzer class]) {
-        _tickTimeSmoother = [[DoubleExponentialSmoother alloc] initWithA:ScrollConfigInterface.ticksPerSecondSmoothingInputValueWeight y:ScrollConfigInterface.ticksPerSecondSmoothingTrendWeight];
+        _tickTimeSmoother = [[DoubleExponentialSmoother alloc] initWithA:ScrollConfig.shared.ticksPerSecondSmoothingInputValueWeight y:ScrollConfig.shared.ticksPerSecondSmoothingTrendWeight];
     }
 }
 
@@ -94,7 +94,7 @@ static int _consecutiveScrollSwipeCounter;
     
     // Update tick and swipe counters
     
-    if (secondsSinceLastTick > ScrollConfigInterface.consecutiveScrollTickMaxInterval) {
+    if (secondsSinceLastTick > ScrollConfig.shared.consecutiveScrollTickMaxInterval) {
         updateConsecutiveScrollSwipeCounterWithSwipeOccuringNow(); // Needs to be called before resetting _consecutiveScrollTickCounter = 0, because it uses _consecutiveScrollTickCounter to determine whether the last series of consecutive scroll ticks was a scroll swipe
         _consecutiveScrollTickCounter = 0;
     } else {
@@ -132,10 +132,10 @@ static void updateConsecutiveScrollSwipeCounterWithSwipeOccuringNow() {
     
     double thisScrollSwipeTimeStamp = CACurrentMediaTime();
     double intervall = thisScrollSwipeTimeStamp - _previousScrollTickTimeStamp; // Time between the last tick of the previous swipe and the first tick of the current swipe (now)
-    if (intervall > ScrollConfigInterface.consecutiveScrollSwipeMaxInterval) {
+    if (intervall > ScrollConfig.shared.consecutiveScrollSwipeMaxInterval) {
         _consecutiveScrollSwipeCounter = 0;
     } else {
-        if (_consecutiveScrollTickCounter >= ScrollConfigInterface.scrollSwipeThreshold_inTicks) {
+        if (_consecutiveScrollTickCounter >= ScrollConfig.shared.scrollSwipeThreshold_inTicks) {
             _consecutiveScrollSwipeCounter += 1;
         } else {
             _consecutiveScrollSwipeCounter = 0;

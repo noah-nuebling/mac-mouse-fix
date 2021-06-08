@@ -13,7 +13,7 @@
 #import "ScrollUtility.h"
 #import "MainConfigInterface.h"
 #import "ScrollModifiers.h"
-#import "ScrollConfigInterface.h"
+#import "Mac_Mouse_Fix_Helper-Swift.h"
 
 @implementation RoughScroll
 
@@ -29,8 +29,8 @@
     
     // Process event
     
-    if (ScrollConfigInterface.scrollDirection == -1) { // TODO: Use kMFInvertedScrollDirection instead of -1. Implement same change where ever ScrollControl.scrollDirection is used.
-        event = [ScrollUtility invertScrollEvent:event direction:ScrollConfigInterface.scrollDirection];
+    if (ScrollConfig.shared.scrollDirection == -1) { // TODO: Use kMFInvertedScrollDirection instead of -1. Implement same change where ever ScrollControl.scrollDirection is used.
+        event = [ScrollUtility invertScrollEvent:event direction:ScrollConfig.shared.scrollDirection];
     }
     if (ScrollModifiers.magnificationScrolling) {
         [ScrollModifiers handleMagnificationScrollWithAmount:CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1)/50.0];

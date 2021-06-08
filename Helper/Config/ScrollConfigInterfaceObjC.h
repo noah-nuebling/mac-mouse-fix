@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-// ScrollConfigInterface.h
+// ScrollConfig.shared.h
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2021
 // Licensed under MIT
@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ScrollConfigInterface : NSObject
+@interface ScrollConfigInterfaceObjC : NSObject
 /**
  Function:
     This class expose values from the config dict that are relevant for scrolling via readonly class properties.
@@ -28,39 +28,6 @@ typedef enum {
     kMFStandardScrollDirection      =   1,
     kMFInvertedScrollDirection      =  -1
 } MFScrollDirection;
-
-// General
-
-+ (BOOL)smoothEnabled;
-+ (MFScrollDirection)scrollDirection;
-+ (BOOL)disableAll;
-
-// Scroll ticks/swipes, fast scroll, and ticksPerSecond
-
-+ (NSUInteger)scrollSwipeThreshold_inTicks;
-+ (NSUInteger)fastScrollThreshold_inSwipes;
-+ (NSTimeInterval)consecutiveScrollTickMaxInterval;
-+ (NSTimeInterval)consecutiveScrollSwipeMaxInterval;
-+ (double)fastScrollExponentialBase;
-+ (double)fastScrollFactor;
-+ (double)ticksPerSecondSmoothingInputValueWeight;
-+ (double)ticksPerSecondSmoothingTrendWeight;
-
-// Smooth scroll
-
-+ (NSUInteger)pxPerTickBase;
-+ (NSUInteger)msPerStep;
-+ (double)frictionCoefficient;
-+ (double)frictionDepth;
-+ (double)accelerationForScrollBuffer;
-+ (NSUInteger)nOfOnePixelScrollsMax;
-
-// Keyboard modifers
-
-+ (CGEventFlags)horizontalScrollModifierKeyMask;
-+ (CGEventFlags)magnificationScrollModifierKeyMask;
-+ (BOOL)horizontalScrollModifierKeyEnabled;
-+ (BOOL)magnificationScrollModifierKeyEnabled;
 
 @end
 

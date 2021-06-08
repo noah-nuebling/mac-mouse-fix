@@ -8,3 +8,5 @@
 #import "WannaBePrefixHeader.h"
 #import "DisplayLink.h"
 #import "Animator.h"
+#import "MainConfigInterface.h"
+#import "ScrollConfigInterfaceObjC.h"

@@ -26,7 +26,7 @@
 #import "SharedUtility.h"
 
 #import "GestureScrollSimulator.h"
-#import "ScrollConfigInterface.h"
+#import "ScrollConfigInterfaceObjC.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "AnimationCurve.h"
 
@@ -153,36 +153,36 @@ static BOOL _hasStarted;
 
     // Update ms left for scroll
     
-//    _msLeftForScroll = ScrollConfigInterface.msPerStep;
+//    _msLeftForScroll = ScrollConfig.shared.msPerStep;
     
     // Apply scroll wheel input to _pxScrollBuffer
     
 //    _msLeftForScroll = 1 / (_pxPerMSBaseSpeed / _pxStepSize);
     if (scrollDeltaAxis1 > 0) {
-        _pxScrollBuffer += ScrollConfigInterface.pxPerTickBase * ScrollConfigInterface.scrollDirection;
+        _pxScrollBuffer += ScrollConfig.shared.pxPerTickBase * ScrollConfig.shared.scrollDirection;
     } else if (scrollDeltaAxis1 < 0) {
-        _pxScrollBuffer -= ScrollConfigInterface.pxPerTickBase * ScrollConfigInterface.scrollDirection;
+        _pxScrollBuffer -= ScrollConfig.shared.pxPerTickBase * ScrollConfig.shared.scrollDirection;
     } else {
         DDLogInfo(@"scrollDeltaAxis1 is 0. This shouldn't happen.");
     }
     
     // Apply acceleration
 //    if (scrollAnalysisResult.consecutiveScrollTickCounter != 0) {
-//        _pxScrollBuffer = _pxScrollBuffer * ScrollConfigInterface.accelerationForScrollBuffer;
+//        _pxScrollBuffer = _pxScrollBuffer * ScrollConfig.shared.accelerationForScrollBuffer;
 //    }
 
     // Apply fast scroll
     
-    int64_t fastScrollThresholdDelta = scrollAnalysisResult.consecutiveScrollSwipeCounter - (unsigned int)ScrollConfigInterface.fastScrollThreshold_inSwipes;
+    int64_t fastScrollThresholdDelta = scrollAnalysisResult.consecutiveScrollSwipeCounter - (unsigned int)ScrollConfig.shared.fastScrollThreshold_inSwipes;
     if (fastScrollThresholdDelta >= 0) {
         //&& ScrollUtility.consecutiveScrollTickCounter >= ScrollControl.scrollSwipeThreshold_inTicks) {
-        _pxScrollBuffer = _pxScrollBuffer * ScrollConfigInterface.fastScrollFactor * pow(ScrollConfigInterface.fastScrollExponentialBase, ((int32_t)fastScrollThresholdDelta));
+        _pxScrollBuffer = _pxScrollBuffer * ScrollConfig.shared.fastScrollFactor * pow(ScrollConfig.shared.fastScrollExponentialBase, ((int32_t)fastScrollThresholdDelta));
     }
     
     // Update animationCurve stuff
     
     _animationStartTime = CACurrentMediaTime();
-    _animationDuration = ScrollConfigInterface.msPerStep / 1000.0; // Don't need to set this every time
+    _animationDuration = ScrollConfig.shared.msPerStep / 1000.0; // Don't need to set this every time
     _animationAlreadyScrolledPixels = 0;
     
 //    DDLogDebug(@"buff: %d", _pxScrollBuffer);
@@ -320,7 +320,7 @@ Ratio: %f",
         
         pxToScrollThisFrame = round(_pxPerMsVelocity * msSinceLastFrame);
         double thisVel = _pxPerMsVelocity;
-        double nextVel = thisVel - [SharedUtility signOf:thisVel] * pow(fabs(thisVel), ScrollConfigInterface.frictionDepth) * (ScrollConfigInterface.frictionCoefficient/100) * msSinceLastFrame;
+        double nextVel = thisVel - [SharedUtility signOf:thisVel] * pow(fabs(thisVel), ScrollConfig.shared.frictionDepth) * (ScrollConfig.shared.frictionCoefficient/100) * msSinceLastFrame;
         
         _pxPerMsVelocity = nextVel;
         if ( ((nextVel < 0) && (thisVel > 0)) || ((nextVel > 0) && (thisVel < 0)) ) {
@@ -333,7 +333,7 @@ Ratio: %f",
         
         if (llabs(pxToScrollThisFrame) == 1) {
             _onePixelScrollsCounter += 1;
-            if (_onePixelScrollsCounter > ScrollConfigInterface.nOfOnePixelScrollsMax) { // I think using > instead of >= might put the actual maximum at _nOfOnePixelScrollsMax + 1.
+            if (_onePixelScrollsCounter > ScrollConfig.shared.nOfOnePixelScrollsMax) { // I think using > instead of >= might put the actual maximum at _nOfOnePixelScrollsMax + 1.
                 _displayLinkPhase = kMFPhaseEnd;
             }
         }
