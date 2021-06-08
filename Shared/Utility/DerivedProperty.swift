@@ -8,13 +8,19 @@
 //
 
 /// A derived property is a block that takes no arguments and returns a value when called
-/// The returned value is calculated based on other values
-/// Here's the useful bit: The block will only re-calculate its value if any of the base values have changed since the last invocation. Otherwise it will return a cached value
-/// That way you can have computed properties that are only caculated when necessary, so you don't have to worry about efficiency
+/// The returned value is calculated based on other property. So it's like a computed property
+/// But here's the kicker: The block will only re-calculate its value if any of the properties it's based (aka "given properties")on have changed since the last invocation. Otherwise it will return a cached value
+/// That way you can have computed properties that are only re-caculated when their result is expected to change, so that way you don't have to worry about efficiency!
 ///
-/// We need to access the current values of the base values whenever a derived property block is called. That' impossible with Swifts copy-on-write mechanics as far as I understand.
+/// We need to access the current values of the givenProperties whenever a derived property block is called. That' impossible with Swifts copy-on-write mechanics as far as I understand.
+///     Edit: Actually I think I misunderstood.
+///         In reality, even value types, when used in a closure, will see outside changes. So the value types will basically be references inside the block. Which is super confusing.
+///         See: https://marcosantadev.com/capturing-values-swift-closures/
+///         ... Well that just means that I might be able to use the Class-based implementation (see below) even on Value types, making the protocol extension obsolete.
+///
+///
 /// I tried to make the derived property blocks store references to their base values. I could not find any way.
-/// So we defined this as a protocol extension instead. That way we have a reference to self available and can then get references to its current property values through keypaths.
+/// So we defined this as a protocol extension instead. That way we always have a reference to self available and can then get references to its current property values through keypaths.
 ///
 /// Also see:
 /// Sample code on how to mutate Array values from within a function: https://stackoverflow.com/questions/45109161/is-there-a-way-to-override-the-copy-on-write-behavior-for-swift-arrays
@@ -131,7 +137,6 @@ extension DerivedPropertyCreator {
             /// Get current property values at givenPropertyKeyPaths
             
             let givenProperties: [AnyHashable] = getProperties(on: self, at: keyPaths)
-            
             return getDerivedValue(owner: self, givenProperties: givenProperties, compute: compute, lastHash: &lastHash, lastValue: &lastValue)
             
         }
@@ -157,7 +162,7 @@ extension DerivedPropertyCreator {
     /// Uses strings as keypaths. Can be used with static properties. Normal Swift keyPaths can't point to static properties for some reason.
     
     class func create_kvc<T>(on owner: AnyObject, given keyPaths: [String], compute: @escaping () -> T) -> () -> T {
-        /// ObjC compatible version of `create()`, but without Swifts neat keyPaths or generics
+        /// Key-Value-Coding based version of `create()`. Using String based keyPaths instead of Swift keyPaths
         /// Since we can only convert Swift keyPaths to string-based, kvc compatible keyPaths, and not the other way around, we might make this kvc compatible version of the create function the base implementation, and have the normal Swift version call it. Otherwise there'd have to be either a lot of code duplication or another layer of closure nesting / passing them as arguments making everything confusing.
         /// Edit: But then we'd have to expose all properties we pass to the Swift function via @objc, so that's not a solution, either.
         ///     See https://stackoverflow.com/questions/46529015/getting-string-from-swift-4-new-key-path-syntax

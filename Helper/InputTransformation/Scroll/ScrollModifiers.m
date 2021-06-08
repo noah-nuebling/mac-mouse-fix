@@ -99,12 +99,12 @@ static void setupModifierKeyCallback() {
 CGEventRef Handle_ModifierChanged(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
     CGEventFlags flags = CGEventGetFlags(event);
-    if (flags & ScrollConfig.shared.horizontalScrollModifierKeyMask && ScrollConfig.shared.horizontalScrollModifierKeyEnabled) {
+    if (flags & ScrollConfig.horizontalScrollModifierKeyMask && ScrollConfig.horizontalScrollModifierKeyEnabled) {
         ScrollModifiers.horizontalScrolling = YES;
     } else {
         ScrollModifiers.horizontalScrolling = NO;
     }
-    if (flags & ScrollConfig.shared.magnificationScrollModifierKeyMask && ScrollConfig.shared.magnificationScrollModifierKeyEnabled) {
+    if (flags & ScrollConfig.magnificationScrollModifierKeyMask && ScrollConfig.magnificationScrollModifierKeyEnabled) {
         ScrollModifiers.magnificationScrolling = YES;
     } else {
         ScrollModifiers.magnificationScrolling = NO;

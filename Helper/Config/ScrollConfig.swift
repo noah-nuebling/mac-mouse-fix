@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-// ScrollConfig.shared.swift
+// ScrollConfig.swift
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2021
 // Licensed under MIT
@@ -11,8 +11,7 @@ import Cocoa
 
 @objc class ScrollConfig: NSObject {
     
-    
-    /// Contstants
+    /// Konstanz
     
     @objc static var stringToEventFlagMask: NSDictionary = ["command" : CGEventFlags.maskCommand,
                                                      "control" : CGEventFlags.maskControl,
@@ -125,9 +124,5 @@ import Cocoa
     @objc static var magnificationScrollModifierKeyEnabled: Bool {
         mod["magnificationScrollModifierKeyEnabled"] as! Bool
     }
-    
-    /// Init singleton instance
-    
-    @objc static var shared: ScrollConfig { ScrollConfig.init() }
     
 }
