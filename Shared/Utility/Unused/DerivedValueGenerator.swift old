@@ -37,9 +37,9 @@ import Cocoa
     ///     - I hope to get around the copy on write stuff by using a Pointer. So I can see changes to the pointee. Not sure what I'm doing, this is dangerous.
     func value<T>(derivedFrom baseValues: AnyHashable..., derivationFunction derive: ([AnyHashable]) -> T) -> () -> T {
         
-        let pointer = baseValues.withUnsafeBufferPointer { (<#UnsafeBufferPointer<AnyHashable>#>) -> R in
-            <#code#>
-        }
+//        let pointer = baseValues.withUnsafeBufferPointer { (<#UnsafeBufferPointer<AnyHashable>#>) -> R in
+//            <#code#>
+//        }
         
         var lastHash: Int = self.hash(baseValues)
         

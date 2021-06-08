@@ -67,15 +67,12 @@ static int      _onePixelScrollsCounter;
     
     // Set up animation curve
     
-    NSPoint p0 = NSMakePoint(0, 0);
-    NSPoint p1 = NSMakePoint(0, 0);
-    NSPoint p2 = NSMakePoint(0.9, 1.0);
-    NSPoint p3 = NSMakePoint(1.0, 1.0);
+    NSArray *points = @[@[@(0.0),@(0.0)], @[@(0.0),@(0.0)], @[@(1.0),@(1.0)], @[@(1.0),@(1.0)]];
+    
+    BezierCurve *bezierCurve = [[BezierCurve alloc] initWithControlPointsAsArrays:points];
     
     AnimationCurve *animationCurve = [AnimationCurve alloc];
-    [animationCurve UnitBezierForPoint1x:p1.x point1y:p1.y point2x:p2.x point2y:p2.y];
-    
-    BezierCurve *bezierCurve = [[BezierCurve alloc] initWithControlNSPoints:@[@(p0), @(p1), @(p2), @(p3)] defaultEpsilon:0.008];
+    [animationCurve UnitBezierForPoint1x:[points[1][0] doubleValue] point1y:[points[1][1] doubleValue] point2x:[points[2][0] doubleValue] point2y:[points[2][1] doubleValue]];
     
     _animationCurve = bezierCurve;
     _animationCurveLegacy = animationCurve;
