@@ -38,13 +38,14 @@
     self = [super init];
     if (self) {
         
-        // Setup internal CVDisplayLink
+        /// Setup internal CVDisplayLink
         
         [self setUpNewDisplayLinkWithActiveDisplays];
         
-        // Init displaysUnderMousePointer cache
+        /// Init displaysUnderMousePointer cache
         
-        _previousDisplaysUnderMousePointer = malloc(sizeof(CGDirectDisplayID) * 2); // Why 2? - see `setDisplayToDisplayUnderMousePointerWithEvent:`
+        _previousDisplaysUnderMousePointer = malloc(sizeof(CGDirectDisplayID) * 2);
+        /// ^ Why 2? - see `setDisplayToDisplayUnderMousePointerWithEvent:`
         
     }
     return self;
@@ -66,7 +67,13 @@
     /// The passed in block will be executed every time the display refreshes until `- stop` is called or this instance is deallocated.
     /// Call `setToMainScreen` to link with the screen that currently has keyboard focus.
     
-    CVDisplayLinkStart(_displayLink);
+    /// Start the displayLink
+    ///     If something goes wrong see notes in old SmoothScroll.m > handleInput: method
+    CVReturn code = CVDisplayLinkStart(_displayLink);
+    if (code != kCVReturnSuccess) {
+        DDLogInfo(@"Failed to start CVDisplayLink. Error code: %d", code);
+    }
+    /// Setup display added & removed callback
     CGDisplayRegisterReconfigurationCallback(displayReconfigurationCallback, (__bridge void * _Nullable)(self));
 }
 - (void)stop {
@@ -75,7 +82,7 @@
 }
 
 - (BOOL)isRunning {
-    return CVDisplayLinkIsRunning(self.displayLink);
+    return CVDisplayLinkIsRunning(_displayLink);
 }
 
 // Set display to mouse location
@@ -119,7 +126,7 @@
 // Display reconfiguration callback
 
 void displayReconfigurationCallback(CGDirectDisplayID display, CGDisplayChangeSummaryFlags flags, void *userInfo) {
-    /// This is called whenever a display is added or removed. If that happens we need to set up a new displayLink (I think)
+    /// This is called whenever a display is added or removed. If that happens we need to set up a new displayLink for it to be compatible with all the new displays (I think)
     /// I get this idea from the `CVDisplayLinkCreateWithActiveCGDisplays` docs at https://developer.apple.com/documentation/corevideo/1456863-cvdisplaylinkcreatewithactivecgd
     
     // Get self and displayLink

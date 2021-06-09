@@ -196,30 +196,32 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 
 static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysisResult) {
     
-    // Update application overrides if necessary
-    //  Checking which app is under the mouse pointer is really slow, so we try to only do it when necessary
+    /// Update configuration
+///         Checking which app is under the mouse pointer is really slow, so we only do it when necessary
     
-    if (scrollAnalysisResult.consecutiveScrollTickCounter == 0) { // Only do this on the first of each series of consecutive scroll ticks
+    if (scrollAnalysisResult.consecutiveScrollTickCounter == 0) { /// Only do this on the first of each series of consecutive scroll ticks
+        
         [ScrollUtility updateMouseDidMoveWithEvent:event];
         if (!ScrollUtility.mouseDidMove) {
             [ScrollUtility updateFrontMostAppDidChange];
-            // Only checking this if mouse didn't move, because of || in (mouseMoved || frontMostAppChanged). For optimization. Not sure if significant.
+            /// Only checking this if mouse didn't move, because of || in (mouseMoved || frontMostAppChanged). For optimization. Not sure if significant.
         }
+        
         if (ScrollUtility.mouseDidMove || ScrollUtility.frontMostAppDidChange) {
-            // set app overrides
+            /// Set app overrides
             BOOL configChanged = [Config applyOverridesForAppUnderMousePointer_Force:NO]; // TODO: `updateInternalParameters_Force:` should (probably) reset stuff itself, if it changes anything. This whole [SmoothScroll stop] stuff is kinda messy
             if (configChanged) {
                 [SmoothScroll stop]; // Not sure if useful
                 [RoughScroll stop]; // Not sure if useful
             }
         }
+        if (ScrollUtility.mouseDidMove) {
+            /// Update animator to currently used display
+            [_animator linkToMainScreen];
+        }
     }
 
     // Process event
-    
-    // Get pixels to scroll for this event
-    
-
 
     // Get parameters for animator
     
@@ -227,6 +229,7 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
     CFTimeInterval animationDuration = ScrollConfig.msPerStep / 1000;
     
     // Distance
+    int64_t animationDistance;
     int64_t pxToScrollForThisTick = getPxPerTick(scrollAnalysisResult.smoothedTimeBetweenTicks);
     double pxLeftToScroll;
     if (scrollAnalysisResult.scrollDirectionDidChange) {
@@ -234,14 +237,52 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
     } else {
         pxLeftToScroll = _animator.animationValueLeft;
     }
+    animationDistance = pxToScrollForThisTick + pxLeftToScroll;
+    
+    // Apply fast scroll to distance
+    int64_t fastScrollThresholdDelta = scrollAnalysisResult.consecutiveScrollSwipeCounter - (unsigned int)ScrollConfig.fastScrollThreshold_inSwipes;
+    if (fastScrollThresholdDelta >= 0) {
+        animationDistance *= ScrollConfig.fastScrollFactor * pow(ScrollConfig.fastScrollExponentialBase, ((int32_t)fastScrollThresholdDelta));
+    }
     Interval *animationValueInterval = [[Interval alloc] initWithStart:0 end:(pxToScrollForThisTick + pxLeftToScroll)];
     
     // Curve
     id<RealFunction> animationCurve = ScrollConfig.animationCurve;
     
     [_animator startWithDuration:animationDuration valueInterval:animationValueInterval animationCurve:animationCurve callback:^(double timeDelta, double valueDelta, MFAnimationPhase phase) {
+        
+        dou
+        
         if (phase == kMFAnimationPhaseStart) {
-            
+            if (ScrollModifiers.magnificationScrolling) {
+                [ScrollModifiers handleMagnificationScrollWithAmount:pxToScrollThisFrame/800.0];
+            } else {
+                
+                // Get 2d delta
+                double dx = 0;
+                double dy = 0;
+                if (ScrollModifiers.horizontalScrolling) {
+                    dx = pxToScrollThisFrame;
+                } else {
+                    dy = pxToScrollThisFrame;
+                }
+                
+                // Get phase
+                
+                IOHIDEventPhaseBits phase = IOHIDPhaseFromMFPhase(_displayLinkPhase);
+                
+        //        DDLogDebug(@"displayLinkPhase: %u", _displayLinkPhase);
+        //        DDLogDebug(@"IOHIDEventPhase: %hu \n", phase);
+                
+                if (phase != kIOHIDEventPhaseEnded) { // TODO: Remove. Sending it again here is a hack to make it stop scrolling.
+                    [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:phase isGestureDelta:NO];
+                } else {
+                    [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseChanged isGestureDelta:NO];
+                    [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded isGestureDelta:NO];
+                }
+                
+                
+            }
         }
     }];
     

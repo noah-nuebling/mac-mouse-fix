@@ -52,6 +52,14 @@ import Foundation
         return animationValueInterval.length - lastAnimationValue
     }
     
+    // Other Interface
+    
+    @objc func linkToMainScreen() {
+        /// Exposing this as a function and not just doing it automatically when the animation starts because I assume it's slow. Not sure where this assumption comes from.
+        
+        displayLink.linkToMainScreen()
+    }
+    
     // Start
     
     @objc func start(duration: CFTimeInterval,
@@ -74,11 +82,13 @@ import Foundation
             animationPhase = kMFAnimationPhaseRunningStart;
         } else {
             animationPhase = kMFAnimationPhaseStart;
+            /// Start displayLink
+            self.displayLink.start(callback: {
+                self.displayLinkCallback()
+            })
         }
         
-        self.displayLink.start(callback: {
-            self.displayLinkCallback()
-        })
+        
     }
     
     /// Stop

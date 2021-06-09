@@ -320,7 +320,7 @@ Ratio: %f",
         
         pxToScrollThisFrame = round(_pxPerMsVelocity * msSinceLastFrame);
         double thisVel = _pxPerMsVelocity;
-        double nextVel = thisVel - [SharedUtility signOf:thisVel] * pow(fabs(thisVel), ScrollConfig.frictionExponent) * (ScrollConfig.frictionCoefficient/100) * msSinceLastFrame;
+        double nextVel = thisVel - [SharedUtility signOf:thisVel] * pow(fabs(thisVel), ScrollConfig.dragExponent) * (ScrollConfig.dragCoefficient/100) * msSinceLastFrame;
         
         _pxPerMsVelocity = nextVel;
         if ( ((nextVel < 0) && (thisVel > 0)) || ((nextVel > 0) && (thisVel < 0)) ) {
