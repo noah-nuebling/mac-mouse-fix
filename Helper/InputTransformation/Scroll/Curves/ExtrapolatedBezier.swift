@@ -20,18 +20,18 @@ class ExtrapolatedBezier: Bezier {
     
     override init(controlPoints: [Bezier.Point], defaultEpsilon: Double = 0.08) {
         
-        // Init lines so we can call super.init. This is the only reason the lines are var and not let. Swift is weird.
-        // See here for an explanation of this problem: https://stackoverflow.com/questions/24021093/error-in-swift-class-property-not-initialized-at-super-init-call
-        // See https://docs.swift.org/swift-book/LanguageGuide/Initialization.html -> Two-phase initialization for an explanation why this is necessary
+        /// Init lines so we can call super.init. This is the only reason the lines are var and not let. Swift is weird.
+        /// See here for an explanation of this problem: https://stackoverflow.com/questions/24021093/error-in-swift-class-property-not-initialized-at-super-init-call
+        /// See https://docs.swift.org/swift-book/LanguageGuide/Initialization.html -> Two-phase initialization for an explanation why this is necessary
         
         self.preLine = Line.init(a: 0, b: 0)
         self.postLine = preLine
         
-        // Init super
+        /// Init super
         
         super.init(controlPoints: controlPoints, defaultEpsilon: defaultEpsilon)
         
-        // Define lines
+        /// Define lines
         
         /**
          Define preLine, such that it
@@ -66,8 +66,8 @@ class ExtrapolatedBezier: Bezier {
         // postLine
         
         // Get control points
-        let cn = controlPoints[self.n]
-        let cnPlus1 = controlPoints[self.n+1]
+        let cn = controlPoints[self.n-1]
+        let cnPlus1 = controlPoints[self.n]
         
         // Find slope
         let aPost = (cnPlus1.y - cn.y) / (cnPlus1.x - cn.x)

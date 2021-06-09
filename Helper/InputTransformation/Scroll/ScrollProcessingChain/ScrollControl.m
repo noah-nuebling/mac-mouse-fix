@@ -22,6 +22,8 @@
 #import <Cocoa/Cocoa.h>
 #import "Queue.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
+#import "SubPixelator.h"
+#import "GestureScrollSimulator.h"
 
 @implementation ScrollControl
 
@@ -33,6 +35,7 @@ static CGEventSourceRef _eventSource;
 static dispatch_queue_t _scrollQueue;
 
 static Animator *_animator;
+static SubPixelator *_subPixelator;
 
 static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this to Config or some sort of OverrideManager class
 + (AXUIElementRef) systemWideAXUIElement {
@@ -71,6 +74,9 @@ static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this
     
     // Create animator
     _animator = [[Animator alloc] init];
+    
+    // Create subpixelator for scroll output
+    _subPixelator = [SubPixelator pixelator] ;
 }
 
 + (void)resetDynamicGlobals {
@@ -220,95 +226,114 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
             [_animator linkToMainScreen];
         }
     }
-
-    // Process event
-
-    // Get parameters for animator
     
-    // Duration
-    CFTimeInterval animationDuration = ScrollConfig.msPerStep / 1000;
+    /// Get distance to scroll
     
-    // Distance
-    int64_t animationDistance;
     int64_t pxToScrollForThisTick = getPxPerTick(scrollAnalysisResult.smoothedTimeBetweenTicks);
-    double pxLeftToScroll;
-    if (scrollAnalysisResult.scrollDirectionDidChange) {
-        pxLeftToScroll = 0;
-    } else {
-        pxLeftToScroll = _animator.animationValueLeft;
-    }
-    animationDistance = pxToScrollForThisTick + pxLeftToScroll;
     
-    // Apply fast scroll to distance
+    /// Apply fast scroll to distance
+    
     int64_t fastScrollThresholdDelta = scrollAnalysisResult.consecutiveScrollSwipeCounter - (unsigned int)ScrollConfig.fastScrollThreshold_inSwipes;
     if (fastScrollThresholdDelta >= 0) {
-        animationDistance *= ScrollConfig.fastScrollFactor * pow(ScrollConfig.fastScrollExponentialBase, ((int32_t)fastScrollThresholdDelta));
+        pxToScrollForThisTick *= ScrollConfig.fastScrollFactor * pow(ScrollConfig.fastScrollExponentialBase, ((int32_t)fastScrollThresholdDelta)); /// TODO: Tune this up a little
     }
-    Interval *animationValueInterval = [[Interval alloc] initWithStart:0 end:(pxToScrollForThisTick + pxLeftToScroll)];
     
-    // Curve
-    id<RealFunction> animationCurve = ScrollConfig.animationCurve;
+    if (ScrollConfig.smoothEnabled) {
     
-    [_animator startWithDuration:animationDuration valueInterval:animationValueInterval animationCurve:animationCurve callback:^(double timeDelta, double valueDelta, MFAnimationPhase phase) {
+        /// Get parameters for animator
         
-        dou
+        /// Duration
+        CFTimeInterval animationDuration = ScrollConfig.msPerStep / 1000;
         
-        if (phase == kMFAnimationPhaseStart) {
+        /// Animation interval
+        double pxLeftToScroll;
+        if (scrollAnalysisResult.scrollDirectionDidChange) {
+            pxLeftToScroll = 0;
+        } else {
+            pxLeftToScroll = _animator.animationValueLeft;
+        }
+        Interval *animationValueInterval = [[Interval alloc] initWithStart:0 end:(pxToScrollForThisTick + pxLeftToScroll)];
+        
+        /// Curve
+        id<RealFunction> animationCurve = ScrollConfig.animationCurve;
+        
+        /// Start animation
+        [_animator startWithDuration:animationDuration valueInterval:animationValueInterval animationCurve:animationCurve callback:^(double timeDelta, double valueDelta, MFAnimationPhase animationPhase) {
+            /// This will be called each frame
+            
+            
+            
+            /// Subpixelate valueDelta to balance out rounding errors
+            
+            int64_t pxToScrollThisFrame = [_subPixelator intDeltaWithDoubleDelta:valueDelta];
+            
+            /// Send zoom event
+            ///  Could subpixelate after this
+            
             if (ScrollModifiers.magnificationScrolling) {
                 [ScrollModifiers handleMagnificationScrollWithAmount:pxToScrollThisFrame/800.0];
+                return;
+            }
+            
+            BOOL isContinuous = YES;
+            if (!isContinuous) {
+                CGEventRef event = CGEventCreateScrollWheelEvent(NULL, kCGScrollEventUnitLine, 1, (int32_t)pxToScrollThisFrame);
+                CGEventPost(kCGSessionEventTap, event);
             } else {
                 
-                // Get 2d delta
+                /// Get x and y deltas
+                
                 double dx = 0;
                 double dy = 0;
-                if (ScrollModifiers.horizontalScrolling) {
-                    dx = pxToScrollThisFrame;
+                if (ScrollModifiers.horizontalScrolling)    dx = pxToScrollThisFrame;
+                else                                        dy = pxToScrollThisFrame;
+                
+                /// Get phase
+                
+                IOHIDEventPhaseBits scrollPhase;
+                
+                if (animationPhase == kMFAnimationPhaseStart) {
+                    scrollPhase = kIOHIDEventPhaseBegan;
+                } else if (animationPhase == kMFAnimationPhaseRunningStart || animationPhase == kMFAnimationPhaseContinue) {
+                    scrollPhase = kIOHIDEventPhaseChanged;
+                } else if (animationPhase == kMFAnimationPhaseEnd) {
+                    scrollPhase = kIOHIDEventPhaseEnded;
                 } else {
-                    dy = pxToScrollThisFrame;
+                    assert(false);
                 }
                 
-                // Get phase
+                /// Send event
                 
-                IOHIDEventPhaseBits phase = IOHIDPhaseFromMFPhase(_displayLinkPhase);
-                
-        //        DDLogDebug(@"displayLinkPhase: %u", _displayLinkPhase);
-        //        DDLogDebug(@"IOHIDEventPhase: %hu \n", phase);
-                
-                if (phase != kIOHIDEventPhaseEnded) { // TODO: Remove. Sending it again here is a hack to make it stop scrolling.
-                    [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:phase isGestureDelta:NO];
-                } else {
-                    [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseChanged isGestureDelta:NO];
-                    [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded isGestureDelta:NO];
-                }
-                
-                
+                [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:scrollPhase isGestureDelta:NO];
             }
-        }
-    }];
+        }];
+    }
     
 //    DDLogDebug(@"Scroll speed unsmoothed: %f", scrollAnalysisResult.ticksPerSecondUnsmoothed);
 //    DDLogDebug(@"Scroll speed: %f", scrollAnalysisResult.ticksPerSecond);
 //    DDLogDebug(@"Tick ctr: %lld", scrollAnalysisResult.consecutiveScrollTickCounter);
 //    DDLogDebug(@"Swip ctr: %lld", scrollAnalysisResult.consecutiveScrollSwipeCounter);
     
-    if (ScrollConfig.smoothEnabled) {
-        [SmoothScroll start];   // Not sure if useful
-        [RoughScroll stop];     // Not sure if useful
-        [SmoothScroll handleInput:event scrollAnalysisResult:scrollAnalysisResult];
-    } else {
-        [SmoothScroll stop];
-        [RoughScroll start];
-        [RoughScroll handleInput:event];
-    }
+//    if (ScrollConfig.smoothEnabled) {
+//        [SmoothScroll start];   // Not sure if useful
+//        [RoughScroll stop];     // Not sure if useful
+//        [SmoothScroll handleInput:event scrollAnalysisResult:scrollAnalysisResult];
+//    } else {
+//        [SmoothScroll stop];
+//        [RoughScroll start];
+//        [RoughScroll handleInput:event];
+//    }
+    
+    
     CFRelease(event);
 }
 
 static int64_t getPxPerTick(CFTimeInterval timeBetweenTicks) {
     /// @discussion See the RawAccel guide for more info on acceleration curves https://github.com/a1xd/rawaccel/blob/master/doc/Guide.md
     ///     -> Edit: I read up on it and I don't see why the sensitivity-based approach that RawAccel uses is useful.
-    ///     They define the base curve as for sensitivity, but then go through complex maths and many hurdles to make the implied outputVelocity(inputVelocity function and its derivative smooth. Because that is what makes the acceleration feel predictable and nice. (See their "Gain" algorithm)
+    ///     They define the base curve as for sensitivity, but then go through complex maths and many hurdles to make the implied outputVelocity(inputVelocity) function and its derivative smooth. Because that is what makes the acceleration feel predictable and nice. (See their "Gain" algorithm)
     ///     Then why not just define the the outputVelocity(inputVelocity) curve to be a smooth curve to begin with? Why does sensitivity matter? It doesn't make sens to me.
-    ///     I'm just gonna use a BezierCurve to define the outputVelocity(inputVelocity) curve. Then I'll extrapolate the curve linearly at the end, so its defined everywhere. That is guaranteed to be smooth and easy to configure!
+    ///     I'm just gonna use a BezierCurve to define the outputVelocity(inputVelocity) curve. Then I'll extrapolate the curve linearly at the end, so its defined everywhere. That is guaranteed to be smooth and easy to configure.
     
     double scrollSpeed = 1/timeBetweenTicks; /// In tick/s
     

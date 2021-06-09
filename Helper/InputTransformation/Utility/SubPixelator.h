@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (SubPixelator *)pixelator;
 - (instancetype)init NS_UNAVAILABLE;
 - (int64_t)intDeltaWithDoubleDelta:(double)inp;
+- (void)reset;
 @end
 
 NS_ASSUME_NONNULL_END

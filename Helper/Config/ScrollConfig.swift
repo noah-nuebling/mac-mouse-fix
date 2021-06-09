@@ -20,16 +20,16 @@ import Cocoa
     
     // Convenience functions for accessing top level dict and different sub-dicts
 
-    @objc static var topLevel: NSDictionary {
+    @objc private static var topLevel: NSDictionary {
         Config.configWithAppOverridesApplied()[kMFConfigKeyScroll] as! NSDictionary
     }
-    @objc static var other: NSDictionary {
+    @objc private static var other: NSDictionary {
         topLevel["other"] as! NSDictionary
     }
-    @objc static var smooth: NSDictionary {
+    @objc private static var smooth: NSDictionary {
         topLevel["smoothParameters"] as! NSDictionary
     }
-    @objc static var mod: NSDictionary {
+    @objc private static var mod: NSDictionary {
         topLevel["modifierKeys"] as! NSDictionary
     }
 
