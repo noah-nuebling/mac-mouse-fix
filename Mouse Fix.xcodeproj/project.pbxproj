@@ -11,6 +11,7 @@
 		3CB845BD141AE05C444DE491 /* libPods-Mac Mouse Fix Accomplice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E109490DBAF540B0DD9FC8 /* libPods-Mac Mouse Fix Accomplice.a */; };
 		4F1793A925EEC92000E8309B /* ZipArchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F1793A825EEC90900E8309B /* ZipArchive.framework */; };
 		4F1793AA25EEC92000E8309B /* ZipArchive.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F1793A825EEC90900E8309B /* ZipArchive.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4F1AFE972670EBA900ECA424 /* Drag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1AFE962670EBA900ECA424 /* Drag.swift */; };
 		4F1B83062606E68300AEAF37 /* ButtonLandscapeAssessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B83052606E68300AEAF37 /* ButtonLandscapeAssessor.m */; };
 		4F1B832D26081A5500AEAF37 /* CaptureNotificationCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B832C26081A5500AEAF37 /* CaptureNotificationCreator.m */; };
 		4F1C51DA260543DD007F4930 /* NSTextField+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C51D9260543DD007F4930 /* NSTextField+Additions.m */; };
@@ -227,6 +228,7 @@
 		4F15C0C12666779D000337FF /* MainApp.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = MainApp.xcconfig; sourceTree = "<group>"; };
 		4F15C0C22666781F000337FF /* Helper.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Helper.xcconfig; sourceTree = "<group>"; };
 		4F1793A825EEC90900E8309B /* ZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ZipArchive.framework; sourceTree = "<group>"; };
+		4F1AFE962670EBA900ECA424 /* Drag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drag.swift; sourceTree = "<group>"; };
 		4F1B83042606E68300AEAF37 /* ButtonLandscapeAssessor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonLandscapeAssessor.h; sourceTree = "<group>"; };
 		4F1B83052606E68300AEAF37 /* ButtonLandscapeAssessor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ButtonLandscapeAssessor.m; sourceTree = "<group>"; };
 		4F1B832B26081A5400AEAF37 /* CaptureNotificationCreator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CaptureNotificationCreator.h; sourceTree = "<group>"; };
@@ -1271,6 +1273,7 @@
 		4FF937552669B043003A52EA /* Curves */ = {
 			isa = PBXGroup;
 			children = (
+				4F1AFE962670EBA900ECA424 /* Drag.swift */,
 				4F3A40AA266BBB6200436821 /* ExtrapolatedBezier.swift */,
 				4FF0BD4A266A8B7E003935EA /* Bezier.swift */,
 				4FF6662625F2C93A00689B77 /* CubicUnitBezier.h */,
@@ -1847,6 +1850,7 @@
 				4FD8607C266E65E9004F76C8 /* DerivedValueGenerator.swift old in Sources */,
 				4FF6668125F2C93A00689B77 /* FileMonitor.m in Sources */,
 				4FF666A225F2C93A00689B77 /* TouchEvents.c in Sources */,
+				4F1AFE972670EBA900ECA424 /* Drag.swift in Sources */,
 				4FF6669125F2C93A00689B77 /* ScrollUtility.m in Sources */,
 				4FF666A825F2C93A00689B77 /* DeviceManager.m in Sources */,
 				4FF6669B25F2C93A00689B77 /* AppDelegate.m in Sources */,

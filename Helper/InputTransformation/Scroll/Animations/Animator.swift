@@ -84,7 +84,7 @@ import Foundation
         if now >= animationTimeInterval.end {
             /// Animation is ending
             animationPhase = kMFAnimationPhaseEnd
-            now = animationTimeInterval.end
+            now = animationTimeInterval.end /// Set now back to a valid value so we don't scroll too far and our scale functions don't throw errors
         }
         
         /// Get normalized time and value
