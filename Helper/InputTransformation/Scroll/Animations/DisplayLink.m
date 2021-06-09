@@ -17,11 +17,12 @@
 @end
 
 /// Wrapper object for CVDisplayLink that uses blocks
-/// Didn't write this in Swift, because CVDisplayLink is clearly a C API that's been machine-translated to Swift. So it should be easier to deal with from Objc
+/// Didn't write this in Swift, because CVDisplayLink is clearly a C API that's been machine-translated to Swift. So it should be easier to deal with from ObjC
 @implementation DisplayLink {
     
     CVDisplayLinkRef _displayLink;
     CGDirectDisplayID *_previousDisplaysUnderMousePointer;
+    BOOL _displayLinkIsOutdated;
 }
 
 // Convenience init
@@ -39,13 +40,17 @@
     if (self) {
         
         /// Setup internal CVDisplayLink
-        
         [self setUpNewDisplayLinkWithActiveDisplays];
         
         /// Init displaysUnderMousePointer cache
-        
         _previousDisplaysUnderMousePointer = malloc(sizeof(CGDirectDisplayID) * 2);
         /// ^ Why 2? - see `setDisplayToDisplayUnderMousePointerWithEvent:`
+        
+        /// Init _displayLinkIsOutdated flag
+        _displayLinkIsOutdated = NO;
+        
+        /// Setup display reconfiguration callback
+        CGDisplayRegisterReconfigurationCallback(displayReconfigurationCallback, (__bridge void * _Nullable)(self));
         
     }
     return self;
@@ -73,12 +78,9 @@
     if (code != kCVReturnSuccess) {
         DDLogInfo(@"Failed to start CVDisplayLink. Error code: %d", code);
     }
-    /// Setup display added & removed callback
-    CGDisplayRegisterReconfigurationCallback(displayReconfigurationCallback, (__bridge void * _Nullable)(self));
 }
 - (void)stop {
     CVDisplayLinkStop(_displayLink);
-    CGDisplayRemoveReconfigurationCallback(displayReconfigurationCallback, (__bridge void * _Nullable)(self));
 }
 
 - (BOOL)isRunning {
@@ -104,12 +106,12 @@
     CGGetDisplaysWithPoint(mouseLocation, 2, newDisplaysUnderMousePointer, &matchingDisplayCount);
     
     if (matchingDisplayCount >= 1) {
-        if (newDisplaysUnderMousePointer[0] != _previousDisplaysUnderMousePointer[0]) {
+        if (newDisplaysUnderMousePointer[0] != _previousDisplaysUnderMousePointer[0]) { /// Why are we only checking at index 0?
             free(_previousDisplaysUnderMousePointer); // We need to free this memory before we lose the pointer to it in the next line. (If I understand how raw C work in ObjC)
             _previousDisplaysUnderMousePointer = newDisplaysUnderMousePointer;
             // Sets dsp to the master display if _displaysUnderMousePointer[0] is part of the mirror set
             CGDirectDisplayID dsp = CGDisplayPrimaryDisplay(_previousDisplaysUnderMousePointer[0]);
-            CVDisplayLinkSetCurrentCGDisplay(_displayLink, dsp);
+            return [self setDisplay:dsp];
         }
     } else if (matchingDisplayCount == 0) {
         DDLogWarn(@"There are 0 diplays under the mouse pointer");
@@ -120,6 +122,12 @@
 }
 
 - (CVReturn)setDisplay:(CGDirectDisplayID)displayID {
+    
+    if (_displayLinkIsOutdated) {
+        [self setUpNewDisplayLinkWithActiveDisplays];
+        _displayLinkIsOutdated = NO;
+    }
+    
     return CVDisplayLinkSetCurrentCGDisplay(_displayLink, displayID);
 }
 
@@ -127,14 +135,21 @@
 
 void displayReconfigurationCallback(CGDirectDisplayID display, CGDisplayChangeSummaryFlags flags, void *userInfo) {
     /// This is called whenever a display is added or removed. If that happens we need to set up a new displayLink for it to be compatible with all the new displays (I think)
-    /// I get this idea from the `CVDisplayLinkCreateWithActiveCGDisplays` docs at https://developer.apple.com/documentation/corevideo/1456863-cvdisplaylinkcreatewithactivecgd
+    ///     I get this idea from the `CVDisplayLinkCreateWithActiveCGDisplays` docs at https://developer.apple.com/documentation/corevideo/1456863-cvdisplaylinkcreatewithactivecgd
+    /// To optimize, in this function, we only set the _displayLinkIsOutdated flag to true.
+    ///     Then we use that flag in `- setDisplay`, to set up a new displayLink when needed.
+    ///     That way, the displayLink won't be recreated when the user isn't even using Mac Mouse Fix.
     
     // Get self and displayLink
     DisplayLink *self = (__bridge DisplayLink *)userInfo;
     
-    if ( (flags & kCGDisplayAddFlag) || (flags & kCGDisplayRemoveFlag) ) {
+    if ((flags & kCGDisplayAddFlag) ||
+        (flags & kCGDisplayRemoveFlag) ||
+        (flags & kCGDisplayEnabledFlag) ||
+        (flags & kCGDisplayDisabledFlag)) { /// Using enabledFlag and disabledFlag here is untested. I'm not sure when they are true.
+        
         DDLogInfo(@"Display added / removed. Setting up displayLink to work with the new display configuration");
-        [self setUpNewDisplayLinkWithActiveDisplays];
+        self->_displayLinkIsOutdated = YES;
     }
     
 }
@@ -158,6 +173,8 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 - (void)dealloc
 {
     CVDisplayLinkRelease(_displayLink);
+    CGDisplayRemoveReconfigurationCallback(displayReconfigurationCallback, (__bridge void * _Nullable)(self));
+    // ^ The arguments need to match the ones for CGDisplayRegisterReconfigurationCallback() exactly
     free(_previousDisplaysUnderMousePointer);
 }
 
