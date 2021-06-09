@@ -55,7 +55,7 @@
         NSError *error;
         task.terminationHandler = ^(NSTask *task) {
             if (enable == NO) { // Cleanup (delete launchdPlist) file after were done // We can't clean up immediately cause then launchctl will fail
-                [self cleanup];
+                cleanup();
             }
             NSLog(@"launchctl terminated with stdout/stderr: %@, error: %@", [NSString.alloc initWithData:pipe.fileHandleForReading.readDataToEndOfFile encoding:NSUTF8StringEncoding], error);
         };
@@ -66,8 +66,12 @@
         [NSTask launchedTaskWithLaunchPath: kMFLaunchctlPath arguments: @[OnOffArgumentOld, Objects.launchdPlistURL.path]]; // Can't clean up here easily cause there's no termination handler
     }
 }
-+ (void)cleanup { // TODO: Make this a c function to signify private nature of it
-    [NSFileManager.defaultManager removeItemAtURL:Objects.launchdPlistURL error:NULL];
+static void cleanup() {
+    NSError *error;
+    [NSFileManager.defaultManager removeItemAtURL:Objects.launchdPlistURL error:&error];
+    if (error != nil) {
+        NSLog(@"Failed to delete launchd.plist file. The helper will likely be re-enabled on startup. Delete the file at \"%@\" to prevent this.", Objects.launchdPlistURL.path); /// TODO: Make this a DDLogError() statement
+    }
 }
 
 + (void)repairLaunchdPlist {
