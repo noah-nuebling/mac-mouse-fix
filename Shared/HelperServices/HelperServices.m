@@ -99,16 +99,16 @@
         NSString *helperExecutablePath = helperBundle.executablePath;
         
         // Get path to launch agent config file (aka launchdPlist)
-        NSString *launchAgentPlistPath = Objects.launchdPlistURL.path;
+        NSString *launchdPlist_path = Objects.launchdPlistURL.path;
         
         // Check if file exists
         NSFileManager *fileManager = [[NSFileManager alloc] init];
-        BOOL launchdPlist_exists = [fileManager fileExistsAtPath: launchAgentPlistPath isDirectory: nil];
+        BOOL launchdPlist_exists = [fileManager fileExistsAtPath: launchdPlist_path isDirectory: nil];
         BOOL launchdPlist_executablePathIsCorrect = TRUE;
         if (launchdPlist_exists == TRUE) {
             
             // Load data from launch agent config file into a dictionary
-            NSData *launchdPlist_data = [NSData dataWithContentsOfFile:launchAgentPlistPath];
+            NSData *launchdPlist_data = [NSData dataWithContentsOfFile:launchdPlist_path];
             NSDictionary *launchdPlist_dict = [NSPropertyListSerialization propertyListWithData:launchdPlist_data options:NSPropertyListImmutable format:0 error:nil];
             
             // Check if the executable path inside the config file is correct, if not, set flag to false
@@ -129,7 +129,7 @@
             NSLog(@"repairing file...");
             
             // Check if "User/Library/LaunchAgents" folder exists, if not, create it
-            NSString *launchAgentsFolderPath = [launchAgentPlistPath stringByDeletingLastPathComponent];
+            NSString *launchAgentsFolderPath = [launchdPlist_path stringByDeletingLastPathComponent];
             BOOL launchAgentsFolderExists = [fileManager fileExistsAtPath: launchAgentsFolderPath isDirectory: nil];
             if (launchAgentsFolderExists == FALSE) {
                 NSLog(@"LaunchAgents folder doesn't exist");
@@ -160,12 +160,12 @@
             NSAssert(error == nil, @"Failed to create NSData from new launchdPlist dict");
             
             // Write new newLaunchdPlist data to file
-            [newLaunchdPlist_data writeToFile:launchAgentPlistPath atomically:YES];
+            [newLaunchdPlist_data writeToFile:launchdPlist_path options:NSDataWritingAtomic error:&error];
             if (error != nil) {
                 NSLog(@"repairUserAgentConfigFile() -- Data Serialization Error: %@", error);
             }
         } else {
-            NSLog(@"nothing to repair");
+            NSLog(@"Nothing to repair");
         }
     }
     
