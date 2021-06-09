@@ -71,18 +71,27 @@
 }
 
 + (void)repairLaunchdPlist {
+    /// What this does:
+    
+    /// Get path of executable of helper app
+    /// Check
+    /// - If the "User/Library/LaunchAgents/mouse.fix.helper.plist" useragent config file  (aka launchdPlist) exists
+    ///     - This specific path is deprecated, since MMF is an app not a prefpane now
+    /// - If the Launch Agents Folder exists
+    /// - If the exectuable path within the plist file is correct
+    /// If not:
+    /// Create correct file based on "default_launchd.plist" and the helpers exectuablePath
+    /// Write correct file to "User/Library/LaunchAgents"
     
     @autoreleasepool {
+        /// Do we need an autoreleasepool here?
+        /// -> No. Remove this.
+        /// I just read up on it. You only need to manually use `autoreleasepool`s for optimization and some edge cases
+        /// Here's my understanding. In normal scenarios, Cocoa objects are automatically sent autorelease messages when they go out of scope. Then, on the next iteration of the runloop, all objects that were sent autorelease messages will be sent release messges. Which will in turn cause their reference counts to drop, which will cause them to be deallocated when that reaches 0. When you use a manual autoreleasepool, then the autoreleased Cocoa objects will be sent release messages after the autoreleasepool block ends, and not only at the next runloop iteration. That's all it does in this scenario.
+        /// When to use autoreleasepool: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/MemoryMgmt/Articles/mmAutoreleasePools.html
+        /// When autoreleased objects are sent release messages: https://stackoverflow.com/questions/673372/when-does-autorelease-actually-cause-a-release-in-cocoa-touch
         
-        NSLog(@"repairing User Agent Config File");
-        // What this does:
-        
-        // Get path of executable of helper app
-        // Check if the "User/Library/LaunchAgents/mouse.fix.helper.plist" (< This specific path is deprecated) UserAgent Config file  (aka launchdPlist)
-        //      exists, if the Launch Agents Folder exists, and if the exectuable path within the plist file is correct
-        // If not:
-        // Create correct file based on "default_launchd.plist" and helperExecutablePath
-        // Write correct file to "User/Library/LaunchAgents"
+        NSLog(@"Repairing User Agent Config File");
         
         // Get helper executable path
         NSBundle *helperBundle = Objects.helperBundle;
@@ -113,21 +122,23 @@
         }
         
         NSLog(@"launchdPlistExists %hhd, launchdPlistIsCorrect: %hhd", launchdPlist_exists,launchdPlist_executablePathIsCorrect);
-        // The config file doesn't exist, or the executable path within it is not correct
+        
         if ((launchdPlist_exists == FALSE) || (launchdPlist_executablePathIsCorrect == FALSE)) {
+            // The config file doesn't exist, or the executable path within it is not correct
+            
             NSLog(@"repairing file...");
             
             // Check if "User/Library/LaunchAgents" folder exists, if not, create it
             NSString *launchAgentsFolderPath = [launchAgentPlistPath stringByDeletingLastPathComponent];
             BOOL launchAgentsFolderExists = [fileManager fileExistsAtPath: launchAgentsFolderPath isDirectory: nil];
             if (launchAgentsFolderExists == FALSE) {
-                NSLog(@"LaunchAgentsFolder doesn't exist");
+                NSLog(@"LaunchAgents folder doesn't exist");
                 NSError *error;
                 [fileManager createDirectoryAtPath:launchAgentsFolderPath withIntermediateDirectories:FALSE attributes:nil error:&error];
                 if (error == nil) {
                     NSLog(@"LaunchAgents Folder Created");
                 } else {
-                    NSLog(@"Error while creating LaunchAgents Folder: %@", error);
+                    NSLog(@"Error creating LaunchAgents Folder: %@", error);
                 }
             }
             
@@ -144,9 +155,11 @@
             // Set the executable path to the correct value
             [newlaunchdPlist_dict setValue: helperExecutablePath forKey:@"Program"];
             
-            // Write the dict to launchdPlist
+            // Get NSData from newLaunchdPlist dict
             NSData *newLaunchdPlist_data = [NSPropertyListSerialization dataWithPropertyList:newlaunchdPlist_dict format:NSPropertyListXMLFormat_v1_0 options:0 error:&error];
-            NSAssert(error == nil, @"Should not have encountered an error");
+            NSAssert(error == nil, @"Failed to create NSData from new launchdPlist dict");
+            
+            // Write new newLaunchdPlist data to file
             [newLaunchdPlist_data writeToFile:launchAgentPlistPath atomically:YES];
             if (error != nil) {
                 NSLog(@"repairUserAgentConfigFile() -- Data Serialization Error: %@", error);
