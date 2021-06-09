@@ -7,7 +7,7 @@
 // --------------------------------------------------------------------------
 //
 
-#import "ScrollControl.h"
+#import "Scroll.h"
 #import "DeviceManager.h"
 #import "SmoothScroll.h"
 #import "RoughScroll.h"
@@ -25,7 +25,7 @@
 #import "SubPixelator.h"
 #import "GestureScrollSimulator.h"
 
-@implementation ScrollControl
+@implementation Scroll
 
 #pragma mark - Variables
 

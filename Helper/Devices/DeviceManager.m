@@ -22,7 +22,7 @@
 #import <IOKit/hid/IOHIDDevice.h>
 #import <IOKit/hid/IOHIDKeys.h>
 
-#import "ScrollControl.h"
+#import "Scroll.h"
 #import "ButtonInputReceiver.h"
 #import "Config.h"
 #import "PointerSpeed.h"
@@ -133,7 +133,7 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
         Device *newMFDevice = [Device deviceWithIOHIDDevice:device];
         [_attachedDevices addObject:newMFDevice];
         
-        [ScrollControl decide];
+        [Scroll decide];
         [ButtonInputReceiver decide];
         
         DDLogInfo(@"New matching IOHIDDevice passed filtering and corresponding MFDevice was attached to device manager:\n%@", newMFDevice);
@@ -156,7 +156,7 @@ static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IO
     [_attachedDevices removeObject:removedMFDevice]; // This might do nothing if this device wasn't contained in _attachedDevice (that's if it didn't pass filtering in `handleDeviceMatching()`)
     
     // If there aren't any relevant devices attached, then we might want to turn off some parts of the program.
-    [ScrollControl decide];
+    [Scroll decide];
     [ButtonInputReceiver decide];
     
     DDLogInfo(@"Matching IOHIDDevice was removed:\n%@", device);

@@ -14,7 +14,7 @@
 #import "MessagePort_Helper.h"
 #import "DeviceManager.h"
 #import "Config.h"
-#import "ScrollControl.h"
+#import "Scroll.h"
 #import "ButtonInputReceiver.h"
 #import "Constants.h"
 #import "ModifiedDrag.h"
@@ -50,7 +50,7 @@ NSTimer *_openMainAppTimer;
         // TODO: Look into using `+ initialize` instead of `+ load`. The way we have things set up there are like a bajillion entry points to the program (one for every `+ load` function) which is kinda sucky. Might be better to have just one entry point to the program and then start everything that needs to be started with `+ start` functions and let `+ initialize` do the rest
         [DeviceManager load_Manual];
         [Config load_Manual];
-        [ScrollControl load_Manual];
+        [Scroll load_Manual];
         [ModifiedDrag load_Manual];
         [ModifierManager load_Manual];
         

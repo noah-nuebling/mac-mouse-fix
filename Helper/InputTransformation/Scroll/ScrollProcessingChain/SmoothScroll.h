@@ -8,10 +8,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "ScrollControl.h"
+#import "Scroll.h"
 #import "ScrollAnalyzer.h"
 
-@interface SmoothScroll : ScrollControl
+@interface SmoothScroll : Scroll
 
 + (void)load_Manual;
 

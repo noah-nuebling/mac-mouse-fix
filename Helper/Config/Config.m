@@ -13,7 +13,7 @@
 
 #import "Config.h"
 #import "AppDelegate.h"
-#import "ScrollControl.h"
+#import "Scroll.h"
 #import "SmoothScroll.h"
 #import "ButtonInputReceiver.h"
 #import "ScrollModifiers.h"
@@ -102,7 +102,7 @@ static void fillConfigFromFile() {
         CGPoint mouseLocation = Utility_Transformation.CGMouseLocationWithoutEvent;
 
         AXUIElementRef elementUnderMousePointer;
-        AXUIElementCopyElementAtPosition(ScrollControl.systemWideAXUIElement, mouseLocation.x, mouseLocation.y, &elementUnderMousePointer);
+        AXUIElementCopyElementAtPosition(Scroll.systemWideAXUIElement, mouseLocation.x, mouseLocation.y, &elementUnderMousePointer);
         pid_t elementUnderMousePointerPID;
         AXUIElementGetPid(elementUnderMousePointer, &elementUnderMousePointerPID);
         NSRunningApplication *appUnderMousePointer = [NSRunningApplication runningApplicationWithProcessIdentifier:elementUnderMousePointerPID];
@@ -126,7 +126,7 @@ static void fillConfigFromFile() {
         _bundleIDOfAppWhichCausesAppOverride = bundleIDOfCurrentApp;
         loadAppOverridesForApp(bundleIDOfCurrentApp);
 //        [Config updateScrollParameters];
-        [ScrollControl resetDynamicGlobals]; // Not entirely sure if necessary
+        [Scroll resetDynamicGlobals]; // Not entirely sure if necessary
         return YES;
     }
     

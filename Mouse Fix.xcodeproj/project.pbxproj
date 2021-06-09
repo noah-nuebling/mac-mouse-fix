@@ -103,7 +103,7 @@
 		4FF6668625F2C93A00689B77 /* ButtonTriggerGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6661925F2C93A00689B77 /* ButtonTriggerGenerator.m */; };
 		4FF6668725F2C93A00689B77 /* ButtonTriggerHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6661A25F2C93A00689B77 /* ButtonTriggerHandler.m */; };
 		4FF6668825F2C93A00689B77 /* ButtonInputReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6661E25F2C93A00689B77 /* ButtonInputReceiver.m */; };
-		4FF6668925F2C93A00689B77 /* ScrollControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662125F2C93A00689B77 /* ScrollControl.m */; };
+		4FF6668925F2C93A00689B77 /* Scroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662125F2C93A00689B77 /* Scroll.m */; };
 		4FF6668A25F2C93A00689B77 /* SmoothScroll.m (old) in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6662325F2C93A00689B77 /* SmoothScroll.m (old) */; };
 		4FF6668B25F2C93A00689B77 /* CubicUnitBezier.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662425F2C93A00689B77 /* CubicUnitBezier.m */; };
 		4FF6668C25F2C93A00689B77 /* SmoothScroll.h (old) in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6662525F2C93A00689B77 /* SmoothScroll.h (old) */; };
@@ -386,7 +386,7 @@
 		4FF6661D25F2C93A00689B77 /* ButtonTriggerHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonTriggerHandler.h; sourceTree = "<group>"; };
 		4FF6661E25F2C93A00689B77 /* ButtonInputReceiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonInputReceiver.m; sourceTree = "<group>"; };
 		4FF6662025F2C93A00689B77 /* SmoothScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmoothScroll.h; sourceTree = "<group>"; };
-		4FF6662125F2C93A00689B77 /* ScrollControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollControl.m; sourceTree = "<group>"; };
+		4FF6662125F2C93A00689B77 /* Scroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Scroll.m; sourceTree = "<group>"; };
 		4FF6662325F2C93A00689B77 /* SmoothScroll.m (old) */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SmoothScroll.m (old)"; sourceTree = "<group>"; };
 		4FF6662425F2C93A00689B77 /* CubicUnitBezier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CubicUnitBezier.m; sourceTree = "<group>"; };
 		4FF6662525F2C93A00689B77 /* SmoothScroll.h (old) */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SmoothScroll.h (old)"; sourceTree = "<group>"; };
@@ -396,7 +396,7 @@
 		4FF6662925F2C93A00689B77 /* ScrollModifiers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollModifiers.h; sourceTree = "<group>"; };
 		4FF6662A25F2C93A00689B77 /* RoughScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoughScroll.h; sourceTree = "<group>"; };
 		4FF6662B25F2C93A00689B77 /* ScrollUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollUtility.h; sourceTree = "<group>"; };
-		4FF6662C25F2C93A00689B77 /* ScrollControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollControl.h; sourceTree = "<group>"; };
+		4FF6662C25F2C93A00689B77 /* Scroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scroll.h; sourceTree = "<group>"; };
 		4FF6662D25F2C93A00689B77 /* SmoothScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SmoothScroll.m; sourceTree = "<group>"; };
 		4FF6662E25F2C93A00689B77 /* ScrollModifiers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollModifiers.m; sourceTree = "<group>"; };
 		4FF6662F25F2C93A00689B77 /* ScrollUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollUtility.m; sourceTree = "<group>"; };
@@ -715,8 +715,8 @@
 		4FA994BB266789BF0007F003 /* ScrollProcessingChain */ = {
 			isa = PBXGroup;
 			children = (
-				4FF6662C25F2C93A00689B77 /* ScrollControl.h */,
-				4FF6662125F2C93A00689B77 /* ScrollControl.m */,
+				4FF6662C25F2C93A00689B77 /* Scroll.h */,
+				4FF6662125F2C93A00689B77 /* Scroll.m */,
 				4FF6662025F2C93A00689B77 /* SmoothScroll.h */,
 				4FF6662D25F2C93A00689B77 /* SmoothScroll.m */,
 				4FF6662A25F2C93A00689B77 /* RoughScroll.h */,
@@ -1835,7 +1835,7 @@
 				4FF6669825F2C93A00689B77 /* SubPixelator.m in Sources */,
 				4FF0BD51266AC10C003935EA /* Math.swift in Sources */,
 				4FF6669F25F2C93A00689B77 /* main.m in Sources */,
-				4FF6668925F2C93A00689B77 /* ScrollControl.m in Sources */,
+				4FF6668925F2C93A00689B77 /* Scroll.m in Sources */,
 				4FF6669525F2C93A00689B77 /* ModifiedDrag.m in Sources */,
 				4FD86089266E819A004F76C8 /* Pointers.swift in Sources */,
 				4FF6668825F2C93A00689B77 /* ButtonInputReceiver.m in Sources */,

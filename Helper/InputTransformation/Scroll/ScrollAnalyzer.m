@@ -9,7 +9,7 @@
 
 #import "ScrollAnalyzer.h"
 #import <Cocoa/Cocoa.h>
-#import "ScrollControl.h"
+#import "Scroll.h"
 #import "ScrollConfigObjC.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "ScrollUtility.h"

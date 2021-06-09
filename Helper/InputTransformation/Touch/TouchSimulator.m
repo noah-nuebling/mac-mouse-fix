@@ -31,7 +31,7 @@
 #import "TouchSimulator.h"
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
-#import "ScrollControl.h"
+#import "Scroll.h"
 #import "SharedUtility.h"
 #import <Foundation/Foundation.h>
 

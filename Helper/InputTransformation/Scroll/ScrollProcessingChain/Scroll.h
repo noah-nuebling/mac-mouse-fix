@@ -12,7 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ScrollControl : NSObject
+@interface Scroll : NSObject
 
 + (AXUIElementRef) systemWideAXUIElement;
 

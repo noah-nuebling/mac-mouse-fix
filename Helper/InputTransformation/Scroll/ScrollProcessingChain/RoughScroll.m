@@ -8,7 +8,7 @@
 //
 
 #import "RoughScroll.h"
-#import "ScrollControl.h"
+#import "Scroll.h"
 #import "TouchSimulator.h"
 #import "ScrollUtility.h"
 #import "Config.h"

@@ -8,7 +8,7 @@
 //
 
 #import "ScrollUtility.h"
-#import "ScrollControl.h"
+#import "Scroll.h"
 #import <Cocoa/Cocoa.h>
 #import "IOHIDEventTypes.h"
 #import "SharedUtility.h"
