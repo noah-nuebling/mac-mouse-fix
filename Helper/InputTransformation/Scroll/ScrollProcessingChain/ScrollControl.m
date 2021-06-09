@@ -228,14 +228,21 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
     
     // Distance
     int64_t pxToScrollForThisTick = getPxPerTick(scrollAnalysisResult.smoothedTimeBetweenTicks);
-    double pxLeftToScroll = _animator.animationValueLeft;
+    double pxLeftToScroll;
+    if (scrollAnalysisResult.scrollDirectionDidChange) {
+        pxLeftToScroll = 0;
+    } else {
+        pxLeftToScroll = _animator.animationValueLeft;
+    }
     Interval *animationValueInterval = [[Interval alloc] initWithStart:0 end:(pxToScrollForThisTick + pxLeftToScroll)];
     
     // Curve
     id<RealFunction> animationCurve = ScrollConfig.animationCurve;
     
     [_animator startWithDuration:animationDuration valueInterval:animationValueInterval animationCurve:animationCurve callback:^(double timeDelta, double valueDelta, MFAnimationPhase phase) {
-            <#code#>
+        if (phase == kMFAnimationPhaseStart) {
+            
+        }
     }];
     
 //    DDLogDebug(@"Scroll speed unsmoothed: %f", scrollAnalysisResult.ticksPerSecondUnsmoothed);

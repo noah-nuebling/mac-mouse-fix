@@ -60,6 +60,7 @@ import Foundation
                      callback: @escaping AnimatorCallback) {
         /// The use of 'Interval' in CFTimeInterval is kind of confusing, since its also used to spedify points in time (It's just a `Double`), and also it has nothing to do with our `Interval` class, which is much closer to an Interval in the Mathematical sense.
         /// Will be restarted if it's already running. No need to call stop before calling this.
+        /// It's kind of unnecessary to be passing this a value interval, because we only use the length of it. Since the AnimatorCallback only receives valueDeltas each frame and no absolute values,  the location of the value interval doesn't matter.
         
         let now: CFTimeInterval = CACurrentMediaTime()
         
