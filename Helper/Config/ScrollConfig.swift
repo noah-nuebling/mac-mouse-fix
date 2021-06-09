@@ -86,7 +86,7 @@ import Cocoa
     @objc static var frictionCoefficient: Double {
         smooth["friction"] as! Double;
     }
-    @objc static var frictionDepth: Double {
+    @objc static var frictionDepth: Double { // Todo: Unused, remove
         smooth["frictionDepth"] as! Double;
     }
     @objc static var accelerationForScrollBuffer: Double { // TODO: Unused, remove
@@ -104,7 +104,7 @@ import Cocoa
         return ExtrapolatedBezier.init(controlPoints: controlPoints, xInterval: scrollTickSpeedInterval, yInterval: animationSpeedInterval)
     }
 
-    @objc static var nOfOnePixelScrollsMax: Int {
+    @objc static var nOfOnePixelScrollsMax: Int { // TODO: Probably unused. Consider removing
         smooth["onePixelScrollsLimit"] as! Int // After opl+1 frames of only scrolling 1 pixel, scrolling stops. Should probably change code to stop after opl frames.
     }
 

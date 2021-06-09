@@ -18,8 +18,8 @@ typedef void(^DisplayLinkCallback)(void);
 
 @property (copy) DisplayLinkCallback callback;
 
-+ (instancetype)displayLinkWithCallback:(DisplayLinkCallback)callback;
-- (void)start;
++ (instancetype)displayLink;
+- (void)startWithCallback:(DisplayLinkCallback)callback;
 - (void)stop;
 - (CVReturn)linkToMainScreen;
 

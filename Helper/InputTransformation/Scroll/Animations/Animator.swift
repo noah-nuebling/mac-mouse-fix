@@ -15,21 +15,17 @@ import Foundation
     
     // Vars - Init
     
-    var displayLink: DisplayLink
-    var callback: AnimatorCallback
-    var animationCurve: RealFunction /// This class assumes that `animationCurve` passes through `(0, 0)` and `(1, 1)`
+    let displayLink: DisplayLink
+    var callback: AnimatorCallback?
+    var animationCurve: RealFunction? /// This class assumes that `animationCurve` passes through `(0, 0)` and `(1, 1)`
     
     // Init
     
-    init(callback: @escaping AnimatorCallback, animationCurve: RealFunction) {
+    @objc override init() {
         
         self.displayLink = DisplayLink.init()
-        self.callback = callback
-        self.animationCurve = animationCurve
         
         super.init()
-        
-        self.displayLink = DisplayLink.init(callback: { self.displayLinkCallback() })
     }
     
     // Vars - Start
@@ -45,16 +41,19 @@ import Foundation
     
     // Vars -  Interface
     
-    var animationTimeLeft: Double {
+    @objc var animationTimeLeft: Double {
         return animationTimeInterval.length - lastAnimationTime
     }
-    var animationValueLeft: Double {
+    @objc var animationValueLeft: Double {
         return animationValueInterval.length - lastAnimationValue
     }
     
     // Start
     
-    func startAnimation(duration: CFTimeInterval, valueInterval: Interval) {
+    @objc func start(duration: CFTimeInterval,
+                     valueInterval: Interval,
+                     animationCurve: RealFunction,
+                     callback: @escaping AnimatorCallback) {
         /// The use of 'Interval' in CFTimeInterval is kind of confusing, since its also used to spedify points in time (It's just a `Double`), and also it has nothing to do with our `Interval` class, which is much closer to an Interval in the Mathematical sense.
         
         let now: CFTimeInterval = CACurrentMediaTime()
@@ -67,7 +66,15 @@ import Foundation
         
         animationPhase = kMFAnimationPhaseBegin
         
-        self.displayLink.start()
+        self.displayLink.start(callback: {
+            self.displayLinkCallback()
+        })
+    }
+    
+    /// Stop
+    
+    @objc func stop() {
+        self.displayLink.stop()
     }
     
     /// DisplayLink callback
@@ -76,6 +83,13 @@ import Foundation
     
     func displayLinkCallback() {
         /// I'm usually a fan of commenting even obvious things, to structure the code and make it easier to parse, but this is overkill. I think the comments make it less readable
+        
+        guard let callback = self.callback else {
+            assert(false, "Invalid state - callback can't be nil during running animation")
+        }
+        guard let animationCurve = self.animationCurve else {
+            assert(false, "Invalid state - animationCurve can't be nil during running animation")
+        }
         
         /// Get current animation time aka `now`
         
@@ -90,7 +104,7 @@ import Foundation
         /// Get normalized time and value
         
         let animationTimeUnit: Double = Math.scale(value: now, from: animationTimeInterval, to: Interval.unitInterval()) /// From 0 to 1
-        let animationValueUnit: Double = self.animationCurve.evaluate(at: animationTimeUnit) /// From 0 to 1
+        let animationValueUnit: Double = animationCurve.evaluate(at: animationTimeUnit) /// From 0 to 1
         
         /// Get actual animation value
         
@@ -103,7 +117,7 @@ import Foundation
         
         /// Call the callback
         
-        self.callback(animationValueDelta, animationTimeDelta, animationPhase)
+        callback(animationValueDelta, animationTimeDelta, animationPhase)
         
         /// Update phases
         

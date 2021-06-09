@@ -26,25 +26,17 @@
 
 // Convenience init
 
-+ (instancetype)displayLinkWithCallback:(DisplayLinkCallback)callback {
-    /// The passed in block will be executed every time the display refreshes until `- stop` is called or this instance is deallocated.
-    /// Call `setToMainScreen` to link with the screen that currently has keyboard focus.
++ (instancetype)displayLink {
     
-    DisplayLink *instance = [[DisplayLink alloc] initWithBlock:callback];
-    
-    return instance;
+    return [[DisplayLink alloc] init];
 }
 
 // Init
 
-- (instancetype)initWithBlock:(DisplayLinkCallback)callback
-{
+- (instancetype)init {
+    
     self = [super init];
     if (self) {
-        
-        // Assign block
-        
-        self.callback = callback;
         
         // Setup internal CVDisplayLink
         
@@ -70,7 +62,10 @@
 
 // Start and stop
 
-- (void)start {
+- (void)startWithCallback:(DisplayLinkCallback)callback {
+    /// The passed in block will be executed every time the display refreshes until `- stop` is called or this instance is deallocated.
+    /// Call `setToMainScreen` to link with the screen that currently has keyboard focus.
+    
     CVDisplayLinkStart(_displayLink);
     CGDisplayRegisterReconfigurationCallback(displayReconfigurationCallback, (__bridge void * _Nullable)(self));
 }

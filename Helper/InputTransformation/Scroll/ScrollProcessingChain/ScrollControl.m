@@ -32,6 +32,8 @@ static CGEventSourceRef _eventSource;
 
 static dispatch_queue_t _scrollQueue;
 
+static Animator *_animator;
+
 static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this to Config or some sort of OverrideManager class
 + (AXUIElementRef) systemWideAXUIElement {
     return _systemWideAXUIElement;
@@ -66,6 +68,9 @@ static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this
         CFRelease(runLoopSource);
         CGEventTapEnable(_eventTap, false); // Not sure if this does anything
     }
+    
+    // Create animator
+    _animator = [[Animator alloc] init];
 }
 
 + (void)resetDynamicGlobals {
@@ -216,8 +221,19 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
     
     int64_t pxPerTick = getPxPerTick(scrollAnalysisResult.smoothedTimeBetweenTicks);
 
-//    Animator
+    // Get parameters for animator
     
+    // Duration
+    CFTimeInterval animationDuration = ScrollConfig.msPerStep / 1000;
+    
+    // Distance
+    double pxLeftToScroll = _animator.animationValueLeft;
+    Interval *animationValueInterval = [[Interval alloc] initWithStart:0 end:(pxPerTick + pxLeftToScroll)]
+    
+    // Curve
+    id<RealFunction> animationCurve = ScrollConfig.
+    
+    _animator startWithDuration:<#(CFTimeInterval)#> valueInterval:<#(Interval * _Nonnull)#> animationCurve:<#(id<RealFunction> _Nonnull)#> callback:<#^(double, double, MFAnimationPhase)callback#>
     
 //    DDLogDebug(@"Scroll speed unsmoothed: %f", scrollAnalysisResult.ticksPerSecondUnsmoothed);
 //    DDLogDebug(@"Scroll speed: %f", scrollAnalysisResult.ticksPerSecond);
