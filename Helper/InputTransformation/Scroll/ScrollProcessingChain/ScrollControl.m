@@ -216,7 +216,7 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
     
     int64_t pxPerTick = getPxPerTick(scrollAnalysisResult.smoothedTimeBetweenTicks);
 
-    Animator
+//    Animator
     
     
 //    DDLogDebug(@"Scroll speed unsmoothed: %f", scrollAnalysisResult.ticksPerSecondUnsmoothed);
