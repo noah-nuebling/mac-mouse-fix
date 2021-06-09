@@ -11,7 +11,8 @@
 #define Animator_h
 
 typedef enum {
-    kMFAnimationPhaseBegin,
+    kMFAnimationPhaseStart,
+    kMFAnimationPhaseRunningStart,
     kMFAnimationPhaseContinue,
     kMFAnimationPhaseEnd,
     kMFAnimationPhaseNone,

@@ -11,7 +11,7 @@ import Foundation
 
 @objc class Animator : NSObject{
     
-    typealias AnimatorCallback = (_ animationValue: Double, _ animationValueDelta: Double, _ phase: MFAnimationPhase) -> ()
+    typealias AnimatorCallback = (_ animationValueDelta: Double, _ animationTimeDelta: Double, _ phase: MFAnimationPhase) -> ()
     
     // Vars - Init
     
@@ -28,10 +28,14 @@ import Foundation
         super.init()
     }
     
-    // Vars - Start
+    // Vars - Start & stop
     
     var animationTimeInterval: Interval = Interval.unitInterval()
     var animationValueInterval: Interval = Interval.unitInterval()
+    
+    var isRunning: Bool {
+        self.displayLink.isRunning()
+    }
     
     // Vars - DisplayLink
     
@@ -55,6 +59,7 @@ import Foundation
                      animationCurve: RealFunction,
                      callback: @escaping AnimatorCallback) {
         /// The use of 'Interval' in CFTimeInterval is kind of confusing, since its also used to spedify points in time (It's just a `Double`), and also it has nothing to do with our `Interval` class, which is much closer to an Interval in the Mathematical sense.
+        /// Will be restarted if it's already running. No need to call stop before calling this.
         
         let now: CFTimeInterval = CACurrentMediaTime()
         
@@ -64,7 +69,11 @@ import Foundation
         lastAnimationTime = now
         lastAnimationValue = animationValueInterval.start
         
-        animationPhase = kMFAnimationPhaseBegin
+        if (isRunning) {
+            animationPhase = kMFAnimationPhaseRunningStart;
+        } else {
+            animationPhase = kMFAnimationPhaseStart;
+        }
         
         self.displayLink.start(callback: {
             self.displayLinkCallback()
@@ -121,7 +130,7 @@ import Foundation
         
         /// Update phases
         
-        if animationPhase == kMFAnimationPhaseBegin {
+        if animationPhase == kMFAnimationPhaseStart {
             animationPhase = kMFAnimationPhaseContinue
         } else if animationPhase == kMFAnimationPhaseEnd {
             displayLink.stop()

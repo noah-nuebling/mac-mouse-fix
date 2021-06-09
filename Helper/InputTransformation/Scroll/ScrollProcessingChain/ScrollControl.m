@@ -219,7 +219,7 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
     
     // Get pixels to scroll for this event
     
-    int64_t pxPerTick = getPxPerTick(scrollAnalysisResult.smoothedTimeBetweenTicks);
+
 
     // Get parameters for animator
     
@@ -227,13 +227,16 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
     CFTimeInterval animationDuration = ScrollConfig.msPerStep / 1000;
     
     // Distance
+    int64_t pxToScrollForThisTick = getPxPerTick(scrollAnalysisResult.smoothedTimeBetweenTicks);
     double pxLeftToScroll = _animator.animationValueLeft;
-    Interval *animationValueInterval = [[Interval alloc] initWithStart:0 end:(pxPerTick + pxLeftToScroll)]
+    Interval *animationValueInterval = [[Interval alloc] initWithStart:0 end:(pxToScrollForThisTick + pxLeftToScroll)];
     
     // Curve
-    id<RealFunction> animationCurve = ScrollConfig.
+    id<RealFunction> animationCurve = ScrollConfig.animationCurve;
     
-    _animator startWithDuration:<#(CFTimeInterval)#> valueInterval:<#(Interval * _Nonnull)#> animationCurve:<#(id<RealFunction> _Nonnull)#> callback:<#^(double, double, MFAnimationPhase)callback#>
+    [_animator startWithDuration:animationDuration valueInterval:animationValueInterval animationCurve:animationCurve callback:^(double timeDelta, double valueDelta, MFAnimationPhase phase) {
+            <#code#>
+    }];
     
 //    DDLogDebug(@"Scroll speed unsmoothed: %f", scrollAnalysisResult.ticksPerSecondUnsmoothed);
 //    DDLogDebug(@"Scroll speed: %f", scrollAnalysisResult.ticksPerSecond);

@@ -83,25 +83,34 @@ import Cocoa
     @objc static var msPerStep: Int {
         smooth["msPerStep"] as! Int;
     }
-    @objc static var frictionCoefficient: Double {
-        smooth["friction"] as! Double;
-    }
-    @objc static var frictionDepth: Double { // Todo: Unused, remove
-        smooth["frictionDepth"] as! Double;
-    }
-    @objc static var accelerationForScrollBuffer: Double { // TODO: Unused, remove
-        smooth["acceleration"] as! Double;
-    }
     @objc static var accelerationCurve: (() -> RealFunction) = DerivedProperty.create_kvc(on: ScrollConfig.self, given: [#keyPath(pxPerTickBase)]) { () -> RealFunction in
         
         typealias P = Bezier.Point
         
-        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:0.7,y:1), P(x:1,y:1)]
+        let controlPoints: [P] = [P(x:0,y:0), P(x:0.2,y:0), P(x:0,y:0), P(x:1,y:1)]
         
         let scrollTickSpeedInterval: Interval = Interval.init(start: 0.0, end: 50.0)
         let animationSpeedInterval: Interval = Interval.init(start: Double(ScrollConfig.self.pxPerTickBase), end: 300.0)
         
         return ExtrapolatedBezier.init(controlPoints: controlPoints, xInterval: scrollTickSpeedInterval, yInterval: animationSpeedInterval)
+    }
+    @objc static var animationCurve: RealFunction = { () -> RealFunction in
+        /// Using a closure here instead of DerivedProperty.create_kvc(), because we know it will never change.
+        
+        typealias P = Bezier.Point
+        
+        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:0.7,y:1), P(x:1,y:1)]
+        
+        return Bezier.init(controlPoints: controlPoints)
+    }()
+    @objc static var dragCoefficient: Double {
+        smooth["friction"] as! Double;
+    }
+    @objc static var dragExponent: Double {
+        smooth["frictionDepth"] as! Double;
+    }
+    @objc static var accelerationForScrollBuffer: Double { // TODO: Unused, remove
+        smooth["acceleration"] as! Double;
     }
 
     @objc static var nOfOnePixelScrollsMax: Int { // TODO: Probably unused. Consider removing

@@ -74,6 +74,10 @@
     CGDisplayRemoveReconfigurationCallback(displayReconfigurationCallback, (__bridge void * _Nullable)(self));
 }
 
+- (BOOL)isRunning {
+    return CVDisplayLinkIsRunning(self.displayLink);
+}
+
 // Set display to mouse location
 
 - (CVReturn)linkToMainScreen {
