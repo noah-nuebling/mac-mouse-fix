@@ -28,7 +28,7 @@
 #import "GestureScrollSimulator.h"
 #import "ScrollConfigObjC.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
-#import "AnimationCurve.h"
+#import "CubicUnitBezier.h"
 
 @implementation SmoothScroll
 
@@ -69,9 +69,9 @@ static int      _onePixelScrollsCounter;
     
     NSArray *points = @[@[@(0.0),@(0.0)], @[@(0.0),@(0.0)], @[@(1.0),@(1.0)], @[@(1.0),@(1.0)]];
     
-    BezierCurve *bezierCurve = [[BezierCurve alloc] initWithControlPointsAsArrays:points];
+    Bezier *bezierCurve = [[Bezier alloc] initWithControlPointsAsArrays:points];
     
-    AnimationCurve *animationCurve = [AnimationCurve alloc];
+    CubicUnitBezier *animationCurve = [CubicUnitBezier alloc];
     [animationCurve UnitBezierForPoint1x:[points[1][0] doubleValue] point1y:[points[1][1] doubleValue] point2x:[points[2][0] doubleValue] point2y:[points[2][1] doubleValue]];
     
     _animationCurve = bezierCurve;

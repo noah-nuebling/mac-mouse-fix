@@ -13,12 +13,12 @@ import Cocoa
 /// With this class you can create a BezierCurve which is then linearly extrapolated before the first and after the last control point
 /// https://en.wikipedia.org/wiki/Extrapolation#Linear
 /// I think this will be really useful for defining acceleration curves
-class ExtrapolatedBezierCurve: BezierCurve {
+class ExtrapolatedBezier: Bezier {
 
     var preLine: Line
     var postLine: Line
     
-    override init(controlPoints: [BezierCurve.Point], defaultEpsilon: Double = 0.08) {
+    override init(controlPoints: [Bezier.Point], defaultEpsilon: Double = 0.08) {
         
         // Init lines so we can call super.init. This is the only reason the lines are var and not let. Swift is weird.
         // See here for an explanation of this problem: https://stackoverflow.com/questions/24021093/error-in-swift-class-property-not-initialized-at-super-init-call

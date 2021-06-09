@@ -24,10 +24,10 @@
  */
 
 
-#import "AnimationCurve.h"
+#import "CubicUnitBezier.h"
 #include <math.h>
 
-@implementation AnimationCurve
+@implementation CubicUnitBezier
 
 double ax;
 double bx;

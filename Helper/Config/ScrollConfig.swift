@@ -94,14 +94,14 @@ import Cocoa
     }
     @objc static var accelerationCurve: (() -> RealFunction) = DerivedProperty.create_kvc(on: ScrollConfig.self, given: [#keyPath(pxPerTickBase)]) { () -> RealFunction in
         
-        typealias P = BezierCurve.Point
+        typealias P = Bezier.Point
         
         let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:0.7,y:1), P(x:1,y:1)]
         
         let scrollTickSpeedInterval: Interval = Interval.init(start: 0.0, end: 50.0)
         let animationSpeedInterval: Interval = Interval.init(start: Double(ScrollConfig.self.pxPerTickBase), end: 300.0)
         
-        return ExtrapolatedBezierCurve.init(controlPoints: controlPoints, xInterval: scrollTickSpeedInterval, yInterval: animationSpeedInterval)
+        return ExtrapolatedBezier.init(controlPoints: controlPoints, xInterval: scrollTickSpeedInterval, yInterval: animationSpeedInterval)
     }
 
     @objc static var nOfOnePixelScrollsMax: Int {

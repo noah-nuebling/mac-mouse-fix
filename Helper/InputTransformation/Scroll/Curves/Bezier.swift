@@ -52,7 +52,7 @@ import ReactiveSwift
 ///     It should be faster than the derivative of the explicit form which we currently use
 ///     https://www.clear.rice.edu/comp360/lectures/old/BezText.pdf
 
-@objc class BezierCurve: NSObject, RealFunction {
+@objc class Bezier: NSObject, RealFunction {
 
     typealias Point = Vector;
     let xAxis = kMFAxisHorizontal
@@ -103,7 +103,7 @@ import ReactiveSwift
     
     // MARK: Init
     
-    private class func convertNSPointsToPoints(_ controlNSPoints: [NSPoint]) -> [BezierCurve.Point] {
+    private class func convertNSPointsToPoints(_ controlNSPoints: [NSPoint]) -> [Bezier.Point] {
         /// Helper function for objc  init functions
         /// Unused - remove
         
@@ -114,7 +114,7 @@ import ReactiveSwift
             return point
         }
     }
-    private class func convertPointArraysToPoints(_ controlPointsAsArrays: [[Double]]) -> [BezierCurve.Point] {
+    private class func convertPointArraysToPoints(_ controlPointsAsArrays: [[Double]]) -> [Bezier.Point] {
         /// Helper function for objc  init functions
         
         return controlPointsAsArrays.map { (pointArray: [Double]) -> Point in
@@ -133,12 +133,12 @@ import ReactiveSwift
         /// `controlPointsAsArrays` is expected to have this structure: `[[x,y],[x,y],[x,y],...]`
         
         
-        let controlPoints: [Point] = BezierCurve.convertPointArraysToPoints(controlPointsAsArrays)
+        let controlPoints: [Point] = Bezier.convertPointArraysToPoints(controlPointsAsArrays)
         self.init(controlPoints: controlPoints, xInterval: xInterval, yInterval: yInterval)
     }
     @objc convenience init(controlPointsAsArrays: [[Double]]) {
         
-        let controlPoints: [Point] = BezierCurve.convertPointArraysToPoints(controlPointsAsArrays)
+        let controlPoints: [Point] = Bezier.convertPointArraysToPoints(controlPointsAsArrays)
         self.init(controlPoints: controlPoints)
     }
     
