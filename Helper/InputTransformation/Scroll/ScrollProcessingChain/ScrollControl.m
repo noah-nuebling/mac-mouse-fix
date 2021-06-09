@@ -66,8 +66,6 @@ static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this
         CFRelease(runLoopSource);
         CGEventTapEnable(_eventTap, false); // Not sure if this does anything
     }
-    
-    //
 }
 
 + (void)resetDynamicGlobals {
@@ -216,9 +214,10 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
     
     // Get pixels to scroll for this event
     
-    int64_t pxToScrollForThisTick;
-    pxToScrollForThisTick = accelerate(scrollAnalysisResult.smoothedTimeBetweenTicks);
-//    pxToScrollForThisTick = scrollDeltaPoint;
+    int64_t pxPerTick = getPxPerTick(scrollAnalysisResult.smoothedTimeBetweenTicks);
+
+    Animator
+    
     
 //    DDLogDebug(@"Scroll speed unsmoothed: %f", scrollAnalysisResult.ticksPerSecondUnsmoothed);
 //    DDLogDebug(@"Scroll speed: %f", scrollAnalysisResult.ticksPerSecond);
@@ -237,18 +236,20 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
     CFRelease(event);
 }
 
-static int64_t accelerate(CFTimeInterval timeBetweenTicks) {
+static int64_t getPxPerTick(CFTimeInterval timeBetweenTicks) {
     /// @discussion See the RawAccel guide for more info on acceleration curves https://github.com/a1xd/rawaccel/blob/master/doc/Guide.md
     ///     -> Edit: I read up on it and I don't see why the sensitivity-based approach that RawAccel uses is useful.
     ///     They define the base curve as for sensitivity, but then go through complex maths and many hurdles to make the implied outputVelocity(inputVelocity function and its derivative smooth. Because that is what makes the acceleration feel predictable and nice. (See their "Gain" algorithm)
     ///     Then why not just define the the outputVelocity(inputVelocity) curve to be a smooth curve to begin with? Why does sensitivity matter? It doesn't make sens to me.
     ///     I'm just gonna use a BezierCurve to define the outputVelocity(inputVelocity) curve. Then I'll extrapolate the curve linearly at the end, so its defined everywhere. That is guaranteed to be smooth and easy to configure!
     
-    double tickSpeed = 1/timeBetweenTicks;
+    double scrollSpeed = 1/timeBetweenTicks; /// In tick/s
     
-//    ScrollConfig.scrollAccelerationCurve;
+    double animationSpeed = [ScrollConfig.accelerationCurve() evaluateAt:scrollSpeed]; /// In px/s
     
-    return 0; // TODO change this
+    double scaling = scrollSpeed / animationSpeed; /// In px/tick
+    
+    return (int64_t)scaling; /// We could use a SubPixelator balance out the rounding errors, but I don't think that'll be noticable
 }
 
 
