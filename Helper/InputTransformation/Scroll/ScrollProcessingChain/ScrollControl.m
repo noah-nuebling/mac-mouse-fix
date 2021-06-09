@@ -65,7 +65,7 @@ static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this
     if (_eventTap == nil) {
         CGEventMask mask = CGEventMaskBit(kCGEventScrollWheel);
         _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
-        DDLogInfo(@"_eventTap: %@", _eventTap);
+        DDLogDebug(@"_eventTap: %@", _eventTap);
         CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _eventTap, 0);
         CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes);
         CFRelease(runLoopSource);
@@ -205,7 +205,7 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
     /// Update configuration
 ///         Checking which app is under the mouse pointer is really slow, so we only do it when necessary
     
-    if (scrollAnalysisResult.consecutiveScrollTickCounter == 0) { /// Only do this on the first of each series of consecutive scroll ticks
+    if (scrollAnalysisResult.consecutiveScrollTickCounter == 0) {
         
         [ScrollUtility updateMouseDidMoveWithEvent:event];
         if (!ScrollUtility.mouseDidMove) {
@@ -219,6 +219,7 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
             if (configChanged) {
                 [SmoothScroll stop]; // Not sure if useful
                 [RoughScroll stop]; // Not sure if useful
+                /// TODO: Reset _animator here
             }
         }
         if (ScrollUtility.mouseDidMove) {
@@ -238,7 +239,13 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
         pxToScrollForThisTick *= ScrollConfig.fastScrollFactor * pow(ScrollConfig.fastScrollExponentialBase, ((int32_t)fastScrollThresholdDelta)); /// TODO: Tune this up a little
     }
     
-    if (ScrollConfig.smoothEnabled) {
+    if (!ScrollConfig.smoothEnabled) {
+        /// Send scroll event directly. Will scroll all of pxToScrollForThisTick at once.
+        
+        scroll(pxToScrollForThisTick, NO, 0);
+        
+    } else {
+        /// Send scroll events through animator, spread out over time.
     
         /// Get parameters for animator
         
@@ -261,69 +268,25 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
         [_animator startWithDuration:animationDuration valueInterval:animationValueInterval animationCurve:animationCurve callback:^(double timeDelta, double valueDelta, MFAnimationPhase animationPhase) {
             /// This will be called each frame
             
+            /// Get phase
             
+            IOHIDEventPhaseBits scrollPhase;
             
-            /// Subpixelate valueDelta to balance out rounding errors
-            
-            int64_t pxToScrollThisFrame = [_subPixelator intDeltaWithDoubleDelta:valueDelta];
-            
-            /// Send zoom event
-            ///  Could subpixelate after this
-            
-            if (ScrollModifiers.magnificationScrolling) {
-                [ScrollModifiers handleMagnificationScrollWithAmount:pxToScrollThisFrame/800.0];
-                return;
-            }
-            
-            BOOL isContinuous = YES;
-            if (!isContinuous) {
-                CGEventRef event = CGEventCreateScrollWheelEvent(NULL, kCGScrollEventUnitLine, 1, (int32_t)pxToScrollThisFrame);
-                CGEventPost(kCGSessionEventTap, event);
+            if (animationPhase == kMFAnimationPhaseStart) {
+                scrollPhase = kIOHIDEventPhaseBegan;
+            } else if (animationPhase == kMFAnimationPhaseRunningStart || animationPhase == kMFAnimationPhaseContinue) {
+                scrollPhase = kIOHIDEventPhaseChanged;
+            } else if (animationPhase == kMFAnimationPhaseEnd) {
+                scrollPhase = kIOHIDEventPhaseEnded;
             } else {
-                
-                /// Get x and y deltas
-                
-                double dx = 0;
-                double dy = 0;
-                if (ScrollModifiers.horizontalScrolling)    dx = pxToScrollThisFrame;
-                else                                        dy = pxToScrollThisFrame;
-                
-                /// Get phase
-                
-                IOHIDEventPhaseBits scrollPhase;
-                
-                if (animationPhase == kMFAnimationPhaseStart) {
-                    scrollPhase = kIOHIDEventPhaseBegan;
-                } else if (animationPhase == kMFAnimationPhaseRunningStart || animationPhase == kMFAnimationPhaseContinue) {
-                    scrollPhase = kIOHIDEventPhaseChanged;
-                } else if (animationPhase == kMFAnimationPhaseEnd) {
-                    scrollPhase = kIOHIDEventPhaseEnded;
-                } else {
-                    assert(false);
-                }
-                
-                /// Send event
-                
-                [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:scrollPhase isGestureDelta:NO];
+                assert(false);
             }
+            
+            /// Scroll
+            
+            scroll(valueDelta, YES, scrollPhase);
         }];
     }
-    
-//    DDLogDebug(@"Scroll speed unsmoothed: %f", scrollAnalysisResult.ticksPerSecondUnsmoothed);
-//    DDLogDebug(@"Scroll speed: %f", scrollAnalysisResult.ticksPerSecond);
-//    DDLogDebug(@"Tick ctr: %lld", scrollAnalysisResult.consecutiveScrollTickCounter);
-//    DDLogDebug(@"Swip ctr: %lld", scrollAnalysisResult.consecutiveScrollSwipeCounter);
-    
-//    if (ScrollConfig.smoothEnabled) {
-//        [SmoothScroll start];   // Not sure if useful
-//        [RoughScroll stop];     // Not sure if useful
-//        [SmoothScroll handleInput:event scrollAnalysisResult:scrollAnalysisResult];
-//    } else {
-//        [SmoothScroll stop];
-//        [RoughScroll start];
-//        [RoughScroll handleInput:event];
-//    }
-    
     
     CFRelease(event);
 }
@@ -342,6 +305,42 @@ static int64_t getPxPerTick(CFTimeInterval timeBetweenTicks) {
     double scaling = scrollSpeed / animationSpeed; /// In px/tick
     
     return (int64_t)scaling; /// We could use a SubPixelator balance out the rounding errors, but I don't think that'll be noticable
+}
+
+static void scroll(double px, BOOL gesture, IOHIDEventPhaseBits scrollPhase) {
+    /// scrollPhase is only used when `gesture` is YES
+    
+    /// Subpixelate px to balance out rounding errors
+    
+    int64_t pxToScrollThisFrame = [_subPixelator intDeltaWithDoubleDelta:px];
+    
+    /// Send zoom event
+    ///  Could subpixelate after this
+    
+    if (ScrollModifiers.magnificationScrolling) {
+        [ScrollModifiers handleMagnificationScrollWithAmount:pxToScrollThisFrame/800.0];
+        return;
+    }
+    if (!gesture) {
+        
+        // Send line-based scroll event
+        
+        CGEventRef event = CGEventCreateScrollWheelEvent(NULL, kCGScrollEventUnitLine, 1, (int32_t)pxToScrollThisFrame);
+        CGEventPost(kCGSessionEventTap, event);
+        
+    } else {
+        
+        /// Get x and y deltas
+        
+        double dx = 0;
+        double dy = 0;
+        if (ScrollModifiers.horizontalScrolling)    dx = pxToScrollThisFrame;
+        else                                        dy = pxToScrollThisFrame;
+        
+        /// Send event
+        
+        [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:scrollPhase isGestureDelta:NO];
+    }
 }
 
 
