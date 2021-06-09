@@ -103,8 +103,8 @@ class Drag: RealFunction {
     var c: Double
     var k: Double
     
-    var timeToStop: Double
-    var distanceToStop: Double
+    var timeInterval: Interval
+    var distanceInterval: Interval
 
     init(coefficient:Double, exponent: Double, initialSpeed v0: Double, stopSpeed vs: Double) {
         /// Speed will never reach 0 exactly so we need to specify `stopSpeed`, the speed at which we consider it stopped
@@ -112,10 +112,10 @@ class Drag: RealFunction {
         self.a = coefficient
         self.b = exponent
         
-        c = 0 // Initialize everything to 0 so swift doesn't complain when we use instance methods
+        c = 0 // Initialize everything so swift doesn't complain when we use instance methods
         k = 0
-        timeToStop = 0
-        distanceToStop = 0
+        timeInterval = Interval(location: 0, length: 0)
+        distanceInterval = Interval(location: 0, length: 0)
         
         // Choose c such that v(t) passes through (t: 0, v: v0)
         c = getC(t: 0, v: v0)
@@ -124,8 +124,10 @@ class Drag: RealFunction {
         k = getK(t: 0, d: 0)
         
         // Get time and distance to stop
-        timeToStop = getT(v: vs)
-        distanceToStop = getD(t: timeToStop, k: self.k)
+        let timeToStop = getT(v: vs)
+        let distanceToStop = getD(t: timeToStop, k: self.k)
+        self.timeInterval = Interval(location: 0, length: timeToStop)
+        self.distanceInterval = Interval(location: 0, length: distanceToStop)
     }
     
     /// v(t)
@@ -158,11 +160,11 @@ class Drag: RealFunction {
     /// Interface
     
     func evaluate(at tUnit: Double) -> Double {
-        /// Animator.swift expects its animation curves to pass through (0,0) and (1,1), so we'll scale our curve accordingly before evaluating
+        /// Animator.swift expects its animation curves to pass through (0,0) and (1,1), so we'll scale our curve accordingly
         
-        let t = Math.scale(value: tUnit, from: .unitInterval(), to: Interval(start: 0, end: timeToStop))
+        let t = Math.scale(value: tUnit, from: .unitInterval(), to: timeInterval)
         let d = getD(t: t, k: self.k)
-        let dUnit = Math.scale(value: d, from: Interval(start: 0, end: distanceToStop), to: .unitInterval())
+        let dUnit = Math.scale(value: d, from: distanceInterval, to: .unitInterval())
         
         return dUnit
     }
