@@ -23,6 +23,14 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+/**
+ - Excerpts from the old "Fix Scrolling" Apple Note:
+    - Make animation curve with visual interface:  http://netcetera.org/camtf-playground.html
+    - WebKit Bezier Source Code: https://opensource.apple.com/source/WebCore/WebCore-955.66/platform/graphics/UnitBezier.h
+    - [x] Play with with epsilon for best performance-precision balance:
+        -> 0.008
+ - Would it be better to just use CAMediaTimingFunction?
+ */
 
 #import "CubicUnitBezier.h"
 #include <math.h>
