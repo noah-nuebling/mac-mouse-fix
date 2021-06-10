@@ -47,6 +47,8 @@ import Cocoa
     /// Scroll inversion
     
     @objc static var scrollInvert: MFScrollInversion {
+        /// This can be used as a factor to invert things. kMFScrollInversionInverted is -1.
+        
         if semanticScrollInvertUser == semanticScrollInvertSystem {
             return kMFScrollInversionNonInverted
         } else {
@@ -58,13 +60,9 @@ import Cocoa
     }
     private static var semanticScrollInvertSystem: MFSemanticScrollInversion {
         
-        let defaults = UserDefaults.init(suiteName: UserDefaults.globalDomain)
+        let defaults = UserDefaults.standard;
         
-        guard let isNatural = defaults?.bool(forKey: "com.apple.swipescrolldirection") else {
-            assert(false)
-            print("Couldn't find scroll inversion settings in global user defaults. Assuming it is natural scrolling direction")
-            return kMFSemanticScrollInversionNatural
-        }
+        let isNatural = defaults.bool(forKey: "com.apple.swipescrolldirection")
         
         return isNatural ? kMFSemanticScrollInversionNatural : kMFSemanticScrollInversionNormal
     }

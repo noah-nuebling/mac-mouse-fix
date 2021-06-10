@@ -160,6 +160,36 @@ static NSDictionary *_MFScrollPhaseToIOHIDEventPhase;
     return axis;
 }
 
++ (MFScrollDirection)directionForInputAxis:(MFAxis)axis
+                           inputDelta:(int64_t)inputDelta
+                        invertSetting:(MFScrollInversion)invertSetting
+                   horizontalModifier:(BOOL)horizontalModifier {
+    
+    /// Axis direction
+    
+    MFScrollInversion inputAxisDirection = [SharedUtility signOf:inputDelta];
+    MFScrollInversion effectiveAxisDirection = inputAxisDirection * invertSetting;
+    
+    /// Direction
+    
+    if (axis == kMFAxisHorizontal || horizontalModifier) {
+        /// H
+        if (effectiveAxisDirection == -1) {
+            return kMFScrollDirectionLeft;
+        } else {
+            return kMFScrollDirectionRight;
+        }
+    } else {
+        /// V
+        if (effectiveAxisDirection == -1) {
+            return kMFScrollDirectionUp;
+        } else {
+            return kMFScrollDirectionDown;
+        }
+    }
+}
+
+
 static BOOL _mouseDidMove = NO;
 + (BOOL)mouseDidMove {
     return _mouseDidMove;

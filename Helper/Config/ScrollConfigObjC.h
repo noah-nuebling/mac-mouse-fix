@@ -36,7 +36,8 @@ typedef enum {
     kMFScrollDirectionUp,
     kMFScrollDirectionRight,
     kMFScrollDirectionDown,
-    kMFScrollDirectionLeft
+    kMFScrollDirectionLeft,
+    kMFScrollDirectionNone
 } MFScrollDirection;
 
 

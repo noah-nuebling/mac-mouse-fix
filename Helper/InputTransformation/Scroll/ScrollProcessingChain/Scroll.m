@@ -165,29 +165,34 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         return event;
     }
     
-    // Get scrollAxis
+    // Get axis
     
-    MFAxis scrollAxis = [ScrollUtility axisForVerticalDelta:scrollDeltaAxis1 horizontalDelta:scrollDeltaAxis2];
+    MFAxis inputAxis = [ScrollUtility axisForVerticalDelta:scrollDeltaAxis1 horizontalDelta:scrollDeltaAxis2];
     
     // Get scrollDelta
     
     int64_t scrollDelta = 0; // Only initing this to 0 to silence Xcode warnings
     int64_t scrollDeltaPoint = 0;
     
-    if (scrollAxis == kMFAxisVertical) {
+    if (inputAxis == kMFAxisVertical) {
         scrollDelta = scrollDeltaAxis1;
         scrollDeltaPoint = CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1);
-    } else if (scrollAxis == kMFAxisHorizontal) {
+    } else if (inputAxis == kMFAxisHorizontal) {
         scrollDelta = scrollDeltaAxis2;
         scrollDeltaPoint = CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis2);
     } else {
         NSCAssert(NO, @"Invalid scroll axis");
     }
     
+    // Get effective direction
+    //  -> With user settings etc. applied
+    
+    MFScrollDirection scrollDirection = [ScrollUtility directionForInputAxis:inputAxis inputDelta:scrollDelta invertSetting:ScrollConfig.scrollInvert horizontalModifier:ScrollModifiers.horizontalScrolling];
+    
     // Run scrollAnalysis
     //  We want to do this here, not in _scrollQueue for more accurate timing
     
-    ScrollAnalysisResult scrollAnalysisResult = [ScrollAnalyzer updateWithTickOccuringNowWithDelta:scrollDelta axis:scrollAxis];
+    ScrollAnalysisResult scrollAnalysisResult = [ScrollAnalyzer updateWithTickOccuringNowWithDirection:scrollDirection];
     
     //  Executing heavy stuff on a different thread to prevent the eventTap from timing out. We wrote this before knowing that you can just re-enable the eventTap when it times out. But this doesn't hurt.
     
@@ -195,12 +200,13 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
     dispatch_async(_scrollQueue, ^{
         
-        heavyProcessing(eventCopy, scrollAnalysisResult);
+        heavyProcessing(eventCopy, scrollAnalysisResult, scrollDirection);
     });
+    
     return nil;
 }
 
-static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysisResult) {
+static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysisResult, MFScrollDirection scrollDirection) {
     
     /// Update configuration
 ///         Checking which app is under the mouse pointer is really slow, so we only do it when necessary
@@ -246,7 +252,7 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
     } else if (!ScrollConfig.smoothEnabled) {
         /// Send scroll event directly. Will scroll all of pxToScrollForThisTick at once.
         
-        sendScroll(pxToScrollForThisTick, NO, 0);
+        sendScroll(pxToScrollForThisTick, scrollDirection, NO, 0);
         
     } else {
         /// Send scroll events through animator, spread out over time.
@@ -254,7 +260,7 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
         /// Get parameters for animator
         
         /// Duration
-        CFTimeInterval animationDuration = ((CFTimeInterval)ScrollConfig.msPerStep) / 1000.0; /// Need to cast to CFTimeInterval (double), to make this a float division instead of int division
+        CFTimeInterval animationDuration = ((CFTimeInterval)ScrollConfig.msPerStep) / 1000.0; /// Need to cast to CFTimeInterval (double), to make this a float division instead of int division, yiedling 0
         
         /// Animation interval
         double pxLeftToScroll;
@@ -273,7 +279,8 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
         
         
         /// Start animation
-        [_animator startWithDuration:animationDuration valueInterval:animationValueInterval animationCurve:animationCurve callback:^(double valueDelta, double timeDelta, MFAnimationPhase animationPhase) {
+        [_animator startWithDuration:animationDuration valueInterval:animationValueInterval animationCurve:animationCurve
+                            callback:^(double valueDelta, double timeDelta, MFAnimationPhase animationPhase) {
             /// This will be called each frame
             
             /// Get phase
@@ -292,7 +299,7 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
             
             /// Scroll
             
-            sendScroll(valueDelta, YES, scrollPhase);
+            sendScroll(valueDelta, scrollDirection, YES, scrollPhase);
         }];
     }
     
@@ -315,49 +322,61 @@ static int64_t getPxPerTick(CFTimeInterval timeBetweenTicks) {
     return 40; /// We could use a SubPixelator balance out the rounding errors, but I don't think that'll be noticable
 }
 
-static void sendScroll(double px, BOOL gesture, IOHIDEventPhaseBits scrollPhase) {
+static void sendScroll(double px, MFScrollDirection scrollDirection, BOOL gesture, IOHIDEventPhaseBits scrollPhase) {
     /// scrollPhase is only used when `gesture` is YES
     
     /// Subpixelate px to balance out rounding errors
     
     int64_t pxToScrollThisFrame = [_subPixelator intDeltaWithDoubleDelta:px];
     
-    /// Send zoom event
-    ///  Could subpixelate after this instead of before
+    /// Get x and y deltas
     
-    if (ScrollModifiers.magnificationScrolling) {
-        [ScrollModifiers handleMagnificationScrollWithAmount:pxToScrollThisFrame/800.0];
-        return;
+    double dx = 0;
+    double dy = 0;
+    
+    if (scrollDirection == kMFScrollDirectionUp) {
+        dy = -px;
+    } else if (scrollDirection == kMFScrollDirectionDown) {
+        dy = px;
+    } else if (scrollDirection == kMFScrollDirectionLeft) {
+        dx = -px;
+    } else if (scrollDirection == kMFScrollDirectionRight) {
+        dx = px;
+    } else {
+        assert(false);
     }
     
-    if (!gesture) {
+    if (ScrollModifiers.magnificationScrolling) {
+        /// Send zoom event
+        ///  This doesn't need subpixelation, so we could subpixelate after this instead of before
+        
+        double anyAxisDelta = dx + dy; /// This works because, if dx != 0 -> dy == 0, and the other way around.
+        
+        [ScrollModifiers handleMagnificationScrollWithAmount:anyAxisDelta/800.0];
+        
+    } else if (!gesture) {
         /// Send line-based scroll event
         
         CGEventRef event = CGEventCreateScrollWheelEvent(NULL, kCGScrollEventUnitLine, 1, 0);
         
-        CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, 1);
-        CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1, pxToScrollThisFrame);
-        CGEventSetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1, pxToScrollThisFrame);
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, dy / fabs(dy)); /// Always 1, 0, or -1. These values are probably too small. We should study what these values should be more
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1, dy);
+        CGEventSetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1, dy);
         
-        if (ScrollModifiers.horizontalScrolling) {
-            [ScrollUtility makeScrollEventHorizontal:event];
-        }
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, dx / fabs(dx));
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1, dx);
+        CGEventSetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1, dx);
         
         CGEventPost(kCGSessionEventTap, event);
         
     } else {
         /// Send simulated two-finger swipe event
-     
-        /// Get x and y deltas
-        
-        double dx = 0;
-        double dy = 0;
-        if (ScrollModifiers.horizontalScrolling)    dx = pxToScrollThisFrame;
-        else                                        dy = pxToScrollThisFrame;
-        
-        /// Send event
         
         [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:scrollPhase isGestureDelta:NO];
+        
+        if (scrollPhase == kIOHIDEventPhaseEnded) { /// Hack to prevent momentum scroll. Should finds a better solution
+            [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx/fabs(dx) deltaY:dy/fabs(dy) phase:kIOHIDEventPhaseEnded isGestureDelta:NO];
+        }
     }
 }
 

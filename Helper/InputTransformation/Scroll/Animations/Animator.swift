@@ -106,10 +106,10 @@ import Foundation
         /// I'm usually a fan of commenting even obvious things, to structure the code and make it easier to parse, but this is overkill. I think the comments make it less readable
         
         guard let callback = self.callback else {
-            assert(false, "Invalid state - callback can't be nil during running animation")
+            fatalError("Invalid state - callback can't be nil during running animation")
         }
         guard let animationCurve = self.animationCurve else {
-            assert(false, "Invalid state - animationCurve can't be nil during running animation")
+            fatalError("Invalid state - animationCurve can't be nil during running animation")
         }
         
         /// Get current animation time aka `now`

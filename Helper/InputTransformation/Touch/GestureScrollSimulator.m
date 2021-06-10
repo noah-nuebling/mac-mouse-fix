@@ -186,7 +186,7 @@ static VectorSubPixelator *_scrollPixelator;
     // Post t22s0 event
     
     CGEventSetLocation(e22, eventLocation);
-    CGEventPost(kCGHIDEventTap, e22); // Needs to be kCGHIDEventTap instead of kCGSessionEventTap to work with Swish, but it will make the events feed back into our scroll event tap. That's not too bad though, because we ignore continuous events anyways.
+    CGEventPost(kCGSessionEventTap, e22); // Needs to be kCGHIDEventTap instead of kCGSessionEventTap to work with Swish, but it will make the events feed back into our scroll event tap. That's not too bad though, because we ignore continuous events anyways.
     CFRelease(e22);
     
     if (momentumPhase == 0) {
@@ -219,7 +219,7 @@ static VectorSubPixelator *_scrollPixelator;
         
         // Post t29s6 events
         CGEventSetLocation(e29, eventLocation);
-        CGEventPost(kCGHIDEventTap, e29);
+        CGEventPost(kCGSessionEventTap, e29);
 
         CFRelease(e29);
     }

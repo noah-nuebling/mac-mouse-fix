@@ -9,6 +9,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Constants.h"
+#import "ScrollConfigObjC.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -24,8 +25,7 @@ typedef struct {
     
 } ScrollAnalysisResult;
 
-+ (ScrollAnalysisResult)updateWithTickOccuringNowWithDelta:(int64_t)delta
-                                                      axis:(MFAxis)axis;
++ (ScrollAnalysisResult)updateWithTickOccuringNowWithDirection:(MFScrollDirection)direction;
 
 + (void)resetState;
 

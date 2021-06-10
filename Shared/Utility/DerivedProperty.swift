@@ -181,8 +181,7 @@ extension DerivedPropertyCreator {
         return { [weak owner] () -> T in
             
             guard let owner = owner else {
-                print("Self is nil. Something went wrong. Crashing the program.")
-                assert(false)
+                fatalError("Self is nil. Something went wrong. Crashing the program.")
             }
             
             let givenProperties: [AnyHashable] = getProperties(on: owner, at: keyPaths)
@@ -220,8 +219,7 @@ extension DerivedPropertyCreator {
         return { [weak owner] () -> T in
             
             guard let owner = owner else {
-                print("Self is nil. Something went wrong. Crashing the program.")
-                assert(false)
+                fatalError("Self is nil. Something went wrong. Crashing the program.")
             }
             
             let givenProperties: [AnyHashable] = getProperties(on: owner, at: keyPaths)

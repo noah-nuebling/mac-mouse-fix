@@ -9,6 +9,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Constants.h"
+#import "ScrollConfigObjC.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -34,6 +35,10 @@ typedef enum {
 + (CGEventRef)makeScrollEventHorizontal:(CGEventRef)event;
 + (BOOL)sameSign:(double)n and:(double)m;
 + (MFAxis)axisForVerticalDelta:(int64_t)deltaV horizontalDelta:(int64_t)deltaH;
++ (MFScrollDirection)directionForInputAxis:(MFAxis)axis
+                           inputDelta:(int64_t)inputDelta
+                        invertSetting:(MFScrollInversion)invertSetting
+                   horizontalModifier:(BOOL)horizontalModifier;
 + (BOOL)mouseDidMove;
 + (void)updateMouseDidMoveWithEvent:(CGEventRef)event;
 + (BOOL)frontMostAppDidChange;

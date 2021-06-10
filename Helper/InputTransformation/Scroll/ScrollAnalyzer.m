@@ -35,8 +35,7 @@ static DoubleExponentialSmoother *_tickTimeSmoother;
 
 static double _previousScrollTickTimeStamp = 0;
 static double _previousScrollSwipeTimeStamp = 0;
-static int64_t _previousDelta = 0;
-static MFAxis _previousAxis = kMFAxisNone;
+static MFScrollDirection _previousDirection = kMFScrollDirectionNone;
 
 static int _consecutiveScrollTickCounter;
 static int _consecutiveScrollSwipeCounter;
@@ -50,10 +49,8 @@ static int _consecutiveScrollSwipeCounter;
     _previousScrollTickTimeStamp = 0;
     _previousScrollSwipeTimeStamp = 0;
     
-    _previousDelta = 0;
-    _previousAxis = kMFAxisNone;
-    // ^ These need to be 0 and kMFAxisNone, so that _scrollDirectionDidChange will definitely evaluate to no on the next tick
-    
+    _previousDirection = kMFScrollDirectionNone;
+    // ^ This needs to be set to none, so that scrollDirectionDidChange will definitely evaluate to NO on the next tick
     
     // The following are probably not necessary to reset, because the above resets will indirectly cause them to be reset on the next tick
     _consecutiveScrollTickCounter = 0;
@@ -65,21 +62,18 @@ static int _consecutiveScrollSwipeCounter;
 }
 
 /// This is the main input function which should be called on each scrollwheel tick event
-+ (ScrollAnalysisResult)updateWithTickOccuringNowWithDelta:(int64_t)delta
-                                                      axis:(MFAxis)axis
++ (ScrollAnalysisResult)updateWithTickOccuringNowWithDirection:(MFScrollDirection)direction
 {
     
     // Update directionDidChange
     // Checks whether the sign of input number is different from when this function was last called. Writes result into `_scrollDirectionDidChange`.
     
     BOOL scrollDirectionDidChange = NO;
-    if (!(_previousAxis == kMFAxisNone) && axis != _previousAxis) {
-        scrollDirectionDidChange = YES;
-    } else if (![ScrollUtility sameSign:delta and:_previousDelta]) {
+    
+    if (direction != _previousDirection && _previousDirection != kMFScrollDirectionNone) {
         scrollDirectionDidChange = YES;
     }
-    _previousAxis = axis;
-    _previousDelta = delta;
+    _previousDirection = direction;
     
     // Reset state if scroll direction changed
     if (scrollDirectionDidChange) {
