@@ -319,21 +319,31 @@ static void scroll(double px, BOOL gesture, IOHIDEventPhaseBits scrollPhase) {
     int64_t pxToScrollThisFrame = [_subPixelator intDeltaWithDoubleDelta:px];
     
     /// Send zoom event
-    ///  Could subpixelate after this
+    ///  Could subpixelate after this instead of before
     
     if (ScrollModifiers.magnificationScrolling) {
         [ScrollModifiers handleMagnificationScrollWithAmount:pxToScrollThisFrame/800.0];
         return;
     }
+    
     if (!gesture) {
+        /// Send line-based scroll event
         
-        // Send line-based scroll event
+        CGEventRef event = CGEventCreateScrollWheelEvent(NULL, kCGScrollEventUnitLine, 1, 0);
         
-        CGEventRef event = CGEventCreateScrollWheelEvent(NULL, kCGScrollEventUnitLine, 1, (int32_t)pxToScrollThisFrame);
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, 1);
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1, pxToScrollThisFrame);
+        CGEventSetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1, pxToScrollThisFrame);
+        
+        if (ScrollModifiers.horizontalScrolling) {
+            [ScrollUtility makeScrollEventHorizontal:event];
+        }
+        
         CGEventPost(kCGSessionEventTap, event);
         
     } else {
-        
+        /// Send simulated two-finger swipe event
+     
         /// Get x and y deltas
         
         double dx = 0;

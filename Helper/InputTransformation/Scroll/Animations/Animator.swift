@@ -30,7 +30,7 @@ import Foundation
     
     // Vars - Start & stop
     
-    var animationTimeInterval: Interval = Interval.unitInterval()
+    var animationTimeInterval: Interval = Interval.unitInterval() /// Just initing so Swift doesn't complain. This value is unused
     var animationValueInterval: Interval = Interval.unitInterval()
     
     var isRunning: Bool {
