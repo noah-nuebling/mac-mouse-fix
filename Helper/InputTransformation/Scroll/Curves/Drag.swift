@@ -44,7 +44,7 @@
  ```
  v(t)=((b-1)(a(t-c)))^{(1/(1-b))}
  ```
- - ^ WA can't integrate this for some reason, but it can integrate the original equation
+ - ^ WA can't integrate this for some reason.
  ```
  v(t) = ((b - 1) (a (t - c)))^(1/(1 - b))
  ```
@@ -78,6 +78,7 @@
  d(t) = (a (b - 1) (t - c))^(1/(1 - b) + 1)/(a (b - 2)) + k
  ```
  - `k` shifts the curve along the d axis
+ - This isn't defined for b = 2. We want to use b = 2. That's a problem.
  
  Now we want to solve for k so we can ask:
  - What is the k that gives us the curve that starts at distance 0
@@ -91,6 +92,13 @@
  Or we can simply get k such that the curve passes through (t, d) with `k = -d(t) + d`. Where d(t) is defined as above but with k=0.
  
  That's it. Now we have all the formulas ready!
+ 
+ Edit:
+ Our formula for d(t) isn't define at b=2, so here's another formula for b=2. We got this by plugging b=2 into our v(t) equation and then letting WA integrate it.
+ ```
+ d(t) = log(a (c - t))/a + k
+ ```
+ ^ Where log(x) is the natural log
  */
 
 
@@ -149,6 +157,11 @@ class Drag: RealFunction {
     /// d(t)
     
     func getD(t: Double, k: Double) -> Double {
+        
+        if (b == 2) { /// The other formula isn't defined at b == 2
+            return log(a * (c - t)) / a + k
+        }
+        
         return pow(a * (b - 1) * (t - c), 1/(1 - b) + 1) / (a * (b - 2)) + k
     }
     

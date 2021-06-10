@@ -86,8 +86,9 @@ import Foundation
         } else {
             animationPhase = kMFAnimationPhaseStart;
             /// Start displayLink
-            self.displayLink.start(callback: {
-                self.displayLinkCallback()
+            self.displayLink.start(callback: { [unowned self] () -> () in
+                let s = self
+                s.displayLinkCallback() /// This call gives EXC_BAD_ACCESS once a minute when scrolling. How is that even possible? It's just a function. Debugger says that everything else is available on self, just not this function. Maybe it's because it's not marked @objc? Edit: Marking it @objc weirdly fixes the issue.
             })
         }
     }
@@ -102,7 +103,7 @@ import Foundation
     /// This will be called whenever the display refreshes while the displayLink is running
     /// Its purpose is calling self.callback. Everything else it does is to figure out arguments for self.callback
     
-    func displayLinkCallback() {
+    @objc func displayLinkCallback() {
         /// I'm usually a fan of commenting even obvious things, to structure the code and make it easier to parse, but this is overkill. I think the comments make it less readable
         
         guard let callback = self.callback else {

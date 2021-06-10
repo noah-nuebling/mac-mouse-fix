@@ -284,9 +284,9 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
         
         
         /// Start animation
+        
         [_animator startWithDuration:animationDuration valueInterval:animationValueInterval animationCurve:animationCurve
                             callback:^(double valueDelta, double timeDelta, MFAnimationPhase animationPhase) {
-            
             /// This will be called each frame
             
             /// Debug
