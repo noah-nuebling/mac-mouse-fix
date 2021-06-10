@@ -78,17 +78,17 @@ import Cocoa
     // Smooth scrolling params
 
     @objc static var pxPerTickBase: Int {
-        smooth["pxPerStep"] as! Int;
+        return smooth["pxPerStep"] as! Int
     }
     @objc static var msPerStep: Int {
-        smooth["msPerStep"] as! Int;
+        smooth["msPerStep"] as! Int
     }
     @objc static var acceleration: Double {
-        return 100.0;
+        return 100.0
     }
     @objc static var accelerationDip: Double {
         /// Between 0 and 1
-        return 0.2;
+        return 0.2
     }
     @objc static var accelerationCurve: (() -> RealFunction) = DerivedProperty.create_kvc(on: ScrollConfig.self,
                                                                                           given: [#keyPath(pxPerTickBase),

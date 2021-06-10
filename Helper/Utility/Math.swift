@@ -70,6 +70,8 @@ import Cocoa
     /// - Also stores a direction, which Maths Intervals don't usually do, but it's real useful for us. If the caller want to ignore this they can use `lower` and `upper` instead of `start` and `end`
     /// - This is used a lot for BezierCurve and Animator, which means tons of these are instantiated every second while scrolling -> Might be worth looking into optimizing
     
+    @objc override var description: String { "(\(start), \(end))" }
+    
     @objc let start: Double
     @objc let end: Double
     
@@ -115,6 +117,8 @@ import Cocoa
     @objc func contains(_ value: Double) -> Bool {
         return lower <= value && value <= upper
     }
+    
+    
 }
 
 @objc class Line: NSObject, RealFunction {

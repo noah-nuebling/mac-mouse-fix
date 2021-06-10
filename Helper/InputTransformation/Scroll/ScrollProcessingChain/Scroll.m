@@ -254,7 +254,9 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
         /// Get parameters for animator
         
         /// Duration
-        CFTimeInterval animationDuration = ScrollConfig.msPerStep / 1000;
+        CFTimeInterval animationDuration = ((CFTimeInterval)ScrollConfig.msPerStep) / 1000.0; /// Need to cast to CFTimeInterval (double), to make this a float division instead of int division
+        
+        DDLogDebug(@"MS: %@", @(animationDuration));
         
         /// Animation interval
         double pxLeftToScroll;
@@ -267,6 +269,10 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
         
         /// Curve
         id<RealFunction> animationCurve = ScrollConfig.animationCurve;
+        
+        /// Debug
+        DDLogDebug(@"animationDuration: %@, animationValueInterval: %@", @(animationDuration), animationValueInterval);
+        
         
         /// Start animation
         [_animator startWithDuration:animationDuration valueInterval:animationValueInterval animationCurve:animationCurve callback:^(double timeDelta, double valueDelta, MFAnimationPhase animationPhase) {
@@ -308,7 +314,7 @@ static int64_t getPxPerTick(CFTimeInterval timeBetweenTicks) {
     
     double scaling = animationSpeed / scrollSpeed; /// In px/tick
     
-    return (int64_t)scaling; /// We could use a SubPixelator balance out the rounding errors, but I don't think that'll be noticable
+    return 40; /// We could use a SubPixelator balance out the rounding errors, but I don't think that'll be noticable
 }
 
 static void scroll(double px, BOOL gesture, IOHIDEventPhaseBits scrollPhase) {

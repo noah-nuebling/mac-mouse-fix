@@ -68,19 +68,26 @@
 
 // Start and stop
 
-- (void)startWithCallback:(DisplayLinkCallback)callback {
+- (void)startWithCallback:(DisplayLinkCallback _Nonnull)callback {
     /// The passed in block will be executed every time the display refreshes until `- stop` is called or this instance is deallocated.
     /// Call `setToMainScreen` to link with the screen that currently has keyboard focus.
+    
+    /// Store callback
+    
+    _callback = callback;
     
     /// Start the displayLink
     ///     If something goes wrong see notes in old SmoothScroll.m > handleInput: method
     CVReturn code = CVDisplayLinkStart(_displayLink);
     if (code != kCVReturnSuccess) {
         DDLogInfo(@"Failed to start CVDisplayLink. Error code: %d", code);
+    } else {
+        DDLogDebug(@"Started displayLinkCallback");
     }
 }
 - (void)stop {
     CVDisplayLinkStop(_displayLink);
+    DDLogDebug(@"Stopped displayLinkCallback");
 }
 
 - (BOOL)isRunning {
@@ -162,7 +169,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     DisplayLink *self = (__bridge DisplayLink *)displayLinkContext;
         
     // Call block
-    self.callback(); // Not passing in anything. None of it is useful. Use CACurrentMediatime() to get current time.
+    self.callback(); // Not passing in anything. None of the arguments to the CVDisplayLinkCallback are useful. Use CACurrentMediatime() to get current time inside the callback.
     
     // Return
     return kCVReturnSuccess;

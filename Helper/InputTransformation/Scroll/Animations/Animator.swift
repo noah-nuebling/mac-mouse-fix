@@ -70,6 +70,9 @@ import Foundation
         /// Will be restarted if it's already running. No need to call stop before calling this.
         /// It's kind of unnecessary to be passing this a value interval, because we only use the length of it. Since the AnimatorCallback only receives valueDeltas each frame and no absolute values,  the location of the value interval doesn't matter.
         
+        self.callback = callback
+        self.animationCurve = animationCurve
+        
         let now: CFTimeInterval = CACurrentMediaTime()
         
         self.animationTimeInterval = Interval.init(location: now, length: duration)
@@ -87,8 +90,6 @@ import Foundation
                 self.displayLinkCallback()
             })
         }
-        
-        
     }
     
     /// Stop
