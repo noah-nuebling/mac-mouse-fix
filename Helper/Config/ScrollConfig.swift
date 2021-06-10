@@ -83,14 +83,22 @@ import Cocoa
     @objc static var msPerStep: Int {
         smooth["msPerStep"] as! Int;
     }
-    @objc static var accelerationCurve: (() -> RealFunction) = DerivedProperty.create_kvc(on: ScrollConfig.self, given: [#keyPath(pxPerTickBase)]) { () -> RealFunction in
+    @objc static var accelerationCurve: (() -> RealFunction) = DerivedProperty.create_kvc(on: ScrollConfig.self,
+                                                                                          given: [#keyPath(pxPerTickBase),
+                                                                                                  #keyPath(msPerStep)])
+    { () -> RealFunction in
         
         typealias P = Bezier.Point
         
         let controlPoints: [P] = [P(x:0,y:0), P(x:0.2,y:0), P(x:0,y:0), P(x:1,y:1)]
         
-        let scrollTickSpeedInterval: Interval = Interval.init(start: 0.0, end: 50.0)
-        let animationSpeedInterval: Interval = Interval.init(start: Double(ScrollConfig.self.pxPerTickBase), end: 300.0)
+        /// Tick speed interval
+        let scrollTickStartSpeed: Double = 1 / (Double(ScrollConfig.self.msPerStep) / 1000.0) /// This is an experiment. Not sure what to put here.
+        let scrollTickSpeedInterval: Interval = Interval.init(start: scrollTickStartSpeed, end: 50.0)
+        
+        /// AnimationSpeedInterval
+        let animationStartSpeed: Double = Double(ScrollConfig.self.pxPerTickBase) * scrollTickStartSpeed
+        let animationSpeedInterval: Interval = Interval.init(start: animationStartSpeed, end: 300.0)
         
         return ExtrapolatedBezier.init(controlPoints: controlPoints, xInterval: scrollTickSpeedInterval, yInterval: animationSpeedInterval)
     }

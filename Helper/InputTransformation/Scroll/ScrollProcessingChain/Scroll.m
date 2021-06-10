@@ -239,7 +239,11 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
         pxToScrollForThisTick *= ScrollConfig.fastScrollFactor * pow(ScrollConfig.fastScrollExponentialBase, ((int32_t)fastScrollThresholdDelta)); /// TODO: Tune this up a little
     }
     
-    if (!ScrollConfig.smoothEnabled) {
+    if (pxToScrollForThisTick == 0) {
+        
+        DDLogWarn(@"px to scroll for this tick is 0");
+        
+    } else if (!ScrollConfig.smoothEnabled) {
         /// Send scroll event directly. Will scroll all of pxToScrollForThisTick at once.
         
         scroll(pxToScrollForThisTick, NO, 0);
@@ -302,7 +306,7 @@ static int64_t getPxPerTick(CFTimeInterval timeBetweenTicks) {
     
     double animationSpeed = [ScrollConfig.accelerationCurve() evaluateAt:scrollSpeed]; /// In px/s
     
-    double scaling = scrollSpeed / animationSpeed; /// In px/tick
+    double scaling = animationSpeed / scrollSpeed; /// In px/tick
     
     return (int64_t)scaling; /// We could use a SubPixelator balance out the rounding errors, but I don't think that'll be noticable
 }

@@ -106,8 +106,8 @@ static int _consecutiveScrollSwipeCounter;
     double smoothedTimeBetweenTicks = -1;
     
     if (_consecutiveScrollTickCounter == 0) {
-        secondsSinceLastTick = DBL_MAX;
-        smoothedTimeBetweenTicks = DBL_MAX;
+        secondsSinceLastTick = ScrollConfig.msPerStep * 1000; /// This is an experiment. Not sure what to put here. Changes from the same experiment in Scroll.m > getPxPerTick()
+        smoothedTimeBetweenTicks = ScrollConfig.msPerStep * 1000;
     } else {
         if (_consecutiveScrollTickCounter == 1) {
             [_tickTimeSmoother resetState]; /// The first `smoothed` value after resetting will always be equal to the input value
