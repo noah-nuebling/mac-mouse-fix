@@ -141,9 +141,9 @@ static VectorSubPixelator *_scrollPixelator;
                                       locaction:(CGPoint)loc {
     
     
-    printf("Posting gesture scroll event with delta values:\n");
-    printf("gesture: x:%f y:%f \nscroll: x:%f y:%f \nscrollPt: x:%f y:%f\n",
-          vecGesture.x, vecGesture.y, vecScroll.x, vecScroll.y, vecScrollPoint.x, vecScrollPoint.y);
+//    printf("Posting gesture scroll event with delta values:\n");
+//    printf("gesture: x:%f y:%f \nscroll: x:%f y:%f \nscrollPt: x:%f y:%f\n",
+//          vecGesture.x, vecGesture.y, vecScroll.x, vecScroll.y, vecScrollPoint.x, vecScrollPoint.y);
     
     //
     //  Get stuff we need for both the type 22 and the type 29 event

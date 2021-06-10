@@ -238,8 +238,8 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
     /// Get distance to scroll
     
     int64_t pxToScrollForThisTick;
-//    pxToScrollForThisTick = getPxPerTick(scrollAnalysisResult.smoothedTimeBetweenTicks);
-    pxToScrollForThisTick = llabs(eventPointDelta);
+    pxToScrollForThisTick = getPxPerTick(scrollAnalysisResult.smoothedTimeBetweenTicks);
+//    pxToScrollForThisTick = llabs(eventPointDelta);
     
     /// Apply fast scroll to distance
     
@@ -333,7 +333,7 @@ static void sendScroll(double px, MFScrollDirection scrollDirection, BOOL gestur
     int64_t pxInt = [_subPixelator intDeltaWithDoubleDelta:px]; /// TODO: Reset the subpixelator where appropriate
     
     if (pxInt == 0) {
-        DDLogDebug(@"Pixels to scroll are 0. Returning.");
+        DDLogDebug(@"Pixels to scroll are 0");
     }
     
     /// Get x and y deltas
@@ -383,7 +383,7 @@ static void sendScroll(double px, MFScrollDirection scrollDirection, BOOL gestur
             [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:scrollPhase isGestureDelta:NO];
         } else if (scrollPhase == kIOHIDEventPhaseEnded) { /// Hack to prevent momentum scroll. Should finds a better solution
             [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:kIOHIDEventPhaseChanged isGestureDelta:NO];
-            dx = [SharedUtility signOf:dx];
+            dx = [SharedUtility signOf:dx]; /// This will fail to stop the momenum scroll properly if dx and dy are 0
             dy = [SharedUtility signOf:dy];
             [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:kIOHIDEventPhaseChanged isGestureDelta:NO];
             [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded isGestureDelta:NO];

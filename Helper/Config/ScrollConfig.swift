@@ -100,7 +100,8 @@ import Cocoa
         return smooth["pxPerStep"] as! Int
     }
     @objc static var msPerStep: Int {
-        smooth["msPerStep"] as! Int
+//        smooth["msPerStep"] as! Int
+        return 200
     }
     @objc static var acceleration: Double {
         return 100.0
@@ -170,7 +171,7 @@ import Cocoa
         
         typealias P = Bezier.Point
         
-        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:0.7,y:1), P(x:1,y:1)]
+        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:1,y:1), P(x:1,y:1)]
         
         return Bezier.init(controlPoints: controlPoints)
     }()
