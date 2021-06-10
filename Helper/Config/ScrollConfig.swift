@@ -83,24 +83,68 @@ import Cocoa
     @objc static var msPerStep: Int {
         smooth["msPerStep"] as! Int;
     }
+    @objc static var acceleration: Double {
+        return 100.0;
+    }
+    @objc static var accelerationDip: Double {
+        /// Between 0 and 1
+        return 0.2;
+    }
     @objc static var accelerationCurve: (() -> RealFunction) = DerivedProperty.create_kvc(on: ScrollConfig.self,
                                                                                           given: [#keyPath(pxPerTickBase),
-                                                                                                  #keyPath(msPerStep)])
+                                                                                                  #keyPath(msPerStep),
+                                                                                                  #keyPath(consecutiveScrollTickMaxInterval),
+                                                                                                  #keyPath(acceleration),
+                                                                                                  #keyPath(accelerationDip)])
     { () -> RealFunction in
         
+        /**
+         Define a curve describing the relationship between the scrollTickSpeed (in scrollTicks per second) (on the x-axis) and the animationSpeed (in pixels per second) (on the y axis).
+         We'll call this function y(x).
+         y(x) is composed of 3 other curves. The core of y(x) is a BezierCurve b(x), which is defined on the interval (xMin, xMax).
+         y(xMin) is called yMin and y(xMax) is called yMax
+         There are two other components to y(x):
+             - For `x < xMin`, we set y(x) to yMin
+                 - We do this so that the acceleration is turned off for tickSpeeds below xMin. Acceleration should only affect scrollTicks that feel 'consecutive' and not ones that feel like singular events unrelated to other scrollTicks. `self.consecutiveScrollTickMaxInterval` is (supposed to be) the maximum time between ticks where they feel consecutive. So we're using it to define xMin.
+            - For `xMax < x`, we lineraly extrapolate b(x), such that the extrapolated line has the slope b'(xMax) and passes through (xMax, yMax)
+                - We do this so the curve is defined and has reasonable values even when the user scrolls really fast
+        We set yMin to (basePxPerTick / baseSecPerTick) = basePxPerSec = basePxSpeed.  That way, a single tick at the baseTickSpeed xMin will produce an animation with px distance basePxPertick and duration baseSecPerTick.
+            (We use tick and step are interchangable here)
+         TODO: Rename class variables to reflect this naming
+        
+         HyperParameters:
+         - `dip` controls how slope (sensitivity) increases around low scrollSpeeds. The name doesn't make sense but it's easy.
+            I think this might be useful if  the basePxPerTick is very low, so you can scroll precisely. But for a larger basePxPerTick, it's probably fine to set it to 0
+         - If the third controlPoint was `(xMax, yMax)`, instead of `(0.9 * ..., 0.9 * ...)`, then the slope of the extrapolated curve after xMax, would be affected `accelerationDip`. That's the reason for (0.9, 0.9). With (0.9, 0.9).
+        */
+        
+        /// Get instance properties
+        
+        var pxPerTickBase =  ScrollConfig.self.pxPerTickBase
+        var msPerStep = ScrollConfig.self.msPerStep
+        var consecutiveScrollTickMaxInterval = ScrollConfig.self.consecutiveScrollTickMaxInterval
+        var acceleration = ScrollConfig.self.acceleration
+        var accelerationDip = ScrollConfig.self.accelerationDip
+        
+        /// Override for testing
+        
+        acceleration = 100
+        
+        /// Define Curve
+        
+        let xMin: Double = 1 / (Double(consecutiveScrollTickMaxInterval))
+        let xMax: Double = 50
+        
+        let yMin: Double = Double(pxPerTickBase) * (Double(msPerStep) / 1000.0)
+        let yMax: Double = acceleration
+        
+        let xDip: Double = 0
+        let yDip: Double = 0
+        
         typealias P = Bezier.Point
+        let controlPoints: [P] = [P(x:xMin, y: yMin), P(x:xDip, y: yDip), P(x: (xMax-xMin)*0.9,y: (yMax-yMin)*0.9), P(x: xMax, y: yMax)]
         
-        let controlPoints: [P] = [P(x:0,y:0), P(x:0.2,y:0), P(x:0,y:0), P(x:1,y:1)]
-        
-        /// Tick speed interval
-        let scrollTickStartSpeed: Double = 1 / (Double(ScrollConfig.self.msPerStep) / 1000.0) /// This is an experiment. Not sure what to put here.
-        let scrollTickSpeedInterval: Interval = Interval.init(start: scrollTickStartSpeed, end: 50.0)
-        
-        /// AnimationSpeedInterval
-        let animationStartSpeed: Double = Double(ScrollConfig.self.pxPerTickBase) * scrollTickStartSpeed
-        let animationSpeedInterval: Interval = Interval.init(start: animationStartSpeed, end: 300.0)
-        
-        return ExtrapolatedBezier.init(controlPoints: controlPoints, xInterval: scrollTickSpeedInterval, yInterval: animationSpeedInterval)
+        return AccelerationBezier.init(controlPoints: controlPoints)
     }
     @objc static var animationCurve: RealFunction = { () -> RealFunction in
         /// Using a closure here instead of DerivedProperty.create_kvc(), because we know it will never change.

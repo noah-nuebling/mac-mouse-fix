@@ -10,10 +10,10 @@
 import Cocoa
 
 
-/// With this class you can create a BezierCurve which is then linearly extrapolated before the first and after the last control point
+/// With this class you can create a BezierCurve which is then linearly extrapolated after the last control point, and set to the minimum value after the last controlPoint
 /// https://en.wikipedia.org/wiki/Extrapolation#Linear
 /// I think this will be really useful for defining acceleration curves
-class ExtrapolatedBezier: Bezier {
+class AccelerationBezier: Bezier {
 
     var preLine: Line
     var postLine: Line
@@ -52,13 +52,12 @@ class ExtrapolatedBezier: Bezier {
         
         // Get the 2 relevant control points
         let c1 = controlPoints[0]
-        let c2 = controlPoints[1]
         
         // Find slope.
-        let aPre = (c2.y - c1.y) / (c2.x - c2.y)
+        let aPre = 0.0
         
         // Find b such that the preLine passes through the first control point
-        let bPre = c1.y - aPre * c1.x
+        let bPre = c1.y
         
         // Found preLine!
         self.preLine = Line.init(a: aPre, b: bPre)
@@ -66,14 +65,20 @@ class ExtrapolatedBezier: Bezier {
         // postLine
         
         // Get control points
-        let cn = controlPoints[self.n-1]
-        let cnPlus1 = controlPoints[self.n]
+        let cLast = controlPoints[self.n]
+        // Find first controlPoint before cLast that is different from cLast
+        var cPrevIndex: Int = self.n-1;
+        var cPrev: Point = controlPoints[cPrevIndex];
+        while (cPrev.x == cLast.x && cPrev.y == cLast.y) { /// Loop while cPrev == cLast
+            cPrevIndex -= 1
+            cPrev = controlPoints[cPrevIndex]
+        }
         
         // Find slope
-        let aPost = (cnPlus1.y - cn.y) / (cnPlus1.x - cn.x)
+        let aPost = (cLast.y - cPrev.y) / (cLast.x - cPrev.x)
         
         // Find b
-        let bPost = cnPlus1.y - aPost * cnPlus1.x
+        let bPost = cLast.y - aPost * cLast.x
         
         // Found postLine!
         self.postLine = Line.init(a: aPost, b: bPost)
