@@ -238,8 +238,8 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
     /// Get distance to scroll
     
     int64_t pxToScrollForThisTick;
-    pxToScrollForThisTick = getPxPerTick(scrollAnalysisResult.smoothedTimeBetweenTicks);
-//    pxToScrollForThisTick = llabs(eventPointDelta);
+//    pxToScrollForThisTick = getPxPerTick(scrollAnalysisResult.smoothedTimeBetweenTicks);
+    pxToScrollForThisTick = llabs(eventPointDelta);
     
     /// Apply fast scroll to distance
     
@@ -263,7 +263,9 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
         /// Get parameters for animator
         
         /// Duration
-        CFTimeInterval animationDuration = ((CFTimeInterval)ScrollConfig.msPerStep) / 1000.0; /// Need to cast to CFTimeInterval (double), to make this a float division instead of int division, yiedling 0
+        CFTimeInterval animationDuration;
+        animationDuration = ((CFTimeInterval)ScrollConfig.msPerStep) / 1000.0; /// Need to cast to CFTimeInterval (double), to make this a float division instead of int division yiedling 0
+//        animationDuration = scrollAnalysisResult.smoothedTimeBetweenTicks;
         
         /// Animation interval
         double pxLeftToScroll;
@@ -284,7 +286,14 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
         /// Start animation
         [_animator startWithDuration:animationDuration valueInterval:animationValueInterval animationCurve:animationCurve
                             callback:^(double valueDelta, double timeDelta, MFAnimationPhase animationPhase) {
+            
             /// This will be called each frame
+            
+            /// Debug
+//            static CFTimeInterval lastTs = 0;
+//            CFTimeInterval ts = CACurrentMediaTime();
+//            DDLogInfo(@"scrollSendInterval: %@, dT: %@, dPx: %@", @(ts - lastTs), @(timeDelta), @(valueDelta));
+//            lastTs = ts;
             
             /// Get phase
             
@@ -327,6 +336,7 @@ static int64_t getPxPerTick(CFTimeInterval timeBetweenTicks) {
 
 static void sendScroll(double px, MFScrollDirection scrollDirection, BOOL gesture, IOHIDEventPhaseBits scrollPhase) {
     /// scrollPhase is only used when `gesture` is YES
+    
     
     /// Subpixelate px to balance out rounding errors
     

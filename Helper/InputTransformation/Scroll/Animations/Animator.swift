@@ -23,7 +23,7 @@ import Foundation
     
     @objc override init() {
         
-        self.displayLink = DisplayLink.init()
+        self.displayLink = DisplayLink()
         
         super.init()
     }
@@ -129,7 +129,7 @@ import Foundation
         
         /// Get actual animation value
         
-        let animationValue = Math.scale(value: animationValueUnit, from: Interval.unitInterval(), to: animationValueInterval)
+        let animationValue: Double = Math.scale(value: animationValueUnit, from: Interval.unitInterval(), to: animationValueInterval)
         
         /// Get change since last frame aka `delta`
         
@@ -153,6 +153,10 @@ import Foundation
         
         self.lastAnimationTime = now
         self.lastAnimationValue = animationValue
+        
+        /// Debug
+        
+//        print("timeU, \(animationTimeUnit), valueU: \(animationValueUnit)")
     }
     
 }

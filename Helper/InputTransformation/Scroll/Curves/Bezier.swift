@@ -426,7 +426,7 @@ import ReactiveSwift
         let maxNewtonIterations: Int = 8
         var t = initialGuess
         
-        for _ in 1...maxNewtonIterations {
+        for i in 1...maxNewtonIterations {
             
             let sampledXShifted = sampleCurve(onAxis: xAxis, atT: t) - x
             

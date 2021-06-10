@@ -162,7 +162,7 @@ import Cocoa
         let yDip: Double = 0
         
         typealias P = Bezier.Point
-        let controlPoints: [P] = [P(x:xMin, y: yMin), P(x:xDip, y: yDip), P(x: (xMax-xMin)*0.9,y: (yMax-yMin)*0.9), P(x: xMax, y: yMax)]
+        let controlPoints: [P] = [P(x:xMin, y: yMin), P(x:xDip, y: yDip), P(x: (xMax-xMin)*0.9, y: (yMax-yMin)*0.9), P(x: xMax, y: yMax)]
         
         return AccelerationBezier.init(controlPoints: controlPoints)
     }
@@ -171,9 +171,9 @@ import Cocoa
         
         typealias P = Bezier.Point
         
-        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:1,y:1), P(x:1,y:1)]
+        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:0.5,y:1), P(x:1,y:1)]
         
-        return Bezier.init(controlPoints: controlPoints)
+        return Bezier(controlPoints: controlPoints, defaultEpsilon: 0.001) /// The default defaultEpsilon 0.08 makes the animations choppy
     }()
     @objc static var dragCoefficient: Double {
         smooth["friction"] as! Double;
