@@ -177,7 +177,7 @@
 		<key>checkForPrereleases</key>
 		<false/>
 		<key>configVersion</key>
-		<integer>9</integer>
+		<integer>10</integer>
 		<key>skippedBundleVersion</key>
 		<integer>0</integer>
 		<key>launchesOverall</key>
@@ -313,8 +313,8 @@
 	</array>
 	<key>Scroll</key>
 	<dict>
-		<key>direction</key>
-		<integer>-1</integer>
+		<key>naturalDirection</key>
+		<false/>
 		<key>disableAll (unused)</key>
 		<false/>
 		<key>modifierKeys</key>

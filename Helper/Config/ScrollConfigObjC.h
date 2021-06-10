@@ -28,8 +28,8 @@ typedef enum {
 } MFScrollInversion;
 
 typedef enum {
-    kMFSemanticScrollInversionNatural,
-    kMFSemanticScrollInversionStandard
+    kMFSemanticScrollInversionNormal = 0,
+    kMFSemanticScrollInversionNatural = 1
 } MFSemanticScrollInversion;
 
 typedef enum {

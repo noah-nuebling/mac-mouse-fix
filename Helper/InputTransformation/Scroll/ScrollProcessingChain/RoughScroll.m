@@ -29,8 +29,8 @@
     
     // Process event
     
-    if (ScrollConfig.scrollDirection == -1) { // TODO: Use kMFInvertedScrollDirection instead of -1. Implement same change where ever ScrollControl.scrollDirection is used.
-        event = [ScrollUtility invertScrollEvent:event direction:ScrollConfig.scrollDirection];
+    if (ScrollConfig.scrollInvert == -1) { // TODO: Use kMFInvertedScrollDirection instead of -1. Implement same change where ever ScrollControl.scrollDirection is used.
+        event = [ScrollUtility invertScrollEvent:event direction:ScrollConfig.scrollInvert];
     }
     if (ScrollModifiers.magnificationScrolling) {
         [ScrollModifiers handleMagnificationScrollWithAmount:CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1)/50.0];

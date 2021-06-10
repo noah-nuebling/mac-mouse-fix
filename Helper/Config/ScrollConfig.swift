@@ -40,14 +40,35 @@ import Cocoa
     @objc static var smoothEnabled: Bool {
         topLevel["smooth"] as! Bool
     }
-    @objc static var scrollDirection: MFScrollInversion {
-        MFScrollInversion(topLevel["direction"] as! Int32)
-    }
-    
     @objc static var disableAll: Bool {
         topLevel["disableAll"] as! Bool; // This is currently unused. Could be used as a killswitch for all scrolling Interception
     }
-
+    
+    /// Scroll inversion
+    
+    @objc static var scrollInvert: MFScrollInversion {
+        if semanticScrollInvertUser == semanticScrollInvertSystem {
+            return kMFScrollInversionNonInverted
+        } else {
+            return kMFScrollInversionInverted
+        }
+    }
+    private static var semanticScrollInvertUser: MFSemanticScrollInversion {
+        MFSemanticScrollInversion(topLevel["naturalDirection"] as! UInt32)
+    }
+    private static var semanticScrollInvertSystem: MFSemanticScrollInversion {
+        
+        let defaults = UserDefaults.init(suiteName: UserDefaults.globalDomain)
+        
+        guard let isNatural = defaults?.bool(forKey: "com.apple.swipescrolldirection") else {
+            assert(false)
+            print("Couldn't find scroll inversion settings in global user defaults. Assuming it is natural scrolling direction")
+            return kMFSemanticScrollInversionNatural
+        }
+        
+        return isNatural ? kMFSemanticScrollInversionNatural : kMFSemanticScrollInversionNormal
+    }
+    
     // Scroll ticks/swipes, fast scroll, and ticksPerSecond
 
     @objc static var scrollSwipeThreshold_inTicks: Int { // If `_scrollSwipeThreshold_inTicks` consecutive ticks occur, they are deemed a scroll-swipe.

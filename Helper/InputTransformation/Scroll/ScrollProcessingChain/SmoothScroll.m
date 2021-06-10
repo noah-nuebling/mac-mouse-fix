@@ -159,9 +159,9 @@ static BOOL _hasStarted;
     
 //    _msLeftForScroll = 1 / (_pxPerMSBaseSpeed / _pxStepSize);
     if (scrollDeltaAxis1 > 0) {
-        _pxScrollBuffer += ScrollConfig.pxPerTickBase * ScrollConfig.scrollDirection;
+        _pxScrollBuffer += ScrollConfig.pxPerTickBase * ScrollConfig.scrollInvert;
     } else if (scrollDeltaAxis1 < 0) {
-        _pxScrollBuffer -= ScrollConfig.pxPerTickBase * ScrollConfig.scrollDirection;
+        _pxScrollBuffer -= ScrollConfig.pxPerTickBase * ScrollConfig.scrollInvert;
     } else {
         DDLogInfo(@"scrollDeltaAxis1 is 0. This shouldn't happen.");
     }
