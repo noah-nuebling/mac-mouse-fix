@@ -138,7 +138,7 @@ static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this
 
 static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
-    // Handle eventTapDisabled messages
+    /// Handle eventTapDisabled messages
     
     if (type == kCGEventTapDisabledByTimeout || type == kCGEventTapDisabledByUserInput) {
         
@@ -152,7 +152,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         return event;
     }
     
-    // Return non-scrollwheel events unaltered
+    /// Return non-scrollwheel events unaltered
     
     int64_t isPixelBased     = CGEventGetIntegerValueField(event, kCGScrollWheelEventIsContinuous);
     int64_t scrollPhase      = CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase);
@@ -317,9 +317,6 @@ static int64_t getPxPerTick(CFTimeInterval timeBetweenTicks) {
 
 static void sendScroll(double px, BOOL gesture, IOHIDEventPhaseBits scrollPhase) {
     /// scrollPhase is only used when `gesture` is YES
-    
-    /// Debug
-    DDLogDebug(@"Scroll px: %f", px);
     
     /// Subpixelate px to balance out rounding errors
     

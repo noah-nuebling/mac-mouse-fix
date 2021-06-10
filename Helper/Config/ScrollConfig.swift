@@ -40,8 +40,8 @@ import Cocoa
     @objc static var smoothEnabled: Bool {
         topLevel["smooth"] as! Bool
     }
-    @objc static var scrollDirection: MFScrollDirection {
-        MFScrollDirection(topLevel["direction"] as! Int32)
+    @objc static var scrollDirection: MFScrollInversion {
+        MFScrollInversion(topLevel["direction"] as! Int32)
     }
     
     @objc static var disableAll: Bool {
