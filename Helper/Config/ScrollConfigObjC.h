@@ -23,8 +23,20 @@ NS_ASSUME_NONNULL_BEGIN
  */
 
 typedef enum {
-    kMFStandardScrollDirection      =   1,
-    kMFInvertedScrollDirection      =  -1
+    kMFScrollInversionNonInverted   =   1,
+    kMFScrollInversionInverted      =  -1
+} MFScrollInversion;
+
+typedef enum {
+    kMFSemanticScrollInversionNatural,
+    kMFSemanticScrollInversionStandard
+} MFSemanticScrollInversion;
+
+typedef enum {
+    kMFScrollDirectionUp,
+    kMFScrollDirectionRight,
+    kMFScrollDirectionDown,
+    kMFScrollDirectionLeft
 } MFScrollDirection;
 
 

@@ -246,7 +246,7 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
     } else if (!ScrollConfig.smoothEnabled) {
         /// Send scroll event directly. Will scroll all of pxToScrollForThisTick at once.
         
-        scroll(pxToScrollForThisTick, NO, 0);
+        sendScroll(pxToScrollForThisTick, NO, 0);
         
     } else {
         /// Send scroll events through animator, spread out over time.
@@ -292,7 +292,7 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
             
             /// Scroll
             
-            scroll(valueDelta, YES, scrollPhase);
+            sendScroll(valueDelta, YES, scrollPhase);
         }];
     }
     
@@ -315,7 +315,7 @@ static int64_t getPxPerTick(CFTimeInterval timeBetweenTicks) {
     return 40; /// We could use a SubPixelator balance out the rounding errors, but I don't think that'll be noticable
 }
 
-static void scroll(double px, BOOL gesture, IOHIDEventPhaseBits scrollPhase) {
+static void sendScroll(double px, BOOL gesture, IOHIDEventPhaseBits scrollPhase) {
     /// scrollPhase is only used when `gesture` is YES
     
     /// Debug
