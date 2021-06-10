@@ -192,6 +192,27 @@
 		<dict>
 			<key>effect</key>
 			<dict>
+				<key>modifiedDragType</key>
+				<string>twoFingerSwipe</string>
+			</dict>
+			<key>modifiers</key>
+			<dict>
+				<key>buttonModifiers</key>
+				<array>
+					<dict>
+						<key>button</key>
+						<integer>4</integer>
+						<key>level</key>
+						<integer>1</integer>
+					</dict>
+				</array>
+			</dict>
+			<key>trigger</key>
+			<string>dragTrigger</string>
+		</dict>
+		<dict>
+			<key>effect</key>
+			<dict>
 				<key>type</key>
 				<string>symbolicHotkey</string>
 				<key>variant</key>

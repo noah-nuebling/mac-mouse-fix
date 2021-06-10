@@ -24,6 +24,7 @@
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "SubPixelator.h"
 #import "GestureScrollSimulator.h"
+#import "SharedUtility.h"
 
 @implementation Scroll
 
@@ -200,13 +201,13 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
     dispatch_async(_scrollQueue, ^{
         
-        heavyProcessing(eventCopy, scrollAnalysisResult, scrollDirection);
+        heavyProcessing(eventCopy, scrollAnalysisResult, scrollDirection, scrollDeltaPoint);
     });
     
     return nil;
 }
 
-static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysisResult, MFScrollDirection scrollDirection) {
+static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysisResult, MFScrollDirection scrollDirection, int64_t eventPointDelta) {
     
     /// Update configuration
 ///         Checking which app is under the mouse pointer is really slow, so we only do it when necessary
@@ -236,7 +237,9 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
     
     /// Get distance to scroll
     
-    int64_t pxToScrollForThisTick = getPxPerTick(scrollAnalysisResult.smoothedTimeBetweenTicks);
+    int64_t pxToScrollForThisTick;
+//    pxToScrollForThisTick = getPxPerTick(scrollAnalysisResult.smoothedTimeBetweenTicks);
+    pxToScrollForThisTick = llabs(eventPointDelta);
     
     /// Apply fast scroll to distance
     
@@ -327,21 +330,25 @@ static void sendScroll(double px, MFScrollDirection scrollDirection, BOOL gestur
     
     /// Subpixelate px to balance out rounding errors
     
-    int64_t pxToScrollThisFrame = [_subPixelator intDeltaWithDoubleDelta:px];
+    int64_t pxInt = [_subPixelator intDeltaWithDoubleDelta:px]; /// TODO: Reset the subpixelator where appropriate
+    
+    if (pxInt == 0) {
+        DDLogDebug(@"Pixels to scroll are 0. Returning.");
+    }
     
     /// Get x and y deltas
     
-    double dx = 0;
-    double dy = 0;
+    int64_t dx = 0;
+    int64_t dy = 0;
     
     if (scrollDirection == kMFScrollDirectionUp) {
-        dy = -px;
+        dy = -pxInt;
     } else if (scrollDirection == kMFScrollDirectionDown) {
-        dy = px;
+        dy = pxInt;
     } else if (scrollDirection == kMFScrollDirectionLeft) {
-        dx = -px;
+        dx = -pxInt;
     } else if (scrollDirection == kMFScrollDirectionRight) {
-        dx = px;
+        dx = pxInt;
     } else {
         assert(false);
     }
@@ -359,11 +366,11 @@ static void sendScroll(double px, MFScrollDirection scrollDirection, BOOL gestur
         
         CGEventRef event = CGEventCreateScrollWheelEvent(NULL, kCGScrollEventUnitLine, 1, 0);
         
-        CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, dy / fabs(dy)); /// Always 1, 0, or -1. These values are probably too small. We should study what these values should be more
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, dy / llabs(dy)); /// Always 1, 0, or -1. These values are probably too small. We should study what these values should be more
         CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1, dy);
         CGEventSetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1, dy);
         
-        CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, dx / fabs(dx));
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, dx / llabs(dx));
         CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1, dx);
         CGEventSetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1, dx);
         
@@ -372,10 +379,14 @@ static void sendScroll(double px, MFScrollDirection scrollDirection, BOOL gestur
     } else {
         /// Send simulated two-finger swipe event
         
-        [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:scrollPhase isGestureDelta:NO];
-        
-        if (scrollPhase == kIOHIDEventPhaseEnded) { /// Hack to prevent momentum scroll. Should finds a better solution
-            [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx/fabs(dx) deltaY:dy/fabs(dy) phase:kIOHIDEventPhaseEnded isGestureDelta:NO];
+        if (scrollPhase != kIOHIDEventPhaseEnded) {
+            [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:scrollPhase isGestureDelta:NO];
+        } else if (scrollPhase == kIOHIDEventPhaseEnded) { /// Hack to prevent momentum scroll. Should finds a better solution
+            [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:kIOHIDEventPhaseChanged isGestureDelta:NO];
+            dx = [SharedUtility signOf:dx];
+            dy = [SharedUtility signOf:dy];
+            [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:kIOHIDEventPhaseChanged isGestureDelta:NO];
+            [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded isGestureDelta:NO];
         }
     }
 }

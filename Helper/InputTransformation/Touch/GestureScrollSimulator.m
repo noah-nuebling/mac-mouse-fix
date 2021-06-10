@@ -141,15 +141,15 @@ static VectorSubPixelator *_scrollPixelator;
                                       locaction:(CGPoint)loc {
     
     
-//    printf("Posting gesture scroll event with delta values:\n");
-//    printf("gesture: x:%f y:%f \nscroll: x:%f y:%f \nscrollPt: x:%f y:%f\n",
-//          vecGesture.x, vecGesture.y, vecScroll.x, vecScroll.y, vecScrollPoint.x, vecScrollPoint.y);
+    printf("Posting gesture scroll event with delta values:\n");
+    printf("gesture: x:%f y:%f \nscroll: x:%f y:%f \nscrollPt: x:%f y:%f\n",
+          vecGesture.x, vecGesture.y, vecScroll.x, vecScroll.y, vecScrollPoint.x, vecScrollPoint.y);
     
     //
     //  Get stuff we need for both the type 22 and the type 29 event
     //
     
-    CGPoint eventLocation = [Utility_Helper getCurrentPointerLocation_flipped];
+    CGPoint eventLocation = [Utility_Helper getCurrentPointerLocation_flipped]; /// This always resolves to the same location during a drag for some reason. But that's great, because it makes scrolling still work, even when the pointer leaves the window where you started scrolling!
     
     //
     // Create type 22 event

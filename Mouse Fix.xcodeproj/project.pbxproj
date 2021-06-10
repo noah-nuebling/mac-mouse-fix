@@ -28,7 +28,6 @@
 		4F3A40B1266BBC5000436821 /* RealFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A40B0266BBC5000436821 /* RealFunction.swift */; };
 		4F3A40CB266C44D100436821 /* DisplayLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A40CA266C44D100436821 /* DisplayLink.m */; };
 		4F3A40DA266C5BDF00436821 /* NSScreen+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A40D9266C5BDF00436821 /* NSScreen+Additions.m */; };
-		4F44FEF82606A5C100926A5E /* default_config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F44FEF72606A5C100926A5E /* default_config.plist */; };
 		4F44FF042606D73D00926A5E /* SharedMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* SharedMessagePort.m */; };
 		4F44FF052606D73D00926A5E /* SharedMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* SharedMessagePort.m */; };
 		4F79A7EF26042E2E00076A7E /* ToastNotification.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F79A7EE26042E2E00076A7E /* ToastNotification.xib */; };
@@ -45,6 +44,7 @@
 		4F94F61025E5EC2800D9F24A /* Mac_Mouse_FixUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60F25E5EC2800D9F24A /* Mac_Mouse_FixUITests.m */; };
 		4F94F73D25E6146C00D9F24A /* Mac Mouse Fix Helper.app in Copy Helper */ = {isa = PBXBuildFile; fileRef = 4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4F94F74C25E614B800D9F24A /* Mac Mouse Fix Accomplice in Copy Updater */ = {isa = PBXBuildFile; fileRef = 4F2FDF302315662400C7BE14 /* Mac Mouse Fix Accomplice */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4F9E59972672A67F004E75F7 /* default_config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F9E59962672A67E004E75F7 /* default_config.plist */; };
 		4FA994BE26678AC90007F003 /* ScrollAnalyzer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA994BD26678AC90007F003 /* ScrollAnalyzer.m */; };
 		4FAD391426702CD4000CF4FA /* DerivedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860A9266EC24E004F76C8 /* DerivedProperty.swift */; };
 		4FB4F9FE260FDBC800806DDD /* RemapTableUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB4F9FD260FDBC800806DDD /* RemapTableUtility.m */; };
@@ -266,7 +266,6 @@
 		4F3A40D8266C5BDF00436821 /* NSScreen+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSScreen+Additions.h"; sourceTree = "<group>"; };
 		4F3A40D9266C5BDF00436821 /* NSScreen+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSScreen+Additions.m"; sourceTree = "<group>"; };
 		4F422EEC23469B0F00AA6E22 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		4F44FEF72606A5C100926A5E /* default_config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_config.plist; sourceTree = "<group>"; };
 		4F44FF022606D73D00926A5E /* SharedMessagePort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharedMessagePort.h; sourceTree = "<group>"; };
 		4F44FF032606D73D00926A5E /* SharedMessagePort.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SharedMessagePort.m; sourceTree = "<group>"; };
 		4F79A7EE26042E2E00076A7E /* ToastNotification.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToastNotification.xib; sourceTree = "<group>"; };
@@ -295,6 +294,7 @@
 		4F94F60B25E5EC2800D9F24A /* Mac Mouse FixUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Mac Mouse FixUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F94F60F25E5EC2800D9F24A /* Mac_Mouse_FixUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Mac_Mouse_FixUITests.m; sourceTree = "<group>"; };
 		4F94F61125E5EC2800D9F24A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4F9E59962672A67E004E75F7 /* default_config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_config.plist; sourceTree = "<group>"; };
 		4FA994BC26678AC90007F003 /* ScrollAnalyzer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollAnalyzer.h; sourceTree = "<group>"; };
 		4FA994BD26678AC90007F003 /* ScrollAnalyzer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollAnalyzer.m; sourceTree = "<group>"; };
 		4FB4F9FC260FDBC800806DDD /* RemapTableUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapTableUtility.h; sourceTree = "<group>"; };
@@ -902,7 +902,7 @@
 		4FF665D025F2C92700689B77 /* Config */ = {
 			isa = PBXGroup;
 			children = (
-				4F44FEF72606A5C100926A5E /* default_config.plist */,
+				4F9E59962672A67E004E75F7 /* default_config.plist */,
 				4FF665D225F2C92700689B77 /* ConfigInterface_App.h */,
 				4FF665D125F2C92700689B77 /* ConfigInterface_App.m */,
 			);
@@ -1471,8 +1471,8 @@
 			files = (
 				4FF6654225F2C7B000689B77 /* default_launchd.plist in Resources */,
 				4FF665F425F2C92700689B77 /* MoreSheet.xib in Resources */,
+				4F9E59972672A67F004E75F7 /* default_config.plist in Resources */,
 				4FF665FC25F2C92700689B77 /* AuthorizeAccessibilityView.xib in Resources */,
-				4F44FEF82606A5C100926A5E /* default_config.plist in Resources */,
 				4F79A7EF26042E2E00076A7E /* ToastNotification.xib in Resources */,
 				4F2F5DB225FB723D0037660A /* AddWindow.xib in Resources */,
 				4FF665F725F2C92700689B77 /* Assets.xcassets in Resources */,
