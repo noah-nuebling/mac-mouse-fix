@@ -29,7 +29,6 @@
 #import "DDTTYLogger.h"
 #import "CocoaLumberjack.h"
 #import "DDLegacyMacros.h"
-#import "SwiftLogLevel.h"
 
 FOUNDATION_EXPORT double CocoaLumberjackVersionNumber;
 FOUNDATION_EXPORT const unsigned char CocoaLumberjackVersionString[];

@@ -177,7 +177,7 @@ import Foundation
         
         /// Debug
         
-//        print("timeU, \(animationTimeUnit), valueU: \(animationValueUnit)")
+//        DDLo("timeU, \(animationTimeUnit), valueU: \(animationValueUnit)")
     }
     
 }

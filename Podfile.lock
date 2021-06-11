@@ -2,8 +2,6 @@ PODS:
   - CocoaLumberjack (3.7.2):
     - CocoaLumberjack/Core (= 3.7.2)
   - CocoaLumberjack/Core (3.7.2)
-  - CocoaLumberjack/Swift (3.7.2):
-    - CocoaLumberjack/Core
   - ReactiveCocoa (11.2.1):
     - ReactiveSwift (~> 6.6)
   - ReactiveObjC (3.1.1)
@@ -12,7 +10,6 @@ PODS:
 
 DEPENDENCIES:
   - CocoaLumberjack
-  - CocoaLumberjack/Swift
   - ReactiveCocoa (~> 11.2)
   - ReactiveObjC (~> 3.1)
   - ReactiveSwift (~> 6.6)
@@ -33,6 +30,6 @@ SPEC CHECKSUMS:
   ReactiveSwift: be9407e2aaf8a11e53a5229255693cffd9a63ccf
   RHAdditions: 13ef6284b6e8eb919c6fbcef63ebae35eda385ff
 
-PODFILE CHECKSUM: 70bc3ea549765fa88ec84a036f8b125e285513b4
+PODFILE CHECKSUM: 6bcf3d30b23a0ba8daf97ed18ba4ef6015c579e4
 
 COCOAPODS: 1.10.1
