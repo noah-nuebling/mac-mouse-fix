@@ -7,9 +7,6 @@
 // --------------------------------------------------------------------------
 //
 
-// Configuration settings file format documentation can be found at:
-// https://help.apple.com/xcode/#/dev745c5c974
-
 #include "Pods/Target Support Files/Pods-Mac Mouse Fix/Pods-Mac Mouse Fix.release.xcconfig"
 
 #include "MainApp.xcconfig"
