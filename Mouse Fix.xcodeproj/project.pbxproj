@@ -2025,7 +2025,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 033974636F3FB7E19C70467C /* Pods-Mac Mouse FixTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
@@ -2051,7 +2050,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D4CC22E2DE785AD938B8362E /* Pods-Mac Mouse FixTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
@@ -2076,7 +2074,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7F6C0C78F914061497F31F88 /* Pods-Mac Mouse Fix-Mac Mouse FixUITests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
@@ -2101,7 +2098,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 23C1F375CD97905FCBA86342 /* Pods-Mac Mouse Fix-Mac Mouse FixUITests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
 				CODE_SIGN_STYLE = Automatic;
