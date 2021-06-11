@@ -1,4 +1,6 @@
 
+- Edit: (Writing this a much later so I don't remember everything) Actually there were more problems with the approach described below. So we ended up having generate_appcasts.py simply download all versions of the app and look at the info.plists to get this information. So I think having these xcconfig files here isn't necessary.
+
 - ! If we want to move or refactor Base.xcconfig, we need to reflect that in generate_appcasts.py, but also still use the old path for older repo version. So it's better to not refactor it at all if possible.
 - We created these xcconfig files to give our generate_appcasts.py script a chance to read the minimum compatible macOS version.
     - When you set env variables from the project editor, those are deeply buries withing the project.pbxproj file, and completely impractical to access for an external script. (External -> Not executed by Xcode as part of the build process)
