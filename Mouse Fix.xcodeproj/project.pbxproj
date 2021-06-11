@@ -54,8 +54,6 @@
 		4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCA07D525F3129B00BFE209 /* RemapTableController.m */; };
 		4FD82DDB260575B100664D6F /* ToastNotificationLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD82DDA260575B100664D6F /* ToastNotificationLabel.m */; };
 		4FD85F7B266CC9C5004F76C8 /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD85F7A266CC9C5004F76C8 /* Animator.swift */; };
-		4FD8607C266E65E9004F76C8 /* DerivedValueGenerator.swift old in Sources */ = {isa = PBXBuildFile; fileRef = 4FD8607B266E65E9004F76C8 /* DerivedValueGenerator.swift old */; };
-		4FD86083266E71A6004F76C8 /* DerivedValueGeneratorObjC.m old in Sources */ = {isa = PBXBuildFile; fileRef = 4FD86082266E71A6004F76C8 /* DerivedValueGeneratorObjC.m old */; };
 		4FD86089266E819A004F76C8 /* Pointers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD86088266E819A004F76C8 /* Pointers.swift */; };
 		4FD860AA266EC24E004F76C8 /* DerivedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860A9266EC24E004F76C8 /* DerivedProperty.swift */; };
 		4FD860CC266EF55A004F76C8 /* ScrollConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860CB266EF55A004F76C8 /* ScrollConfig.swift */; };
@@ -213,6 +211,16 @@
 				4F94F74C25E614B800D9F24A /* Mac Mouse Fix Accomplice in Copy Updater */,
 			);
 			name = "Copy Updater";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4F9E5F0726742A20004E75F7 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -1393,6 +1401,7 @@
 				4FCECD7E21092354001F1078 /* Resources */,
 				4FEEEC53263C164000C50193 /* Copy Version from Main App */,
 				424BDEAE55BF5688DA4028C7 /* [CP] Embed Pods Frameworks */,
+				4F9E5F0726742A20004E75F7 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1447,6 +1456,7 @@
 			knownRegions = (
 				en,
 				Base,
+				English,
 			);
 			mainGroup = 4FCECD7721092354001F1078;
 			productRefGroup = 4FCECD8121092354001F1078 /* Products */;
@@ -1521,12 +1531,10 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Mac Mouse Fix/Pods-Mac Mouse Fix-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack-framework/CocoaLumberjack.framework",
 				"${BUILT_PRODUCTS_DIR}/RHAdditions-framework/RHAdditions.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RHAdditions.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1541,7 +1549,6 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Mac Mouse Fix Helper/Pods-Mac Mouse Fix Helper-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack-framework/CocoaLumberjack.framework",
 				"${BUILT_PRODUCTS_DIR}/RHAdditions-framework/RHAdditions.framework",
 				"${BUILT_PRODUCTS_DIR}/ReactiveCocoa/ReactiveCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/ReactiveObjC/ReactiveObjC.framework",
@@ -1549,7 +1556,6 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RHAdditions.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveObjC.framework",
@@ -1627,12 +1633,10 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Mac Mouse Fix-Mac Mouse FixUITests/Pods-Mac Mouse Fix-Mac Mouse FixUITests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack-framework/CocoaLumberjack.framework",
 				"${BUILT_PRODUCTS_DIR}/RHAdditions-framework/RHAdditions.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RHAdditions.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1837,7 +1841,6 @@
 				4FF6669525F2C93A00689B77 /* ModifiedDrag.m in Sources */,
 				4FD86089266E819A004F76C8 /* Pointers.swift in Sources */,
 				4FF6668825F2C93A00689B77 /* ButtonInputReceiver.m in Sources */,
-				4FD86083266E71A6004F76C8 /* DerivedValueGeneratorObjC.m old in Sources */,
 				4FF6669025F2C93A00689B77 /* ScrollModifiers.m in Sources */,
 				4FF6655125F2C7B000689B77 /* NSMutableDictionary+Additions.m in Sources */,
 				4FF6668525F2C93A00689B77 /* ModifierManager.m in Sources */,
@@ -1845,7 +1848,6 @@
 				4F3A40CB266C44D100436821 /* DisplayLink.m in Sources */,
 				4FF6669925F2C93A00689B77 /* VectorSubPixelator.m in Sources */,
 				4FF0BD4B266A8B7E003935EA /* Bezier.swift in Sources */,
-				4FD8607C266E65E9004F76C8 /* DerivedValueGenerator.swift old in Sources */,
 				4FF6668125F2C93A00689B77 /* FileMonitor.m in Sources */,
 				4FF666A225F2C93A00689B77 /* TouchEvents.c in Sources */,
 				4F1AFE972670EBA900ECA424 /* Drag.swift in Sources */,

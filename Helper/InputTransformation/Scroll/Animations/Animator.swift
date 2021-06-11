@@ -8,6 +8,7 @@
 //
 
 import Foundation
+import CocoaLumberjackSwift
 
 @objc class Animator : NSObject{
     
@@ -177,7 +178,7 @@ import Foundation
         
         /// Debug
         
-//        DDLogDebug("timeU, \(animationTimeUnit), valueU: \(animationValueUnit)")
+        DDLogDebug("timeU, \(animationTimeUnit), valueU: \(animationValueUnit)")
     }
     
 }

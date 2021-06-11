@@ -1,7 +1,4 @@
 PODS:
-  - CocoaLumberjack (3.7.2):
-    - CocoaLumberjack/Core (= 3.7.2)
-  - CocoaLumberjack/Core (3.7.2)
   - ReactiveCocoa (11.2.1):
     - ReactiveSwift (~> 6.6)
   - ReactiveObjC (3.1.1)
@@ -9,7 +6,6 @@ PODS:
   - RHAdditions (1.3.0)
 
 DEPENDENCIES:
-  - CocoaLumberjack
   - ReactiveCocoa (~> 11.2)
   - ReactiveObjC (~> 3.1)
   - ReactiveSwift (~> 6.6)
@@ -17,19 +13,17 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - CocoaLumberjack
     - ReactiveCocoa
     - ReactiveObjC
     - ReactiveSwift
     - RHAdditions
 
 SPEC CHECKSUMS:
-  CocoaLumberjack: b7e05132ff94f6ae4dfa9d5bce9141893a21d9da
   ReactiveCocoa: 194289e7069037d40c59cb4ae9230f4b1ec05fa8
   ReactiveObjC: 011caa393aa0383245f2dcf9bf02e86b80b36040
   ReactiveSwift: be9407e2aaf8a11e53a5229255693cffd9a63ccf
   RHAdditions: 13ef6284b6e8eb919c6fbcef63ebae35eda385ff
 
-PODFILE CHECKSUM: 26d017ffc427ca0cbd2e5cac593870c2d18b1e78
+PODFILE CHECKSUM: cf7b689912965c316f6ed27aa78a52f27ee25a53
 
 COCOAPODS: 1.10.1

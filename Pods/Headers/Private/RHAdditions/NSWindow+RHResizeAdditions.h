@@ -1,0 +1,1 @@
+../../../RHAdditions/RHAdditions/NSWindow+RHResizeAdditions.h
