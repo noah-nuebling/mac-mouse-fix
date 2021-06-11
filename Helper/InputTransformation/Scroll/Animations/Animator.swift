@@ -73,22 +73,42 @@ import Foundation
         self.callback = callback
         self.animationCurve = animationCurve
         
-        let now: CFTimeInterval = CACurrentMediaTime()
-        
-        self.animationTimeInterval = Interval.init(location: now, length: duration)
-        self.animationValueInterval = valueInterval
-        
-        lastAnimationTime = now
-        lastAnimationValue = animationValueInterval.start
-        
         if (isRunning) {
+            /// I think it should make for smoother animations, if we don't se the lastAnimationTime to now when the displayLink is already running, but that's an experiment. I'm not sure. Edit: Not sure if it makes a difference but it's fine
+            
             animationPhase = kMFAnimationPhaseRunningStart;
+            
+            lastAnimationValue = animationValueInterval.start
+            
+            self.animationTimeInterval = Interval.init(location: lastAnimationTime, length: duration)
+            self.animationValueInterval = valueInterval
+            
         } else {
+            
             animationPhase = kMFAnimationPhaseStart;
+            
+            let now: CFTimeInterval = CACurrentMediaTime()
+            
+            lastAnimationTime = now
+            lastAnimationValue = animationValueInterval.start
+            
+            self.animationTimeInterval = Interval.init(location: now, length: duration)
+            self.animationValueInterval = valueInterval
+            
             /// Start displayLink
             self.displayLink.start(callback: { [unowned self] () -> () in
                 let s = self
-                s.displayLinkCallback() /// This call gives EXC_BAD_ACCESS once a minute when scrolling. How is that even possible? It's just a function. Debugger says that everything else is available on self, just not this function. Maybe it's because it's not marked @objc? Edit: Marking it @objc weirdly fixes the issue.
+                s.displayLinkCallback()
+                /**
+                 - `displayLinkCallback()` gives EXC_BAD_ACCESS once a minute when scrolling. How is that even possible? It's just a function. Debugger says that everything else is available on self, just not this function. Maybe it's because it's not marked @objc?
+                    - Edit: Marking it @objc weirdly fixes the issue. Edit2: Nope, now it appeared again.
+                 - SO about a similar problem: https://stackoverflow.com/questions/14744378/arc-exc-bad-access-when-calling-a-method-from-inside-a-block-inside-a-delegate
+                 - I think the reason might be that we were storing the block in `DisplayLink.m` with `_callback = callback` instead of `self.callback = callback`. That might prevent the block from being copied which blocks should normally be when stored as properties or something. See:
+                    - https://www.google.com/search?client=safari&rls=en&q=objc+copy+property&ie=UTF-8&oe=UTF-8
+                    - Actually, using `self.callback` shouldn't make a difference. See:
+                        - https://stackoverflow.com/questions/10453261/under-arc-are-blocks-automatically-copied-when-assigned-to-an-ivar-directly
+                        - But it seems to work so far.
+                 */
             })
         }
     }

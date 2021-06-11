@@ -74,7 +74,7 @@
     
     /// Store callback
     
-    _callback = callback;
+    self.callback = callback;
     
     /// Start the displayLink
     ///     If something goes wrong see notes in old SmoothScroll.m > handleInput: method
