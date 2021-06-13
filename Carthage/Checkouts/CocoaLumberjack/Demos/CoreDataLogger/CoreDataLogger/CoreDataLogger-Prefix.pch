@@ -1,0 +1,13 @@
+//
+//  CoreDataLogger-Prefix.pch
+//  CoreDataLogger
+//
+//  CocoaLumberjack Demos
+//
+//
+// Prefix header for all source files of the 'CoreDataLogger' target in the 'CoreDataLogger' project
+//
+
+#ifdef __OBJC__
+	#import <Cocoa/Cocoa.h>
+#endif

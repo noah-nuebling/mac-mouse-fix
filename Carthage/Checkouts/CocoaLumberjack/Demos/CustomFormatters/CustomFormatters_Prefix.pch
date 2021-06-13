@@ -1,0 +1,13 @@
+//
+//  CustomFormatters_Prefix.pch
+//  CustomFormatters
+//
+//  CocoaLumberjack Demos
+//
+//
+// Prefix header for all source files of the 'CustomFormatters' target in the 'CustomFormatters' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif

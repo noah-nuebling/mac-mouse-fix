@@ -1,0 +1,14 @@
+//
+//  BenchmarkIPhone_Prefix.pch
+//  BenchmarkIPhone
+//
+//  CocoaLumberjack Demos
+//
+//
+// Prefix header for all source files of the 'BenchmarkIPhone' target in the 'BenchmarkIPhone' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+    #import <UIKit/UIKit.h>
+#endif

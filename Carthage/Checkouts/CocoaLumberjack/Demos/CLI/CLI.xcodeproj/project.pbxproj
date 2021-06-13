@@ -1,0 +1,226 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0A7D8FA0217A10A900B496D7 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7D8F9F217A10A900B496D7 /* CocoaLumberjack.framework */; };
+		E5EDB896186286BC002D0689 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5EDB895186286BC002D0689 /* Foundation.framework */; };
+		E5EDB899186286BC002D0689 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E5EDB898186286BC002D0689 /* main.m */; };
+		E5EDB89D186286BC002D0689 /* CLI.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = E5EDB89C186286BC002D0689 /* CLI.1 */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E5EDB890186286BC002D0689 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				E5EDB89D186286BC002D0689 /* CLI.1 in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0A7D8F9F217A10A900B496D7 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CocoaLumberjack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		43AF80292174E3CB00C0D9DC /* Module-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Release.xcconfig"; sourceTree = "<group>"; };
+		43AF802A2174E3CB00C0D9DC /* Module-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Debug.xcconfig"; sourceTree = "<group>"; };
+		43AF802B2174E3CB00C0D9DC /* Module-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Shared.xcconfig"; sourceTree = "<group>"; };
+		E5EDB892186286BC002D0689 /* CLI */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CLI; sourceTree = BUILT_PRODUCTS_DIR; };
+		E5EDB895186286BC002D0689 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		E5EDB898186286BC002D0689 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E5EDB89B186286BC002D0689 /* CLI-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CLI-Prefix.pch"; sourceTree = "<group>"; };
+		E5EDB89C186286BC002D0689 /* CLI.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = CLI.1; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E5EDB88F186286BC002D0689 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A7D8FA0217A10A900B496D7 /* CocoaLumberjack.framework in Frameworks */,
+				E5EDB896186286BC002D0689 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		43AF80282174E3CB00C0D9DC /* Configs */ = {
+			isa = PBXGroup;
+			children = (
+				43AF80292174E3CB00C0D9DC /* Module-Release.xcconfig */,
+				43AF802A2174E3CB00C0D9DC /* Module-Debug.xcconfig */,
+				43AF802B2174E3CB00C0D9DC /* Module-Shared.xcconfig */,
+			);
+			name = Configs;
+			path = ../../Configs;
+			sourceTree = "<group>";
+		};
+		E5EDB889186286BC002D0689 = {
+			isa = PBXGroup;
+			children = (
+				43AF80282174E3CB00C0D9DC /* Configs */,
+				E5EDB897186286BC002D0689 /* CLI */,
+				E5EDB894186286BC002D0689 /* Frameworks */,
+				E5EDB893186286BC002D0689 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E5EDB893186286BC002D0689 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E5EDB892186286BC002D0689 /* CLI */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E5EDB894186286BC002D0689 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0A7D8F9F217A10A900B496D7 /* CocoaLumberjack.framework */,
+				E5EDB895186286BC002D0689 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E5EDB897186286BC002D0689 /* CLI */ = {
+			isa = PBXGroup;
+			children = (
+				E5EDB898186286BC002D0689 /* main.m */,
+				E5EDB89C186286BC002D0689 /* CLI.1 */,
+				E5EDB89A186286BC002D0689 /* Supporting Files */,
+			);
+			path = CLI;
+			sourceTree = "<group>";
+		};
+		E5EDB89A186286BC002D0689 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E5EDB89B186286BC002D0689 /* CLI-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E5EDB891186286BC002D0689 /* CLI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E5EDB8A0186286BC002D0689 /* Build configuration list for PBXNativeTarget "CLI" */;
+			buildPhases = (
+				E5EDB88E186286BC002D0689 /* Sources */,
+				E5EDB88F186286BC002D0689 /* Frameworks */,
+				E5EDB890186286BC002D0689 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CLI;
+			productName = kkcli;
+			productReference = E5EDB892186286BC002D0689 /* CLI */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E5EDB88A186286BC002D0689 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0900;
+				ORGANIZATIONNAME = "";
+			};
+			buildConfigurationList = E5EDB88D186286BC002D0689 /* Build configuration list for PBXProject "CLI" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = E5EDB889186286BC002D0689;
+			productRefGroup = E5EDB893186286BC002D0689 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E5EDB891186286BC002D0689 /* CLI */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E5EDB88E186286BC002D0689 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E5EDB899186286BC002D0689 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		E5EDB89E186286BC002D0689 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 43AF802A2174E3CB00C0D9DC /* Module-Debug.xcconfig */;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		E5EDB89F186286BC002D0689 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 43AF80292174E3CB00C0D9DC /* Module-Release.xcconfig */;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		E5EDB8A1186286BC002D0689 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CLI/CLI-Prefix.pch";
+				SUPPORTED_PLATFORMS = macosx;
+				TARGETED_DEVICE_FAMILY = "";
+			};
+			name = Debug;
+		};
+		E5EDB8A2186286BC002D0689 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CLI/CLI-Prefix.pch";
+				SUPPORTED_PLATFORMS = macosx;
+				TARGETED_DEVICE_FAMILY = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E5EDB88D186286BC002D0689 /* Build configuration list for PBXProject "CLI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E5EDB89E186286BC002D0689 /* Debug */,
+				E5EDB89F186286BC002D0689 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E5EDB8A0186286BC002D0689 /* Build configuration list for PBXNativeTarget "CLI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E5EDB8A1186286BC002D0689 /* Debug */,
+				E5EDB8A2186286BC002D0689 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E5EDB88A186286BC002D0689 /* Project object */;
+}

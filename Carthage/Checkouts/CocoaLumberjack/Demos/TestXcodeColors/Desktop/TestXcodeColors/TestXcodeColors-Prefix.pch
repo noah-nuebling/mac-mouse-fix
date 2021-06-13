@@ -1,0 +1,13 @@
+//
+//  TestXcodeColors-Prefix.pch
+//  TestXcodeColors
+//
+//  CocoaLumberjack Demos
+//
+//
+// Prefix header for all source files of the 'TestXcodeColors' target in the 'TestXcodeColors' project
+//
+
+#ifdef __OBJC__
+	#import <Cocoa/Cocoa.h>
+#endif

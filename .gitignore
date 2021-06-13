@@ -9,7 +9,7 @@ xcuserdata/
 sudopass.sh
 
 # Carthage derived data
-Carthage/
+# Carthage/
 
 # White-listing xcschemes folder. (.gitignore whitelisting is a huge hassle but this works)
 # -> We don't need this anymore, because instead we just moved the build schemes to shared

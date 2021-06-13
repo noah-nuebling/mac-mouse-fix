@@ -1,0 +1,319 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0A7D8F9C217A10A000B496D7 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7D8F9B217A10A000B496D7 /* CocoaLumberjack.framework */; };
+		DCC29DE114730AA9005E8FD4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCC29DE014730AA9005E8FD4 /* Cocoa.framework */; };
+		DCC29DEB14730AA9005E8FD4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCC29DE914730AA9005E8FD4 /* InfoPlist.strings */; };
+		DCC29DED14730AA9005E8FD4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC29DEC14730AA9005E8FD4 /* main.m */; };
+		DCC29DF114730AA9005E8FD4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = DCC29DEF14730AA9005E8FD4 /* Credits.rtf */; };
+		DCC29DF414730AA9005E8FD4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC29DF314730AA9005E8FD4 /* AppDelegate.m */; };
+		DCC29DF714730AA9005E8FD4 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = DCC29DF514730AA9005E8FD4 /* MainMenu.xib */; };
+		DCC29E1F14730B05005E8FD4 /* BaseNSLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC29E1814730B05005E8FD4 /* BaseNSLogging.m */; };
+		DCC29E2014730B05005E8FD4 /* DynamicLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC29E1A14730B05005E8FD4 /* DynamicLogging.m */; };
+		DCC29E2114730B05005E8FD4 /* PerformanceTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC29E1C14730B05005E8FD4 /* PerformanceTesting.m */; };
+		DCC29E2214730B05005E8FD4 /* StaticLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC29E1E14730B05005E8FD4 /* StaticLogging.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0A7D8F9B217A10A000B496D7 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CocoaLumberjack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		43AF80212174E19700C0D9DC /* Module-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Release.xcconfig"; sourceTree = "<group>"; };
+		43AF80222174E19700C0D9DC /* Module-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Debug.xcconfig"; sourceTree = "<group>"; };
+		43AF80232174E19700C0D9DC /* Module-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Shared.xcconfig"; sourceTree = "<group>"; };
+		DCC29DDC14730AA9005E8FD4 /* BenchmarkMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BenchmarkMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DCC29DE014730AA9005E8FD4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		DCC29DE314730AA9005E8FD4 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		DCC29DE414730AA9005E8FD4 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		DCC29DE514730AA9005E8FD4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		DCC29DE814730AA9005E8FD4 /* BenchmarkMac-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BenchmarkMac-Info.plist"; sourceTree = "<group>"; };
+		DCC29DEA14730AA9005E8FD4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DCC29DEC14730AA9005E8FD4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		DCC29DEE14730AA9005E8FD4 /* BenchmarkMac-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BenchmarkMac-Prefix.pch"; sourceTree = "<group>"; };
+		DCC29DF014730AA9005E8FD4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		DCC29DF214730AA9005E8FD4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		DCC29DF314730AA9005E8FD4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		DCC29DF614730AA9005E8FD4 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		DCC29E1714730B05005E8FD4 /* BaseNSLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseNSLogging.h; sourceTree = "<group>"; };
+		DCC29E1814730B05005E8FD4 /* BaseNSLogging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseNSLogging.m; sourceTree = "<group>"; };
+		DCC29E1914730B05005E8FD4 /* DynamicLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamicLogging.h; sourceTree = "<group>"; };
+		DCC29E1A14730B05005E8FD4 /* DynamicLogging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DynamicLogging.m; sourceTree = "<group>"; };
+		DCC29E1B14730B05005E8FD4 /* PerformanceTesting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceTesting.h; sourceTree = "<group>"; };
+		DCC29E1C14730B05005E8FD4 /* PerformanceTesting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerformanceTesting.m; sourceTree = "<group>"; };
+		DCC29E1D14730B05005E8FD4 /* StaticLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticLogging.h; sourceTree = "<group>"; };
+		DCC29E1E14730B05005E8FD4 /* StaticLogging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StaticLogging.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DCC29DD914730AA9005E8FD4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A7D8F9C217A10A000B496D7 /* CocoaLumberjack.framework in Frameworks */,
+				DCC29DE114730AA9005E8FD4 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		43AF80202174E19700C0D9DC /* Configs */ = {
+			isa = PBXGroup;
+			children = (
+				43AF80212174E19700C0D9DC /* Module-Release.xcconfig */,
+				43AF80222174E19700C0D9DC /* Module-Debug.xcconfig */,
+				43AF80232174E19700C0D9DC /* Module-Shared.xcconfig */,
+			);
+			name = Configs;
+			path = ../../../Configs;
+			sourceTree = "<group>";
+		};
+		DCC29DD114730AA9005E8FD4 = {
+			isa = PBXGroup;
+			children = (
+				43AF80202174E19700C0D9DC /* Configs */,
+				DCC29E1614730AC6005E8FD4 /* Benchmarking */,
+				DCC29DE614730AA9005E8FD4 /* BenchmarkMac */,
+				DCC29DDF14730AA9005E8FD4 /* Frameworks */,
+				DCC29DDD14730AA9005E8FD4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DCC29DDD14730AA9005E8FD4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DCC29DDC14730AA9005E8FD4 /* BenchmarkMac.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DCC29DDF14730AA9005E8FD4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0A7D8F9B217A10A000B496D7 /* CocoaLumberjack.framework */,
+				DCC29DE014730AA9005E8FD4 /* Cocoa.framework */,
+				DCC29DE214730AA9005E8FD4 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DCC29DE214730AA9005E8FD4 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DCC29DE314730AA9005E8FD4 /* AppKit.framework */,
+				DCC29DE414730AA9005E8FD4 /* CoreData.framework */,
+				DCC29DE514730AA9005E8FD4 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		DCC29DE614730AA9005E8FD4 /* BenchmarkMac */ = {
+			isa = PBXGroup;
+			children = (
+				DCC29DF214730AA9005E8FD4 /* AppDelegate.h */,
+				DCC29DF314730AA9005E8FD4 /* AppDelegate.m */,
+				DCC29DF514730AA9005E8FD4 /* MainMenu.xib */,
+				DCC29DE714730AA9005E8FD4 /* Supporting Files */,
+			);
+			path = BenchmarkMac;
+			sourceTree = "<group>";
+		};
+		DCC29DE714730AA9005E8FD4 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DCC29DE814730AA9005E8FD4 /* BenchmarkMac-Info.plist */,
+				DCC29DE914730AA9005E8FD4 /* InfoPlist.strings */,
+				DCC29DEC14730AA9005E8FD4 /* main.m */,
+				DCC29DEE14730AA9005E8FD4 /* BenchmarkMac-Prefix.pch */,
+				DCC29DEF14730AA9005E8FD4 /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DCC29E1614730AC6005E8FD4 /* Benchmarking */ = {
+			isa = PBXGroup;
+			children = (
+				DCC29E1714730B05005E8FD4 /* BaseNSLogging.h */,
+				DCC29E1814730B05005E8FD4 /* BaseNSLogging.m */,
+				DCC29E1914730B05005E8FD4 /* DynamicLogging.h */,
+				DCC29E1A14730B05005E8FD4 /* DynamicLogging.m */,
+				DCC29E1B14730B05005E8FD4 /* PerformanceTesting.h */,
+				DCC29E1C14730B05005E8FD4 /* PerformanceTesting.m */,
+				DCC29E1D14730B05005E8FD4 /* StaticLogging.h */,
+				DCC29E1E14730B05005E8FD4 /* StaticLogging.m */,
+			);
+			name = Benchmarking;
+			path = ../../../Benchmarking;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DCC29DDB14730AA9005E8FD4 /* BenchmarkMac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DCC29DFA14730AA9005E8FD4 /* Build configuration list for PBXNativeTarget "BenchmarkMac" */;
+			buildPhases = (
+				DCC29DD814730AA9005E8FD4 /* Sources */,
+				DCC29DD914730AA9005E8FD4 /* Frameworks */,
+				DCC29DDA14730AA9005E8FD4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BenchmarkMac;
+			productName = BenchmarkMac;
+			productReference = DCC29DDC14730AA9005E8FD4 /* BenchmarkMac.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DCC29DD314730AA9005E8FD4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0900;
+			};
+			buildConfigurationList = DCC29DD614730AA9005E8FD4 /* Build configuration list for PBXProject "BenchmarkMac" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = DCC29DD114730AA9005E8FD4;
+			productRefGroup = DCC29DDD14730AA9005E8FD4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DCC29DDB14730AA9005E8FD4 /* BenchmarkMac */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DCC29DDA14730AA9005E8FD4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DCC29DEB14730AA9005E8FD4 /* InfoPlist.strings in Resources */,
+				DCC29DF114730AA9005E8FD4 /* Credits.rtf in Resources */,
+				DCC29DF714730AA9005E8FD4 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DCC29DD814730AA9005E8FD4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DCC29DED14730AA9005E8FD4 /* main.m in Sources */,
+				DCC29DF414730AA9005E8FD4 /* AppDelegate.m in Sources */,
+				DCC29E1F14730B05005E8FD4 /* BaseNSLogging.m in Sources */,
+				DCC29E2014730B05005E8FD4 /* DynamicLogging.m in Sources */,
+				DCC29E2114730B05005E8FD4 /* PerformanceTesting.m in Sources */,
+				DCC29E2214730B05005E8FD4 /* StaticLogging.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		DCC29DE914730AA9005E8FD4 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DCC29DEA14730AA9005E8FD4 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		DCC29DEF14730AA9005E8FD4 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DCC29DF014730AA9005E8FD4 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		DCC29DF514730AA9005E8FD4 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DCC29DF614730AA9005E8FD4 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		DCC29DF814730AA9005E8FD4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 43AF80222174E19700C0D9DC /* Module-Debug.xcconfig */;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		DCC29DF914730AA9005E8FD4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 43AF80212174E19700C0D9DC /* Module-Release.xcconfig */;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		DCC29DFB14730AA9005E8FD4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "BenchmarkMac/BenchmarkMac-Prefix.pch";
+				INFOPLIST_FILE = "BenchmarkMac/BenchmarkMac-Info.plist";
+				SUPPORTED_PLATFORMS = macosx;
+				TARGETED_DEVICE_FAMILY = "";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		DCC29DFC14730AA9005E8FD4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "BenchmarkMac/BenchmarkMac-Prefix.pch";
+				INFOPLIST_FILE = "BenchmarkMac/BenchmarkMac-Info.plist";
+				SUPPORTED_PLATFORMS = macosx;
+				TARGETED_DEVICE_FAMILY = "";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DCC29DD614730AA9005E8FD4 /* Build configuration list for PBXProject "BenchmarkMac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DCC29DF814730AA9005E8FD4 /* Debug */,
+				DCC29DF914730AA9005E8FD4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DCC29DFA14730AA9005E8FD4 /* Build configuration list for PBXNativeTarget "BenchmarkMac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DCC29DFB14730AA9005E8FD4 /* Debug */,
+				DCC29DFC14730AA9005E8FD4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DCC29DD314730AA9005E8FD4 /* Project object */;
+}

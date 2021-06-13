@@ -1,0 +1,13 @@
+//
+//  GlobalLogLevel_Prefix.pch
+//  GlobalLogLevel
+//
+//  CocoaLumberjack Demos
+//
+//
+// Prefix header for all source files of the 'GlobalLogLevel' target in the 'GlobalLogLevel' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif

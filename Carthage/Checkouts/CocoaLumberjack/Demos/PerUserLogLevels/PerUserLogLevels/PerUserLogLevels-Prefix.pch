@@ -1,0 +1,13 @@
+//
+//  PerUserLogLevels-Prefix.pch
+//  PerUserLogLevels
+//
+//  CocoaLumberjack Demos
+//
+//
+// Prefix header for all source files of the 'PerUserLogLevels' target in the 'PerUserLogLevels' project
+//
+
+#ifdef __OBJC__
+	#import <Cocoa/Cocoa.h>
+#endif

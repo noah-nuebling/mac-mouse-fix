@@ -1,0 +1,14 @@
+//
+//  UniversalApp_Prefix.pch
+//  UniversalApp
+//
+//  CocoaLumberjack Demos
+//
+//
+// Prefix header for all source files of the 'UniversalApp' target in the 'UniversalApp' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+    #import <UIKit/UIKit.h>
+#endif

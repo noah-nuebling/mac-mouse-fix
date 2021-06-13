@@ -1,0 +1,276 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0A7D8F9E217A10A500B496D7 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7D8F9D217A10A500B496D7 /* CocoaLumberjack.framework */; };
+		E50619821A2EF295000F835A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E50619811A2EF295000F835A /* Main.storyboard */; };
+		E5AE803B18DA83A400E0501F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5AE803A18DA83A400E0501F /* Foundation.framework */; };
+		E5AE803D18DA83A400E0501F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5AE803C18DA83A400E0501F /* CoreGraphics.framework */; };
+		E5AE803F18DA83A400E0501F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5AE803E18DA83A400E0501F /* UIKit.framework */; };
+		E5AE804518DA83A400E0501F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E5AE804318DA83A400E0501F /* InfoPlist.strings */; };
+		E5AE804718DA83A400E0501F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AE804618DA83A400E0501F /* main.m */; };
+		E5AE804B18DA83A400E0501F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AE804A18DA83A400E0501F /* AppDelegate.m */; };
+		E5AE805118DA83A400E0501F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5AE805018DA83A400E0501F /* ViewController.m */; };
+		E5AE805318DA83A400E0501F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5AE805218DA83A400E0501F /* Images.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0A7D8F9D217A10A500B496D7 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CocoaLumberjack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		43AF80252174E2F700C0D9DC /* Module-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Release.xcconfig"; sourceTree = "<group>"; };
+		43AF80262174E2F700C0D9DC /* Module-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Debug.xcconfig"; sourceTree = "<group>"; };
+		43AF80272174E2F700C0D9DC /* Module-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Module-Shared.xcconfig"; sourceTree = "<group>"; };
+		E50619811A2EF295000F835A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		E5AE803718DA83A400E0501F /* CaptureASL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CaptureASL.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E5AE803A18DA83A400E0501F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		E5AE803C18DA83A400E0501F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		E5AE803E18DA83A400E0501F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		E5AE804218DA83A400E0501F /* CaptureASL-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CaptureASL-Info.plist"; sourceTree = "<group>"; };
+		E5AE804418DA83A400E0501F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E5AE804618DA83A400E0501F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E5AE804818DA83A400E0501F /* CaptureASL-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CaptureASL-Prefix.pch"; sourceTree = "<group>"; };
+		E5AE804918DA83A400E0501F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		E5AE804A18DA83A400E0501F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		E5AE804F18DA83A400E0501F /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		E5AE805018DA83A400E0501F /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		E5AE805218DA83A400E0501F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		E5AE805918DA83A400E0501F /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E5AE803418DA83A400E0501F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A7D8F9E217A10A500B496D7 /* CocoaLumberjack.framework in Frameworks */,
+				E5AE803D18DA83A400E0501F /* CoreGraphics.framework in Frameworks */,
+				E5AE803F18DA83A400E0501F /* UIKit.framework in Frameworks */,
+				E5AE803B18DA83A400E0501F /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		43AF80242174E2F700C0D9DC /* Configs */ = {
+			isa = PBXGroup;
+			children = (
+				43AF80252174E2F700C0D9DC /* Module-Release.xcconfig */,
+				43AF80262174E2F700C0D9DC /* Module-Debug.xcconfig */,
+				43AF80272174E2F700C0D9DC /* Module-Shared.xcconfig */,
+			);
+			name = Configs;
+			path = ../../Configs;
+			sourceTree = "<group>";
+		};
+		E5AE802E18DA83A400E0501F = {
+			isa = PBXGroup;
+			children = (
+				43AF80242174E2F700C0D9DC /* Configs */,
+				E5AE804018DA83A400E0501F /* CaptureASL */,
+				E5AE803918DA83A400E0501F /* Frameworks */,
+				E5AE803818DA83A400E0501F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E5AE803818DA83A400E0501F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E5AE803718DA83A400E0501F /* CaptureASL.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E5AE803918DA83A400E0501F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0A7D8F9D217A10A500B496D7 /* CocoaLumberjack.framework */,
+				E5AE803A18DA83A400E0501F /* Foundation.framework */,
+				E5AE803C18DA83A400E0501F /* CoreGraphics.framework */,
+				E5AE803E18DA83A400E0501F /* UIKit.framework */,
+				E5AE805918DA83A400E0501F /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E5AE804018DA83A400E0501F /* CaptureASL */ = {
+			isa = PBXGroup;
+			children = (
+				E5AE804918DA83A400E0501F /* AppDelegate.h */,
+				E5AE804A18DA83A400E0501F /* AppDelegate.m */,
+				E5AE804F18DA83A400E0501F /* ViewController.h */,
+				E5AE805018DA83A400E0501F /* ViewController.m */,
+				E50619811A2EF295000F835A /* Main.storyboard */,
+				E5AE805218DA83A400E0501F /* Images.xcassets */,
+				E5AE804118DA83A400E0501F /* Supporting Files */,
+			);
+			path = CaptureASL;
+			sourceTree = "<group>";
+		};
+		E5AE804118DA83A400E0501F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E5AE804218DA83A400E0501F /* CaptureASL-Info.plist */,
+				E5AE804318DA83A400E0501F /* InfoPlist.strings */,
+				E5AE804618DA83A400E0501F /* main.m */,
+				E5AE804818DA83A400E0501F /* CaptureASL-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E5AE803618DA83A400E0501F /* CaptureASL */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E5AE806918DA83A500E0501F /* Build configuration list for PBXNativeTarget "CaptureASL" */;
+			buildPhases = (
+				E5AE803318DA83A400E0501F /* Sources */,
+				E5AE803418DA83A400E0501F /* Frameworks */,
+				E5AE803518DA83A400E0501F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CaptureASL;
+			productName = CaptureASL;
+			productReference = E5AE803718DA83A400E0501F /* CaptureASL.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E5AE802F18DA83A400E0501F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0900;
+			};
+			buildConfigurationList = E5AE803218DA83A400E0501F /* Build configuration list for PBXProject "CaptureASL" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = E5AE802E18DA83A400E0501F;
+			productRefGroup = E5AE803818DA83A400E0501F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E5AE803618DA83A400E0501F /* CaptureASL */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E5AE803518DA83A400E0501F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E50619821A2EF295000F835A /* Main.storyboard in Resources */,
+				E5AE805318DA83A400E0501F /* Images.xcassets in Resources */,
+				E5AE804518DA83A400E0501F /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E5AE803318DA83A400E0501F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E5AE805118DA83A400E0501F /* ViewController.m in Sources */,
+				E5AE804B18DA83A400E0501F /* AppDelegate.m in Sources */,
+				E5AE804718DA83A400E0501F /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		E5AE804318DA83A400E0501F /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E5AE804418DA83A400E0501F /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		E5AE806718DA83A500E0501F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 43AF80262174E2F700C0D9DC /* Module-Debug.xcconfig */;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		E5AE806818DA83A500E0501F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 43AF80252174E2F700C0D9DC /* Module-Release.xcconfig */;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		E5AE806A18DA83A500E0501F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CaptureASL/CaptureASL-Prefix.pch";
+				INFOPLIST_FILE = "CaptureASL/CaptureASL-Info.plist";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		E5AE806B18DA83A500E0501F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CaptureASL/CaptureASL-Prefix.pch";
+				INFOPLIST_FILE = "CaptureASL/CaptureASL-Info.plist";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E5AE803218DA83A400E0501F /* Build configuration list for PBXProject "CaptureASL" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E5AE806718DA83A500E0501F /* Debug */,
+				E5AE806818DA83A500E0501F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E5AE806918DA83A500E0501F /* Build configuration list for PBXNativeTarget "CaptureASL" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E5AE806A18DA83A500E0501F /* Debug */,
+				E5AE806B18DA83A500E0501F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E5AE802F18DA83A400E0501F /* Project object */;
+}

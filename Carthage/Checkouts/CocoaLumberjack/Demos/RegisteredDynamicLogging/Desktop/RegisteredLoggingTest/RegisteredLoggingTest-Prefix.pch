@@ -1,0 +1,13 @@
+//
+//  main.m
+//  RegisteredLoggingTest
+//
+//  CocoaLumberjack Demos
+//
+//
+// Prefix header for all source files of the 'RegisteredLoggingTest' target in the 'RegisteredLoggingTest' project
+//
+
+#ifdef __OBJC__
+	#import <Cocoa/Cocoa.h>
+#endif

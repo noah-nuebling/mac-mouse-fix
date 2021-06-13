@@ -1,0 +1,8 @@
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+#include "Module-Release.xcconfig"
+#include "App-Shared.xcconfig"
+
+// Space-separated list of preprocessor macros of the form `foo` or `foo=bar`
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) DD_LOG_LEVEL=DDLogLevelWarning

@@ -1,0 +1,13 @@
+//
+//  FineGrainedLogging_Prefix.pch
+//  FineGrainedLogging
+//
+//  CocoaLumberjack Demos
+//
+//
+// Prefix header for all source files of the 'FineGrainedLogging' target in the 'FineGrainedLogging' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif

@@ -1,0 +1,13 @@
+//
+//  DispatchQueueLogger-Prefix.pch
+//  DispatchQueueLogger
+//
+//  CocoaLumberjack Demos
+//
+//
+// Prefix header for all source files of the 'DispatchQueueLogger' target in the 'DispatchQueueLogger' project
+//
+
+#ifdef __OBJC__
+	#import <Cocoa/Cocoa.h>
+#endif

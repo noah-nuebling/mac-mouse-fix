@@ -1,0 +1,13 @@
+//
+//  SQLiteLogger-Prefix.pch
+//  SQLiteLogger
+//
+//  CocoaLumberjack Demos
+//
+//
+// Prefix header for all source files of the 'SQLiteLogger' target in the 'SQLiteLogger' project
+//
+
+#ifdef __OBJC__
+	#import <Cocoa/Cocoa.h>
+#endif

@@ -1,0 +1,13 @@
+disabled_rules:
+  - line_length
+  - function_parameter_count
+
+opt_in_rules:
+  - empty_count
+  - force_unwrapping
+
+nesting:
+  type_level: 4
+
+identifier_name:
+  allowed_symbols: "_"

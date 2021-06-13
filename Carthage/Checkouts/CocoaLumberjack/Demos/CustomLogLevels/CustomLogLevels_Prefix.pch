@@ -1,0 +1,13 @@
+//
+//  CustomLogLevels_Prefix.pch
+//  CustomLogLevels
+//
+//  CocoaLumberjack Demos
+//
+//
+// Prefix header for all source files of the 'CustomLogLevels' target in the 'CustomLogLevels' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif

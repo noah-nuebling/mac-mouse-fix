@@ -1,0 +1,13 @@
+//
+//  ContextFilter_Prefix.pch
+//  ContextFilter
+//
+//  CocoaLumberjack Demos
+//
+//
+// Prefix header for all source files of the 'ContextFilter' target in the 'ContextFilter' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
