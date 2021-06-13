@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		2542DE086526FDEAC2018A8D /* libPods-Mac Mouse Fix Accomplice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1534F35EBC76CC272CF906 /* libPods-Mac Mouse Fix Accomplice.a */; };
 		2D937827717D64CDBCC2C443 /* Pods_Mac_Mouse_Fix.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24A19E04F97ECEF36516F04A /* Pods_Mac_Mouse_Fix.framework */; };
+		4F1757BD2675955B009FCB47 /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4F1757BC2675955B009FCB47 /* CocoaLumberjackSwift */; };
+		4F1757BF26759574009FCB47 /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4F1757BE26759574009FCB47 /* CocoaLumberjackSwift */; };
+		4F1757C42675957B009FCB47 /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = 4F1757C32675957B009FCB47 /* CocoaLumberjack */; };
+		4F1757C92675959E009FCB47 /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = 4F1757C82675959E009FCB47 /* CocoaLumberjack */; };
+		4F1757CB267595A7009FCB47 /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = 4F1757CA267595A7009FCB47 /* CocoaLumberjack */; };
 		4F1793A925EEC92000E8309B /* ZipArchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F1793A825EEC90900E8309B /* ZipArchive.framework */; };
 		4F1793AA25EEC92000E8309B /* ZipArchive.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F1793A825EEC90900E8309B /* ZipArchive.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F1AFE972670EBA900ECA424 /* Drag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1AFE962670EBA900ECA424 /* Drag.swift */; };
@@ -490,6 +495,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F1757C42675957B009FCB47 /* CocoaLumberjack in Frameworks */,
 				2542DE086526FDEAC2018A8D /* libPods-Mac Mouse Fix Accomplice.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -500,6 +506,8 @@
 			files = (
 				4F1793A925EEC92000E8309B /* ZipArchive.framework in Frameworks */,
 				4F39BC26263AC31600FDF692 /* Sparkle.framework in Frameworks */,
+				4F1757BD2675955B009FCB47 /* CocoaLumberjackSwift in Frameworks */,
+				4F1757CB267595A7009FCB47 /* CocoaLumberjack in Frameworks */,
 				2D937827717D64CDBCC2C443 /* Pods_Mac_Mouse_Fix.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -524,6 +532,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F1757C92675959E009FCB47 /* CocoaLumberjack in Frameworks */,
+				4F1757BF26759574009FCB47 /* CocoaLumberjackSwift in Frameworks */,
 				80457D1CE643F8D503131D96 /* Pods_Mac_Mouse_Fix_Helper.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1323,6 +1333,9 @@
 			dependencies = (
 			);
 			name = "Mac Mouse Fix Accomplice";
+			packageProductDependencies = (
+				4F1757C32675957B009FCB47 /* CocoaLumberjack */,
+			);
 			productName = "Mouse Fix Updater";
 			productReference = 4F2FDF302315662400C7BE14 /* Mac Mouse Fix Accomplice */;
 			productType = "com.apple.product-type.tool";
@@ -1348,6 +1361,10 @@
 				4F94F73625E6138800D9F24A /* PBXTargetDependency */,
 			);
 			name = "Mac Mouse Fix";
+			packageProductDependencies = (
+				4F1757BC2675955B009FCB47 /* CocoaLumberjackSwift */,
+				4F1757CA267595A7009FCB47 /* CocoaLumberjack */,
+			);
 			productName = "Mac Mouse Fix";
 			productReference = 4F94F5EE25E5EC2500D9F24A /* Mac Mouse Fix.app */;
 			productType = "com.apple.product-type.application";
@@ -1408,6 +1425,10 @@
 			dependencies = (
 			);
 			name = "Mac Mouse Fix Helper";
+			packageProductDependencies = (
+				4F1757BE26759574009FCB47 /* CocoaLumberjackSwift */,
+				4F1757C82675959E009FCB47 /* CocoaLumberjack */,
+			);
 			productName = "Mouse Remap Helper";
 			productReference = 4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */;
 			productType = "com.apple.product-type.application";
@@ -1459,6 +1480,9 @@
 				English,
 			);
 			mainGroup = 4FCECD7721092354001F1078;
+			packageReferences = (
+				4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */,
+			);
 			productRefGroup = 4FCECD8121092354001F1078 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -2375,6 +2399,45 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CocoaLumberjack/CocoaLumberjack.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.7.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4F1757BC2675955B009FCB47 /* CocoaLumberjackSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
+			productName = CocoaLumberjackSwift;
+		};
+		4F1757BE26759574009FCB47 /* CocoaLumberjackSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
+			productName = CocoaLumberjackSwift;
+		};
+		4F1757C32675957B009FCB47 /* CocoaLumberjack */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
+			productName = CocoaLumberjack;
+		};
+		4F1757C82675959E009FCB47 /* CocoaLumberjack */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
+			productName = CocoaLumberjack;
+		};
+		4F1757CA267595A7009FCB47 /* CocoaLumberjack */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
+			productName = CocoaLumberjack;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4FCECD7821092354001F1078 /* Project object */;
 }

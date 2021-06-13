@@ -17,7 +17,7 @@
 // Setup Cocoalumberjack
 
 #define LOG_LEVEL_DEF ddLogLevel
-#import <CocoaLumberjack/CocoaLumberjack.h> /// `@import CocoaLumberjack` doesn't compile
+@import CocoaLumberjack;
 
 // Set default CocoaLumberjack loglevel for the project (can be overriden)
 //  More on loglevels here: https://github.com/CocoaLumberjack/CocoaLumberjack/blob/master/Documentation/GettingStarted.md
