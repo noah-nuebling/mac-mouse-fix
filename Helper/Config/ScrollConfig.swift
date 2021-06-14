@@ -59,6 +59,7 @@ import Cocoa
         MFSemanticScrollInversion(topLevel["naturalDirection"] as! UInt32)
     }
     private static var semanticScrollInvertSystem: MFSemanticScrollInversion {
+        /// Maybe we could use NSEvent.directionInvertedFromDevice instead of this.
         
         let defaults = UserDefaults.standard;
         
