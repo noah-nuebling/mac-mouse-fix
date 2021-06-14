@@ -49,7 +49,7 @@ import Cocoa
     @objc static var scrollInvert: MFScrollInversion {
         /// This can be used as a factor to invert things. kMFScrollInversionInverted is -1.
         
-        if semanticScrollInvertUser == semanticScrollInvertSystem {
+        if self.semanticScrollInvertUser == self.semanticScrollInvertSystem {
             return kMFScrollInversionNonInverted
         } else {
             return kMFScrollInversionInverted
@@ -59,6 +59,7 @@ import Cocoa
         MFSemanticScrollInversion(topLevel["naturalDirection"] as! UInt32)
     }
     private static var semanticScrollInvertSystem: MFSemanticScrollInversion {
+        /// Maybe we could use NSEvent.directionInvertedFromDevice instead of this.
         
         let defaults = UserDefaults.standard;
         

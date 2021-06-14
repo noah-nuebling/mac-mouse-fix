@@ -161,7 +161,7 @@ static VectorSubPixelator *_scrollPixelator;
     
     CGEventSetDoubleValueField(e22, 55, 22); // 22 -> NSEventTypeScrollWheel // Setting field 55 is the same as using CGEventSetType(), I'm not sure if that has weird side-effects though, so I'd rather do it this way.
     CGEventSetDoubleValueField(e22, 88, 1); // 88 -> kCGScrollWheelEventIsContinuous
-    CGEventSetDoubleValueField(e22, 137, 1); 
+    CGEventSetDoubleValueField(e22, 137, 1); /// Maybe NSEvent.directionInvertedFromDevice
     
     // Set dynamic fields
     
