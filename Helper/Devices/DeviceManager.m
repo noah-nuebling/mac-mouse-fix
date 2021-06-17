@@ -136,10 +136,10 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
         [Scroll decide];
         [ButtonInputReceiver decide];
         
+        [PointerSpeed setSensitivityTo:1000 onDevice:device];
+        
         DDLogInfo(@"New matching IOHIDDevice passed filtering and corresponding MFDevice was attached to device manager:\n%@", newMFDevice);
         
-        // Testing PointerSpeed
-        //[PointerSpeed setSensitivityViaIORegTo:1000 device:device];
     } else {
         DDLogInfo(@"New matching IOHIDDevice device didn't pass filtering");
     }

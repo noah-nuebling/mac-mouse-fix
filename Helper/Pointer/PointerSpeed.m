@@ -19,6 +19,7 @@
 
 @implementation PointerSpeed
 
+
 extern IOHIDEventSystemClientRef IOHIDEventSystemClientCreate(CFAllocatorRef allocator);
 //extern IOHIDEventSystemClientRef IOHIDEventSystemClientCreate(void);
 extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHIDEventSystemClientRef client, uint64_t entryID);
@@ -85,6 +86,113 @@ static mach_port_t _IOHIDSystemHandle;
 
 #pragma mark Sensitivity
 
+
+static io_registry_entry_t getChildWithName(io_registry_entry_t hostService, NSString *name) {
+    /// Helper function for `setSensitivityTo:onDevice:`
+    
+    io_iterator_t hostServiceChildIterator;
+    IORegistryEntryGetChildIterator(hostService, kIOServicePlane, &hostServiceChildIterator);
+    
+    io_registry_entry_t childEntry;
+    io_service_t interfaceService = -1;
+    while ((childEntry = IOIteratorNext(hostServiceChildIterator))) {
+        char childEntryName[100]; /// Buffer size 100 is untested
+        IORegistryEntryGetNameInPlane(childEntry, kIOServicePlane, childEntryName);
+        if ([@(childEntryName) isEqual:name]) {
+            interfaceService = childEntry;
+        }
+    }
+    
+    assert(interfaceService != -1);
+    
+    return interfaceService;
+}
+
++ (void)setSensitivityTo:(int)sensitivity onDevice:(IOHIDDeviceRef)dev {
+    /**
+     2021 attempt at changing sensitivity based on my new understanding from reading the IOKit Fundamentals and related documents, as well as the the HIPointing.ccp and related Darwin source files.
+     TODO: Fill in more sources from my notes, if this works
+     */
+    
+    sensitivity = 100; /// DEBUG
+    
+    /// Convert to fixed point
+    
+    int64_t sens = IntToFixed(sensitivity);
+    
+    /// Init err
+    
+    kern_return_t err = 0;
+
+    /// Get device driver service
+    
+    io_service_t hostService = IOHIDDeviceGetService(dev);
+    io_service_t interfaceService = getChildWithName(hostService, @"IOHIDInterface");
+    io_service_t driverService = getChildWithName(interfaceService, @"AppleUserHIDEventDriver");
+
+    /// Debug
+    
+//    char hostServicePath[100];
+//    IORegistryEntryGetPath(hostService, kIOServicePlane, hostServicePath); /// This makes the program crash after the function returns for some reason.
+//    DDLogDebug(@"Service Path: %@", @(hostServicePath));
+
+    /// Get whole property dict
+    
+    CFMutableDictionaryRef properties = CFDictionaryCreateMutable(kCFAllocatorDefault, 0, NULL, NULL);
+    err = IORegistryEntryCreateCFProperties(driverService, &properties, kCFAllocatorDefault, 0);
+    assert (err == 0);
+
+    /// Convert to dict NS and update pointerResolution
+    
+    NSMutableDictionary *propertiesNS = (__bridge_transfer NSMutableDictionary *)properties;
+    propertiesNS[@(kIOHIDPointerResolutionKey)] = @(sens);
+
+    /// Set updated property dict to driver registry entry
+    
+    err = IORegistryEntrySetCFProperties(driverService, (__bridge CFMutableDictionaryRef)propertiesNS);
+    assert(err == 0);
+    
+    
+    /// Approach 2:
+    /// Opening a user client and settng properties on that
+    /// Sort of inspired by skimming over this: https://developer.apple.com/forums/thread/90107
+    
+//    io_connect_t driverUserClient;
+//    err = IOServiceOpen(driverService, mach_task_self(), kIOHIDEventSystemConnectType, &driverUserClient); /// Opening driverService or interfaceService or hostService returns different errors. The connectType doesn't seem to make a difference. IOServiceOpen worked in the experiments below. TODO: Investigate why. (Probably called it on different services.)
+//    NSAssert(err == 0, @"Error is: %s", mach_error_string(err));
+//    err = IOConnectSetCFProperties(driverUserClient, (__bridge CFMutableDictionaryRef)propertiesNS);
+//    assert(err == 0);
+
+    
+    /// Approach 3:
+    /// Try IOHIDServiceClientSetProperty again like SteerMouse
+    
+    IOHIDEventSystemClientRef eventSystemClient = IOHIDEventSystemClientCreateSimpleClient(kCFAllocatorDefault);
+    uint64_t entryID;
+    IORegistryEntryGetRegistryEntryID(driverService, &entryID); // driverService doesn't do anything. interfaceService and hostService crash.
+    IOHIDServiceClientRef serviceClient = IOHIDEventSystemClientCopyServiceForRegistryID(eventSystemClient, entryID);
+    IOHIDServiceClientSetProperty(serviceClient, CFSTR(kIOHIDPointerResolutionKey), (__bridge CFNumberRef)@(sens));
+    
+    
+    /// Approach 4
+    /// Use the device interface for communicating with the userClient which is provided by IOHIDDevice (user)
+    /// Doesn't work either, who would've thunk
+
+    
+    Boolean success = IOHIDDeviceSetProperty(dev, CFSTR(kIOHIDPointerResolutionKey), (__bridge  CFNumberRef)@(sens));
+    DDLogDebug(@"Setting property via IOHIDDevice was %ssuccessful", !success ? "not " : ""); /// Says it's succesful but doesn't do anything.
+    
+    /// Debug
+    /// Check if pointerResolution updated
+    /// -> It doesn't work, either
+    CFTypeRef pointerResolution = IORegistryEntryCreateCFProperty(driverService, CFSTR(kIOHIDPointerResolutionKey), kCFAllocatorDefault, 0);
+    int pointerResolutionInt = FixedToInt([((__bridge NSNumber *)pointerResolution) intValue]);
+    DDLogDebug(@"Updated pointer res: %d", pointerResolutionInt);
+    CFRelease(pointerResolution);
+    
+    
+    
+}
 
 // Doesn't work
 + (void)newSetSensitivityViaIORegTo:(int)sens device:(IOHIDDeviceRef)dev {
@@ -273,7 +381,7 @@ static mach_port_t _IOHIDSystemHandle;
             
             
             // This manages to alter alter / create entries in HIDEventServiceProperties property. But creating HIDPointerResolution doesn't do anything.
-            // CursorSense also creates a HIDPointerResolution entry.
+            // CursorSense also creates a HIDPointerResolution entry in the HIDEventServiceProperties property.
 //            CFBooleanRef falseCF = kCFBooleanFalse;
 //            IORegistryEntrySetCFProperty(matchingService, CFSTR("HIDDefaultParameters"), falseCF);
             CFBooleanRef falseCF = kCFBooleanFalse;

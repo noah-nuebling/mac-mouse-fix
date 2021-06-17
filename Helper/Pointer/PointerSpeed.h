@@ -14,7 +14,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PointerSpeed : NSObject
-+ (void)setSensitivityViaIORegTo:(int)sens device:(IOHIDDeviceRef)dev;
++ (void)setSensitivityTo:(int)sens onDevice:(IOHIDDeviceRef)dev;
 + (void)setAccelerationTo:(double)acc;
 @end
 
