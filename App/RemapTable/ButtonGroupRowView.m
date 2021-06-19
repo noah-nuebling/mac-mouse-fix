@@ -38,7 +38,7 @@
     NSRectFill(dirtyRect);
         
     
-    if (NO) { // Don't need to draw border manually when using horizontal grid
+    if ((NO)) { // Don't need to draw border manually when using horizontal grid
         
         // Clip for border drawing
         NSRect clippingRect = NSInsetRect(dirtyRect, 1, 0); // Clip side borders

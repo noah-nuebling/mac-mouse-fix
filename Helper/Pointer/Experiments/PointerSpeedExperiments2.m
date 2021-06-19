@@ -7,17 +7,17 @@
 // --------------------------------------------------------------------------
 //
 
-/// The original PointerSpeed.m was getting a little long and confusing, so we created this
+/// The original PointerSpeedExperiments.m was getting a little long and confusing, so we created this
 
 
-#import "PointerSpeed.h"
+#import "PointerSpeedExperiments2.h"
 #import <IOKit/hidsystem/IOHIDEventSystemClient.h>
 #import <IOKit/hidsystem/IOHIDServiceClient.h>
 #import "WannabePrefixHeader.h"
 #import "IOUtility.h"
 
 
-@implementation PointerSpeed
+@implementation PointerSpeedExperiments2
 
 #pragma mark - External declarations
 
@@ -93,7 +93,8 @@ static void printServiceClientInfo(IOHIDServiceClientRef serviceClient) {
     CFMutableDictionaryRef serviceClientProperties = CFDictionaryCreateMutable(kCFAllocatorDefault, 0, NULL, NULL);
     IORegistryEntryCreateCFProperties(serviceClientService, &serviceClientProperties, kCFAllocatorDefault, 0);
     
-    DDLogDebug(@"ServiceClientInfo: \n%@", (__bridge NSDictionary *)serviceClientProperties);
+    DDLogDebug(@"ServiceClientPath: %s", serviceClientPath);
+    DDLogDebug(@"ServiceClientProperties: \n%@", (__bridge NSDictionary *)serviceClientProperties);
     
     CFRelease(serviceClientProperties);
 }
@@ -105,13 +106,87 @@ static void printServiceClientInfo(IOHIDServiceClientRef serviceClient) {
     /// Testing stuff
     static dispatch_once_t predicate;
     dispatch_once(&predicate, ^{
+        
         /// Get event system client
         
         DDLogDebug(@"BEGIN SERVICE LOGGING");
         
         IOHIDEventSystemClientRef eventSystemClient = IOHIDEventSystemClientCreateWithType(kCFAllocatorDefault, HIDEventSystemClientTypePassive, NULL);
         
-        if (YES) {
+        if ((NO)) {
+            /// Test 5;
+            /// Setting pointerResolution on the service client at IOService:/IOResources/IOHIDSystem
+            /// Doesn't work either :/ The IOHIDSystem doesn't even have a pointerResolution property..
+            /// More ideas I have:
+            /// - Maybe I need to tell the system to acutally apply the new pointer resolution somehow after setting it like in Test 4?
+            /// - Maybe the CursorSense code I had been looking at is just to bamboozle people like me? (Very unlikely)
+            
+            
+            /// Declare stuff
+            register kern_return_t kr;
+            mach_port_t            masterPort;
+            
+            /// Get masterPort
+            kr = IOMasterPort(MACH_PORT_NULL, &masterPort);
+            
+            /// Get IOHIDSystem service (copied from myNXOpenEventStatus)
+            io_service_t IOHIDSystemService = IORegistryEntryFromPath(masterPort, kIOServicePlane ":/IOResources/IOHIDSystem");
+            
+            /// Get ID of the driver
+            uint64_t IOHIDSystemServiceID;
+            IORegistryEntryGetRegistryEntryID(IOHIDSystemService, &IOHIDSystemServiceID);
+            
+            /// Get service client for the IOHIDSystem
+            IOHIDServiceClientRef serviceClient = IOHIDEventSystemClientCopyServiceForRegistryID(eventSystemClient, IOHIDSystemServiceID);
+            
+            /// Get pointerResolution as CFNumber
+            int sens = IntToFixed(50);
+            CFNumberRef pointerResolution = (__bridge CFNumberRef)@(sens);
+            
+            /// Set pointer resolution of the driver
+            Boolean ret = IOHIDServiceClientSetProperty(serviceClient, CFSTR(kIOHIDPointerResolutionKey), pointerResolution);
+            
+            /// Debug
+            DDLogDebug(@"Set prop return: %d", ret);
+            printServiceClientInfo(serviceClient);
+            
+        }
+        if ((YES)) {
+            /// Test 4:
+            /// Putting it all together and changing pointer resolution
+            /// Conclusion:
+            ///     On the driver registry entry, this successfully changes the property at `HIDEventServiceProperties > HIDPointerResolution`, but not the one at `HIDPointerResolution`
+            ///     There is no noticable effect due to this at all though :(
+            ///     Setting sens in CursorSense also changes the value at `HIDEventServiceProperties > HIDPointerResolution`
+            ///     The last idea I have is to use IOHIDServiceClientSetProperty on the HIDSystem (or sth like that) serviceClient which showed up in the results for IOHIDEventSystemClientCopyServices()
+            ///         Just checked and that service client was at registry path IOService:/IOResources/IOHIDSystem
+            
+            /// Get IOService of the driver driving `dev`
+            io_service_t IOHIDDeviceService = IOHIDDeviceGetService(dev);
+            io_service_t interfaceService = [IOUtility getChildOfRegistryEntry:IOHIDDeviceService withName:@"IOHIDInterface"];
+            io_service_t driverService = [IOUtility getChildOfRegistryEntry:interfaceService withName:@"AppleUserHIDEventDriver"];
+            
+            /// Get ID of the driver
+            uint64_t driverServiceID;
+            IORegistryEntryGetRegistryEntryID(driverService, &driverServiceID);
+            
+            /// Get service client of the driver
+            IOHIDServiceClientRef serviceClient = IOHIDEventSystemClientCopyServiceForRegistryID(eventSystemClient, driverServiceID);
+            
+            /// Get pointerResolution as CFNumber
+            int sens = IntToFixed(50);
+            CFNumberRef pointerResolution = (__bridge  CFNumberRef)@(sens);
+            
+            /// Set pointer resolution of the driver
+            Boolean ret = IOHIDServiceClientSetProperty(serviceClient, CFSTR(kIOHIDPointerResolutionKey), pointerResolution);
+            
+            /// Debug
+            
+            DDLogDebug(@"Set prop return: %d", ret);
+            printServiceClientInfo(serviceClient);
+            
+        }
+        if ((NO)) {
             /// Test 3:
             /// Refined version of Test 2. See Test 2 for explanation
             
@@ -125,7 +200,9 @@ static void printServiceClientInfo(IOHIDServiceClientRef serviceClient) {
             IOHIDServiceClientRef serviceClient = IOHIDEventSystemClientCopyServiceForRegistryID(eventSystemClient, driverServiceID);
             
             /// Print info
-            printServiceClientInfo(serviceClient); /// It seems to work! this logs the right thing!
+            printServiceClientInfo(serviceClient);
+            /// ^ It seems to work! this logs the right thing!
+            /// So now we might be able to call IOHIDServiceClientSetProperty on this service client to change the pointer resolution!
             
         }
         
@@ -154,17 +231,19 @@ static void printServiceClientInfo(IOHIDServiceClientRef serviceClient) {
             ///     IOService:/IOResources/IOHIDResource/IOHIDResourceDeviceUserClient/IOHIDUserDevice
             IOHIDServiceClientRef serviceClient = IOHIDEventSystemClientCopyServiceForRegistryID(eventSystemClient, IOHIDDeviceServiceID);
             
-//            printServiceClientInfo(serviceClient);
+            printServiceClientInfo(serviceClient);
         }
         
         
-        if (NO) {
+        if ((NO)) {
             /// Test 1
             /// Copy all services of the eventSystemClient to get an overview
             /// Conclusion:
             /// - There is only one serviceClient provided by the eventSystemClient that relates to my mouse. (Logitech M720 attached via Bluetooth)
             /// - The registryPath of the IOService derived from that serviceClient is
             ///  IOService:/IOResources/IOHIDResource/IOHIDResourceDeviceUserClient/IOHIDUserDevice/IOHIDInterface/AppleUserHIDEventDriver
+            /// Edit: Using IOHIDServiceClientSetProperty to set pointerResolution on this serviceClient doesn't do anything :(
+            ///     But there's another interesting serviceClient that shows up here. It has the path IOService:/IOResources/IOHIDSystem. Maybe setting pointerResolution on this will do something.
 
             CFArrayRef serviceClients = IOHIDEventSystemClientCopyServices(eventSystemClient);
             for (id serviceClientUntyped in (__bridge NSArray *)serviceClients) {

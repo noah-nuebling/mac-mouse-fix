@@ -25,7 +25,7 @@
 #import "Scroll.h"
 #import "ButtonInputReceiver.h"
 #import "Config.h"
-#import "PointerSpeed.h"
+#import "PointerSpeedExperiments2.h"
 
 #import <IOKit/hidsystem/IOHIDServiceClient.h>
 #import <IOKit/hidsystem/IOHIDEventSystemClient.h>
@@ -136,7 +136,7 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
         [Scroll decide];
         [ButtonInputReceiver decide];
         
-        [PointerSpeed setSensitivityTo:1000 onDevice:device];
+        [PointerSpeedExperiments2 setSensitivityTo:1000 onDevice:device];
         
         DDLogInfo(@"New matching IOHIDDevice passed filtering and corresponding MFDevice was attached to device manager:\n%@", newMFDevice);
         

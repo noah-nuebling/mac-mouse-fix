@@ -12,7 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface PointerSpeed : NSObject
+@interface PointerSpeedExperiments2 : NSObject
 
 + (void)setSensitivityTo:(int)sensitivity onDevice:(IOHIDDeviceRef)dev;
 
