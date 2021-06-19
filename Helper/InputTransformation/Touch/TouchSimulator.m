@@ -34,6 +34,7 @@
 #import "Scroll.h"
 #import "SharedUtility.h"
 #import <Foundation/Foundation.h>
+#import "Utility_Helper.h"
 
 @implementation TouchSimulator
 
@@ -98,6 +99,10 @@ CFTimeInterval _dockSwipeLastTimeStamp = 0.0;
 double _dockSwipeOriginOffset = 0.0;
 double _dockSwipeLastDelta = 0.0;
 + (void)postDockSwipeEventWithDelta:(double)d type:(MFDockSwipeType)type phase:(IOHIDEventPhaseBits)phase {
+    
+    /// Debug
+    
+    DDLogDebug(@"FLAVOR: \n%@\n%@\n%@", [Utility_Helper binaryRepresentation:kIOHIDEventFieldDockSwipeFlavor], [Utility_Helper binaryRepresentation:123], [Utility_Helper binaryRepresentation:165]);
         
     DDLogDebug(@"Request to send dockswipe");
     

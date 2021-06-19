@@ -41,13 +41,16 @@
     }
 }
 
-+ (NSString *)binaryRepresentation:(int)value {
-    long nibbleCount = sizeof(value) * 2;
++ (NSString *)binaryRepresentation:(int64_t)value {
+    
+    uint64_t one = 1; /// A literal 1 is apparently 32 bits, so we need to declare it here to make it 64 bits. Declaring as unsigned only to silence an error when shiftting this left by 63 places.
+    
+    int64_t nibbleCount = sizeof(value) * 2;
     NSMutableString *bitString = [NSMutableString stringWithCapacity:nibbleCount * 5];
     
-    for (long index = 4 * nibbleCount - 1; index >= 0; index--)
+    for (int64_t index = 4 * nibbleCount - 1; index >= 0; index--)
     {
-        [bitString appendFormat:@"%i", value & (1 << index) ? 1 : 0];
+        [bitString appendFormat:@"%i", value & (one << index) ? 1 : 0];
         if (index % 4 == 0)
         {
             [bitString appendString:@" "];
