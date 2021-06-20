@@ -1,7 +1,9 @@
-- This branch contains as-of-yet unsuccessful attempts at changing the pointer sensitivity.
+# Feature Branch: Pointer Sensitivity
 
-- You can find them under Helper -> Pointer.
+- This branch contains as-of-yet unsuccessful attempts at changing pointer sensitivity.
 
-- Discussion on the topic in Issue [#14](https://github.com/noah-nuebling/mac-mouse-fix/issues/14)
+- You can find them at Helper -> Pointer
+
+- Related discussion [here](https://github.com/noah-nuebling/mac-mouse-fix/issues/14).
 
 - Any help would be greatly appreciated!
