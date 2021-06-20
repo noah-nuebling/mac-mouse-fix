@@ -69,6 +69,10 @@ extern IOHIDEventSystemClientRef IOHIDEventSystemClientCreateWithType(CFAllocato
 /// src: I forgot
 extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHIDEventSystemClientRef client, uint64_t entryID);
 
+/// src: CursorSense
+extern void IOHIDEventSystemClientScheduleWithRunLoop(IOHIDEventSystemClientRef client, CFRunLoopRef runLoop, CFRunLoopMode mode);
+extern void IOHIDEventSystemClientUnscheduleFromRunLoop(IOHIDEventSystemClientRef client, CFRunLoopRef runLoop, CFRunLoopMode mode);
+
 #pragma mark - Set sensitivity
 
 static void printServiceClientInfo(IOHIDServiceClientRef serviceClient) {
@@ -111,15 +115,25 @@ static void printServiceClientInfo(IOHIDServiceClientRef serviceClient) {
         
         DDLogDebug(@"BEGIN SERVICE LOGGING");
         
+        /// Get event system client
+//        IOHIDEventSystemClientRef eventSystemClient = IOHIDEventSystemClientCreateWithType(kCFAllocatorDefault, HIDEventSystemClientTypePassive, NULL);
         IOHIDEventSystemClientRef eventSystemClient = IOHIDEventSystemClientCreateWithType(kCFAllocatorDefault, HIDEventSystemClientTypePassive, NULL);
+        
+        /// Schedule with runloop
+        IOHIDEventSystemClientScheduleWithRunLoop(eventSystemClient, CFRunLoopGetCurrent(), kCFRunLoopCommonModes);
+        /// CursorSense does this to get propertyChanged and other callbacks. Don't think this'll help in our use case (our use case -> simply setting pointerResolution) but I'm out of ideas.
+        ///     -> Doesn't help
         
         if ((NO)) {
             /// Test 5;
             /// Setting pointerResolution on the service client at IOService:/IOResources/IOHIDSystem
-            /// Doesn't work either :/ The IOHIDSystem doesn't even have a pointerResolution property..
+            /// Doesn't work either :/ The IOHIDSystem registry entry doesn't even have a pointerResolution property..
             /// More ideas I have:
-            /// - Maybe I need to tell the system to acutally apply the new pointer resolution somehow after setting it like in Test 4?
+            /// - Maybe I need to tell the system to actually apply the new pointer resolution somehow after setting it like in Test 4?
             /// - Maybe the CursorSense code I had been looking at is just to bamboozle people like me? (Very unlikely)
+            /// - Maybe I'm using the IOHIDEventSystemClient wrong and I actually need to to escalate the privileges further or open it as an IOService or sth like that to make it actually react to setting properties
+            /// - Maybe I need to set some other properties to enable the pointerResolution property.
+            /// -  Maybe you need some special entitlements on the app or something to set pointerResolution
             
             
             /// Declare stuff
@@ -140,7 +154,7 @@ static void printServiceClientInfo(IOHIDServiceClientRef serviceClient) {
             IOHIDServiceClientRef serviceClient = IOHIDEventSystemClientCopyServiceForRegistryID(eventSystemClient, IOHIDSystemServiceID);
             
             /// Get pointerResolution as CFNumber
-            int sens = IntToFixed(50);
+            int sens = IntToFixed(500);
             CFNumberRef pointerResolution = (__bridge CFNumberRef)@(sens);
             
             /// Set pointer resolution of the driver
@@ -158,8 +172,12 @@ static void printServiceClientInfo(IOHIDServiceClientRef serviceClient) {
             ///     On the driver registry entry, this successfully changes the property at `HIDEventServiceProperties > HIDPointerResolution`, but not the one at `HIDPointerResolution`
             ///     There is no noticable effect due to this at all though :(
             ///     Setting sens in CursorSense also changes the value at `HIDEventServiceProperties > HIDPointerResolution`
-            ///     The last idea I have is to use IOHIDServiceClientSetProperty on the HIDSystem (or sth like that) serviceClient which showed up in the results for IOHIDEventSystemClientCopyServices()
-            ///         Just checked and that service client was at registry path IOService:/IOResources/IOHIDSystem
+            ///     The last idea I have is to use IOHIDServiceClientSetProperty on the HIDSystem's (or sth like that) serviceClient which showed up in the results for IOHIDEventSystemClientCopyServices()
+            ///         Just checked and that service client was at registry path IOService:/IOResources/IOHIDSystem. See Test 5 for results
+            
+            /// Declare stuff
+            kern_return_t kr;
+            Boolean success;
             
             /// Get IOService of the driver driving `dev`
             io_service_t IOHIDDeviceService = IOHIDDeviceGetService(dev);
@@ -168,21 +186,23 @@ static void printServiceClientInfo(IOHIDServiceClientRef serviceClient) {
             
             /// Get ID of the driver
             uint64_t driverServiceID;
-            IORegistryEntryGetRegistryEntryID(driverService, &driverServiceID);
+            kr = IORegistryEntryGetRegistryEntryID(driverService, &driverServiceID);
+            assert(kr == 0);
             
             /// Get service client of the driver
             IOHIDServiceClientRef serviceClient = IOHIDEventSystemClientCopyServiceForRegistryID(eventSystemClient, driverServiceID);
+            assert(serviceClient);
             
             /// Get pointerResolution as CFNumber
-            int sens = IntToFixed(50);
+            int sens = IntToFixed(350);
             CFNumberRef pointerResolution = (__bridge  CFNumberRef)@(sens);
             
             /// Set pointer resolution of the driver
-            Boolean ret = IOHIDServiceClientSetProperty(serviceClient, CFSTR(kIOHIDPointerResolutionKey), pointerResolution);
+            success = IOHIDServiceClientSetProperty(serviceClient, CFSTR(kIOHIDPointerResolutionKey), pointerResolution);
+            assert(success);
             
             /// Debug
             
-            DDLogDebug(@"Set prop return: %d", ret);
             printServiceClientInfo(serviceClient);
             
         }
