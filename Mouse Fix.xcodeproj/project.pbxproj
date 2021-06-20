@@ -37,7 +37,6 @@
 		4F44FF052606D73D00926A5E /* SharedMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* SharedMessagePort.m */; };
 		4F70ECAE267E442D00325A76 /* PointerSpeedExperiments2.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F70ECAD267E442D00325A76 /* PointerSpeedExperiments2.m */; };
 		4F70ECB7267E810900325A76 /* IOUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F70ECB6267E810900325A76 /* IOUtility.m */; };
-		4F70ECD3267E90F500325A76 /* PointerSpeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F70ECD1267E90F400325A76 /* PointerSpeed.m */; };
 		4F79A7EF26042E2E00076A7E /* ToastNotification.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F79A7EE26042E2E00076A7E /* ToastNotification.xib */; };
 		4F79A81C2604317200076A7E /* ToastNotificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A81B2604317200076A7E /* ToastNotificationController.m */; };
 		4F79A82B2605074000076A7E /* NSAttributedString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A82A2605074000076A7E /* NSAttributedString+Additions.m */; };
@@ -287,8 +286,6 @@
 		4F70ECAD267E442D00325A76 /* PointerSpeedExperiments2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerSpeedExperiments2.m; sourceTree = "<group>"; };
 		4F70ECB5267E810900325A76 /* IOUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOUtility.h; sourceTree = "<group>"; };
 		4F70ECB6267E810900325A76 /* IOUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IOUtility.m; sourceTree = "<group>"; };
-		4F70ECD1267E90F400325A76 /* PointerSpeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PointerSpeed.m; sourceTree = "<group>"; };
-		4F70ECD2267E90F400325A76 /* PointerSpeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointerSpeed.h; sourceTree = "<group>"; };
 		4F79A7EE26042E2E00076A7E /* ToastNotification.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToastNotification.xib; sourceTree = "<group>"; };
 		4F79A81A2604317200076A7E /* ToastNotificationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToastNotificationController.h; sourceTree = "<group>"; };
 		4F79A81B2604317200076A7E /* ToastNotificationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ToastNotificationController.m; sourceTree = "<group>"; };
@@ -657,17 +654,6 @@
 				4F2F5DB125FB723D0037660A /* AddWindow.xib */,
 			);
 			path = AddWindow;
-			sourceTree = "<group>";
-		};
-		4F70ECD7267E910200325A76 /* Experiments */ = {
-			isa = PBXGroup;
-			children = (
-				4F70ECAC267E442D00325A76 /* PointerSpeedExperiments2.h */,
-				4F70ECAD267E442D00325A76 /* PointerSpeedExperiments2.m */,
-				4FF6664825F2C93A00689B77 /* PointerSpeedExperiments.h */,
-				4FF6664925F2C93A00689B77 /* PointerSpeedExperiments.m */,
-			);
-			path = Experiments;
 			sourceTree = "<group>";
 		};
 		4F7AB0522606692C0008055E /* UIStrings */ = {
@@ -1177,9 +1163,10 @@
 		4FF6664725F2C93A00689B77 /* Pointer */ = {
 			isa = PBXGroup;
 			children = (
-				4F70ECD2267E90F400325A76 /* PointerSpeed.h */,
-				4F70ECD1267E90F400325A76 /* PointerSpeed.m */,
-				4F70ECD7267E910200325A76 /* Experiments */,
+				4F70ECAC267E442D00325A76 /* PointerSpeedExperiments2.h */,
+				4F70ECAD267E442D00325A76 /* PointerSpeedExperiments2.m */,
+				4FF6664825F2C93A00689B77 /* PointerSpeedExperiments.h */,
+				4FF6664925F2C93A00689B77 /* PointerSpeedExperiments.m */,
 				4F70ECB5267E810900325A76 /* IOUtility.h */,
 				4F70ECB6267E810900325A76 /* IOUtility.m */,
 			);
@@ -1868,7 +1855,6 @@
 				4FD85F7B266CC9C5004F76C8 /* Animator.swift in Sources */,
 				4FF6669325F2C93A00689B77 /* TouchSimulator.m in Sources */,
 				4F3A40AB266BBB6200436821 /* AccelerationBezier.swift in Sources */,
-				4F70ECD3267E90F500325A76 /* PointerSpeed.m in Sources */,
 				4FD860AA266EC24E004F76C8 /* DerivedProperty.swift in Sources */,
 				4FF6669725F2C93A00689B77 /* TransformationManager.m in Sources */,
 				4F1B83062606E68300AEAF37 /* ButtonLandscapeAssessor.m in Sources */,
