@@ -1,7 +1,7 @@
-This branch contains attempts at changing the pointer sensitivity and pointer accelereration.
+- This branch contains as-of-yet unsuccessful attempts at changing the pointer sensitivity.
 
-You can find them under Helper -> Pointer.
+- You can find them under Helper -> Pointer.
 
-Any help would be greatly appreciated!
+- Discussion on the topic in Issue [#14](https://github.com/noah-nuebling/mac-mouse-fix/issues/14)
 
-Discussion on the topic at #14
+- Any help would be greatly appreciated!
