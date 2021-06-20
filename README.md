@@ -1,4 +1,4 @@
-# Feature Branch: Pointer Sensitivity
+## Feature Branch: Pointer Sensitivity
 
 - This branch contains as-of-yet unsuccessful attempts at changing pointer sensitivity.
 
