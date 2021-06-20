@@ -8,6 +8,7 @@
 //
 
 /// The original PointerSpeedExperiments.m was getting a little long and confusing, so we created this
+/// Also see NotePlan daily notes from 16.06.21 and the week after for more info.
 
 
 #import "PointerSpeedExperiments2.h"
