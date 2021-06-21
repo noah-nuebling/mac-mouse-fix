@@ -169,6 +169,7 @@ extern void IOHIDEventSystemClientUnscheduleFromRunLoop(IOHIDEventSystemClientRe
         CFNumberRef pointerResolution = (__bridge  CFNumberRef)@(sens);
         
         /// Set pointer resolution of the driver
+        
         success = IOHIDServiceClientSetProperty(serviceClient, CFSTR(kIOHIDPointerResolutionKey), pointerResolution);
         assert(success);
         

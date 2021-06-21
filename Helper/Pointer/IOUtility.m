@@ -29,4 +29,8 @@
     return childEntry;
 }
 
++ (void)runBlock:(void(^)(void))block afterDelay:(double)delay {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC*delay), dispatch_get_main_queue(), block);
+}
+
 @end

@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface IOUtility : NSObject
 
 + (io_registry_entry_t)getChildOfRegistryEntry:(io_registry_entry_t)entry withName:(NSString *)name;
++ (void)runBlock:(void(^)(void))block afterDelay:(double)delay;
 
 @end
 
