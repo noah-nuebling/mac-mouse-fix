@@ -701,6 +701,17 @@
 			path = Tests;
 			sourceTree = "<group>";
 		};
+		4FA83A2026823EE000F3A31B /* Experiments */ = {
+			isa = PBXGroup;
+			children = (
+				4F70ECAC267E442D00325A76 /* PointerSpeedExperiments2.h */,
+				4F70ECAD267E442D00325A76 /* PointerSpeedExperiments2.m */,
+				4FF6664825F2C93A00689B77 /* PointerSpeedExperiments.h */,
+				4FF6664925F2C93A00689B77 /* PointerSpeedExperiments.m */,
+			);
+			path = Experiments;
+			sourceTree = "<group>";
+		};
 		4FA911E4260D00CB00553CA8 /* RemapTable */ = {
 			isa = PBXGroup;
 			children = (
@@ -1163,10 +1174,7 @@
 		4FF6664725F2C93A00689B77 /* Pointer */ = {
 			isa = PBXGroup;
 			children = (
-				4F70ECAC267E442D00325A76 /* PointerSpeedExperiments2.h */,
-				4F70ECAD267E442D00325A76 /* PointerSpeedExperiments2.m */,
-				4FF6664825F2C93A00689B77 /* PointerSpeedExperiments.h */,
-				4FF6664925F2C93A00689B77 /* PointerSpeedExperiments.m */,
+				4FA83A2026823EE000F3A31B /* Experiments */,
 				4F70ECB5267E810900325A76 /* IOUtility.h */,
 				4F70ECB6267E810900325A76 /* IOUtility.m */,
 			);

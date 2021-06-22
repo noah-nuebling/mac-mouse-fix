@@ -123,21 +123,52 @@ void deviceMatchingCallback(void *context, void *refcon, IOHIDServiceClientRef s
     /// More info on what we're doing here in [PointerSpeedExperiments + setSensitivityTo:onDevice:]
     /// And in the header comment of [PointerSpeedExperiments + newSetSensitivityViaIORegTo:device:]
     
-    /// Testing stuff
-        
-    /// Get event system client
+    /// Guard calling this
+    
+    NSAssert(false, @"This is just experimentation code. It shouldn't be called in production.");
+    
+    /// Log
     
     DDLogDebug(@"BEGIN SERVICE LOGGING");
     
     /// Get event system client
+    
     IOHIDEventSystemClientRef eventSystemClient = IOHIDEventSystemClientCreateWithType(kCFAllocatorDefault, HIDEventSystemClientTypePassive, NULL);
-    /// We could probably use IOHIDEventSystemClientCreate(kCFAllocatorDefault) instead of this - just like CursorSense.
+    /// ^ We could probably use IOHIDEventSystemClientCreate() instead of this - That's what CursorSense is doing. But I have no idea what that does or where it comes from. I also tried using IOHIDEventSystemClientCreateSimpleClient(), but that doesn't let you set the pointerResolution.
     
-    /// Schedule with runloop
-//    IOHIDEventSystemClientScheduleWithRunLoop(eventSystemClient, CFRunLoopGetCurrent(), kCFRunLoopCommonModes);
-    /// CursorSense does this to get propertyChanged and other callbacks. Don't think this'll help in our use case (our use case -> simply setting pointerResolution) but I'm out of ideas.
-    ///     -> Doesn't help
+    /// Test cases
     
+    if ((NO)) {
+        /**
+         Test 12:
+         Trying to set the props directly on the eventSystemClient, and foregoing (is that a word?) the deviceSpecific serviceClients
+         Since we don't support device specific settings anyways, that would simplify things if it works.
+         This works! Problem is it also affects the MacBooks internal trackpad, which we don't want. So setting the stuff per device is better after all.
+         Also, I just tested and these settings don't survive a restart which is good.
+         */
+        
+        /// Define stuff
+        double sensitivity = 10.0;
+        double acceleration = 0.5;
+        Boolean success;
+        
+        /// Get pointerResolution as CFNumber
+        int pointerResolutionFixed = IntToFixed(400 * (1/sensitivity));
+        CFNumberRef pointerResolutionCF = (__bridge  CFNumberRef)@(pointerResolutionFixed);
+        
+        /// Set pointer resolution on the driver
+        success = IOHIDEventSystemClientSetProperty(eventSystemClient, CFSTR(kIOHIDPointerResolutionKey), pointerResolutionCF);
+        assert(success);
+        
+        /// Get acceleration (aka trackingSpeed) as CFNumber
+        int accelerationFixed = FloatToFixed(acceleration);
+        CFNumberRef accelerationCF = (__bridge  CFNumberRef)@(accelerationFixed);
+        
+        /// Set mouse acceleration on the driver
+        success = IOHIDEventSystemClientSetProperty(eventSystemClient, CFSTR(kIOHIDMouseAccelerationTypeKey), accelerationCF);
+        assert(success);
+        
+    }
     if ((NO)) {
         /**
          Test 11:
@@ -150,15 +181,15 @@ void deviceMatchingCallback(void *context, void *refcon, IOHIDServiceClientRef s
             - acceleration default: com.apple.mouse.scaling in NSDefaults.
          - What range of values is sensible for letting the use choose, and how do we parametrize that stuff?
             - The default (unchangeable) pointerRes is 400. I think it makes sens to let the use choose between 0.5x to 2.0x of the original pointer res. The formula would be 400 * 1/(x). Actual values would range from 800 (lowest sens) to 200 (highest sens).
-            - The HIDMouseAcceleration values settable on the driver  through System Prefs range from 0.0 to 3.0. IIRC that means it perfectly corresponds to the values settable through "defaults write .GlobalPreferences com.apple.mouse.scaling x". See Apple Note "Improve Pointer Acceleration" for acceleration values between 0.0 and 3.0 that I thought made sense as options.
+            - The HIDMouseAcceleration values settable on the driver  through System Prefs range from 0.0 to 3.0. IIRC that means it perfectly corresponds to the values settable through "defaults write .GlobalPreferences com.apple.mouse.scaling x". See Apple Note "Improve Pointer Acceleration" for acceleration values between 0.0 and 3.0 which I thought made sense as options.
          - How and when do we (re)apply the settings?
             - CursorSense reapplies the stuff when, logging in, when the computer wakes from sleep, when display configuration changes, etc. We should check if that's necessary and implement that stuff too, if yes.
          - How and when do we reset the values to the system default?
             - Whenever Mac Mouse Fix Helper quits should be fine. Maybe also when a mouse is detached, on the driver of that mouse. When MMF quits we'd have to iterate through all attached mice and reset them individually. This would all be easier if we set the pointerRes and acceleration on the eventSystemClient instead of the individual mouse drivers. But that might also be less robust because if MMF crashes then the settings would be stuck and be applied even on newly attached mice. Idk until when. Maybe until next restart or maybe until forever? I should do more testing there.
          
          
-         Edit: Actually we had CursorSense enabled during these last few tests *facpalm* so we need to test this stuff again.
-            -> It still works! Setting the acceleration is also still necessary to make setting the pointerResolution work. So having CursorSense enabled doesn't seem to have influenced the tests (somehow - from my understanding of the disassembly it should have)
+         Edit: Actually we had CursorSense enabled during these last few tests so we need to test this stuff again.
+            -> It still works! Setting the acceleration is also still necessary to make setting the pointerResolution work. So having CursorSense enabled doesn't seem to have influenced the tests (somehow - from my understanding of the disassembly it should have because it listens to property changes in the eventSystemClient and re-applies it's settings if it detects them IIRC)
          */
         
         /// Declare stuff
@@ -548,7 +579,7 @@ static void printServiceClientInfo(IOHIDServiceClientRef serviceClient) {
     /// After enabling NSZombies there's a stack-buffer-overflow when printing serviceClientPath with DDLogDebug. Doesn't matter if we cast to NSString and use %@ or print using %s.
     /// If we comment out DDLogDebug, we get the old error after the function returns.
     /// When allocating 1000 characters for the serviceClientPath array, the crash disappears!
-    /// But then why was is also crashing when we used got serviceClientProperties? ... Now it doesn't do that anymore.
+    /// But then why was is also crashing when we only got serviceClientProperties? ... Now it doesn't do that anymore.
     
     /// Get properties
     
