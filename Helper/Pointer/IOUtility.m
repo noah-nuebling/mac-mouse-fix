@@ -20,19 +20,19 @@
     IORegistryEntryGetChildIterator(entry, kIOServicePlane, &iterator);
     
     io_registry_entry_t childEntry;
-    Boolean found = false;
+    Boolean childEntryFound = false;
     while ((childEntry = IOIteratorNext(iterator))) {
         char childEntryName[1000]; /// Buffer size 1000 is untested
         IORegistryEntryGetNameInPlane(childEntry, kIOServicePlane, childEntryName);
         if ([@(childEntryName) isEqual:name]) {
-            found = true;
+            childEntryFound = true;
             break;
         }
         IOObjectRelease(childEntry);
     }
     IOObjectRelease(iterator);
     
-    assert(found);
+    assert(childEntryFound);
     
     return childEntry;
 }

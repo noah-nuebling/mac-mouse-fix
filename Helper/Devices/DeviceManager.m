@@ -157,9 +157,10 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
 static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
     
     Device *removedMFDevice = [Device deviceWithIOHIDDevice:device];
-    [_attachedDevices removeObject:removedMFDevice]; // This might do nothing if this device wasn't contained in _attachedDevice (that's if it didn't pass filtering in `handleDeviceMatching()`)
+    [_attachedDevices removeObject:removedMFDevice]; /// This might do nothing if this device wasn't contained in _attachedDevice (that's if it didn't pass filtering in `handleDeviceMatching()`)
     
-    // If there aren't any relevant devices attached, then we might want to turn off some parts of the program.
+    /// Notifiy other objects
+    ///     If there aren't any relevant devices attached, then we might want to turn off some parts of the program.
     [Scroll decide];
     [ButtonInputReceiver decide];
     
