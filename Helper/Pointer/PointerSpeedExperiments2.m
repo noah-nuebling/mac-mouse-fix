@@ -130,15 +130,92 @@ void deviceMatchingCallback(void *context, void *refcon, IOHIDServiceClientRef s
     DDLogDebug(@"BEGIN SERVICE LOGGING");
     
     /// Get event system client
-//        IOHIDEventSystemClientRef eventSystemClient = IOHIDEventSystemClientCreateWithType(kCFAllocatorDefault, HIDEventSystemClientTypePassive, NULL);
     IOHIDEventSystemClientRef eventSystemClient = IOHIDEventSystemClientCreateWithType(kCFAllocatorDefault, HIDEventSystemClientTypePassive, NULL);
+    /// We could probably use IOHIDEventSystemClientCreate(kCFAllocatorDefault) instead of this - just like CursorSense.
     
     /// Schedule with runloop
 //    IOHIDEventSystemClientScheduleWithRunLoop(eventSystemClient, CFRunLoopGetCurrent(), kCFRunLoopCommonModes);
     /// CursorSense does this to get propertyChanged and other callbacks. Don't think this'll help in our use case (our use case -> simply setting pointerResolution) but I'm out of ideas.
     ///     -> Doesn't help
     
-    if ((YES)) {
+    if ((NO)) {
+        /**
+         Test 11:
+         Setting properties on the serviceClient just like CursorSense to get it to update it's internal state or something
+         Mostly based on Test 4;
+         Conclusion: It works!!!!!! I just need to set the mouse acceleration after setting the pointer resolution, and then both of them are actually applied  to the mouse !! Omg I'm literally so happy. I spent the last week trying to figure this out.*Ouffff of relief*
+         The only things lef to figure out now are
+         - What are these system default values for resetting? Can we somehow get the tracking speed which the user has set in System Preferences and translate and apply that to reset to the default?
+            - pointer Res default: 400
+            - acceleration default: com.apple.mouse.scaling in NSDefaults.
+         - What range of values is sensible for letting the use choose, and how do we parametrize that stuff?
+            - The default (unchangeable) pointerRes is 400. I think it makes sens to let the use choose between 0.5x to 2.0x of the original pointer res. The formula would be 400 * 1/(x). Actual values would range from 800 (lowest sens) to 200 (highest sens).
+            - The HIDMouseAcceleration values settable on the driver  through System Prefs range from 0.0 to 3.0. IIRC that means it perfectly corresponds to the values settable through "defaults write .GlobalPreferences com.apple.mouse.scaling x". See Apple Note "Improve Pointer Acceleration" for acceleration values between 0.0 and 3.0 that I thought made sense as options.
+         - How and when do we (re)apply the settings?
+            - CursorSense reapplies the stuff when, logging in, when the computer wakes from sleep, when display configuration changes, etc. We should check if that's necessary and implement that stuff too, if yes.
+         - How and when do we reset the values to the system default?
+            - Whenever Mac Mouse Fix Helper quits should be fine. Maybe also when a mouse is detached, on the driver of that mouse. When MMF quits we'd have to iterate through all attached mice and reset them individually. This would all be easier if we set the pointerRes and acceleration on the eventSystemClient instead of the individual mouse drivers. But that might also be less robust because if MMF crashes then the settings would be stuck and be applied even on newly attached mice. Idk until when. Maybe until next restart or maybe until forever? I should do more testing there.
+         
+         
+         Edit: Actually we had CursorSense enabled during these last few tests *facpalm* so we need to test this stuff again.
+            -> It still works! Setting the acceleration is also still necessary to make setting the pointerResolution work. So having CursorSense enabled doesn't seem to have influenced the tests (somehow - from my understanding of the disassembly it should have)
+         */
+        
+        /// Declare stuff
+        kern_return_t kr;
+        Boolean success;
+        
+        /// Get IOService of the driver driving `dev`
+        io_service_t IOHIDDeviceService = IOHIDDeviceGetService(dev);
+        io_service_t interfaceService = [IOUtility getChildOfRegistryEntry:IOHIDDeviceService withName:@"IOHIDInterface"];
+        io_service_t driverService = [IOUtility getChildOfRegistryEntry:interfaceService withName:@"AppleUserHIDEventDriver"];
+        
+        /// Get ID of the driver
+        uint64_t driverServiceID;
+        kr = IORegistryEntryGetRegistryEntryID(driverService, &driverServiceID);
+        assert(kr == 0);
+        
+        /// Get service client of the driver
+        IOHIDServiceClientRef serviceClient = IOHIDEventSystemClientCopyServiceForRegistryID(eventSystemClient, driverServiceID);
+        assert(serviceClient);
+        
+        /// Get pointerResolution as CFNumber
+        int sens = IntToFixed(20);
+        CFNumberRef pointerResolution = (__bridge  CFNumberRef)@(sens);
+        
+        /// Set pointer resolution on the driver
+        success = IOHIDServiceClientSetProperty(serviceClient, CFSTR(kIOHIDPointerResolutionKey), pointerResolution);
+        assert(success);
+        
+        /// Get acceleration (aka trackingSpeed) as CFNumber
+        int acc = FloatToFixed(0.68);
+        CFNumberRef mouseAcceleration = (__bridge  CFNumberRef)@(acc);
+        
+        /// Set mouse acceleration on the driver
+        success = IOHIDServiceClientSetProperty(serviceClient, CFSTR(kIOHIDMouseAccelerationTypeKey), mouseAcceleration);
+        assert(success);
+        
+    }
+    if ((NO)) {
+        /// Test 10
+        /// Trying to get a minimum working example of the breakthrough made in Test 9
+        /// Conclusion:
+        /// - Plugging larger numbers into X2Fix(x) makes the sensitivity lower and vice versa.
+        /// - The changing of the sensitivity is only due to IOHIDEventSystemClientSetProperty(). IOHIDServiceClientSetProperty() doesn't do anything in the scenario of Test 9.
+        /// - To achieve the change in sens you have to
+        ///     - Run the code of Test 10 while the mouse is plugged in
+        ///     - Plug the the mouse out and in again.
+        ///     - Sensitivity will change!
+        ///     - If the mouse is not plugged in while the Test 10 code runs it won't do anything once you plug it in. If you don't plug it out and in again it won't do anything, either. Very weird.
+        /// Ideas:
+        /// - I feel like, by plugging it out and in again we're forcing the serviceClient driver to update its internal state to the properties set on eventSystemClient somehow.
+        /// - Maybe if we set exactly the properties on the serviceClient that SteerMouse is setting, we'll also provoke the serviceClient drivers internal state to update somehow. -> We'll test this in Test 11.
+        
+        /// Get pointerResolution as CFNumber
+        Fixed sens = X2Fix(400.0); CFNumberRef pointerRes = (__bridge CFNumberRef)[NSNumber numberWithInt:sens];
+        
+        /// Set pointer resolution on the eventSystemClient
+        IOHIDEventSystemClientSetProperty(eventSystemClient, CFSTR(kIOHIDPointerResolutionKey), pointerRes);
         
     }
     
@@ -149,6 +226,7 @@ void deviceMatchingCallback(void *context, void *refcon, IOHIDServiceClientRef s
         /// Conclusion: I feel like I'm doing everything like CursorSense is. I'm soooo out of ideas.
         /// I was about to go to bed but then I tried some random stuff (at the bottom of Test 9) and it worked!
         /// I'll try to simplify this and distill it into the minimum working setup in Test 10.
+        /// After some more investigation, it seems that
         
         static dispatch_once_t predicate;
         dispatch_once(&predicate, ^{
@@ -185,8 +263,10 @@ void deviceMatchingCallback(void *context, void *refcon, IOHIDServiceClientRef s
             /// It works really weird though: When I set the pointer res to X2Fix(20.0) on the eventSystemClient here, and then set then set the pointerRes to X2Fix(20.0) on the serviceClient of my mouse in the deviceMatchingCallback(), then the pointer becomes sinsitive af!
             /// Wtf that doesn't make any sense whatsoever (baseline pointer res is 400, so 20 should be slow?), and why do I have to set it on both to have any effect? Why doesn't it have an effect on the trackpad when I set the pointer res on the eventSystemClient?
             /// It's so weird. But it does something!! I started trying to change pointer res like 2 years ago and now it just works from doing this random bs wtf!!
+            /// I just checked and CursorSense doesn't use IOHIDEventSystemClientSetProperty() at all. Wtf.
+            /// Idea: Maybe this is more about tapping the eventSystemClient to kick it off for customization instead of setting the pointerResolution specifically?
             
-            Fixed sens = X2Fix(20.0); CFNumberRef pointerRes = (__bridge CFNumberRef)[NSNumber numberWithInt:sens];
+            Fixed sens = X2Fix(400.0); CFNumberRef pointerRes = (__bridge CFNumberRef)[NSNumber numberWithInt:sens];
             IOHIDEventSystemClientSetProperty(eventSystemClient, CFSTR(kIOHIDPointerResolutionKey), pointerRes);
         });
         
@@ -254,7 +334,7 @@ void deviceMatchingCallback(void *context, void *refcon, IOHIDServiceClientRef s
     }
     if ((NO)) {
         /// Test 6:
-        /// Like Test 4, but for trying out some extra details obtained from CursorSense source code
+        /// Like Test 4, but for trying out some extra details obtained from CursorSense source code (posting with delay)
         
         
         /// Declare stuff
@@ -298,8 +378,8 @@ void deviceMatchingCallback(void *context, void *refcon, IOHIDServiceClientRef s
         /// More ideas I have:
         /// - Maybe I need to tell the system to actually apply the new pointer resolution somehow after setting it like in Test 4?
         /// - Maybe the CursorSense code I had been looking at is just to bamboozle people like me? (Very unlikely)
-        /// - Maybe I'm using the IOHIDEventSystemClient wrong and I actually need to to escalate the privileges further or open it as an IOService or sth like that to make it actually react to setting properties
-        /// - Maybe I need to set some other properties to enable the pointerResolution property.
+        /// - Maybe I'm using the IOHIDEventSystemClient wrong and I actually need to to escalate the privileges further or open it as an IOConnection or sth like that to make it actually react to setting properties
+        /// - Maybe I need to set some other properties to enable the pointerResolution property. - That was the Bingo :)
         /// -  Maybe you need some special entitlements on the app or something to set pointerResolution
         
         
