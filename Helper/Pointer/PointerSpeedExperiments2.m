@@ -16,6 +16,7 @@
 #import <IOKit/hidsystem/IOHIDServiceClient.h>
 #import "WannabePrefixHeader.h"
 #import "IOUtility.h"
+@import IOKit; /// In hopes this will import the IOHIDEventSystemClientCreate(void) function that CursorSense seems to be using
 
 
 @implementation PointerSpeedExperiments2
@@ -67,6 +68,12 @@ typedef NS_ENUM(NSInteger, HIDEventSystemClientType) {
 extern IOHIDEventSystemClientRef IOHIDEventSystemClientCreateWithType(CFAllocatorRef allocator,
                                                                       HIDEventSystemClientType clientType,
                                                                       CFDictionaryRef _Nullable attributes);
+/// src: CursorSense disassembly
+/// This function call doesn't work. It seems the CursorSense disassembly is just messing up and this function doesn't event exist.
+//extern IOHIDEventSystemClientRef IOHIDEventSystemClientCreate(void);
+/// src: Variation of above function I found on Google
+extern IOHIDEventSystemClientRef IOHIDEventSystemClientCreate(CFAllocatorRef allocator);
+
 /// src: I forgot
 extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHIDEventSystemClientRef client, uint64_t entryID);
 
@@ -74,7 +81,43 @@ extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHI
 extern void IOHIDEventSystemClientScheduleWithRunLoop(IOHIDEventSystemClientRef client, CFRunLoopRef runLoop, CFRunLoopMode mode);
 extern void IOHIDEventSystemClientUnscheduleFromRunLoop(IOHIDEventSystemClientRef client, CFRunLoopRef runLoop, CFRunLoopMode mode);
 
+/// src: CursorSense / IOKit source
+extern void IOHIDEventSystemClientSetMatchingMultiple(IOHIDEventSystemClientRef client, CFArrayRef matchDictArray);
+
+typedef void (*IOHIDEventSystemClientDeviceMatchingCallbackFunction)(void *context, void *refcon, IOHIDServiceClientRef service);
+extern void IOHIDEventSystemClientRegisterDeviceMatchingCallback(IOHIDEventSystemClientRef client, IOHIDEventSystemClientDeviceMatchingCallbackFunction callback, void *context, void *unknown);
+
+
 #pragma mark - Set sensitivity
+
+#pragma mark Helper
+
+void deviceMatchingCallback(void *context, void *refcon, IOHIDServiceClientRef serviceClient) {
+    /// This is called by Test 9
+    
+    [IOUtility afterDelay:0.5 runBlock:^{ /// Post with delay because that's what CursorSense does
+    
+        DDLogDebug(@"New matching service client: %@", [IOUtility registryPathForServiceClient:serviceClient]);
+        
+        
+        /// Get pointerResolution as CFNumber
+//        int64_t sens = IntToFixed(((int64_t)100));
+//        CFNumberRef pointerResolution = (__bridge CFNumberRef)[NSNumber numberWithLongLong:sens];
+        
+        /// Get pointerResolution as CFNumber
+        ///     But do it exactly like CursorSense disassembly
+        Fixed sens = X2Fix(20.0);
+        CFNumberRef pointerResolution = (__bridge CFNumberRef)[NSNumber numberWithInt:sens];
+        
+        /// Set pointerResolution
+        Boolean success = IOHIDServiceClientSetProperty(serviceClient, CFSTR("HIDPointerResolution"), pointerResolution);
+        assert(success);
+        
+    }];
+    
+}
+
+#pragma mark Main
 
 + (void)setSensitivityTo:(int)sensitivity onDevice:(IOHIDDeviceRef)dev {
     /// More info on what we're doing here in [PointerSpeedExperiments + setSensitivityTo:onDevice:]
@@ -91,10 +134,163 @@ extern void IOHIDEventSystemClientUnscheduleFromRunLoop(IOHIDEventSystemClientRe
     IOHIDEventSystemClientRef eventSystemClient = IOHIDEventSystemClientCreateWithType(kCFAllocatorDefault, HIDEventSystemClientTypePassive, NULL);
     
     /// Schedule with runloop
-    IOHIDEventSystemClientScheduleWithRunLoop(eventSystemClient, CFRunLoopGetCurrent(), kCFRunLoopCommonModes);
+//    IOHIDEventSystemClientScheduleWithRunLoop(eventSystemClient, CFRunLoopGetCurrent(), kCFRunLoopCommonModes);
     /// CursorSense does this to get propertyChanged and other callbacks. Don't think this'll help in our use case (our use case -> simply setting pointerResolution) but I'm out of ideas.
     ///     -> Doesn't help
     
+    if ((YES)) {
+        
+    }
+    
+    if ((NO)) {
+        /// Test 9:
+        /// Trying to obtain the serviceClients from the eventSystemClient via matching callbacks like CursorSense does.
+        /// Don't know why that would make a difference but I"m out of ideas.
+        /// Conclusion: I feel like I'm doing everything like CursorSense is. I'm soooo out of ideas.
+        /// I was about to go to bed but then I tried some random stuff (at the bottom of Test 9) and it worked!
+        /// I'll try to simplify this and distill it into the minimum working setup in Test 10.
+        
+        static dispatch_once_t predicate;
+        dispatch_once(&predicate, ^{
+        
+            /// Create eventSystemClient
+            IOHIDEventSystemClientRef eventSystemClient = IOHIDEventSystemClientCreate(kCFAllocatorDefault);
+            
+            /// Create matching dict array
+            
+            NSDictionary *matchDict1 = @{
+                @(kIOHIDDeviceUsagePageKey): @(kHIDPage_GenericDesktop),
+                @(kIOHIDDeviceUsageKey): @(kHIDUsage_GD_Pointer),
+            };
+            NSDictionary *matchDict2 = @{
+                @(kIOHIDDeviceUsagePageKey): @(kHIDPage_GenericDesktop),
+                @(kIOHIDDeviceUsageKey): @(kHIDUsage_GD_Mouse),
+            };
+            NSArray *matchArray = @[matchDict1, matchDict2];
+            
+            /// Set matching to eventSystemClient
+            
+            IOHIDEventSystemClientSetMatchingMultiple(eventSystemClient, (__bridge CFArrayRef)(matchArray));
+            
+            /// Schedule with runloop
+            
+            IOHIDEventSystemClientScheduleWithRunLoop(eventSystemClient, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
+            
+            /// Register device matching callback
+            
+            IOHIDEventSystemClientRegisterDeviceMatchingCallback(eventSystemClient, &deviceMatchingCallback, NULL, NULL);
+            
+            /// Set pointerRes to the eventSystemClient directly. I have no reason to believe this will work, but I'm desperate
+            /// WTF THIS WORKS!!!
+            /// It works really weird though: When I set the pointer res to X2Fix(20.0) on the eventSystemClient here, and then set then set the pointerRes to X2Fix(20.0) on the serviceClient of my mouse in the deviceMatchingCallback(), then the pointer becomes sinsitive af!
+            /// Wtf that doesn't make any sense whatsoever (baseline pointer res is 400, so 20 should be slow?), and why do I have to set it on both to have any effect? Why doesn't it have an effect on the trackpad when I set the pointer res on the eventSystemClient?
+            /// It's so weird. But it does something!! I started trying to change pointer res like 2 years ago and now it just works from doing this random bs wtf!!
+            
+            Fixed sens = X2Fix(20.0); CFNumberRef pointerRes = (__bridge CFNumberRef)[NSNumber numberWithInt:sens];
+            IOHIDEventSystemClientSetProperty(eventSystemClient, CFSTR(kIOHIDPointerResolutionKey), pointerRes);
+        });
+        
+    }
+    if ((NO)) {
+        /// Test 8
+        /// Like test 7 but we use IOHIDEventSystemClientCreate() (with no arguments)
+        /// That seems to be what CursorSense is using, but maybe the arguments are just missing in the disassembly
+        /// I think what CursorSense is actually calling is probably IOHIDEventSystemClientCreate(kCFAllocatorDefault).
+        /// That function exists, but doesn't do anything, either.
+        
+        /// Get eventSystemClient like CursorSense
+        
+        IOHIDEventSystemClientRef eventSystemClient = IOHIDEventSystemClientCreate(kCFAllocatorDefault);
+        
+        static dispatch_once_t predicate;
+        dispatch_once(&predicate, ^{
+            
+            /// Set pointerResolution on all serviceClients
+            
+            CFArrayRef serviceClients = IOHIDEventSystemClientCopyServices(eventSystemClient);
+            for (id serviceClientUntyped in (__bridge NSArray *)serviceClients) {
+                
+                IOHIDServiceClientRef serviceClient = (__bridge IOHIDServiceClientRef)serviceClientUntyped;
+                
+                /// Get pointerResolution as CFNumber
+                int64_t sens = IntToFixed(((int64_t)100));
+                CFNumberRef pointerResolution = (__bridge CFNumberRef)[NSNumber numberWithLongLong:sens];
+                
+                /// Set pointerResolution
+                
+                Boolean success = IOHIDServiceClientSetProperty(serviceClient, CFSTR(kIOHIDPointerResolutionKey), pointerResolution);
+                assert(success);
+            }
+            
+        });
+        
+    }
+    if ((NO)) {
+        /// Test 7
+        /// Simply set pointerResolution on all serviceClients obtained via the eventSystemClient
+        
+        static dispatch_once_t predicate;
+        dispatch_once(&predicate, ^{
+            
+            /// Set pointerResolution on all serviceClients
+            
+            CFArrayRef serviceClients = IOHIDEventSystemClientCopyServices(eventSystemClient);
+            for (id serviceClientUntyped in (__bridge NSArray *)serviceClients) {
+                
+                IOHIDServiceClientRef serviceClient = (__bridge IOHIDServiceClientRef)serviceClientUntyped;
+                
+                /// Get pointerResolution as CFNumber
+                int64_t sens = IntToFixed(((int64_t)200));
+                CFNumberRef pointerResolution = (__bridge CFNumberRef)[NSNumber numberWithLongLong:sens];
+                
+                /// Set pointerResolution
+                
+                Boolean success = IOHIDServiceClientSetProperty(serviceClient, CFSTR(kIOHIDPointerResolutionKey), pointerResolution);
+                assert(success);
+            }
+            
+        });
+        
+    }
+    if ((NO)) {
+        /// Test 6:
+        /// Like Test 4, but for trying out some extra details obtained from CursorSense source code
+        
+        
+        /// Declare stuff
+        kern_return_t kr;
+        
+        /// Get IOService of the driver driving `dev`
+        io_service_t IOHIDDeviceService = IOHIDDeviceGetService(dev);
+        io_service_t interfaceService = [IOUtility getChildOfRegistryEntry:IOHIDDeviceService withName:@"IOHIDInterface"];
+        io_service_t driverService = [IOUtility getChildOfRegistryEntry:interfaceService withName:@"AppleUserHIDEventDriver"];
+        
+        /// Get ID of the driver
+        uint64_t driverServiceID;
+        kr = IORegistryEntryGetRegistryEntryID(driverService, &driverServiceID);
+        assert(kr == 0);
+        
+        /// Get service client of the driver
+        IOHIDServiceClientRef serviceClient = IOHIDEventSystemClientCopyServiceForRegistryID(eventSystemClient, driverServiceID);
+        assert(serviceClient);
+        
+        /// Get pointerResolution as CFNumber
+        int64_t sens = IntToFixed(((int64_t)200));
+        CFNumberRef pointerResolution = (__bridge CFNumberRef)[NSNumber numberWithLongLong:sens];
+        
+        [IOUtility afterDelay:2.0 runBlock:^{ /// Post with delay because that's what CursorSense does
+            
+            /// Set pointer resolution of the driver
+            
+            Boolean success = IOHIDServiceClientSetProperty(serviceClient, CFSTR(kIOHIDPointerResolutionKey), pointerResolution);
+            assert(success);
+            
+            /// Debug
+            
+            printServiceClientInfo(serviceClient);
+            
+        }];
+    }
     if ((NO)) {
         /// Test 5;
         /// Setting pointerResolution on the service client at IOService:/IOResources/IOHIDSystem
@@ -136,7 +332,7 @@ extern void IOHIDEventSystemClientUnscheduleFromRunLoop(IOHIDEventSystemClientRe
         printServiceClientInfo(serviceClient);
         
     }
-    if ((YES)) {
+    if ((NO)) {
         /// Test 4:
         /// Putting it all together and changing pointer resolution
         /// Conclusion:
