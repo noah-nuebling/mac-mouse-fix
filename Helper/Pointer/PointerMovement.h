@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-// IOUtility.h
+// PointerMovement.h
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2021
 // Licensed under MIT
@@ -8,15 +8,15 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <IOKit/hidsystem/IOHIDServiceClient.h>
+#import <IOKit/hid/IOHIDBase.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface IOUtility : NSObject
+@interface PointerMovement : NSObject
 
-+ (io_registry_entry_t)createChildOfRegistryEntry:(io_registry_entry_t)entry withName:(NSString *)name;
-+ (void)afterDelay:(double)delay runBlock:(void(^)(void))block;
-+ (NSString *)registryPathForServiceClient:(IOHIDServiceClientRef)service;
++ (void)setForAllDevices;
++ (void)setForDevice:(IOHIDDeviceRef)device;
+
 @end
 
 NS_ASSUME_NONNULL_END

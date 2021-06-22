@@ -384,5 +384,12 @@
 			<integer>40</integer>
 		</dict>
 	</dict>
+	<key>Pointer</key>
+	<dict>
+		<key>sensitivity</key>
+		<integer>1</integer>
+		<key>acceleration</key>
+		<real>0.6875</real>
+	</dict>
 </dict>
 </plist>

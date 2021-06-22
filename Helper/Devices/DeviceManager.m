@@ -25,7 +25,7 @@
 #import "Scroll.h"
 #import "ButtonInputReceiver.h"
 #import "Config.h"
-#import "PointerSpeedExperiments2.h"
+#import "PointerMovement.h"
 
 #import <IOKit/hidsystem/IOHIDServiceClient.h>
 #import <IOKit/hidsystem/IOHIDEventSystemClient.h>
@@ -36,8 +36,9 @@
 
 @implementation DeviceManager
 
-# pragma mark - Global vars
-static IOHIDManagerRef _HIDManager;
+# pragma mark - Vars and properties
+
+static IOHIDManagerRef _manager;
 static NSMutableArray<Device *> *_attachedDevices;
 
 + (BOOL)devicesAreAttached {
@@ -47,15 +48,18 @@ static NSMutableArray<Device *> *_attachedDevices;
     return _attachedDevices;
 }
 
+# pragma mark - Load
+
 /**
- True entry point of the program
+ True entry point of the program.
+ Edit Really?
  */
 + (void)load_Manual {
     setupDeviceMatchingAndRemovalCallbacks();
     _attachedDevices = [NSMutableArray array];
 }
 
-# pragma mark - Interface
+# pragma mark - Seize devices (Remove this)
 
 //+ (void)seizeDevices:(BOOL)seize {
 //    IOReturn retClose;
@@ -76,13 +80,17 @@ static NSMutableArray<Device *> *_attachedDevices;
 
 
 # pragma mark - Setup callbacks
+
 static void setupDeviceMatchingAndRemovalCallbacks() {
     
-    // Create an HID Manager
+    /// Create HID Manager
     
-    _HIDManager = IOHIDManagerCreate(kCFAllocatorDefault, kIOHIDManagerOptionNone); // TODO: kIOHIDManagerOptionIndependentDevices -> This might be worth a try for independent seizing of devices.
+    _manager = IOHIDManagerCreate(kCFAllocatorDefault, kIOHIDManagerOptionNone); // TODO: kIOHIDManagerOptionIndependentDevices -> This might be worth a try for independent seizing of devices.
     
-    // Specify properties of the devices which we want to add to the HID Manager in the Matching Dictionary
+    /// Specify properties of the devices which we want to add to the HID Manager in the Matching Dictionary
+    /// TODO:...
+    ///     - Can't I simply omit the kIOHIDTransportKey to match mice on any transport?
+    ///     - Also what about kHIDUsage_GD_Pointer? Shouldn't I match for that, too?
     
     NSDictionary *matchDict1 = @{
         @(kIOHIDDeviceUsagePageKey): @(kHIDPage_GenericDesktop),
@@ -100,24 +108,24 @@ static void setupDeviceMatchingAndRemovalCallbacks() {
         @(kIOHIDTransportKey): @("Bluetooth Low Energy"), // kIOHIDTransportBluetoothLowEnergyValue doesn't work (resolves to "BluetoothLowEnergy")
     };
 
-    NSArray *matchDicts = @[matchDict1, matchDict2, matchDict3];
+    NSArray *matchArray = @[matchDict1, matchDict2, matchDict3];
     
-    // Register the Matching Dictionary to the HID Manager
-    IOHIDManagerSetDeviceMatchingMultiple(_HIDManager, (__bridge CFArrayRef)matchDicts);
+    /// Register the Matching Dictionary to the HID Manager
+    IOHIDManagerSetDeviceMatchingMultiple(_manager, (__bridge CFArrayRef)matchArray);
     
-    // Register the HID Manager on our app’s run loop
-    IOHIDManagerScheduleWithRunLoop(_HIDManager, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
+    /// Register the HID Manager on our app’s run loop
+    IOHIDManagerScheduleWithRunLoop(_manager, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
     
-    // Open the HID Manager
+    /// Open the HID Manager
 //    IOReturn IOReturn = IOHIDManagerOpen(_HIDManager, kIOHIDOptionsTypeNone);
 //    IOReturn IOReturn = IOHIDManagerOpen(_HIDManager, kIOHIDOptionsTypeSeizeDevice);
 //    if(IOReturn) DDLogInfo(@"IOHIDManagerOpen failed.");  //  Couldn't open the HID manager! TODO: proper error handling
 
-    // Register a callback for USB device detection with the HID Manager, this will in turn register an button input callback for all devices that getFilteredDevicesFromManager() returns
-    IOHIDManagerRegisterDeviceMatchingCallback(_HIDManager, &handleDeviceMatching, NULL);
+    /// Register a callback for USB device detection with the HID Manager, this will in turn register an button input callback for all devices that getFilteredDevicesFromManager() returns
+    IOHIDManagerRegisterDeviceMatchingCallback(_manager, &handleDeviceMatching, NULL);
     
-    // Register a callback for USB device removal with the HID Manager
-    IOHIDManagerRegisterDeviceRemovalCallback(_HIDManager, &handleDeviceRemoval, NULL);
+    /// Register a callback for USB device removal with the HID Manager
+    IOHIDManagerRegisterDeviceRemovalCallback(_manager, &handleDeviceRemoval, NULL);
 
 }
 
@@ -129,16 +137,12 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
     
     if (devicePassesFiltering(device)) {
         
+        /// Attach
+        attachIOHIDDevice(device);
         
-        Device *newMFDevice = [Device deviceWithIOHIDDevice:device];
-        [_attachedDevices addObject:newMFDevice];
-        
+        ///  Notify other objects
         [Scroll decide];
         [ButtonInputReceiver decide];
-        
-        [PointerSpeedExperiments2 setSensitivityTo:1000 onDevice:device];
-        
-        DDLogInfo(@"New matching IOHIDDevice passed filtering and corresponding MFDevice was attached to device manager:\n%@", newMFDevice);
         
     } else {
         DDLogInfo(@"New matching IOHIDDevice device didn't pass filtering");
@@ -165,21 +169,10 @@ static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IO
     
 }
 
-/// This function is only used for debugging
-static NSString *deviceInfo() {
-    
-    NSString *relevantDevices = stringf(@"Relevant devices:\n%@", _attachedDevices); // Relevant devices are those that are matching the match dicts defined in setupDeviceMatchingAndRemovalCallbacks() and which also pass the filtering in handleDeviceMatching()
-    CFSetRef devices = IOHIDManagerCopyDevices(_HIDManager);
-    NSString *matchingDevices = stringf(@"Matching devices: %@", devices);
-    CFRelease(devices);
-    
-    return [relevantDevices stringByAppendingFormat:@"%@\n", matchingDevices];
-}
-
 # pragma mark - Helper Functions
 
-
 static BOOL devicePassesFiltering(IOHIDDeviceRef device) {
+    /// Helper function for handleDeviceMatching()
     
     NSString *deviceName = (__bridge NSString *)IOHIDDeviceGetProperty(device, CFSTR("Product"));
     NSNumber *deviceVendorID = (__bridge NSNumber *)IOHIDDeviceGetProperty(device, CFSTR("VendorID"));
@@ -192,6 +185,34 @@ static BOOL devicePassesFiltering(IOHIDDeviceRef device) {
     }
     return YES;
 
+}
+
+static void attachIOHIDDevice(IOHIDDeviceRef device) {
+    /// Helper function for handleDeviceMatching()
+    
+    /// Create Device instance
+    Device *newDevice = [Device deviceWithIOHIDDevice:device];
+    
+    /// Add to attachedDevices list
+    [_attachedDevices addObject:newDevice];
+    
+    /// Set pointer sensitivity and acceleration for device
+    [PointerMovement setForDevice:device];
+    
+    /// Log
+    DDLogInfo(@"New device added to attached devices:\n%@", newDevice);
+    
+}
+
+static NSString *deviceInfo() {
+    /// Only used for debugging
+    
+    NSString *relevantDevices = stringf(@"Relevant devices:\n%@", _attachedDevices); // Relevant devices are those that are matching the match dicts defined in setupDeviceMatchingAndRemovalCallbacks() and which also pass the filtering in handleDeviceMatching()
+    CFSetRef devices = IOHIDManagerCopyDevices(_manager);
+    NSString *matchingDevices = stringf(@"Matching devices: %@", devices);
+    CFRelease(devices);
+    
+    return [relevantDevices stringByAppendingFormat:@"%@\n", matchingDevices];
 }
 
 @end

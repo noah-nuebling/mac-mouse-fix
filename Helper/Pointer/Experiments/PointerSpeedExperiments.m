@@ -142,8 +142,8 @@ kern_return_t setParameter(IOHIDEventSystemClientRef esClient, io_service_t serv
     /// Get device driver service
     
     io_service_t hostService = IOHIDDeviceGetService(dev);
-    io_service_t interfaceService = [IOUtility getChildOfRegistryEntry:hostService withName:@"IOHIDInterface"];
-    io_service_t driverService = [IOUtility getChildOfRegistryEntry:interfaceService withName:@"AppleUserHIDEventDriver"];
+    io_service_t interfaceService = [IOUtility createChildOfRegistryEntry:hostService withName:@"IOHIDInterface"];
+    io_service_t driverService = [IOUtility createChildOfRegistryEntry:interfaceService withName:@"AppleUserHIDEventDriver"];
 
     /// Debug
     

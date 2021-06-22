@@ -94,6 +94,7 @@ typedef NSString*                                                       MFString
 
 #define kMFConfigKeyRemaps @"Remaps"
 #define kMFConfigKeyScroll @"Scroll"
+#define kMFConfigKeyPointer @"Pointer"
 #define kMFConfigKeyOther @"Other" // TODO: This occurs in keypaths a few times - replace with constant (search for 'Other.')
 #define kMFConfigKeyAppOverrides @"AppOverrides"
 

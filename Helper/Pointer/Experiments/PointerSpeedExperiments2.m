@@ -198,8 +198,8 @@ void deviceMatchingCallback(void *context, void *refcon, IOHIDServiceClientRef s
         
         /// Get IOService of the driver driving `dev`
         io_service_t IOHIDDeviceService = IOHIDDeviceGetService(dev);
-        io_service_t interfaceService = [IOUtility getChildOfRegistryEntry:IOHIDDeviceService withName:@"IOHIDInterface"];
-        io_service_t driverService = [IOUtility getChildOfRegistryEntry:interfaceService withName:@"AppleUserHIDEventDriver"];
+        io_service_t interfaceService = [IOUtility createChildOfRegistryEntry:IOHIDDeviceService withName:@"IOHIDInterface"];
+        io_service_t driverService = [IOUtility createChildOfRegistryEntry:interfaceService withName:@"AppleUserHIDEventDriver"];
         
         /// Get ID of the driver
         uint64_t driverServiceID;
@@ -373,8 +373,8 @@ void deviceMatchingCallback(void *context, void *refcon, IOHIDServiceClientRef s
         
         /// Get IOService of the driver driving `dev`
         io_service_t IOHIDDeviceService = IOHIDDeviceGetService(dev);
-        io_service_t interfaceService = [IOUtility getChildOfRegistryEntry:IOHIDDeviceService withName:@"IOHIDInterface"];
-        io_service_t driverService = [IOUtility getChildOfRegistryEntry:interfaceService withName:@"AppleUserHIDEventDriver"];
+        io_service_t interfaceService = [IOUtility createChildOfRegistryEntry:IOHIDDeviceService withName:@"IOHIDInterface"];
+        io_service_t driverService = [IOUtility createChildOfRegistryEntry:interfaceService withName:@"AppleUserHIDEventDriver"];
         
         /// Get ID of the driver
         uint64_t driverServiceID;
@@ -459,8 +459,8 @@ void deviceMatchingCallback(void *context, void *refcon, IOHIDServiceClientRef s
         
         /// Get IOService of the driver driving `dev`
         io_service_t IOHIDDeviceService = IOHIDDeviceGetService(dev);
-        io_service_t interfaceService = [IOUtility getChildOfRegistryEntry:IOHIDDeviceService withName:@"IOHIDInterface"];
-        io_service_t driverService = [IOUtility getChildOfRegistryEntry:interfaceService withName:@"AppleUserHIDEventDriver"];
+        io_service_t interfaceService = [IOUtility createChildOfRegistryEntry:IOHIDDeviceService withName:@"IOHIDInterface"];
+        io_service_t driverService = [IOUtility createChildOfRegistryEntry:interfaceService withName:@"AppleUserHIDEventDriver"];
         
         /// Get ID of the driver
         uint64_t driverServiceID;
@@ -490,8 +490,8 @@ void deviceMatchingCallback(void *context, void *refcon, IOHIDServiceClientRef s
         /// Refined version of Test 2. See Test 2 for explanation
         
         io_service_t IOHIDDeviceService = IOHIDDeviceGetService(dev);
-        io_service_t interfaceService = [IOUtility getChildOfRegistryEntry:IOHIDDeviceService withName:@"IOHIDInterface"];
-        io_service_t driverService = [IOUtility getChildOfRegistryEntry:interfaceService withName:@"AppleUserHIDEventDriver"];
+        io_service_t interfaceService = [IOUtility createChildOfRegistryEntry:IOHIDDeviceService withName:@"IOHIDInterface"];
+        io_service_t driverService = [IOUtility createChildOfRegistryEntry:interfaceService withName:@"AppleUserHIDEventDriver"];
         
         /// Get ID
         uint64_t driverServiceID;
