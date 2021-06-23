@@ -177,7 +177,7 @@
 		<key>checkForPrereleases</key>
 		<false/>
 		<key>configVersion</key>
-		<integer>10</integer>
+		<integer>11</integer>
 		<key>skippedBundleVersion</key>
 		<integer>0</integer>
 		<key>launchesOverall</key>
@@ -383,6 +383,15 @@
 			<key>pxPerStep</key>
 			<integer>40</integer>
 		</dict>
+	</dict>
+	<key>Pointer</key>
+	<dict>
+		<key>sensitivity</key>
+		<integer>1</integer>
+		<key>acceleration</key>
+		<real>0.6875</real>
+		<key>useSystemAcceleration</key>
+		<false/>
 	</dict>
 </dict>
 </plist>

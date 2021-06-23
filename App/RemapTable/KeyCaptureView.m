@@ -17,6 +17,8 @@
 
 @interface KeyCaptureView ()
 
+- (IBAction)backgroundButton:(id)sender;
+
 @end
 
 @implementation KeyCaptureView {

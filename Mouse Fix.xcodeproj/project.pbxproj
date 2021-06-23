@@ -35,6 +35,8 @@
 		4F3A40DA266C5BDF00436821 /* NSScreen+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A40D9266C5BDF00436821 /* NSScreen+Additions.m */; };
 		4F44FF042606D73D00926A5E /* SharedMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* SharedMessagePort.m */; };
 		4F44FF052606D73D00926A5E /* SharedMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* SharedMessagePort.m */; };
+		4F70ECAE267E442D00325A76 /* PointerSpeedExperiments2.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F70ECAD267E442D00325A76 /* PointerSpeedExperiments2.m */; };
+		4F70ECB7267E810900325A76 /* IOUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F70ECB6267E810900325A76 /* IOUtility.m */; };
 		4F79A7EF26042E2E00076A7E /* ToastNotification.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F79A7EE26042E2E00076A7E /* ToastNotification.xib */; };
 		4F79A81C2604317200076A7E /* ToastNotificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A81B2604317200076A7E /* ToastNotificationController.m */; };
 		4F79A82B2605074000076A7E /* NSAttributedString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A82A2605074000076A7E /* NSAttributedString+Additions.m */; };
@@ -50,6 +52,8 @@
 		4F94F73D25E6146C00D9F24A /* Mac Mouse Fix Helper.app in Copy Helper */ = {isa = PBXBuildFile; fileRef = 4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4F94F74C25E614B800D9F24A /* Mac Mouse Fix Accomplice in Copy Updater */ = {isa = PBXBuildFile; fileRef = 4F2FDF302315662400C7BE14 /* Mac Mouse Fix Accomplice */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4F9E59972672A67F004E75F7 /* default_config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F9E59962672A67E004E75F7 /* default_config.plist */; };
+		4FA83A29268271E200F3A31B /* PointerMovement.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA83A28268271E200F3A31B /* PointerMovement.m */; };
+		4FA83A2E268288D900F3A31B /* PointerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA83A2D268288D900F3A31B /* PointerConfig.swift */; };
 		4FA994BE26678AC90007F003 /* ScrollAnalyzer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA994BD26678AC90007F003 /* ScrollAnalyzer.m */; };
 		4FAD391426702CD4000CF4FA /* DerivedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860A9266EC24E004F76C8 /* DerivedProperty.swift */; };
 		4FB4F9FE260FDBC800806DDD /* RemapTableUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB4F9FD260FDBC800806DDD /* RemapTableUtility.m */; };
@@ -125,7 +129,7 @@
 		4FF6669925F2C93A00689B77 /* VectorSubPixelator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6664125F2C93A00689B77 /* VectorSubPixelator.m */; };
 		4FF6669A25F2C93A00689B77 /* Utility_Transformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6664225F2C93A00689B77 /* Utility_Transformation.m */; };
 		4FF6669B25F2C93A00689B77 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6664625F2C93A00689B77 /* AppDelegate.m */; };
-		4FF6669C25F2C93A00689B77 /* PointerSpeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6664925F2C93A00689B77 /* PointerSpeed.m */; };
+		4FF6669C25F2C93A00689B77 /* PointerSpeedExperiments.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6664925F2C93A00689B77 /* PointerSpeedExperiments.m */; };
 		4FF6669D25F2C93A00689B77 /* AccessibilityCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6664B25F2C93A00689B77 /* AccessibilityCheck.m */; };
 		4FF6669E25F2C93A00689B77 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6664F25F2C93A00689B77 /* MainMenu.xib */; };
 		4FF6669F25F2C93A00689B77 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6665125F2C93A00689B77 /* main.m */; };
@@ -280,6 +284,10 @@
 		4F3A40D9266C5BDF00436821 /* NSScreen+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSScreen+Additions.m"; sourceTree = "<group>"; };
 		4F44FF022606D73D00926A5E /* SharedMessagePort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharedMessagePort.h; sourceTree = "<group>"; };
 		4F44FF032606D73D00926A5E /* SharedMessagePort.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SharedMessagePort.m; sourceTree = "<group>"; };
+		4F70ECAC267E442D00325A76 /* PointerSpeedExperiments2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerSpeedExperiments2.h; sourceTree = "<group>"; };
+		4F70ECAD267E442D00325A76 /* PointerSpeedExperiments2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerSpeedExperiments2.m; sourceTree = "<group>"; };
+		4F70ECB5267E810900325A76 /* IOUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOUtility.h; sourceTree = "<group>"; };
+		4F70ECB6267E810900325A76 /* IOUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IOUtility.m; sourceTree = "<group>"; };
 		4F79A7EE26042E2E00076A7E /* ToastNotification.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToastNotification.xib; sourceTree = "<group>"; };
 		4F79A81A2604317200076A7E /* ToastNotificationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToastNotificationController.h; sourceTree = "<group>"; };
 		4F79A81B2604317200076A7E /* ToastNotificationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ToastNotificationController.m; sourceTree = "<group>"; };
@@ -307,6 +315,9 @@
 		4F94F60F25E5EC2800D9F24A /* Mac_Mouse_FixUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Mac_Mouse_FixUITests.m; sourceTree = "<group>"; };
 		4F94F61125E5EC2800D9F24A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4F9E59962672A67E004E75F7 /* default_config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_config.plist; sourceTree = "<group>"; };
+		4FA83A27268271E200F3A31B /* PointerMovement.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerMovement.h; sourceTree = "<group>"; };
+		4FA83A28268271E200F3A31B /* PointerMovement.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerMovement.m; sourceTree = "<group>"; };
+		4FA83A2D268288D900F3A31B /* PointerConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointerConfig.swift; sourceTree = "<group>"; };
 		4FA994BC26678AC90007F003 /* ScrollAnalyzer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollAnalyzer.h; sourceTree = "<group>"; };
 		4FA994BD26678AC90007F003 /* ScrollAnalyzer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollAnalyzer.m; sourceTree = "<group>"; };
 		4FB4F9FC260FDBC800806DDD /* RemapTableUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapTableUtility.h; sourceTree = "<group>"; };
@@ -430,8 +441,8 @@
 		4FF6664425F2C93A00689B77 /* VectorSubPixelator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VectorSubPixelator.h; sourceTree = "<group>"; };
 		4FF6664525F2C93A00689B77 /* Utility_Transformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility_Transformation.h; sourceTree = "<group>"; };
 		4FF6664625F2C93A00689B77 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		4FF6664825F2C93A00689B77 /* PointerSpeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointerSpeed.h; sourceTree = "<group>"; };
-		4FF6664925F2C93A00689B77 /* PointerSpeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PointerSpeed.m; sourceTree = "<group>"; };
+		4FF6664825F2C93A00689B77 /* PointerSpeedExperiments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointerSpeedExperiments.h; sourceTree = "<group>"; };
+		4FF6664925F2C93A00689B77 /* PointerSpeedExperiments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PointerSpeedExperiments.m; sourceTree = "<group>"; };
 		4FF6664B25F2C93A00689B77 /* AccessibilityCheck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccessibilityCheck.m; sourceTree = "<group>"; };
 		4FF6664C25F2C93A00689B77 /* AccessibilityCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccessibilityCheck.h; sourceTree = "<group>"; };
 		4FF6664E25F2C93A00689B77 /* Helper.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Helper.entitlements; sourceTree = "<group>"; };
@@ -693,6 +704,17 @@
 				4F94F60E25E5EC2800D9F24A /* UITests */,
 			);
 			path = Tests;
+			sourceTree = "<group>";
+		};
+		4FA83A2026823EE000F3A31B /* Experiments */ = {
+			isa = PBXGroup;
+			children = (
+				4F70ECAC267E442D00325A76 /* PointerSpeedExperiments2.h */,
+				4F70ECAD267E442D00325A76 /* PointerSpeedExperiments2.m */,
+				4FF6664825F2C93A00689B77 /* PointerSpeedExperiments.h */,
+				4FF6664925F2C93A00689B77 /* PointerSpeedExperiments.m */,
+			);
+			path = Experiments;
 			sourceTree = "<group>";
 		};
 		4FA911E4260D00CB00553CA8 /* RemapTable */ = {
@@ -1010,6 +1032,7 @@
 			children = (
 				4FF6660D25F2C93A00689B77 /* Config.h */,
 				4FF6660E25F2C93A00689B77 /* Config.m */,
+				4FA83A2D268288D900F3A31B /* PointerConfig.swift */,
 				4FD860CB266EF55A004F76C8 /* ScrollConfig.swift */,
 				4FD860DA266EFD64004F76C8 /* ScrollConfigObjC.h */,
 			);
@@ -1157,8 +1180,11 @@
 		4FF6664725F2C93A00689B77 /* Pointer */ = {
 			isa = PBXGroup;
 			children = (
-				4FF6664825F2C93A00689B77 /* PointerSpeed.h */,
-				4FF6664925F2C93A00689B77 /* PointerSpeed.m */,
+				4FA83A27268271E200F3A31B /* PointerMovement.h */,
+				4FA83A28268271E200F3A31B /* PointerMovement.m */,
+				4F70ECB5267E810900325A76 /* IOUtility.h */,
+				4F70ECB6267E810900325A76 /* IOUtility.m */,
+				4FA83A2026823EE000F3A31B /* Experiments */,
 			);
 			path = Pointer;
 			sourceTree = "<group>";
@@ -1849,10 +1875,11 @@
 				4FF6669725F2C93A00689B77 /* TransformationManager.m in Sources */,
 				4F1B83062606E68300AEAF37 /* ButtonLandscapeAssessor.m in Sources */,
 				4FF6668F25F2C93A00689B77 /* SmoothScroll.m in Sources */,
+				4F70ECB7267E810900325A76 /* IOUtility.m in Sources */,
 				4FF6669A25F2C93A00689B77 /* Utility_Transformation.m in Sources */,
 				4FF6669D25F2C93A00689B77 /* AccessibilityCheck.m in Sources */,
 				4FF666A725F2C93A00689B77 /* Device.m in Sources */,
-				4FF6669C25F2C93A00689B77 /* PointerSpeed.m in Sources */,
+				4FF6669C25F2C93A00689B77 /* PointerSpeedExperiments.m in Sources */,
 				4FF0BD5F266ADFE5003935EA /* MathObjc.m in Sources */,
 				4F3A40B1266BBC5000436821 /* RealFunction.swift in Sources */,
 				4FF6668425F2C93A00689B77 /* MessagePort_Helper.m in Sources */,
@@ -1862,6 +1889,7 @@
 				4FF0BD51266AC10C003935EA /* Math.swift in Sources */,
 				4FF6669F25F2C93A00689B77 /* main.m in Sources */,
 				4FF6668925F2C93A00689B77 /* Scroll.m in Sources */,
+				4F70ECAE267E442D00325A76 /* PointerSpeedExperiments2.m in Sources */,
 				4FF6669525F2C93A00689B77 /* ModifiedDrag.m in Sources */,
 				4FD86089266E819A004F76C8 /* Pointers.swift in Sources */,
 				4FF6668825F2C93A00689B77 /* ButtonInputReceiver.m in Sources */,
@@ -1886,7 +1914,9 @@
 				4F3A40DA266C5BDF00436821 /* NSScreen+Additions.m in Sources */,
 				4FF6654325F2C7B000689B77 /* HelperServices.m in Sources */,
 				4FA994BE26678AC90007F003 /* ScrollAnalyzer.m in Sources */,
+				4FA83A29268271E200F3A31B /* PointerMovement.m in Sources */,
 				4FF6654B25F2C7B000689B77 /* Queue.m in Sources */,
+				4FA83A2E268288D900F3A31B /* PointerConfig.swift in Sources */,
 				4FF6668625F2C93A00689B77 /* ButtonTriggerGenerator.m in Sources */,
 				4FF6669425F2C93A00689B77 /* GestureScrollSimulator.m in Sources */,
 			);

@@ -7,7 +7,7 @@
 // --------------------------------------------------------------------------
 //
 
-#import "PointerSpeed.h"
+#import "PointerSpeedExperiments.h"
 #import <Foundation/Foundation.h>
 #import <IOKit/hidsystem/IOHIDServiceClient.h>
 #import <IOKit/hidsystem/IOHIDEventSystemClient.h>
@@ -15,16 +15,34 @@
 #import <IOKit/hid/IOHIDKeys.h>
 #import <IOKit/hid/IOHIDProperties.h>
 #import "WannabePrefixHeader.h"
+#import "IOUtility.h"
 
 
-@implementation PointerSpeed
+@implementation PointerSpeedExperiments
+
+#pragma mark - External declarations
 
 extern IOHIDEventSystemClientRef IOHIDEventSystemClientCreate(CFAllocatorRef allocator);
 //extern IOHIDEventSystemClientRef IOHIDEventSystemClientCreate(void);
 extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHIDEventSystemClientRef client, uint64_t entryID);
 
-/// Copied this function from IOEventStatusAPI.c with some changes
+
+#pragma mark - Variables and initialize
+
+static mach_port_t _IOHIDSystemHandle;
+
++ (void)initialize
+{
+    if (self == [PointerSpeedExperiments class]) {
+        _IOHIDSystemHandle = myNXOpenEventStatus();
+    }
+}
+
+#pragma mark - Helper functions
+
 kern_return_t IOHIDSetHIDParameterToEventSystem(io_connect_t handle, CFStringRef key, CFTypeRef parameter) {
+    /// Copied this function from IOEventStatusAPI.c with some changes
+    
 //    IOHIDEventSystemClientRef client = IOHIDEventSystemClientCreateWithType (kCFAllocatorDefault, kIOHIDEventSystemClientTypePassive, NULL);
     IOHIDEventSystemClientRef client = IOHIDEventSystemClientCreate(kCFAllocatorDefault);
     kern_return_t  kr = kIOReturnNotReady;
@@ -60,6 +78,8 @@ kern_return_t IOHIDSetHIDParameterToEventSystem(io_connect_t handle, CFStringRef
 }
 
 kern_return_t setParameter(IOHIDEventSystemClientRef esClient, io_service_t service, CFStringRef key, CFTypeRef parameter) {
+    /// Helper function for IOHIDSetHIDParameterToEventSystem()
+    
     kern_return_t kr = kIOReturnSuccess;
     
     uint64_t entryID = 0;
@@ -77,16 +97,120 @@ kern_return_t setParameter(IOHIDEventSystemClientRef esClient, io_service_t serv
     return kr;
 }
 
-static mach_port_t _IOHIDSystemHandle;
-+ (void)load {
-    _IOHIDSystemHandle = myNXOpenEventStatus();
+
+#pragma mark - Sensitivity
+
++ (void)setSensitivityTo:(int)sensitivity onDevice:(IOHIDDeviceRef)dev {
+    /**
+     2021 attempt at changing sensitivity based on my new understanding from reading the IOKit Fundamentals and related documents, as well as the the HIPointing.ccp and related Darwin source files.
+        HIPointing.cpp and its superclass IOHIDevice.cpp (not sure if correct name) define `setProperties` functions, which updated the internal pointerResolution state when called. I think that setProperties should be called when we call IORegistryEntrySetCFProperties on the device driver which (I assume) is an instance of HIPointing.
+        But it doesn't work :(
+        I looked at the pre-Sierra CursorSense code, and there, they seem to have done it the way I thought would work ( they did it by calling either IORegistryEntrySetCFProperty or IOConnectSetCFProperty I'm spotty on the details). They also seemed to be able to fully customize the acceleration curve back then! But with Sierra, that approach broke, and now they are using IOHIDServiceClientSetProperty() to set the pointer resolution, and without any further customization of the curve.
+        Something similar seems to have happened to Karabiner, with 10.12. - It completely broke the program.
+            See: https://github.com/tekezo/Karabiner/issues/739
+        This caused a huge shitstorm on the Karabiner GitHub. A few months later - possibly as a direct response to this, Apple released a technical note describing how to remap keys with new APIs available in 10.12.
+            See: https://developer.apple.com/library/archive/technotes/tn2450/_index.html
+        The APIs they are using in the tech note are IOHIDEventSystemClient.h and IOHIDServiceClient.h! Just like CursorSense!
+        These APIs had been around since the release of Sierra, apparently, but because they were basically undocumented, no one knew how to use them (I think - haven't looked into this further)
+        I've looked for more info on these new Sierra APIs in the Apple documentation archives but I couldn't find anything else.
+        
+        Either way the conclusion is: these IOHIDEventSystemClient.h and IOHIDServiceClient.h APIs are surely the designated way to set pointer resolution.
+        Now we'll just have to find out how to use them. To guide us we should look at
+        - The Apple technote on how to remap keys in Sierra
+        - CursorSense source code using these APIs.
+            - It's still unclear how they obtain the IOHIDServiceClientRef which they set the pointer resolution on.
+        - Apple source code
+            - In previous investigations (See below), I had the impression that there are different hidden methods to create an IOHIDEventSystemClient, which might impose different privilege levels. Maybe we need a certain privilege level in order to be able to set pointerResolution?
+            - ~/Documents/Projekte/Programmieren/Xcode/Xcode Projekte/Mac Mouse Fix/Other/IOKit source code (19.06.2021)/IOHIDFamily-1633.100.36/HID/HIDEventSystemClient.h
+                - Contains all the different types of eventSystemClient and what their priviledges are and how to create them! We probably want to use kIOHIDEventSystemClientTypePassive type.
+            - IOHIDEventSystemClientCreateWithType() is used all over the IOKitFamilies source code, but I can't find the definition. Maybe it's defined in HIDEventSystemClientPrivate.h?
+                - Should be able to use it by simply declaring extern IOHIDEventSystemClientCreateWithType()
+            
+        
+     */
+    
+    sensitivity = 100; /// DEBUG
+    
+    /// Convert to fixed point
+    
+    int64_t sens = IntToFixed(sensitivity);
+    
+    /// Init err
+    
+    kern_return_t err = 0;
+
+    /// Get device driver service
+    
+    io_service_t hostService = IOHIDDeviceGetService(dev);
+    io_service_t interfaceService = [IOUtility createChildOfRegistryEntry:hostService withName:@"IOHIDInterface"];
+    io_service_t driverService = [IOUtility createChildOfRegistryEntry:interfaceService withName:@"AppleUserHIDEventDriver"];
+
+    /// Debug
+    
+//    char hostServicePath[100];
+//    IORegistryEntryGetPath(hostService, kIOServicePlane, hostServicePath); /// This makes the program crash after the function returns for some reason.
+//    DDLogDebug(@"Service Path: %@", @(hostServicePath));
+
+    /// Get whole property dict
+    
+    CFMutableDictionaryRef properties = CFDictionaryCreateMutable(kCFAllocatorDefault, 0, NULL, NULL);
+    err = IORegistryEntryCreateCFProperties(driverService, &properties, kCFAllocatorDefault, 0);
+    assert (err == 0);
+
+    /// Convert to dict NS and update pointerResolution
+    
+    NSMutableDictionary *propertiesNS = (__bridge_transfer NSMutableDictionary *)properties;
+    propertiesNS[@(kIOHIDPointerResolutionKey)] = @(sens);
+
+    /// Set updated property dict to driver registry entry
+    
+    err = IORegistryEntrySetCFProperties(driverService, (__bridge CFMutableDictionaryRef)propertiesNS);
+    assert(err == 0);
+    
+    
+    /// Approach 2:
+    /// Opening a user client and settng properties on that
+    /// Sort of inspired by skimming over this: https://developer.apple.com/forums/thread/90107
+    
+//    io_connect_t driverUserClient;
+//    err = IOServiceOpen(driverService, mach_task_self(), kIOHIDEventSystemConnectType, &driverUserClient); /// Opening driverService or interfaceService or hostService returns different errors. The connectType doesn't seem to make a difference. IOServiceOpen worked in the experiments below. TODO: Investigate why. (Probably called it on different services.)
+//    NSAssert(err == 0, @"Error is: %s", mach_error_string(err));
+//    err = IOConnectSetCFProperties(driverUserClient, (__bridge CFMutableDictionaryRef)propertiesNS);
+//    assert(err == 0);
+
+    
+    /// Approach 3:
+    /// Try IOHIDServiceClientSetProperty again like SteerMouse
+    
+    IOHIDEventSystemClientRef eventSystemClient = IOHIDEventSystemClientCreateSimpleClient(kCFAllocatorDefault);
+    uint64_t entryID;
+    IORegistryEntryGetRegistryEntryID(driverService, &entryID); // driverService doesn't do anything. interfaceService and hostService crash.
+    IOHIDServiceClientRef serviceClient = IOHIDEventSystemClientCopyServiceForRegistryID(eventSystemClient, entryID);
+    IOHIDServiceClientSetProperty(serviceClient, CFSTR(kIOHIDPointerResolutionKey), (__bridge CFNumberRef)@(sens));
+    
+    
+    /// Approach 4
+    /// Use the device interface for communicating with the userClient which is provided by IOHIDDevice (user)
+    /// Doesn't work either, who would've thunk
+
+    
+    Boolean success = IOHIDDeviceSetProperty(dev, CFSTR(kIOHIDPointerResolutionKey), (__bridge  CFNumberRef)@(sens));
+    DDLogDebug(@"Setting property via IOHIDDevice was %ssuccessful", !success ? "not " : ""); /// Says it's succesful but doesn't do anything.
+    
+    /// Debug
+    /// Check if pointerResolution updated
+    /// -> It doesn't work, either
+    CFTypeRef pointerResolution = IORegistryEntryCreateCFProperty(driverService, CFSTR(kIOHIDPointerResolutionKey), kCFAllocatorDefault, 0);
+    int pointerResolutionInt = FixedToInt([((__bridge NSNumber *)pointerResolution) intValue]);
+    DDLogDebug(@"Updated pointer res: %d", pointerResolutionInt);
+    CFRelease(pointerResolution);
+    
+    
+    
 }
 
-
-#pragma mark Sensitivity
-
-
-// Doesn't work
+/// Doesn't work
+/// Edit: Actually, I don't seem to have tried out the approach described in the header comment for some reason. So that approach might sitll work.
 + (void)newSetSensitivityViaIORegTo:(int)sens device:(IOHIDDeviceRef)dev {
     
     /*
@@ -110,14 +234,14 @@ static mach_port_t _IOHIDSystemHandle;
      // Found this in Cursor Sense
      IOHIDEventSystemClientCreate()
      
-     // Getting services given a client
+     // Getting service clients given an event system client
      
      (CFArrayRef) IOHIDEventSystemClientCopyServices (client);
         IOHIDServiceClientConformsTo(service, kHIDPage_GenericDesktop, kHIDUsage_GD_Keyboard))
      IOHIDEventSystemClientCopyServiceForRegistryID(client, entryID);
         IORegistryEntryGetRegistryEntryID (service, &entryID)
      
-     // Set Property to a client
+     // Set Property to a service client
      IOHIDServiceClientSetProperty(service, key, state ? kCFBooleanTrue : kCFBooleanFalse);
      */
     
@@ -147,6 +271,7 @@ static mach_port_t _IOHIDSystemHandle;
     sens = 200; // 400 is default
     int newPointerRes = IntToFixed(sens);
     IOHIDSetHIDParameterToEventSystem(devConnect, CFSTR(kIOHIDPointerResolutionKey), (__bridge CFNumberRef)@(newPointerRes));
+    /// ^ This function is made to set params to the eventSystem. devConnect is not a handle to the event system. I don't think this function call makes sense.
     
     IOServiceClose(devConnect);
     
@@ -163,7 +288,7 @@ static mach_port_t _IOHIDSystemHandle;
     sens = 12345; // 400 is default
 //    int newPointerRes = IntToFixed(sens);
     int newPointerRes = sens;
-//    IOHIDDeviceSetProperty(dev, CFSTR(kIOHIDPointerResolutionKey), (__bridge CFNumberRef) @(newPointerRes));
+    IOHIDDeviceSetProperty(dev, CFSTR(kIOHIDPointerResolutionKey), (__bridge CFNumberRef) @(newPointerRes));
     
     // Check what values actually are
     NSNumber *pointerResNS = (__bridge NSNumber *) IOHIDDeviceGetProperty(dev, CFSTR(kIOHIDPointerResolutionKey));
@@ -273,7 +398,7 @@ static mach_port_t _IOHIDSystemHandle;
             
             
             // This manages to alter alter / create entries in HIDEventServiceProperties property. But creating HIDPointerResolution doesn't do anything.
-            // CursorSense also creates a HIDPointerResolution entry.
+            // CursorSense also creates a HIDPointerResolution entry in the HIDEventServiceProperties property.
 //            CFBooleanRef falseCF = kCFBooleanFalse;
 //            IORegistryEntrySetCFProperty(matchingService, CFSTR("HIDDefaultParameters"), falseCF);
             CFBooleanRef falseCF = kCFBooleanFalse;
@@ -367,7 +492,7 @@ static mach_port_t _IOHIDSystemHandle;
     
 }
 
-#pragma mark Acceleration
+#pragma mark - Acceleration
 
 /// Sets the mouse pointer acceleration to a certain value.
 /// Changes the same value that the "Tracking Speed" option in System Preferences > Mouse or the "defaults write .GlobalPreferences com.apple.mouse.scaling x" command changes.
