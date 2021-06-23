@@ -263,9 +263,12 @@
         [DDLog addLogger:DDTTYLogger.sharedInstance]; // Log to terminal / Xcode output
     }
     
-    // Enable logging to file
-    // Copied this from https://github.com/CocoaLumberjack/CocoaLumberjack/blob/master/Documentation/GettingStarted.md
-    // Haven't thought about whether the exact settings make sense.
+    /// Set logging format
+//    DDOSLogger.sharedInstance.logFormatter = DDLogFormatter.
+    
+    /// Setup logging  file
+    /// Copied this from https://github.com/CocoaLumberjack/CocoaLumberjack/blob/master/Documentation/GettingStarted.md
+    /// Haven't thought about whether the exact settings make sense.
 #if DEBUG
     DDFileLogger *fileLogger = [[DDFileLogger alloc] init];
     fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
