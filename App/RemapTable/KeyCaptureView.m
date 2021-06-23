@@ -192,4 +192,6 @@
     [NSCursor.arrowCursor set]; // Prevent text insertion cursor from appearing on scroll
 }
 
+- (IBAction)backgroundButton:(id)sender {
+}
 @end

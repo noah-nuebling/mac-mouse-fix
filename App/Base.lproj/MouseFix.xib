@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,7 +17,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenNone="YES"/>
             <rect key="contentRect" x="0.0" y="0.0" width="580" height="429"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="775"/>
             <value key="minSize" type="size" width="580" height="300"/>
             <value key="maxSize" type="size" width="580" height="1000"/>
             <view key="contentView" identifier="mainView" translatesAutoresizingMaskIntoConstraints="NO" id="se5-gp-TjO">
@@ -153,7 +154,7 @@ Tips:
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <clipView key="contentView" drawsBackground="NO" id="S62-75-wtd">
                                                 <rect key="frame" x="0.0" y="0.0" width="540" height="254"/>
-                                                <autoresizingMask key="autoresizingMask"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <tableView identifier="remapTable" verticalHuggingPriority="750" allowsExpansionToolTips="YES" tableStyle="fullWidth" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="39" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" id="zJh-jy-oKM" customClass="RemapTableView">
                                                         <rect key="frame" x="0.0" y="0.0" width="540" height="254"/>
@@ -254,30 +255,27 @@ Tips:
                                                                         <rect key="frame" x="313" y="39" width="218" height="39"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
-                                                                            <button hidden="YES" focusRingType="exterior" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bGK-d6-do3">
+                                                                            <button hidden="YES" focusRingType="exterior" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bGK-d6-do3" userLabel="BackgroundButton">
                                                                                 <rect key="frame" x="-4" y="3" width="225" height="32"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                                 <buttonCell key="cell" type="push" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" focusRingType="exterior" imageScaling="proportionallyDown" inset="2" id="wcb-vJ-PiZ">
                                                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                                     <font key="font" metaFont="system"/>
                                                                                 </buttonCell>
-                                                                                <connections>
-                                                                                    <outlet property="captureView" destination="JcL-EN-Rma" id="ITL-H1-8hi"/>
-                                                                                </connections>
                                                                             </button>
                                                                             <scrollView focusRingType="exterior" fixedFrame="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="gEj-y5-p9Y" customClass="KeyCaptureScrollView">
                                                                                 <rect key="frame" x="3" y="10" width="211" height="20"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                                 <clipView key="contentView" focusRingType="exterior" drawsBackground="NO" id="2dn-db-91A">
                                                                                     <rect key="frame" x="0.0" y="0.0" width="211" height="20"/>
-                                                                                    <autoresizingMask key="autoresizingMask"/>
+                                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                     <subviews>
                                                                                         <textView identifier="keyCaptureView" focusRingType="exterior" editable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" verticallyResizable="NO" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="JcL-EN-Rma" customClass="KeyCaptureView">
                                                                                             <rect key="frame" x="0.0" y="0.0" width="206" height="19"/>
                                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                                            <size key="minSize" width="208" height="19"/>
+                                                                                            <size key="minSize" width="206" height="19"/>
                                                                                             <size key="maxSize" width="295" height="10000000"/>
                                                                                             <attributedString key="textStorage">
                                                                                                 <fragment content="Text go here">
@@ -289,9 +287,6 @@ Tips:
                                                                                                 </fragment>
                                                                                             </attributedString>
                                                                                             <color key="insertionPointColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                                                            <connections>
-                                                                                                <outlet property="backgroundButton" destination="bGK-d6-do3" id="ICS-cY-bwL"/>
-                                                                                            </connections>
                                                                                         </textView>
                                                                                     </subviews>
                                                                                     <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -352,7 +347,6 @@ Tips:
         </customObject>
         <customObject id="p2C-Qy-mgp" customClass="RemapTableController">
             <connections>
-                <outlet property="box" destination="nmi-Qw-Ncm" id="M7y-bz-ysY"/>
                 <outlet property="view" destination="zJh-jy-oKM" id="GWC-PD-NjZ"/>
             </connections>
         </customObject>
