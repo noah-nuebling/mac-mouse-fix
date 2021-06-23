@@ -20,13 +20,22 @@ class PointerConfig: NSObject {
     /// Main
     
     @objc static var sensitivity: Double {
-//        config["sensitivity"] as! Double
-        10.0 /// Testing
+        
+        return 1.3 /// Testing - Remove this
+        
+        config["sensitivity"] as! Double
     }
-    
     @objc static var acceleration: Double {
-//        config["acceleration"] as! Double
-        0.5 /// Testing
+        
+        return 0.5 /// Testing - Remove this
+        
+        if useSystemAcceleration {
+            return UserDefaults.standard.double(forKey: "com.apple.mouse.scaling")
+        } else {
+            return config["acceleration"] as! Double
+        }
     }
-    
+    @objc private static var useSystemAcceleration: Bool {
+        config["useSystemAcceleration"] as! Bool
+    }
 }

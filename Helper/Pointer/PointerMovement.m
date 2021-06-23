@@ -50,7 +50,7 @@ extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHI
     
 }
 
-+ (void)setForDevice:(IOHIDDeviceRef)device {
++ (void) setForDevice:(IOHIDDeviceRef)device {
     /// Sets the sensitivity and acceleration defined by PointerConfig `device`.
     /// This should be called after a new device has been attached.
     

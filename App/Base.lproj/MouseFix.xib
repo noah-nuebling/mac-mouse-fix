@@ -112,7 +112,7 @@ To disable Mac Mouse Fix, uncheck this checkbox or move the app to the Trash.</s
                                                     </textFieldCell>
                                                 </textField>
                                                 <textField toolTip="Scroll fewer pixels per mouse wheel tick." horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dzx-1i-bZ6">
-                                                    <rect key="frame" x="204" y="11" width="27" height="14"/>
+                                                    <rect key="frame" x="203" y="11" width="27" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Slow" id="GKV-Mh-wiX">
                                                         <font key="font" metaFont="message" size="11"/>
@@ -383,6 +383,7 @@ Tips:
             </items>
             <point key="canvasLocation" x="145" y="381"/>
         </menu>
+        <userDefaultsController representsSharedInstance="YES" id="gWW-SD-PZw"/>
     </objects>
     <resources>
         <image name="NSAddTemplate" width="14" height="13"/>
