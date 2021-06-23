@@ -19,12 +19,17 @@ class PointerConfig: NSObject {
     
     /// Main
     
+    /// Sensitivity
+    
     @objc static var sensitivity: Double {
         
         return 1.3 /// Testing - Remove this
         
         config["sensitivity"] as! Double
     }
+    
+    /// Acceleration
+    
     @objc static var acceleration: Double {
         
         return 0.5 /// Testing - Remove this

@@ -201,7 +201,7 @@
 				<array>
 					<dict>
 						<key>button</key>
-						<integer>4</integer>
+						<integer>5</integer>
 						<key>level</key>
 						<integer>1</integer>
 					</dict>
@@ -282,7 +282,7 @@
 				<array>
 					<dict>
 						<key>button</key>
-						<integer>3</integer>
+						<integer>4</integer>
 						<key>level</key>
 						<integer>1</integer>
 					</dict>
