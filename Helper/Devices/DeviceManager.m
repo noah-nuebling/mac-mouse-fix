@@ -198,7 +198,8 @@ static void attachIOHIDDevice(IOHIDDeviceRef device) {
     [_attachedDevices addObject:newDevice];
     
     /// Set pointer sensitivity and acceleration for device
-    [PointerMovement setForDevice:device];
+    /// Not using this yet, as it's still buggy and not implemented in the UI
+//    [PointerMovement setForDevice:device];
     
     /// Log
     DDLogInfo(@"New device added to attached devices:\n%@", newDevice);

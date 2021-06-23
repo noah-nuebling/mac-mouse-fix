@@ -14,8 +14,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface PointerMovement : NSObject
 
-+ (void)setForAllDevices;
-+ (void)setForDevice:(IOHIDDeviceRef)device;
+/// Shouldn't use this yet, as it's still buggy
+
+//+ (void)setForAllDevices;
+//+ (void)setForDevice:(IOHIDDeviceRef)device;
 
 @end
 
