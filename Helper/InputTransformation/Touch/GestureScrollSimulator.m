@@ -182,12 +182,6 @@ static VectorSubPixelator *_scrollPixelator;
 //    CGPoint CGLoc = Utility_Transformation.CG
 //    DDLogInfo(@"\nFLIPPED NS: %f, %f \nCG: %f, %f", flippedNSLoc.x, flippedNSLoc.y, CGLoc.x, CGLoc.y);
     
-    // Post t22s0 event
-    
-    CGEventSetLocation(e22, eventLocation);
-    CGEventPost(kCGSessionEventTap, e22); // Needs to be kCGHIDEventTap instead of kCGSessionEventTap to work with Swish, but it will make the events feed back into our scroll event tap. That's not too bad though, because we ignore continuous events anyways.
-    CFRelease(e22);
-    
     if (momentumPhase == 0) {
         
         //
@@ -222,6 +216,15 @@ static VectorSubPixelator *_scrollPixelator;
 
         CFRelease(e29);
     }
+    
+    /// Post t22s0 event
+    ///     Posting after the t29s6 event because I thought that was close to real trackpad events. But in real trackpad events the order is always different it seems.
+    ///     Wow, posting this after the t29s6 events removed the little stutter when swiping between pages, nice!
+    
+    CGEventSetLocation(e22, eventLocation);
+    CGEventPost(kCGSessionEventTap, e22); // Needs to be kCGHIDEventTap instead of kCGSessionEventTap to work with Swish, but it will make the events feed back into our scroll event tap. That's not too bad though, because we ignore continuous events anyways.
+    CFRelease(e22);
+    
 }
 
 static bool _momentumScrollIsActive; // Should only be manipulated by `startPostingMomentumScrollEventsWithInitialGestureVector()`
