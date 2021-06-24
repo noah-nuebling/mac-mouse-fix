@@ -738,7 +738,7 @@
 			path = RemapTable;
 			sourceTree = "<group>";
 		};
-		4FA994BB266789BF0007F003 /* ScrollProcessingChain */ = {
+		4FA994BB266789BF0007F003 /* ProcessingChain */ = {
 			isa = PBXGroup;
 			children = (
 				4FF6662C25F2C93A00689B77 /* Scroll.h */,
@@ -748,7 +748,7 @@
 				4FF6662A25F2C93A00689B77 /* RoughScroll.h */,
 				4FF6663025F2C93A00689B77 /* RoughScroll.m */,
 			);
-			path = ScrollProcessingChain;
+			path = ProcessingChain;
 			sourceTree = "<group>";
 		};
 		4FBC9433260F8AA60062F186 /* MAS */ = {
@@ -1098,7 +1098,7 @@
 		4FF6661F25F2C93A00689B77 /* Scroll */ = {
 			isa = PBXGroup;
 			children = (
-				4FA994BB266789BF0007F003 /* ScrollProcessingChain */,
+				4FA994BB266789BF0007F003 /* ProcessingChain */,
 				4FF6662925F2C93A00689B77 /* ScrollModifiers.h */,
 				4FF6662E25F2C93A00689B77 /* ScrollModifiers.m */,
 				4FF6662B25F2C93A00689B77 /* ScrollUtility.h */,
