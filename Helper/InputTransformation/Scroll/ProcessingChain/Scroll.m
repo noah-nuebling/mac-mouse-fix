@@ -77,7 +77,7 @@ static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this
     _animator = [[Animator alloc] init];
     
     // Create subpixelator for scroll output
-    _subPixelator = [SubPixelator pixelator] ;
+    _subPixelator = [SubPixelator roundPixelator];
 }
 
 + (void)resetDynamicGlobals {

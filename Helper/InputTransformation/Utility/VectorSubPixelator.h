@@ -14,9 +14,14 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface VectorSubPixelator : NSObject
-+ (VectorSubPixelator *)pixelator;
+
++ (VectorSubPixelator *)ceilPixelator;
++ (VectorSubPixelator *)roundPixelator;
+
 - (instancetype)init NS_UNAVAILABLE;
+
 - (Vector)intVectorWithDoubleVector:(Vector)inpVec;
+
 @end
 
 NS_ASSUME_NONNULL_END

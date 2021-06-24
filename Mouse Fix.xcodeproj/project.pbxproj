@@ -52,6 +52,7 @@
 		4F94F73D25E6146C00D9F24A /* Mac Mouse Fix Helper.app in Copy Helper */ = {isa = PBXBuildFile; fileRef = 4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4F94F74C25E614B800D9F24A /* Mac Mouse Fix Accomplice in Copy Updater */ = {isa = PBXBuildFile; fileRef = 4F2FDF302315662400C7BE14 /* Mac Mouse Fix Accomplice */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4F9E59972672A67F004E75F7 /* default_config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F9E59962672A67E004E75F7 /* default_config.plist */; };
+		4F9E789226851440002C2309 /* IntegerAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9E789126851440002C2309 /* IntegerAnimator.swift */; };
 		4FA83A29268271E200F3A31B /* PointerMovement.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA83A28268271E200F3A31B /* PointerMovement.m */; };
 		4FA83A2E268288D900F3A31B /* PointerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA83A2D268288D900F3A31B /* PointerConfig.swift */; };
 		4FA994BE26678AC90007F003 /* ScrollAnalyzer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA994BD26678AC90007F003 /* ScrollAnalyzer.m */; };
@@ -315,6 +316,7 @@
 		4F94F60F25E5EC2800D9F24A /* Mac_Mouse_FixUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Mac_Mouse_FixUITests.m; sourceTree = "<group>"; };
 		4F94F61125E5EC2800D9F24A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4F9E59962672A67E004E75F7 /* default_config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_config.plist; sourceTree = "<group>"; };
+		4F9E789126851440002C2309 /* IntegerAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegerAnimator.swift; sourceTree = "<group>"; };
 		4FA83A27268271E200F3A31B /* PointerMovement.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerMovement.h; sourceTree = "<group>"; };
 		4FA83A28268271E200F3A31B /* PointerMovement.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerMovement.m; sourceTree = "<group>"; };
 		4FA83A2D268288D900F3A31B /* PointerConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointerConfig.swift; sourceTree = "<group>"; };
@@ -627,6 +629,7 @@
 			children = (
 				4FD86058266DBF96004F76C8 /* Animator.h */,
 				4FD85F7A266CC9C5004F76C8 /* Animator.swift */,
+				4F9E789126851440002C2309 /* IntegerAnimator.swift */,
 				4F3A40C9266C44D100436821 /* DisplayLink.h */,
 				4F3A40CA266C44D100436821 /* DisplayLink.m */,
 			);
@@ -1863,6 +1866,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F9E789226851440002C2309 /* IntegerAnimator.swift in Sources */,
 				4FF6654D25F2C7B000689B77 /* SharedUtility.m in Sources */,
 				4FF6668225F2C93A00689B77 /* Config.m in Sources */,
 				4FFBC5A8266977CA001D389B /* DoubleExponentialSmoother.swift in Sources */,

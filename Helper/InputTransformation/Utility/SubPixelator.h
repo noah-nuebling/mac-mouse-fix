@@ -12,10 +12,15 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SubPixelator : NSObject
-+ (SubPixelator *)pixelator;
+
++ (SubPixelator *)ceilPixelator;
++ (SubPixelator *)roundPixelator;
+
 - (instancetype)init NS_UNAVAILABLE;
+
 - (int64_t)intDeltaWithDoubleDelta:(double)inp;
 - (void)reset;
+
 @end
 
 NS_ASSUME_NONNULL_END

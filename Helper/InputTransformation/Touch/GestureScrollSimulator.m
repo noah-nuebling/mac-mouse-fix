@@ -28,9 +28,9 @@ static VectorSubPixelator *_scrollPixelator;
 + (void)initialize
 {
     if (self == [GestureScrollSimulator class]) {
-        _gesturePixelator = [VectorSubPixelator pixelator];
-        _scrollPointPixelator = [VectorSubPixelator pixelator];
-        _scrollPixelator = [VectorSubPixelator pixelator];
+        _gesturePixelator = [VectorSubPixelator roundPixelator];
+        _scrollPointPixelator = [VectorSubPixelator roundPixelator];
+        _scrollPixelator = [VectorSubPixelator roundPixelator];
     }
 }
 

@@ -10,21 +10,34 @@
 #import "VectorSubPixelator.h"
 #import "SubPixelator.h"
 
-@implementation VectorSubPixelator
-
-+ (VectorSubPixelator *) pixelator {
-    return [[self alloc] init];
+@implementation VectorSubPixelator {
+    SubPixelator *_spX;
+    SubPixelator *_spY;
 }
 
-static SubPixelator *_spX;
-static SubPixelator *_spY;
++ (VectorSubPixelator *)ceilPixelator {
+    return [[self alloc] initCeil];
+}
++ (VectorSubPixelator *)roundPixelator {
+    return [[self alloc] initRound];
+}
 
-- (instancetype)init
+- (instancetype)initCeil
 {
     self = [super init];
     if (self) {
-        _spX = [SubPixelator pixelator];
-        _spY = [SubPixelator pixelator];
+        _spX = [SubPixelator ceilPixelator];
+        _spY = [SubPixelator ceilPixelator];
+    }
+    return self;
+}
+
+- (instancetype)initRound;
+{
+    self = [super init];
+    if (self) {
+        _spX = [SubPixelator roundPixelator];
+        _spY = [SubPixelator roundPixelator];
     }
     return self;
 }
@@ -33,6 +46,11 @@ static SubPixelator *_spY;
     inpVec.x = [_spX intDeltaWithDoubleDelta:inpVec.x];
     inpVec.y = [_spY intDeltaWithDoubleDelta:inpVec.y];
     return inpVec;
+}
+
+- (void)reset {
+    [_spX reset];
+    [_spY reset];
 }
 
 @end
