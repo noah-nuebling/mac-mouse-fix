@@ -59,8 +59,9 @@
     return bitString;
 }
 
-// All of the CG APIs use a flipped coordinate system
 + (CGPoint)getCurrentPointerLocation_flipped {
+    /// All of the CG APIs use a flipped coordinate system
+    /// Edit: Couldn't I just use CGEventGetLocation(CGEventCreate(NULL)) instead?
     
     NSPoint loc = NSEvent.mouseLocation;
     

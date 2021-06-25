@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-// Drag.swift
+// DragCurve.swift
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2021
 // Licensed under MIT
@@ -104,34 +104,46 @@
 
 import Foundation
 
-class Drag: RealFunction {
+@objc class DragCurve: NSObject, RealFunction {
 
-    var a: Double
-    var b: Double
-    var c: Double
-    var k: Double
+    private var a: Double
+    private var b: Double
+    private var c: Double
+    private var k: Double
     
-    var timeInterval: Interval
-    var distanceInterval: Interval
+    @objc var timeInterval: Interval
+    @objc var distanceInterval: Interval
 
-    init(coefficient:Double, exponent: Double, initialSpeed v0: Double, stopSpeed vs: Double) {
+    @objc init(coefficient:Double, exponent: Double, initialSpeed v0: Double, stopSpeed vs: Double) {
         /// Speed will never reach 0 exactly so we need to specify `stopSpeed`, the speed at which we consider it stopped
         
-        self.a = coefficient
-        self.b = exponent
+        /// Initialize everything so Swift doesn't complain when we use instance methods and call super.init()
         
-        c = 0 // Initialize everything so swift doesn't complain when we use instance methods
+        a = 0
+        b = 0
+        c = 0
         k = 0
         timeInterval = Interval(location: 0, length: 0)
         distanceInterval = Interval(location: 0, length: 0)
         
-        // Choose c such that v(t) passes through (t: 0, v: v0)
+        /// Init super so Swift doesn't complain when we use our own instance methods
+        
+        super.init()
+        
+        /// Do actual initialization
+        
+        /// Curve feel
+        
+        self.a = coefficient
+        self.b = exponent
+        
+        /// Choose c such that v(t) passes through (t: 0, v: v0)
         c = getC(t: 0, v: v0)
         
-        // Choose k such that d(t) passes through (t: 0, d: 0)
+        /// Choose k such that d(t) passes through (t: 0, d: 0)
         k = getK(t: 0, d: 0)
         
-        // Get time and distance to stop
+        /// Get time and distance to stop
         let timeToStop = getT(v: vs)
         let distanceToStop = getD(t: timeToStop, k: self.k)
         self.timeInterval = Interval(location: 0, length: timeToStop)
@@ -140,23 +152,23 @@ class Drag: RealFunction {
     
     /// v(t)
     
-    func getV(t: Double) -> Double {
+    private func getV(t: Double) -> Double {
         return pow((b - 1) * (a * (t - c)), 1/(1 - b))
     }
 
-    func getC(t: Double, v: Double) -> Double {
+    private func getC(t: Double, v: Double) -> Double {
         /// Get c such that v(t) passes through the point (t, v)
         return t - (pow(v, 1-b) / ((b-1) * a))
     }
     
-    func getT(v: Double) -> Double {
+    private func getT(v: Double) -> Double {
         /// Get the t where v(t) is v
         return pow(v, 1 - b) / (a * (b - 1)) + c
     }
     
     /// d(t)
     
-    func getD(t: Double, k: Double) -> Double {
+    private func getD(t: Double, k: Double) -> Double {
         
         if (b == 2) { /// The other formula isn't defined at b == 2
             return log(a * (c - t)) / a + k
@@ -165,14 +177,14 @@ class Drag: RealFunction {
         return pow(a * (b - 1) * (t - c), 1/(1 - b) + 1) / (a * (b - 2)) + k
     }
     
-    func getK(t: Double, d: Double) -> Double {
+    private func getK(t: Double, d: Double) -> Double {
         /// Get k such that d(t) passes through the point (t, d)
         return -getD(t: t, k: 0) + d
     }
     
     /// Interface
     
-    func evaluate(at tUnit: Double) -> Double {
+    @objc func evaluate(at tUnit: Double) -> Double {
         /// Animator.swift expects its animation curves to pass through (0,0) and (1,1), so we'll scale our curve accordingly
         
         let t = Math.scale(value: tUnit, from: .unitInterval(), to: timeInterval)

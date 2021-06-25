@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)init NS_UNAVAILABLE;
 
 - (Vector)intVectorWithDoubleVector:(Vector)inpVec;
+- (void)reset;
 
 @end
 

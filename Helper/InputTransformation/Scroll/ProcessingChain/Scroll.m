@@ -300,23 +300,31 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
             assert(valueDelta != 0);
             DDLogDebug(@"DELTA: %ld, PHASE: %d", (long)valueDelta, animationPhase);
             
-            /// Get phase
-            
-            IOHIDEventPhaseBits scrollPhase;
+            /// Send events
             
             if (animationPhase == kMFAnimationPhaseStart) {
-                scrollPhase = kIOHIDEventPhaseBegan;
-            } else if (animationPhase == kMFAnimationPhaseRunningStart || animationPhase == kMFAnimationPhaseContinue) {
-                scrollPhase = kIOHIDEventPhaseChanged;
-            } else if (animationPhase == kMFAnimationPhaseEnd) {
-                scrollPhase = kIOHIDEventPhaseEnded;
+                
+                sendScroll(valueDelta, scrollDirection, YES, kIOHIDEventPhaseBegan);
+                
+            } else if (animationPhase == kMFAnimationPhaseRunningStart
+                    || animationPhase == kMFAnimationPhaseContinue) {
+                
+                sendScroll(valueDelta, scrollDirection, YES, kIOHIDEventPhaseChanged);
+                
+            } else if (animationPhase == kMFAnimationPhaseStartingEnd) {
+                
+                sendScroll(valueDelta, scrollDirection, YES, kIOHIDEventPhaseBegan);
+                sendScroll(0, kMFScrollDirectionNone, YES, kIOHIDEventPhaseEnded);
+                
+            }else if (animationPhase == kMFAnimationPhaseEnd) {
+                
+                sendScroll(valueDelta, scrollDirection, YES, kIOHIDEventPhaseChanged);
+                sendScroll(0, kMFScrollDirectionNone, YES, kIOHIDEventPhaseEnded);
+                
             } else {
                 assert(false);
             }
             
-            /// Scroll
-            
-            sendScroll(valueDelta, scrollDirection, YES, scrollPhase);
         }];
     }
     
@@ -339,15 +347,10 @@ static int64_t getPxPerTick(CFTimeInterval timeBetweenTicks) {
     return 40; /// We could use a SubPixelator balance out the rounding errors, but I don't think that'll be noticable
 }
 
-static void sendScroll(double px, MFScrollDirection scrollDirection, BOOL gesture, IOHIDEventPhaseBits scrollPhase) {
+static void sendScroll(int64_t px, MFScrollDirection scrollDirection, BOOL gesture, IOHIDEventPhaseBits scrollPhase) {
     /// scrollPhase is only used when `gesture` is YES
     
-    
-    /// Subpixelate px to balance out rounding errors
-    
-    int64_t pxInt = [_subPixelator intDeltaWithDoubleDelta:px]; /// TODO: Reset the subpixelator where appropriate
-    
-    if (pxInt == 0) {
+    if (px == 0) {
         DDLogDebug(@"Pixels to scroll are 0");
     }
     
@@ -357,13 +360,15 @@ static void sendScroll(double px, MFScrollDirection scrollDirection, BOOL gestur
     int64_t dy = 0;
     
     if (scrollDirection == kMFScrollDirectionUp) {
-        dy = -pxInt;
+        dy = -px;
     } else if (scrollDirection == kMFScrollDirectionDown) {
-        dy = pxInt;
+        dy = px;
     } else if (scrollDirection == kMFScrollDirectionLeft) {
-        dx = -pxInt;
+        dx = -px;
     } else if (scrollDirection == kMFScrollDirectionRight) {
-        dx = pxInt;
+        dx = px;
+    } else if (scrollDirection == kMFScrollDirectionNone) {
+        
     } else {
         assert(false);
     }
@@ -378,6 +383,9 @@ static void sendScroll(double px, MFScrollDirection scrollDirection, BOOL gestur
         
     } else if (!gesture) {
         /// Send line-based scroll event
+        
+        /// TODO: line delta should always be around 1/10 of pixel delta. Also subpixelate line delta.
+        ///     See CGEventSource pixelsPerLine - it's 10.
         
         CGEventRef event = CGEventCreateScrollWheelEvent(NULL, kCGScrollEventUnitLine, 1, 0);
         
@@ -394,25 +402,14 @@ static void sendScroll(double px, MFScrollDirection scrollDirection, BOOL gestur
     } else {
         /// Send simulated two-finger swipe event
         
-        if (scrollPhase != kIOHIDEventPhaseEnded) {
-            [GestureScrollSimulatorOld postGestureScrollEventWithDeltaX:dx deltaY:dy phase:scrollPhase isGestureDelta:NO];
-        } else if (scrollPhase == kIOHIDEventPhaseEnded) { /// Hack to prevent momentum scroll. Should finds a better solution
-            [GestureScrollSimulatorOld postGestureScrollEventWithDeltaX:dx deltaY:dy phase:kIOHIDEventPhaseChanged isGestureDelta:NO];
-            
-            /// Stop momentum scroll approach 1
-//            dx = [SharedUtility signOf:dx]; /// This will fail to stop the momenum scroll properly if dx and dy are 0
-//            dy = [SharedUtility signOf:dy];
-//            [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:kIOHIDEventPhaseChanged isGestureDelta:NO];
-            
-            /// Send end event
-            [GestureScrollSimulatorOld postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded isGestureDelta:NO];
-            
-            /// Stop momentum scroll approach 2
+        [GestureScrollSimulatorOld postGestureScrollEventWithDeltaX:dx deltaY:dy phase:scrollPhase];
+        
+        if (scrollPhase == kIOHIDEventPhaseEnded) {
+            /// Force stop momentum scroll
             ///  Sending an event with scrollPhase kIOHIDEventPhaseUndefined and momentumPhase kCGMomentumScrollPhaseEnd should stop momentum phase immediately according to postGestureScrollEventWithGestureVector: documentation.
             
-            /// ...
-            
         }
+        
     }
 }
 

@@ -15,6 +15,7 @@
 #import "SharedUtility.h"
 #import "VectorSubPixelator.h"
 #import "Utility_Transformation.h"
+#import "Mac_Mouse_Fix_Helper-Swift.h"
 
 /**
  This generates fliud scroll events containing gesture data similar to the Apple Trackpad or Apple Magic Mouse driver.
@@ -29,20 +30,24 @@ Also see:
 
 @implementation GestureScrollSimulator
 
+#pragma mark - Vars and init
+
 static Vector _lastInputGestureVector = { .x = 0, .y = 0 };
 
 static VectorSubPixelator *_gesturePixelator;
 static VectorSubPixelator *_scrollPointPixelator;
-static VectorSubPixelator *_scrollPixelator;
+static VectorSubPixelator *_scrollLinePixelator;
 
 + (void)initialize
 {
     if (self == [GestureScrollSimulator class]) {
         _gesturePixelator = [VectorSubPixelator roundPixelator];
         _scrollPointPixelator = [VectorSubPixelator roundPixelator];
-        _scrollPixelator = [VectorSubPixelator roundPixelator];
+        _scrollLinePixelator = [VectorSubPixelator roundPixelator];
     }
 }
+
+#pragma mark - Main interface
 
 /**
  Post scroll events that behave as if they are coming from an Apple Trackpad or Magic Mouse.
@@ -59,88 +64,284 @@ static VectorSubPixelator *_scrollPixelator;
 */
 + (void)postGestureScrollEventWithDeltaX:(double)dx deltaY:(double)dy phase:(IOHIDEventPhaseBits)phase {
     
-    static CGPoint origin;
-    static BOOL activelyScrolling;
-    static BOOL momentumScrolling;
-    
-    if (!activelyScrolling) {
-        /// Not using phase == kIOHIDEventPhaseBegan to determine when to get the origin, beca
-        origin = Utility_Transformation.CGMouseLocationWithoutEvent;
-        activelyScrolling = YES;
+    if (phase != kIOHIDEventPhaseEnded && dx == 0.0 && dy == 0.0) {
+        /// Maybe kIOHIDEventPhaseBegan events from the Trackpad driver can also contain zero-deltas? I don't think so by I'm not sure.
+        /// Real trackpad driver seems to only produce zero deltas when phase is kIOHIDEventPhaseEnded.
+        ///     - (And probably also if phase is kIOHIDEventPhaseCancelled or kIOHIDEventPhaseMayBegin, but we're not using those here - IIRC those are only produced when the user touches the trackpad but doesn't begin scrolling before lifting fingers off again)
+        /// The main practical reason we're emulating this behavour of the trackpad driver because of this: There are certain apps (or views?) which create their own momentum scrolls and ignore the momentum scroll deltas contained in the momentum scroll events we send. E.g. Xcode or the Finder collection view. I think that these views ignore all zero-delta events when they calculate what the initial momentum scroll speed should be. (It's been months since I discovered that though, so maybe I'm rememvering wrong) We want to match these apps momentum scroll algortihm closely to provide a consisten experience. So we're not sending the zero-delta events either and ignoring them for the purposes of our momentum scroll calculation and everything else.
+        
+        DDLogWarn(@"Trying to post gesture scroll with zero deltas while phase is not kIOHIDEventPhaseEnded - ignoring");
+        
+        return;
     }
     
+    static CGPoint origin;
+        
     if (phase == kIOHIDEventPhaseBegan) {
+        
+        /// Get location for sending events
+        
         origin = Utility_Transformation.CGMouseLocationWithoutEvent;
         origin.x += dx; /// Not sure if necessary
         origin.y += dy; /// Not sure if necessary
+        
+        /// Reset subpixelators
+        
+        [_scrollLinePixelator reset];
+        [_scrollPointPixelator reset];
+        [_gesturePixelator reset];
+        
     }
     
-    if (phase != kIOHIDEventPhaseEnded) {
+    if (phase == kIOHIDEventPhaseBegan || phase == kIOHIDEventPhaseChanged) {
         
         _breakMomentumScrollFlag = true;
         
-        if (phase == kIOHIDEventPhaseChanged && dx == 0.0 && dy == 0.0) {
-            return;
-        }
+        /// Get vectors
         
-        Vector vecGesture;
-        Vector vecScrollPoint;
-        Vector vecScroll;
-        if (isGestureDelta) {
-            vecGesture = (Vector){ .x = dx, .y = dy };
-            vecScrollPoint = scrollPointVectorWithGestureVector(vecGesture);
-            vecScroll = scrollVectorWithScrollPointVector(vecScrollPoint);
-        } else { // Is scroll point delta
-            vecScrollPoint = (Vector){ .x = dx, .y = dy };
-            vecGesture = gestureVectorFromScrollPointVector(vecScrollPoint);
-            vecScroll = scrollVectorWithScrollPointVector(vecScrollPoint);
-        }
+        Vector vecScrollPoint = (Vector){ .x = dx, .y = dy };
+        Vector vecScrollLine = scrollLineVectorWithScrollPointVector(vecScrollPoint);
+        Vector vecGesture = gestureVectorFromScrollPointVector(vecScrollPoint);
+
+        /// Subpixelate
         
-        vecGesture = [_gesturePixelator intVectorWithDoubleVector:vecGesture];
         vecScrollPoint = [_scrollPointPixelator intVectorWithDoubleVector:vecScrollPoint];
-        vecScroll = [_scrollPixelator intVectorWithDoubleVector:vecScroll];
+        vecScrollLine = [_scrollLinePixelator intVectorWithDoubleVector:vecScrollLine];
+        vecGesture = [_gesturePixelator intVectorWithDoubleVector:vecGesture];
         
-        if (phase == kIOHIDEventPhaseBegan || phase == kIOHIDEventPhaseChanged) {
-            _lastInputGestureVector = vecGesture;
-        }
+        /// Store last gesture vector
+        
+        _lastInputGestureVector = vecGesture;
+        
+        /// Post events
+        
         [self postGestureScrollEventWithGestureVector:vecGesture
-                                         scrollVector:vecScroll
+                                         scrollVector:vecScrollLine
                                     scrollVectorPoint:vecScrollPoint
                                                 phase:phase
                                         momentumPhase:kCGMomentumScrollPhaseNone
-         locaction:origin];
-    } else {
-        if (isZeroVector(_lastInputGestureVector)) { // This will never be called, because zero vectors will never be recorded into _lastInputGestureVector. Read the doc above to learn why. TODO: remove.
-            [self postGestureScrollEventWithGestureVector:(Vector){}
-                                             scrollVector:(Vector){}
-                                        scrollVectorPoint:(Vector){}
-                                                    phase:kIOHIDEventPhaseEnded
-                                            momentumPhase:0
-                                                 locaction:origin];
-            
-            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
-                //startPostingMomentumScrollEventsWithInitialGestureVector(_lastInputGestureVector, 0.016, 1.0, 4, 1.0);
-                double dragCoeff = 8; // Easier to scroll far, kinda nice on a mouse, end still pretty realistic // Got these values by just seeing what feels good
-                double dragExp = 0.8;
-                startPostingMomentumScrollEventsWithInitialGestureVector(_lastInputGestureVector, 0.016, 1.0, dragCoeff, dragExp);
-            });
-        } else {
-            [self postGestureScrollEventWithGestureVector:(Vector){}
-                                             scrollVector:(Vector){}
-                                        scrollVectorPoint:(Vector){}
-                                                    phase:kIOHIDEventPhaseEnded
-                                            momentumPhase:0
-                                                locaction:origin];
-            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
-                //startPostingMomentumScrollEventsWithInitialGestureVector(_lastInputGestureVector, 0.016, 1.0, 4, 1.0);
-                double dragCoeff = 8; // Easier to scroll far, kinda nice on a mouse, end still pretty realistic // Got these values by just seeing what feels good
-                double dragExp = 0.8;
-                startPostingMomentumScrollEventsWithInitialGestureVector(_lastInputGestureVector, 0.016, 1.0, dragCoeff, dragExp);
-            });
-        }
+                                             location:origin];
         
+    } else if (phase == kIOHIDEventPhaseEnded) {
+        
+        /// Post `ended` event
+        
+        [self postGestureScrollEventWithGestureVector:(Vector){}
+                                         scrollVector:(Vector){}
+                                    scrollVectorPoint:(Vector){}
+                                                phase:kIOHIDEventPhaseEnded
+                                        momentumPhase:0
+                                             location:origin];
+        
+        /// Get momentum scroll params
+        
+        Vector exitVelocity = _lastInputGestureVector;
+        double stopSpeed = 1.0;
+        double dragCoeff = 8; // Easier to scroll far, kinda nice on a mouse, end still pretty realistic // Got these values by just seeing what feels good
+        double dragExp = 0.8;
+        CGPoint location = origin;
+        
+        /// Start momentum scroll
+        
+        startMomentumScroll(exitVelocity, stopSpeed, dragCoeff, dragExp, location);
+        
+    } else {
+        assert(false);
     }
 }
+
+#pragma mark - Momentum scroll
+
+static bool _momentumScrollIsActive; // Should only be manipulated by `startPostingMomentumScrollEventsWithInitialGestureVector()`
+static bool _breakMomentumScrollFlag; // Should only be manipulated by `breakMomentumScroll` TODO: Remove this and use Animator.stop() instead
+
++ (void)breakMomentumScroll {
+    _breakMomentumScrollFlag = true;
+}
+static void startMomentumScroll(Vector exitVelocity, double stopSpeed, double dragCoefficient, double dragExponent, CGPoint location) {
+    
+    /// Declare constants
+    
+    Vector zeroVector = (Vector){.x = 0.0, .y = 0.0};
+    
+    /// Get animator
+    
+    static Animator *animator;
+    if (animator == nil) {
+        animator = [[Animator alloc] init];
+    }
+    
+    /// Reset subpixelators
+    
+    [_scrollPointPixelator reset];
+    [_scrollLinePixelator reset];
+    /// Don't need to reset _gesturePixelator, because we don't send gesture events during momentum scroll
+    
+    /// Get animator params
+    
+    /// Get initial velocity
+    Vector initialVelocity = initalMomentumScrollVelocityWithExitVelocity(exitVelocity);
+    
+    /// Get initial speed
+    double initialSpeed = magnitudeOfVector(initialVelocity);
+    
+    /// Get direction
+    Vector direction = unitVector(initialVelocity);
+    
+    /// Get drag animation curve
+    DragCurve *animationCurve = [[DragCurve alloc] initWithCoefficient:dragCoefficient exponent:dragExponent initialSpeed:initialSpeed stopSpeed:stopSpeed];
+    
+    /// Get duration and distance for animation
+    double duration = animationCurve.timeInterval.length;
+    Interval *distanceInterval = animationCurve.distanceInterval;
+    
+    /// Start animator
+    
+    [animator startWithDuration:duration valueInterval:distanceInterval animationCurve:animationCurve
+                       callback:^(double pointDelta, double timeDelta, MFAnimationPhase animationPhase) {
+        
+        /// Get delta vectors
+        Vector directedPointDelta = scaledVector(direction, pointDelta);
+        Vector directedLineDelta = scaledVector(directedPointDelta, 0.1);
+        
+        /// Subpixelate
+        Vector directedPointDeltaInt = [_scrollPointPixelator intVectorWithDoubleVector:directedPointDelta];
+        Vector directedLineDeltaInt = [_scrollLinePixelator intVectorWithDoubleVector:directedLineDelta];
+        
+        /// Get phase
+        CGMomentumScrollPhase momentumPhase;
+        
+        if (animationPhase == kMFAnimationPhaseStart) {
+            momentumPhase = kCGMomentumScrollPhaseBegin;
+        } else if (animationPhase == kMFAnimationPhaseContinue) {
+            momentumPhase = kCGMomentumScrollPhaseContinue;
+        } else if (animationPhase == kMFAnimationPhaseEnd
+                   || animationPhase == kMFAnimationPhaseStartingEnd) {
+            /// Not sure how to deal with kMFAnimationPhaseStartingEnd. Maybe we should set momentumPhase to kCGMomentumScrollPhaseBegin instead?
+            
+            momentumPhase = kCGMomentumScrollPhaseEnd;
+            
+        } else { /// We don't expect momentumPhase == kMFAnimationPhaseRunningStart
+            assert(false);
+        }
+        
+        /// Post event
+        [GestureScrollSimulator postGestureScrollEventWithGestureVector:zeroVector
+                                                           scrollVector:directedPointDeltaInt
+                                                      scrollVectorPoint:directedLineDeltaInt
+                                                                  phase:kIOHIDEventPhaseUndefined
+                                                          momentumPhase:momentumPhase
+                                                              location:location];
+    }];
+    
+    
+    /// ********************************
+    
+//    return;
+//
+//    /// Init flags and constants
+//
+//    _breakMomentumScrollFlag = false;
+//    _momentumScrollIsActive = true;
+//
+//    Vector emptyVec = (const Vector){};
+//
+//    /// Get initial state for the momentum scrolling
+//
+//    Vector velPt = initalMomentumScrollVelocityWithExitVelocity(exitVelocity);
+//    Vector vecPt = velPt;
+//    Vector vec = scrollLineVectorWithScrollPointVector(vecPt);
+//    double magPt = magnitudeOfVector(vecPt);
+//
+//    CGMomentumScrollPhase ph = kCGMomentumScrollPhaseBegin;
+//
+//    /// Start posting scroll events
+//
+//    CFTimeInterval prevTs = CACurrentMediaTime();
+//
+//    while (magPt > thresh) {
+//        if (_breakMomentumScrollFlag == true) {
+//            DDLogInfo(@"BREAKING MOMENTUM SCROLL");
+//            break;
+//        }
+//        CGPoint loc = Utility_Transformation.CGMouseLocationWithoutEvent;
+//        [GestureScrollSimulator postGestureScrollEventWithGestureVector:emptyVec scrollVector:vec scrollVectorPoint:vecPt phase:kIOHIDEventPhaseUndefined momentumPhase:ph location:loc];
+//
+//        [NSThread sleepForTimeInterval:tick]; // Not sure if it's good to pause the whole thread here, using a display link or ns timer or sth is probably much faster. But this seems to work fine so whatevs.
+//        CFTimeInterval ts = CACurrentMediaTime();
+//        CFTimeInterval timeDelta = ts - prevTs;
+//        prevTs = ts;
+//
+//        vecPt = momentumScrollPointVectorWithPreviousVector(vecPt, dragCoeff, dragExp, timeDelta);
+//        vec = scrollLineVectorWithScrollPointVector(vecPt);
+//        magPt = magnitudeOfVector(vecPt);
+//        ph = kCGMomentumScrollPhaseContinue;
+//
+//    }
+//
+//    /// Post end event
+//
+//    CGPoint loc = Utility_Transformation.CGMouseLocationWithoutEvent;
+//    [GestureScrollSimulator postGestureScrollEventWithGestureVector:emptyVec
+//                                                       scrollVector:emptyVec
+//                                                  scrollVectorPoint:emptyVec
+//                                                              phase:kIOHIDEventPhaseUndefined
+//                                                      momentumPhase:kCGMomentumScrollPhaseEnd
+//                                                          location:loc];
+//
+//    /// Set flag
+//
+//    _momentumScrollIsActive = false;
+    
+}
+
+#pragma mark - Vector math functions
+
+//static Vector momentumScrollPointVectorWithPreviousVector(Vector velocity, double dragCoeff, double dragExp, double timeDelta) {
+//
+//    double a = magnitudeOfVector(velocity);
+//    double b = pow(a, dragExp);
+//    double dragMagnitude = b * dragCoeff;
+//
+//    Vector unitVec = unitVector(velocity);
+//    Vector dragForce = scaledVector(unitVec, dragMagnitude);
+//    dragForce = scaledVector(dragForce, -1);
+//
+//    Vector velocityDelta = scaledVector(dragForce, timeDelta);
+//
+//    Vector newVelocity = addedVectors(velocity, velocityDelta);
+//
+//    double dp = dotProduct(velocity, newVelocity);
+//    if (dp < 0) { // Vector has changed direction (crossed zero)
+//        newVelocity = (const Vector){}; // Set to zero
+//    }
+//    return newVelocity;
+//}
+
+static Vector scrollLineVectorWithScrollPointVector(Vector vec) {
+    
+    VectorScalerFunction f = ^double(double x) {
+        return x / 10.0; /// See CGEventSource.pixelsPerLine - it's 10 by default
+    };
+    return scaledVectorWithFunction(vec, f);
+}
+static Vector gestureVectorFromScrollPointVector(Vector vec) {
+    
+    VectorScalerFunction f = ^double(double x) {
+        return 2 * x;
+    };
+    return scaledVectorWithFunction(vec, f);
+}
+
+static Vector initalMomentumScrollVelocityWithExitVelocity(Vector exitVelocity) {
+    
+    return scaledVectorWithFunction(exitVelocity, ^double(double x) {
+        return pow(x, 1.08);
+    });
+}
+
+#pragma mark - Actually Synthesize and post events
+
 
 /// Post scroll events that behave as if they are coming from an Apple Trackpad or Magic Mouse.
 /// This allows for swiping between pages in apps like Safari or Preview, and it also makes overscroll and inertial scrolling work.
@@ -152,70 +353,75 @@ static VectorSubPixelator *_scrollPixelator;
 ///       - If you stop sending events at this point, scrolling will continue in certain apps like Xcode, but get slower with time until it stops. The initial speed and direction of this "automatic momentum phase" seems to be based on the last kIOHIDEventPhaseChanged event which contained at least one non-zero delta.
 ///       - To stop this from happening, either give the last kIOHIDEventPhaseChanged event very small deltas, or send an event with phase kIOHIDEventPhaseUndefined and momentumPhase kCGMomentumScrollPhaseEnd right after this one.
 ///     6. kIOHIDEventPhaseUndefined - Use this phase with non-0 momentumPhase values. (0 being kCGMomentumScrollPhaseNone)
+///     7. What about kIOHIDEventPhaseCanceled? It seems to occur when you touch the trackpad (producing MayBegin events) and then lift your fingers off before scrolling. I guess the deltas are always gonna be 0 on that, too, but I'm not sure.
 
 + (void)postGestureScrollEventWithGestureVector:(Vector)vecGesture
                                    scrollVector:(Vector)vecScroll
                               scrollVectorPoint:(Vector)vecScrollPoint
                                           phase:(IOHIDEventPhaseBits)phase
                                   momentumPhase:(CGMomentumScrollPhase)momentumPhase
-                                      locaction:(CGPoint)loc {
+                                      location:(CGPoint)loc {
     
 //    DDLogDebug(@"Posting: gesture: (%f,%f) --- scroll: (%f, %f) --- scrollPt: (%f, %f) --- phases: %d, %d\n",
 //          vecGesture.x, vecGesture.y, vecScroll.x, vecScroll.y, vecScrollPoint.x, vecScrollPoint.y, phase, momentumPhase);
     
-    //
-    //  Get stuff we need for both the type 22 and the type 29 event
-    //
+    assert((phase == kIOHIDEventPhaseUndefined || momentumPhase == kCGMomentumScrollPhaseNone)); /// At least one of the phases has to be 0
     
-    CGPoint eventLocation = [Utility_Helper getCurrentPointerLocation_flipped]; /// This always resolves to the same location during a drag for some reason. But that's great, because it makes scrolling still work, even when the pointer leaves the window where you started scrolling!
+    ///
+    ///  Get stuff we need for both the type 22 and the type 29 event
+    ///
     
-    //
-    // Create type 22 event
-    //
+    CGPoint eventLocation = loc;
+    
+    ///
+    /// Create type 22 event
+    ///     (scroll event)
+    ///
     
     CGEventRef e22 = CGEventCreate(NULL);
     
-    // Set static fields
+    /// Set static fields
     
     CGEventSetDoubleValueField(e22, 55, 22); // 22 -> NSEventTypeScrollWheel // Setting field 55 is the same as using CGEventSetType(), I'm not sure if that has weird side-effects though, so I'd rather do it this way.
     CGEventSetDoubleValueField(e22, 88, 1); // 88 -> kCGScrollWheelEventIsContinuous
-    CGEventSetDoubleValueField(e22, 137, 1); /// Maybe NSEvent.directionInvertedFromDevice
+    CGEventSetDoubleValueField(e22, 137, 1); /// Maybe this is NSEvent.directionInvertedFromDevice
     
-    // Set dynamic fields
+    /// Set dynamic fields
     
-    // Scroll deltas
-    // Not sure the rounding / flooring is necessary
-    CGEventSetDoubleValueField(e22, 11, floor(vecScroll.y)); // 11 -> kCGScrollWheelEventDeltaAxis1
-    CGEventSetDoubleValueField(e22, 96, round(vecScrollPoint.y)); // 96 -> kCGScrollWheelEventPointDeltaAxis1
+    /// Scroll deltas
+    /// We used to round here, but rounding is not necessary, because we make sure that the incoming vectors only contain integers
+    ///      Even if we didn't, I'm not sure rounding would make a difference
+    /// Fixed point deltas are set automatically by setting these deltas IIRC.
     
-    CGEventSetDoubleValueField(e22, 12, floor(vecScroll.x)); // 12 -> kCGScrollWheelEventDeltaAxis2
-    CGEventSetDoubleValueField(e22, 97, round(vecScrollPoint.x)); // 97 -> kCGScrollWheelEventPointDeltaAxis2
+    CGEventSetDoubleValueField(e22, 11, vecScroll.y); // 11 -> kCGScrollWheelEventDeltaAxis1
+    CGEventSetDoubleValueField(e22, 96, vecScrollPoint.y); // 96 -> kCGScrollWheelEventPointDeltaAxis1
     
-    // Phase
+    CGEventSetDoubleValueField(e22, 12, vecScroll.x); // 12 -> kCGScrollWheelEventDeltaAxis2
+    CGEventSetDoubleValueField(e22, 97, vecScrollPoint.x); // 97 -> kCGScrollWheelEventPointDeltaAxis2
+    
+    /// Phase
     
     CGEventSetDoubleValueField(e22, 99, phase);
     CGEventSetDoubleValueField(e22, 123, momentumPhase);
+
     
-    // Testing
-    
-//    CGPoint flippedNSLoc = [Utility_Helper getCurrentPointerLocation_flipped];
-//    CGPoint CGLoc = Utility_Transformation.CG
-//    DDLogInfo(@"\nFLIPPED NS: %f, %f \nCG: %f, %f", flippedNSLoc.x, flippedNSLoc.y, CGLoc.x, CGLoc.y);
-    
-    if (momentumPhase == 0) {
+    if (phase != kIOHIDEventPhaseUndefined) {
+//    if (momentumPhase == kCGMomentumScrollPhaseNone) {
+            ///  ^ Not sure why we used to check for this instead of phase != kIOHIDEventPhaseUndefined. Remove this if the change didn't break anything.
         
-        //
-        // Create type 29 subtype 6 event
-        //
+        ///
+        /// Create type 29 subtype 6 event
+        ///     (gesture event)
+        ///
         
         CGEventRef e29 = CGEventCreate(NULL);
         
-        // Set static fields
+        /// Set static fields
         
         CGEventSetDoubleValueField(e29, 55, 29); // 29 -> NSEventTypeGesture // Setting field 55 is the same as using CGEventSetType()
         CGEventSetDoubleValueField(e29, 110, 6); // 110 -> subtype // 6 -> kIOHIDEventTypeScroll
         
-        // Set dynamic fields
+        /// Set dynamic fields
         
         double dxGesture = (double)vecGesture.x;
         double dyGesture = (double)vecGesture.y;
@@ -230,7 +436,7 @@ static VectorSubPixelator *_scrollPixelator;
         
         CGEventSetIntegerValueField(e29, 132, phase);
         
-        // Post t29s6 events
+        /// Post t29s6 events
         CGEventSetLocation(e29, eventLocation);
         CGEventPost(kCGSessionEventTap, e29);
 
@@ -246,111 +452,5 @@ static VectorSubPixelator *_scrollPixelator;
     CFRelease(e22);
     
 }
-
-static bool _momentumScrollIsActive; // Should only be manipulated by `startPostingMomentumScrollEventsWithInitialGestureVector()`
-static bool _breakMomentumScrollFlag; // Should only be manipulated by `breakMomentumScroll`
-
-+ (void)breakMomentumScroll {
-    _breakMomentumScrollFlag = true;
-}
-static void startPostingMomentumScrollEventsWithInitialGestureVector(Vector initGestureVec, CFTimeInterval tick, int thresh, double dragCoeff, double dragExp) {
-    
-    _breakMomentumScrollFlag = false;
-    _momentumScrollIsActive = true;
-    
-    Vector emptyVec = (const Vector){};
-    
-    Vector vecPt = initalMomentumScrollPointVectorWithGestureVector(initGestureVec);
-    Vector vec = scrollVectorWithScrollPointVector(vecPt);
-    double magPt = magnitudeOfVector(vecPt);
-    CGMomentumScrollPhase ph = kCGMomentumScrollPhaseBegin;
-    
-    CFTimeInterval prevTs = CACurrentMediaTime();
-    while (magPt > thresh) {
-        if (_breakMomentumScrollFlag == true) {
-            DDLogInfo(@"BREAKING MOMENTUM SCROLL");
-            break;
-        }
-        CGPoint loc = Utility_Transformation.CGMouseLocationWithoutEvent;
-        [GestureScrollSimulator postGestureScrollEventWithGestureVector:emptyVec scrollVector:vec scrollVectorPoint:vecPt phase:kIOHIDEventPhaseUndefined momentumPhase:ph locaction:loc];
-        
-        [NSThread sleepForTimeInterval:tick]; // Not sure if it's good to pause the whole thread here, using a display link or ns timer or sth is probably much faster. But this seems to work fine so whatevs.
-        CFTimeInterval ts = CACurrentMediaTime();
-        CFTimeInterval timeDelta = ts - prevTs;
-        prevTs = ts;
-        
-        vecPt = momentumScrollPointVectorWithPreviousVector(vecPt, dragCoeff, dragExp, timeDelta);
-        vec = scrollVectorWithScrollPointVector(vecPt);
-        magPt = magnitudeOfVector(vecPt);
-        ph = kCGMomentumScrollPhaseContinue;
-        
-    }
-    CGPoint loc = Utility_Transformation.CGMouseLocationWithoutEvent;
-    [GestureScrollSimulator postGestureScrollEventWithGestureVector:emptyVec
-                                                       scrollVector:emptyVec
-                                                  scrollVectorPoint:emptyVec
-                                                              phase:kIOHIDEventPhaseUndefined
-                                                      momentumPhase:kCGMomentumScrollPhaseEnd
-                                                          locaction:loc];
-    _momentumScrollIsActive = false;
-    
-}
-
-static Vector momentumScrollPointVectorWithPreviousVector(Vector velocity, double dragCoeff, double dragExp, double timeDelta) {
-    
-    double a = magnitudeOfVector(velocity);
-    double b = pow(a, dragExp);
-    double dragMagnitude = b * dragCoeff;
-    
-    Vector unitVec = unitVector(velocity);
-    Vector dragForce = scaledVector(unitVec, dragMagnitude);
-    dragForce = scaledVector(dragForce, -1);
-    
-    Vector velocityDelta = scaledVector(dragForce, timeDelta);
-    
-    Vector newVelocity = addedVectors(velocity, velocityDelta);
-    
-    double dp = dotProduct(velocity, newVelocity);
-    if (dp < 0) { // Vector has changed direction (crossed zero)
-        newVelocity = (const Vector){}; // Set to zero
-    }
-    return newVelocity;
-}
-
-static Vector scrollVectorWithScrollPointVector(Vector vec) {
-    VectorScalerFunction f = ^double(double x) {
-        return 0.1 * (x-1); // Approximation from looking at real trackpad events
-    };
-    return scaledVectorWithFunction(vec, f);
-}
-static Vector scrollPointVectorWithGestureVector(Vector vec) {
-    VectorScalerFunction f = ^double(double x) {
-        //    double magOut = 0.01 * pow(magIn, 2) + 0.3 * magIn; // Got these values through curve fitting
-        //    double magOut = 0.05 * pow(magIn, 2) + 0.8 * magIn; // These feel better for mouse
-        return 0.08 * pow(x, 2) + 0.8 * x; // Even better feel - precise and fast at the same time
-    };
-    return scaledVectorWithFunction(vec, f);
-}
-static Vector gestureVectorFromScrollPointVector(Vector vec) {
-    VectorScalerFunction f = ^double(double x) {
-//        x = 0.54 * x; // Tried to make input pixels to equal animation pixels, but the scaling seems to always be different and be dependent on page size. Might as well just leave it like it is because it feels decent enough
-        return x;
-    };
-    return scaledVectorWithFunction(vec, f);
-}
-
-static Vector initalMomentumScrollPointVectorWithGestureVector(Vector vec) {
-    Vector vecScale = scaledVector(vec, 2.2); // This is probably not very accurate to real events, as I didn't test this at all.
-    return scrollPointVectorWithGestureVector(vecScale);
-}
-
-// v Original delta conversion formulas which are the basis for the vector conversion functions above. These are relatively accurated to real events.
-
-//static int scrollDeltaWithGestureDelta(int d) {
-//    return floor(0.1 * (d-1));
-//}
-//static int scrollPointDeltaWithGestureDelta(int d) {
-//    return round(0.01 * pow(d,2) + 0.3 * d);
-//}
 
 @end
