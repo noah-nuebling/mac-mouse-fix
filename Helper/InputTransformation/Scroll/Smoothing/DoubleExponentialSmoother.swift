@@ -23,18 +23,26 @@ import Cocoa
     var usageCounter: Int = 0
         
     /** init
-    - Parameters:
-      - a: Weight for input value aka "data smoothing factor"
+     - Parameters:
+        - a: Weight for input value aka "data smoothing factor"
             - If you set this to 1 there is no smoothing, if you set it to 0 the output never changes
-      - y: Weight for trend aka "trend smoothing factor"
-        - If you set this to 1 the trend isn't
+        - y: Weight for trend aka "trend smoothing factor"
+            - If you set this to 1 the trend isn't
+        - initialValues
+            - From my understanding, the algorithm needs 2 inputs before it starts actually smoothing the values.
+            - The first input establishes the initial value, the first two together establish the initial trend.
+            - The first and second inputs will just be returned without alteration without any smoothing
+            - So to avoid misuse of the algorithm we're requiring the initial values in the initializer
      */
-    @objc init(a: Double, y: Double) {
+    @objc init(a: Double, y: Double, initialValue1: Double, initialValue2: Double) {
         
         self.a = a
         self.y = y
         
         super.init()
+        
+        _ = smooth(value: initialValue1)
+        _ = smooth(value: initialValue2)
         
     }
     
@@ -44,11 +52,6 @@ import Cocoa
     }
     
     @objc func smooth(value: Double) -> Double {
-        /**
-         From my understanding, this needs 2 inputs before it starts actually smoothing the values.
-         - The first input establishes the initial value, the second input to establishes the initial trend.
-         - The first and second inputs will just be returned without alteration.
-         */
         
         let Y = value /// Input value
 
