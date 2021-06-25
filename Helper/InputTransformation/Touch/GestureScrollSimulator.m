@@ -53,13 +53,14 @@ static VectorSubPixelator *_scrollLinePixelator;
  Post scroll events that behave as if they are coming from an Apple Trackpad or Magic Mouse.
  This function is a wrapper for `postGestureScrollEventWithGestureVector:scrollVector:scrollVectorPoint:phase:momentumPhase:`
 
- Scrolling will continue automatically but get slower over time after the function has been called with phase kIOHIDEventPhaseEnded.
+ Scrolling will continue automatically but get slower over time after the function has been called with phase kIOHIDEventPhaseEnded. (Momentum scroll)
  
     - The initial speed of this "momentum phase" is based on the delta values of last time that this function is called with at least one non-zero delta and with phase kIOHIDEventPhaseBegan or kIOHIDEventPhaseChanged before it is called with phase kIOHIDEventPhaseEnded.
  
     - The reason behind this is that this is how real trackpad input seems to work. Some apps like Xcode will automatically keep scrolling if no events are sent after the event with phase kIOHIDEventPhaseEnded. And others, like Safari will not. This function wil automatically keep sending events after it has been called with kIOHIDEventPhaseEnded in order to make all apps react as consistently as possible.
  
  \note In order to minimize momentum scrolling,  send an event with a very small but non-zero scroll delta before calling the function with phase kIOHIDEventPhaseEnded.
+    \todo Implement a better way to stop momentum scrolling. Like a separate function
  \note For more info on which delta values and which phases to use, see the documentation for `postGestureScrollEventWithGestureDeltaX:deltaY:phase:momentumPhase:scrollDeltaConversionFunction:scrollPointDeltaConversionFunction:`. In contrast to the aforementioned function, you shouldn't need to call this function with kIOHIDEventPhaseUndefined.
 */
 + (void)postGestureScrollEventWithDeltaX:(double)dx deltaY:(double)dy phase:(IOHIDEventPhaseBits)phase {
@@ -426,10 +427,10 @@ static Vector initalMomentumScrollVelocityWithExitVelocity(Vector exitVelocity) 
         double dxGesture = (double)vecGesture.x;
         double dyGesture = (double)vecGesture.y;
         if (dxGesture == 0) {
-            dxGesture = -0.0f; // The original events only contain -0 but this probs doesn't make a difference.
+            dxGesture = -0.0f; // The original events only contain -0 but this probably doesn't make a difference.
         }
         if (dyGesture == 0) {
-            dyGesture = -0.0f; // The original events only contain -0 but this probs doesn't make a difference.
+            dyGesture = -0.0f; // The original events only contain -0 but this probably doesn't make a difference.
         }
         CGEventSetDoubleValueField(e29, 116, dxGesture);
         CGEventSetDoubleValueField(e29, 119, dyGesture);
@@ -448,7 +449,7 @@ static Vector initalMomentumScrollVelocityWithExitVelocity(Vector exitVelocity) 
     ///     Wow, posting this after the t29s6 events removed the little stutter when swiping between pages, nice!
     
     CGEventSetLocation(e22, eventLocation);
-    CGEventPost(kCGSessionEventTap, e22); // Needs to be kCGHIDEventTap instead of kCGSessionEventTap to work with Swish, but it will make the events feed back into our scroll event tap. That's not too bad though, because we ignore continuous events anyways.
+    CGEventPost(kCGSessionEventTap, e22); // Needs to be kCGHIDEventTap instead of kCGSessionEventTap to work with Swish, but that will make the events feed back into our scroll event tap. That's not tooo bad, because we ignore continuous events anyways, still bad because CPU use and stuff.
     CFRelease(e22);
     
 }
