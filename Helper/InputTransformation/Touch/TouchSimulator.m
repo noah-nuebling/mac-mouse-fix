@@ -28,6 +28,10 @@
 /// Credits:
 /// I originally found the code for the `postNavigationSwipeWithDirection:` function in Alexei Baboulevitch's SensibleSideButtons project under the name `SBFFakeSwipe:`. SensibleSideButtons was itself heavily based on natevw's macOS touch reverse engineering work ("CalfTrail Touch") for his app Sesamouse from wayy back in the day. Nate's work was the basis for all all of this. Thanks Nate! :)
 
+/// Notes:
+/// Between TouchSimulator.m and GestureScrollSimulator, we have all interesting touch input covered. Except a Force Touch, but we have the kMFSHLookUp symbolic hotkey which works almost as well.
+
+
 #import "TouchSimulator.h"
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
@@ -158,15 +162,17 @@ double _dockSwipeLastDelta = 0.0;
     
     CGEventSetDoubleValueField(e30, 41, valFor41); // This mighttt help not sure what it do
     
-    double weirdTypeOrSum;
+    double weirdTypeOrSum = -1;
     if (type == kMFDockSwipeTypeHorizontal) {
         weirdTypeOrSum = 1.401298464324817e-45;
     } else if (type == kMFDockSwipeTypeVertical) {
         weirdTypeOrSum = 2.802596928649634e-45;
     } else if (type == kMFDockSwipeTypePinch) {
         weirdTypeOrSum = 4.203895392974451e-45;
+    } else {
+        assert(false);
     }
-    // ^ These values are probably an encoded version of the values in MFDockSwipeType. We can probs somehow convert that and put it in here instead of assigning these weird constants
+    // ^ These values are probably an encoded version of the values in MFDockSwipeType. We could probably somehow convert that and put it in here instead of assigning these weird constants
     
     CGEventSetDoubleValueField(e30, 119, weirdTypeOrSum);
     CGEventSetDoubleValueField(e30, 139, weirdTypeOrSum);  // Probs not necessary

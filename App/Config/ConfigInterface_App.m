@@ -42,6 +42,7 @@ static NSMutableDictionary *_config;
 static NSURL *_defaultConfigURL; // default_config aka backup_config
 
 + (void)load {
+    /// TODO: Should probably make this an initialize function so that config is guaranteed to be initialized before it's accessed.
     
     // Get backup config url
     NSString *defaultConfigPathRelative = @"Contents/Resources/default_config.plist";
