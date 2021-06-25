@@ -35,7 +35,7 @@ static CGEventSourceRef _eventSource;
 
 static dispatch_queue_t _scrollQueue;
 
-static Animator *_animator;
+static IntegerAnimator *_animator;
 static SubPixelator *_subPixelator;
 
 static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this to Config or some sort of OverrideManager class
@@ -74,7 +74,7 @@ static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this
     }
     
     // Create animator
-    _animator = [[Animator alloc] init];
+    _animator = [[IntegerAnimator alloc] init];
     
     // Create subpixelator for scroll output
     _subPixelator = [SubPixelator roundPixelator];
@@ -269,7 +269,7 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
         
         /// Animation interval
         double pxLeftToScroll;
-        if (scrollAnalysisResult.scrollDirectionDidChange) {
+        if (scrollAnalysisResult.scrollDirectionDidChange || !_animator.isRunning) {
             pxLeftToScroll = 0;
         } else {
             pxLeftToScroll = _animator.animationValueLeft;
@@ -286,7 +286,7 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
         /// Start animation
         
         [_animator startWithDuration:animationDuration valueInterval:animationValueInterval animationCurve:animationCurve
-                            callback:^(double valueDelta, double timeDelta, MFAnimationPhase animationPhase) {
+                     integerCallback:^(NSInteger valueDelta, double timeDelta, MFAnimationPhase animationPhase) {
             /// This will be called each frame
             
             /// Debug
@@ -294,6 +294,11 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
 //            CFTimeInterval ts = CACurrentMediaTime();
 //            DDLogInfo(@"scrollSendInterval: %@, dT: %@, dPx: %@", @(ts - lastTs), @(timeDelta), @(valueDelta));
 //            lastTs = ts;
+            
+            /// Test if IntegerAnimator works properly
+            
+            assert(valueDelta != 0);
+            DDLogDebug(@"DELTA: %ld, PHASE: %d", (long)valueDelta, animationPhase);
             
             /// Get phase
             

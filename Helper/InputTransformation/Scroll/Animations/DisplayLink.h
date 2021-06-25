@@ -16,7 +16,8 @@ typedef void(^DisplayLinkCallback)(void);
 
 @interface DisplayLink : NSObject
 
-@property (copy) DisplayLinkCallback callback;
+@property (atomic, readwrite, copy) DisplayLinkCallback callback;
+/// ^ I think setting copy on this prevented some mean bug, but I forgot the details.
 
 + (instancetype)displayLink;
 - (void)startWithCallback:(DisplayLinkCallback)callback;

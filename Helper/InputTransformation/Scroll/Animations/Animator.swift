@@ -12,12 +12,14 @@ import CocoaLumberjackSwift
 
 @objc class Animator : NSObject{
     
+    typealias UntypedAnimatorCallback = Any
     typealias AnimatorCallback = (_ animationValueDelta: Double, _ animationTimeDelta: Double, _ phase: MFAnimationPhase) -> ()
     
     // Vars - Init
     
     let displayLink: DisplayLink
-    var callback: AnimatorCallback?
+    @Atomic var callback: UntypedAnimatorCallback?
+    /// ^ This is constantly accessed by subclassHook() and constantly written to by startWithUntypedCallback(). Becuase Swift is stinky and not thread safe, the app will sometimes crash, when this property is read from and written to at the same time. So we're using @Atomic propery wrapper
     var animationCurve: RealFunction? /// This class assumes that `animationCurve` passes through `(0, 0)` and `(1, 1)`
     
     // Init
@@ -34,7 +36,7 @@ import CocoaLumberjackSwift
     var animationTimeInterval: Interval = Interval.unitInterval() /// Just initing so Swift doesn't complain. This value is unused
     var animationValueInterval: Interval = Interval.unitInterval()
     
-    var isRunning: Bool {
+    @objc var isRunning: Bool {
         self.displayLink.isRunning()
     }
     
@@ -64,18 +66,30 @@ import CocoaLumberjackSwift
     // Start
     
     @objc func start(duration: CFTimeInterval,
+                             valueInterval: Interval,
+                             animationCurve: RealFunction,
+                             callback: @escaping AnimatorCallback) {
+        
+        self.startWithUntypedCallback(duration: duration, valueInterval: valueInterval, animationCurve: animationCurve, callback: callback);
+    }
+    
+    @objc internal func startWithUntypedCallback(duration: CFTimeInterval,
                      valueInterval: Interval,
                      animationCurve: RealFunction,
-                     callback: @escaping AnimatorCallback) {
+                     callback: UntypedAnimatorCallback) {
+        /// Should only be called by this and subclasses
         /// The use of 'Interval' in CFTimeInterval is kind of confusing, since its also used to spedify points in time (It's just a `Double`), and also it has nothing to do with our `Interval` class, which is much closer to an Interval in the Mathematical sense.
         /// Will be restarted if it's already running. No need to call stop before calling this.
         /// It's kind of unnecessary to be passing this a value interval, because we only use the length of it. Since the AnimatorCallback only receives valueDeltas each frame and no absolute values,  the location of the value interval doesn't matter.
+        /// We need to make `callback` and UntypedAnimatorCallback instead of a normal AnimatorCallback, so we can change the type of `callback` to IntegerAnimatorCallback in the subclass IntegerAnimator. That's because Swift is stinky. UntypedAnimatorCallback is @escaping
         
-        self.callback = callback
+        self.callback = callback;
         self.animationCurve = animationCurve
         
         if (isRunning) {
             /// I think it should make for smoother animations, if we don't se the lastAnimationTime to now when the displayLink is already running, but that's an experiment. I'm not sure. Edit: Not sure if it makes a difference but it's fine
+            
+//            DDLogDebug("RUNNING START")
             
             animationPhase = kMFAnimationPhaseRunningStart;
             
@@ -85,6 +99,8 @@ import CocoaLumberjackSwift
             self.animationValueInterval = valueInterval
             
         } else {
+            
+//            DDLogDebug("NORMAL START")
             
             animationPhase = kMFAnimationPhaseStart;
             
@@ -117,7 +133,8 @@ import CocoaLumberjackSwift
     /// Stop
     
     @objc func stop() {
-        self.displayLink.stop()
+        displayLink.stop()
+        animationPhase = kMFAnimationPhaseNone
     }
     
     /// DisplayLink callback
@@ -126,6 +143,12 @@ import CocoaLumberjackSwift
     
     @objc func displayLinkCallback() {
         /// I'm usually a fan of commenting even obvious things, to structure the code and make it easier to parse, but this is overkill. I think the comments make it less readable
+        
+        /// Debug
+        
+//        DDLogDebug("DISP LINK INITIAL PHASE: \(self.animationPhase)")
+        
+        /// Guard nil
         
         guard let callback = self.callback else {
             fatalError("Invalid state - callback can't be nil during running animation")
@@ -144,9 +167,12 @@ import CocoaLumberjackSwift
             now = animationTimeInterval.end /// Set now back to a valid value so we don't scroll too far and our scale functions don't throw errors
         }
         
-        /// Get normalized time and value
+        /// Get normalized time
         
         let animationTimeUnit: Double = Math.scale(value: now, from: animationTimeInterval, to: Interval.unitInterval()) /// From 0 to 1
+        
+        /// Get normalized animation value from animation curve
+        
         let animationValueUnit: Double = animationCurve.evaluate(at: animationTimeUnit) /// From 0 to 1
         
         /// Get actual animation value
@@ -158,27 +184,38 @@ import CocoaLumberjackSwift
         let animationTimeDelta: CFTimeInterval = now - lastAnimationTime
         let animationValueDelta: Double = animationValue - lastAnimationValue
         
+        /// Update `last` time and value
+        
+        self.lastAnimationTime = now
+        self.lastAnimationValue = animationValue
+        
+        /// Subclass hook.
+        ///     IntegerAnimator overrides this to do its thing
+        
+        subclassHook(callback, animationValueDelta, animationTimeDelta)
+    }
+    
+    /// Subclass overridable
+    
+    func subclassHook(_ untypedCallback: Any, _ animationValueDelta: Double, _ animationTimeDelta: CFTimeInterval) {
+        
+        /// Guard callback type
+        
+        guard let callback = untypedCallback as? AnimatorCallback else {
+            fatalError("Invalid state - callback is not type AnimatorCallback")
+        }
+        
         /// Call the callback
         
         callback(animationValueDelta, animationTimeDelta, animationPhase)
         
         /// Update phases
         
-        if animationPhase == kMFAnimationPhaseStart {
+        if animationPhase == kMFAnimationPhaseStart || animationPhase == kMFAnimationPhaseRunningStart {
             animationPhase = kMFAnimationPhaseContinue
         } else if animationPhase == kMFAnimationPhaseEnd {
-            displayLink.stop()
-            animationPhase = kMFAnimationPhaseNone
+            stop()
         }
-        
-        /// Set `last` variables
-        
-        self.lastAnimationTime = now
-        self.lastAnimationValue = animationValue
-        
-        /// Debug
-        
-        DDLogDebug("timeU, \(animationTimeUnit), valueU: \(animationValueUnit)")
     }
     
 }

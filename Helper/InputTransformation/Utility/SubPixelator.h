@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)init NS_UNAVAILABLE;
 
 - (int64_t)intDeltaWithDoubleDelta:(double)inp;
+- (int64_t)peekIntDeltaWithDoubleDelta:(double)inpDelta;
 - (void)reset;
 
 @end

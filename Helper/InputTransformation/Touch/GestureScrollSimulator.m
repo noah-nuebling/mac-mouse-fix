@@ -140,8 +140,8 @@ static VectorSubPixelator *_scrollPixelator;
                                   momentumPhase:(CGMomentumScrollPhase)momentumPhase
                                       locaction:(CGPoint)loc {
     
-    DDLogDebug(@"Posting: gesture: (%f,%f) --- scroll: (%f, %f) --- scrollPt: (%f, %f) --- phases: %d, %d\n",
-          vecGesture.x, vecGesture.y, vecScroll.x, vecScroll.y, vecScrollPoint.x, vecScrollPoint.y, phase, momentumPhase);
+//    DDLogDebug(@"Posting: gesture: (%f,%f) --- scroll: (%f, %f) --- scrollPt: (%f, %f) --- phases: %d, %d\n",
+//          vecGesture.x, vecGesture.y, vecScroll.x, vecScroll.y, vecScrollPoint.x, vecScrollPoint.y, phase, momentumPhase);
     
     //
     //  Get stuff we need for both the type 22 and the type 29 event
