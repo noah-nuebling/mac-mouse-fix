@@ -31,6 +31,7 @@ Here are some things I plan to change (Probably incomplete, because I can't thin
     - Actually the Apple driver probably uses something like that, too, otherwise it should feel unreliable in this aspect, too. But IIRC the Apple algorithm had a weird system where the first delta of the momentum scroll always was exactly equal to the last delta of the normal scroll, and then over the next few momentum scroll events, the deltas would actually go _up_ before slowly descending to 0 via a friction-y algorithm. Very weird, but I think with just smoothing and maybe using a multiplier on the exit speed to get the initial momentum speed we should be just fine.
  - We're going to use our Animator.swift class in combination with our Drag.swift curve to implement momentum scrolls, instead of the make-shift vector drag algorithm using a while loop and [NSThread sleep] we used in this class.
  - This is a little buggy when enterying momentum scroll (scrolls up after scrolling down and), we'll hopefully fix that
+ - The new version will always send events at the point on the screen where scrolling began. That will make things nicer to use for click and drag.
  - Probably other things I can't think of
  -
 

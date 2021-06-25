@@ -12,9 +12,10 @@
 
 typedef enum {
     kMFAnimationPhaseStart,
-    kMFAnimationPhaseRunningStart,
+    kMFAnimationPhaseRunningStart, /// Animation has been started again while it was already running
     kMFAnimationPhaseContinue,
     kMFAnimationPhaseEnd,
+    kMFAnimationPhaseStartingEnd, /// Used when there is only one delta in the animation. So that delta is the first _and_ the last one.
     kMFAnimationPhaseNone,
 } MFAnimationPhase;
 

@@ -57,12 +57,22 @@ static VectorSubPixelator *_scrollPixelator;
  \note In order to minimize momentum scrolling,  send an event with a very small but non-zero scroll delta before calling the function with phase kIOHIDEventPhaseEnded.
  \note For more info on which delta values and which phases to use, see the documentation for `postGestureScrollEventWithGestureDeltaX:deltaY:phase:momentumPhase:scrollDeltaConversionFunction:scrollPointDeltaConversionFunction:`. In contrast to the aforementioned function, you shouldn't need to call this function with kIOHIDEventPhaseUndefined.
 */
-+ (void)postGestureScrollEventWithDeltaX:(double)dx deltaY:(double)dy phase:(IOHIDEventPhaseBits)phase isGestureDelta:(BOOL)isGestureDelta {
++ (void)postGestureScrollEventWithDeltaX:(double)dx deltaY:(double)dy phase:(IOHIDEventPhaseBits)phase {
     
-    CGPoint loc = Utility_Transformation.CGMouseLocationWithoutEvent;
-    if (!isGestureDelta) {
-        loc.x += dx;
-        loc.y += dy;
+    static CGPoint origin;
+    static BOOL activelyScrolling;
+    static BOOL momentumScrolling;
+    
+    if (!activelyScrolling) {
+        /// Not using phase == kIOHIDEventPhaseBegan to determine when to get the origin, beca
+        origin = Utility_Transformation.CGMouseLocationWithoutEvent;
+        activelyScrolling = YES;
+    }
+    
+    if (phase == kIOHIDEventPhaseBegan) {
+        origin = Utility_Transformation.CGMouseLocationWithoutEvent;
+        origin.x += dx; /// Not sure if necessary
+        origin.y += dy; /// Not sure if necessary
     }
     
     if (phase != kIOHIDEventPhaseEnded) {
@@ -98,7 +108,7 @@ static VectorSubPixelator *_scrollPixelator;
                                     scrollVectorPoint:vecScrollPoint
                                                 phase:phase
                                         momentumPhase:kCGMomentumScrollPhaseNone
-         locaction:loc];
+         locaction:origin];
     } else {
         if (isZeroVector(_lastInputGestureVector)) { // This will never be called, because zero vectors will never be recorded into _lastInputGestureVector. Read the doc above to learn why. TODO: remove.
             [self postGestureScrollEventWithGestureVector:(Vector){}
@@ -106,7 +116,7 @@ static VectorSubPixelator *_scrollPixelator;
                                         scrollVectorPoint:(Vector){}
                                                     phase:kIOHIDEventPhaseEnded
                                             momentumPhase:0
-                                                 locaction:loc];
+                                                 locaction:origin];
             
             dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
                 //startPostingMomentumScrollEventsWithInitialGestureVector(_lastInputGestureVector, 0.016, 1.0, 4, 1.0);
@@ -120,7 +130,7 @@ static VectorSubPixelator *_scrollPixelator;
                                         scrollVectorPoint:(Vector){}
                                                     phase:kIOHIDEventPhaseEnded
                                             momentumPhase:0
-                                                locaction:loc];
+                                                locaction:origin];
             dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
                 //startPostingMomentumScrollEventsWithInitialGestureVector(_lastInputGestureVector, 0.016, 1.0, 4, 1.0);
                 double dragCoeff = 8; // Easier to scroll far, kinda nice on a mouse, end still pretty realistic // Got these values by just seeing what feels good

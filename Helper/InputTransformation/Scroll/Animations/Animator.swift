@@ -44,6 +44,7 @@ import CocoaLumberjackSwift
     
     var lastAnimationTime: Double = -1 /// Time at which the displayLink was last called
     var lastAnimationValue: Double = -1 /// animationValue when the displayLink was last called
+    var lastAnimationPhase: MFAnimationPhase = kMFAnimationPhaseNone
     var animationPhase: MFAnimationPhase = kMFAnimationPhaseNone
     
     // Vars -  Interface
@@ -103,6 +104,7 @@ import CocoaLumberjackSwift
 //            DDLogDebug("NORMAL START")
             
             animationPhase = kMFAnimationPhaseStart;
+            lastAnimationPhase = kMFAnimationPhaseNone;
             
             let now: CFTimeInterval = CACurrentMediaTime()
             
@@ -184,15 +186,16 @@ import CocoaLumberjackSwift
         let animationTimeDelta: CFTimeInterval = now - lastAnimationTime
         let animationValueDelta: Double = animationValue - lastAnimationValue
         
-        /// Update `last` time and value
-        
-        self.lastAnimationTime = now
-        self.lastAnimationValue = animationValue
-        
         /// Subclass hook.
         ///     IntegerAnimator overrides this to do its thing
         
         subclassHook(callback, animationValueDelta, animationTimeDelta)
+        
+        /// Update `last` time and value
+        
+        self.lastAnimationTime = now
+        self.lastAnimationValue = animationValue
+        self.lastAnimationPhase = self.animationPhase
     }
     
     /// Subclass overridable
@@ -203,6 +206,13 @@ import CocoaLumberjackSwift
         
         guard let callback = untypedCallback as? AnimatorCallback else {
             fatalError("Invalid state - callback is not type AnimatorCallback")
+        }
+        
+        /// Update phase
+        
+        if (animationPhase == kMFAnimationPhaseEnd /// This is last event of the animation
+                && lastAnimationPhase == kMFAnimationPhaseNone) { /// This is also the first event of the animation
+            animationPhase = kMFAnimationPhaseStartingEnd;
         }
         
         /// Call the callback

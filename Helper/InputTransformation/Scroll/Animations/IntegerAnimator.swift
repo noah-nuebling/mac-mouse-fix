@@ -33,7 +33,7 @@ class IntegerAnimator: Animator {
     var integerCallback: IntegerAnimatorCallback?;
     
     var subPixelator: SubPixelator = SubPixelator.ceil();
-    
+    /// ^ This being a ceil subPixelator only makes sense because we're only using this through Scroll.m and that's only running this with positive value ranges. So the deltas are being rounded up, and we get a delta immediately as soon as the animations starts, which should make scrolling very small distances feel a little more responsive. If we were dealing with negative deltas, we'd want to round them down instead somehow. Or simply use a SubPixelator.round() which works in both directions.
     
     /// Declare new start function
     
@@ -70,10 +70,18 @@ class IntegerAnimator: Animator {
             
             /// Check if this was the last int delta
             
-            let intAnimationValueLeft = subPixelator.peekIntDelta(withDoubleDelta: self.animationValueLeft);
-            /// ^ We can only use self.animationValueLeft, because self.lastAnimationValue was already updated in displayLinkCallback() before it called subclassHook().
+            let currentAnimationValueLeft = self.animationValueLeft + animationValueDelta;
+            /// ^ We don't use self.animationValueLeft directly, because it's derived from self.lastAnimationValue which is only updated at the end of displayLinkCallback() after it calls subclassHook().
+            let intAnimationValueLeft = subPixelator.peekIntDelta(withDoubleDelta: currentAnimationValueLeft);
             if intAnimationValueLeft == 0 {
                 self.animationPhase = kMFAnimationPhaseEnd;
+            }
+            
+            /// Update phase
+            
+            if (animationPhase == kMFAnimationPhaseEnd /// This is last event of the animation
+                    && lastAnimationPhase == kMFAnimationPhaseNone) { /// This is also the first event of the animation
+                animationPhase = kMFAnimationPhaseStartingEnd;
             }
             
             /// Debug
