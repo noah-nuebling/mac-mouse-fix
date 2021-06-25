@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-// VectorSubPixelator.h
+// GestureScrollSimulator.h
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2020
 // Licensed under MIT
@@ -8,20 +8,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "GestureScrollSimulatorOld.h"
-#import "VectorUtility.h"
+#import "IOHIDEventTypes.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface VectorSubPixelator : NSObject
-
-+ (VectorSubPixelator *)ceilPixelator;
-+ (VectorSubPixelator *)roundPixelator;
-
-- (instancetype)init NS_UNAVAILABLE;
-
-- (Vector)intVectorWithDoubleVector:(Vector)inpVec;
-
+@interface GestureScrollSimulatorOld : NSObject
++ (void)postGestureScrollEventWithDeltaX:(double)dx deltaY:(double)dy phase:(IOHIDEventPhaseBits)phase isGestureDelta:(BOOL)isGestureDelta;
++ (void)breakMomentumScroll;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -23,7 +23,7 @@
 #import "Queue.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "SubPixelator.h"
-#import "GestureScrollSimulator.h"
+#import "GestureScrollSimulatorOld.h"
 #import "SharedUtility.h"
 
 @implementation Scroll
@@ -395,9 +395,9 @@ static void sendScroll(double px, MFScrollDirection scrollDirection, BOOL gestur
         /// Send simulated two-finger swipe event
         
         if (scrollPhase != kIOHIDEventPhaseEnded) {
-            [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:scrollPhase isGestureDelta:NO];
+            [GestureScrollSimulatorOld postGestureScrollEventWithDeltaX:dx deltaY:dy phase:scrollPhase isGestureDelta:NO];
         } else if (scrollPhase == kIOHIDEventPhaseEnded) { /// Hack to prevent momentum scroll. Should finds a better solution
-            [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:kIOHIDEventPhaseChanged isGestureDelta:NO];
+            [GestureScrollSimulatorOld postGestureScrollEventWithDeltaX:dx deltaY:dy phase:kIOHIDEventPhaseChanged isGestureDelta:NO];
             
             /// Stop momentum scroll approach 1
 //            dx = [SharedUtility signOf:dx]; /// This will fail to stop the momenum scroll properly if dx and dy are 0
@@ -405,7 +405,7 @@ static void sendScroll(double px, MFScrollDirection scrollDirection, BOOL gestur
 //            [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:kIOHIDEventPhaseChanged isGestureDelta:NO];
             
             /// Send end event
-            [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded isGestureDelta:NO];
+            [GestureScrollSimulatorOld postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded isGestureDelta:NO];
             
             /// Stop momentum scroll approach 2
             ///  Sending an event with scrollPhase kIOHIDEventPhaseUndefined and momentumPhase kCGMomentumScrollPhaseEnd should stop momentum phase immediately according to postGestureScrollEventWithGestureVector: documentation.

@@ -13,7 +13,7 @@
 #import "Utility_Transformation.h"
 #import "Utility_Helper.h"
 #import "Config.h"
-#import "GestureScrollSimulator.h"
+#import "GestureScrollSimulatorOld.h"
 #import "TransformationManager.h"
 #import "ModifierManager.h"
 #import "SharedUtility.h"

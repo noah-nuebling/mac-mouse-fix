@@ -9,7 +9,7 @@
 
 #import "Device.h"
 #import "ModifiedDrag.h"
-#import "GestureScrollSimulator.h"
+#import "GestureScrollSimulatorOld.h"
 #import "DeviceManager.h"
 #import "ButtonInputReceiver.h"
 #import "Utility_Transformation.h"
@@ -286,7 +286,7 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
         // Control modified actions
         
         // v TODO: Would it be better to put this into `ButtonInputReceiver.m`? It seems to be more reliable than this function.
-        [GestureScrollSimulator breakMomentumScroll]; // Momentum scroll is started, when when a modified drag of type "twoFingerSwipe" is deactivated. We break it on any button input.
+        [GestureScrollSimulatorOld breakMomentumScroll]; // Momentum scroll is started, when when a modified drag of type "twoFingerSwipe" is deactivated. We break it on any button input.
 //        if (pressure == 0) { // Don't think we need this if inserting fake events works properly
 //            [ModifiedDrag deactivate];
 //        }

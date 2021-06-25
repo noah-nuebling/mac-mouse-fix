@@ -25,7 +25,7 @@
 
 #import "SharedUtility.h"
 
-#import "GestureScrollSimulator.h"
+#import "GestureScrollSimulatorOld.h"
 #import "ScrollConfigObjC.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "CubicUnitBezier.h"
@@ -362,10 +362,10 @@ Ratio: %f",
 //        DDLogDebug(@"IOHIDEventPhase: %hu \n", phase);
         
         if (phase != kIOHIDEventPhaseEnded) { // TODO: Remove. Sending it again here is a hack to make it stop scrolling.
-            [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:phase isGestureDelta:NO];
+            [GestureScrollSimulatorOld postGestureScrollEventWithDeltaX:dx deltaY:dy phase:phase isGestureDelta:NO];
         } else {
-            [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseChanged isGestureDelta:NO];
-            [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded isGestureDelta:NO];
+            [GestureScrollSimulatorOld postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseChanged isGestureDelta:NO];
+            [GestureScrollSimulatorOld postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded isGestureDelta:NO];
         }
         
         
