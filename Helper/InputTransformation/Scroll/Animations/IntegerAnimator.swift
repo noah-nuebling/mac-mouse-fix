@@ -70,10 +70,10 @@ class IntegerAnimator: Animator {
             
             /// Check if this was the last int delta
             
-            let currentAnimationValueLeft = self.animationValueLeft + animationValueDelta;
+            let currentAnimationValueLeft = self.animationValueLeft - animationValueDelta;
             /// ^ We don't use self.animationValueLeft directly, because it's derived from self.lastAnimationValue which is only updated at the end of displayLinkCallback() after it calls subclassHook().
             let intAnimationValueLeft = subPixelator.peekIntDelta(withDoubleDelta: currentAnimationValueLeft);
-            if intAnimationValueLeft == 0 {
+            if intAnimationValueLeft <= 0 {
                 self.animationPhase = kMFAnimationPhaseEnd;
             }
             
@@ -93,13 +93,20 @@ class IntegerAnimator: Animator {
             callback(integerAnimationValueDelta, animationTimeDelta, self.animationPhase)
             
             /// Update phases
-            /// We do the exact same thing in Animator. The only reason we've put this into the subclassHook instead of the displayLinkCallback() is because we don't want to do this in IntegerAnimator if integerAnimationValueDelta == 0 (see above)
             
             if self.animationPhase == kMFAnimationPhaseStart || self.animationPhase == kMFAnimationPhaseRunningStart {
                 self.animationPhase = kMFAnimationPhaseContinue
             } else if self.animationPhase == kMFAnimationPhaseEnd {
                 stop()
             }
+            
+        } else {
+            DDLogDebug("INTEGER DELTA IS ZERO - NOT CALLING CALLBACK")
+            assert(self.animationPhase != kMFAnimationPhaseEnd)
+            ///     Phase can be set to kMFAnimationPhaseEnd in two places.
+            ///     1. In Animator.swift > displayLinkCallback(), when the current time is beyond the animationTimeInterval.
+            ///     2. Here in IntegerAnimator.swift > subclassHook(), when processing a non-zero integerDelta, and finding that all the animationValue that's left won't lead to another integer delta (so when it's smaller than 1)
+            ///     -> 2. Should always occur before 1. can occur from my understanding. This will ensure that all integer deltas that  are being sent to the callback are non zero and that the first and last deltas of the animation have kMFAnimationPhaseStart and kMFAnimationPhaseEnd respectively
         }
     }
     

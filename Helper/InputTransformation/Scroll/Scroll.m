@@ -277,6 +277,7 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
             /// This will be called each frame
             
             /// Debug
+            
 //            static CFTimeInterval lastTs = 0;
 //            CFTimeInterval ts = CACurrentMediaTime();
 //            DDLogInfo(@"scrollSendInterval: %@, dT: %@, dPx: %@", @(ts - lastTs), @(timeDelta), @(valueDelta));
@@ -286,6 +287,8 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
             
             assert(valueDelta != 0);
             DDLogDebug(@"DELTA: %ld, PHASE: %d", (long)valueDelta, animationPhase);
+            
+            /// Send scroll
             
             sendScroll(valueDelta, scrollDirection, YES, animationPhase);
             

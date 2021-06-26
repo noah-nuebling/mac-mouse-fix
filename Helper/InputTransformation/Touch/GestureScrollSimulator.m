@@ -30,6 +30,10 @@ Also see:
 
 @implementation GestureScrollSimulator
 
+#pragma mark - Constants
+
+double pixelsPerLine = 10;
+
 #pragma mark - Vars and init
 
 static DoubleExponentialSmoother *_xSpeedSmoother;
@@ -248,7 +252,7 @@ static void startMomentumScroll(Vector exitVelocity, double stopSpeed, double dr
         
         /// Get delta vectors
         Vector directedPointDelta = scaledVector(direction, pointDelta);
-        Vector directedLineDelta = scaledVector(directedPointDelta, 0.1);
+        Vector directedLineDelta = scrollLineVectorWithScrollPointVector(directedPointDelta);
         
         /// Subpixelate
         Vector directedPointDeltaInt = [_scrollPointPixelator intVectorWithDoubleVector:directedPointDelta];
@@ -367,7 +371,7 @@ static void startMomentumScroll(Vector exitVelocity, double stopSpeed, double dr
 static Vector scrollLineVectorWithScrollPointVector(Vector vec) {
     
     VectorScalerFunction f = ^double(double x) {
-        return x / 10.0; /// See CGEventSource.pixelsPerLine - it's 10 by default
+        return x / pixelsPerLine; /// See CGEventSource.pixelsPerLine - it's 10 by default
     };
     return scaledVectorWithFunction(vec, f);
 }
