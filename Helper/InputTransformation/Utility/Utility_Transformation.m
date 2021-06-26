@@ -13,6 +13,7 @@
 #import <ApplicationServices/ApplicationServices.h>
 #import "CGSPrivate.h"
 #import "SharedUtility.h"
+#import "Utility_Helper.h"
 
 @implementation Utility_Transformation
 
@@ -55,7 +56,7 @@
     
     CGEventTapLocation tapLoc = kCGSessionEventTap;
     
-    CGPoint mouseLoc = Utility_Transformation.CGMouseLocationWithoutEvent;
+    CGPoint mouseLoc = getPointerLocation();
     CGEventType eventTypeDown = [SharedUtility CGEventTypeForButtonNumber:button isMouseDown:YES];
     CGEventType eventTypeUp = [SharedUtility CGEventTypeForButtonNumber:button isMouseDown:NO];
     CGMouseButton buttonCG = [SharedUtility CGMouseButtonFromMFMouseButtonNumber:button];
@@ -84,7 +85,7 @@
     
     CGEventTapLocation tapLoc = kCGSessionEventTap;
     
-    CGPoint mouseLoc = Utility_Transformation.CGMouseLocationWithoutEvent;
+    CGPoint mouseLoc = getPointerLocation();
     CGEventType eventTypeDown = [SharedUtility CGEventTypeForButtonNumber:button isMouseDown:down];
     CGMouseButton buttonCG = [SharedUtility CGMouseButtonFromMFMouseButtonNumber:button];
     

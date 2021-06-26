@@ -20,6 +20,7 @@
 #import "TransformationManager.h"
 #import "Constants.h"
 #import "Utility_Transformation.h"
+#import "Utility_Helper.h"
 
 @implementation Config
 
@@ -98,7 +99,7 @@ static void fillConfigFromFile() {
     NSString *bundleIDOfCurrentApp;
     if (!force) {
         
-        CGPoint mouseLocation = Utility_Transformation.CGMouseLocationWithoutEvent;
+        CGPoint mouseLocation = getPointerLocation();
 
         AXUIElementRef elementUnderMousePointer;
         AXUIElementCopyElementAtPosition(Scroll.systemWideAXUIElement, mouseLocation.x, mouseLocation.y, &elementUnderMousePointer);

@@ -61,28 +61,34 @@
 
 /// Get modifier flags
 
-+ (CGEventFlags)modifierFlags {
+CGEventFlags getModifierFlags() {
     CGEventRef flagEvent = CGEventCreate(NULL);
     CGEventFlags flags = CGEventGetFlags(flagEvent);
     CFRelease(flagEvent);
     return flags;
 }
 
-+ (CGEventFlags)modifierFlagsWithEvent:(CGEventRef)flagEvent {
+CGEventFlags getModifierFlagsWithEvent(CGEventRef flagEvent) {
+    /// This might get you more up-to-date flags than getModifierFlags()
+    ///     See notes below for more.
+    
     CGEventFlags flags = CGEventGetFlags(flagEvent);
     return flags;
 }
 
 /// Get pointer location
 
-+ (CGPoint)pointerLocation {
+CGPoint getPointerLocation() {
     CGEventRef locEvent = CGEventCreate(NULL);
     CGPoint mouseLoc = CGEventGetLocation(locEvent);
     CFRelease(locEvent);
     return mouseLoc;
 }
 
-+ (CGPoint)pointerLocationWithEvent:(CGEventRef)locEvent {
+CGPoint pointerLocationWithEvent(CGEventRef locEvent) {
+    /// This might get you a more up-to-date pointerLocation than getPointerLocation()
+    ///     See notes below for more.
+    
     CGPoint mouseLoc = CGEventGetLocation(locEvent);
     return mouseLoc;
 }
@@ -91,7 +97,7 @@
  I just did some performance testing on 3 functions to get pointer locations functions found in this file:
  For a thousand runs I got these times:
  
- - pointerLocation: 0.000117s
+ - getPointerLocation: 0.000117s
  - pointerLocationWithEvent: 0.000015s
  - pointerLocationNS: 0.001375s
  

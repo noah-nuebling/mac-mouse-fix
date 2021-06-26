@@ -72,7 +72,7 @@ static VectorSubPixelator *_scrollPixelator;
 */
 + (void)postGestureScrollEventWithDeltaX:(double)dx deltaY:(double)dy phase:(IOHIDEventPhaseBits)phase isGestureDelta:(BOOL)isGestureDelta {
     
-    CGPoint loc = Utility_Transformation.CGMouseLocationWithoutEvent;
+    CGPoint loc = pointerLocation();
     if (!isGestureDelta) {
         loc.x += dx;
         loc.y += dy;
@@ -274,7 +274,7 @@ static void startPostingMomentumScrollEventsWithInitialGestureVector(Vector init
             DDLogInfo(@"BREAKING MOMENTUM SCROLL");
             break;
         }
-        CGPoint loc = Utility_Transformation.CGMouseLocationWithoutEvent;
+        CGPoint loc = pointerLocation();
         [GestureScrollSimulatorOld postGestureScrollEventWithGestureVector:emptyVec scrollVector:vec scrollVectorPoint:vecPt phase:kIOHIDEventPhaseUndefined momentumPhase:ph locaction:loc];
         
         [NSThread sleepForTimeInterval:tick]; // Not sure if it's good to pause the whole thread here, using a display link or ns timer or sth is probably much faster. But this seems to work fine so whatevs.
@@ -288,7 +288,7 @@ static void startPostingMomentumScrollEventsWithInitialGestureVector(Vector init
         ph = kCGMomentumScrollPhaseContinue;
         
     }
-    CGPoint loc = Utility_Transformation.CGMouseLocationWithoutEvent;
+    CGPoint loc = pointerLocation();
     [GestureScrollSimulatorOld postGestureScrollEventWithGestureVector:emptyVec
                                                        scrollVector:emptyVec
                                                   scrollVectorPoint:emptyVec

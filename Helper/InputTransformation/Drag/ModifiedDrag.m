@@ -25,6 +25,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "VectorUtility.h"
+#import "Utility_Helper.h"
 
 @implementation ModifiedDrag
 
@@ -128,7 +129,7 @@ static struct ModifiedDragState _drag;
     _drag.modifiedDevice = dev;
     _drag.activationState = kMFModifiedInputActivationStateInitialized;
     _drag.type = type;
-    _drag.origin = Utility_Transformation.CGMouseLocationWithoutEvent;
+    _drag.origin = getPointerLocation();
     _drag.originOffset = (Vector){0};
     _drag.subPixelatorX = [SubPixelator alloc];
     _drag.subPixelatorY = [SubPixelator alloc];
@@ -286,9 +287,9 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
     } else if ([_drag.type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
         CGPoint location;
         if (event) {
-            location = CGEventGetLocation(event); // I feel using `event` passed in from eventTap here makes things slighly more responsive that using `Utility_Transformation.CGMouseLocationWithoutEvent`
+            location = CGEventGetLocation(event); // I feel using `event` passed in from eventTap here makes things slighly more responsive that using `getPointerLocation()`
         } else {
-            location = Utility_Transformation.CGMouseLocationWithoutEvent;
+            location = getPointerLocation();
         }
         CGMouseButton button = [SharedUtility CGMouseButtonFromMFMouseButtonNumber:_drag.fakeDragButtonNumber];
         CGEventRef draggedEvent = CGEventCreateMouseEvent(NULL, kCGEventOtherMouseDragged, location, button);

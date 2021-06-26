@@ -13,6 +13,15 @@
 + (CGEventRef)createEventWithValuesFromEvent:(CGEventRef)event;
 + (void)printEventFieldDifferencesBetween:(CGEventRef)event1 and:(CGEventRef)event2;
 + (NSString *)binaryRepresentation:(int64_t)value;
-+ (CGPoint)pointerLocationFlippedNS;
+
+
+/// Get current modifier flags
+CGEventFlags getModifierFlags(void);
+CGEventFlags getModifierFlagsWithEvent(CGEventRef flagEvent);
+
+/// Get current pointer location
+CGPoint getPointerLocation(void);
+CGPoint pointerLocationWithEvent(CGEventRef locEvent);
+
 @end
 

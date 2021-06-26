@@ -14,6 +14,7 @@
 #import "Queue.h"
 #import "SharedUtility.h"
 #import "Utility_Transformation.h"
+#import "Utility_Helper.h"
 
 
 @implementation ButtonInputReceiver
@@ -68,7 +69,7 @@ static void registerInputCallback() {
     
     // Create event
     CGEventType mouseEventType = [SharedUtility CGEventTypeForButtonNumber:button isMouseDown:isMouseDown];
-    CGPoint mouseLoc = Utility_Transformation.CGMouseLocationWithoutEvent;
+    CGPoint mouseLoc = getPointerLocation();
     CGEventRef fakeEvent = CGEventCreateMouseEvent(NULL, mouseEventType, mouseLoc, [SharedUtility CGMouseButtonFromMFMouseButtonNumber:button]);    
     // Insert event
     CGEventRef ret = eventTapCallback(0, CGEventGetType(fakeEvent), fakeEvent, nil);

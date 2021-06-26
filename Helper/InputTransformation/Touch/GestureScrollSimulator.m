@@ -45,8 +45,6 @@ static VectorSubPixelator *_scrollLinePixelator;
 
 static Animator *_animator;
 
-static CGPoint _origin;
-
 + (void)initialize
 {
     if (self == [GestureScrollSimulator class]) {
@@ -68,9 +66,6 @@ static CGPoint _origin;
         
         _animator = [[Animator alloc] init];
         
-        /// Origin
-        
-        _origin = CGPointMake(-1, -1);
     }
 }
 
@@ -124,17 +119,11 @@ static CGPoint _origin;
     
     /// Location
     
-    CGPoint location =
+    CGPoint location = getPointerLocation();
         
     /// Main
     
     if (phase == kIOHIDEventPhaseBegan) {
-        
-        /// Get location for sending events
-        
-        _origin = Utility_Transformation.CGMouseLocationWithoutEvent;
-        
-        DDLogDebug(@"_ORIGIN OBTAINEDDD: %f, %f", _origin.x, _origin.y);
         
         /// Reset subpixelators
         
@@ -184,7 +173,7 @@ static CGPoint _origin;
                                     scrollVectorPoint:vecScrollPoint
                                                 phase:phase
                                         momentumPhase:kCGMomentumScrollPhaseNone
-                                             location:_origin];
+                                             location:location];
         
     } else if (phase == kIOHIDEventPhaseEnded) {
         
@@ -195,7 +184,7 @@ static CGPoint _origin;
                                     scrollVectorPoint:(Vector){}
                                                 phase:kIOHIDEventPhaseEnded
                                         momentumPhase:0
-                                             location:_origin];
+                                             location:location];
         
         /// Get momentum scroll params
         
@@ -204,7 +193,7 @@ static CGPoint _origin;
         double stopSpeed = 1.0;
         double dragCoeff = 8;
         double dragExp = 1.0;
-        CGPoint location = _origin;
+        CGPoint location = location;
         
         /// Start momentum scroll
         
@@ -311,7 +300,7 @@ static void startMomentumScroll(Vector exitVelocity, double stopSpeed, double dr
         
         /// Get current pointer location
         
-        CGPoint location = Utility_Transformation.CGMouseLocationWithoutEvent;
+        CGPoint location = getPointerLocation();
         
         /// Post event
         [GestureScrollSimulator postGestureScrollEventWithGestureVector:zeroVector
@@ -352,7 +341,7 @@ static void startMomentumScroll(Vector exitVelocity, double stopSpeed, double dr
 //            DDLogInfo(@"BREAKING MOMENTUM SCROLL");
 //            break;
 //        }
-//        CGPoint loc = Utility_Transformation.CGMouseLocationWithoutEvent;
+//        CGPoint loc = getPointerLocation();
 //        [GestureScrollSimulator postGestureScrollEventWithGestureVector:emptyVec scrollVector:vec scrollVectorPoint:vecPt phase:kIOHIDEventPhaseUndefined momentumPhase:ph location:loc];
 //
 //        [NSThread sleepForTimeInterval:tick]; // Not sure if it's good to pause the whole thread here, using a display link or ns timer or sth is probably much faster. But this seems to work fine so whatevs.
@@ -369,7 +358,7 @@ static void startMomentumScroll(Vector exitVelocity, double stopSpeed, double dr
 //
 //    /// Post end event
 //
-//    CGPoint loc = Utility_Transformation.CGMouseLocationWithoutEvent;
+//    CGPoint loc = getPointerLocation();
 //    [GestureScrollSimulator postGestureScrollEventWithGestureVector:emptyVec
 //                                                       scrollVector:emptyVec
 //                                                  scrollVectorPoint:emptyVec

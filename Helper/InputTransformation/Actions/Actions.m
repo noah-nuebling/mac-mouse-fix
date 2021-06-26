@@ -15,6 +15,7 @@
 #import "ModifierManager.h"
 #import "MessagePort_Helper.h"
 #import "TransformationManager.h"
+#import "Utility_Helper.h"
 
 @implementation Actions
 
@@ -113,7 +114,7 @@ static void postKeyboardEventsForSymbolicHotkey(CGKeyCode keyCode, CGSModifierFl
     CGEventRef keyDown = CGEventCreateKeyboardEvent(NULL, keyCode, true);
     CGEventRef keyUp = CGEventCreateKeyboardEvent(NULL, keyCode, false);
     CGEventSetFlags(keyDown, (CGEventFlags)modifierFlags);
-    CGEventFlags originalModifierFlags = Utility_Transformation.CGModifierFlagsWithoutEvent;
+    CGEventFlags originalModifierFlags = getModifierFlags();
     CGEventSetFlags(keyUp, originalModifierFlags); // Restore original keyboard modifier flags state on key up. This seems to fix `[ModifierManager getCurrentModifiers]`
     
     // Send key events
