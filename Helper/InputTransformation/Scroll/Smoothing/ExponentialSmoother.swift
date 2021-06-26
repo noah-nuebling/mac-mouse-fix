@@ -13,15 +13,21 @@ import Cocoa
 
 class ExponentialSmoother: NSObject {
 
-    // Params
-    var a: Double
-    var initialValue: Double
+    /// Params
     
-    // Dynamic
-    var Lprev: Double = -1
-    var usageCounter: Int = 0
-        
-    /**init
+    var a: Double
+    var initialValue: Double?
+    
+    /// Init
+    
+    @objc convenience init(a: Double, initialValue: Double) {
+        self.init(a: a, initialValue: initialValue)
+    }
+    @objc convenience init(a: Double) {
+        self.init(a: a, initialValue: nil)
+    }
+    
+    /** Main init
      - Parameters:
      - a: Weight for input value aka "data smoothing factor"
             - If you set this to 1 there is no smoothing, if you set it to 0 the output never changes
@@ -30,7 +36,7 @@ class ExponentialSmoother: NSObject {
         - The first input will just be returned without alteration
         - So to prevent misuse, we're requiring the initialValue on initialization
      */
-    @objc init(a: Double, initialValue: Double) {
+    private init(a: Double, initialValue: Double?) {
         
         self.a = a
         self.initialValue = initialValue
@@ -40,9 +46,19 @@ class ExponentialSmoother: NSObject {
         self.resetState()
     }
     
+    /// Dynamic vars
+    
+    var Lprev: Double = -1
+    var usageCounter: Int = 0
+    
+    /// Main
+    
     @objc func resetState() {
         usageCounter = 0
-        _ = smooth(value: initialValue);
+        
+        if let initialValue = self.initialValue {
+            _ = smooth(value: initialValue);
+        }
     }
     
     @objc func smooth(value: Double) -> Double {
@@ -68,4 +84,10 @@ class ExponentialSmoother: NSObject {
         return L
     }
     
+    @objc func lastSmoothedValue() -> Double {
+        if usageCounter >= 1 {
+            return Lprev
+        }
+        fatalError()
+    }
 }

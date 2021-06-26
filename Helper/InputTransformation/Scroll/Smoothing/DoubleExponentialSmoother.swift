@@ -13,18 +13,23 @@ import Cocoa
 
 @objc internal class DoubleExponentialSmoother: NSObject{
     
-    // Params
+    /// Params
+    
     var a: Double
     var y: Double
-    var initialValue1: Double
-    var initialValue2: Double
-    
-    // Dynamic
-    var Lprev: Double = -1
-    var Tprev: Double = -1
-    var usageCounter: Int = 0
+    var initialValue1: Double?
+    var initialValue2: Double?
         
-    /** init
+    /// Init
+    
+    @objc convenience init(a: Double, y: Double) {
+        self.init(a: a, y: y, initialValue1: nil, initialValue2: nil)
+    }
+    @objc convenience init(a: Double, y: Double, initialValue1: Double, initialValue2: Double) {
+        self.init(a: a, y: y, initialValue1: initialValue1, initialValue2: initialValue2)
+    }
+    
+    /** Main init
      - Parameters:
         - a: Weight for input value aka "data smoothing factor"
             - If you set this to 1 there is no smoothing, if you set it to 0 the output never changes
@@ -36,7 +41,7 @@ import Cocoa
             - The first and second inputs will just be returned without alteration without any smoothing
             - So to avoid misuse of the algorithm we're requiring the initial values in the initializer
      */
-    @objc init(a: Double, y: Double, initialValue1: Double, initialValue2: Double) {
+    private init(a: Double, y: Double, initialValue1: Double?, initialValue2: Double?) {
         
         self.a = a
         self.y = y
@@ -49,10 +54,21 @@ import Cocoa
         
     }
     
+    /// Dynamic vars
+    
+    var Lprev: Double = -1
+    var Tprev: Double = -1
+    var usageCounter: Int = 0
+    
+    /// Main
+    
     @objc func resetState() {
         usageCounter = 0
-        _ = smooth(value: initialValue1)
-        _ = smooth(value: initialValue2)
+        
+        if let initialValue1 = self.initialValue1, let initialValue2 = self.initialValue2 {
+            _ = smooth(value: initialValue1)
+            _ = smooth(value: initialValue2)
+        }
     }
     
     @objc func smooth(value: Double) -> Double {
@@ -84,8 +100,17 @@ import Cocoa
     }
     
     @objc func predictValue(stepsIntoFuture steps: Int) -> Double {
-        let Ypred = Lprev + Double(steps) * Tprev
-        return Ypred
+        if usageCounter >= 2 {
+            let Ypred = Lprev + Double(steps) * Tprev
+            return Ypred
+        }
+        fatalError()
+    }
+    @objc func lastSmoothedValue() -> Double {
+        if usageCounter >= 1 {
+            return Lprev
+        }
+        fatalError()
     }
     
 }

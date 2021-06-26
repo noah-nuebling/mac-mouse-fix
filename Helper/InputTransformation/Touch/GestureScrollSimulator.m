@@ -32,7 +32,10 @@ Also see:
 
 #pragma mark - Vars and init
 
-static Vector _lastInputGestureVector = { .x = 0, .y = 0 };
+static CFTimeInterval lastInputTime;
+
+static DoubleExponentialSmoother *_xSpeedSmoother;
+static DoubleExponentialSmoother *_ySpeedSmoother;
 
 static VectorSubPixelator *_gesturePixelator;
 static VectorSubPixelator *_scrollPointPixelator;
@@ -41,6 +44,16 @@ static VectorSubPixelator *_scrollLinePixelator;
 + (void)initialize
 {
     if (self == [GestureScrollSimulator class]) {
+        
+        /// Init smoothers
+        
+        double smoothingA = 0.7;
+        double smoothingY = 0.2;
+        _xSpeedSmoother = [[DoubleExponentialSmoother alloc] initWithA:smoothingA y:smoothingY];
+        _ySpeedSmoother = [[DoubleExponentialSmoother alloc] initWithA:smoothingA y:smoothingY];
+        
+        /// Init Pixelators
+        
         _gesturePixelator = [VectorSubPixelator roundPixelator];
         _scrollPointPixelator = [VectorSubPixelator roundPixelator];
         _scrollLinePixelator = [VectorSubPixelator roundPixelator];
@@ -76,7 +89,12 @@ static VectorSubPixelator *_scrollLinePixelator;
         return;
     }
     
+    CFTimeInterval now = CACurrentMediaTime();
+    
+    static CFTimeInterval lastInputTime;
     static CGPoint origin;
+    static double smoothedXSpeed;
+    static double smoothedYSpeed;
         
     if (phase == kIOHIDEventPhaseBegan) {
         
@@ -93,26 +111,41 @@ static VectorSubPixelator *_scrollLinePixelator;
         [_gesturePixelator reset];
         
     }
-    
     if (phase == kIOHIDEventPhaseBegan || phase == kIOHIDEventPhaseChanged) {
         
-        _breakMomentumScrollFlag = true;
+        _breakMomentumScrollFlag = true; /// Remove this
         
         /// Get vectors
         
         Vector vecScrollPoint = (Vector){ .x = dx, .y = dy };
         Vector vecScrollLine = scrollLineVectorWithScrollPointVector(vecScrollPoint);
         Vector vecGesture = gestureVectorFromScrollPointVector(vecScrollPoint);
-
-        /// Subpixelate
+        
+        /// Update smoothed speed
+        
+        if (phase == kIOHIDEventPhaseBegan) {
+            
+            [_xSpeedSmoother resetState];
+            [_ySpeedSmoother resetState];
+            smoothedXSpeed = 0;
+            smoothedYSpeed = 0;
+            
+        } else if (phase == kIOHIDEventPhaseChanged) {
+            
+            double timeSinceLastInput = now - lastInputTime;
+                
+            double xSpeed = vecScrollPoint.x / timeSinceLastInput;
+            double ySpeed = vecScrollPoint.y / timeSinceLastInput;
+            
+            smoothedXSpeed = [_xSpeedSmoother smoothWithValue:xSpeed];
+            smoothedYSpeed = [_ySpeedSmoother smoothWithValue:ySpeed];
+        }
+        
+        /// Subpixelate vectors
         
         vecScrollPoint = [_scrollPointPixelator intVectorWithDoubleVector:vecScrollPoint];
         vecScrollLine = [_scrollLinePixelator intVectorWithDoubleVector:vecScrollLine];
         vecGesture = [_gesturePixelator intVectorWithDoubleVector:vecGesture];
-        
-        /// Store last gesture vector
-        
-        _lastInputGestureVector = vecGesture;
         
         /// Post events
         
@@ -136,10 +169,11 @@ static VectorSubPixelator *_scrollLinePixelator;
         
         /// Get momentum scroll params
         
-        Vector exitVelocity = _lastInputGestureVector;
+        Vector exitVelocity = (Vector){ .x = smoothedXSpeed, .y = smoothedYSpeed };
+        
         double stopSpeed = 1.0;
-        double dragCoeff = 8; // Easier to scroll far, kinda nice on a mouse, end still pretty realistic // Got these values by just seeing what feels good
-        double dragExp = 0.8;
+        double dragCoeff = 8;
+        double dragExp = 1.0;
         CGPoint location = origin;
         
         /// Start momentum scroll
@@ -149,6 +183,8 @@ static VectorSubPixelator *_scrollLinePixelator;
     } else {
         assert(false);
     }
+    
+    lastInputTime = now; /// Make sure you don't return early so this is always executed
 }
 
 #pragma mark - Momentum scroll
