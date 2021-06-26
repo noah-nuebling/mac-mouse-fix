@@ -20,8 +20,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)resetDynamicGlobals;
 + (void)decide;
 
-+ (void)rerouteScrollEventToTop:(CGEventRef)event;
-
 @end
 
 NS_ASSUME_NONNULL_END

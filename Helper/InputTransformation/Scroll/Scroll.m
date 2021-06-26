@@ -83,17 +83,6 @@ static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this
 //    [SmoothScroll resetDynamicGlobals];
 }
 
-+ (void)rerouteScrollEventToTop:(CGEventRef)event {
-    /// Routes the event back to the eventTap where it originally entered the program.
-    ///
-    /// Use this when internal parameters change while processing an event.
-    /// This will essentially restart the evaluation of the event while respecting the new internal parameters.
-    /// You probably wanna return after calliing this.
-    // TODO: This shouldn't be neede anymore. Delete if so.
-    
-    eventTapCallback(nil, 0, event, nil);
-}
-
 + (void)decide {
     /// TODO: Think about / update this
     /// Either activate SmoothScroll or RoughScroll or stop scroll interception entirely
