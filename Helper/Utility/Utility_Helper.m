@@ -59,9 +59,60 @@
     return bitString;
 }
 
-+ (CGPoint)getCurrentPointerLocation_flipped {
-    /// All of the CG APIs use a flipped coordinate system
-    /// Edit: Couldn't I just use CGEventGetLocation(CGEventCreate(NULL)) instead?
+/// Get modifier flags
+
++ (CGEventFlags)modifierFlags {
+    CGEventRef flagEvent = CGEventCreate(NULL);
+    CGEventFlags flags = CGEventGetFlags(flagEvent);
+    CFRelease(flagEvent);
+    return flags;
+}
+
++ (CGEventFlags)modifierFlagsWithEvent:(CGEventRef)flagEvent {
+    CGEventFlags flags = CGEventGetFlags(flagEvent);
+    return flags;
+}
+
+/// Get pointer location
+
++ (CGPoint)pointerLocation {
+    CGEventRef locEvent = CGEventCreate(NULL);
+    CGPoint mouseLoc = CGEventGetLocation(locEvent);
+    CFRelease(locEvent);
+    return mouseLoc;
+}
+
++ (CGPoint)pointerLocationWithEvent:(CGEventRef)locEvent {
+    CGPoint mouseLoc = CGEventGetLocation(locEvent);
+    return mouseLoc;
+}
+
+/**
+ I just did some performance testing on 3 functions to get pointer locations functions found in this file:
+ For a thousand runs I got these times:
+ 
+ - pointerLocation: 0.000117s
+ - pointerLocationWithEvent: 0.000015s
+ - pointerLocationNS: 0.001375s
+ 
+ -> All of them are plenty fast. It shouldn't matter at all which I use from a performance standpoint.
+    I think I got it in my head to use these `withEvent` functions because I had some troubles where I used an `eventLess` way to get modifier flags while implementing the remapping engine and that `eventLess` function caused some mean bug because it didn't provide completely up-to-date values. So it's valuable to have both `withEvent` and `eventLess` around. But I shouldn't think about performance when deciding what to use here
+ -> NSEvent.mouseLocation is actually the slowest of the bunch, so there's no reason for us to use it at all.
+ 
+ -> I should delete all the pointer-location-gettings functions below
+ 
+ */
+
++ (NSPoint)pointerLocationNS {
+    /// All of the CG APIs use a flipped coordinate system. This is not interchangeable with pointerLocationNS
+    
+    return NSEvent.mouseLocation;
+}
+
++ (CGPoint)pointerLocationFlippedNS {
+    /// Don't use this
+    /// I think this might be faster or more up-to-date than using CGEventCreate(NULL) to get the flipped location, but I'm not sure
+    /// However, I'm quite certain that this implementation can't work properly because we use zeroScreenHeight, which is the height of the main display not the height of the display under the mouse pointer. Even if it was, out coordinate conversion code wouldn't work I think.
     
     NSPoint loc = NSEvent.mouseLocation;
     
@@ -73,10 +124,8 @@
     return NSPointFromCGPointWithCoordinateConversion(loc);
 }
 
-// All of the CG APIs use a flipped coordinate system
-+ (CGPoint)getCurrentPointerLocation_flipped_slow {
-    return Utility_Transformation.CGMouseLocationWithoutEvent;
-}
+/// Helper functions for getting mouse location
+
 NSPoint NSPointFromCGPointWithCoordinateConversion(CGPoint cgPoint) {
     return NSMakePoint(cgPoint.x, zeroScreenHeight() - cgPoint.y);
 }
@@ -84,8 +133,9 @@ NSRect NSRectFromCGRectWithCoordinateConversion(CGRect cgRect) {
     return NSMakeRect(cgRect.origin.x,  zeroScreenHeight() - cgRect.origin.y -
     cgRect.size.height, cgRect.size.width, cgRect.size.height);
 }
-
 CGFloat zeroScreenHeight(void) {
+    /// I don't think using this will work for converting CG coordinates to NSCoordinates in a multi screen environment.
+    
    CGFloat result = 0;
    NSArray *screens = [NSScreen screens];
    if ([screens count] > 0) result = NSHeight([[screens objectAtIndex:
@@ -102,7 +152,7 @@ CGFloat zeroScreenHeight(void) {
 // I wrote this cause I thought it might fix crashes in ButtonInputParser where I stored NSTimers in a struct. But it didn't help.
 // Instead I replaced the struct with a private class which fixed the issue. Idk what exactly caused the crashes but apparently it's a bad idea to store NSObject pointers in C structs
 //      cause it messes with ARC or something.
-//          I think the NSTimers became usafe__unretained automatically from what I saw in the debugger, this is not the case when using the class instead of the struct.   
+//          I think the NSTimers became unsafe__unretained automatically from what I saw in the debugger, this is not the case when using the class instead of the struct.
 //+ (void)coolInvalidate:(NSTimer * __strong *)timer {
 //    if (*timer != nil) {
 //        if ([*timer isValid]) {

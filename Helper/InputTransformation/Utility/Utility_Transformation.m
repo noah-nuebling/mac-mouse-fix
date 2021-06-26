@@ -112,17 +112,4 @@
     };
 }
 
-+ (CGPoint)CGMouseLocationWithoutEvent {
-    CGEventRef locEvent = CGEventCreate(NULL);
-    CGPoint mouseLoc = CGEventGetLocation(locEvent);
-    CFRelease(locEvent);
-    return mouseLoc;
-}
-+ (CGEventFlags)CGModifierFlagsWithoutEvent {
-    CGEventRef flagEvent = CGEventCreate(NULL);
-    CGEventFlags flags = CGEventGetFlags(flagEvent);
-    CFRelease(flagEvent);
-    return flags;
-}
-
 @end

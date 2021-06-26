@@ -45,6 +45,8 @@ static VectorSubPixelator *_scrollLinePixelator;
 
 static Animator *_animator;
 
+static CGPoint _origin;
+
 + (void)initialize
 {
     if (self == [GestureScrollSimulator class]) {
@@ -65,6 +67,10 @@ static Animator *_animator;
         /// Animator
         
         _animator = [[Animator alloc] init];
+        
+        /// Origin
+        
+        _origin = CGPointMake(-1, -1);
     }
 }
 
@@ -84,8 +90,6 @@ static Animator *_animator;
     \todo Implement a better way to stop momentum scrolling. Like a separate function
  \note For more info on which delta values and which phases to use, see the documentation for `postGestureScrollEventWithGestureDeltaX:deltaY:phase:momentumPhase:scrollDeltaConversionFunction:scrollPointDeltaConversionFunction:`. In contrast to the aforementioned function, you shouldn't need to call this function with kIOHIDEventPhaseUndefined.
 */
-
-static CGPoint _origin;
 
 + (void)postGestureScrollEventWithDeltaX:(double)dx deltaY:(double)dy phase:(IOHIDEventPhaseBits)phase {
     
@@ -117,6 +121,10 @@ static CGPoint _origin;
     static CFTimeInterval lastInputTime;
     static double smoothedXSpeed;
     static double smoothedYSpeed;
+    
+    /// Location
+    
+    CGPoint location =
         
     /// Main
     
@@ -211,10 +219,16 @@ static CGPoint _origin;
 
 #pragma mark - Momentum scroll
 
-+ (void)stopMomentumScroll {
++ (void)stopMomentumScrollWithEvent:(CGEventRef _Nullable)event {
     
     /// Stop our animator
     [_animator stop];
+    
+    /// Get mouse location
+    if (!event) {
+        event = CGEventCreate(NULL);
+    }
+    CGPoint location = CGEventGetLocation(event);
     
     /// Send kCGMomentumScrollPhaseEnd event.
     ///  This will stop scrolling in apps like Xcode which implement their own momentum scroll algorithm
@@ -224,7 +238,7 @@ static CGPoint _origin;
                                                   scrollVectorPoint:zeroVector
                                                               phase:kIOHIDEventPhaseUndefined
                                                       momentumPhase:kCGMomentumScrollPhaseEnd
-                                                          location:_origin];
+                                                          location:location];
 }
 static void startMomentumScroll(Vector exitVelocity, double stopSpeed, double dragCoefficient, double dragExponent, CGPoint location) {
     
@@ -294,6 +308,10 @@ static void startMomentumScroll(Vector exitVelocity, double stopSpeed, double dr
         } else { /// We don't expect momentumPhase == kMFAnimationPhaseRunningStart
             assert(false);
         }
+        
+        /// Get current pointer location
+        
+        CGPoint location = Utility_Transformation.CGMouseLocationWithoutEvent;
         
         /// Post event
         [GestureScrollSimulator postGestureScrollEventWithGestureVector:zeroVector
@@ -398,7 +416,7 @@ static Vector scrollLineVectorWithScrollPointVector(Vector vec) {
 static Vector gestureVectorFromScrollPointVector(Vector vec) {
     
     VectorScalerFunction f = ^double(double x) {
-        return 2 * x;
+        return 1.5 * x;
     };
     return scaledVectorWithFunction(vec, f);
 }
