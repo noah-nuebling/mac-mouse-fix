@@ -725,6 +725,33 @@
 			path = Old;
 			sourceTree = "<group>";
 		};
+		4F9E790F2686FBC7002C2309 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				4FF6662B25F2C93A00689B77 /* ScrollUtility.h */,
+				4FF6662F25F2C93A00689B77 /* ScrollUtility.m */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		4F9E79102686FBD3002C2309 /* Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+				4FF6662925F2C93A00689B77 /* ScrollModifiers.h */,
+				4FF6662E25F2C93A00689B77 /* ScrollModifiers.m */,
+			);
+			path = Modifiers;
+			sourceTree = "<group>";
+		};
+		4F9E79112686FBE3002C2309 /* Analysis */ = {
+			isa = PBXGroup;
+			children = (
+				4FA994BC26678AC90007F003 /* ScrollAnalyzer.h */,
+				4FA994BD26678AC90007F003 /* ScrollAnalyzer.m */,
+			);
+			path = Analysis;
+			sourceTree = "<group>";
+		};
 		4FA1ACE025E85904007DB95B /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -1116,15 +1143,12 @@
 			children = (
 				4FF6662C25F2C93A00689B77 /* Scroll.h */,
 				4FF6662125F2C93A00689B77 /* Scroll.m */,
-				4FF6662925F2C93A00689B77 /* ScrollModifiers.h */,
-				4FF6662E25F2C93A00689B77 /* ScrollModifiers.m */,
-				4FF6662B25F2C93A00689B77 /* ScrollUtility.h */,
-				4FF6662F25F2C93A00689B77 /* ScrollUtility.m */,
-				4FA994BC26678AC90007F003 /* ScrollAnalyzer.h */,
-				4FA994BD26678AC90007F003 /* ScrollAnalyzer.m */,
+				4F9E79112686FBE3002C2309 /* Analysis */,
+				4FFBC5B126697E8D001D389B /* Smoothing */,
+				4F9E79102686FBD3002C2309 /* Modifiers */,
 				4F3A40C8266C448500436821 /* Animations */,
 				4FF937552669B043003A52EA /* Curves */,
-				4FFBC5B126697E8D001D389B /* Smoothing */,
+				4F9E790F2686FBC7002C2309 /* Utility */,
 				4FF6662225F2C93A00689B77 /* Unused */,
 			);
 			path = Scroll;
