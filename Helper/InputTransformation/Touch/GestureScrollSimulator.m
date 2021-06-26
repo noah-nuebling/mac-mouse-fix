@@ -171,8 +171,8 @@ static Animator *_momentumAnimator;
         
         /// Update smoothed speed
         
-            if (phase == kIOHIDEventPhaseChanged) {
-                
+        if (phase == kIOHIDEventPhaseChanged) {
+            
             double xSpeed = vecScrollPoint.x / timeSinceLastInput;
             double ySpeed = vecScrollPoint.y / timeSinceLastInput;
             
@@ -194,7 +194,7 @@ static Animator *_momentumAnimator;
                                     scrollVectorPoint:vecScrollPoint
                                                 phase:phase
                                         momentumPhase:kCGMomentumScrollPhaseNone
-                                             location:origin];
+                                             location:location];
         
     } else if (phase == kIOHIDEventPhaseEnded) {
         
@@ -251,6 +251,8 @@ static Animator *_momentumAnimator;
 
 #pragma mark - Momentum scroll
 
+/// Stop momentum scroll
+
 + (void)stopMomentumScroll {
 
     CGEventRef event = CGEventCreate(NULL);
@@ -280,6 +282,9 @@ static Animator *_momentumAnimator;
                                                       momentumPhase:kCGMomentumScrollPhaseEnd
                                                           location:location];
 }
+
+/// Momentum scroll main
+
 static void startMomentumScroll(Vector exitVelocity, double stopSpeed, double dragCoefficient, double dragExponent, CGPoint origin) {
     
     ///Debug
@@ -341,7 +346,7 @@ static void startMomentumScroll(Vector exitVelocity, double stopSpeed, double dr
         Vector directedPointDeltaInt = [_scrollPointPixelator intVectorWithDoubleVector:directedPointDelta];
         Vector directedLineDeltaInt = [_scrollLinePixelator intVectorWithDoubleVector:directedLineDelta];
         
-        /// Get phase
+        /// Get momentum phase from animation phase
         CGMomentumScrollPhase momentumPhase;
         
         if (animationPhase == kMFAnimationPhaseStart) {
@@ -358,9 +363,17 @@ static void startMomentumScroll(Vector exitVelocity, double stopSpeed, double dr
             assert(false);
         }
         
-        /// Get pointer location
+        /// Get pointer location for posting
         
-        CGPoint location = getPointerLocation();
+        CGPoint postLocation = getPointerLocation();
+        
+        /// Post at origin at the start of the animation.
+        ///     That way all momentum scroll will go to the app under origin
+        CGPoint originalLocation;
+        if (animationPhase == kMFAnimationPhaseStart) {
+            originalLocation = postLocation;
+            postLocation = origin;
+        }
         
         /// Post event
         [GestureScrollSimulator postGestureScrollEventWithGestureVector:zeroVector
@@ -368,7 +381,12 @@ static void startMomentumScroll(Vector exitVelocity, double stopSpeed, double dr
                                                       scrollVectorPoint:directedLineDeltaInt
                                                                   phase:kIOHIDEventPhaseUndefined
                                                           momentumPhase:momentumPhase
-                                                              location:location];
+                                                              location:postLocation];
+        /// Reset mouse pointer after posting at origin
+        if (animationPhase == kMFAnimationPhaseStart) {
+            CGWarpMouseCursorPosition(originalLocation);
+        }
+        
     }];
     
 }
