@@ -85,7 +85,7 @@ CGPoint getPointerLocation() {
     return mouseLoc;
 }
 
-CGPoint pointerLocationWithEvent(CGEventRef locEvent) {
+CGPoint getPointerLocationWithEvent(CGEventRef locEvent) {
     /// This might get you a more up-to-date pointerLocation than getPointerLocation()
     ///     See notes below for more.
     

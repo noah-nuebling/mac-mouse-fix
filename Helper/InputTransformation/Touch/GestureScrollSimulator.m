@@ -208,16 +208,21 @@ static Animator *_animator;
 
 #pragma mark - Momentum scroll
 
-+ (void)stopMomentumScrollWithEvent:(CGEventRef _Nullable)event {
++ (void)stopMomentumScroll {
+
+    CGEventRef event = CGEventCreate(NULL);
+    [self stopMomentumScrollWithEvent:event];
+    CFRelease(event);
+}
+
++ (void)stopMomentumScrollWithEvent:(CGEventRef _Nonnull)event {
+    
+    
+    /// Get location from event
+    CGPoint location = CGEventGetLocation(event);
     
     /// Stop our animator
     [_animator stop];
-    
-    /// Get mouse location
-    if (!event) {
-        event = CGEventCreate(NULL);
-    }
-    CGPoint location = CGEventGetLocation(event);
     
     /// Send kCGMomentumScrollPhaseEnd event.
     ///  This will stop scrolling in apps like Xcode which implement their own momentum scroll algorithm

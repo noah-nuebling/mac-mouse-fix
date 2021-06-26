@@ -21,7 +21,7 @@ CGEventFlags getModifierFlagsWithEvent(CGEventRef flagEvent);
 
 /// Get current pointer location
 CGPoint getPointerLocation(void);
-CGPoint pointerLocationWithEvent(CGEventRef locEvent);
+CGPoint getPointerLocationWithEvent(CGEventRef locEvent);
 
 @end
 

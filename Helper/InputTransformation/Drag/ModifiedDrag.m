@@ -131,8 +131,8 @@ static struct ModifiedDragState _drag;
     _drag.type = type;
     _drag.origin = getPointerLocation();
     _drag.originOffset = (Vector){0};
-    _drag.subPixelatorX = [SubPixelator alloc];
-    _drag.subPixelatorY = [SubPixelator alloc];
+    _drag.subPixelatorX = [SubPixelator roundPixelator];
+    _drag.subPixelatorY = [SubPixelator roundPixelator];
     _drag.fakeDragButtonNumber = fakeDragButtonNumber;
     _drag.addModePayload = payload;
     
