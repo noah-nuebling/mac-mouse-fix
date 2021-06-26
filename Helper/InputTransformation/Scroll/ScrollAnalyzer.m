@@ -97,19 +97,23 @@ static int _consecutiveScrollSwipeCounter;
     ///     We used to do this based on raw `secondsSinceLastTick` instead of smoothed `smoothedTimeBetweenTicks`. Not entirely sure this makes sense.
     
     if (smoothedTimeBetweenTicks > ScrollConfig.consecutiveScrollTickMaxInterval) {
+        /// This is the first consecutive tick
         
-        updateConsecutiveScrollSwipeCounterWithSwipeOccuringNow(); // Needs to be called before resetting _consecutiveScrollTickCounter = 0, because it uses _consecutiveScrollTickCounter to determine whether the last series of consecutive scroll ticks was a scroll swipe
+        if (ScrollConfig.scrollSwipeThreshold_inTicks <= _consecutiveScrollTickCounter) {
+            /// If the last batch of consecutive ticks had more ticks in it than the swipe threshold, then update the swipe counter.
+            updateConsecutiveScrollSwipeCounterWithSwipeOccuringNow();
+        }
         _consecutiveScrollTickCounter = 0;
         
-    } else {
+    } else { /// This is not the first consecutive tick
         _consecutiveScrollTickCounter += 1;
     }
     
-    /// Reset state if this is first consecutive tick
+    /// Reset timeBetweenTicks state if this is first consecutive tick
     
     if (_consecutiveScrollTickCounter == 0) {
-        secondsSinceLastTick = DBL_MAX; /// DBL_MAX indicates that it has been longer than `consecutiveScrollTickMaxInterval` since the last tick. Maybe we should define a constant for this.
         smoothedTimeBetweenTicks = DBL_MAX;
+            ///     ^ DBL_MAX indicates that it has been longer than `consecutiveScrollTickMaxInterval` since the last tick. Maybe we should define a constant for this.
         [_tickTimeSmoother resetState];
     }
     
@@ -119,9 +123,8 @@ static int _consecutiveScrollSwipeCounter;
         .consecutiveScrollTickCounter = _consecutiveScrollTickCounter,
         .consecutiveScrollSwipeCounter = _consecutiveScrollSwipeCounter,
         .scrollDirectionDidChange = scrollDirectionDidChange,
-        .smoothedTimeBetweenTicks = smoothedTimeBetweenTicks,
-        .timeSinceLastTick = secondsSinceLastTick,
-        /// ^ I don't think we should use this anywhere. We should use `smoothedTimeBetweenTicks` instead. Because that's our best approximation of the true value of `timeSinceLastTick`
+        .timeBetweenTicks = smoothedTimeBetweenTicks,
+        /// ^ We should only return `smoothedTimeBetweenTicks` instead of `timeSinceLastTick`. Because it's our best approximation of the true value of `timeSinceLastTick`. If `smoothedTimeBetweenTicks`, doesn't work, adjust the alorithm until it does.
     };
     
     return result;
@@ -131,15 +134,13 @@ static void updateConsecutiveScrollSwipeCounterWithSwipeOccuringNow() {
     
     double thisScrollSwipeTimeStamp = CACurrentMediaTime();
     double intervall = thisScrollSwipeTimeStamp - _previousScrollTickTimeStamp; // Time between the last tick of the previous swipe and the first tick of the current swipe (now)
-    if (intervall > ScrollConfig.consecutiveScrollSwipeMaxInterval) {
-        _consecutiveScrollSwipeCounter = 0;
+    
+    if (intervall <= ScrollConfig.consecutiveScrollSwipeMaxInterval) {
+        _consecutiveScrollSwipeCounter += 1;
     } else {
-        if (_consecutiveScrollTickCounter >= ScrollConfig.scrollSwipeThreshold_inTicks) {
-            _consecutiveScrollSwipeCounter += 1;
-        } else {
-            _consecutiveScrollSwipeCounter = 0;
-        }
+        _consecutiveScrollSwipeCounter = 0;
     }
+    
     _previousScrollSwipeTimeStamp = thisScrollSwipeTimeStamp;
 }
 
