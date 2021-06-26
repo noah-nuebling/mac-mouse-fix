@@ -21,7 +21,10 @@
 + (void)initialize
 {
     if (self == [ScrollAnalyzer class]) {
-        _tickTimeSmoother = [[DoubleExponentialSmoother alloc] initWithA:ScrollConfig.ticksPerSecondSmoothingInputValueWeight y:ScrollConfig.ticksPerSecondSmoothingTrendWeight];
+        _tickTimeSmoother = [[DoubleExponentialSmoother alloc] initWithA:ScrollConfig.ticksPerSecondSmoothingInputValueWeight
+                                                                       y:ScrollConfig.ticksPerSecondSmoothingTrendWeight
+                                                           initialValue1:ScrollConfig.consecutiveScrollTickMaxInterval
+                                                           initialValue2:ScrollConfig.consecutiveScrollTickMaxInterval];
     }
 }
 
@@ -102,10 +105,8 @@ static int _consecutiveScrollSwipeCounter;
     if (_consecutiveScrollTickCounter == 0) {
         secondsSinceLastTick = DBL_MAX; /// DBL_MAX indicates that it has been longer than `consecutiveScrollTickMaxInterval` since the last tick. Maybe we should define a constant for this.
         smoothedTimeBetweenTicks = DBL_MAX;
+        [_tickTimeSmoother resetState];
     } else {
-        if (_consecutiveScrollTickCounter == 1) {
-            [_tickTimeSmoother resetState]; /// The first `smoothed` value after resetting will always be equal to the input value
-        }
         smoothedTimeBetweenTicks = [_tickTimeSmoother smoothWithValue:secondsSinceLastTick];
     }
     

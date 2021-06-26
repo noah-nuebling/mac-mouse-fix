@@ -15,6 +15,7 @@ class ExponentialSmoother: NSObject {
 
     // Params
     var a: Double
+    var initialValue: Double
     
     // Dynamic
     var Lprev: Double = -1
@@ -32,16 +33,16 @@ class ExponentialSmoother: NSObject {
     @objc init(a: Double, initialValue: Double) {
         
         self.a = a
+        self.initialValue = initialValue
         
         super.init()
         
-        _ = smooth(value: initialValue);
-        
+        self.resetState()
     }
     
     @objc func resetState() {
         usageCounter = 0
-        // ^ Everything else will be indirectly reset by resetting this
+        _ = smooth(value: initialValue);
     }
     
     @objc func smooth(value: Double) -> Double {

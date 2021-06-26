@@ -16,6 +16,8 @@ import Cocoa
     // Params
     var a: Double
     var y: Double
+    var initialValue1: Double
+    var initialValue2: Double
     
     // Dynamic
     var Lprev: Double = -1
@@ -38,17 +40,19 @@ import Cocoa
         
         self.a = a
         self.y = y
+        self.initialValue1 = initialValue1
+        self.initialValue2 = initialValue2
         
         super.init()
         
-        _ = smooth(value: initialValue1)
-        _ = smooth(value: initialValue2)
+        self.resetState()
         
     }
     
     @objc func resetState() {
         usageCounter = 0
-        // ^ Everything else will be indirectly reset by resetting this
+        _ = smooth(value: initialValue1)
+        _ = smooth(value: initialValue2)
     }
     
     @objc func smooth(value: Double) -> Double {
