@@ -24,9 +24,9 @@ double magnitudeOfVector(Vector vec) {
     
     // Handle simple cases separately for optimization
     if (vec.x == 0) {
-        return vec.y;
+        return fabs(vec.y);
     } else if (vec.y == 0) {
-        return vec.x;
+        return fabs(vec.x);
     }
     
     return sqrt(pow(vec.x, 2) + pow(vec.y, 2));

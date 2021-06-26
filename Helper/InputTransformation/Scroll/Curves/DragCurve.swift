@@ -7,6 +7,8 @@
 // --------------------------------------------------------------------------
 //
 
+import CocoaLumberjackSwift
+
 /**
  Models the the effects of drag forces. Drag forces are like friction forces, but magnitude depends on the current speed
  It's easier in to just use the differential drag definition directly and calculate a new speed every frame based on the previous speed. And then figure out how far to animate each frame based on that speed.
@@ -192,6 +194,8 @@ import Foundation
         
         /// Asserts / Debug
         assert(abs(timeInterval.length) != Double.infinity)
+        
+        DDLogDebug("DragDurve initialized with v0: \(v0), distance int: \(self._distanceInterval), timeToStop: \(timeToStop)");
     }
     
     /// v(t)

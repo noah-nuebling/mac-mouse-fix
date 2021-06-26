@@ -36,14 +36,16 @@ double pixelsPerLine = 10;
 
 #pragma mark - Vars and init
 
-static DoubleExponentialSmoother *_xSpeedSmoother;
-static DoubleExponentialSmoother *_ySpeedSmoother;
+static ExponentialSmoother *_xSpeedSmoother;
+static ExponentialSmoother *_ySpeedSmoother;
+
+static Vector _lastScrollPointVector;
 
 static VectorSubPixelator *_gesturePixelator;
 static VectorSubPixelator *_scrollPointPixelator;
 static VectorSubPixelator *_scrollLinePixelator;
 
-static Animator *_animator;
+static Animator *_momentumAnimator;
 
 + (void)initialize
 {
@@ -52,9 +54,8 @@ static Animator *_animator;
         /// Init smoothers
         
         double smoothingA = 1.0; /// 1.0 -> smoothing is off
-        double smoothingY = 0.8;
-        _xSpeedSmoother = [[DoubleExponentialSmoother alloc] initWithA:smoothingA y:smoothingY];
-        _ySpeedSmoother = [[DoubleExponentialSmoother alloc] initWithA:smoothingA y:smoothingY];
+        _xSpeedSmoother = [[ExponentialSmoother alloc] initWithA:smoothingA];
+        _ySpeedSmoother = [[ExponentialSmoother alloc] initWithA:smoothingA];
         
         /// Init Pixelators
         
@@ -64,7 +65,7 @@ static Animator *_animator;
         
         /// Animator
         
-        _animator = [[Animator alloc] init];
+        _momentumAnimator = [[Animator alloc] init];
         
     }
 }
@@ -117,6 +118,8 @@ static Animator *_animator;
     static double smoothedXSpeed;
     static double smoothedYSpeed;
     
+    /// Record last scrollPoint vector
+    
     /// Location
     
     CGPoint location = getPointerLocation();
@@ -140,6 +143,10 @@ static Animator *_animator;
         Vector vecScrollLine = scrollLineVectorWithScrollPointVector(vecScrollPoint);
         Vector vecGesture = gestureVectorFromScrollPointVector(vecScrollPoint);
         
+        /// Record last scroll point vec
+        
+        _lastScrollPointVector = vecScrollPoint;
+        
         /// Update smoothed speed
         
         if (phase == kIOHIDEventPhaseBegan) {
@@ -158,6 +165,8 @@ static Animator *_animator;
             
             smoothedXSpeed = [_xSpeedSmoother smoothWithValue:xSpeed];
             smoothedYSpeed = [_ySpeedSmoother smoothWithValue:ySpeed];
+            
+            
         }
         
         /// Subpixelate vectors
@@ -188,11 +197,12 @@ static Animator *_animator;
         
         /// Get momentum scroll params
         
-        Vector exitVelocity = (Vector){ .x = smoothedXSpeed, .y = smoothedYSpeed };
+//        Vector exitVelocity = (Vector){ .x = smoothedXSpeed, .y = smoothedYSpeed };
+        Vector exitVelocity = scaledVector(_lastScrollPointVector, 200);
         
         double stopSpeed = 1.0;
-        double dragCoeff = 8;
-        double dragExp = 1.0;
+        double dragCoeff = 70;
+        double dragExp = 0.7;
         CGPoint location = location;
         
         /// Start momentum scroll
@@ -209,6 +219,8 @@ static Animator *_animator;
 #pragma mark - Momentum scroll
 
 + (void)stopMomentumScroll {
+    
+    if (!_momentumAnimator.isRunning) return;
 
     CGEventRef event = CGEventCreate(NULL);
     [self stopMomentumScrollWithEvent:event];
@@ -217,12 +229,13 @@ static Animator *_animator;
 
 + (void)stopMomentumScrollWithEvent:(CGEventRef _Nonnull)event {
     
+    if (!_momentumAnimator.isRunning) return;
     
     /// Get location from event
     CGPoint location = CGEventGetLocation(event);
     
     /// Stop our animator
-    [_animator stop];
+    [_momentumAnimator stop];
     
     /// Send kCGMomentumScrollPhaseEnd event.
     ///  This will stop scrolling in apps like Xcode which implement their own momentum scroll algorithm
@@ -235,6 +248,10 @@ static Animator *_animator;
                                                           location:location];
 }
 static void startMomentumScroll(Vector exitVelocity, double stopSpeed, double dragCoefficient, double dragExponent, CGPoint location) {
+    
+    ///Debug
+    
+    DDLogDebug(@"Exit velocity: %f, %f", exitVelocity.x, exitVelocity.y);
     
     /// Declare constants
     
@@ -252,10 +269,11 @@ static void startMomentumScroll(Vector exitVelocity, double stopSpeed, double dr
     Vector initialVelocity = initalMomentumScrollVelocityWithExitVelocity(exitVelocity);
     
     /// Get initial speed
-    double initialSpeed = magnitudeOfVector(initialVelocity);
+    double initialSpeed = magnitudeOfVector(initialVelocity); /// Magnitude is always positive
     
     /// Stop momentumScroll immediately, if the initial Speed is too small
     if (initialSpeed <= stopSpeed) {
+        DDLogDebug(@"InitialSpeed smaller stopSpeed: i: %f, s: %f", initialSpeed, stopSpeed);
         [GestureScrollSimulator stopMomentumScroll];
         return;
     }
@@ -275,8 +293,12 @@ static void startMomentumScroll(Vector exitVelocity, double stopSpeed, double dr
     
     /// Start animator
     
-    [_animator startWithDuration:duration valueInterval:distanceInterval animationCurve:animationCurve
+    [_momentumAnimator startWithDuration:duration valueInterval:distanceInterval animationCurve:animationCurve
                        callback:^(double pointDelta, double timeDelta, MFAnimationPhase animationPhase) {
+        
+        /// Debug
+        
+        DDLogDebug(@"Momentum scroll pointDelta: %f", pointDelta);
         
         /// Get delta vectors
         Vector directedPointDelta = scaledVector(direction, pointDelta);
@@ -410,7 +432,7 @@ static Vector scrollLineVectorWithScrollPointVector(Vector vec) {
 static Vector gestureVectorFromScrollPointVector(Vector vec) {
     
     VectorScalerFunction f = ^double(double x) {
-        return 1.5 * x;
+        return 1.35 * x;
     };
     return scaledVectorWithFunction(vec, f);
 }
@@ -418,7 +440,8 @@ static Vector gestureVectorFromScrollPointVector(Vector vec) {
 static Vector initalMomentumScrollVelocityWithExitVelocity(Vector exitVelocity) {
     
     return scaledVectorWithFunction(exitVelocity, ^double(double x) {
-        return pow(fabs(x), 1.08) * sign(x);
+//        return pow(fabs(x), 1.08) * sign(x);
+        return x * 7;
     });
 }
 
