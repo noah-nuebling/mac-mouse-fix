@@ -198,12 +198,19 @@ static Animator *_momentumAnimator;
         /// Get momentum scroll params
         
 //        Vector exitVelocity = (Vector){ .x = smoothedXSpeed, .y = smoothedYSpeed };
-        Vector exitVelocity = scaledVector(_lastScrollPointVector, 200);
+        Vector exitVelocity = scaledVector(_lastScrollPointVector, 500);
         
         double stopSpeed = 1.0;
-        double dragCoeff = 70;
-        double dragExp = 0.7;
+        double dragCoeff = 30;
+        double dragExp = 0.8;
         CGPoint location = location;
+        
+        /**
+                For `dragExp`, a value between 0.7 and 0.8 seems to be the sweet spot to get nice trackpad-like deceleratin
+                - `dragExp` = 0.8 works well with `dragCoeff` around 30 (in the old implementation it used to be 8, so we probably messed something up in the new implementation)
+                - `dragExp` = 0.7 works well with `dragCoeff` around 70
+                - `dragExp` = 0.9  with `dragCoeff` around 10 also feels nice but noticeably different from Trackpad
+         */
         
         /// Start momentum scroll
         
