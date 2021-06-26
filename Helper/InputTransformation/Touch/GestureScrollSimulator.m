@@ -89,6 +89,12 @@ static CGPoint _origin;
 
 + (void)postGestureScrollEventWithDeltaX:(double)dx deltaY:(double)dy phase:(IOHIDEventPhaseBits)phase {
     
+    /// Debug
+    
+    DDLogDebug(@"Request to post Gesture Scroll: (%f, %f), phase: %d", dx, dy, phase);
+    
+    /// Validate input
+    
     if (phase != kIOHIDEventPhaseEnded && dx == 0.0 && dy == 0.0) {
         /// Maybe kIOHIDEventPhaseBegan events from the Trackpad driver can also contain zero-deltas? I don't think so by I'm not sure.
         /// Real trackpad driver seems to only produce zero deltas when phase is kIOHIDEventPhaseEnded.
@@ -100,19 +106,23 @@ static CGPoint _origin;
         return;
     }
     
+    /// Timestamps and static vars
+    
     CFTimeInterval now = CACurrentMediaTime();
     
     static CFTimeInterval lastInputTime;
     static double smoothedXSpeed;
     static double smoothedYSpeed;
         
+    /// Main
+    
     if (phase == kIOHIDEventPhaseBegan) {
         
         /// Get location for sending events
         
         _origin = Utility_Transformation.CGMouseLocationWithoutEvent;
-        _origin.x += dx; /// Not sure if necessary
-        _origin.y += dy; /// Not sure if necessary
+        
+        DDLogDebug(@"_ORIGIN OBTAINEDDD: %f, %f", _origin.x, _origin.y);
         
         /// Reset subpixelators
         

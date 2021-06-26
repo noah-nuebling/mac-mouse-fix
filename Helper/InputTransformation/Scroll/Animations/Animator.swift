@@ -91,12 +91,23 @@ import CocoaLumberjackSwift
         self.callback = callback;
         self.animationCurve = animationCurve
         
+        /// Update phases
+        
+        if (!isRunning
+            || self.animationPhase == kMFAnimationPhaseStart) {
+            /// If animation phase is still start that means that the displayLinkCallback() hasn't used it, yet (it sets it to continue after using it)
+            ///     We want the first time that selfcallback is called by displayLinkCallback() during the animation to have phase start, so we're not setting phase to running start in this case, even if the Animator is already running (when !isRunning is true)
+            
+            animationPhase = kMFAnimationPhaseStart;
+            lastAnimationPhase = kMFAnimationPhaseNone;
+        } else {
+            animationPhase = kMFAnimationPhaseRunningStart;
+        }
+        
+        /// Update the rest of the state
+        
         if (isRunning) {
             /// I think it should make for smoother animations, if we don't se the lastAnimationTime to now when the displayLink is already running, but that's an experiment. I'm not sure. Edit: Not sure if it makes a difference but it's fine
-            
-//            DDLogDebug("RUNNING START")
-            
-            animationPhase = kMFAnimationPhaseRunningStart;
             
             lastAnimationValue = animationValueInterval.start
             
@@ -104,11 +115,6 @@ import CocoaLumberjackSwift
             self.animationValueInterval = valueInterval
             
         } else {
-            
-//            DDLogDebug("NORMAL START")
-            
-            animationPhase = kMFAnimationPhaseStart;
-            lastAnimationPhase = kMFAnimationPhaseNone;
             
             let now: CFTimeInterval = CACurrentMediaTime()
             
@@ -198,7 +204,7 @@ import CocoaLumberjackSwift
         
         subclassHook(callback, animationValueDelta, animationTimeDelta)
         
-        /// Update `last` time and value
+        /// Update `last` time and value and phase
         
         self.lastAnimationTime = now
         self.lastAnimationValue = animationValue
