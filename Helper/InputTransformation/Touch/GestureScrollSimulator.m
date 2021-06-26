@@ -367,11 +367,10 @@ static void startMomentumScroll(Vector exitVelocity, double stopSpeed, double dr
         
         CGPoint postLocation = getPointerLocation();
         
-        /// Post at origin at the start of the animation.
-        ///     That way all momentum scroll will go to the app under origin
-        CGPoint originalLocation;
+        /// Post at `origin at the start of the animation.
+        ///     That way all scroll events will go to the app above which the user started scrolling which is neat.
+        CGPoint originalLocation = postLocation; /// Only initializing here instead of inside the if statement below to silence warnings
         if (animationPhase == kMFAnimationPhaseStart) {
-            originalLocation = postLocation;
             postLocation = origin;
         }
         
