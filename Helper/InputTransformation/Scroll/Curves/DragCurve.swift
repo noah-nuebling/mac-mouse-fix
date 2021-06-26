@@ -99,6 +99,10 @@
  d(t) = log(a (c - t))/a + k
  ```
  ^ Where log(x) is the natural log
+ 
+ Edit 26. June 21
+ I'm trying to actually put this to use for momentum scrolling right now, and I've noticed that almost none of the functions we defined were defined when b was 1. That lead to division by zero on most of them. A few weren't even defined for b == 2. So What I did now is add special formulas for when b == 1 and changed some other formulas around so they work with b == 1. I (sloppily) documented the way that I arrived at these new formulas in the function bodies. Basically I just used Wolfram Alpha and did the same thing as above just plugging in 1 for b.
+ 
  */
 
 
@@ -111,10 +115,20 @@ import Foundation
     private var c: Double
     private var k: Double
     
+    private var isNegative: Bool
+    
     @objc var timeInterval: Interval
-    @objc var distanceInterval: Interval
+    private var _distanceInterval: Interval
+    @objc var distanceInterval: Interval {
+        get {
+            if self.isNegative {
+                return Interval.init(start: -_distanceInterval.start, end: -_distanceInterval.end)
+            }
+            return _distanceInterval
+        }
+    }
 
-    @objc init(coefficient:Double, exponent: Double, initialSpeed v0: Double, stopSpeed vs: Double) {
+    @objc init(coefficient:Double, exponent: Double, initialSpeed v0_arg: Double, stopSpeed vs_arg: Double) {
         /// Speed will never reach 0 exactly so we need to specify `stopSpeed`, the speed at which we consider it stopped
         
         /// Initialize everything so Swift doesn't complain when we use instance methods and call super.init()
@@ -123,14 +137,41 @@ import Foundation
         b = 0
         c = 0
         k = 0
-        timeInterval = Interval(location: 0, length: 0)
-        distanceInterval = Interval(location: 0, length: 0)
+        isNegative = false
+        timeInterval = Interval.unitInterval()
+        _distanceInterval = Interval.unitInterval()
         
         /// Init super so Swift doesn't complain when we use our own instance methods
         
         super.init()
         
         /// Do actual initialization
+        
+        /// Get mutable v0 and vs
+        
+        var v0 = v0_arg
+        var vs = vs_arg
+        
+        /// Validate input
+        
+        assert(SharedUtility.sign(of: v0) == SharedUtility.sign(of: vs)) /// Same sign - Otherwise vs can't be reached at all
+        assert(vs != 0) /// A speed of zero is unreachable
+        assert(abs(v0) > abs(vs)) /// v0 > vs - Otherwise vs can only be reached in the past. So not at all. Also ensures v0 is not 0 which is important, as well
+        assert(v0 > 0) /// This code could probably deal with negative v0, but the calling code should never input a negative v0, so we're asserting that here, too
+        
+        /// isNegative
+        ///     The meat and potato calculations of this class don't work with a negative v0 and vs.
+        ///     So if they are negative, we make everything positive and note that fact here, so we can do the main calculations as if v0 and vs were positive, and then flip the sign before we return the end result.
+        ///     Actually I think we'll never use this, and this is untested, but we'll leave it in for now
+        
+        self.isNegative = SharedUtility.sign(of: v0) == -1
+        
+        /// Make positive if isNegative
+        
+        if self.isNegative {
+            v0 *= -1
+            vs *= -1
+        }
         
         /// Curve feel
         
@@ -147,39 +188,86 @@ import Foundation
         let timeToStop = getT(v: vs)
         let distanceToStop = getD(t: timeToStop, k: self.k)
         self.timeInterval = Interval(location: 0, length: timeToStop)
-        self.distanceInterval = Interval(location: 0, length: distanceToStop)
+        self._distanceInterval = Interval(location: 0, length: distanceToStop)
+        
+        /// Asserts / Debug
+        assert(abs(timeInterval.length) != Double.infinity)
     }
     
     /// v(t)
     
     private func getV(t: Double) -> Double {
+        
+        if (b == 1) {
+            return pow(M_E, -a * (t - c))
+            /// Solution for `v'(t) = - a v(t)^1` (so for b == 1) from WA
+            ///     Also subtracting c from t, so c behaves like we expect (shifting the curve along the t axis)
+        }
+        
         return pow((b - 1) * (a * (t - c)), 1/(1 - b))
+        /// ^ Always zero for b == 1
     }
 
     private func getC(t: Double, v: Double) -> Double {
         /// Get c such that v(t) passes through the point (t, v)
-        return t - (pow(v, 1-b) / ((b-1) * a))
+        
+        if (b == 1) {
+            
+            let result = (a * t + log(v)) / a
+            /// The formula from WA for `solve c: v = pow(e, -a * (t - c))` is
+            ///     `(a t + 2 i π n + log(v)) / a`
+            ///     I have no clue where that 2 i π n comes from or what it means. What even is n?
+            ///     But WA also tells me `solve x: y = e^x` is `x = log(y) + 2 i π n`, so I guess the 2 i π n is just some imaginary stuff we can ignore?
+            /// Also we added sign(of:v) and abs(v) to prevent crashes on log(v) when v is negative. I haven't really thought about this and I'm not sure it makes sense.
+            
+            return result
+        }
+        
+        return t - (pow(v, 1 - b) / ((b - 1) * a))
+        /// ^ Not defined for b == 1
     }
     
     private func getT(v: Double) -> Double {
         /// Get the t where v(t) is v
-        return pow(v, 1 - b) / (a * (b - 1)) + c
+        
+        if (b == 1) {
+            return (a * c -  log(v)) / a
+            /// Source: WA ->`solve t: v = pow(e, -a * (t - c))`,
+            /// Adaptions: Ignoring the `2 i π n` term, and wrapping log(v) with abs(v) and sign(v), because log(v) doesn't work when v is negative.
+            ///     See `getC()` for more on these adaptions
+        }
+        
+        return pow(v, 1 - b) / ((b - 1) * a) + c
+        /// ^ This is undefined for b == 1
     }
     
     /// d(t)
     
     private func getD(t: Double, k: Double) -> Double {
         
-        if (b == 2) { /// The other formula isn't defined at b == 2
-            return log(a * (c - t)) / a + k
+        if (b == 1) {
+            return -pow(M_E, a * (c - t)) / a + k
+            /// Solution for `integrate pow(e, -a * (t - c))` from WA
         }
         
-        return pow(a * (b - 1) * (t - c), 1/(1 - b) + 1) / (a * (b - 2)) + k
+        return pow((a*b - a) * (t - c), 1/(1 - b) + 1) / (a*b - 2*a) + k
+        /// ^ This is defined for all b except b == 1
+        
+//        if (b == 2) {
+//            return log(a * (c - t)) / a + k
+//            /// ^ This is only defined for b == 2
+//        }
+//
+//        return pow(a * (b - 1) * (t - c), 1/(1 - b) + 1) / (a * (b - 2)) + k
+//            /// ^ Not defined for b == 1 or b == 2
     }
     
     private func getK(t: Double, d: Double) -> Double {
         /// Get k such that d(t) passes through the point (t, d)
-        return -getD(t: t, k: 0) + d
+        
+        let D = getD(t: t, k: 0)
+        
+        return -D + d
     }
     
     /// Interface
@@ -189,7 +277,13 @@ import Foundation
         
         let t = Math.scale(value: tUnit, from: .unitInterval(), to: timeInterval)
         let d = getD(t: t, k: self.k)
-        let dUnit = Math.scale(value: d, from: distanceInterval, to: .unitInterval())
+        var dUnit = Math.scale(value: d, from: distanceInterval, to: .unitInterval())
+        
+        assert(dUnit > 0)
+        
+        if self.isNegative {
+            dUnit *= -1
+        }
         
         return dUnit
     }

@@ -245,7 +245,10 @@
     return dstMutable;
 }
 
-+ (int8_t)signOf:(double)x {
++ (int8_t)signOf:(double)x { /// TODO: Remove this in favor of sign(double x)
+    return sign(x);
+}
+int8_t sign(double x) {
     return (0 < x) - (x < 0);
 }
 

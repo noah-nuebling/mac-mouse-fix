@@ -84,6 +84,10 @@ import CocoaLumberjackSwift
         /// It's kind of unnecessary to be passing this a value interval, because we only use the length of it. Since the AnimatorCallback only receives valueDeltas each frame and no absolute values,  the location of the value interval doesn't matter.
         /// We need to make `callback` and UntypedAnimatorCallback instead of a normal AnimatorCallback, so we can change the type of `callback` to IntegerAnimatorCallback in the subclass IntegerAnimator. That's because Swift is stinky. UntypedAnimatorCallback is @escaping
         
+        
+        DDLogDebug("START ANIMATOR")
+        
+        
         self.callback = callback;
         self.animationCurve = animationCurve
         
@@ -135,6 +139,9 @@ import CocoaLumberjackSwift
     /// Stop
     
     @objc func stop() {
+        
+        DDLogDebug("STOPPING ANIMATOR")
+        
         displayLink.stop()
         animationPhase = kMFAnimationPhaseNone
     }

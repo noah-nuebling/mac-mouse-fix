@@ -82,12 +82,12 @@
     if (code != kCVReturnSuccess) {
         DDLogInfo(@"Failed to start CVDisplayLink. Error code: %d", code);
     } else {
-        DDLogDebug(@"Started displayLinkCallback");
+//        DDLogDebug(@"Started displayLinkCallback");
     }
 }
 - (void)stop {
     CVDisplayLinkStop(_displayLink);
-    DDLogDebug(@"Stopped displayLinkCallback");
+//    DDLogDebug(@"Stopped displayLinkCallback");
 }
 
 - (BOOL)isRunning {

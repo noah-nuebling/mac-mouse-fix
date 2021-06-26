@@ -408,7 +408,7 @@ static void sendGestureScroll(int64_t dx, int64_t dy, IOHIDEventPhaseBits scroll
     [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:scrollPhase];
     
     if (scrollPhase == kIOHIDEventPhaseEnded) {
-        [GestureScrollSimulator stopMomentumScroll];
+//        [GestureScrollSimulator stopMomentumScroll];
     }
 }
 

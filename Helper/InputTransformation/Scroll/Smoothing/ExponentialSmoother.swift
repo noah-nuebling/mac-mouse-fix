@@ -21,10 +21,10 @@ class ExponentialSmoother: NSObject {
     /// Init
     
     @objc convenience init(a: Double, initialValue: Double) {
-        self.init(a: a, initialValue: initialValue)
+        self.init(privateA: a, initialValue: initialValue)
     }
     @objc convenience init(a: Double) {
-        self.init(a: a, initialValue: nil)
+        self.init(privateA: a, initialValue: nil)
     }
     
     /** Main init
@@ -36,9 +36,9 @@ class ExponentialSmoother: NSObject {
         - The first input will just be returned without alteration
         - So to prevent misuse, we're requiring the initialValue on initialization
      */
-    private init(a: Double, initialValue: Double?) {
+    private init(privateA: Double, initialValue: Double?) {
         
-        self.a = a
+        self.a = privateA
         self.initialValue = initialValue
         
         super.init()

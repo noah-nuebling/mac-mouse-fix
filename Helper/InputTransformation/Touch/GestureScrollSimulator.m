@@ -47,7 +47,7 @@ static Animator *_animator;
         
         /// Init smoothers
         
-        double smoothingA = 0.7;
+        double smoothingA = 1.0; /// 1.0 -> smoothing is off
         double smoothingY = 0.8;
         _xSpeedSmoother = [[DoubleExponentialSmoother alloc] initWithA:smoothingA y:smoothingY];
         _ySpeedSmoother = [[DoubleExponentialSmoother alloc] initWithA:smoothingA y:smoothingY];
@@ -232,7 +232,10 @@ static void startMomentumScroll(Vector exitVelocity, double stopSpeed, double dr
     Vector direction = unitVector(initialVelocity);
     
     /// Get drag animation curve
-    DragCurve *animationCurve = [[DragCurve alloc] initWithCoefficient:dragCoefficient exponent:dragExponent initialSpeed:initialSpeed stopSpeed:stopSpeed];
+    DragCurve *animationCurve = [[DragCurve alloc] initWithCoefficient:dragCoefficient
+                                                              exponent:dragExponent
+                                                          initialSpeed:initialSpeed
+                                                             stopSpeed:stopSpeed];
     
     /// Get duration and distance for animation
     double duration = animationCurve.timeInterval.length;
@@ -379,7 +382,7 @@ static Vector gestureVectorFromScrollPointVector(Vector vec) {
 static Vector initalMomentumScrollVelocityWithExitVelocity(Vector exitVelocity) {
     
     return scaledVectorWithFunction(exitVelocity, ^double(double x) {
-        return pow(x, 1.08);
+        return pow(fabs(x), 1.08) * sign(x);
     });
 }
 

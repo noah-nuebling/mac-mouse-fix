@@ -23,10 +23,10 @@ import Cocoa
     /// Init
     
     @objc convenience init(a: Double, y: Double) {
-        self.init(a: a, y: y, initialValue1: nil, initialValue2: nil)
+        self.init(privateA: a, y: y, initialValue1: nil, initialValue2: nil)
     }
     @objc convenience init(a: Double, y: Double, initialValue1: Double, initialValue2: Double) {
-        self.init(a: a, y: y, initialValue1: initialValue1, initialValue2: initialValue2)
+        self.init(privateA: a, y: y, initialValue1: initialValue1, initialValue2: initialValue2)
     }
     
     /** Main init
@@ -40,10 +40,11 @@ import Cocoa
             - The first input establishes the initial value, the first two together establish the initial trend.
             - The first and second inputs will just be returned without alteration without any smoothing
             - So to avoid misuse of the algorithm we're requiring the initial values in the initializer
+        - Need to call `a` `privateA` so that this funciton is differentiable from  `init(a:y:initialValue1:initialValue2:) `
      */
-    private init(a: Double, y: Double, initialValue1: Double?, initialValue2: Double?) {
+    private init(privateA: Double, y: Double, initialValue1: Double?, initialValue2: Double?) {
         
-        self.a = a
+        self.a = privateA
         self.y = y
         self.initialValue1 = initialValue1
         self.initialValue2 = initialValue2
