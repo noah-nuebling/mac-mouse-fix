@@ -226,7 +226,7 @@ static void startMomentumScroll(Vector exitVelocity, double stopSpeed, double dr
     
     /// Declare constants
     
-    Vector zeroVector = (Vector){.x = 0.0, .y = 0.0};
+    Vector zeroVector = (Vector){.x = 0.0, .y = 0.0 };
     
     /// Reset subpixelators
     
@@ -241,6 +241,12 @@ static void startMomentumScroll(Vector exitVelocity, double stopSpeed, double dr
     
     /// Get initial speed
     double initialSpeed = magnitudeOfVector(initialVelocity);
+    
+    /// Stop momentumScroll immediately, if the initial Speed is too small
+    if (initialSpeed <= stopSpeed) {
+        [GestureScrollSimulator stopMomentumScroll];
+        return;
+    }
     
     /// Get direction
     Vector direction = unitVector(initialVelocity);

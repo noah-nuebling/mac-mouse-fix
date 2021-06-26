@@ -10,9 +10,10 @@
 /// IntegerAnimator will behave just like Animator with these differences:
 /// The animationValueDelta values it passes to it's AnimatorCallback are always integers instead of Doubles
 /// To achieve this, the internally generated Double deltas are rounded using a subpixelator which always rounds to the next larger integer (a ceilPixelator)
-///     Using ceil instead of normal rounding (roundPixelator) will always generate the first non-zero integer delta immediately on the first frame of animation. I hope that will make the animations this produces marginally more responsive.
+///     Using ceil instead of normal rounding (roundPixelator) will always generate the first non-zero integer delta immediately on the first frame of animation. I hope that will make the animations this produces marginally more responsive. This only works if the first delta is positive not negative. Since we only use this class in Scroll.m where that's the case, this is okay.
 /// Integer deltas which are zero won't be passed to the AnimatorCallback
 /// Phases kMFAnimationPhaseStart, and kMFAnimationPhaseEnd will be sent to the AnimatorCallback with the first and last non-zero integer deltas respectively.
+///     This behaviour will make this animator great for driving our gestureScrollSimulation, where that kind of input is expected.
 
 
 import Cocoa
@@ -33,7 +34,7 @@ class IntegerAnimator: Animator {
     var integerCallback: IntegerAnimatorCallback?;
     
     var subPixelator: SubPixelator = SubPixelator.ceil();
-    /// ^ This being a ceil subPixelator only makes sense because we're only using this through Scroll.m and that's only running this with positive value ranges. So the deltas are being rounded up, and we get a delta immediately as soon as the animations starts, which should make scrolling very small distances feel a little more responsive. If we were dealing with negative deltas, we'd want to round them down instead somehow. Or simply use a SubPixelator.round() which works in both directions.
+    /// ^ This being a ceil subPixelator only makes sense because we're only using this through Scroll.m and that's only running this with positive value ranges. So the deltas are being rounded up, and we get a delta immediately as soon as the animations starts, which should make scrolling very small distances feel a little more responsive. If we were dealing with negative deltas, we'd want to round them down instead somehow. Or simply use a SubPixelator.round() which works the same in both directions.
     
     /// Declare new start function
     
@@ -50,7 +51,7 @@ class IntegerAnimator: Animator {
         }
     }
     
-    /// Hook into superclasses displayLinkCallback()
+    /// Hook into superclasses' displayLinkCallback()
     
     override func subclassHook(_ untypedCallback: Any, _ animationValueDelta: Double, _ animationTimeDelta: CFTimeInterval) {
         /// This hooks into displayLinkCallback() on Animator.swift. Look at that for context.
@@ -71,13 +72,13 @@ class IntegerAnimator: Animator {
             /// Check if this was the last int delta
             
             let currentAnimationValueLeft = self.animationValueLeft - animationValueDelta;
-            /// ^ We don't use self.animationValueLeft directly, because it's derived from self.lastAnimationValue which is only updated at the end of displayLinkCallback() after it calls subclassHook().
+            /// ^ We don't use self.animationValueLeft directly, because it's a computed property derived from self.lastAnimationValue which is only updated at the end of displayLinkCallback() - after it calls subclassHook().
             let intAnimationValueLeft = subPixelator.peekIntDelta(withDoubleDelta: currentAnimationValueLeft);
             if intAnimationValueLeft <= 0 {
                 self.animationPhase = kMFAnimationPhaseEnd;
             }
             
-            /// Update phase
+            /// Check if this was first and last event of animation simultaneously
             
             if (animationPhase == kMFAnimationPhaseEnd /// This is last event of the animation
                     && lastAnimationPhase == kMFAnimationPhaseNone) { /// This is also the first event of the animation
@@ -105,8 +106,8 @@ class IntegerAnimator: Animator {
             assert(self.animationPhase != kMFAnimationPhaseEnd)
             ///     Phase can be set to kMFAnimationPhaseEnd in two places.
             ///     1. In Animator.swift > displayLinkCallback(), when the current time is beyond the animationTimeInterval.
-            ///     2. Here in IntegerAnimator.swift > subclassHook(), when processing a non-zero integerDelta, and finding that all the animationValue that's left won't lead to another integer delta (so when it's smaller than 1)
-            ///     -> 2. Should always occur before 1. can occur from my understanding. This will ensure that all integer deltas that  are being sent to the callback are non zero and that the first and last deltas of the animation have kMFAnimationPhaseStart and kMFAnimationPhaseEnd respectively
+            ///     2. Here in IntegerAnimator.swift > subclassHook(), when processing a non-zero integerDelta, and finding that all the animationValue that's left won't lead to another integer delta (so when the animationValueLeft is smaller than 1)
+            ///     -> 2. Should always occur before 1. can occur from my understanding. (That's what this assertion is testing) This will ensure that the delta with phase kMFAnimationPhaseEnd would always be sent and would always contain a non-zero delta.
         }
     }
     

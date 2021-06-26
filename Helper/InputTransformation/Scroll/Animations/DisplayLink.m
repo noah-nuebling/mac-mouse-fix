@@ -86,7 +86,9 @@
     }
 }
 - (void)stop {
-    CVDisplayLinkStop(_displayLink);
+    if (self.isRunning) {
+        CVDisplayLinkStop(_displayLink);
+    }
 //    DDLogDebug(@"Stopped displayLinkCallback");
 }
 
