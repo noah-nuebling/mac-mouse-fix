@@ -25,7 +25,7 @@
 
 #import "SharedUtility.h"
 
-#import "GestureScrollSimulatorOld.h"
+#import "GestureScrollSimulator.h"
 #import "ScrollConfigObjC.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "CubicUnitBezier.h"

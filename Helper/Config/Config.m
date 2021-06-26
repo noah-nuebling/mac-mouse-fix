@@ -14,7 +14,6 @@
 #import "Config.h"
 #import "AppDelegate.h"
 #import "Scroll.h"
-#import "SmoothScroll.h"
 #import "ButtonInputReceiver.h"
 #import "ScrollModifiers.h"
 #import "SharedUtility.h"

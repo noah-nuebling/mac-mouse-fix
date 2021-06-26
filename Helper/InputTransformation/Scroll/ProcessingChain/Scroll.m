@@ -9,8 +9,6 @@
 
 #import "Scroll.h"
 #import "DeviceManager.h"
-#import "SmoothScroll.h"
-#import "RoughScroll.h"
 #import "TouchSimulator.h"
 #import "ScrollModifiers.h"
 #import "Config.h"
@@ -47,9 +45,6 @@ static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this
 
 + (void)load_Manual {
     
-    // Load SmoothScroll
-    [SmoothScroll load_Manual];
-    
     // Setup dispatch queue
     //  For multithreading while still retaining control over execution order.
     dispatch_queue_attr_t attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INTERACTIVE, -1);
@@ -85,7 +80,7 @@ static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this
     /// I determined the ones it resets through trial and error. Some misbehaviour/bugs might be caused by this not resetting all of the global variables.
     
     [ScrollAnalyzer resetState];
-    [SmoothScroll resetDynamicGlobals];
+//    [SmoothScroll resetDynamicGlobals];
 }
 
 + (void)rerouteScrollEventToTop:(CGEventRef)event {
@@ -100,6 +95,7 @@ static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this
 }
 
 + (void)decide {
+    /// TODO: Think about / update this
     /// Either activate SmoothScroll or RoughScroll or stop scroll interception entirely
     /// Call this whenever a value which the decision depends on changes
     
@@ -115,23 +111,23 @@ static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this
             CGEventTapEnable(_eventTap, false);
         }
         // Disable other scroll classes
-        [SmoothScroll stop];
-        [RoughScroll stop];
         [ScrollModifiers stop];
+//        [SmoothScroll stop];
+//        [RoughScroll stop];
     } else {
         // Enable scroll interception
         CGEventTapEnable(_eventTap, true);
         // Enable other scroll classes
         [ScrollModifiers start];
-        if (ScrollConfig.smoothEnabled) {
-            DDLogInfo(@"Enabling SmoothScroll");
-            [SmoothScroll start];
-            [RoughScroll stop];
-        } else {
-            DDLogInfo(@"Enabling RoughScroll");
-            [SmoothScroll stop];
-            [RoughScroll start];
-        }
+//        if (ScrollConfig.smoothEnabled) {
+//            DDLogInfo(@"Enabling SmoothScroll");
+//            [SmoothScroll start];
+//            [RoughScroll stop];
+//        } else {
+//            DDLogInfo(@"Enabling RoughScroll");
+//            [SmoothScroll stop];
+//            [RoughScroll start];
+//        }
     }
 }
 
@@ -224,9 +220,11 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
             /// Set app overrides
             BOOL configChanged = [Config applyOverridesForAppUnderMousePointer_Force:NO]; // TODO: `updateInternalParameters_Force:` should (probably) reset stuff itself, if it changes anything. This whole [SmoothScroll stop] stuff is kinda messy
             if (configChanged) {
-                [SmoothScroll stop]; // Not sure if useful
-                [RoughScroll stop]; // Not sure if useful
+//                [SmoothScroll stop]; // Not sure if useful
+//                [RoughScroll stop]; // Not sure if useful
                 /// TODO: Reset _animator here
+                /// Edit: But why?
+                
             }
         }
         if (ScrollUtility.mouseDidMove) {
@@ -255,7 +253,7 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
     } else if (!ScrollConfig.smoothEnabled) {
         /// Send scroll event directly. Will scroll all of pxToScrollForThisTick at once.
         
-        sendGestureScroll(pxToScrollForThisTick, scrollDirection, NO, 0);
+        sendScroll(pxToScrollForThisTick, scrollDirection, NO, kMFAnimationPhaseNone);
         
     } else {
         /// Send scroll events through animator, spread out over time.

@@ -8,7 +8,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "GestureScrollSimulatorOld.h"
+#import "GestureScrollSimulator.h"
 #import "VectorUtility.h"
 
 NS_ASSUME_NONNULL_BEGIN

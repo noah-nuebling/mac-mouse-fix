@@ -9,7 +9,6 @@
 
 #import "ScrollModifiers.h"
 #import "Scroll.h"
-#import "SmoothScroll.h"
 #import "TouchSimulator.h"
 #import "ScrollConfigObjC.h"
 #import "WannabePrefixHeader.h"
@@ -46,10 +45,10 @@ static BOOL _magnificationScrolling;
     
     if (!_magnificationScrolling && B) { // Magnification scrolling is being turned on
         ScrollModifiers.magnificationScrollHasBeenUsed = false;
-        if (SmoothScroll.isScrolling) { // To avoid random zooming when the user is pressing `magnificationScrollModifierKey` (Command) while scrolling
-            [SmoothScroll stop];
-            [SmoothScroll start];
-        }
+//        if (SmoothScroll.isScrolling) { // To avoid random zooming when the user is pressing `magnificationScrollModifierKey` (Command) while scrolling
+//            [SmoothScroll stop];
+//            [SmoothScroll start];
+//        }
     } else if (_magnificationScrolling && !B) { // Magnification scrolling is being turned off
         if (ScrollModifiers.magnificationScrollHasBeenUsed) {
             [TouchSimulator postMagnificationEventWithMagnification:0.0 phase:kIOHIDEventPhaseEnded];
