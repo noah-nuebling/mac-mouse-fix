@@ -78,28 +78,17 @@ class IntegerAnimator: Animator {
                 self.animationPhase = kMFAnimationPhaseEnd;
             }
             
-            /// Check if this was first and last event of animation simultaneously
+            /// Check if this was first _and_  last event of animation
+            ///     This has a copy in superclass. Update it when you change this
             
             if (animationPhase == kMFAnimationPhaseEnd /// This is last event of the animation
                     && lastAnimationPhase == kMFAnimationPhaseNone) { /// This is also the first event of the animation
-                animationPhase = kMFAnimationPhaseStartingEnd;
+                animationPhase = kMFAnimationPhaseStartAndEnd;
             }
-            
-            /// Debug
-            
-//            DDLogDebug("valueD, \(animationValueDelta), valueDInt: \(integerAnimationValueDelta), timeD: \(animationTimeDelta), phase: \(self.animationPhase)")
             
             /// Call callback
             
             callback(integerAnimationValueDelta, animationTimeDelta, self.animationPhase)
-            
-            /// Update phases
-            
-            if self.animationPhase == kMFAnimationPhaseStart || self.animationPhase == kMFAnimationPhaseRunningStart {
-                self.animationPhase = kMFAnimationPhaseContinue
-            } else if self.animationPhase == kMFAnimationPhaseEnd {
-                stop()
-            }
             
         } else {
             DDLogDebug("INTEGER DELTA IS ZERO - NOT CALLING CALLBACK")

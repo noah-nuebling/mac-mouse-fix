@@ -378,7 +378,7 @@ static void sendScroll(int64_t px, MFScrollDirection scrollDirection, BOOL gestu
             
             sendGestureScroll(dx, dy, kIOHIDEventPhaseChanged);
             
-        } else if (animationPhase == kMFAnimationPhaseStartingEnd) {
+        } else if (animationPhase == kMFAnimationPhaseStartAndEnd) {
             
             sendGestureScroll(dx, dy, kIOHIDEventPhaseBegan);
             sendGestureScroll(0, 0, kIOHIDEventPhaseEnded);

@@ -11,12 +11,12 @@
 #define Animator_h
 
 typedef enum {
-    kMFAnimationPhaseStart,
-    kMFAnimationPhaseRunningStart, /// Animation has been started again while it was already running
-    kMFAnimationPhaseContinue,
-    kMFAnimationPhaseEnd,
-    kMFAnimationPhaseStartingEnd, /// Used when there is only one delta in the animation. So that delta is the first _and_ the last one.
-    kMFAnimationPhaseNone,
+    kMFAnimationPhaseStart = 0,
+    kMFAnimationPhaseRunningStart = 1, /// Animation has been started again while it was already running
+    kMFAnimationPhaseContinue = 2,
+    kMFAnimationPhaseEnd = 4,
+    kMFAnimationPhaseStartAndEnd = 8, /// Used when there is only one delta in the animation. So that delta is the first _and_ the last one.
+    kMFAnimationPhaseNone = 16,
 } MFAnimationPhase;
 
 #endif /* Animator_h */

@@ -204,6 +204,13 @@ import CocoaLumberjackSwift
         
         subclassHook(callback, animationValueDelta, animationTimeDelta)
         
+        /// Update phases and do stop()
+        
+        switch self.animationPhase {
+        case kMFAnimationPhaseStart, kMFAnimationPhaseRunningStart: self.animationPhase = kMFAnimationPhaseContinue
+        case kMFAnimationPhaseEnd, kMFAnimationPhaseStartAndEnd: stop()
+        default: break }
+        
         /// Update `last` time and value and phase
         
         self.lastAnimationTime = now
@@ -221,24 +228,17 @@ import CocoaLumberjackSwift
             fatalError("Invalid state - callback is not type AnimatorCallback")
         }
         
-        /// Update phase
+        /// Check if this was first _and_  last event of animation
+        ///     This has a copy in subclass. Update it when you change this
         
         if (animationPhase == kMFAnimationPhaseEnd /// This is last event of the animation
                 && lastAnimationPhase == kMFAnimationPhaseNone) { /// This is also the first event of the animation
-            animationPhase = kMFAnimationPhaseStartingEnd;
+            animationPhase = kMFAnimationPhaseStartAndEnd;
         }
         
         /// Call the callback
         
         callback(animationValueDelta, animationTimeDelta, animationPhase)
-        
-        /// Update phases
-        
-        if animationPhase == kMFAnimationPhaseStart || animationPhase == kMFAnimationPhaseRunningStart {
-            animationPhase = kMFAnimationPhaseContinue
-        } else if animationPhase == kMFAnimationPhaseEnd {
-            stop()
-        }
     }
     
 }

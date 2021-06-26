@@ -106,6 +106,10 @@ static CGPoint _origin;
         return;
     }
     
+    /// Stop momentum scroll
+    
+    [self stopMomentumScroll];
+    
     /// Timestamps and static vars
     
     CFTimeInterval now = CACurrentMediaTime();
@@ -282,7 +286,7 @@ static void startMomentumScroll(Vector exitVelocity, double stopSpeed, double dr
         } else if (animationPhase == kMFAnimationPhaseContinue) {
             momentumPhase = kCGMomentumScrollPhaseContinue;
         } else if (animationPhase == kMFAnimationPhaseEnd
-                   || animationPhase == kMFAnimationPhaseStartingEnd) {
+                   || animationPhase == kMFAnimationPhaseStartAndEnd) {
             /// Not sure how to deal with kMFAnimationPhaseStartingEnd. Maybe we should set momentumPhase to kCGMomentumScrollPhaseBegin instead?
             
             momentumPhase = kCGMomentumScrollPhaseEnd;
