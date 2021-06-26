@@ -90,8 +90,7 @@ static Animator *_momentumAnimator;
  
     - The reason behind this is that this is how real trackpad input seems to work. Some apps like Xcode will automatically keep scrolling if no events are sent after the event with phase kIOHIDEventPhaseEnded. And others, like Safari will not. This function wil automatically keep sending events after it has been called with kIOHIDEventPhaseEnded in order to make all apps react as consistently as possible.
  
- \note In order to minimize momentum scrolling,  send an event with a very small but non-zero scroll delta before calling the function with phase kIOHIDEventPhaseEnded.
-    \todo Implement a better way to stop momentum scrolling. Like a separate function
+ \note In order to minimize momentum scrolling,  send an event with a very small but non-zero scroll delta before calling the function with phase kIOHIDEventPhaseEnded, or call stopMomentumScroll()
  \note For more info on which delta values and which phases to use, see the documentation for `postGestureScrollEventWithGestureDeltaX:deltaY:phase:momentumPhase:scrollDeltaConversionFunction:scrollPointDeltaConversionFunction:`. In contrast to the aforementioned function, you shouldn't need to call this function with kIOHIDEventPhaseUndefined.
 */
 
@@ -438,7 +437,7 @@ static Vector initalMomentumScrollVelocityWithExitVelocity(Vector exitVelocity) 
                               scrollVectorPoint:(Vector)vecScrollPoint
                                           phase:(IOHIDEventPhaseBits)phase
                                   momentumPhase:(CGMomentumScrollPhase)momentumPhase
-                                      location:(CGPoint)loc {
+                                       location:(CGPoint)loc {
     
     DDLogDebug(@"Posting: gesture: (%f,%f) --- scroll: (%f, %f) --- scrollPt: (%f, %f) --- phases: %d, %d\n",
           vecGesture.x, vecGesture.y, vecScroll.x, vecScroll.y, vecScrollPoint.x, vecScrollPoint.y, phase, momentumPhase);
