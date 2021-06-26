@@ -69,7 +69,7 @@ static Animator *_momentumAnimator;
         
         _gesturePixelator = [VectorSubPixelator roundPixelator];
         _scrollPointPixelator = [VectorSubPixelator roundPixelator];
-        _scrollLinePixelator = [VectorSubPixelator roundPixelator];
+        _scrollLinePixelator = [VectorSubPixelator biasedPixelator]; /// I think biased is only beneficial on linePixelator. Too lazy to explain.
         
         /// Animator
         
@@ -384,6 +384,9 @@ static void startMomentumScroll(Vector exitVelocity, double stopSpeed, double dr
         /// Reset mouse pointer after posting at origin
         if (animationPhase == kMFAnimationPhaseStart) {
             CGWarpMouseCursorPosition(originalLocation);
+            CGWarpMouseCursorPosition(originalLocation);
+            /// Doing this twice because it sometimes doesn't work. Not sure if it helps
+            /// Also this freezes the mouse pointer for a split second. Not ideal, but not really noticable, either.
         }
         
     }];
@@ -437,8 +440,8 @@ static Vector initalMomentumScrollVelocityWithExitVelocity(Vector exitVelocity) 
                                   momentumPhase:(CGMomentumScrollPhase)momentumPhase
                                       location:(CGPoint)loc {
     
-//    DDLogDebug(@"Posting: gesture: (%f,%f) --- scroll: (%f, %f) --- scrollPt: (%f, %f) --- phases: %d, %d\n",
-//          vecGesture.x, vecGesture.y, vecScroll.x, vecScroll.y, vecScrollPoint.x, vecScrollPoint.y, phase, momentumPhase);
+    DDLogDebug(@"Posting: gesture: (%f,%f) --- scroll: (%f, %f) --- scrollPt: (%f, %f) --- phases: %d, %d\n",
+          vecGesture.x, vecGesture.y, vecScroll.x, vecScroll.y, vecScrollPoint.x, vecScrollPoint.y, phase, momentumPhase);
     
     assert((phase == kIOHIDEventPhaseUndefined || momentumPhase == kCGMomentumScrollPhaseNone)); /// At least one of the phases has to be 0
     

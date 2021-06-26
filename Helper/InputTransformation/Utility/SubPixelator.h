@@ -15,8 +15,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (SubPixelator *)ceilPixelator;
 + (SubPixelator *)roundPixelator;
++ (SubPixelator *)biasedPixelator;
++ (SubPixelator *)floorPixelator;
 
 - (instancetype)init NS_UNAVAILABLE;
+- (instancetype)initWithRoundingFunction:(double (*)(double))roundingFunction;
+- (instancetype)initAsBiasedPixelator;
 
 - (int64_t)intDeltaWithDoubleDelta:(double)inp;
 - (int64_t)peekIntDeltaWithDoubleDelta:(double)inpDelta;

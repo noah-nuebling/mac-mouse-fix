@@ -16,28 +16,33 @@
 }
 
 + (VectorSubPixelator *)ceilPixelator {
-    return [[self alloc] initCeil];
+    return [[self alloc] initWithRoundingFunction:ceil];
 }
 + (VectorSubPixelator *)roundPixelator {
-    return [[self alloc] initRound];
+    return [[self alloc] initWithRoundingFunction:round];
+}
++ (VectorSubPixelator *)biasedPixelator {
+    return [[self alloc] initAsBiasedPixelator];
+}
++ (VectorSubPixelator *)floorPixelator {
+    return [[self alloc] initWithRoundingFunction:floor];
 }
 
-- (instancetype)initCeil
+- (instancetype)initWithRoundingFunction:(double (*)(double))roundingFunction
 {
     self = [super init];
     if (self) {
-        _spX = [SubPixelator ceilPixelator];
-        _spY = [SubPixelator ceilPixelator];
+        _spX = [[SubPixelator alloc] initWithRoundingFunction:roundingFunction];
+        _spY = [[SubPixelator alloc] initWithRoundingFunction:roundingFunction];
     }
     return self;
 }
-
-- (instancetype)initRound;
+- (instancetype)initAsBiasedPixelator
 {
     self = [super init];
     if (self) {
-        _spX = [SubPixelator roundPixelator];
-        _spY = [SubPixelator roundPixelator];
+        _spX = [SubPixelator biasedPixelator];
+        _spY = [SubPixelator biasedPixelator];
     }
     return self;
 }

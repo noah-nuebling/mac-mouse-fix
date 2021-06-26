@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (VectorSubPixelator *)ceilPixelator;
 + (VectorSubPixelator *)roundPixelator;
++ (VectorSubPixelator *)biasedPixelator;
++ (VectorSubPixelator *)floorPixelator;
 
 - (instancetype)init NS_UNAVAILABLE;
 
