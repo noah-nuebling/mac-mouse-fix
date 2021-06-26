@@ -32,7 +32,9 @@ Also see:
 
 #pragma mark - Constants
 
-double pixelsPerLine = 10;
+static double pixelsPerLine = 10;
+static double preMomentumScrollMaxInterval = 0.05;
+/// ^ Only start momentum scroll, if less than this time interval has passed between the kIOHIDEventPhaseEnded event and the last event before with a non-zero delta.
 
 #pragma mark - Vars and init
 
@@ -53,9 +55,15 @@ static Animator *_momentumAnimator;
         
         /// Init smoothers
         
-        double smoothingA = 1.0; /// 1.0 -> smoothing is off
+        double smoothingA = 0.2; /// 1.0 -> smoothing is off
         _xSpeedSmoother = [[ExponentialSmoother alloc] initWithA:smoothingA];
         _ySpeedSmoother = [[ExponentialSmoother alloc] initWithA:smoothingA];
+        
+//        double smoothingA = 0.2; /// 1.0 -> smoothing is off
+//        double smoothingY = 0.8;
+//        _xSpeedSmoother = [[DoubleExponentialSmoother alloc] initWithA:smoothingA y:smoothingY];
+//        _ySpeedSmoother = [[DoubleExponentialSmoother alloc] initWithA:smoothingA y:smoothingY];
+        
         
         /// Init Pixelators
         
@@ -112,13 +120,19 @@ static Animator *_momentumAnimator;
     
     /// Timestamps and static vars
     
-    CFTimeInterval now = CACurrentMediaTime();
-    
     static CFTimeInterval lastInputTime;
     static double smoothedXSpeed;
     static double smoothedYSpeed;
+    static CGPoint origin;
     
-    /// Record last scrollPoint vector
+    CFTimeInterval now = CACurrentMediaTime();
+    CFTimeInterval timeSinceLastInput;
+    if (phase == kIOHIDEventPhaseBegan) {
+        timeSinceLastInput = DBL_MAX; /// This means we can't say anything useful about the time since last input
+    } else {
+        timeSinceLastInput = now - lastInputTime;
+    }
+    
     
     /// Location
     
@@ -128,11 +142,19 @@ static Animator *_momentumAnimator;
     
     if (phase == kIOHIDEventPhaseBegan) {
         
+        origin = location;
+        
         /// Reset subpixelators
         
         [_scrollLinePixelator reset];
         [_scrollPointPixelator reset];
         [_gesturePixelator reset];
+        
+        /// Reset smoothers
+        [_xSpeedSmoother resetState];
+        [_ySpeedSmoother resetState];
+        smoothedXSpeed = 0;
+        smoothedYSpeed = 0;
         
     }
     if (phase == kIOHIDEventPhaseBegan || phase == kIOHIDEventPhaseChanged) {
@@ -149,23 +171,13 @@ static Animator *_momentumAnimator;
         
         /// Update smoothed speed
         
-        if (phase == kIOHIDEventPhaseBegan) {
-            
-            [_xSpeedSmoother resetState];
-            [_ySpeedSmoother resetState];
-            smoothedXSpeed = 0;
-            smoothedYSpeed = 0;
-            
-        } else if (phase == kIOHIDEventPhaseChanged) {
-            
-            double timeSinceLastInput = now - lastInputTime;
+            if (phase == kIOHIDEventPhaseChanged) {
                 
             double xSpeed = vecScrollPoint.x / timeSinceLastInput;
             double ySpeed = vecScrollPoint.y / timeSinceLastInput;
             
             smoothedXSpeed = [_xSpeedSmoother smoothWithValue:xSpeed];
             smoothedYSpeed = [_ySpeedSmoother smoothWithValue:ySpeed];
-            
             
         }
         
@@ -182,7 +194,7 @@ static Animator *_momentumAnimator;
                                     scrollVectorPoint:vecScrollPoint
                                                 phase:phase
                                         momentumPhase:kCGMomentumScrollPhaseNone
-                                             location:location];
+                                             location:origin];
         
     } else if (phase == kIOHIDEventPhaseEnded) {
         
@@ -195,26 +207,40 @@ static Animator *_momentumAnimator;
                                         momentumPhase:0
                                              location:location];
         
-        /// Get momentum scroll params
+        /// Check if too much time has passed since last event to start momentum scroll (if the mouse is stationary)
         
-//        Vector exitVelocity = (Vector){ .x = smoothedXSpeed, .y = smoothedYSpeed };
-        Vector exitVelocity = scaledVector(_lastScrollPointVector, 500);
+        if (preMomentumScrollMaxInterval < timeSinceLastInput
+            || timeSinceLastInput == DBL_MAX) { /// This should never be true at this point, because it's only set to DBL_MAX when phase == kIOHIDEventPhaseBegan
+            /// Immedately cancel momentum scroll
+            
+            /// Debug
+            DDLogDebug(@"Not sending momentum scroll: timeSinceLastInput: %f", timeSinceLastInput);
+            
+            [self stopMomentumScroll];
+            
+        } else {
+            /// Do start momentum scroll
         
-        double stopSpeed = 1.0;
-        double dragCoeff = 30;
-        double dragExp = 0.8;
-        CGPoint location = location;
-        
-        /**
-                For `dragExp`, a value between 0.7 and 0.8 seems to be the sweet spot to get nice trackpad-like deceleratin
-                - `dragExp` = 0.8 works well with `dragCoeff` around 30 (in the old implementation it used to be 8, so we probably messed something up in the new implementation)
-                - `dragExp` = 0.7 works well with `dragCoeff` around 70
-                - `dragExp` = 0.9  with `dragCoeff` around 10 also feels nice but noticeably different from Trackpad
-         */
-        
-        /// Start momentum scroll
-        
-        startMomentumScroll(exitVelocity, stopSpeed, dragCoeff, dragExp, location);
+            /// Get momentum scroll params
+            
+            Vector exitVelocity = (Vector){ .x = smoothedXSpeed, .y = smoothedYSpeed };
+            
+            double stopSpeed = 1.0;
+            double dragCoeff = 30;
+            double dragExp = 0.8;
+            CGPoint location = origin;
+            
+            /**
+                    For `dragExp`, a value between 0.7 and 0.8 seems to be the sweet spot to get nice trackpad-like deceleratin
+                    - `dragExp` = 0.8 works well with `dragCoeff` around 30 (in the old implementation it used to be 8, so we probably messed something up in the new implementation)
+                    - `dragExp` = 0.7 works well with `dragCoeff` around 70
+                    - `dragExp` = 0.9  with `dragCoeff` around 10 also feels nice but noticeably different from Trackpad
+             */
+            
+            /// Start momentum scroll
+            
+            startMomentumScroll(exitVelocity, stopSpeed, dragCoeff, dragExp, location);
+        }
         
     } else {
         assert(false);
@@ -226,8 +252,6 @@ static Animator *_momentumAnimator;
 #pragma mark - Momentum scroll
 
 + (void)stopMomentumScroll {
-    
-    if (!_momentumAnimator.isRunning) return;
 
     CGEventRef event = CGEventCreate(NULL);
     [self stopMomentumScrollWithEvent:event];
@@ -236,13 +260,15 @@ static Animator *_momentumAnimator;
 
 + (void)stopMomentumScrollWithEvent:(CGEventRef _Nonnull)event {
     
-    if (!_momentumAnimator.isRunning) return;
-    
+    if (_momentumAnimator.isRunning) {
+    /// Stop our animator
+    /// - If we only post the event (below) when _momentumAnimator.isRunning, then preventing the momentumScroll from Scroll.m > sendGestureScroll() won't work. Not sure why.
+        
+        [_momentumAnimator stop];
+    }
+
     /// Get location from event
     CGPoint location = CGEventGetLocation(event);
-    
-    /// Stop our animator
-    [_momentumAnimator stop];
     
     /// Send kCGMomentumScrollPhaseEnd event.
     ///  This will stop scrolling in apps like Xcode which implement their own momentum scroll algorithm
@@ -254,7 +280,7 @@ static Animator *_momentumAnimator;
                                                       momentumPhase:kCGMomentumScrollPhaseEnd
                                                           location:location];
 }
-static void startMomentumScroll(Vector exitVelocity, double stopSpeed, double dragCoefficient, double dragExponent, CGPoint location) {
+static void startMomentumScroll(Vector exitVelocity, double stopSpeed, double dragCoefficient, double dragExponent, CGPoint origin) {
     
     ///Debug
     
@@ -332,7 +358,7 @@ static void startMomentumScroll(Vector exitVelocity, double stopSpeed, double dr
             assert(false);
         }
         
-        /// Get current pointer location
+        /// Get pointer location
         
         CGPoint location = getPointerLocation();
         
@@ -448,7 +474,7 @@ static Vector initalMomentumScrollVelocityWithExitVelocity(Vector exitVelocity) 
     
     return scaledVectorWithFunction(exitVelocity, ^double(double x) {
 //        return pow(fabs(x), 1.08) * sign(x);
-        return x * 7;
+        return x * 9;
     });
 }
 
