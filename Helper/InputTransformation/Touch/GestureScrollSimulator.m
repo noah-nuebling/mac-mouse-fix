@@ -371,89 +371,9 @@ static void startMomentumScroll(Vector exitVelocity, double stopSpeed, double dr
                                                               location:location];
     }];
     
-    
-    /// ********************************
-    
-//    return;
-//
-//    /// Init flags and constants
-//
-//    _breakMomentumScrollFlag = false;
-//    _momentumScrollIsActive = true;
-//
-//    Vector emptyVec = (const Vector){};
-//
-//    /// Get initial state for the momentum scrolling
-//
-//    Vector velPt = initalMomentumScrollVelocityWithExitVelocity(exitVelocity);
-//    Vector vecPt = velPt;
-//    Vector vec = scrollLineVectorWithScrollPointVector(vecPt);
-//    double magPt = magnitudeOfVector(vecPt);
-//
-//    CGMomentumScrollPhase ph = kCGMomentumScrollPhaseBegin;
-//
-//    /// Start posting scroll events
-//
-//    CFTimeInterval prevTs = CACurrentMediaTime();
-//
-//    while (magPt > thresh) {
-//        if (_breakMomentumScrollFlag == true) {
-//            DDLogInfo(@"BREAKING MOMENTUM SCROLL");
-//            break;
-//        }
-//        CGPoint loc = getPointerLocation();
-//        [GestureScrollSimulator postGestureScrollEventWithGestureVector:emptyVec scrollVector:vec scrollVectorPoint:vecPt phase:kIOHIDEventPhaseUndefined momentumPhase:ph location:loc];
-//
-//        [NSThread sleepForTimeInterval:tick]; // Not sure if it's good to pause the whole thread here, using a display link or ns timer or sth is probably much faster. But this seems to work fine so whatevs.
-//        CFTimeInterval ts = CACurrentMediaTime();
-//        CFTimeInterval timeDelta = ts - prevTs;
-//        prevTs = ts;
-//
-//        vecPt = momentumScrollPointVectorWithPreviousVector(vecPt, dragCoeff, dragExp, timeDelta);
-//        vec = scrollLineVectorWithScrollPointVector(vecPt);
-//        magPt = magnitudeOfVector(vecPt);
-//        ph = kCGMomentumScrollPhaseContinue;
-//
-//    }
-//
-//    /// Post end event
-//
-//    CGPoint loc = getPointerLocation();
-//    [GestureScrollSimulator postGestureScrollEventWithGestureVector:emptyVec
-//                                                       scrollVector:emptyVec
-//                                                  scrollVectorPoint:emptyVec
-//                                                              phase:kIOHIDEventPhaseUndefined
-//                                                      momentumPhase:kCGMomentumScrollPhaseEnd
-//                                                          location:loc];
-//
-//    /// Set flag
-//
-//    _momentumScrollIsActive = false;
-    
 }
 
 #pragma mark - Vector math functions
-
-//static Vector momentumScrollPointVectorWithPreviousVector(Vector velocity, double dragCoeff, double dragExp, double timeDelta) {
-//
-//    double a = magnitudeOfVector(velocity);
-//    double b = pow(a, dragExp);
-//    double dragMagnitude = b * dragCoeff;
-//
-//    Vector unitVec = unitVector(velocity);
-//    Vector dragForce = scaledVector(unitVec, dragMagnitude);
-//    dragForce = scaledVector(dragForce, -1);
-//
-//    Vector velocityDelta = scaledVector(dragForce, timeDelta);
-//
-//    Vector newVelocity = addedVectors(velocity, velocityDelta);
-//
-//    double dp = dotProduct(velocity, newVelocity);
-//    if (dp < 0) { // Vector has changed direction (crossed zero)
-//        newVelocity = (const Vector){}; // Set to zero
-//    }
-//    return newVelocity;
-//}
 
 static Vector scrollLineVectorWithScrollPointVector(Vector vec) {
     
