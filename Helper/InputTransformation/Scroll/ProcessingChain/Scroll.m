@@ -23,7 +23,7 @@
 #import "Queue.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "SubPixelator.h"
-#import "GestureScrollSimulatorOld.h"
+#import "GestureScrollSimulator.h"
 #import "SharedUtility.h"
 
 @implementation Scroll
@@ -255,7 +255,7 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
     } else if (!ScrollConfig.smoothEnabled) {
         /// Send scroll event directly. Will scroll all of pxToScrollForThisTick at once.
         
-        sendScroll(pxToScrollForThisTick, scrollDirection, NO, 0);
+        sendGestureScroll(pxToScrollForThisTick, scrollDirection, NO, 0);
         
     } else {
         /// Send scroll events through animator, spread out over time.
@@ -300,30 +300,7 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
             assert(valueDelta != 0);
             DDLogDebug(@"DELTA: %ld, PHASE: %d", (long)valueDelta, animationPhase);
             
-            /// Send events
-            
-            if (animationPhase == kMFAnimationPhaseStart) {
-                
-                sendScroll(valueDelta, scrollDirection, YES, kIOHIDEventPhaseBegan);
-                
-            } else if (animationPhase == kMFAnimationPhaseRunningStart
-                    || animationPhase == kMFAnimationPhaseContinue) {
-                
-                sendScroll(valueDelta, scrollDirection, YES, kIOHIDEventPhaseChanged);
-                
-            } else if (animationPhase == kMFAnimationPhaseStartingEnd) {
-                
-                sendScroll(valueDelta, scrollDirection, YES, kIOHIDEventPhaseBegan);
-                sendScroll(0, kMFScrollDirectionNone, YES, kIOHIDEventPhaseEnded);
-                
-            }else if (animationPhase == kMFAnimationPhaseEnd) {
-                
-                sendScroll(valueDelta, scrollDirection, YES, kIOHIDEventPhaseChanged);
-                sendScroll(0, kMFScrollDirectionNone, YES, kIOHIDEventPhaseEnded);
-                
-            } else {
-                assert(false);
-            }
+            sendScroll(valueDelta, scrollDirection, YES, animationPhase);
             
         }];
     }
@@ -347,7 +324,7 @@ static int64_t getPxPerTick(CFTimeInterval timeBetweenTicks) {
     return 40; /// We could use a SubPixelator balance out the rounding errors, but I don't think that'll be noticable
 }
 
-static void sendScroll(int64_t px, MFScrollDirection scrollDirection, BOOL gesture, IOHIDEventPhaseBits scrollPhase) {
+static void sendScroll(int64_t px, MFScrollDirection scrollDirection, BOOL gesture, MFAnimationPhase animationPhase) {
     /// scrollPhase is only used when `gesture` is YES
     
     if (px == 0) {
@@ -400,16 +377,40 @@ static void sendScroll(int64_t px, MFScrollDirection scrollDirection, BOOL gestu
         CGEventPost(kCGSessionEventTap, event);
         
     } else {
-        /// Send simulated two-finger swipe event
+        /// Send gesture scroll events
         
-        [GestureScrollSimulatorOld postGestureScrollEventWithDeltaX:dx deltaY:dy phase:scrollPhase];
-        
-        if (scrollPhase == kIOHIDEventPhaseEnded) {
-            /// Force stop momentum scroll
-            ///  Sending an event with scrollPhase kIOHIDEventPhaseUndefined and momentumPhase kCGMomentumScrollPhaseEnd should stop momentum phase immediately according to postGestureScrollEventWithGestureVector: documentation.
+        if (animationPhase == kMFAnimationPhaseStart) {
             
+            sendGestureScroll(dx, dy, kIOHIDEventPhaseBegan);
+            
+        } else if (animationPhase == kMFAnimationPhaseRunningStart
+                || animationPhase == kMFAnimationPhaseContinue) {
+            
+            sendGestureScroll(dx, dy, kIOHIDEventPhaseChanged);
+            
+        } else if (animationPhase == kMFAnimationPhaseStartingEnd) {
+            
+            sendGestureScroll(dx, dy, kIOHIDEventPhaseBegan);
+            sendGestureScroll(0, 0, kIOHIDEventPhaseEnded);
+            
+        }else if (animationPhase == kMFAnimationPhaseEnd) {
+            
+            sendGestureScroll(dx, dy,  kIOHIDEventPhaseChanged);
+            sendGestureScroll(0, 0, kIOHIDEventPhaseEnded);
+            
+        } else {
+            assert(false);
         }
-        
+    }
+}
+
+static void sendGestureScroll(int64_t dx, int64_t dy, IOHIDEventPhaseBits scrollPhase) {
+    /// Send simulated two-finger swipe event
+    
+    [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:scrollPhase];
+    
+    if (scrollPhase == kIOHIDEventPhaseEnded) {
+        [GestureScrollSimulator stopMomentumScroll];
     }
 }
 

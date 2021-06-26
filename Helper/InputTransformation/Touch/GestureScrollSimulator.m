@@ -32,14 +32,14 @@ Also see:
 
 #pragma mark - Vars and init
 
-static CFTimeInterval lastInputTime;
-
 static DoubleExponentialSmoother *_xSpeedSmoother;
 static DoubleExponentialSmoother *_ySpeedSmoother;
 
 static VectorSubPixelator *_gesturePixelator;
 static VectorSubPixelator *_scrollPointPixelator;
 static VectorSubPixelator *_scrollLinePixelator;
+
+static Animator *_animator;
 
 + (void)initialize
 {
@@ -48,7 +48,7 @@ static VectorSubPixelator *_scrollLinePixelator;
         /// Init smoothers
         
         double smoothingA = 0.7;
-        double smoothingY = 0.2;
+        double smoothingY = 0.8;
         _xSpeedSmoother = [[DoubleExponentialSmoother alloc] initWithA:smoothingA y:smoothingY];
         _ySpeedSmoother = [[DoubleExponentialSmoother alloc] initWithA:smoothingA y:smoothingY];
         
@@ -57,6 +57,10 @@ static VectorSubPixelator *_scrollLinePixelator;
         _gesturePixelator = [VectorSubPixelator roundPixelator];
         _scrollPointPixelator = [VectorSubPixelator roundPixelator];
         _scrollLinePixelator = [VectorSubPixelator roundPixelator];
+        
+        /// Animator
+        
+        _animator = [[Animator alloc] init];
     }
 }
 
@@ -76,6 +80,9 @@ static VectorSubPixelator *_scrollLinePixelator;
     \todo Implement a better way to stop momentum scrolling. Like a separate function
  \note For more info on which delta values and which phases to use, see the documentation for `postGestureScrollEventWithGestureDeltaX:deltaY:phase:momentumPhase:scrollDeltaConversionFunction:scrollPointDeltaConversionFunction:`. In contrast to the aforementioned function, you shouldn't need to call this function with kIOHIDEventPhaseUndefined.
 */
+
+static CGPoint _origin;
+
 + (void)postGestureScrollEventWithDeltaX:(double)dx deltaY:(double)dy phase:(IOHIDEventPhaseBits)phase {
     
     if (phase != kIOHIDEventPhaseEnded && dx == 0.0 && dy == 0.0) {
@@ -92,7 +99,6 @@ static VectorSubPixelator *_scrollLinePixelator;
     CFTimeInterval now = CACurrentMediaTime();
     
     static CFTimeInterval lastInputTime;
-    static CGPoint origin;
     static double smoothedXSpeed;
     static double smoothedYSpeed;
         
@@ -100,9 +106,9 @@ static VectorSubPixelator *_scrollLinePixelator;
         
         /// Get location for sending events
         
-        origin = Utility_Transformation.CGMouseLocationWithoutEvent;
-        origin.x += dx; /// Not sure if necessary
-        origin.y += dy; /// Not sure if necessary
+        _origin = Utility_Transformation.CGMouseLocationWithoutEvent;
+        _origin.x += dx; /// Not sure if necessary
+        _origin.y += dy; /// Not sure if necessary
         
         /// Reset subpixelators
         
@@ -112,8 +118,6 @@ static VectorSubPixelator *_scrollLinePixelator;
         
     }
     if (phase == kIOHIDEventPhaseBegan || phase == kIOHIDEventPhaseChanged) {
-        
-        _breakMomentumScrollFlag = true; /// Remove this
         
         /// Get vectors
         
@@ -154,7 +158,7 @@ static VectorSubPixelator *_scrollLinePixelator;
                                     scrollVectorPoint:vecScrollPoint
                                                 phase:phase
                                         momentumPhase:kCGMomentumScrollPhaseNone
-                                             location:origin];
+                                             location:_origin];
         
     } else if (phase == kIOHIDEventPhaseEnded) {
         
@@ -165,7 +169,7 @@ static VectorSubPixelator *_scrollLinePixelator;
                                     scrollVectorPoint:(Vector){}
                                                 phase:kIOHIDEventPhaseEnded
                                         momentumPhase:0
-                                             location:origin];
+                                             location:_origin];
         
         /// Get momentum scroll params
         
@@ -174,7 +178,7 @@ static VectorSubPixelator *_scrollLinePixelator;
         double stopSpeed = 1.0;
         double dragCoeff = 8;
         double dragExp = 1.0;
-        CGPoint location = origin;
+        CGPoint location = _origin;
         
         /// Start momentum scroll
         
@@ -189,24 +193,26 @@ static VectorSubPixelator *_scrollLinePixelator;
 
 #pragma mark - Momentum scroll
 
-static bool _momentumScrollIsActive; // Should only be manipulated by `startPostingMomentumScrollEventsWithInitialGestureVector()`
-static bool _breakMomentumScrollFlag; // Should only be manipulated by `breakMomentumScroll` TODO: Remove this and use Animator.stop() instead
-
-+ (void)breakMomentumScroll {
-    _breakMomentumScrollFlag = true;
++ (void)stopMomentumScroll {
+    
+    /// Stop our animator
+    [_animator stop];
+    
+    /// Send kCGMomentumScrollPhaseEnd event.
+    ///  This will stop scrolling in apps like Xcode which implement their own momentum scroll algorithm
+    Vector zeroVector = (Vector){ .x = 0.0, .y = 0.0 };
+    [GestureScrollSimulator postGestureScrollEventWithGestureVector:zeroVector
+                                                       scrollVector:zeroVector
+                                                  scrollVectorPoint:zeroVector
+                                                              phase:kIOHIDEventPhaseUndefined
+                                                      momentumPhase:kCGMomentumScrollPhaseEnd
+                                                          location:_origin];
 }
 static void startMomentumScroll(Vector exitVelocity, double stopSpeed, double dragCoefficient, double dragExponent, CGPoint location) {
     
     /// Declare constants
     
     Vector zeroVector = (Vector){.x = 0.0, .y = 0.0};
-    
-    /// Get animator
-    
-    static Animator *animator;
-    if (animator == nil) {
-        animator = [[Animator alloc] init];
-    }
     
     /// Reset subpixelators
     
@@ -234,7 +240,7 @@ static void startMomentumScroll(Vector exitVelocity, double stopSpeed, double dr
     
     /// Start animator
     
-    [animator startWithDuration:duration valueInterval:distanceInterval animationCurve:animationCurve
+    [_animator startWithDuration:duration valueInterval:distanceInterval animationCurve:animationCurve
                        callback:^(double pointDelta, double timeDelta, MFAnimationPhase animationPhase) {
         
         /// Get delta vectors

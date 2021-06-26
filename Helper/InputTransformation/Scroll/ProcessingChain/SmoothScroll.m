@@ -362,10 +362,10 @@ Ratio: %f",
 //        DDLogDebug(@"IOHIDEventPhase: %hu \n", phase);
         
         if (phase != kIOHIDEventPhaseEnded) { // TODO: Remove. Sending it again here is a hack to make it stop scrolling.
-            [GestureScrollSimulatorOld postGestureScrollEventWithDeltaX:dx deltaY:dy phase:phase isGestureDelta:NO];
+            [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:phase isGestureDelta:NO];
         } else {
-            [GestureScrollSimulatorOld postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseChanged isGestureDelta:NO];
-            [GestureScrollSimulatorOld postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded isGestureDelta:NO];
+            [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseChanged isGestureDelta:NO];
+            [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded isGestureDelta:NO];
         }
         
         

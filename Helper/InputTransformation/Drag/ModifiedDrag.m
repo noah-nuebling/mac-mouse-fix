@@ -12,7 +12,7 @@
 #import "ModifiedDrag.h"
 #import "ScrollModifiers.h"
 #import "TouchSimulator.h"
-#import "GestureScrollSimulatorOld.h"
+#import "GestureScrollSimulator.h"
 #import "ModifierManager.h"
 
 #import "SubPixelator.h"
@@ -281,7 +281,7 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
 //        CGWarpMouseCursorPosition(_drag.usageOrigin);
         
 //        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.0 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{ // dispatching on another queue causes _drag.phase 1 (began) to be skipped, and seems to be unnecessary.
-            [GestureScrollSimulatorOld postGestureScrollEventWithDeltaX:deltaX*twoFingerScale deltaY:deltaY*twoFingerScale phase:_drag.phase isGestureDelta:!inputIsPointerMovement];
+            [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaX*twoFingerScale deltaY:deltaY*twoFingerScale phase:_drag.phase];
 //        });
     } else if ([_drag.type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
         CGPoint location;
@@ -332,7 +332,7 @@ static void handleDeactivationWhileInUse() {
     } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.0 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
-            [GestureScrollSimulatorOld postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded isGestureDelta:!inputIsPointerMovement];
+            [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded];
         });
         
     } else if ([_drag.type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
