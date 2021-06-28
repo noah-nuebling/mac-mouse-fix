@@ -48,7 +48,7 @@ static VectorSubPixelator *_gesturePixelator;
 static VectorSubPixelator *_scrollPointPixelator;
 static VectorSubPixelator *_scrollLinePixelator;
 
-static Animator *_momentumAnimator;
+static PixelatedAnimator *_momentumAnimator;
 
 + (void)initialize
 {
@@ -346,19 +346,22 @@ static void startMomentumScroll(Vector exitVelocity, double stopSpeed, double dr
     /// Start animator
     
     [_momentumAnimator startWithDuration:duration valueInterval:distanceInterval animationCurve:animationCurve
-                       callback:^(double pointDelta, double timeDelta, MFAnimationPhase animationPhase) {
+                       integerCallback:^(NSInteger pointDelta, double timeDelta, MFAnimationPhase animationPhase) {
         
         /// Debug
         
-        DDLogDebug(@"Momentum scroll pointDelta: %f", pointDelta);
+        DDLogDebug(@"Momentum scroll delta: %ld", (long)pointDelta);
         
         /// Get delta vectors
         Vector directedPointDelta = scaledVector(direction, pointDelta);
         Vector directedLineDelta = scrollLineVector_FromScrollPointVector(directedPointDelta);
         
         /// Subpixelate
-        Vector directedPointDeltaInt = [_scrollPointPixelator intVectorWithDoubleVector:directedPointDelta];
-        Vector directedLineDeltaInt = [_scrollLinePixelator intVectorWithDoubleVector:directedLineDelta];
+//        Vector directedPointDeltaInt = [_scrollPointPixelator intVectorWithDoubleVector:directedPointDelta];
+//        Vector directedLineDeltaInt = [_scrollLinePixelator intVectorWithDoubleVector:directedLineDelta];
+        /// Not necessary when we're using PixelatedAnimator
+        Vector directedPointDeltaInt = directedPointDelta;
+        Vector directedLineDeltaInt = directedLineDelta;
         
         /// Get momentum phase from animation phase
         CGMomentumScrollPhase momentumPhase;

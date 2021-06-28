@@ -24,13 +24,15 @@ class PixelatedAnimator: Animator {
     /// Make stuff from superclass unavailable
     
     @available(*, unavailable)
-    override func start(duration: CFTimeInterval, valueInterval: Interval, animationCurve: RealFunction, callback: @escaping Animator.AnimatorCallback) {
+    override func start(duration: CFTimeInterval, valueInterval: Interval, animationCurve: RealFunction,
+                        callback: @escaping Animator.AnimatorCallback) {
         fatalError();
     }
     
     /// Declare types and vars that superclass doesn't have
     
-    typealias IntegerAnimatorCallback = (_ integerAnimationValueDelta: Int, _ animationTimeDelta: Double, _ phase: MFAnimationPhase) -> ()
+    typealias IntegerAnimatorCallback =
+        (_ integerAnimationValueDelta: Int, _ animationTimeDelta: Double, _ phase: MFAnimationPhase) -> ()
     var integerCallback: IntegerAnimatorCallback?;
     
     var subPixelator: SubPixelator = SubPixelator.ceil();
