@@ -12,7 +12,7 @@
 @implementation VectorUtility
 
 
-Vector scaledVectorWithFunction(Vector vec, VectorScalerFunction f) {
+Vector scaledVectorWithFunction(Vector vec, VectorScalingFunction f) {
     double magIn = magnitudeOfVector(vec);
     if (magIn == 0) return (Vector){0};  // To prevent division by 0 from producing nan
     double magOut = f(magIn);
@@ -22,7 +22,7 @@ Vector scaledVectorWithFunction(Vector vec, VectorScalerFunction f) {
 
 double magnitudeOfVector(Vector vec) {
     
-    // Handle simple cases separately for optimization
+    // Handle simple cases separately for optimization. Probably very unnecessary
     if (vec.x == 0) {
         return fabs(vec.y);
     } else if (vec.y == 0) {

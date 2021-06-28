@@ -34,15 +34,15 @@ Also see:
 
 static double pixelsPerLine = 10;
 static double preMomentumScrollMaxInterval = 0.05;
-/// ^ Only start momentum scroll, if less than this time interval has passed between the kIOHIDEventPhaseEnded event and the last event before with a non-zero delta.
+/// ^ Only start momentum scroll, if less than this time interval has passed between the kIOHIDEventPhaseEnded event and the last event before it (with a non-zero delta)
 
 #pragma mark - Vars and init
 
-static id<Smoother> _timeBetweenInputsSmoother; /// These smoothers might fit better into ModifiedDrag.m
+static id<Smoother> _timeBetweenInputsSmoother; /// These smoothers might fit better into ModifiedDrag.m. They're specificly built for mouse-drag input.
 static id<Smoother> _xDistanceSmoother;
 static id<Smoother> _yDistanceSmoother;
 
-static Vector _lastScrollPointVector;
+static Vector _lastScrollPointVector; /// This is unused. Replaced by the smoothers above
 
 static VectorSubPixelator *_gesturePixelator;
 static VectorSubPixelator *_scrollPointPixelator;
@@ -136,7 +136,6 @@ static Animator *_momentumAnimator;
         timeSinceLastInput = now - lastInputTime;
     }
     
-    
     /// Location
     
 //    CGPoint location = getPointerLocation();
@@ -168,8 +167,8 @@ static Animator *_momentumAnimator;
         /// Get vectors
         
         Vector vecScrollPoint = (Vector){ .x = dx, .y = dy };
-        Vector vecScrollLine = scrollLineVectorWithScrollPointVector(vecScrollPoint);
-        Vector vecGesture = gestureVectorFromScrollPointVector(vecScrollPoint);
+        Vector vecScrollLine = scrollLineVector_FromScrollPointVector(vecScrollPoint);
+        Vector vecGesture = gestureVector_FromScrollPointVector(vecScrollPoint);
         
         /// Record last scroll point vec
         
@@ -240,8 +239,8 @@ static Animator *_momentumAnimator;
             };
             
             double stopSpeed = 1.0;
-            double dragCoeff = 30;
-            double dragExp = 0.8;
+            double dragCoeff = 70;
+            double dragExp = 0.7;
             CGPoint location = origin;
             
             /**
@@ -318,7 +317,7 @@ static void startMomentumScroll(Vector exitVelocity, double stopSpeed, double dr
     /// Get animator params
     
     /// Get initial velocity
-    Vector initialVelocity = initalMomentumScrollVelocityWithExitVelocity(exitVelocity);
+    Vector initialVelocity = initalMomentumScrollVelocity_FromExitVelocity(exitVelocity);
     
     /// Get initial speed
     double initialSpeed = magnitudeOfVector(initialVelocity); /// Magnitude is always positive
@@ -354,7 +353,7 @@ static void startMomentumScroll(Vector exitVelocity, double stopSpeed, double dr
         
         /// Get delta vectors
         Vector directedPointDelta = scaledVector(direction, pointDelta);
-        Vector directedLineDelta = scrollLineVectorWithScrollPointVector(directedPointDelta);
+        Vector directedLineDelta = scrollLineVector_FromScrollPointVector(directedPointDelta);
         
         /// Subpixelate
         Vector directedPointDeltaInt = [_scrollPointPixelator intVectorWithDoubleVector:directedPointDelta];
@@ -410,26 +409,27 @@ static void startMomentumScroll(Vector exitVelocity, double stopSpeed, double dr
 
 #pragma mark - Vector math functions
 
-static Vector scrollLineVectorWithScrollPointVector(Vector vec) {
+static Vector scrollLineVector_FromScrollPointVector(Vector vec) {
     
-    VectorScalerFunction f = ^double(double x) {
+    return scaledVectorWithFunction(vec, ^double(double x) {
         return x / pixelsPerLine; /// See CGEventSource.pixelsPerLine - it's 10 by default
-    };
-    return scaledVectorWithFunction(vec, f);
-}
-static Vector gestureVectorFromScrollPointVector(Vector vec) {
-    
-    VectorScalerFunction f = ^double(double x) {
-        return 1.35 * x;
-    };
-    return scaledVectorWithFunction(vec, f);
+    });
 }
 
-static Vector initalMomentumScrollVelocityWithExitVelocity(Vector exitVelocity) {
+static Vector gestureVector_FromScrollPointVector(Vector vec) {
+    
+    return scaledVectorWithFunction(vec, ^double(double x) {
+//        return 1.35 * x; /// This makes swipe to mark unread in Apple Mail feel really nice
+//        return 1.0 * x; /// This feels better for swiping between pages in Safari
+        return 1.15 * x; /// I think this is a nice compromise
+    });
+}
+
+static Vector initalMomentumScrollVelocity_FromExitVelocity(Vector exitVelocity) {
     
     return scaledVectorWithFunction(exitVelocity, ^double(double x) {
 //        return pow(fabs(x), 1.08) * sign(x);
-        return x * 9;
+        return x * 9; /// Something must be wrong that we need to put 9x to make it feel like 1x
     });
 }
 
