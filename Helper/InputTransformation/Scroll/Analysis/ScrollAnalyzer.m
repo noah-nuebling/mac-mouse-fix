@@ -114,7 +114,7 @@ static int _consecutiveScrollSwipeCounter;
     if (_consecutiveScrollTickCounter == 0) {
         smoothedTimeBetweenTicks = DBL_MAX;
             ///     ^ DBL_MAX indicates that it has been longer than `consecutiveScrollTickMaxInterval` since the last tick. Maybe we should define a constant for this.
-        [_tickTimeSmoother resetState];
+        [_tickTimeSmoother reset];
     }
     
     /// Output

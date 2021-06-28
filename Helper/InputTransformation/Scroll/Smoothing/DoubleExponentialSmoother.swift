@@ -11,7 +11,7 @@ import Cocoa
 
 /// Implemented according to this website: https://support.minitab.com/en-us/minitab-express/1/help-and-how-to/modeling-statistics/time-series/how-to/double-exponential-smoothing/methods-and-formulas/methods-and-formulas/#weights
 
-@objc internal class DoubleExponentialSmoother: NSObject{
+@objc internal class DoubleExponentialSmoother: NSObject, Smoother {
     
     /// Params
     
@@ -51,7 +51,7 @@ import Cocoa
         
         super.init()
         
-        self.resetState()
+        self.reset()
         
     }
     
@@ -63,7 +63,7 @@ import Cocoa
     
     /// Main
     
-    @objc func resetState() {
+    @objc func reset() {
         usageCounter = 0
         
         if let initialValue1 = self.initialValue1, let initialValue2 = self.initialValue2 {

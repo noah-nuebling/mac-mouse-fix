@@ -51,6 +51,9 @@
 		4F94F61025E5EC2800D9F24A /* Mac_Mouse_FixUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60F25E5EC2800D9F24A /* Mac_Mouse_FixUITests.m */; };
 		4F94F73D25E6146C00D9F24A /* Mac Mouse Fix Helper.app in Copy Helper */ = {isa = PBXBuildFile; fileRef = 4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4F94F74C25E614B800D9F24A /* Mac Mouse Fix Accomplice in Copy Updater */ = {isa = PBXBuildFile; fileRef = 4F2FDF302315662400C7BE14 /* Mac Mouse Fix Accomplice */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4F9C9B58268A29B70083DED0 /* RollingAverage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C9B57268A29B70083DED0 /* RollingAverage.swift */; };
+		4F9C9B60268A29FE0083DED0 /* Smoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C9B5F268A29FE0083DED0 /* Smoother.swift */; };
+		4F9C9B6B268A2D6F0083DED0 /* CircularBufferObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C9B6A268A2D6F0083DED0 /* CircularBufferObjc.m */; };
 		4F9E59972672A67F004E75F7 /* default_config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F9E59962672A67E004E75F7 /* default_config.plist */; };
 		4F9E789226851440002C2309 /* IntegerAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9E789126851440002C2309 /* IntegerAnimator.swift */; };
 		4F9E78BF26855BCF002C2309 /* Concurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9E78BE26855BCF002C2309 /* Concurrency.swift */; };
@@ -319,6 +322,10 @@
 		4F94F60B25E5EC2800D9F24A /* Mac Mouse FixUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Mac Mouse FixUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F94F60F25E5EC2800D9F24A /* Mac_Mouse_FixUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Mac_Mouse_FixUITests.m; sourceTree = "<group>"; };
 		4F94F61125E5EC2800D9F24A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4F9C9B57268A29B70083DED0 /* RollingAverage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollingAverage.swift; sourceTree = "<group>"; };
+		4F9C9B5F268A29FE0083DED0 /* Smoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Smoother.swift; sourceTree = "<group>"; };
+		4F9C9B69268A2D6F0083DED0 /* CircularBufferObjc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CircularBufferObjc.h; sourceTree = "<group>"; };
+		4F9C9B6A268A2D6F0083DED0 /* CircularBufferObjc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CircularBufferObjc.m; sourceTree = "<group>"; };
 		4F9E59962672A67E004E75F7 /* default_config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_config.plist; sourceTree = "<group>"; };
 		4F9E789126851440002C2309 /* IntegerAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegerAnimator.swift; sourceTree = "<group>"; };
 		4F9E78BE26855BCF002C2309 /* Concurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Concurrency.swift; sourceTree = "<group>"; };
@@ -730,6 +737,8 @@
 			children = (
 				4FF6662B25F2C93A00689B77 /* ScrollUtility.h */,
 				4FF6662F25F2C93A00689B77 /* ScrollUtility.m */,
+				4F9C9B69268A2D6F0083DED0 /* CircularBufferObjc.h */,
+				4F9C9B6A268A2D6F0083DED0 /* CircularBufferObjc.m */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -1144,10 +1153,10 @@
 				4FF6662C25F2C93A00689B77 /* Scroll.h */,
 				4FF6662125F2C93A00689B77 /* Scroll.m */,
 				4F9E79112686FBE3002C2309 /* Analysis */,
-				4FFBC5B126697E8D001D389B /* Smoothing */,
 				4F9E79102686FBD3002C2309 /* Modifiers */,
 				4F3A40C8266C448500436821 /* Animations */,
 				4FF937552669B043003A52EA /* Curves */,
+				4FFBC5B126697E8D001D389B /* Smoothing */,
 				4F9E790F2686FBC7002C2309 /* Utility */,
 				4FF6662225F2C93A00689B77 /* Unused */,
 			);
@@ -1373,6 +1382,8 @@
 			children = (
 				4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */,
 				4F9E78E2268663B1002C2309 /* ExponentialSmoother.swift */,
+				4F9C9B57268A29B70083DED0 /* RollingAverage.swift */,
+				4F9C9B5F268A29FE0083DED0 /* Smoother.swift */,
 			);
 			path = Smoothing;
 			sourceTree = "<group>";
@@ -1911,6 +1922,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F9C9B58268A29B70083DED0 /* RollingAverage.swift in Sources */,
 				4F9E789226851440002C2309 /* IntegerAnimator.swift in Sources */,
 				4FF6654D25F2C7B000689B77 /* SharedUtility.m in Sources */,
 				4FF6668225F2C93A00689B77 /* Config.m in Sources */,
@@ -1966,8 +1978,10 @@
 				4F3A40DA266C5BDF00436821 /* NSScreen+Additions.m in Sources */,
 				4FF6654325F2C7B000689B77 /* HelperServices.m in Sources */,
 				4FA994BE26678AC90007F003 /* ScrollAnalyzer.m in Sources */,
+				4F9C9B60268A29FE0083DED0 /* Smoother.swift in Sources */,
 				4FA83A29268271E200F3A31B /* PointerMovement.m in Sources */,
 				4FF6654B25F2C7B000689B77 /* Queue.m in Sources */,
+				4F9C9B6B268A2D6F0083DED0 /* CircularBufferObjc.m in Sources */,
 				4FA83A2E268288D900F3A31B /* PointerConfig.swift in Sources */,
 				4FF6668625F2C93A00689B77 /* ButtonTriggerGenerator.m in Sources */,
 				4FF6669425F2C93A00689B77 /* GestureScrollSimulator_old_.m in Sources */,

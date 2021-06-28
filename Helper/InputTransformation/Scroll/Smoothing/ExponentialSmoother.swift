@@ -11,7 +11,7 @@
 
 import Cocoa
 
-class ExponentialSmoother: NSObject {
+class ExponentialSmoother: NSObject, Smoother {
 
     /// Params
     
@@ -43,7 +43,7 @@ class ExponentialSmoother: NSObject {
         
         super.init()
         
-        self.resetState()
+        self.reset()
     }
     
     /// Dynamic vars
@@ -53,7 +53,7 @@ class ExponentialSmoother: NSObject {
     
     /// Main
     
-    @objc func resetState() {
+    @objc func reset() {
         usageCounter = 0
         
         if let initialValue = self.initialValue {

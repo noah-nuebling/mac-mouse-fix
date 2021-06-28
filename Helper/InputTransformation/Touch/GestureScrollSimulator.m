@@ -150,8 +150,8 @@ static Animator *_momentumAnimator;
         [_gesturePixelator reset];
         
         /// Reset smoothers
-        [_xSpeedSmoother resetState];
-        [_ySpeedSmoother resetState];
+        [_xSpeedSmoother reset];
+        [_ySpeedSmoother reset];
         smoothedXSpeed = 0;
         smoothedYSpeed = 0;
         
