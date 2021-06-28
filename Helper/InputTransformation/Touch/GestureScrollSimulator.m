@@ -139,13 +139,14 @@ static Animator *_momentumAnimator;
     
     /// Location
     
-    CGPoint location = getPointerLocation();
+//    CGPoint location = getPointerLocation();
+    /// ^ Instead of using this, call getPointerLocation() directly before it's used so the value is as up-to-date as possible. Not sure if that makes a difference.
         
     /// Main
     
     if (phase == kIOHIDEventPhaseBegan) {
         
-        origin = location;
+        origin = getPointerLocation();
         
         /// Reset subpixelators
         
@@ -197,7 +198,7 @@ static Animator *_momentumAnimator;
                                     scrollVectorPoint:vecScrollPoint
                                                 phase:phase
                                         momentumPhase:kCGMomentumScrollPhaseNone
-                                             location:location];
+                                             location:getPointerLocation()];
         
     } else if (phase == kIOHIDEventPhaseEnded) {
         
@@ -208,7 +209,7 @@ static Animator *_momentumAnimator;
                                     scrollVectorPoint:(Vector){}
                                                 phase:kIOHIDEventPhaseEnded
                                         momentumPhase:0
-                                             location:location];
+                                             location:getPointerLocation()];
         
         /// Check if too much time has passed since last event to start momentum scroll (if the mouse is stationary)
         
