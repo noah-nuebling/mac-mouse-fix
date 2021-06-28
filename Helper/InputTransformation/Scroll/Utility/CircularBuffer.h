@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CircularBufferObjc<T> : NSObject
+@interface CircularBuffer<T> : NSObject
 
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithCapacity:(NSInteger)n;

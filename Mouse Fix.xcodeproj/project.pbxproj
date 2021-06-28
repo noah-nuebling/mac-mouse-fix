@@ -53,7 +53,7 @@
 		4F94F74C25E614B800D9F24A /* Mac Mouse Fix Accomplice in Copy Updater */ = {isa = PBXBuildFile; fileRef = 4F2FDF302315662400C7BE14 /* Mac Mouse Fix Accomplice */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4F9C9B58268A29B70083DED0 /* RollingAverage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C9B57268A29B70083DED0 /* RollingAverage.swift */; };
 		4F9C9B60268A29FE0083DED0 /* Smoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C9B5F268A29FE0083DED0 /* Smoother.swift */; };
-		4F9C9B6B268A2D6F0083DED0 /* CircularBufferObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C9B6A268A2D6F0083DED0 /* CircularBufferObjc.m */; };
+		4F9C9B6B268A2D6F0083DED0 /* CircularBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C9B6A268A2D6F0083DED0 /* CircularBuffer.m */; };
 		4F9E59972672A67F004E75F7 /* default_config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F9E59962672A67E004E75F7 /* default_config.plist */; };
 		4F9E789226851440002C2309 /* IntegerAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9E789126851440002C2309 /* IntegerAnimator.swift */; };
 		4F9E78BF26855BCF002C2309 /* Concurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9E78BE26855BCF002C2309 /* Concurrency.swift */; };
@@ -324,8 +324,8 @@
 		4F94F61125E5EC2800D9F24A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4F9C9B57268A29B70083DED0 /* RollingAverage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollingAverage.swift; sourceTree = "<group>"; };
 		4F9C9B5F268A29FE0083DED0 /* Smoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Smoother.swift; sourceTree = "<group>"; };
-		4F9C9B69268A2D6F0083DED0 /* CircularBufferObjc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CircularBufferObjc.h; sourceTree = "<group>"; };
-		4F9C9B6A268A2D6F0083DED0 /* CircularBufferObjc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CircularBufferObjc.m; sourceTree = "<group>"; };
+		4F9C9B69268A2D6F0083DED0 /* CircularBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CircularBuffer.h; sourceTree = "<group>"; };
+		4F9C9B6A268A2D6F0083DED0 /* CircularBuffer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CircularBuffer.m; sourceTree = "<group>"; };
 		4F9E59962672A67E004E75F7 /* default_config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_config.plist; sourceTree = "<group>"; };
 		4F9E789126851440002C2309 /* IntegerAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegerAnimator.swift; sourceTree = "<group>"; };
 		4F9E78BE26855BCF002C2309 /* Concurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Concurrency.swift; sourceTree = "<group>"; };
@@ -737,8 +737,8 @@
 			children = (
 				4FF6662B25F2C93A00689B77 /* ScrollUtility.h */,
 				4FF6662F25F2C93A00689B77 /* ScrollUtility.m */,
-				4F9C9B69268A2D6F0083DED0 /* CircularBufferObjc.h */,
-				4F9C9B6A268A2D6F0083DED0 /* CircularBufferObjc.m */,
+				4F9C9B69268A2D6F0083DED0 /* CircularBuffer.h */,
+				4F9C9B6A268A2D6F0083DED0 /* CircularBuffer.m */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -1981,7 +1981,7 @@
 				4F9C9B60268A29FE0083DED0 /* Smoother.swift in Sources */,
 				4FA83A29268271E200F3A31B /* PointerMovement.m in Sources */,
 				4FF6654B25F2C7B000689B77 /* Queue.m in Sources */,
-				4F9C9B6B268A2D6F0083DED0 /* CircularBufferObjc.m in Sources */,
+				4F9C9B6B268A2D6F0083DED0 /* CircularBuffer.m in Sources */,
 				4FA83A2E268288D900F3A31B /* PointerConfig.swift in Sources */,
 				4FF6668625F2C93A00689B77 /* ButtonTriggerGenerator.m in Sources */,
 				4FF6669425F2C93A00689B77 /* GestureScrollSimulator_old_.m in Sources */,

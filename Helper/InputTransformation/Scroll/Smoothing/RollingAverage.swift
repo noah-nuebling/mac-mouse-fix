@@ -13,7 +13,7 @@ class RollingAverage: NSObject, Smoother {
     
     /// Static vars
     
-    let circularBuffer: CircularBufferObjc<NSNumber>
+    let circularBuffer: CircularBuffer<NSNumber>
     var filled: Int {
         circularBuffer.filled()
     }
@@ -24,7 +24,7 @@ class RollingAverage: NSObject, Smoother {
         
         assert(capacity >= 2, "`capacity` must be greate or equal 2. Otherwise there won't be any smoothing.")
         
-        self.circularBuffer = CircularBufferObjc.init(capacity: capacity);
+        self.circularBuffer = CircularBuffer.init(capacity: capacity);
     }
     
     /// Main

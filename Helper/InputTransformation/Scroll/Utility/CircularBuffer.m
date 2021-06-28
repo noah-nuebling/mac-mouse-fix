@@ -8,16 +8,12 @@
 //
 
 /// See: https://en.wikipedia.org/wiki/Circular_buffer
-/// Implementing this in objc because Swift generics can't be used in objc
+/// Implementing this in objc because Swift generics can't be used in objc, but the other way around works
 
-#import "CircularBufferObjc.h"
+#import "CircularBuffer.h"
 #import "WannabePrefixHeader.h"
 
-@interface CircularBufferObjc ()
-
-@end
-
-@implementation CircularBufferObjc {
+@implementation CircularBuffer {
     /// Static vars
     NSInteger _capacity;
     NSMutableArray<id> *_buffer;
