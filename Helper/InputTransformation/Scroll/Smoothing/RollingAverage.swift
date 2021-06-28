@@ -22,7 +22,7 @@ class RollingAverage: NSObject, Smoother {
     
     @objc init(capacity: Int) {
         
-        assert(capacity >= 2, "`capacity` must be greate or equal 2. Otherwise there won't be any smoothing.")
+        assert(capacity > 1, "`capacity` must be greater than 1. Otherwise there won't be any smoothing.")
         
         self.circularBuffer = CircularBuffer.init(capacity: capacity);
     }

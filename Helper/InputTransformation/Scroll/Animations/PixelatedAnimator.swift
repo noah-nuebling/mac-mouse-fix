@@ -35,8 +35,11 @@ class PixelatedAnimator: Animator {
         (_ integerAnimationValueDelta: Int, _ animationTimeDelta: Double, _ phase: MFAnimationPhase) -> ()
     var integerCallback: IntegerAnimatorCallback?;
     
-    var subPixelator: SubPixelator = SubPixelator.ceil();
+//    var subPixelator: SubPixelator = SubPixelator.ceil();
     /// ^ This being a ceil subPixelator only makes sense because we're only using this through Scroll.m and that's only running this with positive value ranges. So the deltas are being rounded up, and we get a delta immediately as soon as the animations starts, which should make scrolling very small distances feel a little more responsive. If we were dealing with negative deltas, we'd want to round them down instead somehow. Or simply use a SubPixelator.round() which works the same in both directions.
+    
+    var subPixelator: SubPixelator = SubPixelator.biased();
+    /// ^ This biased subpixelator should make SubpixelatedAnimator  also work negative value ranges. So it can also be properly used for for momentum scrolling in GestureScrollAnimator.m
     
     /// Declare new start function
     
