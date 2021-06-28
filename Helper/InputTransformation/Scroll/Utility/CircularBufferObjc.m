@@ -45,6 +45,7 @@
         _capacity = n;
         _filled = 0;
         _head = 0;
+        _buffer = [NSMutableArray array];
         for (NSInteger i = 0; i < _capacity; i++) {
             [_buffer addObject:@(0)];
         }

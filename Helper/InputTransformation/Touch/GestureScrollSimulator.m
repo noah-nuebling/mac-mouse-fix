@@ -38,8 +38,9 @@ static double preMomentumScrollMaxInterval = 0.05;
 
 #pragma mark - Vars and init
 
-static ExponentialSmoother *_xSpeedSmoother;
-static ExponentialSmoother *_ySpeedSmoother;
+static id<Smoother> _timeBetweenInputsSmoother; /// These smoothers might fit better into ModifiedDrag.m
+static id<Smoother> _xDistanceSmoother;
+static id<Smoother> _yDistanceSmoother;
 
 static Vector _lastScrollPointVector;
 
@@ -55,9 +56,11 @@ static Animator *_momentumAnimator;
         
         /// Init smoothers
         
-        double smoothingA = 0.2; /// 1.0 -> smoothing is off
-        _xSpeedSmoother = [[ExponentialSmoother alloc] initWithA:smoothingA];
-        _ySpeedSmoother = [[ExponentialSmoother alloc] initWithA:smoothingA];
+        int capacity = 5;
+        
+        _xDistanceSmoother = [[RollingAverage alloc] initWithCapacity:capacity];
+        _yDistanceSmoother = [[RollingAverage alloc] initWithCapacity:capacity];
+        _timeBetweenInputsSmoother = [[RollingAverage alloc] initWithCapacity:capacity];
         
 //        double smoothingA = 0.2; /// 1.0 -> smoothing is off
 //        double smoothingY = 0.8;
@@ -120,8 +123,9 @@ static Animator *_momentumAnimator;
     /// Timestamps and static vars
     
     static CFTimeInterval lastInputTime;
-    static double smoothedXSpeed;
-    static double smoothedYSpeed;
+    static double smoothedXDistance;
+    static double smoothedYDistance;
+    static double smoothedTimeBetweenInputs;
     static CGPoint origin;
     
     CFTimeInterval now = CACurrentMediaTime();
@@ -150,10 +154,12 @@ static Animator *_momentumAnimator;
         [_gesturePixelator reset];
         
         /// Reset smoothers
-        [_xSpeedSmoother reset];
-        [_ySpeedSmoother reset];
-        smoothedXSpeed = 0;
-        smoothedYSpeed = 0;
+        [_xDistanceSmoother reset];
+        [_yDistanceSmoother reset];
+        [_timeBetweenInputsSmoother reset];
+        smoothedXDistance = 0;
+        smoothedYDistance = 0;
+        smoothedTimeBetweenInputs = 0;
         
     }
     if (phase == kIOHIDEventPhaseBegan || phase == kIOHIDEventPhaseChanged) {
@@ -168,15 +174,13 @@ static Animator *_momentumAnimator;
         
         _lastScrollPointVector = vecScrollPoint;
         
-        /// Update smoothed speed
+        /// Update smoothed values
         
         if (phase == kIOHIDEventPhaseChanged) {
             
-            double xSpeed = vecScrollPoint.x / timeSinceLastInput;
-            double ySpeed = vecScrollPoint.y / timeSinceLastInput;
-            
-            smoothedXSpeed = [_xSpeedSmoother smoothWithValue:xSpeed];
-            smoothedYSpeed = [_ySpeedSmoother smoothWithValue:ySpeed];
+            smoothedXDistance = [_xDistanceSmoother smoothWithValue:vecScrollPoint.x];
+            smoothedYDistance = [_yDistanceSmoother smoothWithValue:vecScrollPoint.y];
+            smoothedTimeBetweenInputs = [_timeBetweenInputsSmoother smoothWithValue:timeSinceLastInput];
             
         }
         
@@ -220,9 +224,19 @@ static Animator *_momentumAnimator;
         } else {
             /// Do start momentum scroll
         
+            /// Update smoothers once more
+            
+            smoothedTimeBetweenInputs = [_timeBetweenInputsSmoother smoothWithValue:timeSinceLastInput];
+            smoothedXDistance = [_xDistanceSmoother smoothWithValue:smoothedXDistance];
+            smoothedYDistance = [_yDistanceSmoother smoothWithValue:smoothedYDistance];
+            /// ^ kIOHIDEventPhaseEnded events always have distance 0. We're  inserting the last smoothed value as input instead of inserting 0 or nothing to maybe keep it more synced with the smoothedTimeBetweenInputs. Not sure if this is beneficial.
+            
             /// Get momentum scroll params
             
-            Vector exitVelocity = (Vector){ .x = smoothedXSpeed, .y = smoothedYSpeed };
+            Vector exitVelocity = (Vector){
+                .x = smoothedXDistance / smoothedTimeBetweenInputs,
+                .y = smoothedYDistance / smoothedTimeBetweenInputs
+            };
             
             double stopSpeed = 1.0;
             double dragCoeff = 30;

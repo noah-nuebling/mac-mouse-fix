@@ -13,32 +13,32 @@ class RollingAverage: NSObject, Smoother {
     
     /// Static vars
     
-    let buffer: CircularBufferObjc<NSNumber>
+    let circularBuffer: CircularBufferObjc<NSNumber>
     var filled: Int {
-        buffer.filled()
+        circularBuffer.filled()
     }
     
     /// Init
     
-    init(n: Int) {
+    @objc init(capacity: Int) {
         
-        assert(n >= 2, "n must be greate or equal 2. Otherwise there won't be any smoothing.")
+        assert(capacity >= 2, "`capacity` must be greate or equal 2. Otherwise there won't be any smoothing.")
         
-        self.buffer = CircularBufferObjc.init(capacity: n);
+        self.circularBuffer = CircularBufferObjc.init(capacity: capacity);
     }
     
     /// Main
     
-    func reset() {
-        self.buffer.reset()
+    @objc func reset() {
+        self.circularBuffer.reset()
     }
     
-    func smooth(value: Double) -> Double {
+    @objc func smooth(value: Double) -> Double {
         
-        assert(buffer.filled() > 0)
-        buffer.add(NSNumber.init(value: value))
+        assert(circularBuffer.filled() > 0)
+        circularBuffer.add(NSNumber.init(value: value))
         
-        let storedValues: [NSNumber] = buffer.content()
+        let storedValues: [NSNumber] = circularBuffer.content()
         let storedValuesAverage: Double = storedValues.reduce(0) { $0 + $1.doubleValue } / Double(storedValues.count)
         
         return storedValuesAverage
