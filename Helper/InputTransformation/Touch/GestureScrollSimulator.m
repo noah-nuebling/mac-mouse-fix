@@ -306,7 +306,7 @@ static void startMomentumScroll(Vector exitVelocity, double stopSpeed, double dr
     
     /// Declare constants
     
-    Vector zeroVector = (Vector){.x = 0.0, .y = 0.0 };
+    Vector zeroVector = (Vector){ .x = 0.0, .y = 0.0 };
     
     /// Reset subpixelators
     
@@ -384,7 +384,7 @@ static void startMomentumScroll(Vector exitVelocity, double stopSpeed, double dr
         ///     That way all scroll events will go to the app above which the user started scrolling which is neat.
         CGPoint originalLocation = postLocation; /// Only initializing here instead of inside the if statement below to silence warnings
         if (animationPhase == kMFAnimationPhaseStart) {
-            postLocation = origin;
+//            postLocation = origin;
         }
         
         /// Post event
@@ -396,10 +396,11 @@ static void startMomentumScroll(Vector exitVelocity, double stopSpeed, double dr
                                                               location:postLocation];
         /// Reset mouse pointer after posting at origin
         if (animationPhase == kMFAnimationPhaseStart) {
-            CGWarpMouseCursorPosition(originalLocation);
-            CGWarpMouseCursorPosition(originalLocation);
+//            CGWarpMouseCursorPosition(originalLocation);
+//            CGWarpMouseCursorPosition(originalLocation);
             /// Doing this twice because it sometimes doesn't work. Not sure if it helps
             /// Also this freezes the mouse pointer for a split second. Not ideal, but not really noticable, either.
+            /// I changed my mind. The freeze is horrible UX
         }
         
     }];
