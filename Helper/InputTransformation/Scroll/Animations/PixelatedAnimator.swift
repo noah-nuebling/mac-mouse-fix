@@ -19,7 +19,7 @@
 import Cocoa
 import CocoaLumberjackSwift
 
-class IntegerAnimator: Animator {
+class PixelatedAnimator: Animator {
     
     /// Make stuff from superclass unavailable
     

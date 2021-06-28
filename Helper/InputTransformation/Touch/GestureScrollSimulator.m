@@ -76,7 +76,8 @@ static Animator *_momentumAnimator;
         
         /// Animator
         
-        _momentumAnimator = [[Animator alloc] init];
+//        _momentumAnimator = [[Animator alloc] init];
+        _momentumAnimator = [[PixelatedAnimator alloc] init];
         
     }
 }

@@ -33,7 +33,7 @@ static CGEventSourceRef _eventSource;
 
 static dispatch_queue_t _scrollQueue;
 
-static IntegerAnimator *_animator;
+static PixelatedAnimator *_animator;
 static SubPixelator *_subPixelator;
 
 static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this to Config or some sort of OverrideManager class
@@ -69,7 +69,7 @@ static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this
     }
     
     // Create animator
-    _animator = [[IntegerAnimator alloc] init];
+    _animator = [[PixelatedAnimator alloc] init];
     
     // Create subpixelator for scroll output
     _subPixelator = [SubPixelator roundPixelator];

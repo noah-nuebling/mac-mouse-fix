@@ -55,7 +55,7 @@
 		4F9C9B60268A29FE0083DED0 /* Smoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C9B5F268A29FE0083DED0 /* Smoother.swift */; };
 		4F9C9B6B268A2D6F0083DED0 /* CircularBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C9B6A268A2D6F0083DED0 /* CircularBuffer.m */; };
 		4F9E59972672A67F004E75F7 /* default_config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F9E59962672A67E004E75F7 /* default_config.plist */; };
-		4F9E789226851440002C2309 /* IntegerAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9E789126851440002C2309 /* IntegerAnimator.swift */; };
+		4F9E789226851440002C2309 /* PixelatedAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9E789126851440002C2309 /* PixelatedAnimator.swift */; };
 		4F9E78BF26855BCF002C2309 /* Concurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9E78BE26855BCF002C2309 /* Concurrency.swift */; };
 		4F9E78C026855BCF002C2309 /* Concurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9E78BE26855BCF002C2309 /* Concurrency.swift */; };
 		4F9E78D02685E30C002C2309 /* GestureScrollSimulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9E78CE2685E30B002C2309 /* GestureScrollSimulator.m */; };
@@ -327,7 +327,7 @@
 		4F9C9B69268A2D6F0083DED0 /* CircularBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CircularBuffer.h; sourceTree = "<group>"; };
 		4F9C9B6A268A2D6F0083DED0 /* CircularBuffer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CircularBuffer.m; sourceTree = "<group>"; };
 		4F9E59962672A67E004E75F7 /* default_config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_config.plist; sourceTree = "<group>"; };
-		4F9E789126851440002C2309 /* IntegerAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegerAnimator.swift; sourceTree = "<group>"; };
+		4F9E789126851440002C2309 /* PixelatedAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelatedAnimator.swift; sourceTree = "<group>"; };
 		4F9E78BE26855BCF002C2309 /* Concurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Concurrency.swift; sourceTree = "<group>"; };
 		4F9E78CE2685E30B002C2309 /* GestureScrollSimulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GestureScrollSimulator.m; sourceTree = "<group>"; };
 		4F9E78CF2685E30C002C2309 /* GestureScrollSimulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GestureScrollSimulator.h; sourceTree = "<group>"; };
@@ -642,7 +642,7 @@
 		4F3A40C8266C448500436821 /* Animations */ = {
 			isa = PBXGroup;
 			children = (
-				4F9E789126851440002C2309 /* IntegerAnimator.swift */,
+				4F9E789126851440002C2309 /* PixelatedAnimator.swift */,
 				4FD85F7A266CC9C5004F76C8 /* Animator.swift */,
 				4F3A40C9266C44D100436821 /* DisplayLink.h */,
 				4F3A40CA266C44D100436821 /* DisplayLink.m */,
@@ -1923,7 +1923,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F9C9B58268A29B70083DED0 /* RollingAverage.swift in Sources */,
-				4F9E789226851440002C2309 /* IntegerAnimator.swift in Sources */,
+				4F9E789226851440002C2309 /* PixelatedAnimator.swift in Sources */,
 				4FF6654D25F2C7B000689B77 /* SharedUtility.m in Sources */,
 				4FF6668225F2C93A00689B77 /* Config.m in Sources */,
 				4FFBC5A8266977CA001D389B /* DoubleExponentialSmoother.swift in Sources */,
