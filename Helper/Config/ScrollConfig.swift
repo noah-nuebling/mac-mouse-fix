@@ -38,7 +38,8 @@ import Cocoa
     // General
 
     @objc static var smoothEnabled: Bool {
-        topLevel["smooth"] as! Bool
+//        topLevel["smooth"] as! Bool
+        return true;
     }
     @objc static var disableAll: Bool {
         topLevel["disableAll"] as! Bool; // This is currently unused. Could be used as a killswitch for all scrolling Interception

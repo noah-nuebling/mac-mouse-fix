@@ -351,6 +351,8 @@ static void sendScroll(int64_t px, MFScrollDirection scrollDirection, BOOL gestu
     } else if (!gesture) {
         /// Send line-based scroll event
         
+        assert(false); ///  Debug
+        
         /// TODO: line delta should always be around 1/10 of pixel delta. Also subpixelate line delta.
         ///     See CGEventSource pixelsPerLine - it's 10.
         
