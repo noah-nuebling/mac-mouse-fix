@@ -91,7 +91,12 @@
 /// Utility
 
 - (NSUInteger)movedIndex:(NSUInteger)index by:(NSInteger)i {
-    return (index + i) % _capacity;
+    NSUInteger r = (index + i) % _capacity;
+    
+    if (r < 0) {
+        return _capacity + r; /// Mod is implemented in a stupid way in c (truncated mod) so we have to use this to get it to behave like euclidian mod
+    }
+    return r;
 }
 
 /// Other interface

@@ -83,6 +83,10 @@ class PixelatedAnimator: Animator {
                 self.animationPhase = kMFAnimationPhaseEnd;
             }
             
+            /// Debug
+            
+            DDLogDebug("PxAnim - valueLeft: \(currentAnimationValueLeft), intValueLeft: \(intAnimationValueLeft)")
+            
             /// Check if this was first _and_  last event of animation
             ///     This has a copy in superclass. Update it when you change this
             
