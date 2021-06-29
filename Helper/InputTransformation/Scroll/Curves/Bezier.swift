@@ -28,10 +28,10 @@ import ReactiveSwift
 ///     I tested on the same curve, with a 0.001 epsilon on my Early 2015 MBP
 ///     BezierCurve.swift usually took around 0.0001s (= 100 microseconds = 0.1 ms) to get y(x), while AnimationCurve.m usually took around 0.000001s (= 1 microsecond = 0.001 ms)
 ///     -> 60 fps is 16.66 ms per frame so the Swift implemenation should be fast enough
-/// Edit3: Did some more optimitzations by implementing formulas for the polynomial form of the Bezier Curve and precalculating the coefficients. Now it's super fast to evaluate!
+/// Edit3: Did some more optimitzations by implementing formulas for the polynomial form of the Bezier Curve and precalculating the coefficients, very similar to how the Apple code does it. Now it's super fast to evaluate!
 ///     With the new algorithms Swift is only around 5 times slower than ObjC.
 ///         (Another thing that affected these results is that before I was building for Debug and for these tests I was building for release. - that made Swift a lot faster while barely affecting C IIRC - Edit: Yep, when running an unoptimized DEBUG build, Swift is still around 40 times slower than C)
-///     Swift now takes around 0.01 ms to evaluate testing with a 0.08 epsilon, which is very important becuase 0.1 ms was way to slow. I officially overengineered this lol.
+///     Swift now takes around 0.01 ms to evaluate testing with a 0.08 epsilon, which is very important becuase 0.1 ms was way to slow (irony). I officially overengineered this lol.
 
 /// For optimization, we usually only evaluate the x or the y values for our functions, even though these functions are formally defined to work on points. That's what the MFAxis parameters in some of these functions are for
 
@@ -42,6 +42,7 @@ import ReactiveSwift
 ///     https://en.wikipedia.org/wiki/De_Casteljau%27s_algorithm
 /// AnimationCurve.m | Apple Webkit
 ///     I can't find this on Google anymore but it's included with this Project
+///     Edit: I since renamed it to CubicUnitBezier
 /// Visual editor for higher order Bezier Curves | Desmos
 ///     https://www.desmos.com/calculator/xlpbe9bgll
 ///     https://www.desmos.com/calculator/jbhmbwqnf3
@@ -102,6 +103,8 @@ import ReactiveSwift
     let xValueRange: Interval
     
     // MARK: Init
+    
+    /// Helper functions for Init functions
     
     private class func convertNSPointsToPoints(_ controlNSPoints: [NSPoint]) -> [Bezier.Point] {
         /// Helper function for objc  init functions
@@ -292,11 +295,13 @@ import ReactiveSwift
     ///   - t: Where to evaluate the curve. Valid values ranges from 0 to 1
     /// - Returns: The x or y value for the input t
     private func sampleCurve(onAxis axis: MFAxis, atT t: Double) -> Double {
+        /// The polynomial approach should be very fast but apparentaly becomes "numerically unstable" for larger control point counts. (src. Wikipedia)
+        ///     So for a larger degree we use the slower Casteljau algorithm instead
         
-        if (degree > maxDegreeForPolynomialApproach) {
-            return sampleCurveCasteljau(axis, t)
-        } else {
+        if degree <= maxDegreeForPolynomialApproach {
             return sampleCurvePolynomial(axis, t)
+        } else {
+            return sampleCurveCasteljau(axis, t)
         }
     }
     
@@ -319,7 +324,7 @@ import ReactiveSwift
     }
     
     fileprivate func sampleCurveCasteljau(_ axis: MFAxis, _ t: Double) -> Double {
-        /// Evaluate at t with De-Casteljau's algorithm. I thonk it's in O(n!)?
+        /// Evaluate at t with De-Casteljau's algorithm. I thonk it's in O(n!) or something?
         
         // Extract x or y values from controlPoints
         
@@ -346,11 +351,13 @@ import ReactiveSwift
     // MARK: Derivative
     
     private func sampleDerivative(on axis: MFAxis, at t: Double) -> Double {
+        /// See sampleCurve(onAxis:atT:) for context
+        /// The explicit algorithm is even slower than Casteljau's algorithm, but it should work the same and couldn't be bothered to implement Casteljau here, too.
         
-        if (degree > maxDegreeForPolynomialApproach) {
-            return sampleDerivativeExplicit(axis, t)
-        } else {
+        if degree <= maxDegreeForPolynomialApproach {
             return sampleDerivativePolynomial(axis, t)
+        } else {
+            return sampleDerivativeExplicit(axis, t)
         }
         
     }
@@ -363,7 +370,7 @@ import ReactiveSwift
         
         /// We take the derivative of the original formula and get
         ///     ```
-        ///     sum_{j=1}^{n} t^{j-1} * j * C_j
+        ///     B'(t) = sum_{j=1}^{n} t^{j-1} * j * C_j
         ///     ```
         ///     To optimize, we then we apply Horners rule and arrive at the algorithm below
         ///     Also see: original formula: https://wikimedia.org/api/rest_v1/media/math/render/svg/1263b2329c8a60a78a433731dfd88b55d6a37eb0
@@ -415,18 +422,18 @@ import ReactiveSwift
         /// It's a numerical inverse finder. It basically finds the parameter t for a function value x through educated guesses
         
         let initialGuess: Double = Math.scale(value: x, from: self.xValueRange, to: Interval.unitInterval())
-        // ^ Our initial guess for t.
-        // In Apples AnimationCurve.m this was set to x which is an informed guess. We extended the same logic to a general case. In the Apple implementation, the xValueRange is implicitly 0...1
+        /// ^ Our initial guess for t.
+        /// In Apples AnimationCurve.m this was set to x which is an informed guess. We extended the same logic to a general case. (In the Apple implementation, the xValueRange is implicitly 0...1)
         
-        // Try Newtons method
-        // Newtons method finds an input for which the output is 0
-        // So to use this for finding x, we need to shift the curve along the xAxis such the the desired x value is at 0
-        // To achieve that, we subtract x from the sampleCurve() result. We don't need to apply this shifting to sampleDerivative(), because shifting along the xAxis won't affect the derivative with respect to x
+        /// Try Newtons method
+        /// Newtons method finds an input for which the output is 0
+        /// So to use this for finding x, we need to shift the curve along the xAxis such the the desired x value is at 0
+        /// To achieve that, we subtract x from the sampleCurve() result. We don't need to apply this shifting to sampleDerivative(), because shifting along the xAxis won't affect the derivative with respect to x. (If this sound weird remember the function parameter is t and the output is a point (x,y))
         
         let maxNewtonIterations: Int = 8
         var t = initialGuess
         
-        for i in 1...maxNewtonIterations {
+        for _ in 1...maxNewtonIterations {
             
             let sampledXShifted = sampleCurve(onAxis: xAxis, atT: t) - x
             
@@ -465,9 +472,9 @@ import ReactiveSwift
                 return t
             }
             if sampledX < x {
-                searchRange = Interval.init(lower: t, upper: searchRange.upper)
+                searchRange = Interval(lower: t, upper: searchRange.upper)
             } else {
-                searchRange = Interval.init(lower: searchRange.lower, upper: t)
+                searchRange = Interval(lower: searchRange.lower, upper: t)
             }
             t = Math.scale(value: 0.5, from: Interval.unitInterval(), to: searchRange)
         }
