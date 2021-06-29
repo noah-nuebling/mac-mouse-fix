@@ -279,7 +279,7 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
     } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
         
         // Warp pointer to origin to prevent cursor movement
-//        CGWarpMouseCursorPosition(_drag.usageOrigin);
+        CGWarpMouseCursorPosition(_drag.usageOrigin);
         
 //        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.0 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{ // dispatching on another queue causes _drag.phase 1 (began) to be skipped, and seems to be unnecessary.
             [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaX*twoFingerScale deltaY:deltaY*twoFingerScale phase:_drag.phase];

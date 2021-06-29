@@ -35,7 +35,6 @@ class RollingAverage: NSObject, Smoother {
     
     @objc func smooth(value: Double) -> Double {
         
-        assert(circularBuffer.filled() > 0)
         circularBuffer.add(NSNumber.init(value: value))
         
         let storedValues: [NSNumber] = circularBuffer.content()
