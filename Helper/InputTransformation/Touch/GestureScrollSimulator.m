@@ -235,7 +235,7 @@ static BOOL _momentumScrollIsActive;
         CGPoint location = origin;
         
         /**
-                For `dragExp`, a value between 0.7 and 0.8 seems to be the sweet spot to get nice trackpad-like deceleratin
+                For `dragExp`, a value between 0.7 and 0.8 seems to be the sweet spot to get nice Apple Trackpad -like deceleration
                 - `dragExp` = 0.8 works well with `dragCoeff` around 30 (in the old implementation it used to be 8, so we probably messed something up in the new implementation)
                 - `dragExp` = 0.7 works well with `dragCoeff` around 70
                 - `dragExp` = 0.9  with `dragCoeff` around 10 also feels nice but noticeably different from Trackpad
@@ -303,6 +303,7 @@ static BOOL _momentumScrollIsActive;
         
     }
     
+    /// Set flag
     _momentumScrollIsActive = NO;
 }
 

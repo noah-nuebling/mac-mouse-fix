@@ -150,13 +150,13 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         || isDiagonal) { // Ignore diagonal scroll-events
         
         /// Debug
-        DDLogDebug(@"Ignored scroll event: (%f,%f), (%f,%f), phase: %f, %f",
-                   CGEventGetDoubleValueField(event, kCGScrollWheelEventDeltaAxis1),
-                   CGEventGetDoubleValueField(event, kCGScrollWheelEventDeltaAxis2),
-                   CGEventGetDoubleValueField(event, kCGScrollWheelEventPointDeltaAxis1),
-                   CGEventGetDoubleValueField(event, kCGScrollWheelEventPointDeltaAxis2),
-                   CGEventGetDoubleValueField(event, kCGScrollWheelEventScrollPhase),
-                   CGEventGetDoubleValueField(event, kCGScrollWheelEventMomentumPhase));
+//        DDLogDebug(@"Ignored scroll event: (%f,%f), (%f,%f), phase: %f, %f",
+//                   CGEventGetDoubleValueField(event, kCGScrollWheelEventDeltaAxis1),
+//                   CGEventGetDoubleValueField(event, kCGScrollWheelEventDeltaAxis2),
+//                   CGEventGetDoubleValueField(event, kCGScrollWheelEventPointDeltaAxis1),
+//                   CGEventGetDoubleValueField(event, kCGScrollWheelEventPointDeltaAxis2),
+//                   CGEventGetDoubleValueField(event, kCGScrollWheelEventScrollPhase),
+//                   CGEventGetDoubleValueField(event, kCGScrollWheelEventMomentumPhase));
         
         return event;
     }
