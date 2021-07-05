@@ -51,6 +51,7 @@ static VectorSubPixelator *_scrollPointPixelator;
 static VectorSubPixelator *_scrollLinePixelator;
 
 static PixelatedAnimator *_momentumAnimator;
+static BOOL _momentumScrollIsActive;
 
 + (void)initialize
 {
@@ -76,10 +77,10 @@ static PixelatedAnimator *_momentumAnimator;
         _scrollPointPixelator = [VectorSubPixelator roundPixelator];
         _scrollLinePixelator = [VectorSubPixelator biasedPixelator]; /// I think biased is only beneficial on linePixelator. Too lazy to explain.
         
-        /// Animator
+        /// Momentum scroll
         
-//        _momentumAnimator = [[Animator alloc] init];
         _momentumAnimator = [[PixelatedAnimator alloc] init];
+        _momentumScrollIsActive = NO;
         
     }
 }
@@ -270,33 +271,52 @@ static PixelatedAnimator *_momentumAnimator;
 /// Stop momentum scroll
 
 + (void)stopMomentumScroll {
-
-    CGEventRef event = CGEventCreate(NULL);
-    [self stopMomentumScrollWithEvent:event];
-    CFRelease(event);
+    
+    [self stopMomentumScrollWithEvent:NULL];
 }
 
-+ (void)stopMomentumScrollWithEvent:(CGEventRef _Nonnull)event {
++ (void)stopMomentumScrollWithEvent:(CGEventRef _Nullable)event {
+    /// We only use `event` to get the location for sending scroll events
     
-    if (_momentumAnimator.isRunning) {
-    /// Stop our animator
-    /// - If we only post the event (below) when _momentumAnimator.isRunning, then preventing the momentumScroll from Scroll.m > sendGestureScroll() won't work. Not sure why.
+    /// Debug
+//    DDLogDebug(@"Request to stop momentum scroll.", SharedUtility.callerInfo);
+    
+    assert(_momentumScrollIsActive || !_momentumAnimator.isRunning);
+    /// ^ This asserts the boolean expression _momentumAnimator.isRunning -> _momentumScrollIsActive
+    ///     _momentumScrollIsActive can be YES before the _momentumAnimator is started.
+    ///     In that scenario we don't need to stop the animator but we still need to send the kCGMomentumScrollPhaseEnd event, to stop views that handle momentum scrolling themselves like the Xcode editor view. That's why we need this distinction between _momentumAnimator.isRunning and _momentumScrollIsActive.
+    
+    if (_momentumScrollIsActive) {
         
-        [_momentumAnimator stop];
-    }
+        if (_momentumAnimator.isRunning) {
 
-    /// Get location from event
-    CGPoint location = CGEventGetLocation(event);
-    
-    /// Send kCGMomentumScrollPhaseEnd event.
-    ///  This will stop scrolling in apps like Xcode which implement their own momentum scroll algorithm
-    Vector zeroVector = (Vector){ .x = 0.0, .y = 0.0 };
-    [GestureScrollSimulator postGestureScrollEventWithGestureVector:zeroVector
+        /// Stop our animator
+            [_momentumAnimator stop];
+        }
+        
+        /// Debug
+        DDLogDebug(@"Send momentum scroll stop event");
+        
+        /// Get event
+        if (!event)
+            event = CGEventCreate(NULL);
+        
+        /// Get location from event
+        CGPoint location = CGEventGetLocation(event);
+        
+        /// Send kCGMomentumScrollPhaseEnd event.
+        ///  This will stop scrolling in apps like Xcode which implement their own momentum scroll algorithm
+        Vector zeroVector = (Vector){ .x = 0.0, .y = 0.0 };
+        [GestureScrollSimulator postGestureScrollEventWithGestureVector:zeroVector
                                                        scrollVectorLine:zeroVector
-                                                  scrollVectorPoint:zeroVector
-                                                              phase:kIOHIDEventPhaseUndefined
-                                                      momentumPhase:kCGMomentumScrollPhaseEnd
-                                                          location:location];
+                                                      scrollVectorPoint:zeroVector
+                                                                  phase:kIOHIDEventPhaseUndefined
+                                                          momentumPhase:kCGMomentumScrollPhaseEnd
+                                                               location:location];
+        
+    }
+    
+    _momentumScrollIsActive = NO;
 }
 
 /// Momentum scroll main
@@ -306,6 +326,10 @@ static void startMomentumScroll(Vector exitVelocity, double stopSpeed, double dr
     ///Debug
     
     DDLogDebug(@"Exit velocity: %f, %f", exitVelocity.x, exitVelocity.y);
+    
+    /// Set flag
+    
+    _momentumScrollIsActive = YES;
     
     /// Declare constants
     
@@ -375,6 +399,8 @@ static void startMomentumScroll(Vector exitVelocity, double stopSpeed, double dr
             /// Not sure how to deal with kMFAnimationPhaseStartingEnd. Maybe we should set momentumPhase to kCGMomentumScrollPhaseBegin instead?
             
             momentumPhase = kCGMomentumScrollPhaseEnd;
+            
+            _momentumScrollIsActive = NO;
             
         } else { /// We don't expect momentumPhase == kMFAnimationPhaseRunningStart
             assert(false);
@@ -459,8 +485,8 @@ static Vector initalMomentumScrollVelocity_FromExitVelocity(Vector exitVelocity)
                                   momentumPhase:(CGMomentumScrollPhase)momentumPhase
                                        location:(CGPoint)loc {
     
-    DDLogDebug(@"Posting: gesture: (%f,%f) --- scroll: (%f, %f) --- scrollPt: (%f, %f) --- phases: %d, %d --- loc: (%f, %f)\n",
-          vecGesture.x, vecGesture.y, vecScroll.x, vecScroll.y, vecScrollPoint.x, vecScrollPoint.y, phase, momentumPhase, loc.x, loc.y);
+//    DDLogDebug(@"Posting: gesture: (%f,%f) --- scroll: (%f, %f) --- scrollPt: (%f, %f) --- phases: %d, %d --- loc: (%f, %f)\n",
+//          vecGesture.x, vecGesture.y, vecScroll.x, vecScroll.y, vecScrollPoint.x, vecScrollPoint.y, phase, momentumPhase, loc.x, loc.y);
     
     assert((phase == kIOHIDEventPhaseUndefined || momentumPhase == kCGMomentumScrollPhaseNone)); /// At least one of the phases has to be 0
     
