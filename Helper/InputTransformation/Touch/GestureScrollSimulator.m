@@ -475,7 +475,7 @@ static Vector initalMomentumScrollVelocity_FromExitVelocity(Vector exitVelocity)
 ///     7. What about kIOHIDEventPhaseCanceled? It seems to occur when you touch the trackpad (producing MayBegin events) and then lift your fingers off before scrolling. I guess the deltas are always gonna be 0 on that, too, but I'm not sure.
 
 + (void)postGestureScrollEventWithGestureVector:(Vector)vecGesture
-                                   scrollVectorLine:(Vector)vecScroll
+                               scrollVectorLine:(Vector)vecScroll
                               scrollVectorPoint:(Vector)vecScrollPoint
                                           phase:(IOHIDEventPhaseBits)phase
                                   momentumPhase:(CGMomentumScrollPhase)momentumPhase
