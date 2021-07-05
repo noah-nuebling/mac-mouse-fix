@@ -145,20 +145,33 @@ static struct ModifiedDragState _drag;
 
 static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType type, CGEventRef  event, void * __nullable userInfo) {
     
-    // Re-enable on timeout (Not sure if this ever times out)
+    /// Re-enable on timeout (Not sure if this ever times out)
     if (type == kCGEventTapDisabledByTimeout) {
         DDLogInfo(@"ButtonInputReceiver eventTap timed out. Re-enabling.");
         CGEventTapEnable(_drag.eventTap, true);
     }
     
+    /// Get deltas
+    
     int64_t dx = CGEventGetIntegerValueField(event, kCGMouseEventDeltaX);
     int64_t dy = CGEventGetIntegerValueField(event, kCGMouseEventDeltaY);
     
-    // ^ These are truly integer values, I'm not rounding anything / losing any info here
+    /// ^ These are truly integer values, I'm not rounding anything / losing any info here
+    /// However, the deltas seem to be pre-subpixelated, and often, both dx and dy are 0.
+    
+    /// Ignore event if both deltas are zero
+    ///     We do this so the phases for the gesture scroll simulation (aka twoFingerSwipe) make sense. The gesture scroll event with phase kIOHIDEventPhaseBegan should always have a non-zero delta. If we let through zero deltas here it messes those phases up.
+    ///     I think for all other types of modified drag (aside from gesture scroll simulation) this shouldn't break anything, either.
+    if (dx == 0 && dy == 0) return NULL;
+    
+    /// Process delta
     
     [ModifiedDrag handleMouseInputWithDeltaX:dx deltaY:dy event:event];
     
-    return NULL; // Sending event or NULL here doesn't seem to make a difference. If you alter the event and send that it does have an effect though
+    /// Return
+    ///     Sending `event` or NULL here doesn't seem to make a difference. If you alter the event and send that it does have an effect though?
+    
+    return NULL;
 }
 
 + (void)handleMouseInputWithDeltaX:(int64_t)deltaX deltaY:(int64_t)deltaY event:(CGEventRef)event {
