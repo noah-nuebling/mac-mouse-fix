@@ -123,7 +123,7 @@ static struct ModifiedDragState _drag;
         [payload removeObjectForKey:kMFModifiedDragDictKeyType];
     }
     
-    DDLogDebug(@"INITIALIZING MODIFIED DRAG WITH TYPE %@ ON DEVICE %@", type, dev);
+//    DDLogDebug(@"INITIALIZING MODIFIED DRAG WITH TYPE %@ ON DEVICE %@", type, dev);
     
     // Init _drag struct
     _drag.modifiedDevice = dev;

@@ -51,7 +51,7 @@
     }
 }
 - (void)setClickLevel:(int64_t)clickLevel {
-    DDLogDebug(@"Setting clickLevel to: %lld", clickLevel);
+//    DDLogDebug(@"Setting clickLevel to: %lld", clickLevel);
     @synchronized (self) {
         _clickLevel = clickLevel;
     }

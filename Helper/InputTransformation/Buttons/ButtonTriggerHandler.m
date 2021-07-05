@@ -32,7 +32,7 @@
     NSDictionary *effectiveRemaps = Utility_Transformation.effectiveRemapsMethod_Override(remaps, modifiersActingOnThisButton);
     NSDictionary *remapsForModifiersActingOnThisButton = remaps[modifiersActingOnThisButton];
     
-    DDLogDebug(@"\nActive mods: %@, \nremapsForActiveMods: %@", modifiersActingOnThisButton, remapsForModifiersActingOnThisButton);
+//    DDLogDebug(@"\nActive mods: %@, \nremapsForActiveMods: %@", modifiersActingOnThisButton, remapsForModifiersActingOnThisButton);
     
     // If no remaps exist for this button, let the CGEvent which caused this function call pass through (Only if this function was invoked as a direct result of a physical button press)
     if (triggerType == kMFActionTriggerTypeButtonDown || triggerType == kMFActionTriggerTypeButtonUp) {

@@ -135,8 +135,8 @@ static void handleButtonModifiersHaveChangedWithDevice(Device *device) {
 #pragma mark Helper
 static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device * _Nonnull device) {
     
-    DDLogDebug(@"MODIFERS HAVE CHANGED TO - %@", activeModifiers);
-    DDLogDebug(@"...ON DEVICE - %@", device);
+//    DDLogDebug(@"MODIFIERS HAVE CHANGED TO - %@", activeModifiers);
+//    DDLogDebug(@"...ON DEVICE - %@", device);
 //    DDLogDebug(@"...CALLED BY %@", [SharedUtility getInfoOnCaller]);
     
     // Kill the currently active modified drag
@@ -158,7 +158,7 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
     }
     
     if (activeModifications) {
-        DDLogDebug(@"ACTIVE MODIFICATIONS - %@", activeModifications);
+//        DDLogDebug(@"ACTIVE MODIFICATIONS - %@", activeModifications);
         // Initialize effects which are modifier driven (only modified drag at this point)
         NSMutableDictionary *modifiedDragEffect = activeModifications[kMFTriggerDrag]; // Probably not truly mutable at this point
         if (modifiedDragEffect) {
@@ -197,7 +197,7 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
 //      That's over a third of the time which is used by our code (I think) - We should look into optimizing this (if we have too much time - the program is plenty fast). Maybe caching the values or calling it less, or making it faster.
 + (NSDictionary *)getActiveModifiersForDevice:(NSNumber *)devID filterButton:(NSNumber * _Nullable)filteredButton event:(CGEventRef _Nullable) event {
     
-    DDLogDebug(@"ActiveModifiers requested by: %s\n", SharedUtility.callerInfo.UTF8String);
+//    DDLogDebug(@"ActiveModifiers requested by: %s\n", SharedUtility.callerInfo.UTF8String);
     
     NSMutableDictionary *outDict = [NSMutableDictionary dictionary];
     
