@@ -120,6 +120,7 @@ static BOOL _momentumScrollIsActive;
         return;
     }
     
+    
     /// Stop momentum scroll
     
     [self stopMomentumScroll];
@@ -404,15 +405,7 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
         }
         
         /// Get pointer location for posting
-        
         CGPoint postLocation = getPointerLocation();
-        
-        /// Post at `origin at the start of the animation.
-        ///     That way all scroll events will go to the app above which the user started scrolling which is neat.
-        CGPoint originalLocation = postLocation; /// Only initializing here instead of inside the if statement below to silence warnings
-        if (animationPhase == kMFAnimationPhaseStart) {
-//            postLocation = origin;
-        }
         
         /// Post event
         [GestureScrollSimulator postGestureScrollEventWithGestureVector:zeroVector
@@ -421,15 +414,6 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
                                                                   phase:kIOHIDEventPhaseUndefined
                                                           momentumPhase:momentumPhase
                                                                location:postLocation];
-        /// Reset mouse pointer after posting at origin
-        if (animationPhase == kMFAnimationPhaseStart) {
-//            CGWarpMouseCursorPosition(originalLocation);
-//            CGWarpMouseCursorPosition(originalLocation);
-            /// Doing this twice because it sometimes doesn't work. Not sure if it helps
-            /// Also this freezes the mouse pointer for a split second. Not ideal, but not really noticable, either.
-            /// I changed my mind. The freeze is horrible UX
-        }
-        
     }];
     
 }
