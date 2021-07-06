@@ -192,9 +192,11 @@ import CocoaLumberjackSwift
         
         /// Lock
     
-        let threadLockingTimeOutResult = self.threadLock.wait(timeout: DispatchTime.now() + 0.02)
-        
-        assert(threadLockingTimeOutResult == DispatchTimeoutResult.success)
+        let lockingTimeout = 0.02
+        let threadLockingTimeOutResult = self.threadLock.wait(timeout: DispatchTime.now() + lockingTimeout)
+        if threadLockingTimeOutResult == DispatchTimeoutResult.timedOut {
+            DDLogWarn("It took longer than \(lockingTimeout) seconds to acquire the threadLock in displayLinkCallback()")
+        }
         
         /// Debug
         
