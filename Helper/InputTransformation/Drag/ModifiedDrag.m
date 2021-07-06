@@ -80,10 +80,11 @@ struct ModifiedDragState {
 static struct ModifiedDragState _drag;
 #define inputIsPointerMovement YES
 
-// There are two different modes for how we receive mouse input, toggle to switch between the two for testing
-// Set to no, if you want input to be raw mouse input, set to yes if you want input to be mouse pointer delta
-// Raw input has better performance (?) and allows for blocking mouse pointer movement. Mouse pointer input makes all the animation follow the pointer, but it has some issues with the pointer jumping when the framerate is low which I'm not quite sure how to fix.
-//      When the pointer jumps that sometimes leads to scrolling in random directions and stuff.
+/// There are two different modes for how we receive mouse input, toggle to switch between the two for testing
+/// Set to no, if you want input to be raw mouse input, set to yes if you want input to be mouse pointer delta
+/// Raw input has better performance (?) and allows for blocking mouse pointer movement. Mouse pointer input makes all the animation follow the pointer, but it has some issues with the pointer jumping when the framerate is low which I'm not quite sure how to fix.
+///      When the pointer jumps that sometimes leads to scrolling in random directions and stuff.
+/// Edit: We can block pointer movement while using pointer delta as input now! Also the jumping in random directions when driving gestureScrolling is gone. So using pointerMovement as input is fine.
 
 + (void)load_Manual {
     
@@ -110,13 +111,13 @@ static struct ModifiedDragState _drag;
 
 + (void)initializeDragWithModifiedDragDict:(NSDictionary *)dict onDevice:(Device *)dev {
     
-    // Get values from dict
+    /// Get values from dict
     MFStringConstant type = dict[kMFModifiedDragDictKeyType];
     MFMouseButtonNumber fakeDragButtonNumber = -1;
     if ([type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
         fakeDragButtonNumber = ((NSNumber *)dict[kMFModifiedDragDictKeyFakeDragVariantButtonNumber]).intValue;
     }
-    // Prepare payload to send to mainApp during AddMode. See TransformationManager -> AddMode for context
+    /// Prepare payload to send to mainApp during AddMode. See TransformationManager -> AddMode for context
     NSMutableDictionary *payload = nil;
     if ([type isEqualToString:kMFModifiedDragTypeAddModeFeedback]){
         payload = dict.mutableCopy;
@@ -129,7 +130,8 @@ static struct ModifiedDragState _drag;
     _drag.modifiedDevice = dev;
     _drag.activationState = kMFModifiedInputActivationStateInitialized;
     _drag.type = type;
-    _drag.origin = getPointerLocation();
+    
+    _drag.origin = getRoundedPointerLocation();
     _drag.originOffset = (Vector){0};
     _drag.subPixelatorX = [SubPixelator roundPixelator];
     _drag.subPixelatorY = [SubPixelator roundPixelator];
@@ -183,12 +185,12 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
     if (st == kMFModifiedInputActivationStateNone) {
         // Disabling the callback triggers this function one more time apparently, aside form that case, this should never happen I think
     } else if (st == kMFModifiedInputActivationStateInitialized) {
-        handleMouseInputWhileInitialized(deltaX, deltaY);
+        handleMouseInputWhileInitialized(deltaX, deltaY, event);
     } else if (st == kMFModifiedInputActivationStateInUse) {
         handleMouseInputWhileInUse(deltaX, deltaY, event);
     }
 }
-static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY) {
+static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGEventRef event) {
     
     _drag.originOffset.x += deltaX;
     _drag.originOffset.y += deltaY;
@@ -198,7 +200,9 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY) {
     // Activate the modified drag if the mouse has been moved far enough from the point where the drag started
     if (MAX(fabs(ofs.x), fabs(ofs.y)) > _drag.usageThreshold) {
         
-        _drag.usageOrigin = NSMakePoint(_drag.origin.x + ofs.x, _drag.origin.y + ofs.y); // This is just the current pointer location
+//        _drag.usageOrigin = CGPointMake(_drag.origin.x + ofs.x, _drag.origin.y + ofs.y);
+        /// ^ This is just the current pointer location, but obtained without a CGEvent. However this didn't quite work because ofs.x and ofs.y are integers while origin.x and origin.y are floats. I tried to roud the values myself to counterbalance this, but it didn't work, so I'm just passing in a CGEvent and getting the location from that. See below v
+        _drag.usageOrigin = getRoundedPointerLocationWithEvent(event);
         
         Device *dev = _drag.modifiedDevice;
         if (inputIsPointerMovement) {
@@ -363,6 +367,9 @@ static void handleDeactivationWhileInUse() {
 
 #pragma mark - Helper functions
 
+/// Disable mouse tracking
+///     I forgot what this does. Is it necessary?
+
 static void disableMouseTracking() {
     if (inputIsPointerMovement) {
         CGEventTapEnable(_drag.eventTap, false);
@@ -370,6 +377,26 @@ static void disableMouseTracking() {
     } else {
         [_drag.modifiedDevice receiveOnlyButtonInput];
     }
+}
+
+/// Get rounded pointer location
+
+static CGPoint getRoundedPointerLocation() {
+    /// Convenience wrapper for getRoundedPointerLocationWithEvent()
+    
+    CGEventRef event = CGEventCreate(NULL);
+    CGPoint location = getRoundedPointerLocationWithEvent(event);
+    CFRelease(event);
+    return location;
+}
+static CGPoint getRoundedPointerLocationWithEvent(CGEventRef event) {
+    /// I thought it was necessary to use this on _drag.origin to calculate the _drag.usageOrigin properly.
+    /// To get the _drag.usageOrigin, I used to take the _drag.origin (which is float) and add the kCGMouseEventDeltaX and DeltaY (which are ints)
+    ///     But even with rounding it didn't work properly so we went over to getting usageOrigin directly from a CGEvent. I think with this new setup there might not be a  reason to use the getRoundedPointerLocation functions anymore. But I'll just leave them in because they don't break anything.
+    
+    CGPoint pointerLocation = CGEventGetLocation(event);
+    CGPoint pointerLocationRounded = (CGPoint){ .x = floor(pointerLocation.x), .y = floor(pointerLocation.y) };
+    return pointerLocationRounded;
 }
 
 
