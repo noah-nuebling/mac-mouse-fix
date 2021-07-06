@@ -11,7 +11,7 @@ import Cocoa
 
 class RollingAverage: NSObject, Smoother {
     
-    /// Static vars
+    /// Vars
     
     let circularBuffer: CircularBuffer<NSNumber>
     var filled: Int {

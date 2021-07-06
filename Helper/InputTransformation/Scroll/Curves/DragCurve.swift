@@ -194,8 +194,7 @@ import Foundation
         
         /// Asserts / Debug
         assert(abs(timeInterval.length) != Double.infinity)
-        
-        DDLogDebug("DragDurve initialized with v0: \(v0), distance int: \(self._distanceInterval), timeToStop: \(timeToStop)");
+//        DDLogDebug("DragDurve initialized with v0: \(v0), distance int: \(self._distanceInterval), timeToStop: \(timeToStop)");
     }
     
     /// v(t)

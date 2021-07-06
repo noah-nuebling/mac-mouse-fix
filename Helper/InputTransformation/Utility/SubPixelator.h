@@ -26,6 +26,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (int64_t)peekIntDeltaWithDoubleDelta:(double)inpDelta;
 - (void)reset;
 
+/// Debug
+
+@property double accumulatedRoundingError;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -105,7 +105,7 @@ static BOOL _momentumScrollIsActive;
     
     /// Debug
     
-    DDLogDebug(@"Request to post Gesture Scroll: (%f, %f), phase: %d", dx, dy, phase);
+//    DDLogDebug(@"Request to post Gesture Scroll: (%f, %f), phase: %d", dx, dy, phase);
     
     /// Validate input
     
@@ -267,7 +267,7 @@ static BOOL _momentumScrollIsActive;
     /// We only use `event` to get the location for sending scroll events
     
     /// Debug
-//    DDLogDebug(@"Request to stop momentum scroll.", SharedUtility.callerInfo);
+    DDLogDebug(@"Request to stop momentum scroll.");
     
     assert(_momentumScrollIsActive || !_momentumAnimator.isRunning);
     /// ^ This asserts the boolean expression _momentumAnimator.isRunning -> _momentumScrollIsActive
@@ -314,7 +314,9 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
     
     ///Debug
     
-    DDLogDebug(@"Exit velocity: %f, %f", exitVelocity.x, exitVelocity.y);
+    DDLogDebug(@"Request momentumScroll start");
+    
+//    DDLogDebug(@"Exit velocity: %f, %f", exitVelocity.x, exitVelocity.y);
     
     /// Set _momentumScrollisActive flag
     ///     This is needed for subsequent stopMomentumScroll calls to work properly

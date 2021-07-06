@@ -295,10 +295,10 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
 //            DDLogInfo(@"scrollSendInterval: %@, dT: %@, dPx: %@", @(ts - lastTs), @(timeDelta), @(valueDelta));
 //            lastTs = ts;
             
-            /// Test if IntegerAnimator works properly
+            /// Test if PixelatedAnimator works properly
             
             assert(valueDelta != 0);
-            DDLogDebug(@"DELTA: %ld, PHASE: %d", (long)valueDelta, animationPhase);
+//            DDLogDebug(@"DELTA: %ld, PHASE: %d", (long)valueDelta, animationPhase);
             
             /// Send scroll
             

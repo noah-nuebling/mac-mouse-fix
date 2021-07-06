@@ -1,13 +1,13 @@
 //
 // --------------------------------------------------------------------------
-// IntegerAnimator.swift
+// PixelatedAnimator.swift
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2021
 // Licensed under MIT
 // --------------------------------------------------------------------------
 //
 
-/// IntegerAnimator will behave just like Animator with these differences:
+/// PixelatedAnimator will behave just like Animator with these differences:
 /// The animationValueDelta values it passes to it's AnimatorCallback are always integers instead of Doubles
 /// To achieve this, the internally generated Double deltas are rounded using a subpixelator which always rounds to the next larger integer (a ceilPixelator)
 ///     Using ceil instead of normal rounding (roundPixelator) will always generate the first non-zero integer delta immediately on the first frame of animation. I hope that will make the animations this produces marginally more responsive. This only works if the first delta is positive not negative. Since we only use this class in Scroll.m where that's the case, this is okay.
@@ -31,9 +31,9 @@ class PixelatedAnimator: Animator {
     
     /// Declare types and vars that superclass doesn't have
     
-    typealias IntegerAnimatorCallback =
+    typealias PixelatedAnimatorCallback =
         (_ integerAnimationValueDelta: Int, _ animationTimeDelta: Double, _ phase: MFAnimationPhase) -> ()
-    var integerCallback: IntegerAnimatorCallback?;
+    var integerCallback: PixelatedAnimatorCallback?;
     
 //    var subPixelator: SubPixelator = SubPixelator.ceil();
     /// ^ This being a ceil subPixelator only makes sense because we're only using this through Scroll.m and that's only running this with positive value ranges. So the deltas are being rounded up, and we get a delta immediately as soon as the animations starts, which should make scrolling very small distances feel a little more responsive. If we were dealing with negative deltas, we'd want to round them down instead somehow. Or simply use a SubPixelator.round() which works the same in both directions.
@@ -46,7 +46,7 @@ class PixelatedAnimator: Animator {
     @objc func start(duration: CFTimeInterval,
                                 valueInterval: Interval,
                                 animationCurve: RealFunction,
-                                integerCallback: @escaping IntegerAnimatorCallback) {
+                                integerCallback: @escaping PixelatedAnimatorCallback) {
         
         self.startWithUntypedCallback(duration: duration, valueInterval: valueInterval, animationCurve: animationCurve, callback: integerCallback)
         
@@ -56,6 +56,10 @@ class PixelatedAnimator: Animator {
         }
     }
     
+    /// Debug vars
+    
+    var summedIntegerAnimationValueDelta: Int = 0;
+    
     /// Hook into superclasses' displayLinkCallback()
     
     override func subclassHook(_ untypedCallback: Any, _ animationValueDelta: Double, _ animationTimeDelta: CFTimeInterval) {
@@ -63,8 +67,8 @@ class PixelatedAnimator: Animator {
         
         /// Guard callback type
         
-        guard let callback = untypedCallback as? IntegerAnimatorCallback else {
-            fatalError("Invalid state - callback is not type IntegerAnimatorCallback")
+        guard let callback = untypedCallback as? PixelatedAnimatorCallback else {
+            fatalError("Invalid state - callback is not type PixelatedAnimatorCallback")
         }
         
         /// Get subpixelated animationValueDelta
@@ -72,39 +76,59 @@ class PixelatedAnimator: Animator {
         let integerAnimationValueDelta = Int(self.subPixelator.intDelta(withDoubleDelta: animationValueDelta));
         
         if (integerAnimationValueDelta != 0) {
-            /// Skip this frames callback and don't update animationPhase, if the integer value delta is 0
+            /// Skip this frames callback and don't update animationPhase from `start` to `continue` if integerValueDelta is 0
             
-            /// Check if this was the last int delta
+            /// Update phase to `end` if this was the last int delta
             
             let currentAnimationValueLeft = self.animationValueLeft - animationValueDelta;
-            /// ^ We don't use self.animationValueLeft directly, because it's a computed property derived from self.lastAnimationValue which is only updated at the end of displayLinkCallback() - after it calls subclassHook().
+            /// ^ We don't use self.animationValueLeft directly, because it's a computed property derived from self.lastAnimationValue which is only updated at the end of displayLinkCallback() - after it calls subclassHook() (which is this function).
             let intAnimationValueLeft = subPixelator.peekIntDelta(withDoubleDelta: currentAnimationValueLeft);
-            if intAnimationValueLeft <= 0 {
+//            if intAnimationValueLeft <= 0 { /// This wouldn't work if the value interval is negative, right?
+            if intAnimationValueLeft == 0 {
                 self.animationPhase = kMFAnimationPhaseEnd;
             }
             
-            /// Debug
-            
-            DDLogDebug("PxAnim - valueLeft: \(currentAnimationValueLeft), intValueLeft: \(intAnimationValueLeft)")
-            
-            /// Check if this was first _and_  last event of animation
-            ///     This has a copy in superclass. Update it when you change this
+            /// Update phase to `startAndEnd` if appropriate
+            ///     -> Check if this event was first _and_  last event of animation
+            ///     This has a copy in superclass. Update that it when you change this.
             
             if (animationPhase == kMFAnimationPhaseEnd /// This is last event of the animation
                     && lastAnimationPhase == kMFAnimationPhaseNone) { /// This is also the first event of the animation
                 animationPhase = kMFAnimationPhaseStartAndEnd;
             }
             
+            /// Debug
+            
+            if animationPhase == kMFAnimationPhaseStart || animationPhase == kMFAnimationPhaseRunningStart || animationPhase == kMFAnimationPhaseStartAndEnd {
+                summedIntegerAnimationValueDelta = 0
+            }
+            summedIntegerAnimationValueDelta += integerAnimationValueDelta
+            
+            DDLogDebug("""
+PxAnim - intValueDelta: \(integerAnimationValueDelta), intValueLeft: \(intAnimationValueLeft), animationPhase: \(self.animationPhase.rawValue),     value: \(lastAnimationValue + animationValueDelta) intValue: \(summedIntegerAnimationValueDelta), intervalLength: \(self.animationValueInterval.length),     valueDelta: \(animationValueDelta), accEoundingErr: \(subPixelator.accumulatedRoundingError), currentnimationValueLeft: \(currentAnimationValueLeft),
+""")
+            
+            if summedIntegerAnimationValueDelta >= Int(self.animationValueInterval.length) {
+//                assert(animationPhase == kMFAnimationPhaseEnd)
+            }
+            
             /// Call callback
             
             callback(integerAnimationValueDelta, animationTimeDelta, self.animationPhase)
+            
+            /// Update phase to `continue` if phase is `start`
+            ///     This has a copy in superclass. Update that it when you change this.
+            
+            switch self.animationPhase {
+            case kMFAnimationPhaseStart, kMFAnimationPhaseRunningStart: self.animationPhase = kMFAnimationPhaseContinue
+            default: break }
             
         } else {
             DDLogDebug("INTEGER DELTA IS ZERO - NOT CALLING CALLBACK")
             assert(self.animationPhase != kMFAnimationPhaseEnd)
             ///     Phase can be set to kMFAnimationPhaseEnd in two places.
             ///     1. In Animator.swift > displayLinkCallback(), when the current time is beyond the animationTimeInterval.
-            ///     2. Here in IntegerAnimator.swift > subclassHook(), when processing a non-zero integerDelta, and finding that all the animationValue that's left won't lead to another integer delta (so when the animationValueLeft is smaller than 1)
+            ///     2. Here in PixelatedAnimator.swift > subclassHook(), when processing a non-zero integerDelta, and finding that all the animationValue that's left won't lead to another integer delta (so when the animationValueLeft is smaller than 1)
             ///     -> 2. Should always occur before 1. can occur from my understanding. (That's what this assertion is testing) This will ensure that the delta with phase kMFAnimationPhaseEnd would always be sent and would always contain a non-zero delta.
         }
     }
@@ -117,7 +141,7 @@ class PixelatedAnimator: Animator {
 //    @objc override func displayLinkCallback() {
 //
 //
-//        guard let callback = self.callback as? IntegerAnimatorCallback else {
+//        guard let callback = self.callback as? PixelatedAnimatorCallback else {
 //            fatalError("Invalid state - callback can't be nil during running animation")
 //        }
 //        guard let animationCurve = self.animationCurve else {

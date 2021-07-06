@@ -11,7 +11,7 @@
 #import "SharedUtility.h"
 
 @interface SubPixelator ()
-@property double accumulatedRoundingError;
+//@property double accumulatedRoundingError; /// Declaring this in header for outside access to help debugging
 @property double (*roundingFunction)(double);
 @property BOOL isBiasedPixelator;
 @end
@@ -66,7 +66,7 @@
         return 0;
     }
     
-    /// Initialize rounding function if it isn't already
+    /// If this is biased pixelator, initialize rounding function if it isn't already
     if (self.isBiasedPixelator && self.roundingFunction == NULL) {
         if (sign(inpDelta) == 1) {
             self.roundingFunction = ceil;

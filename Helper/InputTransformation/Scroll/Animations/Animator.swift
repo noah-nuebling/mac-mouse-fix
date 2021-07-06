@@ -21,6 +21,7 @@ import CocoaLumberjackSwift
     @Atomic var callback: UntypedAnimatorCallback?
     /// ^ This is constantly accessed by subclassHook() and constantly written to by startWithUntypedCallback(). Becuase Swift is stinky and not thread safe, the app will sometimes crash, when this property is read from and written to at the same time. So we're using @Atomic propery wrapper
     var animationCurve: RealFunction? /// This class assumes that `animationCurve` passes through `(0, 0)` and `(1, 1)`
+    let threadLock = DispatchSemaphore.init(value: 1)
     
     // Init
     
@@ -78,23 +79,36 @@ import CocoaLumberjackSwift
                      valueInterval: Interval,
                      animationCurve: RealFunction,
                      callback: UntypedAnimatorCallback) {
+        
         /// Should only be called by this and subclasses
         /// The use of 'Interval' in CFTimeInterval is kind of confusing, since its also used to spedify points in time (It's just a `Double`), and also it has nothing to do with our `Interval` class, which is much closer to an Interval in the Mathematical sense.
         /// Will be restarted if it's already running. No need to call stop before calling this.
         /// It's kind of unnecessary to be passing this a value interval, because we only use the length of it. Since the AnimatorCallback only receives valueDeltas each frame and no absolute values,  the location of the value interval doesn't matter.
-        /// We need to make `callback` and UntypedAnimatorCallback instead of a normal AnimatorCallback, so we can change the type of `callback` to IntegerAnimatorCallback in the subclass IntegerAnimator. That's because Swift is stinky. UntypedAnimatorCallback is @escaping
+        /// We need to make `callback` and UntypedAnimatorCallback instead of a normal AnimatorCallback, so we can change the type of `callback` to PixelatedAnimatorCallback in the subclass PixelatedAnimator. That's because Swift is stinky. UntypedAnimatorCallback is @escaping
         
+        /// Lock
+        ///     Otherwise there will be race conditions with this function and the displayLinkCallback() both manipulating the animationPhase (and I think other values, too) at the same time.
+        ///     Generally queues are advised over locks, but since the docs of CVDisplayLink say the displayLinkCallback is executed on a special high-priority thread, I thought it might be better to use a thread lock instead of a dispatchQueue,
+        ///         so we ensure that the displayLinkCallback really is executing on that high-priority thread.
+        ///     To be exact, we're using a semaphore not a thread lock but it works the exact same
         
-        DDLogDebug("START ANIMATOR")
+        defer {
+            self.threadLock.signal()
+        }
+        let timeOutResult = self.threadLock.wait(timeout: DispatchTime.now() + 0.02)
+
+        assert(timeOutResult == DispatchTimeoutResult.success)
         
+        /// Store args
         
         self.callback = callback;
         self.animationCurve = animationCurve
         
         /// Update phases
         
-        if (!isRunning
-            || self.animationPhase == kMFAnimationPhaseStart) {
+        if (!self.isRunning
+            || self.animationPhase == kMFAnimationPhaseStart
+            || self.animationPhase == kMFAnimationPhaseStartAndEnd) { /// This shouldn't be necessary, because we call self.stop() in the displayLinkCallback if phase is `startAndEnd`, which will make self.isRunning false. But due to some weird race condition or something, it doesn't always work. Edit: I added locks to this class to prevent the race conditions whcih should make this unnecessary - Remove the `startAndEnd` check.
             /// If animation phase is still start that means that the displayLinkCallback() hasn't used it, yet (it sets it to continue after using it)
             ///     We want the first time that selfcallback is called by displayLinkCallback() during the animation to have phase start, so we're not setting phase to running start in this case, even if the Animator is already running (when !isRunning is true)
             
@@ -103,6 +117,10 @@ import CocoaLumberjackSwift
         } else {
             animationPhase = kMFAnimationPhaseRunningStart;
         }
+        
+        /// Debug
+        
+        DDLogDebug("START ANIMATOR \(self.hash) with phase: \(animationPhase.rawValue)")
         
         /// Update the rest of the state
         
@@ -146,7 +164,20 @@ import CocoaLumberjackSwift
     
     @objc func stop() {
         
+        /// Lock
+        
+        let timeOutResult = self.threadLock.wait(timeout: DispatchTime.now() + 0.02)
+        defer {
+            self.threadLock.signal()
+        }
+
+        assert(timeOutResult == DispatchTimeoutResult.success)
+        
+        /// Debug
+        
         DDLogDebug("STOPPING ANIMATOR")
+        
+        /// Do stuff
         
         displayLink.stop()
         animationPhase = kMFAnimationPhaseNone
@@ -159,9 +190,15 @@ import CocoaLumberjackSwift
     @objc func displayLinkCallback() {
         /// I'm usually a fan of commenting even obvious things, to structure the code and make it easier to parse, but this is overkill. I think the comments make it less readable
         
+        /// Lock
+    
+        let threadLockingTimeOutResult = self.threadLock.wait(timeout: DispatchTime.now() + 0.02)
+        
+        assert(threadLockingTimeOutResult == DispatchTimeoutResult.success)
+        
         /// Debug
         
-//        DDLogDebug("DISP LINK INITIAL PHASE: \(self.animationPhase)")
+        DDLogDebug("DO DISP LINK with (initial) phase: \(self.animationPhase.rawValue)")
         
         /// Guard nil
         
@@ -200,22 +237,31 @@ import CocoaLumberjackSwift
         let animationValueDelta: Double = animationValue - lastAnimationValue
         
         /// Subclass hook.
-        ///     IntegerAnimator overrides this to do its thing
+        ///     PixelatedAnimator overrides this to do its thing
         
         subclassHook(callback, animationValueDelta, animationTimeDelta)
-        
-        /// Update phases and do stop()
-        
-        switch self.animationPhase {
-        case kMFAnimationPhaseStart, kMFAnimationPhaseRunningStart: self.animationPhase = kMFAnimationPhaseContinue
-        case kMFAnimationPhaseEnd, kMFAnimationPhaseStartAndEnd: stop()
-        default: break }
         
         /// Update `last` time and value and phase
         
         self.lastAnimationTime = now
         self.lastAnimationValue = animationValue
         self.lastAnimationPhase = self.animationPhase
+        
+        /// Stop animation if phase is   `end`
+        
+        switch self.animationPhase {
+        case kMFAnimationPhaseEnd, kMFAnimationPhaseStartAndEnd:
+            
+            /// Need to make sure that this functions' threadLock has been released before we call self.stop(). self.stop() will try to acquire the lock,  leading to a deadlock if this function still holds the lock.
+            ///     If we unlock the thread before the enclosing switch statement there'll still be race conditions (I think - limited testing)
+            self.threadLock.signal()
+            self.stop()
+            
+        default:
+            /// Unlock
+            ///     Make you don't accidentally return from this function prematurely, such that the lock isn't released
+            self.threadLock.signal()
+        }
     }
     
     /// Subclass overridable
@@ -228,8 +274,11 @@ import CocoaLumberjackSwift
             fatalError("Invalid state - callback is not type AnimatorCallback")
         }
         
-        /// Check if this was first _and_  last event of animation
-        ///     This has a copy in subclass. Update it when you change this
+        /// Update phase to `startAndEnd` if appropriate
+        ///     -> Check if this event was first _and_  last event of animation
+        ///     This has a copy in superclass. Update that it when you change this.
+        ///     We want to do this after all other changes to the animationPhase and before the callback() call. Since the PixelatedAnimator subclassHook() changes the animationPhase before it calls the callback(), we need a copy of the below code in both subclassHooks()
+        ///     This duplicated code make things pretty confusing but, to avoid it we'd have to create like 3 different subclassHooks, which would be even more confusing.
         
         if (animationPhase == kMFAnimationPhaseEnd /// This is last event of the animation
                 && lastAnimationPhase == kMFAnimationPhaseNone) { /// This is also the first event of the animation
@@ -239,6 +288,24 @@ import CocoaLumberjackSwift
         /// Call the callback
         
         callback(animationValueDelta, animationTimeDelta, animationPhase)
+        
+        /// Update phase to `continue` if phase is `start`
+        ///     This has a copy in superclass. Update that it when you change this.
+        
+        switch self.animationPhase {
+        case kMFAnimationPhaseStart, kMFAnimationPhaseRunningStart: self.animationPhase = kMFAnimationPhaseContinue
+        default: break }
+    }
+    
+    /// Helper functions
+    
+    func phaseIsEndingPhase() -> Bool {
+        switch self.animationPhase {
+        case kMFAnimationPhaseEnd, kMFAnimationPhaseStartAndEnd:
+            return true
+        default:
+            return false
+        }
     }
     
 }
