@@ -448,7 +448,8 @@ static Vector gestureVector_FromScrollPointVector(Vector vec) {
     return scaledVectorWithFunction(vec, ^double(double x) {
 //        return 1.35 * x; /// This makes swipe to mark unread in Apple Mail feel really nice
 //        return 1.0 * x; /// This feels better for swiping between pages in Safari
-        return 1.15 * x; /// I think this is a nice compromise
+//        return 1.15 * x; /// I think this is a nice compromise
+        return 1.0 * x; /// Even 1.15 feels to fast right now.
     });
 }
 
