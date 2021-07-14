@@ -80,7 +80,7 @@
     ///     If something goes wrong see notes in old SmoothScroll.m > handleInput: method
     CVReturn code = CVDisplayLinkStart(_displayLink);
     if (code != kCVReturnSuccess) {
-        DDLogInfo(@"Failed to start CVDisplayLink. Error code: %d", code);
+        DDLogInfo(@"Failed to start CVDisplayLink. Error code: %d", code); /// This happens pretty often. We should probably retry a few times if this fails like in the old SmoothScroll.m implementation
     } else {
 //        DDLogDebug(@"Started displayLinkCallback");
     }
@@ -100,7 +100,7 @@
 
 - (CVReturn)linkToMainScreen {
     /// Simple alternative to .`setDisplayToDisplayUnderMousePointerWithEvent:`.
-    /// TODO: Test which is faster by setting
+    /// TODO: Test which is faster
     
     return [self setDisplay:NSScreen.mainScreen.displayID];
 }
@@ -115,7 +115,7 @@
     CGGetDisplaysWithPoint(mouseLocation, 2, newDisplaysUnderMousePointer, &matchingDisplayCount);
     
     if (matchingDisplayCount >= 1) {
-        if (newDisplaysUnderMousePointer[0] != _previousDisplaysUnderMousePointer[0]) { /// Why are we only checking at index 0?
+        if (newDisplaysUnderMousePointer[0] != _previousDisplaysUnderMousePointer[0]) { /// Why are we only checking at index 0? Should make more sense to check current master display against the previous master display
             free(_previousDisplaysUnderMousePointer); // We need to free this memory before we lose the pointer to it in the next line. (If I understand how raw C work in ObjC)
             _previousDisplaysUnderMousePointer = newDisplaysUnderMousePointer;
             // Sets dsp to the master display if _displaysUnderMousePointer[0] is part of the mirror set
@@ -149,7 +149,7 @@ void displayReconfigurationCallback(CGDirectDisplayID display, CGDisplayChangeSu
     ///     Then we use that flag in `- setDisplay`, to set up a new displayLink when needed.
     ///     That way, the displayLink won't be recreated when the user isn't even using Mac Mouse Fix.
     
-    // Get self and displayLink
+    // Get self
     DisplayLink *self = (__bridge DisplayLink *)userInfo;
     
     if ((flags & kCGDisplayAddFlag) ||
