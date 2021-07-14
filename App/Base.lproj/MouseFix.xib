@@ -17,7 +17,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenNone="YES"/>
             <rect key="contentRect" x="0.0" y="0.0" width="580" height="429"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="775"/>
             <value key="minSize" type="size" width="580" height="300"/>
             <value key="maxSize" type="size" width="580" height="1000"/>
             <view key="contentView" identifier="mainView" translatesAutoresizingMaskIntoConstraints="NO" id="se5-gp-TjO">
@@ -132,14 +132,14 @@ To disable Mac Mouse Fix, uncheck this checkbox or move the app to the Trash.</s
                                                     </connections>
                                                 </button>
                                                 <button identifier="scrollCheckBox" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9lG-eT-nD4">
-                                                    <rect key="frame" x="39" y="32" width="132" height="18"/>
+                                                    <rect key="frame" x="39" y="32" width="128" height="18"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <string key="toolTip">Make scrolling animate smoothly
 
 Tips: 
 - Hold Shift (⇧) to scroll horizontally
 - Hold Command (⌘) and scroll to zoom in or out</string>
-                                                    <buttonCell key="cell" type="check" title="Smooth scrolling:" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="aqu-LA-LU4">
+                                                    <buttonCell key="cell" type="check" title="Smooth scrolling" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="aqu-LA-LU4">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
