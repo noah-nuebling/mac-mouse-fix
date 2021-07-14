@@ -79,7 +79,7 @@ static NSArray *getScrollEffectsTable() {
 }
 static NSArray *getDragEffectsTable() {
     NSArray *dragEffectsTable = @[
-        @{@"ui": @"Three Finger Swipe", @"tool": @"Move your mouse: \n - Up to show Mission Control \n - Down to show Application Windows \n - Left or Right to move between Spaces\n \nWorks like swiping with 3 fingers on an Apple Trackpad" , @"dict": @{
+        @{@"ui": @"Mission Control & Spaces", @"tool": @"Move your mouse: \n - Up to show Mission Control \n - Down to show Application Windows \n - Left or Right to move between Spaces\n \nWorks like swiping with 3 fingers on an Apple Trackpad" , @"dict": @{
                   kMFModifiedDragDictKeyType: kMFModifiedDragTypeThreeFingerSwipe,
         }},
 //        @{@"ui": @"Scroll & navigate pages", @"tool": @"Scroll by moving your mouse in any direction \nNavigate pages in Safari, delete messages in Mail, and more, by moving your mouse horizontally \n \nWorks like swiping with 2 fingers on an Apple Trackpad" , @"dict": @{
