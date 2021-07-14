@@ -38,6 +38,7 @@ typedef void(*MFCTLCallback)(NSTask *task, NSPipe *output, NSError *error);
 + (NSString *)currentDispatchQueueDescription;
 + (void)printInvocationCountWithId:(NSString *)strId;
 + (BOOL)button:(NSNumber * _Nonnull)button isPartOfModificationPrecondition:(NSDictionary *)modificationPrecondition;
++ (NSString *)binaryRepresentation:(int)value;
 
 @end
 

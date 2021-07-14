@@ -212,8 +212,22 @@ static void cleanup() {
     
 }
 
-static NSError *makeWritable(NSString *filePath) {
-    /// Helper function for [+ repairLaunchdPlist]
+static NSError *makeWritable(NSString *itemPath) {
+    /**
+     
+     Helper function for + repairLaunchdPlist
+     Changes permissions of the item at filePath to allow writing by the user to that item
+     
+     __Motivation__
+     - This is intended to be used by + repairLaunchdPlist to unlock the LaunchAgents folder so we can write our LaunchdPlist into it.
+     - For some reason, many users have had troubles enabling Mac Mouse Fix recently. Many of these troubles turned out to be due to the LaunchAgents folder having it's permissions set to 'read only'. This function can be used to fix that.
+        - See for example Issue [#54](https://github.com/noah-nuebling/mac-mouse-fix/issues/54)
+        - There was also another GH issue where the user orignially figured out that permissions were the problem which prompted me to add better logging. But I'm writing this function much later. So I can't remember which GH Issue that was. Props to that user anyways.
+    
+     __Notes__
+     - I really hope this doesn't break anything. Changing permissions in the file system feels somewhat dangerous.
+     - Also it might be a good idea to ask the user if they want the permissions to be changed, but 99.9% of users won't even understand what they are deciding about, and it would be a lot of work to present this in a good way. So I think this should be fine.
+     */
     
     /// Get fileManager
     
@@ -221,12 +235,12 @@ static NSError *makeWritable(NSString *filePath) {
     
     /// Check if file at filePath is writable
     
-    if (![fileManager isWritableFileAtPath:filePath]) {
+    if (![fileManager isWritableFileAtPath:itemPath]) {
         /// File is not writable
         
         /// Log
         
-        NSLog(@"File at %@ is not writable. Attempting to change permissions.", filePath);
+        NSLog(@"File at %@ is not writable. Attempting to change permissions.", itemPath);
         
         /// Declare error
         
@@ -235,7 +249,7 @@ static NSError *makeWritable(NSString *filePath) {
         /// Get file attributes
         
         error = nil;
-        NSDictionary *attributes = [fileManager attributesOfItemAtPath:filePath error:&error];
+        NSDictionary *attributes = [fileManager attributesOfItemAtPath:itemPath error:&error];
         if (error) return error;
         
         /// Get old permissions from file attributes
@@ -252,7 +266,7 @@ static NSError *makeWritable(NSString *filePath) {
         error = nil;
         [fileManager setAttributes:@{
             NSFilePosixPermissions: @(newPermissions)
-        } ofItemAtPath:filePath error:&error];
+        } ofItemAtPath:itemPath error:&error];
         
         if (error) {
             return error;
@@ -260,7 +274,8 @@ static NSError *makeWritable(NSString *filePath) {
         
         /// Debug
         
-        NSLog(@"Changed permissions of %@ from %lu to %lu", filePath, (unsigned long)oldPermissions, (unsigned long)newPermissions);
+        NSLog(@"Changed permissions of %@ from %@ to %@", itemPath,  [SharedUtility binaryRepresentation:(int)oldPermissions], [SharedUtility binaryRepresentation:(int)newPermissions]);
+        /// ^ Binary representation doesn't really help. This is almost impossible to parse visually.
     }
     
     return nil;

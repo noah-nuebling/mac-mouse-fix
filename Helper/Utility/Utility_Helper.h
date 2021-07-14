@@ -12,7 +12,6 @@
 @interface Utility_Helper : NSObject
 + (CGEventRef)createEventWithValuesFromEvent:(CGEventRef)event;
 + (void)printEventFieldDifferencesBetween:(CGEventRef)event1 and:(CGEventRef)event2;
-+ (NSString *)binaryRepresentation:(int)value;
 + (CGPoint)getCurrentPointerLocation_flipped;
 @end
 
