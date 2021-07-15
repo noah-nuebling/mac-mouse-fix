@@ -4,12 +4,12 @@ contact_links:
   - name: Need help?
     url: https://github.com/noah-nuebling/mac-mouse-fix/discussions
     about: View guides or ask the community
-  - name: Enhancement request
-    url: https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=feature-request
-    about: Suggest a new feature, UI changes, or other improvements
   - name: Bug report
     url: https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report
     about: Report a bug
+  - name: Enhancement request
+    url: https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=feature-request
+    about: Suggest a new feature, UI changes, or other improvements
   - name: Free form feedback
     url: https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=other
     about: Write free form feedback
