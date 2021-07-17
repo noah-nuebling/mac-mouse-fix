@@ -170,7 +170,9 @@ static NSDictionary *sideButtonActions;
     
     // Configure Sparkle Updater
     //  (See https://sparkle-project.org/documentation/customization/)
+    
     // Some configuration is done via Info.plist, and seemingly can't be done from code
+    // Some more configuration is done from SparkleUpdaterController.m
     
     SUUpdater *up = SUUpdater.sharedUpdater;
     
