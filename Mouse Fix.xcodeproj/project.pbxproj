@@ -293,7 +293,6 @@
 		4F3A40D9266C5BDF00436821 /* NSScreen+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSScreen+Additions.m"; sourceTree = "<group>"; };
 		4F3E067C26A2F97D000C9E06 /* URLMenuItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = URLMenuItem.h; sourceTree = "<group>"; };
 		4F3E067D26A2F97D000C9E06 /* URLMenuItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = URLMenuItem.m; sourceTree = "<group>"; };
-		4F422EEC23469B0F00AA6E22 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F44FF022606D73D00926A5E /* SharedMessagePort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharedMessagePort.h; sourceTree = "<group>"; };
 		4F44FF032606D73D00926A5E /* SharedMessagePort.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SharedMessagePort.m; sourceTree = "<group>"; };
 		4F70ECAC267E442D00325A76 /* PointerSpeedExperiments2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerSpeedExperiments2.h; sourceTree = "<group>"; };
@@ -1118,8 +1117,7 @@
 			isa = PBXGroup;
 			children = (
 				4FF6663C25F2C93A00689B77 /* TransformationManager */,
-				4FF6661525F2C93A00689B77 /* Modifiers */,
-				4FF6661825F2C93A00689B77 /* Buttons */,
+				4FF6661825F2C93A00689B77 /* RemappingEngine */,
 				4FF6661F25F2C93A00689B77 /* Scroll */,
 				4FF6663625F2C93A00689B77 /* Drag */,
 				4FF6663125F2C93A00689B77 /* Touch */,
@@ -1138,7 +1136,7 @@
 			path = Modifiers;
 			sourceTree = "<group>";
 		};
-		4FF6661825F2C93A00689B77 /* Buttons */ = {
+		4FF6661825F2C93A00689B77 /* RemappingEngine */ = {
 			isa = PBXGroup;
 			children = (
 				4FF6661B25F2C93A00689B77 /* ButtonInputReceiver.h */,
@@ -1149,8 +1147,9 @@
 				4FF6661A25F2C93A00689B77 /* ButtonTriggerHandler.m */,
 				4F1B83042606E68300AEAF37 /* ButtonLandscapeAssessor.h */,
 				4F1B83052606E68300AEAF37 /* ButtonLandscapeAssessor.m */,
+				4FF6661525F2C93A00689B77 /* Modifiers */,
 			);
-			path = Buttons;
+			path = RemappingEngine;
 			sourceTree = "<group>";
 		};
 		4FF6661F25F2C93A00689B77 /* Scroll */ = {
