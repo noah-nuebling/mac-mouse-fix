@@ -52,7 +52,7 @@ To disable Mac Mouse Fix, uncheck this checkbox or move the app to the Trash.</s
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="moreButton:" target="NxE-tZ-vxj" id="Ioj-36-Cld"/>
+                                    <action selector="openMoreSheet:" target="NxE-tZ-vxj" id="Ioj-36-Cld"/>
                                 </connections>
                             </button>
                             <box identifier="preferenceBox" autoresizesSubviews="NO" fixedFrame="YES" borderType="line" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="nmi-Qw-Ncm">
@@ -369,6 +369,13 @@ Tips:
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Mac Mouse Fix" systemMenu="apple" id="sWL-bz-rmH">
                         <items>
+                            <menuItem title="About Mac Mouse Fix" id="DGC-Wk-0b9">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="openMoreSheet:" target="NxE-tZ-vxj" id="VtQ-uF-S73"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="81e-GN-Jmb"/>
                             <menuItem title="Check for Updates..." id="xgK-bl-zXP">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>

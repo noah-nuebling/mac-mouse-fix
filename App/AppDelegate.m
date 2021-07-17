@@ -71,7 +71,7 @@
     }
 }
 
-- (IBAction)moreButton:(id)sender {
+- (IBAction)openMoreSheet:(id)sender {
     [MoreSheet.instance begin];
 }
 - (IBAction)scrollEnableCheckBox:(id)sender {
