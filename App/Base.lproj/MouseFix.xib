@@ -653,7 +653,13 @@ Tips:
                 </menuItem>
                 <menuItem title="Help" id="cvc-dN-LRF">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="Help" systemMenu="help" id="d2H-UT-IZe"/>
+                    <menu key="submenu" title="Help" systemMenu="help" id="d2H-UT-IZe">
+                        <items>
+                            <menuItem title="View Guides or Ask the Community" id="GcC-Bk-h8l" userLabel="View Guides or Ask the Community...">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                        </items>
+                    </menu>
                 </menuItem>
             </items>
             <point key="canvasLocation" x="145" y="381"/>
