@@ -444,12 +444,6 @@ Tips:
                                     <action selector="paste:" target="-1" id="ZFu-R4-CkB"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Paste and Match Style" keyEquivalent="V" id="2ch-OA-W10">
-                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
-                                <connections>
-                                    <action selector="pasteAsPlainText:" target="-1" id="Ddg-U4-GlA"/>
-                                </connections>
-                            </menuItem>
                             <menuItem title="Delete" id="5e7-Bk-rgI">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
