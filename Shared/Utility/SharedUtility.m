@@ -297,5 +297,6 @@ int8_t sign(double x) {
         }
     }
     return bitString;
+}
 
 @end
