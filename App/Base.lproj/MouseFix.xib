@@ -17,7 +17,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenNone="YES"/>
             <rect key="contentRect" x="0.0" y="0.0" width="580" height="429"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="775"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="3840" height="2135"/>
             <value key="minSize" type="size" width="580" height="300"/>
             <value key="maxSize" type="size" width="580" height="1000"/>
             <view key="contentView" identifier="mainView" translatesAutoresizingMaskIntoConstraints="NO" id="se5-gp-TjO">
@@ -363,22 +363,45 @@ Tips:
             </connections>
         </customObject>
         <customObject id="iab-hA-K07" customClass="SparkleUpdaterController"/>
-        <menuItem title="Launchpad" tag="160" id="9rC-Ff-2hb"/>
         <menu title="Main Menu" systemMenu="main" id="DQZ-tv-r6C">
             <items>
                 <menuItem title="Mac Mouse Fix" id="SuP-Uq-2Ln">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Mac Mouse Fix" systemMenu="apple" id="sWL-bz-rmH">
                         <items>
-                            <menuItem title="Quit Mac Mouse Fix" keyEquivalent="q" id="5NF-pE-VIh">
-                                <connections>
-                                    <action selector="terminate:" target="-1" id="voe-IU-xtS"/>
-                                </connections>
-                            </menuItem>
                             <menuItem title="Check for Updates..." id="xgK-bl-zXP">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="checkForUpdates:" target="6iu-bA-WM9" id="zmw-X4-ah8"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="Rcw-eN-mGi"/>
+                            <menuItem title="Services" id="iyI-2p-2XX">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Services" systemMenu="services" id="nj2-MI-Hd5"/>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="oHD-Yr-Rjn"/>
+                            <menuItem title="Hide Mac Mouse Fix" keyEquivalent="h" id="5NF-pE-VIh">
+                                <connections>
+                                    <action selector="hide:" target="-1" id="xCY-AB-tjT"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Hide Others" keyEquivalent="h" id="OzC-5Y-Km8">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="hideOtherApplications:" target="-1" id="3Ay-sa-JY5"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Show All" id="bBZ-Ay-p6l">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="unhideAllApplications:" target="-1" id="TdY-bV-ujb"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="256-YT-hXR"/>
+                            <menuItem title="Quit Mac Mouse Fix" keyEquivalent="q" id="WaW-d6-1FG">
+                                <connections>
+                                    <action selector="terminate:" target="-1" id="P3A-gS-tWe"/>
                                 </connections>
                             </menuItem>
                         </items>
@@ -389,7 +412,7 @@ Tips:
         </menu>
     </objects>
     <resources>
-        <image name="NSAddTemplate" width="14" height="13"/>
-        <image name="NSRemoveTemplate" width="14" height="4"/>
+        <image name="NSAddTemplate" width="15" height="13"/>
+        <image name="NSRemoveTemplate" width="15" height="4"/>
     </resources>
 </document>
