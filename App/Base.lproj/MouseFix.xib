@@ -17,7 +17,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenNone="YES"/>
             <rect key="contentRect" x="0.0" y="0.0" width="580" height="429"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="775"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="3840" height="2135"/>
             <value key="minSize" type="size" width="580" height="300"/>
             <value key="maxSize" type="size" width="580" height="1000"/>
             <view key="contentView" identifier="mainView" translatesAutoresizingMaskIntoConstraints="NO" id="se5-gp-TjO">
@@ -52,7 +52,7 @@ To disable Mac Mouse Fix, uncheck this checkbox or move the app to the Trash.</s
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="moreButton:" target="NxE-tZ-vxj" id="Ioj-36-Cld"/>
+                                    <action selector="openMoreSheet:" target="NxE-tZ-vxj" id="Ioj-36-Cld"/>
                                 </connections>
                             </button>
                             <box identifier="preferenceBox" autoresizesSubviews="NO" fixedFrame="YES" borderType="line" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="nmi-Qw-Ncm">
@@ -132,14 +132,14 @@ To disable Mac Mouse Fix, uncheck this checkbox or move the app to the Trash.</s
                                                     </connections>
                                                 </button>
                                                 <button identifier="scrollCheckBox" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9lG-eT-nD4">
-                                                    <rect key="frame" x="39" y="32" width="132" height="18"/>
+                                                    <rect key="frame" x="39" y="32" width="128" height="18"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <string key="toolTip">Make scrolling animate smoothly
 
 Tips: 
 - Hold Shift (⇧) to scroll horizontally
 - Hold Command (⌘) and scroll to zoom in or out</string>
-                                                    <buttonCell key="cell" type="check" title="Smooth scrolling:" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="aqu-LA-LU4">
+                                                    <buttonCell key="cell" type="check" title="Smooth scrolling" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="aqu-LA-LU4">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
@@ -356,23 +356,140 @@ Tips:
             </connections>
         </customObject>
         <customObject id="iab-hA-K07" customClass="SparkleUpdaterController"/>
-        <menuItem title="Launchpad" tag="160" id="9rC-Ff-2hb"/>
         <menu title="Main Menu" systemMenu="main" id="DQZ-tv-r6C">
             <items>
                 <menuItem title="Mac Mouse Fix" id="SuP-Uq-2Ln">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Mac Mouse Fix" systemMenu="apple" id="sWL-bz-rmH">
                         <items>
-                            <menuItem title="Quit Mac Mouse Fix" keyEquivalent="q" id="5NF-pE-VIh">
+                            <menuItem title="About Mac Mouse Fix" id="DGC-Wk-0b9">
+                                <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="terminate:" target="-1" id="voe-IU-xtS"/>
+                                    <action selector="openMoreSheet:" target="NxE-tZ-vxj" id="VtQ-uF-S73"/>
                                 </connections>
                             </menuItem>
+                            <menuItem isSeparatorItem="YES" id="81e-GN-Jmb"/>
                             <menuItem title="Check for Updates..." id="xgK-bl-zXP">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="checkForUpdates:" target="6iu-bA-WM9" id="zmw-X4-ah8"/>
                                 </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="Rcw-eN-mGi"/>
+                            <menuItem title="Services" id="iyI-2p-2XX">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Services" systemMenu="services" id="nj2-MI-Hd5"/>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="oHD-Yr-Rjn"/>
+                            <menuItem title="Hide Mac Mouse Fix" keyEquivalent="h" id="5NF-pE-VIh">
+                                <connections>
+                                    <action selector="hide:" target="-1" id="xCY-AB-tjT"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Hide Others" keyEquivalent="h" id="OzC-5Y-Km8">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="hideOtherApplications:" target="-1" id="3Ay-sa-JY5"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Show All" id="bBZ-Ay-p6l">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="unhideAllApplications:" target="-1" id="TdY-bV-ujb"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="256-YT-hXR"/>
+                            <menuItem title="Quit Mac Mouse Fix" keyEquivalent="q" id="WaW-d6-1FG">
+                                <connections>
+                                    <action selector="terminate:" target="-1" id="P3A-gS-tWe"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Edit" id="wI5-zU-9qx">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Edit" id="Yog-Q2-9zs">
+                        <items>
+                            <menuItem title="Undo" keyEquivalent="z" id="kIC-0d-1oi">
+                                <connections>
+                                    <action selector="undo:" target="-1" id="Lx6-rw-LBZ"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Redo" keyEquivalent="Z" id="ldi-RA-oco">
+                                <connections>
+                                    <action selector="redo:" target="-1" id="pfe-va-4gq"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="Sgx-g5-rCi"/>
+                            <menuItem title="Cut" keyEquivalent="x" id="2Kl-Ga-ipi">
+                                <connections>
+                                    <action selector="cut:" target="-1" id="P5J-SS-ycW"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Copy" keyEquivalent="c" id="6Hk-7O-zX4">
+                                <connections>
+                                    <action selector="copy:" target="-1" id="vB7-DV-F5J"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Paste" keyEquivalent="v" id="Gpn-yw-keG">
+                                <connections>
+                                    <action selector="paste:" target="-1" id="ZFu-R4-CkB"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Delete" id="5e7-Bk-rgI">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="delete:" target="-1" id="dLt-vg-djD"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Select All" keyEquivalent="a" id="VpK-mL-Okh">
+                                <connections>
+                                    <action selector="selectAll:" target="-1" id="Ooa-dd-szz"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Window" id="Yne-Ze-1LT">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Window" systemMenu="window" id="OYd-NL-OBF">
+                        <items>
+                            <menuItem title="Close" keyEquivalent="w" id="PsB-Kz-IPn">
+                                <connections>
+                                    <action selector="performClose:" target="-1" id="qBQ-vS-Lgn"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Minimize" keyEquivalent="m" id="dhH-6o-5jg">
+                                <connections>
+                                    <action selector="performMiniaturize:" target="-1" id="VwM-JJ-zAr"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Zoom" id="z7b-3r-4xX">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="performZoom:" target="-1" id="fhk-m9-8dp"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="vPy-Ne-FAq"/>
+                            <menuItem title="Bring All to Front" id="HeA-aZ-LaQ">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="arrangeInFront:" target="-1" id="daN-aK-YIC"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Help" id="cvc-dN-LRF">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Help" systemMenu="help" id="d2H-UT-IZe">
+                        <items>
+                            <menuItem title="View Guides or Ask the Community..." id="GcC-Bk-h8l" userLabel="View Guides or Ask the Community..." customClass="URLMenuItem">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="URLString" value="https://github.com/noah-nuebling/mac-mouse-fix/discussions"/>
+                                </userDefinedRuntimeAttributes>
                             </menuItem>
                         </items>
                     </menu>
@@ -382,7 +499,7 @@ Tips:
         </menu>
     </objects>
     <resources>
-        <image name="NSAddTemplate" width="14" height="13"/>
-        <image name="NSRemoveTemplate" width="14" height="4"/>
+        <image name="NSAddTemplate" width="15" height="13"/>
+        <image name="NSRemoveTemplate" width="15" height="4"/>
     </resources>
 </document>

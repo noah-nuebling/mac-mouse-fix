@@ -223,7 +223,7 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
     return outDict;
 }
 
-+ (NSUInteger) getActiveKeyboardModifiersWithEvent:(CGEventRef _Nullable) event {
++ (NSUInteger) getActiveKeyboardModifiersWithEvent:(CGEventRef _Nullable)event {
     
     BOOL passedInEventIsNil = NO;
     if (event == nil) {
@@ -232,8 +232,12 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
     }
     
     uint64_t mask = 0xFF0000; // Only lets bits 16-23 through
-    // NSEventModifierFlagDeviceIndependentFlagsMask == 0xFFFF0000 -> it only allows bits 16 - 31.
-    //  But bits 24 - 31 contained weird stuff which messed up the return value and modifiers are only on bits 16-23, so we defined our own mask
+    /// NSEventModifierFlagDeviceIndependentFlagsMask == 0xFFFF0000 -> it only allows bits 16 - 31.
+    ///  But bits 24 - 31 contained weird stuff which messed up the return value and modifiers are only on bits 16-23, so we defined our own mask
+    
+    mask &= ~kCGEventFlagMaskAlphaShift;
+    /// Ignore caps lock. Otherwise modfifications won't work normally when caps lock is enabled.
+    ///     Maybe we need to ignore caps lock in other places, too make this work properly but I don't think so
     
     CGEventFlags modifierFlags = CGEventGetFlags(event) & mask;
     

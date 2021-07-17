@@ -97,58 +97,93 @@ static void cleanup() {
         
         NSLog(@"Repairing User Agent Config File");
         
-        // Get helper executable path
+        /// Declare error
+        NSError *error;
+        
+        /// Get helper executable path
         NSBundle *helperBundle = Objects.helperBundle;
         NSBundle *mainAppBundle = Objects.mainAppBundle;
         NSString *helperExecutablePath = helperBundle.executablePath;
         
-        // Get path to launch agent config file (aka launchdPlist)
+        /// Get path to launch agent config file (aka launchdPlist)
         NSString *launchdPlist_path = Objects.launchdPlistURL.path;
         
-        // Check if file exists
+        /// Create file manager
+        
         NSFileManager *fileManager = [[NSFileManager alloc] init];
+        
+        /// Check if launchPlist file exists
+        
         BOOL launchdPlist_exists = [fileManager fileExistsAtPath: launchdPlist_path isDirectory: nil];
-        BOOL launchdPlist_executablePathIsCorrect = TRUE;
-        if (launchdPlist_exists == TRUE) {
+        
+        /// Check if executable path is correct
+        
+        BOOL launchdPlist_executablePathIsCorrect = YES;
+        
+        if (launchdPlist_exists) {
             
-            // Load data from launch agent config file into a dictionary
+            /// Load data from launch agent config file into a dictionary
             NSData *launchdPlist_data = [NSData dataWithContentsOfFile:launchdPlist_path];
             NSDictionary *launchdPlist_dict = [NSPropertyListSerialization propertyListWithData:launchdPlist_data options:NSPropertyListImmutable format:0 error:nil];
             
-            // Check if the executable path inside the config file is correct, if not, set flag to false
+            /// Check if the executable path inside the config file is correct, if not, set flag to false
             NSString *helperExecutablePathFromFile = [launchdPlist_dict objectForKey: @"Program"];
-            if ( [helperExecutablePath isEqualToString: helperExecutablePathFromFile] == FALSE ) {
-                launchdPlist_executablePathIsCorrect = FALSE;
+            if ( [helperExecutablePath isEqualToString: helperExecutablePathFromFile] == NO ) {
+                launchdPlist_executablePathIsCorrect = NO;
             }
-            //NSLog(@"objectForKey: %@", OBJForKey);
-            //NSLog(@"helperExecutablePath: %@", helperExecutablePath);
-            //NSLog(@"OBJ == Path: %d", OBJForKey isEqualToString: helperExecutablePath);
+            
+            /// Debug
+//            NSLog(@"objectForKey: %@", OBJForKey);
+//            NSLog(@"helperExecutablePath: %@", helperExecutablePath);
+//            NSLog(@"OBJ == Path: %d", OBJForKey isEqualToString: helperExecutablePath);
         }
+        
+        /// Log
         
         NSLog(@"launchdPlistExists %hhd, launchdPlistIsCorrect: %hhd", launchdPlist_exists,launchdPlist_executablePathIsCorrect);
         
         if ((launchdPlist_exists == FALSE) || (launchdPlist_executablePathIsCorrect == FALSE)) {
-            // The config file doesn't exist, or the executable path within it is not correct
+            /// The config file doesn't exist, or the executable path within it is not correct
+            ///  -> Acutally repair stuff
             
             NSLog(@"repairing file...");
             
-            // Check if "User/Library/LaunchAgents" folder exists, if not, create it
+            /// Check if "User/Library/LaunchAgents" folder exists, if not, create it
+            
             NSString *launchAgentsFolderPath = [launchdPlist_path stringByDeletingLastPathComponent];
-            BOOL launchAgentsFolderExists = [fileManager fileExistsAtPath: launchAgentsFolderPath isDirectory: nil];
-            if (launchAgentsFolderExists == FALSE) {
+            
+            BOOL launchAgentsFolderExists = [fileManager fileExistsAtPath:launchAgentsFolderPath isDirectory:nil];
+            
+            if (launchAgentsFolderExists == NO) {
+                
                 NSLog(@"LaunchAgents folder doesn't exist");
                 NSError *error;
+                
+                /// Create LaunchAgents folder
+                
+                error = nil;
                 [fileManager createDirectoryAtPath:launchAgentsFolderPath withIntermediateDirectories:FALSE attributes:nil error:&error];
                 if (error == nil) {
                     NSLog(@"LaunchAgents Folder Created");
+                } else if (error.code == NSFileWriteNoPermissionError) {
+                    NSLog(@"Lacking permission to create LaunchAgents folder. Error: %@", error);
                 } else {
                     NSLog(@"Error creating LaunchAgents Folder: %@", error);
                 }
             }
             
-            NSError *error;
+            /// Repair permissions of LaunchAgents folder if it's not writable
             
-            // Read contents of default_launchd.plist (aka default-launch-agent-config-file or defaultLAConfigFile) into a dictionary
+            error = makeWritable(launchAgentsFolderPath);
+            if (error) {
+                NSLog(@"Failed to make LaunchAgents folder writable. Error: %@", error);
+            }
+            
+            /// Repair the contents of the launchdPlist file
+
+            /// Read contents of default_launchd.plist (aka default-launch-agent-config-file or defaultLAConfigFile) into a dictionary
+            
+            error = nil;
             
             NSString *defaultLaunchdPlist_path = [mainAppBundle pathForResource:@"default_launchd" ofType:@"plist"];
             NSData *defaultlaunchdPlist_data = [NSData dataWithContentsOfFile:defaultLaunchdPlist_path];
@@ -156,15 +191,16 @@ static void cleanup() {
             // I was running Mac Mouse Fix Helper standalone for debugging, not embedded in the main app
             NSMutableDictionary *newlaunchdPlist_dict = [NSPropertyListSerialization propertyListWithData:defaultlaunchdPlist_data options:NSPropertyListMutableContainersAndLeaves format:nil error:&error];
             
-            // Set the executable path to the correct value
+            /// Set the executable path to the correct value
             [newlaunchdPlist_dict setValue: helperExecutablePath forKey:@"Program"];
             
-            // Get NSData from newLaunchdPlist dict
+            /// Get NSData from newLaunchdPlist dict
             NSData *newLaunchdPlist_data = [NSPropertyListSerialization dataWithPropertyList:newlaunchdPlist_dict format:NSPropertyListXMLFormat_v1_0 options:0 error:&error];
             NSAssert(error == nil, @"Failed to create NSData from new launchdPlist dict");
             
-            // Write new newLaunchdPlist data to file
+            /// Write new newLaunchdPlist data to file
             [newLaunchdPlist_data writeToFile:launchdPlist_path options:NSDataWritingAtomic error:&error];
+            
             if (error != nil) {
                 NSLog(@"repairUserAgentConfigFile() -- Data Serialization Error: %@", error);
             }
@@ -173,6 +209,75 @@ static void cleanup() {
         }
     }
     
+}
+
+static NSError *makeWritable(NSString *itemPath) {
+    /**
+     
+     Helper function for + repairLaunchdPlist
+     Changes permissions of the item at filePath to allow writing by the user to that item
+     
+     __Motivation__
+     - This is intended to be used by + repairLaunchdPlist to unlock the LaunchAgents folder so we can write our LaunchdPlist into it.
+     - For some reason, many users have had troubles enabling Mac Mouse Fix recently. Many of these troubles turned out to be due to the LaunchAgents folder having it's permissions set to 'read only'. This function can be used to fix that.
+        - See for example Issue [#54](https://github.com/noah-nuebling/mac-mouse-fix/issues/54)
+        - There was also another GH issue where the user orignially figured out that permissions were the problem which prompted me to add better logging. But I'm writing this function much later. So I can't remember which GH Issue that was. Props to that user anyways.
+    
+     __Notes__
+     - I really hope this doesn't break anything. Changing permissions in the file system feels somewhat dangerous.
+     - Also it might be a good idea to ask the user if they want the permissions to be changed, but 99.9% of users won't even understand what they are deciding about, and it would be a lot of work to present this in a good way. So I think this should be fine.
+     */
+    
+    /// Get fileManager
+    
+    NSFileManager *fileManager = NSFileManager.defaultManager;
+    
+    /// Check if file at filePath is writable
+    
+    if (![fileManager isWritableFileAtPath:itemPath]) {
+        /// File is not writable
+        
+        /// Log
+        
+        NSLog(@"File at %@ is not writable. Attempting to change permissions.", itemPath);
+        
+        /// Declare error
+        
+        NSError *error;
+        
+        /// Get file attributes
+        
+        error = nil;
+        NSDictionary *attributes = [fileManager attributesOfItemAtPath:itemPath error:&error];
+        if (error) return error;
+        
+        /// Get old permissions from file attributes
+        
+        NSUInteger oldPermissions = attributes.filePosixPermissions;
+        
+        /// Create new permissions
+        
+        NSUInteger newPermissions = oldPermissions | S_IWUSR;
+        /// ^ Add write permission for user. See `man 2 chmod` for more info
+            
+        /// Set new permissions to file
+            
+        error = nil;
+        [fileManager setAttributes:@{
+            NSFilePosixPermissions: @(newPermissions)
+        } ofItemAtPath:itemPath error:&error];
+        
+        if (error) {
+            return error;
+        }
+        
+        /// Debug
+        
+        NSLog(@"Changed permissions of %@ from %@ to %@", itemPath,  [SharedUtility binaryRepresentation:(int)oldPermissions], [SharedUtility binaryRepresentation:(int)newPermissions]);
+        /// ^ Binary representation doesn't really help. This is almost impossible to parse visually.
+    }
+    
+    return nil;
 }
 
 + (NSString *)helperInfoFromLaunchd {

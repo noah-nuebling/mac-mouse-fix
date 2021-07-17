@@ -98,7 +98,7 @@ class PixelatedAnimator: Animator {
             }
             
             /// Update phase to `startAndEnd` if appropriate
-            ///     appropriate -> if this event was first _and_  last event of animation
+            ///     appropriate -> open if this event was first _and_  last event of animation
             ///     This has a copy in superclass. Update that it when you change this.
             
             if (animationPhase == kMFAnimationPhaseEnd /// This is last event of the animation

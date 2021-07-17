@@ -14,7 +14,6 @@
 + (void)printEventFieldDifferencesBetween:(CGEventRef)event1 and:(CGEventRef)event2;
 + (NSString *)binaryRepresentation:(int64_t)value;
 
-
 /// Get current modifier flags
 CGEventFlags getModifierFlags(void);
 CGEventFlags getModifierFlagsWithEvent(CGEventRef flagEvent);

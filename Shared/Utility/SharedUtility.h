@@ -43,6 +43,7 @@ int8_t sign(double x);
 + (void)printInvocationCountWithId:(NSString *)strId;
 + (BOOL)button:(NSNumber * _Nonnull)button isPartOfModificationPrecondition:(NSDictionary *)modificationPrecondition;
 + (void)setupBasicCocoaLumberjackLogging;
++ (NSString *)binaryRepresentation:(int)value;
 
 @end
 
