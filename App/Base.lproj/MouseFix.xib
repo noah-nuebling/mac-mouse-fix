@@ -630,9 +630,14 @@ Tips:
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Window" systemMenu="window" id="OYd-NL-OBF">
                         <items>
-                            <menuItem title="Minimize" keyEquivalent="m" id="PsB-Kz-IPn">
+                            <menuItem title="Close" keyEquivalent="w" id="PsB-Kz-IPn">
                                 <connections>
-                                    <action selector="performMiniaturize:" target="-1" id="OJd-Df-sQq"/>
+                                    <action selector="performClose:" target="-1" id="qBQ-vS-Lgn"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Minimize" keyEquivalent="m" id="dhH-6o-5jg">
+                                <connections>
+                                    <action selector="performMiniaturize:" target="-1" id="VwM-JJ-zAr"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Zoom" id="z7b-3r-4xX">
@@ -655,8 +660,11 @@ Tips:
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Help" systemMenu="help" id="d2H-UT-IZe">
                         <items>
-                            <menuItem title="View Guides or Ask the Community" id="GcC-Bk-h8l" userLabel="View Guides or Ask the Community...">
+                            <menuItem title="View Guides or Ask the Community" id="GcC-Bk-h8l" userLabel="View Guides or Ask the Community..." customClass="URLMenuItem">
                                 <modifierMask key="keyEquivalentModifierMask"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="URLString" value="https://github.com/noah-nuebling/mac-mouse-fix/discussions"/>
+                                </userDefinedRuntimeAttributes>
                             </menuItem>
                         </items>
                     </menu>
