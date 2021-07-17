@@ -492,7 +492,7 @@ Tips:
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Help" systemMenu="help" id="d2H-UT-IZe">
                         <items>
-                            <menuItem title="View Guides or Ask the Community" id="GcC-Bk-h8l" userLabel="View Guides or Ask the Community..." customClass="URLMenuItem">
+                            <menuItem title="View Guides or Ask the Community..." id="GcC-Bk-h8l" userLabel="View Guides or Ask the Community..." customClass="URLMenuItem">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="URLString" value="https://github.com/noah-nuebling/mac-mouse-fix/discussions"/>
