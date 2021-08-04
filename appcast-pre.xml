@@ -111,7 +111,7 @@
 </head>
 <body>
 <h3 id="changes-in-beta-12">Changes in Beta 12</h3>
-<p>This update features a few small improvements:</p>
+<p>This update features small improvements:</p>
 <ul>
 <li>Mac Mouse Fix will now automatically repair the permissions on the ~/Library/LaunchAgents folder. This fixes an issue where some people couldn’t enable Mac Mouse Fix.
 <ul>
@@ -119,7 +119,7 @@
 </ul></li>
 <li>Resolved an issue where Click and Drag wouldn’t work when Caps Lock was enabled. Fixes #136.</li>
 <li>When using Click and Drag to move between Spaces, the animation follows the mouse pointer more closely.</li>
-<li>Removed the colon at the end of the label of the Smooth scrolling checkbox as <span class="citation" data-cites="FraserEmbery">@FraserEmbery</span> suggested in Issue #135.</li>
+<li>Removed the colon at the end of the label of the Smooth scrolling checkbox as <span class="citation" data-cites="FraserEmbrey">@FraserEmbrey</span> suggested in Issue #135.</li>
 <li>Improved UI strings.</li>
 </ul>
 </body>
