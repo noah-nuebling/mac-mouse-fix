@@ -147,7 +147,7 @@ static void Handle_DeviceRemovalCallback(void *context, IOReturn result, void *s
     
     NSLog(@"Device Removed");
     
-    // Check if there are still relevant devices atached.
+    // Check if there are still relevant devices attached.
     CFSetRef devices = IOHIDManagerCopyDevices(_hidManager); // for some reason this copies the device which was just removed
     NSLog(@"Devices still attached (includes device which was just removed): %@", devices);
     if (CFSetGetCount(devices) <= 1) { // so we're accounting for that by using a 1 here instead of a 0
