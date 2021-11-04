@@ -199,7 +199,7 @@ static NSString *_mainAppUnzipSubpath;
     NSURL *currentBundleURL = Objects.mainAppBundle.bundleURL;
     NSURL *currentBundleEnclosingURL = [currentBundleURL URLByDeletingLastPathComponent];
     NSURL *updateBundleURL = [[NSURL fileURLWithPath:unzipDest] URLByAppendingPathComponent:_mainAppUnzipSubpath];
-    // Forgot why we need to quadrupel escape " "
+    // Forgot why we need to quadruple escape " "
     NSString *currentBundleOSAPath = [[currentBundleURL path] stringByReplacingOccurrencesOfString:@" " withString:@"\\\\ "];
     NSString *updateBundleOSAPath = [[updateBundleURL path] stringByReplacingOccurrencesOfString:@" " withString:@"\\\\ "];
     NSString *adminParamOSA = @"";
