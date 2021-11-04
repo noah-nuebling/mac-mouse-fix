@@ -99,7 +99,7 @@ CG_EXTERN CGError CGSHideCursor(CGSConnectionID cid);
 /// Hides the cursor until the cursor is moved.
 CG_EXTERN CGError CGSObscureCursor(CGSConnectionID cid);
 
-/// Acts as if a mouse moved event occured and that reveals the cursor if it was hidden.
+/// Acts as if a mouse moved event occurred and that reveals the cursor if it was hidden.
 CG_EXTERN CGError CGSRevealCursor(CGSConnectionID cid);
 
 /// Shows or hides the spinning beachball of death.
