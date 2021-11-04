@@ -53,7 +53,7 @@ typedef enum {
 } CGSWindowOrderingMode;
 
 typedef enum {
-	kCGSBackingNonRetianed,
+	kCGSBackingNonRetained,
 	kCGSBackingRetained,
 	kCGSBackingBuffered,
 } CGSBackingType;
