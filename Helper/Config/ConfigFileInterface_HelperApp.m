@@ -62,7 +62,7 @@ static NSMutableDictionary *_configWithAppOverridesApplied;
 
 + (void)reactToConfigFileChange {
     fillConfigFromFile();
-    _configFileChanged = YES; // Doing this to force update of internal state, even the active app hastn't chaged
+    _configFileChanged = YES; // Doing this to force update of internal state, even the active app hasn't changed
     [ConfigFileInterface_HelperApp updateInternalParameters_Force:YES];
     _configFileChanged = NO;
 }
