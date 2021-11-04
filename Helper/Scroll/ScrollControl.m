@@ -141,7 +141,7 @@ static int _scrollDirection;
 ///
 /// Use this when internal parameters change while processing an event.
 /// This will essentially restart the evaluation of the event while respecting the new internal parameters.
-/// You probably wanna return after calliing this.
+/// You probably wanna return after calling this.
 + (void)rerouteScrollEventToTop:(CGEventRef)event {
     eventTapCallback(nil, 0, event, nil);
 }
