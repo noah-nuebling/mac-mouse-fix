@@ -378,7 +378,7 @@ static void setDisplayLinkToDisplayUnderMousePointer(CGEventRef event) {
         NSLog(@"more than one display for current mouse position");
         
     } else if (matchingDisplayCount == 0) {
-        NSException *e = [NSException exceptionWithName:NSInternalInconsistencyException reason:@"there are 0 diplays under the mouse pointer" userInfo:NULL];
+        NSException *e = [NSException exceptionWithName:NSInternalInconsistencyException reason:@"there are 0 displays under the mouse pointer" userInfo:NULL];
         @throw e;
     }
     free(newDisplaysUnderMousePointer);
