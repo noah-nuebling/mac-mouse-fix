@@ -220,7 +220,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 
         // Set application overrides
         
-        [ScrollUtility updateConsecutiveScrollTickAndSwipeCountersWithTickOccuringNow];
+        [ScrollUtility updateConsecutiveScrollTickAndSwipeCountersWithTickOccurringNow];
         
         if (ScrollUtility.consecutiveScrollTickCounter == 0) { // Only do this on the first of each series of consecutive scroll ticks
             [ScrollUtility updateMouseDidMove];

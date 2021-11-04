@@ -203,11 +203,11 @@ static int _consecutiveScrollTickCounter;
 }
 static double _previousScrollTickTimeStamp;
 
-+ (void) updateConsecutiveScrollTickAndSwipeCountersWithTickOccuringNow { // Starts counting at 0
++ (void) updateConsecutiveScrollTickAndSwipeCountersWithTickOccurringNow { // Starts counting at 0
     double thisScrollTickTimeStamp = CACurrentMediaTime();
     double intervall = (thisScrollTickTimeStamp - _previousScrollTickTimeStamp);
     if (intervall > ScrollControl.consecutiveScrollTickMaxIntervall) {
-        [self updateConsecutiveScrollSwipeCounterWithSwipeOccuringNow]; // Needs to be called before resetting _consecutiveScrollTickCounter = 0, because it uses _consecutiveScrollTickCounter to determine whether the last series of consecutive scroll ticks was a scroll swipe
+        [self updateConsecutiveScrollSwipeCounterWithSwipeOccurringNow]; // Needs to be called before resetting _consecutiveScrollTickCounter = 0, because it uses _consecutiveScrollTickCounter to determine whether the last series of consecutive scroll ticks was a scroll swipe
         _consecutiveScrollTickCounter = 0;
     } else {
         _consecutiveScrollTickCounter += 1;
@@ -221,7 +221,7 @@ static int _consecutiveScrollSwipeCounter;
 }
 static double _previousScrollSwipeTimeStamp;
 
-+ (void)updateConsecutiveScrollSwipeCounterWithSwipeOccuringNow {
++ (void)updateConsecutiveScrollSwipeCounterWithSwipeOccurringNow {
     double thisScrollSwipeTimeStamp = CACurrentMediaTime();
     double intervall = thisScrollSwipeTimeStamp - _previousScrollTickTimeStamp; // Time between the last tick of the previous swipe and the first tick of the current swipe (now) // TODO: subtracting `_previousScrollTickTimeStamp` instead of `_previousScrollSwipeTimeStamp` to help trigger fast scrolling exactly when intended. But not sure if this helps or makes it worse though.
     if (intervall > ScrollControl.consecutiveScrollSwipeMaxIntervall) {

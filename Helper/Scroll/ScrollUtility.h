@@ -42,7 +42,7 @@ typedef enum {
 
 + (int)consecutiveScrollTickCounter;
 + (int)consecutiveScrollSwipeCounter;
-+ (void)updateConsecutiveScrollTickAndSwipeCountersWithTickOccuringNow;
++ (void)updateConsecutiveScrollTickAndSwipeCountersWithTickOccurringNow;
 + (void)resetConsecutiveTicksAndSwipes;
 
 @end
