@@ -126,7 +126,7 @@ typedef enum {
     kMFSHToggleDoNotDisturb = 175,
 } MFSymbolicHotkey;
 
-// Mosue Buttons
+// Mouse Buttons
 
 /// Note that CGMouseButton (and all CG APIs) assign 0 to left mouse button while MFMouseButtonNumber (and the rest of Mac Mouse Fix which doesn't use it yet) assigns 1 to lmb
 typedef enum {
