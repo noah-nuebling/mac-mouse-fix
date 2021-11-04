@@ -84,7 +84,7 @@ typedef enum {
 	/// Leopard: Dumps information about caches to `/tmp/WindowServer.scinfo.out`.
 	kCGSDebugOptionDumpCacheInformationToFile	= 0x80000015,
 
-	/// Leopard: Purges some sort of cache - most likely the same caches dummped with `kCGSDebugOptionDumpCacheInformationToFile`.
+	/// Leopard: Purges some sort of cache - most likely the same caches dumped with `kCGSDebugOptionDumpCacheInformationToFile`.
 	kCGSDebugOptionPurgeCaches					= 0x80000016,
 
 	/// Leopard: Dumps a list of windows to `/tmp/WindowServer.winfo.plist`. This is what Quartz Debug on 10.5 uses to get the window list.
