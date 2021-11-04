@@ -88,7 +88,7 @@ void handleRelocation() {
     // We want to close the helper
     //  If we let the helper running after relocation:
     //      - If the helper closes (crashes) it won't be restarted automatically by launchd
-    //      - Just like the functions for getting current app bundles failed (we fixed it with hax bascially), there might be other stuff that behaves badly after relocation
+    //      - Just like the functions for getting current app bundles failed (we fixed it with hax basically), there might be other stuff that behaves badly after relocation
     // Unfortunately, I can't find a way to make launchd restart the helper from within the helper
     // We have to use a separate executable to restart the helper
     
