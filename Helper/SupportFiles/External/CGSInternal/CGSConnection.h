@@ -32,7 +32,7 @@
 
 /// The type of connections to the Window Server.
 ///
-/// Every application is given a singular connection ID through which it can receieve and manipulate
+/// Every application is given a singular connection ID through which it can receive and manipulate
 /// values, state, notifications, events, etc. in the Window Server.  It
 typedef int CGSConnectionID;
 

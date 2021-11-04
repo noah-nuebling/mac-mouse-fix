@@ -367,7 +367,7 @@ CG_EXTERN CGError CGSSetWindowEventShape(CGSConnectionID cid, CGSBackingType bac
 CG_EXTERN CGError CGSGetWindowEventMask(CGSConnectionID cid, CGWindowID wid, CGEventMask *mask);
 CG_EXTERN CGError CGSSetWindowEventMask(CGSConnectionID cid, CGWindowID wid, CGEventMask mask);
 
-/// Sets whether a window can recieve mouse events.  If no, events will pass to the next window that can receive the event.
+/// Sets whether a window can receive mouse events.  If no, events will pass to the next window that can receive the event.
 CG_EXTERN CGError CGSSetMouseEventEnableFlags(CGSConnectionID cid, CGWindowID wid, bool shouldEnable);
 
 
@@ -471,7 +471,7 @@ CG_EXTERN CGError CGSSetWindowListAlpha(CGSConnectionID cid, const CGWindowID *w
 /// Sets the shape over which the window can capture events in its frame rectangle.
 CG_EXTERN CGError CGSAddActivationRegion(CGSConnectionID cid, CGWindowID wid, CGSRegionRef region);
 
-/// Sets the shape over which the window can recieve mouse drag events.
+/// Sets the shape over which the window can receive mouse drag events.
 CG_EXTERN CGError CGSAddDragRegion(CGSConnectionID cid, CGWindowID wid, CGSRegionRef region);
 
 /// Removes any shapes over which the window can be dragged.

@@ -85,10 +85,10 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
     SInt32 messageID = 0x420666; // Arbitrary
     CFDataRef messageData = (__bridge CFDataRef)[message dataUsingEncoding:kUnicodeUTF8Format];
     CFTimeInterval sendTimeout = 0.0;
-    CFTimeInterval recieveTimeout = 0.0;
+    CFTimeInterval receiveTimeout = 0.0;
     CFStringRef replyMode = NULL;
     CFDataRef returnData = nil;
-    SInt32 status = CFMessagePortSendRequest(remotePort, messageID, messageData, sendTimeout, recieveTimeout, replyMode, &returnData);
+    SInt32 status = CFMessagePortSendRequest(remotePort, messageID, messageData, sendTimeout, receiveTimeout, replyMode, &returnData);
     if (status != 0) {
         NSLog(@"CFMessagePortSendRequest status: %d", status);
     }
@@ -108,10 +108,10 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
 //    SInt32 messageID = 0x420666; // Arbitrary
 //    CFDataRef messageData = (__bridge CFDataRef)[message dataUsingEncoding:kUnicodeUTF8Format];
 //    CFTimeInterval sendTimeout = 0.0;
-//    CFTimeInterval recieveTimeout = 1;
+//    CFTimeInterval receiveTimeout = 1;
 //    CFStringRef replyMode = kCFRunLoopDefaultMode;
 //    CFDataRef returnData;
-//    SInt32 status = CFMessagePortSendRequest(remotePort, messageID, messageData, sendTimeout, recieveTimeout, replyMode, &returnData);
+//    SInt32 status = CFMessagePortSendRequest(remotePort, messageID, messageData, sendTimeout, receiveTimeout, replyMode, &returnData);
 //    if (status != 0) {
 //        NSLog(@"CFMessagePortSendRequest status: %d", status);
 //    }
