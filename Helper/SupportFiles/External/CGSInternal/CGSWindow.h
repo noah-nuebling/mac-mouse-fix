@@ -508,7 +508,7 @@ CG_EXTERN CGError CGSReleaseWindowAnimation(CGSAnimationRef animation);
 /// Gets the state of accelleration for the window.
 CG_EXTERN CGError CGSWindowIsAccelerated(CGSConnectionID cid, CGWindowID wid, bool *outIsAccelerated);
 
-/// Gets and sets if this window can be accellerated. I don't know if playing with this is safe.
+/// Gets and sets if this window can be accelerated. I don't know if playing with this is safe.
 CG_EXTERN CGError CGSWindowCanAccelerate(CGSConnectionID cid, CGWindowID wid, bool *outCanAccelerate);
 CG_EXTERN CGError CGSWindowSetCanAccelerate(CGSConnectionID cid, CGWindowID wid, bool canAccelerate);
 

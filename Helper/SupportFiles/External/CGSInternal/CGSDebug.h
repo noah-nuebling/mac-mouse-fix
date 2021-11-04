@@ -39,10 +39,10 @@ typedef enum {
 	/// Clears all flags.
 	kCGSDebugOptionNone							= 0,
 
-	/// All screen updates are flashed in yellow. Regions under a DisableUpdate are flashed in orange. Regions that are hardware accellerated are painted green.
+	/// All screen updates are flashed in yellow. Regions under a DisableUpdate are flashed in orange. Regions that are hardware accelerated are painted green.
 	kCGSDebugOptionFlashScreenUpdates			= 0x4,
 
-	/// Colors windows green if they are accellerated, otherwise red. Doesn't cause things to refresh properly - leaves excess rects cluttering the screen.
+	/// Colors windows green if they are accelerated, otherwise red. Doesn't cause things to refresh properly - leaves excess rects cluttering the screen.
 	kCGSDebugOptionColorByAccelleration			= 0x20,
 
 	/// Disables shadows on all windows.
