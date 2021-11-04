@@ -107,7 +107,7 @@ void removeQuarantineFlagAndRestart(NSURL* untranslocatedURL) {
     [NSApplication.sharedApplication terminate:nil];
 }
 
-/// If the app is translocated, then remove the qurantine flag and restart it.
+/// If the app is translocated, then remove the quarantine flag and restart it.
 /// This effectively removes the translocation.
 /// Credits: https://www.synack.com/blog/untranslocating-apps/
 /// \discussion As far as I understand, if we ever run executables in the same folder as the app then this poses a security risk, but I don't think we do that so it should be fine.
