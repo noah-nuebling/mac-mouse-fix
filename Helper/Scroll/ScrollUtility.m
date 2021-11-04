@@ -68,7 +68,7 @@ static NSDictionary *_MFScrollPhaseToIOHIDEventPhase;
     
     return event; // This is potentially a memory leak, because I'm creating a CGEvent but not releasing it??
 }
-/// Inverts the diection of a given scroll event if dir is -1.
+/// Inverts the direction of a given scroll event if dir is -1.
 /// @param event Event to be inverted
 /// @param dir Either 1 or -1. 1 Will leave the event unchanged.
 + (CGEventRef)invertScrollEvent:(CGEventRef)event direction:(int)dir {
