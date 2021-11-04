@@ -103,7 +103,7 @@ void uninstallCompletely() {
     disableHelper();
 }
 void removeResidue() {
-    NSLog(@"Removing Mac Mouse Fix resdiue");
+    NSLog(@"Removing Mac Mouse Fix residue");
     // Delete Application Support Folder
     [NSFileManager.defaultManager trashItemAtURL:Objects.MFApplicationSupportFolderURL resultingItemURL:nil error:nil];
     // Delete launchd plist
