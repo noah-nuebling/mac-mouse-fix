@@ -89,7 +89,7 @@ static void fillConfigFromFile() {
 
 /// Modify the helpers internal parameters according to _config and the currently active app.
 /// Used to apply appOverrides (`force == NO`), and after loading new config from file. (`force == YES`)
-/// \param force If NO, then it will only update the internal state, if the app currenly under the cursor is different to the one when this function was last called.
+/// \param force If NO, then it will only update the internal state, if the app currently under the cursor is different to the one when this function was last called.
 /// \returns YES, if internal parameters did update. NO otherwise.
 /// ... wtf was I thinking when writing this, why didn't I write 2 functions?
 + (BOOL)updateInternalParameters_Force:(BOOL)force {
