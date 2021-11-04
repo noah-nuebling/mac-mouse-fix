@@ -96,7 +96,7 @@ static void setupDeviceAddedAndRemovedCallbacks() {
     CFDictionarySetValue(matchDict3, CFSTR("DeviceUsage"), mouseUsage);
     CFDictionarySetValue(matchDict3, CFSTR("Transport"), CFSTR("Bluetooth Low Energy"));
   
-    // Old version - this doesn't match some mice like the mx master, bacause it only matches primary usage and usage page, not any pair of usage and usage page within the usagePairs dictionary of the device. Look to ref1 for a better explanation.
+    // Old version - this doesn't match some mice like the mx master, because it only matches primary usage and usage page, not any pair of usage and usage page within the usagePairs dictionary of the device. Look to ref1 for a better explanation.
 //    CFNumberRef genericDesktopPrimaryUsagePage = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &UP);
 //    CFNumberRef mousePrimaryUsage = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &U);
 //
