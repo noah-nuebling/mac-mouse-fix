@@ -43,7 +43,7 @@ typedef enum {
 	kCGSDebugOptionFlashScreenUpdates			= 0x4,
 
 	/// Colors windows green if they are accelerated, otherwise red. Doesn't cause things to refresh properly - leaves excess rects cluttering the screen.
-	kCGSDebugOptionColorByAccelleration			= 0x20,
+	kCGSDebugOptionColorByacceleration			= 0x20,
 
 	/// Disables shadows on all windows.
 	kCGSDebugOptionNoShadows					= 0x4000,
