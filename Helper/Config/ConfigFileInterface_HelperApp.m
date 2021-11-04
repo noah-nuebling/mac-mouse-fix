@@ -109,7 +109,7 @@ static void fillConfigFromFile() {
         NSRunningApplication *appUnderMousePointer = [NSRunningApplication runningApplicationWithProcessIdentifier:elementUnderMousePointerPID];
         
         if (elementUnderMousePointer != nil) {
-            CFRelease(elementUnderMousePointer); // Using `@try { ... }` instead of `if (x != nil) { ... }` here results in a crash if elementUnderMousePointer is nil for some reason (Might be because it was running in debug configureation or something, or probably I just don't know how `@try` really works)
+            CFRelease(elementUnderMousePointer); // Using `@try { ... }` instead of `if (x != nil) { ... }` here results in a crash if elementUnderMousePointer is nil for some reason (Might be because it was running in debug configuration or something, or probably I just don't know how `@try` really works)
         }
         bundleIDOfCurrentApp = appUnderMousePointer.bundleIdentifier;
     }
