@@ -278,7 +278,7 @@ NSDictionary *_columnIdentifierToKeyPath;
     [self addAppsToTableWithBundleIDs:bundleIDs atRow:row];
     
     [self.window makeKeyWindow]; // Doesn't seem to work
-    // ^ After dropping you probably wanna interact with the window to set app specific settings. Also helps seing the blue selected rows.
+    // ^ After dropping you probably wanna interact with the window to set app specific settings. Also helps seeing the blue selected rows.
     
     return true;
 }
