@@ -66,7 +66,7 @@
         
         // Get path of executable of helper app
         // Check if the "User/Library/LaunchAgents/mouse.fix.helper.plist" (< This specific path is deprecated) UserAgent Config file  (aka launchdPlist)
-        //      exists, if the Launch Agents Folder exists, and if the exectuable path within the plist file is correct
+        //      exists, if the Launch Agents Folder exists, and if the executable path within the plist file is correct
         // If not:
         // Create correct file based on "default_launchd.plist" and helperExecutablePath
         // Write correct file to "User/Library/LaunchAgents"
