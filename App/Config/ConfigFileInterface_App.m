@@ -37,7 +37,7 @@ static NSURL *_backupConfigURL; // backup_config aka default_config
 }
 
 /**
- Writes the _config dicitonary to the plist file at _configURL
+ Writes the _config dictionary to the plist file at _configURL
  
  Should only be called by functions named `- setConfigToUI`
  
