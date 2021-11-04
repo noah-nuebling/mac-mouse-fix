@@ -194,7 +194,7 @@
     }
     
     [self removeLegacyLaunchdPlist];
-    // ^ Could also do this in the if block but users have been having some weirdd issues after upgrading to the app version and I don't know why. I feel like this might make things slightly more robust.
+    // ^ Could also do this in the if block but users have been having some weird issues after upgrading to the app version and I don't know why. I feel like this might make things slightly more robust.
 }
 
 /// Check if helper is registered with launchd from some other location
