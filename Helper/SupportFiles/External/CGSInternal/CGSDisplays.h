@@ -104,7 +104,7 @@ CG_EXTERN CGDisplayErr CGSGetActiveDisplayList(CGDisplayCount maxDisplays, CGDir
 #pragma mark - Display Configuration
 
 
-/// Begins a new display configuration transacation.
+/// Begins a new display configuration transaction.
 CG_EXTERN CGDisplayErr CGSBeginDisplayConfiguration(CGDisplayConfigRef *config);
 
 /// Sets the origin of a display relative to the main display. The main display is at (0, 0) and contains the menubar.
