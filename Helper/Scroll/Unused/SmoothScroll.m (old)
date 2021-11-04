@@ -28,7 +28,7 @@ static float _msPerScrollMax = 250;
 static float _continuousScrollSmoothingFactor = 1.09;
 
 //
-static int64_t _consequtiveScrollsAtMaxSmoothing = 0;
+static int64_t _consecutiveScrollsAtMaxSmoothing = 0;
 static float _msPerScroll = 0;
 static int64_t   _pxStepSize = 0;
 static int64_t _pixelScrollQueue = 0;
@@ -158,7 +158,7 @@ CGEventRef eventTapCallbackSS(CGEventTapProxy proxy, CGEventType type, CGEventRe
             _msPerScroll    =   _msPerScrollMax;
         }
         else {
-            _consequtiveScrollsAtMaxSmoothing = 0;
+            _consecutiveScrollsAtMaxSmoothing = 0;
         }
     }
     _msLeftForScroll = _msPerScroll;
