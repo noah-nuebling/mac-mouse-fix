@@ -41,7 +41,7 @@
             
     } else {
         
-        // using load_Manual instead of normal load, because creating an eventTap crashes the program, if we don't have accessibilty access (I think - I don't really remember)
+        // using load_Manual instead of normal load, because creating an eventTap crashes the program, if we don't have accessibility access (I think - I don't really remember)
         [DeviceManager load_Manual];
         [ConfigFileInterface_HelperApp load_Manual];
         [ScrollControl load_Manual];
@@ -60,7 +60,7 @@
 // Timer Callbacks
 
 + (void)sendAccessibilityMessageToMainApp {
-    NSLog(@"Sending accessibilty disabled message to main app");
+    NSLog(@"Sending accessibility disabled message to main app");
     [MessagePort_HelperApp sendMessageToMainApp:@"accessibilityDisabled"];
 }
 

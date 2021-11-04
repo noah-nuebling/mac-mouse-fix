@@ -19,7 +19,7 @@
 #pragma mark - local (incoming messages)
 
 /// We used to do this in `load` but that lead to issues when restarting the app if it's translocated
-/// If the app detects that it is translocated, it will restart itself at the untranslocated location,  after removing the quarantine flags from itself. It starts a copy of itself while it's still running, and only then does it terminate itself. If the message port is already 'claimed' by the translocated instances when it starts the untranslocated copy, then the untranslocated copy can't 'claim' the message port for itself, which leads to things like the accessiblity screen not working.
+/// If the app detects that it is translocated, it will restart itself at the untranslocated location,  after removing the quarantine flags from itself. It starts a copy of itself while it's still running, and only then does it terminate itself. If the message port is already 'claimed' by the translocated instances when it starts the untranslocated copy, then the untranslocated copy can't 'claim' the message port for itself, which leads to things like the accessibility screen not working.
 /// I hope thinik moving using `initialize' instead of `load` within `MessagePort_App` should fix this and work just fine for everything else. I don't know why we used load to begin with.
 + (void)load_Manual {
     
