@@ -190,7 +190,7 @@ static BOOL _hasStarted;
     
     if (ScrollUtility.consecutiveScrollTickCounter == 0) {
         if (ScrollUtility.mouseDidMove) {
-            // Set diplaylink to the display that is actually being scrolled - not sure if this is necessary, because having the displaylink at 30fps on a 30fps display looks just as horrible as having the display link on 60fps, if not worse
+            // Set displaylink to the display that is actually being scrolled - not sure if this is necessary, because having the displaylink at 30fps on a 30fps display looks just as horrible as having the display link on 60fps, if not worse
             @try {
                 setDisplayLinkToDisplayUnderMousePointer(event);
             } @catch (NSException *e) {
