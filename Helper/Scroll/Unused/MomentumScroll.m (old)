@@ -425,7 +425,7 @@ static void start() {
         _eventSource = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
     }
     
-    //CGDisplayRemoveReconfigurationCallback(Handle_displayReconfiguration, NULL); // don't know if necesssary
+    //CGDisplayRemoveReconfigurationCallback(Handle_displayReconfiguration, NULL); // don't know if necessary
     //CGDisplayRegisterReconfigurationCallback(Handle_displayReconfiguration, NULL);
 }
 

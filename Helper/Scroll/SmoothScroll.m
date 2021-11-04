@@ -104,7 +104,7 @@ static BOOL _hasStarted;
     
     _hasStarted = YES;
     [SmoothScroll resetDynamicGlobals];
-    CGDisplayRemoveReconfigurationCallback(Handle_displayReconfiguration, NULL); // don't know if necesssary
+    CGDisplayRemoveReconfigurationCallback(Handle_displayReconfiguration, NULL); // don't know if necessary
     CGDisplayRegisterReconfigurationCallback(Handle_displayReconfiguration, NULL);
 }
 + (void)stop {
