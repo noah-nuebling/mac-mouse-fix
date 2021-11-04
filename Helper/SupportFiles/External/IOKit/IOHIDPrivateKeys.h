@@ -32,8 +32,8 @@ __BEGIN_DECLS
 
 /*!
     @defined HID Device Property Keys
-    @abstract Keys that represent properties of a paticular device.
-    @discussion Keys that represent properties of a paticular element.  Can be added
+    @abstract Keys that represent properties of a particular device.
+    @discussion Keys that represent properties of a particular element.  Can be added
         to your matching dictionary when refining searches for HID devices.
 */
 #define kIOHIDInputReportElementsKey        "InputReportElements"
