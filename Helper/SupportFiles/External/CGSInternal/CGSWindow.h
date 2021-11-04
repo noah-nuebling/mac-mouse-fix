@@ -517,7 +517,7 @@ CG_EXTERN CGError CGSWindowSetCanAccelerate(CGSConnectionID cid, CGWindowID wid,
 
 
 /// Registers or unregisters a window as a global status item (see `NSStatusItem`, `NSMenuExtra`).
-/// Once a window is registered, the Window Server takes care of placing it in the apropriate location.
+/// Once a window is registered, the Window Server takes care of placing it in the appropriate location.
 CG_EXTERN CGError CGSSystemStatusBarRegisterWindow(CGSConnectionID cid, CGWindowID wid, int priority);
 CG_EXTERN CGError CGSUnregisterWindowWithSystemStatusBar(CGSConnectionID cid, CGWindowID wid);
 
