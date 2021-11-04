@@ -125,7 +125,7 @@ CG_EXTERN CGError CGSGetCurrentCursorLocation(CGSConnectionID cid, CGPoint *outP
 /// Gets the name (ideally in reverse DNS form) of a system cursor.
 CG_EXTERN char *CGSCursorNameForSystemCursor(CGSCursorID cursor);
 
-/// Gets the scale of the current currsor.
+/// Gets the scale of the current cursor.
 CG_EXTERN CGError CGSGetCursorScale(CGSConnectionID cid, CGFloat *outScale);
 
 /// Sets the scale of the current cursor.
