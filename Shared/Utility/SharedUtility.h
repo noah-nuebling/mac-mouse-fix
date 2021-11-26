@@ -8,7 +8,7 @@
 //
 
 #import <CoreGraphics/CoreGraphics.h>
-#import <Foundation/Foundation.h>
+//#import <Foundation/Foundation.h>
 #import "Constants.h"
 
 #define stringf(format, ...) [NSString stringWithFormat:(format), ##__VA_ARGS__]
