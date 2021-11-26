@@ -128,23 +128,21 @@ import CocoaLumberjackSwift
     { () -> RealFunction in
         
         /**
-         Define a curve describing the relationship between the scrollTickSpeed (in scrollTicks per second) (on the x-axis) and the animationSpeed (in pixels per second) (on the y axis).
+         Define a curve describing the relationship between the scrollTickSpeed (in scrollTicks per second) (on the x-axis) and the pxPerTick (on the y axis).
          We'll call this function y(x).
-         y(x) is composed of 3 other curves. The core of y(x) is a BezierCurve b(x), which is defined on the interval (xMin, xMax).
+         y(x) is composed of 3 other curves. The core of y(x) is a BezierCurve *b(x)*, which is defined on the interval (xMin, xMax).
          y(xMin) is called yMin and y(xMax) is called yMax
          There are two other components to y(x):
              - For `x < xMin`, we set y(x) to yMin
                  - We do this so that the acceleration is turned off for tickSpeeds below xMin. Acceleration should only affect scrollTicks that feel 'consecutive' and not ones that feel like singular events unrelated to other scrollTicks. `self.consecutiveScrollTickMaxInterval` is (supposed to be) the maximum time between ticks where they feel consecutive. So we're using it to define xMin.
             - For `xMax < x`, we lineraly extrapolate b(x), such that the extrapolated line has the slope b'(xMax) and passes through (xMax, yMax)
                 - We do this so the curve is defined and has reasonable values even when the user scrolls really fast
-        We set yMin to (basePxPerTick / baseSecPerTick) = basePxPerSec = basePxSpeed.  That way, a single tick at the baseTickSpeed xMin (or slower) will produce an animation with px distance basePxPertick and duration baseSecPerTick.
             (We use tick and step are interchangable here)
-         TODO: Rename class variables to reflect this naming
         
          HyperParameters:
          - `dip` controls how slope (sensitivity) increases around low scrollSpeeds. The name doesn't make sense but it's easy.
-            I think this might be useful if  the basePxPerTick is very low, so you can scroll precisely. But for a larger basePxPerTick, it's probably fine to set it to 0
-         - If the third controlPoint was `(xMax, yMax)`, instead of `(0.9 * ..., 0.9 * ...)`, then the slope of the extrapolated curve after xMax, would be affected `accelerationDip`. That's the reason for (0.9, 0.9). With (0.9, 0.9).
+            I think this might be useful if  the basePxPerTick is very low. But for a larger basePxPerTick, it's probably fine to set it to 0
+         - If the third controlPoint shouldn't be `(xMax, yMax)`. If it was, then the slope of the extrapolated curve after xMax would be affected `accelerationDip`.
         */
         
         /// Get instance properties
