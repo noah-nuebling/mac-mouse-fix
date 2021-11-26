@@ -433,13 +433,13 @@ import ReactiveSwift
         let maxNewtonIterations: Int = 8
         var t = initialGuess
         
-        for i in 1...maxNewtonIterations {
+        for _ in 1...maxNewtonIterations {
             
             let sampledXShifted = sampleCurve(onAxis: xAxis, atT: t) - x
             
             let error = abs(sampledXShifted)
             if error < epsilon {
-                print("Solved for t in \(i) Newton iterations\n") /// Debug
+//                print("Solved for t in \(i) Newton iterations\n") /// Debug
                 return t
             }
             
@@ -457,7 +457,7 @@ import ReactiveSwift
             else if (t < 0) {t = 0}
         }
         
-        print("Couldn't solve for t using Newton's method") /// Debug
+        print("Couldn't solve for t using Newton's method. Using bisection instead") /// Debug
         
         // Try bisection method for reliability
         
