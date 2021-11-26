@@ -177,7 +177,7 @@
 		<key>checkForPrereleases</key>
 		<false/>
 		<key>configVersion</key>
-		<integer>11</integer>
+		<integer>12</integer>
 		<key>skippedBundleVersion</key>
 		<integer>0</integer>
 		<key>launchesOverall</key>
@@ -351,9 +351,9 @@
 		</dict>
 		<key>other</key>
 		<dict>
-			<key>consecutiveScrollSwipeMaxIntervall</key>
+			<key>consecutiveScrollSwipeIntervalMax</key>
 			<real>0.35</real>
-			<key>consecutiveScrollTickMaxIntervall</key>
+			<key>consecutiveScrollTickIntervalMax</key>
 			<real>0.13</real>
 			<key>fastScrollExponentialBase</key>
 			<real>1.1</real>

@@ -79,11 +79,14 @@ import CocoaLumberjackSwift
     @objc static var fastScrollThreshold_inSwipes: Int { // If `_fastScrollThreshold_inSwipes` consecutive swipes occur, fast scrolling is enabled.
         other["fastScrollThreshold_inSwipes"] as! Int
     }
-    @objc static var consecutiveScrollTickMaxInterval: TimeInterval { // If more than `_consecutiveScrollTickMaxIntervall` seconds passes between two scrollwheel ticks, then they aren't deemed consecutive.
-        other["consecutiveScrollTickMaxIntervall"] as! Double; // == _msPerStep/1000 // oldval:0.0
+    @objc static var consecutiveScrollTickIntervalMax: TimeInterval { // If more than `_consecutiveScrollTickIntervalMax` seconds passes between two scrollwheel ticks, then they aren't deemed consecutive.
+        other["consecutiveScrollTickIntervalMax"] as! Double; // == _msPerStep/1000 // oldval:0.0
     }
-    @objc static var consecutiveScrollSwipeMaxInterval: TimeInterval { // If more than `_consecutiveScrollSwipeMaxIntervall` seconds passes between two scrollwheel swipes, then they aren't deemed consecutive.
-        other["consecutiveScrollSwipeMaxIntervall"] as! Double
+    @objc static var consecutiveScrollTickInterval_AccelerationEnd: TimeInterval { // Used to define accelerationCurve. If the time interval between two ticks becomes less than `consecutiveScrollTickInterval_AccelerationEnd` seconds, then the accelerationCurve becomes managed by linear extension of the bezier instead of the bezier directly.
+        0.01
+    }
+    @objc static var consecutiveScrollSwipeMaxInterval: TimeInterval { // If more than `_consecutiveScrollSwipeIntervalMax` seconds passes between two scrollwheel swipes, then they aren't deemed consecutive.
+        other["consecutiveScrollSwipeIntervalMax"] as! Double
     }
     @objc static var fastScrollExponentialBase: Double { // How quickly fast scrolling gains speed.
         other["fastScrollExponentialBase"] as! Double; // 1.05 //1.125 //1.0625 // 1.0937
@@ -122,7 +125,8 @@ import CocoaLumberjackSwift
                                     #keyPath(pxPerTickBase),
                                     #keyPath(pxPerTickEnd),
                                     #keyPath(msPerStep),
-                                    #keyPath(consecutiveScrollTickMaxInterval),
+                                    #keyPath(consecutiveScrollTickIntervalMax),
+                                    #keyPath(consecutiveScrollTickInterval_AccelerationEnd),
                                     #keyPath(accelerationDip)
                                    ])
     { () -> RealFunction in
@@ -134,7 +138,7 @@ import CocoaLumberjackSwift
          y(xMin) is called yMin and y(xMax) is called yMax
          There are two other components to y(x):
              - For `x < xMin`, we set y(x) to yMin
-                 - We do this so that the acceleration is turned off for tickSpeeds below xMin. Acceleration should only affect scrollTicks that feel 'consecutive' and not ones that feel like singular events unrelated to other scrollTicks. `self.consecutiveScrollTickMaxInterval` is (supposed to be) the maximum time between ticks where they feel consecutive. So we're using it to define xMin.
+                 - We do this so that the acceleration is turned off for tickSpeeds below xMin. Acceleration should only affect scrollTicks that feel 'consecutive' and not ones that feel like singular events unrelated to other scrollTicks. `self.consecutiveScrollTickIntervalMax` is (supposed to be) the maximum time between ticks where they feel consecutive. So we're using it to define xMin.
             - For `xMax < x`, we lineraly extrapolate b(x), such that the extrapolated line has the slope b'(xMax) and passes through (xMax, yMax)
                 - We do this so the curve is defined and has reasonable values even when the user scrolls really fast
             (We use tick and step are interchangable here)
@@ -150,21 +154,17 @@ import CocoaLumberjackSwift
         var pxPerTickBase =  ScrollConfig.self.pxPerTickBase
         var pxPerTickEnd = ScrollConfig.self.pxPerTickEnd;
         var msPerStep = ScrollConfig.self.msPerStep
-        var consecutiveScrollTickMaxInterval = ScrollConfig.self.consecutiveScrollTickMaxInterval
+        var consecutiveScrollTickIntervalMax = ScrollConfig.self.consecutiveScrollTickIntervalMax
         /// ^ This is currently 0.13
+        let consecutiveScrollTickInterval_AccelerationEnd = ScrollConfig.self.consecutiveScrollTickInterval_AccelerationEnd
         var accelerationDip = ScrollConfig.self.accelerationDip
-        
-        /// Override for testing
-        
-        let consecutiveScrollTickEndInterval_ForAcceleration = 0.01
-        /// ^ Timer interval between ticks (in seconds) where px / tickSpeed becomes managed by linear interpolation
             
         /// Define Curve
         
-        let xMin: Double = 1 / Double(consecutiveScrollTickMaxInterval)
+        let xMin: Double = 1 / Double(consecutiveScrollTickIntervalMax)
         let yMin: Double = Double(pxPerTickBase);
         
-        let xMax: Double = 1 / consecutiveScrollTickEndInterval_ForAcceleration
+        let xMax: Double = 1 / consecutiveScrollTickInterval_AccelerationEnd
         let yMax: Double = Double(pxPerTickEnd)
         
         let x2: Double = 0
@@ -172,7 +172,7 @@ import CocoaLumberjackSwift
         
         let x3: Double = (xMax-xMin)*0.9
 //        let y3: Double = (yMax-yMin)*0.9
-        let y3: Double = yMax // Flatten out the end of the curve to prevent ridiculous pxPerTick outputs when input is very high. Input is tickSpeed. TickSpeed can be extremely high despite smoothing, because our time measurements of when ticks occur are very imprecise
+        let y3: Double = yMax // Flatten out the end of the curve to prevent ridiculous pxPerTick outputs when input (tickSpeed) is very high. tickSpeed can be extremely high despite smoothing, because our time measurements of when ticks occur are very imprecise
         
         typealias P = Bezier.Point
         return AccelerationBezier.init(controlPoints:

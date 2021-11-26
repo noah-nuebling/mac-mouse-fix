@@ -315,7 +315,7 @@ static int64_t getPxPerTick(CFTimeInterval timeBetweenTicks, double msPerStep) {
     ///     Then why not just define the the outputVelocity(inputVelocity) curve to be a smooth curve to begin with? Why does sensitivity matter? It doesn't make sens to me.
     ///     I'm just gonna use a BezierCurve to define the outputVelocity(inputVelocity) curve. Then I'll extrapolate the curve linearly at the end, so its defined everywhere. That is guaranteed to be smooth and easy to configure.
     
-    if (timeBetweenTicks == DBL_MAX) timeBetweenTicks = ScrollConfig.consecutiveScrollTickMaxInterval;
+    if (timeBetweenTicks == DBL_MAX) timeBetweenTicks = ScrollConfig.consecutiveScrollTickIntervalMax;
     
     double scrollSpeed = 1/timeBetweenTicks; /// In tick/s
     
