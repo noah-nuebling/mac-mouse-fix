@@ -7,7 +7,8 @@
 // --------------------------------------------------------------------------
 //
 
-#import <Foundation/Foundation.h>
+#import <CoreGraphics/CoreGraphics.h>
+//#import <Foundation/Foundation.h>
 #import "Constants.h"
 
 // Import WannabePrefixHeader.h here so we don't have to manually include it in as many places (not sure if bad practise)

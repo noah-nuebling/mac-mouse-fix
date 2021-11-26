@@ -21,6 +21,8 @@
  *
  */
 
+#import <CoreGraphics/CoreGraphics.h> // Noah's addition. This didn't use to be necessary but now it is. To get CGError to work.
+
 //
 //  Updated by Robert Widmann.
 //  Copyright © 2015-2016 CodaFi. All rights reserved.

@@ -7,8 +7,9 @@
 // --------------------------------------------------------------------------
 //
 
-#import <Foundation/Foundation.h>
 #import "Device.h"
+#import <CoreGraphics/CoreGraphics.h>
+//#import <Foundation/Foundation.h>
 #import "Constants.h"
 
 NS_ASSUME_NONNULL_BEGIN

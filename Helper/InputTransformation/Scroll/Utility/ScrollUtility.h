@@ -7,6 +7,7 @@
 // --------------------------------------------------------------------------
 //
 
+#import <CoreGraphics/CoreGraphics.h>
 #import <Foundation/Foundation.h>
 #import "Constants.h"
 #import "ScrollConfigObjC.h"
