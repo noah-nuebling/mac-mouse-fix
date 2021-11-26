@@ -101,27 +101,28 @@ import CocoaLumberjackSwift
     // Smooth scrolling params
 
     @objc static var pxPerTickBase: Int {
-        return smooth["pxPerStep"] as! Int
+//        return smooth["pxPerStep"] as! Int
+        return 10;
     }
     @objc static var msPerStep: Int {
 //        smooth["msPerStep"] as! Int
         return 200
     }
-    @objc static var acceleration: Double {
-        return 100.0
+    @objc static var pxPerTickEnd: Int {
+        return 200;
     }
     @objc static var accelerationDip: Double {
         /// Between 0 and 1
-        return 0.2
+        return 0.5
     }
     @objc static var accelerationCurve: (() -> RealFunction) =
         DerivedProperty.create_kvc(on:
                                     ScrollConfig.self,
                                    given: [
                                     #keyPath(pxPerTickBase),
+                                    #keyPath(pxPerTickEnd),
                                     #keyPath(msPerStep),
                                     #keyPath(consecutiveScrollTickMaxInterval),
-                                    #keyPath(acceleration),
                                     #keyPath(accelerationDip)
                                    ])
     { () -> RealFunction in
@@ -149,36 +150,38 @@ import CocoaLumberjackSwift
         /// Get instance properties
         
         var pxPerTickBase =  ScrollConfig.self.pxPerTickBase
+        var pxPerTickEnd = ScrollConfig.self.pxPerTickEnd;
         var msPerStep = ScrollConfig.self.msPerStep
         var consecutiveScrollTickMaxInterval = ScrollConfig.self.consecutiveScrollTickMaxInterval
         /// ^ This is currently 0.13
-        var acceleration = ScrollConfig.self.acceleration
         var accelerationDip = ScrollConfig.self.accelerationDip
         
         /// Override for testing
         
-        acceleration = 200
-        let consecutiveScrollTickMinInterval_ForAcceleration = 0.02
-        /// ^ Timer interval between ticks (in seconds) where scrollSpeed / tickSpeed becomes managed by linear interpolation
-        pxPerTickBase = 40
+        let consecutiveScrollTickEndInterval_ForAcceleration = 0.01
+        /// ^ Timer interval between ticks (in seconds) where px / tickSpeed becomes managed by linear interpolation
             
         /// Define Curve
         
-        let xMin: Double = 1 / (Double(consecutiveScrollTickMaxInterval))
-        let yMin: Double = Double(pxPerTickBase) / (Double(msPerStep) / 1000.0)
+        let xMin: Double = 1 / Double(consecutiveScrollTickMaxInterval)
+        let yMin: Double = Double(pxPerTickBase);
         
-//        DDLogDebug("yMin: \(yMin)") /// Debug
+        let xMax: Double = 1 / consecutiveScrollTickEndInterval_ForAcceleration
+        let yMax: Double = Double(pxPerTickEnd)
         
-        let xMax: Double = 1 / consecutiveScrollTickMinInterval_ForAcceleration
-        let yMax: Double = acceleration
+        let x2: Double = 0
+        let y2: Double = accelerationDip
         
-        let xDip: Double = 0
-        let yDip: Double = 0
+        let x3: Double = (xMax-xMin)*0.9
+//        let y3: Double = (yMax-yMin)*0.9
+        let y3: Double = yMax // Flatten out the end of the curve to prevent ridiculous pxPerTick outputs when input is very high. Input is tickSpeed. TickSpeed can be extremely high despite smoothing, because our time measurements of when ticks occur are very imprecise
         
         typealias P = Bezier.Point
-        let controlPoints: [P] = [P(x:xMin, y: yMin), P(x:xDip, y: yDip), P(x: (xMax-xMin)*0.9, y: (yMax-yMin)*0.9), P(x: xMax, y: yMax)]
-        
-        return AccelerationBezier.init(controlPoints: controlPoints)
+        return AccelerationBezier.init(controlPoints:
+                                        [P(x:xMin, y: yMin),
+                                         P(x:x2, y: y2),
+                                         P(x: x3, y: y3),
+                                         P(x: xMax, y: yMax)])
     }
     @objc static var animationCurve: RealFunction = { () -> RealFunction in
         /// Using a closure here instead of DerivedProperty.create_kvc(), because we know it will never change.

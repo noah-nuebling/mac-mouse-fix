@@ -319,21 +319,11 @@ static int64_t getPxPerTick(CFTimeInterval timeBetweenTicks, double msPerStep) {
     
     double scrollSpeed = 1/timeBetweenTicks; /// In tick/s
     
-    double animationSpeed = [ScrollConfig.accelerationCurve() evaluateAt:scrollSpeed]; /// In px/s
+    double pxForThisTick = [ScrollConfig.accelerationCurve() evaluateAt:scrollSpeed]; /// In px/s
     
-    double px = animationSpeed * (msPerStep / 1000.0); /// In px/tick
+    DDLogDebug(@"Time between ticks: %f, scrollSpeed: %f, pxForThisTick: %f", timeBetweenTicks, scrollSpeed, pxForThisTick);
     
-    DDLogDebug(@"Time between ticks: %f, scrollSpeed: %f, animationSpeed: %f, px: %f", timeBetweenTicks, scrollSpeed, animationSpeed, px);
-    
-    
-//    return 40; /// Debug
-    /// v Debug
-//    if (scaling < 0) scaling = 0;
-//    else if (scaling > 1000) scaling = 1000;
-    
-//    return scaling; /// We could use a SubPixelator balance out the rounding errors, but I don't think that'll be noticable
-    
-    return px;
+    return pxForThisTick; /// We could use a SubPixelator balance out the rounding errors, but I don't think that'll be noticable
 }
 
 static void sendScroll(int64_t px, MFScrollDirection scrollDirection, BOOL gesture, MFAnimationPhase animationPhase) {
