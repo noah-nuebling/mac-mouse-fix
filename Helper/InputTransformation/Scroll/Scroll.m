@@ -321,7 +321,12 @@ static int64_t getPxPerTick(CFTimeInterval timeBetweenTicks, double msPerStep) {
     
     double pxForThisTick = [ScrollConfig.accelerationCurve() evaluateAt:scrollSpeed]; /// In px/s
     
-    DDLogDebug(@"Time between ticks: %f, scrollSpeed: %f, pxForThisTick: %f", timeBetweenTicks, scrollSpeed, pxForThisTick);
+//    DDLogDebug(@"Time between ticks: %f, scrollSpeed: %f, pxForThisTick: %f", timeBetweenTicks, scrollSpeed, pxForThisTick);
+    
+    if (pxForThisTick <= 0) {
+        DDLogError(@"pxForThisTick is smaller equal 0. This is invalid. Exiting. scrollSpeed: %f, pxForThisTick: %f", scrollSpeed, pxForThisTick);
+        assert(false);
+    }
     
     return pxForThisTick; /// We could use a SubPixelator balance out the rounding errors, but I don't think that'll be noticable
 }

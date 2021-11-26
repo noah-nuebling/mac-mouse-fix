@@ -88,15 +88,40 @@ class AccelerationBezier: Bezier {
     
     override func evaluate(at x: Double, epsilon: Double) -> Double {
         
-//        DDLogDebug("Acc curve input speed: \(x)"); /// Debug
+        let result: Double
         
         if self.xValueRange.contains(x) {
-            return super.evaluate(at: x, epsilon: epsilon)
+            result = super.evaluate(at: x, epsilon: epsilon)
         } else if x < self.xValueRange.lower {
-            return self.preLine.evaluate(at: x)
+            result = self.preLine.evaluate(at: x)
         } else {
-            return self.postLine.evaluate(at: x)
+            result = self.postLine.evaluate(at: x)
         }
+        
+        /// Debug
+        
+        if result < 0 {
+            
+            // Result is sometimes negative for some reason. It should never be negative.
+                
+            let rangeStr: String
+            if self.xValueRange.contains(x) {
+                rangeStr = "within"
+            } else if x < self.xValueRange.lower {
+                rangeStr = "below"
+            } else {
+                rangeStr = "above"
+            }
+            
+            DDLogDebug("Acc curve negative. Input: \(x), result: \(result), range: \(rangeStr)\n")
+//            DDLogDebug("Curve traceee:\n\(super.trace(nOfSamples: 100))")
+            /// ^ This causes dozens of different, extremely weird crashes when setting nOfSamples to large values like 100 or 1000. No idea what's going on.
+            
+            let hhh = super.evaluate(at: x, epsilon: epsilon) /// For debug stepping
+            
+        }
+        
+        return result
     }
     
 }

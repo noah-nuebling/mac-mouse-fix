@@ -433,12 +433,13 @@ import ReactiveSwift
         let maxNewtonIterations: Int = 8
         var t = initialGuess
         
-        for _ in 1...maxNewtonIterations {
+        for i in 1...maxNewtonIterations {
             
             let sampledXShifted = sampleCurve(onAxis: xAxis, atT: t) - x
             
             let error = abs(sampledXShifted)
             if error < epsilon {
+                print("Solved for t in \(i) Newton iterations\n") /// Debug
                 return t
             }
             
@@ -449,7 +450,14 @@ import ReactiveSwift
             }
             
             t = t - sampledXShifted / sampledDerivative
+            
+            /// v In some scenarios, t will be joltet way outside the valid range of [0,1]. If that happens, newtons method will then sometimes find another t where sampleX = x, but with t outside [0,1]. To prevent this, we force t to be inside [0,1] here. Not sure if this has other bad sideeffects.
+            
+            if (t > 1) {t = 1}
+            else if (t < 0) {t = 0}
         }
+        
+        print("Couldn't solve for t using Newton's method") /// Debug
         
         // Try bisection method for reliability
         
@@ -502,5 +510,32 @@ import ReactiveSwift
         
         return y
     }
+        
     
+    // MARK: Debug
+    
+    @objc func trace(nOfSamples: Int) -> String {
+        /// Sample bezier curve `nOfSamples` times, and return results as string
+        
+        var trace: Array<Point> = Array()
+        
+        for i in 0..<nOfSamples {
+            
+            let x = Math.scale(value: Double(i), from: Interval(location: 0, length: Double(nOfSamples-1)), to: xValueRange)
+            let y = evaluate(at: x, epsilon: defaultEpsilon)
+            
+            trace.append(Point(x: x, y: y))
+            
+        }
+        
+        var traceStr: String = String()
+        
+        for p in trace {
+            traceStr.append("(\(p.x),\(p.y))\n")
+        }
+        
+        return traceStr
+        
+    }
+
 }
