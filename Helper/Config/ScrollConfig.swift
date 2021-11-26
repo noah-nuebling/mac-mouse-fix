@@ -8,6 +8,7 @@
 //
 
 import Cocoa
+import CocoaLumberjackSwift
 
 @objc class ScrollConfig: NSObject {
     
@@ -113,12 +114,16 @@ import Cocoa
         /// Between 0 and 1
         return 0.2
     }
-    @objc static var accelerationCurve: (() -> RealFunction) = DerivedProperty.create_kvc(on: ScrollConfig.self,
-                                                                                          given: [#keyPath(pxPerTickBase),
-                                                                                                  #keyPath(msPerStep),
-                                                                                                  #keyPath(consecutiveScrollTickMaxInterval),
-                                                                                                  #keyPath(acceleration),
-                                                                                                  #keyPath(accelerationDip)])
+    @objc static var accelerationCurve: (() -> RealFunction) =
+        DerivedProperty.create_kvc(on:
+                                    ScrollConfig.self,
+                                   given: [
+                                    #keyPath(pxPerTickBase),
+                                    #keyPath(msPerStep),
+                                    #keyPath(consecutiveScrollTickMaxInterval),
+                                    #keyPath(acceleration),
+                                    #keyPath(accelerationDip)
+                                   ])
     { () -> RealFunction in
         
         /**
@@ -131,7 +136,7 @@ import Cocoa
                  - We do this so that the acceleration is turned off for tickSpeeds below xMin. Acceleration should only affect scrollTicks that feel 'consecutive' and not ones that feel like singular events unrelated to other scrollTicks. `self.consecutiveScrollTickMaxInterval` is (supposed to be) the maximum time between ticks where they feel consecutive. So we're using it to define xMin.
             - For `xMax < x`, we lineraly extrapolate b(x), such that the extrapolated line has the slope b'(xMax) and passes through (xMax, yMax)
                 - We do this so the curve is defined and has reasonable values even when the user scrolls really fast
-        We set yMin to (basePxPerTick / baseSecPerTick) = basePxPerSec = basePxSpeed.  That way, a single tick at the baseTickSpeed xMin will produce an animation with px distance basePxPertick and duration baseSecPerTick.
+        We set yMin to (basePxPerTick / baseSecPerTick) = basePxPerSec = basePxSpeed.  That way, a single tick at the baseTickSpeed xMin (or slower) will produce an animation with px distance basePxPertick and duration baseSecPerTick.
             (We use tick and step are interchangable here)
          TODO: Rename class variables to reflect this naming
         
@@ -146,19 +151,25 @@ import Cocoa
         var pxPerTickBase =  ScrollConfig.self.pxPerTickBase
         var msPerStep = ScrollConfig.self.msPerStep
         var consecutiveScrollTickMaxInterval = ScrollConfig.self.consecutiveScrollTickMaxInterval
+        /// ^ This is currently 0.13
         var acceleration = ScrollConfig.self.acceleration
         var accelerationDip = ScrollConfig.self.accelerationDip
         
         /// Override for testing
         
-        acceleration = 100
-        
+        acceleration = 200
+        let consecutiveScrollTickMinInterval_ForAcceleration = 0.02
+        /// ^ Timer interval between ticks (in seconds) where scrollSpeed / tickSpeed becomes managed by linear interpolation
+        pxPerTickBase = 40
+            
         /// Define Curve
         
         let xMin: Double = 1 / (Double(consecutiveScrollTickMaxInterval))
-        let xMax: Double = 50
+        let yMin: Double = Double(pxPerTickBase) / (Double(msPerStep) / 1000.0)
         
-        let yMin: Double = Double(pxPerTickBase) * (Double(msPerStep) / 1000.0)
+//        DDLogDebug("yMin: \(yMin)") /// Debug
+        
+        let xMax: Double = 1 / consecutiveScrollTickMinInterval_ForAcceleration
         let yMax: Double = acceleration
         
         let xDip: Double = 0

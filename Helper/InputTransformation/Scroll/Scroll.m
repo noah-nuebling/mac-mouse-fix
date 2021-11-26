@@ -235,10 +235,8 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
     /// Get distance to scroll
     
     int64_t pxToScrollForThisTick;
-//    pxToScrollForThisTick = getPxPerTick(scrollAnalysisResult.smoothedTimeBetweenTicks);
-    pxToScrollForThisTick = llabs(eventPointDelta);
-    
-//    pxToScrollForThisTick *= 10; /// Testing. Remove this.
+    pxToScrollForThisTick = getPxPerTick(scrollAnalysisResult.timeBetweenTicks, ScrollConfig.msPerStep);
+//    pxToScrollForThisTick = llabs(eventPointDelta); // Use delta from Apples acceleration algorithm
     
     /// Apply fast scroll to distance
     
@@ -310,20 +308,32 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
     CFRelease(event);
 }
 
-static int64_t getPxPerTick(CFTimeInterval timeBetweenTicks) {
+static int64_t getPxPerTick(CFTimeInterval timeBetweenTicks, double msPerStep) {
     /// @discussion See the RawAccel guide for more info on acceleration curves https://github.com/a1xd/rawaccel/blob/master/doc/Guide.md
     ///     -> Edit: I read up on it and I don't see why the sensitivity-based approach that RawAccel uses is useful.
     ///     They define the base curve as for sensitivity, but then go through complex maths and many hurdles to make the implied outputVelocity(inputVelocity) function and its derivative smooth. Because that is what makes the acceleration feel predictable and nice. (See their "Gain" algorithm)
     ///     Then why not just define the the outputVelocity(inputVelocity) curve to be a smooth curve to begin with? Why does sensitivity matter? It doesn't make sens to me.
     ///     I'm just gonna use a BezierCurve to define the outputVelocity(inputVelocity) curve. Then I'll extrapolate the curve linearly at the end, so its defined everywhere. That is guaranteed to be smooth and easy to configure.
     
+    if (timeBetweenTicks == DBL_MAX) timeBetweenTicks = ScrollConfig.consecutiveScrollTickMaxInterval;
+    
     double scrollSpeed = 1/timeBetweenTicks; /// In tick/s
     
     double animationSpeed = [ScrollConfig.accelerationCurve() evaluateAt:scrollSpeed]; /// In px/s
     
-    double scaling = animationSpeed / scrollSpeed; /// In px/tick
+    double px = animationSpeed * (msPerStep / 1000.0); /// In px/tick
     
-    return 40; /// We could use a SubPixelator balance out the rounding errors, but I don't think that'll be noticable
+    DDLogDebug(@"Time between ticks: %f, scrollSpeed: %f, animationSpeed: %f, px: %f", timeBetweenTicks, scrollSpeed, animationSpeed, px);
+    
+    
+//    return 40; /// Debug
+    /// v Debug
+//    if (scaling < 0) scaling = 0;
+//    else if (scaling > 1000) scaling = 1000;
+    
+//    return scaling; /// We could use a SubPixelator balance out the rounding errors, but I don't think that'll be noticable
+    
+    return px;
 }
 
 static void sendScroll(int64_t px, MFScrollDirection scrollDirection, BOOL gesture, MFAnimationPhase animationPhase) {

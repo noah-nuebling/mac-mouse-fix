@@ -8,6 +8,7 @@
 //
 
 import Cocoa
+import CocoaLumberjackSwift
 
 
 /// With this class you can create a BezierCurve which is then linearly extrapolated after the last control point, and set to the minimum value after the last controlPoint
@@ -86,6 +87,8 @@ class AccelerationBezier: Bezier {
     }
     
     override func evaluate(at x: Double, epsilon: Double) -> Double {
+        
+//        DDLogDebug("Acc curve input speed: \(x)"); /// Debug
         
         if self.xValueRange.contains(x) {
             return super.evaluate(at: x, epsilon: epsilon)
