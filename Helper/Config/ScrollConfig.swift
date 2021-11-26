@@ -83,7 +83,7 @@ import CocoaLumberjackSwift
         other["consecutiveScrollTickIntervalMax"] as! Double; // == _msPerStep/1000 // oldval:0.0
     }
     @objc static var consecutiveScrollTickInterval_AccelerationEnd: TimeInterval { // Used to define accelerationCurve. If the time interval between two ticks becomes less than `consecutiveScrollTickInterval_AccelerationEnd` seconds, then the accelerationCurve becomes managed by linear extension of the bezier instead of the bezier directly.
-        0.01
+        0.02
     }
     @objc static var consecutiveScrollSwipeMaxInterval: TimeInterval { // If more than `_consecutiveScrollSwipeIntervalMax` seconds passes between two scrollwheel swipes, then they aren't deemed consecutive.
         other["consecutiveScrollSwipeIntervalMax"] as! Double
@@ -107,16 +107,16 @@ import CocoaLumberjackSwift
 //        return smooth["pxPerStep"] as! Int
         return 10;
     }
+    @objc static var pxPerTickEnd: Int {
+        return 150;
+    }
     @objc static var msPerStep: Int {
 //        smooth["msPerStep"] as! Int
         return 200
     }
-    @objc static var pxPerTickEnd: Int {
-        return 200;
-    }
-    @objc static var accelerationDip: Double {
+    @objc static var accelerationHump: Double {
         /// Between 0 and 1
-        return 0.5
+        return 0.2
     }
     @objc static var accelerationCurve: (() -> RealFunction) =
         DerivedProperty.create_kvc(on:
@@ -127,7 +127,7 @@ import CocoaLumberjackSwift
                                     #keyPath(msPerStep),
                                     #keyPath(consecutiveScrollTickIntervalMax),
                                     #keyPath(consecutiveScrollTickInterval_AccelerationEnd),
-                                    #keyPath(accelerationDip)
+                                    #keyPath(accelerationHump)
                                    ])
     { () -> RealFunction in
         
@@ -157,7 +157,7 @@ import CocoaLumberjackSwift
         var consecutiveScrollTickIntervalMax = ScrollConfig.self.consecutiveScrollTickIntervalMax
         /// ^ This is currently 0.13
         let consecutiveScrollTickInterval_AccelerationEnd = ScrollConfig.self.consecutiveScrollTickInterval_AccelerationEnd
-        var accelerationDip = ScrollConfig.self.accelerationDip
+        var accelerationDip = ScrollConfig.self.accelerationHump
             
         /// Define Curve
         
@@ -186,6 +186,8 @@ import CocoaLumberjackSwift
         
         typealias P = Bezier.Point
         
+//        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:0.3,y:1), P(x:1,y:1)]
+//        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:1,y:1), P(x:1,y:1)]
         let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:0.5,y:1), P(x:1,y:1)]
         
         return Bezier(controlPoints: controlPoints, defaultEpsilon: 0.001) /// The default defaultEpsilon 0.08 makes the animations choppy

@@ -113,8 +113,11 @@ class PixelatedAnimator: Animator {
             }
             summedIntegerAnimationValueDelta += integerAnimationValueDelta
             
+//            DDLogDebug("""
+//PxAnim - intValueDelta: \(integerAnimationValueDelta), intValueLeft: \(intAnimationValueLeft), animationPhase: \(self.animationPhase.rawValue),     value: \(lastAnimationValue + animationValueDelta) intValue: \(summedIntegerAnimationValueDelta), intervalLength: \(self.animationValueInterval.length),     valueDelta: \(animationValueDelta), accEoundingErr: \(subPixelator.accumulatedRoundingError), currentnimationValueLeft: \(currentAnimationValueLeft),
+//""")
             DDLogDebug("""
-PxAnim - intValueDelta: \(integerAnimationValueDelta), intValueLeft: \(intAnimationValueLeft), animationPhase: \(self.animationPhase.rawValue),     value: \(lastAnimationValue + animationValueDelta) intValue: \(summedIntegerAnimationValueDelta), intervalLength: \(self.animationValueInterval.length),     valueDelta: \(animationValueDelta), accEoundingErr: \(subPixelator.accumulatedRoundingError), currentnimationValueLeft: \(currentAnimationValueLeft),
+PxAnim - intValueDelta: \(integerAnimationValueDelta)
 """)
             
             if summedIntegerAnimationValueDelta >= Int(self.animationValueInterval.length) {

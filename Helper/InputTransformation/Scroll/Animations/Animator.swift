@@ -200,7 +200,7 @@ import CocoaLumberjackSwift
         
         /// Debug
         
-        DDLogDebug("DO DISP LINK with (initial) phase: \(self.animationPhase.rawValue)")
+//        DDLogDebug("DO DISP LINK with (initial) phase: \(self.animationPhase.rawValue)")
         
         /// Guard nil
         
