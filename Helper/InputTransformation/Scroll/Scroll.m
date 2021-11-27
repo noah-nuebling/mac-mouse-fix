@@ -195,7 +195,6 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     CGEventRef eventCopy = CGEventCreateCopy(event); // Create a copy, because the original event will become invalid and unusable in the new queue.
     
     dispatch_async(_scrollQueue, ^{
-        
         heavyProcessing(eventCopy, scrollAnalysisResult, scrollDirection, scrollDeltaPoint);
     });
     
@@ -239,10 +238,10 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
 //    pxToScrollForThisTick = llabs(eventPointDelta); // Use delta from Apples acceleration algorithm
     
     /// Apply fast scroll to distance
-    
-    int64_t fastScrollThresholdDelta = scrollAnalysisResult.consecutiveScrollSwipeCounter - (unsigned int)ScrollConfig.fastScrollThreshold_inSwipes;
+        
+    int64_t fastScrollThresholdDelta = scrollAnalysisResult.consecutiveScrollSwipeCounter - ScrollConfig.fastScrollThreshold_inSwipes;
     if (fastScrollThresholdDelta >= 0) {
-        pxToScrollForThisTick *= ScrollConfig.fastScrollFactor * pow(ScrollConfig.fastScrollExponentialBase, ((int32_t)fastScrollThresholdDelta)); /// TODO: Tune this up a little
+        pxToScrollForThisTick *= ScrollConfig.fastScrollFactor * pow(ScrollConfig.fastScrollExponentialBase, fastScrollThresholdDelta);
     }
     
     if (pxToScrollForThisTick == 0) {

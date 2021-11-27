@@ -65,7 +65,8 @@ static int _consecutiveScrollSwipeCounter;
 }
 
 /// This is the main input function which should be called on each scrollwheel tick event
-+ (ScrollAnalysisResult)updateWithTickOccuringNowWithDirection:(MFScrollDirection)direction
++ (ScrollAnalysisResult)
+updateWithTickOccuringNowWithDirection:(MFScrollDirection)direction
 {
     
     // Update directionDidChange
@@ -87,7 +88,6 @@ static int _consecutiveScrollSwipeCounter;
     
     double thisScrollTickTimeStamp = CACurrentMediaTime();
     double secondsSinceLastTick = thisScrollTickTimeStamp - _previousScrollTickTimeStamp;
-    _previousScrollTickTimeStamp = thisScrollTickTimeStamp;
     
     /// Get smoothed time between ticks
     
@@ -126,6 +126,13 @@ static int _consecutiveScrollSwipeCounter;
         .timeBetweenTicks = smoothedTimeBetweenTicks,
         /// ^ We should only return `smoothedTimeBetweenTicks` instead of `timeSinceLastTick`. Because it's our best approximation of the true value of `timeSinceLastTick`. If `smoothedTimeBetweenTicks`, doesn't work, adjust the alorithm until it does.
     };
+    
+    /// Update `_previousScrollTickTimeStamp` for next call
+    ///     This needs to be called after `updateConsecutiveScrollSwipeCounterWithSwipeOccuringNow()`, because it uses `_previousScrollTickTimeStamp`
+    
+    _previousScrollTickTimeStamp = thisScrollTickTimeStamp;
+    
+    /// Return
     
     return result;
 }

@@ -76,23 +76,30 @@ import CocoaLumberjackSwift
     @objc static var scrollSwipeThreshold_inTicks: Int { // If `_scrollSwipeThreshold_inTicks` consecutive ticks occur, they are deemed a scroll-swipe.
         other["scrollSwipeThreshold_inTicks"] as! Int; //
     }
-    @objc static var fastScrollThreshold_inSwipes: Int { // If `_fastScrollThreshold_inSwipes` consecutive swipes occur, fast scrolling is enabled.
+    @objc static var fastScrollThreshold_inSwipes: Int { // If `_fastScrollThreshold_inSwipes` + 1 consecutive swipes occur, fast scrolling is enabled.
         other["fastScrollThreshold_inSwipes"] as! Int
     }
     @objc static var consecutiveScrollTickIntervalMax: TimeInterval { // If more than `_consecutiveScrollTickIntervalMax` seconds passes between two scrollwheel ticks, then they aren't deemed consecutive.
-        other["consecutiveScrollTickIntervalMax"] as! Double; // == _msPerStep/1000 // oldval:0.0
+//        other["consecutiveScrollTickIntervalMax"] as! Double;
+        // msPerStep/1000 <- Good idea but we don't want this to depend on msPerStep
+        0.13
+        
+    }
+    @objc static var consecutiveScrollSwipeMaxInterval: TimeInterval {
+        // If more than `_consecutiveScrollSwipeIntervalMax` seconds passes between two scrollwheel swipes, then they aren't deemed consecutive.
+        //        other["consecutiveScrollSwipeIntervalMax"] as! Double
+        0.35
     }
     @objc static var consecutiveScrollTickInterval_AccelerationEnd: TimeInterval { // Used to define accelerationCurve. If the time interval between two ticks becomes less than `consecutiveScrollTickInterval_AccelerationEnd` seconds, then the accelerationCurve becomes managed by linear extension of the bezier instead of the bezier directly.
         0.02
     }
-    @objc static var consecutiveScrollSwipeMaxInterval: TimeInterval { // If more than `_consecutiveScrollSwipeIntervalMax` seconds passes between two scrollwheel swipes, then they aren't deemed consecutive.
-        other["consecutiveScrollSwipeIntervalMax"] as! Double
-    }
     @objc static var fastScrollExponentialBase: Double { // How quickly fast scrolling gains speed.
-        other["fastScrollExponentialBase"] as! Double; // 1.05 //1.125 //1.0625 // 1.0937
+//        other["fastScrollExponentialBase"] as! Double;
+        1.5 // 1.1
     }
     @objc static var fastScrollFactor: Double {
-        other["fastScrollFactor"] as! Double
+//        other["fastScrollFactor"] as! Double
+        1.5
     }
     @objc static var ticksPerSecondSmoothingInputValueWeight: Double {
         0.5
