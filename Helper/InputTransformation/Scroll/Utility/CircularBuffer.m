@@ -19,7 +19,7 @@
     NSMutableArray<id> *_buffer;
     /// Dynamic vars
     NSInteger _filled;
-    NSUInteger _head;
+    NSUInteger _head; /// Head points to the next insertion point
 }
 
 /// Init
@@ -41,7 +41,7 @@
         _capacity = n;
         _filled = 0;
         _head = 0;
-        _buffer = [NSMutableArray array];
+        _buffer = [NSMutableArray arrayWithCapacity:n];
         for (NSInteger i = 0; i < _capacity; i++) {
             [_buffer addObject:@(0)];
         }
@@ -57,8 +57,10 @@
 }
 
 - (void)add:(id)obj {
-    _head = [self movedIndex:_head by:1];
+    
     [_buffer replaceObjectAtIndex:_head withObject:obj];
+    
+    _head = [self movedIndex:_head by:1];
     if (_filled < _capacity) {
         _filled += 1;
     }
@@ -73,7 +75,7 @@
         return result;
     }
     
-    NSUInteger startIndex = [self movedIndex:_head by:-(_filled - 1)];
+    NSUInteger startIndex = [self movedIndex:_head by:-_filled];
     
     NSUInteger i = startIndex;
     while (true) {
@@ -91,11 +93,17 @@
 /// Utility
 
 - (NSUInteger)movedIndex:(NSUInteger)index by:(NSInteger)i {
-    NSUInteger r = (index + i) % _capacity;
+    
+    NSInteger idx = index; /// Need to cast `index` to signed integer, such that `idx + i` can become negative (I think??)
+    
+    NSInteger r = (idx + i) % _capacity;
     
     if (r < 0) {
-        return _capacity + r; /// Mod is implemented in a stupid way in c (truncated mod) so we have to use this to get it to behave like euclidian mod
+        r = r + _capacity; /// Mod is implemented in a stupid way in c (truncated mod) so we have to use this to get it to behave like euclidian mod
     }
+    
+    assert(r >= 0);
+    
     return r;
 }
 

@@ -21,10 +21,23 @@
 + (void)initialize
 {
     if (self == [ScrollAnalyzer class]) {
-        _tickTimeSmoother = [[DoubleExponentialSmoother alloc] initWithA:ScrollConfig.ticksPerSecondSmoothingInputValueWeight
-                                                                       y:ScrollConfig.ticksPerSecondSmoothingTrendWeight
-                                                           initialValue1:ScrollConfig.consecutiveScrollTickIntervalMax
-                                                           initialValue2:ScrollConfig.consecutiveScrollTickIntervalMax];
+        
+        /// Setup smoothing algorithm for `timeBetweenTicks`
+        
+//        _tickTimeSmoother = [[DoubleExponentialSmoother alloc] initWithA:ScrollConfig.ticksPerSecondSmoothingInputValueWeight
+//                                                                       y:ScrollConfig.ticksPerSecondSmoothingTrendWeight
+//                                                           initialValue1:ScrollConfig.consecutiveScrollTickIntervalMax
+//                                                           initialValue2:ScrollConfig.consecutiveScrollTickIntervalMax];
+//        _tickTimeSmoother = [[RollingAverage alloc] initWithCapacity:3
+//                                                       initialValues:@[@(ScrollConfig.consecutiveScrollTickIntervalMax)]];
+        
+        _tickTimeSmoother = [[RollingAverage alloc] initWithCapacity:1]; /// Capacity 1 turns off smoothing
+        /// ^ No smoothing feels the best.
+        ///     - Without smoothing, there will somemtimes randomly be extremely small `timeSinceLastTick` values. I was worried that these would overdrive the acceleration curve, producing extremely high `pxToScrollForThisTick` values at random. But since we've capped the acceleration curve to a maximum `pxToScrollForThisTick` this isn't a noticable issue anymore.
+        ///     - No smoothing is way more responsive than RollingAverage
+        ///     - No smoothing is more responsive than DoubleExponential. And when there are extremely small `timeSinceLastTick` values (avoiding these is the whole reason we use smoothing), the DoubleExponentialSmoother will extrapolate the trend and make it even *worse* - sometimes it even produces negative values!
+        ///     - We could try if a light exponential smoothing would feel better, but this is good enought for now
+        
     }
 }
 
@@ -32,7 +45,7 @@
 
 // Constant
 
-static DoubleExponentialSmoother *_tickTimeSmoother;
+static NSObject<Smoother> *_tickTimeSmoother;
 
 // Dynamic
 
@@ -86,14 +99,10 @@ static int _consecutiveScrollSwipeCounter_ForFreeScrollWheel;
     double thisScrollTickTimeStamp = CACurrentMediaTime();
     double secondsSinceLastTick = thisScrollTickTimeStamp - _previousScrollTickTimeStamp;
     
-    /// Get smoothed time between ticks
-    
-    double smoothedTimeBetweenTicks = [_tickTimeSmoother smoothWithValue:secondsSinceLastTick];
-    
     /// Update consecutive tick and swipe counters
     ///     We used to do this based on raw `secondsSinceLastTick` instead of smoothed `smoothedTimeBetweenTicks`. Not entirely sure this makes sense.
     
-    if (smoothedTimeBetweenTicks > ScrollConfig.consecutiveScrollTickIntervalMax) {
+    if (secondsSinceLastTick > ScrollConfig.consecutiveScrollTickIntervalMax) { /// Should `secondsSinceLastTick` be smoothed *before* this comparison?
         /// This is the first consecutive tick
         
         /// Update swipes
@@ -137,10 +146,15 @@ static int _consecutiveScrollSwipeCounter_ForFreeScrollWheel;
     
     /// Reset timeBetweenTicks state if this is first consecutive tick
     
+    double smoothedTimeBetweenTicks;
+    
     if (_consecutiveScrollTickCounter == 0) {
         smoothedTimeBetweenTicks = DBL_MAX;
             ///     ^ DBL_MAX indicates that it has been longer than `consecutiveScrollTickIntervalMax` since the last tick. Maybe we should define a constant for this.
         [_tickTimeSmoother reset];
+    } else {
+        /// Get smoothed time between ticks
+        smoothedTimeBetweenTicks = [_tickTimeSmoother smoothWithValue:secondsSinceLastTick];
     }
     
     /// Output
@@ -151,7 +165,9 @@ static int _consecutiveScrollSwipeCounter_ForFreeScrollWheel;
         .consecutiveScrollSwipeCounter_ForFreeScrollWheel = _consecutiveScrollSwipeCounter_ForFreeScrollWheel,
         .scrollDirectionDidChange = scrollDirectionDidChange,
         .timeBetweenTicks = smoothedTimeBetweenTicks,
-        /// ^ We should only return `smoothedTimeBetweenTicks` instead of `timeSinceLastTick`. Because it's our best approximation of the true value of `timeSinceLastTick`. If `smoothedTimeBetweenTicks`, doesn't work, adjust the alorithm until it does.
+        /// ^ We should only use `smoothedTimeBetweenTicks` instead of `secondsSinceLastTick`. Because it's our best approximation of the true value of `secondsSinceLastTick`. If `smoothedTimeBetweenTicks`, doesn't work, adjust the alorithm until it does
+        ///     Edit: Actually we've turned smoothing off for now so the two are the same.
+        .timeBetweenTicksRaw = secondsSinceLastTick,
     };
     
     /// Update `_previousScrollTickTimeStamp` for next call

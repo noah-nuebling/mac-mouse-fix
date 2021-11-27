@@ -24,6 +24,8 @@ typedef struct {
     ///     `consecutiveScrollSwipeCounter_ForFreeScrollWheel` will count these long tick sequences as several consecutive swipes.
     BOOL scrollDirectionDidChange;
     CFTimeInterval timeBetweenTicks;
+    CFTimeInterval timeBetweenTicksRaw;
+    /// ^ Unsmoothed time between ticks. For debugging, don't use this. 
     
 } ScrollAnalysisResult;
 
