@@ -11,9 +11,9 @@ import Cocoa
 import CocoaLumberjackSwift
 
 
-/// With this class you can create a BezierCurve which is then linearly extrapolated after the last control point, and set to the minimum value after the last controlPoint
+/// With this class you can create a BezierCurve which is then linearly extrapolated after the last control point, and set to the minimum value before the first controlPoint
 /// https://en.wikipedia.org/wiki/Extrapolation#Linear
-/// I think this will be really useful for defining acceleration curves
+/// We use this to define acceleration curves
 class AccelerationBezier: Bezier {
 
     var preLine: Line
@@ -37,7 +37,7 @@ class AccelerationBezier: Bezier {
         /**
          Define preLine, such that it
          - Passes through the first control point
-         - Has the same slope that the bezier curve does in its first control point
+         - Has slope 0 and the same value that the bezier curve does in its first control point
          Define postLine such that it
          - Passes through the last control point
          - Has the same slope that the bezier curve does in its last control point
@@ -51,7 +51,7 @@ class AccelerationBezier: Bezier {
         
         // preLine
         
-        // Get the 2 relevant control points
+        // Get the relevant control points
         let c1 = controlPoints[0]
         
         // Find slope.

@@ -204,7 +204,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysisResult, MFScrollDirection scrollDirection, int64_t eventPointDelta) {
     
     /// Update configuration
-///         Checking which app is under the mouse pointer is really slow, so we only do it when necessary
+    ///     Checking which app is under the mouse pointer is really slow, so we only do it when necessary
     
     if (scrollAnalysisResult.consecutiveScrollTickCounter == 0) {
         
@@ -237,18 +237,20 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
     pxToScrollForThisTick = getPxPerTick(scrollAnalysisResult.timeBetweenTicks, ScrollConfig.msPerStep);
 //    pxToScrollForThisTick = llabs(eventPointDelta); // Use delta from Apple's acceleration algorithm
     
-    /// Debug
-    
-//    DDLogDebug(@"consecTicks: %lld, consecSwipes: %lld, consecSwipesFree: %lld", scrollAnalysisResult.consecutiveScrollTickCounter, scrollAnalysisResult.consecutiveScrollSwipeCounter, scrollAnalysisResult.consecutiveScrollSwipeCounter_ForFreeScrollWheel);
-    
-    DDLogDebug(@"timeBetweenTicks: %f, timeBetweenTicksRaw: %f, diff: %f, ticks: %lld", scrollAnalysisResult.timeBetweenTicks, scrollAnalysisResult.timeBetweenTicksRaw, scrollAnalysisResult.timeBetweenTicks - scrollAnalysisResult.timeBetweenTicksRaw, scrollAnalysisResult.consecutiveScrollTickCounter);
-    
     /// Apply fast scroll to distance
         
     int64_t fastScrollThresholdDelta = scrollAnalysisResult.consecutiveScrollSwipeCounter_ForFreeScrollWheel - ScrollConfig.fastScrollThreshold_inSwipes;
     if (fastScrollThresholdDelta >= 0) {
         pxToScrollForThisTick *= ScrollConfig.fastScrollFactor * pow(ScrollConfig.fastScrollExponentialBase, fastScrollThresholdDelta);
     }
+    
+    /// Debug
+    
+    //    DDLogDebug(@"consecTicks: %lld, consecSwipes: %lld, consecSwipesFree: %lld", scrollAnalysisResult.consecutiveScrollTickCounter, scrollAnalysisResult.consecutiveScrollSwipeCounter, scrollAnalysisResult.consecutiveScrollSwipeCounter_ForFreeScrollWheel);
+    
+    DDLogDebug(@"timeBetweenTicks: %f, timeBetweenTicksRaw: %f, diff: %f, ticks: %lld", scrollAnalysisResult.timeBetweenTicks, scrollAnalysisResult.timeBetweenTicksRaw, scrollAnalysisResult.timeBetweenTicks - scrollAnalysisResult.timeBetweenTicksRaw, scrollAnalysisResult.consecutiveScrollTickCounter);
+    
+    /// Send scroll events
     
     if (pxToScrollForThisTick == 0) {
         
@@ -407,7 +409,7 @@ static void sendScroll(int64_t px, MFScrollDirection scrollDirection, BOOL gestu
             sendGestureScroll(dx, dy, kIOHIDEventPhaseBegan);
             sendGestureScroll(0, 0, kIOHIDEventPhaseEnded);
             
-        }else if (animationPhase == kMFAnimationPhaseEnd) {
+        } else if (animationPhase == kMFAnimationPhaseEnd) {
             
             sendGestureScroll(dx, dy,  kIOHIDEventPhaseChanged);
             sendGestureScroll(0, 0, kIOHIDEventPhaseEnded);
