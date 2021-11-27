@@ -237,9 +237,13 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
     pxToScrollForThisTick = getPxPerTick(scrollAnalysisResult.timeBetweenTicks, ScrollConfig.msPerStep);
 //    pxToScrollForThisTick = llabs(eventPointDelta); // Use delta from Apples acceleration algorithm
     
+    /// Debug
+    
+        DDLogDebug(@"consecTicks: %lld, consecSwipes: %lld, consecSwipesFree: %lld", scrollAnalysisResult.consecutiveScrollTickCounter, scrollAnalysisResult.consecutiveScrollSwipeCounter, scrollAnalysisResult.consecutiveScrollSwipeCounter_ForFreeScrollWheel);
+    
     /// Apply fast scroll to distance
         
-    int64_t fastScrollThresholdDelta = scrollAnalysisResult.consecutiveScrollSwipeCounter - ScrollConfig.fastScrollThreshold_inSwipes;
+    int64_t fastScrollThresholdDelta = scrollAnalysisResult.consecutiveScrollSwipeCounter_ForFreeScrollWheel - ScrollConfig.fastScrollThreshold_inSwipes;
     if (fastScrollThresholdDelta >= 0) {
         pxToScrollForThisTick *= ScrollConfig.fastScrollFactor * pow(ScrollConfig.fastScrollExponentialBase, fastScrollThresholdDelta);
     }

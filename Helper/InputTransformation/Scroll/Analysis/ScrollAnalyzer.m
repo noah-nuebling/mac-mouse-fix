@@ -37,11 +37,11 @@ static DoubleExponentialSmoother *_tickTimeSmoother;
 // Dynamic
 
 static double _previousScrollTickTimeStamp = 0;
-static double _previousScrollSwipeTimeStamp = 0;
 static MFScrollDirection _previousDirection = kMFScrollDirectionNone;
 
 static int _consecutiveScrollTickCounter;
 static int _consecutiveScrollSwipeCounter;
+static int _consecutiveScrollSwipeCounter_ForFreeScrollWheel;
 
 #pragma mark - Interface
 
@@ -50,7 +50,6 @@ static int _consecutiveScrollSwipeCounter;
 + (void)resetState {
     
     _previousScrollTickTimeStamp = 0;
-    _previousScrollSwipeTimeStamp = 0;
     
     _previousDirection = kMFScrollDirectionNone;
     // ^ This needs to be set to none, so that scrollDirectionDidChange will definitely evaluate to NO on the next tick
@@ -65,12 +64,10 @@ static int _consecutiveScrollSwipeCounter;
 }
 
 /// This is the main input function which should be called on each scrollwheel tick event
-+ (ScrollAnalysisResult)
-updateWithTickOccuringNowWithDirection:(MFScrollDirection)direction
-{
++ (ScrollAnalysisResult)updateWithTickOccuringNowWithDirection:(MFScrollDirection)direction {
     
-    // Update directionDidChange
-    // Checks whether the sign of input number is different from when this function was last called. Writes result into `_scrollDirectionDidChange`.
+    /// Update directionDidChange
+    /// Checks whether the sign of input number is different from when this function was last called. Writes result into `_scrollDirectionDidChange`.
     
     BOOL scrollDirectionDidChange = NO;
     
@@ -79,7 +76,7 @@ updateWithTickOccuringNowWithDirection:(MFScrollDirection)direction
     }
     _previousDirection = direction;
     
-    // Reset state if scroll direction changed
+    /// Reset state if scroll direction changed
     if (scrollDirectionDidChange) {
         [self resetState];
     }
@@ -99,14 +96,43 @@ updateWithTickOccuringNowWithDirection:(MFScrollDirection)direction
     if (smoothedTimeBetweenTicks > ScrollConfig.consecutiveScrollTickIntervalMax) {
         /// This is the first consecutive tick
         
+        /// Update swipes
+        
         if (ScrollConfig.scrollSwipeThreshold_inTicks <= _consecutiveScrollTickCounter) {
-            /// If the last batch of consecutive ticks had more ticks in it than the swipe threshold, then update the swipe counter.
-            updateConsecutiveScrollSwipeCounterWithSwipeOccuringNow();
+            /// The last batch of consecutive ticks had more ticks in it than the swipe threshold
+            
+            double thisScrollSwipeTimeStamp = CACurrentMediaTime();
+            double intervall = thisScrollSwipeTimeStamp - _previousScrollTickTimeStamp;
+            
+            if (intervall <= ScrollConfig.consecutiveScrollSwipeMaxInterval) {
+                /// Time between the last tick of the previous swipe and the first tick of the current swipe (now) is smaller than swipe threshold
+
+                _consecutiveScrollSwipeCounter += 1;
+                _consecutiveScrollSwipeCounter_ForFreeScrollWheel += 1;
+            }
+            else goto resetSwipes;
+            
+        } else {
+        resetSwipes:
+            _consecutiveScrollSwipeCounter = 0;
+            _consecutiveScrollSwipeCounter_ForFreeScrollWheel = 0;
         }
+        
+        /// Update ticks
+        
         _consecutiveScrollTickCounter = 0;
         
     } else { /// This is not the first consecutive tick
         _consecutiveScrollTickCounter += 1;
+    }
+    
+    /// Update `_consecutiveScrollSwipeCounter_ForFreeScrollWheel`
+    ///     It's a little awkward to update this down here after the other swipe-updating code , but we need the `consecutiveTickCounter` to be updated after the stuff above but before this
+    
+    if (_consecutiveScrollTickCounter >= ScrollConfig.scrollSwipeMax_inTicks) {
+        if (_consecutiveScrollTickCounter % ScrollConfig.scrollSwipeMax_inTicks == 0) {
+            _consecutiveScrollSwipeCounter_ForFreeScrollWheel += 1;
+        }
     }
     
     /// Reset timeBetweenTicks state if this is first consecutive tick
@@ -122,6 +148,7 @@ updateWithTickOccuringNowWithDirection:(MFScrollDirection)direction
     ScrollAnalysisResult result = (ScrollAnalysisResult) {
         .consecutiveScrollTickCounter = _consecutiveScrollTickCounter,
         .consecutiveScrollSwipeCounter = _consecutiveScrollSwipeCounter,
+        .consecutiveScrollSwipeCounter_ForFreeScrollWheel = _consecutiveScrollSwipeCounter_ForFreeScrollWheel,
         .scrollDirectionDidChange = scrollDirectionDidChange,
         .timeBetweenTicks = smoothedTimeBetweenTicks,
         /// ^ We should only return `smoothedTimeBetweenTicks` instead of `timeSinceLastTick`. Because it's our best approximation of the true value of `timeSinceLastTick`. If `smoothedTimeBetweenTicks`, doesn't work, adjust the alorithm until it does.
@@ -135,20 +162,6 @@ updateWithTickOccuringNowWithDirection:(MFScrollDirection)direction
     /// Return
     
     return result;
-}
-
-static void updateConsecutiveScrollSwipeCounterWithSwipeOccuringNow() {
-    
-    double thisScrollSwipeTimeStamp = CACurrentMediaTime();
-    double intervall = thisScrollSwipeTimeStamp - _previousScrollTickTimeStamp; // Time between the last tick of the previous swipe and the first tick of the current swipe (now)
-    
-    if (intervall <= ScrollConfig.consecutiveScrollSwipeMaxInterval) {
-        _consecutiveScrollSwipeCounter += 1;
-    } else {
-        _consecutiveScrollSwipeCounter = 0;
-    }
-    
-    _previousScrollSwipeTimeStamp = thisScrollSwipeTimeStamp;
 }
 
 @end
