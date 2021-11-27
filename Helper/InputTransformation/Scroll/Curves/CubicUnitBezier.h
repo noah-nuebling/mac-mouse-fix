@@ -26,7 +26,7 @@
 #import <Foundation/Foundation.h>
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 
-@interface CubicUnitBezier : NSObject<RealFunction>
+@interface CubicUnitBezier : NSObject<AnimationCurve>
 
 - (void)UnitBezierForPoint1x:(double)p1x point1y:(double)p1y point2x:(double)p2x point2y:(double)p2y;
 - (double)evaluateAt:(double)x epsilon:(double)epsilon;

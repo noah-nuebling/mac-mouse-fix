@@ -110,7 +110,7 @@ import CocoaLumberjackSwift
 
 import Foundation
 
-@objc class DragCurve: NSObject, RealFunction {
+@objc class DragCurve: NSObject, AnimationCurve {
 
     private var a: Double
     private var b: Double
@@ -140,8 +140,8 @@ import Foundation
         c = 0
         k = 0
         isNegative = false
-        timeInterval = Interval.unitInterval()
-        _distanceInterval = Interval.unitInterval()
+        timeInterval = .unitInterval
+        _distanceInterval = .unitInterval
         
         /// Init super so Swift doesn't complain when we use our own instance methods
         
@@ -278,9 +278,9 @@ import Foundation
     @objc func evaluate(at tUnit: Double) -> Double {
         /// Animator.swift expects its animation curves to pass through (0,0) and (1,1), so we'll scale our curve accordingly
         
-        let t = Math.scale(value: tUnit, from: .unitInterval(), to: timeInterval)
+        let t = Math.scale(value: tUnit, from: .unitInterval, to: timeInterval)
         let d = getD(t: t, k: self.k)
-        var dUnit = Math.scale(value: d, from: distanceInterval, to: .unitInterval())
+        var dUnit = Math.scale(value: d, from: distanceInterval, to: .unitInterval)
         
         assert(dUnit > 0)
         

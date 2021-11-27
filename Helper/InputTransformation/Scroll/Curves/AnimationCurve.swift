@@ -9,7 +9,7 @@
 
 import Cocoa
 
-@objc protocol RealFunction { /// TODO: Rename this to animationCurve
+@objc protocol AnimationCurve {
     
     @objc func evaluate(at x: Double) -> Double
     /// ^ Animator.swift expects this to pass through (0,0) and (1,1)

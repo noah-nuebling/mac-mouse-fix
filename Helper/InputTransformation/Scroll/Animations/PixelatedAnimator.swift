@@ -24,7 +24,7 @@ class PixelatedAnimator: Animator {
     /// Make stuff from superclass unavailable
     
     @available(*, unavailable)
-    override func start(duration: CFTimeInterval, valueInterval: Interval, animationCurve: RealFunction,
+    override func start(duration: CFTimeInterval, valueInterval: Interval, animationCurve: AnimationCurve,
                         callback: @escaping Animator.AnimatorCallback) {
         fatalError();
     }
@@ -45,7 +45,7 @@ class PixelatedAnimator: Animator {
     
     @objc func start(duration: CFTimeInterval,
                                 valueInterval: Interval,
-                                animationCurve: RealFunction,
+                                animationCurve: AnimationCurve,
                                 integerCallback: @escaping PixelatedAnimatorCallback) {
         
         super.startWithUntypedCallback(duration: duration, valueInterval: valueInterval, animationCurve: animationCurve, callback: integerCallback)

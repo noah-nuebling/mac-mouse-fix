@@ -281,7 +281,7 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
         Interval *animationValueInterval = [[Interval alloc] initWithStart:0 end:(pxToScrollForThisTick + pxLeftToScroll)];
         
         /// Curve
-        id<RealFunction> animationCurve = ScrollConfig.animationCurve;
+        id<AnimationCurve> animationCurve = ScrollConfig.animationCurve;
         
         /// Debug
 //        DDLogDebug(@"animationDuration: %@, animationValueInterval: %@", @(animationDuration), animationValueInterval);

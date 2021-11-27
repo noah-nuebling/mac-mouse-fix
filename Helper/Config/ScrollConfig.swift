@@ -128,7 +128,7 @@ import CocoaLumberjackSwift
         /// Between -1 and 1
         return 0.0
     }
-    @objc static var accelerationCurve: (() -> RealFunction) =
+    @objc static var accelerationCurve: (() -> AnimationCurve) =
         DerivedProperty.create_kvc(on:
                                     ScrollConfig.self,
                                    given: [
@@ -139,7 +139,7 @@ import CocoaLumberjackSwift
                                     #keyPath(consecutiveScrollTickInterval_AccelerationEnd),
                                     #keyPath(accelerationHump)
                                    ])
-    { () -> RealFunction in
+    { () -> AnimationCurve in
         
         /**
          Define a curve describing the relationship between the scrollTickSpeed (in scrollTicks per second) (on the x-axis) and the pxPerTick (on the y axis).
@@ -201,7 +201,7 @@ import CocoaLumberjackSwift
                                          P(x: x3, y: y3),
                                          P(x: xMax, y: yMax)])
     }
-    @objc static var animationCurve: RealFunction = { () -> RealFunction in
+    @objc static var animationCurve: AnimationCurve = { () -> AnimationCurve in
         /// Using a closure here instead of DerivedProperty.create_kvc(), because we know it will never change.
         
         typealias P = Bezier.Point

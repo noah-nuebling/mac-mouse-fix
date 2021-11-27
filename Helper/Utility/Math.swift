@@ -92,12 +92,9 @@ import Cocoa
     @objc var lower: Double { direction == kMFIntervalDirectionAscending ? start : end }
     @objc var upper: Double { direction == kMFIntervalDirectionAscending ? end : start }
     
-    @objc class func unitInterval() -> Interval {
+    @objc static var unitInterval = Interval.init(start: 0, end: 1)
         /// Scale to this interval to normalize a value
         /// I use this a lot in performance-critical code. It might be good to only create the unitInterval only once instead of this. But maybe swift already optimizes that automatically.
-        
-        return self.init(start: 0, end: 1)
-    }
     
     @objc required init(start: Double, end: Double) {
         
@@ -121,7 +118,7 @@ import Cocoa
     
 }
 
-@objc class Line: NSObject, RealFunction {
+@objc class Line: NSObject, AnimationCurve {
     
     let a: Double
     let b: Double

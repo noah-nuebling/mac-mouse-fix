@@ -18,8 +18,8 @@ import simd // Vector stuff
 import ReactiveCocoa
 import ReactiveSwift
 
-/// This class works similar to the AnimationCurve class I copied from WebKit
-/// The difference is that this doesn't have fixed start and end controlPoints at (0,0) and (1,1), and the number of  control points isn't locked at 4
+/// This class works similar to the AnimationCurve class (Since renamed to `CubicUnitBezier`) I copied from WebKit
+/// The difference is that this doesn't have fixed start and end controlPoints at (0,0) and (1,1), and the number of  control points isn't locked at 4. I don't need this extra functionality but it was way to fun to implement.
 ///
 /// It's also likely muchhh slower than the Apple code, because in the Apple code they somehow transform the bezier curve into a polynomial which allows them to samlpe the curve value and derivative in a single line of c code.
 /// We, on the other hand, use De-Casteljau's algorithm, which has nested for-loops and is probably in O(n*2) (Where n is the number of controlPoints describing the curve)
@@ -50,10 +50,9 @@ import ReactiveSwift
 /// Article on how to implement cubic bezier curves more efficiently for games
 ///     http://devmag.org.za/2011/04/05/bzier-curves-a-tutorial/
 /// Paper which containts info on how to differentiate the De Casteljau formula
-///     It should be faster than the derivative of the explicit form which we currently use
 ///     https://www.clear.rice.edu/comp360/lectures/old/BezText.pdf
 
-@objc class Bezier: NSObject, RealFunction {
+@objc class Bezier: NSObject, AnimationCurve {
 
     typealias Point = Vector;
     let xAxis = kMFAxisHorizontal
@@ -131,8 +130,8 @@ import ReactiveSwift
     // Objc compatible wrappers for the Swift init functions
     
     @objc convenience init(controlPointsAsArrays: [[Double]],
-                               xInterval: Interval = Interval.unitInterval(),
-                               yInterval: Interval = Interval.unitInterval()) {
+                               xInterval: Interval = .unitInterval,
+                               yInterval: Interval = .unitInterval) {
         /// `controlPointsAsArrays` is expected to have this structure: `[[x,y],[x,y],[x,y],...]`
         
         
@@ -421,7 +420,7 @@ import ReactiveSwift
         /// This function is mostly copied from AnimationCurve.m by Apple
         /// It's a numerical inverse finder. It basically finds the parameter t for a function value x through educated guesses
         
-        let initialGuess: Double = Math.scale(value: x, from: self.xValueRange, to: Interval.unitInterval())
+        let initialGuess: Double = Math.scale(value: x, from: self.xValueRange, to: .unitInterval)
         /// ^ Our initial guess for t.
         /// In Apples AnimationCurve.m this was set to x which is an informed guess. We extended the same logic to a general case. (In the Apple implementation, the xValueRange is implicitly 0...1)
         
@@ -459,11 +458,11 @@ import ReactiveSwift
         
         print("Couldn't solve for t using Newton's method. Using bisection instead") /// Debug
         
-        // Try bisection method for reliability
+        /// Try bisection method for reliability
         
         t = initialGuess
         
-        var searchRange = Interval.unitInterval()
+        var searchRange: Interval = .unitInterval
         
         if (t <= searchRange.lower) {
             return searchRange.lower
@@ -484,13 +483,13 @@ import ReactiveSwift
             } else {
                 searchRange = Interval(lower: searchRange.lower, upper: t)
             }
-            t = Math.scale(value: 0.5, from: Interval.unitInterval(), to: searchRange)
+            t = Math.scale(value: 0.5, from: .unitInterval, to: searchRange)
         }
         
         
-        // Failure
+        /// Failure
         
-//        print("Bisection failed, too. Failed to solve for x = \(x). Resulting t = \(t)")  // TODO: Can't import CocoaLumberjack right now. Use that instead when possible
+        print("Bisection failed, too. Failed to solve for x = \(x). Resulting t = \(t)")  // TODO: Can't import CocoaLumberjack right now. Use that instead when possible
         
         return t
         

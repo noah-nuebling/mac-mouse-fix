@@ -20,7 +20,7 @@ import CocoaLumberjackSwift
     let displayLink: DisplayLink
     @Atomic var callback: UntypedAnimatorCallback?
     /// ^ This is constantly accessed by subclassHook() and constantly written to by startWithUntypedCallback(). Becuase Swift is stinky and not thread safe, the app will sometimes crash, when this property is read from and written to at the same time. So we're using @Atomic propery wrapper
-    var animationCurve: RealFunction? /// This class assumes that `animationCurve` passes through `(0, 0)` and `(1, 1)`
+    var animationCurve: AnimationCurve? /// This class assumes that `animationCurve` passes through `(0, 0)` and `(1, 1)`
     let threadLock = DispatchSemaphore.init(value: 1)
     
     // Init
@@ -34,8 +34,8 @@ import CocoaLumberjackSwift
     
     // Vars - Start & stop
     
-    var animationTimeInterval: Interval = Interval.unitInterval() /// Just initing so Swift doesn't complain. This value is unused
-    var animationValueInterval: Interval = Interval.unitInterval()
+    var animationTimeInterval: Interval = .unitInterval /// Just initing so Swift doesn't complain. This value is unused
+    var animationValueInterval: Interval = .unitInterval
     
     @objc var isRunning: Bool {
         self.displayLink.isRunning()
@@ -69,7 +69,7 @@ import CocoaLumberjackSwift
     
     @objc func start(duration: CFTimeInterval,
                              valueInterval: Interval,
-                             animationCurve: RealFunction,
+                             animationCurve: AnimationCurve,
                              callback: @escaping AnimatorCallback) {
         
         self.startWithUntypedCallback(duration: duration, valueInterval: valueInterval, animationCurve: animationCurve, callback: callback);
@@ -77,7 +77,7 @@ import CocoaLumberjackSwift
     
     @objc internal func startWithUntypedCallback(duration: CFTimeInterval,
                      valueInterval: Interval,
-                     animationCurve: RealFunction,
+                     animationCurve: AnimationCurve,
                      callback: UntypedAnimatorCallback) {
         
         /// Should only be called by this and subclasses
@@ -223,7 +223,7 @@ import CocoaLumberjackSwift
         
         /// Get normalized time
         
-        let animationTimeUnit: Double = Math.scale(value: now, from: animationTimeInterval, to: Interval.unitInterval()) /// From 0 to 1
+        let animationTimeUnit: Double = Math.scale(value: now, from: animationTimeInterval, to: .unitInterval) /// From 0 to 1
         
         /// Get normalized animation value from animation curve
         
@@ -231,7 +231,7 @@ import CocoaLumberjackSwift
         
         /// Get actual animation value
         
-        let animationValue: Double = Math.scale(value: animationValueUnit, from: Interval.unitInterval(), to: animationValueInterval)
+        let animationValue: Double = Math.scale(value: animationValueUnit, from: .unitInterval, to: animationValueInterval)
         
         /// Get change since last frame aka `delta`
         
