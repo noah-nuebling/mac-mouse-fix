@@ -108,15 +108,15 @@ import CocoaLumberjackSwift
         return 10;
     }
     @objc static var pxPerTickEnd: Int {
-        return 150;
+        return 120;
     }
     @objc static var msPerStep: Int {
 //        smooth["msPerStep"] as! Int
         return 200
     }
     @objc static var accelerationHump: Double {
-        /// Between 0 and 1
-        return 0.2
+        /// Between -1 and 1
+        return 0.0
     }
     @objc static var accelerationCurve: (() -> RealFunction) =
         DerivedProperty.create_kvc(on:
@@ -157,7 +157,7 @@ import CocoaLumberjackSwift
         var consecutiveScrollTickIntervalMax = ScrollConfig.self.consecutiveScrollTickIntervalMax
         /// ^ This is currently 0.13
         let consecutiveScrollTickInterval_AccelerationEnd = ScrollConfig.self.consecutiveScrollTickInterval_AccelerationEnd
-        var accelerationDip = ScrollConfig.self.accelerationHump
+        var accelerationHump = ScrollConfig.self.accelerationHump
             
         /// Define Curve
         
@@ -167,12 +167,22 @@ import CocoaLumberjackSwift
         let xMax: Double = 1 / consecutiveScrollTickInterval_AccelerationEnd
         let yMax: Double = Double(pxPerTickEnd)
         
-        let x2: Double = 0
-        let y2: Double = accelerationDip
+        let x2: Double
+        let y2: Double
         
+        if (accelerationHump < 0) {
+            x2 = -accelerationHump
+            y2 = 0
+        } else {
+            x2 = 0
+            y2 = accelerationHump
+        }
+        
+        
+        // Flatten out the end of the curve to prevent ridiculous pxPerTick outputs when input (tickSpeed) is very high. tickSpeed can be extremely high despite smoothing, because our time measurements of when ticks occur are very imprecise
         let x3: Double = (xMax-xMin)*0.9
 //        let y3: Double = (yMax-yMin)*0.9
-        let y3: Double = yMax // Flatten out the end of the curve to prevent ridiculous pxPerTick outputs when input (tickSpeed) is very high. tickSpeed can be extremely high despite smoothing, because our time measurements of when ticks occur are very imprecise
+        let y3: Double = yMax
         
         typealias P = Bezier.Point
         return AccelerationBezier.init(controlPoints:
