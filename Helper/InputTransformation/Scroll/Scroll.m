@@ -278,11 +278,11 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
         } else {
             pxLeftToScroll = _animator.animationValueLeft;
             
-            HybridCurve *curve = (HybridCurve *)_animator.animationCurve;
-            pxLeftToScroll -= curve.dragValueRange;
+            pxLeftToScroll -= ((HybridCurve *)_animator.animationCurve).dragValueRange;
             if (pxLeftToScroll < 0) pxLeftToScroll = 0;
-            /// ^ HybridCurve and a bunch of other stuff was engineered to give us the overall distance that the Bezier and the Drag curve will scroll, so that we can factor that back in here
-            ///     But this leads to a very strong, hard to control acceleration that depends on the `msPerStep`, so we factor it back out here.
+            /// ^ HybridCurve and a bunch of other stuff was engineered to give us the overall distance that the Bezier *and* the DragCurve will scroll, so that the distance that would be scrolled via the Drag algorithm isn't lost here (like in older MMF versions)
+            ///     But this leads to a very strong, hard to control acceleration that also depends on the anmation time `msPerStep`. To undo this, we subtract the distance that is to be scrolled via the DragCurve back out here.
+            ///     This is inefficient because we calculate the drag curve on each mouse wheel tick for nothing, even if we don't need it. But I don't think it makes a practical difference.
             
         }
         
@@ -299,7 +299,7 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
         HybridCurve *animationCurve = [[HybridCurve alloc] initWithBaseCurve:baseCurve baseTimeRange:baseTimeRange baseValueRange:baseValueRange dragCoefficient:dragCoefficient dragExponent:dragExponent stopSpeed:stopSpeed];
         
         /// Get intervals for animator from hybrid curve
-        ///     
+
         double animationDuration = animationCurve.timeRange;
         Interval *animationValueInterval = animationCurve.valueInterval;
         
