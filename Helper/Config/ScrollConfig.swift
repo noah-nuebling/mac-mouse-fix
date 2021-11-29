@@ -118,17 +118,18 @@ import CocoaLumberjackSwift
         return 10;
     }
     @objc static var pxPerTickEnd: Int {
-//        return 120 /// Works well without implicit hybrid curve acceleration
-        return 50;
+        return 120 /// Works well without implicit hybrid curve acceleration
+//        return 20;
     }
     @objc static var msPerStep: Int {
 //        smooth["msPerStep"] as! Int
 //        return 200 /// Works well without hybrid curve elongation
-        return 90
+//        return 90
+        return 150
     }
     @objc static var accelerationHump: Double {
         /// Between -1 and 1
-        return 0.0
+        return 0.1
     }
     @objc static var accelerationCurve: (() -> AnimationCurve) =
         DerivedProperty.create_kvc(on:
@@ -210,7 +211,7 @@ import CocoaLumberjackSwift
         
 //        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:0.3,y:1), P(x:1,y:1)]
 //        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:1,y:1), P(x:1,y:1)]
-        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:0.5,y:1), P(x:1,y:1)]
+        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:0.5,y:0.9), P(x:1,y:1)]
         
         return Bezier(controlPoints: controlPoints, defaultEpsilon: 0.001) /// The default defaultEpsilon 0.08 makes the animations choppy
     }()
@@ -219,18 +220,23 @@ import CocoaLumberjackSwift
         /// Using a closure here instead of DerivedProperty.create_kvc(), because we know it will never change.
         typealias P = Bezier.Point
         
-        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:1,y:1), P(x:1,y:1)]
+        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:1,y:1), P(x:1,y:1)] /// Straight line
+//        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:0.5,y:1), P(x:1,y:1)]
         
         return Bezier(controlPoints: controlPoints, defaultEpsilon: 0.001) /// The default defaultEpsilon 0.08 makes the animations choppy
     }()
     @objc static var dragCoefficient: Double {
 //        smooth["friction"] as! Double;
-//        2.3
-        20 // Works well with dragExponent 1
+//        2.3 /// Value from MMF 1. Not sure why so much lower than the new values
+        40 // Works well with dragExponent 1
+//        60 // Works well with dragExponent 0.7
+//        1000 // Stop immediately
+        
     }
     @objc static var dragExponent: Double {
 //        smooth["frictionDepth"] as! Double;
-        1.01
+        1.0 /// Good setting for snappy
+//        0.7 /// Value from GestureScrollSimulator /// Good setting for smooth
     }
     @objc static var stopSpeed: Double {
         /// Used to construct Hybrid curve in Scroll.m

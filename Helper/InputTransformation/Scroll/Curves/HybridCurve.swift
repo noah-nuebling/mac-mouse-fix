@@ -33,14 +33,24 @@ import CocoaLumberjackSwift
     let dragExponent: Double
     let stopSpeed: Double
     
-    var dragCurve: DragCurve
+    var dragCurve: DragCurve?
     
     /// Vars - Interface
 
-    @objc let timeInterval: Interval
-    @objc let valueInterval: Interval
+    @objc var dragTimeRange: Double {
+        guard let c = dragCurve else { return 0 }
+        return c.timeInterval.length
+    }
+    @objc var dragValueRange: Double {
+        guard let c = dragCurve else { return 0 }
+        return c.distanceInterval.length
+    }
+    
+    @objc var timeInterval: Interval { Interval(start: 0, end: baseTimeRange + dragTimeRange) }
+    @objc var valueInterval: Interval { Interval(start: 0, end: baseValueRange + dragValueRange) }
     @objc var timeRange: Double { timeInterval.length }
     @objc var valueRange: Double { valueInterval.length }
+    
     
     /// Init
     
@@ -64,12 +74,17 @@ import CocoaLumberjackSwift
         
         /// Get dragCurve
         
-        self.dragCurve = DragCurve(coefficient: dragCoefficient, exponent: dragExponent, initialSpeed: baseExitSpeed, stopSpeed: stopSpeed)
+        if baseExitSpeed > stopSpeed {
+            self.dragCurve = DragCurve(coefficient: dragCoefficient, exponent: dragExponent, initialSpeed: baseExitSpeed, stopSpeed: stopSpeed)
+        } else {
+            DDLogDebug("baseExitSpeed > stopSpeed in HybridCurve init. Not creating dragCurve.")
+            self.dragCurve = nil
+        }
         
         /// Determine combined time and value intervals
         
-        self.timeInterval = Interval(start: 0, end: baseTimeRange + dragCurve.timeInterval.length)
-        self.valueInterval = Interval(start: 0, end: baseValueRange + dragCurve.distanceInterval.length)
+//        self.timeInterval = Interval(start: 0, end: baseTimeRange + dragCurve.timeInterval.length)
+//        self.valueInterval = Interval(start: 0, end: baseValueRange + dragCurve.distanceInterval.length)
         
     }
     
@@ -80,15 +95,20 @@ import CocoaLumberjackSwift
         
         let result: Double
         
-        if x < baseTimeRange / timeRange {
+        if x <= baseTimeRange / timeRange {
             
             let baseCurveResult = baseCurve.evaluate(at: Math.scale(value: x, from: baseTimeIntervalUnit, to: .unitInterval))
             result = Math.scale(value: baseCurveResult, from: .unitInterval, to: baseValueIntervalUnit)
 //            DDLogDebug("HybridCurve base eval: (\(x),   \(result))") /// Debug
         } else {
-            let dragCurveResult = dragCurve.evaluate(at: Math.scale(value: x, from: dragTimeIntervalUnit, to: .unitInterval))
-            result = Math.scale(value: dragCurveResult, from: .unitInterval, to: dragValueIntervalUnit)
-//            DDLogDebug("HybridCurve drag eval: (\(x),   \(result))") /// Debug
+            if let c = dragCurve  {
+                let dragCurveResult = c.evaluate(at: Math.scale(value: x, from: dragTimeIntervalUnit, to: .unitInterval))
+                result = Math.scale(value: dragCurveResult, from: .unitInterval, to: dragValueIntervalUnit)
+    //            DDLogDebug("HybridCurve drag eval: (\(x),   \(result))") /// Debug
+            } else {
+                DDLogWarn("Tried to evalueate HybridCurve at DragCurve but DragCurve doesn't exist. x: \(x), baseTimeRange/timeRange: \(baseTimeRange/timeRange)")
+                result = x
+            }
         }
         
         return result

@@ -266,18 +266,27 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
     
         /// Get parameters for animator
         
-        /// Base duration
+        /// Base scroll duration
         CFTimeInterval baseTimeRange;
         baseTimeRange = ((CFTimeInterval)ScrollConfig.msPerStep) / 1000.0; /// Need to cast to CFTimeInterval (double), to make this a float division instead of int division yiedling 0
 //        animationDuration = scrollAnalysisResult.smoothedTimeBetweenTicks;
         
-        /// Base distance to scroll
+        /// Px that the animator still wants to scroll
         double pxLeftToScroll;
         if (scrollAnalysisResult.scrollDirectionDidChange || !_animator.isRunning) {
             pxLeftToScroll = 0;
         } else {
             pxLeftToScroll = _animator.animationValueLeft;
+            
+            HybridCurve *curve = (HybridCurve *)_animator.animationCurve;
+            pxLeftToScroll -= curve.dragValueRange;
+            if (pxLeftToScroll < 0) pxLeftToScroll = 0;
+            /// ^ HybridCurve and a bunch of other stuff was engineered to give us the overall distance that the Bezier and the Drag curve will scroll, so that we can factor that back in here
+            ///     But this leads to a very strong, hard to control acceleration that depends on the `msPerStep`, so we factor it back out here.
+            
         }
+        
+        /// Base distance to scroll
         double baseValueRange = pxLeftToScroll + pxToScrollForThisTick;
         
         /// Curve
@@ -290,7 +299,7 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
         HybridCurve *animationCurve = [[HybridCurve alloc] initWithBaseCurve:baseCurve baseTimeRange:baseTimeRange baseValueRange:baseValueRange dragCoefficient:dragCoefficient dragExponent:dragExponent stopSpeed:stopSpeed];
         
         /// Get intervals for animator from hybrid curve
-        
+        ///     
         double animationDuration = animationCurve.timeRange;
         Interval *animationValueInterval = animationCurve.valueInterval;
         

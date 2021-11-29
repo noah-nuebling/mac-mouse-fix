@@ -37,7 +37,7 @@ import CocoaLumberjackSwift
     let displayLink: DisplayLink
     @Atomic var callback: UntypedAnimatorCallback?
     /// ^ This is constantly accessed by subclassHook() and constantly written to by startWithUntypedCallback(). Becuase Swift is stinky and not thread safe, the app will sometimes crash, when this property is read from and written to at the same time. So we're using @Atomic propery wrapper
-    var animationCurve: AnimationCurve? /// This class assumes that `animationCurve` passes through `(0, 0)` and `(1, 1)
+    @objc var animationCurve: AnimationCurve? /// This class assumes that `animationCurve` passes through `(0, 0)` and `(1, 1)
     let threadLock = DispatchSemaphore.init(value: 1)
     
     // Init
