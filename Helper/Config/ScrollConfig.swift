@@ -104,11 +104,16 @@ import CocoaLumberjackSwift
 //        other["fastScrollFactor"] as! Double
         2.0 // Used to be 1.1 before scroll rework. Why so much higher now?
     }
-    @objc static var ticksPerSecondSmoothingInputValueWeight: Double {
+    @objc static var ticksPerSecond_DoubleExponentialSmoothing_InputValueWeight: Double {
         0.5
     }
-    @objc static var ticksPerSecondSmoothingTrendWeight: Double {
+    @objc static var ticksPerSecond_DoubleExponentialSmoothing_TrendWeight: Double {
         0.2
+    }
+    @objc static var ticksPerSecond_ExponentialSmoothing_InputValueWeight: Double {
+//        0.6 /// On larger swipes this counteracts acceleration and it's unsatisfying. Not sure if placebo
+//        0.8 /// Nice, light smoothing. Makes  scrolling slightly less direct. Not sure if placebo.
+        1.0 /// Turn off smoothing. I like this the best
     }
 
     // Smooth scrolling params

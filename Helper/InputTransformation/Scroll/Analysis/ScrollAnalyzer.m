@@ -31,12 +31,14 @@
 //        _tickTimeSmoother = [[RollingAverage alloc] initWithCapacity:3
 //                                                       initialValues:@[@(ScrollConfig.consecutiveScrollTickIntervalMax)]];
         
-        _tickTimeSmoother = [[RollingAverage alloc] initWithCapacity:1]; /// Capacity 1 turns off smoothing
+//        _tickTimeSmoother = [[RollingAverage alloc] initWithCapacity:1]; /// Capacity 1 turns off smoothing
         /// ^ No smoothing feels the best.
         ///     - Without smoothing, there will somemtimes randomly be extremely small `timeSinceLastTick` values. I was worried that these would overdrive the acceleration curve, producing extremely high `pxToScrollForThisTick` values at random. But since we've capped the acceleration curve to a maximum `pxToScrollForThisTick` this isn't a noticable issue anymore.
         ///     - No smoothing is way more responsive than RollingAverage
         ///     - No smoothing is more responsive than DoubleExponential. And when there are extremely small `timeSinceLastTick` values (avoiding these is the whole reason we use smoothing), the DoubleExponentialSmoother will extrapolate the trend and make it even *worse* - sometimes it even produces negative values!
         ///     - We could try if a light exponential smoothing would feel better, but this is good enought for now
+        
+        _tickTimeSmoother = [[ExponentialSmoother alloc] initWithA:ScrollConfig.ticksPerSecond_ExponentialSmoothing_InputValueWeight];
         
     }
 }
@@ -159,6 +161,10 @@ static int _consecutiveScrollSwipeCounter_ForFreeScrollWheel;
     ///     This needs to be executed after `updateConsecutiveScrollSwipeCounterWithSwipeOccuringNow()`, because that function uses `_previousScrollTickTimeStamp`
     
     _previousScrollTickTimeStamp = thisScrollTickTimeStamp;
+    
+    /// Debug
+    
+    DDLogDebug(@"tickTime: %f, Smoothed tickTime: %f", secondsSinceLastTick, smoothedTimeBetweenTicks);
     
     /// Output
     
