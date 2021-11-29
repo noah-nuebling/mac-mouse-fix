@@ -266,26 +266,33 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
     
         /// Get parameters for animator
         
-        /// Duration
-        CFTimeInterval animationDuration;
-        animationDuration = ((CFTimeInterval)ScrollConfig.msPerStep) / 1000.0; /// Need to cast to CFTimeInterval (double), to make this a float division instead of int division yiedling 0
+        /// Base duration
+        CFTimeInterval baseTimeRange;
+        baseTimeRange = ((CFTimeInterval)ScrollConfig.msPerStep) / 1000.0; /// Need to cast to CFTimeInterval (double), to make this a float division instead of int division yiedling 0
 //        animationDuration = scrollAnalysisResult.smoothedTimeBetweenTicks;
         
-        /// Animation interval
+        /// Base distance to scroll
         double pxLeftToScroll;
         if (scrollAnalysisResult.scrollDirectionDidChange || !_animator.isRunning) {
             pxLeftToScroll = 0;
         } else {
             pxLeftToScroll = _animator.animationValueLeft;
         }
-        Interval *animationValueInterval = [[Interval alloc] initWithStart:0 end:(pxToScrollForThisTick + pxLeftToScroll)];
+        double baseValueRange = pxLeftToScroll + pxToScrollForThisTick;
         
         /// Curve
-        id<AnimationCurve> animationCurve = ScrollConfig.animationCurve;
         
-        /// Debug
-//        DDLogDebug(@"animationDuration: %@, animationValueInterval: %@", @(animationDuration), animationValueInterval);
+        Bezier *baseCurve = ScrollConfig.baseCurve;
+        double dragCoefficient = ScrollConfig.dragCoefficient;
+        double dragExponent = ScrollConfig.dragExponent;
+        double stopSpeed = ScrollConfig.stopSpeed;
         
+        HybridCurve *animationCurve = [[HybridCurve alloc] initWithBaseCurve:baseCurve baseTimeRange:baseTimeRange baseValueRange:baseValueRange dragCoefficient:dragCoefficient dragExponent:dragExponent stopSpeed:stopSpeed];
+        
+        /// Get intervals for animator from hybrid curve
+        
+        double animationDuration = animationCurve.timeRange;
+        Interval *animationValueInterval = animationCurve.valueInterval;
         
         /// Start animation
         

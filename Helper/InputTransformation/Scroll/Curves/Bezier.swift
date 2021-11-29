@@ -511,6 +511,30 @@ import ReactiveSwift
     }
         
     
+    // MARK: Other Interface
+    
+    var exitSlope: Double? {
+        
+        if (controlPoints.count <= 1) {
+            return nil
+        }
+        
+        // Get last control point
+        let cLast = controlPoints[self.n]
+        // Find first controlPoint before cLast that is different from cLast
+        var cPrevIndex: Int = self.n-1;
+        var cPrev: Point = controlPoints[cPrevIndex];
+        while (cPrev.x == cLast.x && cPrev.y == cLast.y) { /// Loop while cPrev == cLast
+            cPrevIndex -= 1
+            cPrev = controlPoints[cPrevIndex]
+        }
+        
+        // Find slope
+        let slope = (cLast.y - cPrev.y) / (cLast.x - cPrev.x)
+        
+        return slope
+    }
+    
     // MARK: Debug
     
     @objc func trace(nOfSamples: Int) -> String {

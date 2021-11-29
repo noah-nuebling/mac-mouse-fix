@@ -33,6 +33,8 @@
 		4F3A40B1266BBC5000436821 /* AnimationCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A40B0266BBC5000436821 /* AnimationCurve.swift */; };
 		4F3A40CB266C44D100436821 /* DisplayLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A40CA266C44D100436821 /* DisplayLink.m */; };
 		4F3A40DA266C5BDF00436821 /* NSScreen+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A40D9266C5BDF00436821 /* NSScreen+Additions.m */; };
+		4F3C5BFB2754AB45008D5B90 /* HybridAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3C5BFA2754AB45008D5B90 /* HybridAnimator.swift */; };
+		4F3C5BFD2754CB1C008D5B90 /* HybridCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3C5BFC2754CB1C008D5B90 /* HybridCurve.swift */; };
 		4F3E067E26A2F97D000C9E06 /* URLMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3E067D26A2F97D000C9E06 /* URLMenuItem.m */; };
 		4F44FF042606D73D00926A5E /* SharedMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* SharedMessagePort.m */; };
 		4F44FF052606D73D00926A5E /* SharedMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* SharedMessagePort.m */; };
@@ -291,6 +293,8 @@
 		4F3A40CA266C44D100436821 /* DisplayLink.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DisplayLink.m; sourceTree = "<group>"; };
 		4F3A40D8266C5BDF00436821 /* NSScreen+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSScreen+Additions.h"; sourceTree = "<group>"; };
 		4F3A40D9266C5BDF00436821 /* NSScreen+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSScreen+Additions.m"; sourceTree = "<group>"; };
+		4F3C5BFA2754AB45008D5B90 /* HybridAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HybridAnimator.swift; sourceTree = "<group>"; };
+		4F3C5BFC2754CB1C008D5B90 /* HybridCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HybridCurve.swift; sourceTree = "<group>"; };
 		4F3E067C26A2F97D000C9E06 /* URLMenuItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = URLMenuItem.h; sourceTree = "<group>"; };
 		4F3E067D26A2F97D000C9E06 /* URLMenuItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = URLMenuItem.m; sourceTree = "<group>"; };
 		4F44FF022606D73D00926A5E /* SharedMessagePort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharedMessagePort.h; sourceTree = "<group>"; };
@@ -647,6 +651,7 @@
 			children = (
 				4F9E789126851440002C2309 /* PixelatedAnimator.swift */,
 				4FD85F7A266CC9C5004F76C8 /* Animator.swift */,
+				4F3C5BFA2754AB45008D5B90 /* HybridAnimator.swift */,
 				4F3A40C9266C44D100436821 /* DisplayLink.h */,
 				4F3A40CA266C44D100436821 /* DisplayLink.m */,
 				4FD86058266DBF96004F76C8 /* Animator.h */,
@@ -1369,6 +1374,7 @@
 				4FF6662625F2C93A00689B77 /* CubicUnitBezier.h */,
 				4FF6662425F2C93A00689B77 /* CubicUnitBezier.m */,
 				4F3A40B0266BBC5000436821 /* AnimationCurve.swift */,
+				4F3C5BFC2754CB1C008D5B90 /* HybridCurve.swift */,
 			);
 			path = Curves;
 			sourceTree = "<group>";
@@ -1940,6 +1946,7 @@
 				4F9E78E3268663B1002C2309 /* ExponentialSmoother.swift in Sources */,
 				4F3A40AB266BBB6200436821 /* AccelerationBezier.swift in Sources */,
 				4FD860AA266EC24E004F76C8 /* DerivedProperty.swift in Sources */,
+				4F3C5BFB2754AB45008D5B90 /* HybridAnimator.swift in Sources */,
 				4FF6669725F2C93A00689B77 /* TransformationManager.m in Sources */,
 				4F1B83062606E68300AEAF37 /* ButtonLandscapeAssessor.m in Sources */,
 				4FF6668F25F2C93A00689B77 /* SmoothScroll_old_.m in Sources */,
@@ -1972,6 +1979,7 @@
 				4FF666A225F2C93A00689B77 /* TouchEvents.c in Sources */,
 				4F1AFE972670EBA900ECA424 /* DragCurve.swift in Sources */,
 				4FF6669125F2C93A00689B77 /* ScrollUtility.m in Sources */,
+				4F3C5BFD2754CB1C008D5B90 /* HybridCurve.swift in Sources */,
 				4FF666A825F2C93A00689B77 /* DeviceManager.m in Sources */,
 				4FF6669B25F2C93A00689B77 /* AppDelegate.m in Sources */,
 				4F9E78D02685E30C002C2309 /* GestureScrollSimulator.m in Sources */,

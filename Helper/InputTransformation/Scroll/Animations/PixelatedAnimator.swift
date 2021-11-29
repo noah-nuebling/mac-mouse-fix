@@ -19,20 +19,18 @@
 import Cocoa
 import CocoaLumberjackSwift
 
-class PixelatedAnimator: Animator {
+class PixelatedAnimator: BaseAnimator {
     
     /// Make stuff from superclass unavailable
     
     @available(*, unavailable)
     override func start(duration: CFTimeInterval, valueInterval: Interval, animationCurve: AnimationCurve,
-                        callback: @escaping Animator.AnimatorCallback) {
+                        callback: @escaping BaseAnimator.AnimatorCallback) {
         fatalError();
     }
     
     /// Declare types and vars that superclass doesn't have
     
-    typealias PixelatedAnimatorCallback =
-        (_ integerAnimationValueDelta: Int, _ animationTimeDelta: Double, _ phase: MFAnimationPhase) -> ()
     var integerCallback: PixelatedAnimatorCallback?;
     
 //    var subPixelator: SubPixelator = SubPixelator.ceil();
@@ -44,10 +42,10 @@ class PixelatedAnimator: Animator {
     /// Declare new start function
     
     @objc func start(duration: CFTimeInterval,
-                                valueInterval: Interval,
-                                animationCurve: AnimationCurve,
-                                integerCallback: @escaping PixelatedAnimatorCallback) {
-        
+                     valueInterval: Interval,
+                     animationCurve: AnimationCurve,
+                     integerCallback: @escaping PixelatedAnimatorCallback) {
+
         super.startWithUntypedCallback(duration: duration, valueInterval: valueInterval, animationCurve: animationCurve, callback: integerCallback)
         
         if self.animationPhase == kMFAnimationPhaseStart {
@@ -58,7 +56,7 @@ class PixelatedAnimator: Animator {
     
     /// Debug vars
     
-    var summedIntegerAnimationValueDelta: Int = 0;
+    internal var summedIntegerAnimationValueDelta: Int = 0;
     
     /// Hook into superclasses' displayLinkCallback()
     
@@ -116,9 +114,7 @@ class PixelatedAnimator: Animator {
 //            DDLogDebug("""
 //PxAnim - intValueDelta: \(integerAnimationValueDelta), intValueLeft: \(intAnimationValueLeft), animationPhase: \(self.animationPhase.rawValue),     value: \(lastAnimationValue + animationValueDelta) intValue: \(summedIntegerAnimationValueDelta), intervalLength: \(self.animationValueInterval.length),     valueDelta: \(animationValueDelta), accEoundingErr: \(subPixelator.accumulatedRoundingError), currentnimationValueLeft: \(currentAnimationValueLeft),
 //""")
-            DDLogDebug("""
-PxAnim - intValueDelta: \(integerAnimationValueDelta)
-""")
+            DDLogDebug("PxAnim - intValueDelta: \(integerAnimationValueDelta)")
             
             if summedIntegerAnimationValueDelta >= Int(self.animationValueInterval.length) {
 //                assert(animationPhase == kMFAnimationPhaseEnd)

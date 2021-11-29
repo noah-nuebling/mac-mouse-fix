@@ -65,20 +65,11 @@ class AccelerationBezier: Bezier {
         
         // postLine
         
-        // Get control points
-        let cLast = controlPoints[self.n]
-        // Find first controlPoint before cLast that is different from cLast
-        var cPrevIndex: Int = self.n-1;
-        var cPrev: Point = controlPoints[cPrevIndex];
-        while (cPrev.x == cLast.x && cPrev.y == cLast.y) { /// Loop while cPrev == cLast
-            cPrevIndex -= 1
-            cPrev = controlPoints[cPrevIndex]
-        }
-        
         // Find slope
-        let aPost = (cLast.y - cPrev.y) / (cLast.x - cPrev.x)
+        let aPost = self.exitSlope!
         
         // Find b
+        let cLast = controlPoints[self.n]
         let bPost = cLast.y - aPost * cLast.x
         
         // Found postLine!

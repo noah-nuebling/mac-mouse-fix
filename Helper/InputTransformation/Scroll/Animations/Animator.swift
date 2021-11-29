@@ -10,17 +10,34 @@
 import Foundation
 import CocoaLumberjackSwift
 
-@objc class Animator : NSObject{
+@objc protocol Animator {
     
     typealias UntypedAnimatorCallback = Any
     typealias AnimatorCallback = (_ animationValueDelta: Double, _ animationTimeDelta: Double, _ phase: MFAnimationPhase) -> ()
+    typealias PixelatedAnimatorCallback =
+    (_ integerAnimationValueDelta: Int, _ animationTimeDelta: Double, _ phase: MFAnimationPhase) -> ()
+    typealias StopCallback = (_ lastPhase: MFAnimationPhase) -> ()
     
+    @objc var animationTimeLeft: Double { get }
+    @objc var animationValueLeft: Double { get }
+    
+    @objc func start(duration: CFTimeInterval,
+                     valueInterval: Interval,
+                     animationCurve: AnimationCurve,
+                     callback: @escaping AnimatorCallback)
+    
+    
+}
+
+@objc class BaseAnimator: NSObject, Animator {
+    
+
     // Vars - Init
     
     let displayLink: DisplayLink
     @Atomic var callback: UntypedAnimatorCallback?
     /// ^ This is constantly accessed by subclassHook() and constantly written to by startWithUntypedCallback(). Becuase Swift is stinky and not thread safe, the app will sometimes crash, when this property is read from and written to at the same time. So we're using @Atomic propery wrapper
-    var animationCurve: AnimationCurve? /// This class assumes that `animationCurve` passes through `(0, 0)` and `(1, 1)`
+    var animationCurve: AnimationCurve? /// This class assumes that `animationCurve` passes through `(0, 0)` and `(1, 1)
     let threadLock = DispatchSemaphore.init(value: 1)
     
     // Init
@@ -68,17 +85,17 @@ import CocoaLumberjackSwift
     // Start
     
     @objc func start(duration: CFTimeInterval,
-                             valueInterval: Interval,
-                             animationCurve: AnimationCurve,
-                             callback: @escaping AnimatorCallback) {
+                     valueInterval: Interval,
+                     animationCurve: AnimationCurve,
+                     callback: @escaping AnimatorCallback) {
         
         self.startWithUntypedCallback(duration: duration, valueInterval: valueInterval, animationCurve: animationCurve, callback: callback);
     }
     
     @objc internal func startWithUntypedCallback(duration: CFTimeInterval,
-                     valueInterval: Interval,
-                     animationCurve: AnimationCurve,
-                     callback: UntypedAnimatorCallback) {
+                                                 valueInterval: Interval,
+                                                 animationCurve: AnimationCurve,
+                                                 callback: UntypedAnimatorCallback) {
         
         /// Should only be called by this and subclasses
         /// The use of 'Interval' in CFTimeInterval is kind of confusing, since its also used to spedify points in time (It's just a `Double`), and also it has nothing to do with our `Interval` class, which is much closer to an Interval in the Mathematical sense.
@@ -250,6 +267,7 @@ import CocoaLumberjackSwift
         self.lastAnimationPhase = self.animationPhase
         
         /// Stop animation if phase is   `end`
+        /// TODO: Why don't we use a defer statement to execute this like in the start functions?
         
         switch self.animationPhase {
         case kMFAnimationPhaseEnd, kMFAnimationPhaseStartAndEnd:

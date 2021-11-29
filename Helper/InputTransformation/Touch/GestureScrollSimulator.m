@@ -260,14 +260,13 @@ static BOOL _momentumScrollIsActive;
 
 + (void)stopMomentumScroll {
     
+//    DDLogDebug(@"1 Request to stop momentum scroll. Caller: %@", [SharedUtility callerInfo]);
+    
     [self stopMomentumScrollWithEvent:NULL];
 }
 
 + (void)stopMomentumScrollWithEvent:(CGEventRef _Nullable)event {
     /// We only use `event` to get the location for sending scroll events
-    
-    /// Debug
-    DDLogDebug(@"Request to stop momentum scroll.");
     
     assert(_momentumScrollIsActive || !_momentumAnimator.isRunning);
     /// ^ This asserts the boolean expression _momentumAnimator.isRunning -> _momentumScrollIsActive

@@ -118,11 +118,13 @@ import CocoaLumberjackSwift
         return 10;
     }
     @objc static var pxPerTickEnd: Int {
-        return 120;
+//        return 120 /// Works well without implicit hybrid curve acceleration
+        return 50;
     }
     @objc static var msPerStep: Int {
 //        smooth["msPerStep"] as! Int
-        return 200
+//        return 200 /// Works well without hybrid curve elongation
+        return 90
     }
     @objc static var accelerationHump: Double {
         /// Between -1 and 1
@@ -212,11 +214,28 @@ import CocoaLumberjackSwift
         
         return Bezier(controlPoints: controlPoints, defaultEpsilon: 0.001) /// The default defaultEpsilon 0.08 makes the animations choppy
     }()
+    @objc static var baseCurve: Bezier = { () -> Bezier in
+        /// Base curve used to construct a HybridCurve in Scroll.m. This curve is applied before switching to a DragCurve to simulate physically accurate deceleration
+        /// Using a closure here instead of DerivedProperty.create_kvc(), because we know it will never change.
+        typealias P = Bezier.Point
+        
+        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:1,y:1), P(x:1,y:1)]
+        
+        return Bezier(controlPoints: controlPoints, defaultEpsilon: 0.001) /// The default defaultEpsilon 0.08 makes the animations choppy
+    }()
     @objc static var dragCoefficient: Double {
-        smooth["friction"] as! Double;
+//        smooth["friction"] as! Double;
+//        2.3
+        20 // Works well with dragExponent 1
     }
     @objc static var dragExponent: Double {
-        smooth["frictionDepth"] as! Double;
+//        smooth["frictionDepth"] as! Double;
+        1.01
+    }
+    @objc static var stopSpeed: Double {
+        /// Used to construct Hybrid curve in Scroll.m
+        /// This is the speed (In px/s ?) at which the DragCurve part of the Hybrid curve stops scrolling
+        3.0
     }
     @objc static var accelerationForScrollBuffer: Double { // TODO: Unused, remove
         smooth["acceleration"] as! Double;

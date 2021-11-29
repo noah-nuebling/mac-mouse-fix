@@ -253,16 +253,24 @@ import Foundation
             /// Solution for `integrate pow(e, -a * (t - c))` from WA
         }
         
-        return pow((a*b - a) * (t - c), 1/(1 - b) + 1) / (a*b - 2*a) + k
-        /// ^ This is defined for all b except b == 1
+        if (b == 2) {
+            
+//            let result = log(a * (c - t)) / a + k
+            /// ^ This is only defined for b == 2
+            ///
+            ///    I'm dealing with in issue where this is always NaN for some reason. What's going on?
+            ///    The problem is that log of a negative is NaN, and c is usually negative.
+            ///     After integrating v(t) again with the WA input `integrate v(t) = ((b - 1) (a (t - c)))^(1/(1 - b)), where b=2`, I now get this formula:
+            ///     log(t-c)/a + k -> that should work better!
+            
+            return log(t-c)/a + k
+        }
         
-//        if (b == 2) {
-//            return log(a * (c - t)) / a + k
-//            /// ^ This is only defined for b == 2
-//        }
-//
-//        return pow(a * (b - 1) * (t - c), 1/(1 - b) + 1) / (a * (b - 2)) + k
-//            /// ^ Not defined for b == 1 or b == 2
+        return pow(a * (b - 1) * (t - c), 1/(1 - b) + 1) / (a * (b - 2)) + k
+            /// ^ Not defined for b == 1 or b == 2
+            
+//        return pow((a*b - a) * (t - c), 1/(1 - b) + 1) / (a*b - 2*a) + k
+//        /// ^ Not defined for b == 1 or b == 2. Not sure whats the difference to the formula above
     }
     
     private func getK(t: Double, d: Double) -> Double {
