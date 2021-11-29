@@ -98,11 +98,11 @@ import CocoaLumberjackSwift
     }
     @objc static var fastScrollExponentialBase: Double { // How quickly fast scrolling gains speed.
 //        other["fastScrollExponentialBase"] as! Double;
-        1.5 // 1.1
+        1.35 // Used to be 1.1 before scroll rework. Why so much higher now?
     }
     @objc static var fastScrollFactor: Double {
 //        other["fastScrollFactor"] as! Double
-        1.5
+        2.0 // Used to be 1.1 before scroll rework. Why so much higher now?
     }
     @objc static var ticksPerSecondSmoothingInputValueWeight: Double {
         0.5
@@ -115,21 +115,30 @@ import CocoaLumberjackSwift
 
     @objc static var pxPerTickBase: Int {
 //        return smooth["pxPerStep"] as! Int
-        return 10;
+        
+//        return 60 // Max good-feeling value
+//        return 50
+//        return 45
+        return 30 // I like this one
+//        return 20
+//        return 10 // Min good feeling value
     }
     @objc static var pxPerTickEnd: Int {
-        return 120 /// Works well without implicit hybrid curve acceleration
+//        return 120 /// Works well without implicit hybrid curve acceleration
+        return 100 /// Works well with slight hybrid curve acceleration
 //        return 20;
     }
     @objc static var msPerStep: Int {
 //        smooth["msPerStep"] as! Int
 //        return 200 /// Works well without hybrid curve elongation
 //        return 90
-        return 150
+//        return 150
+        return 190
     }
     @objc static var accelerationHump: Double {
         /// Between -1 and 1
-        return 0.1
+        return -0.2 /// Negative values make the curve continuous, and more predictable (might be placebo)
+//        return 0.0
     }
     @objc static var accelerationCurve: (() -> AnimationCurve) =
         DerivedProperty.create_kvc(on:
@@ -220,8 +229,10 @@ import CocoaLumberjackSwift
         /// Using a closure here instead of DerivedProperty.create_kvc(), because we know it will never change.
         typealias P = Bezier.Point
         
-        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:1,y:1), P(x:1,y:1)] /// Straight line
-//        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:0.5,y:1), P(x:1,y:1)]
+//        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:1,y:1), P(x:1,y:1)] /// Straight line
+        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:0.5,y:0.9), P(x:1,y:1)]
+        /// ^ Ease out but the end slope is not 0. That way. The curve is mostly controlled by the Bezier, but the DragCurve rounds things out.
+        ///     Might be placebo but I really like how this feels
         
         return Bezier(controlPoints: controlPoints, defaultEpsilon: 0.001) /// The default defaultEpsilon 0.08 makes the animations choppy
     }()
