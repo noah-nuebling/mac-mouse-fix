@@ -24,14 +24,11 @@
 ///     Should normally pass `[Utility Transform + effectiveRemapsMethod_Override]` I think other stuff will break if we use sth else.
 + (void)assessMappingLandscapeWithButton:(NSNumber *)button
                                    level:(NSNumber *)level
-                 activeModifiersFiltered:(NSDictionary *)modifiersActingOnThisButton
-                   effectiveRemapsMethod:(MFEffectiveRemapsMethod)effectiveRemapsMethod
+                remapsActingOnThisButton:(NSDictionary *)remapsActingOnThisButton
                                   remaps:(NSDictionary *)remaps
                            thisClickDoBe:(BOOL *)clickActionOfThisLevelExists
                             thisDownDoBe:(BOOL *)effectForMouseDownStateOfThisLevelExists
                              greaterDoBe:(BOOL *)effectOfGreaterLevelExists {
-    
-    NSDictionary *remapsActingOnThisButton = effectiveRemapsMethod(remaps, modifiersActingOnThisButton);
     
     *clickActionOfThisLevelExists = remapsActingOnThisButton[button][level][kMFButtonTriggerDurationClick] != nil;
     *effectForMouseDownStateOfThisLevelExists = effectExistsForMouseDownState(button, level, remaps, remapsActingOnThisButton);
@@ -104,19 +101,19 @@ static BOOL modificationPreconditionButtonComponentOfGreaterLevelExistsForButton
 #pragma mark - Other Landscape Assessment Functions
 
 /// Used by `ButtonTriggerGenerator` to reset the click cycle, if we know the button can't be used this click cycle anyways.
+///     Later in the control chain - in ButtonTriggerHandler - the assessMappingLandscapeWithButton:... method is called again. This is probably redundant, as we could just store the result of the first call somehow. But if it's fast enough, who cares
 + (BOOL)buttonCouldStillBeUsedThisClickCycle:(NSNumber *)devID button:(NSNumber *)button level:(NSNumber *)level {
     
     NSDictionary *remaps = TransformationManager.remaps;
-    NSDictionary *activeModifiers = [ModifierManager getActiveModifiersForDevice:devID filterButton:nil event:nil];
-    NSDictionary *activeModifiersActingOnThisButton = [ModifierManager getActiveModifiersForDevice:devID filterButton:button event:nil];
+    NSDictionary *modifiersActingOnThisButton = [ModifierManager getActiveModifiersForDevice:devID filterButton:button event:nil];
+    NSDictionary *remapsActingOnThisButton = Utility_Transformation.effectiveRemapsMethod_Override(remaps, modifiersActingOnThisButton);
     
     BOOL clickActionOfThisLevelExists;
     BOOL effectForMouseDownStateOfThisLevelExists;
     BOOL effectOfGreaterLevelExists;
     [self assessMappingLandscapeWithButton:button
                                      level:level
-                   activeModifiersFiltered:activeModifiersActingOnThisButton
-                     effectiveRemapsMethod:Utility_Transformation.effectiveRemapsMethod_Override
+                  remapsActingOnThisButton:remapsActingOnThisButton
                                     remaps:remaps
                              thisClickDoBe:&clickActionOfThisLevelExists
                               thisDownDoBe:&effectForMouseDownStateOfThisLevelExists

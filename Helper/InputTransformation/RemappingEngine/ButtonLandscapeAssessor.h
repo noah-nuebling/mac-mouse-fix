@@ -14,8 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ButtonLandscapeAssessor : NSObject
 + (void)assessMappingLandscapeWithButton:(NSNumber *)button
                                    level:(NSNumber *)level
-                 activeModifiersFiltered:(NSDictionary *)modifiersActingOnThisButton
-                   effectiveRemapsMethod:(NSDictionary * (^) (NSDictionary *, NSDictionary *))effectiveRemapsMethod
+                remapsActingOnThisButton:(NSDictionary *)remapsActingOnThisButton
                                   remaps:(NSDictionary *)remaps
                            thisClickDoBe:(BOOL *)clickActionOfThisLevelExists
                             thisDownDoBe:(BOOL *)effectForMouseDownStateOfThisLevelExists

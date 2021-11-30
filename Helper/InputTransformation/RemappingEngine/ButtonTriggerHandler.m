@@ -30,7 +30,7 @@
     NSDictionary *remaps = TransformationManager.remaps;
     NSDictionary *modifiersActingOnThisButton = [ModifierManager getActiveModifiersForDevice:devID filterButton:button event:nil]; // The modifiers which act on the incoming button (the button can't modify itself so we filter it out)
     NSDictionary *remapsForModifiersActingOnThisButton = remaps[modifiersActingOnThisButton];
-    NSDictionary *effectiveRemaps = Utility_Transformation.effectiveRemapsMethod_Override(remaps, modifiersActingOnThisButton);
+    NSDictionary *remapsActingOnThisButton = Utility_Transformation.effectiveRemapsMethod_Override(remaps, modifiersActingOnThisButton);
     /// ^ This is different from `remapsForModifiersActingOnThisButton`, in that this is produced by overriding the default remappings with the `remapsForModifiersActingOnThisButton`
     
 //    DDLogDebug(@"\nActive mods: %@, \nremapsForActiveMods: %@", modifiersActingOnThisButton, remapsForModifiersActingOnThisButton);
@@ -39,7 +39,7 @@
     if (triggerType == kMFActionTriggerTypeButtonDown || triggerType == kMFActionTriggerTypeButtonUp) {
         if (![ButtonLandscapeAssessor effectExistsForButton:button
                                                      remaps:remaps
-                                            effectiveRemaps:effectiveRemaps]) {
+                                            effectiveRemaps:remapsActingOnThisButton]) {
             DDLogDebug(@"No remaps exist for this button, letting event pass through");
             return kMFEventPassThroughApproval;
         }
@@ -57,8 +57,7 @@
     BOOL effectOfGreaterLevelExists;
     [ButtonLandscapeAssessor assessMappingLandscapeWithButton:button
                                                         level:level
-                                      activeModifiersFiltered:modifiersActingOnThisButton
-                                        effectiveRemapsMethod:Utility_Transformation.effectiveRemapsMethod_Override
+                                     remapsActingOnThisButton:remapsActingOnThisButton
                                                        remaps:remaps
                                                 thisClickDoBe:&clickActionOfThisLevelExists
                                                  thisDownDoBe:&effectForMouseDownStateOfThisLevelExists
@@ -87,7 +86,7 @@
                                                                                  level,
                                                                                  modifiersActingOnThisButton,
                                                                                  remapsForModifiersActingOnThisButton,
-                                                                                 effectiveRemaps);
+                                                                                 remapsActingOnThisButton);
     } else if (triggerType == kMFActionTriggerTypeHoldTimerExpired) {
         
         // If trigger is for hold action, execute hold action
@@ -98,7 +97,7 @@
                                            level,
                                            modifiersActingOnThisButton,
                                            remapsForModifiersActingOnThisButton,
-                                           effectiveRemaps);
+                                           remapsActingOnThisButton);
     }
     
     
@@ -114,9 +113,9 @@ static void executeClickOrHoldActionIfItExists(NSString * _Nonnull duration,
                                                NSNumber * _Nonnull level,
                                                NSDictionary *activeModifiers,
                                                NSDictionary *remapsForActiveModifiers,
-                                               NSDictionary *effectiveRemaps) {
+                                               NSDictionary *remapsActingOnThisButton) {
     
-    NSArray *effectiveActionArray = effectiveRemaps[button][level][duration];
+    NSArray *effectiveActionArray = remapsActingOnThisButton[button][level][duration];
     if (effectiveActionArray) { // click/hold action does exist for this button + level
         // // Add modificationPrecondition info for addMode. See TransformationManager -> AddMode for context
         if ([effectiveActionArray[0][kMFActionDictKeyType] isEqualToString: kMFActionDictTypeAddModeFeedback]) {

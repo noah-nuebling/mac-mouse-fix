@@ -15,6 +15,7 @@
 #import "ModifiedDrag.h"
 #import "DeviceManager.h"
 #import "SharedUtility.h"
+#import "Utility_Transformation.h"
 #import <os/signpost.h>
 
 
@@ -22,7 +23,7 @@
 
 /// Trigger driven modification -> when the trigger to be modified comes in, we check how we want to modify it
 /// Modifier driven modification -> when the modification becomes active, we preemtively modify the triggers which it modifies
-#pragma mark - Load
+#pragma mark - --- Load
 
 /// This used to be initialize but  that didn't execute until the first mouse buttons were pressed
 /// Then it was load, but that led to '"Mac Mouse Fix Helper" would like to receive keystrokes from any application' prompt. (I think)
@@ -49,8 +50,10 @@
         }];
     }
 }
-#pragma mark - Modifier driven modification
-
+#pragma mark - --- Modifier driven modification
+///
+///
+///
 #pragma mark Keyboard modifiers
 
 static CFMachPortRef _keyboardModifierEventTap;
@@ -148,7 +151,10 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
     
     // Get active modifications and initialize any which are modifier driven
     
-    NSDictionary *activeModifications = TransformationManager.remaps[activeModifiers];
+//    NSDictionary *activeModifications = TransformationManager.remaps[activeModifiers];
+/// ^ This has worked so far, because the default modification can't contain any of the effects that we're activating here, but we shoule really be using Using effectiveRemapsMethod_Override()
+    
+    NSDictionary *activeModifications = Utility_Transformation.effectiveRemapsMethod_Override(TransformationManager.remaps, activeModifiers);
     
     // Do weird stuff if AddMode is active.
     if (TransformationManager.addModeIsEnabled) {
@@ -185,7 +191,7 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
     }
 }
 
-#pragma mark - Trigger driven modification
+#pragma mark - --- Trigger driven modification
 // Explanation: Modification of most triggers is *trigger driven*.
 //      That means only once the trigger comes in, we'll check for active modifiers and then apply those to the incoming trigger.
 //      But sometimes its not feasible to always listen for triggers (for example in the case of modified drags, for performance reasons)
@@ -212,6 +218,7 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
     // ^ filteredButton is used by `handleButtonTriggerWithButton:trigger:level:device:` to remove modification state caused by the button causing the current input trigger.
         // Don't fully understand this but I think a button shouldn't modify its own triggers.
         // You can't even produce a mouse down trigger without activating the button as a modifier... Just doesn't make sense.
+    // Edit: But if we make sure that a button can never define a button modification on itself, then shouldn't it not matter if we filter the buttons out or not?
     
     if (kb != 0) {
         outDict[kMFModificationPreconditionKeyKeyboard] = @(kb);
