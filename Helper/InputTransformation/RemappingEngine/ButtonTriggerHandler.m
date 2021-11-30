@@ -29,8 +29,9 @@
     // Get remaps and apply modifier overrides
     NSDictionary *remaps = TransformationManager.remaps;
     NSDictionary *modifiersActingOnThisButton = [ModifierManager getActiveModifiersForDevice:devID filterButton:button event:nil]; // The modifiers which act on the incoming button (the button can't modify itself so we filter it out)
-    NSDictionary *effectiveRemaps = Utility_Transformation.effectiveRemapsMethod_Override(remaps, modifiersActingOnThisButton);
     NSDictionary *remapsForModifiersActingOnThisButton = remaps[modifiersActingOnThisButton];
+    NSDictionary *effectiveRemaps = Utility_Transformation.effectiveRemapsMethod_Override(remaps, modifiersActingOnThisButton);
+    /// ^ This is different from `remapsForModifiersActingOnThisButton`, in that this is produced by overriding the default remappings with the `remapsForModifiersActingOnThisButton`
     
 //    DDLogDebug(@"\nActive mods: %@, \nremapsForActiveMods: %@", modifiersActingOnThisButton, remapsForModifiersActingOnThisButton);
     
@@ -49,15 +50,13 @@
     
     NSDictionary *activeModifiers = [ModifierManager getActiveModifiersForDevice:devID filterButton:nil event:nil];
     //      ^ We need to check whether the incoming button is acting as a modifier to determine
-    //          `effectForMouseDownStateOfThisLevelExists`, so we can't use the variable `activeModifiers` defined above because it filters out the incoming button
-    //      Noah from future: TODO: But why do we pass the old value for `effectiveRemaps` - which is not based on `activeModifiersUnfiltered` - to ButtonLandscapeAssessor?
+    //          `effectForMouseDownStateOfThisLevelExists`, so we can't just use the variable `modifiersActingOnThisButton` defined above, because it filters out the incoming button
     
     BOOL clickActionOfThisLevelExists;
     BOOL effectForMouseDownStateOfThisLevelExists;
     BOOL effectOfGreaterLevelExists;
     [ButtonLandscapeAssessor assessMappingLandscapeWithButton:button
                                                         level:level
-                                              activeModifiers:activeModifiers
                                       activeModifiersFiltered:modifiersActingOnThisButton
                                         effectiveRemapsMethod:Utility_Transformation.effectiveRemapsMethod_Override
                                                        remaps:remaps

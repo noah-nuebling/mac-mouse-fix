@@ -39,6 +39,7 @@
         ///     - We could try if a light exponential smoothing would feel better, but this is good enought for now
         
         _tickTimeSmoother = [[ExponentialSmoother alloc] initWithA:ScrollConfig.ticksPerSecond_ExponentialSmoothing_InputValueWeight];
+        /// ^ Light exponential smoothing is also worse than no smoothing at all. The loss in responsiveness is not worth the added "stability"z   imo
         
     }
 }
@@ -164,7 +165,7 @@ static int _consecutiveScrollSwipeCounter_ForFreeScrollWheel;
     
     /// Debug
     
-    DDLogDebug(@"tickTime: %f, Smoothed tickTime: %f", secondsSinceLastTick, smoothedTimeBetweenTicks);
+//    DDLogDebug(@"tickTime: %f, Smoothed tickTime: %f", secondsSinceLastTick, smoothedTimeBetweenTicks);
     
     /// Output
     
