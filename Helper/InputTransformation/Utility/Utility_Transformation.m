@@ -96,21 +96,4 @@
     CFRelease(event);
 }
 
-// Methods for obtaining effective remaps
-
-/// Returns a block
-///     - Which takes 2 arguments: `remaps` and `activeModifiers`
-///     - The block takes the default remaps (with an empty precondition) and overrides it with the remappings defined for a precondition of `activeModifiers`.
-+ (MFEffectiveRemapsMethod)effectiveRemapsMethod_Override {
-    
-    return ^NSDictionary *(NSDictionary *remaps, NSDictionary *activeModifiers) {
-        NSDictionary *effectiveRemaps = remaps[@{}];
-        NSDictionary *remapsForActiveModifiers = remaps[activeModifiers];
-        if ([activeModifiers isNotEqualTo:@{}]) {
-            effectiveRemaps = [SharedUtility dictionaryWithOverridesAppliedFrom:[remapsForActiveModifiers copy] to:effectiveRemaps]; // Why do we do ` - copy` here?
-        }
-        return effectiveRemaps;
-    };
-}
-
 @end

@@ -16,7 +16,8 @@
 #import "ButtonTriggerGenerator.h"
 #import "ButtonTriggerHandler.h"
 #import "ButtonLandscapeAssessor.h"
-#import "Utility_Transformation.h"
+//#import "Utility_Transformation.h"
+#import "Mac_Mouse_Fix_Helper-Swift.h"
 
 @implementation ButtonTriggerHandler
 
@@ -30,7 +31,7 @@
     NSDictionary *remaps = TransformationManager.remaps;
     NSDictionary *modifiersActingOnThisButton = [ModifierManager getActiveModifiersForDevice:devID filterButton:button event:nil]; // The modifiers which act on the incoming button (the button can't modify itself so we filter it out)
     NSDictionary *remapsForModifiersActingOnThisButton = remaps[modifiersActingOnThisButton];
-    NSDictionary *remapsActingOnThisButton = Utility_Transformation.effectiveRemapsMethod_Override(remaps, modifiersActingOnThisButton);
+    NSDictionary *remapsActingOnThisButton = RemapsOverrider.effectiveRemapsMethod_Override(remaps, modifiersActingOnThisButton);
     /// ^ This is different from `remapsForModifiersActingOnThisButton`, in that this is produced by overriding the default remappings with the `remapsForModifiersActingOnThisButton`
     
 //    DDLogDebug(@"\nActive mods: %@, \nremapsForActiveMods: %@", modifiersActingOnThisButton, remapsForModifiersActingOnThisButton);

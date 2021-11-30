@@ -17,6 +17,7 @@
 #import "SharedUtility.h"
 #import "Utility_Transformation.h"
 #import <os/signpost.h>
+#import "Mac_Mouse_Fix_Helper-Swift.h"
 
 
 @implementation ModifierManager
@@ -154,7 +155,7 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
 //    NSDictionary *activeModifications = TransformationManager.remaps[activeModifiers];
 /// ^ This has worked so far, because the default modification can't contain any of the effects that we're activating here, but we shoule really be using Using effectiveRemapsMethod_Override()
     
-    NSDictionary *activeModifications = Utility_Transformation.effectiveRemapsMethod_Override(TransformationManager.remaps, activeModifiers);
+    NSDictionary *activeModifications = RemapsOverrider.effectiveRemapsMethod_Override(TransformationManager.remaps, activeModifiers);
     
     // Do weird stuff if AddMode is active.
     if (TransformationManager.addModeIsEnabled) {

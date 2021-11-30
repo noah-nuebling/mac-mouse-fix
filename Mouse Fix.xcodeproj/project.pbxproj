@@ -38,6 +38,8 @@
 		4F3E067E26A2F97D000C9E06 /* URLMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3E067D26A2F97D000C9E06 /* URLMenuItem.m */; };
 		4F44FF042606D73D00926A5E /* SharedMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* SharedMessagePort.m */; };
 		4F44FF052606D73D00926A5E /* SharedMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* SharedMessagePort.m */; };
+		4F5F3EEE2756DB0A00C350C0 /* RemapsOverrider_old_.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5F3EED2756DB0A00C350C0 /* RemapsOverrider_old_.swift */; };
+		4F5F3EF12756EC0400C350C0 /* RemapsOverrider.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5F3EF02756EC0400C350C0 /* RemapsOverrider.m */; };
 		4F70ECAE267E442D00325A76 /* PointerSpeedExperiments2.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F70ECAD267E442D00325A76 /* PointerSpeedExperiments2.m */; };
 		4F70ECB7267E810900325A76 /* IOUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F70ECB6267E810900325A76 /* IOUtility.m */; };
 		4F79A7EF26042E2E00076A7E /* ToastNotification.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F79A7EE26042E2E00076A7E /* ToastNotification.xib */; };
@@ -299,6 +301,9 @@
 		4F3E067D26A2F97D000C9E06 /* URLMenuItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = URLMenuItem.m; sourceTree = "<group>"; };
 		4F44FF022606D73D00926A5E /* SharedMessagePort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharedMessagePort.h; sourceTree = "<group>"; };
 		4F44FF032606D73D00926A5E /* SharedMessagePort.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SharedMessagePort.m; sourceTree = "<group>"; };
+		4F5F3EED2756DB0A00C350C0 /* RemapsOverrider_old_.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemapsOverrider_old_.swift; sourceTree = "<group>"; };
+		4F5F3EEF2756DD1200C350C0 /* RemapsOverrider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapsOverrider.h; sourceTree = "<group>"; };
+		4F5F3EF02756EC0400C350C0 /* RemapsOverrider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapsOverrider.m; sourceTree = "<group>"; };
 		4F70ECAC267E442D00325A76 /* PointerSpeedExperiments2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerSpeedExperiments2.h; sourceTree = "<group>"; };
 		4F70ECAD267E442D00325A76 /* PointerSpeedExperiments2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerSpeedExperiments2.m; sourceTree = "<group>"; };
 		4F70ECB5267E810900325A76 /* IOUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOUtility.h; sourceTree = "<group>"; };
@@ -1135,6 +1140,9 @@
 		4FF6661525F2C93A00689B77 /* Modifiers */ = {
 			isa = PBXGroup;
 			children = (
+				4F5F3EEF2756DD1200C350C0 /* RemapsOverrider.h */,
+				4F5F3EF02756EC0400C350C0 /* RemapsOverrider.m */,
+				4F5F3EED2756DB0A00C350C0 /* RemapsOverrider_old_.swift */,
 				4FF6661625F2C93A00689B77 /* ModifierManager.h */,
 				4FF6661725F2C93A00689B77 /* ModifierManager.m */,
 			);
@@ -1942,6 +1950,7 @@
 				4FF6669625F2C93A00689B77 /* Actions.m in Sources */,
 				4F44FF042606D73D00926A5E /* SharedMessagePort.m in Sources */,
 				4FD85F7B266CC9C5004F76C8 /* Animator.swift in Sources */,
+				4F5F3EEE2756DB0A00C350C0 /* RemapsOverrider_old_.swift in Sources */,
 				4FF6669325F2C93A00689B77 /* TouchSimulator.m in Sources */,
 				4F9E78E3268663B1002C2309 /* ExponentialSmoother.swift in Sources */,
 				4F3A40AB266BBB6200436821 /* AccelerationBezier.swift in Sources */,
@@ -1986,6 +1995,7 @@
 				4FF0BD58266ACE32003935EA /* VectorUtility.m in Sources */,
 				4FF6654F25F2C7B000689B77 /* NSArray+Additions.m in Sources */,
 				4FF6654525F2C7B000689B77 /* Objects.m in Sources */,
+				4F5F3EF12756EC0400C350C0 /* RemapsOverrider.m in Sources */,
 				4FF666A925F2C93A00689B77 /* Utility_Helper.m in Sources */,
 				4FF6668B25F2C93A00689B77 /* CubicUnitBezier.m in Sources */,
 				4F9E78C026855BCF002C2309 /* Concurrency.swift in Sources */,

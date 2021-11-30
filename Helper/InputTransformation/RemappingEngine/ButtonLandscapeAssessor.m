@@ -11,7 +11,8 @@
 #import "TransformationManager.h"
 #import "SharedUtility.h"
 #import "ModifierManager.h"
-#import "Utility_Transformation.h"
+//#import "Utility_Transformation.h"
+#import "Mac_Mouse_Fix_Helper-Swift.h"
 
 @implementation ButtonLandscapeAssessor
 
@@ -106,7 +107,7 @@ static BOOL modificationPreconditionButtonComponentOfGreaterLevelExistsForButton
     
     NSDictionary *remaps = TransformationManager.remaps;
     NSDictionary *modifiersActingOnThisButton = [ModifierManager getActiveModifiersForDevice:devID filterButton:button event:nil];
-    NSDictionary *remapsActingOnThisButton = Utility_Transformation.effectiveRemapsMethod_Override(remaps, modifiersActingOnThisButton);
+    NSDictionary *remapsActingOnThisButton = RemapsOverrider.effectiveRemapsMethod_Override(remaps, modifiersActingOnThisButton);
     
     BOOL clickActionOfThisLevelExists;
     BOOL effectForMouseDownStateOfThisLevelExists;
