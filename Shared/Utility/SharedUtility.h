@@ -33,6 +33,8 @@ typedef void(*MFCTLCallback)(NSTask *task, NSPipe *output, NSError *error);
 + (void)launchCLT:(NSURL *)commandLineTool withArgs:(NSArray <NSString *> *)arguments callback:(MFCTLCallback _Nullable)callback;
 + (FSEventStreamRef)scheduleFSEventStreamOnPaths:(NSArray<NSString *> *)urls withCallback:(FSEventStreamCallback)callback;
 + (void)destroyFSEventStream:(FSEventStreamRef)stream;
++ (NSRect)quartzToCocoaScreenSpace:(CGRect)quartzFrame;
++ (CGRect)cocoaToQuartzScreenSpace:(NSRect)cocoaFrame;
 + (NSObject *)deepCopyOf:(NSObject *)object;
 + (NSString *)callerInfo;
 + (NSDictionary *)dictionaryWithOverridesAppliedFrom:(NSDictionary *)src to: (NSDictionary *)dst;
@@ -45,6 +47,20 @@ int8_t sign(double x);
 + (BOOL)button:(NSNumber * _Nonnull)button isPartOfModificationPrecondition:(NSDictionary *)modificationPrecondition;
 + (void)setupBasicCocoaLumberjackLogging;
 + (NSString *)binaryRepresentation:(int)value;
+
+#pragma mark - Clipping
+
+/// Src: https://stackoverflow.com/a/14770282/10601702
+
+#define MIN(A,B)    ({ __typeof__(A) __a = (A); __typeof__(B) __b = (B); __a < __b ? __a : __b; })
+#define MAX(A,B)    ({ __typeof__(A) __a = (A); __typeof__(B) __b = (B); __a < __b ? __b : __a; })
+
+#define CLIP(x, low, high) ({\
+__typeof__(x) __x = (x); \
+__typeof__(low) __low = (low);\
+__typeof__(high) __high = (high);\
+__x > __high ? __high : (__x < __low ? __low : __x);\
+})
 
 @end
 

@@ -11,6 +11,7 @@
 #import <Cocoa/Cocoa.h>
 #import "WannabePrefixHeader.h"
 #import "NSScreen+Additions.h"
+#import "Utility_Helper.h"
 
 @interface DisplayLink ()
 
@@ -21,7 +22,8 @@
 @implementation DisplayLink {
     
     CVDisplayLinkRef _displayLink;
-    CGDirectDisplayID *_previousDisplaysUnderMousePointer;
+    CGDirectDisplayID *_previousDisplaysUnderMousePointer; /// Old and unused, use `_previousDisplayUnderMousePointer` instead
+    CGDirectDisplayID _previousDisplayUnderMousePointer;                                                       ///
     BOOL _displayLinkIsOutdated;
 }
 
@@ -106,11 +108,31 @@
 }
 
 - (CVReturn)linkToDisplayUnderMousePointerWithEvent:(CGEventRef)event {
+    /// TODO: Test if this new version works
+    
+    /// Init shared return
+    CVReturn rt;
+    
+    /// Get display under mouse pointer
+    CGDirectDisplayID dsp;
+    rt = [Utility_Helper displayUnderMousePointer:&dsp withEvent:event];
+    
+    /// Premature return
+    if (rt == kCVReturnError) return kCVReturnError; /// Coudln't get display under pointer
+    if (dsp == _previousDisplayUnderMousePointer) return kCVReturnSuccess; /// Display under pointer already linked to
+    _previousDisplayUnderMousePointer = dsp;
+    
+    /// Set new display
+    return [self setDisplay:dsp];
+}
+
+- (CVReturn)old_linkToDisplayUnderMousePointerWithEvent:(CGEventRef)event {
+    /// Made a new version of this that is simpler and more modular.
     /// Pass in a CGEvent to get pointer location from. Not sure if signification optimization
     
     CGPoint mouseLocation = CGEventGetLocation(event);
     CGDirectDisplayID *newDisplaysUnderMousePointer = malloc(sizeof(CGDirectDisplayID) * 2);
-    // ^ We only make the buffer 2 (instead of 1) so that we can check if there are several displays under the mouse pointer. If there are more than 2 under the pointer, we'll get the primary onw with CGDisplayPrimaryDisplay()
+    /// ^ We only make the buffer 2 (instead of 1) so that we can check if there are several displays under the mouse pointer. If there are more than 2 under the pointer, we'll get the primary onw with CGDisplayPrimaryDisplay().
     uint32_t matchingDisplayCount;
     CGGetDisplaysWithPoint(mouseLocation, 2, newDisplaysUnderMousePointer, &matchingDisplayCount);
     

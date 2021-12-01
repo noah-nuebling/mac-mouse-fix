@@ -75,6 +75,7 @@
 		4FBA3152261758C1006C20F3 /* SharedUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6653B25F2C7B000689B77 /* SharedUtility.m */; };
 		4FBC943B260F8AA60062F186 /* MASShortcut.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC9434260F8AA60062F186 /* MASShortcut.m */; };
 		4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCA07D525F3129B00BFE209 /* RemapTableController.m */; };
+		4FCC03352757B181002E5A57 /* ScreenDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCC03322757A50C002E5A57 /* ScreenDrawer.swift */; };
 		4FD82DDB260575B100664D6F /* ToastNotificationLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD82DDA260575B100664D6F /* ToastNotificationLabel.m */; };
 		4FD85F7B266CC9C5004F76C8 /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD85F7A266CC9C5004F76C8 /* Animator.swift */; };
 		4FD86089266E819A004F76C8 /* Pointers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD86088266E819A004F76C8 /* Pointers.swift */; };
@@ -362,6 +363,7 @@
 		4FBE18BA2666EC4A002A6771 /* WannabePrefixHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WannabePrefixHeader.h; sourceTree = "<group>"; };
 		4FCA07D425F3129B00BFE209 /* RemapTableController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapTableController.h; sourceTree = "<group>"; };
 		4FCA07D525F3129B00BFE209 /* RemapTableController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapTableController.m; sourceTree = "<group>"; };
+		4FCC03322757A50C002E5A57 /* ScreenDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenDrawer.swift; sourceTree = "<group>"; };
 		4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mac Mouse Fix Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FD82DD9260575B100664D6F /* ToastNotificationLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToastNotificationLabel.h; sourceTree = "<group>"; };
 		4FD82DDA260575B100664D6F /* ToastNotificationLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ToastNotificationLabel.m; sourceTree = "<group>"; };
@@ -853,6 +855,14 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
+		4FCC03342757A516002E5A57 /* Drawing */ = {
+			isa = PBXGroup;
+			children = (
+				4FCC03322757A50C002E5A57 /* ScreenDrawer.swift */,
+			);
+			path = Drawing;
+			sourceTree = "<group>";
+		};
 		4FCECD7721092354001F1078 = {
 			isa = PBXGroup;
 			children = (
@@ -1081,6 +1091,7 @@
 				4FF6661125F2C93A00689B77 /* MessagePort */,
 				4FF6667925F2C93A00689B77 /* Devices */,
 				4FF6661425F2C93A00689B77 /* InputTransformation */,
+				4FCC03342757A516002E5A57 /* Drawing */,
 				4FF6664725F2C93A00689B77 /* Pointer */,
 				4FF6667E25F2C93A00689B77 /* Utility */,
 				4FF6664D25F2C93A00689B77 /* SupportFiles */,
@@ -2000,6 +2011,7 @@
 				4FF6654525F2C7B000689B77 /* Objects.m in Sources */,
 				4F5F3EF12756EC0400C350C0 /* RemapsOverrider.m in Sources */,
 				4FF666A925F2C93A00689B77 /* Utility_Helper.m in Sources */,
+				4FCC03352757B181002E5A57 /* ScreenDrawer.swift in Sources */,
 				4FF6668B25F2C93A00689B77 /* CubicUnitBezier.m in Sources */,
 				4F9E78C026855BCF002C2309 /* Concurrency.swift in Sources */,
 				4F3A40DA266C5BDF00436821 /* NSScreen+Additions.m in Sources */,

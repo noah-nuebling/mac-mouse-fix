@@ -27,7 +27,14 @@
 #import "VectorUtility.h"
 #import "Utility_Helper.h"
 
+#import "CGSCursor.h"
+#import "CGSConnection.h"
+#import "Mac_Mouse_Fix_Helper-Swift.h"
+#import "SharedUtility.h"
+
 @implementation ModifiedDrag
+
+/// Vars - drag state
 
 struct ModifiedDragState {
     CFMachPortRef eventTap;
@@ -44,12 +51,17 @@ struct ModifiedDragState {
     MFAxis usageAxis;
     IOHIDEventPhaseBits phase;
     
+    CGDirectDisplayID display;
+    
     SubPixelator *subPixelatorX;
     SubPixelator *subPixelatorY;
     
     MFMouseButtonNumber fakeDragButtonNumber; // Button number. Only used with modified drag of type kMFModifiedDragTypeFakeDrag.
     NSDictionary *addModePayload; // Payload to send to the mainApp. Only used with modified drag of type kMFModifiedDragTypeAddModeFeedback.
 };
+static struct ModifiedDragState _drag;
+
+/// Debug
 
 + (NSString *)modifiedDragStateDescription:(struct ModifiedDragState)drag {
     NSString *output = @"";
@@ -77,8 +89,11 @@ struct ModifiedDragState {
     return output;
 }
 
-static struct ModifiedDragState _drag;
+/// More vars /defs
+
 #define inputIsPointerMovement YES
+static int _cgsConnection; /// This is used by private APIs to talk to the window server and do fancy shit like hiding the cursor from a background application
+static NSImageView *_puppetCursorView;
 
 /// There are two different modes for how we receive mouse input, toggle to switch between the two for testing
 /// Set to no, if you want input to be raw mouse input, set to yes if you want input to be mouse pointer delta
@@ -88,7 +103,14 @@ static struct ModifiedDragState _drag;
 
 + (void)load_Manual {
     
-    // Setup input callback and related
+    /// Setup cgs stuff
+    _cgsConnection = CGSMainConnectionID();
+    
+    /// Setup puppet cursor
+    
+    _puppetCursorView = [[NSImageView alloc] init];
+    
+    /// Setup input callback and related
     if (inputIsPointerMovement) {
         // Create mouse pointer moved input callback
         if (_drag.eventTap == nil) {
@@ -107,6 +129,10 @@ static struct ModifiedDragState _drag;
 }
 
 + (void)initializeDragWithModifiedDragDict:(NSDictionary *)dict onDevice:(Device *)dev largeUsageThreshold:(BOOL)largeUsageThreshold {
+    
+    /// Make cursor settable
+    
+    [Utility_Transformation makeCursorSettable];
     
     /// Get values from dict
     MFStringConstant type = dict[kMFModifiedDragDictKeyType];
@@ -188,6 +214,9 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
 
 + (void)handleMouseInputWithDeltaX:(int64_t)deltaX deltaY:(int64_t)deltaY event:(CGEventRef)event {
     
+    _drag.originOffset.x += deltaX;
+    _drag.originOffset.y += deltaY;
+    
     MFModifiedInputActivationState st = _drag.activationState;
     
 //    DDLogDebug(@"Handling mouse input. dx: %lld, dy: %lld, activationState: %@", deltaX, deltaY, @(st));
@@ -202,49 +231,77 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
 }
 static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGEventRef event) {
     
-    _drag.originOffset.x += deltaX;
-    _drag.originOffset.y += deltaY;
-    
     Vector ofs = _drag.originOffset;
     
     // Activate the modified drag if the mouse has been moved far enough from the point where the drag started
     if (MAX(fabs(ofs.x), fabs(ofs.y)) > _drag.usageThreshold) {
         
+        /// Get usageOrigin
+        
 //        _drag.usageOrigin = CGPointMake(_drag.origin.x + ofs.x, _drag.origin.y + ofs.y);
         /// ^ This is just the current pointer location, but obtained without a CGEvent. However this didn't quite work because ofs.x and ofs.y are integers while origin.x and origin.y are floats. I tried to roud the values myself to counterbalance this, but it didn't work, so I'm just passing in a CGEvent and getting the location from that. See below v
         _drag.usageOrigin = getRoundedPointerLocationWithEvent(event);
         
+        /// Get display under mouse pointer
+        CVReturn rt = [Utility_Helper display:&_drag.display atPoint:_drag.usageOrigin];
+        if (rt != kCVReturnSuccess) DDLogWarn(@"Couldn't get display under mouse pointer in modifiedDrag");
+        
+        /// Do weird stuff
         Device *dev = _drag.modifiedDevice;
         if (inputIsPointerMovement) {
-            [NSCursor.closedHandCursor push]; // Doesn't work for some reason
+//            [NSCursor.closedHandCursor push]; // Doesn't work for some reason
         } else {
             if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) { // Only seize when drag scrolling // TODO: Would be cleaner to call this further down where we check for kMFModifiedDragVariantTwoFingerSwipe anyways. Does that work too?
                 [dev receiveAxisInputAndDoSeizeDevice:YES];
             }
         }
+        /// Set activationState
         _drag.activationState = kMFModifiedInputActivationStateInUse; // Activate modified drag input!
+        
+        /// Setnd modifier feednack
         [ModifierManager handleModifiersHaveHadEffectWithDevice:dev.uniqueID];
         
+        //// Get usage axis
         if (fabs(ofs.x) < fabs(ofs.y)) {
             _drag.usageAxis = kMFAxisVertical;
         } else {
             _drag.usageAxis = kMFAxisHorizontal;
         }
-    
-        DDLogInfo(@"SETTING DRAG PHASE TO BEGAN");
         
+        /// Debug
+        DDLogDebug(@"SETTING DRAG PHASE TO BEGAN");
+        
+        /// Set phase
         _drag.phase = kIOHIDEventPhaseBegan;
+        
+        /// Do type-specific stuff
         
         if ([_drag.type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
             
-//            _drag.phase = kIOHIDEventPhaseBegan;
+//            if (inputIsPointerMovement) [NSCursor.closedHandCursor push];
             
         } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
             
-            //                [GestureScrollSimulator postGestureScrollEventWithGestureDeltaX:0.0 deltaY:0.0 phase:kIOHIDEventPhaseMayBegin];
+            /// Draw puppet cursor before hiding
+            drawPuppetCursor(YES);
+            
+            /// Decrease delay after warping
+            ///     But only as much so that it doesn't break `CGWarpMouseCursorPosition(()` ability to stop cursor by calling repeatedly
+            ///     This changes the timeout globally for many events, so we need to reset this after the drag is deactivated!
+            setSuppressionInterval(kMFEventSuppressionIntervalForStoppingCursor);
+            
+            /// Hide cursor
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 0.02), dispatch_get_main_queue(), ^{
+                /// The puppetCursor will only be drawn after a delay, while hiding the mouse pointer is really fast.
+                ///     This leads to a little flicker when the puppetCursor is not yet drawn, but the real cursor is already hidden.
+                ///     Not sure why this happens. But adding a delay of 0.02 before hiding makes it look seamless.
+                
+                [Utility_Transformation hideMousePointer:YES];
+            });
+            
+            // [GestureScrollSimulator postGestureScrollEventWithGestureDeltaX:0.0 deltaY:0.0 phase:kIOHIDEventPhaseMayBegin];
             // ^ Always sending this at the start breaks swiping between pages on some websites (Google search results)
             
-//            _drag.phase = kIOHIDEventPhaseBegan;
         } else if ([_drag.type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
             
             [Utility_Transformation postMouseButton:_drag.fakeDragButtonNumber down:YES];
@@ -295,6 +352,7 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
     twoFingerScale = 1.0;
     
     if ([_drag.type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
+        
         if (_drag.usageAxis == kMFAxisHorizontal) {
             double delta = -deltaX * threeFingerScaleH;
             [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeHorizontal phase:_drag.phase];
@@ -305,12 +363,18 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
 //        _drag.phase = kIOHIDEventPhaseChanged;
     } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
         
-        // Warp pointer to origin to prevent cursor movement
+        /// Warp pointer to origin to prevent cursor movement
+        ///     This only works when the suppressionInterval is a certain size, and that will cause a slight stutter / delay until the mouse starts moving againg when we deactivate. So this isn't optimal
         CGWarpMouseCursorPosition(_drag.usageOrigin);
+        /// Disassociate pointer to prevent cursor movements
+        CGAssociateMouseAndMouseCursorPosition(NO);
         
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.0 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{ // dispatching on another queue causes _drag.phase 1 (began) to be skipped, and seems to be unnecessary.
-            [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaX*twoFingerScale deltaY:deltaY*twoFingerScale phase:_drag.phase];
-//        });
+        /// Draw puppet cursor
+        drawPuppetCursor(NO);
+        
+        /// Post event
+        [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaX*twoFingerScale deltaY:deltaY*twoFingerScale phase:_drag.phase];
+        
     } else if ([_drag.type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
         CGPoint location;
         if (event) {
@@ -372,10 +436,33 @@ static void handleDeactivationWhileInUse(BOOL cancelation) {
         });
         // ^ The inital dockSwipe event we post will be ignored by the system when it is under load (I called this the "stuck bug" in other places). Sending the event again with a delay of 200ms (0.2s) gets it unstuck almost always. Sending the event twice gives us the best of both responsiveness and reliability.
         
+        /// Revert cursor back to normal
+//        if (inputIsPointerMovement) [NSCursor.closedHandCursor pop];
+        
     } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
         
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.0 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
-            [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded];
+        /// Send final scroll event
+        ///     This will set off momentum scroll
+        [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.05 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            /// ^ Execute this on a delay so that momentumScroll is started before the warp. That way momentumScrol will still kick in and work, even if we moved the ponter outside the scrollView that we started scrolling in.
+            
+            /// Set suppression interval to zero to avoid delay after
+            setSuppressionInterval(kMFEventSuppressionIntervalZero);
+            
+            /// Set actual cursor to position of puppet cursor
+            CGWarpMouseCursorPosition(puppetCursorPosition());
+//            CGWarpMouseCursorPosition(_drag.origin);
+            
+            /// Reset suppression interval to default
+            setSuppressionInterval(kMFEventSuppressionIntervalDefault);
+            
+            /// Show mouse pointer again
+            [Utility_Transformation hideMousePointer:NO];
+            
+            /// Undraw puppet cursor
+            [ScreenDrawer.shared undrawWithView:_puppetCursorView];
         });
         
     } else if ([_drag.type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
@@ -391,6 +478,110 @@ static void handleDeactivationWhileInUse(BOOL cancelation) {
 }
 
 #pragma mark - Helper functions
+
+/// Event suppression
+
+typedef enum {
+    kMFEventSuppressionIntervalZero,
+    kMFEventSuppressionIntervalForStoppingCursor,
+    kMFEventSuppressionIntervalDefault,
+} MFEventSuppressionInterval;
+
+static MFEventSuppressionInterval _previousMFSuppressionInterval = kMFEventSuppressionIntervalDefault;
+static CFTimeInterval _defaultSuppressionInterval = 0.25;
+void setSuppressionInterval(MFEventSuppressionInterval mfInterval) {
+    /// We use CGWarpMousePointer to keep the pointer from moving during simulated touchScroll.
+    ///     However, after that, the cursor will freeze for like half a second which is annoying.
+    ///     To avoid this we need to set the CGEventSuppressionInterval to 0
+    ///         (I also looked into permitting all (mouse) events during suppression using `CGEventSourceSetLocalEventsFilterDuringSuppressionState()`. However, it doesn't remove the delay after warping unfortunately. Only `CGEventSourceGetLocalEventsSuppressionInterval()` works.)
+    ///     Butttt I just found that whe you set the suppressionInterval to zero then CGWarpMouseCursorPosition doesn't work at all anymore..., so maybe a small value like 0.1? ... 0.05 seems to be the smallest value that fully stops pointer from moving when repeatedly calling CGWarpMouseCursorPosition()
+    ///         I thought about using CGAssociateMouseAndMouseCursorPosition(), but in the end we'll still have to use the warp when deactivating to get the real pointer position to where the puppetPointerPosition is. And that's where the delay comes from. Also when using CGAssociateMouseAndMouseCursorPosition() the deltas become really inaccurate and irratic, overdriving the momentumScroll. So there's no benefit to using CGAssociateMouseAndMouseCursorPosition().
+    /// Src: https://stackoverflow.com/questions/8215413/why-is-cgwarpmousecursorposition-causing-a-delay-if-it-is-not-what-is
+    
+    /// Get source
+    CGEventSourceRef src = CGEventSourceCreate(kCGEventSourceStateCombinedSessionState);
+    
+    /// Store default
+    if (_previousMFSuppressionInterval == kMFEventSuppressionIntervalDefault) {
+        _defaultSuppressionInterval = CGEventSourceGetLocalEventsSuppressionInterval(src);
+    }
+    
+    /// Get interval
+    double interval;
+    if (mfInterval == kMFEventSuppressionIntervalForStoppingCursor) {
+        interval = 0.05; /// Can't be 0 or else repeatedly calling CGWarpMouseCursorPosition() won't work for stopping the cursor
+    } else if (mfInterval == kMFEventSuppressionIntervalDefault) {
+        interval = _defaultSuppressionInterval;
+    } else if (mfInterval == kMFEventSuppressionIntervalZero) {
+        interval = 0.0;
+    } else {
+        assert(false);
+    }
+    
+    /// Set new suppressionInterval
+    CGEventSourceSetLocalEventsSuppressionInterval(src, interval);
+    
+    /// Analyze suppresionInterval
+    CFTimeInterval intervalResult = CGEventSourceGetLocalEventsSuppressionInterval(src);
+    DDLogDebug(@"Event suppression interval: %f", intervalResult);
+    
+    /// Store previous mfInterval
+    _previousMFSuppressionInterval = mfInterval;
+}
+
+void setSuppressionIntervalWithTimeInterval(CFTimeInterval interval) {
+    
+    CGEventSourceRef src = CGEventSourceCreate(kCGEventSourceStateCombinedSessionState);
+    /// Set new suppressionInterval
+    CGEventSourceSetLocalEventsSuppressionInterval(src, interval);
+}
+
+/// Puppet cursor
+
+void drawPuppetCursor(BOOL fresh) {
+    
+    /// Get cursor
+    NSCursor *cursor = NSCursor.currentCursor;
+    
+    /// Store cursor image into puppet view
+    NSImage *puppetImage = cursor.image;
+    _puppetCursorView.image = puppetImage;
+    
+    /// Get puppet pointer location
+    CGPoint loc = puppetCursorPosition();
+    
+    /// Subtract hotspot to get puppet image loc
+    CGPoint hotspot = cursor.hotSpot;
+    CGPoint imageLoc = CGPointMake(loc.x - hotspot.x, loc.y - hotspot.y);
+    
+    /// Unflip coordinates to be compatible with Cocoa
+    NSRect puppetImageFrame = NSMakeRect(imageLoc.x, imageLoc.y, puppetImage.size.width, puppetImage.size.height);
+    NSRect puppetImageFrameUnflipped = [SharedUtility quartzToCocoaScreenSpace:puppetImageFrame];
+    
+    /// Draw!
+    if (fresh) {
+        [ScreenDrawer.shared drawWithView:_puppetCursorView atFrame:puppetImageFrameUnflipped onScreen:NSScreen.mainScreen];
+    } else {
+        [ScreenDrawer.shared moveWithView:_puppetCursorView toFrame:puppetImageFrameUnflipped];
+    }
+}
+
+CGPoint puppetCursorPosition(void) {
+    
+    /// Get base pos
+    CGPoint pos = CGPointMake(_drag.origin.x + _drag.originOffset.x, _drag.origin.y + _drag.originOffset.y);
+    
+    /// Clip to screen bounds
+    CGRect screenSize = CGDisplayBounds(_drag.display);
+    pos.x = CLIP(pos.x, CGRectGetMinX(screenSize), CGRectGetMaxX(screenSize));
+    pos.y = CLIP(pos.y, CGRectGetMinY(screenSize), CGRectGetMaxY(screenSize));
+    
+    /// Normalize originOffsets
+    ///     Not sure if good idea. Origin offset is also used for other important stuff
+    
+    /// return
+    return pos;
+}
 
 /// Disable mouse tracking
 ///     I forgot what this does. Is it necessary?

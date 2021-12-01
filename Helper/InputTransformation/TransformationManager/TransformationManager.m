@@ -347,6 +347,27 @@ Boolean keyCaptureModePayloadIsValidWithKeyCode(CGKeyCode keyCode, CGEventFlags 
                 },
             },
         },
+        
+        
+        @{
+            kMFModificationPreconditionKeyButtons: @[
+                @{
+                    kMFButtonModificationPreconditionKeyButtonNumber: @(5),
+                    kMFButtonModificationPreconditionKeyClickLevel: @(1),
+                },
+            ],
+            
+        }: @{
+            kMFTriggerScroll: @{
+                kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeRotate,
+            },
+            kMFTriggerDrag: @{
+                kMFModifiedDragDictKeyType: kMFModifiedDragTypeTwoFingerSwipe,
+            },
+        
+        },
+        
+        
         @{
             //            kMFModificationPreconditionKeyButtons: @[
             //                    @{

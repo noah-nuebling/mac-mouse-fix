@@ -131,6 +131,7 @@ CGPoint getPointerLocationWithEvent(CGEventRef locEvent) {
 }
 
 /// Helper functions for getting mouse location
+///     Implemented new version of the coordinate flipping code in SharedUtility. Not sure if there's a difference.
 
 NSPoint NSPointFromCGPointWithCoordinateConversion(CGPoint cgPoint) {
     return NSMakePoint(cgPoint.x, zeroScreenHeight() - cgPoint.y);
@@ -167,5 +168,42 @@ CGFloat zeroScreenHeight(void) {
 //        *timer = nil;
 //    }
 //}
+
++ (CVReturn)displayUnderMousePointer:(CGDirectDisplayID *)dspID withEvent:(CGEventRef _Nullable)event {
+    
+    /// Get event
+    if (event == NULL) {
+        event = CGEventCreate(NULL);
+    }
+    /// Get mouse location
+    CGPoint mouseLocation = CGEventGetLocation(event);
+    
+    /// Return
+    return [self display:dspID atPoint:mouseLocation];
+    
+}
+
++ (CVReturn)display:(CGDirectDisplayID *)dspID atPoint:(CGPoint)point {
+    /// Pass in a CGEvent to get pointer location from. Not sure if signification optimization
+    
+    /// Get display
+    CGDirectDisplayID *newDisplaysUnderMousePointer = malloc(sizeof(CGDirectDisplayID));
+    uint32_t matchingDisplayCount;
+    CGGetDisplaysWithPoint(point, 1, newDisplaysUnderMousePointer, &matchingDisplayCount);
+    
+    if (matchingDisplayCount == 1) {
+        /// Get the the master display in case _displaysUnderMousePointer[0] is part of a mirror set
+        CGDirectDisplayID d = CGDisplayPrimaryDisplay(newDisplaysUnderMousePointer[0]);
+        /// Output
+        *dspID = d;
+        return kCVReturnSuccess;
+        
+    }
+    
+    /// Failure output
+    DDLogWarn(@"There are 0 diplays under the mouse pointer");
+    dspID = NULL;
+    return kCVReturnError;
+}
 
 @end

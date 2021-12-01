@@ -21,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
                                   placement:(CGEventTapPlacement)placement
                                    callback:(CGEventTapCallBack)callback;
 
++ (void)makeCursorSettable;
+
 + (void)hideMousePointer:(BOOL)B;
 + (void)postMouseButtonClicks:(MFMouseButtonNumber)button nOfClicks:(int64_t)nOfClicks;
 + (void)postMouseButton:(MFMouseButtonNumber)button down:(BOOL)down;

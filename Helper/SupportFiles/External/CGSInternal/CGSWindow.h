@@ -88,7 +88,7 @@ typedef enum : int {
 	
 	/// The window may set the cursor when the application is not active.  Useful for windows that
 	/// present controls like editable text fields.
-	kCGSSetsCursorInBackgroundTagBit				= 1 << 5,
+	kCGSTagBit				= 1 << 5,
 	
 	/// The window continues to operate while a modal run loop has been pushed.
 	kCGSWorksWhenModalTagBit						= 1 << 6,

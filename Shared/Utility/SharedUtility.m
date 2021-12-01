@@ -12,6 +12,7 @@
 #import "ConfigInterface_App.h"
 #import "Config.h"
 #import "SharedUtility.h"
+@import AppKit.NSScreen;
 
 @implementation SharedUtility
 
@@ -215,6 +216,47 @@
         return [dict[kMFButtonModificationPreconditionKeyButtonNumber] isEqualToNumber:button];
     }];
     return buttonIndexes.count != 0;
+}
+
+#pragma mark - Coordinate conversion
+
+/// The *cocoa*  global "display" coordinate system starts at the bottom left of the main screen, while the *quartz* coordinate system starts at the top left
+/// We sometimes need to convert between them
+/// I've tried to write conversion functions before (should be in the project somewhere) but I don't think they worked. I'll give it one more try:
+
+/// Convenience wrappers
+
++ (NSRect)quartzToCocoaScreenSpace:(CGRect)quartzFrame {
+    return [self cocoaToQuartzScreenSpaceConversionWithOriginFrame:quartzFrame destinationIsCocoa:YES];
+}
++ (CGRect)cocoaToQuartzScreenSpace:(NSRect)cocoaFrame {
+    return [self cocoaToQuartzScreenSpaceConversionWithOriginFrame:cocoaFrame destinationIsCocoa:NO];
+}
+
+/// Base function
+
++ (CGRect)cocoaToQuartzScreenSpaceConversionWithOriginFrame:(CGRect)originFrame destinationIsCocoa:(BOOL)toCocoa {
+    
+    /// Src: https://stackoverflow.com/questions/19884363/in-objective-c-os-x-is-the-global-display-coordinate-space-used-by-quartz-d
+    
+    /// Get main screen
+    NSScreen *zeroScreen = NSScreen.screens[0];
+    CGFloat screenHeight = zeroScreen.frame.size.height;
+    
+    /// Get other
+    CGFloat originY = originFrame.origin.y;
+    CGFloat frameHeight = originFrame.size.height;
+    
+    /// Get new y
+    CGFloat destinationY = screenHeight - (originY + frameHeight);
+    
+    /// Get new frame
+    CGRect destinationFrame = originFrame;
+    destinationFrame.origin.y = destinationY;
+    
+    /// return
+    return destinationFrame;
+
 }
 
 #pragma mark - Other

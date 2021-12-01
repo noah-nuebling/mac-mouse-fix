@@ -11,9 +11,10 @@
 #import <Cocoa/Cocoa.h>
 #import <Carbon/Carbon.h>
 #import <ApplicationServices/ApplicationServices.h>
-#import "CGSPrivate.h"
+//#import "CGSPrivate.h"
 #import "SharedUtility.h"
 #import "Utility_Helper.h"
+#import "CGSCursor.h"
 
 @implementation Utility_Transformation
 
@@ -31,22 +32,49 @@
     return eventTap;
 }
 
++ (void)makeCursorSettable {
+    CGSConnectionID _CGSDefaultConnection(void);
+    CGSConnectionID cid = _CGSDefaultConnection();
+    //    CGSConnectionID cn = CGSMainConnectionID();
+    //    CGSConnectionID cid = CGSDefaultConnectionForThread();
+    CGSSetConnectionProperty(cid, cid, (__bridge CFStringRef)@"SetsCursorInBackground", kCFBooleanTrue);
+}
+
 + (void)hideMousePointer:(BOOL)B {
     
+    /// Source: https://stackoverflow.com/a/3939241/10601702
+    /// Normally, hiding  only works from foreground apps
+    
+    /// Hack to make background cursor setting work
+    [self makeCursorSettable];
+        
     if (B) {
-        void CGSSetConnectionProperty(int, int, CFStringRef, CFBooleanRef);
-        int _CGSDefaultConnection(void);
-        CFStringRef propertyString;
-
-        // Hack to make background cursor setting work
-        propertyString = CFStringCreateWithCString(NULL, "SetsCursorInBackground", kCFStringEncodingUTF8);
-        CGSSetConnectionProperty(_CGSDefaultConnection(), _CGSDefaultConnection(), propertyString, kCFBooleanTrue);
-        CFRelease(propertyString);
-        // Hide the cursor and wait
+        
+        /// Hide till mouse moves
+        
+        
+//        CGSObscureCursor(cid);
+//        [NSCursor setHiddenUntilMouseMoves:YES];
+        
+        /// Hide unconditionally
+        
+//        CGSHideCursor(cid);
         CGDisplayHideCursor(kCGDirectMainDisplay);
-//        pause();
+//        [NSCursor hide];
+        
     } else {
+
+        /// Simulate mouse moved event
+        
+//        CGSRevealCursor(cid);
+//        [NSCursor setHiddenUntilMouseMoves:NO];
+        
+        /// Unhide unconditionally
+        
+//        CGSShowCursor(cid);
         CGDisplayShowCursor(kCGDirectMainDisplay);
+        [NSCursor unhide];
+        
     }
 }
 
