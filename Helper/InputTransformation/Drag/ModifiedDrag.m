@@ -213,7 +213,7 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
             }
         }
         _drag.activationState = kMFModifiedInputActivationStateInUse; // Activate modified drag input!
-        [ModifierManager handleModifiersHaveHadEffect:dev.uniqueID];
+        [ModifierManager handleModifiersHaveHadEffectWithDevice:dev.uniqueID];
         
         if (fabs(ofs.x) < fabs(ofs.y)) {
             _drag.usageAxis = kMFAxisVertical;

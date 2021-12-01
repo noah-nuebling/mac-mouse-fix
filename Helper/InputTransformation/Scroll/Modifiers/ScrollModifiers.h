@@ -7,31 +7,40 @@
 // --------------------------------------------------------------------------
 //
 
+typedef enum {
+    kMFScrollInputModificationNone,
+    kMFScrollInputModificationPrecise,
+    kMFScrollInputModificationFast,
+    
+} MFScrollInputModification;
+
+typedef enum {
+    kMFScrollEffectModificationNone,
+    kMFScrollEffectModificationZoom,
+    kMFScrollEffectModificationHorizontalScroll,
+    kMFScrollEffectModificationRotate,
+} MFScrollEffectModification;
+
+typedef struct {
+    MFScrollInputModification input;
+    MFScrollEffectModification effect;
+} MFScrollModificationResult;
+
+
+/// v For the old Objc implementation of ScrollModifers
+
 #import <CoreGraphics/CoreGraphics.h>
 //#import <Foundation/Foundation.h>
 
 @interface ScrollModifiers : NSObject
 
-+ (BOOL)magnificationScrollHasBeenUsed;
-+ (void)setMagnificationScrollHasBeenUsed:(BOOL)B;
-
-+ (BOOL)horizontalScrolling;
-+ (void)setHorizontalScrolling:(BOOL)B;
-+ (BOOL)magnificationScrolling;
-+ (void)setMagnificationScrolling:(BOOL)B;
-
-+ (void)handleMagnificationScrollWithAmount:(double)amount;
-
-//+ (void)setHorizontalScrollModifierKeyMask:(CGEventFlags)F;
-//+ (void)setMagnificationScrollModifierKeyMask:(CGEventFlags)F;
+//+ (BOOL)horizontalScrolling;
+//+ (BOOL)magnificationScrolling;
 //
-//+ (BOOL)horizontalScrollModifierKeyEnabled;
-//+ (void)setHorizontalScrollModifierKeyEnabled:(BOOL)B;
-//+ (BOOL)magnificationScrollModifierKeyEnabled;
-//+ (void)setMagnificationScrollModifierKeyEnabled:(BOOL)B;
-
-+ (void)start;
-+ (void)stop;
+//+ (void)handleMagnificationScrollWithAmount:(double)amount;
+//
+//+ (void)start;
+//+ (void)stop;
 
 @end
 

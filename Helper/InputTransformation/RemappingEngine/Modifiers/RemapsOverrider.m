@@ -8,6 +8,9 @@
 //
 
 #import "RemapsOverrider.h"
+#import "ModifierManager.h"
+#import "DeviceManager.h"
+#import "TransformationManager.h"
 
 #import "SharedUtility.h"
 
@@ -30,6 +33,16 @@
         }
         return effectiveRemaps;
     };
+}
+
++ (NSDictionary  * _Nonnull )remapsForCurrentlyActiveModifiers {
+    /// Convenience method. Unused
+    
+    NSDictionary *activeModifiers = [ModifierManager getActiveModifiersForDevice:nil filterButton:nil event:nil];
+    NSDictionary *remaps = TransformationManager.remaps;
+    
+    return RemapsOverrider.effectiveRemapsMethod_Override(remaps, activeModifiers);
+    
 }
 
 @end

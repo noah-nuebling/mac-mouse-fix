@@ -17,7 +17,7 @@
 + (void)handleButtonHasHadDirectEffectWithDevice:(NSNumber *)devID button:(NSNumber *)btn;
 + (void)handleButtonHasHadEffectAsModifierWithDevice:(NSNumber *)devID button:(NSNumber *)btn;
 
-+ (NSArray *)getActiveButtonModifiersForDevice:(NSNumber *)devID;
++ (NSArray *)getActiveButtonModifiersForDevice:(NSNumber *_Nullable *_Nonnull)devIDPtr;
 
 @end
 

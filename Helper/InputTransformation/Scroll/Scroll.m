@@ -23,10 +23,11 @@
 #import "SubPixelator.h"
 #import "GestureScrollSimulator.h"
 #import "SharedUtility.h"
+#import "ScrollModifiers.h"
 
 @implementation Scroll
 
-#pragma mark - Variables
+#pragma mark - Variables - static
 
 static CFMachPortRef _eventTap;
 static CGEventSourceRef _eventSource;
@@ -40,6 +41,10 @@ static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this
 + (AXUIElementRef) systemWideAXUIElement {
     return _systemWideAXUIElement;
 }
+
+#pragma mark - Variables - dynamic
+
+static MFScrollModificationResult _modifications;
 
 #pragma mark - Public functions
 
@@ -100,14 +105,14 @@ static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this
             CGEventTapEnable(_eventTap, false);
         }
         // Disable other scroll classes
-        [ScrollModifiers stop];
+//        [ScrollModifiers stop];
 //        [SmoothScroll stop];
 //        [RoughScroll stop];
     } else {
         // Enable scroll interception
         CGEventTapEnable(_eventTap, true);
         // Enable other scroll classes
-        [ScrollModifiers start];
+//        [ScrollModifiers start];
 //        if (ScrollConfig.smoothEnabled) {
 //            DDLogInfo(@"Enabling SmoothScroll");
 //            [SmoothScroll start];
@@ -179,34 +184,31 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     } else {
         NSCAssert(NO, @"Invalid scroll axis");
     }
-    
-    // Get effective direction
-    //  -> With user settings etc. applied
-    
-    MFScrollDirection scrollDirection = [ScrollUtility directionForInputAxis:inputAxis inputDelta:scrollDelta invertSetting:ScrollConfig.scrollInvert horizontalModifier:ScrollModifiers.horizontalScrolling];
-    
+        
     // Run scrollAnalysis
     //  We want to do this here, not in _scrollQueue for more accurate timing
     
-    ScrollAnalysisResult scrollAnalysisResult = [ScrollAnalyzer updateWithTickOccuringNowWithDirection:scrollDirection];
+    ScrollAnalysisResult scrollAnalysisResult = [ScrollAnalyzer updateWithTickOccuringNowWithDirection:scrollDelta];
     
     //  Executing heavy stuff on a different thread to prevent the eventTap from timing out. We wrote this before knowing that you can just re-enable the eventTap when it times out. But this doesn't hurt.
     
     CGEventRef eventCopy = CGEventCreateCopy(event); // Create a copy, because the original event will become invalid and unusable in the new queue.
     
     dispatch_async(_scrollQueue, ^{
-        heavyProcessing(eventCopy, scrollAnalysisResult, scrollDirection, scrollDeltaPoint);
+        heavyProcessing(eventCopy, scrollAnalysisResult, scrollDelta, scrollDeltaPoint, inputAxis);
     });
     
     return nil;
 }
 
-static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysisResult, MFScrollDirection scrollDirection, int64_t eventPointDelta) {
+static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysisResult, int64_t scrollDelta, int64_t scrollDeltaPoint, MFAxis inputAxis) {
     
     /// Update configuration
     ///     Checking which app is under the mouse pointer is really slow, so we only do it when necessary
     
     if (scrollAnalysisResult.consecutiveScrollTickCounter == 0) {
+        
+        /// Update application Overrides
         
         [ScrollUtility updateMouseDidMoveWithEvent:event];
         if (!ScrollUtility.mouseDidMove) {
@@ -225,11 +227,23 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
                 
             }
         }
+        
+        /// Update linked display
+        
         if (ScrollUtility.mouseDidMove) {
             /// Update animator to currently used display
             [_animator linkToMainScreen];
         }
+        
+        /// Update modfications
+        
+        _modifications = [ScrollModifiersSwift currentScrollModifications];
     }
+    
+    /// Get effective direction
+    ///  -> With user settings etc. applied
+    
+    MFScrollDirection scrollDirection = [ScrollUtility directionForInputAxis:inputAxis inputDelta:scrollDelta invertSetting:ScrollConfig.scrollInvert horizontalModifier:(_modifications.effect == kMFScrollEffectModificationHorizontalScroll)];
     
     /// Get distance to scroll
     
@@ -380,70 +394,133 @@ static void sendScroll(int64_t px, MFScrollDirection scrollDirection, BOOL gestu
         assert(false);
     }
     
-    if (ScrollModifiers.magnificationScrolling) {
-        /// Send zoom event
-        ///  This doesn't need subpixelation, so we could subpixelate after this instead of before
+    /// Get params for sending event
+    
+    IOHIDEventPhaseBits deltaPhase = kIOHIDEventPhaseUndefined;
+    BOOL isFinalEvent = NO;
+    void (*sendTouchEventFunction)(int64_t, int64_t, IOHIDEventPhaseBits);
+    
+    
+    if (!gesture) {
+        /// line-based scroll event
         
-        double anyAxisDelta = dx + dy; /// This works because, if dx != 0 -> dy == 0, and the other way around.
-        
-        [ScrollModifiers handleMagnificationScrollWithAmount:anyAxisDelta/800.0];
-        
-    } else if (!gesture) {
-        /// Send line-based scroll event
-        
-        assert(false); ///  Debug
-        
-        /// TODO: line delta should always be around 1/10 of pixel delta. Also subpixelate line delta.
-        ///     See CGEventSource pixelsPerLine - it's 10.
-        
-        CGEventRef event = CGEventCreateScrollWheelEvent(NULL, kCGScrollEventUnitLine, 1, 0);
-        
-        CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, dy / llabs(dy)); /// Always 1, 0, or -1. These values are probably too small. We should study what these values should be more
-        CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1, dy);
-        CGEventSetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1, dy);
-        
-        CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, dx / llabs(dx));
-        CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1, dx);
-        CGEventSetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1, dx);
-        
-        CGEventPost(kCGSessionEventTap, event);
+        deltaPhase = kIOHIDEventPhaseBegan;
+        isFinalEvent = YES;
+        sendTouchEventFunction = sendLineScroll;
         
     } else {
-        /// Send gesture scroll events
+        /// Gesture scroll events
         
-        if (animationPhase == kMFAnimationPhaseStart) {
+        /// get deltaPhase
+        
+        if (animationPhase == kMFAnimationPhaseStart
+            || animationPhase == kMFAnimationPhaseStartAndEnd) {
             
-            sendGestureScroll(dx, dy, kIOHIDEventPhaseBegan);
+            deltaPhase = kIOHIDEventPhaseBegan;
             
         } else if (animationPhase == kMFAnimationPhaseRunningStart
-                || animationPhase == kMFAnimationPhaseContinue) {
+                   || animationPhase == kMFAnimationPhaseContinue
+                   || animationPhase == kMFAnimationPhaseEnd) {
             
-            sendGestureScroll(dx, dy, kIOHIDEventPhaseChanged);
-            
-        } else if (animationPhase == kMFAnimationPhaseStartAndEnd) {
-            
-            sendGestureScroll(dx, dy, kIOHIDEventPhaseBegan);
-            sendGestureScroll(0, 0, kIOHIDEventPhaseEnded);
-            
-        } else if (animationPhase == kMFAnimationPhaseEnd) {
-            
-            sendGestureScroll(dx, dy,  kIOHIDEventPhaseChanged);
-            sendGestureScroll(0, 0, kIOHIDEventPhaseEnded);
-            
+            deltaPhase = kIOHIDEventPhaseChanged;
         } else {
             assert(false);
         }
+        
+        /// Get isFinalEvent
+        
+        if (animationPhase == kMFAnimationPhaseEnd
+            || animationPhase == kMFAnimationPhaseStartAndEnd) {
+            
+            isFinalEvent = YES;
+        }
+        
+        /// Get sendTouchEventFunction
+        
+        sendTouchEventFunction = sendGestureScroll;
+    }
+    
+    if (_modifications.effect == kMFScrollEffectModificationZoom) {
+        sendTouchEventFunction = sendZoomEvent;
+    } else if (_modifications.effect == kMFScrollEffectModificationRotate) {
+        sendTouchEventFunction = sendRotationEvent;
+    }
+    
+    /// Debug
+    
+    DDLogDebug(@"Sending touch event with dx: %lld, dy: %lld, phase: %d, isFinal: %d", dx, dy, deltaPhase, isFinalEvent);
+    
+    /// Send event
+    
+    sendTouchEvent(dx, dy, deltaPhase, isFinalEvent, sendTouchEventFunction);
+}
+
+/// Generic touch sending func
+
+static void sendTouchEvent(int64_t dx, int64_t dy, IOHIDEventPhaseBits deltaPhase, BOOL isFinalEvent, void (*sendTouchEventFunction)(int64_t, int64_t, IOHIDEventPhaseBits)) {
+    
+    assert(deltaPhase == kIOHIDEventPhaseBegan || deltaPhase == kIOHIDEventPhaseChanged);
+    
+    sendTouchEventFunction(dx, dy, deltaPhase);
+    
+    if (isFinalEvent) {
+        sendTouchEventFunction(0, 0, kIOHIDEventPhaseEnded);
+    }
+    
+}
+
+/// Specific touch sending functions
+///     That plug into `sendTouchEvent`
+
+static void sendGestureScroll(int64_t dx, int64_t dy, IOHIDEventPhaseBits eventPhase) {
+    /// Send simulated two-finger swipe event
+    
+    [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:eventPhase];
+    
+    if (eventPhase == kIOHIDEventPhaseEnded) {
+        [GestureScrollSimulator stopMomentumScroll];
     }
 }
 
-static void sendGestureScroll(int64_t dx, int64_t dy, IOHIDEventPhaseBits scrollPhase) {
-    /// Send simulated two-finger swipe event
+static void sendZoomEvent(int64_t dx, int64_t dy, IOHIDEventPhaseBits eventPhase) {
+    /// Send zoom event
+    ///  This doesn't need subpixelation, so we could subpixelate after this instead of before (in sendScroll())
     
-    [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:scrollPhase];
+    double anyAxisDelta = dx + dy; /// This works because, if dx != 0 -> dy == 0, and the other way around.
+    double eventDelta = anyAxisDelta/800.0;
     
-    if (scrollPhase == kIOHIDEventPhaseEnded) {
-        [GestureScrollSimulator stopMomentumScroll];
-    }
+    [TouchSimulator postMagnificationEventWithMagnification:eventDelta phase:eventPhase];
+    
+    DDLogDebug(@"Sent zoom event with delta: %f, phase: %d", eventDelta, eventPhase);
+}
+static void sendRotationEvent(int64_t dx, int64_t dy, IOHIDEventPhaseBits eventPhase) {
+    /// Send zoom event
+    ///  This doesn't need subpixelation, so we could subpixelate after this instead of before (in sendScroll())
+    
+    double anyAxisDelta = dx + dy; /// This works because, if dx != 0 -> dy == 0, and the other way around.
+    double eventDelta = anyAxisDelta/800.0;
+    
+    [TouchSimulator postRotationEventWithRotation:eventDelta phase:eventPhase];
+}
+
+static void sendLineScroll(int64_t dx, int64_t dy, IOHIDEventPhaseBits eventPhase) {
+    /// Send line-based scroll event
+    ///     We ignore the `eventPhase` argument
+    
+    /// TODO: line delta should always be around 1/10 of pixel delta. Also subpixelate line delta.
+    ///     See CGEventSource pixelsPerLine - it's 10.
+    
+    CGEventRef event = CGEventCreateScrollWheelEvent(NULL, kCGScrollEventUnitLine, 1, 0);
+    
+    CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, dy / llabs(dy)); /// Always 1, 0, or -1. These values are probably too small. We should study what these values should be more
+    CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1, dy);
+    CGEventSetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1, dy);
+    
+    CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, dx / llabs(dx));
+    CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1, dx);
+    CGEventSetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1, dx);
+    
+    CGEventPost(kCGSessionEventTap, event);
 }
 
 

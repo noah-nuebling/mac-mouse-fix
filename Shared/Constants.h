@@ -131,16 +131,18 @@ typedef NSString*                                                       MFString
 
 // Modified Scroll
 
-// Trigger (value for key kMFRemapsKeyTrigger)
+// Trigger key (value for key kMFRemapsKeyTrigger)
 #define kMFTriggerScroll                                                @"scrollTrigger"
-// Type key
-#define kMFModifiedScrollDictKeyType                                    @"modifiedScrollType"
+// Type keys
+#define kMFModifiedScrollDictKeyInputModificationType                   @"modifiedScrollInputModification"
+#define kMFModifiedScrollDictKeyEffectModificationType                  @"modifiedScrollEffectModification"
 // Type values
-#define kMFModifiedScrollTypeZoom                                       @"zoom"
-#define kMFModifiedScrollTypeHorizontalScroll                           @"horizontal"
-#define kMFModifiedScrollTypePrecisionScroll                            @"precision"
-#define kMFModifiedScrollTypeFastScroll                                 @"fast"
-#define kMFModifiedScrollTypeAddModeFeedback                            @"addModeScroll"
+#define kMFModifiedScrollInputModificationTypePrecisionScroll                               @"precision"
+#define kMFModifiedScrollInputModificationTypeQuickScroll                                   @"fast"
+#define kMFModifiedScrollEffectModificationTypeZoom                                         @"zoom"
+#define kMFModifiedScrollEffectModificationTypeHorizontalScroll                             @"horizontal"
+#define kMFModifiedScrollEffectModificationTypeRotate                                       @"rotate"
+#define kMFModifiedScrollEffectModificationTypeAddModeFeedback                              @"addModeScroll"
 
 // Oneshot Actions
 // TODO: Used to be named ActionDict... Rename to OneShot..., or OneShotDict

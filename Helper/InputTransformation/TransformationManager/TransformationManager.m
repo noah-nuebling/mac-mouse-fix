@@ -22,9 +22,7 @@
 
 @implementation TransformationManager
 
-+ (void)load {
-//    loadTestRemaps();
-}
+#define USE_TEST_REMAPS YES
 
 #pragma mark - Remaps dictionary and interface
 
@@ -45,6 +43,10 @@ NSDictionary *_remaps;
 /// The helper was made to handle a dictionary format which should be more effictient among other perks.
 /// This function takes the remaps in table format from config, then converts it to dict format and makes that available to all the other Input Transformation classes to base their behaviour off of through self.remaps.
 + (void)loadRemapsFromConfig {
+    
+    if (USE_TEST_REMAPS) {
+        [self setRemaps:self.testRemaps]; return;
+    }
     
     NSArray *remapsTable = [Config.config objectForKey:kMFConfigKeyRemaps];
     
@@ -235,111 +237,115 @@ Boolean keyCaptureModePayloadIsValidWithKeyCode(CGKeyCode keyCode, CGEventFlags 
     /// Having these 2 data structures might very well not be worth the cost of having to think about both and write a conversion function between them. But we've already built helper around this, and mainApp needs the table based structure, so we're sticking with this double-structure approach.
     return @{
         @{}: @{                                                     // Key: modifier dict (empty -> no modifiers)
-//                @(3): @{                                                // Key: button
-//                        @(1): @{                                            // Key: level
-//                                kMFButtonTriggerDurationClick: @[                                   // Key: click/hold, value: array of actions
-//                                        @{
-//                                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-//                                            kMFActionDictKeyGenericVariant:@(kMFSHMissionControl)
-//                                        },
-//                                ],
-//                                kMFButtonTriggerDurationHold: @[                                  // Key: click/hold, value: array of actions
-//                                        @{
-//                                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-//                                            kMFActionDictKeyGenericVariant: @(kMFSHShowDesktop),
-//                                        },
-//                                ],
-//
-//                        },
-////                        @(2): @{                                            // Key: level
-////                                kMFButtonTriggerDurationClick: @[                                   // Key: click/hold, value: array of actions
-////                                        @{
-////                                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-////                                            kMFActionDictKeyGenericVariant:@(kMFSHLookUp)
-////                                        },
-////                                ],
-////                        }
-//                },
-//                @(4): @{                                                // Key: button
-//                        @(1): @{                                            // Key: level
-//                                kMFButtonTriggerDurationClick: @[
-//                                        @{
-//                                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-//                                            kMFActionDictKeyGenericVariant: @(32),
-//                                        }
-//                                ],
-//                                kMFButtonTriggerDurationHold: @[
-//                                        @{
-//                                            kMFActionDictKeyType: kMFActionDictTypeSmartZoom,
-//                                        }
-//                                ],
-//                        },
-////                        @(2): @{                                            // Key: level
-////                                kMFButtonTriggerDurationClick: @[
-////                                        @{
-////                                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-////                                            kMFActionDictKeyGenericVariant: @(36),
-////                                        }
-////                                ],
-////                        },
-//                },
-                @(7)  : @{                                                // Key: button
-                        @(1): @{                                            // Key: level
-                                kMFButtonTriggerDurationClick: @[                                  // Key: click/hold, value: array of actions
-                                        @{
-                                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-                                            kMFActionDictKeyGenericVariant: @(kMFSHLaunchpad),
-                                        },
-                                ],
-                        },
+            //                @(3): @{                                                // Key: button
+            //                        @(1): @{                                            // Key: level
+            //                                kMFButtonTriggerDurationClick: @[                                   // Key: click/hold, value: array of actions
+            //                                        @{
+            //                                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+            //                                            kMFActionDictKeyGenericVariant:@(kMFSHMissionControl)
+            //                                        },
+            //                                ],
+            //                                kMFButtonTriggerDurationHold: @[                                  // Key: click/hold, value: array of actions
+            //                                        @{
+            //                                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+            //                                            kMFActionDictKeyGenericVariant: @(kMFSHShowDesktop),
+            //                                        },
+            //                                ],
+            //
+            //                        },
+            ////                        @(2): @{                                            // Key: level
+            ////                                kMFButtonTriggerDurationClick: @[                                   // Key: click/hold, value: array of actions
+            ////                                        @{
+            ////                                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+            ////                                            kMFActionDictKeyGenericVariant:@(kMFSHLookUp)
+            ////                                        },
+            ////                                ],
+            ////                        }
+            //                },
+            @(4): @{                                                // Key: button
+                @(1): @{                                            // Key: level
+                    kMFButtonTriggerDurationClick: @[
+                        @{
+                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+                            kMFActionDictKeyGenericVariant: @(kMFSHMissionControl),
+                        }
+                    ],
+                    //                                kMFButtonTriggerDurationHold: @[
+                    //                                        @{
+                    //                                            kMFActionDictKeyType: kMFActionDictTypeSmartZoom,
+                    //                                        }
+                    //                                ],
                 },
-                
+            },
+            ////                        @(2): @{                                            // Key: level
+            ////                                kMFButtonTriggerDurationClick: @[
+            ////                                        @{
+            ////                                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+            ////                                            kMFActionDictKeyGenericVariant: @(36),
+            ////                                        }
+            ////                                ],
+            ////                        },
+            //                },
+            @(7)  : @{                                                // Key: button
+                @(1): @{                                            // Key: level
+                    kMFButtonTriggerDurationClick: @[                                  // Key: click/hold, value: array of actions
+                        @{
+                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+                            kMFActionDictKeyGenericVariant: @(kMFSHLaunchpad),
+                        },
+                    ],
+                },
+            },
+            
         },
         
-//        @{                                                          // Key: modifier dict
-//            kMFModificationPreconditionKeyButtons: @[
-//                    @{
-//                        kMFButtonModificationPreconditionKeyButtonNumber: @(3),
-//                        kMFButtonModificationPreconditionKeyClickLevel: @(2),
-//                    }
-//            ],
-//        }: @{
-//                kMFTriggerDrag: @{
-//                        kMFModifiedDragDictKeyType: kMFModifiedDragTypeFakeDrag,
-//                        kMFModifiedDragDictKeyFakeDragVariantButtonNumber: @3,
-//                }
-//        },
+        //        @{                                                          // Key: modifier dict
+        //            kMFModificationPreconditionKeyButtons: @[
+        //                    @{
+        //                        kMFButtonModificationPreconditionKeyButtonNumber: @(3),
+        //                        kMFButtonModificationPreconditionKeyClickLevel: @(2),
+        //                    }
+        //            ],
+        //        }: @{
+        //                kMFTriggerDrag: @{
+        //                        kMFModifiedDragDictKeyType: kMFModifiedDragTypeFakeDrag,
+        //                        kMFModifiedDragDictKeyFakeDragVariantButtonNumber: @3,
+        //                }
+        //        },
         
         @{
             kMFModificationPreconditionKeyButtons: @[
-                    @{
-                        kMFButtonModificationPreconditionKeyButtonNumber: @(4),
-                        kMFButtonModificationPreconditionKeyClickLevel: @(1),
-                    },
+                @{
+                    kMFButtonModificationPreconditionKeyButtonNumber: @(4),
+                    kMFButtonModificationPreconditionKeyClickLevel: @(1),
+                },
             ],
             
         }: @{
-                kMFTriggerDrag: @{
-                        kMFModifiedDragDictKeyType: kMFModifiedDragTypeThreeFingerSwipe,
+            kMFTriggerScroll: @{
+                kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeZoom
+            },
+            kMFTriggerDrag: @{
+                kMFModifiedDragDictKeyType: kMFModifiedDragTypeThreeFingerSwipe,
+            },
+            @(3): @{                                                // Key: button
+                @(1): @{                                            // Key: level
+                    kMFButtonTriggerDurationClick: @[
+                        @{
+                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+                            kMFActionDictKeyGenericVariant: @(kMFSHSpotlight),
+                        }
+                    ],
                 },
-                @(3): @{                                                // Key: button
-                        @(1): @{                                            // Key: level
-                                kMFButtonTriggerDurationClick: @[
-                                        @{
-                                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-                                            kMFActionDictKeyGenericVariant: @(kMFSHSpotlight),
-                                        }
-                                ],
-                        },
-                        @(2): @{                                            // Key: level
-                                kMFButtonTriggerDurationClick: @[
-                                        @{
-                                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-                                            kMFActionDictKeyGenericVariant: @(kMFSHSiri),
-                                        }
-                                ],
-                        },
+                @(2): @{                                            // Key: level
+                    kMFButtonTriggerDurationClick: @[
+                        @{
+                            kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+                            kMFActionDictKeyGenericVariant: @(kMFSHLaunchpad),
+                        }
+                    ],
                 },
+            },
         },
         @{
             //            kMFModificationPreconditionKeyButtons: @[
@@ -354,9 +360,9 @@ Boolean keyCaptureModePayloadIsValidWithKeyCode(CGKeyCode keyCode, CGEventFlags 
             //            ],
             kMFModificationPreconditionKeyKeyboard: @(NSShiftKeyMask | NSControlKeyMask)
         }: @{
-                kMFTriggerDrag: @{
-                        kMFModifiedDragDictKeyType: kMFModifiedDragTypeThreeFingerSwipe,
-                }
+            kMFTriggerDrag: @{
+                kMFModifiedDragDictKeyType: kMFModifiedDragTypeThreeFingerSwipe,
+            }
         }
     };
 }

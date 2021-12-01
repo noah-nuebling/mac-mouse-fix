@@ -29,7 +29,7 @@ typedef struct {
     
 } ScrollAnalysisResult;
 
-+ (ScrollAnalysisResult)updateWithTickOccuringNowWithDirection:(MFScrollDirection)direction;
++ (ScrollAnalysisResult)updateWithTickOccuringNowWithDirection:(int64_t)delta;
 
 + (void)resetState;
 

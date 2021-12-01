@@ -129,8 +129,8 @@ import CocoaLumberjackSwift
 //        return 10 // Min good feeling value
     }
     @objc static var pxPerTickEnd: Int {
-//        return 120 /// Works well without implicit hybrid curve acceleration
-        return 100 /// Works well with slight hybrid curve acceleration
+        return 120 /// Works well without implicit hybrid curve acceleration
+//        return 100 /// Works well with slight hybrid curve acceleration
 //        return 20;
     }
     @objc static var msPerStep: Int {

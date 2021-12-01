@@ -29,7 +29,7 @@
     
     // Get remaps and apply modifier overrides
     NSDictionary *remaps = TransformationManager.remaps;
-    NSDictionary *modifiersActingOnThisButton = [ModifierManager getActiveModifiersForDevice:devID filterButton:button event:nil]; // The modifiers which act on the incoming button (the button can't modify itself so we filter it out)
+    NSDictionary *modifiersActingOnThisButton = [ModifierManager getActiveModifiersForDevice:&devID filterButton:button event:nil]; // The modifiers which act on the incoming button (the button can't modify itself so we filter it out)
     NSDictionary *remapsForModifiersActingOnThisButton = remaps[modifiersActingOnThisButton];
     NSDictionary *remapsActingOnThisButton = RemapsOverrider.effectiveRemapsMethod_Override(remaps, modifiersActingOnThisButton);
     /// ^ This is different from `remapsForModifiersActingOnThisButton`, in that this is produced by overriding the default remappings with the `remapsForModifiersActingOnThisButton`
@@ -49,7 +49,7 @@
     // Asses mapping landscape
     // \note It's unnecessary to assess mapping landscape (that includes calculating targetTrigger) on click actions again for every call of this function. It only has to be calculated once for every "click" (as opposed to "hold") actionArray in every possible overriden remapDict including the unoverriden one. We could precalculate everything once when loading remapDict if we wanted to. This is plenty fast though so it's fine.
     
-    NSDictionary *activeModifiers = [ModifierManager getActiveModifiersForDevice:devID filterButton:nil event:nil];
+    NSDictionary *activeModifiers = [ModifierManager getActiveModifiersForDevice:&devID filterButton:nil event:nil];
     //      ^ We need to check whether the incoming button is acting as a modifier to determine
     //          `effectForMouseDownStateOfThisLevelExists`, so we can't just use the variable `modifiersActingOnThisButton` defined above, because it filters out the incoming button
     
@@ -130,7 +130,7 @@ static void executeClickOrHoldActionIfItExists(NSString * _Nonnull duration,
         NSArray *actionArrayFromActiveModification = remapsForActiveModifiers[button][level][duration];
         BOOL actionStemsFromModification = [effectiveActionArray isEqual:actionArrayFromActiveModification];
         if (actionStemsFromModification) {
-            [ModifierManager handleModifiersHaveHadEffect:devID];
+            [ModifierManager handleModifiersHaveHadEffectWithDevice:devID activeModifiers:activeModifiers];
         }
     }
 }

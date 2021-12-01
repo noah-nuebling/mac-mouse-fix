@@ -106,7 +106,7 @@ static BOOL modificationPreconditionButtonComponentOfGreaterLevelExistsForButton
 + (BOOL)buttonCouldStillBeUsedThisClickCycle:(NSNumber *)devID button:(NSNumber *)button level:(NSNumber *)level {
     
     NSDictionary *remaps = TransformationManager.remaps;
-    NSDictionary *modifiersActingOnThisButton = [ModifierManager getActiveModifiersForDevice:devID filterButton:button event:nil];
+    NSDictionary *modifiersActingOnThisButton = [ModifierManager getActiveModifiersForDevice:&devID filterButton:button event:nil];
     NSDictionary *remapsActingOnThisButton = RemapsOverrider.effectiveRemapsMethod_Override(remaps, modifiersActingOnThisButton);
     
     BOOL clickActionOfThisLevelExists;

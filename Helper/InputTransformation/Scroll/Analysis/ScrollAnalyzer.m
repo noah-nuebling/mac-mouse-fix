@@ -53,7 +53,7 @@ static NSObject<Smoother> *_tickTimeSmoother;
 /// Dynamic
 
 static double _previousScrollTickTimeStamp = 0;
-static MFScrollDirection _previousDirection = kMFScrollDirectionNone;
+static int64_t _previousDelta = 0;
 
 static int _consecutiveScrollTickCounter;
 static int _consecutiveScrollSwipeCounter;
@@ -67,8 +67,8 @@ static int _consecutiveScrollSwipeCounter_ForFreeScrollWheel;
     
     _previousScrollTickTimeStamp = 0;
     
-    _previousDirection = kMFScrollDirectionNone;
-    /// ^ This needs to be set to none, so that scrollDirectionDidChange will definitely evaluate to NO on the next tick
+    _previousDelta = 0;
+    /// ^ This needs to be set to 0, so that scrollDirectionDidChange will definitely evaluate to NO on the next tick
     
     /// The following are probably not necessary to reset, because the above resets will indirectly cause them to be reset on the next tick
     _consecutiveScrollTickCounter = 0;
@@ -80,17 +80,17 @@ static int _consecutiveScrollSwipeCounter_ForFreeScrollWheel;
 }
 
 /// This is the main input function which should be called on each scrollwheel tick event
-+ (ScrollAnalysisResult)updateWithTickOccuringNowWithDirection:(MFScrollDirection)direction {
++ (ScrollAnalysisResult)updateWithTickOccuringNowWithDirection:(int64_t)delta {
     
     /// Update directionDidChange
     ///     Checks whether the scrolling direction is different from when this function was last called. Writes result into `_scrollDirectionDidChange`.
     
     BOOL scrollDirectionDidChange = NO;
     
-    if (direction != _previousDirection && _previousDirection != kMFScrollDirectionNone) {
+    if (![ScrollUtility sameSign:delta and:_previousDelta]) {
         scrollDirectionDidChange = YES;
     }
-    _previousDirection = direction;
+    _previousDelta = delta;
     
     /// Reset state if scroll direction changed
     if (scrollDirectionDidChange) {

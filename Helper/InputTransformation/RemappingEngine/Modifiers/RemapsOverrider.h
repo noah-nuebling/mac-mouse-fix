@@ -7,6 +7,8 @@
 // --------------------------------------------------------------------------
 //
 
+// TODO: Merge all the code surrounding access and overriding of remaps (from TransformationManager and from RemapsOverrider) into a single `Remaps` class.
+
 #ifndef RemapsOverrider_h
 #define RemapsOverrider_h
 
@@ -17,6 +19,7 @@
 /// `MFEffectiveRemapsMethod`s are blocks that take `remaps` and `activeModifiers` as input and return `effectiveRemaps` based on those.
 typedef NSDictionary *_Nonnull (^MFEffectiveRemapsMethod)(NSDictionary *_Nonnull, NSDictionary *_Nonnull);
 + (MFEffectiveRemapsMethod _Nonnull)effectiveRemapsMethod_Override;
++ (NSDictionary  * _Nonnull )remapsForCurrentlyActiveModifiers;
 
 @end
 

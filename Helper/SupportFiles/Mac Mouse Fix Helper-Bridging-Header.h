@@ -15,5 +15,8 @@
 #import "Utility_Helper.h"
 #import "CircularBuffer.h"
 #import "RemapsOverrider.h"
+#import "ScrollModifiers.h"
+#import "ModifierManager.h"
+#import "TransformationManager.h"
 
 //#import <CocoaLumberjack/CocoaLumberjack.h> /// Importing CocoaLumberjack/Swift with CocoaPods breaks my project. Can't use macros when importing this.

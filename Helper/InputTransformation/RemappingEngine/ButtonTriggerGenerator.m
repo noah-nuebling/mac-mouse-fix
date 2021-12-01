@@ -19,6 +19,8 @@
 #import "SharedUtility.h"
 #import "ButtonTriggerHandler.h"
 #import "ButtonLandscapeAssessor.h"
+#import "Device.h"
+#import "DeviceManager.h"
 
 #pragma mark - Definition of private helper class `Button State`
 
@@ -293,13 +295,23 @@ static void neuterAllButtonsOnDeviceExcept(NSNumber *devID, NSNumber *exceptedBt
     zombifyWithDevice(devID, btn);
 }
 
-+ (NSArray *)getActiveButtonModifiersForDevice:(NSNumber *)devID {
-    // NSUInteger pressedButtons = NSEvent.pressedMouseButtons; // This only updates after we use it here, which led to problems, so were keeping track of mouse down state ourselves with `bs.isPressed`
++ (NSArray *)getActiveButtonModifiersForDevice:(NSNumber **)devIDPtr {
+    /// When passing in a pointer to nil for the devID, this function will try to find a device with pressed buttons and use that. It will return a pointer to the found device' devID in the `devIDPtr` argument
+    
+    /// NSUInteger pressedButtons = NSEvent.pressedMouseButtons; // This only updates after we use it here, which led to problems, so were keeping track of mouse down state ourselves with `bs.isPressed`
     
     NSMutableArray *outArray = [NSMutableArray array];
     
-    NSDictionary *devState = _state[devID];
-    if (devState == nil) return outArray; // Not sure if necessary
+    if (*devIDPtr == nil) {
+        /// Find any device with pressed buttons
+        *devIDPtr = ([ButtonTriggerGenerator getAnyDeviceWithPressedButtons].uniqueID);
+    }
+    
+    NSNumber *devID = *devIDPtr;
+    
+    /// Get device state
+    NSMutableDictionary *devState = _state[devID];;
+    if (devState == nil || devState.count == 0) return outArray; // Not sure if necessary
     // Get state and order by press time
     NSArray *buttonsOrderedByPressTime = [devState keysSortedByValueUsingComparator:^NSComparisonResult(ButtonState *_Nonnull bs1, ButtonState *_Nonnull bs2) {
         return [@(bs1.pressedAtTimeStamp) compare:@(bs2.pressedAtTimeStamp)];
@@ -325,6 +337,20 @@ static BOOL buttonIsPressed(NSNumber *devID, NSNumber *btn) {
     //return [bs.holdTimer isValid] || bs.isZombified;
     ButtonState *bs = _state[devID][btn];
     return bs.isPressed;
+}
+
++ (Device *_Nullable)getAnyDeviceWithPressedButtons {
+    /// Get the first device we find that has any pressed buttons
+    
+    for (Device *device in DeviceManager.attachedDevices) {
+        NSDictionary *devState = _state[device.uniqueID];
+        /// Check if any buttons are pressed on this device
+        for (ButtonState *bs in devState.allValues) {
+            if (bs.isPressed) return device;
+        }
+    }
+    
+    return nil;
 }
 
 

@@ -40,6 +40,7 @@
 		4F44FF052606D73D00926A5E /* SharedMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* SharedMessagePort.m */; };
 		4F5F3EEE2756DB0A00C350C0 /* RemapsOverrider_old_.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5F3EED2756DB0A00C350C0 /* RemapsOverrider_old_.swift */; };
 		4F5F3EF12756EC0400C350C0 /* RemapsOverrider.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5F3EF02756EC0400C350C0 /* RemapsOverrider.m */; };
+		4F5F3EF32756F1DB00C350C0 /* ScrollModifiersSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5F3EF22756F1DB00C350C0 /* ScrollModifiersSwift.swift */; };
 		4F70ECAE267E442D00325A76 /* PointerSpeedExperiments2.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F70ECAD267E442D00325A76 /* PointerSpeedExperiments2.m */; };
 		4F70ECB7267E810900325A76 /* IOUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F70ECB6267E810900325A76 /* IOUtility.m */; };
 		4F79A7EF26042E2E00076A7E /* ToastNotification.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F79A7EE26042E2E00076A7E /* ToastNotification.xib */; };
@@ -130,7 +131,7 @@
 		4FF6668D25F2C93A00689B77 /* MomentumScroll.h (old) in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6662725F2C93A00689B77 /* MomentumScroll.h (old) */; };
 		4FF6668E25F2C93A00689B77 /* MomentumScroll.m (old) in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6662825F2C93A00689B77 /* MomentumScroll.m (old) */; };
 		4FF6668F25F2C93A00689B77 /* SmoothScroll_old_.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662D25F2C93A00689B77 /* SmoothScroll_old_.m */; };
-		4FF6669025F2C93A00689B77 /* ScrollModifiers.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662E25F2C93A00689B77 /* ScrollModifiers.m */; };
+		4FF6669025F2C93A00689B77 /* ScrollModifiers_old_.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662E25F2C93A00689B77 /* ScrollModifiers_old_.m */; };
 		4FF6669125F2C93A00689B77 /* ScrollUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662F25F2C93A00689B77 /* ScrollUtility.m */; };
 		4FF6669225F2C93A00689B77 /* RoughScroll_old_.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6663025F2C93A00689B77 /* RoughScroll_old_.m */; };
 		4FF6669325F2C93A00689B77 /* TouchSimulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6663325F2C93A00689B77 /* TouchSimulator.m */; };
@@ -304,6 +305,7 @@
 		4F5F3EED2756DB0A00C350C0 /* RemapsOverrider_old_.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemapsOverrider_old_.swift; sourceTree = "<group>"; };
 		4F5F3EEF2756DD1200C350C0 /* RemapsOverrider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapsOverrider.h; sourceTree = "<group>"; };
 		4F5F3EF02756EC0400C350C0 /* RemapsOverrider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapsOverrider.m; sourceTree = "<group>"; };
+		4F5F3EF22756F1DB00C350C0 /* ScrollModifiersSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollModifiersSwift.swift; sourceTree = "<group>"; };
 		4F70ECAC267E442D00325A76 /* PointerSpeedExperiments2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerSpeedExperiments2.h; sourceTree = "<group>"; };
 		4F70ECAD267E442D00325A76 /* PointerSpeedExperiments2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerSpeedExperiments2.m; sourceTree = "<group>"; };
 		4F70ECB5267E810900325A76 /* IOUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOUtility.h; sourceTree = "<group>"; };
@@ -450,7 +452,7 @@
 		4FF6662B25F2C93A00689B77 /* ScrollUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollUtility.h; sourceTree = "<group>"; };
 		4FF6662C25F2C93A00689B77 /* Scroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scroll.h; sourceTree = "<group>"; };
 		4FF6662D25F2C93A00689B77 /* SmoothScroll_old_.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SmoothScroll_old_.m; sourceTree = "<group>"; };
-		4FF6662E25F2C93A00689B77 /* ScrollModifiers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollModifiers.m; sourceTree = "<group>"; };
+		4FF6662E25F2C93A00689B77 /* ScrollModifiers_old_.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollModifiers_old_.m; sourceTree = "<group>"; };
 		4FF6662F25F2C93A00689B77 /* ScrollUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollUtility.m; sourceTree = "<group>"; };
 		4FF6663025F2C93A00689B77 /* RoughScroll_old_.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoughScroll_old_.m; sourceTree = "<group>"; };
 		4FF6663225F2C93A00689B77 /* GestureScrollSimulator_old_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GestureScrollSimulator_old_.h; sourceTree = "<group>"; };
@@ -760,7 +762,8 @@
 			isa = PBXGroup;
 			children = (
 				4FF6662925F2C93A00689B77 /* ScrollModifiers.h */,
-				4FF6662E25F2C93A00689B77 /* ScrollModifiers.m */,
+				4FF6662E25F2C93A00689B77 /* ScrollModifiers_old_.m */,
+				4F5F3EF22756F1DB00C350C0 /* ScrollModifiersSwift.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -1977,7 +1980,7 @@
 				4FF6669525F2C93A00689B77 /* ModifiedDrag.m in Sources */,
 				4FD86089266E819A004F76C8 /* Pointers.swift in Sources */,
 				4FF6668825F2C93A00689B77 /* ButtonInputReceiver.m in Sources */,
-				4FF6669025F2C93A00689B77 /* ScrollModifiers.m in Sources */,
+				4FF6669025F2C93A00689B77 /* ScrollModifiers_old_.m in Sources */,
 				4FF6655125F2C7B000689B77 /* NSMutableDictionary+Additions.m in Sources */,
 				4FF6668525F2C93A00689B77 /* ModifierManager.m in Sources */,
 				4FD860CC266EF55A004F76C8 /* ScrollConfig.swift in Sources */,
@@ -2009,6 +2012,7 @@
 				4FA83A2E268288D900F3A31B /* PointerConfig.swift in Sources */,
 				4FF6668625F2C93A00689B77 /* ButtonTriggerGenerator.m in Sources */,
 				4FF6669425F2C93A00689B77 /* GestureScrollSimulator_old_.m in Sources */,
+				4F5F3EF32756F1DB00C350C0 /* ScrollModifiersSwift.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
