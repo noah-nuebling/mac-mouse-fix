@@ -24,8 +24,11 @@ typedef enum {
 
 + (void)load_Manual;
 
-+ (void)initializeDragWithModifiedDragDict:(NSDictionary *)dict onDevice:(Device *)dev;
++ (void)initializeDragWithModifiedDragDict:(NSDictionary *)dict onDevice:(Device *)dev largeUsageThreshold:(BOOL)largeUsageThreshold;
+
++ (void)suspend;
 + (void)deactivate;
++ (void)deactivateCancel:(BOOL)cancel;
 
 + (void)handleMouseInputWithDeltaX:(int64_t)deltaX deltaY:(int64_t)deltaY event:(CGEventRef _Nullable)event;
 @end

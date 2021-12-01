@@ -103,13 +103,10 @@ static struct ModifiedDragState _drag;
             
             _drag.eventTap = eventTap;
         }
-        _drag.usageThreshold = 5; // 20
-    } else {
-        _drag.usageThreshold = 50;
     }
 }
 
-+ (void)initializeDragWithModifiedDragDict:(NSDictionary *)dict onDevice:(Device *)dev {
++ (void)initializeDragWithModifiedDragDict:(NSDictionary *)dict onDevice:(Device *)dev largeUsageThreshold:(BOOL)largeUsageThreshold {
     
     /// Get values from dict
     MFStringConstant type = dict[kMFModifiedDragDictKeyType];
@@ -126,22 +123,35 @@ static struct ModifiedDragState _drag;
     
 //    DDLogDebug(@"INITIALIZING MODIFIED DRAG WITH TYPE %@ ON DEVICE %@", type, dev);
     
-    // Init _drag struct
-    _drag.modifiedDevice = dev;
-    _drag.activationState = kMFModifiedInputActivationStateInitialized;
-    _drag.type = type;
+    /// Init _drag struct
     
-    _drag.origin = getRoundedPointerLocation();
+    /// Init static
+    _drag.modifiedDevice = dev;
+    _drag.type = type;
+    _drag.fakeDragButtonNumber = fakeDragButtonNumber;
+    _drag.addModePayload = payload;
+    if (inputIsPointerMovement) {
+        _drag.usageThreshold = largeUsageThreshold ? 20 : 5;
+    } else {
+        _drag.usageThreshold = largeUsageThreshold ? 50 : 12;
+    }
+    
+    /// Init dynamic
+    initDragState();
+}
+
+void initDragState(void) {
     _drag.originOffset = (Vector){0};
     _drag.subPixelatorX = [SubPixelator roundPixelator];
     _drag.subPixelatorY = [SubPixelator roundPixelator];
-    _drag.fakeDragButtonNumber = fakeDragButtonNumber;
-    _drag.addModePayload = payload;
+    
+    _drag.origin = getRoundedPointerLocation();
+    _drag.activationState = kMFModifiedInputActivationStateInitialized;
     
     if (inputIsPointerMovement) {
         CGEventTapEnable(_drag.eventTap, true);
     } else {
-        [dev receiveAxisInputAndDoSeizeDevice:NO];
+        [_drag.modifiedDevice receiveAxisInputAndDoSeizeDevice:NO];
     }
 }
 
@@ -317,6 +327,17 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
 }
 
 + (void)deactivate {
+    [self deactivateCancel:false];
+}
+
++ (void)suspend {
+    /// Deactivate and re-initialize
+    
+    [self deactivateCancel:true];
+    initDragState();
+}
+
++ (void)deactivateCancel:(BOOL)cancel {
     
 //    DDLogDebug(@"Deactivating modified drag with state: %@", [self modifiedDragStateDescription:_drag]);
     
@@ -325,27 +346,31 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
     disableMouseTracking(); // Moved this up here instead of at the end of the function to minimize mouseMovedOrDraggedCallback() being called when we don't need that anymore. Not sure if it makes a difference.
     
     if (_drag.activationState == kMFModifiedInputActivationStateInUse) {
-        handleDeactivationWhileInUse();
+        handleDeactivationWhileInUse(cancel);
     }
     _drag.activationState = kMFModifiedInputActivationStateNone;
 }
 
-static void handleDeactivationWhileInUse() {
+static void handleDeactivationWhileInUse(BOOL cancelation) {
     if ([_drag.type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
+        
+        MFDockSwipeType type;
+        IOHIDEventPhaseBits phase;
         
         struct ModifiedDragState localDrag = _drag;
         if (localDrag.usageAxis == kMFAxisHorizontal) {
-            [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypeHorizontal phase:kIOHIDEventPhaseEnded];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypeHorizontal phase:kIOHIDEventPhaseEnded];
-            });
-            // ^ The inital dockSwipe event we post will be ignored by the system when it is under load (I called this the "stuck bug" in other places). Sending the event again with a delay of 200ms (0.2s) gets it unstuck almost always. Sending the event twice gives us the best of both responsiveness and reliability.
+            type = kMFDockSwipeTypeHorizontal;
         } else if (localDrag.usageAxis == kMFAxisVertical) {
-            [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypeVertical phase:kIOHIDEventPhaseEnded];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypeVertical phase:kIOHIDEventPhaseEnded];
-            });
-        }
+            type = kMFDockSwipeTypeVertical;
+        } else assert(false);
+        
+        phase = cancelation ? kIOHIDEventPhaseCancelled : kIOHIDEventPhaseEnded;
+        
+        [TouchSimulator postDockSwipeEventWithDelta:0.0 type:type phase:phase];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [TouchSimulator postDockSwipeEventWithDelta:0.0 type:type phase:phase];
+        });
+        // ^ The inital dockSwipe event we post will be ignored by the system when it is under load (I called this the "stuck bug" in other places). Sending the event again with a delay of 200ms (0.2s) gets it unstuck almost always. Sending the event twice gives us the best of both responsiveness and reliability.
         
     } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
         

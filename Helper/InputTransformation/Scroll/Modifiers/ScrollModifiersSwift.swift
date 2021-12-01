@@ -77,6 +77,8 @@ import CocoaLumberjackSwift
         let resultIsEmpty = result.input == emptyResult.input && result.effect == emptyResult.effect
         if !resultIsEmpty {
             ModifierManager.handleModifiersHaveHadEffect(withDevice: modifyingDeviceID, activeModifiers: activeModifiers)
+            ModifiedDrag.suspend()
+            /// ^ It's easy to accidentally drag while trying to click and scroll. And some modifiedDrag effects can interfere with modifiedScroll effects. That's why we deactivate modifiedScroll here.
         }
         
         /// Debiug

@@ -128,8 +128,8 @@ double _dockSwipeLastDelta = 0.0;
     DDLogDebug(@"Sending dockSwipe with \ndelta: %@, \nlastDelta: %@, \nprevOriginOffset: %@ \ntype: %@, \nphase: %@, \ntimeSinceLastEvent: %@", @(d), @(_dockSwipeLastDelta), @(_dockSwipeOriginOffset), @(type), @(phase), @(timeDiff));
     
     // We actually need to send kIOHIDEventPhaseEnded or kIOHIDEventPhaseCancelled depending on situation, but we don't wan't to expose that complexity to the caller
-    // We're treating phase == kIOHIDEventPhaseEnded and the phase == kIOHIDEventPhaseCancelled the exact same and then decide ouselves which of the two to send
-    if (phase == kIOHIDEventPhaseEnded || phase == kIOHIDEventPhaseCancelled) {
+    // IF phase == kIOHIDEventPhaseEnded then decide ouselves which of the two to send
+    if (phase == kIOHIDEventPhaseEnded) {
         if ([SharedUtility signOf:_dockSwipeLastDelta] == [SharedUtility signOf:_dockSwipeOriginOffset]) {
             phase = kIOHIDEventPhaseEnded;
         } else {

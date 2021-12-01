@@ -163,9 +163,9 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
     
     // Do weird stuff if AddMode is active.
     if (TransformationManager.addModeIsEnabled) {
-            if (activeModifiers.allKeys.count != 0) { // We activate modifications, if activeModifiers isn't _completely_ empty
-                activeModifications = TransformationManager.remaps[@{kMFAddModeModificationPrecondition: @YES}];
-            }
+        if (activeModifiers.allKeys.count != 0) { // We activate modifications, if activeModifiers isn't _completely_ empty
+            activeModifications = TransformationManager.remaps[@{kMFAddModeModificationPrecondition: @YES}];
+        }
     }
     
     if (activeModifications) {
@@ -178,7 +178,13 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
                 modifiedDragEffect = modifiedDragEffect.mutableCopy;
                 modifiedDragEffect[kMFRemapsKeyModificationPrecondition] = activeModifiers;
             }
-            [ModifiedDrag initializeDragWithModifiedDragDict:modifiedDragEffect onDevice:device];
+            /// Determine usage threshold based on other active modifications
+            /// It's easy to accidentally drag the mouse while trying to scroll so in that case we want a larger usageThreshold to avoid accidental drag activation
+            BOOL largeUsageThreshold = NO;
+            if (activeModifications[kMFTriggerScroll] != nil) {
+                largeUsageThreshold = YES;
+            }
+            [ModifiedDrag initializeDragWithModifiedDragDict:modifiedDragEffect onDevice:device largeUsageThreshold:largeUsageThreshold];
         }
     }
 }
