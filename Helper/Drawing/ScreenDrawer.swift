@@ -41,11 +41,24 @@ import CocoaLumberjackSwift
         canvas.ignoresMouseEvents = true /// Mouse events should pass through
 
         canvas.makeKeyAndOrderFront(nil)
+        
+        /// Optimization
+        ///  Setting frame on canvas.contentView subview is really slow for some reason. Here are attempts at fixing that.
+    
+//        canvas.contentView?.translatesAutoresizingMaskIntoConstraints = false
+//        canvas.contentView?.autoresizingMask = .none
+//        canvas.contentView?.removeConstraints(canvas.contentView?.constraints ?? [])
+//        canvas.contentView?.autoresizesSubviews = false
     }
     
     /// Drawing
     
     @objc func draw(view: NSView, atFrame frameInScreen: NSRect, onScreen screen: NSScreen) {
+        
+        /// Set props on view to (hopefully) optimize
+//        view.translatesAutoresizingMaskIntoConstraints = false
+//        view.autoresizingMask = .none
+//        view.removeConstraints(view.constraints)
         
         /// Size `canvas` to fill `screen`
         canvas.setFrame(screen.frame, display: false)
@@ -63,16 +76,16 @@ import CocoaLumberjackSwift
         ///     This is necessary after switching spaces
         canvas.orderFront(nil)
     }
-    @objc func move(view: NSView, toFrame frameInScreen: NSRect) {
+    @objc func move(view: NSView, toOrigin newOrigin: NSPoint) {
         
         guard (view.superview!.isEqual(to: canvas.contentView)) else { fatalError() }
         
-        view.frame = frameInScreen
+        view.setFrameOrigin(newOrigin)
     }
     
     @objc func undraw(view: NSView) {
         
-        DDLogDebug("Superview: \(view), canvas: \(canvas)")
+//        DDLogDebug("Superview: \(view), canvas: \(canvas)")
         
         if view.superview!.isEqual(to: canvas.contentView) {
             view.removeFromSuperview()

@@ -560,9 +560,11 @@ void drawPuppetCursor(BOOL fresh) {
     
     /// Draw!
     if (fresh) {
+        /// Draw
         [ScreenDrawer.shared drawWithView:_puppetCursorView atFrame:puppetImageFrameUnflipped onScreen:NSScreen.mainScreen];
     } else {
-        [ScreenDrawer.shared moveWithView:_puppetCursorView toFrame:puppetImageFrameUnflipped];
+        ///Draw
+        [ScreenDrawer.shared moveWithView:_puppetCursorView toOrigin:puppetImageFrameUnflipped.origin];
     }
 }
 

@@ -229,11 +229,13 @@ static BOOL _momentumScrollIsActive;
             .x = smoothedXDistance / smoothedTimeBetweenInputs,
             .y = smoothedYDistance / smoothedTimeBetweenInputs
         };
-        
         double stopSpeed = 1.0;
+        
+        /// 1. Similar to trackpad, but to fast fall off on low speeds vs medium speeds
+        ///     Can't really deviate from the default curve thought because certain apps impement their own momentumScroll and we should stay consistent with those
+        ///     Maybe we can use a Bezier for the initialMomentumSpeed and make it feel better that way.
         double dragCoeff = 30;
         double dragExp = 0.7;
-        CGPoint location = origin;
         
         /**
                 For `dragExp`, a value between 0.7 and 0.8 seems to be the sweet spot to get nice Apple Trackpad -like deceleration
@@ -242,6 +244,8 @@ static BOOL _momentumScrollIsActive;
                 - `dragExp` = 0.9  with `dragCoeff` around 10 also feels nice but noticeably different from Trackpad
                 -   ^ The above drag coefficients don't work anymore now that we've fixed another bug where scroll point deltas were 10x too small
          */
+        
+        CGPoint location = origin;
         
         /// Do start momentum scroll
         
