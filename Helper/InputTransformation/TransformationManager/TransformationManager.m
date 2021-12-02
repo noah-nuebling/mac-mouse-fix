@@ -22,7 +22,7 @@
 
 @implementation TransformationManager
 
-#define USE_TEST_REMAPS YES
+#define USE_TEST_REMAPS NO
 
 #pragma mark - Remaps dictionary and interface
 
@@ -128,18 +128,27 @@ BOOL _addModeIsEnabled = NO;
 ///                 -  `ModifierManager` -> `toggleModifierEventTapBasedOnRemaps` along with other functions from `ModifierManager` are probably broken, too.
 + (void)enableAddMode {
     _addModeIsEnabled = YES;
+    
     NSMutableDictionary *triggerToEffectDict_DemandsMods = [NSMutableDictionary dictionary];
-    // Fill out triggerToEffectDictWithNeedForModifier with all triggers that users can map to
-    // String based triggers (Only one - drag - atm)
+    /// Fill out triggerToEffectDictWithNeedForModifier with all triggers that users can map to
+    /// String based triggers (Only one - drag - atm)
+    /// Edit: What are "String-based triggers"? Where does the scrollTrigger belong?
     triggerToEffectDict_DemandsMods[kMFTriggerDrag] = @{
         kMFModifiedDragDictKeyType: kMFModifiedDragTypeAddModeFeedback,
         kMFRemapsKeyTrigger: kMFTriggerDrag,
     };
+    
     NSMutableDictionary *triggerToEffectDict_NoModsRequired = [NSMutableDictionary dictionary];
+    // Scroll trigger
+    triggerToEffectDict_NoModsRequired[kMFTriggerScroll] = @{
+        kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeAddModeFeedback,
+        kMFRemapsKeyTrigger: kMFTriggerScroll,
+    };
     // Button triggers (dict based)
     for (int btn = 1; btn <= kMFMaxButtonNumber; btn++) {
         for (int lvl = 1; lvl <= 3; lvl++) {
             for (NSString *dur in @[kMFButtonTriggerDurationClick, kMFButtonTriggerDurationHold]) {
+                
                 NSMutableDictionary *addModeFeedbackDict = @{
                     kMFActionDictKeyType: kMFActionDictTypeAddModeFeedback,
                     kMFRemapsKeyTrigger: @{

@@ -167,11 +167,11 @@ static NSImageView *_puppetCursorView;
 }
 
 void initDragState(void) {
-    _drag.originOffset = (Vector){0};
     _drag.subPixelatorX = [SubPixelator roundPixelator];
     _drag.subPixelatorY = [SubPixelator roundPixelator];
     
     _drag.origin = getRoundedPointerLocation();
+    _drag.originOffset = (Vector){0};
     _drag.activationState = kMFModifiedInputActivationStateInitialized;
     
     if (inputIsPointerMovement) {
@@ -334,7 +334,7 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
         TODO: Test this on a vertical screen
      */
     
-    double originOffsetForOneSpace = 2.0;  // I've seen this be: 1.25, 1.5, 2.0. Not sure why. Restarting, attaching displays, or changing UI scaling don't seem to change it from my testing. It just randomly changes after a few weeks.
+    double originOffsetForOneSpace = 2.0;  // I've seen this be: 1.25, 1.5, 2.0. Not sure why. Restarting, attaching displays, or changing UI scaling don't seem to change it from my testing. It just randomly changes after a few weeks. Edit: *It depends on how many spaces there are.*
     CGFloat screenWidth = NSScreen.mainScreen.frame.size.width;
     double spaceSeparatorWidth = 63;
     threeFingerScaleH = threeFingerScaleV = originOffsetForOneSpace / (screenWidth + spaceSeparatorWidth);
@@ -445,6 +445,8 @@ static void handleDeactivationWhileInUse(BOOL cancelation) {
         ///     This will set off momentum scroll
         [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded];
         
+        CGPoint puppetPos = puppetCursorPosition(); /// Get this before dispatching, cause otherwise there's a race condition when this is called by `suspend` because suspend will then call `initDragState();` which resets the values that this depends on (namely origin offset)
+        
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.05 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
             /// ^ Execute this on a delay so that momentumScroll is started before the warp. That way momentumScrol will still kick in and work, even if we moved the ponter outside the scrollView that we started scrolling in.
             
@@ -452,7 +454,7 @@ static void handleDeactivationWhileInUse(BOOL cancelation) {
             setSuppressionInterval(kMFEventSuppressionIntervalZero);
             
             /// Set actual cursor to position of puppet cursor
-            CGWarpMouseCursorPosition(puppetCursorPosition());
+            CGWarpMouseCursorPosition(puppetPos);
 //            CGWarpMouseCursorPosition(_drag.origin);
             
             /// Reset suppression interval to default

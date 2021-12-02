@@ -67,7 +67,12 @@ import CocoaLumberjackSwift
             case kMFModifiedScrollEffectModificationTypeRotate:
                 result.effect = kMFScrollEffectModificationRotate
             case kMFModifiedScrollEffectModificationTypeAddModeFeedback:
-                DDLogWarn("Add mode for scrolling not implemented")
+                
+                var payload = modifiedScrollDict
+                payload.removeValue(forKey: kMFModifiedScrollDictKeyEffectModificationType)
+                payload[kMFRemapsKeyModificationPrecondition] = NSMutableDictionary(dictionary: activeModifiers) /// Need to cast to mutable, otherwise Swift will make it immutable and mainApp will crash trying to build payload into its remapArray
+                TransformationManager.concludeAddMode(withPayload: payload)
+                
             default:
                 fatalError("Unknown modifiedSrollDict type found in remaps")
             }

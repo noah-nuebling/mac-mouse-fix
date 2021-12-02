@@ -79,6 +79,7 @@ import CocoaLumberjackSwift
     @objc func move(view: NSView, toOrigin newOrigin: NSPoint) {
         
         guard (view.superview!.isEqual(to: canvas.contentView)) else { fatalError() }
+        /// ^ This crashes sometimes because view doesn't have a superview. This happens when scroll zooming and drag scrolling at the same time on the same button. Investivate.
         
         view.setFrameOrigin(newOrigin)
     }

@@ -16,6 +16,7 @@
 #import "ToastNotificationController.h"
 #import "NSAttributedString+Additions.h"
 #import "UIStrings.h"
+#import "WannabePrefixHeader.h"
 
 @interface AddWindowController ()
 @property (weak) IBOutlet NSBox *addField;
@@ -69,6 +70,9 @@ static BOOL _pointerIsInsideAddField;
     [AppDelegate.mainWindow endSheet:_instance.window];
 }
 + (void)handleReceivedAddModeFeedbackFromHelperWithPayload:(NSDictionary *)payload {
+    
+    DDLogDebug(@"Received AddMode feedback with payload: %@", payload);
+    
     // Tint plus icon to give visual feedback
     NSImageView *plusIconViewCopy;
     if (@available(macOS 10.14, *)) {

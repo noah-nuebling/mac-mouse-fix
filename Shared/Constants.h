@@ -141,6 +141,7 @@ typedef NSString*                                                       MFString
 #define kMFModifiedScrollInputModificationTypeQuickScroll                                   @"fast"
 #define kMFModifiedScrollEffectModificationTypeZoom                                         @"zoom"
 #define kMFModifiedScrollEffectModificationTypeHorizontalScroll                             @"horizontal"
+#define kMFModifiedScrollEffectModificationTypeFourFingerPinch                              @"fourFingerPinch"
 #define kMFModifiedScrollEffectModificationTypeRotate                                       @"rotate"
 #define kMFModifiedScrollEffectModificationTypeAddModeFeedback                              @"addModeScroll"
 
