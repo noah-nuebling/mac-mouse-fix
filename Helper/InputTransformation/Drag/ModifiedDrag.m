@@ -23,6 +23,8 @@
 #import "TransformationManager.h"
 #import "SharedUtility.h"
 
+#import "CGSSpace.h"
+
 #import <Cocoa/Cocoa.h>
 #import "VectorUtility.h"
 #import "Utility_Helper.h"
@@ -94,6 +96,7 @@ static struct ModifiedDragState _drag;
 #define inputIsPointerMovement YES
 static int _cgsConnection; /// This is used by private APIs to talk to the window server and do fancy shit like hiding the cursor from a background application
 static NSImageView *_puppetCursorView;
+int16_t _nOfSpaces = 1;
 
 /// There are two different modes for how we receive mouse input, toggle to switch between the two for testing
 /// Set to no, if you want input to be raw mouse input, set to yes if you want input to be mouse pointer delta
@@ -278,7 +281,13 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
         
         if ([_drag.type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
             
-//            if (inputIsPointerMovement) [NSCursor.closedHandCursor push];
+            _drag.phase = kIOHIDEventPhaseBegan;
+            
+            /// Get number of spaces
+            ///     for use in `handleMouseInputWhileInUse()`. Getting it here for performance reasons. Not sure if significant.
+            CFArrayRef spaces = CGSCopySpaces(_cgsConnection, kCGSAllSpacesMask);
+            _nOfSpaces = CFArrayGetCount(spaces);
+            CFRelease(spaces);
             
         } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
             
@@ -327,23 +336,30 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
     double threeFingerScaleH;
     double threeFingerScaleV;
     
-    /*
+    /**
      Horizontal dockSwipe scaling
         This makes horizontal dockSwipes (switch between spaces) follow the pointer exactly. (If everything works)
         I arrived at these value through testing documented in the NotePlan note "MMF - Scraps - Testing DockSwipe scaling"
         TODO: Test this on a vertical screen
      */
+    double originOffsetForOneSpace = _nOfSpaces == 1 ? 2.0 : 1.0 + (1.0 / (_nOfSpaces-1));
+    /// ^ I've seen this be: 1.25, 1.5, 2.0. Not sure why. Restarting, attaching displays, or changing UI scaling don't seem to change it from my testing. It just randomly changes after a few weeks.
+    ///     I think I finally see the pattern:
+    ///         It's 2.0 for 2 spaces
+    ///         It's 1.5 for 3 spaces
+    ///         It's 1.25 for 5 spaces
+    ///         So the patterns is: 1 + 1 / (nOfSpaces-1)
+    ///            (Except for 1 cause you can't divide by zero)
     
-    double originOffsetForOneSpace = 2.0;  // I've seen this be: 1.25, 1.5, 2.0. Not sure why. Restarting, attaching displays, or changing UI scaling don't seem to change it from my testing. It just randomly changes after a few weeks. Edit: *It depends on how many spaces there are.*
     CGFloat screenWidth = NSScreen.mainScreen.frame.size.width;
     double spaceSeparatorWidth = 63;
     threeFingerScaleH = threeFingerScaleV = originOffsetForOneSpace / (screenWidth + spaceSeparatorWidth);
     
-    // Vertical dockSwipe scaling
-    // We should maybe use screenHeight to scale vertical dockSwipes (Mission Control and App Windows), but since they don't follow the mouse pointer anyways, this is fine;
+    /// Vertical dockSwipe scaling
+    /// We should maybe use screenHeight to scale vertical dockSwipes (Mission Control and App Windows), but since they don't follow the mouse pointer anyways, this is fine;
     threeFingerScaleV *= 1.0;
     
-    /*
+    /**
      scrollSwipe scaling
         A scale of 1.0 will make the pixel based animations (normal scrolling) follow the mouse pointer.
         Gesture based animations (swiping between pages in Safari etc.) seem to be scaled separately such that swiping 3/4 (or so) of the way across the Trackpad equals one whole page. No matter how wide the page is.
