@@ -129,22 +129,23 @@ BOOL _addModeIsEnabled = NO;
 + (void)enableAddMode {
     _addModeIsEnabled = YES;
     
-    NSMutableDictionary *triggerToEffectDict_DemandsMods = [NSMutableDictionary dictionary];
-    /// Fill out triggerToEffectDictWithNeedForModifier with all triggers that users can map to
-    /// String based triggers (Only one - drag - atm)
-    /// Edit: What are "String-based triggers"? Where does the scrollTrigger belong?
-    triggerToEffectDict_DemandsMods[kMFTriggerDrag] = @{
+    NSMutableDictionary *triggerToEffectDict = [NSMutableDictionary dictionary];
+    /// Fill out triggerToEffectDict_DemandsMods with all triggers that users can map to String based triggers (Only one - drag - atm)
+    ///     Edit: What are "String-based triggers"? Where does the scrollTrigger belong?
+    ///         Also making this distinction between triggers that need mods and ones that don't here and in this way seems unnecessary and confusing. Edit we removed it cause it was causing trouble implementing modifiedDrag addMode
+    
+    /// Drag trigger
+    triggerToEffectDict[kMFTriggerDrag] = @{
         kMFModifiedDragDictKeyType: kMFModifiedDragTypeAddModeFeedback,
         kMFRemapsKeyTrigger: kMFTriggerDrag,
     };
-    
-    NSMutableDictionary *triggerToEffectDict_NoModsRequired = [NSMutableDictionary dictionary];
-    // Scroll trigger
-    triggerToEffectDict_NoModsRequired[kMFTriggerScroll] = @{
+    /// Scroll trigger
+    triggerToEffectDict[kMFTriggerScroll] = @{
         kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeAddModeFeedback,
         kMFRemapsKeyTrigger: kMFTriggerScroll,
     };
-    // Button triggers (dict based)
+    
+    /// Button triggers (dict based)
     for (int btn = 1; btn <= kMFMaxButtonNumber; btn++) {
         for (int lvl = 1; lvl <= 3; lvl++) {
             for (NSString *dur in @[kMFButtonTriggerDurationClick, kMFButtonTriggerDurationHold]) {
@@ -156,18 +157,17 @@ BOOL _addModeIsEnabled = NO;
                         kMFButtonTriggerKeyClickLevel: @(lvl),
                         kMFButtonTriggerKeyDuration: dur,
                     }
-                }.mutableCopy; // The key `kMFRemapsKeyModificationPrecondition` and corresponding values are added to `addModeFeedbackDict` in the function `executeClickOrHoldActionIfItExists`. That's also why we need to make this mutable.
-                [triggerToEffectDict_NoModsRequired setObject:@[addModeFeedbackDict] forCoolKeyArray:@[@(btn),@(lvl),dur]];
-                //  ^ We're wrapping `addModeFeedbackDict` in an array here because we started building helper with dicts of several effects in mind.
-                //      This doesn't make sense though and we should remove it.
+                }.mutableCopy; /// The key `kMFRemapsKeyModificationPrecondition` and corresponding values are added to `addModeFeedbackDict` in the function `executeClickOrHoldActionIfItExists`. That's also why we need to make this mutable.
+                [triggerToEffectDict setObject:@[addModeFeedbackDict] forCoolKeyArray:@[@(btn),@(lvl),dur]];
+                ///  ^ We're wrapping `addModeFeedbackDict` in an array here because we started building helper with dicts of several effects in mind.
+                ///      This doesn't make sense though and we should remove it.
             }
         }
     }
     
-    // Set _remaps to generated
+    /// Set _remaps to generated
     self.remaps = @{
-        @{}: triggerToEffectDict_NoModsRequired,
-        @{kMFAddModeModificationPrecondition:@YES}: triggerToEffectDict_DemandsMods,
+        @{}: triggerToEffectDict
     };
 }
 + (void)disableAddMode {
@@ -175,17 +175,23 @@ BOOL _addModeIsEnabled = NO;
     [self loadRemapsFromConfig];
 }
 + (void)concludeAddModeWithPayload:(NSDictionary *)payload {
-    [SharedMessagePort sendMessage:@"addModeFeedback" withPayload:payload expectingReply:NO];
-//    [TransformationManager performSelector:@selector(disableAddMode) withObject:nil afterDelay:0.5];
-    // ^ We did this to keep the remapping disabled for a little while after adding a new row, but it leads to adding several entries at once when trying to input button modification precondition, if you're not fast enough.
-    [TransformationManager disableAddMode];
+    
+    if ([self addModePayloadIsValid:payload]) {
+        [SharedMessagePort sendMessage:@"addModeFeedback" withPayload:payload expectingReply:NO];
+        ///    [TransformationManager performSelector:@selector(disableAddMode) withObject:nil afterDelay:0.5];
+        /// ^ We did this to keep the remapping disabled for a little while after adding a new row, but it leads to adding several entries at once when trying to input button modification precondition, if you're not fast enough.
+        [TransformationManager disableAddMode];
+    }
 }
 
-/// Using this to prevent payloads containing a modified drag with a keyboard-modifier-only precondition, or an empty precondition from being sent to the main app
+/// Using this to prevent payloads containing a modifiedDrag/modifiedScroll with a keyboard-modifier-only precondition, or an empty precondition from being sent to the main app
 /// Empty preconditions only happen when weird bugs occur so this is just an extra safety net for that
-/// Keyboard-modifier-only modified drags work in principle but they cause some smaller bugs and issues in the mainApp UI. We don't wan't to polish that up so we're just disabling the ability to add them.
+///     Edit: We simplified things now and this is the only safety net against sending payloads without necessary modificationPreconditions.
+/// Keyboard-modifier-only modifiedDrags and modifiedScrolls work in principle but they cause some smaller bugs and issues in the mainApp UI. We don't wan't to polish that up so we're just disabling the ability to add them.
+///     Also the remap table is completely structured around buttons now, so it wouldn't fit into the UI to have keyboard-modifier-only modifiedDrags and modifiedScrolls
 + (BOOL)addModePayloadIsValid:(NSDictionary *)payload {
-    if ([payload[kMFRemapsKeyTrigger] isEqual:kMFTriggerDrag]) {
+    if ([payload[kMFRemapsKeyTrigger] isEqual:kMFTriggerDrag]
+        || [payload[kMFRemapsKeyTrigger] isEqual:kMFTriggerScroll]) {
         NSArray *buttonPreconds = payload[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyButtons];
         if (buttonPreconds == nil || buttonPreconds.count == 0) {
             return NO;

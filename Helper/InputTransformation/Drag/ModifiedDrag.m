@@ -319,8 +319,8 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
             
             if (_drag.addModePayload != nil) {
                 if ([TransformationManager addModePayloadIsValid:_drag.addModePayload]) {
-                    [SharedMessagePort sendMessage:@"addModeFeedback" withPayload:_drag.addModePayload expectingReply:NO];
-                    disableMouseTracking(); // Not sure if should be here
+                    [SharedMessagePort sendMessage:@"addModeFeedback" withPayload:_drag.addModePayload expectingReply:NO]; /// Why aren't we using [TransformationManager concludeAddModeWithPayload] here?
+                    disableMouseTracking(); /// Not sure if should be here
                 }
             } else {
                 @throw [NSException exceptionWithName:@"InvalidAddModeFeedbackPayload" reason:@"_drag.addModePayload is nil. Something went wrong!" userInfo:nil]; // Throw exception to cause crash
@@ -496,8 +496,8 @@ static void handleDeactivationWhileInUse(BOOL cancelation) {
         
     } else if ([_drag.type isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
         
-        if ([TransformationManager addModePayloadIsValid:_drag.addModePayload]) { // If it's valid, then we sent the payload off to the MainApp
-            [TransformationManager disableAddMode]; // Why disable it here and not when sending the payload?
+        if ([TransformationManager addModePayloadIsValid:_drag.addModePayload]) { /// If it's valid, then we've already sent the payload off to the MainApp
+            [TransformationManager disableAddMode]; /// Why disable it here and not when sending the payload?
         }
     }
 }
@@ -588,7 +588,7 @@ void drawPuppetCursor(BOOL fresh) {
         /// Draw
         [ScreenDrawer.shared drawWithView:_puppetCursorView atFrame:puppetImageFrameUnflipped onScreen:NSScreen.mainScreen];
     } else {
-        ///Draw
+        ///Move
         [ScreenDrawer.shared moveWithView:_puppetCursorView toOrigin:puppetImageFrameUnflipped.origin];
     }
 }
@@ -603,7 +603,7 @@ CGPoint puppetCursorPosition(void) {
     pos.x = CLIP(pos.x, CGRectGetMinX(screenSize), CGRectGetMaxX(screenSize));
     pos.y = CLIP(pos.y, CGRectGetMinY(screenSize), CGRectGetMaxY(screenSize));
     
-    /// Normalize originOffsets
+    /// Clip originOffsets to screen bounds
     ///     Not sure if good idea. Origin offset is also used for other important stuff
     
     /// return

@@ -764,8 +764,8 @@
 			isa = PBXGroup;
 			children = (
 				4FF6662925F2C93A00689B77 /* ScrollModifiers.h */,
-				4FF6662E25F2C93A00689B77 /* ScrollModifiers_old_.m */,
 				4F5F3EF22756F1DB00C350C0 /* ScrollModifiers.swift */,
+				4FF6662E25F2C93A00689B77 /* ScrollModifiers_old_.m */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";

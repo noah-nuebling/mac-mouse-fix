@@ -161,29 +161,29 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
     
     NSDictionary *activeModifications = RemapsOverrider.effectiveRemapsMethod_Override(TransformationManager.remaps, activeModifiers);
     
-    // Do weird stuff if AddMode is active.
-    if (TransformationManager.addModeIsEnabled) {
-        if (activeModifiers.allKeys.count != 0) { // We activate modifications, if activeModifiers isn't _completely_ empty
-            activeModifications = TransformationManager.remaps[@{kMFAddModeModificationPrecondition: @YES}];
-        }
-    }
-    
     if (activeModifications) {
-//        DDLogDebug(@"ACTIVE MODIFICATIONS - %@", activeModifications);
-        // Initialize effects which are modifier driven (only modified drag at this point)
-        NSMutableDictionary *modifiedDragEffect = activeModifications[kMFTriggerDrag]; // Probably not truly mutable at this point
+        
+        /// Init modifiedDrag
+        ///    (If there were other modifier driven effects than modifiedDrag in the future, we would also init them here)
+        
+        NSMutableDictionary *modifiedDragEffect = activeModifications[kMFTriggerDrag]; /// Declared as NSMutableDictionary but probably not actually mutable at this point
         if (modifiedDragEffect) {
-            // Add modificationPrecondition info for addMode. See TransformationManager.m -> AddMode for context
+            
+            /// If addMode is active, add activeModifiers to modifiedDragDict
+            ///     See TransformationManager.m -> AddMode for context.
             if ([modifiedDragEffect[kMFModifiedDragDictKeyType] isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
-                modifiedDragEffect = modifiedDragEffect.mutableCopy;
-                modifiedDragEffect[kMFRemapsKeyModificationPrecondition] = activeModifiers;
+                modifiedDragEffect = modifiedDragEffect.mutableCopy; /// Make actually mutable
+                modifiedDragEffect[kMFRemapsKeyModificationPrecondition] = activeModifiers; /// Add activeModifiers
             }
+            
             /// Determine usage threshold based on other active modifications
-            /// It's easy to accidentally drag the mouse while trying to scroll so in that case we want a larger usageThreshold to avoid accidental drag activation
+            ///     It's easy to accidentally drag the mouse while trying to scroll so in that case we want a larger usageThreshold to avoid accidental drag activation
             BOOL largeUsageThreshold = NO;
             if (activeModifications[kMFTriggerScroll] != nil) {
                 largeUsageThreshold = YES;
             }
+            
+            /// Init modifiedDrag
             [ModifiedDrag initializeDragWithModifiedDragDict:modifiedDragEffect onDevice:device largeUsageThreshold:largeUsageThreshold];
         }
     }

@@ -27,7 +27,7 @@ import CocoaLumberjackSwift
         /// Get currently active scroll remaps
         
         var modifyingDeviceID: NSNumber? = nil;
-        let activeModifiers = ModifierManager.getActiveModifiers(forDevice: &modifyingDeviceID, filterButton: nil, event: nil)
+        var activeModifiers = ModifierManager.getActiveModifiers(forDevice: &modifyingDeviceID, filterButton: nil, event: nil)
         let baseRemaps = TransformationManager.remaps();
         
         let remapsForCurrentlyActiveModifiers = RemapsOverrider.effectiveRemapsMethod_Override()(baseRemaps, activeModifiers);
@@ -68,11 +68,11 @@ import CocoaLumberjackSwift
                 result.effect = kMFScrollEffectModificationFourFingerPinch
                 
             case kMFModifiedScrollEffectModificationTypeAddModeFeedback:
-                
-                var payload = modifiedScrollDict
-                payload.removeValue(forKey: kMFModifiedScrollDictKeyEffectModificationType)
-                payload[kMFRemapsKeyModificationPrecondition] = NSMutableDictionary(dictionary: activeModifiers) /// Need to cast to mutable, otherwise Swift will make it immutable and mainApp will crash trying to build this payload into its remapArray
-                TransformationManager.concludeAddMode(withPayload: payload)
+                        
+                    var payload = modifiedScrollDict
+                    payload.removeValue(forKey: kMFModifiedScrollDictKeyEffectModificationType)
+                    payload[kMFRemapsKeyModificationPrecondition] = NSMutableDictionary(dictionary: activeModifiers) /// Need to cast to mutable, otherwise Swift will make it immutable and mainApp will crash trying to build this payload into its remapArray
+                    TransformationManager.concludeAddMode(withPayload: payload)
                 
             default:
                 fatalError("Unknown modifiedSrollDict type found in remaps")
