@@ -15,7 +15,6 @@ import CocoaLumberjackSwift
     /// The first part of the curve  is driven by a BezierCurve, and the second half by a DragCurve.
     /// The drag curve is used to ensure physically accurate, natural-feeling deceleration.
     
-    
     /// Constants
     
     let bezierEpsilon: Double = 0.08
@@ -57,6 +56,8 @@ import CocoaLumberjackSwift
     @objc init(baseCurve: Bezier, baseTimeRange: Double, baseValueRange: Double, dragCoefficient: Double, dragExponent: Double, stopSpeed: Double) {
         
         /// baseCurve is assumed to pass through (0,0) and (1,1)
+        /// The baseValueRange and baseTimeRange are for the Bezier (aka "base") curve.
+        ///     A Drag curve will be appended to the the base curve for natural deceleration. This will increase the timeRange and valueRange of the Hybrid curve to be larger than `baseTimeRange` and `baseValueRange`.
         
         /// Store params
         

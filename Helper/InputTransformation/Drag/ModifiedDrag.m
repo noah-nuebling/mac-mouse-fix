@@ -391,19 +391,11 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
 }
 
 + (void)deactivate {
-    [self deactivateCancel:false];
+    [self deactivateWithCancel:false];
 }
-
-+ (void)suspend {
-    /// Deactivate and re-initialize
++ (void)deactivateWithCancel:(BOOL)cancel {
     
-    [self deactivateCancel:true];
-    initDragState();
-}
-
-+ (void)deactivateCancel:(BOOL)cancel {
-    
-//    DDLogDebug(@"Deactivating modified drag with state: %@", [self modifiedDragStateDescription:_drag]);
+    //    DDLogDebug(@"Deactivating modified drag with state: %@", [self modifiedDragStateDescription:_drag]);
     
     if (_drag.activationState == kMFModifiedInputActivationStateNone) return;
     
@@ -413,6 +405,21 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
         handleDeactivationWhileInUse(cancel);
     }
     _drag.activationState = kMFModifiedInputActivationStateNone;
+}
++ (void)modifiedScrollHasBeenUsed {
+    /// It's easy to accidentally drag while trying to click and scroll. And some modifiedDrag effects can interfere with modifiedScroll effects. We built this cool ModifiedDrag `suspend()` method which effectively restarts modifiedDrag. This is cool and feels nice and has a few usability benefits, but also leads to a bunch of bugs and race conditions in its current form, so were just using `deactivate()`
+    if (_drag.activationState == kMFModifiedInputActivationStateInUse) {
+        [self deactivateWithCancel:YES];
+    }
+}
+    
++ (void)suspend {
+    /// Deactivate and re-initialize
+    
+    if (_drag.activationState == kMFModifiedInputActivationStateNone) return;
+    
+    [self deactivateWithCancel:true];
+    initDragState();
 }
 
 static void handleDeactivationWhileInUse(BOOL cancelation) {

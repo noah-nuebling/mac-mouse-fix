@@ -219,6 +219,7 @@ import CocoaLumberjackSwift
                                          P(x: xMax, y: yMax)])
     }
     @objc static var animationCurve: AnimationCurve = { () -> AnimationCurve in
+        /// This i s not used anymore. Instead we use a `HybridCurve` with a base curve of `baseCurve`. Remove this.
         /// Using a closure here instead of DerivedProperty.create_kvc(), because we know it will never change.
         
         typealias P = Bezier.Point
@@ -241,6 +242,15 @@ import CocoaLumberjackSwift
         
         return Bezier(controlPoints: controlPoints, defaultEpsilon: 0.001) /// The default defaultEpsilon 0.08 makes the animations choppy
     }()
+    @objc static var linearCurve: AnimationCurve = { () -> AnimationCurve in
+        /// This i s not used anymore. Instead we use a `HybridCurve` with a base curve of `baseCurve`. Remove this.
+        /// Using a closure here instead of DerivedProperty.create_kvc(), because we know it will never change.
+        
+        typealias P = Bezier.Point
+        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:1,y:1), P(x:1,y:1)]
+        
+        return Bezier(controlPoints: controlPoints, defaultEpsilon: 0.001) /// The default defaultEpsilon 0.08 makes the animations choppy
+    }()
     @objc static var dragCoefficient: Double {
 //        smooth["friction"] as! Double;
 //        2.3 /// Value from MMF 1. Not sure why so much lower than the new values
@@ -257,6 +267,7 @@ import CocoaLumberjackSwift
     @objc static var stopSpeed: Double {
         /// Used to construct Hybrid curve in Scroll.m
         /// This is the speed (In px/s ?) at which the DragCurve part of the Hybrid curve stops scrolling
+//        99999999.0 /// Turn off momentum scroll
         3.0
     }
     @objc static var accelerationForScrollBuffer: Double { // TODO: Unused, remove

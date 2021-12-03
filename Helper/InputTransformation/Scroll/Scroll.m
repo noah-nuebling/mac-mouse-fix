@@ -280,42 +280,68 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
     
         /// Get parameters for animator
         
+        double animationDuration;
+        Interval *animationValueInterval;
+        id<AnimationCurve> animationCurve;
+        
         /// Base scroll duration
         CFTimeInterval baseTimeRange;
         baseTimeRange = ((CFTimeInterval)ScrollConfig.msPerStep) / 1000.0; /// Need to cast to CFTimeInterval (double), to make this a float division instead of int division yiedling 0
 //        animationDuration = scrollAnalysisResult.smoothedTimeBetweenTicks;
         
-        /// Px that the animator still wants to scroll
+        /// Base px that the animator still wants to scroll
         double pxLeftToScroll;
         if (scrollAnalysisResult.scrollDirectionDidChange || !_animator.isRunning) {
             pxLeftToScroll = 0;
         } else {
             pxLeftToScroll = _animator.animationValueLeft;
-            
-            pxLeftToScroll -= ((HybridCurve *)_animator.animationCurve).dragValueRange;
-            if (pxLeftToScroll < 0) pxLeftToScroll = 0;
-            /// ^ HybridCurve and a bunch of other stuff was engineered to give us the overall distance that the Bezier *and* the DragCurve will scroll, so that the distance that would be scrolled via the Drag algorithm isn't lost here (like in older MMF versions)
-            ///     But this leads to a very strong, hard to control acceleration that also depends on the anmation time `msPerStep`. To undo this, we subtract the distance that is to be scrolled via the DragCurve back out here.
-            ///     This is inefficient because we calculate the drag curve on each mouse wheel tick for nothing, even if we don't need it. But I don't think it makes a practical difference.
-            
         }
         
-        /// Base distance to scroll
-        double baseValueRange = pxLeftToScroll + pxToScrollForThisTick;
-        
-        /// Curve
-        
-        Bezier *baseCurve = ScrollConfig.baseCurve;
-        double dragCoefficient = ScrollConfig.dragCoefficient;
-        double dragExponent = ScrollConfig.dragExponent;
-        double stopSpeed = ScrollConfig.stopSpeed;
-        
-        HybridCurve *animationCurve = [[HybridCurve alloc] initWithBaseCurve:baseCurve baseTimeRange:baseTimeRange baseValueRange:baseValueRange dragCoefficient:dragCoefficient dragExponent:dragExponent stopSpeed:stopSpeed];
-        
-        /// Get intervals for animator from hybrid curve
-
-        double animationDuration = animationCurve.timeRange;
-        Interval *animationValueInterval = animationCurve.valueInterval;
+        if (_modifications.effect == kMFScrollEffectModificationFourFingerPinch) {
+            /// Use linear curve for 4 finger pinch
+            ///     because it feels much smoother
+            /// Using linear for horizontal scroll
+            ///     feels smoother for navigating between pages
+            ///         We could not suppress natural momentum scrolling on horizontal scroll events to balance out the linear curve? But then we should probably also decrease the animationDuration... Edit: I tried it and it sucks for normal scrolling.
+            
+            animationDuration = baseTimeRange;
+            animationValueInterval = [[Interval alloc] initWithStart:0 end:pxToScrollForThisTick + pxLeftToScroll];
+            animationCurve = ScrollConfig.linearCurve;
+            
+        } else {
+            /// Use hybrid curve
+            
+            /// Update pxLeftToScroll
+            if (pxLeftToScroll > 0) {
+            
+                pxLeftToScroll -= ((HybridCurve *)_animator.animationCurve).dragValueRange;
+                if (pxLeftToScroll < 0) pxLeftToScroll = 0;
+                /// ^ HybridCurve (and a bunch of other stuff to support it) was engineered to give us the overall distance that the Bezier *and* the DragCurve will scroll, so that the distance that would be scrolled via the Drag algorithm isn't lost here (like in older MMF versions)
+                ///     But this leads to a very strong, hard to control acceleration that also depends on the anmation time `msPerStep`. To undo this, we subtract the distance that is to be scrolled via the DragCurve back out here.
+                ///     This is inefficient because we init and calculate the drag curve on each mouse wheel tick for nothing, even if we don't need it, and just subtract the result we got from it back out here. But I don't think it makes a practical difference cause it's really fast.
+            }
+            
+            /// Base distance to scroll
+            double baseValueRange = pxLeftToScroll + pxToScrollForThisTick;
+            
+            /// Curve
+            Bezier *baseCurve = ScrollConfig.baseCurve;
+            double dragCoefficient = ScrollConfig.dragCoefficient;
+            double dragExponent = ScrollConfig.dragExponent;
+            double stopSpeed = ScrollConfig.stopSpeed;
+            
+            HybridCurve *c = [[HybridCurve alloc] initWithBaseCurve:baseCurve
+                                                      baseTimeRange:baseTimeRange
+                                                     baseValueRange:baseValueRange
+                                                    dragCoefficient:dragCoefficient
+                                                       dragExponent:dragExponent
+                                                          stopSpeed:stopSpeed];
+            
+            /// Get values for animator from hybrid curve
+            animationCurve = c;
+            animationDuration = c.timeRange;
+            animationValueInterval = c.valueInterval;
+        }
         
         /// Start animation
         
@@ -398,7 +424,7 @@ static void sendScroll(int64_t px, MFScrollDirection scrollDirection, BOOL gestu
     
     IOHIDEventPhaseBits deltaPhase = kIOHIDEventPhaseUndefined;
     BOOL isFinalEvent = NO;
-    void (*sendTouchEventFunction)(int64_t, int64_t, IOHIDEventPhaseBits);
+    void (*sendEventFunction)(int64_t, int64_t, IOHIDEventPhaseBits);
     
     
     if (!gesture) {
@@ -406,7 +432,7 @@ static void sendScroll(int64_t px, MFScrollDirection scrollDirection, BOOL gestu
         
         deltaPhase = kIOHIDEventPhaseBegan;
         isFinalEvent = YES;
-        sendTouchEventFunction = sendLineScroll;
+        sendEventFunction = sendLineScroll;
         
     } else {
         /// Gesture scroll events
@@ -437,14 +463,16 @@ static void sendScroll(int64_t px, MFScrollDirection scrollDirection, BOOL gestu
         
         /// Get sendTouchEventFunction
         
-        sendTouchEventFunction = sendGestureScroll;
+        sendEventFunction = sendGestureScroll;
     }
     
     if (_modifications.effect == kMFScrollEffectModificationZoom) {
-        sendTouchEventFunction = sendZoomEvent;
+        sendEventFunction = sendZoomEvent;
     } else if (_modifications.effect == kMFScrollEffectModificationRotate) {
-        sendTouchEventFunction = sendRotationEvent;
-    }
+        sendEventFunction = sendRotationEvent;
+    } else if (_modifications.effect == kMFScrollEffectModificationFourFingerPinch) {
+        sendEventFunction = sendFourFingerPinch;
+    } /// kMFScrollEffectModificationHorizontalScroll is handled above when determining scroll direction
     
     /// Debug
     
@@ -452,7 +480,7 @@ static void sendScroll(int64_t px, MFScrollDirection scrollDirection, BOOL gestu
     
     /// Send event
     
-    sendTouchEvent(dx, dy, deltaPhase, isFinalEvent, sendTouchEventFunction);
+    sendTouchEvent(dx, dy, deltaPhase, isFinalEvent, sendEventFunction);
 }
 
 /// Generic touch sending func
@@ -464,6 +492,7 @@ static void sendTouchEvent(int64_t dx, int64_t dy, IOHIDEventPhaseBits deltaPhas
     sendTouchEventFunction(dx, dy, deltaPhase);
     
     if (isFinalEvent) {
+        /// The "end" event in touch events usually signals the user lifting off their fingers and has a 0,0 delta. The events that our scrolling engine produces have non-zero deltas on their final events events. That's why we need to send this extra event
         sendTouchEventFunction(0, 0, kIOHIDEventPhaseEnded);
     }
     
@@ -478,6 +507,7 @@ static void sendGestureScroll(int64_t dx, int64_t dy, IOHIDEventPhaseBits eventP
     [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:eventPhase];
     
     if (eventPhase == kIOHIDEventPhaseEnded) {
+        /// Suppress natural momentumScroll and GestureScrollSimulator's momentumScroll
         [GestureScrollSimulator stopMomentumScroll];
     }
 }
@@ -498,9 +528,35 @@ static void sendRotationEvent(int64_t dx, int64_t dy, IOHIDEventPhaseBits eventP
     ///  This doesn't need subpixelation, so we could subpixelate after this instead of before (in sendScroll())
     
     double anyAxisDelta = dx + dy; /// This works because, if dx != 0 -> dy == 0, and the other way around.
-    double eventDelta = anyAxisDelta/800.0;
+    double eventDelta = anyAxisDelta/50.0;
     
     [TouchSimulator postRotationEventWithRotation:eventDelta phase:eventPhase];
+}
+
+static void sendFourFingerPinch(int64_t dx, int64_t dy, IOHIDEventPhaseBits eventPhase) {
+    /// Send 4 finger pinch event - used to access Launchpad or show desktop
+    
+    double anyAxisDelta = dx + dy;
+    double eventDelta = anyAxisDelta/400.0;
+    /// ^ Launchpad feels a lot less sensitive than Show Desktop, but to improve this we'd have to somehow detect which of both is active atm
+    eventDelta = -eventDelta;
+    /// ^ Flip delta to mirror the way that zooming works
+    
+    [TouchSimulator postDockSwipeEventWithDelta:eventDelta type:kMFDockSwipeTypePinch phase:eventPhase];
+    
+    if (eventPhase == kIOHIDEventPhaseEnded) {
+        /// Dock swipes will sometimes get stuck when the computer is slow. This can be solved by sending several "end" events in a row with a delay (see "stuck bug" in ModifiedDrag)
+        ///     Edit: Even with sending the event again after 0.2 seconds, the stuck bug still happens a bunch here for some reason. Event though this almost completely eliminates the bug in ModifiedDrag.
+        ///         Hopefully, sending it again after 0.5 seconds works... Edit: Yes, seems to work
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypePinch phase:eventPhase];
+        });
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypePinch phase:eventPhase];
+        });
+        
+    }
+    
 }
 
 static void sendLineScroll(int64_t dx, int64_t dy, IOHIDEventPhaseBits eventPhase) {
