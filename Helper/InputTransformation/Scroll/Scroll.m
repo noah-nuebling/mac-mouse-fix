@@ -237,7 +237,7 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
         
         /// Update modfications
         
-        _modifications = [ScrollModifiersSwift currentScrollModifications];
+        _modifications = [ScrollModifiers currentScrollModifications];
     }
     
     /// Get effective direction
@@ -270,7 +270,12 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
         
         DDLogWarn(@"pxToScrollForThisTick is 0");
         
-    } else if (!ScrollConfig.smoothEnabled) {
+    } else if (!ScrollConfig.smoothEnabled
+               && !(_modifications.effect == kMFScrollEffectModificationFourFingerPinch
+                    || _modifications.effect == kMFScrollEffectModificationZoom
+                    || _modifications.effect == kMFScrollEffectModificationRotate)) {
+        ///             ^ These modification effects simulate gestures. They need eventPhases to work properly. So they only work when when driven by the animator.
+        
         /// Send scroll event directly. Will scroll all of pxToScrollForThisTick at once.
         
         sendScroll(pxToScrollForThisTick, scrollDirection, NO, kMFAnimationPhaseNone);
@@ -377,6 +382,7 @@ static int64_t getPxPerTick(CFTimeInterval timeBetweenTicks, double msPerStep) {
     ///     They define the base curve as for sensitivity, but then go through complex maths and many hurdles to make the implied outputVelocity(inputVelocity) function and its derivative smooth. Because that is what makes the acceleration feel predictable and nice. (See their "Gain" algorithm)
     ///     Then why not just define the the outputVelocity(inputVelocity) curve to be a smooth curve to begin with? Why does sensitivity matter? It doesn't make sens to me.
     ///     I'm just gonna use a BezierCurve to define the outputVelocity(inputVelocity) curve. Then I'll extrapolate the curve linearly at the end, so its defined everywhere. That is guaranteed to be smooth and easy to configure.
+    ///     Edit: Actuallyyy we ended up outputting pixels to scroll for a given tick here (so sensitivity), not speed. I don't think perfectly smooth curves are that important. This is good enough and is more easy and natural to think about and configure.
     
     if (timeBetweenTicks == DBL_MAX) timeBetweenTicks = ScrollConfig.consecutiveScrollTickIntervalMax;
     
@@ -566,15 +572,26 @@ static void sendLineScroll(int64_t dx, int64_t dy, IOHIDEventPhaseBits eventPhas
     /// TODO: line delta should always be around 1/10 of pixel delta. Also subpixelate line delta.
     ///     See CGEventSource pixelsPerLine - it's 10.
     
-    CGEventRef event = CGEventCreateScrollWheelEvent(NULL, kCGScrollEventUnitLine, 1, 0);
+    CGEventRef event = CGEventCreateScrollWheelEvent(NULL, kCGScrollEventUnitPixel, 1, 0);
     
-    CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, dy / llabs(dy)); /// Always 1, 0, or -1. These values are probably too small. We should study what these values should be more
+    int64_t dyLine;
+    int64_t dxLine;
+    
+    /// Make line deltas 1/10 or pixel deltas
+    dyLine = round(dy / 10);
+    dxLine = round(dx / 10);
+    
+    /// Make line deltas always 1, 0, or -1. These values are probably too small. We should study what these values should be more
+//    if (dy != 0) dyLine = dy / llabs(dy);
+//    if (dx != 0) dxLine = dx / llabs(dx);
+    
+    CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, dyLine);
     CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1, dy);
     CGEventSetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1, dy);
     
-    CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, dx / llabs(dx));
-    CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1, dx);
-    CGEventSetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1, dx);
+    CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2, dxLine);
+    CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis2, dx);
+    CGEventSetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis2, dx);
     
     CGEventPost(kCGSessionEventTap, event);
 }

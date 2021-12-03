@@ -10,7 +10,7 @@
 import Cocoa
 import CocoaLumberjackSwift
 
-@objc class ScrollModifiersSwift: NSObject {
+@objc class ScrollModifiers: NSObject {
 
     @objc class func currentScrollModifications() -> MFScrollModificationResult {
         
@@ -33,10 +33,8 @@ import CocoaLumberjackSwift
         let remapsForCurrentlyActiveModifiers = RemapsOverrider.effectiveRemapsMethod_Override()(baseRemaps, activeModifiers);
         
         guard let modifiedScrollDictUntyped = remapsForCurrentlyActiveModifiers[kMFTriggerScroll] else {
-            DDLogDebug("DEBUGGGGGGGG NO ACTIVE SCROLL MODS")
             return result; /// There are no active scroll modifications
         }
-        
         let modifiedScrollDict = modifiedScrollDictUntyped as! Dictionary<AnyHashable, Any>
         
         /// Input modification
@@ -68,11 +66,12 @@ import CocoaLumberjackSwift
                 result.effect = kMFScrollEffectModificationRotate
             case kMFModifiedScrollEffectModificationTypeFourFingerPinch:
                 result.effect = kMFScrollEffectModificationFourFingerPinch
+                
             case kMFModifiedScrollEffectModificationTypeAddModeFeedback:
                 
                 var payload = modifiedScrollDict
                 payload.removeValue(forKey: kMFModifiedScrollDictKeyEffectModificationType)
-                payload[kMFRemapsKeyModificationPrecondition] = NSMutableDictionary(dictionary: activeModifiers) /// Need to cast to mutable, otherwise Swift will make it immutable and mainApp will crash trying to build payload into its remapArray
+                payload[kMFRemapsKeyModificationPrecondition] = NSMutableDictionary(dictionary: activeModifiers) /// Need to cast to mutable, otherwise Swift will make it immutable and mainApp will crash trying to build this payload into its remapArray
                 TransformationManager.concludeAddMode(withPayload: payload)
                 
             default:

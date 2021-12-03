@@ -33,7 +33,7 @@ typedef struct {
 #import <CoreGraphics/CoreGraphics.h>
 //#import <Foundation/Foundation.h>
 
-@interface ScrollModifiers : NSObject
+@interface ScrollModifiers_old_ : NSObject
 
 //+ (BOOL)horizontalScrolling;
 //+ (BOOL)magnificationScrolling;

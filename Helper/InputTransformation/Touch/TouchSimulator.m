@@ -106,9 +106,9 @@ double _dockSwipeLastDelta = 0.0;
     
     /// Debug
     
-    DDLogDebug(@"FLAVOR: \n%@\n%@\n%@", [Utility_Helper binaryRepresentation:kIOHIDEventFieldDockSwipeFlavor], [Utility_Helper binaryRepresentation:123], [Utility_Helper binaryRepresentation:165]);
+//    DDLogDebug(@"FLAVOR: \n%@\n%@\n%@", [Utility_Helper binaryRepresentation:kIOHIDEventFieldDockSwipeFlavor], [Utility_Helper binaryRepresentation:123], [Utility_Helper binaryRepresentation:165]);
         
-    DDLogDebug(@"Request to send dockswipe");
+//    DDLogDebug(@"Request to send dockswipe");
     
     int valFor41 = 33231;
     int vertInvert = 1;

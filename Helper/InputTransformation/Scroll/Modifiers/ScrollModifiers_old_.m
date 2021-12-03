@@ -15,7 +15,7 @@
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 
 // TODO: Rename to ScrollModifierInputReceiver. Maybe merge this into ScrollControl or put the modifier properties from ScrollControl into this.
-@implementation ScrollModifiers
+@implementation ScrollModifiers_old_
 
 #pragma mark - Public class variables
 
