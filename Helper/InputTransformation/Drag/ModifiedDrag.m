@@ -23,6 +23,8 @@
 #import "TransformationManager.h"
 #import "SharedUtility.h"
 
+#import "CGSSpace.h"
+
 #import <Cocoa/Cocoa.h>
 
 @implementation ModifiedDrag
@@ -76,6 +78,7 @@ struct ModifiedDragState {
 
 static struct ModifiedDragState _drag;
 #define inputIsPointerMovement YES
+int16_t _nOfSpaces = 1;
 
 // There are two different modes for how we receive mouse input, toggle to switch between the two for testing
 // Set to no, if you want input to be raw mouse input, set to yes if you want input to be mouse pointer delta
@@ -202,6 +205,13 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY) {
         
         if ([_drag.type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
             _drag.phase = kIOHIDEventPhaseBegan;
+            
+            /// Get number of spaces
+            ///     for use in `handleMouseInputWhileInUse()`. Getting it here for performance reasons. Not sure if significant.
+            CFArrayRef spaces = CGSCopySpaces(CGSMainConnectionID(), kCGSAllSpacesMask);
+            _nOfSpaces = CFArrayGetCount(spaces);
+            CFRelease(spaces);
+            
         } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
             //                [GestureScrollSimulator postGestureScrollEventWithGestureDeltaX:0.0 deltaY:0.0 phase:kIOHIDEventPhaseMayBegin];
             // ^ Always sending this at the start breaks swiping between pages on some websites (Google search results)
@@ -235,7 +245,15 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
         TODO: Test this on a vertical screen
      */
     
-    double originOffsetForOneSpace = 2.0;  // I've seen this be: 1.25, 1.5, 2.0. Not sure why. Restarting, attaching displays, or changing UI scaling don't seem to change it from my testing. It just randomly changes after a few weeks.
+    double originOffsetForOneSpace = _nOfSpaces == 1 ? 2.0 : 1.0 + (1.0 / (_nOfSpaces-1));
+    /// ^ I've seen this be: 1.25, 1.5, 2.0. Not sure why. Restarting, attaching displays, or changing UI scaling don't seem to change it from my testing. It just randomly changes after a few weeks.
+    ///     I think I finally see the pattern:
+    ///         It's 2.0 for 2 spaces
+    ///         It's 1.5 for 3 spaces
+    ///         It's 1.25 for 5 spaces
+    ///         So the patterns is: 1 + 1 / (nOfSpaces-1)
+    ///            (Except for 1 cause you can't divide by zero)
+    
     CGFloat screenWidth = NSScreen.mainScreen.frame.size.width;
     double spaceSeparatorWidth = 63;
     threeFingerScaleH = threeFingerScaleV = originOffsetForOneSpace / (screenWidth + spaceSeparatorWidth);
