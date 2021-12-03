@@ -127,6 +127,7 @@ import CocoaLumberjackSwift
         return 30 // I like this one
 //        return 20
 //        return 10 // Min good feeling value
+//        return 5
     }
     @objc static var pxPerTickEnd: Int {
         return 120 /// Works well without implicit hybrid curve acceleration
@@ -138,7 +139,12 @@ import CocoaLumberjackSwift
 //        return 200 /// Works well without hybrid curve elongation
 //        return 90
 //        return 150
-        return 190
+//        return 190
+        return 180
+    }
+    @objc static var useAppleAcceleration: Bool {
+        /// Ignore MMF acceleration algorithm and use values provided by macOS
+        return false
     }
     @objc static var accelerationHump: Double {
         /// Between -1 and 1
@@ -254,6 +260,7 @@ import CocoaLumberjackSwift
     @objc static var dragCoefficient: Double {
 //        smooth["friction"] as! Double;
 //        2.3 /// Value from MMF 1. Not sure why so much lower than the new values
+//        20 /// Too floaty with dragExponent 1
         40 // Works well with dragExponent 1
 //        60 // Works well with dragExponent 0.7
 //        1000 // Stop immediately

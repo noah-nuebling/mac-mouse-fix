@@ -82,10 +82,13 @@ import CocoaLumberjackSwift
             self.dragCurve = nil
         }
         
-        /// Determine combined time and value intervals
+        /// Init super
         
-//        self.timeInterval = Interval(start: 0, end: baseTimeRange + dragCurve.timeInterval.length)
-//        self.valueInterval = Interval(start: 0, end: baseValueRange + dragCurve.distanceInterval.length)
+        super.init()
+        
+        /// Debug
+        
+        DDLogDebug("dragTime: \(dragTimeRange), dragValue: \(dragValueRange), time: \(timeRange), value: \(valueRange)")
         
     }
     
@@ -98,7 +101,8 @@ import CocoaLumberjackSwift
         
         if x <= baseTimeRange / timeRange {
             
-            let baseCurveResult = baseCurve.evaluate(at: Math.scale(value: x, from: baseTimeIntervalUnit, to: .unitInterval))
+            var baseCurveResult = baseCurve.evaluate(at: Math.scale(value: x, from: baseTimeIntervalUnit, to: .unitInterval))
+            if baseCurveResult > 1 { baseCurveResult = 1 } /// The baseCurveResult is sometimes 1.00000000002 leading to assert failures in scaling code
             result = Math.scale(value: baseCurveResult, from: .unitInterval, to: baseValueIntervalUnit)
 //            DDLogDebug("HybridCurve base eval: (\(x),   \(result))") /// Debug
         } else {

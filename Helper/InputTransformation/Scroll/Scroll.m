@@ -248,8 +248,11 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
     /// Get distance to scroll
     
     int64_t pxToScrollForThisTick;
-    pxToScrollForThisTick = getPxPerTick(scrollAnalysisResult.timeBetweenTicks, ScrollConfig.msPerStep);
-//    pxToScrollForThisTick = llabs(eventPointDelta); // Use delta from Apple's acceleration algorithm
+    if (ScrollConfig.useAppleAcceleration) {
+        pxToScrollForThisTick = llabs(scrollDeltaPoint); // Use delta from Apple's acceleration algorithm
+    } else {
+        pxToScrollForThisTick = getPxPerTick(scrollAnalysisResult.timeBetweenTicks, ScrollConfig.msPerStep);
+    }
     
     /// Apply fast scroll to distance
         
@@ -318,29 +321,27 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
             
             /// Update pxLeftToScroll
             if (pxLeftToScroll > 0) {
-            
-                pxLeftToScroll -= ((HybridCurve *)_animator.animationCurve).dragValueRange;
-                if (pxLeftToScroll < 0) pxLeftToScroll = 0;
-                /// ^ HybridCurve (and a bunch of other stuff to support it) was engineered to give us the overall distance that the Bezier *and* the DragCurve will scroll, so that the distance that would be scrolled via the Drag algorithm isn't lost here (like in older MMF versions)
-                ///     But this leads to a very strong, hard to control acceleration that also depends on the anmation time `msPerStep`. To undo this, we subtract the distance that is to be scrolled via the DragCurve back out here.
-                ///     This is inefficient because we init and calculate the drag curve on each mouse wheel tick for nothing, even if we don't need it, and just subtract the result we got from it back out here. But I don't think it makes a practical difference cause it's really fast.
+                
+                id c = _animator.animationCurve;
+                if ([c isKindOfClass:HybridCurve.class]) {
+                    pxLeftToScroll -= ((HybridCurve *)c).dragValueRange;
+                    if (pxLeftToScroll < 0) pxLeftToScroll = 0;
+                    /// ^ HybridCurve (and a bunch of other stuff to support it) was engineered to give us the overall distance that the Bezier *and* the DragCurve will scroll, so that the distance that would be scrolled via the Drag algorithm isn't lost here (like in older MMF versions)
+                    ///     But this leads to a very strong, hard to control acceleration that also depends on the anmation time `msPerStep`. To undo this, we subtract the distance that is to be scrolled via the DragCurve back out here.
+                    ///     This is inefficient because we init and calculate the drag curve on each mouse wheel tick for nothing, even if we don't need it, and just subtract the result we got from it back out here. But I don't think it makes a practical difference cause it's really fast.
+                }
             }
             
             /// Base distance to scroll
             double baseValueRange = pxLeftToScroll + pxToScrollForThisTick;
             
             /// Curve
-            Bezier *baseCurve = ScrollConfig.baseCurve;
-            double dragCoefficient = ScrollConfig.dragCoefficient;
-            double dragExponent = ScrollConfig.dragExponent;
-            double stopSpeed = ScrollConfig.stopSpeed;
-            
-            HybridCurve *c = [[HybridCurve alloc] initWithBaseCurve:baseCurve
+            HybridCurve *c = [[HybridCurve alloc] initWithBaseCurve:ScrollConfig.baseCurve
                                                       baseTimeRange:baseTimeRange
                                                      baseValueRange:baseValueRange
-                                                    dragCoefficient:dragCoefficient
-                                                       dragExponent:dragExponent
-                                                          stopSpeed:stopSpeed];
+                                                    dragCoefficient:ScrollConfig.dragCoefficient
+                                                       dragExponent:ScrollConfig.dragExponent
+                                                          stopSpeed:ScrollConfig.stopSpeed];
             
             /// Get values for animator from hybrid curve
             animationCurve = c;
@@ -553,12 +554,12 @@ static void sendFourFingerPinch(int64_t dx, int64_t dy, IOHIDEventPhaseBits even
     if (eventPhase == kIOHIDEventPhaseEnded) {
         /// Dock swipes will sometimes get stuck when the computer is slow. This can be solved by sending several "end" events in a row with a delay (see "stuck bug" in ModifiedDrag)
         ///     Edit: Even with sending the event again after 0.2 seconds, the stuck bug still happens a bunch here for some reason. Event though this almost completely eliminates the bug in ModifiedDrag.
-        ///         Hopefully, sending it again after 0.5 seconds works... Edit: Yes, seems to work
+        ///         Hopefully, sending it again after 0.5 seconds works... Edit: Yes, seems to work better but still sometimes happens
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-            [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypePinch phase:eventPhase];
+            [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypePinch phase:kIOHIDEventPhaseEnded];
         });
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-            [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypePinch phase:eventPhase];
+            [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypePinch phase:kIOHIDEventPhaseEnded];
         });
         
     }
