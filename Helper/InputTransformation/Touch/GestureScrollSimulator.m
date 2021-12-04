@@ -16,6 +16,7 @@
 #import "VectorSubPixelator.h"
 #import "Utility_Transformation.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
+#import "WannabePrefixHeader.h"
 
 /**
  This generates fliud scroll events containing gesture data similar to the Apple Trackpad or Apple Magic Mouse driver.
@@ -533,9 +534,16 @@ static Vector initalMomentumScrollVelocity_FromExitVelocity(Vector exitVelocity)
                                           phase:(IOHIDEventPhaseBits)phase
                                   momentumPhase:(CGMomentumScrollPhase)momentumPhase
                                        location:(CGPoint)loc {
+
+    /// Debug
     
-//    DDLogDebug(@"Posting: gesture: (%f,%f) --- scroll: (%f, %f) --- scrollPt: (%f, %f) --- phases: %d, %d --- loc: (%f, %f)\n",
-//          vecGesture.x, vecGesture.y, vecScroll.x, vecScroll.y, vecScrollPoint.x, vecScrollPoint.y, phase, momentumPhase, loc.x, loc.y);
+    static double tsLast;
+    double ts = CACurrentMediaTime();
+    double timeSinceLast = ts - tsLast;
+    tsLast = ts;
+    
+    DDLogDebug(@"\nPosting: gesture: (%f, %f)   \t scroll: (%f, %f) \t scrollPt: (%f, %f) \t phases: (%d, %d) \t timeSinceLast: %f \t loc: (%f, %f)\n",
+          vecGesture.x, vecGesture.y, vecScroll.x, vecScroll.y, vecScrollPoint.x, vecScrollPoint.y, phase, momentumPhase, timeSinceLast*1000, loc.x, loc.y);
     
     assert((phase == kIOHIDEventPhaseUndefined || momentumPhase == kCGMomentumScrollPhaseNone)); /// At least one of the phases has to be 0
     

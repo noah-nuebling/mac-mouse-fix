@@ -535,6 +535,8 @@ static void sendTouchEvent(int64_t dx, int64_t dy, IOHIDEventPhaseBits deltaPhas
     
     assert(deltaPhase == kIOHIDEventPhaseBegan || deltaPhase == kIOHIDEventPhaseChanged);
     
+//    if (isFinalEvent) deltaPhase = kIOHIDEventPhaseEnded; /// Debug
+    
     sendTouchEventFunction(dx, dy, deltaPhase);
     
     if (isFinalEvent) {
