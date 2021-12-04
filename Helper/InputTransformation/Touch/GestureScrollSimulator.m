@@ -305,7 +305,7 @@ static BOOL _momentumScrollIsActive;
 
 + (void)stopMomentumScroll {
     
-//    DDLogDebug(@"1 Request to stop momentum scroll. Caller: %@", [SharedUtility callerInfo]);
+    DDLogDebug(@"Request to stop momentum scroll. Caller: %@", [SharedUtility callerInfo]);
     
     [self stopMomentumScrollWithEvent:NULL];
 }

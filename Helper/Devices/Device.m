@@ -279,19 +279,16 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
         
         int64_t pressure = IOHIDValueGetIntegerValue(value);
         
-        if (button != 1 && button != 2) { // Don't print left and right click as to not clog up the logs
-            DDLogDebug(@"Received HID Button Input - btn: %d, pressure: %lld", button, pressure);
+        if (button != 1 && button != 2) { /// Don't print left and right click as to not clog up the logs
+//            DDLogDebug(@"Received HID Button Input - btn: %d, pressure: %lld", button, pressure);
+        }
+        /// Stop momentumScroll on LMB click
+        ///     ButtonInputReceiver tries to filter out LMB and RMB events as early as possible, so it's better to do this here
+        if (button == 1 && pressure != 0) {
+            [GestureScrollSimulator stopMomentumScroll];
         }
         
-        // Control modified actions
-        
-        // v TODO: Would it be better to put this into `ButtonInputReceiver.m`? It seems to be more reliable than this function.
-        [GestureScrollSimulator stopMomentumScroll]; // Momentum scroll is started, when when a modified drag of type "twoFingerSwipe" is deactivated. We break it on any button input.
-//        if (pressure == 0) { // Don't think we need this if inserting fake events works properly
-//            [ModifiedDrag deactivate];
-//        }
-        
-        // Post fake button input events, if the device is seized
+        /// Post fake button input events, if the device is seized
 
         if (sendingDev.isSeized) {
             //DDLogDebug(@"BUTTON INP COMES FORM SEIZED");

@@ -15,6 +15,7 @@
 #import "SharedUtility.h"
 #import "Utility_Transformation.h"
 #import "Utility_Helper.h"
+#import "GestureScrollSimulator.h"
 
 
 @implementation ButtonInputReceiver
@@ -54,7 +55,7 @@ static void registerInputCallback() {
     | CGEventMaskBit(kCGEventLeftMouseDown) | CGEventMaskBit(kCGEventLeftMouseUp)
     | CGEventMaskBit(kCGEventRightMouseDown) | CGEventMaskBit(kCGEventRightMouseUp);
     
-    // ^ I think we need to also listen to lmb and rmb here (even though we don't use them for remapping) to keep some stuff in sync with the HID callbacks / _buttonInputsFromRelevantDevices. Not sure though.
+    /// ^ I think we need to also listen to lmb and rmb here (even though we don't use them for remapping) to keep some stuff in sync with the HID callbacks / _buttonInputsFromRelevantDevices. Not sure though.
 
     _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
     CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _eventTap, 0);
@@ -116,9 +117,11 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         DDLogInfo(@"ButtonInputReceiver eventTap was disabled by user input");
     }
     
+    /// Debug
+    
     @try {
         NSUInteger buttonNumber = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
-        if (buttonNumber != 1 && buttonNumber != 2) { // Don't print left and right click cause that'll clog the logs
+        if (buttonNumber != 1 && buttonNumber != 2) { /// Don't print left and right click cause that'll clog the logs
             DDLogDebug(@"Received CG Button Input - %@", [NSEvent eventWithCGEvent:event]);
             // ^ This crashes sometimes.
             // I think it's because the timeout events can't be translated to NSEvent
@@ -132,32 +135,38 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         DDLogDebug(@"Received CG Button Input which can't be printed normally - Exception while printing: %@", exception);
     }
     
+    /// Process input
+    
     if ([_buttonInputsFromRelevantDevices isEmpty]) return event;
     
     NSDictionary *lastInputFromRelevantDevice = [_buttonInputsFromRelevantDevices dequeue];
     
     if (((NSNumber *)lastInputFromRelevantDevice[@"stemsFromSeize"]).boolValue) {
+        /// @Note This whole seizing mechanism was intended to stop the cursor from moving, but it caused tons of issues. We're now using CGWarpMouseCursor() to stop the cursor and it's much better. We should remove the seizing code.
         return nil;
     }
     
+    /// Get buttonNumber and mouseUp/mouseDown
     NSUInteger buttonNumber = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
-    
-    if ([_buttonParseBlacklist containsObject:@(buttonNumber)]) return event;
-    
-    Device *dev = lastInputFromRelevantDevice[@"dev"];
-    
     long long pr = CGEventGetIntegerValueField(event, kCGMouseEventPressure);
     MFButtonInputType triggertType = pr == 0 ? kMFButtonInputTypeButtonUp : kMFButtonInputTypeButtonDown;
-        
+    
+    /// Filter out primary and secondary mouse button from being passed on to ButtonTriggerGenerator
+    if ([_buttonParseBlacklist containsObject:@(buttonNumber)]) return event;
+    
+    /// Get dev
+    Device *dev = lastInputFromRelevantDevice[@"dev"];
+    
+    /// Pass to ButtonTriggerGenerator
     MFEventPassThroughEvaluation eval = [ButtonTriggerGenerator parseInputWithButton:@(buttonNumber) triggerType:triggertType inputDevice:dev];
     
+    /// Event passThrough
     if (eval == kMFEventPassThroughRefusal) {
         return nil;
+    } else {
+        DDLogDebug(@"... letting event pass through");
+        return event;
     }
-    
-    DDLogDebug(@"... letting event pass through");
-    
-    return event;
 
 }
 

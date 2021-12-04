@@ -80,11 +80,39 @@
     
     /// Start the displayLink
     ///     If something goes wrong see notes in old SmoothScroll.m > handleInput: method
-    CVReturn code = CVDisplayLinkStart(_displayLink);
-    if (code != kCVReturnSuccess) {
-        DDLogInfo(@"Failed to start CVDisplayLink. Error code: %d", code); /// This happens pretty often. We should probably retry a few times if this fails like in the old SmoothScroll.m implementation
+    
+    /// Starting the displayLink often fails with error code `-6660` for some reason.
+    ///     Running on the main queue seems to fix that. (See SmoothScroll_old_).
+    ///     We don't wanna use `dispatch_sync(dispatch_get_main_queue())` here because if were already running on the main thread(/queue?) then that'll crash
+    ///     -> Just make sure that this function is always called from the main thread(/queue?)
+    ///         Edit: The control flow is pretty complicated and it's hard to make sure this is always called from the main thread. So we're attempting to detect if we're already running on the main thread and dispatch to it if necessary.
+    
+    /// Define block that starts displayLink
+    
+    void (^startDisplayLinkBlock)(void) = ^{
+        
+        int64_t failedAttempts = 0;
+        int64_t maxAttempts = 100;
+        
+        while (true) {
+            CVReturn rt = CVDisplayLinkStart(self->_displayLink);
+            if (rt == kCVReturnSuccess) break;
+            
+            failedAttempts += 1;
+            if (failedAttempts >= maxAttempts) {
+                DDLogInfo(@"Failed to start CVDisplayLink after %lld tries. Last error code: %d", failedAttempts, rt);
+            }
+        }
+    };
+    
+    /// Make sure block is running on the main thread
+    
+    if (NSThread.isMainThread) {
+        /// Already running on main thread
+        startDisplayLinkBlock();
     } else {
-//        DDLogDebug(@"Started displayLinkCallback");
+        /// Not yet running on main thread - dispatch on main - synchronously (Not sure if synchronously is necessary but I think so)
+        dispatch_sync(dispatch_get_main_queue(), startDisplayLinkBlock);
     }
 }
 - (void)stop {

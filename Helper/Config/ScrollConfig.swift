@@ -173,15 +173,15 @@ import CocoaLumberjackSwift
     }
     
     @objc static let preciseAccelerationCurve = { () -> AccelerationBezier in
-        accelerationCurveFromParams(pxPerTickBase: 2,
-                                    pxPerTickEnd: 10,
+        accelerationCurveFromParams(pxPerTickBase: 3, /// 2 is better than 3 but that leads to weird asswert failures in PixelatedAnimator that I can't be bothered to fix
+                                    pxPerTickEnd: 15,
                                     consecutiveScrollTickIntervalMax: ScrollConfig.consecutiveScrollTickIntervalMax,
                                     /// ^ We don't expect this to ever change so it's okay to just capture here
                                     consecutiveScrollTickInterval_AccelerationEnd: ScrollConfig.consecutiveScrollTickInterval_AccelerationEnd,
                                     accelerationHump: -0.2)
     }()
     @objc static let quickAccelerationCurve = { () -> AccelerationBezier in
-        accelerationCurveFromParams(pxPerTickBase: 80,
+        accelerationCurveFromParams(pxPerTickBase: 50, // 40 and 220 also works well
                                     pxPerTickEnd: 200,
                                     consecutiveScrollTickIntervalMax: ScrollConfig.consecutiveScrollTickIntervalMax,
                                     consecutiveScrollTickInterval_AccelerationEnd: ScrollConfig.consecutiveScrollTickInterval_AccelerationEnd,

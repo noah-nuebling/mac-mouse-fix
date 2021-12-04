@@ -256,11 +256,17 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
     double fsFactor = ScrollConfig.fastScrollFactor;
     double fsBase = ScrollConfig.fastScrollExponentialBase;
     
-    /// Override fast scroll params if quickScroll is active
+    /// Override fast scroll params if quickScroll / preciseScroll is active
     if (_modifications.input == kMFScrollInputModificationQuick) {
+        /// (Amp up fast scroll)
         fsThreshold = 1;
         fsFactor = 3.0;
-        fsBase = 3.0;
+        fsBase = 2.0;
+    } else if (_modifications.input == kMFScrollInputModificationPrecise) {
+        /// (Turn off fast scroll)
+        fsThreshold = 69; /// Haha sex number
+        fsFactor = 1.0;
+        fsBase = 1.0;
     }
     
     /// Evaulate fast scroll
@@ -379,15 +385,15 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
             
             /// Debug
             
-//            static CFTimeInterval lastTs = 0;
-//            CFTimeInterval ts = CACurrentMediaTime();
-//            DDLogInfo(@"scrollSendInterval: %@, dT: %@, dPx: %@", @(ts - lastTs), @(timeDelta), @(valueDelta));
-//            lastTs = ts;
+            //            static CFTimeInterval lastTs = 0;
+            //            CFTimeInterval ts = CACurrentMediaTime();
+            //            DDLogInfo(@"scrollSendInterval: %@, dT: %@, dPx: %@", @(ts - lastTs), @(timeDelta), @(valueDelta));
+            //            lastTs = ts;
             
             /// Test if PixelatedAnimator works properly
             
             assert(valueDelta != 0);
-//            DDLogDebug(@"DELTA: %ld, PHASE: %d", (long)valueDelta, animationPhase);
+            //            DDLogDebug(@"DELTA: %ld, PHASE: %d", (long)valueDelta, animationPhase);
             
             /// Send scroll
             
@@ -583,7 +589,7 @@ static void sendFourFingerPinch(int64_t dx, int64_t dy, IOHIDEventPhaseBits even
     /// Send 4 finger pinch event - used to access Launchpad or show desktop
     
     double anyAxisDelta = dx + dy;
-    double eventDelta = anyAxisDelta/400.0;
+    double eventDelta = anyAxisDelta/600.0;
     /// ^ Launchpad feels a lot less sensitive than Show Desktop, but to improve this we'd have to somehow detect which of both is active atm
     eventDelta = -eventDelta;
     /// ^ Flip delta to mirror the way that zooming works

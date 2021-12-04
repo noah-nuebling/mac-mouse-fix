@@ -83,7 +83,7 @@ static NSArray *getScrollEffectsTable() {
         @{@"ui": @"Precise Scroll", @"tool": @"Scroll small distances with high precision", @"dict": @{
             kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypePrecisionScroll
         }},
-        @{@"ui": @"Fast Scroll", @"tool": @"Scroll to the top of the webpage or other document with minimal effort", @"dict": @{
+        @{@"ui": @"Swift Scroll", @"tool": @"Scroll long distances with minimal effort", @"dict": @{
             kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypeQuickScroll
         }},
     ];
