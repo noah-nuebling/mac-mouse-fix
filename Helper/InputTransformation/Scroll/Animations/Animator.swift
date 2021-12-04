@@ -58,6 +58,8 @@ import CocoaLumberjackSwift
         self.displayLink.isRunning()
     }
     
+    fileprivate var onStopCallback: (() -> ())?
+    
     // Vars - DisplayLink
     
     var lastAnimationTime: Double = -1 /// Time at which the displayLink was last called
@@ -198,6 +200,20 @@ import CocoaLumberjackSwift
         
         displayLink.stop()
         animationPhase = kMFAnimationPhaseNone
+        if onStopCallback != nil {
+            onStopCallback!()
+            onStopCallback = nil
+        }
+    }
+    
+    @objc func onStop(callback: @escaping () -> ()) {
+        /// Do `callback` once the Animator stops or immediately if the animator isn't running
+        
+        if (!self.isRunning) {
+            callback()
+        } else {
+            self.onStopCallback = callback
+        }
     }
     
     /// DisplayLink callback

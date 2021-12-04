@@ -95,9 +95,12 @@ static struct ModifiedDragState _drag;
 
 #define inputIsPointerMovement YES
 static int _cgsConnection; /// This is used by private APIs to talk to the window server and do fancy shit like hiding the cursor from a background application
+static NSCursor *_puppetCursor;
 static NSImageView *_puppetCursorView;
 static int16_t _nOfSpaces = 1;
 static dispatch_queue_t _dragQueue;
+static PixelatedAnimator *_smoothingAnimator;
+static BOOL _smoothingAnimatorShouldStartMomentumScroll = NO;
 
 /// There are two different modes for how we receive mouse input, toggle to switch between the two for testing
 /// Set to no, if you want input to be raw mouse input, set to yes if you want input to be mouse pointer delta
@@ -112,6 +115,10 @@ static dispatch_queue_t _dragQueue;
     ///     When the eventTap and the deactivate function are driven by different threads or whatever then the deactivation can happen before we've processed all the events. This allows us to avoid that issue
     dispatch_queue_attr_t attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INTERACTIVE, -1);
     _dragQueue = dispatch_queue_create("com.nuebling.mac-mouse-fix.helper.drag", attr);
+    
+    /// Setup smoothingAnimator
+    ///     When using a twoFingerModifedDrag and performance drops, the timeBetweenEvents can sometimes be erratic, and this sometimes leads apps like Xcode to start their custom momentumScroll algorithms with way too high speeds (At least I think that's whats going on) So we're using an animator to smooth things out and hopefully achieve more consistent behaviour
+    _smoothingAnimator = [[PixelatedAnimator alloc] init];
     
     /// Setup cgs stuff
     _cgsConnection = CGSMainConnectionID();
@@ -320,7 +327,7 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
             /// Decrease delay after warping
             ///     But only as much so that it doesn't break `CGWarpMouseCursorPosition(()` ability to stop cursor by calling repeatedly
             ///     This changes the timeout globally for many events, so we need to reset this after the drag is deactivated!
-//            setSuppressionInterval(kMFEventSuppressionIntervalForStoppingCursor);
+            setSuppressionInterval(kMFEventSuppressionIntervalForStoppingCursor);
             
             /// Hide cursor
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 0.02), _dragQueue, ^{
@@ -404,7 +411,7 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
         
         /// Warp pointer to origin to prevent cursor movement
         ///     This only works when the suppressionInterval is a certain size, and that will cause a slight stutter / delay until the mouse starts moving againg when we deactivate. So this isn't optimal
-//        CGWarpMouseCursorPosition(_drag.usageOrigin);
+        CGWarpMouseCursorPosition(_drag.usageOrigin);
 //        CGWarpMouseCursorPosition(_drag.origin);
         /// ^ Move pointer to origin instead of usageOrigin to make scroll events dispatch there - would be nice but that moves the pointer, which creates events which will feed back into our eventTap and mess everything up (even though `CGWarpMouseCursorPosition` docs say that it doesn't create events??)
         ///     I gues we'll just have to make the usageThreshold small instead
@@ -417,7 +424,45 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
         drawPuppetCursorWithFresh(YES, NO);
         
         /// Post event
-        [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaX*twoFingerScale deltaY:deltaY*twoFingerScale phase:_drag.phase];
+        ///     Using animator for smoothing
+        
+        static Vector lastDirection = { .x = 0, .y = 0 };
+        
+        Vector currentVec = { .x = deltaX*twoFingerScale, .y = deltaY*twoFingerScale };
+        double magnitudeLeft = _smoothingAnimator.animationValueLeft;
+        Vector vectorLeft = scaledVector(lastDirection, magnitudeLeft);
+        Vector combinedVec = addedVectors(currentVec, vectorLeft);
+        double combinedMagnitude = magnitudeOfVector(combinedVec);
+        Vector combinedDirection = unitVector(combinedVec);
+        
+        Interval *combinedValueInterval = [[Interval alloc] initWithStart:0 end:(combinedMagnitude)];
+        lastDirection = combinedDirection;
+        
+        static IOHIDEventPhaseBits eventPhase = kIOHIDEventPhaseUndefined;
+        if (_drag.phase == kIOHIDEventPhaseBegan) eventPhase = kIOHIDEventPhaseBegan;
+        
+        [_smoothingAnimator startWithDuration:0.04
+                                valueInterval:combinedValueInterval
+                               animationCurve:ScrollConfig.linearCurve
+                              integerCallback:^(NSInteger valueDelta, double timeDelta, MFAnimationPhase phase) {
+            
+            if (_smoothingAnimatorShouldStartMomentumScroll) {
+                if (phase == kMFAnimationPhaseEnd || phase == kMFAnimationPhaseStartAndEnd) {
+                    /// Sorry for this confusing code. Heres the idea:
+                    /// Due to the nature of PixelatedAnimator, the last delta is almost always much smaller. This will make apps like Xcode start momentumScroll at a too low speed. Also apps like Xcode will have a litte stuttery jump when the time between the kIOHIDEventPhaseEnded event and the previous event is very small
+                    ///     Our solution to these two problems is to set the _smoothingAnimatorShouldStartMomentumScroll flag when the user releases the button, and if this flag is set, we transform the last delta callback from the animator into the kIOHIDEventPhaseEnded GestureScroll event. The deltas from this last callback are lost like this, but no one will notice.
+
+                    [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded];
+                    _smoothingAnimatorShouldStartMomentumScroll = NO;
+                    return;
+                }
+            }
+//            IOHIDEventPhaseBits eventPhase = phase == kMFAnimationPhaseStart || phase == kMFAnimationPhaseStartAndEnd ? kIOHIDEventPhaseBegan : kIOHIDEventPhaseChanged;
+            Vector deltaVec = scaledVector(combinedDirection, valueDelta);
+            [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaVec.x deltaY:deltaVec.y phase:eventPhase];
+            if (eventPhase == kIOHIDEventPhaseBegan) eventPhase = kIOHIDEventPhaseChanged;
+            
+        }];
         
     } else if ([_drag.type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
         CGPoint location;
@@ -449,12 +494,15 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
         
         if (_drag.activationState == kMFModifiedInputActivationStateNone) return;
         
-        disableMouseTracking(); // Moved this up here instead of at the end of the function to minimize mouseMovedOrDraggedCallback() being called when we don't need that anymore. Not sure if it makes a difference.
-        
         if (_drag.activationState == kMFModifiedInputActivationStateInUse) {
             handleDeactivationWhileInUse(cancel);
         }
         _drag.activationState = kMFModifiedInputActivationStateNone;
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 0.1), _dragQueue, ^{
+            /// Delay so we don't "cut off" the mouseDragged events that are still pent up in the eventTap. Better solution might be to have one single event tap that drives both button input and mouseDragged events.
+            disableMouseTracking();
+        });
     });
 }
 + (void)modifiedScrollHasBeenUsed {
@@ -475,6 +523,7 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
 //}
 
 static void handleDeactivationWhileInUse(BOOL cancelation) {
+    
     if ([_drag.type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
         
         MFDockSwipeType type;
@@ -500,33 +549,51 @@ static void handleDeactivationWhileInUse(BOOL cancelation) {
         
     } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
         
-        /// Set suppression interval to zero to avoid delay after
-        setSuppressionInterval(kMFEventSuppressionIntervalZero);
-        
-        /// Set _drag to origin to start momentum scroll there
-        CGWarpMouseCursorPosition(_drag.origin);
+//        /// Draw puppet cursor
+//        drawPuppetCursorWithFresh(YES, YES);
+//
+//        /// Hide real cursor
+//        [Utility_Transformation hideMousePointer:YES];
+//
+//        /// Set suppression interval
+//        setSuppressionInterval(kMFEventSuppressionIntervalForStartingMomentumScroll);
+//
+//        /// Set _drag to origin to start momentum scroll there
+//        CGWarpMouseCursorPosition(_drag.origin);
         
         /// Send final scroll event
         ///     This will set off momentum scroll
-        [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded];
+//        [_smoothingAnimator onStopWithCallback:^{ /// Do this after the smoothingAnimator is done animating
+//            [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded];
+//        }];
+        if (_smoothingAnimator.isRunning) {
+            _smoothingAnimatorShouldStartMomentumScroll = YES;
+        } else {
+            [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded];
+        }
         
-        CGPoint puppetPos = puppetCursorPosition(); /// Get this before dispatching, cause otherwise there's a race condition when this is called by `suspend` because suspend will then call `initDragState();` which resets the values that this depends on (namely origin offset)
+        CGPoint puppetPos = puppetCursorPosition();
+        /// ^ Get this before dispatching, cause otherwise there's a race condition when this is called by `suspend` because suspend will then call `initDragState();` which resets the values that this depends on (namely origin offset)
+        ///     Since we don't use `suspend` anymore, ....
         
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.05 * NSEC_PER_SEC), _dragQueue, ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.08 * NSEC_PER_SEC), _dragQueue, ^{
             /// ^ Execute this on a delay so that momentumScroll is started before the warp. That way momentumScrol will still kick in and work, even if we moved the ponter outside the scrollView that we started scrolling in.
+            ///     Would be better if we had a callback that told us when the momentum scrolling started?
+            
+            /// Set suppression interval
+            setSuppressionInterval(kMFEventSuppressionIntervalZero);
             
             /// Set actual cursor to position of puppet cursor
             CGWarpMouseCursorPosition(puppetPos);
-//            CGWarpMouseCursorPosition(_drag.origin);
-            
-            /// Reset suppression interval to default
-            setSuppressionInterval(kMFEventSuppressionIntervalDefault);
             
             /// Show mouse pointer again
             [Utility_Transformation hideMousePointer:NO];
             
             /// Undraw puppet cursor
             drawPuppetCursorWithFresh(NO, NO);
+            
+            /// Reset suppression interval to default
+            setSuppressionInterval(kMFEventSuppressionIntervalDefault);
         });
         
     } else if ([_drag.type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
@@ -548,6 +615,7 @@ static void handleDeactivationWhileInUse(BOOL cancelation) {
 typedef enum {
     kMFEventSuppressionIntervalZero,
     kMFEventSuppressionIntervalForStoppingCursor,
+    kMFEventSuppressionIntervalForStartingMomentumScroll,
     kMFEventSuppressionIntervalDefault,
 } MFEventSuppressionInterval;
 
@@ -574,6 +642,8 @@ void setSuppressionInterval(MFEventSuppressionInterval mfInterval) {
     double interval;
     if (mfInterval == kMFEventSuppressionIntervalForStoppingCursor) {
         interval = 0.07; /// 0.05; /// Can't be 0 or else repeatedly calling CGWarpMouseCursorPosition() won't work for stopping the cursor
+    } else if (mfInterval == kMFEventSuppressionIntervalForStartingMomentumScroll) {
+        interval = 0.01;
     } else if (mfInterval == kMFEventSuppressionIntervalDefault) {
         interval = _defaultSuppressionInterval;
     } else if (mfInterval == kMFEventSuppressionIntervalZero) {
@@ -614,22 +684,22 @@ void drawPuppetCursorWithFresh(BOOL draw, BOOL fresh) {
             return;
         }
         
-        /// Get cursor
-        NSCursor *cursor = NSCursor.currentCursor;
-        
-        /// Store cursor image into puppet view
-        NSImage *puppetImage = cursor.image;
-        _puppetCursorView.image = puppetImage;
+        if (fresh) {
+            /// Get cursor
+            _puppetCursor = NSCursor.currentSystemCursor;
+            /// Store cursor image into puppet view
+            _puppetCursorView.image = _puppetCursor.image;
+        }
         
         /// Get puppet pointer location
         CGPoint loc = puppetCursorPosition();
         
         /// Subtract hotspot to get puppet image loc
-        CGPoint hotspot = cursor.hotSpot;
+        CGPoint hotspot = _puppetCursor.hotSpot;
         CGPoint imageLoc = CGPointMake(loc.x - hotspot.x, loc.y - hotspot.y);
         
         /// Unflip coordinates to be compatible with Cocoa
-        NSRect puppetImageFrame = NSMakeRect(imageLoc.x, imageLoc.y, puppetImage.size.width, puppetImage.size.height);
+        NSRect puppetImageFrame = NSMakeRect(imageLoc.x, imageLoc.y, _puppetCursorView.image.size.width, _puppetCursorView.image.size.height);
         NSRect puppetImageFrameUnflipped = [SharedUtility quartzToCocoaScreenSpace:puppetImageFrame];
         
         /// Draw!

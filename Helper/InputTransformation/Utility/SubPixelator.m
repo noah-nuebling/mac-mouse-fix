@@ -93,7 +93,7 @@
     
     /// Guard roundingFunction exists
     if (self.roundingFunction == NULL) {
-        assert(false);
+        assert(false); 
         /// ^ If this is a biasedPixelator, you need to call intDeltaWithDoubleDelta: first (with non-0 input) to intialize the roundingFunction, before you can call this
         ///     You can call intDeltaWithDoubleDelta: with -1 or 1 to initialize it without affecting any other state (self.accumulatedRoundingError)
     }
