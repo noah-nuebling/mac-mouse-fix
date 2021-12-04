@@ -247,18 +247,26 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
     
     /// Get distance to scroll
     
-    int64_t pxToScrollForThisTick;
-    if (ScrollConfig.useAppleAcceleration) {
-        pxToScrollForThisTick = llabs(scrollDeltaPoint); // Use delta from Apple's acceleration algorithm
-    } else {
-        pxToScrollForThisTick = getPxPerTick(scrollAnalysisResult.timeBetweenTicks, ScrollConfig.msPerStep);
-    }
+    int64_t pxToScrollForThisTick = getPxPerTick(scrollAnalysisResult.timeBetweenTicks, scrollDeltaPoint);
     
     /// Apply fast scroll to distance
         
-    int64_t fastScrollThresholdDelta = scrollAnalysisResult.consecutiveScrollSwipeCounter_ForFreeScrollWheel - ScrollConfig.fastScrollThreshold_inSwipes;
+    /// Get fast scroll params
+    int64_t fsThreshold = ScrollConfig.fastScrollThreshold_inSwipes;
+    double fsFactor = ScrollConfig.fastScrollFactor;
+    double fsBase = ScrollConfig.fastScrollExponentialBase;
+    
+    /// Override fast scroll params if quickScroll is active
+    if (_modifications.input == kMFScrollInputModificationQuick) {
+        fsThreshold = 1;
+        fsFactor = 3.0;
+        fsBase = 3.0;
+    }
+    
+    /// Evaulate fast scroll
+    int64_t fastScrollThresholdDelta = scrollAnalysisResult.consecutiveScrollSwipeCounter_ForFreeScrollWheel - fsThreshold;
     if (fastScrollThresholdDelta >= 0) {
-        pxToScrollForThisTick *= ScrollConfig.fastScrollFactor * pow(ScrollConfig.fastScrollExponentialBase, fastScrollThresholdDelta);
+        pxToScrollForThisTick *= fsFactor * pow(fsBase, fastScrollThresholdDelta);
     }
     
     /// Debug
@@ -305,7 +313,8 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
             pxLeftToScroll = _animator.animationValueLeft;
         }
         
-        if (_modifications.effect == kMFScrollEffectModificationFourFingerPinch) {
+        if (_modifications.effect == kMFScrollEffectModificationFourFingerPinch
+            || _modifications.input == kMFScrollInputModificationQuick) {
             /// Use linear curve for 4 finger pinch
             ///     because it feels much smoother
             /// Using linear for horizontal scroll
@@ -335,12 +344,25 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
             /// Base distance to scroll
             double baseValueRange = pxLeftToScroll + pxToScrollForThisTick;
             
+            /// Decrease friction if fastScroll is active
+            ///     Overriding params in all these different places if quickScroll is active is a little messy. Would maybe be better to have ScrollConfig return a struct with all params and to then override the values in the struct in one place.
+            Bezier *baseCurve = ScrollConfig.baseCurve;
+            double dragCoefficient = ScrollConfig.dragCoefficient;
+            double dragExponent = ScrollConfig.dragExponent;
+            
+            if (_modifications.input == kMFScrollInputModificationQuick) {
+//                baseCurve = ScrollConfig.linearCurve;
+//                dragCoefficient = 30;
+//                dragExponent = 0.8;
+                
+            }
+            
             /// Curve
-            HybridCurve *c = [[HybridCurve alloc] initWithBaseCurve:ScrollConfig.baseCurve
+            HybridCurve *c = [[HybridCurve alloc] initWithBaseCurve:baseCurve
                                                       baseTimeRange:baseTimeRange
                                                      baseValueRange:baseValueRange
-                                                    dragCoefficient:ScrollConfig.dragCoefficient
-                                                       dragExponent:ScrollConfig.dragExponent
+                                                    dragCoefficient:dragCoefficient
+                                                       dragExponent:dragExponent
                                                           stopSpeed:ScrollConfig.stopSpeed];
             
             /// Get values for animator from hybrid curve
@@ -377,7 +399,7 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
     CFRelease(event);
 }
 
-static int64_t getPxPerTick(CFTimeInterval timeBetweenTicks, double msPerStep) {
+static int64_t getPxPerTick(CFTimeInterval timeBetweenTicks, int64_t cgEventScrollDeltaPoint) {
     /// @discussion See the RawAccel guide for more info on acceleration curves https://github.com/a1xd/rawaccel/blob/master/doc/Guide.md
     ///     -> Edit: I read up on it and I don't see why the sensitivity-based approach that RawAccel uses is useful.
     ///     They define the base curve as for sensitivity, but then go through complex maths and many hurdles to make the implied outputVelocity(inputVelocity) function and its derivative smooth. Because that is what makes the acceleration feel predictable and nice. (See their "Gain" algorithm)
@@ -385,11 +407,22 @@ static int64_t getPxPerTick(CFTimeInterval timeBetweenTicks, double msPerStep) {
     ///     I'm just gonna use a BezierCurve to define the outputVelocity(inputVelocity) curve. Then I'll extrapolate the curve linearly at the end, so its defined everywhere. That is guaranteed to be smooth and easy to configure.
     ///     Edit: Actuallyyy we ended up outputting pixels to scroll for a given tick here (so sensitivity), not speed. I don't think perfectly smooth curves are that important. This is good enough and is more easy and natural to think about and configure.
     
+    AccelerationBezier *curve;
+    
+    if (_modifications.input == kMFScrollInputModificationPrecise) {
+        curve = ScrollConfig.preciseAccelerationCurve;
+    } else if (_modifications.input == kMFScrollInputModificationQuick) {
+        curve = ScrollConfig.quickAccelerationCurve;
+    } else if (ScrollConfig.useAppleAcceleration) {
+        return llabs(cgEventScrollDeltaPoint); // Use delta from Apple's acceleration algorithm
+    } else {
+        curve = ScrollConfig.accelerationCurve();
+    }
+    
     if (timeBetweenTicks == DBL_MAX) timeBetweenTicks = ScrollConfig.consecutiveScrollTickIntervalMax;
-    
     double scrollSpeed = 1/timeBetweenTicks; /// In tick/s
-    
-    double pxForThisTick = [ScrollConfig.accelerationCurve() evaluateAt:scrollSpeed]; /// In px/s
+                                             ///
+    double pxForThisTick = [curve evaluateAt:scrollSpeed]; /// In px/s
     
 //    DDLogDebug(@"Time between ticks: %f, scrollSpeed: %f, pxForThisTick: %f", timeBetweenTicks, scrollSpeed, pxForThisTick);
     
@@ -513,8 +546,14 @@ static void sendGestureScroll(int64_t dx, int64_t dy, IOHIDEventPhaseBits eventP
     
     [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:eventPhase];
     
+    if (_modifications.input == kMFScrollInputModificationQuick) {
+        /// Don't suppress natural momentum scroll if quickScroll is active
+        ///     Overriding params in all these different places if quickScroll is active is a little messy. Would maybe be better to have ScrollConfig return a struct with all params and to then override the values in the struct in one place.
+        return;
+    }
+    
+    /// Suppress natural momentumScroll and GestureScrollSimulator's momentumScroll
     if (eventPhase == kIOHIDEventPhaseEnded) {
-        /// Suppress natural momentumScroll and GestureScrollSimulator's momentumScroll
         [GestureScrollSimulator stopMomentumScroll];
     }
 }

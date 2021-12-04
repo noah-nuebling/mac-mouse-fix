@@ -10,7 +10,7 @@
 typedef enum {
     kMFScrollInputModificationNone,
     kMFScrollInputModificationPrecise,
-    kMFScrollInputModificationFast,
+    kMFScrollInputModificationQuick,
     
 } MFScrollInputModification;
 

@@ -46,7 +46,7 @@ import CocoaLumberjackSwift
             case kMFModifiedScrollInputModificationTypePrecisionScroll:
                 result.input = kMFScrollInputModificationPrecise
             case kMFModifiedScrollInputModificationTypeQuickScroll:
-                result.input = kMFScrollInputModificationFast
+                result.input = kMFScrollInputModificationQuick
             default:
                 fatalError("Unknown modifiedSrollDict type found in remaps")
             }

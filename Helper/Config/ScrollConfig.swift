@@ -151,93 +151,46 @@ import CocoaLumberjackSwift
         return -0.2 /// Negative values make the curve continuous, and more predictable (might be placebo)
 //        return 0.0
     }
-    @objc static var accelerationCurve: (() -> AnimationCurve) =
+    @objc static var accelerationCurve: (() -> AccelerationBezier) =
         DerivedProperty.create_kvc(on:
                                     ScrollConfig.self,
                                    given: [
                                     #keyPath(pxPerTickBase),
                                     #keyPath(pxPerTickEnd),
-                                    #keyPath(msPerStep),
                                     #keyPath(consecutiveScrollTickIntervalMax),
                                     #keyPath(consecutiveScrollTickInterval_AccelerationEnd),
                                     #keyPath(accelerationHump)
                                    ])
-    { () -> AnimationCurve in
+    { () -> AccelerationBezier in
         
-        /**
-         Define a curve describing the relationship between the scrollTickSpeed (in scrollTicks per second) (on the x-axis) and the pxPerTick (on the y axis).
-         We'll call this function y(x).
-         y(x) is composed of 3 other curves. The core of y(x) is a BezierCurve *b(x)*, which is defined on the interval (xMin, xMax).
-         y(xMin) is called yMin and y(xMax) is called yMax
-         There are two other components to y(x):
-             - For `x < xMin`, we set y(x) to yMin
-                 - We do this so that the acceleration is turned off for tickSpeeds below xMin. Acceleration should only affect scrollTicks that feel 'consecutive' and not ones that feel like singular events unrelated to other scrollTicks. `self.consecutiveScrollTickIntervalMax` is (supposed to be) the maximum time between ticks where they feel consecutive. So we're using it to define xMin.
-            - For `xMax < x`, we lineraly extrapolate b(x), such that the extrapolated line has the slope b'(xMax) and passes through (xMax, yMax)
-                - We do this so the curve is defined and has reasonable values even when the user scrolls really fast
-            (We use tick and step are interchangable here)
-        
-         HyperParameters:
-         - `dip` controls how slope (sensitivity) increases around low scrollSpeeds. The name doesn't make sense but it's easy.
-            I think this might be useful if  the basePxPerTick is very low. But for a larger basePxPerTick, it's probably fine to set it to 0
-         - If the third controlPoint shouldn't be `(xMax, yMax)`. If it was, then the slope of the extrapolated curve after xMax would be affected `accelerationDip`.
-        */
-        
-        /// Get instance properties
-        
-        var pxPerTickBase =  ScrollConfig.self.pxPerTickBase
-        var pxPerTickEnd = ScrollConfig.self.pxPerTickEnd;
-        var msPerStep = ScrollConfig.self.msPerStep
-        var consecutiveScrollTickIntervalMax = ScrollConfig.self.consecutiveScrollTickIntervalMax
-        /// ^ This is currently 0.13
-        let consecutiveScrollTickInterval_AccelerationEnd = ScrollConfig.self.consecutiveScrollTickInterval_AccelerationEnd
-        var accelerationHump = ScrollConfig.self.accelerationHump
-            
-        /// Define Curve
-        
-        let xMin: Double = 1 / Double(consecutiveScrollTickIntervalMax)
-        let yMin: Double = Double(pxPerTickBase);
-        
-        let xMax: Double = 1 / consecutiveScrollTickInterval_AccelerationEnd
-        let yMax: Double = Double(pxPerTickEnd)
-        
-        let x2: Double
-        let y2: Double
-        
-        if (accelerationHump < 0) {
-            x2 = -accelerationHump
-            y2 = 0
-        } else {
-            x2 = 0
-            y2 = accelerationHump
-        }
-        
-        
-        // Flatten out the end of the curve to prevent ridiculous pxPerTick outputs when input (tickSpeed) is very high. tickSpeed can be extremely high despite smoothing, because our time measurements of when ticks occur are very imprecise
-        let x3: Double = (xMax-xMin)*0.9
-//        let y3: Double = (yMax-yMin)*0.9
-        let y3: Double = yMax
-        
-        typealias P = Bezier.Point
-        return AccelerationBezier.init(controlPoints:
-                                        [P(x:xMin, y: yMin),
-                                         P(x:x2, y: y2),
-                                         P(x: x3, y: y3),
-                                         P(x: xMax, y: yMax)])
+        /// I'm not sure that using a derived property instead of just re-calculating the curve everytime is faster.
+    
+        return accelerationCurveFromParams(pxPerTickBase:                                   ScrollConfig.self.pxPerTickBase,
+                                           pxPerTickEnd:                                    ScrollConfig.self.pxPerTickEnd,
+                                           consecutiveScrollTickIntervalMax:                ScrollConfig.self.consecutiveScrollTickIntervalMax,
+                                           consecutiveScrollTickInterval_AccelerationEnd:   ScrollConfig.self.consecutiveScrollTickInterval_AccelerationEnd,
+                                           accelerationHump:                                ScrollConfig.self.accelerationHump)
     }
-    @objc static var animationCurve: AnimationCurve = { () -> AnimationCurve in
-        /// This i s not used anymore. Instead we use a `HybridCurve` with a base curve of `baseCurve`. Remove this.
-        /// Using a closure here instead of DerivedProperty.create_kvc(), because we know it will never change.
-        
-        typealias P = Bezier.Point
-        
-//        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:0.3,y:1), P(x:1,y:1)]
-//        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:1,y:1), P(x:1,y:1)]
-        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:0.5,y:0.9), P(x:1,y:1)]
-        
-        return Bezier(controlPoints: controlPoints, defaultEpsilon: 0.001) /// The default defaultEpsilon 0.08 makes the animations choppy
+    
+    @objc static let preciseAccelerationCurve = { () -> AccelerationBezier in
+        accelerationCurveFromParams(pxPerTickBase: 2,
+                                    pxPerTickEnd: 10,
+                                    consecutiveScrollTickIntervalMax: ScrollConfig.consecutiveScrollTickIntervalMax,
+                                    /// ^ We don't expect this to ever change so it's okay to just capture here
+                                    consecutiveScrollTickInterval_AccelerationEnd: ScrollConfig.consecutiveScrollTickInterval_AccelerationEnd,
+                                    accelerationHump: -0.2)
     }()
-    @objc static var baseCurve: Bezier = { () -> Bezier in
-        /// Base curve used to construct a HybridCurve in Scroll.m. This curve is applied before switching to a DragCurve to simulate physically accurate deceleration
+    @objc static let quickAccelerationCurve = { () -> AccelerationBezier in
+        accelerationCurveFromParams(pxPerTickBase: 80,
+                                    pxPerTickEnd: 200,
+                                    consecutiveScrollTickIntervalMax: ScrollConfig.consecutiveScrollTickIntervalMax,
+                                    consecutiveScrollTickInterval_AccelerationEnd: ScrollConfig.consecutiveScrollTickInterval_AccelerationEnd,
+                                    accelerationHump: -0.2)
+    }()
+    
+    
+    @objc static let baseCurve: Bezier = { () -> Bezier in
+        /// Base curve used to construct a HybridCurve animationCurve in Scroll.m. This curve is applied before switching to a DragCurve to simulate physically accurate deceleration
         /// Using a closure here instead of DerivedProperty.create_kvc(), because we know it will never change.
         typealias P = Bezier.Point
         
@@ -248,9 +201,7 @@ import CocoaLumberjackSwift
         
         return Bezier(controlPoints: controlPoints, defaultEpsilon: 0.001) /// The default defaultEpsilon 0.08 makes the animations choppy
     }()
-    @objc static var linearCurve: AnimationCurve = { () -> AnimationCurve in
-        /// This i s not used anymore. Instead we use a `HybridCurve` with a base curve of `baseCurve`. Remove this.
-        /// Using a closure here instead of DerivedProperty.create_kvc(), because we know it will never change.
+    @objc static let linearCurve: Bezier = { () -> Bezier in
         
         typealias P = Bezier.Point
         let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:1,y:1), P(x:1,y:1)]
@@ -300,6 +251,60 @@ import CocoaLumberjackSwift
     }
     @objc static var magnificationScrollModifierKeyEnabled: Bool {
         mod["magnificationScrollModifierKeyEnabled"] as! Bool
+    }
+    
+    
+    // MARK: Helpers
+    
+    fileprivate static func accelerationCurveFromParams(pxPerTickBase: Int, pxPerTickEnd: Int, consecutiveScrollTickIntervalMax: TimeInterval, consecutiveScrollTickInterval_AccelerationEnd: TimeInterval, accelerationHump: Double) -> AccelerationBezier {
+        /**
+         Define a curve describing the relationship between the scrollTickSpeed (in scrollTicks per second) (on the x-axis) and the pxPerTick (on the y axis).
+         We'll call this function y(x).
+         y(x) is composed of 3 other curves. The core of y(x) is a BezierCurve *b(x)*, which is defined on the interval (xMin, xMax).
+         y(xMin) is called yMin and y(xMax) is called yMax
+         There are two other components to y(x):
+         - For `x < xMin`, we set y(x) to yMin
+         - We do this so that the acceleration is turned off for tickSpeeds below xMin. Acceleration should only affect scrollTicks that feel 'consecutive' and not ones that feel like singular events unrelated to other scrollTicks. `self.consecutiveScrollTickIntervalMax` is (supposed to be) the maximum time between ticks where they feel consecutive. So we're using it to define xMin.
+         - For `xMax < x`, we lineraly extrapolate b(x), such that the extrapolated line has the slope b'(xMax) and passes through (xMax, yMax)
+         - We do this so the curve is defined and has reasonable values even when the user scrolls really fast
+         (We use tick and step are interchangable here)
+         
+         HyperParameters:
+         - `dip` controls how slope (sensitivity) increases around low scrollSpeeds. The name doesn't make sense but it's easy.
+         I think this might be useful if  the basePxPerTick is very low. But for a larger basePxPerTick, it's probably fine to set it to 0
+         - If the third controlPoint shouldn't be `(xMax, yMax)`. If it was, then the slope of the extrapolated curve after xMax would be affected `accelerationDip`.
+         */
+        
+        /// Define Curve
+        
+        let xMin: Double = 1 / Double(consecutiveScrollTickIntervalMax)
+        let yMin: Double = Double(pxPerTickBase);
+        
+        let xMax: Double = 1 / consecutiveScrollTickInterval_AccelerationEnd
+        let yMax: Double = Double(pxPerTickEnd)
+        
+        let x2: Double
+        let y2: Double
+        
+        if (accelerationHump < 0) {
+            x2 = -accelerationHump
+            y2 = 0
+        } else {
+            x2 = 0
+            y2 = accelerationHump
+        }
+        
+        /// Flatten out the end of the curve to prevent ridiculous pxPerTick outputs when input (tickSpeed) is very high. tickSpeed can be extremely high despite smoothing, because our time measurements of when ticks occur are very imprecise
+        let x3: Double = (xMax-xMin)*0.9
+        //        let y3: Double = (yMax-yMin)*0.9
+        let y3: Double = yMax
+        
+        typealias P = Bezier.Point
+        return AccelerationBezier.init(controlPoints:
+                                        [P(x:xMin, y: yMin),
+                                         P(x:x2, y: y2),
+                                         P(x: x3, y: y3),
+                                         P(x: xMax, y: yMax)])
     }
     
 }
