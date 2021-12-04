@@ -50,7 +50,11 @@ class RollingAverage: NSObject, Smoother {
         circularBuffer.add(NSNumber(value: value))
         
         let storedValues: [NSNumber] = circularBuffer.content()
-        let storedValuesAverage: Double = storedValues.reduce(0) { $0 + $1.doubleValue } / Double(storedValues.count)
+        var storedValuesAverage: Double = 0;
+        for storedValue in storedValues { /// I used `reduce` for the avg but its extremely slow for some reason
+            storedValuesAverage += storedValue.doubleValue;
+        }
+        storedValuesAverage /= Double(storedValues.count)
         
         return storedValuesAverage
         

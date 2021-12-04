@@ -205,7 +205,7 @@ static BOOL _momentumScrollIsActive;
                                              location:getPointerLocation()];
         
         /// Debug
-        DDLogInfo(@"timeSinceLast: %f scrollVec: %f %f speed: %f", timeSinceLastInput, vecScrollPoint.x, vecScrollPoint.y, vecScrollPoint.y / timeSinceLastInput);
+//        DDLogInfo(@"timeSinceLast: %f scrollVec: %f %f speed: %f", timeSinceLastInput, vecScrollPoint.x, vecScrollPoint.y, vecScrollPoint.y / timeSinceLastInput);
         /// ^ We're trying to analyze what makes a sequence of (modifiedDrag) scrolls produce an absurly fast momentum Scroll in Xcode (Xcode has it's own momentumScroll algorirthm that doesn't just follow our smoothed algorithm)
         ///     I can't see a simple pattern. I don't get it.
         ///     I do see thought that the timeSinceLast fluctuates wildly. This might be part of the issue.
@@ -306,7 +306,7 @@ static BOOL _momentumScrollIsActive;
 
 + (void)stopMomentumScroll {
     
-    DDLogDebug(@"Request to stop momentum scroll. Caller: %@", [SharedUtility callerInfo]);
+//    DDLogDebug(@"Request to stop momentum scroll. Caller: %@", [SharedUtility callerInfo]);
     
     [self stopMomentumScrollWithEvent:NULL];
 }
@@ -420,7 +420,7 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
                        integerCallback:^(NSInteger pointDelta, double timeDelta, MFAnimationPhase animationPhase) {
         
         /// Debug
-        DDLogDebug(@"Momentum scrolling - delta: %ld, animationPhase: %d", (long)pointDelta, animationPhase);
+//        DDLogDebug(@"Momentum scrolling - delta: %ld, animationPhase: %d", (long)pointDelta, animationPhase);
         
         /// Get delta vectors
         Vector directedPointDelta = scaledVector(direction, pointDelta);
@@ -537,13 +537,12 @@ static Vector initalMomentumScrollVelocity_FromExitVelocity(Vector exitVelocity)
 
     /// Debug
     
-    static double tsLast;
-    double ts = CACurrentMediaTime();
-    double timeSinceLast = ts - tsLast;
-    tsLast = ts;
+//    static double tsLast;
+//    double ts = CACurrentMediaTime();
+//    double timeSinceLast = ts - tsLast;
+//    tsLast = ts;
     
-    DDLogDebug(@"\nPosting: gesture: (%f, %f)   \t scroll: (%f, %f) \t scrollPt: (%f, %f) \t phases: (%d, %d) \t timeSinceLast: %f \t loc: (%f, %f)\n",
-          vecGesture.x, vecGesture.y, vecScroll.x, vecScroll.y, vecScrollPoint.x, vecScrollPoint.y, phase, momentumPhase, timeSinceLast*1000, loc.x, loc.y);
+//    DDLogDebug(@"\nPosting: gesture: (%f, %f)   \t scroll: (%f, %f) \t scrollPt: (%f, %f) \t phases: (%d, %d) \t timeSinceLast: %f \t loc: (%f, %f)\n", vecGesture.x, vecGesture.y, vecScroll.x, vecScroll.y, vecScrollPoint.x, vecScrollPoint.y, phase, momentumPhase, timeSinceLast*1000, loc.x, loc.y);
     
     assert((phase == kIOHIDEventPhaseUndefined || momentumPhase == kCGMomentumScrollPhaseNone)); /// At least one of the phases has to be 0
     

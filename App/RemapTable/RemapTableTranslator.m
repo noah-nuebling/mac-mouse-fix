@@ -65,6 +65,9 @@ NSTableView *_tableView;
 static NSDictionary *separatorEffectsTableEntry() {
     return @{@"isSeparator": @YES};
 }
+//static NSDictionary *hideableSeparatorEffectsTableEntry() {
+//    return @{@"isSeparator": @YES, @"hideable": @YES}; /// This doesn't work ;/
+//}
 static NSArray *getScrollEffectsTable() {
     NSArray *scrollEffectsTable = @[
         @{@"ui": @"Desktop & Launchpad", @"tool": @"Scroll up for Launchpad and down to show the Desktop \n \nWorks like Pinching with 4 fingers on an Apple Trackpad", @"dict": @{
@@ -76,15 +79,15 @@ static NSArray *getScrollEffectsTable() {
         @{@"ui": @"Horizontal Scroll", @"tool": @"Scroll horizontally \nNavigate pages in Safari, delete messages in Mail, and more \n \nWorks like swiping horizontally with 2 fingers on an Apple Trackpad" , @"dict": @{
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeHorizontalScroll
         }},
-//        @{@"ui": @"Rotate", @"tool": @"Rotate in Maps and other apps \n \nWorks like Twisting with 2 fingers on an Apple Trackpad", @"dict": @{
-//            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeRotate
-//        }},
-        separatorEffectsTableEntry(),
-        @{@"ui": @"Precise Scroll", @"tool": @"Scroll small distances with high precision", @"dict": @{
-            kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypePrecisionScroll
+        @{@"ui": @"Rotate", @"hideable": @YES, @"tool": @"Rotate in Maps and other apps \n \nWorks like Twisting with 2 fingers on an Apple Trackpad", @"dict": @{
+            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeRotate
         }},
+        separatorEffectsTableEntry(),
         @{@"ui": @"Swift Scroll", @"tool": @"Scroll long distances with minimal effort", @"dict": @{
             kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypeQuickScroll
+        }},
+        @{@"ui": @"Precise Scroll", @"tool": @"Scroll small distances and use sensitive UI Elements with precision.", @"dict": @{
+            kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypePrecisionScroll
         }},
     ];
     return scrollEffectsTable;

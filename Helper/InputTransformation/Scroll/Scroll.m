@@ -53,7 +53,7 @@ static MFScrollModificationResult _modifications;
     // Setup dispatch queue
     //  For multithreading while still retaining control over execution order.
     dispatch_queue_attr_t attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INTERACTIVE, -1);
-    _scrollQueue = dispatch_queue_create(NULL, attr);
+    _scrollQueue = dispatch_queue_create("com.nuebling.mac-mouse-fix.helper.scroll", attr);
     
     // Create AXUIElement for getting app under mouse pointer
     _systemWideAXUIElement = AXUIElementCreateSystemWide();
@@ -155,13 +155,13 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         || isDiagonal) { // Ignore diagonal scroll-events
         
         /// Debug
-        DDLogDebug(@"Ignored scroll event: (%f,%f), (%f,%f), phase: %f, %f",
-                   CGEventGetDoubleValueField(event, kCGScrollWheelEventDeltaAxis1),
-                   CGEventGetDoubleValueField(event, kCGScrollWheelEventDeltaAxis2),
-                   CGEventGetDoubleValueField(event, kCGScrollWheelEventPointDeltaAxis1),
-                   CGEventGetDoubleValueField(event, kCGScrollWheelEventPointDeltaAxis2),
-                   CGEventGetDoubleValueField(event, kCGScrollWheelEventScrollPhase),
-                   CGEventGetDoubleValueField(event, kCGScrollWheelEventMomentumPhase));
+//        DDLogDebug(@"Ignored scroll event: (%f,%f), (%f,%f), phase: %f, %f",
+//                   CGEventGetDoubleValueField(event, kCGScrollWheelEventDeltaAxis1),
+//                   CGEventGetDoubleValueField(event, kCGScrollWheelEventDeltaAxis2),
+//                   CGEventGetDoubleValueField(event, kCGScrollWheelEventPointDeltaAxis1),
+//                   CGEventGetDoubleValueField(event, kCGScrollWheelEventPointDeltaAxis2),
+//                   CGEventGetDoubleValueField(event, kCGScrollWheelEventScrollPhase),
+//                   CGEventGetDoubleValueField(event, kCGScrollWheelEventMomentumPhase));
         
         return event;
     }
