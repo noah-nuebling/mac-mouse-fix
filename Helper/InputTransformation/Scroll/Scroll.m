@@ -535,14 +535,39 @@ static void sendTouchEvent(int64_t dx, int64_t dy, IOHIDEventPhaseBits deltaPhas
     
     assert(deltaPhase == kIOHIDEventPhaseBegan || deltaPhase == kIOHIDEventPhaseChanged);
     
-//    if (isFinalEvent) deltaPhase = kIOHIDEventPhaseEnded; /// Debug
-    
-    sendTouchEventFunction(dx, dy, deltaPhase);
-    
-    if (isFinalEvent) {
-        /// The "end" event in touch events usually signals the user lifting off their fingers and has a 0,0 delta. The events that our scrolling engine produces have non-zero deltas on their final events events. That's why we need to send this extra event
-        sendTouchEventFunction(0, 0, kIOHIDEventPhaseEnded);
-    }
+        
+        if (_modifications.input == kMFScrollInputModificationQuick
+            && sendTouchEventFunction == sendGestureScroll) {
+            
+            /// When quick scroll is active, we don't want to suppress natural momentum scroll (which `sendGestureScroll()` does), so we're sending the events directly instead of calling sendGestureScroll in that case
+            ///     For momentumScroll to work properly in certain apps like Xcode which implement their own momentumScroll algorithm, there are the following problems that would occur if we used sendGestureScroll but just turned off the momentumScroll suppression
+            ///         1. The delta of the last event before the kIOHIDEventPhaseEnded event seems to determine how fast the momentum scroll will be in apps like Xcode.
+            ///             -> Since this is driven by a PixelatedAnimator the last delta will almost always be much smaller than the rest, leading momentum scroll to be too slow.
+            ///         2. If the time between the kIOHIDEventPhaseEnded event and the previous one is very small, there will be a stuttery jump at the start of the momentumScroll
+            ///             -> The default touchEventSending code (below) sends the kIOHIDEventPhaseEnded event immediately after the last delta event which leads to a very exagerated stuttery jump
+            ///     To fix these two issues we simply ignore the deltas on the final event and set its phase to kIOHIDEventPhaseEnded (kIOHIDEventPhaseEnded can't have deltas (at least on the touch events we've observed), because they signal the user lifting off their fingers). Ignoring the final deltas is not ideal but this is the simplest and most robust solution I can come up with.
+            ///
+            ///     Notes:
+            ///     - It might also be more ideal to have the last event before the kIOHIDEventPhaseEnded event have the smoothed delta that we use to start our custom momentumScroll in [GestureScrollSimulator postGestureScrollEventWithDeltaX:]. This would create greater consistency between apps that use our momentumScroll algorithm like Safari and apps that have their own like Xcode.
+            ///     - We could also maybe turn off the smoothing in GestureScrollSimulator, because it doesn't work for apps with their own momentumScroll algorithm anyways. Instead we could base the initial speed of our own momentumScroll algorithm solely on the last event delta and the time between that event and the kIOHIDEventPhaseEnded event, just like the Xcode momentumScroll apparently does. And then we'd have to make sure to drive the GestureSimulator such that those values are reasonable. (Like we're doing now anyways because that's necessary for apps that implement their own momentumScroll)
+            ///     - We're pretty much the same thing in ModifiedDrag to drive the [GestureScrollSimulator postGestureScrollEventWithDeltaX:]. Maybeee it would be smart to abstract this behaviour away if we end up using it more. But for now this works.
+            
+            if (isFinalEvent) {
+                dx = 0;
+                dy = 0;
+                deltaPhase = kIOHIDEventPhaseEnded;
+            }
+            [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:deltaPhase];
+            
+        } else {
+            
+            sendTouchEventFunction(dx, dy, deltaPhase);
+            
+            if (isFinalEvent) {
+                /// The "end" event in touch events usually signals the user lifting off their fingers and has a 0,0 delta. The events that our scrolling engine produces have non-zero deltas on their final events events. That's why we need to send this extra event
+                sendTouchEventFunction(0, 0, kIOHIDEventPhaseEnded);
+            }
+        }
     
 }
 
@@ -553,12 +578,6 @@ static void sendGestureScroll(int64_t dx, int64_t dy, IOHIDEventPhaseBits eventP
     /// Send simulated two-finger swipe event
     
     [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:eventPhase];
-    
-    if (_modifications.input == kMFScrollInputModificationQuick) {
-        /// Don't suppress natural momentum scroll if quickScroll is active
-        ///     Overriding params in all these different places if quickScroll is active is a little messy. Would maybe be better to have ScrollConfig return a struct with all params and to then override the values in the struct in one place.
-        return;
-    }
     
     /// Suppress natural momentumScroll and GestureScrollSimulator's momentumScroll
     if (eventPhase == kIOHIDEventPhaseEnded) {

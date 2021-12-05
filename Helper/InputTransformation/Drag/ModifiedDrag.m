@@ -566,6 +566,7 @@ static void handleDeactivationWhileInUse(BOOL cancelation) {
 //        [_smoothingAnimator onStopWithCallback:^{ /// Do this after the smoothingAnimator is done animating
 //            [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded];
 //        }];
+            
         if (_smoothingAnimator.isRunning) {
             _smoothingAnimatorShouldStartMomentumScroll = YES;
         } else {

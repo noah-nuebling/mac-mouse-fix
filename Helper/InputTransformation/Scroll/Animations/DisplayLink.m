@@ -116,10 +116,22 @@
     }
 }
 - (void)stop {
+    
     if (self.isRunning) {
-        CVDisplayLinkStop(_displayLink);
+            
+        /// CVDisplayLink should be stopped from the main thread
+        ///     According to https://cpp.hotexamples.com/examples/-/-/CVDisplayLinkStop/cpp-cvdisplaylinkstop-function-examples.html
+        
+        void (^workload)(void) = ^{
+            CVDisplayLinkStop(self->_displayLink);
+        };
+        
+        if (NSThread.isMainThread) {
+            workload();
+        } else {
+            dispatch_sync(dispatch_get_main_queue(), workload);
+        }
     }
-//    DDLogDebug(@"Stopped displayLinkCallback");
 }
 
 - (BOOL)isRunning {

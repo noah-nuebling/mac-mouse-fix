@@ -53,10 +53,18 @@ static VectorSubPixelator *_scrollLinePixelator;
 
 static PixelatedAnimator *_momentumAnimator;
 static BOOL _momentumScrollIsActive;
+/// ^ We use this to avoid race conditions. It would be safer and easier (although maybe larginally slow?) to use a dispatch queue instead
+
+static dispatch_queue_t _queue; /// Use this queue for interface functions to avoid race conditions
 
 + (void)initialize
 {
     if (self == [GestureScrollSimulator class]) {
+        
+        /// Init dispatch queue
+        
+        dispatch_queue_attr_t attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INTERACTIVE, -1);
+        _queue = dispatch_queue_create("com.nuebling.mac-mouse-fix.gesture-scroll", attr);
         
         /// Init smoothers
         
@@ -104,200 +112,205 @@ static BOOL _momentumScrollIsActive;
 
 + (void)postGestureScrollEventWithDeltaX:(double)dx deltaY:(double)dy phase:(IOHIDEventPhaseBits)phase {
     
-    /// Debug
+    /// Dispatch to queue
     
-//    DDLogDebug(@"Request to post Gesture Scroll: (%f, %f), phase: %d", dx, dy, phase);
-    
-    /// Validate input
-    
-    if (phase != kIOHIDEventPhaseEnded && dx == 0.0 && dy == 0.0) {
-        /// Maybe kIOHIDEventPhaseBegan events from the Trackpad driver can also contain zero-deltas? I don't think so by I'm not sure.
-        /// Real trackpad driver seems to only produce zero deltas when phase is kIOHIDEventPhaseEnded.
-        ///     - (And probably also if phase is kIOHIDEventPhaseCancelled or kIOHIDEventPhaseMayBegin, but we're not using those here - IIRC those are only produced when the user touches the trackpad but doesn't begin scrolling before lifting fingers off again)
-        /// The main practical reason we're emulating this behavour of the trackpad driver because of this: There are certain apps (or views?) which create their own momentum scrolls and ignore the momentum scroll deltas contained in the momentum scroll events we send. E.g. Xcode or the Finder collection view. I think that these views ignore all zero-delta events when they calculate what the initial momentum scroll speed should be. (It's been months since I discovered that though, so maybe I'm rememvering wrong) We want to match these apps momentum scroll algortihm closely to provide a consisten experience. So we're not sending the zero-delta events either and ignoring them for the purposes of our momentum scroll calculation and everything else.
-        
-        DDLogWarn(@"Trying to post gesture scroll with zero deltas while phase is not kIOHIDEventPhaseEnded - ignoring");
-        
-        return;
-    }
-    
-    
-    /// Stop momentum scroll
-    
-    [self stopMomentumScroll];
-    
-    /// Timestamps and static vars
-    
-    static CFTimeInterval lastInputTime;
-    static double smoothedXDistance;
-    static double smoothedYDistance;
-    static double smoothedTimeBetweenInputs;
-    static CGPoint origin;
-    
-    CFTimeInterval now = CACurrentMediaTime();
-    CFTimeInterval timeSinceLastInput;
-    if (phase == kIOHIDEventPhaseBegan) {
-        timeSinceLastInput = DBL_MAX; /// This means we can't say anything useful about the time since last input
-    } else {
-        timeSinceLastInput = now - lastInputTime;
-    }
-    
-    /// Location
-    
-//    CGPoint location = getPointerLocation();
-    /// ^ Instead of using this, call getPointerLocation() directly before it's used so the value is as up-to-date as possible. Not sure if that makes a difference.
-        
-    /// Main
-    
-    if (phase == kIOHIDEventPhaseBegan) {
-        
-        origin = getPointerLocation();
-        
-        /// Reset subpixelators
-        
-        [_scrollLinePixelator reset];
-        [_scrollPointPixelator reset];
-        [_gesturePixelator reset];
-        
-        /// Reset smoothers
-        [_xDistanceSmoother reset];
-        [_yDistanceSmoother reset];
-        [_timeBetweenInputsSmoother reset];
-        smoothedXDistance = 0;
-        smoothedYDistance = 0;
-        smoothedTimeBetweenInputs = 0;
-        
-    }
-    if (phase == kIOHIDEventPhaseBegan || phase == kIOHIDEventPhaseChanged) {
-        
-        /// Get vectors
-        
-        Vector vecScrollPoint = (Vector){ .x = dx, .y = dy };
-        Vector vecScrollLine = scrollLineVector_FromScrollPointVector(vecScrollPoint);
-        Vector vecGesture = gestureVector_FromScrollPointVector(vecScrollPoint);
-        
-        /// Record last scroll point vec
-        
-        _lastScrollPointVector = vecScrollPoint;
-        
-        /// Update smoothed values
-        
-        if (phase == kIOHIDEventPhaseChanged) {            
-            smoothedXDistance = [_xDistanceSmoother smoothWithValue:vecScrollPoint.x];
-            smoothedYDistance = [_yDistanceSmoother smoothWithValue:vecScrollPoint.y];
-            smoothedTimeBetweenInputs = [_timeBetweenInputsSmoother smoothWithValue:timeSinceLastInput];
-            
-        }
-        
-        /// Subpixelate vectors
-        
-        vecScrollPoint = [_scrollPointPixelator intVectorWithDoubleVector:vecScrollPoint];
-        vecScrollLine = [_scrollLinePixelator intVectorWithDoubleVector:vecScrollLine];
-        vecGesture = [_gesturePixelator intVectorWithDoubleVector:vecGesture];
-        
-        /// Post events
-        
-        [self postGestureScrollEventWithGestureVector:vecGesture
-                                         scrollVectorLine:vecScrollLine
-                                    scrollVectorPoint:vecScrollPoint
-                                                phase:phase
-                                        momentumPhase:kCGMomentumScrollPhaseNone
-                                             location:getPointerLocation()];
+    dispatch_async(_queue, ^{
         
         /// Debug
-//        DDLogInfo(@"timeSinceLast: %f scrollVec: %f %f speed: %f", timeSinceLastInput, vecScrollPoint.x, vecScrollPoint.y, vecScrollPoint.y / timeSinceLastInput);
-        /// ^ We're trying to analyze what makes a sequence of (modifiedDrag) scrolls produce an absurly fast momentum Scroll in Xcode (Xcode has it's own momentumScroll algorirthm that doesn't just follow our smoothed algorithm)
-        ///     I can't see a simple pattern. I don't get it.
-        ///     I do see thought that the timeSinceLast fluctuates wildly. This might be part of the issue.
-        ///         Solution idea: Feed the deltas from modifiedDrag into a display-synced coalescing loop. This coalescing loop will then call GestureScrollSimulator at most [refreshRate] times a second.
         
-    } else if (phase == kIOHIDEventPhaseEnded) {
+        //    DDLogDebug(@"Request to post Gesture Scroll: (%f, %f), phase: %d", dx, dy, phase);
+        
+        /// Validate input
+        
+        if (phase != kIOHIDEventPhaseEnded && dx == 0.0 && dy == 0.0) {
+            /// Maybe kIOHIDEventPhaseBegan events from the Trackpad driver can also contain zero-deltas? I don't think so by I'm not sure.
+            /// Real trackpad driver seems to only produce zero deltas when phase is kIOHIDEventPhaseEnded.
+            ///     - (And probably also if phase is kIOHIDEventPhaseCancelled or kIOHIDEventPhaseMayBegin, but we're not using those here - IIRC those are only produced when the user touches the trackpad but doesn't begin scrolling before lifting fingers off again)
+            /// The main practical reason we're emulating this behavour of the trackpad driver because of this: There are certain apps (or views?) which create their own momentum scrolls and ignore the momentum scroll deltas contained in the momentum scroll events we send. E.g. Xcode or the Finder collection view. I think that these views ignore all zero-delta events when they calculate what the initial momentum scroll speed should be. (It's been months since I discovered that though, so maybe I'm rememvering wrong) We want to match these apps momentum scroll algortihm closely to provide a consisten experience. So we're not sending the zero-delta events either and ignoring them for the purposes of our momentum scroll calculation and everything else.
             
-        /// Start momentum scroll
+            DDLogWarn(@"Trying to post gesture scroll with zero deltas while phase is not kIOHIDEventPhaseEnded - ignoring");
+            
+            return;
+        }
         
-        DDLogInfo(@"timeSinceLast: %f", timeSinceLastInput);
         
-        /// Update smoothers once more
+        /// Stop momentum scroll
         
-        smoothedTimeBetweenInputs = [_timeBetweenInputsSmoother smoothWithValue:timeSinceLastInput];
-        smoothedXDistance = [_xDistanceSmoother smoothWithValue:smoothedXDistance];
-        smoothedYDistance = [_yDistanceSmoother smoothWithValue:smoothedYDistance];
-        /// ^ kIOHIDEventPhaseEnded events always have distance 0. We're  inserting the last smoothed value as input instead of inserting 0 or nothing to maybe keep it more synced with the smoothedTimeBetweenInputs. Not sure if this is beneficial.
-
+        [self stopMomentumScroll];
         
-        /// Get exitSpeed (aka initialSpeed for momentum Scroll)
+        /// Timestamps and static vars
         
-        Vector exitVelocity = (Vector){
-            .x = smoothedXDistance / smoothedTimeBetweenInputs,
-            .y = smoothedYDistance / smoothedTimeBetweenInputs
-        };
+        static CFTimeInterval lastInputTime;
+        static double smoothedXDistance;
+        static double smoothedYDistance;
+        static double smoothedTimeBetweenInputs;
+        static CGPoint origin;
         
-        /// Post one more event with a delta
-        ///     The speed in this last event should be exactly our smoothied speed.
-        ///     We only do this because programs like Xcode and Finder implement their own momentum scroll algorithm and they sometimes react in a volatile way. Having the momentum scroll start either too slow or too fast.
-        ///         We're already smoothing the speed over the last few input to the the initial speed for our momentumScroll implementation and it works really well. But it seems Xcode and others just ignore our momentumScroll events.
-        ///         My theory is Xcode and other base their initial momentumScroll speed only on the speed in the last event before the kIOHIDEventPhaseEnded event.
-        ///         So that's why were sending one extra event here with the smoothied speed - so that Xcode and other apps hopefully start momentumScroll with our smoothedSpeed
+        CFTimeInterval now = CACurrentMediaTime();
+        CFTimeInterval timeSinceLastInput;
+        if (phase == kIOHIDEventPhaseBegan) {
+            timeSinceLastInput = DBL_MAX; /// This means we can't say anything useful about the time since last input
+        } else {
+            timeSinceLastInput = now - lastInputTime;
+        }
         
-//        double lastXDelta = timeSinceLastInput * exitVelocity.x * 1;
-//        double lastYDelta = timeSinceLastInput * exitVelocity.y * 1;
-        /// ^ This seems to help a little but not much
-
-//        double lastXDelta = smoothedXDistance;
-//        double lastYDelta = smoothedYDistance;
-        /// ^ Also very volatile
+        /// Location
         
-        /// Get vectors for last delta event
+        //    CGPoint location = getPointerLocation();
+        /// ^ Instead of using this, call getPointerLocation() directly before it's used so the value is as up-to-date as possible. Not sure if that makes a difference.
         
-//        Vector vecScrollPoint = (Vector){ .x = lastXDelta, .y = lastYDelta };
-//        Vector vecScrollLine = scrollLineVector_FromScrollPointVector(vecScrollPoint);
-//        Vector vecGesture = gestureVector_FromScrollPointVector(vecScrollPoint);
-//
-//        /// Post last delta event
-//        [self postGestureScrollEventWithGestureVector:vecGesture
-//                                     scrollVectorLine:vecScrollLine
-//                                    scrollVectorPoint:vecScrollPoint
-//                                                phase:kIOHIDEventPhaseChanged
-//                                        momentumPhase:0
-//                                             location:getPointerLocation()];
+        /// Main
         
-        /// Post `ended` event
-        [self postGestureScrollEventWithGestureVector:(Vector){}
-                                     scrollVectorLine:(Vector){}
-                                    scrollVectorPoint:(Vector){}
-                                                phase:kIOHIDEventPhaseEnded
-                                        momentumPhase:0
-                                             location:getPointerLocation()];
+        if (phase == kIOHIDEventPhaseBegan) {
+            
+            origin = getPointerLocation();
+            
+            /// Reset subpixelators
+            
+            [_scrollLinePixelator reset];
+            [_scrollPointPixelator reset];
+            [_gesturePixelator reset];
+            
+            /// Reset smoothers
+            [_xDistanceSmoother reset];
+            [_yDistanceSmoother reset];
+            [_timeBetweenInputsSmoother reset];
+            smoothedXDistance = 0;
+            smoothedYDistance = 0;
+            smoothedTimeBetweenInputs = 0;
+            
+        }
+        if (phase == kIOHIDEventPhaseBegan || phase == kIOHIDEventPhaseChanged) {
+            
+            /// Get vectors
+            
+            Vector vecScrollPoint = (Vector){ .x = dx, .y = dy };
+            Vector vecScrollLine = scrollLineVector_FromScrollPointVector(vecScrollPoint);
+            Vector vecGesture = gestureVector_FromScrollPointVector(vecScrollPoint);
+            
+            /// Record last scroll point vec
+            
+            _lastScrollPointVector = vecScrollPoint;
+            
+            /// Update smoothed values
+            
+            if (phase == kIOHIDEventPhaseChanged) {
+                smoothedXDistance = [_xDistanceSmoother smoothWithValue:vecScrollPoint.x];
+                smoothedYDistance = [_yDistanceSmoother smoothWithValue:vecScrollPoint.y];
+                smoothedTimeBetweenInputs = [_timeBetweenInputsSmoother smoothWithValue:timeSinceLastInput];
+                
+            }
+            
+            /// Subpixelate vectors
+            
+            vecScrollPoint = [_scrollPointPixelator intVectorWithDoubleVector:vecScrollPoint];
+            vecScrollLine = [_scrollLinePixelator intVectorWithDoubleVector:vecScrollLine];
+            vecGesture = [_gesturePixelator intVectorWithDoubleVector:vecGesture];
+            
+            /// Post events
+            
+            [self postGestureScrollEventWithGestureVector:vecGesture
+                                         scrollVectorLine:vecScrollLine
+                                        scrollVectorPoint:vecScrollPoint
+                                                    phase:phase
+                                            momentumPhase:kCGMomentumScrollPhaseNone
+                                                 location:getPointerLocation()];
+            
+            /// Debug
+            //        DDLogInfo(@"timeSinceLast: %f scrollVec: %f %f speed: %f", timeSinceLastInput, vecScrollPoint.x, vecScrollPoint.y, vecScrollPoint.y / timeSinceLastInput);
+            /// ^ We're trying to analyze what makes a sequence of (modifiedDrag) scrolls produce an absurly fast momentum Scroll in Xcode (Xcode has it's own momentumScroll algorirthm that doesn't just follow our smoothed algorithm)
+            ///     I can't see a simple pattern. I don't get it.
+            ///     I do see thought that the timeSinceLast fluctuates wildly. This might be part of the issue.
+            ///         Solution idea: Feed the deltas from modifiedDrag into a display-synced coalescing loop. This coalescing loop will then call GestureScrollSimulator at most [refreshRate] times a second.
+            
+        } else if (phase == kIOHIDEventPhaseEnded) {
+            
+            /// Start momentum scroll
+            
+            DDLogInfo(@"timeSinceLast: %f", timeSinceLastInput);
+            
+            /// Update smoothers once more
+            
+            smoothedTimeBetweenInputs = [_timeBetweenInputsSmoother smoothWithValue:timeSinceLastInput];
+            smoothedXDistance = [_xDistanceSmoother smoothWithValue:smoothedXDistance];
+            smoothedYDistance = [_yDistanceSmoother smoothWithValue:smoothedYDistance];
+            /// ^ kIOHIDEventPhaseEnded events always have distance 0. We're  inserting the last smoothed value as input instead of inserting 0 or nothing to maybe keep it more synced with the smoothedTimeBetweenInputs. Not sure if this is beneficial.
+            
+            
+            /// Get exitSpeed (aka initialSpeed for momentum Scroll)
+            
+            Vector exitVelocity = (Vector){
+                .x = smoothedXDistance / smoothedTimeBetweenInputs,
+                .y = smoothedYDistance / smoothedTimeBetweenInputs
+            };
+            
+            /// Post one more event with a delta
+            ///     The speed in this last event should be exactly our smoothied speed.
+            ///     We only do this because programs like Xcode and Finder implement their own momentum scroll algorithm and they sometimes react in a volatile way. Having the momentum scroll start either too slow or too fast.
+            ///         We're already smoothing the speed over the last few input to the the initial speed for our momentumScroll implementation and it works really well. But it seems Xcode and others just ignore our momentumScroll events.
+            ///         My theory is Xcode and other base their initial momentumScroll speed only on the speed in the last event before the kIOHIDEventPhaseEnded event.
+            ///         So that's why were sending one extra event here with the smoothied speed - so that Xcode and other apps hopefully start momentumScroll with our smoothedSpeed
+            
+            //        double lastXDelta = timeSinceLastInput * exitVelocity.x * 1;
+            //        double lastYDelta = timeSinceLastInput * exitVelocity.y * 1;
+            /// ^ This seems to help a little but not much
+            
+            //        double lastXDelta = smoothedXDistance;
+            //        double lastYDelta = smoothedYDistance;
+            /// ^ Also very volatile
+            
+            /// Get vectors for last delta event
+            
+            //        Vector vecScrollPoint = (Vector){ .x = lastXDelta, .y = lastYDelta };
+            //        Vector vecScrollLine = scrollLineVector_FromScrollPointVector(vecScrollPoint);
+            //        Vector vecGesture = gestureVector_FromScrollPointVector(vecScrollPoint);
+            //
+            //        /// Post last delta event
+            //        [self postGestureScrollEventWithGestureVector:vecGesture
+            //                                     scrollVectorLine:vecScrollLine
+            //                                    scrollVectorPoint:vecScrollPoint
+            //                                                phase:kIOHIDEventPhaseChanged
+            //                                        momentumPhase:0
+            //                                             location:getPointerLocation()];
+            
+            /// Post `ended` event
+            [self postGestureScrollEventWithGestureVector:(Vector){}
+                                         scrollVectorLine:(Vector){}
+                                        scrollVectorPoint:(Vector){}
+                                                    phase:kIOHIDEventPhaseEnded
+                                            momentumPhase:0
+                                                 location:getPointerLocation()];
+            
+            /// Get momentum scroll params
+            
+            double stopSpeed = 1.0;
+            
+            /// 1. Similar to trackpad, but to fast fall off on low speeds vs medium speeds
+            ///     Can't really deviate from the default curve thought because certain apps impement their own momentumScroll and we should stay consistent with those
+            ///     Maybe we can use a Bezier for the initialMomentumSpeed and make it feel better that way.
+            double dragCoeff = 30;
+            double dragExp = 0.7;
+            
+            /**
+             For `dragExp`, a value between 0.7 and 0.8 seems to be the sweet spot to get nice Apple Trackpad -like deceleration
+             - `dragExp` = 0.8 works well with `dragCoeff` around 30 (in the old implementation it used to be 8, so we probably messed something up in the new implementation)
+             - `dragExp` = 0.7 works well with `dragCoeff` around 70
+             - `dragExp` = 0.9  with `dragCoeff` around 10 also feels nice but noticeably different from Trackpad
+             -   ^ The above drag coefficients don't work anymore now that we've fixed another bug where scroll point deltas were 10x too small
+             */
+            
+            CGPoint location = origin;
+            
+            /// Do start momentum scroll
+            
+            startMomentumScroll(timeSinceLastInput, exitVelocity, stopSpeed, dragCoeff, dragExp, location);
+            
+        } else {
+            assert(false);
+        }
         
-        /// Get momentum scroll params
-        
-        double stopSpeed = 1.0;
-        
-        /// 1. Similar to trackpad, but to fast fall off on low speeds vs medium speeds
-        ///     Can't really deviate from the default curve thought because certain apps impement their own momentumScroll and we should stay consistent with those
-        ///     Maybe we can use a Bezier for the initialMomentumSpeed and make it feel better that way.
-        double dragCoeff = 30;
-        double dragExp = 0.7;
-        
-        /**
-                For `dragExp`, a value between 0.7 and 0.8 seems to be the sweet spot to get nice Apple Trackpad -like deceleration
-                - `dragExp` = 0.8 works well with `dragCoeff` around 30 (in the old implementation it used to be 8, so we probably messed something up in the new implementation)
-                - `dragExp` = 0.7 works well with `dragCoeff` around 70
-                - `dragExp` = 0.9  with `dragCoeff` around 10 also feels nice but noticeably different from Trackpad
-                -   ^ The above drag coefficients don't work anymore now that we've fixed another bug where scroll point deltas were 10x too small
-         */
-        
-        CGPoint location = origin;
-        
-        /// Do start momentum scroll
-        
-        startMomentumScroll(timeSinceLastInput, exitVelocity, stopSpeed, dragCoeff, dragExp, location);
-        
-    } else {
-        assert(false);
-    }
-    
-    lastInputTime = now; /// Make sure you don't return early so this is always executed
+        lastInputTime = now; /// Make sure you don't return early so this is always executed
+    });
 }
 
 #pragma mark - Momentum scroll
@@ -311,46 +324,51 @@ static BOOL _momentumScrollIsActive;
     [self stopMomentumScrollWithEvent:NULL];
 }
 
-+ (void)stopMomentumScrollWithEvent:(CGEventRef _Nullable)event {
++ (void)stopMomentumScrollWithEvent:(CGEventRef _Nullable)eventArg {
     /// We only use `event` to get the location for sending scroll events
     
-    assert(_momentumScrollIsActive || !_momentumAnimator.isRunning);
-    /// ^ This asserts the boolean expression _momentumAnimator.isRunning -> _momentumScrollIsActive
-    ///     _momentumScrollIsActive can be YES before the _momentumAnimator is started. (But not the other way around.)
-    ///     In that scenario we don't need to stop the animator but we still need to send the kCGMomentumScrollPhaseEnd event to stop views that handle momentum scrolling themselves like the Xcode editor view. That's why we need this distinction between _momentumAnimator.isRunning and _momentumScrollIsActive.
-    
-    if (_momentumScrollIsActive) {
+    dispatch_async(_queue, ^{
         
-        if (_momentumAnimator.isRunning) {
-
-        /// Stop our animator
-            [_momentumAnimator stop];
+        assert(_momentumScrollIsActive || !_momentumAnimator.isRunning);
+        /// ^ This asserts the boolean expression _momentumAnimator.isRunning -> _momentumScrollIsActive
+        ///     _momentumScrollIsActive can be YES before the _momentumAnimator is started. (But not the other way around.)
+        ///     In that scenario we don't need to stop the animator but we still need to send the kCGMomentumScrollPhaseEnd event to stop views that handle momentum scrolling themselves like the Xcode editor view. That's why we need this distinction between _momentumAnimator.isRunning and _momentumScrollIsActive.
+        
+        CGEventRef event = eventArg;
+        
+        if (_momentumScrollIsActive) {
+            
+            if (_momentumAnimator.isRunning) {
+                
+                /// Stop our animator
+                [_momentumAnimator stop];
+            }
+            
+            /// Debug
+            DDLogDebug(@"Send momentum scroll stop event");
+            
+            /// Get event
+            if (!event)
+                event = CGEventCreate(NULL);
+            
+            /// Get location from event
+            CGPoint location = CGEventGetLocation(event);
+            
+            /// Send kCGMomentumScrollPhaseEnd event.
+            ///  This will stop scrolling in apps like Xcode which implement their own momentum scroll algorithm
+            Vector zeroVector = (Vector){ .x = 0.0, .y = 0.0 };
+            [GestureScrollSimulator postGestureScrollEventWithGestureVector:zeroVector
+                                                           scrollVectorLine:zeroVector
+                                                          scrollVectorPoint:zeroVector
+                                                                      phase:kIOHIDEventPhaseUndefined
+                                                              momentumPhase:kCGMomentumScrollPhaseEnd
+                                                                   location:location];
+            
         }
         
-        /// Debug
-        DDLogDebug(@"Send momentum scroll stop event");
-        
-        /// Get event
-        if (!event)
-            event = CGEventCreate(NULL);
-        
-        /// Get location from event
-        CGPoint location = CGEventGetLocation(event);
-        
-        /// Send kCGMomentumScrollPhaseEnd event.
-        ///  This will stop scrolling in apps like Xcode which implement their own momentum scroll algorithm
-        Vector zeroVector = (Vector){ .x = 0.0, .y = 0.0 };
-        [GestureScrollSimulator postGestureScrollEventWithGestureVector:zeroVector
-                                                       scrollVectorLine:zeroVector
-                                                      scrollVectorPoint:zeroVector
-                                                                  phase:kIOHIDEventPhaseUndefined
-                                                          momentumPhase:kCGMomentumScrollPhaseEnd
-                                                               location:location];
-        
-    }
-    
-    /// Set flag
-    _momentumScrollIsActive = NO;
+        /// Set flag
+        _momentumScrollIsActive = NO;
+    });
 }
 
 /// Momentum scroll main
@@ -367,6 +385,7 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
     ///     This is needed for subsequent stopMomentumScroll calls to work properly
     
     _momentumScrollIsActive = YES;
+    DDLogDebug(@"\nMomentoom activated");
     
     /// Stop immediately, if too much time has passed since last event (So if the mouse is stationary)
     if (_preMomentumScrollMaxInterval < timeSinceLastInput
@@ -413,6 +432,17 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
     /// Get duration and distance for animation
     double duration = animationCurve.timeInterval.length;
     Interval *distanceInterval = animationCurve.distanceInterval;
+    
+    /// Set isActive flag once animator stops
+    [_momentumAnimator onStopWithCallback:^{
+        _momentumScrollIsActive = NO;
+        DDLogDebug(@"\nMomentoom deactivated");
+    }];
+    
+    /// Weird stuff to avoid race condition if stop() has been called between the start of this function and now
+    if (_momentumScrollIsActive == NO) {
+        return;
+    }
     
     /// Start animator
     
@@ -469,8 +499,6 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
                                                                       phase:kIOHIDEventPhaseUndefined
                                                               momentumPhase:kCGMomentumScrollPhaseEnd
                                                                    location:postLocation];
-            /// Set isActive flag
-            _momentumScrollIsActive = NO;
             
         } else { /// Default case - animationPhase != kMFAnimationPhaseEnd
             
@@ -542,7 +570,7 @@ static Vector initalMomentumScrollVelocity_FromExitVelocity(Vector exitVelocity)
     double timeSinceLast = ts - tsLast;
     tsLast = ts;
     
-//    DDLogInfo(@"\nPosting: gesture: (%f, %f) \t\t scroll: (%f, %f) \t scrollPt: (%f, %f) \t phases: (%d, %d) \t timeSinceLast: %f \t loc: (%f, %f)\n", vecGesture.x, vecGesture.y, vecScroll.x, vecScroll.y, vecScrollPoint.x, vecScrollPoint.y, phase, momentumPhase, timeSinceLast*1000, loc.x, loc.y);
+    DDLogInfo(@"\nPosting: gesture: (%f, %f) \t\t scroll: (%f, %f) \t scrollPt: (%f, %f) \t phases: (%d, %d) \t timeSinceLast: %f \t loc: (%f, %f)\n", vecGesture.x, vecGesture.y, vecScroll.x, vecScroll.y, vecScrollPoint.x, vecScrollPoint.y, phase, momentumPhase, timeSinceLast*1000, loc.x, loc.y);
     
     assert((phase == kIOHIDEventPhaseUndefined || momentumPhase == kCGMomentumScrollPhaseNone)); /// At least one of the phases has to be 0
     
