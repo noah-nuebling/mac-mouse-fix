@@ -52,8 +52,9 @@ static VectorSubPixelator *_scrollPointPixelator;
 static VectorSubPixelator *_scrollLinePixelator;
 
 static PixelatedAnimator *_momentumAnimator;
-static BOOL _momentumScrollIsActive;
+//static BOOL _momentumScrollIsActive;
 /// ^ We use this to avoid race conditions. It would be safer and easier (although maybe larginally slow?) to use a dispatch queue instead
+///     Edit: Using dispatch queue now. This is not necessary anymore
 
 static dispatch_queue_t _queue; /// Use this queue for interface functions to avoid race conditions
 
@@ -89,7 +90,7 @@ static dispatch_queue_t _queue; /// Use this queue for interface functions to av
         /// Momentum scroll
         
         _momentumAnimator = [[PixelatedAnimator alloc] init];
-        _momentumScrollIsActive = NO;
+//        _momentumScrollIsActive = NO;
         
     }
 }
@@ -135,8 +136,8 @@ static dispatch_queue_t _queue; /// Use this queue for interface functions to av
         
         
         /// Stop momentum scroll
-        
-        [self stopMomentumScroll];
+        ///     Do it sync otherwise it will be stopped immediately after it's startet by this block
+        stopMomentumScroll_Sync();
         
         /// Timestamps and static vars
         
@@ -319,56 +320,46 @@ static dispatch_queue_t _queue; /// Use this queue for interface functions to av
 
 + (void)stopMomentumScroll {
     
-//    DDLogDebug(@"Request to stop momentum scroll. Caller: %@", [SharedUtility callerInfo]);
-    
-    [self stopMomentumScrollWithEvent:NULL];
-}
-
-+ (void)stopMomentumScrollWithEvent:(CGEventRef _Nullable)eventArg {
-    /// We only use `event` to get the location for sending scroll events
+    DDLogDebug(@"momentumScroll stop request. Caller: %@", [SharedUtility callerInfo]);
     
     dispatch_async(_queue, ^{
-        
-        assert(_momentumScrollIsActive || !_momentumAnimator.isRunning);
-        /// ^ This asserts the boolean expression _momentumAnimator.isRunning -> _momentumScrollIsActive
-        ///     _momentumScrollIsActive can be YES before the _momentumAnimator is started. (But not the other way around.)
-        ///     In that scenario we don't need to stop the animator but we still need to send the kCGMomentumScrollPhaseEnd event to stop views that handle momentum scrolling themselves like the Xcode editor view. That's why we need this distinction between _momentumAnimator.isRunning and _momentumScrollIsActive.
-        
-        CGEventRef event = eventArg;
-        
-        if (_momentumScrollIsActive) {
-            
-            if (_momentumAnimator.isRunning) {
-                
-                /// Stop our animator
-                [_momentumAnimator stop];
-            }
-            
-            /// Debug
-            DDLogDebug(@"Send momentum scroll stop event");
-            
-            /// Get event
-            if (!event)
-                event = CGEventCreate(NULL);
-            
-            /// Get location from event
-            CGPoint location = CGEventGetLocation(event);
-            
-            /// Send kCGMomentumScrollPhaseEnd event.
-            ///  This will stop scrolling in apps like Xcode which implement their own momentum scroll algorithm
-            Vector zeroVector = (Vector){ .x = 0.0, .y = 0.0 };
-            [GestureScrollSimulator postGestureScrollEventWithGestureVector:zeroVector
-                                                           scrollVectorLine:zeroVector
-                                                          scrollVectorPoint:zeroVector
-                                                                      phase:kIOHIDEventPhaseUndefined
-                                                              momentumPhase:kCGMomentumScrollPhaseEnd
-                                                                   location:location];
-            
-        }
-        
-        /// Set flag
-        _momentumScrollIsActive = NO;
+        stopMomentumScroll_Sync();
     });
+}
+
+void stopMomentumScroll_Sync(void) {
+    /// Only use this when you know you're already running on _queue
+    
+    //    DDLogDebug(@"momentumScroll stop request. Caller: %@", [SharedUtility callerInfo]);
+    
+    if (!_momentumAnimator.isRunning) {
+//        DDLogDebug(@"... But momentumScroll insn't running");
+    }
+    
+    if (_momentumAnimator.isRunning) {
+        
+        /// Stop our animator
+        [_momentumAnimator stop];
+        
+        /// Debug
+        DDLogDebug(@"... Sending momentumScroll stop event");
+        
+        /// Get event for location
+        CGEventRef event = CGEventCreate(NULL);
+        
+        /// Get location from event
+        CGPoint location = CGEventGetLocation(event);
+        
+        /// Send kCGMomentumScrollPhaseEnd event.
+        ///  This will stop scrolling in apps like Xcode which implement their own momentum scroll algorithm
+        Vector zeroVector = (Vector){ .x = 0.0, .y = 0.0 };
+        [GestureScrollSimulator postGestureScrollEventWithGestureVector:zeroVector
+                                                       scrollVectorLine:zeroVector
+                                                      scrollVectorPoint:zeroVector
+                                                                  phase:kIOHIDEventPhaseUndefined
+                                                          momentumPhase:kCGMomentumScrollPhaseEnd
+                                                               location:location];
+    }
 }
 
 /// Momentum scroll main
@@ -377,15 +368,15 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
     
     ///Debug
     
-    DDLogDebug(@"Request momentumScroll start");
+    DDLogDebug(@"momentumScroll start request");
     
 //    DDLogDebug(@"Exit velocity: %f, %f", exitVelocity.x, exitVelocity.y);
     
     /// Set _momentumScrollisActive flag
     ///     This is needed for subsequent stopMomentumScroll calls to work properly
     
-    _momentumScrollIsActive = YES;
-    DDLogDebug(@"\nMomentoom activated");
+//    _momentumScrollIsActive = YES;
+//    DDLogDebug(@"\nMomentoom activated");
     
     /// Stop immediately, if too much time has passed since last event (So if the mouse is stationary)
     if (_preMomentumScrollMaxInterval < timeSinceLastInput
@@ -434,15 +425,15 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
     Interval *distanceInterval = animationCurve.distanceInterval;
     
     /// Set isActive flag once animator stops
-    [_momentumAnimator onStopWithCallback:^{
-        _momentumScrollIsActive = NO;
-        DDLogDebug(@"\nMomentoom deactivated");
-    }];
+//    [_momentumAnimator onStopWithCallback:^{
+//        _momentumScrollIsActive = NO;
+//        DDLogDebug(@"\nMomentoom deactivated");
+//    }];
     
-    /// Weird stuff to avoid race condition if stop() has been called between the start of this function and now
-    if (_momentumScrollIsActive == NO) {
-        return;
-    }
+//    /// Weird stuff to avoid race condition if stop() has been called between the start of this function and now
+//    if (_momentumScrollIsActive == NO) {
+//        return;
+//    }
     
     /// Start animator
     

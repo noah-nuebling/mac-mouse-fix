@@ -48,9 +48,12 @@ class PixelatedAnimator: BaseAnimator {
 
         super.startWithUntypedCallback(duration: duration, valueInterval: valueInterval, animationCurve: animationCurve, callback: integerCallback)
         
-        if self.animationPhase == kMFAnimationPhaseStart {
-            self.subPixelator.reset()
-            
+        self.queue.async {
+            /// Pretty sure this should be executed on the queue. Not totally sure though
+            if self.animationPhase == kMFAnimationPhaseStart {
+                self.subPixelator.reset()
+                
+            }
         }
     }
     
@@ -77,7 +80,7 @@ class PixelatedAnimator: BaseAnimator {
             /// Skip this frames callback and don't update animationPhase from `start` to `continue` if integerValueDelta is 0
             
             DDLogDebug("INTEGER DELTA IS ZERO - NOT CALLING CALLBACK")
-            assert(self.animationPhase != kMFAnimationPhaseEnd )
+            assert(self.animationPhase != kMFAnimationPhaseEnd)
             ///     Phase can be set to kMFAnimationPhaseEnd in two places.
             ///     1. In Animator.swift > displayLinkCallback(), when the current time is beyond the animationTimeInterval.
             ///     2. Here in PixelatedAnimator.swift > subclassHook(), when processing a non-zero integerDelta, and finding that all the animationValue that's left won't lead to another integer delta (so when the animationValueLeft is smaller than 1)

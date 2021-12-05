@@ -501,6 +501,7 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 0.1), _dragQueue, ^{
             /// Delay so we don't "cut off" the mouseDragged events that are still pent up in the eventTap. Better solution might be to have one single event tap that drives both button input and mouseDragged events.
+            ///     Edit: Not even sure that this does anything. I feel like the feeling of events being "cut off" might be due to to CGWarpMouseCursorPosittion causing the pointer to freeze for a short time.
             disableMouseTracking();
         });
     });

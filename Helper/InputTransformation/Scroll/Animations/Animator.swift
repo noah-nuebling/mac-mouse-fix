@@ -35,7 +35,7 @@ import CocoaLumberjackSwift
     
     // Constants
     
-    let lockingTimeout: Double = 0.02 /* (1.0/60.0 + 2.0/60.0) / 2.0 */
+//    let lockingTimeout: Double = 0.02 /* (1.0/60.0 + 2.0/60.0) / 2.0 */
     ///     Idk if I'm crazy but if I make this EITHER larger OR smaller than 0.02 (I tried 0.01 and 0.03) then scrolling becomes stuttery?
     ///     Edit: I'm using (1/60 + 2/60) / 2 == 0.025 now, also seems to work fine. No idea what's going on. Edit2: 0.02 still works better. This is probably a big coincidence that I"m seeing a pattern in.
     
@@ -65,7 +65,16 @@ import CocoaLumberjackSwift
     var animationValueInterval: Interval = .unitInterval
     
     @objc var isRunning: Bool {
-        self.displayLink.isRunning()
+        var result: Bool = false
+        self.queue.sync {
+            result = self.isRunning_Internal
+        }
+        return result
+    }
+    @objc fileprivate var isRunning_Internal: Bool {
+        /// We always want isRunning to be executed on self.queue. But if we call self.queue.sync() when we're already on self queue, that is an error
+        ///     So use this functtion instead of isRunning() if you know you're already executing on self.queue
+        return self.displayLink.isRunning()
     }
     
     fileprivate var onStopCallback: (() -> ())?
@@ -123,6 +132,9 @@ import CocoaLumberjackSwift
         /// Edit: We've since moved to using a dispatchQueue instead of a muctex lock. This should prevent many potential deadlock issues and be faster and the function is also asynchronous now, which I hope is a good thing
         
         /// Dispatch to queue
+        ///     Dispatching sync, so that calling self.start() and then right after calling self.isRunning()  actually works....
+        ///         Orrr we can also have self.isRunning() execute on self.queue. - we did that. Should be most robust solution
+        ///         But actually, maybe it's faster to make start() use queue.sync after all. Because isRunning() is probably called a lot more.
         
         self.queue.async {
             
@@ -133,7 +145,7 @@ import CocoaLumberjackSwift
             
             /// Update phases
             
-            if (!self.isRunning
+            if (!self.isRunning_Internal
                 || self.animationPhase == kMFAnimationPhaseStart
                 || self.animationPhase == kMFAnimationPhaseStartAndEnd) { /// This shouldn't be necessary, because we call self.stop() in the displayLinkCallback if phase is `startAndEnd`, which will make self.isRunning false. But due to some weird race condition or something, it doesn't always work. Edit: I added locks to this class to prevent the race conditions whcih should make this unnecessary - Remove the `startAndEnd` check.
                                                                           /// If animation phase is still start that means that the displayLinkCallback() hasn't used it, yet (it sets it to continue after using it)
@@ -151,7 +163,7 @@ import CocoaLumberjackSwift
             
             /// Update the rest of the state
             
-            if (self.isRunning) {
+            if (self.isRunning_Internal) {
                 /// I think it should make for smoother animations, if we don't se the lastAnimationTime to now when the displayLink is already running, but that's an experiment. I'm not sure. Edit: Not sure if it makes a difference but it's fine
                 
                 self.lastAnimationValue = self.animationValueInterval.start
@@ -194,42 +206,32 @@ import CocoaLumberjackSwift
     
     /// Stop
     
+    @objc fileprivate func stop_Sync() {
+        /// Only call this when you're already running on self.queue
+        
+        /// Debug
+        
+        DDLogDebug("STOPPING ANIMATOR")
+        
+        /// Do stuff
+        
+        self.displayLink.stop()
+        self.animationPhase = kMFAnimationPhaseNone
+        if self.onStopCallback != nil {
+            self.onStopCallback!()
+            self.onStopCallback = nil
+        }
+    }
+    
     @objc func stop() {
-        
-        /// Lock
-        
-//        defer {
-//            self.threadLock.signal()
-//        }
-//
-//        var timeoutResult: DispatchTimeoutResult = .timedOut
-//        while (timeoutResult == .timedOut) {
-//            timeoutResult = self.threadLock.wait(timeout: .now() + self.lockingTimeout)
-//            if (timeoutResult == .timedOut) {
-//                DDLogWarn("Timed out while trying to acquire lock to stop Animator. self: \(self)")
-//            }
-//        }
-//        assert(timeoutResult == .success)
-        
         self.queue.async {
-            
-            /// Debug
-            
-//            DDLogDebug("STOPPING ANIMATOR")
-            
-            /// Do stuff
-            
-            self.displayLink.stop()
-            self.animationPhase = kMFAnimationPhaseNone
-            if self.onStopCallback != nil {
-                self.onStopCallback!()
-                self.onStopCallback = nil
-            }
+            self.stop_Sync()
         }
     }
     
     @objc func onStop(callback: @escaping () -> ()) {
         /// Do `callback` once the Animator stops or immediately if the animator isn't running
+        ///     Might wanna execute this on self.queue as well
         
         if (!self.isRunning) {
             callback()
@@ -260,7 +262,14 @@ import CocoaLumberjackSwift
             
             /// Debug
             
-            //        DDLogDebug("DO DISP LINK with (initial) phase: \(self.animationPhase.rawValue)")
+            DDLogDebug("DO ANIMATOR DISP LINK with (initial) phase: \(self.animationPhase.rawValue)")
+            
+            /// Guard stopped
+            
+            if (self.animationPhase == kMFAnimationPhaseNone) {
+                DDLogWarn("Animator displayLinkCallback called after it has been stopped")
+                return;
+            }
             
             /// Guard nil
             
@@ -318,7 +327,7 @@ import CocoaLumberjackSwift
                 /// Need to make sure that this functions' threadLock has been released before we call self.stop(). self.stop() will try to acquire the lock,  leading to a deadlock if this function still holds the lock.
                 ///     If we unlock the thread before the enclosing switch statement there'll still be race conditions (I think - limited testing)
 //                self.threadLock.signal()
-                self.stop()
+                self.stop_Sync()
                 
             default:
                 /// Unlock
