@@ -600,7 +600,7 @@ static void sendRotationEvent(int64_t dx, int64_t dy, IOHIDEventPhaseBits eventP
     ///  This doesn't need subpixelation, so we could subpixelate after this instead of before (in sendScroll())
     
     double anyAxisDelta = dx + dy; /// This works because, if dx != 0 -> dy == 0, and the other way around.
-    double eventDelta = anyAxisDelta/50.0;
+    double eventDelta = anyAxisDelta/8.0;
     
     [TouchSimulator postRotationEventWithRotation:eventDelta phase:eventPhase];
 }

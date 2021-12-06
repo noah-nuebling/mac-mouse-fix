@@ -167,7 +167,7 @@ static BOOL _smoothingAnimatorShouldStartMomentumScroll = NO;
         
         /// Make cursor settable
         
-        [Utility_Transformation makeCursorSettable];
+        [Utility_Transformation makeCursorSettable]; /// I think we only need to do this once
         
         /// Get values from dict
         MFStringConstant type = dict[kMFModifiedDragDictKeyType];
@@ -201,6 +201,11 @@ static BOOL _smoothingAnimatorShouldStartMomentumScroll = NO;
         
         /// Init dynamic
         initDragState();
+        
+        /// Stop momentum scroll if we're initing a twoFingerDrag
+        if ([_drag.type isEqual:kMFModifiedDragTypeTwoFingerSwipe]) {
+            [GestureScrollSimulator stopMomentumScroll];
+        }
         
     });
 }
@@ -517,11 +522,12 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
         }
         _drag.activationState = kMFModifiedInputActivationStateNone;
         
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 0.1), _dragQueue, ^{
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 0.1), _dragQueue, ^{
             /// Delay so we don't "cut off" the mouseDragged events that are still pent up in the eventTap. Better solution might be to have one single event tap that drives both button input and mouseDragged events.
             ///     Edit: Not even sure that this does anything. I feel like the feeling of events being "cut off" might be due to to CGWarpMouseCursorPosittion causing the pointer to freeze for a short time.
+            ///         This seems to make issue worse where the mouse pointer jumps when re-initializing the twoFingerModifiedDrag right after deactivating
             disableMouseTracking();
-        });
+//        });
     });
 }
 + (void)modifiedScrollHasBeenUsed {
@@ -599,6 +605,7 @@ static void handleDeactivationWhileInUse(BOOL cancelation) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.08 * NSEC_PER_SEC), _dragQueue, ^{
             /// ^ Execute this on a delay so that momentumScroll is started before the warp. That way momentumScrol will still kick in and work, even if we moved the ponter outside the scrollView that we started scrolling in.
             ///     Would be better if we had a callback that told us when the momentum scrolling started?
+            ///         Edit: YES, we need that. This solutiion is very crude and has race conditions. E.g. When deacativating twoFinger and then re-activating right after, the cursor with jump bc of this. not sure what happens there but if you inline this it goes away
             
             /// Set suppression interval
             setSuppressionInterval(kMFEventSuppressionIntervalForWarping);
