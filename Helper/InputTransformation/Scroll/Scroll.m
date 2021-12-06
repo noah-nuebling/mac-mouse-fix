@@ -80,12 +80,12 @@ static MFScrollModificationResult _modifications;
     _subPixelator = [SubPixelator roundPixelator];
 }
 
-+ (void)resetDynamicGlobals {
-    /// When scrolling is in progress, there are tons of variables holding global state. This resets some of them.
-    /// I determined the ones it resets through trial and error. Some misbehaviour/bugs might be caused by this not resetting all of the global variables.
++ (void)resetState {
+    /// This is untested
     
+    [_animator stop];
+    [GestureScrollSimulator stopMomentumScroll];
     [ScrollAnalyzer resetState];
-//    [SmoothScroll resetDynamicGlobals];
 }
 
 + (void)decide {
@@ -218,12 +218,11 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
         
         if (ScrollUtility.mouseDidMove || ScrollUtility.frontMostAppDidChange) {
             /// Set app overrides
-            BOOL configChanged = [Config applyOverridesForAppUnderMousePointer_Force:NO]; // TODO: `updateInternalParameters_Force:` should (probably) reset stuff itself, if it changes anything. This whole [SmoothScroll stop] stuff is kinda messy
+            BOOL configChanged = [Config applyOverridesForAppUnderMousePointer_Force:NO];
             if (configChanged) {
-//                [SmoothScroll stop]; // Not sure if useful
-//                [RoughScroll stop]; // Not sure if useful
-                /// TODO: Reset _animator here
-                /// Edit: But why?
+                [Scroll resetState];
+                /// TODO: Test if this works
+                /// TODO: `applyOverridesForAppUnderMousePointer_Force:` should (probably) reset stuff itself, if it changes anything. This whole [SmoothScroll stop] stuff is kinda messy
                 
             }
         }
@@ -237,7 +236,7 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
         
         /// Update modfications
         
-        _modifications = [ScrollModifiers currentScrollModifications];
+        _modifications = [ScrollModifiers currentScrollModificationsWithEvent:event];
     }
     
     /// Get effective direction

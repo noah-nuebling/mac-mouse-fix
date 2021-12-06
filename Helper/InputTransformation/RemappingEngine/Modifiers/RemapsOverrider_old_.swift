@@ -21,7 +21,7 @@ import Foundation
     ///     If this doesn't make sense, see an example of the remaps dict structure in TransformationManager.m
     
     
-    @objc class func effectiveRemapsMethod_Override() -> MFEffectiveRemapsMethod {
+    @objc class func effectiveRemapsMethod() -> MFEffectiveRemapsMethod {
         /// Primitive remaps overriding method. Siimply takes the base (with an empty modification precondition) remaps and overrides it with the remaps which have a modificationPrecondition of exactly `activeModifiers`
         /// Returns a block
         ///     - Which takes 2 arguments: `remaps` and `activeModifiers`

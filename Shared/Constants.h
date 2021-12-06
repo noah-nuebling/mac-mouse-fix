@@ -117,7 +117,7 @@ typedef NSString*                                                       MFString
 
 // Modified drag
 
-// Trigger (value for key kMFRemapsKeyTrigger)
+// Trigger (Not just key, also value for key kMFRemapsKeyTrigger)
 #define kMFTriggerDrag                                                  @"dragTrigger"
 // Type key
 #define kMFModifiedDragDictKeyType                                      @"modifiedDragType"

@@ -47,8 +47,8 @@ static id<Smoother> _yDistanceSmoother;
 
 static Vector _lastScrollPointVector; /// This is unused. Replaced by the smoothers above
 
-static VectorSubPixelator *_gesturePixelator;
-static VectorSubPixelator *_scrollPointPixelator;
+//static VectorSubPixelator *_gesturePixelator;
+//static VectorSubPixelator *_scrollPointPixelator;
 static VectorSubPixelator *_scrollLinePixelator;
 
 static PixelatedAnimator *_momentumAnimator;
@@ -83,8 +83,8 @@ static dispatch_queue_t _queue; /// Use this queue for interface functions to av
         
         /// Init Pixelators
         
-        _gesturePixelator = [VectorSubPixelator roundPixelator];
-        _scrollPointPixelator = [VectorSubPixelator roundPixelator];
+//        _gesturePixelator = [VectorSubPixelator roundPixelator];
+//        _scrollPointPixelator = [VectorSubPixelator roundPixelator];
         _scrollLinePixelator = [VectorSubPixelator biasedPixelator]; /// I think biased is only beneficial on linePixelator. Too lazy to explain.
         
         /// Momentum scroll
@@ -111,7 +111,7 @@ static dispatch_queue_t _queue; /// Use this queue for interface functions to av
  \note For more info on which delta values and which phases to use, see the documentation for `postGestureScrollEventWithGestureDeltaX:deltaY:phase:momentumPhase:scrollDeltaConversionFunction:scrollPointDeltaConversionFunction:`. In contrast to the aforementioned function, you shouldn't need to call this function with kIOHIDEventPhaseUndefined.
 */
 
-+ (void)postGestureScrollEventWithDeltaX:(double)dx deltaY:(double)dy phase:(IOHIDEventPhaseBits)phase {
++ (void)postGestureScrollEventWithDeltaX:(int64_t)dx deltaY:(int64_t)dy phase:(IOHIDEventPhaseBits)phase {
     
     /// Dispatch to queue
     
@@ -168,9 +168,9 @@ static dispatch_queue_t _queue; /// Use this queue for interface functions to av
             
             /// Reset subpixelators
             
+//            [_scrollPointPixelator reset];
+//            [_gesturePixelator reset];
             [_scrollLinePixelator reset];
-            [_scrollPointPixelator reset];
-            [_gesturePixelator reset];
             
             /// Reset smoothers
             [_xDistanceSmoother reset];
@@ -204,9 +204,9 @@ static dispatch_queue_t _queue; /// Use this queue for interface functions to av
             
             /// Subpixelate vectors
             
-            vecScrollPoint = [_scrollPointPixelator intVectorWithDoubleVector:vecScrollPoint];
-            vecScrollLine = [_scrollLinePixelator intVectorWithDoubleVector:vecScrollLine];
-            vecGesture = [_gesturePixelator intVectorWithDoubleVector:vecGesture];
+//            vecScrollPoint = [_scrollPointPixelator intVectorWithDoubleVector:vecScrollPoint]; /// Out input deltas dx and dy are pixels. No need to subpixelate
+//            vecGesture = [_gesturePixelator intVectorWithDoubleVector:vecGesture]; /// This is the same as vecScrollPoint
+//            vecScrollLine = [_scrollLinePixelator intVectorWithDoubleVector:vecScrollLine];
             
             /// Post events
             
@@ -392,7 +392,7 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
     
     /// Reset subpixelators
     
-    [_scrollPointPixelator reset];
+//    [_scrollPointPixelator reset];
     [_scrollLinePixelator reset];
     /// Don't need to reset _gesturePixelator, because we don't send gesture events during momentum scroll
     

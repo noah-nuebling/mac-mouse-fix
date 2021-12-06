@@ -22,7 +22,7 @@
 /// `activeModifiers` are the active modifiers including `button` (We've since removed this argument since we didn't use it)
 /// `activeModifiersActingOnThisButton` are the active modifiers with `button` filtered out
 /// `effectiveRemapsMethod` is a block taking `remaps` and `activeModifiersActingOnThisButton` and returning what the effective remaps acting on the button are.
-///     Should normally pass `[Utility Transform + effectiveRemapsMethod_Override]` I think other stuff will break if we use sth else.
+///     Should normally pass `[Utility Transform + effectiveRemapsMethod]` I think other stuff will break if we use sth else.
 + (void)assessMappingLandscapeWithButton:(NSNumber *)button
                                    level:(NSNumber *)level
                 remapsActingOnThisButton:(NSDictionary *)remapsActingOnThisButton
@@ -107,7 +107,7 @@ static BOOL modificationPreconditionButtonComponentOfGreaterLevelExistsForButton
     
     NSDictionary *remaps = TransformationManager.remaps;
     NSDictionary *modifiersActingOnThisButton = [ModifierManager getActiveModifiersForDevice:&devID filterButton:button event:nil];
-    NSDictionary *remapsActingOnThisButton = RemapsOverrider.effectiveRemapsMethod_Override(remaps, modifiersActingOnThisButton);
+    NSDictionary *remapsActingOnThisButton = RemapsOverrider.effectiveRemapsMethod(remaps, modifiersActingOnThisButton);
     
     BOOL clickActionOfThisLevelExists;
     BOOL effectForMouseDownStateOfThisLevelExists;

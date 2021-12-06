@@ -98,6 +98,8 @@ import Cocoa
     
     @objc required init(start: Double, end: Double) {
         
+        assert(!start.isNaN && !end.isNaN)
+        
         self.start = start
         self.end = end
     }

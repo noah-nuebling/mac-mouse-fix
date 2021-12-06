@@ -46,13 +46,18 @@ class PixelatedAnimator: BaseAnimator {
                      animationCurve: AnimationCurve,
                      integerCallback: @escaping PixelatedAnimatorCallback) {
 
+        /// Validate input
+        
+//        assert(valueInterval.length >= 1)
+        
+        /// Do stuff
+        
         super.startWithUntypedCallback(duration: duration, valueInterval: valueInterval, animationCurve: animationCurve, callback: integerCallback)
         
         self.queue.async {
             /// Pretty sure this should be executed on the queue. Not totally sure though
-            if self.animationPhase == kMFAnimationPhaseStart {
+            if self.animationPhase == kMFAnimationPhaseStart { ///  Why aren't we checking for kMFAnimationPhaseStartAndEnd here?
                 self.subPixelator.reset()
-                
             }
         }
     }
@@ -74,7 +79,9 @@ class PixelatedAnimator: BaseAnimator {
         
         /// Get subpixelated animationValueDelta
         
-        let integerAnimationValueDelta = Int(self.subPixelator.intDelta(withDoubleDelta: animationValueDelta));
+        let integerAnimationValueDelta: Int = Int(self.subPixelator.intDelta(withDoubleDelta: animationValueDelta));
+        
+        DDLogDebug("AnimationValue now: \(integerAnimationValueDelta)");
         
         if (integerAnimationValueDelta == 0) {
             /// Skip this frames callback and don't update animationPhase from `start` to `continue` if integerValueDelta is 0
@@ -98,6 +105,10 @@ class PixelatedAnimator: BaseAnimator {
                 self.animationPhase = kMFAnimationPhaseEnd;
             }
             
+            /// Debug
+            
+            DDLogDebug("AnimationValue prediction: \(intAnimationValueLeft)");
+            
             /// Update phase to `startAndEnd` if appropriate
             ///     appropriate -> open if this event was first _and_  last event of animation
             ///     This has a copy in superclass. Update that it when you change this.
@@ -112,7 +123,7 @@ class PixelatedAnimator: BaseAnimator {
             if animationPhase == kMFAnimationPhaseStart || animationPhase == kMFAnimationPhaseRunningStart || animationPhase == kMFAnimationPhaseStartAndEnd {
                 summedIntegerAnimationValueDelta = 0
             }
-            summedIntegerAnimationValueDelta += integerAnimationValueDelta
+            self.summedIntegerAnimationValueDelta += integerAnimationValueDelta
             
 //            DDLogDebug("""
 //PxAnim - intValueDelta: \(integerAnimationValueDelta), intValueLeft: \(intAnimationValueLeft), animationPhase: \(self.animationPhase.rawValue),     value: \(lastAnimationValue + animationValueDelta) intValue: \(summedIntegerAnimationValueDelta), intervalLength: \(self.animationValueInterval.length),     valueDelta: \(animationValueDelta), accEoundingErr: \(subPixelator.accumulatedRoundingError), currentnimationValueLeft: \(currentAnimationValueLeft),

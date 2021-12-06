@@ -490,7 +490,7 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
     dispatch_async(_dragQueue, ^{
         /// Do everything on the dragQueue to ensure correct order of operations with the processing of the events from the eventTap.
         
-        DDLogDebug(@"modifiedDrag deactivate with state: %@", [self modifiedDragStateDescription:_drag]);
+//        DDLogDebug(@"modifiedDrag deactivate with state: %@", [self modifiedDragStateDescription:_drag]);
         
         if (_drag.activationState == kMFModifiedInputActivationStateNone) return;
         
@@ -583,7 +583,7 @@ static void handleDeactivationWhileInUse(BOOL cancelation) {
             ///     Would be better if we had a callback that told us when the momentum scrolling started?
             
             /// Set suppression interval
-            setSuppressionInterval(kMFEventSuppressionIntervalZero);
+            setSuppressionInterval(kMFEventSuppressionIntervalForWarping);
             
             /// Set actual cursor to position of puppet cursor
             CGWarpMouseCursorPosition(puppetPos);
@@ -615,7 +615,7 @@ static void handleDeactivationWhileInUse(BOOL cancelation) {
 /// Event suppression
 
 typedef enum {
-    kMFEventSuppressionIntervalZero,
+    kMFEventSuppressionIntervalForWarping,
     kMFEventSuppressionIntervalForStoppingCursor,
     kMFEventSuppressionIntervalForStartingMomentumScroll,
     kMFEventSuppressionIntervalDefault,
@@ -645,11 +645,12 @@ void setSuppressionInterval(MFEventSuppressionInterval mfInterval) {
     if (mfInterval == kMFEventSuppressionIntervalForStoppingCursor) {
         interval = 0.07; /// 0.05; /// Can't be 0 or else repeatedly calling CGWarpMouseCursorPosition() won't work for stopping the cursor
     } else if (mfInterval == kMFEventSuppressionIntervalForStartingMomentumScroll) {
+        assert(false); /// Not using this anymore
         interval = 0.01;
     } else if (mfInterval == kMFEventSuppressionIntervalDefault) {
         interval = _defaultSuppressionInterval;
-    } else if (mfInterval == kMFEventSuppressionIntervalZero) {
-        interval = 0.0;
+    } else if (mfInterval == kMFEventSuppressionIntervalForWarping) {
+        interval = 0.000;
     } else {
         assert(false);
     }

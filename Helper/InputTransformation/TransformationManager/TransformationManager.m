@@ -22,10 +22,9 @@
 
 @implementation TransformationManager
 
-#define USE_TEST_REMAPS NO
-
 #pragma mark - Remaps dictionary and interface
 
+#define USE_TEST_REMAPS YES
 NSDictionary *_remaps;
 
 /// Always set remaps through this, so that the kMFNotifCenterNotificationNameRemapsChanged notification is posted
@@ -105,17 +104,18 @@ BOOL _addModeIsEnabled = NO;
 /// Our feedback dicts we send to the main app during addMode use 3 - overlapping, but different - keys:
 ///     - kMFRemapsKeyTrigger
 ///     - kMFRemapsKeyModificationPrecondition
-///     - kMFActionDictKeyType / kMFModifiedDragDictKeyType
+///     - kMFActionDictKeyType / kMFModifiedDragDictKeyType (Edit: or kMFModifiedScrollDictKeyType)
 /// kMFActionDictKeyType / kMFModifiedDragDictKeyType is added in this funciton and used so the helper knows how to process the dictionary, but it's removed before we send stuff off to the mainApp
 /// kMFRemapsKeyTrigger is added in this function, and eventually sent off to the main app
 /// kMFRemapsKeyModificationPrecondition has to be added right when the user actually triggers the actions
-///     They are added in `executeClickOrHoldActionIfItExists` for the button actions, and in `reactToModifierChange` for the drag actions
+///     They are added in `executeClickOrHoldActionIfItExists` for the button actions, and in `reactToModifierChange` for the drag actions (Edit: And in currentScrollModifications() for scroll actions)
 /// So the final feedback dict we send to the main app contains values for the keys
 ///     - kMFRemapsKeyTrigger
 ///     - kMFRemapsKeyModificationPrecondition
 /// So it's _almost_ a tableEntry which can be used by the mainApp's remap tableview's dataModel, it's just lacking the kMFRemapsKeyEffect key and values.
 /// This makes sense, because The effect is then to be chosen by the user in the main app's GUI
 ///
+///   v Edit: We just implemented this whole "modifiers need to be present to capture drags and scrolls" in the `addModePayloadIsValid:` method. Much simpler!
 /// It doesn't make sense to capture drag triggers (and scroll triggers, but that's not yet implemented at this point) when no modifier is present,
 ///     But if any modifier is present, we want to capture them, no matter what the modifier is specifically. We implemented this by using the new kMFAddModeModificationPrecondition key
 ///         and by making some changes to `ModifierManager` -> `reactToModifierChange()` to work with this new key.
@@ -127,6 +127,7 @@ BOOL _addModeIsEnabled = NO;
 ///                 - ButtonLandscapeAssessment code in ButtonTriggerHandler. Checking if button is used as modifier at a higher clicklevel and stuff is surelyyy broken. But that might not matter.
 ///                 -  `ModifierManager` -> `toggleModifierEventTapBasedOnRemaps` along with other functions from `ModifierManager` are probably broken, too.
 + (void)enableAddMode {
+    
     _addModeIsEnabled = YES;
     
     NSMutableDictionary *triggerToEffectDict = [NSMutableDictionary dictionary];
@@ -184,7 +185,7 @@ BOOL _addModeIsEnabled = NO;
     }
 }
 
-/// Using this to prevent payloads containing a modifiedDrag/modifiedScroll with a keyboard-modifier-only precondition, or an empty precondition from being sent to the main app
+/// Using this to prevent payloads containing a modifiedDrag / modifiedScroll with a keyboard-modifier-only precondition, or an empty precondition from being sent to the main app
 /// Empty preconditions only happen when weird bugs occur so this is just an extra safety net for that
 ///     Edit: We simplified things now and this is the only safety net against sending payloads without necessary modificationPreconditions.
 /// Keyboard-modifier-only modifiedDrags and modifiedScrolls work in principle but they cause some smaller bugs and issues in the mainApp UI. We don't wan't to polish that up so we're just disabling the ability to add them.
@@ -251,6 +252,9 @@ Boolean keyCaptureModePayloadIsValidWithKeyCode(CGKeyCode keyCode, CGEventFlags 
     /// Using this in Helper is definitely faster than the tableView oriented (-> array based) structure which the MainApp uses. That's because we can do a lot of O(1) dict accesses where we'd have to use O(n) array searches using the other structure. I suspect that performance gains are negligible though.
     /// Having these 2 data structures might very well not be worth the cost of having to think about both and write a conversion function between them. But we've already built helper around this, and mainApp needs the table based structure, so we're sticking with this double-structure approach.
     return @{
+        
+        /// Empty precond
+        
         @{}: @{                                                     // Key: modifier dict (empty -> no modifiers)
             //                @(3): @{                                                // Key: button
             //                        @(1): @{                                            // Key: level
@@ -328,6 +332,8 @@ Boolean keyCaptureModePayloadIsValidWithKeyCode(CGKeyCode keyCode, CGEventFlags 
         //                }
         //        },
         
+        /// Button 4 precond
+        
         @{
             kMFModificationPreconditionKeyButtons: @[
                 @{
@@ -363,6 +369,7 @@ Boolean keyCaptureModePayloadIsValidWithKeyCode(CGKeyCode keyCode, CGEventFlags 
             },
         },
         
+        /// Button 5 precond
         
         @{
             kMFModificationPreconditionKeyButtons: @[
@@ -382,6 +389,27 @@ Boolean keyCaptureModePayloadIsValidWithKeyCode(CGKeyCode keyCode, CGEventFlags 
         
         },
         
+        /// Shift precond
+            
+        @{
+            kMFModificationPreconditionKeyKeyboard: @(NSShiftKeyMask)
+        }: @{
+            kMFTriggerScroll: @{
+                kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeHorizontalScroll,
+            }
+        },
+        
+        /// Command precond
+        
+        @{
+            kMFModificationPreconditionKeyKeyboard: @(NSAlternateKeyMask)
+        }: @{
+            kMFTriggerScroll: @{
+                kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypeQuickScroll
+            }
+        },
+        
+        /// Weird precond
         
         @{
             //            kMFModificationPreconditionKeyButtons: @[
@@ -399,7 +427,7 @@ Boolean keyCaptureModePayloadIsValidWithKeyCode(CGKeyCode keyCode, CGEventFlags 
             kMFTriggerDrag: @{
                 kMFModifiedDragDictKeyType: kMFModifiedDragTypeThreeFingerSwipe,
             }
-        }
+        },
     };
 }
 

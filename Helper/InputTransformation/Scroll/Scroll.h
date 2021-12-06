@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (AXUIElementRef) systemWideAXUIElement;
 
 + (void)load_Manual;
-+ (void)resetDynamicGlobals;
++ (void)resetState;
 + (void)decide;
 
 @end

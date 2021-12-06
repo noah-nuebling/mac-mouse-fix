@@ -126,7 +126,7 @@ static void fillConfigFromFile() {
         _bundleIDOfAppWhichCausesAppOverride = bundleIDOfCurrentApp;
         loadAppOverridesForApp(bundleIDOfCurrentApp);
 //        [Config updateScrollParameters];
-        [Scroll resetDynamicGlobals]; // Not entirely sure if necessary
+        [Scroll resetState]; // Not entirely sure if necessary
         return YES;
     }
     

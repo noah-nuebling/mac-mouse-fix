@@ -17,8 +17,8 @@
 @interface RemapsOverrider : NSObject
 
 /// `MFEffectiveRemapsMethod`s are blocks that take `remaps` and `activeModifiers` as input and return `effectiveRemaps` based on those.
-typedef NSDictionary *_Nonnull (^MFEffectiveRemapsMethod)(NSDictionary *_Nonnull, NSDictionary *_Nonnull);
-+ (MFEffectiveRemapsMethod _Nonnull)effectiveRemapsMethod_Override;
+typedef NSDictionary *_Nonnull (*MFEffectiveRemapsMethod)(NSDictionary *_Nonnull, NSDictionary *_Nonnull);
++ (MFEffectiveRemapsMethod _Nonnull)effectiveRemapsMethod;
 + (NSDictionary  * _Nonnull )remapsForCurrentlyActiveModifiers;
 
 @end

@@ -12,7 +12,7 @@ import CocoaLumberjackSwift
 
 @objc class ScrollModifiers: NSObject {
 
-    @objc class func currentScrollModifications() -> MFScrollModificationResult {
+    @objc class func currentScrollModifications(event: CGEvent) -> MFScrollModificationResult {
         
         /// Debug
         
@@ -27,10 +27,13 @@ import CocoaLumberjackSwift
         /// Get currently active scroll remaps
         
         var modifyingDeviceID: NSNumber? = nil;
-        var activeModifiers = ModifierManager.getActiveModifiers(forDevice: &modifyingDeviceID, filterButton: nil, event: nil)
+        let activeModifiers = ModifierManager.getActiveModifiers(forDevice: &modifyingDeviceID, filterButton: nil, event: event)
         let baseRemaps = TransformationManager.remaps();
         
-        let remapsForCurrentlyActiveModifiers = RemapsOverrider.effectiveRemapsMethod_Override()(baseRemaps, activeModifiers);
+        /// Debug
+        DDLogDebug("activeFlags in ScrollModifers: \(SharedUtility.binaryRepresentation((activeModifiers[kMFModificationPreconditionKeyKeyboard] as? NSNumber)?.int32Value ?? 0))")
+        
+        let remapsForCurrentlyActiveModifiers = RemapsOverrider.effectiveRemapsMethod()(baseRemaps, activeModifiers);
         
         guard let modifiedScrollDictUntyped = remapsForCurrentlyActiveModifiers[kMFTriggerScroll] else {
             return result; /// There are no active scroll modifications

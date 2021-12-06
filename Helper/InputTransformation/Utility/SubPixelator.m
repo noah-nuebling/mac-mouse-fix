@@ -80,6 +80,10 @@
     double preciseDelta = inpDelta + self.accumulatedRoundingError;
     int64_t roundedDelta = (int64_t)self.roundingFunction(preciseDelta);
     
+    ///  Debug
+    
+    DDLogDebug(@"\nSubpixelator eval with d: %f, oldErr: %f, roundedD: %lld, newErr: %f", inpDelta, self.accumulatedRoundingError, roundedDelta, preciseDelta - roundedDelta);
+    
     /// Update roundingError
     self.accumulatedRoundingError = preciseDelta - roundedDelta;
     
@@ -101,6 +105,9 @@
     /// Get roundedDelta
     double preciseDelta = inpDelta + self.accumulatedRoundingError;
     int64_t roundedDelta = (int64_t)self.roundingFunction(preciseDelta);
+    
+    ///  Debug
+    DDLogDebug(@"\nSubpixelator PEEK with d: %f, oldErr: %f, roundedD: %lld", inpDelta, self.accumulatedRoundingError, roundedDelta);
     
     /// Return
     return roundedDelta;

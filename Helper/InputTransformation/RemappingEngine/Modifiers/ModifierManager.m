@@ -157,9 +157,9 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
     // Get active modifications and initialize any which are modifier driven
     
 //    NSDictionary *activeModifications = TransformationManager.remaps[activeModifiers];
-/// ^ This has worked so far, because the default modification can't contain any of the effects that we're activating here, but we shoule really be using Using effectiveRemapsMethod_Override()
+/// ^ This has worked so far, because the default modification can't contain any of the effects that we're activating here, but we shoule really be using Using effectiveRemapsMethod()
     
-    NSDictionary *activeModifications = RemapsOverrider.effectiveRemapsMethod_Override(TransformationManager.remaps, activeModifiers);
+    NSDictionary *activeModifications = RemapsOverrider.effectiveRemapsMethod(TransformationManager.remaps, activeModifiers);
     
     if (activeModifications) {
         
@@ -222,13 +222,13 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
 // Analyzing with os_signpost reveals this is called 9 times per button click and takes around 20% of the time.
 //      That's over a third of the time which is used by our code (I think) - We should look into optimizing this (if we have too much time - the program is plenty fast). Maybe caching the values or calling it less, or making it faster.
 // \discussion If you pass in -1 for the `devID`, this function will try to find some device that has buttons pressed and use that to get the active modifiers and write id of the device it found into the `devID` argument. We never expect the user to use several mice at once, so this should work fine. If no device with any pressed buttons can be found, we return nil in the `devIDPtr`.
-+ (NSDictionary *)getActiveModifiersForDevice:(NSNumber *_Nullable *)devIDPtr filterButton:(NSNumber *)filteredButton event:(CGEventRef)event {
++ (NSDictionary *)getActiveModifiersForDevice:(NSNumber **)devIDPtr filterButton:(NSNumber *)filteredButton event:(CGEventRef)event {
     
 //    DDLogDebug(@"ActiveModifiers requested by: %s\n", SharedUtility.callerInfo.UTF8String);
     
     NSMutableDictionary *outDict = [NSMutableDictionary dictionary];
     
-    NSUInteger kb = [self getActiveKeyboardModifiersWithEvent:event];
+    CGEventFlags kb = [self getActiveKeyboardModifiersWithEvent:event];
     NSMutableArray *btn = [ButtonTriggerGenerator getActiveButtonModifiersForDevice:devIDPtr].mutableCopy;
     
     if (filteredButton != nil && btn.count != 0) {
@@ -252,7 +252,7 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
     return outDict;
 }
 
-+ (NSUInteger) getActiveKeyboardModifiersWithEvent:(CGEventRef _Nullable)event {
++ (NSUInteger)getActiveKeyboardModifiersWithEvent:(CGEventRef _Nullable)event {
     
     BOOL passedInEventIsNil = NO;
     if (event == nil) {
@@ -267,6 +267,7 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
     mask &= ~kCGEventFlagMaskAlphaShift;
     /// Ignore caps lock. Otherwise modfifications won't work normally when caps lock is enabled.
     ///     Maybe we need to ignore caps lock in other places, too make this work properly but I don't think so
+    ///         We should probably remove this once we update RemapsOverrider to work with subset matches and stuff
     
     CGEventFlags modifierFlags = CGEventGetFlags(event) & mask;
     
