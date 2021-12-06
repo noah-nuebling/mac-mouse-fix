@@ -27,6 +27,7 @@
 /// Also see CachedComputedPropertiesTests.xcodeproj
 
 import Foundation
+import CocoaLumberjackSwift
 
 // MARK: Base functions
 
@@ -98,9 +99,7 @@ fileprivate func getDerivedValue<S, T>(owner: S, givenProperties: [AnyHashable],
     lastHash = hash
     lastValue = derivedValue
     
-    #if DEBUG
-    print("Given properties did change. Recalculated derived value: \(derivedValue)")
-    #endif
+    DDLogDebug("Given properties did change. Recalculated derived value: \(derivedValue)")
     
     /// Return new value
     

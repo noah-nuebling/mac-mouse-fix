@@ -24,6 +24,7 @@ typedef enum {
 
 + (void)load_Manual;
 
++ (NSDictionary *)dict;
 + (void)initializeDragWithModifiedDragDict:(NSDictionary *)dict onDevice:(Device *)dev largeUsageThreshold:(BOOL)largeUsageThreshold;
 
 + (void)modifiedScrollHasBeenUsed;

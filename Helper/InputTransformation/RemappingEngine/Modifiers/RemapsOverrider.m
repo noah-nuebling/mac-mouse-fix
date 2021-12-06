@@ -60,6 +60,7 @@ static NSDictionary *subsetOverride(NSDictionary *remaps, NSDictionary *activeMo
     /// Here's what it does
     ///     It takes all the modificationPreconditions from `remaps` that are a subset of `activeModifiers` and sorts them by how large of a subset they are
     ///     It then takes all the modification dicts of these modificationPreconditiions and overrides them into each other in the order of their modificationPreconditions size, from small to large
+    /// TODO: ^ This desctiption is outdated. Update.
     
     /// Treat simple case separately for optimization
     
@@ -68,93 +69,35 @@ static NSDictionary *subsetOverride(NSDictionary *remaps, NSDictionary *activeMo
         return remaps[@{}];
     }
     
-    /// Get values from active modifiers
-    
-    CGEventFlags activeFlags = ((NSNumber *)activeModifiers[kMFModificationPreconditionKeyKeyboard]).unsignedLongLongValue;
-    NSArray *activeButtons = (NSArray *)activeModifiers[kMFModificationPreconditionKeyButtons];
-    
     /// Debug
     
 //    DDLogDebug(@"activeFlags in subsetOverride: %@", [SharedUtility binaryRepresentation:(int)activeFlags]);
     
-    /// Get subset sizes
+    /// Filter out preconds that aren't a subset of activeModifiers
+    
+    NSMutableArray *preconds = [NSMutableArray array];
+    
+    for (NSDictionary *precond in remaps.allKeys) {
+        if (isSubMod(activeModifiers, precond)) {
+            [preconds addObject:precond];
+        }
+    }
+    
+    /// Get precond sizes
     
     NSMutableArray<NSDictionary *> *precondsAndSizes = [NSMutableArray array];
     
-    for (NSDictionary *precond in remaps.allKeys) {
-        
-        /// Keyboard mod flags
+    for (NSDictionary *precond in preconds) {
         
         CGEventFlags flags = ((NSNumber *)precond[kMFModificationPreconditionKeyKeyboard]).unsignedLongLongValue;
-        
-        /// Check if subset
-        BOOL flagsAreSubset = (flags & activeFlags) == flags;
-        if (!flagsAreSubset) continue;
-        
-        /// Get subset size
         int64_t flagsSubsetSize = 0;
         while (flags != 0) {
             flagsSubsetSize += flags & 1;
             flags >>= 1;
         }
         
-        /// Button mods
-        
         NSArray *buttons = precond[kMFModificationPreconditionKeyButtons];
-        
-        BOOL buttonsAreSubsequence = NO;
-        int64_t buttonSubsequenceLength = 0;
-        
-        if (buttons.count == 0) {
-            /// Treat zero case separately for optimization
-            
-            buttonsAreSubsequence = YES;
-            buttonSubsequenceLength = 0;
-            
-        } else {
-            
-            int buttonIndex = 0;
-            
-            for (int activeButtonIndex = 0; activeButtonIndex < buttons.count; activeButtonIndex++) {
-                
-                /// Break prematurely
-                ///     For optimtization
-                long buttonsLeft = buttons.count - buttonIndex;
-                long activeButtonsLeft = activeButtons.count - activeButtonIndex;
-                if (buttonsLeft > activeButtonsLeft) { /// Cuttons can't be a subsequence of activeButtons
-                    buttonsAreSubsequence = NO;
-                    buttonSubsequenceLength = 0;
-                    break;
-                };
-                
-                /// Get buttons dicts
-                ///     for checking equality
-                NSDictionary *buttonDict = buttons[buttonIndex];
-                NSDictionary *activeButtonDict = activeButtons[activeButtonIndex];
-                
-                /// Do logical things that make sense
-                if ([buttonDict isEqual:activeButtonDict]) {
-                    buttonIndex++;
-                } else {
-                    buttonIndex = 0;
-                }
-                
-                /// Validate
-                assert(!(buttonIndex > buttons.count));
-                
-                /// Check if found subsequence
-                if (buttonIndex == buttons.count) {
-                    buttonsAreSubsequence = YES;
-                    buttonSubsequenceLength = activeButtons.count;
-                    break;
-                }
-            }
-        }
-        
-        /// Combine info about  flags and buttons
-        
-        assert(flagsAreSubset);
-        if (!buttonsAreSubsequence) continue;
+        int64_t buttonSubsequenceLength = buttons.count;
         
         [precondsAndSizes addObject:@{
             @"precond": precond,
@@ -162,26 +105,46 @@ static NSDictionary *subsetOverride(NSDictionary *remaps, NSDictionary *activeMo
         }];
     }
     
-    /// Sort preconditions (that are subsets of activeModifiers) by size
+    /// Sort preconditions by size
     
     [precondsAndSizes sortUsingComparator:^NSComparisonResult(NSDictionary *obj1, NSDictionary *obj2) {
         NSNumber *size1 = obj1[@"size"];
         NSNumber *size2 = obj2[@"size"];
         return [size1 compare:size2];
     }];
+
+    /// Filter out preconds that are subsets of other preconds
     
-    /// Debug
+    NSMutableArray *preconds2 = [NSMutableArray array];
     
-//    DDLogDebug(@"precondsAndSizes in subsetOverride: %@", precondsAndSizes);
+    for (int i = 0; i < precondsAndSizes.count; i++) {
+        
+        NSDictionary *precond = precondsAndSizes[i][@"precond"];
+        
+        BOOL isSubsetOfOtherPrecond = NO;
+        
+        for (int j = i+1; j < precondsAndSizes.count; j++) {
+            
+            NSDictionary *otherPrecond = precondsAndSizes[j][@"precond"];
+            
+            if (isSubMod(otherPrecond, precond)) {
+                isSubsetOfOtherPrecond = YES;
+                break;
+            }
+        }
+        
+        if (!isSubsetOfOtherPrecond) {
+            [preconds2 addObject:precond];
+        }
+    }
+    
     
     /// Apply modifications in order of their precond size
     
     NSDictionary *combinedModifications = [NSMutableDictionary dictionary];
     
-    for (NSDictionary *precondAndSize in precondsAndSizes) {
-        NSDictionary *precond = precondAndSize[@"precond"];
+    for (NSDictionary *precond in preconds2) {
         NSDictionary *modification = remaps[precond];
-        
         combinedModifications = [SharedUtility dictionaryWithOverridesAppliedFrom:modification to:combinedModifications];
         /// ^ Would be more efficient to have an in-place override function for this
     }
@@ -193,6 +156,85 @@ static NSDictionary *subsetOverride(NSDictionary *remaps, NSDictionary *activeMo
     /// Return
     
     return combinedModifications;
+}
+
+/// SubsetOverrride helpers
+
+BOOL isSubMod(NSDictionary *modifiers, NSDictionary *potentialSubModifiers) {
+    
+    /// Treat zero case separately
+    ///     For optimtization
+    
+    if (potentialSubModifiers.count == 0) return YES;
+    
+    /// Keyboard flags
+    
+    CGEventFlags flags = ((NSNumber *)modifiers[kMFModificationPreconditionKeyKeyboard]).unsignedLongLongValue;
+    CGEventFlags subFlags = ((NSNumber *)potentialSubModifiers[kMFModificationPreconditionKeyKeyboard]).unsignedLongLongValue;
+    
+    if (!isSubBits(flags, subFlags)) return NO;
+    
+    /// Buttons
+    
+    NSArray *buttons = modifiers[kMFModificationPreconditionKeyButtons];
+    NSArray *subButtons = potentialSubModifiers[kMFModificationPreconditionKeyButtons];
+    
+    if (!isSubSequence(buttons, subButtons)) return NO;
+    
+    /// Is subSet!
+    
+    return YES;
+}
+
+BOOL isSubBits(int64_t bits, int64_t potentialSubBits) {
+    return (potentialSubBits & bits) == potentialSubBits;
+}
+
+BOOL isSubSequence(NSArray *sequence, NSArray *potentialSubSequence) {
+    
+    /// Treat zero case separately for optimization
+    
+    if (potentialSubSequence.count == 0) return YES;
+    
+    /// Main logic
+    
+    int subIndex = 0;
+    
+    for (int index = 0; index < sequence.count; index++) {
+        
+        /// This loop is pretty siimple because we know that no button can occor in the sequence more than once
+        ///     Otherwise it would be more involved to determine subsequence
+        
+        /// Break prematurely
+        ///     for optimtization
+        long subItemsLeft = potentialSubSequence.count - subIndex;
+        long itemsLeft = sequence.count - index;
+        if (subItemsLeft > itemsLeft) { /// potentialSubSequence can't be a subsequence of sequence
+            return NO;
+        };
+        
+        /// Get items
+        ///     for checking equality
+        NSDictionary *subItem = potentialSubSequence[subIndex];
+        NSDictionary *item = sequence[index];
+        
+        /// Do logical things that make sense
+        if ([subItem isEqual:item]) {
+            subIndex++;
+        } else {
+            subIndex = 0;
+        }
+        
+        /// Validate
+        assert(!(subIndex > potentialSubSequence.count));
+        
+        /// Check if found subsequence
+        if (subIndex == potentialSubSequence.count) {
+            return YES;
+        }
+    }
+    
+    return NO;
 }
 
 @end

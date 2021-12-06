@@ -31,7 +31,7 @@ import CocoaLumberjackSwift
         let baseRemaps = TransformationManager.remaps();
         
         /// Debug
-        DDLogDebug("activeFlags in ScrollModifers: \(SharedUtility.binaryRepresentation((activeModifiers[kMFModificationPreconditionKeyKeyboard] as? NSNumber)?.int32Value ?? 0))")
+//        DDLogDebug("activeFlags in ScrollModifers: \(SharedUtility.binaryRepresentation((activeModifiers[kMFModificationPreconditionKeyKeyboard] as? NSNumber)?.uint32Value ?? 0))") /// This is unbelievably slow for some reason
         
         let remapsForCurrentlyActiveModifiers = RemapsOverrider.effectiveRemapsMethod()(baseRemaps, activeModifiers);
         

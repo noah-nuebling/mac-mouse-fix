@@ -242,7 +242,7 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
     /// Get effective direction
     ///  -> With user settings etc. applied
     
-    MFScrollDirection scrollDirection = [ScrollUtility directionForInputAxis:inputAxis inputDelta:scrollDelta invertSetting:ScrollConfig.scrollInvert horizontalModifier:(_modifications.effect == kMFScrollEffectModificationHorizontalScroll)];
+    MFScrollDirection scrollDirection = [ScrollUtility directionForInputAxis:inputAxis inputDelta:scrollDelta invertSetting:[ScrollConfig scrollInvertWithEvent:event] horizontalModifier:(_modifications.effect == kMFScrollEffectModificationHorizontalScroll)];
     
     /// Get distance to scroll
     

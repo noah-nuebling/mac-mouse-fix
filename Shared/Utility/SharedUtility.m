@@ -325,7 +325,7 @@ int8_t sign(double x) {
 #endif
 }
 
-+ (NSString *)binaryRepresentation:(int)value {
++ (NSString *)binaryRepresentation:(unsigned int)value {
     
     long nibbleCount = sizeof(value) * 2;
     NSMutableString *bitString = [NSMutableString stringWithCapacity:nibbleCount * 5];

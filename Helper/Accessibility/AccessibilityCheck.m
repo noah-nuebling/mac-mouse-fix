@@ -19,6 +19,7 @@
 #import "Constants.h"
 #import "ModifiedDrag.h"
 #import "ModifierManager.h"
+#import "Mac_Mouse_Fix_Helper-Swift.h"
 
 #import "SharedUtility.h"
 
@@ -31,6 +32,8 @@ NSTimer *_openMainAppTimer;
     // Set up CocoaLumberjack
     [SharedUtility setupBasicCocoaLumberjackLogging];
     DDLogInfo(@"Mac Mosue Fix begins logging excessively");
+    
+    [PrefixSwift initGlobalStuff];
     
     [MessagePort_Helper load_Manual];
     

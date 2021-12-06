@@ -388,6 +388,16 @@ Boolean keyCaptureModePayloadIsValidWithKeyCode(CGKeyCode keyCode, CGEventFlags 
             },
         
         },
+            
+        /// Option precond
+        
+        @{
+            kMFModificationPreconditionKeyKeyboard: @(NSAlternateKeyMask)
+        }: @{
+            kMFTriggerScroll: @{
+                kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypeQuickScroll
+            }
+        },
         
         /// Shift precond
             
@@ -398,14 +408,15 @@ Boolean keyCaptureModePayloadIsValidWithKeyCode(CGKeyCode keyCode, CGEventFlags 
                 kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeHorizontalScroll,
             }
         },
+
         
-        /// Command precond
+        /// Option & Shift precond
         
         @{
-            kMFModificationPreconditionKeyKeyboard: @(NSAlternateKeyMask)
+            kMFModificationPreconditionKeyKeyboard: @(NSAlternateKeyMask | NSShiftKeyMask)
         }: @{
             kMFTriggerScroll: @{
-                kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypeQuickScroll
+                kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeZoom
             }
         },
         

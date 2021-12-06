@@ -143,48 +143,60 @@ static void handleButtonModifiersHaveChangedWithDevice(Device *device) {
 #pragma mark Helper
 static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device * _Nonnull device) {
     
+    /// Get active modifications and initialize any which are modifier driven
+    
+    /// Debug
+    
 //    DDLogDebug(@"MODIFIERS HAVE CHANGED TO - %@", activeModifiers);
 //    DDLogDebug(@"...ON DEVICE - %@", device);
 //    DDLogDebug(@"...CALLED BY %@", [SharedUtility getInfoOnCaller]);
     
-    // Kill the currently active modified drag
-    //      (or any other effects which are modifier driven, but currently modified drag is the only one)
-    // \note The precondition for any currently active modifications can't be true anymore because
-    //      we know that the activeModifers have changed (that's why this function was called)
-    //      Because of this we can simply kill everything without any further checks
-    [ModifiedDrag deactivate];
-    
-    // Get active modifications and initialize any which are modifier driven
-    
-//    NSDictionary *activeModifications = TransformationManager.remaps[activeModifiers];
-/// ^ This has worked so far, because the default modification can't contain any of the effects that we're activating here, but we shoule really be using Using effectiveRemapsMethod()
+    /// Get activeModifications
     
     NSDictionary *activeModifications = RemapsOverrider.effectiveRemapsMethod(TransformationManager.remaps, activeModifiers);
+    
+    /// Kill old modifications
+    
+    /// Kill the currently active modifiedDrag if it's differrent from the one that the one in activeModifications
+    ///     (If there were other modifier driven effects than modifiedDrag in the future, we would also kill them here)
+
+    BOOL modifiedDragIsStillUpToDate = NO;
+    
+    if ([activeModifications[kMFTriggerDrag] isEqual: ModifiedDrag.dict]) {
+        modifiedDragIsStillUpToDate = YES;
+    } else {
+        [ModifiedDrag deactivate];
+    }
+    
+    /// Iniit new modifications
     
     if (activeModifications) {
         
         /// Init modifiedDrag
         ///    (If there were other modifier driven effects than modifiedDrag in the future, we would also init them here)
         
-        NSMutableDictionary *modifiedDragEffect = activeModifications[kMFTriggerDrag]; /// Declared as NSMutableDictionary but probably not actually mutable at this point
-        if (modifiedDragEffect) {
-            
-            /// If addMode is active, add activeModifiers to modifiedDragDict
-            ///     See TransformationManager.m -> AddMode for context.
-            if ([modifiedDragEffect[kMFModifiedDragDictKeyType] isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
-                modifiedDragEffect = modifiedDragEffect.mutableCopy; /// Make actually mutable
-                modifiedDragEffect[kMFRemapsKeyModificationPrecondition] = activeModifiers; /// Add activeModifiers
+        if (!modifiedDragIsStillUpToDate) {
+        
+            NSMutableDictionary *modifiedDragEffect = activeModifications[kMFTriggerDrag]; /// Declared as NSMutableDictionary but probably not actually mutable at this point
+            if (modifiedDragEffect) {
+                
+                /// If addMode is active, add activeModifiers to modifiedDragDict
+                ///     See TransformationManager.m -> AddMode for context.
+                if ([modifiedDragEffect[kMFModifiedDragDictKeyType] isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
+                    modifiedDragEffect = modifiedDragEffect.mutableCopy; /// Make actually mutable
+                    modifiedDragEffect[kMFRemapsKeyModificationPrecondition] = activeModifiers; /// Add activeModifiers
+                }
+                
+                /// Determine usage threshold based on other active modifications
+                ///     It's easy to accidentally drag the mouse while trying to scroll so in that case we want a larger usageThreshold to avoid accidental drag activation
+                BOOL largeUsageThreshold = NO;
+                if (activeModifications[kMFTriggerScroll] != nil) {
+                    largeUsageThreshold = YES;
+                }
+                
+                /// Init modifiedDrag
+                [ModifiedDrag initializeDragWithModifiedDragDict:modifiedDragEffect onDevice:device largeUsageThreshold:largeUsageThreshold];
             }
-            
-            /// Determine usage threshold based on other active modifications
-            ///     It's easy to accidentally drag the mouse while trying to scroll so in that case we want a larger usageThreshold to avoid accidental drag activation
-            BOOL largeUsageThreshold = NO;
-            if (activeModifications[kMFTriggerScroll] != nil) {
-                largeUsageThreshold = YES;
-            }
-            
-            /// Init modifiedDrag
-            [ModifiedDrag initializeDragWithModifiedDragDict:modifiedDragEffect onDevice:device largeUsageThreshold:largeUsageThreshold];
         }
     }
 }

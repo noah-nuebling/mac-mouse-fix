@@ -81,7 +81,19 @@ import CocoaLumberjackSwift
         guard (view.superview!.isEqual(to: canvas.contentView)) else { fatalError() }
         /// ^ This crashes sometimes because view doesn't have a superview. This happens when scroll zooming and drag scrolling at the same time on the same button. Investivate.
         
-        view.setFrameOrigin(newOrigin)
+        /// Sol 1
+        /// This calls all sorts of autolayout stuff and is very slow. Can't manage to turn that off
+        
+//        view.setFrameOrigin(newOrigin)
+        
+        /// Sol 2
+        /// This is a little faster
+        
+        view.wantsLayer = true
+        let origin = view.frame.origin
+        let transform = CGAffineTransform(translationX: newOrigin.x - origin.x, y: newOrigin.y - origin.y)
+        view.layer?.setAffineTransform(transform)
+        
     }
     
     @objc func undraw(view: NSView) {

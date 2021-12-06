@@ -48,10 +48,10 @@ import CocoaLumberjackSwift
     
     /// Scroll inversion
     
-    @objc static var scrollInvert: MFScrollInversion {
+    @objc static func scrollInvert(event: CGEvent) -> MFScrollInversion {
         /// This can be used as a factor to invert things. kMFScrollInversionInverted is -1.
         
-        if self.semanticScrollInvertUser == self.semanticScrollInvertSystem {
+        if self.semanticScrollInvertUser == self.semanticScrollInvertSystem(event) {
             return kMFScrollInversionNonInverted
         } else {
             return kMFScrollInversionInverted
@@ -61,12 +61,15 @@ import CocoaLumberjackSwift
 //        MFSemanticScrollInversion(topLevel["naturalDirection"] as! UInt32)
         return kMFSemanticScrollInversionNormal
     }
-    private static var semanticScrollInvertSystem: MFSemanticScrollInversion {
-        /// Maybe we could use NSEvent.directionInvertedFromDevice instead of this.
+    private static func semanticScrollInvertSystem(_ event: CGEvent) -> MFSemanticScrollInversion {
         
-        let defaults = UserDefaults.standard;
+        /// Accessing userDefaults is actually surprisingly slow, so we're using NSEvent.isDirectionInvertedFromDevice instead... but NSEvent(cgEvent:) is slow as well...
+        ///     .... So we're using our advanced knowledge of CGEventFields!!!
         
-        let isNatural = defaults.bool(forKey: "com.apple.swipescrolldirection")
+        
+//        let isNatural = UserDefaults.standard.bool(forKey: "com.apple.swipescrolldirection") /// User defaults method
+//        let isNatural = NSEvent(cgEvent: event)!.isDirectionInvertedFromDevice /// NSEvent method
+        let isNatural = event.getIntegerValueField(CGEventField(rawValue: 137)!) != 0; /// CGEvent method
         
         return isNatural ? kMFSemanticScrollInversionNatural : kMFSemanticScrollInversionNormal
     }
@@ -162,15 +165,25 @@ import CocoaLumberjackSwift
                                     #keyPath(accelerationHump)
                                    ])
     { () -> AccelerationBezier in
-        
+
         /// I'm not sure that using a derived property instead of just re-calculating the curve everytime is faster.
-    
+        ///     Edit: I tested it and using DerivedProperty seems slightly faster
+
         return accelerationCurveFromParams(pxPerTickBase:                                   ScrollConfig.self.pxPerTickBase,
                                            pxPerTickEnd:                                    ScrollConfig.self.pxPerTickEnd,
                                            consecutiveScrollTickIntervalMax:                ScrollConfig.self.consecutiveScrollTickIntervalMax,
                                            consecutiveScrollTickInterval_AccelerationEnd:   ScrollConfig.self.consecutiveScrollTickInterval_AccelerationEnd,
                                            accelerationHump:                                ScrollConfig.self.accelerationHump)
     }
+    
+//    @objc static var accelerationCurve: (() -> AccelerationBezier) = { () -> AccelerationBezier in
+//
+//        return accelerationCurveFromParams(pxPerTickBase:                                   ScrollConfig.self.pxPerTickBase,
+//                                           pxPerTickEnd:                                    ScrollConfig.self.pxPerTickEnd,
+//                                           consecutiveScrollTickIntervalMax:                ScrollConfig.self.consecutiveScrollTickIntervalMax,
+//                                           consecutiveScrollTickInterval_AccelerationEnd:   ScrollConfig.self.consecutiveScrollTickInterval_AccelerationEnd,
+//                                           accelerationHump:                                ScrollConfig.self.accelerationHump)
+//    }
     
     @objc static let preciseAccelerationCurve = { () -> AccelerationBezier in
         accelerationCurveFromParams(pxPerTickBase: 3, /// 2 is better than 3 but that leads to weird asswert failures in PixelatedAnimator that I can't be bothered to fix

@@ -39,8 +39,11 @@
 /// Vars - drag state
 
 struct ModifiedDragState {
+    
     CFMachPortRef eventTap;
     int64_t usageThreshold;
+    
+    NSDictionary *dict;
     
     MFStringConstant type;
 
@@ -62,6 +65,18 @@ struct ModifiedDragState {
     NSDictionary *addModePayload; // Payload to send to the mainApp. Only used with modified drag of type kMFModifiedDragTypeAddModeFeedback.
 };
 static struct ModifiedDragState _drag;
+
+/// Vars - Other
+///     Not sure what the logic should be for which global vars are part of the _drag struct, and which ones are just static globals. It doesn't really make a difference
+
+#define inputIsPointerMovement YES
+static int _cgsConnection; /// This is used by private APIs to talk to the window server and do fancy shit like hiding the cursor from a background application
+static NSCursor *_puppetCursor;
+static NSImageView *_puppetCursorView;
+static int16_t _nOfSpaces = 1;
+static dispatch_queue_t _dragQueue;
+static PixelatedAnimator *_smoothingAnimator;
+static BOOL _smoothingAnimatorShouldStartMomentumScroll = NO;
 
 /// Debug
 
@@ -90,17 +105,6 @@ static struct ModifiedDragState _drag;
     }
     return output;
 }
-
-/// More vars /defs
-
-#define inputIsPointerMovement YES
-static int _cgsConnection; /// This is used by private APIs to talk to the window server and do fancy shit like hiding the cursor from a background application
-static NSCursor *_puppetCursor;
-static NSImageView *_puppetCursorView;
-static int16_t _nOfSpaces = 1;
-static dispatch_queue_t _dragQueue;
-static PixelatedAnimator *_smoothingAnimator;
-static BOOL _smoothingAnimatorShouldStartMomentumScroll = NO;
 
 /// There are two different modes for how we receive mouse input, toggle to switch between the two for testing
 /// Set to no, if you want input to be raw mouse input, set to yes if you want input to be mouse pointer delta
@@ -144,6 +148,19 @@ static BOOL _smoothingAnimatorShouldStartMomentumScroll = NO;
     }
 }
 
+/// Interface - start
+
++ (NSDictionary *)dict {
+    
+    if (_drag.activationState == kMFModifiedInputActivationStateNone) {
+        return nil;
+    } else if (_drag.activationState == kMFModifiedInputActivationStateInitialized || _drag.activationState == kMFModifiedInputActivationStateInUse) {
+        return _drag.dict;
+    } else {
+        assert(false);
+    }
+}
+
 + (void)initializeDragWithModifiedDragDict:(NSDictionary *)dict onDevice:(Device *)dev largeUsageThreshold:(BOOL)largeUsageThreshold {
     
     dispatch_async(_dragQueue, ^{
@@ -172,6 +189,7 @@ static BOOL _smoothingAnimatorShouldStartMomentumScroll = NO;
         /// Init static
         _drag.modifiedDevice = dev;
         _drag.type = type;
+        _drag.dict = dict;
         _drag.fakeDragButtonNumber = fakeDragButtonNumber;
         _drag.addModePayload = payload;
         if (inputIsPointerMovement) {
@@ -322,7 +340,7 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
         } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
             
             /// Draw puppet cursor before hiding
-            drawPuppetCursorWithFresh(YES, YES);
+            drawPuppetCursor(YES, YES);
             
             /// Decrease delay after warping
             ///     But only as much so that it doesn't break `CGWarpMouseCursorPosition(()` ability to stop cursor by calling repeatedly
@@ -421,7 +439,7 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
 //        CGAssociateMouseAndMouseCursorPosition(NO);
         
         /// Draw puppet cursor
-        drawPuppetCursorWithFresh(YES, NO);
+        drawPuppetCursor(YES, NO);
         
         /// Post event
         ///     Using animator for smoothing
@@ -481,7 +499,7 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
 
 + (void)deactivate {
     
-    DDLogDebug(@"Deactivated modifiedDrag. Caller: %@", [SharedUtility callerInfo]);
+//    DDLogDebug(@"Deactivated modifiedDrag. Caller: %@", [SharedUtility callerInfo]);
     
     [self deactivateWithCancel:false];
 }
@@ -592,7 +610,7 @@ static void handleDeactivationWhileInUse(BOOL cancelation) {
             [Utility_Transformation hideMousePointer:NO];
             
             /// Undraw puppet cursor
-            drawPuppetCursorWithFresh(NO, NO);
+            drawPuppetCursor(NO, NO);
             
             /// Reset suppression interval to default
             setSuppressionInterval(kMFEventSuppressionIntervalDefault);
@@ -675,7 +693,7 @@ void setSuppressionIntervalWithTimeInterval(CFTimeInterval interval) {
 
 /// Puppet cursor
 
-void drawPuppetCursorWithFresh(BOOL draw, BOOL fresh) {
+void drawPuppetCursor(BOOL draw, BOOL fresh) {
     
     /// Define workload block
     ///     (Graphics code always needs to be executed on main)
@@ -683,13 +701,20 @@ void drawPuppetCursorWithFresh(BOOL draw, BOOL fresh) {
     void (^workload)(void) = ^{
     
         if (!draw) {
-            [ScreenDrawer.shared undrawWithView:_puppetCursorView];
+            _puppetCursorView.alphaValue = 0; /// Make the puppetCursor invisible
             return;
         }
         
+        if (_puppetCursor == nil) {
+            /// Init puppetCursot
+            ///     Might be better to do this during ModifidDrags + initialize function
+            _puppetCursor = NSCursor.arrowCursor;
+        }
+        
         if (fresh) {
-            /// Get cursor
-            _puppetCursor = NSCursor.currentSystemCursor;
+            /// Use the currently displaying cursor, instead of the default arrow cursor
+//            _puppetCursor = NSCursor.currentSystemCursor;
+            
             /// Store cursor image into puppet view
             _puppetCursorView.image = _puppetCursor.image;
         }
@@ -705,14 +730,17 @@ void drawPuppetCursorWithFresh(BOOL draw, BOOL fresh) {
         NSRect puppetImageFrame = NSMakeRect(imageLoc.x, imageLoc.y, _puppetCursorView.image.size.width, _puppetCursorView.image.size.height);
         NSRect puppetImageFrameUnflipped = [SharedUtility quartzToCocoaScreenSpace:puppetImageFrame];
         
-        /// Draw!
+        
         if (fresh) {
-            /// Draw
+            /// Draw puppetCursor
             [ScreenDrawer.shared drawWithView:_puppetCursorView atFrame:puppetImageFrameUnflipped onScreen:NSScreen.mainScreen];
         } else {
-            ///Move
+            /// Reposition  puppet cursor!
             [ScreenDrawer.shared moveWithView:_puppetCursorView toOrigin:puppetImageFrameUnflipped.origin];
         }
+        
+        /// Unhide puppet cursot
+        _puppetCursorView.alphaValue = 1;
     };
     
     /// Make sure workload is executed on main thread
