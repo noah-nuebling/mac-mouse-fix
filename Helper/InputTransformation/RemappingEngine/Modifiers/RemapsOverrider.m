@@ -20,7 +20,7 @@
 ///     These *combined* remaps are also sometimes called *effective remaps* or *remaps for current modifiers*
 ///     If this doesn't make sense, see an example of the remaps dict structure in TransformationManager.m
 
-/// Interface
+/// MARK: Interface
 
 + (MFEffectiveRemapsMethod _Nonnull)effectiveRemapsMethod {
     /// Primitive remaps overriding method. Siimply takes the base (with an empty modification precondition) remaps and overrides it with the remaps which have a modificationPrecondition of exactly `activeModifiers`
@@ -42,7 +42,7 @@
     
 }
 
-/// Effective remaps methods
+/// MARK: Effective remaps methods
 
 static NSDictionary *simpleOverride(NSDictionary *remaps, NSDictionary *activeModifiers) {
 
@@ -59,8 +59,10 @@ static NSDictionary *subsetOverride(NSDictionary *remaps, NSDictionary *activeMo
     /// This allows combining modifiers
     /// Here's what it does
     ///     It takes all the modificationPreconditions from `remaps` that are a subset of `activeModifiers` and sorts them by how large of a subset they are
-    ///     It then takes all the modification dicts of these modificationPreconditiions and overrides them into each other in the order of their modificationPreconditions size, from small to large
-    /// TODO: ^ This desctiption is outdated. Update.
+    ///     Then It creates one new precond array for each triggerType and only puts in the preconds that have that triggerType in their modification
+    ///     For each trigger-specific precond array it then filters out all the preconds that are a subset of another precond in that trigger-specific precond array
+    ///     Then, for each trigger-specific precond array, it takes all the modification dicts of each precond and overrides them into each other in the order of their precond size, from small to large
+    /// I'm too lazy and stupid to describe why all this abstract stuff makes sense, but it leads the button and keyboard modifiers to always do the intuitive thing that you expect them to imo!
     
     /// Treat simple case separately for optimization
     
@@ -73,7 +75,7 @@ static NSDictionary *subsetOverride(NSDictionary *remaps, NSDictionary *activeMo
     
 //    DDLogDebug(@"activeFlags in subsetOverride: %@", [SharedUtility binaryRepresentation:(int)activeFlags]);
     
-    /// Filter out preconds that aren't a subset of activeModifiers
+    /// Get preconds that are a subset of activeModifiers
     
     NSMutableArray *preconds = [NSMutableArray array];
     
@@ -112,20 +114,97 @@ static NSDictionary *subsetOverride(NSDictionary *remaps, NSDictionary *activeMo
         NSNumber *size2 = obj2[@"size"];
         return [size1 compare:size2];
     }];
-
-    /// Filter out preconds that are subsets of other preconds
+    
+    /// Extract sorted preconds from precondsAndSizes
     
     NSMutableArray *preconds2 = [NSMutableArray array];
     
-    for (int i = 0; i < precondsAndSizes.count; i++) {
+    for (NSDictionary *precondAndSize in precondsAndSizes) {
+        [preconds2 addObject:precondAndSize[@"precond"]];
+    }
+    
+    /// Split sorted preconds by trigger
+    
+    NSMutableArray *scrollPreconds = [NSMutableArray array];
+    NSMutableArray *dragPreconds = [NSMutableArray array];
+    NSMutableArray *buttonPreconds = [NSMutableArray array];
+    
+    for (NSDictionary *precond in preconds2) {
         
-        NSDictionary *precond = precondsAndSizes[i][@"precond"];
+        NSDictionary *mod = remaps[precond];
+        if (mod[kMFTriggerScroll] != nil) {
+            [scrollPreconds addObject:precond];
+        }
+        if (mod[kMFTriggerDrag] != nil) {
+            [dragPreconds addObject:precond];
+        }
+        BOOL precondHasNumberKey = NO;
+        for (NSObject *key in precond.allKeys) {
+            if ([key isKindOfClass:NSNumber.class]) {
+                precondHasNumberKey = YES;
+                break;
+            }
+        }
+        if (precondHasNumberKey) {
+            [buttonPreconds addObject:precond];
+        }
+    }
+    
+    /// Filter out preconds that are subsets of other preconds - per trigger
+    
+    NSArray *scrollPreconds2 = internalSubSetsFilteredOut(scrollPreconds);
+    NSArray *dragPreconds2 = internalSubSetsFilteredOut(dragPreconds);
+    NSArray *buttonPreconds2 = internalSubSetsFilteredOut(buttonPreconds);
+    
+    /// Apply modifications in order of their precond size
+    
+    NSDictionary *combinedScrollMods = [NSMutableDictionary dictionary];
+    NSDictionary *combinedDragMods = [NSMutableDictionary dictionary];
+    NSDictionary *combinedButtonMods = [NSMutableDictionary dictionary];
+    
+    /// Scroll
+    for (NSDictionary *precond in scrollPreconds2) {
+        NSDictionary *scrollModification = remaps[precond][kMFTriggerScroll];
+        combinedScrollMods = [SharedUtility dictionaryWithOverridesAppliedFrom:scrollModification to:combinedScrollMods];
+    }
+    /// Drag
+    combinedDragMods = remaps[dragPreconds2.lastObject][kMFTriggerDrag]; /// Drag mods can't be combined so far, so we can just use lastObject
+    
+    /// Buttons
+    for (NSDictionary *precond in buttonPreconds2) {
+        NSDictionary *modification = remaps[precond];
+        combinedButtonMods = [SharedUtility dictionaryWithOverridesAppliedFrom:modification to:combinedButtonMods];
+    }
+    
+    /// Combine everything back together
+    
+    NSMutableDictionary *combinedModifications = combinedButtonMods.mutableCopy;
+    combinedModifications[kMFTriggerDrag] = combinedDragMods;
+    combinedModifications[kMFTriggerScroll] = combinedScrollMods;
+    
+    /// Return
+    
+    return combinedModifications;
+}
+
+/// MARK: SubsetOverrride helpers
+
+NSArray<NSDictionary *> *internalSubSetsFilteredOut(NSArray<NSDictionary *> *modifiers) {
+    /// Will filter out any modifierDicts in `modifiers` that are a subset of another modifierDict in `modifiers`
+    /// This function assumes that `modifiers` is sorted by subSetSize (See where this is called in subsetOverride() for example)
+    ///     This is probably (hopefully) never gonna be called from anywhere else than subsetOverride()
+    
+    NSMutableArray *filteredModifiers = [NSMutableArray array];
+    
+    for (int i = 0; i < modifiers.count; i++) {
+        
+        NSDictionary *precond = modifiers[i];
         
         BOOL isSubsetOfOtherPrecond = NO;
         
-        for (int j = i+1; j < precondsAndSizes.count; j++) {
+        for (int j = i+1; j < modifiers.count; j++) {
             
-            NSDictionary *otherPrecond = precondsAndSizes[j][@"precond"];
+            NSDictionary *otherPrecond = modifiers[j];
             
             if (isSubMod(otherPrecond, precond)) {
                 isSubsetOfOtherPrecond = YES;
@@ -134,31 +213,12 @@ static NSDictionary *subsetOverride(NSDictionary *remaps, NSDictionary *activeMo
         }
         
         if (!isSubsetOfOtherPrecond) {
-            [preconds2 addObject:precond];
+            [filteredModifiers addObject:precond];
         }
     }
     
-    
-    /// Apply modifications in order of their precond size
-    
-    NSDictionary *combinedModifications = [NSMutableDictionary dictionary];
-    
-    for (NSDictionary *precond in preconds2) {
-        NSDictionary *modification = remaps[precond];
-        combinedModifications = [SharedUtility dictionaryWithOverridesAppliedFrom:modification to:combinedModifications];
-        /// ^ Would be more efficient to have an in-place override function for this
-    }
-    
-    /// Debug
-    
-//    DDLogDebug(@"combinedModifications in subsetOverride: %@", combinedModifications);
-    
-    /// Return
-    
-    return combinedModifications;
+    return filteredModifiers;
 }
-
-/// SubsetOverrride helpers
 
 BOOL isSubMod(NSDictionary *modifiers, NSDictionary *potentialSubModifiers) {
     

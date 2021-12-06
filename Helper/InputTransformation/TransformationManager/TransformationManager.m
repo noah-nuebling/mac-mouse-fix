@@ -24,7 +24,7 @@
 
 #pragma mark - Remaps dictionary and interface
 
-#define USE_TEST_REMAPS YES
+#define USE_TEST_REMAPS NO
 NSDictionary *_remaps;
 
 /// Always set remaps through this, so that the kMFNotifCenterNotificationNameRemapsChanged notification is posted

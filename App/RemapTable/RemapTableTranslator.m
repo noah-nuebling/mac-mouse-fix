@@ -73,13 +73,14 @@ static NSArray *getScrollEffectsTable() {
         @{@"ui": @"Desktop & Launchpad", @"tool": @"Scroll up for Launchpad and down to show the Desktop \n \nWorks like Pinching with 4 fingers on an Apple Trackpad", @"dict": @{
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeFourFingerPinch
         }},
-        @{@"ui": @"Zoom In & Out", @"tool": @"Zoom in or out in Safari, Maps, and other apps \n \nWorks like Pinch to Zoom on an Apple Trackpad" , @"dict": @{
-            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeZoom
-        }},
+        separatorEffectsTableEntry(),
         @{@"ui": @"Horizontal Scroll", @"tool": @"Scroll horizontally \nNavigate pages in Safari, delete messages in Mail, and more \n \nWorks like swiping horizontally with 2 fingers on an Apple Trackpad" , @"dict": @{
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeHorizontalScroll
         }},
-        @{@"ui": @"Rotate", @"hideable": @YES, @"tool": @"Rotate in Maps and other apps \n \nWorks like Twisting with 2 fingers on an Apple Trackpad", @"dict": @{
+        @{@"ui": @"Zoom In & Out", @"tool": @"Zoom in or out in Safari, Maps, and other apps \n \nWorks like Pinch to Zoom on an Apple Trackpad" , @"dict": @{
+            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeZoom
+        }},
+        @{@"ui": @"Rotate", @"hideable": @NO, @"tool": @"Rotate in Maps and other apps \n \nWorks like Twisting with 2 fingers on an Apple Trackpad", @"dict": @{
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeRotate
         }},
         separatorEffectsTableEntry(),
