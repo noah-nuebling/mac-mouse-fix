@@ -47,14 +47,14 @@ import CocoaLumberjackSwift
     @objc var animationCurve: AnimationCurve? /// This class assumes that `animationCurve` passes through `(0, 0)` and `(1, 1)
 //    let threadLock = DispatchSemaphore.init(value: 1)
         /// ^ Using a queue instead of a lock to avoid deadlocks. Always use queues for mutual exclusion except if you know exactly what you're doing!
-    let queue: DispatchQueue
+    let animatorQueue: DispatchQueue
     
     // Init
     
     @objc override init() {
         
         self.displayLink = DisplayLink()
-        self.queue = DispatchQueue(label: "com.nuebling.mac-mouse-fix.animator", qos: .userInteractive , attributes: [], autoreleaseFrequency: .inherit, target: nil)
+        self.animatorQueue = DispatchQueue(label: "com.nuebling.mac-mouse-fix.animator", qos: .userInteractive , attributes: [], autoreleaseFrequency: .inherit, target: nil)
         
         super.init()
     }
@@ -66,7 +66,7 @@ import CocoaLumberjackSwift
     
     @objc var isRunning: Bool {
         var result: Bool = false
-        self.queue.sync {
+        self.animatorQueue.sync {
             result = self.isRunning_Internal
         }
         return result
@@ -113,7 +113,7 @@ import CocoaLumberjackSwift
         self.startWithUntypedCallback(duration: duration, valueInterval: valueInterval, animationCurve: animationCurve, callback: callback);
     }
     
-    @objc internal func startWithUntypedCallback(duration: CFTimeInterval,
+    internal func startWithUntypedCallback(duration: CFTimeInterval,
                                                  valueInterval: Interval,
                                                  animationCurve: AnimationCurve,
                                                  callback: UntypedAnimatorCallback) {
@@ -136,104 +136,139 @@ import CocoaLumberjackSwift
         ///         Orrr we can also have self.isRunning() execute on self.queue. - we did that. Should be most robust solution
         ///         But actually, maybe it's faster to make start() use queue.sync after all. Because isRunning() is probably called a lot more.
         
-        self.queue.async {
+        self.animatorQueue.async {
+            self.startWithUntypedCallback_Unsafe(duration: duration, valueInterval: valueInterval, animationCurve: animationCurve, callback: callback)
+        }
+    }
+    
+    internal func startWithUntypedCallback_Unsafe(duration: CFTimeInterval,
+                                                valueInterval: Interval,
+                                                animationCurve: AnimationCurve,
+                                                callback: UntypedAnimatorCallback) {
+        
+        /// This function has `_Unsafe` in it's name because it doesn't execute on self.animatorQueue. Only call it form self.animatorQueue
+        
+        /// Store args
+        
+        self.callback = callback;
+        self.animationCurve = animationCurve
+        
+        /// Update phases
+        
+        if (!self.isRunning_Internal
+            || self.animationPhase == kMFAnimationPhaseStart
+            || self.animationPhase == kMFAnimationPhaseStartAndEnd) { /// This shouldn't be necessary, because we call self.stop() in the displayLinkCallback if phase is `startAndEnd`, which will make self.isRunning false. But due to some weird race condition or something, it doesn't always work. Edit: I added locks to this class to prevent the race conditions whcih should make this unnecessary - Remove the `startAndEnd` check.
+                                                                      /// If animation phase is still start that means that the displayLinkCallback() hasn't used it, yet (it sets it to continue after using it)
+                                                                      ///     We want the first time that selfcallback is called by displayLinkCallback() during the animation to have phase start, so we're not setting phase to running start in this case, even if the Animator is already running (when !isRunning is true)
             
-            /// Store args
+            self.animationPhase = kMFAnimationPhaseStart;
+            self.lastAnimationPhase = kMFAnimationPhaseNone;
+        } else {
+            self.animationPhase = kMFAnimationPhaseRunningStart;
+        }
+        
+        /// Debug
+        
+        DDLogDebug("START ANIMATOR \(self.hash) with phase: \(self.animationPhase.rawValue)")
+        
+        /// Update the rest of the state
+        
+        if (self.isRunning_Internal) {
+            /// I think it should make for smoother animations, if we don't se the lastAnimationTime to now when the displayLink is already running, but that's an experiment. I'm not sure. Edit: Not sure if it makes a difference but it's fine
             
-            self.callback = callback;
-            self.animationCurve = animationCurve
+            self.lastAnimationValue = self.animationValueInterval.start
             
-            /// Update phases
+            self.animationTimeInterval = Interval.init(location: self.lastAnimationTime, length: duration)
+            self.animationValueInterval = valueInterval
             
-            if (!self.isRunning_Internal
-                || self.animationPhase == kMFAnimationPhaseStart
-                || self.animationPhase == kMFAnimationPhaseStartAndEnd) { /// This shouldn't be necessary, because we call self.stop() in the displayLinkCallback if phase is `startAndEnd`, which will make self.isRunning false. But due to some weird race condition or something, it doesn't always work. Edit: I added locks to this class to prevent the race conditions whcih should make this unnecessary - Remove the `startAndEnd` check.
-                                                                          /// If animation phase is still start that means that the displayLinkCallback() hasn't used it, yet (it sets it to continue after using it)
-                                                                          ///     We want the first time that selfcallback is called by displayLinkCallback() during the animation to have phase start, so we're not setting phase to running start in this case, even if the Animator is already running (when !isRunning is true)
-                
-                self.animationPhase = kMFAnimationPhaseStart;
-                self.lastAnimationPhase = kMFAnimationPhaseNone;
-            } else {
-                self.animationPhase = kMFAnimationPhaseRunningStart;
-            }
+            //                threadLock.signal()
             
-            /// Debug
+        } else {
             
-            DDLogDebug("START ANIMATOR \(self.hash) with phase: \(self.animationPhase.rawValue)")
+            let now: CFTimeInterval = CACurrentMediaTime()
             
-            /// Update the rest of the state
+            self.lastAnimationTime = now
+            self.lastAnimationValue = self.animationValueInterval.start
             
-            if (self.isRunning_Internal) {
-                /// I think it should make for smoother animations, if we don't se the lastAnimationTime to now when the displayLink is already running, but that's an experiment. I'm not sure. Edit: Not sure if it makes a difference but it's fine
-                
-                self.lastAnimationValue = self.animationValueInterval.start
-                
-                self.animationTimeInterval = Interval.init(location: self.lastAnimationTime, length: duration)
-                self.animationValueInterval = valueInterval
-                
-//                threadLock.signal()
-                
-            } else {
-                
-                let now: CFTimeInterval = CACurrentMediaTime()
-                
-                self.lastAnimationTime = now
-                self.lastAnimationValue = self.animationValueInterval.start
-                
-                self.animationTimeInterval = Interval.init(location: now, length: duration)
-                self.animationValueInterval = valueInterval
-                
-//                threadLock.signal()
-                
-                /// Start displayLink
-                self.displayLink.start(callback: { [unowned self] () -> () in
-                    let s = self
-                    s.displayLinkCallback()
-                    /**
-                     - `displayLinkCallback()` gives EXC_BAD_ACCESS once a minute when scrolling. How is that even possible? It's just a function. Debugger says that everything else is available on self, just not this function. Maybe it's because it's not marked @objc?
-                     - Edit: Marking it @objc weirdly fixes the issue. Edit2: Nope, now it appeared again.
-                     - SO about a similar problem: https://stackoverflow.com/questions/14744378/arc-exc-bad-access-when-calling-a-method-from-inside-a-block-inside-a-delegate
-                     - I think the reason might be that we were storing the block in `DisplayLink.m` with `_callback = callback` instead of `self.callback = callback`. That might prevent the block from being copied which blocks should normally be when stored as properties or something. See:
-                     - https://www.google.com/search?client=safari&rls=en&q=objc+copy+property&ie=UTF-8&oe=UTF-8
-                     - Actually, using `self.callback` shouldn't make a difference. See:
-                     - https://stackoverflow.com/questions/10453261/under-arc-are-blocks-automatically-copied-when-assigned-to-an-ivar-directly
-                     - But it seems to work so far.
-                     */
-                })
-            }
+            self.animationTimeInterval = Interval.init(location: now, length: duration)
+            self.animationValueInterval = valueInterval
+            
+            //                threadLock.signal()
+            
+            /// Start displayLink
+            self.displayLink.start(callback: { [unowned self] () -> () in
+                let s = self
+                s.displayLinkCallback()
+                /**
+                 - `displayLinkCallback()` gives EXC_BAD_ACCESS once a minute when scrolling. How is that even possible? It's just a function. Debugger says that everything else is available on self, just not this function. Maybe it's because it's not marked @objc?
+                 - Edit: Marking it @objc weirdly fixes the issue. Edit2: Nope, now it appeared again.
+                 - SO about a similar problem: https://stackoverflow.com/questions/14744378/arc-exc-bad-access-when-calling-a-method-from-inside-a-block-inside-a-delegate
+                 - I think the reason might be that we were storing the block in `DisplayLink.m` with `_callback = callback` instead of `self.callback = callback`. That might prevent the block from being copied which blocks should normally be when stored as properties or something. See:
+                 - https://www.google.com/search?client=safari&rls=en&q=objc+copy+property&ie=UTF-8&oe=UTF-8
+                 - Actually, using `self.callback` shouldn't make a difference. See:
+                 - https://stackoverflow.com/questions/10453261/under-arc-are-blocks-automatically-copied-when-assigned-to-an-ivar-directly
+                 - But it seems to work so far.
+                 */
+            })
         }
     }
     
     /// Stop
     
-    @objc fileprivate func stop_Sync() {
-        /// Only call this when you're already running on self.queue
+    @objc func stop() {
+        self.animatorQueue.async {
+            self.stop_Internal(fromDisplayLink: false)
+        }
+    }
+    
+    fileprivate func stop_FromDisplayLinkedThread() {
+        /// Only call this when you're already running on the displayLinkCallback
         
+        self.stop_Internal(fromDisplayLink: true)
+    }
+    
+    fileprivate func stop_Internal(fromDisplayLink: Bool) {
         /// Debug
         
         DDLogDebug("STOPPING ANIMATOR")
         
         /// Do stuff
         
-        self.displayLink.stop()
+        if (fromDisplayLink) {
+            self.displayLink.stop()
+        } else {
+            self.displayLink.stop()
+        }
         self.animationPhase = kMFAnimationPhaseNone
         if self.onStopCallback != nil {
             self.onStopCallback!()
             self.onStopCallback = nil
+            
         }
     }
-    
-    @objc func stop() {
-        self.queue.async {
-            self.stop_Sync()
-        }
+            
+    @objc func onStop_SynchronouslyFromAnimationQueue(callback: @escaping () -> ()) {
+        /// The default `onStop(callback:)` dispatches to self.queue asynchronously.
+        /// It can be used from self.queue, but, if used from self.queue, the callback will only become active after all the other items in the queue are finished, which is not always what we want.
+        /// Use this function to synchronously install the onStop callback.
+        /// This function should only be called from self.queue
+        
+        assert(self.isRunning_Internal)
+        
+        onStop_Internal(callback: callback, doImmediatelyIfNotRunning: false)
     }
     
     @objc func onStop(callback: @escaping () -> ()) {
-        /// Do `callback` once the Animator stops or immediately if the animator isn't running
-        ///     Might wanna execute this on self.queue as well
         
-        if (!self.isRunning) {
+        self.animatorQueue.async {
+            self.onStop_Internal(callback: callback, doImmediatelyIfNotRunning: false)
+        }
+    }
+    
+    fileprivate func onStop_Internal(callback: @escaping () -> (), doImmediatelyIfNotRunning: Bool) {
+        /// Do `callback` once the Animator stops or immediately if the animator isn't running and `waitTillNextStop` is false
+        
+        if (doImmediatelyIfNotRunning && !self.isRunning_Internal) {
             callback()
         } else {
             self.onStopCallback = callback
@@ -258,7 +293,7 @@ import CocoaLumberjackSwift
 //        }
 //        assert(timeoutResult == .success)
         
-        self.queue.async {
+        self.animatorQueue.sync { /// Use sync so this is actually executed on the high-priority display-linked thread
             
             /// Debug
             
@@ -324,10 +359,7 @@ import CocoaLumberjackSwift
             switch self.animationPhase {
             case kMFAnimationPhaseEnd, kMFAnimationPhaseStartAndEnd:
                 
-                /// Need to make sure that this functions' threadLock has been released before we call self.stop(). self.stop() will try to acquire the lock,  leading to a deadlock if this function still holds the lock.
-                ///     If we unlock the thread before the enclosing switch statement there'll still be race conditions (I think - limited testing)
-//                self.threadLock.signal()
-                self.stop_Sync()
+                self.stop_FromDisplayLinkedThread()
                 
             default:
                 /// Unlock

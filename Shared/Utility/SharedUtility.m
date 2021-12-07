@@ -341,4 +341,28 @@ int8_t sign(double x) {
     return bitString;
 }
 
++ (void)resetDispatchGroupCount:(dispatch_group_t)group {
+    /// Reset smoothing group counter to 0
+    /// This doesn't work, don't use this.
+    
+    assert(false);
+    
+    /// Method 2
+    
+//    dispatch_group_wait(group, DISPATCH_TIME_NOW); /// Time out immediately to reset state. Doesn't work....
+    
+    /// Method 1 (kinda hacky and unstable method)
+    
+    NSString *groupDebugDescription = group.debugDescription;
+    NSRange groupCountRange = [groupDebugDescription rangeOfString:@"(?<= count = ).*?(?=,)" options:NSRegularExpressionSearch];
+    /// ^ Actual Regex for count (?<= count = ).*?(?=,)
+    NSString *groupCountString = [groupDebugDescription substringWithRange:groupCountRange];
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+    numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
+    int groupCount = [numberFormatter numberFromString:groupCountString].intValue;
+    for (int i = 0; i < groupCount; i++) {
+        dispatch_group_leave(group);
+    }
+}
+
 @end

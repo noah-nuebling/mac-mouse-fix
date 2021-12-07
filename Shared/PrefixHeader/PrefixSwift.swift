@@ -14,7 +14,7 @@ import CocoaLumberjackSwift
 
     @objc static func initGlobalStuff() {
         /// ^ This is called at program start and should set global Swfft variables
-        ///     We'll probably only ever use it for cocoaLumberjack log levels, just like our WannabePrefixHeader
+        ///     We'll probably only ever use it for CocoaLumberjack log levels, just like our WannabePrefixHeader
         
         /// Set Log level for CocoaLumberjack in Swift
         ///     Separate from objc log level
@@ -22,10 +22,9 @@ import CocoaLumberjackSwift
         #if DEBUG
         dynamicLogLevel = .debug
         #else
-        dynamicLogLevel = .info
-        #endif
-        
+//        dynamicLogLevel = .info
         dynamicLogLevel = .off /// Override for testing
+        #endif
         
     }
     

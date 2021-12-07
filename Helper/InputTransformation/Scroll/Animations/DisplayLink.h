@@ -22,10 +22,11 @@ typedef void(^DisplayLinkCallback)(void);
 + (instancetype)displayLink;
 - (void)startWithCallback:(DisplayLinkCallback)callback;
 - (void)stop;
+//- (void)stop_FromDisplayLinkedThread;
 - (BOOL)isRunning;
-- (CVReturn)linkToMainScreen;
+- (void)linkToMainScreen;
 
-- (CVReturn)linkToDisplayUnderMousePointerWithEvent:(CGEventRef)event;
+- (void)linkToDisplayUnderMousePointerWithEvent:(CGEventRef)event;
 
 @end
 

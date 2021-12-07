@@ -52,9 +52,10 @@ class PixelatedAnimator: BaseAnimator {
         
         /// Do stuff
         
-        super.startWithUntypedCallback(duration: duration, valueInterval: valueInterval, animationCurve: animationCurve, callback: integerCallback)
+        self.animatorQueue.async {
         
-        self.queue.async {
+            super.startWithUntypedCallback_Unsafe(duration: duration, valueInterval: valueInterval, animationCurve: animationCurve, callback: integerCallback)
+        
             /// Pretty sure this should be executed on the queue. Not totally sure though
             if self.animationPhase == kMFAnimationPhaseStart { ///  Why aren't we checking for kMFAnimationPhaseStartAndEnd here?
                 self.subPixelator.reset()

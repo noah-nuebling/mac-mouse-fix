@@ -47,6 +47,7 @@ int8_t sign(double x);
 + (BOOL)button:(NSNumber * _Nonnull)button isPartOfModificationPrecondition:(NSDictionary *)modificationPrecondition;
 + (void)setupBasicCocoaLumberjackLogging;
 + (NSString *)binaryRepresentation:(unsigned int)value;
++ (void)resetDispatchGroupCount:(dispatch_group_t)group;
 
 #pragma mark - Clipping
 

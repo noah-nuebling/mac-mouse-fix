@@ -74,9 +74,10 @@ static int _cgsConnection; /// This is used by private APIs to talk to the windo
 static NSCursor *_puppetCursor;
 static NSImageView *_puppetCursorView;
 static int16_t _nOfSpaces = 1;
-static dispatch_queue_t _dragQueue;
+static dispatch_queue_t _twoFingerDragQueue;
 static PixelatedAnimator *_smoothingAnimator;
 static BOOL _smoothingAnimatorShouldStartMomentumScroll = NO;
+static dispatch_group_t _smoothingGroup;
 
 /// Debug
 
@@ -114,11 +115,16 @@ static BOOL _smoothingAnimatorShouldStartMomentumScroll = NO;
 
 + (void)load_Manual {
     
+    /// Setup smoothingGroup
+    ///     It allows us to wait until the _smoothingAnimator is done.
+    
+    _smoothingGroup = dispatch_group_create();
+    
     /// Setup dispatch queue
     ///     This allows us to process events in the right order
     ///     When the eventTap and the deactivate function are driven by different threads or whatever then the deactivation can happen before we've processed all the events. This allows us to avoid that issue
     dispatch_queue_attr_t attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INTERACTIVE, -1);
-    _dragQueue = dispatch_queue_create("com.nuebling.mac-mouse-fix.helper.drag", attr);
+    _twoFingerDragQueue = dispatch_queue_create("com.nuebling.mac-mouse-fix.helper.drag", attr);
     
     /// Setup smoothingAnimator
     ///     When using a twoFingerModifedDrag and performance drops, the timeBetweenEvents can sometimes be erratic, and this sometimes leads apps like Xcode to start their custom momentumScroll algorithms with way too high speeds (At least I think that's whats going on) So we're using an animator to smooth things out and hopefully achieve more consistent behaviour
@@ -163,7 +169,7 @@ static BOOL _smoothingAnimatorShouldStartMomentumScroll = NO;
 
 + (void)initializeDragWithModifiedDragDict:(NSDictionary *)dict onDevice:(Device *)dev largeUsageThreshold:(BOOL)largeUsageThreshold {
     
-    dispatch_async(_dragQueue, ^{
+    dispatch_async(_twoFingerDragQueue, ^{
         
         /// Make cursor settable
         
@@ -235,29 +241,25 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
         CGEventTapEnable(_drag.eventTap, true);
     }
     
-    CGEventRef eventCopy = CGEventCreateCopy(event);
-    dispatch_async(_dragQueue, ^{
-        
-        /// Get deltas
-        
-        int64_t dx = CGEventGetIntegerValueField(eventCopy, kCGMouseEventDeltaX);
-        int64_t dy = CGEventGetIntegerValueField(eventCopy, kCGMouseEventDeltaY);
-        
-        /// ^ These are truly integer values, I'm not rounding anything / losing any info here
-        /// However, the deltas seem to be pre-subpixelated, and often, both dx and dy are 0.
-        
-        /// Debug
-        
-        DDLogDebug(@"modifiedDrag input: %lld %lld", dx, dy);
-        
-        /// Ignore event if both deltas are zero
-        ///     We do this so the phases for the gesture scroll simulation (aka twoFingerSwipe) make sense. The gesture scroll event with phase kIOHIDEventPhaseBegan should always have a non-zero delta. If we let through zero deltas here it messes those phases up.
-        ///     I think for all other types of modified drag (aside from gesture scroll simulation) this shouldn't break anything, either.
-        if (dx == 0 && dy == 0) return;
-        
-        /// Process delta
-        [ModifiedDrag handleMouseInputWithDeltaX:dx deltaY:dy event:eventCopy];
-    });
+    /// Get deltas
+    
+    int64_t dx = CGEventGetIntegerValueField(event, kCGMouseEventDeltaX);
+    int64_t dy = CGEventGetIntegerValueField(event, kCGMouseEventDeltaY);
+    
+    /// ^ These are truly integer values, I'm not rounding anything / losing any info here
+    /// However, the deltas seem to be pre-subpixelated, and often, both dx and dy are 0.
+    
+    /// Debug
+    
+    DDLogDebug(@"modifiedDrag input: %lld %lld", dx, dy);
+    
+    /// Ignore event if both deltas are zero
+    ///     We do this so the phases for the gesture scroll simulation (aka twoFingerSwipe) make sense. The gesture scroll event with phase kIOHIDEventPhaseBegan should always have a non-zero delta. If we let through zero deltas here it messes those phases up.
+    ///     I think for all other types of modified drag (aside from gesture scroll simulation) this shouldn't break anything, either.
+    if (dx == 0 && dy == 0) return NULL;
+    
+    /// Process delta
+    [ModifiedDrag handleMouseInputWithDeltaX:dx deltaY:dy event:event];
         
     /// Return
     ///     Sending `event` or NULL here doesn't seem to make a difference. If you alter the event and send that it does have an effect though?
@@ -267,23 +269,28 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
 
 + (void)handleMouseInputWithDeltaX:(int64_t)deltaX deltaY:(int64_t)deltaY event:(CGEventRef)event {
     
-    ///  If this is ever called from something other than the eventTap, make sure this is also executed on the _dragQueue;
+    CGEventRef eventCopy = CGEventCreateCopy(event);
     
-    _drag.originOffset.x += deltaX;
-    _drag.originOffset.y += deltaY;
-    
-    MFModifiedInputActivationState st = _drag.activationState;
-    
-//        DDLogDebug(@"Handling mouse input. dx: %lld, dy: %lld, activationState: %@", deltaX, deltaY, @(st));
-    
-    if (st == kMFModifiedInputActivationStateNone) {
-        // Disabling the callback triggers this function one more time apparently, aside form that case, this should never happen I think
-    } else if (st == kMFModifiedInputActivationStateInitialized) {
-        handleMouseInputWhileInitialized(deltaX, deltaY, event);
-    } else if (st == kMFModifiedInputActivationStateInUse) {
-        handleMouseInputWhileInUse(deltaX, deltaY, event);
-    }
+    dispatch_async(_twoFingerDragQueue, ^{
         
+        _drag.originOffset.x += deltaX;
+        _drag.originOffset.y += deltaY;
+        /// ^ We get the originOffset outside the _dragQueue, so that we still record changes in originOffset while deactivate() is blocking the _dragQueue
+        
+
+        MFModifiedInputActivationState st = _drag.activationState;
+        
+    //        DDLogDebug(@"Handling mouse input. dx: %lld, dy: %lld, activationState: %@", deltaX, deltaY, @(st));
+        
+        if (st == kMFModifiedInputActivationStateNone) {
+            /// Disabling the callback triggers this function one more time apparently, aside form that case, this should never happen I think
+        } else if (st == kMFModifiedInputActivationStateInitialized) {
+            handleMouseInputWhileInitialized(deltaX, deltaY, eventCopy);
+        } else if (st == kMFModifiedInputActivationStateInUse) {
+            handleMouseInputWhileInUse(deltaX, deltaY, eventCopy); /// This shouldn't mutate any shared state, so we don't need to schedule it on _twoFingerDragQueue
+        }
+
+    });
 }
 static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGEventRef event) {
     
@@ -353,7 +360,7 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
             setSuppressionInterval(kMFEventSuppressionIntervalForStoppingCursor);
             
             /// Hide cursor
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 0.02), _dragQueue, ^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 0.02), _twoFingerDragQueue, ^{
                 /// The puppetCursor will only be drawn after a delay, while hiding the mouse pointer is really fast.
                 ///     This leads to a little flicker when the puppetCursor is not yet drawn, but the real cursor is already hidden.
                 ///     Not sure why this happens. But adding a delay of 0.02 before hiding makes it look seamless.
@@ -453,6 +460,7 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
         
         Vector currentVec = { .x = deltaX*twoFingerScale, .y = deltaY*twoFingerScale };
         double magnitudeLeft = _smoothingAnimator.animationValueLeft;
+        
         Vector vectorLeft = scaledVector(lastDirection, magnitudeLeft);
         Vector combinedVec = addedVectors(currentVec, vectorLeft);
         double combinedMagnitude = magnitudeOfVector(combinedVec);
@@ -464,26 +472,42 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
         static IOHIDEventPhaseBits eventPhase = kIOHIDEventPhaseUndefined;
         if (_drag.phase == kIOHIDEventPhaseBegan) eventPhase = kIOHIDEventPhaseBegan;
         
+        /// Smoothing group allows us to us to wait until the smoothingAnimator is finished and momentumScroll has started
+        if (!_smoothingAnimator.isRunning) {
+            DDLogDebug(@"\nEntering dispatch group from ModifiedDrag");
+            dispatch_group_enter(_smoothingGroup);
+            [_smoothingAnimator onStopWithCallback:^{
+                printf("\nLeaving dispatch group from animator stop callback\n");
+                dispatch_group_leave(_smoothingGroup);
+            }];
+        }
+        
         [_smoothingAnimator startWithDuration:0.04
                                 valueInterval:combinedValueInterval
                                animationCurve:ScrollConfig.linearCurve
                               integerCallback:^(NSInteger valueDelta, double timeDelta, MFAnimationPhase phase) {
             
-            if (_smoothingAnimatorShouldStartMomentumScroll) {
-                if (phase == kMFAnimationPhaseEnd || phase == kMFAnimationPhaseStartAndEnd) {
-                    /// Sorry for this confusing code. Heres the idea:
-                    /// Due to the nature of PixelatedAnimator, the last delta is almost always much smaller. This will make apps like Xcode start momentumScroll at a too low speed. Also apps like Xcode will have a litte stuttery jump when the time between the kIOHIDEventPhaseEnded event and the previous event is very small
-                    ///     Our solution to these two problems is to set the _smoothingAnimatorShouldStartMomentumScroll flag when the user releases the button, and if this flag is set, we transform the last delta callback from the animator into the kIOHIDEventPhaseEnded GestureScroll event. The deltas from this last callback are lost like this, but no one will notice.
+            if (_smoothingAnimatorShouldStartMomentumScroll
+                && (phase == kMFAnimationPhaseEnd || phase == kMFAnimationPhaseStartAndEnd)) {
+                /// Sorry for this confusing code. Heres the idea:
+                /// Due to the nature of PixelatedAnimator, the last delta is almost always much smaller. This will make apps like Xcode start momentumScroll at a too low speed. Also apps like Xcode will have a litte stuttery jump when the time between the kIOHIDEventPhaseEnded event and the previous event is very small
+                ///     Our solution to these two problems is to set the _smoothingAnimatorShouldStartMomentumScroll flag when the user releases the button, and if this flag is set, we transform the last delta callback from the animator into the kIOHIDEventPhaseEnded GestureScroll event. The deltas from this last callback are lost like this, but no one will notice.
 
-                    [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded];
-                    _smoothingAnimatorShouldStartMomentumScroll = NO;
-                    return;
-                }
+                /// Shift dispatch group leaving to gestureScroll
+                [_smoothingAnimator onStop_SynchronouslyFromAnimationQueueWithCallback: ^{}];
+                [GestureScrollSimulator afterStartingMomentumScroll:^{
+                    printf("\nLeaving dispatch group from momentum start callback\n");
+                    dispatch_group_leave(_smoothingGroup);
+                }];
+                [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded];
+                /// ^ Use the `_Synchronous_` variant so that the _smoothingGroup is only left after momentumScroll has been started. We need this for the deactivation to work properly
+                _smoothingAnimatorShouldStartMomentumScroll = NO;
+            } else {
+    //            IOHIDEventPhaseBits eventPhase = phase == kMFAnimationPhaseStart || phase == kMFAnimationPhaseStartAndEnd ? kIOHIDEventPhaseBegan : kIOHIDEventPhaseChanged;
+                Vector deltaVec = scaledVector(combinedDirection, valueDelta);
+                [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaVec.x deltaY:deltaVec.y phase:eventPhase];
+                if (eventPhase == kIOHIDEventPhaseBegan) eventPhase = kIOHIDEventPhaseChanged;
             }
-//            IOHIDEventPhaseBits eventPhase = phase == kMFAnimationPhaseStart || phase == kMFAnimationPhaseStartAndEnd ? kIOHIDEventPhaseBegan : kIOHIDEventPhaseChanged;
-            Vector deltaVec = scaledVector(combinedDirection, valueDelta);
-            [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaVec.x deltaY:deltaVec.y phase:eventPhase];
-            if (eventPhase == kIOHIDEventPhaseBegan) eventPhase = kIOHIDEventPhaseChanged;
             
         }];
         
@@ -510,7 +534,7 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
 }
 + (void)deactivateWithCancel:(BOOL)cancel {
     
-    dispatch_async(_dragQueue, ^{
+    dispatch_async(_twoFingerDragQueue, ^{
         /// Do everything on the dragQueue to ensure correct order of operations with the processing of the events from the eventTap.
         
 //        DDLogDebug(@"modifiedDrag deactivate with state: %@", [self modifiedDragStateDescription:_drag]);
@@ -564,7 +588,7 @@ static void handleDeactivationWhileInUse(BOOL cancelation) {
         phase = cancelation ? kIOHIDEventPhaseCancelled : kIOHIDEventPhaseEnded;
         
         [TouchSimulator postDockSwipeEventWithDelta:0.0 type:type phase:phase];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), _dragQueue, ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), _twoFingerDragQueue, ^{
             [TouchSimulator postDockSwipeEventWithDelta:0.0 type:type phase:phase];
         });
         // ^ The inital dockSwipe event we post will be ignored by the system when it is under load (I called this the "stuck bug" in other places). Sending the event again with a delay of 200ms (0.2s) gets it unstuck almost always. Sending the event twice gives us the best of both responsiveness and reliability.
@@ -579,7 +603,7 @@ static void handleDeactivationWhileInUse(BOOL cancelation) {
 //
 //        /// Hide real cursor
 //        [Utility_Transformation hideMousePointer:YES];
-//
+//_
 //        /// Set suppression interval
 //        setSuppressionInterval(kMFEventSuppressionIntervalForStartingMomentumScroll);
 //
@@ -592,36 +616,49 @@ static void handleDeactivationWhileInUse(BOOL cancelation) {
 //            [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded];
 //        }];
             
+        /// Send final scroll event (or wait until final scroll event has been sent)
+        ///     (Final scroll events starts momentumScroll)
+        
         if (_smoothingAnimator.isRunning) {
-            _smoothingAnimatorShouldStartMomentumScroll = YES;
+            
+            _smoothingAnimatorShouldStartMomentumScroll = YES; /// _smoothingAnimator callback also manipulates this which is a race cond
+
         } else {
+            DDLogDebug(@"Entering dispatch group from deactivate()");
+            dispatch_group_enter(_smoothingGroup);
+            [GestureScrollSimulator afterStartingMomentumScroll:^{
+                DDLogDebug(@"Leaving dispatch group from momentumScroll callback (Scheduled by deactivate())");
+                dispatch_group_leave(_smoothingGroup);
+            }];
             [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded];
         }
         
-        CGPoint puppetPos = puppetCursorPosition();
-        /// ^ Get this before dispatching, cause otherwise there's a race condition when this is called by `suspend` because suspend will then call `initDragState();` which resets the values that this depends on (namely origin offset)
-        ///     Since we don't use `suspend` anymore, ....
+        /// Wait until momentumScroll has been started
+        ///     We want to wait for momentumScroll so it is started before the warp. That way momentumScrol will still kick in and work, even if we moved the pointer outside the scrollView that we started scrolling in.
+        ///     Wiating here will also block all other items on _twoFingerDragQueue
         
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.08 * NSEC_PER_SEC), _dragQueue, ^{
-            /// ^ Execute this on a delay so that momentumScroll is started before the warp. That way momentumScrol will still kick in and work, even if we moved the ponter outside the scrollView that we started scrolling in.
-            ///     Would be better if we had a callback that told us when the momentum scrolling started?
-            ///         Edit: YES, we need that. This solutiion is very crude and has race conditions. E.g. When deacativating twoFinger and then re-activating right after, the cursor with jump bc of this. not sure what happens there but if you inline this it goes away
-            
-            /// Set suppression interval
-            setSuppressionInterval(kMFEventSuppressionIntervalForWarping);
-            
-            /// Set actual cursor to position of puppet cursor
-            CGWarpMouseCursorPosition(puppetPos);
-            
-            /// Show mouse pointer again
-            [Utility_Transformation hideMousePointer:NO];
-            
-            /// Undraw puppet cursor
-            drawPuppetCursor(NO, NO);
-            
-            /// Reset suppression interval to default
-            setSuppressionInterval(kMFEventSuppressionIntervalDefault);
-        });
+        intptr_t rt = dispatch_group_wait(_smoothingGroup, dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC));
+        if (rt != 0) {
+            DDLogWarn(@"Waiting for dispatch group _smoothingGroup timed out. _smoothingGroup info: %@", _smoothingGroup.debugDescription);
+        }
+        
+        /// Get puppet Cursor position
+        CGPoint puppetPos = puppetCursorPosition();
+        
+        /// Set suppression interval for warping
+        setSuppressionInterval(kMFEventSuppressionIntervalForWarping);
+        
+        /// Warp actual cursor to position of puppet cursor
+        CGWarpMouseCursorPosition(puppetPos);
+        
+        /// Show mouse pointer again
+        [Utility_Transformation hideMousePointer:NO];
+        
+        /// Undraw puppet cursor
+        drawPuppetCursor(NO, NO);
+        
+        /// Reset suppression interval to default
+        setSuppressionInterval(kMFEventSuppressionIntervalDefault);
         
     } else if ([_drag.type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
         
