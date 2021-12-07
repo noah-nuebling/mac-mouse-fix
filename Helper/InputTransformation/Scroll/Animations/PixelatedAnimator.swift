@@ -45,21 +45,21 @@ class PixelatedAnimator: BaseAnimator {
                      valueInterval: Interval,
                      animationCurve: AnimationCurve,
                      integerCallback: @escaping PixelatedAnimatorCallback) {
-
-        /// Validate input
-        
-//        assert(valueInterval.length >= 1)
-        
-        /// Do stuff
         
         self.animatorQueue.async {
         
+            /// Do stuff
+            
             super.startWithUntypedCallback_Unsafe(duration: duration, valueInterval: valueInterval, animationCurve: animationCurve, callback: integerCallback)
         
-            /// Pretty sure this should be executed on the queue. Not totally sure though
-            if self.animationPhase == kMFAnimationPhaseStart { ///  Why aren't we checking for kMFAnimationPhaseStartAndEnd here?
-                self.subPixelator.reset()
+        
+            if self.animationPhase == kMFAnimationPhaseStart {
+                self.subPixelator.reset() /// Comment out for testing
             }
+            
+            /// Debug
+            
+            DDLogDebug("Started PixelatedAnimator with phase: \(self.animationPhase.rawValue), lastPhase: \(self.lastAnimationPhase.rawValue)")
         }
     }
     
@@ -87,12 +87,27 @@ class PixelatedAnimator: BaseAnimator {
         if (integerAnimationValueDelta == 0) {
             /// Skip this frames callback and don't update animationPhase from `start` to `continue` if integerValueDelta is 0
             
-            DDLogDebug("INTEGER DELTA IS ZERO - NOT CALLING CALLBACK")
-            assert(self.animationPhase != kMFAnimationPhaseEnd)
-            ///     Phase can be set to kMFAnimationPhaseEnd in two places.
-            ///     1. In Animator.swift > displayLinkCallback(), when the current time is beyond the animationTimeInterval.
-            ///     2. Here in PixelatedAnimator.swift > subclassHook(), when processing a non-zero integerDelta, and finding that all the animationValue that's left won't lead to another integer delta (so when the animationValueLeft is smaller than 1)
-            ///     -> 2. Should always occur before 1. can occur from my understanding. (That's what this assertion is testing) This will ensure that the delta with phase kMFAnimationPhaseEnd would always be sent and would always contain a non-zero delta.
+            /// Debug
+            
+            DDLogDebug("Skipped PixelatedAnimator callback due to 0 delta. phase: \(self.animationPhase.rawValue), lastPhase: \(self.lastAnimationPhase.rawValue)")
+            
+            /// Validate
+            
+            if (self.animationPhase == kMFAnimationPhaseEnd || self.animationPhase == kMFAnimationPhaseStartAndEnd) {
+                /// This should never happen.
+                /// When driving momentumScroll we expect all deltas to be non-zero. I think things will break if we return 0 here. Not totally sure though.
+                /// Thoughts on how to prevent this bug:
+                ///     Phase can be set to kMFAnimationPhaseEnd in two places.
+                ///     1. In Animator.swift > displayLinkCallback(), when the current time is beyond the animationTimeInterval.
+                ///     2. Here in PixelatedAnimator.swift > subclassHook(), when processing a non-zero integerDelta, and finding that all the animationValue that's left won't lead to another integer delta (so when the animationValueLeft is smaller than 1)
+                ///     -> 2. Should always occur before 1. can occur from my understanding. (That's what this assertion is testing) This will ensure that the delta with phase kMFAnimationPhaseEnd would always be sent and would always contain a non-zero delta.
+                
+                DDLogError("Integer delta is 0 on final PixelatedAnimator callback. This should never happen.")
+                assert(false)
+                
+                /// Post a value delta of 1 as a fallback so that things don't break as bad if this happens
+                callback(1, animationTimeDelta, self.animationPhase)
+            }
             
         } else {
             
@@ -138,6 +153,14 @@ class PixelatedAnimator: BaseAnimator {
             /// Call callback
             
             callback(integerAnimationValueDelta, animationTimeDelta, self.animationPhase)
+            
+            /// Debug
+            
+            DDLogDebug("PixelatedAnimator callback with delta: \(integerAnimationValueDelta), phase: \(self.animationPhase.rawValue), lastPhase: \(self.lastAnimationPhase.rawValue)")
+            
+            /// Update `last` phase
+            
+            self.lastAnimationPhase = self.animationPhase
             
             /// Update phase to `continue` if phase is `start`
             ///     This has a copy in superclass. Update that it when you change this.

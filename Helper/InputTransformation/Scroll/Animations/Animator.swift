@@ -228,6 +228,8 @@ import CocoaLumberjackSwift
     }
     
     fileprivate func stop_Internal(fromDisplayLink: Bool) {
+        /// Don't call this directly, use `stop()` or `stop_FromDisplayLinkedThread()`
+        
         /// Debug
         
         DDLogDebug("STOPPING ANIMATOR")
@@ -297,7 +299,7 @@ import CocoaLumberjackSwift
             
             /// Debug
             
-            DDLogDebug("DO ANIMATOR DISP LINK with (initial) phase: \(self.animationPhase.rawValue)")
+            DDLogDebug("DO ANIMATOR DISP LINK CALLBACK with (initial) phase: \(self.animationPhase.rawValue)")
             
             /// Guard stopped
             
@@ -348,10 +350,12 @@ import CocoaLumberjackSwift
             self.subclassHook(callback, animationValueDelta, animationTimeDelta)
             
             /// Update `last` time and value and phase
+            ///     \note  Should lastPhase be updated right after the callback is called? Experimentally moved it there. Move back if that breaks things
+            ///         Edit: I checked and atm we only use lastAnimationPhase to set the startAndEnd phase. For that it shouldn't make a difference. But I do think it makes more sense to update it right after `callback` is called in general
             
             self.lastAnimationTime = now
             self.lastAnimationValue = animationValue
-            self.lastAnimationPhase = self.animationPhase
+//            self.lastAnimationPhase = self.animationPhase
             
             /// Stop animation if phase is   `end`
             /// TODO: Why don't we use a defer statement to execute this like in the start functions?
@@ -396,6 +400,10 @@ import CocoaLumberjackSwift
         
         callback(animationValueDelta, animationTimeDelta, animationPhase)
         
+        /// Update `last` time and value and phase
+        
+        self.lastAnimationPhase = self.animationPhase
+        
         /// Update phase to `continue` if phase is `start`
         ///     This has a copy in superclass. Update that it when you change this.
         
@@ -406,13 +414,13 @@ import CocoaLumberjackSwift
     
     /// Helper functions
     
-    func phaseIsEndingPhase() -> Bool {
-        switch self.animationPhase {
-        case kMFAnimationPhaseEnd, kMFAnimationPhaseStartAndEnd:
-            return true
-        default:
-            return false
-        }
-    }
+//    func phaseIsEndingPhase() -> Bool {
+//        switch self.animationPhase {
+//        case kMFAnimationPhaseEnd, kMFAnimationPhaseStartAndEnd:
+//            return true
+//        default:
+//            return false
+//        }
+//    }
     
 }
