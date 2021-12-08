@@ -10,28 +10,38 @@
 import Foundation
 import CocoaLumberjackSwift
 
-@objc protocol Animator {
-    
-    // TODO: I don't think this is needed. Remove
+//@objc protocol Animator {
+//
+//    // TODO: I don't think this is needed. Remove
+//
+//    typealias UntypedAnimatorCallback = Any
+//    typealias AnimatorCallback = (_ animationValueDelta: Double, _ animationTimeDelta: Double, _ phase: MFAnimationPhase) -> ()
+//    typealias PixelatedAnimatorCallback = (_ integerAnimationValueDelta: Int, _ animationTimeDelta: Double, _ phase: MFAnimationPhase) -> ()
+//    typealias StopCallback = (_ lastPhase: MFAnimationPhase) -> ()
+//
+//    @objc var animationTimeLeft: Double { get }
+//    @objc var animationValueLeft: Double { get }
+//
+//    @objc func start(duration: CFTimeInterval,
+//                     value: Double,
+//                     animationCurve: AnimationCurve,
+//                     callback: @escaping AnimatorCallback)
+//
+//
+//}
+
+@objc class BaseAnimator: NSObject {
+        
+    /// Typedef
     
     typealias UntypedAnimatorCallback = Any
     typealias AnimatorCallback = (_ animationValueDelta: Double, _ animationTimeDelta: Double, _ phase: MFAnimationPhase) -> ()
-    typealias PixelatedAnimatorCallback =
-    (_ integerAnimationValueDelta: Int, _ animationTimeDelta: Double, _ phase: MFAnimationPhase) -> ()
     typealias StopCallback = (_ lastPhase: MFAnimationPhase) -> ()
-    
-    @objc var animationTimeLeft: Double { get }
-    @objc var animationValueLeft: Double { get }
-    
-    @objc func start(duration: CFTimeInterval,
-                     valueInterval: Interval,
-                     animationCurve: AnimationCurve,
-                     callback: @escaping AnimatorCallback)
-    
-    
-}
-
-@objc class BaseAnimator: NSObject, Animator {
+    typealias StartParamCalculationCallback = (_ valueLeft: Double, _ isRunning: Bool, _ animationCurve: AnimationCurve?) -> MFAnimatorStartParams
+    /// ^ When starting the animator, we usually want to get the value that the animator still wants to scroll (`animationValueLeft`), and add that to the new value. The specific logic can differ a lot though, so we can't just hardcode this into `Animator`
+    ///     But to avoid race-conditions, we can't just externally execute this, so we to pass in a callback that can execute custom logic to get the start params right before the animator is started
+    typealias MFAnimatorStartParams = Dictionary<String, Any>
+    /// ^ 4 keys: "doStart", "duration", "value", "curve"
     
     // Constants
     
@@ -49,7 +59,7 @@ import CocoaLumberjackSwift
         /// ^ Using a queue instead of a lock to avoid deadlocks. Always use queues for mutual exclusion except if you know exactly what you're doing!
     let animatorQueue: DispatchQueue
     
-    // Init
+    /// Init
     
     @objc override init() {
         
@@ -59,7 +69,7 @@ import CocoaLumberjackSwift
         super.init()
     }
     
-    // Vars - Start & stop
+    /// Vars - Start & stop
     
     var animationTimeInterval: Interval = .unitInterval /// Just initing so Swift doesn't complain. This value is unused
     var animationValueInterval: Interval = .unitInterval
@@ -67,35 +77,38 @@ import CocoaLumberjackSwift
     @objc var isRunning: Bool {
         var result: Bool = false
         self.animatorQueue.sync {
-            result = self.isRunning_Internal
+            result = self.isRunning_Sync
         }
         return result
     }
-    @objc fileprivate var isRunning_Internal: Bool {
+    @objc var isRunning_Sync: Bool {
+        /// ! Only use this instead of isRunning() if you know you're already executing on self.queue
         /// We always want isRunning to be executed on self.queue. But if we call self.queue.sync() when we're already on self queue, that is an error
-        ///     So use this functtion instead of isRunning() if you know you're already executing on self.queue
         return self.displayLink.isRunning()
     }
     
     fileprivate var onStopCallback: (() -> ())?
     
-    // Vars - DisplayLink
+    /// Vars - DisplayLink
     
     var lastAnimationTime: Double = -1 /// Time at which the displayLink was last called
     var lastAnimationValue: Double = -1 /// animationValue when the displayLink was last called
     var lastAnimationPhase: MFAnimationPhase = kMFAnimationPhaseNone
     var animationPhase: MFAnimationPhase = kMFAnimationPhaseNone
     
-    // Vars -  Interface
+    /// Vars -  Interface
+    ///     Accessing these directly is not thread safe. Only access them from self.animatorQueue
     
     @objc var animationTimeLeft: Double {
-        return animationTimeInterval.length - lastAnimationTime
+        let result = animationTimeInterval.length - lastAnimationTime
+        return result
     }
     @objc var animationValueLeft: Double {
-        return animationValueInterval.length - lastAnimationValue
+        let result = animationValueInterval.length - lastAnimationValue
+        return result
     }
     
-    // Other Interface
+    /// Other Interface
     
     @objc func linkToMainScreen() {
         /// Exposing this as a function and not just doing it automatically when the animation starts because I assume it's slow. Not sure where this assumption comes from.
@@ -103,26 +116,10 @@ import CocoaLumberjackSwift
         displayLink.linkToMainScreen()
     }
     
-    // Start
+    /// Start
     
-    @objc func start(duration: CFTimeInterval,
-                     valueInterval: Interval,
-                     animationCurve: AnimationCurve,
+    @objc func start(params: @escaping StartParamCalculationCallback,
                      callback: @escaping AnimatorCallback) {
-        
-        self.startWithUntypedCallback(duration: duration, valueInterval: valueInterval, animationCurve: animationCurve, callback: callback);
-    }
-    
-    internal func startWithUntypedCallback(duration: CFTimeInterval,
-                                                 valueInterval: Interval,
-                                                 animationCurve: AnimationCurve,
-                                                 callback: UntypedAnimatorCallback) {
-        
-        /// Should only be called by this and subclasses
-        /// The use of 'Interval' in CFTimeInterval is kind of confusing, since its also used to spedify points in time (It's just a `Double`), and also it has nothing to do with our `Interval` class, which is much closer to an Interval in the Mathematical sense.
-        /// Will be restarted if it's already running. No need to call stop before calling this.
-        /// It's kind of unnecessary to be passing this a value interval, because we only use the length of it. Since the AnimatorCallback only receives valueDeltas each frame and no absolute values,  the location of the value interval doesn't matter.
-        /// We need to make `callback` and UntypedAnimatorCallback instead of a normal AnimatorCallback, so we can change the type of `callback` to PixelatedAnimatorCallback in the subclass PixelatedAnimator. That's because Swift is stinky. UntypedAnimatorCallback is @escaping
         
         /// Lock
         ///     Otherwise there will be race conditions with this function and the displayLinkCallback() both manipulating the animationPhase (and I think other values, too) at the same time.
@@ -135,63 +132,106 @@ import CocoaLumberjackSwift
         ///     Dispatching sync, so that calling self.start() and then right after calling self.isRunning()  actually works....
         ///         Orrr we can also have self.isRunning() execute on self.queue. - we did that. Should be most robust solution
         ///         But actually, maybe it's faster to make start() use queue.sync after all. Because isRunning() is probably called a lot more.
-        
+            
         self.animatorQueue.async {
-            self.startWithUntypedCallback_Unsafe(duration: duration, valueInterval: valueInterval, animationCurve: animationCurve, callback: callback)
+            let p: MFAnimatorStartParams = params(self.animationValueLeft, self.isRunning_Sync, self.animationCurve)
+            
+            if let doStart = p["doStart"] as? Bool {
+                if doStart == false {
+                    return;
+                }
+            }
+            self.startWithUntypedCallback_Unsafe(duration: p["duration"] as! Double, value: p["value"] as! Double, animationCurve: p["curve"] as! AnimationCurve, callback: callback);
         }
     }
     
     internal func startWithUntypedCallback_Unsafe(duration: CFTimeInterval,
-                                                valueInterval: Interval,
+                                                value: Double,
                                                 animationCurve: AnimationCurve,
                                                 callback: UntypedAnimatorCallback) {
         
         /// This function has `_Unsafe` in it's name because it doesn't execute on self.animatorQueue. Only call it form self.animatorQueue
+        
+        /// Should only be called by this and subclasses
+        /// The use of 'Interval' in CFTimeInterval is kind of confusing, since its also used to spedify points in time (It's just a `Double`), and also it has nothing to do with our `Interval` class, which is much closer to an Interval in the Mathematical sense.
+        /// Will be restarted if it's already running. No need to call stop before calling this.
+        /// It's kind of unnecessary to be passing this a value interval, because we only use the length of it. Since the AnimatorCallback only receives valueDeltas each frame and no absolute values,  the location of the value interval doesn't matter.
+        /// We need to make `callback` and UntypedAnimatorCallback instead of a normal AnimatorCallback, so we can change the type of `callback` to PixelatedAnimatorCallback in the subclass PixelatedAnimator. That's because Swift is stinky. UntypedAnimatorCallback is @escaping
+
         
         /// Store args
         
         self.callback = callback;
         self.animationCurve = animationCurve
         
+        /// Get stuff
+        
+        let isRunningg = self.isRunning_Sync
+        
+        /// Validate
+        
+        if isRunningg {
+            switch self.animationPhase {
+            case kMFAnimationPhaseStart, kMFAnimationPhaseContinue, kMFAnimationPhaseRunningStart:
+                break
+            case kMFAnimationPhaseEnd, kMFAnimationPhaseStartAndEnd, kMFAnimationPhaseNone:
+                assert(false)
+            default: /// This should never happen
+                fatalError();
+            }
+        } else {
+            switch self.animationPhase {
+            case kMFAnimationPhaseEnd, kMFAnimationPhaseStartAndEnd, kMFAnimationPhaseNone:
+                break
+            case kMFAnimationPhaseStart, kMFAnimationPhaseContinue, kMFAnimationPhaseRunningStart:
+                assert(false)
+            default: /// This should never happen
+                fatalError();
+            }
+        }
+        
         /// Update phases
         
-        if (!self.isRunning_Internal
-            || self.animationPhase == kMFAnimationPhaseStart
-            || self.animationPhase == kMFAnimationPhaseStartAndEnd) { /// This shouldn't be necessary, because we call self.stop() in the displayLinkCallback if phase is `startAndEnd`, which will make self.isRunning false. But due to some weird race condition or something, it doesn't always work. Edit: I added locks to this class to prevent the race conditions whcih should make this unnecessary - Remove the `startAndEnd` check.
-                                                                      /// If animation phase is still start that means that the displayLinkCallback() hasn't used it, yet (it sets it to continue after using it)
-                                                                      ///     We want the first time that selfcallback is called by displayLinkCallback() during the animation to have phase start, so we're not setting phase to running start in this case, even if the Animator is already running (when !isRunning is true)
+        if (isRunningg
+            && self.animationPhase != kMFAnimationPhaseStart
+            && self.animationPhase != kMFAnimationPhaseStartAndEnd) {
             
+            /// If animation phase is still start that means that the displayLinkCallback() hasn't been used it, yet (it sets it to continue after using it)
+            ///     We want the first time that self.callback is called by displayLinkCallback() during the animation to have phase start, so we're not setting phase to running start in this case, even if the Animator is already running (when !isRunning is true)
+            ///
+            /// Regarding the kMFAnimationPhaseStartAndEnd check: This shouldn't be necessary, because we call self.stop() in the displayLinkCallback if phase is `startAndEnd`, which will make self.isRunning false. But due to some weird race condition or something, it doesn't always work. Edit: I added locks to this class to prevent the race conditions whcih should make this unnecessary - Remove the `startAndEnd` check.
+            
+            self.animationPhase = kMFAnimationPhaseRunningStart;
+        } else {
             self.animationPhase = kMFAnimationPhaseStart;
             self.lastAnimationPhase = kMFAnimationPhaseNone;
-        } else {
-            self.animationPhase = kMFAnimationPhaseRunningStart;
         }
         
         /// Debug
         
-        DDLogDebug("START ANIMATOR \(self.hash) with phase: \(self.animationPhase.rawValue)")
+//        DDLogDebug("START ANIMATOR \(self.hash) with phase: \(self.animationPhase.rawValue)")
         
         /// Update the rest of the state
         
-        if (self.isRunning_Internal) {
-            /// I think it should make for smoother animations, if we don't se the lastAnimationTime to now when the displayLink is already running, but that's an experiment. I'm not sure. Edit: Not sure if it makes a difference but it's fine
+        if (isRunningg) {
             
-            self.lastAnimationValue = self.animationValueInterval.start
+//            self.lastAnimationTime =  CACurrentMediaTime();
+            /// ^ I think it should make for smoother animations, if we **don't** set the lastAnimationTime to `now` when the displayLink is already running, but that's an experiment. I'm not sure. Edit: Not sure if it makes a difference but it's fine
+            self.lastAnimationValue = 0
             
-            self.animationTimeInterval = Interval.init(location: self.lastAnimationTime, length: duration)
-            self.animationValueInterval = valueInterval
+            self.animationTimeInterval = Interval(location: self.lastAnimationTime, length: duration)
+            self.animationValueInterval = Interval(location: 0, length: value)
             
-            //                threadLock.signal()
             
         } else {
             
             let now: CFTimeInterval = CACurrentMediaTime()
             
             self.lastAnimationTime = now
-            self.lastAnimationValue = self.animationValueInterval.start
+            self.lastAnimationValue = 0
             
-            self.animationTimeInterval = Interval.init(location: now, length: duration)
-            self.animationValueInterval = valueInterval
+            self.animationTimeInterval = Interval(location: now, length: duration)
+            self.animationValueInterval = Interval(location: 0, length: value)
             
             //                threadLock.signal()
             
@@ -255,7 +295,7 @@ import CocoaLumberjackSwift
         /// Use this function to synchronously install the onStop callback.
         /// This function should only be called from self.queue
         
-        assert(self.isRunning_Internal)
+        assert(self.isRunning_Sync)
         
         onStop_Internal(callback: callback, doImmediatelyIfNotRunning: false)
     }
@@ -270,7 +310,7 @@ import CocoaLumberjackSwift
     fileprivate func onStop_Internal(callback: @escaping () -> (), doImmediatelyIfNotRunning: Bool) {
         /// Do `callback` once the Animator stops or immediately if the animator isn't running and `waitTillNextStop` is false
         
-        if (doImmediatelyIfNotRunning && !self.isRunning_Internal) {
+        if (doImmediatelyIfNotRunning && !self.isRunning_Sync) {
             callback()
         } else {
             self.onStopCallback = callback
@@ -399,6 +439,10 @@ import CocoaLumberjackSwift
         /// Call the callback
         
         callback(animationValueDelta, animationTimeDelta, animationPhase)
+        
+        /// Debug
+        
+        DDLogDebug("BaseAnimator callback - delta: \(animationValueDelta)")
         
         /// Update `last` time and value and phase
         

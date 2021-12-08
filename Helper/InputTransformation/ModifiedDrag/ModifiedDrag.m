@@ -74,8 +74,8 @@ static int _cgsConnection; /// This is used by private APIs to talk to the windo
 static NSCursor *_puppetCursor;
 static NSImageView *_puppetCursorView;
 static int16_t _nOfSpaces = 1;
-static dispatch_queue_t _twoFingerDragQueue;
-static PixelatedAnimator *_smoothingAnimator;
+static dispatch_queue_t _dragQueue;
+static /*PixelatedAnimator*/ BaseAnimator *_smoothingAnimator;
 static BOOL _smoothingAnimatorShouldStartMomentumScroll = NO;
 static dispatch_group_t _smoothingGroup;
 
@@ -124,11 +124,11 @@ static dispatch_group_t _smoothingGroup;
     ///     This allows us to process events in the right order
     ///     When the eventTap and the deactivate function are driven by different threads or whatever then the deactivation can happen before we've processed all the events. This allows us to avoid that issue
     dispatch_queue_attr_t attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INTERACTIVE, -1);
-    _twoFingerDragQueue = dispatch_queue_create("com.nuebling.mac-mouse-fix.helper.drag", attr);
+    _dragQueue = dispatch_queue_create("com.nuebling.mac-mouse-fix.helper.drag", attr);
     
     /// Setup smoothingAnimator
     ///     When using a twoFingerModifedDrag and performance drops, the timeBetweenEvents can sometimes be erratic, and this sometimes leads apps like Xcode to start their custom momentumScroll algorithms with way too high speeds (At least I think that's whats going on) So we're using an animator to smooth things out and hopefully achieve more consistent behaviour
-    _smoothingAnimator = [[PixelatedAnimator alloc] init];
+    _smoothingAnimator = [[BaseAnimator alloc] init];
     
     /// Setup cgs stuff
     _cgsConnection = CGSMainConnectionID();
@@ -169,7 +169,7 @@ static dispatch_group_t _smoothingGroup;
 
 + (void)initializeDragWithModifiedDragDict:(NSDictionary *)dict onDevice:(Device *)dev largeUsageThreshold:(BOOL)largeUsageThreshold {
     
-    dispatch_async(_twoFingerDragQueue, ^{
+    dispatch_async(_dragQueue, ^{
         
         /// Make cursor settable
         
@@ -271,7 +271,7 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
     
     CGEventRef eventCopy = CGEventCreateCopy(event);
     
-    dispatch_async(_twoFingerDragQueue, ^{
+    dispatch_async(_dragQueue, ^{
         
         _drag.originOffset.x += deltaX;
         _drag.originOffset.y += deltaY;
@@ -360,7 +360,7 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
             setSuppressionInterval(kMFEventSuppressionIntervalForStoppingCursor);
             
             /// Hide cursor
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 0.02), _twoFingerDragQueue, ^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 0.02), _dragQueue, ^{
                 /// The puppetCursor will only be drawn after a delay, while hiding the mouse pointer is really fast.
                 ///     This leads to a little flicker when the puppetCursor is not yet drawn, but the real cursor is already hidden.
                 ///     Not sure why this happens. But adding a delay of 0.02 before hiding makes it look seamless.
@@ -456,22 +456,6 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
         /// Post event
         ///     Using animator for smoothing
         
-        static Vector lastDirection = { .x = 0, .y = 0 };
-        
-        Vector currentVec = { .x = deltaX*twoFingerScale, .y = deltaY*twoFingerScale };
-        double magnitudeLeft = _smoothingAnimator.animationValueLeft;
-        
-        Vector vectorLeft = scaledVector(lastDirection, magnitudeLeft);
-        Vector combinedVec = addedVectors(currentVec, vectorLeft);
-        double combinedMagnitude = magnitudeOfVector(combinedVec);
-        Vector combinedDirection = unitVector(combinedVec);
-        
-        Interval *combinedValueInterval = [[Interval alloc] initWithStart:0 end:(combinedMagnitude)];
-        lastDirection = combinedDirection;
-        
-        static IOHIDEventPhaseBits eventPhase = kIOHIDEventPhaseUndefined;
-        if (_drag.phase == kIOHIDEventPhaseBegan) eventPhase = kIOHIDEventPhaseBegan;
-        
         /// Smoothing group allows us to us to wait until the smoothingAnimator is finished and momentumScroll has started
         if (!_smoothingAnimator.isRunning) {
             DDLogDebug(@"\nEntering dispatch group from ModifiedDrag");
@@ -482,10 +466,54 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
             }];
         }
         
-        [_smoothingAnimator startWithDuration:0.04
-                                valueInterval:combinedValueInterval
-                               animationCurve:ScrollConfig.linearCurve
-                              integerCallback:^(NSInteger valueDelta, double timeDelta, MFAnimationPhase phase) {
+        /// Declare static vars for animator
+        static IOHIDEventPhaseBits eventPhase = kIOHIDEventPhaseUndefined;
+        static Vector combinedDirection = { .x = 0, .y = 0 };
+        
+        /// Values that block should copy instead of reference
+        IOHIDEventPhaseBits dragPhase = _drag.phase;
+        
+        /// Start animator
+        ///     We made this a BaseAnimator instead of a PixelatedAnimator for debugging
+        [_smoothingAnimator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(double valueLeft, BOOL isRunning, id<AnimationCurve> _Nullable curve) {
+            
+            NSMutableDictionary *p = [NSMutableDictionary dictionary];
+                
+            Vector lastDirection = combinedDirection;
+            
+            Vector currentVec = { .x = deltaX*twoFingerScale, .y = deltaY*twoFingerScale };
+            double magnitudeLeft = valueLeft;
+            
+            Vector vectorLeft = scaledVector(lastDirection, magnitudeLeft);
+            Vector combinedVec = addedVectors(currentVec, vectorLeft);
+            
+            double combinedMagnitude = magnitudeOfVector(combinedVec);
+            combinedDirection = unitVector(combinedVec);
+            
+            if (dragPhase == kIOHIDEventPhaseBegan) eventPhase = kIOHIDEventPhaseBegan;
+            
+            /// Debug
+            
+            DDLogDebug(@"Starting BaseAnimator - deltaLeft: %f, inputVec: (%f, %f), oldDirection: (%f, %f), combinedDelta: %f", valueLeft, currentVec.x, currentVec.y, lastDirection.x, lastDirection.y, combinedMagnitude);
+            
+            static double lastTs = 0;
+            double ts = CACurrentMediaTime();
+            double tsDiff = ts - lastTs;
+            lastTs = ts;
+            
+            DDLogDebug(@"Time since last baseAnimator start: %f", tsDiff * 1000);
+            
+            /// Return
+            
+            p[@"value"] = @(combinedMagnitude);
+            p[@"duration"] = @(3.0/60); // @(0.00001); // @(0.04);
+            p[@"curve"] = ScrollConfig.linearCurve;
+            
+            return p;
+            
+        } callback:^(double valueDeltaD, double timeDelta, MFAnimationPhase phase) {
+            
+            NSInteger valueDelta = ceil(valueDeltaD);
             
             if (_smoothingAnimatorShouldStartMomentumScroll
                 && (phase == kMFAnimationPhaseEnd || phase == kMFAnimationPhaseStartAndEnd)) {
@@ -534,7 +562,7 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
 }
 + (void)deactivateWithCancel:(BOOL)cancel {
     
-    dispatch_async(_twoFingerDragQueue, ^{
+    dispatch_async(_dragQueue, ^{
         /// Do everything on the dragQueue to ensure correct order of operations with the processing of the events from the eventTap.
         
 //        DDLogDebug(@"modifiedDrag deactivate with state: %@", [self modifiedDragStateDescription:_drag]);
@@ -588,7 +616,7 @@ static void handleDeactivationWhileInUse(BOOL cancelation) {
         phase = cancelation ? kIOHIDEventPhaseCancelled : kIOHIDEventPhaseEnded;
         
         [TouchSimulator postDockSwipeEventWithDelta:0.0 type:type phase:phase];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), _twoFingerDragQueue, ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), _dragQueue, ^{
             [TouchSimulator postDockSwipeEventWithDelta:0.0 type:type phase:phase];
         });
         // ^ The inital dockSwipe event we post will be ignored by the system when it is under load (I called this the "stuck bug" in other places). Sending the event again with a delay of 200ms (0.2s) gets it unstuck almost always. Sending the event twice gives us the best of both responsiveness and reliability.
@@ -639,7 +667,8 @@ static void handleDeactivationWhileInUse(BOOL cancelation) {
         
         intptr_t rt = dispatch_group_wait(_smoothingGroup, dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC));
         if (rt != 0) {
-            DDLogWarn(@"Waiting for dispatch group _smoothingGroup timed out. _smoothingGroup info: %@", _smoothingGroup.debugDescription);
+            DDLogWarn(@"Waiting for dispatch group _smoothingGroup timed out. _smoothingGroup info: %@. Crashing.", _smoothingGroup.debugDescription);
+            assert(false);
         }
         
         /// Get puppet Cursor position

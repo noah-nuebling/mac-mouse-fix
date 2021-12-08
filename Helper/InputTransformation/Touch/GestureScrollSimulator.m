@@ -330,7 +330,7 @@ void postGestureScrollEvent_Internal(int64_t dx, int64_t dy, IOHIDEventPhaseBits
 
 #pragma mark - Momentum scroll
 
-static void (^_momentumScrollStartCallback)(void);
+static void (^_momentumScrollCallback)(void);
 
 + (void)afterStartingMomentumScroll:(void (^)(void))callback {
     /// `callback` will be called after the last `kIOHIDEventPhaseEnd` event has been sent, leading momentum scroll to be started
@@ -347,7 +347,7 @@ static void (^_momentumScrollStartCallback)(void);
             assert(false);
         }
         
-        _momentumScrollStartCallback = callback;
+        _momentumScrollCallback = callback;
     });
 }
 
@@ -407,75 +407,84 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
     
 //    DDLogDebug(@"Exit velocity: %f, %f", exitVelocity.x, exitVelocity.y);
     
-    /// Set _momentumScrollisActive flag
-    ///     This is needed for subsequent stopMomentumScroll calls to work properly
+    /// Declare constants
     
-//    _momentumScrollIsActive = YES;
-//    DDLogDebug(@"\nMomentoom activated");
+    Vector zeroVector = (Vector){ .x = 0, .y = 0 };
     
     /// Stop immediately, if too much time has passed since last event (So if the mouse is stationary)
     if (_preMomentumScrollMaxInterval < timeSinceLastInput
         || timeSinceLastInput == DBL_MAX) { /// This should never be true at this point, because it's only set to DBL_MAX when phase == kIOHIDEventPhaseBegan
         DDLogDebug(@"Not sending momentum scroll - timeSinceLastInput: %f", timeSinceLastInput);
-        _momentumScrollStartCallback();
+        _momentumScrollCallback();
         [GestureScrollSimulator stopMomentumScroll];
         return;
     }
-    
-    /// Declare constants
-    
-    Vector zeroVector = (Vector){ .x = 0.0, .y = 0.0 };
-    
-    /// Reset subpixelators
-    
-//    [_scrollPointPixelator reset];
-    [_scrollLinePixelator reset];
-    /// Don't need to reset _gesturePixelator, because we don't send gesture events during momentum scroll
-    
-    /// Get animator params
-    
-    /// Get initial velocity
-    Vector initialVelocity = initalMomentumScrollVelocity_FromExitVelocity(exitVelocity);
-    
-    /// Get initial speed
-    double initialSpeed = magnitudeOfVector(initialVelocity); /// Magnitude is always positive
-    
-    /// Stop momentumScroll immediately, if the initial Speed is too small
-    if (initialSpeed <= stopSpeed) {
-        DDLogDebug(@"Stopping momentum scroll - initialSpeed smaller stopSpeed: i: %f, s: %f", initialSpeed, stopSpeed);
-        _momentumScrollStartCallback();
-        [GestureScrollSimulator stopMomentumScroll];
-        return;
-    }
-    
-    /// Get direction
-    Vector direction = unitVector(initialVelocity);
-    
-    /// Get drag animation curve
-    DragCurve *animationCurve = [[DragCurve alloc] initWithCoefficient:dragCoefficient
-                                                              exponent:dragExponent
-                                                          initialSpeed:initialSpeed
-                                                             stopSpeed:stopSpeed];
-    
-    /// Get duration and distance for animation
-    double duration = animationCurve.timeInterval.length;
-    Interval *distanceInterval = animationCurve.distanceInterval;
-    
-    /// Set isActive flag once animator stops
-//    [_momentumAnimator onStopWithCallback:^{
-//        _momentumScrollIsActive = NO;
-//        DDLogDebug(@"\nMomentoom deactivated");
-//    }];
-    
-//    /// Weird stuff to avoid race condition if stop() has been called between the start of this function and now
-//    if (_momentumScrollIsActive == NO) {
-//        return;
-//    }
     
     /// Start animator
     
-    [_momentumAnimator startWithDuration:duration valueInterval:distanceInterval animationCurve:animationCurve
-                       integerCallback:^(NSInteger pointDelta, double timeDelta, MFAnimationPhase animationPhase) {
+//    [_momentumAnimator startWithDuration:duration valueInterval:distanceInterval animationCurve:animationCurve
+//                       integerCallback:^(NSInteger pointDelta, double timeDelta, MFAnimationPhase animationPhase) {
+    
+    
+    /// Declare static
+    ///     For communication between startParams callback and displayLinkCallback
+    
+    static Vector direction = { .x = 0, .y = 0 };
+    
+    /// Start animator
+    
+    [_momentumAnimator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(double valueLeft, BOOL isRunning, id<AnimationCurve> _Nullable curve) {
+        
+        NSMutableDictionary *p = [NSMutableDictionary dictionary];
+        
+        /// Reset subpixelators
+        
+        //    [_scrollPointPixelator reset];
+        [_scrollLinePixelator reset];
+        /// Don't need to reset _gesturePixelator, because we don't send gesture events during momentum scroll
+        
+        /// Get animator params
+        
+        /// Get initial velocity
+        Vector initialVelocity = initalMomentumScrollVelocity_FromExitVelocity(exitVelocity);
+        
+        /// Get initial speed
+        double initialSpeed = magnitudeOfVector(initialVelocity); /// Magnitude is always positive
+        
+        /// Stop momentumScroll immediately, if the initial Speed is too small
+        if (initialSpeed <= stopSpeed) {
+            DDLogDebug(@"Not starting momentum scroll - initialSpeed smaller stopSpeed: i: %f, s: %f", initialSpeed, stopSpeed);
+            _momentumScrollCallback();
+            [GestureScrollSimulator stopMomentumScroll];
+            p[@"doStart"] = @(NO);
+            return p;
+        }
+        
+        /// Get direction
+        
+        direction = unitVector(initialVelocity);
+        
+        /// Get drag animation curve
+        
+        DragCurve *animationCurve = [[DragCurve alloc] initWithCoefficient:dragCoefficient
+                                                                  exponent:dragExponent
+                                                              initialSpeed:initialSpeed
+                                                                 stopSpeed:stopSpeed];
+        
+        /// Get duration and distance for animation from DragCurve
+        
+        double duration = animationCurve.timeInterval.length;
+        double distance = animationCurve.distanceInterval.length;
+        
+        /// Return
+        
+        p[@"value"] = @(distance);
+        p[@"duration"] = @(duration);
+        p[@"curve"] = animationCurve;
+        
+        return p;
+        
+    } integerCallback:^(NSInteger pointDelta, double timeDelta, MFAnimationPhase animationPhase) {
         
         /// Debug
 //        DDLogDebug(@"Momentum scrolling - delta: %ld, animationPhase: %d", (long)pointDelta, animationPhase);
@@ -496,8 +505,8 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
         
         if (animationPhase == kMFAnimationPhaseStart) {
             momentumPhase = kCGMomentumScrollPhaseBegin;
-            if (_momentumScrollStartCallback != NULL) {
-                _momentumScrollStartCallback();
+            if (_momentumScrollCallback != NULL) {
+                _momentumScrollCallback();
             }
         } else if (animationPhase == kMFAnimationPhaseContinue) {
             momentumPhase = kCGMomentumScrollPhaseContinue;

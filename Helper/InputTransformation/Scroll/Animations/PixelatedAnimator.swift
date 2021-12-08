@@ -23,16 +23,15 @@ class PixelatedAnimator: BaseAnimator {
     
     /// Make stuff from superclass unavailable
     
-    @available(*, unavailable)
-    override func start(duration: CFTimeInterval, valueInterval: Interval, animationCurve: AnimationCurve,
-                        callback: @escaping BaseAnimator.AnimatorCallback) {
-        fatalError();
-    }
+//    @available(*, unavailable)
+//    override func start(params: @escaping StartParamCalculationCallback, callback: @escaping AnimatorCallback) {
+//        fatalError();
+//    }
     
     /// Declare types and vars that superclass doesn't have
     
+    typealias PixelatedAnimatorCallback = (_ integerAnimationValueDelta: Int, _ animationTimeDelta: Double, _ phase: MFAnimationPhase) -> ()
     var integerCallback: PixelatedAnimatorCallback?;
-    
 //    var subPixelator: SubPixelator = SubPixelator.ceil();
     /// ^ This being a ceil subPixelator only makes sense because we're only using this through Scroll.m and that's only running this with positive value ranges. So the deltas are being rounded up, and we get a delta immediately as soon as the animations starts, which should make scrolling very small distances feel a little more responsive. If we were dealing with negative deltas, we'd want to round them down instead somehow. Or simply use a SubPixelator.round() which works the same in both directions.
     
@@ -41,25 +40,41 @@ class PixelatedAnimator: BaseAnimator {
     
     /// Declare new start function
     
-    @objc func start(duration: CFTimeInterval,
-                     valueInterval: Interval,
-                     animationCurve: AnimationCurve,
+    @objc func start(params: @escaping StartParamCalculationCallback,
                      integerCallback: @escaping PixelatedAnimatorCallback) {
         
         self.animatorQueue.async {
         
-            /// Do stuff
+            /// Get startParams
             
-            super.startWithUntypedCallback_Unsafe(duration: duration, valueInterval: valueInterval, animationCurve: animationCurve, callback: integerCallback)
-        
-        
-            if self.animationPhase == kMFAnimationPhaseStart {
-                self.subPixelator.reset() /// Comment out for testing
+            let p = params(self.animationValueLeft, self.isRunning_Sync, self.animationCurve)
+            
+            /// Do nothing if doStart == false
+            
+            if let doStart = p["doStart"] as? Bool {
+                if doStart == false {
+                    return
+                }
             }
             
             /// Debug
             
-            DDLogDebug("Started PixelatedAnimator with phase: \(self.animationPhase.rawValue), lastPhase: \(self.lastAnimationPhase.rawValue)")
+            let deltaLeftBefore = self.animationValueLeft;
+            
+            /// Start animator
+            
+            super.startWithUntypedCallback_Unsafe(duration: p["duration"] as! Double, value: p["value"] as! Double, animationCurve: p["curve"] as! AnimationCurve, callback: integerCallback)
+        
+            /// Debug
+            
+            DDLogDebug("\nStarted PixelatedAnimator with phase: \(self.animationPhase.rawValue), lastPhase: \(self.lastAnimationPhase.rawValue), deltaLeftDiff: \(self.animationValueLeft - deltaLeftBefore), oldDeltaLeft: \(deltaLeftBefore), newDeltaLeft: \(self.animationValueLeft)")
+            
+            /// Extend start animator method
+            
+            if self.animationPhase == kMFAnimationPhaseStart {
+                self.subPixelator.reset()
+            }
+            
         }
     }
     
@@ -89,7 +104,7 @@ class PixelatedAnimator: BaseAnimator {
             
             /// Debug
             
-            DDLogDebug("Skipped PixelatedAnimator callback due to 0 delta. phase: \(self.animationPhase.rawValue), lastPhase: \(self.lastAnimationPhase.rawValue)")
+            DDLogDebug("\nSkipped PixelatedAnimator callback due to 0 delta. phase: \(self.animationPhase.rawValue), lastPhase: \(self.lastAnimationPhase.rawValue)")
             
             /// Validate
             
@@ -156,7 +171,7 @@ class PixelatedAnimator: BaseAnimator {
             
             /// Debug
             
-            DDLogDebug("PixelatedAnimator callback with delta: \(integerAnimationValueDelta), phase: \(self.animationPhase.rawValue), lastPhase: \(self.lastAnimationPhase.rawValue)")
+            DDLogDebug("\nPixelatedAnimator callback with delta: \(integerAnimationValueDelta), phase: \(self.animationPhase.rawValue), lastPhase: \(self.lastAnimationPhase.rawValue)")
             
             /// Update `last` phase
             

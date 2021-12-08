@@ -298,89 +298,92 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
         
     } else {
         /// Send scroll events through animator, spread out over time.
-    
-        /// Get parameters for animator
-        
-        double animationDuration;
-        Interval *animationValueInterval;
-        id<AnimationCurve> animationCurve;
-        
-        /// Base scroll duration
-        CFTimeInterval baseTimeRange;
-        baseTimeRange = ((CFTimeInterval)ScrollConfig.msPerStep) / 1000.0; /// Need to cast to CFTimeInterval (double), to make this a float division instead of int division yiedling 0
-//        animationDuration = scrollAnalysisResult.smoothedTimeBetweenTicks;
-        
-        /// Base px that the animator still wants to scroll
-        double pxLeftToScroll;
-        if (scrollAnalysisResult.scrollDirectionDidChange || !_animator.isRunning) {
-            pxLeftToScroll = 0;
-        } else {
-            pxLeftToScroll = _animator.animationValueLeft;
-        }
-        
-        if (_modifications.effect == kMFScrollEffectModificationFourFingerPinch
-            || _modifications.input == kMFScrollInputModificationQuick) {
-            /// Use linear curve for 4 finger pinch
-            ///     because it feels much smoother
-            /// Using linear for horizontal scroll
-            ///     feels smoother for navigating between pages
-            ///         We could not suppress natural momentum scrolling on horizontal scroll events to balance out the linear curve? But then we should probably also decrease the animationDuration... Edit: I tried it and it sucks for normal scrolling.
-            
-            animationDuration = baseTimeRange;
-            animationValueInterval = [[Interval alloc] initWithStart:0 end:pxToScrollForThisTick + pxLeftToScroll];
-            animationCurve = ScrollConfig.linearCurve;
-            
-        } else {
-            /// Use hybrid curve
-            
-            /// Update pxLeftToScroll
-            if (pxLeftToScroll > 0) {
-                
-                id c = _animator.animationCurve;
-                if ([c isKindOfClass:HybridCurve.class]) {
-                    pxLeftToScroll -= ((HybridCurve *)c).dragValueRange;
-                    if (pxLeftToScroll < 0) pxLeftToScroll = 0;
-                    /// ^ HybridCurve (and a bunch of other stuff to support it) was engineered to give us the overall distance that the Bezier *and* the DragCurve will scroll, so that the distance that would be scrolled via the Drag algorithm isn't lost here (like in older MMF versions)
-                    ///     But this leads to a very strong, hard to control acceleration that also depends on the anmation time `msPerStep`. To undo this, we subtract the distance that is to be scrolled via the DragCurve back out here.
-                    ///     This is inefficient because we init and calculate the drag curve on each mouse wheel tick for nothing, even if we don't need it, and just subtract the result we got from it back out here. But I don't think it makes a practical difference cause it's really fast.
-                }
-            }
-            
-            /// Base distance to scroll
-            double baseValueRange = pxLeftToScroll + pxToScrollForThisTick;
-            
-            /// Decrease friction if fastScroll is active
-            ///     Overriding params in all these different places if quickScroll is active is a little messy. Would maybe be better to have ScrollConfig return a struct with all params and to then override the values in the struct in one place.
-            Bezier *baseCurve = ScrollConfig.baseCurve;
-            double dragCoefficient = ScrollConfig.dragCoefficient;
-            double dragExponent = ScrollConfig.dragExponent;
-            
-            if (_modifications.input == kMFScrollInputModificationQuick) {
-//                baseCurve = ScrollConfig.linearCurve;
-//                dragCoefficient = 30;
-//                dragExponent = 0.8;
-                
-            }
-            
-            /// Curve
-            HybridCurve *c = [[HybridCurve alloc] initWithBaseCurve:baseCurve
-                                                      baseTimeRange:baseTimeRange
-                                                     baseValueRange:baseValueRange
-                                                    dragCoefficient:dragCoefficient
-                                                       dragExponent:dragExponent
-                                                          stopSpeed:ScrollConfig.stopSpeed];
-            
-            /// Get values for animator from hybrid curve
-            animationCurve = c;
-            animationDuration = c.timeRange;
-            animationValueInterval = c.valueInterval;
-        }
         
         /// Start animation
         
-        [_animator startWithDuration:animationDuration valueInterval:animationValueInterval animationCurve:animationCurve
-                     integerCallback:^(NSInteger valueDelta, double timeDelta, MFAnimationPhase animationPhase) {
-            /// This will be called each frame
+        [_animator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(double valueLeft, BOOL isRunning, id<AnimationCurve> animationCurve) {
+            
+            /// Declare result dict (animator start params)
+            
+            NSMutableDictionary *p = [NSMutableDictionary dictionary];
+            
+            /// Get base scroll duration
+            CFTimeInterval baseTimeRange = ((CFTimeInterval)ScrollConfig.msPerStep) / 1000.0; /// Need to cast to CFTimeInterval (double), to make this a float division
+            
+            /// Get px that the animator still wants to scroll
+            double pxLeftToScroll;
+            if (scrollAnalysisResult.scrollDirectionDidChange || !isRunning) {
+                pxLeftToScroll = 0;
+            } else {
+                pxLeftToScroll = valueLeft;
+            }
+            
+            if (_modifications.effect == kMFScrollEffectModificationFourFingerPinch
+                || _modifications.input == kMFScrollInputModificationQuick) {
+
+                /// Use linear curve for 4 finger pinch
+                ///     because it feels much smoother
+                /// Using linear for horizontal scroll
+                ///     feels smoother for navigating between pages
+                ///         We could not suppress natural momentum scrolling on horizontal scroll events to balance out the linear curve? But then we should probably also decrease the animationDuration... Edit: I tried it and it sucks for normal scrolling.
+                
+                p[@"duration"] = @(baseTimeRange);
+                p[@"value"] = @(pxToScrollForThisTick + pxLeftToScroll);
+                p[@"curve"] = ScrollConfig.linearCurve;
+                
+                return p;
+                
+            } else {
+                /// Use hybrid curve
+                
+                /// Update pxLeftToScroll
+                if (pxLeftToScroll > 0) {
+                    
+                    id c = animationCurve;
+                    if ([c isKindOfClass:HybridCurve.class]) {
+                        pxLeftToScroll -= ((HybridCurve *)c).dragValueRange;
+                        if (pxLeftToScroll < 0) pxLeftToScroll = 0;
+                        /// ^ HybridCurve (and a bunch of other stuff to support it) was engineered to give us the overall distance that the Bezier *and* the DragCurve will scroll, so that the distance that would be scrolled via the Drag algorithm isn't lost here (like in older MMF versions)
+                        ///     But this leads to a very strong, hard to control acceleration that also depends on the anmation time `msPerStep`. To undo this, we subtract the distance that is to be scrolled via the DragCurve back out here.
+                        ///     This is inefficient because we init and calculate the drag curve on each mouse wheel tick for nothing, even if we don't need it, and just subtract the result we got from it back out here. But I don't think it makes a practical difference cause it's really fast.
+                    }
+                }
+                
+                /// Base distance to scroll
+                double baseValueRange = pxLeftToScroll + pxToScrollForThisTick;
+                
+                /// Decrease friction if fastScroll is active
+                ///     Overriding params in all these different places if quickScroll is active is a little messy. Would maybe be better to have ScrollConfig return a struct with all params and to then override the values in the struct in one place.
+                Bezier *baseCurve = ScrollConfig.baseCurve;
+                double dragCoefficient = ScrollConfig.dragCoefficient;
+                double dragExponent = ScrollConfig.dragExponent;
+                
+                if (_modifications.input == kMFScrollInputModificationQuick) {
+                    //                baseCurve = ScrollConfig.linearCurve;
+                    //                dragCoefficient = 30;
+                    //                dragExponent = 0.8;
+                    
+                }
+                
+                /// Curve
+                HybridCurve *c = [[HybridCurve alloc] initWithBaseCurve:baseCurve
+                                                          baseTimeRange:baseTimeRange
+                                                         baseValueRange:baseValueRange
+                                                        dragCoefficient:dragCoefficient
+                                                           dragExponent:dragExponent
+                                                              stopSpeed:ScrollConfig.stopSpeed];
+                
+                /// Get values for animator from hybrid curve
+                p[@"duration"] = @(c.timeRange);
+                p[@"value"]  = @(c.valueRange);
+                p[@"curve"]  = c;
+            }
+            
+            return p;
+            
+        } integerCallback:^(NSInteger valueDelta, double timeDelta, MFAnimationPhase animationPhase) {
+         
+         /// This will be called each frame
             
             /// Debug
             

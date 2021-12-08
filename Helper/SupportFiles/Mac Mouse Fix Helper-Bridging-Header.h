@@ -7,7 +7,7 @@
 #import "MathObjc.h"
 #import "WannaBePrefixHeader.h"
 #import "DisplayLink.h"
-#import "Animator.h"
+#import "AnimatorDeclarations.h"
 #import "Config.h"
 #import "ScrollConfigObjC.h"
 #import "SubPixelator.h"
