@@ -73,6 +73,9 @@ static NSArray *getScrollEffectsTable() {
         @{@"ui": @"Desktop & Launchpad", @"tool": @"Scroll up for Launchpad and down to show the Desktop \n \nWorks like Pinching with 4 fingers on an Apple Trackpad", @"dict": @{
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeFourFingerPinch
         }},
+        @{@"ui": @"App Switcher", @"tool": @"", @"dict": @{
+            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeCommandTab
+        }},
         separatorEffectsTableEntry(),
         @{@"ui": @"Horizontal Scroll", @"tool": @"Scroll horizontally \nNavigate pages in Safari, delete messages in Mail, and more \n \nWorks like swiping horizontally with 2 fingers on an Apple Trackpad" , @"dict": @{
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeHorizontalScroll

@@ -143,6 +143,7 @@ typedef NSString*                                                       MFString
 #define kMFModifiedScrollEffectModificationTypeHorizontalScroll                             @"horizontal"
 #define kMFModifiedScrollEffectModificationTypeFourFingerPinch                              @"fourFingerPinch"
 #define kMFModifiedScrollEffectModificationTypeRotate                                       @"rotate"
+#define kMFModifiedScrollEffectModificationTypeCommandTab                                   @"commandTab"
 #define kMFModifiedScrollEffectModificationTypeAddModeFeedback                              @"addModeScroll"
 
 // Oneshot Actions

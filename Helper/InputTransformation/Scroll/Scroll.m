@@ -24,6 +24,7 @@
 #import "GestureScrollSimulator.h"
 #import "SharedUtility.h"
 #import "ScrollModifiers.h"
+#import "Actions.h"
 
 @implementation Scroll
 
@@ -286,11 +287,12 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
         
         DDLogWarn(@"pxToScrollForThisTick is 0");
         
-    } else if (!ScrollConfig.smoothEnabled
-               && !(_modifications.effect == kMFScrollEffectModificationFourFingerPinch
-                    || _modifications.effect == kMFScrollEffectModificationZoom
-                    || _modifications.effect == kMFScrollEffectModificationRotate)) {
-        ///             ^ These modification effects simulate gestures. They need eventPhases to work properly. So they only work when when driven by the animator.
+    } else if ((_modifications.effect == kMFScrollEffectModificationCommandTab)
+               || (!ScrollConfig.smoothEnabled
+                   && !(_modifications.effect == kMFScrollEffectModificationFourFingerPinch
+                        || _modifications.effect == kMFScrollEffectModificationZoom
+                        || _modifications.effect == kMFScrollEffectModificationRotate))) {
+        ///                 ^ These modification effects simulate gestures. They need eventPhases to work properly. So they only work when when driven by the animator.
         
         /// Send scroll event directly - without the animator. Will scroll all of pxToScrollForThisTick at once.
         
@@ -524,6 +526,8 @@ static void sendScroll(int64_t px, MFScrollDirection scrollDirection, BOOL gestu
         outputType = kMFScrollOutputTypeRotation;
     } else if (_modifications.effect == kMFScrollEffectModificationFourFingerPinch) {
         outputType = kMFScrollOutputTypeFourFingerPinch;
+    } else if (_modifications.effect == kMFScrollEffectModificationCommandTab) {
+        outputType = kMFScrollOutputTypeCommandTab;
     } /// kMFScrollEffectModificationHorizontalScroll is handled above when determining scroll direction
     
     /// Debug
@@ -542,6 +546,7 @@ typedef enum {
     kMFScrollOutputTypeZoom,
     kMFScrollOutputTypeRotation,
     kMFScrollOutputTypeFourFingerPinch,
+    kMFScrollOutputTypeCommandTab,
     kMFScrollOutputTypeLineScroll,
 } MFScrollOutputType;
 
@@ -663,6 +668,46 @@ static void sendOutputEvents(int64_t dx, int64_t dy, BOOL isFirstEvent, BOOL isF
             
         }
         
+    } else if (outputType == kMFScrollOutputTypeCommandTab) {
+        
+        /// Setup timer for releasing command keykMF
+        
+//        static NSTimer *commandReleaseTimer;
+//        BOOL commandIsStillPressed = NO;
+//
+//        if (commandReleaseTimer != nil) {
+//            [commandReleaseTimer invalidate];
+//            commandReleaseTimer = nil;
+//            commandIsStillPressed = YES;
+//        }
+//        dispatch_sync(dispatch_get_main_queue(), ^{
+//            commandReleaseTimer = [NSTimer scheduledTimerWithTimeInterval:0.3 target:Scroll.class selector:@selector(sendCommandUp) userInfo:nil repeats:NO];
+//        });
+        
+        
+        double d = -(dx + dy);
+        assert (d != 0);
+        
+        /// Send events
+        
+        if (!_appSwitcherIsOpen) {
+            /// Send command down event
+            sendKeyEvent(55, kCGEventFlagMaskCommand, true);
+            _appSwitcherIsOpen = YES;
+            
+        }
+        
+        /// Send tab down and up events
+        
+        if (d > 0) {
+            sendKeyEvent(48, kCGEventFlagMaskCommand, true);
+            sendKeyEvent(48, kCGEventFlagMaskCommand, false);
+        } else {
+            sendKeyEvent(48, kCGEventFlagMaskCommand | kCGEventFlagMaskShift, true);
+            sendKeyEvent(48, kCGEventFlagMaskCommand | kCGEventFlagMaskShift, false);
+        }
+
+        
     } else if (outputType == kMFScrollOutputTypeLineScroll) {
         
         /// --- LineScroll ---
@@ -695,9 +740,34 @@ static void sendOutputEvents(int64_t dx, int64_t dy, BOOL isFirstEvent, BOOL isF
         
         CGEventPost(kCGSessionEventTap, event);
         
+    } else {
+        assert(false);
     }
     
 }
 
+/// Output - Helper funcs
+
+static BOOL _appSwitcherIsOpen = NO;
+
++ (void)appSwitcherModificationHasBeenDeactivated {
+    /// AppSwitcherModification is aka CommandTab. Should rename to AppSwitcher.
+    if (_appSwitcherIsOpen) { /// Not sure if this check is necessary. Should only be called when the appSwitcher is open.
+        sendKeyEvent(55, 0, false);
+        _appSwitcherIsOpen = NO;
+    }
+}
+
+void sendKeyEvent(CGKeyCode keyCode, CGEventFlags flags, bool keyDown) {
+    
+    CGEventTapLocation tapLoc = kCGSessionEventTap;
+    
+    CGEventRef event = CGEventCreateKeyboardEvent(NULL, keyCode, keyDown);
+    CGEventSetFlags(event, flags);
+    
+    CGEventPost(tapLoc, event);
+    CFRelease(event);
+    
+}
 
 @end

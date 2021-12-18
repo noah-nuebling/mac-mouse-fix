@@ -155,6 +155,11 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
     
     NSDictionary *activeModifications = RemapsOverrider.effectiveRemapsMethod(TransformationManager.remaps, activeModifiers);
     
+    /// Notify ScrollModifiers of modifierChange
+    ///     It needs that to commit to an app in the app switcher when the user releases a button
+    
+    [ScrollModifiers reactToModiferChangeWithActiveModifications: activeModifications];
+    
     /// Kill old modifications
     
     /// Kill the currently active modifiedDrag if it's differrent from the one that the one in activeModifications
@@ -168,7 +173,7 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
         [ModifiedDrag deactivate];
     }
     
-    /// Iniit new modifications
+    /// Init new modifications
     
     if (activeModifications) {
         
