@@ -32,7 +32,8 @@ NSDictionary *_remaps;
 ///  (Idk why we aren't just calling an update function instead of using a notification)
 + (void)setRemaps:(NSDictionary *)remapsDict {
     _remaps = remapsDict;
-//    _remaps = self.testRemaps; // TESTING
+//    _remaps = self.testRemaps; /// TESTING
+//    [self enableAddMode]; /// TESTING
     [NSNotificationCenter.defaultCenter postNotificationName:kMFNotifCenterNotificationNameRemapsChanged object:self];
     DDLogDebug(@"Set remaps to: %@", _remaps);
 }

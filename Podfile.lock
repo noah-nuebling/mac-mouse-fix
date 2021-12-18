@@ -3,27 +3,23 @@ PODS:
     - ReactiveSwift (~> 6.6)
   - ReactiveObjC (3.1.1)
   - ReactiveSwift (6.6.0)
-  - RHAdditions (1.3.0)
 
 DEPENDENCIES:
   - ReactiveCocoa (~> 11.2)
   - ReactiveObjC (~> 3.1)
   - ReactiveSwift (~> 6.6)
-  - RHAdditions
 
 SPEC REPOS:
   trunk:
     - ReactiveCocoa
     - ReactiveObjC
     - ReactiveSwift
-    - RHAdditions
 
 SPEC CHECKSUMS:
   ReactiveCocoa: 194289e7069037d40c59cb4ae9230f4b1ec05fa8
   ReactiveObjC: 011caa393aa0383245f2dcf9bf02e86b80b36040
   ReactiveSwift: be9407e2aaf8a11e53a5229255693cffd9a63ccf
-  RHAdditions: 13ef6284b6e8eb919c6fbcef63ebae35eda385ff
 
-PODFILE CHECKSUM: cf7b689912965c316f6ed27aa78a52f27ee25a53
+PODFILE CHECKSUM: 58c7ab22d8503b695e6c8dc2d57e1e99930d7de4
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.2

@@ -7,6 +7,9 @@
 // --------------------------------------------------------------------------
 //
 
+/// Accomplice is unused now because we're using Sparkle for updates
+///     We still keep it around in case we need it again
+
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKit.h>
 #import "Constants.h"
@@ -15,8 +18,6 @@
 #import "WannabePrefixHeader.h"
 
 static int update(const char *installScript) {
-
-    /// This is unused now because we're using Sparkle for updates
     
     DDLogInfo(@"Installing Mac Mouse Fix Update...");
     
@@ -74,7 +75,7 @@ static int update(const char *installScript) {
     
     return 0;
 }
-void reloadHelper() {
+void reloadHelper(void) {
     // v Disabling helper is inconsistent without waiting
     //      I think it's because NSFileManager gives wrong values for a short time after the app has been relocated (this is called as a result of the app being relocated)
     [NSThread sleepForTimeInterval:0.5];
