@@ -25,7 +25,7 @@
 #pragma mark - Remaps dictionary and interface
 
 #define USE_TEST_REMAPS NO
-NSDictionary *_remaps;
+static NSDictionary *_remaps;
 
 /// Always set remaps through this, so that the kMFNotifCenterNotificationNameRemapsChanged notification is posted
 /// The notification is used by ModifierManager to update itself, whenever _remaps updates.
@@ -33,7 +33,9 @@ NSDictionary *_remaps;
 + (void)setRemaps:(NSDictionary *)remapsDict {
     _remaps = remapsDict;
 //    _remaps = self.testRemaps; /// TESTING
-//    [self enableAddMode]; /// TESTING
+//    if (!_addModeIsEnabled) {
+//        [self enableAddMode]; /// TESTING
+//    }
     [NSNotificationCenter.defaultCenter postNotificationName:kMFNotifCenterNotificationNameRemapsChanged object:self];
     DDLogDebug(@"Set remaps to: %@", _remaps);
 }
@@ -168,7 +170,7 @@ BOOL _addModeIsEnabled = NO;
     }
     
     /// Set _remaps to generated
-    self.remaps = @{
+    _remaps = @{
         @{}: triggerToEffectDict
     };
 }
@@ -177,6 +179,8 @@ BOOL _addModeIsEnabled = NO;
     [self loadRemapsFromConfig];
 }
 + (void)concludeAddModeWithPayload:(NSDictionary *)payload {
+    
+    DDLogDebug(@"Concluding addMode with payload: %@", payload);
     
     if ([self addModePayloadIsValid:payload]) {
         [SharedMessagePort sendMessage:@"addModeFeedback" withPayload:payload expectingReply:NO];

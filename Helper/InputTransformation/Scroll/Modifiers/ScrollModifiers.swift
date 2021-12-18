@@ -74,11 +74,12 @@ import CocoaLumberjackSwift
             case kMFModifiedScrollEffectModificationTypeCommandTab:
                 result.effect = kMFScrollEffectModificationCommandTab
             case kMFModifiedScrollEffectModificationTypeAddModeFeedback:
-                        
-                    var payload = modifiedScrollDict
-                    payload.removeValue(forKey: kMFModifiedScrollDictKeyEffectModificationType)
-                    payload[kMFRemapsKeyModificationPrecondition] = NSMutableDictionary(dictionary: activeModifiers) /// Need to cast to mutable, otherwise Swift will make it immutable and mainApp will crash trying to build this payload into its remapArray
-                    TransformationManager.concludeAddMode(withPayload: payload)
+                
+                var payload = modifiedScrollDict
+                payload.removeValue(forKey: kMFModifiedScrollDictKeyEffectModificationType)
+                payload[kMFRemapsKeyModificationPrecondition] = NSMutableDictionary(dictionary: ModifierManager .getActiveModifiers(forDevice: nil, filterButton: nil, event: event, despiteAddMode: true))
+                /// ^ Need to cast to mutable, otherwise Swift will make it immutable and mainApp will crash trying to build this payload into its remapArray
+                TransformationManager.concludeAddMode(withPayload: payload)
                 
             default:
                 fatalError("Unknown modifiedSrollDict type found in remaps")

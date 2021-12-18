@@ -29,8 +29,8 @@
     
     /// Get remaps and apply modifier overrides
     NSDictionary *remaps = TransformationManager.remaps;
-    NSDictionary *modifiersActingOnThisButton = TransformationManager.addModeIsEnabled ? @{} : [ModifierManager getActiveModifiersForDevice:&devID filterButton:button event:nil];
-    /// ^ The modifiers which act on the incoming button (the button can't modify itself so we filter it out)   ^ AddMode needs to work no matter which modifiers are pressed, so we hack around things like this
+    NSDictionary *modifiersActingOnThisButton = [ModifierManager getActiveModifiersForDevice:&devID filterButton:button event:nil];
+    /// ^ The modifiers which act on the incoming button (the button can't modify itself so we filter it out)
     
     NSDictionary *remapsForModifiersActingOnThisButton = remaps[modifiersActingOnThisButton];
     NSDictionary *remapsActingOnThisButton = RemapsOverrider.effectiveRemapsMethod(remaps, modifiersActingOnThisButton);
@@ -125,7 +125,7 @@ static void executeClickOrHoldActionIfItExists(NSString * _Nonnull duration,
         if ([effectiveActionArray[0][kMFActionDictKeyType] isEqualToString: kMFActionDictTypeAddModeFeedback]) {
             /// Add modificationPrecondition info for addMode. See TransformationManager -> AddMode for context
             
-            effectiveActionArray[0][kMFRemapsKeyModificationPrecondition] = [ModifierManager getActiveModifiersForDevice:&devID filterButton:button event:nil];
+            effectiveActionArray[0][kMFRemapsKeyModificationPrecondition] = [ModifierManager getActiveModifiersForDevice:&devID filterButton:button event:nil despiteAddMode:YES];
             /// ^ These are the actual modifiersActingOnThisButton. But for addMode we needed to set the argument `modifiersActingOnThisButton` to `@{}`, so we need to get the real value here.
         }
         // Execute action

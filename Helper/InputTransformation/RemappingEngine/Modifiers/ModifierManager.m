@@ -189,7 +189,8 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
                 ///     See TransformationManager.m -> AddMode for context.
                 if ([modifiedDragEffect[kMFModifiedDragDictKeyType] isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
                     modifiedDragEffect = modifiedDragEffect.mutableCopy; /// Make actually mutable
-                    modifiedDragEffect[kMFRemapsKeyModificationPrecondition] = activeModifiers; /// Add activeModifiers
+                    NSNumber *devID;
+                    modifiedDragEffect[kMFRemapsKeyModificationPrecondition] = [ModifierManager getActiveModifiersForDevice:&devID filterButton:nil event:nil despiteAddMode:YES]; /// Add activeModifiers
                 }
                 
                 /// Determine usage threshold based on other active modifications
@@ -239,9 +240,21 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
 // Analyzing with os_signpost reveals this is called 9 times per button click and takes around 20% of the time.
 //      That's over a third of the time which is used by our code (I think) - We should look into optimizing this (if we have too much time - the program is plenty fast). Maybe caching the values or calling it less, or making it faster.
 // \discussion If you pass in -1 for the `devID`, this function will try to find some device that has buttons pressed and use that to get the active modifiers and write id of the device it found into the `devID` argument. We never expect the user to use several mice at once, so this should work fine. If no device with any pressed buttons can be found, we return nil in the `devIDPtr`.
+
 + (NSDictionary *)getActiveModifiersForDevice:(NSNumber **)devIDPtr filterButton:(NSNumber *)filteredButton event:(CGEventRef)event {
     
+    return [self getActiveModifiersForDevice:devIDPtr filterButton:filteredButton event:event despiteAddMode:NO];
+}
+
++ (NSDictionary *)getActiveModifiersForDevice:(NSNumber **)devIDPtr filterButton:(NSNumber *)filteredButton event:(CGEventRef)event despiteAddMode:(BOOL)despiteAddMode {
+    
 //    DDLogDebug(@"ActiveModifiers requested by: %s\n", SharedUtility.callerInfo.UTF8String);
+    
+    if (TransformationManager.addModeIsEnabled && !despiteAddMode) {
+        /// ^ AddMode needs to work no matter which modifiers are pressed, so we hack around things by lying and saying that no modifiers are pressed during addMode.
+        ///     To get the real modifiers despite addMode, pass in `YES` for `despiteAddMode`. You should only need this when fetching modifiers for the addMode payload to send back to the mainApp
+        return @{};
+    };
     
     NSMutableDictionary *outDict = [NSMutableDictionary dictionary];
     

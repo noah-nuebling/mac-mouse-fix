@@ -378,10 +378,8 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
         } else if ([_drag.type isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
             
             if (_drag.addModePayload != nil) {
-                if ([TransformationManager addModePayloadIsValid:_drag.addModePayload]) {
-                    [SharedMessagePort sendMessage:@"addModeFeedback" withPayload:_drag.addModePayload expectingReply:NO]; /// Why aren't we using [TransformationManager concludeAddModeWithPayload] here?
-                    disableMouseTracking(); /// Not sure if should be here
-                }
+                [TransformationManager concludeAddModeWithPayload:_drag.addModePayload];
+                disableMouseTracking(); /// Not sure if should be here
             } else {
                 @throw [NSException exceptionWithName:@"InvalidAddModeFeedbackPayload" reason:@"_drag.addModePayload is nil. Something went wrong!" userInfo:nil]; // Throw exception to cause crash
             }
@@ -706,9 +704,8 @@ static void handleDeactivationWhileInUse(BOOL cancelation) {
         
     } else if ([_drag.type isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
         
-        if ([TransformationManager addModePayloadIsValid:_drag.addModePayload]) { /// If it's valid, then we've already sent the payload off to the MainApp
-            [TransformationManager disableAddMode]; /// Why disable it here and not when sending the payload?
-        }
+        /// Do nothing
+
     }
 }
 
