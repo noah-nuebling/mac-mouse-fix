@@ -87,11 +87,11 @@ static NSArray *getScrollEffectsTable() {
         @{@"ui": @"Swift Scroll", @"tool": @"Scroll long distances with minimal effort", @"dict": @{
             kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypeQuickScroll
         }},
-        @{@"ui": @"Precise Scroll", @"tool": @"Scroll small distances and use sensitive UI Elements with precision.", @"dict": @{
+        @{@"ui": @"Precise Scroll", @"tool": @"Scroll small distances and use sensitive UI elements with precision.", @"dict": @{
             kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypePrecisionScroll
         }},
         separatorEffectsTableEntry(),
-        @{@"ui": @"App Switcher", @"tool": @"", @"dict": @{
+        @{@"ui": @"App Switcher", @"tool": @"Quickly switch between open apps \n \nWorks like holding Command (⌘) and then pressing Tab (⇥) on your keyboard", @"dict": @{
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeCommandTab
         }},
     ];
@@ -102,7 +102,7 @@ static NSArray *getDragEffectsTable() {
         @{@"ui": @"Mission Control & Spaces", @"tool": @"Move your mouse: \n - Up to show Mission Control \n - Down to show Application Windows \n - Left or Right to move between Spaces\n \nWorks like swiping with 3 fingers on an Apple Trackpad" , @"dict": @{
                   kMFModifiedDragDictKeyType: kMFModifiedDragTypeThreeFingerSwipe,
         }},
-        @{@"ui": @"360° Scroll", @"tool": @"Scroll by moving your mouse in any direction \nNavigate pages in Safari, delete messages in Mail, and more, by moving your mouse horizontally \n \nWorks like swiping with 2 fingers on an Apple Trackpad" , @"dict": @{
+        @{@"ui": @"360° Scroll", @"tool": @"Scroll freely by moving your mouse in any direction \n \nNavigate between pages in Safari, delete messages in Mail and more by moving your mouse left and right \n \nWorks like swiping with 2 fingers on an Apple Trackpad" , @"dict": @{
                   kMFModifiedDragDictKeyType: kMFModifiedDragTypeTwoFingerSwipe,
         }},
 //        separatorEffectsTableEntry(),
@@ -352,11 +352,11 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         triggerCell = keyCaptureCell;
         
     } else {
-        // Get popup button
+        /// Get popup button
         NSPopUpButton *popupButton = triggerCell.subviews[0];
-        // Delete existing menu items from IB
+        /// Delete existing menu items from IB
         [popupButton removeAllItems];
-        // Iterate oneshot effects table and fill popupButton
+        /// Iterate oneshot effects table and fill popupButton
         for (NSDictionary *effectTableEntry in effectTable) {
             NSMenuItem *i;
             if ([effectTableEntry[@"isSeparator"] isEqual: @YES]) {
@@ -390,14 +390,16 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
             [popupButton.menu addItem:i];
         }
         
-        // Select popup button item corresponding to datamodel
-        // Get effectDict from datamodel
+        /// Select popup button item corresponding to datamodel
+        /// Get effectDict from datamodel
         NSString * title = effectNameForRowDict(rowDict);
         if (title) {
-            [popupButton selectItemWithTitle:title];
+            NSMenuItem *itemToSelect = [popupButton itemWithTitle:title];
+            [popupButton selectItem:itemToSelect];
+            popupButton.toolTip = itemToSelect.toolTip;
         }
         
-        // Disable popupbutton, if tableView is disabled
+        /// Disable popupbutton, if tableView is disabled
         popupButton.enabled = tableViewEnabled;
        
     }
