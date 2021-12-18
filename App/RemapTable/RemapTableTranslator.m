@@ -406,136 +406,84 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
 
 + (NSTableCellView *)getTriggerCellWithRowDict:(NSDictionary *)rowDict {
     
-    rowDict = rowDict.mutableCopy; // This is necessary for some of this hacky mess to work // However, this is not a deep copy, so the _dataModel is still changed when we change some nested object. Watch out!
+    rowDict = rowDict.mutableCopy; /// This is necessary for some of this hacky mess to work –– However, this is not a deep copy, so the _dataModel is still changed when we change some nested object. Watch out!
     
-    // Define Data-to-UI-String mappings
+    #pragma mark --- Get data ---
+    
+    id triggerGeneric = rowDict[kMFRemapsKeyTrigger];
+    
+    /// Get the trigger type
+    
+    NSString *triggerType; /// Either "_button", "_drag", or "_scroll"
+    
+    if ([triggerGeneric isKindOfClass:NSDictionary.class]) {
+        
+        triggerType = @"_button"; /// Using underscore to make clear that this is not a UI string
+        
+    } else if ([triggerGeneric isKindOfClass:NSString.class]) {
+        
+        NSString *trigger = (NSString *)triggerGeneric;
+        if ([trigger isEqualToString:kMFTriggerDrag]) {
+            triggerType = @"_drag";
+        } else if ([trigger isEqualToString:kMFTriggerScroll]) {
+            triggerType = @"_scroll";
+        } else {
+            @throw [NSException exceptionWithName:@"Unknown string trigger value" reason:@"The value for the string trigger key is unknown" userInfo:@{@"Trigger value": trigger}];
+        }
+    } else {
+        DDLogInfo(@"Trigger value: %@, class: %@", triggerGeneric, [triggerGeneric class]);
+        @throw [NSException exceptionWithName:@"Invalid trigger value type" reason:@"The value for the trigger key is not a String and not a dictionary" userInfo:@{@"Trigger value": triggerGeneric}];
+    }
+    
+    /// Get additional info if buttonTrigger
+    
+    NSNumber *btn;
+    NSNumber *lvl;
+    NSString *dur;
+    if ([triggerType isEqual: @"_button"]) {
+        NSDictionary *trigger = (NSDictionary *)triggerGeneric;
+        btn = trigger[kMFButtonTriggerKeyButtonNumber];
+        lvl = trigger[kMFButtonTriggerKeyClickLevel];
+        dur = trigger[kMFButtonTriggerKeyDuration];
+    }
+    
+    /// Get additional info if drag or scroll trigger
+    ///
+    /// Extract last button press from button-modification-precondition. If it doesn't exist, extract kb mods
+    ///   This info will be used to form the trigger string and will therefore be removed from the modificationPrecondition (That's what we mean by "extract")
+    
+    NSDictionary *lastButtonPress;
+    NSNumber *keyboardModifiers;
+    /// TODO: ^ rename these to `buttonForTriggerString` and `flagsForTriggerString` or something similar
+    
+    if ([triggerType isEqual: @"_drag"] || [triggerType isEqual: @"_scroll"]) {
+        
+        NSMutableArray *buttonPressSequence = ((NSArray *)rowDict[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyButtons]).mutableCopy;
+        
+        if (buttonPressSequence) {
+            /// Extract last button
+            lastButtonPress = buttonPressSequence.lastObject;
+            [buttonPressSequence removeLastObject];
+            rowDict[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyButtons] = buttonPressSequence;
+        } else if (keyboardModifiers != nil) {
+            /// Extract keyboard modifiers
+            keyboardModifiers = rowDict[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyKeyboard];
+            rowDict[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyKeyboard] = nil;
+        } else {
+            @throw [NSException exceptionWithName:@"No precondition" reason:@"Modified drag or scroll has no preconditions" userInfo:@{@"Precond dict": (rowDict[kMFRemapsKeyModificationPrecondition])}];
+        }
+    }
+    
+    #pragma mark --- Build strings ---
+
+    /// Define Data-to-UI-String mappings
     NSDictionary *clickLevelToUIString = @{
         @1: @"",
         @2: @"Double ",
         @3: @"Triple ",
     };
     
-    // Get trigger string from data
-    NSAttributedString *tr;
-    NSAttributedString *trTool;
-    NSString *mainButtonStr = @"";
-    
-    id triggerGeneric = rowDict[kMFRemapsKeyTrigger];
-    
-    if ([triggerGeneric isKindOfClass:NSDictionary.class]) { // Trigger is button input
-        
-        // Get relevant values from button trigger dict
-        NSDictionary *trigger = (NSDictionary *)triggerGeneric;
-        NSNumber *btn = trigger[kMFButtonTriggerKeyButtonNumber];
-        NSNumber *lvl = trigger[kMFButtonTriggerKeyClickLevel];
-        NSString *dur = trigger[kMFButtonTriggerKeyDuration];
-        
-        // Generate substrings from data
-        
-        // lvl
-        NSString *levelStr = (NSString *)clickLevelToUIString[lvl];
-        if (!levelStr) {
-            levelStr = [NSString stringWithFormat:@"%@", lvl];
-        }
-        if (lvl.intValue < 1) { // 0 or smaller
-            @throw [NSException exceptionWithName:@"Invalid click level" reason:@"Remaps contain invalid click level" userInfo:@{@"Trigger dict containing invalid value": trigger}];
-        }
-        // dur
-        NSString *durationStr;
-        if ([dur isEqualToString:kMFButtonTriggerDurationClick]) {
-            durationStr = @"Click ";
-        } else if ([dur isEqualToString:kMFButtonTriggerDurationHold]) {
-            if (lvl.intValue == 1) {
-                durationStr = @"Hold ";
-            } else {
-                durationStr = @"Click and Hold ";
-            }
-        }
-        if (!durationStr) {
-            @throw [NSException exceptionWithName:@"Invalid duration" reason:@"Remaps contain invalid duration" userInfo:@{@"Trigger dict containing invalid value": trigger}];
-        }
-        // btn
-        mainButtonStr = [UIStrings getButtonString:btn.intValue];
-        NSString *mainButtonStrTool = [UIStrings getButtonStringToolTip:btn.intValue];
-        if (btn.intValue < 1) {
-            @throw [NSException exceptionWithName:@"Invalid button number" reason:@"Remaps contain invalid button number" userInfo:@{@"Trigger dict containing invalid value": trigger}];
-        }
-        
-        // Form trigger string from substrings
-        
-        NSString *trRaw = [NSString stringWithFormat:@"%@%@", levelStr, durationStr]; // Append buttonStr later depending on whether there are button preconds
-        NSString *trToolRaw = [NSString stringWithFormat:@"%@%@%@", levelStr, durationStr, mainButtonStrTool];
-        
-        // Turn into attributedString and highlight button substrings
-        tr = [[NSAttributedString alloc] initWithString:trRaw];
-        trTool = [[NSAttributedString alloc] initWithString:trToolRaw];
-//        tr = [tr attributedStringBySettingSecondaryButtonTextColorForSubstring:buttonStr];
-//        trTool = [trTool attributedStringBySettingSecondaryButtonTextColorForSubstring:buttonStrTool];
-        
-    } else if ([triggerGeneric isKindOfClass:NSString.class]) { // Trigger is drag or scroll
-        // We need part of the modification precondition to form the main trigger string here.
-        //  E.g. if our precondition for a modified drag is single click button 3, followed by double click button 4, we want the string to be "Click Middle Button + Double Click and Drag Button 4", where the "Click Middle Button + " substring follows the format of a regular modification precondition string (we compute those further down) but the "Double Click and Drag Button 4" substring, which is also called the "trigger string" follows a different format which we compute here.
-        // Get button strings from last button precond, or, if no button preconds exist, get keyboard modifier string
-        NSString *levelStr = @"";
-        NSString *clickStr = @"";
-        mainButtonStr = @"";
-        NSString *keyboardModStr = @"";
-        NSString *mainButtonStrTool = @"";
-        NSString *keyboardModStrTool = @"";
-        
-        // Extract last button press from button-modification-precondition. If it doesn't exist, get kb mod string
-        NSDictionary *lastButtonPress;
-        NSMutableArray *buttonPressSequence = ((NSArray *)rowDict[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyButtons]).mutableCopy;
-        NSNumber *keyboardModifiers = rowDict[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyKeyboard];
-        if (buttonPressSequence) {
-            lastButtonPress = buttonPressSequence.lastObject;
-            [buttonPressSequence removeLastObject];
-            rowDict[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyButtons] = buttonPressSequence;
-            // Generate Level, click, and button strings based on last button press from sequence
-            NSNumber *btn = lastButtonPress[kMFButtonModificationPreconditionKeyButtonNumber];
-            NSNumber *lvl = lastButtonPress[kMFButtonModificationPreconditionKeyClickLevel];
-            levelStr = clickLevelToUIString[lvl];
-            clickStr = @"Click ";
-            mainButtonStr = [UIStrings getButtonString:btn.intValue];
-            mainButtonStrTool = [UIStrings getButtonStringToolTip:btn.intValue];
-        } else if (keyboardModifiers != nil) {
-            // Extract keyboard modifiers
-            keyboardModStr = [UIStrings getKeyboardModifierString:((NSNumber *)keyboardModifiers).unsignedIntegerValue];
-            keyboardModStr = [keyboardModStr stringByAppendingString:@" "];
-            keyboardModStrTool = [UIStrings getKeyboardModifierStringToolTip:((NSNumber *)keyboardModifiers).unsignedIntegerValue];
-            rowDict[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyKeyboard] = nil;
-        } else {
-            @throw [NSException exceptionWithName:@"No precondition" reason:@"Modified drag or scroll has no preconditions" userInfo:@{@"Precond dict": (rowDict[kMFRemapsKeyModificationPrecondition])}];
-        }
-        
-        // Get trigger string
-        NSString *triggerStr;
-        NSString *trigger = (NSString *)triggerGeneric;
-        if ([trigger isEqualToString:kMFTriggerDrag]) {
-            triggerStr = @"and Drag ";
-        } else if ([trigger isEqualToString:kMFTriggerScroll]) {
-            triggerStr = @"and Scroll ";
-        } else {
-            @throw [NSException exceptionWithName:@"Unknown string trigger value" reason:@"The value for the string trigger key is unknown" userInfo:@{@"Trigger value": trigger}];
-        }
-        
-        // Form full trigger cell string from substrings
-        
-        NSString *trRaw = [NSString stringWithFormat:@"%@%@%@%@", levelStr, clickStr, keyboardModStr, triggerStr]; // Append buttonStr later depending on whether there are button preconds
-        NSString *trToolRaw = [NSString stringWithFormat:@"%@%@%@%@%@", levelStr, clickStr, keyboardModStrTool, triggerStr, mainButtonStrTool];
-        
-        // Turn into attributedString and highlight button substrings
-        tr = [[NSAttributedString alloc] initWithString:trRaw];
-        trTool = [[NSAttributedString alloc] initWithString:trToolRaw];
-//        tr = [tr attributedStringBySettingSecondaryButtonTextColorForSubstring:buttonStr];
-//        trTool = [trTool attributedStringBySettingSecondaryLabelColorForSubstring:buttonStrTool];
-        
-    } else {
-        DDLogInfo(@"Trigger value: %@, class: %@", triggerGeneric, [triggerGeneric class]);
-        @throw [NSException exceptionWithName:@"Invalid trigger value type" reason:@"The value for the trigger key is not a String and not a dictionary" userInfo:@{@"Trigger value": triggerGeneric}];
-    }
-    
-    // Get keyboard modifier strings
+    /// Get keyboard modifier strings
     
     NSNumber *flags = (NSNumber *)rowDict[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyKeyboard];
     NSString *kbModRaw = [UIStrings getKeyboardModifierString:((NSNumber *)flags).unsignedIntegerValue];
@@ -547,7 +495,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         kbModTool = [kbModTooltipRaw stringByAppendingString:@", then "];
     }
     
-    // Get button modifier string
+    /// Get button modifier string
     
     NSMutableArray *buttonPressSequence = rowDict[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyButtons];
     NSMutableArray *buttonModifierStrings = [NSMutableArray array];
@@ -569,31 +517,138 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     NSString *btnMod = [buttonModifierStrings componentsJoinedByString:@""];
     NSString *btnModTool = [buttonModifierStringsTool componentsJoinedByString:@""];
     
-    // Get effect string
+    /// Get main trigger string
+    ///     (Naming is confusing since we call three different things the "trigger string")
+    
+    NSAttributedString *tr;
+    NSAttributedString *trTool;
+    NSString *mainButtonStr = @"";
+    
+    if ([triggerType isEqual: @"_button"]) {
+        
+        /// Generate substrings from data
+        
+        /// lvl
+        NSString *levelStr = (NSString *)clickLevelToUIString[lvl];
+        if (!levelStr) {
+            levelStr = [NSString stringWithFormat:@"%@", lvl];
+        }
+        if (lvl.intValue < 1) { // 0 or smaller
+            @throw [NSException exceptionWithName:@"Invalid click level" reason:@"Remaps contain invalid click level" userInfo:@{@"Trigger dict containing invalid value": triggerGeneric}];
+        }
+        /// dur
+        NSString *durationStr;
+        if ([dur isEqualToString:kMFButtonTriggerDurationClick]) {
+            durationStr = @"Click ";
+        } else if ([dur isEqualToString:kMFButtonTriggerDurationHold]) {
+            if (lvl.intValue == 1) {
+                durationStr = @"Hold ";
+            } else {
+                durationStr = @"Click and Hold ";
+            }
+        }
+        if (!durationStr) {
+            @throw [NSException exceptionWithName:@"Invalid duration" reason:@"Remaps contain invalid duration" userInfo:@{@"Trigger dict containing invalid value": triggerGeneric}];
+        }
+        /// btn
+        mainButtonStr = [UIStrings getButtonString:btn.intValue];
+        NSString *mainButtonStrTool = [UIStrings getButtonStringToolTip:btn.intValue];
+        if (btn.intValue < 1) {
+            @throw [NSException exceptionWithName:@"Invalid button number" reason:@"Remaps contain invalid button number" userInfo:@{@"Trigger dict containing invalid value": triggerGeneric}];
+        }
+        
+        /// Form trigger string from substrings
+        
+        NSString *trRaw = [NSString stringWithFormat:@"%@%@", levelStr, durationStr]; // Append buttonStr later depending on whether there are button preconds
+        NSString *trToolRaw = [NSString stringWithFormat:@"%@%@%@", levelStr, durationStr, mainButtonStrTool];
+        
+        // Turn into attributedString and highlight button substrings
+        tr = [[NSAttributedString alloc] initWithString:trRaw];
+        trTool = [[NSAttributedString alloc] initWithString:trToolRaw];
+//        tr = [tr attributedStringBySettingSecondaryButtonTextColorForSubstring:buttonStr];
+//        trTool = [trTool attributedStringBySettingSecondaryButtonTextColorForSubstring:buttonStrTool];
+        
+    } else if ([triggerType isEqual: @"_drag"] || [triggerType isEqual: @"_scroll"]) {
+        // We need part of the modification precondition to form the main trigger string here.
+        //  E.g. if our precondition for a modified drag is single click button 3, followed by double click button 4, we want the string to be "Click Middle Button + Double Click and Drag Button 4", where the "Click Middle Button + " substring follows the format of a regular modification precondition string (we compute those further down) but the "Double Click and Drag Button 4" substring, which is also called the "trigger string" follows a different format which we compute here.
+        // Get button strings from last button precond, or, if no button preconds exist, get keyboard modifier string
+        NSString *levelStr = @"";
+        NSString *clickStr = @"";
+        mainButtonStr = @"";
+        NSString *keyboardModStr = @"";
+        NSString *mainButtonStrTool = @"";
+        NSString *keyboardModStrTool = @"";
+        
+        if (lastButtonPress) {
+            /// Generate Level, click, and button strings based on last button press from sequence
+            NSNumber *btn = lastButtonPress[kMFButtonModificationPreconditionKeyButtonNumber];
+            NSNumber *lvl = lastButtonPress[kMFButtonModificationPreconditionKeyClickLevel];
+            levelStr = clickLevelToUIString[lvl];
+            clickStr = @"Click and ";
+            mainButtonStr = [UIStrings getButtonString:btn.intValue];
+            mainButtonStrTool = [UIStrings getButtonStringToolTip:btn.intValue];
+        } else if (keyboardModifiers != nil) {
+            /// Get keyboard mod string
+            keyboardModStr = [UIStrings getKeyboardModifierString:((NSNumber *)keyboardModifiers).unsignedIntegerValue];
+            keyboardModStr = [keyboardModStr stringByAppendingString:@" and "];
+            keyboardModStrTool = [UIStrings getKeyboardModifierStringToolTip:((NSNumber *)keyboardModifiers).unsignedIntegerValue];
+        } else assert(false);
+        
+        /// Get trigger string
+        NSString *triggerStr;
+        if ([triggerType isEqual: @"_drag"]) {
+            triggerStr = @"Drag ";
+        } else if ([triggerType isEqual: @"_scroll"]) {
+            triggerStr = @"Scroll ";
+        } else assert(false);
+        
+        /// Form full trigger cell string from substrings
+        
+        NSString *trRaw = [NSString stringWithFormat:@"%@%@%@%@", levelStr, clickStr, keyboardModStr, triggerStr]; // Append buttonStr later depending on whether there are button preconds
+        NSString *trToolRaw = [NSString stringWithFormat:@"%@%@%@%@%@", levelStr, clickStr, keyboardModStrTool, triggerStr, mainButtonStrTool];
+        
+        /// Turn into attributedString
+        tr = [[NSAttributedString alloc] initWithString:trRaw];
+        trTool = [[NSAttributedString alloc] initWithString:trToolRaw];
+        
+        /// highlight button substrings
+//        tr = [tr attributedStringBySettingSecondaryButtonTextColorForSubstring:buttonStr];
+//        trTool = [trTool attributedStringBySettingSecondaryLabelColorForSubstring:buttonStrTool];
+        
+        /// De-emphasize click string
+        ///     Looks weird when you have "Double _Click and_ Drag"
+//        tr = [tr attributedStringBySettingSecondaryButtonTextColorForSubstring: clickStr]; /// `attributedStringBySettingSecondaryButtonTextColorForSubstring` is specifically intended for buttons, which is not what we're using it for here
+        
+        /// Emphasize trigger string
+        tr = [tr attributedStringByAddingBoldForSubstring: triggerStr];
+        
+    } else assert(false);
+    
+    /// Get effect string
     NSString *effectString = [NSString stringWithFormat:@" to use '%@'", effectNameForRowDict(rowDict)];
-//    NSString *effectString = @""; // TODO: For debugging - undo this
     
-    // Append buttonStr
-    
-    if (![btnMod isEqual:@""]) { // Only display main button string if there are button modifiers
+    /// Append buttonStr
+    if (![btnMod isEqual:@""]) { /// Only display main button string in case there are button modifiers
         NSMutableAttributedString *trMutable = tr.mutableCopy;
         [trMutable appendAttributedString:[[NSAttributedString alloc] initWithString:mainButtonStr]];
         tr = [trMutable attributedStringBySettingSecondaryButtonTextColorForSubstring:mainButtonStr];
     }
     
-    // Join all substrings to get result string
+    /// Join all substrings to get result string
     NSMutableAttributedString *fullTriggerCellString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@", kbMod, btnMod]];
     NSMutableAttributedString *fullTriggerCellTooltipString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%@", kbModTool, btnModTool]];
     [fullTriggerCellString appendAttributedString:tr];
     [fullTriggerCellTooltipString appendAttributedString:trTool];
     [fullTriggerCellTooltipString appendAttributedString:[[NSMutableAttributedString alloc] initWithString:effectString]];
     
+    #pragma mark --- Create view ---
     
-    // Generate view and set string to view
+    /// Generate view and set string to view
     NSTableCellView *triggerCell = [self.tableView makeViewWithIdentifier:@"triggerCell" owner:nil];
     triggerCell.textField.attributedStringValue = fullTriggerCellString;
     triggerCell.textField.toolTip = fullTriggerCellTooltipString.string;
     return triggerCell;
+    
 }
 
 @end
