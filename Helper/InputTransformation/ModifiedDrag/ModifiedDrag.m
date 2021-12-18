@@ -52,7 +52,7 @@ struct ModifiedDragState {
     
     CGPoint origin;
     Vector originOffset;
-    CGPoint usageOrigin; // Point at which the modified drag changed its activationState to inUse
+    CGPoint usageOrigin; /// Point at which the modified drag changed its activationState to inUse
     MFAxis usageAxis;
     IOHIDEventPhaseBits phase;
     
@@ -61,8 +61,8 @@ struct ModifiedDragState {
     SubPixelator *subPixelatorX;
     SubPixelator *subPixelatorY;
     
-    MFMouseButtonNumber fakeDragButtonNumber; // Button number. Only used with modified drag of type kMFModifiedDragTypeFakeDrag.
-    NSDictionary *addModePayload; // Payload to send to the mainApp. Only used with modified drag of type kMFModifiedDragTypeAddModeFeedback.
+    MFMouseButtonNumber fakeDragButtonNumber; /// Button number. Only used with modified drag of type kMFModifiedDragTypeFakeDrag.
+    NSDictionary *addModePayload; /// Payload to send to the mainApp. Only used with modified drag of type kMFModifiedDragTypeAddModeFeedback.
 };
 static struct ModifiedDragState _drag;
 
@@ -143,7 +143,8 @@ static dispatch_group_t _momentumScrollWaitGroup;
             
             CGEventTapLocation location = kCGHIDEventTap;
             CGEventTapPlacement placement = kCGHeadInsertEventTap;
-            CGEventTapOptions option = kCGEventTapOptionDefault;
+            CGEventTapOptions option = kCGEventTapOptionListenOnly; // kCGEventTapOptionDefault
+            /// ^ Using `Default` causes weird cursor jumping issues when clicking-dragging-and-holding during addMode. Not sure why that happens. This didn't happen in v2 while using `Default`. Not sure if `ListenOnly` has any disadvantages.
             CGEventMask mask = CGEventMaskBit(kCGEventOtherMouseDragged) | CGEventMaskBit(kCGEventMouseMoved); // kCGEventMouseMoved is only necessary for keyboard-only drag-modification (which we've disable because it had other problems), and maybe for AddMode to work.
             mask = mask | CGEventMaskBit(kCGEventLeftMouseDragged) | CGEventMaskBit(kCGEventRightMouseDragged); // This is necessary for modified drag to work during a left/right click and drag. Concretely I added this to make drag and drop work. For that we only need the kCGEventLeftMouseDragged. Adding kCGEventRightMouseDragged is probably completely unnecessary. Not sure if there are other concrete applications outside of drag and drop.
             
@@ -171,6 +172,10 @@ static dispatch_group_t _momentumScrollWaitGroup;
     
     dispatch_async(_dragQueue, ^{
         
+        /// Debug
+        
+        DDLogDebug(@"INITIALIZING MODIFIEDDRAG WITH previous type %@ activationState %d, dict: %@", _drag.type, _drag.activationState, dict);
+        
         /// Make cursor settable
         
         [Utility_Transformation makeCursorSettable]; /// I think we only need to do this once
@@ -187,8 +192,6 @@ static dispatch_group_t _momentumScrollWaitGroup;
             payload = dict.mutableCopy;
             [payload removeObjectForKey:kMFModifiedDragDictKeyType];
         }
-        
-        //    DDLogDebug(@"INITIALIZING MODIFIED DRAG WITH TYPE %@ ON DEVICE %@", type, dev);
         
         /// Init _drag struct
         
@@ -251,7 +254,7 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
     
     /// Debug
     
-    DDLogDebug(@"modifiedDrag input: %lld %lld", dx, dy);
+//    DDLogDebug(@"modifiedDrag input: %lld %lld", dx, dy);
     
     /// Ignore event if both deltas are zero
     ///     We do this so the phases for the gesture scroll simulation (aka twoFingerSwipe) make sense. The gesture scroll event with phase kIOHIDEventPhaseBegan should always have a non-zero delta. If we let through zero deltas here it messes those phases up.
@@ -314,14 +317,14 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
         if (inputIsPointerMovement) {
 //            [NSCursor.closedHandCursor push]; // Doesn't work for some reason
         } else {
-            if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) { // Only seize when drag scrolling // TODO: Would be cleaner to call this further down where we check for kMFModifiedDragVariantTwoFingerSwipe anyways. Does that work too?
+            if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) { /// Only seize when drag scrolling // TODO: Would be cleaner to call this further down where we check for kMFModifiedDragVariantTwoFingerSwipe anyways. Does that work too?
                 [dev receiveAxisInputAndDoSeizeDevice:YES];
             }
         }
         /// Set activationState
-        _drag.activationState = kMFModifiedInputActivationStateInUse; // Activate modified drag input!
+        _drag.activationState = kMFModifiedInputActivationStateInUse; /// Activate modified drag input!
         
-        /// Setnd modifier feednack
+        /// Send modifier feedback
         [ModifierManager handleModifiersHaveHadEffectWithDevice:dev.uniqueID];
         
         //// Get usage axis
@@ -369,7 +372,7 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
             });
             
             // [GestureScrollSimulator postGestureScrollEventWithGestureDeltaX:0.0 deltaY:0.0 phase:kIOHIDEventPhaseMayBegin];
-            // ^ Always sending this at the start breaks swiping between pages on some websites (Google search results)
+            /// ^ Always sending this at the start breaks swiping between pages on some websites (Google search results)
             
         } else if ([_drag.type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
             
@@ -378,10 +381,9 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
         } else if ([_drag.type isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
             
             if (_drag.addModePayload != nil) {
-                [TransformationManager concludeAddModeWithPayload:_drag.addModePayload];
-                disableMouseTracking(); /// Not sure if should be here
+                [TransformationManager sendAddModeFeedbackWithPayload:_drag.addModePayload];
             } else {
-                @throw [NSException exceptionWithName:@"InvalidAddModeFeedbackPayload" reason:@"_drag.addModePayload is nil. Something went wrong!" userInfo:nil]; // Throw exception to cause crash
+                @throw [NSException exceptionWithName:@"InvalidAddModeFeedbackPayload" reason:@"_drag.addModePayload is nil. Something went wrong!" userInfo:nil]; /// Throw exception to cause crash
             }
         }
         
@@ -570,7 +572,7 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
     dispatch_async(_dragQueue, ^{
         /// Do everything on the dragQueue to ensure correct order of operations with the processing of the events from the eventTap.
         
-//        DDLogDebug(@"modifiedDrag deactivate with state: %@", [self modifiedDragStateDescription:_drag]);
+        DDLogDebug(@"modifiedDrag deactivate with state: %@", [self modifiedDragStateDescription:_drag]);
         
         if (_drag.activationState == kMFModifiedInputActivationStateNone) return;
         
@@ -704,8 +706,7 @@ static void handleDeactivationWhileInUse(BOOL cancelation) {
         
     } else if ([_drag.type isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
         
-        /// Do nothing
-
+        [TransformationManager disableAddModeWithPayload:_drag.addModePayload];
     }
 }
 

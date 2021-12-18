@@ -73,15 +73,12 @@ static NSArray *getScrollEffectsTable() {
         @{@"ui": @"Desktop & Launchpad", @"tool": @"Scroll up for Launchpad and down to show the Desktop \n \nWorks like Pinching with 4 fingers on an Apple Trackpad", @"dict": @{
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeFourFingerPinch
         }},
-        @{@"ui": @"App Switcher", @"tool": @"", @"dict": @{
-            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeCommandTab
-        }},
         separatorEffectsTableEntry(),
-        @{@"ui": @"Horizontal Scroll", @"tool": @"Scroll horizontally \nNavigate pages in Safari, delete messages in Mail, and more \n \nWorks like swiping horizontally with 2 fingers on an Apple Trackpad" , @"dict": @{
-            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeHorizontalScroll
-        }},
         @{@"ui": @"Zoom In & Out", @"tool": @"Zoom in or out in Safari, Maps, and other apps \n \nWorks like Pinch to Zoom on an Apple Trackpad" , @"dict": @{
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeZoom
+        }},
+        @{@"ui": @"Horizontal Scroll", @"tool": @"Scroll horizontally \nNavigate pages in Safari, delete messages in Mail, and more \n \nWorks like swiping horizontally with 2 fingers on an Apple Trackpad" , @"dict": @{
+            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeHorizontalScroll
         }},
         @{@"ui": @"Rotate", @"hideable": @NO, @"tool": @"Rotate in Maps and other apps \n \nWorks like Twisting with 2 fingers on an Apple Trackpad", @"dict": @{
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeRotate
@@ -92,6 +89,10 @@ static NSArray *getScrollEffectsTable() {
         }},
         @{@"ui": @"Precise Scroll", @"tool": @"Scroll small distances and use sensitive UI Elements with precision.", @"dict": @{
             kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypePrecisionScroll
+        }},
+        separatorEffectsTableEntry(),
+        @{@"ui": @"App Switcher", @"tool": @"", @"dict": @{
+            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeCommandTab
         }},
     ];
     return scrollEffectsTable;
@@ -619,8 +620,9 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         ///     Looks weird when you have "Double _Click and_ Drag"
 //        tr = [tr attributedStringBySettingSecondaryButtonTextColorForSubstring: clickStr]; /// `attributedStringBySettingSecondaryButtonTextColorForSubstring` is specifically intended for buttons, which is not what we're using it for here
         
-        /// Emphasize trigger string
-        tr = [tr attributedStringByAddingBoldForSubstring: triggerStr];
+        /// Slightly emphasize trigger string
+        tr = [tr attributedStringByAddingSemiBoldForSubstring:triggerStr];
+        tr = [tr attributedStringBySettingSemiBoldColorForSubstring:triggerStr];
         
     } else assert(false);
     

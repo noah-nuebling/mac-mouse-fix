@@ -212,7 +212,8 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
 + (void)handleModifiersHaveHadEffectWithDevice:(NSNumber *)devID {
     /// Convenience wrapper for `handleModifiersHaveHadEffect:activeModifiers:` if you don't have access to `activeModifiers`
     
-    NSDictionary *activeModifiers = [self getActiveModifiersForDevice:&devID filterButton:nil event:nil];
+    NSDictionary *activeModifiers = [self getActiveModifiersForDevice:&devID filterButton:nil event:nil despiteAddMode:YES];
+    /// ^ Using despiteAddMode: YES bc it works
     [ModifierManager handleModifiersHaveHadEffectWithDevice:devID activeModifiers:activeModifiers];
 }
 + (void)handleModifiersHaveHadEffectWithDevice:(NSNumber *)devID activeModifiers:(NSDictionary *)activeModifiers {

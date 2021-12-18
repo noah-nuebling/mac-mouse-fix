@@ -174,21 +174,38 @@ BOOL _addModeIsEnabled = NO;
         @{}: triggerToEffectDict
     };
 }
+
 + (void)disableAddMode {
+        
     _addModeIsEnabled = NO;
     [self loadRemapsFromConfig];
 }
+
++ (void)disableAddModeWithPayload:(NSDictionary *)payload {
+    /// Wrapper for disableAddMode. Not sure if this is useful
+    
+    if (![self addModePayloadIsValid:payload]) return;
+        
+    [self disableAddMode];
+}
+
++ (void)sendAddModeFeedbackWithPayload:(NSDictionary *)payload {
+    
+    if (![self addModePayloadIsValid:payload]) return;
+    
+    [SharedMessagePort sendMessage:@"addModeFeedback" withPayload:payload expectingReply:NO];
+    ///    [TransformationManager performSelector:@selector(disableAddMode) withObject:nil afterDelay:0.5];
+    /// ^ We did this to keep the remapping disabled for a little while after adding a new row, but it leads to adding several entries at once when trying to input button modification precondition, if you're not fast enough.
+}
+
 + (void)concludeAddModeWithPayload:(NSDictionary *)payload {
     
     DDLogDebug(@"Concluding addMode with payload: %@", payload);
     
-    if ([self addModePayloadIsValid:payload]) {
-        [SharedMessagePort sendMessage:@"addModeFeedback" withPayload:payload expectingReply:NO];
-        ///    [TransformationManager performSelector:@selector(disableAddMode) withObject:nil afterDelay:0.5];
-        /// ^ We did this to keep the remapping disabled for a little while after adding a new row, but it leads to adding several entries at once when trying to input button modification precondition, if you're not fast enough.
-        [TransformationManager disableAddMode];
-    }
+    [self sendAddModeFeedbackWithPayload:payload];
+    [self disableAddModeWithPayload:payload];
 }
+
 
 /// Using this to prevent payloads containing a modifiedDrag / modifiedScroll with a keyboard-modifier-only precondition, or an empty precondition from being sent to the main app
 /// Empty preconditions only happen when weird bugs occur so this is just an extra safety net for that

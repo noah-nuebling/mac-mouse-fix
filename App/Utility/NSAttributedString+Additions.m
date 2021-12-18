@@ -80,6 +80,27 @@
 //    return ret;
 }
 
+- (NSAttributedString *)attributedStringByAddingSemiBoldForSubstring:(NSString *)subStr {
+    double weight = 7; // 8;
+    return [self attributedStringBySettingWeight:weight forSubstring:subStr];
+}
+
+- (NSAttributedString *)attributedStringBySettingSemiBoldColorForSubstring:(NSString *)subStr {
+    /// I can't really get a semibold. It's too thick or too thin. So I'm trying to make it appear thicker by darkening the color.
+    
+    NSMutableAttributedString *ret = self.mutableCopy;
+    NSRange subRange = [self.string rangeOfString:subStr];
+    
+    NSColor *color;
+    
+//    color = [NSColor.textColor colorWithAlphaComponent:1.0]; /// Custom colors disable the automatic color inversion when selecting a tableViewCell. See https://stackoverflow.com/a/29860102/10601702
+    color = NSColor.controlTextColor; /// This is almost black and automatically inverts. See: http://sethwillits.com/temp/nscolor/
+    
+    [ret addAttribute:NSForegroundColorAttributeName value:color range:subRange];
+    
+    return ret;
+}
+
 - (NSAttributedString *)attributedStringByAddingItalicForSubstring:(NSString *)subStr {
     
     NSFontDescriptorSymbolicTraits traits = NSFontDescriptorTraitItalic;
