@@ -292,7 +292,7 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
                     || _modifications.effect == kMFScrollEffectModificationRotate)) {
         ///             ^ These modification effects simulate gestures. They need eventPhases to work properly. So they only work when when driven by the animator.
         
-        /// Send scroll event directly. Will scroll all of pxToScrollForThisTick at once.
+        /// Send scroll event directly - without the animator. Will scroll all of pxToScrollForThisTick at once.
         
         sendScroll(pxToScrollForThisTick, scrollDirection, NO, kMFAnimationPhaseNone);
         
@@ -470,84 +470,108 @@ static void sendScroll(int64_t px, MFScrollDirection scrollDirection, BOOL gestu
     
     /// Get params for sending event
     
-    IOHIDEventPhaseBits deltaPhase = kIOHIDEventPhaseUndefined;
-    BOOL isFinalEvent = NO;
-    void (*sendEventFunction)(int64_t, int64_t, IOHIDEventPhaseBits);
+//    IOHIDEventPhaseBits deltaPhase = kIOHIDEventPhaseUndefined;
+    BOOL isFirstEvent;
+    BOOL isFinalEvent;
+    MFScrollOutputType outputType;
     
     
     if (!gesture) {
         /// line-based scroll event
         
-        deltaPhase = kIOHIDEventPhaseBegan;
+        isFirstEvent = YES;
         isFinalEvent = YES;
-        sendEventFunction = sendLineScroll;
+        outputType = kMFScrollOutputTypeLineScroll;
         
     } else {
         /// Gesture scroll events
         
-        /// get deltaPhase
+        /// Get isFirst
         
         if (animationPhase == kMFAnimationPhaseStart
             || animationPhase == kMFAnimationPhaseStartAndEnd) {
             
-            deltaPhase = kIOHIDEventPhaseBegan;
+            isFirstEvent = YES;
             
         } else if (animationPhase == kMFAnimationPhaseRunningStart
                    || animationPhase == kMFAnimationPhaseContinue
                    || animationPhase == kMFAnimationPhaseEnd) {
             
-            deltaPhase = kIOHIDEventPhaseChanged;
+            isFirstEvent = NO;
+            
         } else {
             assert(false);
         }
         
-        /// Get isFinalEvent
+        /// Get isFinal
         
         if (animationPhase == kMFAnimationPhaseEnd
             || animationPhase == kMFAnimationPhaseStartAndEnd) {
             
             isFinalEvent = YES;
+        } else {
+            isFinalEvent = NO;
         }
         
-        /// Get sendTouchEventFunction
+        /// Get outputType
         
-        sendEventFunction = sendGestureScroll;
+        outputType = kMFScrollOutputTypeGestureScroll;
     }
     
     if (_modifications.effect == kMFScrollEffectModificationZoom) {
-        sendEventFunction = sendZoomEvent;
+        outputType = kMFScrollOutputTypeZoom;
     } else if (_modifications.effect == kMFScrollEffectModificationRotate) {
-        sendEventFunction = sendRotationEvent;
+        outputType = kMFScrollOutputTypeRotation;
     } else if (_modifications.effect == kMFScrollEffectModificationFourFingerPinch) {
-        sendEventFunction = sendFourFingerPinch;
+        outputType = kMFScrollOutputTypeFourFingerPinch;
     } /// kMFScrollEffectModificationHorizontalScroll is handled above when determining scroll direction
     
     /// Debug
     
-    DDLogDebug(@"Sending touch event with dx: %lld, dy: %lld, phase: %d, isFinal: %d", dx, dy, deltaPhase, isFinalEvent);
+    DDLogDebug(@"Sending touch event with dx: %lld, dy: %lld, isFirst: %d, isFinal: %d", dx, dy, isFirstEvent, isFinalEvent);
     
     /// Send event
     
-    sendTouchEvent(dx, dy, deltaPhase, isFinalEvent, sendEventFunction);
+    sendOutputEvents(dx, dy, isFirstEvent, isFinalEvent, outputType);
 }
 
-/// Generic touch sending func
+/// Define output types
 
-static void sendTouchEvent(int64_t dx, int64_t dy, IOHIDEventPhaseBits deltaPhase, BOOL isFinalEvent, void (*sendTouchEventFunction)(int64_t, int64_t, IOHIDEventPhaseBits)) {
+typedef enum {
+    kMFScrollOutputTypeGestureScroll,
+    kMFScrollOutputTypeZoom,
+    kMFScrollOutputTypeRotation,
+    kMFScrollOutputTypeFourFingerPinch,
+    kMFScrollOutputTypeLineScroll,
+} MFScrollOutputType;
+
+/// Output
+
+static void sendOutputEvents(int64_t dx, int64_t dy, BOOL isFirstEvent, BOOL isFinalEvent, MFScrollOutputType outputType) {
     
-    assert(deltaPhase == kIOHIDEventPhaseBegan || deltaPhase == kIOHIDEventPhaseChanged);
+    /// Init eventPhase
     
+    IOHIDEventPhaseBits eventPhase = isFirstEvent ? kIOHIDEventPhaseBegan : kIOHIDEventPhaseChanged;
+    
+    /// Send events based on outputType
+    
+    if (outputType == kMFScrollOutputTypeGestureScroll) {
         
-        if (_modifications.input == kMFScrollInputModificationQuick
-            && sendTouchEventFunction == sendGestureScroll) {
+        /// --- GestureScroll ---
+        
+        if (_modifications.input == kMFScrollInputModificationQuick) {
             
-            /// When quick scroll is active, we don't want to suppress natural momentum scroll (which `sendGestureScroll()` does), so we're sending the events directly instead of calling sendGestureScroll in that case
-            ///     For momentumScroll to work properly in certain apps like Xcode which implement their own momentumScroll algorithm, there are the following problems that would occur if we used sendGestureScroll but just turned off the momentumScroll suppression
+            /// QuickScroll is active
+            
+            /// When quick scroll is active, we don't want to suppress natural momentum scroll (which `kMFScrollOutputTypeGestureScroll()` does), so we're sending the events directly instead of calling kMFScrollOutputTypeGestureScroll in that case
+            ///     For momentumScroll to work properly in certain apps like Xcode which implement their own momentumScroll algorithm, there are the following problems that would occur if we used kMFScrollOutputTypeGestureScroll but just turned off the momentumScroll suppression
             ///         1. The delta of the last event before the kIOHIDEventPhaseEnded event seems to determine how fast the momentum scroll will be in apps like Xcode.
             ///             -> Since this is driven by a PixelatedAnimator the last delta will almost always be much smaller than the rest, leading momentum scroll to be too slow.
             ///         2. If the time between the kIOHIDEventPhaseEnded event and the previous one is very small, there will be a stuttery jump at the start of the momentumScroll
             ///             -> The default touchEventSending code (below) sends the kIOHIDEventPhaseEnded event immediately after the last delta event which leads to a very exagerated stuttery jump
             ///     To fix these two issues we simply ignore the deltas on the final event and set its phase to kIOHIDEventPhaseEnded (kIOHIDEventPhaseEnded can't have deltas (at least on the touch events we've observed), because they signal the user lifting off their fingers). Ignoring the final deltas is not ideal but this is the simplest and most robust solution I can come up with.
+            ///
+            ///     When sending zoom events, it also seems to cause problems (I saw them in Maps) if the `end` event is posted immediately after the last delta event. So we're cutting off the last delta event and sending and `end` event instead
             ///
             ///     Notes:
             ///     - It might also be more ideal to have the last event before the kIOHIDEventPhaseEnded event have the smoothed delta that we use to start our custom momentumScroll in [GestureScrollSimulator postGestureScrollEventWithDeltaX:]. This would create greater consistency between apps that use our momentumScroll algorithm like Safari and apps that have their own like Xcode.
@@ -557,112 +581,122 @@ static void sendTouchEvent(int64_t dx, int64_t dy, IOHIDEventPhaseBits deltaPhas
             if (isFinalEvent) {
                 dx = 0;
                 dy = 0;
-                deltaPhase = kIOHIDEventPhaseEnded;
+                eventPhase = kIOHIDEventPhaseEnded;
             }
-            [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:deltaPhase];
+            
+            [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:eventPhase];
             
         } else {
             
-            sendTouchEventFunction(dx, dy, deltaPhase);
+            /// Default (QuickScroll is *not* active)
             
+            [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:eventPhase];
+            
+            /// Suppress natural momentumScroll and GestureScrollSimulator's momentumScroll
             if (isFinalEvent) {
-                /// The "end" event in touch events usually signals the user lifting off their fingers and has a 0,0 delta. The events that our scrolling engine produces have non-zero deltas on their final events events. That's why we need to send this extra event
-                sendTouchEventFunction(0, 0, kIOHIDEventPhaseEnded);
+                
+                [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase: kIOHIDEventPhaseEnded];
+                [GestureScrollSimulator stopMomentumScroll];
             }
+            
         }
-    
-}
-
-/// Specific touch sending functions
-///     That plug into `sendTouchEvent`
-
-static void sendGestureScroll(int64_t dx, int64_t dy, IOHIDEventPhaseBits eventPhase) {
-    /// Send simulated two-finger swipe event
-    
-    [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:eventPhase];
-    
-    /// Suppress natural momentumScroll and GestureScrollSimulator's momentumScroll
-    if (eventPhase == kIOHIDEventPhaseEnded) {
-        [GestureScrollSimulator stopMomentumScroll];
-    }
-}
-
-static void sendZoomEvent(int64_t dx, int64_t dy, IOHIDEventPhaseBits eventPhase) {
-    /// Send zoom event
-    ///  This doesn't need subpixelation, so we could subpixelate after this instead of before (in sendScroll())
-    
-    double anyAxisDelta = dx + dy; /// This works because, if dx != 0 -> dy == 0, and the other way around.
-    double eventDelta = anyAxisDelta/800.0;
-    
-    [TouchSimulator postMagnificationEventWithMagnification:eventDelta phase:eventPhase];
-    
-    DDLogDebug(@"Sent zoom event with delta: %f, phase: %d", eventDelta, eventPhase);
-}
-static void sendRotationEvent(int64_t dx, int64_t dy, IOHIDEventPhaseBits eventPhase) {
-    /// Send zoom event
-    ///  This doesn't need subpixelation, so we could subpixelate after this instead of before (in sendScroll())
-    
-    double anyAxisDelta = dx + dy; /// This works because, if dx != 0 -> dy == 0, and the other way around.
-    double eventDelta = anyAxisDelta/8.0;
-    
-    [TouchSimulator postRotationEventWithRotation:eventDelta phase:eventPhase];
-}
-
-static void sendFourFingerPinch(int64_t dx, int64_t dy, IOHIDEventPhaseBits eventPhase) {
-    /// Send 4 finger pinch event - used to access Launchpad or show desktop
-    
-    double anyAxisDelta = dx + dy;
-    double eventDelta = anyAxisDelta/600.0;
-    /// ^ Launchpad feels a lot less sensitive than Show Desktop, but to improve this we'd have to somehow detect which of both is active atm
-    eventDelta = -eventDelta;
-    /// ^ Flip delta to mirror the way that zooming works
-    
-    [TouchSimulator postDockSwipeEventWithDelta:eventDelta type:kMFDockSwipeTypePinch phase:eventPhase];
-    
-    if (eventPhase == kIOHIDEventPhaseEnded) {
-        /// Dock swipes will sometimes get stuck when the computer is slow. This can be solved by sending several "end" events in a row with a delay (see "stuck bug" in ModifiedDrag)
-        ///     Edit: Even with sending the event again after 0.2 seconds, the stuck bug still happens a bunch here for some reason. Event though this almost completely eliminates the bug in ModifiedDrag.
-        ///         Hopefully, sending it again after 0.5 seconds works... Edit: Yes, seems to work better but still sometimes happens
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        
+    } else if (outputType == kMFScrollOutputTypeZoom) {
+        
+        /// --- Zoom ---
+        
+        double eventDelta;
+        
+        if (isFinalEvent) {
+            
+            /// When sending zoom events, it  seems to cause problems if the `end` event is posted immediately after the last delta event. (In Maps it would abruptly  jump to a different zoom level sometimes) So we're cutting off the final delta event and sending and `end` event with zero deltas instead - to preserve time gap between the last delta event and the `end` event.
+            
+            eventDelta = 0;
+            eventPhase = kIOHIDEventPhaseEnded;
+        } else {
+            eventDelta = (dx + dy)/800.0; /// This works because, if dx != 0 -> dy == 0, and the other way around.
+        }
+        
+        [TouchSimulator postMagnificationEventWithMagnification:eventDelta phase:eventPhase];
+        
+        
+        
+    } else if (outputType == kMFScrollOutputTypeRotation) {
+        
+        /// --- Rotation ---
+        
+        double eventDelta = (dx + dy)/8.0; /// This works because, if dx != 0 -> dy == 0, and the other way around.
+        
+        [TouchSimulator postRotationEventWithRotation:eventDelta phase:eventPhase];
+        
+        if (isFinalEvent) {
+            [TouchSimulator postRotationEventWithRotation:0 phase:kIOHIDEventPhaseEnded];
+        }
+        
+    } else if (outputType == kMFScrollOutputTypeFourFingerPinch) {
+        
+        /// --- FourFingerPinch ---
+        
+        ///     used to access Launchpad or show desktop
+        
+        double eventDelta = (dx + dy)/600.0;
+        /// ^ Launchpad feels a lot less sensitive than Show Desktop, but to improve this we'd have to somehow detect which of both is active atm
+        eventDelta = -eventDelta;
+        /// ^ Flip delta to mirror the way that zooming works
+        
+        [TouchSimulator postDockSwipeEventWithDelta:eventDelta type:kMFDockSwipeTypePinch phase:eventPhase];
+        
+        if (isFinalEvent) {
+            
             [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypePinch phase:kIOHIDEventPhaseEnded];
-        });
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-            [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypePinch phase:kIOHIDEventPhaseEnded];
-        });
+            
+            /// v Dock swipes will sometimes get stuck when the computer is slow. This can be solved by sending several "end" events in a row with a delay (see "stuck bug" in ModifiedDrag)
+            ///     Edit: Even with sending the event again after 0.2 seconds, the stuck bug still happens a bunch here for some reason. Event though this almost completely eliminates the bug in ModifiedDrag.
+            ///         Hopefully, sending it again after 0.5 seconds works... Edit: Yes, seems to work better but still sometimes happens
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypePinch phase:kIOHIDEventPhaseEnded];
+            });
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypePinch phase:kIOHIDEventPhaseEnded];
+            });
+            
+        }
+        
+    } else if (outputType == kMFScrollOutputTypeLineScroll) {
+        
+        /// --- LineScroll ---
+        
+        /// We ignore the phases and isFinalEvent here, they don't matter
+        
+        /// TODO: line delta should always be around 1/10 of pixel delta. Also subpixelate line delta.
+        ///     See CGEventSource pixelsPerLine - it's 10.
+        
+        CGEventRef event = CGEventCreateScrollWheelEvent(NULL, kCGScrollEventUnitPixel, 1, 0);
+        
+        int64_t dyLine;
+        int64_t dxLine;
+        
+        /// Make line deltas 1/10 or pixel deltas
+        dyLine = round(dy / 10);
+        dxLine = round(dx / 10);
+        
+        /// Make line deltas always 1, 0, or -1. These values are probably too small. We should study what these values should be more
+    //    if (dy != 0) dyLine = dy / llabs(dy);
+    //    if (dx != 0) dxLine = dx / llabs(dx);
+        
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, dyLine);
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1, dy);
+        CGEventSetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1, dy);
+        
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2, dxLine);
+        CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis2, dx);
+        CGEventSetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis2, dx);
+        
+        CGEventPost(kCGSessionEventTap, event);
         
     }
     
-}
-
-static void sendLineScroll(int64_t dx, int64_t dy, IOHIDEventPhaseBits eventPhase) {
-    /// Send line-based scroll event
-    ///     We ignore the `eventPhase` argument
-    
-    /// TODO: line delta should always be around 1/10 of pixel delta. Also subpixelate line delta.
-    ///     See CGEventSource pixelsPerLine - it's 10.
-    
-    CGEventRef event = CGEventCreateScrollWheelEvent(NULL, kCGScrollEventUnitPixel, 1, 0);
-    
-    int64_t dyLine;
-    int64_t dxLine;
-    
-    /// Make line deltas 1/10 or pixel deltas
-    dyLine = round(dy / 10);
-    dxLine = round(dx / 10);
-    
-    /// Make line deltas always 1, 0, or -1. These values are probably too small. We should study what these values should be more
-//    if (dy != 0) dyLine = dy / llabs(dy);
-//    if (dx != 0) dxLine = dx / llabs(dx);
-    
-    CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, dyLine);
-    CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1, dy);
-    CGEventSetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1, dy);
-    
-    CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2, dxLine);
-    CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis2, dx);
-    CGEventSetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis2, dx);
-    
-    CGEventPost(kCGSessionEventTap, event);
 }
 
 
