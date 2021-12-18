@@ -214,32 +214,32 @@
 }
 - (void)removeButtonAction {
     
-    // Capture notifs
+    /// Capture notifs
     NSSet<NSNumber *> *capturedButtonsBefore = [RemapTableUtility getCapturedButtons];
     
-    // Get selected table index
+    /// Get selected table index
     if (self.tableView.selectedRowIndexes.count == 0) return;
     assert(self.tableView.selectedRowIndexes.count == 1);
     NSUInteger selectedTableIndex = self.tableView.selectedRowIndexes.firstIndex;
     
-    // Get base data model index corresponding to selected table index
+    /// Get base data model index corresponding to selected table index
     NSUInteger selectedDataModelIndex = [RemapTableUtility baseDataModelIndexFromGroupedDataModelIndex:selectedTableIndex withGroupedDataModel:self.groupedDataModel];
     
-    // Save rowDict to be removed for later
+    /// Save rowDict to be removed for later
     NSDictionary *removedRowDict = self.dataModel[selectedDataModelIndex];
     
-    // Remove object from data model at selected index, and write to file
+    /// Remove object from data model at selected index, and write to file
     NSMutableArray *mutableDataModel = self.dataModel.mutableCopy;
     [mutableDataModel removeObjectAtIndex:selectedDataModelIndex];
     self.dataModel = (NSArray *)mutableDataModel;
     [self writeDataModelToConfig];
     [self loadDataModelFromConfig]; // Not sure if necessary
     
-    // Remove rows from table with animation
+    /// Remove rows from table with animation
     
     NSMutableIndexSet *rowsToRemoveWithAnimation = [[NSMutableIndexSet alloc] initWithIndex:selectedTableIndex];
     
-    // Check if a buttonGroupRow should be with animation removed, too
+    /// Check if a buttonGroupRow should be with animation removed, too
     MFMouseButtonNumber removedRowTriggerButton = [RemapTableUtility triggerButtonForRow:removedRowDict];
     BOOL buttonIsStillTriggerInDataModel = NO;
     for (NSDictionary *rowDict in self.dataModel) {
@@ -253,10 +253,10 @@
         
     }
     
-    // Do remove rows with animation
+    /// Do remove rows with animation
     [self.tableView removeRowsAtIndexes:rowsToRemoveWithAnimation withAnimation:NSTableViewAnimationSlideUp];
     
-    // Capture notifs
+    /// Capture notifs
     NSSet *capturedButtonsAfter = [RemapTableUtility getCapturedButtons];
     [CaptureNotificationCreator showButtonCaptureNotificationWithBeforeSet:capturedButtonsBefore afterSet:capturedButtonsAfter];
 }
@@ -371,7 +371,7 @@
 
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row {
     
-    // Calculate trigger cell text height
+    /// Calculate trigger cell text height
     NSDictionary *rowDict = self.groupedDataModel[row];
     
     if ([rowDict isEqual:RemapTableUtility.buttonGroupRowDict]) {
@@ -381,22 +381,22 @@
     
     rowDict = (NSDictionary *)[SharedUtility deepCopyOf:rowDict];
     NSTableCellView *view = [RemapTableTranslator getTriggerCellWithRowDict:rowDict];
-    // ^ These lines are copied from `tableView:viewForTableColumn:row:`. Should change this cause copied code is bad.
+    /// ^ These lines are copied from `tableView:viewForTableColumn:row:`. Should change this cause copied code is bad.
     NSTextField *textField = view.subviews[0];
     NSMutableAttributedString *string = textField.effectiveAttributedStringValue.mutableCopy;
     
-    CGFloat wdth = textField.bounds.size.width; // 326 for some reason, in IB it's 323
-    // ^ TODO: Test method from [Utility_App actualTextViewWidth]
+    CGFloat wdth = textField.bounds.size.width; /// 326 for some reason, in IB it's 323
+    /// TODO: ^ Test method from [Utility_App actualTextViewWidth]
     CGFloat textHeight = [string heightAtWidth:wdth];
     
-    // Get top and bottom margins around text from IB template
+    /// Get top and bottom margins around text from IB template
     NSTableCellView *templateView = [self.tableView makeViewWithIdentifier:@"triggerCell" owner:nil];
     NSTextField *templateTextField = templateView.subviews[0];
     CGFloat templateViewHeight = templateView.bounds.size.height;
     CGFloat templateTextFieldHeight = templateTextField.bounds.size.height;
     double margin = templateViewHeight - templateTextFieldHeight;
     
-    // Add margins and text height to get result
+    /// Add margins and text height to get result
     CGFloat result = textHeight + margin;
     if (result == templateViewHeight) {
         return result;
@@ -640,7 +640,7 @@ static BOOL isGroupRow(NSArray *groupedDataModel, NSInteger row) {
 /// The solution was to set the text field to a property other than `textField` so the tableView can't find the text field and override its style.
 - (void)tableView:(NSTableView *)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     
-    if (isGroupRow(self.groupedDataModel, row)) { // Try to make groupRow text black. Doesn't work. The function is never called.
+    if (isGroupRow(self.groupedDataModel, row)) { /// Try to make groupRow text black. Doesn't work. The function is never called.
         NSTableCellView *cellView = cell;
         cellView.textField.textColor = NSColor.labelColor;
     }

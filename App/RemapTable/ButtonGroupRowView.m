@@ -12,15 +12,22 @@
 
 @implementation ButtonGroupRowView
 
+- (instancetype)init {
+    if (self = [super init]) {
+        /// Nothing
+    }
+    return self;
+}
+
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];
     
-    // Clip for background drawing
-    NSRect clippingRect = NSInsetRect(dirtyRect, 1, 0); // Clip side borders
-    clippingRect.size.height -= 1; // Clip bottom border
+    /// Clip for background drawing
+    NSRect clippingRect = NSInsetRect(dirtyRect, 1, 0); /// Clip side borders
+    clippingRect.size.height -= 1; /// Clip bottom (?) border
     NSRectClip(clippingRect);
     
-    // Get background color
+    /// Get background color
     NSColor *backgroundColor;
     if (@available(macOS 10.14, *)) {
         backgroundColor = NSColor.alternatingContentBackgroundColors[1];
@@ -33,12 +40,12 @@
         backgroundColor = [backgroundColor colorWithAlphaComponent:alpha];
     }
     
-    // Draw background
+    /// Draw background
     [backgroundColor setFill];
     NSRectFill(dirtyRect);
         
     
-    if ((NO)) { // Don't need to draw border manually when using horizontal grid
+    if ((NO)) { /// Don't need to draw border manually when using horizontal grid
         
         // Clip for border drawing
         NSRect clippingRect = NSInsetRect(dirtyRect, 1, 0); // Clip side borders

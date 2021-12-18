@@ -11,6 +11,15 @@
 
 @implementation RemapTableView
 
+- (instancetype)init {
+    
+    if (self = [super init]) {
+        self.intercellSpacing = NSMakeSize(20,20);
+
+    }
+    return self;
+}
+
 // (?) Need this to make keystroke capture field first responder
 // See https://stackoverflow.com/questions/29986224/editable-nstextfield-in-nstableview
 //- (BOOL)validateProposedFirstResponder:(NSResponder *)responder forEvent:(NSEvent *)event {

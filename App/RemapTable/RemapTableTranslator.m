@@ -57,7 +57,7 @@ NSTableView *_tableView;
 //  "tool" - Tooltip of the popupbutton-menu-item
 //  "dict" - The effect dict
 //  "alternate" - If set to @YES, this entry will revealed by pressing a modifier key in the popupbutton menu
-// ? TODO: Create constants for these keys
+// TODO: ? Create constants for these keys
 // There are also separatorTableEntry()s which become a separator in the popupbutton-menu generated from the effectsTable
 // There are 3 different effectsTables for 3 different types of triggers
 // Noah from future: an 'effectsTable' should probably be called an 'effectButtonMenuModel' or 'effectsMenuModel' or 'effectOptionsModel' or something else that's more descriptive and less close to 'remapsTable'
@@ -178,9 +178,9 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
         @{@"ui": @"Keyboard Shortcut...", @"tool": @"Type a keyboard shortcut, then use it from your mouse", @"keyCaptureEntry": @YES},
     ].mutableCopy;
     
-    // Insert button specific entry
+    /// Insert button specific entry
     
-    if (buttonNumber != 3) { // We already have the "Open Link in New Tab" entry for button 3
+    if (buttonNumber != 3) { /// We already have the "Open Link in New Tab" / "Middle Click" entry for button 3
         NSDictionary *buttonClickEntry = @{
             @"ui": [NSString stringWithFormat:@"%@ Click", [UIStrings getButtonString:buttonNumber]],
             @"tool": [NSString stringWithFormat:@"Simulate Clicking %@", [UIStrings getButtonStringToolTip:buttonNumber]],
@@ -195,21 +195,21 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
         [oneShotEffectsTable insertObject:buttonClickEntry atIndex:9];
     }
     
-    // Insert entry for keyboard shortcut effect
+    /// Insert entry for keyboard shortcut effect
     
     if ([effectDict[kMFActionDictKeyType] isEqual:kMFActionDictTypeKeyboardShortcut]) {
-        // Get index for new entry (right after keyCaptureEntry)
+        /// Get index for new entry (right after keyCaptureEntry)
         NSIndexSet *keyCaptureIndexes = [oneShotEffectsTable indexesOfObjectsPassingTest:^BOOL(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             return [obj[@"keyCaptureEntry"] isEqual:@YES];
         }];
         assert(keyCaptureIndexes.count == 1);
         NSUInteger shortcutIndex = keyCaptureIndexes.firstIndex + 1;
-        // Get keycode and flags
+        /// Get keycode and flags
         CGKeyCode keyCode = ((NSNumber *)effectDict[kMFActionDictKeyKeyboardShortcutVariantKeycode]).unsignedShortValue;
         CGEventFlags flags = ((NSNumber *)effectDict[kMFActionDictKeyKeyboardShortcutVariantModifierFlags]).unsignedLongValue;
-        // Get shortcut string
+        /// Get shortcut string
         NSString *shortcutString = [UIStrings getStringForKeyCode:keyCode flags:flags];
-        // Create and insert new entry
+        /// Create and insert new entry
         [oneShotEffectsTable insertObject:@{
             @"ui": shortcutString,
             @"tool": stringf(@"Works like pressing '%@' on your keyboard", shortcutString),
@@ -220,9 +220,9 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
     
     return oneShotEffectsTable;
 }
-// Convenience functions for effects tables
+/// Convenience functions for effects tables
 
-// We wanted to rename 'effects table' to 'effects menu model', but we only did it in a few places. Thats why this is named weird
+/// We wanted to rename 'effects table' to 'effects menu model', but we only did it in a few places. Thats why this is named weird
 + (NSDictionary *)getEntryFromEffectTable:(NSArray *)effectTable withEffectDict:(NSDictionary *)effectDict {
     
     if ([effectDict[@"drawKeyCaptureView"] isEqual: @YES]) {
@@ -260,13 +260,13 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
         } else if ([triggerValueStr isEqualToString:kMFTriggerScroll]) {
             triggerType = @"scroll";
         } else {
-            NSAssert(YES, @"Can't determine trigger type.");
+            NSAssert(NO, @"Can't determine trigger type.");
         }
     }
-    // Get effects Table
+    /// Get effects Table
     NSArray *effectsTable;
     if ([triggerType isEqualToString:@"button"]) {
-        // We determined that trigger value is a dict -> convert to dict
+        /// We determined that trigger value is a dict -> convert to dict
         NSDictionary *buttonTriggerDict = (NSDictionary *)triggerValue;
         effectsTable = getOneShotEffectsTable(rowDict);
     } else if ([triggerType isEqualToString:@"drag"]) {
@@ -604,7 +604,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         
         /// Form full trigger cell string from substrings
         
-        NSString *trRaw = [NSString stringWithFormat:@"%@%@%@%@", levelStr, clickStr, keyboardModStr, triggerStr]; // Append buttonStr later depending on whether there are button preconds
+        NSString *trRaw = [NSString stringWithFormat:@"%@%@%@%@", levelStr, clickStr, keyboardModStr, triggerStr]; /// Append buttonStr later depending on whether there are button preconds
         NSString *trToolRaw = [NSString stringWithFormat:@"%@%@%@%@%@", levelStr, clickStr, keyboardModStrTool, triggerStr, mainButtonStrTool];
         
         /// Turn into attributedString
