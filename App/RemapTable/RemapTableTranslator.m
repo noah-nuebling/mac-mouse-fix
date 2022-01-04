@@ -376,7 +376,9 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         // Get effectDict from datamodel
         NSString * title = effectNameForRowDict(rowDict);
         if (title) {
-            [popupButton selectItemWithTitle:title];
+            NSMenuItem *itemToSelect = [popupButton itemWithTitle:title];
+            [popupButton selectItem:itemToSelect];
+            popupButton.toolTip = itemToSelect.toolTip;
         }
         
         // Disable popupbutton, if tableView is disabled
