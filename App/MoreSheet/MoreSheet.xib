@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -23,7 +23,7 @@
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="90" y="125" width="580" height="210"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="875"/>
             <view key="contentView" wantsLayer="YES" id="IZI-tD-pBD">
                 <rect key="frame" x="0.0" y="0.0" width="580" height="210"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -146,7 +146,7 @@ DQ
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <string key="toolTip">Check for an update every time you open Mac Mouse Fix
 
-You can turn this off and on again to check for updates immediately.</string>
+Turn this off and on again to check for updates immediately.</string>
                         <buttonCell key="cell" type="check" title="Check for updates" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="hbh-ID-kIW">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -165,7 +165,7 @@ You can turn this off and on again to check for updates immediately.</string>
                         </userDefinedRuntimeAttributes>
                     </imageView>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="07Z-7Y-gHB">
-                        <rect key="frame" x="530" y="170" width="19.5" height="25"/>
+                        <rect key="frame" x="530" y="170.5" width="19.5" height="25"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="Rki-3y-WxT">
                             <imageReference key="image" image="pencil" catalog="system" symbolScale="large"/>
@@ -194,7 +194,7 @@ You can turn this off and on again to check for updates immediately.</string>
                         </userDefinedRuntimeAttributes>
                     </textField>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="frB-aV-9yi">
-                        <rect key="frame" x="529" y="141.5" width="19" height="27"/>
+                        <rect key="frame" x="529" y="142" width="19" height="27"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="cA1-Yr-TyR">
                             <imageReference key="image" image="questionmark" catalog="system" symbolScale="large"/>
@@ -245,8 +245,8 @@ AAAAAAAAAAAAAAABOQ
         <image name="MilkshakeButton" width="185" height="27"/>
         <image name="PayPal" width="100" height="26"/>
         <image name="arrow.triangle.branch" catalog="system" width="15" height="14"/>
-        <image name="pencil" catalog="system" width="17" height="16"/>
-        <image name="questionmark" catalog="system" width="12" height="18"/>
+        <image name="pencil" catalog="system" width="18" height="17"/>
+        <image name="questionmark" catalog="system" width="13" height="19"/>
         <image name="safari" catalog="system" width="15" height="15"/>
     </resources>
 </document>
