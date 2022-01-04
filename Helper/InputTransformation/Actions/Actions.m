@@ -164,6 +164,7 @@ static void postSymbolicHotkey(CGSSymbolicHotKey shk) {
                                          target:[Actions class]
                                        selector:@selector(restoreSymbolicHotkeyParameters_timerCallback:)
                                        userInfo:@{
+                                           @"oldVirtualKeyCodeIsUsable": @(oldVirtualKeyCodeIsUsable),
                                            @"shk": @(shk),
                                            @"enabled": @(hotkeyIsEnabled),
                                            @"keyEquivalent": @(keyEquivalent),
@@ -178,12 +179,19 @@ static void postSymbolicHotkey(CGSSymbolicHotKey shk) {
     
     CGSSymbolicHotKey shk = [timer.userInfo[@"shk"] intValue];
     BOOL enabled = [timer.userInfo[@"enabled"] boolValue];
-    unichar kEq = [timer.userInfo[@"keyEquivalent"] unsignedCharValue];
-    CGKeyCode kCode = [timer.userInfo[@"virtualKeyCode"] unsignedIntValue];
-    CGSModifierFlags mod = [timer.userInfo[@"flags"] intValue];
-    
     CGSSetSymbolicHotKeyEnabled(shk, enabled);
-    CGSSetSymbolicHotKeyValue(shk, kEq, kCode, mod);
+    
+    if (![timer.userInfo[@"oldVirtualKeyCodeIsUsable"] boolValue]) {
+        
+        /// In Monterey, `CGSSetSymbolicHotKeyValue()` doesn't seem to work anymore, and it sets the shk to unusable values.
+        ///     That's why we introduced this if-condition - so that if a hotkey is usable, just not enabled, the hotkey configuration won't be messed up under Monterey. If a hotkey is actually not usable that still poses an issues though, I think.
+        ///         TODO: Test this further, and get it to work under Monterey (possibly we can just leave out the "making the keycode usable" stuff or possibly we can find a replacement function for CGSSetSymbolicHotKeyValue()). Don't forget to merge these changes into version 3.
+        
+        unichar kEq = [timer.userInfo[@"keyEquivalent"] unsignedCharValue];
+        CGKeyCode kCode = [timer.userInfo[@"virtualKeyCode"] unsignedIntValue];
+        CGSModifierFlags mod = [timer.userInfo[@"flags"] intValue];
+        CGSSetSymbolicHotKeyValue(shk, kEq, kCode, mod);
+    }
 }
 
 @end
