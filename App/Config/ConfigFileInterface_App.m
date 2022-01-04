@@ -10,12 +10,26 @@
 #import <AppKit/AppKit.h>
 #import "ConfigFileInterface_App.h"
 #import "HelperServices.h"
-#import "../MessagePort/MessagePort_App.h"
+#import "SharedMessagePort.h"
 #import "NSMutableDictionary+Additions.h"
 #import "Utility_App.h"
 #import "Objects.h"
+#import "Constants.h"
 
 @implementation ConfigFileInterface_App
+
+// Convenience function for accessing config
+id config(NSString *keyPath) {
+    return [ConfigFileInterface_App.config valueForKeyPath:keyPath];
+}
+// Convenience function for modifying config
+void setConfig(NSString *keyPath, NSObject *object) {
+    [ConfigFileInterface_App.config setValue:object forKeyPath:keyPath];
+}
+// Convenience function for writing config to file and notifying the helper app
+void commitConfig() {
+    [ConfigFileInterface_App writeConfigToFileAndNotifyHelper];
+}
 
 static NSMutableDictionary *_config;
 + (NSMutableDictionary *)config {
@@ -24,13 +38,13 @@ static NSMutableDictionary *_config;
 + (void)setConfig:(NSMutableDictionary *)new {
     _config = new;
 }
-static NSURL *_backupConfigURL; // backup_config aka default_config
+static NSURL *_defaultConfigURL; // default_config aka backup_config
 
 + (void)load {
     
     // Get backup config url
-    NSString *backupConfigPathRelative = @"Contents/Resources/backup_config.plist";
-    _backupConfigURL = [Objects.mainAppBundle.bundleURL URLByAppendingPathComponent:backupConfigPathRelative];
+    NSString *defaultConfigPathRelative = @"Contents/Resources/default_config.plist";
+    _defaultConfigURL = [Objects.mainAppBundle.bundleURL URLByAppendingPathComponent:defaultConfigPathRelative];
     
     // Load config
     [self loadConfigFromFile];
@@ -62,7 +76,7 @@ static NSURL *_backupConfigURL; // backup_config aka default_config
     }
     NSLog(@"Wrote config to file.");
 //    NSLog(@"config: %@", _config);
-    [MessagePort_App sendMessageToHelper:@"configFileChanged"];
+    [SharedMessagePort sendMessage:@"configFileChanged" withPayload:nil expectingReply:NO];
 }
 
 /// Load data from plist file at _configURL into _config class variable
@@ -75,9 +89,14 @@ static NSURL *_backupConfigURL; // backup_config aka default_config
     NSError *readErr;
     NSMutableDictionary *configDict = [NSPropertyListSerialization propertyListWithData:configData options:NSPropertyListMutableContainersAndLeaves format:nil error:&readErr];
     if (readErr) {
-        NSLog(@"ERROR Reading config File: %@", readErr);
+        NSLog(@"Error Reading config File: %@", readErr);
         // TODO: handle this error
     }
+    
+#if DEBUG
+    NSLog(@"Loaded config from file: %@", configDict);
+#endif
+    
     self.config = configDict;
 }
 
@@ -89,18 +108,18 @@ static NSURL *_backupConfigURL; // backup_config aka default_config
     
     if (![NSFileManager.defaultManager fileExistsAtPath:Objects.configURL.path]) {
         [NSFileManager.defaultManager createDirectoryAtURL:Objects.configURL.URLByDeletingLastPathComponent withIntermediateDirectories:YES attributes:nil error:nil];
-        [self replaceCurrentConfigWithBackupConfig];
+        [self replaceCurrentConfigWithDefaultConfig];
     }
     
-    // TODO: Check whether all default (as opposed to override) values exist in config file. If they don't everything breaks. Maybe do this by comparing with backup_config.
+    // TODO: Check whether all default (as opposed to override) values exist in config file. If they don't everything breaks. Maybe do this by comparing with default_config.
     // TODO: Consider moving/copying this function to helper, so it can repair stuff as well.
     
     // Check if config version matches, if not, replace with default.
     
     NSNumber *currentConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:Objects.configURL] valueForKeyPath:@"Other.configVersion"];
-    NSNumber *backupConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:_backupConfigURL] valueForKeyPath:@"Other.configVersion"];
-    if (currentConfigVersion.intValue != backupConfigVersion.intValue) {
-        [self replaceCurrentConfigWithBackupConfig];
+    NSNumber *defaultConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:_defaultConfigURL] valueForKeyPath:@"Other.configVersion"];
+    if (currentConfigVersion.intValue != defaultConfigVersion.intValue) {
+        [self replaceCurrentConfigWithDefaultConfig];
     }
     
     // TODO: Check if this works
@@ -135,20 +154,20 @@ static NSURL *_backupConfigURL; // backup_config aka default_config
 //            }
 //            repairedOverrides[bundleID] = repairedOverride;
 //        }
-//        _config[@"AppOverrides"] = repairedOverrides;
+//        _config[kMFConfigKeyAppOverrides] = repairedOverrides;
 //    }
 }
 
 /// Replaces the current config file which the helper app is reading from with the backup one and then terminates the helper. (Helper will restart automatically because of the KeepAlive attribute in its user agent config file.)
-+ (void)replaceCurrentConfigWithBackupConfig {
-    NSData *defaultData = [NSData dataWithContentsOfURL:_backupConfigURL];
++ (void)replaceCurrentConfigWithDefaultConfig {
+    NSData *defaultData = [NSData dataWithContentsOfURL:_defaultConfigURL];
     [defaultData writeToURL:Objects.configURL atomically:YES];
-    [MessagePort_App sendMessageToHelper:@"terminate"];
+    [SharedMessagePort sendMessage:@"terminate" withPayload:nil expectingReply:NO];
     [self loadConfigFromFile];
 }
 
 + (void)cleanConfig {
-    NSMutableDictionary *appOverrides = _config[@"AppOverrides"];
+    NSMutableDictionary *appOverrides = _config[kMFConfigKeyAppOverrides];
     
     // Delete overrides for uninstalled apps
     // This might delete preinstalled overrides. So not doing that.

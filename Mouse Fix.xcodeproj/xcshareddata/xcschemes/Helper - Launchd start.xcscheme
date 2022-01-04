@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scheme
+   LastUpgradeVersion = "1220"
+   version = "1.7">
+   <BuildAction
+      parallelizeBuildables = "YES"
+      buildImplicitDependencies = "YES">
+      <BuildActionEntries>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4F94F5ED25E5EC2500D9F24A"
+               BuildableName = "Mac Mouse Fix.app"
+               BlueprintName = "Mac Mouse Fix"
+               ReferencedContainer = "container:Mouse Fix.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+      </BuildActionEntries>
+   </BuildAction>
+   <TestAction
+      buildConfiguration = "Debug"
+      selectedDebuggerIdentifier = ""
+      selectedLauncherIdentifier = "Xcode.IDEFoundation.Launcher.PosixSpawn"
+      shouldUseLaunchSchemeArgsEnv = "YES">
+      <Testables>
+      </Testables>
+   </TestAction>
+   <LaunchAction
+      buildConfiguration = "Debug"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      launchStyle = "1"
+      useCustomWorkingDirectory = "NO"
+      ignoresPersistentStateOnLaunch = "NO"
+      debugDocumentVersioning = "YES"
+      debugServiceExtension = "internal"
+      allowLocationSimulation = "YES">
+      <PreActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Run Script"
+               scriptText = "#!/bin/bash&#10;&#10;# Launching Helper embedded into Main App via launchd.&#10;# This provides a &quot;natural&quot; environment for it for debugging&#10;&#10;# I thought this would be a quick little script to test the uninstalling code but nope. Might want to move this over to XCTests.&#10;&#10;# Need to use Console.app to see logs for debugging&#10;# ... Console.app doesn&apos;t log all messages somehow? What is going on?&#10;# We only want to execute this script and not use the xcode debugging cause debugging in xcode doesn&apos;t work anyways (Even if we can get the debugger attached, no log messages show up in Xcode)&#10;# But we still need to debug an executable for this script to be executed for some stupid reason&#10;# *luckily* the &quot;Wait for executable to be launched&quot; option doesn&apos;t fucking work either and we can use that to disable the Xcode debugging while still having it execute this script&#10;# The post actions don&apos;t work at all...&#10;&#10;# If this doesn&apos;t work, it might be because no config file exists in the library. Try starting the helper from the main app to generate this file&#10;&#10;# plutil tut: https://scriptingosx.com/2016/11/editing-property-lists/&#10;# debugging priviledged helper https://developer.apple.com/forums/thread/133415&#10;&#10;# Debug&#10;#BUILD_DIR=&quot;/Users/Noah/Library/Developer/Xcode/DerivedData/Mouse_Fix-efqsyfjcspmnyiftwlwinuqikmvp/Build/Products&quot;; &#10;#PROJECT_DIR=&quot;/Users/Noah/Documents/Projekte/Programmieren/Xcode/Xcode Projekte/Mac Mouse Fix/mac-mouse-fix&quot;;&#10;&#10;echo &quot;Registering helper with launchd&quot;;&#10;&#10;# Remove helper from launchd (this also closes it)&#10;/bin/launchctl remove &quot;mouse.fix.helper&quot;;&#10;&#10;# Create launchd plist&#10;default_launchd_plist_path=&quot;${PROJECT_DIR}/Shared/HelperServices/default_launchd.plist&quot;&#10;launchd_plist_path=&quot;/Users/Noah/Library/LaunchAgents/com.nuebling.mac-mouse-fix.helper.plist&quot;;&#10;cp &quot;${default_launchd_plist_path}&quot; &quot;${launchd_plist_path}&quot;&#10;&#10;# Edit launchd plist&#10;exec_path=&quot;${BUILD_DIR}/Debug/Mac Mouse Fix.app/Contents/Library/LoginItems/Mac Mouse Fix Helper.app/Contents/MacOS/Mac Mouse Fix Helper&quot;;&#10;/usr/bin/plutil -replace Program -string &quot;${exec_path}&quot; &quot;${launchd_plist_path}&quot;;&#10;#/usr/bin/plutil -replace WaitForDebugger -bool YES &quot;${launchd_plist_path}&quot;; # Testing # Don&apos;t forget to set to NO after&#10;&#10;# Launch helper&#10;/bin/launchctl bootstrap gui/501 $launchd_plist_path;&#10;">
+               <EnvironmentBuildable>
+                  <BuildableReference
+                     BuildableIdentifier = "primary"
+                     BlueprintIdentifier = "4F94F5ED25E5EC2500D9F24A"
+                     BuildableName = "Mac Mouse Fix.app"
+                     BlueprintName = "Mac Mouse Fix"
+                     ReferencedContainer = "container:Mouse Fix.xcodeproj">
+                  </BuildableReference>
+               </EnvironmentBuildable>
+            </ActionContent>
+         </ExecutionAction>
+      </PreActions>
+      <PostActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Run Script"
+               scriptText = "/bin/launchctl remove &quot;mouse.fix.helper&quot;; &#10;# Doesn&apos;t work, have to do this manually after running&#10;#   I think that&apos;s cause this is only called when the executable is quit &quot;naturally&quot; not by pressing the stop button in Xcode...&#10;&#10;">
+            </ActionContent>
+         </ExecutionAction>
+      </PostActions>
+      <PathRunnable
+         runnableDebuggingMode = "0"
+         FilePath = "/Users/Noah/Library/Developer/Xcode/DerivedData/Mouse_Fix-efqsyfjcspmnyiftwlwinuqikmvp/Build/Products/Release/Mac Mouse Fix.app/Contents/Library/LoginItems/Mac Mouse Fix Helper.app">
+      </PathRunnable>
+   </LaunchAction>
+   <ProfileAction
+      buildConfiguration = "Release"
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      savedToolIdentifier = ""
+      useCustomWorkingDirectory = "NO"
+      debugDocumentVersioning = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "4F94F5ED25E5EC2500D9F24A"
+            BuildableName = "Mac Mouse Fix.app"
+            BlueprintName = "Mac Mouse Fix"
+            ReferencedContainer = "container:Mouse Fix.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
+   </ProfileAction>
+   <AnalyzeAction
+      buildConfiguration = "Debug">
+   </AnalyzeAction>
+   <ArchiveAction
+      buildConfiguration = "Release"
+      revealArchiveInOrganizer = "YES">
+   </ArchiveAction>
+</Scheme>

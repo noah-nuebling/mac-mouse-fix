@@ -23,17 +23,23 @@ IB_DESIGNABLE
 
 @end
 
-@implementation Hyperlink
-
-NSRect _trackingRect;
+@implementation Hyperlink {
+    BOOL _mouseIsOverSelf;
+    BOOL _mouseDownOverSelf;
+    NSRect _trackingRect;
+}
 
 - (void)awakeFromNib {
     
+    _mouseIsOverSelf = NO;
+    _mouseDownOverSelf = NO;
+        
+    [NSEvent addLocalMonitorForEventsMatchingMask:NSEventMaskLeftMouseDown handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
+        [self mouseDown:event];
+        return event;
+    }];
     [NSEvent addLocalMonitorForEventsMatchingMask:NSEventMaskLeftMouseUp handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
-        NSPoint loc = [AppDelegate.mainWindow.contentView convertPoint:event.locationInWindow toView:self];
-        if (NSPointInRect(loc, _trackingRect)) {
-            [self reactToClick];
-        }
+        [self mouseUp:event];
         return event;
     }];
     
@@ -56,7 +62,7 @@ NSRect _trackingRect;
     // Setup tracking area
     
     // Options
-    NSTrackingAreaOptions trackingAreaOptions =  NSTrackingMouseEnteredAndExited | NSTrackingActiveInKeyWindow;
+    NSTrackingAreaOptions trackingAreaOptions =  NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways | NSTrackingEnabledDuringMouseDrag;
     _trackingRect = self.bounds;
     
     // Make area larger according to IBInspectable tracking margins
@@ -77,38 +83,40 @@ NSRect _trackingRect;
                                                            owner:self
                                                         userInfo:nil];
     [self addTrackingArea:area];
-    
 }
-//- (void)resetCursorRects {
-//    [self discardCursorRects];
-//    [self addCursorRect:_trackingRect cursor:NSCursor.pointingHandCursor];
-//}
 - (void)mouseEntered:(NSEvent *)event {
     
+    _mouseIsOverSelf = YES;
+    
     NSMutableAttributedString *underlinedString = [[NSMutableAttributedString alloc] initWithAttributedString: self.attributedStringValue];
-    
     NSRange wholeStringRange = NSMakeRange(0, [underlinedString length]);
-    
     [underlinedString addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:wholeStringRange];
-    
-//    [underlinedString setAlignment:NSTextAlignmentRight range:wholeStringRange];
-    
     self.attributedStringValue = underlinedString;
+    
+//    [NSCursor.pointingHandCursor push]; // This is maybe a little tacky, cause nothing else in the UI does this
 }
 - (void)mouseExited:(NSEvent *)event {
     
+    _mouseIsOverSelf = NO;
+    
     NSMutableAttributedString *notUnderlinedString = [[NSMutableAttributedString alloc] initWithAttributedString: self.attributedStringValue];
-    
     NSRange wholeStringRange = NSMakeRange(0, [notUnderlinedString length]);
-    
     [notUnderlinedString addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleNone) range:wholeStringRange];
     
-//    [notUnderlinedString setAlignment:NSTextAlignmentRight range:wholeStringRange];
-    
     self.attributedStringValue = notUnderlinedString;
+    
+//    [NSCursor.pointingHandCursor pop];
+}
+- (void)mouseDown:(NSEvent *)event {
+    if (_mouseIsOverSelf) {
+        _mouseDownOverSelf = YES;
+    }
 }
 - (void)mouseUp:(NSEvent *)event {
-
+    if (_mouseDownOverSelf && _mouseIsOverSelf) {
+        [self reactToClick];
+    }
+    _mouseDownOverSelf = NO;
 }
 - (void) reactToClick {
     // Open URL defined in Interface Builder
@@ -117,6 +125,5 @@ NSRect _trackingRect;
     // Send IBAction
     [self sendAction:self.action to:self.target];
 }
-
 
 @end

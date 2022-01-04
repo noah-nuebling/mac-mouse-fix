@@ -9,19 +9,17 @@
 
 #import "Utility_App.h"
 #import <AppKit/AppKit.h>
+#import "NSArray+Additions.h"
 
 @implementation Utility_App
 
-+ (NSArray *)subviewsForView:(NSView *)view withIdentifier:(NSString *)identifier {
-    
-    NSMutableArray *subviews = [[NSMutableArray alloc] init];
-    for (NSView *v in view.subviews) {
-        if ([v.identifier isEqualToString:identifier]) {
-            [subviews addObject:v];
-        }
-    }
-    return subviews;
++ (NSInteger)bundleVersion {
+    return [[[NSBundle bundleForClass:self] objectForInfoDictionaryKey:@"CFBundleVersion"] integerValue];
 }
++ (NSString *)bundleVersionShort {
+    return (NSString *)[NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+}
+
 + (void)centerWindow:(NSWindow *)win atPoint:(NSPoint)pt {
     
     NSRect frm = win.frame;
@@ -49,25 +47,6 @@
     
     return ctr;
 }
-
-/// Copy of identically named function in `Helper` > `Utility` > `Utility_HelperApp.m`
-+ (NSDictionary *)dictionaryWithOverridesAppliedFrom:(NSDictionary *)src to:(NSDictionary *)dst {
-    NSMutableDictionary *dstMutable = [dst mutableCopy];
-    for (NSString *key in src) {
-        NSObject *dstVal = [dst valueForKey:key];
-        NSObject *srcVal = [src valueForKey:key];
-        if ([srcVal isKindOfClass:[NSDictionary class]] || [srcVal isKindOfClass:[NSMutableDictionary class]]) { // Not sure if checking for mutable dict and dict is necessary
-            // Nested dictionary found. Recursing.
-            NSDictionary *recursionResult = [self dictionaryWithOverridesAppliedFrom:(NSDictionary *)srcVal to:(NSDictionary *)dstVal];
-            [dstMutable setValue:recursionResult forKey:key];
-        } else {
-            // Leaf found
-            [dstMutable setValue:srcVal forKey:key];
-        }
-    }
-    return dstMutable;
-}
-
 + (BOOL)appIsInstalled:(NSString *)bundleID {
     NSString *appPath = [NSWorkspace.sharedWorkspace URLForApplicationWithBundleIdentifier:bundleID].path;
     if (appPath) {
@@ -75,5 +54,29 @@
     }
     return NO;
 }
++ (NSImage *)tintedImage:(NSImage *)image withColor:(NSColor *)tint {
+    image = image.copy;
+    if (tint) {
+        [image lockFocus];
+        
+        NSRect imageRect = NSMakeRect(0, 0, image.size.width, image.size.height);
+        [image drawInRect:imageRect fromRect:imageRect operation:NSCompositingOperationSourceOver fraction:tint.alphaComponent];
+        [[tint colorWithAlphaComponent:1] set];
+        NSRectFillUsingOperation(imageRect, NSCompositingOperationSourceAtop);
+        [image unlockFocus];
+    }
+    [image setTemplate:NO];
+    return image;
+}
+
+// Source: https://stackoverflow.com/a/25941139/10601702
++ (CGFloat)actualTextViewWidth:(NSTextView *)textView {
+    CGFloat padding = textView.textContainer.lineFragmentPadding;
+    CGFloat  actualPageWidth = textView.bounds.size.width - padding * 2;
+    return actualPageWidth;
+}
+//+ (CGFloat)actualTextFieldWidth:(NSTextField *)textField {
+//    // Don't know how to make this work
+//}
 
 @end

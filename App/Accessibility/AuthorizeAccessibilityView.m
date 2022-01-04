@@ -7,10 +7,14 @@
 // --------------------------------------------------------------------------
 //
 
-#import "../AppDelegate.h"
+#import "AppDelegate.h"
 #import "AuthorizeAccessibilityView.h"
-#import "../MessagePort/MessagePort_App.h"
+#import "MessagePort_App.h"
 #import "Utility_App.h"
+#import "MFNotificationController.h"
+#import "SharedMessagePort.h"
+#import "CaptureNotifications.h"
+#import "RemapTableUtility.h"
 
 @interface AuthorizeAccessibilityView ()
 
@@ -87,6 +91,28 @@ AuthorizeAccessibilityView *_accViewController;
         [mainView addSubview:accView];
         accView.alphaValue = 0;
         accView.hidden = YES;
+        // Center in superview
+//        mainView.translatesAutoresizingMaskIntoConstraints = NO;
+        accView.translatesAutoresizingMaskIntoConstraints = NO;
+        NSLog(@"mainView frame: %@, accView frame: %@", [NSValue valueWithRect:mainView.frame], [NSValue valueWithRect:accView.frame]);
+        [mainView addConstraints:@[
+            [NSLayoutConstraint constraintWithItem:mainView
+                                         attribute:NSLayoutAttributeCenterX
+                                         relatedBy:NSLayoutRelationEqual
+                                            toItem:accView
+                                         attribute:NSLayoutAttributeCenterX
+                                        multiplier:1
+                                          constant:0],
+            [NSLayoutConstraint constraintWithItem:mainView
+                                         attribute:NSLayoutAttributeCenterY
+                                         relatedBy:NSLayoutRelationEqual
+                                            toItem:accView
+                                         attribute:NSLayoutAttributeCenterY
+                                        multiplier:1
+                                          constant:0],
+        ]];
+        [mainView layout];
+        NSLog(@"mainView frame: %@, accView frame: %@", [NSValue valueWithRect:mainView.frame], [NSValue valueWithRect:accView.frame]);
     }
     
     [NSAnimationContext beginGrouping];
@@ -102,7 +128,6 @@ AuthorizeAccessibilityView *_accViewController;
     
     NSLog(@"Removing AuthorizeAccessibilityView");
     
-//    NSView *mainView = NSApp.mainWindow.contentView;
     NSView *mainView = AppDelegate.mainWindow.contentView;
     
     NSView *baseView;
@@ -122,16 +147,27 @@ AuthorizeAccessibilityView *_accViewController;
     
     if (accView) {
         [accView removeFromSuperview];
+        
+        [NSAnimationContext beginGrouping];
+        [NSAnimationContext.currentContext setDuration:0.3];
+        [NSAnimationContext.currentContext setCompletionHandler:^{
+//            NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Welcome to Mac Mouse Fix!"];
+//            [MFNotificationController attachNotificationWithMessage:message toWindow:AppDelegate.mainWindow forDuration:-1];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.0), dispatch_get_main_queue(), ^{
+                // v This usually fails because the remote message port can't be created
+                //      I think it happens because the helper kills itself after gaining accessibility access and is restarted by launchd too slowly. Weirdly, I think I remember that this used to work.
+                NSSet *capturedButtons = [RemapTableUtility getCapturedButtons];
+                [CaptureNotifications showButtonCaptureNotificationWithBeforeSet:NSSet.set afterSet:capturedButtons];
+//                NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Mac Mouse Fix will stay enabled after you restart your Mac"];
+//                [MFNotificationController attachNotificationWithMessage:message toWindow:AppDelegate.mainWindow forDuration:-1];
+            });
+        }];
+        baseView.animator.alphaValue = 1;
+        baseView.hidden = NO;
+        accView.animator.alphaValue = 0;
+        accView.hidden = YES;
+        [NSAnimationContext endGrouping];
     }
-    
-    [NSAnimationContext beginGrouping];
-    [[NSAnimationContext currentContext] setDuration:0.3];
-    baseView.animator.alphaValue = 1;
-    baseView.hidden = NO;
-    accView.animator.alphaValue = 0;
-    accView.hidden = YES;
-    [NSAnimationContext endGrouping];
-    
 }
 
 @end

@@ -10,24 +10,28 @@
 #import "AccessibilityCheck.h"
 
 #import <AppKit/AppKit.h>
-#import "../MessagePort/MessagePort_HelperApp.h"
-#import "../DeviceManager/DeviceManager.h"
-#import "../MessagePort/MessagePort_HelperApp.h"
-#import "../Config/ConfigFileInterface_HelperApp.h"
-#import "../Scroll/SmoothScroll.h"
-#import "../Scroll/RoughScroll.h"
+#import "SharedMessagePort.h"
+#import "MessagePort_Helper.h"
+#import "DeviceManager.h"
+#import "ConfigFileInterface_Helper.h"
+#import "ScrollControl.h"
+#import "ButtonInputReceiver.h"
 #import "Constants.h"
+#import "ModifiedDrag.h"
+#import "ModifierManager.h"
 
 #import <os/log.h>
 
 @implementation AccessibilityCheck
 
+NSTimer *_openMainAppTimer;
+
 + (void)load {
     
-    os_log_t MFLog = os_log_create(kMFBundleIDHelper.UTF8String, "status");
-    os_log(MFLog, "Mac Mouse Fix Helper begins logging excessively...");
+//    os_log_t MFLog = os_log_create(kMFBundleIDHelper.UTF8String, "status");
+//    os_log(MFLog, "Mac Mouse Fix Helper begins logging excessively...");
     
-    [MessagePort_HelperApp load_Manual];
+    [MessagePort_Helper load_Manual];
     
     Boolean accessibilityEnabled = [self check];
     
@@ -37,15 +41,21 @@
         
         [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(sendAccessibilityMessageToMainApp) userInfo:NULL repeats:NO];
         
-        [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(openMainApp) userInfo:NULL repeats:YES];
+        _openMainAppTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(openMainApp) userInfo:NULL repeats:YES];
             
     } else {
         
-        // using load_Manual instead of normal load, because creating an eventTap crashes the program, if we don't have accessibilty access (I think - I don't really remember)
+        // Using load_Manual instead of normal load, because creating an eventTap crashes the program, if we don't have accessibilty access (I think - I don't really remember)
+        // TODO: Look into using `+ initialize` instead of `+ load`. The way we have things set up there are like a bajillion entry points to the program (one for every `+ load` function) which is kinda sucky. Might be better to have just one entry point to the program and then start everything that needs to be started with `+ start` functions and let `+ initialize` do the rest
         [DeviceManager load_Manual];
-        [ConfigFileInterface_HelperApp load_Manual];
+        [ConfigFileInterface_Helper load_Manual];
         [ScrollControl load_Manual];
-        [SmoothScroll load_Manual];
+        [ModifiedDrag load_Manual];
+        [ModifierManager load_Manual];
+        
+        [ButtonInputReceiver load_Manual]; // TODO: Check if this is necessary. I think that not having this caused a crash when accessibility permissions were denied.
+        
+        [SharedMessagePort sendMessage:@"helperEnabled" withPayload:nil expectingReply:NO];
     }
 }
 + (Boolean)check {
@@ -61,7 +71,7 @@
 
 + (void)sendAccessibilityMessageToMainApp {
     NSLog(@"Sending accessibilty disabled message to main app");
-    [MessagePort_HelperApp sendMessageToMainApp:@"accessibilityDisabled"];
+    [SharedMessagePort sendMessage:@"accessibilityDisabled" withPayload:nil expectingReply:NO];
 }
 
 + (void)openMainApp {
@@ -75,6 +85,8 @@
         }
         // Close this app (Will be restarted immediately by launchd)
         [NSApp terminate:NULL];
+//        [self load]; // TESTING - to make button capture notification work
+//        [_openMainAppTimer invalidate]; // TESTING
     }
 }
 

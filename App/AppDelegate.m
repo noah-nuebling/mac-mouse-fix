@@ -10,16 +10,20 @@
 // implement checkbox functionality, setup AddingField mouse tracking and other minor stuff
 
 #import <PreferencePanes/PreferencePanes.h>
-#import <ServiceManagement/SMLoginItem.h>
 #import "AppDelegate.h"
-#import "Updater.h"
-#import "Config/ConfigFileInterface_App.h"
-#import "MessagePort/MessagePort_App.h"
-#import "Update/UpdateWindow.h"
-#import "Utility/Utility_App.h"
-#import "Accessibility/AuthorizeAccessibilityView.h"
+#import "ConfigFileInterface_App.h"
+#import "SharedMessagePort.h"
+#import "Utility_App.h"
+#import "AuthorizeAccessibilityView.h"
 #import "HelperServices.h"
+#import "SharedUtility.h"
+#import "MFNotificationController.h"
+#import "NSView+Additions.h"
 #import "AppTranslocationManager.h"
+#import "MessagePort_App.h"
+#import <Sparkle/Sparkle.h>
+#import "SparkleUpdaterController.h"
+#import "NSAttributedString+Additions.h"
 
 @interface AppDelegate ()
 
@@ -27,16 +31,10 @@
 
 @property (weak) IBOutlet NSButton *enableMouseFixCheckBox;
 
-
 @property (weak) IBOutlet NSButton *scrollEnableCheckBox;
 
 @property (weak) IBOutlet NSSlider *scrollStepSizeSlider;
 @property (weak) IBOutlet NSButton *invertScrollCheckBox;
-
-@property (weak) IBOutlet NSPopUpButton *middleClick;
-@property (weak) IBOutlet NSPopUpButton *middleHold;
-@property (weak) IBOutlet NSPopUpButton *sideClick;
-@property (weak) IBOutlet NSButton *swapSideButtonsCheckBox;
 
 @end
 
@@ -44,12 +42,36 @@
 
 # pragma mark - IBActions
 
-- (IBAction)enableCheckBox:(id)sender {
-    BOOL checkboxState = [sender state];
-    [HelperServices enableHelperAsUserAgent: checkboxState];
-    [self performSelector:@selector(disableUI:) withObject:[NSNumber numberWithBool:_enableMouseFixCheckBox.state] afterDelay:0.0];
+- (IBAction)enableCheckBox:(NSButton *)sender {
+    
+    BOOL beingEnabled = sender.state;
+    sender.state = !sender.state; // Prevent user from changing checkbox state directly. Instead, we'll do that through the `enableUI` method.
+    
+    if (beingEnabled) {
+        // We won't enable the UI here directly. Instead, we'll do that from the `handleHelperEnabledMessage` method
+    } else { // Being disabled
+        [self enableUI:@NO];
+    }
+    
+    [HelperServices enableHelperAsUserAgent:beingEnabled];
+    // ^ We enable/disable the helper.
+    //  After enabling, the helper will send a message to the main app confirming that it has been enabled (received by `AppDelegate + handleHelperEnabledMessage`). Only when that message is received, will we change the state of the checkbox and the rest of the UI to enabled.
+    //  This should make the checkbox state more accurately reflect what's going on when something goes wrong with enabling the helper, making things less confusing to users who experience issues enabling MMF.
+    //  We only do this for enabling and not for disabling, because disabling always seems to work. Another reason we're not applying this for disabling is that it could lead to issues if the helper just crashes and doesn't send an "I'm being disabled" message before quitting. In that case the checkbox would just stay enabled.
 }
-- (IBAction)moreButton:(id)sender {
++ (void)handleHelperEnabledMessage {
+    
+    if (self.instance.UIDisabled) {
+        // Enable UI
+        [self.instance enableUI:@YES];
+        // Flash Notification
+//        NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Mac Mouse Fix will stay enabled after you restart your Mac"];
+//        message = [message attributedStringBySettingFontSize:NSFont.smallSystemFontSize];
+//        [MFNotificationController attachNotificationWithMessage:message toWindow:AppDelegate.mainWindow forDuration:-1 alignment:kMFNotificationAlignmentBottomMiddle];
+    }
+}
+
+- (IBAction)openMoreSheet:(id)sender {
     [MoreSheet.instance begin];
 }
 - (IBAction)scrollEnableCheckBox:(id)sender {
@@ -67,6 +89,10 @@
 }
 + (NSWindow *)mainWindow {
     return self.instance.window;
+}
+- (RemapTableController *)remapTableController {
+    RemapTableController *controller = (RemapTableController *)self.remapsTable.delegate;
+    return controller;
 }
 
 #pragma mark - Init and Lifecycle
@@ -105,16 +131,92 @@ static NSDictionary *sideButtonActions;
     
 }
 
+- (void)applicationWillFinishLaunching:(NSNotification *)notification {
+
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
     
     NSLog(@"Mac Mouse Fix finished launching");
     
+    // Load UI
+    
     [self setUIToConfigFile];
     
-    BOOL checkForUpdates = [[ConfigFileInterface_App.config valueForKeyPath:@"Other.checkForUpdates"] boolValue];
-    if (checkForUpdates == YES) {
-        [Updater checkForUpdate];
+    // Update app-launch counters
+    
+    NSInteger launchesOverall;
+    NSInteger launchesOfCurrentBundleVersion;
+    
+    launchesOverall = [config(@"Other.launchesOverall") integerValue];
+    launchesOfCurrentBundleVersion = [config(@"Other.launchesOfCurrentBundleVersion") integerValue];
+    NSInteger lastLaunchedBundleVersion = [config(@"Other.lastLaunchedBundleVersion") integerValue];
+    NSInteger currentBundleVersion = Utility_App.bundleVersion;
+    
+    launchesOverall += 1;
+    
+    if (currentBundleVersion != lastLaunchedBundleVersion) {
+        launchesOfCurrentBundleVersion = 0;
     }
+    launchesOfCurrentBundleVersion += 1;
+    
+    setConfig(@"Other.launchesOfCurrentBundleVersion", @(launchesOfCurrentBundleVersion));
+    setConfig(@"Other.launchesOverall", @(launchesOverall));
+    setConfig(@"Other.lastLaunchedBundleVersion", @(currentBundleVersion));
+    
+    
+    BOOL firstAppLaunch = launchesOverall == 1; // App is launched for the first time
+    BOOL firstVersionLaunch = launchesOfCurrentBundleVersion == 1; // Last time that the app was launched was a different bundle version
+    
+    // Configure Sparkle Updater
+    //  (See https://sparkle-project.org/documentation/customization/)
+    
+    // Some configuration is done via Info.plist, and seemingly can't be done from code
+    // Some more configuration is done from SparkleUpdaterController.m
+    
+    SUUpdater *up = SUUpdater.sharedUpdater;
+    
+    up.automaticallyChecksForUpdates = NO;
+    // ^ We set this to NO because we just always check when the app starts. That's simpler and it's how the old non-Sparkle updater did it so it's a little easier to deal with.
+    //   We also use the `updaterShouldPromptForPermissionToCheckForUpdates:` delegate method to make sure no Sparkle prompt occurs asking the user if they want automatic checks.
+    //   You could also disable this from Info.plist using `SUEnableAutomaticChecks` but that's unnecessary
+    
+//    up.sendsSystemProfile = NO; // This is no by default
+    up.automaticallyDownloadsUpdates = NO;
+    
+    BOOL checkForUpdates = [config(@"Other.checkForUpdates") boolValue];
+    
+    BOOL checkForPrereleases = [config(@"Other.checkForPrereleases") boolValue];
+    
+    if (firstVersionLaunch && !appState().updaterDidRelaunchApplication) {
+        // TODO: Test if updaterDidRelaunchApplication works.
+        //  It will only work if `SparkleUpdaterDelegate - updaterDidRelaunchApplication:` is called before this
+        // The app (or this version of it) has probably been downloaded from the internet and is running for the first time.
+        //  -> Override check-for-prereleases setting
+        if (SharedUtility.runningPreRelease) {
+            // If this is a pre-release version itself, we activate updates to pre-releases
+            checkForPrereleases = YES;
+        } else {
+            // If this is not a pre-release, then we'll *deactivate* updates to pre-releases
+            checkForPrereleases = NO;
+        }
+        setConfig(@"Other.checkForPrereleases", @(checkForPrereleases));
+    }
+    
+    // Write changes to we made to config through setConfig() to file. Also notifies helper app, which is probably unnecessary.
+    commitConfig();
+    
+    // Check for udates
+    
+    if (checkForUpdates) {
+        
+        NSString *feedURLString;
+        
+        [SparkleUpdaterController enablePrereleaseChannel:checkForPrereleases];
+        
+        [up checkForUpdatesInBackground];
+    }
+    
 }
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
     NSLog(@"Mac Mouse Fix should terminate");
@@ -132,7 +234,7 @@ NSTimer *removeAccOverlayTimer;
     [removeAccOverlayTimer invalidate];
 }
 - (void)windowDidBecomeKey:(NSNotification *)notification {
-    [MessagePort_App performSelector:@selector(sendMessageToHelper:) withObject:@"checkAccessibility" afterDelay:0.0];
+    [SharedMessagePort sendMessage:@"checkAccessibility" withPayload:nil expectingReply:NO];
     if (@available(macOS 10.12, *)) {
         removeAccOverlayTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 repeats:NO block:^(NSTimer * _Nonnull timer) {
             [self removeAccOverlayTimerCallback];
@@ -142,28 +244,33 @@ NSTimer *removeAccOverlayTimer;
     }
 }
 
-
 - (void)windowWillClose:(NSNotification *)notification {
-    [UpdateWindow.instance close];
+//    [UpdateWindow.instance close]; Can't find a way to close Sparkle Window
     [OverridePanel.instance close];
     [MoreSheet.instance end];
 }
 
--(BOOL) applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)app {
+- (BOOL) applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)app {
     return YES;
 }
 
 #pragma mark - UI Logic
 
-- (void)disableUI:(NSNumber *)enable {
+- (BOOL)UIDisabled {
+    return !self.enableMouseFixCheckBox.state;
+}
+- (void)enableUI:(NSNumber *)enable {
     
     BOOL enb = enable.boolValue;
     
-    NSArray *baseArray = [Utility_App subviewsForView:self.window.contentView withIdentifier:@"baseView"];
-    NSView *baseView = baseArray[0];
-    NSBox *preferenceBox = (NSBox *)[Utility_App subviewsForView:baseView withIdentifier:@"preferenceBox"][0];
+    self.enableMouseFixCheckBox.state = enb;
     
-    for (NSObject *v in preferenceBox.contentView.subviews) {
+    NSView *baseView = [self.window.contentView subviewsWithIdentifier:@"baseView"][0];
+    NSBox *preferenceBox = (NSBox *)[baseView subviewsWithIdentifier:@"preferenceBox"][0]; // Should use outlets instead of this
+    
+    
+    NSArray<NSView *> *recursiveSubviews = [preferenceBox.contentView nestedSubviews];
+    for (NSObject *v in recursiveSubviews) {
         if ([[v class] isSubclassOfClass:[NSControl class]]) {
             [(NSControl *)v setEnabled:enb];
         }
@@ -176,6 +283,7 @@ NSTimer *removeAccOverlayTimer;
     _scrollStepSizeSlider.enabled = enable.boolValue;
 }
 
+/// TODO: Rename to loadUIFromConfigFile - this is confusing
 - (void)setUIToConfigFile {
     
     NSLog(@"Setting Enable Mac Mouse Fix checkbox to: %hhd", [HelperServices helperIsActive]);
@@ -190,60 +298,9 @@ NSTimer *removeAccOverlayTimer;
     
     [ConfigFileInterface_App loadConfigFromFile];
     
-# pragma mark Popup Buttons
-    
-    NSDictionary *buttonRemaps = ConfigFileInterface_App.config[@"ButtonRemaps"];
-    
-    // Side buttons
-    
-    // Swapped checkbox
-    if ([buttonRemaps[@"sideButtonsInverted"] boolValue] == 1) {
-        _swapSideButtonsCheckBox.state = 1;
-    }
-    else {
-        _swapSideButtonsCheckBox.state = 0;
-    }
-    
-    // Popup button
-    long i;
-    NSString *eventTypeSideClick = buttonRemaps[@"4"][@"single"][@"click"][0];
-    
-    if ([eventTypeSideClick isEqualToString:@"swipeEvent"]) {
-        i = 2;
-    }
-    else if ([eventTypeSideClick isEqualToString:@"symbolicHotKey"]) {
-        i = 1;
-    }
-    else {
-        i = 0;
-    }
-    [_sideClick selectItemWithTag: i];
-    
-    // Middle button
-    
-    NSDictionary *middleButtonRemap = buttonRemaps[@"3"][@"single"];
-    
-    // Click popup buttons
-    NSInteger symbolicHotKeyMiddleClick = [middleButtonRemap[@"click"][1] integerValue];
-    if (symbolicHotKeyMiddleClick) {
-        [_middleClick selectItemWithTag: symbolicHotKeyMiddleClick];
-    }
-    else {
-        [_middleClick selectItemWithTag: 0];
-    }
-    
-    // Hold popup button
-    NSInteger symbolicHotKeyMiddleHold = [middleButtonRemap[@"hold"][1] integerValue];
-    if (symbolicHotKeyMiddleHold) {
-        [_middleHold selectItemWithTag: symbolicHotKeyMiddleHold];
-    }
-    else {
-        [_middleHold selectItemWithTag: 0];
-    }
-    
 # pragma mark scrollSettings
     
-    NSDictionary *scrollConfigFromFile = ConfigFileInterface_App.config[@"Scroll"];
+    NSDictionary *scrollConfigFromFile = ConfigFileInterface_App.config[kMFConfigKeyScroll];
     
     // Enabled checkbox
     if ([scrollConfigFromFile[@"smooth"] boolValue] == 1) {
@@ -269,45 +326,12 @@ NSTimer *removeAccOverlayTimer;
     
     _scrollStepSizeSlider.doubleValue = pxStepSizeRelativeToConfigRange;
     
-    [self performSelector:@selector(disableUI:) withObject:[NSNumber numberWithBool:_enableMouseFixCheckBox.state] afterDelay:0.0];
+//    [self performSelector:@selector(enableUI:) withObject:@(_enableMouseFixCheckBox.state) afterDelay:0.0];
     
 }
 
 - (void)setConfigFileToUI {
     
-    // Middle button
-    
-    // Tag equals symbolicHotKey
-    
-    // Click
-    NSArray *middleButtonClickAction;
-    if (_middleClick.selectedTag != 0) {
-        middleButtonClickAction= @[@"symbolicHotKey", @(_middleClick.selectedTag)];
-    }
-    [ConfigFileInterface_App.config setValue:middleButtonClickAction forKeyPath:@"ButtonRemaps.3.single.click"];
-    
-    // Hold
-    NSArray *middleButtonHoldAction;
-    if (_middleHold.selectedTag != 0) {
-        middleButtonHoldAction = @[@"symbolicHotKey", @(_middleHold.selectedTag)];
-    }
-    [ConfigFileInterface_App.config setValue:middleButtonHoldAction forKeyPath:@"ButtonRemaps.3.single.hold"];
-    
-    
-    // Side buttons         // tag = 1 -> Switch Spaces, tag = 2 -> Switch Pages
-    
-    [ConfigFileInterface_App.config setValue:[NSNumber numberWithBool: _swapSideButtonsCheckBox.state] forKeyPath:@"ButtonRemaps.sideButtonsInverted"];
-    
-    // Click
-    NSArray *sideButtonClickAction = [sideButtonActions objectForKey:@(_sideClick.selectedTag)];
-
-    if (_swapSideButtonsCheckBox.state == 1) {
-        [ConfigFileInterface_App.config setValue:sideButtonClickAction[0] forKeyPath:@"ButtonRemaps.5.single.click"];
-        [ConfigFileInterface_App.config setValue:sideButtonClickAction[1] forKeyPath:@"ButtonRemaps.4.single.click"];
-    } else {
-        [ConfigFileInterface_App.config setValue:sideButtonClickAction[0] forKeyPath:@"ButtonRemaps.4.single.click"];
-        [ConfigFileInterface_App.config setValue:sideButtonClickAction[1] forKeyPath:@"ButtonRemaps.5.single.click"];
-    }
     
     // Scroll Settings
     
@@ -328,7 +352,7 @@ NSTimer *removeAccOverlayTimer;
     int stepSizeActual = ( scrollSliderValue * (stepSizeMax - stepSizeMin) ) + stepSizeMin;
     
     NSDictionary *scrollParametersFromUI = @{
-        @"Scroll": @{
+        kMFConfigKeyScroll: @{
                 @"smooth": @(_scrollEnableCheckBox.state),
                 @"direction": @(direction),
                 @"smoothParameters": @{
@@ -340,7 +364,7 @@ NSTimer *removeAccOverlayTimer;
     };
     
     
-    ConfigFileInterface_App.config = [[Utility_App dictionaryWithOverridesAppliedFrom:scrollParametersFromUI to:ConfigFileInterface_App.config] mutableCopy];
+    ConfigFileInterface_App.config = [[SharedUtility dictionaryWithOverridesAppliedFrom:scrollParametersFromUI to:ConfigFileInterface_App.config] mutableCopy];
     
     [ConfigFileInterface_App writeConfigToFileAndNotifyHelper];
 }

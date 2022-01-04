@@ -9,17 +9,19 @@
 
 #import "MoreSheet.h"
 #import "ConfigFileInterface_App.h"
-#import "../Update/Updater.h"
-#import "../MessagePort/MessagePort_App.h"
-#import "../AppDelegate.h"
+#import "MessagePort_App.h"
+#import "AppDelegate.h"
 #import "Utility_App.h"
+#import <Sparkle/Sparkle.h>
+#import "SparkleUpdaterController.h"
 
 
 @interface MoreSheet ()
-    @property (strong) IBOutlet NSPanel *sheetPanel; // TODO: Remove. This should be the same as the automatically generated _window property.
-    @property (weak) IBOutlet NSTextField *versionLabel;
-    @property (weak) IBOutlet NSButton *checkForUpdateCheckBox;
-    @property (weak) IBOutlet NSButton *doneButton;
+@property (strong) IBOutlet NSPanel *sheetPanel; // TODO: Remove. This should be the same as the automatically generated _window property.
+@property (weak) IBOutlet NSTextField *versionLabel;
+@property (weak) IBOutlet NSButton *checkForUpdateCheckBox;
+@property (weak) IBOutlet NSButton *prereleaseCheckBox;
+@property (weak) IBOutlet NSButton *doneButton;
 @end
 
 @implementation MoreSheet
@@ -39,12 +41,19 @@ static MoreSheet *_instance;
 # pragma mark - IBActions
 
 - (IBAction)checkForUpdateCheckBox:(NSButton *)sender {
-    NSLog(@"CHECK");
-    [ConfigFileInterface_App.config setValue:@"0" forKeyPath:@"Other.skippedBundleVersion"];
-    [self UIChanged:NULL];
+    setConfig(@"Other.skippedBundleVersion", @"0");
+    [self updateConfigFileToUIState];
+    [self updateUI]; // So that prereleaseCheckBox gets disabled/enabled
     if (sender.state == 1) {
-        [Updater checkForUpdate];
+        [SUUpdater.sharedUpdater checkForUpdatesInBackground];
         
+    }
+}
+- (IBAction)prereleaseCheckBox:(NSButton *)sender {
+    [self updateConfigFileToUIState];
+    [SparkleUpdaterController enablePrereleaseChannel:sender.state];
+    if (sender.state == 1) {  
+        [SUUpdater.sharedUpdater checkForUpdatesInBackground];
     }
 }
 
@@ -57,9 +66,6 @@ static MoreSheet *_instance;
 }
 - (IBAction)doneButton:(id)sender {
     [self end];
-}
-- (IBAction)UIChanged:(id)sender {
-    [self setConfigFileToUI];
 }
 
 //- (void)mouseDown:(NSEvent *)event {
@@ -91,21 +97,30 @@ static MoreSheet *_instance;
 
 - (void)windowDidLoad {
     [super windowDidLoad];
-    [self initializeUI];
+    [self updateUI];
 }
 
-- (void)initializeUI {
-    NSString *versionString = [NSString stringWithFormat:@"Version %@ (%@)",
-                               [[NSBundle bundleForClass:[self class]] objectForInfoDictionaryKey:@"CFBundleShortVersionString"],
-                               [[NSBundle bundleForClass:[self class]] objectForInfoDictionaryKey:@"CFBundleVersion"]];
-    [_versionLabel setStringValue:versionString];
+- (void)updateUI {
     
-    _checkForUpdateCheckBox.state = [[ConfigFileInterface_App.config valueForKeyPath:@"Other.checkForUpdates"] boolValue];
+    // Load version label
+    NSString *versionString = [NSString stringWithFormat:@"Version %@ (%ld)",
+                               (NSString *)Utility_App.bundleVersionShort,
+                               (long)Utility_App.bundleVersion];
+    [self.versionLabel setStringValue:versionString];
+    
+    // Load checkbox state
+    self.checkForUpdateCheckBox.state = [config(@"Other.checkForUpdates") boolValue];
+    self.prereleaseCheckBox.state = [config(@"Other.checkForPrereleases") boolValue];
+    
+    self.prereleaseCheckBox.enabled = self.checkForUpdateCheckBox.state;
 }
 
-- (void)setConfigFileToUI {
-    [ConfigFileInterface_App.config setValue:[NSNumber numberWithBool:_checkForUpdateCheckBox.state] forKeyPath:@"Other.checkForUpdates"];
-    [ConfigFileInterface_App writeConfigToFileAndNotifyHelper];
+- (void)updateConfigFileToUIState {
+    
+    setConfig(@"Other.checkForPrereleases", @(self.prereleaseCheckBox.state));
+    setConfig(@"Other.checkForUpdates", @(self.checkForUpdateCheckBox.state));
+    
+    commitConfig();
 }
 
 @end

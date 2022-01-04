@@ -10,6 +10,7 @@
 #import "Objects.h"
 #import "Constants.h"
 #import <Cocoa/Cocoa.h>
+#import "SharedUtility.h"
 
 @implementation Objects
 
@@ -72,15 +73,15 @@ static NSURL *_configURL;
 + (void)getOriginalBundlesForMainApp:(NSBundle *__autoreleasing *)mainAppBundle helper:(NSBundle *__autoreleasing *)helperBundle {
     NSBundle *thisBundle = NSBundle.mainBundle;
     
-    if ([thisBundle.bundleIdentifier isEqualToString:kMFBundleIDApp]) {
+    if (SharedUtility.runningMainApp) {
         NSString *helperPath = [thisBundle.bundleURL URLByAppendingPathComponent:kMFRelativeHelperAppPath].path;
         *mainAppBundle = thisBundle;
         *helperBundle = [NSBundle bundleWithPath:helperPath];
-    } else if ([thisBundle.bundleIdentifier isEqualToString:kMFBundleIDHelper]) {
+    } else if (SharedUtility.runningHelper) {
         NSString *mainAppPath = [thisBundle.bundleURL URLByAppendingPathComponent:kMFRelativeMainAppPathFromHelperBundle].path;
         *mainAppBundle = [NSBundle bundleWithPath:mainAppPath];
         *helperBundle = thisBundle;
-    } else if ([NSFileManager.defaultManager isExecutableFileAtPath:[thisBundle.bundlePath stringByAppendingPathComponent:kMFAccompliceName]]) {
+    } else if (SharedUtility.runningAccomplice) {
         // Accomplice bundle doesn't have url only bundle path
         NSString *mainAppPath =  [thisBundle.bundlePath stringByAppendingPathComponent:kMFRelativeMainAppPathFromAccompliceFolder];
         NSString *helperPath = [mainAppPath stringByAppendingPathComponent:kMFRelativeHelperAppPath];

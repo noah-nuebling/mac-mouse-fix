@@ -21,7 +21,7 @@ extern const CFStringRef kTLInfoKeyRotation;	// degrees
 extern const CFStringRef kTLInfoKeySwipeDirection;
 extern const CFStringRef kTLInfoKeyNextSubtype;
 
-enum {
+enum { // Noah: These seem to come from IOHIDEvents.h
 	kTLInfoSubtypeRotate = 0x05,
 	kTLInfoSubtypeSub6,	// may be panning/scrolling
 	kTLInfoSubtypeMagnify = 0x08,

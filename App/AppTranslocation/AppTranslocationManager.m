@@ -9,7 +9,7 @@
 
 #import "AppTranslocationManager.h"
 #import <dlfcn.h>
-#import "SharedUtil.h"
+#import "SharedUtility.h"
 #import "Constants.h"
 #import <Cocoa/Cocoa.h>
 
@@ -64,7 +64,7 @@ NSURL *getUntranslocatedURL() {
     mySecTranslocateCreateOriginalPathForURL = getFunctionFromSecurityFramework("SecTranslocateCreateOriginalPathForURL");
     
     // Get original URL
-    CFErrorRef err = NULL;
+    CFErrorRef err = NULL; // Need to initialize this to NULL, else this will be random memory when no error occurs (I think)
     untranslocatedURL = (__bridge NSURL*)mySecTranslocateCreateOriginalPathForURL(getAppURL(), &err);
     if (err != NULL) {
         NSError *error = (__bridge NSError *)err;
@@ -81,10 +81,10 @@ void removeQuarantineFlagAndRestart(NSURL* untranslocatedURL) {
     NSURL *xattrURL = [NSURL fileURLWithPath:kMFXattrPath];
     NSURL *openURL = [NSURL fileURLWithPath:kMFOpenCLTPath];
     
-    NSError *error;
+    NSError *error = nil;
     
     // Remove quarantine attributes of original
-    [SharedUtil launchCTL:xattrURL withArguments:@[@"-cr", untranslocatedURL.path] error:&error];
+    [SharedUtility launchCTL:xattrURL withArguments:@[@"-cr", untranslocatedURL.path] error:&error];
     
     if (error != nil) {
         NSLog(@"Error while removing quarantine: %@", error);
@@ -93,7 +93,7 @@ void removeQuarantineFlagAndRestart(NSURL* untranslocatedURL) {
     
     // Relaunch app at original (untranslocated) location
     //  -> Use ‘open’ as it allows two instances of app (this instance is exiting)
-    [SharedUtil launchCTL:openURL withArguments:@[@"-n", @"-a", untranslocatedURL.path] error:&error];
+    [SharedUtility launchCTL:openURL withArguments:@[@"-n", @"-a", untranslocatedURL.path] error:&error];
     // ^ This successfully relaunches the app but AccessibilityOverlay doesn't work on the relaunched instance. I assume it's sth to do with message ports. Yes that turned out to be it. Using `initialize` instead of `load` to make the message port be created after this is executed fixed it.
     // ^ We need to make sure not to use MessagePort_App from within any `load` methods, as that would lead to MessagePort_App being initialized before this is called, leading to the same issue. (This is currently being called from [AppDelegate + initialize])
     
@@ -115,11 +115,12 @@ void removeQuarantineFlagAndRestart(NSURL* untranslocatedURL) {
 + (void)removeTranslocation {
     
     bool translocated = getIsTranslocated();
-    NSURL *originalURL = getUntranslocatedURL();
     
-    NSLog(@"Mac Mouse Fix is translocated: %d\n original URL: %@", translocated, originalURL);
+    NSLog(@"Mac Mouse Fix is translocated: %d", translocated);
     
     if (translocated) {
+        NSURL *originalURL = getUntranslocatedURL();
+        NSLog(@"Untranslocated URL: %@", originalURL);
         removeQuarantineFlagAndRestart(originalURL);
     }
     

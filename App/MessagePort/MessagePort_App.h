@@ -14,6 +14,4 @@
 
 + (void)load_Manual;
 
-+ (void)sendMessageToHelper:(NSString *)message;
-//+ (NSString *)sendMessageWithReplyToHelper:(NSString *)message;
 @end
