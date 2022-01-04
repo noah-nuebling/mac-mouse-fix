@@ -142,12 +142,12 @@ DQ
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" id="Ooo-MV-trH">
-                        <rect key="frame" x="29" y="99" width="134" height="18"/>
+                        <rect key="frame" x="29" y="99" width="140" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <string key="toolTip">Check for an update every time you open Mac Mouse Fix
 
 Turn this off and on again to check for updates immediately.</string>
-                        <buttonCell key="cell" type="check" title="Check for updates" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="hbh-ID-kIW">
+                        <buttonCell key="cell" type="check" title="Check for Updates" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="hbh-ID-kIW">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -208,9 +208,9 @@ Turn this off and on again to check for updates immediately.</string>
                         <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                     </imageView>
                     <button toolTip="Help make Mac Mouse Fix better by testing new features and improvements early" verticalHuggingPriority="750" id="Opz-In-sXR">
-                        <rect key="frame" x="31" y="81" width="124" height="11"/>
+                        <rect key="frame" x="31" y="81" width="97" height="11"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="check" title="Update to beta versions" bezelStyle="regularSquare" imagePosition="left" controlSize="mini" inset="2" id="XE3-Wv-ejl">
+                        <buttonCell key="cell" type="check" title="Get Beta Versions" bezelStyle="regularSquare" imagePosition="left" controlSize="mini" inset="2" id="XE3-Wv-ejl">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="miniSystem"/>
                         </buttonCell>
