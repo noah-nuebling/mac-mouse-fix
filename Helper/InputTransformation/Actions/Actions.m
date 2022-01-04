@@ -126,7 +126,6 @@ static void postKeyboardEventsForSymbolicHotkey(CGKeyCode keyCode, CGSModifierFl
     CFRelease(keyUp);
 }
 
-// I think these two private functions are the only thing preventing the app from being allowed on the Mac App Store at the time of writing, so if you know a way to trigger system functions without a private API it would be awesome if you let me know! :)
 CG_EXTERN CGError CGSGetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar *outKeyEquivalent, unichar *outVirtualKeyCode, CGSModifierFlags *outModifiers);
 CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar keyEquivalent, CGKeyCode virtualKeyCode, CGSModifierFlags modifiers);
 
@@ -138,35 +137,40 @@ static void postSymbolicHotkey(CGSSymbolicHotKey shk) {
     CGSGetSymbolicHotKeyValue(shk, &keyEquivalent, &keyCode, &modifierFlags);
     
     BOOL hotkeyIsEnabled = CGSIsSymbolicHotKeyEnabled(shk);
-    BOOL oldVirtualKeyCodeIsUsable = (keyCode < 400);
+    BOOL oldBindingIsUsable = (keyCode < 400);
     
-    if (hotkeyIsEnabled == FALSE) {
-        CGSSetSymbolicHotKeyEnabled(shk, TRUE);
+    if (!hotkeyIsEnabled) {
+        CGSSetSymbolicHotKeyEnabled(shk, true);
     }
-    if (oldVirtualKeyCodeIsUsable == FALSE) {
-        // set new parameters for shk - should not accessible through actual keyboard, cause values too high
-        keyEquivalent = 65535; // TODO: Why this value? Does it event matter what value this is?
-        keyCode = (CGKeyCode)shk + 400; // TODO: Test if 400 still works or is too much
-        modifierFlags = 10485760; // 0 Didn't work in my testing. This seems to be the 'empty' CGSModifierFlags value, used to signal that no modifiers are pressed. TODO: Test if this works
-        CGError err = CGSSetSymbolicHotKeyValue(shk, keyEquivalent, keyCode, modifierFlags);
-        if (err != 0) {
+    if (!oldBindingIsUsable) {
+        
+        /// Temporarily set a usable binding for our shk
+        unichar newKeyEquivalent = 65535; /// Not sure  this value matters
+        CGKeyCode newKeyCode = (CGKeyCode)shk + 400; /// Keycodes on my keyboard go up to like 125, but we use 400 just to be safely out of reach for a real kb
+        CGSModifierFlags newModifierFlags = 10485760; /// 0 Didn't work in my testing. This seems to be the 'empty' CGSModifierFlags value, used to signal that no modifiers are pressed. TODO: Test if this works
+        CGError err = CGSSetSymbolicHotKeyValue(shk, newKeyEquivalent, newKeyCode, newModifierFlags);
+        if (err != kCGErrorSuccess) {
             NSLog(@"Error setting shk params: %d", err);
-            // Do again or something if setting shk goes wrong
+            /// Do again or something if setting shk goes wrong
         }
+        
+        /// Post keyboard events trigger shk
+        postKeyboardEventsForSymbolicHotkey(newKeyCode, newModifierFlags);
+    } else {
+            
+        /// Post keyboard events trigger shk
+        postKeyboardEventsForSymbolicHotkey(keyCode, modifierFlags);
     }
     
-    // Post keyboard events corresponding to trigger shk
-    postKeyboardEventsForSymbolicHotkey(keyCode, modifierFlags);
-    
-    // Restore original hotkey parameter state after 20ms
-    if (hotkeyIsEnabled == FALSE) { // Only really need to restore hotKeyIsEnabled. But the other stuff doesn't hurt.
+    /// Restore original binding after short delay
+    if (!hotkeyIsEnabled || !oldBindingIsUsable) { /// Only really need to restore hotKeyIsEnabled. But the other stuff doesn't hurt.
         [NSTimer scheduledTimerWithTimeInterval:0.05
                                          target:[Actions class]
                                        selector:@selector(restoreSymbolicHotkeyParameters_timerCallback:)
                                        userInfo:@{
-                                           @"oldVirtualKeyCodeIsUsable": @(oldVirtualKeyCodeIsUsable),
-                                           @"shk": @(shk),
                                            @"enabled": @(hotkeyIsEnabled),
+                                           @"oldIsBindingIsUsable": @(oldBindingIsUsable),
+                                           @"shk": @(shk),
                                            @"keyEquivalent": @(keyEquivalent),
                                            @"virtualKeyCode": @(keyCode),
                                            @"flags": @(modifierFlags),
@@ -175,19 +179,18 @@ static void postSymbolicHotkey(CGSSymbolicHotKey shk) {
     }
 }
 
-+ (void)restoreSymbolicHotkeyParameters_timerCallback:(NSTimer *)timer { // TODO: Test if this works
++ (void)restoreSymbolicHotkeyParameters_timerCallback:(NSTimer *)timer {
     
     CGSSymbolicHotKey shk = [timer.userInfo[@"shk"] intValue];
     BOOL enabled = [timer.userInfo[@"enabled"] boolValue];
+    
     CGSSetSymbolicHotKeyEnabled(shk, enabled);
     
-    if (![timer.userInfo[@"oldVirtualKeyCodeIsUsable"] boolValue]) {
-        
-        /// In Monterey, `CGSSetSymbolicHotKeyValue()` doesn't seem to work anymore, and it sets the shk to unusable values.
-        ///     That's why we introduced this if-condition - so that if a hotkey is usable, just not enabled, the hotkey configuration won't be messed up under Monterey. If a hotkey is actually not usable that still poses an issues though, I think.
-        ///         TODO: Test this further, and get it to work under Monterey (possibly we can just leave out the "making the keycode usable" stuff or possibly we can find a replacement function for CGSSetSymbolicHotKeyValue()). Don't forget to merge these changes into version 3.
-        
-        unichar kEq = [timer.userInfo[@"keyEquivalent"] unsignedCharValue];
+    BOOL oldIsBindingIsUsable = [timer.userInfo[@"oldIsBindingIsUsable"] boolValue];
+    
+    if (!oldIsBindingIsUsable) {
+        /// Restore old, unusable binding
+        unichar kEq = [timer.userInfo[@"keyEquivalent"] unsignedShortValue];
         CGKeyCode kCode = [timer.userInfo[@"virtualKeyCode"] unsignedIntValue];
         CGSModifierFlags mod = [timer.userInfo[@"flags"] intValue];
         CGSSetSymbolicHotKeyValue(shk, kEq, kCode, mod);
