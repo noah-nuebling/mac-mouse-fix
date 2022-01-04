@@ -31,15 +31,15 @@
     }
 
     ul {
-        padding-left: 2.0rem;
-        margin-top: 0rem;
-        margin-bottom: 2.0rem;
+        padding: 0 0 0 2.0rem;
+        margin: 1.0rem 0 2.0rem 2.0rem;
     }
-    li, p {
+    ul ul {
+        margin: -0.2rem 0 0.3rem 0;
+    }
 
-        margin-left: 0;
-        margin-top: 0;
-        margin-bottom: 0.8rem;
+    li, p {
+        margin: 0.4rem 0 0.4rem 0;
 
         font-size: 1.1rem
     }
