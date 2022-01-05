@@ -152,31 +152,22 @@
   </style>
 </head>
 <body>
-<h1 id="mac-mouse-fix-2-is-here">Mac Mouse Fix 2 is here!</h1>
-<!-- Mac Mouse Fix 2 makes your Mouse even more powerful and easy to use. -->
+<h1 id="mac-mouse-fix-2-is-here">Mac Mouse Fix 2 is here! 🎉</h1>
+<p>Mac Mouse Fix 2 makes <em>your</em> Mouse even better.</p>
 <h2 id="with-great-power-comes-great-ease-of-use">With great power comes great … ease of use!</h2>
-<!-- ## Show, don't tell. -->
-<p>With the new <strong>Action Table</strong>, you can set up your mouse exactly how you want it - in seconds.</p>
-<p>Move the pointer into the “+” field and then simply show Mac Mouse Fix the clicks and drags that you want to assign a new Action to.</p>
+<p>With the new <strong>Action Table</strong>, you can set up your Mouse exactly how you want it - in seconds.</p>
+<p>Move the pointer into the “+” field, then simply show Mac Mouse Fix the clicks and drags that you want to assign a new Action to.</p>
 <p><img width=500px src="https://user-images.githubusercontent.com/40808343/148165599-02a82c4c-8db6-4784-9e61-f8ba1d1915af.gif"></p>
-<!-- The Action Table lets you assign actions to double click, click and hold, button sequences, keyboard modifiers, and much more. -->
-<!-- Mac Mouse Fix 2 gives you incredible power and flexibility while also being easier to set up than almost any other mouse driver. -->
-<!-- Now you can have all the functions you want on your mouse / and replace trackpad, even if you don't have many buttons on your mouse -->
 <h2 id="mouse-gestures-done-right.">Mouse Gestures done right.</h2>
 <p><strong>Click</strong> a Mouse Button <strong>and Drag</strong> in different directions to enter <strong>Mission Control</strong>, <strong>Move between Spaces</strong>, or <strong>see all Windows of the Current App</strong> - all just using a single Button!</p>
-<p>That’s not all. The new Action Table allows you to put even more actions to that same button. You can easily get <strong>7x functionality out of a single button</strong> compared to conventional mouse drivers. All while <em>also</em> being more simple and intuitive to use and set up than the competition. Call that a flex. :O</p>
-<p>Mac Mouse Fix Gestures also feel much more <strong>fluid and responsive</strong> than any other driver on the market. <!-- (cough cough Logitech Options) --> This is made possible because I reverse engineered the Apple Trackpad Driver to emulate the way it works. If other drivers copy this you know what’s up. ;) <!-- (Logitech please credit me if you end up copying this, thanks) --></p>
-<!-- When you click and drag MMF will simulate swiping on a trackpad. This is unprecedented and took a lotta effort, yadda yadda. -->
-<!--The end result is Mouse gestures that are more fluid and intuitive and easy to use than anything else (cough cough Logitech). -->
-<!-- Thank to the new Action Table you can now assign many Actions to a single button. Even the awesome new __Click and Drag__ action. -->
-<!-- How does that work?? -->
+<p>That’s not all. The new Action Table allows you to put even more Actions to that same Button. You can easily get <strong>7x more functionality out of a single Button</strong> compared to conventional Mouse Drivers. All while <em>also</em> being more simple to use and set up than the competition. Call that a flex. :O</p>
+<p>Mac Mouse Fix Gestures also feel much more <strong>fluid and responsive</strong> than any other driver on the market. This is possible because I reverse engineered the Apple Trackpad Driver to emulate how it works. If other drivers copy this, you know what’s up. ;)</p>
 <p><img width="500px" src="https://user-images.githubusercontent.com/40808343/148170941-417c0821-432a-48da-b3a3-26a8f93342d7.gif"></p>
-<p>All of this functionality using just a single button! ^ 💪💪 (The frame rate is low due to GitHub file size restrictions. This will be buttery smooth on your system.)</p>
-<!-- ## More powerful than the competition - yet easier to use -->
+<p>All of this functionality using just a single Button! ^ 💪💪 (The frame rate is low due to GitHub file size restrictions. This will be buttery smooth on your system.)</p>
 <h2 id="and-a-lot-more">… And a lot more</h2>
 <h3 id="neat-features">Neat features</h3>
 <ul>
-<li><strong>Keyboard Shortcuts</strong> right from your mouse give you even more flexibility for your workflow.</li>
+<li><strong>Keyboard Shortcuts</strong> right from your Mouse give you even more flexibility for your workflow.</li>
 <li><strong>Smart zoom</strong> allows you to get a better glance on the web and elsewhere.</li>
 </ul>
 <h3 id="ui-refinements">UI Refinements</h3>
@@ -185,13 +176,13 @@
 <li><strong>Set up</strong> is easier and more streamlined.</li>
 </ul>
 <h3 id="updates">Updates</h3>
-<p>The new and improved <strong>update mechanism</strong> … - is secure against man in the middle attacks. - lets you test the latest Beta version - hassle free! - features an improved UI. - lets me count downloads without relying on Google Analytics or other frameworks that might compromise your privacy.</p>
+<p>The new and improved <strong>Update Mechanism</strong> … - is secure against man in the middle attacks. - lets you test the latest Beta version - hassle-free! - features an improved UI. - lets me count downloads without relying on Google Analytics or other frameworks that might compromise your privacy.</p>
 <h3 id="reliability">Reliability</h3>
 <ul>
 <li>Various bug fixes and stability improvements.</li>
 </ul>
 <hr />
-<p>Thanks so much for your support in my attempt at <strong>building the best mouse driver ever</strong>! 🚀🚀🚀 :)</p>
+<p>Thanks so much for your support in my attempt at <strong>building the best Mouse Driver ever</strong>! 🚀🚀🚀 :)</p>
 </body>
 </html>
 
