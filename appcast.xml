@@ -163,7 +163,8 @@
 <p>That’s not all. The new Action Table allows you to put even more Actions to that same Button. You can easily get <strong>7x more functionality out of a single Button</strong> compared to conventional Mouse Drivers. All while <em>also</em> being more simple to use and set up than the competition. Call that a flex. :O</p>
 <p>Mac Mouse Fix Gestures also feel much more <strong>fluid and responsive</strong> than any other driver on the market. This is possible because I reverse engineered the Apple Trackpad Driver to emulate how it works. If other drivers copy this, you know what’s up. ;)</p>
 <p><img width="500px" src="https://user-images.githubusercontent.com/40808343/148170941-417c0821-432a-48da-b3a3-26a8f93342d7.gif"></p>
-<p>All of this functionality using just a single Button! ^ 💪💪 (The frame rate is low due to GitHub file size restrictions. This will be buttery smooth on your system.)</p>
+<p>All of this functionality using just a single Button! ^ 💪💪</p>
+<p>(The frame rate is low due to GitHub file size restrictions. This will be buttery smooth on your system.)</p>
 <h2 id="and-a-lot-more">… And a lot more</h2>
 <h3 id="neat-features">Neat features</h3>
 <ul>
@@ -176,7 +177,13 @@
 <li><strong>Set up</strong> is easier and more streamlined.</li>
 </ul>
 <h3 id="updates">Updates</h3>
-<p>The new and improved <strong>Update Mechanism</strong> … - is secure against man in the middle attacks. - lets you test the latest Beta version - hassle-free! - features an improved UI. - lets me count downloads without relying on Google Analytics or other frameworks that might compromise your privacy.</p>
+<p>The new and improved <strong>Update Mechanism</strong> …</p>
+<ul>
+<li>is secure against man in the middle attacks.</li>
+<li>lets you test the latest Beta version - hassle-free!</li>
+<li>features an improved UI.</li>
+<li>lets me count downloads without relying on Google Analytics or other frameworks that might compromise your privacy.</li>
+</ul>
 <h3 id="reliability">Reliability</h3>
 <ul>
 <li>Various bug fixes and stability improvements.</li>
