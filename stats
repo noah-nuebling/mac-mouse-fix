@@ -19,7 +19,7 @@ def main():
 
     if len(sys.argv) == 1: # Print current downloads
         releases = load_releases()
-        releases = sorted_by_release(releases)
+        releases = sorted_by_release(releases, 'published_at')
         for r in releases:
             short_version = r['name']
             downloads = r['assets'][0]['download_count']
@@ -57,7 +57,7 @@ def main():
                 outfile.write(json.dumps(history))
         elif command_line_argument == 'print':
             history = load_history()
-            print_nested(sorted_by_release(history))
+            print_nested(sorted_by_release(history, 'name'))
         else:
             raise Exception('Unknown command line argument.')
     else:
@@ -95,9 +95,9 @@ def print_nested(val, nesting = -4):
 	else: 
 		print(val) 
 
-def sorted_by_release(arg):
+def sorted_by_release(arg, key):
     if isinstance(arg, list):
-        return sorted(arg, key = lambda i: i['name'])
+        return sorted(arg, key = lambda i: i[key])
     elif isinstance(arg, dict):
         return collections.OrderedDict(sorted(arg.items()))
     else:
