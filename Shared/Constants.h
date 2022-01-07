@@ -58,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #define kMFWebsiteAddress  @"https://noah-nuebling.github.io/mac-mouse-fix-website" //@"https://mousefix.org"
 
-#define kMFUpdateFeedRepoAddressRaw @"https://raw.githubusercontent.com/noah-nuebling/mac-mouse-fix/update-feed/"
+#define kMFUpdateFeedRepoAddressRaw @"https://raw.githubusercontent.com/noah-nuebling/mac-mouse-fix/update-feed"
 
 // Sparkle
 
