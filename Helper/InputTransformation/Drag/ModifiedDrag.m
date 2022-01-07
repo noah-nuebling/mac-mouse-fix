@@ -208,8 +208,11 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY) {
             
             /// Get number of spaces
             ///     for use in `handleMouseInputWhileInUse()`. Getting it here for performance reasons. Not sure if significant.
-            CFArrayRef spaces = CGSCopySpaces(CGSMainConnectionID(), kCGSAllSpacesMask);
-            _nOfSpaces = CFArrayGetCount(spaces);
+            CFArrayRef spaces = CGSCopySpaces(CGSMainConnectionID(), CGSSpaceIncludesUser | CGSSpaceIncludesOthers | CGSSpaceIncludesCurrent);
+            /// Full screen spaces appear twice for some reason so we need to filter duplicates
+            NSSet *uniqueSpaces = [NSSet setWithArray:(__bridge NSArray *)spaces];
+            _nOfSpaces = uniqueSpaces.count;
+            
             CFRelease(spaces);
             
         } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
