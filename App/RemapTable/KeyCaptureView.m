@@ -138,6 +138,7 @@
         }];
         
         [SharedMessagePort sendMessage:@"enableKeyCaptureMode" withPayload:@"" expectingReply:NO];
+        /// ^ Do actual capturing in helper app because it already has permissions to stop captured events from being sent to other apps
         
         [self drawEmptyAppearance];
         
