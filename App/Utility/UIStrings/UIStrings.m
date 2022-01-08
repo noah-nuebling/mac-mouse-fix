@@ -113,8 +113,19 @@
     } else if (type == kMFSystemEventTypeVolumeUp) {
         symbolName = @"speaker.wave.3";
         stringFallback = @"<Increase Volume key>";
+    } else if (type == kMFSystemEventTypeKeyboardBacklightDown) {
+        symbolName = @"light.min";
+        stringFallback = @"<Decrease Keyboard Brightness key>";
+    } else if (type == kMFSystemEventTypeKeyboardBacklightUp) {
+        symbolName = @"light.max";
+        stringFallback = @"<Increase Keyboard Brightness key>";
     }
         
+    /// Validate
+    
+    if ([symbolName isEqual: @"questionmark.square"]) {
+        NSLog(@"Couldn't find visualization for system event with type: %d, flags: %llu", type, flags);
+    }
     
     /// Get symbol and attach it to keyStr
     NSAttributedString *keyStr = stringWithSymbol(symbolName, stringFallback);
@@ -143,11 +154,6 @@ static CGSSymbolicHotKey _highestSymbolicHotKeyInCache = 0;
         NSAttributedString *keyStr;
         
         /// Fallback for apple proprietary function keys
-        
-        if (flags != 0) {
-            /// This is weird
-            NSLog(@"Weird flag state when trying to get keyboard string");
-        }
         
         /// Init
         if (!_hotKeyCache) {
@@ -209,10 +215,19 @@ static CGSSymbolicHotKey _highestSymbolicHotKeyInCache = 0;
             } else if (shk == kMFFunctionKeySHKSwitchKeyboard) {
                 symbolName = @"globe";
                 stringFallback = @"<Emoji Picker key>";
+            } else if (shk == kMFFunctionKeySHKLaunchpad) {
+                symbolName = @"square.grid.3x2";
+                stringFallback = @"<Launchpad key>";
             }
             
             /// Get symbol and attach it to keyStr
             keyStr = stringWithSymbol(symbolName, stringFallback);
+            
+            /// Validate
+            
+            if ([symbolName isEqual:@"questionmark.square"]) {
+                NSLog(@"Couldn't find visualization for keyCode: %d, flags: %llu, symbolicHotKey: %@", keyCode, flags, symbolicHotkey);
+            }
         }
         
         /// Append keyStr and modStr

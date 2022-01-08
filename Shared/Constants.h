@@ -220,6 +220,8 @@ typedef enum {
     kMFFunctionKeySHKSwitchKeyboard = 188,
     kMFFunctionKeySHKDoNotDisturb = 189,
     
+    kMFFunctionKeySHKLaunchpad = 173,
+    
 } MFSymbolicHotkey;
 
 /// SystemEvents
@@ -239,6 +241,9 @@ typedef enum {
     kMFSystemEventTypeVolumeMute = 7,
     kMFSystemEventTypeVolumeDown = 1,
     kMFSystemEventTypeVolumeUp = 0,
+    
+    kMFSystemEventTypeKeyboardBacklightDown = 22,
+    kMFSystemEventTypeKeyboardBacklightUp = 21,
     
 } MFSystemDefinedEventType;
 
