@@ -12,6 +12,7 @@
 #import "MASShortcut.h"
 #import "CGSHotKeys.h"
 #import "SharedUtility.h"
+#import "NSAttributedString+Additions.h"
 
 @implementation UIStrings
 
@@ -242,6 +243,8 @@ static CGSSymbolicHotKey _highestSymbolicHotKeyInCache = 0;
 }
 
 static NSMutableAttributedString *stringWithModifierPrefix(NSString *flagsStr, NSAttributedString *keyStr) {
+    keyStr = [keyStr attributedStringByAddingWeight:9];
+    keyStr = [keyStr attributedStringBySettingFontSize:12];
     NSMutableAttributedString *result = [[NSMutableAttributedString alloc] initWithString:flagsStr];
     [result appendAttributedString:keyStr];
     return result;

@@ -77,7 +77,7 @@
      return str;
 }
 
-- (NSAttributedString *)attributedStringByAddingSymbolicFontTraits:(NSFontDescriptorSymbolicTraits)traits forSubstring:(NSString *)subStr {
+- (NSAttributedString *)attributedStringByAddingSymbolicFontTraits:(NSFontDescriptorSymbolicTraits)traits forRange:(NSRange)range {
     
     NSDictionary *originalAttributes = [self attributesAtIndex:0 effectiveRange:nil];
     NSFont *originalFont = originalAttributes[NSFontAttributeName];
@@ -87,12 +87,16 @@
     NSFontDescriptor *newFontDescriptor = [originalFont.fontDescriptor fontDescriptorWithSymbolicTraits:traits];
     NSFont *newFont = [NSFont fontWithDescriptor:newFontDescriptor size:originalFont.pointSize];
     
-    NSRange subStrRange = [self.string rangeOfString:subStr];
-    
     NSMutableAttributedString *ret = [[NSMutableAttributedString alloc] initWithAttributedString:self];
-    [ret addAttribute:NSFontAttributeName value:newFont range:subStrRange];
+    [ret addAttribute:NSFontAttributeName value:newFont range:range];
     
     return ret;
+}
+
+- (NSAttributedString *)attributedStringByAddingSymbolicFontTraits:(NSFontDescriptorSymbolicTraits)traits forSubstring:(NSString *)subStr {
+    
+    NSRange subStrRange = [self.string rangeOfString:subStr];
+    return [self attributedStringByAddingSymbolicFontTraits:traits forRange:subStrRange];
 }
 
 - (NSAttributedString *)attributedStringByAddingBoldForSubstring:(NSString *)subStr {
@@ -107,6 +111,14 @@
 //    NSMutableAttributedString *ret = [[NSMutableAttributedString alloc] initWithAttributedString:self];
 //    [ret addAttribute:NSFontAttributeName value:boldFont range:subStrRange];
 //    return ret;
+}
+
+- (NSAttributedString *)attributedStringByAddingBold {
+    
+    NSFontDescriptorSymbolicTraits traits = NSFontDescriptorTraitBold;
+    NSRange range = NSMakeRange(0, self.length);
+    
+    return [self attributedStringByAddingSymbolicFontTraits:traits forRange:range];
 }
 
 - (NSAttributedString *)attributedStringByAddingItalicForSubstring:(NSString *)subStr {
@@ -135,8 +147,19 @@
 
 - (NSMutableAttributedString *)attributedStringBySettingWeight:(NSInteger)weight forSubstring:(NSString * _Nonnull)subStr {
     
-    NSMutableAttributedString *ret = self.mutableCopy;
     NSRange subRange = [self.string rangeOfString:subStr];
+    return [self attributedStringBySettingWeight:weight forRange:subRange];
+}
+
+- (NSMutableAttributedString *)attributedStringByAddingWeight:(NSInteger)weight {
+    
+    NSRange range = NSMakeRange(0, self.length);
+    return [self attributedStringBySettingWeight:weight forRange:range];
+}
+
+- (NSMutableAttributedString *)attributedStringBySettingWeight:(NSInteger)weight forRange:(NSRange)subRange {
+    
+    NSMutableAttributedString *ret = self.mutableCopy;
     
     [self enumerateAttribute:NSFontAttributeName inRange:subRange options:0 usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
         NSFont *currentFont = (NSFont *)value;
@@ -147,7 +170,7 @@
         
         NSString *fontFamily = currentFont.familyName;
         NSFontTraitMask traits = [NSFontManager.sharedFontManager traitsOfFont:currentFont];
-//        NSInteger originalWeight = [NSFontManager.sharedFontManager weightOfFont:currentFont];
+        //        NSInteger originalWeight = [NSFontManager.sharedFontManager weightOfFont:currentFont];
         CGFloat size = currentFont.pointSize;
         
         NSFont *newFont = [NSFontManager.sharedFontManager fontWithFamily:fontFamily traits:traits weight:weight size:size];
@@ -156,6 +179,7 @@
     }];
     return ret;
 }
+
 
 
 - (NSAttributedString *)attributedStringBySettingFontSize:(CGFloat)size {
