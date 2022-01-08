@@ -20,6 +20,7 @@ typedef enum {
     kMFScrollEffectModificationHorizontalScroll,
     kMFScrollEffectModificationRotate,
     kMFScrollEffectModificationFourFingerPinch,
+    kMFScrollEffectModificationCommandTab,
 } MFScrollEffectModification;
 
 typedef struct {

@@ -12,7 +12,9 @@ import CocoaLumberjackSwift
 
 @objc class ScrollModifiers: NSObject {
 
-    @objc class func currentScrollModifications(event: CGEvent) -> MFScrollModificationResult {
+    static var activeModifications: Dictionary<AnyHashable, Any> = [:];
+    
+    @objc public static func currentScrollModifications(event: CGEvent) -> MFScrollModificationResult {
         
         /// Debug
         
@@ -33,9 +35,9 @@ import CocoaLumberjackSwift
         /// Debug
 //        DDLogDebug("activeFlags in ScrollModifers: \(SharedUtility.binaryRepresentation((activeModifiers[kMFModificationPreconditionKeyKeyboard] as? NSNumber)?.uint32Value ?? 0))") /// This is unbelievably slow for some reason
         
-        let remapsForCurrentlyActiveModifiers = RemapsOverrider.effectiveRemapsMethod()(baseRemaps, activeModifiers);
+        self.activeModifications = RemapsOverrider.effectiveRemapsMethod()(baseRemaps, activeModifiers);
         
-        guard let modifiedScrollDictUntyped = remapsForCurrentlyActiveModifiers[kMFTriggerScroll] else {
+        guard let modifiedScrollDictUntyped = activeModifications[kMFTriggerScroll] else {
             return result; /// There are no active scroll modifications
         }
         let modifiedScrollDict = modifiedScrollDictUntyped as! Dictionary<AnyHashable, Any>
@@ -69,13 +71,16 @@ import CocoaLumberjackSwift
                 result.effect = kMFScrollEffectModificationRotate
             case kMFModifiedScrollEffectModificationTypeFourFingerPinch:
                 result.effect = kMFScrollEffectModificationFourFingerPinch
-                
+            case kMFModifiedScrollEffectModificationTypeCommandTab:
+                result.effect = kMFScrollEffectModificationCommandTab
             case kMFModifiedScrollEffectModificationTypeAddModeFeedback:
-                        
-                    var payload = modifiedScrollDict
-                    payload.removeValue(forKey: kMFModifiedScrollDictKeyEffectModificationType)
-                    payload[kMFRemapsKeyModificationPrecondition] = NSMutableDictionary(dictionary: activeModifiers) /// Need to cast to mutable, otherwise Swift will make it immutable and mainApp will crash trying to build this payload into its remapArray
-                    TransformationManager.concludeAddMode(withPayload: payload)
+                
+                var payload = modifiedScrollDict
+                payload.removeValue(forKey: kMFModifiedScrollDictKeyEffectModificationType)
+                var devID: NSNumber? = nil
+                payload[kMFRemapsKeyModificationPrecondition] = NSMutableDictionary(dictionary: ModifierManager .getActiveModifiers(forDevice: &devID, filterButton: nil, event: event, despiteAddMode: true))
+                /// ^ Need to cast to mutable, otherwise Swift will make it immutable and mainApp will crash trying to build this payload into its remapArray
+                TransformationManager.concludeAddMode(withPayload: payload)
                 
             default:
                 fatalError("Unknown modifiedSrollDict type found in remaps")
@@ -97,5 +102,23 @@ import CocoaLumberjackSwift
         
         return result
     
+    }
+    
+    @objc public static func reactToModiferChange(activeModifications: Dictionary<AnyHashable, Any>) {
+        /// This is called on every button press. Might be good to optimize this if it has any noticable performance impact.
+        
+        /// Deactivate app switcher - if appropriate
+        
+        let effectModKeyPath = "\(kMFTriggerScroll).\(kMFModifiedScrollDictKeyEffectModificationType)"
+        
+        let switcherActiveLastScroll = (self.activeModifications as NSDictionary).value(forKeyPath: effectModKeyPath) as? String == kMFModifiedScrollEffectModificationTypeCommandTab
+        let switcherActiveNow = (activeModifications as NSDictionary).value(forKeyPath: effectModKeyPath) as? String == kMFModifiedScrollEffectModificationTypeCommandTab
+        
+        if (switcherActiveLastScroll && !switcherActiveNow) {
+            /// AppSwitcher has been deactivated - notify Scroll.m
+            
+            Scroll.appSwitcherModificationHasBeenDeactivated();
+            self.activeModifications = activeModifications;
+        }
     }
 }

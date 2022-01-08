@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSDictionary *)getActiveModifiersForDevice:(NSNumber *_Nullable *_Nullable)devIDPtr filterButton:(NSNumber * _Nullable)filteredButton event:(CGEventRef _Nullable) event;
 
++ (NSDictionary *)getActiveModifiersForDevice:(NSNumber *_Nullable *_Nullable)devIDPtr filterButton:(NSNumber * _Nullable)filteredButton event:(CGEventRef _Nullable)event despiteAddMode:(BOOL)despiteAddMode;
+
 + (void)handleButtonModifiersMightHaveChangedWithDevice:(Device *)device;
 
 + (void)handleModifiersHaveHadEffectWithDevice:(NSNumber *_Nullable)devID;

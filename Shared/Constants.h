@@ -67,7 +67,7 @@ typedef enum {
 
 #define kMFWebsiteAddress  @"https://noah-nuebling.github.io/mac-mouse-fix-website" //@"https://mousefix.org"
 
-#define kMFUpdateFeedRepoAddressRaw @"https://raw.githubusercontent.com/noah-nuebling/mac-mouse-fix/update-feed/"
+#define kMFUpdateFeedRepoAddressRaw @"https://raw.githubusercontent.com/noah-nuebling/mac-mouse-fix/update-feed"
 
 // Sparkle
 
@@ -143,6 +143,7 @@ typedef NSString*                                                       MFString
 #define kMFModifiedScrollEffectModificationTypeHorizontalScroll                             @"horizontal"
 #define kMFModifiedScrollEffectModificationTypeFourFingerPinch                              @"fourFingerPinch"
 #define kMFModifiedScrollEffectModificationTypeRotate                                       @"rotate"
+#define kMFModifiedScrollEffectModificationTypeCommandTab                                   @"commandTab"
 #define kMFModifiedScrollEffectModificationTypeAddModeFeedback                              @"addModeScroll"
 
 // Oneshot Actions

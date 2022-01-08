@@ -20,10 +20,10 @@ typedef struct {
 
 typedef enum {
     kMFAnimationPhaseStart = 0,
+    kMFAnimationPhaseStartAndEnd = 8, /// Used when there is only one delta in the animation. So that delta is the first _and_ the last one.
     kMFAnimationPhaseRunningStart = 1, /// Animation has been started again while it was already running
     kMFAnimationPhaseContinue = 2,
     kMFAnimationPhaseEnd = 4,
-    kMFAnimationPhaseStartAndEnd = 8, /// Used when there is only one delta in the animation. So that delta is the first _and_ the last one.
     kMFAnimationPhaseNone = 16,
 } MFAnimationPhase;
 

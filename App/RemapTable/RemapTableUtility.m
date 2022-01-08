@@ -91,7 +91,7 @@
     
     for (int b = 1; b <= kMFMaxButtonNumber; b++) {
         
-        // Go through all preconds and corresponding modifications and check if button occurs anywhere
+        /// Go through all preconds and corresponding modifications and check if button occurs anywhere
         for (NSDictionary *rowDict in dataModel) {
             
             NSDictionary *modificationPrecondition = rowDict[kMFRemapsKeyModificationPrecondition];

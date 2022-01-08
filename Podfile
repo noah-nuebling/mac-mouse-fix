@@ -3,7 +3,7 @@ platform :osx, '10.11'
 
 # Pods for all targets
 
-pod 'RHAdditions'
+#pod 'RHAdditions'
 
 #pod 'CocoaLumberjack'
 #pod 'CocoaLumberjack/Swift'

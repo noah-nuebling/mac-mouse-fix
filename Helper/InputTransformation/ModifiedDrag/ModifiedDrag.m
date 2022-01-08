@@ -52,7 +52,7 @@ struct ModifiedDragState {
     
     CGPoint origin;
     Vector originOffset;
-    CGPoint usageOrigin; // Point at which the modified drag changed its activationState to inUse
+    CGPoint usageOrigin; /// Point at which the modified drag changed its activationState to inUse
     MFAxis usageAxis;
     IOHIDEventPhaseBits phase;
     
@@ -61,8 +61,8 @@ struct ModifiedDragState {
     SubPixelator *subPixelatorX;
     SubPixelator *subPixelatorY;
     
-    MFMouseButtonNumber fakeDragButtonNumber; // Button number. Only used with modified drag of type kMFModifiedDragTypeFakeDrag.
-    NSDictionary *addModePayload; // Payload to send to the mainApp. Only used with modified drag of type kMFModifiedDragTypeAddModeFeedback.
+    MFMouseButtonNumber fakeDragButtonNumber; /// Button number. Only used with modified drag of type kMFModifiedDragTypeFakeDrag.
+    NSDictionary *addModePayload; /// Payload to send to the mainApp. Only used with modified drag of type kMFModifiedDragTypeAddModeFeedback.
 };
 static struct ModifiedDragState _drag;
 
@@ -77,7 +77,7 @@ static int16_t _nOfSpaces = 1;
 static dispatch_queue_t _dragQueue;
 static /*PixelatedAnimator*/ BaseAnimator *_smoothingAnimator;
 static BOOL _smoothingAnimatorShouldStartMomentumScroll = NO;
-static dispatch_group_t _smoothingGroup;
+static dispatch_group_t _momentumScrollWaitGroup;
 
 /// Debug
 
@@ -118,7 +118,7 @@ static dispatch_group_t _smoothingGroup;
     /// Setup smoothingGroup
     ///     It allows us to wait until the _smoothingAnimator is done.
     
-    _smoothingGroup = dispatch_group_create();
+    _momentumScrollWaitGroup = dispatch_group_create();
     
     /// Setup dispatch queue
     ///     This allows us to process events in the right order
@@ -143,7 +143,8 @@ static dispatch_group_t _smoothingGroup;
             
             CGEventTapLocation location = kCGHIDEventTap;
             CGEventTapPlacement placement = kCGHeadInsertEventTap;
-            CGEventTapOptions option = kCGEventTapOptionDefault;
+            CGEventTapOptions option = kCGEventTapOptionListenOnly; // kCGEventTapOptionDefault
+            /// ^ Using `Default` causes weird cursor jumping issues when clicking-dragging-and-holding during addMode. Not sure why that happens. This didn't happen in v2 while using `Default`. Not sure if `ListenOnly` has any disadvantages.
             CGEventMask mask = CGEventMaskBit(kCGEventOtherMouseDragged) | CGEventMaskBit(kCGEventMouseMoved); // kCGEventMouseMoved is only necessary for keyboard-only drag-modification (which we've disable because it had other problems), and maybe for AddMode to work.
             mask = mask | CGEventMaskBit(kCGEventLeftMouseDragged) | CGEventMaskBit(kCGEventRightMouseDragged); // This is necessary for modified drag to work during a left/right click and drag. Concretely I added this to make drag and drop work. For that we only need the kCGEventLeftMouseDragged. Adding kCGEventRightMouseDragged is probably completely unnecessary. Not sure if there are other concrete applications outside of drag and drop.
             
@@ -171,6 +172,10 @@ static dispatch_group_t _smoothingGroup;
     
     dispatch_async(_dragQueue, ^{
         
+        /// Debug
+        
+        DDLogDebug(@"INITIALIZING MODIFIEDDRAG WITH previous type %@ activationState %d, dict: %@", _drag.type, _drag.activationState, dict);
+        
         /// Make cursor settable
         
         [Utility_Transformation makeCursorSettable]; /// I think we only need to do this once
@@ -187,8 +192,6 @@ static dispatch_group_t _smoothingGroup;
             payload = dict.mutableCopy;
             [payload removeObjectForKey:kMFModifiedDragDictKeyType];
         }
-        
-        //    DDLogDebug(@"INITIALIZING MODIFIED DRAG WITH TYPE %@ ON DEVICE %@", type, dev);
         
         /// Init _drag struct
         
@@ -251,7 +254,7 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
     
     /// Debug
     
-    DDLogDebug(@"modifiedDrag input: %lld %lld", dx, dy);
+//    DDLogDebug(@"modifiedDrag input: %lld %lld", dx, dy);
     
     /// Ignore event if both deltas are zero
     ///     We do this so the phases for the gesture scroll simulation (aka twoFingerSwipe) make sense. The gesture scroll event with phase kIOHIDEventPhaseBegan should always have a non-zero delta. If we let through zero deltas here it messes those phases up.
@@ -314,14 +317,14 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
         if (inputIsPointerMovement) {
 //            [NSCursor.closedHandCursor push]; // Doesn't work for some reason
         } else {
-            if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) { // Only seize when drag scrolling // TODO: Would be cleaner to call this further down where we check for kMFModifiedDragVariantTwoFingerSwipe anyways. Does that work too?
+            if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) { /// Only seize when drag scrolling // TODO: Would be cleaner to call this further down where we check for kMFModifiedDragVariantTwoFingerSwipe anyways. Does that work too?
                 [dev receiveAxisInputAndDoSeizeDevice:YES];
             }
         }
         /// Set activationState
-        _drag.activationState = kMFModifiedInputActivationStateInUse; // Activate modified drag input!
+        _drag.activationState = kMFModifiedInputActivationStateInUse; /// Activate modified drag input!
         
-        /// Setnd modifier feednack
+        /// Send modifier feedback
         [ModifierManager handleModifiersHaveHadEffectWithDevice:dev.uniqueID];
         
         //// Get usage axis
@@ -369,7 +372,7 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
             });
             
             // [GestureScrollSimulator postGestureScrollEventWithGestureDeltaX:0.0 deltaY:0.0 phase:kIOHIDEventPhaseMayBegin];
-            // ^ Always sending this at the start breaks swiping between pages on some websites (Google search results)
+            /// ^ Always sending this at the start breaks swiping between pages on some websites (Google search results)
             
         } else if ([_drag.type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
             
@@ -378,12 +381,9 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
         } else if ([_drag.type isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
             
             if (_drag.addModePayload != nil) {
-                if ([TransformationManager addModePayloadIsValid:_drag.addModePayload]) {
-                    [SharedMessagePort sendMessage:@"addModeFeedback" withPayload:_drag.addModePayload expectingReply:NO]; /// Why aren't we using [TransformationManager concludeAddModeWithPayload] here?
-                    disableMouseTracking(); /// Not sure if should be here
-                }
+                [TransformationManager sendAddModeFeedbackWithPayload:_drag.addModePayload];
             } else {
-                @throw [NSException exceptionWithName:@"InvalidAddModeFeedbackPayload" reason:@"_drag.addModePayload is nil. Something went wrong!" userInfo:nil]; // Throw exception to cause crash
+                @throw [NSException exceptionWithName:@"InvalidAddModeFeedbackPayload" reason:@"_drag.addModePayload is nil. Something went wrong!" userInfo:nil]; /// Throw exception to cause crash
             }
         }
         
@@ -459,10 +459,10 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
         /// Smoothing group allows us to us to wait until the smoothingAnimator is finished and momentumScroll has started
         if (!_smoothingAnimator.isRunning) {
             DDLogDebug(@"\nEntering dispatch group from ModifiedDrag");
-            dispatch_group_enter(_smoothingGroup);
+            dispatch_group_enter(_momentumScrollWaitGroup);
             [_smoothingAnimator onStopWithCallback:^{
                 printf("\nLeaving dispatch group from animator stop callback\n");
-                dispatch_group_leave(_smoothingGroup);
+                dispatch_group_leave(_momentumScrollWaitGroup);
             }];
         }
         
@@ -505,9 +505,14 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
             
             /// Return
             
-            p[@"value"] = @(combinedMagnitude);
-            p[@"duration"] = @(3.0/60); // @(0.00001); // @(0.04);
-            p[@"curve"] = ScrollConfig.linearCurve;
+            if (combinedMagnitude == 0.0) {
+                DDLogDebug(@"Not starting baseAnimator since combinedMagnitude is 0.0");
+                p[@"doStart"] = @NO;
+            } else {
+                p[@"value"] = @(combinedMagnitude);
+                p[@"duration"] = @(3.0/60); // @(0.00001); // @(0.04);
+                p[@"curve"] = ScrollConfig.linearCurve;
+            }
             
             return p;
             
@@ -520,15 +525,17 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
                 /// Sorry for this confusing code. Heres the idea:
                 /// Due to the nature of PixelatedAnimator, the last delta is almost always much smaller. This will make apps like Xcode start momentumScroll at a too low speed. Also apps like Xcode will have a litte stuttery jump when the time between the kIOHIDEventPhaseEnded event and the previous event is very small
                 ///     Our solution to these two problems is to set the _smoothingAnimatorShouldStartMomentumScroll flag when the user releases the button, and if this flag is set, we transform the last delta callback from the animator into the kIOHIDEventPhaseEnded GestureScroll event. The deltas from this last callback are lost like this, but no one will notice.
-
+                
+                /// Debug
+                DDLogDebug(@"Shifting dispatch group exit from smoothingAnimator stop to momentumScroll start");
+                
                 /// Shift dispatch group leaving to gestureScroll
                 [_smoothingAnimator onStop_SynchronouslyFromAnimationQueueWithCallback: ^{}];
                 [GestureScrollSimulator afterStartingMomentumScroll:^{
-                    printf("\nLeaving dispatch group from momentum start callback\n");
-                    dispatch_group_leave(_smoothingGroup);
+                    DDLogDebug(@"\nLeaving dispatch group from momentum start callback\n");
+                    dispatch_group_leave(_momentumScrollWaitGroup);
                 }];
                 [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded];
-                /// ^ Use the `_Synchronous_` variant so that the _smoothingGroup is only left after momentumScroll has been started. We need this for the deactivation to work properly
                 _smoothingAnimatorShouldStartMomentumScroll = NO;
             } else {
     //            IOHIDEventPhaseBits eventPhase = phase == kMFAnimationPhaseStart || phase == kMFAnimationPhaseStartAndEnd ? kIOHIDEventPhaseBegan : kIOHIDEventPhaseChanged;
@@ -565,7 +572,7 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
     dispatch_async(_dragQueue, ^{
         /// Do everything on the dragQueue to ensure correct order of operations with the processing of the events from the eventTap.
         
-//        DDLogDebug(@"modifiedDrag deactivate with state: %@", [self modifiedDragStateDescription:_drag]);
+        DDLogDebug(@"modifiedDrag deactivate with state: %@", [self modifiedDragStateDescription:_drag]);
         
         if (_drag.activationState == kMFModifiedInputActivationStateNone) return;
         
@@ -653,21 +660,25 @@ static void handleDeactivationWhileInUse(BOOL cancelation) {
 
         } else {
             DDLogDebug(@"Entering dispatch group from deactivate()");
-            dispatch_group_enter(_smoothingGroup);
+            dispatch_group_enter(_momentumScrollWaitGroup);
             [GestureScrollSimulator afterStartingMomentumScroll:^{
                 DDLogDebug(@"Leaving dispatch group from momentumScroll callback (Scheduled by deactivate())");
-                dispatch_group_leave(_smoothingGroup);
+                dispatch_group_leave(_momentumScrollWaitGroup);
             }];
             [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded];
         }
         
         /// Wait until momentumScroll has been started
         ///     We want to wait for momentumScroll so it is started before the warp. That way momentumScrol will still kick in and work, even if we moved the pointer outside the scrollView that we started scrolling in.
-        ///     Wiating here will also block all other items on _twoFingerDragQueue
+        ///     Waiting here will also block all other items on _twoFingerDragQueue
         
-        intptr_t rt = dispatch_group_wait(_smoothingGroup, dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC));
+        ///     This whole _momentumScrollWaitGroup thing is pretty risky, because if there is any race condition and we don't leave the group properly, then we need to crash the whole app (I think?).
+        ///     It's really hard to avoid race conditions here though the different  eventTap threads that control ModifiedDrag and all the different nested dispatch queues of ModifiedDrag and its smoothingAnimator and the GestureScrollSimulator queue and it's momentumAnimator's queue and then all those animators have displayLinks with their own queues.... All of these queues call each other in a mix of synchronous and asynchronous, and it all needs to work perfectly without race conditions or deadlocks... Really hard to keep track of.
+        ///     If our code is perfect, then it's a good solution though!
+        
+        intptr_t rt = dispatch_group_wait(_momentumScrollWaitGroup, dispatch_time(DISPATCH_TIME_NOW, 2.0 * NSEC_PER_SEC));
         if (rt != 0) {
-            DDLogWarn(@"Waiting for dispatch group _smoothingGroup timed out. _smoothingGroup info: %@. Crashing.", _smoothingGroup.debugDescription);
+            DDLogWarn(@"Waiting for dispatch group _momentumScrollWaitGroup timed out. _momentumScrollWaitGroup info: %@. Crashing.", _momentumScrollWaitGroup.debugDescription);
             assert(false);
         }
         
@@ -695,9 +706,7 @@ static void handleDeactivationWhileInUse(BOOL cancelation) {
         
     } else if ([_drag.type isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
         
-        if ([TransformationManager addModePayloadIsValid:_drag.addModePayload]) { /// If it's valid, then we've already sent the payload off to the MainApp
-            [TransformationManager disableAddMode]; /// Why disable it here and not when sending the payload?
-        }
+        [TransformationManager disableAddModeWithPayload:_drag.addModePayload];
     }
 }
 

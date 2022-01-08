@@ -486,6 +486,11 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
         
     } integerCallback:^(NSInteger pointDelta, double timeDelta, MFAnimationPhase animationPhase) {
         
+        /// Validate state
+        
+        assert(animationPhase != kMFAnimationPhaseRunningStart);
+        /// ^ _momentumAnimator should always be stopped before it is started again
+        
         /// Debug
 //        DDLogDebug(@"Momentum scrolling - delta: %ld, animationPhase: %d", (long)pointDelta, animationPhase);
         
@@ -499,15 +504,20 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
         Vector directedPointDeltaInt = directedPointDelta;
         Vector directedLineDeltaInt = [_scrollLinePixelator intVectorWithDoubleVector:directedLineDelta];
         
+        /// Call momentumScrollStart callback
+        
+        if (animationPhase == kMFAnimationPhaseStart
+            || animationPhase == kMFAnimationPhaseStartAndEnd) {
+            
+            if (_momentumScrollCallback != NULL) _momentumScrollCallback();
+        }
+        
         /// Get momentumPhase from animationPhase
         
         CGMomentumScrollPhase momentumPhase;
         
         if (animationPhase == kMFAnimationPhaseStart) {
             momentumPhase = kCGMomentumScrollPhaseBegin;
-            if (_momentumScrollCallback != NULL) {
-                _momentumScrollCallback();
-            }
         } else if (animationPhase == kMFAnimationPhaseContinue) {
             momentumPhase = kCGMomentumScrollPhaseContinue;
         } else if (animationPhase == kMFAnimationPhaseEnd

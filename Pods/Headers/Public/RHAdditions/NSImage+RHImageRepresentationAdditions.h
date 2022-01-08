@@ -1,1 +1,0 @@
-../../../RHAdditions/RHAdditions/NSImage+RHImageRepresentationAdditions.h
