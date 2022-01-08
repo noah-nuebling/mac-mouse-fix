@@ -98,18 +98,19 @@ static void postSystemDefinedEvent(MFSystemDefinedEventType type, NSEventModifie
     data = data | kMFSystemDefinedEventBase;
     data = data | (type << 16);
     
+    NSInteger downData = data;
+    NSInteger upData = data | kMFSystemDefinedEventPressedMask;
+    
     /// Post key down
     
     NSTimeInterval ts = [Utility_Transformation nsTimeStamp];
-    NSEvent *e = [NSEvent otherEventWithType:14 location:loc modifierFlags:modifierFlags timestamp:ts windowNumber:-1 context:nil subtype:8 data1:data data2:-1];
+    NSEvent *e = [NSEvent otherEventWithType:14 location:loc modifierFlags:modifierFlags timestamp:ts windowNumber:-1 context:nil subtype:8 data1:downData data2:-1];
     
     CGEventPost(tapLoc, e.CGEvent);
     
     /// Post key up
     ts = [Utility_Transformation nsTimeStamp];
-    
-    data = data | kMFSystemDefinedEventPressedMask;
-    e = [NSEvent otherEventWithType:14 location:loc modifierFlags:modifierFlags timestamp:ts windowNumber:-1 context:nil subtype:8 data1:data data2:-1];
+    e = [NSEvent otherEventWithType:14 location:loc modifierFlags:modifierFlags timestamp:ts windowNumber:-1 context:nil subtype:8 data1:upData data2:-1];
     
     CGEventPost(tapLoc, e.CGEvent);
 }
