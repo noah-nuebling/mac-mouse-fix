@@ -243,7 +243,7 @@ static CGSSymbolicHotKey _highestSymbolicHotKeyInCache = 0;
 }
 
 static NSMutableAttributedString *stringWithModifierPrefix(NSString *flagsStr, NSAttributedString *keyStr) {
-    keyStr = [keyStr attributedStringByAddingWeight:9];
+    keyStr = [keyStr attributedStringByAddingWeight:7];
     keyStr = [keyStr attributedStringBySettingFontSize:12];
     NSMutableAttributedString *result = [[NSMutableAttributedString alloc] initWithString:flagsStr];
     [result appendAttributedString:keyStr];
