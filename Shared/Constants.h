@@ -149,6 +149,7 @@ typedef NSString*                                                       MFString
 #define kMFActionDictTypeNavigationSwipe                                @"navigationSwipe"
 #define kMFActionDictTypeSmartZoom                                      @"smartZoom"
 #define kMFActionDictTypeKeyboardShortcut                               @"keyboardShortcut"
+#define kMFActionDictTypeSystemDefinedEvent                             @"systemDefinedEvent"
 #define kMFActionDictTypeMouseButtonClicks                              @"mouseButton"
 #define kMFActionDictTypeAddModeFeedback                                @"addModeAction"
 
@@ -162,6 +163,10 @@ typedef NSString*                                                       MFString
 // Button click variant keys
 #define kMFActionDictKeyMouseButtonClicksVariantButtonNumber            @"button"
 #define kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks          @"nOfClicks"
+
+#define kMFActionDictKeySystemDefinedEventVariantType                   @"systemDefinedEventType"
+#define kMFActionDictKeySystemDefinedEventVariantModifierFlags          @"flags"
+
 
 // Variant values
 
@@ -216,6 +221,33 @@ typedef enum {
     kMFFunctionKeySHKDoNotDisturb = 189,
     
 } MFSymbolicHotkey;
+
+/// SystemEvents
+
+///  NSEvents with type systemDefined and subtype 8 are fired when pressing some keys on Apple keyboards
+///         All the interesting info is in the `data1` field
+
+typedef enum {
+
+    /// These types are found in the `data1` field, shifted left by 16 bits
+    
+    kMFSystemEventTypeBrightnessDown = 3,
+    kMFSystemEventTypeBrightnessUp = 2,
+    kMFSystemEventTypeMediaBack = 16 + 4,
+    kMFSystemEventTypeMediaPlayPause = 16 + 0,
+    kMFSystemEventTypeMediaForward = 16 + 3,
+    kMFSystemEventTypeVolumeMute = 7,
+    kMFSystemEventTypeVolumeDown = 1,
+    kMFSystemEventTypeVolumeUp = 0,
+    
+} MFSystemDefinedEventType;
+
+enum {
+    /// More definitions for the `data1` field
+
+    kMFSystemDefinedEventPressedMask = 1 << 8, ///  0 is keyDown, 1 is keyUp
+    kMFSystemDefinedEventBase = (1 << 9) | (1 << 11), /// These two bits are always set    
+};
 
 // Mosue Buttons
 // (Used as oneshot action dict variants (for actions of type `kMFActionDictTypeMouseButtonClicks`))

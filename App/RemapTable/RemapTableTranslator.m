@@ -178,21 +178,42 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
         [oneShotEffectsTable insertObject:buttonClickEntry atIndex:9];
     }
     
-    /// Insert entry for keyboard shortcut effect
+    /// Insert entry for keyboard shortcut effect or systemDefined effect
     
-    if ([effectDict[kMFActionDictKeyType] isEqual:kMFActionDictTypeKeyboardShortcut]) {
+    BOOL isKeyShortcut = [effectDict[kMFActionDictKeyType] isEqual:kMFActionDictTypeKeyboardShortcut];
+    BOOL isSystemEvent = [effectDict[kMFActionDictKeyType] isEqual:kMFActionDictTypeSystemDefinedEvent];
+    
+    if (isKeyShortcut || isSystemEvent) {
+        
         /// Get index for new entry (right after keyCaptureEntry)
         NSIndexSet *keyCaptureIndexes = [oneShotEffectsTable indexesOfObjectsPassingTest:^BOOL(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             return [obj[@"keyCaptureEntry"] isEqual:@YES];
         }];
         assert(keyCaptureIndexes.count == 1);
         NSUInteger shortcutIndex = keyCaptureIndexes.firstIndex + 1;
-        /// Get keycode and flags
-        CGKeyCode keyCode = ((NSNumber *)effectDict[kMFActionDictKeyKeyboardShortcutVariantKeycode]).unsignedShortValue;
-        CGEventFlags flags = ((NSNumber *)effectDict[kMFActionDictKeyKeyboardShortcutVariantModifierFlags]).unsignedLongValue;
-        /// Get shortcut string
-        NSAttributedString *shortcutString = [UIStrings getStringForKeyCode:keyCode flags:flags];
+        
+        /// Get  strings
+        
+        NSAttributedString *shortcutString;
+        
+        if (isKeyShortcut) {
+        
+            CGKeyCode keyCode = ((NSNumber *)effectDict[kMFActionDictKeyKeyboardShortcutVariantKeycode]).unsignedShortValue;
+            CGEventFlags flags = ((NSNumber *)effectDict[kMFActionDictKeyKeyboardShortcutVariantModifierFlags]).unsignedLongValue;
+            
+            shortcutString = [UIStrings getStringForKeyCode:keyCode flags:flags];
+            
+        } else if (isSystemEvent) {
+                
+            MFSystemDefinedEventType type = ((NSNumber *)effectDict[kMFActionDictKeySystemDefinedEventVariantType]).unsignedIntValue;
+            CGEventFlags flags = ((NSNumber *)effectDict[kMFActionDictKeySystemDefinedEventVariantModifierFlags]).unsignedLongValue;
+            
+            shortcutString = [UIStrings getStringForSystemDefinedEvent:type flags:flags];
+            
+        }
+
         NSString *shortcutStringRaw = [shortcutString coolString];
+        
         /// Create and insert new entry
         [oneShotEffectsTable insertObject:@{
             @"uiAttributed": shortcutString,
@@ -333,14 +354,29 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         // Get capture field
         KeyCaptureView *keyStrokeCaptureField = (KeyCaptureView *)[keyCaptureCell nestedSubviewsWithIdentifier:@"keyCaptureView"][0];
         
-        [keyStrokeCaptureField setupWithCaptureHandler:^(CGKeyCode keyCode, CGEventFlags flags) {
+        [keyStrokeCaptureField setupWithCaptureHandler:^(CGKeyCode keyCode, MFSystemDefinedEventType type, CGEventFlags flags) {
             
-            /// Create new effectDict
-            NSDictionary *newEffectDict = @{
-                kMFActionDictKeyType: kMFActionDictTypeKeyboardShortcut,
-                kMFActionDictKeyKeyboardShortcutVariantKeycode: @(keyCode),
-                kMFActionDictKeyKeyboardShortcutVariantModifierFlags: @(flags),
-            };
+            BOOL keyCodeValid = keyCode != USHRT_MAX;
+            BOOL typeValid = type != UINT_MAX;
+            
+            assert(!(keyCodeValid && typeValid));
+            assert(keyCodeValid || typeValid);
+            
+            NSDictionary *newEffectDict;
+            
+            if (keyCodeValid) {
+                newEffectDict = @{
+                    kMFActionDictKeyType: kMFActionDictTypeKeyboardShortcut,
+                    kMFActionDictKeyKeyboardShortcutVariantKeycode: @(keyCode),
+                    kMFActionDictKeyKeyboardShortcutVariantModifierFlags: @(flags),
+                };
+            } else {
+                newEffectDict = @{
+                    kMFActionDictKeyType: kMFActionDictTypeSystemDefinedEvent,
+                    kMFActionDictKeySystemDefinedEventVariantType: @(type),
+                    kMFActionDictKeySystemDefinedEventVariantModifierFlags: @(flags),
+                };
+            }
             
             /// Insert new effectDict into dataModel and reload table
             ///  Manipulating the datamodel should probably be done by RemapTableController, not RemapTableTranslator, and definitely not in this method, but oh well.

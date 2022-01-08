@@ -8,10 +8,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "Constants.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void (^CaptureHandler) (CGKeyCode keyCode, CGEventFlags flags);
+typedef void (^CaptureHandler) (CGKeyCode keyCode, MFSystemDefinedEventType type, CGEventFlags flags); /// Either keyCode or type will be set, the other one will be USHRT_MAX or UINT_MAX respectively
 typedef void (^CancelHandler) (void);
 
 @interface KeyCaptureView : NSTextView <NSTextViewDelegate>
@@ -19,7 +20,7 @@ typedef void (^CancelHandler) (void);
 - (void)setupWithCaptureHandler:(CaptureHandler)captureHandler
                   cancelHandler:(CancelHandler)cancelHandler;
 
-+ (void)handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload;
++ (void)handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload isSystemDefinedEvent:(BOOL)isSystem;
 
 @end
 

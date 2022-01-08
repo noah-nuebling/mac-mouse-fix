@@ -84,6 +84,44 @@
     return kb;
 }
 
++ (NSAttributedString *)getStringForSystemDefinedEvent:(MFSystemDefinedEventType)type flags:(CGEventFlags)flags {
+    
+    NSString *symbolName = @"questionmark.square";
+    NSString *stringFallback = @"<Key without description>";
+    
+    if (type == kMFSystemEventTypeBrightnessDown) {
+        symbolName = @"sun.min";
+        stringFallback = @"<Decrease Brightness key>";
+    } else if (type == kMFSystemEventTypeBrightnessUp) {
+        symbolName = @"sun.max";
+        stringFallback = @"<Increase Brightness key>";
+    } else if (type == kMFSystemEventTypeMediaBack) {
+        symbolName = @"backward";
+        stringFallback = @"<Rewind key>";
+    } else if (type == kMFSystemEventTypeMediaPlayPause) {
+        symbolName = @"playpause";
+        stringFallback = @"<Play or Pause key>";
+    } else if (type == kMFSystemEventTypeMediaForward) {
+        symbolName = @"forward";
+        stringFallback = @"<Fast-Forward key>";
+    } else if (type == kMFSystemEventTypeVolumeMute) {
+        symbolName = @"speaker";
+        stringFallback = @"<Mute key>";
+    } else if (type == kMFSystemEventTypeVolumeDown) {
+        symbolName = @"speaker.wave.1";
+        stringFallback = @"<Decrease Volume key>";
+    } else if (type == kMFSystemEventTypeVolumeUp) {
+        symbolName = @"speaker.wave.3";
+        stringFallback = @"<Increase Volume key>";
+    }
+        
+    
+    /// Get symbol and attach it to keyStr
+    NSAttributedString *keyStr = stringWithSymbol(symbolName, stringFallback);
+    NSString *flagsStr = [UIStrings getKeyboardModifierString:flags];
+    return stringWithModifierPrefix(flagsStr, keyStr);
+}
+
 static NSMutableDictionary *_hotKeyCache;
 static CGSSymbolicHotKey _highestSymbolicHotKeyInCache = 0;
 
@@ -91,10 +129,9 @@ static CGSSymbolicHotKey _highestSymbolicHotKeyInCache = 0;
     
     /// Get key string
     NSString *keyStr = [UIStrings stringForKeyCode:keyCode];
+    NSString *flagsStr = [UIStrings getKeyboardModifierString:flags];
     
     if (![keyStr isEqual:@""]) {
-        
-        NSString *flagsStr = [UIStrings getKeyboardModifierString:flags];
         
         NSString *combinedString = stringf(@"%@%@", flagsStr, keyStr);
         
@@ -174,26 +211,29 @@ static CGSSymbolicHotKey _highestSymbolicHotKeyInCache = 0;
                 stringFallback = @"<Emoji Picker key>";
             }
             
-            /// Get symbol
-            NSImage *symbol = [NSImage imageNamed:symbolName];
-            NSTextAttachment *symbolAttachment = [[NSTextAttachment alloc] init];
-            symbol.accessibilityDescription = stringFallback;
-            symbolAttachment.image = symbol;
-            keyStr = [NSAttributedString attributedStringWithAttachment:symbolAttachment];
+            /// Get symbol and attach it to keyStr
+            keyStr = stringWithSymbol(symbolName, stringFallback);
         }
-        
-        /// Get modStr
-        ///     This should be necessary - we do this just for debugging
-        
-        NSString *flagsStr = [UIStrings getKeyboardModifierString:flags];
         
         /// Append keyStr and modStr
         
-        NSMutableAttributedString *result = [[NSMutableAttributedString alloc] initWithString:flagsStr];
-        [result appendAttributedString:keyStr];
+        NSMutableAttributedString *result = stringWithModifierPrefix(flagsStr, keyStr);
         
         return result;
     }
+}
+
+static NSMutableAttributedString *stringWithModifierPrefix(NSString *flagsStr, NSAttributedString *keyStr) {
+    NSMutableAttributedString *result = [[NSMutableAttributedString alloc] initWithString:flagsStr];
+    [result appendAttributedString:keyStr];
+    return result;
+}
+static NSAttributedString *stringWithSymbol(NSString *symbolName, NSString *fallbackString) {
+    NSImage *symbol = [NSImage imageNamed:symbolName];
+    NSTextAttachment *symbolAttachment = [[NSTextAttachment alloc] init];
+    symbol.accessibilityDescription = fallbackString;
+    symbolAttachment.image = symbol;
+    return [NSAttributedString attributedStringWithAttachment:symbolAttachment];
 }
 
 + (NSString *)naturalLanguageListFromStringArray:(NSArray<NSString *> *)stringArray {

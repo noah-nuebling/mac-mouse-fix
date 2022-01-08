@@ -15,6 +15,7 @@
 #import "ModifierManager.h"
 #import "MessagePort_Helper.h"
 #import "TransformationManager.h"
+#import "Constants.h"
 
 @implementation Actions
 
@@ -57,6 +58,13 @@
             NSNumber *flags = actionDict[kMFActionDictKeyKeyboardShortcutVariantModifierFlags];
             postKeyboardShortcut(keycode.intValue, flags.intValue);
             
+        } else if ([actionType isEqualToString:kMFActionDictTypeSystemDefinedEvent]) {
+            
+            NSNumber *type = actionDict[kMFActionDictKeySystemDefinedEventVariantType];
+            NSNumber *flags = actionDict[kMFActionDictKeySystemDefinedEventVariantModifierFlags];
+            
+            postSystemDefinedEvent(type.unsignedIntValue, flags.unsignedIntValue);
+            
         } else if ([actionType isEqualToString:kMFActionDictTypeMouseButtonClicks]) {
             
             NSNumber *button = actionDict[kMFActionDictKeyMouseButtonClicksVariantButtonNumber];
@@ -74,6 +82,35 @@
             
         }
     }
+}
+
+#pragma mark - System defined events
+
+static void postSystemDefinedEvent(MFSystemDefinedEventType type, NSEventModifierFlags modifierFlags) {
+    
+    CGEventTapLocation tapLoc = kCGSessionEventTap;
+    
+    CGEventRef locEvent = CGEventCreate(NULL);
+    CGPoint loc = CGEventGetLocation(locEvent);
+    CFRelease(locEvent);
+    
+    NSInteger data = 0;
+    data = data | kMFSystemDefinedEventBase;
+    data = data | (type << 16);
+    
+    
+    /// Post key down
+    
+    NSEvent *e = [NSEvent otherEventWithType:14 location:loc modifierFlags:modifierFlags timestamp:0.0 windowNumber:0 context:nil subtype:8 data1:data data2:-1];
+    
+    CGEventPost(tapLoc, e.CGEvent);
+    
+    /// Post key up
+    
+    data = data | kMFSystemDefinedEventPressedMask;
+    e = [NSEvent otherEventWithType:14 location:loc modifierFlags:modifierFlags timestamp:0.0 windowNumber:0 context:nil subtype:8 data1:data data2:-1];
+    
+    CGEventPost(tapLoc, e.CGEvent);
 }
 
 #pragma mark - Keyboard shortcuts

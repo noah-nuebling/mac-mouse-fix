@@ -83,9 +83,9 @@
 
 #pragma mark keyCaptureModeFeedback
 
-+ (void)handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload {
++ (void)handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload isSystemDefinedEvent:(BOOL)isSystem {
     
-    // Find keyCaptureField instance in remapsTable
+    /// Find keyCaptureField instance in remapsTable
     
     NSTableView *remapsTable = AppDelegate.instance.remapsTable;
     NSInteger effectColumn = [remapsTable columnWithIdentifier:@"effect"];
@@ -102,20 +102,30 @@
     NSTableCellView *keyCaptureCell = [AppDelegate.instance.remapsTable viewAtColumn:effectColumn row:indexes.firstIndex makeIfNecessary:NO];
     KeyCaptureView *keyCaptureView = (KeyCaptureView *)[keyCaptureCell nestedSubviewsWithIdentifier:@"keyCaptureView"].firstObject;
     
-    // Send payload to found instance
+    /// Send payload to found instance
     
-    [keyCaptureView handleKeyCaptureModeFeedbackWithPayload:payload];
+    [keyCaptureView handleKeyCaptureModeFeedbackWithPayload:payload isSystemDefinedEvent:isSystem];
 }
 
-- (void)handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload {
+- (void)handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload isSystemDefinedEvent:(BOOL)isSystem {
     
-    _isCapturing = NO; // Helper disabled keyCaptureMode after sending payload
+    _isCapturing = NO; /// Helper disabled keyCaptureMode after sending payload
     
-    CGKeyCode keyCode = ((NSNumber *)payload[@"keyCode"]).unsignedShortValue;
-    CGEventFlags flags = ((NSNumber *)payload[@"flags"]).unsignedLongValue;
+    CGKeyCode keyCode = USHRT_MAX;
+    MFSystemDefinedEventType type = UINT_MAX;
+    CGEventFlags flags;
     
-    [AppDelegate.mainWindow makeFirstResponder:nil]; // Important to call this before capture handler, otherwise `resignFirstResponder:` (our teardown function) isn't called
-    _captureHandler(keyCode, flags); // This should undraw the view
+    if (isSystem) {
+        type = ((NSNumber *)payload[@"systemEventType"]).unsignedIntValue;
+        flags = ((NSNumber *)payload[@"flags"]).unsignedLongValue;
+    } else {
+        keyCode = ((NSNumber *)payload[@"keyCode"]).unsignedShortValue;
+        flags = ((NSNumber *)payload[@"flags"]).unsignedLongValue;
+    }
+    
+    [AppDelegate.mainWindow makeFirstResponder:nil]; /// Important to call this before capture handler, otherwise `resignFirstResponder:` (our teardown function) isn't called
+    
+    _captureHandler(keyCode, type, flags); /// This should undraw the view
 }
 
 #pragma mark FirstResponderStatus handlers
