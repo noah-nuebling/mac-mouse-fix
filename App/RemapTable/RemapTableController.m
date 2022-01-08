@@ -122,11 +122,7 @@
         NSTableCellView *cell = [self.tableView viewAtColumn:1 row:rowGrouped makeIfNecessary:YES];
         if ([cell.identifier isEqual:@"effectCell"]) {
             NSPopUpButton *pb = cell.subviews[0];
-            NSString *selectedTitle = pb.selectedItem.title;
-            // Get effects table for row of sender
-            NSArray *effectsTable = [RemapTableTranslator getEffectsTableForRemapsTableEntry:self.dataModel[row]];
-            NSDictionary *effectsTableEntryForSelected = [RemapTableTranslator getEntryFromEffectsTable:effectsTable withUIString:selectedTitle];
-            NSDictionary *effectDictForSelected = effectsTableEntryForSelected[@"dict"];
+            NSDictionary *effectDictForSelected = [RemapTableTranslator getEffectDictBasedOnSelectedItemInButton:pb rowDict:self.dataModel[row]];
             // Write effect dict to data model
             self.dataModel[row][kMFRemapsKeyEffect] = effectDictForSelected;
         } else {

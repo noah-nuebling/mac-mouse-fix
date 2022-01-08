@@ -10,6 +10,8 @@
 #import "UIStrings.h"
 #import <Carbon/Carbon.h>
 #import "MASShortcut.h"
+#import "CGSHotKeys.h"
+#import "SharedUtility.h"
 
 @implementation UIStrings
 
@@ -17,8 +19,13 @@
 /// Function for getting extended button string for tooltips found in RemapTableController
 
 + (NSString *)stringForKeyCode:(NSInteger)keyCode {
+    
+    /// Get string from MASShortcut
+    
     MASShortcut *shortcut = [MASShortcut shortcutWithKeyCode:keyCode modifierFlags:0];
     NSString *keyStr = shortcut.keyCodeString;
+    
+    
     return keyStr;
 }
 
@@ -77,15 +84,107 @@
     return kb;
 }
 
-// Arguments are NSNumber so we can throw in values from dataModel and get valid results if they are nil. This is probably a bad solution.
-+ (NSString *)getStringForKeyCode:(CGKeyCode)keyCode flags:(CGEventFlags)flags {
-    NSString *captureFieldContent;
-    // Get key string
+static NSMutableDictionary *_hotKeyCache;
+static CGSSymbolicHotKey _highestSymbolicHotKeyInCache = 0;
+
++ (NSAttributedString *)getStringForKeyCode:(CGKeyCode)keyCode flags:(CGEventFlags)flags {
+    
+    /// Get key string
     NSString *keyStr = [UIStrings stringForKeyCode:keyCode];
-    // Get modifier string
-    NSString *flagsStr = [UIStrings getKeyboardModifierString:flags];
-    captureFieldContent = [NSString stringWithFormat:@"%@%@",flagsStr, keyStr];
-    return captureFieldContent;
+    
+    if (![keyStr isEqual:@""]) {
+        
+        NSString *flagsStr = [UIStrings getKeyboardModifierString:flags];
+        
+        NSString *combinedString = stringf(@"%@%@", flagsStr, keyStr);
+        
+        return [[NSAttributedString alloc] initWithString:combinedString];
+        
+    } else {
+        /// Couldn't retrieve keyStr using MAS
+        
+        NSAttributedString *keyStr;
+        
+        /// Fallback for apple proprietary function keys
+        
+        if (flags != 0) {
+            /// This is weird
+            NSLog(@"Weird flag state when trying to get keyboard string");
+        }
+        
+        /// Init
+        if (!_hotKeyCache) {
+            _hotKeyCache = [NSMutableDictionary dictionary];
+        }
+        
+        /// Get shk
+        NSNumber *symbolicHotkey;
+        
+        /// Try to retrieve from cache
+        symbolicHotkey = _hotKeyCache[@(keyCode)][@(flags)];
+        
+        ///  Search new value
+        if (symbolicHotkey == nil) {
+            
+            CGSSymbolicHotKey h = _highestSymbolicHotKeyInCache;
+            while (h < 512) { /// 512 is arbitrary
+                unichar keyEquivalent;
+                CGKeyCode virtualKeyCode;
+                CGSModifierFlags modifiers;
+                CGSGetSymbolicHotKeyValue(h, &keyEquivalent, &virtualKeyCode, &modifiers);
+                if (virtualKeyCode == 126) {
+                    NSLog(@"");
+                }
+                if (_hotKeyCache[@(virtualKeyCode)] == nil) {
+                    _hotKeyCache[@(virtualKeyCode)] = [NSMutableDictionary dictionary];
+                }
+                _hotKeyCache[@(virtualKeyCode)][@(modifiers)] = @(h);
+                if (((CGKeyCode)virtualKeyCode) == keyCode) {
+                    symbolicHotkey = @(h);
+                    break;
+                }
+                h++;
+            }
+        }
+        
+        /// If found, generate keyStr based on shk
+        
+        if (symbolicHotkey != nil) {
+            CGSSymbolicHotKey shk = (CGSSymbolicHotKey)symbolicHotkey.integerValue;
+            NSString *symbolName;
+            
+            /// Debug
+            NSLog(@"shk: %d", shk);
+            
+            if (shk == kMFFunctionKeySHKMissionControl) {
+                symbolName = @"rectangle.3.group";
+            } else if (shk == kMFFunctionKeySHKDictation) {
+                symbolName = @"mic";
+            } else if (shk == kMFFunctionKeySHKSpotlight) {
+                symbolName = @"magnifyingglass";
+            } else if (shk == kMFFunctionKeySHKDoNotDisturb) {
+                symbolName = @"moon";
+            }
+            
+            /// Get symbol
+            NSImage *symbol = [NSImage imageNamed:symbolName];
+            NSTextAttachment *symbolAttachment = [[NSTextAttachment alloc] init];
+            symbolAttachment.image = symbol;
+            keyStr = [NSAttributedString attributedStringWithAttachment:symbolAttachment];
+        }
+        
+        /// Get modStr
+        ///     This should be necessary - we do this just for debugging
+        
+        NSString *flagsStr = [UIStrings getKeyboardModifierString:flags];
+        
+        /// Append keyStr and modStr
+        
+        NSMutableAttributedString *result = [[NSMutableAttributedString alloc] initWithAttributedString:keyStr];
+        [result appendAttributedString:[[NSAttributedString alloc] initWithString:flagsStr]];
+        
+        return result;
+    }
 }
 
 + (NSString *)naturalLanguageListFromStringArray:(NSArray<NSString *> *)stringArray {

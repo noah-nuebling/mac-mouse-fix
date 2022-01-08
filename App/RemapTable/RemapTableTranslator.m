@@ -161,7 +161,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
         @{@"ui": @"Keyboard Shortcut...", @"tool": @"Type a keyboard shortcut, then use it from your mouse", @"keyCaptureEntry": @YES},
     ].mutableCopy;
     
-    // Insert button specific entry
+    /// Insert button specific entry
     
     if (buttonNumber != 3) { // We already have the "Open Link in New Tab" entry for button 3
         NSDictionary *buttonClickEntry = @{
@@ -178,24 +178,24 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
         [oneShotEffectsTable insertObject:buttonClickEntry atIndex:9];
     }
     
-    // Insert entry for keyboard shortcut effect
+    /// Insert entry for keyboard shortcut effect
     
     if ([effectDict[kMFActionDictKeyType] isEqual:kMFActionDictTypeKeyboardShortcut]) {
-        // Get index for new entry (right after keyCaptureEntry)
+        /// Get index for new entry (right after keyCaptureEntry)
         NSIndexSet *keyCaptureIndexes = [oneShotEffectsTable indexesOfObjectsPassingTest:^BOOL(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             return [obj[@"keyCaptureEntry"] isEqual:@YES];
         }];
         assert(keyCaptureIndexes.count == 1);
         NSUInteger shortcutIndex = keyCaptureIndexes.firstIndex + 1;
-        // Get keycode and flags
+        /// Get keycode and flags
         CGKeyCode keyCode = ((NSNumber *)effectDict[kMFActionDictKeyKeyboardShortcutVariantKeycode]).unsignedShortValue;
         CGEventFlags flags = ((NSNumber *)effectDict[kMFActionDictKeyKeyboardShortcutVariantModifierFlags]).unsignedLongValue;
-        // Get shortcut string
-        NSString *shortcutString = [UIStrings getStringForKeyCode:keyCode flags:flags];
-        // Create and insert new entry
+        /// Get shortcut string
+        NSAttributedString *shortcutString = [UIStrings getStringForKeyCode:keyCode flags:flags];
+        /// Create and insert new entry
         [oneShotEffectsTable insertObject:@{
-            @"ui": shortcutString,
-            @"tool": stringf(@"Works like pressing '%@' on your keyboard", shortcutString),
+            @"uiAttributed": shortcutString,
+            @"tool": stringf(@"Works like pressing '%@' on your keyboard", shortcutString.string),
             @"dict": effectDict,
             @"indentation": @1,
         } atIndex:shortcutIndex];
@@ -220,14 +220,14 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
     NSDictionary *effectsTableEntry = (NSDictionary *)effectTable[inds.firstIndex];
     return effectsTableEntry;
 }
-+ (NSDictionary *)getEntryFromEffectsTable:(NSArray *)effectsTable withUIString:(NSString *)uiString {
-    NSIndexSet *inds = [effectsTable indexesOfObjectsPassingTest:^BOOL(NSDictionary * _Nonnull tableEntry, NSUInteger idx, BOOL * _Nonnull stop) {
-        return [tableEntry[@"ui"] isEqualToString:uiString];
-    }];
-    NSAssert(inds.count == 1, @"");
-    NSDictionary *effectsTableEntry = effectsTable[inds.firstIndex];
-    return effectsTableEntry;
-}
+//+ (NSDictionary *)getEntryFromEffectsTable:(NSArray *)effectsTable withUIString:(NSAttributedString *)uiString {
+//    NSIndexSet *inds = [effectsTable indexesOfObjectsPassingTest:^BOOL(NSDictionary * _Nonnull tableEntry, NSUInteger idx, BOOL * _Nonnull stop) {
+//        return [tableEntry[@"ui"] isEqual:uiString];
+//    }];
+//    NSAssert(inds.count == 1, @"");
+//    NSDictionary *effectsTableEntry = effectsTable[inds.firstIndex];
+//    return effectsTableEntry;
+//}
 
 + (NSArray *)getEffectsTableForRemapsTableEntry:(NSDictionary *)rowDict {
     
@@ -268,19 +268,43 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     NSArray *effectsTable = [RemapTableTranslator getEffectsTableForRemapsTableEntry:rowDict];
     NSDictionary *effectDict = rowDict[kMFRemapsKeyEffect];
     NSString *name;
-    if (effectDict) { // When inserting new rows through AddMode, there is no effectDict at first // Noah from future: are you sure? I think this has changed.
-//        if ([effectDict[kMFActionDictKeyType] isEqual:kMFActionDictTypeKeyboardShortcut]) {
-//            NSNumber *keyCode = effectDict[kMFActionDictKeyKeyboardShortcutVariantKeycode];
-//            NSNumber *flags = effectDict[kMFActionDictKeyKeyboardShortcutVariantModifierFlags];
-//            name = [UIStrings getStringForKeyCode:keyCode.unsignedIntValue flags:flags.unsignedIntValue];
-//        } else
-//        {
-            // Get title for effectDict from effectsTable
-            NSDictionary *effectsMenuModelEntry = [RemapTableTranslator getEntryFromEffectTable:effectsTable withEffectDict:effectDict];
-            name = effectsMenuModelEntry[@"ui"];
-//        }
+    if (effectDict) {
+        NSDictionary *effectsMenuModelEntry = [RemapTableTranslator getEntryFromEffectTable:effectsTable withEffectDict:effectDict];
+        name = effectsMenuModelEntry[@"ui"];
     }
     return name;
+}
+
++ (NSMenuItem * _Nullable)getPopUpButtonItemToSelectBasedOnRowDict:(NSPopUpButton * _Nonnull)button rowDict:(NSDictionary * _Nonnull)rowDict {
+    
+    int itemIndex = -1;
+    
+    NSArray *effectsTable = [RemapTableTranslator getEffectsTableForRemapsTableEntry: rowDict];
+    
+    int i = 0;
+    while (true) {
+        NSDictionary *effectTableEntry = effectsTable[i];
+        if ([effectTableEntry[@"dict"] isEqual: rowDict[kMFRemapsKeyEffect]]) {
+            itemIndex = i;
+            break;
+        };
+        i++;
+    }
+    
+    if (itemIndex != -1) {
+        return [button itemAtIndex:i];
+    } else {
+        return nil;
+    }
+}
+
++ (NSDictionary * _Nullable)getEffectDictBasedOnSelectedItemInButton:(NSPopUpButton * _Nonnull)button rowDict:(NSDictionary * _Nonnull)rowDict {
+    
+    NSArray *effectsTable = [RemapTableTranslator getEffectsTableForRemapsTableEntry:rowDict];
+    NSInteger selectedIndex = button.indexOfSelectedItem;
+    
+    return effectsTable[selectedIndex][@"dict"];
+    
 }
 
 /// \discussion We only need the `row` parameter to insert data into the datamodel, which we shouldn't be doing from this function to begin with
@@ -289,9 +313,9 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
 ///            For a clean solution, the tableView should reload it's content, whenever tableView.enabled changes, so that this function is called again. I don't think it does this (automatically) though. However, things still seem to work fine. I assume, that's because we're still doing the recursive enabling/disabling from AppDelegate - disableUI:, and both that function and this one work together in some way I don't understand to enable/disable everything properly.
 + (NSTableCellView *)getEffectCellWithRowDict:(NSDictionary *)rowDict row:(NSUInteger)row tableViewEnabled:(BOOL)tableViewEnabled {
     
-    rowDict = rowDict.mutableCopy; // Not sure if necessary
+    rowDict = rowDict.mutableCopy; /// Not sure if necessary
     NSArray *effectTable = [self getEffectsTableForRemapsTableEntry:rowDict];
-    // Create trigger cell and fill out popup button contained in it
+    /// Create trigger cell and fill out popup button contained in it
     NSTableCellView *triggerCell = [self.tableView makeViewWithIdentifier:@"effectCell" owner:nil];
     
     NSDictionary *effectDict = rowDict[kMFRemapsKeyEffect];
@@ -307,15 +331,15 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         
         [keyStrokeCaptureField setupWithCaptureHandler:^(CGKeyCode keyCode, CGEventFlags flags) {
             
-            // Create new effectDict
+            /// Create new effectDict
             NSDictionary *newEffectDict = @{
                 kMFActionDictKeyType: kMFActionDictTypeKeyboardShortcut,
                 kMFActionDictKeyKeyboardShortcutVariantKeycode: @(keyCode),
                 kMFActionDictKeyKeyboardShortcutVariantModifierFlags: @(flags),
             };
             
-            // Insert new effectDict into dataModel and reload table
-            //  Manipulating the datamodel should probably be done by RemapTableController, not RemapTableTranslator, and definitely not in this method, but oh well.
+            /// Insert new effectDict into dataModel and reload table
+            ///  Manipulating the datamodel should probably be done by RemapTableController, not RemapTableTranslator, and definitely not in this method, but oh well.
             
             NSInteger rowBaseDataModel = [RemapTableUtility baseDataModelIndexFromGroupedDataModelIndex:row withGroupedDataModel:self.groupedDataModel];
             
@@ -326,26 +350,31 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         } cancelHandler:^{
             
             [self.tableView reloadData];
-            // Restore tableView to the ground truth dataModel
-            //  This used to restore original state if the capture field has been created through `reloadDataWithTemporaryDataModel:`
+            /// Restore tableView to the ground truth dataModel
+            ///  This used to restore original state if the capture field has been created through `reloadDataWithTemporaryDataModel:`
             
         }];
         
         triggerCell = keyCaptureCell;
         
     } else {
-        // Get popup button
+        /// Get popup button
         NSPopUpButton *popupButton = triggerCell.subviews[0];
-        // Delete existing menu items from IB
+        /// Delete existing menu items from IB
         [popupButton removeAllItems];
-        // Iterate oneshot effects table and fill popupButton
+        /// Iterate effects table and fill popupButton
         for (NSDictionary *effectTableEntry in effectTable) {
             NSMenuItem *i;
             if ([effectTableEntry[@"isSeparator"] isEqual: @YES]) {
                 i = (NSMenuItem *)NSMenuItem.separatorItem;
             } else {
                 i = [[NSMenuItem alloc] init];
-                i.title = effectTableEntry[@"ui"];
+                NSString *title = effectTableEntry[@"ui"];
+                if (title != nil) {
+                    i.title = title;
+                } else {
+                    i.attributedTitle = effectTableEntry[@"uiAttributed"];
+                }
                 i.action = @selector(updateTableAndWriteToConfig:);
                 i.target = self.tableView.delegate;
                 i.toolTip = effectTableEntry[@"tool"];
@@ -372,16 +401,15 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
             [popupButton.menu addItem:i];
         }
         
-        // Select popup button item corresponding to datamodel
-        // Get effectDict from datamodel
-        NSString * title = effectNameForRowDict(rowDict);
-        if (title) {
-            NSMenuItem *itemToSelect = [popupButton itemWithTitle:title];
+        /// Select popup button item corresponding to datamodel
+        /// Get effectDict from datamodel
+        NSMenuItem *itemToSelect = [self getPopUpButtonItemToSelectBasedOnRowDict:popupButton rowDict:rowDict];
+        if (itemToSelect) {
             [popupButton selectItem:itemToSelect];
             popupButton.toolTip = itemToSelect.toolTip;
         }
         
-        // Disable popupbutton, if tableView is disabled
+        /// Disable popupbutton, if tableView is disabled
         popupButton.enabled = tableViewEnabled;
        
     }

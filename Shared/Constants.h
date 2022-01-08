@@ -206,6 +206,14 @@ typedef enum {
     kMFSHSiri = 176,
     kMFSHNotificationCenter = 163,
     kMFSHToggleDoNotDisturb = 175,
+    
+    /// These shk are assigned to some function keys on apple keyboards
+    
+    kMFFunctionKeySHKMissionControl = 108,
+    kMFFunctionKeySHKSpotlight = 187,
+    kMFFunctionKeySHKDictation = 186,
+    kMFFunctionKeySHKDoNotDisturb = 189,
+    
 } MFSymbolicHotkey;
 
 // Mosue Buttons
