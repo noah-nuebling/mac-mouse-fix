@@ -119,6 +119,9 @@
     } else if (type == kMFSystemEventTypeKeyboardBacklightUp) {
         symbolName = @"light.max";
         stringFallback = @"<Increase Keyboard Brightness key>";
+    } else if (type == kMFSystemEventTypePower) {
+        symbolName = @"power";
+        stringFallback = @"<Power key>";
     }
         
     /// Validate

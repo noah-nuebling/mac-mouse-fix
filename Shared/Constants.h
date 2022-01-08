@@ -244,6 +244,7 @@ typedef enum {
     
     kMFSystemEventTypeKeyboardBacklightDown = 22,
     kMFSystemEventTypeKeyboardBacklightUp = 21,
+    kMFSystemEventTypePower = 6,
     
 } MFSystemDefinedEventType;
 

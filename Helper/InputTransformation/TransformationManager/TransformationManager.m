@@ -228,9 +228,11 @@ CGEventRef  _Nullable keyCaptureModeCallback(CGEventTapProxy proxy, CGEventType 
         
         NSEvent *e = [NSEvent eventWithCGEvent:event];
         
-        if (!keyCaptureModePayloadIsValidWithEvent(e, flags)) {
+        if (keyCaptureModePayloadIsValidWithEvent(e, flags)) {
             
             MFSystemDefinedEventType type = (MFSystemDefinedEventType)(e.data1 >> 16);
+            
+            NSLog(@"System event data1: %ld, data2: %ld", e.data1, e.data2); /// Debug
             
             payload = @{
                 @"systemEventType": @(type),
@@ -254,8 +256,9 @@ bool keyCaptureModePayloadIsValidWithEvent(NSEvent *e, CGEventFlags flags) {
     
     BOOL isSub8 = (e.subtype == 8); /// 8 -> NSEvnentSubtypeScreenChanged
     BOOL isKeyDown = (e.data1 & kMFSystemDefinedEventPressedMask) == 0;
+    BOOL secondDataIsNil = e.data2 == -1; /// The power key up event has both data fields be 0
     
-    return isSub8 && isKeyDown;
+    return isSub8 && isKeyDown && secondDataIsNil;
 }
 
 #pragma mark - Dummy Data

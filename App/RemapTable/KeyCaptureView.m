@@ -166,7 +166,7 @@
                     [self drawEmptyAppearance];
                 }
             } else if (event.type == NSEventTypeKeyDown) {
-                assert(!self->_isCapturing); // _isCapturing should be set to NO by `handleKeyCaptureModeFeedbackWithPayload:` before this is executed.
+//                assert(!self->_isCapturing); // _isCapturing should be set to NO by `handleKeyCaptureModeFeedbackWithPayload:` before this is executed.
             } else if (event.type == NSEventTypeLeftMouseDown) {
                 // If the user clicks anything, resign key. -> To prevent weird states. E.g. where Mac Mouse Fix is disabled while the field is still up
                 [AppDelegate.mainWindow makeFirstResponder:nil];
