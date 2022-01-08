@@ -13,8 +13,30 @@
 #import <ApplicationServices/ApplicationServices.h>
 #import "CGSPrivate.h"
 #import "SharedUtility.h"
+#include <sys/types.h>
+#include <sys/sysctl.h>
 
 @implementation Utility_Transformation
+
++ (NSTimeInterval)nsTimeStamp {
+    /// Time since system startup in seconds. This value is used in NSEvent timestamps
+
+    
+    int MIB_SIZE = 2;
+    
+    int mib[MIB_SIZE];
+    size_t size;
+    struct timeval boottime;
+    
+    mib[0] = CTL_KERN;
+    mib[1] = KERN_BOOTTIME;
+    size = sizeof(boottime);
+    if (sysctl(mib, MIB_SIZE, &boottime, &size, NULL, 0) != -1) {
+        return boottime.tv_sec + (((double)boottime.tv_usec) / USEC_PER_SEC);
+    }
+    
+    return 0.0;
+}
 
 + (CFMachPortRef)createEventTapWithLocation:(CGEventTapLocation)location
                                        mask:(CGEventMask)mask
