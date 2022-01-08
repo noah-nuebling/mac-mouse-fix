@@ -192,10 +192,11 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
         CGEventFlags flags = ((NSNumber *)effectDict[kMFActionDictKeyKeyboardShortcutVariantModifierFlags]).unsignedLongValue;
         /// Get shortcut string
         NSAttributedString *shortcutString = [UIStrings getStringForKeyCode:keyCode flags:flags];
+        NSString *shortcutStringRaw = [shortcutString coolString];
         /// Create and insert new entry
         [oneShotEffectsTable insertObject:@{
             @"uiAttributed": shortcutString,
-            @"tool": stringf(@"Works like pressing '%@' on your keyboard", shortcutString.string),
+            @"tool": stringf(@"Works like pressing '%@' on your keyboard", shortcutStringRaw),
             @"dict": effectDict,
             @"indentation": @1,
         } atIndex:shortcutIndex];
@@ -271,6 +272,9 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     if (effectDict) {
         NSDictionary *effectsMenuModelEntry = [RemapTableTranslator getEntryFromEffectTable:effectsTable withEffectDict:effectDict];
         name = effectsMenuModelEntry[@"ui"];
+        if (name == nil) {
+            name = [effectsMenuModelEntry[@"uiAttributed"] coolString];
+        }
     }
     return name;
 }

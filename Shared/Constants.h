@@ -210,8 +210,9 @@ typedef enum {
     /// These shk are assigned to some function keys on apple keyboards
     
     kMFFunctionKeySHKMissionControl = 108,
-    kMFFunctionKeySHKSpotlight = 187,
     kMFFunctionKeySHKDictation = 186,
+    kMFFunctionKeySHKSpotlight = 187,
+    kMFFunctionKeySHKSwitchKeyboard = 188,
     kMFFunctionKeySHKDoNotDisturb = 189,
     
 } MFSymbolicHotkey;

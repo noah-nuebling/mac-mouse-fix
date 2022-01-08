@@ -12,6 +12,35 @@
 
 @implementation NSAttributedString (Additions)
 
+- (NSString *)coolString {
+    /// Enhance the string method to support fallback values for text attachments
+    ///     Can't override `- string` for some reason. Probably bc `- string` is already declared in another category or sth
+    
+    NSMutableString *result = [NSMutableString string];
+    
+    NSUInteger i = 0;
+    while (true) {
+        NSRange range;
+        NSDictionary<NSAttributedStringKey, id> *attributes = [self attributesAtIndex:i effectiveRange:&range];
+        NSTextAttachment *attachment = attributes[NSAttachmentAttributeName];
+        if (attachment != nil) {
+            NSString *description = attachment.image.accessibilityDescription;
+            if (description != nil) {
+                [result appendString:description];
+            }
+        } else {
+            NSString *substring = [self attributedSubstringFromRange:range].string;
+            [result appendString:substring];
+        }
+        i = NSMaxRange(range);
+        if (i >= self.length) {
+            break;
+        }
+    }
+    
+    return result;
+}
+
 /// Fill out default attributes, because layout code won't work if the string doesn't have a font and a textColor attribute on every character. See https://stackoverflow.com/questions/13621084/boundingrectwithsize-for-nsattributedstring-returning-wrong-size
 - (NSAttributedString *)attributedStringByFillingOutDefaultAttributes {
     

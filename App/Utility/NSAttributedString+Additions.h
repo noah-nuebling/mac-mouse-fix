@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSAttributedString (Additions)
 
+- (NSString *)coolString;
+
 - (NSAttributedString *)attributedStringByFillingOutDefaultAttributes;
 
 - (NSAttributedString *)attributedStringByAddingBaseAttributes:(NSDictionary<NSAttributedStringKey, id> *)baseAttributes;

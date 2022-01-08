@@ -151,24 +151,33 @@ static CGSSymbolicHotKey _highestSymbolicHotKeyInCache = 0;
         
         if (symbolicHotkey != nil) {
             CGSSymbolicHotKey shk = (CGSSymbolicHotKey)symbolicHotkey.integerValue;
-            NSString *symbolName;
+            NSString *symbolName = @"questionmark.square";
+            NSString *stringFallback = @"<Key without description>";
             
             /// Debug
             NSLog(@"shk: %d", shk);
             
             if (shk == kMFFunctionKeySHKMissionControl) {
                 symbolName = @"rectangle.3.group";
+                stringFallback = @"<Mission Control key>";
             } else if (shk == kMFFunctionKeySHKDictation) {
                 symbolName = @"mic";
+                stringFallback = @"<Dictation key>";
             } else if (shk == kMFFunctionKeySHKSpotlight) {
                 symbolName = @"magnifyingglass";
+                stringFallback = @"<Spotlight key>";
             } else if (shk == kMFFunctionKeySHKDoNotDisturb) {
                 symbolName = @"moon";
+                stringFallback = @"<Do Not Disturb key>";
+            } else if (shk == kMFFunctionKeySHKSwitchKeyboard) {
+                symbolName = @"globe";
+                stringFallback = @"<Emoji Picker key>";
             }
             
             /// Get symbol
             NSImage *symbol = [NSImage imageNamed:symbolName];
             NSTextAttachment *symbolAttachment = [[NSTextAttachment alloc] init];
+            symbol.accessibilityDescription = stringFallback;
             symbolAttachment.image = symbol;
             keyStr = [NSAttributedString attributedStringWithAttachment:symbolAttachment];
         }
@@ -180,8 +189,8 @@ static CGSSymbolicHotKey _highestSymbolicHotKeyInCache = 0;
         
         /// Append keyStr and modStr
         
-        NSMutableAttributedString *result = [[NSMutableAttributedString alloc] initWithAttributedString:keyStr];
-        [result appendAttributedString:[[NSAttributedString alloc] initWithString:flagsStr]];
+        NSMutableAttributedString *result = [[NSMutableAttributedString alloc] initWithString:flagsStr];
+        [result appendAttributedString:keyStr];
         
         return result;
     }
