@@ -205,6 +205,7 @@
 		4F1B832C26081A5500AEAF37 /* CaptureNotifications.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CaptureNotifications.m; sourceTree = "<group>"; };
 		4F1C51D8260543DD007F4930 /* NSTextField+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSTextField+Additions.h"; sourceTree = "<group>"; };
 		4F1C51D9260543DD007F4930 /* NSTextField+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSTextField+Additions.m"; sourceTree = "<group>"; };
+		4F1EB2DE278A4513009B08B1 /* notes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = notes.md; sourceTree = "<group>"; };
 		4F2F5DA625FB6FFD0037660A /* AddWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddWindowController.h; sourceTree = "<group>"; };
 		4F2F5DA725FB6FFD0037660A /* AddWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddWindowController.m; sourceTree = "<group>"; };
 		4F2F5DB125FB723D0037660A /* AddWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddWindow.xib; sourceTree = "<group>"; };
@@ -572,6 +573,7 @@
 			isa = PBXGroup;
 			children = (
 				4F39BC88263B68F400FDF692 /* xcconfig */,
+				4F1EB2DE278A4513009B08B1 /* notes.md */,
 				4F422EEC23469B0F00AA6E22 /* README.md */,
 			);
 			name = Other;
