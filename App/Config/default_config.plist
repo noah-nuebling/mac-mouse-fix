@@ -177,7 +177,7 @@
 		<key>checkForPrereleases</key>
 		<false/>
 		<key>configVersion</key>
-		<integer>9</integer>
+		<integer>10</integer>
 		<key>skippedBundleVersion</key>
 		<integer>0</integer>
 		<key>launchesOverall</key>
