@@ -123,6 +123,9 @@
     } else if (type == kMFSystemEventTypePower) {
         symbolName = @"power";
         stringFallback = @"<Power key>";
+    } else if (type == kMFSystemEventTypeCapsLock) {
+        symbolName = @"capslock";
+        stringFallback = @"⇪";
     }
         
     /// Validate
@@ -243,8 +246,9 @@ static CGSSymbolicHotKey _highestSymbolicHotKeyInCache = 0;
 }
 
 static NSMutableAttributedString *stringWithModifierPrefix(NSString *flagsStr, NSAttributedString *keyStr) {
-    keyStr = [keyStr attributedStringByAddingWeight:8];
-    keyStr = [keyStr attributedStringBySettingFontSize:12];
+    keyStr = [keyStr attributedStringByAddingWeight:0.4];
+    NSLog(@"bold: %f", NSFontWeightSemibold);
+    keyStr = [keyStr attributedStringBySettingFontSize:NSFont.smallSystemFontSize];
     NSMutableAttributedString *result = [[NSMutableAttributedString alloc] initWithString:flagsStr];
     [result appendAttributedString:keyStr];
     return result;

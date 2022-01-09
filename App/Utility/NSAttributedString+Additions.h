@@ -16,6 +16,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSString *)coolString;
 
+- (NSAttributedString *)attributedStringByAddingFontTraits:(NSDictionary<NSFontDescriptorTraitKey, id> *)traits;
+- (NSAttributedString *)attributedStringByAddingWeight:(NSFontWeight)weight;
+
+- (NSAttributedString *)attributedStringByAddingSymbolicFontTraits:(NSFontDescriptorSymbolicTraits)traits forSubstring:(NSString *)subStr;
+- (NSAttributedString *)attributedStringByAddingSymbolicFontTraits:(NSFontDescriptorSymbolicTraits)traits;
+
 - (NSAttributedString *)attributedStringByFillingOutDefaultAttributes;
 
 - (NSAttributedString *)attributedStringByAddingBaseAttributes:(NSDictionary<NSAttributedStringKey, id> *)baseAttributes;
@@ -24,8 +30,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSAttributedString *)attributedStringByAddingBold;
 - (NSAttributedString *)attributedStringByAddingItalicForSubstring:(NSString *)subStr;
 - (NSAttributedString *)attributedStringByAligningSubstring:(NSString *)subStr alignment:(NSTextAlignment)alignment;
-- (NSAttributedString *)attributedStringByAddingWeight:(NSInteger)weight;
-- (NSAttributedString *)attributedStringByAddingThinForSubstring:(NSString *)subStr;
+- (NSAttributedString *)attributedStringBySettingWeight:(NSInteger)weight;
+- (NSAttributedString *)attributedStringBySettingThinForSubstring:(NSString *)subStr;
 - (NSAttributedString *)attributedStringBySettingFontSize:(CGFloat)size;
 - (NSAttributedString *)attributedStringBySettingSecondaryButtonTextColorForSubstring:(NSString *)subStr;
 + (NSAttributedString *)hyperlinkFromString:(NSString *)inString withURL:(NSURL *)aURL;
