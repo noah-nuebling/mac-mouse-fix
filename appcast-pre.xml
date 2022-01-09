@@ -157,6 +157,8 @@
 <h3 id="new-feature">New feature!</h3>
 <p>You can now control Media Playback, Speaker Volume, Display Brightness and more right from your mouse! This is possible because Mac Mouse Fix now let’s you remap your mouse buttons to any key on your keyboard - even Apple’s proprietary function keys like “Play-Pause” or “Mute Speaker”.</p>
 <p><img width="500px" src="https://user-images.githubusercontent.com/40808343/148666688-f2da6897-a6d2-47cb-86df-59afb3ab8682.gif"></p>
+<hr />
+<p>Also check out the <strong>cool stuff</strong> introduced in <a href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.0.0">Mac Mouse Fix 2</a>!</p>
 </body>
 </html>
 
@@ -328,7 +330,7 @@
 <p><img width=500px src="https://user-images.githubusercontent.com/40808343/148165599-02a82c4c-8db6-4784-9e61-f8ba1d1915af.gif"></p>
 <p>Adding an Action for Double-Clicking the Middle Mouse Button is super simple. ^</p>
 <h2 id="a-major-boost-to-your-productivity.">A major boost to your productivity.</h2>
-<p>Mouse Gestures, together with the new Action Table allow you to get <strong>7x more functionality out of a single Button</strong> compared to conventional mouse drivers. All while being so simple that you’ll actually use it.</p>
+<p>Mouse Gestures, together with the new Action Table allow you to get <strong>7x more functionality out of a single Button</strong> compared to conventional mouse drivers. All while being so simple and intuitive that you’ll actually use all that power.</p>
 <p>This way anyone can leverage the convenient navigation options that make macOS so powerful - from any mouse. Even the simplest ones.</p>
 <p><img width="500px" src="https://user-images.githubusercontent.com/40808343/148170941-417c0821-432a-48da-b3a3-26a8f93342d7.gif"></p>
 <p>All of this functionality using just a single Button! ^</p>
