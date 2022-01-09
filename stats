@@ -20,10 +20,13 @@ def main():
     if len(sys.argv) == 1: # Print current downloads
         releases = load_releases()
         releases = sorted_by_release(releases, 'published_at')
+        total_downloads = 0
         for r in releases:
             short_version = r['name']
             downloads = r['assets'][0]['download_count']
+            total_downloads += downloads
             print(f'{short_version}: {downloads}')
+        print(f'\ntotal: {total_downloads}')
 
     elif len(sys.argv) >= 2:
 
