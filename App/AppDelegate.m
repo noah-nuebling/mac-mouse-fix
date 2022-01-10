@@ -48,9 +48,9 @@
     sender.state = !sender.state; // Prevent user from changing checkbox state directly. Instead, we'll do that through the `enableUI` method.
     
     if (beingEnabled) {
-        // We won't enable the UI here directly. Instead, we'll do that from the `handleHelperEnabledMessage` method
+        /// We won't enable the UI here directly. Instead, we'll do that from the `handleHelperEnabledMessage` method
     } else { // Being disabled
-        [self enableUI:@NO];
+        [self enableUI:NO];
     }
     
     [HelperServices enableHelperAsUserAgent:beingEnabled];
@@ -63,7 +63,7 @@
     
     if (self.instance.UIDisabled) {
         // Enable UI
-        [self.instance enableUI:@YES];
+        [self.instance enableUI:YES];
         // Flash Notification
 //        NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Mac Mouse Fix will stay enabled after you restart your Mac"];
 //        message = [message attributedStringBySettingFontSize:NSFont.smallSystemFontSize];
@@ -139,11 +139,11 @@ static NSDictionary *sideButtonActions;
     
     NSLog(@"Mac Mouse Fix finished launching");
     
-    // Load UI
+    /// Load UI
     
     [self setUIToConfigFile];
     
-    // Update app-launch counters
+    /// Update app-launch counters
     
     NSInteger launchesOverall;
     NSInteger launchesOfCurrentBundleVersion;
@@ -259,14 +259,12 @@ NSTimer *removeAccOverlayTimer;
 - (BOOL)UIDisabled {
     return !self.enableMouseFixCheckBox.state;
 }
-- (void)enableUI:(NSNumber *)enable {
-    
-    BOOL enb = enable.boolValue;
+- (void)enableUI:(BOOL)enb {
     
     self.enableMouseFixCheckBox.state = enb;
     
     NSView *baseView = [self.window.contentView subviewsWithIdentifier:@"baseView"][0];
-    NSBox *preferenceBox = (NSBox *)[baseView subviewsWithIdentifier:@"preferenceBox"][0]; // Should use outlets instead of this
+    NSBox *preferenceBox = (NSBox *)[baseView subviewsWithIdentifier:@"preferenceBox"][0]; /// Should use outlets instead of this
     
     
     NSArray<NSView *> *recursiveSubviews = [preferenceBox.contentView nestedSubviews];
@@ -289,12 +287,10 @@ NSTimer *removeAccOverlayTimer;
     NSLog(@"Setting Enable Mac Mouse Fix checkbox to: %hhd", [HelperServices helperIsActive]);
     
 #pragma mark other
-    // enableCheckbox
-    if (HelperServices.helperIsActive) {
-        _enableMouseFixCheckBox.state = 1;
-    } else {
-        _enableMouseFixCheckBox.state = 0;
-    }
+    /// enableCheckbox
+    BOOL enable = HelperServices.helperIsActive;
+    _enableMouseFixCheckBox.state = enable ? 1 : 0;
+    [self enableUI:enable];
     
     [ConfigFileInterface_App loadConfigFromFile];
     
@@ -325,8 +321,6 @@ NSTimer *removeAccOverlayTimer;
     pxStepSizeRelativeToConfigRange = (pxStepSize - lowerLm) / (upperLm - lowerLm);
     
     _scrollStepSizeSlider.doubleValue = pxStepSizeRelativeToConfigRange;
-    
-//    [self performSelector:@selector(enableUI:) withObject:@(_enableMouseFixCheckBox.state) afterDelay:0.0];
     
 }
 
