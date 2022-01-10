@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSAttributedString (Additions)
 
+- (NSAttributedString *)attributedStringByAddingBaseLineOffset:(CGFloat)offset;
+
 - (NSString *)coolString;
 
 - (NSAttributedString *)attributedStringByAddingFontTraits:(NSDictionary<NSFontDescriptorTraitKey, id> *)traits;
@@ -22,9 +24,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSAttributedString *)attributedStringByAddingSymbolicFontTraits:(NSFontDescriptorSymbolicTraits)traits forSubstring:(NSString *)subStr;
 - (NSAttributedString *)attributedStringByAddingSymbolicFontTraits:(NSFontDescriptorSymbolicTraits)traits;
 
-- (NSAttributedString *)attributedStringByFillingOutDefaultAttributes;
+- (NSAttributedString *)attributedStringByFillingOutBase;
 
-- (NSAttributedString *)attributedStringByAddingBaseAttributes:(NSDictionary<NSAttributedStringKey, id> *)baseAttributes;
+- (NSAttributedString *)attributedStringByAddingStringAttributesAsBase:(NSDictionary<NSAttributedStringKey, id> *)baseAttributes;
 - (NSAttributedString *)attributedStringByAddingLinkWithURL:(NSURL *)linkURL forSubstring:(NSString *)substring;
 - (NSAttributedString *)attributedStringByAddingBoldForSubstring:(NSString *)subStr;
 - (NSAttributedString *)attributedStringByAddingBold;

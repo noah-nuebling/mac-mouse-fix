@@ -12,7 +12,60 @@
 
 @implementation NSAttributedString (Additions)
 
+#pragma mark Attributed string attributes
+
+- (NSAttributedString *)attributedStringByAddingStringAttributes:(NSDictionary<NSAttributedStringKey, id> *)attributes forRange:(NSRange)range {
+    
+    NSMutableAttributedString *ret = self.mutableCopy;
+    
+    [ret addAttributes:attributes range:range];
+    
+    return ret;
+}
+
+/// Baseline offset
+
+- (NSAttributedString *)attributedStringByAddingBaseLineOffset:(CGFloat)offset forRange:(NSRange)range {
+    /// Offset in points
+    
+    return [self attributedStringByAddingStringAttributes:@{
+        NSBaselineOffsetAttributeName: @(offset),
+    } forRange:range];
+}
+
+- (NSAttributedString *)attributedStringByAddingBaseLineOffset:(CGFloat)offset {
+    
+    NSRange range = NSMakeRange(0, self.length);
+    return [self attributedStringByAddingBaseLineOffset:offset forRange:range];
+}
+
+
+#pragma mark Font attributes
+/// Font attributes are a subset of attributed string attributes.
+///     It might be smart to use our function for adding string attributes for adding font attributes
+
+- (NSAttributedString *)attributedStringByAddingFontAttributes:(NSDictionary<NSFontDescriptorAttributeName,id> *)attributes forRange:(NSRange)range {
+    
+    NSMutableAttributedString *ret = self.mutableCopy;
+    
+    [self enumerateAttribute:NSFontAttributeName inRange:range options:0 usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
+        NSFont *currentFont = (NSFont *)value;
+        
+        if (currentFont == nil) {
+            currentFont = [NSFont systemFontOfSize:NSFont.systemFontSize];
+        }
+        NSFontDescriptor *newDescriptor = [currentFont.fontDescriptor fontDescriptorByAddingAttributes:attributes];
+        
+        NSFont *newFont = [NSFont fontWithDescriptor:newDescriptor size:currentFont.pointSize];
+        
+        [ret addAttribute:NSFontAttributeName value:newFont range:range];
+    }];
+    return ret;
+}
+
 #pragma mark Font traits
+/// Font traits are a subset of font attributes
+///     We have a completely separate function for adding font traits (instead of utilitzing the func for adding font attributes), so that we can add font traits without overriding exising ones. Not sure if this separate func is actually necessary to achieve this.
 
 - (NSAttributedString *)attributedStringByAddingFontTraits:(NSDictionary<NSFontDescriptorTraitKey, id> *)traits forRange:(NSRange)range {
     
@@ -37,12 +90,10 @@
         }
         
         /// Set new overriden traits
-        
         NSFontDescriptor *newDescriptor = [currentFont.fontDescriptor fontDescriptorByAddingAttributes:@{
             NSFontTraitsAttribute: newTraits
         }];
         NSFont *newFont = [NSFont fontWithDescriptor:newDescriptor size:currentFont.pointSize];
-        
         
         [ret addAttribute:NSFontAttributeName value:newFont range:range];
     }];
@@ -70,27 +121,8 @@
     return [self attributedStringByAddingWeight:weight inRange:range];
 }
 
-#pragma mark Font attributes
-
-- (NSAttributedString *)attributedStringByAddingFontAttributes:(NSDictionary<NSFontDescriptorAttributeName,id> *)traits forRange:(NSRange)range {
-    
-    NSMutableAttributedString *ret = self.mutableCopy;
-    
-    [self enumerateAttribute:NSFontAttributeName inRange:range options:0 usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
-        NSFont *currentFont = (NSFont *)value;
-        
-        if (currentFont == nil) {
-            currentFont = [NSFont systemFontOfSize:NSFont.systemFontSize];
-        }
-        NSFontDescriptor *newDescriptor = [currentFont.fontDescriptor fontDescriptorByAddingAttributes:traits];
-        
-        NSFont *newFont = [NSFont fontWithDescriptor:newDescriptor size:currentFont.pointSize];
-        
-        [ret addAttribute:NSFontAttributeName value:newFont range:range];
-    }];
-    return ret;
-}
 #pragma mark Symbolic font traits
+/// Symbolic font traits are an abstract and easy way to control font traits and font attributes
 
 /// Base
 
@@ -337,7 +369,7 @@
 #pragma mark Fill out default attributes (to make size code work)
 
 /// Fill out default attributes, because layout code won't work if the string doesn't have a font and a textColor attribute on every character. See https://stackoverflow.com/questions/13621084/boundingrectwithsize-for-nsattributedstring-returning-wrong-size
-- (NSAttributedString *)attributedStringByFillingOutDefaultAttributes {
+- (NSAttributedString *)attributedStringByFillingOutBase {
     
     NSFont *font = [NSFont systemFontOfSize:NSFont.systemFontSize];
     NSColor *color = NSColor.labelColor;
@@ -346,18 +378,18 @@
                                           color, NSForegroundColorAttributeName,
                                           nil];
     
-    return [self attributedStringByAddingBaseAttributes:attributesDictionary];
+    return [self attributedStringByAddingStringAttributesAsBase:attributesDictionary];
 }
 
 /// Create string by adding values from `baseAttributes`, without overriding any of the attributes set for `self`
-- (NSAttributedString *)attributedStringByAddingBaseAttributes:(NSDictionary<NSAttributedStringKey, id> *)baseAttributes {
+- (NSAttributedString *)attributedStringByAddingStringAttributesAsBase:(NSDictionary<NSAttributedStringKey, id> *)baseAttributes {
     
     NSMutableAttributedString *s = self.mutableCopy;
     
-    [s addAttributes:baseAttributes range:NSMakeRange(0, s.length)]; // Base attributes will override string attributes
+    [s addAttributes:baseAttributes range:NSMakeRange(0, s.length)]; /// Base attributes will override string attributes
     [self enumerateAttributesInRange:NSMakeRange(0, s.length) options:0 usingBlock:^(NSDictionary<NSAttributedStringKey,id> * _Nonnull attrs, NSRange range, BOOL * _Nonnull stop) {
         [s addAttributes:attrs range:range];
-    }]; // Override base attributes with original string attributes to undo overrides of original string attributes
+    }]; /// Override base attributes with original string attributes to undo overrides of original string attributes
     return s.copy;
 }
 

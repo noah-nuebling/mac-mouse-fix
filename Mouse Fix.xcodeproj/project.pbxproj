@@ -47,6 +47,7 @@
 		4FBC943B260F8AA60062F186 /* MASShortcut.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC9434260F8AA60062F186 /* MASShortcut.m */; };
 		4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCA07D525F3129B00BFE209 /* RemapTableController.m */; };
 		4FD82DDB260575B100664D6F /* MFNotificationLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD82DDA260575B100664D6F /* MFNotificationLabel.m */; };
+		4FEC9668278BBDC600548604 /* NSColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FEC9667278BBDC600548604 /* NSColor+Additions.m */; };
 		4FF6654125F2C7B000689B77 /* default_launchd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6652E25F2C7B000689B77 /* default_launchd.plist */; };
 		4FF6654225F2C7B000689B77 /* default_launchd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6652E25F2C7B000689B77 /* default_launchd.plist */; };
 		4FF6654325F2C7B000689B77 /* HelperServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6652F25F2C7B000689B77 /* HelperServices.m */; };
@@ -296,6 +297,8 @@
 		4FD82DD9260575B100664D6F /* MFNotificationLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFNotificationLabel.h; sourceTree = "<group>"; };
 		4FD82DDA260575B100664D6F /* MFNotificationLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFNotificationLabel.m; sourceTree = "<group>"; };
 		4FDBC59A234F80C500A46517 /* Accomplice.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Accomplice.entitlements; sourceTree = "<group>"; };
+		4FEC9666278BBDC600548604 /* NSColor+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSColor+Additions.h"; sourceTree = "<group>"; };
+		4FEC9667278BBDC600548604 /* NSColor+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSColor+Additions.m"; sourceTree = "<group>"; };
 		4FF6652D25F2C7B000689B77 /* HelperServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelperServices.h; sourceTree = "<group>"; };
 		4FF6652E25F2C7B000689B77 /* default_launchd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_launchd.plist; sourceTree = "<group>"; };
 		4FF6652F25F2C7B000689B77 /* HelperServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelperServices.m; sourceTree = "<group>"; };
@@ -658,16 +661,16 @@
 				4FCA07D525F3129B00BFE209 /* RemapTableController.m */,
 				4F79C2E8260976950067B381 /* RemapTableTranslator.h */,
 				4F79C2E9260976950067B381 /* RemapTableTranslator.m */,
+				4F92A706260F4BF000529D1F /* MFTableView.h */,
+				4F92A707260F4BF000529D1F /* MFTableView.m */,
+				4F319CB926252A2D004E5F63 /* ButtonGroupRowView.h */,
+				4F319CBA26252A2D004E5F63 /* ButtonGroupRowView.m */,
 				4F92A71C260F667F00529D1F /* KeyCaptureView.h */,
 				4F92A71D260F667F00529D1F /* KeyCaptureView.m */,
 				4FB4FA1E2611DD6000806DDD /* KeyCaptureScrollView.h */,
 				4FB4FA1F2611DD6000806DDD /* KeyCaptureScrollView.m */,
 				4FB4F9FC260FDBC800806DDD /* RemapTableUtility.h */,
 				4FB4F9FD260FDBC800806DDD /* RemapTableUtility.m */,
-				4F92A706260F4BF000529D1F /* MFTableView.h */,
-				4F92A707260F4BF000529D1F /* MFTableView.m */,
-				4F319CB926252A2D004E5F63 /* ButtonGroupRowView.h */,
-				4F319CBA26252A2D004E5F63 /* ButtonGroupRowView.m */,
 			);
 			path = RemapTable;
 			sourceTree = "<group>";
@@ -907,6 +910,8 @@
 				4F3E067D26A2F97D000C9E06 /* URLMenuItem.m */,
 				4F854D7A2789146900B46E9D /* NSMenu+NSMenu_Additions.h */,
 				4F854D7B2789146900B46E9D /* NSMenu+NSMenu_Additions.m */,
+				4FEC9666278BBDC600548604 /* NSColor+Additions.h */,
+				4FEC9667278BBDC600548604 /* NSColor+Additions.m */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -1481,6 +1486,7 @@
 				4FD82DDB260575B100664D6F /* MFNotificationLabel.m in Sources */,
 				4FF665FA25F2C92700689B77 /* AppDelegate.m in Sources */,
 				4FF665F325F2C92700689B77 /* MoreSheet.m in Sources */,
+				4FEC9668278BBDC600548604 /* NSColor+Additions.m in Sources */,
 				4FF6660025F2C92700689B77 /* Hyperlink.m in Sources */,
 				4FF6654C25F2C7B000689B77 /* MFQueue.m in Sources */,
 				4F3E067E26A2F97D000C9E06 /* URLMenuItem.m in Sources */,

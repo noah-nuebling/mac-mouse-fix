@@ -76,7 +76,7 @@
           (f & kCGEventFlagMaskShift ?      @"Shift (⇧)-" : @""),
           (f & kCGEventFlagMaskCommand ?    @"Command (⌘)-" : @"")];
     if (kb.length > 0) {
-        kb = [kb substringToIndex:kb.length-1]; // Delete trailing dash
+        kb = [kb substringToIndex:kb.length-1]; /// Delete trailing dash
         NSArray *stringArray = [kb componentsSeparatedByString:@"-"];
         kb = [self naturalLanguageListFromStringArray:stringArray];
         kb = [@"Hold " stringByAppendingString:kb];
@@ -137,7 +137,7 @@
     /// Get symbol and attach it to keyStr
     NSAttributedString *keyStr = stringWithSymbol(symbolName, stringFallback);
     NSString *flagsStr = [UIStrings getKeyboardModifierString:flags];
-    return stringWithModifierPrefix(flagsStr, keyStr);
+    return symbolStringWithModifierPrefix(flagsStr, keyStr);
 }
 
 static NSMutableDictionary *_hotKeyCache;
@@ -239,18 +239,15 @@ static CGSSymbolicHotKey _highestSymbolicHotKeyInCache = 0;
         
         /// Append keyStr and modStr
         
-        NSMutableAttributedString *result = stringWithModifierPrefix(flagsStr, keyStr);
+        NSMutableAttributedString *result = symbolStringWithModifierPrefix(flagsStr, keyStr);
         
         return result;
     }
 }
 
-static NSMutableAttributedString *stringWithModifierPrefix(NSString *flagsStr, NSAttributedString *keyStr) {
-    keyStr = [keyStr attributedStringByAddingWeight:0.4];
-    NSLog(@"bold: %f", NSFontWeightSemibold);
-    keyStr = [keyStr attributedStringBySettingFontSize:NSFont.smallSystemFontSize];
+static NSMutableAttributedString *symbolStringWithModifierPrefix(NSString *flagsStr, NSAttributedString *symbolStr) {
     NSMutableAttributedString *result = [[NSMutableAttributedString alloc] initWithString:flagsStr];
-    [result appendAttributedString:keyStr];
+    [result appendAttributedString:symbolStr];
     return result;
 }
 static NSAttributedString *stringWithSymbol(NSString *symbolName, NSString *fallbackString) {
@@ -258,7 +255,22 @@ static NSAttributedString *stringWithSymbol(NSString *symbolName, NSString *fall
     NSTextAttachment *symbolAttachment = [[NSTextAttachment alloc] init];
     symbol.accessibilityDescription = fallbackString;
     symbolAttachment.image = symbol;
-    return [NSAttributedString attributedStringWithAttachment:symbolAttachment];
+    
+    NSAttributedString *string = [NSAttributedString attributedStringWithAttachment:symbolAttachment];
+    
+    string = [string attributedStringByAddingWeight:0.28];
+    string = [string attributedStringByAddingBaseLineOffset:0.25];
+    
+    if (@available(macOS 10.14, *)) {
+        if (NSApp.effectiveAppearance.name == NSAppearanceNameDarkAqua) {
+            string = [string attributedStringByAddingWeight:0.4];
+            string = [string attributedStringByAddingBaseLineOffset:0.39];
+        }
+    }
+    
+    string = [string attributedStringBySettingFontSize:11.4];
+    
+    return string;
 }
 
 + (NSString *)naturalLanguageListFromStringArray:(NSArray<NSString *> *)stringArray {

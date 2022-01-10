@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -112,7 +113,7 @@ To disable Mac Mouse Fix, uncheck this checkbox or move the app to the Trash.</s
                                                     </textFieldCell>
                                                 </textField>
                                                 <textField toolTip="Scroll fewer pixels per mouse wheel tick." horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dzx-1i-bZ6">
-                                                    <rect key="frame" x="205" y="11" width="27" height="14"/>
+                                                    <rect key="frame" x="204" y="11" width="27" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Slow" id="GKV-Mh-wiX">
                                                         <font key="font" metaFont="message" size="11"/>
@@ -162,7 +163,7 @@ Tips:
                                                         <size key="intercellSpacing" width="17" height="0.0"/>
                                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         <tableViewGridLines key="gridStyleMask" vertical="YES" horizontal="YES"/>
-                                                        <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="gridColor" name="separatorColor" catalog="System" colorSpace="catalog"/>
                                                         <tableColumns>
                                                             <tableColumn identifier="trigger" width="287" minWidth="40" maxWidth="1000" id="zj7-YT-yKp">
                                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Trigger">
@@ -278,7 +279,7 @@ Tips:
                                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                                            <size key="minSize" width="209" height="19"/>
+                                                                                            <size key="minSize" width="207" height="19"/>
                                                                                             <size key="maxSize" width="295" height="10000000"/>
                                                                                             <attributedString key="textStorage">
                                                                                                 <fragment content="Text go here">

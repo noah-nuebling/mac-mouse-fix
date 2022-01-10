@@ -209,7 +209,6 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
             CGEventFlags flags = ((NSNumber *)effectDict[kMFActionDictKeySystemDefinedEventVariantModifierFlags]).unsignedLongValue;
             
             shortcutString = [UIStrings getStringForSystemDefinedEvent:type flags:flags];
-            
         }
 
         NSString *shortcutStringRaw = [shortcutString coolString];
@@ -225,9 +224,10 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
     
     return oneShotEffectsTable;
 }
-// Convenience functions for effects tables
 
-// We wanted to rename 'effects table' to 'effects menu model', but we only did it in a few places. Thats why this is named weird
+/// Convenience functions for effects tables
+
+/// We wanted to rename 'effects table' to 'effects menu model', but we only did it in a few places. Thats why this is named weird
 + (NSDictionary *)getEntryFromEffectTable:(NSArray *)effectTable withEffectDict:(NSDictionary *)effectDict {
     
     if ([effectDict[@"drawKeyCaptureView"] isEqual: @YES]) {

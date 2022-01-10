@@ -26,6 +26,7 @@
 #import "KeyCaptureView.h"
 #import "RemapTableUtility.h"
 #import "ButtonGroupRowView.h"
+#import "NSColor+Additions.h"
 
 @interface RemapTableController ()
 @property NSTableView *tableView;
@@ -107,10 +108,10 @@
     
 }
 
-// Helper for functions below. Shouldn't need to call directly.
+/// Helper for functions below. Shouldn't need to call directly.
 - (void)storeEffectsFromUIInDataModel {
     
-    // Set each rows effect content to datamodel
+    /// Set each rows effect content to datamodel
     NSInteger row = 0; // Index for trueDataModel
     for (NSInteger rowGrouped = 0; rowGrouped < self.groupedDataModel.count; rowGrouped++) { // rowGrouped is index for groupedDataModel
         
@@ -118,12 +119,12 @@
             continue;
         }
         
-        // Get effect dicts
+        /// Get effect dicts
         NSTableCellView *cell = [self.tableView viewAtColumn:1 row:rowGrouped makeIfNecessary:YES];
         if ([cell.identifier isEqual:@"effectCell"]) {
             NSPopUpButton *pb = cell.subviews[0];
             NSDictionary *effectDictForSelected = [RemapTableTranslator getEffectDictBasedOnSelectedItemInButton:pb rowDict:self.dataModel[row]];
-            // Write effect dict to data model
+            /// Write effect dict to data model
             self.dataModel[row][kMFRemapsKeyEffect] = effectDictForSelected;
         } else {
             assert(false);
@@ -157,46 +158,78 @@
 #pragma mark Lifecycle
 
 - (void)awakeFromNib {
-    // Force Autohiding scrollers - to keep layout consistent (doesn't work)
+    /// Force Autohiding scrollers - to keep layout consistent (doesn't work)
     self.scrollView.autohidesScrollers = YES;
     self.scrollView.scrollerStyle = NSScrollerStyleOverlay;
 }
 
 - (void)viewDidLoad {
-    // Not getting called for some reason -> I had to set the view outlet of the controller object in IB to the tableView.
+    /// Not getting called for some reason -> I had to set the view outlet of the controller object in IB to the tableView.
     
 #if DEBUG
     NSLog(@"RemapTableView did load.");
 #endif
     
-    // Set rounded corners and appropriate border
+    /// Set rounded corners and appropriate border
     
     NSScrollView * scrollView = self.scrollView;
     
     CGFloat cr = 5.0;
-    // ^ Should be equal to cornerRadius of surrounding NSBox
-    //   Hardcoding this might lead to bad visuals on pre-BigSur macOS versions with lower corner radius, but idk how to access the NSBox's effective cornerRadius
+    /// ^ Should be equal to cornerRadius of surrounding NSBox
+    ///   Hardcoding this might lead to bad visuals on pre-BigSur macOS versions with lower corner radius, but idk how to access the NSBox's effective cornerRadius
     
     scrollView.borderType = NSNoBorder;
     scrollView.wantsLayer = YES;
     scrollView.layer.masksToBounds = YES;
-    if (@available(macOS 10.14, *)) {
-        scrollView.layer.borderColor = NSColor.separatorColor.CGColor;
-    } else {
-        scrollView.layer.borderColor = NSColor.gridColor.CGColor;
-    }
     scrollView.layer.borderWidth = 1.0;
     scrollView.layer.cornerRadius = cr;
     
-    // Load table data from config
+    if (@available(macOS 10.14, *)) {
+        NSColor *background = self.tableView.backgroundColor;
+        self.scrollView.layer.borderColor = [NSColor.separatorColor solidColorWithBackground:background].CGColor;
+        /// ^ The rgb values we get from the separatorColor don't change when darkmode is toggled while MMF is running. (We need those rgb values to get the `solidColorWithBackground:`). I can't find a workaround. If we use `separatorColor` directly, the color does change when darkmode is toggled while MMF is running, but the colors are also wrong...
+    } else {
+        self.scrollView.layer.borderColor = NSColor.gridColor.CGColor;
+    }
+    
+    /// Load table data from config
     [self loadDataModelFromConfig];
-    // Initialize sorting
+    /// Initialize sorting
     [self initSorting];
-    // Do first sorting (Not sure where soring and reloading is appropriate but this seems fine)
+    /// Do first sorting (Not sure where soring and reloading is appropriate but this seems fine)
     [self sortDataModel];
     [self.tableView reloadData];
     
     [RemapTableTranslator initializeWithTableView:self.tableView];
+    
+    /// Reload table on appearance change
+    
+    [self observeValueForKeyPath:@"effectiveAppearance" ofObject:self.tableView change:nil context:nil];
+    [NSApp addObserver:self forKeyPath:@"effectiveAppearance" options:0 context:nil];
+}
+
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    
+    if ([keyPath isEqual:@"effectiveAppearance"]) {
+        
+        static NSAppearanceName initialAppearance = @"";
+        static BOOL effectiveAppearanceIsInitialized = NO; /// Prevent table reload when appearance is initially set
+        if (!effectiveAppearanceIsInitialized) {
+            effectiveAppearanceIsInitialized = YES;
+            initialAppearance = self.tableView.effectiveAppearance.name;
+        } else {
+            
+            [NSApp setAppearance:[NSAppearance appearanceNamed:initialAppearance]];
+            return;
+            /// ^ Turn off appearance changes, because it doesn't work properly
+            
+            [self.tableView updateLayer];
+            [self.tableView reloadData];
+            /// ^ The only reason we do this is currently because the sfsymbols for the function keys should be different weight for darkmode and lightmode. Reloading the whole table is pretty inefficient, but it's fast enough.
+        }
+    }
+    
 }
 
 #pragma mark - IBActions
