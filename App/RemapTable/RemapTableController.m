@@ -185,9 +185,11 @@
     scrollView.layer.cornerRadius = cr;
     
     if (@available(macOS 10.14, *)) {
+        
         NSColor *background = self.tableView.backgroundColor;
         self.scrollView.layer.borderColor = [NSColor.separatorColor solidColorWithBackground:background].CGColor;
         /// ^ The rgb values we get from the separatorColor don't change when darkmode is toggled while MMF is running. (We need those rgb values to get the `solidColorWithBackground:`). I can't find a workaround. If we use `separatorColor` directly, the color does change when darkmode is toggled while MMF is running, but the colors are also wrong...
+        /// We want the color to be solid to prevent the border chaning color when overlapping with the grid of the table.
     } else {
         self.scrollView.layer.borderColor = NSColor.gridColor.CGColor;
     }
@@ -220,9 +222,8 @@
             initialAppearance = self.tableView.effectiveAppearance.name;
         } else {
             
-            [NSApp setAppearance:[NSAppearance appearanceNamed:initialAppearance]];
-            return;
-            /// ^ Turn off appearance changes, because it doesn't work properly
+            [self.scrollView updateLayer]; /// Makes scrollView borders disappear which is better than having them stay the same color.
+//            [self.scrollView drawRect:NSInsetRect(self.scrollView.bounds, -2, -2)]; /// Doesn't do anything
             
             [self.tableView updateLayer];
             [self.tableView reloadData];
