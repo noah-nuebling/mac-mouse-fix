@@ -26,7 +26,6 @@
     MASShortcut *shortcut = [MASShortcut shortcutWithKeyCode:keyCode modifierFlags:0];
     NSString *keyStr = shortcut.keyCodeString;
     
-    
     return keyStr;
 }
 
@@ -152,6 +151,8 @@ static CGSSymbolicHotKey _highestSymbolicHotKeyInCache = 0;
     if (![keyStr isEqual:@""]) {
         
         NSString *combinedString = stringf(@"%@%@", flagsStr, keyStr);
+        combinedString = [self stringByTrimmingLeadingWhiteSpace:combinedString];
+        /// ^ Some keyStrings have leading whitespace (name " Space") to look better with preceding modifiers. But if there are no modifiers the leading space looks weird.
         
         return [[NSAttributedString alloc] initWithString:combinedString];
         
@@ -166,7 +167,6 @@ static CGSSymbolicHotKey _highestSymbolicHotKeyInCache = 0;
         if (!_hotKeyCache) {
             _hotKeyCache = [NSMutableDictionary dictionary];
         }
-        
         /// Get shk
         NSNumber *symbolicHotkey;
         
@@ -298,6 +298,14 @@ static NSAttributedString *stringWithSymbol(NSString *symbolName, NSString *fall
     }
     
     return outString;
+}
+
+/// Helper
+
++ (NSString *)stringByTrimmingLeadingWhiteSpace:(NSString *)str {
+
+    NSRange range = [str rangeOfString:@"^\\s*" options:NSRegularExpressionSearch];
+    return [str stringByReplacingCharactersInRange:range withString:@""];
 }
 
 @end
