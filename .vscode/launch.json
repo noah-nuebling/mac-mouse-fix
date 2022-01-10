@@ -7,13 +7,13 @@
         {
             "name": "Python: Current file with args",
             "args": [
-                "print"
+                "plot", " 2.1.0", "./stats_internal.py", "plot", "2.1.0"
             ],
             "type": "python",
             "request": "launch",
-            "program": "${file}",
+            "program": "python3",
             "console": "integratedTerminal"
-        }
+        },
         {
             "name": "Python: Current File",
             "type": "python",

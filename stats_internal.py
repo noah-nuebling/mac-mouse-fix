@@ -10,6 +10,7 @@ import urllib.request
 import urllib.parse
 
 import matplotlib.pyplot as plt
+import numpy as np
 
 releases_api_url = "https://api.github.com/repos/noah-nuebling/mac-mouse-fix/releases"
 history_file_path = 'stats_history.json'
@@ -63,11 +64,85 @@ def main():
             history = load_history()
             print_nested(sorted_by_release(history, 'name'))
         elif command_line_argument == 'plot':
-            # Load venv with matplotlib
             
-            # plt.plot([1,2,3,4])
-            # plt.ylabel('Some nums')
-            # plt.show()
+            # Get version arg (needs to be of the format '2.0.0 Beta 5')
+            
+            history = load_history()    
+            
+            if len(sys.argv) == 2:
+                sys.argv.append('total') # No s_arg is the same as s_arg == 'total'
+            
+            s_arg = sys.argv[2] # Get first sub arg
+            
+            if s_arg == 'all' or s_arg == 'total':
+                versions = history.keys()                    
+            elif s_arg == 'all-stable':
+                versions = history.keys()
+                versions = filter(lambda version_string: ' ' not in version_string, versions) # Filter out prereleases
+            else:
+                versions = sys.argv[2:]
+            
+            plot_data = []
+            
+            for version in versions:
+                
+                vh = history[version]
+                
+                x = []
+                y = []
+                
+                for date in vh:
+                    downloads = int(vh[date]['download_count']) # Parse downloads string into int
+                    date = datetime.datetime.fromisoformat(date) # Parse date string into date object
+                    
+                    x.append(date)
+                    y.append(downloads)
+
+
+                plot_data.append({
+                    'version': version,
+                    'x': x,
+                    'y': y,
+                })
+            
+            if s_arg == 'total':
+                # Source: https://stackoverflow.com/a/55290542/10601702
+
+                # Get x values for each version
+                x_each = list(map(lambda a: a['x'], plot_data)) # List of list of dates for each version
+                
+                # Convert dates to timestamps so that interpolation works
+                x_each = [[d.timestamp() for d in v] for v in x_each]
+                
+                # Get sorted list of all x values for all versions
+                x_combined = np.unique(np.concatenate(x_each))
+                
+                # Get y values for each version
+                y_each = list(map(lambda a: a['y'], plot_data))
+                
+                # interpolate y values on the combined x values
+                itp = []
+                for idx, (x, y) in enumerate(zip(x_each, y_each)):
+                    r = np.interp(x_combined, x, y, left=0, right=0)
+                    itp.append(r)
+
+                y_summed = sum(itp)
+                
+                x_combined = [datetime.datetime.utcfromtimestamp(d) for d in x_combined]
+
+                plt.plot(x_combined, y_summed, label="Total downloads", linestyle='-', marker='.')
+                
+                plt.gcf().autofmt_xdate()
+                plt.legend(loc='upper left')
+                plt.show()
+                
+            else:
+                for d in plot_data:
+                    plt.plot(d['x'], d['y'], label=d['version'], linestyle='-', marker='.')
+                    
+                plt.legend(loc='upper left')
+                plt.gcf().autofmt_xdate()
+                plt.show()
             
         else:
             raise Exception('Unknown command line argument.')
