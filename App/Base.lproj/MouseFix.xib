@@ -182,7 +182,7 @@ Tips:
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
                                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pzd-Fo-nrS">
-                                                                                <rect key="frame" x="5" y="12" width="281" height="17"/>
+                                                                                <rect key="frame" x="4" y="12" width="281" height="17"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="⌘⇧⌥⌃ + Triple Click and Drag Button 3" id="hBN-M2-pMi">
                                                                                     <font key="font" metaFont="system"/>
@@ -200,7 +200,7 @@ Tips:
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
                                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZkS-6b-dCZ">
-                                                                                <rect key="frame" x="-7" y="3" width="294" height="16"/>
+                                                                                <rect key="frame" x="-8" y="3" width="294" height="16"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="left" title="Button X" id="Jbj-n8-l11">
                                                                                     <font key="font" metaFont="systemSemibold" size="11"/>
@@ -316,6 +316,7 @@ Tips:
                                                         <connections>
                                                             <outlet property="dataSource" destination="p2C-Qy-mgp" id="qbE-1W-Q1c"/>
                                                             <outlet property="delegate" destination="p2C-Qy-mgp" id="2c8-Jg-yoa"/>
+                                                            <outlet property="menu" destination="wYv-c3-roG" id="CPC-cv-0Ir"/>
                                                         </connections>
                                                     </tableView>
                                                 </subviews>
@@ -504,6 +505,20 @@ Tips:
                 </menuItem>
             </items>
             <point key="canvasLocation" x="145" y="381"/>
+        </menu>
+        <menu id="wYv-c3-roG" userLabel="ActionTableMenu">
+            <items>
+                <menuItem title="Item 1" id="wkx-a9-yNs">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem title="Item 2" id="lid-3j-GuY">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem title="Item 3" id="g2O-qk-Xor">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="281" y="-365"/>
         </menu>
     </objects>
     <resources>

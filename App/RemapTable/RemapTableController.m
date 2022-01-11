@@ -184,6 +184,10 @@
     scrollView.layer.borderWidth = 1.0;
     scrollView.layer.cornerRadius = cr;
     
+    scrollView.automaticallyAdjustsContentInsets = NO;
+    scrollView.contentInsets = NSEdgeInsetsMake(1, 1, 1, 1); /// Insets so the content doesn't overlap with the border
+    
+    
     setBorderColor(self);
     
     /// Load table data from config
