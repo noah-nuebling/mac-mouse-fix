@@ -178,6 +178,16 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
         [oneShotEffectsTable insertObject:buttonClickEntry atIndex:9];
     }
     
+    /// Get keycapture index
+    
+    /// Get index for new entry (right after keyCaptureEntry)
+    NSIndexSet *keyCaptureIndexes = [oneShotEffectsTable indexesOfObjectsPassingTest:^BOOL(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        return [obj[@"keyCaptureEntry"] isEqual:@YES];
+    }];
+    assert(keyCaptureIndexes.count == 1);
+    
+    NSUInteger keyCaptureIndex = keyCaptureIndexes.firstIndex;
+    
     /// Insert entry for keyboard shortcut effect or systemDefined effect
     
     BOOL isKeyShortcut = [effectDict[kMFActionDictKeyType] isEqual:kMFActionDictTypeKeyboardShortcut];
@@ -186,30 +196,11 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
     if (isKeyShortcut || isSystemEvent) {
         
         /// Get index for new entry (right after keyCaptureEntry)
-        NSIndexSet *keyCaptureIndexes = [oneShotEffectsTable indexesOfObjectsPassingTest:^BOOL(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            return [obj[@"keyCaptureEntry"] isEqual:@YES];
-        }];
-        assert(keyCaptureIndexes.count == 1);
-        NSUInteger shortcutIndex = keyCaptureIndexes.firstIndex + 1;
+        NSUInteger shortcutIndex = keyCaptureIndex + 1;
         
         /// Get  strings
         
-        NSAttributedString *shortcutString;
-        
-        if (isKeyShortcut) {
-        
-            CGKeyCode keyCode = ((NSNumber *)effectDict[kMFActionDictKeyKeyboardShortcutVariantKeycode]).unsignedShortValue;
-            CGEventFlags flags = ((NSNumber *)effectDict[kMFActionDictKeyKeyboardShortcutVariantModifierFlags]).unsignedLongValue;
-            
-            shortcutString = [UIStrings getStringForKeyCode:keyCode flags:flags];
-            
-        } else if (isSystemEvent) {
-                
-            MFSystemDefinedEventType type = ((NSNumber *)effectDict[kMFActionDictKeySystemDefinedEventVariantType]).unsignedIntValue;
-            CGEventFlags flags = ((NSNumber *)effectDict[kMFActionDictKeySystemDefinedEventVariantModifierFlags]).unsignedLongValue;
-            
-            shortcutString = [UIStrings getStringForSystemDefinedEvent:type flags:flags];
-        }
+        NSAttributedString *shortcutString = getShortcutString(effectDict, isKeyShortcut);
 
         NSString *shortcutStringRaw = [shortcutString coolString];
         
@@ -220,9 +211,78 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
             @"dict": effectDict,
             @"indentation": @1,
         } atIndex:shortcutIndex];
+    }
+    
+    /// Insert hidden submenu for  apple specific keys
+    
+    int separator = -1;
+    
+    MFSystemDefinedEventType systemEventTypes[] =  {
+        kMFSystemEventTypeBrightnessDown,
+        kMFSystemEventTypeBrightnessUp,
+        separator,
+        kMFSystemEventTypeMediaBack,
+        kMFSystemEventTypeMediaPlayPause,
+        kMFSystemEventTypeMediaForward,
+        separator,
+        kMFSystemEventTypeVolumeMute,
+        kMFSystemEventTypeVolumeDown,
+        kMFSystemEventTypeVolumeUp
     };
+    int count = sizeof(systemEventTypes) / sizeof(systemEventTypes[0]);
+    
+    NSMutableArray<NSDictionary *> *submenu = [NSMutableArray array];
+    for (int i = 0; i < count; i++) {
+        
+        MFSystemDefinedEventType type = systemEventTypes[i];
+        
+        if (type == separator) {
+            [submenu addObject:separatorEffectsTableEntry()];
+        } else {
+            NSDictionary *actionDict = @{
+                kMFActionDictKeyType: kMFActionDictTypeSystemDefinedEvent,
+                kMFActionDictKeySystemDefinedEventVariantType: @(type),
+                kMFActionDictKeySystemDefinedEventVariantModifierFlags: @(0),
+            };
+            
+            NSAttributedString *shortcutString = getShortcutString(actionDict, NO);
+            NSString *shortcutStringRaw = [shortcutString coolString];
+            [submenu addObject:@{
+                @"uiAttributed": shortcutString,
+                @"tool": stringf(@"Works like pressing '%@' on an Apple keyboard", shortcutStringRaw),
+                @"dict": actionDict
+            }];
+        }
+    }
+    
+    [oneShotEffectsTable insertObject:@{
+        @"ui": @"Keyboard Shortcut",
+        @"tool": @"Choose shortcuts that are only available on Apple keyboards from a dropdown menu",
+        @"alternate": @YES,
+        @"submenu": submenu
+    } atIndex:keyCaptureIndex+1];
     
     return oneShotEffectsTable;
+}
+
+/// Helper for getEffectsTable
+
+static NSAttributedString *getShortcutString(NSDictionary *effectDict, BOOL isKeyShortcut) {
+    
+    if (isKeyShortcut) {
+        
+        CGKeyCode keyCode = ((NSNumber *)effectDict[kMFActionDictKeyKeyboardShortcutVariantKeycode]).unsignedShortValue;
+        CGEventFlags flags = ((NSNumber *)effectDict[kMFActionDictKeyKeyboardShortcutVariantModifierFlags]).unsignedLongValue;
+        
+        return [UIStrings getStringForKeyCode:keyCode flags:flags];
+        
+    } else { /// Is systemEventShortcut
+        
+        MFSystemDefinedEventType type = ((NSNumber *)effectDict[kMFActionDictKeySystemDefinedEventVariantType]).unsignedIntValue;
+        CGEventFlags flags = ((NSNumber *)effectDict[kMFActionDictKeySystemDefinedEventVariantModifierFlags]).unsignedLongValue;
+        
+        return [UIStrings getStringForSystemDefinedEvent:type flags:flags];
+    }
 }
 
 /// Convenience functions for effects tables
@@ -332,6 +392,55 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     
 }
 
++ (NSMenuItem *)menuItemFromDataModel:(NSDictionary *)itemModel enclosingMenu:(NSMenu *)enclosingMenu {
+    NSMenuItem *i;
+    if ([itemModel[@"isSeparator"] isEqual: @YES]) {
+        i = (NSMenuItem *)NSMenuItem.separatorItem;
+    } else {
+        i = [[NSMenuItem alloc] init];
+        NSString *title = itemModel[@"ui"];
+        if (title != nil) {
+            i.title = title;
+        } else {
+            i.attributedTitle = itemModel[@"uiAttributed"];
+        }
+        i.action = @selector(updateTableAndWriteToConfig:);
+        i.target = self.tableView.delegate;
+        i.toolTip = itemModel[@"tool"];
+        
+        if ([itemModel[@"keyCaptureEntry"] isEqual:@YES]) {
+            i.action = @selector(handleKeystrokeMenuItemSelected:);
+        }
+        if ([itemModel[@"alternate"] isEqual:@YES]) {
+            i.alternate = YES;
+            i.keyEquivalentModifierMask = NSEventModifierFlagOption;
+        }
+        if ([itemModel[@"hideable"] isEqual:@YES]) {
+            NSMenuItem *h = [[NSMenuItem alloc] init];
+            h.view = [[NSView alloc] initWithFrame:NSZeroRect];
+            h.enabled = NO; /// Prevent the zero-height item from being selected by keyboard. This only works if `autoenablesItems == NO` on the PopUpButton
+            [enclosingMenu addItem:h];
+            i.alternate = YES;
+            i.keyEquivalentModifierMask = NSEventModifierFlagOption;
+        }
+        if (itemModel[@"indentation"] != nil) {
+            i.indentationLevel = ((NSNumber *)itemModel[@"indentation"]).unsignedIntegerValue;
+        }
+        if (itemModel[@"submenu"] != nil) {
+            NSMenu *m = [[NSMenu alloc] init];
+            for (NSDictionary *submenuItemModel in itemModel[@"submenu"]) {
+                NSMenuItem *subI = [self menuItemFromDataModel:submenuItemModel enclosingMenu:m];
+                subI.representedObject = submenuItemModel;
+                subI.action = @selector(submenuItemClicked:);
+                [m addItem:subI];
+            }
+            i.submenu = m;
+            i.action = nil;
+        }
+    }
+    return i;
+}
+
 /// \discussion We only need the `row` parameter to insert data into the datamodel, which we shouldn't be doing from this function to begin with
 /// \discussion We need the `tableViewEnabled` parameter to enabled / disable contained popUpButtons depending on whether the table view is enabled
 ///         We used to use the function 'disableUI:' in App Delegate to recursively go over all controls and disable them. But disabling controls contained in the table view sometimes didn't work, when they weren't scrolled into view. (It worked when disableUI: was called in response to toggling the "Enabled Mac Mouse Fix" checkbox, but it didn't work when it was called in response to the app launching. I'm not sure why.)
@@ -404,40 +513,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         [popupButton removeAllItems];
         /// Iterate effects table and fill popupButton
         for (NSDictionary *effectTableEntry in effectTable) {
-            NSMenuItem *i;
-            if ([effectTableEntry[@"isSeparator"] isEqual: @YES]) {
-                i = (NSMenuItem *)NSMenuItem.separatorItem;
-            } else {
-                i = [[NSMenuItem alloc] init];
-                NSString *title = effectTableEntry[@"ui"];
-                if (title != nil) {
-                    i.title = title;
-                } else {
-                    i.attributedTitle = effectTableEntry[@"uiAttributed"];
-                }
-                i.action = @selector(updateTableAndWriteToConfig:);
-                i.target = self.tableView.delegate;
-                i.toolTip = effectTableEntry[@"tool"];
-                
-                if ([effectTableEntry[@"keyCaptureEntry"] isEqual:@YES]) {
-                    i.action = @selector(handleKeystrokeMenuItemSelected:);
-                }
-                if ([effectTableEntry[@"alternate"] isEqual:@YES]) {
-                    i.alternate = YES;
-                    i.keyEquivalentModifierMask = NSEventModifierFlagOption;
-                }
-                if ([effectTableEntry[@"hideable"] isEqual:@YES]) {
-                    NSMenuItem *h = [[NSMenuItem alloc] init];
-                    h.view = [[NSView alloc] initWithFrame:NSZeroRect];
-                    h.enabled = NO; // Prevent the zero-height item from being selected by keyboard. This only works if `autoenablesItems == NO` on the PopUpButton
-                    [popupButton.menu addItem:h];
-                    i.alternate = YES;
-                    i.keyEquivalentModifierMask = NSEventModifierFlagOption;
-                }
-                if (effectTableEntry[@"indentation"] != nil) {
-                    i.indentationLevel = ((NSNumber *)effectTableEntry[@"indentation"]).unsignedIntegerValue;
-                }
-            }
+            NSMenuItem *i = [self menuItemFromDataModel:effectTableEntry enclosingMenu:popupButton.menu];
             [popupButton.menu addItem:i];
         }
         

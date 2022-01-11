@@ -155,6 +155,55 @@
     
 }
 
+- (IBAction)submenuItemClicked:(NSMenuItem * _Nonnull)item {
+    
+    /// Find root menu
+    
+    NSMenuItem *rootItem = item;
+    while (true) {
+        NSMenuItem *nextRoot = rootItem.parentItem;
+        if (nextRoot == nil) {
+            break;
+        }
+        rootItem = nextRoot;
+    }
+    NSMenu *rootMenu = rootItem.menu;
+    
+    /// Find row that contains popupButton which has rootMenu (row which contains `item` / row which was clicked)
+    
+    NSInteger clickedRow = -1;
+    
+    for (int row = 0; row < self.tableView.numberOfRows; row++) {
+        NSTableCellView *effectCell = [self.tableView viewAtColumn:1 row:row makeIfNecessary:YES]; /// Why is makeIfNecessary == YES?
+        NSPopUpButton *pb = effectCell.subviews[0];
+        NSMenu *m = pb.menu;
+        
+        if ([m isEqual: rootMenu]) {
+            /// Clicked row found!
+            clickedRow = row;
+            break;
+        }
+    }
+    
+    /// Validate
+    
+    if (clickedRow == -1) {
+        NSLog(@"Couldn't find clickedRow in submenu item IBAction");
+        return;
+    }
+    
+    /// Convert clicked index to base dataModel
+    
+    NSInteger clickedRowInBaseDataModel = [RemapTableUtility baseDataModelIndexFromGroupedDataModelIndex:clickedRow withGroupedDataModel:self.groupedDataModel];
+    
+    NSDictionary *itemModel = item.representedObject;
+    self.dataModel[clickedRowInBaseDataModel][kMFRemapsKeyEffect] = itemModel[@"dict"];
+    
+    [self writeDataModelToConfig];
+    [self.tableView reloadData];
+    
+}
+
 #pragma mark Lifecycle
 
 - (void)awakeFromNib {
