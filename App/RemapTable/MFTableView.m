@@ -22,4 +22,17 @@
 //    NSRectFill(clipRect);
 //}
 
+- (NSMenu *)menuForEvent:(NSEvent *)event {
+    
+    NSPoint clickedPoint = [self convertPoint:event.locationInWindow fromView:nil];
+    NSInteger clickedRow = [self rowAtPoint:clickedPoint];
+    if (clickedRow != -1) {
+        if ([self.delegate tableView:self shouldSelectRow:clickedRow]) {
+            return [super menuForEvent:event];
+        }
+    }
+    
+    return nil;
+}
+
 @end

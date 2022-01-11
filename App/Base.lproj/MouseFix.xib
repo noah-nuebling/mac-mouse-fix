@@ -506,16 +506,14 @@ Tips:
             </items>
             <point key="canvasLocation" x="145" y="381"/>
         </menu>
-        <menu id="wYv-c3-roG" userLabel="ActionTableMenu">
+        <menu showsStateColumn="NO" id="wYv-c3-roG" userLabel="ActionTableMenu">
             <items>
-                <menuItem title="Item 1" id="wkx-a9-yNs">
+                <menuItem title="Delete" id="wkx-a9-yNs">
+                    <attributedString key="attributedTitle"/>
                     <modifierMask key="keyEquivalentModifierMask"/>
-                </menuItem>
-                <menuItem title="Item 2" id="lid-3j-GuY">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                </menuItem>
-                <menuItem title="Item 3" id="g2O-qk-Xor">
-                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="rightClickRemoveButton:" target="p2C-Qy-mgp" id="iXn-iT-hRE"/>
+                    </connections>
                 </menuItem>
             </items>
             <point key="canvasLocation" x="281" y="-365"/>

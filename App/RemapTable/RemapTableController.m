@@ -250,40 +250,44 @@ static void setBorderColor(RemapTableController *object) {
 
 #pragma mark - IBActions
 
-// IBActions
 - (IBAction)addRemoveControl:(id)sender {
     if ([sender selectedSegment] == 0) {
         [self addButtonAction];
     } else {
-        [self removeButtonAction];
+        /// Get selected table row index
+        if (self.tableView.selectedRowIndexes.count == 0) return;
+        assert(self.tableView.selectedRowIndexes.count == 1);
+        NSUInteger selectedRow = self.tableView.selectedRowIndexes.firstIndex;
+        /// Remove selected row
+        [self removeRow:selectedRow];
     }
 }
-- (void)removeButtonAction {
+- (IBAction)rightClickRemoveButton:(id)sender {
+    
+    [self removeRow:self.tableView.clickedRow];
+}
+
+- (void)removeRow:(NSInteger)rowToRemove {
     
     // Capture notifs
     NSSet<NSNumber *> *capturedButtonsBefore = [RemapTableUtility getCapturedButtons];
     
-    // Get selected table index
-    if (self.tableView.selectedRowIndexes.count == 0) return;
-    assert(self.tableView.selectedRowIndexes.count == 1);
-    NSUInteger selectedTableIndex = self.tableView.selectedRowIndexes.firstIndex;
-    
     // Get base data model index corresponding to selected table index
-    NSUInteger selectedDataModelIndex = [RemapTableUtility baseDataModelIndexFromGroupedDataModelIndex:selectedTableIndex withGroupedDataModel:self.groupedDataModel];
+    NSUInteger dataModelRowToRemove = [RemapTableUtility baseDataModelIndexFromGroupedDataModelIndex:rowToRemove withGroupedDataModel:self.groupedDataModel];
     
     // Save rowDict to be removed for later
-    NSDictionary *removedRowDict = self.dataModel[selectedDataModelIndex];
+    NSDictionary *removedRowDict = self.dataModel[dataModelRowToRemove];
     
     // Remove object from data model at selected index, and write to file
     NSMutableArray *mutableDataModel = self.dataModel.mutableCopy;
-    [mutableDataModel removeObjectAtIndex:selectedDataModelIndex];
+    [mutableDataModel removeObjectAtIndex:dataModelRowToRemove];
     self.dataModel = (NSArray *)mutableDataModel;
     [self writeDataModelToConfig];
     [self loadDataModelFromConfig]; // Not sure if necessary
     
     // Remove rows from table with animation
     
-    NSMutableIndexSet *rowsToRemoveWithAnimation = [[NSMutableIndexSet alloc] initWithIndex:selectedTableIndex];
+    NSMutableIndexSet *rowsToRemoveWithAnimation = [[NSMutableIndexSet alloc] initWithIndex:rowToRemove];
     
     // Check if a buttonGroupRow should be with animation removed, too
     MFMouseButtonNumber removedRowTriggerButton = [RemapTableUtility triggerButtonForRow:removedRowDict];
@@ -295,7 +299,7 @@ static void setBorderColor(RemapTableController *object) {
         }
     }
     if (!buttonIsStillTriggerInDataModel) { // Yes, we want to remove a group row, too
-        [rowsToRemoveWithAnimation addIndex:selectedTableIndex-1];
+        [rowsToRemoveWithAnimation addIndex:rowToRemove-1];
         
     }
     
@@ -311,7 +315,7 @@ static void setBorderColor(RemapTableController *object) {
     [AddWindowController begin];
 }
 
-#pragma mark Interface functions
+#pragma mark Interface
 
 - (void)addRowWithHelperPayload:(NSDictionary *)payload {
     
@@ -383,7 +387,7 @@ static void setBorderColor(RemapTableController *object) {
 
 }
 
-#pragma mark - TableView data source functions
+#pragma mark - Data source
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     // Get data for this row
@@ -667,6 +671,7 @@ NSArray *groupedDataModel_FromLastGroupedDataModelAccess;
 }
 
 /// Helper function for determining if a row is a group row
+
 static BOOL isGroupRow(NSArray *groupedDataModel, NSInteger row) {
     return [groupedDataModel[row] isEqual:RemapTableUtility.buttonGroupRowDict];
 }
@@ -676,7 +681,7 @@ static BOOL isGroupRow(NSArray *groupedDataModel, NSInteger row) {
 }
 /// Disable selection of groupRows. This prevents users from deleting group rows which leads to problems.
 - (BOOL)tableView:(NSTableView *)tableView shouldSelectRow:(NSInteger)row {
-    return !isGroupRow(self.groupedDataModel, row);
+    return !isGroupRow(self.groupedDataModel, row) && self.tableView.isEnabled;
 }
 
 /// The tableview will apply its own style to the NSTableCellViews' textField property in group rows.
