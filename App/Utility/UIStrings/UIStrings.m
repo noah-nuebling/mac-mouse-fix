@@ -258,8 +258,8 @@ static NSAttributedString *stringWithSymbol(NSString *symbolName, NSString *fall
     
     NSAttributedString *string = [NSAttributedString attributedStringWithAttachment:symbolAttachment];
     
-    string = [string attributedStringByAddingWeight:0.28];
-    string = [string attributedStringByAddingBaseLineOffset:0.25];
+    string = [string attributedStringByAddingWeight:0.3];
+    string = [string attributedStringByAddingBaseLineOffset:0.39];
     
     if (@available(macOS 10.14, *)) {
         if (NSApp.effectiveAppearance.name == NSAppearanceNameDarkAqua) {
