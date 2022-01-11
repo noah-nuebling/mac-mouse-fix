@@ -30,6 +30,7 @@ def main():
             total_downloads += downloads
             print(f'{short_version}: {downloads}')
         print(f'\ntotal: {total_downloads}')
+        print(f'\nUTC time: {datetime.datetime.utcnow()}\n')
 
     elif len(sys.argv) >= 2:
         
