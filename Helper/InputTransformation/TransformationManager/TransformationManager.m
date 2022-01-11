@@ -228,9 +228,9 @@ CGEventRef  _Nullable keyCaptureModeCallback(CGEventTapProxy proxy, CGEventType 
         
         NSEvent *e = [NSEvent eventWithCGEvent:event];
         
-        if (keyCaptureModePayloadIsValidWithEvent(e, flags)) {
-            
-            MFSystemDefinedEventType type = (MFSystemDefinedEventType)(e.data1 >> 16);
+        MFSystemDefinedEventType type = (MFSystemDefinedEventType)(e.data1 >> 16);
+        
+        if (keyCaptureModePayloadIsValidWithEvent(e, flags, type)) {
             
             NSLog(@"System event data1: %ld, data2: %ld", e.data1, e.data2); /// Debug
             
@@ -252,13 +252,15 @@ bool keyCaptureModePayloadIsValidWithKeyCode(CGKeyCode keyCode, CGEventFlags fla
     return keyCode != 0;
 }
 
-bool keyCaptureModePayloadIsValidWithEvent(NSEvent *e, CGEventFlags flags) {
+bool keyCaptureModePayloadIsValidWithEvent(NSEvent *e, CGEventFlags flags, MFSystemDefinedEventType type) {
     
-    BOOL isSub8 = (e.subtype == 8); /// 8 -> NSEvnentSubtypeScreenChanged
+    BOOL isSub8 = (e.subtype == 8); /// 8 -> NSEventSubtypeScreenChanged
     BOOL isKeyDown = (e.data1 & kMFSystemDefinedEventPressedMask) == 0;
     BOOL secondDataIsNil = e.data2 == -1; /// The power key up event has both data fields be 0
+    BOOL typeIsBlackListed = type == kMFSystemEventTypeCapsLock;
     
-    return isSub8 && isKeyDown && secondDataIsNil;
+    
+    return isSub8 && isKeyDown && secondDataIsNil && !typeIsBlackListed;
 }
 
 #pragma mark - Dummy Data

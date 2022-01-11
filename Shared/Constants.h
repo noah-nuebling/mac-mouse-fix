@@ -244,9 +244,9 @@ typedef enum {
     
     kMFSystemEventTypeKeyboardBacklightDown = 22,
     kMFSystemEventTypeKeyboardBacklightUp = 21,
-    kMFSystemEventTypePower = 6,
     
-    kMFSystemEventTypeCapsLock = 4,
+    kMFSystemEventTypePower = 6,
+    kMFSystemEventTypeCapsLock = 4, /// Should probably disable remapping to this. Doesn't work
     
 } MFSystemDefinedEventType;
 
