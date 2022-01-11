@@ -20,6 +20,7 @@ history_file_path = 'stats_history.json'
 def main():
 
     if len(sys.argv) == 1: # Print current downloads
+        
         releases = load_releases()
         releases = sorted_by_release(releases, 'published_at')
         total_downloads = 0
@@ -31,10 +32,39 @@ def main():
         print(f'\ntotal: {total_downloads}')
 
     elif len(sys.argv) >= 2:
-
+        
         command_line_argument = sys.argv[1]
+        
+        if command_line_argument == '--help':
+            print(
+                """
+`stats` command line tool
 
-        if command_line_argument == 'record':
+### Subcommands
+    
+**`record`**
+    Record current downloads. Store results in history file.
+**`print`**
+    Print all recorded data to the console.
+**`plot`**
+    Visualize the recorded data in a graph.
+    _Subcommands_:
+    `latest`
+        See downloads for the latest stable release
+    `total`
+        Total number of downloads across all versions.
+    `<list of versions>`
+        Provide a list of version names you want to compare.
+        The version names are the titles of the corresponding GitHub releases. (Would probably be better to use the git tag instead)
+        Example of usage:
+            `./stats plot "2.0.0" "2.0.0 Beta 13"`
+    `all`
+        Separate graph for each release.
+    `all-stable`
+        Separate graph for each release. Omit beta versions.
+                """)    
+            exit()
+        elif command_line_argument == 'record':
             # Load existing log
 
             history = load_history()
@@ -55,7 +85,7 @@ def main():
                 # log[short_version][current_time]['download_count'] = downloads
 
             # Print
-            print(f'New datapoints recorded for {current_time}. View them with `./stats print`')
+            print(f'New datapoints recorded for utc time: {current_time}. View them with `./stats print` or `./stats plot`')
 
             # Write log to file
             with open(history_file_path, 'w') as outfile:
@@ -70,15 +100,18 @@ def main():
             history = load_history()    
             
             if len(sys.argv) == 2:
-                sys.argv.append('total') # No s_arg is the same as s_arg == 'total'
+                sys.argv.append('latest') # No s_arg is the same as s_arg == 'latest'
             
             s_arg = sys.argv[2] # Get first sub arg
             
+            versions = []
             if s_arg == 'all' or s_arg == 'total':
                 versions = history.keys()                    
             elif s_arg == 'all-stable':
                 versions = history.keys()
                 versions = filter(lambda version_string: ' ' not in version_string, versions) # Filter out prereleases
+            elif s_arg == 'latest':
+                versions.append(load_latest_release()['name'])
             else:
                 versions = sys.argv[2:]
             
@@ -126,19 +159,36 @@ def main():
                     r = np.interp(x_combined, x, y, left=0, right=0)
                     itp.append(r)
 
+                # Sum the y values up to get total downloads
                 y_summed = sum(itp)
                 
+                # Convert timestamps to datetime
                 x_combined = [datetime.datetime.utcfromtimestamp(d) for d in x_combined]
 
-                plt.plot(x_combined, y_summed, label="Total downloads", linestyle='-', marker='.')
+                x = x_combined
+                y = y_summed
                 
+                plt.plot(x, y, label="Total downloads", linestyle='-', marker='.')
                 plt.gcf().autofmt_xdate()
+                
+                # Draw point coordinates (doesn't work)
+                
+                # plt.rcParams["figure.autolayout"] = True         
+                # for x_i, y_i in zip(x, y):
+                    
+                #     plt.text(x_i, y_i, f'({x_i}, {y_i})')
+                
                 plt.legend(loc='upper left')
                 plt.show()
                 
             else:
                 for d in plot_data:
-                    plt.plot(d['x'], d['y'], label=d['version'], linestyle='-', marker='.')
+                    
+                    x = d['x']
+                    y = d['y']
+                    version = d['version']
+                    
+                    plt.plot(x, y, label=version, linestyle='-', marker='.')
                     
                 plt.legend(loc='upper left')
                 plt.gcf().autofmt_xdate()
@@ -153,6 +203,11 @@ def load_releases():
     request = urllib.request.urlopen(releases_api_url)
     releases = json.load(request)
     return releases
+
+def load_latest_release():
+    request = urllib.request.urlopen(releases_api_url + '/latest')
+    latest = json.load(request)
+    return latest
 
 def load_history():
     log = {}
