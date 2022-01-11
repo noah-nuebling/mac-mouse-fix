@@ -28,6 +28,10 @@
     NSInteger clickedRow = [self rowAtPoint:clickedPoint];
     if (clickedRow != -1) {
         if ([self.delegate tableView:self shouldSelectRow:clickedRow]) {
+            /// Select clicked row cause it looks cool?
+//            NSIndexSet *idx = [NSIndexSet indexSetWithIndex:clickedRow];
+//            [self selectRowIndexes:idx byExtendingSelection:NO];
+            /// Open menu
             return [super menuForEvent:event];
         }
     }
