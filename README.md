@@ -69,3 +69,4 @@ To publish a new update you would then:
 All of this is very inefficient, but it's fast enough for Mac Mouse Fix for now. In the future I might add a mode where only the latest release is processed to speed things up.
 - Use a URL like `https://github.com/[owner]/[repo]/releases/latest/download/[AssetName].zip` to link to your latest release download from an external website. Downloads from that external website will also count towards your GitHub Releases' download counts.
 - Also see the [Sparkle docs](https://sparkle-project.org/documentation/) more about appcasts and other things
+- On Monday Jan 10 22 I changed the timestamps to record in UTC time instead of local time, so all the timestamps after around 12 pm that day are shifted forward by 8 hours or so compared to the earlier ones. At some point in August when I flew from Europe to the US the timestamps should also be shifted. 

@@ -178,7 +178,7 @@ def main():
                     
                 #     plt.text(x_i, y_i, f'({x_i}, {y_i})')
                 
-                plt.legend(loc='upper left')
+                plt.legend(loc='best')
                 plt.show()
                 
             else:
