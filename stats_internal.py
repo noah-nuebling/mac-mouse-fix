@@ -169,6 +169,8 @@ def main():
                 x = x_combined
                 y = y_summed
                 
+                print(f'Current trend: {(y[-1] - y[-2]) / ((x[-1] - x[-2]).total_seconds()/60/60/24)} downloads per day.')
+                
                 plt.plot(x, y, label="Total downloads", linestyle='-', marker='.')
                 plt.gcf().autofmt_xdate()
                 
