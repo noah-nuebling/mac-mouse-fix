@@ -2,4 +2,12 @@
 
 source update_env/bin/activate # Activate venv which contains package dependencies (Namely matplotlib)
 python3 stats_internal.py "$@" # Run python script and pass along arguments
+
+
+if [["$1" == "record"]]; then
+git add .;
+git push;
+git commit -m "Pushed recorded stats";
+fi
+
 deactivate # Deactivate venv
