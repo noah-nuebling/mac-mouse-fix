@@ -23,7 +23,7 @@ git push;
 
 # Record stats
 echo 'Recording stats...'
-python3 ./stats record;
+./stats record;
 echo 'Pushing new stats...'
 git add .;
 git commit -m "Recorded stats";
