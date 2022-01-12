@@ -63,25 +63,17 @@ To disable Mac Mouse Fix, uncheck this checkbox or move the app to the Trash.</s
                                     <rect key="frame" x="3" y="3" width="540" height="432"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <segmentedControl verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xGK-PH-XPN" customClass="MFSegmentedControl">
-                                            <rect key="frame" x="3" y="86" width="47" height="24"/>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HGX-T5-6af">
+                                            <rect key="frame" x="425" y="80" width="112" height="32"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="momentary" id="btI-2i-s2J">
+                                            <buttonCell key="cell" type="push" title="Add Action..." bezelStyle="rounded" alignment="left" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3JK-0V-r63">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
-                                                <segments>
-                                                    <segment image="NSAddTemplate" width="21"/>
-                                                    <segment image="NSRemoveTemplate" width="19" tag="-1"/>
-                                                </segments>
-                                            </segmentedCell>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="keyEquivKC">
-                                                    <integer key="value" value="51"/>
-                                                </userDefinedRuntimeAttribute>
-                                            </userDefinedRuntimeAttributes>
+                                            </buttonCell>
                                             <connections>
-                                                <action selector="addRemoveControl:" target="p2C-Qy-mgp" id="klS-40-MDb"/>
+                                                <action selector="addAction:" target="p2C-Qy-mgp" id="PvL-ZD-v2n"/>
                                             </connections>
-                                        </segmentedControl>
+                                        </button>
                                         <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uS5-6r-XRu" userLabel="ScrollGroup">
                                             <rect key="frame" x="0.0" y="15" width="540" height="82"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -323,7 +315,7 @@ Tips:
                                                 <nil key="backgroundColor"/>
                                             </clipView>
                                             <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="Wpn-xY-rCp">
-                                                <rect key="frame" x="0.0" y="221" width="530" height="16"/>
+                                                <rect key="frame" x="0.0" y="284" width="530" height="16"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
                                             <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="h3C-j3-pEp">
@@ -519,8 +511,4 @@ Tips:
             <point key="canvasLocation" x="281" y="-365"/>
         </menu>
     </objects>
-    <resources>
-        <image name="NSAddTemplate" width="14" height="13"/>
-        <image name="NSRemoveTemplate" width="14" height="4"/>
-    </resources>
 </document>

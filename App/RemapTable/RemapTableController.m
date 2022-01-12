@@ -311,6 +311,9 @@ static void setBorderColor(RemapTableController *object) {
         [self removeRow:selectedRow];
     }
 }
+- (IBAction)addAction:(id)sender {
+    [self addButtonAction];
+}
 - (IBAction)rightClickRemoveButton:(id)sender {
     [self removeRow:self.tableView.clickedRow];
 }
