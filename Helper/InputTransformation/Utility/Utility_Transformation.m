@@ -102,6 +102,15 @@
 }
 + (void)postMouseButton:(MFMouseButtonNumber)button down:(BOOL)down {
     
+    /// I tried dispatching this event at a point other than the current cursor position, without moving the cursor.
+    /// That would maybe help with this issue:  https://github.com/noah-nuebling/mac-mouse-fix/issues/157#issuecomment-932108105)
+    /// I couldn't do it, though/ Here's what I tried:
+    ///     Sending another mouse click at the original location - Only works like 1/4
+    ///     Sending another mouse up event at the original location - Works exactly 1/3
+    ///  I know this won't work:
+    ///     CGWarpMousePointer - I'm using this in version-3 branch and has a delay after it where you can't move the poiner at all. If you turn off the delay it doesn't work anymore.
+    ///  If feel like this might be impossible because macOS might need this small delay to move the pointer programmatically.
+    
 #if DEBUG
     NSLog(@"POSTING FAKE MOUSE BUTTON EVENT. btn: %d, down: %d", button, down);
 #endif
