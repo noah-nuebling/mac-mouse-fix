@@ -256,8 +256,8 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
     }
     
     [oneShotEffectsTable insertObject:@{
-        @"ui": @"Keyboard Shortcut",
-        @"tool": @"Choose shortcuts that are only available on Apple keyboards from a dropdown menu",
+        @"ui": @" Exclusive Keys",
+        @"tool": @"Choose keys that are only available on Apple keyboards.",
         @"alternate": @YES,
         @"submenu": submenu
     } atIndex:keyCaptureIndex+1];
