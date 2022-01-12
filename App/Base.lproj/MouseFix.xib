@@ -64,9 +64,9 @@ To disable Mac Mouse Fix, uncheck this checkbox or move the app to the Trash.</s
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HGX-T5-6af">
-                                            <rect key="frame" x="427" y="80" width="112" height="32"/>
+                                            <rect key="frame" x="409" y="80" width="130" height="32"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <buttonCell key="cell" type="push" title="Add Action..." bezelStyle="rounded" alignment="left" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3JK-0V-r63">
+                                            <buttonCell key="cell" type="push" title="Add an Action..." bezelStyle="rounded" alignment="right" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3JK-0V-r63">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
@@ -500,7 +500,7 @@ Tips:
         </menu>
         <menu showsStateColumn="NO" id="wYv-c3-roG" userLabel="ActionTableMenu">
             <items>
-                <menuItem title="Delete Action" id="wkx-a9-yNs">
+                <menuItem title="Delete this Action" id="wkx-a9-yNs">
                     <attributedString key="attributedTitle"/>
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
