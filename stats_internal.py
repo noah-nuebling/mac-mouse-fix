@@ -141,7 +141,13 @@ def main():
             
             if s_arg == 'total':
                 # Source: https://stackoverflow.com/a/55290542/10601702
-
+                
+                # Setup graph for drawing 2 axes
+                
+                fig, ax1 = plt.subplots()
+                ax2 = ax1.twinx()
+                
+                
                 # Get x values for each version
                 x_each = list(map(lambda a: a['x'], plot_data)) # List of list of dates for each version
                 
@@ -164,15 +170,46 @@ def main():
                 y_summed = sum(itp)
                 
                 # Convert timestamps to datetime
-                x_combined = [datetime.datetime.utcfromtimestamp(d) for d in x_combined]
+                x_combined_dates = [datetime.datetime.utcfromtimestamp(d) for d in x_combined]
 
-                x = x_combined
+                x = x_combined_dates
                 y = y_summed
                 
-                print(f'Current trend: {(y[-1] - y[-2]) / ((x[-1] - x[-2]).total_seconds()/60/60/24)} downloads per day.')
+                color = 'tab:blue'
+                ax1.set_xlabel('Date')
+                ax1.set_ylabel('Total downloads', color=color)
+                # plt.plot(x,y, linestyle='-', marker='.', color=color) # Need to draw on plot not axis to get mouse hover values to work
+                ax1.tick_params(axis='y', labelcolor=color)
                 
-                plt.plot(x, y, label="Total downloads", linestyle='-', marker='.')
+                # Derivative
+                #   Downloads per day
+                #   Src: https://stackoverflow.com/a/52957827/10601702
+                
+                N = 1 # Rolling average window
+                if N > 0:
+                    y_p = cool_diff(y, N) / [d.total_seconds()/60/60/24 for d in cool_diff(x, N)]
+                    x_p_timestamps = np.array(x_combined)[N:-N]
+                else:
+                    y_p = np.diff(y) / [d.total_seconds()/60/60/24 for d in np.diff(x)]
+                    x_p_timestamps = (np.array(x_combined)[1:] + np.array(x_combined)[:-1]) / 2
+                
+                # Convert timestamps to dates for display
+                x_p = [datetime.datetime.utcfromtimestamp(d) for d in x_p_timestamps]
+                
+                color2 = 'tab:red'
+                ax2.set_ylabel('Downloads per day', color=color2)  # we already handled the x-label with ax1
+                ax2.tick_params(axis='y', labelcolor=color2)
+                
+                # Plot
+                # ax1 last so that the mouse hover will display its values?
+                
+                ax2.format_coord = make_format(ax2, ax1)
+                
+                ax1.plot(x, y, linestyle='-', marker='.', color=color)
+                ax2.plot(x_p, y_p, linestyle='-', marker='.', color=color2)
+                
                 plt.gcf().autofmt_xdate()
+                fig.tight_layout()  # otherwise the right y-label is slightly clipped
                 
                 # Draw point coordinates (doesn't work)
                 
@@ -246,5 +283,34 @@ def sorted_by_release(arg, key):
         return collections.OrderedDict(sorted(arg.items()))
     else:
         raise Exception('Unexpected argument type')
+
+def cool_diff(array, n):
+    # More stable than np.diff for our 'downloads per day' calculation
+    # n how many values to look back / look forward
+    # size(result) = size(array) - 2n
+    
+    if n == 0:
+        return np.array(array)
+    
+    out = []
+    
+    for i, v in enumerate(array[n:-n]):
+        diff = array[i+n] - array[i-n]
+        out.append(diff)
+    
+    return np.array(out)
+    
+def make_format(current, other):
+    # current and other are axes
+    def format_coord(x, y):
+        # x, y are data coordinates
+        # convert to display coords
+        display_coord = current.transData.transform((x,y))
+        inv = other.transData.inverted()
+        # convert back to data coords with respect to ax
+        ax_coord = inv.transform(display_coord)
+        coords = [ax_coord, (x, y)]
+        return ('Left: {:<40} Right: {:<}'.format(*['{:.0f}'.format(y) for x,y in coords]))
+    return format_coord
 
 main()
