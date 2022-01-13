@@ -100,8 +100,8 @@ def main():
             
             history = load_history()    
             
-            if len(sys.argv) == 2:
-                sys.argv.append('latest') # No s_arg is the same as s_arg == 'latest'
+            if len(sys.argv) == 2: # No sub argument
+                sys.argv.append('total')
             
             s_arg = sys.argv[2] # Get first sub arg
             
@@ -183,7 +183,6 @@ def main():
                 ax1.axhline(y=0, color='black', linestyle='--')
                 
                 # Downloads per day
-                #   Src: https://stackoverflow.com/a/52957827/10601702
                 
                 first_date = x_combined_dates[0]
                 last_date = x_combined_dates[-1]
@@ -196,8 +195,6 @@ def main():
                 for i in reversed(range(int(delta.total_seconds()//interval))):
                     days.append(last_date - datetime.timedelta(seconds=i*interval))
                 days_timestamps = [d.timestamp() for d in days]
-                
-                print(f'last day ts: {days_timestamps[-1]}, last_combined_ts: {x_combined[-1]}')
                 
                 day_values = np.interp(days_timestamps, x_combined, y, left=0, right=0)
                 
@@ -214,7 +211,6 @@ def main():
                 ax2.axhline(y=0, color='black', linestyle='--')
                 
                 # Plot
-                # ax1 last so that the mouse hover will display its values?
                 
                 ax2.format_coord = make_format(ax2, ax1)
                 
