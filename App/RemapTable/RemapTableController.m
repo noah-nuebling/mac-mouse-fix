@@ -368,19 +368,24 @@ static void setBorderColor(RemapTableController *object) {
 
 - (NSArray<NSTableViewRowAction *> *)tableView:(NSTableView *)tableView rowActionsForRow:(NSInteger)row edge:(NSTableRowActionEdge)edge {
     
-    NSMutableArray *result = [NSMutableArray array];
+    return nil;
     
-    if (edge == NSTableRowActionEdgeTrailing) {
+    if ((NO)) {
         
-        NSTableViewRowAction *deleteAction = [NSTableViewRowAction rowActionWithStyle:NSTableViewRowActionStyleDestructive title:@"Delete" handler:^(NSTableViewRowAction * _Nonnull action, NSInteger row) {
-            [self removeRow:row];
-        }];
-        deleteAction.image = [NSImage imageWithSystemSymbolName:@"trash.fill" accessibilityDescription:@"Delete"];
+        NSMutableArray *result = [NSMutableArray array];
         
-        [result addObject:deleteAction];
+        if (edge == NSTableRowActionEdgeTrailing) {
+            
+            NSTableViewRowAction *deleteAction = [NSTableViewRowAction rowActionWithStyle:NSTableViewRowActionStyleDestructive title:@"Delete" handler:^(NSTableViewRowAction * _Nonnull action, NSInteger row) {
+                [self removeRow:row];
+            }];
+            deleteAction.image = [NSImage imageWithSystemSymbolName:@"trash.fill" accessibilityDescription:@"Delete"];
+            
+            [result addObject:deleteAction];
+        }
+        
+        return result;
     }
-    
-    return result;
 }
 
 #pragma mark Interface
