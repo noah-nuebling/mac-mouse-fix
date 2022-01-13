@@ -28,7 +28,7 @@
     NSInteger clickedRow = [self rowAtPoint:clickedPoint];
     if (clickedRow != -1) {
         if ([self.delegate tableView:self shouldSelectRow:clickedRow]) {
-            /// Select clicked row cause it looks cool?
+            /// Select clicked row
             NSIndexSet *idx = [NSIndexSet indexSetWithIndex:clickedRow];
             [self selectRowIndexes:idx byExtendingSelection:NO];
             /// Open menu
@@ -46,6 +46,7 @@
     
     if (clickedRow != -1) {
         if (![self.delegate tableView:self shouldSelectRow:clickedRow]) {
+            /// Unselect currently selected row
             [self deselectAll:nil];
         }
     }
