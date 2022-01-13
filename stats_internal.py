@@ -8,7 +8,7 @@ from pprint import pprint
 from typing import OrderedDict
 import urllib.request
 import urllib.parse
-
+import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -170,7 +170,7 @@ def main():
                 y_summed = sum(itp)
                 
                 # Convert timestamps to datetime
-                x_combined_dates = [datetime.datetime.utcfromtimestamp(d) for d in x_combined]
+                x_combined_dates = [datetime.datetime.fromtimestamp(d) for d in x_combined] # Using utcfromtimestamp here actually gives us the wrong time. (Because it tries to convert the time again?) We need to use fromtimestamp() to get utc time.
 
                 x = x_combined_dates
                 y = y_summed
@@ -180,25 +180,38 @@ def main():
                 ax1.set_ylabel('Total downloads', color=color)
                 # plt.plot(x,y, linestyle='-', marker='.', color=color) # Need to draw on plot not axis to get mouse hover values to work
                 ax1.tick_params(axis='y', labelcolor=color)
+                ax1.axhline(y=0, color='black', linestyle='--')
                 
-                # Derivative
-                #   Downloads per day
+                # Downloads per day
                 #   Src: https://stackoverflow.com/a/52957827/10601702
                 
-                N = 1 # Rolling average window
-                if N > 0:
-                    y_p = cool_diff(y, N) / [d.total_seconds()/60/60/24 for d in cool_diff(x, N)]
-                    x_p_timestamps = np.array(x_combined)[N:-N]
-                else:
-                    y_p = np.diff(y) / [d.total_seconds()/60/60/24 for d in np.diff(x)]
-                    x_p_timestamps = (np.array(x_combined)[1:] + np.array(x_combined)[:-1]) / 2
+                first_date = x_combined_dates[0]
+                last_date = x_combined_dates[-1]
                 
-                # Convert timestamps to dates for display
-                x_p = [datetime.datetime.utcfromtimestamp(d) for d in x_p_timestamps]
+                delta = (last_date - first_date)
+                
+                days = []
+                interval = 60*60*24 # Should be seconds in a day, but can lower for testing
+                
+                for i in reversed(range(int(delta.total_seconds()//interval))):
+                    days.append(last_date - datetime.timedelta(seconds=i*interval))
+                days_timestamps = [d.timestamp() for d in days]
+                
+                print(f'last day ts: {days_timestamps[-1]}, last_combined_ts: {x_combined[-1]}')
+                
+                day_values = np.interp(days_timestamps, x_combined, y, left=0, right=0)
+                
+                middle_dates = []
+                for i in range(len(days)-1):
+                    middle_dates.append(datetime.datetime.fromtimestamp((days[i].timestamp() + days[i+1].timestamp())/2))
+                
+                x_p = middle_dates
+                y_p = np.diff(day_values)
                 
                 color2 = 'tab:red'
                 ax2.set_ylabel('Downloads per day', color=color2)  # we already handled the x-label with ax1
                 ax2.tick_params(axis='y', labelcolor=color2)
+                ax2.axhline(y=0, color='black', linestyle='--')
                 
                 # Plot
                 # ax1 last so that the mouse hover will display its values?
@@ -206,7 +219,7 @@ def main():
                 ax2.format_coord = make_format(ax2, ax1)
                 
                 ax1.plot(x, y, linestyle='-', marker='.', color=color)
-                ax2.plot(x_p, y_p, linestyle='-', marker='.', color=color2)
+                ax2.plot(x_p, y_p, linestyle='-', marker='', color=color2)
                 
                 plt.gcf().autofmt_xdate()
                 fig.tight_layout()  # otherwise the right y-label is slightly clipped
@@ -301,6 +314,8 @@ def cool_diff(array, n):
     return np.array(out)
     
 def make_format(current, other):
+    # Src: https://stackoverflow.com/questions/21583965/matplotlib-cursor-value-with-two-axes
+    
     # current and other are axes
     def format_coord(x, y):
         # x, y are data coordinates
@@ -310,7 +325,11 @@ def make_format(current, other):
         # convert back to data coords with respect to ax
         ax_coord = inv.transform(display_coord)
         coords = [ax_coord, (x, y)]
-        return ('Left: {:<40} Right: {:<}'.format(*['{:.0f}'.format(y) for x,y in coords]))
+        # Get x axis string (date)
+        datefmt = matplotlib.dates.DateFormatter("%d %b %Y")
+        datestring = datefmt(x)
+        
+        return 'Total: {:<10.0f} Per day: {:<10.0f} ({})'.format(ax_coord[1], y, datestring)
     return format_coord
 
 main()
