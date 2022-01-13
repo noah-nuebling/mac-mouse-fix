@@ -27,9 +27,12 @@
 #import "RemapTableUtility.h"
 #import "ButtonGroupRowView.h"
 #import "NSColor+Additions.h"
+#import "MFSegmentedControl.h"
 
 @interface RemapTableController ()
 @property NSTableView *tableView;
+@property (weak) IBOutlet MFSegmentedControl *addRemoveControl;
+
 @end
 
 @implementation RemapTableController
@@ -196,8 +199,12 @@
     
     NSInteger clickedRowInBaseDataModel = [RemapTableUtility baseDataModelIndexFromGroupedDataModelIndex:clickedRow withGroupedDataModel:self.groupedDataModel];
     
+    /// Set action dict from item model to dataModel
+    
     NSDictionary *itemModel = item.representedObject;
     self.dataModel[clickedRowInBaseDataModel][kMFRemapsKeyEffect] = itemModel[@"dict"];
+    
+    /// Commit change
     
     [self writeDataModelToConfig];
     [self.tableView reloadData];
@@ -255,13 +262,72 @@
         [self observeValueForKeyPath:@"effectiveAppearance" ofObject:NSApp change:nil context:nil];
         [NSApp addObserver:self forKeyPath:@"effectiveAppearance" options:NSKeyValueObservingOptionNew context:nil];
     }
+    
+    /// Init addRemoveControl state
+    [self updateAddRemoveControl];
 }
 
+static void setBorderColor(RemapTableController *object) {
+    if (@available(macOS 10.14, *)) {
+        /// Helper for viewDidLoad
+        
+        
+        NSColor *background = object.tableView.backgroundColor;
+        object.scrollView.layer.borderColor = [NSColor.separatorColor solidColorWithBackground:background].CGColor;
+        /// ^ The rgb values we get from the separatorColor don't change when darkmode is toggled while MMF is running. (We need those rgb values to get the `solidColorWithBackground:`). I can't find a workaround. If we use `separatorColor` directly, the color does change when darkmode is toggled while MMF is running, but the colors are also wrong...
+        /// We want the color to be solid to prevent the border chaning color when overlapping with the grid of the table.
+    } else {
+        object.scrollView.layer.borderColor = NSColor.gridColor.CGColor;
+    }
+}
+
+
+#pragma mark - Delegate & Controller
+/// Other methods from NSTableViewDelegate and NSTableViewConroller protocols
+
+- (void)tableViewSelectionDidChange:(NSNotification *)notification {
+    [self updateAddRemoveControl];
+}
+
+- (void)updateAddRemoveControl {
+    if (self.tableView.selectedRow == -1) {
+        /// No row selected
+        [self.addRemoveControl setEnabled:NO forSegment:1];
+    } else {
+        [self.addRemoveControl setEnabled:YES forSegment:1];
+    }
+}
+
+- (NSArray<NSTableViewRowAction *> *)tableView:(NSTableView *)tableView rowActionsForRow:(NSInteger)row edge:(NSTableRowActionEdge)edge {
+        
+    /// Define swipe actions
+    
+    return nil;
+    
+    if ((NO)) {
+        
+        NSMutableArray *result = [NSMutableArray array];
+        
+        if (edge == NSTableRowActionEdgeTrailing) {
+            
+            NSTableViewRowAction *deleteAction = [NSTableViewRowAction rowActionWithStyle:NSTableViewRowActionStyleDestructive title:@"Delete" handler:^(NSTableViewRowAction * _Nonnull action, NSInteger row) {
+                [self removeRow:row];
+            }];
+            deleteAction.image = [NSImage imageWithSystemSymbolName:@"trash.fill" accessibilityDescription:@"Delete"];
+            
+            [result addObject:deleteAction];
+        }
+        
+        return result;
+    }
+}
+
+#pragma mark - Observer
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
     
     if ([keyPath isEqual:@"effectiveAppearance"]) {
-    
+        
         static NSAppearanceName initialAppearance = @"";
         static BOOL effectiveAppearanceIsInitialized = NO; /// Prevent table reload when appearance is initially set
         if (!effectiveAppearanceIsInitialized) {
@@ -285,22 +351,10 @@
     
 }
 
-static void setBorderColor(RemapTableController *object) {
-    if (@available(macOS 10.14, *)) {
-        
-        NSColor *background = object.tableView.backgroundColor;
-        object.scrollView.layer.borderColor = [NSColor.separatorColor solidColorWithBackground:background].CGColor;
-        /// ^ The rgb values we get from the separatorColor don't change when darkmode is toggled while MMF is running. (We need those rgb values to get the `solidColorWithBackground:`). I can't find a workaround. If we use `separatorColor` directly, the color does change when darkmode is toggled while MMF is running, but the colors are also wrong...
-        /// We want the color to be solid to prevent the border chaning color when overlapping with the grid of the table.
-    } else {
-        object.scrollView.layer.borderColor = NSColor.gridColor.CGColor;
-    }
-}
-
 #pragma mark - IBActions
 
-- (IBAction)addRemoveControl:(id)sender {
-    if ([sender selectedSegment] == 0) {
+- (IBAction)addRemoveControl:(NSSegmentedControl *)sender {
+    if (sender.selectedSegment == 0) {
         [self addButtonAction];
     } else {
         /// Get selected table row index
@@ -362,30 +416,6 @@ static void setBorderColor(RemapTableController *object) {
 
 - (void)addButtonAction {
     [AddWindowController begin];
-}
-
-#pragma mark Row Actions
-
-- (NSArray<NSTableViewRowAction *> *)tableView:(NSTableView *)tableView rowActionsForRow:(NSInteger)row edge:(NSTableRowActionEdge)edge {
-    
-    return nil;
-    
-    if ((NO)) {
-        
-        NSMutableArray *result = [NSMutableArray array];
-        
-        if (edge == NSTableRowActionEdgeTrailing) {
-            
-            NSTableViewRowAction *deleteAction = [NSTableViewRowAction rowActionWithStyle:NSTableViewRowActionStyleDestructive title:@"Delete" handler:^(NSTableViewRowAction * _Nonnull action, NSInteger row) {
-                [self removeRow:row];
-            }];
-            deleteAction.image = [NSImage imageWithSystemSymbolName:@"trash.fill" accessibilityDescription:@"Delete"];
-            
-            [result addObject:deleteAction];
-        }
-        
-        return result;
-    }
 }
 
 #pragma mark Interface

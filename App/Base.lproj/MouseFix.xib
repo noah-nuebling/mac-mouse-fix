@@ -355,6 +355,7 @@ Tips:
         </customObject>
         <customObject id="p2C-Qy-mgp" customClass="RemapTableController">
             <connections>
+                <outlet property="addRemoveControl" destination="xGK-PH-XPN" id="ltz-dO-tq6"/>
                 <outlet property="box" destination="nmi-Qw-Ncm" id="M7y-bz-ysY"/>
                 <outlet property="view" destination="zJh-jy-oKM" id="GWC-PD-NjZ"/>
             </connections>
