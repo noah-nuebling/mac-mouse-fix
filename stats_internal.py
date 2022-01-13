@@ -325,7 +325,7 @@ def make_format(current, other):
         datefmt = matplotlib.dates.DateFormatter("%d %b %Y")
         datestring = datefmt(x)
         
-        return 'Total: {:<10.0f} Per day: {:<10.0f} ({})'.format(ax_coord[1], y, datestring)
+        return 'Total: {:.0f}          ({:<10})          Per day: {:.0f}'.format(ax_coord[1], datestring, y)
     return format_coord
 
 main()
