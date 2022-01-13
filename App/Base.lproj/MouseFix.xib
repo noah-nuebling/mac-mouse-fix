@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -70,7 +71,9 @@ To disable Mac Mouse Fix, uncheck this checkbox or move the app to the Trash.</s
                                                 <font key="font" metaFont="system"/>
                                                 <segments>
                                                     <segment toolTip="Add a new Action" image="NSAddTemplate" width="21"/>
-                                                    <segment toolTip="Delete the selected Action" image="NSRemoveTemplate" width="19" tag="-1"/>
+                                                    <segment toolTip="Delete the selected Action" width="19" tag="-1">
+                                                        <imageReference key="image" image="NSRemoveTemplate" symbolScale="small"/>
+                                                    </segment>
                                                 </segments>
                                             </segmentedCell>
                                             <userDefinedRuntimeAttributes>
@@ -509,7 +512,7 @@ Tips:
         </menu>
         <menu showsStateColumn="NO" id="wYv-c3-roG" userLabel="ActionTableMenu">
             <items>
-                <menuItem title="Delete" image="minus.square" catalog="system" id="wkx-a9-yNs">
+                <menuItem title="Delete" image="minus.square" id="wkx-a9-yNs">
                     <attributedString key="attributedTitle"/>
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
@@ -522,7 +525,7 @@ Tips:
     </objects>
     <resources>
         <image name="NSAddTemplate" width="14" height="13"/>
-        <image name="NSRemoveTemplate" width="14" height="4"/>
-        <image name="minus.square" catalog="system" width="15" height="14"/>
+        <image name="NSRemoveTemplate" width="12" height="4"/>
+        <image name="minus.square" width="12" height="12"/>
     </resources>
 </document>

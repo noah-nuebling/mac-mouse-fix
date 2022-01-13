@@ -34,6 +34,17 @@
             /// Open menu
             return [super menuForEvent:event];
         }
+    } else {
+        NSMenuItem *addItem = [[NSMenuItem alloc] init];
+        addItem.title = @"Add";
+        addItem.image = [NSImage imageNamed:@"plus.square"];
+        addItem.target = self.delegate;
+        addItem.action = @selector(addButtonAction);
+        
+        NSMenu *addMenu = [[NSMenu alloc] init];
+        [addMenu addItem:addItem];
+        
+        return addMenu;
     }
     
     return nil;
