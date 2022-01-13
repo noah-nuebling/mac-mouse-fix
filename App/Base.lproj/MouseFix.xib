@@ -162,7 +162,7 @@ Tips:
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <size key="intercellSpacing" width="17" height="0.0"/>
                                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                        <tableViewGridLines key="gridStyleMask" vertical="YES" horizontal="YES"/>
+                                                        <tableViewGridLines key="gridStyleMask" horizontal="YES"/>
                                                         <color key="gridColor" name="separatorColor" catalog="System" colorSpace="catalog"/>
                                                         <tableColumns>
                                                             <tableColumn identifier="trigger" width="287" minWidth="40" maxWidth="1000" id="zj7-YT-yKp">
@@ -508,7 +508,7 @@ Tips:
         </menu>
         <menu showsStateColumn="NO" id="wYv-c3-roG" userLabel="ActionTableMenu">
             <items>
-                <menuItem title="Delete" id="wkx-a9-yNs">
+                <menuItem title="Delete" image="trash.fill" catalog="system" id="wkx-a9-yNs">
                     <attributedString key="attributedTitle"/>
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
@@ -522,5 +522,6 @@ Tips:
     <resources>
         <image name="NSAddTemplate" width="14" height="13"/>
         <image name="NSRemoveTemplate" width="14" height="4"/>
+        <image name="trash.fill" catalog="system" width="15" height="16"/>
     </resources>
 </document>

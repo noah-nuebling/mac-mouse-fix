@@ -316,6 +316,7 @@ static void setBorderColor(RemapTableController *object) {
 }
 
 - (void)removeRow:(NSInteger)rowToRemove {
+    /// `rowToRemove` is relative to actual table / groupedDataModel. Not baseDataModel
     
     // Capture notifs
     NSSet<NSNumber *> *capturedButtonsBefore = [RemapTableUtility getCapturedButtons];
@@ -361,6 +362,25 @@ static void setBorderColor(RemapTableController *object) {
 
 - (void)addButtonAction {
     [AddWindowController begin];
+}
+
+#pragma mark Row Actions
+
+- (NSArray<NSTableViewRowAction *> *)tableView:(NSTableView *)tableView rowActionsForRow:(NSInteger)row edge:(NSTableRowActionEdge)edge {
+    
+    NSMutableArray *result = [NSMutableArray array];
+    
+    if (edge == NSTableRowActionEdgeTrailing) {
+        
+        NSTableViewRowAction *deleteAction = [NSTableViewRowAction rowActionWithStyle:NSTableViewRowActionStyleDestructive title:@"Delete" handler:^(NSTableViewRowAction * _Nonnull action, NSInteger row) {
+            [self removeRow:row];
+        }];
+        deleteAction.image = [NSImage imageWithSystemSymbolName:@"trash.fill" accessibilityDescription:@"Delete"];
+        
+        [result addObject:deleteAction];
+    }
+    
+    return result;
 }
 
 #pragma mark Interface
