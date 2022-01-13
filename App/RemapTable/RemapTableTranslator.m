@@ -86,16 +86,16 @@ static NSArray *getDragEffectsTable() {
 //                  kMFModifiedDragDictKeyType: kMFModifiedDragTypeTwoFingerSwipe,
 //        }},
 //        separatorEffectsTableEntry(),
-        @{
-//          @"ui": [NSString stringWithFormat:@"%@ Click and Drag", [UIStrings getButtonString:3]],
-          @"ui": [NSString stringWithFormat:@"Middle Click and Drag"],
-//          @"ui": [NSString stringWithFormat:@"%@ Drag", [UIStrings getButtonString:3]],
-          @"tool": [NSString stringWithFormat: @"Works like clicking and dragging %@\nUsed to orbit in some 3D software like Blender", [UIStrings getButtonStringToolTip:3]],
-          @"hideable": @YES,
-          @"dict": @{
-                  kMFModifiedDragDictKeyType: kMFModifiedDragTypeFakeDrag,
-                  kMFModifiedDragDictKeyFakeDragVariantButtonNumber: @3,
-        }},
+//        @{
+////          @"ui": [NSString stringWithFormat:@"%@ Click and Drag", [UIStrings getButtonString:3]],
+//          @"ui": [NSString stringWithFormat:@"Middle Click and Drag"],
+////          @"ui": [NSString stringWithFormat:@"%@ Drag", [UIStrings getButtonString:3]],
+//          @"tool": [NSString stringWithFormat: @"Works like clicking and dragging %@\nUsed to orbit in some 3D software like Blender", [UIStrings getButtonStringToolTip:3]],
+//          @"hideable": @YES,
+//          @"dict": @{
+//                  kMFModifiedDragDictKeyType: kMFModifiedDragTypeFakeDrag,
+//                  kMFModifiedDragDictKeyFakeDragVariantButtonNumber: @3,
+//        }},
     ];
     return dragEffectsTable;
 }
