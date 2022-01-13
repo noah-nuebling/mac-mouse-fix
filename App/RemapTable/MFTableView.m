@@ -35,6 +35,11 @@
             return [super menuForEvent:event];
         }
     } else {
+        
+        /// Unselect currently selected row
+        [self deselectAll:nil];
+        
+        /// Create add menu
         NSMenuItem *addItem = [[NSMenuItem alloc] init];
         addItem.title = @"Add";
         addItem.image = [NSImage imageNamed:@"plus.square"];
@@ -44,6 +49,7 @@
         NSMenu *addMenu = [[NSMenu alloc] init];
         [addMenu addItem:addItem];
         
+        /// Return add Menu
         return addMenu;
     }
     
