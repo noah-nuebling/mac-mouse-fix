@@ -102,7 +102,7 @@ int16_t _nOfSpaces = 1;
             
             _drag.eventTap = eventTap;
         }
-        _drag.usageThreshold = 10; // 20
+        _drag.usageThreshold = 7; // 20
     } else {
         _drag.usageThreshold = 50;
     }
