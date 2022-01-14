@@ -7,7 +7,7 @@
 // --------------------------------------------------------------------------
 //
 
-#import <Foundation/Foundation.h>
+@import CoreGraphics;
 #import <AppKit/AppKit.h>
 #import "Constants.h"
 #import "HelperServices.h"

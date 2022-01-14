@@ -8,7 +8,7 @@
 //
 
 #import "TouchSimulator.h"
-#import <Foundation/Foundation.h>
+@import CoreGraphics;
 #import "ScrollControl.h"
 
 @implementation TouchSimulator

@@ -7,7 +7,7 @@
 // --------------------------------------------------------------------------
 //
 
-#import <Foundation/Foundation.h>
+@import CoreGraphics;
 
 @interface InputParser : NSObject
 

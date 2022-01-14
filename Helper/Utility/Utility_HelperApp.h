@@ -7,7 +7,7 @@
 // --------------------------------------------------------------------------
 //
 
-#import <Foundation/Foundation.h>
+@import CoreGraphics;
 
 @interface Utility_HelperApp : NSObject
 + (CGEventRef)createEventWithValuesFromEvent:(CGEventRef)event;

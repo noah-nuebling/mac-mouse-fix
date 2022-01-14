@@ -7,7 +7,8 @@
 // --------------------------------------------------------------------------
 //
 
-#import <Foundation/Foundation.h>
+@import CoreGraphics;
+@import Foundation;
 
 #define fstring(format, ...) [NSString stringWithFormat:(format), ##__VA_ARGS__]
 

@@ -22,7 +22,7 @@
 #import "ConfigFileInterface_App.h"
 #import "Utility_App.h"
 #import "NSMutableDictionary+Additions.h"
-#import <Foundation/Foundation.h>
+@import CoreGraphics;
 #import "MoreSheet.h"
 #import "AppDelegate.h"
 

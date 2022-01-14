@@ -7,7 +7,7 @@
 // --------------------------------------------------------------------------
 //
 
-#import <Foundation/Foundation.h>
+@import CoreGraphics;
 #import <Cocoa/Cocoa.h>
 #import "IOKit/hid/IOHIDManager.h"
 

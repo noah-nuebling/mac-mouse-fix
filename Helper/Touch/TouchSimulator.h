@@ -7,7 +7,9 @@
 // --------------------------------------------------------------------------
 //
 
-#import <Foundation/Foundation.h>
+@import CoreGraphics;
+@import Foundation;
+
 #import "../SupportFiles/External/SensibleSideButtons/TouchEvents.h"
 #import "../SupportFiles/External/SensibleSideButtons/IOHIDEventTypes.h"
 

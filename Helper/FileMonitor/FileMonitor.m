@@ -11,7 +11,7 @@
 #import "HelperServices.h"
 #import "Objects.h"
 #import <AppKit/AppKit.h>
-#import <Foundation/Foundation.h>
+@import CoreGraphics;
 #import "Constants.h"
 #import "SharedUtil.h"
 

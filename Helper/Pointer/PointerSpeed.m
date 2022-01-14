@@ -8,7 +8,7 @@
 //
 
 #import "PointerSpeed.h"
-#import <Foundation/Foundation.h>
+@import CoreGraphics;
 #import <IOKit/hidsystem/IOHIDServiceClient.h>
 #import <IOKit/hidsystem/IOHIDEventSystemClient.h>
 #import <IOKit/hidsystem/IOHIDTypes.h>

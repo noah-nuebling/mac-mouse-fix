@@ -7,7 +7,7 @@
 // --------------------------------------------------------------------------
 //
 
-#import <Foundation/Foundation.h>
+@import CoreGraphics;
 
 NS_ASSUME_NONNULL_BEGIN
 

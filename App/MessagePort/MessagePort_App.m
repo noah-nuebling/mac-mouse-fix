@@ -9,7 +9,7 @@
 
 #import "MessagePort_App.h"
 #import "../Accessibility/AuthorizeAccessibilityView.h"
-#import <Foundation/Foundation.h>
+@import CoreGraphics;
 #import "AppDelegate.h"
 #import "Constants.h"
 

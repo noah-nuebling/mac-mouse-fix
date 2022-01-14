@@ -7,7 +7,8 @@
 // --------------------------------------------------------------------------
 //
 
-#import <Foundation/Foundation.h>
+@import CoreGraphics;
+@import Foundation;
 #import <IOKit/hid/IOHIDDevice.h>
 //#import <IOKit/hid/IOHIDKeys.h>
 

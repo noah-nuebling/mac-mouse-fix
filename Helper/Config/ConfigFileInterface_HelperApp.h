@@ -7,7 +7,8 @@
 // --------------------------------------------------------------------------
 //
 
-#import <Foundation/Foundation.h>
+@import CoreGraphics;
+@import Foundation;
 
 @interface ConfigFileInterface_HelperApp : NSObject
 

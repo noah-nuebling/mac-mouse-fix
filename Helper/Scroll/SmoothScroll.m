@@ -8,7 +8,7 @@
 //
 
 #import <CoreVideo/CoreVideo.h>
-#import <Foundation/Foundation.h>
+@import CoreGraphics;
 //#import <HIServices/AXUIElement.h>
 
 #import "SmoothScroll.h"
