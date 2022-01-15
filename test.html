@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>-</title>
+  <title>TEST</title>
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -25,45 +25,90 @@
 
       :root {
           font-size: 10px; /* 1 rem is this much */
+          padding: 0 0 0 0;
       }
 
       body {
           background-color: transparent;
-          margin: 1.2rem 1.2rem;
-          padding: 0rem;
+          margin: 0 1.2rem 2.0rem 1.2rem;
+          padding: 0;
           font-family: -apple-system;
           font-size: 1.3rem;
 
           line-height: 1.15em;
       }
 
+      h1, h2, h3, h4, h5, h6 {
+          line-height: 1.15em;
+      }
+
+      h1:after, h2:after {
+          content:' ';
+          display: block;
+          border: 0.5px solid rgba(0, 0, 0, 0.12);
+      }
+      h1:after {
+          margin: 0.6rem 0 0 0;
+      }
+      h2:after {
+          margin: 0.4rem 0 0 0;
+      }
+
       h1 {
-          font-size: 2.0rem;
+          font-size: 2.2rem;
+          margin: 2.2rem 0 1.3rem -0.0rem;
       }
 
       h2 {
           font-size: 1.7rem;
+          margin: 2.0rem 0 1.7rem -0.0rem;
       }
 
       h3 {
           font-size: 1.3rem;
+          margin: 1.5rem 0 0.0rem -0.0rem;
+      }
+
+      p {
+          margin: 1.1rem 0 1.1rem 0;
+          font-size: 1.1rem;
       }
 
       ul {
-          padding-left: 2.0rem;
-          margin-top: 0rem;
-          margin-bottom: 2.0rem;
+          padding: 0 0 0 1.5rem;
+          margin: 1.0rem 0 1.0rem 0.5rem;
       }
-      li, p {
+      ul ul {
+          margin: 0.6rem 0 -0.6rem 0;
+          padding: 0 0 0 2.1rem;
+      }
 
-          margin-left: 0;
-          margin-top: 0;
-          margin-bottom: 0.8rem;
+      li {
+          padding: 0 0 0.6rem 0;
 
-          font-size: 1.1rem
+          font-size: 1.1rem;
       }
       .annotation {
           font-size: 1.1rem;
+      }
+      img {
+          max-width: 100%;
+          height: auto;
+          
+          border-radius: 1.0rem;
+          box-shadow: 0 0.2rem 0.4rem 0.0rem rgba(0, 0, 0, 0.15), 0 0.2rem 1.7rem 0.0rem rgba(0, 0, 0, 0.15);
+
+          display: block;
+          margin: 1.4rem auto 1.8rem auto;
+      }
+
+      hr {
+          height: 0px;
+          border: none;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+          border-color:rgba(0, 0, 0, 0.12);
+
+          margin: 1.7rem 0 1.7rem 0;
       }
 
       @media (prefers-color-scheme: light) {
@@ -112,5 +157,6 @@
 <!-- Render this using
 cat test.md | pandoc -f markdown -t html -H update-notes.css -s -o test.html; open test.html
 -->
+<h2 id="this-is-a-really-really-really-long-title-that-wraps-and-stuff-i-said-its-really-really-really-really-long-and-it-wraps-and-stuff">This is a really really really long title that wraps and stuff, I said it’s really really really really long and it wraps and stuff</h2>
 </body>
 </html>
