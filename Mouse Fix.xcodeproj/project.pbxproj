@@ -206,7 +206,6 @@
 		4F1B832C26081A5500AEAF37 /* CaptureNotifications.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CaptureNotifications.m; sourceTree = "<group>"; };
 		4F1C51D8260543DD007F4930 /* NSTextField+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSTextField+Additions.h"; sourceTree = "<group>"; };
 		4F1C51D9260543DD007F4930 /* NSTextField+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSTextField+Additions.m"; sourceTree = "<group>"; };
-		4F1EB2DE278A4513009B08B1 /* notes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = notes.md; sourceTree = "<group>"; };
 		4F2F5DA625FB6FFD0037660A /* AddWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddWindowController.h; sourceTree = "<group>"; };
 		4F2F5DA725FB6FFD0037660A /* AddWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddWindowController.m; sourceTree = "<group>"; };
 		4F2F5DB125FB723D0037660A /* AddWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddWindow.xib; sourceTree = "<group>"; };
@@ -297,6 +296,8 @@
 		4FD82DD9260575B100664D6F /* MFNotificationLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFNotificationLabel.h; sourceTree = "<group>"; };
 		4FD82DDA260575B100664D6F /* MFNotificationLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFNotificationLabel.m; sourceTree = "<group>"; };
 		4FDBC59A234F80C500A46517 /* Accomplice.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Accomplice.entitlements; sourceTree = "<group>"; };
+		4FEB6617279376C200E6A111 /* SymbolicHotKeys Reference.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "SymbolicHotKeys Reference.txt"; sourceTree = "<group>"; };
+		4FEB6618279376C200E6A111 /* notes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = notes.md; sourceTree = "<group>"; };
 		4FEC9666278BBDC600548604 /* NSColor+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSColor+Additions.h"; sourceTree = "<group>"; };
 		4FEC9667278BBDC600548604 /* NSColor+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSColor+Additions.m"; sourceTree = "<group>"; };
 		4FF6652D25F2C7B000689B77 /* HelperServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelperServices.h; sourceTree = "<group>"; };
@@ -575,8 +576,8 @@
 		4F422EF023469B2B00AA6E22 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				4FEB6616279376C200E6A111 /* Notes */,
 				4F39BC88263B68F400FDF692 /* xcconfig */,
-				4F1EB2DE278A4513009B08B1 /* notes.md */,
 				4F422EEC23469B0F00AA6E22 /* README.md */,
 			);
 			name = Other;
@@ -734,6 +735,15 @@
 				4F94F60B25E5EC2800D9F24A /* Mac Mouse FixUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		4FEB6616279376C200E6A111 /* Notes */ = {
+			isa = PBXGroup;
+			children = (
+				4FEB6617279376C200E6A111 /* SymbolicHotKeys Reference.txt */,
+				4FEB6618279376C200E6A111 /* notes.md */,
+			);
+			path = Notes;
 			sourceTree = "<group>";
 		};
 		4FF6652B25F2C7B000689B77 /* Shared */ = {
