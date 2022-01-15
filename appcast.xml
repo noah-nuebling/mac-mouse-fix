@@ -182,7 +182,7 @@
 <p>The threshold for activating Click and Drag has been increased from 5 pixels to 7 pixels. This makes it harder to accidentally activate Click and Drag, while still letting users switch Spaces etc. by using small, comfortable flicks. <!-- See [this comment](https://github.com/noah-nuebling/mac-mouse-fix/discussions/114#discussioncomment-1959404). --></p>
 <h2 id="other-ui-changes">Other UI changes</h2>
 <ul>
-<li>The appearance of the Action Table has been improved in small ways.</li>
+<li>The appearance of the Action Table has been improved.</li>
 <li>Various other UI enhancements.</li>
 </ul>
 <h2 id="bug-fixes">Bug fixes</h2>
