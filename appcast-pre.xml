@@ -50,16 +50,20 @@
           line-height: 1.15em;
       }
 
+      h1, h2, h3, h4, h5, h6 {
+          line-height: 1.15em;
+      }
+
       h1:after, h2:after {
           content:' ';
           display: block;
           border: 0.5px solid rgba(0, 0, 0, 0.12);
       }
       h1:after {
-          margin: 1.1rem 0 0 0;
+          margin: 0.6rem 0 0 0;
       }
       h2:after {
-          margin: 0.8rem 0 0 0;
+          margin: 0.4rem 0 0 0;
       }
 
       h1 {
@@ -79,7 +83,6 @@
 
       p {
           margin: 1.1rem 0 1.1rem 0;
-
           font-size: 1.1rem;
       }
 
@@ -248,16 +251,20 @@
           line-height: 1.15em;
       }
 
+      h1, h2, h3, h4, h5, h6 {
+          line-height: 1.15em;
+      }
+
       h1:after, h2:after {
           content:' ';
           display: block;
           border: 0.5px solid rgba(0, 0, 0, 0.12);
       }
       h1:after {
-          margin: 1.1rem 0 0 0;
+          margin: 0.6rem 0 0 0;
       }
       h2:after {
-          margin: 0.8rem 0 0 0;
+          margin: 0.4rem 0 0 0;
       }
 
       h1 {
@@ -277,7 +284,6 @@
 
       p {
           margin: 1.1rem 0 1.1rem 0;
-
           font-size: 1.1rem;
       }
 
@@ -415,16 +421,20 @@
           line-height: 1.15em;
       }
 
+      h1, h2, h3, h4, h5, h6 {
+          line-height: 1.15em;
+      }
+
       h1:after, h2:after {
           content:' ';
           display: block;
           border: 0.5px solid rgba(0, 0, 0, 0.12);
       }
       h1:after {
-          margin: 1.1rem 0 0 0;
+          margin: 0.6rem 0 0 0;
       }
       h2:after {
-          margin: 0.8rem 0 0 0;
+          margin: 0.4rem 0 0 0;
       }
 
       h1 {
@@ -444,7 +454,6 @@
 
       p {
           margin: 1.1rem 0 1.1rem 0;
-
           font-size: 1.1rem;
       }
 
@@ -615,16 +624,20 @@
           line-height: 1.15em;
       }
 
+      h1, h2, h3, h4, h5, h6 {
+          line-height: 1.15em;
+      }
+
       h1:after, h2:after {
           content:' ';
           display: block;
           border: 0.5px solid rgba(0, 0, 0, 0.12);
       }
       h1:after {
-          margin: 1.1rem 0 0 0;
+          margin: 0.6rem 0 0 0;
       }
       h2:after {
-          margin: 0.8rem 0 0 0;
+          margin: 0.4rem 0 0 0;
       }
 
       h1 {
@@ -644,7 +657,6 @@
 
       p {
           margin: 1.1rem 0 1.1rem 0;
-
           font-size: 1.1rem;
       }
 
@@ -784,16 +796,20 @@
           line-height: 1.15em;
       }
 
+      h1, h2, h3, h4, h5, h6 {
+          line-height: 1.15em;
+      }
+
       h1:after, h2:after {
           content:' ';
           display: block;
           border: 0.5px solid rgba(0, 0, 0, 0.12);
       }
       h1:after {
-          margin: 1.1rem 0 0 0;
+          margin: 0.6rem 0 0 0;
       }
       h2:after {
-          margin: 0.8rem 0 0 0;
+          margin: 0.4rem 0 0 0;
       }
 
       h1 {
@@ -813,7 +829,6 @@
 
       p {
           margin: 1.1rem 0 1.1rem 0;
-
           font-size: 1.1rem;
       }
 
@@ -956,16 +971,20 @@
           line-height: 1.15em;
       }
 
+      h1, h2, h3, h4, h5, h6 {
+          line-height: 1.15em;
+      }
+
       h1:after, h2:after {
           content:' ';
           display: block;
           border: 0.5px solid rgba(0, 0, 0, 0.12);
       }
       h1:after {
-          margin: 1.1rem 0 0 0;
+          margin: 0.6rem 0 0 0;
       }
       h2:after {
-          margin: 0.8rem 0 0 0;
+          margin: 0.4rem 0 0 0;
       }
 
       h1 {
@@ -985,7 +1004,6 @@
 
       p {
           margin: 1.1rem 0 1.1rem 0;
-
           font-size: 1.1rem;
       }
 
@@ -1118,16 +1136,20 @@
           line-height: 1.15em;
       }
 
+      h1, h2, h3, h4, h5, h6 {
+          line-height: 1.15em;
+      }
+
       h1:after, h2:after {
           content:' ';
           display: block;
           border: 0.5px solid rgba(0, 0, 0, 0.12);
       }
       h1:after {
-          margin: 1.1rem 0 0 0;
+          margin: 0.6rem 0 0 0;
       }
       h2:after {
-          margin: 0.8rem 0 0 0;
+          margin: 0.4rem 0 0 0;
       }
 
       h1 {
@@ -1147,7 +1169,6 @@
 
       p {
           margin: 1.1rem 0 1.1rem 0;
-
           font-size: 1.1rem;
       }
 
@@ -1294,16 +1315,20 @@
           line-height: 1.15em;
       }
 
+      h1, h2, h3, h4, h5, h6 {
+          line-height: 1.15em;
+      }
+
       h1:after, h2:after {
           content:' ';
           display: block;
           border: 0.5px solid rgba(0, 0, 0, 0.12);
       }
       h1:after {
-          margin: 1.1rem 0 0 0;
+          margin: 0.6rem 0 0 0;
       }
       h2:after {
-          margin: 0.8rem 0 0 0;
+          margin: 0.4rem 0 0 0;
       }
 
       h1 {
@@ -1323,7 +1348,6 @@
 
       p {
           margin: 1.1rem 0 1.1rem 0;
-
           font-size: 1.1rem;
       }
 
@@ -1469,16 +1493,20 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
           line-height: 1.15em;
       }
 
+      h1, h2, h3, h4, h5, h6 {
+          line-height: 1.15em;
+      }
+
       h1:after, h2:after {
           content:' ';
           display: block;
           border: 0.5px solid rgba(0, 0, 0, 0.12);
       }
       h1:after {
-          margin: 1.1rem 0 0 0;
+          margin: 0.6rem 0 0 0;
       }
       h2:after {
-          margin: 0.8rem 0 0 0;
+          margin: 0.4rem 0 0 0;
       }
 
       h1 {
@@ -1498,7 +1526,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
       p {
           margin: 1.1rem 0 1.1rem 0;
-
           font-size: 1.1rem;
       }
 
@@ -1646,16 +1673,20 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
           line-height: 1.15em;
       }
 
+      h1, h2, h3, h4, h5, h6 {
+          line-height: 1.15em;
+      }
+
       h1:after, h2:after {
           content:' ';
           display: block;
           border: 0.5px solid rgba(0, 0, 0, 0.12);
       }
       h1:after {
-          margin: 1.1rem 0 0 0;
+          margin: 0.6rem 0 0 0;
       }
       h2:after {
-          margin: 0.8rem 0 0 0;
+          margin: 0.4rem 0 0 0;
       }
 
       h1 {
@@ -1675,7 +1706,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
       p {
           margin: 1.1rem 0 1.1rem 0;
-
           font-size: 1.1rem;
       }
 
@@ -1812,16 +1842,20 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
           line-height: 1.15em;
       }
 
+      h1, h2, h3, h4, h5, h6 {
+          line-height: 1.15em;
+      }
+
       h1:after, h2:after {
           content:' ';
           display: block;
           border: 0.5px solid rgba(0, 0, 0, 0.12);
       }
       h1:after {
-          margin: 1.1rem 0 0 0;
+          margin: 0.6rem 0 0 0;
       }
       h2:after {
-          margin: 0.8rem 0 0 0;
+          margin: 0.4rem 0 0 0;
       }
 
       h1 {
@@ -1841,7 +1875,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
       p {
           margin: 1.1rem 0 1.1rem 0;
-
           font-size: 1.1rem;
       }
 
@@ -1990,16 +2023,20 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
           line-height: 1.15em;
       }
 
+      h1, h2, h3, h4, h5, h6 {
+          line-height: 1.15em;
+      }
+
       h1:after, h2:after {
           content:' ';
           display: block;
           border: 0.5px solid rgba(0, 0, 0, 0.12);
       }
       h1:after {
-          margin: 1.1rem 0 0 0;
+          margin: 0.6rem 0 0 0;
       }
       h2:after {
-          margin: 0.8rem 0 0 0;
+          margin: 0.4rem 0 0 0;
       }
 
       h1 {
@@ -2019,7 +2056,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
       p {
           margin: 1.1rem 0 1.1rem 0;
-
           font-size: 1.1rem;
       }
 
@@ -2174,16 +2210,20 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
           line-height: 1.15em;
       }
 
+      h1, h2, h3, h4, h5, h6 {
+          line-height: 1.15em;
+      }
+
       h1:after, h2:after {
           content:' ';
           display: block;
           border: 0.5px solid rgba(0, 0, 0, 0.12);
       }
       h1:after {
-          margin: 1.1rem 0 0 0;
+          margin: 0.6rem 0 0 0;
       }
       h2:after {
-          margin: 0.8rem 0 0 0;
+          margin: 0.4rem 0 0 0;
       }
 
       h1 {
@@ -2203,7 +2243,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
       p {
           margin: 1.1rem 0 1.1rem 0;
-
           font-size: 1.1rem;
       }
 
@@ -2335,16 +2374,20 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
           line-height: 1.15em;
       }
 
+      h1, h2, h3, h4, h5, h6 {
+          line-height: 1.15em;
+      }
+
       h1:after, h2:after {
           content:' ';
           display: block;
           border: 0.5px solid rgba(0, 0, 0, 0.12);
       }
       h1:after {
-          margin: 1.1rem 0 0 0;
+          margin: 0.6rem 0 0 0;
       }
       h2:after {
-          margin: 0.8rem 0 0 0;
+          margin: 0.4rem 0 0 0;
       }
 
       h1 {
@@ -2364,7 +2407,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
       p {
           margin: 1.1rem 0 1.1rem 0;
-
           font-size: 1.1rem;
       }
 
@@ -2516,16 +2558,20 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
           line-height: 1.15em;
       }
 
+      h1, h2, h3, h4, h5, h6 {
+          line-height: 1.15em;
+      }
+
       h1:after, h2:after {
           content:' ';
           display: block;
           border: 0.5px solid rgba(0, 0, 0, 0.12);
       }
       h1:after {
-          margin: 1.1rem 0 0 0;
+          margin: 0.6rem 0 0 0;
       }
       h2:after {
-          margin: 0.8rem 0 0 0;
+          margin: 0.4rem 0 0 0;
       }
 
       h1 {
@@ -2545,7 +2591,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
       p {
           margin: 1.1rem 0 1.1rem 0;
-
           font-size: 1.1rem;
       }
 
@@ -2691,16 +2736,20 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
           line-height: 1.15em;
       }
 
+      h1, h2, h3, h4, h5, h6 {
+          line-height: 1.15em;
+      }
+
       h1:after, h2:after {
           content:' ';
           display: block;
           border: 0.5px solid rgba(0, 0, 0, 0.12);
       }
       h1:after {
-          margin: 1.1rem 0 0 0;
+          margin: 0.6rem 0 0 0;
       }
       h2:after {
-          margin: 0.8rem 0 0 0;
+          margin: 0.4rem 0 0 0;
       }
 
       h1 {
@@ -2720,7 +2769,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
       p {
           margin: 1.1rem 0 1.1rem 0;
-
           font-size: 1.1rem;
       }
 
@@ -2870,16 +2918,20 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
           line-height: 1.15em;
       }
 
+      h1, h2, h3, h4, h5, h6 {
+          line-height: 1.15em;
+      }
+
       h1:after, h2:after {
           content:' ';
           display: block;
           border: 0.5px solid rgba(0, 0, 0, 0.12);
       }
       h1:after {
-          margin: 1.1rem 0 0 0;
+          margin: 0.6rem 0 0 0;
       }
       h2:after {
-          margin: 0.8rem 0 0 0;
+          margin: 0.4rem 0 0 0;
       }
 
       h1 {
@@ -2899,7 +2951,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
       p {
           margin: 1.1rem 0 1.1rem 0;
-
           font-size: 1.1rem;
       }
 
@@ -3054,16 +3105,20 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
           line-height: 1.15em;
       }
 
+      h1, h2, h3, h4, h5, h6 {
+          line-height: 1.15em;
+      }
+
       h1:after, h2:after {
           content:' ';
           display: block;
           border: 0.5px solid rgba(0, 0, 0, 0.12);
       }
       h1:after {
-          margin: 1.1rem 0 0 0;
+          margin: 0.6rem 0 0 0;
       }
       h2:after {
-          margin: 0.8rem 0 0 0;
+          margin: 0.4rem 0 0 0;
       }
 
       h1 {
@@ -3083,7 +3138,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
       p {
           margin: 1.1rem 0 1.1rem 0;
-
           font-size: 1.1rem;
       }
 
@@ -3219,16 +3273,20 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
           line-height: 1.15em;
       }
 
+      h1, h2, h3, h4, h5, h6 {
+          line-height: 1.15em;
+      }
+
       h1:after, h2:after {
           content:' ';
           display: block;
           border: 0.5px solid rgba(0, 0, 0, 0.12);
       }
       h1:after {
-          margin: 1.1rem 0 0 0;
+          margin: 0.6rem 0 0 0;
       }
       h2:after {
-          margin: 0.8rem 0 0 0;
+          margin: 0.4rem 0 0 0;
       }
 
       h1 {
@@ -3248,7 +3306,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
       p {
           margin: 1.1rem 0 1.1rem 0;
-
           font-size: 1.1rem;
       }
 
@@ -3381,16 +3438,20 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
           line-height: 1.15em;
       }
 
+      h1, h2, h3, h4, h5, h6 {
+          line-height: 1.15em;
+      }
+
       h1:after, h2:after {
           content:' ';
           display: block;
           border: 0.5px solid rgba(0, 0, 0, 0.12);
       }
       h1:after {
-          margin: 1.1rem 0 0 0;
+          margin: 0.6rem 0 0 0;
       }
       h2:after {
-          margin: 0.8rem 0 0 0;
+          margin: 0.4rem 0 0 0;
       }
 
       h1 {
@@ -3410,7 +3471,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
       p {
           margin: 1.1rem 0 1.1rem 0;
-
           font-size: 1.1rem;
       }
 
@@ -3547,16 +3607,20 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
           line-height: 1.15em;
       }
 
+      h1, h2, h3, h4, h5, h6 {
+          line-height: 1.15em;
+      }
+
       h1:after, h2:after {
           content:' ';
           display: block;
           border: 0.5px solid rgba(0, 0, 0, 0.12);
       }
       h1:after {
-          margin: 1.1rem 0 0 0;
+          margin: 0.6rem 0 0 0;
       }
       h2:after {
-          margin: 0.8rem 0 0 0;
+          margin: 0.4rem 0 0 0;
       }
 
       h1 {
@@ -3576,7 +3640,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
       p {
           margin: 1.1rem 0 1.1rem 0;
-
           font-size: 1.1rem;
       }
 
@@ -3718,16 +3781,20 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
           line-height: 1.15em;
       }
 
+      h1, h2, h3, h4, h5, h6 {
+          line-height: 1.15em;
+      }
+
       h1:after, h2:after {
           content:' ';
           display: block;
           border: 0.5px solid rgba(0, 0, 0, 0.12);
       }
       h1:after {
-          margin: 1.1rem 0 0 0;
+          margin: 0.6rem 0 0 0;
       }
       h2:after {
-          margin: 0.8rem 0 0 0;
+          margin: 0.4rem 0 0 0;
       }
 
       h1 {
@@ -3747,7 +3814,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
       p {
           margin: 1.1rem 0 1.1rem 0;
-
           font-size: 1.1rem;
       }
 
@@ -3889,16 +3955,20 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
           line-height: 1.15em;
       }
 
+      h1, h2, h3, h4, h5, h6 {
+          line-height: 1.15em;
+      }
+
       h1:after, h2:after {
           content:' ';
           display: block;
           border: 0.5px solid rgba(0, 0, 0, 0.12);
       }
       h1:after {
-          margin: 1.1rem 0 0 0;
+          margin: 0.6rem 0 0 0;
       }
       h2:after {
-          margin: 0.8rem 0 0 0;
+          margin: 0.4rem 0 0 0;
       }
 
       h1 {
@@ -3918,7 +3988,6 @@ There is quite a lot of new text in the app. I’d love for it to strike a great
 
       p {
           margin: 1.1rem 0 1.1rem 0;
-
           font-size: 1.1rem;
       }
 
