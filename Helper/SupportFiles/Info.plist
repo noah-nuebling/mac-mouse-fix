@@ -19,11 +19,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
-<<<<<<< HEAD
-	<string>8641</string>
-=======
-	<string>8886</string>
->>>>>>> db73119760c43f382b2c740611bfc28540a5754a
+	<string>8887</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSBackgroundOnly</key>
