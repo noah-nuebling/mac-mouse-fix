@@ -171,11 +171,11 @@
 <li>You can now delete Actions by right-clicking them.
 <ul>
 <li>This should make it easier to discover the option to delete Actions.</li>
-<li>The right-click menu features a symbol of the ‘-’ button. This should help draw attention to the ‘-’ button. Which should then draw attention to the ‘+’ button. This hopefully makes the option to add Actions more discoverable as well.</li>
+<li>The right-click menu features a symbol of the ‘-’ button. This should help draw attention to the ‘-’ <em>button</em>, which should then draw attention to the ‘+’ button. This hopefully makes the option to <strong>add</strong> Actions more discoverable as well.</li>
 </ul></li>
 <li>You can now add Actions to the Action Table by right-clicking and an empty row.</li>
 <li>The ‘-’ button is now only active when an Action is selected. This should make it clearer that the ‘-’ button deletes the selected Action.</li>
-<li>The default window height is now higher so that there’s a visible empty row, which can be right-clicked to add and Action.</li>
+<li>The default window height has been increased so that there’s a visible empty row which can be right-clicked to add and Action.</li>
 <li>The ‘+’ and ‘-’ buttons have tooltips now.</li>
 </ul>
 <h2 id="click-and-drag-improvements">Click and Drag improvements</h2>
