@@ -215,7 +215,7 @@ def main():
                 ax2.format_coord = make_format(ax2, ax1)
                 
                 ax1.plot(x, y, linestyle='-', marker='.', color=color)
-                ax2.plot(x_p, y_p, linestyle='-', marker='', color=color2)
+                ax2.plot(x_p, y_p, linestyle='-', marker='.', color=color2)
                 
                 plt.gcf().autofmt_xdate()
                 fig.tight_layout()  # otherwise the right y-label is slightly clipped
