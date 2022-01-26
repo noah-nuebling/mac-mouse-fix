@@ -179,7 +179,7 @@ Turn this off and on again to check for updates immediately.</string>
                         <color key="contentTintColor" name="linkColor" catalog="System" colorSpace="catalog"/>
                     </imageView>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ean-nS-cFV" customClass="Hyperlink">
-                        <rect key="frame" x="427" y="146" width="97" height="18"/>
+                        <rect key="frame" x="466" y="146" width="58" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Get Help" id="rK1-Wg-ZIf">
                             <font key="font" metaFont="system"/>
