@@ -273,14 +273,8 @@ BOOL shkBindingIsUsable(CGKeyCode keyCode, unichar keyEquivalent) {
     
     /// Check if keyCode and keyEquivalent (the args to this function) match the current keyboard layout
     
-    if (chars.length != 1) {
-        return NO;
-    }
-    unichar keyEquivalentFromLayout = [chars characterAtIndex:0];
-    
-    if (keyEquivalent != keyEquivalentFromLayout) {
-        return NO;
-    }
+    if (chars.length != 1) return NO;
+    if (keyEquivalent != [chars characterAtIndex:0]) return NO;
     
     /// Return
     return YES;
@@ -316,7 +310,7 @@ BOOL getCharsForKeyCode(CGKeyCode keyCode, NSString **chars) {
     UInt16 keyCodeForLayout = keyCode;
     UInt16 keyAction = kUCKeyActionDisplay; /// Should maybe be using kUCKeyActionDown instead. Some SO poster said it works better.
     UInt32 modifierKeyState = 0; /// The keyEquivalent arg is not affected by modifier flags. It's always lower case despite Shift, etc... That's why we can just set this to 0.
-    UInt32 keyboardType = LMGetKbdType();
+    UInt32 keyboardType = LMGetKbdType(); 
     OptionBits keyTranslateOptions = kUCKeyTranslateNoDeadKeysBit /*kUCKeyTranslateNoDeadKeysMask*/; /// Not sure what's correct
     
     /// Declare return buffers
