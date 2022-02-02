@@ -17,6 +17,8 @@
 #import "TransformationManager.h"
 #import "Constants.h"
 
+@import Carbon;
+
 @implementation Actions
 
 + (void)executeActionArray:(NSArray *)actionArray {
@@ -176,7 +178,7 @@ static void postSymbolicHotkey(CGSSymbolicHotKey shk) {
     CGSGetSymbolicHotKeyValue(shk, &keyEquivalent, &keyCode, &modifierFlags);
     
     BOOL hotkeyIsEnabled = CGSIsSymbolicHotKeyEnabled(shk);
-    BOOL oldBindingIsUsable = (keyCode < 400);
+    BOOL oldBindingIsUsable = shkBindingIsUsable(keyCode, keyEquivalent);
     
     if (!hotkeyIsEnabled) {
         CGSSetSymbolicHotKeyEnabled(shk, true);
@@ -202,7 +204,7 @@ static void postSymbolicHotkey(CGSSymbolicHotKey shk) {
     }
     
     /// Restore original binding after short delay
-    if (!hotkeyIsEnabled || !oldBindingIsUsable) { /// Only really need to restore hotKeyIsEnabled. But the other stuff doesn't hurt.
+    if (!hotkeyIsEnabled || !oldBindingIsUsable) { /// Only really need to restore hotKeyIsEnabled. But the other stuff doesn't hurt. Edit: now that we override oldBindingIsUsable to be false, we always need to restore.
         [NSTimer scheduledTimerWithTimeInterval:0.05
                                          target:[Actions class]
                                        selector:@selector(restoreSymbolicHotkeyParameters_timerCallback:)
@@ -234,6 +236,102 @@ static void postSymbolicHotkey(CGSSymbolicHotKey shk) {
         CGSModifierFlags mod = [timer.userInfo[@"flags"] intValue];
         CGSSetSymbolicHotKeyValue(shk, kEq, kCode, mod);
     }
+}
+
+#pragma mark - Helper
+
+BOOL shkBindingIsUsable(CGKeyCode keyCode, unichar keyEquivalent) {
+    
+    /// Check if keyCode is reasonable
+    
+    if (keyCode >= 400) return NO;
+    
+    /// Check if keyCode matches char
+    ///  Why we do this:
+    ///     When using a 'non-standard' keyboard layout, then the keycodes for certain keyboard shortcuts can change.
+    ///         This is because keycodes seem to be hard mapped to physical keys on the keyboard. But the character values for those keys depend on the keyboard mapping. For example, with a German layout, the characters for the 'Y' and 'Z' keys will be swapped. Therefore the key that produces 'Z' will have a different keycode with the German layout vs the English layout. Therefore the keycodes that trigger certain keyboard shortcuts also change when changing the keyboard layout.
+    ///     Now the problem is, that CGSGetSymbolicHotKeyValue() doesn't take this into account. It always returns the keycode for the 'standard' layout, not the current layout.
+    ///     Possible solutions:
+    ///         1. Find an alternative function to CGSGetSymbolicHotKeyValue() that works properly.
+    ///             - Problem: CGSInternal project on GH doesn't offer an alternative, so this probably involves reverse engineering Apple libraries -> a lot of work
+    ///         2. Build a custom function that translates the keyEquivalent that CGSGetSymbolicHotKeyValue() returns into the correct keyCode according to the current layout.
+    ///             - Problem: Some shortcuts may not have keyEquivalents
+    ///             - Problem: There doesn't seem to be an API for this. UCKeyTranslate only translates keyCode -> char not char -> keyCode
+    ///         3. Always assign a specific keyCode and then use that.
+    ///             - We achieve this simply by overriding oldBindingIsUsable = NO -> It's easy
+    ///             - Problem: This is around 30% slower when a functioning keyCode already exists.
+    ///         4. Check if the combination of keyCode and keyEquivalent that CGSGetSymbolicHotKeyValue() returns corresponds to the current layout. If not, declare unusable
+    ///             - This is like 3. but more optimized.
+    ///             - I like this idea
+    ///
+    ///     -> I'm not sure what the 'standard' layout is. I think the only 'standard' layout is the one that maps all keys to what it says on the keycaps. Or maybe the 'standard' layout is the US American layout. Not sure.
+    
+    /// Get input parameters for translating
+    
+    /// Get layout
+    
+    TISInputSourceRef inputSource = TISCopyCurrentKeyboardInputSource(); /// Should we be using kUCKeyTranslateNoDeadKeysMask() or TISCopyCurrentKeyboardInputSource() instead?
+    CFDataRef layoutData = TISGetInputSourceProperty(inputSource, kTISPropertyUnicodeKeyLayoutData);
+    const UCKeyboardLayout *layout = (UCKeyboardLayout *)CFDataGetBytePtr(layoutData);
+    
+    CFRelease(inputSource);
+//    CFRelease(layoutData);
+    
+    /// Get keycode
+    UInt16 keyCodeForLayout = keyCode;
+    
+    /// Get keyAction
+    UInt16 keyAction = kUCKeyActionDisplay; /// Should probably be using kUCKeyActionDown instead
+    
+    /// Get modifiers
+    UInt32 modifierKeyState = 0; /// The keyEquivalent arg is not affected by modifier flags. It's always lower case despite Shift, etc...
+    
+    /// Get keyboard type
+    UInt32 keyboardType = LMGetKbdType();
+    
+    /// Get options
+    OptionBits keyTranslateOptions = /*kUCKeyTranslateNoDeadKeysMask*/ kUCKeyTranslateNoDeadKeysBit; /// Not sure what's correct here
+    
+    /// Get dead key state
+    UInt32 deadKeyState = 0;
+    
+    /// Declare return buffers for translating
+    
+    /// Get max str len
+    UniCharCount maxStringLength = 4; /// 1 Should be enough I think
+    
+    /// Str len buffer
+    UniCharCount actualStringLength = 0;
+    
+    // Str
+    UniChar unicodeString[maxStringLength];
+    
+    /// Translate
+     
+    OSStatus r = UCKeyTranslate(layout, keyCodeForLayout, keyAction, modifierKeyState, keyboardType, keyTranslateOptions, &deadKeyState, maxStringLength, &actualStringLength, unicodeString);
+    
+    /// Check errors
+    
+    if (r != noErr) {
+        NSLog(@"UCKeyTranslate() failed with error code: %d", r);
+        return NO;
+    }
+    
+    /// Check if keyCode and keyEquivalent (the args to this function) match the current keyboard layout
+    
+    assert(keyCode == keyCodeForLayout);
+    
+    if (actualStringLength != 1) {
+        return NO;
+    }
+    UniChar keyEquivalentFromLayout = unicodeString[0];
+    
+    if (keyEquivalent != keyEquivalentFromLayout) {
+        return NO;
+    }
+    
+    /// Return
+    return YES;
 }
 
 @end
