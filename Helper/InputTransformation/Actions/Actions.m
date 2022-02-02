@@ -248,6 +248,7 @@ BOOL shkBindingIsUsable(CGKeyCode keyCode, unichar keyEquivalent) {
     
     /// Check if keyCode matches char
     ///  Why we do this:
+    ///     (For context for this comment, see postSymbolicHotkey() - where this function is called)
     ///     When using a 'non-standard' keyboard layout, then the keycodes for certain keyboard shortcuts can change.
     ///         This is because keycodes seem to be hard mapped to physical keys on the keyboard. But the character values for those keys depend on the keyboard mapping. For example, with a German layout, the characters for the 'Y' and 'Z' keys will be swapped. Therefore the key that produces 'Z' will have a different keycode with the German layout vs the English layout. Therefore the keycodes that trigger certain keyboard shortcuts also change when changing the keyboard layout.
     ///     Now the problem is, that CGSGetSymbolicHotKeyValue() doesn't take this into account. It always returns the keycode for the 'standard' layout, not the current layout.
@@ -259,10 +260,11 @@ BOOL shkBindingIsUsable(CGKeyCode keyCode, unichar keyEquivalent) {
     ///             - Problem: There doesn't seem to be an API for this. UCKeyTranslate only translates keyCode -> char not char -> keyCode
     ///         3. Always assign a specific keyCode and then use that.
     ///             - We achieve this simply by overriding oldBindingIsUsable = NO -> It's easy
-    ///             - Problem: This is around 30% slower when a functioning keyCode already exists.
+    ///             - Problem: This is around 30% - 100% slower when a functioning keyCode already exists.
     ///         4. Check if the combination of keyCode and keyEquivalent that CGSGetSymbolicHotKeyValue() returns corresponds to the current layout. If not, declare unusable
     ///             - This is like 3. but more optimized.
     ///             - I like this idea
+    ///             -> We went with this approach
     ///
     ///     -> I'm not sure what the 'standard' layout is. I think the only 'standard' layout is the one that maps all keys to what it says on the keycaps. Or maybe the 'standard' layout is the US American layout. Not sure.
     
