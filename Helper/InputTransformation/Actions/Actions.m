@@ -298,8 +298,7 @@ BOOL getCharsForKeyCode(CGKeyCode keyCode, NSString **chars) {
     
     const UCKeyboardLayout *layout;
     
-    TISInputSourceRef inputSource = TISCopyCurrentKeyboardInputSource();
-    /// ^ Should we be using TISCopyCurrentKeyboardLayoutInputSource() or TISCopyCurrentKeyboardInputSource() instead
+    TISInputSourceRef inputSource = TISCopyCurrentKeyboardInputSource() /*TISCopyCurrentKeyboardLayoutInputSource()*/; /// Not sure what's better
     CFDataRef layoutData = TISGetInputSourceProperty(inputSource, kTISPropertyUnicodeKeyLayoutData);
     if (layoutData != NULL) {
         layout = (UCKeyboardLayout *)CFDataGetBytePtr(layoutData);
@@ -313,14 +312,14 @@ BOOL getCharsForKeyCode(CGKeyCode keyCode, NSString **chars) {
     /// Get other input params
     
     UInt16 keyCodeForLayout = keyCode;
-    UInt16 keyAction = kUCKeyActionDisplay; /// Should probably be using kUCKeyActionDown instead
-    UInt32 modifierKeyState = 0; /// The keyEquivalent arg is not affected by modifier flags. It's always lower case despite Shift, etc...
+    UInt16 keyAction = kUCKeyActionDisplay; /// Should maybe be using kUCKeyActionDown instead. Some SO poster said it works better.
+    UInt32 modifierKeyState = 0; /// The keyEquivalent arg is not affected by modifier flags. It's always lower case despite Shift, etc... That's why we can just set this to 0.
     UInt32 keyboardType = LMGetKbdType();
-    OptionBits keyTranslateOptions = /*kUCKeyTranslateNoDeadKeysMask*/ kUCKeyTranslateNoDeadKeysBit; /// Not sure what's correct here
-    UInt32 deadKeyState = 0;
+    OptionBits keyTranslateOptions = kUCKeyTranslateNoDeadKeysBit /*kUCKeyTranslateNoDeadKeysMask*/; /// Not sure what's correct
     
     /// Declare return buffers
     
+    UInt32 deadKeyState = 0;
     UniCharCount maxStringLength = 4; /// 1 Should be enough I think
     UniCharCount actualStringLength = 0;
     UniChar unicodeString[maxStringLength];
