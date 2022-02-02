@@ -266,16 +266,48 @@ BOOL shkBindingIsUsable(CGKeyCode keyCode, unichar keyEquivalent) {
     ///
     ///     -> I'm not sure what the 'standard' layout is. I think the only 'standard' layout is the one that maps all keys to what it says on the keycaps. Or maybe the 'standard' layout is the US American layout. Not sure.
     
+    NSString *chars;
+    getCharsForKeyCode(keyCode, &chars);
+    
+    /// Check if keyCode and keyEquivalent (the args to this function) match the current keyboard layout
+    
+    if (chars.length != 1) {
+        return NO;
+    }
+    unichar keyEquivalentFromLayout = [chars characterAtIndex:0];
+    
+    if (keyEquivalent != keyEquivalentFromLayout) {
+        return NO;
+    }
+    
+    /// Return
+    return YES;
+}
+
+BOOL getCharsForKeyCode(CGKeyCode keyCode, NSString **chars) {
+    /// Get chars for a given keycode.
+    /// Returns success
+    
+    /// Init result
+    *chars = @"";
+    
     /// Get input parameters for translating
     
     /// Get layout
     
-    TISInputSourceRef inputSource = TISCopyCurrentKeyboardInputSource(); /// Should we be using kUCKeyTranslateNoDeadKeysMask() or TISCopyCurrentKeyboardInputSource() instead?
-    CFDataRef layoutData = TISGetInputSourceProperty(inputSource, kTISPropertyUnicodeKeyLayoutData);
-    const UCKeyboardLayout *layout = (UCKeyboardLayout *)CFDataGetBytePtr(layoutData);
+    const UCKeyboardLayout *layout;
     
+    TISInputSourceRef inputSource = TISCopyCurrentKeyboardInputSource();
+    /// ^ Should we be using TISCopyCurrentKeyboardLayoutInputSource() or TISCopyCurrentKeyboardInputSource() instead
+    CFDataRef layoutData = TISGetInputSourceProperty(inputSource, kTISPropertyUnicodeKeyLayoutData);
+    if (layoutData != NULL) {
+        layout = (UCKeyboardLayout *)CFDataGetBytePtr(layoutData);
+    } else {
+        CFRelease(inputSource);
+        *chars = @"";
+        return NO;
+    }
     CFRelease(inputSource);
-//    CFRelease(layoutData);
     
     /// Get keycode
     UInt16 keyCodeForLayout = keyCode;
@@ -307,31 +339,19 @@ BOOL shkBindingIsUsable(CGKeyCode keyCode, unichar keyEquivalent) {
     UniChar unicodeString[maxStringLength];
     
     /// Translate
-     
+    
     OSStatus r = UCKeyTranslate(layout, keyCodeForLayout, keyAction, modifierKeyState, keyboardType, keyTranslateOptions, &deadKeyState, maxStringLength, &actualStringLength, unicodeString);
     
     /// Check errors
     
     if (r != noErr) {
         NSLog(@"UCKeyTranslate() failed with error code: %d", r);
+        *chars = @"";
         return NO;
+    } else {
+        *chars = [NSString stringWithCharacters:unicodeString length:actualStringLength];
+        return YES;
     }
-    
-    /// Check if keyCode and keyEquivalent (the args to this function) match the current keyboard layout
-    
-    assert(keyCode == keyCodeForLayout);
-    
-    if (actualStringLength != 1) {
-        return NO;
-    }
-    UniChar keyEquivalentFromLayout = unicodeString[0];
-    
-    if (keyEquivalent != keyEquivalentFromLayout) {
-        return NO;
-    }
-    
-    /// Return
-    return YES;
 }
 
 @end
