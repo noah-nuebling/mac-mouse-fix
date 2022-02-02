@@ -220,6 +220,8 @@ static void postSymbolicHotkey(CGSSymbolicHotKey shk) {
     }
 }
 
+#pragma mark postSymbolicHotkey() - Helper funcs
+
 + (void)restoreSymbolicHotkeyParameters_timerCallback:(NSTimer *)timer {
     
     CGSSymbolicHotKey shk = [timer.userInfo[@"shk"] intValue];
@@ -237,8 +239,6 @@ static void postSymbolicHotkey(CGSSymbolicHotKey shk) {
         CGSSetSymbolicHotKeyValue(shk, kEq, kCode, mod);
     }
 }
-
-#pragma mark - Helper
 
 BOOL shkBindingIsUsable(CGKeyCode keyCode, unichar keyEquivalent) {
     
@@ -287,11 +287,12 @@ BOOL shkBindingIsUsable(CGKeyCode keyCode, unichar keyEquivalent) {
 BOOL getCharsForKeyCode(CGKeyCode keyCode, NSString **chars) {
     /// Get chars for a given keycode.
     /// Returns success
+    ///
+    /// TODO: Think about putting this into some utility class
     
     /// Init result
-    *chars = @"";
     
-    /// Get input parameters for translating
+    *chars = @"";
     
     /// Get layout
     
@@ -309,33 +310,19 @@ BOOL getCharsForKeyCode(CGKeyCode keyCode, NSString **chars) {
     }
     CFRelease(inputSource);
     
-    /// Get keycode
+    /// Get other input params
+    
     UInt16 keyCodeForLayout = keyCode;
-    
-    /// Get keyAction
     UInt16 keyAction = kUCKeyActionDisplay; /// Should probably be using kUCKeyActionDown instead
-    
-    /// Get modifiers
     UInt32 modifierKeyState = 0; /// The keyEquivalent arg is not affected by modifier flags. It's always lower case despite Shift, etc...
-    
-    /// Get keyboard type
     UInt32 keyboardType = LMGetKbdType();
-    
-    /// Get options
     OptionBits keyTranslateOptions = /*kUCKeyTranslateNoDeadKeysMask*/ kUCKeyTranslateNoDeadKeysBit; /// Not sure what's correct here
-    
-    /// Get dead key state
     UInt32 deadKeyState = 0;
     
-    /// Declare return buffers for translating
+    /// Declare return buffers
     
-    /// Get max str len
     UniCharCount maxStringLength = 4; /// 1 Should be enough I think
-    
-    /// Str len buffer
     UniCharCount actualStringLength = 0;
-    
-    // Str
     UniChar unicodeString[maxStringLength];
     
     /// Translate
@@ -348,10 +335,12 @@ BOOL getCharsForKeyCode(CGKeyCode keyCode, NSString **chars) {
         NSLog(@"UCKeyTranslate() failed with error code: %d", r);
         *chars = @"";
         return NO;
-    } else {
-        *chars = [NSString stringWithCharacters:unicodeString length:actualStringLength];
-        return YES;
     }
+    
+    /// Return result
+    
+    *chars = [NSString stringWithCharacters:unicodeString length:actualStringLength];
+    return YES;
 }
 
 @end
