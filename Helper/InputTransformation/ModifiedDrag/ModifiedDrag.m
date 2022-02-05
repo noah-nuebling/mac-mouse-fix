@@ -152,7 +152,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
             
             _drag.eventTap = eventTap;
         }
-        _drag.usageThreshold = 7; // 20, 5 // TODO: This is from 2.0. But why are we also setting usageThreshold in initializeDragWithModifiedDragDict:? Did git merge forget to remove that?
+        _drag.usageThreshold = 7; // 20, 5
     } else {
         assert(false);
     }
@@ -204,12 +204,6 @@ static dispatch_group_t _momentumScrollWaitGroup;
         _drag.dict = dict;
         _drag.fakeDragButtonNumber = fakeDragButtonNumber;
         _drag.addModePayload = payload;
-        if (inputIsPointerMovement) {
-            _drag.usageThreshold = largeUsageThreshold ? /*20*/ 5 : 5;
-            /// ^ We made the largeUsageThreshold to stop accidental mouse movements from interfering with modifiedScroll. But it leads to other issues and we have other workarounds for that interference now. So we're not using the largeUsageThreshold anymore
-        } else {
-            _drag.usageThreshold = largeUsageThreshold ? /*50*/ 12 : 12;
-        }
         
         /// Init dynamic
         initDragState();
