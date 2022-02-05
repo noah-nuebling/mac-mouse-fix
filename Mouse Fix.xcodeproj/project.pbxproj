@@ -44,6 +44,8 @@
 		4F79A83626051E4A00076A7E /* ToastNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A83526051E4A00076A7E /* ToastNotification.m */; };
 		4F79C2EA260976950067B381 /* RemapTableTranslator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79C2E9260976950067B381 /* RemapTableTranslator.m */; };
 		4F7AB0552606698A0008055E /* UIStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F7AB0542606698A0008055E /* UIStrings.m */; };
+		4F854D7C2789146900B46E9D /* NSMenu+NSMenu_Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F854D7B2789146900B46E9D /* NSMenu+NSMenu_Additions.m */; };
+		4F854D7E2789266A00B46E9D /* sfsymbols.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F854D7D2789266A00B46E9D /* sfsymbols.xcassets */; };
 		4F8CE7012617738A00D70A76 /* AppTranslocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CE6FF2617738A00D70A76 /* AppTranslocationManager.m */; };
 		4F8FC13F275DC81900887A0C /* PrefixSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8FC13E275DC81900887A0C /* PrefixSwift.swift */; };
 		4F8FC140275DC81900887A0C /* PrefixSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8FC13E275DC81900887A0C /* PrefixSwift.swift */; };
@@ -88,6 +90,7 @@
 		4FF0BD51266AC10C003935EA /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD50266AC10C003935EA /* Math.swift */; };
 		4FF0BD58266ACE32003935EA /* VectorUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD57266ACE32003935EA /* VectorUtility.m */; };
 		4FF0BD5F266ADFE5003935EA /* MathObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD5E266ADFE5003935EA /* MathObjc.m */; };
+		4FEC9668278BBDC600548604 /* NSColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FEC9667278BBDC600548604 /* NSColor+Additions.m */; };
 		4FF6654125F2C7B000689B77 /* default_launchd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6652E25F2C7B000689B77 /* default_launchd.plist */; };
 		4FF6654225F2C7B000689B77 /* default_launchd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6652E25F2C7B000689B77 /* default_launchd.plist */; };
 		4FF6654325F2C7B000689B77 /* HelperServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6652F25F2C7B000689B77 /* HelperServices.m */; };
@@ -325,6 +328,9 @@
 		4F79C2E9260976950067B381 /* RemapTableTranslator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapTableTranslator.m; sourceTree = "<group>"; };
 		4F7AB0532606698A0008055E /* UIStrings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIStrings.h; sourceTree = "<group>"; };
 		4F7AB0542606698A0008055E /* UIStrings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UIStrings.m; sourceTree = "<group>"; };
+		4F854D7A2789146900B46E9D /* NSMenu+NSMenu_Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMenu+NSMenu_Additions.h"; sourceTree = "<group>"; };
+		4F854D7B2789146900B46E9D /* NSMenu+NSMenu_Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMenu+NSMenu_Additions.m"; sourceTree = "<group>"; };
+		4F854D7D2789266A00B46E9D /* sfsymbols.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = sfsymbols.xcassets; sourceTree = "<group>"; };
 		4F8CE6FF2617738A00D70A76 /* AppTranslocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppTranslocationManager.m; sourceTree = "<group>"; };
 		4F8CE7002617738A00D70A76 /* AppTranslocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppTranslocationManager.h; sourceTree = "<group>"; };
 		4F8FC13E275DC81900887A0C /* PrefixSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefixSwift.swift; sourceTree = "<group>"; };
@@ -387,6 +393,10 @@
 		4FF0BD57266ACE32003935EA /* VectorUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VectorUtility.m; sourceTree = "<group>"; };
 		4FF0BD5D266ADFE5003935EA /* MathObjc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MathObjc.h; sourceTree = "<group>"; };
 		4FF0BD5E266ADFE5003935EA /* MathObjc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MathObjc.m; sourceTree = "<group>"; };
+		4FEB6617279376C200E6A111 /* SymbolicHotKeys Reference.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "SymbolicHotKeys Reference.txt"; sourceTree = "<group>"; };
+		4FEB6618279376C200E6A111 /* notes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = notes.md; sourceTree = "<group>"; };
+		4FEC9666278BBDC600548604 /* NSColor+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSColor+Additions.h"; sourceTree = "<group>"; };
+		4FEC9667278BBDC600548604 /* NSColor+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSColor+Additions.m"; sourceTree = "<group>"; };
 		4FF6652D25F2C7B000689B77 /* HelperServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelperServices.h; sourceTree = "<group>"; };
 		4FF6652E25F2C7B000689B77 /* default_launchd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_launchd.plist; sourceTree = "<group>"; };
 		4FF6652F25F2C7B000689B77 /* HelperServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelperServices.m; sourceTree = "<group>"; };
@@ -678,6 +688,7 @@
 			children = (
 				4F1793A725EEC8E500E8309B /* Frameworks */,
 				4F39BC88263B68F400FDF692 /* xcconfig */,
+				4FEB6616279376C200E6A111 /* Notes */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -782,6 +793,14 @@
 				4FA994BD26678AC90007F003 /* ScrollAnalyzer.m */,
 			);
 			path = Analysis;
+			sourceTree = "<group>";
+		};
+		4F9912772788FB8E008DBE9F /* External */ = {
+			isa = PBXGroup;
+			children = (
+				4FF6665A25F2C93A00689B77 /* CGSInternal */,
+			);
+			path = External;
 			sourceTree = "<group>";
 		};
 		4FA1ACE025E85904007DB95B /* Tests */ = {
@@ -906,6 +925,15 @@
 			path = Unused;
 			sourceTree = "<group>";
 		};
+		4FEB6616279376C200E6A111 /* Notes */ = {
+			isa = PBXGroup;
+			children = (
+				4FEB6617279376C200E6A111 /* SymbolicHotKeys Reference.txt */,
+				4FEB6618279376C200E6A111 /* notes.md */,
+			);
+			path = Notes;
+			sourceTree = "<group>";
+		};
 		4FF6652B25F2C7B000689B77 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
@@ -916,6 +944,7 @@
 				4FF6653025F2C7B000689B77 /* Objects */,
 				4F9E78BD26855B9B002C2309 /* SwiftConcurrency */,
 				4FF6653625F2C7B000689B77 /* Utility */,
+				4F9912772788FB8E008DBE9F /* External */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -1022,6 +1051,7 @@
 			isa = PBXGroup;
 			children = (
 				4FF665D525F2C92700689B77 /* Assets.xcassets */,
+				4F854D7D2789266A00B46E9D /* sfsymbols.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1080,6 +1110,10 @@
 				4FF665E825F2C92700689B77 /* Utility_App.m */,
 				4F3E067C26A2F97D000C9E06 /* URLMenuItem.h */,
 				4F3E067D26A2F97D000C9E06 /* URLMenuItem.m */,
+				4F854D7A2789146900B46E9D /* NSMenu+NSMenu_Additions.h */,
+				4F854D7B2789146900B46E9D /* NSMenu+NSMenu_Additions.m */,
+				4FEC9666278BBDC600548604 /* NSColor+Additions.h */,
+				4FEC9667278BBDC600548604 /* NSColor+Additions.m */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -1309,7 +1343,6 @@
 				4FF6665325F2C93A00689B77 /* CFRuntime.h */,
 				4FF6665425F2C93A00689B77 /* IOKit */,
 				4FF6665925F2C93A00689B77 /* CGSPrivate.h */,
-				4FF6665A25F2C93A00689B77 /* CGSInternal */,
 				4FF6667025F2C93A00689B77 /* SensibleSideButtons */,
 			);
 			path = External;
@@ -1629,6 +1662,8 @@
 				4F9E59972672A67F004E75F7 /* default_config.plist in Resources */,
 				4FF665FC25F2C92700689B77 /* AuthorizeAccessibilityView.xib in Resources */,
 				4F79A7EF26042E2E00076A7E /* ToastNotification.xib in Resources */,
+				4F44FEF82606A5C100926A5E /* default_config.plist in Resources */,
+				4F854D7E2789266A00B46E9D /* sfsymbols.xcassets in Resources */,
 				4F2F5DB225FB723D0037660A /* AddWindow.xib in Resources */,
 				4FF665F725F2C92700689B77 /* Assets.xcassets in Resources */,
 				4FF665F925F2C92700689B77 /* MouseFix.xib in Resources */,
@@ -1873,6 +1908,7 @@
 				4FD82DDB260575B100664D6F /* ToastNotificationLabel.m in Sources */,
 				4FF665FA25F2C92700689B77 /* AppDelegate.m in Sources */,
 				4FF665F325F2C92700689B77 /* MoreSheet.m in Sources */,
+				4FEC9668278BBDC600548604 /* NSColor+Additions.m in Sources */,
 				4FF6660025F2C92700689B77 /* Hyperlink.m in Sources */,
 				4FF6654C25F2C7B000689B77 /* Queue.m in Sources */,
 				4FF665ED25F2C92700689B77 /* CustomSegmentedControl.m in Sources */,
@@ -1899,6 +1935,7 @@
 				4F79C2EA260976950067B381 /* RemapTableTranslator.m in Sources */,
 				4FB4F9FE260FDBC800806DDD /* RemapTableUtility.m in Sources */,
 				4FF665FD25F2C92700689B77 /* AuthorizeAccessibilityView.m in Sources */,
+				4F854D7C2789146900B46E9D /* NSMenu+NSMenu_Additions.m in Sources */,
 				4F92A72D260F6C7800529D1F /* NSView+Additions.m in Sources */,
 				4F92A73A260F73C600529D1F /* KeyCaptureView.m in Sources */,
 				4FF6654425F2C7B000689B77 /* HelperServices.m in Sources */,

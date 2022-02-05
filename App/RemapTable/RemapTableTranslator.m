@@ -106,14 +106,16 @@ static NSArray *getDragEffectsTable() {
                   kMFModifiedDragDictKeyType: kMFModifiedDragTypeTwoFingerSwipe,
         }},
 //        separatorEffectsTableEntry(),
-        @{
-          @"ui": [NSString stringWithFormat:@"Middle Click and Drag"],
-          @"tool": [NSString stringWithFormat: @"Works like clicking and dragging %@\nUsed to orbit in some 3D software like Blender", [UIStrings getButtonStringToolTip:3]],
-          @"hideable": @YES,
-          @"dict": @{
-                  kMFModifiedDragDictKeyType: kMFModifiedDragTypeFakeDrag,
-                  kMFModifiedDragDictKeyFakeDragVariantButtonNumber: @3,
-        }},
+//        @{
+////          @"ui": [NSString stringWithFormat:@"%@ Click and Drag", [UIStrings getButtonString:3]],
+//          @"ui": [NSString stringWithFormat:@"Middle Click and Drag"],
+////          @"ui": [NSString stringWithFormat:@"%@ Drag", [UIStrings getButtonString:3]],
+//          @"tool": [NSString stringWithFormat: @"Works like clicking and dragging %@\nUsed to orbit in some 3D software like Blender", [UIStrings getButtonStringToolTip:3]],
+//          @"hideable": @YES,
+//          @"dict": @{
+//                  kMFModifiedDragDictKeyType: kMFModifiedDragTypeFakeDrag,
+//                  kMFModifiedDragDictKeyFakeDragVariantButtonNumber: @3,
+//        }},
     ];
     return dragEffectsTable;
 }
@@ -198,29 +200,110 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
     
     /// Insert entry for keyboard shortcut effect
     
-    if ([effectDict[kMFActionDictKeyType] isEqual:kMFActionDictTypeKeyboardShortcut]) {
+    /// Get keycapture index
+    NSIndexSet *keyCaptureIndexes = [oneShotEffectsTable indexesOfObjectsPassingTest:^BOOL(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        return [obj[@"keyCaptureEntry"] isEqual:@YES];
+    }];
+    assert(keyCaptureIndexes.count == 1);
+    NSUInteger keyCaptureIndex = keyCaptureIndexes.firstIndex;
+    
+    /// Insert entry for keyboard shortcut effect or systemDefined effect
+    
+    BOOL isKeyShortcut = [effectDict[kMFActionDictKeyType] isEqual:kMFActionDictTypeKeyboardShortcut];
+    BOOL isSystemEvent = [effectDict[kMFActionDictKeyType] isEqual:kMFActionDictTypeSystemDefinedEvent];
+    
+    if (isKeyShortcut || isSystemEvent) {
+        
         /// Get index for new entry (right after keyCaptureEntry)
-        NSIndexSet *keyCaptureIndexes = [oneShotEffectsTable indexesOfObjectsPassingTest:^BOOL(NSDictionary * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            return [obj[@"keyCaptureEntry"] isEqual:@YES];
-        }];
-        assert(keyCaptureIndexes.count == 1);
-        NSUInteger shortcutIndex = keyCaptureIndexes.firstIndex + 1;
-        /// Get keycode and flags
-        CGKeyCode keyCode = ((NSNumber *)effectDict[kMFActionDictKeyKeyboardShortcutVariantKeycode]).unsignedShortValue;
-        CGEventFlags flags = ((NSNumber *)effectDict[kMFActionDictKeyKeyboardShortcutVariantModifierFlags]).unsignedLongValue;
-        /// Get shortcut string
-        NSString *shortcutString = [UIStrings getStringForKeyCode:keyCode flags:flags];
+        NSUInteger shortcutIndex = keyCaptureIndex + 1;
+        
+        /// Get  strings
+        
+        NSAttributedString *shortcutString = getShortcutString(effectDict, isKeyShortcut);
+
+        NSString *shortcutStringRaw = [shortcutString coolString];
+        
         /// Create and insert new entry
         [oneShotEffectsTable insertObject:@{
-            @"ui": shortcutString,
-            @"tool": stringf(@"Works like pressing '%@' on your keyboard", shortcutString),
+            @"uiAttributed": shortcutString,
+            @"tool": stringf(@"Works like pressing '%@' on your keyboard", shortcutStringRaw),
             @"dict": effectDict,
             @"indentation": @1,
         } atIndex:shortcutIndex];
+    }
+    
+    /// Insert hidden submenu for  apple specific keys
+    
+    int separator = -1;
+    
+    MFSystemDefinedEventType systemEventTypes[] =  {
+        kMFSystemEventTypeBrightnessDown,
+        kMFSystemEventTypeBrightnessUp,
+        separator,
+        kMFSystemEventTypeMediaBack,
+        kMFSystemEventTypeMediaPlayPause,
+        kMFSystemEventTypeMediaForward,
+        separator,
+        kMFSystemEventTypeVolumeMute,
+        kMFSystemEventTypeVolumeDown,
+        kMFSystemEventTypeVolumeUp
     };
+    int count = sizeof(systemEventTypes) / sizeof(systemEventTypes[0]);
+    
+    NSMutableArray<NSDictionary *> *submenu = [NSMutableArray array];
+    for (int i = 0; i < count; i++) {
+        
+        MFSystemDefinedEventType type = systemEventTypes[i];
+        
+        if (type == separator) {
+            [submenu addObject:separatorEffectsTableEntry()];
+        } else {
+            NSDictionary *actionDict = @{
+                kMFActionDictKeyType: kMFActionDictTypeSystemDefinedEvent,
+                kMFActionDictKeySystemDefinedEventVariantType: @(type),
+                kMFActionDictKeySystemDefinedEventVariantModifierFlags: @(0),
+    };
+    
+            NSAttributedString *shortcutString = getShortcutString(actionDict, NO);
+            NSString *shortcutStringRaw = [shortcutString coolString];
+            [submenu addObject:@{
+                @"uiAttributed": shortcutString,
+                @"tool": stringf(@"Works like pressing '%@' on an Apple keyboard", shortcutStringRaw),
+                @"dict": actionDict
+            }];
+        }
+    }
+    
+    [oneShotEffectsTable insertObject:@{
+        @"ui": @" Exclusive Keys",
+        @"tool": @"Choose keys that are only available on Apple keyboards.",
+        @"alternate": @YES,
+        @"submenu": submenu
+    } atIndex:keyCaptureIndex+1];
     
     return oneShotEffectsTable;
 }
+
+/// Helper for getEffectsTable
+
+static NSAttributedString *getShortcutString(NSDictionary *effectDict, BOOL isKeyShortcut) {
+    
+    if (isKeyShortcut) {
+        
+        CGKeyCode keyCode = ((NSNumber *)effectDict[kMFActionDictKeyKeyboardShortcutVariantKeycode]).unsignedShortValue;
+        CGEventFlags flags = ((NSNumber *)effectDict[kMFActionDictKeyKeyboardShortcutVariantModifierFlags]).unsignedLongValue;
+        
+        return [UIStrings getStringForKeyCode:keyCode flags:flags];
+        
+    } else { /// Is systemEventShortcut
+        
+        MFSystemDefinedEventType type = ((NSNumber *)effectDict[kMFActionDictKeySystemDefinedEventVariantType]).unsignedIntValue;
+        CGEventFlags flags = ((NSNumber *)effectDict[kMFActionDictKeySystemDefinedEventVariantModifierFlags]).unsignedLongValue;
+        
+        return [UIStrings getStringForSystemDefinedEvent:type flags:flags];
+    }
+}
+
 /// Convenience functions for effects tables
 
 /// We wanted to rename 'effects table' to 'effects menu model', but we only did it in a few places. Thats why this is named weird
@@ -238,14 +321,14 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
     NSDictionary *effectsTableEntry = (NSDictionary *)effectTable[inds.firstIndex];
     return effectsTableEntry;
 }
-+ (NSDictionary *)getEntryFromEffectsTable:(NSArray *)effectsTable withUIString:(NSString *)uiString {
-    NSIndexSet *inds = [effectsTable indexesOfObjectsPassingTest:^BOOL(NSDictionary * _Nonnull tableEntry, NSUInteger idx, BOOL * _Nonnull stop) {
-        return [tableEntry[@"ui"] isEqualToString:uiString];
-    }];
-    NSAssert(inds.count == 1, @"");
-    NSDictionary *effectsTableEntry = effectsTable[inds.firstIndex];
-    return effectsTableEntry;
-}
+//+ (NSDictionary *)getEntryFromEffectsTable:(NSArray *)effectsTable withUIString:(NSAttributedString *)uiString {
+//    NSIndexSet *inds = [effectsTable indexesOfObjectsPassingTest:^BOOL(NSDictionary * _Nonnull tableEntry, NSUInteger idx, BOOL * _Nonnull stop) {
+//        return [tableEntry[@"ui"] isEqual:uiString];
+//    }];
+//    NSAssert(inds.count == 1, @"");
+//    NSDictionary *effectsTableEntry = effectsTable[inds.firstIndex];
+//    return effectsTableEntry;
+//}
 
 + (NSArray *)getEffectsTableForRemapsTableEntry:(NSDictionary *)rowDict {
     
@@ -286,19 +369,95 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     NSArray *effectsTable = [RemapTableTranslator getEffectsTableForRemapsTableEntry:rowDict];
     NSDictionary *effectDict = rowDict[kMFRemapsKeyEffect];
     NSString *name;
-    if (effectDict) { // When inserting new rows through AddMode, there is no effectDict at first // Noah from future: are you sure? I think this has changed.
-//        if ([effectDict[kMFActionDictKeyType] isEqual:kMFActionDictTypeKeyboardShortcut]) {
-//            NSNumber *keyCode = effectDict[kMFActionDictKeyKeyboardShortcutVariantKeycode];
-//            NSNumber *flags = effectDict[kMFActionDictKeyKeyboardShortcutVariantModifierFlags];
-//            name = [UIStrings getStringForKeyCode:keyCode.unsignedIntValue flags:flags.unsignedIntValue];
-//        } else
-//        {
-            // Get title for effectDict from effectsTable
+    if (effectDict) {
             NSDictionary *effectsMenuModelEntry = [RemapTableTranslator getEntryFromEffectTable:effectsTable withEffectDict:effectDict];
             name = effectsMenuModelEntry[@"ui"];
-//        }
+        if (name == nil) {
+            name = [effectsMenuModelEntry[@"uiAttributed"] coolString];
+        }
     }
     return name;
+}
+
++ (NSMenuItem * _Nullable)getPopUpButtonItemToSelectBasedOnRowDict:(NSPopUpButton * _Nonnull)button rowDict:(NSDictionary * _Nonnull)rowDict {
+    
+    int itemIndex = -1;
+    
+    NSArray *effectsTable = [RemapTableTranslator getEffectsTableForRemapsTableEntry: rowDict];
+    
+    int i = 0;
+    while (true) {
+        NSDictionary *effectTableEntry = effectsTable[i];
+        if ([effectTableEntry[@"dict"] isEqual: rowDict[kMFRemapsKeyEffect]]) {
+            itemIndex = i;
+            break;
+        };
+        i++;
+    }
+    
+    if (itemIndex != -1) {
+        return [button itemAtIndex:i];
+    } else {
+        return nil;
+    }
+}
+
++ (NSDictionary * _Nullable)getEffectDictBasedOnSelectedItemInButton:(NSPopUpButton * _Nonnull)button rowDict:(NSDictionary * _Nonnull)rowDict {
+    
+    NSArray *effectsTable = [RemapTableTranslator getEffectsTableForRemapsTableEntry:rowDict];
+    NSInteger selectedIndex = button.indexOfSelectedItem;
+    
+    return effectsTable[selectedIndex][@"dict"];
+    
+}
+
++ (NSMenuItem *)menuItemFromDataModel:(NSDictionary *)itemModel enclosingMenu:(NSMenu *)enclosingMenu {
+    NSMenuItem *i;
+    if ([itemModel[@"isSeparator"] isEqual: @YES]) {
+        i = (NSMenuItem *)NSMenuItem.separatorItem;
+    } else {
+        i = [[NSMenuItem alloc] init];
+        NSString *title = itemModel[@"ui"];
+        if (title != nil) {
+            i.title = title;
+        } else {
+            i.attributedTitle = itemModel[@"uiAttributed"];
+        }
+        i.action = @selector(updateTableAndWriteToConfig:);
+        i.target = self.tableView.delegate;
+        i.toolTip = itemModel[@"tool"];
+        
+        if ([itemModel[@"keyCaptureEntry"] isEqual:@YES]) {
+            i.action = @selector(handleKeystrokeMenuItemSelected:);
+        }
+        if ([itemModel[@"alternate"] isEqual:@YES]) {
+            i.alternate = YES;
+            i.keyEquivalentModifierMask = NSEventModifierFlagOption;
+        }
+        if ([itemModel[@"hideable"] isEqual:@YES]) {
+            NSMenuItem *h = [[NSMenuItem alloc] init];
+            h.view = [[NSView alloc] initWithFrame:NSZeroRect];
+            h.enabled = NO; /// Prevent the zero-height item from being selected by keyboard. This only works if `autoenablesItems == NO` on the PopUpButton
+            [enclosingMenu addItem:h];
+            i.alternate = YES;
+            i.keyEquivalentModifierMask = NSEventModifierFlagOption;
+        }
+        if (itemModel[@"indentation"] != nil) {
+            i.indentationLevel = ((NSNumber *)itemModel[@"indentation"]).unsignedIntegerValue;
+        }
+        if (itemModel[@"submenu"] != nil) {
+            NSMenu *m = [[NSMenu alloc] init];
+            for (NSDictionary *submenuItemModel in itemModel[@"submenu"]) {
+                NSMenuItem *subI = [self menuItemFromDataModel:submenuItemModel enclosingMenu:m];
+                subI.representedObject = submenuItemModel;
+                subI.action = @selector(submenuItemClicked:);
+                [m addItem:subI];
+            }
+            i.submenu = m;
+            i.action = nil;
+        }
+    }
+    return i;
 }
 
 /// \discussion We only need the `row` parameter to insert data into the datamodel, which we shouldn't be doing from this function to begin with
@@ -307,9 +466,9 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
 ///            For a clean solution, the tableView should reload it's content, whenever tableView.enabled changes, so that this function is called again. I don't think it does this (automatically) though. However, things still seem to work fine. I assume, that's because we're still doing the recursive enabling/disabling from AppDelegate - disableUI:, and both that function and this one work together in some way I don't understand to enable/disable everything properly.
 + (NSTableCellView *)getEffectCellWithRowDict:(NSDictionary *)rowDict row:(NSUInteger)row tableViewEnabled:(BOOL)tableViewEnabled {
     
-    rowDict = rowDict.mutableCopy; // Not sure if necessary
+    rowDict = rowDict.mutableCopy; /// Not sure if necessary
     NSArray *effectTable = [self getEffectsTableForRemapsTableEntry:rowDict];
-    // Create trigger cell and fill out popup button contained in it
+    /// Create trigger cell and fill out popup button contained in it
     NSTableCellView *triggerCell = [self.tableView makeViewWithIdentifier:@"effectCell" owner:nil];
     
     NSDictionary *effectDict = rowDict[kMFRemapsKeyEffect];
@@ -323,17 +482,32 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         // Get capture field
         KeyCaptureView *keyStrokeCaptureField = (KeyCaptureView *)[keyCaptureCell nestedSubviewsWithIdentifier:@"keyCaptureView"][0];
         
-        [keyStrokeCaptureField setupWithCaptureHandler:^(CGKeyCode keyCode, CGEventFlags flags) {
+        [keyStrokeCaptureField setupWithCaptureHandler:^(CGKeyCode keyCode, MFSystemDefinedEventType type, CGEventFlags flags) {
             
-            // Create new effectDict
-            NSDictionary *newEffectDict = @{
+            BOOL keyCodeValid = keyCode != USHRT_MAX;
+            BOOL typeValid = type != UINT_MAX;
+            
+            assert(!(keyCodeValid && typeValid));
+            assert(keyCodeValid || typeValid);
+            
+            NSDictionary *newEffectDict;
+            
+            if (keyCodeValid) {
+                newEffectDict = @{
                 kMFActionDictKeyType: kMFActionDictTypeKeyboardShortcut,
                 kMFActionDictKeyKeyboardShortcutVariantKeycode: @(keyCode),
                 kMFActionDictKeyKeyboardShortcutVariantModifierFlags: @(flags),
             };
+            } else {
+                newEffectDict = @{
+                    kMFActionDictKeyType: kMFActionDictTypeSystemDefinedEvent,
+                    kMFActionDictKeySystemDefinedEventVariantType: @(type),
+                    kMFActionDictKeySystemDefinedEventVariantModifierFlags: @(flags),
+                };
+            }
             
-            // Insert new effectDict into dataModel and reload table
-            //  Manipulating the datamodel should probably be done by RemapTableController, not RemapTableTranslator, and definitely not in this method, but oh well.
+            /// Insert new effectDict into dataModel and reload table
+            ///  Manipulating the datamodel should probably be done by RemapTableController, not RemapTableTranslator, and definitely not in this method, but oh well.
             
             NSInteger rowBaseDataModel = [RemapTableUtility baseDataModelIndexFromGroupedDataModelIndex:row withGroupedDataModel:self.groupedDataModel];
             
@@ -344,8 +518,8 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         } cancelHandler:^{
             
             [self.tableView reloadData];
-            // Restore tableView to the ground truth dataModel
-            //  This used to restore original state if the capture field has been created through `reloadDataWithTemporaryDataModel:`
+            /// Restore tableView to the ground truth dataModel
+            ///  This used to restore original state if the capture field has been created through `reloadDataWithTemporaryDataModel:`
             
         }];
         
@@ -356,45 +530,16 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         NSPopUpButton *popupButton = triggerCell.subviews[0];
         /// Delete existing menu items from IB
         [popupButton removeAllItems];
-        /// Iterate oneshot effects table and fill popupButton
+        /// Iterate effects table and fill popupButton
         for (NSDictionary *effectTableEntry in effectTable) {
-            NSMenuItem *i;
-            if ([effectTableEntry[@"isSeparator"] isEqual: @YES]) {
-                i = (NSMenuItem *)NSMenuItem.separatorItem;
-            } else {
-                i = [[NSMenuItem alloc] init];
-                i.title = effectTableEntry[@"ui"];
-                i.action = @selector(updateTableAndWriteToConfig:);
-                i.target = self.tableView.delegate;
-                i.toolTip = effectTableEntry[@"tool"];
-                
-                if ([effectTableEntry[@"keyCaptureEntry"] isEqual:@YES]) {
-                    i.action = @selector(handleKeystrokeMenuItemSelected:);
-                }
-                if ([effectTableEntry[@"alternate"] isEqual:@YES]) {
-                    i.alternate = YES;
-                    i.keyEquivalentModifierMask = NSEventModifierFlagOption;
-                }
-                if ([effectTableEntry[@"hideable"] isEqual:@YES]) {
-                    NSMenuItem *h = [[NSMenuItem alloc] init];
-                    h.view = [[NSView alloc] initWithFrame:NSZeroRect];
-                    h.enabled = NO; // Prevent the zero-height item from being selected by keyboard. This only works if `autoenablesItems == NO` on the PopUpButton
-                    [popupButton.menu addItem:h];
-                    i.alternate = YES;
-                    i.keyEquivalentModifierMask = NSEventModifierFlagOption;
-                }
-                if (effectTableEntry[@"indentation"] != nil) {
-                    i.indentationLevel = ((NSNumber *)effectTableEntry[@"indentation"]).unsignedIntegerValue;
-                }
-            }
+            NSMenuItem *i = [self menuItemFromDataModel:effectTableEntry enclosingMenu:popupButton.menu];
             [popupButton.menu addItem:i];
         }
         
         /// Select popup button item corresponding to datamodel
         /// Get effectDict from datamodel
-        NSString * title = effectNameForRowDict(rowDict);
-        if (title) {
-            NSMenuItem *itemToSelect = [popupButton itemWithTitle:title];
+        NSMenuItem *itemToSelect = [self getPopUpButtonItemToSelectBasedOnRowDict:popupButton rowDict:rowDict];
+        if (itemToSelect) {
             [popupButton selectItem:itemToSelect];
             popupButton.toolTip = itemToSelect.toolTip;
         }

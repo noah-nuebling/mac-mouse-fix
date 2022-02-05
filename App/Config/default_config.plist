@@ -178,13 +178,13 @@
 		<true/>
 		<key>configVersion</key>
 		<integer>12</integer>
-		<key>lastLaunchedBundleVersion</key>
-		<integer>8636</integer>
-		<key>launchesOfCurrentBundleVersion</key>
-		<integer>1</integer>
-		<key>launchesOverall</key>
-		<integer>1</integer>
 		<key>skippedBundleVersion</key>
+		<integer>0</integer>
+		<key>launchesOverall</key>
+		<string>0</string>
+		<key>lastLaunchedBundleVersion</key>
+		<integer>0</integer>
+		<key>launchesOfCurrentBundleVersion</key>
 		<integer>0</integer>
 	</dict>
 	<key>Pointer</key>

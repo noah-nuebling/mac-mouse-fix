@@ -19,11 +19,15 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)initializeWithTableView:(NSTableView *)tableView;
 
 + (NSDictionary *)getEntryFromEffectTable:(NSArray *)effectsTable withEffectDict:(NSDictionary *)effectDict;
-+ (NSDictionary *)getEntryFromEffectsTable:(NSArray *)effectsTable withUIString:(NSString *)uiString;
+//+ (NSDictionary *)getEntryFromEffectsTable:(NSArray *)effectsTable withUIString:(NSString *)uiString;
 + (NSArray *)getEffectsTableForRemapsTableEntry:(NSDictionary *)tableEntry;
 
 + (NSTableCellView *)getTriggerCellWithRowDict:(NSDictionary *)rowDict;
 + (NSTableCellView *)getEffectCellWithRowDict:(NSDictionary *)rowDict row:(NSUInteger)row tableViewEnabled:(BOOL)tableViewEnabled;
+
+
++ (NSMenuItem * _Nullable)getPopUpButtonItemToSelectBasedOnRowDict:(NSPopUpButton * _Nonnull)button rowDict:(NSDictionary * _Nonnull)rowDict;
++ (NSDictionary * _Nullable)getEffectDictBasedOnSelectedItemInButton:(NSPopUpButton * _Nonnull)button rowDict:(NSDictionary * _Nonnull)rowDict;
 
 @end
 

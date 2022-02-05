@@ -23,8 +23,8 @@
     [super drawRect:dirtyRect];
     
     /// Clip for background drawing
-    NSRect clippingRect = NSInsetRect(dirtyRect, 1, 0); /// Clip side borders
-    clippingRect.size.height -= 1; /// Clip bottom (?) border
+    NSRect clippingRect = NSInsetRect(dirtyRect, 0, 0); /// Don't Clip side borders (Since 2.2.0 or so we changed the table inset, so this isn't necessary any more.)
+    clippingRect.size.height -= 1; /// Clip bottom border
     NSRectClip(clippingRect);
     
     /// Get background color

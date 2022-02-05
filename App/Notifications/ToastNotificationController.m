@@ -112,8 +112,8 @@ static double _toastAnimationOffset = 20;
     
     // Set message text and text attributes to label
     NSDictionary *baseAttributes = _labelAttributesFromIB;
-    NSAttributedString *m = [message attributedStringByAddingBaseAttributes:baseAttributes];
-    m = [m attributedStringByFillingOutDefaultAttributes];
+    NSAttributedString *m = [message attributedStringByAddingStringAttributesAsBase:baseAttributes];
+    m = [m attributedStringByFillingOutBase];
     
     [_instance.label.textStorage setAttributedString:m];
 

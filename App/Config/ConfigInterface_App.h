@@ -21,7 +21,7 @@ typedef enum {
 // Convenience functions
 id config(NSString *keyPath);
 void setConfig(NSString *keyPath, NSObject *object);
-void commitConfig();
+void commitConfig(void);
 
 @property (class,retain) NSMutableDictionary *config;
 

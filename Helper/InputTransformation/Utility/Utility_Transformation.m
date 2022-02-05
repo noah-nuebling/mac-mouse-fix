@@ -15,8 +15,30 @@
 #import "SharedUtility.h"
 #import "Utility_Helper.h"
 #import "CGSCursor.h"
+#include <sys/types.h>
+#include <sys/sysctl.h>
 
 @implementation Utility_Transformation
+
++ (NSTimeInterval)nsTimeStamp {
+    /// Time since system startup in seconds. This value is used in NSEvent timestamps
+
+    
+    int MIB_SIZE = 2;
+    
+    int mib[MIB_SIZE];
+    size_t size;
+    struct timeval boottime;
+    
+    mib[0] = CTL_KERN;
+    mib[1] = KERN_BOOTTIME;
+    size = sizeof(boottime);
+    if (sysctl(mib, MIB_SIZE, &boottime, &size, NULL, 0) != -1) {
+        return boottime.tv_sec + (((double)boottime.tv_usec) / USEC_PER_SEC);
+    }
+    
+    return 0.0;
+}
 
 + (CFMachPortRef)createEventTapWithLocation:(CGEventTapLocation)location
                                        mask:(CGEventMask)mask
@@ -108,6 +130,15 @@
     CFRelease(buttonUp);
 }
 + (void)postMouseButton:(MFMouseButtonNumber)button down:(BOOL)down {
+    
+    /// I tried dispatching this event at a point other than the current cursor position, without moving the cursor.
+    /// That would maybe help with this issue:  https://github.com/noah-nuebling/mac-mouse-fix/issues/157#issuecomment-932108105)
+    /// I couldn't do it, though/ Here's what I tried:
+    ///     Sending another mouse click at the original location - Only works like 1/4
+    ///     Sending another mouse up event at the original location - Works exactly 1/3
+    ///  I know this won't work:
+    ///     CGWarpMousePointer - I'm using this in version-3 branch and has a delay after it where you can't move the poiner at all. If you turn off the delay it doesn't work anymore.
+    ///  If feel like this might be impossible because macOS might need this small delay to move the pointer programmatically.
     
     DDLogDebug(@"POSTING FAKE MOUSE BUTTON EVENT. btn: %d, down: %d", button, down);
     

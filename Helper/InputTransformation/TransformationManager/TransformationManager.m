@@ -232,7 +232,7 @@ CFMachPortRef _keyCaptureEventTap;
     DDLogInfo(@"Enabling keyCaptureMode");
     
     if (_keyCaptureEventTap == nil) {
-        _keyCaptureEventTap = [Utility_Transformation createEventTapWithLocation:kCGHIDEventTap mask:CGEventMaskBit(kCGEventKeyDown) option:kCGEventTapOptionDefault placement:kCGHeadInsertEventTap callback:keyCaptureModeCallback];
+        _keyCaptureEventTap = [Utility_Transformation createEventTapWithLocation:kCGHIDEventTap mask:CGEventMaskBit(kCGEventKeyDown) | CGEventMaskBit(NSEventTypeSystemDefined) option:kCGEventTapOptionDefault placement:kCGHeadInsertEventTap callback:keyCaptureModeCallback];
     }
     CGEventTapEnable(_keyCaptureEventTap, true);
 }
@@ -243,27 +243,62 @@ CFMachPortRef _keyCaptureEventTap;
 
 CGEventRef  _Nullable keyCaptureModeCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
-    CGKeyCode keyCode = CGEventGetIntegerValueField(event, kCGKeyboardEventKeycode);
     CGEventFlags flags  = CGEventGetFlags(event);
     
-    if (!keyCaptureModePayloadIsValidWithKeyCode(keyCode, flags)) return nil;
+    NSDictionary *payload;
     
-    NSDictionary *payload = @{
+    if (type == kCGEventKeyDown) {
+    
+        CGKeyCode keyCode = CGEventGetIntegerValueField(event, kCGKeyboardEventKeycode);
+    
+        if (keyCaptureModePayloadIsValidWithKeyCode(keyCode, flags)) {
+        
+            payload = @{
         @"keyCode": @(keyCode),
         @"flags": @(flags),
     };
     
     [SharedMessagePort sendMessage:@"keyCaptureModeFeedback" withPayload:payload expectingReply:NO];
+            [TransformationManager disableKeyCaptureMode];
+        }
     
+    } else if (type == NSEventTypeSystemDefined) {
+        
+        NSEvent *e = [NSEvent eventWithCGEvent:event];
+        
+        MFSystemDefinedEventType type = (MFSystemDefinedEventType)(e.data1 >> 16);
+        
+        if (keyCaptureModePayloadIsValidWithEvent(e, flags, type)) {
+            
+            NSLog(@"System event data1: %ld, data2: %ld", e.data1, e.data2); /// Debug
+            
+            payload = @{
+                @"systemEventType": @(type),
+                @"flags": @(flags),
+            };
+            
+            [SharedMessagePort sendMessage:@"keyCaptureModeFeedbackWithSystemEvent" withPayload:payload expectingReply:NO];
     [TransformationManager disableKeyCaptureMode];
+        }
+        
+    }
+    
+    
     return nil;
 }
-Boolean keyCaptureModePayloadIsValidWithKeyCode(CGKeyCode keyCode, CGEventFlags flags) {
+bool keyCaptureModePayloadIsValidWithKeyCode(CGKeyCode keyCode, CGEventFlags flags) {
+    return true; /// keyCode 0 is 'A'
+}
     
-    if (keyCode == 0) {
-        return false;
-    }
-    return true;
+bool keyCaptureModePayloadIsValidWithEvent(NSEvent *e, CGEventFlags flags, MFSystemDefinedEventType type) {
+    
+    BOOL isSub8 = (e.subtype == 8); /// 8 -> NSEventSubtypeScreenChanged
+    BOOL isKeyDown = (e.data1 & kMFSystemDefinedEventPressedMask) == 0;
+    BOOL secondDataIsNil = e.data2 == -1; /// The power key up event has both data fields be 0
+    BOOL typeIsBlackListed = type == kMFSystemEventTypeCapsLock;
+    
+    
+    return isSub8 && isKeyDown && secondDataIsNil && !typeIsBlackListed;
 }
 
 #pragma mark - Dummy Data

@@ -15,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Utility_Transformation : NSObject
 
++ (NSTimeInterval)nsTimeStamp;
+
 + (CFMachPortRef)createEventTapWithLocation:(CGEventTapLocation)location
                                        mask:(CGEventMask)mask
                                      option:(CGEventTapOptions)option

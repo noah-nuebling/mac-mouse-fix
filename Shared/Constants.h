@@ -163,6 +163,7 @@ typedef NSString*                                                       MFString
 #define kMFActionDictTypeNavigationSwipe                                @"navigationSwipe"
 #define kMFActionDictTypeSmartZoom                                      @"smartZoom"
 #define kMFActionDictTypeKeyboardShortcut                               @"keyboardShortcut"
+#define kMFActionDictTypeSystemDefinedEvent                             @"systemDefinedEvent"
 #define kMFActionDictTypeMouseButtonClicks                              @"mouseButton"
 #define kMFActionDictTypeAddModeFeedback                                @"addModeAction"
 
@@ -176,6 +177,10 @@ typedef NSString*                                                       MFString
 // Button click variant keys
 #define kMFActionDictKeyMouseButtonClicksVariantButtonNumber            @"button"
 #define kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks          @"nOfClicks"
+
+#define kMFActionDictKeySystemDefinedEventVariantType                   @"systemDefinedEventType"
+#define kMFActionDictKeySystemDefinedEventVariantModifierFlags          @"flags"
+
 
 // Variant values
 
@@ -220,7 +225,51 @@ typedef enum {
     kMFSHSiri = 176,
     kMFSHNotificationCenter = 163,
     kMFSHToggleDoNotDisturb = 175,
+    
+    /// These shk are assigned to some function keys on apple keyboards
+    
+    kMFFunctionKeySHKMissionControl = 108,
+    kMFFunctionKeySHKDictation = 186,
+    kMFFunctionKeySHKSpotlight = 187,
+    kMFFunctionKeySHKSwitchKeyboard = 188,
+    kMFFunctionKeySHKDoNotDisturb = 189,
+    
+    kMFFunctionKeySHKLaunchpad = 173,
+    
 } MFSymbolicHotkey;
+
+/// SystemEvents
+
+///  NSEvents with type systemDefined and subtype 8 are fired when pressing some keys on Apple keyboards
+///         All the interesting info is in the `data1` field
+
+typedef enum {
+
+    /// These types are found in the `data1` field, shifted left by 16 bits
+    
+    kMFSystemEventTypeBrightnessDown = 3,
+    kMFSystemEventTypeBrightnessUp = 2,
+    kMFSystemEventTypeMediaBack = 16 + 4,
+    kMFSystemEventTypeMediaPlayPause = 16 + 0,
+    kMFSystemEventTypeMediaForward = 16 + 3,
+    kMFSystemEventTypeVolumeMute = 7,
+    kMFSystemEventTypeVolumeDown = 1,
+    kMFSystemEventTypeVolumeUp = 0,
+    
+    kMFSystemEventTypeKeyboardBacklightDown = 22,
+    kMFSystemEventTypeKeyboardBacklightUp = 21,
+    
+    kMFSystemEventTypePower = 6,
+    kMFSystemEventTypeCapsLock = 4, /// Should probably disable remapping to this. Doesn't work
+    
+} MFSystemDefinedEventType;
+
+enum {
+    /// More definitions for the `data1` field
+
+    kMFSystemDefinedEventPressedMask = 1 << 8, ///  0 is keyDown, 1 is keyUp
+    kMFSystemDefinedEventBase = (1 << 9) | (1 << 11), /// These two bits are always set    
+};
 
 // Mosue Buttons
 // (Used as oneshot action dict variants (for actions of type `kMFActionDictTypeMouseButtonClicks`))

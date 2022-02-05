@@ -74,7 +74,9 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
     } else if ([message isEqualToString:@"addModeFeedback"]) {
         [AddWindowController handleReceivedAddModeFeedbackFromHelperWithPayload:(NSDictionary *)payload];
     } else if ([message isEqualToString:@"keyCaptureModeFeedback"]) {
-        [KeyCaptureView handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload];        
+        [KeyCaptureView handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload isSystemDefinedEvent:NO];
+    } else if ([message isEqualToString:@"keyCaptureModeFeedbackWithSystemEvent"]) {
+        [KeyCaptureView handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload isSystemDefinedEvent:YES];
     } else if ([message isEqualToString:@"helperEnabled"]) {
         [AppDelegate handleHelperEnabledMessage];
     }

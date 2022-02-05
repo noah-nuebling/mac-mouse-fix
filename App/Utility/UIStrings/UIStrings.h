@@ -21,7 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString *)getButtonStringToolTip:(MFMouseButtonNumber)buttonNumber;
 + (NSString *)getKeyboardModifierString:(CGEventFlags)flags;
 + (NSString *)getKeyboardModifierStringToolTip:(CGEventFlags)flags;
-+ (NSString *)getStringForKeyCode:(CGKeyCode)keyCode flags:(CGEventFlags)flags;
++ (NSAttributedString *)getStringForKeyCode:(CGKeyCode)keyCode flags:(CGEventFlags)flags;
++ (NSAttributedString *)getStringForSystemDefinedEvent:(MFSystemDefinedEventType)type flags:(CGEventFlags)flags;
 + (NSString *)naturalLanguageListFromStringArray:(NSArray<NSString *> *)stringArray;
 
 @end

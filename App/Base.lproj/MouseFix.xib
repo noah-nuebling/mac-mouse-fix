@@ -3,6 +3,8 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -16,20 +18,20 @@
         <window identifier="mainWindow" title="Mac Mouse Fix" autorecalculatesKeyViewLoop="NO" deferred="NO" releasedWhenClosed="NO" animationBehavior="default" tabbingMode="disallowed" id="F0z-JX-Cv5" userLabel="MainWindow">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenNone="YES"/>
-            <rect key="contentRect" x="0.0" y="0.0" width="580" height="429"/>
+            <rect key="contentRect" x="0.0" y="0.0" width="580" height="510"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="875"/>
             <value key="minSize" type="size" width="580" height="300"/>
             <value key="maxSize" type="size" width="580" height="1000"/>
             <view key="contentView" identifier="mainView" translatesAutoresizingMaskIntoConstraints="NO" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="0.0" width="580" height="429"/>
+                <rect key="frame" x="0.0" y="0.0" width="580" height="510"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view identifier="baseView" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5ZP-Jh-Lwi">
-                        <rect key="frame" x="0.0" y="0.0" width="580" height="429"/>
+                        <rect key="frame" x="0.0" y="0.0" width="580" height="510"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button verticalHuggingPriority="750" fixedFrame="YES" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vqy-WZ-nG6">
-                                <rect key="frame" x="18" y="400" width="161" height="18"/>
+                                <rect key="frame" x="18" y="481" width="161" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <string key="toolTip">Enable Mac Mouse Fix for a better mouse experience!
 
@@ -45,7 +47,7 @@ To disable Mac Mouse Fix, uncheck this checkbox or move the app to the Trash.</s
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="73e-pL-X7k">
-                                <rect key="frame" x="491" y="392" width="77" height="32"/>
+                                <rect key="frame" x="491" y="473" width="77" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="More..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dLd-xI-ix2">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -56,10 +58,10 @@ To disable Mac Mouse Fix, uncheck this checkbox or move the app to the Trash.</s
                                 </connections>
                             </button>
                             <box identifier="preferenceBox" autoresizesSubviews="NO" fixedFrame="YES" borderType="line" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="nmi-Qw-Ncm">
-                                <rect key="frame" x="17" y="16" width="546" height="375"/>
+                                <rect key="frame" x="17" y="16" width="546" height="456"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <view key="contentView" id="IVL-q6-nHn">
-                                    <rect key="frame" x="3" y="3" width="540" height="369"/>
+                                    <rect key="frame" x="3" y="3" width="540" height="450"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <segmentedControl verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xGK-PH-XPN" customClass="CustomSegmentedControl">
@@ -68,8 +70,10 @@ To disable Mac Mouse Fix, uncheck this checkbox or move the app to the Trash.</s
                                             <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="momentary" id="btI-2i-s2J">
                                                 <font key="font" metaFont="system"/>
                                                 <segments>
-                                                    <segment image="NSAddTemplate" width="21"/>
-                                                    <segment image="NSRemoveTemplate" width="19" tag="-1"/>
+                                                    <segment toolTip="Add a new Action" image="NSAddTemplate" width="21"/>
+                                                    <segment toolTip="Delete the selected Action" width="19" tag="-1">
+                                                        <imageReference key="image" image="NSRemoveTemplate" symbolScale="small"/>
+                                                    </segment>
                                                 </segments>
                                             </segmentedCell>
                                             <userDefinedRuntimeAttributes>
@@ -112,7 +116,7 @@ To disable Mac Mouse Fix, uncheck this checkbox or move the app to the Trash.</s
                                                     </textFieldCell>
                                                 </textField>
                                                 <textField toolTip="Scroll fewer pixels per mouse wheel tick." horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dzx-1i-bZ6">
-                                                    <rect key="frame" x="204" y="11" width="27" height="14"/>
+                                                    <rect key="frame" x="203" y="11" width="27" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Slow" id="GKV-Mh-wiX">
                                                         <font key="font" metaFont="message" size="11"/>
@@ -149,22 +153,22 @@ Tips:
                                                 </button>
                                             </subviews>
                                         </customView>
-                                        <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="39" horizontalPageScroll="10" verticalLineScroll="39" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jLq-vs-Mpd" customClass="CustomScrollView">
-                                            <rect key="frame" x="0.0" y="116" width="540" height="254"/>
+                                        <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="39" horizontalPageScroll="10" verticalLineScroll="39" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jLq-vs-Mpd" customClass="MFScrollView">
+                                            <rect key="frame" x="0.0" y="116" width="540" height="335"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <clipView key="contentView" drawsBackground="NO" id="S62-75-wtd">
-                                                <rect key="frame" x="0.0" y="0.0" width="540" height="254"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="540" height="335"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
-                                                    <tableView identifier="remapTable" verticalHuggingPriority="750" allowsExpansionToolTips="YES" tableStyle="plain" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="39" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" id="zJh-jy-oKM" customClass="RemapTableView">
-                                                        <rect key="frame" x="0.0" y="0.0" width="540" height="254"/>
+                                                    <tableView identifier="remapTable" verticalHuggingPriority="750" allowsExpansionToolTips="YES" tableStyle="plain" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="39" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" id="zJh-jy-oKM" customClass="MFTableView">
+                                                        <rect key="frame" x="0.0" y="0.0" width="540" height="335"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <size key="intercellSpacing" width="17" height="0.0"/>
                                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         <tableViewGridLines key="gridStyleMask" vertical="YES" horizontal="YES"/>
-                                                        <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="gridColor" name="separatorColor" catalog="System" colorSpace="catalog"/>
                                                         <tableColumns>
-                                                            <tableColumn identifier="trigger" width="286.5" minWidth="40" maxWidth="1000" id="zj7-YT-yKp">
+                                                            <tableColumn identifier="trigger" width="287" minWidth="40" maxWidth="1000" id="zj7-YT-yKp">
                                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Trigger">
                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -177,11 +181,11 @@ Tips:
                                                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                                                 <prototypeCellViews>
                                                                     <tableCellView identifier="triggerCell" id="PcD-th-uol">
-                                                                        <rect key="frame" x="8" y="0.0" width="286" height="39"/>
+                                                                        <rect key="frame" x="8" y="0.0" width="287" height="39"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
                                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pzd-Fo-nrS">
-                                                                                <rect key="frame" x="5" y="12" width="280" height="17"/>
+                                                                                <rect key="frame" x="4" y="12" width="281" height="17"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="⌘⇧⌥⌃ + Triple Click and Drag Button 3" id="hBN-M2-pMi">
                                                                                     <font key="font" metaFont="system"/>
@@ -195,11 +199,11 @@ Tips:
                                                                         </connections>
                                                                     </tableCellView>
                                                                     <tableCellView identifier="buttonGroupCell" id="gRD-nG-q8J">
-                                                                        <rect key="frame" x="8" y="39" width="286" height="22"/>
+                                                                        <rect key="frame" x="8" y="39" width="287" height="22"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
                                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZkS-6b-dCZ">
-                                                                                <rect key="frame" x="-7" y="3" width="293" height="16"/>
+                                                                                <rect key="frame" x="-8" y="3" width="294" height="16"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="left" title="Button X" id="Jbj-n8-l11">
                                                                                     <font key="font" metaFont="systemSemibold" size="11"/>
@@ -214,7 +218,7 @@ Tips:
                                                                     </tableCellView>
                                                                 </prototypeCellViews>
                                                             </tableColumn>
-                                                            <tableColumn identifier="effect" width="219.5" minWidth="40" maxWidth="1000" id="hfG-kJ-PIF">
+                                                            <tableColumn identifier="effect" width="219" minWidth="40" maxWidth="1000" id="hfG-kJ-PIF">
                                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Effect">
                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -227,11 +231,11 @@ Tips:
                                                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                                                 <prototypeCellViews>
                                                                     <tableCellView identifier="effectCell" id="5PH-4e-aAm">
-                                                                        <rect key="frame" x="311" y="0.0" width="220" height="39"/>
+                                                                        <rect key="frame" x="312" y="0.0" width="219" height="39"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
                                                                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7A6-Ou-8wk">
-                                                                                <rect key="frame" x="0.0" y="6" width="221" height="25"/>
+                                                                                <rect key="frame" x="0.0" y="6" width="220" height="25"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                                 <popUpButtonCell key="cell" type="push" title="Mission Control and Spaces" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="Frp-Q3-9xh" id="zPv-8e-GO1">
                                                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -252,11 +256,11 @@ Tips:
                                                                         </subviews>
                                                                     </tableCellView>
                                                                     <tableCellView identifier="keyCaptureCell" id="ppe-fA-Qpm">
-                                                                        <rect key="frame" x="311" y="39" width="220" height="39"/>
+                                                                        <rect key="frame" x="312" y="39" width="219" height="39"/>
                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                         <subviews>
-                                                                            <button hidden="YES" focusRingType="exterior" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bGK-d6-do3" userLabel="BackgroundButton">
-                                                                                <rect key="frame" x="-4" y="3" width="227" height="32"/>
+                                                                            <button hidden="YES" focusRingType="exterior" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bGK-d6-do3">
+                                                                                <rect key="frame" x="-4" y="3" width="226" height="32"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                                 <buttonCell key="cell" type="push" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" focusRingType="exterior" imageScaling="proportionallyDown" inset="2" id="wcb-vJ-PiZ">
                                                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -264,18 +268,18 @@ Tips:
                                                                                 </buttonCell>
                                                                             </button>
                                                                             <scrollView focusRingType="exterior" fixedFrame="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="gEj-y5-p9Y" customClass="KeyCaptureScrollView">
-                                                                                <rect key="frame" x="3" y="10" width="213" height="20"/>
+                                                                                <rect key="frame" x="3" y="10" width="212" height="20"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                                 <clipView key="contentView" focusRingType="exterior" drawsBackground="NO" id="2dn-db-91A">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="213" height="20"/>
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="212" height="20"/>
                                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                     <subviews>
                                                                                         <textView identifier="keyCaptureView" focusRingType="exterior" editable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" verticallyResizable="NO" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="JcL-EN-Rma" customClass="KeyCaptureView">
-                                                                                            <rect key="frame" x="0.0" y="0.0" width="208" height="19"/>
+                                                                                            <rect key="frame" x="0.0" y="0.0" width="207" height="19"/>
                                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                                            <size key="minSize" width="210" height="19"/>
+                                                                                            <size key="minSize" width="207" height="19"/>
                                                                                             <size key="maxSize" width="295" height="10000000"/>
                                                                                             <attributedString key="textStorage">
                                                                                                 <fragment content="Text go here">
@@ -309,6 +313,7 @@ Tips:
                                                         <connections>
                                                             <outlet property="dataSource" destination="p2C-Qy-mgp" id="qbE-1W-Q1c"/>
                                                             <outlet property="delegate" destination="p2C-Qy-mgp" id="2c8-Jg-yoa"/>
+                                                            <outlet property="menu" destination="wYv-c3-roG" id="CPC-cv-0Ir"/>
                                                         </connections>
                                                     </tableView>
                                                 </subviews>
@@ -333,7 +338,7 @@ Tips:
             <connections>
                 <outlet property="delegate" destination="NxE-tZ-vxj" id="mRZ-zN-zML"/>
             </connections>
-            <point key="canvasLocation" x="359" y="-16.5"/>
+            <point key="canvasLocation" x="359" y="30"/>
         </window>
         <customObject id="NxE-tZ-vxj" customClass="AppDelegate">
             <connections>
@@ -347,6 +352,8 @@ Tips:
         </customObject>
         <customObject id="p2C-Qy-mgp" customClass="RemapTableController">
             <connections>
+                <outlet property="addRemoveControl" destination="xGK-PH-XPN" id="ltz-dO-tq6"/>
+                <outlet property="box" destination="nmi-Qw-Ncm" id="M7y-bz-ysY"/>
                 <outlet property="view" destination="zJh-jy-oKM" id="GWC-PD-NjZ"/>
             </connections>
         </customObject>
@@ -497,9 +504,22 @@ Tips:
             </items>
             <point key="canvasLocation" x="145" y="381"/>
         </menu>
+        <menu showsStateColumn="NO" id="wYv-c3-roG" userLabel="ActionTableMenu">
+            <items>
+                <menuItem title="Delete" image="minus.square" id="wkx-a9-yNs">
+                    <attributedString key="attributedTitle"/>
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="rightClickRemoveButton:" target="p2C-Qy-mgp" id="iXn-iT-hRE"/>
+                    </connections>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="281" y="-365"/>
+        </menu>
     </objects>
     <resources>
         <image name="NSAddTemplate" width="14" height="13"/>
-        <image name="NSRemoveTemplate" width="14" height="4"/>
+        <image name="NSRemoveTemplate" width="12" height="4"/>
+        <image name="minus.square" width="12" height="12"/>
     </resources>
 </document>

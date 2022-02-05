@@ -152,12 +152,15 @@ static dispatch_group_t _momentumScrollWaitGroup;
             
             _drag.eventTap = eventTap;
         }
+        _drag.usageThreshold = 7; // 20, 5 // TODO: This is from 2.0. But why are we also setting usageThreshold in initializeDragWithModifiedDragDict:? Did git merge forget to remove that?
+    } else {
+        assert(false);
     }
 }
 
 /// Interface - start
 
-+ (NSDictionary *)dict {
++ (NSDictionary *)dict { // TODO: What is this good for? Why didn't we need it in 2.0?
     
     if (_drag.activationState == kMFModifiedInputActivationStateNone) {
         return nil;
@@ -348,8 +351,11 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
             
             /// Get number of spaces
             ///     for use in `handleMouseInputWhileInUse()`. Getting it here for performance reasons. Not sure if significant.
-            CFArrayRef spaces = CGSCopySpaces(_cgsConnection, kCGSAllSpacesMask);
-            _nOfSpaces = CFArrayGetCount(spaces);
+            CFArrayRef spaces = CGSCopySpaces(CGSMainConnectionID(), CGSSpaceIncludesUser | CGSSpaceIncludesOthers | CGSSpaceIncludesCurrent);
+            /// Full screen spaces appear twice for some reason so we need to filter duplicates
+            NSSet *uniqueSpaces = [NSSet setWithArray:(__bridge NSArray *)spaces];
+            _nOfSpaces = uniqueSpaces.count;
+            
             CFRelease(spaces);
             
         } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {

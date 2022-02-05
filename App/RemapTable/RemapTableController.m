@@ -27,9 +27,13 @@
 #import "RemapTableUtility.h"
 #import "ButtonGroupRowView.h"
 #import "Mac_Mouse_Fix-Swift.h"
+#import "NSColor+Additions.h"
+#import "MFSegmentedControl.h"
 
 @interface RemapTableController ()
 @property NSTableView *tableView;
+@property (weak) IBOutlet MFSegmentedControl *addRemoveControl;
+
 @end
 
 @implementation RemapTableController
@@ -108,10 +112,10 @@
     
 }
 
-// Helper for functions below. Shouldn't need to call directly.
+/// Helper for functions below. Shouldn't need to call directly.
 - (void)storeEffectsFromUIInDataModel {
     
-    // Set each rows effect content to datamodel
+    /// Set each rows effect content to datamodel
     NSInteger row = 0; // Index for trueDataModel
     for (NSInteger rowGrouped = 0; rowGrouped < self.groupedDataModel.count; rowGrouped++) { // rowGrouped is index for groupedDataModel
         
@@ -119,16 +123,12 @@
             continue;
         }
         
-        // Get effect dicts
+        /// Get effect dicts
         NSTableCellView *cell = [self.tableView viewAtColumn:1 row:rowGrouped makeIfNecessary:YES];
         if ([cell.identifier isEqual:@"effectCell"]) {
             NSPopUpButton *pb = cell.subviews[0];
-            NSString *selectedTitle = pb.selectedItem.title;
-            // Get effects table for row of sender
-            NSArray *effectsTable = [RemapTableTranslator getEffectsTableForRemapsTableEntry:self.dataModel[row]];
-            NSDictionary *effectsTableEntryForSelected = [RemapTableTranslator getEntryFromEffectsTable:effectsTable withUIString:selectedTitle];
-            NSDictionary *effectDictForSelected = effectsTableEntryForSelected[@"dict"];
-            // Write effect dict to data model
+            NSDictionary *effectDictForSelected = [RemapTableTranslator getEffectDictBasedOnSelectedItemInButton:pb rowDict:self.dataModel[row]];
+            /// Write effect dict to data model
             self.dataModel[row][kMFRemapsKeyEffect] = effectDictForSelected;
         } else {
             assert(false);
@@ -159,85 +159,237 @@
     
 }
 
+- (IBAction)submenuItemClicked:(NSMenuItem * _Nonnull)item {
+    
+    /// Find root menu
+    
+    NSMenuItem *rootItem = item;
+    while (true) {
+        NSMenuItem *nextRoot = rootItem.parentItem;
+        if (nextRoot == nil) {
+            break;
+        }
+        rootItem = nextRoot;
+    }
+    NSMenu *rootMenu = rootItem.menu;
+    
+    /// Find row that contains popupButton which has rootMenu (row which contains `item` / row which was clicked)
+    
+    NSInteger clickedRow = -1;
+    
+    for (int row = 0; row < self.tableView.numberOfRows; row++) {
+        NSTableCellView *effectCell = [self.tableView viewAtColumn:1 row:row makeIfNecessary:YES]; /// Why is makeIfNecessary == YES?
+        NSPopUpButton *pb = effectCell.subviews[0];
+        NSMenu *m = pb.menu;
+        
+        if ([m isEqual: rootMenu]) {
+            /// Clicked row found!
+            clickedRow = row;
+            break;
+        }
+    }
+    
+    /// Validate
+    
+    if (clickedRow == -1) {
+        NSLog(@"Couldn't find clickedRow in submenu item IBAction");
+        return;
+    }
+    
+    /// Convert clicked index to base dataModel
+    
+    NSInteger clickedRowInBaseDataModel = [RemapTableUtility baseDataModelIndexFromGroupedDataModelIndex:clickedRow withGroupedDataModel:self.groupedDataModel];
+    
+    /// Set action dict from item model to dataModel
+    
+    NSDictionary *itemModel = item.representedObject;
+    self.dataModel[clickedRowInBaseDataModel][kMFRemapsKeyEffect] = itemModel[@"dict"];
+    
+    /// Commit change
+    
+    [self writeDataModelToConfig];
+    [self.tableView reloadData];
+    
+}
+
 #pragma mark Lifecycle
 
 - (void)awakeFromNib {
-    // Force Autohiding scrollers - to keep layout consistent (doesn't work)
+    /// Force Autohiding scrollers - to keep layout consistent (doesn't work)
     self.scrollView.autohidesScrollers = YES;
     self.scrollView.scrollerStyle = NSScrollerStyleOverlay;
 }
 
 - (void)viewDidLoad {
-    // Not getting called for some reason -> I had to set the view outlet of the controller object in IB to the tableView.
+    /// Not getting called for some reason -> I had to set the view outlet of the controller object in IB to the tableView.
     
     DDLogDebug(@"RemapTableView did load.");
     
-    // Set rounded corners and appropriate border
+    /// Set rounded corners and appropriate border
     
     NSScrollView * scrollView = self.scrollView;
     
     CGFloat cr = 5.0;
-    // ^ Should be equal to cornerRadius of surrounding NSBox
-    //   Hardcoding this might lead to bad visuals on pre-BigSur macOS versions with lower corner radius, but idk how to access the NSBox's effective cornerRadius
+    /// ^ Should be equal to cornerRadius of surrounding NSBox
+    ///   Hardcoding this might lead to bad visuals on pre-BigSur macOS versions with lower corner radius, but idk how to access the NSBox's effective cornerRadius
     
     scrollView.borderType = NSNoBorder;
     scrollView.wantsLayer = YES;
     scrollView.layer.masksToBounds = YES;
-    if (@available(macOS 10.14, *)) {
-        scrollView.layer.borderColor = NSColor.separatorColor.CGColor;
-    } else {
-        scrollView.layer.borderColor = NSColor.gridColor.CGColor;
-    }
     scrollView.layer.borderWidth = 1.0;
     scrollView.layer.cornerRadius = cr;
     
-    // Load table data from config
+    scrollView.automaticallyAdjustsContentInsets = NO;
+    scrollView.contentInsets = NSEdgeInsetsMake(1, 1, 1, 1); /// Insets so the content doesn't overlap with the border
+    
+    
+    setBorderColor(self);
+    
+    /// Load table data from config
     [self loadDataModelFromConfig];
-    // Initialize sorting
+    /// Initialize sorting
     [self initSorting];
-    // Do first sorting (Not sure where soring and reloading is appropriate but this seems fine)
+    /// Do first sorting (Not sure where soring and reloading is appropriate but this seems fine)
     [self sortDataModel];
     [self.tableView reloadData];
     
     [RemapTableTranslator initializeWithTableView:self.tableView];
+    
+    /// Callback on darkmode toggle
+    
+    if (@available(macOS 10.14, *)) {
+        [self observeValueForKeyPath:@"effectiveAppearance" ofObject:NSApp change:nil context:nil];
+        [NSApp addObserver:self forKeyPath:@"effectiveAppearance" options:NSKeyValueObservingOptionNew context:nil];
+    }
+    
+    /// Init addRemoveControl state
+    [self updateAddRemoveControl];
+}
+
+static void setBorderColor(RemapTableController *object) {
+    if (@available(macOS 10.14, *)) {
+        /// Helper for viewDidLoad
+        
+        
+        NSColor *background = object.tableView.backgroundColor;
+        object.scrollView.layer.borderColor = [NSColor.separatorColor solidColorWithBackground:background].CGColor;
+        /// ^ The rgb values we get from the separatorColor don't change when darkmode is toggled while MMF is running. (We need those rgb values to get the `solidColorWithBackground:`). I can't find a workaround. If we use `separatorColor` directly, the color does change when darkmode is toggled while MMF is running, but the colors are also wrong...
+        /// We want the color to be solid to prevent the border chaning color when overlapping with the grid of the table.
+    } else {
+        object.scrollView.layer.borderColor = NSColor.gridColor.CGColor;
+    }
+}
+
+
+#pragma mark - Delegate & Controller
+/// Other methods from NSTableViewDelegate and NSTableViewConroller protocols
+
+- (void)tableViewSelectionDidChange:(NSNotification *)notification {
+    [self updateAddRemoveControl];
+}
+
+- (void)updateAddRemoveControl {
+    if (self.tableView.selectedRow == -1) {
+        /// No row selected
+        [self.addRemoveControl setEnabled:NO forSegment:1];
+    } else {
+        [self.addRemoveControl setEnabled:YES forSegment:1];
+    }
+}
+
+- (NSArray<NSTableViewRowAction *> *)tableView:(NSTableView *)tableView rowActionsForRow:(NSInteger)row edge:(NSTableRowActionEdge)edge {
+        
+    /// Define swipe actions
+    
+    return nil;
+    
+    if ((NO)) {
+        
+        NSMutableArray *result = [NSMutableArray array];
+        
+        if (edge == NSTableRowActionEdgeTrailing) {
+            
+            NSTableViewRowAction *deleteAction = [NSTableViewRowAction rowActionWithStyle:NSTableViewRowActionStyleDestructive title:@"Delete" handler:^(NSTableViewRowAction * _Nonnull action, NSInteger row) {
+                [self removeRow:row];
+            }];
+            deleteAction.image = [NSImage imageWithSystemSymbolName:@"trash.fill" accessibilityDescription:@"Delete"];
+            
+            [result addObject:deleteAction];
+        }
+        
+        return result;
+    }
+}
+
+#pragma mark - Observer
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    
+    if ([keyPath isEqual:@"effectiveAppearance"]) {
+        
+        static NSAppearanceName initialAppearance = @"";
+        static BOOL effectiveAppearanceIsInitialized = NO; /// Prevent table reload when appearance is initially set
+        if (!effectiveAppearanceIsInitialized) {
+            effectiveAppearanceIsInitialized = YES;
+            initialAppearance = self.tableView.effectiveAppearance.name;
+        } else {
+            
+            NSAppearance *newAppearance = change[@"new"];
+            
+            if ([newAppearance.name isEqual:initialAppearance]) {
+                setBorderColor(self);
+            } else {
+                self.scrollView.layer.borderColor = NSColor.clearColor.CGColor; /// `setBorderColor()` doesn't work right. This makes scrollView borders disappear completely which is better.
+            }
+            
+            [self.tableView updateLayer];
+            [self.tableView reloadData];
+            /// ^ The only reason we do this is currently because the sfsymbols for the function keys should be different weight for darkmode and lightmode. Reloading the whole table is pretty inefficient, but it's fast enough.
+        }
+    }
+    
 }
 
 #pragma mark - IBActions
 
-// IBActions
-- (IBAction)addRemoveControl:(id)sender {
-    if ([sender selectedSegment] == 0) {
+- (IBAction)addRemoveControl:(NSSegmentedControl *)sender {
+    if (sender.selectedSegment == 0) {
         [self addButtonAction];
     } else {
-        [self removeButtonAction];
+        /// Get selected table row index
+        if (self.tableView.selectedRowIndexes.count == 0) return;
+        assert(self.tableView.selectedRowIndexes.count == 1);
+        NSUInteger selectedRow = self.tableView.selectedRowIndexes.firstIndex;
+        /// Remove selected row
+        [self removeRow:selectedRow];
     }
 }
-- (void)removeButtonAction {
+- (IBAction)rightClickRemoveButton:(id)sender {
+    [self removeRow:self.tableView.clickedRow];
+}
+
+- (void)removeRow:(NSInteger)rowToRemove {
+    /// `rowToRemove` is relative to actual table / groupedDataModel. Not baseDataModel
     
     /// Capture notifs
     NSSet<NSNumber *> *capturedButtonsBefore = [RemapTableUtility getCapturedButtons];
     
-    /// Get selected table index
-    if (self.tableView.selectedRowIndexes.count == 0) return;
-    assert(self.tableView.selectedRowIndexes.count == 1);
-    NSUInteger selectedTableIndex = self.tableView.selectedRowIndexes.firstIndex;
+    // Get base data model index corresponding to selected table index
+    NSUInteger dataModelRowToRemove = [RemapTableUtility baseDataModelIndexFromGroupedDataModelIndex:rowToRemove withGroupedDataModel:self.groupedDataModel];
     
-    /// Get base data model index corresponding to selected table index
-    NSUInteger selectedDataModelIndex = [RemapTableUtility baseDataModelIndexFromGroupedDataModelIndex:selectedTableIndex withGroupedDataModel:self.groupedDataModel];
-    
-    /// Save rowDict to be removed for later
-    NSDictionary *removedRowDict = self.dataModel[selectedDataModelIndex];
+    // Save rowDict to be removed for later
+    NSDictionary *removedRowDict = self.dataModel[dataModelRowToRemove];
     
     /// Remove object from data model at selected index, and write to file
     NSMutableArray *mutableDataModel = self.dataModel.mutableCopy;
-    [mutableDataModel removeObjectAtIndex:selectedDataModelIndex];
+    [mutableDataModel removeObjectAtIndex:dataModelRowToRemove];
     self.dataModel = (NSArray *)mutableDataModel;
     [self writeDataModelToConfig];
     [self loadDataModelFromConfig]; // Not sure if necessary
     
     /// Remove rows from table with animation
     
-    NSMutableIndexSet *rowsToRemoveWithAnimation = [[NSMutableIndexSet alloc] initWithIndex:selectedTableIndex];
+    NSMutableIndexSet *rowsToRemoveWithAnimation = [[NSMutableIndexSet alloc] initWithIndex:rowToRemove];
     
     /// Check if a buttonGroupRow should be with animation removed, too
     MFMouseButtonNumber removedRowTriggerButton = [RemapTableUtility triggerButtonForRow:removedRowDict];
@@ -249,7 +401,7 @@
         }
     }
     if (!buttonIsStillTriggerInDataModel) { // Yes, we want to remove a group row, too
-        [rowsToRemoveWithAnimation addIndex:selectedTableIndex-1];
+        [rowsToRemoveWithAnimation addIndex:rowToRemove-1];
         
     }
     
@@ -265,7 +417,7 @@
     [AddWindowController begin];
 }
 
-#pragma mark Interface functions
+#pragma mark Interface
 
 - (void)addRowWithHelperPayload:(NSDictionary *)payload {
     
@@ -337,7 +489,7 @@
 
 }
 
-#pragma mark - TableView data source functions
+#pragma mark - Data source
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     // Get data for this row
@@ -623,6 +775,7 @@ NSArray *groupedDataModel_FromLastGroupedDataModelAccess;
 }
 
 /// Helper function for determining if a row is a group row
+
 static BOOL isGroupRow(NSArray *groupedDataModel, NSInteger row) {
     return [groupedDataModel[row] isEqual:RemapTableUtility.buttonGroupRowDict];
 }
@@ -632,7 +785,7 @@ static BOOL isGroupRow(NSArray *groupedDataModel, NSInteger row) {
 }
 /// Disable selection of groupRows. This prevents users from deleting group rows which leads to problems.
 - (BOOL)tableView:(NSTableView *)tableView shouldSelectRow:(NSInteger)row {
-    return !isGroupRow(self.groupedDataModel, row);
+    return !isGroupRow(self.groupedDataModel, row) && self.tableView.isEnabled;
 }
 
 /// The tableview will apply its own style to the NSTableCellViews' textField property in group rows.

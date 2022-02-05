@@ -14,16 +14,28 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSAttributedString (Additions)
 
-- (NSAttributedString *)attributedStringByFillingOutDefaultAttributes;
+- (NSAttributedString *)attributedStringByAddingBaseLineOffset:(CGFloat)offset;
 
-- (NSAttributedString *)attributedStringByAddingBaseAttributes:(NSDictionary<NSAttributedStringKey, id> *)baseAttributes;
+- (NSString *)coolString;
+
+- (NSAttributedString *)attributedStringByAddingFontTraits:(NSDictionary<NSFontDescriptorTraitKey, id> *)traits;
+- (NSAttributedString *)attributedStringByAddingWeight:(NSFontWeight)weight;
+
+- (NSAttributedString *)attributedStringByAddingSymbolicFontTraits:(NSFontDescriptorSymbolicTraits)traits forSubstring:(NSString *)subStr;
+- (NSAttributedString *)attributedStringByAddingSymbolicFontTraits:(NSFontDescriptorSymbolicTraits)traits;
+
+- (NSAttributedString *)attributedStringByFillingOutBase;
+
+- (NSAttributedString *)attributedStringByAddingStringAttributesAsBase:(NSDictionary<NSAttributedStringKey, id> *)baseAttributes;
 - (NSAttributedString *)attributedStringByAddingLinkWithURL:(NSURL *)linkURL forSubstring:(NSString *)substring;
 - (NSAttributedString *)attributedStringByAddingBoldForSubstring:(NSString *)subStr;
 - (NSAttributedString *)attributedStringByAddingSemiBoldForSubstring:(NSString *)subStr;
 - (NSAttributedString *)attributedStringBySettingSemiBoldColorForSubstring:(NSString *)subStr;
+- (NSAttributedString *)attributedStringByAddingBold;
 - (NSAttributedString *)attributedStringByAddingItalicForSubstring:(NSString *)subStr;
 - (NSAttributedString *)attributedStringByAligningSubstring:(NSString *)subStr alignment:(NSTextAlignment)alignment;
-- (NSAttributedString *)attributedStringByAddingThinForSubstring:(NSString *)subStr;
+- (NSAttributedString *)attributedStringBySettingWeight:(NSInteger)weight;
+- (NSAttributedString *)attributedStringBySettingThinForSubstring:(NSString *)subStr;
 - (NSAttributedString *)attributedStringBySettingFontSize:(CGFloat)size;
 - (NSAttributedString *)attributedStringBySettingSecondaryButtonTextColorForSubstring:(NSString *)subStr;
 + (NSAttributedString *)hyperlinkFromString:(NSString *)inString withURL:(NSURL *)aURL;

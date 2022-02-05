@@ -15,7 +15,7 @@
 
 @implementation AppTranslocationManager
 
-CFURLRef getAppURL() {
+CFURLRef getAppURL(void) {
     
     return (__bridge CFURLRef)[NSURL fileURLWithPath:NSBundle.mainBundle.bundlePath];
 }
@@ -30,7 +30,7 @@ void *getFunctionFromSecurityFramework(const char *functionName) {
     return dlsym(handle, functionName);
 }
 
-bool getIsTranslocated() {
+bool getIsTranslocated(void) {
     
     bool isTranslocated = false;
     
@@ -51,7 +51,7 @@ bool getIsTranslocated() {
     return isTranslocated;
 }
 
-NSURL *getUntranslocatedURL() {
+NSURL *getUntranslocatedURL(void) {
     
     NSURL* untranslocatedURL = nil;
     

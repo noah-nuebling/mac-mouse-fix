@@ -45,7 +45,7 @@ static MoreSheet *_instance;
     [self updateConfigFileToUIState];
     [self updateUI]; // So that prereleaseCheckBox gets disabled/enabled
     if (sender.state == 1) {
-        [SUUpdater.sharedUpdater checkForUpdates:nil];
+        [SUUpdater.sharedUpdater checkForUpdatesInBackground];
         
     }
 }
