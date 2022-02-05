@@ -7,9 +7,9 @@
 // --------------------------------------------------------------------------
 //
 
-#import "CustomScrollView.h"
+#import "MFScrollView.h"
 
-@implementation CustomScrollView
+@implementation MFScrollView
 
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];

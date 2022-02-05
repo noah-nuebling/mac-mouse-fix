@@ -19,7 +19,7 @@
 		4F2F5DB225FB723D0037660A /* AddWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F2F5DB125FB723D0037660A /* AddWindow.xib */; };
 		4F2FDF332315662500C7BE14 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2FDF322315662500C7BE14 /* main.m */; };
 		4F319CBB26252A2D004E5F63 /* ButtonGroupRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F319CBA26252A2D004E5F63 /* ButtonGroupRowView.m */; };
-		4F37FAD825FDFDC5004C34C4 /* CustomScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F37FAD725FDFDC4004C34C4 /* CustomScrollView.m */; };
+		4F37FAD825FDFDC5004C34C4 /* MFScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */; };
 		4F39BC26263AC31600FDF692 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F39BC24263AC2E800FDF692 /* Sparkle.framework */; };
 		4F39BC27263AC31600FDF692 /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F39BC24263AC2E800FDF692 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F39BC3B263AF2B000FDF692 /* SparkleUpdaterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F39BC3A263AF2B000FDF692 /* SparkleUpdaterController.m */; };
@@ -280,8 +280,7 @@
 		4F2FDF322315662500C7BE14 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4F319CB926252A2D004E5F63 /* ButtonGroupRowView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonGroupRowView.h; sourceTree = "<group>"; };
 		4F319CBA26252A2D004E5F63 /* ButtonGroupRowView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ButtonGroupRowView.m; sourceTree = "<group>"; };
-		4F37FAD625FDFDC4004C34C4 /* CustomScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomScrollView.h; sourceTree = "<group>"; };
-		4F37FAD725FDFDC4004C34C4 /* CustomScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomScrollView.m; sourceTree = "<group>"; };
+		4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFScrollView.m; sourceTree = "<group>"; };
 		4F39BC24263AC2E800FDF692 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		4F39BC39263AF2B000FDF692 /* SparkleUpdaterController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SparkleUpdaterController.h; sourceTree = "<group>"; };
 		4F39BC3A263AF2B000FDF692 /* SparkleUpdaterController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SparkleUpdaterController.m; sourceTree = "<group>"; };
@@ -366,6 +365,7 @@
 		4FB4F9FD260FDBC800806DDD /* RemapTableUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapTableUtility.m; sourceTree = "<group>"; };
 		4FB4FA1E2611DD6000806DDD /* KeyCaptureScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyCaptureScrollView.h; sourceTree = "<group>"; };
 		4FB4FA1F2611DD6000806DDD /* KeyCaptureScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KeyCaptureScrollView.m; sourceTree = "<group>"; };
+		4FB5FE8A27AE563F0092C9B4 /* MFScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MFScrollView.h; sourceTree = "<group>"; };
 		4FBC9434260F8AA60062F186 /* MASShortcut.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASShortcut.m; sourceTree = "<group>"; };
 		4FBC9436260F8AA60062F186 /* MASShortcut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASShortcut.h; sourceTree = "<group>"; };
 		4FBC9437260F8AA60062F186 /* MASKeyMasks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASKeyMasks.h; sourceTree = "<group>"; };
@@ -1096,8 +1096,8 @@
 				4F1C51D9260543DD007F4930 /* NSTextField+Additions.m */,
 				4F79A8292605074000076A7E /* NSAttributedString+Additions.h */,
 				4F79A82A2605074000076A7E /* NSAttributedString+Additions.m */,
-				4F37FAD625FDFDC4004C34C4 /* CustomScrollView.h */,
-				4F37FAD725FDFDC4004C34C4 /* CustomScrollView.m */,
+				4FB5FE8A27AE563F0092C9B4 /* MFScrollView.h */,
+				4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */,
 				4FF665C425F2C92700689B77 /* MFSegmentedControl.h */,
 				4FF665C125F2C92700689B77 /* MFSegmentedControl.m */,
 				4FF665E625F2C92700689B77 /* ClickableImageView.h */,
@@ -1924,7 +1924,7 @@
 				4FB4FA202611DD6000806DDD /* KeyCaptureScrollView.m in Sources */,
 				4F9E78BF26855BCF002C2309 /* Concurrency.swift in Sources */,
 				4F92A708260F4BF000529D1F /* RemapTableView.m in Sources */,
-				4F37FAD825FDFDC5004C34C4 /* CustomScrollView.m in Sources */,
+				4F37FAD825FDFDC5004C34C4 /* MFScrollView.m in Sources */,
 				4FF665F825F2C92700689B77 /* MessagePort_App.m in Sources */,
 				4F319CBB26252A2D004E5F63 /* ButtonGroupRowView.m in Sources */,
 				4F79A82B2605074000076A7E /* NSAttributedString+Additions.m in Sources */,

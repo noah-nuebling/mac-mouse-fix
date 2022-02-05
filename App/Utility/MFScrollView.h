@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CustomScrollView : NSScrollView
+@interface MFScrollView : NSScrollView
 
 @end
 
