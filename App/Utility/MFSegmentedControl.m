@@ -7,11 +7,11 @@
 // --------------------------------------------------------------------------
 //
 
-#import "CustomSegmentedControl.h"
+#import "MFSegmentedControl.h"
 #import <Carbon/Carbon.h>
 #import "WannabePrefixHeader.h"
 
-@interface CustomSegmentedControl ()
+@interface MFSegmentedControl ()
 @property (nonatomic) IBInspectable NSNumber *keyEquivKC;
 @end
 
@@ -20,7 +20,7 @@
  - Delete -> kVK_Delete -> 0x33 -> 51
 */
 
-@implementation CustomSegmentedControl
+@implementation MFSegmentedControl
 
 - (BOOL)performKeyEquivalent:(NSEvent *)key {
     
