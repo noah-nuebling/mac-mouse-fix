@@ -190,8 +190,8 @@ static void postSymbolicHotkey(CGSSymbolicHotKey shk) {
         CGSModifierFlags newModifierFlags = 10485760; /// 0 Didn't work in my testing. This seems to be the 'empty' CGSModifierFlags value, used to signal that no modifiers are pressed. TODO: Test if this works
         CGError err = CGSSetSymbolicHotKeyValue(shk, newKeyEquivalent, newKeyCode, newModifierFlags);
         if (err != kCGErrorSuccess) {
-            NSLog(@"Error setting shk params: %d", err);
-            /// Do again or something if setting shk goes wrong
+            DDLogError(@"Error setting shk params: %d", err);
+            /// TODO: Do again or something if setting shk goes wrong?
     }
     
         /// Post keyboard events trigger shk
@@ -280,7 +280,7 @@ BOOL shkBindingIsUsable(CGKeyCode keyCode, unichar keyEquivalent) {
 }
 
 BOOL getCharsForKeyCode(CGKeyCode keyCode, NSString **chars) {
-    /// Get chars for a given keycode.
+    /// Get chars for a given keycode. Based on currently active keyboard layout
     /// Returns success
     ///
     /// TODO: Think about putting this into some utility class
@@ -326,7 +326,7 @@ BOOL getCharsForKeyCode(CGKeyCode keyCode, NSString **chars) {
     /// Check errors
     
     if (r != noErr) {
-        NSLog(@"UCKeyTranslate() failed with error code: %d", r);
+        DDLogError(@"UCKeyTranslate() failed with error code: %d", r);
         *chars = @"";
         return NO;
     }

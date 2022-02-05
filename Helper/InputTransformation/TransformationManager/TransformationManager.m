@@ -270,7 +270,7 @@ CGEventRef  _Nullable keyCaptureModeCallback(CGEventTapProxy proxy, CGEventType 
         
         if (keyCaptureModePayloadIsValidWithEvent(e, flags, type)) {
             
-            NSLog(@"System event data1: %ld, data2: %ld", e.data1, e.data2); /// Debug
+            DDLogDebug(@"Capturing system event with data1: %ld, data2: %ld", e.data1, e.data2);
             
             payload = @{
                 @"systemEventType": @(type),

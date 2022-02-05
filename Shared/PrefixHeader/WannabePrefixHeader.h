@@ -20,10 +20,12 @@
 @import CocoaLumberjack;
 //#import <CocoaLumberjack/CocoaLumberjack.h>
 
-// Set default CocoaLumberjack loglevel for the project (can be overriden)
-//  More on loglevels here: https://github.com/CocoaLumberjack/CocoaLumberjack/blob/master/Documentation/GettingStarted.md
-//      General note on my use of CocoaLumberjack: I plan on not using the verbose channel for logging at all because it doesn't make sense for me to differentiate it from the debug channel. I probably won't use Error and Warn either because it's too much work to migrate all my old NSLog Statements into all these different categories. So I'll just use Info and Debug channels. At least for now.
-//      And therefore the only interesting log _levels_ are also Info and Debug
+/// Set default CocoaLumberjack loglevel for the project (can be overriden)
+///  More on loglevels here: https://github.com/CocoaLumberjack/CocoaLumberjack/blob/master/Documentation/GettingStarted.md
+///      General note on my use of CocoaLumberjack: I plan on not using the verbose channel for logging at all because it doesn't make sense for me to differentiate it from the debug channel. I probably won't use Error and Warn either because it's too much work to migrate all my old NSLog Statements into all these different categories. So I'll just use Info and Debug channels. At least for now.
+///      And therefore the only interesting log _levels_ are also Info and Debug
+///      Edit: I've since started using Error and Warn in some places.
+
 
 
 #if DEBUG

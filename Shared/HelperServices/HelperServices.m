@@ -57,7 +57,7 @@
             if (enable == NO) { // Cleanup (delete launchdPlist) file after were done // We can't clean up immediately cause then launchctl will fail
                 cleanup();
             }
-            NSLog(@"launchctl terminated with stdout/stderr: %@, error: %@", [NSString.alloc initWithData:pipe.fileHandleForReading.readDataToEndOfFile encoding:NSUTF8StringEncoding], error);
+            DDLogInfo(@"launchctl terminated with stdout/stderr: %@, error: %@", [NSString.alloc initWithData:pipe.fileHandleForReading.readDataToEndOfFile encoding:NSUTF8StringEncoding], error);
         };
         [task launchAndReturnError:&error];
         
@@ -70,7 +70,7 @@ static void cleanup() {
     NSError *error;
     [NSFileManager.defaultManager removeItemAtURL:Objects.launchdPlistURL error:&error];
     if (error != nil) {
-        NSLog(@"Failed to delete launchd.plist file. The helper will likely be re-enabled on startup. Delete the file at \"%@\" to prevent this.", Objects.launchdPlistURL.path); /// TODO: Make this a DDLogError() statement
+        DDLogError(@"Failed to delete launchd.plist file. The helper will likely be re-enabled on startup. Delete the file at \"%@\" to prevent this.", Objects.launchdPlistURL.path);
     }
 }
 
@@ -95,7 +95,7 @@ static void cleanup() {
         /// When to use autoreleasepool: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/MemoryMgmt/Articles/mmAutoreleasePools.html
         /// When autoreleased objects are sent release messages: https://stackoverflow.com/questions/673372/when-does-autorelease-actually-cause-a-release-in-cocoa-touch
         
-        NSLog(@"Repairing User Agent Config File");
+        DDLogInfo(@"Repairing User Agent Config File");
         
         /// Declare error
         NSError *error;
@@ -133,20 +133,20 @@ static void cleanup() {
             }
             
             /// Debug
-//            NSLog(@"objectForKey: %@", OBJForKey);
-//            NSLog(@"helperExecutablePath: %@", helperExecutablePath);
-//            NSLog(@"OBJ == Path: %d", OBJForKey isEqualToString: helperExecutablePath);
+//            DDLogDebug(@"objectForKey: %@", OBJForKey);
+//            DDLogDebug(@"helperExecutablePath: %@", helperExecutablePath);
+//            DDLogDebug(@"OBJ == Path: %d", OBJForKey isEqualToString: helperExecutablePath);
         }
         
         /// Log
         
-        NSLog(@"launchdPlistExists %hhd, launchdPlistIsCorrect: %hhd", launchdPlist_exists,launchdPlist_executablePathIsCorrect);
+        DDLogInfo(@"launchdPlistExists %hhd, launchdPlistIsCorrect: %hhd", launchdPlist_exists,launchdPlist_executablePathIsCorrect);
         
         if ((launchdPlist_exists == FALSE) || (launchdPlist_executablePathIsCorrect == FALSE)) {
             /// The config file doesn't exist, or the executable path within it is not correct
             ///  -> Acutally repair stuff
             
-            NSLog(@"repairing file...");
+            DDLogInfo(@"repairing file...");
             
             /// Check if "User/Library/LaunchAgents" folder exists, if not, create it
             
@@ -156,7 +156,7 @@ static void cleanup() {
             
             if (launchAgentsFolderExists == NO) {
                 
-                NSLog(@"LaunchAgents folder doesn't exist");
+                DDLogInfo(@"LaunchAgents folder doesn't exist");
                 NSError *error;
                 
                 /// Create LaunchAgents folder
@@ -164,11 +164,11 @@ static void cleanup() {
                 error = nil;
                 [fileManager createDirectoryAtPath:launchAgentsFolderPath withIntermediateDirectories:FALSE attributes:nil error:&error];
                 if (error == nil) {
-                    NSLog(@"LaunchAgents Folder Created");
+                    DDLogInfo(@"LaunchAgents Folder Created");
                 } else if (error.code == NSFileWriteNoPermissionError) {
-                    NSLog(@"Lacking permission to create LaunchAgents folder. Error: %@", error);
+                    DDLogError(@"Lacking permission to create LaunchAgents folder. Error: %@", error);
                 } else {
-                    NSLog(@"Error creating LaunchAgents Folder: %@", error);
+                    DDLogError(@"Error creating LaunchAgents Folder: %@", error);
                 }
             }
             
@@ -176,7 +176,7 @@ static void cleanup() {
             
             error = makeWritable(launchAgentsFolderPath);
             if (error) {
-                NSLog(@"Failed to make LaunchAgents folder writable. Error: %@", error);
+                DDLogError(@"Failed to make LaunchAgents folder writable. Error: %@", error);
             }
             
             /// Repair the contents of the launchdPlist file
@@ -202,10 +202,10 @@ static void cleanup() {
             [newLaunchdPlist_data writeToFile:launchdPlist_path options:NSDataWritingAtomic error:&error];
             
             if (error != nil) {
-                NSLog(@"repairUserAgentConfigFile() -- Data Serialization Error: %@", error);
+                DDLogError(@"repairUserAgentConfigFile() -- Data Serialization Error: %@", error);
             }
         } else {
-            NSLog(@"Nothing to repair");
+            DDLogInfo(@"Nothing to repair");
         }
     }
     
@@ -239,7 +239,7 @@ static NSError *makeWritable(NSString *itemPath) {
         
         /// Log
         
-        NSLog(@"File at %@ is not writable. Attempting to change permissions.", itemPath);
+        DDLogWarn(@"File at %@ is not writable. Attempting to change permissions.", itemPath);
         
         /// Declare error
         
@@ -273,7 +273,7 @@ static NSError *makeWritable(NSString *itemPath) {
         
         /// Debug
         
-        NSLog(@"Changed permissions of %@ from %@ to %@", itemPath,  [SharedUtility binaryRepresentation:(int)oldPermissions], [SharedUtility binaryRepresentation:(int)newPermissions]);
+        DDLogInfo(@"Changed permissions of %@ from %@ to %@", itemPath,  [SharedUtility binaryRepresentation:(int)oldPermissions], [SharedUtility binaryRepresentation:(int)newPermissions]);
         /// ^ Binary representation doesn't really help. This is almost impossible to parse visually.
     }
     
@@ -304,15 +304,15 @@ static NSError *makeWritable(NSString *itemPath) {
     BOOL exitStatusIsZero = [launchctlOutput rangeOfString: @"\"LastExitStatus\" = 0;"].location != NSNotFound;
     
     if (self.strangeHelperIsRegisteredWithLaunchd) {
-        NSLog(@"Found helper running somewhere else.");
+        DDLogWarn(@"Found helper running somewhere else.");
         return NO;
     }
     
     if (labelFound && exitStatusIsZero) { // Why check for exit status here?
-        NSLog(@"MOUSE REMAPOR FOUNDD AND ACTIVE");
+        DDLogInfo(@"MOUSE REMAPOR FOUNDD AND ACTIVE");
         return YES;
     } else {
-        NSLog(@"Helper is not active");
+        DDLogInfo(@"Helper is not active");
         return NO;
     }
     
@@ -322,7 +322,7 @@ static NSError *makeWritable(NSString *itemPath) {
 
 + (void)runPreviousVersionCleanup {
     
-    NSLog(@"Cleaning up stuff from previous versions");
+    DDLogInfo(@"Cleaning up stuff from previous versions");
     
     if (self.strangeHelperIsRegisteredWithLaunchd) {
         [self removeHelperFromLaunchd];
@@ -342,11 +342,11 @@ static NSError *makeWritable(NSString *itemPath) {
     
     if (!launchdPathIsBundlePath && launchdPathExists) {
         
-        NSLog(@"Strange helper: found at: %@ \nbundleExecutable at: %@", launchdPath, Objects.helperBundle.executablePath);
+        DDLogWarn(@"Strange helper: found at: %@ \nbundleExecutable at: %@", launchdPath, Objects.helperBundle.executablePath);
         return YES;
     }
     
-    NSLog(@"Strange Helper: not found");
+    DDLogInfo(@"Strange Helper: not found");
     
     return NO;
 }
@@ -358,11 +358,11 @@ static NSError *makeWritable(NSString *itemPath) {
     /// Launchd-started instances will immediately be restarted after they are terminated
     /// Mac Mouse Fix Accomplice does something similar to this in update()
     
-    NSLog(@"Terminating other Helper instances");
+    DDLogInfo(@"Terminating other Helper instances");
     
     NSArray<NSRunningApplication *> *instances = [NSRunningApplication runningApplicationsWithBundleIdentifier:kMFBundleIDHelper];
     
-    NSLog(@"%lu other running Helper instances found", (unsigned long)instances.count);
+    DDLogInfo(@"%lu other running Helper instances found", (unsigned long)instances.count);
         
     for (NSRunningApplication *instance in instances) {
         [instance terminate]; // Consider using forceTerminate instead
@@ -374,13 +374,13 @@ static NSError *makeWritable(NSString *itemPath) {
 /// From my testing this does the same as the `bootout` command, but it doesn't rely on a valid launchd.plist file to exist in the library, so it should be more robust.
 + (void)removeHelperFromLaunchd {
     
-    NSLog(@"Removing Helper from launchd");
+    DDLogInfo(@"Removing Helper from launchd");
     
     NSURL *launchctlURL = [NSURL fileURLWithPath:kMFLaunchctlPath];
     NSError *err;
     [SharedUtility launchCTL:launchctlURL withArguments:@[@"remove", kMFLaunchdHelperIdentifier] error:&err];
     if (err != nil) {
-        NSLog(@"Error removing Helper from launchd: %@", err);
+        DDLogError(@"Error removing Helper from launchd: %@", err);
     }
 }
 
@@ -390,7 +390,7 @@ static NSError *makeWritable(NSString *itemPath) {
 /// Having the old version still can lead to the old helper being started at startup, and I think other conflicts, too.
 + (void)removeLegacyLaunchdPlist {
     
-    NSLog(@"Removing legacy launchd plist");
+    DDLogInfo(@"Removing legacy launchd plist");
     
     // Find user library
     NSArray<NSString *> *libraryPaths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
@@ -402,10 +402,10 @@ static NSError *makeWritable(NSString *itemPath) {
     if ([NSFileManager.defaultManager fileExistsAtPath:legacyLaunchdPlistPath]) {
         [NSFileManager.defaultManager removeItemAtPath:legacyLaunchdPlistPath error:&err];
         if (err) {
-            NSLog(@"Error while removing legacy launchd plist file: %@", err);
+            DDLogError(@"Error while removing legacy launchd plist file: %@", err);
         }
     } else  {
-        NSLog(@"No legacy launchd plist file found at: %@", legacyLaunchdPlistPath);
+        DDLogInfo(@"No legacy launchd plist file found at: %@", legacyLaunchdPlistPath);
     }
 }
 

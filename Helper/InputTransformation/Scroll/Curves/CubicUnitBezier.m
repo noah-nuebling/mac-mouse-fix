@@ -88,7 +88,7 @@ double solveCurveX(double x, double epsilon)
     // First try a few iterations of Newton's method -- normally very fast.
     for (t2 = x, i = 0; i < 8; i++) {
         
-//        NSLog(@"Newtons method iteration: %d", i);
+//        DDLogDebug(@"Newtons method iteration: %d", i);
         
         x2 = sampleCurveX(t2) - x;
         if (fabs (x2) < epsilon)

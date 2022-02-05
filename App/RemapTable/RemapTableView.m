@@ -35,6 +35,7 @@
     
     NSPoint clickedPoint = [self convertPoint:event.locationInWindow fromView:nil];
     NSInteger clickedRow = [self rowAtPoint:clickedPoint];
+    
     if (clickedRow != -1) {
         if ([self.delegate tableView:self shouldSelectRow:clickedRow]) {
             /// Select clicked row

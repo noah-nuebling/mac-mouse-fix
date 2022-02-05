@@ -192,8 +192,9 @@
     /// Validate
     
     if (clickedRow == -1) {
-        NSLog(@"Couldn't find clickedRow in submenu item IBAction");
+        DDLogError(@"Couldn't find clickedRow in submenu item IBAction");
         return;
+        /// TODO: Maybe handle this better? Crash the app so it doesn't corrupt data or sth?
     }
     
     /// Convert clicked index to base dataModel

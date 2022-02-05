@@ -130,7 +130,7 @@
     /// Validate
     
     if ([symbolName isEqual: @"questionmark.square"]) {
-        NSLog(@"Couldn't find visualization for system event with type: %d, flags: %llu", type, flags);
+        DDLogWarn(@"Couldn't find visualization for system event with type: %d, flags: %llu", type, flags);
     }
     
     /// Get symbol and attach it to keyStr
@@ -173,39 +173,46 @@ static CGSSymbolicHotKey _highestSymbolicHotKeyInCache = 0;
         /// Try to retrieve from cache
         symbolicHotkey = _hotKeyCache[@(keyCode)][@(flags)];
         
-        ///  Search new value
+        /// If not found in cache - search new value
         if (symbolicHotkey == nil) {
             
-            CGSSymbolicHotKey h = _highestSymbolicHotKeyInCache;
-            while (h < 512) { /// 512 is arbitrary
+            CGSSymbolicHotKey shk = _highestSymbolicHotKeyInCache;
+            while (shk < 512) { /// 512 is arbitrary
+                                
                 unichar keyEquivalent;
                 CGKeyCode virtualKeyCode;
                 CGSModifierFlags modifiers;
-                CGSGetSymbolicHotKeyValue(h, &keyEquivalent, &virtualKeyCode, &modifiers);
+                
+                CGSGetSymbolicHotKeyValue(shk, &keyEquivalent, &virtualKeyCode, &modifiers);
                 if (virtualKeyCode == 126) {
-                    NSLog(@"");
+                    /// Why did we put this if-statement??
                 }
+                
                 if (_hotKeyCache[@(virtualKeyCode)] == nil) {
                     _hotKeyCache[@(virtualKeyCode)] = [NSMutableDictionary dictionary];
                 }
-                _hotKeyCache[@(virtualKeyCode)][@(modifiers)] = @(h);
+                
+                /// Store in cache for later
+                _hotKeyCache[@(virtualKeyCode)][@(modifiers)] = @(shk);
+                
+                /// Check if shk is what we're looking for.
                 if (((CGKeyCode)virtualKeyCode) == keyCode) {
-                    symbolicHotkey = @(h);
+                    symbolicHotkey = @(shk);
                     break;
                 }
-                h++;
+                
+                shk++;
             }
         }
         
-        /// If found, generate keyStr based on shk
+        /// If symbolicHotKey found for keyCode and flags -> generate keyStr based on symbolicHotKey
         
         if (symbolicHotkey != nil) {
+            
             CGSSymbolicHotKey shk = (CGSSymbolicHotKey)symbolicHotkey.integerValue;
+            
             NSString *symbolName = @"questionmark.square";
             NSString *stringFallback = @"<Key without description>";
-            
-            /// Debug
-            NSLog(@"shk: %d", shk);
             
             if (shk == kMFFunctionKeySHKMissionControl) {
                 symbolName = @"rectangle.3.group";
@@ -233,7 +240,7 @@ static CGSSymbolicHotKey _highestSymbolicHotKeyInCache = 0;
             /// Validate
             
             if ([symbolName isEqual:@"questionmark.square"]) {
-                NSLog(@"Couldn't find visualization for keyCode: %d, flags: %llu, symbolicHotKey: %@", keyCode, flags, symbolicHotkey);
+                DDLogError(@"Couldn't find visualization for keyCode: %d, flags: %llu, symbolicHotKey: %@", keyCode, flags, symbolicHotkey);
             }
         }
         
