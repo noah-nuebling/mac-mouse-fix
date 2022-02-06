@@ -305,15 +305,13 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
         /// ^ This is just the current pointer location, but obtained without a CGEvent. However this didn't quite work because ofs.x and ofs.y are integers while origin.x and origin.y are floats. I tried to roud the values myself to counterbalance this, but it didn't work, so I'm just passing in a CGEvent and getting the location from that. See below v
         _drag.usageOrigin = getRoundedPointerLocationWithEvent(event);
         
-        /// Get display under mouse pointer
-        CVReturn rt = [Utility_Helper display:&_drag.display atPoint:_drag.usageOrigin];
-        if (rt != kCVReturnSuccess) DDLogWarn(@"Couldn't get display under mouse pointer in modifiedDrag");
-        
         /// Do weird stuff
         Device *dev = _drag.modifiedDevice;
         if (inputIsPointerMovement) {
 //            [NSCursor.closedHandCursor push]; // Doesn't work for some reason
         } else {
+            assert(false);
+            
             if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) { /// Only seize when drag scrolling // TODO: Would be cleaner to call this further down where we check for kMFModifiedDragVariantTwoFingerSwipe anyways. Does that work too?
                 [dev receiveAxisInputAndDoSeizeDevice:YES];
             }
@@ -324,7 +322,7 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
         /// Send modifier feedback
         [ModifierManager handleModifiersHaveHadEffectWithDevice:dev.uniqueID];
         
-        //// Get usage axis
+        /// Get usage axis
         if (fabs(ofs.x) < fabs(ofs.y)) {
             _drag.usageAxis = kMFAxisVertical;
         } else {
@@ -353,6 +351,10 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
             CFRelease(spaces);
             
         } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
+            
+            /// Get display under mouse pointer
+            CVReturn rt = [Utility_Helper display:&_drag.display atPoint:_drag.usageOrigin];
+            if (rt != kCVReturnSuccess) DDLogWarn(@"Couldn't get display under mouse pointer in modifiedDrag");
             
             /// Draw puppet cursor before hiding
             drawPuppetCursor(YES, YES);
@@ -392,42 +394,32 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
 // Only passing in event to obtain event location to get slightly better behaviour for fakeDrag
 void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event) {
     
-    double twoFingerScale;
-    double threeFingerScaleH;
-    double threeFingerScaleV;
-    
-    /**
-     Horizontal dockSwipe scaling
-        This makes horizontal dockSwipes (switch between spaces) follow the pointer exactly. (If everything works)
-        I arrived at these value through testing documented in the NotePlan note "MMF - Scraps - Testing DockSwipe scaling"
-        TODO: Test this on a vertical screen
-     */
-    double originOffsetForOneSpace = _nOfSpaces == 1 ? 2.0 : 1.0 + (1.0 / (_nOfSpaces-1));
-    /// ^ I've seen this be: 1.25, 1.5, 2.0. Not sure why. Restarting, attaching displays, or changing UI scaling don't seem to change it from my testing. It just randomly changes after a few weeks.
-    ///     I think I finally see the pattern:
-    ///         It's 2.0 for 2 spaces
-    ///         It's 1.5 for 3 spaces
-    ///         It's 1.25 for 5 spaces
-    ///         So the patterns is: 1 + 1 / (nOfSpaces-1)
-    ///            (Except for 1 cause you can't divide by zero)
-    
-    CGFloat screenWidth = NSScreen.mainScreen.frame.size.width;
-    double spaceSeparatorWidth = 63;
-    threeFingerScaleH = threeFingerScaleV = originOffsetForOneSpace / (screenWidth + spaceSeparatorWidth);
-    
-    /// Vertical dockSwipe scaling
-    /// We should maybe use screenHeight to scale vertical dockSwipes (Mission Control and App Windows), but since they don't follow the mouse pointer anyways, this is fine;
-    threeFingerScaleV *= 1.0;
-    
-    /**
-     scrollSwipe scaling
-        A scale of 1.0 will make the pixel based animations (normal scrolling) follow the mouse pointer.
-        Gesture based animations (swiping between pages in Safari etc.) seem to be scaled separately such that swiping 3/4 (or so) of the way across the Trackpad equals one whole page. No matter how wide the page is.
-        So to scale the gesture deltas such that the page-change-animations follow the mouse pointer exactly, we'd somehow have to get the width of the underlying scrollview. This might be possible using the _systemWideAXUIElement we created in ScrollControl, but it'll probably be really slow.
-    */
-    twoFingerScale = 1.0;
-    
     if ([_drag.type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
+        
+        /**
+         Horizontal dockSwipe scaling
+         This makes horizontal dockSwipes (switch between spaces) follow the pointer exactly. (If everything works)
+         I arrived at these value through testing documented in the NotePlan note "MMF - Scraps - Testing DockSwipe scaling"
+         TODO: Test this on a vertical screen
+         */
+        double originOffsetForOneSpace = _nOfSpaces == 1 ? 2.0 : 1.0 + (1.0 / (_nOfSpaces-1));
+        /// ^ I've seen this be: 1.25, 1.5, 2.0. Not sure why. Restarting, attaching displays, or changing UI scaling don't seem to change it from my testing. It just randomly changes after a few weeks.
+        ///     I think I finally see the pattern:
+        ///         It's 2.0 for 2 spaces
+        ///         It's 1.5 for 3 spaces
+        ///         It's 1.25 for 5 spaces
+        ///         So the patterns is: 1 + 1 / (nOfSpaces-1)
+        ///            (Except for 1 cause you can't divide by zero)
+        
+        CGFloat screenWidth = NSScreen.mainScreen.frame.size.width;
+        double spaceSeparatorWidth = 63;
+        double threeFingerScaleH = originOffsetForOneSpace / (screenWidth + spaceSeparatorWidth);
+        
+        /// Vertical dockSwipe scaling
+        /// We should maybe use screenHeight to scale vertical dockSwipes (Mission Control and App Windows), but since they don't follow the mouse pointer anyways, this is fine;
+        double threeFingerScaleV = threeFingerScaleH * 1.0;
+        
+        /// Send events
         
         if (_drag.usageAxis == kMFAxisHorizontal) {
             double delta = -deltaX * threeFingerScaleH;
@@ -438,6 +430,14 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
         }
 //        _drag.phase = kIOHIDEventPhaseChanged;
     } else if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
+        
+        /**
+         scrollSwipe scaling
+         A scale of 1.0 will make the pixel based animations (normal scrolling) follow the mouse pointer.
+         Gesture based animations (swiping between pages in Safari etc.) seem to be scaled separately such that swiping 3/4 (or so) of the way across the Trackpad equals one whole page. No matter how wide the page is.
+         So to scale the gesture deltas such that the page-change-animations follow the mouse pointer exactly, we'd somehow have to get the width of the underlying scrollview. This might be possible using the _systemWideAXUIElement we created in ScrollControl, but it'll probably be really slow.
+         */
+        double twoFingerScale = 1.0;
         
         /// Warp pointer to origin to prevent cursor movement
         ///     This only works when the suppressionInterval is a certain size, and that will cause a slight stutter / delay until the mouse starts moving againg when we deactivate. So this isn't optimal
