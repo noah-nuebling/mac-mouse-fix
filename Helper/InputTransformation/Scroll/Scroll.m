@@ -677,13 +677,31 @@ static void sendOutputEvents(int64_t dx, int64_t dy, BOOL isFirstEvent, BOOL isF
             /// v Dock swipes will sometimes get stuck when the computer is slow. This can be solved by sending several "end" events in a row with a delay (see "stuck bug" in ModifiedDrag)
             ///     Edit: Even with sending the event again after 0.2 seconds, the stuck bug still happens a bunch here for some reason. Event though this almost completely eliminates the bug in ModifiedDrag.
             ///         Hopefully, sending it again after 0.5 seconds works... Edit: Yes, seems to work better but still sometimes happens
+            ///   Edit2: I don't experience the stuck bug anymore here. I'm on an M1 now, maybe that's it.
+            ///     TODO: I should probably move the "sending several end events" code to the postDockSwipeEventWithDelta: function, because otherwise there might be interference when the scroll engine and the drag engine try to send those 'end' events at the same time. We also need further safety measures if several sources try to use postDockSwipeEventWithDelta: at the same time.
+            ///     TODO: We should probably change the "sending several end events" code in ModifiedDrag over to using timers that we can invalidate like here - We should do this to avoid too many 'end' events being sent from old timers.
             
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                [TouchSimulator postDockSwipeEventWithDelta:0.0 type:type phase:kIOHIDEventPhaseEnded];
-            });
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                [TouchSimulator postDockSwipeEventWithDelta:0.0 type:type phase:kIOHIDEventPhaseEnded];
-            });
+            static NSTimer *timer1;
+            static NSTimer *timer2;
+            
+            [timer1 invalidate];
+            [timer2 invalidate];
+            
+            double zero = 0.0;
+            
+            IOHIDEventPhaseBits iohidPhase = kIOHIDEventPhaseEnded;
+            
+            SEL selector = @selector(postDockSwipeEventWithDelta:type:phase:);
+            NSMethodSignature *signature = [TouchSimulator methodSignatureForSelector:selector];
+            NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
+            invocation.target = TouchSimulator.class;
+            invocation.selector = selector;
+            [invocation setArgument:&zero atIndex:2];
+            [invocation setArgument:&type atIndex:3];
+            [invocation setArgument:&iohidPhase atIndex:4];
+            
+            timer1 = [NSTimer scheduledTimerWithTimeInterval:0.2 invocation:invocation repeats:NO];
+            timer2 = [NSTimer scheduledTimerWithTimeInterval:0.5 invocation:invocation repeats:NO];
             
         }
         
