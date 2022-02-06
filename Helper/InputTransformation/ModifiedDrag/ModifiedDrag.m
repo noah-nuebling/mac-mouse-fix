@@ -37,7 +37,6 @@
 /// Vars
 
 static ModifiedDragState _drag;
-#define inputIsPointerMovement YES
 
 /// Debug
 
@@ -71,39 +70,32 @@ static ModifiedDragState _drag;
 
 + (void)load_Manual {
     
+    /// Init plugins
+    [ModifiedDragOutputTwoFingerSwipe load_Manual];
+    
     /// Setup dispatch queue
     ///     This allows us to process events in the right order
     ///     When the eventTap and the deactivate function are driven by different threads or whatever then the deactivation can happen before we've processed all the events. This allows us to avoid that issue
     dispatch_queue_attr_t attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INTERACTIVE, -1);
     _drag.queue = dispatch_queue_create("com.nuebling.mac-mouse-fix.helper.drag", attr);
     
-    /// Setup input callback and related
-    if (inputIsPointerMovement) {
+    /// Set usage threshold
+    _drag.usageThreshold = 7; // 20, 5
+    
+    /// Create mouse pointer moved input callback
+    if (_drag.eventTap == nil) {
         
-        /// Set usage threshold
-        _drag.usageThreshold = 7; // 20, 5
+        CGEventTapLocation location = kCGHIDEventTap;
+        CGEventTapPlacement placement = kCGHeadInsertEventTap;
+        CGEventTapOptions option = kCGEventTapOptionListenOnly; /// kCGEventTapOptionDefault
+        /// ^ Using `Default` causes weird cursor jumping issues when clicking-dragging-and-holding during addMode. Not sure why that happens. This didn't happen in v2 while using `Default`. Not sure if `ListenOnly` has any disadvantages.
+        CGEventMask mask = CGEventMaskBit(kCGEventOtherMouseDragged) | CGEventMaskBit(kCGEventMouseMoved); /// kCGEventMouseMoved is only necessary for keyboard-only drag-modification (which we've disable because it had other problems), and maybe for AddMode to work.
+        mask = mask | CGEventMaskBit(kCGEventLeftMouseDragged) | CGEventMaskBit(kCGEventRightMouseDragged); /// This is necessary for modified drag to work during a left/right click and drag. Concretely I added this to make drag and drop work. For that we only need the kCGEventLeftMouseDragged. Adding kCGEventRightMouseDragged is probably completely unnecessary. Not sure if there are other concrete applications outside of drag and drop.
         
-        /// Create mouse pointer moved input callback
-        if (_drag.eventTap == nil) {
-            
-            CGEventTapLocation location = kCGHIDEventTap;
-            CGEventTapPlacement placement = kCGHeadInsertEventTap;
-            CGEventTapOptions option = kCGEventTapOptionListenOnly; // kCGEventTapOptionDefault
-            /// ^ Using `Default` causes weird cursor jumping issues when clicking-dragging-and-holding during addMode. Not sure why that happens. This didn't happen in v2 while using `Default`. Not sure if `ListenOnly` has any disadvantages.
-            CGEventMask mask = CGEventMaskBit(kCGEventOtherMouseDragged) | CGEventMaskBit(kCGEventMouseMoved); // kCGEventMouseMoved is only necessary for keyboard-only drag-modification (which we've disable because it had other problems), and maybe for AddMode to work.
-            mask = mask | CGEventMaskBit(kCGEventLeftMouseDragged) | CGEventMaskBit(kCGEventRightMouseDragged); // This is necessary for modified drag to work during a left/right click and drag. Concretely I added this to make drag and drop work. For that we only need the kCGEventLeftMouseDragged. Adding kCGEventRightMouseDragged is probably completely unnecessary. Not sure if there are other concrete applications outside of drag and drop.
-            
-            CFMachPortRef eventTap = [Utility_Transformation createEventTapWithLocation:location mask:mask option:option placement:placement callback:eventTapCallBack];
-            
-            _drag.eventTap = eventTap;
-        }
-    } else {
-        assert(false);
+        CFMachPortRef eventTap = [Utility_Transformation createEventTapWithLocation:location mask:mask option:option placement:placement callback:eventTapCallBack];
+        
+        _drag.eventTap = eventTap;
     }
-    
-    /// Init plugins
-    [ModifiedDragOutputTwoFingerSwipe load_Manual];
-    
 }
 
 /// Interface - start
@@ -174,13 +166,8 @@ void initDragState(void) {
     _drag.originOffset = (Vector){0};
     _drag.activationState = kMFModifiedInputActivationStateInitialized;
     
-    if (inputIsPointerMovement) {
-        CGEventTapEnable(_drag.eventTap, true);
-        DDLogDebug(@"\nEnabled drag eventTap");
-    } else {
-        assert(false);
-        [_drag.modifiedDevice receiveAxisInputAndDoSeizeDevice:NO];
-    }
+    CGEventTapEnable(_drag.eventTap, true);
+    DDLogDebug(@"\nEnabled drag eventTap");
 }
 
 static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType type, CGEventRef  event, void * __nullable userInfo) {
@@ -257,15 +244,8 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
         
         /// Do weird stuff
         Device *dev = _drag.modifiedDevice;
-        if (inputIsPointerMovement) {
-//            [NSCursor.closedHandCursor push]; // Doesn't work for some reason
-        } else {
-            assert(false);
-            
-            if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) { /// Only seize when drag scrolling // TODO: Would be cleaner to call this further down where we check for kMFModifiedDragVariantTwoFingerSwipe anyways. Does that work too?
-                [dev receiveAxisInputAndDoSeizeDevice:YES];
-            }
-        }
+//        [NSCursor.closedHandCursor push]; // Doesn't work for some reason
+
         /// Set activationState
         _drag.activationState = kMFModifiedInputActivationStateInUse; /// Activate modified drag input!
         
@@ -349,14 +329,11 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
 ///     I forgot what this does. Is it necessary?
 
 static void disableMouseTracking() {
-    if (inputIsPointerMovement) {
-        CGEventTapEnable(_drag.eventTap, false);
-        DDLogDebug(@"\nmodifiedDrag disabled drag eventTap. Caller info: %@", [SharedUtility callerInfo]);
+
+    CGEventTapEnable(_drag.eventTap, false);
+    DDLogDebug(@"\nmodifiedDrag disabled drag eventTap. Caller info: %@", [SharedUtility callerInfo]);
         
-//        [NSCursor.closedHandCursor pop];
-    } else {
-        [_drag.modifiedDevice receiveOnlyButtonInput];
-    }
+    [NSCursor.closedHandCursor pop];
 }
 
 /// Get rounded pointer location

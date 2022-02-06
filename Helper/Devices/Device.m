@@ -209,6 +209,7 @@ static NSArray *getPressedButtons(Device *dev) {
 }
 
 - (void)receiveOnlyButtonInput {
+    /// TODO: This is unused now -> Clean up
     
     //DDLogDebug(@"RECEIVE ONLY BUTTON INPUT");
     
@@ -222,6 +223,7 @@ static NSArray *getPressedButtons(Device *dev) {
 
 
 - (void)receiveAxisInputAndDoSeizeDevice:(BOOL)seize {
+    /// TODO: This is unused. Other functions in this class, too. -> Clean this up.
     
     //DDLogDebug(@"RECEIVE AXIS INPUT ON TOP OF BUTTON INPUT");
     
