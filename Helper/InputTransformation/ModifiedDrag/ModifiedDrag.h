@@ -11,16 +11,53 @@
 #import <CoreGraphics/CoreGraphics.h>
 //#import <Foundation/Foundation.h>
 #import "Constants.h"
+#import "VectorUtility.h"
+#import "IOHIDEventTypes.h"
 
 NS_ASSUME_NONNULL_BEGIN
+
+/// Forward declaration
+///     So that typedef works
+@protocol ModifiedDragOutputPlugin;
+
+/// Typedefs
+
+typedef enum {
+    kMFModifiedInputActivationStateNone,
+    kMFModifiedInputActivationStateInitialized,
+    kMFModifiedInputActivationStateInUse,
+} MFModifiedInputActivationState;
+
+typedef struct {
+    
+    CFMachPortRef eventTap;
+    int64_t usageThreshold;
+    
+    NSDictionary *dict;
+    
+    MFStringConstant type;
+    id<ModifiedDragOutputPlugin> outputPlugin;
+    
+    MFModifiedInputActivationState activationState;
+    Device *modifiedDevice;
+    
+    CGPoint origin;
+    Vector originOffset;
+    CGPoint usageOrigin; /// Point at which the modified drag changed its activationState to inUse
+    MFAxis usageAxis;
+    IOHIDEventPhaseBits phase;
+    
+    dispatch_queue_t queue;
+} ModifiedDragState;
+
 
 /// Plugin Declaration
 
 @protocol ModifiedDragOutputPlugin <NSObject>
 
-+ (void)initializeDragWithModifiedDragDict:(NSDictionary *)dict;
++ (void)initializeWithDragState:(ModifiedDragState *)dragStateRef;
 + (void)handleMouseInputWhileInitialized;
-+ (void)handleMouseInputWhileInUseWithDeltaX:(double)deltaX;
++ (void)handleMouseInputWhileInUseWithDeltaX:(double)deltaX deltaY:(double)deltaY event:(CGEventRef)event;
 + (void)handleDeactivationWhileInUseWithCancel:(BOOL)cancelation;
 
 @end
@@ -28,12 +65,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// Modified Drag Declaration
 
 @interface ModifiedDrag : NSObject
-
-typedef enum {
-    kMFModifiedInputActivationStateNone,
-    kMFModifiedInputActivationStateInitialized,
-    kMFModifiedInputActivationStateInUse,
-} MFModifiedInputActivationState;
 
 + (void)load_Manual;
 
