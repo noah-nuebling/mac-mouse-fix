@@ -14,6 +14,19 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// Plugin Declaration
+
+@protocol ModifiedDragOutputPlugin <NSObject>
+
++ (void)initializeDragWithModifiedDragDict:(NSDictionary *)dict;
++ (void)handleMouseInputWhileInitialized;
++ (void)handleMouseInputWhileInUseWithDeltaX:(double)deltaX;
++ (void)handleDeactivationWhileInUseWithCancel:(BOOL)cancelation;
+
+@end
+
+/// Modified Drag Declaration
+
 @interface ModifiedDrag : NSObject
 
 typedef enum {

@@ -40,7 +40,10 @@
 
 
 
+
 #pragma mark Three
+
+static int16_t _nOfSpaces = 1;
 
 + (void)handleMouseInputWhileInitialized_ThreeFinger {
     
@@ -117,10 +120,18 @@
 
 #pragma mark Two
 
+static int _cgsConnection; /// This is used by private APIs to talk to the window server and do fancy shit like hiding the cursor from a background application
+static NSCursor *_puppetCursor;
+static NSImageView *_puppetCursorView;
+static /*PixelatedAnimator*/ BaseAnimator *_smoothingAnimator;
+static BOOL _smoothingAnimatorShouldStartMomentumScroll = NO;
+static dispatch_group_t _momentumScrollWaitGroup;
+static CGDirectDisplayID _display;
+
 + (void)handleMouseInputWhileInitialized_TwoFinger {
     
     /// Get display under mouse pointer
-    CVReturn rt = [Utility_Helper display:&_drag.display atPoint:_drag.usageOrigin];
+    CVReturn rt = [Utility_Helper display:&_display atPoint:_drag.usageOrigin];
     if (rt != kCVReturnSuccess) DDLogWarn(@"Couldn't get display under mouse pointer in modifiedDrag");
     
     /// Draw puppet cursor before hiding
@@ -462,7 +473,7 @@ CGPoint puppetCursorPosition(void) {
     CGPoint pos = CGPointMake(_drag.origin.x + _drag.originOffset.x, _drag.origin.y + _drag.originOffset.y);
     
     /// Clip to screen bounds
-    CGRect screenSize = CGDisplayBounds(_drag.display);
+    CGRect screenSize = CGDisplayBounds(_display);
     pos.x = CLIP(pos.x, CGRectGetMinX(screenSize), CGRectGetMaxX(screenSize));
     pos.y = CLIP(pos.y, CGRectGetMinY(screenSize), CGRectGetMaxY(screenSize));
     
@@ -475,9 +486,16 @@ CGPoint puppetCursorPosition(void) {
 
 #pragma mark Fake
 
+static MFMouseButtonNumber _fakeDragButtonNumber; /// Button number. Only used with modified drag of type kMFModifiedDragTypeFakeDrag.
+
++ (void)initializeDragWithModifiedDragDict_Fake:(NSDictionary *)dict {
+    
+    _fakeDragButtonNumber = ((NSNumber *)dict[kMFModifiedDragDictKeyFakeDragVariantButtonNumber]).intValue;
+}
+
 + (void)handleMouseInputWhileInitialized_Fake {
     
-    [Utility_Transformation postMouseButton:_drag.fakeDragButtonNumber down:YES];
+    [Utility_Transformation postMouseButton:_fakeDragButtonNumber down:YES];
 }
 
 + (void)handleMouseInputWhileInUse_Fake_WithDeltaX:(double)deltaX deltaY:(double)deltaY event:(CGEventRef)event {
@@ -488,29 +506,38 @@ CGPoint puppetCursorPosition(void) {
     } else {
         location = getPointerLocation();
     }
-    CGMouseButton button = [SharedUtility CGMouseButtonFromMFMouseButtonNumber:_drag.fakeDragButtonNumber];
+    CGMouseButton button = [SharedUtility CGMouseButtonFromMFMouseButtonNumber:_fakeDragButtonNumber];
     CGEventRef draggedEvent = CGEventCreateMouseEvent(NULL, kCGEventOtherMouseDragged, location, button);
     CGEventPost(kCGSessionEventTap, draggedEvent);
     CFRelease(draggedEvent);
 }
 
 + (void)handleDeactivationWhileInUse_Fake_WithCancel:(BOOL)cancelation {
-    [Utility_Transformation postMouseButton:_drag.fakeDragButtonNumber down:NO];
+    [Utility_Transformation postMouseButton:_fakeDragButtonNumber down:NO];
 }
 
 #pragma mark Add
 
+static NSDictionary *_addModePayload; /// Payload to send to the mainApp. Only used with modified drag of type kMFModifiedDragTypeAddModeFeedback.
+
++ (void)initializeDragWithModifiedDragDict_Add:(NSDictionary *)dict {
+    
+    NSMutableDictionary *payload = dict.mutableCopy;
+    [payload removeObjectForKey:kMFModifiedDragDictKeyType];
+    _addModePayload = payload;
+}
+
 + (void)handleMouseInputWhileInitialized_Add {
     
-    if (_drag.addModePayload != nil) {
-        [TransformationManager sendAddModeFeedbackWithPayload:_drag.addModePayload];
+    if (_addModePayload != nil) {
+        [TransformationManager sendAddModeFeedbackWithPayload:_addModePayload];
     } else {
         @throw [NSException exceptionWithName:@"InvalidAddModeFeedbackPayload" reason:@"_drag.addModePayload is nil. Something went wrong!" userInfo:nil]; /// Throw exception to cause crash
     }
 }
 
 + (void)handleDeactivationWhileInUse_Add_WithCancel:(BOOL)cancelation {
-    [TransformationManager disableAddModeWithPayload:_drag.addModePayload];
+    [TransformationManager disableAddModeWithPayload:_addModePayload];
 }
 
 #pragma mark - REMOVE THIS PRAGMA
@@ -535,13 +562,8 @@ struct ModifiedDragState {
     MFAxis usageAxis;
     IOHIDEventPhaseBits phase;
     
-    CGDirectDisplayID display;
-    
     SubPixelator *subPixelatorX;
     SubPixelator *subPixelatorY;
-    
-    MFMouseButtonNumber fakeDragButtonNumber; /// Button number. Only used with modified drag of type kMFModifiedDragTypeFakeDrag.
-    NSDictionary *addModePayload; /// Payload to send to the mainApp. Only used with modified drag of type kMFModifiedDragTypeAddModeFeedback.
 };
 static struct ModifiedDragState _drag;
 
@@ -549,14 +571,7 @@ static struct ModifiedDragState _drag;
 ///     Not sure what the logic should be for which global vars are part of the _drag struct, and which ones are just static globals. It doesn't really make a difference
 
 #define inputIsPointerMovement YES
-static int _cgsConnection; /// This is used by private APIs to talk to the window server and do fancy shit like hiding the cursor from a background application
-static NSCursor *_puppetCursor;
-static NSImageView *_puppetCursorView;
-static int16_t _nOfSpaces = 1;
 static dispatch_queue_t _dragQueue;
-static /*PixelatedAnimator*/ BaseAnimator *_smoothingAnimator;
-static BOOL _smoothingAnimatorShouldStartMomentumScroll = NO;
-static dispatch_group_t _momentumScrollWaitGroup;
 
 /// Debug
 
@@ -574,11 +589,9 @@ static dispatch_group_t _momentumScrollWaitGroup;
         originOffset: (%f, %f)\n\
         usageAxis: %u\n\
         phase: %hu\n\
-        subPixelatorX: %@\n\
-        subPixelatorY: %@\n\
         fakeDragButtonNumber: %u\n\
         addModePayload: %@\n",
-                  drag.eventTap, drag.usageThreshold, drag.type, drag.activationState, drag.modifiedDevice, drag.origin.x, drag.origin.y, drag.originOffset.x, drag.originOffset.y, drag.usageAxis, drag.phase, drag.subPixelatorX, drag.subPixelatorY, drag.fakeDragButtonNumber, drag.addModePayload
+                  drag.eventTap, drag.usageThreshold, drag.type, drag.activationState, drag.modifiedDevice, drag.origin.x, drag.origin.y, drag.originOffset.x, drag.originOffset.y, drag.usageAxis, drag.phase, _fakeDragButtonNumber, _addModePayload
                   ];
     } @catch (NSException *exception) {
         DDLogInfo(@"Exception while generating string description of ModifiedDragState: %@", exception);
@@ -664,16 +677,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
         
         /// Get values from dict
         MFStringConstant type = dict[kMFModifiedDragDictKeyType];
-        MFMouseButtonNumber fakeDragButtonNumber = -1;
-        if ([type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
-            fakeDragButtonNumber = ((NSNumber *)dict[kMFModifiedDragDictKeyFakeDragVariantButtonNumber]).intValue;
-        }
         /// Prepare payload to send to mainApp during AddMode. See TransformationManager -> AddMode for context
-        NSMutableDictionary *payload = nil;
-        if ([type isEqualToString:kMFModifiedDragTypeAddModeFeedback]){
-            payload = dict.mutableCopy;
-            [payload removeObjectForKey:kMFModifiedDragDictKeyType];
-        }
         
         /// Init _drag struct
         
@@ -681,8 +685,16 @@ static dispatch_group_t _momentumScrollWaitGroup;
         _drag.modifiedDevice = dev;
         _drag.type = type;
         _drag.dict = dict;
-        _drag.fakeDragButtonNumber = fakeDragButtonNumber;
-        _drag.addModePayload = payload;
+        
+        /// Init plugins
+        
+        if ([type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
+            [ModifiedDrag initializeDragWithModifiedDragDict_Fake:dict];
+        }
+        
+        if ([type isEqualToString:kMFModifiedDragTypeAddModeFeedback]){
+            [ModifiedDrag initializeDragWithModifiedDragDict_Add:dict];
+        }
         
         /// Init dynamic
         initDragState();
@@ -696,9 +708,6 @@ static dispatch_group_t _momentumScrollWaitGroup;
 }
 
 void initDragState(void) {
-    
-    _drag.subPixelatorX = [SubPixelator roundPixelator];
-    _drag.subPixelatorY = [SubPixelator roundPixelator];
     
     _drag.origin = getRoundedPointerLocation();
     _drag.originOffset = (Vector){0};
