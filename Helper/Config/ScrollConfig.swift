@@ -124,10 +124,10 @@ import CocoaLumberjackSwift
     @objc static var pxPerTickBase: Int {
 //        return smooth["pxPerStep"] as! Int
         
-//        return 60 // Max good-feeling value
+        return 60 // Max good-feeling value
 //        return 50
 //        return 45
-        return 30 // I like this one
+//        return 30 // I like this one
 //        return 20
 //        return 10 // Min good feeling value
 //        return 5
