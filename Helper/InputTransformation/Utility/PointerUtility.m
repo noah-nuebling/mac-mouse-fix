@@ -125,6 +125,15 @@ CGEventRef _Nullable mouseMovedCallback(CGEventTapProxy proxy, CGEventType type,
         /// Debug
         DDLogDebug(@"frozen dispatch point - move - with delta: %lld, %lld", dx, dy);
         
+        /// Check interrupt
+        if (!CGEventTapIsEnabled(_eventTap)) {
+            /// More debug
+            DDLogDebug(@"frozen dispatch point - actually don't move");
+            return;
+        }
+        
+        /// Update origin offset
+        
         _originOffset.x += dx;
         _originOffset.y += dy;
         
@@ -160,7 +169,7 @@ CGEventRef _Nullable mouseMovedCallback(CGEventTapProxy proxy, CGEventType type,
         CGPoint puppetPos = puppetCursorPosition();
         
         /// Disable eventTap
-        /// TODO: Think about the order of getting pos, unfreezing, and disabling event tap.
+        /// Think about the order of getting pos, unfreezing, and disabling event tap. -> I think it doesn't matter since everything is locked.
         CGEventTapEnable(_eventTap, false);
         
         /// Set suppression interval for warping
