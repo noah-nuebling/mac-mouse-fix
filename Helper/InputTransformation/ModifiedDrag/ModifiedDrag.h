@@ -56,9 +56,9 @@ typedef struct {
 @protocol ModifiedDragOutputPlugin <NSObject>
 
 + (void)initializeWithDragState:(ModifiedDragState *)dragStateRef;
-+ (void)handleMouseInputWhileInitialized;
++ (void)handleBecameInUse;
 + (void)handleMouseInputWhileInUseWithDeltaX:(double)deltaX deltaY:(double)deltaY event:(CGEventRef)event;
-+ (void)handleDeactivationWhileInUseWithCancel:(BOOL)cancelation;
++ (void)handleDeactivationWhileInUseWithCancel:(BOOL)cancel;
 
 @end
 

@@ -27,7 +27,7 @@ static int16_t _nOfSpaces = 1;
     _drag = dragStateRef;
 }
 
-+ (void)handleMouseInputWhileInitialized {
++ (void)handleBecameInUse {
     /// Get number of spaces
     ///     for use in `handleMouseInputWhileInUse()`. Getting it here for performance reasons. Not sure if significant.
     CFArrayRef spaces = CGSCopySpaces(CGSMainConnectionID(), CGSSpaceIncludesUser | CGSSpaceIncludesOthers | CGSSpaceIncludesCurrent);

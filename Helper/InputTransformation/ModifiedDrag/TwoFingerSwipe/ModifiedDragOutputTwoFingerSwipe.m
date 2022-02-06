@@ -54,7 +54,7 @@ static CGDirectDisplayID _display;
     _drag = dragStateRef;
 }
 
-+ (void)handleMouseInputWhileInitialized {
++ (void)handleBecameInUse {
     
     /// Get display under mouse pointer
     CVReturn rt = [Utility_Helper display:&_display atPoint:_drag->usageOrigin];

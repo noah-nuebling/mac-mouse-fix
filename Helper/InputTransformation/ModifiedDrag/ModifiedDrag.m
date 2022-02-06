@@ -34,8 +34,6 @@
 
 @implementation ModifiedDrag
 
-#pragma mark - Export to output classes
-
 /// Vars
 
 static ModifiedDragState _drag;
@@ -248,7 +246,7 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
     
     Vector ofs = _drag.originOffset;
     
-    // Activate the modified drag if the mouse has been moved far enough from the point where the drag started
+    /// Activate the modified drag if the mouse has been moved far enough from the point where the drag started
     if (MAX(fabs(ofs.x), fabs(ofs.y)) > _drag.usageThreshold) {
         
         /// Get usageOrigin
@@ -289,7 +287,7 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
         
         /// Do type-specific stuff
         
-        [_drag.outputPlugin handleMouseInputWhileInitialized];
+        [_drag.outputPlugin handleBecameInUse];
     }
 }
 // Only passing in event to obtain event location to get slightly better behaviour for fakeDrag

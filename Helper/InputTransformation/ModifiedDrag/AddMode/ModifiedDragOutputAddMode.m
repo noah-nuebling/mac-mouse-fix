@@ -29,7 +29,7 @@ static NSDictionary *_addModePayload; /// Payload to send to the mainApp. Only u
     _addModePayload = payload;
 }
 
-+ (void)handleMouseInputWhileInitialized {
++ (void)handleBecameInUse {
     
     if (_addModePayload != nil) {
         [TransformationManager sendAddModeFeedbackWithPayload:_addModePayload];

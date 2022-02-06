@@ -946,6 +946,42 @@
 			path = Notes;
 			sourceTree = "<group>";
 		};
+		4FF0255827B00F9700923107 /* ThreeFingerSwipe */ = {
+			isa = PBXGroup;
+			children = (
+				4FF0254C27AFF90800923107 /* ModifiedDragOutputThreeFingerSwipe.h */,
+				4FF0254D27AFF90800923107 /* ModifiedDragOutputThreeFingerSwipe.m */,
+			);
+			path = ThreeFingerSwipe;
+			sourceTree = "<group>";
+		};
+		4FF0255927B00FA400923107 /* TwoFingerSwipe */ = {
+			isa = PBXGroup;
+			children = (
+				4FF0254F27B0033000923107 /* ModifiedDragOutputTwoFingerSwipe.h */,
+				4FF0255027B0033000923107 /* ModifiedDragOutputTwoFingerSwipe.m */,
+			);
+			path = TwoFingerSwipe;
+			sourceTree = "<group>";
+		};
+		4FF0255A27B00FAF00923107 /* FakeDrag */ = {
+			isa = PBXGroup;
+			children = (
+				4FF0255227B007FC00923107 /* ModifiedDragOutputFakeDrag.h */,
+				4FF0255327B007FC00923107 /* ModifiedDragOutputFakeDrag.m */,
+			);
+			path = FakeDrag;
+			sourceTree = "<group>";
+		};
+		4FF0255B27B00FBA00923107 /* AddMode */ = {
+			isa = PBXGroup;
+			children = (
+				4FF0255527B0091700923107 /* ModifiedDragOutputAddMode.h */,
+				4FF0255627B0091700923107 /* ModifiedDragOutputAddMode.m */,
+			);
+			path = AddMode;
+			sourceTree = "<group>";
+		};
 		4FF6652B25F2C7B000689B77 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
@@ -1278,14 +1314,10 @@
 			children = (
 				4FF6663725F2C93A00689B77 /* ModifiedDrag.h */,
 				4FF6663825F2C93A00689B77 /* ModifiedDrag.m */,
-				4FF0254C27AFF90800923107 /* ModifiedDragOutputThreeFingerSwipe.h */,
-				4FF0254D27AFF90800923107 /* ModifiedDragOutputThreeFingerSwipe.m */,
-				4FF0254F27B0033000923107 /* ModifiedDragOutputTwoFingerSwipe.h */,
-				4FF0255027B0033000923107 /* ModifiedDragOutputTwoFingerSwipe.m */,
-				4FF0255227B007FC00923107 /* ModifiedDragOutputFakeDrag.h */,
-				4FF0255327B007FC00923107 /* ModifiedDragOutputFakeDrag.m */,
-				4FF0255527B0091700923107 /* ModifiedDragOutputAddMode.h */,
-				4FF0255627B0091700923107 /* ModifiedDragOutputAddMode.m */,
+				4FF0255827B00F9700923107 /* ThreeFingerSwipe */,
+				4FF0255927B00FA400923107 /* TwoFingerSwipe */,
+				4FF0255A27B00FAF00923107 /* FakeDrag */,
+				4FF0255B27B00FBA00923107 /* AddMode */,
 			);
 			path = ModifiedDrag;
 			sourceTree = "<group>";
