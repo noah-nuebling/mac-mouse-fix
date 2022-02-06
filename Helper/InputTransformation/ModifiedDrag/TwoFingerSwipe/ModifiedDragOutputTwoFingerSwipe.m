@@ -75,15 +75,15 @@ static dispatch_group_t _momentumScrollWaitGroup;
     /// Post event
     ///     Using animator for smoothing
     
-    /// Smoothing group allows us to us to wait until the smoothingAnimator is finished and momentumScroll has started
-    if (!_smoothingAnimator.isRunning) {
-        DDLogDebug(@"\nEntering dispatch group from ModifiedDrag");
-        dispatch_group_enter(_momentumScrollWaitGroup);
-        [_smoothingAnimator onStopWithCallback:^{
-            printf("\nLeaving dispatch group from animator stop callback\n");
-            dispatch_group_leave(_momentumScrollWaitGroup);
-        }];
-    }
+//    /// Smoothing group allows us to us to wait until the smoothingAnimator is finished and momentumScroll has started
+//    if (!_smoothingAnimator.isRunning) {
+//        DDLogDebug(@"\nEntering dispatch group from ModifiedDrag");
+//        dispatch_group_enter(_momentumScrollWaitGroup);
+//        [_smoothingAnimator onStopWithCallback:^{
+//            printf("\nLeaving dispatch group from animator stop callback\n");
+//            dispatch_group_leave(_momentumScrollWaitGroup);
+//        }];
+//    }
     
     /// Declare static vars for animator
     static IOHIDEventPhaseBits eventPhase = kIOHIDEventPhaseUndefined;
@@ -146,20 +146,25 @@ static dispatch_group_t _momentumScrollWaitGroup;
             ///     Our solution to these two problems is to set the _smoothingAnimatorShouldStartMomentumScroll flag when the user releases the button, and if this flag is set, we transform the last delta callback from the animator into the kIOHIDEventPhaseEnded GestureScroll event. The deltas from this last callback are lost like this, but no one will notice.
             
             /// Debug
-            DDLogDebug(@"Shifting dispatch group exit from smoothingAnimator stop to momentumScroll start");
+//            DDLogDebug(@"Shifting dispatch group exit from smoothingAnimator stop to momentumScroll start");
             
             /// Shift dispatch group leaving to gestureScroll
-            [_smoothingAnimator onStop_SynchronouslyFromAnimationQueueWithCallback: ^{}];
-            [GestureScrollSimulator afterStartingMomentumScroll:^{
-                DDLogDebug(@"\nLeaving dispatch group from momentum start callback\n");
-                dispatch_group_leave(_momentumScrollWaitGroup);
-            }];
+//            [_smoothingAnimator onStop_SynchronouslyFromAnimationQueueWithCallback: ^{}];
+//            [GestureScrollSimulator afterStartingMomentumScroll:^{
+//                DDLogDebug(@"\nLeaving dispatch group from momentum start callback\n");
+//                dispatch_group_leave(_momentumScrollWaitGroup);
+//            }];
+            
+            /// Start momentum scroll
             [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded];
+            /// Reset flag
             _smoothingAnimatorShouldStartMomentumScroll = NO;
         } else {
-            //            IOHIDEventPhaseBits eventPhase = phase == kMFAnimationPhaseStart || phase == kMFAnimationPhaseStartAndEnd ? kIOHIDEventPhaseBegan : kIOHIDEventPhaseChanged;
+            /// Get scroll direction
             Vector deltaVec = scaledVector(combinedDirection, valueDelta);
+            /// Post event
             [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaVec.x deltaY:deltaVec.y phase:eventPhase];
+            /// Update eventPhase
             if (eventPhase == kIOHIDEventPhaseBegan) eventPhase = kIOHIDEventPhaseChanged;
         }
         
@@ -186,20 +191,21 @@ static dispatch_group_t _momentumScrollWaitGroup;
     //            [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded];
     //        }];
     
-    /// Send final scroll event (or wait until final scroll event has been sent)
-    ///     (Final scroll events starts momentumScroll)
+    /// Setup waiting for momentumScroll
     
-    if (_smoothingAnimator.isRunning) {
-        
+    DDLogDebug(@"Entering dispatch group from deactivate()");
+    dispatch_group_enter(_momentumScrollWaitGroup);
+    [GestureScrollSimulator afterStartingMomentumScroll:^{
+        DDLogDebug(@"Leaving dispatch group from momentumScroll callback (Scheduled by deactivate())");
+        dispatch_group_leave(_momentumScrollWaitGroup);
+    }];
+    
+    /// Start momentumScroll
+    
+    if (_smoothingAnimator.isRunning) { /// Let _smoothingAnimator start momentumScroll
         _smoothingAnimatorShouldStartMomentumScroll = YES; /// _smoothingAnimator callback also manipulates this which is a race cond
         
-    } else {
-        DDLogDebug(@"Entering dispatch group from deactivate()");
-        dispatch_group_enter(_momentumScrollWaitGroup);
-        [GestureScrollSimulator afterStartingMomentumScroll:^{
-            DDLogDebug(@"Leaving dispatch group from momentumScroll callback (Scheduled by deactivate())");
-            dispatch_group_leave(_momentumScrollWaitGroup);
-        }];
+    } else { /// Start momentumScroll directly
         [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded];
     }
     
@@ -210,6 +216,8 @@ static dispatch_group_t _momentumScrollWaitGroup;
     ///     This whole _momentumScrollWaitGroup thing is pretty risky, because if there is any race condition and we don't leave the group properly, then we need to crash the whole app (I think?).
     ///     It's really hard to avoid race conditions here though the different  eventTap threads that control ModifiedDrag and all the different nested dispatch queues of ModifiedDrag and its smoothingAnimator and the GestureScrollSimulator queue and it's momentumAnimator's queue and then all those animators have displayLinks with their own queues.... All of these queues call each other in a mix of synchronous and asynchronous, and it all needs to work perfectly without race conditions or deadlocks... Really hard to keep track of.
     ///     If our code is perfect, then it's a good solution though!
+    
+    /// Wait for momentumScroll to start
     
     intptr_t rt = dispatch_group_wait(_momentumScrollWaitGroup, dispatch_time(DISPATCH_TIME_NOW, 2.0 * NSEC_PER_SEC));
     if (rt != 0) {
