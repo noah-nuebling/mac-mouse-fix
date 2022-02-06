@@ -46,13 +46,15 @@ static dispatch_queue_t _queue;
             _puppetCursorView = [[NSImageView alloc] init];
         });
         
-        /// Setup eventTap
-        _eventTap = [Utility_Transformation createEventTapWithLocation:kCGHIDEventTap mask:CGEventMaskBit(kCGEventMouseMoved) | CGEventMaskBit(kCGEventLeftMouseDragged) | CGEventMaskBit(kCGEventRightMouseDragged) | CGEventMaskBit(kCGEventOtherMouseDragged) option:kCGEventTapOptionListenOnly placement:kCGHeadInsertEventTap callback:mouseMovedCallback runLoop:CFRunLoopGetMain()];
-        /// ^ It seems like only CFRunLoopGetMain() works here. With CFRunLoopGetCurrent() the callback is never called. Not sure why.
-        
         /// Setup queue
         dispatch_queue_attr_t attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INTERACTIVE, -1);
         _queue = dispatch_queue_create("com.nuebling.mac-mouse-fix.helper.pointer", attr);
+        
+        /// Setup eventTap
+        dispatch_sync(_queue, ^{
+            _eventTap = [Utility_Transformation createEventTapWithLocation:kCGHIDEventTap mask:CGEventMaskBit(kCGEventMouseMoved) | CGEventMaskBit(kCGEventLeftMouseDragged) | CGEventMaskBit(kCGEventRightMouseDragged) | CGEventMaskBit(kCGEventOtherMouseDragged) option:kCGEventTapOptionListenOnly placement:kCGHeadInsertEventTap callback:mouseMovedCallback runLoop:CFRunLoopGetMain()];
+        });
+        /// ^ It seems like only CFRunLoopGetMain() works here. With CFRunLoopGetCurrent() (and without dispatching to a queue) the callback is never called. Not sure why.
     }
 }
 
