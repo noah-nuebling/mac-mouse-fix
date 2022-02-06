@@ -201,7 +201,7 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
                 }
                 
                 /// Init modifiedDrag
-                [ModifiedDrag initializeDragWithModifiedDragDict:modifiedDragEffect onDevice:device largeUsageThreshold:largeUsageThreshold];
+                [ModifiedDrag initializeDragWithModifiedDragDict:modifiedDragEffect onDevice:device];
             }
         }
     }

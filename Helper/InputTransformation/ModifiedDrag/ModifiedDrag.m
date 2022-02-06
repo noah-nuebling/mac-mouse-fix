@@ -69,12 +69,6 @@ static ModifiedDragState _drag;
     return output;
 }
 
-/// There are two different modes for how we receive mouse input, toggle to switch between the two for testing
-/// Set to no, if you want input to be raw mouse input, set to yes if you want input to be mouse pointer delta
-/// Raw input has better performance (?) and allows for blocking mouse pointer movement. Mouse pointer input makes all the animation follow the pointer, but it has some issues with the pointer jumping when the framerate is low which I'm not quite sure how to fix.
-///      When the pointer jumps that sometimes leads to scrolling in random directions and stuff.
-/// Edit: We can block pointer movement while using pointer delta as input now! Also the jumping in random directions when driving gestureScrolling is gone. So using pointerMovement as input is fine.
-
 + (void)load_Manual {
     
     /// Init plugins
@@ -89,7 +83,7 @@ static ModifiedDragState _drag;
     /// Set usage threshold
     _drag.usageThreshold = 7; // 20, 5
     
-    /// Create mouse pointer moved input callback
+    /// Create mouse moved callback
     if (_drag.eventTap == nil) {
         
         CGEventTapLocation location = kCGHIDEventTap;
@@ -118,52 +112,44 @@ static ModifiedDragState _drag;
     }
 }
 
-+ (void)initializeDragWithModifiedDragDict:(NSDictionary *)dict onDevice:(Device *)dev largeUsageThreshold:(BOOL)largeUsageThreshold {
++ (void)initializeDragWithModifiedDragDict:(NSDictionary *)dict onDevice:(Device *)dev {
     
     dispatch_async(_drag.queue, ^{
         
         /// Debug
         
-        DDLogDebug(@"INITIALIZING MODIFIEDDRAG WITH previous type %@ activationState %d, dict: %@", _drag.type, _drag.activationState, dict);
+        DDLogDebug(@"INITIALIZING MODIFIEDDRAG WITH previous type %@ activationState %d, dict: %@", _drag.type, _drag.activationState, dict); 
         
-        /// Make cursor settable
+        /// Get value from dict
         
-        [Utility_Transformation makeCursorSettable]; /// I think we only need to do this once
-        
-        /// Get values from dict
         MFStringConstant type = dict[kMFModifiedDragDictKeyType];
         
-        /// Init _drag struct
+        /// Init _drag
         
-        /// Init static
+        /// Init static parts of _drag
+        
         _drag.modifiedDevice = dev;
         _drag.type = type;
         _drag.dict = dict;
         
-        /// Get output plugin
+        id<ModifiedDragOutputPlugin> p;
         if ([type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
-            _drag.outputPlugin = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputThreeFingerSwipe.class;
+            p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputThreeFingerSwipe.class;
         } else if ([type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
-            _drag.outputPlugin = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputTwoFingerSwipe.class;
+            p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputTwoFingerSwipe.class;
         } else if ([type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
-            _drag.outputPlugin = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputFakeDrag.class;
+            p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputFakeDrag.class;
         } else if ([type isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
-            _drag.outputPlugin = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputAddMode.class;
+            p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputAddMode.class;
         } else {
             assert(false);
         }
+        [p initializeWithDragState:&_drag];
+        _drag.outputPlugin = p;
         
-        /// Init output plugin
-        [_drag.outputPlugin initializeWithDragState:&_drag];
+        /// Init dynamic parts of _drag
         
-        /// Init dynamic
         initDragState();
-        
-        /// Stop momentum scroll if we're initing a twoFingerDrag
-        if ([_drag.type isEqual:kMFModifiedDragTypeTwoFingerSwipe]) {
-            [GestureScrollSimulator stopMomentumScroll];
-        }
-        
     });
 }
 
@@ -207,8 +193,47 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
     ///     I think for all other types of modified drag (aside from gesture scroll simulation) this shouldn't break anything, either.
     if (dx == 0 && dy == 0) return NULL;
     
-    /// Process delta
-    [ModifiedDrag handleMouseInputWithDeltaX:dx deltaY:dy event:event];
+    /// Make copy of event for _drag.queue
+    
+    CGEventRef eventCopy = CGEventCreateCopy(event);
+    
+    /// Do main processing on _drag.queue
+    
+    dispatch_async(_drag.queue, ^{
+        
+        /// Interrupt
+        ///     This handles race condition where _drag.eventTap is disabled right after eventTapCallBack() is called
+        ///     We implemented the same idea in PointerUtility.
+        ///     Actually, the check for kMFModifiedInputActivationStateNone below has the same effect, but I think but this makes it clearer?
+        
+        if (!CGEventTapIsEnabled(_drag.eventTap)) {
+            return;
+        }
+        
+        /// Update originOffset
+        
+        _drag.originOffset.x += dx;
+        _drag.originOffset.y += dy;
+        
+        /// Call further handler functions depending on current state
+        
+        MFModifiedInputActivationState st = _drag.activationState;
+        
+        if (st == kMFModifiedInputActivationStateNone) {
+            
+            /// Disabling the callback triggers this function one more time apparently
+            ///     That's the only case I know where I expect this. Maybe we should log this to see what's going on.
+            
+        } else if (st == kMFModifiedInputActivationStateInitialized) {
+            
+            handleMouseInputWhileInitialized(dx, dy, eventCopy);
+            
+        } else if (st == kMFModifiedInputActivationStateInUse) {
+            
+            handleMouseInputWhileInUse(dx, dy, eventCopy);
+        }
+        
+    });
         
     /// Return
     ///     Sending `event` or NULL here doesn't seem to make a difference. If you alter the event and send that it does have an effect though?
@@ -216,75 +241,50 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
     return NULL;
 }
 
-+ (void)handleMouseInputWithDeltaX:(int64_t)deltaX deltaY:(int64_t)deltaY event:(CGEventRef)event {
-    
-    CGEventRef eventCopy = CGEventCreateCopy(event);
-    
-    dispatch_async(_drag.queue, ^{
-        
-        _drag.originOffset.x += deltaX;
-        _drag.originOffset.y += deltaY;
-        /// ^ We get the originOffset outside the _drag.queue, so that we still record changes in originOffset while deactivate() is blocking the _drag.queue
-        
-        MFModifiedInputActivationState st = _drag.activationState;
-        
-    //        DDLogDebug(@"Handling mouse input. dx: %lld, dy: %lld, activationState: %@", deltaX, deltaY, @(st));
-        
-        if (st == kMFModifiedInputActivationStateNone) {
-            /// Disabling the callback triggers this function one more time apparently, aside form that case, this should never happen I think
-        } else if (st == kMFModifiedInputActivationStateInitialized) {
-            handleMouseInputWhileInitialized(deltaX, deltaY, eventCopy);
-        } else if (st == kMFModifiedInputActivationStateInUse) {
-            handleMouseInputWhileInUse(deltaX, deltaY, eventCopy); /// This shouldn't mutate any shared state, so we don't need to schedule it on _twoFingerDragQueue
-        }
-
-    });
-}
 static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGEventRef event) {
     
-    Vector ofs = _drag.originOffset;
-    
     /// Activate the modified drag if the mouse has been moved far enough from the point where the drag started
+    
+    Vector ofs = _drag.originOffset;
     if (MAX(fabs(ofs.x), fabs(ofs.y)) > _drag.usageThreshold) {
         
-        /// Get usageOrigin
+        /// Debug
         
-//        _drag.usageOrigin = CGPointMake(_drag.origin.x + ofs.x, _drag.origin.y + ofs.y);
-        /// ^ This is just the current pointer location, but obtained without a CGEvent. However this didn't quite work because ofs.x and ofs.y are integers while origin.x and origin.y are floats. I tried to roud the values myself to counterbalance this, but it didn't work, so I'm just passing in a CGEvent and getting the location from that. See below v
+        DDLogDebug(@"Modified Drag entered 'in use' state");
+        
+        /// Store state
+        
         _drag.usageOrigin = getRoundedPointerLocationWithEvent(event);
         
-        /// Do weird stuff
-        Device *dev = _drag.modifiedDevice;
-//        [NSCursor.closedHandCursor push]; // Doesn't work for some reason
-
-        /// Set activationState
-        _drag.activationState = kMFModifiedInputActivationStateInUse; /// Activate modified drag input!
-        
-        /// Send modifier feedback
-        [ModifierManager handleModifiersHaveHadEffectWithDevice:dev.uniqueID];
-        
-        /// Get usage axis
         if (fabs(ofs.x) < fabs(ofs.y)) {
             _drag.usageAxis = kMFAxisVertical;
         } else {
             _drag.usageAxis = kMFAxisHorizontal;
         }
         
-        /// Debug
-        DDLogDebug(@"SETTING DRAG PHASE TO BEGAN");
+        /// Update state
         
-        /// Set phase
+        _drag.activationState = kMFModifiedInputActivationStateInUse;
         _drag.phase = kIOHIDEventPhaseBegan;
         
-        /// Do type-specific stuff
+        /// Notify other modules
         
+        [ModifierManager handleModifiersHaveHadEffectWithDevice:_drag.modifiedDevice.uniqueID];
         [_drag.outputPlugin handleBecameInUse];
     }
 }
 /// Only passing in event to obtain event location to get slightly better behaviour for fakeDrag
 void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event) {
     
+    /// Notifiy plugin
+    
     [_drag.outputPlugin handleMouseInputWhileInUseWithDeltaX:deltaX deltaY:deltaY event:event];
+    
+    /// Update phase
+    ///
+    /// - Phase is used in `handleMouseInputWhileInUseWithDeltaX:...` (called above)
+    /// - The first time we call `handleMouseInputWhileInUseWithDeltaX:...` during a drag, the phase will be kIOHIDEventPhaseBegan. On subsequent calls, the phase will be kIOHIDEventPhaseChanged.
+    ///     - Indirectly communicating with the plugin through _drag is a little confusing, we might want to consider removing _drag from the plugins and sending the relevant data as arguments instead.
     
     _drag.phase = kIOHIDEventPhaseChanged;
 }
@@ -295,28 +295,39 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
     
     [self deactivateWithCancel:false];
 }
+
 + (void)deactivateWithCancel:(BOOL)cancel {
     
     dispatch_async(_drag.queue, ^{
-        /// Do everything on the dragQueue to ensure correct order of operations with the processing of the events from the eventTap.
+        /// ^ Do everything on the dragQueue to ensure correct order of operations with the processing of the events from the eventTap.
         
+        /// Debug
         DDLogDebug(@"modifiedDrag deactivate with state: %@", [self modifiedDragStateDescription:_drag]);
         
+        /// Handle state == none
+        ///     Return immediately
         if (_drag.activationState == kMFModifiedInputActivationStateNone) return;
         
+        /// Handle state == In use
+        ///     Notify plugin
         if (_drag.activationState == kMFModifiedInputActivationStateInUse) {
             [_drag.outputPlugin handleDeactivationWhileInUseWithCancel:cancel];
         }
+        
+        /// Set state == none
         _drag.activationState = kMFModifiedInputActivationStateNone;
         
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 0.1), _drag.queue, ^{
-            /// Delay so we don't "cut off" the mouseDragged events that are still pent up in the eventTap. Better solution might be to have one single event tap that drives both button input and mouseDragged events.
-            ///     Edit: Not even sure that this does anything. I feel like the feeling of events being "cut off" might be due to to CGWarpMouseCursorPosittion causing the pointer to freeze for a short time.
-            ///         This seems to make issue worse where the mouse pointer jumps when re-initializing the twoFingerModifiedDrag right after deactivating
-            disableMouseTracking();
-//        });
+        /// Disable eventTap
+        CGEventTapEnable(_drag.eventTap, false);
+        
+        /// Debug
+        DDLogDebug(@"\nmodifiedDrag disabled drag eventTap. Caller info: %@", [SharedUtility callerInfo]);
     });
 }
+                   
+/// Handle interference with ModifiedScroll
+///     I'm not confident this is an adequate solution.
+                   
 + (void)modifiedScrollHasBeenUsed {
     /// It's easy to accidentally drag while trying to click and scroll. And some modifiedDrag effects can interfere with modifiedScroll effects. We built this cool ModifiedDrag `suspend()` method which effectively restarts modifiedDrag. This is cool and feels nice and has a few usability benefits, but also leads to a bunch of bugs and race conditions in its current form, so were just using `deactivate()`
     if (_drag.activationState == kMFModifiedInputActivationStateInUse) { /// This check should probably also be performed on the _drag.queue
@@ -335,17 +346,6 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
 //}
 
 #pragma mark - Helper functions
-
-/// Disable mouse tracking
-///     I forgot what this does. Is it necessary?
-
-static void disableMouseTracking() {
-
-    CGEventTapEnable(_drag.eventTap, false);
-    DDLogDebug(@"\nmodifiedDrag disabled drag eventTap. Caller info: %@", [SharedUtility callerInfo]);
-        
-    [NSCursor.closedHandCursor pop];
-}
 
 /// Get rounded pointer location
 

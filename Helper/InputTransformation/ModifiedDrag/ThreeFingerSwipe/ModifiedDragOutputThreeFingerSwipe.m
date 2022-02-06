@@ -72,7 +72,6 @@ static int16_t _nOfSpaces = 1;
         double delta = deltaY * threeFingerScaleV;
         [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeVertical phase:_drag->phase];
     }
-    //        _drag.phase = kIOHIDEventPhaseChanged;
 }
 
 + (void)handleDeactivationWhileInUseWithCancel:(BOOL)cancelation {

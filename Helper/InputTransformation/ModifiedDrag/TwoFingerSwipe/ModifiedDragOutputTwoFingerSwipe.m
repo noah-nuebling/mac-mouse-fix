@@ -29,25 +29,36 @@ static dispatch_group_t _momentumScrollWaitGroup;
 
 + (void)load_Manual {
     
+    /// Setup smoothingAnimator
+    ///     When using a twoFingerModifedDrag and performance drops, the timeBetweenEvents can sometimes be erratic, and this sometimes leads apps like Xcode to start their custom momentumScroll algorithms with way too high speeds (At least I think that's whats going on) So we're using an animator to smooth things out and hopefully achieve more consistent behaviour
+    ///     Edit:
+    ///     TODO: maybe it would be smart to just delay the time between the last two events to be reasonable. That seemst to be matters for the erratic behaviour. Using the _smoothingAnimator forces us to use dispatch_group and stuff which is very very error prone. I should seriously consider if this is the best approach
+    
+    _smoothingAnimator = [[BaseAnimator alloc] init];
+    
     /// Setup smoothingGroup
     ///     It allows us to wait until the _smoothingAnimator is done.
     
     _momentumScrollWaitGroup = dispatch_group_create();
-    
-    /// Setup smoothingAnimator
-    ///     When using a twoFingerModifedDrag and performance drops, the timeBetweenEvents can sometimes be erratic, and this sometimes leads apps like Xcode to start their custom momentumScroll algorithms with way too high speeds (At least I think that's whats going on) So we're using an animator to smooth things out and hopefully achieve more consistent behaviour
-    
-    _smoothingAnimator = [[BaseAnimator alloc] init];
 }
 
 #pragma mark - Interface
 
 + (void)initializeWithDragState:(ModifiedDragState *)dragStateRef {
+    
+    /// Store drag state
     _drag = dragStateRef;
+    
+    /// Make cursor settable
+    [Utility_Transformation makeCursorSettable];
+    /// ^ I think we only need to do this once, so it might be better to do this in load_Manual() instead. But it doesn't make a difference.
+    
+    /// Stop momentum scroll
+    ///     TODO: I don't think this is an adequate solution - think deeply about this
+    [GestureScrollSimulator stopMomentumScroll];
 }
 
 + (void)handleBecameInUse {
-    
     [PointerUtility freezeEventDispatchPointWithCurrentLocation:_drag->usageOrigin];
 }
 

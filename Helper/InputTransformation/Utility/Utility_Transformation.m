@@ -66,10 +66,14 @@
 }
 
 + (void)makeCursorSettable {
+    
+    /// Declare func
     CGSConnectionID _CGSDefaultConnection(void);
+    /// Call func -> Get connection
     CGSConnectionID cid = _CGSDefaultConnection();
-    //    CGSConnectionID cn = CGSMainConnectionID();
-    //    CGSConnectionID cid = CGSDefaultConnectionForThread();
+    /// ^ Alternative funcs: CGSMainConnectionID(), CGSDefaultConnectionForThread()
+    ///     _CGSDefaultConnection() works fine so far though
+    /// Make cursor settable!
     CGSSetConnectionProperty(cid, cid, (__bridge CFStringRef)@"SetsCursorInBackground", kCFBooleanTrue);
 }
 

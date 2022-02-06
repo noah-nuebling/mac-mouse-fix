@@ -69,7 +69,7 @@ typedef struct {
 + (void)load_Manual;
 
 + (NSDictionary *)dict;
-+ (void)initializeDragWithModifiedDragDict:(NSDictionary *)dict onDevice:(Device *)dev largeUsageThreshold:(BOOL)largeUsageThreshold;
++ (void)initializeDragWithModifiedDragDict:(NSDictionary *)dict onDevice:(Device *)dev;
 
 + (void)modifiedScrollHasBeenUsed;
 //+ (void)suspend;
