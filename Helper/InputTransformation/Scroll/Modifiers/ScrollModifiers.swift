@@ -73,6 +73,8 @@ import CocoaLumberjackSwift
                 result.effect = kMFScrollEffectModificationFourFingerPinch
             case kMFModifiedScrollEffectModificationTypeCommandTab:
                 result.effect = kMFScrollEffectModificationCommandTab
+            case kMFModifiedScrollEffectModificationTypeThreeFingerSwipeHorizontal:
+                result.effect = kMFScrollEffectModificationThreeFingerSwipeHorizontal
             case kMFModifiedScrollEffectModificationTypeAddModeFeedback:
                 
                 var payload = modifiedScrollDict

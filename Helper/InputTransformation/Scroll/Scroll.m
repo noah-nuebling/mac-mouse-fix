@@ -291,7 +291,8 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
                || (!ScrollConfig.smoothEnabled
                    && !(_modifications.effect == kMFScrollEffectModificationFourFingerPinch
                         || _modifications.effect == kMFScrollEffectModificationZoom
-                        || _modifications.effect == kMFScrollEffectModificationRotate))) {
+                        || _modifications.effect == kMFScrollEffectModificationRotate
+                        || _modifications.effect == kMFScrollEffectModificationThreeFingerSwipeHorizontal))) {
         ///                 ^ These modification effects simulate gestures. They need eventPhases to work properly. So they only work when when driven by the animator.
         
         /// Send scroll event directly - without the animator. Will scroll all of pxToScrollForThisTick at once.
@@ -321,9 +322,10 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
             }
             
             if (_modifications.effect == kMFScrollEffectModificationFourFingerPinch
+                || _modifications.effect == kMFScrollEffectModificationThreeFingerSwipeHorizontal
                 || _modifications.input == kMFScrollInputModificationQuick) {
 
-                /// Use linear curve for 4 finger pinch
+                /// Use linear curve for 4 finger pinch and 3 finger swipe
                 ///     because it feels much smoother
                 /// Using linear for horizontal scroll
                 ///     feels smoother for navigating between pages
@@ -520,6 +522,7 @@ static void sendScroll(int64_t px, MFScrollDirection scrollDirection, BOOL gestu
         outputType = kMFScrollOutputTypeGestureScroll;
     }
     
+    /// TODO: Is a third set of constants for the same thing (?) really necessary??
     if (_modifications.effect == kMFScrollEffectModificationZoom) {
         outputType = kMFScrollOutputTypeZoom;
     } else if (_modifications.effect == kMFScrollEffectModificationRotate) {
@@ -528,6 +531,8 @@ static void sendScroll(int64_t px, MFScrollDirection scrollDirection, BOOL gestu
         outputType = kMFScrollOutputTypeFourFingerPinch;
     } else if (_modifications.effect == kMFScrollEffectModificationCommandTab) {
         outputType = kMFScrollOutputTypeCommandTab;
+    } else if (_modifications.effect == kMFScrollEffectModificationThreeFingerSwipeHorizontal) {
+        outputType = kMFScrollOutputTypeThreeFingerSwipeHorizontal;
     } /// kMFScrollEffectModificationHorizontalScroll is handled above when determining scroll direction
     
     /// Debug
@@ -548,6 +553,7 @@ typedef enum {
     kMFScrollOutputTypeFourFingerPinch,
     kMFScrollOutputTypeCommandTab,
     kMFScrollOutputTypeLineScroll,
+    kMFScrollOutputTypeThreeFingerSwipeHorizontal,
 } MFScrollOutputType;
 
 /// Output
@@ -638,32 +644,45 @@ static void sendOutputEvents(int64_t dx, int64_t dy, BOOL isFirstEvent, BOOL isF
             [TouchSimulator postRotationEventWithRotation:0 phase:kIOHIDEventPhaseEnded];
         }
         
-    } else if (outputType == kMFScrollOutputTypeFourFingerPinch) {
+    } else if (outputType == kMFScrollOutputTypeFourFingerPinch
+               || outputType == kMFScrollOutputTypeThreeFingerSwipeHorizontal) {
         
-        /// --- FourFingerPinch ---
+        /// --- FourFingerPinch or ThreeFingerSwipeHorizontal ---
+        ///     ^ Used to access Launchpad or show desktop
+        ///                    ^ Used to switch Spaces
         
-        ///     used to access Launchpad or show desktop
+        MFDockSwipeType type;
+        double eventDelta;
         
-        double eventDelta = (dx + dy)/600.0;
-        /// ^ Launchpad feels a lot less sensitive than Show Desktop, but to improve this we'd have to somehow detect which of both is active atm
-        eventDelta = -eventDelta;
-        /// ^ Flip delta to mirror the way that zooming works
+        if (outputType == kMFScrollOutputTypeFourFingerPinch) {
+            type = kMFDockSwipeTypePinch;
+            eventDelta = (dx + dy)/600.0;
+            /// ^ Launchpad feels a lot less sensitive than Show Desktop, but to improve this we'd have to somehow detect which of both is active atm
+            eventDelta = -eventDelta;
+            /// ^ Flip delta to mirror the way that zooming works
+        } else if (outputType == kMFScrollOutputTypeThreeFingerSwipeHorizontal) {
+            type = kMFDockSwipeTypeHorizontal;
+            eventDelta = (dx + dy)/600.0;
+            eventDelta = -eventDelta;
+        } else {
+            assert(false);
+        }
         
-        [TouchSimulator postDockSwipeEventWithDelta:eventDelta type:kMFDockSwipeTypePinch phase:eventPhase];
+        [TouchSimulator postDockSwipeEventWithDelta:eventDelta type:type phase:eventPhase];
         
         if (isFinalEvent) {
             
-            [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypePinch phase:kIOHIDEventPhaseEnded];
+            [TouchSimulator postDockSwipeEventWithDelta:0.0 type:type phase:kIOHIDEventPhaseEnded];
             
             /// v Dock swipes will sometimes get stuck when the computer is slow. This can be solved by sending several "end" events in a row with a delay (see "stuck bug" in ModifiedDrag)
             ///     Edit: Even with sending the event again after 0.2 seconds, the stuck bug still happens a bunch here for some reason. Event though this almost completely eliminates the bug in ModifiedDrag.
             ///         Hopefully, sending it again after 0.5 seconds works... Edit: Yes, seems to work better but still sometimes happens
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypePinch phase:kIOHIDEventPhaseEnded];
+                [TouchSimulator postDockSwipeEventWithDelta:0.0 type:type phase:kIOHIDEventPhaseEnded];
             });
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypePinch phase:kIOHIDEventPhaseEnded];
+                [TouchSimulator postDockSwipeEventWithDelta:0.0 type:type phase:kIOHIDEventPhaseEnded];
             });
             
         }
