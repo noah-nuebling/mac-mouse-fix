@@ -75,21 +75,11 @@ static dispatch_group_t _momentumScrollWaitGroup;
     /// Post event
     ///     Using animator for smoothing
     
-//    /// Smoothing group allows us to us to wait until the smoothingAnimator is finished and momentumScroll has started
-//    if (!_smoothingAnimator.isRunning) {
-//        DDLogDebug(@"\nEntering dispatch group from ModifiedDrag");
-//        dispatch_group_enter(_momentumScrollWaitGroup);
-//        [_smoothingAnimator onStopWithCallback:^{
-//            printf("\nLeaving dispatch group from animator stop callback\n");
-//            dispatch_group_leave(_momentumScrollWaitGroup);
-//        }];
-//    }
-    
     /// Declare static vars for animator
     static IOHIDEventPhaseBits eventPhase = kIOHIDEventPhaseUndefined;
     static Vector combinedDirection = { .x = 0, .y = 0 };
     
-    /// Values that block should copy instead of reference
+    /// Values that the block should copy instead of reference
     IOHIDEventPhaseBits dragPhase = _drag->phase;
     
     /// Start animator
@@ -125,7 +115,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
         /// Return
         
         if (combinedMagnitude == 0.0) {
-            DDLogDebug(@"Not starting baseAnimator since combinedMagnitude is 0.0");
+            DDLogWarn(@"Not starting baseAnimator since combinedMagnitude is 0.0");
             p[@"doStart"] = @NO;
         } else {
             p[@"value"] = @(combinedMagnitude);
@@ -141,19 +131,8 @@ static dispatch_group_t _momentumScrollWaitGroup;
         
         if (_smoothingAnimatorShouldStartMomentumScroll
             && (phase == kMFAnimationPhaseEnd || phase == kMFAnimationPhaseStartAndEnd)) {
-            /// Sorry for this confusing code. Heres the idea:
             /// Due to the nature of PixelatedAnimator, the last delta is almost always much smaller. This will make apps like Xcode start momentumScroll at a too low speed. Also apps like Xcode will have a litte stuttery jump when the time between the kIOHIDEventPhaseEnded event and the previous event is very small
             ///     Our solution to these two problems is to set the _smoothingAnimatorShouldStartMomentumScroll flag when the user releases the button, and if this flag is set, we transform the last delta callback from the animator into the kIOHIDEventPhaseEnded GestureScroll event. The deltas from this last callback are lost like this, but no one will notice.
-            
-            /// Debug
-//            DDLogDebug(@"Shifting dispatch group exit from smoothingAnimator stop to momentumScroll start");
-            
-            /// Shift dispatch group leaving to gestureScroll
-//            [_smoothingAnimator onStop_SynchronouslyFromAnimationQueueWithCallback: ^{}];
-//            [GestureScrollSimulator afterStartingMomentumScroll:^{
-//                DDLogDebug(@"\nLeaving dispatch group from momentum start callback\n");
-//                dispatch_group_leave(_momentumScrollWaitGroup);
-//            }];
             
             /// Start momentum scroll
             [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded];
@@ -225,6 +204,11 @@ static dispatch_group_t _momentumScrollWaitGroup;
         assert(false);
     }
     
+    /// Delete momentumScroll callback
+    ///     Otherwise, there might be a 'dispatch_group_leave()' without a corresponding dispatch_group_enter() and the app will crash.
+    [GestureScrollSimulator afterStartingMomentumScroll:NULL];
+    
+    /// Unfreeze dispatch point
     [PointerUtility unfreezeEventDispatchPoint];
 }
 
