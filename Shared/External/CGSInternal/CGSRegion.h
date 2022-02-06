@@ -27,6 +27,8 @@
 //  Released under the MIT license.
 //
 
+@import ApplicationServices; /// Noah: Had to import this because RgnHandle was not found anymore after refactor. Commit 0a624865d1ce481eab5aca63d805b173f2494cde broke things.
+
 #ifndef CGS_REGION_INTERNAL_H
 #define CGS_REGION_INTERNAL_H
 
