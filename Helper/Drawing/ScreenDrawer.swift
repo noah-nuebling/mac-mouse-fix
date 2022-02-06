@@ -79,7 +79,10 @@ import CocoaLumberjackSwift
     @objc func move(view: NSView, toOrigin newOrigin: NSPoint) {
         
         guard (view.superview!.isEqual(to: canvas.contentView)) else { fatalError() }
-        /// ^ This crashes sometimes because view doesn't have a superview. This happens when scroll zooming and drag scrolling at the same time on the same button. Investivate.
+        /// ^ This crashes sometimes because view doesn't have a superview. This happens when scroll zooming and drag scrolling at the same time on the same button. Investigate.
+        
+        /// Debug
+        DDLogDebug("Moving puppet cursor to: \(newOrigin)")
         
         /// Sol 1
         /// This calls all sorts of autolayout stuff and is very slow. Can't manage to turn that off

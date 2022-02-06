@@ -91,6 +91,7 @@
 		4FF0255127B0033000923107 /* ModifiedDragOutputTwoFingerSwipe.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0255027B0033000923107 /* ModifiedDragOutputTwoFingerSwipe.m */; };
 		4FF0255427B007FC00923107 /* ModifiedDragOutputFakeDrag.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0255327B007FC00923107 /* ModifiedDragOutputFakeDrag.m */; };
 		4FF0255727B0091700923107 /* ModifiedDragOutputAddMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0255627B0091700923107 /* ModifiedDragOutputAddMode.m */; };
+		4FF0255F27B013A100923107 /* PointerUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0255E27B013A100923107 /* PointerUtility.m */; };
 		4FF0BD4B266A8B7E003935EA /* Bezier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD4A266A8B7E003935EA /* Bezier.swift */; };
 		4FF0BD51266AC10C003935EA /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD50266AC10C003935EA /* Math.swift */; };
 		4FF0BD58266ACE32003935EA /* VectorUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD57266ACE32003935EA /* VectorUtility.m */; };
@@ -403,6 +404,8 @@
 		4FF0255327B007FC00923107 /* ModifiedDragOutputFakeDrag.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModifiedDragOutputFakeDrag.m; sourceTree = "<group>"; };
 		4FF0255527B0091700923107 /* ModifiedDragOutputAddMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModifiedDragOutputAddMode.h; sourceTree = "<group>"; };
 		4FF0255627B0091700923107 /* ModifiedDragOutputAddMode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModifiedDragOutputAddMode.m; sourceTree = "<group>"; };
+		4FF0255D27B013A100923107 /* PointerUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerUtility.h; sourceTree = "<group>"; };
+		4FF0255E27B013A100923107 /* PointerUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerUtility.m; sourceTree = "<group>"; };
 		4FF0BD4A266A8B7E003935EA /* Bezier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bezier.swift; sourceTree = "<group>"; };
 		4FF0BD50266AC10C003935EA /* Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
 		4FF0BD56266ACE32003935EA /* VectorUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VectorUtility.h; sourceTree = "<group>"; };
@@ -1351,6 +1354,8 @@
 				4FF6664225F2C93A00689B77 /* Utility_Transformation.m */,
 				4F3A40D8266C5BDF00436821 /* NSScreen+Additions.h */,
 				4F3A40D9266C5BDF00436821 /* NSScreen+Additions.m */,
+				4FF0255D27B013A100923107 /* PointerUtility.h */,
+				4FF0255E27B013A100923107 /* PointerUtility.m */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -2036,6 +2041,7 @@
 				4F70ECB7267E810900325A76 /* IOUtility.m in Sources */,
 				4FF6669A25F2C93A00689B77 /* Utility_Transformation.m in Sources */,
 				4FF6669D25F2C93A00689B77 /* AccessibilityCheck.m in Sources */,
+				4FF0255F27B013A100923107 /* PointerUtility.m in Sources */,
 				4FF666A725F2C93A00689B77 /* Device.m in Sources */,
 				4FF6669C25F2C93A00689B77 /* PointerSpeedExperiments.m in Sources */,
 				4FF0BD5F266ADFE5003935EA /* MathObjc.m in Sources */,

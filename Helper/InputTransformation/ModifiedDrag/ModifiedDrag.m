@@ -38,6 +38,13 @@
 
 static ModifiedDragState _drag;
 
+/// Derived props
+
++ (CGPoint)pseudoPointerPosition {
+    
+    return CGPointMake(_drag.origin.x + _drag.originOffset.x, _drag.origin.y + _drag.originOffset.y);
+}
+
 /// Debug
 
 + (NSString *)modifiedDragStateDescription:(ModifiedDragState)drag {
@@ -172,10 +179,15 @@ void initDragState(void) {
 
 static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType type, CGEventRef  event, void * __nullable userInfo) {
     
-    /// Re-enable on timeout (Not sure if this ever times out)
+    /// Catch special events
     if (type == kCGEventTapDisabledByTimeout) {
-        DDLogInfo(@"ButtonInputReceiver eventTap timed out. Re-enabling.");
+        /// Re-enable on timeout (Not sure if this ever times out)
+        DDLogInfo(@"ModifiedDrag eventTap timed out. Re-enabling.");
         CGEventTapEnable(_drag.eventTap, true);
+        return event;
+    } else if (type == kCGEventTapDisabledByUserInput) {
+        DDLogInfo(@"ModifiedDrag eventTap disabled by user input.");
+        return event;
     }
     
     /// Get deltas
@@ -214,7 +226,6 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
         _drag.originOffset.y += deltaY;
         /// ^ We get the originOffset outside the _drag.queue, so that we still record changes in originOffset while deactivate() is blocking the _drag.queue
         
-
         MFModifiedInputActivationState st = _drag.activationState;
         
     //        DDLogDebug(@"Handling mouse input. dx: %lld, dy: %lld, activationState: %@", deltaX, deltaY, @(st));
@@ -270,7 +281,7 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
         [_drag.outputPlugin handleBecameInUse];
     }
 }
-// Only passing in event to obtain event location to get slightly better behaviour for fakeDrag
+/// Only passing in event to obtain event location to get slightly better behaviour for fakeDrag
 void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event) {
     
     [_drag.outputPlugin handleMouseInputWhileInUseWithDeltaX:deltaX deltaY:deltaY event:event];
