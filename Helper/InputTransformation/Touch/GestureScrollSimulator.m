@@ -343,7 +343,7 @@ static void (^_momentumScrollCallback)(void);
     dispatch_async(_queue, ^{
         
         if (_momentumAnimator.isRunning && callback != NULL) {
-            /// ^ `callback != NULL` is a hack to make ModifiedDragOutputTwoFingerSwipe work properly. I'm not sure what I'm doing.
+            /// ^ `&& callback != NULL` is a hack to make ModifiedDragOutputTwoFingerSwipe work properly. I'm not sure what I'm doing.
             
             DDLogError(@"Trying to set momentumScroll start callback while it's running. This can lead to bad issues and you probably don't want to do it.");
             assert(false);

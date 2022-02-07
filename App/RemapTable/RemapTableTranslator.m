@@ -73,26 +73,26 @@ static NSArray *getScrollEffectsTable() {
         @{@"ui": @"Zoom in or out", @"tool": @"Zoom in or out in Safari, Maps, and other apps \n \nWorks like Pinch to Zoom on an Apple Trackpad" , @"dict": @{
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeZoom
         }},
-        @{@"ui": @"Horizontal scroll", @"tool": @"Scroll horizontally \nNavigate pages in Safari, delete messages in Mail, and more \n \nWorks like swiping horizontally with 2 fingers on an Apple Trackpad" , @"dict": @{
+        @{@"ui": @"Horizontal Scroll", @"tool": @"Scroll horizontally \nNavigate pages in Safari, delete messages in Mail, and more \n \nWorks like swiping horizontally with 2 fingers on an Apple Trackpad" , @"dict": @{
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeHorizontalScroll
         }},
 //        @{@"ui": @"Rotate", @"hideable": @NO, @"tool": @"Rotate in Maps and other apps \n \nWorks like Twisting with 2 fingers on an Apple Trackpad", @"dict": @{
 //            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeRotate
 //        }},
         separatorEffectsTableEntry(),
-        @{@"ui": @"Swift scroll", @"tool": @"Scroll long distances with minimal effort", @"dict": @{
+        @{@"ui": @"Swift Scroll", @"tool": @"Scroll long distances with minimal effort", @"dict": @{
             kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypeQuickScroll
         }},
-        @{@"ui": @"Precise scroll", @"tool": @"Scroll small distances and use sensitive UI elements with precision.", @"dict": @{
+        @{@"ui": @"Precise Scroll", @"tool": @"Scroll small distances and use sensitive UI elements with precision.", @"dict": @{
             kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypePrecisionScroll
         }},
         separatorEffectsTableEntry(),
-        @{@"ui": @"Desktop & Launchpad", @"tool": @"Scroll up for Launchpad and down to show the Desktop \n \nWorks like Pinching with 4 fingers on an Apple Trackpad", @"dict": @{
+        @{@"ui": @"Desktop + Launchpad", @"tool": @"Scroll up for Launchpad and down to show the Desktop \n \nWorks like Pinching with 4 fingers on an Apple Trackpad", @"dict": @{
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeFourFingerPinch
         }},
-        @{@"ui": @"Move between Spaces", @"tool": @"Scroll up to move left a Space and down to move Right a Space \n \nWorks like Swiping horizontally with 3 fingers on an Apple Trackpad", @"dict": @{
-            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeThreeFingerSwipeHorizontal
-        }},
+//        @{@"ui": @"Move between Spaces", @"tool": @"Scroll up to move left a Space and down to move Right a Space \n \nWorks like Swiping horizontally with 3 fingers on an Apple Trackpad", @"dict": @{
+//            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeThreeFingerSwipeHorizontal
+//        }},
 //        separatorEffectsTableEntry(),
 //        @{@"ui": @"App Switcher", @"tool": @"Quickly switch between open apps \n \nWorks like holding Command (⌘) and then pressing Tab (⇥) on your keyboard", @"dict": @{
 //            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeCommandTab
@@ -103,10 +103,10 @@ static NSArray *getScrollEffectsTable() {
 }
 static NSArray *getDragEffectsTable() {
     NSArray *dragEffectsTable = @[
-        @{@"ui": @"Mission Control & Spaces", @"tool": @"Move your mouse: \n - Up to show Mission Control \n - Down to show Application Windows \n - Left or Right to move between Spaces\n \nWorks like swiping with 3 fingers on an Apple Trackpad" , @"dict": @{
+        @{@"ui": @"Mission Control + Spaces", @"tool": @"Move your mouse: \n - Up to show Mission Control \n - Down to show Application Windows \n - Left or Right to move between Spaces\n \nWorks like swiping with 3 fingers on an Apple Trackpad" , @"dict": @{
                   kMFModifiedDragDictKeyType: kMFModifiedDragTypeThreeFingerSwipe,
         }},
-        @{@"ui": @"360° Scroll", @"tool": @"Scroll freely by moving your mouse in any direction \n \nNavigate between pages in Safari, delete messages in Mail and more by moving your mouse left and right \n \nWorks like swiping with 2 fingers on an Apple Trackpad" , @"dict": @{
+        @{@"ui": @"Drag Scroll", @"tool": @"Scroll freely by moving your mouse in any direction \n \nNavigate between pages in Safari, delete messages in Mail and more by moving your mouse left and right \n \nWorks like swiping with 2 fingers on an Apple Trackpad" , @"dict": @{
                   kMFModifiedDragDictKeyType: kMFModifiedDragTypeTwoFingerSwipe,
         }},
 //        separatorEffectsTableEntry(),
@@ -133,12 +133,12 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHMissionControl)
         }},
-        @{@"ui": @"Application Windows", @"tool": @"Show all windows of the active app", @"dict": @{
+        @{@"ui": @"App Exposé", @"tool": @"Show all windows of the active app", @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHAppExpose)
         }},
         separatorEffectsTableEntry(),
-        @{@"ui": @"Show Desktop", @"tool": @"Show the desktop", @"dict": @{
+        @{@"ui": @"Desktop", @"tool": @"Show the desktop", @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHShowDesktop)
         }},
@@ -190,7 +190,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
                     kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks: @1,
             }
         };
-        [oneShotEffectsTable insertObject:buttonClickEntry atIndex:9];
+        [oneShotEffectsTable insertObject:buttonClickEntry atIndex:10];
     }
     
     /// Insert entry for keyboard shortcut effect
