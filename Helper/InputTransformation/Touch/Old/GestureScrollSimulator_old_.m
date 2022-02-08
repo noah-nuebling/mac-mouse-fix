@@ -201,7 +201,7 @@ static VectorSubPixelator *_scrollPixelator;
     
     // Testing
     
-//    CGPoint flippedNSLoc = [Utility_Helper getCurrentPointerLocation_flipped];
+//    CGPoint flippedNSLoc = [HelperUtility getCurrentPointerLocation_flipped];
 //    CGPoint CGLoc = Utility_Transformation.CG
 //    DDLogInfo(@"\nFLIPPED NS: %f, %f \nCG: %f, %f", flippedNSLoc.x, flippedNSLoc.y, CGLoc.x, CGLoc.y);
     

@@ -7,18 +7,18 @@
 // --------------------------------------------------------------------------
 //
 
-#import "Utility_Transformation.h"
+#import "TransformationUtility.h"
 #import <Cocoa/Cocoa.h>
 #import <Carbon/Carbon.h>
 #import <ApplicationServices/ApplicationServices.h>
 //#import "CGSPrivate.h"
 #import "SharedUtility.h"
-#import "Utility_Helper.h"
+#import "HelperUtility.h"
 #import "CGSCursor.h"
 #include <sys/types.h>
 #include <sys/sysctl.h>
 
-@implementation Utility_Transformation
+@implementation TransformationUtility
 
 + (NSTimeInterval)nsTimeStamp {
     /// Time since system startup in seconds. This value is used in NSEvent timestamps

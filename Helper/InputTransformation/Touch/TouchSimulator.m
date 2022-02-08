@@ -38,7 +38,7 @@
 #import "Scroll.h"
 #import "SharedUtility.h"
 #import <Foundation/Foundation.h>
-#import "Utility_Helper.h"
+#import "HelperUtility.h"
 
 @implementation TouchSimulator
 
@@ -113,7 +113,7 @@ double _dockSwipeLastDelta = 0.0;
     
     /// Debug
     
-//    DDLogDebug(@"FLAVOR: \n%@\n%@\n%@", [Utility_Helper binaryRepresentation:kIOHIDEventFieldDockSwipeFlavor], [Utility_Helper binaryRepresentation:123], [Utility_Helper binaryRepresentation:165]);
+//    DDLogDebug(@"FLAVOR: \n%@\n%@\n%@", [HelperUtility binaryRepresentation:kIOHIDEventFieldDockSwipeFlavor], [HelperUtility binaryRepresentation:123], [HelperUtility binaryRepresentation:165]);
         
 //    DDLogDebug(@"Request to send dockswipe");
     

@@ -12,7 +12,7 @@
 #import <Cocoa/Cocoa.h>
 #import "IOHIDEventTypes.h"
 #import "SharedUtility.h"
-#import "Utility_Transformation.h"
+#import "TransformationUtility.h"
 
 @implementation ScrollUtility
 

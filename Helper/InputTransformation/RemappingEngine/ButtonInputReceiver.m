@@ -13,8 +13,8 @@
 #import "ButtonTriggerGenerator.h"
 #import "Queue.h"
 #import "SharedUtility.h"
-#import "Utility_Transformation.h"
-#import "Utility_Helper.h"
+#import "TransformationUtility.h"
+#import "HelperUtility.h"
 #import "GestureScrollSimulator.h"
 
 

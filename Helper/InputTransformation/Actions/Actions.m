@@ -11,8 +11,8 @@
 #import "CGSHotKeys.h"
 #import "TouchSimulator.h"
 #import "SharedUtility.h"
-#import "Utility_Transformation.h"
-#import "Utility_Helper.h"
+#import "TransformationUtility.h"
+#import "HelperUtility.h"
 #import "ModifierManager.h"
 #import "MessagePort_Helper.h"
 #import "TransformationManager.h"
@@ -70,7 +70,7 @@
             
             NSNumber *button = actionDict[kMFActionDictKeyMouseButtonClicksVariantButtonNumber];
             NSNumber *nOfClicks = actionDict[kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks];
-            [Utility_Transformation postMouseButtonClicks:button.intValue nOfClicks:nOfClicks.intValue];
+            [TransformationUtility postMouseButtonClicks:button.intValue nOfClicks:nOfClicks.intValue];
         
         } else if ([actionType isEqualToString:kMFActionDictTypeAddModeFeedback]) {
             NSMutableDictionary *payload = ((NSMutableDictionary *)actionDict.mutableCopy);
@@ -104,13 +104,13 @@ static void postSystemDefinedEvent(MFSystemDefinedEventType type, NSEventModifie
     
     /// Post key down
     
-    NSTimeInterval ts = [Utility_Transformation nsTimeStamp];
+    NSTimeInterval ts = [TransformationUtility nsTimeStamp];
     NSEvent *e = [NSEvent otherEventWithType:14 location:loc modifierFlags:modifierFlags timestamp:ts windowNumber:-1 context:nil subtype:8 data1:downData data2:-1];
     
     CGEventPost(tapLoc, e.CGEvent);
     
     /// Post key up
-    ts = [Utility_Transformation nsTimeStamp];
+    ts = [TransformationUtility nsTimeStamp];
     e = [NSEvent otherEventWithType:14 location:loc modifierFlags:modifierFlags timestamp:ts windowNumber:-1 context:nil subtype:8 data1:upData data2:-1];
     
     CGEventPost(tapLoc, e.CGEvent);

@@ -11,7 +11,7 @@
 #import <Cocoa/Cocoa.h>
 #import "WannabePrefixHeader.h"
 #import "NSScreen+Additions.h"
-#import "Utility_Helper.h"
+#import "HelperUtility.h"
 
 @interface DisplayLink ()
 
@@ -197,7 +197,7 @@ BOOL isRunning_Internal(CVDisplayLinkRef dl) {
         
         /// Get display under mouse pointer
         CGDirectDisplayID dsp;
-        rt = [Utility_Helper displayUnderMousePointer:&dsp withEvent:event];
+        rt = [HelperUtility displayUnderMousePointer:&dsp withEvent:event];
         
         /// Premature return
         if (rt == kCVReturnError) {
@@ -206,6 +206,8 @@ BOOL isRunning_Internal(CVDisplayLinkRef dl) {
         if (dsp == self->_previousDisplayUnderMousePointer) {
             result = kCVReturnSuccess; return; /// Display under pointer already linked to
         }
+        
+        /// Store dsp in cache
         self->_previousDisplayUnderMousePointer = dsp;
         
         /// Set new display

@@ -1,20 +1,20 @@
 //
 // --------------------------------------------------------------------------
-// PointerUtility.m
+// PointerFreeze.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2022
 // Licensed under MIT
 // --------------------------------------------------------------------------
 //
 
-#import "PointerUtility.h"
+#import "PointerFreeze.h"
 @import Cocoa;
-#import "Utility_Helper.h"
+#import "HelperUtility.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "CGSConnection.h"
-#import "Utility_Transformation.h"
+#import "TransformationUtility.h"
 
-@implementation PointerUtility
+@implementation PointerFreeze
 
 
 /// Vars
@@ -35,7 +35,7 @@ static dispatch_queue_t _queue;
 
 + (void)initialize
 {
-    if (self == [PointerUtility class]) {
+    if (self == [PointerFreeze class]) {
         
         /// Setup cgs stuff
         _cgsConnection = CGSMainConnectionID();
@@ -52,7 +52,7 @@ static dispatch_queue_t _queue;
         
         /// Setup eventTap
         dispatch_sync(_queue, ^{
-            _eventTap = [Utility_Transformation createEventTapWithLocation:kCGHIDEventTap mask:CGEventMaskBit(kCGEventMouseMoved) | CGEventMaskBit(kCGEventLeftMouseDragged) | CGEventMaskBit(kCGEventRightMouseDragged) | CGEventMaskBit(kCGEventOtherMouseDragged) option:kCGEventTapOptionListenOnly placement:kCGHeadInsertEventTap callback:mouseMovedCallback runLoop:CFRunLoopGetMain()];
+            _eventTap = [TransformationUtility createEventTapWithLocation:kCGHIDEventTap mask:CGEventMaskBit(kCGEventMouseMoved) | CGEventMaskBit(kCGEventLeftMouseDragged) | CGEventMaskBit(kCGEventRightMouseDragged) | CGEventMaskBit(kCGEventOtherMouseDragged) option:kCGEventTapOptionListenOnly placement:kCGHeadInsertEventTap callback:mouseMovedCallback runLoop:CFRunLoopGetMain()];
         });
         /// ^ It seems like only CFRunLoopGetMain() works here. With CFRunLoopGetCurrent() (and without dispatching to a queue) the callback is never called. Not sure why.
     }
@@ -75,7 +75,7 @@ static dispatch_queue_t _queue;
         _originOffset = CGPointZero;
         
         /// Get display under mouse pointer
-        CVReturn rt = [Utility_Helper display:&_display atPoint:_origin];
+        CVReturn rt = [HelperUtility display:&_display atPoint:_origin];
         if (rt != kCVReturnSuccess) DDLogWarn(@"Couldn't get display under mouse pointer in modifiedDrag");
         
         /// Draw puppet cursor before hiding
@@ -92,7 +92,7 @@ static dispatch_queue_t _queue;
             ///     This leads to a little flicker when the puppetCursor is not yet drawn, but the real cursor is already hidden.
             ///     Not sure why this happens. But adding a delay of 0.02 before hiding makes it look seamless.
             
-            [Utility_Transformation hideMousePointer:YES];
+            [TransformationUtility hideMousePointer:YES];
         });
         
         /// ^ TODO: We used to use _drag->queue instead of dispatch_get_main_queue(). Check if this works as well.
@@ -181,7 +181,7 @@ CGEventRef _Nullable mouseMovedCallback(CGEventTapProxy proxy, CGEventType type,
         CGWarpMouseCursorPosition(puppetPos);
         
         /// Show mouse pointer again
-        [Utility_Transformation hideMousePointer:NO];
+        [TransformationUtility hideMousePointer:NO];
         
         /// Undraw puppet cursor
         drawPuppetCursor(NO, NO);

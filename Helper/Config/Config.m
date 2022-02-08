@@ -19,8 +19,8 @@
 #import "SharedUtility.h"
 #import "TransformationManager.h"
 #import "Constants.h"
-#import "Utility_Transformation.h"
-#import "Utility_Helper.h"
+#import "TransformationUtility.h"
+#import "HelperUtility.h"
 
 @implementation Config
 

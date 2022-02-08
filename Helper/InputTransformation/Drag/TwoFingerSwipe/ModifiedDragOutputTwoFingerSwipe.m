@@ -10,10 +10,10 @@
 #import "ModifiedDragOutputTwoFingerSwipe.h"
 static ModifiedDragState *_drag;
 #import "Mac_Mouse_Fix_Helper-Swift.h"
-#import "Utility_Transformation.h"
+#import "TransformationUtility.h"
 #import "GestureScrollSimulator.h"
 #import "CGSConnection.h"
-#import "PointerUtility.h"
+#import "PointerFreeze.h"
 
 @implementation ModifiedDragOutputTwoFingerSwipe
 
@@ -50,7 +50,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
     _drag = dragStateRef;
     
     /// Make cursor settable
-    [Utility_Transformation makeCursorSettable];
+    [TransformationUtility makeCursorSettable];
     /// ^ I think we only need to do this once, so it might be better to do this in load_Manual() instead. But it doesn't make a difference.
     
     /// Stop momentum scroll
@@ -59,7 +59,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
 }
 
 + (void)handleBecameInUse {
-    [PointerUtility freezeEventDispatchPointWithCurrentLocation:_drag->usageOrigin];
+    [PointerFreeze freezeEventDispatchPointWithCurrentLocation:_drag->usageOrigin];
 }
 
 + (void)handleMouseInputWhileInUseWithDeltaX:(double)deltaX deltaY:(double)deltaY event:(CGEventRef)event {
@@ -209,7 +209,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
     [GestureScrollSimulator afterStartingMomentumScroll:NULL];
     
     /// Unfreeze dispatch point
-    [PointerUtility unfreezeEventDispatchPoint];
+    [PointerFreeze unfreezeEventDispatchPoint];
 }
 
 @end

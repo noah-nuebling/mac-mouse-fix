@@ -13,7 +13,7 @@
 #import "ScrollModifiers.h"
 #import "Config.h"
 #import "ScrollUtility.h"
-#import "Utility_Helper.h"
+#import "HelperUtility.h"
 #import "WannabePrefixHeader.h"
 #import "ScrollAnalyzer.h"
 #import "ScrollConfigObjC.h"

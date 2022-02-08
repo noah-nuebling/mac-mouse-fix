@@ -222,7 +222,7 @@
 
 /// The *cocoa*  global "display" coordinate system starts at the bottom left of the main screen, while the *quartz* coordinate system starts at the top left
 /// We sometimes need to convert between them
-/// I've tried to write conversion functions before (should be in the project somewhere) but I don't think they worked. I'll give it one more try:
+/// I've tried to write conversion functions before (Find them in HelperUtility) but I don't think they worked. I'll give it one more try:
 
 /// Convenience wrappers
 

@@ -8,7 +8,7 @@
 //
 
 #import "TransformationManager.h"
-#import "Utility_Transformation.h"
+#import "TransformationUtility.h"
 #import "SharedUtility.h"
 #import "ButtonTriggerGenerator.h"
 #import "Actions.h"
@@ -232,7 +232,7 @@ CFMachPortRef _keyCaptureEventTap;
     DDLogInfo(@"Enabling keyCaptureMode");
     
     if (_keyCaptureEventTap == nil) {
-        _keyCaptureEventTap = [Utility_Transformation createEventTapWithLocation:kCGHIDEventTap mask:CGEventMaskBit(kCGEventKeyDown) | CGEventMaskBit(NSEventTypeSystemDefined) option:kCGEventTapOptionDefault placement:kCGHeadInsertEventTap callback:keyCaptureModeCallback];
+        _keyCaptureEventTap = [TransformationUtility createEventTapWithLocation:kCGHIDEventTap mask:CGEventMaskBit(kCGEventKeyDown) | CGEventMaskBit(NSEventTypeSystemDefined) option:kCGEventTapOptionDefault placement:kCGHeadInsertEventTap callback:keyCaptureModeCallback];
     }
     CGEventTapEnable(_keyCaptureEventTap, true);
 }

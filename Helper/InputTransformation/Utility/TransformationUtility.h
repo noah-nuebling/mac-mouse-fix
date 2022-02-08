@@ -13,7 +13,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Utility_Transformation : NSObject
+@interface TransformationUtility : NSObject
 
 + (NSTimeInterval)nsTimeStamp;
 

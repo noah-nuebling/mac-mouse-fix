@@ -17,12 +17,12 @@
 #import "SubPixelator.h"
 #import <Cocoa/Cocoa.h>
 
-#import "Utility_Transformation.h"
+#import "TransformationUtility.h"
 #import "SharedMessagePort.h"
 #import "TransformationManager.h"
 #import "SharedUtility.h"
 
-#import "Utility_Helper.h"
+#import "HelperUtility.h"
 
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "SharedUtility.h"
@@ -93,7 +93,7 @@ static ModifiedDragState _drag;
         CGEventMask mask = CGEventMaskBit(kCGEventOtherMouseDragged) | CGEventMaskBit(kCGEventMouseMoved); /// kCGEventMouseMoved is only necessary for keyboard-only drag-modification (which we've disable because it had other problems), and maybe for AddMode to work.
         mask = mask | CGEventMaskBit(kCGEventLeftMouseDragged) | CGEventMaskBit(kCGEventRightMouseDragged); /// This is necessary for modified drag to work during a left/right click and drag. Concretely I added this to make drag and drop work. For that we only need the kCGEventLeftMouseDragged. Adding kCGEventRightMouseDragged is probably completely unnecessary. Not sure if there are other concrete applications outside of drag and drop.
         
-        CFMachPortRef eventTap = [Utility_Transformation createEventTapWithLocation:location mask:mask option:option placement:placement callback:eventTapCallBack];
+        CFMachPortRef eventTap = [TransformationUtility createEventTapWithLocation:location mask:mask option:option placement:placement callback:eventTapCallBack];
         
         _drag.eventTap = eventTap;
     }
@@ -203,7 +203,7 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
         
         /// Interrupt
         ///     This handles race condition where _drag.eventTap is disabled right after eventTapCallBack() is called
-        ///     We implemented the same idea in PointerUtility.
+        ///     We implemented the same idea in PointerFreeze.
         ///     Actually, the check for kMFModifiedInputActivationStateNone below has the same effect, but I think but this makes it clearer?
         
         if (!CGEventTapIsEnabled(_drag.eventTap)) {

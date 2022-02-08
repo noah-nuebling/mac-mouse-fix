@@ -90,7 +90,7 @@
 		4FF0255127B0033000923107 /* ModifiedDragOutputTwoFingerSwipe.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0255027B0033000923107 /* ModifiedDragOutputTwoFingerSwipe.m */; };
 		4FF0255427B007FC00923107 /* ModifiedDragOutputFakeDrag.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0255327B007FC00923107 /* ModifiedDragOutputFakeDrag.m */; };
 		4FF0255727B0091700923107 /* ModifiedDragOutputAddMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0255627B0091700923107 /* ModifiedDragOutputAddMode.m */; };
-		4FF0255F27B013A100923107 /* PointerUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0255E27B013A100923107 /* PointerUtility.m */; };
+		4FF0255F27B013A100923107 /* PointerFreeze.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0255E27B013A100923107 /* PointerFreeze.m */; };
 		4FF0BD4B266A8B7E003935EA /* Bezier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD4A266A8B7E003935EA /* Bezier.swift */; };
 		4FF0BD51266AC10C003935EA /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD50266AC10C003935EA /* Math.swift */; };
 		4FF0BD58266ACE32003935EA /* VectorUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD57266ACE32003935EA /* VectorUtility.m */; };
@@ -152,7 +152,7 @@
 		4FF6669725F2C93A00689B77 /* TransformationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6663D25F2C93A00689B77 /* TransformationManager.m */; };
 		4FF6669825F2C93A00689B77 /* SubPixelator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6664025F2C93A00689B77 /* SubPixelator.m */; };
 		4FF6669925F2C93A00689B77 /* VectorSubPixelator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6664125F2C93A00689B77 /* VectorSubPixelator.m */; };
-		4FF6669A25F2C93A00689B77 /* Utility_Transformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6664225F2C93A00689B77 /* Utility_Transformation.m */; };
+		4FF6669A25F2C93A00689B77 /* TransformationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6664225F2C93A00689B77 /* TransformationUtility.m */; };
 		4FF6669B25F2C93A00689B77 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6664625F2C93A00689B77 /* AppDelegate.m */; };
 		4FF6669C25F2C93A00689B77 /* PointerSpeedExperiments.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6664925F2C93A00689B77 /* PointerSpeedExperiments.m */; };
 		4FF6669D25F2C93A00689B77 /* AccessibilityCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6664B25F2C93A00689B77 /* AccessibilityCheck.m */; };
@@ -165,7 +165,7 @@
 		4FF666A425F2C93A00689B77 /* NoahsTouchEventAnalysis in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6667325F2C93A00689B77 /* NoahsTouchEventAnalysis */; };
 		4FF666A725F2C93A00689B77 /* Device.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6667A25F2C93A00689B77 /* Device.m */; };
 		4FF666A825F2C93A00689B77 /* DeviceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6667D25F2C93A00689B77 /* DeviceManager.m */; };
-		4FF666A925F2C93A00689B77 /* Utility_Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6668025F2C93A00689B77 /* Utility_Helper.m */; };
+		4FF666A925F2C93A00689B77 /* HelperUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6668025F2C93A00689B77 /* HelperUtility.m */; };
 		4FFBC5A8266977CA001D389B /* DoubleExponentialSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */; };
 		80457D1CE643F8D503131D96 /* Pods_Mac_Mouse_Fix_Helper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E09D0DF45AFAF30A568B97D /* Pods_Mac_Mouse_Fix_Helper.framework */; };
 		B6D5363E56CF13634EB5BD57 /* Pods_Mac_Mouse_Fix_Mac_Mouse_FixUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D8699EFC1F3CB6B37A1522D /* Pods_Mac_Mouse_Fix_Mac_Mouse_FixUITests.framework */; };
@@ -402,8 +402,8 @@
 		4FF0255327B007FC00923107 /* ModifiedDragOutputFakeDrag.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModifiedDragOutputFakeDrag.m; sourceTree = "<group>"; };
 		4FF0255527B0091700923107 /* ModifiedDragOutputAddMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModifiedDragOutputAddMode.h; sourceTree = "<group>"; };
 		4FF0255627B0091700923107 /* ModifiedDragOutputAddMode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModifiedDragOutputAddMode.m; sourceTree = "<group>"; };
-		4FF0255D27B013A100923107 /* PointerUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerUtility.h; sourceTree = "<group>"; };
-		4FF0255E27B013A100923107 /* PointerUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerUtility.m; sourceTree = "<group>"; };
+		4FF0255D27B013A100923107 /* PointerFreeze.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerFreeze.h; sourceTree = "<group>"; };
+		4FF0255E27B013A100923107 /* PointerFreeze.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerFreeze.m; sourceTree = "<group>"; };
 		4FF0BD4A266A8B7E003935EA /* Bezier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bezier.swift; sourceTree = "<group>"; };
 		4FF0BD50266AC10C003935EA /* Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
 		4FF0BD56266ACE32003935EA /* VectorUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VectorUtility.h; sourceTree = "<group>"; };
@@ -496,10 +496,10 @@
 		4FF6663E25F2C93A00689B77 /* TransformationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformationManager.h; sourceTree = "<group>"; };
 		4FF6664025F2C93A00689B77 /* SubPixelator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubPixelator.m; sourceTree = "<group>"; };
 		4FF6664125F2C93A00689B77 /* VectorSubPixelator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VectorSubPixelator.m; sourceTree = "<group>"; };
-		4FF6664225F2C93A00689B77 /* Utility_Transformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility_Transformation.m; sourceTree = "<group>"; };
+		4FF6664225F2C93A00689B77 /* TransformationUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransformationUtility.m; sourceTree = "<group>"; };
 		4FF6664325F2C93A00689B77 /* SubPixelator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubPixelator.h; sourceTree = "<group>"; };
 		4FF6664425F2C93A00689B77 /* VectorSubPixelator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VectorSubPixelator.h; sourceTree = "<group>"; };
-		4FF6664525F2C93A00689B77 /* Utility_Transformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility_Transformation.h; sourceTree = "<group>"; };
+		4FF6664525F2C93A00689B77 /* TransformationUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformationUtility.h; sourceTree = "<group>"; };
 		4FF6664625F2C93A00689B77 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		4FF6664825F2C93A00689B77 /* PointerSpeedExperiments.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointerSpeedExperiments.h; sourceTree = "<group>"; };
 		4FF6664925F2C93A00689B77 /* PointerSpeedExperiments.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PointerSpeedExperiments.m; sourceTree = "<group>"; };
@@ -546,8 +546,8 @@
 		4FF6667B25F2C93A00689B77 /* DeviceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceManager.h; sourceTree = "<group>"; };
 		4FF6667C25F2C93A00689B77 /* Device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Device.h; sourceTree = "<group>"; };
 		4FF6667D25F2C93A00689B77 /* DeviceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceManager.m; sourceTree = "<group>"; };
-		4FF6667F25F2C93A00689B77 /* Utility_Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility_Helper.h; sourceTree = "<group>"; };
-		4FF6668025F2C93A00689B77 /* Utility_Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility_Helper.m; sourceTree = "<group>"; };
+		4FF6667F25F2C93A00689B77 /* HelperUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelperUtility.h; sourceTree = "<group>"; };
+		4FF6668025F2C93A00689B77 /* HelperUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelperUtility.m; sourceTree = "<group>"; };
 		4FFBC5732667DCE4001D389B /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		4FFBC5A6266977CA001D389B /* Mac Mouse Fix Helper-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mac Mouse Fix Helper-Bridging-Header.h"; sourceTree = "<group>"; };
 		4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExponentialSmoother.swift; sourceTree = "<group>"; };
@@ -900,12 +900,13 @@
 			path = SubPixelator;
 			sourceTree = "<group>";
 		};
-		4FCC03342757A516002E5A57 /* Drawing */ = {
+		4FBDA14A27B225210030E4EA /* Unused */ = {
 			isa = PBXGroup;
 			children = (
-				4FCC03322757A50C002E5A57 /* ScreenDrawer.swift */,
+				4FF6662625F2C93A00689B77 /* CubicUnitBezier.h */,
+				4FF6662425F2C93A00689B77 /* CubicUnitBezier.m */,
 			);
-			path = Drawing;
+			path = Unused;
 			sourceTree = "<group>";
 		};
 		4FCECD7721092354001F1078 = {
@@ -1183,13 +1184,12 @@
 				4FF6664A25F2C93A00689B77 /* Accessibility */,
 				4FF6660825F2C93A00689B77 /* FileMonitor */,
 				4FF6660C25F2C93A00689B77 /* Config */,
-				4FF6660F25F2C93A00689B77 /* Resources */,
 				4FF6661125F2C93A00689B77 /* MessagePort */,
 				4FF6667925F2C93A00689B77 /* Devices */,
 				4FF6661425F2C93A00689B77 /* InputTransformation */,
-				4FCC03342757A516002E5A57 /* Drawing */,
-				4FF6664725F2C93A00689B77 /* Pointer */,
+				4FF6664725F2C93A00689B77 /* PointerSensitivity */,
 				4FF6667E25F2C93A00689B77 /* Utility */,
+				4FF6660F25F2C93A00689B77 /* Resources */,
 				4FF6664D25F2C93A00689B77 /* SupportFiles */,
 			);
 			path = Helper;
@@ -1353,17 +1353,18 @@
 		4FF6663F25F2C93A00689B77 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
-				4FF6664525F2C93A00689B77 /* Utility_Transformation.h */,
-				4FF6664225F2C93A00689B77 /* Utility_Transformation.m */,
+				4FF6664525F2C93A00689B77 /* TransformationUtility.h */,
+				4FF6664225F2C93A00689B77 /* TransformationUtility.m */,
 				4F3A40D8266C5BDF00436821 /* NSScreen+Additions.h */,
 				4F3A40D9266C5BDF00436821 /* NSScreen+Additions.m */,
-				4FF0255D27B013A100923107 /* PointerUtility.h */,
-				4FF0255E27B013A100923107 /* PointerUtility.m */,
+				4FF0255D27B013A100923107 /* PointerFreeze.h */,
+				4FF0255E27B013A100923107 /* PointerFreeze.m */,
+				4FCC03322757A50C002E5A57 /* ScreenDrawer.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
 		};
-		4FF6664725F2C93A00689B77 /* Pointer */ = {
+		4FF6664725F2C93A00689B77 /* PointerSensitivity */ = {
 			isa = PBXGroup;
 			children = (
 				4FA83A27268271E200F3A31B /* PointerMovement.h */,
@@ -1372,7 +1373,7 @@
 				4F70ECB6267E810900325A76 /* IOUtility.m */,
 				4FA83A2026823EE000F3A31B /* Experiments */,
 			);
-			path = Pointer;
+			path = PointerSensitivity;
 			sourceTree = "<group>";
 		};
 		4FF6664A25F2C93A00689B77 /* Accessibility */ = {
@@ -1474,8 +1475,8 @@
 		4FF6667E25F2C93A00689B77 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
-				4FF6667F25F2C93A00689B77 /* Utility_Helper.h */,
-				4FF6668025F2C93A00689B77 /* Utility_Helper.m */,
+				4FF6667F25F2C93A00689B77 /* HelperUtility.h */,
+				4FF6668025F2C93A00689B77 /* HelperUtility.m */,
 				4FF0BD50266AC10C003935EA /* Math.swift */,
 				4FF0BD5D266ADFE5003935EA /* MathObjc.h */,
 				4FF0BD5E266ADFE5003935EA /* MathObjc.m */,
@@ -1493,8 +1494,7 @@
 				4F3C5BFC2754CB1C008D5B90 /* HybridCurve.swift */,
 				4F3A40AA266BBB6200436821 /* AccelerationBezier.swift */,
 				4F3A40B0266BBC5000436821 /* AnimationCurve.swift */,
-				4FF6662625F2C93A00689B77 /* CubicUnitBezier.h */,
-				4FF6662425F2C93A00689B77 /* CubicUnitBezier.m */,
+				4FBDA14A27B225210030E4EA /* Unused */,
 			);
 			path = Curves;
 			sourceTree = "<group>";
@@ -2043,9 +2043,9 @@
 				4F1B83062606E68300AEAF37 /* ButtonLandscapeAssessor.m in Sources */,
 				4FF6668F25F2C93A00689B77 /* SmoothScroll_old_.m in Sources */,
 				4F70ECB7267E810900325A76 /* IOUtility.m in Sources */,
-				4FF6669A25F2C93A00689B77 /* Utility_Transformation.m in Sources */,
+				4FF6669A25F2C93A00689B77 /* TransformationUtility.m in Sources */,
 				4FF6669D25F2C93A00689B77 /* AccessibilityCheck.m in Sources */,
-				4FF0255F27B013A100923107 /* PointerUtility.m in Sources */,
+				4FF0255F27B013A100923107 /* PointerFreeze.m in Sources */,
 				4FF666A725F2C93A00689B77 /* Device.m in Sources */,
 				4FF6669C25F2C93A00689B77 /* PointerSpeedExperiments.m in Sources */,
 				4FF0BD5F266ADFE5003935EA /* MathObjc.m in Sources */,
@@ -2081,7 +2081,7 @@
 				4FF6654F25F2C7B000689B77 /* NSArray+Additions.m in Sources */,
 				4FF6654525F2C7B000689B77 /* Objects.m in Sources */,
 				4F5F3EF12756EC0400C350C0 /* RemapsOverrider.m in Sources */,
-				4FF666A925F2C93A00689B77 /* Utility_Helper.m in Sources */,
+				4FF666A925F2C93A00689B77 /* HelperUtility.m in Sources */,
 				4FCC03352757B181002E5A57 /* ScreenDrawer.swift in Sources */,
 				4FF6668B25F2C93A00689B77 /* CubicUnitBezier.m in Sources */,
 				4F9E78C026855BCF002C2309 /* Concurrency.swift in Sources */,

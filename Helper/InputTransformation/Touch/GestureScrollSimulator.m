@@ -11,10 +11,10 @@
 #import <QuartzCore/QuartzCore.h>
 #import <Cocoa/Cocoa.h>
 #import "TouchSimulator.h"
-#import "Utility_Helper.h"
+#import "HelperUtility.h"
 #import "SharedUtility.h"
 #import "VectorSubPixelator.h"
-#import "Utility_Transformation.h"
+#import "TransformationUtility.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "WannabePrefixHeader.h"
 

@@ -12,7 +12,7 @@
 #import "ScrollConfigObjC.h"
 #import "SubPixelator.h"
 #import "SharedUtility.h"
-#import "Utility_Helper.h"
+#import "HelperUtility.h"
 #import "CircularBuffer.h"
 #import "RemapsOverrider.h"
 #import "ScrollModifiers.h"
