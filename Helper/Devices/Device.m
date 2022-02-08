@@ -299,28 +299,28 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
         }
     } else {
     
-        BOOL isXAxis = usagePage == kHIDPage_GenericDesktop && usage == kHIDUsage_GD_X;
-        BOOL isYAxis = usagePage == kHIDPage_GenericDesktop && usage == kHIDUsage_GD_Y;
-        
-        if (isXAxis || isYAxis) {
-            
-            MFAxis axis = isXAxis ? kMFAxisHorizontal : kMFAxisVertical;
-            
-            if (axis == kMFAxisVertical) {
-                _previousDeltaY = IOHIDValueGetIntegerValue(value); // Vertical axis delta value seems to always be sent before horizontal axis delta
-            } else {
-                int64_t currentDeltaX = IOHIDValueGetIntegerValue(value);
-                
-                if (currentDeltaX != 0 || _previousDeltaY != 0) {
-                    
-                    [ModifiedDrag handleMouseInputWithDeltaX:currentDeltaX deltaY:_previousDeltaY event:nil];
-                    
-    //                dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{ // Multithreading in hopes of preventing some issues which I assume are caused by the hid callback (this function) being processed after the CG callback when the system is under load sometimes. Not sure if the multithreading helps though.
-    //                    [ModifyingActions handleMouseInputWithDeltaX:currentDeltaX deltaY:_previousDeltaY];
-    //                });
-                }
-            }
-        }
+//        BOOL isXAxis = usagePage == kHIDPage_GenericDesktop && usage == kHIDUsage_GD_X;
+//        BOOL isYAxis = usagePage == kHIDPage_GenericDesktop && usage == kHIDUsage_GD_Y;
+//
+//        if (isXAxis || isYAxis) {
+//
+//            MFAxis axis = isXAxis ? kMFAxisHorizontal : kMFAxisVertical;
+//
+//            if (axis == kMFAxisVertical) {
+//                _previousDeltaY = IOHIDValueGetIntegerValue(value); // Vertical axis delta value seems to always be sent before horizontal axis delta
+//            } else {
+//                int64_t currentDeltaX = IOHIDValueGetIntegerValue(value);
+//
+//                if (currentDeltaX != 0 || _previousDeltaY != 0) {
+//
+//                    [ModifiedDrag handleMouseInputWithDeltaX:currentDeltaX deltaY:_previousDeltaY event:nil];
+//
+//    //                dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{ // Multithreading in hopes of preventing some issues which I assume are caused by the hid callback (this function) being processed after the CG callback when the system is under load sometimes. Not sure if the multithreading helps though.
+//    //                    [ModifyingActions handleMouseInputWithDeltaX:currentDeltaX deltaY:_previousDeltaY];
+//    //                });
+//                }
+//            }
+//        }
     }
 }
 

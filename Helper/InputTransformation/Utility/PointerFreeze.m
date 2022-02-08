@@ -13,6 +13,7 @@
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "CGSConnection.h"
 #import "TransformationUtility.h"
+#import "GlobalEventTapThread.h"
 
 @implementation PointerFreeze
 
@@ -40,21 +41,19 @@ static dispatch_queue_t _queue;
         /// Setup cgs stuff
         _cgsConnection = CGSMainConnectionID();
         
-        /// Setup puppet cursor
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            /// Views must be inited on the main thread. Not totally sure this makes sense.
-            _puppetCursorView = [[NSImageView alloc] init];
-        });
-        
         /// Setup queue
         dispatch_queue_attr_t attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INTERACTIVE, -1);
         _queue = dispatch_queue_create("com.nuebling.mac-mouse-fix.helper.pointer", attr);
         
-        /// Setup eventTap
-        dispatch_sync(_queue, ^{
-            _eventTap = [TransformationUtility createEventTapWithLocation:kCGHIDEventTap mask:CGEventMaskBit(kCGEventMouseMoved) | CGEventMaskBit(kCGEventLeftMouseDragged) | CGEventMaskBit(kCGEventRightMouseDragged) | CGEventMaskBit(kCGEventOtherMouseDragged) option:kCGEventTapOptionListenOnly placement:kCGHeadInsertEventTap callback:mouseMovedCallback runLoop:CFRunLoopGetMain()];
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            /// Views must be inited on the main thread. Not totally sure this makes sense.
+            
+            /// Setup puppet cursor
+            _puppetCursorView = [[NSImageView alloc] init];
         });
-        /// ^ It seems like only CFRunLoopGetMain() works here. With CFRunLoopGetCurrent() (and without dispatching to a queue) the callback is never called. Not sure why.
+        
+        /// Setup eventTap
+        _eventTap = [TransformationUtility createEventTapWithLocation:kCGHIDEventTap mask:CGEventMaskBit(kCGEventMouseMoved) | CGEventMaskBit(kCGEventLeftMouseDragged) | CGEventMaskBit(kCGEventRightMouseDragged) | CGEventMaskBit(kCGEventOtherMouseDragged) option:kCGEventTapOptionListenOnly placement:kCGHeadInsertEventTap callback:mouseMovedCallback runLoop:GlobalEventTapThread.runLoop];
     }
 }
 

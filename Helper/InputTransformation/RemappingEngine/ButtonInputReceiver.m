@@ -49,7 +49,7 @@ static CFMachPortRef _eventTap;
 }
 
 static void registerInputCallback() {
-    // Register event Tap Callback
+    /// Register event Tap Callback
     CGEventMask mask =
     CGEventMaskBit(kCGEventOtherMouseDown) | CGEventMaskBit(kCGEventOtherMouseUp)
     | CGEventMaskBit(kCGEventLeftMouseDown) | CGEventMaskBit(kCGEventLeftMouseUp)

@@ -18,7 +18,7 @@ typedef enum {
     kMFConfigProblemIncompleteAppOverride = 1
 } MFConfigProblem;
 
-// Convenience functions
+/// Convenience functions
 id config(NSString *keyPath);
 void setConfig(NSString *keyPath, NSObject *object);
 void commitConfig(void);

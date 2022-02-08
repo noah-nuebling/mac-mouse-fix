@@ -76,7 +76,7 @@ typedef struct {
 + (void)deactivate;
 + (void)deactivateWithCancel:(BOOL)cancel;
 
-+ (void)handleMouseInputWithDeltaX:(int64_t)deltaX deltaY:(int64_t)deltaY event:(CGEventRef _Nullable)event;
+//+ (void)handleMouseInputWithDeltaX:(int64_t)deltaX deltaY:(int64_t)deltaY event:(CGEventRef _Nullable)event;
 @end
 
 NS_ASSUME_NONNULL_END
