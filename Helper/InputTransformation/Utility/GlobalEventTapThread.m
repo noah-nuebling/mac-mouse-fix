@@ -50,7 +50,7 @@ static NSCondition *_threadIsInitializedSignal;
         
         /// Wait unil thread is initialized
         while (!_threadIsInitialized) {
-            [_threadIsInitializedSignal wait];
+            [_threadIsInitializedSignal waitUntilDate:[NSDate dateWithTimeIntervalSinceNow:1]];
         }
         
     }

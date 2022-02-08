@@ -34,8 +34,16 @@ static dispatch_queue_t _queue;
 
 /// + initialize
 
-+ (void)initialize
-{
++ (void)load_Manual {
+    /// We made this load instead of initialize, so that there isn't a large delay when using it for the first time.
+    ///     This delay would cause the pointer to jump back to a previous position when using this for twoFingerModifiedDrag
+    ///     For the same reason we made ScreenDrawer use load instead of init. (I think ScreenDrawer was the real bottleneck because it creates an NSWindow which I think is pretty slow)
+    ///     -> I hope this doesn't make starting the helper super slow.
+    ///         Also if the user doesn't have twoFingerSwipe (the only thing that currently uses ScreenDrawer) set up, then it's unnecessary to load ScreenDrawer... Is there a better solution?
+    ///         Idea for better(?) solution 1: Create coolInit function with dispatch_once and call it when some feature that uses this is detected in the config -> That's a horrible solution
+    ///         Idea 2: Fetch up-to-date pointer position after initializing -> Worth a shot. But the current solution using load_Manual seems fast enough.
+    ///
+    
     if (self == [PointerFreeze class]) {
         
         /// Setup cgs stuff
@@ -45,11 +53,14 @@ static dispatch_queue_t _queue;
         dispatch_queue_attr_t attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INTERACTIVE, -1);
         _queue = dispatch_queue_create("com.nuebling.mac-mouse-fix.helper.pointer", attr);
         
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            /// Views must be inited on the main thread.
-            /// Setup puppet cursor
+        if (NSThread.isMainThread) {
             _puppetCursorView = [[NSImageView alloc] init];
-        });
+        } else {
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                /// Setup puppet cursor
+                _puppetCursorView = [[NSImageView alloc] init];
+            });
+        }
         
         /// Setup eventTap
         _eventTap = [TransformationUtility createEventTapWithLocation:kCGHIDEventTap mask:CGEventMaskBit(kCGEventMouseMoved) | CGEventMaskBit(kCGEventLeftMouseDragged) | CGEventMaskBit(kCGEventRightMouseDragged) | CGEventMaskBit(kCGEventOtherMouseDragged) option:kCGEventTapOptionListenOnly placement:kCGHeadInsertEventTap callback:mouseMovedCallback runLoop:GlobalEventTapThread.runLoop];
@@ -115,11 +126,25 @@ CGEventRef _Nullable mouseMovedCallback(CGEventTapProxy proxy, CGEventType type,
         DDLogInfo(@"PointerUtility eventTap disabled by user input.");
         return event;
     }
+    /// Ignore second event
+    ///     The second delta after the tap is started is always really big and goes in the opposite movement direction. Really weird
+    
+//    static int eventCounter = 0;
+//    if (eventCounter < 3) { /// Count up to 3
+//        eventCounter++;
+//    }
+//    if (eventCounter == 2) {
+//        DDLogInfo(@"Ignoring second delta event in PointerFreeze eventTap.");
+//        return event;
+//    }
     
     /// Get deltas
     ///     Have to get delta's before dispatching async, otherwise they won't be correct
     int64_t dx = CGEventGetIntegerValueField(event, kCGMouseEventDeltaX);
     int64_t dy = CGEventGetIntegerValueField(event, kCGMouseEventDeltaY);
+    
+    /// DEBUG
+//    DDLogDebug(@"\nUpdating puppet cursor pos with delta: (%lld, %lld)", dx, dy);
     
     /// Lock
     

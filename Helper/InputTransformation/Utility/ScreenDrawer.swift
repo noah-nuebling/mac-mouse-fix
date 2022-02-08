@@ -21,14 +21,18 @@ import CocoaLumberjackSwift
     
     /// Vars - init
     
-    @objc let canvas: NSWindow
+    @objc var canvas: NSWindow = NSWindow()
+    /// ^ Need to init this to NSWindow. (Up here not in init()) for things to work. Super strange.
     
     /// Init
     
-    @objc override init() {
+    @objc func load_Manual() {
+        /// Using load_Manual instead of init. See PointerFreeze -> load_Manual for explanation
         
         canvas = NSWindow.init(contentRect: NSRect.zero, styleMask: .borderless, backing: .buffered, defer: false, screen: nil)
         
+//        guard let canvas = canvas else { fatalError() }
+
         canvas.backgroundColor = .clear
         canvas.isOpaque = false /// Make window transparent but content visible
         canvas.alphaValue = 1.0
@@ -49,6 +53,8 @@ import CocoaLumberjackSwift
     /// Drawing
     
     @objc func draw(view: NSView, atFrame frameInScreen: NSRect, onScreen screen: NSScreen) {
+        
+//        guard let canvas = canvas else { fatalError() }
         
         /// Set props on view to (hopefully) optimize
 //        view.translatesAutoresizingMaskIntoConstraints = false
@@ -71,10 +77,6 @@ import CocoaLumberjackSwift
         /// Add imageView to canvas
         canvas.contentView?.addSubview(view)
         
-        /// DEBUG
-        let c = canvas.contentView?.constraints;
-//        print("Constraints on ScreenDrawer contentView: \(c)")
-        
         /// Put canvas window on top or sth
         ///     This is necessary after switching spaces
         canvas.orderFront(nil)
@@ -83,6 +85,8 @@ import CocoaLumberjackSwift
         CATransaction.commit()
     }
     @objc func move(view: NSView, toOrigin newOrigin: NSPoint) {
+        
+//        guard let canvas = canvas else { fatalError() }
         
         guard (view.superview!.isEqual(to: canvas.contentView)) else { fatalError() }
         /// ^ This crashes sometimes because view doesn't have a superview. This happens when scroll zooming and drag scrolling at the same time on the same button. Investigate.
@@ -107,6 +111,8 @@ import CocoaLumberjackSwift
     
     @objc func undraw(view: NSView) {
         
+//        guard let canvas = canvas else { fatalError() }
+        
 //        DDLogDebug("Superview: \(view), canvas: \(canvas)")
         
         if view.superview!.isEqual(to: canvas.contentView) {
@@ -118,6 +124,7 @@ import CocoaLumberjackSwift
     }
     
     @objc func flush() {
+//        guard let canvas = canvas else { fatalError() }
 //        canvas.orderOut(nil);
         canvas.contentView = NSView()
     }

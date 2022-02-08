@@ -20,6 +20,7 @@
 #import "ModifiedDrag.h"
 #import "ModifierManager.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
+#import "PointerFreeze.h"
 
 #import "SharedUtility.h"
 
@@ -57,6 +58,12 @@ NSTimer *_openMainAppTimer;
         [Scroll load_Manual];
         [ModifiedDrag load_Manual];
         [ModifierManager load_Manual];
+        
+        [ScreenDrawer.shared load_Manual];
+        [PointerFreeze load_Manual];
+        
+        
+        
         
         [SharedMessagePort sendMessage:@"helperEnabled" withPayload:nil expectingReply:NO];
     }
