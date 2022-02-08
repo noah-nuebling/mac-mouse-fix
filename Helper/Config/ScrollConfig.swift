@@ -12,14 +12,14 @@ import CocoaLumberjackSwift
 
 @objc class ScrollConfig: NSObject {
     
-    /// Konstanz
+    // MARK: - Constants
     
     @objc static var stringToEventFlagMask: NSDictionary = ["command" : CGEventFlags.maskCommand,
                                                      "control" : CGEventFlags.maskControl,
                                                      "option" : CGEventFlags.maskAlternate,
                                                      "shift" : CGEventFlags.maskShift]
     
-    // Convenience functions for accessing top level dict and different sub-dicts
+    /// Convenience functions for accessing top level dict and different sub-dicts
 
     @objc private static var topLevel: NSDictionary {
         Config.configWithAppOverridesApplied()[kMFConfigKeyScroll] as! NSDictionary
@@ -34,19 +34,23 @@ import CocoaLumberjackSwift
         topLevel["modifierKeys"] as! NSDictionary
     }
 
-    // Interface
+    // MARK: - Interface
 
-    // General
+//    @objc class ScrollConfigResult: NSObject {
+//        
+//    }
+    
+    // MARK: General
 
     @objc static var smoothEnabled: Bool {
 //        topLevel["smooth"] as! Bool
         return true;
     }
     @objc static var disableAll: Bool {
-        topLevel["disableAll"] as! Bool; // This is currently unused. Could be used as a killswitch for all scrolling Interception
+        topLevel["disableAll"] as! Bool; /// This is currently unused. Could be used as a killswitch for all scrolling Interception
     }
     
-    /// Scroll inversion
+    // MARK: Invert Direction
     
     @objc static func scrollInvert(event: CGEvent) -> MFScrollInversion {
         /// This can be used as a factor to invert things. kMFScrollInversionInverted is -1.
@@ -74,7 +78,7 @@ import CocoaLumberjackSwift
         return isNatural ? kMFSemanticScrollInversionNatural : kMFSemanticScrollInversionNormal
     }
     
-    // Scroll ticks/swipes, fast scroll, and ticksPerSecond
+    // MARK: Analysis
 
     @objc static var scrollSwipeThreshold_inTicks: Int { /// If `scrollSwipeThreshold_inTicks` consecutive ticks occur, they are deemed a scroll-swipe.
         other["scrollSwipeThreshold_inTicks"] as! Int;
@@ -85,27 +89,19 @@ import CocoaLumberjackSwift
     @objc static var scrollSwipeMax_inTicks: Int { /// Max number of ticks that we think can occur in a single swipe naturally (if the user isn't using a free-spinning scrollwheel). (See `consecutiveScrollSwipeCounter_ForFreeScrollWheel` definition for more info)
         9;
     }
-    @objc static var consecutiveScrollTickIntervalMax: TimeInterval { // If more than `_consecutiveScrollTickIntervalMax` seconds passes between two scrollwheel ticks, then they aren't deemed consecutive.
+    @objc static var consecutiveScrollTickIntervalMax: TimeInterval { /// If more than `_consecutiveScrollTickIntervalMax` seconds passes between two scrollwheel ticks, then they aren't deemed consecutive.
 //        other["consecutiveScrollTickIntervalMax"] as! Double;
-        // msPerStep/1000 <- Good idea but we don't want this to depend on msPerStep
+        /// msPerStep/1000 <- Good idea but we don't want this to depend on msPerStep
         0.13
         
     }
     @objc static var consecutiveScrollSwipeMaxInterval: TimeInterval {
-        // If more than `_consecutiveScrollSwipeIntervalMax` seconds passes between two scrollwheel swipes, then they aren't deemed consecutive.
-        //        other["consecutiveScrollSwipeIntervalMax"] as! Double
+        /// If more than `_consecutiveScrollSwipeIntervalMax` seconds passes between two scrollwheel swipes, then they aren't deemed consecutive.
+        ///        other["consecutiveScrollSwipeIntervalMax"] as! Double
         0.35
     }
-    @objc static var consecutiveScrollTickInterval_AccelerationEnd: TimeInterval { // Used to define accelerationCurve. If the time interval between two ticks becomes less than `consecutiveScrollTickInterval_AccelerationEnd` seconds, then the accelerationCurve becomes managed by linear extension of the bezier instead of the bezier directly.
+    @objc private static var consecutiveScrollTickInterval_AccelerationEnd: TimeInterval { /// Used to define accelerationCurve. If the time interval between two ticks becomes less than `consecutiveScrollTickInterval_AccelerationEnd` seconds, then the accelerationCurve becomes managed by linear extension of the bezier instead of the bezier directly.
         0.02
-    }
-    @objc static var fastScrollExponentialBase: Double { // How quickly fast scrolling gains speed.
-//        other["fastScrollExponentialBase"] as! Double;
-        1.35 // Used to be 1.1 before scroll rework. Why so much higher now?
-    }
-    @objc static var fastScrollFactor: Double {
-//        other["fastScrollFactor"] as! Double
-        2.0 // Used to be 1.1 before scroll rework. Why so much higher now?
     }
     @objc static var ticksPerSecond_DoubleExponentialSmoothing_InputValueWeight: Double {
         0.5
@@ -118,10 +114,21 @@ import CocoaLumberjackSwift
 //        0.8 /// Nice, light smoothing. Makes  scrolling slightly less direct. Not sure if placebo.
         1.0 /// Turn off smoothing. I like this the best
     }
+    
+    // MARK: Fast scroll
+    
+    @objc static var fastScrollExponentialBase: Double { // How quickly fast scrolling gains speed.
+                                                         //        other["fastScrollExponentialBase"] as! Double;
+        1.35 /// Used to be 1.1 before scroll rework. Why so much higher now?
+    }
+    @objc static var fastScrollFactor: Double {
+        //        other["fastScrollFactor"] as! Double
+        2.0 /// Used to be 1.1 before scroll rework. Why so much higher now?
+    }
 
-    // Smooth scrolling params
+    // MARK: Smooth scroll
 
-    @objc static var pxPerTickBase: Int {
+    @objc private static var pxPerTickBase: Int {
 //        return smooth["pxPerStep"] as! Int
         
         return 60 // Max good-feeling value
@@ -132,7 +139,7 @@ import CocoaLumberjackSwift
 //        return 10 // Min good feeling value
 //        return 5
     }
-    @objc static var pxPerTickEnd: Int {
+    @objc private static var pxPerTickEnd: Int {
         return 120 /// Works well without implicit hybrid curve acceleration
 //        return 100 /// Works well with slight hybrid curve acceleration
 //        return 20;
@@ -145,11 +152,47 @@ import CocoaLumberjackSwift
 //        return 190
         return 180
     }
+    
+    @objc static let baseCurve: Bezier = { () -> Bezier in
+        /// Base curve used to construct a HybridCurve animationCurve in Scroll.m. This curve is applied before switching to a DragCurve to simulate physically accurate deceleration
+        /// Using a closure here instead of DerivedProperty.create_kvc(), because we know it will never change.
+        typealias P = Bezier.Point
+        
+        //        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:1,y:1), P(x:1,y:1)] /// Straight line
+        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:0.5,y:0.9), P(x:1,y:1)]
+        /// ^ Ease out but the end slope is not 0. That way. The curve is mostly controlled by the Bezier, but the DragCurve rounds things out.
+        ///     Might be placebo but I really like how this feels
+        
+        return Bezier(controlPoints: controlPoints, defaultEpsilon: 0.001) /// The default defaultEpsilon 0.08 makes the animations choppy
+    }()
+    @objc static var dragCoefficient: Double {
+        //        smooth["friction"] as! Double;
+        //        2.3 /// Value from MMF 1. Not sure why so much lower than the new values
+        //        20 /// Too floaty with dragExponent 1
+        40 // Works well with dragExponent 1
+           //        60 // Works well with dragExponent 0.7
+           //        1000 // Stop immediately
+        
+    }
+    @objc static var dragExponent: Double {
+        //        smooth["frictionDepth"] as! Double;
+        1.0 /// Good setting for snappy
+            //        0.7 /// Value from GestureScrollSimulator /// Good setting for smooth
+    }
+    @objc static var stopSpeed: Double {
+        /// Used to construct Hybrid curve in Scroll.m
+        /// This is the speed (In px/s ?) at which the DragCurve part of the Hybrid curve stops scrolling
+        //        99999999.0 /// Turn off momentum scroll
+        3.0
+    }
+    
+    // MARK: Acceleration
+    
     @objc static var useAppleAcceleration: Bool {
         /// Ignore MMF acceleration algorithm and use values provided by macOS
         return false
     }
-    @objc static var accelerationHump: Double {
+    @objc private static var accelerationHump: Double {
         /// Between -1 and 1
         return -0.2 /// Negative values make the curve continuous, and more predictable (might be placebo)
 //        return 0.0
@@ -194,64 +237,16 @@ import CocoaLumberjackSwift
                                     accelerationHump: -0.2)
     }()
     @objc static let quickAccelerationCurve = { () -> AccelerationBezier in
-        accelerationCurveFromParams(pxPerTickBase: 50, // 40 and 220 also works well
+        accelerationCurveFromParams(pxPerTickBase: 50, /// 40 and 220 also works well
                                     pxPerTickEnd: 200,
                                     consecutiveScrollTickIntervalMax: ScrollConfig.consecutiveScrollTickIntervalMax,
                                     consecutiveScrollTickInterval_AccelerationEnd: ScrollConfig.consecutiveScrollTickInterval_AccelerationEnd,
                                     accelerationHump: -0.2)
     }()
-    
-    
-    @objc static let baseCurve: Bezier = { () -> Bezier in
-        /// Base curve used to construct a HybridCurve animationCurve in Scroll.m. This curve is applied before switching to a DragCurve to simulate physically accurate deceleration
-        /// Using a closure here instead of DerivedProperty.create_kvc(), because we know it will never change.
-        typealias P = Bezier.Point
-        
-//        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:1,y:1), P(x:1,y:1)] /// Straight line
-        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:0.5,y:0.9), P(x:1,y:1)]
-        /// ^ Ease out but the end slope is not 0. That way. The curve is mostly controlled by the Bezier, but the DragCurve rounds things out.
-        ///     Might be placebo but I really like how this feels
-        
-        return Bezier(controlPoints: controlPoints, defaultEpsilon: 0.001) /// The default defaultEpsilon 0.08 makes the animations choppy
-    }()
-    @objc static let linearCurve: Bezier = { () -> Bezier in
-        
-        typealias P = Bezier.Point
-        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:1,y:1), P(x:1,y:1)]
-        
-        return Bezier(controlPoints: controlPoints, defaultEpsilon: 0.001) /// The default defaultEpsilon 0.08 makes the animations choppy
-    }()
-    @objc static var dragCoefficient: Double {
-//        smooth["friction"] as! Double;
-//        2.3 /// Value from MMF 1. Not sure why so much lower than the new values
-//        20 /// Too floaty with dragExponent 1
-        40 // Works well with dragExponent 1
-//        60 // Works well with dragExponent 0.7
-//        1000 // Stop immediately
-        
-    }
-    @objc static var dragExponent: Double {
-//        smooth["frictionDepth"] as! Double;
-        1.0 /// Good setting for snappy
-//        0.7 /// Value from GestureScrollSimulator /// Good setting for smooth
-    }
-    @objc static var stopSpeed: Double {
-        /// Used to construct Hybrid curve in Scroll.m
-        /// This is the speed (In px/s ?) at which the DragCurve part of the Hybrid curve stops scrolling
-//        99999999.0 /// Turn off momentum scroll
-        3.0
-    }
-    @objc static var accelerationForScrollBuffer: Double { // TODO: Unused, remove
-        smooth["acceleration"] as! Double;
-    }
 
-    @objc static var nOfOnePixelScrollsMax: Int { // TODO: Probably unused. Consider removing
-        smooth["onePixelScrollsLimit"] as! Int // After opl+1 frames of only scrolling 1 pixel, scrolling stops. Should probably change code to stop after opl frames.
-    }
+    // MARK: Keyboard modifiers
 
-    // Keyboard modifiers
-
-    // Event flag masks
+    /// Event flag masks
     @objc static var horizontalScrollModifierKeyMask: CGEventFlags {
         stringToEventFlagMask[mod["horizontalScrollModifierKey"] as! String] as! CGEventFlags
     }
@@ -266,8 +261,17 @@ import CocoaLumberjackSwift
         mod["magnificationScrollModifierKeyEnabled"] as! Bool
     }
     
+    // MARK: Other
     
-    // MARK: Helpers
+    @objc static let linearCurve: Bezier = { () -> Bezier in
+        
+        typealias P = Bezier.Point
+        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:1,y:1), P(x:1,y:1)]
+        
+        return Bezier(controlPoints: controlPoints, defaultEpsilon: 0.001) /// The default defaultEpsilon 0.08 makes the animations choppy
+    }()
+    
+    // MARK: - Helper
     
     fileprivate static func accelerationCurveFromParams(pxPerTickBase: Int, pxPerTickEnd: Int, consecutiveScrollTickIntervalMax: TimeInterval, consecutiveScrollTickInterval_AccelerationEnd: TimeInterval, accelerationHump: Double) -> AccelerationBezier {
         /**

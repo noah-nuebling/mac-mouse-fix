@@ -11,9 +11,13 @@ import Cocoa
 
 @objc class OtherConfig: NSObject {
 
+    /// Advanced settings
+    
     @objc static func freezePointerDuringModifiedDrag() -> Bool {
-        return true
+        return false
     }
+    
+    /// Internal
     
     @objc static func mouseMovingMaxIntervalLarge() -> Double {
         return 0.1

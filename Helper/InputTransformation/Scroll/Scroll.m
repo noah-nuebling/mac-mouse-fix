@@ -186,12 +186,12 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         NSCAssert(NO, @"Invalid scroll axis");
     }
         
-    // Run scrollAnalysis
-    //  We want to do this here, not in _scrollQueue for more accurate timing
+    /// Run scrollAnalysis
+    ///  We want to do this here, not in _scrollQueue for more accurate timing
     
     ScrollAnalysisResult scrollAnalysisResult = [ScrollAnalyzer updateWithTickOccuringNowWithDirection:scrollDelta];
     
-    //  Executing heavy stuff on a different thread to prevent the eventTap from timing out. We wrote this before knowing that you can just re-enable the eventTap when it times out. But this doesn't hurt.
+    ///  Executing heavy stuff on a different thread to prevent the eventTap from timing out. We wrote this before knowing that you can just re-enable the eventTap when it times out. But this doesn't hurt.
     
     CGEventRef eventCopy = CGEventCreateCopy(event); // Create a copy, because the original event will become invalid and unusable in the new queue.
     
@@ -356,7 +356,7 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
                 /// Base distance to scroll
                 double baseValueRange = pxLeftToScroll + pxToScrollForThisTick;
                 
-                /// Decrease friction if fastScroll is active
+                /// Decrease friction if quickScroll is active
                 ///     Overriding params in all these different places if quickScroll is active is a little messy. Would maybe be better to have ScrollConfig return a struct with all params and to then override the values in the struct in one place.
                 Bezier *baseCurve = ScrollConfig.baseCurve;
                 double dragCoefficient = ScrollConfig.dragCoefficient;
