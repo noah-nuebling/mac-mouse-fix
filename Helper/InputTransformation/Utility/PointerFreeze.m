@@ -14,6 +14,7 @@
 #import "CGSConnection.h"
 #import "TransformationUtility.h"
 #import "GlobalEventTapThread.h"
+@import CoreMedia;
 
 @implementation PointerFreeze
 
@@ -33,6 +34,9 @@ static CFMachPortRef _eventTap;
 static Boolean _coolEventTapIsEnabled; /// CGEventTapIsEnabled() is pretty slow, so we're using this instead
 
 static dispatch_queue_t _queue;
+
+static CFTimeInterval _lastEventTimestamp;
+static int64_t _lastEventDelta;
 
 /// + initialize
 
@@ -156,6 +160,10 @@ CGEventRef _Nullable mouseMovedCallback(CGEventTapProxy proxy, CGEventType type,
         dy = CGEventGetIntegerValueField(event, kCGMouseEventDeltaY);
     }
     
+    /// Record timestamp and delta
+    _lastEventTimestamp = CACurrentMediaTime();
+    _lastEventDelta = llabs(MAX(dx,dy));
+    
     /// Lock
     
     dispatch_async(_queue, ^{
@@ -192,12 +200,16 @@ CGEventRef _Nullable mouseMovedCallback(CGEventTapProxy proxy, CGEventType type,
 
 + (void)unfreeze {
     
+    /// Record timestamp
+    CFTimeInterval timeSinceLastEvent = CACurrentMediaTime() - _lastEventTimestamp;
+    BOOL pointerIsMoving = (timeSinceLastEvent < OtherConfig.mouseMovingMaxIntervalSmall) && _lastEventDelta > 0;
+    
+    DDLogDebug(@"pointerIsMoving: %d - time: %f, delta: %lld", pointerIsMoving, timeSinceLastEvent, _lastEventDelta);
+    
     /// Lock
     ///     Not sure whether to use sync or async here
     
     dispatch_async(_queue, ^{
-        
-        DDLogDebug(@"frozen dispatch point - unfreeze");
         
         /// Disable eventTap
         /// Think about the order of getting pos, unfreezing, and disabling event tap. -> I think it doesn't matter since everything is locked.
@@ -210,7 +222,14 @@ CGEventRef _Nullable mouseMovedCallback(CGEventTapProxy proxy, CGEventType type,
             warpDestination = _puppetCursorPosition;
         } else {
             /// When we're freezing the pointer, we still want to warp one last time, to control the delay before the pointer unfreezes.
-            setSuppressionInterval(kMFEventSuppressionIntervalForUnfreezingPointer);
+            
+            MFEventSuppressionInterval delay;
+            if (pointerIsMoving) {
+                delay = kMFEventSuppressionIntervalForUnfreezingPointerDuringFlick;
+            } else {
+                delay = kMFEventSuppressionIntervalZero;
+            }
+            setSuppressionInterval(delay);
             warpDestination = _origin;
         }
         
@@ -239,7 +258,7 @@ typedef enum {
     kMFEventSuppressionIntervalZero,
     kMFEventSuppressionIntervalForWarping,
     kMFEventSuppressionIntervalForStoppingCursor,
-    kMFEventSuppressionIntervalForUnfreezingPointer,
+    kMFEventSuppressionIntervalForUnfreezingPointerDuringFlick,
     kMFEventSuppressionIntervalDefault,
 } MFEventSuppressionInterval;
 
@@ -273,9 +292,9 @@ void setSuppressionInterval(MFEventSuppressionInterval mfInterval) {
         interval = _defaultSuppressionInterval;
     } else if (mfInterval == kMFEventSuppressionIntervalForWarping) {
         interval = 0.000;
-    } else if (mfInterval == kMFEventSuppressionIntervalForUnfreezingPointer) {
+    } else if (mfInterval == kMFEventSuppressionIntervalForUnfreezingPointerDuringFlick) {
         /// We use a larger delay here so that the pointer doesn't suddenly get flicked around when unfreezing during a flick
-        interval = 0.1;
+        interval = 0.15;
     } else {
         assert(false);
     }

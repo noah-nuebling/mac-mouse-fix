@@ -75,6 +75,7 @@
 		4FBDA14F27B241CE0030E4EA /* GlobalEventTapThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBDA14E27B241CE0030E4EA /* GlobalEventTapThread.m */; };
 		4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCA07D525F3129B00BFE209 /* RemapTableController.m */; };
 		4FCC03352757B181002E5A57 /* ScreenDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCC03322757A50C002E5A57 /* ScreenDrawer.swift */; };
+		4FD0A71127B295F600FFCD12 /* OtherConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD0A71027B295F600FFCD12 /* OtherConfig.swift */; };
 		4FD82DDB260575B100664D6F /* ToastNotificationLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD82DDA260575B100664D6F /* ToastNotificationLabel.m */; };
 		4FD85F7B266CC9C5004F76C8 /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD85F7A266CC9C5004F76C8 /* Animator.swift */; };
 		4FD86089266E819A004F76C8 /* Pointers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD86088266E819A004F76C8 /* Pointers.swift */; };
@@ -381,6 +382,7 @@
 		4FCA07D525F3129B00BFE209 /* RemapTableController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapTableController.m; sourceTree = "<group>"; };
 		4FCC03322757A50C002E5A57 /* ScreenDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenDrawer.swift; sourceTree = "<group>"; };
 		4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mac Mouse Fix Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4FD0A71027B295F600FFCD12 /* OtherConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherConfig.swift; sourceTree = "<group>"; };
 		4FD82DD9260575B100664D6F /* ToastNotificationLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToastNotificationLabel.h; sourceTree = "<group>"; };
 		4FD82DDA260575B100664D6F /* ToastNotificationLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ToastNotificationLabel.m; sourceTree = "<group>"; };
 		4FD85F7A266CC9C5004F76C8 /* Animator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
@@ -1214,6 +1216,7 @@
 				4FF6660E25F2C93A00689B77 /* Config.m */,
 				4FA83A2D268288D900F3A31B /* PointerConfig.swift */,
 				4FD860CB266EF55A004F76C8 /* ScrollConfig.swift */,
+				4FD0A71027B295F600FFCD12 /* OtherConfig.swift */,
 				4FD860DA266EFD64004F76C8 /* ScrollConfigObjC.h */,
 			);
 			path = Config;
@@ -2048,6 +2051,7 @@
 				4F1B83062606E68300AEAF37 /* ButtonLandscapeAssessor.m in Sources */,
 				4FF6668F25F2C93A00689B77 /* SmoothScroll_old_.m in Sources */,
 				4F70ECB7267E810900325A76 /* IOUtility.m in Sources */,
+				4FD0A71127B295F600FFCD12 /* OtherConfig.swift in Sources */,
 				4FF6669A25F2C93A00689B77 /* TransformationUtility.m in Sources */,
 				4FF6669D25F2C93A00689B77 /* AccessibilityCheck.m in Sources */,
 				4FF0255F27B013A100923107 /* PointerFreeze.m in Sources */,

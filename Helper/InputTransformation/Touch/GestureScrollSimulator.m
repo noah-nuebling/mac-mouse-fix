@@ -34,10 +34,6 @@ Also see:
 #pragma mark - Constants
 
 static double _pixelsPerLine = 10;
-static double _preMomentumScrollMaxInterval = 0.1;
-/// ^ Only start momentum scroll, if less than this time interval has passed between the kIOHIDEventPhaseEnded event and the last event before it (with a non-zero delta)
-/// - 0.05 is a little too low. It will sometimes stop when you don't want it to when driving it through click and drag.
-/// - 0.07 is still a little low when the computer is laggy
 
 #pragma mark - Vars and init
 
@@ -424,7 +420,7 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
     Vector zeroVector = (Vector){ .x = 0, .y = 0 };
     
     /// Stop immediately, if too much time has passed since last event (So if the mouse is stationary)
-    if (_preMomentumScrollMaxInterval < timeSinceLastInput
+    if (OtherConfig.mouseMovingMaxIntervalLarge < timeSinceLastInput
         || timeSinceLastInput == DBL_MAX) { /// This should never be true at this point, because it's only set to DBL_MAX when phase == kIOHIDEventPhaseBegan
         DDLogDebug(@"Not sending momentum scroll - timeSinceLastInput: %f", timeSinceLastInput);
         _momentumScrollCallback();

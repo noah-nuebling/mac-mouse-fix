@@ -59,7 +59,11 @@ static dispatch_group_t _momentumScrollWaitGroup;
 }
 
 + (void)handleBecameInUse {
-    [PointerFreeze freezeEventDispatchPointAtPosition:_drag->usageOrigin];
+    if (OtherConfig.freezePointerDuringModifiedDrag) {
+        [PointerFreeze freezePointerAtPosition:_drag->usageOrigin];
+    } else {
+        [PointerFreeze freezeEventDispatchPointAtPosition:_drag->usageOrigin];
+    }
 }
 
 + (void)handleMouseInputWhileInUseWithDeltaX:(double)deltaX deltaY:(double)deltaY event:(CGEventRef)event {

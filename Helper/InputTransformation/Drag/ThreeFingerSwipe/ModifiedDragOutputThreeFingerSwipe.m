@@ -11,6 +11,8 @@
 #import "CGSSpace.h"
 #import "TouchSimulator.h"
 @import Cocoa;
+#import "PointerFreeze.h"
+#import "Mac_Mouse_Fix_Helper-Swift.h"
 
 @implementation ModifiedDragOutputThreeFingerSwipe
 
@@ -36,6 +38,11 @@ static int16_t _nOfSpaces = 1;
     _nOfSpaces = uniqueSpaces.count;
     
     CFRelease(spaces);
+    
+    /// Freeze pointer
+    if (OtherConfig.freezePointerDuringModifiedDrag) {
+        [PointerFreeze freezePointerAtPosition:_drag->usageOrigin];
+    }
 }
 
 + (void)handleMouseInputWhileInUseWithDeltaX:(double)deltaX deltaY:(double)deltaY event:(CGEventRef)event {
@@ -96,9 +103,11 @@ static int16_t _nOfSpaces = 1;
     
     /// ^ The inital dockSwipe event we post will be ignored by the system when it is under load (I called this the "stuck bug" in other places). Sending the event again with a delay of 200ms (0.2s) gets it unstuck almost always. Sending the event twice gives us the best of both responsiveness and reliability.
     ///     Edit: Should maybe move the second send into TouchSimulator and use an NSTimer - to prevent double sending. (Because postDockSwipeEventWithDelta: is also used through scrolling. See Scroll.m for context.)
+    
+    /// Unfreeze pointer
+    if (OtherConfig.freezePointerDuringModifiedDrag) {
+        [PointerFreeze unfreeze];
+    }
 }
-
-
-/// Helper functions
 
 @end
