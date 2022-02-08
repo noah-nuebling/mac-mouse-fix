@@ -46,24 +46,25 @@ static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this
 #pragma mark - Variables - dynamic
 
 static MFScrollModificationResult _modifications;
+static ScrollConfig *_scrollConfig;
 
 #pragma mark - Public functions
 
 + (void)load_Manual {
     
-    // Setup dispatch queue
-    //  For multithreading while still retaining control over execution order.
+    /// Setup dispatch queue
+    ///  For multithreading while still retaining control over execution order.
     dispatch_queue_attr_t attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INTERACTIVE, -1);
     _scrollQueue = dispatch_queue_create("com.nuebling.mac-mouse-fix.helper.scroll", attr);
     
-    // Create AXUIElement for getting app under mouse pointer
+    /// Create AXUIElement for getting app under mouse pointer
     _systemWideAXUIElement = AXUIElementCreateSystemWide();
-    // Create Event source
+    /// Create Event source
     if (_eventSource == nil) {
         _eventSource = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
     }
     
-    // Create/enable scrollwheel input callback
+    /// Create/enable scrollwheel input callback
     if (_eventTap == nil) {
         CGEventMask mask = CGEventMaskBit(kCGEventScrollWheel);
         _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
@@ -74,11 +75,14 @@ static MFScrollModificationResult _modifications;
         CGEventTapEnable(_eventTap, false); // Not sure if this does anything
     }
     
-    // Create animator
+    /// Create animator
     _animator = [[PixelatedAnimator alloc] init];
     
-    // Create subpixelator for scroll output
+    /// Create subpixelator for scroll output
     _subPixelator = [SubPixelator roundPixelator];
+    
+    /// Init config instance
+    _scrollConfig = [[ScrollConfig alloc] init];
 }
 
 + (void)resetState {
@@ -152,28 +156,23 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     int64_t scrollDeltaAxis2 = CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2);
     bool isDiagonal = scrollDeltaAxis1 != 0 && scrollDeltaAxis2 != 0;
     if (isPixelBased != 0
-        || scrollPhase != 0 // Adding scrollphase here is untested
-        || isDiagonal) { // Ignore diagonal scroll-events
-        
-        /// Debug
-//        DDLogDebug(@"Ignored scroll event: (%f,%f), (%f,%f), phase: %f, %f",
-//                   CGEventGetDoubleValueField(event, kCGScrollWheelEventDeltaAxis1),
-//                   CGEventGetDoubleValueField(event, kCGScrollWheelEventDeltaAxis2),
-//                   CGEventGetDoubleValueField(event, kCGScrollWheelEventPointDeltaAxis1),
-//                   CGEventGetDoubleValueField(event, kCGScrollWheelEventPointDeltaAxis2),
-//                   CGEventGetDoubleValueField(event, kCGScrollWheelEventScrollPhase),
-//                   CGEventGetDoubleValueField(event, kCGScrollWheelEventMomentumPhase));
+        || scrollPhase != 0 /// Adding scrollphase here is untested
+        || isDiagonal) {
         
         return event;
     }
     
-    // Get axis
+    /// Get timestamp
+    
+    CFTimeInterval tickTime = CACurrentMediaTime();
+    
+    /// Get axis
     
     MFAxis inputAxis = [ScrollUtility axisForVerticalDelta:scrollDeltaAxis1 horizontalDelta:scrollDeltaAxis2];
     
-    // Get scrollDelta
+    /// Get scrollDelta
     
-    int64_t scrollDelta = 0; // Only initing this to 0 to silence Xcode warnings
+    int64_t scrollDelta = 0;
     int64_t scrollDeltaPoint = 0;
     
     if (inputAxis == kMFAxisVertical) {
@@ -185,29 +184,32 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     } else {
         NSCAssert(NO, @"Invalid scroll axis");
     }
-        
-    /// Run scrollAnalysis
-    ///  We want to do this here, not in _scrollQueue for more accurate timing
     
-    ScrollAnalysisResult scrollAnalysisResult = [ScrollAnalyzer updateWithTickOccuringNowWithDirection:scrollDelta];
+    /// Create copy of event
+    CGEventRef eventCopy = CGEventCreateCopy(event); /// Create a copy, because the original event will become invalid and unusable in the new queue.
     
     ///  Executing heavy stuff on a different thread to prevent the eventTap from timing out. We wrote this before knowing that you can just re-enable the eventTap when it times out. But this doesn't hurt.
     
-    CGEventRef eventCopy = CGEventCreateCopy(event); // Create a copy, because the original event will become invalid and unusable in the new queue.
-    
+    /// Enqueue heavy processing
     dispatch_async(_scrollQueue, ^{
-        heavyProcessing(eventCopy, scrollAnalysisResult, scrollDelta, scrollDeltaPoint, inputAxis);
+        heavyProcessing(eventCopy, tickTime, scrollDelta, scrollDeltaPoint, inputAxis);
     });
     
     return nil;
 }
 
-static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysisResult, int64_t scrollDelta, int64_t scrollDeltaPoint, MFAxis inputAxis) {
+static void heavyProcessing(CGEventRef event, CFTimeInterval tickTime, int64_t scrollDelta, int64_t scrollDeltaPoint, MFAxis inputAxis) {
     
-    /// Update configuration
-    ///     Checking which app is under the mouse pointer is really slow, so we only do it when necessary
+    /// Run scrollAnalysis
     
-    if (scrollAnalysisResult.consecutiveScrollTickCounter == 0) {
+    /// Check if this tick is first consecutive
+    BOOL firstConsecutive = [ScrollAnalyzer peekIsFirstConsecutiveTickWithTickOccuringAt:tickTime withDirection:scrollDelta withConfig:_scrollConfig]; // TODO: We should probably pass a 1...4 direction not just the scrollDelta (which is just on one axis)
+    
+    /// Update stuff
+    ///     on the first scrollTick
+    
+    if (firstConsecutive) {
+        /// Checking which app is under the mouse pointer and the other stuff we do here is really slow, so we only do it when necessary
         
         /// Update application Overrides
         
@@ -238,12 +240,64 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
         /// Update modfications
         
         _modifications = [ScrollModifiers currentScrollModificationsWithEvent:event];
+        
+        /// Update scrollConfig
+        
+        _scrollConfig = [ScrollConfig config];
+        
+        /// Override scrollConfig based on modifications
+        
+        if (_modifications.inputModification == kMFScrollInputModificationQuick) {
+            
+            /// Make fast scroll easy to trigger
+            _scrollConfig.consecutiveScrollSwipeMaxInterval *= 1.2;
+            _scrollConfig.consecutiveScrollTickIntervalMax *= 1.2;
+            
+            /// Amp up fast scroll
+            _scrollConfig.fastScrollThreshold_inSwipes = 1;
+            _scrollConfig.fastScrollFactor = 2.0;
+            _scrollConfig.fastScrollExponentialBase = 1.5;
+            
+            /// Override acceleration curve
+            _scrollConfig.accelerationCurve = _scrollConfig.quickAccelerationCurve;
+            
+        } else if (_modifications.inputModification == kMFScrollInputModificationPrecise) {
+            
+            /// Turn off fast scroll
+            _scrollConfig.fastScrollThreshold_inSwipes = 69; /// Haha sex number
+            _scrollConfig.fastScrollFactor = 1.0;
+            _scrollConfig.fastScrollExponentialBase = 1.0;
+            
+            /// Override acceleration curve
+            _scrollConfig.accelerationCurve = _scrollConfig.preciseAccelerationCurve;
+        } else {
+            
+            /// Set default acceleration curve
+            _scrollConfig.accelerationCurve = _scrollConfig.standardAccelerationCurve;
+        }
+        
+        if (_modifications.effectModification == kMFScrollEffectModificationCommandTab) {
+            _scrollConfig.smoothEnabled = NO;
+        }
+        if (_modifications.effectModification == kMFScrollEffectModificationFourFingerPinch
+            || _modifications.effectModification == kMFScrollEffectModificationThreeFingerSwipeHorizontal
+            || _modifications.effectModification == kMFScrollEffectModificationZoom
+            || _modifications.effectModification == kMFScrollEffectModificationRotate
+            || _modifications.inputModification == kMFScrollInputModificationQuick) {
+            
+            _scrollConfig.smoothEnabled = YES;
+            /// ^ These modification effects simulate gestures. They need eventPhases to work properly. So they only work when when driven by the animator.
+        }
+        
     }
     
+    /// Run full scrollAnalysis
+    ScrollAnalysisResult scrollAnalysisResult = [ScrollAnalyzer updateWithTickOccuringAt:tickTime withDirection:scrollDelta withConfig:_scrollConfig];
+
     /// Get effective direction
     ///  -> With user settings etc. applied
     
-    MFScrollDirection scrollDirection = [ScrollUtility directionForInputAxis:inputAxis inputDelta:scrollDelta invertSetting:[ScrollConfig scrollInvertWithEvent:event] horizontalModifier:(_modifications.effect == kMFScrollEffectModificationHorizontalScroll)];
+    MFScrollDirection scrollDirection = [ScrollUtility directionForInputAxis:inputAxis inputDelta:scrollDelta invertSetting:[_scrollConfig scrollInvertWithEvent:event] horizontalModifier:(_modifications.effectModification == kMFScrollEffectModificationHorizontalScroll)];
     
     /// Get distance to scroll
     
@@ -252,22 +306,9 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
     /// Apply fast scroll to distance
         
     /// Get fast scroll params
-    int64_t fsThreshold = ScrollConfig.fastScrollThreshold_inSwipes;
-    double fsFactor = ScrollConfig.fastScrollFactor;
-    double fsBase = ScrollConfig.fastScrollExponentialBase;
-    
-    /// Override fast scroll params if quickScroll / preciseScroll is active
-    if (_modifications.input == kMFScrollInputModificationQuick) {
-        /// (Amp up fast scroll)
-        fsThreshold = 1;
-        fsFactor = 3.0;
-        fsBase = 2.0;
-    } else if (_modifications.input == kMFScrollInputModificationPrecise) {
-        /// (Turn off fast scroll)
-        fsThreshold = 69; /// Haha sex number
-        fsFactor = 1.0;
-        fsBase = 1.0;
-    }
+    int64_t fsThreshold = _scrollConfig.fastScrollThreshold_inSwipes;
+    double fsFactor = _scrollConfig.fastScrollFactor;
+    double fsBase = _scrollConfig.fastScrollExponentialBase;
     
     /// Evaulate fast scroll
     int64_t fastScrollThresholdDelta = scrollAnalysisResult.consecutiveScrollSwipeCounter_ForFreeScrollWheel - fsThreshold;
@@ -287,13 +328,7 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
         
         DDLogWarn(@"pxToScrollForThisTick is 0");
         
-    } else if ((_modifications.effect == kMFScrollEffectModificationCommandTab)
-               || (!ScrollConfig.smoothEnabled
-                   && !(_modifications.effect == kMFScrollEffectModificationFourFingerPinch
-                        || _modifications.effect == kMFScrollEffectModificationZoom
-                        || _modifications.effect == kMFScrollEffectModificationRotate
-                        || _modifications.effect == kMFScrollEffectModificationThreeFingerSwipeHorizontal))) {
-        ///                 ^ These modification effects simulate gestures. They need eventPhases to work properly. So they only work when when driven by the animator.
+    } else if (!_scrollConfig.smoothEnabled) {
         
         /// Send scroll event directly - without the animator. Will scroll all of pxToScrollForThisTick at once.
         
@@ -311,7 +346,7 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
             NSMutableDictionary *p = [NSMutableDictionary dictionary];
             
             /// Get base scroll duration
-            CFTimeInterval baseTimeRange = ((CFTimeInterval)ScrollConfig.msPerStep) / 1000.0; /// Need to cast to CFTimeInterval (double), to make this a float division
+            CFTimeInterval baseTimeRange = ((CFTimeInterval)_scrollConfig.msPerStep) / 1000.0; /// Need to cast to CFTimeInterval (double), to make this a float division
             
             /// Get px that the animator still wants to scroll
             double pxLeftToScroll;
@@ -321,9 +356,9 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
                 pxLeftToScroll = valueLeft;
             }
             
-            if (_modifications.effect == kMFScrollEffectModificationFourFingerPinch
-                || _modifications.effect == kMFScrollEffectModificationThreeFingerSwipeHorizontal
-                || _modifications.input == kMFScrollInputModificationQuick) {
+            if (_modifications.effectModification == kMFScrollEffectModificationFourFingerPinch
+                || _modifications.effectModification == kMFScrollEffectModificationThreeFingerSwipeHorizontal
+                || _modifications.inputModification == kMFScrollInputModificationQuick) {
 
                 /// Use linear curve for 4 finger pinch and 3 finger swipe
                 ///     because it feels much smoother
@@ -358,16 +393,9 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
                 
                 /// Decrease friction if quickScroll is active
                 ///     Overriding params in all these different places if quickScroll is active is a little messy. Would maybe be better to have ScrollConfig return a struct with all params and to then override the values in the struct in one place.
-                Bezier *baseCurve = ScrollConfig.baseCurve;
-                double dragCoefficient = ScrollConfig.dragCoefficient;
-                double dragExponent = ScrollConfig.dragExponent;
-                
-                if (_modifications.input == kMFScrollInputModificationQuick) {
-                    //                baseCurve = ScrollConfig.linearCurve;
-                    //                dragCoefficient = 30;
-                    //                dragExponent = 0.8;
-                    
-                }
+                Bezier *baseCurve = _scrollConfig.baseCurve;
+                double dragCoefficient = _scrollConfig.dragCoefficient;
+                double dragExponent = _scrollConfig.dragExponent;
                 
                 /// Curve
                 HybridCurve *c = [[HybridCurve alloc] initWithBaseCurve:baseCurve
@@ -375,7 +403,7 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
                                                          baseValueRange:baseValueRange
                                                         dragCoefficient:dragCoefficient
                                                            dragExponent:dragExponent
-                                                              stopSpeed:ScrollConfig.stopSpeed];
+                                                              stopSpeed:_scrollConfig.stopSpeed];
                 
                 /// Get values for animator from hybrid curve
                 p[@"duration"] = @(c.timeRange);
@@ -417,19 +445,12 @@ static int64_t getPxPerTick(CFTimeInterval timeBetweenTicks, int64_t cgEventScro
     ///     I'm just gonna use a BezierCurve to define the outputVelocity(inputVelocity) curve. Then I'll extrapolate the curve linearly at the end, so its defined everywhere. That is guaranteed to be smooth and easy to configure.
     ///     Edit: Actuallyyy we ended up outputting pixels to scroll for a given tick here (so sensitivity), not speed. I don't think perfectly smooth curves are that important. This is good enough and is more easy and natural to think about and configure.
     
-    AccelerationBezier *curve;
-    
-    if (_modifications.input == kMFScrollInputModificationPrecise) {
-        curve = ScrollConfig.preciseAccelerationCurve;
-    } else if (_modifications.input == kMFScrollInputModificationQuick) {
-        curve = ScrollConfig.quickAccelerationCurve;
-    } else if (ScrollConfig.useAppleAcceleration) {
-        return llabs(cgEventScrollDeltaPoint); // Use delta from Apple's acceleration algorithm
-    } else {
-        curve = ScrollConfig.accelerationCurve();
+    if (_scrollConfig.useAppleAcceleration) {
+        return llabs(cgEventScrollDeltaPoint);
     }
+    AccelerationBezier *curve = _scrollConfig.accelerationCurve();
     
-    if (timeBetweenTicks == DBL_MAX) timeBetweenTicks = ScrollConfig.consecutiveScrollTickIntervalMax;
+    if (timeBetweenTicks == DBL_MAX) timeBetweenTicks = _scrollConfig.consecutiveScrollTickIntervalMax;
     double scrollSpeed = 1/timeBetweenTicks; /// In tick/s
                                              ///
     double pxForThisTick = [curve evaluateAt:scrollSpeed]; /// In px/s
@@ -521,15 +542,15 @@ static void sendScroll(int64_t px, MFScrollDirection scrollDirection, BOOL gestu
     }
     
     /// TODO: Is a third set of constants for the same thing (?) really necessary??
-    if (_modifications.effect == kMFScrollEffectModificationZoom) {
+    if (_modifications.effectModification == kMFScrollEffectModificationZoom) {
         outputType = kMFScrollOutputTypeZoom;
-    } else if (_modifications.effect == kMFScrollEffectModificationRotate) {
+    } else if (_modifications.effectModification == kMFScrollEffectModificationRotate) {
         outputType = kMFScrollOutputTypeRotation;
-    } else if (_modifications.effect == kMFScrollEffectModificationFourFingerPinch) {
+    } else if (_modifications.effectModification == kMFScrollEffectModificationFourFingerPinch) {
         outputType = kMFScrollOutputTypeFourFingerPinch;
-    } else if (_modifications.effect == kMFScrollEffectModificationCommandTab) {
+    } else if (_modifications.effectModification == kMFScrollEffectModificationCommandTab) {
         outputType = kMFScrollOutputTypeCommandTab;
-    } else if (_modifications.effect == kMFScrollEffectModificationThreeFingerSwipeHorizontal) {
+    } else if (_modifications.effectModification == kMFScrollEffectModificationThreeFingerSwipeHorizontal) {
         outputType = kMFScrollOutputTypeThreeFingerSwipeHorizontal;
     } /// kMFScrollEffectModificationHorizontalScroll is handled above when determining scroll direction
     
@@ -568,7 +589,7 @@ static void sendOutputEvents(int64_t dx, int64_t dy, BOOL isFirstEvent, BOOL isF
         
         /// --- GestureScroll ---
         
-        if (_modifications.input == kMFScrollInputModificationQuick) {
+        if (_modifications.inputModification == kMFScrollInputModificationQuick) {
             
             /// QuickScroll is active
             

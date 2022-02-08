@@ -25,8 +25,8 @@ typedef enum {
 } MFScrollEffectModification;
 
 typedef struct {
-    MFScrollInputModification input;
-    MFScrollEffectModification effect;
+    MFScrollInputModification inputModification;
+    MFScrollEffectModification effectModification;
 } MFScrollModificationResult;
 
 

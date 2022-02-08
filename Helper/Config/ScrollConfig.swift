@@ -11,48 +11,54 @@ import Cocoa
 import CocoaLumberjackSwift
 
 @objc class ScrollConfig: NSObject {
+    /// This class has almost all instance properties
+    /// You can request the config once, then store it.
+    /// You'll receive an independent instance that you can override with custom values. This should be useful for implementing Modifications in Scroll.m
+    ///     Everything in ScrollConfigResult is lazy so that you only pay for what you actually use
     
-    // MARK: - Constants
+    // MARK: Convenience functions
+    ///     For accessing top level dict and different sub-dicts
+    
+    private var topLevel: NSDictionary {
+        Config.configWithAppOverridesApplied()[kMFConfigKeyScroll] as! NSDictionary
+    }
+    private var other: NSDictionary {
+        topLevel["other"] as! NSDictionary
+    }
+    private var smooth: NSDictionary {
+        topLevel["smoothParameters"] as! NSDictionary
+    }
+    private var mod: NSDictionary {
+        topLevel["modifierKeys"] as! NSDictionary
+    }
+    
+    // MARK: Class functions
+    
+    @objc static func config() -> ScrollConfig {
+        return ScrollConfig()
+    }
+    
+    @objc static var linearCurve: Bezier = { () -> Bezier in
+        
+        typealias P = Bezier.Point
+        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:1,y:1), P(x:1,y:1)]
+        
+        return Bezier(controlPoints: controlPoints, defaultEpsilon: 0.001) /// The default defaultEpsilon 0.08 makes the animations choppy
+    }()
     
     @objc static var stringToEventFlagMask: NSDictionary = ["command" : CGEventFlags.maskCommand,
                                                      "control" : CGEventFlags.maskControl,
                                                      "option" : CGEventFlags.maskAlternate,
                                                      "shift" : CGEventFlags.maskShift]
     
-    /// Convenience functions for accessing top level dict and different sub-dicts
-
-    @objc private static var topLevel: NSDictionary {
-        Config.configWithAppOverridesApplied()[kMFConfigKeyScroll] as! NSDictionary
-    }
-    @objc private static var other: NSDictionary {
-        topLevel["other"] as! NSDictionary
-    }
-    @objc private static var smooth: NSDictionary {
-        topLevel["smoothParameters"] as! NSDictionary
-    }
-    @objc private static var mod: NSDictionary {
-        topLevel["modifierKeys"] as! NSDictionary
-    }
-
-    // MARK: - Interface
-
-//    @objc class ScrollConfigResult: NSObject {
-//        
-//    }
-    
     // MARK: General
-
-    @objc static var smoothEnabled: Bool {
-//        topLevel["smooth"] as! Bool
-        return true;
-    }
-    @objc static var disableAll: Bool {
-        topLevel["disableAll"] as! Bool; /// This is currently unused. Could be used as a killswitch for all scrolling Interception
-    }
+    
+    @objc lazy var smoothEnabled: Bool = false /* ScrollConfig.topLevel["smooth"] as! Bool */
+    @objc lazy var disableAll: Bool = topLevel["disableAll"] as! Bool /// This is currently unused. Could be used as a killswitch for all scrolling Interception
     
     // MARK: Invert Direction
     
-    @objc static func scrollInvert(event: CGEvent) -> MFScrollInversion {
+    @objc func scrollInvert(event: CGEvent) -> MFScrollInversion {
         /// This can be used as a factor to invert things. kMFScrollInversionInverted is -1.
         
         if self.semanticScrollInvertUser == self.semanticScrollInvertSystem(event) {
@@ -61,99 +67,76 @@ import CocoaLumberjackSwift
             return kMFScrollInversionInverted
         }
     }
-    private static var semanticScrollInvertUser: MFSemanticScrollInversion {
-//        MFSemanticScrollInversion(topLevel["naturalDirection"] as! UInt32)
-        return kMFSemanticScrollInversionNormal
-    }
-    private static func semanticScrollInvertSystem(_ event: CGEvent) -> MFSemanticScrollInversion {
+    lazy private var semanticScrollInvertUser: MFSemanticScrollInversion = kMFSemanticScrollInversionNormal /* MFSemanticScrollInversion(ScrollConfig.topLevel["naturalDirection"] as! UInt32) */
+    private func semanticScrollInvertSystem(_ event: CGEvent) -> MFSemanticScrollInversion {
         
         /// Accessing userDefaults is actually surprisingly slow, so we're using NSEvent.isDirectionInvertedFromDevice instead... but NSEvent(cgEvent:) is slow as well...
         ///     .... So we're using our advanced knowledge of CGEventFields!!!
         
         
-//        let isNatural = UserDefaults.standard.bool(forKey: "com.apple.swipescrolldirection") /// User defaults method
-//        let isNatural = NSEvent(cgEvent: event)!.isDirectionInvertedFromDevice /// NSEvent method
+        //            let isNatural = UserDefaults.standard.bool(forKey: "com.apple.swipescrolldirection") /// User defaults method
+        //            let isNatural = NSEvent(cgEvent: event)!.isDirectionInvertedFromDevice /// NSEvent method
         let isNatural = event.getIntegerValueField(CGEventField(rawValue: 137)!) != 0; /// CGEvent method
         
         return isNatural ? kMFSemanticScrollInversionNatural : kMFSemanticScrollInversionNormal
     }
     
     // MARK: Analysis
-
-    @objc static var scrollSwipeThreshold_inTicks: Int { /// If `scrollSwipeThreshold_inTicks` consecutive ticks occur, they are deemed a scroll-swipe.
-        other["scrollSwipeThreshold_inTicks"] as! Int;
-    }
-    @objc static var fastScrollThreshold_inSwipes: Int { /// If `fastScrollThreshold_inSwipes` + 1 consecutive swipes occur, fast scrolling is enabled.
-        other["fastScrollThreshold_inSwipes"] as! Int
-    }
-    @objc static var scrollSwipeMax_inTicks: Int { /// Max number of ticks that we think can occur in a single swipe naturally (if the user isn't using a free-spinning scrollwheel). (See `consecutiveScrollSwipeCounter_ForFreeScrollWheel` definition for more info)
-        9;
-    }
-    @objc static var consecutiveScrollTickIntervalMax: TimeInterval { /// If more than `_consecutiveScrollTickIntervalMax` seconds passes between two scrollwheel ticks, then they aren't deemed consecutive.
-//        other["consecutiveScrollTickIntervalMax"] as! Double;
-        /// msPerStep/1000 <- Good idea but we don't want this to depend on msPerStep
-        0.13
-        
-    }
-    @objc static var consecutiveScrollSwipeMaxInterval: TimeInterval {
-        /// If more than `_consecutiveScrollSwipeIntervalMax` seconds passes between two scrollwheel swipes, then they aren't deemed consecutive.
-        ///        other["consecutiveScrollSwipeIntervalMax"] as! Double
-        0.35
-    }
-    @objc private static var consecutiveScrollTickInterval_AccelerationEnd: TimeInterval { /// Used to define accelerationCurve. If the time interval between two ticks becomes less than `consecutiveScrollTickInterval_AccelerationEnd` seconds, then the accelerationCurve becomes managed by linear extension of the bezier instead of the bezier directly.
-        0.02
-    }
-    @objc static var ticksPerSecond_DoubleExponentialSmoothing_InputValueWeight: Double {
-        0.5
-    }
-    @objc static var ticksPerSecond_DoubleExponentialSmoothing_TrendWeight: Double {
-        0.2
-    }
-    @objc static var ticksPerSecond_ExponentialSmoothing_InputValueWeight: Double {
-//        0.6 /// On larger swipes this counteracts acceleration and it's unsatisfying. Not sure if placebo
-//        0.8 /// Nice, light smoothing. Makes  scrolling slightly less direct. Not sure if placebo.
-        1.0 /// Turn off smoothing. I like this the best
-    }
+    
+    @objc lazy var scrollSwipeThreshold_inTicks: Int = other["scrollSwipeThreshold_inTicks"] as! Int; /// If `scrollSwipeThreshold_inTicks` consecutive ticks occur, they are deemed a scroll-swipe.
+    
+    @objc lazy var fastScrollThreshold_inSwipes: Int = other["fastScrollThreshold_inSwipes"] as! Int /// If `fastScrollThreshold_inSwipes` + 1 consecutive swipes occur, fast scrolling is enabled.
+    
+    @objc lazy var scrollSwipeMax_inTicks: Int = 9 /// Max number of ticks that we think can occur in a single swipe naturally (if the user isn't using a free-spinning scrollwheel). (See `consecutiveScrollSwipeCounter_ForFreeScrollWheel` definition for more info)
+    
+    @objc lazy var consecutiveScrollTickIntervalMax: TimeInterval = 0.13
+    /// ^ If more than `_consecutiveScrollTickIntervalMax` seconds passes between two scrollwheel ticks, then they aren't deemed consecutive.
+    ///        other["consecutiveScrollTickIntervalMax"] as! Double;
+    ///     msPerStep/1000 <- Good idea but we don't want this to depend on msPerStep
+    
+    @objc lazy var consecutiveScrollSwipeMaxInterval: TimeInterval = 0.35
+    /// ^ If more than `_consecutiveScrollSwipeIntervalMax` seconds passes between two scrollwheel swipes, then they aren't deemed consecutive.
+    ///        other["consecutiveScrollSwipeIntervalMax"] as! Double
+    
+    @objc lazy private var consecutiveScrollTickInterval_AccelerationEnd: TimeInterval = 0.02
+    /// ^ Used to define accelerationCurve. If the time interval between two ticks becomes less than `consecutiveScrollTickInterval_AccelerationEnd` seconds, then the accelerationCurve becomes managed by linear extension of the bezier instead of the bezier directly.
+    
+    @objc lazy var ticksPerSecond_DoubleExponentialSmoothing_InputValueWeight: Double = 0.5
+    
+    @objc lazy var ticksPerSecond_DoubleExponentialSmoothing_TrendWeight: Double = 0.2
+    
+    @objc lazy var ticksPerSecond_ExponentialSmoothing_InputValueWeight: Double = 1.0
+    /// ^       1.0 -> Turns off smoothing. I like this the best
+    ///     0.6 -> On larger swipes this counteracts acceleration and it's unsatisfying. Not sure if placebo
+    ///     0.8 ->  Nice, light smoothing. Makes  scrolling slightly less direct. Not sure if placebo.
     
     // MARK: Fast scroll
     
-    @objc static var fastScrollExponentialBase: Double { // How quickly fast scrolling gains speed.
-                                                         //        other["fastScrollExponentialBase"] as! Double;
-        1.35 /// Used to be 1.1 before scroll rework. Why so much higher now?
-    }
-    @objc static var fastScrollFactor: Double {
-        //        other["fastScrollFactor"] as! Double
-        2.0 /// Used to be 1.1 before scroll rework. Why so much higher now?
-    }
-
-    // MARK: Smooth scroll
-
-    @objc private static var pxPerTickBase: Int {
-//        return smooth["pxPerStep"] as! Int
-        
-        return 60 // Max good-feeling value
-//        return 50
-//        return 45
-//        return 30 // I like this one
-//        return 20
-//        return 10 // Min good feeling value
-//        return 5
-    }
-    @objc private static var pxPerTickEnd: Int {
-        return 120 /// Works well without implicit hybrid curve acceleration
-//        return 100 /// Works well with slight hybrid curve acceleration
-//        return 20;
-    }
-    @objc static var msPerStep: Int {
-//        smooth["msPerStep"] as! Int
-//        return 200 /// Works well without hybrid curve elongation
-//        return 90
-//        return 150
-//        return 190
-        return 180
-    }
+    @objc lazy var fastScrollExponentialBase = 1.35 /* other["fastScrollExponentialBase"] as! Double; */
+    /// ^ How quickly fast scrolling gains speed.
+    ///     Used to be 1.1 before scroll rework. Why so much higher now?
     
-    @objc static let baseCurve: Bezier = { () -> Bezier in
+    
+    @objc lazy var fastScrollFactor = 2.0 /*other["fastScrollFactor"] as! Double*/
+    /// ^ Used to be 1.1 before scroll rework. Why so much higher now?
+    
+    
+    // MARK: Smooth scroll
+    
+    @objc var pxPerTickBase = 60 /* return smooth["pxPerStep"] as! Int */
+    /// ^ 60 -> Max good-feeling value, 30 -> I like this one, 10 -> Min good feeling value
+    
+    @objc lazy private var pxPerTickEnd: Int = 120
+    /// ^ 120 Works well without implicit hybrid curve acceleration
+    ///     100 Works well with slight hybrid curve acceleration
+    
+    @objc lazy var msPerStep = 180 /* smooth["msPerStep"] as! Int */
+    /// 200 -> Works well without hybrid curve elongation
+    /// 90
+    /// 150
+    /// 190
+    
+    @objc lazy var baseCurve: Bezier = { () -> Bezier in
         /// Base curve used to construct a HybridCurve animationCurve in Scroll.m. This curve is applied before switching to a DragCurve to simulate physically accurate deceleration
         /// Using a closure here instead of DerivedProperty.create_kvc(), because we know it will never change.
         typealias P = Bezier.Point
@@ -165,113 +148,80 @@ import CocoaLumberjackSwift
         
         return Bezier(controlPoints: controlPoints, defaultEpsilon: 0.001) /// The default defaultEpsilon 0.08 makes the animations choppy
     }()
-    @objc static var dragCoefficient: Double {
-        //        smooth["friction"] as! Double;
-        //        2.3 /// Value from MMF 1. Not sure why so much lower than the new values
-        //        20 /// Too floaty with dragExponent 1
-        40 // Works well with dragExponent 1
-           //        60 // Works well with dragExponent 0.7
-           //        1000 // Stop immediately
-        
-    }
-    @objc static var dragExponent: Double {
-        //        smooth["frictionDepth"] as! Double;
-        1.0 /// Good setting for snappy
-            //        0.7 /// Value from GestureScrollSimulator /// Good setting for smooth
-    }
-    @objc static var stopSpeed: Double {
-        /// Used to construct Hybrid curve in Scroll.m
-        /// This is the speed (In px/s ?) at which the DragCurve part of the Hybrid curve stops scrolling
-        //        99999999.0 /// Turn off momentum scroll
-        3.0
-    }
+    @objc lazy var dragCoefficient = 40.0 /* smooth["friction"] as! Double */
+    /// ^       2.3: Value from MMF 1. Not sure why so much lower than the new values
+    ///     20: Too floaty with dragExponent 1
+    ///     40: Works well with dragExponent 1
+    ///     60: Works well with dragExponent 0.7
+    ///     1000: Stop immediately
+    
+    @objc lazy var dragExponent = 1.0 /* smooth["frictionDepth"] as! Double */
+    
+    @objc lazy var stopSpeed = 3.0
+    /// ^ Used to construct Hybrid curve in Scroll.m
+    ///     This is the speed (In px/s ?) at which the DragCurve part of the Hybrid curve stops scrolling
     
     // MARK: Acceleration
     
-    @objc static var useAppleAcceleration: Bool {
-        /// Ignore MMF acceleration algorithm and use values provided by macOS
-        return false
-    }
-    @objc private static var accelerationHump: Double {
-        /// Between -1 and 1
-        return -0.2 /// Negative values make the curve continuous, and more predictable (might be placebo)
-//        return 0.0
-    }
-    @objc static var accelerationCurve: (() -> AccelerationBezier) =
-        DerivedProperty.create_kvc(on:
-                                    ScrollConfig.self,
-                                   given: [
-                                    #keyPath(pxPerTickBase),
-                                    #keyPath(pxPerTickEnd),
-                                    #keyPath(consecutiveScrollTickIntervalMax),
-                                    #keyPath(consecutiveScrollTickInterval_AccelerationEnd),
-                                    #keyPath(accelerationHump)
-                                   ])
+    @objc lazy var useAppleAcceleration = false
+    /// ^ Ignore MMF acceleration algorithm and use values provided by macOS
+    
+    @objc lazy var accelerationHump = -0.2
+    /// ^ Between -1 and 1
+    ///     Negative values make the curve continuous, and more predictable (might be placebo)
+    
+    @objc lazy var accelerationCurve = standardAccelerationCurve
+    
+    @objc lazy var standardAccelerationCurve: (() -> AccelerationBezier) =
+    DerivedProperty.create_kvc(on:
+                                self,
+                               given: [
+                                #keyPath(pxPerTickBase),
+                                #keyPath(pxPerTickEnd),
+                                #keyPath(consecutiveScrollTickIntervalMax),
+                                #keyPath(consecutiveScrollTickInterval_AccelerationEnd),
+                                #keyPath(accelerationHump)
+                               ])
     { () -> AccelerationBezier in
-
+        
         /// I'm not sure that using a derived property instead of just re-calculating the curve everytime is faster.
         ///     Edit: I tested it and using DerivedProperty seems slightly faster
-
-        return accelerationCurveFromParams(pxPerTickBase:                                   ScrollConfig.self.pxPerTickBase,
-                                           pxPerTickEnd:                                    ScrollConfig.self.pxPerTickEnd,
-                                           consecutiveScrollTickIntervalMax:                ScrollConfig.self.consecutiveScrollTickIntervalMax,
-                                           consecutiveScrollTickInterval_AccelerationEnd:   ScrollConfig.self.consecutiveScrollTickInterval_AccelerationEnd,
-                                           accelerationHump:                                ScrollConfig.self.accelerationHump)
+        
+        return ScrollConfig.accelerationCurveFromParams(pxPerTickBase:                                   self.pxPerTickBase,
+                                                        pxPerTickEnd:                                    self.pxPerTickEnd,
+                                                        consecutiveScrollTickIntervalMax:                self.consecutiveScrollTickIntervalMax,
+                                                        consecutiveScrollTickInterval_AccelerationEnd:   self.consecutiveScrollTickInterval_AccelerationEnd,
+                                                        accelerationHump:                                self.accelerationHump)
     }
     
-//    @objc static var accelerationCurve: (() -> AccelerationBezier) = { () -> AccelerationBezier in
-//
-//        return accelerationCurveFromParams(pxPerTickBase:                                   ScrollConfig.self.pxPerTickBase,
-//                                           pxPerTickEnd:                                    ScrollConfig.self.pxPerTickEnd,
-//                                           consecutiveScrollTickIntervalMax:                ScrollConfig.self.consecutiveScrollTickIntervalMax,
-//                                           consecutiveScrollTickInterval_AccelerationEnd:   ScrollConfig.self.consecutiveScrollTickInterval_AccelerationEnd,
-//                                           accelerationHump:                                ScrollConfig.self.accelerationHump)
-//    }
+    @objc lazy var preciseAccelerationCurve = { () -> AccelerationBezier in
+        ScrollConfig.accelerationCurveFromParams(pxPerTickBase: 3, /// 2 is better than 3 but that leads to weird asswert failures in PixelatedAnimator that I can't be bothered to fix
+                                                 pxPerTickEnd: 15,
+                                                 consecutiveScrollTickIntervalMax: self.consecutiveScrollTickIntervalMax,
+                                                 /// ^ We don't expect this to ever change so it's okay to just capture here
+                                                 consecutiveScrollTickInterval_AccelerationEnd: self.consecutiveScrollTickInterval_AccelerationEnd,
+                                                 accelerationHump: -0.2)
+    }
+    @objc lazy var quickAccelerationCurve = { () -> AccelerationBezier in
+        ScrollConfig.accelerationCurveFromParams(pxPerTickBase: 50, /// 40 and 220 also works well
+                                                 pxPerTickEnd: 200,
+                                                 consecutiveScrollTickIntervalMax: self.consecutiveScrollTickIntervalMax,
+                                                 consecutiveScrollTickInterval_AccelerationEnd: self.consecutiveScrollTickInterval_AccelerationEnd,
+                                                 accelerationHump: -0.2)
+    }
     
-    @objc static let preciseAccelerationCurve = { () -> AccelerationBezier in
-        accelerationCurveFromParams(pxPerTickBase: 3, /// 2 is better than 3 but that leads to weird asswert failures in PixelatedAnimator that I can't be bothered to fix
-                                    pxPerTickEnd: 15,
-                                    consecutiveScrollTickIntervalMax: ScrollConfig.consecutiveScrollTickIntervalMax,
-                                    /// ^ We don't expect this to ever change so it's okay to just capture here
-                                    consecutiveScrollTickInterval_AccelerationEnd: ScrollConfig.consecutiveScrollTickInterval_AccelerationEnd,
-                                    accelerationHump: -0.2)
-    }()
-    @objc static let quickAccelerationCurve = { () -> AccelerationBezier in
-        accelerationCurveFromParams(pxPerTickBase: 50, /// 40 and 220 also works well
-                                    pxPerTickEnd: 200,
-                                    consecutiveScrollTickIntervalMax: ScrollConfig.consecutiveScrollTickIntervalMax,
-                                    consecutiveScrollTickInterval_AccelerationEnd: ScrollConfig.consecutiveScrollTickInterval_AccelerationEnd,
-                                    accelerationHump: -0.2)
-    }()
-
     // MARK: Keyboard modifiers
-
+    
     /// Event flag masks
-    @objc static var horizontalScrollModifierKeyMask: CGEventFlags {
-        stringToEventFlagMask[mod["horizontalScrollModifierKey"] as! String] as! CGEventFlags
-    }
-    @objc static var magnificationScrollModifierKeyMask: CGEventFlags {
-        stringToEventFlagMask[mod["magnificationScrollModifierKey"] as! String] as! CGEventFlags
-    }
-    // Modifier enabled
-    @objc static var horizontalScrollModifierKeyEnabled: Bool {
-        mod["horizontalScrollModifierKeyEnabled"] as! Bool
-    }
-    @objc static var magnificationScrollModifierKeyEnabled: Bool {
-        mod["magnificationScrollModifierKeyEnabled"] as! Bool
-    }
+    @objc lazy var horizontalScrollModifierKeyMask = ScrollConfig.stringToEventFlagMask[mod["horizontalScrollModifierKey"] as! String] as! CGEventFlags
+    @objc lazy var magnificationScrollModifierKeyMask = ScrollConfig.stringToEventFlagMask[mod["magnificationScrollModifierKey"] as! String] as! CGEventFlags
     
-    // MARK: Other
+    /// Modifier enabled
+    @objc lazy var horizontalScrollModifierKeyEnabled = mod["horizontalScrollModifierKeyEnabled"] as! Bool
     
-    @objc static let linearCurve: Bezier = { () -> Bezier in
-        
-        typealias P = Bezier.Point
-        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:1,y:1), P(x:1,y:1)]
-        
-        return Bezier(controlPoints: controlPoints, defaultEpsilon: 0.001) /// The default defaultEpsilon 0.08 makes the animations choppy
-    }()
+    @objc lazy var magnificationScrollModifierKeyEnabled = mod["magnificationScrollModifierKeyEnabled"] as! Bool
     
-    // MARK: - Helper
+    // MARK: - Helper functions
     
     fileprivate static func accelerationCurveFromParams(pxPerTickBase: Int, pxPerTickEnd: Int, consecutiveScrollTickIntervalMax: TimeInterval, consecutiveScrollTickInterval_AccelerationEnd: TimeInterval, accelerationHump: Double) -> AccelerationBezier {
         /**
@@ -325,3 +275,4 @@ import CocoaLumberjackSwift
     }
     
 }
+

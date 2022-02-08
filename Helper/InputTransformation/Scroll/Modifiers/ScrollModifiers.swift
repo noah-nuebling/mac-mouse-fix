@@ -22,8 +22,8 @@ import CocoaLumberjackSwift
         
         /// Declare and init result
         
-        let emptyResult = MFScrollModificationResult.init(input: kMFScrollInputModificationNone,
-                                                          effect: kMFScrollEffectModificationNone)
+        let emptyResult = MFScrollModificationResult.init(inputModification: kMFScrollInputModificationNone,
+                                                          effectModification: kMFScrollEffectModificationNone)
         var result = emptyResult
         
         /// Get currently active scroll remaps
@@ -49,9 +49,9 @@ import CocoaLumberjackSwift
             switch inputModification {
                 
             case kMFModifiedScrollInputModificationTypePrecisionScroll:
-                result.input = kMFScrollInputModificationPrecise
+                result.inputModification = kMFScrollInputModificationPrecise
             case kMFModifiedScrollInputModificationTypeQuickScroll:
-                result.input = kMFScrollInputModificationQuick
+                result.inputModification = kMFScrollInputModificationQuick
             default:
                 fatalError("Unknown modifiedSrollDict type found in remaps")
             }
@@ -64,17 +64,17 @@ import CocoaLumberjackSwift
             switch effectModification {
                 
             case kMFModifiedScrollEffectModificationTypeZoom:
-                result.effect = kMFScrollEffectModificationZoom
+                result.effectModification = kMFScrollEffectModificationZoom
             case kMFModifiedScrollEffectModificationTypeHorizontalScroll:
-                result.effect = kMFScrollEffectModificationHorizontalScroll
+                result.effectModification = kMFScrollEffectModificationHorizontalScroll
             case kMFModifiedScrollEffectModificationTypeRotate:
-                result.effect = kMFScrollEffectModificationRotate
+                result.effectModification = kMFScrollEffectModificationRotate
             case kMFModifiedScrollEffectModificationTypeFourFingerPinch:
-                result.effect = kMFScrollEffectModificationFourFingerPinch
+                result.effectModification = kMFScrollEffectModificationFourFingerPinch
             case kMFModifiedScrollEffectModificationTypeCommandTab:
-                result.effect = kMFScrollEffectModificationCommandTab
+                result.effectModification = kMFScrollEffectModificationCommandTab
             case kMFModifiedScrollEffectModificationTypeThreeFingerSwipeHorizontal:
-                result.effect = kMFScrollEffectModificationThreeFingerSwipeHorizontal
+                result.effectModification = kMFScrollEffectModificationThreeFingerSwipeHorizontal
             case kMFModifiedScrollEffectModificationTypeAddModeFeedback:
                 
                 var payload = modifiedScrollDict
@@ -90,7 +90,7 @@ import CocoaLumberjackSwift
         }
         
         /// Feedback
-        let resultIsEmpty = result.input == emptyResult.input && result.effect == emptyResult.effect
+        let resultIsEmpty = result.inputModification == emptyResult.inputModification && result.effectModification == emptyResult.effectModification
         if !resultIsEmpty {
             ModifierManager.handleModifiersHaveHadEffect(withDevice: modifyingDeviceID, activeModifiers: activeModifiers)
             ModifiedDrag.modifiedScrollHasBeenUsed()

@@ -10,35 +10,29 @@
 #import "ScrollAnalyzer.h"
 #import <Cocoa/Cocoa.h>
 #import "Scroll.h"
-#import "ScrollConfigObjC.h"
-#import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "ScrollUtility.h"
 
 @implementation ScrollAnalyzer
 
 #pragma mark Init
 
-+ (void)initialize
-{
++ (void)initialize {
     if (self == [ScrollAnalyzer class]) {
+        
+        /// Get default config
+        ///     Note that this will never update because the init function only runs once. So make sure that whatever values you use here aren't intended to update!
+        ScrollConfig *_scrollConfig = [ScrollConfig config];
         
         /// Setup smoothing algorithm for `timeBetweenTicks`
         
-//        _tickTimeSmoother = [[DoubleExponentialSmoother alloc] initWithA:ScrollConfig.ticksPerSecondSmoothingInputValueWeight
-//                                                                       y:ScrollConfig.ticksPerSecondSmoothingTrendWeight
-//                                                           initialValue1:ScrollConfig.consecutiveScrollTickIntervalMax
-//                                                           initialValue2:ScrollConfig.consecutiveScrollTickIntervalMax];
-//        _tickTimeSmoother = [[RollingAverage alloc] initWithCapacity:3
-//                                                       initialValues:@[@(ScrollConfig.consecutiveScrollTickIntervalMax)]];
-        
-//        _tickTimeSmoother = [[RollingAverage alloc] initWithCapacity:1]; /// Capacity 1 turns off smoothing
+        //        _tickTimeSmoother = [[RollingAverage alloc] initWithCapacity:1]; /// Capacity 1 turns off smoothing
         /// ^ No smoothing feels the best.
         ///     - Without smoothing, there will somemtimes randomly be extremely small `timeSinceLastTick` values. I was worried that these would overdrive the acceleration curve, producing extremely high `pxToScrollForThisTick` values at random. But since we've capped the acceleration curve to a maximum `pxToScrollForThisTick` this isn't a noticable issue anymore.
         ///     - No smoothing is way more responsive than RollingAverage
         ///     - No smoothing is more responsive than DoubleExponential. And when there are extremely small `timeSinceLastTick` values (avoiding these is the whole reason we use smoothing), the DoubleExponentialSmoother will extrapolate the trend and make it even *worse* - sometimes it even produces negative values!
         ///     - We could try if a light exponential smoothing would feel better, but this is good enought for now
         
-        _tickTimeSmoother = [[ExponentialSmoother alloc] initWithA:ScrollConfig.ticksPerSecond_ExponentialSmoothing_InputValueWeight];
+        _tickTimeSmoother = [[ExponentialSmoother alloc] initWithA:_scrollConfig.ticksPerSecond_ExponentialSmoothing_InputValueWeight];
         /// ^ Light exponential smoothing is also worse than no smoothing at all. The loss in responsiveness is not worth the added "stability"z   imo
         
     }
@@ -79,8 +73,25 @@ static int _consecutiveScrollSwipeCounter_ForFreeScrollWheel;
     /// We shouldn't definitely not reset _scrollDirectionDidChange here, because a scroll direction change causes this function to be called, and then the information about the scroll direction changing would be lost as it's reset immediately
 }
 
++ (BOOL)peekIsFirstConsecutiveTickWithTickOccuringAt:(CFTimeInterval)thisScrollTickTimeStamp withDirection:(int64_t)delta withConfig:(ScrollConfig *)scrollConfig {
+    
+    /// Checks if a given tick is the first consecutive tick. Without changing state.
+    
+    /// Return direction change
+    if (![ScrollUtility sameSign:delta and:_previousDelta]) {
+        return YES;
+    }
+    
+    /// Get seconds since last tick
+    double secondsSinceLastTick = thisScrollTickTimeStamp - _previousScrollTickTimeStamp;
+    /// Get timeout
+    BOOL timeout = secondsSinceLastTick > scrollConfig.consecutiveScrollTickIntervalMax;
+    
+    return timeout;
+}
+
 /// This is the main input function which should be called on each scrollwheel tick event
-+ (ScrollAnalysisResult)updateWithTickOccuringNowWithDirection:(int64_t)delta {
++ (ScrollAnalysisResult)updateWithTickOccuringAt:(CFTimeInterval)thisScrollTickTimeStamp withDirection:(int64_t)delta withConfig:(ScrollConfig *)scrollConfig {
     
     /// Update directionDidChange
     ///     Checks whether the scrolling direction is different from when this function was last called. Writes result into `_scrollDirectionDidChange`.
@@ -98,24 +109,22 @@ static int _consecutiveScrollSwipeCounter_ForFreeScrollWheel;
     }
 
     /// Get raw seconds since last tick
-    
-    double thisScrollTickTimeStamp = CACurrentMediaTime();
     double secondsSinceLastTick = thisScrollTickTimeStamp - _previousScrollTickTimeStamp;
     
     /// Update consecutive tick and swipe counters
     
-    if (secondsSinceLastTick > ScrollConfig.consecutiveScrollTickIntervalMax) { /// Should `secondsSinceLastTick` be smoothed *before* this comparison?
+    if (secondsSinceLastTick > scrollConfig.consecutiveScrollTickIntervalMax) { /// Should `secondsSinceLastTick` be smoothed *before* this comparison?
         /// This is the first consecutive tick
         
         /// Update swipes
         
-        if (ScrollConfig.scrollSwipeThreshold_inTicks <= _consecutiveScrollTickCounter) {
+        if (scrollConfig.scrollSwipeThreshold_inTicks <= _consecutiveScrollTickCounter) {
             /// The last batch of consecutive ticks had more ticks in it than the swipe threshold
             
             double thisScrollSwipeTimeStamp = CACurrentMediaTime();
             double interval = thisScrollSwipeTimeStamp - _previousScrollTickTimeStamp;
             
-            if (interval <= ScrollConfig.consecutiveScrollSwipeMaxInterval) {
+            if (interval <= scrollConfig.consecutiveScrollSwipeMaxInterval) {
                 /// Time between the last tick of the previous swipe and the first tick of the current swipe (now) is smaller than swipe threshold
 
                 _consecutiveScrollSwipeCounter += 1;
@@ -140,8 +149,8 @@ static int _consecutiveScrollSwipeCounter_ForFreeScrollWheel;
     /// Update `_consecutiveScrollSwipeCounter_ForFreeScrollWheel`
     ///     It's a little awkward to update this down here after the other swipe-updating code , but we need to do it this way because we need the `consecutiveTickCounter` to be updated after the stuff above but before this
     
-    if (_consecutiveScrollTickCounter >= ScrollConfig.scrollSwipeMax_inTicks) {
-        if (_consecutiveScrollTickCounter % ScrollConfig.scrollSwipeMax_inTicks == 0) {
+    if (_consecutiveScrollTickCounter >= scrollConfig.scrollSwipeMax_inTicks) {
+        if (_consecutiveScrollTickCounter % scrollConfig.scrollSwipeMax_inTicks == 0) {
             _consecutiveScrollSwipeCounter_ForFreeScrollWheel += 1;
         }
     }
