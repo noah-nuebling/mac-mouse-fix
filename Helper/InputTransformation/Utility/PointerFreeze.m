@@ -17,7 +17,6 @@
 
 @implementation PointerFreeze
 
-
 /// Vars
 
 static CGPoint _origin;
@@ -29,6 +28,7 @@ static NSImageView *_puppetCursorView;
 static CGDirectDisplayID _display;
 
 static CFMachPortRef _eventTap;
+static Boolean _coolEventTapIsEnabled; /// CGEventTapIsEnabled() is pretty slow, so we're using this instead
 
 static dispatch_queue_t _queue;
 
@@ -46,8 +46,7 @@ static dispatch_queue_t _queue;
         _queue = dispatch_queue_create("com.nuebling.mac-mouse-fix.helper.pointer", attr);
         
         dispatch_sync(dispatch_get_main_queue(), ^{
-            /// Views must be inited on the main thread. Not totally sure this makes sense.
-            
+            /// Views must be inited on the main thread.
             /// Setup puppet cursor
             _puppetCursorView = [[NSImageView alloc] init];
         });
@@ -88,19 +87,18 @@ static dispatch_queue_t _queue;
         ///     This changes the timeout globally for many events, so we need to reset this after the drag is deactivated!
         setSuppressionInterval(kMFEventSuppressionIntervalForStoppingCursor);
         
+        /// Enable eventTap
+        CGEventTapEnable(_eventTap, true);
+        _coolEventTapIsEnabled = true;
+        
         /// Hide cursor
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 0.02), dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 0.02), _queue, ^{
             /// The puppetCursor will only be drawn after a delay, while hiding the mouse pointer is really fast.
             ///     This leads to a little flicker when the puppetCursor is not yet drawn, but the real cursor is already hidden.
             ///     Not sure why this happens. But adding a delay of 0.02 before hiding makes it look seamless.
             
             [TransformationUtility hideMousePointer:YES];
         });
-        
-        /// ^ TODO: We used to use _drag->queue instead of dispatch_get_main_queue(). Check if this works as well.
-        
-        /// Enable eventTap
-        CGEventTapEnable(_eventTap, true);
     });
 }
 
@@ -111,6 +109,7 @@ CGEventRef _Nullable mouseMovedCallback(CGEventTapProxy proxy, CGEventType type,
         /// Re-enable on timeout (Not sure if this ever times out)
         DDLogInfo(@"PointerUtility eventTap timed out. Re-enabling.");
         CGEventTapEnable(_eventTap, true);
+        _coolEventTapIsEnabled = true;
         return event;
     } else if (type == kCGEventTapDisabledByUserInput) {
         DDLogInfo(@"PointerUtility eventTap disabled by user input.");
@@ -130,7 +129,7 @@ CGEventRef _Nullable mouseMovedCallback(CGEventTapProxy proxy, CGEventType type,
         DDLogDebug(@"frozen dispatch point - move - with delta: %lld, %lld", dx, dy);
         
         /// Check interrupt
-        if (!CGEventTapIsEnabled(_eventTap)) {
+        if (!_coolEventTapIsEnabled) {
             /// More debug
             DDLogDebug(@"frozen dispatch point - actually don't move");
             return;
@@ -169,6 +168,7 @@ CGEventRef _Nullable mouseMovedCallback(CGEventTapProxy proxy, CGEventType type,
         /// Disable eventTap
         /// Think about the order of getting pos, unfreezing, and disabling event tap. -> I think it doesn't matter since everything is locked.
         CGEventTapEnable(_eventTap, false);
+        _coolEventTapIsEnabled = false;
         
         /// Set suppression interval for warping
         setSuppressionInterval(kMFEventSuppressionIntervalForWarping);
@@ -254,42 +254,47 @@ void setSuppressionIntervalWithTimeInterval(CFTimeInterval interval) {
 
 + (void)drawPuppetCursor:(BOOL)draw fresh:(BOOL)fresh {
     
-    /// Define workload block
-    ///     (Graphics code always needs to be executed on main)
+    if (!draw) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            _puppetCursorView.alphaValue = 0; /// Make the puppetCursor invisible
+        });
+        return;
+    }
+    
+    /// Get loc
+    CGPoint loc = _puppetCursorPosition;
+    
+    /// Get default cursor
+    if (_puppetCursor == nil) {
+        /// Init puppetCursor
+        ///     Might be better to do this during + initialize function
+        _puppetCursor = NSCursor.arrowCursor;
+    }
+    
+    /// Get current cursor
+//    if (fresh) {
+//        _puppetCursor = NSCursor.currentSystemCursor;
+//    }
+    
+    /// Subtract hotspot to get puppet image loc
+    CGPoint hotspot = _puppetCursor.hotSpot;
+    CGPoint imageLoc = CGPointMake(loc.x - hotspot.x, loc.y - hotspot.y);
+    
+    /// Unflip coordinates to be compatible with Cocoa
+    NSRect puppetImageFrame = NSMakeRect(imageLoc.x, imageLoc.y, _puppetCursor.image.size.width, _puppetCursor.image.size.height);
+    NSRect puppetImageFrameUnflipped = [SharedUtility quartzToCocoaScreenSpace:puppetImageFrame];
+    
+    /// Define mainthread workload
     
     void (^workload)(void) = ^{
         
-        if (!draw) {
-            _puppetCursorView.alphaValue = 0; /// Make the puppetCursor invisible
-            return;
-        }
-        
-        if (_puppetCursor == nil) {
-            /// Init puppetCursor
-            ///     Might be better to do this during + initialize function
-            _puppetCursor = NSCursor.arrowCursor;
-        }
-        
+        /// Store image of cursor into puppetView
         if (fresh) {
-            /// Use the currently displaying cursor, instead of the default arrow cursor
-//            _puppetCursor = NSCursor.currentSystemCursor;
-            
             /// Store cursor image into puppet view
             _puppetCursorView.image = _puppetCursor.image;
         }
         
-        /// Get loc
-        CGPoint loc = _puppetCursorPosition;
-        
-        /// Subtract hotspot to get puppet image loc
-        CGPoint hotspot = _puppetCursor.hotSpot;
-        CGPoint imageLoc = CGPointMake(loc.x - hotspot.x, loc.y - hotspot.y);
-        
-        /// Unflip coordinates to be compatible with Cocoa
-        NSRect puppetImageFrame = NSMakeRect(imageLoc.x, imageLoc.y, _puppetCursorView.image.size.width, _puppetCursorView.image.size.height);
-        NSRect puppetImageFrameUnflipped = [SharedUtility quartzToCocoaScreenSpace:puppetImageFrame];
-        
-        
+        /// Draw/move puppet cursor image
         if (fresh) {
             /// Draw puppetCursor
             [ScreenDrawer.shared drawWithView:_puppetCursorView atFrame:puppetImageFrameUnflipped onScreen:NSScreen.mainScreen];
@@ -299,10 +304,13 @@ void setSuppressionIntervalWithTimeInterval(CFTimeInterval interval) {
         }
         
         /// Unhide puppet cursor
-        _puppetCursorView.alphaValue = 1;
+        if (fresh) {
+            _puppetCursorView.alphaValue = 1;
+        }
     };
     
     /// Make sure workload is executed on main thread
+    ///     Since we call sync, we need to check if we're already on main to avoid deadlock
     
     if (NSThread.isMainThread) {
         workload();

@@ -31,8 +31,8 @@ static NSCondition *_threadIsInitializedSignal;
 
 + (void)coolInitialize {
     /// We can't use +initialize because
-    ///     We're in +initialize we call [NSThread -start] and then wait for it to do stuff
-    ///     But for some reason [NSThread -start] waits for any +initialize functions to finish, which leads to deadlock
+    ///     In +initialize we call [NSThread -start] and then wait for it to do stuff
+    ///     But for some reason [NSThread -start] waits for any +initialize functions to finish, which leads to deadlock.
     
     if (self == GlobalEventTapThread.class) {
         
@@ -42,7 +42,7 @@ static NSCondition *_threadIsInitializedSignal;
         [_threadIsInitializedSignal lock];
         
         /// Setup thread
-        _thread = [[NSThread alloc] initWithTarget:self selector:@selector(threadWorkload:) object:nil];
+        _thread = [[NSThread alloc] initWithTarget:self selector:@selector(threadWorkload) object:nil];
         _thread.name = @"com.nuebling.mac-mouse-fix.global-event-tap";
         _thread.qualityOfService = NSQualityOfServiceUserInteractive;
         _thread.threadPriority = 1.0;
@@ -58,21 +58,36 @@ static NSCondition *_threadIsInitializedSignal;
 
 /// Thread workload
 
-+ (void)threadWorkload:(void *)ignore {
++ (void)threadWorkload {
     
     /// Store runLoop of new thread
     _runLoop = CFRunLoopGetCurrent();
     
-    /// Signal
+    /// Add empty source so the runLoop doesn't exit immediately
+    CFRunLoopSourceContext ctx = {
+        .cancel = NULL,
+        .copyDescription = NULL,
+        .equal = NULL,
+        .hash = NULL,
+        .info = NULL,
+        .perform = NULL,
+        .release = NULL,
+        .retain = NULL,
+        .schedule = NULL,
+        .version = 0,
+    };
+    CFRunLoopSourceRef emptySource = CFRunLoopSourceCreate(kCFAllocatorDefault, 0, &ctx);
+    CFRunLoopAddSource(_runLoop, emptySource, kCFRunLoopCommonModes);
+    
+    /// Notify initialize function that we're done
     _threadIsInitialized = YES;
     [_threadIsInitializedSignal signal];
     
     /// Run the runLoop
     ///     This thread is blocked by the runLoop now
     while (true) {
-        CFRunLoopRunInMode(kCFRunLoopDefaultMode, 1000, false);
+        CFRunLoopRun();
     }
-    
 }
 
 /// Interface
