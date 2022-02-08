@@ -22,6 +22,8 @@
 static CGPoint _origin;
 static CGPoint _puppetCursorPosition;
 
+static BOOL _keepPointerMoving;
+
 static int _cgsConnection; /// This is used by private APIs to talk to the window server and do fancy shit like hiding the cursor from a background application
 static NSCursor *_puppetCursor;
 static NSImageView *_puppetCursorView;
@@ -74,24 +76,29 @@ static dispatch_queue_t _queue;
     ///     This is achieved through freezing the actual pointer in place, then making the actual pointer invisible, and then creating a fake 'puppet' pointer and letting the user move that around.
     /// `origin` should be the current pointer position. Not sure what happens if you choose another location
     
+    
+    [self freezeAtPosition:origin keepPointerMoving:YES];
+}
+
++ (void)freezePointerAtPosition:(CGPoint)origin {
+    /// Freezes the dispatch point for CGEvents in place while making it appear to the user as if the they are still controlling the pointer.
+    ///     This is achieved through freezing the actual pointer in place, then making the actual pointer invisible, and then creating a fake 'puppet' pointer and letting the user move that around.
+    /// `origin` should be the current pointer position. Not sure what happens if you choose another location
+    
+    
+    [self freezeAtPosition:origin keepPointerMoving:NO];
+}
+
++ (void)freezeAtPosition:(CGPoint)origin keepPointerMoving:(BOOL)keepPointerMoving {
+    /// Internal helper function
+    
     /// Lock
     ///     Not sure if necessary to lock, since we're starting the eventTap at the very end anyways.
     dispatch_sync(_queue, ^{
         
-        /// Debug
-        
-        DDLogDebug(@"frozen dispatch point - init - at origin: %f, %f", origin.x, origin.y);
-        
         /// Store
         _origin = origin;
-        _puppetCursorPosition = origin;
-        
-        /// Get display under mouse pointer
-        CVReturn rt = [HelperUtility display:&_display atPoint:_origin];
-        if (rt != kCVReturnSuccess) DDLogWarn(@"Couldn't get display under mouse pointer in modifiedDrag");
-        
-        /// Draw puppet cursor before hiding
-        [PointerFreeze drawPuppetCursor:YES fresh:YES];
+        _keepPointerMoving = keepPointerMoving;
         
         /// Decrease delay after warping
         ///     But only as much so that it doesn't break `CGWarpMouseCursorPosition(()` ability to stop cursor by calling repeatedly
@@ -102,14 +109,27 @@ static dispatch_queue_t _queue;
         CGEventTapEnable(_eventTap, true);
         _coolEventTapIsEnabled = true;
         
-        /// Hide cursor
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 0.02), _queue, ^{
-            /// The puppetCursor will only be drawn after a delay, while hiding the mouse pointer is really fast.
-            ///     This leads to a little flicker when the puppetCursor is not yet drawn, but the real cursor is already hidden.
-            ///     Not sure why this happens. But adding a delay of 0.02 before hiding makes it look seamless.
+        if (keepPointerMoving) {
             
-            [TransformationUtility hideMousePointer:YES];
-        });
+            /// Init puppet cursor pos
+            _puppetCursorPosition = origin;
+            
+            /// Get display under mouse pointer
+            CVReturn rt = [HelperUtility display:&_display atPoint:_origin];
+            if (rt != kCVReturnSuccess) DDLogWarn(@"Couldn't get display under mouse pointer in modifiedDrag");
+            
+            /// Draw puppet cursor before hiding
+            [PointerFreeze drawPuppetCursor:YES fresh:YES];
+            
+            /// Hide cursor
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 0.02), _queue, ^{
+                /// The puppetCursor will only be drawn after a delay, while hiding the mouse pointer is really fast.
+                ///     This leads to a little flicker when the puppetCursor is not yet drawn, but the real cursor is already hidden.
+                ///     Not sure why this happens. But adding a delay of 0.02 before hiding makes it look seamless.
+                
+                [TransformationUtility hideMousePointer:YES];
+            });
+        }
     });
 }
 
@@ -126,43 +146,29 @@ CGEventRef _Nullable mouseMovedCallback(CGEventTapProxy proxy, CGEventType type,
         DDLogInfo(@"PointerUtility eventTap disabled by user input.");
         return event;
     }
-    /// Ignore second event
-    ///     The second delta after the tap is started is always really big and goes in the opposite movement direction. Really weird
-    
-//    static int eventCounter = 0;
-//    if (eventCounter < 3) { /// Count up to 3
-//        eventCounter++;
-//    }
-//    if (eventCounter == 2) {
-//        DDLogInfo(@"Ignoring second delta event in PointerFreeze eventTap.");
-//        return event;
-//    }
     
     /// Get deltas
     ///     Have to get delta's before dispatching async, otherwise they won't be correct
-    int64_t dx = CGEventGetIntegerValueField(event, kCGMouseEventDeltaX);
-    int64_t dy = CGEventGetIntegerValueField(event, kCGMouseEventDeltaY);
-    
-    /// DEBUG
-//    DDLogDebug(@"\nUpdating puppet cursor pos with delta: (%lld, %lld)", dx, dy);
+    int64_t dx = -1;
+    int64_t dy = -1;
+    if (_keepPointerMoving) {
+        dx = CGEventGetIntegerValueField(event, kCGMouseEventDeltaX);
+        dy = CGEventGetIntegerValueField(event, kCGMouseEventDeltaY);
+    }
     
     /// Lock
     
     dispatch_async(_queue, ^{
         
-        /// Debug
-        DDLogDebug(@"frozen dispatch point - move - with delta: %lld, %lld", dx, dy);
-        
         /// Check interrupt
         if (!_coolEventTapIsEnabled) {
-            /// More debug
-            DDLogDebug(@"frozen dispatch point - actually don't move");
             return;
         }
         
         /// Warp pointer to origin to prevent cursor movement
         ///     This only works when the suppressionInterval is a certain size, and that will cause a slight stutter / delay until the mouse starts moving againg when we deactivate. So this isn't optimal
         CGWarpMouseCursorPosition(_origin);
+        
         //        CGWarpMouseCursorPosition(_drag->origin);
         /// ^ Move pointer to origin instead of usageOrigin to make scroll events dispatch there - would be nice but that moves the pointer, which creates events which will feed back into our eventTap and mess everything up (even though `CGWarpMouseCursorPosition` docs say that it doesn't create events??)
         ///     I gues we'll just have to make the usageThreshold small instead
@@ -171,17 +177,20 @@ CGEventRef _Nullable mouseMovedCallback(CGEventTapProxy proxy, CGEventType type,
         ///     This makes the inputDeltas weird I feel. Better to freeze pointer through calling CGWarpMouseCursorPosition repeatedly.
         //        CGAssociateMouseAndMouseCursorPosition(NO);
         
-        /// Update puppetCursorPosition
-        updatePuppetCursorPosition(dx, dy);
-        /// Draw puppet cursor
-        [PointerFreeze drawPuppetCursor:YES fresh:NO];
+        if (_keepPointerMoving) {
+        
+            /// Update puppetCursorPosition
+            updatePuppetCursorPosition(dx, dy);
+            /// Draw puppet cursor
+            [PointerFreeze drawPuppetCursor:YES fresh:NO];
+        }
         
     });
 
    return NULL;
 }
 
-+ (void)unfreezeEventDispatchPoint {
++ (void)unfreeze {
     
     /// Lock
     ///     Not sure whether to use sync or async here
@@ -195,17 +204,19 @@ CGEventRef _Nullable mouseMovedCallback(CGEventTapProxy proxy, CGEventType type,
         CGEventTapEnable(_eventTap, false);
         _coolEventTapIsEnabled = false;
         
-        /// Set suppression interval for warping
-        setSuppressionInterval(kMFEventSuppressionIntervalForWarping);
+        if (_keepPointerMoving) {
+            /// Set suppression interval for warping
+            setSuppressionInterval(kMFEventSuppressionIntervalForWarping);
+            
+            /// Warp actual cursor to position of puppet cursor
+            CGWarpMouseCursorPosition(_puppetCursorPosition);
         
-        /// Warp actual cursor to position of puppet cursor
-        CGWarpMouseCursorPosition(_puppetCursorPosition);
-        
-        /// Show mouse pointer again
-        [TransformationUtility hideMousePointer:NO];
-        
-        /// Undraw puppet cursor
-        [PointerFreeze drawPuppetCursor:NO fresh:NO];
+            /// Show mouse pointer again
+            [TransformationUtility hideMousePointer:NO];
+            
+            /// Undraw puppet cursor
+            [PointerFreeze drawPuppetCursor:NO fresh:NO];
+        }
         
         /// Reset suppression interval to default
         setSuppressionInterval(kMFEventSuppressionIntervalDefault);

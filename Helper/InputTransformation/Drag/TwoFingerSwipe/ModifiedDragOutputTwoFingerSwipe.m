@@ -209,7 +209,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
     [GestureScrollSimulator afterStartingMomentumScroll:NULL];
     
     /// Unfreeze dispatch point
-    [PointerFreeze unfreezeEventDispatchPoint];
+    [PointerFreeze unfreeze];
 }
 
 @end
