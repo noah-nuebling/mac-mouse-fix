@@ -20,9 +20,8 @@
 
 static CFRunLoopRef _runLoop;
 
-//static dispatch_queue_t _globalEventTapQueue;
 static NSThread *_thread;
-/// I usually use dispatch queue but it doesn't let you guarantee if you're on the main thread or not. So we're using threads directly.
+/// ^ I usually use dispatch queue but it doesn't let you guarantee that you're not on the main thread. So we're using threads directly.
 
 static BOOL _threadIsInitialized;
 static NSCondition *_threadIsInitializedSignal;
@@ -50,7 +49,7 @@ static NSCondition *_threadIsInitializedSignal;
         
         /// Wait unil thread is initialized
         while (!_threadIsInitialized) {
-            [_threadIsInitializedSignal waitUntilDate:[NSDate dateWithTimeIntervalSinceNow:1]];
+            [_threadIsInitializedSignal waitUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]]; /// I saw this deadlock once (which is strange, since POSIX condition vars never do that I think, and I'm using this just the way I would use POSIX vars). The `waitUntilDate:` should work as a fallback if that happens.
         }
         
     }

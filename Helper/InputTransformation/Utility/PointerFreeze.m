@@ -204,12 +204,20 @@ CGEventRef _Nullable mouseMovedCallback(CGEventTapProxy proxy, CGEventType type,
         CGEventTapEnable(_eventTap, false);
         _coolEventTapIsEnabled = false;
         
+        CGPoint warpDestination;
         if (_keepPointerMoving) {
-            /// Set suppression interval for warping
             setSuppressionInterval(kMFEventSuppressionIntervalForWarping);
-            
-            /// Warp actual cursor to position of puppet cursor
-            CGWarpMouseCursorPosition(_puppetCursorPosition);
+            warpDestination = _puppetCursorPosition;
+        } else {
+            /// When we're freezing the pointer, we still want to warp one last time, to control the delay before the pointer unfreezes.
+            setSuppressionInterval(kMFEventSuppressionIntervalForUnfreezingPointer);
+            warpDestination = _origin;
+        }
+        
+        /// Warp actual cursor to position of puppet cursor
+        CGWarpMouseCursorPosition(warpDestination);
+        
+        if (_keepPointerMoving) {
         
             /// Show mouse pointer again
             [TransformationUtility hideMousePointer:NO];
@@ -228,9 +236,10 @@ CGEventRef _Nullable mouseMovedCallback(CGEventTapProxy proxy, CGEventType type,
 /// Event suppression
 
 typedef enum {
+    kMFEventSuppressionIntervalZero,
     kMFEventSuppressionIntervalForWarping,
     kMFEventSuppressionIntervalForStoppingCursor,
-    kMFEventSuppressionIntervalForStartingMomentumScroll,
+    kMFEventSuppressionIntervalForUnfreezingPointer,
     kMFEventSuppressionIntervalDefault,
 } MFEventSuppressionInterval;
 
@@ -256,14 +265,17 @@ void setSuppressionInterval(MFEventSuppressionInterval mfInterval) {
     /// Get interval
     double interval;
     if (mfInterval == kMFEventSuppressionIntervalForStoppingCursor) {
-        interval = 0.07; /// 0.05; /// Can't be 0 or else repeatedly calling CGWarpMouseCursorPosition() won't work for stopping the cursor
-    } else if (mfInterval == kMFEventSuppressionIntervalForStartingMomentumScroll) {
-        assert(false); /// Not using this anymore
-        interval = 0.01;
+        /// Can't be 0 or else repeatedly calling CGWarpMouseCursorPosition() won't work for stopping the cursor
+        interval = 0.07 /*0.05*/;
+    } else if (mfInterval == kMFEventSuppressionIntervalZero) {
+        interval = 0.000;
     } else if (mfInterval == kMFEventSuppressionIntervalDefault) {
         interval = _defaultSuppressionInterval;
     } else if (mfInterval == kMFEventSuppressionIntervalForWarping) {
         interval = 0.000;
+    } else if (mfInterval == kMFEventSuppressionIntervalForUnfreezingPointer) {
+        /// We use a larger delay here so that the pointer doesn't suddenly get flicked around when unfreezing during a flick
+        interval = 0.1;
     } else {
         assert(false);
     }
