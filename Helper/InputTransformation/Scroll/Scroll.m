@@ -548,12 +548,12 @@ static void sendScroll(int64_t px, MFScrollDirection scrollDirection, BOOL gestu
 
 typedef enum {
     kMFScrollOutputTypeGestureScroll,
+    kMFScrollOutputTypeFourFingerPinch,
+    kMFScrollOutputTypeThreeFingerSwipeHorizontal,
     kMFScrollOutputTypeZoom,
     kMFScrollOutputTypeRotation,
-    kMFScrollOutputTypeFourFingerPinch,
     kMFScrollOutputTypeCommandTab,
     kMFScrollOutputTypeLineScroll,
-    kMFScrollOutputTypeThreeFingerSwipeHorizontal,
 } MFScrollOutputType;
 
 /// Output
@@ -648,22 +648,19 @@ static void sendOutputEvents(int64_t dx, int64_t dy, BOOL isFirstEvent, BOOL isF
                || outputType == kMFScrollOutputTypeThreeFingerSwipeHorizontal) {
         
         /// --- FourFingerPinch or ThreeFingerSwipeHorizontal ---
-        ///     ^ Used to access Launchpad or show desktop
-        ///                    ^ Used to switch Spaces
+        ///         ^ Used to access Launchpad or show desktop
+        ///                           ^ Used to switch Spaces
         
         MFDockSwipeType type;
         double eventDelta;
         
         if (outputType == kMFScrollOutputTypeFourFingerPinch) {
             type = kMFDockSwipeTypePinch;
-            eventDelta = (dx + dy)/600.0;
-            /// ^ Launchpad feels a lot less sensitive than Show Desktop, but to improve this we'd have to somehow detect which of both is active atm
-            eventDelta = -eventDelta;
-            /// ^ Flip delta to mirror the way that zooming works
+            eventDelta = -(dx + dy)/600.0;
+            /// ^ Launchpad feels a lot less sensitive than Show Desktop, but to improve this we'd have to somehow detect which of both is active atm. Negate delta to mirror the way that zooming works
         } else if (outputType == kMFScrollOutputTypeThreeFingerSwipeHorizontal) {
             type = kMFDockSwipeTypeHorizontal;
-            eventDelta = (dx + dy)/600.0;
-            eventDelta = -eventDelta;
+            eventDelta = -(dx + dy)/600.0;
         } else {
             assert(false);
         }
@@ -707,21 +704,6 @@ static void sendOutputEvents(int64_t dx, int64_t dy, BOOL isFirstEvent, BOOL isF
         
     } else if (outputType == kMFScrollOutputTypeCommandTab) {
         
-        /// Setup timer for releasing command keykMF
-        
-//        static NSTimer *commandReleaseTimer;
-//        BOOL commandIsStillPressed = NO;
-//
-//        if (commandReleaseTimer != nil) {
-//            [commandReleaseTimer invalidate];
-//            commandReleaseTimer = nil;
-//            commandIsStillPressed = YES;
-//        }
-//        dispatch_sync(dispatch_get_main_queue(), ^{
-//            commandReleaseTimer = [NSTimer scheduledTimerWithTimeInterval:0.3 target:Scroll.class selector:@selector(sendCommandUp) userInfo:nil repeats:NO];
-//        });
-        
-        
         double d = -(dx + dy);
         assert (d != 0);
         
@@ -759,7 +741,7 @@ static void sendOutputEvents(int64_t dx, int64_t dy, BOOL isFirstEvent, BOOL isF
         int64_t dyLine;
         int64_t dxLine;
         
-        /// Make line deltas 1/10 or pixel deltas
+        /// Make line deltas 1/10 of pixel deltas
         dyLine = round(dy / 10);
         dxLine = round(dx / 10);
         

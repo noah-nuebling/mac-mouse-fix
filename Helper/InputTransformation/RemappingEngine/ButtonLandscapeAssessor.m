@@ -88,9 +88,9 @@ static BOOL modificationPreconditionButtonComponentOfGreaterLevelExistsForButton
         NSIndexSet *indexesContainingButton = [(NSArray *)modificationPrecondition[kMFModificationPreconditionKeyButtons] indexesOfObjectsPassingTest:^BOOL(NSDictionary *_Nonnull dict, NSUInteger idx, BOOL * _Nonnull stop) {
             return [dict[kMFButtonModificationPreconditionKeyButtonNumber] isEqualToNumber:button];
         }];
+        if (indexesContainingButton.count > 1) assert(false); /// Each button can only occur once in the sequence
         if (indexesContainingButton.count == 0) continue;
         
-        /// v Shouldn't we iterate through the buttonSequence, instead of just checking at index `indexesContainingButton.firstIndex`?
         NSNumber *precondLvl = modificationPrecondition[kMFModificationPreconditionKeyButtons][indexesContainingButton.firstIndex][kMFButtonModificationPreconditionKeyClickLevel];
         if (precondLvl.unsignedIntegerValue > level.unsignedIntegerValue) {
             return YES;

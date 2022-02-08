@@ -74,28 +74,28 @@ static int16_t _nOfSpaces = 1;
     }
 }
 
-+ (void)handleDeactivationWhileInUseWithCancel:(BOOL)cancelation {
++ (void)handleDeactivationWhileInUseWithCancel:(BOOL)cancel {
     
     MFDockSwipeType type;
     IOHIDEventPhaseBits phase;
     
-    ModifiedDragState localDrag = *_drag;
-    if (localDrag.usageAxis == kMFAxisHorizontal) {
+    if (_drag->usageAxis == kMFAxisHorizontal) {
         type = kMFDockSwipeTypeHorizontal;
-    } else if (localDrag.usageAxis == kMFAxisVertical) {
+    } else if (_drag->usageAxis == kMFAxisVertical) {
         type = kMFDockSwipeTypeVertical;
-    } else assert(false);
+    } else {
+        assert(false);
+    }
     
-    phase = cancelation ? kIOHIDEventPhaseCancelled : kIOHIDEventPhaseEnded;
+    phase = cancel ? kIOHIDEventPhaseCancelled : kIOHIDEventPhaseEnded;
     
     [TouchSimulator postDockSwipeEventWithDelta:0.0 type:type phase:phase];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC), _drag->queue, ^{
         [TouchSimulator postDockSwipeEventWithDelta:0.0 type:type phase:phase];
     });
-    // ^ The inital dockSwipe event we post will be ignored by the system when it is under load (I called this the "stuck bug" in other places). Sending the event again with a delay of 200ms (0.2s) gets it unstuck almost always. Sending the event twice gives us the best of both responsiveness and reliability.
     
-    /// Revert cursor back to normal
-    //        if (inputIsPointerMovement) [NSCursor.closedHandCursor pop];
+    /// ^ The inital dockSwipe event we post will be ignored by the system when it is under load (I called this the "stuck bug" in other places). Sending the event again with a delay of 200ms (0.2s) gets it unstuck almost always. Sending the event twice gives us the best of both responsiveness and reliability.
+    ///     Edit: Should maybe move the second send into TouchSimulator and use an NSTimer - to prevent double sending. (Because postDockSwipeEventWithDelta: is also used through scrolling. See Scroll.m for context.)
 }
 
 
