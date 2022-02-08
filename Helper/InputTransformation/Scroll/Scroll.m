@@ -391,18 +391,16 @@ static void heavyProcessing(CGEventRef event, ScrollAnalysisResult scrollAnalysi
             
             /// Debug
             
-            //            static CFTimeInterval lastTs = 0;
-            //            CFTimeInterval ts = CACurrentMediaTime();
-            //            DDLogInfo(@"scrollSendInterval: %@, dT: %@, dPx: %@", @(ts - lastTs), @(timeDelta), @(valueDelta));
-            //            lastTs = ts;
+//            static CFTimeInterval lastTs = 0;
+//            CFTimeInterval ts = CACurrentMediaTime();
+//            DDLogInfo(@"scrollSendInterval: %@, dT: %@, dPx: %@", @(ts - lastTs), @(timeDelta), @(valueDelta));
+//            lastTs = ts;
+//            DDLogDebug(@"DELTA: %ld, PHASE: %d", (long)valueDelta, animationPhase);
             
             /// Test if PixelatedAnimator works properly
-            
             assert(valueDelta != 0);
-            //            DDLogDebug(@"DELTA: %ld, PHASE: %d", (long)valueDelta, animationPhase);
             
             /// Send scroll
-            
             sendScroll(valueDelta, scrollDirection, YES, animationPhase);
             
         }];
