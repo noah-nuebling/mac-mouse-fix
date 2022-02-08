@@ -20,7 +20,8 @@
 /// Vars
 
 static CGPoint _origin;
-static CGPoint _originOffset;
+//static CGPoint _originOffset;
+static CGPoint _puppetCursorPosition;
 
 static int _cgsConnection; /// This is used by private APIs to talk to the window server and do fancy shit like hiding the cursor from a background application
 static NSCursor *_puppetCursor;
@@ -72,7 +73,7 @@ static dispatch_queue_t _queue;
         
         /// Store
         _origin = origin;
-        _originOffset = CGPointZero;
+        _puppetCursorPosition = origin;
         
         /// Get display under mouse pointer
         CVReturn rt = [HelperUtility display:&_display atPoint:_origin];
@@ -135,9 +136,7 @@ CGEventRef _Nullable mouseMovedCallback(CGEventTapProxy proxy, CGEventType type,
         }
         
         /// Update origin offset
-        
-        _originOffset.x += dx;
-        _originOffset.y += dy;
+        updatePuppetCursorPosition(dx, dy);
         
         /// Warp pointer to origin to prevent cursor movement
         ///     This only works when the suppressionInterval is a certain size, and that will cause a slight stutter / delay until the mouse starts moving againg when we deactivate. So this isn't optimal
@@ -167,9 +166,6 @@ CGEventRef _Nullable mouseMovedCallback(CGEventTapProxy proxy, CGEventType type,
         
         DDLogDebug(@"frozen dispatch point - unfreeze");
         
-        /// Get puppet Cursor position
-        CGPoint puppetPos = puppetCursorPosition();
-        
         /// Disable eventTap
         /// Think about the order of getting pos, unfreezing, and disabling event tap. -> I think it doesn't matter since everything is locked.
         CGEventTapEnable(_eventTap, false);
@@ -178,7 +174,7 @@ CGEventRef _Nullable mouseMovedCallback(CGEventTapProxy proxy, CGEventType type,
         setSuppressionInterval(kMFEventSuppressionIntervalForWarping);
         
         /// Warp actual cursor to position of puppet cursor
-        CGWarpMouseCursorPosition(puppetPos);
+        CGWarpMouseCursorPosition(_puppetCursorPosition);
         
         /// Show mouse pointer again
         [TransformationUtility hideMousePointer:NO];
@@ -282,8 +278,7 @@ void drawPuppetCursor(BOOL draw, BOOL fresh) {
             _puppetCursorView.image = _puppetCursor.image;
         }
         
-        /// Get puppet pointer location
-        CGPoint loc = puppetCursorPosition();
+        CGPoint loc = _puppetCursorPosition;
         
         /// Subtract hotspot to get puppet image loc
         CGPoint hotspot = _puppetCursor.hotSpot;
@@ -315,22 +310,23 @@ void drawPuppetCursor(BOOL draw, BOOL fresh) {
     }
 }
 
-CGPoint puppetCursorPosition(void) {
+void updatePuppetCursorPosition(int64_t dx, int64_t dy) {
     
-    /// Get base pos
-    CGPoint pos = CGPointMake(_origin.x + _originOffset.x, _origin.y + _originOffset.y);
+    /// Store in local var
+    ///     for easier readability
+    CGPoint pos = _puppetCursorPosition;
     
-    /// Clip to screen bounds
-    CGRect screenSize = CGDisplayBounds(_display);
-    pos.x = CLIP(pos.x, CGRectGetMinX(screenSize), CGRectGetMaxX(screenSize));
-    pos.y = CLIP(pos.y, CGRectGetMinY(screenSize), CGRectGetMaxY(screenSize));
+    /// Add delta to current puppet pos
+    pos.x += dx;
+    pos.y += dy;
     
-    /// Clip originOffsets to screen bounds
-    ///     Not sure if good idea. Origin offset is also used for other important stuff
+    /// Clip puppet pos to screen bounds
+    CGRect screenBounds = CGDisplayBounds(_display);
+    pos.x = CLIP(pos.x, CGRectGetMinX(screenBounds), CGRectGetMaxX(screenBounds)-1);
+    pos.y = CLIP(pos.y, CGRectGetMinY(screenBounds), CGRectGetMaxY(screenBounds)-1);
     
-    /// return
-    return pos;
+    /// Write to global var
+    _puppetCursorPosition = pos;
 }
-
 
 @end
