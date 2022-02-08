@@ -34,13 +34,13 @@ import CocoaLumberjackSwift
         
         canvas = NSWindow.init(contentRect: canvasFrame!, styleMask: .borderless, backing: .buffered, defer: false, screen: nil)
         
-        canvas.isOpaque = false /// Make window transparent but content visible
         canvas.backgroundColor = .clear
+        canvas.isOpaque = false /// Make window transparent but content visible
         canvas.alphaValue = 1.0
         canvas.level = NSWindow.Level.init(Int(CGWindowLevelForKey(.cursorWindow)) + 1) /// Canvas draws above everything else
         canvas.ignoresMouseEvents = true /// Mouse events should pass through
 
-        canvas.makeKeyAndOrderFront(nil)
+//        canvas.makeKeyAndOrderFront(nil) /// We already call this in draw()
         
         /// Optimization
         ///  Setting frame on canvas.contentView subview is really slow for some reason. Here are attempts at fixing that.
@@ -82,7 +82,7 @@ import CocoaLumberjackSwift
         /// ^ This crashes sometimes because view doesn't have a superview. This happens when scroll zooming and drag scrolling at the same time on the same button. Investigate.
         
         /// Debug
-        DDLogDebug("Moving puppet cursor to: \(newOrigin)")
+//        DDLogDebug("Moving puppet cursor to: \(newOrigin)")
         
         /// Sol 1
         /// This calls all sorts of autolayout stuff and is very slow. Can't manage to turn that off
@@ -105,7 +105,7 @@ import CocoaLumberjackSwift
         
         if view.superview!.isEqual(to: canvas.contentView) {
             view.removeFromSuperview()
-            canvas.displayIfNeeded() /// Probs not necessary
+//            canvas.displayIfNeeded() /// Probs not necessary
         } else {
             fatalError("Idk dude Swift value semantics or sth uchh")
         }

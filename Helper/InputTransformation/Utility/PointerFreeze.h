@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface PointerFreeze : NSObject
 
-+ (void)freezeEventDispatchPointWithCurrentLocation:(CGPoint)origin;
++ (void)freezeEventDispatchPointAtPosition:(CGPoint)origin;
 + (void)unfreezeEventDispatchPoint;
 
 @end
