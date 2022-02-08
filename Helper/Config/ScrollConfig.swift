@@ -83,9 +83,9 @@ import CocoaLumberjackSwift
     
     // MARK: Analysis
     
-    @objc lazy var scrollSwipeThreshold_inTicks: Int = other["scrollSwipeThreshold_inTicks"] as! Int; /// If `scrollSwipeThreshold_inTicks` consecutive ticks occur, they are deemed a scroll-swipe.
+    @objc lazy var scrollSwipeThreshold_inTicks: Int = 2 /*other["scrollSwipeThreshold_inTicks"] as! Int;*/ /// If `scrollSwipeThreshold_inTicks` consecutive ticks occur, they are deemed a scroll-swipe.
     
-    @objc lazy var fastScrollThreshold_inSwipes: Int = other["fastScrollThreshold_inSwipes"] as! Int /// If `fastScrollThreshold_inSwipes` + 1 consecutive swipes occur, fast scrolling is enabled.
+    @objc lazy var fastScrollThreshold_inSwipes: Int = 4 /*other["fastScrollThreshold_inSwipes"] as! Int*/ /// On the `fastScrollThreshold_inSwipes`th consecutive swipe, fast scrolling kicks in
     
     @objc lazy var scrollSwipeMax_inTicks: Int = 9 /// Max number of ticks that we think can occur in a single swipe naturally (if the user isn't using a free-spinning scrollwheel). (See `consecutiveScrollSwipeCounter_ForFreeScrollWheel` definition for more info)
     
@@ -117,9 +117,10 @@ import CocoaLumberjackSwift
     ///     Used to be 1.1 before scroll rework. Why so much higher now?
     
     
-    @objc lazy var fastScrollFactor = 2.0 /*other["fastScrollFactor"] as! Double*/
-    /// ^ Used to be 1.1 before scroll rework. Why so much higher now?
+    @objc lazy var fastScrollFactor = 1.0 /*other["fastScrollFactor"] as! Double*/
+    /// ^ With the introduction of fastScrollScale, this should always be 1.0
     
+    @objc lazy var fastScrollScale = 0.3
     
     // MARK: Smooth scroll
     

@@ -254,9 +254,9 @@ static void heavyProcessing(CGEventRef event, CFTimeInterval tickTime, int64_t s
             _scrollConfig.consecutiveScrollTickIntervalMax *= 1.2;
             
             /// Amp up fast scroll
-            _scrollConfig.fastScrollThreshold_inSwipes = 1;
-            _scrollConfig.fastScrollFactor = 2.0;
-            _scrollConfig.fastScrollExponentialBase = 1.5;
+            _scrollConfig.fastScrollThreshold_inSwipes = 2;
+            _scrollConfig.fastScrollExponentialBase = M_E /*1.5*/;
+            _scrollConfig.fastScrollScale = 0.7;
             
             /// Override acceleration curve
             _scrollConfig.accelerationCurve = _scrollConfig.quickAccelerationCurve;
@@ -265,8 +265,8 @@ static void heavyProcessing(CGEventRef event, CFTimeInterval tickTime, int64_t s
             
             /// Turn off fast scroll
             _scrollConfig.fastScrollThreshold_inSwipes = 69; /// Haha sex number
-            _scrollConfig.fastScrollFactor = 1.0;
             _scrollConfig.fastScrollExponentialBase = 1.0;
+            _scrollConfig.fastScrollScale = 1.0;
             
             /// Override acceleration curve
             _scrollConfig.accelerationCurve = _scrollConfig.preciseAccelerationCurve;
@@ -309,16 +309,18 @@ static void heavyProcessing(CGEventRef event, CFTimeInterval tickTime, int64_t s
     int64_t fsThreshold = _scrollConfig.fastScrollThreshold_inSwipes;
     double fsFactor = _scrollConfig.fastScrollFactor;
     double fsBase = _scrollConfig.fastScrollExponentialBase;
+    double fsScale = _scrollConfig.fastScrollScale;
     
-    /// Evaulate fast scroll
+    /// Evaluate fast scroll
     int64_t fastScrollThresholdDelta = scrollAnalysisResult.consecutiveScrollSwipeCounter_ForFreeScrollWheel - fsThreshold;
-    if (fastScrollThresholdDelta >= 0) {
-        pxToScrollForThisTick *= fsFactor * pow(fsBase, fastScrollThresholdDelta);
+    fastScrollThresholdDelta += 2; /// Add 2 cause it makes sense
+    if (fastScrollThresholdDelta > 0) {
+        pxToScrollForThisTick *= fsFactor * pow(fsBase, fastScrollThresholdDelta*fsScale);
     }
     
     /// Debug
     
-    //    DDLogDebug(@"consecTicks: %lld, consecSwipes: %lld, consecSwipesFree: %lld", scrollAnalysisResult.consecutiveScrollTickCounter, scrollAnalysisResult.consecutiveScrollSwipeCounter, scrollAnalysisResult.consecutiveScrollSwipeCounter_ForFreeScrollWheel);
+    DDLogDebug(@"\nconsecTicks: %lld, consecSwipes: %lld, consecSwipesFree: %lld", scrollAnalysisResult.consecutiveScrollTickCounter, scrollAnalysisResult.consecutiveScrollSwipeCounter, scrollAnalysisResult.consecutiveScrollSwipeCounter_ForFreeScrollWheel);
     
     DDLogDebug(@"timeBetweenTicks: %f, timeBetweenTicksRaw: %f, diff: %f, ticks: %lld", scrollAnalysisResult.timeBetweenTicks, scrollAnalysisResult.timeBetweenTicksRaw, scrollAnalysisResult.timeBetweenTicks - scrollAnalysisResult.timeBetweenTicksRaw, scrollAnalysisResult.consecutiveScrollTickCounter);
     

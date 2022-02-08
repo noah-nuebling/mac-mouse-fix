@@ -121,7 +121,7 @@ static int _consecutiveScrollSwipeCounter_ForFreeScrollWheel;
         if (scrollConfig.scrollSwipeThreshold_inTicks <= _consecutiveScrollTickCounter) {
             /// The last batch of consecutive ticks had more ticks in it than the swipe threshold
             
-            double thisScrollSwipeTimeStamp = CACurrentMediaTime();
+            double thisScrollSwipeTimeStamp = thisScrollTickTimeStamp;
             double interval = thisScrollSwipeTimeStamp - _previousScrollTickTimeStamp;
             
             if (interval <= scrollConfig.consecutiveScrollSwipeMaxInterval) {
