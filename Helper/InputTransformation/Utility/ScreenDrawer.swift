@@ -27,12 +27,7 @@ import CocoaLumberjackSwift
     
     @objc override init() {
         
-        var canvasFrame = NSScreen.main?.frame
-        if canvasFrame == nil {
-            canvasFrame = NSRect.zero
-        }
-        
-        canvas = NSWindow.init(contentRect: canvasFrame!, styleMask: .borderless, backing: .buffered, defer: false, screen: nil)
+        canvas = NSWindow.init(contentRect: NSRect.zero, styleMask: .borderless, backing: .buffered, defer: false, screen: nil)
         
         canvas.backgroundColor = .clear
         canvas.isOpaque = false /// Make window transparent but content visible
@@ -60,6 +55,10 @@ import CocoaLumberjackSwift
 //        view.autoresizingMask = .none
 //        view.removeConstraints(view.constraints)
         
+        /// Begin transaction
+        ///     Using transaction speeds things up slightly. Might be placebo.
+        CATransaction.begin()
+        
         /// Size `canvas` to fill `screen`
         canvas.setFrame(screen.frame, display: false)
         
@@ -75,6 +74,9 @@ import CocoaLumberjackSwift
         /// Put canvas window on top or sth
         ///     This is necessary after switching spaces
         canvas.orderFront(nil)
+        
+        /// Commit transaction
+        CATransaction.commit()
     }
     @objc func move(view: NSView, toOrigin newOrigin: NSPoint) {
         
