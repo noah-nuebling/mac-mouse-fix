@@ -41,9 +41,13 @@ static double _preMomentumScrollMaxInterval = 0.1;
 
 #pragma mark - Vars and init
 
-static id<Smoother> _timeBetweenInputsSmoother; /// These smoothers might fit better into ModifiedDrag.m. They're specificly built for mouse-drag input.
+static id<Smoother> _timeBetweenInputsSmoother;
 static id<Smoother> _xDistanceSmoother;
 static id<Smoother> _yDistanceSmoother;
+/// These smoothers might fit better into ModifiedDrag.m. They're specificly built for mouse-drag input.
+/// Edit:
+///     We've disabled the smoothers now. We should remove them entirely at some point.
+///     The only reason we used the smoothers in the first place is to combat the erratic timing of the mouseMoved events produced by ModifiedDrag. Since we're using an Animator in ModifiedDrag now to smooth out the erratic timing, we don't need this anymore. It was also quite slow and didn't work and didn't make sense when Scroll.m called this class. 
 
 static Vector _lastScrollPointVector; /// This is unused. Replaced by the smoothers above
 
@@ -187,9 +191,9 @@ void postGestureScrollEvent_Internal(int64_t dx, int64_t dy, IOHIDEventPhaseBits
         [_scrollLinePixelator reset];
         
         /// Reset smoothers
-        [_xDistanceSmoother reset];
-        [_yDistanceSmoother reset];
-        [_timeBetweenInputsSmoother reset];
+//        [_xDistanceSmoother reset];
+//        [_yDistanceSmoother reset];
+//        [_timeBetweenInputsSmoother reset];
         smoothedXDistance = 0;
         smoothedYDistance = 0;
         smoothedTimeBetweenInputs = 0;
@@ -210,9 +214,12 @@ void postGestureScrollEvent_Internal(int64_t dx, int64_t dy, IOHIDEventPhaseBits
         /// Update smoothed values
         
         if (phase == kIOHIDEventPhaseChanged) {
-            smoothedXDistance = [_xDistanceSmoother smoothWithValue:vecScrollPoint.x];
-            smoothedYDistance = [_yDistanceSmoother smoothWithValue:vecScrollPoint.y];
-            smoothedTimeBetweenInputs = [_timeBetweenInputsSmoother smoothWithValue:timeSinceLastInput];
+//            smoothedXDistance = [_xDistanceSmoother smoothWithValue:vecScrollPoint.x];
+//            smoothedYDistance = [_yDistanceSmoother smoothWithValue:vecScrollPoint.y];
+//            smoothedTimeBetweenInputs = [_timeBetweenInputsSmoother smoothWithValue:timeSinceLastInput];
+            smoothedXDistance = vecScrollPoint.x;
+            smoothedYDistance = vecScrollPoint.y;
+            smoothedTimeBetweenInputs = timeSinceLastInput;
             
         }
         
@@ -246,9 +253,12 @@ void postGestureScrollEvent_Internal(int64_t dx, int64_t dy, IOHIDEventPhaseBits
         
         /// Update smoothers once more
         
-        smoothedTimeBetweenInputs = [_timeBetweenInputsSmoother smoothWithValue:timeSinceLastInput];
-        smoothedXDistance = [_xDistanceSmoother smoothWithValue:smoothedXDistance];
-        smoothedYDistance = [_yDistanceSmoother smoothWithValue:smoothedYDistance];
+//        smoothedTimeBetweenInputs = [_timeBetweenInputsSmoother smoothWithValue:timeSinceLastInput];
+//        smoothedXDistance = [_xDistanceSmoother smoothWithValue:smoothedXDistance];
+//        smoothedYDistance = [_yDistanceSmoother smoothWithValue:smoothedYDistance];
+        smoothedXDistance = _lastScrollPointVector.x;
+        smoothedYDistance = _lastScrollPointVector.y;
+        smoothedTimeBetweenInputs = timeSinceLastInput;
         /// ^ kIOHIDEventPhaseEnded events always have distance 0. We're  inserting the last smoothed value as input instead of inserting 0 or nothing to maybe keep it more synced with the smoothedTimeBetweenInputs. Not sure if this is beneficial.
         
         

@@ -71,6 +71,10 @@ import CocoaLumberjackSwift
         /// Add imageView to canvas
         canvas.contentView?.addSubview(view)
         
+        /// DEBUG
+        let c = canvas.contentView?.constraints;
+//        print("Constraints on ScreenDrawer contentView: \(c)")
+        
         /// Put canvas window on top or sth
         ///     This is necessary after switching spaces
         canvas.orderFront(nil)
