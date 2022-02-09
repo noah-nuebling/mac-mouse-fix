@@ -73,7 +73,7 @@ static int64_t _lastEventDelta;
     }
 }
 
-/// Interface
+// MARK: Interface
 
 + (void)freezeEventDispatchPointAtPosition:(CGPoint)origin {
     /// Freezes the dispatch point for CGEvents in place while making it appear to the user as if the they are still controlling the pointer.

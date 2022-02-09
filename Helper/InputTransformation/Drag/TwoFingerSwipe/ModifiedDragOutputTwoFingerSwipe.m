@@ -21,7 +21,7 @@ static ModifiedDragState *_drag;
 
 static ModifiedDragState *_drag;
 
-static /*PixelatedAnimator*/ BaseAnimator *_smoothingAnimator;
+static BaseAnimator *_smoothingAnimator;
 static BOOL _smoothingAnimatorShouldStartMomentumScroll = NO;
 static dispatch_group_t _momentumScrollWaitGroup;
 
@@ -127,9 +127,19 @@ static dispatch_group_t _momentumScrollWaitGroup;
             p[@"curve"] = ScrollConfig.linearCurve;
         }
         
+        /// Debug
+        static double deltaSum = 0;
+        deltaSum += magnitudeOfVector(currentVec);
+        DDLogDebug(@"Delta sum at animator start: %f", deltaSum);
+        
         return p;
         
     } callback:^(double valueDeltaD, double timeDelta, MFAnimationPhase phase) {
+        
+        /// Debug
+        static double deltaSumm = 0;
+        deltaSumm += valueDeltaD;
+        DDLogDebug(@"Delta sum at animator callback: %f", deltaSumm);
         
         NSInteger valueDelta = ceil(valueDeltaD);
         
