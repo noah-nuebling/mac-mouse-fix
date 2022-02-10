@@ -11,6 +11,7 @@
 #import <Cocoa/Cocoa.h>
 #import "Scroll.h"
 #import "ScrollUtility.h"
+#import "TransformationUtility.h"
 
 @implementation ScrollAnalyzer
 
@@ -21,7 +22,7 @@
         
         /// Get default config
         ///     Note that this will never update because the init function only runs once. So make sure that whatever values you use here aren't intended to update!
-        ScrollConfig *_scrollConfig = [ScrollConfig config];
+        ScrollConfig *_scrollConfig = [ScrollConfig currentConfig];
         
         /// Setup smoothing algorithm for `timeBetweenTicks`
         
@@ -47,7 +48,7 @@ static NSObject<Smoother> *_tickTimeSmoother;
 /// Dynamic
 
 static double _previousScrollTickTimeStamp = 0;
-static int64_t _previousDelta = 0;
+static MFDirection _previousDirection = kMFDirectionNone;
 
 static int _consecutiveScrollTickCounter;
 static int _consecutiveScrollSwipeCounter;
@@ -61,7 +62,7 @@ static int _consecutiveScrollSwipeCounter_ForFreeScrollWheel;
     
     _previousScrollTickTimeStamp = 0;
     
-    _previousDelta = 0;
+    _previousDirection = kMFDirectionNone;
     /// ^ This needs to be set to 0, so that scrollDirectionDidChange will definitely evaluate to NO on the next tick
     
     /// The following are probably not necessary to reset, because the above resets will indirectly cause them to be reset on the next tick
@@ -73,35 +74,35 @@ static int _consecutiveScrollSwipeCounter_ForFreeScrollWheel;
     /// We shouldn't definitely not reset _scrollDirectionDidChange here, because a scroll direction change causes this function to be called, and then the information about the scroll direction changing would be lost as it's reset immediately
 }
 
-+ (BOOL)peekIsFirstConsecutiveTickWithTickOccuringAt:(CFTimeInterval)thisScrollTickTimeStamp withDirection:(int64_t)delta withConfig:(ScrollConfig *)scrollConfig {
++ (BOOL)peekIsFirstConsecutiveTickWithTickOccuringAt:(CFTimeInterval)thisScrollTickTimeStamp withDirection:(MFDirection)direction withConfig:(ScrollConfig *)scrollConfig {
     
     /// Checks if a given tick is the first consecutive tick. Without changing state.
     
     /// Return direction change
-    if (![ScrollUtility sameSign:delta and:_previousDelta]) {
+    if (directionChanged(_previousDirection, direction)) {
         return YES;
     }
     
     /// Get seconds since last tick
     double secondsSinceLastTick = thisScrollTickTimeStamp - _previousScrollTickTimeStamp;
     /// Get timeout
-    BOOL timeout = secondsSinceLastTick > scrollConfig.consecutiveScrollTickIntervalMax;
+    BOOL didTimeOut = secondsSinceLastTick > scrollConfig.consecutiveScrollTickIntervalMax;
     
-    return timeout;
+    return didTimeOut;
 }
 
 /// This is the main input function which should be called on each scrollwheel tick event
-+ (ScrollAnalysisResult)updateWithTickOccuringAt:(CFTimeInterval)thisScrollTickTimeStamp withDirection:(int64_t)delta withConfig:(ScrollConfig *)scrollConfig {
++ (ScrollAnalysisResult)updateWithTickOccuringAt:(CFTimeInterval)thisScrollTickTimeStamp withDirection:(MFDirection)direction withConfig:(ScrollConfig *)scrollConfig {
     
     /// Update directionDidChange
     ///     Checks whether the scrolling direction is different from when this function was last called. Writes result into `_scrollDirectionDidChange`.
     
     BOOL scrollDirectionDidChange = NO;
     
-    if (![ScrollUtility sameSign:delta and:_previousDelta]) {
+    if (directionChanged(_previousDirection, direction)) {
         scrollDirectionDidChange = YES;
     }
-    _previousDelta = delta;
+    _previousDirection = direction;
     
     /// Reset state if scroll direction changed
     if (scrollDirectionDidChange) {

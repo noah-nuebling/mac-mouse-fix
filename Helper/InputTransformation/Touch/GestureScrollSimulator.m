@@ -486,7 +486,7 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
         
         /// Return
         
-        p[@"value"] = @(distance);
+        p[@"vector"] = @(distance);
         p[@"duration"] = @(duration);
         p[@"curve"] = animationCurve;
         

@@ -8,6 +8,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "TransformationUtility.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -31,6 +32,8 @@ bool isZeroVector(Vector vec);
 
 Vector vectorFromValue(NSValue *value);
 NSValue *valueFromVector(Vector vector);
+
+Vector vectorFromDirection(double delta, MFDirection direction);
 
 @end
 

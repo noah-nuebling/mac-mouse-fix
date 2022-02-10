@@ -14,6 +14,7 @@ static ModifiedDragState *_drag;
 #import "GestureScrollSimulator.h"
 #import "CGSConnection.h"
 #import "PointerFreeze.h"
+#import "ScrollUtility.h"
 
 @implementation ModifiedDragOutputTwoFingerSwipe
 
@@ -69,6 +70,9 @@ static dispatch_group_t _momentumScrollWaitGroup;
     
     /// Reset subpixelator
     [_smoothingAnimator resetSubPixelator];
+    
+    /// Link animator to main screen
+    [_smoothingAnimator linkToMainScreen];
 }
 
 + (void)handleMouseInputWhileInUseWithDeltaX:(double)deltaX deltaY:(double)deltaY event:(CGEventRef)event {
@@ -116,7 +120,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
             DDLogWarn(@"Not starting baseAnimator since combinedMagnitude is 0.0");
             p[@"doStart"] = @NO;
         } else {
-            p[@"value"] = valueFromVector(combinedVec);
+            p[@"vector"] = valueFromVector(combinedVec);
             p[@"duration"] = @(3.0/60); // @(0.00001); // @(0.04);
             p[@"curve"] = ScrollConfig.linearCurve;
         }

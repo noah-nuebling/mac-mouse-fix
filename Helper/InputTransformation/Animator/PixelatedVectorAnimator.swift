@@ -45,9 +45,19 @@ class PixelatedVectorAnimator: VectorAnimator {
         
         self.animatorQueue.async {
             
+            let isRunningResult = self.isRunning_Sync /// Store result because blocking and slow
+            
+            if !isRunningResult {
+                self.lastAnimationValue = Vector(x: 0, y: 0)
+            }
+            
             /// Get startParams
             
-            let p = params(self.animationValueLeft, self.isRunning_Sync, self.animationCurve)
+            let p = params(self.animationValueLeft, isRunningResult, self.animationCurve)
+            
+            /// Validate
+            assert(p["vector"] is NSValue)
+            /// This is always true for some reason. Make sure to pass in sensible stuff!
             
             /// Do nothing if doStart == false
             
@@ -63,7 +73,7 @@ class PixelatedVectorAnimator: VectorAnimator {
             
             /// Start animator
             
-            super.startWithUntypedCallback_Unsafe(duration: p["duration"] as! Double, value: vectorFromValue(p["value"] as! NSValue), animationCurve: p["curve"] as! AnimationCurve, callback: integerCallback)
+            super.startWithUntypedCallback_Unsafe(duration: p["duration"] as! Double, value: vectorFromValue(p["vector"] as! NSValue), animationCurve: p["curve"] as! AnimationCurve, callback: integerCallback)
             
             /// Debug
             
@@ -128,7 +138,7 @@ class PixelatedVectorAnimator: VectorAnimator {
                 assert(false)
                 
                 /// Post a value delta of 1 as a fallback so that things don't break as bad if this happens
-                //      TODO: Does this fallback still make sense now that everything is Vector-based?
+                //      TODO: Does this fallback still make sense now that everything is Vector-based? Is it really that important not to have the last delta be 0?
                 callback(Vector(x: 0, y: 1), animationTimeDelta, self.animationPhase)
             }
             

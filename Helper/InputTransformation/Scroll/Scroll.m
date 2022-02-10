@@ -13,6 +13,7 @@
 #import "ScrollModifiers.h"
 #import "Config.h"
 #import "ScrollUtility.h"
+#import "VectorUtility.h"
 #import "HelperUtility.h"
 #import "WannabePrefixHeader.h"
 #import "ScrollAnalyzer.h"
@@ -35,8 +36,7 @@ static CGEventSourceRef _eventSource;
 
 static dispatch_queue_t _scrollQueue;
 
-static PixelatedAnimator *_animator;
-static SubPixelator *_subPixelator;
+static PixelatedVectorAnimator *_animator;
 
 static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this to Config or some sort of OverrideManager class
 + (AXUIElementRef) systemWideAXUIElement {
@@ -76,10 +76,7 @@ static ScrollConfig *_scrollConfig;
     }
     
     /// Create animator
-    _animator = [[PixelatedAnimator alloc] init];
-    
-    /// Create subpixelator for scroll output
-    _subPixelator = [SubPixelator roundPixelator];
+    _animator = [[PixelatedVectorAnimator alloc] init];
     
     /// Init config instance
     _scrollConfig = [[ScrollConfig alloc] init];
@@ -152,8 +149,8 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
     int64_t isPixelBased     = CGEventGetIntegerValueField(event, kCGScrollWheelEventIsContinuous);
     int64_t scrollPhase      = CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase);
-    int64_t scrollDeltaAxis1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
-    int64_t scrollDeltaAxis2 = CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2);
+    int64_t scrollDeltaAxis1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1);
+    int64_t scrollDeltaAxis2 = CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis2);
     bool isDiagonal = scrollDeltaAxis1 != 0 && scrollDeltaAxis2 != 0;
     if (isPixelBased != 0
         || scrollPhase != 0 /// Adding scrollphase here is untested
@@ -189,29 +186,29 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     /// Get scrollDelta
     
     int64_t scrollDelta = 0;
-    int64_t scrollDeltaPoint = 0;
     
     if (inputAxis == kMFAxisVertical) {
         scrollDelta = scrollDeltaAxis1;
-        scrollDeltaPoint = CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1);
     } else if (inputAxis == kMFAxisHorizontal) {
         scrollDelta = scrollDeltaAxis2;
-        scrollDeltaPoint = CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis2);
     } else {
         NSCAssert(NO, @"Invalid scroll axis");
     }
-
     
-    /// Run scrollAnalysis
+    /// Run preliminary scrollAnalysis
+    ///     To check if this is the first consecutive scrollTick
     
-    /// Check if this tick is first consecutive
-    BOOL firstConsecutive = [ScrollAnalyzer peekIsFirstConsecutiveTickWithTickOccuringAt:tickTime withDirection:scrollDelta withConfig:_scrollConfig]; // TODO: We should probably pass a 1...4 direction not just the scrollDelta (which is just on one axis)
+    MFDirection scrollDirection = [ScrollUtility directionForInputAxis:inputAxis inputDelta:scrollDelta invertSetting:[_scrollConfig scrollInvertWithEvent:event] horizontalModifier:(_modifications.effectModification == kMFScrollEffectModificationHorizontalScroll)];
+    
+    BOOL firstConsecutive = [ScrollAnalyzer peekIsFirstConsecutiveTickWithTickOccuringAt:tickTime withDirection:scrollDirection withConfig:_scrollConfig];
     
     /// Update stuff
     ///     on the first scrollTick
     
     if (firstConsecutive) {
         /// Checking which app is under the mouse pointer and the other stuff we do here is really slow, so we only do it when necessary
+        
+        DDLogDebug(@"First consec");
         
         /// Update application Overrides
         
@@ -239,13 +236,17 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             [_animator linkToMainScreen];
         }
         
+        /// Reset subpixelator
+        
+        [_animator resetSubPixelator];
+        
         /// Update modfications
         
         _modifications = [ScrollModifiers currentScrollModificationsWithEvent:event];
         
         /// Update scrollConfig
         
-        _scrollConfig = [ScrollConfig config];
+        _scrollConfig = [ScrollConfig currentConfig];
         
         /// Override scrollConfig based on modifications
         
@@ -293,17 +294,20 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         
     }
     
-    /// Run full scrollAnalysis
-    ScrollAnalysisResult scrollAnalysisResult = [ScrollAnalyzer updateWithTickOccuringAt:tickTime withDirection:scrollDelta withConfig:_scrollConfig];
-
     /// Get effective direction
     ///  -> With user settings etc. applied
     
-    MFScrollDirection scrollDirection = [ScrollUtility directionForInputAxis:inputAxis inputDelta:scrollDelta invertSetting:[_scrollConfig scrollInvertWithEvent:event] horizontalModifier:(_modifications.effectModification == kMFScrollEffectModificationHorizontalScroll)];
+    scrollDirection = [ScrollUtility directionForInputAxis:inputAxis inputDelta:scrollDelta invertSetting:[_scrollConfig scrollInvertWithEvent:event] horizontalModifier:(_modifications.effectModification == kMFScrollEffectModificationHorizontalScroll)];
+    
+    /// Run full scrollAnalysis
+    ScrollAnalysisResult scrollAnalysisResult = [ScrollAnalyzer updateWithTickOccuringAt:tickTime withDirection:scrollDirection withConfig:_scrollConfig];
+    
+    /// Make scrollDelta positive, now that we have scrollDirection stored
+    scrollDelta = llabs(scrollDelta);
     
     /// Get distance to scroll
     
-    int64_t pxToScrollForThisTick = getPxPerTick(scrollAnalysisResult.timeBetweenTicks, scrollDeltaPoint);
+    int64_t pxToScrollForThisTick = getPxPerTick(scrollAnalysisResult.timeBetweenTicks, scrollDelta);
     
     /// Apply fast scroll to distance
         
@@ -343,7 +347,13 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         
         /// Start animation
         
-        [_animator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(double valueLeft, BOOL isRunning, NSObject<AnimationCurve> *animationCurve) {
+        [_animator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(Vector valueLeftVec, BOOL isRunning, NSObject<AnimationCurve> *animationCurve) {
+            
+            /// Validate
+            assert(valueLeftVec.x == 0 || valueLeftVec.y == 0);
+            
+            /// Extract 1d valueLeft
+            double valueLeft = magnitudeOfVector(valueLeftVec);
             
             /// Declare result dict (animator start params)
             
@@ -373,8 +383,11 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 ///     feels smoother for navigating between pages
                 ///         We could not suppress natural momentum scrolling on horizontal scroll events to balance out the linear curve? But then we should probably also decrease the animationDuration... Edit: I tried it and it sucks for normal scrolling.
                 
+                double delta = pxToScrollForThisTick + pxLeftToScroll;
+                Vector deltaVec = vectorFromDirection(delta, scrollDirection);
+                
                 p[@"duration"] = @(baseTimeRange);
-                p[@"value"] = @(pxToScrollForThisTick + pxLeftToScroll);
+                p[@"vector"] = valueFromVector(deltaVec);
                 p[@"curve"] = ScrollConfig.linearCurve;
                 
             } else {
@@ -388,11 +401,14 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                                                    dragExponent:_scrollConfig.dragExponent
                                                       stopSpeed:_scrollConfig.stopSpeed];
                 
-                
                 /// Get values for animator from hybrid curve
+                
+                double delta = c.valueRange;
+                Vector deltaVec = vectorFromDirection(delta, scrollDirection);
+                
                 p[@"duration"] = @(c.timeRange);
-                p[@"value"]  = @(c.valueRange);
-                p[@"curve"]  = c;
+                p[@"vector"] = valueFromVector(deltaVec);
+                p[@"curve"] = c;
             }
             
             /// Debug
@@ -404,7 +420,12 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             /// Return
             return p;
             
-        } integerCallback:^(NSInteger valueDelta, double timeDelta, MFAnimationPhase animationPhase) {
+        } integerCallback:^(Vector valueDeltaVec, double timeDelta, MFAnimationPhase animationPhase) {
+            
+            /// Validate
+            assert(valueDeltaVec.x == 0 || valueDeltaVec.y == 0);
+            /// Extract
+            double valueDelta = magnitudeOfVector(valueDeltaVec);
             
          /// This will be called each frame
             
@@ -461,7 +482,7 @@ static int64_t getPxPerTick(CFTimeInterval timeBetweenTicks, int64_t cgEventScro
     return pxForThisTick; /// We could use a SubPixelator balance out the rounding errors, but I don't think that'll be noticable
 }
 
-static void sendScroll(int64_t px, MFScrollDirection scrollDirection, BOOL gesture, MFAnimationPhase animationPhase) {
+static void sendScroll(int64_t px, MFDirection scrollDirection, BOOL gesture, MFAnimationPhase animationPhase) {
     /// scrollPhase is only used when `gesture` is YES
     
     if (px == 0) {
@@ -473,15 +494,15 @@ static void sendScroll(int64_t px, MFScrollDirection scrollDirection, BOOL gestu
     int64_t dx = 0;
     int64_t dy = 0;
     
-    if (scrollDirection == kMFScrollDirectionUp) {
-        dy = -px;
-    } else if (scrollDirection == kMFScrollDirectionDown) {
+    if (scrollDirection == kMFDirectionUp) {
         dy = px;
-    } else if (scrollDirection == kMFScrollDirectionLeft) {
+    } else if (scrollDirection == kMFDirectionDown) {
+        dy = -px;
+    } else if (scrollDirection == kMFDirectionLeft) {
         dx = -px;
-    } else if (scrollDirection == kMFScrollDirectionRight) {
+    } else if (scrollDirection == kMFDirectionRight) {
         dx = px;
-    } else if (scrollDirection == kMFScrollDirectionNone) {
+    } else if (scrollDirection == kMFDirectionNone) {
         
     } else {
         assert(false);

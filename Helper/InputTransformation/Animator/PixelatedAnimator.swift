@@ -63,7 +63,7 @@ class PixelatedAnimator: BaseAnimator {
             
             /// Start animator
             
-            super.startWithUntypedCallback_Unsafe(duration: p["duration"] as! Double, value: p["value"] as! Double, animationCurve: p["curve"] as! AnimationCurve, callback: integerCallback)
+            super.startWithUntypedCallback_Unsafe(duration: p["duration"] as! Double, value: p["vector"] as! Double, animationCurve: p["curve"] as! AnimationCurve, callback: integerCallback)
         
             /// Debug
             

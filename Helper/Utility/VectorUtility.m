@@ -66,6 +66,33 @@ bool isZeroVector(Vector vec) {
     return vec.x == 0 && vec.y == 0;
 }
 
+Vector vectorFromDirection(double delta, MFDirection direction) {
+    
+    assert(delta != 0);
+    assert(delta > 0);
+    
+    Vector outVec = { .x = 0, .y = 0 };
+    
+    if (direction == kMFDirectionUp
+        || direction == kMFDirectionDown) {
+        
+//        assert((delta < 0 && direction == kMFDirectionDown)
+//               || (delta > 0 && direction == kMFDirectionUp));
+        
+        outVec.y = delta;
+        
+    } else if (direction == kMFDirectionLeft
+               || direction == kMFDirectionRight) {
+        
+//        assert((delta < 0 && direction == kMFDirectionLeft)
+//               || (delta > 0 && direction == kMFDirectionRight));
+        
+        outVec.x = delta;
+    }
+    
+    return outVec;
+}
+
 Vector vectorFromValue(NSValue *value) {
     Vector result;
     [value getValue: &result];

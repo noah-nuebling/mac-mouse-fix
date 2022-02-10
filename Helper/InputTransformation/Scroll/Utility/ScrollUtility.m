@@ -160,7 +160,7 @@ static NSDictionary *_MFScrollPhaseToIOHIDEventPhase;
     return axis;
 }
 
-+ (MFScrollDirection)directionForInputAxis:(MFAxis)axis
++ (MFDirection)directionForInputAxis:(MFAxis)axis
                            inputDelta:(int64_t)inputDelta
                         invertSetting:(MFScrollInversion)invertSetting
                    horizontalModifier:(BOOL)horizontalModifier {
@@ -175,16 +175,16 @@ static NSDictionary *_MFScrollPhaseToIOHIDEventPhase;
     if (axis == kMFAxisHorizontal || horizontalModifier) {
         /// H
         if (effectiveAxisDirection == -1) {
-            return kMFScrollDirectionLeft;
+            return kMFDirectionLeft;
         } else {
-            return kMFScrollDirectionRight;
+            return kMFDirectionRight;
         }
     } else {
         /// V
         if (effectiveAxisDirection == -1) {
-            return kMFScrollDirectionUp;
+            return kMFDirectionDown;
         } else {
-            return kMFScrollDirectionDown;
+            return kMFDirectionUp;
         }
     }
 }

@@ -21,7 +21,7 @@ import CocoaLumberjackSwift
     /// ^ When starting the animator, we usually want to get the value that the animator still wants to scroll (`animationValueLeft`), and add that to the new value. The specific logic can differ a lot though, so we can't just hardcode this into `Animator`
     ///     But to avoid race-conditions, we can't just externally execute this, so we to pass in a callback that can execute custom logic to get the start params right before the animator is started
     typealias MFAnimatorStartParams = Dictionary<String, Any>
-    /// ^ 4 keys: "doStart", "duration", "value", "curve"
+    /// ^ 4 keys: "doStart", "duration", "vector", "curve"
     
     /// Constants
     
@@ -114,6 +114,15 @@ import CocoaLumberjackSwift
         ///         But actually, maybe it's faster to make start() use queue.sync after all. Because isRunning() is probably called a lot more.
         
         self.animatorQueue.async {
+            
+            /// Reset lastAnimationValue
+            ///     So we don't give the `params` callback old invalid animationValueLeft.
+            ///     I think this is sort of redundant, because we're resetting animationValueLeft in `startWithUntypedCallback_Unsafe()` as well?
+            
+            if !self.isRunning_Sync {
+                self.lastAnimationValue = Vector(x: 0, y: 0)
+            }
+            
             let p: MFAnimatorStartParams = params(self.animationValueLeft, self.isRunning_Sync, self.animationCurve)
             
             if let doStart = p["doStart"] as? Bool {
@@ -121,7 +130,7 @@ import CocoaLumberjackSwift
                     return;
                 }
             }
-            self.startWithUntypedCallback_Unsafe(duration: p["duration"] as! Double, value: vectorFromValue(p["value"] as! NSValue), animationCurve: p["curve"] as! AnimationCurve, callback: callback);
+            self.startWithUntypedCallback_Unsafe(duration: p["duration"] as! Double, value: vectorFromValue(p["vector"] as! NSValue), animationCurve: p["curve"] as! AnimationCurve, callback: callback);
         }
     }
     
@@ -172,19 +181,21 @@ import CocoaLumberjackSwift
         
         /// Update phases
         
-        if (isRunningg
-            && self.animationPhase != kMFAnimationPhaseStart
-            && self.animationPhase != kMFAnimationPhaseStartAndEnd) {
+        if (!isRunningg
+            || self.animationPhase == kMFAnimationPhaseStart
+            || self.animationPhase == kMFAnimationPhaseStartAndEnd) {
             
             /// If animation phase is still start that means that the displayLinkCallback() hasn't been used it, yet (it sets it to continue after using it)
             ///     We want the first time that self.callback is called by displayLinkCallback() during the animation to have phase start, so we're not setting phase to running start in this case, even if the Animator is already running (when !isRunning is true)
-            ///
-            /// Regarding the kMFAnimationPhaseStartAndEnd check: This shouldn't be necessary, because we call self.stop() in the displayLinkCallback if phase is `startAndEnd`, which will make self.isRunning false. But due to some weird race condition or something, it doesn't always work. Edit: I added locks to this class to prevent the race conditions whcih should make this unnecessary - Remove the `startAndEnd` check.
             
-            self.animationPhase = kMFAnimationPhaseRunningStart;
-        } else {
+            /// Regarding the kMFAnimationPhaseStartAndEnd check: This shouldn't be necessary, because we call self.stop() in the displayLinkCallback if phase is `startAndEnd`, which will make self.isRunning false. But due to some weird race condition or something, it doesn't always work. Edit: I added locks to this class to prevent the race conditions whcih should make this unnecessary
+            // TODO: Remove the `startAndEnd` check.
+
             self.animationPhase = kMFAnimationPhaseStart;
             self.lastAnimationPhase = kMFAnimationPhaseNone;
+            
+        } else {
+            self.animationPhase = kMFAnimationPhaseRunningStart;
         }
         
         /// Debug

@@ -32,13 +32,5 @@ typedef enum {
     kMFSemanticScrollInversionNatural = 1
 } MFSemanticScrollInversion;
 
-typedef enum {
-    kMFScrollDirectionUp,
-    kMFScrollDirectionRight,
-    kMFScrollDirectionDown,
-    kMFScrollDirectionLeft,
-    kMFScrollDirectionNone
-} MFScrollDirection;
-
 
 NS_ASSUME_NONNULL_END

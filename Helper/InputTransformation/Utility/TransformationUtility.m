@@ -20,6 +20,19 @@
 
 @implementation TransformationUtility
 
+BOOL directionChanged(MFDirection direction1, MFDirection direction2) {
+    
+    if (direction1 == kMFDirectionNone || direction2 == kMFDirectionNone) {
+        return NO;
+    }
+    
+    if (direction1 == direction2) {
+        return NO;
+    }
+    
+    return YES;
+}
+
 + (NSTimeInterval)nsTimeStamp {
     /// Time since system startup in seconds. This value is used in NSEvent timestamps
 

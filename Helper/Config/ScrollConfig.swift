@@ -34,7 +34,7 @@ import CocoaLumberjackSwift
     
     // MARK: Class functions
     
-    @objc static func config() -> ScrollConfig {
+    @objc static func currentConfig() -> ScrollConfig {
         return ScrollConfig()
     }
     
