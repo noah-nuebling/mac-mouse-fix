@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-// HybridCurve.swift
+// SimpleBezierDragHybridCurve.swift
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2021
 // Licensed under MIT
@@ -10,10 +10,27 @@
 import Foundation
 import CocoaLumberjackSwift
 
-@objc class HybridCurve: NSObject, AnimationCurve {
+@objc class SimpleBezierDragHybridCurve: NSObject, AnimationCurve {
     /// This curve is intended to animate scrolling in a way that resembles the original MMF scrolling algorithm
     /// The first part of the curve  is driven by a BezierCurve, and the second half by a DragCurve.
     /// The drag curve is used to ensure physically accurate, natural-feeling deceleration.
+    ///
+    /// This is a 'Simple' Hybrid curve because it doesn't let you specify or retrieve the distance and duration of the whole curve, but only of the 'Base' curve. (The whole curve consists of the Base curve as well as the the Drag curve.)
+    ///
+    /// Eventually I would like to try and implement a Hybrid Curve that does let you specify the distance range of the entire Hybrid curve. We'll have to figure some way to piece together the Base curve and the Hybrid curve such that
+    /// - The transition between the two curves is smooth (speed doesn't change abruptly)
+    /// - The overall curve covers a specified distance to be scrolled
+    /// - The 'friction' of the drag curve is constant
+    /// - The duration can change
+    /// -> I can think of 2 solutions. A LinearDragHybridCurve (simpler) and a BezierDragHybridCurve (more complex) I thought about both and neither should be too hard.
+    /// - For the LinearDragHybridCurve, approach like this:
+    ///     - Get the single derivative that the linear curve has everywhere and plug that into the DragCurve and see what distance that would cover. Use this distance to determine where to attach the DragCurve to the LinearCurve.
+    /// - For the BezierDragHybridCurve, don't forget this:
+    ///     - The derivative dy/dy for a parametric curve is y'(t) / x'(t).
+    ///     - Using this derivative, you can determine for any point on the Bezier, whether attaching a DragCurve here would put you over or under the desired overall distance. The end point of the Bezier will always put you *over* the desired distance. Sample the curve from end to start (in increments of 1/10 or so should be precise enough) and find the first point where attaching the DragCurve puts you *under* the desired overall distance. Then do bisection between two points to find that point that puts you *at* the desired overall distance.
+    ///     - This sounds involved but should be plenty fast.
+    /// For both Hybrid curves don't forget this:
+    ///     It could be that the point to attach the DragCurve is in the past. In that case use some fallback like doing everything with the DragCurve such that it covers the desired distance by itself.
     
     /// Constants
     

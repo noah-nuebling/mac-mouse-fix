@@ -251,6 +251,10 @@ import CocoaLumberjackSwift
                  */
             })
         }
+        
+        /// Debug
+        
+        DDLogDebug("AnimationValueInterval at start: \(value)")
     }
     
     /// Stop
@@ -322,7 +326,6 @@ import CocoaLumberjackSwift
     /// Its purpose is calling self.callback. Everything else it does is to figure out arguments for self.callback
     
     @objc func displayLinkCallback() {
-        /// I'm usually a fan of commenting even obvious things, to structure the code and make it easier to parse, but this is overkill. I think the comments make it less readable
         
         /// Lock
     
@@ -337,9 +340,8 @@ import CocoaLumberjackSwift
         
         self.animatorQueue.sync { /// Use sync so this is actually executed on the high-priority display-linked thread
             
-            /// Debug
+//            DDLogDebug("DO ANIMATOR DISP LINK CALLBACK with (initial) phase: \(self.animationPhase.rawValue)")
             
-            DDLogDebug("DO ANIMATOR DISP LINK CALLBACK with (initial) phase: \(self.animationPhase.rawValue)")
             
             /// Guard stopped
             
@@ -396,6 +398,11 @@ import CocoaLumberjackSwift
             self.lastAnimationTime = now
             self.lastAnimationValue = animationValue
 //            self.lastAnimationPhase = self.animationPhase
+            
+            /// DEBUG
+            
+//            DDLogDebug("\nAnimatorrr Time: \((now - animationTimeInterval.start)/animationTimeInterval.length), range: \(self.animationTimeInterval.length)")
+//            DDLogDebug("\nAnimatorrr Value: \(animationValue), range: \(self.animationValueInterval)")
             
             /// Stop animation if phase is   `end`
             /// TODO: Why don't we use a defer statement to execute this like in the start functions?

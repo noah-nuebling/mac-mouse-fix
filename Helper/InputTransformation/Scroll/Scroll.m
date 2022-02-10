@@ -409,17 +409,19 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                                                            dragExponent:dragExponent
                                                               stopSpeed:_scrollConfig.stopSpeed];
                 
+                /// Debug
+                
                 /// Get values for animator from hybrid curve
                 p[@"duration"] = @(c.timeRange);
                 p[@"value"]  = @(c.valueRange);
-                p[@"curve"]  = c;
+                p[@"curve"]  = /*c*/ ScrollConfig.linearCurve;
             }
             
             /// Debug
-            
-            static double scrollDeltaSum = 0;
-            scrollDeltaSum += pxToScrollForThisTick;
-            DDLogDebug(@"Delta sum pre-animator: %f", scrollDeltaSum);
+//
+//            static double scrollDeltaSum = 0;
+//            scrollDeltaSum += pxToScrollForThisTick;
+//            DDLogDebug(@"Delta sum pre-animator: %f", scrollDeltaSum);
             
             /// Return
             return p;
