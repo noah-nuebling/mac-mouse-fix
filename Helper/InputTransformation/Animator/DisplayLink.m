@@ -282,18 +282,10 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     DisplayLink *self = (__bridge DisplayLink *)displayLinkContext;
         
     /// Parse timestamps
-    ParsedCVTimeStamps ts = parseTimeStamps(inNow, inOutputTime);
-    
-    /// Analyze
-    
-    double periodVideoFromAPI = CVDisplayLinkGetActualOutputVideoRefreshPeriod(displayLink);
-    CVTime nominal = CVDisplayLinkGetNominalOutputVideoRefreshPeriod(displayLink);
-    double periodVideoNominalFromAPI = nominal.timeValue / ((double)nominal.timeScale);
-    
-//    DDLogDebug(@"\nperiodFromAPI: %.10f, periodFromTs: %.10f, periodFromNextTs: %.10f, nominal: %.3f, %.3f, %.3f", periodVideoFromAPI, ts.periodNow, ts.periodNext, periodVideoNominalFromAPI, ts.nominalPeriodNow, ts.nominalPeriodNext);
+    DisplayLinkCallbackTimeInfo timeInfo = parseTimeStamps(inNow, inOutputTime);
     
     /// Call block
-    self.callback();
+    self.callback(timeInfo);
     
     /// Return
     return kCVReturnSuccess;
@@ -312,18 +304,6 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 /// MARK: Parsing CVTimeStamp
 
 typedef struct {
-    CFTimeInterval now;
-    CFTimeInterval lastFrame;
-    CFTimeInterval nextFrame;
-    
-    CFTimeInterval periodLast;
-    CFTimeInterval periodNext;
-    CFTimeInterval nominalPeriodLast;
-    CFTimeInterval nominalPeriodNext;
-    
-} ParsedCVTimeStamps;
-
-typedef struct {
     CFTimeInterval hostTS;
     CFTimeInterval frameTS;
     
@@ -332,48 +312,50 @@ typedef struct {
     
 } ParsedCVTimeStamp;
 
-ParsedCVTimeStamps parseTimeStamps(const CVTimeStamp *inNow, const CVTimeStamp *inNext) {
+DisplayLinkCallbackTimeInfo parseTimeStamps(const CVTimeStamp *inNow, const CVTimeStamp *inOut) {
     
     /// Get frame timestamps
     
     ParsedCVTimeStamp tsNow = parseTimeStamp(inNow);
-    ParsedCVTimeStamp tsNext = parseTimeStamp(inNext);
+    ParsedCVTimeStamp tsOut = parseTimeStamp(inOut);
     
     /// Analyse parsed timestamps
     
     /// Analysis of frameTS and hostTS
     /// Our analysis shows:
     ///     - ts.frameTS -> When the last frame was sent
-    ///     - tsOut.frameTS -> When the next frame will be sent
+    ///     - tsOut.frameTS -> When the currently processed frame will be displayed
+    ///         - From my observations, this tends to be 33.333ms (so two frames) in the future.
     ///     - ts.hostTS -> The time when this callback is called. Equivalent to CACurrentMediaTime().
     ///     - tsOut.hostTs -> No idea what this is.
     
 //    CFTimeInterval now = CACurrentMediaTime();
-//    DDLogDebug(@"\nhostDiff: %.1f, %.1f, frameDiff: %.1f, %.1f", (tsNow.hostTS - now)*1000, (tsOut.hostTS - now)*1000, (tsNow.frameTS - now)*1000, (tsOut.frameTS - now)*1000);
+    
+//    DDLogDebug(@"\nhostDiff: %.1f, %.1f, frameDiff: %.1f, %.1f", (tsNow.hostTS - now)*1000, (tsNext.hostTS - now)*1000, (tsNow.frameTS - now)*1000, (tsNext.frameTS - now)*1000);
+    
+//    static CFTimeInterval last = 0;
+//    CFTimeInterval measuredFramePeriod = now - last;
+//    last = now;
+//    DDLogDebug(@"Measured frame period: %f", measuredFramePeriod);
     
     /// Analysis of period
     /// Our analysis shows:
-    ///     - CVDisplayLinkGetActualOutputVideoRefreshPeriod(_displayLink) is the same as tsNext.period
-    ///     - On the next displayLinkCalback() call, tsNow.period will be the same as tsNext.period on the current call.
-    ///     - These values don't make sense
-    ///         - I observed not heavy load, but scrolling looked distinctly 30 fps, and nextFrame - lastFrame = 34 ms. But tsNow.period was still around 16.666 ms.
+    ///     - CVDisplayLinkGetActualOutputVideoRefreshPeriod(_displayLink) is the same as tsOut.period
+    ///     - On the next displayLinkCalback() call, tsNow.period will be the same as tsOut.period on the current call.
+    ///     - I'm not sure what when to use tsNow.period vs tsOut.period.  Both should be fine -> I will just use tsOut.
+    ///     - Do the values make sense?
+    ///         - I observed scrolling that looked distinctly 30 fps. But tsNow.period was still around 16.666 ms.
     
     /// Fill result struct
     
-    ParsedCVTimeStamps result = {
+    DisplayLinkCallbackTimeInfo result = {
         .now = tsNow.hostTS,
-        .lastFrame = tsNow.frameTS,
-        .nextFrame = tsNext.frameTS,
-        
-        .periodLast = tsNow.period,
-        .periodNext = tsNext.period,
-        .nominalPeriodLast = tsNow.nominalPeriod,
-        .nominalPeriodNext = tsNext.nominalPeriod,
+        .frameOutTS = tsOut.frameTS,
+        .period = tsOut.period,
     };
 
     /// Return
     return result;
-    
 }
 
 ParsedCVTimeStamp parseTimeStamp(const CVTimeStamp *ts) {

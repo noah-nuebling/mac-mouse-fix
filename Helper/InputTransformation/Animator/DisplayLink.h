@@ -12,7 +12,17 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void(^DisplayLinkCallback)(void);
+/// Typedefs
+
+typedef struct {
+    CFTimeInterval now; /// When the displayLinkCallback is called
+    CFTimeInterval frameOutTS; /// When the currently processed frame will be displayed
+    CFTimeInterval period; /// The current time between frames
+} DisplayLinkCallbackTimeInfo;
+
+typedef void(^DisplayLinkCallback)(DisplayLinkCallbackTimeInfo timeInfo);
+
+/// Class declaration
 
 @interface DisplayLink : NSObject
 
