@@ -301,7 +301,9 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     free(_previousDisplaysUnderMousePointer);
 }
 
-/// MARK: Parsing CVTimeStamp
+/// MARK: Helper
+
+/// Parsing CVTimeStamps
 
 typedef struct {
     CFTimeInterval hostTS;
@@ -351,7 +353,7 @@ DisplayLinkCallbackTimeInfo parseTimeStamps(const CVTimeStamp *inNow, const CVTi
     DisplayLinkCallbackTimeInfo result = {
         .now = tsNow.hostTS,
         .frameOutTS = tsOut.frameTS,
-        .period = tsOut.period,
+        .timeBetweenFrames = tsOut.period,
     };
 
     /// Return
