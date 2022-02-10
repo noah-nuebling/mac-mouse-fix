@@ -21,7 +21,7 @@ static ModifiedDragState *_drag;
 
 static ModifiedDragState *_drag;
 
-static VectorAnimator *_smoothingAnimator;
+static PixelatedVectorAnimator *_smoothingAnimator;
 static BOOL _smoothingAnimatorShouldStartMomentumScroll = NO;
 static dispatch_group_t _momentumScrollWaitGroup;
 
@@ -34,7 +34,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
     ///     Edit:
     ///     TODO: maybe it would be smart to just delay the time between the last two events to be reasonable. That seemst to be matters for the erratic behaviour. Using the _smoothingAnimator forces us to use dispatch_group and stuff which is very very error prone. I should seriously consider if this is the best approach
     
-    _smoothingAnimator = [[VectorAnimator alloc] init];
+    _smoothingAnimator = [[PixelatedVectorAnimator alloc] init];
     
     /// Setup smoothingGroup
     ///     It allows us to wait until the _smoothingAnimator is done.
@@ -125,7 +125,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
         /// Return
         return p;
         
-    } callback:^(Vector valueDeltaD, double timeDelta, MFAnimationPhase phase) {
+    } integerCallback:^(Vector valueDeltaD, double timeDelta, MFAnimationPhase phase) {
         
 //        static double scrollDeltaSummm = 0;
 //        scrollDeltaSummm += fabs(valueDeltaD);
@@ -160,8 +160,8 @@ static dispatch_group_t _momentumScrollWaitGroup;
         ///         -> But it's honestly probably not worth it, since all it would improve is not skipping those 2 pixels before momentum scroll starts, which no one will ever notice and maybe cleaning up the code a little bit.
         ///
         
-        valueDeltaD.x = ceil(valueDeltaD.x);
-        valueDeltaD.y = ceil(valueDeltaD.y);
+//        valueDeltaD.x = ceil(valueDeltaD.x);
+//        valueDeltaD.y = ceil(valueDeltaD.y);
         
         if (_smoothingAnimatorShouldStartMomentumScroll
             && (phase == kMFAnimationPhaseEnd || phase == kMFAnimationPhaseStartAndEnd)) {

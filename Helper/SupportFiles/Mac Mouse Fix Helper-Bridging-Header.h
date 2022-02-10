@@ -11,6 +11,7 @@
 #import "Config.h"
 #import "ScrollConfigObjC.h"
 #import "SubPixelator.h"
+#import "VectorSubPixelator.h"
 #import "SharedUtility.h"
 #import "HelperUtility.h"
 #import "CircularBuffer.h"

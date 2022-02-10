@@ -12,7 +12,7 @@
 
 @interface SubPixelator ()
 //@property double accumulatedRoundingError; /// Declaring this in header for outside access to help debugging
-@property double (*roundingFunction)(double);
+@property RoundingFunction roundingFunction;
 @property BOOL isBiasedPixelator;
 @end
 
@@ -57,6 +57,17 @@
     return self;
 }
 
+static RoundingFunction getBiasedRoundingFunction(double inpDelta) {
+    if (sign(inpDelta) == 1) {
+        return ceil;
+    } else if (sign(inpDelta) == -1) {
+        return floor;
+    } else {
+        /* sign == 0 */
+        return NULL;
+    }
+}
+
 /// Main
 
 - (int64_t)intDeltaWithDoubleDelta:(double)inpDelta {
@@ -68,11 +79,7 @@
     
     /// If this is biased pixelator, initialize rounding function if it isn't already
     if (self.isBiasedPixelator && self.roundingFunction == NULL) {
-        if (sign(inpDelta) == 1) {
-            self.roundingFunction = ceil;
-        } else if (sign(inpDelta) == -1) {
-            self.roundingFunction = floor;
-        } else { /* sign == 0 */ }
+        self.roundingFunction = getBiasedRoundingFunction(inpDelta);
         
     }
     
@@ -95,16 +102,27 @@
     /// See what int delta a certain double input would yield without changing the state of the subpixelator
     ///     ^ With reference to this class's main function intDeltaWithDoubleDelta:
     
-    /// Guard roundingFunction exists
+    /// Nothing to round if input is 0
+    if (inpDelta == 0) {
+        return 0;
+    }
+    
+    /// Get rounding functtion
+    RoundingFunction rf;
+    
     if (self.roundingFunction == NULL) {
-        assert(false); 
-        /// ^ If this is a biasedPixelator, you need to call intDeltaWithDoubleDelta: first (with non-0 input) to intialize the roundingFunction, before you can call this
-        ///     You can call intDeltaWithDoubleDelta: with -1 or 1 to initialize it without affecting any other state (self.accumulatedRoundingError)
+        /// Get 'hypothetical' rounding function if none has been assigned
+        rf = getBiasedRoundingFunction(inpDelta);
+        /// Validate
+        assert(self.accumulatedRoundingError == 0);
+    } else {
+        /// Get actual rounding function
+        rf = self.roundingFunction;
     }
     
     /// Get roundedDelta
     double preciseDelta = inpDelta + self.accumulatedRoundingError;
-    int64_t roundedDelta = (int64_t)self.roundingFunction(preciseDelta);
+    int64_t roundedDelta = (int64_t)rf(preciseDelta);
     
     ///  Debug
     DDLogDebug(@"\nSubpixelator PEEK with d: %f, oldErr: %f, roundedD: %lld", inpDelta, self.accumulatedRoundingError, roundedDelta);

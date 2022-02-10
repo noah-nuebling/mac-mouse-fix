@@ -53,6 +53,12 @@
     return inpVec;
 }
 
+- (Vector)peekIntVectorWithDoubleVector:(Vector)inpVec {
+    inpVec.x = [_spX peekIntDeltaWithDoubleDelta:inpVec.x];
+    inpVec.y = [_spY peekIntDeltaWithDoubleDelta:inpVec.y];
+    return inpVec;
+}
+
 - (void)reset {
     [_spX reset];
     [_spY reset];
