@@ -72,7 +72,7 @@ import CocoaLumberjackSwift
     /// Vars - DisplayLink
     
     var lastAnimationTime: Double = -1 /// Time at which the displayLink was last called
-    var lastAnimationValue: Vector = Vector(x: -1, y: -1) /// animationValue when the displayLink was last called
+    var lastAnimationValue: Vector = Vector(x: 0, y: 0) /// animationValue when the displayLink was last called
     var lastAnimationPhase: MFAnimationPhase = kMFAnimationPhaseNone
     var animationPhase: MFAnimationPhase = kMFAnimationPhaseNone
     
@@ -119,11 +119,9 @@ import CocoaLumberjackSwift
             ///     So we don't give the `params` callback old invalid animationValueLeft.
             ///     I think this is sort of redundant, because we're resetting animationValueLeft in `startWithUntypedCallback_Unsafe()` as well?
             
-            if !self.isRunning_Sync {
-                self.lastAnimationValue = Vector(x: 0, y: 0)
-            }
-            
             let p: MFAnimatorStartParams = params(self.animationValueLeft, self.isRunning_Sync, self.animationCurve)
+            
+            self.lastAnimationValue = Vector(x: 0, y: 0)
             
             if let doStart = p["doStart"] as? Bool {
                 if doStart == false {
@@ -175,7 +173,7 @@ import CocoaLumberjackSwift
             case kMFAnimationPhaseStart, kMFAnimationPhaseContinue, kMFAnimationPhaseRunningStart:
                 assert(false)
             default: /// This should never happen
-                fatalError();
+                fatalError()
             }
         }
         
@@ -208,7 +206,6 @@ import CocoaLumberjackSwift
             
             //            self.lastAnimationTime =  CACurrentMediaTime();
             /// ^ I think it should make for smoother animations, if we **don't** set the lastAnimationTime to `now` when the displayLink is already running, but that's an experiment. I'm not sure. Edit: Not sure if it makes a difference but it's fine
-            self.lastAnimationValue = Vector(x: 0, y: 0)
             
             self.animationTimeInterval = Interval(location: self.lastAnimationTime, length: duration)
             self.animationValueTotal = value
@@ -219,7 +216,6 @@ import CocoaLumberjackSwift
             let now: CFTimeInterval = CACurrentMediaTime()
             
             self.lastAnimationTime = now
-            self.lastAnimationValue = Vector(x: 0, y: 0)
             
             self.animationTimeInterval = Interval(location: now, length: duration)
             self.animationValueTotal = value

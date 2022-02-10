@@ -45,15 +45,12 @@ class PixelatedVectorAnimator: VectorAnimator {
         
         self.animatorQueue.async {
             
-            let isRunningResult = self.isRunning_Sync /// Store result because blocking and slow
-            
-            if !isRunningResult {
-                self.lastAnimationValue = Vector(x: 0, y: 0)
-            }
-            
             /// Get startParams
             
-            let p = params(self.animationValueLeft, isRunningResult, self.animationCurve)
+            let p = params(self.animationValueLeft, self.isRunning_Sync, self.animationCurve)
+            
+            /// Reset animationValueLeft
+            self.lastAnimationValue = Vector(x: 0, y: 0)
             
             /// Validate
             assert(p["vector"] is NSValue)
