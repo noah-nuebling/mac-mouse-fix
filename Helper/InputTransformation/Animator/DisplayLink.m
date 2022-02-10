@@ -329,16 +329,21 @@ DisplayLinkCallbackTimeInfo parseTimeStamps(const CVTimeStamp *inNow, const CVTi
     ///     - tsOut.frameTS -> When the currently processed frame will be displayed
     ///         - From my observations, this tends to be 33.333ms (so two frames) in the future.
     ///     - ts.hostTS -> The time when this callback is called. Equivalent to CACurrentMediaTime().
-    ///     - tsOut.hostTs -> No idea what this is.
+    ///     - tsOut.hostTs -> No idea what this is. Won't use it.
     
-//    CFTimeInterval now = CACurrentMediaTime();
+    static CFTimeInterval anchor = 0;
+    if (anchor == 0) {
+        anchor = CACurrentMediaTime();
+    }
     
-//    DDLogDebug(@"\nhostDiff: %.1f, %.1f, frameDiff: %.1f, %.1f", (tsNow.hostTS - now)*1000, (tsNext.hostTS - now)*1000, (tsNow.frameTS - now)*1000, (tsNext.frameTS - now)*1000);
+    DDLogDebug(@"\nhostDiff: %.1f, %.1f, frameDiff: %.1f, %.1f", (tsNow.hostTS - anchor)*1000, (tsOut.hostTS - anchor)*1000, (tsNow.frameTS - anchor)*1000, (tsOut.frameTS - anchor)*1000);
     
 //    static CFTimeInterval last = 0;
 //    CFTimeInterval measuredFramePeriod = now - last;
 //    last = now;
 //    DDLogDebug(@"Measured frame period: %f", measuredFramePeriod);
+    
+//    DDLogDebug(@"\nframePeriod manual %.10f, api: %.10f", (tsOut.frameTS - tsNow.frameTS)/2.0, tsOut.period);
     
     /// Analysis of period
     /// Our analysis shows:
@@ -347,13 +352,16 @@ DisplayLinkCallbackTimeInfo parseTimeStamps(const CVTimeStamp *inNow, const CVTi
     ///     - I'm not sure what when to use tsNow.period vs tsOut.period.  Both should be fine -> I will just use tsOut.
     ///     - Do the values make sense?
     ///         - I observed scrolling that looked distinctly 30 fps. But tsNow.period was still around 16.666 ms.
+    ///     - In my observations, (outFrame - lastFrame) is always exactly equal to 2*nominalTimeBetweenFrames
     
     /// Fill result struct
     
     DisplayLinkCallbackTimeInfo result = {
         .now = tsNow.hostTS,
-        .frameOutTS = tsOut.frameTS,
+        .lastFrame = tsNow.frameTS,
+        .outFrame = tsOut.frameTS,
         .timeBetweenFrames = tsOut.period,
+        .nominalTimeBetweenFrames = tsOut.nominalPeriod,
     };
 
     /// Return

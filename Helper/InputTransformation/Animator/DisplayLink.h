@@ -16,8 +16,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef struct {
     CFTimeInterval now; /// When displayLinkCallback() is called
-    CFTimeInterval frameOutTS; /// When the currently processed frame will be displayed
+    CFTimeInterval lastFrame; /// When the last frame was displayed
+    CFTimeInterval outFrame; /// When the currently processed frame will be displayed
     CFTimeInterval timeBetweenFrames; /// The latest frame period reported by the displayLink
+    CFTimeInterval nominalTimeBetweenFrames; /// The frame period target
 } DisplayLinkCallbackTimeInfo;
 
 typedef void(^DisplayLinkCallback)(DisplayLinkCallbackTimeInfo timeInfo);
