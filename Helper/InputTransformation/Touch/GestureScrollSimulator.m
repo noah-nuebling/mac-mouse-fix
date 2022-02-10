@@ -51,7 +51,7 @@ static Vector _lastScrollPointVector; /// This is unused. Replaced by the smooth
 //static VectorSubPixelator *_scrollPointPixelator;
 static VectorSubPixelator *_scrollLinePixelator;
 
-static PixelatedAnimator *_momentumAnimator;
+static PixelatedVectorAnimator *_momentumAnimator;
 //static BOOL _momentumScrollIsActive;
 /// ^ We use this to avoid race conditions. It would be safer and easier (although maybe larginally slow?) to use a dispatch queue instead
 ///     Edit: Using dispatch queue now. This is not necessary anymore
@@ -89,7 +89,7 @@ static dispatch_queue_t _queue; /// Use this queue for interface functions to av
         
         /// Momentum scroll
         
-        _momentumAnimator = [[PixelatedAnimator alloc] init];
+        _momentumAnimator = [[PixelatedVectorAnimator alloc] init];
 //        _momentumScrollIsActive = NO;
         
     }
@@ -433,15 +433,9 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
 //    [_momentumAnimator startWithDuration:duration valueInterval:distanceInterval animationCurve:animationCurve
 //                       integerCallback:^(NSInteger pointDelta, double timeDelta, MFAnimationPhase animationPhase) {
     
-    
-    /// Declare static
-    ///     For communication between startParams callback and displayLinkCallback
-    
-    static Vector direction = { .x = 0, .y = 0 };
-    
     /// Start animator
     
-    [_momentumAnimator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(double valueLeft, BOOL isRunning, id<AnimationCurve> _Nullable curve) {
+    [_momentumAnimator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(Vector valueLeft, BOOL isRunning, id<AnimationCurve> _Nullable curve) {
         
         NSMutableDictionary *p = [NSMutableDictionary dictionary];
         
@@ -468,10 +462,6 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
             return p;
         }
         
-        /// Get direction
-        
-        direction = unitVector(initialVelocity);
-        
         /// Get drag animation curve
         
         DragCurve *animationCurve = [[DragCurve alloc] initWithCoefficient:dragCoefficient
@@ -484,15 +474,19 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
         double duration = animationCurve.timeInterval.length;
         double distance = animationCurve.distanceInterval.length;
         
+        /// Get distanceVec
+        
+        Vector distanceVec = scaledVector(unitVector(initialVelocity), distance);
+        
         /// Return
         
-        p[@"vector"] = @(distance);
+        p[@"vector"] = valueFromVector(distanceVec);
         p[@"duration"] = @(duration);
         p[@"curve"] = animationCurve;
         
         return p;
         
-    } integerCallback:^(NSInteger pointDelta, double timeDelta, MFAnimationPhase animationPhase) {
+    } integerCallback:^(Vector deltaVec, double timeDelta, MFAnimationPhase animationPhase) {
         
         /// Validate state
         
@@ -503,7 +497,7 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
 //        DDLogDebug(@"Momentum scrolling - delta: %ld, animationPhase: %d", (long)pointDelta, animationPhase);
         
         /// Get delta vectors
-        Vector directedPointDelta = scaledVector(direction, pointDelta);
+        Vector directedPointDelta = deltaVec;
         Vector directedLineDelta = scrollLineVector_FromScrollPointVector(directedPointDelta);
         
         /// Subpixelate
