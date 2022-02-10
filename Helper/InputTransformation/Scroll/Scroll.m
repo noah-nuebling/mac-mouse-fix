@@ -35,7 +35,7 @@ static CGEventSourceRef _eventSource;
 
 static dispatch_queue_t _scrollQueue;
 
-static PixelatedAnimator *_animator;
+static /*PixelatedAnimator*/BaseAnimator *_animator;
 static SubPixelator *_subPixelator;
 
 static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this to Config or some sort of OverrideManager class
@@ -76,7 +76,7 @@ static ScrollConfig *_scrollConfig;
     }
     
     /// Create animator
-    _animator = [[PixelatedAnimator alloc] init];
+    _animator = [[/*PixelatedAnimator*/ BaseAnimator alloc] init];
     
     /// Create subpixelator for scroll output
     _subPixelator = [SubPixelator roundPixelator];
@@ -415,11 +415,23 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 p[@"curve"]  = c;
             }
             
+            /// Debug
+            
+            static double scrollDeltaSum = 0;
+            scrollDeltaSum += pxToScrollForThisTick;
+            DDLogDebug(@"Delta sum pre-animator: %f", scrollDeltaSum);
+            
+            /// Return
             return p;
             
-        } integerCallback:^(NSInteger valueDelta, double timeDelta, MFAnimationPhase animationPhase) {
-         
+        } callback:^(double valueDelta, double timeDelta, MFAnimationPhase animationPhase) {
+            
          /// This will be called each frame
+            
+            /// Debug
+            static double scrollDeltaSummm = 0;
+            scrollDeltaSummm += valueDelta;
+            DDLogDebug(@"Delta sum in-animator: %f", scrollDeltaSummm);
             
             /// Debug
             
