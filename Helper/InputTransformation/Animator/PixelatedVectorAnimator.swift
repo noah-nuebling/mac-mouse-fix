@@ -65,7 +65,7 @@ class PixelatedVectorAnimator: VectorAnimator {
             
             /// Validate
             assert(p["vector"] is NSValue)
-            /// This is always true for some reason. Make sure to pass in sensible stuff!
+            /// ^ This is always true for some reason. Make sure to actually pass a Vector in an NSValue!
             
             /// Do nothing if doStart == false
             
@@ -86,13 +86,6 @@ class PixelatedVectorAnimator: VectorAnimator {
             /// Debug
             
             DDLogDebug("\nStarted PixelatedAnimator with phase: \(self.animationPhase.rawValue), lastPhase: \(self.lastAnimationPhase.rawValue), deltaLeftDiff: \(subtractedVectors(self.animationValueLeft, deltaLeftBefore)), oldDeltaLeft: \(deltaLeftBefore), newDeltaLeft: \(self.animationValueLeft)")
-            
-            /// Extend start animator method
-            
-//            if self.animationPhase == kMFAnimationPhaseStart {
-//                self.subPixelator.reset()
-//            }
-            /// ^ It's not ideal to do reset the subPixelators automatically, because when there's a bunch of fresh starts in a row the rounding errors all get swallowed and it becomes noticable. (This happens when moving the mouse slowly with twoFingerModifiedDrag)
             
         }
     }
