@@ -433,11 +433,12 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
 //    [_momentumAnimator startWithDuration:duration valueInterval:distanceInterval animationCurve:animationCurve
 //                       integerCallback:^(NSInteger pointDelta, double timeDelta, MFAnimationPhase animationPhase) {
     
-    /// Reset animator
+    /// Init animator
     
     [_momentumAnimator resetSubPixelator];
+    [_momentumAnimator linkToMainScreen];
     
-    /// Start animator
+    /// Init animator
     
     [_momentumAnimator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(Vector valueLeft, BOOL isRunning, id<AnimationCurve> _Nullable curve) {
         

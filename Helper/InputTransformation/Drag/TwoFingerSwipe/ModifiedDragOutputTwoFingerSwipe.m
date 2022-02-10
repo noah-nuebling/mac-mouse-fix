@@ -68,10 +68,8 @@ static dispatch_group_t _momentumScrollWaitGroup;
         [PointerFreeze freezeEventDispatchPointAtPosition:_drag->usageOrigin];
     }
     
-    /// Reset subpixelator
+    /// Setup animator
     [_smoothingAnimator resetSubPixelator];
-    
-    /// Link animator to main screen
     [_smoothingAnimator linkToMainScreen];
 }
 

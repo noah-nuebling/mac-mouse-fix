@@ -38,6 +38,17 @@ class PixelatedVectorAnimator: VectorAnimator {
     var subPixelator = VectorSubPixelator.biased()
     /// ^ This biased subpixelator should make SubpixelatedAnimator  also work negative value ranges. So it can also be properly used for for momentum scrolling in GestureScrollAnimator.m
     
+    // MARK: Interface
+    
+    /// Other interface
+    
+    /// SubPixelator reset
+    ///     You usually want to call this where you call linkToMainScreen()
+    
+    @objc func resetSubPixelator() {
+        subPixelator.reset()
+    }
+    
     /// Declare new start function
     
     @objc func start(params: @escaping StartParamCalculationCallback,
@@ -84,12 +95,6 @@ class PixelatedVectorAnimator: VectorAnimator {
             /// ^ It's not ideal to do reset the subPixelators automatically, because when there's a bunch of fresh starts in a row the rounding errors all get swallowed and it becomes noticable. (This happens when moving the mouse slowly with twoFingerModifiedDrag)
             
         }
-    }
-    
-    /// SubPixelator reset
-    
-    @objc func resetSubPixelator() {
-        subPixelator.reset()
     }
     
     /// Debug vars

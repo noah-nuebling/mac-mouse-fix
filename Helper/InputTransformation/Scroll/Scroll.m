@@ -229,16 +229,13 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             }
         }
         
-        /// Update linked display
+        /// Init animator
         
+        [_animator resetSubPixelator];
         if (ScrollUtility.mouseDidMove) {
             /// Update animator to currently used display
             [_animator linkToMainScreen];
         }
-        
-        /// Reset subpixelator
-        
-        [_animator resetSubPixelator];
         
         /// Update modfications
         
