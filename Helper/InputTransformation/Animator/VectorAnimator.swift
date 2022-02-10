@@ -232,7 +232,7 @@ import CocoaLumberjackSwift
         
         /// Debug
         
-        DDLogDebug("AnimationValueInterval at start: \(value)")
+//        DDLogDebug("AnimationValueInterval at start: \(value)")
     }
     
     /// Stop
@@ -318,7 +318,9 @@ import CocoaLumberjackSwift
         
         self.animatorQueue.sync { /// Use sync so this is actually executed on the high-priority display-linked thread
             
-            //            DDLogDebug("DO ANIMATOR DISP LINK CALLBACK with (initial) phase: \(self.animationPhase.rawValue)")
+            /// Debug
+            
+            DDLogDebug("\nAnimation value total: (\(animationValueTotal.x), \(animationValueTotal.y)), left: (\(animationValueLeft.x), \(animationValueLeft.y))")
             
             
             /// Guard stopped
@@ -358,8 +360,13 @@ import CocoaLumberjackSwift
             /// Get actual animation value
             
             var animationValue = Vector(x: 0, y: 0)
-            animationValue.x = Math.scale(value: animationValueUnit, from: .unitInterval, to: Interval(0, animationValueTotal.x))
-            animationValue.y = Math.scale(value: animationValueUnit, from: .unitInterval, to: Interval(0, animationValueTotal.y))
+            
+            if animationValueTotal.x != 0 {
+                animationValue.x = Math.scale(value: animationValueUnit, from: .unitInterval, to: Interval(start: 0, end: animationValueTotal.x))
+            }
+            if animationValueTotal.y != 0 {
+                animationValue.y = Math.scale(value: animationValueUnit, from: .unitInterval, to: Interval(start: 0, end: animationValueTotal.y))
+            }
             
             /// Get change since last frame aka `delta`
             

@@ -21,7 +21,7 @@ static ModifiedDragState *_drag;
 
 static ModifiedDragState *_drag;
 
-static BaseAnimator *_smoothingAnimator;
+static VectorAnimator *_smoothingAnimator;
 static BOOL _smoothingAnimatorShouldStartMomentumScroll = NO;
 static dispatch_group_t _momentumScrollWaitGroup;
 
@@ -34,7 +34,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
     ///     Edit:
     ///     TODO: maybe it would be smart to just delay the time between the last two events to be reasonable. That seemst to be matters for the erratic behaviour. Using the _smoothingAnimator forces us to use dispatch_group and stuff which is very very error prone. I should seriously consider if this is the best approach
     
-    _smoothingAnimator = [[BaseAnimator alloc] init];
+    _smoothingAnimator = [[VectorAnimator alloc] init];
     
     /// Setup smoothingGroup
     ///     It allows us to wait until the _smoothingAnimator is done.
@@ -81,33 +81,22 @@ static dispatch_group_t _momentumScrollWaitGroup;
     
     /// Declare static vars for animator
     static IOHIDEventPhaseBits eventPhase = kIOHIDEventPhaseUndefined;
-    static Vector combinedDirection = { .x = 0, .y = 0 };
     
     /// Values that the block should copy instead of reference
     IOHIDEventPhaseBits dragPhase = _drag->phase;
     
     /// Start animator
     ///     We made this a BaseAnimator instead of a PixelatedAnimator for debugging
-    [_smoothingAnimator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(double valueLeft, BOOL isRunning, id<AnimationCurve> _Nullable curve) {
+    [_smoothingAnimator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(Vector valueLeft, BOOL isRunning, id<AnimationCurve> _Nullable curve) {
         
         NSMutableDictionary *p = [NSMutableDictionary dictionary];
         
-        Vector lastDirection = combinedDirection;
-        
         Vector currentVec = { .x = deltaX*twoFingerScale, .y = deltaY*twoFingerScale };
-        double magnitudeLeft = valueLeft;
-        
-        Vector vectorLeft = scaledVector(lastDirection, magnitudeLeft);
-        Vector combinedVec = addedVectors(currentVec, vectorLeft);
-        
-        double combinedMagnitude = magnitudeOfVector(combinedVec);
-        combinedDirection = unitVector(combinedVec);
+        Vector combinedVec = addedVectors(currentVec, valueLeft);
         
         if (dragPhase == kIOHIDEventPhaseBegan) eventPhase = kIOHIDEventPhaseBegan;
         
         /// Debug
-        
-        DDLogDebug(@"Starting BaseAnimator - deltaLeft: %f, inputVec: (%f, %f), oldDirection: (%f, %f), combinedDelta: %f", valueLeft, currentVec.x, currentVec.y, lastDirection.x, lastDirection.y, combinedMagnitude);
         
         static double lastTs = 0;
         double ts = CACurrentMediaTime();
@@ -118,23 +107,25 @@ static dispatch_group_t _momentumScrollWaitGroup;
         
         /// Return
         
-        if (combinedMagnitude == 0.0) {
+        if (magnitudeOfVector(combinedVec) == 0.0) {
             DDLogWarn(@"Not starting baseAnimator since combinedMagnitude is 0.0");
             p[@"doStart"] = @NO;
         } else {
-            p[@"value"] = @(combinedMagnitude);
+            p[@"value"] = valueFromVector(combinedVec);
             p[@"duration"] = @(3.0/60); // @(0.00001); // @(0.04);
             p[@"curve"] = ScrollConfig.linearCurve;
         }
         
-//        static double scrollDeltaSum = 0;
-//        scrollDeltaSum += fabs(currentVec.y);
-//        DDLogDebug(@"Delta sum pre-animator: %f", scrollDeltaSum);
+        static Vector scrollDeltaSum = { .x = 0, .y = 0};
+        scrollDeltaSum.x += fabs(currentVec.x);
+        scrollDeltaSum.y += fabs(currentVec.y);
+        DDLogDebug(@"Delta sum pre-animator: (%f, %f)", scrollDeltaSum.x, scrollDeltaSum.y);
+        DDLogDebug(@"Value left pre-animator: (%f, %f)", valueLeft.x, valueLeft.y);
         
         /// Return
         return p;
         
-    } callback:^(double valueDeltaD, double timeDelta, MFAnimationPhase phase) {
+    } callback:^(Vector valueDeltaD, double timeDelta, MFAnimationPhase phase) {
         
 //        static double scrollDeltaSummm = 0;
 //        scrollDeltaSummm += fabs(valueDeltaD);
@@ -169,7 +160,8 @@ static dispatch_group_t _momentumScrollWaitGroup;
         ///         -> But it's honestly probably not worth it, since all it would improve is not skipping those 2 pixels before momentum scroll starts, which no one will ever notice and maybe cleaning up the code a little bit.
         ///
         
-        NSInteger valueDelta = ceil(valueDeltaD);
+        valueDeltaD.x = ceil(valueDeltaD.x);
+        valueDeltaD.y = ceil(valueDeltaD.y);
         
         if (_smoothingAnimatorShouldStartMomentumScroll
             && (phase == kMFAnimationPhaseEnd || phase == kMFAnimationPhaseStartAndEnd)) {
@@ -181,10 +173,8 @@ static dispatch_group_t _momentumScrollWaitGroup;
             /// Reset flag
             _smoothingAnimatorShouldStartMomentumScroll = NO;
         } else {
-            /// Get scroll direction
-            Vector deltaVec = scaledVector(combinedDirection, valueDelta);
             /// Post event
-            [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaVec.x deltaY:deltaVec.y phase:eventPhase];
+            [GestureScrollSimulator postGestureScrollEventWithDeltaX:valueDeltaD.x deltaY:valueDeltaD.y phase:eventPhase];
             /// Update eventPhase
             if (eventPhase == kIOHIDEventPhaseBegan) eventPhase = kIOHIDEventPhaseChanged;
         }

@@ -54,8 +54,8 @@ Vector addedVectors(Vector vec1, Vector vec2) {
 }
 Vector subtractedVectors(Vector vec1, Vector vec2) {
     Vector outVec;
-    outVec.x = vec2.x - vec1.x;
-    outVec.y = vec2.y - vec1.y;
+    outVec.x = vec1.x - vec2.x;
+    outVec.y = vec1.y - vec2.y;
     return outVec;
 }
 double dotProduct(Vector vec1, Vector vec2) {
