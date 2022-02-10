@@ -71,11 +71,18 @@ class PixelatedVectorAnimator: VectorAnimator {
             
             /// Extend start animator method
             
-            if self.animationPhase == kMFAnimationPhaseStart {
-                self.subPixelator.reset()
-            }
+//            if self.animationPhase == kMFAnimationPhaseStart {
+//                self.subPixelator.reset()
+//            }
+            /// ^ It's not ideal to do reset the subPixelators automatically, because when there's a bunch of fresh starts in a row the rounding errors all get swallowed and it becomes noticable. (This happens when moving the mouse slowly with twoFingerModifiedDrag)
             
         }
+    }
+    
+    /// SubPixelator reset
+    
+    @objc func resetSubPixelator() {
+        subPixelator.reset()
     }
     
     /// Debug vars
