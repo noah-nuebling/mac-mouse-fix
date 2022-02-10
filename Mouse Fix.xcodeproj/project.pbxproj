@@ -61,7 +61,6 @@
 		4F9C9B60268A29FE0083DED0 /* Smoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C9B5F268A29FE0083DED0 /* Smoother.swift */; };
 		4F9C9B6B268A2D6F0083DED0 /* CircularBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C9B6A268A2D6F0083DED0 /* CircularBuffer.m */; };
 		4F9E59972672A67F004E75F7 /* default_config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F9E59962672A67E004E75F7 /* default_config.plist */; };
-		4F9E789226851440002C2309 /* PixelatedAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9E789126851440002C2309 /* PixelatedAnimator.swift */; };
 		4F9E78BF26855BCF002C2309 /* Concurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9E78BE26855BCF002C2309 /* Concurrency.swift */; };
 		4F9E78C026855BCF002C2309 /* Concurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9E78BE26855BCF002C2309 /* Concurrency.swift */; };
 		4F9E78D02685E30C002C2309 /* GestureScrollSimulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9E78CE2685E30B002C2309 /* GestureScrollSimulator.m */; };
@@ -79,7 +78,6 @@
 		4FCC03352757B181002E5A57 /* ScreenDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCC03322757A50C002E5A57 /* ScreenDrawer.swift */; };
 		4FD0A71127B295F600FFCD12 /* OtherConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD0A71027B295F600FFCD12 /* OtherConfig.swift */; };
 		4FD82DDB260575B100664D6F /* ToastNotificationLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD82DDA260575B100664D6F /* ToastNotificationLabel.m */; };
-		4FD85F7B266CC9C5004F76C8 /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD85F7A266CC9C5004F76C8 /* Animator.swift */; };
 		4FD86089266E819A004F76C8 /* Pointers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD86088266E819A004F76C8 /* Pointers.swift */; };
 		4FD860AA266EC24E004F76C8 /* DerivedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860A9266EC24E004F76C8 /* DerivedProperty.swift */; };
 		4FD860CC266EF55A004F76C8 /* ScrollConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860CB266EF55A004F76C8 /* ScrollConfig.swift */; };
@@ -360,7 +358,6 @@
 		4F9C9B69268A2D6F0083DED0 /* CircularBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CircularBuffer.h; sourceTree = "<group>"; };
 		4F9C9B6A268A2D6F0083DED0 /* CircularBuffer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CircularBuffer.m; sourceTree = "<group>"; };
 		4F9E59962672A67E004E75F7 /* default_config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_config.plist; sourceTree = "<group>"; };
-		4F9E789126851440002C2309 /* PixelatedAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelatedAnimator.swift; sourceTree = "<group>"; };
 		4F9E78BE26855BCF002C2309 /* Concurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Concurrency.swift; sourceTree = "<group>"; };
 		4F9E78CE2685E30B002C2309 /* GestureScrollSimulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GestureScrollSimulator.m; sourceTree = "<group>"; };
 		4F9E78CF2685E30C002C2309 /* GestureScrollSimulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GestureScrollSimulator.h; sourceTree = "<group>"; };
@@ -389,7 +386,6 @@
 		4FD0A71027B295F600FFCD12 /* OtherConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherConfig.swift; sourceTree = "<group>"; };
 		4FD82DD9260575B100664D6F /* ToastNotificationLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToastNotificationLabel.h; sourceTree = "<group>"; };
 		4FD82DDA260575B100664D6F /* ToastNotificationLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ToastNotificationLabel.m; sourceTree = "<group>"; };
-		4FD85F7A266CC9C5004F76C8 /* Animator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
 		4FD86058266DBF96004F76C8 /* AnimatorDeclarations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnimatorDeclarations.h; sourceTree = "<group>"; };
 		4FD8607B266E65E9004F76C8 /* DerivedValueGenerator.swift old */ = {isa = PBXFileReference; lastKnownFileType = text; path = "DerivedValueGenerator.swift old"; sourceTree = "<group>"; };
 		4FD86081266E71A5004F76C8 /* DerivedValueGeneratorObjC.h old */ = {isa = PBXFileReference; lastKnownFileType = text; path = "DerivedValueGeneratorObjC.h old"; sourceTree = "<group>"; };
@@ -700,7 +696,6 @@
 				4F8B7E6627B4E32600598B65 /* VectorAnimator.swift */,
 				4F96060E27B4F92F004D6F6D /* PixelatedVectorAnimator.swift */,
 				4FD86058266DBF96004F76C8 /* AnimatorDeclarations.h */,
-				4F96061027B53AF8004D6F6D /* Unused */,
 			);
 			path = Animator;
 			sourceTree = "<group>";
@@ -768,15 +763,6 @@
 				4F94F61125E5EC2800D9F24A /* Info.plist */,
 			);
 			path = UITests;
-			sourceTree = "<group>";
-		};
-		4F96061027B53AF8004D6F6D /* Unused */ = {
-			isa = PBXGroup;
-			children = (
-				4FD85F7A266CC9C5004F76C8 /* Animator.swift */,
-				4F9E789126851440002C2309 /* PixelatedAnimator.swift */,
-			);
-			path = Unused;
 			sourceTree = "<group>";
 		};
 		4F9912772788FB8E008DBE9F /* External */ = {
@@ -2046,7 +2032,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F9C9B58268A29B70083DED0 /* RollingAverage.swift in Sources */,
-				4F9E789226851440002C2309 /* PixelatedAnimator.swift in Sources */,
 				4FF0255727B0091700923107 /* ModifiedDragOutputAddMode.m in Sources */,
 				4FF0255127B0033000923107 /* ModifiedDragOutputTwoFingerSwipe.m in Sources */,
 				4FF6654D25F2C7B000689B77 /* SharedUtility.m in Sources */,
@@ -2055,7 +2040,6 @@
 				4FF6669625F2C93A00689B77 /* Actions.m in Sources */,
 				4FF0254E27AFF90800923107 /* ModifiedDragOutputThreeFingerSwipe.m in Sources */,
 				4F44FF042606D73D00926A5E /* SharedMessagePort.m in Sources */,
-				4FD85F7B266CC9C5004F76C8 /* Animator.swift in Sources */,
 				4F5F3EEE2756DB0A00C350C0 /* RemapsOverrider_old_.swift in Sources */,
 				4F8B7E6727B4E32600598B65 /* VectorAnimator.swift in Sources */,
 				4FF6669325F2C93A00689B77 /* TouchSimulator.m in Sources */,
