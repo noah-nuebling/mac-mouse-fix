@@ -127,10 +127,18 @@ static dispatch_group_t _momentumScrollWaitGroup;
             p[@"curve"] = ScrollConfig.linearCurve;
         }
         
+//        static double scrollDeltaSum = 0;
+//        scrollDeltaSum += fabs(currentVec.y);
+//        DDLogDebug(@"Delta sum pre-animator: %f", scrollDeltaSum);
+        
         /// Return
         return p;
         
     } callback:^(double valueDeltaD, double timeDelta, MFAnimationPhase phase) {
+        
+//        static double scrollDeltaSummm = 0;
+//        scrollDeltaSummm += fabs(valueDeltaD);
+//        DDLogDebug(@"Delta sum in-animator: %f", scrollDeltaSummm);
         
         // TODO: Change this
         /// Even if we use a pixelated animator here (at least in it' current form), this is not going to work right.
