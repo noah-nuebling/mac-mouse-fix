@@ -92,9 +92,8 @@ import Cocoa
     @objc var lower: Double { direction == kMFIntervalDirectionAscending ? start : end }
     @objc var upper: Double { direction == kMFIntervalDirectionAscending ? end : start }
     
-    @objc static var unitInterval = Interval.init(start: 0, end: 1)
-        /// Scale to this interval to normalize a value
-        /// I use this a lot in performance-critical code. It might be good to only create the unitInterval only once instead of this. But maybe swift already optimizes that automatically.
+    @objc static let unitInterval = Interval.init(start: 0, end: 1)
+    /// ^ Scale to this interval to normalize a value
     
     @objc required init(start: Double, end: Double) {
         
@@ -111,6 +110,9 @@ import Cocoa
     @objc convenience init(lower: Double, upper: Double) {
         assert(lower < upper)
         self.init(start: lower, end: upper)
+    }
+    @objc convenience init(_ a: Double, _ b: Double) {
+        self.init(lower: a, upper: b)
     }
     
     @objc func contains(_ value: Double) -> Bool {

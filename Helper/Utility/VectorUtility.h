@@ -25,8 +25,12 @@ double magnitudeOfVector(Vector vec);
 Vector unitVector(Vector vec);
 Vector scaledVector(Vector vec, double scalar);
 Vector addedVectors(Vector vec1, Vector vec2);
+Vector subtractedVectors(Vector vec1, Vector vec2);
 double dotProduct(Vector vec1, Vector vec2);
 bool isZeroVector(Vector vec);
+
+Vector vectorFromValue(NSValue *value);
+NSValue *valueFromVector(Vector vector);
 
 @end
 

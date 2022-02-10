@@ -45,6 +45,7 @@
 		4F7AB0552606698A0008055E /* UIStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F7AB0542606698A0008055E /* UIStrings.m */; };
 		4F854D7C2789146900B46E9D /* NSMenu+NSMenu_Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F854D7B2789146900B46E9D /* NSMenu+NSMenu_Additions.m */; };
 		4F854D7E2789266A00B46E9D /* sfsymbols.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F854D7D2789266A00B46E9D /* sfsymbols.xcassets */; };
+		4F8B7E6727B4E32600598B65 /* VectorAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8B7E6627B4E32600598B65 /* VectorAnimator.swift */; };
 		4F8CE7012617738A00D70A76 /* AppTranslocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CE6FF2617738A00D70A76 /* AppTranslocationManager.m */; };
 		4F8FC13F275DC81900887A0C /* PrefixSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8FC13E275DC81900887A0C /* PrefixSwift.swift */; };
 		4F8FC140275DC81900887A0C /* PrefixSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8FC13E275DC81900887A0C /* PrefixSwift.swift */; };
@@ -335,6 +336,7 @@
 		4F854D7A2789146900B46E9D /* NSMenu+NSMenu_Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMenu+NSMenu_Additions.h"; sourceTree = "<group>"; };
 		4F854D7B2789146900B46E9D /* NSMenu+NSMenu_Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMenu+NSMenu_Additions.m"; sourceTree = "<group>"; };
 		4F854D7D2789266A00B46E9D /* sfsymbols.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = sfsymbols.xcassets; sourceTree = "<group>"; };
+		4F8B7E6627B4E32600598B65 /* VectorAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorAnimator.swift; sourceTree = "<group>"; };
 		4F8CE6FF2617738A00D70A76 /* AppTranslocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppTranslocationManager.m; sourceTree = "<group>"; };
 		4F8CE7002617738A00D70A76 /* AppTranslocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppTranslocationManager.h; sourceTree = "<group>"; };
 		4F8FC13E275DC81900887A0C /* PrefixSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefixSwift.swift; sourceTree = "<group>"; };
@@ -695,6 +697,7 @@
 				4F3A40CA266C44D100436821 /* DisplayLink.m */,
 				4FD85F7A266CC9C5004F76C8 /* Animator.swift */,
 				4F9E789126851440002C2309 /* PixelatedAnimator.swift */,
+				4F8B7E6627B4E32600598B65 /* VectorAnimator.swift */,
 				4FD86058266DBF96004F76C8 /* AnimatorDeclarations.h */,
 			);
 			path = Animator;
@@ -2043,6 +2046,7 @@
 				4F44FF042606D73D00926A5E /* SharedMessagePort.m in Sources */,
 				4FD85F7B266CC9C5004F76C8 /* Animator.swift in Sources */,
 				4F5F3EEE2756DB0A00C350C0 /* RemapsOverrider_old_.swift in Sources */,
+				4F8B7E6727B4E32600598B65 /* VectorAnimator.swift in Sources */,
 				4FF6669325F2C93A00689B77 /* TouchSimulator.m in Sources */,
 				4F9E78E3268663B1002C2309 /* ExponentialSmoother.swift in Sources */,
 				4F3A40AB266BBB6200436821 /* AccelerationBezier.swift in Sources */,
