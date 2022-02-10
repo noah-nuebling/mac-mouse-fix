@@ -278,13 +278,24 @@ void displayReconfigurationCallback(CGDirectDisplayID display, CGDisplayChangeSu
 
 static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp *inNow, const CVTimeStamp *inOutputTime, CVOptionFlags flagsIn, CVOptionFlags *flagsOut, void *displayLinkContext) {
     
-    // Get self
+    /// Get self
     DisplayLink *self = (__bridge DisplayLink *)displayLinkContext;
         
-    // Call block
-    self.callback(); // Not passing in anything. None of the arguments to the CVDisplayLinkCallback are useful. Use CACurrentMediatime() to get current time inside the callback.
+    /// Parse timestamps
+    ParsedCVTimeStamps ts = parseTimeStamps(inNow, inOutputTime);
     
-    // Return
+    /// Analyze
+    
+    double periodVideoFromAPI = CVDisplayLinkGetActualOutputVideoRefreshPeriod(displayLink);
+    CVTime nominal = CVDisplayLinkGetNominalOutputVideoRefreshPeriod(displayLink);
+    double periodVideoNominalFromAPI = nominal.timeValue / ((double)nominal.timeScale);
+    
+//    DDLogDebug(@"\nperiodFromAPI: %.10f, periodFromTs: %.10f, periodFromNextTs: %.10f, nominal: %.3f, %.3f, %.3f", periodVideoFromAPI, ts.periodNow, ts.periodNext, periodVideoNominalFromAPI, ts.nominalPeriodNow, ts.nominalPeriodNext);
+    
+    /// Call block
+    self.callback();
+    
+    /// Return
     return kCVReturnSuccess;
 }
 
@@ -294,8 +305,131 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 {
     CVDisplayLinkRelease(_displayLink);
     CGDisplayRemoveReconfigurationCallback(displayReconfigurationCallback, (__bridge void * _Nullable)(self));
-    // ^ The arguments need to match the ones for CGDisplayRegisterReconfigurationCallback() exactly
+    /// ^ The arguments need to match the ones for CGDisplayRegisterReconfigurationCallback() exactly
     free(_previousDisplaysUnderMousePointer);
 }
+
+/// MARK: Parsing CVTimeStamp
+
+typedef struct {
+    CFTimeInterval now;
+    CFTimeInterval lastFrame;
+    CFTimeInterval nextFrame;
+    
+    CFTimeInterval periodLast;
+    CFTimeInterval periodNext;
+    CFTimeInterval nominalPeriodLast;
+    CFTimeInterval nominalPeriodNext;
+    
+} ParsedCVTimeStamps;
+
+typedef struct {
+    CFTimeInterval hostTS;
+    CFTimeInterval frameTS;
+    
+    CFTimeInterval period;
+    CFTimeInterval nominalPeriod;
+    
+} ParsedCVTimeStamp;
+
+ParsedCVTimeStamps parseTimeStamps(const CVTimeStamp *inNow, const CVTimeStamp *inNext) {
+    
+    /// Get frame timestamps
+    
+    ParsedCVTimeStamp tsNow = parseTimeStamp(inNow);
+    ParsedCVTimeStamp tsNext = parseTimeStamp(inNext);
+    
+    /// Analyse parsed timestamps
+    
+    /// Analysis of frameTS and hostTS
+    /// Our analysis shows:
+    ///     - ts.frameTS -> When the last frame was sent
+    ///     - tsOut.frameTS -> When the next frame will be sent
+    ///     - ts.hostTS -> The time when this callback is called. Equivalent to CACurrentMediaTime().
+    ///     - tsOut.hostTs -> No idea what this is.
+    
+//    CFTimeInterval now = CACurrentMediaTime();
+//    DDLogDebug(@"\nhostDiff: %.1f, %.1f, frameDiff: %.1f, %.1f", (tsNow.hostTS - now)*1000, (tsOut.hostTS - now)*1000, (tsNow.frameTS - now)*1000, (tsOut.frameTS - now)*1000);
+    
+    /// Analysis of period
+    /// Our analysis shows:
+    ///     - CVDisplayLinkGetActualOutputVideoRefreshPeriod(_displayLink) is the same as tsNext.period
+    ///     - On the next displayLinkCalback() call, tsNow.period will be the same as tsNext.period on the current call.
+    ///     - These values don't make sense
+    ///         - I observed not heavy load, but scrolling looked distinctly 30 fps, and nextFrame - lastFrame = 34 ms. But tsNow.period was still around 16.666 ms.
+    
+    /// Fill result struct
+    
+    ParsedCVTimeStamps result = {
+        .now = tsNow.hostTS,
+        .lastFrame = tsNow.frameTS,
+        .nextFrame = tsNext.frameTS,
+        
+        .periodLast = tsNow.period,
+        .periodNext = tsNext.period,
+        .nominalPeriodLast = tsNow.nominalPeriod,
+        .nominalPeriodNext = tsNext.nominalPeriod,
+    };
+
+    /// Return
+    return result;
+    
+}
+
+ParsedCVTimeStamp parseTimeStamp(const CVTimeStamp *ts) {
+    
+    /// Extract info from flags
+    
+    CVTimeStampFlags f = ts->flags;
+    
+    Boolean hostTimeIsValid = (f & kCVTimeStampVideoHostTimeValid) != 0;
+    Boolean isInterlaced = (f & kCVTimeStampIsInterlaced) != 0;
+    Boolean SMPTETimeIsValid = (f & kCVTimeStampSMPTETimeValid) != 0;
+    Boolean videoRefreshPeriodIsValid = (f & kCVTimeStampVideoRefreshPeriodValid) != 0;
+    Boolean timeStampRateScalerIsValid = (f & kCVTimeStampRateScalarValid) != 0;
+    
+    /// Handle weird flags
+    
+    if (!hostTimeIsValid || isInterlaced || SMPTETimeIsValid || !videoRefreshPeriodIsValid || !timeStampRateScalerIsValid) {
+        
+        DDLogWarn(@"\nCVTimeStamp flags are weird - hostTimeIsValid: %d, isInterlaced: %d, SMPTETimeIsValid: %d, videoRefreshPeriodIsValid: %d, timeStampRateScalerIsValid: %d", hostTimeIsValid, isInterlaced, SMPTETimeIsValid, videoRefreshPeriodIsValid, timeStampRateScalerIsValid);
+    }
+    
+    /// Extract other data from timestamp
+    ///     (Ignoring smpteTime)
+    
+    int32_t videoTimeScale = ts->videoTimeScale;
+    int64_t videoTime = ts->videoTime;
+    int64_t videoRefreshPeriod = ts->videoRefreshPeriod;
+    uint64_t hostTime = ts->hostTime; /// I think 'hostTime' is 'now' whereas 'videoTime' is when a frame occurs
+    double rateScalar = ts->rateScalar; /// I think this is nominalRefreshPeriod / actualRefreshPeriod
+    
+    /// Parse video time
+    
+    CFTimeInterval tsVideo = videoTime / ((double)videoTimeScale);
+    /// ^ We're calling these CFTimeInterval instead of double because they are interoperable with CACurrentMediaTime()
+    
+    /// Parse host time
+    CFTimeInterval hostTimeScaled = hostTime / ((double)videoTimeScale);
+    /// ^ The documentation doesn't say that videoTimeScale is supposed to be used for scaling hostTime. But it works.
+    
+    /// Parse refresh period
+    CFTimeInterval periodVideoNominal = videoRefreshPeriod / ((double)videoTimeScale);
+    CFTimeInterval periodVideo = periodVideoNominal * rateScalar;
+    /// ^ Since it's 'rate' it should be division, but multiplication gives us the same values as CVDisplayLinkGetActualOutputVideoRefreshPeriod()
+    
+    /// Build result struct
+    
+    ParsedCVTimeStamp result;
+    result.hostTS = hostTimeScaled;
+    result.frameTS = tsVideo;
+    result.period = periodVideo;
+    result.nominalPeriod = periodVideoNominal;
+    
+    /// return parsed videoTime
+    
+    return result;
+}
+
 
 @end

@@ -9,6 +9,7 @@
 
 import Foundation
 import CocoaLumberjackSwift
+import CoreVideo
 
 @objc class VectorAnimator: NSObject {
 
@@ -458,6 +459,6 @@ import CocoaLumberjackSwift
     }
     
     /// Helper functions
-    
+        
 }
 
