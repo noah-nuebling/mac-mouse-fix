@@ -213,11 +213,17 @@ static dispatch_group_t _momentumScrollWaitGroup;
     
     /// Setup waiting for momentumScroll
     
-    DDLogDebug(@"Entering dispatch group from deactivate()");
+    DDLogDebug(@"Entering _momentumScrollWaitGroup");
     dispatch_group_enter(_momentumScrollWaitGroup);
+    
     [GestureScrollSimulator afterStartingMomentumScroll:^{
-        DDLogDebug(@"Leaving dispatch group from momentumScroll callback (Scheduled by deactivate())");
+        
+        DDLogDebug(@"Leaving _momentumScrollWaitGroup");
         dispatch_group_leave(_momentumScrollWaitGroup);
+        
+        /// Delete momentumScroll callback
+        ///     Otherwise, there might be a 'dispatch_group_leave()' without a corresponding dispatch_group_enter() and the app will crash.
+        [GestureScrollSimulator afterStartingMomentumScroll:NULL];
     }];
     
     /// Start momentumScroll
@@ -239,17 +245,21 @@ static dispatch_group_t _momentumScrollWaitGroup;
     
     /// Wait for momentumScroll to start
     
+    DDLogDebug(@"Waiting for dispatch group");
+    
     intptr_t rt = dispatch_group_wait(_momentumScrollWaitGroup, dispatch_time(DISPATCH_TIME_NOW, 2.0 * NSEC_PER_SEC));
+    
     if (rt != 0) {
-        DDLogWarn(@"Waiting for dispatch group _momentumScrollWaitGroup timed out. _momentumScrollWaitGroup info: %@. Crashing.", _momentumScrollWaitGroup.debugDescription);
+        
+        /// Log error
+        DDLogError(@"_momentumScrollWaitGroup timed out. _momentumScrollWaitGroup info: %@. Will crash.", _momentumScrollWaitGroup.debugDescription);
+        
+        /// Crash
         assert(false);
     }
     
-    /// Delete momentumScroll callback
-    ///     Otherwise, there might be a 'dispatch_group_leave()' without a corresponding dispatch_group_enter() and the app will crash.
-    [GestureScrollSimulator afterStartingMomentumScroll:NULL];
-    
     /// Unfreeze dispatch point
+    
     [PointerFreeze unfreeze];
 }
 
