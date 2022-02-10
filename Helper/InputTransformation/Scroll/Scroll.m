@@ -35,7 +35,7 @@ static CGEventSourceRef _eventSource;
 
 static dispatch_queue_t _scrollQueue;
 
-static /*PixelatedAnimator*/BaseAnimator *_animator;
+static PixelatedAnimator *_animator;
 static SubPixelator *_subPixelator;
 
 static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this to Config or some sort of OverrideManager class
@@ -76,7 +76,7 @@ static ScrollConfig *_scrollConfig;
     }
     
     /// Create animator
-    _animator = [[/*PixelatedAnimator*/ BaseAnimator alloc] init];
+    _animator = [[PixelatedAnimator alloc] init];
     
     /// Create subpixelator for scroll output
     _subPixelator = [SubPixelator roundPixelator];
@@ -343,7 +343,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         
         /// Start animation
         
-        [_animator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(double valueLeft, BOOL isRunning, id<AnimationCurve> animationCurve) {
+        [_animator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(double valueLeft, BOOL isRunning, NSObject<AnimationCurve> *animationCurve) {
             
             /// Declare result dict (animator start params)
             
@@ -356,6 +356,9 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             double pxLeftToScroll;
             if (scrollAnalysisResult.scrollDirectionDidChange || !isRunning) {
                 pxLeftToScroll = 0;
+            } else if ([animationCurve isKindOfClass:SimpleBezierDragHybridCurve.class]) {
+                SimpleBezierDragHybridCurve *c = (SimpleBezierDragHybridCurve *)animationCurve;
+                pxLeftToScroll = [c baseValueLeftWithValueLeft:valueLeft]; /// If we feed valueLeft instead of baseValueLeft back into the animator, it will lead to unwanted acceleration
             } else {
                 pxLeftToScroll = valueLeft;
             }
@@ -374,66 +377,41 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 p[@"value"] = @(pxToScrollForThisTick + pxLeftToScroll);
                 p[@"curve"] = ScrollConfig.linearCurve;
                 
-                return p;
-                
             } else {
-                /// Use hybrid curve
                 
-                /// Update pxLeftToScroll
-                if (pxLeftToScroll > 0) {
-                    
-                    id c = animationCurve;
-                    if ([c isKindOfClass:HybridCurve.class]) {
-                        pxLeftToScroll -= ((HybridCurve *)c).dragValueRange;
-                        if (pxLeftToScroll < 0) pxLeftToScroll = 0;
-                        /// ^ HybridCurve (and a bunch of other stuff to support it) was engineered to give us the overall distance that the Bezier *and* the DragCurve will scroll, so that the distance that would be scrolled via the Drag algorithm isn't lost here (like in older MMF versions)
-                        ///     But this leads to a very strong, hard to control acceleration that also depends on the anmation time `msPerStep`. To undo this, we subtract the distance that is to be scrolled via the DragCurve back out here.
-                        ///     This is inefficient because we init and calculate the drag curve on each mouse wheel tick for nothing, even if we don't need it, and just subtract the result we got from it back out here. But I don't think it makes a practical difference cause it's really fast.
-                    }
-                }
+                /// New curve
+                SimpleBezierDragHybridCurve *c = [[SimpleBezierDragHybridCurve alloc]
+                                                  initWithBaseCurve:_scrollConfig.baseCurve
+                                                  baseTimeRange:baseTimeRange
+                                                 baseValueRange:(pxToScrollForThisTick + pxLeftToScroll)
+                                                dragCoefficient:_scrollConfig.dragCoefficient
+                                                   dragExponent:_scrollConfig.dragExponent
+                                                      stopSpeed:_scrollConfig.stopSpeed];
                 
-                /// Base distance to scroll
-                double baseValueRange = pxLeftToScroll + pxToScrollForThisTick;
-                
-                /// Decrease friction if quickScroll is active
-                ///     Overriding params in all these different places if quickScroll is active is a little messy. Would maybe be better to have ScrollConfig return a struct with all params and to then override the values in the struct in one place.
-                Bezier *baseCurve = _scrollConfig.baseCurve;
-                double dragCoefficient = _scrollConfig.dragCoefficient;
-                double dragExponent = _scrollConfig.dragExponent;
-                
-                /// Curve
-                HybridCurve *c = [[HybridCurve alloc] initWithBaseCurve:baseCurve
-                                                          baseTimeRange:baseTimeRange
-                                                         baseValueRange:baseValueRange
-                                                        dragCoefficient:dragCoefficient
-                                                           dragExponent:dragExponent
-                                                              stopSpeed:_scrollConfig.stopSpeed];
-                
-                /// Debug
                 
                 /// Get values for animator from hybrid curve
                 p[@"duration"] = @(c.timeRange);
                 p[@"value"]  = @(c.valueRange);
-                p[@"curve"]  = /*c*/ ScrollConfig.linearCurve;
+                p[@"curve"]  = c;
             }
             
             /// Debug
-//
+            
 //            static double scrollDeltaSum = 0;
-//            scrollDeltaSum += pxToScrollForThisTick;
+//            scrollDeltaSum += labs(pxToScrollForThisTick);
 //            DDLogDebug(@"Delta sum pre-animator: %f", scrollDeltaSum);
             
             /// Return
             return p;
             
-        } callback:^(double valueDelta, double timeDelta, MFAnimationPhase animationPhase) {
+        } integerCallback:^(NSInteger valueDelta, double timeDelta, MFAnimationPhase animationPhase) {
             
          /// This will be called each frame
             
             /// Debug
-            static double scrollDeltaSummm = 0;
-            scrollDeltaSummm += valueDelta;
-            DDLogDebug(@"Delta sum in-animator: %f", scrollDeltaSummm);
+//            static double scrollDeltaSummm = 0;
+//            scrollDeltaSummm += valueDelta;
+//            DDLogDebug(@"Delta sum in-animator: %f", scrollDeltaSummm);
             
             /// Debug
             

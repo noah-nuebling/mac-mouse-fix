@@ -38,35 +38,44 @@ import CocoaLumberjackSwift
     
     /// Vars - init
         
-    let baseCurve: Bezier
+    /// BaseCurve
     
-    let baseTimeInterval: Interval
-    let baseValueInterval: Interval
-    var baseTimeRange: Double { baseTimeInterval.length }
-    var baseValueRange: Double { baseValueInterval.length }
+    private let baseCurve: Bezier
     
-    let dragCoefficient: Double
-    let dragExponent: Double
-    let stopSpeed: Double
+    @objc let baseTimeInterval: Interval
+    @objc let baseValueInterval: Interval
+    @objc var baseTimeRange: Double { baseTimeInterval.length }
+    @objc var baseValueRange: Double { baseValueInterval.length }
     
-    var dragCurve: DragCurve?
+    @objc func baseValueLeft(valueLeft: Double) -> Double {
+        var baseValueLeft = valueLeft - dragValueRange
+        if baseValueLeft < 0 { baseValueLeft = 0 }
+        return baseValueLeft
+    }
     
-    /// Vars - Interface
-
-    @objc var dragTimeRange: Double {
+    /// DragCurve
+    
+    private let dragCoefficient: Double
+    private let dragExponent: Double
+    private let stopSpeed: Double
+    
+    private var dragCurve: DragCurve?
+    
+    private var dragTimeRange: Double {
         guard let c = dragCurve else { return 0 }
         return c.timeInterval.length
     }
-    @objc var dragValueRange: Double {
+    private var dragValueRange: Double {
         guard let c = dragCurve else { return 0 }
         return c.distanceInterval.length
     }
     
-    @objc var timeInterval: Interval { Interval(start: 0, end: baseTimeRange + dragTimeRange) }
-    @objc var valueInterval: Interval { Interval(start: 0, end: baseValueRange + dragValueRange) }
+    /// HybridCurve
+    
+    private var timeInterval: Interval { Interval(start: 0, end: baseTimeRange + dragTimeRange) }
+    private var valueInterval: Interval { Interval(start: 0, end: baseValueRange + dragValueRange) }
     @objc var timeRange: Double { timeInterval.length }
     @objc var valueRange: Double { valueInterval.length }
-    
     
     /// Init
     
