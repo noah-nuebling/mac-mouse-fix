@@ -163,8 +163,24 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     }
     
     /// Get timestamp
+    ///     Get timestamp here instead of _scrollQueue for accurate timing
     
     CFTimeInterval tickTime = CACurrentMediaTime();
+        
+    /// Create copy of event
+    CGEventRef eventCopy = CGEventCreateCopy(event); /// Create a copy, because the original event will become invalid and unusable in the new queue.
+    
+    ///  Executing heavy stuff on a different thread to prevent the eventTap from timing out. We wrote this before knowing that you can just re-enable the eventTap when it times out. But this doesn't hurt.
+    
+    /// Enqueue heavy processing
+    dispatch_async(_scrollQueue, ^{
+        heavyProcessing(eventCopy, scrollDeltaAxis1, scrollDeltaAxis2, tickTime);
+    });
+    
+    return nil;
+}
+
+static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t scrollDeltaAxis2, CFTimeInterval tickTime) {
     
     /// Get axis
     
@@ -184,21 +200,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     } else {
         NSCAssert(NO, @"Invalid scroll axis");
     }
-    
-    /// Create copy of event
-    CGEventRef eventCopy = CGEventCreateCopy(event); /// Create a copy, because the original event will become invalid and unusable in the new queue.
-    
-    ///  Executing heavy stuff on a different thread to prevent the eventTap from timing out. We wrote this before knowing that you can just re-enable the eventTap when it times out. But this doesn't hurt.
-    
-    /// Enqueue heavy processing
-    dispatch_async(_scrollQueue, ^{
-        heavyProcessing(eventCopy, tickTime, scrollDelta, scrollDeltaPoint, inputAxis);
-    });
-    
-    return nil;
-}
 
-static void heavyProcessing(CGEventRef event, CFTimeInterval tickTime, int64_t scrollDelta, int64_t scrollDeltaPoint, MFAxis inputAxis) {
     
     /// Run scrollAnalysis
     
