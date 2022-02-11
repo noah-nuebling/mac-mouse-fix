@@ -175,6 +175,11 @@ BOOL isRunning_Internal(CVDisplayLinkRef dl) {
 
 /// Get timeBetweenFrames
 
+- (CFTimeInterval)timeBetweenFrames {
+    double t = CVDisplayLinkGetActualOutputVideoRefreshPeriod(_displayLink);
+    return t;
+}
+
 - (CFTimeInterval)nominalTimeBetweenFrames {
     CVTime t = CVDisplayLinkGetNominalOutputVideoRefreshPeriod(_displayLink);
     return (t.timeValue / (double)t.timeScale);

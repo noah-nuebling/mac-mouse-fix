@@ -35,6 +35,7 @@ typedef void(^DisplayLinkCallback)(DisplayLinkCallbackTimeInfo timeInfo);
 - (void)startWithCallback:(DisplayLinkCallback)callback;
 - (void)stop;
 - (BOOL)isRunning;
+- (CFTimeInterval)timeBetweenFrames;
 - (CFTimeInterval)nominalTimeBetweenFrames;
 - (void)linkToMainScreen;
 

@@ -38,7 +38,7 @@ BOOL directionChanged(MFDirection direction1, MFDirection direction2) {
     
     if (multiple == 0) return numToRound;
     
-    int remainder = fmod(numToRound, multiple);
+    double remainder = fmod(numToRound, multiple);
     
     if (remainder == 0) return numToRound;
     

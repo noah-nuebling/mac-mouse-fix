@@ -365,6 +365,11 @@ import QuartzCore
                 frameTime = self.animationEndTime /// So we scroll exactly animationValueTotal
             }
             
+            /// Debug
+//            static double scrollDeltaSummm = 0;
+//            scrollDeltaSummm += valueDelta;
+            DDLogDebug("Time delta in-animator: \(frameTime - lastFrameTime)");
+            
             /// Get normalized time
             
             let animationTimeUnit: Double = Math.scale(value: frameTime, from: self.animationTimeInterval, to: .unitInterval)

@@ -131,7 +131,8 @@ import CocoaLumberjackSwift
     /// ^ 120 Works well without implicit hybrid curve acceleration
     ///     100 Works well with slight hybrid curve acceleration
     
-    @objc lazy var msPerStep = 180 /* smooth["msPerStep"] as! Int */
+    @objc lazy var msPerStep = 181 /* smooth["msPerStep"] as! Int */
+    /// 180 -> Used this for a long time
     /// 200 -> Works well without hybrid curve elongation
     /// 90
     /// 150
