@@ -491,29 +491,18 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
         
         return p;
         
-    } integerCallback:^(Vector deltaVec, double timeDelta, MFAnimationPhase animationPhase) {
-        
-        /// Validate state
-        
-        assert(animationPhase != kMFAnimationPhaseRunningStart);
-        /// ^ _momentumAnimator should always be stopped before it is started again
+    } integerCallback:^(Vector deltaVec, MFAnimationCallbackPhase animationPhase) {
         
         /// Debug
-//        DDLogDebug(@"Momentum scrolling - delta: %ld, animationPhase: %d", (long)pointDelta, animationPhase);
+        DDLogDebug(@"Momentum scrolling - delta: (%f, %f), animationPhase: %d", deltaVec.x, deltaVec.y, animationPhase);
         
-        /// Get delta vectors
-        Vector directedPointDelta = deltaVec;
-        Vector directedLineDelta = scrollLineVector_FromScrollPointVector(directedPointDelta);
-        
-        /// Subpixelate
-//        Vector directedPointDeltaInt = [_scrollPointPixelator intVectorWithDoubleVector:directedPointDelta];
-        ///     ^ Subpixelating the point delta not necessary since we're using PixelatedAnimator
-        Vector directedPointDeltaInt = directedPointDelta;
+        /// Get line vector and subpixelate
+        Vector directedLineDelta = scrollLineVector_FromScrollPointVector(deltaVec);
         Vector directedLineDeltaInt = [_scrollLinePixelator intVectorWithDoubleVector:directedLineDelta];
         
         /// Call momentumScrollStart callback
         
-        if (animationPhase == kMFAnimationPhaseStart) {
+        if (animationPhase == kMFAnimationCallbackPhaseStart) {
             
             if (_momentumScrollCallback != NULL) _momentumScrollCallback();
         }
@@ -522,48 +511,32 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
         
         CGMomentumScrollPhase momentumPhase;
         
-        if (animationPhase == kMFAnimationPhaseStart) {
+        if (animationPhase == kMFAnimationCallbackPhaseStart) {
             momentumPhase = kCGMomentumScrollPhaseBegin;
-        } else if (animationPhase == kMFAnimationPhaseContinue) {
+        } else if (animationPhase == kMFAnimationCallbackPhaseContinue) {
             momentumPhase = kCGMomentumScrollPhaseContinue;
-        } else if (animationPhase == kMFAnimationPhaseEnd) {
+        } else if (animationPhase == kMFAnimationCallbackPhaseEnd) {
             momentumPhase = kCGMomentumScrollPhaseEnd;
-        } else { /// We don't expect momentumPhase == kMFAnimationPhaseRunningStart
+        } else {
             assert(false);
+        }
+        
+        /// Validate
+        if (momentumPhase == kCGMomentumScrollPhaseEnd) {
+            assert(isZeroVector(deltaVec));
         }
         
         /// Get pointer location for posting event
         CGPoint postLocation = getPointerLocation();
         
-        /// Actuallly do stuff
-        if (momentumPhase == kCGMomentumScrollPhaseEnd) {
-            /// This is the last frame of the animation
-            
-            /// Send final kCGMomentumScrollPhaseContinue event
-            [GestureScrollSimulator postGestureScrollEventWithGestureVector:zeroVector
-                                                           scrollVectorLine:directedLineDeltaInt
-                                                          scrollVectorPoint:directedPointDeltaInt
-                                                                      phase:kIOHIDEventPhaseUndefined
-                                                              momentumPhase:kCGMomentumScrollPhaseContinue
-                                                                   location:postLocation];
-            /// Send kCGMomentumScrollPhaseEnd event
-            [GestureScrollSimulator postGestureScrollEventWithGestureVector:zeroVector
-                                                           scrollVectorLine:zeroVector
-                                                          scrollVectorPoint:zeroVector
-                                                                      phase:kIOHIDEventPhaseUndefined
-                                                              momentumPhase:kCGMomentumScrollPhaseEnd
-                                                                   location:postLocation];
-            
-        } else { /// Default case - animationPhase != kMFAnimationPhaseEnd
-            
-            /// Post event
-            [GestureScrollSimulator postGestureScrollEventWithGestureVector:zeroVector
-                                                           scrollVectorLine:directedLineDeltaInt
-                                                          scrollVectorPoint:directedPointDeltaInt
-                                                                      phase:kIOHIDEventPhaseUndefined
-                                                              momentumPhase:momentumPhase
-                                                                   location:postLocation];
-        }
+        /// Post event
+        [GestureScrollSimulator postGestureScrollEventWithGestureVector:zeroVector
+                                                       scrollVectorLine:directedLineDeltaInt
+                                                      scrollVectorPoint:deltaVec
+                                                                  phase:kIOHIDEventPhaseUndefined
+                                                          momentumPhase:momentumPhase
+                                                               location:postLocation];
+
     }];
     
 }

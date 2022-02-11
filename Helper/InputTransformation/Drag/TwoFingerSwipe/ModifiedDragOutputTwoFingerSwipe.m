@@ -88,9 +88,9 @@ static dispatch_group_t _momentumScrollWaitGroup;
     
     /// Declare static vars for animator
     static IOHIDEventPhaseBits eventPhase = kIOHIDEventPhaseUndefined;
-    
+
     /// Values that the block should copy instead of reference
-    IOHIDEventPhaseBits dragPhase = _drag->phase;
+    IOHIDEventPhaseBits firstCallback = _drag->firstCallback;
     
     /// Start animator
     ///     We made this a BaseAnimator instead of a PixelatedAnimator for debugging
@@ -101,7 +101,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
         Vector currentVec = { .x = deltaX*twoFingerScale, .y = deltaY*twoFingerScale };
         Vector combinedVec = addedVectors(currentVec, valueLeft);
         
-        if (dragPhase == kIOHIDEventPhaseBegan) eventPhase = kIOHIDEventPhaseBegan;
+        if (firstCallback) eventPhase = kIOHIDEventPhaseBegan;
         
         /// Debug
         
@@ -132,11 +132,15 @@ static dispatch_group_t _momentumScrollWaitGroup;
         /// Return
         return p;
         
-    } integerCallback:^(Vector valueDeltaD, double timeDelta, MFAnimationPhase phase) {
+    } integerCallback:^(Vector deltaVec, MFAnimationCallbackPhase animatorPhase) {
+        
+        /// Debug
         
 //        static double scrollDeltaSummm = 0;
 //        scrollDeltaSummm += fabs(valueDeltaD);
 //        DDLogDebug(@"Delta sum in-animator: %f", scrollDeltaSummm);
+        
+        DDLogDebug(@"\n twoFingerDragSmoother - delta: (%f, %f), phase: %d", deltaVec.x, deltaVec.y, animatorPhase);
         
         // TODO: Change this
         /// Even if we use a pixelated animator here (at least in it' current form), this is not going to work right.
@@ -167,47 +171,25 @@ static dispatch_group_t _momentumScrollWaitGroup;
         ///         -> But it's honestly probably not worth it, since all it would improve is not skipping those 2 pixels before momentum scroll starts, which no one will ever notice and maybe cleaning up the code a little bit.
         ///
         
-//        valueDeltaD.x = ceil(valueDeltaD.x);
-//        valueDeltaD.y = ceil(valueDeltaD.y);
-        
-        if (_smoothingAnimatorShouldStartMomentumScroll
-            && (phase == kMFAnimationPhaseEnd)) {
-            /// Due to the nature of PixelatedAnimator, the last delta is almost always much smaller. This will make apps like Xcode start momentumScroll at a too low speed. Also apps like Xcode will have a litte stuttery jump when the time between the kIOHIDEventPhaseEnded event and the previous event is very small
-            ///     Our solution to these two problems is to set the _smoothingAnimatorShouldStartMomentumScroll flag when the user releases the button, and if this flag is set, we transform the last delta callback from the animator into the kIOHIDEventPhaseEnded GestureScroll event. The deltas from this last callback are lost like this, but no one will notice.
+        if (animatorPhase == kMFAnimationCallbackPhaseEnd) {
             
-            /// Start momentum scroll
-            [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded];
-            /// Reset flag
-            _smoothingAnimatorShouldStartMomentumScroll = NO;
-        } else {
-            /// Post event
-            [GestureScrollSimulator postGestureScrollEventWithDeltaX:valueDeltaD.x deltaY:valueDeltaD.y phase:eventPhase];
-            /// Update eventPhase
-            if (eventPhase == kIOHIDEventPhaseBegan) eventPhase = kIOHIDEventPhaseChanged;
+             if (_smoothingAnimatorShouldStartMomentumScroll) {
+                 [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded];
+             }
+            
+            _smoothingAnimatorShouldStartMomentumScroll = false;
+            
+            return;
         }
+            
+        [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaVec.x deltaY:deltaVec.y phase:eventPhase];
+        
+        if (eventPhase == kIOHIDEventPhaseBegan) eventPhase = kIOHIDEventPhaseChanged;
         
     }];
 }
 
 + (void)handleDeactivationWhileInUseWithCancel:(BOOL)cancelation {
-    
-    //        /// Draw puppet cursor
-    //        drawPuppetCursorWithFresh(YES, YES);
-    //
-    //        /// Hide real cursor
-    //        [Utility_Transformation hideMousePointer:YES];
-    //_
-    //        /// Set suppression interval
-    //        setSuppressionInterval(kMFEventSuppressionIntervalForStartingMomentumScroll);
-    //
-    //        /// Set _drag to origin to start momentum scroll there
-    //        CGWarpMouseCursorPosition(_drag->origin);
-    
-    /// Send final scroll event
-    ///     This will set off momentum scroll
-    //        [_smoothingAnimator onStopWithCallback:^{ /// Do this after the smoothingAnimator is done animating
-    //            [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded];
-    //        }];
     
     /// Setup waiting for momentumScroll
     

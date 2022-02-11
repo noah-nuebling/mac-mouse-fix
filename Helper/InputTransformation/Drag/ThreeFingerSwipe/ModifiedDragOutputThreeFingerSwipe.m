@@ -70,14 +70,17 @@ static int16_t _nOfSpaces = 1;
     /// We should maybe use screenHeight to scale vertical dockSwipes (Mission Control and App Windows), but since they don't follow the mouse pointer anyways, this is fine;
     double threeFingerScaleV = threeFingerScaleH * 1.0;
     
+    /// Get phase
+    IOHIDEventPhaseBits eventPhase = _drag->firstCallback ? kIOHIDEventPhaseBegan : kIOHIDEventPhaseChanged;
+    
     /// Send events
     
     if (_drag->usageAxis == kMFAxisHorizontal) {
         double delta = -deltaX * threeFingerScaleH;
-        [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeHorizontal phase:_drag->phase];
+        [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeHorizontal phase:eventPhase];
     } else if (_drag->usageAxis == kMFAxisVertical) {
         double delta = deltaY * threeFingerScaleV;
-        [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeVertical phase:_drag->phase];
+        [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeVertical phase:eventPhase];
     }
 }
 

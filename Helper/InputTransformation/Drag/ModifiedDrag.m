@@ -32,7 +32,7 @@
 #import "ModifiedDragOutputFakeDrag.h"
 #import "ModifiedDragOutputAddMode.h"
 
-#import "GlobalEventTapThread.h";
+#import "GlobalEventTapThread.h"
 
 @implementation ModifiedDrag
 
@@ -62,8 +62,8 @@ static ModifiedDragState _drag;
         origin: (%f, %f)\n\
         originOffset: (%f, %f)\n\
         usageAxis: %u\n\
-        phase: %hu\n",
-                  drag.eventTap, drag.usageThreshold, drag.type, drag.activationState, drag.modifiedDevice, drag.origin.x, drag.origin.y, drag.originOffset.x, drag.originOffset.y, drag.usageAxis, drag.phase
+        phase: %d\n",
+                  drag.eventTap, drag.usageThreshold, drag.type, drag.activationState, drag.modifiedDevice, drag.origin.x, drag.origin.y, drag.originOffset.x, drag.originOffset.y, drag.usageAxis, drag.firstCallback
                   ];
     } @catch (NSException *exception) {
         DDLogInfo(@"Exception while generating string description of ModifiedDragState: %@", exception);
@@ -267,7 +267,7 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
         /// Update state
         
         _drag.activationState = kMFModifiedInputActivationStateInUse;
-        _drag.phase = kIOHIDEventPhaseBegan;
+        _drag.firstCallback = true;
         
         /// Notify other modules
         
@@ -284,11 +284,11 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
     
     /// Update phase
     ///
-    /// - Phase is used in `handleMouseInputWhileInUseWithDeltaX:...` (called above)
-    /// - The first time we call `handleMouseInputWhileInUseWithDeltaX:...` during a drag, the phase will be kIOHIDEventPhaseBegan. On subsequent calls, the phase will be kIOHIDEventPhaseChanged.
+    /// - firstCallback is used in `handleMouseInputWhileInUseWithDeltaX:...` (called above)
+    /// - The first time we call `handleMouseInputWhileInUseWithDeltaX:...` during a drag, the `firstCallback` will be true. On subsequent calls, the `firstCallback` will be false.
     ///     - Indirectly communicating with the plugin through _drag is a little confusing, we might want to consider removing _drag from the plugins and sending the relevant data as arguments instead.
     
-    _drag.phase = kIOHIDEventPhaseChanged;
+    _drag.firstCallback = false;
 }
 
 + (void)deactivate {

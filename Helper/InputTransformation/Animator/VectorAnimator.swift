@@ -17,7 +17,7 @@ import QuartzCore
     /// Typedef
     
     typealias UntypedAnimatorCallback = Any
-    typealias AnimatorCallback = (_ animationValueDelta: Vector, _ animationTimeDelta: Double, _ phase: MFAnimationPhase) -> ()
+    typealias AnimatorCallback = (_ animationValueDelta: Vector, _ phase: MFAnimationCallbackPhase) -> ()
     typealias StopCallback = (_ lastPhase: MFAnimationPhase) -> ()
     typealias StartParamCalculationCallback = (_ valueLeft: Vector, _ isRunning: Bool, _ animationCurve: AnimationCurve?) -> MFAnimatorStartParams
     /// ^ When starting the animator, we usually want to get the value that the animator still wants to scroll (`animationValueLeft`), and add that to the new value. The specific logic can differ a lot though, so we can't just hardcode this into `Animator`
@@ -25,11 +25,39 @@ import QuartzCore
     typealias MFAnimatorStartParams = Dictionary<String, Any>
     /// ^ 4 keys: "doStart", "duration", "vector", "curve"
     
-    /// Constants
+    /// Enum conversion
     
-    //    let lockingTimeout: Double = 0.02 /* (1.0/60.0 + 2.0/60.0) / 2.0 */
-    ///     Idk if I'm crazy but if I make this EITHER larger OR smaller than 0.02 (I tried 0.01 and 0.03) then scrolling becomes stuttery?
-    ///     Edit: I'm using (1/60 + 2/60) / 2 == 0.025 now, also seems to work fine. No idea what's going on. Edit2: 0.02 still works better. This is probably a big coincidence that I"m seeing a pattern in.
+    @objc static func callbackPhase(animationPhase: MFAnimationPhase) -> MFAnimationCallbackPhase {
+        
+        switch animationPhase {
+            
+        case kMFAnimationPhaseStart:
+            return kMFAnimationCallbackPhaseStart
+        case kMFAnimationPhaseContinue, kMFAnimationPhaseRunningStart:
+            return kMFAnimationCallbackPhaseContinue
+        case kMFAnimationPhaseEnd:
+            return kMFAnimationCallbackPhaseEnd
+        default:
+            fatalError()
+        }
+    }
+    
+    @objc static func IOHIDPhase(animationCallbackPhase: MFAnimationCallbackPhase) -> IOHIDEventPhaseBits {
+        
+        switch animationCallbackPhase {
+            
+        case kMFAnimationCallbackPhaseStart:
+            return IOHIDEventPhaseBits(kIOHIDEventPhaseBegan)
+        case kMFAnimationCallbackPhaseContinue:
+            return IOHIDEventPhaseBits(kIOHIDEventPhaseChanged)
+        case kMFAnimationCallbackPhaseEnd:
+            return IOHIDEventPhaseBits(kIOHIDEventPhaseEnded)
+        default:
+            fatalError()
+        }
+    }
+    
+    /// Constants
     
     /// Vars - Init
     
@@ -84,6 +112,9 @@ import QuartzCore
     var lastAnimationValue: Vector = Vector(x: 0, y: 0) /// animationValue when the displayLink was last called
     var lastAnimationPhase: MFAnimationPhase = kMFAnimationPhaseNone
     var animationPhase: MFAnimationPhase = kMFAnimationPhaseNone
+    var callbackPhase: MFAnimationCallbackPhase {
+        return VectorAnimator.callbackPhase(animationPhase: self.animationPhase)
+    }
     
     /// Vars -  Interface
     ///     Accessing these directly is not thread safe. Only access them from self.animatorQueue
@@ -359,14 +390,20 @@ import QuartzCore
                 self.animationDuration = TransformationUtility.roundUp(animationDurationRaw, toMultiple: displayLink.nominalTimeBetweenFrames())
             }
             
+            /// Set phase to end
+            ///     If the last callback was the last delta callback
+            ///     We know that the delta is going to be (0,0) so most of the work below is redundant in this case
+            if self.lastFrameTime >= self.animationEndTime {
+                self.animationPhase = kMFAnimationPhaseEnd
+            }
+            
             /// Check if animation time is up
             
             let closerToEndTimeThanNextFrame = abs(frameTime - self.animationEndTime) < abs(frameTime+timeInfo.timeBetweenFrames - self.animationEndTime)
             let pastEndTime = self.animationEndTime <= frameTime
             
             if closerToEndTimeThanNextFrame || pastEndTime {
-                /// Animation is ending
-                self.animationPhase = kMFAnimationPhaseEnd
+                /// This is probably the last delta callback -> make sure we scroll exactly animationValueTotal
                 frameTime = self.animationEndTime /// This is so we scroll exactly animationValueTotal
             }
             
@@ -410,10 +447,10 @@ import QuartzCore
             self.lastFrameTime = frameTime
             self.lastAnimationValue = animationValue
             
-            /// Stop animation if phase is   `end`
-            
+            /// Stop animation if phase is  `end`
             if self.animationPhase == kMFAnimationPhaseEnd {
                 self.stop_FromDisplayLinkedThread()
+                return
             }
         }
     }
@@ -438,7 +475,7 @@ import QuartzCore
         
         /// Call the callback
         
-        callback(animationValueDelta, animationTimeDelta, animationPhase)
+        callback(animationValueDelta, self.callbackPhase)
         
         /// Debug
         

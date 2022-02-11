@@ -26,4 +26,10 @@ typedef enum {
     kMFAnimationPhaseNone = 16,
 } MFAnimationPhase;
 
+typedef enum {
+    kMFAnimationCallbackPhaseStart = 0,
+    kMFAnimationCallbackPhaseContinue = 1,
+    kMFAnimationCallbackPhaseEnd = 2, /// Deltas will always be zero for this phase
+} MFAnimationCallbackPhase;
+
 #endif /* Animator_h */

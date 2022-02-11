@@ -45,7 +45,7 @@ typedef struct {
     Vector originOffset;
     CGPoint usageOrigin; /// Point at which the modified drag changed its activationState to inUse
     MFAxis usageAxis;
-    IOHIDEventPhaseBits phase;
+    Boolean firstCallback;
     
     dispatch_queue_t queue;
 } ModifiedDragState;
