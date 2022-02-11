@@ -513,8 +513,7 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
         
         /// Call momentumScrollStart callback
         
-        if (animationPhase == kMFAnimationPhaseStart
-            || animationPhase == kMFAnimationPhaseStartAndEnd) {
+        if (animationPhase == kMFAnimationPhaseStart) {
             
             if (_momentumScrollCallback != NULL) _momentumScrollCallback();
         }
@@ -527,9 +526,7 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
             momentumPhase = kCGMomentumScrollPhaseBegin;
         } else if (animationPhase == kMFAnimationPhaseContinue) {
             momentumPhase = kCGMomentumScrollPhaseContinue;
-        } else if (animationPhase == kMFAnimationPhaseEnd
-                   || animationPhase == kMFAnimationPhaseStartAndEnd) {
-            /// Not sure how to deal with kMFAnimationPhaseStartAndEnd. Maybe we should set momentumPhase to kCGMomentumScrollPhaseBegin instead?
+        } else if (animationPhase == kMFAnimationPhaseEnd) {
             momentumPhase = kCGMomentumScrollPhaseEnd;
         } else { /// We don't expect momentumPhase == kMFAnimationPhaseRunningStart
             assert(false);

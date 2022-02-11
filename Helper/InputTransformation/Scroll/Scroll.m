@@ -525,8 +525,7 @@ static void sendScroll(int64_t px, MFDirection scrollDirection, BOOL gesture, MF
         
         /// Get isFirst
         
-        if (animationPhase == kMFAnimationPhaseStart
-            || animationPhase == kMFAnimationPhaseStartAndEnd) {
+        if (animationPhase == kMFAnimationPhaseStart) {
             
             isFirstEvent = YES;
             
@@ -542,9 +541,7 @@ static void sendScroll(int64_t px, MFDirection scrollDirection, BOOL gesture, MF
         
         /// Get isFinal
         
-        if (animationPhase == kMFAnimationPhaseEnd
-            || animationPhase == kMFAnimationPhaseStartAndEnd) {
-            
+        if (animationPhase == kMFAnimationPhaseEnd) { // TODO: Does this structure still make sense after removing startAndEnd phase?
             isFinalEvent = YES;
         } else {
             isFinalEvent = NO;

@@ -171,7 +171,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
 //        valueDeltaD.y = ceil(valueDeltaD.y);
         
         if (_smoothingAnimatorShouldStartMomentumScroll
-            && (phase == kMFAnimationPhaseEnd || phase == kMFAnimationPhaseStartAndEnd)) {
+            && (phase == kMFAnimationPhaseEnd)) {
             /// Due to the nature of PixelatedAnimator, the last delta is almost always much smaller. This will make apps like Xcode start momentumScroll at a too low speed. Also apps like Xcode will have a litte stuttery jump when the time between the kIOHIDEventPhaseEnded event and the previous event is very small
             ///     Our solution to these two problems is to set the _smoothingAnimatorShouldStartMomentumScroll flag when the user releases the button, and if this flag is set, we transform the last delta callback from the animator into the kIOHIDEventPhaseEnded GestureScroll event. The deltas from this last callback are lost like this, but no one will notice.
             

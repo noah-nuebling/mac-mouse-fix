@@ -171,14 +171,14 @@ import QuartzCore
             switch self.animationPhase {
             case kMFAnimationPhaseStart, kMFAnimationPhaseContinue, kMFAnimationPhaseRunningStart:
                 break
-            case kMFAnimationPhaseEnd, kMFAnimationPhaseStartAndEnd, kMFAnimationPhaseNone:
+            case kMFAnimationPhaseEnd, kMFAnimationPhaseNone:
                 assert(false)
             default: /// This should never happen
                 fatalError();
             }
         } else {
             switch self.animationPhase {
-            case kMFAnimationPhaseEnd, kMFAnimationPhaseStartAndEnd, kMFAnimationPhaseNone:
+            case kMFAnimationPhaseEnd, kMFAnimationPhaseNone:
                 break
             case kMFAnimationPhaseStart, kMFAnimationPhaseContinue, kMFAnimationPhaseRunningStart:
                 assert(false)
@@ -190,14 +190,11 @@ import QuartzCore
         /// Update phases
         
         if (!isRunningg
-            || self.animationPhase == kMFAnimationPhaseStart
-            || self.animationPhase == kMFAnimationPhaseStartAndEnd) {
+            || self.animationPhase == kMFAnimationPhaseStart) {
             
             /// If animation phase is still start that means that the displayLinkCallback() hasn't been used it, yet (it sets it to continue after using it)
             ///     We want the first time that self.callback is called by displayLinkCallback() during the animation to have phase start, so we're not setting phase to running start in this case, even if the Animator is already running (when !isRunning is true)
-            
-            /// Regarding the kMFAnimationPhaseStartAndEnd check: This shouldn't be necessary, because we call self.stop() in the displayLinkCallback if phase is `startAndEnd`, which will make self.isRunning false. But due to some weird race condition or something, it doesn't always work. Edit: I added locks to this class to prevent the race conditions whcih should make this unnecessary
-            // TODO: Remove the `startAndEnd` check.
+
 
             self.animationPhase = kMFAnimationPhaseStart;
             self.lastAnimationPhase = kMFAnimationPhaseNone;
@@ -321,7 +318,6 @@ import QuartzCore
             
             DDLogDebug("\nAnimation value total: (\(animationValueTotal.x), \(animationValueTotal.y)), left: (\(animationValueLeft.x), \(animationValueLeft.y))")
             
-            
             /// Guard stopped
             
             if (self.animationPhase == kMFAnimationPhaseNone) {
@@ -357,7 +353,6 @@ import QuartzCore
             /// Round duration to a multiple of timeBetweenFrames
             ///     This is so that the last timeDelta is the same size as all the others
             ///     Doing this in start() would be easier but leads to deadlocks
-            ///     ? Don't need to check for startAndEnd because that is set after this
             if animationPhase == kMFAnimationPhaseStart
                 || animationPhase == kMFAnimationPhaseRunningStart {
                 
@@ -410,21 +405,15 @@ import QuartzCore
             /// Update `last` time and value and phase
             ///     \note  Should lastPhase be updated right after the callback is called? Experimentally moved it there. Move back if that breaks things
             ///         Edit: I checked and atm we only use lastAnimationPhase to set the startAndEnd phase. For that it shouldn't make a difference. But I do think it makes more sense to update it right after `callback` is called in general
+            //          TODO: Maybe remove lastAnimationPhase now that we removed startEndEnd Phase?
             
             self.lastFrameTime = frameTime
             self.lastAnimationValue = animationValue
             
             /// Stop animation if phase is   `end`
-            /// TODO: Why don't we use a defer statement to execute this like in the start functions?
             
-            switch self.animationPhase {
-            case kMFAnimationPhaseEnd, kMFAnimationPhaseStartAndEnd:
-                
+            if self.animationPhase == kMFAnimationPhaseEnd {
                 self.stop_FromDisplayLinkedThread()
-                
-            default:
-                break
-                
             }
         }
     }
@@ -439,15 +428,12 @@ import QuartzCore
             fatalError("Invalid state - callback is not type AnimatorCallback")
         }
         
-        /// Update phase to `startAndEnd` if appropriate
-        ///     -> Check if this event was first _and_  last event of animation
-        ///     This has a copy in superclass. Update that it when you change this.
-        ///     We want to do this after all other changes to the animationPhase and before the callback() call. Since the PixelatedAnimator subclassHook() changes the animationPhase before it calls the callback(), we need a copy of the below code in both subclassHooks()
-        ///     This duplicated code make things pretty confusing but, to avoid it we'd have to create like 3 different subclassHooks, which would be even more confusing.
-        
+        /// Guard simulataneously start and end
+        ///     This has a copy in subclass. Update that it when you change this.
         if (animationPhase == kMFAnimationPhaseEnd /// This is last event of the animation
             && lastAnimationPhase == kMFAnimationPhaseNone) { /// This is also the first event of the animation
-            animationPhase = kMFAnimationPhaseStartAndEnd;
+            
+            fatalError()
         }
         
         /// Call the callback

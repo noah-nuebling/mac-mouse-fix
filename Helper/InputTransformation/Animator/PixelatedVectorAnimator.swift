@@ -120,7 +120,7 @@ class PixelatedVectorAnimator: VectorAnimator {
             
             /// Validate
             
-            if (self.animationPhase == kMFAnimationPhaseEnd || self.animationPhase == kMFAnimationPhaseStartAndEnd) {
+            if (self.animationPhase == kMFAnimationPhaseEnd) {
                 /// This should never happen.
                 /// When driving momentumScroll we expect all deltas to be non-zero. I think things will break if we return 0 here. Not totally sure though.
                 /// Thoughts on how to prevent this bug:
@@ -153,18 +153,18 @@ class PixelatedVectorAnimator: VectorAnimator {
             
             DDLogDebug("AnimationValue prediction: \(intAnimationValueLeft)");
             
-            /// Update phase to `startAndEnd` if appropriate
-            ///     appropriate -> open if this event was first _and_  last event of animation
+            /// Check if simultaneously start and end
             ///     This has a copy in superclass. Update that it when you change this.
             
             if (animationPhase == kMFAnimationPhaseEnd /// This is last event of the animation
                 && lastAnimationPhase == kMFAnimationPhaseNone) { /// This is also the first event of the animation
-                animationPhase = kMFAnimationPhaseStartAndEnd;
+                
+                fatalError()
             }
             
             /// Debug
             
-            if animationPhase == kMFAnimationPhaseStart || animationPhase == kMFAnimationPhaseRunningStart || animationPhase == kMFAnimationPhaseStartAndEnd {
+            if animationPhase == kMFAnimationPhaseStart || animationPhase == kMFAnimationPhaseRunningStart {
                 summedIntegerAnimationValueDelta = Vector(x: 0, y: 0)
             }
             summedIntegerAnimationValueDelta = addedVectors(summedIntegerAnimationValueDelta, integerAnimationValueDelta)
