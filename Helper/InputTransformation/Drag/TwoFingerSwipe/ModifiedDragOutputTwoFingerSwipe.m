@@ -8,7 +8,6 @@
 //
 
 #import "ModifiedDragOutputTwoFingerSwipe.h"
-static ModifiedDragState *_drag;
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "TransformationUtility.h"
 #import "GestureScrollSimulator.h"
@@ -32,8 +31,9 @@ static dispatch_group_t _momentumScrollWaitGroup;
     
     /// Setup smoothingAnimator
     ///     When using a twoFingerModifedDrag and performance drops, the timeBetweenEvents can sometimes be erratic, and this sometimes leads apps like Xcode to start their custom momentumScroll algorithms with way too high speeds (At least I think that's whats going on) So we're using an animator to smooth things out and hopefully achieve more consistent behaviour
-    ///     Edit:
-    ///     TODO: maybe it would be smart to just delay the time between the last two events to be reasonable. That seemst to be matters for the erratic behaviour. Using the _smoothingAnimator forces us to use dispatch_group and stuff which is very very error prone. I should seriously consider if this is the best approach
+    ///
+    ///     Edit: Using the _smoothingAnimator forces us to use some very very error prone parallel code. I should seriously consider if this is the best approach.
+    ///         Maybe you could just introduce a delay between the last two events? I feel like the lack of that delay causes most of the erratic behaviour.
     
     _smoothingAnimator = [[PixelatedVectorAnimator alloc] init];
     
@@ -41,6 +41,9 @@ static dispatch_group_t _momentumScrollWaitGroup;
     ///     It allows us to wait until the _smoothingAnimator is done.
     
     _momentumScrollWaitGroup = dispatch_group_create();
+    
+    /// Make cursor settable
+    [TransformationUtility makeCursorSettable];
 }
 
 #pragma mark - Interface
@@ -50,12 +53,8 @@ static dispatch_group_t _momentumScrollWaitGroup;
     /// Store drag state
     _drag = dragStateRef;
     
-    /// Make cursor settable
-    [TransformationUtility makeCursorSettable];
-    /// ^ I think we only need to do this once, so it might be better to do this in load_Manual() instead. But it doesn't make a difference.
-    
     /// Stop momentum scroll
-    ///     TODO: I don't think this is an adequate solution - think deeply about this
+    ///     TODO: Think about this - I don't think this is an adequate solution
     [GestureScrollSimulator stopMomentumScroll];
 }
 
@@ -111,7 +110,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
         
         DDLogDebug(@"Time since last baseAnimator start: %f", tsDiff * 1000);
         
-        /// Return
+        /// Get return values
         
         if (magnitudeOfVector(combinedVec) == 0.0) {
             DDLogWarn(@"Not starting baseAnimator since combinedMagnitude is 0.0");
@@ -122,6 +121,8 @@ static dispatch_group_t _momentumScrollWaitGroup;
             p[@"curve"] = ScrollConfig.linearCurve;
         }
         
+        /// Debug
+        
         static Vector scrollDeltaSum = { .x = 0, .y = 0};
         scrollDeltaSum.x += fabs(currentVec.x);
         scrollDeltaSum.y += fabs(currentVec.y);
@@ -129,6 +130,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
         DDLogDebug(@"Value left pre-animator: (%f, %f)", valueLeft.x, valueLeft.y);
         
         /// Return
+        
         return p;
         
     } integerCallback:^(Vector deltaVec, MFAnimationCallbackPhase animatorPhase) {
@@ -139,7 +141,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
 //        scrollDeltaSummm += fabs(valueDeltaD);
 //        DDLogDebug(@"Delta sum in-animator: %f", scrollDeltaSummm);
         
-        DDLogDebug(@"\n twoFingerDragSmoother - delta: (%f, %f), phase: %d", deltaVec.x, deltaVec.y, animatorPhase);
+//        DDLogDebug(@"\n twoFingerDragSmoother - delta: (%f, %f), phase: %d", deltaVec.x, deltaVec.y, animatorPhase);
         
         if (animatorPhase == kMFAnimationCallbackPhaseEnd) {
             
@@ -154,7 +156,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
             
         [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaVec.x deltaY:deltaVec.y phase:eventPhase];
         
-        if (eventPhase == kIOHIDEventPhaseBegan) eventPhase = kIOHIDEventPhaseChanged;
+        eventPhase = kIOHIDEventPhaseChanged;
         
     }];
 }
@@ -172,26 +174,26 @@ static dispatch_group_t _momentumScrollWaitGroup;
         dispatch_group_leave(_momentumScrollWaitGroup);
         
         /// Delete momentumScroll callback
-        ///     Otherwise, there might be a 'dispatch_group_leave()' without a corresponding dispatch_group_enter() and the app will crash.
+        ///     App will crash if dispatch_group_leave() is called again!
         [GestureScrollSimulator afterStartingMomentumScroll:NULL];
     }];
     
     /// Start momentumScroll
     
     if (_smoothingAnimator.isRunning) { /// Let _smoothingAnimator start momentumScroll
-        _smoothingAnimatorShouldStartMomentumScroll = YES; /// _smoothingAnimator callback also manipulates this which is a race cond
+        _smoothingAnimatorShouldStartMomentumScroll = YES;
         
     } else { /// Start momentumScroll directly
         [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded];
     }
     
     /// Wait until momentumScroll has been started
-    ///     We want to wait for momentumScroll so it is started before the warp. That way momentumScrol will still kick in and work, even if we moved the pointer outside the scrollView that we started scrolling in.
+    ///     We want to wait for momentumScroll so it is started before the warp. That way momentumScroll will work, even if we moved the pointer outside the scrollView that we started scrolling in.
     ///     Waiting here will also block all other items on _twoFingerDragQueue
     
-    ///     This whole _momentumScrollWaitGroup thing is pretty risky, because if there is any race condition and we don't leave the group properly, then we need to crash the whole app (I think?).
+    ///     This whole _momentumScrollWaitGroup thing is pretty risky, because if there is any race condition and we don't leave the group properly, then we need to crash the app
     ///     It's really hard to avoid race conditions here though the different  eventTap threads that control ModifiedDrag and all the different nested dispatch queues of ModifiedDrag and its smoothingAnimator and the GestureScrollSimulator queue and it's momentumAnimator's queue and then all those animators have displayLinks with their own queues.... All of these queues call each other in a mix of synchronous and asynchronous, and it all needs to work perfectly without race conditions or deadlocks... Really hard to keep track of.
-    ///     If our code is perfect, then it's a good solution though!
+    ///     If we manage to figure this out, this will make for a great user experience though.
     
     /// Wait for momentumScroll to start
     
@@ -206,7 +208,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
         
         /// Crash
         assert(false);
-        exit(EXIT_FAILURE); /// To make sure it also quits in release builds
+        exit(EXIT_FAILURE); /// Make sure it also quits in release builds
     }
     
     /// Unfreeze dispatch point
