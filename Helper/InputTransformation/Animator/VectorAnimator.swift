@@ -470,7 +470,7 @@ import QuartzCore
         if (animationPhase == kMFAnimationPhaseEnd /// This is last event of the animation
             && lastAnimationPhase == kMFAnimationPhaseNone) { /// This is also the first event of the animation
             
-            fatalError()
+//            fatalError()
         }
         
         /// Call the callback

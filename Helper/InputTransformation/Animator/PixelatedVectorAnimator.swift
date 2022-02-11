@@ -137,9 +137,12 @@ class PixelatedVectorAnimator: VectorAnimator {
         ///     This has a copy in superclass. Update that it when you change this.
         
         if (animationPhase == kMFAnimationPhaseEnd /// This is last event of the animation
-            && lastAnimationPhase == kMFAnimationPhaseNone) { /// This is also the first event of the animation
+            && lastAnimationPhase == kMFAnimationPhaseNone) { /// There has not been an event with a non-zero delta during this animation.
             
-            fatalError()
+            /// I don't think this assert is necessary or useful. We use the biasedSubpixelator to ensure a non-zero delta on the first callback after resetting the subpixelators, but after that it doesn't matter.
+            /// We could consider just not sending anything in this case, but that would just be a very minor speed optimization.
+            
+//            fatalError()
         }
         
         /// Debug

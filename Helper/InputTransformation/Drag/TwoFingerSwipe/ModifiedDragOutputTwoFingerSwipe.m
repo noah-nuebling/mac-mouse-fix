@@ -93,7 +93,6 @@ static dispatch_group_t _momentumScrollWaitGroup;
     IOHIDEventPhaseBits firstCallback = _drag->firstCallback;
     
     /// Start animator
-    ///     We made this a BaseAnimator instead of a PixelatedAnimator for debugging
     [_smoothingAnimator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(Vector valueLeft, BOOL isRunning, id<AnimationCurve> _Nullable curve) {
         
         NSMutableDictionary *p = [NSMutableDictionary dictionary];
@@ -141,35 +140,6 @@ static dispatch_group_t _momentumScrollWaitGroup;
 //        DDLogDebug(@"Delta sum in-animator: %f", scrollDeltaSummm);
         
         DDLogDebug(@"\n twoFingerDragSmoother - delta: (%f, %f), phase: %d", deltaVec.x, deltaVec.y, animatorPhase);
-        
-        // TODO: Change this
-        /// Even if we use a pixelated animator here (at least in it' current form), this is not going to work right.
-        /// Why? Because when we make our delta the magnitude of the current direction, then the x and y values of the direction vector will not be integers, even if the delta is an int (which is what pixelated animator guarantees)
-        /// Possible solutions:
-        ///     - Create a new 'PixelatedVectorAnimator'
-        ///     - Subpixelate in the callback of BaseAnimator
-        ///         -> Will produce (0,0) deltas sometimes I think
-        ///         -> But are we sure that (0,0) deltas are that bad? I don't remember why we avoid them so much. I think real events from the trackpad never have (0,0) deltas though
-        ///     - Make separate Pixelated Animator for x and y values.
-        ///         - This is a horrible idea. We'd have to sync them with condition vars and mutex locks and then when one skips a frame because it has a (0,0) delta we're f'ed.
-        
-        // TODO: v This is just random thoughts about animator, move it into the animator class or into a notes app
-        /// Other random ideas for improving Animator:
-        ///     1 We could turn the second to last delta event into the last one and send the remaining delta there. Then the last delta wouldn't be smaller than the others (But it would be bigger instead, which is probably not better - not that great of an idea)
-        ///     2. We could sync animation time with the frame refreshes
-        ///         - To be more precise, we could:
-        ///             2.1. Set the animation start time at the first frame callback of the animation
-        ///                 - If we do this the very first callback would never produce a delta, which might make things less responsive
-        ///                 -> Instead we could set the animation start point to one frame before the first frame callback retroactively. Seems kind of strange but it might just work
-        ///             2.2. Round the overall animation time to be divisible by the time between frames
-        ///                 - When we combine 1. and 2. this should make all times between frames equal. So the first and last frame callback won't randomly produce larger or smaller deltas than the others
-        ///                 - This might be useful because the last delta that is being produced determines the momentum scroll speed in some apps like Xcode
-        ///                 - This would also make make idea 1. obsolete
-        ///     3. We could make the animator send one last 'post-end' event after the last event which sends a delta.
-        ///         Currently we use the last delta event to start momentum scroll in some cases (and ignore the delta that is being sent). We do this because the last delta will usually be smaller which will make momentum scroll too slow in apps that implement their own momentum scroll algortihm like Xcode, and because we need to have a little time between the last delta event and the momentum scroll start, because otherwise there will be a jittery jump when momentum scroll starts in apps like Xcode.
-        ///         -> If we combine idea's 2. and 3. we could avoid this hack
-        ///         -> But it's honestly probably not worth it, since all it would improve is not skipping those 2 pixels before momentum scroll starts, which no one will ever notice and maybe cleaning up the code a little bit.
-        ///
         
         if (animatorPhase == kMFAnimationCallbackPhaseEnd) {
             
