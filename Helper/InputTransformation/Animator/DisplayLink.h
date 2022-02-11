@@ -34,8 +34,8 @@ typedef void(^DisplayLinkCallback)(DisplayLinkCallbackTimeInfo timeInfo);
 + (instancetype)displayLink;
 - (void)startWithCallback:(DisplayLinkCallback)callback;
 - (void)stop;
-//- (void)stop_FromDisplayLinkedThread;
 - (BOOL)isRunning;
+- (CFTimeInterval)nominalTimeBetweenFrames;
 - (void)linkToMainScreen;
 
 - (void)linkToDisplayUnderMousePointerWithEvent:(CGEventRef)event;

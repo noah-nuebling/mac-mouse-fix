@@ -33,6 +33,18 @@ BOOL directionChanged(MFDirection direction1, MFDirection direction2) {
     return YES;
 }
 
++ (double)roundUp:(double)numToRound toMultiple:(double)multiple {
+    /// Src: https://stackoverflow.com/a/3407254/10601702
+    
+    if (multiple == 0) return numToRound;
+    
+    int remainder = fmod(numToRound, multiple);
+    
+    if (remainder == 0) return numToRound;
+    
+    return numToRound + multiple - remainder;
+}
+
 + (NSTimeInterval)nsTimeStamp {
     /// Time since system startup in seconds. This value is used in NSEvent timestamps
 

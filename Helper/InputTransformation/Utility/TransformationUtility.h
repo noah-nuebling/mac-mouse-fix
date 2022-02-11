@@ -25,6 +25,8 @@ typedef enum {
 
 BOOL directionChanged(MFDirection direction1, MFDirection direction2);
 
++ (double)roundUp:(double)numToRound toMultiple:(double)multiple;
+
 + (NSTimeInterval)nsTimeStamp;
 
 + (CFMachPortRef)createEventTapWithLocation:(CGEventTapLocation)location

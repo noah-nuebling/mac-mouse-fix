@@ -10,6 +10,7 @@
 import Foundation
 import CocoaLumberjackSwift
 import CoreVideo
+import QuartzCore
 
 @objc class VectorAnimator: NSObject {
 
@@ -52,8 +53,14 @@ import CoreVideo
     
     /// Vars - Start & stop
     
-    var animationTimeInterval: Interval = .unitInterval /// Just initing so Swift doesn't complain. This value is unused
+    var animationDuration: CFTimeInterval = 0
+    var animationStartTime: CFTimeInterval = 0
+    var animationEndTime: CFTimeInterval { animationStartTime + animationDuration }
+    var animationTimeInterval: Interval { Interval(location: animationStartTime, length: animationDuration) }
+    
     var animationValueTotal: Vector = Vector(x: 0, y: 0)
+    var animationValueIntervalX: Interval { Interval(start: 0, end: animationValueTotal.x) }
+    var animationValueIntervalY: Interval { Interval(start: 0, end: animationValueTotal.y) }
     
     @objc var isRunning: Bool {
         var result: Bool = false
@@ -72,16 +79,17 @@ import CoreVideo
     
     /// Vars - DisplayLink
     
-    var lastAnimationTime: Double = -1 /// Time at which the displayLink was last called
+    var lastFrameTime: Double = -1 /// Time at which the displayLink was last called
     var lastAnimationValue: Vector = Vector(x: 0, y: 0) /// animationValue when the displayLink was last called
     var lastAnimationPhase: MFAnimationPhase = kMFAnimationPhaseNone
     var animationPhase: MFAnimationPhase = kMFAnimationPhaseNone
     
     /// Vars -  Interface
     ///     Accessing these directly is not thread safe. Only access them from self.animatorQueue
+    //      TODO: Make these private since they are not thread safe
     
     @objc var animationTimeLeft: Double {
-        let result = animationTimeInterval.length - lastAnimationTime
+        let result = animationEndTime - lastFrameTime
         return result
     }
     @objc var animationValueLeft: Vector {
@@ -129,11 +137,11 @@ import CoreVideo
                     return;
                 }
             }
-            self.startWithUntypedCallback_Unsafe(duration: p["duration"] as! Double, value: vectorFromValue(p["vector"] as! NSValue), animationCurve: p["curve"] as! AnimationCurve, callback: callback);
+            self.startWithUntypedCallback_Unsafe(durationRaw: p["duration"] as! Double, value: vectorFromValue(p["vector"] as! NSValue), animationCurve: p["curve"] as! AnimationCurve, callback: callback);
         }
     }
     
-    internal func startWithUntypedCallback_Unsafe(duration: CFTimeInterval,
+    internal func startWithUntypedCallback_Unsafe(durationRaw: CFTimeInterval,
                                                   value: Vector,
                                                   animationCurve: AnimationCurve,
                                                   callback: UntypedAnimatorCallback) {
@@ -197,28 +205,23 @@ import CoreVideo
             self.animationPhase = kMFAnimationPhaseRunningStart;
         }
         
-        /// Debug
+        /// Round duration to a multiple of timeBetweenFrames
         
-        //        DDLogDebug("START ANIMATOR \(self.hash) with phase: \(self.animationPhase.rawValue)")
+        let duration = TransformationUtility.roundUp(durationRaw, toMultiple: displayLink.nominalTimeBetweenFrames())
         
         /// Update the rest of the state
         
         if (isRunningg) {
             
-            //            self.lastAnimationTime =  CACurrentMediaTime();
-            /// ^ I think it should make for smoother animations, if we **don't** set the lastAnimationTime to `now` when the displayLink is already running, but that's an experiment. I'm not sure. Edit: Not sure if it makes a difference but it's fine
-            
-            self.animationTimeInterval = Interval(location: self.lastAnimationTime, length: duration)
+            self.animationStartTime = lastFrameTime
+            self.animationDuration = duration
             self.animationValueTotal = value
-            
             
         } else {
             
-            let now: CFTimeInterval = CACurrentMediaTime()
-            
-            self.lastAnimationTime = now
-            
-            self.animationTimeInterval = Interval(location: now, length: duration)
+            /// animationStartTime will be set in the displayLinkCallback
+            self.animationStartTime = -1
+            self.animationDuration = duration
             self.animationValueTotal = value
             
             /// Start displayLink
@@ -313,17 +316,6 @@ import CoreVideo
     
     @objc func displayLinkCallback(_ timeInfo: DisplayLinkCallbackTimeInfo) {
         
-        /// Lock
-        
-        //        var timeoutResult: DispatchTimeoutResult = .timedOut
-        //        while (timeoutResult == .timedOut) {
-        //            timeoutResult = self.threadLock.wait(timeout: .now() + self.lockingTimeout)
-        //            if (timeoutResult == .timedOut) {
-        //                DDLogWarn("Timed out while trying to acquire lock to do displayLinkCallback.")
-        //            }
-        //        }
-        //        assert(timeoutResult == .success)
-        
         self.animatorQueue.sync { /// Use sync so this is actually executed on the high-priority display-linked thread
             
             /// Debug
@@ -347,38 +339,54 @@ import CoreVideo
                 fatalError("Invalid state - animationCurve can't be nil during running animation")
             }
             
-            /// Get current animation time aka `now`
+            /// Get time when frame will be displayed
+            var frameTime = timeInfo.outFrame
             
-            var now: CFTimeInterval = CACurrentMediaTime() /// Should maybe rename this to `animationTime`. It's not necessarily now when it's used.
+            /// Set animation start time
+            if animationPhase == kMFAnimationPhaseStart {
+                /// ^ I don't think we have to check for lastAnimationPhase
+                ///     to make sure this is the first callback?
+                
+                /// Pull time of last frame out of butt
+                self.lastFrameTime = frameTime - timeInfo.nominalTimeBetweenFrames
+                
+                /// Set animation start time to hypothetical last frame
+                self.animationStartTime = self.lastFrameTime
+            }
             
-            if now >= self.animationTimeInterval.end {
+            /// Check if animation time is up
+            
+            let closeEnoughToEndTime = abs(frameTime - self.animationEndTime) < abs(frameTime+timeInfo.timeBetweenFrames - self.animationEndTime)
+            let pastEndTime = self.animationEndTime <= frameTime
+            
+            if closeEnoughToEndTime || pastEndTime {
                 /// Animation is ending
                 self.animationPhase = kMFAnimationPhaseEnd
-                now = self.animationTimeInterval.end /// Set now back to a valid value so we don't scroll too far and our scale functions don't throw errors
+                frameTime = self.animationEndTime /// So we scroll exactly animationValueTotal
             }
             
             /// Get normalized time
             
-            let animationTimeUnit: Double = Math.scale(value: now, from: self.animationTimeInterval, to: .unitInterval) /// From 0 to 1
+            let animationTimeUnit: Double = Math.scale(value: frameTime, from: self.animationTimeInterval, to: .unitInterval)
             
             /// Get normalized animation value from animation curve
             
-            let animationValueUnit: Double = animationCurve.evaluate(at: animationTimeUnit) /// From 0 to 1
+            let animationValueUnit: Double = animationCurve.evaluate(at: animationTimeUnit)
             
             /// Get actual animation value
             
             var animationValue = Vector(x: 0, y: 0)
             
             if animationValueTotal.x != 0 {
-                animationValue.x = Math.scale(value: animationValueUnit, from: .unitInterval, to: Interval(start: 0, end: animationValueTotal.x))
+                animationValue.x = Math.scale(value: animationValueUnit, from: .unitInterval, to: animationValueIntervalX)
             }
             if animationValueTotal.y != 0 {
-                animationValue.y = Math.scale(value: animationValueUnit, from: .unitInterval, to: Interval(start: 0, end: animationValueTotal.y))
+                animationValue.y = Math.scale(value: animationValueUnit, from: .unitInterval, to: animationValueIntervalY)
             }
             
             /// Get change since last frame aka `delta`
             
-            let animationTimeDelta: CFTimeInterval = now - self.lastAnimationTime
+            let animationTimeDelta: CFTimeInterval = frameTime - self.lastFrameTime
             let animationValueDelta: Vector = subtractedVectors(animationValue, lastAnimationValue)
             
             /// Subclass hook.
@@ -390,14 +398,8 @@ import CoreVideo
             ///     \note  Should lastPhase be updated right after the callback is called? Experimentally moved it there. Move back if that breaks things
             ///         Edit: I checked and atm we only use lastAnimationPhase to set the startAndEnd phase. For that it shouldn't make a difference. But I do think it makes more sense to update it right after `callback` is called in general
             
-            self.lastAnimationTime = now
+            self.lastFrameTime = frameTime
             self.lastAnimationValue = animationValue
-            //            self.lastAnimationPhase = self.animationPhase
-            
-            /// DEBUG
-            
-            //            DDLogDebug("\nAnimatorrr Time: \((now - animationTimeInterval.start)/animationTimeInterval.length), range: \(self.animationTimeInterval.length)")
-            //            DDLogDebug("\nAnimatorrr Value: \(animationValue), range: \(self.animationValueInterval)")
             
             /// Stop animation if phase is   `end`
             /// TODO: Why don't we use a defer statement to execute this like in the start functions?
@@ -408,9 +410,6 @@ import CoreVideo
                 self.stop_FromDisplayLinkedThread()
                 
             default:
-                /// Unlock
-                ///     Make you don't accidentally return from this function prematurely, such that the lock isn't released
-                //                self.threadLock.signal()
                 break
                 
             }

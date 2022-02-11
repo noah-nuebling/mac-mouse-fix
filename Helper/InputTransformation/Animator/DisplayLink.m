@@ -173,6 +173,13 @@ BOOL isRunning_Internal(CVDisplayLinkRef dl) {
     return CVDisplayLinkIsRunning(dl);
 }
 
+/// Get timeBetweenFrames
+
+- (CFTimeInterval)nominalTimeBetweenFrames {
+    CVTime t = CVDisplayLinkGetNominalOutputVideoRefreshPeriod(_displayLink);
+    return (t.timeValue / (double)t.timeScale);
+}
+
 /// Set display to mouse location
 
 - (void)linkToMainScreen {
