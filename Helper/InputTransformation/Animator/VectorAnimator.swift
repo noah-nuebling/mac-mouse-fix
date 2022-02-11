@@ -53,6 +53,7 @@ import QuartzCore
     
     /// Vars - Start & stop
     
+    var animationDurationRaw: CFTimeInterval = 0
     var animationDuration: CFTimeInterval = 0
     var animationStartTime: CFTimeInterval = 0
     var animationEndTime: CFTimeInterval { animationStartTime + animationDuration }
@@ -205,23 +206,21 @@ import QuartzCore
             self.animationPhase = kMFAnimationPhaseRunningStart;
         }
         
-        /// Round duration to a multiple of timeBetweenFrames
-        
-        let duration = TransformationUtility.roundUp(durationRaw, toMultiple: displayLink.nominalTimeBetweenFrames())
-        
         /// Update the rest of the state
         
         if (isRunningg) {
             
             self.animationStartTime = lastFrameTime
-            self.animationDuration = duration
+            self.animationDuration = -1
+            self.animationDurationRaw = durationRaw
             self.animationValueTotal = value
             
         } else {
             
             /// animationStartTime will be set in the displayLinkCallback
             self.animationStartTime = -1
-            self.animationDuration = duration
+            self.animationDuration = -1
+            self.animationDurationRaw = durationRaw
             self.animationValueTotal = value
             
             /// Start displayLink
@@ -351,24 +350,33 @@ import QuartzCore
                 self.lastFrameTime = frameTime - timeInfo.nominalTimeBetweenFrames
                 
                 /// Set animation start time to hypothetical last frame
+                ///     This is so that the first timeDelta is the same size as all the others (instead of 0)
                 self.animationStartTime = self.lastFrameTime
+            }
+            
+            /// Round duration to a multiple of timeBetweenFrames
+            ///     This is so that the last timeDelta is the same size as all the others
+            ///     Doing this in start() would be easier but leads to deadlocks
+            ///     ? Don't need to check for startAndEnd because that is set after this
+            if animationPhase == kMFAnimationPhaseStart
+                || animationPhase == kMFAnimationPhaseRunningStart {
+                
+                self.animationDuration = TransformationUtility.roundUp(animationDurationRaw, toMultiple: displayLink.nominalTimeBetweenFrames())
             }
             
             /// Check if animation time is up
             
-            let closeEnoughToEndTime = abs(frameTime - self.animationEndTime) < abs(frameTime+timeInfo.timeBetweenFrames - self.animationEndTime)
+            let closerToEndTimeThanNextFrame = abs(frameTime - self.animationEndTime) < abs(frameTime+timeInfo.timeBetweenFrames - self.animationEndTime)
             let pastEndTime = self.animationEndTime <= frameTime
             
-            if closeEnoughToEndTime || pastEndTime {
+            if closerToEndTimeThanNextFrame || pastEndTime {
                 /// Animation is ending
                 self.animationPhase = kMFAnimationPhaseEnd
-                frameTime = self.animationEndTime /// So we scroll exactly animationValueTotal
+                frameTime = self.animationEndTime /// This is so we scroll exactly animationValueTotal
             }
             
             /// Debug
-//            static double scrollDeltaSummm = 0;
-//            scrollDeltaSummm += valueDelta;
-            DDLogDebug("Time delta in-animator: \(frameTime - lastFrameTime)");
+            DDLogDebug("\nTime delta in-animator: \(frameTime - lastFrameTime)");
             
             /// Get normalized time
             
