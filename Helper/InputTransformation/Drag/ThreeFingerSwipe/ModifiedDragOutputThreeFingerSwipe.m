@@ -49,28 +49,21 @@ static int16_t _nOfSpaces = 1;
     
     /**
      Horizontal dockSwipe scaling
-     This makes horizontal dockSwipes (switch between spaces) follow the pointer exactly. (If everything works)
+     This makes horizontal dockSwipes (switch between spaces) follow the pointer exactly
      I arrived at these value through testing documented in the NotePlan note "MMF - Scraps - Testing DockSwipe scaling"
      TODO: Test this on a vertical screen
      */
+    CGSize screenSize = NSScreen.mainScreen.frame.size;
     double originOffsetForOneSpace = _nOfSpaces == 1 ? 2.0 : 1.0 + (1.0 / (_nOfSpaces-1));
-    /// ^ I've seen this be: 1.25, 1.5, 2.0. Not sure why. Restarting, attaching displays, or changing UI scaling don't seem to change it from my testing. It just randomly changes after a few weeks.
-    ///     I think I finally see the pattern:
-    ///         It's 2.0 for 2 spaces
-    ///         It's 1.5 for 3 spaces
-    ///         It's 1.25 for 5 spaces
-    ///         So the patterns is: 1 + 1 / (nOfSpaces-1)
-    ///            (Except for 1 cause you can't divide by zero)
-    
-    CGFloat screenWidth = NSScreen.mainScreen.frame.size.width;
     double spaceSeparatorWidth = 63;
-    double threeFingerScaleH = originOffsetForOneSpace / (screenWidth + spaceSeparatorWidth);
+    double threeFingerScaleH = originOffsetForOneSpace / (screenSize.width + spaceSeparatorWidth);
     
     /// Vertical dockSwipe scaling
-    /// We should maybe use screenHeight to scale vertical dockSwipes (Mission Control and App Windows), but since they don't follow the mouse pointer anyways, this is fine;
-    double threeFingerScaleV = threeFingerScaleH * 1.0;
+    ///     Not sure if it makes sense to scale this with screen height
+    double threeFingerScaleV = 1.0 / screenSize.height;
     
     /// Get phase
+    
     IOHIDEventPhaseBits eventPhase = _drag->firstCallback ? kIOHIDEventPhaseBegan : kIOHIDEventPhaseChanged;
     
     /// Send events

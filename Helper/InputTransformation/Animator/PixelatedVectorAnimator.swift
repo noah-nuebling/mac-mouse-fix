@@ -121,7 +121,8 @@ class PixelatedVectorAnimator: VectorAnimator {
         
         let integerAnimationValueDelta = subPixelator.intVector(withDouble: animationValueDelta)
         
-        /// Skip this frames callback and don't update animationPhase from `start` to `continue` if integerValueDelta is 0
+        /// Skip this frames callback
+        ///     and don't update animationPhase from `start` to `continue`
         
         if (isZeroVector(integerAnimationValueDelta)
             && self.animationPhase != kMFAnimationPhaseEnd) {
@@ -134,16 +135,11 @@ class PixelatedVectorAnimator: VectorAnimator {
         }
         
         /// Check if simultaneously start and end
-        ///     This has a copy in superclass. Update that it when you change this.
-        
-        if (animationPhase == kMFAnimationPhaseEnd /// This is last event of the animation
-            && lastAnimationPhase == kMFAnimationPhaseNone) { /// There has not been an event with a non-zero delta during this animation.
-            
-            /// I don't think this assert is necessary or useful. We use the biasedSubpixelator to ensure a non-zero delta on the first callback after resetting the subpixelators, but after that it doesn't matter.
-            /// We could consider just not sending anything in this case, but that would just be a very minor speed optimization.
-            
-//            fatalError()
-        }
+        ///     There is similar code in superclass. Update that it when you change this.
+         
+        let isEndAndNoPrecedingDeltas =
+            animationPhase == kMFAnimationPhaseEnd /// This is last event of the animation
+            && lastAnimationPhase == kMFAnimationPhaseNone  /// There has not been an event with a non-zero delta during this animation.
         
         /// Debug
         
@@ -171,7 +167,9 @@ class PixelatedVectorAnimator: VectorAnimator {
         
         /// Call callback
         
-        callback(integerAnimationValueDelta, self.callbackPhase)
+        if (!isEndAndNoPrecedingDeltas) { /// Skip `end` phase callbacks if there have been no deltas.
+            callback(integerAnimationValueDelta, self.callbackPhase)
+        }
         
         /// Debug
         

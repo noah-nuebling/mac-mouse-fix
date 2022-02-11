@@ -466,12 +466,13 @@ import QuartzCore
         }
         
         /// Guard simulataneously start and end
-        ///     This has a copy in subclass. Update that it when you change this.
-        if (animationPhase == kMFAnimationPhaseEnd /// This is last event of the animation
-            && lastAnimationPhase == kMFAnimationPhaseNone) { /// This is also the first event of the animation
-            
-//            fatalError()
-        }
+        ///     There is similar code in subclass. Update that it when you change this.
+        
+        let isEndAndNoPrecedingDeltas =
+            animationPhase == kMFAnimationPhaseEnd /// This is last event of the animation
+            && lastAnimationPhase == kMFAnimationPhaseNone  /// There has not been an event with a non-zero delta during this animation.
+
+        assert(!isEndAndNoPrecedingDeltas)
         
         /// Call the callback
         
