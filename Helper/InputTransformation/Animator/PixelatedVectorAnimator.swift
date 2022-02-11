@@ -81,7 +81,7 @@ class PixelatedVectorAnimator: VectorAnimator {
             
             /// Start animator
             
-            super.startWithUntypedCallback_Unsafe(durationRaw: p["duration"] as! Double, value: vectorFromValue(p["vector"] as! NSValue), animationCurve: p["curve"] as! AnimationCurve, callback: integerCallback)
+            super.startWithUntypedCallback_Unsafe(durationRaw: p["duration"] as! Double, value: vectorFromNSValue(p["vector"] as! NSValue), animationCurve: p["curve"] as! AnimationCurve, callback: integerCallback)
             
             /// Debug
             

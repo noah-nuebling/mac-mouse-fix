@@ -14,7 +14,7 @@ import CocoaLumberjackSwift
 
     static var activeModifications: Dictionary<AnyHashable, Any> = [:];
     
-    @objc public static func currentScrollModifications(event: CGEvent) -> MFScrollModificationResult {
+    @objc public static func currentModifications(event: CGEvent) -> MFScrollModificationResult {
         
         /// Debug
         

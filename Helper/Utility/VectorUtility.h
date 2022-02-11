@@ -30,10 +30,10 @@ Vector subtractedVectors(Vector vec1, Vector vec2);
 double dotProduct(Vector vec1, Vector vec2);
 bool isZeroVector(Vector vec);
 
-Vector vectorFromValue(NSValue *value);
-NSValue *valueFromVector(Vector vector);
+Vector vectorFromNSValue(NSValue *value);
+NSValue *nsValueFromVector(Vector vector);
 
-Vector vectorFromDirection(double delta, MFDirection direction);
+Vector vectorFromDeltaAndDirection(double delta, MFDirection direction);
 
 @end
 

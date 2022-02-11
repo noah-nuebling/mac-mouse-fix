@@ -169,7 +169,7 @@ import QuartzCore
                     return;
                 }
             }
-            self.startWithUntypedCallback_Unsafe(durationRaw: p["duration"] as! Double, value: vectorFromValue(p["vector"] as! NSValue), animationCurve: p["curve"] as! AnimationCurve, callback: callback);
+            self.startWithUntypedCallback_Unsafe(durationRaw: p["duration"] as! Double, value: vectorFromNSValue(p["vector"] as! NSValue), animationCurve: p["curve"] as! AnimationCurve, callback: callback);
         }
     }
     

@@ -66,7 +66,7 @@ bool isZeroVector(Vector vec) {
     return vec.x == 0 && vec.y == 0;
 }
 
-Vector vectorFromDirection(double delta, MFDirection direction) {
+Vector vectorFromDeltaAndDirection(double delta, MFDirection direction) {
     
     assert(delta != 0);
     assert(delta > 0);
@@ -93,13 +93,13 @@ Vector vectorFromDirection(double delta, MFDirection direction) {
     return outVec;
 }
 
-Vector vectorFromValue(NSValue *value) {
+Vector vectorFromNSValue(NSValue *value) {
     Vector result;
     [value getValue: &result];
     return result;
 }
 
-NSValue *valueFromVector(Vector vector) {
+NSValue *nsValueFromVector(Vector vector) {
     NSValue *result = [NSValue value:&vector withObjCType:@encode(Vector)];
     return result;
 }

@@ -78,12 +78,12 @@ static ScrollConfig *_scrollConfig;
     /// Create animator
     _animator = [[PixelatedVectorAnimator alloc] init];
     
-    /// Init config instance
+    /// Create initial config instance
     _scrollConfig = [[ScrollConfig alloc] init];
 }
 
 + (void)resetState {
-    /// This is untested
+    /// Untested
     
     [_animator stop];
     [GestureScrollSimulator stopMomentumScroll];
@@ -91,43 +91,26 @@ static ScrollConfig *_scrollConfig;
 }
 
 + (void)decide {
-    /// TODO: Think about / update this
-    /// Either activate SmoothScroll or RoughScroll or stop scroll interception entirely
-    /// Call this whenever a value which the decision depends on changes
+    /// Whether to enable or enable scrolling interception
+    ///     Call this whenever a value which the decision depends on changes
     
-    BOOL disableAll =
-    ![DeviceManager devicesAreAttached];
-    //|| (!_isSmoothEnabled && _scrollDirection == 1);
-//    || isEnabled == NO;
+    BOOL disableAll = ![DeviceManager devicesAreAttached];
     
     if (disableAll) {
-        DDLogInfo(@"Disabling scroll interception");
-        // Disable scroll interception
+        /// Disable scroll interception
         if (_eventTap) {
             CGEventTapEnable(_eventTap, false);
         }
-        // Disable other scroll classes
-//        [ScrollModifiers stop];
-//        [SmoothScroll stop];
-//        [RoughScroll stop];
     } else {
-        // Enable scroll interception
+        /// Enable scroll interception
         CGEventTapEnable(_eventTap, true);
-        // Enable other scroll classes
-//        [ScrollModifiers start];
-//        if (ScrollConfig.smoothEnabled) {
-//            DDLogInfo(@"Enabling SmoothScroll");
-//            [SmoothScroll start];
-//            [RoughScroll stop];
-//        } else {
-//            DDLogInfo(@"Enabling RoughScroll");
-//            [SmoothScroll stop];
-//            [RoughScroll start];
-//        }
     }
+    
+    /// Are there other things we should enable/disable here?
+    ///     ScrollModifiers.reactToModiferChange() comes to mind
 }
 
-#pragma mark - Private functions
+#pragma mark - Event tap
 
 static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
@@ -153,7 +136,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     int64_t scrollDeltaAxis2 = CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis2);
     bool isDiagonal = scrollDeltaAxis1 != 0 && scrollDeltaAxis2 != 0;
     if (isPixelBased != 0
-        || scrollPhase != 0 /// Adding scrollphase here is untested
+        || scrollPhase != 0 /// Not entirely sure if testing for 'scrollPhase' here makes sense
         || isDiagonal) {
         
         return event;
@@ -165,17 +148,20 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     CFTimeInterval tickTime = CACurrentMediaTime();
         
     /// Create copy of event
+    
     CGEventRef eventCopy = CGEventCreateCopy(event); /// Create a copy, because the original event will become invalid and unusable in the new queue.
     
+    /// Enqueue heavy processing
     ///  Executing heavy stuff on a different thread to prevent the eventTap from timing out. We wrote this before knowing that you can just re-enable the eventTap when it times out. But this doesn't hurt.
     
-    /// Enqueue heavy processing
     dispatch_async(_scrollQueue, ^{
         heavyProcessing(eventCopy, scrollDeltaAxis1, scrollDeltaAxis2, tickTime);
     });
     
     return nil;
 }
+
+#pragma mark - Main event processing
 
 static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t scrollDeltaAxis2, CFTimeInterval tickTime) {
     
@@ -208,8 +194,6 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     if (firstConsecutive) {
         /// Checking which app is under the mouse pointer and the other stuff we do here is really slow, so we only do it when necessary
         
-        DDLogDebug(@"First consec");
-        
         /// Update application Overrides
         
         [ScrollUtility updateMouseDidMoveWithEvent:event];
@@ -220,16 +204,10 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         
         if (ScrollUtility.mouseDidMove || ScrollUtility.frontMostAppDidChange) {
             /// Set app overrides
-            BOOL configChanged = [Config applyOverridesForAppUnderMousePointer_Force:NO];
-            if (configChanged) {
-                [Scroll resetState];
-                /// TODO: Test if this works
-                /// TODO: `applyOverridesForAppUnderMousePointer_Force:` should (probably) reset stuff itself, if it changes anything. This whole [SmoothScroll stop] stuff is kinda messy
-                
-            }
+            [Config applyOverridesForAppUnderMousePointer_Force:NO]; /// Calls [self resetState]
         }
         
-        /// Init animator
+        /// Update animator state
         
         [_animator resetSubPixelator];
         if (ScrollUtility.mouseDidMove) {
@@ -239,7 +217,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         
         /// Update modfications
         
-        _modifications = [ScrollModifiers currentScrollModificationsWithEvent:event];
+        _modifications = [ScrollModifiers currentModificationsWithEvent:event];
         
         /// Update scrollConfig
         
@@ -303,12 +281,11 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     scrollDelta = llabs(scrollDelta);
     
     /// Get distance to scroll
-    
     int64_t pxToScrollForThisTick = getPxPerTick(scrollAnalysisResult.timeBetweenTicks, scrollDelta);
     
     /// Apply fast scroll to distance
         
-    /// Get fast scroll params
+    /// Get fast scroll config
     int64_t fsThreshold = _scrollConfig.fastScrollThreshold_inSwipes;
     double fsFactor = _scrollConfig.fastScrollFactor;
     double fsBase = _scrollConfig.fastScrollExponentialBase;
@@ -337,7 +314,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         
         /// Send scroll event directly - without the animator. Will scroll all of pxToScrollForThisTick at once.
         
-        sendScroll(pxToScrollForThisTick, scrollDirection, NO, kMFAnimationPhaseNone);
+        sendScroll(pxToScrollForThisTick, scrollDirection, NO, -1);
         
     } else {
         /// Send scroll events through animator, spread out over time.
@@ -349,12 +326,11 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             /// Validate
             assert(valueLeftVec.x == 0 || valueLeftVec.y == 0);
             
+            /// Declare result dict (animator start params)
+            NSMutableDictionary *p = [NSMutableDictionary dictionary];
+            
             /// Extract 1d valueLeft
             double valueLeft = magnitudeOfVector(valueLeftVec);
-            
-            /// Declare result dict (animator start params)
-            
-            NSMutableDictionary *p = [NSMutableDictionary dictionary];
             
             /// Get base scroll duration
             CFTimeInterval baseTimeRange = ((CFTimeInterval)_scrollConfig.msPerStep) / 1000.0; /// Need to cast to CFTimeInterval (double), to make this a float division
@@ -381,10 +357,10 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 ///         We could not suppress natural momentum scrolling on horizontal scroll events to balance out the linear curve? But then we should probably also decrease the animationDuration... Edit: I tried it and it sucks for normal scrolling.
                 
                 double delta = pxToScrollForThisTick + pxLeftToScroll;
-                Vector deltaVec = vectorFromDirection(delta, scrollDirection);
+                Vector deltaVec = vectorFromDeltaAndDirection(delta, scrollDirection);
                 
                 p[@"duration"] = @(baseTimeRange);
-                p[@"vector"] = valueFromVector(deltaVec);
+                p[@"vector"] = nsValueFromVector(deltaVec);
                 p[@"curve"] = ScrollConfig.linearCurve;
                 
             } else {
@@ -401,10 +377,10 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 /// Get values for animator from hybrid curve
                 
                 double delta = c.valueRange;
-                Vector deltaVec = vectorFromDirection(delta, scrollDirection);
+                Vector deltaVec = vectorFromDeltaAndDirection(delta, scrollDirection);
                 
                 p[@"duration"] = @(c.timeRange);
-                p[@"vector"] = valueFromVector(deltaVec);
+                p[@"vector"] = nsValueFromVector(deltaVec);
                 p[@"curve"] = c;
             }
             
@@ -419,30 +395,29 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             
         } integerCallback:^(Vector valueDeltaVec, MFAnimationCallbackPhase animationPhase) {
             
-            /// Validate
-            assert(valueDeltaVec.x == 0 || valueDeltaVec.y == 0);
-            /// Extract
+            /// This will be called each frame
+            
+            /// Extract 1d delta from vec
             double valueDelta = magnitudeOfVector(valueDeltaVec);
             
-         /// This will be called each frame
+            /// Validate
+            assert(valueDeltaVec.x == 0 || valueDeltaVec.y == 0);
+            
+            if (valueDelta == 0) {
+                assert(animationPhase == kMFAnimationCallbackPhaseEnd);
+            }
             
             /// Debug
+            
 //            static double scrollDeltaSummm = 0;
 //            scrollDeltaSummm += valueDelta;
 //            DDLogDebug(@"Delta sum in-animator: %f", scrollDeltaSummm);
-            
-            /// Debug
             
 //            static CFTimeInterval lastTs = 0;
 //            CFTimeInterval ts = CACurrentMediaTime();
 //            DDLogInfo(@"scrollSendInterval: %@, dT: %@, dPx: %@", @(ts - lastTs), @(timeDelta), @(valueDelta));
 //            lastTs = ts;
 //            DDLogDebug(@"DELTA: %ld, PHASE: %d", (long)valueDelta, animationPhase);
-            
-            /// Test if PixelatedAnimator works properly
-            if (valueDelta == 0) {
-                assert(animationPhase == kMFAnimationCallbackPhaseEnd);
-            }
             
             /// Send scroll
             sendScroll(valueDelta, scrollDirection, YES, animationPhase);
@@ -454,6 +429,9 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
 }
 
 static int64_t getPxPerTick(CFTimeInterval timeBetweenTicks, int64_t cgEventScrollDeltaPoint) {
+    
+    /// TODO: Update this
+    
     /// @discussion See the RawAccel guide for more info on acceleration curves https://github.com/a1xd/rawaccel/blob/master/doc/Guide.md
     ///     -> Edit: I read up on it and I don't see why the sensitivity-based approach that RawAccel uses is useful.
     ///     They define the base curve as for sensitivity, but then go through complex maths and many hurdles to make the implied outputVelocity(inputVelocity) function and its derivative smooth. Because that is what makes the acceleration feel predictable and nice. (See their "Gain" algorithm)
@@ -461,32 +439,27 @@ static int64_t getPxPerTick(CFTimeInterval timeBetweenTicks, int64_t cgEventScro
     ///     I'm just gonna use a BezierCurve to define the outputVelocity(inputVelocity) curve. Then I'll extrapolate the curve linearly at the end, so its defined everywhere. That is guaranteed to be smooth and easy to configure.
     ///     Edit: Actuallyyy we ended up outputting pixels to scroll for a given tick here (so sensitivity), not speed. I don't think perfectly smooth curves are that important. This is good enough and is more easy and natural to think about and configure.
     
-    if (_scrollConfig.useAppleAcceleration) {
+    if (_scrollConfig.useAppleAcceleration)
         return llabs(cgEventScrollDeltaPoint);
-    }
-    AccelerationBezier *curve = _scrollConfig.accelerationCurve();
     
+    /// Get speed
     if (timeBetweenTicks == DBL_MAX) timeBetweenTicks = _scrollConfig.consecutiveScrollTickIntervalMax;
     double scrollSpeed = 1/timeBetweenTicks; /// In tick/s
-                                             ///
-    double pxForThisTick = [curve evaluateAt:scrollSpeed]; /// In px/s
+
+    /// Get px to scroll from acceleration curve
+    double pxForThisTick = [_scrollConfig.accelerationCurve() evaluateAt:scrollSpeed]; /// In px/s
     
-//    DDLogDebug(@"Time between ticks: %f, scrollSpeed: %f, pxForThisTick: %f", timeBetweenTicks, scrollSpeed, pxForThisTick);
-    
+    /// Validate
     if (pxForThisTick <= 0) {
         DDLogError(@"pxForThisTick is smaller equal 0. This is invalid. Exiting. scrollSpeed: %f, pxForThisTick: %f", scrollSpeed, pxForThisTick);
         assert(false);
     }
     
-    return pxForThisTick; /// We could use a SubPixelator balance out the rounding errors, but I don't think that'll be noticable
+    /// Return
+    return (int64_t)pxForThisTick; /// We could use a SubPixelator balance out the rounding errors, but I don't think that'll be noticable
 }
 
 static void sendScroll(int64_t px, MFDirection scrollDirection, BOOL gesture, MFAnimationCallbackPhase animationPhase) {
-    
-    
-    if (px == 0) {
-        DDLogDebug(@"Pixels to scroll are 0");
-    }
     
     /// Get x and y deltas
     
@@ -574,7 +547,6 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         if (eventPhase == kIOHIDEventPhaseEnded
             && _modifications.inputModification != kMFScrollInputModificationQuick) {
             
-            [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase: kIOHIDEventPhaseEnded];
             [GestureScrollSimulator stopMomentumScroll];
         }
         
@@ -599,8 +571,6 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
                || outputType == kMFScrollOutputTypeThreeFingerSwipeHorizontal) {
         
         /// --- FourFingerPinch or ThreeFingerSwipeHorizontal ---
-        ///         ^ Used to access Launchpad or show desktop
-        ///                           ^ Used to switch Spaces
         
         MFDockSwipeType type;
         double eventDelta;
@@ -627,8 +597,8 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
             ///     TODO: I should probably move the "sending several end events" code to the postDockSwipeEventWithDelta: function, because otherwise there might be interference when the scroll engine and the drag engine try to send those 'end' events at the same time. We also need further safety measures if several sources try to use postDockSwipeEventWithDelta: at the same time.
             ///     TODO: We should probably change the "sending several end events" code in ModifiedDrag over to using timers that we can invalidate like here - We should do this to avoid too many 'end' events being sent from old timers.
             
-            static NSTimer *timer1;
-            static NSTimer *timer2;
+            static NSTimer *timer1 = nil;
+            static NSTimer *timer2 = nil;
             
             [timer1 invalidate];
             [timer2 invalidate];
@@ -683,10 +653,7 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         
         /// --- LineScroll ---
         
-        /// We ignore the phases and isFinalEvent here, they don't matter
-        
-        /// TODO: line delta should always be around 1/10 of pixel delta. Also subpixelate line delta.
-        ///     See CGEventSource pixelsPerLine - it's 10.
+        /// We ignore the phases here
         
         if (dx+dy == 0) return;
         
@@ -696,12 +663,10 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         int64_t dxLine;
         
         /// Make line deltas 1/10 of pixel deltas
+        ///     See CGEventSource pixelsPerLine - it's 10
+        //      TODO: Subpixelate line delta (instead of rounding)
         dyLine = round(dy / 10);
         dxLine = round(dx / 10);
-        
-        /// Make line deltas always 1, 0, or -1. These values are probably too small. We should study what these values should be more
-    //    if (dy != 0) dyLine = dy / llabs(dy);
-    //    if (dx != 0) dxLine = dx / llabs(dx);
         
         CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, dyLine);
         CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1, dy);

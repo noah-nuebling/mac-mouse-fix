@@ -117,7 +117,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
             DDLogWarn(@"Not starting baseAnimator since combinedMagnitude is 0.0");
             p[@"doStart"] = @NO;
         } else {
-            p[@"vector"] = valueFromVector(combinedVec);
+            p[@"vector"] = nsValueFromVector(combinedVec);
             p[@"duration"] = @(3.0/60); // @(0.00001); // @(0.04);
             p[@"curve"] = ScrollConfig.linearCurve;
         }
