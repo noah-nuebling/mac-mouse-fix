@@ -206,6 +206,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
         
         /// Crash
         assert(false);
+        exit(EXIT_FAILURE); /// To make sure it also quits in release builds
     }
     
     /// Unfreeze dispatch point
