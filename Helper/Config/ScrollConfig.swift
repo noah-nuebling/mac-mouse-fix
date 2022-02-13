@@ -94,7 +94,7 @@ import CocoaLumberjackSwift
     ///        other["consecutiveScrollTickIntervalMax"] as! Double;
     ///     msPerStep/1000 <- Good idea but we don't want this to depend on msPerStep
     
-    @objc lazy var consecutiveScrollSwipeMaxInterval: TimeInterval = 0.35
+    @objc lazy var consecutiveScrollSwipeMaxInterval: TimeInterval = 350/1000
     /// ^ If more than `_consecutiveScrollSwipeIntervalMax` seconds passes between two scrollwheel swipes, then they aren't deemed consecutive.
     ///        other["consecutiveScrollSwipeIntervalMax"] as! Double
     
@@ -105,10 +105,11 @@ import CocoaLumberjackSwift
     
     @objc lazy var ticksPerSecond_DoubleExponentialSmoothing_TrendWeight: Double = 0.2
     
-    @objc lazy var ticksPerSecond_ExponentialSmoothing_InputValueWeight: Double = 1.0
+    @objc lazy var ticksPerSecond_ExponentialSmoothing_InputValueWeight: Double = 0.5
     /// ^       1.0 -> Turns off smoothing. I like this the best
     ///     0.6 -> On larger swipes this counteracts acceleration and it's unsatisfying. Not sure if placebo
     ///     0.8 ->  Nice, light smoothing. Makes  scrolling slightly less direct. Not sure if placebo.
+    ///     0.5 -> (Edit) I prefer smoother feel now in everything. 0.5 Makes short scroll swipes less accelerated which I like
     
     // MARK: Fast scroll
     
@@ -127,7 +128,7 @@ import CocoaLumberjackSwift
     @objc var pxPerTickBase = 60 /* return smooth["pxPerStep"] as! Int */
     /// ^ 60 -> Max good-feeling value, 30 -> I like this one, 10 -> Min good feeling value
     
-    @objc lazy private var pxPerTickEnd: Int = 190
+    @objc lazy private var pxPerTickEnd: Int = 120
     /// ^ 120 Works well without implicit hybrid curve acceleration
     ///     100 Works well with slight hybrid curve acceleration
     
