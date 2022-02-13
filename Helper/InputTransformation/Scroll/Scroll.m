@@ -145,30 +145,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     /// Get timestamp
     ///     Get timestamp here instead of _scrollQueue for accurate timing
     
-    CFTimeInterval tickTime = CACurrentMediaTime();
-    CFTimeInterval tickTimeCG = CGEventGetTimestamp(event)*(100/2.4)/NSEC_PER_SEC;
-    
-    DDLogDebug(@"\ntickTimeCG: %.20f", tickTimeCG);
-    
-    /// Debug
-    
-    static CFTimeInterval lastTickTime = 0;
-    static CFTimeInterval lastTickTimeCG = 0;
-    double tickPeriod = 0;
-    double tickPeriodCG = 0;
-    if (lastTickTime != 0) {
-        tickPeriod = tickTime - lastTickTime;
-        tickPeriodCG = tickTimeCG - lastTickTimeCG;
-    }
-    lastTickTime = tickTime;
-    lastTickTimeCG = tickTimeCG;
-    static double pSum = 0;
-    static double pSumCG = 0;
-    pSum += tickPeriod;
-    pSumCG += tickPeriodCG;
-    DDLogDebug(@"tickPeriod: %.3f, CG: %.3f", tickPeriod*1000, tickPeriodCG*1000);
-    DDLogDebug(@"ticksPerSec: %.3f, CG: %.3f", 1/tickPeriod, 1/tickPeriodCG);
-    DDLogDebug(@"tickPeriodSum: %.0f, CG: %.0f, ratio: %.5f", pSum, pSumCG, pSumCG/pSum);
+    CFTimeInterval tickTime = getTimestamp(event);
     
     /// Create copy of event
     
@@ -178,7 +155,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     ///  Executing heavy stuff on a different thread to prevent the eventTap from timing out. We wrote this before knowing that you can just re-enable the eventTap when it times out. But this doesn't hurt.
     
     dispatch_async(_scrollQueue, ^{
-        heavyProcessing(eventCopy, scrollDeltaAxis1, scrollDeltaAxis2, tickTimeCG);
+        heavyProcessing(eventCopy, scrollDeltaAxis1, scrollDeltaAxis2, tickTime);
     });
     
     return nil;
@@ -729,6 +706,47 @@ void sendKeyEvent(CGKeyCode keyCode, CGEventFlags flags, bool keyDown) {
     CGEventPost(tapLoc, event);
     CFRelease(event);
     
+}
+
+/// Other helper functions
+
+CFTimeInterval getTimestamp(CGEventRef event) {
+    
+    CGEventTimestamp tickTimeCGRaw = CGEventGetTimestamp(event);
+    
+    CFTimeInterval tickTimeCG = (100/2.4)*tickTimeCGRaw/NSEC_PER_SEC;
+    /// ^ The docs say that CGEventGetTimestamp() is in nanoseconds, no idea where the extra (100/2.4) factor comes from. But it works, to make it scaled the same as CACurrentMediaTime()
+    ///     I hope this also works on other macOS versions?
+    
+    if ((NO)) {
+        
+        /// Debug
+        
+        CFTimeInterval tickTime = CACurrentMediaTime();
+        /// ^ This works but is less accurate than getting the time from the CGEvent
+        
+        static CFTimeInterval lastTickTime = 0;
+        static CFTimeInterval lastTickTimeCG = 0;
+        double tickPeriod = 0;
+        double tickPeriodCG = 0;
+        if (lastTickTime != 0) {
+            tickPeriod = tickTime - lastTickTime;
+            tickPeriodCG = tickTimeCG - lastTickTimeCG;
+        }
+        lastTickTime = tickTime;
+        lastTickTimeCG = tickTimeCG;
+        static double pSum = 0;
+        static double pSumCG = 0;
+        pSum += tickPeriod;
+        pSumCG += tickPeriodCG;
+        DDLogDebug(@"tickPeriod: %.3f, CG: %.3f", tickPeriod*1000, tickPeriodCG*1000);
+        DDLogDebug(@"ticksPerSec: %.3f, CG: %.3f", 1/tickPeriod, 1/tickPeriodCG);
+        DDLogDebug(@"tickPeriodSum: %.0f, CG: %.0f, ratio: %.5f", pSum, pSumCG, pSumCG/pSum);
+    }
+    
+    /// Return
+    
+    return tickTimeCG;
 }
 
 @end

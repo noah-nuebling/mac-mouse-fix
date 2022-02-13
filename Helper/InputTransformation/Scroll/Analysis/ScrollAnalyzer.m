@@ -32,6 +32,7 @@
         ///     - No smoothing is way more responsive than RollingAverage
         ///     - No smoothing is more responsive than DoubleExponential. And when there are extremely small `timeSinceLastTick` values (avoiding these is the whole reason we use smoothing), the DoubleExponentialSmoother will extrapolate the trend and make it even *worse* - sometimes it even produces negative values!
         ///     - We could try if a light exponential smoothing would feel better, but this is good enought for now
+        ///     Edit: I do prefer the smoothness over the responsiveness now. Like a LOT. Capacity 3 works well.
         
 //        _tickTimeSmoother = [[ExponentialSmoother alloc] initWithA:_scrollConfig.ticksPerSecond_ExponentialSmoothing_InputValueWeight];
         /// ^ Light exponential smoothing is also worse than no smoothing at all. The loss in responsiveness is not worth the added "stability"z   imo
@@ -113,9 +114,8 @@ static int _consecutiveScrollSwipeCounter_ForFreeScrollWheel;
     double secondsSinceLastTick = thisScrollTickTimeStamp - _previousScrollTickTimeStamp;
     
     /// Clip time since last tick to >= 15ms
-    ///     Not sure this makes sense
     ///     15ms seemst to be smallest that you can naturally produce, but when performance drops, the secondsSinceLastTick that we see can be much smaller sometimes.
-    ///     We're also addressing this issue through `consecutiveScrollTickInterval_AccelerationEnd`, but capping the timeBetweenTicks here let's us be more free with the acceleration curve.
+    ///     We're also addressing this issue by capping the acceleration curve (See `consecutiveScrollTickInterval_AccelerationEnd`), but capping the timeBetweenTicks here let's us be more free with the acceleration curve.
     if (secondsSinceLastTick < 15/1000) {
         secondsSinceLastTick = 15/1000;
     }
