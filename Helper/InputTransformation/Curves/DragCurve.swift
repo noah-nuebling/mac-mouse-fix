@@ -178,8 +178,8 @@ import Foundation
         
         /// Validate input
         
-        assert(a > 0)
-        assert(b > 0)
+        assert(exponent > 0)
+        assert(coefficient > 0)
         assert(SharedUtility.sign(of: d) == SharedUtility.sign(of: vs))
         assert(vs > 0)
         
@@ -237,8 +237,8 @@ import Foundation
         var vs = vs_arg
         
         /// Validate curve shape params
-        assert(a > 0)
-        assert(b > 0)
+        assert(exponent > 0)
+        assert(coefficient > 0)
         
         /// Validate velocities
         ///     This asserts that everything is positive, which makes self.isNegative unused.
@@ -368,22 +368,6 @@ import Foundation
 //        /// ^ Not defined for b == 1 or b == 2. Not sure whats the difference to the formula above
     }
     
-    private func solveK(d: Double, t: Double, c: Double) -> Double {
-        /// Get k such that d(t) passes through the point (t, d)
-        
-        let D: Double = solveD(t: t, c: c, k: 0)
-        
-        return (D - d)
-    }
-    
-    private func solveC(d: Double, t: Double, k: Double) -> Double {
-        /// Get t where d(t) is d
-        
-        let T: Double = solveT(d: d, c: 0, k: k)
-        
-        return -(T - t)
-    }
-    
     private func solveT(d: Double, c: Double, k: Double) -> Double {
         
         if b == 1 {
@@ -405,6 +389,22 @@ import Foundation
             )
             /
             (a * (b - 1))
+    }
+    
+    private func solveC(d: Double, t: Double, k: Double) -> Double {
+        /// Get t where d(t) is d
+        
+        let T: Double = solveT(d: d, c: 0, k: k)
+        
+        return -(T - t)
+    }
+    
+    private func solveK(d: Double, t: Double, c: Double) -> Double {
+        /// Get k such that d(t) passes through the point (t, d)
+        
+        let D: Double = solveD(t: t, c: c, k: 0)
+        
+        return -(D - d)
     }
     
     /// Interface

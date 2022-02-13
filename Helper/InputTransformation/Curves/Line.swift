@@ -26,6 +26,10 @@ import Foundation
     @objc func evaluate(at x: Double) -> Double {
         return a * x + b
     }
+    
+    @objc func evaluate(atY y: Double) -> Double {
+        return (y - b) / a
+    }
 }
 
 @objc class InvalidLine: Line {

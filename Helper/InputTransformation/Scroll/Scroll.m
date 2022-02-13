@@ -330,7 +330,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             NSMutableDictionary *p = [NSMutableDictionary dictionary];
             
             /// Extract 1d valueLeft
-            double valueLeft = magnitudeOfVector(valueLeftVec);
+            double distanceLeft = magnitudeOfVector(valueLeftVec);
             
             /// Get base scroll duration
             CFTimeInterval baseTimeRange = ((CFTimeInterval)_scrollConfig.msPerStep) / 1000.0; /// Need to cast to CFTimeInterval (double), to make this a float division
@@ -341,9 +341,9 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 pxLeftToScroll = 0;
             } else if ([animationCurve isKindOfClass:SimpleBezierHybridCurve.class]) {
                 SimpleBezierHybridCurve *c = (SimpleBezierHybridCurve *)animationCurve;
-                pxLeftToScroll = [c baseValueLeftWithValueLeft:valueLeft]; /// If we feed valueLeft instead of baseValueLeft back into the animator, it will lead to unwanted acceleration
+                pxLeftToScroll = [c baseDistanceLeftWithDistanceLeft: distanceLeft]; /// If we feed valueLeft instead of baseValueLeft back into the animator, it will lead to unwanted acceleration
             } else {
-                pxLeftToScroll = valueLeft;
+                pxLeftToScroll = distanceLeft;
             }
             
             if (_modifications.effectModification == kMFScrollEffectModificationFourFingerPinch
@@ -376,10 +376,10 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 
                 /// Get values for animator from hybrid curve
                 
-                double delta = c.valueRange;
+                double delta = c.distance;
                 Vector deltaVec = vectorFromDeltaAndDirection(delta, scrollDirection);
                 
-                p[@"duration"] = @(c.timeRange);
+                p[@"duration"] = @(c.duration);
                 p[@"vector"] = nsValueFromVector(deltaVec);
                 p[@"curve"] = c;
             }
@@ -393,17 +393,17 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             /// Return
             return p;
             
-        } integerCallback:^(Vector valueDeltaVec, MFAnimationCallbackPhase animationPhase) {
+        } integerCallback:^(Vector distanceDeltaVec, MFAnimationCallbackPhase animationPhase) {
             
             /// This will be called each frame
             
             /// Extract 1d delta from vec
-            double valueDelta = magnitudeOfVector(valueDeltaVec);
+            double distanceDelta = magnitudeOfVector(distanceDeltaVec);
             
             /// Validate
-            assert(valueDeltaVec.x == 0 || valueDeltaVec.y == 0);
+            assert(distanceDeltaVec.x == 0 || distanceDeltaVec.y == 0);
             
-            if (valueDelta == 0) {
+            if (distanceDelta == 0) {
                 assert(animationPhase == kMFAnimationCallbackPhaseEnd);
             }
             
@@ -420,7 +420,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
 //            DDLogDebug(@"DELTA: %ld, PHASE: %d", (long)valueDelta, animationPhase);
             
             /// Send scroll
-            sendScroll(valueDelta, scrollDirection, YES, animationPhase);
+            sendScroll(distanceDelta, scrollDirection, YES, animationPhase);
             
         }];
     }

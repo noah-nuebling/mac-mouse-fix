@@ -22,20 +22,23 @@ import CocoaLumberjackSwift
         set { fatalError() }
     }
     
-    @objc init(baseTimeRange: Double, valueRange: Double, dragCoefficient: Double, dragExponent: Double, stopSpeed: Double) {
+    @objc init(minDuration: Double, distance: Double, dragCoefficient: Double, dragExponent: Double, stopSpeed: Double) {
         
         /// Init super
         super.init()
         
         /// Validate
-        assert(valueRange > 0)
+        assert(distance > 0)
+        
+        /// Get base curve exit speed
+        let transitionSpeed = distance / minDuration
         
         /// Get drag curve
-        dragCurve = getDragCurve(exitSlope: _baseCurve.slope, stopSpeed: stopSpeed, coefficient: dragCoefficient, exponent: dragExponent)
+        dragCurve = getDragCurve(initialSpeed: transitionSpeed, stopSpeed: stopSpeed, coefficient: dragCoefficient, exponent: dragExponent)
         
         /// Find transition point
         let dragDistance = dragCurve!.distanceInterval.length
-        let transitionDistance = valueRange - dragDistance
+        var transitionDistance = distance - dragDistance
         
         /// Change dragCurve if transition distance is negative
         if transitionDistance < 0 {
@@ -47,13 +50,24 @@ import CocoaLumberjackSwift
             DDLogWarn("DragCurve transition distance is negative. Ignoring Line.")
             assert(false) /// For debugging - remove later
             
-            ///
+            /// Get new curve
+            dragCurve = DragCurve(coefficient: dragCoefficient, exponent: dragExponent, distance: distance, stopSpeed: stopSpeed)
             
+            /// Set transition Distance to 0
+            transitionDistance = 0
         }
+
+        /// Get transition time
+        let transitionTime = _baseCurve.evaluate(atY: transitionDistance / distance) * minDuration
         
         /// Store params
-        ///     ....
         
+        self.baseTimeInterval = Interval(start: 0, end: transitionTime)
+        self.baseDistanceInterval = Interval(start: 0, end: transitionDistance)
+        
+        self.dragCoefficient = dragCoefficient
+        self.dragExponent = dragExponent
+        self.stopSpeed = stopSpeed
     }
 }
 
@@ -74,6 +88,14 @@ import CocoaLumberjackSwift
         set { _baseCurve = newValue as! Bezier }
     }
     
+    /// Helper
+    
+    @objc func baseDistanceLeft(distanceLeft: Double) -> Double {
+        var baseValueLeft = distanceLeft - dragValueRange
+        if baseValueLeft < 0 { baseValueLeft = 0 }
+        return baseValueLeft
+    }
+    
     /// Init
     
     @objc init(baseCurve: Bezier, baseTimeRange: Double, baseValueRange: Double, dragCoefficient: Double, dragExponent: Double, stopSpeed: Double) {
@@ -91,12 +113,17 @@ import CocoaLumberjackSwift
         /// Store params
         
         self.baseCurve = baseCurve
-        storeParams(baseTimeRange, baseValueRange, dragCoefficient, dragExponent, stopSpeed)
+        self.baseTimeInterval = Interval(start: 0, end: baseTimeRange)
+        self.baseDistanceInterval = Interval(start: 0, end: baseValueRange)
+        
+        self.dragCoefficient = dragCoefficient
+        self.dragExponent = dragExponent
+        self.stopSpeed = stopSpeed
         
         /// Get exit speed of baseCurve (== initial speed of dragCurve)
         
-        let exitSlope = baseCurve.exitSlope!
-        self.dragCurve = getDragCurve(exitSlope: exitSlope, stopSpeed: stopSpeed, coefficient: dragCoefficient, exponent: dragExponent)
+        let v0 = baseCurve.exitSlope! * distance / duration
+        self.dragCurve = getDragCurve(initialSpeed: v0, stopSpeed: stopSpeed, coefficient: dragCoefficient, exponent: dragExponent)
         
     }
 }
@@ -138,15 +165,9 @@ class HybridCurve: NSObject, AnimationCurve {
     fileprivate var baseCurve: AnimationCurve { get{fatalError()} set{fatalError()} }
     
     @objc var baseTimeInterval: Interval = .unitInterval
-    @objc var baseValueInterval: Interval = .unitInterval
-    @objc var baseTimeRange: Double { baseTimeInterval.length }
-    @objc var baseValueRange: Double { baseValueInterval.length }
-    
-    @objc func baseValueLeft(valueLeft: Double) -> Double {
-        var baseValueLeft = valueLeft - dragValueRange
-        if baseValueLeft < 0 { baseValueLeft = 0 }
-        return baseValueLeft
-    }
+    @objc var baseDistanceInterval: Interval = .unitInterval
+    @objc var baseDuration: Double { baseTimeInterval.length }
+    @objc var baseDistance: Double { baseDistanceInterval.length }
     
     /// DragCurve
     
@@ -167,10 +188,10 @@ class HybridCurve: NSObject, AnimationCurve {
     
     /// HybridCurve
     
-    fileprivate var timeInterval: Interval { Interval(start: 0, end: baseTimeRange + dragTimeRange) }
-    fileprivate var valueInterval: Interval { Interval(start: 0, end: baseValueRange + dragValueRange) }
-    @objc var timeRange: Double { timeInterval.length }
-    @objc var valueRange: Double { valueInterval.length }
+    fileprivate var timeInterval: Interval { Interval(start: 0, end: baseDuration + dragTimeRange) }
+    fileprivate var distanceInterval: Interval { Interval(start: 0, end: baseDistance + dragValueRange) }
+    @objc var duration: Double { timeInterval.length }
+    @objc var distance: Double { distanceInterval.length }
     
     /// Init
     
@@ -185,11 +206,7 @@ class HybridCurve: NSObject, AnimationCurve {
     
     /// Init - Helper functions
     
-    fileprivate func getDragCurve(exitSlope: Double, stopSpeed: Double, coefficient: Double, exponent: Double) -> DragCurve? {
-        
-        /// Get base curve exit speed
-        
-        let initialSpeed = exitSlope * baseValueRange / baseTimeRange
+    fileprivate func getDragCurve(initialSpeed: Double, stopSpeed: Double, coefficient: Double, exponent: Double) -> DragCurve? {
         
         /// Get dragCurve
         
@@ -204,21 +221,11 @@ class HybridCurve: NSObject, AnimationCurve {
         
         /// Debug
         
-        DDLogDebug("dragTime: \(dragTimeRange), dragValue: \(dragValueRange), time: \(timeRange), value: \(valueRange)")
+        DDLogDebug("dragTime: \(dragTimeRange), dragValue: \(dragValueRange), time: \(duration), value: \(distance)")
         
         /// Return
         
         return result
-    }
-    
-    fileprivate func storeParams(_ baseTimeRange: Double, _ baseValueRange: Double, _ dragCoefficient: Double, _ dragExponent: Double, _ stopSpeed: Double) {
-        
-        self.baseTimeInterval = Interval(start: 0, end: baseTimeRange)
-        self.baseValueInterval = Interval(start: 0, end: baseValueRange)
-        
-        self.dragCoefficient = dragCoefficient
-        self.dragExponent = dragExponent
-        self.stopSpeed = stopSpeed
     }
     
     
@@ -228,22 +235,22 @@ class HybridCurve: NSObject, AnimationCurve {
         
         let result: Double
         
-        if x <= baseTimeRange / timeRange {
+        if x <= baseDuration / duration {
             
             /// Evaluate baseCurve
             
             var baseCurveResult = baseCurve.evaluate(at: Math.scale(value: x, from: baseTimeIntervalUnit, to: .unitInterval))
             if baseCurveResult > 1 { baseCurveResult = 1 } /// The baseCurveResult is sometimes 1.00000000002 leading to assert failures in scaling code
-            result = Math.scale(value: baseCurveResult, from: .unitInterval, to: baseValueIntervalUnit)
+            result = Math.scale(value: baseCurveResult, from: .unitInterval, to: baseDistanceIntervalUnit)
         } else {
             
             /// Evaluate DragCurve
             
             if let c = dragCurve  {
                 let dragCurveResult = c.evaluate(at: Math.scale(value: x, from: dragTimeIntervalUnit, to: .unitInterval))
-                result = Math.scale(value: dragCurveResult, from: .unitInterval, to: dragValueIntervalUnit)
+                result = Math.scale(value: dragCurveResult, from: .unitInterval, to: dragDistanceIntervalUnit)
             } else {
-                DDLogWarn("Tried to evaluate HybridCurve at DragCurve but DragCurve doesn't exist. x: \(x), baseTimeRange/timeRange: \(baseTimeRange/timeRange)")
+                DDLogWarn("Tried to evaluate HybridCurve at DragCurve but DragCurve doesn't exist. x: \(x), baseTimeRange/timeRange: \(baseDuration/duration)")
                 result = x
             }
         }
@@ -252,9 +259,9 @@ class HybridCurve: NSObject, AnimationCurve {
     }
     
     /// Evaluate - helpers
-    var baseTimeIntervalUnit: Interval { Interval(start: 0, end: baseTimeRange / timeRange) }
-    var dragTimeIntervalUnit: Interval { Interval(start: baseTimeRange / timeRange, end: 1) }
+    var baseTimeIntervalUnit: Interval { Interval(start: 0, end: baseDuration / duration) }
+    var dragTimeIntervalUnit: Interval { Interval(start: baseDuration / duration, end: 1) }
     
-    var baseValueIntervalUnit: Interval { Interval(start: 0, end: baseValueRange / valueRange) }
-    var dragValueIntervalUnit: Interval { Interval(start: baseValueRange / valueRange, end: 1) }
+    var baseDistanceIntervalUnit: Interval { Interval(start: 0, end: baseDistance / distance) }
+    var dragDistanceIntervalUnit: Interval { Interval(start: baseDistance / distance, end: 1) }
 }
