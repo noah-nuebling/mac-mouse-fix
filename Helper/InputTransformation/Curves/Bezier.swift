@@ -54,9 +54,11 @@ import ReactiveSwift
 
 @objc class Bezier: NSObject, AnimationCurve {
 
-    static typealias Point = Vector;
+    typealias Point = Vector;
     static let xAxis = kMFAxisHorizontal
     static let yAxis = kMFAxisVertical
+    let xAxis = Bezier.xAxis
+    let yAxis = Bezier.yAxis
     
     // Control points
     
@@ -463,8 +465,8 @@ import ReactiveSwift
             return sampleCurve(onAxis: xAxis, atT: input)
         }
         
-        if tBisect != nil {
-            return tBisect!
+        if let tBisect = tBisect as? Double {
+            return tBisect
         }
         
         /// Old code for reference, if sth goes wrong

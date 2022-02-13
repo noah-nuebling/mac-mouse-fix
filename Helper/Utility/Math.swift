@@ -11,7 +11,9 @@ import Cocoa
 
 @objc class Math: NSObject {
     
-    @objc class func bisect(searchRange: Interval, targetOutput: Double, epsilon: Double, function: (Double) -> Double) -> Double? {
+    @objc class func bisect(searchRange: Interval, targetOutput: Double, epsilon: Double, function: (Double) -> Double) -> NSNumber? {
+        
+        /// (Returning NSNumber so we can make it nullable. the value is double)
         
         /// Validate
         
@@ -20,15 +22,15 @@ import Cocoa
         
         /// Algorithm
         
-        let t = Math.scale(value: 0.5, from: .unitInterval, to: searchRange)
+        var t = Math.scale(value: 0.5, from: .unitInterval, to: searchRange)
         var searchRange = searchRange
         
         while searchRange.lower < searchRange.upper {
             
             let sampledOutput = function(t)
             
-            if fabs(distance - sampledDistance) < epsilon {
-                return t
+            if fabs(targetOutput - sampledOutput) < epsilon {
+                return t as NSNumber
             }
             
             if sampledOutput < targetOutput {

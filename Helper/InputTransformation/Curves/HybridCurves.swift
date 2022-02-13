@@ -49,7 +49,7 @@ import CocoaLumberjackSwift
         var k = 1
         while true {
             /// Get transition point to sample
-            let t = Math.scale(value: k, from: Interval(1, n), to: .reversedUnitInterval) /// t goes from 1.0 to 0.0 in increments of 1/n
+            let t = Math.scale(value: Double(k), from: Interval(1, Double(n)), to: .reversedUnitInterval) /// t goes from 1.0 to 0.0 in increments of 1/n
             /// Get combined distance at transition point
             let combinedDistance = combinedDistance(transitionPoint: t, baseDistance: distance, baseDuration: minDuration, dragExponent: dragExponent, dragCoefficient: dragCoefficient, stopSpeed: stopSpeed)
             /// Validate
@@ -61,7 +61,7 @@ import CocoaLumberjackSwift
                 break
             }
             if combinedDistance <= distance {
-                transitionPointRange = Interval(t, t+(1/n))
+                transitionPointRange = Interval(t, t+(1/Double(n)))
                 break
             }
             if k >= n {
@@ -79,7 +79,7 @@ import CocoaLumberjackSwift
             transitionPoint = Math.bisect(searchRange: transitionPointRange, targetOutput: distance, epsilon: transitionPointEpsilon, function: { transitionPoint in
                 
                 return combinedDistance(transitionPoint: transitionPoint, baseDistance: distance, baseDuration: minDuration, dragExponent: dragExponent, dragCoefficient: dragCoefficient, stopSpeed: stopSpeed)
-            })
+            }) as? Double
             
         }
         
@@ -103,6 +103,8 @@ import CocoaLumberjackSwift
         }
         
         /// Get transition time and distance
+        
+        guard let transitionPoint = transitionPoint else { fatalError() }
         
         let transitionTime = _baseCurve.sampleCurve(onAxis: Bezier.xAxis, atT: transitionPoint) * minDuration
         let transitionDistance = _baseCurve.sampleCurve(onAxis: Bezier.yAxis, atT: transitionPoint) * distance
