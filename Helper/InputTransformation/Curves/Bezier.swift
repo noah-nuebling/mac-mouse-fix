@@ -562,3 +562,15 @@ import ReactiveSwift
     }
 
 }
+
+
+@objc class InvalidBezier: Bezier {
+    
+    init() {
+        super.init(controlPoints: [Point(x: 0, y: 0), Point(x: 1, y: 1)])
+    }
+    
+    override func evaluate(at x: Double) -> Double {
+        fatalError()
+    }
+}

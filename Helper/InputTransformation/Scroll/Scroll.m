@@ -339,8 +339,8 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             double pxLeftToScroll;
             if (scrollAnalysisResult.scrollDirectionDidChange || !isRunning) {
                 pxLeftToScroll = 0;
-            } else if ([animationCurve isKindOfClass:SimpleBezierDragHybridCurve.class]) {
-                SimpleBezierDragHybridCurve *c = (SimpleBezierDragHybridCurve *)animationCurve;
+            } else if ([animationCurve isKindOfClass:SimpleBezierHybridCurve.class]) {
+                SimpleBezierHybridCurve *c = (SimpleBezierHybridCurve *)animationCurve;
                 pxLeftToScroll = [c baseValueLeftWithValueLeft:valueLeft]; /// If we feed valueLeft instead of baseValueLeft back into the animator, it will lead to unwanted acceleration
             } else {
                 pxLeftToScroll = valueLeft;
@@ -366,7 +366,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             } else {
                 
                 /// New curve
-                SimpleBezierDragHybridCurve *c = [[SimpleBezierDragHybridCurve alloc]
+                SimpleBezierHybridCurve *c = [[SimpleBezierHybridCurve alloc]
                                                   initWithBaseCurve:_scrollConfig.baseCurve
                                                   baseTimeRange:baseTimeRange
                                                  baseValueRange:(pxToScrollForThisTick + pxLeftToScroll)

@@ -118,26 +118,6 @@ import Cocoa
     @objc func contains(_ value: Double) -> Bool {
         return lower <= value && value <= upper
     }
-    
-    
-}
-
-@objc class Line: NSObject, AnimationCurve {
-    
-    let a: Double
-    let b: Double
-    
-    var slope: Double { a }
-    
-    // Function looks like ax + b
-    @objc init(a: Double, b: Double) {
-        self.a = a
-        self.b = b
-    }
-    
-    @objc func evaluate(at x: Double) -> Double {
-        return a * x + b
-    }
 }
 
 // MARK: Exponent operator

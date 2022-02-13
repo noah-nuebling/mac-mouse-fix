@@ -15,6 +15,8 @@
 		4F1B83062606E68300AEAF37 /* ButtonLandscapeAssessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B83052606E68300AEAF37 /* ButtonLandscapeAssessor.m */; };
 		4F1B832D26081A5500AEAF37 /* CaptureNotificationCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B832C26081A5500AEAF37 /* CaptureNotificationCreator.m */; };
 		4F1C51DA260543DD007F4930 /* NSTextField+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C51D9260543DD007F4930 /* NSTextField+Additions.m */; };
+		4F2CC58727B8D2300084AACE /* HybridCurves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CC58627B8D2300084AACE /* HybridCurves.swift */; };
+		4F2CC58927B8DA8B0084AACE /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CC58827B8DA8B0084AACE /* Line.swift */; };
 		4F2F5DA825FB6FFD0037660A /* AddWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F5DA725FB6FFD0037660A /* AddWindowController.m */; };
 		4F2F5DB225FB723D0037660A /* AddWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F2F5DB125FB723D0037660A /* AddWindow.xib */; };
 		4F2FDF332315662500C7BE14 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2FDF322315662500C7BE14 /* main.m */; };
@@ -28,7 +30,6 @@
 		4F3A40B1266BBC5000436821 /* AnimationCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A40B0266BBC5000436821 /* AnimationCurve.swift */; };
 		4F3A40CB266C44D100436821 /* DisplayLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A40CA266C44D100436821 /* DisplayLink.m */; };
 		4F3A40DA266C5BDF00436821 /* NSScreen+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A40D9266C5BDF00436821 /* NSScreen+Additions.m */; };
-		4F3C5BFD2754CB1C008D5B90 /* SimpleBezierDragHybridCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3C5BFC2754CB1C008D5B90 /* SimpleBezierDragHybridCurve.swift */; };
 		4F3E067E26A2F97D000C9E06 /* URLMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3E067D26A2F97D000C9E06 /* URLMenuItem.m */; };
 		4F44FF042606D73D00926A5E /* SharedMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* SharedMessagePort.m */; };
 		4F44FF052606D73D00926A5E /* SharedMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* SharedMessagePort.m */; };
@@ -279,6 +280,8 @@
 		4F1B832C26081A5500AEAF37 /* CaptureNotificationCreator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CaptureNotificationCreator.m; sourceTree = "<group>"; };
 		4F1C51D8260543DD007F4930 /* NSTextField+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSTextField+Additions.h"; sourceTree = "<group>"; };
 		4F1C51D9260543DD007F4930 /* NSTextField+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSTextField+Additions.m"; sourceTree = "<group>"; };
+		4F2CC58627B8D2300084AACE /* HybridCurves.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HybridCurves.swift; sourceTree = "<group>"; };
+		4F2CC58827B8DA8B0084AACE /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		4F2F5DA625FB6FFD0037660A /* AddWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddWindowController.h; sourceTree = "<group>"; };
 		4F2F5DA725FB6FFD0037660A /* AddWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddWindowController.m; sourceTree = "<group>"; };
 		4F2F5DB125FB723D0037660A /* AddWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddWindow.xib; sourceTree = "<group>"; };
@@ -308,7 +311,6 @@
 		4F3A40CA266C44D100436821 /* DisplayLink.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DisplayLink.m; sourceTree = "<group>"; };
 		4F3A40D8266C5BDF00436821 /* NSScreen+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSScreen+Additions.h"; sourceTree = "<group>"; };
 		4F3A40D9266C5BDF00436821 /* NSScreen+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSScreen+Additions.m"; sourceTree = "<group>"; };
-		4F3C5BFC2754CB1C008D5B90 /* SimpleBezierDragHybridCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleBezierDragHybridCurve.swift; sourceTree = "<group>"; };
 		4F3E067C26A2F97D000C9E06 /* URLMenuItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = URLMenuItem.h; sourceTree = "<group>"; };
 		4F3E067D26A2F97D000C9E06 /* URLMenuItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = URLMenuItem.m; sourceTree = "<group>"; };
 		4F44FF022606D73D00926A5E /* SharedMessagePort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharedMessagePort.h; sourceTree = "<group>"; };
@@ -1498,10 +1500,11 @@
 			isa = PBXGroup;
 			children = (
 				4FF0BD4A266A8B7E003935EA /* Bezier.swift */,
-				4F1AFE962670EBA900ECA424 /* DragCurve.swift */,
-				4F3C5BFC2754CB1C008D5B90 /* SimpleBezierDragHybridCurve.swift */,
 				4F3A40AA266BBB6200436821 /* AccelerationBezier.swift */,
+				4F1AFE962670EBA900ECA424 /* DragCurve.swift */,
+				4F2CC58627B8D2300084AACE /* HybridCurves.swift */,
 				4F3A40B0266BBC5000436821 /* AnimationCurve.swift */,
+				4F2CC58827B8DA8B0084AACE /* Line.swift */,
 				4FBDA14A27B225210030E4EA /* Unused */,
 			);
 			path = Curves;
@@ -2064,6 +2067,7 @@
 				4FF6668725F2C93A00689B77 /* ButtonTriggerHandler.m in Sources */,
 				4FF6669825F2C93A00689B77 /* SubPixelator.m in Sources */,
 				4FF0BD51266AC10C003935EA /* Math.swift in Sources */,
+				4F2CC58927B8DA8B0084AACE /* Line.swift in Sources */,
 				4FF6669F25F2C93A00689B77 /* main.m in Sources */,
 				4FF6668925F2C93A00689B77 /* Scroll.m in Sources */,
 				4F70ECAE267E442D00325A76 /* PointerSpeedExperiments2.m in Sources */,
@@ -2075,6 +2079,7 @@
 				4FF6668525F2C93A00689B77 /* ModifierManager.m in Sources */,
 				4FD860CC266EF55A004F76C8 /* ScrollConfig.swift in Sources */,
 				4F8FC140275DC81900887A0C /* PrefixSwift.swift in Sources */,
+				4F2CC58727B8D2300084AACE /* HybridCurves.swift in Sources */,
 				4F3A40CB266C44D100436821 /* DisplayLink.m in Sources */,
 				4FF6669925F2C93A00689B77 /* VectorSubPixelator.m in Sources */,
 				4FF0BD4B266A8B7E003935EA /* Bezier.swift in Sources */,
@@ -2082,7 +2087,6 @@
 				4FF666A225F2C93A00689B77 /* TouchEvents.c in Sources */,
 				4F1AFE972670EBA900ECA424 /* DragCurve.swift in Sources */,
 				4FF6669125F2C93A00689B77 /* ScrollUtility.m in Sources */,
-				4F3C5BFD2754CB1C008D5B90 /* SimpleBezierDragHybridCurve.swift in Sources */,
 				4FF666A825F2C93A00689B77 /* DeviceManager.m in Sources */,
 				4FF6669B25F2C93A00689B77 /* AppDelegate.m in Sources */,
 				4F9E78D02685E30C002C2309 /* GestureScrollSimulator.m in Sources */,

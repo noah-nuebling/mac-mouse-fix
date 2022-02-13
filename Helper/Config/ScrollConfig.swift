@@ -139,7 +139,7 @@ import CocoaLumberjackSwift
     /// 190
     
     @objc lazy var baseCurve: Bezier = { () -> Bezier in
-        /// Base curve used to construct a SimpleBezierDragHybridCurve animationCurve in Scroll.m. This curve is applied before switching to a DragCurve to simulate physically accurate deceleration
+        /// Base curve used to construct a SimpleBezierHybridCurve animationCurve in Scroll.m. This curve is applied before switching to a DragCurve to simulate physically accurate deceleration
         /// Using a closure here instead of DerivedProperty.create_kvc(), because we know it will never change.
         typealias P = Bezier.Point
         
