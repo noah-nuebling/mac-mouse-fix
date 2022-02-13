@@ -509,7 +509,6 @@ import ReactiveSwift
         
         return y
     }
-        
     
     // MARK: Other Interface
     

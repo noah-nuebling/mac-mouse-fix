@@ -130,7 +130,65 @@ import Foundation
         }
     }
 
-    @objc init(coefficient:Double, exponent: Double, initialSpeed v0_arg: Double, stopSpeed vs_arg: Double) {
+    @objc init(coefficient: Double, exponent: Double, distance d_arg: Double, stopSpeed vs_arg: Double) {
+        /// Distance-based init
+        
+        /// Init everything to garbage so we can call super.init()
+        
+        a = 0
+        b = 0
+        c = 0
+        k = 0
+        isNegative = false
+        timeInterval = .unitInterval
+        _distanceInterval = .unitInterval
+        
+        /// Call super init
+        
+        super.init()
+        
+        /// Get mutable d and vs
+        
+        var d = d_arg
+        var vs = vs_arg
+        
+        /// Validate input
+        
+        assert(SharedUtility.sign(of: d) == SharedUtility.sign(of: vs))
+        assert(vs > 0)
+        
+        
+        
+        /// Validate
+        
+        assert(abs(v0) > abs(vs))
+        
+        /// Curve feel
+
+        self.a = coefficient
+        self.b = exponent
+
+        /// Choose c such that v(t) passes through (t: 0, v: v0)
+        c = getC(t: 0, v: v0)
+
+        /// Choose k such that d(t) passes through (t: 0, d: 0)
+        k = solveK(t: 0, d: 0)
+
+        /// Get time and distance to stop
+        let timeToStop = getT(v: vs)
+        let distanceToStop = solveD(t: timeToStop, k: self.k)
+        self.timeInterval = Interval(location: 0, length: timeToStop)
+        self._distanceInterval = Interval(location: 0, length: distanceToStop)
+        
+        /// Asserts / Debug
+        assert(abs(timeInterval.length) != Double.infinity)
+//        DDLogDebug("DragDurve initialized with v0: \(v0), distance int: \(self._distanceInterval), timeToStop: \(timeToStop)");
+        
+    }
+    
+    @objc init(coefficient: Double, exponent: Double, initialSpeed v0_arg: Double, stopSpeed vs_arg: Double) {
+        /// Initial-speed-based init
+        
         /// Speed will never reach 0 exactly so we need to specify `stopSpeed`, the speed at which we consider it stopped
         
         /// Initialize everything so Swift doesn't complain when we use instance methods and call super.init()
@@ -180,15 +238,15 @@ import Foundation
         self.a = coefficient
         self.b = exponent
         
-        /// Choose c such that v(t) passes through (t: 0, v: v0)
-        c = getC(t: 0, v: v0)
+        /// Choose c such that v(t) passes through (v: v0, t: 0)
+        c = solveC(v: v0, t: 0)
         
-        /// Choose k such that d(t) passes through (t: 0, d: 0)
-        k = getK(t: 0, d: 0)
+        /// Choose k such that d(t) passes through (d: 0, t: 0)
+        k = solveK(d: 0, t: 0, c: c)
         
         /// Get time and distance to stop
-        let timeToStop = getT(v: vs)
-        let distanceToStop = getD(t: timeToStop, k: self.k)
+        let timeToStop = solveT(v: vs, c: c)
+        let distanceToStop = solveD(t: timeToStop, c: c, k: k)
         self.timeInterval = Interval(location: 0, length: timeToStop)
         self._distanceInterval = Interval(location: 0, length: distanceToStop)
         
@@ -198,8 +256,12 @@ import Foundation
     }
     
     /// v(t)
+    ///     There are 3 important variables in the v(t) equation: v, t, and c
+    ///         (Also a and b but they just define the shape of the curve, and we never need to solve for them)
+    ///
+    ///     We can find each of these 3 variables, given the other 2, with the following 3 functions:
     
-    private func getV(t: Double) -> Double {
+    private func solveV(t: Double, c: Double) -> Double {
         
         if (b == 1) {
             return pow(M_E, -a * (t - c))
@@ -210,8 +272,22 @@ import Foundation
         return pow((b - 1) * (a * (t - c)), 1/(1 - b))
         /// ^ Always zero for b == 1
     }
+    
+    private func solveT(v: Double, c: Double) -> Double {
+        /// Get the t where v(t) is v
+        
+        if (b == 1) {
+            return (a * c -  log(v)) / a
+            /// Source: WA ->`solve t: v = pow(e, -a * (t - c))`,
+            /// Adaptions: Ignoring the `2 i π n` term, and wrapping log(v) with abs(v) and sign(v), because log(v) doesn't work when v is negative.
+            ///     See `getC()` for more on these adaptions
+        }
+        
+        return pow(v, 1 - b) / ((b - 1) * a) + c
+        /// ^ This is undefined for b == 1
+    }
 
-    private func getC(t: Double, v: Double) -> Double {
+    private func solveC(v: Double, t: Double) -> Double {
         /// Get c such that v(t) passes through the point (t, v)
         
         if (b == 1) {
@@ -230,23 +306,14 @@ import Foundation
         /// ^ Not defined for b == 1
     }
     
-    private func getT(v: Double) -> Double {
-        /// Get the t where v(t) is v
-        
-        if (b == 1) {
-            return (a * c -  log(v)) / a
-            /// Source: WA ->`solve t: v = pow(e, -a * (t - c))`,
-            /// Adaptions: Ignoring the `2 i π n` term, and wrapping log(v) with abs(v) and sign(v), because log(v) doesn't work when v is negative.
-            ///     See `getC()` for more on these adaptions
-        }
-        
-        return pow(v, 1 - b) / ((b - 1) * a) + c
-        /// ^ This is undefined for b == 1
-    }
     
     /// d(t)
+    ///     There are 4 important variables in the d(t) equation: d, t, c, and k
+    ///         (Also a and b but we don't have functions for them)
+    ///
+    ///     We can solve for each of these 4 variables, given the other 3, with the following 4 functions:
     
-    private func getD(t: Double, k: Double) -> Double {
+    private func solveD(t: Double, c: Double, k: Double) -> Double {
         
         if (b == 1) {
             return -pow(M_E, a * (c - t)) / a + k
@@ -273,10 +340,10 @@ import Foundation
 //        /// ^ Not defined for b == 1 or b == 2. Not sure whats the difference to the formula above
     }
     
-    private func getK(t: Double, d: Double) -> Double {
+    private func solveK(d: Double, t: Double, c: Double) -> Double {
         /// Get k such that d(t) passes through the point (t, d)
         
-        let D = getD(t: t, k: 0)
+        let D: Double = solveD(t: t, c: c, k: 0)
         
         return -D + d
     }
@@ -287,7 +354,7 @@ import Foundation
         /// Animator.swift expects its animation curves to pass through (0,0) and (1,1), so we'll scale our curve accordingly
         
         let t = Math.scale(value: tUnit, from: .unitInterval, to: timeInterval)
-        let d = getD(t: t, k: self.k)
+        let d = solveD(t: t, c: self.c, k: self.k)
         var dUnit = Math.scale(value: d, from: distanceInterval, to: .unitInterval)
         
         assert(dUnit > 0)

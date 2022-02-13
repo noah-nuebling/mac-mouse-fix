@@ -27,3 +27,13 @@ import Foundation
         return a * x + b
     }
 }
+
+@objc class InvalidLine: Line {
+    
+    init() {
+        super.init(a: 0, b: 0)
+    }
+    override func evaluate(at x: Double) -> Double {
+        fatalError()
+    }
+}

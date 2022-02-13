@@ -10,6 +10,53 @@
 import Cocoa
 import CocoaLumberjackSwift
 
+// MARK: - LineHybrid
+
+@objc class LineHybridCurve: HybridCurve {
+    
+    /// Base Curve
+    
+    var _baseCurve: Line = Line(a: 1, b: 0)
+    override var baseCurve: AnimationCurve {
+        get { _baseCurve }
+        set { fatalError() }
+    }
+    
+    @objc init(baseTimeRange: Double, valueRange: Double, dragCoefficient: Double, dragExponent: Double, stopSpeed: Double) {
+        
+        /// Init super
+        super.init()
+        
+        /// Validate
+        assert(valueRange > 0)
+        
+        /// Get drag curve
+        dragCurve = getDragCurve(exitSlope: _baseCurve.slope, stopSpeed: stopSpeed, coefficient: dragCoefficient, exponent: dragExponent)
+        
+        /// Find transition point
+        let dragDistance = dragCurve!.distanceInterval.length
+        let transitionDistance = valueRange - dragDistance
+        
+        /// Change dragCurve if transition distance is negative
+        if transitionDistance < 0 {
+            
+            /// Get a dragCurve that exactly covers valueRange
+            ///     Note that this means that the slope of the baseCurve is ignored. This might lead to weird feeling speed changes
+            
+            /// Warn
+            DDLogWarn("DragCurve transition distance is negative. Ignoring Line.")
+            assert(false) /// For debugging - remove later
+            
+            ///
+            
+        }
+        
+        /// Store params
+        ///     ....
+        
+    }
+}
+
 // MARK: - SimpleBezierHybrid
 
 @objc class SimpleBezierHybridCurve: HybridCurve {
@@ -44,29 +91,12 @@ import CocoaLumberjackSwift
         /// Store params
         
         self.baseCurve = baseCurve
-        self.baseTimeInterval = Interval(start: 0, end: baseTimeRange)
-        self.baseValueInterval = Interval(start: 0, end: baseValueRange)
-        
-        self.dragCoefficient = dragCoefficient
-        self.dragExponent = dragExponent
-        self.stopSpeed = stopSpeed
+        storeParams(baseTimeRange, baseValueRange, dragCoefficient, dragExponent, stopSpeed)
         
         /// Get exit speed of baseCurve (== initial speed of dragCurve)
         
-        let baseExitSpeed = baseCurve.exitSlope! * baseValueRange / baseTimeRange
-        
-        /// Get dragCurve
-        
-        if baseExitSpeed > stopSpeed {
-            self.dragCurve = DragCurve(coefficient: dragCoefficient, exponent: dragExponent, initialSpeed: baseExitSpeed, stopSpeed: stopSpeed)
-        } else {
-            DDLogDebug("baseExitSpeed > stopSpeed in HybridCurve init. Not creating dragCurve.")
-            self.dragCurve = nil
-        }
-        
-        /// Debug
-        
-        DDLogDebug("dragTime: \(dragTimeRange), dragValue: \(dragValueRange), time: \(timeRange), value: \(valueRange)")
+        let exitSlope = baseCurve.exitSlope!
+        self.dragCurve = getDragCurve(exitSlope: exitSlope, stopSpeed: stopSpeed, coefficient: dragCoefficient, exponent: dragExponent)
         
     }
 }
@@ -151,6 +181,44 @@ class HybridCurve: NSObject, AnimationCurve {
         
         /// Crash if not subclass
         if type(of: self) == HybridCurve.self { fatalError() }
+    }
+    
+    /// Init - Helper functions
+    
+    fileprivate func getDragCurve(exitSlope: Double, stopSpeed: Double, coefficient: Double, exponent: Double) -> DragCurve? {
+        
+        /// Get base curve exit speed
+        
+        let initialSpeed = exitSlope * baseValueRange / baseTimeRange
+        
+        /// Get dragCurve
+        
+        let result: DragCurve?
+        
+        if initialSpeed > stopSpeed {
+            result = DragCurve(coefficient: coefficient, exponent: exponent, initialSpeed: initialSpeed, stopSpeed: stopSpeed)
+        } else {
+            DDLogDebug("baseExitSpeed > stopSpeed in HybridCurve init. Not creating dragCurve.")
+            result = nil
+        }
+        
+        /// Debug
+        
+        DDLogDebug("dragTime: \(dragTimeRange), dragValue: \(dragValueRange), time: \(timeRange), value: \(valueRange)")
+        
+        /// Return
+        
+        return result
+    }
+    
+    fileprivate func storeParams(_ baseTimeRange: Double, _ baseValueRange: Double, _ dragCoefficient: Double, _ dragExponent: Double, _ stopSpeed: Double) {
+        
+        self.baseTimeInterval = Interval(start: 0, end: baseTimeRange)
+        self.baseValueInterval = Interval(start: 0, end: baseValueRange)
+        
+        self.dragCoefficient = dragCoefficient
+        self.dragExponent = dragExponent
+        self.stopSpeed = stopSpeed
     }
     
     
