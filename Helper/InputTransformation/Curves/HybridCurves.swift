@@ -22,13 +22,16 @@ import CocoaLumberjackSwift
         set { fatalError() }
     }
     
-    @objc init(baseCurve: Bezier, minDuration: Double, distance: Double, dragCoefficient: Double, dragExponent: Double, stopSpeed: Double, transitionPointEpsilon: Double) {
+    @objc init(baseCurve: Bezier, minDuration: Double, distance targetDistance: Double, dragCoefficient: Double, dragExponent: Double, stopSpeed: Double, transitionPointEpsilon: Double = 1.0) {
+        
+        /// ^ Not sure what to choose as the transitionPointEpsilon
+        ///     It's an epsilon for the targetDistance
         
         /// Init super
         super.init()
         
         /// Validate
-        assert(distance > 0)
+        assert(targetDistance > 0)
         
         /// Find transition point
         ///     We need to find a point on the BezierCurve where to attach the DragCurve, such that the combined curve covers a distance of `distance`
@@ -51,16 +54,16 @@ import CocoaLumberjackSwift
             /// Get transition point to sample
             let t = Math.scale(value: Double(k), from: Interval(1, Double(n)), to: .reversedUnitInterval) /// t goes from 1.0 to 0.0 in increments of 1/n
             /// Get combined distance at transition point
-            let combinedDistance = combinedDistance(transitionPoint: t, baseDistance: distance, baseDuration: minDuration, dragExponent: dragExponent, dragCoefficient: dragCoefficient, stopSpeed: stopSpeed)
+            let combinedDistance = combinedDistance(transitionPoint: t, baseCurve: _baseCurve, baseDistance: targetDistance, baseDuration: minDuration, dragExponent: dragExponent, dragCoefficient: dragCoefficient, stopSpeed: stopSpeed)
             /// Validate
-            if n == 1 { assert(t == 1) }
-            if n == 1 { assert(combinedDistance >= distance) }
+            if k == 1 { assert(t == 1) }
+            if k == 1 { assert(combinedDistance >= targetDistance) }
             /// Break
-            if combinedDistance == distance {
+            if combinedDistance == targetDistance {
                 transitionPoint = t
                 break
             }
-            if combinedDistance <= distance {
+            if combinedDistance <= targetDistance {
                 transitionPointRange = Interval(t, t+(1/Double(n)))
                 break
             }
@@ -76,9 +79,9 @@ import CocoaLumberjackSwift
         if let transitionPointRange = transitionPointRange {
             /// Use bisection to find exact transition point
             
-            transitionPoint = Math.bisect(searchRange: transitionPointRange, targetOutput: distance, epsilon: transitionPointEpsilon, function: { transitionPoint in
+            transitionPoint = Math.bisect(searchRange: transitionPointRange, targetOutput: targetDistance, epsilon: transitionPointEpsilon, function: { transitionPoint in
                 
-                return combinedDistance(transitionPoint: transitionPoint, baseDistance: distance, baseDuration: minDuration, dragExponent: dragExponent, dragCoefficient: dragCoefficient, stopSpeed: stopSpeed)
+                return combinedDistance(transitionPoint: transitionPoint, baseCurve: _baseCurve, baseDistance: targetDistance, baseDuration: minDuration, dragExponent: dragExponent, dragCoefficient: dragCoefficient, stopSpeed: stopSpeed)
             }) as? Double
             
         }
@@ -86,7 +89,7 @@ import CocoaLumberjackSwift
         if transitionPoint == nil {
             /// No transition point found
             
-            /// Fallback: Get a dragCurve that exactly covers `distance`
+            /// Fallback: Get a dragCurve that exactly covers `targetDistance`
             ///     Note that this means that the slope of the baseCurve is ignored. This might lead to weird feeling speed changes
             
             /// Warn
@@ -94,7 +97,7 @@ import CocoaLumberjackSwift
             assert(false) /// For debugging - remove later
             
             /// Get new curve
-            dragCurve = DragCurve(coefficient: dragCoefficient, exponent: dragExponent, distance: distance, stopSpeed: stopSpeed)
+            dragCurve = DragCurve(coefficient: dragCoefficient, exponent: dragExponent, distance: targetDistance, stopSpeed: stopSpeed)
             
             /// Set transition point to 0
             ///     (That means the baseCurve is ignored)
@@ -107,10 +110,11 @@ import CocoaLumberjackSwift
         guard let transitionPoint = transitionPoint else { fatalError() }
         
         let transitionTime = _baseCurve.sampleCurve(onAxis: Bezier.xAxis, atT: transitionPoint) * minDuration
-        let transitionDistance = _baseCurve.sampleCurve(onAxis: Bezier.yAxis, atT: transitionPoint) * distance
+        let transitionDistance = _baseCurve.sampleCurve(onAxis: Bezier.yAxis, atT: transitionPoint) * targetDistance
         
         /// Store params
         
+        self._baseCurve = baseCurve
         self.baseTimeInterval = Interval(start: 0, end: transitionTime)
         self.baseDistanceInterval = Interval(start: 0, end: transitionDistance)
         
@@ -121,11 +125,11 @@ import CocoaLumberjackSwift
     
     /// Init - Helpers
     
-    func combinedDistance(transitionPoint t: Double, baseDistance: Double, baseDuration: Double, dragExponent: Double, dragCoefficient: Double, stopSpeed: Double) -> Double {
+    func combinedDistance(transitionPoint t: Double, baseCurve: Bezier, baseDistance: Double, baseDuration: Double, dragExponent: Double, dragCoefficient: Double, stopSpeed: Double) -> Double {
         
         assert(0 <= t && t <= 1)
         
-        let speedAtT = _baseCurve.derivativeDyOverDx(atT: t) * baseDistance / baseDuration
+        let speedAtT = baseCurve.derivativeDyOverDx(atT: t) * baseDistance / baseDuration
         
         let dragCurve = DragCurve(coefficient: dragCoefficient, exponent: dragExponent, initialSpeed: speedAtT, stopSpeed: stopSpeed)
         let dragDistance = dragCurve.distanceInterval.length

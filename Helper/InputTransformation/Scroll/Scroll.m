@@ -366,12 +366,22 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             } else {
                 
                 /// New curve
-                LineHybridCurve *c = [[LineHybridCurve alloc]
-                                        initWithMinDuration:baseTimeRange
+                BezierHybridCurve *c = [[BezierHybridCurve alloc]
+                                        initWithBaseCurve:_scrollConfig.baseCurve
+                                        minDuration:baseTimeRange
                                         distance:(pxToScrollForThisTick + pxLeftToScroll)
                                         dragCoefficient:_scrollConfig.dragCoefficient
                                         dragExponent:_scrollConfig.dragExponent
-                                        stopSpeed:_scrollConfig.stopSpeed];
+                                        stopSpeed:_scrollConfig.stopSpeed
+                                        transitionPointEpsilon:0.2];
+                
+                /// New curve
+//                LineHybridCurve *c = [[LineHybridCurve alloc]
+//                                        initWithMinDuration:baseTimeRange
+//                                        distance:(pxToScrollForThisTick + pxLeftToScroll)
+//                                        dragCoefficient:_scrollConfig.dragCoefficient
+//                                        dragExponent:_scrollConfig.dragExponent
+//                                        stopSpeed:_scrollConfig.stopSpeed];
                 
                 /// Get values for animator from hybrid curve
                 

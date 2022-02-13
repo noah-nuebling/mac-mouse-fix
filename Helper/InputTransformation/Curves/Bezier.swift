@@ -355,6 +355,12 @@ import ReactiveSwift
         /// See sampleCurve(onAxis:atT:) for context
         /// The explicit algorithm is even slower than Casteljau's algorithm, but it should work the same and couldn't be bothered to implement Casteljau here, too.
         
+        assert(controlPoints.count >= 2)
+        
+        if controlPoints.count == 2 {
+            return controlPoints(axis)[1] - controlPoints(axis)[0]
+        }
+        
         if degree <= maxDegreeForPolynomialApproach {
             return sampleDerivativePolynomial(axis, t)
         } else {
