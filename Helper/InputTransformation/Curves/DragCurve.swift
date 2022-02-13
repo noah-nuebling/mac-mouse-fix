@@ -53,6 +53,12 @@ import CocoaLumberjackSwift
  - ^ I wrote the equation more like the original and now WA __can__ integrate it. Weird
  - `c` shifts the curve along the t axis
  
+ Edit: We need to use different functions for b == 1 and b == 2. here are the equations for copy-pasting
+    (b == 1)
+    `v(t) = e^(-a (t - c))`
+    (b == 2)
+    `v(t) = 1/(a (t - c))`
+ 
  Now we want to __solve for c__, so we can ask:
  - What is the c that gives us the curve for an initial speed of v_0?
  - Or phrased differently: what is the c such that the curve crosses the v axis at v_0
@@ -82,6 +88,12 @@ import CocoaLumberjackSwift
  - `k` shifts the curve along the d axis
  - This isn't defined for b = 2. We want to use b = 2. That's a problem.
  
+ Edit: We need to use different equations for b == 1 and b == 2. Here they are for copy-pasting
+    (b == 1)
+    `d(t) = -e^(a (c - t))/a + k`
+    (b == 2)
+    `d(t) = log(t - c)/a + k`
+ 
  Now we want to solve for k so we can ask:
  - What is the k that gives us the curve that starts at distance 0
  - Or phrased differently: what is the k such that the curve passes through (t: 0, d: 0)
@@ -104,6 +116,21 @@ import CocoaLumberjackSwift
  
  Edit 26. June 21
  I'm trying to actually put this to use for momentum scrolling right now, and I've noticed that almost none of the functions we defined were defined when b was 1. That lead to division by zero on most of them. A few weren't even defined for b == 2. So What I did now is add special formulas for when b == 1 and changed some other formulas around so they work with b == 1. I (sloppily) documented the way that I arrived at these new formulas in the function bodies. Basically I just used Wolfram Alpha and did the same thing as above just plugging in 1 for b.
+ 
+ Edit 13. Feb 22
+ We want to create drag curves based on overall distance now
+ For that we need to solve d(t) for c, and we need to solve d(t) for t.
+ For the c solution we used the same logic as for the k solution. For the t solution we used WA
+ 
+ `t = ((a (2 - b) k)^(-1/(b - 2)) (-a c (a (2 - b) k)^(1/(b - 2)) + a b c (a (2 - b) k)^(1/(b - 2)) + (a (2 - b) k)^(b/(b - 2))))/(a (b - 1))`
+ 
+ (b == 1)
+    `t = c - log(a k)/a`
+        (for and a>0 and k>0)
+ (b == 2)
+    `t = e^(-a k) + c`
+        (for a!=0)
+ 
  
  */
 
@@ -130,8 +157,10 @@ import Foundation
         }
     }
 
-    @objc init(coefficient: Double, exponent: Double, distance d_arg: Double, stopSpeed vs_arg: Double) {
+    @objc init(coefficient: Double, exponent: Double, distance d: Double, stopSpeed vs: Double) {
         /// Distance-based init
+        ///
+        /// This is quite similar to the `Initial-speed-based init`. Make sure to keep both in sync when you make changes.
         
         /// Init everything to garbage so we can call super.init()
         
@@ -147,41 +176,36 @@ import Foundation
         
         super.init()
         
-        /// Get mutable d and vs
-        
-        var d = d_arg
-        var vs = vs_arg
-        
         /// Validate input
         
+        assert(a > 0)
+        assert(b > 0)
         assert(SharedUtility.sign(of: d) == SharedUtility.sign(of: vs))
         assert(vs > 0)
         
-        
-        
-        /// Validate
-        
-        assert(abs(v0) > abs(vs))
-        
-        /// Curve feel
-
+        /// Store curve shape
         self.a = coefficient
         self.b = exponent
 
-        /// Choose c such that v(t) passes through (t: 0, v: v0)
-        c = getC(t: 0, v: v0)
+        /// Get t for stop speed
+        ///     Since c=0, this is not the true stop time, but instead it's t - c. (I think)
+        let t_s0 = solveT(v: vs, c: 0)
 
-        /// Choose k such that d(t) passes through (t: 0, d: 0)
-        k = solveK(t: 0, d: 0)
-
-        /// Get time and distance to stop
-        let timeToStop = getT(v: vs)
-        let distanceToStop = solveD(t: timeToStop, k: self.k)
-        self.timeInterval = Interval(location: 0, length: timeToStop)
-        self._distanceInterval = Interval(location: 0, length: distanceToStop)
+        /// Get k
+        ///     So that the whole curve will cover a distance of `d`
+        self.k = solveK(d: d, t: t_s0, c: 0)
         
-        /// Asserts / Debug
+        /// Get c
+        ///     Such that the curve passes through (d=0, t=0)
+        self.c = solveC(d: 0, t: 0, k: self.k)
+        
+        /// Validate / Debug
+        
         assert(abs(timeInterval.length) != Double.infinity)
+        
+        let v0 = solveV(t: 0, c: self.c)
+        assert(abs(v0) > abs(vs))
+        
 //        DDLogDebug("DragDurve initialized with v0: \(v0), distance int: \(self._distanceInterval), timeToStop: \(timeToStop)");
         
     }
@@ -212,7 +236,12 @@ import Foundation
         var v0 = v0_arg
         var vs = vs_arg
         
-        /// Validate input
+        /// Validate curve shape params
+        assert(a > 0)
+        assert(b > 0)
+        
+        /// Validate velocities
+        ///     This asserts that everything is positive, which makes self.isNegative unused.
         
         assert(SharedUtility.sign(of: v0) == SharedUtility.sign(of: vs)) /// Same sign - Otherwise vs can't be reached at all
         assert(vs != 0) /// A speed of zero is unreachable
@@ -233,8 +262,7 @@ import Foundation
             vs *= -1
         }
         
-        /// Curve feel
-        
+        /// Store curve shape
         self.a = coefficient
         self.b = exponent
         
@@ -345,7 +373,38 @@ import Foundation
         
         let D: Double = solveD(t: t, c: c, k: 0)
         
-        return -D + d
+        return (D - d)
+    }
+    
+    private func solveC(d: Double, t: Double, k: Double) -> Double {
+        /// Get t where d(t) is d
+        
+        let T: Double = solveT(d: d, c: 0, k: k)
+        
+        return -(T - t)
+    }
+    
+    private func solveT(d: Double, c: Double, k: Double) -> Double {
+        
+        if b == 1 {
+            return c - log(a * k) / a
+        }
+        if b == 2 {
+            return pow(M_E, -a * k) + c
+        }
+        
+        /// If we messed this up, see Apple Note `Figuring out solveT() (MMF)`
+        return
+            (pow(a * (2 - b) * k, -1/(b - 2))
+             * (-a * c * pow(a * (2 - b) * k, 1/(b - 2))
+                 +
+                 a * b * c * pow(a * (2 - b) * k, 1/(b - 2))
+                 +
+                 pow(a * (2 - b) * k, b/(b - 2))
+               )
+            )
+            /
+            (a * (b - 1))
     }
     
     /// Interface
