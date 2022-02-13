@@ -146,7 +146,9 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     ///     Get timestamp here instead of _scrollQueue for accurate timing
     
     CFTimeInterval tickTime = CACurrentMediaTime();
-    CGEventTimestamp tickTimeCG = CGEventGetTimestamp(event);
+    CFTimeInterval tickTimeCG = CGEventGetTimestamp(event)*(100/2.4)/NSEC_PER_SEC;
+    
+    DDLogDebug(@"\ntickTimeCG: %.20f", tickTimeCG);
     
     /// Debug
     
@@ -160,13 +162,12 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     }
     lastTickTime = tickTime;
     lastTickTimeCG = tickTimeCG;
-    double p = tickPeriod*1000;
-    double pCG = tickPeriodCG*1000/NSEC_PER_SEC*(100/2.4);
     static double pSum = 0;
     static double pSumCG = 0;
-    pSum += p;
-    pSumCG += pCG;
-    DDLogDebug(@"tickPeriod: %.3f, CG: %.3f", p, pCG);
+    pSum += tickPeriod;
+    pSumCG += tickPeriodCG;
+    DDLogDebug(@"tickPeriod: %.3f, CG: %.3f", tickPeriod*1000, tickPeriodCG*1000);
+    DDLogDebug(@"ticksPerSec: %.3f, CG: %.3f", 1/tickPeriod, 1/tickPeriodCG);
     DDLogDebug(@"tickPeriodSum: %.0f, CG: %.0f, ratio: %.5f", pSum, pSumCG, pSumCG/pSum);
     
     /// Create copy of event
@@ -177,7 +178,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     ///  Executing heavy stuff on a different thread to prevent the eventTap from timing out. We wrote this before knowing that you can just re-enable the eventTap when it times out. But this doesn't hurt.
     
     dispatch_async(_scrollQueue, ^{
-        heavyProcessing(eventCopy, scrollDeltaAxis1, scrollDeltaAxis2, tickTime);
+        heavyProcessing(eventCopy, scrollDeltaAxis1, scrollDeltaAxis2, tickTimeCG);
     });
     
     return nil;

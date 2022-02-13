@@ -89,7 +89,7 @@ import CocoaLumberjackSwift
     
     @objc lazy var scrollSwipeMax_inTicks: Int = 9 /// Max number of ticks that we think can occur in a single swipe naturally (if the user isn't using a free-spinning scrollwheel). (See `consecutiveScrollSwipeCounter_ForFreeScrollWheel` definition for more info)
     
-    @objc lazy var consecutiveScrollTickIntervalMax: TimeInterval = 0.13
+    @objc lazy var consecutiveScrollTickIntervalMax: TimeInterval = 160/1000
     /// ^ If more than `_consecutiveScrollTickIntervalMax` seconds passes between two scrollwheel ticks, then they aren't deemed consecutive.
     ///        other["consecutiveScrollTickIntervalMax"] as! Double;
     ///     msPerStep/1000 <- Good idea but we don't want this to depend on msPerStep
@@ -98,7 +98,7 @@ import CocoaLumberjackSwift
     /// ^ If more than `_consecutiveScrollSwipeIntervalMax` seconds passes between two scrollwheel swipes, then they aren't deemed consecutive.
     ///        other["consecutiveScrollSwipeIntervalMax"] as! Double
     
-    @objc lazy private var consecutiveScrollTickInterval_AccelerationEnd: TimeInterval = 0.02
+    @objc lazy private var consecutiveScrollTickInterval_AccelerationEnd: TimeInterval = 15/1000
     /// ^ Used to define accelerationCurve. If the time interval between two ticks becomes less than `consecutiveScrollTickInterval_AccelerationEnd` seconds, then the accelerationCurve becomes managed by linear extension of the bezier instead of the bezier directly.
     
     @objc lazy var ticksPerSecond_DoubleExponentialSmoothing_InputValueWeight: Double = 0.5
@@ -127,7 +127,7 @@ import CocoaLumberjackSwift
     @objc var pxPerTickBase = 60 /* return smooth["pxPerStep"] as! Int */
     /// ^ 60 -> Max good-feeling value, 30 -> I like this one, 10 -> Min good feeling value
     
-    @objc lazy private var pxPerTickEnd: Int = 120
+    @objc lazy private var pxPerTickEnd: Int = 190
     /// ^ 120 Works well without implicit hybrid curve acceleration
     ///     100 Works well with slight hybrid curve acceleration
     
