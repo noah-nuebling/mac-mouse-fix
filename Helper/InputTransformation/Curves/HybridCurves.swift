@@ -10,17 +10,146 @@
 import Cocoa
 import CocoaLumberjackSwift
 
+// MARK: - BezierHybrid
+
+@objc class BezierHybridCurve: HybridCurve {
+    
+    /// Base Curve
+    
+    var _baseCurve: Bezier = InvalidBezier()
+    override var baseCurve: AnimationCurve {
+        get { _baseCurve }
+        set { fatalError() }
+    }
+    
+    @objc init(baseCurve: Bezier, minDuration: Double, distance: Double, dragCoefficient: Double, dragExponent: Double, stopSpeed: Double, transitionPointEpsilon: Double) {
+        
+        /// Init super
+        super.init()
+        
+        /// Validate
+        assert(distance > 0)
+        
+        /// Find transition point
+        ///     We need to find a point on the BezierCurve where to attach the DragCurve, such that the combined curve covers a distance of `distance`
+        ///     We can't solve this mathematically (at least I wouldn't know how) so we need to search for the point algorithmically
+        ///     The algorithm will work something like this:
+        ///         - Define function distance(attachmentPoint). We try to find the attachmentPoint t_a where distance(attachmentPoint = t_a) = targetDistance.
+        ///         - We know that distance(attachmentPoint = lastPointOnBezier) >(=?) targetDistance, because the Bezier exactly covers targetDistance on it's own.
+        ///         - We traverse the points on the Bezier from lastPointOnBezer (t == 1.0) to firstPointOnBezier (t == 0.0).  (Increments of 10 or less should work). Until we find a point t_n where `distance(attachmentPoint = t_n) < targetDistance`. Then we know that `t_a` is between `t_n` and `t_{n+1}`. Then we do bisection between `t_n` and `t_{n+1}` until we find a point that's within an epsilon of `t_a`.
+        ///         - If we found the derivative of distance(attachmentPoint) we could use Newton's method instead of bisection, but bisection should be fast enough.
+        ///             -> Maybe look into using that if there is a noticable performance impact.
+        
+        var transitionPointRange: Interval? = nil
+        var transitionPoint: Double? = nil
+        
+        /// Find range where transitionPoint might be
+        
+        let n = 10
+        var k = 1
+        while true {
+            /// Get transition point to sample
+            let t = Math.scale(value: k, from: Interval(1, n), to: .reversedUnitInterval) /// t goes from 1.0 to 0.0 in increments of 1/n
+            /// Get combined distance at transition point
+            let combinedDistance = combinedDistance(transitionPoint: t, baseDistance: distance, baseDuration: minDuration, dragExponent: dragExponent, dragCoefficient: dragCoefficient, stopSpeed: stopSpeed)
+            /// Validate
+            if n == 1 { assert(t == 1) }
+            if n == 1 { assert(combinedDistance >= distance) }
+            /// Break
+            if combinedDistance == distance {
+                transitionPoint = t
+                break
+            }
+            if combinedDistance <= distance {
+                transitionPointRange = Interval(t, t+(1/n))
+                break
+            }
+            if k >= n {
+                break
+            }
+            /// Increment
+            k += 1
+        }
+        
+        
+        
+        if let transitionPointRange = transitionPointRange {
+            /// Use bisection to find exact transition point
+            
+            transitionPoint = Math.bisect(searchRange: transitionPointRange, targetOutput: distance, epsilon: transitionPointEpsilon, function: { transitionPoint in
+                
+                return combinedDistance(transitionPoint: transitionPoint, baseDistance: distance, baseDuration: minDuration, dragExponent: dragExponent, dragCoefficient: dragCoefficient, stopSpeed: stopSpeed)
+            })
+            
+        }
+        
+        if transitionPoint == nil {
+            /// No transition point found
+            
+            /// Fallback: Get a dragCurve that exactly covers `distance`
+            ///     Note that this means that the slope of the baseCurve is ignored. This might lead to weird feeling speed changes
+            
+            /// Warn
+            DDLogWarn("Coudn't find DragCurve transition point. Ignoring Bezier.")
+            assert(false) /// For debugging - remove later
+            
+            /// Get new curve
+            dragCurve = DragCurve(coefficient: dragCoefficient, exponent: dragExponent, distance: distance, stopSpeed: stopSpeed)
+            
+            /// Set transition point to 0
+            ///     (That means the baseCurve is ignored)
+            transitionPoint = 0.0
+            
+        }
+        
+        /// Get transition time and distance
+        
+        let transitionTime = _baseCurve.sampleCurve(onAxis: Bezier.xAxis, atT: transitionPoint) * minDuration
+        let transitionDistance = _baseCurve.sampleCurve(onAxis: Bezier.yAxis, atT: transitionPoint) * distance
+        
+        /// Store params
+        
+        self.baseTimeInterval = Interval(start: 0, end: transitionTime)
+        self.baseDistanceInterval = Interval(start: 0, end: transitionDistance)
+        
+        self.dragCoefficient = dragCoefficient
+        self.dragExponent = dragExponent
+        self.stopSpeed = stopSpeed
+    }
+    
+    /// Init - Helpers
+    
+    func combinedDistance(transitionPoint t: Double, baseDistance: Double, baseDuration: Double, dragExponent: Double, dragCoefficient: Double, stopSpeed: Double) -> Double {
+        
+        assert(0 <= t && t <= 1)
+        
+        let speedAtT = _baseCurve.derivativeDyOverDx(atT: t) * baseDistance / baseDuration
+        
+        let dragCurve = DragCurve(coefficient: dragCoefficient, exponent: dragExponent, initialSpeed: speedAtT, stopSpeed: stopSpeed)
+        let dragDistance = dragCurve.distanceInterval.length
+        
+        let transitionDistance = _baseCurve.sampleCurve(onAxis: Bezier.yAxis, atT: t) * baseDistance
+        
+        let combinedDistance = transitionDistance + dragDistance
+        
+        return combinedDistance
+    }
+    
+}
+
 // MARK: - LineHybrid
 
 @objc class LineHybridCurve: HybridCurve {
     
     /// Base Curve
     
-    var _baseCurve: Line = Line(a: 1, b: 0)
+    var _baseCurve: Line = InvalidLine()
     override var baseCurve: AnimationCurve {
         get { _baseCurve }
         set { fatalError() }
     }
+    
+    /// Init
     
     @objc init(minDuration: Double, distance: Double, dragCoefficient: Double, dragExponent: Double, stopSpeed: Double) {
         

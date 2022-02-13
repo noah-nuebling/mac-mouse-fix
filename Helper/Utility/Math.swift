@@ -11,6 +11,38 @@ import Cocoa
 
 @objc class Math: NSObject {
     
+    @objc class func bisect(searchRange: Interval, targetOutput: Double, epsilon: Double, function: (Double) -> Double) -> Double? {
+        
+        /// Validate
+        
+        assert(searchRange.upper - searchRange.lower > 0)
+        assert(epsilon > 0)
+        
+        /// Algorithm
+        
+        let t = Math.scale(value: 0.5, from: .unitInterval, to: searchRange)
+        var searchRange = searchRange
+        
+        while searchRange.lower < searchRange.upper {
+            
+            let sampledOutput = function(t)
+            
+            if fabs(distance - sampledDistance) < epsilon {
+                return t
+            }
+            
+            if sampledOutput < targetOutput {
+                searchRange = Interval(t, searchRange.upper)
+            } else {
+                searchRange = Interval(searchRange.lower, t)
+            }
+            
+            t = Math.scale(value: 0.5, from: .unitInterval, to: searchRange)
+        }
+        
+        return nil
+    }
+    
     @objc class func choose(_ nArg: Int, _ k: Int) -> Int {
         /// Aka binomial coefficient
         /// Source https://blog.plover.com/math/choose.html
@@ -94,6 +126,8 @@ import Cocoa
     
     @objc static let unitInterval = Interval.init(start: 0, end: 1)
     /// ^ Scale to this interval to normalize a value
+    
+    @objc static let reversedUnitInterval = Interval.init(start: 1, end: 0)
     
     @objc required init(start: Double, end: Double) {
         

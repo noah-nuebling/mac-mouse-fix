@@ -54,9 +54,9 @@ import ReactiveSwift
 
 @objc class Bezier: NSObject, AnimationCurve {
 
-    typealias Point = Vector;
-    let xAxis = kMFAxisHorizontal
-    let yAxis = kMFAxisVertical
+    static typealias Point = Vector;
+    static let xAxis = kMFAxisHorizontal
+    static let yAxis = kMFAxisVertical
     
     // Control points
     
@@ -293,7 +293,7 @@ import ReactiveSwift
     ///   - axis: Axis which to sample. Either `xAxis` or `yAxis`
     ///   - t: Where to evaluate the curve. Valid values ranges from 0 to 1
     /// - Returns: The x or y value for the input t
-    private func sampleCurve(onAxis axis: MFAxis, atT t: Double) -> Double {
+    public func sampleCurve(onAxis axis: MFAxis, atT t: Double) -> Double {
         /// The polynomial approach should be very fast but apparentaly becomes "numerically unstable" for larger control point counts. (src. Wikipedia)
         ///     So for a larger degree we use the slower Casteljau algorithm instead
         
@@ -438,13 +438,12 @@ import ReactiveSwift
             
             let error = abs(sampledXShifted)
             if error < epsilon {
-//                print("Solved for t in \(i) Newton iterations\n") /// Debug
                 return t
             }
             
             let sampledDerivative = sampleDerivative(on: xAxis, at: t)
             
-            if abs(sampledDerivative) < 1e-6 {
+            if abs(sampledDerivative) < 1e-6 { /// 1e-6 comes from the WebKit implementation I found.
                 break
             }
             
@@ -460,32 +459,41 @@ import ReactiveSwift
         
         /// Try bisection method for reliability
         
-        t = initialGuess
-        
-        var searchRange: Interval = .unitInterval
-        
-        if (t <= searchRange.lower) {
-            return searchRange.lower
-        } else if searchRange.upper <= t {
-            return searchRange.upper
+        let tBisect = Math.bisect(searchRange: .unitInterval, targetOutput: x, epsilon: epsilon) { input in
+            return sampleCurve(onAxis: xAxis, atT: input)
         }
         
-        while (searchRange.lower < searchRange.upper) {
-            
-            let sampledX = sampleCurve(onAxis: xAxis, atT: t)
-            
-            if fabs(sampledX - x) < epsilon {
-//                print("Found t using bisection! t:\(t)")
-                return t
-            }
-            if sampledX < x {
-                searchRange = Interval(lower: t, upper: searchRange.upper)
-            } else {
-                searchRange = Interval(lower: searchRange.lower, upper: t)
-            }
-            t = Math.scale(value: 0.5, from: .unitInterval, to: searchRange)
+        if tBisect != nil {
+            return tBisect!
         }
         
+        /// Old code for reference, if sth goes wrong
+        
+//        var searchRange: Interval = .unitInterval
+        
+//        if (t <= searchRange.lower) {
+//            return searchRange.lower
+//        } else if searchRange.upper <= t {
+//            return searchRange.upper
+//        }
+        
+        /// ^ Why do we do that? Isn't this a fatalError?
+//        
+//        while (searchRange.lower < searchRange.upper) {
+//            
+//            let sampledX = sampleCurve(onAxis: xAxis, atT: t)
+//            
+//            if fabs(sampledX - x) < epsilon {
+//                return t
+//            }
+//            if sampledX < x {
+//                searchRange = Interval(lower: t, upper: searchRange.upper)
+//            } else {
+//                searchRange = Interval(lower: searchRange.lower, upper: t)
+//            }
+//            t = Math.scale(value: 0.5, from: .unitInterval, to: searchRange)
+//        }
+//        
         
         /// Failure
         
@@ -510,6 +518,13 @@ import ReactiveSwift
         return y
     }
     
+    // MARK: Derivative dy/dx
+    
+    @objc func derivativeDyOverDx(atT t: Double) -> Double {
+        /// All parametric functions have this derivative
+        return sampleDerivative(on: yAxis, at: t) / sampleDerivative(on: xAxis, at: t)
+    }
+    
     // MARK: Other Interface
     
     var exitSlope: Double? {
@@ -518,9 +533,9 @@ import ReactiveSwift
             return nil
         }
         
-        // Get last control point
+        /// Get last control point
         let cLast = controlPoints[self.n]
-        // Find first controlPoint before cLast that is different from cLast
+        /// Find first controlPoint before cLast that is different from cLast
         var cPrevIndex: Int = self.n-1;
         var cPrev: Point = controlPoints[cPrevIndex];
         while (cPrev.x == cLast.x && cPrev.y == cLast.y) { /// Loop while cPrev == cLast
@@ -528,7 +543,7 @@ import ReactiveSwift
             cPrev = controlPoints[cPrevIndex]
         }
         
-        // Find slope
+        /// Find slope
         let slope = (cLast.y - cPrev.y) / (cLast.x - cPrev.x)
         
         return slope
