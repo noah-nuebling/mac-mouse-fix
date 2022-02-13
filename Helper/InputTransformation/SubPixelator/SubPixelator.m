@@ -11,9 +11,9 @@
 #import "SharedUtility.h"
 
 @interface SubPixelator ()
-//@property double accumulatedRoundingError; /// Declaring this in header for outside access to help debugging
-@property RoundingFunction roundingFunction;
-@property BOOL isBiasedPixelator;
+@property (readwrite, assign, atomic) double accumulatedRoundingError;
+@property (readwrite, assign, atomic, nullable) RoundingFunction roundingFunction;
+@property (readwrite, assign, atomic) BOOL isBiasedPixelator;
 @end
 
 @implementation SubPixelator
@@ -26,7 +26,8 @@
 }
 + (SubPixelator *)biasedPixelator {
     /// A biased pixelator becomes a floor or a ceil pixelator depending on whether it's first non-zero input is negative (floor) or positive (ceil)
-    ///     That means it's first
+    ///     That means it's first input will always result in a non-zero output.
+    ///     We're using this in PixelatedVectorAnimator. I can't remember why.
     
     return [[self alloc] initAsBiasedPixelator];
 }
@@ -62,8 +63,7 @@ static RoundingFunction getBiasedRoundingFunction(double inpDelta) {
         return ceil;
     } else if (sign(inpDelta) == -1) {
         return floor;
-    } else {
-        /* sign == 0 */
+    } else { /* sign == 0 */
         return NULL;
     }
 }
@@ -80,7 +80,6 @@ static RoundingFunction getBiasedRoundingFunction(double inpDelta) {
     /// If this is biased pixelator, initialize rounding function if it isn't already
     if (self.isBiasedPixelator && self.roundingFunction == NULL) {
         self.roundingFunction = getBiasedRoundingFunction(inpDelta);
-        
     }
     
     /// Get roundedDelta
@@ -91,6 +90,9 @@ static RoundingFunction getBiasedRoundingFunction(double inpDelta) {
     
     DDLogDebug(@"\nSubpixelator eval with d: %f, oldErr: %f, roundedD: %lld, newErr: %f", inpDelta, self.accumulatedRoundingError, roundedDelta, preciseDelta - roundedDelta);
     
+    /// Validate
+    assert(self.roundingFunction != NULL);
+    
     /// Update roundingError
     self.accumulatedRoundingError = preciseDelta - roundedDelta;
     
@@ -100,7 +102,6 @@ static RoundingFunction getBiasedRoundingFunction(double inpDelta) {
 
 - (int64_t)peekIntDeltaWithDoubleDelta:(double)inpDelta {
     /// See what int delta a certain double input would yield without changing the state of the subpixelator
-    ///     ^ With reference to this class's main function intDeltaWithDoubleDelta:
     
     /// Nothing to round if input is 0
     if (inpDelta == 0) {

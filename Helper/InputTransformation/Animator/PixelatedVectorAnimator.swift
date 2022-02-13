@@ -46,7 +46,9 @@ class PixelatedVectorAnimator: VectorAnimator {
     ///     You usually want to call this where you call linkToMainScreen()
     
     @objc func resetSubPixelator() {
-        subPixelator.reset()
+        self.animatorQueue.async {
+            self.subPixelator.reset()
+        }
     }
     
     /// Declare new start function
