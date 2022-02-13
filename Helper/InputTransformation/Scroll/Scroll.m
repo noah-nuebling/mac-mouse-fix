@@ -146,7 +146,29 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     ///     Get timestamp here instead of _scrollQueue for accurate timing
     
     CFTimeInterval tickTime = CACurrentMediaTime();
-        
+    CGEventTimestamp tickTimeCG = CGEventGetTimestamp(event);
+    
+    /// Debug
+    
+    static CFTimeInterval lastTickTime = 0;
+    static CFTimeInterval lastTickTimeCG = 0;
+    double tickPeriod = 0;
+    double tickPeriodCG = 0;
+    if (lastTickTime != 0) {
+        tickPeriod = tickTime - lastTickTime;
+        tickPeriodCG = tickTimeCG - lastTickTimeCG;
+    }
+    lastTickTime = tickTime;
+    lastTickTimeCG = tickTimeCG;
+    double p = tickPeriod*1000;
+    double pCG = tickPeriodCG*1000/NSEC_PER_SEC*(100/2.4);
+    static double pSum = 0;
+    static double pSumCG = 0;
+    pSum += p;
+    pSumCG += pCG;
+    DDLogDebug(@"tickPeriod: %.3f, CG: %.3f", p, pCG);
+    DDLogDebug(@"tickPeriodSum: %.0f, CG: %.0f, ratio: %.5f", pSum, pSumCG, pSumCG/pSum);
+    
     /// Create copy of event
     
     CGEventRef eventCopy = CGEventCreateCopy(event); /// Create a copy, because the original event will become invalid and unusable in the new queue.
