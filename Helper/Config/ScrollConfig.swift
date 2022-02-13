@@ -144,7 +144,8 @@ import CocoaLumberjackSwift
         /// Using a closure here instead of DerivedProperty.create_kvc(), because we know it will never change.
         typealias P = Bezier.Point
         
-        //        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:1,y:1), P(x:1,y:1)] /// Straight line
+//        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:1,y:1), P(x:1,y:1)] /// Straight line
+//        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:0.9,y:0), P(x:1,y:1)] /// Testing
         let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:0.5,y:0.9), P(x:1,y:1)]
         /// ^ Ease out but the end slope is not 0. That way. The curve is mostly controlled by the Bezier, but the DragCurve rounds things out.
         ///     Might be placebo but I really like how this feels

@@ -355,12 +355,6 @@ import ReactiveSwift
         /// See sampleCurve(onAxis:atT:) for context
         /// The explicit algorithm is even slower than Casteljau's algorithm, but it should work the same and couldn't be bothered to implement Casteljau here, too.
         
-        assert(controlPoints.count >= 2)
-        
-        if controlPoints.count == 2 {
-            return controlPoints(axis)[1] - controlPoints(axis)[0]
-        }
-        
         if degree <= maxDegreeForPolynomialApproach {
             return sampleDerivativePolynomial(axis, t)
         } else {
@@ -529,17 +523,30 @@ import ReactiveSwift
     // MARK: Derivative dy/dx
     
     @objc func derivativeDyOverDx(atT t: Double) -> Double {
+        
+        assert(controlPoints.count > 1)
+        
+        /// Our sampleDerivative() function doesn't work for t == 0 and t == 1
+        
+        if t == 0 {
+            return entrySlope
+        }
+        if t == 1 {
+            return exitSlope
+        }
+        
         /// All parametric functions have this derivative
-        return sampleDerivative(on: yAxis, at: t) / sampleDerivative(on: xAxis, at: t)
+        let dyDt = sampleDerivative(on: yAxis, at: t)
+        let dxDt = sampleDerivative(on: xAxis, at: t)
+        
+        return dyDt / dxDt
     }
     
     // MARK: Other Interface
     
-    var exitSlope: Double? {
+    var exitSlope: Double {
         
-        if (controlPoints.count <= 1) {
-            return nil
-        }
+        assert(controlPoints.count > 1)
         
         /// Get last control point
         let cLast = controlPoints[self.n]
@@ -553,6 +560,26 @@ import ReactiveSwift
         
         /// Find slope
         let slope = (cLast.y - cPrev.y) / (cLast.x - cPrev.x)
+        
+        return slope
+    }
+    
+    var entrySlope: Double {
+        
+        assert(controlPoints.count > 1)
+        
+        /// Get first control point
+        let cFirst = controlPoints[0]
+        /// Find first controlPoint after cFirst that is different from cFirst
+        var cNextIndex: Int = 1;
+        var cNext: Point = controlPoints[cNextIndex];
+        while cFirst.x == cNext.x && cFirst.y == cNext.y { /// Loop while cFirst == cNext
+            cNextIndex += 1
+            cNext = controlPoints[cNextIndex]
+        }
+        
+        /// Find slope
+        let slope = (cNext.y - cFirst.y) / (cNext.x - cFirst.x)
         
         return slope
     }
@@ -589,7 +616,7 @@ import ReactiveSwift
 @objc class InvalidBezier: Bezier {
     
     init() {
-        super.init(controlPoints: [Point(x: 0, y: 0), Point(x: 1, y: 1)])
+        super.init(controlPoints: [Point(x: 1, y: 1), Point(x: 12345, y: 12345)])
     }
     
     override func evaluate(at x: Double) -> Double {

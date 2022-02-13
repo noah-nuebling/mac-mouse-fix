@@ -37,7 +37,13 @@ import Foundation
     init() {
         super.init(a: 0, b: 0)
     }
-    override func evaluate(at x: Double) -> Double {
+    override var slope: Double { fatalError() }
+    
+    @objc override func evaluate(at x: Double) -> Double {
+        fatalError()
+    }
+    
+    @objc override func evaluate(atY y: Double) -> Double {
         fatalError()
     }
 }

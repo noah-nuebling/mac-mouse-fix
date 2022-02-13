@@ -49,30 +49,30 @@ class AccelerationBezier: Bezier {
          
          */
         
-        // preLine
+        /// preLine
         
-        // Get the relevant control points
+        /// Get the relevant control points
         let c1 = controlPoints[0]
         
-        // Find slope.
+        /// Find slope.
         let aPre = 0.0
         
-        // Find b such that the preLine passes through the first control point
+        /// Find b such that the preLine passes through the first control point
         let bPre = c1.y
         
-        // Found preLine!
+        /// Found preLine!
         self.preLine = Line.init(a: aPre, b: bPre)
         
-        // postLine
+        /// postLine
         
-        // Find slope
-        let aPost = self.exitSlope!
+        /// Find slope
+        let aPost = self.exitSlope
         
-        // Find b
+        /// Find b
         let cLast = controlPoints[self.n]
         let bPost = cLast.y - aPost * cLast.x
         
-        // Found postLine!
+        /// Found postLine!
         self.postLine = Line.init(a: aPost, b: bPost)
         
     }
@@ -94,7 +94,7 @@ class AccelerationBezier: Bezier {
 //        if result < 0 {
         if ((false)) {
             
-            // Result is sometimes negative for some reason. It should never be negative.
+            /// Result is sometimes negative for some reason. It should never be negative.
                 
             let rangeStr: String
             if self.xValueRange.contains(x) {

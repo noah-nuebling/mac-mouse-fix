@@ -373,7 +373,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                                         dragCoefficient:_scrollConfig.dragCoefficient
                                         dragExponent:_scrollConfig.dragExponent
                                         stopSpeed:_scrollConfig.stopSpeed
-                                        transitionPointEpsilon:0.2];
+                                        distanceEpsilon:0.2];
                 
                 /// New curve
 //                LineHybridCurve *c = [[LineHybridCurve alloc]
@@ -385,7 +385,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 
                 /// Get values for animator from hybrid curve
                 
-                double delta = c.distance;
+                double delta = c.distance; 
                 Vector deltaVec = vectorFromDeltaAndDirection(delta, scrollDirection);
                 
                 p[@"duration"] = @(c.duration);

@@ -169,7 +169,12 @@ import QuartzCore
                     return;
                 }
             }
-            self.startWithUntypedCallback_Unsafe(durationRaw: p["duration"] as! Double, value: vectorFromNSValue(p["vector"] as! NSValue), animationCurve: p["curve"] as! AnimationCurve, callback: callback);
+            
+            let durationRaw = p["duration"] as! Double
+            let vector = vectorFromNSValue(p["vector"] as! NSValue) as Vector
+            let curve = p["curve"] as! AnimationCurve
+            
+            self.startWithUntypedCallback_Unsafe(durationRaw: durationRaw, value: vector, animationCurve: curve, callback: callback);
         }
     }
     
@@ -186,6 +191,9 @@ import QuartzCore
         /// It's kind of unnecessary to be passing this a value interval, because we only use the length of it. Since the AnimatorCallback only receives valueDeltas each frame and no absolute values,  the location of the value interval doesn't matter.
         /// We need to make `callback` and UntypedAnimatorCallback instead of a normal AnimatorCallback, so we can change the type of `callback` to PixelatedAnimatorCallback in the subclass PixelatedAnimator. That's because Swift is stinky. UntypedAnimatorCallback is @escaping
         
+        /// Validate
+        
+        assert(!durationRaw.isNaN && durationRaw.isFinite)
         
         /// Store args
         

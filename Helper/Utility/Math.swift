@@ -8,11 +8,12 @@
 //
 
 import Cocoa
+import CocoaLumberjackSwift
 
 @objc class Math: NSObject {
     
     @objc class func bisect(searchRange: Interval, targetOutput: Double, epsilon: Double, function: (Double) -> Double) -> NSNumber? {
-        
+        /// This only works if 'function' is monotonically increasing (I think)
         /// (Returning NSNumber so we can make it nullable. the value is double)
         
         /// Validate
@@ -22,10 +23,13 @@ import Cocoa
         
         /// Algorithm
         
+        let validationFrequency = 10 /// Validate after every 10 iterations
+        var iterationCounter = 0
+        
         var t = Math.scale(value: 0.5, from: .unitInterval, to: searchRange)
         var searchRange = searchRange
         
-        while searchRange.lower < searchRange.upper {
+        while searchRange.lower != searchRange.upper { /// I don't think this condition can be false. Copied from WebKit CubicBezier code.
             
             let sampledOutput = function(t)
             
@@ -39,10 +43,37 @@ import Cocoa
                 searchRange = Interval(searchRange.lower, t)
             }
             
+            /// Validate
+            iterationCounter += 1
+            if iterationCounter % validationFrequency == 0 {
+                
+                let lowerOutput: Double
+                let upperOutput: Double
+                
+                if sampledOutput < targetOutput {
+                    lowerOutput = sampledOutput
+                    upperOutput = function(searchRange.upper)
+                } else {
+                    lowerOutput = function(searchRange.lower)
+                    upperOutput = sampledOutput
+                }
+                
+                let targetTooSmall = targetOutput < lowerOutput
+                let targetTooLarge = upperOutput < targetOutput
+                let outputIsFindable = !targetTooSmall && !targetTooLarge
+                if (!outputIsFindable) {
+                    let closestFoundInput = (targetTooSmall ? searchRange.lower : searchRange.upper)
+                    let closestFoundOutput = (targetTooSmall ? lowerOutput : upperOutput)
+                    assert(false)
+                    DDLogError("Bisection failed. This likely means that the function you're trying to bisect is not monotonically increasing. targetOutput: \(targetOutput), found output: \(closestFoundOutput)")
+                    return closestFoundInput as NSNumber
+                }
+            }
+            
             t = Math.scale(value: 0.5, from: .unitInterval, to: searchRange)
         }
         
-        return nil
+        return nil /// I don't think this can happen
     }
     
     @objc class func choose(_ nArg: Int, _ k: Int) -> Int {
