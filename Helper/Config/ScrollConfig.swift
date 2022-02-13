@@ -150,7 +150,7 @@ import CocoaLumberjackSwift
         
         return Bezier(controlPoints: controlPoints, defaultEpsilon: 0.001) /// The default defaultEpsilon 0.08 makes the animations choppy
     }()
-    @objc lazy var dragCoefficient = 40.0 /* smooth["friction"] as! Double */
+    @objc lazy var dragCoefficient = 25.0 /* smooth["friction"] as! Double */
     /// ^       2.3: Value from MMF 1. Not sure why so much lower than the new values
     ///     20: Too floaty with dragExponent 1
     ///     40: Works well with dragExponent 1

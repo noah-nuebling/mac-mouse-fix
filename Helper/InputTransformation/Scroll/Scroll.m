@@ -366,13 +366,12 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             } else {
                 
                 /// New curve
-                SimpleBezierHybridCurve *c = [[SimpleBezierHybridCurve alloc]
-                                                  initWithBaseCurve:_scrollConfig.baseCurve
-                                                  baseTimeRange:baseTimeRange
-                                                 baseValueRange:(pxToScrollForThisTick + pxLeftToScroll)
-                                                dragCoefficient:_scrollConfig.dragCoefficient
-                                                   dragExponent:_scrollConfig.dragExponent
-                                                      stopSpeed:_scrollConfig.stopSpeed];
+                LineHybridCurve *c = [[LineHybridCurve alloc]
+                                        initWithMinDuration:baseTimeRange
+                                        distance:(pxToScrollForThisTick + pxLeftToScroll)
+                                        dragCoefficient:_scrollConfig.dragCoefficient
+                                        dragExponent:_scrollConfig.dragExponent
+                                        stopSpeed:_scrollConfig.stopSpeed];
                 
                 /// Get values for animator from hybrid curve
                 
@@ -382,13 +381,17 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 p[@"duration"] = @(c.duration);
                 p[@"vector"] = nsValueFromVector(deltaVec);
                 p[@"curve"] = c;
+                
+                /// Debug
+                
+                DDLogDebug(@"Duration pre-animator: %@", @(c.duration));
             }
             
             /// Debug
             
-//            static double scrollDeltaSum = 0;
-//            scrollDeltaSum += labs(pxToScrollForThisTick);
-//            DDLogDebug(@"Delta sum pre-animator: %f", scrollDeltaSum);
+            static double scrollDeltaSum = 0;
+            scrollDeltaSum += labs(pxToScrollForThisTick);
+            DDLogDebug(@"Delta sum pre-animator: %f", scrollDeltaSum);
             
             /// Return
             return p;
@@ -409,9 +412,9 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             
             /// Debug
             
-//            static double scrollDeltaSummm = 0;
-//            scrollDeltaSummm += valueDelta;
-//            DDLogDebug(@"Delta sum in-animator: %f", scrollDeltaSummm);
+            static double scrollDeltaSummm = 0;
+            scrollDeltaSummm += distanceDelta;
+            DDLogDebug(@"Delta sum in-animator: %f", scrollDeltaSummm);
             
 //            static CFTimeInterval lastTs = 0;
 //            CFTimeInterval ts = CACurrentMediaTime();
