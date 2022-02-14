@@ -27,6 +27,9 @@
 #import "ScrollModifiers.h"
 #import "Actions.h"
 
+@import IOKit;
+#import "IOKitExtern.h"
+
 @implementation Scroll
 
 #pragma mark - Variables - static
@@ -127,6 +130,38 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         
         return event;
     }
+    
+    /// Testing
+    
+    int64_t sourceStateID = CGEventGetIntegerValueField(event, kCGEventSourceStateID);
+    int64_t sourceProcessID = CGEventGetIntegerValueField(event, kCGEventSourceUnixProcessID);
+    
+    DDLogDebug(@"Source - stateID: %lld, processID: %lld", sourceStateID, sourceProcessID);
+    
+    CGPoint loc = CGPointMake(6, 9);
+    CGEventRef testEvent = CGEventCreateMouseEvent(NULL, kCGEventLeftMouseDown, loc, -1);
+    
+//    CGEventPost(kCGHIDEventTap, testEvent);
+    
+    HIDEvent *HIDEvent = CGEventCopyIOHIDEvent(event);
+    
+    uint64_t sender = [HIDEvent senderID];
+    IOHIDEventType eventType = [HIDEvent type];
+    uint64_t timestamp = [HIDEvent timestamp];
+    uint32_t options = [HIDEvent options];
+    double scrollX = [HIDEvent scrollX];
+    double scrollY = [HIDEvent scrollY];
+    double scrollZ = [HIDEvent scrollZ];
+    uint32_t isPixels = [HIDEvent scrollIsPixels];
+    NSArray *children = [HIDEvent children];
+    
+    DDLogDebug(@"\nHIDEvent: - sender: %lld type: %d, ts: %llu, options: %u, xyz: (%f, %f, %f), pixels: %d, childCount: %lu, CGTimestamp: %llu", sender, eventType, timestamp, options, scrollX, scrollY, scrollZ, isPixels, children.count, CGEventGetTimestamp(event));
+    
+    CFMutableDictionaryRef idMatching = IORegistryEntryIDMatching(sender);
+    io_service_t service = IOServiceGetMatchingService(kIOMasterPortDefault, idMatching);
+    CFStringRef path = IORegistryEntryCopyPath(service, kIOServicePlane);
+    
+    DDLogDebug(@"\nHIDEvent: - registryPath: %@", path);
     
     /// Return non-scrollwheel events unaltered
     
@@ -724,14 +759,31 @@ void sendKeyEvent(CGKeyCode keyCode, CGEventFlags flags, bool keyDown) {
 /// Other helper functions
 
 CFTimeInterval getTimestamp(CGEventRef event) {
+    /// Gets timestamp in seconds from CGEvent
     
-    CGEventTimestamp tickTimeCGRaw = CGEventGetTimestamp(event);
+    /// Get raw mach timestamp
+    CGEventTimestamp tsMach = CGEventGetTimestamp(event);
     
-    CFTimeInterval tickTimeCG = (100/2.4)*tickTimeCGRaw/NSEC_PER_SEC;
-    /// ^ The docs say that CGEventGetTimestamp() is in nanoseconds, no idea where the extra (100/2.4) factor comes from. But it works, to make it scaled the same as CACurrentMediaTime()
-    ///     I hope this also works on other macOS versions?
+    /// Get the timebase info
+    mach_timebase_info_data_t info;
+    mach_timebase_info(&info);
     
-    if ((NO)) {
+    /// Convert to nanoseconds
+    double tsNano = tsMach;
+    tsNano *= info.numer;
+    tsNano /= info.denom;
+    
+    /// Convert to seconds
+    CFTimeInterval tsSeconds = tsNano / NSEC_PER_SEC;
+    
+    return tsSeconds;
+    
+    if ((/* DISABLES CODE */ (NO))) {
+        
+        CFTimeInterval tickTimeCG = (100/2.4)*tsMach/NSEC_PER_SEC;
+        /// ^ The docs say that CGEventGetTimestamp() is in nanoseconds, no idea where the extra (100/2.4) factor comes from. But it works, to make it scaled the same as CACurrentMediaTime()
+        ///     I hope this also works on other macOS versions?
+        /// Edit: We should to use mach_timebase_info() to convert insteads of 100/2.4
         
         /// Debug
         
@@ -756,10 +808,6 @@ CFTimeInterval getTimestamp(CGEventRef event) {
         DDLogDebug(@"ticksPerSec: %.3f, CG: %.3f", 1/tickPeriod, 1/tickPeriodCG);
         DDLogDebug(@"tickPeriodSum: %.0f, CG: %.0f, ratio: %.5f", pSum, pSumCG, pSumCG/pSum);
     }
-    
-    /// Return
-    
-    return tickTimeCG;
 }
 
 @end

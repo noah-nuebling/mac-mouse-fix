@@ -8,9 +8,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SensibleSideButtons/TouchEvents.h"
-#import "SensibleSideButtons/IOHIDEventTypes.h"
-#import "SensibleSideButtons/IOHIDEventData.h"
+#import "IOKitExtern.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

@@ -22,26 +22,20 @@
  * @APPLE_LICENSE_HEADER_END@
  */
 
-#ifndef _IOKIT_HID_IOHIDEVENTTYPES_H
-#define _IOKIT_HID_IOHIDEVENTTYPES_H /* { */
+#ifndef _IOKIT_IOHIDEVENTTYPES_H
+#define _IOKIT_IOHIDEVENTTYPES_H /* { */
 
 #include <TargetConditionals.h>
-#include <IOKit/IOTypes.h>
 
-#define IRONSIDE_AVAILABLE 1
-
-#if TARGET_OS_IPHONE
-    #ifndef IRONSIDE_AVAILABLE
-    #ifndef RC_SEED_BUILD
-        #define IRONSIDE_AVAILABLE 1
-    #endif
-    #endif
+#if TARGET_OS_DRIVERKIT
+#include <DriverKit/IOTypes.h>
 #else
-    //#include <ironside.h>
+#include <IOKit/IOTypes.h>
 #endif
 
 #define IOHIDEventTypeMask(type) (1LL<<type)
 #define IOHIDEventFieldBase(type) (type << 16)
+#define IOHIDEventFieldOffsetOf(field) (field & 0xffff)
 /*!
     @typedef IOHIDEventType
     @abstract The type of event represented by an IOHIDEventRef.
@@ -79,6 +73,13 @@
     @constant kIOHIDEventTypeFluidTouchGesture
     @constant kIOHIDEventTypeBoundaryScroll
     @constant kIOHIDEventTypeBiometric
+    @constant kIOHIDEventTypeUnicode
+    @constant kIOHIDEventTypeAtmosphericPressure
+    @constant kIOHIDEventTypeMotionActivity
+    @constant kIOHIDEventTypeMotionGesture
+    @constant kIOHIDEventTypeGameController
+    @constant kIOHIDEventTypeHumidity
+    @constant kIOHIDEventTypeCollection
     @constant kIOHIDEventTypeSwipe DEPRECATED
     @constant kIOHIDEventTypeMouse DEPRECATED
 
@@ -116,12 +117,14 @@ enum {
     kIOHIDEventTypeBiometric,
     kIOHIDEventTypeUnicode,                 // 30
     kIOHIDEventTypeAtmosphericPressure,
-#if IRONSIDE_AVAILABLE // {
     kIOHIDEventTypeForce,
-#else // } IRONSIDE_AVAILABLE {
-    kIOHIDEventTypeUndefined,
-#endif // } IRONSIDE_AVAILABLE
-    
+    kIOHIDEventTypeMotionActivity,
+    kIOHIDEventTypeMotionGesture,
+    kIOHIDEventTypeGameController,          // 35
+    kIOHIDEventTypeHumidity,
+    kIOHIDEventTypeCollection,
+    kIOHIDEventTypeBrightness,
+    kIOHIDEventTypeGenericGesture,
     kIOHIDEventTypeCount, // This should always be last
     
     
@@ -129,88 +132,42 @@ enum {
     kIOHIDEventTypeSwipe = kIOHIDEventTypeNavigationSwipe,
     kIOHIDEventTypeMouse = kIOHIDEventTypePointer
 };
+
 typedef uint32_t IOHIDEventType;
 
-/* 
-    @typedef IOHIDEventField
-    @abstract Keys used to set and get individual event fields.
-*/
-enum {
-    kIOHIDEventFieldIsRelative = IOHIDEventFieldBase(kIOHIDEventTypeNULL),
-    kIOHIDEventFieldIsCollection,
-    kIOHIDEventFieldIsPixelUnits,
-    kIOHIDEventFieldIsCenterOrigin,
-    kIOHIDEventFieldIsBuiltIn
-};
+typedef uint32_t IOHIDEventField;
 
-enum {
-    kIOHIDEventFieldVendorDefinedUsagePage = IOHIDEventFieldBase(kIOHIDEventTypeVendorDefined),
-    kIOHIDEventFieldVendorDefinedUsage,
-    kIOHIDEventFieldVendorDefinedVersion,
-    kIOHIDEventFieldVendorDefinedDataLength,
-    kIOHIDEventFieldVendorDefinedData
-};
+typedef uint32_t IOHIDGenericGestureType;
+
+typedef uint8_t IOHIDDigitizerOrientationType;
+
+#if TARGET_OS_DRIVERKIT
+//#include <HIDDriverKit/IOHIDEventFieldDefs.h>
+#else
+#include "IOHIDEventFieldDefs.h" /* <IOKit/hid/IOHIDEventFieldDefs.h> */
+#endif
 
 enum  {
-    kIOHIDEventFieldButtonMask = IOHIDEventFieldBase(kIOHIDEventTypeButton),
-    kIOHIDEventFieldButtonNumber,
-    kIOHIDEventFieldButtonClickCount,
-    kIOHIDEventFieldButtonPressure,
-    kIOHIDEventFieldButtonState
+    kIOHIDGenericGestureTypeTap        = 0,
+    kIOHIDGenericGestureTypeSwipe
 };
 
 enum {
-    kIOHIDEventFieldTranslationX = IOHIDEventFieldBase(kIOHIDEventTypeTranslation),
-    kIOHIDEventFieldTranslationY,
-    kIOHIDEventFieldTranslationZ
+    kIOHIDDigitizerOrientationTypeTilt = 0,
+    kIOHIDDigitizerOrientationTypePolar,
+    kIOHIDDigitizerOrientationTypeQuality
 };
 
 enum {
-    kIOHIDEventFieldRotationX = IOHIDEventFieldBase(kIOHIDEventTypeRotation),
-    kIOHIDEventFieldRotationY,
-    kIOHIDEventFieldRotationZ
-};
-
-enum {
-    kIOHIDEventFieldScrollX = IOHIDEventFieldBase(kIOHIDEventTypeScroll),
-    kIOHIDEventFieldScrollY,
-    kIOHIDEventFieldScrollZ,
-    kIOHIDEventFieldScrollIsPixels
-};
-
-enum {
-    kIOHIDEventFieldScaleX = IOHIDEventFieldBase(kIOHIDEventTypeScale),
-    kIOHIDEventFieldScaleY,
-    kIOHIDEventFieldScaleZ
-};
-
-enum {
-    kIOHIDEventFieldVelocityX = IOHIDEventFieldBase(kIOHIDEventTypeVelocity),
-    kIOHIDEventFieldVelocityY,
-    kIOHIDEventFieldVelocityZ
-};
-
-enum {
-    kIOHIDEventFieldPointerX = IOHIDEventFieldBase(kIOHIDEventTypePointer),
-    kIOHIDEventFieldPointerY,
-    kIOHIDEventFieldPointerZ,
-    kIOHIDEventFieldPointerButtonMask,
-    kIOHIDEventFieldPointerButtonNumber     = kIOHIDEventFieldButtonNumber,
-    kIOHIDEventFieldPointerButtonClickCount = kIOHIDEventFieldButtonClickCount,
-    kIOHIDEventFieldPointerButtonPressure   = kIOHIDEventFieldButtonPressure
-};
-
-enum {
-    kIOHIDEventFieldMultiAxisPointerX                   = IOHIDEventFieldBase(kIOHIDEventTypeMultiAxisPointer),
-    kIOHIDEventFieldMultiAxisPointerY,
-    kIOHIDEventFieldMultiAxisPointerZ,
-    kIOHIDEventFieldMultiAxisPointerRx,
-    kIOHIDEventFieldMultiAxisPointerRy,
-    kIOHIDEventFieldMultiAxisPointerRz,
-    kIOHIDEventFieldMultiAxisPointerButtonMask,
     kIOHIDEventFieldMultiAxisPointerButtonNumber        = kIOHIDEventFieldButtonNumber,
     kIOHIDEventFieldMultiAxisPointerButtonClickCount    = kIOHIDEventFieldButtonClickCount,
     kIOHIDEventFieldMultiAxisPointerButtonPressure      = kIOHIDEventFieldButtonPressure
+};
+
+enum {
+    kIOHIDEventFieldPointerButtonNumber     = kIOHIDEventFieldButtonNumber,
+    kIOHIDEventFieldPointerButtonClickCount = kIOHIDEventFieldButtonClickCount,
+    kIOHIDEventFieldPointerButtonPressure   = kIOHIDEventFieldButtonPressure
 };
 
 /* DEPRECATED: use pointer field */
@@ -224,11 +181,23 @@ enum {
     kIOHIDEventFieldMousePressure   = kIOHIDEventFieldPointerButtonPressure
 };
 
+/* DEPRECATED: misspelled */
+enum {
+    kIOHIDEventFieldNavagationSwipeFlavor       = kIOHIDEventFieldNavigationSwipeFlavor
+};
+
+enum {
+    kIOHIDEventFieldForceLean                   = kIOHIDEventFieldForceStagePressure,
+    kIOHIDEventFieldForceTransitionProgress     = kIOHIDEventFieldForceProgress
+};
+
+enum  {
+    kIOHIDEventFieldDigitizerEstimatedMask      =  (kIOHIDEventFieldDigitizerBase | 30)
+};
 
 /*!
  @typedef IOHIDMotionType
- @abstract Type of Motion event triggered.
- 
+ @abstract  Type of Motion event triggered.
  @constant kIOHIDMotionTypeNormal
  @constant kIOHIDMotionTypeShake
  */
@@ -242,7 +211,6 @@ typedef uint32_t IOHIDMotionType;
 /*!
  @typedef IOHIDMotionPath
  @abstract Type of Motion Path event triggered.
- 
  @constant IOHIDMotionPathStart
  @constant IOHIDMotionPathEnd
  */
@@ -263,155 +231,45 @@ enum {
 typedef IOHIDMotionType IOHIDAccelerometerType;
 typedef IOHIDMotionPath IOHIDAccelerometerSubType;
 
-enum {
-    kIOHIDEventFieldAccelerometerX = IOHIDEventFieldBase(kIOHIDEventTypeAccelerometer),
-    kIOHIDEventFieldAccelerometerY,
-    kIOHIDEventFieldAccelerometerZ,
-    kIOHIDEventFieldAccelerometerType,
-    kIOHIDEventFieldAccelerometerSubType,
-    kIOHIDEventFieldAccelerometerSequence,
-};
 
 typedef IOHIDMotionType IOHIDGyroType;
 typedef IOHIDMotionPath IOHIDGyroSubType;
 
-enum {
-    kIOHIDEventFieldGyroX = IOHIDEventFieldBase(kIOHIDEventTypeGyro),
-    kIOHIDEventFieldGyroY,
-    kIOHIDEventFieldGyroZ, 
-    kIOHIDEventFieldGyroType,
-    kIOHIDEventFieldGyroSubType,
-    kIOHIDEventFieldGyroSequence
-};
 
 typedef IOHIDMotionType IOHIDCompassType;
 typedef IOHIDMotionPath IOHIDCompassSubType;
 
+
 enum {
-    kIOHIDEventFieldCompassX = IOHIDEventFieldBase(kIOHIDEventTypeCompass),
-    kIOHIDEventFieldCompassY,
-    kIOHIDEventFieldCompassZ, 
-    kIOHIDEventFieldCompassType,
-    kIOHIDEventFieldCompassSubType,
-    kIOHIDEventFieldCompassSequence
+    kIOHIDKeyboardLongPress                     = 1,
+    kIOHIDKeyboardLongPressBit                  = 0,
+    kIOHIDKeyboardLongPressMask                 = (kIOHIDKeyboardLongPress << kIOHIDKeyboardLongPressBit),
 };
 
 enum {
-    kIOHIDEventFieldAmbientLightSensorLevel = IOHIDEventFieldBase(kIOHIDEventTypeAmbientLightSensor),
-    kIOHIDEventFieldAmbientLightSensorRawChannel0,
-    kIOHIDEventFieldAmbientLightSensorRawChannel1,
-    kIOHIDEventFieldAmbientLightSensorRawChannel2,
-    kIOHIDEventFieldAmbientLightSensorRawChannel3,
-    kIOHIDEventFieldAmbientLightDisplayBrightnessChanged
+    kIOHIDKeyboardClickSpeedNone                = 0,
+    kIOHIDKeyboardClickSpeedSlow                = 1,
+    kIOHIDKeyboardClickSpeedNormal              = 2,
+    kIOHIDKeyboardClickSpeedFast                = 3,
+    kIOHIDKeyboardClickSpeedStartBit            = 1,
+    kIOHIDKeyboardClickSpeedMask                = (0x3 << kIOHIDKeyboardClickSpeedStartBit),
 };
 
 enum {
-    kIOHIDEventFieldTemperatureLevel = IOHIDEventFieldBase(kIOHIDEventTypeTemperature)
+    kIOHIDKeyboardSlowKeyNone                  = 0,
+    kIOHIDKeyboardSlowKeyPhaseStart            = 1,
+    kIOHIDKeyboardSlowKeyPhaseAbort            = 2,
+    kIOHIDKeyboardSlowKeyOn                    = 3,
+    kIOHIDKeyboardSlowKeyPhaseBit              = 3,
+    kIOHIDKeyboardSlowKeyPhaseMask             = (0x3 << kIOHIDKeyboardSlowKeyPhaseBit),
 };
 
 enum {
-    kIOHIDEventFieldProximityDetectionMask = IOHIDEventFieldBase(kIOHIDEventTypeProximity),
-    kIOHIDEventFieldProximityLevel
+    kIOHIDKeyboardMouseKeyToggle                = 1,
+    kIOHIDKeyboardMouseKeyToggleBit             = 5,
+    kIOHIDKeyboardMouseKeyToggleMask            = (1 << kIOHIDKeyboardMouseKeyToggleBit),
 };
 
-
-enum {
-    kIOHIDEventFieldOrientationRadius   = IOHIDEventFieldBase(kIOHIDEventTypeOrientation),
-    kIOHIDEventFieldOrientationAzimuth,
-    kIOHIDEventFieldOrientationAltitude
-};
-
-enum {
-    kIOHIDEventFieldKeyboardUsagePage = IOHIDEventFieldBase(kIOHIDEventTypeKeyboard),
-    kIOHIDEventFieldKeyboardUsage,
-    kIOHIDEventFieldKeyboardDown,
-    kIOHIDEventFieldKeyboardRepeat
-};
-
-enum {
-    kIOHIDEventFieldDigitizerX = IOHIDEventFieldBase(kIOHIDEventTypeDigitizer),
-    kIOHIDEventFieldDigitizerY,
-    kIOHIDEventFieldDigitizerZ,
-    kIOHIDEventFieldDigitizerButtonMask,
-    kIOHIDEventFieldDigitizerType,
-    kIOHIDEventFieldDigitizerIndex,
-    kIOHIDEventFieldDigitizerIdentity,
-    kIOHIDEventFieldDigitizerEventMask,
-    kIOHIDEventFieldDigitizerRange,   
-    kIOHIDEventFieldDigitizerTouch,
-    kIOHIDEventFieldDigitizerPressure,
-    kIOHIDEventFieldDigitizerAuxiliaryPressure, //BarrelPressure
-    kIOHIDEventFieldDigitizerTwist,
-    kIOHIDEventFieldDigitizerTiltX,
-    kIOHIDEventFieldDigitizerTiltY,
-    kIOHIDEventFieldDigitizerAltitude,
-    kIOHIDEventFieldDigitizerAzimuth,
-    kIOHIDEventFieldDigitizerQuality,
-    kIOHIDEventFieldDigitizerDensity,
-    kIOHIDEventFieldDigitizerIrregularity,
-    kIOHIDEventFieldDigitizerMajorRadius,
-    kIOHIDEventFieldDigitizerMinorRadius,
-    kIOHIDEventFieldDigitizerCollection,
-    kIOHIDEventFieldDigitizerCollectionChord,
-    kIOHIDEventFieldDigitizerChildEventMask,
-    kIOHIDEventFieldDigitizerIsDisplayIntegrated,
-    kIOHIDEventFieldDigitizerQualityRadiiAccuracy,
-};
-
-enum {
-    kIOHIDEventFieldSwipeMask = IOHIDEventFieldBase(kIOHIDEventTypeSwipe),
-    kIOHIDEventFieldSwipeMotion,
-    kIOHIDEventFieldSwipeProgress,
-    kIOHIDEventFieldSwipePositionX,
-    kIOHIDEventFieldSwipePositionY,
-    kIOHIDEventFieldSwipeFlavor,
-};
-
-enum {
-    kIOHIDEventFieldNavigationSwipeMask = IOHIDEventFieldBase(kIOHIDEventTypeNavigationSwipe),
-    kIOHIDEventFieldNavigationSwipeMotion,
-    kIOHIDEventFieldNavigationSwipeProgress,
-    kIOHIDEventFieldNavigationSwipePositionX,
-    kIOHIDEventFieldNavigationSwipePositionY,
-    kIOHIDEventFieldNavagationSwipeFlavor,
-};
-
-enum {
-    kIOHIDEventFieldDockSwipeMask = IOHIDEventFieldBase(kIOHIDEventTypeDockSwipe),
-    kIOHIDEventFieldDockSwipeMotion,
-    kIOHIDEventFieldDockSwipeProgress,
-    kIOHIDEventFieldDockSwipePositionX,
-    kIOHIDEventFieldDockSwipePositionY,
-    kIOHIDEventFieldDockSwipeFlavor,
-};
-
-enum {
-    kIOHIDEventFieldFluidTouchGestureMask = IOHIDEventFieldBase(kIOHIDEventTypeFluidTouchGesture),
-    kIOHIDEventFieldFluidTouchGestureMotion,
-    kIOHIDEventFieldFluidTouchGestureProgress,
-    kIOHIDEventFieldFluidTouchGesturePositionX,
-    kIOHIDEventFieldFluidTouchGesturePositionY,
-    kIOHIDEventFieldFluidTouchGestureFlavor,
-};
-
-enum {
-    kIOHIDEventFieldBoundaryScrollMask = IOHIDEventFieldBase(kIOHIDEventTypeBoundaryScroll),
-    kIOHIDEventFieldBoundaryScrollMotion,
-    kIOHIDEventFieldBoundaryScrollProgress,
-    kIOHIDEventFieldBoundaryScrollPositionX,
-    kIOHIDEventFieldBoundaryScrollPositionY,
-    kIOHIDEventFieldBoundaryScrollFlavor,
-};
-
-enum {
-    kIOHIDEventFieldProgressEventType = IOHIDEventFieldBase(kIOHIDEventTypeProgress),
-    kIOHIDEventFieldProgressLevel,
-};
-
-enum {
-    kIOHIDEventFieldSymbolicHotKeyValue = IOHIDEventFieldBase(kIOHIDEventTypeSymbolicHotKey),
-    kIOHIDEventFieldSymbolicHotKeyIsCGSEvent,
-};
 
 /*!
  @typedef IOHIDPowerType
@@ -439,11 +297,6 @@ enum {
 };
 typedef uint32_t IOHIDPowerSubType;
 
-enum {
-    kIOHIDEventFieldPowerMeasurement = IOHIDEventFieldBase(kIOHIDEventTypePower),
-    kIOHIDEventFieldPowerType,
-    kIOHIDEventFieldPowerSubType,
-};
 
 /*!
  @typedef IOHIDBiometricEventType
@@ -451,25 +304,19 @@ enum {
  @constant kIOHIDBiometricEventTypeHumanProximity
  @constant kIOHIDBiometricEventTypeHumanTouch
  @constant kIOHIDBiometricEventTypeHumanForce
+ @constant kIOHIDBiometricEventTypeHumanPresence
  */
 enum {
     kIOHIDBiometricEventTypeHumanProximity = 0,
     kIOHIDBiometricEventTypeHumanTouch,
-    kIOHIDBiometricEventTypeHumanForce
+    kIOHIDBiometricEventTypeHumanForce,
+    kIOHIDBiometricEventTypeHumanPresence
 };
 
 typedef uint32_t IOHIDBiometricEventType;
 
-enum {
-    kIOHIDEventFieldBiometricEventType = IOHIDEventFieldBase(kIOHIDEventTypeBiometric),
-    kIOHIDEventFieldBiometricLevel
-};
 
-enum {
-    kIOHIDEventFieldLEDMask = IOHIDEventFieldBase(kIOHIDEventTypeLED),
-    kIOHIDEventFieldLEDNumber,
-    kIOHIDEventFieldLEDState
-};
+
 
 
 enum {
@@ -481,50 +328,52 @@ enum {
 };
 typedef uint32_t IOHIDUnicodeEncodingType;
 
+
 /*!
- @typedef IOHIDEventFieldUnicode
- @abstract Event field corresponding the unicode events.
- @discussion The HID Unicode Usage table states that currently only 2-octect are supported,
-             but considering that we can easily discern the size of the character field, it's
-             possible for us to convey variable length characters provided that the sizes
-             are byte aligned
- @constant  kIOHIDEventFieldUnicodeEncoding event field selector representing the unicode encoding
- @constant  kIOHIDEventFieldUnicodeQuality event field selector representing the quality of the character from 0.0 to 1.0
-@constant  kIOHIDEventFieldUnicodeLength event field selector representing the length/size
-            of the payload in bytes
- @constant  kIOHIDEventFieldPayload event field selector representing the payload of size
-            references by kIOHIDEventFieldUnicodeLength
+ @typedef IOHIDMotionActivityEventType
+ @abstract Type of motion activity event triggered.
+ @constant kIOHIDMotionActivityEventTypeUnknown
+ @constant kIOHIDMotionActivityEventTypeStatic
+ @constant kIOHIDMotionActivityEventTypeMoving
+ @constant kIOHIDMotionActivityEventTypeSemiStationary
+ @constant kIOHIDMotionActivityEventTypeWalking
+ @constant kIOHIDMotionActivityEventTypeRunning
+ @constant kIOHIDMotionActivityEventTypeCycling
+ @constant kIOHIDMotionActivityEventTypeInVehicleStatic
+ @constant kIOHIDMotionActivityEventTypeDriving
  */
-
 enum {
-    kIOHIDEventFieldUnicodeEncoding     = IOHIDEventFieldBase(kIOHIDEventTypeUnicode),
-    kIOHIDEventFieldUnicodeQuality,
-    kIOHIDEventFieldUnicodeLength,
-    kIOHIDEventFieldUnicodePayload
+    kIOHIDMotionActivityEventTypeUnknown = 0,
+    kIOHIDMotionActivityEventTypeStatic,
+    kIOHIDMotionActivityEventTypeMoving,
+    kIOHIDMotionActivityEventTypeSemiStationary,
+    kIOHIDMotionActivityEventTypeWalking,
+    kIOHIDMotionActivityEventTypeRunning,
+    kIOHIDMotionActivityEventTypeCycling,
+    kIOHIDMotionActivityEventTypeInVehicleStatic,
+    kIOHIDMotionActivityEventTypeDriving,
 };
 
+typedef uint32_t IOHIDMotionActivityEventType;
+
+
+/*!
+ @typedef IOHIDMotionGestureEventType
+ @abstract Type of motion gesture event triggered.
+ @constant kIOHIDMotionGestureEventTypeUnknown
+ @constant kIOHIDMotionGestureEventTypeRaiseToListen
+ @constant kIOHIDMotionGestureEventTypeRaiseToLook
+*/
 enum {
-    kIOHIDEventFieldAtmosphericPressureLevel = IOHIDEventFieldBase(kIOHIDEventTypeAtmosphericPressure),
-    kIOHIDEventFieldAtmosphericSequence
+    kIOHIDMotionGestureEventTypeUnknown = 0,
+    kIOHIDMotionGestureEventTypeRaiseToListen,
+    kIOHIDMotionGestureEventTypeRaiseToLook,
 };
 
-#if IRONSIDE_AVAILABLE // {
-enum {
-    kIOHIDEventFieldForceBehavior = IOHIDEventFieldBase(kIOHIDEventTypeForce),
-    kIOHIDEventFieldForceTransitionProgress,
-    kIOHIDEventFieldForceStage,
-    kIOHIDEventFieldForceStagePressure, 
-    kIOHIDEventFieldForceProgress = kIOHIDEventFieldForceTransitionProgress,
-    kIOHIDEventFieldForceLean = kIOHIDEventFieldForceStagePressure,
-};
-#endif // } IRONSIDE_AVAILABLE
-
-typedef uint32_t IOHIDEventField;
 
 /*!
     @typedef IOHIDSwipeMask
     @abstract Mask detailing the type of swipe detected.
-    
     @constant kIOHIDSwipeUp
     @constant kIOHIDSwipeDown
     @constant kIOHIDSwipeLeft
@@ -545,6 +394,7 @@ typedef uint32_t IOHIDSwipeMask;
 
 /*!
     @typedef IOHIDGestureMotion
+    @abstract Motion gestures
     @constant kIOHIDGestureMotionNone
     @constant kIOHIDGestureMotionHorizontalX
     @constant kIOHIDGestureMotionVerticalY
@@ -560,6 +410,8 @@ typedef uint32_t IOHIDSwipeMask;
     @constant kIOHIDGestureMotionOffTopEdge
     @constant kIOHIDGestureMotionFromBottomEdge
     @constant kIOHIDGestureMotionOffBottomEdge
+    @constant kIOHIDGestureMotionLongPress
+
 */
 enum {
     kIOHIDGestureMotionNone,
@@ -577,11 +429,13 @@ enum {
     kIOHIDGestureMotionOffTopEdge,
     kIOHIDGestureMotionFromBottomEdge,
     kIOHIDGestureMotionOffBottomEdge,
+    kIOHIDGestureMotionLongPress,
 };
 typedef uint16_t IOHIDGestureMotion;
 
 /*!
     @typedef IOHIDGestureFlavor
+    @abstract Gesture flavours
     @constant kIOHIDGestureFlavorNone
     @constant kIOHIDGestureFlavorNotificationCenterPrimary
     @constant kIOHIDGestureFlavorNotificationCenterSecondary
@@ -608,7 +462,6 @@ typedef uint16_t IOHIDGestureFlavor;
 /*!
     @typedef IOHIDProximityDetectionMask
     @abstract Proximity mask detailing the inputs that were detected.
-    
     @constant kIOHIDProximityDetectionLargeBodyContact
     @constant kIOHIDProximityDetectionLargeBodyFarField
     @constant kIOHIDProximityDetectionIrregularObjects
@@ -619,6 +472,7 @@ typedef uint16_t IOHIDGestureFlavor;
     @constant kIOHIDProximityDetectionSmallObjectsHovering
     @constant kIOHIDProximityDetectionReceiverCrude
     @constant kIOHIDProximityDetectionReceiverMonitoring
+    @constant kIOHIDProximityDetectionReceiverCrudeMonitoring
 */
 enum {
     kIOHIDProximityDetectionLargeBodyContact                = 1<<0,
@@ -630,7 +484,8 @@ enum {
     kIOHIDProximityDetectionReceiver                        = 1<<6,
     kIOHIDProximityDetectionSmallObjectsHovering            = 1<<7,
     kIOHIDProximityDetectionReceiverCrude                   = 1<<8,
-    kIOHIDProximityDetectionReceiverMonitoring              = 1<<9
+    kIOHIDProximityDetectionReceiverMonitoring              = 1<<9,
+    kIOHIDProximityDetectionReceiverCrudeMonitoring         = 1<<10
 };
 typedef uint32_t IOHIDProximityDetectionMask;
 
@@ -672,6 +527,8 @@ typedef uint32_t IOHIDDigitizerTransducerType;
     @constant kIOHIDDigitizerEventFromEdgeTip Issued when a digitizer approaches from the edge with standard (i.e. un-flattened) presentation.
     @constant kIOHIDDigitizerEventFromCorner Issued when a digitizer approaches from a corner
     @constant kIOHIDDigitizerEventSwipePending Issued to indicate that an edge swipe is pending 
+    @constant kIOHIDDigitizerEventFromEdgeForcePending Issued to indicate that edge press is pending
+    @constant kIOHIDDigitizerEventFromEdgeForceActive Issued to indicate that edge press is active
     @constant kIOHIDDigitizerEventUpSwipe Issued when an up swipe has been detected.
     @constant kIOHIDDigitizerEventDownSwipe Issued when an down swipe has been detected.
     @constant kIOHIDDigitizerEventLeftSwipe Issued when an left swipe has been detected.
@@ -693,13 +550,54 @@ enum {
     kIOHIDDigitizerEventFromEdgeTip                         = 1<<11,
     kIOHIDDigitizerEventFromCorner                          = 1<<12,
     kIOHIDDigitizerEventSwipePending                        = 1<<13,
+    kIOHIDDigitizerEventFromEdgeForcePending                = 1<<14,
+    kIOHIDDigitizerEventFromEdgeForceActive                 = 1<<15,
+    kIOHIDDigitizerEventTap                                 = 1<<17,
+    kIOHIDDigitizerEventSwipeLocked                         = 1<<18,
     kIOHIDDigitizerEventSwipeUp                             = 1<<24,
     kIOHIDDigitizerEventSwipeDown                           = 1<<25,
     kIOHIDDigitizerEventSwipeLeft                           = 1<<26,
     kIOHIDDigitizerEventSwipeRight                          = 1<<27,
-    kIOHIDDigitizerEventSwipeMask                           = 0xFF<<24,
+    kIOHIDDigitizerEventEstimatedAltitude                   = 1<<28,
+    kIOHIDDigitizerEventEstimatedAzimuth                    = 1<<29,
+    kIOHIDDigitizerEventEstimatedPressure                   = 1<<30,
+    kIOHIDDigitizerEventSwipeMask                           = 0xF<<24,
 };
 typedef uint32_t IOHIDDigitizerEventMask;
+
+/*!
+ @typedef IOHIDDigitizerEventUpdateMask
+ @abstract Bit mask detailing the fields that have or will change in a digitizer event
+*/
+enum {
+    kIOHIDDigitizerEventUpdateXMask                         = 1<<IOHIDEventFieldOffsetOf(kIOHIDEventFieldDigitizerX),
+    kIOHIDDigitizerEventUpdateYMask                         = 1<<IOHIDEventFieldOffsetOf(kIOHIDEventFieldDigitizerY),
+    kIOHIDDigitizerEventUpdateZMask                         = 1<<IOHIDEventFieldOffsetOf(kIOHIDEventFieldDigitizerZ),
+    kIOHIDDigitizerEventUpdateButtonMaskMask                = 1<<IOHIDEventFieldOffsetOf(kIOHIDEventFieldDigitizerButtonMask),
+    kIOHIDDigitizerEventUpdateTypeMask                      = 1<<IOHIDEventFieldOffsetOf(kIOHIDEventFieldDigitizerType),
+    kIOHIDDigitizerEventUpdateIndexMask                     = 1<<IOHIDEventFieldOffsetOf(kIOHIDEventFieldDigitizerIndex),
+    kIOHIDDigitizerEventUpdateIdentityMask                  = 1<<IOHIDEventFieldOffsetOf(kIOHIDEventFieldDigitizerIdentity),
+    kIOHIDDigitizerEventUpdateEventMaskMask                 = 1<<IOHIDEventFieldOffsetOf(kIOHIDEventFieldDigitizerEventMask),
+    kIOHIDDigitizerEventUpdateRangeMask                     = 1<<IOHIDEventFieldOffsetOf(kIOHIDEventFieldDigitizerRange),
+    kIOHIDDigitizerEventUpdateTouchMask                     = 1<<IOHIDEventFieldOffsetOf(kIOHIDEventFieldDigitizerTouch),
+    kIOHIDDigitizerEventUpdatePressureMask                  = 1<<IOHIDEventFieldOffsetOf(kIOHIDEventFieldDigitizerPressure),
+    kIOHIDDigitizerEventUpdateAuxiliaryPressureMask         = 1<<IOHIDEventFieldOffsetOf(kIOHIDEventFieldDigitizerAuxiliaryPressure),
+    kIOHIDDigitizerEventUpdateTwistMask                     = 1<<IOHIDEventFieldOffsetOf(kIOHIDEventFieldDigitizerTwist),
+    kIOHIDDigitizerEventUpdateTiltXMask                     = 1<<IOHIDEventFieldOffsetOf(kIOHIDEventFieldDigitizerTiltX),
+    kIOHIDDigitizerEventUpdateTiltYMask                     = 1<<IOHIDEventFieldOffsetOf(kIOHIDEventFieldDigitizerTiltY),
+    kIOHIDDigitizerEventUpdateAltitudeMask                  = 1<<IOHIDEventFieldOffsetOf(kIOHIDEventFieldDigitizerAltitude),
+    kIOHIDDigitizerEventUpdateAzimuthMask                   = 1<<IOHIDEventFieldOffsetOf(kIOHIDEventFieldDigitizerAzimuth),
+    kIOHIDDigitizerEventUpdateQualityMask                   = 1<<IOHIDEventFieldOffsetOf(kIOHIDEventFieldDigitizerQuality),
+    kIOHIDDigitizerEventUpdateDensityMask                   = 1<<IOHIDEventFieldOffsetOf(kIOHIDEventFieldDigitizerDensity),
+    kIOHIDDigitizerEventUpdateIrregularityMask              = 1<<IOHIDEventFieldOffsetOf(kIOHIDEventFieldDigitizerIrregularity),
+    kIOHIDDigitizerEventUpdateMajorRadiusMask               = 1<<IOHIDEventFieldOffsetOf(kIOHIDEventFieldDigitizerMajorRadius),
+    kIOHIDDigitizerEventUpdateMinorRadiusMask               = 1<<IOHIDEventFieldOffsetOf(kIOHIDEventFieldDigitizerMinorRadius),
+    kIOHIDDigitizerEventUpdateCollectionMask                = 1<<IOHIDEventFieldOffsetOf(kIOHIDEventFieldDigitizerCollection),
+    kIOHIDDigitizerEventUpdateChildEventMaskMask            = 1<<IOHIDEventFieldOffsetOf(kIOHIDEventFieldDigitizerChildEventMask),
+    kIOHIDDigitizerEventUpdateIsDisplayIntegratedMask       = 1<<IOHIDEventFieldOffsetOf(kIOHIDEventFieldDigitizerIsDisplayIntegrated),
+    kIOHIDDigitizerEventUpdateQualityRadiiAccuracyMask      = 1<<IOHIDEventFieldOffsetOf(kIOHIDEventFieldDigitizerQualityRadiiAccuracy),
+};
+typedef uint32_t IOHIDDigitizerEventUpdateMask;
 
 enum {
     kIOHIDEventOptionNone                                   = 0,
@@ -726,6 +624,17 @@ enum {
 };
 typedef uint16_t IOHIDEventPhaseBits;
 
+enum {
+    kIOHIDEventScrollMomentumUndefined                      = 0,
+    kIOHIDEventScrollMomentumContinue                       = (1<<0),
+    kIOHIDEventScrollMomentumStart                          = (1<<1),
+    kIOHIDEventScrollMomentumEnd                            = (1<<2),
+    kIOHIDEventScrollMomentumMask                           = (kIOHIDEventScrollMomentumContinue | kIOHIDEventScrollMomentumStart | kIOHIDEventScrollMomentumEnd),
+    kIOHIDEventScrollMomentumShift                          = (kIOHIDEventEventOptionPhaseShift + 4)
+};
+typedef uint8_t IOHIDEventScrollMomentumBits;
+
+
 /*!
  @typedef IOHIDSymbolicHotKey
  @abstract Enumerted values for sending symbolic hot key events.
@@ -746,11 +655,20 @@ enum {
 };
 typedef uint32_t IOHIDSymbolicHotKeyValue;
 
+enum {
+    kIOHIDOrientationTypePolar             = 0,
+    kIOHIDOrientationTypeCMUsage           = 1,  // see kHIDUsage_AppleVendorMotion_DeviceOrientation* for possible options
+    kIOHIDOrientationTypeTilt              = 2,
+    kIOHIDOrientationTypeQuaternion        = 3,
+};
+
 
 enum {
     kIOHIDEventSenderIDUndefined                            = 0x0000000000000000LL,
 };
 typedef uint64_t IOHIDEventSenderID; // must be the same size as that returned from IORegistryEntry::getRegistryEntryID
+
+typedef double IOHIDDouble;
 
 #ifndef KERNEL
 /*!
@@ -770,5 +688,41 @@ typedef struct _IOHID3DPoint {
     IOHIDFloat  z;
 } IOHID3DPoint; 
 #endif
+
+enum {
+    kIOHIDEventColorSpaceUndefined                           = 0,
+    kIOHIDEventColorSpaceXYZ                                 = 1
+};
+typedef uint8_t IOHIDEventColorSpace;
+
+/*!
+    @typedef IOHIDEventPerfData
+*/
+typedef struct {
+    uint64_t    driverDispatchTime;
+    uint64_t    eventSystemReceiveTime;
+    uint64_t    eventSystemDispatchTime;
+    uint64_t    eventSystemFilterTime;
+    uint64_t    eventSystemClientDispatchTime;
+} IOHIDEventPerfData;
+
+enum {
+    kIOHIDEventPerfDataPointDriverDispatch,
+    kIOHIDEventPerfDataPointEventSystemReceive,
+    kIOHIDEventPerfDataPointEventSystemDispatch,
+    kIOHIDEventPerfDataPointEventSystemFilter,
+    kIOHIDEventPerfDataPointEventSystemClientDispatch
+};
+
+enum {
+    kIOHIDKeyboardStickyKeyPhaseDown    = 1,
+    kIOHIDKeyboardStickyKeyPhaseLocked  = 2,
+    kIOHIDKeyboardStickyKeyPhaseUp      = 3
+};
+
+enum {
+    kIOHIDKeyboardStickyKeyToggleOn    = 1,
+    kIOHIDKeyboardStickyKeyToggleOff   = 2
+};
 
 #endif /* _IOKIT_HID_IOHIDEVENTTYPES_H } */

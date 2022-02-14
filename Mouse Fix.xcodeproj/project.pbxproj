@@ -163,9 +163,6 @@
 		4FF6669F25F2C93A00689B77 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6665125F2C93A00689B77 /* main.m */; };
 		4FF666A025F2C93A00689B77 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6666325F2C93A00689B77 /* README.md */; };
 		4FF666A125F2C93A00689B77 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6666625F2C93A00689B77 /* .gitignore */; };
-		4FF666A225F2C93A00689B77 /* TouchEvents.c in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6667125F2C93A00689B77 /* TouchEvents.c */; };
-		4FF666A325F2C93A00689B77 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6667225F2C93A00689B77 /* LICENSE */; };
-		4FF666A425F2C93A00689B77 /* NoahsTouchEventAnalysis in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6667325F2C93A00689B77 /* NoahsTouchEventAnalysis */; };
 		4FF666A725F2C93A00689B77 /* Device.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6667A25F2C93A00689B77 /* Device.m */; };
 		4FF666A825F2C93A00689B77 /* DeviceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6667D25F2C93A00689B77 /* DeviceManager.m */; };
 		4FF666A925F2C93A00689B77 /* HelperUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6668025F2C93A00689B77 /* HelperUtility.m */; };
@@ -355,6 +352,21 @@
 		4F94F60F25E5EC2800D9F24A /* Mac_Mouse_FixUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Mac_Mouse_FixUITests.m; sourceTree = "<group>"; };
 		4F94F61125E5EC2800D9F24A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4F96060E27B4F92F004D6F6D /* PixelatedVectorAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelatedVectorAnimator.swift; sourceTree = "<group>"; };
+		4F9C14AD27BAE773008A1479 /* HIDEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIDEvent.h; sourceTree = "<group>"; };
+		4F9C14AE27BAE802008A1479 /* HIDBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIDBase.h; sourceTree = "<group>"; };
+		4F9C14AF27BAEA71008A1479 /* HIDEventBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIDEventBase.h; sourceTree = "<group>"; };
+		4F9C14B027BAEADF008A1479 /* HIDEventIvar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIDEventIvar.h; sourceTree = "<group>"; };
+		4F9C14B127BAEAFF008A1479 /* hidobjcbase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = hidobjcbase.h; sourceTree = "<group>"; };
+		4F9C14B227BAF1A2008A1479 /* HIDEventAccessors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIDEventAccessors.h; sourceTree = "<group>"; };
+		4F9C14B327BAF1A2008A1479 /* HIDEvent+HIDEventFields.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HIDEvent+HIDEventFields.h"; sourceTree = "<group>"; };
+		4F9C14B427BAF1A2008A1479 /* HIDEventAccessors_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIDEventAccessors_Private.h; sourceTree = "<group>"; };
+		4F9C14B627BAF21E008A1479 /* IOKitExtern.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOKitExtern.h; sourceTree = "<group>"; };
+		4F9C14B727BAF8BF008A1479 /* HIDEventFields.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIDEventFields.h; sourceTree = "<group>"; };
+		4F9C14B927BAF989008A1479 /* IOHIDEventTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOHIDEventTypes.h; sourceTree = "<group>"; };
+		4F9C14BA27BAF9C8008A1479 /* IOHIDEventFieldDefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOHIDEventFieldDefs.h; sourceTree = "<group>"; };
+		4F9C14BB27BAFB3A008A1479 /* IOHIDLibPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOHIDLibPrivate.h; sourceTree = "<group>"; };
+		4F9C14BD27BAFB3A008A1479 /* IOHIDPrivateKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOHIDPrivateKeys.h; sourceTree = "<group>"; };
+		4F9C14BE27BAFB3A008A1479 /* IOHIDLibUserClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOHIDLibUserClient.h; sourceTree = "<group>"; };
 		4F9C9B57268A29B70083DED0 /* RollingAverage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollingAverage.swift; sourceTree = "<group>"; };
 		4F9C9B5F268A29FE0083DED0 /* Smoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Smoother.swift; sourceTree = "<group>"; };
 		4F9C9B69268A2D6F0083DED0 /* CircularBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CircularBuffer.h; sourceTree = "<group>"; };
@@ -516,10 +528,6 @@
 		4FF6665025F2C93A00689B77 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		4FF6665125F2C93A00689B77 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4FF6665325F2C93A00689B77 /* CFRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CFRuntime.h; sourceTree = "<group>"; };
-		4FF6665525F2C93A00689B77 /* IOHIDPrivateKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOHIDPrivateKeys.h; sourceTree = "<group>"; };
-		4FF6665625F2C93A00689B77 /* IOHIDLibPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOHIDLibPrivate.h; sourceTree = "<group>"; };
-		4FF6665725F2C93A00689B77 /* IOHIDEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOHIDEvent.h; sourceTree = "<group>"; };
-		4FF6665825F2C93A00689B77 /* IOHIDLibUserClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOHIDLibUserClient.h; sourceTree = "<group>"; };
 		4FF6665925F2C93A00689B77 /* CGSPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSPrivate.h; sourceTree = "<group>"; };
 		4FF6665B25F2C93A00689B77 /* CGSTile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSTile.h; sourceTree = "<group>"; };
 		4FF6665C25F2C93A00689B77 /* CGSSurface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSSurface.h; sourceTree = "<group>"; };
@@ -542,12 +550,6 @@
 		4FF6666D25F2C93A00689B77 /* CGSSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSSpace.h; sourceTree = "<group>"; };
 		4FF6666E25F2C93A00689B77 /* CGSEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSEvent.h; sourceTree = "<group>"; };
 		4FF6666F25F2C93A00689B77 /* CGSDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSDebug.h; sourceTree = "<group>"; };
-		4FF6667125F2C93A00689B77 /* TouchEvents.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = TouchEvents.c; sourceTree = "<group>"; };
-		4FF6667225F2C93A00689B77 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		4FF6667325F2C93A00689B77 /* NoahsTouchEventAnalysis */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NoahsTouchEventAnalysis; sourceTree = "<group>"; };
-		4FF6667425F2C93A00689B77 /* TouchEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchEvents.h; sourceTree = "<group>"; };
-		4FF6667525F2C93A00689B77 /* IOHIDEventData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOHIDEventData.h; sourceTree = "<group>"; };
-		4FF6667625F2C93A00689B77 /* IOHIDEventTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOHIDEventTypes.h; sourceTree = "<group>"; };
 		4FF6667825F2C93A00689B77 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4FF6667A25F2C93A00689B77 /* Device.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Device.m; sourceTree = "<group>"; };
 		4FF6667B25F2C93A00689B77 /* DeviceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceManager.h; sourceTree = "<group>"; };
@@ -773,6 +775,28 @@
 				4FF6665A25F2C93A00689B77 /* CGSInternal */,
 			);
 			path = External;
+			sourceTree = "<group>";
+		};
+		4F9C14B527BAF202008A1479 /* IOKit */ = {
+			isa = PBXGroup;
+			children = (
+				4F9C14B627BAF21E008A1479 /* IOKitExtern.h */,
+				4F9C14AD27BAE773008A1479 /* HIDEvent.h */,
+				4F9C14AF27BAEA71008A1479 /* HIDEventBase.h */,
+				4F9C14B327BAF1A2008A1479 /* HIDEvent+HIDEventFields.h */,
+				4F9C14B727BAF8BF008A1479 /* HIDEventFields.h */,
+				4F9C14B227BAF1A2008A1479 /* HIDEventAccessors.h */,
+				4F9C14B427BAF1A2008A1479 /* HIDEventAccessors_Private.h */,
+				4F9C14AE27BAE802008A1479 /* HIDBase.h */,
+				4F9C14B027BAEADF008A1479 /* HIDEventIvar.h */,
+				4F9C14B127BAEAFF008A1479 /* hidobjcbase.h */,
+				4F9C14B927BAF989008A1479 /* IOHIDEventTypes.h */,
+				4F9C14BA27BAF9C8008A1479 /* IOHIDEventFieldDefs.h */,
+				4F9C14BB27BAFB3A008A1479 /* IOHIDLibPrivate.h */,
+				4F9C14BE27BAFB3A008A1479 /* IOHIDLibUserClient.h */,
+				4F9C14BD27BAFB3A008A1479 /* IOHIDPrivateKeys.h */,
+			);
+			path = IOKit;
 			sourceTree = "<group>";
 		};
 		4F9E78BD26855B9B002C2309 /* SwiftConcurrency */ = {
@@ -1292,6 +1316,7 @@
 			children = (
 				4FF6662C25F2C93A00689B77 /* Scroll.h */,
 				4FF6662125F2C93A00689B77 /* Scroll.m */,
+				4F9C14B527BAF202008A1479 /* IOKit */,
 				4F9E79112686FBE3002C2309 /* Analysis */,
 				4F9E79102686FBD3002C2309 /* Modifiers */,
 				4F9E790F2686FBC7002C2309 /* Utility */,
@@ -1412,22 +1437,9 @@
 			isa = PBXGroup;
 			children = (
 				4FF6665325F2C93A00689B77 /* CFRuntime.h */,
-				4FF6665425F2C93A00689B77 /* IOKit */,
 				4FF6665925F2C93A00689B77 /* CGSPrivate.h */,
-				4FF6667025F2C93A00689B77 /* SensibleSideButtons */,
 			);
 			path = External;
-			sourceTree = "<group>";
-		};
-		4FF6665425F2C93A00689B77 /* IOKit */ = {
-			isa = PBXGroup;
-			children = (
-				4FF6665525F2C93A00689B77 /* IOHIDPrivateKeys.h */,
-				4FF6665625F2C93A00689B77 /* IOHIDLibPrivate.h */,
-				4FF6665725F2C93A00689B77 /* IOHIDEvent.h */,
-				4FF6665825F2C93A00689B77 /* IOHIDLibUserClient.h */,
-			);
-			path = IOKit;
 			sourceTree = "<group>";
 		};
 		4FF6665A25F2C93A00689B77 /* CGSInternal */ = {
@@ -1456,19 +1468,6 @@
 				4FF6666F25F2C93A00689B77 /* CGSDebug.h */,
 			);
 			path = CGSInternal;
-			sourceTree = "<group>";
-		};
-		4FF6667025F2C93A00689B77 /* SensibleSideButtons */ = {
-			isa = PBXGroup;
-			children = (
-				4FF6667125F2C93A00689B77 /* TouchEvents.c */,
-				4FF6667225F2C93A00689B77 /* LICENSE */,
-				4FF6667325F2C93A00689B77 /* NoahsTouchEventAnalysis */,
-				4FF6667425F2C93A00689B77 /* TouchEvents.h */,
-				4FF6667525F2C93A00689B77 /* IOHIDEventData.h */,
-				4FF6667625F2C93A00689B77 /* IOHIDEventTypes.h */,
-			);
-			path = SensibleSideButtons;
 			sourceTree = "<group>";
 		};
 		4FF6667925F2C93A00689B77 /* Devices */ = {
@@ -1765,11 +1764,9 @@
 				4FF6668325F2C93A00689B77 /* Assets.xcassets in Resources */,
 				4FF6668A25F2C93A00689B77 /* SmoothScroll.m (old) in Resources */,
 				4FF6654125F2C7B000689B77 /* default_launchd.plist in Resources */,
-				4FF666A325F2C93A00689B77 /* LICENSE in Resources */,
 				4FF6668E25F2C93A00689B77 /* MomentumScroll.m (old) in Resources */,
 				4FF6669E25F2C93A00689B77 /* MainMenu.xib in Resources */,
 				4FF666A025F2C93A00689B77 /* README.md in Resources */,
-				4FF666A425F2C93A00689B77 /* NoahsTouchEventAnalysis in Resources */,
 				4FF666A125F2C93A00689B77 /* .gitignore in Resources */,
 				4FF6668C25F2C93A00689B77 /* SmoothScroll.h (old) in Resources */,
 			);
@@ -2084,7 +2081,6 @@
 				4FF6669925F2C93A00689B77 /* VectorSubPixelator.m in Sources */,
 				4FF0BD4B266A8B7E003935EA /* Bezier.swift in Sources */,
 				4FF6668125F2C93A00689B77 /* FileMonitor.m in Sources */,
-				4FF666A225F2C93A00689B77 /* TouchEvents.c in Sources */,
 				4F1AFE972670EBA900ECA424 /* DragCurve.swift in Sources */,
 				4FF6669125F2C93A00689B77 /* ScrollUtility.m in Sources */,
 				4FF666A825F2C93A00689B77 /* DeviceManager.m in Sources */,
