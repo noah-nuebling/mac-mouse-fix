@@ -42,6 +42,9 @@
 ///     This would be great because IOHIDEvents are not opaque. All their fields are documented.
 ///     See: https://github.com/NUIKit/CGSInternal/issues/2 for more info.
 ///     -> This is not really necessary because we can already simulate all the important events (except force touch) by just setting fields on CGEvent.
+///     See https://opensource.apple.com/source/IOHIDFamily/IOHIDFamily-1633.100.36/IOHIDFamily/IOHIDEventTypes.h.auto.html
+///     Another reason to use IOHIDEvent:
+///         `typedef uint64_t IOHIDEventSenderID` - Registry entry id in the IOHIDEvent!!
 
 #import "TouchSimulator.h"
 #import <Foundation/Foundation.h>
