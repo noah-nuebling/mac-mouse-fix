@@ -134,13 +134,14 @@ import CocoaLumberjackSwift
     /// - Defines only closed Intervals. We don't need open or half-open intervals
     /// - Also stores a direction, which Maths Intervals don't usually do, but it's real useful for us. If the caller want to ignore this they can use `lower` and `upper` instead of `start` and `end`
     /// - This is used a lot for BezierCurve and Animator, which means tons of these are instantiated every second while scrolling -> Might be worth looking into optimizing
+    ///     Edit: We made everything lazy for optimization. Don't know if it makes any difference.
     
     @objc override var description: String { "(\(start), \(end))" }
     
     @objc let start: Double
     @objc let end: Double
     
-    @objc var direction: MFIntervalDirection {
+    @objc lazy var direction: MFIntervalDirection = {
         if start == end {
             return kMFIntervalDirectionNone
         } else if start < end {
@@ -148,23 +149,22 @@ import CocoaLumberjackSwift
         } else {
             return kMFIntervalDirectionDescending
         }
-    }
+    }()
     
-    @objc var location: Double { lower }
-    @objc var length: Double { upper - lower }
-    @objc var directedLength: Double { end - start }
+    @objc lazy var location: Double = { lower }()
+    @objc lazy var length: Double = { upper - lower }()
+    @objc lazy var directedLength: Double = { end - start }()
     
-    @objc var lower: Double { direction == kMFIntervalDirectionAscending ? start : end }
-    @objc var upper: Double { direction == kMFIntervalDirectionAscending ? end : start }
+    @objc lazy var lower: Double = { direction == kMFIntervalDirectionAscending ? start : end }()
+    @objc lazy var upper: Double = { direction == kMFIntervalDirectionAscending ? end : start }()
     
+    @objc static let reversedUnitInterval = Interval.init(start: 1, end: 0)
     @objc static let unitInterval = Interval.init(start: 0, end: 1)
     /// ^ Scale to this interval to normalize a value
     
-    @objc static let reversedUnitInterval = Interval.init(start: 1, end: 0)
-    
     @objc required init(start: Double, end: Double) {
         
-        assert(!start.isNaN && !end.isNaN)
+        assert(!start.isNaN && !end.isNaN && start.isFinite && end.isFinite)
         
         self.start = start
         self.end = end

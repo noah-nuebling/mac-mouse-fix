@@ -13,8 +13,8 @@
  */
 
 import Cocoa
-import simd // Vector stuff
-//import CocoaLumberjack // Doesn't work for some reason
+import simd /// Vector stuff
+import CocoaLumberjack /// Doesn't work for some reason
 import ReactiveCocoa
 import ReactiveSwift
 
@@ -327,21 +327,21 @@ import ReactiveSwift
     fileprivate func sampleCurveCasteljau(_ axis: MFAxis, _ t: Double) -> Double {
         /// Evaluate at t with De-Casteljau's algorithm. I thonk it's in O(n!) or something?
         
-        // Extract x or y values from controlPoints
+        /// Extract x or y values from controlPoints
         
         var points1D: [Double] = controlPoints(axis)
         
-        // Apply De-Casteljau's algorithm
+        /// Apply De-Casteljau's algorithm
         
         var pointsCount = points1D.count;
         
         while true {
             pointsCount -= 1
             for i in 0..<pointsCount {
-                // Interpolate between the points at i and at i-1. Write the result into points at i
+                /// Interpolate between the points at i and at i-1. Write the result into points at i
                 points1D[i] = simd_mix(points1D[i], points1D[i+1], t)
             }
-            if pointsCount == 1 { // We evaluated the point
+            if pointsCount == 1 { /// We evaluated the point
                 break
             }
         }
@@ -461,41 +461,11 @@ import ReactiveSwift
         
         /// Try bisection method for reliability
         
-        let tBisect = Math.bisect(searchRange: .unitInterval, targetOutput: x, epsilon: epsilon) { input in
-            return sampleCurve(onAxis: xAxis, atT: input)
-        }
+        let tBisect = Math.bisect(searchRange: .unitInterval, targetOutput: x, epsilon: epsilon) { input in sampleCurve(onAxis: xAxis, atT: input) }
         
         if let tBisect = tBisect as? Double {
             return tBisect
         }
-        
-        /// Old code for reference, if sth goes wrong
-        
-//        var searchRange: Interval = .unitInterval
-        
-//        if (t <= searchRange.lower) {
-//            return searchRange.lower
-//        } else if searchRange.upper <= t {
-//            return searchRange.upper
-//        }
-        
-        /// ^ Why do we do that? Isn't this a fatalError?
-//        
-//        while (searchRange.lower < searchRange.upper) {
-//            
-//            let sampledX = sampleCurve(onAxis: xAxis, atT: t)
-//            
-//            if fabs(sampledX - x) < epsilon {
-//                return t
-//            }
-//            if sampledX < x {
-//                searchRange = Interval(lower: t, upper: searchRange.upper)
-//            } else {
-//                searchRange = Interval(lower: searchRange.lower, upper: t)
-//            }
-//            t = Math.scale(value: 0.5, from: .unitInterval, to: searchRange)
-//        }
-//        
         
         /// Failure
         
@@ -611,7 +581,6 @@ import ReactiveSwift
     }
 
 }
-
 
 @objc class InvalidBezier: Bezier {
     
