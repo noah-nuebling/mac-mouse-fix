@@ -242,7 +242,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         } else if (_modifications.inputModification == kMFScrollInputModificationPrecise) {
             
             /// Turn off fast scroll
-            _scrollConfig.fastScrollThreshold_inSwipes = 69; /// Haha sex number
+            _scrollConfig.fastScrollThreshold_inSwipes = 69; /// This is the haha sex number
             _scrollConfig.fastScrollExponentialBase = 1.0;
             _scrollConfig.fastScrollScale = 1.0;
             

@@ -29,8 +29,19 @@
 /// I originally found the code for the `postNavigationSwipeWithDirection:` function in Alexei Baboulevitch's SensibleSideButtons project under the name `SBFFakeSwipe:`. SensibleSideButtons was itself heavily based on natevw's macOS touch reverse engineering work ("CalfTrail Touch") for his app Sesamouse from wayy back in the day. Nate's work was the basis for all all of this. Thanks Nate! :)
 
 /// Notes:
+/// 
 /// Between TouchSimulator.m and GestureScrollSimulator, we have all interesting touch input covered. Except a Force Touch, but we have the kMFSHLookUp symbolic hotkey which works almost as well.
-
+///
+/// I just saw in Instruments that when CFRelease is called on the scrollEvents we capture in Scroll.m, then the following function are called:
+///     `CGSEventReclaimObjects()`, which then calls `[HIDEvent dealloc]`
+///     This Suggests that CGEvent is an interface / wrapper for CGSEvent, and CGSEvent is an interface / wrapper for HIDEvent. Kernel drivers send IOHIDEvent IIRC, so possible HIDEvent is an interface / wrapper for IOHIDEvent.
+///
+/// In the private Skylight framework there are the functions: _SLEventSetIOHIDEvent and _SLEventCopyIOHIDEvent.
+///     SLEvent is a differnent name for CGSEvent as far as I understand.
+///     Maybe we can use these functions to create CGEvents from IOHIDEvents.
+///     This would be great because IOHIDEvents are not opaque. All their fields are documented.
+///     See: https://github.com/NUIKit/CGSInternal/issues/2 for more info.
+///     -> This is not really necessary because we can already simulate all the important events (except force touch) by just setting fields on CGEvent.
 
 #import "TouchSimulator.h"
 #import <Foundation/Foundation.h>
@@ -68,8 +79,8 @@ static NSMutableDictionary *_swipeInfo;
 + (void)postSmartZoomEvent {
     
     CGEventRef e = CGEventCreate(NULL);
-    CGEventSetIntegerValueField(e, 55, 29); // NSEventTypeGesture
-    CGEventSetIntegerValueField(e, 110, 22); // kIOHIDEventTypeZoomToggle
+    CGEventSetIntegerValueField(e, 55, 29); /// NSEventTypeGesture
+    CGEventSetIntegerValueField(e, 110, 22); /// kIOHIDEventTypeZoomToggle
     CGEventPost(kCGHIDEventTap, e);
     CFRelease(e);
 }
@@ -77,9 +88,9 @@ static NSMutableDictionary *_swipeInfo;
 + (void)postRotationEventWithRotation:(double)rotation phase:(IOHIDEventPhaseBits)phase {
     
     CGEventRef e = CGEventCreate(NULL);
-    // Could also use CGEventSetType() here
-    CGEventSetIntegerValueField(e, 55, 29); // NSEventTypeGesture
-    CGEventSetIntegerValueField(e, 110, 5); // kIOHIDEventTypeRotation
+    /// Could also use CGEventSetType() here
+    CGEventSetIntegerValueField(e, 55, 29); /// NSEventTypeGesture
+    CGEventSetIntegerValueField(e, 110, 5); /// kIOHIDEventTypeRotation
     CGEventSetDoubleValueField(e, 114, rotation);
     CGEventSetIntegerValueField(e, 132, phase);
     CGEventPost(kCGHIDEventTap, e);
