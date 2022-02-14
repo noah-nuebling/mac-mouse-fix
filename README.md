@@ -33,6 +33,9 @@ to record the current download counts to `stats_history.json`
 - `python3 stats print` \
 to display the recorded download counts from `stats_history.json`
 
+- `python3 stats plot` \
+to visualize the recorded stats
+
 - `./update` \
   To
   - Generate new appcasts
