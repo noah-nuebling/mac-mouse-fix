@@ -132,7 +132,7 @@ import CocoaLumberjackSwift
     /// ^ 120 Works well without implicit hybrid curve acceleration
     ///     100 Works well with slight hybrid curve acceleration
     
-    @objc lazy var msPerStep = 181 /* smooth["msPerStep"] as! Int */
+    @objc lazy var msPerStep = 150 /* smooth["msPerStep"] as! Int */
     /// 180 -> Used this for a long time
     /// 200 -> Works well without hybrid curve elongation
     /// 90
@@ -144,15 +144,15 @@ import CocoaLumberjackSwift
         /// Using a closure here instead of DerivedProperty.create_kvc(), because we know it will never change.
         typealias P = Bezier.Point
         
-//        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:1,y:1), P(x:1,y:1)] /// Straight line
+        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:1,y:1), P(x:1,y:1)] /// Straight line
 //        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:0.9,y:0), P(x:1,y:1)] /// Testing
-        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:0.5,y:0.9), P(x:1,y:1)]
+//        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:0.5,y:0.9), P(x:1,y:1)]
         /// ^ Ease out but the end slope is not 0. That way. The curve is mostly controlled by the Bezier, but the DragCurve rounds things out.
         ///     Might be placebo but I really like how this feels
         
         return Bezier(controlPoints: controlPoints, defaultEpsilon: 0.001) /// The default defaultEpsilon 0.08 makes the animations choppy
     }()
-    @objc lazy var dragCoefficient = 25.0 /* smooth["friction"] as! Double */
+    @objc lazy var dragCoefficient = 20 /* smooth["friction"] as! Double */
     /// ^       2.3: Value from MMF 1. Not sure why so much lower than the new values
     ///     20: Too floaty with dragExponent 1
     ///     40: Works well with dragExponent 1
@@ -161,7 +161,7 @@ import CocoaLumberjackSwift
     
     @objc lazy var dragExponent = 1.0 /* smooth["frictionDepth"] as! Double */
     
-    @objc lazy var stopSpeed = 3.0
+    @objc lazy var stopSpeed = 15.0
     /// ^ Used to construct Hybrid curve in Scroll.m
     ///     This is the speed (In px/s ?) at which the DragCurve part of the Hybrid curve stops scrolling
     

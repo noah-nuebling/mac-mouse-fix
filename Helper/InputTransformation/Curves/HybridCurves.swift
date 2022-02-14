@@ -120,14 +120,14 @@ import CocoaLumberjackSwift
         }
         
         /// Get transition time and distance
-        guard let transitionPoint = transitionPoint else { fatalError() }
+        guard var transitionPoint = transitionPoint else { fatalError() }
         
         let transitionTime = baseCurve.sampleCurve(onAxis: Bezier.xAxis, atT: transitionPoint) * minDuration
         let transitionDistance = baseCurve.sampleCurve(onAxis: Bezier.yAxis, atT: transitionPoint) * targetDistance
         
         /// Debug
         
-        DDLogDebug("\ntransitionPoint - t: \(transitionPoint), time: \(transitionTime), dist: \(transitionDistance)")
+        DDLogDebug("\ntransition time: \(transitionTime*1000), dist: \(transitionDistance), dragTime: \(dragCurve!.timeInterval.length*1000)")
         
         /// Store params
         
