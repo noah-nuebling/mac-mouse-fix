@@ -8,7 +8,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "IOKitExtern.h"
+#import "MFIOKitImports.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

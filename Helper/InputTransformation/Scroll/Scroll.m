@@ -28,7 +28,7 @@
 #import "Actions.h"
 
 @import IOKit;
-#import "IOKitExtern.h"
+#import "MFIOKitImports.h"
 #import "IOUtility.h"
 
 @implementation Scroll
@@ -156,19 +156,13 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     ///         - Also clean up the descriptions in TouchSimulator.m
     ///
     
-    
-    
     HIDEvent *hidEvent = CGEventCopyIOHIDEvent(event);
-    
-    
-    /// Try to find symbol for HIDEvent -> CGEvent transfer
-//    IOHIDEventCreateCGEvent(hidEvent);
-    
+
     /// Try to reconstruct CGEvent
-//    CGEventRef reconstructedCG = CGEventCreate(NULL);
-//    CGEventSetIOHIDEvent(reconstructedCG, hidEvent);
-//    HIDEvent *reconstructedHID = CGEventCopyIOHIDEvent(reconstructedCG);
-//    hidEvent = reconstructedHID;
+    CGEventRef reconstructedCG = MFCGEventCreateWithIOHIDEvent(hidEvent);
+    HIDEvent *reconstructedHID = CGEventCopyIOHIDEvent(reconstructedCG);
+    
+    hidEvent = reconstructedHID;
     
     uint64_t sender = [hidEvent senderID];
     IOHIDEventType eventType = [hidEvent type];
