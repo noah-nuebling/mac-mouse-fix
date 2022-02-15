@@ -8,12 +8,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MFIOKitImports.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface EventUtility : NSObject
 
-IOHIDDeviceRef CGEventCopySender(CGEventRef event);
+IOHIDDeviceRef HIDEventCopySendingDevice(HIDEvent *event);
 CFTimeInterval CGEventGetTimestampInSeconds(CGEventRef event);
 
 @end

@@ -1,16 +1,16 @@
 //
 // --------------------------------------------------------------------------
-// MFIOKitTools.m
+// CGEventHIDEventBridge.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2022
 // Licensed under MIT
 // --------------------------------------------------------------------------
 //
 
-#import "MFIOKitTools.h"
+#import "CGEventHIDEventBridge.h"
 @import CoreGraphics.CGEvent;
 
-@implementation MFIOKitTools
+@implementation CGEventHIDEventBridge
 
 /// MARK: ----- CGEvent -> HIDEvent -----
 
@@ -22,7 +22,7 @@ extern HIDEvent *CGEventCopyIOHIDEvent(CGEventRef);
 ///
 /// Disassembly shows that CGEventCopyIOHIDEvent() calls CFRetain() before returning the HIDEvent. But in ARC the retain count of HIDEvent is then increased *again* because we hold a pointer to it. That's why we CFRelease() the HIDEvent before returning it.
 
-HIDEvent *MFCGEventGetIOHIDEvent(CGEventRef cgEvent) {
+HIDEvent *CGEventGetIOHIDEvent(CGEventRef cgEvent) {
     
     if (cgEvent == NULL) {
         assert(false);
@@ -37,7 +37,7 @@ HIDEvent *MFCGEventGetIOHIDEvent(CGEventRef cgEvent) {
 /// MARK: ----- HIDEvent -> CGEvent -----
 
 /// Defining our own HIDEvent -> CGEvent function, because we can't find an external one.
-CGEventRef MFCGEventCreateWithIOHIDEvent(HIDEvent *hidEvent) {
+CGEventRef CGEventCreateWithIOHIDEvent(HIDEvent *hidEvent) {
     
     if (hidEvent == nil) {
         assert(false);

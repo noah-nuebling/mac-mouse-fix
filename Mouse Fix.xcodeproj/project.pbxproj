@@ -78,7 +78,7 @@
 		4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCA07D525F3129B00BFE209 /* RemapTableController.m */; };
 		4FCC03352757B181002E5A57 /* ScreenDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCC03322757A50C002E5A57 /* ScreenDrawer.swift */; };
 		4FD0A71127B295F600FFCD12 /* OtherConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD0A71027B295F600FFCD12 /* OtherConfig.swift */; };
-		4FD66E0827BB553800F67559 /* MFIOKitTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD66E0727BB553800F67559 /* MFIOKitTools.m */; };
+		4FD66E0827BB553800F67559 /* CGEventHIDEventBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD66E0727BB553800F67559 /* CGEventHIDEventBridge.m */; };
 		4FD66E0B27BB9BAE00F67559 /* EventUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD66E0A27BB9BAE00F67559 /* EventUtility.m */; };
 		4FD82DDB260575B100664D6F /* ToastNotificationLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD82DDA260575B100664D6F /* ToastNotificationLabel.m */; };
 		4FD86089266E819A004F76C8 /* Pointers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD86088266E819A004F76C8 /* Pointers.swift */; };
@@ -400,8 +400,8 @@
 		4FCC03322757A50C002E5A57 /* ScreenDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenDrawer.swift; sourceTree = "<group>"; };
 		4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mac Mouse Fix Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FD0A71027B295F600FFCD12 /* OtherConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherConfig.swift; sourceTree = "<group>"; };
-		4FD66E0627BB553800F67559 /* MFIOKitTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFIOKitTools.h; sourceTree = "<group>"; };
-		4FD66E0727BB553800F67559 /* MFIOKitTools.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFIOKitTools.m; sourceTree = "<group>"; };
+		4FD66E0627BB553800F67559 /* CGEventHIDEventBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CGEventHIDEventBridge.h; sourceTree = "<group>"; };
+		4FD66E0727BB553800F67559 /* CGEventHIDEventBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CGEventHIDEventBridge.m; sourceTree = "<group>"; };
 		4FD66E0927BB9BAD00F67559 /* EventUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventUtility.h; sourceTree = "<group>"; };
 		4FD66E0A27BB9BAE00F67559 /* EventUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EventUtility.m; sourceTree = "<group>"; };
 		4FD82DD9260575B100664D6F /* ToastNotificationLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToastNotificationLabel.h; sourceTree = "<group>"; };
@@ -779,8 +779,8 @@
 			isa = PBXGroup;
 			children = (
 				4F9C14B627BAF21E008A1479 /* MFIOKitImports.h */,
-				4FD66E0627BB553800F67559 /* MFIOKitTools.h */,
-				4FD66E0727BB553800F67559 /* MFIOKitTools.m */,
+				4FD66E0627BB553800F67559 /* CGEventHIDEventBridge.h */,
+				4FD66E0727BB553800F67559 /* CGEventHIDEventBridge.m */,
 				4F9C14AD27BAE773008A1479 /* HIDEvent.h */,
 				4F9C14AF27BAEA71008A1479 /* HIDEventBase.h */,
 				4F9C14B327BAF1A2008A1479 /* HIDEvent+HIDEventFields.h */,
@@ -2088,7 +2088,7 @@
 				4FF666A825F2C93A00689B77 /* DeviceManager.m in Sources */,
 				4FF6669B25F2C93A00689B77 /* AppDelegate.m in Sources */,
 				4F9E78D02685E30C002C2309 /* GestureScrollSimulator.m in Sources */,
-				4FD66E0827BB553800F67559 /* MFIOKitTools.m in Sources */,
+				4FD66E0827BB553800F67559 /* CGEventHIDEventBridge.m in Sources */,
 				4FF0BD58266ACE32003935EA /* VectorUtility.m in Sources */,
 				4F96060F27B4F92F004D6F6D /* PixelatedVectorAnimator.swift in Sources */,
 				4FF6654F25F2C7B000689B77 /* NSArray+Additions.m in Sources */,

@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-// MFIOKitTools.h
+// CGEventHIDEventBridge.h
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2022
 // Licensed under MIT
@@ -14,7 +14,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MFIOKitTools : NSObject
+@interface CGEventHIDEventBridge : NSObject
 
 /// How we came up with this:
 ///     We know there are many useful functions for interacting with the 'Window Server' in the private 'SkyLight' framework. (Formerly Core Graphics Services afaik). Some of these private functions have been discovered and documented in the CGSInternal repo (https://github.com/NUIKit/CGSInternal/). We've been using some of these for a long time for example to trigger 'SymbolicHotKeys' which lets us trigger many system functions like 'Look Up' and 'Mission Control'.
@@ -46,8 +46,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// MARK: HIDEvent <-> CGEvent
 
-HIDEvent *MFCGEventGetIOHIDEvent(CGEventRef _Nonnull);
-CGEventRef _Nonnull MFCGEventCreateWithIOHIDEvent(HIDEvent * _Nonnull);
+HIDEvent *CGEventGetIOHIDEvent(CGEventRef _Nonnull);
+CGEventRef _Nonnull CGEventCreateWithIOHIDEvent(HIDEvent * _Nonnull);
 
 /// MARK: v Attempts to find a HIDEvent -> CGEvent function
 

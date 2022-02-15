@@ -16,6 +16,6 @@
 #import "HIDEventAccessors_Private.h"
 
 #import <IOKit/hid/IOHIDKeys.h>
-#import "MFIOKitTools.h"
+#import "CGEventHIDEventBridge.h"
 
 #endif /* HIDEvent_Imports_h */

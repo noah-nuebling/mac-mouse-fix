@@ -15,10 +15,7 @@
 
 @implementation EventUtility
 
-IOHIDDeviceRef CGEventCopySender(CGEventRef event) {
-    
-    /// Get HIDEvent
-    HIDEvent *hidEvent = MFCGEventGetIOHIDEvent(event);
+IOHIDDeviceRef HIDEventCopySendingDevice(HIDEvent *hidEvent) {
     
     /// Get IOService
     uint64_t senderID = hidEvent.senderID;

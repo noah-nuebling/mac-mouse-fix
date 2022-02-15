@@ -147,38 +147,6 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         return event;
     }
     
-    /// Testing
-    ///     TODO:
-    ///     - Clean this up
-    ///     - Investigate the `children` property
-    
-    HIDEvent *hidEvent = MFCGEventGetIOHIDEvent(event);
-    
-    uint64_t sender = [hidEvent senderID];
-    IOHIDEventType eventType = [hidEvent type];
-    uint64_t timestamp = [hidEvent timestamp];
-    uint32_t options = [hidEvent options];
-    double scrollX = [hidEvent scrollX];
-    double scrollY = [hidEvent scrollY];
-    double scrollZ = [hidEvent scrollZ];
-    uint32_t isPixels = [hidEvent scrollIsPixels];
-    NSArray *children = [hidEvent children];
-    
-    DDLogDebug(@"\nHIDEvent: - sender: %lld type: %d, ts: %llu, options: %u, xyz: (%f, %f, %f), pixels: %d, childCount: %lu, CGTimestamp: %llu", sender, eventType, timestamp, options, scrollX, scrollY, scrollZ, isPixels, children.count, CGEventGetTimestamp(event));
-    
-    IOHIDDeviceRef iohidDevice = CGEventCopySender(event);
-    
-    assert(iohidDevice != NULL);
-    
-    if (iohidDevice != NULL) {
-        CFStringRef name = IOHIDDeviceGetProperty(iohidDevice, CFSTR(kIOHIDProductKey));
-        CFStringRef manufacturer = IOHIDDeviceGetProperty(iohidDevice, CFSTR(kIOHIDManufacturerKey));
-        
-        DDLogDebug(@"\nHIDEvent: - device: %@ %@", manufacturer, name);
-    }
-    
-    CFRelease(iohidDevice);
-    
     /// Get timestamp
     ///     Get timestamp here instead of _scrollQueue for accurate timing
     
@@ -201,6 +169,27 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 #pragma mark - Main event processing
 
 static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t scrollDeltaAxis2, CFTimeInterval tickTime) {
+    
+    /// Get HIDEvent
+    HIDEvent *hidEvent = CGEventGetIOHIDEvent(event);
+    
+    /// Get sending device
+    IOHIDDeviceRef sendingDev = HIDEventCopySendingDevice(hidEvent);
+    
+    /// Debug
+    assert(sendingDev != NULL);
+    
+    /// Print info on sendingDev
+    if (sendingDev != NULL) {
+        
+        CFStringRef name = IOHIDDeviceGetProperty(sendingDev, CFSTR(kIOHIDProductKey));
+        CFStringRef manufacturer = IOHIDDeviceGetProperty(sendingDev, CFSTR(kIOHIDManufacturerKey));
+        
+        DDLogInfo(@"\nDevice sending scroll: %@ %@", manufacturer, name);
+    }
+    
+    /// Release sendingDev
+    CFRelease(sendingDev);
     
     /// Get axis
     
