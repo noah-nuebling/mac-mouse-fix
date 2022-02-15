@@ -781,20 +781,9 @@
 				4F9C14B627BAF21E008A1479 /* MFIOKitImports.h */,
 				4FD66E0627BB553800F67559 /* CGEventHIDEventBridge.h */,
 				4FD66E0727BB553800F67559 /* CGEventHIDEventBridge.m */,
-				4F9C14AD27BAE773008A1479 /* HIDEvent.h */,
-				4F9C14AF27BAEA71008A1479 /* HIDEventBase.h */,
-				4F9C14B327BAF1A2008A1479 /* HIDEvent+HIDEventFields.h */,
-				4F9C14B727BAF8BF008A1479 /* HIDEventFields.h */,
-				4F9C14B227BAF1A2008A1479 /* HIDEventAccessors.h */,
-				4F9C14B427BAF1A2008A1479 /* HIDEventAccessors_Private.h */,
-				4F9C14AE27BAE802008A1479 /* HIDBase.h */,
-				4F9C14B027BAEADF008A1479 /* HIDEventIvar.h */,
-				4F9C14B127BAEAFF008A1479 /* hidobjcbase.h */,
-				4F9C14B927BAF989008A1479 /* IOHIDEventTypes.h */,
-				4F9C14BA27BAF9C8008A1479 /* IOHIDEventFieldDefs.h */,
-				4F9C14BB27BAFB3A008A1479 /* IOHIDLibPrivate.h */,
-				4F9C14BE27BAFB3A008A1479 /* IOHIDLibUserClient.h */,
-				4F9C14BD27BAFB3A008A1479 /* IOHIDPrivateKeys.h */,
+				4F70ECB5267E810900325A76 /* IOUtility.h */,
+				4F70ECB6267E810900325A76 /* IOUtility.m */,
+				4FD66E0C27BBB55200F67559 /* External */,
 			);
 			path = IOKit;
 			sourceTree = "<group>";
@@ -965,6 +954,27 @@
 				4F94F60B25E5EC2800D9F24A /* Mac Mouse FixUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		4FD66E0C27BBB55200F67559 /* External */ = {
+			isa = PBXGroup;
+			children = (
+				4F9C14AD27BAE773008A1479 /* HIDEvent.h */,
+				4F9C14AF27BAEA71008A1479 /* HIDEventBase.h */,
+				4F9C14B327BAF1A2008A1479 /* HIDEvent+HIDEventFields.h */,
+				4F9C14B727BAF8BF008A1479 /* HIDEventFields.h */,
+				4F9C14B227BAF1A2008A1479 /* HIDEventAccessors.h */,
+				4F9C14B427BAF1A2008A1479 /* HIDEventAccessors_Private.h */,
+				4F9C14AE27BAE802008A1479 /* HIDBase.h */,
+				4F9C14B027BAEADF008A1479 /* HIDEventIvar.h */,
+				4F9C14B127BAEAFF008A1479 /* hidobjcbase.h */,
+				4F9C14B927BAF989008A1479 /* IOHIDEventTypes.h */,
+				4F9C14BA27BAF9C8008A1479 /* IOHIDEventFieldDefs.h */,
+				4F9C14BB27BAFB3A008A1479 /* IOHIDLibPrivate.h */,
+				4F9C14BE27BAFB3A008A1479 /* IOHIDLibUserClient.h */,
+				4F9C14BD27BAFB3A008A1479 /* IOHIDPrivateKeys.h */,
+			);
+			path = External;
 			sourceTree = "<group>";
 		};
 		4FD860C2266EEA94004F76C8 /* Unused */ = {
@@ -1342,10 +1352,10 @@
 		4FF6663125F2C93A00689B77 /* Touch */ = {
 			isa = PBXGroup;
 			children = (
-				4F9E78CF2685E30C002C2309 /* GestureScrollSimulator.h */,
-				4F9E78CE2685E30B002C2309 /* GestureScrollSimulator.m */,
 				4FF6663525F2C93A00689B77 /* TouchSimulator.h */,
 				4FF6663325F2C93A00689B77 /* TouchSimulator.m */,
+				4F9E78CF2685E30C002C2309 /* GestureScrollSimulator.h */,
+				4F9E78CE2685E30B002C2309 /* GestureScrollSimulator.m */,
 				4F9E78C72685DDCF002C2309 /* Old */,
 			);
 			path = Touch;
@@ -1387,11 +1397,11 @@
 			children = (
 				4FF6664525F2C93A00689B77 /* TransformationUtility.h */,
 				4FF6664225F2C93A00689B77 /* TransformationUtility.m */,
-				4F3A40D8266C5BDF00436821 /* NSScreen+Additions.h */,
-				4F3A40D9266C5BDF00436821 /* NSScreen+Additions.m */,
 				4FF0255D27B013A100923107 /* PointerFreeze.h */,
 				4FF0255E27B013A100923107 /* PointerFreeze.m */,
 				4FCC03322757A50C002E5A57 /* ScreenDrawer.swift */,
+				4F3A40D8266C5BDF00436821 /* NSScreen+Additions.h */,
+				4F3A40D9266C5BDF00436821 /* NSScreen+Additions.m */,
 				4FBDA14D27B241CE0030E4EA /* GlobalEventTapThread.h */,
 				4FBDA14E27B241CE0030E4EA /* GlobalEventTapThread.m */,
 				4FD66E0927BB9BAD00F67559 /* EventUtility.h */,
@@ -1406,8 +1416,6 @@
 			children = (
 				4FA83A27268271E200F3A31B /* PointerMovement.h */,
 				4FA83A28268271E200F3A31B /* PointerMovement.m */,
-				4F70ECB5267E810900325A76 /* IOUtility.h */,
-				4F70ECB6267E810900325A76 /* IOUtility.m */,
 				4FA83A2026823EE000F3A31B /* Experiments */,
 			);
 			path = PointerSensitivity;

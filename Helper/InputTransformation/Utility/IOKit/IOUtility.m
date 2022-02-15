@@ -81,9 +81,13 @@ clean_up:
 }
 
 + (io_registry_entry_t)createChildOfRegistryEntry:(io_registry_entry_t)entry withName:(NSString *)name {
+    ///
+    /// TODO: Don't use IORegistryEntryGetPath(). Use kIORegistryEntryIDKey or IORegistryEntryCopyPath().
+    ///
     /// Caller is responsible for releasing the returned registryEntry
     /// I feel like maybe I could call CFAutorelease or sth on the result before returning it to make it easier for the caller but not too sure how that works.
     ///     Edit: need to call IOObjectRelease on the result and that doesn't have an autorelease variant.
+    
     
     io_iterator_t iterator;
     IORegistryEntryGetChildIterator(entry, kIOServicePlane, &iterator);
@@ -111,6 +115,8 @@ clean_up:
 }
 
 + (NSString *)registryPathForServiceClient:(IOHIDServiceClientRef)service {
+    /// TODO: Don't use IORegistryEntryGetPath(). Use kIORegistryEntryIDKey or IORegistryEntryCopyPath().
+    
     CFTypeRef entryIDCF = IOHIDServiceClientGetRegistryID(service);
     uint64_t entryID = ((__bridge NSNumber *)entryIDCF).unsignedLongLongValue;
     CFMutableDictionaryRef idMatching = IORegistryEntryIDMatching(entryID);

@@ -48,7 +48,6 @@ BOOL directionChanged(MFDirection direction1, MFDirection direction2) {
 + (NSTimeInterval)nsTimeStamp {
     /// Time since system startup in seconds. This value is used in NSEvent timestamps
 
-    
     int MIB_SIZE = 2;
     
     int mib[MIB_SIZE];
