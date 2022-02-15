@@ -49,7 +49,7 @@ CGEventRef _Nonnull MFCGEventCreateWithIOHIDEvent(HIDEvent * _Nonnull);
 
 /// MARK: v Attempts to find a HIDEvent -> CGEvent function
 
-//IOHIDEventFromCGEvent()
+/// Unsuccessful, we ended up writing our own function.
 
 /// Trying to find a function that converts HIDEvent -> CGEvent
 ///     (__bridge doesn't work)

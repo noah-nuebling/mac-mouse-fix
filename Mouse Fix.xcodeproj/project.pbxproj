@@ -79,6 +79,7 @@
 		4FCC03352757B181002E5A57 /* ScreenDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCC03322757A50C002E5A57 /* ScreenDrawer.swift */; };
 		4FD0A71127B295F600FFCD12 /* OtherConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD0A71027B295F600FFCD12 /* OtherConfig.swift */; };
 		4FD66E0827BB553800F67559 /* MFIOKitTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD66E0727BB553800F67559 /* MFIOKitTools.m */; };
+		4FD66E0B27BB9BAE00F67559 /* EventUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD66E0A27BB9BAE00F67559 /* EventUtility.m */; };
 		4FD82DDB260575B100664D6F /* ToastNotificationLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD82DDA260575B100664D6F /* ToastNotificationLabel.m */; };
 		4FD86089266E819A004F76C8 /* Pointers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD86088266E819A004F76C8 /* Pointers.swift */; };
 		4FD860AA266EC24E004F76C8 /* DerivedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860A9266EC24E004F76C8 /* DerivedProperty.swift */; };
@@ -401,6 +402,8 @@
 		4FD0A71027B295F600FFCD12 /* OtherConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherConfig.swift; sourceTree = "<group>"; };
 		4FD66E0627BB553800F67559 /* MFIOKitTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFIOKitTools.h; sourceTree = "<group>"; };
 		4FD66E0727BB553800F67559 /* MFIOKitTools.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFIOKitTools.m; sourceTree = "<group>"; };
+		4FD66E0927BB9BAD00F67559 /* EventUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventUtility.h; sourceTree = "<group>"; };
+		4FD66E0A27BB9BAE00F67559 /* EventUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EventUtility.m; sourceTree = "<group>"; };
 		4FD82DD9260575B100664D6F /* ToastNotificationLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToastNotificationLabel.h; sourceTree = "<group>"; };
 		4FD82DDA260575B100664D6F /* ToastNotificationLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ToastNotificationLabel.m; sourceTree = "<group>"; };
 		4FD86058266DBF96004F76C8 /* AnimatorDeclarations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnimatorDeclarations.h; sourceTree = "<group>"; };
@@ -772,14 +775,6 @@
 			path = UITests;
 			sourceTree = "<group>";
 		};
-		4F9912772788FB8E008DBE9F /* External */ = {
-			isa = PBXGroup;
-			children = (
-				4FF6665A25F2C93A00689B77 /* CGSInternal */,
-			);
-			path = External;
-			sourceTree = "<group>";
-		};
 		4F9C14B527BAF202008A1479 /* IOKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -1038,7 +1033,7 @@
 				4FF6653025F2C7B000689B77 /* Objects */,
 				4F9E78BD26855B9B002C2309 /* SwiftConcurrency */,
 				4FF6653625F2C7B000689B77 /* Utility */,
-				4F9912772788FB8E008DBE9F /* External */,
+				4FF6665A25F2C93A00689B77 /* CGSInternal */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -1321,7 +1316,6 @@
 			children = (
 				4FF6662C25F2C93A00689B77 /* Scroll.h */,
 				4FF6662125F2C93A00689B77 /* Scroll.m */,
-				4F9C14B527BAF202008A1479 /* IOKit */,
 				4F9E79112686FBE3002C2309 /* Analysis */,
 				4F9E79102686FBD3002C2309 /* Modifiers */,
 				4F9E790F2686FBC7002C2309 /* Utility */,
@@ -1400,6 +1394,9 @@
 				4FCC03322757A50C002E5A57 /* ScreenDrawer.swift */,
 				4FBDA14D27B241CE0030E4EA /* GlobalEventTapThread.h */,
 				4FBDA14E27B241CE0030E4EA /* GlobalEventTapThread.m */,
+				4FD66E0927BB9BAD00F67559 /* EventUtility.h */,
+				4FD66E0A27BB9BAE00F67559 /* EventUtility.m */,
+				4F9C14B527BAF202008A1479 /* IOKit */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -2097,6 +2094,7 @@
 				4FF6654F25F2C7B000689B77 /* NSArray+Additions.m in Sources */,
 				4FF6654525F2C7B000689B77 /* Objects.m in Sources */,
 				4F5F3EF12756EC0400C350C0 /* RemapsOverrider.m in Sources */,
+				4FD66E0B27BB9BAE00F67559 /* EventUtility.m in Sources */,
 				4FF666A925F2C93A00689B77 /* HelperUtility.m in Sources */,
 				4FCC03352757B181002E5A57 /* ScreenDrawer.swift in Sources */,
 				4FF6668B25F2C93A00689B77 /* CubicUnitBezier.m in Sources */,
