@@ -149,34 +149,10 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
     /// Testing
     ///     TODO:
-    ///     - Clean up the new IOKit imports
     ///     - Clean this up
     ///     - Investigate the `children` property
-    ///     - Look into CGEventSetIOHIDEvent()
-    ///     - Clean up documentation and describe how I found this stuff.
-    ///         - Also clean up the descriptions in TouchSimulator.m
-    ///
-    
-    CFIndex retainCountCG = CFGetRetainCount(event);
     
     HIDEvent *hidEvent = MFCGEventGetIOHIDEvent(event);
-    
-    HIDEvent *hidEvent2 = MFCGEventGetIOHIDEvent(event);
-    
-    CFIndex retainCount1 = CFGetRetainCount((__bridge CFTypeRef)hidEvent);
-    
-    /// Try to reconstruct CGEvent
-    CGEventRef reconstructedCG = MFCGEventCreateWithIOHIDEvent(hidEvent);
-    
-    CFIndex retainCount2 = CFGetRetainCount((__bridge CFTypeRef)hidEvent);
-    
-    CFRelease(event);
-    
-    CFIndex retainCount3 = CFGetRetainCount((__bridge CFTypeRef)hidEvent);
-    
-    CFRelease(reconstructedCG);
-    
-    CFIndex retainCount4 = CFGetRetainCount((__bridge CFTypeRef)hidEvent);
     
     uint64_t sender = [hidEvent senderID];
     IOHIDEventType eventType = [hidEvent type];
