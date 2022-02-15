@@ -15,7 +15,74 @@
 
 @implementation EventUtility
 
-IOHIDDeviceRef HIDEventCopySendingDevice(HIDEvent *hidEvent) {
+NSMutableDictionary *_hidDeviceCache = nil;
+
+IOHIDDeviceRef HIDEventGetSendingDevice(HIDEvent *hidEvent) {
+    /// This version uses a cache to avoid calling IOHIDDeviceCreate() (which is super slow) over and over.
+    ///     \note Do we need to reset the cache at certain points?
+    ///     \note Now that we use the cache we should be able to use the version that iterates over all parents instead of only checking the immediate parent, without it being too slow.
+    
+    uint64_t senderID = hidEvent.senderID;
+    
+    if (_hidDeviceCache == nil) {
+        _hidDeviceCache = [NSMutableDictionary dictionary];
+    }
+    
+    id iohidDeviceFromCache = _hidDeviceCache[@(senderID)];
+    
+    if (iohidDeviceFromCache != nil) {
+        
+        CFIndex retainCount = CFGetRetainCount((__bridge CFTypeRef)(iohidDeviceFromCache));
+        DDLogError(@"cache retainCount: %ld", (long)retainCount);
+        
+        return (__bridge IOHIDDeviceRef)iohidDeviceFromCache;
+    }
+    
+    CFMutableDictionaryRef idMatching = IORegistryEntryIDMatching(senderID);
+    io_service_t service = IOServiceGetMatchingService(kIOMasterPortDefault, idMatching);
+    
+    io_service_t parent1;
+    io_service_t parent2;
+    IORegistryEntryGetParentEntry(service, kIOServicePlane, &parent1);
+    IORegistryEntryGetParentEntry(parent1, kIOServicePlane, &parent2);
+    
+    IOHIDDeviceRef iohidDevice = IOHIDDeviceCreate(kCFAllocatorDefault, parent2);
+    
+    CFRetain(iohidDevice);
+    _hidDeviceCache[@(senderID)] = (__bridge id _Nullable)(iohidDevice);
+    
+    IOObjectRelease(parent1);
+    IOObjectRelease(parent2);
+    
+    return iohidDevice;
+    
+}
+
+IOHIDDeviceRef HIDEventCopySendingDeviceFaster(HIDEvent *hidEvent) {
+    /// This gets the second parent of the registryEntry that sent the hidEvent. If that doesn't work, it returns NULL.
+    /// This is still super slow because IOHIDDeviceCreate() is super slow
+    
+    /// Get IOService
+    uint64_t senderID = hidEvent.senderID;
+    CFMutableDictionaryRef idMatching = IORegistryEntryIDMatching(senderID);
+    io_service_t service = IOServiceGetMatchingService(kIOMasterPortDefault, idMatching);
+    
+    io_service_t parent1;
+    io_service_t parent2;
+    IORegistryEntryGetParentEntry(service, kIOServicePlane, &parent1);
+    IORegistryEntryGetParentEntry(parent1, kIOServicePlane, &parent2);
+    
+    IOHIDDeviceRef iohidDevice = IOHIDDeviceCreate(kCFAllocatorDefault, parent2);
+    
+    IOObjectRelease(parent1);
+    IOObjectRelease(parent2);
+    
+    return iohidDevice;
+}
+
+IOHIDDeviceRef HIDEventCopySendingReliable(HIDEvent *hidEvent) {
+    /// This iterates all parents of the service which send the hidEvent until it finds one that it can convert to and IOHIDDevice.
+    /// Calling IOHIDDeviceCreate() on all these non-hid device is super slow unfortunately.
     
     /// Get IOService
     uint64_t senderID = hidEvent.senderID;

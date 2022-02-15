@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface EventUtility : NSObject
 
-IOHIDDeviceRef HIDEventCopySendingDevice(HIDEvent *event);
+IOHIDDeviceRef HIDEventGetSendingDevice(HIDEvent *event);
 CFTimeInterval CGEventGetTimestampInSeconds(CGEventRef event);
 
 @end
