@@ -18,8 +18,4 @@
 #import <IOKit/hid/IOHIDKeys.h>
 #import "MFIOKitTools.h"
 
-@import Cocoa;
-
-HIDEvent *CGEventCopyIOHIDEvent(CGEventRef);
-
 #endif /* HIDEvent_Imports_h */

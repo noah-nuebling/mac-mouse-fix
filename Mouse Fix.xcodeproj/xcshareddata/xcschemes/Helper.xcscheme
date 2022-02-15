@@ -56,6 +56,18 @@
          BundleIdentifier = "com.nuebling.mac-mouse-fix.helper"
          FilePath = "/Users/Noah/Library/Developer/Xcode/DerivedData/Mouse_Fix-ekrdlmmvrexfqueuhacwcsaimzaa/Build/Products/Debug/Mac Mouse Fix.app/Contents/Library/LoginItems/Mac Mouse Fix Helper.app">
       </PathRunnable>
+      <AdditionalOptions>
+         <AdditionalOption
+            key = "MallocGuardEdges"
+            value = ""
+            isEnabled = "YES">
+         </AdditionalOption>
+         <AdditionalOption
+            key = "MallocScribble"
+            value = ""
+            isEnabled = "YES">
+         </AdditionalOption>
+      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

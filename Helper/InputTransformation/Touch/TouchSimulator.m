@@ -31,20 +31,7 @@
 /// Notes:
 /// 
 /// Between TouchSimulator.m and GestureScrollSimulator, we have all interesting touch input covered. Except a Force Touch, but we have the kMFSHLookUp symbolic hotkey which works almost as well.
-///
-/// I just saw in Instruments that when CFRelease is called on the scrollEvents we capture in Scroll.m, then the following function are called:
-///     `CGSEventReclaimObjects()`, which then calls `[HIDEvent dealloc]`
-///     This Suggests that CGEvent is an interface / wrapper for CGSEvent, and CGSEvent is an interface / wrapper for HIDEvent. Kernel drivers send IOHIDEvent IIRC, so possible HIDEvent is an interface / wrapper for IOHIDEvent.
-///
-/// In the private Skylight framework there are the functions: _SLEventSetIOHIDEvent and _SLEventCopyIOHIDEvent.
-///     SLEvent is a differnent name for CGSEvent as far as I understand.
-///     Maybe we can use these functions to create CGEvents from IOHIDEvents.
-///     This would be great because IOHIDEvents are not opaque. All their fields are documented.
-///     See: https://github.com/NUIKit/CGSInternal/issues/2 for more info.
-///     -> This is not really necessary because we can already simulate all the important events (except force touch) by just setting fields on CGEvent.
-///     See https://opensource.apple.com/source/IOHIDFamily/IOHIDFamily-1633.100.36/IOHIDFamily/IOHIDEventTypes.h.auto.html
-///     Another reason to use IOHIDEvent:
-///         `typedef uint64_t IOHIDEventSenderID` - Registry entry id in the IOHIDEvent!!
+///     Edit: Actually using LookUp by any other method except force touch is broken in Safari and Mail since few versions.
 
 #import "TouchSimulator.h"
 #import <Foundation/Foundation.h>

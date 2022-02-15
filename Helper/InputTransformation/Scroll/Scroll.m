@@ -156,13 +156,26 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     ///         - Also clean up the descriptions in TouchSimulator.m
     ///
     
-    HIDEvent *hidEvent = CGEventCopyIOHIDEvent(event);
-
+    CFIndex retainCountCG = CFGetRetainCount(event);
+    
+    HIDEvent *hidEvent = MFCGEventGetIOHIDEvent(event);
+    
+    HIDEvent *hidEvent2 = MFCGEventGetIOHIDEvent(event);
+    
+    CFIndex retainCount1 = CFGetRetainCount((__bridge CFTypeRef)hidEvent);
+    
     /// Try to reconstruct CGEvent
     CGEventRef reconstructedCG = MFCGEventCreateWithIOHIDEvent(hidEvent);
-    HIDEvent *reconstructedHID = CGEventCopyIOHIDEvent(reconstructedCG);
     
-    hidEvent = reconstructedHID;
+    CFIndex retainCount2 = CFGetRetainCount((__bridge CFTypeRef)hidEvent);
+    
+    CFRelease(event);
+    
+    CFIndex retainCount3 = CFGetRetainCount((__bridge CFTypeRef)hidEvent);
+    
+    CFRelease(reconstructedCG);
+    
+    CFIndex retainCount4 = CFGetRetainCount((__bridge CFTypeRef)hidEvent);
     
     uint64_t sender = [hidEvent senderID];
     IOHIDEventType eventType = [hidEvent type];
@@ -825,14 +838,14 @@ CFTimeInterval getTimestamp(CGEventRef event) {
 + (IOHIDDeviceRef)CGEventCopySender:(CGEventRef)event {
     
     /// Get HIDEvent
-    HIDEvent *hidEvent = CGEventCopyIOHIDEvent(event);
+    HIDEvent *hidEvent = MFCGEventGetIOHIDEvent(event);
     
     /// Get IOService
     uint64_t senderID = hidEvent.senderID;
     CFMutableDictionaryRef idMatching = IORegistryEntryIDMatching(senderID);
     io_service_t service = IOServiceGetMatchingService(kIOMasterPortDefault, idMatching);
     
-    /// Get IOHIDDevide
+    /// Get IOHIDDevice
     __block IOHIDDeviceRef iohidDevice;
     [IOUtility iterateParentsOfEntry:service forEach:^Boolean(io_registry_entry_t parent) {
         iohidDevice = IOHIDDeviceCreate(kCFAllocatorDefault, parent);
