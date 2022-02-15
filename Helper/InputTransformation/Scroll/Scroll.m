@@ -29,6 +29,7 @@
 
 @import IOKit;
 #import "IOKitExtern.h"
+#import "IOUtility.h"
 
 @implementation Scroll
 
@@ -143,17 +144,17 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
 //    CGEventPost(kCGHIDEventTap, testEvent);
     
-    HIDEvent *HIDEvent = CGEventCopyIOHIDEvent(event);
+    HIDEvent *hidEvent = CGEventCopyIOHIDEvent(event);
     
-    uint64_t sender = [HIDEvent senderID];
-    IOHIDEventType eventType = [HIDEvent type];
-    uint64_t timestamp = [HIDEvent timestamp];
-    uint32_t options = [HIDEvent options];
-    double scrollX = [HIDEvent scrollX];
-    double scrollY = [HIDEvent scrollY];
-    double scrollZ = [HIDEvent scrollZ];
-    uint32_t isPixels = [HIDEvent scrollIsPixels];
-    NSArray *children = [HIDEvent children];
+    uint64_t sender = [hidEvent senderID];
+    IOHIDEventType eventType = [hidEvent type];
+    uint64_t timestamp = [hidEvent timestamp];
+    uint32_t options = [hidEvent options];
+    double scrollX = [hidEvent scrollX];
+    double scrollY = [hidEvent scrollY];
+    double scrollZ = [hidEvent scrollZ];
+    uint32_t isPixels = [hidEvent scrollIsPixels];
+    NSArray *children = [hidEvent children];
     
     DDLogDebug(@"\nHIDEvent: - sender: %lld type: %d, ts: %llu, options: %u, xyz: (%f, %f, %f), pixels: %d, childCount: %lu, CGTimestamp: %llu", sender, eventType, timestamp, options, scrollX, scrollY, scrollZ, isPixels, children.count, CGEventGetTimestamp(event));
     
@@ -162,6 +163,46 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     CFStringRef path = IORegistryEntryCopyPath(service, kIOServicePlane);
     
     DDLogDebug(@"\nHIDEvent: - registryPath: %@", path);
+    
+    /// Get sending IOHIDDevice from event
+    
+    __block IOHIDDeviceRef iohidDevice;
+    
+    [IOUtility iterateParentsOfEntry:service forEach:^Boolean(io_registry_entry_t parent) {
+        iohidDevice = IOHIDDeviceCreate(kCFAllocatorDefault, parent);
+        return (iohidDevice == NULL); /// Keep going while device not found
+    }];
+    
+    assert(iohidDevice != NULL);
+    
+    if ((NO)) {
+        io_iterator_t parent_iterator = 0;
+        IORegistryEntryGetParentIterator(service, kIOServicePlane, &parent_iterator);
+        while (true) {
+            io_object_t parent = IOIteratorNext(parent_iterator);
+            if (parent == 0) break;
+            iohidDevice = IOHIDDeviceCreate(kCFAllocatorDefault, parent);
+            IOObjectRelease(parent);
+            if (iohidDevice != NULL) break;
+        }
+        IOObjectRelease(parent_iterator);
+    }
+    if ((NO)) {
+        io_registry_entry_t parent1;
+        io_registry_entry_t parent2;
+        IORegistryEntryGetParentEntry(service, kIOServicePlane, &parent1);
+        IORegistryEntryGetParentEntry(parent1, kIOServicePlane, &parent2);
+        iohidDevice = IOHIDDeviceCreate(kCFAllocatorDefault, parent2);
+        IOObjectRelease(parent1);
+        IOObjectRelease(parent2);
+    }
+    
+    if (iohidDevice != NULL) {
+        CFStringRef name = IOHIDDeviceGetProperty(iohidDevice, CFSTR(kIOHIDProductKey));
+        CFStringRef manufacturer = IOHIDDeviceGetProperty(iohidDevice, CFSTR(kIOHIDManufacturerKey));
+        
+        DDLogDebug(@"\nHIDEvent: - device: %@ %@", manufacturer, name);
+    }
     
     /// Return non-scrollwheel events unaltered
     

@@ -16,7 +16,7 @@
 #import "HIDEventAccessors_Private.h"
 
 #import <IOKit/hid/IOHIDKeys.h>
-#import "IOHIDEventTypes.h"
+//#import "IOHIDEventTypes.h"
 
 @import Cocoa;
 

@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface IOUtility : NSObject
 
++ (void)iterateParentsOfEntry:(io_registry_entry_t)entry forEach:(Boolean (^)(io_registry_entry_t))workload;
 + (io_registry_entry_t)createChildOfRegistryEntry:(io_registry_entry_t)entry withName:(NSString *)name;
 + (void)afterDelay:(double)delay runBlock:(void(^)(void))block;
 + (NSString *)registryPathForServiceClient:(IOHIDServiceClientRef)service;

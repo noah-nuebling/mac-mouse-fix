@@ -11,6 +11,75 @@
 
 @implementation IOUtility
 
++ (void)iterateParentsOfEntry:(io_registry_entry_t)entry forEach:(Boolean (^)(io_registry_entry_t))workload {
+    /// This function calls `workload` with self and every parent, including parents of parents.
+    /// The `workload` block can return false to stop iteration, (e.g. when it's found what it's searching for) otherwise it should return true.
+    /// Otherwise the function will keep iterating until there are no more parents.
+    /// IORegistryEntryGetParentIterator() only iterates over all immediate parents. Not parents of parents.
+    
+    Boolean keepGoing = workload(entry);
+    if (!keepGoing) return;
+    
+    IOObjectRetain(entry); /// Because we'll call IOObjectRelease() on it
+    
+    NSMutableSet *thisLvl = [NSMutableSet setWithObject:@(entry)];
+    NSMutableSet *nextLvl = [NSMutableSet set];;
+    
+    while (true) {
+     
+        /// Iterate thisLvl and fill nextLvl
+        
+        for (NSNumber *entryNS in thisLvl) {
+            
+            io_registry_entry_t entry = entryNS.unsignedIntValue;
+            
+            /// Iterate all immediate parents of entry
+            
+            io_iterator_t parent_iterator = 0;
+            IORegistryEntryGetParentIterator(entry, kIOServicePlane, &parent_iterator);
+            
+            while (true) {
+                
+                io_registry_entry_t parent = IOIteratorNext(parent_iterator);
+                if (parent == 0) break;
+                
+                [nextLvl addObject:@(parent)]; /// Add before calling workload() so that parent is cleaned up
+                
+                Boolean keep_going = workload(parent);
+                if (!keep_going)
+                    goto clean_up;
+            }
+            
+            IOObjectRelease(parent_iterator);
+        }
+        
+        if (nextLvl.count == 0)
+            goto clean_up;
+        
+        /// Clean up thisLvl before moving on to nextLevel
+        for (NSNumber *entryNS in thisLvl) {
+            io_registry_entry_t entry = entryNS.unsignedIntValue;
+            IOObjectRelease(entry);
+        }
+        
+        thisLvl = nextLvl;
+        nextLvl = [NSMutableSet set];
+    }
+    
+clean_up:
+    
+    /// thisLvl
+    for (NSNumber *entryNS in thisLvl) {
+        io_registry_entry_t entry = entryNS.unsignedIntValue;
+        IOObjectRelease(entry);
+    }
+    /// nextLvl
+    for (NSNumber *entryNS in nextLvl) {
+        io_registry_entry_t entry = entryNS.unsignedIntValue;
+        IOObjectRelease(entry);
+    }
+}
+
 + (io_registry_entry_t)createChildOfRegistryEntry:(io_registry_entry_t)entry withName:(NSString *)name {
     /// Caller is responsible for releasing the returned registryEntry
     /// I feel like maybe I could call CFAutorelease or sth on the result before returning it to make it easier for the caller but not too sure how that works.
