@@ -20,7 +20,34 @@
 
 @import Cocoa;
 
+/// Convert CGEvent -> IOHIDEvent
+
 HIDEvent *CGEventCopyIOHIDEvent(CGEventRef);
-int CGEventSetIOHIDEvent(CGEventRef, HIDEvent *);
+
+/// Defining our own HIDEvent -> CGEvent function, because we can't find one;
+
+//CGEventRef IOHIDEventCreateCGEvent(HIDEvent *);
+
+/// Trying to find a function that converts HIDEvent -> CGEvent
+///     (__bridge doesn't work)
+///     Cast to NSEvent doesn't work
+
+//SLEventSetIOHIDEvent();
+//CGEventSetIOHIDEvent();
+//CGSEventSetIOHIDEvent();
+//SLEventSetHIDEvent();
+//CGEventSetHIDEvent();
+//CGSEventSetHIDEvent();
+
+//CGEventCreateWithIOHIDEvent();
+//CGEventCreateHIDEvent();
+//CGEventCreateIOHIDEvent();
+
+//SLEventCreateFromIOHIDEvent();
+//SLEventCreateFromHIDEvent();
+//CGEventCreateFromIOHIDEvent();
+//CGEventCreateFromHIDEvent();
+//CGSEventCreateFromIOHIDEvent();
+//CGSEventCreateFromHIDEvent();
 
 #endif /* HIDEvent_Imports_h */

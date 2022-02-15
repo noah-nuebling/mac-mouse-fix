@@ -10,7 +10,7 @@
 #ifndef HIDEvent_h
 #define HIDEvent_h
 
-#import <Foundation/Foundation.h>
+//#import <Foundation/Foundation.h>
 #import "HIDBase.h" /** <HID/HIDBase.h> */
 #import "HIDEventBase.h" /** </hidobjc/HIDEventBase.h>*/
 #import "IOHIDEventTypes.h"
