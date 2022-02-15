@@ -25,7 +25,9 @@ NS_ASSUME_NONNULL_BEGIN
 ///     So we tried to link the symbol SLEventCopyIOHIDEvent. It didn't work for some reason. But CGEventCopyIOHIDEvent did! Then we called the function and stepped into the assembly code (hold control and click the step button in Xcode) to see what it does.
 ///     After we read up on some ARM assembly we could figure out what it does and infer what the arguments and return must be.
 ///
-///     We then tried to find _SLEventSetIOHIDEvent, but we couldn't manage to. However, we could build our own equivalent function based on the assembly of CGEventCopyIOHIDEvent and shifting around pointers between memory addresses. Was super surprised when it worked!
+///     We saw that he function returns an NSObject of type 'HIDEvent'. Then we used VSCode to search Apples open source projects IOHIDFamily-1633.100.36, IOKitUser-1845.100.19, and xnu-7195.101.1 for the headers declaring 'HIDEvent' and their dependencies and added the to the project until everything compiled.
+///
+///     We then tried to find _SLEventSetIOHIDEvent, but we couldn't manage to. However, we could build our own equivalent function based on the assembly of CGEventCopyIOHIDEvent and shifting around pointers between memory addresses.
 ///
 /// Old Notes from TouchSimulator.m: (These observations led us to this)
 ///     I just saw in Instruments that when CFRelease is called on the scrollEvents we capture in Scroll.m, then the following function are called:
