@@ -131,18 +131,28 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         
         return event;
     }
+
+    /// Return non-scrollwheel events unaltered
+    
+    int64_t isPixelBased     = CGEventGetIntegerValueField(event, kCGScrollWheelEventIsContinuous);
+    int64_t scrollPhase      = CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase);
+    int64_t scrollDeltaAxis1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1);
+    int64_t scrollDeltaAxis2 = CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis2);
+    bool isDiagonal = scrollDeltaAxis1 != 0 && scrollDeltaAxis2 != 0;
+    if (isPixelBased != 0
+        || scrollPhase != 0 /// Not entirely sure if testing for 'scrollPhase' here makes sense
+        || isDiagonal) {
+        
+        return event;
+    }
     
     /// Testing
-    
-    int64_t sourceStateID = CGEventGetIntegerValueField(event, kCGEventSourceStateID);
-    int64_t sourceProcessID = CGEventGetIntegerValueField(event, kCGEventSourceUnixProcessID);
-    
-    DDLogDebug(@"Source - stateID: %lld, processID: %lld", sourceStateID, sourceProcessID);
-    
-    CGPoint loc = CGPointMake(6, 9);
-    CGEventRef testEvent = CGEventCreateMouseEvent(NULL, kCGEventLeftMouseDown, loc, -1);
-    
-//    CGEventPost(kCGHIDEventTap, testEvent);
+    ///     TODO:
+    ///     - Clean up the new IOKit imports
+    ///     - Clean this up
+    ///     - Investigate the `children` property
+    ///     - Look into CGEventSetIOHIDEvent()
+    ///
     
     HIDEvent *hidEvent = CGEventCopyIOHIDEvent(event);
     
@@ -158,44 +168,9 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
     DDLogDebug(@"\nHIDEvent: - sender: %lld type: %d, ts: %llu, options: %u, xyz: (%f, %f, %f), pixels: %d, childCount: %lu, CGTimestamp: %llu", sender, eventType, timestamp, options, scrollX, scrollY, scrollZ, isPixels, children.count, CGEventGetTimestamp(event));
     
-    CFMutableDictionaryRef idMatching = IORegistryEntryIDMatching(sender);
-    io_service_t service = IOServiceGetMatchingService(kIOMasterPortDefault, idMatching);
-    CFStringRef path = IORegistryEntryCopyPath(service, kIOServicePlane);
-    
-    DDLogDebug(@"\nHIDEvent: - registryPath: %@", path);
-    
-    /// Get sending IOHIDDevice from event
-    
-    __block IOHIDDeviceRef iohidDevice;
-    
-    [IOUtility iterateParentsOfEntry:service forEach:^Boolean(io_registry_entry_t parent) {
-        iohidDevice = IOHIDDeviceCreate(kCFAllocatorDefault, parent);
-        return (iohidDevice == NULL); /// Keep going while device not found
-    }];
+    IOHIDDeviceRef iohidDevice = [Scroll CGEventCopySender:event];
     
     assert(iohidDevice != NULL);
-    
-    if ((NO)) {
-        io_iterator_t parent_iterator = 0;
-        IORegistryEntryGetParentIterator(service, kIOServicePlane, &parent_iterator);
-        while (true) {
-            io_object_t parent = IOIteratorNext(parent_iterator);
-            if (parent == 0) break;
-            iohidDevice = IOHIDDeviceCreate(kCFAllocatorDefault, parent);
-            IOObjectRelease(parent);
-            if (iohidDevice != NULL) break;
-        }
-        IOObjectRelease(parent_iterator);
-    }
-    if ((NO)) {
-        io_registry_entry_t parent1;
-        io_registry_entry_t parent2;
-        IORegistryEntryGetParentEntry(service, kIOServicePlane, &parent1);
-        IORegistryEntryGetParentEntry(parent1, kIOServicePlane, &parent2);
-        iohidDevice = IOHIDDeviceCreate(kCFAllocatorDefault, parent2);
-        IOObjectRelease(parent1);
-        IOObjectRelease(parent2);
-    }
     
     if (iohidDevice != NULL) {
         CFStringRef name = IOHIDDeviceGetProperty(iohidDevice, CFSTR(kIOHIDProductKey));
@@ -204,19 +179,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         DDLogDebug(@"\nHIDEvent: - device: %@ %@", manufacturer, name);
     }
     
-    /// Return non-scrollwheel events unaltered
-    
-    int64_t isPixelBased     = CGEventGetIntegerValueField(event, kCGScrollWheelEventIsContinuous);
-    int64_t scrollPhase      = CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase);
-    int64_t scrollDeltaAxis1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1);
-    int64_t scrollDeltaAxis2 = CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis2);
-    bool isDiagonal = scrollDeltaAxis1 != 0 && scrollDeltaAxis2 != 0;
-    if (isPixelBased != 0
-        || scrollPhase != 0 /// Not entirely sure if testing for 'scrollPhase' here makes sense
-        || isDiagonal) {
-        
-        return event;
-    }
+    CFRelease(iohidDevice);
     
     /// Get timestamp
     ///     Get timestamp here instead of _scrollQueue for accurate timing
@@ -849,6 +812,26 @@ CFTimeInterval getTimestamp(CGEventRef event) {
         DDLogDebug(@"ticksPerSec: %.3f, CG: %.3f", 1/tickPeriod, 1/tickPeriodCG);
         DDLogDebug(@"tickPeriodSum: %.0f, CG: %.0f, ratio: %.5f", pSum, pSumCG, pSumCG/pSum);
     }
+}
+
++ (IOHIDDeviceRef)CGEventCopySender:(CGEventRef)event {
+    
+    /// Get HIDEvent
+    HIDEvent *hidEvent = CGEventCopyIOHIDEvent(event);
+    
+    /// Get IOService
+    uint64_t senderID = hidEvent.senderID;
+    CFMutableDictionaryRef idMatching = IORegistryEntryIDMatching(senderID);
+    io_service_t service = IOServiceGetMatchingService(kIOMasterPortDefault, idMatching);
+    
+    /// Get IOHIDDevide
+    __block IOHIDDeviceRef iohidDevice;
+    [IOUtility iterateParentsOfEntry:service forEach:^Boolean(io_registry_entry_t parent) {
+        iohidDevice = IOHIDDeviceCreate(kCFAllocatorDefault, parent);
+        return (iohidDevice == NULL); /// Keep going while device not found
+    }];
+    
+    return iohidDevice;
 }
 
 @end
