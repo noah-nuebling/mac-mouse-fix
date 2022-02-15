@@ -152,6 +152,8 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     ///     - Clean this up
     ///     - Investigate the `children` property
     ///     - Look into CGEventSetIOHIDEvent()
+    ///     - Clean up documentation and describe how I found this stuff.
+    ///         - Also clean up the descriptions in TouchSimulator.m
     ///
     
     HIDEvent *hidEvent = CGEventCopyIOHIDEvent(event);
