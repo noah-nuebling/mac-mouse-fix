@@ -20,7 +20,7 @@ NSMutableDictionary *_hidDeviceCache = nil;
 IOHIDDeviceRef HIDEventGetSendingDevice(HIDEvent *hidEvent) {
     /// This version uses a cache to avoid calling IOHIDDeviceCreate() (which is super slow) over and over.
     ///     \note Do we need to reset the cache at certain points?
-    ///     \note Now that we use the cache we should be able to use the version that iterates over all parents instead of only checking the immediate parent, without it being too slow.
+    ///     \note Now that we use the cache we should be able to use the version that iterates over all parents instead of only checking the second parent, without it being too slow.
     
     uint64_t senderID = hidEvent.senderID;
     
@@ -102,7 +102,7 @@ IOHIDDeviceRef HIDEventCopySendingReliable(HIDEvent *hidEvent) {
 /// Other helper functions
 
 CFTimeInterval CGEventGetTimestampInSeconds(CGEventRef event) {
-    /// Gets timestamp in seconds from CGEvent
+    /// Gets timestamp in seconds from CGEvent. More accurate and less volatile than calling CACurrentMediaTime() in the eventTapCallback.
     
     /// Get raw mach timestamp
     CGEventTimestamp tsMach = CGEventGetTimestamp(event);
