@@ -125,6 +125,7 @@ class PixelatedVectorAnimator: VectorAnimator {
         
         /// Skip this frames callback
         ///     and don't update animationPhase from `start` to `continue`
+        ///     Also don't update lastAnimationPhase
         
         if (isZeroVector(integerAnimationValueDelta)
             && self.animationPhase != kMFAnimationPhaseEnd) {

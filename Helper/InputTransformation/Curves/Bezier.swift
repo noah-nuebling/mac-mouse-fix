@@ -395,7 +395,7 @@ import ReactiveSwift
         
         for i in 0...n-1 {
             
-            sum += bernsteinBasisPolynomial(i, n-1, t) * (points1D[i+1] - points1D[i]) // Maybe we
+            sum += bernsteinBasisPolynomial(i, n-1, t) * (points1D[i+1] - points1D[i])
         }
         
         return Double(n) * sum

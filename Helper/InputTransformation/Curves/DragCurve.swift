@@ -164,6 +164,8 @@ import Foundation
         
         /// Init everything to garbage so we can call super.init()
         
+        // TODO: Test this and make it work
+        
         a = 0
         b = 0
         c = 0
@@ -205,6 +207,9 @@ import Foundation
         
         let v0 = solveV(t: 0, c: self.c)
         assert(abs(v0) > abs(vs))
+        
+        // TODO: We're not storing the timeInterval and _distanceInterval
+        //  Also I'm not sure if we need to scale the stop time or sth
         
 //        DDLogDebug("DragDurve initialized with v0: \(v0), distance int: \(self._distanceInterval), timeToStop: \(timeToStop)");
         

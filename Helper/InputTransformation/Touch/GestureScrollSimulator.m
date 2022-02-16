@@ -52,9 +52,6 @@ static Vector _lastScrollPointVector; /// This is unused. Replaced by the smooth
 static VectorSubPixelator *_scrollLinePixelator;
 
 static PixelatedVectorAnimator *_momentumAnimator;
-//static BOOL _momentumScrollIsActive;
-/// ^ We use this to avoid race conditions. It would be safer and easier (although maybe larginally slow?) to use a dispatch queue instead
-///     Edit: Using dispatch queue now. This is not necessary anymore
 
 static dispatch_queue_t _queue; /// Use this queue for interface functions to avoid race conditions
 
@@ -182,8 +179,8 @@ void postGestureScrollEvent_Internal(int64_t dx, int64_t dy, IOHIDEventPhaseBits
         
         /// Reset subpixelators
         
-        //            [_scrollPointPixelator reset];
-        //            [_gesturePixelator reset];
+//        [_scrollPointPixelator reset];
+//        [_gesturePixelator reset];
         [_scrollLinePixelator reset];
         
         /// Reset smoothers
@@ -373,7 +370,7 @@ static void (^_momentumScrollCallback)(void);
 void stopMomentumScroll_Sync(void) {
     /// Only use this when you know you're already running on _queue
     
-    //    DDLogDebug(@"momentumScroll stop request. Caller: %@", [SharedUtility callerInfo]);
+//    DDLogDebug(@"momentumScroll stop request. Caller: %@", [SharedUtility callerInfo]);
     
     if (!_momentumAnimator.isRunning) {
 //        DDLogDebug(@"... But momentumScroll insn't running");
@@ -446,7 +443,7 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
         
         /// Reset subpixelators
         
-        //    [_scrollPointPixelator reset];
+//        [_scrollPointPixelator reset];
         [_scrollLinePixelator reset];
         /// Don't need to reset _gesturePixelator, because we don't send gesture events during momentum scroll
         
@@ -640,10 +637,7 @@ static Vector initalMomentumScrollVelocity_FromExitVelocity(Vector exitVelocity)
 
     
     if (phase != kIOHIDEventPhaseUndefined) {
-//    if (momentumPhase == kCGMomentumScrollPhaseNone) {
-            ///  ^ Not sure why we used to check for this instead of phase != kIOHIDEventPhaseUndefined. Remove this if the change didn't break anything.
         
-        ///
         /// Create type 29 subtype 6 event
         ///     (gesture event)
         ///
