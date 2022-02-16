@@ -29,7 +29,10 @@ HIDEvent *CGEventGetIOHIDEvent(CGEventRef cgEvent) {
     }
     
     HIDEvent *hidEvent = CGEventCopyIOHIDEvent(cgEvent);
-    CFRelease((__bridge CFTypeRef)hidEvent);
+    
+    if (hidEvent != nil) {
+        CFRelease((__bridge CFTypeRef)hidEvent);
+    }
     
     return hidEvent;
 }
