@@ -190,7 +190,7 @@ import Foundation
         self.b = exponent
 
         /// Get t for stop speed
-        ///     Since c=0, this is not the true stop time, but instead it's t - c. (I think)
+        ///     Since c=0, this is not the true stop time `t_s`, but instead it's `t_s - c`. (I think)
         let t_s0 = solveT(v: vs, c: 0)
 
         /// Get k
@@ -200,6 +200,17 @@ import Foundation
         /// Get c
         ///     Such that the curve passes through (d=0, t=0)
         self.c = solveC(d: 0, t: 0, k: self.k)
+        
+        /// Get time to stop
+        let timeToStop = t_s0 + c
+        self.timeInterval = Interval(0, timeToStop)
+        
+        /// Get distance to stop
+        /// -> From curve
+        ///     We could also use `d`, but that might not match the curve and time interval exactly due to rounding errs in the previous calculations
+
+        let distanceToStop = solveD(t: timeToStop, c: self.c, k: self.k)
+        self._distanceInterval = Interval(0, distanceToStop)
         
         /// Validate / Debug
         

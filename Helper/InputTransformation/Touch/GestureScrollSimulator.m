@@ -315,6 +315,7 @@ void postGestureScrollEvent_Internal(int64_t dx, int64_t dy, IOHIDEventPhaseBits
          - `dragExp` = 0.7 works well with `dragCoeff` around 70
          - `dragExp` = 0.9  with `dragCoeff` around 10 also feels nice but noticeably different from Trackpad
          -   ^ The above drag coefficients don't work anymore now that we've fixed another bug where scroll point deltas were 10x too small
+         - Edit: I just checked the formulas on Desmos, and I don't get how this can work with 0.8 as the exponent? (But it does??) If the value is < 1.0 that gives a completely different curve that speeds up over time, instead of slowing down.
          */
         
         CGPoint location = origin;

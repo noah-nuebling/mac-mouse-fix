@@ -448,6 +448,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             static double scrollDeltaSummm = 0;
             scrollDeltaSummm += distanceDelta;
             DDLogDebug(@"Delta sum in-animator: %f", scrollDeltaSummm);
+            DDLogDebug(@"Delta in-animator: %f", distanceDelta);
             
 //            static CFTimeInterval lastTs = 0;
 //            CFTimeInterval ts = CACurrentMediaTime();

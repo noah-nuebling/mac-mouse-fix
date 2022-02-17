@@ -318,6 +318,7 @@
 		4F5F3EEF2756DD1200C350C0 /* RemapsOverrider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapsOverrider.h; sourceTree = "<group>"; };
 		4F5F3EF02756EC0400C350C0 /* RemapsOverrider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapsOverrider.m; sourceTree = "<group>"; };
 		4F5F3EF22756F1DB00C350C0 /* ScrollModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollModifiers.swift; sourceTree = "<group>"; };
+		4F616D6027BDCD56004A6A72 /* Scroll Settings Testing.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Scroll Settings Testing.md"; sourceTree = "<group>"; };
 		4F70ECAC267E442D00325A76 /* PointerSpeedExperiments2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerSpeedExperiments2.h; sourceTree = "<group>"; };
 		4F70ECAD267E442D00325A76 /* PointerSpeedExperiments2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerSpeedExperiments2.m; sourceTree = "<group>"; };
 		4F70ECB5267E810900325A76 /* IOUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOUtility.h; sourceTree = "<group>"; };
@@ -1252,6 +1253,7 @@
 				4FF6660E25F2C93A00689B77 /* Config.m */,
 				4FA83A2D268288D900F3A31B /* PointerConfig.swift */,
 				4FD860CB266EF55A004F76C8 /* ScrollConfig.swift */,
+				4F616D6027BDCD56004A6A72 /* Scroll Settings Testing.md */,
 				4FD0A71027B295F600FFCD12 /* OtherConfig.swift */,
 				4FD860DA266EFD64004F76C8 /* ScrollConfigObjC.h */,
 			);

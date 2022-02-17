@@ -100,7 +100,7 @@ import CocoaLumberjackSwift
             
             /// Warn
             DDLogWarn("Coudn't find DragCurve transition point. Ignoring Bezier.")
-            assert(false) /// For debugging
+//            assert(false) /// For debugging
             
             /// Get new curve
             dragCurve = DragCurve(coefficient: dragCoefficient, exponent: dragExponent, distance: targetDistance, stopSpeed: stopSpeed)
