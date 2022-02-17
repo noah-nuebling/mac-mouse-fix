@@ -90,3 +90,13 @@ __Inertial settings__
 - dragExponent: 0.7
 - stopSpeed: 50
     -> Increasing the msPerStep actually makes the time taken for small flicks shorter
+    
+2.3 Xcode momentum 4 (ticks feel awesome)
+- pxPerTickBase: 60
+- pxPerTickEnd: 160
+- BaseCurve: (0,0), (0,0), (1,1), (1,1) 
+- msPerStep: 205
+- dragCoefficient: 40
+- dragExponent: 0.7
+- stopSpeed: 50
+    -> Might be placebo, but I think the 205 msPerStep makes single ticks feel nicer
