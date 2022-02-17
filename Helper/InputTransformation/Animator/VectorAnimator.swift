@@ -94,11 +94,11 @@ import QuartzCore
     @objc var isRunning: Bool {
         var result: Bool = false
         self.animatorQueue.sync {
-            result = self.isRunning_Sync
+            result = self.isRunning_Internal
         }
         return result
     }
-    @objc var isRunning_Sync: Bool {
+    @objc var isRunning_Internal: Bool {
         /// ! Only use this instead of isRunning() if you know you're already executing on self.queue
         /// We always want isRunning to be executed on self.queue. But if we call self.queue.sync() when we're already on self queue, that is an error
         return self.displayLink.isRunning()
@@ -118,14 +118,33 @@ import QuartzCore
     
     /// Vars -  Interface
     ///     Accessing these directly is not thread safe. Only access them from self.animatorQueue
-    //      TODO: Make these private since they are not thread safe
     
     @objc var animationTimeLeft: Double {
-        let result = animationEndTime - lastFrameTime
+        var result: Double = -1
+        self.animatorQueue.sync {
+            result = animationTimeLeft_Internal
+        }
         return result
     }
     @objc var animationValueLeft: Vector {
+        var result = Vector(x:-1, y:-1)
+        animatorQueue.sync {
+            result = animationValueLeft_Internal
+        }
+        return result
+    }
+    
+    @objc var animationValueLeft_Internal: Vector {
+        /// Only call this when you're already on the animatorQueue
+        
         let result = subtractedVectors(animationValueTotal, lastAnimationValue)
+        return result
+    }
+    
+    @objc var animationTimeLeft_Internal: Double {
+        /// Only call this when you're already on the animatorQueue
+        
+        let result = animationEndTime - lastFrameTime
         return result
     }
     
@@ -160,7 +179,7 @@ import QuartzCore
             ///     So we don't give the `params` callback old invalid animationValueLeft.
             ///     I think this is sort of redundant, because we're resetting animationValueLeft in `startWithUntypedCallback_Unsafe()` as well?
             
-            let p: MFAnimatorStartParams = params(self.animationValueLeft, self.isRunning_Sync, self.animationCurve)
+            let p: MFAnimatorStartParams = params(self.animationValueLeft_Internal, self.isRunning_Internal, self.animationCurve)
             
             self.lastAnimationValue = Vector(x: 0, y: 0)
             
@@ -202,7 +221,7 @@ import QuartzCore
         
         /// Get stuff
         
-        let isRunningg = self.isRunning_Sync
+        let isRunningg = self.isRunning_Internal
         
         /// Validate
         
@@ -323,7 +342,7 @@ import QuartzCore
         /// Use this function to synchronously install the onStop callback.
         /// This function should only be called from self.queue
         
-        assert(self.isRunning_Sync)
+        assert(self.isRunning_Internal)
         
         onStop_Internal(callback: callback, doImmediatelyIfNotRunning: false)
     }
@@ -338,7 +357,7 @@ import QuartzCore
     fileprivate func onStop_Internal(callback: @escaping () -> (), doImmediatelyIfNotRunning: Bool) {
         /// Do `callback` once the Animator stops or immediately if the animator isn't running and `waitTillNextStop` is false
         
-        if (doImmediatelyIfNotRunning && !self.isRunning_Sync) {
+        if (doImmediatelyIfNotRunning && !self.isRunning_Internal) {
             callback()
         } else {
             self.onStopCallback = callback
@@ -355,7 +374,7 @@ import QuartzCore
             
             /// Debug
             
-            DDLogDebug("\nAnimation value total: (\(animationValueTotal.x), \(animationValueTotal.y)), left: (\(animationValueLeft.x), \(animationValueLeft.y))")
+            DDLogDebug("\nAnimation value total: (\(animationValueTotal.x), \(animationValueTotal.y)), left: (\(animationValueLeft_Internal.x), \(animationValueLeft_Internal.y))")
             
             /// Guard stopped
             

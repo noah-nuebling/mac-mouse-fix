@@ -303,20 +303,8 @@ void postGestureScrollEvent_Internal(int64_t dx, int64_t dy, IOHIDEventPhaseBits
         
         double stopSpeed = 1.0;
         
-        /// 1. Similar to trackpad, but to fast fall off on low speeds vs medium speeds
-        ///     Can't really deviate from the default curve thought because certain apps impement their own momentumScroll and we should stay consistent with those
-        ///     Maybe we can use a Bezier for the initialMomentumSpeed and make it feel better that way.
-        double dragCoeff = 30;
-        double dragExp = 0.7;
-        
-        /**
-         For `dragExp`, a value between 0.7 and 0.8 seems to be the sweet spot to get nice Apple Trackpad -like deceleration
-         - `dragExp` = 0.8 works well with `dragCoeff` around 30 (in the old implementation it used to be 8, so we probably messed something up in the new implementation)
-         - `dragExp` = 0.7 works well with `dragCoeff` around 70
-         - `dragExp` = 0.9  with `dragCoeff` around 10 also feels nice but noticeably different from Trackpad
-         -   ^ The above drag coefficients don't work anymore now that we've fixed another bug where scroll point deltas were 10x too small
-         - Edit: I just checked the formulas on Desmos, and I don't get how this can work with 0.8 as the exponent? (But it does??) If the value is < 1.0 that gives a completely different curve that speeds up over time, instead of slowing down.
-         */
+        double dragCoeff = ScrollConfig.currentConfig.dragCoefficient;
+        double dragExp = ScrollConfig.currentConfig.dragExponent;
         
         CGPoint location = origin;
         
@@ -333,6 +321,10 @@ void postGestureScrollEvent_Internal(int64_t dx, int64_t dy, IOHIDEventPhaseBits
 }
 
 #pragma mark - Momentum scroll
+
++ (PixelatedVectorAnimator *)momentumAnimator {
+    return _momentumAnimator;
+}
 
 static void (^_momentumScrollCallback)(void);
 
@@ -566,7 +558,7 @@ static Vector initalMomentumScrollVelocity_FromExitVelocity(Vector exitVelocity)
     });
 }
 
-#pragma mark - Actually Synthesize and post events
+#pragma mark - Post CGEvents
 
 
 /// Post scroll events that behave as if they are coming from an Apple Trackpad or Magic Mouse.

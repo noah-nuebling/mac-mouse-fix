@@ -60,7 +60,7 @@ class PixelatedVectorAnimator: VectorAnimator {
             
             /// Get startParams
             
-            let p = params(self.animationValueLeft, self.isRunning_Sync, self.animationCurve)
+            let p = params(self.animationValueLeft_Internal, self.isRunning_Internal, self.animationCurve)
             
             /// Reset animationValueLeft
             self.lastAnimationValue = Vector(x: 0, y: 0)
@@ -79,7 +79,7 @@ class PixelatedVectorAnimator: VectorAnimator {
             
             /// Debug
             
-            let deltaLeftBefore = self.animationValueLeft;
+            let deltaLeftBefore = self.animationValueLeft_Internal;
             
             /// Start animator
             
@@ -87,7 +87,7 @@ class PixelatedVectorAnimator: VectorAnimator {
             
             /// Debug
             
-            DDLogDebug("\nStarted PixelatedAnimator with phase: \(self.animationPhase.rawValue), lastPhase: \(self.lastAnimationPhase.rawValue), deltaLeftDiff: \(subtractedVectors(self.animationValueLeft, deltaLeftBefore)), oldDeltaLeft: \(deltaLeftBefore), newDeltaLeft: \(self.animationValueLeft)")
+            DDLogDebug("\nStarted PixelatedAnimator with phase: \(self.animationPhase.rawValue), lastPhase: \(self.lastAnimationPhase.rawValue), deltaLeftDiff: \(subtractedVectors(self.animationValueLeft_Internal, deltaLeftBefore)), oldDeltaLeft: \(deltaLeftBefore), newDeltaLeft: \(self.animationValueLeft_Internal)")
             
         }
     }
@@ -109,11 +109,11 @@ class PixelatedVectorAnimator: VectorAnimator {
         
         /// Update phase to `end` if all valueLeft won't lead to another non-zero delta
         
-//        let currentAnimationValueLeft = subtractedVectors(animationValueLeft, animationValueDelta);
+//        let currentAnimationValueLeft = subtractedVectors(animationValueLeft_Internal, animationValueDelta);
         /// ^ We don't use self.animationValueLeft directly, because it's a computed property derived from self.lastAnimationValue which is only updated at the end of displayLinkCallback() - after it calls subclassHook() (which is this function).
         ///     Edit: Now that the end event has zero deltas this is unnecessary
         
-        let currentAnimationValueLeft = animationValueLeft
+        let currentAnimationValueLeft = animationValueLeft_Internal
         let intAnimationValueLeft = subPixelator.peekIntVector(withDouble: currentAnimationValueLeft);
         if isZeroVector(intAnimationValueLeft) {
             self.animationPhase = kMFAnimationPhaseEnd; /// After this we know the delta will be zero, so most of the work we do below is unnecessary

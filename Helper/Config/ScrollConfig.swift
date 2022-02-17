@@ -164,10 +164,22 @@ import CocoaLumberjackSwift
     
     @objc lazy var dragExponent = 0.8 /* smooth["frictionDepth"] as! Double */
     
+    @objc let inertialDragCoefficient = 30
+    @objc let inertialDragExponent = 0.7
+    /**
+        ^
+        These values make the DragCurve behave like Apple's  inertial trackpad scrolling.
+            We need to use these whenever we're sending momentumScroll events, because some apps will ignore the momentumscroll deltas and use their own algorithm (e.g. Xcode). The deltas we generate need to match what those apps are doing for consistent behaviour.
+    
+        I just checked the formulas on Desmos, and I don't get how this can work with 0.8 as the exponent? (But it does??) If the value is `< 1.0` that gives a completely different curve that speeds up over time, instead of slowing down.
+    */
+    
     @objc lazy var stopSpeed = 50.0
     /// ^ Used to construct Hybrid curve in Scroll.m
     ///     This is the speed (In px/s ?) at which the DragCurve part of the Hybrid curve stops scrolling
     ///     I feel like this maybe scales up and down with scroll speed as it currently is? (Shouldn't do that)
+    
+    @objc lazy var inertialScroll = true
     
     // MARK: Acceleration
     

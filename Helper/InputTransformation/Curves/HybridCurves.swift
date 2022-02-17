@@ -296,7 +296,7 @@ class HybridCurve: NSObject, AnimationCurve {
     
     /// BaseCurve
     
-    fileprivate var baseCurve: AnimationCurve { get{fatalError()} set{fatalError()} }
+    @objc var baseCurve: AnimationCurve { get{fatalError()} set{fatalError()} }
     
     @objc var baseTimeInterval: Interval = .unitInterval
     @objc var baseDistanceInterval: Interval = .unitInterval
@@ -315,7 +315,7 @@ class HybridCurve: NSObject, AnimationCurve {
         guard let c = dragCurve else { return 0 }
         return c.timeInterval.length
     }
-    fileprivate var dragValueRange: Double {
+    @objc var dragValueRange: Double {
         guard let c = dragCurve else { return 0 }
         return c.distanceInterval.length
     }
