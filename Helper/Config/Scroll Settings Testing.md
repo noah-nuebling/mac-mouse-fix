@@ -46,4 +46,47 @@ __Inertial settings__
 - dragCoefficient: 30
 - dragExponent: 0.8
 - stopSpeed: 50
-- > This is really good!! 30 and 0.8 are the exact parameters we use in GestureScrollSimulator to approximate the curve of Apples Trackpad driver. This feels great!! Since it's the same curve, we can even send these events as MomentumScroll events which will make the overscroll feels amazing! I'll almost certainly go with this for the Inertial scrolling.
+    - This is really good!! 30 and 0.8 are the exact parameters we use in GestureScrollSimulator to approximate the curve of Apples Trackpad driver. This feels great!! Since it's the same curve, we can even send these events as MomentumScroll events which will make the overscroll feels amazing! I'll almost certainly go with this for the Inertial scrolling.
+
+2.2 Actual trackpad-style (too floaty)
+- pxPerTickBase: 60
+- pxPerTickEnd: 160
+- BaseCurve: (0,0), (0,0), (1,1), (1,1) 
+- msPerStep: 200
+- dragCoefficient: 30
+- dragExponent: 0.7
+- stopSpeed: 50
+    - Edit: I just found the real GestureScrollSimulator values are 30 and 0.7 (not 0.8). That's a bummer because 0.7 is too floaty imo. 
+
+2.2 Xcode momentum 1
+- pxPerTickBase: 60
+- pxPerTickEnd: 160
+- BaseCurve: (0,0), (0,0), (1,1), (1,1) 
+- msPerStep: 200
+- dragCoefficient: 27
+- dragExponent: 0.8
+- stopSpeed: 50
+    - Edit: We don't actually need to emulate the real trackpad output. Our momentumScroll phase just needs to not be noticably shorter than the Xcode generated momentum scroll. Because if it is, then the Xcode momentumScroll will get cut short (And many other apps have this problem, too). That's our only constraint I think. Since the Xcode momentum scroll is shorter and snappier than the real momentum scroll, we're in luck! We don't have to use the floaty 2.2 settings.
+    -> These settings feel pretty similar to the Xcode momentum scroll to me. 
+    -> We'll have to test these values once we have the Hybrid curve momentum scroll algorithm, to know if they work or if they cut short / differ too much from the the Xcode animation. 
+    -> (Stop speed can differ from Xcode animation I think since there we want to cut the animation short.)
+    -> Actually the time till it slows down at high speeds is much shorter than Xcode at 0.8... Might not work after all
+
+2.2 Xcode momentum 2 (more accurate to Xcode)
+- pxPerTickBase: 60
+- pxPerTickEnd: 160
+- BaseCurve: (0,0), (0,0), (1,1), (1,1) 
+- msPerStep: 200
+- dragCoefficient: 40
+- dragExponent: 0.7
+- stopSpeed: 50
+
+2.3 Xcode momentum 3 (more snappy)
+- pxPerTickBase: 60
+- pxPerTickEnd: 160
+- BaseCurve: (0,0), (0,0), (1,1), (1,1) 
+- msPerStep: 220
+- dragCoefficient: 40
+- dragExponent: 0.7
+- stopSpeed: 50
+    -> Increasing the msPerStep actually makes the time taken for small flicks shorter

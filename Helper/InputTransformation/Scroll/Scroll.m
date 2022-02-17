@@ -52,7 +52,6 @@ static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this
 
 static MFScrollModificationResult _modifications;
 static ScrollConfig *_scrollConfig;
-static double _momentumPrediction; /// How many px we predict the momentumAnimator in GestureScrollSimulator.m will scroll
 
 #pragma mark - Public functions
 
@@ -366,13 +365,6 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             } else if ([animationCurve isKindOfClass:SimpleBezierHybridCurve.class]) {
                 SimpleBezierHybridCurve *c = (SimpleBezierHybridCurve *)animationCurve;
                 pxLeftToScroll = [c baseDistanceLeftWithDistanceLeft: distanceLeft]; /// If we feed valueLeft instead of baseValueLeft back into the animator, it will lead to unwanted acceleration
-            } else if (_scrollConfig.inertialScroll) {
-//                Vector momentumLeftVec = GestureScrollSimulator.momentumAnimator.animationValueLeft;
-//                double momentumLeft = fabs(magnitudeOfVector(momentumLeftVec));
-                pxLeftToScroll = distanceLeft + _momentumPrediction;
-                
-                DDLogDebug(@"distanceLeft: %f, momentumPrediction: %f", distanceLeft, _momentumPrediction);
-                
             } else {
                 pxLeftToScroll = distanceLeft;
             }
@@ -393,36 +385,6 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 p[@"vector"] = nsValueFromVector(deltaVec);
                 p[@"duration"] = @(baseTimeRange);
                 p[@"curve"] = ScrollConfig.linearCurve;
-                
-            } else if (_scrollConfig.inertialScroll) {
-                
-                /// New hybrid curve
-                BezierHybridCurve *c = [[BezierHybridCurve alloc]
-                                        initWithBaseCurve:_scrollConfig.baseCurve
-                                        minDuration:baseTimeRange
-                                        distance:(pxToScrollForThisTick + pxLeftToScroll)
-                                        dragCoefficient:_scrollConfig.inertialDragCoefficient
-                                        dragExponent:_scrollConfig.inertialDragExponent
-                                        stopSpeed:_scrollConfig.stopSpeed
-                                        distanceEpsilon:0.2];
-                
-                /// Extract baseCurve
-                ///     We only pass the baseCurve to the animator, because automatic momentumScroll will take care of the DragCurve
-                Bezier *baseCurve = c.baseCurve;
-                double baseDistance = c.baseDistance;
-                double baseDuration = c.baseDuration;
-                
-                /// Store momentumPrediction
-                _momentumPrediction = c.dragValueRange;
-                
-                /// Set params to animator
-                
-                Vector deltaVec = vectorFromDeltaAndDirection(baseDistance, scrollDirection);
-                
-                p[@"duration"] = @(baseDuration);
-                p[@"vector"] = nsValueFromVector(deltaVec);
-                p[@"curve"] = baseCurve;
-                
                 
             } else {
                 
@@ -618,11 +580,8 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         
         
         if (_scrollConfig.inertialScroll) {
-            /// Reset _momentumPrediction after starting momentumScroll
-            ///     Is there race conditions on this?
-            if (eventPhase == kIOHIDEventPhaseEnded) {
-                _momentumPrediction = 0;
-            }
+
+            
             
         } else {
             /// Suppress momentumScroll if inertialScroll is not active
