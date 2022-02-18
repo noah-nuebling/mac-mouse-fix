@@ -247,6 +247,8 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         
         _scrollConfig = [ScrollConfig currentConfig];
         
+#pragma mark Override config
+        
         /// Override scrollConfig based on modifications
         
         if (_modifications.inputModification == kMFScrollInputModificationQuick) {
@@ -272,6 +274,10 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             
             /// Override acceleration curve
             _scrollConfig.accelerationCurve = _scrollConfig.preciseAccelerationCurve;
+            
+            /// Override stopSpeed
+            _scrollConfig.stopSpeed = 1.0;
+            
         } else {
             
             /// Set default acceleration curve
@@ -284,11 +290,23 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         if (_modifications.effectModification == kMFScrollEffectModificationFourFingerPinch
             || _modifications.effectModification == kMFScrollEffectModificationThreeFingerSwipeHorizontal
             || _modifications.effectModification == kMFScrollEffectModificationZoom
-            || _modifications.effectModification == kMFScrollEffectModificationRotate
-            || _modifications.inputModification == kMFScrollInputModificationQuick) {
+            || _modifications.effectModification == kMFScrollEffectModificationRotate) {
             
             _scrollConfig.smoothEnabled = YES;
             /// ^ These modification effects simulate gestures. They need eventPhases to work properly. So they only work when when driven by the animator.
+        }
+        if (_modifications.inputModification == kMFScrollInputModificationQuick) {
+            _scrollConfig.sendMomentumScrolls = YES;
+        } else if (_modifications.inputModification == kMFScrollInputModificationPrecise) {
+            _scrollConfig.sendMomentumScrolls = NO;
+        }
+        
+        if (_scrollConfig.sendMomentumScrolls) {
+            
+            _scrollConfig.msPerStep = _scrollConfig.momentumMsPerStep;
+            
+            /// TODO: Move the other 'momentum' settings overrides from below up here
+            
         }
         
     }
@@ -371,14 +389,10 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             }
             
             if (_modifications.effectModification == kMFScrollEffectModificationFourFingerPinch
-                || _modifications.effectModification == kMFScrollEffectModificationThreeFingerSwipeHorizontal
-                || _modifications.inputModification == kMFScrollInputModificationQuick) {
+                || _modifications.effectModification == kMFScrollEffectModificationThreeFingerSwipeHorizontal) {
 
                 /// Use linear curve for 4 finger pinch and 3 finger swipe
                 ///     because it feels much smoother
-                /// Using linear for horizontal scroll
-                ///     feels smoother for navigating between pages
-                ///         We could not suppress natural momentum scrolling on horizontal scroll events to balance out the linear curve? But then we should probably also decrease the animationDuration... Edit: I tried it and it sucks for normal scrolling.
                 
                 double delta = pxToScrollForThisTick + pxLeftToScroll;
                 Vector deltaVec = vectorFromDeltaAndDirection(delta, scrollDirection);
@@ -389,23 +403,31 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 
             } else {
                 
+                /// Get HybridCurve params
+                
+                double dragCoefficient;
+                double dragExponent;
+                double stopSpeed;
+                
+                if (_scrollConfig.sendMomentumScrolls) { /// Todo: Do this settings overrid further up
+                    dragCoefficient = _scrollConfig.momentumDragCoefficient;
+                    dragExponent = _scrollConfig.momentumDragExponent;
+                    stopSpeed = _scrollConfig.momentumStopSpeed;
+                } else {
+                    dragCoefficient = _scrollConfig.dragCoefficient;
+                    dragExponent = _scrollConfig.dragExponent;
+                    stopSpeed = _scrollConfig.stopSpeed;
+                }
+                
                 /// New curve
                 BezierHybridCurve *c = [[BezierHybridCurve alloc]
                                         initWithBaseCurve:_scrollConfig.baseCurve
                                         minDuration:baseTimeRange
                                         distance:(pxToScrollForThisTick + pxLeftToScroll)
-                                        dragCoefficient:_scrollConfig.dragCoefficient
-                                        dragExponent:_scrollConfig.dragExponent
-                                        stopSpeed:_scrollConfig.stopSpeed
+                                        dragCoefficient:dragCoefficient
+                                        dragExponent:dragExponent
+                                        stopSpeed:stopSpeed
                                         distanceEpsilon:0.2];
-                
-                /// New curve
-//                LineHybridCurve *c = [[LineHybridCurve alloc]
-//                                        initWithMinDuration:baseTimeRange
-//                                        distance:(pxToScrollForThisTick + pxLeftToScroll)
-//                                        dragCoefficient:_scrollConfig.dragCoefficient
-//                                        dragExponent:_scrollConfig.dragExponent
-//                                        stopSpeed:_scrollConfig.stopSpeed];
                 
                 /// Get values for animator from hybrid curve
                 

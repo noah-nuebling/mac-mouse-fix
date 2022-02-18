@@ -132,7 +132,7 @@ import CocoaLumberjackSwift
     /// ^ 120 Works well without implicit hybrid curve acceleration
     ///     100 Works well with slight hybrid curve acceleration
     
-    @objc lazy var msPerStep = 205 /* smooth["msPerStep"] as! Int */
+    @objc lazy var msPerStep = 180 /* smooth["msPerStep"] as! Int */
     
     @objc lazy var baseCurve: Bezier = { () -> Bezier in
         /// Base curve used to construct a Hybrid AnimationCurve in Scroll.m. This curve is applied before switching to a DragCurve to simulate physically accurate deceleration
@@ -151,32 +151,27 @@ import CocoaLumberjackSwift
         return Bezier(controlPoints: controlPoints, defaultEpsilon: 0.001) /// The default defaultEpsilon 0.08 makes the animations choppy
     }()
     
-    @objc lazy var dragExponent = 0.7 /* smooth["frictionDepth"] as! Double */
-    @objc lazy var dragCoefficient = 40 /* smooth["friction"] as! Double */
-    /// ^       2.3: Value from MMF 1. Not sure why so much lower than the new values
-    ///     20: Too floaty with dragExponent 1
-    ///     40: Works well with dragExponent 1
-    ///     60: Works well with dragExponent 0.7
-    ///     1000: Stop immediately
-
-    /**
-        ^
-        These values make the DragCurve behave like Apple's  inertial trackpad scrolling.
-            We need to use these whenever we're sending momentumScroll events, because some apps will ignore the momentumscroll deltas and use their own algorithm (e.g. Xcode). The deltas we generate need to match what those apps are doing for consistent behaviour.
+    @objc lazy var stopSpeed = 50.0
+    @objc lazy var dragExponent = 1.0 /* smooth["frictionDepth"] as! Double */
+    @objc lazy var dragCoefficient = 20 /* smooth["friction"] as! Double */
+    /// ^ Defines the Drag subcurve of the default Hybrid curve used for scrollwheel scrolling in Scroll.m. (When we're not sending momentumScrolls)
     
-        I just checked the formulas on Desmos, and I don't get how this can work with 0.8 as the exponent? (But it does??) If the value is `< 1.0` that gives a completely different curve that speeds up over time, instead of slowing down.
-    */
+    @objc lazy var sendMomentumScrolls = false
     
-    @objc lazy var stopSpeed = 50
-    /// ^ Used to construct Hybrid curve in Scroll.m
-    ///     This is the speed (In px/s ?) at which the DragCurve part of the Hybrid curve stops scrolling
-    ///     I feel like this maybe scales up and down with scroll speed as it currently is? (Shouldn't do that)
-    
-    @objc lazy var sendMomentumScrolls = true
-    
-    
+    @objc let momentumStopSpeed = 50
     @objc let momentumDragExponent = 0.7
     @objc let momentumDragCoefficient = 40
+    @objc let momentumMsPerStep = 205
+    /// ^ Snappiest curve that can be used to send momentumScrolls.
+    ///     If you make it snappier then it will cut off the build-in momentumScroll in apps like Xcode
+    ///     Used in Scroll.m if sendMomentumScrolls == true
+    
+    @objc let trackpadStopSpeed = 1.0
+    @objc let trackpadDragExponent = 0.7
+    @objc let trackpadDragCoefficient = 30
+    /// ^ Emulates the trackpad as closely as possible. Use in the default momentumScroll in GestureSimulator.m
+    ///
+    /// I just checked the formulas on Desmos, and I don't get how this can work with 0.8 as the exponent? (But it does??) If the value is `< 1.0` that gives a completely different curve that speeds up over time, instead of slowing down.
     
     // MARK: Acceleration
     

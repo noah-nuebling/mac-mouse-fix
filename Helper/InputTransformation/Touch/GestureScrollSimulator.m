@@ -196,9 +196,11 @@ void postGestureScrollEvent_Internal(int64_t dx, int64_t dy, IOHIDEventPhaseBits
             
             /// Get momentum scroll params
             
-            double stopSpeed = 1.0;
-            double dragCoeff = ScrollConfig.currentConfig.dragCoefficient;
-            double dragExp = ScrollConfig.currentConfig.dragExponent;
+            ScrollConfig *config = ScrollConfig.currentConfig;
+            
+            double stopSpeed = config.trackpadStopSpeed;
+            double dragCoeff = config.trackpadDragCoefficient;
+            double dragExp = config.trackpadDragExponent;
             
             /// Do start momentum scroll
             
