@@ -251,39 +251,6 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         
         /// Override scrollConfig based on modifications
         
-        if (_modifications.inputModification == kMFScrollInputModificationQuick) {
-            
-            /// Make fast scroll easy to trigger
-            _scrollConfig.consecutiveScrollSwipeMaxInterval *= 1.2;
-            _scrollConfig.consecutiveScrollTickIntervalMax *= 1.2;
-            
-            /// Amp up fast scroll
-            _scrollConfig.fastScrollThreshold_inSwipes = 2;
-            _scrollConfig.fastScrollExponentialBase = M_E /*1.5*/;
-            _scrollConfig.fastScrollScale = 0.7;
-            
-            /// Override acceleration curve
-            _scrollConfig.accelerationCurve = _scrollConfig.quickAccelerationCurve;
-            
-        } else if (_modifications.inputModification == kMFScrollInputModificationPrecise) {
-            
-            /// Turn off fast scroll
-            _scrollConfig.fastScrollThreshold_inSwipes = 69; /// This is the haha sex number
-            _scrollConfig.fastScrollExponentialBase = 1.0;
-            _scrollConfig.fastScrollScale = 1.0;
-            
-            /// Override acceleration curve
-            _scrollConfig.accelerationCurve = _scrollConfig.preciseAccelerationCurve;
-            
-            /// Override stopSpeed
-            _scrollConfig.stopSpeed = 1.0;
-            
-        } else {
-            
-            /// Set default acceleration curve
-            _scrollConfig.accelerationCurve = _scrollConfig.standardAccelerationCurve;
-        }
-        
         if (_modifications.effectModification == kMFScrollEffectModificationCommandTab) {
             _scrollConfig.smoothEnabled = NO;
         }
@@ -304,9 +271,53 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         if (_scrollConfig.sendMomentumScrolls) {
             
             _scrollConfig.msPerStep = _scrollConfig.momentumMsPerStep;
+            _scrollConfig.dragCoefficient = _scrollConfig.momentumDragCoefficient;
+            _scrollConfig.dragExponent = _scrollConfig.momentumDragExponent;
+            _scrollConfig.stopSpeed = _scrollConfig.momentumStopSpeed;
             
-            /// TODO: Move the other 'momentum' settings overrides from below up here
+        }
+        if (_modifications.inputModification == kMFScrollInputModificationQuick) {
             
+            /// Make fast scroll easy to trigger
+            _scrollConfig.consecutiveScrollSwipeMaxInterval *= 1.2;
+            _scrollConfig.consecutiveScrollTickIntervalMax *= 1.2;
+            
+            /// Amp up fast scroll
+            _scrollConfig.fastScrollThreshold_inSwipes = 2;
+            _scrollConfig.fastScrollExponentialBase = M_E /*1.5*/;
+            _scrollConfig.fastScrollScale = 0.7;
+            
+            /// Override acceleration curve
+            _scrollConfig.accelerationCurve = _scrollConfig.quickAccelerationCurve;
+            
+            /// Override dragCurve
+//            _scrollConfig.dragExponent = _scrollConfig.trackpadDragExponent;
+//            _scrollConfig.dragCoefficient = _scrollConfig.trackpadDragCoefficient;
+//            _scrollConfig.stopSpeed = _scrollConfig.trackpadStopSpeed;
+            
+            _scrollConfig.dragExponent = _scrollConfig.momentumDragExponent;
+            _scrollConfig.dragCoefficient = _scrollConfig.momentumDragCoefficient;
+            _scrollConfig.stopSpeed = _scrollConfig.momentumStopSpeed;
+
+            _scrollConfig.msPerStep = 220;
+            
+        } else if (_modifications.inputModification == kMFScrollInputModificationPrecise) {
+            
+            /// Turn off fast scroll
+            _scrollConfig.fastScrollThreshold_inSwipes = 69; /// This is the haha sex number
+            _scrollConfig.fastScrollExponentialBase = 1.0;
+            _scrollConfig.fastScrollScale = 1.0;
+            
+            /// Override acceleration curve
+            _scrollConfig.accelerationCurve = _scrollConfig.preciseAccelerationCurve;
+            
+            /// Override stopSpeed
+            _scrollConfig.stopSpeed = 1.0;
+            
+        } else {
+            
+            /// Set default acceleration curve
+            _scrollConfig.accelerationCurve = _scrollConfig.standardAccelerationCurve;
         }
         
     }
@@ -403,30 +414,14 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 
             } else {
                 
-                /// Get HybridCurve params
-                
-                double dragCoefficient;
-                double dragExponent;
-                double stopSpeed;
-                
-                if (_scrollConfig.sendMomentumScrolls) { /// Todo: Do this settings overrid further up
-                    dragCoefficient = _scrollConfig.momentumDragCoefficient;
-                    dragExponent = _scrollConfig.momentumDragExponent;
-                    stopSpeed = _scrollConfig.momentumStopSpeed;
-                } else {
-                    dragCoefficient = _scrollConfig.dragCoefficient;
-                    dragExponent = _scrollConfig.dragExponent;
-                    stopSpeed = _scrollConfig.stopSpeed;
-                }
-                
                 /// New curve
                 BezierHybridCurve *c = [[BezierHybridCurve alloc]
                                         initWithBaseCurve:_scrollConfig.baseCurve
                                         minDuration:baseTimeRange
                                         distance:(pxToScrollForThisTick + pxLeftToScroll)
-                                        dragCoefficient:dragCoefficient
-                                        dragExponent:dragExponent
-                                        stopSpeed:stopSpeed
+                                        dragCoefficient:_scrollConfig.dragCoefficient
+                                        dragExponent:_scrollConfig.dragExponent
+                                        stopSpeed:_scrollConfig.stopSpeed
                                         distanceEpsilon:0.2];
                 
                 /// Get values for animator from hybrid curve

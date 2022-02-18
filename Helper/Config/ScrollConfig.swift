@@ -156,7 +156,7 @@ import CocoaLumberjackSwift
     @objc lazy var dragCoefficient = 20 /* smooth["friction"] as! Double */
     /// ^ Defines the Drag subcurve of the default Hybrid curve used for scrollwheel scrolling in Scroll.m. (When we're not sending momentumScrolls)
     
-    @objc lazy var sendMomentumScrolls = false
+    @objc lazy var sendMomentumScrolls = true
     
     @objc let momentumStopSpeed = 50
     @objc let momentumDragExponent = 0.7
@@ -215,8 +215,8 @@ import CocoaLumberjackSwift
                                                  accelerationHump: -0.2)
     }
     @objc lazy var quickAccelerationCurve = { () -> AccelerationBezier in
-        ScrollConfig.accelerationCurveFromParams(pxPerTickBase: 50, /// 40 and 220 also works well
-                                                 pxPerTickEnd: 200,
+        ScrollConfig.accelerationCurveFromParams(pxPerTickBase: 80,
+                                                 pxPerTickEnd: 400,
                                                  consecutiveScrollTickIntervalMax: self.consecutiveScrollTickIntervalMax,
                                                  consecutiveScrollTickInterval_AccelerationEnd: self.consecutiveScrollTickInterval_AccelerationEnd,
                                                  accelerationHump: -0.2)
