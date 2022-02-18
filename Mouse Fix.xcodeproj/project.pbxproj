@@ -273,6 +273,7 @@
 		4F15C0C22666781F000337FF /* Helper.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Helper.xcconfig; sourceTree = "<group>"; };
 		4F1793A825EEC90900E8309B /* ZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ZipArchive.framework; sourceTree = "<group>"; };
 		4F18A85627BF22F900A5703B /* CurveDeclarations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CurveDeclarations.h; sourceTree = "<group>"; };
+		4F18A85727BF6E0200A5703B /* IOHIDEvent-Reconstructed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IOHIDEvent-Reconstructed.h"; sourceTree = "<group>"; };
 		4F1AFE962670EBA900ECA424 /* DragCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragCurve.swift; sourceTree = "<group>"; };
 		4F1B83042606E68300AEAF37 /* ButtonLandscapeAssessor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonLandscapeAssessor.h; sourceTree = "<group>"; };
 		4F1B83052606E68300AEAF37 /* ButtonLandscapeAssessor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ButtonLandscapeAssessor.m; sourceTree = "<group>"; };
@@ -785,6 +786,7 @@
 				4FD66E0727BB553800F67559 /* CGEventHIDEventBridge.m */,
 				4F70ECB5267E810900325A76 /* IOUtility.h */,
 				4F70ECB6267E810900325A76 /* IOUtility.m */,
+				4F18A85727BF6E0200A5703B /* IOHIDEvent-Reconstructed.h */,
 				4FD66E0C27BBB55200F67559 /* External */,
 			);
 			path = IOKit;

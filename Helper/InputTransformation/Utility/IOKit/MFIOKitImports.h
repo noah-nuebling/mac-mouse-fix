@@ -17,5 +17,6 @@
 
 #import <IOKit/hid/IOHIDKeys.h>
 #import "CGEventHIDEventBridge.h"
+#include "IOHIDEvent-Reconstructed.h"
 
 #endif /* HIDEvent_Imports_h */

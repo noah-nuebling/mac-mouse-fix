@@ -47,9 +47,9 @@ import CocoaLumberjackSwift
     }()
     
     @objc static var stringToEventFlagMask: NSDictionary = ["command" : CGEventFlags.maskCommand,
-                                                     "control" : CGEventFlags.maskControl,
-                                                     "option" : CGEventFlags.maskAlternate,
-                                                     "shift" : CGEventFlags.maskShift]
+                                                            "control" : CGEventFlags.maskControl,
+                                                            "option" : CGEventFlags.maskAlternate,
+                                                            "shift" : CGEventFlags.maskShift]
     
     // MARK: General
     
@@ -175,8 +175,8 @@ import CocoaLumberjackSwift
     @objc lazy var sendMomentumScrolls = true
     
     
-    @objc let inertialDragExponent = 0.7
-    @objc let inertialDragCoefficient = 30
+    @objc let momentumDragExponent = 0.7
+    @objc let momentumDragCoefficient = 40
     
     // MARK: Acceleration
     

@@ -22,7 +22,15 @@ IOHIDDeviceRef HIDEventGetSendingDevice(HIDEvent *hidEvent) {
     ///     \note Do we need to reset the cache at certain points?
     ///     \note Now that we use the cache we should be able to use the version that iterates over all parents instead of only checking the second parent, without it being too slow.
     
-    uint64_t senderID = hidEvent.senderID;
+    
+    uint64_t senderID;
+    
+    if ([hidEvent respondsToSelector:@selector(senderID)]) {
+        senderID = hidEvent.senderID;
+    } else {
+        senderID = IOHIDEventGetSenderID((__bridge IOHIDEventRef)hidEvent);
+    }
+    /// ^ Sometimes `- senderID` gives an unrecognized selector error. Only when I'm not starting the app via the debugger though. Weird. IOHIDEventGetSenderID() works in those cases. Even though `- senderID` just calls it. Really weird.
     
     if (_hidDeviceCache == nil) {
         _hidDeviceCache = [NSMutableDictionary dictionary];
@@ -33,7 +41,7 @@ IOHIDDeviceRef HIDEventGetSendingDevice(HIDEvent *hidEvent) {
     if (iohidDeviceFromCache != nil) {
         
         CFIndex retainCount = CFGetRetainCount((__bridge CFTypeRef)(iohidDeviceFromCache));
-        DDLogError(@"cache retainCount: %ld", (long)retainCount);
+        DDLogDebug(@"cache retainCount: %ld", (long)retainCount);
         
         return (__bridge IOHIDDeviceRef)iohidDeviceFromCache;
     }
@@ -48,8 +56,12 @@ IOHIDDeviceRef HIDEventGetSendingDevice(HIDEvent *hidEvent) {
     
     IOHIDDeviceRef iohidDevice = IOHIDDeviceCreate(kCFAllocatorDefault, parent2);
     
-    CFRetain(iohidDevice);
-    _hidDeviceCache[@(senderID)] = (__bridge id _Nullable)(iohidDevice);
+    assert(iohidDevice != NULL);
+    
+    if (iohidDevice != NULL) {
+        CFRetain(iohidDevice);
+        _hidDeviceCache[@(senderID)] = (__bridge id _Nullable)(iohidDevice);
+    }
     
     IOObjectRelease(parent1);
     IOObjectRelease(parent2);
