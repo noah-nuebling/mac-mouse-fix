@@ -219,18 +219,21 @@ void postGestureScrollEvent_Internal(int64_t dx, int64_t dy, IOHIDEventPhaseBits
                                    deltaY:(double)dy
                             momentumPhase:(CGMomentumScrollPhase)momentumPhase {
     
-    CGPoint loc = getPointerLocation();
-    
-    Vector zeroVector = (Vector){ .x = 0, .y = 0 };
-    Vector deltaVec = (Vector){ .x = dx, .y = dy };
-    Vector deltaVecLine = (Vector){ .x = dx/10, .y = dy/10 }; /// TODO: Subpixelate this
-    
-    [GestureScrollSimulator postGestureScrollEventWithGestureVector:zeroVector
-                                                   scrollVectorLine:deltaVecLine
-                                                  scrollVectorPoint:deltaVec
-                                                              phase:kIOHIDEventPhaseUndefined
-                                                      momentumPhase:momentumPhase
-                                                           location:loc];
+    dispatch_async(_queue, ^{
+        
+        CGPoint loc = getPointerLocation();
+        
+        Vector zeroVector = (Vector){ .x = 0, .y = 0 };
+        Vector deltaVec = (Vector){ .x = dx, .y = dy };
+        Vector deltaVecLine = (Vector){ .x = dx/10, .y = dy/10 }; /// TODO: Subpixelate this
+        
+        [GestureScrollSimulator postGestureScrollEventWithGestureVector:zeroVector
+                                                       scrollVectorLine:deltaVecLine
+                                                      scrollVectorPoint:deltaVec
+                                                                  phase:kIOHIDEventPhaseUndefined
+                                                          momentumPhase:momentumPhase
+                                                               location:loc];
+    });
 }
 
 #pragma mark - Auto momentum scroll
@@ -499,7 +502,7 @@ static Vector initalMomentumScrollVelocity_FromExitVelocity(Vector exitVelocity)
     double timeSinceLast = ts - tsLast;
     tsLast = ts;
     
-//    DDLogDebug(@"\nPosting: gesture: (%f, %f) \t\t scroll: (%f, %f) \t scrollPt: (%f, %f) \t phases: (%d, %d) \t timeSinceLast: %f \t loc: (%f, %f)\n", vecGesture.x, vecGesture.y, vecScroll.x, vecScroll.y, vecScrollPoint.x, vecScrollPoint.y, phase, momentumPhase, timeSinceLast*1000, loc.x, loc.y);
+    DDLogDebug(@"\nPosting: gesture: (%f, %f) \t\t scroll: (%f, %f) \t scrollPt: (%f, %f) \t phases: (%d, %d) \t timeSinceLast: %f \t loc: (%f, %f)\n", vecGesture.x, vecGesture.y, vecScroll.x, vecScroll.y, vecScrollPoint.x, vecScrollPoint.y, phase, momentumPhase, timeSinceLast*1000, loc.x, loc.y);
     
     assert((phase == kIOHIDEventPhaseUndefined || momentumPhase == kCGMomentumScrollPhaseNone)); /// At least one of the phases has to be 0
     

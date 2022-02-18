@@ -573,8 +573,6 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         
         /// --- GestureScroll ---
         
-        
-        
         if (!_scrollConfig.sendMomentumScrolls) {
             
             /// Post event
