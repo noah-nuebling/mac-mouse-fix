@@ -17,7 +17,7 @@ import QuartzCore
     /// Typedef
     
     typealias UntypedAnimatorCallback = Any
-    typealias AnimatorCallback = (_ animationValueDelta: Vector, _ phase: MFAnimationCallbackPhase) -> ()
+    typealias AnimatorCallback = (_ animationValueDelta: Vector, _ phase: MFAnimationCallbackPhase, _ subCurve: MFHybridSubCurve) -> ()
     typealias StopCallback = (_ lastPhase: MFAnimationPhase) -> ()
     typealias StartParamCalculationCallback = (_ valueLeft: Vector, _ isRunning: Bool, _ animationCurve: AnimationCurve?) -> MFAnimatorStartParams
     /// ^ When starting the animator, we usually want to get the value that the animator still wants to scroll (`animationValueLeft`), and add that to the new value. The specific logic can differ a lot though, so we can't just hardcode this into `Animator`
@@ -438,15 +438,18 @@ import QuartzCore
             DDLogDebug("\nTime delta in-animator: \(frameTime - lastFrameTime)");
             
             /// Get normalized time
-            
             let animationTimeUnit: Double = Math.scale(value: frameTime, from: self.animationTimeInterval, to: .unitInterval)
             
             /// Get normalized animation value from animation curve
-            
             let animationValueUnit: Double = animationCurve.evaluate(at: animationTimeUnit)
             
-            /// Get actual animation value
+            /// Get subCurve
+            var subCurve = kMFHybridSubCurveNone
+            if let hybridCurve = animationCurve as? HybridCurve {
+                subCurve = hybridCurve.subCurve(at: animationTimeUnit)
+            }
             
+            /// Get actual animation value
             var animationValue = Vector(x: 0, y: 0)
             
             if animationValueTotal.x != 0 {
@@ -464,7 +467,7 @@ import QuartzCore
             /// Subclass hook.
             ///     PixelatedAnimator overrides this to do its thing
             
-            self.subclassHook(callback, animationValueDelta, animationTimeDelta)
+            self.subclassHook(callback, animationValueDelta, animationTimeDelta, subCurve)
             
             /// Update `last` time and value and phase
             ///     \note  Should lastPhase be updated right after the callback is called? Experimentally moved it there. Move back if that breaks things
@@ -484,7 +487,7 @@ import QuartzCore
     
     /// Subclass overridable
     
-    func subclassHook(_ untypedCallback: Any, _ animationValueDelta: Vector, _ animationTimeDelta: CFTimeInterval) {
+    func subclassHook(_ untypedCallback: Any, _ animationValueDelta: Vector, _ animationTimeDelta: CFTimeInterval, _ subCurve: MFHybridSubCurve) {
         
         /// Guard callback type
         
@@ -501,9 +504,9 @@ import QuartzCore
 
         assert(!isEndAndNoPrecedingDeltas)
         
-        /// Call the callback
         
-        callback(animationValueDelta, self.callbackPhase)
+        /// Call the callback
+        callback(animationValueDelta, self.callbackPhase, subCurve)
         
         /// Debug
         

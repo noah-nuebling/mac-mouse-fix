@@ -30,7 +30,7 @@ class PixelatedVectorAnimator: VectorAnimator {
     
     /// Declare types and vars that superclass doesn't have
     
-    typealias PixelatedAnimatorCallback = (_ integerAnimationValueDelta: Vector, _ phase: MFAnimationCallbackPhase) -> ()
+    typealias PixelatedAnimatorCallback = (_ integerAnimationValueDelta: Vector, _ phase: MFAnimationCallbackPhase, _ subCurve: MFHybridSubCurve) -> ()
     var integerCallback: PixelatedAnimatorCallback?;
     //    var subPixelator: SubPixelator = SubPixelator.ceil();
     /// ^ This being a ceil subPixelator only makes sense because we're only using this through Scroll.m and that's only running this with positive value ranges. So the deltas are being rounded up, and we get a delta immediately as soon as the animations starts, which should make scrolling very small distances feel a little more responsive. If we were dealing with negative deltas, we'd want to round them down instead somehow. Or simply use a SubPixelator.round() which works the same in both directions.
@@ -98,7 +98,7 @@ class PixelatedVectorAnimator: VectorAnimator {
     
     /// Hook into superclasses' displayLinkCallback()
     
-    override func subclassHook(_ untypedCallback: Any, _ animationValueDelta: Vector, _ animationTimeDelta: CFTimeInterval) {
+    override func subclassHook(_ untypedCallback: Any, _ animationValueDelta: Vector, _ animationTimeDelta: CFTimeInterval, _ subCurve: MFHybridSubCurve) {
         /// This hooks into displayLinkCallback() in Animator.swift. Look at that for context.
         
         /// Guard callback type
@@ -171,7 +171,7 @@ class PixelatedVectorAnimator: VectorAnimator {
         /// Call callback
         
         if (!isEndAndNoPrecedingDeltas) { /// Skip `end` phase callbacks if there have been no deltas.
-            callback(integerAnimationValueDelta, self.callbackPhase)
+            callback(integerAnimationValueDelta, self.callbackPhase, subCurve)
         }
         
         /// Debug

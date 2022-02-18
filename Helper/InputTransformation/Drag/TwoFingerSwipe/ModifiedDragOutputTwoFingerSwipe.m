@@ -136,7 +136,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
         
         return p;
         
-    } integerCallback:^(Vector deltaVec, MFAnimationCallbackPhase animatorPhase) {
+    } integerCallback:^(Vector deltaVec, MFAnimationCallbackPhase animatorPhase, MFHybridSubCurve subCurve) {
         
         /// Debug
         

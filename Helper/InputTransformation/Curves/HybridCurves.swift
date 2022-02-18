@@ -362,7 +362,6 @@ class HybridCurve: NSObject, AnimationCurve {
         return result
     }
     
-    
     /// Evaluate
     
     @objc func evaluate(at x: Double) -> Double {
@@ -398,4 +397,18 @@ class HybridCurve: NSObject, AnimationCurve {
     
     var dragTimeIntervalUnit: Interval      { Interval(start: baseDuration / duration, end: 1) }
     var dragDistanceIntervalUnit: Interval  { Interval(start: baseDistance / distance, end: 1) }
+    
+    /// Other interface
+    
+    
+    @objc func subCurve(at x: Double) -> MFHybridSubCurve {
+        
+        if x <= baseDuration / duration {
+            return kMFHybridSubCurveBase
+        } else {
+            return kMFHybridSubCurveDrag
+        }
+        
+    }
+    
 }

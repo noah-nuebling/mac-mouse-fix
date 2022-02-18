@@ -27,6 +27,7 @@
 #import "ScrollModifiers.h"
 #import "Actions.h"
 #import "EventUtility.h"
+#import "CurveDeclarations.h"
 
 @import IOKit;
 #import "MFIOKitImports.h"
@@ -429,7 +430,11 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             /// Return
             return p;
             
-        } integerCallback:^(Vector distanceDeltaVec, MFAnimationCallbackPhase animationPhase) {
+        } integerCallback:^(Vector distanceDeltaVec, MFAnimationCallbackPhase animationPhase, MFHybridSubCurve subCurve) {
+            
+            /// Debug
+            
+            DDLogDebug(@"SubCurve in-animator: %d", subCurve);
             
             /// This will be called each frame
             
