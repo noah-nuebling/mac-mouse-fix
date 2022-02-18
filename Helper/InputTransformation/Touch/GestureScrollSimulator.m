@@ -37,18 +37,6 @@ static double _pixelsPerLine = 10;
 
 #pragma mark - Vars and init
 
-static id<Smoother> _timeBetweenInputsSmoother;
-static id<Smoother> _xDistanceSmoother;
-static id<Smoother> _yDistanceSmoother;
-/// These smoothers might fit better into ModifiedDrag.m. They're specificly built for mouse-drag input.
-/// Edit:
-///     We've disabled the smoothers now. We should remove them entirely at some point.
-///     The only reason we used the smoothers in the first place is to combat the erratic timing of the mouseMoved events produced by ModifiedDrag. Since we're using an Animator in ModifiedDrag now to smooth out the erratic timing, we don't need this anymore. It was also quite slow and didn't work and didn't make sense when Scroll.m called this class. 
-
-static Vector _lastScrollPointVector; /// This is unused. Replaced by the smoothers above
-
-//static VectorSubPixelator *_gesturePixelator;
-//static VectorSubPixelator *_scrollPointPixelator;
 static VectorSubPixelator *_scrollLinePixelator;
 
 static PixelatedVectorAnimator *_momentumAnimator;
@@ -64,30 +52,13 @@ static dispatch_queue_t _queue; /// Use this queue for interface functions to av
         dispatch_queue_attr_t attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INTERACTIVE, -1);
         _queue = dispatch_queue_create("com.nuebling.mac-mouse-fix.gesture-scroll", attr);
         
-        /// Init smoothers
-        
-        int capacity = 5;
-        
-        _xDistanceSmoother = [[RollingAverage alloc] initWithCapacity:capacity];
-        _yDistanceSmoother = [[RollingAverage alloc] initWithCapacity:capacity];
-        _timeBetweenInputsSmoother = [[RollingAverage alloc] initWithCapacity:capacity];
-        
-//        double smoothingA = 0.2; /// 1.0 -> smoothing is off
-//        double smoothingY = 0.8;
-//        _xSpeedSmoother = [[DoubleExponentialSmoother alloc] initWithA:smoothingA y:smoothingY];
-//        _ySpeedSmoother = [[DoubleExponentialSmoother alloc] initWithA:smoothingA y:smoothingY];
-        
-        
         /// Init Pixelators
         
-//        _gesturePixelator = [VectorSubPixelator roundPixelator];
-//        _scrollPointPixelator = [VectorSubPixelator roundPixelator];
         _scrollLinePixelator = [VectorSubPixelator biasedPixelator]; /// I think biased is only beneficial on linePixelator. Too lazy to explain.
         
         /// Momentum scroll
         
         _momentumAnimator = [[PixelatedVectorAnimator alloc] init];
-//        _momentumScrollIsActive = NO;
         
     }
 }
@@ -109,24 +80,24 @@ static dispatch_queue_t _queue; /// Use this queue for interface functions to av
 */
 
 + (void)postGestureScrollEventWithDeltaX:(int64_t)dx deltaY:(int64_t)dy phase:(IOHIDEventPhaseBits)phase {
-    /// Schedule event to be posted on _queue and return immeditaly
-    ///     Use this over `postGestureScrollEvent_Synchronously_WithDeltaX` when in doubt
+    
+    /// Convenience function that sets autoMomentumScroll = YES
+    
+    [self postGestureScrollEventWithDeltaX:dx deltaY:dy phase:phase autoMomentumScroll:YES];
+}
+
++ (void)postGestureScrollEventWithDeltaX:(int64_t)dx deltaY:(int64_t)dy phase:(IOHIDEventPhaseBits)phase autoMomentumScroll:(BOOL)autoMomentumScroll {
+    
+    /// Schedule event to be posted on _queue and return immediately
     
     dispatch_async(_queue, ^{
-        postGestureScrollEvent_Internal(dx, dy, phase);
+        postGestureScrollEvent_Internal(dx, dy, phase, autoMomentumScroll);
     });
 }
 
-+ (void)postGestureScrollEvent_Synchronously_WithDeltaX:(int64_t)dx deltaY:(int64_t)dy phase:(IOHIDEventPhaseBits)phase {
-    /// Schedule event to be posted on _queue and wait until it has been posted (and until momentum scroll has been started if phase is `kIOHIDEventPhaseEnd`)
-    
-    dispatch_sync(_queue, ^{
-        postGestureScrollEvent_Internal(dx, dy, phase);
-    });
-}
-
-void postGestureScrollEvent_Internal(int64_t dx, int64_t dy, IOHIDEventPhaseBits phase) {
-    /// This function doesn't dispatch to _queue. It should only be called if your're already on _queue. Otherwise there will be race conditions with the other functions that execute on _queue.
+void postGestureScrollEvent_Internal(int64_t dx, int64_t dy, IOHIDEventPhaseBits phase, Boolean autoMomentumScroll) {
+    /// This function doesn't dispatch to _queue. It should only be called if you're already on _queue. Otherwise there will be race conditions with the other functions that execute on _queue.
+    /// `autoMomentumScroll` should always be true, except if you are going to post momentumScrolls manually using `+ postMomentumScrollEvent`
     
     /// Debug
     
@@ -152,45 +123,28 @@ void postGestureScrollEvent_Internal(int64_t dx, int64_t dy, IOHIDEventPhaseBits
     
     /// Timestamps and static vars
     
-    static CFTimeInterval lastInputTime;
-    static double smoothedXDistance;
-    static double smoothedYDistance;
-    static double smoothedTimeBetweenInputs;
     static CGPoint origin;
+    static CFTimeInterval lastInputTime;
+    static Vector lastScrollPointVector;
     
     CFTimeInterval now = CACurrentMediaTime();
     CFTimeInterval timeSinceLastInput;
+    
     if (phase == kIOHIDEventPhaseBegan) {
         timeSinceLastInput = DBL_MAX; /// This means we can't say anything useful about the time since last input
     } else {
         timeSinceLastInput = now - lastInputTime;
     }
     
-    /// Location
-    
-    //    CGPoint location = getPointerLocation();
-    /// ^ Instead of using this, call getPointerLocation() directly before it's used so the value is as up-to-date as possible. Not sure if that makes a difference.
-    
     /// Main
     
     if (phase == kIOHIDEventPhaseBegan) {
         
+        /// Get origin
         origin = getPointerLocation();
         
-        /// Reset subpixelators
-        
-//        [_scrollPointPixelator reset];
-//        [_gesturePixelator reset];
+        /// Reset subpixelator
         [_scrollLinePixelator reset];
-        
-        /// Reset smoothers
-//        [_xDistanceSmoother reset];
-//        [_yDistanceSmoother reset];
-//        [_timeBetweenInputsSmoother reset];
-        smoothedXDistance = 0;
-        smoothedYDistance = 0;
-        smoothedTimeBetweenInputs = 0;
-        
     }
     if (phase == kIOHIDEventPhaseBegan || phase == kIOHIDEventPhaseChanged) {
         
@@ -200,27 +154,14 @@ void postGestureScrollEvent_Internal(int64_t dx, int64_t dy, IOHIDEventPhaseBits
         Vector vecScrollLine = scrollLineVector_FromScrollPointVector(vecScrollPoint);
         Vector vecGesture = gestureVector_FromScrollPointVector(vecScrollPoint);
         
+        /// Subpixelate vector
+        ///     No need to subpixelate the other two vecs because they are integer
+        
+        vecScrollLine = [_scrollLinePixelator intVectorWithDoubleVector:vecScrollLine];
+        
         /// Record last scroll point vec
         
-        _lastScrollPointVector = vecScrollPoint;
-        
-        /// Update smoothed values
-        
-        if (phase == kIOHIDEventPhaseChanged) {
-//            smoothedXDistance = [_xDistanceSmoother smoothWithValue:vecScrollPoint.x];
-//            smoothedYDistance = [_yDistanceSmoother smoothWithValue:vecScrollPoint.y];
-//            smoothedTimeBetweenInputs = [_timeBetweenInputsSmoother smoothWithValue:timeSinceLastInput];
-            smoothedXDistance = vecScrollPoint.x;
-            smoothedYDistance = vecScrollPoint.y;
-            smoothedTimeBetweenInputs = timeSinceLastInput;
-            
-        }
-        
-        /// Subpixelate vectors
-        
-        //            vecScrollPoint = [_scrollPointPixelator intVectorWithDoubleVector:vecScrollPoint]; /// Out input deltas dx and dy are pixels. No need to subpixelate
-        //            vecGesture = [_gesturePixelator intVectorWithDoubleVector:vecGesture]; /// This is the same as vecScrollPoint
-        //            vecScrollLine = [_scrollLinePixelator intVectorWithDoubleVector:vecScrollLine];
+        lastScrollPointVector = vecScrollPoint;
         
         /// Post events
         
@@ -240,57 +181,6 @@ void postGestureScrollEvent_Internal(int64_t dx, int64_t dy, IOHIDEventPhaseBits
         
     } else if (phase == kIOHIDEventPhaseEnded) {
         
-        /// Start momentum scroll
-        
-        DDLogInfo(@"timeSinceLast: %f", timeSinceLastInput);
-        
-        /// Update smoothers once more
-        
-//        smoothedTimeBetweenInputs = [_timeBetweenInputsSmoother smoothWithValue:timeSinceLastInput];
-//        smoothedXDistance = [_xDistanceSmoother smoothWithValue:smoothedXDistance];
-//        smoothedYDistance = [_yDistanceSmoother smoothWithValue:smoothedYDistance];
-        smoothedXDistance = _lastScrollPointVector.x;
-        smoothedYDistance = _lastScrollPointVector.y;
-        smoothedTimeBetweenInputs = timeSinceLastInput;
-        /// ^ kIOHIDEventPhaseEnded events always have distance 0. We're  inserting the last smoothed value as input instead of inserting 0 or nothing to maybe keep it more synced with the smoothedTimeBetweenInputs. Not sure if this is beneficial.
-        
-        
-        /// Get exitSpeed (aka initialSpeed for momentum Scroll)
-        
-        Vector exitVelocity = (Vector){
-            .x = smoothedXDistance / smoothedTimeBetweenInputs,
-            .y = smoothedYDistance / smoothedTimeBetweenInputs
-        };
-        
-        /// Post one more event with a delta
-        ///     The speed in this last event should be exactly our smoothied speed.
-        ///     We only do this because programs like Xcode and Finder implement their own momentum scroll algorithm and they sometimes react in a volatile way. Having the momentum scroll start either too slow or too fast.
-        ///         We're already smoothing the speed over the last few input to the the initial speed for our momentumScroll implementation and it works really well. But it seems Xcode and others just ignore our momentumScroll events.
-        ///         My theory is Xcode and other base their initial momentumScroll speed only on the speed in the last event before the kIOHIDEventPhaseEnded event.
-        ///         So that's why were sending one extra event here with the smoothied speed - so that Xcode and other apps hopefully start momentumScroll with our smoothedSpeed
-        
-        //        double lastXDelta = timeSinceLastInput * exitVelocity.x * 1;
-        //        double lastYDelta = timeSinceLastInput * exitVelocity.y * 1;
-        /// ^ This seems to help a little but not much
-        
-        //        double lastXDelta = smoothedXDistance;
-        //        double lastYDelta = smoothedYDistance;
-        /// ^ Also very volatile
-        
-        /// Get vectors for last delta event
-        
-        //        Vector vecScrollPoint = (Vector){ .x = lastXDelta, .y = lastYDelta };
-        //        Vector vecScrollLine = scrollLineVector_FromScrollPointVector(vecScrollPoint);
-        //        Vector vecGesture = gestureVector_FromScrollPointVector(vecScrollPoint);
-        //
-        //        /// Post last delta event
-        //        [self postGestureScrollEventWithGestureVector:vecGesture
-        //                                     scrollVectorLine:vecScrollLine
-        //                                    scrollVectorPoint:vecScrollPoint
-        //                                                phase:kIOHIDEventPhaseChanged
-        //                                        momentumPhase:0
-        //                                             location:getPointerLocation()];
-        
         /// Post `ended` event
         [GestureScrollSimulator postGestureScrollEventWithGestureVector:(Vector){}
                                                        scrollVectorLine:(Vector){}
@@ -299,18 +189,26 @@ void postGestureScrollEvent_Internal(int64_t dx, int64_t dy, IOHIDEventPhaseBits
                                                           momentumPhase:0
                                                                location:getPointerLocation()];
         
-        /// Get momentum scroll params
+        if (autoMomentumScroll) {
         
-        double stopSpeed = 1.0;
-        
-        double dragCoeff = ScrollConfig.currentConfig.dragCoefficient;
-        double dragExp = ScrollConfig.currentConfig.dragExponent;
-        
-        CGPoint location = origin;
-        
-        /// Do start momentum scroll
-        
-        startMomentumScroll(timeSinceLastInput, exitVelocity, stopSpeed, dragCoeff, dragExp, location);
+            /// Get exitSpeed (aka initialSpeed for momentum Scroll)
+            
+            Vector exitVelocity = (Vector) {
+                .x = lastScrollPointVector.x / timeSinceLastInput,
+                .y = lastScrollPointVector.y / timeSinceLastInput
+            };
+            
+            /// Get momentum scroll params
+            
+            double stopSpeed = 1.0;
+            double dragCoeff = ScrollConfig.currentConfig.dragCoefficient;
+            double dragExp = ScrollConfig.currentConfig.dragExponent;
+            CGPoint location = origin;
+            
+            /// Do start momentum scroll
+            
+            startMomentumScroll(timeSinceLastInput, exitVelocity, stopSpeed, dragCoeff, dragExp, location);
+        }
         
     } else {
         DDLogError(@"Trying to send GestureScroll with invalid IOHIDEventPhase: %d", phase);
@@ -320,11 +218,26 @@ void postGestureScrollEvent_Internal(int64_t dx, int64_t dy, IOHIDEventPhaseBits
     lastInputTime = now; /// Make sure you don't return early so this is always executed
 }
 
-#pragma mark - Momentum scroll
+#pragma mark - Direct momentum scroll interface
 
-+ (PixelatedVectorAnimator *)momentumAnimator {
-    return _momentumAnimator;
++ (void)postMomentumScrollDirectlyWithDeltaX:(double)dx
+                                   deltaY:(double)dy
+                            momentumPhase:(CGMomentumScrollPhase)momentumPhase
+                                 location:(CGPoint)loc {
+    
+    Vector zeroVector = (Vector){ .x = 0, .y = 0 };
+    Vector deltaVec = (Vector){ .x = dx, .y = dy };
+    Vector deltaVecLine = (Vector){ .x = dx/10, .y = dy/10 }; /// TODO: Subpixelate this
+    
+    [GestureScrollSimulator postGestureScrollEventWithGestureVector:zeroVector
+                                                   scrollVectorLine:deltaVecLine
+                                                  scrollVectorPoint:deltaVec
+                                                              phase:kIOHIDEventPhaseUndefined
+                                                      momentumPhase:momentumPhase
+                                                           location:loc];
 }
+
+#pragma mark - Auto momentum scroll
 
 static void (^_momentumScrollCallback)(void);
 
@@ -363,11 +276,11 @@ static void (^_momentumScrollCallback)(void);
 void stopMomentumScroll_Sync(void) {
     /// Only use this when you know you're already running on _queue
     
+    /// Debug
+    
 //    DDLogDebug(@"momentumScroll stop request. Caller: %@", [SharedUtility callerInfo]);
     
-    if (!_momentumAnimator.isRunning) {
-//        DDLogDebug(@"... But momentumScroll insn't running");
-    }
+    /// Stop
     
     if (_momentumAnimator.isRunning) {
         
@@ -392,6 +305,9 @@ void stopMomentumScroll_Sync(void) {
                                                                   phase:kIOHIDEventPhaseUndefined
                                                           momentumPhase:kCGMomentumScrollPhaseEnd
                                                                location:location];
+    } else {
+        /// Debug
+//        DDLogDebug(@"... But momentumScroll insn't running");
     }
 }
 
