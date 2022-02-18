@@ -11,10 +11,24 @@
 #define CurveDeclarations_h
 
 typedef enum {
+    kMFHybridSubCurveNone,
     kMFHybridSubCurveBase,
     kMFHybridSubCurveDrag,
-    kMFHybridSubCurveNone,
 } MFHybridSubCurve;
-/// ^ When animating a HybridCurve, the animator will tell the animation callback whether it's currently on the Base (first) or the Drag (second) subcurve of the HybridCurve.
+
+typedef enum {
+    kMFHybridSubCurvePhaseNone = kMFHybridSubCurveNone,
+    kMFHybridSubCurvePhaseBase = kMFHybridSubCurveBase,
+    kMFHybridSubCurvePhaseDrag = kMFHybridSubCurveDrag,
+    
+    kMFHybridSubCurvePhaseBaseFromDrag,
+    kMFHybridSubCurvePhaseDragBegan,
+    
+    kMFHybridSubCurvePhaseBaseMask = kMFHybridSubCurvePhaseBase | kMFHybridSubCurvePhaseBaseFromDrag,
+    
+    kMFHybridSubCurvePhaseDragMask = kMFHybridSubCurvePhaseDrag | kMFHybridSubCurvePhaseDragBegan,
+    
+} MFHybridSubCurvePhase;
+/// ^ When animating a HybridCurve, the animator will tell the animation callback whether it's currently on the Base (first) or the Drag (second) subcurve of the HybridCurve, and whether the subcurve has just changed to Drag (then it will send kMFHybridSubCurvePhaseDragBegan)
 
 #endif /* CurveDeclarations_h */

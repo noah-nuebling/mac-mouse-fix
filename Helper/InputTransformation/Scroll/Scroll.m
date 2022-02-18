@@ -338,7 +338,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         
         /// Send scroll event directly - without the animator. Will scroll all of pxToScrollForThisTick at once.
         
-        sendScroll(pxToScrollForThisTick, scrollDirection, NO, -1);
+        sendScroll(pxToScrollForThisTick, scrollDirection, NO, kMFAnimationCallbackPhaseNone, kMFHybridSubCurvePhaseNone);
         
     } else {
         /// Send scroll events through animator, spread out over time.
@@ -418,7 +418,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 
                 /// Debug
                 
-                DDLogDebug(@"Duration pre-animator: %@", @(c.duration));
+                DDLogDebug(@"\nDuration pre-animator: %f base: %f", c.duration, c.baseDuration);
             }
             
             /// Debug
@@ -430,11 +430,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             /// Return
             return p;
             
-        } integerCallback:^(Vector distanceDeltaVec, MFAnimationCallbackPhase animationPhase, MFHybridSubCurve subCurve) {
-            
-            /// Debug
-            
-            DDLogDebug(@"SubCurve in-animator: %d", subCurve);
+        } integerCallback:^(Vector distanceDeltaVec, MFAnimationCallbackPhase animationPhase, MFHybridSubCurvePhase subCurvePhase) {
             
             /// This will be called each frame
             
@@ -442,6 +438,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             double distanceDelta = magnitudeOfVector(distanceDeltaVec);
             
             /// Validate
+            
             assert(distanceDeltaVec.x == 0 || distanceDeltaVec.y == 0);
             
             if (distanceDelta == 0) {
@@ -454,15 +451,10 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             scrollDeltaSummm += distanceDelta;
             DDLogDebug(@"Delta sum in-animator: %f", scrollDeltaSummm);
             DDLogDebug(@"Delta in-animator: %f", distanceDelta);
-            
-//            static CFTimeInterval lastTs = 0;
-//            CFTimeInterval ts = CACurrentMediaTime();
-//            DDLogInfo(@"scrollSendInterval: %@, dT: %@, dPx: %@", @(ts - lastTs), @(timeDelta), @(valueDelta));
-//            lastTs = ts;
-//            DDLogDebug(@"DELTA: %ld, PHASE: %d", (long)valueDelta, animationPhase);
+            DDLogDebug(@"SubCurvePhase in-animator: %d", subCurvePhase);
             
             /// Send scroll
-            sendScroll(distanceDelta, scrollDirection, YES, animationPhase);
+            sendScroll(distanceDelta, scrollDirection, YES, animationPhase, subCurvePhase);
             
         }];
     }
@@ -501,7 +493,7 @@ static int64_t getPxPerTick(CFTimeInterval timeBetweenTicks, int64_t cgEventScro
     return (int64_t)pxForThisTick; /// We could use a SubPixelator balance out the rounding errors, but I don't think that'll be noticable
 }
 
-static void sendScroll(int64_t px, MFDirection scrollDirection, BOOL gesture, MFAnimationCallbackPhase animationPhase) {
+static void sendScroll(int64_t px, MFDirection scrollDirection, BOOL gesture, MFAnimationCallbackPhase animationPhase, MFHybridSubCurvePhase subCurvePhase) {
     
     /// Get x and y deltas
     
@@ -546,7 +538,7 @@ static void sendScroll(int64_t px, MFDirection scrollDirection, BOOL gesture, MF
     
     /// Send event
     
-    sendOutputEvents(dx, dy, outputType, animationPhase);
+    sendOutputEvents(dx, dy, outputType, animationPhase, subCurvePhase);
 }
 
 /// Define output types
@@ -563,7 +555,7 @@ typedef enum {
 
 /// Output
 
-static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputType, MFAnimationCallbackPhase animatorPhase) {
+static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputType, MFAnimationCallbackPhase animatorPhase, MFHybridSubCurvePhase subCurvePhase) {
     
     /// Init eventPhase
     
@@ -581,18 +573,84 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         
         /// --- GestureScroll ---
         
-        [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:eventPhase];
         
         
-        if (_scrollConfig.inertialScroll) {
-
+        if (!_scrollConfig.sendMomentumScrolls) {
             
+            /// Post event
+            [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:eventPhase];
             
-        } else {
-            /// Suppress momentumScroll if inertialScroll is not active
+            /// Suppress momentumScroll
             if (eventPhase == kIOHIDEventPhaseEnded) {
                 [GestureScrollSimulator stopMomentumScroll];
             }
+            
+        } else { /// sendMomentumScrolls == true
+            
+            /// Validate
+            assert(subCurvePhase != kMFHybridSubCurvePhaseNone);
+            
+            /// Get eventPhase and momentumPhase
+            
+            if (subCurvePhase == kMFHybridSubCurvePhaseBase
+                || subCurvePhase == kMFHybridSubCurvePhaseBaseFromDrag) {
+                
+                if (subCurvePhase == kMFHybridSubCurvePhaseBaseFromDrag) {
+                    
+                    /// Send momentum end event
+                    [GestureScrollSimulator postMomentumScrollDirectlyWithDeltaX:0 deltaY:0 momentumPhase:kCGMomentumScrollPhaseEnd];
+                    
+                    /// Set eventPhase to start
+                    eventPhase = kIOHIDEventPhaseBegan;
+                    
+                    /// Debug
+                    DDLogDebug(@"\nHybrid event - momentum: (0, 0, %d) JJJ", kCGMomentumScrollPhaseEnd);
+                }
+                
+                /// Send normal gesture scroll
+                [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:eventPhase autoMomentumScroll:NO];
+                
+                /// Debug
+                DDLogDebug(@"\nHybrid event - gesture: (%lld, %lld, %d)", dx, dy, eventPhase);
+                
+            } else { /// SubCurve is drag
+                
+                CGMomentumScrollPhase momentumPhase = kCGMomentumScrollPhaseNone;
+                
+                if (subCurvePhase == kMFHybridSubCurvePhaseDragBegan) {
+                    /// DragCurve begins
+                    
+                    /// Get momentum phase
+                    momentumPhase = kCGMomentumScrollPhaseBegin;
+                    
+                    /// Send gesture end event
+                    [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded autoMomentumScroll:NO];
+                    
+                    /// Debug
+                    DDLogDebug(@"\nHybrid event - gesture: (0, 0, %d) HHH", kIOHIDEventPhaseEnded);
+                    
+                } else if (subCurvePhase == kMFHybridSubCurvePhaseDrag) {
+                    /// DragCurve continues
+                    
+                    /// Get momentum phase
+                    if (animatorPhase == kMFAnimationCallbackPhaseContinue) {
+                        momentumPhase = kCGMomentumScrollPhaseContinue;
+                    } else if (animatorPhase == kMFAnimationCallbackPhaseEnd) {
+                        momentumPhase = kCGMomentumScrollPhaseEnd;
+                    } else {
+                        assert(false);
+                    }
+                } else {
+                    assert(false);
+                }
+
+                /// Send momentum event
+                [GestureScrollSimulator postMomentumScrollDirectlyWithDeltaX:dx deltaY:dy momentumPhase:momentumPhase];
+                
+                /// Debug
+                DDLogDebug(@"\nHybrid event - momentum: (%lld, %lld, %d)", dx, dy, momentumPhase);
+            }
+            
         }
         
     } else if (outputType == kMFScrollOutputTypeZoom) {

@@ -17,7 +17,7 @@ import QuartzCore
     /// Typedef
     
     typealias UntypedAnimatorCallback = Any
-    typealias AnimatorCallback = (_ animationValueDelta: Vector, _ phase: MFAnimationCallbackPhase, _ subCurve: MFHybridSubCurve) -> ()
+    typealias AnimatorCallback = (_ animationValueDelta: Vector, _ phase: MFAnimationCallbackPhase, _ subCurve: MFHybridSubCurvePhase) -> ()
     typealias StopCallback = (_ lastPhase: MFAnimationPhase) -> ()
     typealias StartParamCalculationCallback = (_ valueLeft: Vector, _ isRunning: Bool, _ animationCurve: AnimationCurve?) -> MFAnimatorStartParams
     /// ^ When starting the animator, we usually want to get the value that the animator still wants to scroll (`animationValueLeft`), and add that to the new value. The specific logic can differ a lot though, so we can't just hardcode this into `Animator`
@@ -108,13 +108,17 @@ import QuartzCore
     
     /// Vars - DisplayLink
     
-    var lastFrameTime: Double = -1 /// Time at which the displayLink was last called
-    var lastAnimationValue: Vector = Vector(x: 0, y: 0) /// animationValue when the displayLink was last called
-    var lastAnimationPhase: MFAnimationPhase = kMFAnimationPhaseNone
     var animationPhase: MFAnimationPhase = kMFAnimationPhaseNone
     var callbackPhase: MFAnimationCallbackPhase {
         return VectorAnimator.callbackPhase(animationPhase: self.animationPhase)
     }
+    
+    var lastAnimationValue: Vector = Vector(x: 0, y: 0) /// animationValue when the displayLink was last called
+    var lastAnimationTimeUnit: Double = 0.0
+    var lastAnimationPhase: MFAnimationPhase = kMFAnimationPhaseNone
+    private var lastSubCurve: MFHybridSubCurve = kMFHybridSubCurveNone
+    
+    var lastFrameTime: Double = -1 /// Time at which the displayLink was last called
     
     /// Vars -  Interface
     ///     Accessing these directly is not thread safe. Only access them from self.animatorQueue
@@ -395,10 +399,11 @@ import QuartzCore
             /// Get time when frame will be displayed
             var frameTime = timeInfo.outFrame
             
-            /// Set animation start time
             if animationPhase == kMFAnimationPhaseStart {
                 /// ^ I don't think we have to check for lastAnimationPhase
                 ///     to make sure this is the first callback?
+                
+                /// Set animation start time
                 
                 /// Pull time of last frame out of butt
                 self.lastFrameTime = frameTime - timeInfo.nominalTimeBetweenFrames
@@ -406,13 +411,22 @@ import QuartzCore
                 /// Set animation start time to hypothetical last frame
                 ///     This is so that the first timeDelta is the same size as all the others (instead of 0)
                 self.animationStartTime = self.lastFrameTime
+                
+                /// Reset lastAnimationTimeUnit
+                ///     Might be better to reset this somewhere else
+                lastAnimationTimeUnit = -1
+                
+                /// Reset lastSubCurve
+                ///     Might be better to reset this in start and/or stop
+                lastSubCurve = kMFHybridSubCurveNone
             }
             
-            /// Round duration to a multiple of timeBetweenFrames
-            ///     This is so that the last timeDelta is the same size as all the others
-            ///     Doing this in start() would be easier but leads to deadlocks
             if animationPhase == kMFAnimationPhaseStart
                 || animationPhase == kMFAnimationPhaseRunningStart {
+                
+                /// Round duration to a multiple of timeBetweenFrames
+                ///     This is so that the last timeDelta is the same size as all the others
+                ///     Doing this in start() would be easier but leads to deadlocks
                 
                 self.animationDuration = TransformationUtility.roundUp(animationDurationRaw, toMultiple: displayLink.nominalTimeBetweenFrames())
             }
@@ -443,11 +457,61 @@ import QuartzCore
             /// Get normalized animation value from animation curve
             let animationValueUnit: Double = animationCurve.evaluate(at: animationTimeUnit)
             
-            /// Get subCurve
+            /// Get subCurvePhase
+            
             var subCurve = kMFHybridSubCurveNone
+            
             if let hybridCurve = animationCurve as? HybridCurve {
-                subCurve = hybridCurve.subCurve(at: animationTimeUnit)
+                
+                let timeSinceAnimationStart = frameTime - animationStartTime
+                
+                let minBaseCurveTime = ScrollConfig().consecutiveScrollTickIntervalMax
+                
+                if timeSinceAnimationStart < minBaseCurveTime {
+                    /// Lie and say the the first x ms of the animation are always base
+                    ///     This is so that:
+                    ///         - ... the first event is always sent with gestureScrolls instead of momentumScrolls in Scroll.m. Otherwise apps like Xcode won't react at all (they ignore the deltas in momentumScrolls).
+                    ///         - ... to decrease the transitions into momentumScroll in Scroll.m. Due to Apple bug, this transition causes a stuttery jump in apps like Xcode
+                    ///     TODO: (not that important)
+                    ///         - This logic doesn't really belong into the Animator
+                    ///         - Put minBaseCurveTime into ScrollConfig
+                    ///     Values for `minBaseCurveTime`:
+                    ///         - tested values between 100 and 300 ms and they all worked. Settled on 150 for now. Edit: Using consecutiveScrollTickIntervalMax (which is 160 ms)
+                    
+                    subCurve = kMFHybridSubCurveBase
+                } else {
+                    subCurve = hybridCurve.subCurve(at: animationTimeUnit)
+                    /// Reset subCurve to base
+                    ///     We only want to set the curve to drag if all of the pixels to be scrolled for the frame come from the DragCurve
+                    if lastAnimationTimeUnit != -1 {
+                        let lastSubCurve = hybridCurve.subCurve(at: lastAnimationTimeUnit)
+                        if lastSubCurve == kMFHybridSubCurveBase {
+                            subCurve = kMFHybridSubCurveBase
+                        }
+                    }
+                }
             }
+            
+            var subCurvePhase: MFHybridSubCurvePhase = kMFHybridSubCurvePhaseNone
+            
+            if subCurve == kMFHybridSubCurveBase {
+                
+                subCurvePhase = kMFHybridSubCurvePhaseBase
+                
+                if (lastSubCurve == kMFHybridSubCurveDrag) {
+                    subCurvePhase = kMFHybridSubCurvePhaseBaseFromDrag
+                }
+                
+            } else if subCurve == kMFHybridSubCurveDrag {
+                
+                subCurvePhase = kMFHybridSubCurvePhaseDrag
+                
+                if (lastSubCurve == kMFHybridSubCurveBase) {
+                    subCurvePhase = kMFHybridSubCurvePhaseDragBegan
+                }
+            }
+            
+            lastSubCurve = subCurve
             
             /// Get actual animation value
             var animationValue = Vector(x: 0, y: 0)
@@ -467,7 +531,7 @@ import QuartzCore
             /// Subclass hook.
             ///     PixelatedAnimator overrides this to do its thing
             
-            self.subclassHook(callback, animationValueDelta, animationTimeDelta, subCurve)
+            self.subclassHook(callback, animationValueDelta, animationTimeDelta, subCurvePhase)
             
             /// Update `last` time and value and phase
             ///     \note  Should lastPhase be updated right after the callback is called? Experimentally moved it there. Move back if that breaks things
@@ -476,6 +540,7 @@ import QuartzCore
             
             self.lastFrameTime = frameTime
             self.lastAnimationValue = animationValue
+            self.lastAnimationTimeUnit = animationTimeUnit
             
             /// Stop animation if phase is  `end`
             if self.animationPhase == kMFAnimationPhaseEnd {
@@ -487,7 +552,7 @@ import QuartzCore
     
     /// Subclass overridable
     
-    func subclassHook(_ untypedCallback: Any, _ animationValueDelta: Vector, _ animationTimeDelta: CFTimeInterval, _ subCurve: MFHybridSubCurve) {
+    func subclassHook(_ untypedCallback: Any, _ animationValueDelta: Vector, _ animationTimeDelta: CFTimeInterval, _ subCurve: MFHybridSubCurvePhase) {
         
         /// Guard callback type
         

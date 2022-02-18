@@ -122,8 +122,7 @@ void postGestureScrollEvent_Internal(int64_t dx, int64_t dy, IOHIDEventPhaseBits
     stopMomentumScroll_Sync();
     
     /// Timestamps and static vars
-    
-    static CGPoint origin;
+
     static CFTimeInterval lastInputTime;
     static Vector lastScrollPointVector;
     
@@ -139,9 +138,6 @@ void postGestureScrollEvent_Internal(int64_t dx, int64_t dy, IOHIDEventPhaseBits
     /// Main
     
     if (phase == kIOHIDEventPhaseBegan) {
-        
-        /// Get origin
-        origin = getPointerLocation();
         
         /// Reset subpixelator
         [_scrollLinePixelator reset];
@@ -203,11 +199,10 @@ void postGestureScrollEvent_Internal(int64_t dx, int64_t dy, IOHIDEventPhaseBits
             double stopSpeed = 1.0;
             double dragCoeff = ScrollConfig.currentConfig.dragCoefficient;
             double dragExp = ScrollConfig.currentConfig.dragExponent;
-            CGPoint location = origin;
             
             /// Do start momentum scroll
             
-            startMomentumScroll(timeSinceLastInput, exitVelocity, stopSpeed, dragCoeff, dragExp, location);
+            startMomentumScroll(timeSinceLastInput, exitVelocity, stopSpeed, dragCoeff, dragExp);
         }
         
     } else {
@@ -222,8 +217,9 @@ void postGestureScrollEvent_Internal(int64_t dx, int64_t dy, IOHIDEventPhaseBits
 
 + (void)postMomentumScrollDirectlyWithDeltaX:(double)dx
                                    deltaY:(double)dy
-                            momentumPhase:(CGMomentumScrollPhase)momentumPhase
-                                 location:(CGPoint)loc {
+                            momentumPhase:(CGMomentumScrollPhase)momentumPhase {
+    
+    CGPoint loc = getPointerLocation();
     
     Vector zeroVector = (Vector){ .x = 0, .y = 0 };
     Vector deltaVec = (Vector){ .x = dx, .y = dy };
@@ -313,7 +309,7 @@ void stopMomentumScroll_Sync(void) {
 
 /// Momentum scroll main
 
-static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, double stopSpeed, double dragCoefficient, double dragExponent, CGPoint origin) {
+static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, double stopSpeed, double dragCoefficient, double dragExponent) {
     
     ///Debug
     
@@ -397,7 +393,7 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
         
         return p;
         
-    } integerCallback:^(Vector deltaVec, MFAnimationCallbackPhase animationPhase, MFHybridSubCurve subCurve) {
+    } integerCallback:^(Vector deltaVec, MFAnimationCallbackPhase animationPhase, MFHybridSubCurvePhase subCurve) {
         
         /// Debug
         DDLogDebug(@"Momentum scrolling - delta: (%f, %f), animationPhase: %d", deltaVec.x, deltaVec.y, animationPhase);

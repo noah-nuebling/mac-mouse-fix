@@ -21,8 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)postMomentumScrollDirectlyWithDeltaX:(double)dx
                                       deltaY:(double)dy
-                               momentumPhase:(CGMomentumScrollPhase)momentumPhase
-                                    location:(CGPoint)loc;
+                               momentumPhase:(CGMomentumScrollPhase)momentumPhase;
 
 + (void)afterStartingMomentumScroll:(void (^ _Nullable)(void))callback;
 + (void)stopMomentumScroll;

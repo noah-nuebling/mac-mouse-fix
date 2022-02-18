@@ -172,7 +172,7 @@ import CocoaLumberjackSwift
     ///     This is the speed (In px/s ?) at which the DragCurve part of the Hybrid curve stops scrolling
     ///     I feel like this maybe scales up and down with scroll speed as it currently is? (Shouldn't do that)
     
-    @objc lazy var inertialScroll = false
+    @objc lazy var sendMomentumScrolls = true
     
     
     @objc let inertialDragExponent = 0.7
