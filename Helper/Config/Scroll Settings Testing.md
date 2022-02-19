@@ -100,3 +100,12 @@ __Inertial settings__
 - dragExponent: 0.7
 - stopSpeed: 50
     -> Might be placebo, but I think the 205 msPerStep makes single ticks feel nicer
+
+3. Snappy
+- pxPerTickBase: 60
+- pxPerTickEnd: 160
+- BaseCurve: (0,0), (0,0), (1,1), (1,1) 
+- msPerStep: 180
+- dragCoefficient: 10
+- dragExponent: 1.1
+- stopSpeed: 50

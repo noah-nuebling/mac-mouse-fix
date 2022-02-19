@@ -125,14 +125,14 @@ import CocoaLumberjackSwift
     
     // MARK: Smooth scroll
     
-    @objc var pxPerTickBase = 60 /* return smooth["pxPerStep"] as! Int */
+    @objc var pxPerTickBase = 40 /* return smooth["pxPerStep"] as! Int */
     /// ^ 60 -> Max good-feeling value, 30 -> I like this one, 10 -> Min good feeling value
     
-    @objc lazy private var pxPerTickEnd: Int = 160
+    @objc lazy private var pxPerTickEnd: Int = 110
     /// ^ 120 Works well without implicit hybrid curve acceleration
     ///     100 Works well with slight hybrid curve acceleration
     
-    @objc lazy var msPerStep = 180 /* smooth["msPerStep"] as! Int */
+    @objc lazy var msPerStep = 140 /* smooth["msPerStep"] as! Int */
     
     @objc lazy var baseCurve: Bezier = { () -> Bezier in
         /// Base curve used to construct a Hybrid AnimationCurve in Scroll.m. This curve is applied before switching to a DragCurve to simulate physically accurate deceleration
@@ -152,11 +152,11 @@ import CocoaLumberjackSwift
     }()
     
     @objc lazy var stopSpeed = 50.0
-    @objc lazy var dragExponent = 1.0 /* smooth["frictionDepth"] as! Double */
-    @objc lazy var dragCoefficient = 20 /* smooth["friction"] as! Double */
+    @objc lazy var dragExponent = 1.1 /* smooth["frictionDepth"] as! Double */
+    @objc lazy var dragCoefficient = 10.0 /* smooth["friction"] as! Double */
     /// ^ Defines the Drag subcurve of the default Hybrid curve used for scrollwheel scrolling in Scroll.m. (When we're not sending momentumScrolls)
     
-    @objc lazy var sendMomentumScrolls = true
+    @objc lazy var sendMomentumScrolls = false
     
     @objc let momentumStopSpeed = 50
     @objc let momentumDragExponent = 0.7
