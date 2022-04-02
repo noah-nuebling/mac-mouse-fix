@@ -74,7 +74,7 @@ import CocoaLumberjackSwift
                 transitionPointRange = Interval(t, t+(1/Double(n)))
                 break
             }
-            if k >= n {
+            if k >= n { /// TODO: Shouldn't this be > instead of >=?
                 break
             }
             /// Increment
