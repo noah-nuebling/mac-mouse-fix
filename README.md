@@ -10,4 +10,4 @@ Mac Mouse Fix is a simple way to make your mouse better.
 
 ---
 
-[**Mac Mouse Fix 2**](https://github.com/noah-nuebling/mac-mouse-fix/releases) now available!
+[**Mac Mouse Fix 2**](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.0.0) now available!
