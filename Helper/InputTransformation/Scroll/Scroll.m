@@ -580,7 +580,10 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
     
     /// Init eventPhase
     
-    IOHIDEventPhaseBits eventPhase = [VectorAnimator IOHIDPhaseWithAnimationCallbackPhase:animatorPhase];
+    IOHIDEventPhaseBits eventPhase = kIOHIDEventPhaseUndefined;
+    if (animatorPhase != kMFAnimationCallbackPhaseNone) {
+        eventPhase = [VectorAnimator IOHIDPhaseWithAnimationCallbackPhase:animatorPhase];
+    }
     
     /// Validate
     

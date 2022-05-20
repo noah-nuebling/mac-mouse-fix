@@ -74,8 +74,8 @@ import CocoaLumberjackSwift
         ///     .... So we're using our advanced knowledge of CGEventFields!!!
         
         
-        //            let isNatural = UserDefaults.standard.bool(forKey: "com.apple.swipescrolldirection") /// User defaults method
-        //            let isNatural = NSEvent(cgEvent: event)!.isDirectionInvertedFromDevice /// NSEvent method
+//            let isNatural = UserDefaults.standard.bool(forKey: "com.apple.swipescrolldirection") /// User defaults method
+//            let isNatural = NSEvent(cgEvent: event)!.isDirectionInvertedFromDevice /// NSEvent method
         let isNatural = event.getIntegerValueField(CGEventField(rawValue: 137)!) != 0; /// CGEvent method
         
         return isNatural ? kMFSemanticScrollInversionNatural : kMFSemanticScrollInversionNormal
@@ -130,12 +130,10 @@ import CocoaLumberjackSwift
     
     // MARK: Smooth scroll
     
-    @objc var pxPerTickBase = 40 /* return smooth["pxPerStep"] as! Int */
+    @objc var pxPerTickBase = 10 /* return smooth["pxPerStep"] as! Int */
     /// ^ 60 -> Max good-feeling value, 30 -> I like this one, 10 -> Min good feeling value
     
-    @objc lazy private var pxPerTickEnd: Int = 120
-    /// ^ 120 Works well without implicit hybrid curve acceleration
-    ///     100 Works well with slight hybrid curve acceleration
+    @objc lazy private var pxPerTickEnd: Int = 130
     
     @objc lazy var msPerStep = 180 /* smooth["msPerStep"] as! Int */
     
@@ -161,7 +159,7 @@ import CocoaLumberjackSwift
     @objc lazy var dragCoefficient = 10.0 /* smooth["friction"] as! Double */
     /// ^ Defines the Drag subcurve of the default Hybrid curve used for scrollwheel scrolling in Scroll.m. (When we're not sending momentumScrolls)
     
-    @objc lazy var sendMomentumScrolls = false
+    @objc lazy var sendMomentumScrolls = true
     
     @objc let momentumStopSpeed = 50
     @objc let momentumDragExponent = 0.7
@@ -186,6 +184,7 @@ import CocoaLumberjackSwift
     @objc lazy var accelerationHump = -0.0
     /// ^ Between -1 and 1
     ///     Negative values make the curve continuous, and more predictable (might be placebo)
+    ///     Edit: I like 0.0 the best now. Feels more "direct"
     
     @objc lazy var accelerationCurve = standardAccelerationCurve
     

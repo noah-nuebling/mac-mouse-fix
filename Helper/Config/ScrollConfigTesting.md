@@ -169,9 +169,9 @@ Formula to calculate pxPerTickEnd: (based on the tests above)
 pxPerTickEnd = pxPerTickEndBase * inertiaFactor + screenHeightSummant
 where
     pxPerTickEndBase =
-        160 if pxPerTickEndSemantic = "large"
-        120 if pxPerTickEndSemantic = "medium"
-        80 if pxPerTickEndSemantic = "small"
+        160 if pxPerTickEndSemantic = "large"   (180 is good after making acceleration curve linear)
+        120 if pxPerTickEndSemantic = "medium"  (120 might be good after making acceleration curve linear)
+        80 if pxPerTickEndSemantic = "small"    (90 might be good after making acceleration curve linear)
 where
     inertiaFactor = 
         1 if inertia="2.3 Xcode Momentum 4"
