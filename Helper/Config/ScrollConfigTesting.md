@@ -1,4 +1,4 @@
-#  Scroll Settings Testing
+#  ScrollConfigTesting
 
 (Using BezierHybridCurve for everything)
 
@@ -17,7 +17,7 @@ __Final Settings__
 
 __Inertial settings__
 
-1. Inertial base 
+1. __Inertial base__ 
 - pxPerTickBase: 60
 - pxPerTickEnd: 120
 - BaseCurve: (0,0), (0,0), (1,1), (1,1) 
@@ -34,7 +34,7 @@ __Inertial settings__
 - msPerStep: 220
 - dragCoefficient: 15
 - dragExponent: 1.0
-- stopSpeed: 50.0
+- stopSpeed: 50.0 <- This changed
 - > This stop speed is in line with MOS and prevents 'pixel creep'
 
 1.3. Inertial Fast comedown
@@ -42,12 +42,12 @@ __Inertial settings__
 - pxPerTickEnd: 120
 - BaseCurve: (0,0), (0,0), (1,1), (1,1) 
 - msPerStep: 220
-- dragCoefficient: 6.5
-- dragExponent: 1.2
+- dragCoefficient: 6.5 <- These 
+- dragExponent: 1.2 <-      changed
 - stopSpeed: 20.0
 - > Similar to 1. but with higher exp to make it slow down from high speed faster. (And lower coefficient to balance it out). Feels weird for some reason.
 
-2. Trackpad-style
+2. __Trackpad-style__
 - pxPerTickBase: 60
 - pxPerTickEnd: 160
 - BaseCurve: (0,0), (0,0), (1,1), (1,1) 
@@ -63,7 +63,7 @@ __Inertial settings__
 - BaseCurve: (0,0), (0,0), (1,1), (1,1) 
 - msPerStep: 200
 - dragCoefficient: 30
-- dragExponent: 0.7
+- dragExponent: 0.7 <- This changed
 - stopSpeed: 50
     - Edit: I just found the real GestureScrollSimulator values are 30 and 0.7 (not 0.8). That's a bummer because 0.7 is too floaty imo. 
 
@@ -72,8 +72,8 @@ __Inertial settings__
 - pxPerTickEnd: 160
 - BaseCurve: (0,0), (0,0), (1,1), (1,1) 
 - msPerStep: 200
-- dragCoefficient: 27
-- dragExponent: 0.8
+- dragCoefficient: 27 <- These changed
+- dragExponent: 0.8 <- 
 - stopSpeed: 50
     - Edit: We don't actually need to emulate the real trackpad output. Our momentumScroll phase just needs to not be noticably shorter than the Xcode generated momentum scroll. Because if it is, then the Xcode momentumScroll will get cut short (And many other apps have this problem, too). That's our only constraint I think. Since the Xcode momentum scroll is shorter and snappier than the real momentum scroll, we're in luck! We don't have to use the floaty 2.2 settings.
     -> These settings feel pretty similar to the Xcode momentum scroll to me. 
@@ -86,15 +86,15 @@ __Inertial settings__
 - pxPerTickEnd: 160
 - BaseCurve: (0,0), (0,0), (1,1), (1,1) 
 - msPerStep: 200
-- dragCoefficient: 40
-- dragExponent: 0.7
+- dragCoefficient: 40 <- 
+- dragExponent: 0.7 <- These changed
 - stopSpeed: 50
 
 2.3 Xcode momentum 3 (more snappy)
 - pxPerTickBase: 60
 - pxPerTickEnd: 160
 - BaseCurve: (0,0), (0,0), (1,1), (1,1) 
-- msPerStep: 220
+- msPerStep: 220 <- This changed
 - dragCoefficient: 40
 - dragExponent: 0.7
 - stopSpeed: 50
@@ -104,13 +104,13 @@ __Inertial settings__
 - pxPerTickBase: 60
 - pxPerTickEnd: 160
 - BaseCurve: (0,0), (0,0), (1,1), (1,1) 
-- msPerStep: 205
+- msPerStep: 205 <- This changed
 - dragCoefficient: 40
 - dragExponent: 0.7
 - stopSpeed: 50
     -> Might be placebo, but I think the 205 msPerStep makes single ticks feel nicer
 
-3. Snappy
+3. __Snappy__
 - pxPerTickBase: 60
 - pxPerTickEnd: 160
 - BaseCurve: (0,0), (0,0), (1,1), (1,1) 
@@ -120,15 +120,15 @@ __Inertial settings__
 - stopSpeed: 50
 
 3.1 Snappy 2
-- pxPerTickBase: 40
-- pxPerTickEnd: 110 
+- pxPerTickBase: 40 <- These changed
+- pxPerTickEnd: 110 <-
 - BaseCurve: (0,0), (0,0), (1,1), (1,1) 
-- msPerStep: 140
+- msPerStep: 140 <-
 - dragCoefficient: 10
 - dragExponent: 1.1
 - stopSpeed: 50
 
-4. MMF
+4. __MMF__
 - pxPerTickBase: 40
 - pxPerTickEnd: 80 
 - BaseCurve: (0,0), (0,0), (1,1), (1,1) 
@@ -136,6 +136,7 @@ __Inertial settings__
 - dragCoefficient: 20
 - dragExponent: 1.0
 - stopSpeed: 50 
+    -> This emulates the feel of the old MMF scrolling algorithm very closely
 
 ---
 
@@ -183,7 +184,12 @@ where
         ((1/screenHeightFactor)-1)*-20 if screenHeightFactor < 1
             where screenHeightFactor = actualScreenHeight / 1080
 ```
-→ Not sure if the screenHeightSummant makes sense. It's just constructed so that a screenHeightFactor of 2 creates a screenHeightSummant of 20px. 
+→ Not sure if the screenHeightSummant makes sense. It's just constructed so that 
+    ```
+    screenHeightSummant(screenHeightFactor = 1) = 0
+    screenHeightSummant(screenHeightFactor = 2) = 20
+    screenHeightSummant(screenHeightFactor = 1/x) = - screenHeightSummant(screenHeightFactor = x) –– (where x < 1)
+    ``` 
 
 Testing the formula: (calculating pxPerTickEnd values based on the formula)
 
