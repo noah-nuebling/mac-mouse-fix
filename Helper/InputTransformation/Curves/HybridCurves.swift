@@ -114,8 +114,14 @@ import CocoaLumberjackSwift
             /// Get speed at transition point
             let transitionSpeed = baseCurve.derivativeDyOverDx(atT: transitionPoint!) * targetDistance / minDuration
             
-            /// Get dragCurve at transition point
-            dragCurve = DragCurve(coefficient: dragCoefficient, exponent: dragExponent, initialSpeed: transitionSpeed, stopSpeed: stopSpeed)
+            if transitionSpeed > stopSpeed {
+            
+                /// Get dragCurve at transition point
+                dragCurve = DragCurve(coefficient: dragCoefficient, exponent: dragExponent, initialSpeed: transitionSpeed, stopSpeed: stopSpeed)
+            } else {
+                
+                DDLogWarn("transitionPoint has been found but transitionSpeed is lower than stopSpeed. So the dragCurve can't cover any distance. This likely means that the baseCurve covers then whole distance on its own exactly.")
+            }
             
         }
         
@@ -127,7 +133,7 @@ import CocoaLumberjackSwift
         
         /// Debug
         
-        DDLogDebug("\ntransition time: \(transitionTime*1000), dist: \(transitionDistance), dragTime: \(dragCurve!.timeInterval.length*1000)")
+        DDLogDebug("\ntransition time: \(transitionTime*1000), dist: \(transitionDistance), dragTime: \((dragCurve?.timeInterval.length ?? 0)*1000)")
         
         /// Store params
         
@@ -149,6 +155,14 @@ import CocoaLumberjackSwift
         
         let slopeAtT = baseCurve.derivativeDyOverDx(atT: t)
         let speedAtT = slopeAtT * baseDistance / baseDuration
+        
+        if speedAtT <= stopSpeed {
+            
+            DDLogWarn("Proposed transitionSpeed is lower than stopSpeed")
+            
+            let transitionDistance = baseCurve.sampleCurve(onAxis: Bezier.yAxis, atT: t) * baseDistance
+            return transitionDistance
+        }
         
         let dragCurve = DragCurve(coefficient: dragCoefficient, exponent: dragExponent, initialSpeed: speedAtT, stopSpeed: stopSpeed)
         let dragDistance = dragCurve.distanceInterval.length

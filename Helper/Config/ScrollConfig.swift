@@ -125,10 +125,10 @@ import CocoaLumberjackSwift
     
     // MARK: Smooth scroll
     
-    @objc var pxPerTickBase = 40 /* return smooth["pxPerStep"] as! Int */
+    @objc var pxPerTickBase = 60 /* return smooth["pxPerStep"] as! Int */
     /// ^ 60 -> Max good-feeling value, 30 -> I like this one, 10 -> Min good feeling value
     
-    @objc lazy private var pxPerTickEnd: Int = 110
+    @objc lazy private var pxPerTickEnd: Int = 48
     /// ^ 120 Works well without implicit hybrid curve acceleration
     ///     100 Works well with slight hybrid curve acceleration
     

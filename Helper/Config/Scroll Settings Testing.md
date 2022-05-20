@@ -2,6 +2,19 @@
 
 (Using BezierHybridCurve for everything)
 
+__Final Settings__
+(The settings which will appear in the app)
+
+1. Low Inertia
+
+
+2. Mid Inertia
+→ Use "3.1 Snappy 2"
+
+3. High Inertia
+→ Use "2.3 Xcode Momentum 4"
+→ If you simply switch on the "sendMomentumScrolls" setting in ScrollConfig.swift, then these settings will be automatically applied
+
 __Normal settings__
 
 We should base this off of the old MMF algorithm. -> Also use a BezierHybrid curve. No one has ever complained that the old algorithm is 'too inertial' or anything
@@ -109,3 +122,81 @@ __Inertial settings__
 - dragCoefficient: 10
 - dragExponent: 1.1
 - stopSpeed: 50
+
+3.1 Snappy 2
+- pxPerTickBase: 40
+- pxPerTickEnd: 110 
+- BaseCurve: (0,0), (0,0), (1,1), (1,1) 
+- msPerStep: 140
+- dragCoefficient: 10
+- dragExponent: 1.1
+- stopSpeed: 50
+
+4. MMF 1
+
+---
+
+__Acceleration Settings__
+
+Low acceleration
+- pxPerTickBase: 10 (Low), 30 (Mid), 60 (High)
+- pxPerTickEnd: 80
+
+Mid acceleration
+- pxPerTickBase: 30
+- pxPerTickEnd: 110
+
+High acceleration
+- pxPerTickBase: 60
+- pxPerTickEnd: 160
+
+Testing
+
+Max good-feeling pxPerTickEnd
+
+- Screensize: 2160, 2.3 Xcode Momentum 4 –– 180
+- Screensize: 2160, 3.1 Snappy 2 –– 130
+- Screensize: 1080, 2.3 Xcode Momentum 4 –– 160
+- Screensize: 1080, 3.1 Snappy 2 –– 110
+
+Min good-feeling pxPerTickEnd
+
+- Screensize: 1080, 2.3 Xcode Momentum 4 –– 80
+
+Idea for formula to calculate pxPerTickEnd: (based on the tests above)
+
+```
+pxPerTickEnd = pxPerTickEndBase * inertiaFactor + screenHeightSummant
+where
+    pxPerTickEndBase =
+        160 if pxPerTickEndSemantic = "large"
+        120 if pxPerTickEndSemantic = "medium"
+        80 if pxPerTickEndSemantic = "small"
+where
+    inertiaFactor = 
+        1 if inertia="2.3 Xcode Momentum 4"
+        2/3 if inertia="3.1 Snappy 2"
+where
+    screenHeightSummant = 
+        (screenHeightFactor-1)*20 if screenHeightFactor > 1
+        ((1/screenHeightFactor)-1)*-20 if screenHeightFactor < 1
+            where screenHeightFactor = actualScreenHeight / 1080
+```
+→ Not sure if the screenHeightSummant makes sense. It's just constructed so that a screenHeightFactor of 2 creates a screenHeightSummant of 20px. 
+
+Testing the formula: (pxPerTickEnd values based on the formula)
+
+- Screensize 2160, "3.1 Snappy 2", "small" –– 80*(2/3) + 20 = 73 –– Feels good
+- Screensize 1080, "3.1 Snappy 2", "small" –– 80*(2/3) = 53 –– Feels good
+- Screensize 2160, "3.1 Snappy 2", "large" –– 160*(2/3) + 20 = 126 –– Feels good
+- Screensize 2160, "3.1 Snappy 2", "large" –– 160*(2/3) + 20 = 126 –– Feels good
+- Screensize 846, "3.1 Snappy 2", "large" –– 160*(2/3) - 5 = 102 –– Feels good
+- Screensize 846, "3.1 Snappy 2", "large" –– 80*(2/3) - 5 = 48 –– Feels good
+
+---
+
+__Notes__
+
+- Should msPerStep change as the user adjusts pxPerTick? - No I don't think so. It feels good with a constant msPerStep.
+- Should the pxPerTick options change as the user chooses different inertial feels? - Yes. The more inertia, the more do larger pxPerTick (or at least pxPerTickEnd) make sense. 
+- Should the pxPerTick options change when there is more screen real estate? - Maybe? It does feel more appropriate to use large pxPerTick (or at least pxPerTickEnd) with more screenSpace
