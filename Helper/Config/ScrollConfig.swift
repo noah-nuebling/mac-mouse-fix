@@ -128,11 +128,11 @@ import CocoaLumberjackSwift
     @objc var pxPerTickBase = 60 /* return smooth["pxPerStep"] as! Int */
     /// ^ 60 -> Max good-feeling value, 30 -> I like this one, 10 -> Min good feeling value
     
-    @objc lazy private var pxPerTickEnd: Int = 48
+    @objc lazy private var pxPerTickEnd: Int = 120
     /// ^ 120 Works well without implicit hybrid curve acceleration
     ///     100 Works well with slight hybrid curve acceleration
     
-    @objc lazy var msPerStep = 140 /* smooth["msPerStep"] as! Int */
+    @objc lazy var msPerStep = 180 /* smooth["msPerStep"] as! Int */
     
     @objc lazy var baseCurve: Bezier = { () -> Bezier in
         /// Base curve used to construct a Hybrid AnimationCurve in Scroll.m. This curve is applied before switching to a DragCurve to simulate physically accurate deceleration

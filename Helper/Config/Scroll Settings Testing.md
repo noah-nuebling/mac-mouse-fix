@@ -6,18 +6,14 @@ __Final Settings__
 (The settings which will appear in the app)
 
 1. Low Inertia
-
+-> Use "4. MMF"
 
 2. Mid Inertia
-→ Use "3.1 Snappy 2"
+→ Use "3. Snappy"
 
 3. High Inertia
 → Use "2.3 Xcode Momentum 4"
-→ If you simply switch on the "sendMomentumScrolls" setting in ScrollConfig.swift, then these settings will be automatically applied
-
-__Normal settings__
-
-We should base this off of the old MMF algorithm. -> Also use a BezierHybrid curve. No one has ever complained that the old algorithm is 'too inertial' or anything
+→ If you simply switch on the "sendMomentumScrolls" setting in ScrollConfig.swift, then the "2.3 Xcode Momentum 4" settings will be automatically applied
 
 __Inertial settings__
 
@@ -132,25 +128,23 @@ __Inertial settings__
 - dragExponent: 1.1
 - stopSpeed: 50
 
-4. MMF 1
+4. MMF
+- pxPerTickBase: 40
+- pxPerTickEnd: 80 
+- BaseCurve: (0,0), (0,0), (1,1), (1,1) 
+- msPerStep: 90
+- dragCoefficient: 20
+- dragExponent: 1.0
+- stopSpeed: 50 
 
 ---
 
 __Acceleration Settings__
 
-Low acceleration
-- pxPerTickBase: 10 (Low), 30 (Mid), 60 (High)
-- pxPerTickEnd: 80
+pxPerTickBase: 
+    10 (Low), 40 (Mid), 60 (High)
 
-Mid acceleration
-- pxPerTickBase: 30
-- pxPerTickEnd: 110
-
-High acceleration
-- pxPerTickBase: 60
-- pxPerTickEnd: 160
-
-Testing
+pxPerTickEnd:
 
 Max good-feeling pxPerTickEnd
 
@@ -163,7 +157,12 @@ Min good-feeling pxPerTickEnd
 
 - Screensize: 1080, 2.3 Xcode Momentum 4 –– 80
 
-Idea for formula to calculate pxPerTickEnd: (based on the tests above)
+MMF1-feeling pxPerTickEnd
+
+- Screensize: 846, "4. MMF" –– 80
+
+
+Formula to calculate pxPerTickEnd: (based on the tests above)
 
 ```
 pxPerTickEnd = pxPerTickEndBase * inertiaFactor + screenHeightSummant
@@ -175,7 +174,9 @@ where
 where
     inertiaFactor = 
         1 if inertia="2.3 Xcode Momentum 4"
+        3/4 if inertia="3 Snappy"
         2/3 if inertia="3.1 Snappy 2"
+        2/3 if inertia="4. MMF"
 where
     screenHeightSummant = 
         (screenHeightFactor-1)*20 if screenHeightFactor > 1
@@ -184,14 +185,17 @@ where
 ```
 → Not sure if the screenHeightSummant makes sense. It's just constructed so that a screenHeightFactor of 2 creates a screenHeightSummant of 20px. 
 
-Testing the formula: (pxPerTickEnd values based on the formula)
+Testing the formula: (calculating pxPerTickEnd values based on the formula)
 
 - Screensize 2160, "3.1 Snappy 2", "small" –– 80*(2/3) + 20 = 73 –– Feels good
 - Screensize 1080, "3.1 Snappy 2", "small" –– 80*(2/3) = 53 –– Feels good
 - Screensize 2160, "3.1 Snappy 2", "large" –– 160*(2/3) + 20 = 126 –– Feels good
-- Screensize 2160, "3.1 Snappy 2", "large" –– 160*(2/3) + 20 = 126 –– Feels good
 - Screensize 846, "3.1 Snappy 2", "large" –– 160*(2/3) - 5 = 102 –– Feels good
-- Screensize 846, "3.1 Snappy 2", "large" –– 80*(2/3) - 5 = 48 –– Feels good
+- Screensize 846, "3.1 Snappy 2", "small" –– 80*(2/3) - 5 = 48 –– Feels good
+- Screensize 846, "4. MMF", "medium" –– 120*(2/3) - 5 = 75 –– Feels good
+- Screensize 1080, "3. Snappy", "large" –– 160*(3/4) = 120 –– Feels good
+
+-> Formula seems to work well enough
 
 ---
 
