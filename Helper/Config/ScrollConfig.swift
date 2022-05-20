@@ -249,9 +249,10 @@ import CocoaLumberjackSwift
          (We use tick and step are interchangable here)
          
          HyperParameters:
-         - `dip` controls how slope (sensitivity) increases around low scrollSpeeds. The name doesn't make sense but it's easy.
-         I think this might be useful if  the basePxPerTick is very low. But for a larger basePxPerTick, it's probably fine to set it to 0
-         - If the third controlPoint shouldn't be `(xMax, yMax)`. If it was, then the slope of the extrapolated curve after xMax would be affected `accelerationDip`.
+         - `accelerationHump` controls how slope (sensitivity) increases around low scrollSpeeds. The name doesn't make sense but it's easy.
+            I think this might be useful if  the basePxPerTick is very low. But for a larger basePxPerTick, it's probably fine to set it to 0
+            - If `accelerationHump < 0`, that makes the transition between the preline and the Bezier smooth. (Makes the derivative continuous)
+         - If the third controlPoint shouldn't be `(xMax, yMax)`. If it was, then the slope of the extrapolated curve after xMax would be affected `accelerationHump`.
          */
         
         /// Define Curve
@@ -275,7 +276,6 @@ import CocoaLumberjackSwift
         
         /// Flatten out the end of the curve to prevent ridiculous pxPerTick outputs when input (tickSpeed) is very high. tickSpeed can be extremely high despite smoothing, because our time measurements of when ticks occur are very imprecise
         let x3: Double = (xMax-xMin)*0.9
-        //        let y3: Double = (yMax-yMin)*0.9
         let y3: Double = yMax
         
         typealias P = Bezier.Point

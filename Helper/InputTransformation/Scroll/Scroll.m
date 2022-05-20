@@ -322,6 +322,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         
     }
     
+    ///
     /// Get effective direction
     ///  -> With user settings etc. applied
     
@@ -333,11 +334,43 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     /// Make scrollDelta positive, now that we have scrollDirection stored
     scrollDelta = llabs(scrollDelta);
     
-    /// Get distance to scroll
-    int64_t pxToScrollForThisTick = getPxPerTick(scrollAnalysisResult.timeBetweenTicks, scrollDelta);
+    ///
+    /// Apply Acceleration (Get pxToScrollForThisTick
+    ///
     
-    /// Apply fast scroll to distance
+    /// @discussion See the RawAccel guide for more info on acceleration curves https://github.com/a1xd/rawaccel/blob/master/doc/Guide.md
+    ///     -> Edit: Their whole shtick is to make the outputSpeed(inputSpeed) curve smooth. This is relatively hard and I don't think this would be noticable for scrolling. Instead we simply define a sens(inputSpeed) curve using a Bezier curve.
+    
+    int64_t pxToScrollForThisTick;
+    
+    if (_scrollConfig.useAppleAcceleration) {
         
+        pxToScrollForThisTick = scrollDelta;
+        
+    } else {
+        
+        /// Get scroll speed
+        
+        double timeBetweenTicks = scrollAnalysisResult.timeBetweenTicks;
+        timeBetweenTicks = CLIP(timeBetweenTicks, 0, _scrollConfig.consecutiveScrollTickIntervalMax);
+        
+        double scrollSpeed = 1/timeBetweenTicks; /// In tick/s
+
+        /// Evaluate acceleration curve
+        double pxForThisTickDouble = [_scrollConfig.accelerationCurve() evaluateAt:scrollSpeed]; /// In px/s
+        pxToScrollForThisTick = pxForThisTickDouble; /// We could use a SubPixelator balance out the rounding errors, but I don't think that'll be noticable
+        
+        /// Validate
+        if (pxToScrollForThisTick <= 0) {
+            DDLogError(@"pxForThisTick is smaller equal 0. This is invalid. Exiting. scrollSpeed: %f, pxForThisTick: %lld", scrollSpeed, pxToScrollForThisTick);
+            assert(false);
+        }
+    }
+    
+    ///
+    /// Apply fast scroll to pxToScrollForThisTick
+    ///
+    
     /// Get fast scroll config
     int64_t fsThreshold = _scrollConfig.fastScrollThreshold_inSwipes;
     double fsFactor = _scrollConfig.fastScrollFactor;
@@ -357,7 +390,9 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     
     DDLogDebug(@"timeBetweenTicks: %f, timeBetweenTicksRaw: %f, diff: %f, ticks: %lld", scrollAnalysisResult.timeBetweenTicks, scrollAnalysisResult.timeBetweenTicksRaw, scrollAnalysisResult.timeBetweenTicks - scrollAnalysisResult.timeBetweenTicksRaw, scrollAnalysisResult.consecutiveScrollTickCounter);
     
+    ///
     /// Send scroll events
+    ///
     
     if (pxToScrollForThisTick == 0) {
         
@@ -477,37 +512,6 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     }
     
     CFRelease(event);
-}
-
-static int64_t getPxPerTick(CFTimeInterval timeBetweenTicks, int64_t cgEventScrollDeltaPoint) {
-    
-    /// TODO: Update this
-    
-    /// @discussion See the RawAccel guide for more info on acceleration curves https://github.com/a1xd/rawaccel/blob/master/doc/Guide.md
-    ///     -> Edit: I read up on it and I don't see why the sensitivity-based approach that RawAccel uses is useful.
-    ///     They define the base curve as for sensitivity, but then go through complex maths and many hurdles to make the implied outputVelocity(inputVelocity) function and its derivative smooth. Because that is what makes the acceleration feel predictable and nice. (See their "Gain" algorithm)
-    ///     Then why not just define the the outputVelocity(inputVelocity) curve to be a smooth curve to begin with? Why does sensitivity matter? It doesn't make sens to me.
-    ///     I'm just gonna use a BezierCurve to define the outputVelocity(inputVelocity) curve. Then I'll extrapolate the curve linearly at the end, so its defined everywhere. That is guaranteed to be smooth and easy to configure.
-    ///     Edit: Actuallyyy we ended up outputting pixels to scroll for a given tick here (so sensitivity), not speed. I don't think perfectly smooth curves are that important. This is good enough and is more easy and natural to think about and configure.
-    
-    if (_scrollConfig.useAppleAcceleration)
-        return llabs(cgEventScrollDeltaPoint);
-    
-    /// Get speed
-    if (timeBetweenTicks == DBL_MAX) timeBetweenTicks = _scrollConfig.consecutiveScrollTickIntervalMax;
-    double scrollSpeed = 1/timeBetweenTicks; /// In tick/s
-
-    /// Get px to scroll from acceleration curve
-    double pxForThisTick = [_scrollConfig.accelerationCurve() evaluateAt:scrollSpeed]; /// In px/s
-    
-    /// Validate
-    if (pxForThisTick <= 0) {
-        DDLogError(@"pxForThisTick is smaller equal 0. This is invalid. Exiting. scrollSpeed: %f, pxForThisTick: %f", scrollSpeed, pxForThisTick);
-        assert(false);
-    }
-    
-    /// Return
-    return (int64_t)pxForThisTick; /// We could use a SubPixelator balance out the rounding errors, but I don't think that'll be noticable
 }
 
 static void sendScroll(int64_t px, MFDirection scrollDirection, BOOL gesture, MFAnimationCallbackPhase animationPhase, MFHybridSubCurvePhase subCurvePhase) {
