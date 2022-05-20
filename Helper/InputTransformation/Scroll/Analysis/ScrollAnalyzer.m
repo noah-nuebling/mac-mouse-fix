@@ -26,7 +26,7 @@
         
         /// Setup smoothing algorithm for `timeBetweenTicks`
         
-//        _tickTimeSmoother = [[RollingAverage alloc] initWithCapacity:3]; /// Capacity 1 turns off smoothing
+        _tickTimeSmoother = [[RollingAverage alloc] initWithCapacity:3]; /// Capacity 1 turns off smoothing
         /// ^ No smoothing feels the best.
         ///     - Without smoothing, there will somemtimes randomly be extremely small `timeSinceLastTick` values. I was worried that these would overdrive the acceleration curve, producing extremely high `pxToScrollForThisTick` values at random. But since we've capped the acceleration curve to a maximum `pxToScrollForThisTick` this isn't a noticable issue anymore.
         ///     - No smoothing is way more responsive than RollingAverage
@@ -34,8 +34,8 @@
         ///     - We could try if a light exponential smoothing would feel better, but this is good enought for now
         ///     Edit: I do prefer the smoothness over the responsiveness now. Like a LOT. Capacity 3 works well.
         
-        _tickTimeSmoother = [[ExponentialSmoother alloc] initWithA:_scrollConfig.ticksPerSecond_ExponentialSmoothing_InputValueWeight];
-        /// ^ Light exponential smoothing is also worse than no smoothing at all. The loss in responsiveness is not worth the added "stability"z   imo
+//        _tickTimeSmoother = [[ExponentialSmoother alloc] initWithA:_scrollConfig.ticksPerSecond_ExponentialSmoothing_InputValueWeight];
+        /// ^ Light exponential smoothing is also worse than no smoothing at all. The loss in responsiveness is not worth the added "stability" imo
         
     }
 }
@@ -87,7 +87,7 @@ static int _consecutiveScrollSwipeCounter_ForFreeScrollWheel;
     /// Get seconds since last tick
     double secondsSinceLastTick = thisScrollTickTimeStamp - _previousScrollTickTimeStamp;
     /// Get timeout
-    BOOL didTimeOut = secondsSinceLastTick > scrollConfig.consecutiveScrollTickIntervalMax;
+    BOOL didTimeOut = secondsSinceLastTick > scrollConfig.consecutiveScrollTickIntervalMax; /// Should secondsSinceLastTick be smoothed before the comparison?
     
     return didTimeOut;
 }
@@ -95,8 +95,8 @@ static int _consecutiveScrollSwipeCounter_ForFreeScrollWheel;
 /// This is the main input function which should be called on each scrollwheel tick event
 + (ScrollAnalysisResult)updateWithTickOccuringAt:(CFTimeInterval)thisScrollTickTimeStamp withDirection:(MFDirection)direction withConfig:(ScrollConfig *)scrollConfig {
     
-    /// Update directionDidChange
-    ///     Checks whether the scrolling direction is different from when this function was last called. Writes result into `_scrollDirectionDidChange`.
+    /// Update scrollDirectionDidChange
+    ///     Checks whether the scrolling direction is different from when this function was last called.
     
     BOOL scrollDirectionDidChange = NO;
     
@@ -113,11 +113,11 @@ static int _consecutiveScrollSwipeCounter_ForFreeScrollWheel;
     /// Get raw seconds since last tick
     double secondsSinceLastTick = thisScrollTickTimeStamp - _previousScrollTickTimeStamp;
     
-    /// Clip time since last tick to >= 15ms
-    ///     15ms seemst to be smallest that you can naturally produce, but when performance drops, the secondsSinceLastTick that we see can be much smaller sometimes.
+    /// Clip time since last tick to realistic value
     ///     We're also addressing this issue by capping the acceleration curve (See `consecutiveScrollTickInterval_AccelerationEnd`), but capping the timeBetweenTicks here let's us be more free with the acceleration curve.
-    if (secondsSinceLastTick < 15/1000) {
-        secondsSinceLastTick = 15/1000;
+    
+    if (secondsSinceLastTick < scrollConfig.consecutiveScrollTickIntervalMin) {
+        secondsSinceLastTick = scrollConfig.consecutiveScrollTickIntervalMin;
     }
     
     /// Update consecutive tick and swipe counters

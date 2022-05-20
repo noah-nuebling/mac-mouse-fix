@@ -94,6 +94,11 @@ import CocoaLumberjackSwift
     ///        other["consecutiveScrollTickIntervalMax"] as! Double;
     ///     msPerStep/1000 <- Good idea but we don't want this to depend on msPerStep
     
+    @objc lazy var consecutiveScrollTickIntervalMin: TimeInterval = 15/1000
+    /// ^ 15ms seemst to be smallest scrollTickInterval that you can naturally produce. But when performance drops, the scrollTickIntervals that we see can be much smaller sometimes.
+    ///     This variable can be used to cap the observed scrollTickInterval to a reasonable value
+    
+    
     @objc lazy var consecutiveScrollSwipeMaxInterval: TimeInterval = 350/1000
     /// ^ If more than `_consecutiveScrollSwipeIntervalMax` seconds passes between two scrollwheel swipes, then they aren't deemed consecutive.
     ///        other["consecutiveScrollSwipeIntervalMax"] as! Double
@@ -178,7 +183,7 @@ import CocoaLumberjackSwift
     @objc lazy var useAppleAcceleration = false
     /// ^ Ignore MMF acceleration algorithm and use values provided by macOS
     
-    @objc lazy var accelerationHump = -0.2
+    @objc lazy var accelerationHump = -0.0
     /// ^ Between -1 and 1
     ///     Negative values make the curve continuous, and more predictable (might be placebo)
     
@@ -275,15 +280,16 @@ import CocoaLumberjackSwift
         }
         
         /// Flatten out the end of the curve to prevent ridiculous pxPerTick outputs when input (tickSpeed) is very high. tickSpeed can be extremely high despite smoothing, because our time measurements of when ticks occur are very imprecise
-        let x3: Double = (xMax-xMin)*0.9
+        ///     Edit: Turn off flattening by making x3 = xMax. Do this because currenlty `consecutiveScrollTickIntervalMin == consecutiveScrollTickInterval_AccelerationEnd`, and therefore the extrapolated curve after xMax will never be used anyways -> I think this feels much nicer!
+        let x3: Double = xMax /*(xMax-xMin)*0.9 + xMin*/
         let y3: Double = yMax
         
         typealias P = Bezier.Point
-        return AccelerationBezier.init(controlPoints:
-                                        [P(x:xMin, y: yMin),
-                                         P(x:x2, y: y2),
-                                         P(x: x3, y: y3),
-                                         P(x: xMax, y: yMax)])
+        return AccelerationBezier(controlPoints:
+                                    [P(x: xMin, y: yMin),
+                                     P(x: x2, y: y2),
+                                     P(x: x3, y: y3),
+                                     P(x: xMax, y: yMax)])
     }
     
 }
