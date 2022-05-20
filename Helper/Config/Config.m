@@ -21,6 +21,7 @@
 #import "Constants.h"
 #import "TransformationUtility.h"
 #import "HelperUtility.h"
+#import "Mac_Mouse_Fix_Helper-Swift.h"
 
 @implementation Config
 
@@ -65,6 +66,7 @@ static NSMutableDictionary *_configWithAppOverridesApplied;
     [Config applyOverridesForAppUnderMousePointer_Force:YES]; // Doing this to force update of internal state, even the active app hastn't chaged
 //    _configFileChanged = NO;
     [TransformationManager loadRemapsFromConfig];
+    [ScrollConfig deleteCache];
 }
 
 /// Load contents of config.plist file into this class' config property

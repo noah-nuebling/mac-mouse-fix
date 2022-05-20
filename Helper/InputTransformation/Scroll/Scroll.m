@@ -245,7 +245,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         
         /// Update scrollConfig
         
-        _scrollConfig = [ScrollConfig currentConfig];
+        _scrollConfig = [ScrollConfig.currentConfig copy];
         
 #pragma mark Override config
         

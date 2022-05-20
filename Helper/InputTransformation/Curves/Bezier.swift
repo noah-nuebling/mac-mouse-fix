@@ -52,7 +52,7 @@ import ReactiveSwift
 /// Paper which containts info on how to differentiate the De Casteljau formula
 ///     https://www.clear.rice.edu/comp360/lectures/old/BezText.pdf
 
-@objc class Bezier: NSObject, AnimationCurve {
+@objc class Bezier: NSObject, AnimationCurve, NSCopying {
 
     typealias Point = Vector;
     static let xAxis = kMFAxisHorizontal
@@ -60,7 +60,7 @@ import ReactiveSwift
     let xAxis = Bezier.xAxis
     let yAxis = Bezier.yAxis
     
-    // Control points
+    /// Control points
     
     let controlPoints: [Point]
     let controlPointsX: [Double]
@@ -72,9 +72,9 @@ import ReactiveSwift
         return [] // This will never happen. Just to silence compiler
     }
     
-    // Polynomial coefficients
+    /// Polynomial coefficients
     
-    var polynomialCoefficients: [Point] // Needs to be var to fill it based on other instance properties in initializer bc Swift is weird
+    var polynomialCoefficients: [Point] /// Needs to be var to fill it based on other instance properties in initializer bc Swift is weird
     var polynomialCoefficientsX: [Double]
     var polynomialCoefficientsY: [Double]
     func polynomialCoefficients(_ axis: MFAxis) -> [Double] {
@@ -129,7 +129,7 @@ import ReactiveSwift
         }
     }
     
-    // Objc compatible wrappers for the Swift init functions
+    /// Objc compatible wrappers for the Swift init functions
     
     @objc convenience init(controlPointsAsArrays: [[Double]],
                                xInterval: Interval = .unitInterval,
@@ -146,7 +146,7 @@ import ReactiveSwift
         self.init(controlPoints: controlPoints)
     }
     
-    // Swift init
+    /// Swift init
     
     convenience init(controlPoints: [Point],
                      defaultEpsilon: Double = 0.08,
@@ -287,6 +287,27 @@ import ReactiveSwift
             self.polynomialCoefficientsY[j] = yCoefficient
             self.polynomialCoefficients[j] = Point.init(x: xCoefficient, y: yCoefficient)
         }
+    }
+    
+    /// Empty init
+    ///     For copying
+    
+    private init(copiedFrom other: Bezier, withZone zone: NSZone?) {
+        
+        defaultEpsilon = other.defaultEpsilon
+        controlPoints = other.controlPoints
+        controlPointsX = other.controlPointsX
+        controlPointsY = other.controlPointsY
+        polynomialCoefficients = other.polynomialCoefficients
+        polynomialCoefficientsX = other.polynomialCoefficientsX
+        polynomialCoefficientsY = other.polynomialCoefficientsY
+        xValueRange = other.xValueRange.copy(with: zone) as! Interval
+    }
+    
+    /// Copying
+    
+    func copy(with zone: NSZone? = nil) -> Any {
+        return Bezier(copiedFrom: self, withZone: zone)
     }
     
     // MARK: Sample curve

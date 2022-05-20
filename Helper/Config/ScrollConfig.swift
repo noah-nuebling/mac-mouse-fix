@@ -10,11 +10,34 @@
 import Cocoa
 import CocoaLumberjackSwift
 
-@objc class ScrollConfig: NSObject {
+@objc class ScrollConfig: NSObject, NSCopying /*, NSCoding*/ {
+    
+    
+    
     /// This class has almost all instance properties
     /// You can request the config once, then store it.
     /// You'll receive an independent instance that you can override with custom values. This should be useful for implementing Modifications in Scroll.m
     ///     Everything in ScrollConfigResult is lazy so that you only pay for what you actually use
+    
+    // MARK: Class functions
+    
+    @objc static var currentConfig = ScrollConfig() /// Singleton instance
+    @objc static func deleteCache() { /// This should be called when the underlying config (which mirrors the config file) changes
+        currentConfig = ScrollConfig() /// All the property values are cached in `currentConfig`, because the properties are lazy. Replacing with a fresh object deletes this implicit cache.
+    }
+    
+    @objc static var linearCurve: Bezier = { () -> Bezier in
+        
+        typealias P = Bezier.Point
+        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:1,y:1), P(x:1,y:1)]
+        
+        return Bezier(controlPoints: controlPoints, defaultEpsilon: 0.001) /// The default defaultEpsilon 0.08 makes the animations choppy
+    }()
+    
+    @objc static var stringToEventFlagMask: NSDictionary = ["command" : CGEventFlags.maskCommand,
+                                                            "control" : CGEventFlags.maskControl,
+                                                            "option" : CGEventFlags.maskAlternate,
+                                                            "shift" : CGEventFlags.maskShift]
     
     // MARK: Convenience functions
     ///     For accessing top level dict and different sub-dicts
@@ -32,29 +55,10 @@ import CocoaLumberjackSwift
         topLevel["modifierKeys"] as! NSDictionary
     }
     
-    // MARK: Class functions
-    
-    @objc static func currentConfig() -> ScrollConfig {
-        return ScrollConfig()
-    }
-    
-    @objc static var linearCurve: Bezier = { () -> Bezier in
-        
-        typealias P = Bezier.Point
-        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:1,y:1), P(x:1,y:1)]
-        
-        return Bezier(controlPoints: controlPoints, defaultEpsilon: 0.001) /// The default defaultEpsilon 0.08 makes the animations choppy
-    }()
-    
-    @objc static var stringToEventFlagMask: NSDictionary = ["command" : CGEventFlags.maskCommand,
-                                                            "control" : CGEventFlags.maskControl,
-                                                            "option" : CGEventFlags.maskAlternate,
-                                                            "shift" : CGEventFlags.maskShift]
-    
     // MARK: General
     
     @objc lazy var smoothEnabled: Bool = true /* ScrollConfig.topLevel["smooth"] as! Bool */
-    @objc lazy var disableAll: Bool = topLevel["disableAll"] as! Bool /// This is currently unused. Could be used as a killswitch for all scrolling Interception
+    @objc lazy var disableAll: Bool = false /* topLevel["disableAll"] as! Bool */ /// This is currently unused. Could be used as a killswitch for all scrolling Interception
     
     // MARK: Invert Direction
     
@@ -130,16 +134,14 @@ import CocoaLumberjackSwift
     
     // MARK: Smooth scroll
     
-    @objc var pxPerTickBase = 10 /* return smooth["pxPerStep"] as! Int */
-    /// ^ 60 -> Max good-feeling value, 30 -> I like this one, 10 -> Min good feeling value
+    @objc var pxPerTickBase = 40 /* return smooth["pxPerStep"] as! Int */
     
-    @objc lazy private var pxPerTickEnd: Int = 130
+    @objc lazy private var pxPerTickEnd: Int = 80
     
-    @objc lazy var msPerStep = 180 /* smooth["msPerStep"] as! Int */
+    @objc lazy var msPerStep = 90 /* smooth["msPerStep"] as! Int */
     
     @objc lazy var baseCurve: Bezier = { () -> Bezier in
         /// Base curve used to construct a Hybrid AnimationCurve in Scroll.m. This curve is applied before switching to a DragCurve to simulate physically accurate deceleration
-        /// Using a closure here instead of DerivedProperty.create_kvc(), because we know it will never change.
         typealias P = Bezier.Point
         
         let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:1,y:1), P(x:1,y:1)] /// Straight line
@@ -155,11 +157,11 @@ import CocoaLumberjackSwift
     }()
     
     @objc lazy var stopSpeed = 50.0
-    @objc lazy var dragExponent = 1.1 /* smooth["frictionDepth"] as! Double */
-    @objc lazy var dragCoefficient = 10.0 /* smooth["friction"] as! Double */
+    @objc lazy var dragExponent = 1.0 /* smooth["frictionDepth"] as! Double */
+    @objc lazy var dragCoefficient = 20.0 /* smooth["friction"] as! Double */
     /// ^ Defines the Drag subcurve of the default Hybrid curve used for scrollwheel scrolling in Scroll.m. (When we're not sending momentumScrolls)
     
-    @objc lazy var sendMomentumScrolls = true
+    @objc lazy var sendMomentumScrolls = false
     
     @objc let momentumStopSpeed = 50
     @objc let momentumDragExponent = 0.7
@@ -188,20 +190,7 @@ import CocoaLumberjackSwift
     
     @objc lazy var accelerationCurve = standardAccelerationCurve
     
-    @objc lazy var standardAccelerationCurve: (() -> AccelerationBezier) =
-    DerivedProperty.create_kvc(on:
-                                self,
-                               given: [
-                                #keyPath(pxPerTickBase),
-                                #keyPath(pxPerTickEnd),
-                                #keyPath(consecutiveScrollTickIntervalMax),
-                                #keyPath(consecutiveScrollTickInterval_AccelerationEnd),
-                                #keyPath(accelerationHump)
-                               ])
-    { () -> AccelerationBezier in
-        
-        /// I'm not sure that using a derived property instead of just re-calculating the curve everytime is faster.
-        ///     Edit: I tested it and using DerivedProperty seems slightly faster
+    @objc lazy var standardAccelerationCurve = { () -> AccelerationBezier in
         
         return ScrollConfig.accelerationCurveFromParams(pxPerTickBase:                                   self.pxPerTickBase,
                                                         pxPerTickEnd:                                    self.pxPerTickEnd,
@@ -290,6 +279,69 @@ import CocoaLumberjackSwift
                                      P(x: x3, y: y3),
                                      P(x: xMax, y: yMax)])
     }
+    
+    /// Copying
+    ///     Why is there no simple default "shallowCopy" method for objects??
+    ///     Be careful not to mutate anything in the copy because it mostly holds references
+    
+    func copy(with zone: NSZone? = nil) -> Any {
+        
+        /// Create new instance
+        let copy = ScrollConfig()
+        
+        /// Iterate properties
+        ///     And copy the values over to the new instance
+        
+        var numberOfProperties: UInt32 = 0
+        let propertyList = class_copyPropertyList(ScrollConfig.self, &numberOfProperties)
+        
+        guard let propertyList = propertyList else { fatalError() }
+        
+        for i in 0..<(Int(numberOfProperties)) {
+            
+            let property = propertyList[i]
+            
+            /// Get property name
+            let propertyNameC = property_getName(property)
+            let propertyName = String(cString: propertyNameC)
+            
+            /// Debug
+            DDLogDebug("Property: \(propertyName)")
+            
+            /// Check if property is readOnly
+            var isReadOnly = false
+            let readOnlyAttributeValue = property_copyAttributeValue(property, "R".cString(using: .utf8)!)
+            isReadOnly = readOnlyAttributeValue != nil
+            
+            /// Skip copying this property if it's readonly
+            if isReadOnly {
+                /// Debug
+                DDLogDebug(" ... is readonly")
+                /// Do skip
+                continue
+            }
+            /// Copy over old value
+            
+            var oldValue = self.value(forKey: propertyName)
+            
+            if oldValue != nil {
+                /// Make a copy of the oldValue if possible
+                ///     Actually that should be unnecessary since we only override, not mutate the values
+//                if let copyingOldValue = oldValue as? NSCopying {
+//                    oldValue = copyingOldValue.copy()
+//                } else {
+//                    DDLogDebug("Not copying property: \(propertyName): \(oldValue)")
+//                }
+                copy.setValue(oldValue, forKey: propertyName)
+            }
+        }
+        
+        free(propertyList)
+        
+        return copy;
+    }
+    
+    
     
 }
 

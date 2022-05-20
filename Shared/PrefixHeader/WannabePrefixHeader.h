@@ -31,8 +31,8 @@
 #if DEBUG
 static DDLogLevel ddLogLevel = DDLogLevelDebug; // These definitions might make more sense in Constants.h
 #else
-//static DDLogLevel ddLogLevel = DDLogLevelInfo;
-static DDLogLevel ddLogLevel = DDLogLevelOff; /// Override log level for testing
+static DDLogLevel ddLogLevel = DDLogLevelInfo;
+//static DDLogLevel ddLogLevel = DDLogLevelOff; /// Override log level for testing
 #endif
 
 #endif /* WannabePrefixHeader_h */

@@ -129,7 +129,7 @@ import CocoaLumberjackSwift
     }
 }
 
-@objc class Interval: NSObject {
+@objc class Interval: NSObject, NSCopying {
     /// - Defines an Interval of real values
     /// - Defines only closed Intervals. We don't need open or half-open intervals
     /// - Also stores a direction, which Maths Intervals don't usually do, but it's real useful for us. If the caller want to ignore this they can use `lower` and `upper` instead of `start` and `end`
@@ -180,6 +180,10 @@ import CocoaLumberjackSwift
     }
     @objc convenience init(_ a: Double, _ b: Double) {
         self.init(lower: a, upper: b)
+    }
+    
+    @objc func copy(with zone: NSZone? = nil) -> Any {
+        return Interval(start: self.start, end: self.end)
     }
     
     @objc func contains(_ value: Double) -> Bool {

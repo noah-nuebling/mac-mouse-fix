@@ -22,8 +22,8 @@ import CocoaLumberjackSwift
         #if DEBUG
         dynamicLogLevel = .debug
         #else
-//        dynamicLogLevel = .info
-        dynamicLogLevel = .off /// Override for testing
+        dynamicLogLevel = .info
+//        dynamicLogLevel = .off /// Override for testing
         #endif
         
     }
