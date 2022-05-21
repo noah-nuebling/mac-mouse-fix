@@ -6,7 +6,7 @@ __Final Settings__
 (The settings which will appear in the app)
 
 1. Low Inertia
--> Use "4. MMF"
+-> Use "4.2 MMF 3"
 
 2. Mid Inertia
 → Use "3. Snappy"
@@ -127,16 +127,37 @@ __Inertial settings__
 - dragCoefficient: 10
 - dragExponent: 1.1
 - stopSpeed: 50
+    -> This is very snappy but still sort of floaty. I like "3. Snappy" and "4.2 MMF 3" better
 
 4. __MMF__
-- pxPerTickBase: 40
-- pxPerTickEnd: 80 
+- pxPerTickBase: 60
+- pxPerTickEnd: 90
 - BaseCurve: (0,0), (0,0), (1,1), (1,1) 
-- msPerStep: 90
+- msPerStep: 110
 - dragCoefficient: 20
 - dragExponent: 1.0
 - stopSpeed: 50 
     -> This emulates the feel of the old MMF scrolling algorithm very closely
+    
+4.1 MMF 2
+- pxPerTickBase: 60
+- pxPerTickEnd: 90
+- BaseCurve: (0,0), (0,0), (1,1), (1,1) 
+- msPerStep: 140 <- These changed
+- dragCoefficient: 25 <-
+- dragExponent: 1.0
+- stopSpeed: 50 
+    -> This is very stiff, but medium speed scrolls are smoother
+    
+4.2 MMF 3
+- pxPerTickBase: 60
+- pxPerTickEnd: 90
+- BaseCurve: (0,0), (0,0), (1,1), (1,1) 
+- msPerStep: 140
+- dragCoefficient: 23 <- This changed
+- dragExponent: 1.0
+- stopSpeed: 50 
+    -> Little bit less stiff 
 
 ---
 
@@ -170,13 +191,12 @@ pxPerTickEnd = pxPerTickEndBase * inertiaFactor + screenHeightSummant
 where
     pxPerTickEndBase =
         160 if pxPerTickEndSemantic = "large"   (180 is good after making acceleration curve linear)
-        120 if pxPerTickEndSemantic = "medium"  (120 might be good after making acceleration curve linear)
-        80 if pxPerTickEndSemantic = "small"    (90 might be good after making acceleration curve linear)
+        120 if pxPerTickEndSemantic = "medium"  (130 or 140 might be better after making acceleration curve linear)
+        80 if pxPerTickEndSemantic = "small"    (90 might be better after making acceleration curve linear)
 where
     inertiaFactor = 
         1 if inertia="2.3 Xcode Momentum 4"
         3/4 if inertia="3 Snappy"
-        2/3 if inertia="3.1 Snappy 2"
         2/3 if inertia="4. MMF"
 where
     screenHeightSummant = 
