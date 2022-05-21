@@ -262,7 +262,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             _scrollConfig.accelerationCurve = _scrollConfig.quickAccelerationCurve;
             
             /// Set animationCurve
-            _scrollConfig.animationCurveParams = [_scrollConfig animationCurveParamsWithPreset:kMFScrollAnimationCurvePresetQuickScroll];
+            _scrollConfig.animationCurveParams = [_scrollConfig animationCurveParamsForPreset:kMFScrollAnimationCurvePresetQuickScroll];
             
             /// Make fast scroll easy to trigger
             _scrollConfig.consecutiveScrollSwipeMaxInterval *= 1.2;
@@ -279,7 +279,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             _scrollConfig.accelerationCurve = _scrollConfig.preciseAccelerationCurve;
             
             /// Set animationCurve
-            _scrollConfig.animationCurveParams = [_scrollConfig animationCurveParamsWithPreset:kMFScrollAnimationCurvePresetPreciseScroll];
+            _scrollConfig.animationCurveParams = [_scrollConfig animationCurveParamsForPreset:kMFScrollAnimationCurvePresetPreciseScroll];
             
             /// Turn off fast scroll
             _scrollConfig.fastScrollThreshold_inSwipes = 69; /// This is the haha sex number
@@ -289,7 +289,10 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         } else if (_modifications.inputMod == kMFScrollInputModificationNone) {
             
             /// Set default acceleration curve
-            _scrollConfig.accelerationCurve = _scrollConfig.standardAccelerationCurve;
+            CGDirectDisplayID displayUnderMousePointer;
+            [HelperUtility displayUnderMousePointer:&displayUnderMousePointer withEvent:event];
+            size_t displayHeight = CGDisplayPixelsHigh(displayUnderMousePointer);
+            _scrollConfig.accelerationCurve = [_scrollConfig accelerationCurveWithScreenHeight:displayHeight];
             
         } else {
             assert(false);
@@ -304,13 +307,13 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             
             _scrollConfig.smoothEnabled = YES;
             /// Override animation curve
-            _scrollConfig.animationCurveParams = [_scrollConfig animationCurveParamsWithPreset:kMFScrollAnimationCurvePresetTouchDriver];
+            _scrollConfig.animationCurveParams = [_scrollConfig animationCurveParamsForPreset:kMFScrollAnimationCurvePresetTouchDriver];
             
         } else if (_modifications.effectMod == kMFScrollEffectModificationRotate) {
             
             _scrollConfig.smoothEnabled = YES;
             /// Override animation curve
-            _scrollConfig.animationCurveParams = [_scrollConfig animationCurveParamsWithPreset:kMFScrollAnimationCurvePresetTouchDriver];
+            _scrollConfig.animationCurveParams = [_scrollConfig animationCurveParamsForPreset:kMFScrollAnimationCurvePresetTouchDriver];
             
         } else if (_modifications.effectMod == kMFScrollEffectModificationCommandTab) {
             
@@ -320,13 +323,13 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             
             _scrollConfig.smoothEnabled = YES;
             /// Override animation curve
-            _scrollConfig.animationCurveParams = [_scrollConfig animationCurveParamsWithPreset:kMFScrollAnimationCurvePresetTouchDriverLinear];
+            _scrollConfig.animationCurveParams = [_scrollConfig animationCurveParamsForPreset:kMFScrollAnimationCurvePresetTouchDriverLinear];
             
         } else if (_modifications.effectMod == kMFScrollEffectModificationFourFingerPinch) {
             
             _scrollConfig.smoothEnabled = YES;
             /// Override animation curve
-            _scrollConfig.animationCurveParams = [_scrollConfig animationCurveParamsWithPreset:kMFScrollAnimationCurvePresetTouchDriverLinear];
+            _scrollConfig.animationCurveParams = [_scrollConfig animationCurveParamsForPreset:kMFScrollAnimationCurvePresetTouchDriverLinear];
             
         } else if (_modifications.effectMod == kMFScrollEffectModificationNone) {
         } else {
@@ -370,7 +373,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         double scrollSpeed = 1/timeBetweenTicks; /// In tick/s
 
         /// Evaluate acceleration curve
-        double pxForThisTickDouble = [_scrollConfig.accelerationCurve() evaluateAt:scrollSpeed]; /// In px/s
+        double pxForThisTickDouble = [_scrollConfig.accelerationCurve evaluateAt:scrollSpeed]; /// In px/s
         pxToScrollForThisTick = pxForThisTickDouble; /// We could use a SubPixelator balance out the rounding errors, but I don't think that'll be noticable
         
         /// Validate

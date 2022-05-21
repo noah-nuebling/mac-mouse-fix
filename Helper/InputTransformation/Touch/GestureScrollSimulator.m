@@ -197,7 +197,7 @@ void postGestureScrollEvent_Internal(int64_t dx, int64_t dy, IOHIDEventPhaseBits
             /// Get momentum scroll params
             
             ScrollConfig *config = [ScrollConfig copyOfConfig];
-            MFScrollAnimationCurveParameters *trackpadParams = [config animationCurveParamsWithPreset:kMFScrollAnimationCurvePresetTrackpad]; /// This is a really stupid way to access the Trackpad params. TODO: Find a better way (e.g. just hardcode them or make `- animationCurveParamsWithPreset:` a class function)
+            MFScrollAnimationCurveParameters *trackpadParams = [config animationCurveParamsForPreset:kMFScrollAnimationCurvePresetTrackpad]; /// This is a really stupid way to access the Trackpad params. TODO: Find a better way (e.g. just hardcode them or make `- animationCurveParamsForPreset:` a class function)
             
             double stopSpeed = trackpadParams.stopSpeed;
             double dragCoeff = trackpadParams.dragCoefficient;

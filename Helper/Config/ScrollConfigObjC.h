@@ -38,7 +38,7 @@ typedef enum {
     ///  The user can choose these options in the UI
     
     kMFScrollAnimationCurvePresetLowInertia,
-    kMFScrollAnimationCurvePresetMidInertia,
+    kMFScrollAnimationCurvePresetMediumInertia,
     kMFScrollAnimationCurvePresetHighInertia,
     
     /// Modifier overrides
@@ -55,5 +55,21 @@ typedef enum {
     kMFScrollAnimationCurvePresetTrackpad,
     
 } MFScrollAnimationCurvePreset;
+
+typedef enum {
+    
+    kMFScrollAccelerationLow,
+    kMFScrollAccelerationMedium,
+    kMFScrollAccelerationHigh
+    
+} MFScrollAcceleration;
+
+typedef enum {
+    
+    kMFScrollSensitivityLow,
+    kMFScrollSensitivityMedium,
+    kMFScrollSensitivityHigh
+    
+} MFScrollSensitivity;
 
 NS_ASSUME_NONNULL_END

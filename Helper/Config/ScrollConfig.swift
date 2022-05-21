@@ -162,7 +162,7 @@ import CocoaLumberjackSwift
     
     /// Define function that maps preset -> params
     
-    @objc func animationCurveParams(withPreset preset: MFScrollAnimationCurvePreset) -> MFScrollAnimationCurveParameters {
+    @objc func animationCurveParams(forPreset preset: MFScrollAnimationCurvePreset) -> MFScrollAnimationCurveParameters {
         
         /// For the origin behind these presets see ScrollConfigTesting.md
         /// @note I just checked the formulas on Desmos, and I don't get how this can work with 0.7 as the exponent? (But it does??) If the value is `< 1.0` that gives a completely different curve that speeds up over time, instead of slowing down.
@@ -174,7 +174,7 @@ import CocoaLumberjackSwift
         case kMFScrollAnimationCurvePresetLowInertia:
             return MFScrollAnimationCurveParameters(msPerStep: 140, baseCurve: ScrollConfig.linearCurve, dragExponent: 1.0, dragCoefficient: 23, stopSpeed: 50, sendMomentumScrolls: false)
             
-        case kMFScrollAnimationCurvePresetMidInertia:
+        case kMFScrollAnimationCurvePresetMediumInertia:
             return MFScrollAnimationCurveParameters(msPerStep: 180, baseCurve: ScrollConfig.linearCurve, dragExponent: 1.1, dragCoefficient: 10, stopSpeed: 50, sendMomentumScrolls: false)
             
         case kMFScrollAnimationCurvePresetHighInertia:
@@ -210,52 +210,144 @@ import CocoaLumberjackSwift
         }
     }
     
-    /// Stored preset and params
-    
+    /// User setting
     @objc lazy var userSelectedAnimationCurvePreset = kMFScrollAnimationCurvePresetHighInertia
-    @objc lazy var animationCurveParams = { self.animationCurveParams(withPreset: self.userSelectedAnimationCurvePreset) }() /// Meant to be overwritten dynamically in Scroll.m depending on activeModifiers
+    
+    /// Stored params
+    @objc lazy var animationCurveParams = { self.animationCurveParams(forPreset: self.userSelectedAnimationCurvePreset) }() /// Meant to be overwritten dynamically in Scroll.m depending on activeModifiers
     
     
     // MARK: Acceleration
     
-    @objc lazy var useAppleAcceleration = false
-    /// ^ Ignore MMF acceleration algorithm and use values provided by macOS
+    /// User settings
     
-    @objc var pxPerTickBase = 60 /* return smooth["pxPerStep"] as! Int */
+    @objc lazy var useAppleAcceleration: Bool = false /// Ignore MMF acceleration algorithm and use values provided by macOS
+    @objc lazy var scrollSensitivity: MFScrollSensitivity = kMFScrollSensitivityHigh
+    @objc lazy var scrollAcceleration: MFScrollAcceleration = kMFScrollAccelerationHigh
     
-    @objc lazy private var pxPerTickEnd: Int = 170
+    /// Stored property
+    ///     This is used by Scroll.m to determine how to accelerate
     
-    @objc lazy var accelerationHump = -0.0
-    /// ^ Between -1 and 1
-    ///     Negative values make the curve continuous, and more predictable (might be placebo)
-    ///     Edit: I like 0.0 the best now. Feels more "direct"
+    @objc lazy var accelerationCurve: AccelerationBezier = standardAccelerationCurve(screenHeight: 1080) /// Initial value is unused I think
     
-    @objc lazy var accelerationCurve = standardAccelerationCurve
+    /// Define function that maps userSettings -> accelerationCurve
     
-    @objc lazy var standardAccelerationCurve = { () -> AccelerationBezier in
+    private func standardAccelerationCurve(forSensitivity sensitivity: MFScrollSensitivity, acceleration: MFScrollAcceleration, animationCurve: MFScrollAnimationCurvePreset, screenHeight: Int) -> AccelerationBezier {
         
-        return ScrollConfig.accelerationCurveFromParams(pxPerTickBase:                                   self.pxPerTickBase,
-                                                        pxPerTickEnd:                                    self.pxPerTickEnd,
-                                                        consecutiveScrollTickIntervalMax:                self.consecutiveScrollTickIntervalMax,
-                                                        consecutiveScrollTickInterval_AccelerationEnd:   self.consecutiveScrollTickInterval_AccelerationEnd,
-                                                        accelerationHump:                                self.accelerationHump)
+        ///
+        /// Get pxPerTickStart
+        ///
+        
+        let pxPerTickStart: Int
+        
+        switch sensitivity {
+        case kMFScrollSensitivityLow:
+            pxPerTickStart = 10
+        case kMFScrollSensitivityMedium:
+            pxPerTickStart = 30
+        case kMFScrollSensitivityHigh:
+            pxPerTickStart = 60
+        default:
+            fatalError()
+        }
+        
+        ///
+        /// Get pxPerTickEnd
+        ///
+        
+        /// Get base pxPerTick
+        
+        let pxPerTickEndBase: Double
+        
+        switch acceleration {
+        case kMFScrollAccelerationLow:
+            pxPerTickEndBase = 90
+        case kMFScrollAccelerationMedium:
+            pxPerTickEndBase = 140
+        case kMFScrollAccelerationHigh:
+            pxPerTickEndBase = 180
+        default:
+            fatalError()
+        }
+        
+        /// Get inertia factor
+        
+        let inertiaFactor: Double
+        
+        switch animationCurve {
+        case kMFScrollAnimationCurvePresetLowInertia:
+            inertiaFactor = 2/3
+        case kMFScrollAnimationCurvePresetMediumInertia:
+            inertiaFactor = 3/4
+        case kMFScrollAnimationCurvePresetHighInertia:
+            inertiaFactor = 1
+        default:
+            fatalError()
+        }
+        
+        /// Get screenHeight summand
+        let screenHeightSummand: Double
+        
+        let screenHeightFactor = Double(screenHeight) / 1080.0
+        
+        if screenHeightFactor >= 1 {
+            screenHeightSummand = 20*(screenHeightFactor - 1)
+        } else {
+            screenHeightSummand = -20*((1/screenHeightFactor) - 1)
+        }
+        
+        /// Put it all together to get pxPerTickEnd
+        let pxPerTickEnd = Int(pxPerTickEndBase * inertiaFactor + screenHeightSummand)
+        
+        /// Debug
+        DDLogDebug("Dynamic pxPerTickEnd: \(pxPerTickEnd)")
+        
+        ///
+        /// Get accelerationHump
+        ///
+        
+        let accelerationHump = -0.0
+        /// ^ Between -1 and 1
+        ///     Negative values make the curve continuous, and more predictable (might be placebo)
+        ///     Edit: I like 0.0 the best now. Feels more "direct" (Before I've like -0.2)
+        
+        ///
+        /// Generate curve from params
+        ///
+        
+        return ScrollConfig.accelerationCurveFromParams(pxPerTickBase: pxPerTickStart,
+                                                        pxPerTickEnd: pxPerTickEnd,
+                                                        accelerationHump: accelerationHump,
+                                                        consecutiveScrollTickIntervalMax: self.consecutiveScrollTickIntervalMax,
+                                                        consecutiveScrollTickInterval_AccelerationEnd: self.consecutiveScrollTickInterval_AccelerationEnd)
+        
     }
     
-    @objc lazy var preciseAccelerationCurve = { () -> AccelerationBezier in
+    /// Acceleration curve defnitions
+    ///     These aren't used directly but instead they are dynamically loaded into `self.accelerationCurve` by Scroll.m on each first consecutive scroll tick.
+    
+    @objc func standardAccelerationCurve(screenHeight: Int) -> AccelerationBezier {
+        
+        return self.standardAccelerationCurve(forSensitivity: self.scrollSensitivity,
+                                      acceleration: self.scrollAcceleration,
+                                      animationCurve: self.userSelectedAnimationCurvePreset,
+                                      screenHeight: screenHeight)
+    }
+    
+    @objc lazy var preciseAccelerationCurve: AccelerationBezier = { () -> AccelerationBezier in
         ScrollConfig.accelerationCurveFromParams(pxPerTickBase: 3, /// 2 is better than 3 but that leads to weird asswert failures in PixelatedAnimator that I can't be bothered to fix
                                                  pxPerTickEnd: 15,
-                                                 consecutiveScrollTickIntervalMax: self.consecutiveScrollTickIntervalMax,
-                                                 /// ^ We don't expect this to ever change so it's okay to just capture here
-                                                 consecutiveScrollTickInterval_AccelerationEnd: self.consecutiveScrollTickInterval_AccelerationEnd,
-                                                 accelerationHump: -0.2)
-    }
-    @objc lazy var quickAccelerationCurve = { () -> AccelerationBezier in
+                                                 accelerationHump: -0.0,
+                                                 consecutiveScrollTickIntervalMax: self.consecutiveScrollTickIntervalMax, /// We don't expect this to ever change so it's okay to just capture here
+                                                 consecutiveScrollTickInterval_AccelerationEnd: self.consecutiveScrollTickInterval_AccelerationEnd)
+    }()
+    @objc lazy var quickAccelerationCurve: AccelerationBezier = { () -> AccelerationBezier in
         ScrollConfig.accelerationCurveFromParams(pxPerTickBase: 80,
                                                  pxPerTickEnd: 400,
+                                                 accelerationHump: -0.0,
                                                  consecutiveScrollTickIntervalMax: self.consecutiveScrollTickIntervalMax,
-                                                 consecutiveScrollTickInterval_AccelerationEnd: self.consecutiveScrollTickInterval_AccelerationEnd,
-                                                 accelerationHump: -0.2)
-    }
+                                                 consecutiveScrollTickInterval_AccelerationEnd: self.consecutiveScrollTickInterval_AccelerationEnd)
+    }()
     
     // MARK: Keyboard modifiers
     
@@ -270,7 +362,7 @@ import CocoaLumberjackSwift
     
     // MARK: - Helper functions
     
-    fileprivate static func accelerationCurveFromParams(pxPerTickBase: Int, pxPerTickEnd: Int, consecutiveScrollTickIntervalMax: TimeInterval, consecutiveScrollTickInterval_AccelerationEnd: TimeInterval, accelerationHump: Double) -> AccelerationBezier {
+    fileprivate static func accelerationCurveFromParams(pxPerTickBase: Int, pxPerTickEnd: Int, accelerationHump: Double, consecutiveScrollTickIntervalMax: TimeInterval, consecutiveScrollTickInterval_AccelerationEnd: TimeInterval) -> AccelerationBezier {
         /**
          Define a curve describing the relationship between the scrollTickSpeed (in scrollTicks per second) (on the x-axis) and the pxPerTick (on the y axis).
          We'll call this function y(x).
