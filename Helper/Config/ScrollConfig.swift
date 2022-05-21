@@ -228,11 +228,13 @@ import CocoaLumberjackSwift
     /// Stored property
     ///     This is used by Scroll.m to determine how to accelerate
     
-    @objc lazy var accelerationCurve: AccelerationBezier = standardAccelerationCurve(screenHeight: 1080) /// Initial value is unused I think
+    @objc lazy var accelerationCurve: AccelerationBezier = standardAccelerationCurve(withScreenSize: 1080) /// Initial value is unused I think
     
     /// Define function that maps userSettings -> accelerationCurve
     
-    private func standardAccelerationCurve(forSensitivity sensitivity: MFScrollSensitivity, acceleration: MFScrollAcceleration, animationCurve: MFScrollAnimationCurvePreset, screenHeight: Int) -> AccelerationBezier {
+    private func standardAccelerationCurve(forSensitivity sensitivity: MFScrollSensitivity, acceleration: MFScrollAcceleration, animationCurve: MFScrollAnimationCurvePreset, screenSize: Int) -> AccelerationBezier {
+        /// `screenSize` should be the width/height of the screen you're scrolling on. Depending on if you're scrolling horizontally or vertically.
+        
         
         ///
         /// Get pxPerTickStart
@@ -288,7 +290,7 @@ import CocoaLumberjackSwift
         /// Get screenHeight summand
         let screenHeightSummand: Double
         
-        let screenHeightFactor = Double(screenHeight) / 1080.0
+        let screenHeightFactor = Double(screenSize) / 1080.0
         
         if screenHeightFactor >= 1 {
             screenHeightSummand = 20*(screenHeightFactor - 1)
@@ -326,12 +328,12 @@ import CocoaLumberjackSwift
     /// Acceleration curve defnitions
     ///     These aren't used directly but instead they are dynamically loaded into `self.accelerationCurve` by Scroll.m on each first consecutive scroll tick.
     
-    @objc func standardAccelerationCurve(screenHeight: Int) -> AccelerationBezier {
+    @objc func standardAccelerationCurve(withScreenSize screenSize: Int) -> AccelerationBezier {
         
         return self.standardAccelerationCurve(forSensitivity: self.scrollSensitivity,
                                       acceleration: self.scrollAcceleration,
                                       animationCurve: self.userSelectedAnimationCurvePreset,
-                                      screenHeight: screenHeight)
+                                      screenSize: screenSize)
     }
     
     @objc lazy var preciseAccelerationCurve: AccelerationBezier = { () -> AccelerationBezier in

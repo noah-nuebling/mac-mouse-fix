@@ -288,11 +288,19 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             
         } else if (_modifications.inputMod == kMFScrollInputModificationNone) {
             
-            /// Set default acceleration curve
+            /// Get display under mouse pointer
             CGDirectDisplayID displayUnderMousePointer;
             [HelperUtility displayUnderMousePointer:&displayUnderMousePointer withEvent:event];
-            size_t displayHeight = CGDisplayPixelsHigh(displayUnderMousePointer);
-            _scrollConfig.accelerationCurve = [_scrollConfig accelerationCurveWithScreenHeight:displayHeight];
+            
+            /// Get display height/width
+            size_t displayDimension;
+            if (scrollDirection == kMFDirectionLeft || scrollDirection == kMFDirectionRight) {
+                displayDimension = CGDisplayPixelsWide(displayUnderMousePointer);
+            } else if (scrollDirection == kMFDirectionUp || scrollDirection == kMFDirectionDown) {
+                displayDimension = CGDisplayPixelsHigh(displayUnderMousePointer);
+            } else assert(false);
+            
+            _scrollConfig.accelerationCurve = [_scrollConfig standardAccelerationCurveWithScreenHeight:displayDimension];
             
         } else {
             assert(false);
@@ -342,13 +350,15 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     /// Get effective direction
     ///  -> With user settings etc. applied
     
-    scrollDirection = [ScrollUtility directionForInputAxis:inputAxis inputDelta:scrollDelta invertSetting:[_scrollConfig scrollInvertWithEvent:event] horizontalModifier:(_modifications.effectMod == kMFScrollEffectModificationHorizontalScroll)];
+    scrollDirection = [ScrollUtility directionForInputAxis:inputAxis inputDelta:scrollDelta invertSetting:[_scrollConfig scrollInvertWithEvent:event] horizontalModifier:(_modifications.effectMod == kMFScrollEffectModificationHorizontalScroll)]; /// Why do we need to get the scrollDirection again? We already calculated it during the "preliminary scrollAnalysis". Can it ever change betweent he 2 times we calculate it?
     
     /// Run full scrollAnalysis
     ScrollAnalysisResult scrollAnalysisResult = [ScrollAnalyzer updateWithTickOccuringAt:tickTime withDirection:scrollDirection withConfig:_scrollConfig];
     
     /// Make scrollDelta positive, now that we have scrollDirection stored
     scrollDelta = llabs(scrollDelta);
+    
+    
     
     ///
     /// Apply Acceleration (Get pxToScrollForThisTick
