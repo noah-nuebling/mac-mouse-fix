@@ -193,7 +193,7 @@ import CocoaLumberjackSwift
         
         case kMFScrollAnimationCurvePresetQuickScroll:
             /// Almost the same as `highInertia`
-            return MFScrollAnimationCurveParameters(msPerStep: 220, baseCurve: ScrollConfig.linearCurve, dragExponent: 0.7, dragCoefficient: 40, stopSpeed: 50, sendMomentumScrolls: true)
+            return MFScrollAnimationCurveParameters(msPerStep: 220, baseCurve: ScrollConfig.linearCurve, dragExponent: 0.7, dragCoefficient: 30, stopSpeed: 50, sendMomentumScrolls: true)
             
         case kMFScrollAnimationCurvePresetPreciseScroll:
             /// Similar to `lowInertia`
@@ -211,10 +211,18 @@ import CocoaLumberjackSwift
     }
     
     /// User setting
-    @objc lazy var userSelectedAnimationCurvePreset = kMFScrollAnimationCurvePresetHighInertia
     
-    /// Stored params
-    @objc lazy var animationCurveParams = { self.animationCurveParams(forPreset: self.userSelectedAnimationCurvePreset) }() /// Meant to be overwritten dynamically in Scroll.m depending on activeModifiers
+    private lazy var _animationCurvePreset = kMFScrollAnimationCurvePresetHighInertia
+    @objc var animationCurvePreset: MFScrollAnimationCurvePreset {
+        set {
+            _animationCurvePreset = newValue
+            self.animationCurveParams = self.animationCurveParams(forPreset: _animationCurvePreset)
+        } get {
+            return _animationCurvePreset
+        }
+    }
+    
+    @objc private(set) lazy var animationCurveParams = { self.animationCurveParams(forPreset: self.animationCurvePreset) }() /// Updates automatically do match `self.animationCurvePreset`
     
     
     // MARK: Acceleration
@@ -283,7 +291,11 @@ import CocoaLumberjackSwift
             inertiaFactor = 3/4
         case kMFScrollAnimationCurvePresetHighInertia:
             inertiaFactor = 1
-        default:
+        case kMFScrollAnimationCurvePresetTouchDriver:
+            inertiaFactor = 2/3
+        case kMFScrollAnimationCurvePresetTouchDriverLinear:
+            inertiaFactor = 2/3
+        default: /// The reason why the other MFScrollAnimationCurvePreset constants will never be passed in here is because quickScroll and preciseScroll define their own accelerationCurves. See Scroll.m for more.
             fatalError()
         }
         
@@ -331,9 +343,9 @@ import CocoaLumberjackSwift
     @objc func standardAccelerationCurve(withScreenSize screenSize: Int) -> AccelerationBezier {
         
         return self.standardAccelerationCurve(forSensitivity: self.scrollSensitivity,
-                                      acceleration: self.scrollAcceleration,
-                                      animationCurve: self.userSelectedAnimationCurvePreset,
-                                      screenSize: screenSize)
+                                              acceleration: self.scrollAcceleration,
+                                              animationCurve: self.animationCurvePreset,
+                                              screenSize: screenSize)
     }
     
     @objc lazy var preciseAccelerationCurve: AccelerationBezier = { () -> AccelerationBezier in
@@ -344,8 +356,8 @@ import CocoaLumberjackSwift
                                                  consecutiveScrollTickInterval_AccelerationEnd: self.consecutiveScrollTickInterval_AccelerationEnd)
     }()
     @objc lazy var quickAccelerationCurve: AccelerationBezier = { () -> AccelerationBezier in
-        ScrollConfig.accelerationCurveFromParams(pxPerTickBase: 80,
-                                                 pxPerTickEnd: 400,
+        ScrollConfig.accelerationCurveFromParams(pxPerTickBase: 100,
+                                                 pxPerTickEnd: 500,
                                                  accelerationHump: -0.0,
                                                  consecutiveScrollTickIntervalMax: self.consecutiveScrollTickIntervalMax,
                                                  consecutiveScrollTickInterval_AccelerationEnd: self.consecutiveScrollTickInterval_AccelerationEnd)
