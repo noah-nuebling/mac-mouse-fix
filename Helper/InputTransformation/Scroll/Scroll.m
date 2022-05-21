@@ -208,7 +208,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     /// Run preliminary scrollAnalysis
     ///     To check if this is the first consecutive scrollTick
     
-    MFDirection scrollDirection = [ScrollUtility directionForInputAxis:inputAxis inputDelta:scrollDelta invertSetting:[_scrollConfig scrollInvertWithEvent:event] horizontalModifier:(_modifications.effectModification == kMFScrollEffectModificationHorizontalScroll)];
+    MFDirection scrollDirection = [ScrollUtility directionForInputAxis:inputAxis inputDelta:scrollDelta invertSetting:[_scrollConfig scrollInvertWithEvent:event] horizontalModifier:(_modifications.effectMod == kMFScrollEffectModificationHorizontalScroll)];
     
     BOOL firstConsecutive = [ScrollAnalyzer peekIsFirstConsecutiveTickWithTickOccuringAt:tickTime withDirection:scrollDirection withConfig:_scrollConfig];
     
@@ -251,20 +251,20 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         
         /// Override scrollConfig based on modifications
         
-        if (_modifications.effectModification == kMFScrollEffectModificationCommandTab) {
+        if (_modifications.effectMod == kMFScrollEffectModificationCommandTab) {
             _scrollConfig.smoothEnabled = NO;
         }
-        if (_modifications.effectModification == kMFScrollEffectModificationFourFingerPinch
-            || _modifications.effectModification == kMFScrollEffectModificationThreeFingerSwipeHorizontal
-            || _modifications.effectModification == kMFScrollEffectModificationZoom
-            || _modifications.effectModification == kMFScrollEffectModificationRotate) {
+        if (_modifications.effectMod == kMFScrollEffectModificationFourFingerPinch
+            || _modifications.effectMod == kMFScrollEffectModificationThreeFingerSwipeHorizontal
+            || _modifications.effectMod == kMFScrollEffectModificationZoom
+            || _modifications.effectMod == kMFScrollEffectModificationRotate) {
             
             _scrollConfig.smoothEnabled = YES;
             /// ^ These modification effects simulate gestures. They need eventPhases to work properly. So they only work when when driven by the animator.
         }
-        if (_modifications.inputModification == kMFScrollInputModificationQuick) {
+        if (_modifications.inputMod == kMFScrollInputModificationQuick) {
             _scrollConfig.sendMomentumScrolls = YES;
-        } else if (_modifications.inputModification == kMFScrollInputModificationPrecise) {
+        } else if (_modifications.inputMod == kMFScrollInputModificationPrecise) {
             _scrollConfig.sendMomentumScrolls = NO;
         }
         
@@ -276,7 +276,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             _scrollConfig.stopSpeed = _scrollConfig.momentumStopSpeed;
             
         }
-        if (_modifications.inputModification == kMFScrollInputModificationQuick) {
+        if (_modifications.inputMod == kMFScrollInputModificationQuick) {
             
             /// Make fast scroll easy to trigger
             _scrollConfig.consecutiveScrollSwipeMaxInterval *= 1.2;
@@ -301,7 +301,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
 
             _scrollConfig.msPerStep = 220;
             
-        } else if (_modifications.inputModification == kMFScrollInputModificationPrecise) {
+        } else if (_modifications.inputMod == kMFScrollInputModificationPrecise) {
             
             /// Turn off fast scroll
             _scrollConfig.fastScrollThreshold_inSwipes = 69; /// This is the haha sex number
@@ -326,7 +326,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     /// Get effective direction
     ///  -> With user settings etc. applied
     
-    scrollDirection = [ScrollUtility directionForInputAxis:inputAxis inputDelta:scrollDelta invertSetting:[_scrollConfig scrollInvertWithEvent:event] horizontalModifier:(_modifications.effectModification == kMFScrollEffectModificationHorizontalScroll)];
+    scrollDirection = [ScrollUtility directionForInputAxis:inputAxis inputDelta:scrollDelta invertSetting:[_scrollConfig scrollInvertWithEvent:event] horizontalModifier:(_modifications.effectMod == kMFScrollEffectModificationHorizontalScroll)];
     
     /// Run full scrollAnalysis
     ScrollAnalysisResult scrollAnalysisResult = [ScrollAnalyzer updateWithTickOccuringAt:tickTime withDirection:scrollDirection withConfig:_scrollConfig];
@@ -434,8 +434,8 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 pxLeftToScroll = distanceLeft;
             }
             
-            if (_modifications.effectModification == kMFScrollEffectModificationFourFingerPinch
-                || _modifications.effectModification == kMFScrollEffectModificationThreeFingerSwipeHorizontal) {
+            if (_modifications.effectMod == kMFScrollEffectModificationFourFingerPinch
+                || _modifications.effectMod == kMFScrollEffectModificationThreeFingerSwipeHorizontal) {
 
                 /// Use linear curve for 4 finger pinch and 3 finger swipe
                 ///     because it feels much smoother
@@ -545,15 +545,15 @@ static void sendScroll(int64_t px, MFDirection scrollDirection, BOOL gesture, MF
         outputType = kMFScrollOutputTypeGestureScroll;
     }
     
-    if (_modifications.effectModification == kMFScrollEffectModificationZoom) {
+    if (_modifications.effectMod == kMFScrollEffectModificationZoom) {
         outputType = kMFScrollOutputTypeZoom;
-    } else if (_modifications.effectModification == kMFScrollEffectModificationRotate) {
+    } else if (_modifications.effectMod == kMFScrollEffectModificationRotate) {
         outputType = kMFScrollOutputTypeRotation;
-    } else if (_modifications.effectModification == kMFScrollEffectModificationFourFingerPinch) {
+    } else if (_modifications.effectMod == kMFScrollEffectModificationFourFingerPinch) {
         outputType = kMFScrollOutputTypeFourFingerPinch;
-    } else if (_modifications.effectModification == kMFScrollEffectModificationCommandTab) {
+    } else if (_modifications.effectMod == kMFScrollEffectModificationCommandTab) {
         outputType = kMFScrollOutputTypeCommandTab;
-    } else if (_modifications.effectModification == kMFScrollEffectModificationThreeFingerSwipeHorizontal) {
+    } else if (_modifications.effectMod == kMFScrollEffectModificationThreeFingerSwipeHorizontal) {
         outputType = kMFScrollOutputTypeThreeFingerSwipeHorizontal;
     } /// kMFScrollEffectModificationHorizontalScroll is handled above when determining scroll direction
     

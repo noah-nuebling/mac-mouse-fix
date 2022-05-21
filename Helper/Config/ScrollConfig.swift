@@ -136,7 +136,7 @@ import CocoaLumberjackSwift
     
     @objc var pxPerTickBase = 60 /* return smooth["pxPerStep"] as! Int */
     
-    @objc lazy private var pxPerTickEnd: Int = 130
+    @objc lazy private var pxPerTickEnd: Int = 170
     
     @objc lazy var msPerStep = 140 /* smooth["msPerStep"] as! Int */
     
