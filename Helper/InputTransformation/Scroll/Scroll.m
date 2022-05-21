@@ -53,6 +53,7 @@ static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this
 
 static MFScrollModificationResult _modifications;
 static ScrollConfig *_scrollConfig;
+static MFScrollAnimationCurveParameters *_animationParams;
 
 #pragma mark - Public functions
 
@@ -207,6 +208,8 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     
     /// Run preliminary scrollAnalysis
     ///     To check if this is the first consecutive scrollTick
+    ///
+    ///     @note We check the _modifications.effectMod before updating _modifications. Not totally sure this makes sense?
     
     MFDirection scrollDirection = [ScrollUtility directionForInputAxis:inputAxis inputDelta:scrollDelta invertSetting:[_scrollConfig scrollInvertWithEvent:event] horizontalModifier:(_modifications.effectMod == kMFScrollEffectModificationHorizontalScroll)];
     
@@ -245,38 +248,21 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         
         /// Update scrollConfig
         
-        _scrollConfig = [ScrollConfig.currentConfig copy];
+        _scrollConfig = [ScrollConfig copyOfConfig];
         
 #pragma mark Override config
         
         /// Override scrollConfig based on modifications
         
-        if (_modifications.effectMod == kMFScrollEffectModificationCommandTab) {
-            _scrollConfig.smoothEnabled = NO;
-        }
-        if (_modifications.effectMod == kMFScrollEffectModificationFourFingerPinch
-            || _modifications.effectMod == kMFScrollEffectModificationThreeFingerSwipeHorizontal
-            || _modifications.effectMod == kMFScrollEffectModificationZoom
-            || _modifications.effectMod == kMFScrollEffectModificationRotate) {
-            
-            _scrollConfig.smoothEnabled = YES;
-            /// ^ These modification effects simulate gestures. They need eventPhases to work properly. So they only work when when driven by the animator.
-        }
-        if (_modifications.inputMod == kMFScrollInputModificationQuick) {
-            _scrollConfig.sendMomentumScrolls = YES;
-        } else if (_modifications.inputMod == kMFScrollInputModificationPrecise) {
-            _scrollConfig.sendMomentumScrolls = NO;
-        }
+        /// inputModifications
         
-        if (_scrollConfig.sendMomentumScrolls) {
-            
-            _scrollConfig.msPerStep = _scrollConfig.momentumMsPerStep;
-            _scrollConfig.dragCoefficient = _scrollConfig.momentumDragCoefficient;
-            _scrollConfig.dragExponent = _scrollConfig.momentumDragExponent;
-            _scrollConfig.stopSpeed = _scrollConfig.momentumStopSpeed;
-            
-        }
         if (_modifications.inputMod == kMFScrollInputModificationQuick) {
+            
+            /// Set quick acceleration curve
+            _scrollConfig.accelerationCurve = _scrollConfig.quickAccelerationCurve;
+            
+            /// Set animationCurve
+            _scrollConfig.animationCurveParams = [_scrollConfig animationCurveParamsWithPreset:kMFScrollAnimationCurvePresetQuickScroll];
             
             /// Make fast scroll easy to trigger
             _scrollConfig.consecutiveScrollSwipeMaxInterval *= 1.2;
@@ -287,40 +273,67 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             _scrollConfig.fastScrollExponentialBase = M_E /*1.5*/;
             _scrollConfig.fastScrollScale = 0.7;
             
-            /// Override acceleration curve
-            _scrollConfig.accelerationCurve = _scrollConfig.quickAccelerationCurve;
-            
-            /// Override dragCurve
-//            _scrollConfig.dragExponent = _scrollConfig.trackpadDragExponent;
-//            _scrollConfig.dragCoefficient = _scrollConfig.trackpadDragCoefficient;
-//            _scrollConfig.stopSpeed = _scrollConfig.trackpadStopSpeed;
-            
-            _scrollConfig.dragExponent = _scrollConfig.momentumDragExponent;
-            _scrollConfig.dragCoefficient = _scrollConfig.momentumDragCoefficient;
-            _scrollConfig.stopSpeed = _scrollConfig.momentumStopSpeed;
-
-            _scrollConfig.msPerStep = 220;
-            
         } else if (_modifications.inputMod == kMFScrollInputModificationPrecise) {
+            
+            /// Set slow acceleration curve
+            _scrollConfig.accelerationCurve = _scrollConfig.preciseAccelerationCurve;
+            
+            /// Set animationCurve
+            _scrollConfig.animationCurveParams = [_scrollConfig animationCurveParamsWithPreset:kMFScrollAnimationCurvePresetPreciseScroll];
             
             /// Turn off fast scroll
             _scrollConfig.fastScrollThreshold_inSwipes = 69; /// This is the haha sex number
             _scrollConfig.fastScrollExponentialBase = 1.0;
             _scrollConfig.fastScrollScale = 1.0;
             
-            /// Override acceleration curve
-            _scrollConfig.accelerationCurve = _scrollConfig.preciseAccelerationCurve;
-            
-            /// Override stopSpeed
-            _scrollConfig.stopSpeed = 1.0;
-            
-        } else {
+        } else if (_modifications.inputMod == kMFScrollInputModificationNone) {
             
             /// Set default acceleration curve
             _scrollConfig.accelerationCurve = _scrollConfig.standardAccelerationCurve;
+            
+        } else {
+            assert(false);
         }
         
-    }
+        /// effectModifications
+        
+        if (_modifications.effectMod == kMFScrollEffectModificationHorizontalScroll) {
+            
+
+        } else if (_modifications.effectMod == kMFScrollEffectModificationZoom) {
+            
+            _scrollConfig.smoothEnabled = YES;
+            /// Override animation curve
+            _scrollConfig.animationCurveParams = [_scrollConfig animationCurveParamsWithPreset:kMFScrollAnimationCurvePresetTouchDriver];
+            
+        } else if (_modifications.effectMod == kMFScrollEffectModificationRotate) {
+            
+            _scrollConfig.smoothEnabled = YES;
+            /// Override animation curve
+            _scrollConfig.animationCurveParams = [_scrollConfig animationCurveParamsWithPreset:kMFScrollAnimationCurvePresetTouchDriver];
+            
+        } else if (_modifications.effectMod == kMFScrollEffectModificationCommandTab) {
+            
+            _scrollConfig.smoothEnabled = NO;
+            
+        } else if (_modifications.effectMod == kMFScrollEffectModificationThreeFingerSwipeHorizontal) {
+            
+            _scrollConfig.smoothEnabled = YES;
+            /// Override animation curve
+            _scrollConfig.animationCurveParams = [_scrollConfig animationCurveParamsWithPreset:kMFScrollAnimationCurvePresetTouchDriverLinear];
+            
+        } else if (_modifications.effectMod == kMFScrollEffectModificationFourFingerPinch) {
+            
+            _scrollConfig.smoothEnabled = YES;
+            /// Override animation curve
+            _scrollConfig.animationCurveParams = [_scrollConfig animationCurveParamsWithPreset:kMFScrollAnimationCurvePresetTouchDriverLinear];
+            
+        } else if (_modifications.effectMod == kMFScrollEffectModificationNone) {
+        } else {
+            assert(false);
+        }
+        
+    } /// End `if (firstConsecutive) {`
     
     ///
     /// Get effective direction
@@ -421,7 +434,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             double distanceLeft = magnitudeOfVector(valueLeftVec);
             
             /// Get base scroll duration
-            CFTimeInterval baseTimeRange = ((CFTimeInterval)_scrollConfig.msPerStep) / 1000.0; /// Need to cast to CFTimeInterval (double), to make this a float division
+            CFTimeInterval baseTimeRange = ((CFTimeInterval)_scrollConfig.animationCurveParams.msPerStep) / 1000.0; /// Need to cast to CFTimeInterval (double), to make this a float division
             
             /// Get px that the animator still wants to scroll
             double pxLeftToScroll;
@@ -434,46 +447,39 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 pxLeftToScroll = distanceLeft;
             }
             
-            if (_modifications.effectMod == kMFScrollEffectModificationFourFingerPinch
-                || _modifications.effectMod == kMFScrollEffectModificationThreeFingerSwipeHorizontal) {
-
-                /// Use linear curve for 4 finger pinch and 3 finger swipe
-                ///     because it feels much smoother
-                
-                double delta = pxToScrollForThisTick + pxLeftToScroll;
-                Vector deltaVec = vectorFromDeltaAndDirection(delta, scrollDirection);
-                
-                p[@"vector"] = nsValueFromVector(deltaVec);
-                p[@"duration"] = @(baseTimeRange);
-                p[@"curve"] = ScrollConfig.linearCurve;
-                
-            } else {
-                
-                /// New curve
-                BezierHybridCurve *c = [[BezierHybridCurve alloc]
-                                        initWithBaseCurve:_scrollConfig.baseCurve
-                                        minDuration:baseTimeRange
-                                        distance:(pxToScrollForThisTick + pxLeftToScroll)
-                                        dragCoefficient:_scrollConfig.dragCoefficient
-                                        dragExponent:_scrollConfig.dragExponent
-                                        stopSpeed:_scrollConfig.stopSpeed
-                                        distanceEpsilon:0.2];
-                
-                /// Get values for animator from hybrid curve
-                
-                double delta = c.distance; 
-                Vector deltaVec = vectorFromDeltaAndDirection(delta, scrollDirection);
-                
-                p[@"duration"] = @(c.duration);
-                p[@"vector"] = nsValueFromVector(deltaVec);
-                p[@"curve"] = c;
-                
-                /// Debug
-                
-                DDLogDebug(@"\nDuration pre-animator: %f base: %f", c.duration, c.baseDuration);
-            }
+            
+            /// Calculate distance to scroll
+            double delta = pxToScrollForThisTick + pxLeftToScroll;
+            
+            /// Create curve
+            MFScrollAnimationCurveParameters *cParams = _scrollConfig.animationCurveParams;
+            BezierHybridCurve *c = [[BezierHybridCurve alloc]
+                                    initWithBaseCurve:cParams.baseCurve
+                                    minDuration:baseTimeRange
+                                    distance:delta
+                                    dragCoefficient:cParams.dragCoefficient
+                                    dragExponent:cParams.dragExponent
+                                    stopSpeed:cParams.stopSpeed
+                                    distanceEpsilon:0.2];
+            
+            /// Get values from curve
+            
+            double deltaFromCurve = c.distance;
+            double durationFromCurve = c.duration;
+            
+            /// Validate distanceFromCurve
+            
+            assert(fabs(deltaFromCurve - delta) < 3);
+            
+            /// Fill return dict
+            
+            p[@"duration"] = @(durationFromCurve);
+            p[@"vector"] = nsValueFromVector(vectorFromDeltaAndDirection(deltaFromCurve, scrollDirection));
+            p[@"curve"] = c;
             
             /// Debug
+            
+            DDLogDebug(@"\nDuration pre-animator: %f base: %f", c.duration, c.baseDuration);
             
             static double scrollDeltaSum = 0;
             scrollDeltaSum += labs(pxToScrollForThisTick);
@@ -597,7 +603,7 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         
         /// --- GestureScroll ---
         
-        if (!_scrollConfig.sendMomentumScrolls) {
+        if (!_scrollConfig.animationCurveParams.sendMomentumScrolls) {
             
             /// Post event
             [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:eventPhase];

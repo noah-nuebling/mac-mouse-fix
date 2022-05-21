@@ -22,7 +22,7 @@
         
         /// Get default config
         ///     Note that this will never update because the init function only runs once. So make sure that whatever values you use here aren't intended to update!
-        ScrollConfig *_scrollConfig = [ScrollConfig currentConfig];
+        ScrollConfig *_scrollConfig = [ScrollConfig copyOfConfig];
         
         /// Setup smoothing algorithm for `timeBetweenTicks`
         

@@ -21,9 +21,10 @@ import CocoaLumberjackSwift
     
     // MARK: Class functions
     
-    @objc static var currentConfig = ScrollConfig() /// Singleton instance
+    private(set) static var config = ScrollConfig() /// Singleton instance
+    @objc static var copyOfConfig: ScrollConfig { config.copy() as! ScrollConfig }
     @objc static func deleteCache() { /// This should be called when the underlying config (which mirrors the config file) changes
-        currentConfig = ScrollConfig() /// All the property values are cached in `currentConfig`, because the properties are lazy. Replacing with a fresh object deletes this implicit cache.
+        config = ScrollConfig() /// All the property values are cached in `currentConfig`, because the properties are lazy. Replacing with a fresh object deletes this implicit cache.
     }
     
     @objc static var linearCurve: Bezier = { () -> Bezier in
@@ -132,56 +133,97 @@ import CocoaLumberjackSwift
     
     @objc lazy var fastScrollScale = 0.3
     
-    // MARK: Smooth scroll
+    // MARK: Animation curve
     
-    @objc var pxPerTickBase = 60 /* return smooth["pxPerStep"] as! Int */
+    /// Define storage class for animationCurve params
     
-    @objc lazy private var pxPerTickEnd: Int = 170
-    
-    @objc lazy var msPerStep = 140 /* smooth["msPerStep"] as! Int */
-    
-    @objc lazy var baseCurve: Bezier = { () -> Bezier in
-        /// Base curve used to construct a Hybrid AnimationCurve in Scroll.m. This curve is applied before switching to a DragCurve to simulate physically accurate deceleration
-        typealias P = Bezier.Point
+    @objc class MFScrollAnimationCurveParameters: NSObject {
         
-        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:1,y:1), P(x:1,y:1)] /// Straight line
-//        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:0.9,y:0), P(x:1,y:1)] /// Testing
-//        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:0.5,y:0.9), P(x:1,y:1)]
-        /// ^ Ease out but the end slope is not 0. That way. The curve is mostly controlled by the Bezier, but the DragCurve rounds things out.
-        ///     Might be placebo but I really like how this feels
+        /// baseCurve params
+        @objc let msPerStep: Int
+        @objc let baseCurve: Bezier?
+        /// dragCurve params
+        @objc let dragExponent: Double
+        @objc let dragCoefficient: Double
+        @objc let stopSpeed: Int
+        /// Other params
+        @objc let sendMomentumScrolls: Bool /// This will make Scroll.m send momentumScroll events (what the Apple Trackpad sends after lifting your fingers off) when scrolling is controlled by the dragCurve. Use this when the dragCurve closely mimicks the Apple Trackpad.
         
-//        let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:0.6,y:0.9), P(x:1,y:1)]
-        /// ^ For use with low friction to cut the tails a little on long swipes. Turn up the msPerStep when using this
+        /// Init
+        required init(msPerStep: Int, baseCurve: Bezier?, dragExponent: Double, dragCoefficient: Double, stopSpeed: Int, sendMomentumScrolls: Bool) { /// Why can't Swift autogenerate this, absolut UNPROGRAMMIERBAR
+            self.msPerStep = msPerStep
+            self.baseCurve = baseCurve
+            self.dragExponent = dragExponent
+            self.dragCoefficient = dragCoefficient
+            self.stopSpeed = stopSpeed
+            self.sendMomentumScrolls = sendMomentumScrolls
+        }
+    }
+    
+    /// Define function that maps preset -> params
+    
+    @objc func animationCurveParams(withPreset preset: MFScrollAnimationCurvePreset) -> MFScrollAnimationCurveParameters {
         
-        return Bezier(controlPoints: controlPoints, defaultEpsilon: 0.001) /// The default defaultEpsilon 0.08 makes the animations choppy
-    }()
+        /// For the origin behind these presets see ScrollConfigTesting.md
+        /// @note I just checked the formulas on Desmos, and I don't get how this can work with 0.7 as the exponent? (But it does??) If the value is `< 1.0` that gives a completely different curve that speeds up over time, instead of slowing down.
+        
+        switch preset {
+            
+        /// User selected
+            
+        case kMFScrollAnimationCurvePresetLowInertia:
+            return MFScrollAnimationCurveParameters(msPerStep: 140, baseCurve: ScrollConfig.linearCurve, dragExponent: 1.0, dragCoefficient: 23, stopSpeed: 50, sendMomentumScrolls: false)
+            
+        case kMFScrollAnimationCurvePresetMidInertia:
+            return MFScrollAnimationCurveParameters(msPerStep: 180, baseCurve: ScrollConfig.linearCurve, dragExponent: 1.1, dragCoefficient: 10, stopSpeed: 50, sendMomentumScrolls: false)
+            
+        case kMFScrollAnimationCurvePresetHighInertia:
+            /// Snappiest curve that can be used to send momentumScrolls.
+            ///    If you make it snappier then it will cut off the build-in momentumScroll in apps like Xcode
+            return MFScrollAnimationCurveParameters(msPerStep: 205, baseCurve: ScrollConfig.linearCurve, dragExponent: 0.7, dragCoefficient: 40, stopSpeed: 50, sendMomentumScrolls: true)
+            
+        /// Dynamically applied
+            
+        case kMFScrollAnimationCurvePresetTouchDriver:
+            return MFScrollAnimationCurveParameters(msPerStep: 140, baseCurve: ScrollConfig.linearCurve, dragExponent: 1.0, dragCoefficient: 23, stopSpeed: 50, sendMomentumScrolls: false)
+            
+        case kMFScrollAnimationCurvePresetTouchDriverLinear:
+            /// "Disable" the dragCurve by setting the dragCoefficient to an absurdly high number. This creates a linear curve. This is not elegant or efficient -> Maybe refactor this (have a bool `usePureBezier` or sth to disable the dragCurve)
+            return MFScrollAnimationCurveParameters(msPerStep: 180, baseCurve: ScrollConfig.linearCurve, dragExponent: 1.0, dragCoefficient: 99999, stopSpeed: 99999, sendMomentumScrolls: false)
+        
+        case kMFScrollAnimationCurvePresetQuickScroll:
+            /// Almost the same as `highInertia`
+            return MFScrollAnimationCurveParameters(msPerStep: 220, baseCurve: ScrollConfig.linearCurve, dragExponent: 0.7, dragCoefficient: 40, stopSpeed: 50, sendMomentumScrolls: true)
+            
+        case kMFScrollAnimationCurvePresetPreciseScroll:
+            /// Similar to `lowInertia`
+            return MFScrollAnimationCurveParameters(msPerStep: 140, baseCurve: ScrollConfig.linearCurve, dragExponent: 1.0, dragCoefficient: 20, stopSpeed: 50, sendMomentumScrolls: false)
+            
+        /// Other
+            
+        case kMFScrollAnimationCurvePresetTrackpad:
+            /// The dragCurve parameters emulate the trackpad as closely as possible. Use this in GestureSimulator.m. The baseCurve parameters as well as `sendMomentumScrolls` are irrelevant, since this is not used in Scroll.m. Not sure if this belongs here. Maybe we should just put these parameters into GestureScrollSimulator where they are used.
+            return MFScrollAnimationCurveParameters(msPerStep: -1, baseCurve: nil, dragExponent: 0.7, dragCoefficient: 30, stopSpeed: 1, sendMomentumScrolls: true)
+        
+        default:
+            fatalError()
+        }
+    }
     
-    @objc lazy var stopSpeed = 50.0
-    @objc lazy var dragExponent = 1.0 /* smooth["frictionDepth"] as! Double */
-    @objc lazy var dragCoefficient = 23.0 /* smooth["friction"] as! Double */
-    /// ^ Defines the Drag subcurve of the default Hybrid curve used for scrollwheel scrolling in Scroll.m. (When we're not sending momentumScrolls)
+    /// Stored preset and params
     
-    @objc lazy var sendMomentumScrolls = true
+    @objc lazy var userSelectedAnimationCurvePreset = kMFScrollAnimationCurvePresetHighInertia
+    @objc lazy var animationCurveParams = { self.animationCurveParams(withPreset: self.userSelectedAnimationCurvePreset) }() /// Meant to be overwritten dynamically in Scroll.m depending on activeModifiers
     
-    @objc let momentumStopSpeed = 50
-    @objc let momentumDragExponent = 0.7
-    @objc let momentumDragCoefficient = 40
-    @objc let momentumMsPerStep = 205
-    /// ^ Snappiest curve that can be used to send momentumScrolls.
-    ///     If you make it snappier then it will cut off the build-in momentumScroll in apps like Xcode
-    ///     Used in Scroll.m if sendMomentumScrolls == true
-    
-    @objc let trackpadStopSpeed = 1.0
-    @objc let trackpadDragExponent = 0.7
-    @objc let trackpadDragCoefficient = 30
-    /// ^ Emulates the trackpad as closely as possible. Use in the default momentumScroll in GestureSimulator.m
-    ///
-    /// I just checked the formulas on Desmos, and I don't get how this can work with 0.8 as the exponent? (But it does??) If the value is `< 1.0` that gives a completely different curve that speeds up over time, instead of slowing down.
     
     // MARK: Acceleration
     
     @objc lazy var useAppleAcceleration = false
     /// ^ Ignore MMF acceleration algorithm and use values provided by macOS
+    
+    @objc var pxPerTickBase = 60 /* return smooth["pxPerStep"] as! Int */
+    
+    @objc lazy private var pxPerTickEnd: Int = 170
     
     @objc lazy var accelerationHump = -0.0
     /// ^ Between -1 and 1

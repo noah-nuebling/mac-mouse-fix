@@ -32,5 +32,28 @@ typedef enum {
     kMFSemanticScrollInversionNatural = 1
 } MFSemanticScrollInversion;
 
+typedef enum {
+    
+    /// User configured
+    ///  The user can choose these options in the UI
+    
+    kMFScrollAnimationCurvePresetLowInertia,
+    kMFScrollAnimationCurvePresetMidInertia,
+    kMFScrollAnimationCurvePresetHighInertia,
+    
+    /// Modifier overrides
+    ///     Used in Scroll.m to dynamically override the animationCurve if a certain scroll modification is active
+    
+    kMFScrollAnimationCurvePresetTouchDriver, /// For driving pinch-to-zoom and rotation simulation
+    kMFScrollAnimationCurvePresetTouchDriverLinear, /// For driving dockSwipe simulation
+    
+    kMFScrollAnimationCurvePresetQuickScroll, /// For driving quickScroll
+    kMFScrollAnimationCurvePresetPreciseScroll, /// For driving preciseScroll
+    
+    /// Other
+    
+    kMFScrollAnimationCurvePresetTrackpad,
+    
+} MFScrollAnimationCurvePreset;
 
 NS_ASSUME_NONNULL_END

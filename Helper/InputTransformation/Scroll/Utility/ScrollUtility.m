@@ -196,7 +196,8 @@ static BOOL _mouseDidMove = NO;
 }
 static CGPoint _previousMouseLocation;
 /// Checks if cursor did move since the last time this function was called. Writes result into `_mouseDidMove`.
-/// Passing in event for optimization. Not sure if signification
+///     Storing result in _mouseDidMove instead of returning so that different parts of the program can reuse this info
+/// Passing in event for optimization. Not sure if significatnt.
 + (void)updateMouseDidMoveWithEvent:(CGEventRef)event {
     CGPoint mouseLocation = CGEventGetLocation(event);
     _mouseDidMove = ![ScrollUtility point:mouseLocation
