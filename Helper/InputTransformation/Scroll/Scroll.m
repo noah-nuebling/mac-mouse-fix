@@ -370,10 +370,8 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     /// Make scrollDelta positive, now that we have scrollDirection stored
     scrollDelta = llabs(scrollDelta);
     
-    
-    
     ///
-    /// Apply Acceleration (Get pxToScrollForThisTick
+    /// Acceleration (Get pxToScrollForThisTick)
     ///
     
     /// @discussion See the RawAccel guide for more info on acceleration curves https://github.com/a1xd/rawaccel/blob/master/doc/Guide.md
@@ -458,9 +456,6 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             /// Extract 1d valueLeft
             double distanceLeft = magnitudeOfVector(valueLeftVec);
             
-            /// Get base scroll duration
-            CFTimeInterval baseTimeRange = ((CFTimeInterval)_scrollConfig.animationCurveParams.msPerStep) / 1000.0; /// Need to cast to CFTimeInterval (double), to make this a float division
-            
             /// Get px that the animator still wants to scroll
             double pxLeftToScroll;
             if (scrollAnalysisResult.scrollDirectionDidChange || !isRunning) {
@@ -472,7 +467,6 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 pxLeftToScroll = distanceLeft;
             }
             
-            
             /// Calculate distance to scroll
             double delta = pxToScrollForThisTick + pxLeftToScroll;
             
@@ -480,7 +474,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             MFScrollAnimationCurveParameters *cParams = _scrollConfig.animationCurveParams;
             BezierHybridCurve *c = [[BezierHybridCurve alloc]
                                     initWithBaseCurve:cParams.baseCurve
-                                    minDuration:baseTimeRange
+                                    minDuration:((double)cParams.msPerStep) / 1000.0
                                     distance:delta
                                     dragCoefficient:cParams.dragCoefficient
                                     dragExponent:cParams.dragExponent
@@ -639,6 +633,15 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
             }
             
         } else { /// sendMomentumScrolls == true
+            
+            /// This stuff only works properly because the animator is always claiming to scroll on the baseCurve for a few seconds even if it's not. That's not pretty but it works. See VectorAnimator for more info.
+            ///     Thoughts on refactoring this:
+            ///         - VectorAnimator is currently lying about whether we're scrolling on baseCurve or dragCurve. That's bad.
+            ///         - But if we made the VectorAnimator say the truth, then we'd have to migrate the logic for delaying momentumPhase activation to Scroll.m. However Scroll.m doesn't have access to all the timing data and state that the VectorAnimator uses to figure this stuff out. So this would need significant refactors and make things even more confusing probably.
+            ///         - We could simply rename the `subCurvePhase` to somthing like `momentumPhase`. Then we wouldn't be lying about what these phases really are. (They are a recommendation whether to send normal gestureScrolls or momentumScrolls) -> This is definitely better than what we have currently.
+            ///             - This makes it obvious that these phases make VectorAnimator very tightly coupled to Scroll.m. They already are though. We just wouldn't be lying about that fact anymore.
+            ///             -> I like this solution. I don't think the coupling is important. The code will be more simple and readable than any other way I can think of
+            ///             TODO: Rename the `subCurvePhase` stuff. Example: rename kMFHybridSubCurvePhaseBaseFromDrag -> kMFMomentumHintGestureFromMomentum
             
             /// Validate
             assert(subCurvePhase != kMFHybridSubCurvePhaseNone);

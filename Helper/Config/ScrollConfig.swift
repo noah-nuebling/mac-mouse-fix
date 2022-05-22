@@ -137,7 +137,7 @@ import CocoaLumberjackSwift
     
     /// Define storage class for animationCurve params
     
-    @objc class MFScrollAnimationCurveParameters: NSObject {
+    @objc class MFScrollAnimationCurveParameters: NSObject { /// Does this have to inherit from NSObject?
         
         /// baseCurve params
         @objc let msPerStep: Int

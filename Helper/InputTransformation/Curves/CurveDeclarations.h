@@ -24,8 +24,7 @@ typedef enum {
     kMFHybridSubCurvePhaseBaseFromDrag,
     kMFHybridSubCurvePhaseDragBegan,
     
-    kMFHybridSubCurvePhaseBaseMask = kMFHybridSubCurvePhaseBase | kMFHybridSubCurvePhaseBaseFromDrag,
-    
+    kMFHybridSubCurvePhaseBaseMask = kMFHybridSubCurvePhaseBase | kMFHybridSubCurvePhaseBaseFromDrag, /// <- I don't think these masks are usable because the values aren't single bits but just random numbers
     kMFHybridSubCurvePhaseDragMask = kMFHybridSubCurvePhaseDrag | kMFHybridSubCurvePhaseDragBegan,
     
 } MFHybridSubCurvePhase;
