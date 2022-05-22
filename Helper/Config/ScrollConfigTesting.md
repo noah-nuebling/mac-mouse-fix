@@ -109,6 +109,7 @@ __Inertial settings__
 - dragExponent: 0.7
 - stopSpeed: 50
     -> Might be placebo, but I think the 205 msPerStep makes single ticks feel nicer
+    -> Smaller msPerStep make single ticks feel even less stiff, but that makes time taken for small flicks longer. Might need more testing. Edit: 180 still feels nice, probably don't wanna go lower. As high as 280 still feels decent, but it makes the single ticks very stiff
 
 3. __Snappy__
 - pxPerTickBase: 60

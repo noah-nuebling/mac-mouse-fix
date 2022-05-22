@@ -58,7 +58,7 @@ import CocoaLumberjackSwift
     
     // MARK: General
     
-    @objc lazy var smoothEnabled: Bool = true /* ScrollConfig.topLevel["smooth"] as! Bool */
+    @objc lazy var smoothEnabled: Bool = false /* ScrollConfig.topLevel["smooth"] as! Bool */
     @objc lazy var disableAll: Bool = false /* topLevel["disableAll"] as! Bool */ /// This is currently unused. Could be used as a killswitch for all scrolling Interception
     
     // MARK: Invert Direction
@@ -193,7 +193,7 @@ import CocoaLumberjackSwift
         
         case kMFScrollAnimationCurvePresetQuickScroll:
             /// Almost the same as `highInertia`
-            return MFScrollAnimationCurveParameters(msPerStep: 220, baseCurve: ScrollConfig.linearCurve, dragExponent: 0.7, dragCoefficient: 30, stopSpeed: 50, sendMomentumScrolls: true)
+            return MFScrollAnimationCurveParameters(msPerStep: 220, baseCurve: ScrollConfig.linearCurve, dragExponent: 0.7, dragCoefficient: 30, stopSpeed: 1, sendMomentumScrolls: true)
             
         case kMFScrollAnimationCurvePresetPreciseScroll:
             /// Similar to `lowInertia`
@@ -323,7 +323,7 @@ import CocoaLumberjackSwift
         let accelerationHump = -0.0
         /// ^ Between -1 and 1
         ///     Negative values make the curve continuous, and more predictable (might be placebo)
-        ///     Edit: I like 0.0 the best now. Feels more "direct" (Before I've like -0.2)
+        ///     Edit: I like 0.0 the best now. Feels more "direct" (Before I've liked -0.2)
         
         ///
         /// Generate curve from params
@@ -391,9 +391,9 @@ import CocoaLumberjackSwift
          
          HyperParameters:
          - `accelerationHump` controls how slope (sensitivity) increases around low scrollSpeeds. The name doesn't make sense but it's easy.
-            I think this might be useful if  the basePxPerTick is very low. But for a larger basePxPerTick, it's probably fine to set it to 0
+            I think this might be useful if  the basePxPerTick is very low. But for a larger basePxPerTick, it's probably fine to set it to 0 (Edit: Why though? - Maybe I was thinking about a positive acceleration hump to mimic the way that Apple acceleration works 🤢)
             - If `accelerationHump < 0`, that makes the transition between the preline and the Bezier smooth. (Makes the derivative continuous)
-         - If the third controlPoint shouldn't be `(xMax, yMax)`. If it was, then the slope of the extrapolated curve after xMax would be affected `accelerationHump`.
+         - If the third controlPoint shouldn't be `(xMax, yMax)`. If it was, then the slope of the extrapolated curve after xMax would be affected by `accelerationHump`.
          */
         
         /// Define Curve
@@ -428,63 +428,9 @@ import CocoaLumberjackSwift
                                      P(x: xMax, y: yMax)])
     }
     
-    /// Copying
-    ///     Why is there no simple default "shallowCopy" method for objects??
-    ///     Be careful not to mutate anything in the copy because it mostly holds references
-    
     func copy(with zone: NSZone? = nil) -> Any {
         
-        /// Create new instance
-        let copy = ScrollConfig()
-        
-        /// Iterate properties
-        ///     And copy the values over to the new instance
-        
-        var numberOfProperties: UInt32 = 0
-        let propertyList = class_copyPropertyList(ScrollConfig.self, &numberOfProperties)
-        
-        guard let propertyList = propertyList else { fatalError() }
-        
-        for i in 0..<(Int(numberOfProperties)) {
-            
-            let property = propertyList[i]
-            
-            /// Get property name
-            let propertyNameC = property_getName(property)
-            let propertyName = String(cString: propertyNameC)
-            
-            /// Debug
-            DDLogDebug("Property: \(propertyName)")
-            
-            /// Check if property is readOnly
-            var isReadOnly = false
-            let readOnlyAttributeValue = property_copyAttributeValue(property, "R".cString(using: .utf8)!)
-            isReadOnly = readOnlyAttributeValue != nil
-            
-            /// Skip copying this property if it's readonly
-            if isReadOnly {
-                DDLogDebug(" ... is readonly")
-                continue
-            }
-            /// Copy over old value
-            
-            var oldValue = self.value(forKey: propertyName)
-            
-            if oldValue != nil {
-                /// Make a copy of the oldValue if possible
-                ///     Actually that should be unnecessary since we only override, not mutate the values
-//                if let copyingOldValue = oldValue as? NSCopying {
-//                    oldValue = copyingOldValue.copy()
-//                } else {
-//                    DDLogDebug("Not copying property: \(propertyName): \(oldValue)")
-//                }
-                copy.setValue(oldValue, forKey: propertyName)
-            }
-        }
-        
-        free(propertyList)
-        
-        return copy;
+        return SharedUtilitySwift.shallowCopy(of: self)
     }
     
     
