@@ -58,7 +58,7 @@ import CocoaLumberjackSwift
     
     // MARK: General
     
-    @objc lazy var smoothEnabled: Bool = false /* ScrollConfig.topLevel["smooth"] as! Bool */
+    @objc lazy var smoothEnabled: Bool = true /* ScrollConfig.topLevel["smooth"] as! Bool */
     @objc lazy var disableAll: Bool = false /* topLevel["disableAll"] as! Bool */ /// This is currently unused. Could be used as a killswitch for all scrolling Interception
     
     // MARK: Invert Direction

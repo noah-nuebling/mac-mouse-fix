@@ -28,6 +28,8 @@
     dispatch_queue_t _displayLinkQueue;
 }
 
+@synthesize dispatchQueue=_displayLinkQueue;
+
 /// Convenience init
 
 + (instancetype)displayLink {
@@ -130,7 +132,7 @@
     
     dispatch_async(_displayLinkQueue, ^{
         
-        if (isRunning_Internal(self->_displayLink)) {
+        if ([self isRunning_Unsafe]) {
             
             /// CVDisplayLink should be stopped from the main thread
             ///     According to https://cpp.hotexamples.com/examples/-/-/CVDisplayLinkStop/cpp-cvdisplaylinkstop-function-examples.html
@@ -162,16 +164,9 @@
 //    });
 //}
 
-- (BOOL)isRunning {
-    __block BOOL result;
-    dispatch_sync(_displayLinkQueue, ^{
-        result = isRunning_Internal(_displayLink);
-    });
-    return result;
-}
-BOOL isRunning_Internal(CVDisplayLinkRef dl) {
+- (BOOL)isRunning_Unsafe {
     /// Only call this if you're already running on _displayLinkQueue
-    return CVDisplayLinkIsRunning(dl);
+    return CVDisplayLinkIsRunning(self->_displayLink);
 }
 
 /// Get timeBetweenFrames

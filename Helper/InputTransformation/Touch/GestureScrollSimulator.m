@@ -91,11 +91,11 @@ static dispatch_queue_t _queue; /// Use this queue for interface functions to av
     /// Schedule event to be posted on _queue and return immediately
     
     dispatch_async(_queue, ^{
-        postGestureScrollEvent_Internal(dx, dy, phase, autoMomentumScroll);
+        postGestureScrollEvent_Unsafe(dx, dy, phase, autoMomentumScroll);
     });
 }
 
-void postGestureScrollEvent_Internal(int64_t dx, int64_t dy, IOHIDEventPhaseBits phase, Boolean autoMomentumScroll) {
+void postGestureScrollEvent_Unsafe(int64_t dx, int64_t dy, IOHIDEventPhaseBits phase, Boolean autoMomentumScroll) {
     /// This function doesn't dispatch to _queue. It should only be called if you're already on _queue. Otherwise there will be race conditions with the other functions that execute on _queue.
     /// `autoMomentumScroll` should always be true, except if you are going to post momentumScrolls manually using `+ postMomentumScrollEvent`
     
@@ -119,7 +119,7 @@ void postGestureScrollEvent_Internal(int64_t dx, int64_t dy, IOHIDEventPhaseBits
     
     /// Stop momentum scroll
     ///     Do it sync otherwise it will be stopped immediately after it's startet by this block
-    stopMomentumScroll_Sync();
+    stopMomentumScroll_Unsafe();
     
     /// Timestamps and static vars
 
@@ -271,11 +271,11 @@ static void (^_momentumScrollCallback)(void);
 //    DDLogDebug(@"momentumScroll stop request. Caller: %@", [SharedUtility callerInfo]);
     
     dispatch_async(_queue, ^{
-        stopMomentumScroll_Sync();
+        stopMomentumScroll_Unsafe();
     });
 }
 
-void stopMomentumScroll_Sync(void) {
+void stopMomentumScroll_Unsafe(void) {
     /// Only use this when you know you're already running on _queue
     
     /// Debug

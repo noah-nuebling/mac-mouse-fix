@@ -34,12 +34,15 @@ typedef void(^DisplayLinkCallback)(DisplayLinkCallbackTimeInfo timeInfo);
 + (instancetype)displayLink;
 - (void)startWithCallback:(DisplayLinkCallback)callback;
 - (void)stop;
-- (BOOL)isRunning;
+- (BOOL)isRunning_Unsafe;
 - (CFTimeInterval)timeBetweenFrames;
 - (CFTimeInterval)nominalTimeBetweenFrames;
 - (void)linkToMainScreen;
 
 - (void)linkToDisplayUnderMousePointerWithEvent:(CGEventRef)event;
+
+@property(atomic, readonly, strong) dispatch_queue_t dispatchQueue;
+/// ^ Expose queue so that Animator (which builds ontop of DisplayLink) can use it, too. Using the same queue makes sense to avoid deadlocks and stuff
 
 @end
 

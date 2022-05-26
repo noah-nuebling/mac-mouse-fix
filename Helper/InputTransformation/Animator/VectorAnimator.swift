@@ -67,14 +67,15 @@ import QuartzCore
     @objc var animationCurve: AnimationCurve? /// This class assumes that `animationCurve` passes through `(0, 0)` and `(1, 1)
                                               //    let threadLock = DispatchSemaphore.init(value: 1)
                                               /// ^ Using a queue instead of a lock to avoid deadlocks. Always use queues for mutual exclusion except if you know exactly what you're doing!
-    let animatorQueue: DispatchQueue
+
+//    let animatorQueue: DispatchQueue /// Use the displayLink's queue instead to avoid deadlocks and such
     
     /// Init
     
     @objc override init() {
         
         self.displayLink = DisplayLink()
-        self.animatorQueue = DispatchQueue(label: "com.nuebling.mac-mouse-fix.animator", qos: .userInteractive , attributes: [], autoreleaseFrequency: .inherit, target: nil)
+//        self.animatorQueue = DispatchQueue(label: "com.nuebling.mac-mouse-fix.animator", qos: .userInteractive , attributes: [], autoreleaseFrequency: .inherit, target: nil)
         
         super.init()
     }
@@ -93,15 +94,14 @@ import QuartzCore
     
     @objc var isRunning: Bool {
         var result: Bool = false
-        self.animatorQueue.sync {
-            result = self.isRunning_Internal
+        displayLink.dispatchQueue.sync {
+            result = self.displayLink.isRunning_Unsafe()
         }
         return result
     }
-    @objc var isRunning_Internal: Bool {
-        /// ! Only use this instead of isRunning() if you know you're already executing on self.queue
-        /// We always want isRunning to be executed on self.queue. But if we call self.queue.sync() when we're already on self queue, that is an error
-        return self.displayLink.isRunning()
+    @objc var isRunning_Unsafe: Bool {
+        /// ! Not Thread Safe. Use this if you're already executing on displayLink.dispatchQueue
+        return displayLink.isRunning_Unsafe()
     }
     
     fileprivate var onStopCallback: (() -> ())?
@@ -121,31 +121,30 @@ import QuartzCore
     var lastFrameTime: Double = -1 /// Time at which the displayLink was last called
     
     /// Vars -  Interface
-    ///     Accessing these directly is not thread safe. Only access them from self.animatorQueue
     
     @objc var animationTimeLeft: Double {
         var result: Double = -1
-        self.animatorQueue.sync {
-            result = animationTimeLeft_Internal
+        displayLink.dispatchQueue.sync {
+            result = animationTimeLeft_Unsafe
         }
         return result
     }
     @objc var animationValueLeft: Vector {
         var result = Vector(x:-1, y:-1)
-        animatorQueue.sync {
-            result = animationValueLeft_Internal
+        displayLink.dispatchQueue.sync {
+            result = animationValueLeft_Unsafe
         }
         return result
     }
     
-    @objc var animationValueLeft_Internal: Vector {
+    @objc var animationValueLeft_Unsafe: Vector {
         /// Only call this when you're already on the animatorQueue
         
         let result = subtractedVectors(animationValueTotal, lastAnimationValue)
         return result
     }
     
-    @objc var animationTimeLeft_Internal: Double {
+    @objc var animationTimeLeft_Unsafe: Double {
         /// Only call this when you're already on the animatorQueue
         
         let result = animationEndTime - lastFrameTime
@@ -177,13 +176,13 @@ import QuartzCore
         ///         Orrr we can also have self.isRunning() execute on self.queue. - we did that. Should be most robust solution
         ///         But actually, maybe it's faster to make start() use queue.sync after all. Because isRunning() is probably called a lot more.
         
-        self.animatorQueue.async {
+        displayLink.dispatchQueue.async {
             
             /// Reset lastAnimationValue
             ///     So we don't give the `params` callback old invalid animationValueLeft.
             ///     I think this is sort of redundant, because we're resetting animationValueLeft in `startWithUntypedCallback_Unsafe()` as well?
             
-            let p: MFAnimatorStartParams = params(self.animationValueLeft_Internal, self.isRunning_Internal, self.animationCurve)
+            let p: MFAnimatorStartParams = params(self.animationValueLeft_Unsafe, self.isRunning_Unsafe, self.animationCurve)
             
             self.lastAnimationValue = Vector(x: 0, y: 0)
             
@@ -225,7 +224,7 @@ import QuartzCore
         
         /// Get stuff
         
-        let isRunningg = self.isRunning_Internal
+        let isRunningg = self.isRunning_Unsafe
         
         /// Validate
         
@@ -307,7 +306,7 @@ import QuartzCore
     /// Stop
     
     @objc func stop() {
-        self.animatorQueue.async {
+        displayLink.dispatchQueue.async {
             self.stop_Internal(fromDisplayLink: false)
         }
     }
@@ -320,6 +319,7 @@ import QuartzCore
     
     fileprivate func stop_Internal(fromDisplayLink: Bool) {
         /// Don't call this directly, use `stop()` or `stop_FromDisplayLinkedThread()`
+        ///     Edit: Actually I think this is obsolete now that we merged the animator and displayLink queues
         
         /// Debug
         
@@ -327,11 +327,8 @@ import QuartzCore
         
         /// Do stuff
         
-        if (fromDisplayLink) {
-            self.displayLink.stop()
-        } else {
-            self.displayLink.stop()
-        }
+        self.displayLink.stop()
+        
         self.animationPhase = kMFAnimationPhaseNone
         if self.onStopCallback != nil {
             self.onStopCallback!()
@@ -346,22 +343,23 @@ import QuartzCore
         /// Use this function to synchronously install the onStop callback.
         /// This function should only be called from self.queue
         
-        assert(self.isRunning_Internal)
+        assert(self.isRunning_Unsafe)
         
-        onStop_Internal(callback: callback, doImmediatelyIfNotRunning: false)
+        onStop_Unsafe(callback: callback, doImmediatelyIfNotRunning: false)
     }
     
     @objc func onStop(callback: @escaping () -> ()) {
         
-        self.animatorQueue.async {
-            self.onStop_Internal(callback: callback, doImmediatelyIfNotRunning: false)
+        displayLink.dispatchQueue.async {
+            self.onStop_Unsafe(callback: callback, doImmediatelyIfNotRunning: false)
         }
     }
     
-    fileprivate func onStop_Internal(callback: @escaping () -> (), doImmediatelyIfNotRunning: Bool) {
+    fileprivate func onStop_Unsafe(callback: @escaping () -> (), doImmediatelyIfNotRunning: Bool) {
+        /// Not thread safe. Use `onStop` unless you're already running on displayLink.dispatchQueue
         /// Do `callback` once the Animator stops or immediately if the animator isn't running and `waitTillNextStop` is false
         
-        if (doImmediatelyIfNotRunning && !self.isRunning_Internal) {
+        if (doImmediatelyIfNotRunning && !self.isRunning_Unsafe) {
             callback()
         } else {
             self.onStopCallback = callback
@@ -374,11 +372,11 @@ import QuartzCore
     
     @objc func displayLinkCallback(_ timeInfo: DisplayLinkCallbackTimeInfo) {
         
-        self.animatorQueue.sync { /// Use sync so this is actually executed on the high-priority display-linked thread
+        displayLink.dispatchQueue.sync { /// Use sync so this is actually executed on the high-priority display-linked thread
             
             /// Debug
             
-            DDLogDebug("\nAnimation value total: (\(animationValueTotal.x), \(animationValueTotal.y)), left: (\(animationValueLeft_Internal.x), \(animationValueLeft_Internal.y))")
+            DDLogDebug("\nAnimation value total: (\(animationValueTotal.x), \(animationValueTotal.y)), left: (\(animationValueLeft_Unsafe.x), \(animationValueLeft_Unsafe.y))")
             
             /// Guard stopped
             
