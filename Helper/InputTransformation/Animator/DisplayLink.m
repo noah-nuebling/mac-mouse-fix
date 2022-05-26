@@ -143,6 +143,7 @@
                 workload();
             } else {
                 dispatch_sync(dispatch_get_main_queue(), workload);
+                /// ^ Does this need to be sync? Has been causing deadlocks. Maybe good idea that it's sync so the next block on _displayLinkQueue works with a "fully stopped" displayLink if that's a thing
             }
         }
     });

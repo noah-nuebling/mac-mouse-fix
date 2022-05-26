@@ -209,6 +209,13 @@ static dispatch_group_t _momentumScrollWaitGroup;
         /// Log error
         DDLogError(@"_momentumScrollWaitGroup timed out. _momentumScrollWaitGroup info: %@. Will crash.", _momentumScrollWaitGroup.debugDescription);
         
+        /// Clean up
+        ///     Unhide mouse pointer
+#if DEBUG
+#else
+        [PointerFreeze unfreeze]; /// Only in release so the crashes are more noticable in DEBUG mode
+#endif
+        
         /// Crash
         assert(false);
         exit(EXIT_FAILURE); /// Make sure it also quits in release builds

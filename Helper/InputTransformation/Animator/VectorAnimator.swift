@@ -449,7 +449,7 @@ import QuartzCore
             }
             
             /// Debug
-            DDLogDebug("\nTime delta in-animator: \(frameTime - lastFrameTime)");
+            DDLogDebug("Time delta in-animator: \(frameTime - lastFrameTime) \nanimationEndTime: \(self.animationEndTime), frameTime: \(frameTime)")
             
             /// Get normalized time
             let animationTimeUnit: Double = Math.scale(value: frameTime, from: self.animationTimeInterval, to: .unitInterval)
