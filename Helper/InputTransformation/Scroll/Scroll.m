@@ -526,9 +526,8 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             
             static double scrollDeltaSummm = 0;
             scrollDeltaSummm += distanceDelta;
-            DDLogDebug(@"Delta sum in-animator: %f", scrollDeltaSummm);
-            DDLogDebug(@"Delta in-animator: %f", distanceDelta);
-            DDLogDebug(@"SubCurvePhase in-animator: %d", subCurvePhase);
+//            DDLogDebug(@"Delta sum in-animator: %f", scrollDeltaSummm);
+            DDLogDebug(@"in-animator - delta %f, animationPhase: %d, subCurve: %d", distanceDelta, animationPhase, subCurvePhase);
             
             /// Send scroll
             sendScroll(distanceDelta, scrollDirection, YES, animationPhase, subCurvePhase);
@@ -694,7 +693,8 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
                     } else if (animatorPhase == kMFAnimationCallbackPhaseEnd) {
                         momentumPhase = kCGMomentumScrollPhaseEnd;
                     } else {
-                        assert(false);
+//                        assert(false);
+                        DDLogDebug(@"\nHybrid event - Assert fail >:(");
                     }
                 } else {
                     assert(false);
