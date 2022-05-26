@@ -87,7 +87,7 @@ class PixelatedVectorAnimator: VectorAnimator {
             
             /// Debug
             
-            DDLogDebug("\nStarted PixelatedAnimator with phase: \(self.animationPhase.rawValue), lastPhase: \(self.lastAnimationPhase.rawValue), deltaLeftDiff: \(subtractedVectors(self.animationValueLeft_Unsafe, deltaLeftBefore)), oldDeltaLeft: \(deltaLeftBefore), newDeltaLeft: \(self.animationValueLeft_Unsafe)")
+            DDLogDebug("\nStarted PixelatedAnimator with phase: \(self.animationPhase.rawValue), deltaLeftDiff: \(subtractedVectors(self.animationValueLeft_Unsafe, deltaLeftBefore)), oldDeltaLeft: \(deltaLeftBefore), newDeltaLeft: \(self.animationValueLeft_Unsafe)")
             
         }
     }
@@ -127,7 +127,7 @@ class PixelatedVectorAnimator: VectorAnimator {
             && self.animationPhase != kMFAnimationPhaseEnd) {
             
             /// Log
-            DDLogDebug("\nSkipped PixelatedAnimator callback due to 0 delta. phase: \(self.animationPhase.rawValue), lastPhase: \(self.lastAnimationPhase.rawValue)")
+            DDLogDebug("\nSkipped PixelatedAnimator callback due to 0 delta. phase: \(self.animationPhase.rawValue)")
             
             /// Return
             return
@@ -138,7 +138,7 @@ class PixelatedVectorAnimator: VectorAnimator {
          
         let isEndAndNoPrecedingDeltas =
             animationPhase == kMFAnimationPhaseEnd /// This is last event of the animation
-            && lastAnimationPhase == kMFAnimationPhaseNone  /// There has not been an event with a non-zero delta during this animation.
+            && !thisAnimationHasProducedDeltas  /// There has not been an event with a non-zero delta during this animation.
         
         /// Debug
         
@@ -172,11 +172,11 @@ class PixelatedVectorAnimator: VectorAnimator {
         
         /// Debug
         
-        DDLogDebug("\nPixelatedAnimator callback with delta: \(integerAnimationValueDelta), phase: \(self.animationPhase.rawValue), lastPhase: \(self.lastAnimationPhase.rawValue)")
+        DDLogDebug("\nPixelatedAnimator callback with delta: \(integerAnimationValueDelta), phase: \(self.animationPhase.rawValue)")
         
-        /// Update `last` phase
+        /// Update hasProducedDeltas
         
-        self.lastAnimationPhase = self.animationPhase
+        self.thisAnimationHasProducedDeltas = true
         
         /// Update phase to `continue` if phase is `start`
         ///     This has a copy in superclass. Update that it when you change this.

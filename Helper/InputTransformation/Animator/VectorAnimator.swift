@@ -113,9 +113,17 @@ import QuartzCore
         return VectorAnimator.callbackPhase(animationPhase: self.animationPhase)
     }
     
+    var thisAnimationHasProducedDeltas = false
+    
+//    var state_firstDeltaCallback = false
+//    var state_lastDeltaCallback = false
+//
+//    var state_firstDisplayLinkCallback = false
+//    var state_firstDisplayLinkCallback_AfterRunningStart = false
+//    var state_lastDisplayLinkCallback = false
+    
     var lastAnimationValue: Vector = Vector(x: 0, y: 0) /// animationValue when the displayLink was last called
     var lastAnimationTimeUnit: Double = 0.0
-    var lastAnimationPhase: MFAnimationPhase = kMFAnimationPhaseNone
     private var lastSubCurve: MFHybridSubCurve = kMFHybridSubCurveNone
     
     var lastFrameTime: Double = -1 /// Time at which the displayLink was last called
@@ -227,7 +235,7 @@ import QuartzCore
         let isRunningg = self.isRunning_Unsafe
 
         /// Debug
-        DDLogDebug("Animation phase: \(self.animationPhase), last: \(self.lastAnimationPhase)")
+        DDLogDebug("Animation phase: \(self.animationPhase)")
         
         /// Validate
         
@@ -261,7 +269,7 @@ import QuartzCore
             ///     We want the first time that self.callback is called by displayLinkCallback() during the animation to have phase start, so we're not setting phase to running start in this case, even if the Animator is already running (when !isRunning is true)
 
             self.animationPhase = kMFAnimationPhaseStart;
-            self.lastAnimationPhase = kMFAnimationPhaseNone;
+            self.thisAnimationHasProducedDeltas = false
             
         } else {
             self.animationPhase = kMFAnimationPhaseRunningStart;
@@ -403,6 +411,7 @@ import QuartzCore
             if animationPhase == kMFAnimationPhaseStart {
                 /// ^ I don't think we have to check for lastAnimationPhase
                 ///     to make sure this is the first callback?
+                ///     Edit: THIS SHOULD ONLY RUN ONCE even when the Subpixelated Animator skips callbacks during an animation!! Otherwise the animationEndTime will be shifted further and further back and there will be infinite loop.
                 
                 /// Set animation start time
                 
@@ -450,7 +459,7 @@ import QuartzCore
             }
             
             /// Debug
-            DDLogDebug("Time delta in-animator: \(frameTime - lastFrameTime) \nanimationEndTime: \(self.animationEndTime), frameTime: \(frameTime)")
+            DDLogDebug("Time delta in-animator: \(frameTime - lastFrameTime) \nanimationEndTime: \(self.animationEndTime), frameTime: \(frameTime)\n animationStartTime \(self.animationStartTime), animationDuration: \(self.animationDuration), phase: \(self.animationPhase)")
             
             /// Get normalized time
             let animationTimeUnit: Double = Math.scale(value: frameTime, from: self.animationTimeInterval, to: .unitInterval)
@@ -535,9 +544,6 @@ import QuartzCore
             self.subclassHook(callback, animationValueDelta, animationTimeDelta, subCurvePhase)
             
             /// Update `last` time and value and phase
-            ///     \note  Should lastPhase be updated right after the callback is called? Experimentally moved it there. Move back if that breaks things
-            ///         Edit: I checked and atm we only use lastAnimationPhase to set the startAndEnd phase. For that it shouldn't make a difference. But I do think it makes more sense to update it right after `callback` is called in general
-            //          TODO: Maybe remove lastAnimationPhase now that we removed startEndEnd Phase?
             
             self.lastFrameTime = frameTime
             self.lastAnimationValue = animationValue
@@ -566,7 +572,7 @@ import QuartzCore
         
         let isEndAndNoPrecedingDeltas =
             animationPhase == kMFAnimationPhaseEnd /// This is last event of the animation
-            && lastAnimationPhase == kMFAnimationPhaseNone  /// There has not been an event with a non-zero delta during this animation.
+            && !thisAnimationHasProducedDeltas  /// There has not been an event with a non-zero delta during this animation.
 
         assert(!isEndAndNoPrecedingDeltas)
         
@@ -578,9 +584,9 @@ import QuartzCore
         
         DDLogDebug("BaseAnimator callback - delta: \(animationValueDelta)")
         
-        /// Update `last` time and value and phase
+        /// Update hasProducedDeltas
         
-        self.lastAnimationPhase = self.animationPhase
+        self.thisAnimationHasProducedDeltas = true
         
         /// Update phase to `continue` if phase is `start`
         ///     This has a copy in superclass. Update that it when you change this.

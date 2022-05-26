@@ -100,6 +100,9 @@ static int64_t _lastEventDelta;
     ///     Not sure if necessary to lock, since we're starting the eventTap at the very end anyways.
     dispatch_sync(_queue, ^{
         
+        /// Debug
+        DDLogDebug(@"PointerFreeze - freezing");
+        
         /// Store
         _origin = origin;
         _keepPointerMoving = keepPointerMoving;
@@ -120,7 +123,7 @@ static int64_t _lastEventDelta;
             
             /// Get display under mouse pointer
             CVReturn rt = [HelperUtility display:&_display atPoint:_origin];
-            if (rt != kCVReturnSuccess) DDLogWarn(@"Couldn't get display under mouse pointer in modifiedDrag");
+            if (rt != kCVReturnSuccess) DDLogWarn(@"Couldn't get display under mouse pointer in PointerFreeze");
             
             /// Draw puppet cursor before hiding
             [PointerFreeze drawPuppetCursor:YES fresh:YES];
@@ -142,12 +145,12 @@ CGEventRef _Nullable mouseMovedCallback(CGEventTapProxy proxy, CGEventType type,
     /// Catch special events
     if (type == kCGEventTapDisabledByTimeout) {
         /// Re-enable on timeout (Not sure if this ever times out)
-        DDLogInfo(@"PointerUtility eventTap timed out. Re-enabling.");
+        DDLogInfo(@"PointerFreeze eventTap timed out. Re-enabling.");
         CGEventTapEnable(_eventTap, true);
         _coolEventTapIsEnabled = true;
         return event;
     } else if (type == kCGEventTapDisabledByUserInput) {
-        DDLogInfo(@"PointerUtility eventTap disabled by user input.");
+        DDLogInfo(@"PointerFreeze eventTap disabled by user input.");
         return event;
     }
     
@@ -204,7 +207,10 @@ CGEventRef _Nullable mouseMovedCallback(CGEventTapProxy proxy, CGEventType type,
     CFTimeInterval timeSinceLastEvent = CACurrentMediaTime() - _lastEventTimestamp;
     BOOL pointerIsMoving = (timeSinceLastEvent < OtherConfig.mouseMovingMaxIntervalSmall) && _lastEventDelta > 0;
     
-    DDLogDebug(@"pointerIsMoving: %d - time: %f, delta: %lld", pointerIsMoving, timeSinceLastEvent, _lastEventDelta);
+    /// Debug
+    
+    DDLogDebug(@"PointerFreeze - UNfreezing");
+    DDLogDebug(@"PointerFreeze - pointerIsMoving: %d - time: %f, delta: %lld", pointerIsMoving, timeSinceLastEvent, _lastEventDelta);
     
     /// Lock
     ///     Not sure whether to use sync or async here
@@ -304,7 +310,7 @@ void setSuppressionInterval(MFEventSuppressionInterval mfInterval) {
     
     /// Analyze suppresionInterval
     CFTimeInterval intervalResult = CGEventSourceGetLocalEventsSuppressionInterval(src);
-    DDLogDebug(@"Event suppression interval: %f", intervalResult);
+    DDLogDebug(@"PointerFreeze - Event suppression interval: %f", intervalResult);
     
     /// Store previous mfInterval
     _previousMFSuppressionInterval = mfInterval;
