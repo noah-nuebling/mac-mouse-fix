@@ -25,21 +25,20 @@ import QuartzCore
     typealias MFAnimatorStartParams = Dictionary<String, Any>
     /// ^ 4 keys: "doStart", "duration", "vector", "curve"
     
-    /// Enum conversion
+    /// Conversion
     
-    @objc static func callbackPhase(animationPhase: MFAnimationPhase) -> MFAnimationCallbackPhase {
+    @objc static func callbackPhase(hasProducedDeltas: Bool, isLastCallback: Bool) -> MFAnimationCallbackPhase {
         
-        switch animationPhase {
-            
-        case kMFAnimationPhaseStart:
-            return kMFAnimationCallbackPhaseStart
-        case kMFAnimationPhaseContinue, kMFAnimationPhaseRunningStart:
-            return kMFAnimationCallbackPhaseContinue
-        case kMFAnimationPhaseEnd:
+        assert(!(!hasProducedDeltas && isLastCallback))
+        
+        if isLastCallback {
             return kMFAnimationCallbackPhaseEnd
-        default:
-            fatalError()
+        } else if !hasProducedDeltas {
+            return kMFAnimationCallbackPhaseStart
+        } else {
+            return kMFAnimationCallbackPhaseContinue
         }
+        
     }
     
     @objc static func IOHIDPhase(animationCallbackPhase: MFAnimationCallbackPhase) -> IOHIDEventPhaseBits {
@@ -86,7 +85,10 @@ import QuartzCore
     var animationDuration: CFTimeInterval = 0
     var animationStartTime: CFTimeInterval = 0
     var animationEndTime: CFTimeInterval { animationStartTime + animationDuration }
-    var animationTimeInterval: Interval { Interval(location: animationStartTime, length: animationDuration) }
+    var animationTimeInterval: Interval {
+        assert(animationStartTime > 0 && animationDuration > 0) /// Debug
+        return Interval(location: animationStartTime, length: animationDuration)
+    }
     
     var animationValueTotal: Vector = Vector(x: 0, y: 0)
     var animationValueIntervalX: Interval { Interval(start: 0, end: animationValueTotal.x) }
@@ -107,20 +109,12 @@ import QuartzCore
     fileprivate var onStopCallback: (() -> ())?
     
     /// Vars - DisplayLink
+
+    var isFirstDisplayLinkCallback = false
+    var isFirstDisplayLinkCallback_AfterRunningStart = false
+    var isLastDisplayLinkCallback = false
     
-    var animationPhase: MFAnimationPhase = kMFAnimationPhaseNone
-    var callbackPhase: MFAnimationCallbackPhase {
-        return VectorAnimator.callbackPhase(animationPhase: self.animationPhase)
-    }
-    
-    var thisAnimationHasProducedDeltas = false
-    
-//    var state_firstDeltaCallback = false
-//    var state_lastDeltaCallback = false
-//
-//    var state_firstDisplayLinkCallback = false
-//    var state_firstDisplayLinkCallback_AfterRunningStart = false
-//    var state_lastDisplayLinkCallback = false
+    var thisAnimationHasProducedDeltas = false /// Whether deltas have been fed into `self.callback` this animation
     
     var lastAnimationValue: Vector = Vector(x: 0, y: 0) /// animationValue when the displayLink was last called
     var lastAnimationTimeUnit: Double = 0.0
@@ -232,68 +226,49 @@ import QuartzCore
         
         /// Get stuff
         
-        let isRunningg = self.isRunning_Unsafe
+        let isRunningg = isRunning_Unsafe
 
+        /// Update state
+        
+        if !isRunningg
+            || isFirstDisplayLinkCallback {
+
+            /// If isFirstDisplayLinkCallback == true that means that the displayLinkCallback hasn't run yet (since it sets it to false), so we don't wan to signal runningStart, yet
+            
+            isFirstDisplayLinkCallback = true
+            isFirstDisplayLinkCallback_AfterRunningStart = false
+            isLastDisplayLinkCallback = false
+            
+            thisAnimationHasProducedDeltas = false
+            
+        } else {
+            
+            /// Signal running Start
+            isFirstDisplayLinkCallback_AfterRunningStart = true
+        }
+        
         /// Debug
-        DDLogDebug("Animation phase: \(self.animationPhase)")
-        
-        /// Validate
-        
-        if isRunningg {
-            switch self.animationPhase {
-            case kMFAnimationPhaseStart, kMFAnimationPhaseContinue, kMFAnimationPhaseRunningStart:
-                break
-            case kMFAnimationPhaseEnd, kMFAnimationPhaseNone:
-                assert(false)
-            default:
-                fatalError();
-            }
-        } else {
-            switch self.animationPhase {
-            case kMFAnimationPhaseEnd, kMFAnimationPhaseNone:
-                break
-            case kMFAnimationPhaseStart, kMFAnimationPhaseContinue, kMFAnimationPhaseRunningStart:
-                /* assert(false) */ break
-                /// ^ This assert is failing after merging DisplayLink and Animator queues because animationPhase == kMFAnimationPhaseStart. But I don't understand why that's wrong. (It's being set to `start` right below.) -> Just commenting the assert out for now.
-            default:
-                fatalError()
-            }
-        }
-        
-        /// Update phases
-        
-        if (!isRunningg
-            || self.animationPhase == kMFAnimationPhaseStart) {
-            
-            /// If animation phase is still start that means that the displayLinkCallback() hasn't been used it, yet (it sets it to continue after using it)
-            ///     We want the first time that self.callback is called by displayLinkCallback() during the animation to have phase start, so we're not setting phase to running start in this case, even if the Animator is already running (when !isRunning is true)
-
-            self.animationPhase = kMFAnimationPhaseStart;
-            self.thisAnimationHasProducedDeltas = false
-            
-        } else {
-            self.animationPhase = kMFAnimationPhaseRunningStart;
-        }
+        DDLogDebug("AnimationCallback start - isFirst: \(self.isFirstDisplayLinkCallback), isRunningStart: \(self.isFirstDisplayLinkCallback_AfterRunningStart)")
         
         /// Update the rest of the state
         
         if (isRunningg) {
             
-            self.animationStartTime = lastFrameTime
-            self.animationDuration = -1
-            self.animationDurationRaw = durationRaw
-            self.animationValueTotal = value
+            animationStartTime = lastFrameTime
+            animationDuration = -1
+            animationDurationRaw = durationRaw
+            animationValueTotal = value
             
         } else {
             
             /// animationStartTime will be set in the displayLinkCallback
-            self.animationStartTime = -1
-            self.animationDuration = -1
-            self.animationDurationRaw = durationRaw
-            self.animationValueTotal = value
+            animationStartTime = -1
+            animationDuration = -1
+            animationDurationRaw = durationRaw
+            animationValueTotal = value
             
             /// Start displayLink
-            self.displayLink.start(callback: { [unowned self] (timeInfo: DisplayLinkCallbackTimeInfo) -> () in
+            displayLink.start(callback: { [unowned self] (timeInfo: DisplayLinkCallbackTimeInfo) -> () in
                 let s = self
                 s.displayLinkCallback(timeInfo)
                 /**
@@ -338,9 +313,12 @@ import QuartzCore
         
         /// Do stuff
         
-        self.displayLink.stop()
+        displayLink.stop()
         
-        self.animationPhase = kMFAnimationPhaseNone
+        isFirstDisplayLinkCallback = false
+        isFirstDisplayLinkCallback_AfterRunningStart = false
+        isLastDisplayLinkCallback = false
+        
         if self.onStopCallback != nil {
             self.onStopCallback!()
             self.onStopCallback = nil
@@ -389,13 +367,8 @@ import QuartzCore
             
             DDLogDebug("\nAnimation value total: (\(animationValueTotal.x), \(animationValueTotal.y)), left: (\(animationValueLeft_Unsafe.x), \(animationValueLeft_Unsafe.y))")
             
-            /// Guard stopped
-            
-            if (self.animationPhase == kMFAnimationPhaseNone) {
-                DDLogWarn("Animator displayLinkCallback called after it has been stopped")
-                return;
-            }
-            
+            DDLogDebug("AnimationCallback with state - isFirst: \(isFirstDisplayLinkCallback), isRunning: \(isFirstDisplayLinkCallback_AfterRunningStart)")
+                        
             /// Guard nil
             
             guard let callback = self.callback else {
@@ -408,19 +381,16 @@ import QuartzCore
             /// Get time when frame will be displayed
             var frameTime = timeInfo.outFrame
             
-            if animationPhase == kMFAnimationPhaseStart {
-                /// ^ I don't think we have to check for lastAnimationPhase
-                ///     to make sure this is the first callback?
-                ///     Edit: THIS SHOULD ONLY RUN ONCE even when the Subpixelated Animator skips callbacks during an animation!! Otherwise the animationEndTime will be shifted further and further back and there will be infinite loop.
+            if isFirstDisplayLinkCallback {
                 
                 /// Set animation start time
                 
                 /// Pull time of last frame out of butt
-                self.lastFrameTime = frameTime - timeInfo.nominalTimeBetweenFrames
+                lastFrameTime = frameTime - timeInfo.nominalTimeBetweenFrames
                 
                 /// Set animation start time to hypothetical last frame
                 ///     This is so that the first timeDelta is the same size as all the others (instead of 0)
-                self.animationStartTime = self.lastFrameTime
+                animationStartTime = self.lastFrameTime
                 
                 /// Reset lastAnimationTimeUnit
                 ///     Might be better to reset this somewhere else
@@ -431,8 +401,7 @@ import QuartzCore
                 lastSubCurve = kMFHybridSubCurveNone
             }
             
-            if animationPhase == kMFAnimationPhaseStart
-                || animationPhase == kMFAnimationPhaseRunningStart {
+            if isFirstDisplayLinkCallback || isFirstDisplayLinkCallback_AfterRunningStart {
                 
                 /// Round duration to a multiple of timeBetweenFrames
                 ///     This is so that the last timeDelta is the same size as all the others
@@ -445,24 +414,24 @@ import QuartzCore
             ///     If the last callback was the last delta callback
             ///     We know that the delta is going to be (0,0) so most of the work below is redundant in this case
             if self.lastFrameTime >= self.animationEndTime {
-                self.animationPhase = kMFAnimationPhaseEnd
+                isLastDisplayLinkCallback = true
             }
             
             /// Check if animation time is up
             
             let closerToEndTimeThanNextFrame = abs(frameTime - self.animationEndTime) < abs(frameTime+timeInfo.timeBetweenFrames - self.animationEndTime)
-            let pastEndTime = self.animationEndTime <= frameTime
+            let pastEndTime = animationEndTime <= frameTime
             
             if closerToEndTimeThanNextFrame || pastEndTime {
                 /// This is probably the last delta callback -> make sure we scroll exactly animationValueTotal
-                frameTime = self.animationEndTime /// This is so we scroll exactly animationValueTotal
+                frameTime = animationEndTime /// This is so we scroll exactly animationValueTotal
             }
             
             /// Debug
-            DDLogDebug("Time delta in-animator: \(frameTime - lastFrameTime) \nanimationEndTime: \(self.animationEndTime), frameTime: \(frameTime)\n animationStartTime \(self.animationStartTime), animationDuration: \(self.animationDuration), phase: \(self.animationPhase)")
+//            DDLogDebug("Time delta in-animator: \(frameTime - lastFrameTime) \nanimationEndTime: \(self.animationEndTime), frameTime: \(frameTime)\n animationStartTime \(self.animationStartTime), animationDuration: \(self.animationDuration)")
             
             /// Get normalized time
-            let animationTimeUnit: Double = Math.scale(value: frameTime, from: self.animationTimeInterval, to: .unitInterval)
+            let animationTimeUnit: Double = Math.scale(value: frameTime, from: animationTimeInterval, to: .unitInterval)
             
             /// Get normalized animation value from animation curve
             let animationValueUnit: Double = animationCurve.evaluate(at: animationTimeUnit)
@@ -550,16 +519,22 @@ import QuartzCore
             self.lastAnimationTimeUnit = animationTimeUnit
             
             /// Stop animation if phase is  `end`
-            if self.animationPhase == kMFAnimationPhaseEnd {
+            if isLastDisplayLinkCallback {
                 self.stop_FromDisplayLinkedThread()
                 return
             }
+            
+            /// Update isFirstCallback state
+            isFirstDisplayLinkCallback = false
+            isFirstDisplayLinkCallback_AfterRunningStart = false
         }
     }
     
     /// Subclass overridable
     
     func subclassHook(_ untypedCallback: Any, _ animationValueDelta: Vector, _ animationTimeDelta: CFTimeInterval, _ subCurve: MFHybridSubCurvePhase) {
+        
+        /// This is unused. Probably doesn't work properly. The override in `PixelatedVectorAnimator` is the relevant thing.
         
         /// Guard callback type
         
@@ -571,14 +546,14 @@ import QuartzCore
         ///     There is similar code in subclass. Update that it when you change this.
         
         let isEndAndNoPrecedingDeltas =
-            animationPhase == kMFAnimationPhaseEnd /// This is last event of the animation
-            && !thisAnimationHasProducedDeltas  /// There has not been an event with a non-zero delta during this animation.
+            isLastDisplayLinkCallback
+            && !thisAnimationHasProducedDeltas
 
         assert(!isEndAndNoPrecedingDeltas)
         
-        
         /// Call the callback
-        callback(animationValueDelta, self.callbackPhase, subCurve)
+        let phase = VectorAnimator.callbackPhase(hasProducedDeltas: thisAnimationHasProducedDeltas, isLastCallback: isLastDisplayLinkCallback)
+        callback(animationValueDelta, phase, subCurve)
         
         /// Debug
         
@@ -586,14 +561,7 @@ import QuartzCore
         
         /// Update hasProducedDeltas
         
-        self.thisAnimationHasProducedDeltas = true
-        
-        /// Update phase to `continue` if phase is `start`
-        ///     This has a copy in superclass. Update that it when you change this.
-        
-        switch self.animationPhase {
-        case kMFAnimationPhaseStart, kMFAnimationPhaseRunningStart: self.animationPhase = kMFAnimationPhaseContinue
-            default: break }
+        thisAnimationHasProducedDeltas = true
     }
     
     /// Helper functions

@@ -11,9 +11,9 @@
 #define CurveDeclarations_h
 
 typedef enum {
-    kMFHybridSubCurveNone,
-    kMFHybridSubCurveBase,
-    kMFHybridSubCurveDrag,
+    kMFHybridSubCurveNone = 0,
+    kMFHybridSubCurveBase = 1,
+    kMFHybridSubCurveDrag = 2,
 } MFHybridSubCurve;
 
 typedef enum {
@@ -21,11 +21,8 @@ typedef enum {
     kMFHybridSubCurvePhaseBase = kMFHybridSubCurveBase,
     kMFHybridSubCurvePhaseDrag = kMFHybridSubCurveDrag,
     
-    kMFHybridSubCurvePhaseBaseFromDrag,
-    kMFHybridSubCurvePhaseDragBegan,
-    
-    kMFHybridSubCurvePhaseBaseMask = kMFHybridSubCurvePhaseBase | kMFHybridSubCurvePhaseBaseFromDrag, /// <- I don't think these masks are usable because the values aren't single bits but just random numbers
-    kMFHybridSubCurvePhaseDragMask = kMFHybridSubCurvePhaseDrag | kMFHybridSubCurvePhaseDragBegan,
+    kMFHybridSubCurvePhaseDragBegan = 4,
+    kMFHybridSubCurvePhaseBaseFromDrag = 8,
     
 } MFHybridSubCurvePhase;
 /// ^ When animating a HybridCurve, the animator will tell the animation callback whether it's currently on the Base (first) or the Drag (second) subcurve of the HybridCurve, and whether the subcurve has just changed to Drag (then it will send kMFHybridSubCurvePhaseDragBegan)

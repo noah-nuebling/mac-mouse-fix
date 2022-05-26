@@ -87,7 +87,7 @@ class PixelatedVectorAnimator: VectorAnimator {
             
             /// Debug
             
-            DDLogDebug("\nStarted PixelatedAnimator with phase: \(self.animationPhase.rawValue), deltaLeftDiff: \(subtractedVectors(self.animationValueLeft_Unsafe, deltaLeftBefore)), oldDeltaLeft: \(deltaLeftBefore), newDeltaLeft: \(self.animationValueLeft_Unsafe)")
+            DDLogDebug("\nStarted PixelatedAnimator with deltaLeftDiff: \(subtractedVectors(self.animationValueLeft_Unsafe, deltaLeftBefore)), oldDeltaLeft: \(deltaLeftBefore), newDeltaLeft: \(self.animationValueLeft_Unsafe)")
             
         }
     }
@@ -112,7 +112,7 @@ class PixelatedVectorAnimator: VectorAnimator {
         let currentAnimationValueLeft = animationValueLeft_Unsafe
         let intAnimationValueLeft = subPixelator.peekIntVector(withDouble: currentAnimationValueLeft);
         if isZeroVector(intAnimationValueLeft) {
-            self.animationPhase = kMFAnimationPhaseEnd; /// After this we know the delta will be zero, so most of the work we do below is unnecessary
+            isLastDisplayLinkCallback = true /// After this we know the delta will be zero, so most of the work we do below is unnecessary
         }
         
         /// Get subpixelated animationValueDelta
@@ -124,67 +124,35 @@ class PixelatedVectorAnimator: VectorAnimator {
         ///     Also don't update lastAnimationPhase
         
         if (isZeroVector(integerAnimationValueDelta)
-            && self.animationPhase != kMFAnimationPhaseEnd) {
+            && !isLastDisplayLinkCallback) {
             
             /// Log
-            DDLogDebug("\nSkipped PixelatedAnimator callback due to 0 delta. phase: \(self.animationPhase.rawValue)")
+            DDLogDebug("\nSkipped PixelatedAnimator callback due to 0 delta.")
             
-            /// Return
-            return
-        }
+        } else {
         
-        /// Check if simultaneously start and end
-        ///     There is similar code in superclass. Update that it when you change this.
-         
-        let isEndAndNoPrecedingDeltas =
-            animationPhase == kMFAnimationPhaseEnd /// This is last event of the animation
-            && !thisAnimationHasProducedDeltas  /// There has not been an event with a non-zero delta during this animation.
-        
-        /// Debug
-        
-//        if animationPhase == kMFAnimationPhaseStart || animationPhase == kMFAnimationPhaseRunningStart {
-//            summedIntegerAnimationValueDelta = Vector(x: 0, y: 0)
-//        }
-//        summedIntegerAnimationValueDelta = addedVectors(summedIntegerAnimationValueDelta, integerAnimationValueDelta)
-//
-//        if magnitudeOfVector(summedIntegerAnimationValueDelta)
-//                >= magnitudeOfVector(animationValueTotal) {
-//
-//            /// Not sure if this makes sense. Don't know how to translate this from the old non-vector-based PixelatedAnimator.
-//            ///     Also, this was commented out in Pixelated animator. But without comments. I don't know why. I remember I really struggled to not get this assert to fail. Maybe I just gave up and commented it out?
-//
-//                assert(animationPhase == kMFAnimationPhaseEnd)
-//        }
-        
-        /// Debug
-        
-//        DDLogDebug(
-//            """
-//            PxAnim - intValueDelta: \(integerAnimationValueDelta), intValueLeft: \(intAnimationValueLeft), animationPhase: \(self.animationPhase.rawValue),     value: \(lastAnimationValue + animationValueDelta) intValue: \(summedIntegerAnimationValueDelta), intervalLength: \(self.animationValueInterval.length),     valueDelta: \(animationValueDelta), accEoundingErr: \(subPixelator.accumulatedRoundingError), currentnimationValueLeft: \(currentAnimationValueLeft)
-//            """)
-//        DDLogDebug("PxAnim - intValueDelta: \(integerAnimationValueDelta)")
-        
-        /// Call callback
-        
-        if (!isEndAndNoPrecedingDeltas) { /// Skip `end` phase callbacks if there have been no deltas.
-            callback(integerAnimationValueDelta, self.callbackPhase, subCurve)
-        }
-        
-        /// Debug
-        
-        DDLogDebug("\nPixelatedAnimator callback with delta: \(integerAnimationValueDelta), phase: \(self.animationPhase.rawValue)")
-        
-        /// Update hasProducedDeltas
-        
-        self.thisAnimationHasProducedDeltas = true
-        
-        /// Update phase to `continue` if phase is `start`
-        ///     This has a copy in superclass. Update that it when you change this.
-        
-        if (self.animationPhase == kMFAnimationPhaseStart
-            || self.animationPhase == kMFAnimationPhaseRunningStart) {
+            /// Check if simultaneously start and end
+            ///     There is similar code in superclass. Update that it when you change this.
             
-            self.animationPhase = kMFAnimationPhaseContinue
-        }
+            let isEndAndNoPrecedingDeltas =
+                isLastDisplayLinkCallback
+                && !thisAnimationHasProducedDeltas
+            
+            /// Call callback
+            
+            if (!isEndAndNoPrecedingDeltas) { /// Skip `end` phase callbacks if there have been no deltas.
+                let phase = PixelatedVectorAnimator.callbackPhase(hasProducedDeltas: thisAnimationHasProducedDeltas, isLastCallback: isLastDisplayLinkCallback)
+                callback(integerAnimationValueDelta, phase, subCurve)
+            }
+            
+            /// Debug
+            
+            DDLogDebug("\nPixelatedAnimator callback with delta: \(integerAnimationValueDelta)")
+            
+            /// Update hasProducedDeltas
+            /// 
+            self.thisAnimationHasProducedDeltas = true
+            
+        } /// End `if (isZeroVector...`
     }
 }
