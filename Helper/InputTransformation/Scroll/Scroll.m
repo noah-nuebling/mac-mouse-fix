@@ -396,6 +396,9 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         double pxForThisTickDouble = [_scrollConfig.accelerationCurve evaluateAt:scrollSpeed]; /// In px/s
         pxToScrollForThisTick = pxForThisTickDouble; /// We could use a SubPixelator balance out the rounding errors, but I don't think that'll be noticable
         
+        /// Debug
+        DDLogDebug(@"Acceleration curve f(%f) = %lld", scrollSpeed, pxToScrollForThisTick);
+        
         /// Validate
         if (pxToScrollForThisTick <= 0) {
             DDLogError(@"pxForThisTick is smaller equal 0. This is invalid. Exiting. scrollSpeed: %f, pxForThisTick: %lld", scrollSpeed, pxToScrollForThisTick);

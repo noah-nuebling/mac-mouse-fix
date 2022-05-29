@@ -53,6 +53,7 @@ typedef enum {
     /// Other
     
     kMFScrollAnimationCurvePresetTrackpad,
+    kMFScrollAnimationCurvePresetTest,
     
 } MFScrollAnimationCurvePreset;
 
@@ -66,6 +67,7 @@ typedef enum {
 
 typedef enum {
     
+    kMFScrollSensitivityPrecise,
     kMFScrollSensitivityLow,
     kMFScrollSensitivityMedium,
     kMFScrollSensitivityHigh

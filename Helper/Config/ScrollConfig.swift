@@ -170,12 +170,20 @@ import CocoaLumberjackSwift
         switch preset {
             
         /// User selected
+
+        case kMFScrollAnimationCurvePresetTest:
+            typealias P = Bezier.Point
+            let controlPoints: [P] = [P(x:0,y:0), P(x:0,y:0), P(x:0.3,y:1), P(x:1,y:1)]
+            let curve = Bezier(controlPoints: controlPoints, defaultEpsilon: 0.001)
+            
+            return MFScrollAnimationCurveParameters(msPerStep: 350, baseCurve: curve, dragExponent: 9999999, dragCoefficient: 99999, stopSpeed: 999999, sendMomentumScrolls: false)
             
         case kMFScrollAnimationCurvePresetLowInertia:
+
             return MFScrollAnimationCurveParameters(msPerStep: 140, baseCurve: ScrollConfig.linearCurve, dragExponent: 1.0, dragCoefficient: 23, stopSpeed: 50, sendMomentumScrolls: false)
             
         case kMFScrollAnimationCurvePresetMediumInertia:
-            return MFScrollAnimationCurveParameters(msPerStep: 180, baseCurve: ScrollConfig.linearCurve, dragExponent: 1.1, dragCoefficient: 10, stopSpeed: 50, sendMomentumScrolls: false)
+            return MFScrollAnimationCurveParameters(msPerStep: 180, baseCurve: ScrollConfig.linearCurve, dragExponent: 1.0, dragCoefficient: 15, stopSpeed: 50, sendMomentumScrolls: false)
             
         case kMFScrollAnimationCurvePresetHighInertia:
             /// Snappiest curve that can be used to send momentumScrolls.
@@ -212,7 +220,7 @@ import CocoaLumberjackSwift
     
     /// User setting
     
-    private lazy var _animationCurvePreset = kMFScrollAnimationCurvePresetLowInertia
+    private lazy var _animationCurvePreset = kMFScrollAnimationCurvePresetHighInertia
     @objc var animationCurvePreset: MFScrollAnimationCurvePreset {
         set {
             _animationCurvePreset = newValue
@@ -230,8 +238,8 @@ import CocoaLumberjackSwift
     /// User settings
     
     @objc lazy var useAppleAcceleration: Bool = false /// Ignore MMF acceleration algorithm and use values provided by macOS
-    @objc lazy var scrollSensitivity: MFScrollSensitivity = kMFScrollSensitivityHigh
-    @objc lazy var scrollAcceleration: MFScrollAcceleration = kMFScrollAccelerationMedium
+    @objc lazy var scrollSensitivity: MFScrollSensitivity = kMFScrollSensitivityMedium
+    @objc lazy var scrollAcceleration: MFScrollAcceleration = kMFScrollAccelerationHigh
     
     /// Stored property
     ///     This is used by Scroll.m to determine how to accelerate
@@ -240,7 +248,7 @@ import CocoaLumberjackSwift
     
     /// Define function that maps userSettings -> accelerationCurve
     
-    private func standardAccelerationCurve(forSensitivity sensitivity: MFScrollSensitivity, acceleration: MFScrollAcceleration, animationCurve: MFScrollAnimationCurvePreset, screenSize: Int) -> AccelerationBezier {
+    private func standardAccelerationCurve(forSensitivity sensitivity: MFScrollSensitivity, acceleration: MFScrollAcceleration, animationCurve: MFScrollAnimationCurvePreset, smoothEnabled: Bool, screenSize: Int) -> AccelerationBezier {
         /// `screenSize` should be the width/height of the screen you're scrolling on. Depending on if you're scrolling horizontally or vertically.
         
         
@@ -250,15 +258,53 @@ import CocoaLumberjackSwift
         
         let pxPerTickStart: Int
         
-        switch sensitivity {
-        case kMFScrollSensitivityLow:
+        if sensitivity == kMFScrollSensitivityPrecise {
+            
             pxPerTickStart = 10
-        case kMFScrollSensitivityMedium:
-            pxPerTickStart = 30
-        case kMFScrollSensitivityHigh:
-            pxPerTickStart = 60
-        default:
-            fatalError()
+            
+        } else {
+            
+            /// Get base pxPerTick
+            
+            let pxPerTickStartBase: Double
+            
+            switch sensitivity {
+            case kMFScrollSensitivityLow:
+                pxPerTickStartBase = 30
+            case kMFScrollSensitivityMedium:
+                pxPerTickStartBase = 60
+            case kMFScrollSensitivityHigh:
+                pxPerTickStartBase = 90
+            default:
+                fatalError()
+            }
+
+            /// Get inertia factor
+            
+            let inertiaFactor: Double
+            
+            if !smoothEnabled {
+                inertiaFactor = 1/2
+            } else {
+                switch animationCurve {
+                case kMFScrollAnimationCurvePresetLowInertia:
+                    inertiaFactor = 2/3
+                case kMFScrollAnimationCurvePresetMediumInertia:
+                    inertiaFactor = 3/4
+                case kMFScrollAnimationCurvePresetHighInertia:
+                    inertiaFactor = 1
+                case kMFScrollAnimationCurvePresetTouchDriver:
+                    /// TODO: Why do we define acceleration curves for the touchDriver so weirdly? Shouldn't we just hardcode it to one curve and acceleration?
+                    inertiaFactor = 2/3
+                case kMFScrollAnimationCurvePresetTouchDriverLinear:
+                    inertiaFactor = 2/3
+                default: /// The reason why the other MFScrollAnimationCurvePreset constants will never be passed in here is because quickScroll and preciseScroll define their own accelerationCurves. See Scroll.m for more.
+                    fatalError()
+                }
+            }
+            
+            /// Put it together
+            pxPerTickStart = Int(pxPerTickStartBase * inertiaFactor)
         }
         
         ///
@@ -284,19 +330,25 @@ import CocoaLumberjackSwift
         
         let inertiaFactor: Double
         
-        switch animationCurve {
-        case kMFScrollAnimationCurvePresetLowInertia:
-            inertiaFactor = 2/3
-        case kMFScrollAnimationCurvePresetMediumInertia:
-            inertiaFactor = 3/4
-        case kMFScrollAnimationCurvePresetHighInertia:
-            inertiaFactor = 1
-        case kMFScrollAnimationCurvePresetTouchDriver:
-            inertiaFactor = 2/3
-        case kMFScrollAnimationCurvePresetTouchDriverLinear:
-            inertiaFactor = 2/3
-        default: /// The reason why the other MFScrollAnimationCurvePreset constants will never be passed in here is because quickScroll and preciseScroll define their own accelerationCurves. See Scroll.m for more.
-            fatalError()
+        if !smoothEnabled {
+            
+            inertiaFactor = 1/2
+            
+        } else {
+            switch animationCurve {
+            case kMFScrollAnimationCurvePresetLowInertia:
+                inertiaFactor = 2/3
+            case kMFScrollAnimationCurvePresetMediumInertia:
+                inertiaFactor = 3/4
+            case kMFScrollAnimationCurvePresetHighInertia:
+                inertiaFactor = 1
+            case kMFScrollAnimationCurvePresetTouchDriver:
+                inertiaFactor = 2/3
+            case kMFScrollAnimationCurvePresetTouchDriverLinear:
+                inertiaFactor = 2/3
+            default:
+                fatalError()
+            }
         }
         
         /// Get screenHeight summand
@@ -314,16 +366,19 @@ import CocoaLumberjackSwift
         let pxPerTickEnd = Int(pxPerTickEndBase * inertiaFactor + screenHeightSummand)
         
         /// Debug
-        DDLogDebug("Dynamic pxPerTickEnd: \(pxPerTickEnd)")
+        DDLogDebug("Dynamic pxPerTickStart: \(pxPerTickStart) end: \(pxPerTickEnd)")
         
         ///
         /// Get accelerationHump
         ///
         
-        let accelerationHump = -0.0
+        var accelerationHump = -0.0
         /// ^ Between -1 and 1
         ///     Negative values make the curve continuous, and more predictable (might be placebo)
         ///     Edit: I like 0.0 the best now. Feels more "direct" (Before I've liked -0.2)
+        if sensitivity == kMFScrollSensitivityPrecise {
+            accelerationHump = 0.0
+        }
         
         ///
         /// Generate curve from params
@@ -345,6 +400,7 @@ import CocoaLumberjackSwift
         return self.standardAccelerationCurve(forSensitivity: self.scrollSensitivity,
                                               acceleration: self.scrollAcceleration,
                                               animationCurve: self.animationCurvePreset,
+                                              smoothEnabled: self.smoothEnabled,
                                               screenSize: screenSize)
     }
     
@@ -408,11 +464,11 @@ import CocoaLumberjackSwift
         let y2: Double
         
         if (accelerationHump < 0) {
-            x2 = -accelerationHump
-            y2 = 0
+            x2 = xMin-accelerationHump
+            y2 = yMin
         } else {
-            x2 = 0
-            y2 = accelerationHump
+            x2 = xMin
+            y2 = yMin+accelerationHump
         }
         
         /// Flatten out the end of the curve to prevent ridiculous pxPerTick outputs when input (tickSpeed) is very high. tickSpeed can be extremely high despite smoothing, because our time measurements of when ticks occur are very imprecise
@@ -421,11 +477,19 @@ import CocoaLumberjackSwift
         let y3: Double = yMax
         
         typealias P = Bezier.Point
-        return AccelerationBezier(controlPoints:
+        let curve = AccelerationBezier(controlPoints:
                                     [P(x: xMin, y: yMin),
                                      P(x: x2, y: y2),
                                      P(x: x3, y: y3),
-                                     P(x: xMax, y: yMax)])
+                                     P(x: xMax, y: yMax)], defaultEpsilon: 0.08)
+        
+        /// Debug
+        
+        let trace = curve.trace(nOfSamples: 100)
+        DDLogDebug("trace of accelerationBezier: \n\(trace)")
+        
+        /// Return
+        return curve
     }
     
     func copy(with zone: NSZone? = nil) -> Any {

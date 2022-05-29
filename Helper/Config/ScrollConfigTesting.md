@@ -130,6 +130,19 @@ __Inertial settings__
 - stopSpeed: 50
     -> This is very snappy but still sort of floaty. I like "3. Snappy" and "4.2 MMF 3" better
 
+3.2 Medium 2
+
+pxPerTick: Same as 3. Snappy
+msPerStep: 180, 
+baseCurve: ScrollConfig.linearCurve, 
+dragExponent: 1.0, 
+dragCoefficient: 15, 
+stopSpeed: 50,  
+    -> Found this randomly by making the MMF setting gradually more inertial
+
+
+
+
 4. __MMF__
 - pxPerTickBase: 60
 - pxPerTickEnd: 90

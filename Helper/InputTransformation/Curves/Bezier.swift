@@ -197,6 +197,17 @@ import ReactiveSwift
         
         self.defaultEpsilon = defaultEpsilon
         
+        /// Removing consective duplicate points
+        ///     For optimization. Not sure if significant
+        
+        var controlPointsFiltered: [Point] = []
+        for i in 0..<controlPoints.count-1 {
+            let this = controlPoints[i]
+            let next = controlPoints[i+1]
+            if this.x == next.x && this.y == next.y { continue }
+            controlPointsFiltered.append(this)
+        }
+        
         /// Fill self.controlPoints
         
         self.controlPoints = controlPoints
@@ -259,7 +270,7 @@ import ReactiveSwift
             /// Get product
             
             var product: Int = 1
-            if 0 <= j-1 { // Otherwise the range can be be 0...-1 which, just means "skip this" in Maths, but Swift doesn't like it
+            if 0 <= j-1 { /// Otherwise the range can be be 0...-1 which, just means "skip this" in Maths, but Swift doesn't like it
                 for m in 0...j-1 {
                     product *= n-m
                 }

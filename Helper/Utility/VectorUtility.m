@@ -66,6 +66,10 @@ bool isZeroVector(Vector vec) {
     return vec.x == 0 && vec.y == 0;
 }
 
+bool vectorsAreEqual(Vector vec1, Vector vec2) {
+    return vec1.x == vec2.x && vec1.y == vec2.y;
+}
+
 Vector vectorFromDeltaAndDirection(double delta, MFDirection direction) {
     
     assert(delta != 0);
