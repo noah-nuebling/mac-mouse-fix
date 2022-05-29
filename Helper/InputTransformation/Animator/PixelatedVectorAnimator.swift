@@ -65,10 +65,6 @@ class PixelatedVectorAnimator: VectorAnimator {
             /// Reset animationValueLeft
             self.lastAnimationValue = Vector(x: 0, y: 0)
             
-            /// Validate
-            assert(p["vector"] is NSValue)
-            /// ^ This is always true for some reason. Make sure to actually pass a Vector in an NSValue!
-            
             /// Do nothing if doStart == false
             
             if let doStart = p["doStart"] as? Bool {
@@ -76,6 +72,10 @@ class PixelatedVectorAnimator: VectorAnimator {
                     return
                 }
             }
+            
+            /// Validate
+            assert(p["vector"] is NSValue)
+            /// ^ This is always true for some reason. Make sure to actually pass a Vector in an NSValue! Edit: Randomly, this starting working on 29.05.22
             
             /// Debug
             

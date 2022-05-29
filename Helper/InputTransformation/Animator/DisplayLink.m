@@ -15,6 +15,11 @@
 
 @interface DisplayLink ()
 
+typedef enum {
+    kMFDisplayLinkRequestedStateStopped = 0,
+    kMFDisplayLinkRequestedStateRunning,
+} MFDisplayLinkRequestedState;
+
 @end
 
 /// Wrapper object for CVDisplayLink that uses blocks
@@ -26,6 +31,7 @@
     CGDirectDisplayID _previousDisplayUnderMousePointer;                                                       ///
     BOOL _displayLinkIsOutdated;
     dispatch_queue_t _displayLinkQueue;
+    MFDisplayLinkRequestedState _requestedState;
 }
 
 @synthesize dispatchQueue=_displayLinkQueue;
@@ -59,6 +65,9 @@
         
         /// Init _displayLinkIsOutdated flag
         _displayLinkIsOutdated = NO;
+        
+        /// Init _requestedState
+        _requestedState = kMFDisplayLinkRequestedStateStopped;
         
         /// Setup display reconfiguration callback
         CGDisplayRegisterReconfigurationCallback(displayReconfigurationCallback, (__bridge void * _Nullable)(self));
@@ -125,11 +134,13 @@
         }
     };
     
+    /// Set requestedState
+    ///     before async dispatching to main -> so that isRunning() works properly
+    _requestedState = kMFDisplayLinkRequestedStateRunning;
+    
     /// Make sure block is running on the main thread
     
-    
-    
-    if ((YES)) {
+    if ((NO)) {
         
         /// Dispatch to main synchronously
         
@@ -196,8 +207,15 @@
         ///             -> Doesn't really make sense, try if desperate
         ///         - 3. Introduce new state variable 'requestedState' with states `requestedRunning` and `requestedStop`. Use this state to make isRunning() return the right value right after start() or stop() are called, even if the underlying CVDisplayLink hasn't started / stopped yet.
         ///             -> Think this makes sense. Try this if 1. doesn't work.
+        ///
+        ///         Edit: 1. Still doesn't work. -> Introducing _requestedState variable
         
-        if ((YES)) {
+        /// Set requestedState
+        ///     before async dispatching to main -> so that isRunning() works properly
+        
+        _requestedState = kMFDisplayLinkRequestedStateStopped;
+        
+        if ((NO)) {
             
             /// Dispatching to main synchronously
             
@@ -230,6 +248,8 @@
 //}
 
 - (BOOL)isRunning_Unsafe {
+    
+    return _requestedState;
     
     /// Only call this if you're already running on _displayLinkQueue
     Boolean result = CVDisplayLinkIsRunning(self->_displayLink);
@@ -371,12 +391,18 @@ void displayReconfigurationCallback(CGDirectDisplayID display, CGDisplayChangeSu
 
 static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp *inNow, const CVTimeStamp *inOutputTime, CVOptionFlags flagsIn, CVOptionFlags *flagsOut, void *displayLinkContext) {
     
-    /// Debug
-    DDLogDebug(@"displayLinkkk %@ callback Invoked", [DisplayLink identifierForDisplayLink:displayLink]);
-    
     /// Get self
     DisplayLink *self = (__bridge DisplayLink *)displayLinkContext;
         
+    /// Debug
+    DDLogDebug(@"displayLinkkk %@ callback Invoked", [DisplayLink identifierForDisplayLink:displayLink]);
+    
+    /// Check requestedState
+    if (self->_requestedState == kMFDisplayLinkRequestedStateStopped) {
+        DDLogDebug(@"displayLinkkk callback called after requested stop. Returning");
+        return kCVReturnSuccess;
+    }
+    
     /// Parse timestamps
     DisplayLinkCallbackTimeInfo timeInfo = parseTimeStamps(inNow, inOutputTime);
     
