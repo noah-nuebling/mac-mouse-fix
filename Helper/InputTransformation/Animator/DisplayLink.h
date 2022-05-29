@@ -32,9 +32,14 @@ typedef void(^DisplayLinkCallback)(DisplayLinkCallbackTimeInfo timeInfo);
 /// ^ I think setting copy on this prevented some mean bug, but I forgot the details.
 
 + (instancetype)displayLink;
-- (void)startWithCallback:(DisplayLinkCallback)callback;
-- (void)stop;
+
+//- (void)startWithCallback:(DisplayLinkCallback)callback;
+//- (void)stop;
+
+- (void)start_UnsafeWithCallback:(DisplayLinkCallback)callback;
+- (void)stop_Unsafe;
 - (BOOL)isRunning_Unsafe;
+
 - (CFTimeInterval)timeBetweenFrames;
 - (CFTimeInterval)nominalTimeBetweenFrames;
 - (void)linkToMainScreen;

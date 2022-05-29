@@ -212,7 +212,7 @@ import CocoaLumberjackSwift
     
     /// User setting
     
-    private lazy var _animationCurvePreset = kMFScrollAnimationCurvePresetHighInertia
+    private lazy var _animationCurvePreset = kMFScrollAnimationCurvePresetLowInertia
     @objc var animationCurvePreset: MFScrollAnimationCurvePreset {
         set {
             _animationCurvePreset = newValue
@@ -231,7 +231,7 @@ import CocoaLumberjackSwift
     
     @objc lazy var useAppleAcceleration: Bool = false /// Ignore MMF acceleration algorithm and use values provided by macOS
     @objc lazy var scrollSensitivity: MFScrollSensitivity = kMFScrollSensitivityHigh
-    @objc lazy var scrollAcceleration: MFScrollAcceleration = kMFScrollAccelerationHigh
+    @objc lazy var scrollAcceleration: MFScrollAcceleration = kMFScrollAccelerationMedium
     
     /// Stored property
     ///     This is used by Scroll.m to determine how to accelerate

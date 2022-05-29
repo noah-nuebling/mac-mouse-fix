@@ -268,7 +268,7 @@ import QuartzCore
             animationValueTotal = value
             
             /// Start displayLink
-            displayLink.start(callback: { [unowned self] (timeInfo: DisplayLinkCallbackTimeInfo) -> () in
+            displayLink.start_Unsafe(callback: { [unowned self] (timeInfo: DisplayLinkCallbackTimeInfo) -> () in
                 let s = self
                 s.displayLinkCallback(timeInfo)
                 /**
@@ -293,27 +293,26 @@ import QuartzCore
     
     @objc func stop() {
         displayLink.dispatchQueue.async {
-            self.stop_Internal(fromDisplayLink: false)
+            self.stop_Unsafe()
         }
     }
     
-    fileprivate func stop_FromDisplayLinkedThread() {
-        /// Only call this when you're already running on the displayLinkCallback
+    @objc func stop_FromDisplayLinkedThread() {
+        /// Trying to stop from displayLinkThread causes deadlock. So we need to wait until the displayLinkThread has finished its iteration and then stop ASAP.
+        ///     The best way we found to stop ASAP is to simply enqueu async on the displayLink's dispatchQueue
         
-        self.stop_Internal(fromDisplayLink: true)
+        displayLink.dispatchQueue.async {
+            self.stop_Unsafe()
+        }
     }
     
-    fileprivate func stop_Internal(fromDisplayLink: Bool) {
-        /// Don't call this directly, use `stop()` or `stop_FromDisplayLinkedThread()`
-        ///     Edit: Actually I think this is obsolete now that we merged the animator and displayLink queues
+    fileprivate func stop_Unsafe() {
         
         /// Debug
-        
         DDLogDebug("STOPPING ANIMATOR")
         
         /// Do stuff
-        
-        displayLink.stop()
+        displayLink.stop_Unsafe()
         
         isFirstDisplayLinkCallback = false
         isFirstDisplayLinkCallback_AfterRunningStart = false

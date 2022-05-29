@@ -628,6 +628,7 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
             
             /// Suppress momentumScroll
             if (eventPhase == kIOHIDEventPhaseEnded) {
+                DDLogDebug(@"THAT CALL where displayLinkkk is stopped from Scroll.m");
                 [GestureScrollSimulator stopMomentumScroll];
             }
             

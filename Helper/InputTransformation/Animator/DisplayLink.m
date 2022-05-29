@@ -30,6 +30,8 @@
 
 @synthesize dispatchQueue=_displayLinkQueue;
 
+#pragma mark - Init
+
 /// Convenience init
 
 + (instancetype)displayLink {
@@ -75,7 +77,7 @@
     CVDisplayLinkSetOutputCallback(_displayLink, displayLinkCallback, (__bridge void * _Nullable)(self));
 }
 
-/// Start and stop
+#pragma mark - Start and stop
 
 - (void)startWithCallback:(DisplayLinkCallback _Nonnull)callback {
     /// The passed in block will be executed every time the display refreshes until `- stop` is called or this instance is deallocated.
@@ -83,114 +85,135 @@
     ///     This is synchronous, when called from the main thread and asynchronous otherwise
     
     dispatch_async(_displayLinkQueue, ^{
-        
-        
-        /// Store callback
-        
-        self.callback = callback;
-        
-        /// Start the displayLink
-        ///     If something goes wrong see notes in old SmoothScroll.m > handleInput: method
-        
-        /// Starting the displayLink often fails with error code `-6660` for some reason.
-        ///     Running on the main queue seems to fix that. (See SmoothScroll_old_).
-        ///     We don't wanna use `dispatch_sync(dispatch_get_main_queue())` here because if were already running on the main thread(/queue?) then that'll crash
-        
-        /// Define block that starts displayLink
-        
-        void (^startDisplayLinkBlock)(void) = ^{
-            
-            int64_t failedAttempts = 0;
-            int64_t maxAttempts = 100;
-            
-            while (true) {
-                CVReturn rt = CVDisplayLinkStart(self->_displayLink); /// This locks until the displayLinkCallback is done
-                if (rt == kCVReturnSuccess) break;
-                
-                failedAttempts += 1;
-                if (failedAttempts >= maxAttempts) {
-                    DDLogInfo(@"Failed to start CVDisplayLink after %lld tries. Last error code: %d", failedAttempts, rt);
-                    break;
-                }
-            }
-        };
-        
-        /// Make sure block is running on the main thread
-        
-        
-        
-        if ((NO)) {
-            
-            /// Dispatch to main synchronously
-            
-            if (NSThread.isMainThread) {
-                /// Already running on main thread
-                startDisplayLinkBlock();
-            } else {
-                /// Not yet running on main thread - dispatch on main - synchronously, so that subsequent isRunning calls return true
-                dispatch_sync(dispatch_get_main_queue(), startDisplayLinkBlock);
-            }
-            
-        } else {
-         
-            /// Dispatch to main asynchronously
-            
-            dispatch_async(dispatch_get_main_queue(), startDisplayLinkBlock);
-            
-        }
-        
+        [self start_UnsafeWithCallback:callback];
     });
 }
 
+- (void)start_UnsafeWithCallback:(DisplayLinkCallback _Nonnull)callback {
+
+    
+    /// Debug
+    DDLogDebug(@"Starting displayLinkkk %@", self.identifier);
+    
+    /// Store callback
+    
+    self.callback = callback;
+    
+    /// Start the displayLink
+    ///     If something goes wrong see notes in old SmoothScroll.m > handleInput: method
+    
+    /// Starting the displayLink often fails with error code `-6660` for some reason.
+    ///     Running on the main queue seems to fix that. (See SmoothScroll_old_).
+    ///     We don't wanna use `dispatch_sync(dispatch_get_main_queue())` here because if were already running on the main thread(/queue?) then that'll crash
+    
+    /// Define block that starts displayLink
+    
+    void (^startDisplayLinkBlock)(void) = ^{
+        
+        int64_t failedAttempts = 0;
+        int64_t maxAttempts = 100;
+        
+        while (true) {
+            CVReturn rt = CVDisplayLinkStart(self->_displayLink); /// This locks until the displayLinkCallback is done
+            if (rt == kCVReturnSuccess) break;
+            
+            failedAttempts += 1;
+            if (failedAttempts >= maxAttempts) {
+                DDLogInfo(@"Failed to start CVDisplayLink after %lld tries. Last error code: %d", failedAttempts, rt);
+                break;
+            }
+        }
+    };
+    
+    /// Make sure block is running on the main thread
+    
+    
+    
+    if ((YES)) {
+        
+        /// Dispatch to main synchronously
+        
+        if (NSThread.isMainThread) {
+            /// Already running on main thread
+            startDisplayLinkBlock();
+        } else {
+            /// Not yet running on main thread - dispatch on main - synchronously, so that subsequent isRunning calls return true
+            dispatch_sync(dispatch_get_main_queue(), startDisplayLinkBlock);
+        }
+        
+    } else {
+     
+        /// Dispatch to main asynchronously
+        
+        dispatch_async(dispatch_get_main_queue(), startDisplayLinkBlock);
+        
+    }
+}
+                   
 - (void)stop {
     
     dispatch_async(_displayLinkQueue, ^{
-        
-        if ([self isRunning_Unsafe]) {
-            
-            /// CVDisplayLink should be stopped from the main thread
-            ///     According to https://cpp.hotexamples.com/examples/-/-/CVDisplayLinkStop/cpp-cvdisplaylinkstop-function-examples.html
-            
-            void (^workload)(void) = ^{
-                CVDisplayLinkStop(self->_displayLink); /// This locks until the displayLinkCallback is done
-            };
-            
-            /// Make sure block is running on the main thread
-            ///
-            ///     This has been causing deadlocks. Deadlocks explanation:
-            ///         - This function runs on _displayLinkQueue and waits for displayLinkCallback when it calls CVDisplayLinkStop()
-            ///         - displayLinkCallback waits for _displayLinkQueue when it tries to sync dispatch to it
-            ///         -> Classic deadlock scenaro
-            ///     The pretty solution I can come up with is to make either the displayLinkCallback or the _displayLinkQueue not acquire its resource (thread lock) before it it can acquire all the other resources that it will need. But we don't have access to the locking stuff that the CVDisplayLink uses at all afaik, so I don't know how this would be possible.
-            ///     As an alternative, we could simply either
-            ///     1. not make the callback _not_ try to acquire the queue lock
-            ///         - by making the callback dispatch to queue async instead of sync
-            ///         - this will make the callback not execute on the high priotity display link thread though, potentially making things slower
-            ///     2. make the queue _not_ try to acquire the callback lock
-            ///         - by dispatching to main async instead of sync in the `- stop` and `- start` functions (Those are the functions where the deadlocks have occured so far.)
-            ///         - This will potentially change the order of operations and introduce new bugs.
-            ///
-            ///     -> For now I'll try 2. Edit: Seems to not make a difference so far and fixes the constant deadlocks!
-            ///
-            
-            if ((NO)) {
-                
-                /// Dispatching to main synchronously
-                
-                if (NSThread.isMainThread) {
-                    workload();
-                } else {
-                    dispatch_sync(dispatch_get_main_queue(), workload);
-                }
-                
-            } else {
-                
-                /// Dispatch to main async
-                
-                dispatch_async(dispatch_get_main_queue(), workload);
-            }
-        }
+        [self stop_Unsafe];
     });
+}
+
+- (void)stop_Unsafe {
+    /// Debug
+    DDLogDebug(@"Stopping displayLinkkk %@", self.identifier);
+    
+    if ([self isRunning_Unsafe]) {
+        
+        /// CVDisplayLink should be stopped from the main thread
+        ///     According to https://cpp.hotexamples.com/examples/-/-/CVDisplayLinkStop/cpp-cvdisplaylinkstop-function-examples.html
+        
+        void (^workload)(void) = ^{
+            CVDisplayLinkStop(self->_displayLink); /// This locks until the displayLinkCallback is done
+        };
+        
+        /// Make sure block is running on the main thread
+        ///
+        ///     This has been causing deadlocks. Deadlocks explanation:
+        ///         - This function runs on _displayLinkQueue and waits for displayLinkCallback when it calls CVDisplayLinkStop()
+        ///         - displayLinkCallback waits for _displayLinkQueue when it tries to sync dispatch to it
+        ///         -> Classic deadlock scenaro
+        ///     The pretty solution I can come up with is to make either the displayLinkCallback or the _displayLinkQueue not acquire its resource (thread lock) before it it can acquire all the other resources that it will need. But we don't have access to the locking stuff that the CVDisplayLink uses at all afaik, so I don't know how this would be possible.
+        ///     As an alternative, we could simply either
+        ///     1. not make the callback _not_ try to acquire the queue lock
+        ///         - by making the callback dispatch to queue async instead of sync
+        ///         - this will make the callback not execute on the high priotity display link thread though, potentially making scrolling performance worse
+        ///     2. make the queue _not_ try to acquire the callback lock
+        ///         - by dispatching to main async instead of sync in the `- stop` and `- start` functions (Those are the functions where the deadlocks have occured so far.)
+        ///         - This will potentially change the order of operations and introduce new bugs.
+        ///
+        ///     -> For now I'll try 2.
+        ///
+        ///     Edit: Seems to not make a difference so far and fixes the constant deadlocks!
+        ///
+        ///     Edit2: Solution 2. breaks isRunning(). Explanation: If, in start() and stop(), the displayLinkQueue async dispatches to mainQueue to do the actual starting and stopping, then the actual starting and stopping won't have happened yet when isRunnging() runs. Possible solutions:
+        ///         - 1. Go back to sync dispatching to mainQueue in start() and stop() and hope the other changes we made coincidentally prevent the deadlocks that were happening
+        ///             -> Worth a try
+        ///         - 2. Dispatch to mainQueue also in isRunning() -> We're introducing a new sync dispatch, so this might very well lead to new deadlocks
+        ///             -> Doesn't really make sense, try if desperate
+        ///         - 3. Introduce new state variable 'requestedState' with states `requestedRunning` and `requestedStop`. Use this state to make isRunning() return the right value right after start() or stop() are called, even if the underlying CVDisplayLink hasn't started / stopped yet.
+        ///             -> Think this makes sense. Try this if 1. doesn't work.
+        
+        if ((YES)) {
+            
+            /// Dispatching to main synchronously
+            
+            if (NSThread.isMainThread) {
+                workload();
+            } else {
+                dispatch_sync(dispatch_get_main_queue(), workload);
+            }
+            
+        } else {
+            
+            /// Dispatch to main async
+            
+            dispatch_async(dispatch_get_main_queue(), workload);
+        }
+    }
 }
 
 //- (void)stop_FromDisplayLinkedThread {
@@ -207,11 +230,31 @@
 //}
 
 - (BOOL)isRunning_Unsafe {
+    
     /// Only call this if you're already running on _displayLinkQueue
-    return CVDisplayLinkIsRunning(self->_displayLink);
+    Boolean result = CVDisplayLinkIsRunning(self->_displayLink);
+    
+    /// Debug
+    DDLogDebug(@"displayLinkkk %@ isRunning: %d", self.identifier, result);
+    
+    /// Return
+    return result;
 }
 
-/// Get timeBetweenFrames
+#pragma mark - Other interface
+
++ (BOOL)callerIsRunningOnDisplayLinkThread {
+    return [NSThread.currentThread.name isEqual:@"CVDisplayLink"];
+}
+
+
++ (NSString *)identifierForDisplayLink:(CVDisplayLinkRef)dl { /// This id stuff is for debugging
+    int64_t pointerNumber = (int64_t)(void *)dl;
+    return [NSString stringWithFormat:@"%lld", pointerNumber];
+}
+- (NSString *)identifier {
+    return [DisplayLink identifierForDisplayLink:_displayLink];
+}
 
 - (CFTimeInterval)timeBetweenFrames {
     double t = CVDisplayLinkGetActualOutputVideoRefreshPeriod(_displayLink);
@@ -324,9 +367,12 @@ void displayReconfigurationCallback(CGDirectDisplayID display, CGDisplayChangeSu
     
 }
 
-/// Display link callback
+#pragma mark - Display Link Callback
 
 static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp *inNow, const CVTimeStamp *inOutputTime, CVOptionFlags flagsIn, CVOptionFlags *flagsOut, void *displayLinkContext) {
+    
+    /// Debug
+    DDLogDebug(@"displayLinkkk %@ callback Invoked", [DisplayLink identifierForDisplayLink:displayLink]);
     
     /// Get self
     DisplayLink *self = (__bridge DisplayLink *)displayLinkContext;
@@ -351,7 +397,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     free(_previousDisplaysUnderMousePointer);
 }
 
-/// MARK: Helper
+#pragma mark - Helper
 
 /// Parsing CVTimeStamps
 

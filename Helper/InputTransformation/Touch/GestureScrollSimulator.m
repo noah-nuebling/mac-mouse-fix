@@ -119,7 +119,7 @@ void postGestureScrollEvent_Unsafe(int64_t dx, int64_t dy, IOHIDEventPhaseBits p
     
     /// Stop momentum scroll
     ///     Do it sync otherwise it will be stopped immediately after it's startet by this block
-    stopMomentumScroll_Unsafe();
+    [GestureScrollSimulator stopMomentumScroll_Unsafe];
     
     /// Timestamps and static vars
 
@@ -268,14 +268,14 @@ static void (^_momentumScrollCallback)(void);
 
 + (void)stopMomentumScroll {
     
-//    DDLogDebug(@"momentumScroll stop request. Caller: %@", [SharedUtility callerInfo]);
+    DDLogDebug(@"momentumScroll stop request. Caller: %@", [SharedUtility callerInfo]);
     
     dispatch_async(_queue, ^{
-        stopMomentumScroll_Unsafe();
+        [self stopMomentumScroll_Unsafe];
     });
 }
 
-void stopMomentumScroll_Unsafe(void) {
++ (void)stopMomentumScroll_Unsafe {
     /// Only use this when you know you're already running on _queue
     
     /// Debug
@@ -309,7 +309,7 @@ void stopMomentumScroll_Unsafe(void) {
                                                                location:location];
     } else {
         /// Debug
-//        DDLogDebug(@"... But momentumScroll insn't running");
+        DDLogDebug(@"Not stopping because momentumScroll insn't running");
     }
 }
 
