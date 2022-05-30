@@ -168,7 +168,7 @@ CGEventRef _Nullable mouseMovedCallback(CGEventTapProxy proxy, CGEventType type,
     _lastEventDelta = llabs(MAX(dx,dy));
     
     /// Lock
-    
+    ///     Edit: Why is this async? Doesn't that make for worse/inconsistent behaviour?
     dispatch_async(_queue, ^{
         
         /// Check interrupt
@@ -227,7 +227,7 @@ CGEventRef _Nullable mouseMovedCallback(CGEventTapProxy proxy, CGEventType type,
             setSuppressionInterval(kMFEventSuppressionIntervalForWarping);
             warpDestination = _puppetCursorPosition;
         } else {
-            /// When we're freezing the pointer, we still want to warp one last time, to control the delay before the pointer unfreezes.
+            /// When we're freezing the pointer, we still want to warp one last time, to create a the delay before the pointer unfreezes.
             
             MFEventSuppressionInterval delay;
             if (pointerIsMoving) {
