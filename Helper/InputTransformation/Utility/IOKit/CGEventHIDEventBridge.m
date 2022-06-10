@@ -20,7 +20,7 @@ extern HIDEvent *CGEventCopyIOHIDEvent(CGEventRef);
 
 /// Wrapper for external CGEvent -> HIDEvent function
 ///
-/// Disassembly shows that CGEventCopyIOHIDEvent() calls CFRetain() before returning the HIDEvent. But in ARC the retain count of HIDEvent is then increased *again* because we hold a pointer to it. That's why we CFRelease() the HIDEvent before returning it.
+/// Disassembly shows that CGEventCopyIOHIDEvent() calls CFRetain() before returning the HIDEvent. But in ARC the retain count of HIDEvent is then increased *again* because we hold a pointer to it. That's why we CFRelease() the HIDEvent before returning it. Edit: It would probably do the same thing and make more sense to declare the return of CGEventCopyIOHIDEvent() as IOHIDEvent, and then use __bridge to cast to HIDEvent.
 
 HIDEvent *CGEventGetIOHIDEvent(CGEventRef cgEvent) {
     
