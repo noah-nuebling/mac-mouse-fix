@@ -506,7 +506,7 @@ static Vector initalMomentumScrollVelocity_FromExitVelocity(Vector exitVelocity)
     double timeSinceLast = ts - tsLast;
     tsLast = ts;
     
-    DDLogDebug(@"\nPosting: gesture: (%f, %f) \t\t scroll: (%f, %f) \t scrollPt: (%f, %f) \t phases: (%d, %d) \t timeSinceLast: %f \t loc: (%f, %f)\n", vecGesture.x, vecGesture.y, vecScroll.x, vecScroll.y, vecScrollPoint.x, vecScrollPoint.y, phase, momentumPhase, timeSinceLast*1000, loc.x, loc.y);
+    DDLogDebug(@"\nHNGG Posting: gesture: (%f, %f) \t\t scroll: (%f, %f) \t scrollPt: (%f, %f) \t phases: (%d, %d) \t timeSinceLast: %f \t loc: (%f, %f)\n", vecGesture.x, vecGesture.y, vecScroll.x, vecScroll.y, vecScrollPoint.x, vecScrollPoint.y, phase, momentumPhase, timeSinceLast*1000, loc.x, loc.y);
     
     assert((phase == kIOHIDEventPhaseUndefined || momentumPhase == kCGMomentumScrollPhaseNone)); /// At least one of the phases has to be 0
     

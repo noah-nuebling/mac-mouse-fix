@@ -8,13 +8,21 @@
 //
 
 /// (Copied from old non-vector PixelatedAnimator)
+///
+/// Only use PixelatedAnimator, not Animator superclass directly. Animator is untested and probably doesn't work
+///
+/// This class does different things. An attempt to summarize: "Based on some input deltas, this class creates smoothly animated output deltas that are that are usable for driving simulated trackpad events"
+/// It is currently used:
+/// 1. To smooth out pointer movement before plugging it into the GestureScrollSimulator. This prevents too slow / fast momentum scroll due to irregular timeBetweenEvents.
+/// 2. To apply animation and find appropriate gesture phases when mapping scrollwheel input to gestureScrolling, dockSwipes, magnification, etc.
+///
 /// PixelatedAnimator will behave just like Animator with these differences:
 /// The animationValueDelta values it passes to it's AnimatorCallback are always integers instead of Doubles
-/// To achieve this, the internally generated Double deltas are rounded using a subpixelator which always rounds to the next larger integer (a ceilPixelator)
-///     Using ceil instead of normal rounding (roundPixelator) will always generate the first non-zero integer delta immediately on the first frame of animation. I hope that will make the animations this produces marginally more responsive. This only works if the first delta is positive not negative. Since we only use this class in Scroll.m where that's the case, this is okay.
-/// Integer deltas which are zero won't be passed to the AnimatorCallback
-/// Phases kMFAnimationPhaseStart, and kMFAnimationPhaseEnd will be sent to the AnimatorCallback with the first and last non-zero integer deltas respectively.
-///     This behaviour will make this animator great for driving our gestureScrollSimulation, where that kind of input is expected.
+/// To achieve this, the internally generated Double deltas are rounded using a subpixelator which always rounds to the next larger integer (using biasedSubpixelator)
+///     This is so we always generate a non-zero integer delta on the first frame of animation, which makes things more responsive when the deltas are single pixels (which they are when you use Apple Acceleration)
+///
+/// Callbacks wth phases kMFAnimationPhaseStart, and kMFAnimationPhaseContinue have non-zero deltas. Callbacks with kMFAnimationPhaseEnd have a delta of (0,0)
+///     This behaviour will make this animator great for driving touch gesture simulations, where that kind of input is expected. (In gesture events, the end phase signals lifting your fingers off, so that's why it has a (0,0) delta)
 
 import Cocoa
 import CocoaLumberjackSwift
@@ -45,9 +53,13 @@ class PixelatedVectorAnimator: VectorAnimator {
     /// SubPixelator reset
     ///     You usually want to call this where you call linkToMainScreen()
     
+    @objc func resetSubPixelator_Unsafe() {
+        DDLogDebug("HNGG Resetting subpixelator")
+        self.subPixelator.reset()
+    }
     @objc func resetSubPixelator() {
         displayLink.dispatchQueue.async {
-            self.subPixelator.reset()
+            self.resetSubPixelator_Unsafe()
         }
     }
     
@@ -63,10 +75,10 @@ class PixelatedVectorAnimator: VectorAnimator {
             let p = params(self.animationValueLeft_Unsafe, self.isRunning_Unsafe, self.animationCurve)
             
             /// Reset animationValueLeft
+            ///     Do this here since `animationValueLeft` is `animationValueTotal - lastAnimationValue`. A new `animationValueTotal` is contained in `p`, and we need to reset `lastAnimationValue` to make it usable.
             self.lastAnimationValue = Vector(x: 0, y: 0)
             
             /// Do nothing if doStart == false
-            
             if let doStart = p["doStart"] as? Bool {
                 if doStart == false {
                     return
@@ -77,16 +89,13 @@ class PixelatedVectorAnimator: VectorAnimator {
             assert(p["vector"] is NSValue)
             /// ^ This is always true for some reason. Make sure to actually pass a Vector in an NSValue! Edit: Randomly, this starting working on 29.05.22
             
-            /// Debug
-            
-            let deltaLeftBefore = self.animationValueLeft_Unsafe;
-            
             /// Start animator
             
             super.startWithUntypedCallback_Unsafe(durationRaw: p["duration"] as! Double, value: vectorFromNSValue(p["vector"] as! NSValue), animationCurve: p["curve"] as! AnimationCurve, callback: integerCallback)
             
             /// Debug
             
+            let deltaLeftBefore = self.animationValueLeft_Unsafe;
             DDLogDebug("\nStarted PixelatedAnimator with deltaLeftDiff: \(subtractedVectors(self.animationValueLeft_Unsafe, deltaLeftBefore)), oldDeltaLeft: \(deltaLeftBefore), newDeltaLeft: \(self.animationValueLeft_Unsafe)")
             
         }
@@ -127,7 +136,7 @@ class PixelatedVectorAnimator: VectorAnimator {
             && !isLastDisplayLinkCallback) {
             
             /// Log
-            DDLogDebug("\nSkipped PixelatedAnimator callback due to 0 delta.")
+            DDLogDebug("\nHNGG Skipped PixelatedAnimator callback due to 0 delta.")
             
         } else {
         

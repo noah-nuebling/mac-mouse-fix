@@ -233,14 +233,6 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             [Config applyOverridesForAppUnderMousePointer_Force:NO]; /// Calls [self resetState]
         }
         
-        /// Update animator state
-        
-        [_animator resetSubPixelator];
-        if (ScrollUtility.mouseDidMove) {
-            /// Update animator to currently used display
-            [_animator linkToMainScreen];
-        }
-        
         /// Update modfications
         
         _modifications = [ScrollModifiers currentModificationsWithEvent:event];
@@ -385,9 +377,9 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     } else {
         
         /// Get scroll speed
-        
         double timeBetweenTicks = scrollAnalysisResult.timeBetweenTicks;
         timeBetweenTicks = CLIP(timeBetweenTicks, 0, _scrollConfig.consecutiveScrollTickIntervalMax);
+        /// Shouldn't we clip between consecutiveScrollTickIntervalMin (instead of 0) and consecutiveScrollTickIntervalMax?
         
         double scrollSpeed = 1/timeBetweenTicks; /// In tick/s
 
@@ -452,6 +444,13 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             /// Validate
             assert(valueLeftVec.x == 0 || valueLeftVec.y == 0);
             
+            /// Link to main screen
+            ///     This used to be above in the `isFirstConsecutive` section. Maybe it fits better there?
+            if (ScrollUtility.mouseDidMove && !isRunning) {
+                /// Update animator to currently used display
+                [_animator linkToMainScreen_Unsafe];
+            }
+            
             /// Declare result dict (animator start params)
             NSMutableDictionary *p = [NSMutableDictionary dictionary];
             
@@ -460,8 +459,12 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             
             /// Get px that the animator still wants to scroll
             double pxLeftToScroll;
-            if (scrollAnalysisResult.scrollDirectionDidChange || !isRunning) {
+            if (!isRunning || scrollAnalysisResult.scrollDirectionDidChange) {
+                
+                /// Reset pxLeftToScroll
                 pxLeftToScroll = 0;
+                [_animator resetSubPixelator_Unsafe];
+                
             } else if ([animationCurve isKindOfClass:SimpleBezierHybridCurve.class]) {
                 SimpleBezierHybridCurve *c = (SimpleBezierHybridCurve *)animationCurve;
                 pxLeftToScroll = [c baseDistanceLeftWithDistanceLeft: distanceLeft]; /// If we feed valueLeft instead of baseValueLeft back into the animator, it will lead to unwanted acceleration

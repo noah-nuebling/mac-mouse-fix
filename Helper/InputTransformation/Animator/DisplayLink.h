@@ -43,6 +43,7 @@ typedef void(^DisplayLinkCallback)(DisplayLinkCallbackTimeInfo timeInfo);
 - (CFTimeInterval)timeBetweenFrames;
 - (CFTimeInterval)nominalTimeBetweenFrames;
 - (void)linkToMainScreen;
+- (void)linkToMainScreen_Unsafe;
 
 - (void)linkToDisplayUnderMousePointerWithEvent:(CGEventRef)event;
 

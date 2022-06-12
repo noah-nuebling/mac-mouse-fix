@@ -289,14 +289,17 @@ typedef enum {
 /// Set display to mouse location
 
 - (void)linkToMainScreen {
+    
+    dispatch_async(_displayLinkQueue, ^{
+        [self linkToMainScreen_Unsafe];
+    });
+}
+
+- (void)linkToMainScreen_Unsafe {
     /// Simple alternative to .`linkToDisplayUnderMousePointerWithEvent:`.
     /// TODO: Test which is faster
     
-    __block CVReturn result;
-    
-    dispatch_async(_displayLinkQueue, ^{
-        result = [self setDisplay:NSScreen.mainScreen.displayID];
-    });
+    [self setDisplay:NSScreen.mainScreen.displayID];
 }
 
 - (void)linkToDisplayUnderMousePointerWithEvent:(CGEventRef)event {

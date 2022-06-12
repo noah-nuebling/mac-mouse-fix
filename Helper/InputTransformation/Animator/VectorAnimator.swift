@@ -7,6 +7,8 @@
 // --------------------------------------------------------------------------
 //
 
+/// Don't use this directly. Use the subclass `PixelatedVectorAnimator` For discussion see `PixelatedVectorAnimator`.
+
 import Foundation
 import CocoaLumberjackSwift
 import CoreVideo
@@ -156,9 +158,11 @@ import QuartzCore
     /// Other Interface
     
     @objc func linkToMainScreen() {
-        /// Exposing this as a function and not just doing it automatically when the animation starts because I assume it's slow. Not sure where this assumption comes from.
-        
         displayLink.linkToMainScreen()
+    }
+    @objc func linkToMainScreen_Unsafe() {
+        /// Exposing this as a function and not just doing it automatically when the animation starts because I assume it's slow. Not sure where this assumption comes from.
+        displayLink.linkToMainScreen_Unsafe()
     }
     
     /// Start
@@ -233,7 +237,7 @@ import QuartzCore
         if !isRunningg
             || isFirstDisplayLinkCallback_AfterColdStart {
 
-            /// If `isFirstDisplayLinkCallback_AfterColdStart` == true that means that the displayLinkCallback hasn't run yet (since it sets it to false), so we don't wan to signal runningStart, yet
+            /// If `isFirstDisplayLinkCallback_AfterColdStart` == true that means that the displayLinkCallback hasn't run yet (since it sets it to false), so we don't want to signal runningStart, yet
             
             isFirstDisplayLinkCallback_AfterColdStart = true
             isFirstDisplayLinkCallback_AfterRunningStart = false
@@ -366,7 +370,7 @@ import QuartzCore
             
             DDLogDebug("\nAnimation value total: (\(animationValueTotal.x), \(animationValueTotal.y)), left: (\(animationValueLeft_Unsafe.x), \(animationValueLeft_Unsafe.y))")
             
-            DDLogDebug("AnimationCallback with state - isFirst: \(isFirstDisplayLinkCallback_AfterColdStart), isRunning: \(isFirstDisplayLinkCallback_AfterRunningStart)")
+            DDLogDebug("HNGG AnimationCallback with state - isFirstCold: \(isFirstDisplayLinkCallback_AfterColdStart), isFirstRunning: \(isFirstDisplayLinkCallback_AfterRunningStart)")
                         
             /// Guard nil
             
