@@ -203,7 +203,7 @@ import CocoaLumberjackSwift
             return MFScrollAnimationCurveParameters(msPerStep: 180, baseCurve: ScrollConfig.linearCurve, dragExponent: 1.0, dragCoefficient: 987654321, stopSpeed: 987654321, sendMomentumScrolls: false)
         
         case kMFScrollAnimationCurvePresetQuickScroll:
-            /// Almost the same as `highInertia`
+            /// Almost the same as `highInertia` just more inertial
             return MFScrollAnimationCurveParameters(msPerStep: 220, baseCurve: ScrollConfig.linearCurve, dragExponent: 0.7, dragCoefficient: 30, stopSpeed: 1, sendMomentumScrolls: true)
             
         case kMFScrollAnimationCurvePresetPreciseScroll:
@@ -418,7 +418,7 @@ import CocoaLumberjackSwift
     
     @objc lazy var preciseAccelerationCurve: AccelerationBezier = { () -> AccelerationBezier in
         ScrollConfig.accelerationCurveFromParams(pxPerTickBase: 3, /// 2 is better than 3 but that leads to weird asswert failures in PixelatedAnimator that I can't be bothered to fix
-                                                 pxPerTickEnd: 15,
+                                                 pxPerTickEnd: 30,
                                                  accelerationHump: -0.0,
                                                  consecutiveScrollTickIntervalMax: self.consecutiveScrollTickIntervalMax, /// We don't expect this to ever change so it's okay to just capture here
                                                  consecutiveScrollTickInterval_AccelerationEnd: self.consecutiveScrollTickInterval_AccelerationEnd)
