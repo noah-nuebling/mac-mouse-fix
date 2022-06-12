@@ -53,6 +53,8 @@ static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this
 static MFScrollModificationResult _modifications;
 static ScrollConfig *_scrollConfig;
 static MFScrollAnimationCurveParameters *_animationParams;
+static ScrollAnalysisResult _lastScrollAnalysisResult;
+static CFTimeInterval _lastScrollAnalysisResultTimeStamp;
 
 #pragma mark - Public functions
 
@@ -357,6 +359,11 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     
     /// Run full scrollAnalysis
     ScrollAnalysisResult scrollAnalysisResult = [ScrollAnalyzer updateWithTickOccuringAt:tickTime withDirection:scrollDirection withConfig:_scrollConfig];
+    
+    /// Store scrollAnalysisResult
+    ///     So that command tab output code can access it. Not sure if good solution
+    _lastScrollAnalysisResult = scrollAnalysisResult;
+    _lastScrollAnalysisResultTimeStamp = CACurrentMediaTime();
     
     /// Make scrollDelta positive, now that we have scrollDirection stored
     scrollDelta = llabs(scrollDelta);
@@ -788,29 +795,41 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         
         /// --- CommandTab ---
         
+        
         double d = -(dx + dy);
         
         if (d == 0) return;
         
-        /// Send events
+        /// Get state
+        
+        static bool appSwitcherWasOpenedByCurrentConsecutiveTicks = false; /// Use this to make first swipe only create one selection change
+        bool isFirstConsecutive = _lastScrollAnalysisResult.consecutiveScrollTickCounter == 0; /// When commandTab is active, we only get one call of this function per Tick (animator is disabled), that's why we can do this
+        
+        /// Open app switcher
         
         if (!_appSwitcherIsOpen) {
-            
             _appSwitcherIsOpen = YES;
-            /// Send command down event
             sendKeyEvent(55, kCGEventFlagMaskCommand, true);
-        }
-        
-        /// Send tab down and up events
-        
-        if (d > 0) {
             sendKeyEvent(48, kCGEventFlagMaskCommand, true);
             sendKeyEvent(48, kCGEventFlagMaskCommand, false);
+            appSwitcherWasOpenedByCurrentConsecutiveTicks = true;
         } else {
-            sendKeyEvent(48, kCGEventFlagMaskCommand | kCGEventFlagMaskShift, true);
-            sendKeyEvent(48, kCGEventFlagMaskCommand | kCGEventFlagMaskShift, false);
+            if (isFirstConsecutive)
+                appSwitcherWasOpenedByCurrentConsecutiveTicks = false;
         }
-
+        
+        /// Select apps
+        
+        if (!appSwitcherWasOpenedByCurrentConsecutiveTicks) {
+            
+            if (d > 0) {
+                sendKeyEvent(48, kCGEventFlagMaskCommand, true);
+                sendKeyEvent(48, kCGEventFlagMaskCommand, false);
+            } else {
+                sendKeyEvent(48, kCGEventFlagMaskCommand | kCGEventFlagMaskShift, true);
+                sendKeyEvent(48, kCGEventFlagMaskCommand | kCGEventFlagMaskShift, false);
+            }
+        }
         
     } else if (outputType == kMFScrollOutputTypeLineScroll) {
         
