@@ -76,9 +76,9 @@ static NSArray *getScrollEffectsTable() {
         @{@"ui": @"Horizontal Scroll", @"tool": @"Scroll horizontally \nNavigate pages in Safari, delete messages in Mail, and more \n \nWorks like swiping horizontally with 2 fingers on an Apple Trackpad" , @"dict": @{
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeHorizontalScroll
         }},
-//        @{@"ui": @"Rotate", @"hideable": @NO, @"tool": @"Rotate in Maps and other apps \n \nWorks like Twisting with 2 fingers on an Apple Trackpad", @"dict": @{
-//            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeRotate
-//        }},
+        @{@"ui": @"Rotate", @"hideable": @NO, @"tool": @"Rotate in Maps and other apps \n \nWorks like Twisting with 2 fingers on an Apple Trackpad", @"dict": @{
+            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeRotate
+        }},
         separatorEffectsTableEntry(),
         @{@"ui": @"Swift Scroll", @"tool": @"Scroll long distances with minimal effort", @"dict": @{
             kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypeQuickScroll
@@ -87,26 +87,26 @@ static NSArray *getScrollEffectsTable() {
             kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypePrecisionScroll
         }},
         separatorEffectsTableEntry(),
-        @{@"ui": @"Desktop + Launchpad", @"tool": @"Scroll up for Launchpad and down to show the Desktop \n \nWorks like Pinching with 4 fingers on an Apple Trackpad", @"dict": @{
+        @{@"ui": @"Desktop & Launchpad", @"tool": @"Scroll up for Launchpad and down to show the Desktop \n \nWorks like Pinching with 4 fingers on an Apple Trackpad", @"dict": @{
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeFourFingerPinch
         }},
-//        @{@"ui": @"Move between Spaces", @"tool": @"Scroll up to move left a Space and down to move Right a Space \n \nWorks like Swiping horizontally with 3 fingers on an Apple Trackpad", @"dict": @{
-//            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeThreeFingerSwipeHorizontal
-//        }},
-//        separatorEffectsTableEntry(),
-//        @{@"ui": @"App Switcher", @"tool": @"Quickly switch between open apps \n \nWorks like holding Command (⌘) and then pressing Tab (⇥) on your keyboard", @"dict": @{
-//            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeCommandTab
-//        }},
+        @{@"ui": @"Move between Spaces", @"tool": @"Scroll up to move left a Space and down to move Right a Space \n \nWorks like Swiping horizontally with 3 fingers on an Apple Trackpad", @"dict": @{
+            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeThreeFingerSwipeHorizontal
+        }},
+        separatorEffectsTableEntry(),
+        @{@"ui": @"App Switcher", @"tool": @"Quickly switch between open apps \n \nWorks like holding Command (⌘) and then pressing Tab (⇥) on your keyboard", @"dict": @{
+            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeCommandTab
+        }},
         
     ];
     return scrollEffectsTable;
 }
 static NSArray *getDragEffectsTable() {
     NSArray *dragEffectsTable = @[
-        @{@"ui": @"Mission Control + Spaces", @"tool": @"Move your mouse: \n - Up to show Mission Control \n - Down to show Application Windows \n - Left or Right to move between Spaces\n \nWorks like swiping with 3 fingers on an Apple Trackpad" , @"dict": @{
+        @{@"ui": @"Mission Control & Spaces", @"tool": @"Move your mouse: \n - Up to show Mission Control \n - Down to show Application Windows \n - Left or Right to move between Spaces\n \nWorks like swiping with 3 fingers on an Apple Trackpad" , @"dict": @{
                   kMFModifiedDragDictKeyType: kMFModifiedDragTypeThreeFingerSwipe,
         }},
-        @{@"ui": @"Drag Scroll", @"tool": @"Scroll freely by moving your mouse in any direction \n \nNavigate between pages in Safari, delete messages in Mail and more by moving your mouse left and right \n \nWorks like swiping with 2 fingers on an Apple Trackpad" , @"dict": @{
+        @{@"ui": @"Scroll & Navigate", @"tool": @"Scroll freely by moving your mouse in any direction \n \nNavigate between pages in Safari, delete messages in Mail and more by moving your mouse left and right \n \nWorks like swiping with 2 fingers on an Apple Trackpad" , @"dict": @{
                   kMFModifiedDragDictKeyType: kMFModifiedDragTypeTwoFingerSwipe,
         }},
 //        separatorEffectsTableEntry(),
@@ -137,7 +137,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHAppExpose)
         }},
-        separatorEffectsTableEntry(),
+//        separatorEffectsTableEntry(),
         @{@"ui": @"Desktop", @"tool": @"Show the desktop", @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHShowDesktop)
@@ -154,7 +154,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
         @{@"ui": @"Smart Zoom", @"tool": @"Zoom in or out in Safari and other apps. \n \nWorks like a two-finger double tap on an Apple Trackpad.", @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSmartZoom,
         }},
-        separatorEffectsTableEntry(),
+//        separatorEffectsTableEntry(),
         @{@"ui": stringf(@"Middle Click"),
           @"tool": [NSString stringWithFormat:@"Open links in a new tab, paste text in the Terminal, and more. \n \nWorks like clicking %@ on a standard mouse.", [UIStrings getButtonStringToolTip:3]],
           @"dict": @{
@@ -164,14 +164,14 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
           }
         },
         separatorEffectsTableEntry(),
-//        @{@"ui": @"Move Left a Space", @"tool": @"Move one Space to the left", @"dict": @{
-//                  kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-//                  kMFActionDictKeyGenericVariant: @(kMFSHMoveLeftASpace)
-//        }},
-//        @{@"ui": @"Move Right a Space", @"tool": @"Move one Space to the right", @"dict": @{
-//                  kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-//                  kMFActionDictKeyGenericVariant: @(kMFSHMoveRightASpace)
-//        }},
+        @{@"ui": @"Move Left a Space", @"tool": @"Move one Space to the left", @"dict": @{
+                  kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+                  kMFActionDictKeyGenericVariant: @(kMFSHMoveLeftASpace)
+        }},
+        @{@"ui": @"Move Right a Space", @"tool": @"Move one Space to the right", @"dict": @{
+                  kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+                  kMFActionDictKeyGenericVariant: @(kMFSHMoveRightASpace)
+        }},
         separatorEffectsTableEntry(),
         @{@"ui": @"Keyboard Shortcut...", @"tool": @"Type a keyboard shortcut, then use it from your mouse", @"keyCaptureEntry": @YES},
     ].mutableCopy;
