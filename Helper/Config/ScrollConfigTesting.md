@@ -110,6 +110,7 @@ __Inertial settings__
 - stopSpeed: 50
     -> Might be placebo, but I think the 205 msPerStep makes single ticks feel nicer
     -> Smaller msPerStep make single ticks feel even less stiff, but that makes time taken for small flicks longer. Might need more testing. Edit: 180 still feels nice, probably don't wanna go lower. As high as 280 still feels decent, but it makes the single ticks very stiff
+    -> Played around with stopSpeed = 20. It feels nice but too much like you're forced to 'watch' animations
 
 3. __Snappy__
 - pxPerTickBase: 60
@@ -141,6 +142,17 @@ stopSpeed: 50,
     -> Found this randomly by making the MMF setting gradually more inertial
 
 
+3.3 Mouse Remap
+- pxPerTickBase: 120 (with 2/3 inertia factor applied, so it's actually 80)
+- pxPerTickEnd: 180 (with 2/3 inertia factor, so it's actually 120)
+- BaseCurve: (0,0), (0,0), (1,1), (1,1) 
+- msPerStep: 190
+- dragCoefficient: 17
+- dragExponent: 1.0
+- stopSpeed: 50
+    -> This is based on `Mouse Fix (last version before Xcode fucked up).prefPane`. The settings seem to be same as any pre-0.9.2-releases.
+    -> What makes the single steps feel so good is the large step size (aka pxPerTickBase)
+    -> Without the large steps, it's almost the same as `3.2 Medium 2` - but slightly better imo
 
 
 4. __MMF__
@@ -171,7 +183,27 @@ stopSpeed: 50,
 - dragCoefficient: 23 <- This changed
 - dragExponent: 1.0
 - stopSpeed: 50 
-    -> Little bit less stiff 
+    -> Little bit less stiff
+    
+4.3 No inertia inspired
+- BaseCurve: (0,0), (0,0), (1,1), (1,1) 
+- msPerStep: 160 <- This changed
+- dragCoefficient: 20 <- This changed
+- dragExponent: 1.0
+- stopSpeed: 50
+    -> Feels similar to 5. No inertia
+    -> You may want to make the msPerStep even larger?
+
+5. __No inertia__
+
+- BaseCurve: (0,0), (0,0), (0.5,1), (1,1) 
+- msPerStep: 250
+- dragCoefficient: 999999
+- dragExponent: 99999
+- stopSpeed: 99999
+    -> Actually liking this better than the MMF ones right now 
+
+
 
 ---
 

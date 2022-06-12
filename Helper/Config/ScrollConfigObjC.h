@@ -37,6 +37,8 @@ typedef enum {
     /// User configured
     ///  The user can choose these options in the UI
     
+    kMFScrollAnimationCurvePresetNoInertia,
+    
     kMFScrollAnimationCurvePresetLowInertia,
     kMFScrollAnimationCurvePresetMediumInertia,
     kMFScrollAnimationCurvePresetHighInertia,
@@ -70,7 +72,8 @@ typedef enum {
     kMFScrollSensitivityPrecise,
     kMFScrollSensitivityLow,
     kMFScrollSensitivityMedium,
-    kMFScrollSensitivityHigh
+    kMFScrollSensitivityHigh,
+    kMFScrollSensitivityTest
     
 } MFScrollSensitivity;
 
