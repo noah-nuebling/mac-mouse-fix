@@ -639,12 +639,14 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
             /// Validate
             assert(momentumHint != kMFMomentumHintNone);
             
+            /// Store lastMomentumHint
+            static MFMomentumHint lastMomentumHint = kMFMomentumHintNone;
+            
             /// Get eventPhase and momentumPhase
             
-            if (momentumHint == kMFMomentumHintGesture
-                || momentumHint == kMFMomentumHintGestureFromMomentum) { /// momentumHint is gesture
+            if (momentumHint == kMFMomentumHintGesture) { /// momentumHint is gesture
                 
-                if (momentumHint == kMFMomentumHintGestureFromMomentum) {
+                if (lastMomentumHint == kMFMomentumHintMomentum) {
                     
                     /// Send momentum end event
                     [GestureScrollSimulator postMomentumScrollDirectlyWithDeltaX:0 deltaY:0 momentumPhase:kCGMomentumScrollPhaseEnd];
@@ -666,19 +668,19 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
                 
                 CGMomentumScrollPhase momentumPhase = kCGMomentumScrollPhaseNone;
                 
-                if (momentumHint == kMFMomentumHintMomentumFromGesture) {
+                if (lastMomentumHint == kMFMomentumHintGesture) {
                     /// Momentum begins
-                    
-                    /// Get momentum phase
-                    momentumPhase = kCGMomentumScrollPhaseBegin;
                     
                     /// Send gesture end event
                     [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded autoMomentumScroll:NO];
                     
+                    /// Get momentum phase
+                    momentumPhase = kCGMomentumScrollPhaseBegin;
+                    
                     /// Debug
                     DDLogDebug(@"\nHybrid event - gesture: (0, 0, %d) HHH", kIOHIDEventPhaseEnded);
                     
-                } else if (momentumHint == kMFMomentumHintMomentum) {
+                } else if (lastMomentumHint == kMFMomentumHintMomentum) {
                     /// Momentum continues
                     
                     /// Get momentum phase
@@ -697,10 +699,15 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
                 /// Send momentum event
                 [GestureScrollSimulator postMomentumScrollDirectlyWithDeltaX:dx deltaY:dy momentumPhase:momentumPhase];
                 
+                
                 /// Debug
                 DDLogDebug(@"\nHybrid event - momentum: (%lld, %lld, %d)", dx, dy, momentumPhase);
             }
             
+            /// Update lastMomentumHint
+            lastMomentumHint = momentumHint;
+            if (animatorPhase == kMFAnimationCallbackPhaseEnd)
+                lastMomentumHint = kMFMomentumHintNone;
         }
         
     } else if (outputType == kMFScrollOutputTypeZoom) {

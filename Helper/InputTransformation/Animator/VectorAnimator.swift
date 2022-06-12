@@ -110,7 +110,7 @@ import QuartzCore
     
     /// Vars - DisplayLink
 
-    var isFirstDisplayLinkCallback = false
+    var isFirstDisplayLinkCallback_AfterColdStart = false
     var isFirstDisplayLinkCallback_AfterRunningStart = false
     var isLastDisplayLinkCallback = false
     
@@ -118,7 +118,7 @@ import QuartzCore
     
     var lastAnimationValue: Vector = Vector(x: 0, y: 0) /// animationValue when the displayLink was last called
     var lastAnimationTimeUnit: Double = 0.0
-    private var lastSubCurve: MFHybridSubCurve = kMFHybridSubCurveNone
+    private var lastMomentumHint: MFMomentumHint = kMFMomentumHintNone
     
     var lastFrameTime: Double = -1 /// Time at which the displayLink was last called
     
@@ -231,11 +231,11 @@ import QuartzCore
         /// Update state
         
         if !isRunningg
-            || isFirstDisplayLinkCallback {
+            || isFirstDisplayLinkCallback_AfterColdStart {
 
-            /// If isFirstDisplayLinkCallback == true that means that the displayLinkCallback hasn't run yet (since it sets it to false), so we don't wan to signal runningStart, yet
+            /// If `isFirstDisplayLinkCallback_AfterColdStart` == true that means that the displayLinkCallback hasn't run yet (since it sets it to false), so we don't wan to signal runningStart, yet
             
-            isFirstDisplayLinkCallback = true
+            isFirstDisplayLinkCallback_AfterColdStart = true
             isFirstDisplayLinkCallback_AfterRunningStart = false
             isLastDisplayLinkCallback = false
             
@@ -248,7 +248,7 @@ import QuartzCore
         }
         
         /// Debug
-        DDLogDebug("AnimationCallback start - isFirst: \(self.isFirstDisplayLinkCallback), isRunningStart: \(self.isFirstDisplayLinkCallback_AfterRunningStart)")
+        DDLogDebug("AnimationCallback start - isFirst: \(self.isFirstDisplayLinkCallback_AfterColdStart), isRunningStart: \(self.isFirstDisplayLinkCallback_AfterRunningStart)")
         
         /// Update the rest of the state
         
@@ -314,7 +314,7 @@ import QuartzCore
         /// Do stuff
         displayLink.stop_Unsafe()
         
-        isFirstDisplayLinkCallback = false
+        isFirstDisplayLinkCallback_AfterColdStart = false
         isFirstDisplayLinkCallback_AfterRunningStart = false
         isLastDisplayLinkCallback = false
         
@@ -366,7 +366,7 @@ import QuartzCore
             
             DDLogDebug("\nAnimation value total: (\(animationValueTotal.x), \(animationValueTotal.y)), left: (\(animationValueLeft_Unsafe.x), \(animationValueLeft_Unsafe.y))")
             
-            DDLogDebug("AnimationCallback with state - isFirst: \(isFirstDisplayLinkCallback), isRunning: \(isFirstDisplayLinkCallback_AfterRunningStart)")
+            DDLogDebug("AnimationCallback with state - isFirst: \(isFirstDisplayLinkCallback_AfterColdStart), isRunning: \(isFirstDisplayLinkCallback_AfterRunningStart)")
                         
             /// Guard nil
             
@@ -380,7 +380,7 @@ import QuartzCore
             /// Get time when frame will be displayed
             var frameTime = timeInfo.outFrame
             
-            if isFirstDisplayLinkCallback {
+            if isFirstDisplayLinkCallback_AfterColdStart {
                 
                 /// Set animation start time
                 
@@ -389,7 +389,7 @@ import QuartzCore
                 
                 /// Set animation start time to hypothetical last frame
                 ///     This is so that the first timeDelta is the same size as all the others (instead of 0)
-                animationStartTime = self.lastFrameTime
+                animationStartTime = lastFrameTime
                 
                 /// Reset lastAnimationTimeUnit
                 ///     Might be better to reset this somewhere else
@@ -397,10 +397,10 @@ import QuartzCore
                 
                 /// Reset lastSubCurve
                 ///     Might be better to reset this in start and/or stop
-                lastSubCurve = kMFHybridSubCurveNone
+//                lastSubCurve = kMFHybridSubCurveNone
             }
             
-            if isFirstDisplayLinkCallback || isFirstDisplayLinkCallback_AfterRunningStart {
+            if isFirstDisplayLinkCallback_AfterColdStart || isFirstDisplayLinkCallback_AfterRunningStart {
                 
                 /// Round duration to a multiple of timeBetweenFrames
                 ///     This is so that the last timeDelta is the same size as all the others
@@ -437,57 +437,48 @@ import QuartzCore
             
             /// Get momentumHint
             
-            var subCurve = kMFHybridSubCurveNone
+            var momentumHint: MFMomentumHint = kMFMomentumHintNone
             
             if let hybridCurve = animationCurve as? HybridCurve {
                 
+                /// Get subcurve
+                var subCurve = hybridCurve.subCurve(at: animationTimeUnit)
+                /// Set subCurve to base
+                ///     We only want to set the curve to drag if all of the pixels to be scrolled for the frame come from the DragCurve
+                if lastAnimationTimeUnit != -1 {
+                    let lastSubCurve = hybridCurve.subCurve(at: lastAnimationTimeUnit)
+                    /// ^ Can't use `lastSubCurve` instance prop because it would never change
+                    if lastSubCurve == kMFHybridSubCurveBase {
+                        subCurve = kMFHybridSubCurveBase
+                    }
+                }
+                
+                /// Do get momentumHint
+                
                 let timeSinceAnimationStart = frameTime - animationStartTime
-                
                 let minBaseCurveTime = ScrollConfig().consecutiveScrollTickIntervalMax
-                
                 if timeSinceAnimationStart < minBaseCurveTime {
-                    /// Lie and say the the first x ms of the animation are always base
-                    ///     This is so that:
-                    ///         - ... the first event is always sent with gestureScrolls instead of momentumScrolls in Scroll.m. Otherwise apps like Xcode won't react at all (they ignore the deltas in momentumScrolls).
-                    ///         - ... to decrease the transitions into momentumScroll in Scroll.m. Due to Apple bug, this transition causes a stuttery jump in apps like Xcode
-                    ///     TODO: (not that important)
-                    ///         - This logic doesn't really belong into the Animator
-                    ///         - Put minBaseCurveTime into ScrollConfig
-                    ///     Values for `minBaseCurveTime`:
-                    ///         - tested values between 100 and 300 ms and they all worked. Settled on 150 for now. Edit: Using consecutiveScrollTickIntervalMax (which is 160 ms)
                     
-                    subCurve = kMFHybridSubCurveBase
+                    /// Make the first x ms of the animation always kMFMomentumHintGesture
+                    ///     This is so that:
+                    ///         - ... the first event of the scroll is always sent with gestureScrolls instead of momentumScrolls in Scroll.m. Otherwise apps like Xcode won't react at all (they ignore the deltas in momentumScrolls).
+                    ///         - ... to decrease the transitions into momentumScroll in Scroll.m. Due to Apple bug, this transition causes a stuttery jump in apps like Xcode
+                    ///     `minBaseCurveTime`:
+                    ///         - tested values between 100 and 300 ms and they all worked. Settled on 150 for now. Edit: Using consecutiveScrollTickIntervalMax (which is 160 ms)
+                    ///         - Put minBaseCurveTime into ScrollConfig?
+                    
+                    momentumHint = kMFMomentumHintGesture
+                    
                 } else {
-                    subCurve = hybridCurve.subCurve(at: animationTimeUnit)
-                    /// Reset subCurve to base
-                    ///     We only want to set the curve to drag if all of the pixels to be scrolled for the frame come from the DragCurve
-                    if lastAnimationTimeUnit != -1 {
-                        let lastSubCurve = hybridCurve.subCurve(at: lastAnimationTimeUnit)
-                        if lastSubCurve == kMFHybridSubCurveBase {
-                            subCurve = kMFHybridSubCurveBase
-                        }
+                    if subCurve == kMFHybridSubCurveBase {
+                        momentumHint = kMFMomentumHintGesture
+                    } else if subCurve == kMFHybridSubCurveDrag {
+                        momentumHint = kMFMomentumHintMomentum
+                    } else {
+                        assert(false)
                     }
                 }
             }
-            
-            var momentumHint: MFMomentumHint = kMFMomentumHintNone
-            
-            if subCurve == kMFHybridSubCurveBase {
-                
-                momentumHint = kMFMomentumHintGesture
-                if (lastSubCurve == kMFHybridSubCurveDrag) {
-                    momentumHint = kMFMomentumHintGestureFromMomentum
-                }
-                
-            } else if subCurve == kMFHybridSubCurveDrag {
-                
-                momentumHint = kMFMomentumHintMomentum
-                if (lastSubCurve == kMFHybridSubCurveBase) {
-                    momentumHint = kMFMomentumHintMomentumFromGesture
-                }
-            }
-            
-            lastSubCurve = subCurve
             
             /// Get actual animation value
             var animationValue = Vector(x: 0, y: 0)
@@ -522,7 +513,7 @@ import QuartzCore
             }
             
             /// Update isFirstCallback state
-            isFirstDisplayLinkCallback = false
+            isFirstDisplayLinkCallback_AfterColdStart = false
             isFirstDisplayLinkCallback_AfterRunningStart = false
         }
     }
