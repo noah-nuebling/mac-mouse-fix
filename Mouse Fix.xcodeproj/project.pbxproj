@@ -274,7 +274,6 @@
 		4F15C0C12666779D000337FF /* MainApp.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = MainApp.xcconfig; sourceTree = "<group>"; };
 		4F15C0C22666781F000337FF /* Helper.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Helper.xcconfig; sourceTree = "<group>"; };
 		4F1793A825EEC90900E8309B /* ZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ZipArchive.framework; sourceTree = "<group>"; };
-		4F18A85627BF22F900A5703B /* CurveDeclarations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CurveDeclarations.h; sourceTree = "<group>"; };
 		4F18A85727BF6E0200A5703B /* IOHIDEvent-Reconstructed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IOHIDEvent-Reconstructed.h"; sourceTree = "<group>"; };
 		4F1AFE962670EBA900ECA424 /* DragCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragCurve.swift; sourceTree = "<group>"; };
 		4F1B83042606E68300AEAF37 /* ButtonLandscapeAssessor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonLandscapeAssessor.h; sourceTree = "<group>"; };
@@ -1525,7 +1524,6 @@
 				4F2CC58627B8D2300084AACE /* HybridCurves.swift */,
 				4F3A40B0266BBC5000436821 /* AnimationCurve.swift */,
 				4F2CC58827B8DA8B0084AACE /* Line.swift */,
-				4F18A85627BF22F900A5703B /* CurveDeclarations.h */,
 				4FBDA14A27B225210030E4EA /* Unused */,
 			);
 			path = Curves;

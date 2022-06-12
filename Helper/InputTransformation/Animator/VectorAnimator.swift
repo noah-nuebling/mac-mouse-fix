@@ -17,7 +17,7 @@ import QuartzCore
     /// Typedef
     
     typealias UntypedAnimatorCallback = Any
-    typealias AnimatorCallback = (_ animationValueDelta: Vector, _ phase: MFAnimationCallbackPhase, _ subCurve: MFHybridSubCurvePhase) -> ()
+    typealias AnimatorCallback = (_ animationValueDelta: Vector, _ phase: MFAnimationCallbackPhase, _ subCurve: MFMomentumHint) -> ()
     typealias StopCallback = (_ lastPhase: MFAnimationPhase) -> ()
     typealias StartParamCalculationCallback = (_ valueLeft: Vector, _ isRunning: Bool, _ animationCurve: AnimationCurve?) -> MFAnimatorStartParams
     /// ^ When starting the animator, we usually want to get the value that the animator still wants to scroll (`animationValueLeft`), and add that to the new value. The specific logic can differ a lot though, so we can't just hardcode this into `Animator`
@@ -435,7 +435,7 @@ import QuartzCore
             /// Get normalized animation value from animation curve
             let animationValueUnit: Double = animationCurve.evaluate(at: animationTimeUnit)
             
-            /// Get subCurvePhase
+            /// Get momentumHint
             
             var subCurve = kMFHybridSubCurveNone
             
@@ -470,22 +470,20 @@ import QuartzCore
                 }
             }
             
-            var subCurvePhase: MFHybridSubCurvePhase = kMFHybridSubCurvePhaseNone
+            var momentumHint: MFMomentumHint = kMFMomentumHintNone
             
             if subCurve == kMFHybridSubCurveBase {
                 
-                subCurvePhase = kMFHybridSubCurvePhaseBase
-                
+                momentumHint = kMFMomentumHintGesture
                 if (lastSubCurve == kMFHybridSubCurveDrag) {
-                    subCurvePhase = kMFHybridSubCurvePhaseBaseFromDrag
+                    momentumHint = kMFMomentumHintGestureFromMomentum
                 }
                 
             } else if subCurve == kMFHybridSubCurveDrag {
                 
-                subCurvePhase = kMFHybridSubCurvePhaseDrag
-                
+                momentumHint = kMFMomentumHintMomentum
                 if (lastSubCurve == kMFHybridSubCurveBase) {
-                    subCurvePhase = kMFHybridSubCurvePhaseDragBegan
+                    momentumHint = kMFMomentumHintMomentumFromGesture
                 }
             }
             
@@ -509,7 +507,7 @@ import QuartzCore
             /// Subclass hook.
             ///     PixelatedAnimator overrides this to do its thing
             
-            self.subclassHook(callback, animationValueDelta, animationTimeDelta, subCurvePhase)
+            self.subclassHook(callback, animationValueDelta, animationTimeDelta, momentumHint)
             
             /// Update `last` time and value and phase
             
@@ -531,7 +529,7 @@ import QuartzCore
     
     /// Subclass overridable
     
-    func subclassHook(_ untypedCallback: Any, _ animationValueDelta: Vector, _ animationTimeDelta: CFTimeInterval, _ subCurve: MFHybridSubCurvePhase) {
+    func subclassHook(_ untypedCallback: Any, _ animationValueDelta: Vector, _ animationTimeDelta: CFTimeInterval, _ momentumHint: MFMomentumHint) {
         
         /// This is unused. Probably doesn't work properly. The override in `PixelatedVectorAnimator` is the relevant thing.
         
@@ -552,7 +550,7 @@ import QuartzCore
         
         /// Call the callback
         let phase = VectorAnimator.callbackPhase(hasProducedDeltas: thisAnimationHasProducedDeltas, isLastCallback: isLastDisplayLinkCallback)
-        callback(animationValueDelta, phase, subCurve)
+        callback(animationValueDelta, phase, momentumHint)
         
         /// Debug
         

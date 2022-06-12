@@ -399,7 +399,7 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
         
         return p;
         
-    } integerCallback:^(Vector deltaVec, MFAnimationCallbackPhase animationPhase, MFHybridSubCurvePhase subCurve) {
+    } integerCallback:^(Vector deltaVec, MFAnimationCallbackPhase animationPhase, MFMomentumHint subCurve) {
         
         /// Debug
         DDLogDebug(@"Momentum scrolling - delta: (%f, %f), animationPhase: %d", deltaVec.x, deltaVec.y, animationPhase);

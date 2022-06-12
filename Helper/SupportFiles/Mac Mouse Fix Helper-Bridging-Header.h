@@ -8,7 +8,6 @@
 #import "WannaBePrefixHeader.h"
 #import "DisplayLink.h"
 #import "AnimatorDeclarations.h"
-#import "CurveDeclarations.h"
 #import "Config.h"
 #import "ScrollConfigObjC.h"
 #import "SubPixelator.h"

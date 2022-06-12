@@ -27,7 +27,6 @@
 #import "ScrollModifiers.h"
 #import "Actions.h"
 #import "EventUtility.h"
-#import "CurveDeclarations.h"
 
 @import IOKit;
 #import "MFIOKitImports.h"
@@ -441,7 +440,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         
         /// Send scroll event directly - without the animator. Will scroll all of pxToScrollForThisTick at once.
         
-        sendScroll(pxToScrollForThisTick, scrollDirection, NO, kMFAnimationCallbackPhaseNone, kMFHybridSubCurvePhaseNone);
+        sendScroll(pxToScrollForThisTick, scrollDirection, NO, kMFAnimationCallbackPhaseNone, kMFMomentumHintNone);
         
     } else {
         /// Send scroll events through animator, spread out over time.
@@ -510,7 +509,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             /// Return
             return p;
             
-        } integerCallback:^(Vector distanceDeltaVec, MFAnimationCallbackPhase animationPhase, MFHybridSubCurvePhase subCurvePhase) {
+        } integerCallback:^(Vector distanceDeltaVec, MFAnimationCallbackPhase animationPhase, MFMomentumHint momentumHint) {
             
             /// This will be called each frame
             
@@ -530,10 +529,10 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             static double scrollDeltaSummm = 0;
             scrollDeltaSummm += distanceDelta;
 //            DDLogDebug(@"Delta sum in-animator: %f", scrollDeltaSummm);
-            DDLogDebug(@"in-animator - delta %f, animationPhase: %d, subCurve: %d", distanceDelta, animationPhase, subCurvePhase);
+            DDLogDebug(@"in-animator - delta %f, animationPhase: %d, momentumHint: %d", distanceDelta, animationPhase, momentumHint);
             
             /// Send scroll
-            sendScroll(distanceDelta, scrollDirection, YES, animationPhase, subCurvePhase);
+            sendScroll(distanceDelta, scrollDirection, YES, animationPhase, momentumHint);
             
         }];
     }
@@ -541,7 +540,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     CFRelease(event);
 }
 
-static void sendScroll(int64_t px, MFDirection scrollDirection, BOOL gesture, MFAnimationCallbackPhase animationPhase, MFHybridSubCurvePhase subCurvePhase) {
+static void sendScroll(int64_t px, MFDirection scrollDirection, BOOL gesture, MFAnimationCallbackPhase animationPhase, MFMomentumHint momentumHint) {
     
     /// Get x and y deltas
     
@@ -586,7 +585,7 @@ static void sendScroll(int64_t px, MFDirection scrollDirection, BOOL gesture, MF
     
     /// Send event
     
-    sendOutputEvents(dx, dy, outputType, animationPhase, subCurvePhase);
+    sendOutputEvents(dx, dy, outputType, animationPhase, momentumHint);
 }
 
 /// Define output types
@@ -603,7 +602,7 @@ typedef enum {
 
 /// Output
 
-static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputType, MFAnimationCallbackPhase animatorPhase, MFHybridSubCurvePhase subCurvePhase) {
+static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputType, MFAnimationCallbackPhase animatorPhase, MFMomentumHint momentumHint) {
     
     /// Init eventPhase
     
@@ -637,24 +636,15 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
             
         } else { /// sendMomentumScrolls == true
             
-            /// This stuff only works properly because the animator is always claiming to scroll on the baseCurve for a few seconds even if it's not. That's not pretty but it works. See VectorAnimator for more info.
-            ///     Thoughts on refactoring this:
-            ///         - VectorAnimator is currently lying about whether we're scrolling on baseCurve or dragCurve. That's bad.
-            ///         - But if we made the VectorAnimator say the truth, then we'd have to migrate the logic for delaying momentumPhase activation to Scroll.m. However Scroll.m doesn't have access to all the timing data and state that the VectorAnimator uses to figure this stuff out. So this would need significant refactors and make things even more confusing probably.
-            ///         - We could simply rename the `subCurvePhase` to somthing like `momentumPhase`. Then we wouldn't be lying about what these phases really are. (They are a recommendation whether to send normal gestureScrolls or momentumScrolls) -> This is definitely better than what we have currently.
-            ///             - This makes it obvious that these phases make VectorAnimator very tightly coupled to Scroll.m. They already are though. We just wouldn't be lying about that fact anymore.
-            ///             -> I like this solution. I don't think the coupling is important. The code will be more simple and readable than any other way I can think of
-            ///             TODO: Rename the `subCurvePhase` stuff. Example: rename kMFHybridSubCurvePhaseBaseFromDrag -> kMFMomentumHintGestureFromMomentum
-            
             /// Validate
-            assert(subCurvePhase != kMFHybridSubCurvePhaseNone);
+            assert(momentumHint != kMFMomentumHintNone);
             
             /// Get eventPhase and momentumPhase
             
-            if (subCurvePhase == kMFHybridSubCurvePhaseBase
-                || subCurvePhase == kMFHybridSubCurvePhaseBaseFromDrag) {
+            if (momentumHint == kMFMomentumHintGesture
+                || momentumHint == kMFMomentumHintGestureFromMomentum) { /// momentumHint is gesture
                 
-                if (subCurvePhase == kMFHybridSubCurvePhaseBaseFromDrag) {
+                if (momentumHint == kMFMomentumHintGestureFromMomentum) {
                     
                     /// Send momentum end event
                     [GestureScrollSimulator postMomentumScrollDirectlyWithDeltaX:0 deltaY:0 momentumPhase:kCGMomentumScrollPhaseEnd];
@@ -672,12 +662,12 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
                 /// Debug
                 DDLogDebug(@"\nHybrid event - gesture: (%lld, %lld, %d)", dx, dy, eventPhase);
                 
-            } else { /// SubCurve is drag
+            } else { /// momentumHint is momentum
                 
                 CGMomentumScrollPhase momentumPhase = kCGMomentumScrollPhaseNone;
                 
-                if (subCurvePhase == kMFHybridSubCurvePhaseDragBegan) {
-                    /// DragCurve begins
+                if (momentumHint == kMFMomentumHintMomentumFromGesture) {
+                    /// Momentum begins
                     
                     /// Get momentum phase
                     momentumPhase = kCGMomentumScrollPhaseBegin;
@@ -688,8 +678,8 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
                     /// Debug
                     DDLogDebug(@"\nHybrid event - gesture: (0, 0, %d) HHH", kIOHIDEventPhaseEnded);
                     
-                } else if (subCurvePhase == kMFHybridSubCurvePhaseDrag) {
-                    /// DragCurve continues
+                } else if (momentumHint == kMFMomentumHintMomentum) {
+                    /// Momentum continues
                     
                     /// Get momentum phase
                     if (animatorPhase == kMFAnimationCallbackPhaseContinue) {

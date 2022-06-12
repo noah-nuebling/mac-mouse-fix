@@ -237,7 +237,7 @@ import CocoaLumberjackSwift
     
     /// User settings
     
-    @objc lazy var useAppleAcceleration: Bool = false /// Ignore MMF acceleration algorithm and use values provided by macOS
+    @objc lazy var useAppleAcceleration: Bool = true /// Ignore MMF acceleration algorithm and use values provided by macOS
     @objc lazy var scrollSensitivity: MFScrollSensitivity = kMFScrollSensitivityMedium
     @objc lazy var scrollAcceleration: MFScrollAcceleration = kMFScrollAccelerationHigh
     
