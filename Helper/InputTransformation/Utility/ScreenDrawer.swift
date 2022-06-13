@@ -38,6 +38,7 @@ import CocoaLumberjackSwift
         canvas.alphaValue = 1.0
         canvas.level = NSWindow.Level.init(Int(CGWindowLevelForKey(.cursorWindow)) + 1) /// Canvas draws above everything else
         canvas.ignoresMouseEvents = true /// Mouse events should pass through
+        canvas.collectionBehavior = [.stationary, .moveToActiveSpace] /// Make unaffected by Mission Control and Exposé
 
 //        canvas.makeKeyAndOrderFront(nil) /// We already call this in draw()
         
@@ -106,7 +107,6 @@ import CocoaLumberjackSwift
         let origin = view.frame.origin
         let transform = CGAffineTransform(translationX: newOrigin.x - origin.x, y: newOrigin.y - origin.y)
         view.layer?.setAffineTransform(transform)
-        
     }
     
     @objc func undraw(view: NSView) {
