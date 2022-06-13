@@ -98,14 +98,6 @@ static CFTimeInterval _consecutiveSwipeSequenceStartTime;
     return didTimeOut;
 }
 
-static void resetSwipes() {
-resetSwipes:
-    _consecutiveScrollSwipeCounter = 0;
-    _consecutiveScrollSwipeCounter_ForFreeScrollWheel = 0;
-    _consecutiveSwipeSequenceStartTime = CACurrentMediaTime();
-    _ticksInCurrentConsecutiveSwipeSequence = 0;
-}
-
 /// This is the main input function which should be called on each scrollwheel tick event
 + (ScrollAnalysisResult)updateWithTickOccuringAt:(CFTimeInterval)thisScrollTickTimeStamp withDirection:(MFDirection)direction withConfig:(ScrollConfig *)scrollConfig {
     
@@ -136,46 +128,57 @@ resetSwipes:
     
     /// Update consecutive tick and swipe counters
     
-    _ticksInCurrentConsecutiveSwipeSequence += 1;
+    _ticksInCurrentConsecutiveSwipeSequence += 1; /// Not totally sure if it makes sense to update this up here, but it seems to work well
     
     if (secondsSinceLastTick > scrollConfig.consecutiveScrollTickIntervalMax) { /// Should `secondsSinceLastTick` be smoothed *before* this comparison?
         /// This is the first consecutive tick
         
-        /// Update swipes
+        /// --- Update swipes ---
         
-        if (scrollConfig.scrollSwipeThreshold_inTicks > _consecutiveScrollTickCounter) {
-            /// The last batch of consecutive ticks had less ticks in it than the swipe threshold
-            resetSwipes();
-        } else {
-            
-            double thisScrollSwipeTimeStamp = thisScrollTickTimeStamp;
-            double interval = thisScrollSwipeTimeStamp - _previousScrollTickTimeStamp;
-            
-            if (interval > scrollConfig.consecutiveScrollSwipeMaxInterval) {
-                /// Time between the last tick of the previous swipe and the first tick of the current swipe (now) is greater than swipe threshold
-                resetSwipes();
-            } else {
-                
-                double tickSpeedThisSwipeSequence = ((double)_ticksInCurrentConsecutiveSwipeSequence) / (CACurrentMediaTime() - _consecutiveSwipeSequenceStartTime);
-                
-                DDLogDebug(@"Tickspeed this swipeSequence: %f", tickSpeedThisSwipeSequence);
-                
-                if (tickSpeedThisSwipeSequence < scrollConfig.consecutiveScrollSwipeMinTickSpeed) {
-                    /// Average speed is too low
-                    /// We purely use _consecutiveScrollSwipeCounter to drive fastScroll. That's why we don't want to increase it when the user scrolls slowly.
-                    resetSwipes();
-                } else {
-                    _consecutiveScrollSwipeCounter += 1;
-                    _consecutiveScrollSwipeCounter_ForFreeScrollWheel += 1;
-                }
-            }
-        }
+        /// Guard: Enough ticks in last swipe
         
-        /// Update ticks
+        if (scrollConfig.scrollSwipeThreshold_inTicks > _consecutiveScrollTickCounter)
+            goto resetSwipes;
+            
+        /// Guard: Not too much time since last swipe
+        
+        double thisScrollSwipeTimeStamp = thisScrollTickTimeStamp;
+        double interval = thisScrollSwipeTimeStamp - _previousScrollTickTimeStamp;
+        
+        if (interval > scrollConfig.consecutiveScrollSwipeMaxInterval)
+            goto resetSwipes; /// Time between the last tick of the previous swipe and the first tick of the current swipe (now) is greater than swipe threshold
+        
+        /// Guard: Average speed high enough
+        ///     We purely use _consecutiveScrollSwipeCounter to drive fastScroll. That's why we don't want to increase it when the user scrolls slowly. -> Should consider renaming to signify coupling with fastScroll
+        
+        double tickSpeedThisSwipeSequence = ((double)_ticksInCurrentConsecutiveSwipeSequence) / (CACurrentMediaTime() - _consecutiveSwipeSequenceStartTime);
+        
+        if (tickSpeedThisSwipeSequence < scrollConfig.consecutiveScrollSwipeMinTickSpeed)
+            goto resetSwipes;
+        
+        /// Increment swipes
+        
+        _consecutiveScrollSwipeCounter += 1;
+        _consecutiveScrollSwipeCounter_ForFreeScrollWheel += 1;
+        
+        goto updateTicks; /// Don't resetSwipes
+        
+    resetSwipes: /// Using goto even thought my professor said I'm not allowed to muahahaha
+        _consecutiveScrollSwipeCounter = 0;
+        _consecutiveScrollSwipeCounter_ForFreeScrollWheel = 0;
+        _consecutiveSwipeSequenceStartTime = CACurrentMediaTime();
+        _ticksInCurrentConsecutiveSwipeSequence = 0;
+        
+    updateTicks:
+        
+        /// --- Update ticks ---
         
         _consecutiveScrollTickCounter = 0;
         
     } else { /// This is not the first consecutive tick
+        
+        /// --- Update ticks ---
+        
         _consecutiveScrollTickCounter += 1;
     }
     
@@ -190,7 +193,7 @@ resetSwipes:
     
     double smoothedTimeBetweenTicks;
     
-    if (_consecutiveScrollTickCounter == 0) { /// This is first consecutive tick – reset smoothedTimeBetweenTicks state
+    if (_consecutiveScrollTickCounter == 0) { /// This is first consecutive tick –> reset smoothedTimeBetweenTicks state
         smoothedTimeBetweenTicks = DBL_MAX;
         ///     ^ DBL_MAX indicates that it has been longer than `consecutiveScrollTickIntervalMax` since the last tick. Maybe we should define a constant for this.
         [_tickTimeSmoother reset];
@@ -214,7 +217,7 @@ resetSwipes:
         .consecutiveScrollSwipeCounter = _consecutiveScrollSwipeCounter_ForFreeScrollWheel,
         .scrollDirectionDidChange = scrollDirectionDidChange,
         .timeBetweenTicks = smoothedTimeBetweenTicks,
-        /// ^  `smoothedTimeBetweenTicks` is our best approximation of the true value of `secondsSinceLastTick`. If `smoothedTimeBetweenTicks`, doesn't work, adjust the alorithm until it does.
+        /// ^  `smoothedTimeBetweenTicks` is our best approximation of the true value of `secondsSinceLastTick`. Don't use secondsSinceLastTick directly.
         .DEBUG_timeBetweenTicksRaw = secondsSinceLastTick,
         .DEBUG_consecutiveScrollSwipeCounterRaw = _consecutiveScrollSwipeCounter,
     };
