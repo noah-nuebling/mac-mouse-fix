@@ -20,14 +20,15 @@ NS_ASSUME_NONNULL_BEGIN
 typedef struct {
     
     int64_t consecutiveScrollTickCounter;
-    int64_t consecutiveScrollSwipeCounter;
-    int64_t consecutiveScrollSwipeCounter_ForFreeScrollWheel;
-    /// ^ Mice with free scrollwheels (e.g. MX Master) make it hard to input several consecutive scroll swipes, because the swipes will bleed into each other and will be registered as a very long sequence of consecutive ticks instead.
-    ///     `consecutiveScrollSwipeCounter_ForFreeScrollWheel` will count these long tick sequences as several consecutive swipes.
+    double consecutiveScrollSwipeCounter;
     BOOL scrollDirectionDidChange;
     CFTimeInterval timeBetweenTicks;
-    CFTimeInterval timeBetweenTicksRaw;
-    /// ^ Unsmoothed time between ticks. For debugging, don't use this. 
+    
+    CFTimeInterval DEBUG_timeBetweenTicksRaw;
+    /// ^ Unsmoothed time between ticks. For debugging, don't use this.
+    int64_t DEBUG_consecutiveScrollSwipeCounterRaw;
+    /// ^ Mice with free scrollwheels (e.g. MX Master) make it hard to input several consecutive scroll swipes, because the swipes will bleed into each other and will be registered as a very long sequence of consecutive ticks instead.
+    ///     `consecutiveScrollSwipeCounter` will count these long tick sequences as several consecutive swipes, while `DEBUG_consecutiveScrollSwipeCounterRaw` will not
     
 } ScrollAnalysisResult;
 

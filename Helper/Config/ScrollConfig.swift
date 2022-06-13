@@ -90,9 +90,9 @@ import CocoaLumberjackSwift
     
     @objc lazy var scrollSwipeThreshold_inTicks: Int = 2 /*other["scrollSwipeThreshold_inTicks"] as! Int;*/ /// If `scrollSwipeThreshold_inTicks` consecutive ticks occur, they are deemed a scroll-swipe.
     
-    @objc lazy var fastScrollThreshold_inSwipes: Int = 4 /*other["fastScrollThreshold_inSwipes"] as! Int*/ /// On the `fastScrollThreshold_inSwipes`th consecutive swipe, fast scrolling kicks in
+    @objc lazy var fastScrollThreshold_inSwipes: Int = 3 /*other["fastScrollThreshold_inSwipes"] as! Int*/ /// On the `fastScrollThreshold_inSwipes`th consecutive swipe, fast scrolling kicks in
     
-    @objc lazy var scrollSwipeMax_inTicks: Int = 9 /// Max number of ticks that we think can occur in a single swipe naturally (if the user isn't using a free-spinning scrollwheel). (See `consecutiveScrollSwipeCounter_ForFreeScrollWheel` definition for more info)
+    @objc lazy var scrollSwipeMax_inTicks: Int = 11 /// Max number of ticks that we think can occur in a single swipe naturally (if the user isn't using a free-spinning scrollwheel). (See `consecutiveScrollSwipeCounter_ForFreeScrollWheel` definition for more info)
     
     @objc lazy var consecutiveScrollTickIntervalMax: TimeInterval = 160/1000
     /// ^ If more than `_consecutiveScrollTickIntervalMax` seconds passes between two scrollwheel ticks, then they aren't deemed consecutive.
@@ -104,9 +104,11 @@ import CocoaLumberjackSwift
     ///     This variable can be used to cap the observed scrollTickInterval to a reasonable value
     
     
-    @objc lazy var consecutiveScrollSwipeMaxInterval: TimeInterval = 350/1000
+    @objc lazy var consecutiveScrollSwipeMaxInterval: TimeInterval = 600/1000
     /// ^ If more than `_consecutiveScrollSwipeIntervalMax` seconds passes between two scrollwheel swipes, then they aren't deemed consecutive.
     ///        other["consecutiveScrollSwipeIntervalMax"] as! Double
+    
+    @objc lazy var consecutiveScrollSwipeMinTickSpeed: Double = 12.0
     
     @objc lazy private var consecutiveScrollTickInterval_AccelerationEnd: TimeInterval = 15/1000
     /// ^ Used to define accelerationCurve. If the time interval between two ticks becomes less than `consecutiveScrollTickInterval_AccelerationEnd` seconds, then the accelerationCurve becomes managed by linear extension of the bezier instead of the bezier directly.
@@ -122,18 +124,34 @@ import CocoaLumberjackSwift
     ///     0.5 -> (Edit) I prefer smoother feel now in everything. 0.5 Makes short scroll swipes less accelerated which I like
     
     // MARK: Fast scroll
-    
-    @objc lazy var fastScrollExponentialBase = 1.35 /* other["fastScrollExponentialBase"] as! Double; */
-    /// ^ How quickly fast scrolling gains speed.
-    ///     Used to be 1.1 before scroll rework. Why so much higher now?
-    
+    /// See the function on Desmos: https://www.desmos.com/calculator/e3qhvipmu0
     
     @objc lazy var fastScrollFactor = 1.0 /*other["fastScrollFactor"] as! Double*/
-    /// ^ With the introduction of fastScrollScale, this should always be 1.0
+    /// ^ With the introduction of fastScrollSpeedup, this should always be 1.0. (So that the speedup is even and doesn't have a dip/hump at the start?)
     
-    @objc lazy var fastScrollScale = 0.3
+    @objc lazy var fastScrollExponentialBase = 1.1 /* other["fastScrollExponentialBase"] as! Double; */
+    /// ^ This seems to do the same thing as `fastScrollSpeedup`. Setting it close to 1 makes fastScrollSpeeup less sensitive. which allows us to be more precise
+    ///     Needs to be > 1 for there to be any speedup
+    
+    @objc lazy var fastScrollSpeedup = 7
+    /// Needs to be > 0 for there to be any speedup
     
     // MARK: Animation curve
+    
+    /// User setting
+    
+    private lazy var _animationCurvePreset = kMFScrollAnimationCurvePresetHighInertia
+    
+    @objc var animationCurvePreset: MFScrollAnimationCurvePreset {
+        set {
+            _animationCurvePreset = newValue
+            self.animationCurveParams = self.animationCurveParams(forPreset: _animationCurvePreset)
+        } get {
+            return _animationCurvePreset
+        }
+    }
+    
+    @objc private(set) lazy var animationCurveParams = { self.animationCurveParams(forPreset: self.animationCurvePreset) }() /// Updates automatically do match `self.animationCurvePreset`
     
     /// Define storage class for animationCurve params
     
@@ -227,29 +245,13 @@ import CocoaLumberjackSwift
         }
     }
     
-    /// User setting
-    
-    private lazy var _animationCurvePreset = kMFScrollAnimationCurvePresetHighInertia
-    
-    @objc var animationCurvePreset: MFScrollAnimationCurvePreset {
-        set {
-            _animationCurvePreset = newValue
-            self.animationCurveParams = self.animationCurveParams(forPreset: _animationCurvePreset)
-        } get {
-            return _animationCurvePreset
-        }
-    }
-    
-    @objc private(set) lazy var animationCurveParams = { self.animationCurveParams(forPreset: self.animationCurvePreset) }() /// Updates automatically do match `self.animationCurvePreset`
-    
-    
     // MARK: Acceleration
     
     /// User settings
     
     @objc lazy var useAppleAcceleration: Bool = false /// Ignore MMF acceleration algorithm and use values provided by macOS
-    @objc lazy var scrollSensitivity: MFScrollSensitivity = kMFScrollSensitivityHigh
-    @objc lazy var scrollAcceleration: MFScrollAcceleration = kMFScrollAccelerationHigh
+    @objc lazy var scrollSensitivity: MFScrollSensitivity = kMFScrollSensitivityMedium
+    @objc lazy var scrollAcceleration: MFScrollAcceleration = kMFScrollAccelerationMedium
     
     /// Stored property
     ///     This is used by Scroll.m to determine how to accelerate

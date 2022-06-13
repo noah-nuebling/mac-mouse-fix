@@ -263,8 +263,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             
             /// Amp up fast scroll
             _scrollConfig.fastScrollThreshold_inSwipes = 2;
-            _scrollConfig.fastScrollExponentialBase = M_E /*1.5*/;
-            _scrollConfig.fastScrollScale = 0.7;
+            _scrollConfig.fastScrollSpeedup = 20;
             
         } else if (_modifications.inputMod == kMFScrollInputModificationPrecise) {
             
@@ -278,7 +277,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             /// Turn off fast scroll
             _scrollConfig.fastScrollThreshold_inSwipes = 69; /// This is the haha sex number
             _scrollConfig.fastScrollExponentialBase = 1.0;
-            _scrollConfig.fastScrollScale = 1.0;
+            _scrollConfig.fastScrollSpeedup = 0.0;
             
         } else if (_modifications.inputMod == kMFScrollInputModificationNone) {
             
@@ -359,6 +358,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     
     /// Run full scrollAnalysis
     ScrollAnalysisResult scrollAnalysisResult = [ScrollAnalyzer updateWithTickOccuringAt:tickTime withDirection:scrollDirection withConfig:_scrollConfig];
+
     
     /// Store scrollAnalysisResult
     ///     So that command tab output code can access it. Not sure if good solution
@@ -412,20 +412,19 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     int64_t fsThreshold = _scrollConfig.fastScrollThreshold_inSwipes;
     double fsFactor = _scrollConfig.fastScrollFactor;
     double fsBase = _scrollConfig.fastScrollExponentialBase;
-    double fsScale = _scrollConfig.fastScrollScale;
+    double fsSpeedup = _scrollConfig.fastScrollSpeedup;
     
     /// Evaluate fast scroll
-    int64_t fastScrollThresholdDelta = scrollAnalysisResult.consecutiveScrollSwipeCounter_ForFreeScrollWheel - fsThreshold;
-    fastScrollThresholdDelta += 2; /// Add 2 cause it makes sense
-    if (fastScrollThresholdDelta > 0) {
-        pxToScrollForThisTick *= fsFactor * pow(fsBase, fastScrollThresholdDelta*fsScale);
+    double fastScrollThresholdDelta = (scrollAnalysisResult.consecutiveScrollSwipeCounter+1) - fsThreshold; /// +1 cause consecutiveScrollSwipeCounter starts counting at 0, and fsThreshold at 1
+    if (fastScrollThresholdDelta >= 0) {
+        pxToScrollForThisTick *= fsFactor * pow(fsBase, (fastScrollThresholdDelta+1)*fsSpeedup); /// +1 so fsScale is always a factor
     }
     
     /// Debug
     
-    DDLogDebug(@"\nconsecTicks: %lld, consecSwipes: %lld, consecSwipesFree: %lld", scrollAnalysisResult.consecutiveScrollTickCounter, scrollAnalysisResult.consecutiveScrollSwipeCounter, scrollAnalysisResult.consecutiveScrollSwipeCounter_ForFreeScrollWheel);
+    DDLogDebug(@"consecTicks: %lld, consecSwipes: %lld, consecSwipesFree: %f, fsThresholdDelta: %f", scrollAnalysisResult.consecutiveScrollTickCounter, scrollAnalysisResult.DEBUG_consecutiveScrollSwipeCounterRaw, scrollAnalysisResult.consecutiveScrollSwipeCounter, fastScrollThresholdDelta);
     
-    DDLogDebug(@"timeBetweenTicks: %f, timeBetweenTicksRaw: %f, diff: %f, ticks: %lld", scrollAnalysisResult.timeBetweenTicks, scrollAnalysisResult.timeBetweenTicksRaw, scrollAnalysisResult.timeBetweenTicks - scrollAnalysisResult.timeBetweenTicksRaw, scrollAnalysisResult.consecutiveScrollTickCounter);
+    DDLogDebug(@"timeBetweenTicks: %f, timeBetweenTicksRaw: %f, diff: %f, ticks: %lld", scrollAnalysisResult.timeBetweenTicks, scrollAnalysisResult.DEBUG_timeBetweenTicksRaw, scrollAnalysisResult.timeBetweenTicks - scrollAnalysisResult.DEBUG_timeBetweenTicksRaw, scrollAnalysisResult.consecutiveScrollTickCounter);
     
     ///
     /// Send scroll events
@@ -808,10 +807,10 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         /// Open app switcher
         
         if (!_appSwitcherIsOpen) {
-            _appSwitcherIsOpen = YES;
             sendKeyEvent(55, kCGEventFlagMaskCommand, true);
             sendKeyEvent(48, kCGEventFlagMaskCommand, true);
             sendKeyEvent(48, kCGEventFlagMaskCommand, false);
+            _appSwitcherIsOpen = YES;
             appSwitcherWasOpenedByCurrentConsecutiveTicks = true;
         } else {
             if (isFirstConsecutive)

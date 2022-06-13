@@ -52,8 +52,12 @@ static double _previousScrollTickTimeStamp = 0;
 static MFDirection _previousDirection = kMFDirectionNone;
 
 static int _consecutiveScrollTickCounter;
+
 static int _consecutiveScrollSwipeCounter;
-static int _consecutiveScrollSwipeCounter_ForFreeScrollWheel;
+static double _consecutiveScrollSwipeCounter_ForFreeScrollWheel;
+
+static int _ticksInCurrentConsecutiveSwipeSequence;
+static CFTimeInterval _consecutiveSwipeSequenceStartTime;
 
 #pragma mark - Interface
 
@@ -70,6 +74,8 @@ static int _consecutiveScrollSwipeCounter_ForFreeScrollWheel;
     _consecutiveScrollTickCounter = 0;
     _consecutiveScrollSwipeCounter = 0;
     
+    _ticksInCurrentConsecutiveSwipeSequence = 0;
+    _consecutiveSwipeSequenceStartTime = -1;
 //    [_tickTimeSmoother resetState]; /// Don't do this here
     
     /// We shouldn't definitely not reset _scrollDirectionDidChange here, because a scroll direction change causes this function to be called, and then the information about the scroll direction changing would be lost as it's reset immediately
@@ -90,6 +96,14 @@ static int _consecutiveScrollSwipeCounter_ForFreeScrollWheel;
     BOOL didTimeOut = secondsSinceLastTick > scrollConfig.consecutiveScrollTickIntervalMax; /// Should secondsSinceLastTick be smoothed before the comparison?
     
     return didTimeOut;
+}
+
+static void resetSwipes() {
+resetSwipes:
+    _consecutiveScrollSwipeCounter = 0;
+    _consecutiveScrollSwipeCounter_ForFreeScrollWheel = 0;
+    _consecutiveSwipeSequenceStartTime = CACurrentMediaTime();
+    _ticksInCurrentConsecutiveSwipeSequence = 0;
 }
 
 /// This is the main input function which should be called on each scrollwheel tick event
@@ -122,29 +136,39 @@ static int _consecutiveScrollSwipeCounter_ForFreeScrollWheel;
     
     /// Update consecutive tick and swipe counters
     
+    _ticksInCurrentConsecutiveSwipeSequence += 1;
+    
     if (secondsSinceLastTick > scrollConfig.consecutiveScrollTickIntervalMax) { /// Should `secondsSinceLastTick` be smoothed *before* this comparison?
         /// This is the first consecutive tick
         
         /// Update swipes
         
-        if (scrollConfig.scrollSwipeThreshold_inTicks <= _consecutiveScrollTickCounter) {
-            /// The last batch of consecutive ticks had more ticks in it than the swipe threshold
+        if (scrollConfig.scrollSwipeThreshold_inTicks > _consecutiveScrollTickCounter) {
+            /// The last batch of consecutive ticks had less ticks in it than the swipe threshold
+            resetSwipes();
+        } else {
             
             double thisScrollSwipeTimeStamp = thisScrollTickTimeStamp;
             double interval = thisScrollSwipeTimeStamp - _previousScrollTickTimeStamp;
             
-            if (interval <= scrollConfig.consecutiveScrollSwipeMaxInterval) {
-                /// Time between the last tick of the previous swipe and the first tick of the current swipe (now) is smaller than swipe threshold
-
-                _consecutiveScrollSwipeCounter += 1;
-                _consecutiveScrollSwipeCounter_ForFreeScrollWheel += 1;
+            if (interval > scrollConfig.consecutiveScrollSwipeMaxInterval) {
+                /// Time between the last tick of the previous swipe and the first tick of the current swipe (now) is greater than swipe threshold
+                resetSwipes();
+            } else {
+                
+                double tickSpeedThisSwipeSequence = ((double)_ticksInCurrentConsecutiveSwipeSequence) / (CACurrentMediaTime() - _consecutiveSwipeSequenceStartTime);
+                
+                DDLogDebug(@"Tickspeed this swipeSequence: %f", tickSpeedThisSwipeSequence);
+                
+                if (tickSpeedThisSwipeSequence < scrollConfig.consecutiveScrollSwipeMinTickSpeed) {
+                    /// Average speed is too low
+                    /// We purely use _consecutiveScrollSwipeCounter to drive fastScroll. That's why we don't want to increase it when the user scrolls slowly.
+                    resetSwipes();
+                } else {
+                    _consecutiveScrollSwipeCounter += 1;
+                    _consecutiveScrollSwipeCounter_ForFreeScrollWheel += 1;
+                }
             }
-            else goto resetSwipes;
-            
-        } else {
-        resetSwipes:
-            _consecutiveScrollSwipeCounter = 0;
-            _consecutiveScrollSwipeCounter_ForFreeScrollWheel = 0;
         }
         
         /// Update ticks
@@ -159,9 +183,7 @@ static int _consecutiveScrollSwipeCounter_ForFreeScrollWheel;
     ///     It's a little awkward to update this down here after the other swipe-updating code , but we need to do it this way because we need the `consecutiveTickCounter` to be updated after the stuff above but before this
     
     if (_consecutiveScrollTickCounter >= scrollConfig.scrollSwipeMax_inTicks) {
-        if (_consecutiveScrollTickCounter % scrollConfig.scrollSwipeMax_inTicks == 0) {
-            _consecutiveScrollSwipeCounter_ForFreeScrollWheel += 1;
-        }
+        _consecutiveScrollSwipeCounter_ForFreeScrollWheel += 1.0/scrollConfig.scrollSwipeMax_inTicks;
     }
     
     /// Smoothing
@@ -189,13 +211,12 @@ static int _consecutiveScrollSwipeCounter_ForFreeScrollWheel;
     
     ScrollAnalysisResult result = (ScrollAnalysisResult) {
         .consecutiveScrollTickCounter = _consecutiveScrollTickCounter,
-        .consecutiveScrollSwipeCounter = _consecutiveScrollSwipeCounter,
-        .consecutiveScrollSwipeCounter_ForFreeScrollWheel = _consecutiveScrollSwipeCounter_ForFreeScrollWheel,
+        .consecutiveScrollSwipeCounter = _consecutiveScrollSwipeCounter_ForFreeScrollWheel,
         .scrollDirectionDidChange = scrollDirectionDidChange,
         .timeBetweenTicks = smoothedTimeBetweenTicks,
-        /// ^ We should only use `smoothedTimeBetweenTicks` instead of `secondsSinceLastTick`. Because it's our best approximation of the true value of `secondsSinceLastTick`. If `smoothedTimeBetweenTicks`, doesn't work, adjust the alorithm until it does
-        ///     Edit: Actually we've turned smoothing off for now so the two are the same.
-        .timeBetweenTicksRaw = secondsSinceLastTick,
+        /// ^  `smoothedTimeBetweenTicks` is our best approximation of the true value of `secondsSinceLastTick`. If `smoothedTimeBetweenTicks`, doesn't work, adjust the alorithm until it does.
+        .DEBUG_timeBetweenTicksRaw = secondsSinceLastTick,
+        .DEBUG_consecutiveScrollSwipeCounterRaw = _consecutiveScrollSwipeCounter,
     };
     
     
