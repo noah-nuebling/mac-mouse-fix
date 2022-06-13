@@ -14,6 +14,7 @@
 #import "CGSConnection.h"
 #import "TransformationUtility.h"
 #import "GlobalEventTapThread.h"
+#import "NSScreen+Additions.h"
 @import CoreMedia;
 
 @implementation PointerFreeze
@@ -370,10 +371,8 @@ void setSuppressionIntervalWithTimeInterval(CFTimeInterval interval) {
         /// Draw/move puppet cursor image
         if (fresh) {
             /// Draw puppetCursor
-            CGDirectDisplayID screenID;
-            [HelperUtility displayUnderMousePointer:&screenID withEvent:NULL];
-            NSScreen *screen = NSScreen screen
-            [ScreenDrawer.shared drawWithView:_puppetCursorView atFrame:puppetImageFrameUnflipped onScreen:HelperUtility ];
+            NSScreen *screenUnderMousePointer = [NSScreen screenUnderMousePointerWithEvent:NULL];
+            [ScreenDrawer.shared drawWithView:_puppetCursorView atFrame:puppetImageFrameUnflipped onScreen:screenUnderMousePointer];
         } else {
             /// Reposition  puppet cursor!
             [ScreenDrawer.shared moveWithView:_puppetCursorView toOrigin:puppetImageFrameUnflipped.origin];
