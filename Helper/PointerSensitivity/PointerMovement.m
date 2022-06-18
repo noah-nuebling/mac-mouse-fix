@@ -199,7 +199,7 @@ static Boolean setAccelerationToCurve(MFAppleAccelerationCurveParams params, IOH
     Boolean success;
     
     /// Create custom curveParamDict
-    ///     See IOHIDParameter
+    ///     See IOHIDParameter.h
     NSDictionary *customCurveParams = @{
         @(kHIDAccelIndexKey): @(FloatToFixed(customCurveIndex)),
         @(kHIDAccelGainLinearKey): @(FloatToFixed(params.linearGain)),
@@ -216,7 +216,7 @@ static Boolean setAccelerationToCurve(MFAppleAccelerationCurveParams params, IOH
     
     if (![curveParams containsObject:customCurveParams]) {
             
-        /// Add custom curve
+        /// Add curve
         [curveParams addObject:customCurveParams];
         
         /// Write curves
@@ -236,7 +236,7 @@ static Boolean setAccelerationToCurve(MFAppleAccelerationCurveParams params, IOH
 // MARK: Old
 
 /// -------------------------------------------------------------------------------
-/// Old implementation, that doesn't support totally custom curves
+/// Old implementation, that isn't modular and doesn't support totally custom curves. TODO: Remove or move to Experiments folder.
 + (void)old_setForDevice:(IOHIDDeviceRef)device
          sensitivity:(double)sensitivity
         acceleration:(double)acceleration {

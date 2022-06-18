@@ -16,6 +16,9 @@ import Cocoa
     @objc static func freezePointerDuringModifiedDrag() -> Bool {
         return false
     }
+    @objc static var doubleClickThreshold: Double {
+        return 0.25;
+    }
     
     /// Internal
     

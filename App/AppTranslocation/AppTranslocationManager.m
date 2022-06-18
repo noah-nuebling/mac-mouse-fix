@@ -84,7 +84,7 @@ void removeQuarantineFlagAndRestart(NSURL* untranslocatedURL) {
     NSError *error = nil;
     
     // Remove quarantine attributes of original
-    [SharedUtility launchCTL:xattrURL withArguments:@[@"-cr", untranslocatedURL.path] error:&error];
+    [SharedUtility launchCLT:xattrURL withArguments:@[@"-cr", untranslocatedURL.path] error:&error];
     
     if (error != nil) {
         DDLogInfo(@"Error while removing quarantine: %@", error);
@@ -93,7 +93,7 @@ void removeQuarantineFlagAndRestart(NSURL* untranslocatedURL) {
     
     // Relaunch app at original (untranslocated) location
     //  -> Use ‘open’ as it allows two instances of app (this instance is exiting)
-    [SharedUtility launchCTL:openURL withArguments:@[@"-n", @"-a", untranslocatedURL.path] error:&error];
+    [SharedUtility launchCLT:openURL withArguments:@[@"-n", @"-a", untranslocatedURL.path] error:&error];
     // ^ This successfully relaunches the app but AccessibilityOverlay doesn't work on the relaunched instance. I assume it's sth to do with message ports. Yes that turned out to be it. Using `initialize` instead of `load` to make the message port be created after this is executed fixed it.
     // ^ We need to make sure not to use MessagePort_App from within any `load` methods, as that would lead to MessagePort_App being initialized before this is called, leading to the same issue. (This is currently being called from [AppDelegate + initialize])
     

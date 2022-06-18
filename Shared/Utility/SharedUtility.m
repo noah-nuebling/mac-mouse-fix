@@ -49,8 +49,8 @@
 
 #pragma mark - Use command-line tools
 
-/// This returns the output of the CLT, in contrast to the `launchCTL` functions further down
-+ (NSString *)launchCTL:(NSURL *)executableURL withArguments:(NSArray<NSString *> *)arguments error:(NSError ** _Nullable)error {
+/// This returns the output of the CLT, in contrast to the other `launchCLT` function further down
++ (NSString *)launchCLT:(NSURL *)executableURL withArguments:(NSArray<NSString *> *)arguments error:(NSError ** _Nullable)error {
     
     NSPipe * launchctlOutput = [NSPipe pipe];
     
@@ -62,7 +62,7 @@
         [task setStandardOutput: launchctlOutput];
         
         [task launchAndReturnError:error];
-    } else { // Fallback on earlier versions
+    } else { /// Fallback on earlier versions
         NSTask *task = [[NSTask alloc] init];
         [task setLaunchPath: executableURL.path];
         [task setArguments: arguments];
@@ -71,7 +71,7 @@
         [task launch];
     }
     
-    // Get output
+    /// Get output
     
     NSFileHandle *output_fileHandle = [launchctlOutput fileHandleForReading];
     NSData *output_data = [output_fileHandle readDataToEndOfFile];
@@ -86,37 +86,12 @@
 
 + (void)launchCLT:(NSURL *)commandLineTool
          withArgs:(NSArray <NSString *> *)args {
-    [self launchCLT:commandLineTool withArgs:args callback:nil];
-}
-+ (void)launchCLT:(NSURL *)commandLineTool
-         withArgs:(NSArray <NSString *> *)args
-         callback:(MFCTLCallback _Nullable)callback {
     
     if (@available(macOS 10.13, *)) {
         
-        DDLogInfo(@"Launching CLT at: %@, with args: %@, from bundle at: %@, from thread: %@", commandLineTool, args, Objects.mainAppBundle.bundleURL, NSThread.currentThread);
-        
-//        NSTask *task = [[NSTask alloc] init];
-//        task.executableURL = commandLineTool;
-//        task.arguments = args;
-//        NSPipe *pipe = NSPipe.pipe;
-//        task.standardError = pipe;
-//        task.standardOutput = pipe;
-//        NSError *error;
-//        task.terminationHandler = ^(NSTask *task) {
-//            DDLogInfo(@"CLT %@ terminated with stdout/stderr: %@, error: %@", commandLineTool.lastPathComponent, [NSString.alloc initWithData:pipe.fileHandleForReading.readDataToEndOfFile encoding:NSUTF8StringEncoding], error);
-//            callback(task, pipe, error);
-//        };
-//        [task launchAndReturnError:&error]; // [task launch];
-            
-        // ^ This code gets the stdout and stderr of the task and prints that once it's done, which is nice for debugging.
-        //      But for some reason, when we launch Mac Mouse Fix Accomplice using this, after the accomplice kills this process, the accomplice terminates as well..
-        
-        // v This weird behaviour ((doesn't happen)) when we use `launchedTaskWithExecutableURL:` - Actually still happening sometimes...
-        
         [NSTask launchedTaskWithExecutableURL:commandLineTool arguments:args error:nil terminationHandler:nil];
         
-    } else { // Fallback on earlier versions
+    } else { /// Fallback on earlier versions
         [NSTask launchedTaskWithLaunchPath:commandLineTool.path arguments: args];
     }
 }
