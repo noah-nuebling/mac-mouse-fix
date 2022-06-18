@@ -30,7 +30,10 @@ NSTimer *_openMainAppTimer;
 
 + (void)load {
     
-    // Set up CocoaLumberjack
+    /// Debug
+    [GlobalDefaults applyDoubleClickThreshold];
+    
+    /// Set up CocoaLumberjack
     [SharedUtility setupBasicCocoaLumberjackLogging];
     DDLogInfo(@"Mac Mosue Fix begins logging excessively");
     

@@ -17,7 +17,7 @@ import Cocoa
         return false
     }
     @objc static var doubleClickThreshold: Double {
-        return 0.25;
+        return 0.01;
     }
     
     /// Internal

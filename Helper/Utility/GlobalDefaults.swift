@@ -10,6 +10,13 @@
 /// Sets settings to the system
 /// UserDefaults doesn't allow writing to the global domain, that's why we need to use the `defaults` command-line-tool instead
 
+/// Edit: Actually this won't work, because we have no way of telling the system to load from defaults. So the settings will only be applied when yuu restart the computer, making this not practical
+
+/// Investigation of double clicks
+/// The only thing related to double clicks I could find so far in my local copy of IOKit is IOHIDEventProcessorFilter.cpp
+///     IOHIDEventProcessorFilter does state machine stuff and handles double, triple, and long presses It seems to use the key kIOHIDKeyboardPressCountDoublePressTimeoutKey to determine the double click timeout However this key has "keyboard" in it's name suggesting that it doesn't work for mouse clicks.
+/// IOHIDEventService and IOHIPointing don't seem to handle any
+
 import Cocoa
 import CocoaLumberjackSwift
 
@@ -18,8 +25,7 @@ import CocoaLumberjackSwift
     // MARK: Manage application of settings
     ///     - Apply settings when Mac Mouse Fix Helper starts / when settings change / whenever else it is appropriate
     ///     - Un-apply settings when Mac Mouse Fix Helper closes
-    
-    // TODO: Implement application of settings
+    //      TODO: Implement this
     
     // MARK: Convenience
     
