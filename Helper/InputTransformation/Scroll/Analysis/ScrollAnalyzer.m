@@ -105,7 +105,6 @@ static CFTimeInterval _consecutiveSwipeSequenceStartTime;
     ///     Checks whether the scrolling direction is different from when this function was last called.
     
     BOOL scrollDirectionDidChange = NO;
-    
     if (directionChanged(_previousDirection, direction)) {
         scrollDirectionDidChange = YES;
     }
@@ -172,19 +171,16 @@ static CFTimeInterval _consecutiveSwipeSequenceStartTime;
     updateTicks:
         
         /// --- Update ticks ---
-        
         _consecutiveScrollTickCounter = 0;
         
     } else { /// This is not the first consecutive tick
         
         /// --- Update ticks ---
-        
         _consecutiveScrollTickCounter += 1;
     }
     
     /// Update `_consecutiveScrollSwipeCounter_ForFreeScrollWheel`
     ///     It's a little awkward to update this down here after the other swipe-updating code , but we need to do it this way because we need the `consecutiveTickCounter` to be updated after the stuff above but before this
-    
     if (_consecutiveScrollTickCounter >= scrollConfig.scrollSwipeMax_inTicks) {
         _consecutiveScrollSwipeCounter_ForFreeScrollWheel += 1.0/scrollConfig.scrollSwipeMax_inTicks;
     }
@@ -203,7 +199,6 @@ static CFTimeInterval _consecutiveSwipeSequenceStartTime;
     
     /// Update `_previousScrollTickTimeStamp` for next call
     ///     This needs to be executed after `updateConsecutiveScrollSwipeCounterWithSwipeOccuringNow()`, because that function uses `_previousScrollTickTimeStamp`
-    
     _previousScrollTickTimeStamp = thisScrollTickTimeStamp;
     
     /// Debug
@@ -211,7 +206,6 @@ static CFTimeInterval _consecutiveSwipeSequenceStartTime;
 //    DDLogDebug(@"tickTime: %f, Smoothed tickTime: %f", secondsSinceLastTick, smoothedTimeBetweenTicks);
     
     /// Output
-    
     ScrollAnalysisResult result = (ScrollAnalysisResult) {
         .consecutiveScrollTickCounter = _consecutiveScrollTickCounter,
         .consecutiveScrollSwipeCounter = _consecutiveScrollSwipeCounter_ForFreeScrollWheel,
@@ -221,7 +215,6 @@ static CFTimeInterval _consecutiveSwipeSequenceStartTime;
         .DEBUG_timeBetweenTicksRaw = secondsSinceLastTick,
         .DEBUG_consecutiveScrollSwipeCounterRaw = _consecutiveScrollSwipeCounter,
     };
-    
     
     return result;
 }

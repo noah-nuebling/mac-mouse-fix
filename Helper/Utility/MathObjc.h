@@ -13,9 +13,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MathObjc : NSObject
 
-// When in doubt, use Math.swift instead of this
-// This is only used to do stuff that you can't do in Swift
-// Like define a struct or enum that can be used in Swift as well as ObjC
+/// When in doubt, use Math.swift instead of this
+/// This is only used to do stuff that you can't do in Swift
+/// Like define a struct or enum that can be used in Swift as well as ObjC
 
 typedef enum {
     kMFIntervalDirectionAscending,

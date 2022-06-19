@@ -181,7 +181,7 @@ static BOOL devicePassesFiltering(IOHIDDeviceRef device) {
     if ([deviceName isEqualToString:@"Apple Internal Keyboard / Trackpad"]) { // TODO: Does it make sense? Does this work on other machines that are not mine? Shouldn't ignoring all Apple devices be enough?
         return NO;
     }
-    if (deviceVendorID.integerValue == 1452) { // Apple's Vendor ID is 1452 (sometimes written as 0x5ac or 05ac)
+    if (deviceVendorID.integerValue == 1452) { /// Apple's Vendor ID is 1452 (sometimes written as 0x5ac or 05ac)
         return NO;
     }
     return YES;
@@ -209,7 +209,7 @@ static void attachIOHIDDevice(IOHIDDeviceRef device) {
 static NSString *deviceInfo() {
     /// Only used for debugging
     
-    NSString *relevantDevices = stringf(@"Relevant devices:\n%@", _attachedDevices); // Relevant devices are those that are matching the match dicts defined in setupDeviceMatchingAndRemovalCallbacks() and which also pass the filtering in handleDeviceMatching()
+    NSString *relevantDevices = stringf(@"Relevant devices:\n%@", _attachedDevices); /// Relevant devices are those that are matching the match dicts defined in setupDeviceMatchingAndRemovalCallbacks() and which also pass the filtering in handleDeviceMatching()
     CFSetRef devices = IOHIDManagerCopyDevices(_manager);
     NSString *matchingDevices = stringf(@"Matching devices: %@", devices);
     CFRelease(devices);

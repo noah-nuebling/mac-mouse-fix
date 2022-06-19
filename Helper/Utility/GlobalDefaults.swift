@@ -13,9 +13,11 @@
 /// Edit: Actually this won't work, because we have no way of telling the system to load from defaults. So the settings will only be applied when yuu restart the computer, making this not practical
 
 /// Investigation of double clicks
-/// The only thing related to double clicks I could find so far in my local copy of IOKit is IOHIDEventProcessorFilter.cpp
+/// - The only thing related to double clicks I could find so far in my local copy of IOKit is IOHIDEventProcessorFilter.cpp
 ///     IOHIDEventProcessorFilter does state machine stuff and handles double, triple, and long presses It seems to use the key kIOHIDKeyboardPressCountDoublePressTimeoutKey to determine the double click timeout However this key has "keyboard" in it's name suggesting that it doesn't work for mouse clicks.
-/// IOHIDEventService and IOHIPointing don't seem to handle any
+/// - IOHIDEventService, IOHIDEventDriver and IOHIPointing don't seem to handle any clickLevel logic either
+/// - Maybe there is some extra processing before the clickEvents are dispatched to userSpace. Maybe it has been redacted from IOKit source. Maybe it's in HIDSystem or HIDEventSystem or something, but I couldn't find anything
+/// - Maybe the logic for determining doubleClicks is done by the windowServer in userSpace after it receives the IOHIDEvents from the kernel. This would be weird though.
 
 import Cocoa
 import CocoaLumberjackSwift

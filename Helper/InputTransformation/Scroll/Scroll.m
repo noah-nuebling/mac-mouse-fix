@@ -386,7 +386,8 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         /// Get scroll speed
         double timeBetweenTicks = scrollAnalysisResult.timeBetweenTicks;
         timeBetweenTicks = CLIP(timeBetweenTicks, 0, _scrollConfig.consecutiveScrollTickIntervalMax);
-        /// Shouldn't we clip between consecutiveScrollTickIntervalMin (instead of 0) and consecutiveScrollTickIntervalMax?
+        /// ^ Shouldn't we clip between consecutiveScrollTickIntervalMin (instead of 0) and consecutiveScrollTickIntervalMax?
+        ///     Also I think scrollAnalyzer should only produce these values and we should put an assert here instead
         
         double scrollSpeed = 1/timeBetweenTicks; /// In tick/s
 
@@ -417,7 +418,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     /// Evaluate fast scroll
     double fastScrollThresholdDelta = (scrollAnalysisResult.consecutiveScrollSwipeCounter+1) - fsThreshold; /// +1 cause consecutiveScrollSwipeCounter starts counting at 0, and fsThreshold at 1
     if (fastScrollThresholdDelta >= 0) {
-        pxToScrollForThisTick *= fsFactor * pow(fsBase, (fastScrollThresholdDelta+1)*fsSpeedup); /// +1 so fsScale is always a factor
+        pxToScrollForThisTick *= fsFactor * pow(fsBase, (fastScrollThresholdDelta+1)*fsSpeedup); /// +1 so fsSpeedup is always a factor
     }
     
     /// Debug
@@ -886,7 +887,6 @@ void sendKeyEvent(CGKeyCode keyCode, CGEventFlags flags, bool keyDown) {
     
     CGEventPost(tapLoc, event);
     CFRelease(event);
-    
 }
 
 @end
