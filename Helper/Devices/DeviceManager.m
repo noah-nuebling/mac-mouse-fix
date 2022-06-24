@@ -25,7 +25,7 @@
 #import "Scroll.h"
 #import "ButtonInputReceiver.h"
 #import "Config.h"
-#import "PointerMovement.h"
+#import "PointerSpeed.h"
 
 #import <IOKit/hidsystem/IOHIDServiceClient.h>
 #import <IOKit/hidsystem/IOHIDEventSystemClient.h>
@@ -199,7 +199,7 @@ static void attachIOHIDDevice(IOHIDDeviceRef device) {
     
     /// Set pointer sensitivity and acceleration for device
     /// Not using this yet, as it's still buggy and not implemented in the UI
-//    [PointerMovement setForDevice:device];
+//    [PointerSpeed setForDevice:device];
     
     /// Log
     DDLogInfo(@"New device added to attached devices:\n%@", newDevice);

@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-// PointerMovement.m
+// PointerSpeed.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2021
 // Licensed under MIT
@@ -11,7 +11,7 @@
 
 /// Imports
 
-#import "PointerMovement.h"
+#import "PointerSpeed.h"
 #import <IOKit/hidsystem/IOHIDEventSystemClient.h>
 #import <IOKit/hidsystem/IOHIDServiceClient.h>
 #import "IOUtility.h"
@@ -35,7 +35,7 @@ extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHI
 
 /// Implementation
 
-@implementation PointerMovement
+@implementation PointerSpeed
 
 /// Interface
 

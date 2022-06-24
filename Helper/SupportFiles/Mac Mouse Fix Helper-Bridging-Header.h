@@ -21,6 +21,6 @@
 #import "TransformationManager.h"
 #import "ModifiedDrag.h"
 #import "Scroll.h"
-#import "PointerMovement.h"
+#import "PointerSpeed.h"
 
 //#import <CocoaLumberjack/CocoaLumberjack.h> /// Importing CocoaLumberjack/Swift with CocoaPods breaks my project. Can't use macros when importing this.
