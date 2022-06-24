@@ -176,6 +176,9 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     /// Get HIDEvent
     HIDEvent *hidEvent = CGEventGetHIDEvent(event);
     
+    /// Debug
+    DDLogInfo(@"Scroll event: %@", hidEvent.description);
+    
     /// Get sending device
     IOHIDDeviceRef sendingDev = HIDEventGetSendingDevice(hidEvent);
     
@@ -188,7 +191,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         CFStringRef name = IOHIDDeviceGetProperty(sendingDev, CFSTR(kIOHIDProductKey));
         CFStringRef manufacturer = IOHIDDeviceGetProperty(sendingDev, CFSTR(kIOHIDManufacturerKey));
         
-        DDLogInfo(@"\nDevice sending scroll: %@ %@", manufacturer, name);
+        DDLogInfo(@"Device sending scroll: %@ %@", manufacturer, name);
     }
     
     /// Get axis
