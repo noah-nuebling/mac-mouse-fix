@@ -49,27 +49,27 @@ class PointerConfig: NSObject {
     ///  See top of the file for explanation
     
     private static let basePollingRate = 125
-    private static var actualPollingRate = 500
+    private static var actualPollingRate = 125
     private static var pollingRateFactor: Double {
         Double(actualPollingRate) / Double(basePollingRate)
     }
     
-    // MARK: Sensitivity
+    // MARK: Sensitivity (CPI compensation)
     
     @objc static var sensitivity: Double {
         
-        let sens = 1.3
+        let sens = 1.0
         
         return sens * pollingRateFactor
     }
     
-    // MARK: Acceleration
+    // MARK: Acceleration curve
     
     private static var semanticAcceleration: SemanticAcceleration {
-        return .medium
+        return .test
     }
-    private static var useSystemAccelerationCurve: Bool {
-        false
+    @objc static var useSystemAccelerationCurve: Bool {
+        true
     }
     
     @objc static var systemAccelerationCurvePresetIndex: Double {
@@ -83,6 +83,8 @@ class PointerConfig: NSObject {
             return 1.0
         case .high:
             return 2.0
+        case .test:
+            return 0.0
         case .system:
             return UserDefaults.standard.double(forKey: "com.apple.mouse.scaling")
         }
@@ -111,6 +113,10 @@ class PointerConfig: NSObject {
             minSens = 1
             maxSens = 40
             capSpeed = 8.0
+        case .test:
+            minSens = 1
+            maxSens = 1
+            capSpeed = 3.0
         case .system:
             fatalError()
         }
@@ -148,6 +154,7 @@ class PointerConfig: NSObject {
         case low
         case medium
         case high
+        case test
         case system
     }
 }
