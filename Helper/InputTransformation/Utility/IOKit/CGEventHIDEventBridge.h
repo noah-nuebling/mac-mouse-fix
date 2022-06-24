@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 ///     We saw that he function returns an NSObject of type 'HIDEvent'. Then we used VSCode to search Apples open source projects IOHIDFamily-1633.100.36, IOKitUser-1845.100.19, and xnu-7195.101.1 for the headers declaring 'HIDEvent' and their dependencies and added the to the project until everything compiled.
 ///
-///     We then tried to find _SLEventSetIOHIDEvent, but we couldn't manage to. However, we could build our own equivalent function based on the assembly of CGEventCopyIOHIDEvent and shifting around pointers between memory addresses.
+///     We then tried to find _SLEventSetIOHIDEvent, but we couldn't manage to. However, we could build our own equivalent function based on reversing the process seen in the assembly of CGEventCopyIOHIDEvent and shifting around pointers between memory addresses.
 ///
 /// Old Notes from TouchSimulator.m: (These observations led us to this)
 ///     I just saw in Instruments that when CFRelease is called on the scrollEvents we capture in Scroll.m, then the following function are called:
@@ -46,16 +46,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// MARK: HIDEvent <-> CGEvent
 
-HIDEvent *CGEventGetIOHIDEvent(CGEventRef _Nonnull);
-CGEventRef _Nonnull CGEventCreateWithIOHIDEvent(HIDEvent * _Nonnull);
+HIDEvent *CGEventGetHIDEvent(CGEventRef _Nonnull);
+void CGEventSetHIDEvent(CGEventRef _Nonnull, HIDEvent * _Nonnull);
 
 /// MARK: v Attempts to find a HIDEvent -> CGEvent function
 
 /// Unsuccessful, we ended up writing our own function.
+/// Actually in `SkyLight.tbd` there is `_SLEventSetIOHIDEvent`, but I can't find a definition that works
 
 /// Trying to find a function that converts HIDEvent -> CGEvent
 ///     (__bridge doesn't work)
-///     Cast to NSEvent doesn't work
+///     (Cast to NSEvent doesn't work)
 
 //SLEventSetIOHIDEvent();
 //CGEventSetIOHIDEvent();

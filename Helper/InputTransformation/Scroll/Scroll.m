@@ -174,7 +174,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t scrollDeltaAxis2, CFTimeInterval tickTime) {
     
     /// Get HIDEvent
-    HIDEvent *hidEvent = CGEventGetIOHIDEvent(event);
+    HIDEvent *hidEvent = CGEventGetHIDEvent(event);
     
     /// Get sending device
     IOHIDDeviceRef sendingDev = HIDEventGetSendingDevice(hidEvent);

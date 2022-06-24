@@ -12,53 +12,48 @@
 
 @implementation CGEventHIDEventBridge
 
-/// MARK: ----- CGEvent -> HIDEvent -----
+/// MARK: CGEvent -> HIDEvent
 
-/// External CGEvent -> HIDEvent function
-
-extern HIDEvent *CGEventCopyIOHIDEvent(CGEventRef);
-
-/// Wrapper for external CGEvent -> HIDEvent function
-///
-/// Disassembly shows that CGEventCopyIOHIDEvent() calls CFRetain() before returning the HIDEvent. But in ARC the retain count of HIDEvent is then increased *again* because we hold a pointer to it. That's why we CFRelease() the HIDEvent before returning it. Edit: It would probably do the same thing and make more sense to declare the return of CGEventCopyIOHIDEvent() as IOHIDEvent, and then use __bridge to cast to HIDEvent.
-
-HIDEvent *CGEventGetIOHIDEvent(CGEventRef cgEvent) {
+/// Convenience wrapper
+HIDEvent *CGEventGetHIDEvent(CGEventRef cgEvent) {
     
     if (cgEvent == NULL) {
         assert(false);
     }
     
-    HIDEvent *hidEvent = CGEventCopyIOHIDEvent(cgEvent);
-    
-    if (hidEvent != nil) {
-        CFRelease((__bridge CFTypeRef)hidEvent);
-    }
-    
-    return hidEvent;
+    return (__bridge_transfer HIDEvent *)CGEventCopyIOHIDEvent(cgEvent);
 }
 
-/// MARK: ----- HIDEvent -> CGEvent -----
+/// External CGEvent -> HIDEvent function
+extern IOHIDEventRef CGEventCopyIOHIDEvent(CGEventRef);
 
-/// Defining our own HIDEvent -> CGEvent function, because we can't find an external one.
-CGEventRef CGEventCreateWithIOHIDEvent(HIDEvent *hidEvent) {
+/// MARK: HIDEvent -> CGEvent
+
+/// Convenience wrapper
+void CGEventSetHIDEvent(CGEventRef cgEvent, HIDEvent *hidEvent) {
     
-    if (hidEvent == nil) {
+    return CGEventSetIOHIDEvent(cgEvent, (__bridge IOHIDEventRef)hidEvent);
+}
+
+/// Defining our own IOHIDEvent -> CGEvent function, because we can't find an external one. (See header)
+void CGEventSetIOHIDEvent(CGEventRef cgEvent, IOHIDEventRef iohidEvent) {
+    
+    if (cgEvent == NULL) {
+        assert(false);
+    }
+    if (iohidEvent == NULL) {
         assert(false);
     }
     
-    CFRetain((__bridge CFTypeRef)hidEvent);
-    /// Releasing the cgEvent will release the embedded hidEvent as well. That's why we need to retain it here.
-    
-    CGEventRef cgEvent = CGEventCreate(NULL);
+    CFRetain(iohidEvent);
+    /// ^ When we just stored HIDEvent * instead of IOHIDEventRef we needed to retain here. That's because CFRelease(cgEvent) also releases the embedded embedded IOHIDEventRef to be released. Now that we're storing IOHIDEventRef I'm not sure if this still works.
     
     void *resultHIDPtr = (void *)cgEvent;
     
     applyOffset(&resultHIDPtr, 0x18); /// Shift
     resultHIDPtr = *(void **)resultHIDPtr; /// Dereference
     applyOffset(&resultHIDPtr, 0xd0); /// Shift
-    *(HIDEvent *__weak *)resultHIDPtr = hidEvent; /// Store pointer to hidEvent. Not sure whether to use '__strong' here, or if there might be memory issues.
-    
-    return cgEvent;
+    *(IOHIDEventRef *)resultHIDPtr = iohidEvent; /// Store pointer to iohidEvent
 }
 
 /// MARK: Helper
