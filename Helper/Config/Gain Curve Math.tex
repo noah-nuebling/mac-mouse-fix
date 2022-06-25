@@ -1,0 +1,241 @@
+(This is a .tex file so that vscode highlights the braces and brackets)
+
+# Fourth version
+
+See https://www.desmos.com/calculator/ni6jmeq0cb
+
+# This is a like 3rd version but we want to make the sens curve approach its cap smoothly instead of the fake sens curve. So we want the constraint h'(v_1) = 0 instead of f''(v_1) = 0. So this is basically a correction for third version.
+
+# The relevant curves are (still)
+# f(x) = (ax) + (bx)^2 + (cx)^3
+# f''(x) = 2 (b^2 + 3 c^3 x)
+# h(x) = ((ax) + (bx)^2 + (cx)^3) / x
+# h'(x) = (a + 2 b^2 x + 3 c^3 x^2)/x - (a x + b^2 x^2 + c^3 x^3)/x^2
+
+# Meta params:
+#   s_0 -> min sens
+#   s_1 -> max sens
+#   v_1 -> The cap speed
+
+# The following constraints should hold
+#   h(0) = s_0
+#   h(v_1) = s_1
+#   h'(v_1) = 0
+
+# Finding the curve params
+
+# Solving h(0) = s_0 for a
+# a = s_0
+
+# Solving h(v_1) = s_1 for b
+# b = sqrt(-a + c^3 (-v_1^2) + s_1)/sqrt(v_1)
+
+# Solving h'(v_1) = 0 for c
+# c = ((-1/2)^(1/3) b^(2/3))/(v_1)^(1/3)
+
+# Plugging b into c and solving for c
+# c = (a - s_1)^(1/3)/v_1^(2/3)
+
+# Third version
+
+See https://www.desmos.com/calculator/hmaivjcfix (This is actually used for 4th version now)
+
+# In this version we want to define a point that the speed curve passes through. Because f'(x) isn't actually the sens curve. It describes how much the pointer speed changes when you change the mouse speed for a given mouse speed. I guess you could call that `sens` but what we were trying to define is how high the outSpeed/inSpeed for a given inSpeed. f(x) is outSpeed(inSpeed) so the sens curve we were thinking about is just f(x)/x not f'(x). We call h(x) = f(x)/x
+
+# The relevant curves are
+# f(x) = (ax) + (bx)^2 + (cx)^3
+# f''(x) = 2 (b^2 + 3 c^3 x)
+# h(x) = ((ax) + (bx)^2 + (cx)^3) / x
+
+# So now we define new meta params:
+#   s_0 -> min sens
+#   s_1 -> cap sens
+#   v_1 -> The cap speed
+
+# The following constraints should hold
+#   h(0) = s_0
+#   h(v_1) = s_1
+#   f''(v_1) = 0
+
+
+# Finding the curve params
+
+# Solving h(0) = s_0 for a
+# a = s_0
+
+# Solving h(v_1) = s_1 for b
+# b = sqrt(-a + c^3 (-v_1^2) + s_1)/sqrt(v_1)
+
+# Solving f''(v_1) = 0 for c (alredy did that below)
+# c = -b^(2/3)/(3^(1/3) (v_1)^(1/3))
+
+# Plugging b into c and solving for c
+#   1. c = -((-1/2)^(1/3) (a - s_1)^(1/3))/v_1^(2/3)
+#   2. c = (a - s_1)^(1/3)/(2^(1/3) v_1^(2/3))
+#   3. c = ((-1)^(2/3) (a - s_1)^(1/3))/(2^(1/3) v_1^(2/3))
+#   -> They all are the same thing just with umformung. 2. Looks simplest though
+
+
+# Second attempt
+
+See https://www.desmos.com/calculator/usbskelvq5
+
+# We try to find some c, such that the slope of the sens curve approaches the cap smoothly. (At the cap sens cap, the slope of the sens curve is zero.)
+
+# Our original function is f(x) = (ax) + (bx)^2 + (cx)^3 + (dx)^4. 
+# Input is mouse speed and output is cursor speed. f(x) = outSpeed(inSpeed)
+# The derivative of f is the sens curve f'(x) = sens(inSpeed).
+# The second derivative of f is the gain curve f''(x) = sensSlope(inSpeed)
+# The Apple algorithm also lets us define a cap speed s_c. Such that for any x>s_c f'(x) = f'(s_c).
+# At s_c the curve becomes a straight horizontal line.
+# We want to cap the sens because it feels good and makes things more controllable. 
+
+# So far we've been making the sens curve a straight line with a positive slope which then abruptly transitions into a straight line with slope 0 at cap speed s_c. 
+#   Like this the gain curve was non-continuous
+
+# Our goal now is to make the gain curve continuous. So to have the sens curve's slope change continuously instead of abruptly
+
+# Find c such that the gain is continuous:
+
+# To achieve this we need to use parameters a, b and c. (So far we've been setting c and d to 0) When c is negative the sens curve curves down. With the right c we can achieve a continuous gain curve.
+# d doesn't help us
+
+# So we start out with f(x) = (ax) + (bx)^2 + (cx)^3
+
+# Now we get the derivates:
+# f'(x) = a + x (2 b^2 + 3 c^3 x)
+# f''(x) = 2 (b^2 + 3 c^3 x)
+
+# We want to configure the curves with 3 meta parameters:
+#  1. s_0 -> The min sens
+#  2. v_1 -> The cap inputSpeed 
+#  3. s_1 -> The max sens
+
+# We want to choose a, b and c such that the following constraints hold:
+#  1. f'(0) = s_0
+#  2. f'(v_1) = s_1
+#  3. f''(v_1) = 0
+
+# Solving f'(0) = s_0 for a
+#   a = s_0
+
+# Solving f'(v_1) = s_1 for b:
+#   b = ± sqrt(-a - 3 c^3 v_1^2 + s_1)/(sqrt(2) sqrt(v_1))
+#   (Since b is squared anyways its sign doesn't matter)
+#   b = sqrt(-a - 3 c^3 v_1^2 + s_1)/(sqrt(2) sqrt(v_1))
+
+# Solving f''(v_1) = 0 for c:
+#   (Roots of unity)
+#   1. c = ((-1/3)^(1/3) b^(2/3))/(v_1)^(1/3) and v_1 !=0
+#   2. c = -b^(2/3)/(3^(1/3) (v_1)^(1/3)) and v_1 !=0
+#   3. c = -((-1)^(2/3) b^(2/3))/(3^(1/3) (v_1)^(1/3)) and v_1 !=0
+#   The only real solution is 2.
+#   c = -b^(2/3)/(3^(1/3) (v_1)^(1/3)) and v_1 !=0
+
+# Note that our solution for b depends on c and our solution for c depends on b
+# (b plugged into c)
+# c = -(sqrt(-a - 3 c^3 v_1^2 + s_1)/(sqrt(2) sqrt(v_1)))^(2/3)/(3^(1/3) (v_1)^(1/3))
+# (Solved for c again) (Roots of unity)
+# 1. c = -((-1/3)^(1/3) (a - s_1)^(1/3))/v_1^(2/3)
+# 2. c = (a - s_1)^(1/3)/(3^(1/3) v_1^(2/3))
+# 3. c = ((-1)^(2/3) (a - s_1)^(1/3))/(3^(1/3) v_1^(2/3))
+# The only real solution is 2. 
+# c = (a - s_1)^(1/3)/(3^(1/3) v_1^(2/3))
+
+# This works!! (See Desmos link above)
+
+---------
+
+# First attempt (Something went wrong. Doing again)
+
+
+# Original function (plugged solution for b solution for c)
+
+c=\frac{\sqrt[3]{-\frac{1}{6}}\sqrt[3]{0-2(\frac{\sqrt{-a-3c^3s_c^2+s_1}}{\sqrt{2}\sqrt{s_c}})^2}}{\sqrt[3]{s_c}}
+
+# Line breaks and indentation
+
+c=\frac{
+    \sqrt[3]{
+        -\frac{1}{6}
+    }\sqrt[3]{
+        0-2(\frac{\sqrt{
+            -a-3c^3s_c^2+s_1
+        }}{
+            \sqrt{2}\sqrt{s_c}
+        })^2
+    }
+}{
+    \sqrt[3]{s_c}
+}
+
+# Remove latex fraction notation
+
+c=(
+    \sqrt[3]{
+        -1/6
+    }\sqrt[3]{
+        -2((
+            \sqrt{-a-3c^3s_c^2+s_1}
+        )/(
+            \sqrt{2}\sqrt{s_c}
+        ))^2
+    }
+)/(
+    \sqrt[3]{s_c}
+)
+
+# Remove latex root notation
+
+c=(
+    (-1/6)^(1/3)
+    (
+        -2((
+            (-a-3c^3s_c^2+s_1)^0.5
+        )/(
+            2^0.5 s_c^0.5
+        ))^2
+    )^(1/3)
+)/(
+    s_c^(1/3)
+)
+
+# Rename s_c to s_3 to confues WA less
+
+c=(
+    (-1/6)^(1/3)
+    (
+        -2((
+            (-a-3c^3s_3^2+s_1)^0.5
+        )/(
+            2^0.5 s_3^0.5
+        ))^2
+    )^(1/3)
+)/(
+    s_3^(1/3)
+)
+
+# WA finally solved it!!!
+# It gives 3 solutions. WA phone app says these are the "3 roots of unity"
+
+1. c = ((-1/3)^(2/3) (s_1 - a)^(1/3))/s_3^(2/3)
+
+2. c = (s_1 - a)^(1/3)/(3^(2/3) s_3^(2/3))
+
+3. c = -((-1)^(1/3) (s_1 - a)^(1/3))/(3^(2/3) s_3^(2/3))
+
+# Replacing s_3 with s_c
+
+1. c = ((-1/3)^(2/3) (s_1 - a)^(1/3))/s_c^(2/3)
+
+2. c = (s_1 - a)^(1/3)/(3^(2/3) s_c^(2/3))
+
+3. c = -((-1)^(1/3) (s_1 - a)^(1/3))/(3^(2/3) s_c^(2/3))x`'
+
+# Trying solution 2. (real solution) -> doesn't quite work, the x axis Schnitt is negative instead of positive
+
+# Trying solution 1. -> Exact same result as 2.
+
+# Trying solution 3. -> Also exact same. 
+
+# -> I must've entered some wrong equations

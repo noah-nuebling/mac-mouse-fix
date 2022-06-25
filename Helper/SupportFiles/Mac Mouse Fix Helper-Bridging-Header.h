@@ -10,6 +10,7 @@
 #import "AnimatorDeclarations.h"
 #import "Config.h"
 #import "ScrollConfigObjC.h"
+#import "PointerConfigObjC.h"
 #import "SubPixelator.h"
 #import "VectorSubPixelator.h"
 #import "SharedUtility.h"

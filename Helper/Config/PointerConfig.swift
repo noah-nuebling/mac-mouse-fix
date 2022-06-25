@@ -34,6 +34,7 @@
 
 
 import Cocoa
+import CocoaLumberjackSwift
 
 class PointerConfig: NSObject {
 
@@ -49,7 +50,7 @@ class PointerConfig: NSObject {
     ///  See top of the file for explanation
     
     private static let basePollingRate = 125
-    private static var actualPollingRate = 125
+    private static var actualPollingRate = 90
     private static var pollingRateFactor: Double {
         Double(actualPollingRate) / Double(basePollingRate)
     }
@@ -68,8 +69,8 @@ class PointerConfig: NSObject {
     private static var semanticAcceleration: SemanticAcceleration {
         return .test
     }
-    @objc static var useSystemAccelerationCurve: Bool {
-        false
+    @objc static var useSystemAcceleration: Bool {
+        return false
     }
     
     @objc static var systemAccelerationCurvePresetIndex: Double {
@@ -89,34 +90,21 @@ class PointerConfig: NSObject {
             return UserDefaults.standard.double(forKey: "com.apple.mouse.scaling")
         }
     }
-    @objc static var linearAccelerationCurve: MFAppleAccelerationCurveParams {
-        /// TODO: Test these values and find good ones
+    
+    @objc static var customAccelerationCurve: MFAppleAccelerationCurveParams {
+        /// See Gain Curve Math.tex and PointerSpeed class for context
         
-        let minSens: Double
-        let maxSens: Double
-        let capSpeed: Double
+        let lowSens: Double
+        let highSens: Double
+        let highSpeed: Double
+        let curvature: Double
         
         switch semanticAcceleration {
-        case .off:
-            minSens = 1
-            maxSens = 1
-            capSpeed = 8.0
-        case .low:
-            minSens = 1
-            maxSens = 10
-            capSpeed = 8.0
-        case .medium:
-            minSens = 1
-            maxSens = 25
-            capSpeed = 8.0
-        case .high:
-            minSens = 1
-            maxSens = 40
-            capSpeed = 8.0
         case .test:
-            minSens = 1.0
-            maxSens = 8
-            capSpeed = 3.0
+            lowSens = 0.6
+            highSens = 9
+            highSpeed = 7.0
+            curvature = 0.0
             //----------
 //            minSens = 1.0 /* 0.5 */
 //            maxSens = 8
@@ -125,11 +113,55 @@ class PointerConfig: NSObject {
 //            minSens = 1
 //            maxSens = 80.0
 //            capSpeed = 30.0
+        case .off:
+            lowSens = 1
+            highSens = 1
+            highSpeed = 8.0
+            curvature = 1.0
+        case .low:
+            lowSens = 1
+            highSens = 10
+            highSpeed = 8.0
+            curvature = 1.0
+        case .medium:
+            lowSens = 1
+            highSens = 25
+            highSpeed = 8.0
+            curvature = 1.0
+        case .high:
+            lowSens = 1
+            highSens = 40
+            highSpeed = 8.0
+            curvature = 1.0
         case .system:
             fatalError()
         }
         
-        return linearAccelerationCurve(minSens: minSens, maxSens: maxSens, capSpeed: capSpeed)
+        return sensitivityBasedAccelerationCurve(lowSens: lowSens, highSens: highSens, highSpeed: highSpeed, curvature: curvature)
+    }
+    
+    private static func sensitivityBasedAccelerationCurve(lowSens: Double, highSens: Double, highSpeed: Double, curvature: Double) -> MFAppleAccelerationCurveParams {
+        
+        /// See `Gain Curve Maths.tex` for background
+        
+        assert(-1 <= curvature && curvature <= 1)
+        
+        var a: Double = lowSens
+        let cCap = Math.nthroot(value: a-highSens, 3)/pow(highSpeed, 2/3)
+        var c: Double = curvature * cCap
+        var b: Double = sqrt(-a + pow(c, 3) * -pow(highSpeed, 2) + highSens)/sqrt(highSpeed)
+        
+        a /= pollingRateFactor
+        b /= pow(pollingRateFactor, 1/2)
+        c /= pow(pollingRateFactor, 1/3)
+        
+        return MFAppleAccelerationCurveParams(linearGain: a,
+                                              parabolicGain: b,
+                                              cubicGain: c,
+                                              quarticGain: 0.0,
+                                              capSpeedLinear: highSpeed,
+                                              capSpeedParabolicRoot: highSpeed*100) /// Make this absurdly high so it never activates
+        
     }
     
     private static func linearAccelerationCurve(minSens: Double, maxSens: Double, capSpeed: Double) -> MFAppleAccelerationCurveParams {
@@ -166,7 +198,15 @@ class PointerConfig: NSObject {
         case system
     }
     
-    @objc static func defaultAccelCurves() -> NSArray {
+    @objc static var defaultAccelCurves: NSArray = {
+        /// By default AppleUserHIDEventDriver instances don't have any "HIDAccelCurves" key (aka kHIDAccelParametricCurvesKey) in it's properties. When we set curves for the "HIDAccelCurves", the driver will use them though!
+        /// However, we've found no way to remove keys from IORegistryEntries. (You can also set the curves on an AppleUserHIDEventDriver IOHIDServiceClient, which has the same effect as setting it on the RegistryEntry, but there is no way to remove keys in the IOHIDServiceClient APIs either.) - so there is no easy way to go back to the systm's default acceleration curves.
+        /// I have no idea where the AppleUserHIDEventDriver even gets it's curves from when the "HIDAccelCurves" key isn't set. The source code (IOHIPointing.cpp or IOHIDPointerScrollFilter.cpp) says that there is a fallback to using lookup tables for the acceleration if no parametric curves are defined. But there is no key for the lookup table either! So I have no idea where the curves come from
+        /// IOHIDPointerScrollFilter.cpp also tries to load "user curves" using the key kIOHIDUserPointerAccelCurvesKey. But it's not defined anywhere public. I found a definition deep inside github but setting curves to that value doesn't do anything.
+        /// However, instances of AppleUserHIDEventDriver driving **keyboards** do have the "HIDAccelCurves" key set for some godforsaken reason. Those same curves are defined in  `/System/Library/Extensions/IOHIDFamily.kext/Contents/PlugIns/IOHIDEventDriver.kext/Contents/Info.plist` I think that's where they are loaded from.
+        /// Even though these curves are defined on the keyboard driver, they feel perfect when you set them for the "HIDAccelCurves" key on a mouse driver instance. Exactly like the default acceleration if you hadn't set "HIDAccelCurves" as far as I can tell.
+        /// This is a really ugly solution, but it's the best I can come up with.
+        
         var result: NSArray
         
         let pathToPlist = "/System/Library/Extensions/IOHIDFamily.kext/Contents/PlugIns/IOHIDEventDriver.kext/Contents/Info.plist"
@@ -189,10 +229,13 @@ class PointerConfig: NSObject {
             result = _result
         }
         catch {
+            
+            DDLogWarn("Failed to load default pointer accel curves from library. Falling back to hardcoded curves.")
+            
             /// Fallback to hardcoded
-            ///     TODO: Fill this out to match the curves in the IOHIDEventDriver.kext
+            ///     Copied this by hand. Might've made a mistake.
             result = [
-                [
+                [ /// Item 0
                     kHIDAccelIndexKey: FloatToFixed(0.0),
                     kHIDAccelGainLinearKey: FloatToFixed(1.0),
                     kHIDAccelGainParabolicKey: FloatToFixed(0.0),
@@ -200,11 +243,83 @@ class PointerConfig: NSObject {
                     kHIDAccelGainQuarticKey: FloatToFixed(0.0),
                     kHIDAccelTangentSpeedLinearKey: FloatToFixed(8.0),
                     kHIDAccelTangentSpeedParabolicRootKey: FloatToFixed(0.0),
-                ]
+                ],
+                [ /// Item 1
+                    kHIDAccelGainCubicKey: 5243,
+                    kHIDAccelGainLinearKey: 60293,
+                    kHIDAccelGainParabolicKey: 26214,
+                    kHIDAccelIndexKey: 8192,
+                    kHIDAccelTangentSpeedLinearKey: 537395,
+                    kHIDAccelTangentSpeedParabolicRootKey: 1245184,
+                ],
+                [ /// Item 2
+                    kHIDAccelGainCubicKey: 6554,
+                    kHIDAccelGainLinearKey: 60948,
+                    kHIDAccelGainParabolicKey: 36045,
+                    kHIDAccelIndexKey: 32768,
+                    kHIDAccelTangentSpeedLinearKey: 543949,
+                    kHIDAccelTangentSpeedParabolicRootKey: 1179648,
+                ],
+                [ /// Item 3
+                    kHIDAccelGainCubicKey: 7864,
+                    kHIDAccelGainLinearKey: 61604,
+                    kHIDAccelGainParabolicKey: 46531,
+                    kHIDAccelIndexKey: 45056,
+                    kHIDAccelTangentSpeedLinearKey: 550502,
+                    kHIDAccelTangentSpeedParabolicRootKey: 1114112,
+                ],
+                [ /// Item 4
+                    kHIDAccelGainCubicKey: 9830,
+                    kHIDAccelGainLinearKey: 62259,
+                    kHIDAccelGainParabolicKey: 57672,
+                    kHIDAccelIndexKey: 57344,
+                    kHIDAccelTangentSpeedLinearKey: 557056,
+                    kHIDAccelTangentSpeedParabolicRootKey: 1048576,
+                ],
+                [ /// Item 5
+                    kHIDAccelGainCubicKey: 11796,
+                    kHIDAccelGainLinearKey: 62915,
+                    kHIDAccelGainParabolicKey: 69468,
+                    kHIDAccelIndexKey: 65536,
+                    kHIDAccelTangentSpeedLinearKey: 563610,
+                    kHIDAccelTangentSpeedParabolicRootKey: 983040,
+                ],
+                [ /// Item 6
+                    kHIDAccelGainCubicKey: 14418,
+                    kHIDAccelGainLinearKey: 63570,
+                    kHIDAccelGainParabolicKey: 81920,
+                    kHIDAccelIndexKey: 98304,
+                    kHIDAccelTangentSpeedLinearKey: 570163,
+                    kHIDAccelTangentSpeedParabolicRootKey: 917504,
+                ],
+                [ /// Item 7
+                    kHIDAccelGainCubicKey: 17695,
+                    kHIDAccelGainLinearKey: 64225,
+                    kHIDAccelGainParabolicKey: 95027,
+                    kHIDAccelIndexKey: 131072,
+                    kHIDAccelTangentSpeedLinearKey: 576717,
+                    kHIDAccelTangentSpeedParabolicRootKey: 851968,
+                ],
+                [ /// Item 8
+                    kHIDAccelGainCubicKey: 21627,
+                    kHIDAccelGainLinearKey: 64881,
+                    kHIDAccelGainParabolicKey: 108790,
+                    kHIDAccelIndexKey: 163840,
+                    kHIDAccelTangentSpeedLinearKey: 583270,
+                    kHIDAccelTangentSpeedParabolicRootKey: 786432,
+                ],
+                [ /// Item 9
+                    kHIDAccelGainCubicKey: 26214,
+                    kHIDAccelGainLinearKey: 65536,
+                    kHIDAccelGainParabolicKey: 123208,
+                    kHIDAccelIndexKey: 196608,
+                    kHIDAccelTangentSpeedLinearKey: 589824,
+                    kHIDAccelTangentSpeedParabolicRootKey: 786432,
+                ],
             ]
         }
         return result
-    }
+    }()
     
     static let FixedOne:IOFixed = 0x00010000
     static func FloatToFixed(_ input: Double) -> IOFixed {

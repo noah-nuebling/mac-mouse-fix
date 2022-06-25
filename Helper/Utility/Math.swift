@@ -12,6 +12,18 @@ import CocoaLumberjackSwift
 
 @objc class Math: NSObject {
     
+    @objc class func nthroot(value: Double, _ n: Double) -> Double {
+        /// Src: https://stackoverflow.com/a/37028926/10601702
+        
+        var res: Double
+        if (value < 0 && abs(n.truncatingRemainder(dividingBy: 2)) == 1) {
+            res = -pow(-value, 1/n)
+        } else {
+            res = pow(value, 1/n)
+        }
+        return res
+    }
+    
     @objc class func bisect(searchRange: Interval, targetOutput: Double, epsilon: Double, function: (Double) -> Double) -> NSNumber? {
         /// This only works if 'function' is monotonically increasing (I think)
         /// (Returning NSNumber so we can make it nullable. the value is double)

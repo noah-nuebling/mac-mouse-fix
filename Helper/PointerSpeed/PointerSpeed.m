@@ -57,10 +57,10 @@ extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHI
     
 //    [self old_setForDevice:device sensitivity:PointerConfig.sensitivity acceleration:PointerConfig.systemAccelerationCurvePresetIndex]; /// Debug
 
-    if (PointerConfig.useSystemAccelerationCurve) {
+    if (PointerConfig.useSystemAcceleration) {
         [self setForDevice:device sensitivity:PointerConfig.sensitivity accelerationPreset:PointerConfig.systemAccelerationCurvePresetIndex];
     } else {
-        [self setForDevice:device sensitivity:PointerConfig.sensitivity accelerationCurve:PointerConfig.linearAccelerationCurve];
+        [self setForDevice:device sensitivity:PointerConfig.sensitivity accelerationCurve:PointerConfig.customAccelerationCurve];
     }
 }
 
