@@ -69,7 +69,7 @@ class PointerConfig: NSObject {
         return .test
     }
     @objc static var useSystemAccelerationCurve: Bool {
-        true
+        false
     }
     
     @objc static var systemAccelerationCurvePresetIndex: Double {
@@ -84,7 +84,7 @@ class PointerConfig: NSObject {
         case .high:
             return 2.0
         case .test:
-            return 0.0
+            return UserDefaults.standard.double(forKey: "com.apple.mouse.scaling")
         case .system:
             return UserDefaults.standard.double(forKey: "com.apple.mouse.scaling")
         }
@@ -114,9 +114,17 @@ class PointerConfig: NSObject {
             maxSens = 40
             capSpeed = 8.0
         case .test:
-            minSens = 1
-            maxSens = 1
+            minSens = 1.0
+            maxSens = 8
             capSpeed = 3.0
+            //----------
+//            minSens = 1.0 /* 0.5 */
+//            maxSens = 8
+//            capSpeed = 3.0
+            //----------
+//            minSens = 1
+//            maxSens = 80.0
+//            capSpeed = 30.0
         case .system:
             fatalError()
         }
@@ -156,5 +164,50 @@ class PointerConfig: NSObject {
         case high
         case test
         case system
+    }
+    
+    @objc static func defaultAccelCurves() -> NSArray {
+        var result: NSArray
+        
+        let pathToPlist = "/System/Library/Extensions/IOHIDFamily.kext/Contents/PlugIns/IOHIDEventDriver.kext/Contents/Info.plist"
+        let urlToPlist = URL(fileURLWithPath: pathToPlist)
+        do {
+            
+            var plist: NSDictionary = [:]
+            if #available(macOS 10.13, *) {
+                plist = try NSDictionary(contentsOf: urlToPlist, error: ())
+            } else {
+                guard let _plist = NSDictionary(contentsOf: urlToPlist) else {
+                    throw NSError()
+                }
+                plist = _plist
+            }
+            
+            guard let _result = plist.value(forKeyPath: "IOKitPersonalities.HID Keyboard Driver.HIDAccelCurves") as? NSArray else {
+                throw NSError()
+            }
+            result = _result
+        }
+        catch {
+            /// Fallback to hardcoded
+            ///     TODO: Fill this out to match the curves in the IOHIDEventDriver.kext
+            result = [
+                [
+                    kHIDAccelIndexKey: FloatToFixed(0.0),
+                    kHIDAccelGainLinearKey: FloatToFixed(1.0),
+                    kHIDAccelGainParabolicKey: FloatToFixed(0.0),
+                    kHIDAccelGainCubicKey: FloatToFixed(0.0),
+                    kHIDAccelGainQuarticKey: FloatToFixed(0.0),
+                    kHIDAccelTangentSpeedLinearKey: FloatToFixed(8.0),
+                    kHIDAccelTangentSpeedParabolicRootKey: FloatToFixed(0.0),
+                ]
+            ]
+        }
+        return result
+    }
+    
+    static let FixedOne:IOFixed = 0x00010000
+    static func FloatToFixed(_ input: Double) -> IOFixed {
+        return IOFixed(round(input * Double(FixedOne)))
     }
 }
