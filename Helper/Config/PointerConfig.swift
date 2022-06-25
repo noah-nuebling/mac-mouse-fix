@@ -74,33 +74,11 @@ class PointerConfig: NSObject {
     
     // MARK: Speed curve
     
-    @objc static var useSystemAcceleration: Bool {
-        return false
-    }
-    
     private static var semanticAcceleration: SemanticAcceleration {
         return .test
     }
     
-    @objc static var systemAccelerationCurvePresetIndex: Double {
-        
-        switch semanticAcceleration {
-        case .off:
-            return 0.0
-        case .low:
-            return 0.5
-        case .medium:
-            return 1.0
-        case .high:
-            return 2.0
-        case .test:
-            return UserDefaults.standard.double(forKey: "com.apple.mouse.scaling")
-        case .system:
-            return UserDefaults.standard.double(forKey: "com.apple.mouse.scaling")
-        }
-    }
-    
-    @objc static var customAccelerationCurve: MFAppleAccelerationCurveParams {
+    @objc static var customSpeedCurve: MFAppleAccelerationCurveParams {
         /// See "Gain Curve Math.tex" and PointerSpeed class for context
         
         let lowSens: Double
@@ -134,14 +112,12 @@ class PointerConfig: NSObject {
             highSens = 40
             highSpeed = 8.0
             curvature = 0.0
-        case .system:
-            fatalError()
         }
         
-        return sensitivityBasedAccelerationCurve(lowSens: lowSens, highSens: highSens, highSpeed: highSpeed, curvature: curvature)
+        return sensitivityBasedSpeedCurve(lowSens: lowSens, highSens: highSens, highSpeed: highSpeed, curvature: curvature)
     }
     
-    private static func sensitivityBasedAccelerationCurve(lowSens: Double, highSens: Double, highSpeed: Double, curvature: Double) -> MFAppleAccelerationCurveParams {
+    private static func sensitivityBasedSpeedCurve(lowSens: Double, highSens: Double, highSpeed: Double, curvature: Double) -> MFAppleAccelerationCurveParams {
         
         /// See `Gain Curve Maths.tex` for background
         
@@ -166,15 +142,24 @@ class PointerConfig: NSObject {
     }
     
     private enum SemanticAcceleration {
+        case test
         case off
         case low
         case medium
         case high
-        case test
-        case system
     }
     
-    @objc static var defaultAccelCurves: NSArray = {
+    
+    // MARK: - Master switch
+    
+    @objc static var useSystemSpeed: Bool {
+        return false
+    }
+    @objc static var systemSensitivity: Double  = 1.0
+    @objc static var systemAccelCurveIndex: Double {
+        return UserDefaults.standard.double(forKey: "com.apple.mouse.scaling")
+    }
+    @objc static var systemAccelCurves: NSArray = {
         /// By default, AppleUserHIDEventDriver instances don't have any "HIDAccelCurves" key (aka kHIDAccelParametricCurvesKey) in it's properties. When we set curves for the "HIDAccelCurves", the driver will use them though!
         /// However, we've found no way to remove keys from IORegistryEntries. (You can also set the curves on an AppleUserHIDEventDriver's IOHIDServiceClient, which has the same effect as setting it on the RegistryEntry, but there is no way to remove keys using the IOHIDServiceClient APIs either.) - so there is no easy way to go back to the systm's default acceleration curves.
         /// I have no idea where the AppleUserHIDEventDriver even gets it's curves from, when the "HIDAccelCurves" key isn't set. The source code (IOHIPointing.cpp or IOHIDPointerScrollFilter.cpp) says that there is a fallback to using lookup tables for the acceleration if no parametric curves are defined. But there is no key for the lookup table either! So I have no idea where the curves come from.

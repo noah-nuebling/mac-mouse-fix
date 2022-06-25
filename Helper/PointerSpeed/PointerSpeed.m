@@ -55,7 +55,7 @@ extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHI
     /// Sets pointer speed accoring to PointerConfig
     /// This should be called after a new device has been attached.
 
-    if (PointerConfig.useSystemAcceleration) {
+    if (PointerConfig.useSystemSpeed) {
         [self setForDevice:device sensitivity:PointerConfig.sensitivity accelerationPreset:PointerConfig.systemAccelerationCurvePresetIndex];
     } else {
         [self setForDevice:device sensitivity:PointerConfig.sensitivity accelerationCurve:PointerConfig.customAccelerationCurve];
@@ -66,7 +66,7 @@ extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHI
 
 + (void)setForDevice:(IOHIDDeviceRef)device
          sensitivity:(double)sensitivity
-        accelerationCurve:(MFAppleAccelerationCurveParams)accelerationCurve {
+        accelerationCurve:(MFAppleSpeedCurveParams)accelerationCurve {
     
     /// Declare stuff
     Boolean success;
@@ -183,7 +183,7 @@ static Boolean setAccelerationPreset(double accelerationPresetIndex, IOHIDServic
 
 static double customCurveIndex = 123; /// This is arbitrary. PointerConfig.defaultAccelCurves documentation
 
-static Boolean setAccelerationToCurve(MFAppleAccelerationCurveParams params, IOHIDServiceClientRef eventServiceClient) {
+static Boolean setAccelerationToCurve(MFAppleSpeedCurveParams params, IOHIDServiceClientRef eventServiceClient) {
     // TODO: Test if this works
     /// Set acceleration to a custom curve
     ///     Also see
