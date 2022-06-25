@@ -21,6 +21,68 @@
 
 @implementation PointerSpeedExperiments2
 
+#pragma mark - Edit 26.06.2022
+
+/// Moved this out of PointerSpeed.m on 26.06.2022. Old implementation, that isn't modular and doesn't support totally custom curves. Keeping it for reference.
++ (void)old_setForDevice:(IOHIDDeviceRef)device
+         sensitivity:(double)sensitivity
+        acceleration:(double)acceleration {
+    /// Sets pointer  sensitivity and pointer acceleration on a specific IOHIDDevice. Source for this is `PointerSpeedExperiments2.m`
+    /// `sensitivity` is a multiplier on the default macOS pointer sensitivity
+    /// `acceleration` should be between 0.0 and 3.0.
+///         - It's the same value that can be set through the `defaults write .GlobalPreferences com.apple.mouse.scaling x` terminal command or through the "Tracking speed" slider in System Preferences > Mouse.
+    ///     - x in `defaults write .GlobalPreferences com.apple.mouse.scaling x` can also be -1 (or any other negative number) which will turn the acceleration off (just like 0), but it will also increase the sensitivity. I haven't experimented with setting `acceleration` to -1. But we can change sensitivity through `sensitivity` anyways so it's not that interesting.
+    
+    /// Declare stuff
+    kern_return_t kr;
+    Boolean success;
+    
+    /// Get eventSystemClient
+    IOHIDEventSystemClientRef eventSystemClient = IOHIDEventSystemClientCreateWithType(kCFAllocatorDefault, HIDEventSystemClientTypePassive, NULL);
+    
+    /// Get IOService of the driver driving `dev`
+    io_service_t IOHIDDeviceService = IOHIDDeviceGetService(device);
+    io_service_t interfaceService = [IOUtility createChildOfRegistryEntry:IOHIDDeviceService withName:@"IOHIDInterface"];
+    io_service_t driverService = [IOUtility createChildOfRegistryEntry:interfaceService withName:@"AppleUserHIDEventDriver"];
+    
+    /// Get ID of the driver
+    uint64_t driverServiceID;
+    kr = IORegistryEntryGetRegistryEntryID(driverService, &driverServiceID);
+    assert(kr == 0);
+    
+    /// Get service client of the driver
+    IOHIDServiceClientRef serviceClient = IOHIDEventSystemClientCopyServiceForRegistryID(eventSystemClient, driverServiceID);
+    assert(serviceClient);
+    
+    /// Get pointerResolution from sensitivity
+    /// - 400 is the default (unchangeable) pointer resolution in macOS.
+    /// - Smaller pointerResolution -> higher sensitivity
+    /// - Like this, `sensitvity` will act like a multiplier on the default sensitivity.
+    double pointerResolution = 400.0 / sensitivity;
+    
+    /// Get pointerResolution as fixed point CFNumber
+    CFNumberRef pointerResolutionCF = (__bridge  CFNumberRef)@(FloatToFixed(pointerResolution));
+    
+    /// Set pointer resolution on the driver
+    success = IOHIDServiceClientSetProperty(serviceClient, CFSTR(kIOHIDPointerResolutionKey), pointerResolutionCF);
+    assert(success);
+    
+    /// Get acceleration as fixed point CFNumber
+    CFNumberRef mouseAccelerationCF = (__bridge CFNumberRef)@(FloatToFixed(acceleration));
+    
+    /// Set mouse acceleration on the driver
+    success = IOHIDServiceClientSetProperty(serviceClient, CFSTR(kIOHIDMouseAccelerationTypeKey), mouseAccelerationCF);
+    assert(success);
+    
+    /// Release stuff
+    IOObjectRelease(IOHIDDeviceService); /// Not sure if necessary because of function name used to create it (See CreateRule)
+    IOObjectRelease(interfaceService);
+    IOObjectRelease(driverService);
+    CFRelease(eventSystemClient);
+    CFRelease(serviceClient);
+    
+}
+
 #pragma mark - External declarations
 
 /*!

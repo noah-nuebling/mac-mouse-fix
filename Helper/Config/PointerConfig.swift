@@ -55,22 +55,31 @@ class PointerConfig: NSObject {
         Double(actualPollingRate) / Double(basePollingRate)
     }
     
-    // MARK: Sensitivity (CPI compensation)
+    // MARK: CPI compensation
+    private static let baseCPI = 1000
+    private static var actuaCPI = 1000
+    private static var CPIFactor: Double {
+        Double(actuaCPI) / Double(baseCPI)
+    }
+    
+    // MARK: Sensitivity
     
     @objc static var sensitivity: Double {
         
         let sens = 1.0
+        /// ^ It's probably better to leave this at 1.0 and use our custom speed curve to control sensitivity instead. This is a factor on the mouse speed before it's passed to the acceleration algorithm. So the whole acceleration curve changes when you change this.  However that makes it perfect for compensating CPI.
         
-        return sens * pollingRateFactor
+        return sens * pollingRateFactor / CPIFactor
     }
     
-    // MARK: Acceleration curve
+    // MARK: Speed curve
+    
+    @objc static var useSystemAcceleration: Bool {
+        return false
+    }
     
     private static var semanticAcceleration: SemanticAcceleration {
         return .test
-    }
-    @objc static var useSystemAcceleration: Bool {
-        return false
     }
     
     @objc static var systemAccelerationCurvePresetIndex: Double {
@@ -92,7 +101,7 @@ class PointerConfig: NSObject {
     }
     
     @objc static var customAccelerationCurve: MFAppleAccelerationCurveParams {
-        /// See Gain Curve Math.tex and PointerSpeed class for context
+        /// See "Gain Curve Math.tex" and PointerSpeed class for context
         
         let lowSens: Double
         let highSens: Double
@@ -105,34 +114,26 @@ class PointerConfig: NSObject {
             highSens = 9
             highSpeed = 7.0
             curvature = 0.0
-            //----------
-//            minSens = 1.0 /* 0.5 */
-//            maxSens = 8
-//            capSpeed = 3.0
-            //----------
-//            minSens = 1
-//            maxSens = 80.0
-//            capSpeed = 30.0
         case .off:
             lowSens = 1
             highSens = 1
             highSpeed = 8.0
-            curvature = 1.0
+            curvature = 0.0
         case .low:
             lowSens = 1
             highSens = 10
             highSpeed = 8.0
-            curvature = 1.0
+            curvature = 0.0
         case .medium:
             lowSens = 1
             highSens = 25
             highSpeed = 8.0
-            curvature = 1.0
+            curvature = 0.0
         case .high:
             lowSens = 1
             highSens = 40
             highSpeed = 8.0
-            curvature = 1.0
+            curvature = 0.0
         case .system:
             fatalError()
         }
@@ -164,31 +165,6 @@ class PointerConfig: NSObject {
         
     }
     
-    private static func linearAccelerationCurve(minSens: Double, maxSens: Double, capSpeed: Double) -> MFAppleAccelerationCurveParams {
-        
-        /// Create curve based on params:
-        ///     - minSens: Minimum sensitivity. Applied at inputSpeed = 0
-        ///     - maxSens: maximum sensitivity. Applied at inputSpeed = capSpeed
-        ///     - capSpeed: The inputSpeed at which to cap sensitivity
-        ///
-        /// The curves' derivate describes the relationship sens(inputSpeed). It will be linear, which should make it easier to get a feel for the curve. Gamers prefer these curves for better aim (src: the Guide for "raw accel" for Windows)
-        ///
-        /// Figured this out based on https://www.desmos.com/calculator/wcjoiuioxf
-        
-        var a = minSens
-        var b = sqrt(maxSens-minSens) / (sqrt(2) * sqrt(capSpeed))
-        a /= pollingRateFactor
-        b /= sqrt(pollingRateFactor)
-        
-        return MFAppleAccelerationCurveParams(linearGain: a,
-                                              parabolicGain: b,
-                                              cubicGain: 0.0, /// Make cubic and quartic equal zero so the derivative is linear
-                                              quarticGain: 0.0,
-                                              capSpeedLinear: capSpeed,
-                                              capSpeedParabolicRoot: capSpeed*100) /// Make this absurdly high so it never activates
-        
-    }
-    
     private enum SemanticAcceleration {
         case off
         case low
@@ -199,13 +175,13 @@ class PointerConfig: NSObject {
     }
     
     @objc static var defaultAccelCurves: NSArray = {
-        /// By default AppleUserHIDEventDriver instances don't have any "HIDAccelCurves" key (aka kHIDAccelParametricCurvesKey) in it's properties. When we set curves for the "HIDAccelCurves", the driver will use them though!
-        /// However, we've found no way to remove keys from IORegistryEntries. (You can also set the curves on an AppleUserHIDEventDriver IOHIDServiceClient, which has the same effect as setting it on the RegistryEntry, but there is no way to remove keys in the IOHIDServiceClient APIs either.) - so there is no easy way to go back to the systm's default acceleration curves.
-        /// I have no idea where the AppleUserHIDEventDriver even gets it's curves from when the "HIDAccelCurves" key isn't set. The source code (IOHIPointing.cpp or IOHIDPointerScrollFilter.cpp) says that there is a fallback to using lookup tables for the acceleration if no parametric curves are defined. But there is no key for the lookup table either! So I have no idea where the curves come from
-        /// IOHIDPointerScrollFilter.cpp also tries to load "user curves" using the key kIOHIDUserPointerAccelCurvesKey. But it's not defined anywhere public. I found a definition deep inside github but setting curves to that value doesn't do anything.
-        /// However, instances of AppleUserHIDEventDriver driving **keyboards** do have the "HIDAccelCurves" key set for some godforsaken reason. Those same curves are defined in  `/System/Library/Extensions/IOHIDFamily.kext/Contents/PlugIns/IOHIDEventDriver.kext/Contents/Info.plist` I think that's where they are loaded from.
-        /// Even though these curves are defined on the keyboard driver, they feel perfect when you set them for the "HIDAccelCurves" key on a mouse driver instance. Exactly like the default acceleration if you hadn't set "HIDAccelCurves" as far as I can tell.
-        /// This is a really ugly solution, but it's the best I can come up with.
+        /// By default, AppleUserHIDEventDriver instances don't have any "HIDAccelCurves" key (aka kHIDAccelParametricCurvesKey) in it's properties. When we set curves for the "HIDAccelCurves", the driver will use them though!
+        /// However, we've found no way to remove keys from IORegistryEntries. (You can also set the curves on an AppleUserHIDEventDriver's IOHIDServiceClient, which has the same effect as setting it on the RegistryEntry, but there is no way to remove keys using the IOHIDServiceClient APIs either.) - so there is no easy way to go back to the systm's default acceleration curves.
+        /// I have no idea where the AppleUserHIDEventDriver even gets it's curves from, when the "HIDAccelCurves" key isn't set. The source code (IOHIPointing.cpp or IOHIDPointerScrollFilter.cpp) says that there is a fallback to using lookup tables for the acceleration if no parametric curves are defined. But there is no key for the lookup table either! So I have no idea where the curves come from.
+        /// IOHIDPointerScrollFilter.cpp also tries to load "user curves" using the key kIOHIDUserPointerAccelCurvesKey. But it that constant not defined anywhere public. I found a definition deep inside github but setting curves to that value doesn't do anything.
+        /// However, instances of AppleUserHIDEventDriver driving **keyboards** do have the "HIDAccelCurves" key set for some godforsaken reason. You can see it in the IORegistry. Those same curves are defined in  `/System/Library/Extensions/IOHIDFamily.kext/Contents/PlugIns/IOHIDEventDriver.kext/Contents/Info.plist` I think that's where the IORegsitryEntry property is loaded from.
+        /// Even though these curves are defined for keyboard drivers, they feel perfect when you set them for the "HIDAccelCurves" key on a mouse driver instance. Exactly like the default acceleration if you hadn't set "HIDAccelCurves" as far as I can tell.
+        /// This is a really ugly solution, but it should work and I don't know what else to try.
         
         var result: NSArray
         
@@ -320,6 +296,9 @@ class PointerConfig: NSObject {
         }
         return result
     }()
+    
+    /// Helper
+    ///     TODO: Put this in a utility class
     
     static let FixedOne:IOFixed = 0x00010000
     static func FloatToFixed(_ input: Double) -> IOFixed {
