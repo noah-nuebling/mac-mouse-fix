@@ -1,0 +1,446 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CA11100E1ABB16560007758E /* DoublesMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = CA11100D1ABB16560007758E /* DoublesMatrix.m */; };
+		CA547E001ABF319800E10ECC /* PolynomialRegression.m in Sources */ = {isa = PBXBuildFile; fileRef = CA547DFF1ABF319800E10ECC /* PolynomialRegression.m */; };
+		CA8020101AB9B747007CDF96 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CA80200F1AB9B747007CDF96 /* main.m */; };
+		CA8020131AB9B747007CDF96 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CA8020121AB9B747007CDF96 /* AppDelegate.m */; };
+		CA8020161AB9B747007CDF96 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA8020151AB9B747007CDF96 /* ViewController.m */; };
+		CA8020191AB9B747007CDF96 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA8020171AB9B747007CDF96 /* Main.storyboard */; };
+		CA80201B1AB9B747007CDF96 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA80201A1AB9B747007CDF96 /* Images.xcassets */; };
+		CA80201E1AB9B747007CDF96 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA80201C1AB9B747007CDF96 /* LaunchScreen.xib */; };
+		CA80202A1AB9B747007CDF96 /* PolynomialRegressionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CA8020291AB9B747007CDF96 /* PolynomialRegressionTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CA8020241AB9B747007CDF96 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CA8020021AB9B746007CDF96 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CA8020091AB9B746007CDF96;
+			remoteInfo = PolynomialRegression;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		CA11100C1ABB16560007758E /* DoublesMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DoublesMatrix.h; sourceTree = "<group>"; };
+		CA11100D1ABB16560007758E /* DoublesMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DoublesMatrix.m; sourceTree = "<group>"; };
+		CA547DFF1ABF319800E10ECC /* PolynomialRegression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PolynomialRegression.m; sourceTree = "<group>"; };
+		CA547E011ABF31A700E10ECC /* PolynomialRegression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolynomialRegression.h; sourceTree = "<group>"; };
+		CA80200A1AB9B747007CDF96 /* PolynomialRegression.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PolynomialRegression.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA80200E1AB9B747007CDF96 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CA80200F1AB9B747007CDF96 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		CA8020111AB9B747007CDF96 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		CA8020121AB9B747007CDF96 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		CA8020141AB9B747007CDF96 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		CA8020151AB9B747007CDF96 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		CA8020181AB9B747007CDF96 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		CA80201A1AB9B747007CDF96 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		CA80201D1AB9B747007CDF96 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		CA8020231AB9B747007CDF96 /* PolynomialRegressionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PolynomialRegressionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA8020281AB9B747007CDF96 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CA8020291AB9B747007CDF96 /* PolynomialRegressionTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PolynomialRegressionTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CA8020071AB9B746007CDF96 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA8020201AB9B747007CDF96 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CA8020011AB9B746007CDF96 = {
+			isa = PBXGroup;
+			children = (
+				CA80200C1AB9B747007CDF96 /* PolynomialRegression */,
+				CA8020261AB9B747007CDF96 /* PolynomialRegressionTests */,
+				CA80200B1AB9B747007CDF96 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CA80200B1AB9B747007CDF96 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CA80200A1AB9B747007CDF96 /* PolynomialRegression.app */,
+				CA8020231AB9B747007CDF96 /* PolynomialRegressionTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CA80200C1AB9B747007CDF96 /* PolynomialRegression */ = {
+			isa = PBXGroup;
+			children = (
+				CA8020111AB9B747007CDF96 /* AppDelegate.h */,
+				CA8020121AB9B747007CDF96 /* AppDelegate.m */,
+				CA8020141AB9B747007CDF96 /* ViewController.h */,
+				CA8020151AB9B747007CDF96 /* ViewController.m */,
+				CA8020171AB9B747007CDF96 /* Main.storyboard */,
+				CA80201A1AB9B747007CDF96 /* Images.xcassets */,
+				CA80201C1AB9B747007CDF96 /* LaunchScreen.xib */,
+				CA80200D1AB9B747007CDF96 /* Supporting Files */,
+				CA11100C1ABB16560007758E /* DoublesMatrix.h */,
+				CA11100D1ABB16560007758E /* DoublesMatrix.m */,
+				CA547E011ABF31A700E10ECC /* PolynomialRegression.h */,
+				CA547DFF1ABF319800E10ECC /* PolynomialRegression.m */,
+			);
+			path = PolynomialRegression;
+			sourceTree = "<group>";
+		};
+		CA80200D1AB9B747007CDF96 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				CA80200E1AB9B747007CDF96 /* Info.plist */,
+				CA80200F1AB9B747007CDF96 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		CA8020261AB9B747007CDF96 /* PolynomialRegressionTests */ = {
+			isa = PBXGroup;
+			children = (
+				CA8020291AB9B747007CDF96 /* PolynomialRegressionTests.m */,
+				CA8020271AB9B747007CDF96 /* Supporting Files */,
+			);
+			path = PolynomialRegressionTests;
+			sourceTree = "<group>";
+		};
+		CA8020271AB9B747007CDF96 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				CA8020281AB9B747007CDF96 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CA8020091AB9B746007CDF96 /* PolynomialRegression */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CA80202D1AB9B748007CDF96 /* Build configuration list for PBXNativeTarget "PolynomialRegression" */;
+			buildPhases = (
+				CA8020061AB9B746007CDF96 /* Sources */,
+				CA8020071AB9B746007CDF96 /* Frameworks */,
+				CA8020081AB9B746007CDF96 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PolynomialRegression;
+			productName = PolynomialRegression;
+			productReference = CA80200A1AB9B747007CDF96 /* PolynomialRegression.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CA8020221AB9B747007CDF96 /* PolynomialRegressionTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CA8020301AB9B748007CDF96 /* Build configuration list for PBXNativeTarget "PolynomialRegressionTests" */;
+			buildPhases = (
+				CA80201F1AB9B747007CDF96 /* Sources */,
+				CA8020201AB9B747007CDF96 /* Frameworks */,
+				CA8020211AB9B747007CDF96 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CA8020251AB9B747007CDF96 /* PBXTargetDependency */,
+			);
+			name = PolynomialRegressionTests;
+			productName = PolynomialRegressionTests;
+			productReference = CA8020231AB9B747007CDF96 /* PolynomialRegressionTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CA8020021AB9B746007CDF96 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0620;
+				ORGANIZATIONNAME = "Gilles Lesire";
+				TargetAttributes = {
+					CA8020091AB9B746007CDF96 = {
+						CreatedOnToolsVersion = 6.2;
+					};
+					CA8020221AB9B747007CDF96 = {
+						CreatedOnToolsVersion = 6.2;
+						TestTargetID = CA8020091AB9B746007CDF96;
+					};
+				};
+			};
+			buildConfigurationList = CA8020051AB9B746007CDF96 /* Build configuration list for PBXProject "PolynomialRegression" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				en,
+				Base,
+			);
+			mainGroup = CA8020011AB9B746007CDF96;
+			productRefGroup = CA80200B1AB9B747007CDF96 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CA8020091AB9B746007CDF96 /* PolynomialRegression */,
+				CA8020221AB9B747007CDF96 /* PolynomialRegressionTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CA8020081AB9B746007CDF96 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CA8020191AB9B747007CDF96 /* Main.storyboard in Resources */,
+				CA80201E1AB9B747007CDF96 /* LaunchScreen.xib in Resources */,
+				CA80201B1AB9B747007CDF96 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA8020211AB9B747007CDF96 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CA8020061AB9B746007CDF96 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CA11100E1ABB16560007758E /* DoublesMatrix.m in Sources */,
+				CA8020161AB9B747007CDF96 /* ViewController.m in Sources */,
+				CA8020131AB9B747007CDF96 /* AppDelegate.m in Sources */,
+				CA547E001ABF319800E10ECC /* PolynomialRegression.m in Sources */,
+				CA8020101AB9B747007CDF96 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA80201F1AB9B747007CDF96 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CA80202A1AB9B747007CDF96 /* PolynomialRegressionTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CA8020251AB9B747007CDF96 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CA8020091AB9B746007CDF96 /* PolynomialRegression */;
+			targetProxy = CA8020241AB9B747007CDF96 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		CA8020171AB9B747007CDF96 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CA8020181AB9B747007CDF96 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		CA80201C1AB9B747007CDF96 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CA80201D1AB9B747007CDF96 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		CA80202B1AB9B748007CDF96 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CA80202C1AB9B748007CDF96 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		CA80202E1AB9B748007CDF96 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = PolynomialRegression/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CA80202F1AB9B748007CDF96 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = PolynomialRegression/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		CA8020311AB9B748007CDF96 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = PolynomialRegressionTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PolynomialRegression.app/PolynomialRegression";
+			};
+			name = Debug;
+		};
+		CA8020321AB9B748007CDF96 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = PolynomialRegressionTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PolynomialRegression.app/PolynomialRegression";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CA8020051AB9B746007CDF96 /* Build configuration list for PBXProject "PolynomialRegression" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CA80202B1AB9B748007CDF96 /* Debug */,
+				CA80202C1AB9B748007CDF96 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CA80202D1AB9B748007CDF96 /* Build configuration list for PBXNativeTarget "PolynomialRegression" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CA80202E1AB9B748007CDF96 /* Debug */,
+				CA80202F1AB9B748007CDF96 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CA8020301AB9B748007CDF96 /* Build configuration list for PBXNativeTarget "PolynomialRegressionTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CA8020311AB9B748007CDF96 /* Debug */,
+				CA8020321AB9B748007CDF96 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CA8020021AB9B746007CDF96 /* Project object */;
+}

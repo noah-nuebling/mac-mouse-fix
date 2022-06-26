@@ -15,7 +15,15 @@ import Foundation
     let a: Double
     let b: Double
     
+    typealias P = CGPoint
+    
     var slope: Double { a }
+    
+    @objc convenience init(connecting p1: P, _ p2: P) {
+        let a = (p2.y - p1.y) / (p2.x - p1.x)
+        let b = p1.y - a * p1.x
+        self.init(a: a, b: b)
+    }
     
     /// Function looks like ax + b
     @objc init(a: Double, b: Double) {

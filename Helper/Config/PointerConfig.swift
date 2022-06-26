@@ -7,11 +7,11 @@
 // --------------------------------------------------------------------------
 //
 
-/// This class provides pointer related settings. Primarily used by `PointerSpeed.m`. `PointerSpeed.m` configures Apple's HID driver to have different mouse sensitivity and acceleration curve. The implementation of the Apple code can be found in `HIPointing.cpp` and in `IOHIDPointerScrollFilter.cpp`
+/// This class provides pointer related settings. Primarily used by `PointerSpeed.m`. `PointerSpeed.m` configures Apple's HID driver to have different mouse sensitivity and acceleration curve. The implementation of the Apple driver that `PointerSpeed.m` configures can be found in `HIPointing.cpp` and in `IOHIDPointerScrollFilter.cpp`
 
 /// Polling rate compensation notes:
 ///
-/// Apples driver doesn't take into account polling rate. When it measures device speed for its acceleration algorithm, it actually just uses the raw delta from the device and calls it speed.
+/// Apples driver doesn't take into account polling rate. When it measures device speed for its acceleration algorithm, it actually just uses the raw delta from the device and calls it speed. (Edit: This might not be the case for `IOHIDPointerScrollFilter.cpp`. See "More thoughts".)
 ///     Problem is that at equivalent movement speed and CPI, a mouse with a 2x polling rate will only have 0.5x magnitude in its raw deltas. This means the acceleration curve won't kick in properly.
 ///     However we have come up with a mechanism to compensate for this, so that the acceleration curve behaves the same for all devices regardless of polling rate.
 ///
@@ -24,17 +24,17 @@
 ///     - Because there are twice as many events at rate = 1000 compared to 500. So we need to divide the output delta by 2 to get the same overall distance
 ///
 /// How to get polling rate:
-///
 /// - Measure time between callbacks for either CGEvents or IOHIDValues / IOHIDReports.
-/// - Do some smart processing. Like throw away values that are too big / too far from the current estimated value. Or only take max values. Or only top 10 percent or something. Round to power/multiple of 2 because polling intervals are always multiples of 2 I think. maybe other smart stuff.
+/// - Do some smart processing. Like throw away values that are too big / too far from the current estimated value. Or only take max values. Or only top 10 percent or something. Round to power/multiple of 2 because polling intervals are always multiples of 2 I think. maybe other smart stuff. Use the CGEvent's timestamp for accurate timing
 ///
 /// More thoughts:
-/// - Not sure it makes sense to expose this in the UI. Just do it automatically when not using "macOS" pointer speed
+/// - Not sure it makes sense to expose this in the UI. Just do it automatically when not using "macOS" pointer speed.
 /// - `IOHIDPointerScrollFilter.cpp` actually supports the key `kHIDPointerReportRateKey` but I'm not sure exactly how it is used or if it evens works and `HIPointing.cpp` doesn't support it at all. (Not sure if `HIPointing.cpp` is still used in any way or in which macOS version they switched to `IOHIDPointerScrollFilter.cpp`) It will be a problem if we compensate for reportRate even though it is already compensated for, but It don't think Apples compensation is working. In my system `kHIDPointerReportRateKey` is only set on the Trackpad driver not standard mouse drivers.
 
 
 import Cocoa
 import CocoaLumberjackSwift
+
 
 class PointerConfig: NSObject {
 
@@ -48,7 +48,6 @@ class PointerConfig: NSObject {
     
     // MARK: Polling rate compensation
     ///  See top of the file for explanation
-    
     private static let basePollingRate = 125
     private static var actualPollingRate = 125
     private static var pollingRateFactor: Double {
@@ -81,50 +80,85 @@ class PointerConfig: NSObject {
     @objc static var customAccelCurve: MFAppleAccelerationCurveParams {
         /// See "Gain Curve Math.tex" and PointerSpeed class for context
         
+        let lowSpeed = 0.3
+        let highSpeed = 7.0
+        
         let lowSens: Double
         let highSens: Double
-        let highSpeed: Double
-        let curvature: Double
         
         switch semanticAcceleration {
         case .test:
-//            lowSens = 0.7
-//            highSens = 9
-//            highSpeed = 9.0
-//            curvature = 1.0
-            // ---------
-            lowSens = 0.8
-            highSens = 9
-            highSpeed = 7.0
-            curvature = 0.0
-            // -----------
-//            lowSens = 0.6
-//            highSens = 9
-//            highSpeed = 7.0
-//            curvature = 0.0
+            lowSens = 1.2
+            highSens = 7.0
         case .off:
             lowSens = 2
             highSens = 2
-            highSpeed = 7.0
-            curvature = 0.0
         case .low:
-            lowSens = 1.0
+            lowSens = 1.2
             highSens = 5
-            highSpeed = 7.0
-            curvature = 0.0
         case .medium:
-            lowSens = 0.8
+            lowSens = 1.2
             highSens = 9
-            highSpeed = 7.0
-            curvature = 0.0
         case .high:
-            lowSens = 0.7
+            lowSens = 1.2
             highSens = 11
-            highSpeed = 7.0
-            curvature = 0.0
+        }
+
+        return linearSensitivityBasedAccelCurve(lowSpeed: lowSpeed,
+                                               lowSens: lowSens,
+                                               highSpeed: highSpeed,
+                                               highSens: highSens)
+    }
+    
+    private static func linearSensitivityBasedAccelCurve(lowSpeed: Double, lowSens: Double, highSpeed: Double, highSens: Double) -> MFAppleAccelerationCurveParams {
+        
+        // TODO: Test if this works properly and if it's better than `sensitivityBasedAccelCurve()`
+        
+        /// Notes on `quartic` version of this (which we deleted)
+        ///     This here is an attempt to let the caller define a specific inputSpeed > 0 for which the sens = lowSens. While still making the curve as linear as possible
+        ///         For the original function `sensitivityBasedAccelCurve(lowSens: Double, highSens: Double, highSpeed: Double, curvature: Double)` the low sens is always defined for inputSpeed 0. This is bad because you always move at a higher inputSpeed than 0 and so the perceived low sens changes when you change the high sens.
+        ///     To achieve this we first define the points we want the curve to pass through, and then we use polynomial regression to find the coefficients
+        ///         See https://www.desmos.com/calculator/v5ssuwpshx for the quartic regression
+        ///     All the points are just on a straight line except for `p_1` which is capped at `p_1 >= 0`. (Otherwise the pointer moves backwards at very low speeds)
+        ///     Why this doesn't work:
+        ///         For the interesting cases, where the line is not straight, the curve slopes up for small x and back down for larger x. In these cases the fourth coefficient `d` is negative. However to bring the function from a normal polynomial into the shape of Apples acceleration curves `f(x) = ax + (bx)^2 + (cx)^3 + (dx)^4`, we need to take the fourth root of d. If d is negative this produces an imaginary number which the Apple driver can't process... :/.
+        ///             I feel like there might be an equivalent curve where c is negative instead of d. But I have no idea how you would find that. Edit: I just played around with it and I think d has to be negative to fit the curve.
+        
+        /// Notes on `cubic` version (this)
+        /// Same idea as quartic. Since it's cubic we can't make the line as straight. But it also shouldn't produce imaginary coefficients.
+        ///     See https://www.desmos.com/calculator/in835xa1lm
+        
+        typealias P = CGPoint
+        
+        let p2 = P(x: lowSpeed, y: lowSens)
+        let p3 = P(x: highSpeed, y: highSens)
+        
+        let l = Line(connecting: p2, p3)
+        
+        let e = l.evaluate(at: 0)
+        let p1 = P(x: 0, y: e < 0 ? 0 : e)
+        
+        let coeffsNS = PolynomialRegression.regression(withXValues: [p1.x, p2.x, p3.x], yValues: [p1.y, p2.y, p3.y], polynomialDegree: 2)
+        let coeffs = coeffsNS!.map{ ($0 as! NSNumber).doubleValue }
+        
+        var a = coeffs[0]
+        var b = root(coeffs[1], 2)
+        var c = root(coeffs[2], 3)
+        
+        if c != 0 {
+            DDLogWarn("The generated pointer acceleration curve is not linear. Coefficients: a: \(a), b: \(b), c: \(c)")
         }
         
-        return sensitivityBasedAccelCurve(lowSens: lowSens, highSens: highSens, highSpeed: highSpeed, curvature: curvature)
+        a /= pollingRateFactor
+        b /= root(pollingRateFactor, 2)
+        c /= root(pollingRateFactor, 3)
+        
+        return MFAppleAccelerationCurveParams(linearGain: a,
+                                              parabolicGain: b,
+                                              cubicGain: c,
+                                              quarticGain: 0.0,
+                                              capSpeedLinear: highSpeed,
+                                              capSpeedParabolicRoot: highSpeed * 100)
     }
     
     private static func sensitivityBasedAccelCurve(lowSens: Double, highSens: Double, highSpeed: Double, curvature: Double) -> MFAppleAccelerationCurveParams {
@@ -134,7 +168,7 @@ class PointerConfig: NSObject {
         assert(-1 <= curvature && curvature <= 1)
         
         var a: Double = lowSens
-        let cCap = Math.nthroot(value: a-highSens, 3)/pow(highSpeed, 2/3)
+        let cCap = root(a-highSens, 3)/pow(highSpeed, 2/3)
         let cSmoothSpeedSlope = Math.nthroot(value: a-highSens, 3)/(pow(2, 1/3) * pow(highSpeed, 2/3))
         var c: Double = curvature * cCap /*cSmoothSpeedSlope*/
         var b: Double = sqrt(-a + pow(c, 3) * -pow(highSpeed, 2) + highSens)/sqrt(highSpeed)

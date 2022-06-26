@@ -89,7 +89,7 @@ static void setupDeviceMatchingAndRemovalCallbacks() {
     
     /// Specify properties of the devices which we want to add to the HID Manager in the Matching Dictionary
     /// TODO:...
-    ///     - Can't I simply omit the kIOHIDTransportKey to match mice on any transport?
+    ///     - Can't I simply omit the kIOHIDTransportKey to match mice on any transport? - Edit: No because that also matches Internal Trackpads
     ///     - Also what about kHIDUsage_GD_Pointer? Shouldn't I match for that, too?
     
     NSDictionary *matchDict1 = @{

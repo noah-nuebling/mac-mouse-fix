@@ -48,6 +48,8 @@
 		4F854D7E2789266A00B46E9D /* sfsymbols.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F854D7D2789266A00B46E9D /* sfsymbols.xcassets */; };
 		4F8B7E6727B4E32600598B65 /* VectorAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8B7E6627B4E32600598B65 /* VectorAnimator.swift */; };
 		4F8CE7012617738A00D70A76 /* AppTranslocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CE6FF2617738A00D70A76 /* AppTranslocationManager.m */; };
+		4F8CF95728686C0100BF5E55 /* PolynomialRegression.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CF94328686C0100BF5E55 /* PolynomialRegression.m */; };
+		4F8CF95B28686EA200BF5E55 /* DoublesMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CF94528686C0100BF5E55 /* DoublesMatrix.m */; };
 		4F8FC13F275DC81900887A0C /* PrefixSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8FC13E275DC81900887A0C /* PrefixSwift.swift */; };
 		4F8FC140275DC81900887A0C /* PrefixSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8FC13E275DC81900887A0C /* PrefixSwift.swift */; };
 		4F92A708260F4BF000529D1F /* RemapTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F92A707260F4BF000529D1F /* RemapTableView.m */; };
@@ -146,9 +148,7 @@
 		4FF6668925F2C93A00689B77 /* Scroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662125F2C93A00689B77 /* Scroll.m */; };
 		4FF6668A25F2C93A00689B77 /* SmoothScroll.m (old) in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6662325F2C93A00689B77 /* SmoothScroll.m (old) */; };
 		4FF6668B25F2C93A00689B77 /* CubicUnitBezier.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662425F2C93A00689B77 /* CubicUnitBezier.m */; };
-		4FF6668C25F2C93A00689B77 /* SmoothScroll.h (old) in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6662525F2C93A00689B77 /* SmoothScroll.h (old) */; };
 		4FF6668D25F2C93A00689B77 /* MomentumScroll.h (old) in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6662725F2C93A00689B77 /* MomentumScroll.h (old) */; };
-		4FF6668E25F2C93A00689B77 /* MomentumScroll.m (old) in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6662825F2C93A00689B77 /* MomentumScroll.m (old) */; };
 		4FF6668F25F2C93A00689B77 /* SmoothScroll_old_.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662D25F2C93A00689B77 /* SmoothScroll_old_.m */; };
 		4FF6669025F2C93A00689B77 /* ScrollModifiers_old_.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662E25F2C93A00689B77 /* ScrollModifiers_old_.m */; };
 		4FF6669125F2C93A00689B77 /* ScrollUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662F25F2C93A00689B77 /* ScrollUtility.m */; };
@@ -166,8 +166,6 @@
 		4FF6669D25F2C93A00689B77 /* AccessibilityCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6664B25F2C93A00689B77 /* AccessibilityCheck.m */; };
 		4FF6669E25F2C93A00689B77 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6664F25F2C93A00689B77 /* MainMenu.xib */; };
 		4FF6669F25F2C93A00689B77 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6665125F2C93A00689B77 /* main.m */; };
-		4FF666A025F2C93A00689B77 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6666325F2C93A00689B77 /* README.md */; };
-		4FF666A125F2C93A00689B77 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6666625F2C93A00689B77 /* .gitignore */; };
 		4FF666A725F2C93A00689B77 /* Device.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6667A25F2C93A00689B77 /* Device.m */; };
 		4FF666A825F2C93A00689B77 /* DeviceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6667D25F2C93A00689B77 /* DeviceManager.m */; };
 		4FF666A925F2C93A00689B77 /* HelperUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6668025F2C93A00689B77 /* HelperUtility.m */; };
@@ -178,6 +176,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		4F8CF94A28686C0100BF5E55 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4F8CF93428686C0100BF5E55 /* PolynomialRegression.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CA80200A1AB9B747007CDF96;
+			remoteInfo = PolynomialRegression;
+		};
+		4F8CF94C28686C0100BF5E55 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4F8CF93428686C0100BF5E55 /* PolynomialRegression.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CA8020231AB9B747007CDF96;
+			remoteInfo = PolynomialRegressionTests;
+		};
 		4F94F60125E5EC2800D9F24A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4FCECD7821092354001F1078 /* Project object */;
@@ -345,6 +357,24 @@
 		4F8B7E6627B4E32600598B65 /* VectorAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorAnimator.swift; sourceTree = "<group>"; };
 		4F8CE6FF2617738A00D70A76 /* AppTranslocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppTranslocationManager.m; sourceTree = "<group>"; };
 		4F8CE7002617738A00D70A76 /* AppTranslocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppTranslocationManager.h; sourceTree = "<group>"; };
+		4F8CF93028686C0100BF5E55 /* license.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = license.md; sourceTree = "<group>"; };
+		4F8CF93228686C0100BF5E55 /* PolynomialRegressionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PolynomialRegressionTests.m; sourceTree = "<group>"; };
+		4F8CF93328686C0100BF5E55 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4F8CF93428686C0100BF5E55 /* PolynomialRegression.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = PolynomialRegression.xcodeproj; sourceTree = "<group>"; };
+		4F8CF93728686C0100BF5E55 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		4F8CF93928686C0100BF5E55 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		4F8CF93A28686C0100BF5E55 /* PolynomialRegression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolynomialRegression.h; sourceTree = "<group>"; };
+		4F8CF93B28686C0100BF5E55 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		4F8CF93C28686C0100BF5E55 /* DoublesMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoublesMatrix.h; sourceTree = "<group>"; };
+		4F8CF93E28686C0100BF5E55 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		4F8CF94028686C0100BF5E55 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		4F8CF94128686C0100BF5E55 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4F8CF94228686C0100BF5E55 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		4F8CF94328686C0100BF5E55 /* PolynomialRegression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PolynomialRegression.m; sourceTree = "<group>"; };
+		4F8CF94428686C0100BF5E55 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		4F8CF94528686C0100BF5E55 /* DoublesMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoublesMatrix.m; sourceTree = "<group>"; };
+		4F8CF94628686C0100BF5E55 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4F8CF94728686C0100BF5E55 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		4F8FC13E275DC81900887A0C /* PrefixSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefixSwift.swift; sourceTree = "<group>"; };
 		4F92A706260F4BF000529D1F /* RemapTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapTableView.h; sourceTree = "<group>"; };
 		4F92A707260F4BF000529D1F /* RemapTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapTableView.m; sourceTree = "<group>"; };
@@ -658,6 +688,7 @@
 		4F1793A725EEC8E500E8309B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4F8CF92F28686C0100BF5E55 /* iOS-Polynomial-Regression-master */,
 				4F1793A825EEC90900E8309B /* ZipArchive.framework */,
 				4F39BC24263AC2E800FDF692 /* Sparkle.framework */,
 				4F39BCE8263B7B1500FDF692 /* README.md */,
@@ -765,6 +796,56 @@
 				4F8CE6FF2617738A00D70A76 /* AppTranslocationManager.m */,
 			);
 			path = AppTranslocation;
+			sourceTree = "<group>";
+		};
+		4F8CF92F28686C0100BF5E55 /* iOS-Polynomial-Regression-master */ = {
+			isa = PBXGroup;
+			children = (
+				4F8CF93028686C0100BF5E55 /* license.md */,
+				4F8CF93128686C0100BF5E55 /* PolynomialRegressionTests */,
+				4F8CF93428686C0100BF5E55 /* PolynomialRegression.xcodeproj */,
+				4F8CF93728686C0100BF5E55 /* README.md */,
+				4F8CF93828686C0100BF5E55 /* PolynomialRegression */,
+			);
+			path = "iOS-Polynomial-Regression-master";
+			sourceTree = "<group>";
+		};
+		4F8CF93128686C0100BF5E55 /* PolynomialRegressionTests */ = {
+			isa = PBXGroup;
+			children = (
+				4F8CF93228686C0100BF5E55 /* PolynomialRegressionTests.m */,
+				4F8CF93328686C0100BF5E55 /* Info.plist */,
+			);
+			path = PolynomialRegressionTests;
+			sourceTree = "<group>";
+		};
+		4F8CF93528686C0100BF5E55 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4F8CF94B28686C0100BF5E55 /* PolynomialRegression.app */,
+				4F8CF94D28686C0100BF5E55 /* PolynomialRegressionTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4F8CF93828686C0100BF5E55 /* PolynomialRegression */ = {
+			isa = PBXGroup;
+			children = (
+				4F8CF93928686C0100BF5E55 /* AppDelegate.h */,
+				4F8CF93A28686C0100BF5E55 /* PolynomialRegression.h */,
+				4F8CF93B28686C0100BF5E55 /* ViewController.m */,
+				4F8CF93C28686C0100BF5E55 /* DoublesMatrix.h */,
+				4F8CF93D28686C0100BF5E55 /* LaunchScreen.xib */,
+				4F8CF93F28686C0100BF5E55 /* Main.storyboard */,
+				4F8CF94128686C0100BF5E55 /* main.m */,
+				4F8CF94228686C0100BF5E55 /* Images.xcassets */,
+				4F8CF94328686C0100BF5E55 /* PolynomialRegression.m */,
+				4F8CF94428686C0100BF5E55 /* AppDelegate.m */,
+				4F8CF94528686C0100BF5E55 /* DoublesMatrix.m */,
+				4F8CF94628686C0100BF5E55 /* Info.plist */,
+				4F8CF94728686C0100BF5E55 /* ViewController.h */,
+			);
+			path = PolynomialRegression;
 			sourceTree = "<group>";
 		};
 		4F94F60325E5EC2800D9F24A /* AppTests */ = {
@@ -1740,6 +1821,12 @@
 			);
 			productRefGroup = 4FCECD8121092354001F1078 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 4F8CF93528686C0100BF5E55 /* Products */;
+					ProjectRef = 4F8CF93428686C0100BF5E55 /* PolynomialRegression.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				4F94F5ED25E5EC2500D9F24A /* Mac Mouse Fix */,
@@ -1750,6 +1837,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		4F8CF94B28686C0100BF5E55 /* PolynomialRegression.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = PolynomialRegression.app;
+			remoteRef = 4F8CF94A28686C0100BF5E55 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4F8CF94D28686C0100BF5E55 /* PolynomialRegressionTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = PolynomialRegressionTests.xctest;
+			remoteRef = 4F8CF94C28686C0100BF5E55 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		4F94F5EC25E5EC2500D9F24A /* Resources */ = {
@@ -1791,11 +1895,7 @@
 				4FF6668325F2C93A00689B77 /* Assets.xcassets in Resources */,
 				4FF6668A25F2C93A00689B77 /* SmoothScroll.m (old) in Resources */,
 				4FF6654125F2C7B000689B77 /* default_launchd.plist in Resources */,
-				4FF6668E25F2C93A00689B77 /* MomentumScroll.m (old) in Resources */,
 				4FF6669E25F2C93A00689B77 /* MainMenu.xib in Resources */,
-				4FF666A025F2C93A00689B77 /* README.md in Resources */,
-				4FF666A125F2C93A00689B77 /* .gitignore in Resources */,
-				4FF6668C25F2C93A00689B77 /* SmoothScroll.h (old) in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2068,6 +2168,7 @@
 				4FF6669625F2C93A00689B77 /* Actions.m in Sources */,
 				4FF0254E27AFF90800923107 /* ModifiedDragOutputThreeFingerSwipe.m in Sources */,
 				4F44FF042606D73D00926A5E /* SharedMessagePort.m in Sources */,
+				4F8CF95728686C0100BF5E55 /* PolynomialRegression.m in Sources */,
 				4F5F3EEE2756DB0A00C350C0 /* RemapsOverrider_old_.swift in Sources */,
 				4F8B7E6727B4E32600598B65 /* VectorAnimator.swift in Sources */,
 				4FF6669325F2C93A00689B77 /* TouchSimulator.m in Sources */,
@@ -2093,6 +2194,7 @@
 				4FF6669825F2C93A00689B77 /* SubPixelator.m in Sources */,
 				4FE40B97283A49DD00880BEF /* SharedUtilitySwift.swift in Sources */,
 				4FF0BD51266AC10C003935EA /* Math.swift in Sources */,
+				4F8CF95B28686EA200BF5E55 /* DoublesMatrix.m in Sources */,
 				4F2CC58927B8DA8B0084AACE /* Line.swift in Sources */,
 				4FF6669F25F2C93A00689B77 /* main.m in Sources */,
 				4FF6668925F2C93A00689B77 /* Scroll.m in Sources */,
@@ -2168,6 +2270,22 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		4F8CF93D28686C0100BF5E55 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4F8CF93E28686C0100BF5E55 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		4F8CF93F28686C0100BF5E55 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4F8CF94028686C0100BF5E55 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
 		4FF665D925F2C92700689B77 /* MouseFix.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -2271,6 +2389,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MARKETING_VERSION = "3.0.0 Alpha";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -2302,6 +2421,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MARKETING_VERSION = "3.0.0 Alpha";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix";
@@ -2565,6 +2685,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix.helper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -2597,6 +2718,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix.helper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Helper/SupportFiles/Mac Mouse Fix Helper-Bridging-Header.h";
