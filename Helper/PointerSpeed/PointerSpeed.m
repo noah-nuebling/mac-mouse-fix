@@ -7,7 +7,7 @@
 // --------------------------------------------------------------------------
 //
 
-/// This class can set sensitivity and SpeedCurves for a specific or all attached pointing devices
+/// This class can set sensitivity and acceleration curves for a specific or all attached pointing devices
 
 /// Imports
 
@@ -56,9 +56,9 @@ extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHI
     /// This should be called after a new device has been attached.
 
     if (PointerConfig.useSystemSpeed) {
-        [self setForDevice:device sensitivity:PointerConfig.sensitivity accelerationPreset:PointerConfig.systemAccelerationCurvePresetIndex];
+        [self setForDevice:device sensitivity:PointerConfig.systemSensitivity systemCurveIndex:PointerConfig.systemAccelCurveIndex];
     } else {
-        [self setForDevice:device sensitivity:PointerConfig.sensitivity accelerationCurve:PointerConfig.customAccelerationCurve];
+        [self setForDevice:device sensitivity:PointerConfig.sensitivity customCurve:PointerConfig.customAccelCurve];
     }
 }
 
@@ -66,7 +66,7 @@ extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHI
 
 + (void)setForDevice:(IOHIDDeviceRef)device
          sensitivity:(double)sensitivity
-        accelerationCurve:(MFAppleSpeedCurveParams)accelerationCurve {
+        customCurve:(MFAppleAccelerationCurveParams)accelCurve {
     
     /// Declare stuff
     Boolean success;
@@ -87,7 +87,7 @@ extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHI
     assert(success);
     
     /// Set mouse acceleration on the driver
-    success = setAccelerationToCurve(accelerationCurve, serviceClient);
+    success = setAccelToCurve(accelCurve, serviceClient);
     assert(success);
     
     IOObjectRelease(driverService);
@@ -97,12 +97,12 @@ extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHI
 
 + (void)setForDevice:(IOHIDDeviceRef)device
          sensitivity:(double)sensitivity
-  accelerationPreset:(double)acceleration {
+  systemCurveIndex:(double)curveIndex {
     /// Sets pointer  sensitivity and pointer acceleration on a specific IOHIDDevice. Source for this is `PointerSpeedExperiments2.m`
     
     /// Validate
     ///     These are the values settable through System Preferences. Not sure if it makes sense to restrict to these values?
-    assert(0 <= acceleration && acceleration <= 3.0);
+    assert(0 <= curveIndex && curveIndex <= 3.0);
     
     /// Declare stuff
     Boolean success;
@@ -126,7 +126,7 @@ extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHI
     removeCustomCurves(serviceClient, driverService, serviceClient);
     
     /// Set mouse acceleration on the driver
-    success = setAccelerationPreset(acceleration, serviceClient);
+    success = selectAccelCurveWithIndex(curveIndex, serviceClient);
     assert(success);
     
     IOObjectRelease(driverService);
@@ -158,7 +158,7 @@ static Boolean setSensitivity(double sensitivity, IOHIDServiceClientRef serviceC
     return success;
 }
 
-static Boolean setAccelerationPreset(double accelerationPresetIndex, IOHIDServiceClientRef eventServiceClient) {
+static Boolean selectAccelCurveWithIndex(double accelerationPresetIndex, IOHIDServiceClientRef eventServiceClient) {
     /// The default Apple curves have an `accelerationPresetIndex` between 0.0 and 3.0.
     /// - This is the same value that can be set through the `defaults write .GlobalPreferences com.apple.mouse.scaling x` terminal command or through the "Tracking speed" slider in System Preferences > Mouse.
     /// - x in `defaults write .GlobalPreferences com.apple.mouse.scaling x` can also be -1 (or any other negative number) which will turn the acceleration off (just like 0), but it will also increase the sensitivity. I haven't experimented with setting `acceleration` to -1. But we can change sensitivity through `sensitivity` anyways so it's not that interesting.
@@ -183,8 +183,7 @@ static Boolean setAccelerationPreset(double accelerationPresetIndex, IOHIDServic
 
 static double customCurveIndex = 123; /// This is arbitrary. PointerConfig.defaultAccelCurves documentation
 
-static Boolean setAccelerationToCurve(MFAppleSpeedCurveParams params, IOHIDServiceClientRef eventServiceClient) {
-    // TODO: Test if this works
+static Boolean setAccelToCurve(MFAppleAccelerationCurveParams params, IOHIDServiceClientRef eventServiceClient) {
     /// Set acceleration to a custom curve
     ///     Also see
     ///     - MFAppleAccelerationCurveParams documentation
@@ -214,7 +213,7 @@ static Boolean setAccelerationToCurve(MFAppleSpeedCurveParams params, IOHIDServi
     if (!success) return false;
     
     /// Select custom curve
-    success = setAccelerationPreset(customCurveIndex, eventServiceClient);
+    success = selectAccelCurveWithIndex(customCurveIndex, eventServiceClient);
     
     /// Return
     return success;
@@ -230,7 +229,7 @@ static Boolean setCurves(NSArray *curves, IOHIDServiceClientRef serviceClient) {
 
 static Boolean removeCustomCurves(IOHIDServiceClientRef eventServiceClient, io_service_t driverService, IOHIDServiceClientRef serviceClient) {
     
-    return setCurves(PointerConfig.defaultAccelCurves, serviceClient);
+    return setCurves(PointerConfig.systemAccelCurves, serviceClient);
     /// ^ See PointerConfig.defaultAccelCurves documentation for context
 }
 

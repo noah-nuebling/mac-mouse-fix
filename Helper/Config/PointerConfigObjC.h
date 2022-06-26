@@ -31,6 +31,6 @@ typedef struct {
     double quarticGain;
     double capSpeedLinear;
     double capSpeedParabolicRoot;
-} MFAppleSpeedCurveParams;
+} MFAppleAccelerationCurveParams;
 
 #endif /* PointerConfigObjC_h */

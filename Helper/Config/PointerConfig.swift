@@ -7,7 +7,7 @@
 // --------------------------------------------------------------------------
 //
 
-/// This class provides pointer related settings. Primarily used by `PointerSpeed.m`. `PointerSpeed.m` configures Apple's HID driver to have different mouse sensitivity and acceleration curve. The implementation of the Apple code can be found in `HIPointing.cpp`
+/// This class provides pointer related settings. Primarily used by `PointerSpeed.m`. `PointerSpeed.m` configures Apple's HID driver to have different mouse sensitivity and acceleration curve. The implementation of the Apple code can be found in `HIPointing.cpp` and in `IOHIDPointerScrollFilter.cpp`
 
 /// Polling rate compensation notes:
 ///
@@ -29,8 +29,8 @@
 /// - Do some smart processing. Like throw away values that are too big / too far from the current estimated value. Or only take max values. Or only top 10 percent or something. Round to power/multiple of 2 because polling intervals are always multiples of 2 I think. maybe other smart stuff.
 ///
 /// More thoughts:
-///
-/// Not sure it makes sense to expose this in the UI. Just do it automatically when not using "macOS" pointer speed
+/// - Not sure it makes sense to expose this in the UI. Just do it automatically when not using "macOS" pointer speed
+/// - `IOHIDPointerScrollFilter.cpp` actually supports the key `kHIDPointerReportRateKey` but I'm not sure exactly how it is used or if it evens works and `HIPointing.cpp` doesn't support it at all. (Not sure if `HIPointing.cpp` is still used in any way or in which macOS version they switched to `IOHIDPointerScrollFilter.cpp`) It will be a problem if we compensate for reportRate even though it is already compensated for, but It don't think Apples compensation is working. In my system `kHIDPointerReportRateKey` is only set on the Trackpad driver not standard mouse drivers.
 
 
 import Cocoa
@@ -50,7 +50,7 @@ class PointerConfig: NSObject {
     ///  See top of the file for explanation
     
     private static let basePollingRate = 125
-    private static var actualPollingRate = 90
+    private static var actualPollingRate = 125
     private static var pollingRateFactor: Double {
         Double(actualPollingRate) / Double(basePollingRate)
     }
@@ -75,10 +75,10 @@ class PointerConfig: NSObject {
     // MARK: Speed curve
     
     private static var semanticAcceleration: SemanticAcceleration {
-        return .test
+        return .medium
     }
     
-    @objc static var customSpeedCurve: MFAppleAccelerationCurveParams {
+    @objc static var customAccelCurve: MFAppleAccelerationCurveParams {
         /// See "Gain Curve Math.tex" and PointerSpeed class for context
         
         let lowSens: Double
@@ -88,36 +88,46 @@ class PointerConfig: NSObject {
         
         switch semanticAcceleration {
         case .test:
-            lowSens = 0.6
+//            lowSens = 0.7
+//            highSens = 9
+//            highSpeed = 9.0
+//            curvature = 1.0
+            // ---------
+            lowSens = 0.8
             highSens = 9
             highSpeed = 7.0
             curvature = 0.0
+            // -----------
+//            lowSens = 0.6
+//            highSens = 9
+//            highSpeed = 7.0
+//            curvature = 0.0
         case .off:
-            lowSens = 1
-            highSens = 1
-            highSpeed = 8.0
+            lowSens = 2
+            highSens = 2
+            highSpeed = 7.0
             curvature = 0.0
         case .low:
-            lowSens = 1
-            highSens = 10
-            highSpeed = 8.0
+            lowSens = 1.0
+            highSens = 5
+            highSpeed = 7.0
             curvature = 0.0
         case .medium:
-            lowSens = 1
-            highSens = 25
-            highSpeed = 8.0
+            lowSens = 0.8
+            highSens = 9
+            highSpeed = 7.0
             curvature = 0.0
         case .high:
-            lowSens = 1
-            highSens = 40
-            highSpeed = 8.0
+            lowSens = 0.7
+            highSens = 11
+            highSpeed = 7.0
             curvature = 0.0
         }
         
-        return sensitivityBasedSpeedCurve(lowSens: lowSens, highSens: highSens, highSpeed: highSpeed, curvature: curvature)
+        return sensitivityBasedAccelCurve(lowSens: lowSens, highSens: highSens, highSpeed: highSpeed, curvature: curvature)
     }
     
-    private static func sensitivityBasedSpeedCurve(lowSens: Double, highSens: Double, highSpeed: Double, curvature: Double) -> MFAppleAccelerationCurveParams {
+    private static func sensitivityBasedAccelCurve(lowSens: Double, highSens: Double, highSpeed: Double, curvature: Double) -> MFAppleAccelerationCurveParams {
         
         /// See `Gain Curve Maths.tex` for background
         
@@ -125,7 +135,8 @@ class PointerConfig: NSObject {
         
         var a: Double = lowSens
         let cCap = Math.nthroot(value: a-highSens, 3)/pow(highSpeed, 2/3)
-        var c: Double = curvature * cCap
+        let cSmoothSpeedSlope = Math.nthroot(value: a-highSens, 3)/(pow(2, 1/3) * pow(highSpeed, 2/3))
+        var c: Double = curvature * cCap /*cSmoothSpeedSlope*/
         var b: Double = sqrt(-a + pow(c, 3) * -pow(highSpeed, 2) + highSens)/sqrt(highSpeed)
         
         a /= pollingRateFactor
