@@ -74,7 +74,7 @@ class PointerConfig: NSObject {
     // MARK: Speed curve
     
     private static var semanticAcceleration: SemanticAcceleration {
-        return .medium
+        return .test
     }
     
     @objc static var customAccelCurve: MFAppleAccelerationCurveParams {
@@ -83,24 +83,20 @@ class PointerConfig: NSObject {
         let lowSpeed = 0.3
         let highSpeed = 7.0
         
-        let lowSens: Double
+        var lowSens = 1.2
         let highSens: Double
         
         switch semanticAcceleration {
         case .test:
-            lowSens = 1.2
-            highSens = 7.0
+            highSens = 8
         case .off:
-            lowSens = 2
-            highSens = 2
+            lowSens *= 2
+            highSens = lowSens
         case .low:
-            lowSens = 1.2
-            highSens = 5
+            highSens = 3.5
         case .medium:
-            lowSens = 1.2
-            highSens = 9
+            highSens = 8
         case .high:
-            lowSens = 1.2
             highSens = 11
         }
 
@@ -108,6 +104,36 @@ class PointerConfig: NSObject {
                                                lowSens: lowSens,
                                                highSpeed: highSpeed,
                                                highSens: highSens)
+    }
+    
+    private static func simpleLinearSensitivityBasedAccelCurve(acceleration: Double) -> MFAppleAccelerationCurveParams {
+        
+        /// simpleLinearSensitivityBasedAccelCurve curve. These names are getting out of hand.
+        /// Idea: Reduce the number of parameters so it's easier for user to configure. Could have just 2 sliders to completely control the curve:
+        ///     1. Slider: Sensitivity. The CPI compensation would be a 'secret' feature of this. Most users won't think about the CPI and just choose something that feels good. This slider changes the acceleration as well because it controls the pointerResolution on the driver. So it removes the need for a separate CPI compensation option.
+        ///     2. Slider: Acceleration. This controls the slope of the linear sensitivity curve.
+        ///     Notes:
+        ///         The `lowSpeed` parameter from older curves is included in the sensitivity.
+        ///         We simply disable the cap by setting it very high.
+        ///    Discussion
+        ///     - Speaking in terms of the old curve this means the highSens changes with the lowSens (aka sensitivity) but also the lowSens changes with the highSens. Making the lowSens and the highSens completely independent was the main goal of the `linearSensitivityBasedAccelCurve()` not sure if removing CPI compensation option or making lowSens and highSens settings independent will make for better user experience (don't have a mouse right now.)
+        ///     - Also, no accel setting would naturally be support, by just setting slope to 0.
+        /// See https://www.desmos.com/calculator/xoxabcofrr
+        
+        typealias P = CGPoint
+        
+        var a = 0.8 /// Base sens
+        var b = root(acceleration, 2) /// Slope
+        
+        a /= pollingRateFactor
+        b /= root(pollingRateFactor, 2)
+        
+        return MFAppleAccelerationCurveParams(linearGain: a,
+                                              parabolicGain: b,
+                                              cubicGain: 0.0,
+                                              quarticGain: 0.0,
+                                              capSpeedLinear: 9999, /// Set very high so it never activates
+                                              capSpeedParabolicRoot: 9999 * 100) /// Set even higher because the Apple Driver expects that
     }
     
     private static func linearSensitivityBasedAccelCurve(lowSpeed: Double, lowSens: Double, highSpeed: Double, highSens: Double) -> MFAppleAccelerationCurveParams {
@@ -158,7 +184,7 @@ class PointerConfig: NSObject {
                                               cubicGain: c,
                                               quarticGain: 0.0,
                                               capSpeedLinear: highSpeed,
-                                              capSpeedParabolicRoot: highSpeed * 100)
+                                              capSpeedParabolicRoot: highSpeed * 1000)
     }
     
     private static func sensitivityBasedAccelCurve(lowSens: Double, highSens: Double, highSpeed: Double, curvature: Double) -> MFAppleAccelerationCurveParams {
