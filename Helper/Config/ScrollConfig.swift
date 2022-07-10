@@ -104,9 +104,22 @@ import CocoaLumberjackSwift
     ///     This variable can be used to cap the observed scrollTickInterval to a reasonable value
     
     
-    @objc lazy var consecutiveScrollSwipeMaxInterval: TimeInterval = 600/1000
-    /// ^ If more than `_consecutiveScrollSwipeIntervalMax` seconds passes between two scrollwheel swipes, then they aren't deemed consecutive.
-    ///        other["consecutiveScrollSwipeIntervalMax"] as! Double
+    @objc lazy var consecutiveScrollSwipeMaxInterval: TimeInterval = {
+        /// If more than `_consecutiveScrollSwipeIntervalMax` seconds passes between two scrollwheel swipes, then they aren't deemed consecutive.
+        
+        /// Not sure this switch makes sense. Quick bandaid. Might wanna change.
+        
+        switch _animationCurvePreset {
+        case kMFScrollAnimationCurvePresetLowInertia, kMFScrollAnimationCurvePresetNoInertia, kMFScrollAnimationCurvePresetTouchDriver, kMFScrollAnimationCurvePresetTouchDriverLinear, kMFScrollAnimationCurvePresetPreciseScroll:
+            return 350/1000
+        case kMFScrollAnimationCurvePresetMediumInertia:
+            return 475/1000
+        case kMFScrollAnimationCurvePresetHighInertia, kMFScrollAnimationCurvePresetQuickScroll:
+            return 600/1000
+        default:
+            fatalError()
+        }
+    }()
     
     @objc lazy var consecutiveScrollSwipeMinTickSpeed: Double = 12.0
     
@@ -140,7 +153,7 @@ import CocoaLumberjackSwift
     
     /// User setting
     
-    private lazy var _animationCurvePreset = kMFScrollAnimationCurvePresetHighInertia
+    private lazy var _animationCurvePreset = kMFScrollAnimationCurvePresetLowInertia
     
     @objc var animationCurvePreset: MFScrollAnimationCurvePreset {
         set {
@@ -250,8 +263,8 @@ import CocoaLumberjackSwift
     /// User settings
     
     @objc lazy var useAppleAcceleration: Bool = false /// Ignore MMF acceleration algorithm and use values provided by macOS
-    @objc lazy var scrollSensitivity: MFScrollSensitivity = kMFScrollSensitivityMedium
-    @objc lazy var scrollAcceleration: MFScrollAcceleration = kMFScrollAccelerationMedium
+    @objc lazy var scrollSensitivity: MFScrollSensitivity = kMFScrollSensitivityHigh
+    @objc lazy var scrollAcceleration: MFScrollAcceleration = kMFScrollAccelerationHigh
     
     /// Stored property
     ///     This is used by Scroll.m to determine how to accelerate

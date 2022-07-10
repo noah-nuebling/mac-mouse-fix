@@ -100,15 +100,20 @@ class PointerConfig: NSObject {
     @objc static var customAccelCurve: MFAppleAccelerationCurveParams {
         /// See "Gain Curve Math.tex" and PointerSpeed class for context
         
-        let lowSpeed = 0.3
-        let highSpeed = 8.0
+        let multiplier = 1.0
+        
+        let curvature = 1.0
+        let useSmoothCurvature = false
+        
+        let lowSpeed = 0.2
+        let highSpeed = 7.0
         
         var lowSens: Double
-        let highSens: Double
+        var highSens: Double
         
         switch semanticSensitivity {
         case .test:
-            lowSens = 2.3
+            lowSens = 4.7
         case .low:
             lowSens = 0.8
         case .medium:
@@ -119,7 +124,7 @@ class PointerConfig: NSObject {
         
         switch semanticAcceleration {
         case .test:
-            highSens = 18
+            highSens = 16
         case .off:
             lowSens *= 2
             highSens = lowSens
@@ -130,8 +135,11 @@ class PointerConfig: NSObject {
         case .high:
             highSens = 11
         }
+        
+        lowSens *= multiplier
+        highSens *= multiplier
 
-        return sensitivityBasedAccelCurve(lowSpeed: lowSpeed, lowSens: lowSens, highSpeed: highSpeed, highSens: highSens, curvature: 1.0, useSmoothCurvature: false)
+        return sensitivityBasedAccelCurve(lowSpeed: lowSpeed, lowSens: lowSens, highSpeed: highSpeed, highSens: highSens, curvature: curvature, useSmoothCurvature: useSmoothCurvature)
     }
     
     private static func sensitivityBasedAccelCurve(lowSpeed v_0: Double, lowSens s_0: Double, highSpeed v_1: Double, highSens s_1: Double, curvature c_unit: Double, useSmoothCurvature: Bool) -> MFAppleAccelerationCurveParams {
