@@ -57,10 +57,11 @@ static void signal_handler(int signal_number, siginfo_t *signal_info, void *cont
     
     /// Setup termination handler
 
-    struct sigaction action;
-    memset(&action, '\0', sizeof(action));
-    action.sa_flags = SA_SIGINFO;
-    action.sa_sigaction = signal_handler;
+    struct sigaction action = {
+        .sa_flags = SA_SIGINFO,
+        .sa_mask = 0,
+        .sa_sigaction = signal_handler,
+    };
     int rt = sigaction(SIGTERM, &action, NULL);
     if (rt < 0) {
         DDLogError(@"Error setting up sigterm handler: %d", rt);
