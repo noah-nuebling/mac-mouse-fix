@@ -56,10 +56,17 @@ extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHI
     /// This should be called after a new device has been attached.
 
     if (PointerConfig.useSystemSpeed) {
-        [self setForDevice:device sensitivity:PointerConfig.systemSensitivity systemCurveIndex:PointerConfig.systemAccelCurveIndex];
+        [self deconfigureDevice:device];
     } else {
         [self setForDevice:device sensitivity:PointerConfig.CPIMultiplier customCurve:PointerConfig.customAccelCurve];
     }
+}
+
++ (void)deconfigureDevice:(IOHIDDeviceRef)device {
+    /// Sets pointer speed accoring to PointerConfig
+    /// This should be called after a new device has been attached.
+
+    [self setForDevice:device sensitivity:PointerConfig.systemSensitivity systemCurveIndex:PointerConfig.systemAccelCurveIndex];
 }
 
 // MARK: Doing stuff

@@ -78,6 +78,16 @@ static NSMutableArray<Device *> *_attachedDevices;
 //    DDLogInfo(@"Seize manager open return: %d", retOpen);
 //}
 
+# pragma mark - Interface
+
++ (void)deconfigureDevices {
+    
+    /// Meant to be called when the app closes
+    
+    for (Device *device in _attachedDevices) {
+        [PointerSpeed deconfigureDevice:device.IOHIDDevice];
+    }
+}
 
 # pragma mark - Setup callbacks
 

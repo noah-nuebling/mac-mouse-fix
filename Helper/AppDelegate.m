@@ -8,6 +8,7 @@
 //
 
 #import "AppDelegate.h"
+#import "DeviceManager.h"
 
 @interface AppDelegate ()
 @property (strong) IBOutlet NSWindow *addedWindow;
@@ -15,11 +16,13 @@
 
 @implementation AppDelegate
 
-+ (void)applicationDidFinishLaunching:(NSNotification *)notification {
-    // The effective entry point of this app is at [AccessibilityCheck load]
-    
-    /// Debug
-    
+- (void)applicationDidFinishLaunching:(NSNotification *)notification {
+    /// The effective entry point of this app is at [AccessibilityCheck load]
+}
+
+- (void)applicationWillTerminate:(NSNotification *)notification {
+    /// This doesn't seem to get called when the Helper is terminated through launchd.
+    /// Instead use `signal_handler` in `AccessibiltyCheck` to catch SIGTERM.
 }
 
 @end

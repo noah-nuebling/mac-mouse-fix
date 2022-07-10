@@ -12,16 +12,17 @@
 #import "Constants.h"
 #import "Objects.h"
 #import "SharedUtility.h"
+#import "SharedMessagePort.h"
 
 @implementation HelperServices
 
 /// Register/unregister the helper as a User Agent with launchd so it runs in the background - also launches/terminates helper
 + (void)enableHelperAsUserAgent:(BOOL)enable {
     
-    // Repair/generate launchdPlist so that the following code works for sure
+    /// Repair/generate launchdPlist so that the following code works for sure
     [self repairLaunchdPlist];
     
-    // If an old version of Mac Mouse Fix is still running and stuff, clean that up to prevent issues
+    /// If an old version of Mac Mouse Fix is still running and stuff, clean that up to prevent issues
     [self runPreviousVersionCleanup];
     
     /**
@@ -33,15 +34,13 @@
     if (enable) {
         [self removeHelperFromLaunchd];
         
-        // Any Mac Mouse Fix Helper processes that were started by launchd should have been quit by now. But if there are Helpers which weren't started by launchd they will still be running which causes problems. Terminate them now.
+        /// Any Mac Mouse Fix Helper processes that were started by launchd should have been quit by now. But if there are Helpers which weren't started by launchd they will still be running which causes problems. Terminate them now.
         [self terminateOtherHelperInstances];
     }
     
-    // Prepare strings for NSTask
+    /// Use the `launchctl` command-line-tool
+    ///     Note: Why don't we use `SharedUtility + launchCLT:withArgs:` here?
     
-    // Path for the executable of the launchctl command-line-tool, which we use to control launchd
-    
-    // Prepare arguments for the launchctl command-line-tool
     if (@available(macOS 10.13, *)) {
         NSTask *task = [[NSTask alloc] init];
         task.executableURL = [NSURL fileURLWithPath: kMFLaunchctlPath];
@@ -54,7 +53,7 @@
         task.standardOutput = pipe;
         NSError *error;
         task.terminationHandler = ^(NSTask *task) {
-            if (enable == NO) { // Cleanup (delete launchdPlist) file after were done // We can't clean up immediately cause then launchctl will fail
+            if (enable == NO) { /// Cleanup (delete launchdPlist) file after were done - We can't clean up immediately cause then launchctl will fail
                 cleanup();
             }
             DDLogInfo(@"launchctl terminated with stdout/stderr: %@, error: %@", [NSString.alloc initWithData:pipe.fileHandleForReading.readDataToEndOfFile encoding:NSUTF8StringEncoding], error);
@@ -63,7 +62,7 @@
         
     } else { // Fallback on earlier versions
         NSString *OnOffArgumentOld = (enable) ? @"load": @"unload";
-        [NSTask launchedTaskWithLaunchPath: kMFLaunchctlPath arguments: @[OnOffArgumentOld, Objects.launchdPlistURL.path]]; // Can't clean up here easily cause there's no termination handler
+        [NSTask launchedTaskWithLaunchPath: kMFLaunchctlPath arguments: @[OnOffArgumentOld, Objects.launchdPlistURL.path]]; /// Can't clean up here easily cause there's no termination handler
     }
 }
 static void cleanup() {

@@ -16,5 +16,7 @@
 + (BOOL)devicesAreAttached;
 + (NSArray<Device *> *)attachedDevices;
 
++ (void)deconfigureDevices;
+
 @end
 

@@ -24,14 +24,47 @@
 
 #import "SharedUtility.h"
 
+#import <signal.h>
+
 @implementation AccessibilityCheck
 
 NSTimer *_openMainAppTimer;
+
+/// Handle Unix signals
+
+static void signal_handler(int signal_number, siginfo_t *signal_info, void *context) {
+    
+    if (signal_number == SIGTERM) {
+        
+        /// Deconfigure
+        [DeviceManager deconfigureDevices];
+        
+        /// Terminate app
+        ///     I think `NSApplicationMain(argc, argv)` (found in main.m) sets up its own SIGTERM handler which we're overriding here. So we need to manually terminate the app.
+        ///     If this leads to further problems around termination, consider simply sending a `willTerminate` message from the Main App before terminating the Helper.
+        [NSApp terminate:nil];
+    } else {
+        DDLogWarn(@"SIGTERM handler caught weird signal: %d", signal_number);
+    }
+}
+
+/// Load
 
 + (void)load {
     
     /// Debug
     [GlobalDefaults applyDoubleClickThreshold];
+    
+    /// Setup termination handler
+
+    struct sigaction action;
+    memset(&action, '\0', sizeof(action));
+    action.sa_flags = SA_SIGINFO;
+    action.sa_sigaction = signal_handler;
+    int rt = sigaction(SIGTERM, &action, NULL);
+    if (rt < 0) {
+        DDLogError(@"Error setting up sigterm handler: %d", rt);
+    }
     
     /// Set up CocoaLumberjack
     [SharedUtility setupBasicCocoaLumberjackLogging];

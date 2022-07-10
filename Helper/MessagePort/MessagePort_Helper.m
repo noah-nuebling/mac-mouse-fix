@@ -15,6 +15,7 @@
 #import "Constants.h"
 #import "SharedMessagePort.h"
 #import "ButtonLandscapeAssessor.h"
+#import "DeviceManager.h"
 
 #import <CoreFoundation/CoreFoundation.h>
 #import "WannabePrefixHeader.h"

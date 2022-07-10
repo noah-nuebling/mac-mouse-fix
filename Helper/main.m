@@ -8,7 +8,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "WannaBePrefixHeader.h"
+#import "DeviceManager.h"
 
 int main(int argc, const char * argv[]) {
+    /// Start application
     return NSApplicationMain(argc, argv);
 }
