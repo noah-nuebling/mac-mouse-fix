@@ -19,6 +19,11 @@ import Foundation
     
     var slope: Double { a }
     
+    @objc convenience init(p: P, slope a: Double) {
+        let b = p.y - a*p.x
+        self.init(a: a, b: b)
+    }
+    
     @objc convenience init(connecting p1: P, _ p2: P) {
         let a = (p2.y - p1.y) / (p2.x - p1.x)
         let b = p1.y - a * p1.x

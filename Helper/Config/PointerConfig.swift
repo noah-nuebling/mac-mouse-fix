@@ -131,12 +131,44 @@ class PointerConfig: NSObject {
             highSens = 11
         }
 
-//        return sensitivityBasedAccelCurve(lowSens: lowSens, highSens: highSens, highSpeed: highSpeed, curvature: 1.0)
-//        return linearSensitivityBasedAccelCurve(lowSpeed: lowSpeed, lowSens: lowSens, highSpeed: highSpeed, highSens: highSens)
-        return completeSensitivityBasedAccelCurve(lowSpeed: lowSpeed, lowSens: lowSens, highSpeed: highSpeed, highSens: highSens, curvature: 1.0, useSmoothCurvature: false)
+        return sensitivityBasedAccelCurve(lowSpeed: lowSpeed, lowSens: lowSens, highSpeed: highSpeed, highSens: highSens, curvature: 1.0, useSmoothCurvature: false)
     }
     
-    private static func completeSensitivityBasedAccelCurve(lowSpeed v_0: Double, lowSens s_0: Double, highSpeed v_1: Double, highSens s_1: Double, curvature c_unit: Double, useSmoothCurvature: Bool) -> MFAppleAccelerationCurveParams {
+    private static func sensitivityBasedAccelCurve(lowSpeed v_0: Double, lowSens s_0: Double, highSpeed v_1: Double, highSens s_1: Double, curvature c_unit: Double, useSmoothCurvature: Bool) -> MFAppleAccelerationCurveParams {
+        
+        // MARK: Notes on this
+        
+        /// This method can do everything we could want. All other accel curve generation functions should call this one.
+        /// See `Gain Curve Math.tex` for more background
+        
+        // MARK: Notes on old versions (which were replaced by this one)
+        
+        /// Notes on `quartic` version of `lowSpeed` function
+        ///     This here is an attempt to let the caller define a specific inputSpeed > 0 for which the sens = lowSens. While still making the curve as linear as possible
+        ///         For the original function `sensitivityBasedAccelCurve(lowSens: Double, highSens: Double, highSpeed: Double, curvature: Double)` the low sens is always defined for inputSpeed 0. This is bad because you always move at a higher inputSpeed than 0 and so the perceived low sens changes when you change the high sens.
+        ///     To achieve this we first define the points we want the curve to pass through, and then we use polynomial regression to find the coefficients
+        ///         See https://www.desmos.com/calculator/v5ssuwpshx for the quartic regression
+        ///     All the points are just on a straight line except for `p_1` which is capped at `p_1 >= 0`. (Otherwise the pointer moves backwards at very low speeds)
+        ///     Why this doesn't work:
+        ///         For the interesting cases, where the line is not straight, the curve slopes up for small x and back down for larger x. In these cases the fourth coefficient `d` is negative. However to bring the function from a normal polynomial into the shape of Apples acceleration curves `f(x) = ax + (bx)^2 + (cx)^3 + (dx)^4`, we need to take the fourth root of d. If d is negative this produces an imaginary number which the Apple driver can't process... :/.
+        ///             I feel like there might be an equivalent curve where c is negative instead of d. But I have no idea how you would find that. Edit: I just played around with it and I think d has to be negative to fit the curve.
+        
+        /// Notes on `cubic` version of `lowSpeed` function
+        /// Same idea as quartic. Since it's cubic we can't make the line as straight. But it also shouldn't produce imaginary coefficients.
+        ///     See https://www.desmos.com/calculator/in835xa1lm
+        
+        /// Notes on `simpleLinearSensitivityBasedAccelCurve` curve.
+        /// These names are getting out of hand.
+        /// Idea: Reduce the number of parameters so it's easier for user to configure. Could have just 2 sliders to completely control the curve:
+        ///     1. Slider: Sensitivity. The CPI compensation would be a 'secret' feature of this. Most users won't think about the CPI and just choose something that feels good. This slider changes the acceleration as well because it controls the pointerResolution on the driver. So it removes the need for a separate CPI compensation option.
+        ///     2. Slider: Acceleration. This controls the slope of the linear sensitivity curve.
+        ///     Notes:
+        ///         The `lowSpeed` parameter from older curves is included in the sensitivity.
+        ///         We simply disable the cap by setting it very high.
+        ///    Discussion
+        ///     - Speaking in terms of the old curve this means the highSens changes with the lowSens (aka sensitivity) but also the lowSens changes with the highSens. Making the lowSens and the highSens completely independent was the main goal of the `linearSensitivityBasedAccelCurve()` not sure if removing CPI compensation option or making lowSens and highSens settings independent will make for better user experience (don't have a mouse right now.)
+        ///     - Also, no accel setting would naturally be support, by just setting slope to 0.
+        /// See https://www.desmos.com/calculator/xoxabcofrr
         
         /// Validate
         assert(-1 <= c_unit && c_unit <= 1)
@@ -151,7 +183,7 @@ class PointerConfig: NSObject {
         if useSmoothCurvature {
             c = c_smooth
         } else {
-            c = c_unit * c_max
+            c = c_max * c_unit
         }
         
         var b = sqrt( (s_0 - s_1 - pow(c, 3) * (pow(v_0, 2) - pow(v_1, 2))) / (v_0 - v_1) )
@@ -179,110 +211,15 @@ class PointerConfig: NSObject {
         
     }
     
-    private static func simpleLinearSensitivityBasedAccelCurve(acceleration: Double) -> MFAppleAccelerationCurveParams {
+    private static func simpleSensitivityBasedAccelCurve(lowSpeed v_0: Double, lowSens s_0: Double, slope: Double, curvature: Double) -> MFAppleAccelerationCurveParams {
         
-        /// simpleLinearSensitivityBasedAccelCurve curve. These names are getting out of hand.
-        /// Idea: Reduce the number of parameters so it's easier for user to configure. Could have just 2 sliders to completely control the curve:
-        ///     1. Slider: Sensitivity. The CPI compensation would be a 'secret' feature of this. Most users won't think about the CPI and just choose something that feels good. This slider changes the acceleration as well because it controls the pointerResolution on the driver. So it removes the need for a separate CPI compensation option.
-        ///     2. Slider: Acceleration. This controls the slope of the linear sensitivity curve.
-        ///     Notes:
-        ///         The `lowSpeed` parameter from older curves is included in the sensitivity.
-        ///         We simply disable the cap by setting it very high.
-        ///    Discussion
-        ///     - Speaking in terms of the old curve this means the highSens changes with the lowSens (aka sensitivity) but also the lowSens changes with the highSens. Making the lowSens and the highSens completely independent was the main goal of the `linearSensitivityBasedAccelCurve()` not sure if removing CPI compensation option or making lowSens and highSens settings independent will make for better user experience (don't have a mouse right now.)
-        ///     - Also, no accel setting would naturally be support, by just setting slope to 0.
-        /// See https://www.desmos.com/calculator/xoxabcofrr
+        /// Convenience wrapper. Probably super unnecessary.
         
-        typealias P = CGPoint
+        let line = Line(p: .init(x: v_0, y: s_0), slope: slope)
+        let v_1 = 50.0 /// Pretty arbitrary. Making this very high makes cap at capSpeedLinear not set in.
+        let s_1 = line.evaluate(at: v_1)
         
-        var a = 0.8 /// Base sens
-        var b = root(acceleration, 2) /// Slope
-        
-        a /= pollingRateRatio
-        b /= root(pollingRateRatio, 2)
-        
-        return MFAppleAccelerationCurveParams(linearGain: a,
-                                              parabolicGain: b,
-                                              cubicGain: 0.0,
-                                              quarticGain: 0.0,
-                                              capSpeedLinear: 9999, /// Set very high so it never activates
-                                              capSpeedParabolicRoot: 9999 * 100) /// Set even higher because the Apple Driver expects that
-    }
-    
-    private static func linearSensitivityBasedAccelCurve(lowSpeed: Double, lowSens: Double, highSpeed: Double, highSens: Double) -> MFAppleAccelerationCurveParams {
-        
-        // TODO: Test if this works properly and if it's better than `sensitivityBasedAccelCurve()`
-        
-        /// Notes on `quartic` version of this (which we deleted)
-        ///     This here is an attempt to let the caller define a specific inputSpeed > 0 for which the sens = lowSens. While still making the curve as linear as possible
-        ///         For the original function `sensitivityBasedAccelCurve(lowSens: Double, highSens: Double, highSpeed: Double, curvature: Double)` the low sens is always defined for inputSpeed 0. This is bad because you always move at a higher inputSpeed than 0 and so the perceived low sens changes when you change the high sens.
-        ///     To achieve this we first define the points we want the curve to pass through, and then we use polynomial regression to find the coefficients
-        ///         See https://www.desmos.com/calculator/v5ssuwpshx for the quartic regression
-        ///     All the points are just on a straight line except for `p_1` which is capped at `p_1 >= 0`. (Otherwise the pointer moves backwards at very low speeds)
-        ///     Why this doesn't work:
-        ///         For the interesting cases, where the line is not straight, the curve slopes up for small x and back down for larger x. In these cases the fourth coefficient `d` is negative. However to bring the function from a normal polynomial into the shape of Apples acceleration curves `f(x) = ax + (bx)^2 + (cx)^3 + (dx)^4`, we need to take the fourth root of d. If d is negative this produces an imaginary number which the Apple driver can't process... :/.
-        ///             I feel like there might be an equivalent curve where c is negative instead of d. But I have no idea how you would find that. Edit: I just played around with it and I think d has to be negative to fit the curve.
-        
-        /// Notes on `cubic` version (this)
-        /// Same idea as quartic. Since it's cubic we can't make the line as straight. But it also shouldn't produce imaginary coefficients.
-        ///     See https://www.desmos.com/calculator/in835xa1lm
-        
-        typealias P = CGPoint
-        
-        let p2 = P(x: lowSpeed, y: lowSens)
-        let p3 = P(x: highSpeed, y: highSens)
-        
-        let l = Line(connecting: p2, p3)
-        
-        let e = l.evaluate(at: 0)
-        let p1 = P(x: 0, y: e < 0 ? 0 : e)
-        
-        let coeffsNS = PolynomialRegression.regression(withXValues: [p1.x, p2.x, p3.x], yValues: [p1.y, p2.y, p3.y], polynomialDegree: 2)
-        let coeffs = coeffsNS!.map{ ($0 as! NSNumber).doubleValue }
-        
-        var a = coeffs[0]
-        var b = root(coeffs[1], 2)
-        var c = root(coeffs[2], 3)
-        
-        if c != 0 {
-            DDLogWarn("The generated pointer acceleration curve is not linear. Coefficients: a: \(a), b: \(b), c: \(c)")
-        }
-        
-        a /= pollingRateRatio
-        b /= root(pollingRateRatio, 2)
-        c /= root(pollingRateRatio, 3)
-        
-        return MFAppleAccelerationCurveParams(linearGain: a,
-                                              parabolicGain: b,
-                                              cubicGain: c,
-                                              quarticGain: 0.0,
-                                              capSpeedLinear: highSpeed * 100,
-                                              capSpeedParabolicRoot: highSpeed * 1000)
-    }
-    
-    private static func sensitivityBasedAccelCurve(lowSens: Double, highSens: Double, highSpeed: Double, curvature: Double) -> MFAppleAccelerationCurveParams {
-        
-        /// See `Gain Curve Maths.tex` for background
-        
-        assert(-1 <= curvature && curvature <= 1)
-        
-        var a: Double = lowSens
-        let cCap = root(a-highSens, 3)/pow(highSpeed, 2/3) /// Max curvature for smooth sens curve
-        let cSmoothSpeedSlope = Math.nthroot(value: a-highSens, 3)/(pow(2, 1/3) * pow(highSpeed, 2/3)) /// Curvature for continuous speed slope
-        var c: Double = curvature * /*cCap*/ cSmoothSpeedSlope
-        var b: Double = sqrt(-a + pow(c, 3) * -pow(highSpeed, 2) + highSens)/sqrt(highSpeed)
-        
-        a /= pollingRateRatio
-        b /= pow(pollingRateRatio, 1/2)
-        c /= pow(pollingRateRatio, 1/3)
-        
-        return MFAppleAccelerationCurveParams(linearGain: a,
-                                              parabolicGain: b,
-                                              cubicGain: c,
-                                              quarticGain: 0.0,
-                                              capSpeedLinear: highSpeed,
-                                              capSpeedParabolicRoot: highSpeed*100) /// Make this absurdly high so it never activates
-        
+        return sensitivityBasedAccelCurve(lowSpeed: v_0, lowSens: s_0, highSpeed: v_1, highSens: s_1, curvature: curvature, useSmoothCurvature: false)
     }
     
     // MARK: - Master switch
