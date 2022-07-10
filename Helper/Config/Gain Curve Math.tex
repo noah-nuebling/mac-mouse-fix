@@ -1,5 +1,47 @@
 (This is a .tex file so that vscode highlights the braces and brackets)
 
+# Fifth version
+
+# See https://www.desmos.com/calculator/sqtvufiktv
+
+# Problem to solve: Low sens is defined at speed=0. But speed is always higher than 0. This leads to the effect that perceived low sens becomes higher when high sens is higher. To make perceived low and high sens independent, we want to define low sens at a speed > 0.
+
+# So our meta params should be:
+# v_0 -> lowSpeed
+# s_0 -> lowSens
+# v_1 -> highSpeed
+# s_1 -> highSens
+# s_c -> curvature
+
+# The relevant curves are same as fourth version
+
+# Constraints that should hold
+
+# h(v_0) = s_0
+# h(v_1) = s_1
+
+# Finding params:
+
+# a (given c)
+# a = s_1 + v_1 * (v_0 * c^3 - (s_0-s_1)/(v_0-v_1))
+
+# b (given c)
+# b = sqrt( (s_0 - s_1 - c^3 * (v_0^2 - v_1^2))/(v_0 - v_1) )
+
+
+# Parameter c controls curvature, there is a max value c_max. If the curvature is > c_max the sens becomes smaller when you move the mouse faster which doesn't make sense. -c_max also happens to be the min sensible value, where the curvature of the sens curve starts out at 0.
+#   The constraint to find c_max is:
+#       h'(v_1) = 0
+#   The value for c_max is:
+#       c_max = (s_0 - s_1)^(1/3)/(v_0^2 - 2 v_1 v_0 + v_1^2)^(1/3)
+        
+# Another interesting value for c is c_smooth. It makes it so f''(x) is continuous and f'(x) doesn't become smaller at higher speeds.
+#   The constraint to find c_smooth is:
+#       f''(v_1) = 0
+#   Value:
+#       c_smooth = (s_0 - s_1)^(1/3)/(v_0^2 - 3 v_1 v_0 + 2 v_1^2)^(1/3)
+
+
 # Fourth version
 
 See https://www.desmos.com/calculator/4qvpumdf4g

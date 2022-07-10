@@ -44,51 +44,82 @@ class PointerConfig: NSObject {
         Config.configWithAppOverridesApplied()[kMFConfigKeyPointer] as! NSDictionary
     }
     
+    /// User settings
+    
+    private static var semanticSensitivity: SemanticSensitivity {
+        return .test
+    }
+    private static var semanticAcceleration: SemanticAcceleration {
+        return .test
+    }
+    
+    private enum SemanticAcceleration {
+        case test
+        case off
+        case low
+        case medium
+        case high
+    }
+    private enum SemanticSensitivity {
+        case test
+        case low
+        case medium
+        case high
+    }
+    
     /// Main
     
     // MARK: Polling rate compensation
     ///  See top of the file for explanation
     private static let basePollingRate = 125
     private static var actualPollingRate = 125
-    private static var pollingRateFactor: Double {
+    private static var pollingRateRatio: Double {
         Double(actualPollingRate) / Double(basePollingRate)
     }
     
     // MARK: CPI compensation
     private static let baseCPI = 1000
     private static var actuaCPI = 1000
-    private static var CPIFactor: Double {
+    private static var CPIRatio: Double {
         Double(actuaCPI) / Double(baseCPI)
     }
     
     // MARK: Sensitivity
     
-    @objc static var sensitivity: Double {
+    @objc static var CPIMultiplier: Double {
         
         let sens = 1.0
         /// ^ It's probably better to leave this at 1.0 and use our custom speed curve to control sensitivity instead. This is a factor on the mouse speed before it's passed to the acceleration algorithm. So the whole acceleration curve changes when you change this.  However that makes it perfect for compensating CPI.
         
-        return sens * pollingRateFactor / CPIFactor
+        return sens * pollingRateRatio / CPIRatio
     }
     
     // MARK: Speed curve
     
-    private static var semanticAcceleration: SemanticAcceleration {
-        return .test
-    }
     
     @objc static var customAccelCurve: MFAppleAccelerationCurveParams {
         /// See "Gain Curve Math.tex" and PointerSpeed class for context
         
         let lowSpeed = 0.3
-        let highSpeed = 7.0
+        let highSpeed = 8.0
         
-        var lowSens = 1.2
+        var lowSens: Double
         let highSens: Double
+        
+        switch semanticSensitivity {
+        case .test:
+            lowSens = 2.3
+        case .low:
+            lowSens = 0.8
+        case .medium:
+            lowSens = 1.2
+        case .high:
+            lowSens = 2.0
+        }
         
         switch semanticAcceleration {
         case .test:
-            highSens = 8
+            highSens = 18
         case .off:
             lowSens *= 2
             highSens = lowSens
@@ -100,10 +131,52 @@ class PointerConfig: NSObject {
             highSens = 11
         }
 
-        return linearSensitivityBasedAccelCurve(lowSpeed: lowSpeed,
-                                               lowSens: lowSens,
-                                               highSpeed: highSpeed,
-                                               highSens: highSens)
+//        return sensitivityBasedAccelCurve(lowSens: lowSens, highSens: highSens, highSpeed: highSpeed, curvature: 1.0)
+//        return linearSensitivityBasedAccelCurve(lowSpeed: lowSpeed, lowSens: lowSens, highSpeed: highSpeed, highSens: highSens)
+        return completeSensitivityBasedAccelCurve(lowSpeed: lowSpeed, lowSens: lowSens, highSpeed: highSpeed, highSens: highSens, curvature: 1.0, useSmoothCurvature: false)
+    }
+    
+    private static func completeSensitivityBasedAccelCurve(lowSpeed v_0: Double, lowSens s_0: Double, highSpeed v_1: Double, highSens s_1: Double, curvature c_unit: Double, useSmoothCurvature: Bool) -> MFAppleAccelerationCurveParams {
+        
+        /// Validate
+        assert(-1 <= c_unit && c_unit <= 1)
+        
+        /// Get params
+        
+        var c: Double
+        
+        let c_max =     root(s_0 - s_1, 3) / root(pow(v_0, 2) - 2 * v_1 * v_0 +     pow(v_1, 2), 3)
+        let c_smooth =  root(s_0 - s_1, 3) / root(pow(v_0, 2) - 3 * v_1 * v_0 + 2 * pow(v_1, 2), 3)
+        
+        if useSmoothCurvature {
+            c = c_smooth
+        } else {
+            c = c_unit * c_max
+        }
+        
+        var b = sqrt( (s_0 - s_1 - pow(c, 3) * (pow(v_0, 2) - pow(v_1, 2))) / (v_0 - v_1) )
+        var a = s_1 + v_1 * (v_0 * pow(c, 3) - (s_0-s_1)/(v_0-v_1))
+        
+        /// Validate
+        
+        assert(a >= 0, "Invalid sensitivity curve. Initial sensitivity is negative.")
+        
+        /// Polling rate compensation
+        
+        a /= pollingRateRatio
+        b /= pow(pollingRateRatio, 1/2)
+        c /= pow(pollingRateRatio, 1/3)
+        
+        /// Return
+        return MFAppleAccelerationCurveParams(linearGain: a,
+                                       parabolicGain: b,
+                                       cubicGain: c,
+                                       quarticGain: 0,
+                                       capSpeedLinear: v_1,
+                                       capSpeedParabolicRoot: v_1*1000)
+        
+        
+        
     }
     
     private static func simpleLinearSensitivityBasedAccelCurve(acceleration: Double) -> MFAppleAccelerationCurveParams {
@@ -125,8 +198,8 @@ class PointerConfig: NSObject {
         var a = 0.8 /// Base sens
         var b = root(acceleration, 2) /// Slope
         
-        a /= pollingRateFactor
-        b /= root(pollingRateFactor, 2)
+        a /= pollingRateRatio
+        b /= root(pollingRateRatio, 2)
         
         return MFAppleAccelerationCurveParams(linearGain: a,
                                               parabolicGain: b,
@@ -175,15 +248,15 @@ class PointerConfig: NSObject {
             DDLogWarn("The generated pointer acceleration curve is not linear. Coefficients: a: \(a), b: \(b), c: \(c)")
         }
         
-        a /= pollingRateFactor
-        b /= root(pollingRateFactor, 2)
-        c /= root(pollingRateFactor, 3)
+        a /= pollingRateRatio
+        b /= root(pollingRateRatio, 2)
+        c /= root(pollingRateRatio, 3)
         
         return MFAppleAccelerationCurveParams(linearGain: a,
                                               parabolicGain: b,
                                               cubicGain: c,
                                               quarticGain: 0.0,
-                                              capSpeedLinear: highSpeed,
+                                              capSpeedLinear: highSpeed * 100,
                                               capSpeedParabolicRoot: highSpeed * 1000)
     }
     
@@ -194,14 +267,14 @@ class PointerConfig: NSObject {
         assert(-1 <= curvature && curvature <= 1)
         
         var a: Double = lowSens
-        let cCap = root(a-highSens, 3)/pow(highSpeed, 2/3)
-        let cSmoothSpeedSlope = Math.nthroot(value: a-highSens, 3)/(pow(2, 1/3) * pow(highSpeed, 2/3))
-        var c: Double = curvature * cCap /*cSmoothSpeedSlope*/
+        let cCap = root(a-highSens, 3)/pow(highSpeed, 2/3) /// Max curvature for smooth sens curve
+        let cSmoothSpeedSlope = Math.nthroot(value: a-highSens, 3)/(pow(2, 1/3) * pow(highSpeed, 2/3)) /// Curvature for continuous speed slope
+        var c: Double = curvature * /*cCap*/ cSmoothSpeedSlope
         var b: Double = sqrt(-a + pow(c, 3) * -pow(highSpeed, 2) + highSens)/sqrt(highSpeed)
         
-        a /= pollingRateFactor
-        b /= pow(pollingRateFactor, 1/2)
-        c /= pow(pollingRateFactor, 1/3)
+        a /= pollingRateRatio
+        b /= pow(pollingRateRatio, 1/2)
+        c /= pow(pollingRateRatio, 1/3)
         
         return MFAppleAccelerationCurveParams(linearGain: a,
                                               parabolicGain: b,
@@ -211,15 +284,6 @@ class PointerConfig: NSObject {
                                               capSpeedParabolicRoot: highSpeed*100) /// Make this absurdly high so it never activates
         
     }
-    
-    private enum SemanticAcceleration {
-        case test
-        case off
-        case low
-        case medium
-        case high
-    }
-    
     
     // MARK: - Master switch
     

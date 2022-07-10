@@ -58,7 +58,7 @@ extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHI
     if (PointerConfig.useSystemSpeed) {
         [self setForDevice:device sensitivity:PointerConfig.systemSensitivity systemCurveIndex:PointerConfig.systemAccelCurveIndex];
     } else {
-        [self setForDevice:device sensitivity:PointerConfig.sensitivity customCurve:PointerConfig.customAccelCurve];
+        [self setForDevice:device sensitivity:PointerConfig.CPIMultiplier customCurve:PointerConfig.customAccelCurve];
     }
 }
 
