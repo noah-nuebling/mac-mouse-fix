@@ -102,18 +102,40 @@ class PointerConfig: NSObject {
         
         let multiplier = 1.0
         
-        let curvature = 1.0
-        let useSmoothCurvature = false
+        /**
+         Notes on highSpeed and lowSpeed:
+            lowSpeed should be chosen so that lowSens is independent of other params (Not sure that's possible)
+            highSpeed should be chosen so that it's the largest speed you can consiouscly input and differentiate from other speeds.
+                - This seems to be 7.0.
+                - When curvature is 1.0, it also makes sense to lower highSpeed to increase curvature even more. Then you can lower lowSens, while maintaining the same "mediumSens". But I feel that makes the curve less predictable somehow.
+         */
         
         let lowSpeed = 0.2
         let highSpeed = 7.0
         
         var lowSens: Double
         var highSens: Double
+
+        /**
+         Notes on curvature:
+            Larger Curvature:
+                -> Bigger sens at medium speeds -> Less corrections and more comfort while tracking
+                -> Smaller sens at small speeds -> Still able to make micromovements for selecting text
+         */
+        
+        let curvature = 1.0
+        let useSmoothCurvature = false
+        
+        /**
+         Notes on sens:
+            Larger Sens -> Less corrections while tracking
+            4.5 largest sens that still allows comfortably selecting an 'I'
+                (With curvature 1.0. Should be independent but at this point it's not)
+         */
         
         switch semanticSensitivity {
         case .test:
-            lowSens = 4.7
+            lowSens = 4.5 /*4.7*/
         case .low:
             lowSens = 0.8
         case .medium:
@@ -122,9 +144,18 @@ class PointerConfig: NSObject {
             lowSens = 2.0
         }
         
+        /**
+         Notes on acc: (with curvature 1.0 and lowSens 4.5)
+            Smaller Acc -> Less corrections while tracking
+            10 -> Great accuracy, but little tedius
+            13.5 -> Feels great. `3 * lowSens`.
+            20 -> Veryyyy slightly less accuracy. Great comfort
+            30 -> Starting to lose accuracy
+         */
+        
         switch semanticAcceleration {
         case .test:
-            highSens = 16
+            highSens = 20.0
         case .off:
             lowSens *= 2
             highSens = lowSens

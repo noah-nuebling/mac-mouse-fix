@@ -47,7 +47,7 @@
 		<key>ReactiveCocoa.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>13</integer>
+			<integer>14</integer>
 		</dict>
 		<key>ReactiveObjC.xcscheme</key>
 		<dict>
@@ -64,7 +64,7 @@
 		<key>ReactiveSwift.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>14</integer>
+			<integer>12</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
