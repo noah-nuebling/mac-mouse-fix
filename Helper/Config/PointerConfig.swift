@@ -131,17 +131,18 @@ class PointerConfig: NSObject {
             Larger Sens -> Less corrections while tracking
             4.5 largest sens that still allows comfortably selecting an 'I'
                 (With curvature 1.0. Should be independent but at this point it's not)
+            4.5 is stretching it a little. Even 3.5. is a little finicky.
          */
         
         switch semanticSensitivity {
         case .test:
             lowSens = 4.5 /*4.7*/
         case .low:
-            lowSens = 0.8
-        case .medium:
-            lowSens = 1.2
-        case .high:
             lowSens = 2.0
+        case .medium:
+            lowSens = 3.0
+        case .high:
+            lowSens = 4.5
         }
         
         /**
@@ -160,11 +161,11 @@ class PointerConfig: NSObject {
             lowSens *= 2
             highSens = lowSens
         case .low:
-            highSens = 3.5
+            highSens = 15
         case .medium:
-            highSens = 8
+            highSens = 18
         case .high:
-            highSens = 11
+            highSens = 20
         }
         
         lowSens *= multiplier
