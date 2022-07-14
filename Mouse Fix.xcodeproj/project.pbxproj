@@ -27,7 +27,7 @@
 		4F39BC3B263AF2B000FDF692 /* SparkleUpdaterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F39BC3A263AF2B000FDF692 /* SparkleUpdaterController.m */; };
 		4F39BC4A263B179200FDF692 /* AppState.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F39BC49263B179200FDF692 /* AppState.m */; };
 		4F3A40AB266BBB6200436821 /* AccelerationBezier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A40AA266BBB6200436821 /* AccelerationBezier.swift */; };
-		4F3A40B1266BBC5000436821 /* AnimationCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A40B0266BBC5000436821 /* AnimationCurve.swift */; };
+		4F3A40B1266BBC5000436821 /* Curve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A40B0266BBC5000436821 /* Curve.swift */; };
 		4F3A40CB266C44D100436821 /* DisplayLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A40CA266C44D100436821 /* DisplayLink.m */; };
 		4F3A40DA266C5BDF00436821 /* NSScreen+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A40D9266C5BDF00436821 /* NSScreen+Additions.m */; };
 		4F3E067E26A2F97D000C9E06 /* URLMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3E067D26A2F97D000C9E06 /* URLMenuItem.m */; };
@@ -46,6 +46,10 @@
 		4F7AB0552606698A0008055E /* UIStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F7AB0542606698A0008055E /* UIStrings.m */; };
 		4F854D7C2789146900B46E9D /* NSMenu+NSMenu_Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F854D7B2789146900B46E9D /* NSMenu+NSMenu_Additions.m */; };
 		4F854D7E2789266A00B46E9D /* sfsymbols.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F854D7D2789266A00B46E9D /* sfsymbols.xcassets */; };
+		4F8A8DAD287EEF6200786BCC /* IOHIDAccelerationTableBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DAC287EEF6200786BCC /* IOHIDAccelerationTableBridge.mm */; };
+		4F8A8DBD287F203D00786BCC /* IOHIDAccelerationTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DBC287F203D00786BCC /* IOHIDAccelerationTable.cpp */; };
+		4F8A8DBF287F7BBA00786BCC /* NaturalAccelerationCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DBE287F7BBA00786BCC /* NaturalAccelerationCurve.swift */; };
+		4F8A8DC2287F967000786BCC /* TestAccelerationCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DC1287F967000786BCC /* TestAccelerationCurve.swift */; };
 		4F8B7E6727B4E32600598B65 /* VectorAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8B7E6627B4E32600598B65 /* VectorAnimator.swift */; };
 		4F8CE7012617738A00D70A76 /* AppTranslocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CE6FF2617738A00D70A76 /* AppTranslocationManager.m */; };
 		4F8CF95728686C0100BF5E55 /* PolynomialRegression.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CF94328686C0100BF5E55 /* PolynomialRegression.m */; };
@@ -322,7 +326,7 @@
 		4F39BCD3263B713400FDF692 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F39BCE8263B7B1500FDF692 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F3A40AA266BBB6200436821 /* AccelerationBezier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccelerationBezier.swift; sourceTree = "<group>"; };
-		4F3A40B0266BBC5000436821 /* AnimationCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationCurve.swift; sourceTree = "<group>"; };
+		4F3A40B0266BBC5000436821 /* Curve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Curve.swift; sourceTree = "<group>"; };
 		4F3A40C9266C44D100436821 /* DisplayLink.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DisplayLink.h; sourceTree = "<group>"; };
 		4F3A40CA266C44D100436821 /* DisplayLink.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DisplayLink.m; sourceTree = "<group>"; };
 		4F3A40D8266C5BDF00436821 /* NSScreen+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSScreen+Additions.h"; sourceTree = "<group>"; };
@@ -355,6 +359,16 @@
 		4F854D7A2789146900B46E9D /* NSMenu+NSMenu_Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMenu+NSMenu_Additions.h"; sourceTree = "<group>"; };
 		4F854D7B2789146900B46E9D /* NSMenu+NSMenu_Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMenu+NSMenu_Additions.m"; sourceTree = "<group>"; };
 		4F854D7D2789266A00B46E9D /* sfsymbols.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = sfsymbols.xcassets; sourceTree = "<group>"; };
+		4F8A8DAC287EEF6200786BCC /* IOHIDAccelerationTableBridge.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = IOHIDAccelerationTableBridge.mm; sourceTree = "<group>"; };
+		4F8A8DB0287EEF9B00786BCC /* IOHIDAccelerationTableBridge.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IOHIDAccelerationTableBridge.hpp; sourceTree = "<group>"; };
+		4F8A8DB4287EF65800786BCC /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
+		4F8A8DB6287EF76200786BCC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		4F8A8DB8287EF76A00786BCC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		4F8A8DBA287EFB3400786BCC /* IOHIDAccelerationTable.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IOHIDAccelerationTable.hpp; sourceTree = "<group>"; };
+		4F8A8DBC287F203D00786BCC /* IOHIDAccelerationTable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IOHIDAccelerationTable.cpp; sourceTree = "<group>"; };
+		4F8A8DBE287F7BBA00786BCC /* NaturalAccelerationCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaturalAccelerationCurve.swift; sourceTree = "<group>"; };
+		4F8A8DC0287F885D00786BCC /* Shorthands.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Shorthands.h; sourceTree = "<group>"; };
+		4F8A8DC1287F967000786BCC /* TestAccelerationCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAccelerationCurve.swift; sourceTree = "<group>"; };
 		4F8B7E6627B4E32600598B65 /* VectorAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorAnimator.swift; sourceTree = "<group>"; };
 		4F8CE6FF2617738A00D70A76 /* AppTranslocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppTranslocationManager.m; sourceTree = "<group>"; };
 		4F8CE7002617738A00D70A76 /* AppTranslocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppTranslocationManager.h; sourceTree = "<group>"; };
@@ -790,6 +804,15 @@
 			path = UIStrings;
 			sourceTree = "<group>";
 		};
+		4F8A8DBB287EFB4D00786BCC /* Extern */ = {
+			isa = PBXGroup;
+			children = (
+				4F8A8DBA287EFB3400786BCC /* IOHIDAccelerationTable.hpp */,
+				4F8A8DBC287F203D00786BCC /* IOHIDAccelerationTable.cpp */,
+			);
+			path = Extern;
+			sourceTree = "<group>";
+		};
 		4F8CE6FE2617738A00D70A76 /* AppTranslocation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1163,6 +1186,7 @@
 		4FF6653625F2C7B000689B77 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				4F8A8DC0287F885D00786BCC /* Shorthands.h */,
 				4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */,
 				4FF6653E25F2C7B000689B77 /* SharedUtility.h */,
 				4FF6653B25F2C7B000689B77 /* SharedUtility.m */,
@@ -1515,6 +1539,9 @@
 			children = (
 				4FA83A27268271E200F3A31B /* PointerSpeed.h */,
 				4FA83A28268271E200F3A31B /* PointerSpeed.m */,
+				4F8A8DB0287EEF9B00786BCC /* IOHIDAccelerationTableBridge.hpp */,
+				4F8A8DAC287EEF6200786BCC /* IOHIDAccelerationTableBridge.mm */,
+				4F8A8DBB287EFB4D00786BCC /* Extern */,
 				4FA83A2026823EE000F3A31B /* Experiments */,
 			);
 			path = PointerSpeed;
@@ -1607,11 +1634,13 @@
 		4FF937552669B043003A52EA /* Curves */ = {
 			isa = PBXGroup;
 			children = (
+				4F3A40B0266BBC5000436821 /* Curve.swift */,
+				4F8A8DC1287F967000786BCC /* TestAccelerationCurve.swift */,
+				4F8A8DBE287F7BBA00786BCC /* NaturalAccelerationCurve.swift */,
 				4FF0BD4A266A8B7E003935EA /* Bezier.swift */,
-				4F3A40AA266BBB6200436821 /* AccelerationBezier.swift */,
 				4F1AFE962670EBA900ECA424 /* DragCurve.swift */,
+				4F3A40AA266BBB6200436821 /* AccelerationBezier.swift */,
 				4F2CC58627B8D2300084AACE /* HybridCurves.swift */,
-				4F3A40B0266BBC5000436821 /* AnimationCurve.swift */,
 				4F2CC58827B8DA8B0084AACE /* Line.swift */,
 				4FBDA14A27B225210030E4EA /* Unused */,
 			);
@@ -1644,6 +1673,9 @@
 		E7721D8AA50A5B47737E0DD5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4F8A8DB8287EF76A00786BCC /* Foundation.framework */,
+				4F8A8DB6287EF76200786BCC /* QuartzCore.framework */,
+				4F8A8DB4287EF65800786BCC /* Metal.framework */,
 				24A19E04F97ECEF36516F04A /* Pods_Mac_Mouse_Fix.framework */,
 				5E09D0DF45AFAF30A568B97D /* Pods_Mac_Mouse_Fix_Helper.framework */,
 				1D8699EFC1F3CB6B37A1522D /* Pods_Mac_Mouse_Fix_Mac_Mouse_FixUITests.framework */,
@@ -2179,6 +2211,7 @@
 				4FD860AA266EC24E004F76C8 /* DerivedProperty.swift in Sources */,
 				4FF6669725F2C93A00689B77 /* TransformationManager.m in Sources */,
 				4F1B83062606E68300AEAF37 /* ButtonLandscapeAssessor.m in Sources */,
+				4F8A8DBF287F7BBA00786BCC /* NaturalAccelerationCurve.swift in Sources */,
 				4FF6668F25F2C93A00689B77 /* SmoothScroll_old_.m in Sources */,
 				4F70ECB7267E810900325A76 /* IOUtility.m in Sources */,
 				4FD0A71127B295F600FFCD12 /* OtherConfig.swift in Sources */,
@@ -2188,13 +2221,14 @@
 				4FF666A725F2C93A00689B77 /* Device.m in Sources */,
 				4FF6669C25F2C93A00689B77 /* PointerSpeedExperiments.m in Sources */,
 				4FF0BD5F266ADFE5003935EA /* MathObjc.m in Sources */,
-				4F3A40B1266BBC5000436821 /* AnimationCurve.swift in Sources */,
+				4F3A40B1266BBC5000436821 /* Curve.swift in Sources */,
 				4FF6668425F2C93A00689B77 /* MessagePort_Helper.m in Sources */,
 				4FF6669225F2C93A00689B77 /* RoughScroll_old_.m in Sources */,
 				4FBDA14F27B241CE0030E4EA /* GlobalEventTapThread.m in Sources */,
 				4FF6668725F2C93A00689B77 /* ButtonTriggerHandler.m in Sources */,
 				4FF6669825F2C93A00689B77 /* SubPixelator.m in Sources */,
 				4FE40B97283A49DD00880BEF /* SharedUtilitySwift.swift in Sources */,
+				4F8A8DC2287F967000786BCC /* TestAccelerationCurve.swift in Sources */,
 				4FF0BD51266AC10C003935EA /* Math.swift in Sources */,
 				4F8CF95B28686EA200BF5E55 /* DoublesMatrix.m in Sources */,
 				4F2CC58927B8DA8B0084AACE /* Line.swift in Sources */,
@@ -2211,6 +2245,7 @@
 				4FD860CC266EF55A004F76C8 /* ScrollConfig.swift in Sources */,
 				4F8FC140275DC81900887A0C /* PrefixSwift.swift in Sources */,
 				4F2CC58727B8D2300084AACE /* HybridCurves.swift in Sources */,
+				4F8A8DAD287EEF6200786BCC /* IOHIDAccelerationTableBridge.mm in Sources */,
 				4F3A40CB266C44D100436821 /* DisplayLink.m in Sources */,
 				4FF6669925F2C93A00689B77 /* VectorSubPixelator.m in Sources */,
 				4FF0BD4B266A8B7E003935EA /* Bezier.swift in Sources */,
@@ -2242,6 +2277,7 @@
 				4FA83A2E268288D900F3A31B /* PointerConfig.swift in Sources */,
 				4FF6668625F2C93A00689B77 /* ButtonTriggerGenerator.m in Sources */,
 				4FF6669425F2C93A00689B77 /* GestureScrollSimulator_old_.m in Sources */,
+				4F8A8DBD287F203D00786BCC /* IOHIDAccelerationTable.cpp in Sources */,
 				4F5F3EF32756F1DB00C350C0 /* ScrollModifiers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

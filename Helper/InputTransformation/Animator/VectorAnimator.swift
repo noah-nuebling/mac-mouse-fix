@@ -21,7 +21,7 @@ import QuartzCore
     typealias UntypedAnimatorCallback = Any
     typealias AnimatorCallback = (_ animationValueDelta: Vector, _ phase: MFAnimationCallbackPhase, _ subCurve: MFMomentumHint) -> ()
     typealias StopCallback = (_ lastPhase: MFAnimationPhase) -> ()
-    typealias StartParamCalculationCallback = (_ valueLeft: Vector, _ isRunning: Bool, _ animationCurve: AnimationCurve?) -> MFAnimatorStartParams
+    typealias StartParamCalculationCallback = (_ valueLeft: Vector, _ isRunning: Bool, _ animationCurve: Curve?) -> MFAnimatorStartParams
     /// ^ When starting the animator, we usually want to get the value that the animator still wants to scroll (`animationValueLeft`), and add that to the new value. The specific logic can differ a lot though, so we can't just hardcode this into `Animator`
     ///     But to avoid race-conditions, we can't just externally execute this, so we to pass in a callback that can execute custom logic to get the start params right before the animator is started
     typealias MFAnimatorStartParams = Dictionary<String, Any>
@@ -65,7 +65,7 @@ import QuartzCore
     let displayLink: DisplayLink
     @Atomic var callback: UntypedAnimatorCallback?
     /// ^ This is constantly accessed by subclassHook() and constantly written to by startWithUntypedCallback(). Becuase Swift is stinky and not thread safe, the app will sometimes crash, when this property is read from and written to at the same time. So we're using @Atomic propery wrapper
-    @objc var animationCurve: AnimationCurve? /// This class assumes that `animationCurve` passes through `(0, 0)` and `(1, 1)
+    @objc var animationCurve: Curve? /// This class assumes that `animationCurve` passes through `(0, 0)` and `(1, 1)
                                               //    let threadLock = DispatchSemaphore.init(value: 1)
                                               /// ^ Using a queue instead of a lock to avoid deadlocks. Always use queues for mutual exclusion except if you know exactly what you're doing!
 
@@ -200,7 +200,7 @@ import QuartzCore
             
             let durationRaw = p["duration"] as! Double
             let vector = vectorFromNSValue(p["vector"] as! NSValue) as Vector
-            let curve = p["curve"] as! AnimationCurve
+            let curve = p["curve"] as! Curve
             
             self.startWithUntypedCallback_Unsafe(durationRaw: durationRaw, value: vector, animationCurve: curve, callback: callback);
         }
@@ -208,7 +208,7 @@ import QuartzCore
     
     internal func startWithUntypedCallback_Unsafe(durationRaw: CFTimeInterval,
                                                   value: Vector,
-                                                  animationCurve: AnimationCurve,
+                                                  animationCurve: Curve,
                                                   callback: UntypedAnimatorCallback) {
         
         /// This function has `_Unsafe` in it's name because it doesn't execute on self.animatorQueue. Only call it form self.animatorQueue

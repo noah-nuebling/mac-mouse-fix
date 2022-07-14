@@ -12,6 +12,12 @@ import CocoaLumberjackSwift
 
 @objc class SharedUtilitySwift: NSObject {
 
+    static func clip<T: Comparable>(_ value: T, betweenLow low: T, high: T) -> T {
+        if value < low { return low }
+        if value > high { return high }
+        return value
+    }
+    
     @objc static func shallowCopy(of object: NSObject) -> NSObject {
         /// Why is there no default "shallowCopy" method for objects?? Is this bad?
         /// Be careful not to mutate any properties in the copy because it's shallow (holds new references to the same old objects as the original)

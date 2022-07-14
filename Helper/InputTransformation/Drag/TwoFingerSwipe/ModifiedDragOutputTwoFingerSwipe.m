@@ -95,7 +95,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
     IOHIDEventPhaseBits firstCallback = _drag->firstCallback;
     
     /// Start animator
-    [_smoothingAnimator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(Vector valueLeft, BOOL isRunning, id<AnimationCurve> _Nullable curve) {
+    [_smoothingAnimator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(Vector valueLeft, BOOL isRunning, Curve * _Nullable curve) {
         
         NSMutableDictionary *p = [NSMutableDictionary dictionary];
         

@@ -10,11 +10,11 @@
 #ifndef WannabePrefixHeader_h
 #define WannabePrefixHeader_h
 
-// I tried to use a prefix header but it didn't work for some reason. (see PrefixHeader.pch)
-// So now this is the place for stuff I want to import/define everywhere. (Since it's not a prefix header I'll also have to import this everywhere for that to work)
-// Remove this if you can ever get PrefixHeader.pch to work
+/// I tried to use a prefix header but it didn't work for some reason. (see PrefixHeader.pch)
+/// So now this is the place for stuff I want to import/define everywhere. (Since it's not a prefix header I'll also have to import this everywhere for that to work)
+/// Remove this if you can ever get PrefixHeader.pch to work
 
-// Setup Cocoalumberjack
+/// Setup Cocoalumberjack
 
 #define LOG_LEVEL_DEF ddLogLevel
 @import CocoaLumberjack;
@@ -29,7 +29,7 @@
 
 
 #if DEBUG
-static DDLogLevel ddLogLevel = DDLogLevelDebug; // These definitions might make more sense in Constants.h
+static DDLogLevel ddLogLevel = DDLogLevelDebug; /// These definitions might make more sense in Constants.h
 #else
 static DDLogLevel ddLogLevel = DDLogLevelInfo;
 //static DDLogLevel ddLogLevel = DDLogLevelOff; /// Override log level for testing

@@ -52,9 +52,8 @@ import ReactiveSwift
 /// Paper which containts info on how to differentiate the De Casteljau formula
 ///     https://www.clear.rice.edu/comp360/lectures/old/BezText.pdf
 
-@objc class Bezier: NSObject, AnimationCurve, NSCopying {
+@objc class Bezier: Curve, NSCopying {
 
-    typealias Point = Vector;
     static let xAxis = kMFAxisHorizontal
     static let yAxis = kMFAxisVertical
     let xAxis = Bezier.xAxis
@@ -510,7 +509,7 @@ import ReactiveSwift
     // MARK: Evaluate
     /// Get y(x)
     
-    @objc func evaluate(at x: Double) -> Double {
+    override func evaluate(at x: Double) -> Double {
         self.evaluate(at: x, epsilon: self.defaultEpsilon)
     }
     
@@ -584,32 +583,6 @@ import ReactiveSwift
         let slope = (cNext.y - cFirst.y) / (cNext.x - cFirst.x)
         
         return slope
-    }
-    
-    // MARK: Debug
-    
-    @objc func trace(nOfSamples: Int) -> String {
-        /// Sample bezier curve `nOfSamples` times, and return results as string
-        
-        var trace: Array<Point> = Array()
-        
-        for i in 0..<nOfSamples {
-            
-            let x = Math.scale(value: Double(i), from: Interval(location: 0, length: Double(nOfSamples-1)), to: xValueRange)
-            let y = evaluate(at: x, epsilon: defaultEpsilon)
-            
-            trace.append(Point(x: x, y: y))
-            
-        }
-        
-        var traceStr: String = String()
-        
-        for p in trace {
-            traceStr.append("(\(p.x),\(p.y))\n")
-        }
-        
-        return traceStr
-        
     }
 
 }

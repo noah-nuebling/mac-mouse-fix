@@ -348,7 +348,7 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
     
     /// Init animator
     
-    [_momentumAnimator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(Vector valueLeft, BOOL isRunning, id<AnimationCurve> _Nullable curve) {
+    [_momentumAnimator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(Vector valueLeft, BOOL isRunning, Curve * _Nullable curve) {
         
         NSMutableDictionary *p = [NSMutableDictionary dictionary];
         

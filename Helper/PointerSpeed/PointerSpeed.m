@@ -17,6 +17,7 @@
 #import "IOUtility.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "DeviceManager.h"
+#import "IOHIDAccelerationTableBridge.hpp"
 
 /// Get private Apple stuff
 /// See PointerSpeedExperiments2.m for more info
@@ -57,9 +58,24 @@ extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHI
 
     if (PointerConfig.useSystemSpeed) {
         [self deconfigureDevice:device];
+    } else if (PointerConfig.useParametricCurve) {
+        [self setForDevice:device sensitivity:PointerConfig.CPIMultiplier parametricCurve:PointerConfig.customParametricAccelCurve];
     } else {
-        [self setForDevice:device sensitivity:PointerConfig.CPIMultiplier customCurve:PointerConfig.customAccelCurve];
+        [self setForDevice:device sensitivity:PointerConfig.CPIMultiplier tableBasedCurve:PointerConfig.customTableBasedAccelCurve];
     }
+    
+    /// Debug
+    
+//    double accelIndex = 123.0;
+//    int pointCount = 3;
+//    P points[3] = {
+//        (P){.x = 0, .y = 0},
+//        (P){.x = 1, .y = 2},
+//        (P){.x = 2, .y = 4}
+//    };
+//    CFDataRef table = createAccelerationTableWithPoints(points, pointCount, accelIndex);
+    CFDataRef defaultTable = copyDefaultAccelerationTable();
+    printAccelerationTable(defaultTable);
 }
 
 + (void)deconfigureDevice:(IOHIDDeviceRef)device {
@@ -67,42 +83,59 @@ extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHI
     [self setForDevice:device sensitivity:PointerConfig.systemSensitivity systemCurveIndex:PointerConfig.systemAccelCurveIndex];
 }
 
-// MARK: Doing stuff
+// MARK: - Surface
 
 + (void)setForDevice:(IOHIDDeviceRef)device
          sensitivity:(double)sensitivity
-        customCurve:(MFAppleAccelerationCurveParams)accelCurve {
+     tableBasedCurve:(NSArray *)points {
     
     /// Declare stuff
     Boolean success;
     
-    /// Get eventSystemClient
-    IOHIDEventSystemClientRef systemClient = IOHIDEventSystemClientCreateWithType(kCFAllocatorDefault, HIDEventSystemClientTypePassive, NULL);
-    
     /// Get eventServiceClient
-    io_service_t driverService = copyDriverService(device);
-    IOHIDServiceClientRef serviceClient = copyEventServiceClient(driverService, systemClient);
-    if (serviceClient == NULL) {
-        DDLogWarn(@"Failed to get service client. Can't set PointerSpeed");
-        return;
-    }
+    IOHIDServiceClientRef serviceClient;
+    IOHIDEventSystemClientRef systemClient;
+    copyEventServiceAndSystemClients(device, &serviceClient, &systemClient);
     
     /// Set sensitivity on the driver
     success = setSensitivity(sensitivity, serviceClient);
     assert(success);
     
     /// Set mouse acceleration on the driver
-    success = setAccelToCurve(accelCurve, serviceClient);
+    success = setAccelToTableBasedCurve(points, serviceClient);
     assert(success);
     
-    IOObjectRelease(driverService);
     CFRelease(serviceClient);
     CFRelease(systemClient);
 }
 
 + (void)setForDevice:(IOHIDDeviceRef)device
          sensitivity:(double)sensitivity
-  systemCurveIndex:(double)curveIndex {
+        parametricCurve:(MFAppleAccelerationCurveParams)accelCurve {
+    
+    /// Declare stuff
+    Boolean success;
+    
+    /// Get eventServiceClient
+    IOHIDServiceClientRef serviceClient;
+    IOHIDEventSystemClientRef systemClient;
+    copyEventServiceAndSystemClients(device, &serviceClient, &systemClient);
+    
+    /// Set sensitivity on the driver
+    success = setSensitivity(sensitivity, serviceClient);
+    assert(success);
+    
+    /// Set mouse acceleration on the driver
+    success = setAccelToParametricCurve(accelCurve, serviceClient);
+    assert(success);
+    
+    CFRelease(serviceClient);
+    CFRelease(systemClient);
+}
+
++ (void)setForDevice:(IOHIDDeviceRef)device
+         sensitivity:(double)sensitivity
+    systemCurveIndex:(double)curveIndex {
     /// Sets pointer  sensitivity and pointer acceleration on a specific IOHIDDevice. Source for this is `PointerSpeedExperiments2.m`
     
     /// Validate
@@ -112,34 +145,28 @@ extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHI
     /// Declare stuff
     Boolean success;
     
-    /// Get eventSystemClient
-    IOHIDEventSystemClientRef systemClient = IOHIDEventSystemClientCreateWithType(kCFAllocatorDefault, HIDEventSystemClientTypePassive, NULL);
-    
     /// Get eventServiceClient
-    io_service_t driverService = copyDriverService(device);
-    IOHIDServiceClientRef serviceClient = copyEventServiceClient(driverService, systemClient);
-    if (serviceClient == NULL) {
-        DDLogWarn(@"Failed to get service client. Can't set PointerSpeed");
-        return;
-    }
+    IOHIDServiceClientRef serviceClient;
+    IOHIDEventSystemClientRef systemClient;
+    copyEventServiceAndSystemClients(device, &serviceClient, &systemClient);
     
     /// Set sensitivity on the driver
     success = setSensitivity(sensitivity, serviceClient);
     assert(success);
     
     /// Delete custom curves
-    removeCustomCurves(serviceClient, driverService, serviceClient);
+    removeCustomCurves(serviceClient, serviceClient);
     
     /// Set mouse acceleration on the driver
     success = selectAccelCurveWithIndex(curveIndex, serviceClient);
     assert(success);
     
-    IOObjectRelease(driverService);
+    /// Release
     CFRelease(serviceClient);
     CFRelease(systemClient);
 }
 
-// MARK: - Core
+// MARK: - Core lvl 2
 
 static Boolean setSensitivity(double sensitivity, IOHIDServiceClientRef serviceClient) {
     /// `sensitivity` acts like a multiplier on the mouse speed before that speed is passed into the accelerationCurve. It can be used to compensate for different CPI on different mice.
@@ -185,10 +212,30 @@ static Boolean selectAccelCurveWithIndex(double accelerationPresetIndex, IOHIDSe
     return success;
 }
 
-
 static double customCurveIndex = 123; /// This is arbitrary. PointerConfig.defaultAccelCurves documentation
 
-static Boolean setAccelToCurve(MFAppleAccelerationCurveParams params, IOHIDServiceClientRef eventServiceClient) {
+static Boolean setAccelToTableBasedCurve(NSArray *points, IOHIDServiceClientRef eventServiceClient) {
+    
+    /// Declare stuff
+    Boolean success;
+        
+    /// Create CFData for table
+    CFDataRef table = createAccelerationTableWithArray(points, customCurveIndex);
+    
+    /// Write curves
+    success = setTableCurves(table, eventServiceClient);
+        
+    /// Early return
+    if (!success) return false;
+    
+    /// Select custom curve
+    success = selectAccelCurveWithIndex(customCurveIndex, eventServiceClient);
+    
+    /// Return
+    return success;
+}
+
+static Boolean setAccelToParametricCurve(MFAppleAccelerationCurveParams params, IOHIDServiceClientRef eventServiceClient) {
     /// Set acceleration to a custom curve
     ///     Also see
     ///     - MFAppleAccelerationCurveParams documentation
@@ -212,7 +259,7 @@ static Boolean setAccelToCurve(MFAppleAccelerationCurveParams params, IOHIDServi
     NSArray *customCurveArray = @[customCurveParams];
         
     /// Write curves
-    success = setCurves(customCurveArray, eventServiceClient);
+    success = setParametricCurves(customCurveArray, eventServiceClient);
         
     /// Early return
     if (!success) return false;
@@ -224,21 +271,51 @@ static Boolean setAccelToCurve(MFAppleAccelerationCurveParams params, IOHIDServi
     return success;
 }
 
-// MARK: Helper
+// MARK: Core lvl 1
 
-static Boolean setCurves(NSArray *curves, IOHIDServiceClientRef serviceClient) {
+static Boolean parametricCurvesAreSet(IOHIDServiceClientRef serviceClient) {
+    /// Once parametricCurves are set we don't know of a way to remove them again. And they override tableBasedCurves.
+    ///     So there is no way to activate tableBasedCurves once parametricCurves have been set.
+    
+    CFArrayRef parametricCurves = IOHIDServiceClientCopyProperty(serviceClient, CFSTR(kHIDAccelParametricCurvesKey));
+    
+    if (parametricCurves == NULL) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+static Boolean setTableCurves(CFDataRef curves, IOHIDServiceClientRef serviceClient) {
+    
+    if (parametricCurvesAreSet(serviceClient)) {
+        DDLogError(@"Trying to set tableBasedCurve but parametricCurve is already set. This has no effect.");
+        assert(false);
+    }
+    
+    return IOHIDServiceClientSetProperty(serviceClient, CFSTR(kIOHIDPointerAccelerationTableKey), curves);
+}
+
+static Boolean setParametricCurves(NSArray *curves, IOHIDServiceClientRef serviceClient) {
     return IOHIDServiceClientSetProperty(serviceClient, CFSTR(kHIDAccelParametricCurvesKey), (__bridge CFArrayRef)curves);
     /// ^ See PointerConfig.defaultAccelCurves documentation for context
     ///     Fun fact: Setting a number crashes the window server under 12.4 Monterey
 }
 
-static Boolean removeCustomCurves(IOHIDServiceClientRef eventServiceClient, io_service_t driverService, IOHIDServiceClientRef serviceClient) {
+static Boolean removeCustomCurves(IOHIDServiceClientRef eventServiceClient, IOHIDServiceClientRef serviceClient) {
     
-    return setCurves(PointerConfig.systemAccelCurves, serviceClient);
-    /// ^ See PointerConfig.defaultAccelCurves documentation for context
+    if (parametricCurvesAreSet(serviceClient)) {
+        return setParametricCurves(PointerConfig.systemAccelCurves, serviceClient);
+        /// ^ See PointerConfig.defaultAccelCurves documentation for context
+    } else {
+        CFDataRef defaultCurves = copyDefaultAccelerationTable();
+        Boolean success = setTableCurves(defaultCurves, serviceClient);
+        CFRelease(defaultCurves);
+        return success;
+    }
 }
 
-static IOHIDServiceClientRef copyEventServiceClient(io_service_t service, IOHIDEventSystemClientRef eventSystemClient) {
+static IOHIDServiceClientRef copyEventServiceClient_WithEventSystem(io_service_t service, IOHIDEventSystemClientRef eventSystemClient) {
     
     uint64_t serviceID;
     kern_return_t kr = IORegistryEntryGetRegistryEntryID(service, &serviceID);
@@ -251,6 +328,25 @@ static IOHIDServiceClientRef copyEventServiceClient(io_service_t service, IOHIDE
     
     /// Return
     return eventServiceClient;
+}
+
+static void copyEventServiceAndSystemClients(IOHIDDeviceRef device, IOHIDServiceClientRef *serviceClient, IOHIDEventSystemClientRef *systemClient) {
+    
+    /// Caller is responsible for releasing serviceClient and systemClient
+    /// Releasing the systemClient will make the serviceClient unusable.
+    
+    /// Get eventSystemClient
+    *systemClient = IOHIDEventSystemClientCreateWithType(kCFAllocatorDefault, HIDEventSystemClientTypePassive, NULL);
+    
+    /// Get eventServiceClient
+    io_service_t driverService = copyDriverService(device);
+    *serviceClient = copyEventServiceClient_WithEventSystem(driverService, *systemClient);
+    if (*serviceClient == NULL) {
+        DDLogWarn(@"Failed to get service client. Can't set PointerSpeed");
+    }
+    
+    /// Release
+    IOObjectRelease(driverService);
 }
 
 static io_service_t copyDriverService(IOHIDDeviceRef device) {

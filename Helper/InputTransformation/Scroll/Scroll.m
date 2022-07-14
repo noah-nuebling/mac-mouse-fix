@@ -449,7 +449,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         
         /// Start animation
         
-        [_animator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(Vector valueLeftVec, BOOL isRunning, NSObject<AnimationCurve> *animationCurve) {
+        [_animator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(Vector valueLeftVec, BOOL isRunning, Curve *animationCurve) {
             
             /// Validate
             assert(valueLeftVec.x == 0 || valueLeftVec.y == 0);

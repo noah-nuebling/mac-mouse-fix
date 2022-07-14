@@ -13,6 +13,7 @@
 
 // Import WannabePrefixHeader.h here so we don't have to manually include it in as many places (not sure if bad practise)
 #import "WannabePrefixHeader.h"
+#import "Shorthands.h"
 
 #define stringf(format, ...) [NSString stringWithFormat:(format), ##__VA_ARGS__]
 

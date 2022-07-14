@@ -509,11 +509,6 @@ import CocoaLumberjackSwift
                                      P(x: x3, y: y3),
                                      P(x: xMax, y: yMax)], defaultEpsilon: 0.08)
         
-        /// Debug
-        
-        let trace = curve.trace(nOfSamples: 100)
-        DDLogDebug("trace of accelerationBezier: \n\(trace)")
-        
         /// Return
         return curve
     }

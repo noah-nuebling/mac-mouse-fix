@@ -1,16 +1,18 @@
 //
 // --------------------------------------------------------------------------
-// Curve.swift
+// Shorthands.h
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
-// Created by Noah Nuebling in 2021
+// Created by Noah Nuebling in 2022
 // Licensed under MIT
 // --------------------------------------------------------------------------
 //
 
-import Cocoa
+#ifndef Shorthands_h
+#define Shorthands_h
 
-@objc protocol AnimationCurve: NSObjectProtocol {
-    
-    @objc func evaluate(at x: Double) -> Double
-    /// ^ Animator.swift expects this to pass through (0,0) and (1,1)
-}
+typedef struct {
+    double x;
+    double y;
+} P;
+
+#endif /* Shorthands_h */

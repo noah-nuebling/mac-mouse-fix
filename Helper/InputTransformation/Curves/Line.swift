@@ -10,7 +10,7 @@
 import Foundation
 
 
-@objc class Line: NSObject, AnimationCurve {
+@objc class Line: Curve {
     
     let a: Double
     let b: Double
@@ -36,7 +36,7 @@ import Foundation
         self.b = b
     }
     
-    @objc func evaluate(at x: Double) -> Double {
+    override func evaluate(at x: Double) -> Double {
         return a * x + b
     }
     

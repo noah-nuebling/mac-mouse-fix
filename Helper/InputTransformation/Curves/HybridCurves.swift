@@ -23,7 +23,7 @@ import CocoaLumberjackSwift
     /// Base Curve
     
     var _baseCurve: Bezier = InvalidBezier()
-    override var baseCurve: AnimationCurve {
+    override var baseCurve: Curve {
         get { _baseCurve }
         set { fatalError() }
     }
@@ -183,7 +183,7 @@ import CocoaLumberjackSwift
     /// Base Curve
     
     let _baseCurve: Line = Line(a: 1, b: 0)
-    override var baseCurve: AnimationCurve {
+    override var baseCurve: Curve {
         get { _baseCurve }
         set { fatalError() }
     }
@@ -251,7 +251,7 @@ import CocoaLumberjackSwift
     /// BaseCurve
     
     var _baseCurve: Bezier
-    override var baseCurve: AnimationCurve {
+    override var baseCurve: Curve {
         get { _baseCurve }
         set { _baseCurve = newValue as! Bezier }
     }
@@ -299,7 +299,7 @@ import CocoaLumberjackSwift
 
 // MARK: - Base class
 
-class HybridCurve: NSObject, AnimationCurve {
+class HybridCurve: Curve {
     /// This class is supposed to be subclassed, not used directly.
 
     /// Constants
@@ -310,7 +310,7 @@ class HybridCurve: NSObject, AnimationCurve {
     
     /// BaseCurve
     
-    @objc var baseCurve: AnimationCurve { get{fatalError()} set{fatalError()} }
+    @objc var baseCurve: Curve { get{fatalError()} set{fatalError()} }
     
     @objc var baseTimeInterval: Interval = .unitInterval
     @objc var baseDistanceInterval: Interval = .unitInterval
@@ -378,7 +378,7 @@ class HybridCurve: NSObject, AnimationCurve {
     
     /// Evaluate
     
-    @objc func evaluate(at x: Double) -> Double {
+    override func evaluate(at x: Double) -> Double {
         
         let result: Double
         

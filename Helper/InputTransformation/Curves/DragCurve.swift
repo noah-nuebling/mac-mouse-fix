@@ -137,7 +137,7 @@ import CocoaLumberjackSwift
 
 import Foundation
 
-@objc class DragCurve: NSObject, AnimationCurve {
+@objc class DragCurve: Curve {
 
     private var a: Double
     private var b: Double
@@ -425,7 +425,7 @@ import Foundation
     
     /// Interface
     
-    @objc func evaluate(at tUnit: Double) -> Double {
+    override func evaluate(at tUnit: Double) -> Double {
         /// Animator.swift expects its animation curves to pass through (0,0) and (1,1), so we'll scale our curve accordingly
         
         let t = Math.scale(value: tUnit, from: .unitInterval, to: timeInterval)

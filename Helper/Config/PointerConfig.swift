@@ -9,7 +9,9 @@
 
 /// This class provides pointer related settings. Primarily used by `PointerSpeed.m`. `PointerSpeed.m` configures Apple's HID driver to have different mouse sensitivity and acceleration curve. The implementation of the Apple driver that `PointerSpeed.m` configures can be found in `HIPointing.cpp` and in `IOHIDPointerScrollFilter.cpp`
 
-/// Polling rate compensation notes:
+/// **Polling rate compensation notes**
+///
+/// Edit: Polling rate is already accounted for in the newer macOS acceleration algorithm. See `IOHIDPointerAccelerator::accelerate`. But it's not done properly I think. (Judging from `IOKit source code (19.06.2021)`).  From my understanding, setting the `_rate` to the actual polling rate would only somewhat stabilize the acceleration when events are coming in slower or faster than the physical polling rate. But it wouldn't adjust the acceleration curve to be independent of polling rate.  Might still be have some benefits. Set via `kHIDPointerReportRateKey`
 ///
 /// Apples driver doesn't take into account polling rate. When it measures device speed for its acceleration algorithm, it actually just uses the raw delta from the device and calls it speed. (Edit: This might not be the case for `IOHIDPointerScrollFilter.cpp`. See "More thoughts".)
 ///     Problem is that at equivalent movement speed and CPI, a mouse with a 2x polling rate will only have 0.5x magnitude in its raw deltas. This means the acceleration curve won't kick in properly.
@@ -96,8 +98,29 @@ class PointerConfig: NSObject {
     
     // MARK: Speed curve
     
+    @objc static var useParametricCurve: Bool = false
     
-    @objc static var customAccelCurve: MFAppleAccelerationCurveParams {
+    @objc static var customTableBasedAccelCurve: [[Double]] {
+        
+        /// Create natural curve
+        
+        let v0 = 0.2
+        let s0 = 4.5
+        let v1 = 10.0
+        let s1 = 20.0
+        let curv = 0.15
+        let nSamp = 1000
+        
+        let curve = NaturalAccelerationCurve(lowSpeed: v0, lowSens: s0, highSpeed: v1, highSens: s1, curvature: curv)
+        
+        /// Create test curve
+        
+//        let curve = TestAccelerationCurve(thresholdSpeed: 4, firstSens: 0, secondSens: -2.0)
+        
+        return curve.traceSpeed(startX: v0, endX: v1, nOfSamples: nSamp)
+    }
+    
+    @objc static var customParametricAccelCurve: MFAppleAccelerationCurveParams {
         /// See "Gain Curve Math.tex" and PointerSpeed class for context
         
         let multiplier = 1.0
