@@ -16,21 +16,28 @@ import Cocoa
 
 @objc class NaturalAccelerationCurve: AccelerationCurve {
     
+    let v0: Double
+    let v1: Double
+    
     let a: Double
     let b: Double
     let c: Double
     let d: Double
     
     convenience init(lowSpeed v0: Double, lowSens s0: Double, highSpeed v1: Double, highSens s1: Double, curvature scurve: Double) {
+        
         let a = v0
         let b = s0
         let c = 1/(1-scurve) - 1
         let d = (b * pow(M_E, c * (a-v1)) - s1) / (pow(M_E, c * (a - v1)) - 1) - s0
         
-        self.init(a: a, b: b, c: c, d: d)
+        self.init(v0: v0, v1: v1, a: a, b: b, c: c, d: d)
     }
     
-    required init(a: Double, b: Double, c: Double, d: Double) {
+    required init(v0: Double, v1: Double, a: Double, b: Double, c: Double, d: Double) {
+        
+        self.v0 = v0
+        self.v1 = v1
         self.a = a
         self.b = b
         self.c = c
@@ -38,7 +45,7 @@ import Cocoa
     }
     
     override func evaluate(at x: Double) -> Double {
-        let xClipped = SharedUtilitySwift.clip(x, betweenLow: a, high: Double.infinity) /// Clipping makes it so that sens is flat below v0. This is similar to the offset in rawAccel
+        let xClipped = SharedUtilitySwift.clip(x, betweenLow: v0, high: Double.infinity) /// Clipping makes it so that sens is capped flat outside v0...♾ This is similar to the offset and cap in rawAccel
         return evaluateCore(at: xClipped)
     }
     

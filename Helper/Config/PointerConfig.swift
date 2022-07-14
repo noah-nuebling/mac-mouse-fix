@@ -102,22 +102,27 @@ class PointerConfig: NSObject {
     
     @objc static var customTableBasedAccelCurve: [[Double]] {
         
-        /// Create natural curve
+        /// General params
         
         let v0 = 0.2
-        let s0 = 4.5
-        let v1 = 10.0
-        let s1 = 20.0
-        let curv = 0.15
+        let s0 = 2.0
+        let v1 = 7.0
+        let s1 = 18.0
         let nSamp = 1000
+        let overSample = 2.0
         
-        let curve = NaturalAccelerationCurve(lowSpeed: v0, lowSens: s0, highSpeed: v1, highSens: s1, curvature: curv)
+        /// Create natural curve
+//        let curv = 0.15
+//        let curve = NaturalAccelerationCurve(lowSpeed: v0, lowSens: s0, highSpeed: v1, highSens: s1, curvature: curv)
         
-        /// Create test curve
+        /// Create polynomialCurve
+        let curvature = 4
+        let curve = PolynomialCappedAccelerationCurve(lowSpeed: v0, lowSens: s0, highSpeed: v1, highSens: s1, curvature: curvature)
         
-//        let curve = TestAccelerationCurve(thresholdSpeed: 4, firstSens: 0, secondSens: -2.0)
+        let trace = curve.traceSpeed(startX: 0, endX: v1 * overSample, nOfSamples: Int(Double(nSamp)*overSample))
+        let adjustedTrace = trace.map{ p in [p[0], p[1] / pollingRateRatio] }
         
-        return curve.traceSpeed(startX: v0, endX: v1, nOfSamples: nSamp)
+        return adjustedTrace
     }
     
     @objc static var customParametricAccelCurve: MFAppleAccelerationCurveParams {

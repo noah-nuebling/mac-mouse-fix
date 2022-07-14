@@ -24,6 +24,7 @@
 #import "Scroll.h"
 #import "PointerSpeed.h"
 #import "PolynomialRegression.h"
+#import "PolyFitObjC.h"
 #import "IOHIDAccelerationTableBridge.hpp"
 
 //#import <CocoaLumberjack/CocoaLumberjack.h> /// Importing CocoaLumberjack/Swift with CocoaPods breaks my project. Can't use macros when importing this.
