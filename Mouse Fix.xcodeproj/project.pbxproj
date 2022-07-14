@@ -348,6 +348,7 @@
 		4F70ECAD267E442D00325A76 /* PointerSpeedExperiments2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerSpeedExperiments2.m; sourceTree = "<group>"; };
 		4F70ECB5267E810900325A76 /* IOUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOUtility.h; sourceTree = "<group>"; };
 		4F70ECB6267E810900325A76 /* IOUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IOUtility.m; sourceTree = "<group>"; };
+		4F77F7C728808DAE00847D0E /* PolyFitNumPy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolyFitNumPy.swift; sourceTree = "<group>"; };
 		4F79A7EE26042E2E00076A7E /* ToastNotification.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToastNotification.xib; sourceTree = "<group>"; };
 		4F79A81A2604317200076A7E /* ToastNotificationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToastNotificationController.h; sourceTree = "<group>"; };
 		4F79A81B2604317200076A7E /* ToastNotificationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ToastNotificationController.m; sourceTree = "<group>"; };
@@ -801,6 +802,18 @@
 				4F2F5DB125FB723D0037660A /* AddWindow.xib */,
 			);
 			path = AddWindow;
+			sourceTree = "<group>";
+		};
+		4F77F7C628808D6000847D0E /* PolynomialRegression */ = {
+			isa = PBXGroup;
+			children = (
+				4F77F7C728808DAE00847D0E /* PolyFitNumPy.swift */,
+				4FF9306028806E4F0007CCA7 /* PolyFitObjC.h */,
+				4FF9306128806E4F0007CCA7 /* PolyFitObjC.m */,
+				4FF9305E288060100007CCA7 /* PolyFit.hpp */,
+				4FF9305D288060100007CCA7 /* PolyFit.cpp */,
+			);
+			path = PolynomialRegression;
 			sourceTree = "<group>";
 		};
 		4F7AB0522606692C0008055E /* UIStrings */ = {
@@ -1643,10 +1656,7 @@
 				4FF0BD5D266ADFE5003935EA /* MathObjc.h */,
 				4FF0BD5E266ADFE5003935EA /* MathObjc.m */,
 				4FF937552669B043003A52EA /* Curves */,
-				4FF9306028806E4F0007CCA7 /* PolyFitObjC.h */,
-				4FF9306128806E4F0007CCA7 /* PolyFitObjC.m */,
-				4FF9305E288060100007CCA7 /* PolyFit.hpp */,
-				4FF9305D288060100007CCA7 /* PolyFit.cpp */,
+				4F77F7C628808D6000847D0E /* PolynomialRegression */,
 			);
 			path = Math;
 			sourceTree = "<group>";
@@ -2747,6 +2757,12 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Helper/Utility/Math/PolynomialRegression/numpy/core/lib",
+					"$(PROJECT_DIR)/Helper/Utility/Math/PolynomialRegression/numpy/.dylibs",
+					"$(PROJECT_DIR)/Helper/Utility/Math/PolynomialRegression/numpy/random/lib",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix.helper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2779,6 +2795,12 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Helper/Utility/Math/PolynomialRegression/numpy/core/lib",
+					"$(PROJECT_DIR)/Helper/Utility/Math/PolynomialRegression/numpy/.dylibs",
+					"$(PROJECT_DIR)/Helper/Utility/Math/PolynomialRegression/numpy/random/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix.helper";

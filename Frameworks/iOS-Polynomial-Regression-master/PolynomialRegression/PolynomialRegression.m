@@ -11,7 +11,7 @@
 
 @implementation PolynomialRegression
 
-+ (NSMutableArray *)regressionWithXValues:(NSMutableArray *)xvals yValues:(NSMutableArray *)yvals polynomialDegree:(NSUInteger)p
++ (NSArray<NSNumber *> *)regressionWithXValues:(NSArray<NSNumber *> *)xvals yValues:(NSArray<NSNumber *> *)yvals polynomialDegree:(NSUInteger)p
 {
     NSCParameterAssert(p > 0);
     NSCAssert([xvals count] == [yvals count], @"There should be as many x values as y values. Given %lu x values and %lu y values.", [xvals count], [yvals count]);

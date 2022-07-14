@@ -116,7 +116,7 @@ class PointerConfig: NSObject {
 //        let curve = NaturalAccelerationCurve(lowSpeed: v0, lowSens: s0, highSpeed: v1, highSens: s1, curvature: curv)
         
         /// Create polynomialCurve
-        let curvature = 4
+        let curvature = 3
         let curve = PolynomialCappedAccelerationCurve(lowSpeed: v0, lowSens: s0, highSpeed: v1, highSens: s1, curvature: curvature)
         
         let trace = curve.traceSpeed(startX: 0, endX: v1 * overSample, nOfSamples: Int(Double(nSamp)*overSample))
@@ -164,7 +164,7 @@ class PointerConfig: NSObject {
         
         switch semanticSensitivity {
         case .test:
-            lowSens = 4.5 /*4.7*/
+            lowSens = 2.0 /*4.7*/
         case .low:
             lowSens = 2.0
         case .medium:
@@ -184,7 +184,7 @@ class PointerConfig: NSObject {
         
         switch semanticAcceleration {
         case .test:
-            highSens = 20.0
+            highSens = 18.0
         case .off:
             lowSens *= 2
             highSens = lowSens

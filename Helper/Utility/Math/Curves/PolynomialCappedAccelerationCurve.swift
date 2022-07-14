@@ -24,12 +24,17 @@
 ///     - The third extra point is `p5 = (p1.x + 3ε, p1.y)` and so on.
 /// For a polynomial of degree n, we need n-1 extra points to ensure that all derivatives go through 0 at `p1.x`
 
-/// Notes on failing regression
+/// Notes on failing regression with curvature >= 4
 ///     Using
 /// `iOS-Polynomial-Regression` the results become wrong at a degree 4. But it works for degree 1, 2 and 3 which is probably all we need.
 ///  I also tried the code from this SO answer https://stackoverflow.com/a/45735875/10601702, under "Example conventional code for generic degree equation:" but it also doesn't work for degree 4.
-///  I also found this CPP implementation from NASA https://github.com/nasa/polyfit  - it ALSO didn't work. Actually fails worse than the other methods
-///  The only method I found that works is regression inside of Desmos or numpy.polyfit()
+///  I also found this CPP implementation from NASA https://github.com/nasa/polyfit  - it ALSO didn't work. Actually fails worse than the other methods, doesn't even work properly with degree 3
+///  The only method I found that works is regression inside of Desmos or numpy.polyfit(). I tried using numpy from Swift. there is a lib called NumPy-iOS which does exactly what we want but it doesn't support macOS. So I gave up on making degree >= 4 work.
+///  -> However we tested degree >= by calculating the coefficients using numpy and it doesn't feel that great. Still good but it gets a little floaty at that point.
+///
+/// Edit: After playing around with degree = 3 I decided I like degree 2 better. You can do degree 2 using the Apple Driver Parametric curves. So you don't need this class.
+///
+///  TODO: Clean up all the different regression functions that don't work.
 
 import Foundation
 
@@ -61,23 +66,24 @@ import Foundation
         }
         
         /// Prep points for polynomial regression
+        var allPoints = [p0, p1]
+        allPoints.append(contentsOf: q)
         
         var xValues = [NSNumber]()
         var yValues = [NSNumber]()
         
-        xValues.append(contentsOf: [NSNumber(value: p0.x), NSNumber(value: p1.x)])
-        yValues.append(contentsOf: [NSNumber(value: p0.y), NSNumber(value: p1.y)])
-        for p in q {
+        for p in allPoints {
             xValues.append(NSNumber(value: p.x))
             yValues.append(NSNumber(value: p.y))
         }
         
         /// Use polynomial regression
-//        let coeffsNS: NSMutableArray = PolynomialRegression.regression(withXValues: xValues, yValues: yValues, polynomialDegree: UInt(n))
-
-        let coeffsNS: [NSNumber] = PolyFit.fitWith(x: xValues, y: yValues, polynomialDegree: Int32(n))
+        let coeffsNS = PolynomialRegression.regression(withXValues: xValues, yValues: yValues, polynomialDegree: UInt(n))
+//        let coeffsNS: [NSNumber] = PolyFit.fitWith(x: xValues, y: yValues, polynomialDegree: Int32(n))
         /// Store coefficients
         self.coeffs = coeffsNS.map { nsNumber in nsNumber.doubleValue }
+        
+//        self.coeffs = fit(points: allPoints, polynomialDegree: n)
         
         /// Test
 //        self.coeffs = [0.0334005, 10.2645, -2.19908, 0.209393, -0.00747675]
