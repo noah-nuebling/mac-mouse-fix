@@ -17,8 +17,8 @@
 extern "C" {
 #endif
 
-CFDataRef _Nonnull createAccelerationTableWithPoints(P * _Nonnull points, uint16_t pointCount, double accelIndex);
-CFDataRef _Nonnull createAccelerationTableWithArray(NSArray * _Nonnull points, double accelIndex);
+CFDataRef _Nonnull createAccelerationTableWithPoints(P * _Nonnull points, uint16_t pointCount);
+CFDataRef _Nonnull createAccelerationTableWithArray(NSArray * _Nonnull points);
 CFDataRef _Nonnull copyDefaultAccelerationTable(void);
 
 void printAccelerationTable(CFDataRef _Nonnull tableData);

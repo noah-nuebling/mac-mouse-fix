@@ -220,7 +220,7 @@ static Boolean setAccelToTableBasedCurve(NSArray *points, IOHIDServiceClientRef 
     Boolean success;
         
     /// Create CFData for table
-    CFDataRef table = createAccelerationTableWithArray(points, customCurveIndex);
+    CFDataRef table = createAccelerationTableWithArray(points);
     
     /// Write curves
     success = setTableCurves(table, eventServiceClient);
@@ -229,7 +229,7 @@ static Boolean setAccelToTableBasedCurve(NSArray *points, IOHIDServiceClientRef 
     if (!success) return false;
     
     /// Select custom curve
-    success = selectAccelCurveWithIndex(customCurveIndex, eventServiceClient);
+    success = selectAccelCurveWithIndex(1.5, eventServiceClient);
     
     /// Return
     return success;

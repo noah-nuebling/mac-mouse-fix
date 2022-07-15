@@ -27,6 +27,13 @@
 
 #import "IOHIDAccelerationTable.hpp"
 
+#pragma mark - Utility
+/// TODO: Move this to some utility class
+
+void *offsetPointer(void *ptr, int byteOffset) {
+    return ((uint8_t *)ptr) + byteOffset;
+}
+
 #pragma mark - Constructable copies of `ACCEL_TABLE` and `ACCEL_TABLE_ENTRY`
 /// `ACCEL_TABLE` and `ACCEL_TABLE_ENTRY` (found in `IOHIDAccelerationTable.cpp`) don't have constructors. As a workaround we created equivalent structs `CONSTRUCTABLE_ACCEL_TABLE` and `CONSTRUCTABLE_ACCEL_TABLE_ENTRY` which generate the same byte-level data layout. We then obtain the desired structs from the constructable ones through type casting.
 
@@ -87,32 +94,45 @@ struct CONSTRUCTABLE_ACCEL_TABLE {
     
     /// --- Additions ---
     
-    static CONSTRUCTABLE_ACCEL_TABLE *construct(ACCEL_TABLE_ENTRY *entry) {
+    static CONSTRUCTABLE_ACCEL_TABLE *construct(ACCEL_TABLE_ENTRY *entries, size_t entriesCount) {
         
-        size_t size = sizeof(scale_) + sizeof(signature_) + sizeof(count_) + entry->length();
+        size_t entriesSize = entriesLength(entries, entriesCount);
+        
+        size_t size = sizeof(scale_) + sizeof(signature_) + sizeof(count_) + entriesSize;
         
         CONSTRUCTABLE_ACCEL_TABLE *instance = (CONSTRUCTABLE_ACCEL_TABLE *)malloc(size);
-        instance->setValuesWithEntry(entry);
+        instance->setValues(entries, entriesSize, entriesCount);
         
         return instance;
     }
     
-    void setValuesWithEntry(ACCEL_TABLE_ENTRY *entry) {
+    void setValues(ACCEL_TABLE_ENTRY *entries, size_t entriesSize, size_t entriesCount) {
         
         OSWriteBigInt32(&scale_, 0, FloatToFixed(1.0)); /// Seems to be totally unused by `IOHIDTableAcceleration`
         signature_ = APPLE_ACCELERATION_DEFAULT_TABLE_SIGNATURE;
-        OSWriteBigInt16(&count_, 0, 1); /// There can be more entries in memory after the first one but it's difficult to construct and we don't need it, so just use a single entry.
-        memcpy(&entry_, entry, entry->length());
+        OSWriteBigInt16(&count_, 0, entriesCount);
+        memcpy(&entry_, entries, entriesSize);
+    }
+    
+    size_t length() const {
+        /// Size in bytes. Analog to ACCEL_TABLE_ENTRY::length()
+        size_t entriesSize = entriesLength(&entry_, count_);
+        return sizeof(scale_) + sizeof(signature_) + sizeof(count_) + entriesSize;
+    }
+    
+    static size_t entriesLength(const ACCEL_TABLE_ENTRY *entries, size_t entriesCount)  {
+        size_t entriesSize = 0;
+        const ACCEL_TABLE_ENTRY *thisEntry = entries;
+        for (int i = 0; i < entriesCount; i++) {
+            size_t thisLength = thisEntry->length();
+            entriesSize += thisLength;
+            thisEntry = (ACCEL_TABLE_ENTRY *)((uint8_t *)thisEntry + thisLength);
+        }
+        return entriesSize;
     }
     
     ACCEL_TABLE *cast() const {
         return (ACCEL_TABLE *)this;
-    }
-    
-    size_t length() const {
-        /// Size in bytes. Analog to ACCEL_TABLE_ENTRY::length(). Assumes that there is only 1 entry.
-        
-        return sizeof(scale_) + sizeof(signature_) + sizeof(count_) + entry_.length();
     }
     
 private:
@@ -127,7 +147,7 @@ private:
 
 #pragma mark - Interface
 
-CFDataRef createAccelerationTableWithArray(NSArray/**<<NSNumber *> *>*/ *points, double accelIndex) {
+CFDataRef createAccelerationTableWithArray(NSArray/**<<NSNumber *> *>*/ *points) {
     
     /// `points` is supposed to have type NSArray<NSArray<NSNumber *> *> *, where the inner array represents a points -> Has two float values representing x and y.
     
@@ -143,28 +163,38 @@ CFDataRef createAccelerationTableWithArray(NSArray/**<<NSNumber *> *>*/ *points,
     }
     
     /// Call core function
-    return createAccelerationTableWithPoints(cPoints, points.count, accelIndex);
+    return createAccelerationTableWithPoints(cPoints, points.count);
 }
 
-CFDataRef createAccelerationTableWithPoints(P *points, uint16_t pointCount, double accelIndex) {
+CFDataRef createAccelerationTableWithPoints(P *points, uint16_t pointCount) {
     
     /// Create table
+
+    /// Create two identical entries to turn off PointerSpeed setting in System Preferences
+    ///     (0.0 and 3.0 are the min and max values you can select using System Preferences)
+    ACCEL_TABLE_ENTRY *entry0 = CONSTRUCTABLE_ACCEL_TABLE_ENTRY::construct(0.0,
+                                                                           pointCount,
+                                                                           points)->cast();
     
-    ACCEL_TABLE_ENTRY *entry = CONSTRUCTABLE_ACCEL_TABLE_ENTRY::construct(accelIndex,
-                                                                          pointCount,
-                                                                          points)->cast();
+    ACCEL_TABLE_ENTRY *entry1 = CONSTRUCTABLE_ACCEL_TABLE_ENTRY::construct(3.0,
+                                                                           pointCount,
+                                                                           points)->cast();
+    int entrySize = entry0->length();
+    ACCEL_TABLE_ENTRY *entries = (ACCEL_TABLE_ENTRY *)malloc(entrySize * 2);
+    memcpy(entries, entry0, entrySize);
+    memcpy(offsetPointer(entries, (int)entrySize), entry1, entrySize);
     
-    CONSTRUCTABLE_ACCEL_TABLE *table_const = CONSTRUCTABLE_ACCEL_TABLE::construct(entry);
+    CONSTRUCTABLE_ACCEL_TABLE *table_const = CONSTRUCTABLE_ACCEL_TABLE::construct(entries, 2);
     size_t tableSize = table_const->length();
     ACCEL_TABLE *table = table_const->cast();
-    
-    /// Release memory
-    free(entry);
     
     /// Create data
     CFDataRef data = CFDataCreate(kCFAllocatorDefault, (UInt8 *)table, tableSize);
     
-    /// Release other memory
+    /// Release memory
+    free(entry0);
+    free(entry1);
+    free(entries);
     free(table);
     
     /// Return data
@@ -204,7 +234,7 @@ void printAccelerationTable(CFDataRef tableData) {
     ACCEL_TABLE *table_reconst = (ACCEL_TABLE *)CFDataGetBytePtr(tableData);
     
     std::string pointsString = "";
-    for (int j; j < table_reconst->count(); j++) {
+    for (int j = 0; j < table_reconst->count(); j++) {
         const ACCEL_TABLE_ENTRY *entry_reconst = table_reconst->entry(j);
         for (int i = 0; i < entry_reconst->count(); i++) {
             ACCEL_POINT p = entry_reconst->point(i);
