@@ -54,6 +54,7 @@ static void signal_handler(int signal_number, siginfo_t *signal_info, void *cont
     
     /// Debug
     [GlobalDefaults applyDoubleClickThreshold];
+    PointerConfig.customTableBasedAccelCurve;
     
     /// Setup termination handler
 

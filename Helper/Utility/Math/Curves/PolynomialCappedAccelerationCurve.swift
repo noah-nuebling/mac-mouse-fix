@@ -20,19 +20,19 @@
 /// We want all (non-constant) derivatives to be equal 0 at the cap point `p1`. Not totally sure why but that seems to generate the desired curve shape.
 /// To achieve this we simply use a polynomial regression feed it `p0` `p1` and some extra points.
 ///     - The first extra points is `p3 = (p1.x + ε, p1.y)` This will force the first derivative to be 0 somewhere between `p1.x` and `p1.x + ε`. If we make ε small enough it's as good as having the derivative be 0 at exactly `p.x`.
-///     - The second extra point is `p4 = (p1.x + 2ε, p1.y)`. This will force the second derivative to be 0 somewhere between `p1.x` and `p1.x + ε`
+///     - The second extra point is `p4 = (p1.x + 2ε, p1.y)`. This will force the second derivative to be 0 somewhere between `p1.x` and `p1.x + 2ε`
 ///     - The third extra point is `p5 = (p1.x + 3ε, p1.y)` and so on.
-/// For a polynomial of degree n, we need n-1 extra points to ensure that all derivatives go through 0 at `p1.x`
+/// For a polynomial of degree n, we need n-1 extra points to ensure that all derivatives go through 0 at (circa) `p1.x`
 
 /// Notes on failing regression with curvature >= 4
 ///     Using
 /// `iOS-Polynomial-Regression` the results become wrong at a degree 4. But it works for degree 1, 2 and 3 which is probably all we need.
 ///  I also tried the code from this SO answer https://stackoverflow.com/a/45735875/10601702, under "Example conventional code for generic degree equation:" but it also doesn't work for degree 4.
-///  I also found this CPP implementation from NASA https://github.com/nasa/polyfit  - it ALSO didn't work. Actually fails worse than the other methods, doesn't even work properly with degree 3
+///  I also found this CPP implementation from NASA https://github.com/nasa/polyfit  - it ALSO didn't work. Actually fails worse than the other methods, doesn't even work properly with degree 3.
 ///  The only method I found that works is regression inside of Desmos or numpy.polyfit(). I tried using numpy from Swift. there is a lib called NumPy-iOS which does exactly what we want but it doesn't support macOS. So I gave up on making degree >= 4 work.
-///  -> However we tested degree >= by calculating the coefficients using numpy and it doesn't feel that great. Still good but it gets a little floaty at that point.
+///  -> However we tested degree 4 by calculating the coefficients using numpy and inserting them manually and it doesn't feel that great. Still good but it gets a little floaty / hard to predict at that point.
 ///
-/// Edit: After playing around with degree = 3 I decided I like degree 2 better. You can do degree 2 using the Apple Driver Parametric curves. So you don't need this class.
+/// Note: For degree 1 or 2 you can just use the Apple Driver's built in Parametric curve function. So you don't need this class.
 ///
 ///  TODO: Clean up all the different regression functions that don't work.
 
@@ -53,6 +53,8 @@ import Foundation
     
     /// Init
     required init(lowSpeed v0: Double, lowSens s0: Double, highSpeed v1: Double, highSens s1: Double, curvature n: Int) {
+        
+        /// See top of this file for explanation of parameters
         
         /// Store params
         self.p0 = P(x: v0, y: s0)
@@ -79,11 +81,15 @@ import Foundation
         
         /// Use polynomial regression
         let coeffsNS = PolynomialRegression.regression(withXValues: xValues, yValues: yValues, polynomialDegree: UInt(n))
+        
+        
+        ///
 //        let coeffsNS: [NSNumber] = PolyFit.fitWith(x: xValues, y: yValues, polynomialDegree: Int32(n))
+        //        self.coeffs = fit(points: allPoints, polynomialDegree: n)
+        
         /// Store coefficients
         self.coeffs = coeffsNS.map { nsNumber in nsNumber.doubleValue }
         
-//        self.coeffs = fit(points: allPoints, polynomialDegree: n)
         
         /// Test
 //        self.coeffs = [0.0334005, 10.2645, -2.19908, 0.209393, -0.00747675]
@@ -97,10 +103,24 @@ import Foundation
         var y = 0.0
         var exponent = 0.0
         for c in coeffs {
-            y += c * pow(xClipped, exponent)
+            y += c*pow(xClipped, exponent)
             exponent += 1.0
         }
         
         return y
+    }
+    
+    /// Trace
+    func traceSpeed(nOfSamples: Int) -> [[Double]] {
+        /// Params
+        let bias = 2.0
+        let oversample = 2.0
+        /// Build trace
+        var trace = [[0.0, 0.0]]
+        let coreTrace = super.traceSpeed(startX: p0.x, endX: p1.x, nOfSamples: nOfSamples, bias: bias)
+        trace.append(contentsOf: coreTrace)
+        trace.append([p1.x*oversample, p1.y*p1.x*oversample])
+        /// Return
+        return trace
     }
 }

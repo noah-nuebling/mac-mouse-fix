@@ -102,27 +102,66 @@ class PointerConfig: NSObject {
     
     @objc static var customTableBasedAccelCurve: [[Double]] {
         
-        /// General params
+        /// Test curve
+//        let testCurve = TestAccelerationCurve(thresholdSpeed: 10, firstSens: 0.0, secondSens: 2.0)
+//        let testTrace = testCurve.traceSpeed(startX: 0.0, endX: 20, nOfSamples: 1000)
+//        return testTrace
         
-        let v0 = 0.2
+        /// Meta params
+        let speed = 1.0
+        
+        /// General params
+        let v0 = 0.15
         let s0 = 2.0
-        let v1 = 7.0
-        let s1 = 18.0
+        let v1 = 10.0
+        let s1 = 22.0 * speed
+        
+        /// Sampling params
         let nSamp = 1000
-        let overSample = 2.0
         
         /// Create natural curve
 //        let curv = 0.15
 //        let curve = NaturalAccelerationCurve(lowSpeed: v0, lowSens: s0, highSpeed: v1, highSens: s1, curvature: curv)
         
         /// Create polynomialCurve
-        let curvature = 3
-        let curve = PolynomialCappedAccelerationCurve(lowSpeed: v0, lowSens: s0, highSpeed: v1, highSens: s1, curvature: curvature)
+        /// Params
+        let n = 2.5 /// Curvature
+        /// Assert
+        assert(1 <= n && n <= 3)
+        /// Get interpolation params
+        let n0: Int = Int(floor(n))
+        let n1: Int = Int(ceil(n))
+        let nRatio: Double = n - Double(n0)
         
-        let trace = curve.traceSpeed(startX: 0, endX: v1 * overSample, nOfSamples: Int(Double(nSamp)*overSample))
-        let adjustedTrace = trace.map{ p in [p[0], p[1] / pollingRateRatio] }
+        /// Get trace
+        var trace: [[Double]]
+        if n0 != n1 {
+            /// Get 2 traces and interpolate between them
+            let curve0 = PolynomialCappedAccelerationCurve(lowSpeed: v0, lowSens: s0, highSpeed: v1, highSens: s1, curvature: n0)
+            let curve1 = PolynomialCappedAccelerationCurve(lowSpeed: v0, lowSens: s0, highSpeed: v1, highSens: s1, curvature: n1)
+            let trace0 = curve0.traceSpeed(nOfSamples: nSamp)
+            let trace1 = curve1.traceSpeed(nOfSamples: nSamp)
+            
+            trace = zip(trace0, trace1).map { (p0, p1) in
+                assert(p0[0] == p1[0])
+                let x = p0[0]
+                let y0 = p0[1]
+                let y1 = p1[1]
+                let y = (1-nRatio) * y0 + nRatio * y1
+                return [x, y]
+            }
+            
+        } else {
+            /// Just get a single trace
+            let curve = PolynomialCappedAccelerationCurve(lowSpeed: v0, lowSens: s0, highSpeed: v1, highSens: s1, curvature: n1)
+            
+            trace = curve.traceSpeed(nOfSamples: nSamp)
+        }
         
-        return adjustedTrace
+        /// Do Polling rate compensation
+        trace = trace.map{ p in [p[0], p[1] / pollingRateRatio] }
+        
+        return trace
     }
     
     @objc static var customParametricAccelCurve: MFAppleAccelerationCurveParams {
@@ -164,7 +203,7 @@ class PointerConfig: NSObject {
         
         switch semanticSensitivity {
         case .test:
-            lowSens = 2.0 /*4.7*/
+            lowSens = 4.5 /*4.7*/
         case .low:
             lowSens = 2.0
         case .medium:
@@ -184,7 +223,7 @@ class PointerConfig: NSObject {
         
         switch semanticAcceleration {
         case .test:
-            highSens = 18.0
+            highSens = 20.0
         case .off:
             lowSens *= 2
             highSens = lowSens
