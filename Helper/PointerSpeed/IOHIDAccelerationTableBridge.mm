@@ -149,7 +149,7 @@ private:
 
 CFDataRef createAccelerationTableWithArray(NSArray/**<<NSNumber *> *>*/ *points) {
     
-    /// `points` is supposed to have type NSArray<NSArray<NSNumber *> *> *, where the inner array represents a points -> Has two float values representing x and y.
+    /// `points` is supposed to have type NSArray<NSArray<NSNumber *> *> *, where the inner array represents a point -> Has two float values representing x and y.
     
     /// Convert to C
     
@@ -163,6 +163,7 @@ CFDataRef createAccelerationTableWithArray(NSArray/**<<NSNumber *> *>*/ *points)
     }
     
     /// Call core function
+    
     return createAccelerationTableWithPoints(cPoints, points.count);
 }
 
@@ -230,6 +231,8 @@ CFDataRef copyDefaultAccelerationTable() {
 #pragma mark - Debug
 
 void printAccelerationTable(CFDataRef tableData) {
+    
+    /// TODO: Make this return an NSString instead;
     
     ACCEL_TABLE *table_reconst = (ACCEL_TABLE *)CFDataGetBytePtr(tableData);
     

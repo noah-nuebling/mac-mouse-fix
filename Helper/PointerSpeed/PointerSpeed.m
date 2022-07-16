@@ -59,9 +59,9 @@ extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHI
     if (PointerConfig.useSystemSpeed) {
         [self deconfigureDevice:device];
     } else if (PointerConfig.useParametricCurve) {
-        [self setForDevice:device sensitivity:PointerConfig.CPIMultiplier parametricCurve:PointerConfig.customParametricAccelCurve];
+        [self setForDevice:device sensitivity:PointerConfig.CPIMultiplier parametricCurve:PointerConfig.parametricCurve];
     } else {
-        [self setForDevice:device sensitivity:PointerConfig.CPIMultiplier tableBasedCurve:PointerConfig.customTableBasedAccelCurve];
+        [self setForDevice:device sensitivity:PointerConfig.CPIMultiplier tableBasedCurve:PointerConfig.tableBasedCurve];
     }
     
     /// Debug
@@ -221,6 +221,9 @@ static Boolean setAccelToTableBasedCurve(NSArray *points, IOHIDServiceClientRef 
         
     /// Create CFData for table
     CFDataRef table = createAccelerationTableWithArray(points);
+    
+    /// Print table
+    printAccelerationTable(table);
     
     /// Write curves
     success = setTableCurves(table, eventServiceClient);

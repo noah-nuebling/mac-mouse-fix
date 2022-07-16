@@ -15,6 +15,7 @@
 		4F1B83062606E68300AEAF37 /* ButtonLandscapeAssessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B83052606E68300AEAF37 /* ButtonLandscapeAssessor.m */; };
 		4F1B832D26081A5500AEAF37 /* CaptureNotificationCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B832C26081A5500AEAF37 /* CaptureNotificationCreator.m */; };
 		4F1C51DA260543DD007F4930 /* NSTextField+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C51D9260543DD007F4930 /* NSTextField+Additions.m */; };
+		4F1D58192881D880002EB119 /* CombinedLinearCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1D58182881D880002EB119 /* CombinedLinearCurve.swift */; };
 		4F2CC58727B8D2300084AACE /* HybridCurves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CC58627B8D2300084AACE /* HybridCurves.swift */; };
 		4F2CC58927B8DA8B0084AACE /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CC58827B8DA8B0084AACE /* Line.swift */; };
 		4F2F5DA825FB6FFD0037660A /* AddWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F5DA725FB6FFD0037660A /* AddWindowController.m */; };
@@ -303,6 +304,7 @@
 		4F1B832C26081A5500AEAF37 /* CaptureNotificationCreator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CaptureNotificationCreator.m; sourceTree = "<group>"; };
 		4F1C51D8260543DD007F4930 /* NSTextField+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSTextField+Additions.h"; sourceTree = "<group>"; };
 		4F1C51D9260543DD007F4930 /* NSTextField+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSTextField+Additions.m"; sourceTree = "<group>"; };
+		4F1D58182881D880002EB119 /* CombinedLinearCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombinedLinearCurve.swift; sourceTree = "<group>"; };
 		4F2CC58627B8D2300084AACE /* HybridCurves.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HybridCurves.swift; sourceTree = "<group>"; };
 		4F2CC58827B8DA8B0084AACE /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		4F2F5DA625FB6FFD0037660A /* AddWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddWindowController.h; sourceTree = "<group>"; };
@@ -1674,6 +1676,7 @@
 				4F2CC58627B8D2300084AACE /* HybridCurves.swift */,
 				4F2CC58827B8DA8B0084AACE /* Line.swift */,
 				4FBDA14A27B225210030E4EA /* Unused */,
+				4F1D58182881D880002EB119 /* CombinedLinearCurve.swift */,
 			);
 			path = Curves;
 			sourceTree = "<group>";
@@ -2247,6 +2250,7 @@
 				4FF6668F25F2C93A00689B77 /* SmoothScroll_old_.m in Sources */,
 				4F70ECB7267E810900325A76 /* IOUtility.m in Sources */,
 				4FD0A71127B295F600FFCD12 /* OtherConfig.swift in Sources */,
+				4F1D58192881D880002EB119 /* CombinedLinearCurve.swift in Sources */,
 				4FF6669A25F2C93A00689B77 /* TransformationUtility.m in Sources */,
 				4FF6669D25F2C93A00689B77 /* AccessibilityCheck.m in Sources */,
 				4FF0255F27B013A100923107 /* PointerFreeze.m in Sources */,

@@ -98,34 +98,60 @@ class PointerConfig: NSObject {
     
     // MARK: Speed curve
     
-    @objc static var useParametricCurve: Bool = false
+    /// Constants
+    @objc static var useParametricCurve: Bool = false /// Switch between table-based and parametric curve
     
-    @objc static var customTableBasedAccelCurve: [[Double]] {
+    /// User defined params
+    @objc static var u_speed: Double = 0.88
+    @objc static var u_complexSettings: Bool = false /// Switch between using just `u_speed` or the fine-grained params below
+    @objc static var u_minSens: Double = 1.0
+    @objc static var u_maxSens: Double = 1.0
+    @objc static var u_curvature: Double = 0.5
+    @objc static var u_turnOffAcceleration: Bool = false
+    @objc static var u_unacceleratedSens: Double = 1.0
+    
+    /// Generate curves
+    @objc static var tableBasedCurve: [[Double]] {
         
         /// Test curve
-//        let testCurve = TestAccelerationCurve(thresholdSpeed: 10, firstSens: 0.0, secondSens: 2.0)
-//        let testTrace = testCurve.traceSpeed(startX: 0.0, endX: 20, nOfSamples: 1000)
+//        let testCurve = TestAccelerationCurve(thresholdSpeed: 3.0, firstSens: 0.0, secondSens: 2.0)
+//        let testTrace = testCurve.traceSpeed(startX: 0.0, endX: 20, nOfSamples: 1000, bias: 2.0)
 //        return testTrace
         
-        /// Meta params
-        let speed = 1.0
+        /// Declare curve params
+        let v0: Double = 0.1
+        let s0: Double
+        let v1: Double = 10.0
+        let s1: Double
+        var n: Double
         
-        /// General params
-        let v0 = 0.15
-        let s0 = 2.0
-        let v1 = 10.0
-        let s1 = 22.0 * speed
+        /// Create userParams -> curveParams maps
+        let lowSensMap = CombinedLinearFunction(yValues:    [1.25,  1.625,  2.0,    3.0,    4.0])
+        let highSensMap = CombinedLinearFunction(yValues:   [13.0,  18.0,   22.0,   30.0,   70.0])
+        let curveMap1 = CombinedLinearFunction(yValues:     [4.0,   3.0,    2.75,   2.58,    1.75])
+        let curveMap2 = CombinedLinearFunction(yValues:     [1.0, 1.5, 2.0, 2.75, 3.0])
+        let unacceleratedSensMap = CombinedLinearFunction(yValues: [2.0, 3.0, 4.0])
         
-        /// Sampling params
+        /// Get curve params from user params
+        if !u_complexSettings {
+            s0 = lowSensMap.evaluate(atX: u_speed)
+            s1 = highSensMap.evaluate(atX: u_speed)
+            n = curveMap1.evaluate(atX: u_speed)
+            if n > 3.0 { n = 3.0 } /// Our polynomial regression breaks for n > 3
+        } else if u_turnOffAcceleration {
+            s0 = unacceleratedSensMap.evaluate(atX: u_unacceleratedSens)
+            s1 = s0
+            n = 1.0
+        } else {
+            s0 = lowSensMap.evaluate(atX: u_minSens)
+            s1 = highSensMap.evaluate(atX: u_maxSens)
+            n = curveMap2.evaluate(atX: u_curvature)
+        }
+
+        /// Sampling param
         let nSamp = 1000
         
-        /// Create natural curve
-//        let curv = 0.15
-//        let curve = NaturalAccelerationCurve(lowSpeed: v0, lowSens: s0, highSpeed: v1, highSens: s1, curvature: curv)
-        
         /// Create polynomialCurve
-        /// Params
-        let n = 2.5 /// Curvature
         /// Assert
         assert(1 <= n && n <= 3)
         /// Get interpolation params
@@ -154,8 +180,7 @@ class PointerConfig: NSObject {
         } else {
             /// Just get a single trace
             let curve = PolynomialCappedAccelerationCurve(lowSpeed: v0, lowSens: s0, highSpeed: v1, highSens: s1, curvature: n1)
-            
-            trace = curve.traceSpeed(nOfSamples: nSamp)
+            trace = curve.traceSpeed(nOfSamples: nSamp, allowSparseSampling: true)
         }
         
         /// Do Polling rate compensation
@@ -164,7 +189,7 @@ class PointerConfig: NSObject {
         return trace
     }
     
-    @objc static var customParametricAccelCurve: MFAppleAccelerationCurveParams {
+    @objc static var parametricCurve: MFAppleAccelerationCurveParams {
         /// See "Gain Curve Math.tex" and PointerSpeed class for context
         
         let multiplier = 1.0

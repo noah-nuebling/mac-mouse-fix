@@ -57,14 +57,14 @@ import Foundation
         /// See top of this file for explanation of parameters
         
         /// Store params
-        self.p0 = P(x: v0, y: s0)
-        self.p1 = P(x: v1, y: s1)
+        self.p0 = P(v0, s0)
+        self.p1 = P(v1, s1)
         self.n = n
         
         /// Generate additional key points
         var q: [P] = []
         for i in 1..<n {
-            q.append(P(x: p1.x + Double(i)*epsilon, y: p1.y))
+            q.append(P(p1.x + Double(i)*epsilon, p1.y))
         }
         
         /// Prep points for polynomial regression
@@ -111,15 +111,21 @@ import Foundation
     }
     
     /// Trace
-    func traceSpeed(nOfSamples: Int) -> [[Double]] {
+    func traceSpeed(nOfSamples: Int, allowSparseSampling: Bool = false) -> [[Double]] {
         /// Params
         let bias = 2.0
         let oversample = 2.0
         /// Build trace
-        var trace = [[0.0, 0.0]]
-        let coreTrace = super.traceSpeed(startX: p0.x, endX: p1.x, nOfSamples: nOfSamples, bias: bias)
+        var trace: [[Double]] = []
+        var coreTrace: [[Double]]
+        if n == 1 && allowSparseSampling {
+            /// n == 1 -> Straight line. We only need 2 points to describe it, not nOfSamples. But for some reason the acceleration becomes way too fast with very few points. (ca. 10 or fewer), so we sample 100 times. Doing this for optimization but doesn't make any tangible difference. The number of points in the acceleration table is not visible in Activity Monitor at all.
+            coreTrace = super.traceSpeed(startX: p0.x, endX: p1.x, nOfSamples: 100, bias: 1.0)
+        } else {
+            coreTrace = super.traceSpeed(startX: p0.x, endX: p1.x, nOfSamples: nOfSamples, bias: bias)
+        }
         trace.append(contentsOf: coreTrace)
-        trace.append([p1.x*oversample, p1.y*p1.x*oversample])
+        trace.append([p1.x*oversample, p1.y*(p1.x*oversample)])
         /// Return
         return trace
     }

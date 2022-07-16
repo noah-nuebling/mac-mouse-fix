@@ -11,6 +11,7 @@
 /// See https://www.desmos.com/calculator/ql0uppqk4n
 /// This visualizes exactly what this curve does except for the **clipping**
 ///
+/// When Playing around with this I liked curvature values between 0.15 and 0.3. But I liked the Polynomial curves better so this is unused now.
 
 import Cocoa
 
