@@ -102,7 +102,7 @@ class PointerConfig: NSObject {
     @objc static var useParametricCurve: Bool = false /// Switch between table-based and parametric curve
     
     /// User defined params
-    @objc static var u_speed: Double = 0.5
+    @objc static var u_speed: Double = 0.75
     @objc static var u_complexSettings: Bool = false /// Switch between using just `u_speed` or the fine-grained params below
     @objc static var u_minSens: Double = 1.0
     @objc static var u_maxSens: Double = 0.5
@@ -131,13 +131,13 @@ class PointerConfig: NSObject {
 //        let highSensMap = CombinedLinearFunction(yValues:   [13.0,  18.0,   22.0,   30.0,   70.0])
 //        let curveMap = CombinedLinearFunction(yValues:      [4.0,   3.0,    2.75,   2.58,    1.75])
         
-        let lowSensMap = CombinedLinearFunction(yValues:    [0.5, 1.25, 1.875,  2.0, 3.0])
-        let highSensMap = CombinedLinearFunction(yValues:   [7.0, 13.0, 18.0, 22.0, 30.0])
-        let curveMap = CombinedLinearFunction(yValues:      [3.0, 3.0,  3.0, 2.75, 2.58])
-        let metaSpeedMap = CombinedLinearFunction(yValues: [0.25, 0.75]) /// For testing, remove
+        let lowSensMap = CombinedLinearFunction(yValues:    [0.5, 1.25, 1.875, 2.0,  3.0])
+        let highSensMap = CombinedLinearFunction(yValues:   [7.0, 13.0, 18.0,  22.0, 30.0])
+        let curveMap = CombinedLinearFunction(yValues:      [2.0, 2.25, 2.0,   2.75, 2.58])
+        let metaSpeedMap = CombinedLinearFunction(yValues:  [0.0, 1.0]) /// For testing, remove
         
         /// Complex settings maps
-        let lowSensMap2 = CombinedLinearFunction(yValues:    [0.5, 2.0, 4.0])
+        let lowSensMap2 = CombinedLinearFunction(yValues:    [0.5, 1.0, 2.0, 3.0, 4.0])
         let highSensMap2 = CombinedLinearFunction(yValues:   [6.0,  22.0, 70.0])
         let curveMap2 = CombinedLinearFunction(yValues:     [1.0, 2.0, 3.0])
         /// Unaccelerated map
