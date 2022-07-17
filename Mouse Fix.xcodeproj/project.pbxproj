@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		26741110F3F9E2DAEDD3279A /* libPods-Mac Mouse Fix Accomplice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9035471CA1531768F940DEFA /* libPods-Mac Mouse Fix Accomplice.a */; };
 		2D937827717D64CDBCC2C443 /* Pods_Mac_Mouse_Fix.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24A19E04F97ECEF36516F04A /* Pods_Mac_Mouse_Fix.framework */; };
+		4F09BF58288355170080A5F8 /* PollingRateMeasurer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F09BF57288355170080A5F8 /* PollingRateMeasurer.swift */; };
 		4F1793A925EEC92000E8309B /* ZipArchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F1793A825EEC90900E8309B /* ZipArchive.framework */; };
 		4F1793AA25EEC92000E8309B /* ZipArchive.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F1793A825EEC90900E8309B /* ZipArchive.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F1AFE972670EBA900ECA424 /* DragCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1AFE962670EBA900ECA424 /* DragCurve.swift */; };
@@ -293,6 +294,7 @@
 		403031DA0EB25C7C3CABCA58 /* Pods-Mac Mouse Fix.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mac Mouse Fix.debug.xcconfig"; path = "Target Support Files/Pods-Mac Mouse Fix/Pods-Mac Mouse Fix.debug.xcconfig"; sourceTree = "<group>"; };
 		4954E06256CFC3F8A8310EEA /* Pods_Mac_Mouse_FixTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mac_Mouse_FixTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		49BE22BB51446F44DE9045AA /* Pods-Mac Mouse FixTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mac Mouse FixTests.debug.xcconfig"; path = "Target Support Files/Pods-Mac Mouse FixTests/Pods-Mac Mouse FixTests.debug.xcconfig"; sourceTree = "<group>"; };
+		4F09BF57288355170080A5F8 /* PollingRateMeasurer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollingRateMeasurer.swift; sourceTree = "<group>"; };
 		4F15C0C12666779D000337FF /* MainApp.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = MainApp.xcconfig; sourceTree = "<group>"; };
 		4F15C0C22666781F000337FF /* Helper.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Helper.xcconfig; sourceTree = "<group>"; };
 		4F1793A825EEC90900E8309B /* ZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ZipArchive.framework; sourceTree = "<group>"; };
@@ -714,7 +716,6 @@
 		4F1793A725EEC8E500E8309B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4F8CF92F28686C0100BF5E55 /* iOS-Polynomial-Regression-master */,
 				4F1793A825EEC90900E8309B /* ZipArchive.framework */,
 				4F39BC24263AC2E800FDF692 /* Sparkle.framework */,
 				4F39BCE8263B7B1500FDF692 /* README.md */,
@@ -809,6 +810,7 @@
 		4F77F7C628808D6000847D0E /* PolynomialRegression */ = {
 			isa = PBXGroup;
 			children = (
+				4F8CF92F28686C0100BF5E55 /* iOS-Polynomial-Regression-master */,
 				4F77F7C728808DAE00847D0E /* PolyFitNumPy.swift */,
 				4FF9306028806E4F0007CCA7 /* PolyFitObjC.h */,
 				4FF9306128806E4F0007CCA7 /* PolyFitObjC.m */,
@@ -1394,6 +1396,7 @@
 				4FF6660E25F2C93A00689B77 /* Config.m */,
 				4FA83A2D268288D900F3A31B /* PointerConfig.swift */,
 				4FD860CB266EF55A004F76C8 /* ScrollConfig.swift */,
+				4F09BF57288355170080A5F8 /* PollingRateMeasurer.swift */,
 				4F616D6027BDCD56004A6A72 /* ScrollConfigTesting.md */,
 				4FE7A0DE28677AD600C33B37 /* Gain Curve Math.tex */,
 				4FD0A71027B295F600FFCD12 /* OtherConfig.swift */,
@@ -2227,6 +2230,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F09BF58288355170080A5F8 /* PollingRateMeasurer.swift in Sources */,
 				4F9C9B58268A29B70083DED0 /* RollingAverage.swift in Sources */,
 				4FF0255727B0091700923107 /* ModifiedDragOutputAddMode.m in Sources */,
 				4FF0255127B0033000923107 /* ModifiedDragOutputTwoFingerSwipe.m in Sources */,

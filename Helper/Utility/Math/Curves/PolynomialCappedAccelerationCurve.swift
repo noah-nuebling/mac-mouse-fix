@@ -119,7 +119,7 @@ import Foundation
         var trace: [[Double]] = []
         var coreTrace: [[Double]]
         if n == 1 && allowSparseSampling {
-            /// n == 1 -> Straight line. We only need 2 points to describe it, not nOfSamples. But for some reason the acceleration becomes way too fast with very few points. (ca. 10 or fewer), so we sample 100 times. Doing this for optimization but doesn't make any tangible difference. The number of points in the acceleration table is not visible in Activity Monitor at all.
+            /// n == 1 -> Straight line. We only need 2 points to describe it, not nOfSamples. But for some reason the acceleration becomes way too fast with very few points. (ca. 10 or fewer), so we sample 100 times. Doing this for optimization but doesn't make any tangible difference. The number of points in the acceleration table is not visible in the Activity Monitor CPU usage of `com.apple.AppleUserHIDDrivers` at all.
             coreTrace = super.traceSpeed(startX: p0.x, endX: p1.x, nOfSamples: 100, bias: 1.0)
         } else {
             coreTrace = super.traceSpeed(startX: p0.x, endX: p1.x, nOfSamples: nOfSamples, bias: bias)

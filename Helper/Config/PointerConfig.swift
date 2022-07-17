@@ -27,7 +27,7 @@
 ///
 /// How to get polling rate:
 /// - Measure time between callbacks for either CGEvents or IOHIDValues / IOHIDReports.
-/// - Do some smart processing. Like throw away values that are too big / too far from the current estimated value. Or only take max values. Or only top 10 percent or something. Round to power/multiple of 2 because polling intervals are always multiples of 2 I think. maybe other smart stuff. Use the CGEvent's timestamp for accurate timing
+/// - Do some smart processing. Like throw away values that are too big / too far from the current estimated value. Or only take max values. Or only top 10 percent or something. Round to power/multiple of 2 because polling intervals are always multiples of 2 ms I think. maybe other smart stuff. Use the CGEvent's timestamp for accurate timing
 ///
 /// More thoughts:
 /// - Not sure it makes sense to expose this in the UI. Just do it automatically when not using "macOS" pointer speed.
@@ -99,7 +99,7 @@ class PointerConfig: NSObject {
     // MARK: Speed curve
     
     /// Constants
-    @objc static var useParametricCurve: Bool = false /// Switch between table-based and parametric curve
+    @objc static var useParametricCurve: Bool = false /// Switch between table-based and parametric curve. Once parametric has been used you can't switch back until you detach the device.
     
     /// User defined params
     @objc static var u_speed: Double = 0.75
@@ -113,7 +113,7 @@ class PointerConfig: NSObject {
     /// Generate curves
     @objc static var tableBasedCurve: [[Double]] {
         
-        /// Test curve
+        /// Debug - test mouse speed
 //        let testCurve = TestAccelerationCurve(thresholdSpeed: 3.0, firstSens: 0.0, secondSens: 2.0)
 //        let testTrace = testCurve.traceSpeed(startX: 0.0, endX: 20, nOfSamples: 1000, bias: 2.0)
 //        return testTrace
@@ -127,30 +127,27 @@ class PointerConfig: NSObject {
         
         /// Create userParams -> curveParams maps
         /// Simple settings maps
-//        let lowSensMap = CombinedLinearFunction(yValues:    [1.25,  1.625,  2.0,    3.0,    4.0])
+//        let lowSensMap = CombinedLinearFunction(yValues:    [1.25,  1.625,  2.0,    3.0,    4.0]) /// These are too fast
 //        let highSensMap = CombinedLinearFunction(yValues:   [13.0,  18.0,   22.0,   30.0,   70.0])
 //        let curveMap = CombinedLinearFunction(yValues:      [4.0,   3.0,    2.75,   2.58,    1.75])
         
         let lowSensMap = CombinedLinearFunction(yValues:    [0.5, 1.25, 1.875, 2.0,  3.0])
         let highSensMap = CombinedLinearFunction(yValues:   [7.0, 13.0, 18.0,  22.0, 30.0])
         let curveMap = CombinedLinearFunction(yValues:      [2.0, 2.25, 2.0,   2.75, 2.58])
-        let metaSpeedMap = CombinedLinearFunction(yValues:  [0.0, 1.0]) /// For testing, remove
-        
         /// Complex settings maps
         let lowSensMap2 = CombinedLinearFunction(yValues:    [0.5, 1.0, 2.0, 3.0, 4.0])
-        let highSensMap2 = CombinedLinearFunction(yValues:   [6.0,  22.0, 70.0])
-        let curveMap2 = CombinedLinearFunction(yValues:     [1.0, 2.0, 3.0])
+        let highSensMap2 = CombinedLinearFunction(yValues:   [6.0, 22.0, 70.0])
+        let curveMap2 = CombinedLinearFunction(yValues:      [1.0, 2.0, 3.0])
         /// Unaccelerated map
         let lowSensMap3 = CombinedLinearFunction(yValues: [2.0, 3.0, 4.0])
         
         /// Get curve params from user params
         if !u_complexSettings { /// Simple settings
-            let s = metaSpeedMap.evaluate(atX: u_speed)
-            s0 = lowSensMap.evaluate(atX: s)
-            s1 = highSensMap.evaluate(atX: s)
-            n = curveMap.evaluate(atX: s)
-            if n > 3.0 { n = 3.0 } /// Our polynomial regression breaks for n > 3
-        } else if u_turnOffAcceleration { /// No accell
+            s0 = lowSensMap.evaluate(atX: u_speed)
+            s1 = highSensMap.evaluate(atX: u_speed)
+            n = curveMap.evaluate(atX: u_speed)
+            if n > 3.0 { n = 3.0 }
+        } else if u_turnOffAcceleration { /// No accel
             s0 = lowSensMap3.evaluate(atX: u_unacceleratedSens)
             s1 = s0
             n = 1.0
@@ -165,7 +162,7 @@ class PointerConfig: NSObject {
         
         /// Create polynomialCurve
         /// Assert
-        assert(1 <= n && n <= 3)
+        assert(1 <= n && n <= 3) /// Larger curvature might be nice but our polynomial regression breaks for n > 3
         /// Get interpolation params
         let n0: Int = Int(floor(n))
         let n1: Int = Int(ceil(n))

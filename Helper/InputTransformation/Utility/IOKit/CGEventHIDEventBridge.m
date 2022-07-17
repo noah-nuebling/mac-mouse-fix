@@ -25,7 +25,7 @@ HIDEvent *CGEventGetHIDEvent(CGEventRef cgEvent) {
 }
 
 /// External CGEvent -> HIDEvent function
-extern IOHIDEventRef CGEventCopyIOHIDEvent(CGEventRef);
+extern IOHIDEventRef CGEventCopyIOHIDEvent(CGEventRef); /// Doesnt seem to work for mouseDragged events. -> Investigate!
 
 /// MARK: HIDEvent -> CGEvent
 

@@ -14,8 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface EventUtility : NSObject
 
-IOHIDDeviceRef HIDEventGetSendingDevice(HIDEvent *event);
+IOHIDDeviceRef _Nullable HIDEventGetSendingDevice(HIDEvent *event);
 CFTimeInterval CGEventGetTimestampInSeconds(CGEventRef event);
+CFTimeInterval machDeltaToTimeInterval(uint64_t machTime1, uint64_t machTime2);
 
 @end
 

@@ -12,16 +12,22 @@
 #import "EventUtility.h"
 #import "MFIOKitImports.h"
 #import "IOUtility.h"
+#import "SharedUtility.h"
 
 @implementation EventUtility
 
+extern CFTimeInterval CATimeWithHostTime(UInt64 mach_absolute_time);
+
 NSMutableDictionary *_hidDeviceCache = nil;
 
-IOHIDDeviceRef HIDEventGetSendingDevice(HIDEvent *hidEvent) {
+IOHIDDeviceRef _Nullable HIDEventGetSendingDevice(HIDEvent *hidEvent) {
     /// This version uses a cache to avoid calling IOHIDDeviceCreate() (which is super slow) over and over.
     ///     \note Do we need to reset the cache at certain points?
     ///     \note Now that we use the cache we should be able to use the version that iterates over all parents instead of only checking the second parent, without it being too slow.
     
+    
+    assert(hidEvent != NULL);
+    if (hidEvent == NULL) return NULL;
     
     uint64_t senderID;
     
@@ -40,31 +46,19 @@ IOHIDDeviceRef HIDEventGetSendingDevice(HIDEvent *hidEvent) {
     
     if (iohidDeviceFromCache != nil) {
         
-        CFIndex retainCount = CFGetRetainCount((__bridge CFTypeRef)(iohidDeviceFromCache));
-        DDLogDebug(@"cache retainCount: %ld", (long)retainCount);
+//        CFIndex retainCount = CFGetRetainCount((__bridge CFTypeRef)(iohidDeviceFromCache));
+//        DDLogDebug(@"cache retainCount: %ld", (long)retainCount);
         
         return (__bridge IOHIDDeviceRef)iohidDeviceFromCache;
     }
     
-    CFMutableDictionaryRef idMatching = IORegistryEntryIDMatching(senderID);
-    io_service_t service = IOServiceGetMatchingService(kIOMasterPortDefault, idMatching);
-    
-    io_service_t parent1;
-    io_service_t parent2;
-    IORegistryEntryGetParentEntry(service, kIOServicePlane, &parent1);
-    IORegistryEntryGetParentEntry(parent1, kIOServicePlane, &parent2);
-    
-    IOHIDDeviceRef iohidDevice = IOHIDDeviceCreate(kCFAllocatorDefault, parent2);
-    
+    IOHIDDeviceRef iohidDevice = HIDEventCopySendingReliable(hidEvent);
     assert(iohidDevice != NULL);
     
     if (iohidDevice != NULL) {
-        CFRetain(iohidDevice);
-        _hidDeviceCache[@(senderID)] = (__bridge id _Nullable)(iohidDevice);
+//        CFRetain(iohidDevice);
+        _hidDeviceCache[@(senderID)] = (__bridge_transfer id _Nullable)(iohidDevice);
     }
-    
-    IOObjectRelease(parent1);
-    IOObjectRelease(parent2);
     
     return iohidDevice;
     
@@ -76,6 +70,7 @@ IOHIDDeviceRef HIDEventCopySendingDeviceFaster(HIDEvent *hidEvent) {
     
     /// Get IOService
     uint64_t senderID = hidEvent.senderID;
+    
     CFMutableDictionaryRef idMatching = IORegistryEntryIDMatching(senderID);
     io_service_t service = IOServiceGetMatchingService(kIOMasterPortDefault, idMatching);
     
@@ -115,6 +110,9 @@ IOHIDDeviceRef HIDEventCopySendingReliable(HIDEvent *hidEvent) {
 
 CFTimeInterval CGEventGetTimestampInSeconds(CGEventRef event) {
     /// Gets timestamp in seconds from CGEvent. More accurate and less volatile than calling CACurrentMediaTime() in the eventTapCallback.
+    ///     I've found that this doesn't work for mouseMoved events in PollingRateMeasurer. Those timestamps are already in nanosecs. No idea why.
+    
+    /// Stuff below doesn't work properly ;?
     
     /// Get raw mach timestamp
     CGEventTimestamp tsMach = CGEventGetTimestamp(event);

@@ -31,6 +31,7 @@
 #import <IOKit/hidsystem/IOHIDEventSystemClient.h>
 
 #import "SharedUtility.h"
+#import "Mac_Mouse_Fix_Helper-Swift.h""
 
 
 
@@ -211,6 +212,19 @@ static void attachIOHIDDevice(IOHIDDeviceRef device) {
     /// Not using this yet, as it's still buggy and not implemented in the UI
     DDLogDebug(@"Setting PointerSpeed for device: %@", newDevice.description);
     [PointerSpeed setForDevice:newDevice.IOHIDDevice];
+    
+    /// Debug
+    static NSMutableArray *measurerMap = nil;
+    if (measurerMap == nil) {
+        measurerMap = [NSMutableArray array];
+    }
+    PollingRateMeasurer *measurer = [[PollingRateMeasurer alloc] init];
+    [measurerMap addObject:measurer];
+    [measurer measureOnDevice:newDevice numberOfSamples:400 completionCallback:^(double period, NSInteger rate) {
+            DDLogDebug(@"Completed polling rate measurement! Period: %f ms, Rate: %ld Hz", period, rate);
+        } progressCallback:^(double completion, double period, NSInteger rate) {
+            DDLogDebug(@"Polling rate measurement %d\%% completed. Current estimate: %ld", (int)(completion*100), (long)rate);
+        }];
     
     /// Log
     DDLogInfo(@"New device added to attached devices:\n%@", newDevice);
