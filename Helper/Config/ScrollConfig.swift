@@ -87,9 +87,23 @@ import CocoaLumberjackSwift
     
     // MARK: Analysis
     
+    /// Note:
+    ///     We tuned all these parameters for highInertia. However, they made fastScroll feel bad for lowInertia, so we added all these `switch _animationCurvePreset` statements as a bandaid. to make lowInertia feel good, too.
+    ///     TODO: Think about: 1. Is this elegant? 2. What about the inertias between high and low? Is fast scroll even used with any of them?
+    
     @objc lazy var scrollSwipeThreshold_inTicks: Int = 2 /*other["scrollSwipeThreshold_inTicks"] as! Int;*/ /// If `scrollSwipeThreshold_inTicks` consecutive ticks occur, they are deemed a scroll-swipe.
     
-    @objc lazy var fastScrollThreshold_inSwipes: Int = 3 /*other["fastScrollThreshold_inSwipes"] as! Int*/ /// On the `fastScrollThreshold_inSwipes`th consecutive swipe, fast scrolling kicks in
+    @objc lazy var fastScrollThreshold_inSwipes: Int = { /// On the `fastScrollThreshold_inSwipes`th consecutive swipe, fast scrolling kicks in
+        /*other["fastScrollThreshold_inSwipes"] as! Int*/
+            
+        switch _animationCurvePreset {
+        case kMFScrollAnimationCurvePresetHighInertia, kMFScrollAnimationCurvePresetQuickScroll:
+            return 3
+        default:
+            return 4
+            
+        }
+    }()
     
     @objc lazy var scrollSwipeMax_inTicks: Int = 11 /// Max number of ticks that we think can occur in a single swipe naturally (if the user isn't using a free-spinning scrollwheel). (See `consecutiveScrollSwipeCounter_ForFreeScrollWheel` definition for more info)
     
@@ -120,9 +134,16 @@ import CocoaLumberjackSwift
         }
     }()
     
-    @objc lazy var consecutiveScrollSwipeMinTickSpeed: Double = 12.0
+    @objc lazy var consecutiveScrollSwipeMinTickSpeed: Double = {
+        switch _animationCurvePreset {
+        case kMFScrollAnimationCurvePresetHighInertia, kMFScrollAnimationCurvePresetQuickScroll:
+            return 12.0
+        default:
+            return 16.0
+        }
+    }()
     
-    @objc lazy private var consecutiveScrollTickInterval_AccelerationEnd: TimeInterval = 15/1000
+    @objc lazy private var consecutiveScrollTickInterval_AccelerationEnd: TimeInterval = consecutiveScrollTickIntervalMin
     /// ^ Used to define accelerationCurve. If the time interval between two ticks becomes less than `consecutiveScrollTickInterval_AccelerationEnd` seconds, then the accelerationCurve becomes managed by linear extension of the bezier instead of the bezier directly.
     
     @objc lazy var ticksPerSecond_DoubleExponentialSmoothing_InputValueWeight: Double = 0.5
@@ -145,8 +166,14 @@ import CocoaLumberjackSwift
     /// ^ This seems to do the same thing as `fastScrollSpeedup`. Setting it close to 1 makes fastScrollSpeeup less sensitive. which allows us to be more precise
     ///     Needs to be > 1 for there to be any speedup
     
-    @objc lazy var fastScrollSpeedup = 7
-    /// Needs to be > 0 for there to be any speedup
+    @objc lazy var fastScrollSpeedup: Double = { /// Needs to be > 0 for there to be any speedup
+        switch _animationCurvePreset {
+        case kMFScrollAnimationCurvePresetHighInertia, kMFScrollAnimationCurvePresetQuickScroll:
+            return 7.0
+        default:
+            return 5.0
+        }
+    }()
     
     // MARK: Animation curve
     
@@ -300,7 +327,7 @@ import CocoaLumberjackSwift
             case kMFScrollSensitivityMedium:
                 pxPerTickStartBase = 60
             case kMFScrollSensitivityHigh:
-                pxPerTickStartBase = 120/*90*/
+                pxPerTickStartBase = 90
             default:
                 fatalError()
             }
@@ -314,9 +341,9 @@ import CocoaLumberjackSwift
             } else {
                 switch animationCurve {
                 case kMFScrollAnimationCurvePresetLowInertia, kMFScrollAnimationCurvePresetNoInertia:
-                    inertiaFactor = 1/*2/3*/
+                    inertiaFactor = /*1*/2/3
                 case kMFScrollAnimationCurvePresetMediumInertia:
-                    inertiaFactor = 1/*3/4*/
+                    inertiaFactor = /*1*/3/4
                 case kMFScrollAnimationCurvePresetHighInertia:
                     inertiaFactor = 1
                 case kMFScrollAnimationCurvePresetTouchDriver:
@@ -363,9 +390,9 @@ import CocoaLumberjackSwift
         } else {
             switch animationCurve {
             case kMFScrollAnimationCurvePresetLowInertia, kMFScrollAnimationCurvePresetNoInertia:
-                inertiaFactor = 1 /*2/3*/
+                inertiaFactor = /*1*/ 2/3
             case kMFScrollAnimationCurvePresetMediumInertia:
-                inertiaFactor = 1 /*3/4*/
+                inertiaFactor = /*1*/ 3/4
             case kMFScrollAnimationCurvePresetHighInertia:
                 inertiaFactor = 1
             case kMFScrollAnimationCurvePresetTouchDriver:

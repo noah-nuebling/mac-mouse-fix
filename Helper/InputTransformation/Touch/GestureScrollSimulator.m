@@ -515,7 +515,7 @@ static Vector initalMomentumScrollVelocity_FromExitVelocity(Vector exitVelocity)
     ///
     
     CGPoint eventLocation = loc;
-    CGEventTimestamp eventTs = (CACurrentMediaTime() * NSEC_PER_SEC); /// Timestamp doesn't seem to make a difference anywhere. Could also set  to 0
+    CGEventTimestamp eventTs = (CACurrentMediaTime() * NSEC_PER_SEC); /// Timestamp doesn't seem to make a difference anywhere. Could also set to 0
     
     ///
     /// Create type 22 event
@@ -531,9 +531,6 @@ static Vector initalMomentumScrollVelocity_FromExitVelocity(Vector exitVelocity)
     CGEventSetDoubleValueField(e22, 137, 1); /// Maybe this is NSEvent.directionInvertedFromDevice
     
     /// Set dynamic fields
-    
-    /// Timestamp
-    CGEventSetTimestamp(e22, eventTs);
     
     /// Scroll deltas
     /// We used to round here, but rounding is not necessary, because we make sure that the incoming vectors only contain integers
@@ -557,19 +554,15 @@ static Vector initalMomentumScrollVelocity_FromExitVelocity(Vector exitVelocity)
     
     CGEventSetTimestamp(e22, eventTs);
     CGEventSetLocation(e22, eventLocation);
-//    CGEventPost(kCGSessionEventTap, e22); /// Needs to be kCGHIDEventTap instead of kCGSessionEventTap to work with Swish, but that will make the events feed back into our scroll event tap. That's not tooo bad, because we ignore continuous events anyways, still bad because CPU use and stuff.
-    dispatch_async(dispatch_get_main_queue(), ^{
-        CGEventTapPostEvent(ModifiedDrag.tapProxy, e22);
-        CFRelease(e22);
-    });
-    
-    /// Create type 29 subtype 6 event
-    ///     (gesture event)
-    ///     (Defining this outside the if-block so we can print it below for debugging)
-    
-    CGEventRef e29 = CGEventCreate(NULL);
+    CGEventPost(kCGSessionEventTap, e22); /// Needs to be kCGHIDEventTap instead of kCGSessionEventTap to work with Swish, but that will make the events feed back into our scroll event tap. That's not tooo bad, because we ignore continuous events anyways, still bad because CPU use and stuff.
+    CFRelease(e22);
     
     if (phase != kIOHIDEventPhaseUndefined) {
+       
+        /// Create type 29 subtype 6 event
+        ///     (gesture event)
+        
+        CGEventRef e29 = CGEventCreate(NULL);
         
         /// Set static fields
         
@@ -581,12 +574,8 @@ static Vector initalMomentumScrollVelocity_FromExitVelocity(Vector exitVelocity)
         /// Deltas
         double dxGesture = (double)vecGesture.x;
         double dyGesture = (double)vecGesture.y;
-        if (dxGesture == 0) {
-            dxGesture = -0.0f; /// The original events only contain -0 but this probably doesn't make a difference.
-        }
-        if (dyGesture == 0) {
-            dyGesture = -0.0f; /// The original events only contain -0 but this probably doesn't make a difference.
-        }
+        if (dxGesture == 0) dxGesture = -0.0f; /// The original events only contain -0 but this probably doesn't make a difference.
+        if (dyGesture == 0) dyGesture = -0.0f;
         CGEventSetDoubleValueField(e29, 116, dxGesture);
         CGEventSetDoubleValueField(e29, 119, dyGesture);
         
@@ -594,27 +583,9 @@ static Vector initalMomentumScrollVelocity_FromExitVelocity(Vector exitVelocity)
         CGEventSetIntegerValueField(e29, 132, phase);
         
         /// Post t29s6 events
-        
         CGEventSetTimestamp(e29, eventTs);
         CGEventSetLocation(e29, eventLocation);
-//        CGEventPost(kCGSessionEventTap, e29);
-        dispatch_async(dispatch_get_main_queue(), ^{
-            CGEventTapPostEvent(ModifiedDrag.tapProxy, e29); /// Using CGEventTapPostEvent and dispatch_async in hopes it helps compat with Catalyst apps. But it doesn't
-            CFRelease(e29);
-        });
-    }
-    
-    /// Debug
-    ///     Extract HIDEvent from CGEvents
-    
-    HIDEvent *hid22 = CGEventGetHIDEvent(e22);
-    HIDEvent *hid29 = CGEventGetHIDEvent(e29);
-    
-    DDLogDebug(@"Hid events from artificial scroll events. hid22: %@, hid29: %@", hid22, hid29);
-    
-    /// Release
-    ///     We defined e29 outside the scope it's primarily used, so we can print it for debugging. This makes sure it's still released in all cases.
-    if (phase == kIOHIDEventPhaseUndefined) {
+        CGEventPost(kCGSessionEventTap, e29);
         CFRelease(e29);
     }
     
