@@ -24,12 +24,39 @@
 
 @implementation Device
 
+NSMutableDictionary *_deviceCache = nil;
+
+static uint64_t IOHIDDeviceGetRegistryID(IOHIDDeviceRef  _Nonnull device) {
+    /// TODO: Put this in some utility class
+    io_service_t service = IOHIDDeviceGetService(device);
+    uint64_t deviceID;
+    IORegistryEntryGetRegistryEntryID(service, &deviceID);
+    return deviceID;
+}
+
++ (Device *)deviceForIOHIDDevice:(IOHIDDeviceRef)device {
+    
+    /// TODO: Delete this
+    /// Move functionality to DeviceManager.
+    /// This `_deviceCache` is redundant with `_attachedDevices` array in deviceManager.
+    /// Goal: We wanna get an attached `Device` instance based on an incoming CGEvent - see `CGEventGetSendingDevice()`
+    
+    if (_deviceCache == nil) {
+        _deviceCache = [NSMutableDictionary dictionary];
+    }
+    uint64_t deviceID = IOHIDDeviceGetRegistryID(device);
+    Device *deviceFromCache = _deviceCache[@(deviceID)];
+    
+    if (deviceFromCache == nil) {
+        Device *newDevice = [[Device alloc] initWithIOHIDDevice:device];
+        _deviceCache[@(deviceID)] = newDevice;
+    }
+    
+    return _deviceCache[@(deviceID)];
+}
+
 /// Create instances with this function
 /// DeviceManager calls this for each relevant device it finds
-+ (Device *)deviceWithIOHIDDevice:(IOHIDDeviceRef)IOHIDDevice {
-    Device *newDevice = [[Device alloc] initWithIOHIDDevice:IOHIDDevice];
-    return newDevice;
-}
 
 - (Device *)initWithIOHIDDevice:(IOHIDDeviceRef)IOHIDDevice {
     self = [super init];

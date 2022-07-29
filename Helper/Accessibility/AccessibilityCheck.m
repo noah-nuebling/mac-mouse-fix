@@ -48,6 +48,47 @@ static void signal_handler(int signal_number, siginfo_t *signal_info, void *cont
     }
 }
 
+/// Testing
+
+CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void * __nullable userInfo) {
+    
+    if (type == kCGEventTapDisabledByTimeout || type == kCGEventTapDisabledByUserInput) {
+        return NULL;
+    }
+    
+    IOHIDDeviceRef device = CGEventGetSendingDevice(event);
+    NSString *deviceName = (__bridge NSString *)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductKey));
+    DDLogDebug(@"Sending Device Test: %@", deviceName);
+    
+    /// CGEvent bridging test
+    ///     Conclusion: objc version of cgevent has no properties, no ivars and no interesting methods
+    
+    id objcEvent = (__bridge id)event;
+    
+    DDLogDebug(@"objcEvent: %@", [objcEvent description]);
+    
+    unsigned int nProperties;
+    Class eventClass = [objcEvent class];
+    objc_property_t *propertyList = class_copyPropertyList(eventClass, &nProperties);
+    unsigned int nIvars;
+    Ivar *ivarList = class_copyIvarList(eventClass, &nIvars);
+    
+    unsigned int nMethods;
+    Method *methodList = class_copyMethodList(eventClass, &nMethods);
+    
+    DDLogDebug(@"nProps: %u, nIvars: %d, nMethods: %d", nProperties, nIvars, nMethods);
+    
+    for (int i = 0; i < nMethods; i++) {
+        Method m = methodList[i];
+        SEL mSelector = method_getName(m);
+        const char *mName = sel_getName(mSelector);
+        DDLogDebug(@"objcEventMethodName: %s", mName);
+    }
+    
+    /// Return
+    return event;
+}
+
 /// Load
 
 + (void)load {
@@ -55,6 +96,9 @@ static void signal_handler(int signal_number, siginfo_t *signal_info, void *cont
     /// Debug
 //    [GlobalDefaults applyDoubleClickThreshold];
 //    PointerConfig.customTableBasedAccelCurve;
+//    CFMachPortRef testTap = [TransformationUtility createEventTapWithLocation:kCGSessionEventTap mask:CGEventMaskBit(kCGEventMouseMoved) | CGEventMaskBit(kCGEventLeftMouseDragged) | CGEventMaskBit(kCGEventScrollWheel) | CGEventMaskBit(kCGEventLeftMouseDown) /* | CGEventMaskBit()*/ option:kCGEventTapOptionDefault placement:kCGTailAppendEventTap callback: testCallback];
+//    CGEventTapEnable(testTap, true);
+    
     
     /// Setup termination handler
 
@@ -99,9 +143,6 @@ static void signal_handler(int signal_number, siginfo_t *signal_info, void *cont
         
         [ScreenDrawer.shared load_Manual];
         [PointerFreeze load_Manual];
-        
-        
-        
         
         [SharedMessagePort sendMessage:@"helperEnabled" withPayload:nil expectingReply:NO];
     }

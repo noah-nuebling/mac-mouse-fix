@@ -16,6 +16,7 @@
     /// The `workload` block can return false to stop iteration, (e.g. when it's found what it's searching for) otherwise it should return true.
     /// Otherwise the function will keep iterating until there are no more parents.
     /// IORegistryEntryGetParentIterator() only iterates over all immediate parents. Not parents of parents.
+    /// TODO: This would be nicer to use if you had an arg `bool *continue` for the `forEach` block, instead of the return value.
     
     Boolean keepGoing = workload(entry);
     if (!keepGoing) return;

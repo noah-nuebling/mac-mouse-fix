@@ -29,6 +29,7 @@ fileprivate let _periodMax = 50.0 /// Max ms between events that we could still 
     
     /// Event tap
     var _eventTap: CFMachPort? = nil
+    var _tapEnabled: Bool = false /// The tap will randombly reactivate and send weird events that don't have a sender, use this to ignore.
     
     /// Store args for access by callback
     var _device: Device? = nil
@@ -38,9 +39,9 @@ fileprivate let _periodMax = 50.0 /// Max ms between events that we could still 
     
     /// Interface
     
-    @objc func stopMeasuring() {
-        CGEvent.tapEnable(tap: _eventTap!, enable: false)
-    }
+//    @objc func stopMeasuring() {
+//
+//    }
     
     @objc func measure(onDevice device: Device, numberOfSamples nSamples: Int, completionCallback: @escaping (Double, Int) -> (), progressCallback: @escaping (Double, Double, Int) -> ()) {
         /// Measures the polling rate on `device` by intercepting `nSamples` events from the device and applying a heuristic algorithm I made up.
@@ -65,7 +66,7 @@ fileprivate let _periodMax = 50.0 /// Max ms between events that we could still 
         if _eventTap == nil {
         
             /// Setup eventTapCallback
-            let eventMask = 1 << CGEventType.mouseMoved.rawValue | 1 << CGEventType.leftMouseDragged.rawValue | 1 << CGEventType.rightMouseDragged.rawValue | 1 << CGEventType.otherMouseDragged.rawValue
+            let eventMask = 1 << CGEventType.mouseMoved.rawValue // | 1 << CGEventType.leftMouseDragged.rawValue | 1 << CGEventType.rightMouseDragged.rawValue | 1 << CGEventType.otherMouseDragged.rawValue
             
             _eventTap = CGEvent.tapCreate(tap: .cgSessionEventTap, place: .tailAppendEventTap, options: .defaultTap, eventsOfInterest: CGEventMask(eventMask), callback: eventTapCallback, userInfo: Unmanaged.passUnretained(self).toOpaque()) /// Using a listenonly tap totally messes up the timestamps.
             
@@ -75,6 +76,7 @@ fileprivate let _periodMax = 50.0 /// Max ms between events that we could still 
         
         /// Enable event tap
         CGEvent.tapEnable(tap: _eventTap!, enable: true)
+        _tapEnabled = true
     }
 }
 
@@ -82,7 +84,7 @@ func eventTapCallback(_ proxy: OpaquePointer, _ type: CGEventType, _ event: CGEv
     
     /// Guard weird events
     if type == .tapDisabledByTimeout || type == .tapDisabledByUserInput {
-        return nil
+        return Unmanaged.passUnretained(event)
     }
     
     /// Get self
@@ -90,13 +92,22 @@ func eventTapCallback(_ proxy: OpaquePointer, _ type: CGEventType, _ event: CGEv
     let unmanagedContext = Unmanaged<PollingRateMeasurer>.fromOpaque(context)
     let selfff = unmanagedContext.takeUnretainedValue()
     
+    let enabled = selfff._tapEnabled /// This returns true even thought the value is false ????
+    if !enabled {
+        DDLogInfo("PollingRateMeasurement eventTap called after disabling")
+        CGEvent.tapEnable(tap: selfff._eventTap!, enable: false)
+        selfff._tapEnabled = false
+        return Unmanaged.passUnretained(event)
+    }
+    
     /// Main Logic
-    let hidEvent = CGEventGetHIDEvent(event)
-    let sender = HIDEventGetSendingDevice(hidEvent)?.takeUnretainedValue()
-    guard let sender = sender else { return nil }
+//    let hidEvent = CGEventGetHIDEvent(event)
+//    let sender = HIDEventGetSendingDevice(hidEvent)?.takeUnretainedValue()
+    let sender = CGEventGetSendingDevice(event)?.takeUnretainedValue();
+    guard let sender = sender else { return Unmanaged.passUnretained(event) }
     let senderDeviceID = IOHIDDeviceGetProperty(sender, kIOHIDLocationIDKey as CFString) as! NSNumber /// Not sure if this is good way of comparing devices.
     let targetDeviceID = IOHIDDeviceGetProperty(selfff._device!.iohidDevice, kIOHIDLocationIDKey as CFString) as! NSNumber
-    if !senderDeviceID.isEqual(to: targetDeviceID) { return nil }
+    if !senderDeviceID.isEqual(to: targetDeviceID) { return Unmanaged.passUnretained(event) }
     let time = event.timestamp
     let delta: CFTimeInterval = Double(time - selfff._lastMeasurementTime)/Double(NSEC_PER_SEC)
     /// ^ Discussion: normally, CGEvent timestamp is a `mach_absolute_time()` timestamp, and we use CGEventGetTimeStampInSeconds() or related functions to convert to seconds. But here, the CGEvent timestampts are already in nanoseconds! No idea why.
@@ -116,7 +127,8 @@ func eventTapCallback(_ proxy: OpaquePointer, _ type: CGEventType, _ event: CGEv
             }
             if doCallCompletion {
                 selfff._completionCallback!(period, rate)
-                selfff.stopMeasuring()
+                CGEvent.tapEnable(tap: selfff._eventTap!, enable: false)
+                selfff._tapEnabled = false
             }
         }
     }

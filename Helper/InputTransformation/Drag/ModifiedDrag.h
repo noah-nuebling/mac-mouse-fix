@@ -48,6 +48,7 @@ typedef struct {
     Boolean firstCallback;
     
     dispatch_queue_t queue;
+    
 } ModifiedDragState;
 
 
@@ -69,6 +70,7 @@ typedef struct {
 + (void)load_Manual;
 
 + (NSDictionary *)dict;
++ (CGEventTapProxy)tapProxy;
 + (void)initializeDragWithModifiedDragDict:(NSDictionary *)dict onDevice:(Device *)dev;
 
 + (void)modifiedScrollHasBeenUsed;

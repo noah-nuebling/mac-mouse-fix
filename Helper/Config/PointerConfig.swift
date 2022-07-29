@@ -102,8 +102,8 @@ class PointerConfig: NSObject {
     @objc static var useParametricCurve: Bool = false /// Switch between table-based and parametric curve. Once parametric has been used you can't switch back until you detach the device.
     
     /// User defined params
-    @objc static var u_speed: Double = 0.75
-    @objc static var u_complexSettings: Bool = false /// Switch between using just `u_speed` or the fine-grained params below
+    @objc static var u_speed: Double = 0.5
+    @objc static var u_complexSettings: Bool = false /// Switch nbetwee using just `u_speed` or the fine-grained params below
     @objc static var u_minSens: Double = 1.0
     @objc static var u_maxSens: Double = 0.5
     @objc static var u_curvature: Double = 0.5

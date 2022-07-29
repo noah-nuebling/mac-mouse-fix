@@ -135,6 +135,10 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         
         return event;
     }
+    
+    /// Testing
+    
+//    IOHIDDeviceRef sendingDev = CGEventGetSendingDevice(event);
 
     /// Return non-scrollwheel events unaltered
     
@@ -180,7 +184,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     DDLogInfo(@"Scroll event: %@", hidEvent.description);
     
     /// Get sending device
-    IOHIDDeviceRef sendingDev = HIDEventGetSendingDevice(hidEvent);
+    IOHIDDeviceRef sendingDev = CGEventGetSendingDevice(event);
     
     /// Debug
     assert(sendingDev != NULL);

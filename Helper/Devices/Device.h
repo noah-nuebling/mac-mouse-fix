@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
-+ (Device *)deviceWithIOHIDDevice:(IOHIDDeviceRef)IOHIDDevice;
++ (Device *)deviceForIOHIDDevice:(IOHIDDeviceRef)IOHIDDevice;
 
 - (NSNumber *)uniqueID;
 - (NSString *)name;

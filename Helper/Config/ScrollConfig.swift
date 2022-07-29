@@ -209,7 +209,7 @@ import CocoaLumberjackSwift
             
         case kMFScrollAnimationCurvePresetLowInertia:
 
-            return MFScrollAnimationCurveParameters(msPerStep: /*140*/160, baseCurve: ScrollConfig.linearCurve, dragExponent: 1.0, dragCoefficient: 23, stopSpeed: 50, sendMomentumScrolls: false)
+            return MFScrollAnimationCurveParameters(msPerStep: 140/*160*/, baseCurve: ScrollConfig.linearCurve, dragExponent: 1.0, dragCoefficient: 30/*23*/, stopSpeed: 50, sendMomentumScrolls: false)
             
         case kMFScrollAnimationCurvePresetMediumInertia:
             
@@ -300,7 +300,7 @@ import CocoaLumberjackSwift
             case kMFScrollSensitivityMedium:
                 pxPerTickStartBase = 60
             case kMFScrollSensitivityHigh:
-                pxPerTickStartBase = 90
+                pxPerTickStartBase = 120/*90*/
             default:
                 fatalError()
             }
@@ -314,9 +314,9 @@ import CocoaLumberjackSwift
             } else {
                 switch animationCurve {
                 case kMFScrollAnimationCurvePresetLowInertia, kMFScrollAnimationCurvePresetNoInertia:
-                    inertiaFactor = 2/3
+                    inertiaFactor = 1/*2/3*/
                 case kMFScrollAnimationCurvePresetMediumInertia:
-                    inertiaFactor = 3/4
+                    inertiaFactor = 1/*3/4*/
                 case kMFScrollAnimationCurvePresetHighInertia:
                     inertiaFactor = 1
                 case kMFScrollAnimationCurvePresetTouchDriver:
@@ -363,9 +363,9 @@ import CocoaLumberjackSwift
         } else {
             switch animationCurve {
             case kMFScrollAnimationCurvePresetLowInertia, kMFScrollAnimationCurvePresetNoInertia:
-                inertiaFactor = 2/3
+                inertiaFactor = 1 /*2/3*/
             case kMFScrollAnimationCurvePresetMediumInertia:
-                inertiaFactor = 3/4
+                inertiaFactor = 1 /*3/4*/
             case kMFScrollAnimationCurvePresetHighInertia:
                 inertiaFactor = 1
             case kMFScrollAnimationCurvePresetTouchDriver:

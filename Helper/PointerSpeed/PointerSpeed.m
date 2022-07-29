@@ -85,7 +85,7 @@ extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHI
 
 // MARK: - Surface
 
-+ (void)setForDevice:(IOHIDDeviceRef)device
++ (Boolean)setForDevice:(IOHIDDeviceRef)device
          sensitivity:(double)sensitivity
      tableBasedCurve:(NSArray *)points {
     
@@ -102,14 +102,16 @@ extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHI
     assert(success);
     
     /// Set mouse acceleration on the driver
-    success = setAccelToTableBasedCurve(points, serviceClient);
+    success = success && setAccelToTableBasedCurve(points, serviceClient);
     assert(success);
     
     CFRelease(serviceClient);
     CFRelease(systemClient);
+    
+    return success;
 }
 
-+ (void)setForDevice:(IOHIDDeviceRef)device
++ (Boolean)setForDevice:(IOHIDDeviceRef)device
          sensitivity:(double)sensitivity
         parametricCurve:(MFAppleAccelerationCurveParams)accelCurve {
     
@@ -126,11 +128,13 @@ extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHI
     assert(success);
     
     /// Set mouse acceleration on the driver
-    success = setAccelToParametricCurve(accelCurve, serviceClient);
+    success = success && setAccelToParametricCurve(accelCurve, serviceClient);
     assert(success);
     
     CFRelease(serviceClient);
     CFRelease(systemClient);
+    
+    return success;
 }
 
 + (void)setForDevice:(IOHIDDeviceRef)device
@@ -227,6 +231,9 @@ static Boolean setAccelToTableBasedCurve(NSArray *points, IOHIDServiceClientRef 
     
     /// Write curves
     success = setTableCurves(table, eventServiceClient);
+    
+    /// Release
+    CFRelease(table);
         
     /// Early return
     if (!success) return false;
@@ -293,7 +300,7 @@ static Boolean setTableCurves(CFDataRef curves, IOHIDServiceClientRef serviceCli
     
     if (parametricCurvesAreSet(serviceClient)) {
         DDLogError(@"Trying to set tableBasedCurve but parametricCurve is already set. This has no effect.");
-        assert(false);
+        return false;
     }
     
     return IOHIDServiceClientSetProperty(serviceClient, CFSTR(kIOHIDPointerAccelerationTableKey), curves);
@@ -313,6 +320,7 @@ static Boolean removeCustomCurves(IOHIDServiceClientRef eventServiceClient, IOHI
     } else {
         CFDataRef defaultCurves = copyDefaultAccelerationTable();
         Boolean success = setTableCurves(defaultCurves, serviceClient);
+        assert(success);
         CFRelease(defaultCurves);
         return success;
     }

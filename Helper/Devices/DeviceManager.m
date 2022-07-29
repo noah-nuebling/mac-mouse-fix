@@ -167,7 +167,7 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
 
 static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
     
-    Device *removedMFDevice = [Device deviceWithIOHIDDevice:device];
+    Device *removedMFDevice = [Device deviceForIOHIDDevice:device];
     [_attachedDevices removeObject:removedMFDevice]; /// This might do nothing if this device wasn't contained in _attachedDevice (that's if it didn't pass filtering in `handleDeviceMatching()`)
     
     /// Notifiy other objects
@@ -203,7 +203,7 @@ static void attachIOHIDDevice(IOHIDDeviceRef device) {
     /// Helper function for handleDeviceMatching()
     
     /// Create Device instance
-    Device *newDevice = [Device deviceWithIOHIDDevice:device];
+    Device *newDevice = [Device deviceForIOHIDDevice:device];
     
     /// Add to attachedDevices list
     [_attachedDevices addObject:newDevice];
@@ -221,10 +221,10 @@ static void attachIOHIDDevice(IOHIDDeviceRef device) {
     PollingRateMeasurer *measurer = [[PollingRateMeasurer alloc] init];
     [measurerMap addObject:measurer];
     [measurer measureOnDevice:newDevice numberOfSamples:400 completionCallback:^(double period, NSInteger rate) {
-            DDLogDebug(@"Completed polling rate measurement! Period: %f ms, Rate: %ld Hz", period, rate);
-        } progressCallback:^(double completion, double period, NSInteger rate) {
-            DDLogDebug(@"Polling rate measurement %d\%% completed. Current estimate: %ld", (int)(completion*100), (long)rate);
-        }];
+        DDLogDebug(@"Completed polling rate measurement! Period: %f ms, Rate: %ld Hz", period, rate);
+    } progressCallback:^(double completion, double period, NSInteger rate) {
+        DDLogDebug(@"Polling rate measurement %d\%% completed. Current estimate: %ld", (int)(completion*100), (long)rate);
+    }];
     
     /// Log
     DDLogInfo(@"New device added to attached devices:\n%@", newDevice);

@@ -13,18 +13,47 @@
 #import "MFIOKitImports.h"
 #import "IOUtility.h"
 #import "SharedUtility.h"
+#import "CGEventHIDEventBridge.h"
 
 @implementation EventUtility
 
-extern CFTimeInterval CATimeWithHostTime(UInt64 mach_absolute_time);
+extern CFTimeInterval CATimeWithHostTime(UInt64 mach_absolute_time); /// I saw this in assembly but linking failed I think -> remove
+
+#pragma mark - Sending device
 
 NSMutableDictionary *_hidDeviceCache = nil;
+
+IOHIDDeviceRef _Nullable CGEventGetSendingDevice(CGEventRef cgEvent) {
+    /// Sometimes CGEventGetHIDEvent() doesn't work. I observed this in the `PollingRateMeasurer` where it doesn't work for mouseDragged events. (Only mouseMoved). This works for `mouseDragged` events as well! -> Use this instead of `HIDEventGetSendingDevice()` as long as `CGEventGetHIDEvent()` isn't reliable.
+    
+    /// Testing
+//    HIDEvent *hidEvent = CGEventGetHIDEvent(cgEvent);
+//    uint64_t hidSenderID = hidEvent.senderID;
+//    NSMutableArray *potentialIDs = [NSMutableArray array];
+//    for (int i = 0; i < 256; i++) {
+//        int64_t field = CGEventGetIntegerValueField(cgEvent, i);
+//        uint64_t potentialID;
+//        memcpy(&potentialID, &field, sizeof(int64_t));
+//        [potentialIDs addObject:@[@(i), @(potentialID)]];
+//    }
+//    DDLogDebug(@"SenderID: %llu, Potential IDs: %@", hidSenderID, potentialIDs);
+    
+    /// Main Logic
+    int64_t senderFieldValue = CGEventGetIntegerValueField(cgEvent, 87);
+    uint64_t senderID;
+    memcpy(&senderID, &senderFieldValue, sizeof(int64_t));
+    
+    if (senderID == 0) {
+        assert(false);
+    }
+    
+    return getSendingDeviceWithSenderID(senderID);
+}
 
 IOHIDDeviceRef _Nullable HIDEventGetSendingDevice(HIDEvent *hidEvent) {
     /// This version uses a cache to avoid calling IOHIDDeviceCreate() (which is super slow) over and over.
     ///     \note Do we need to reset the cache at certain points?
     ///     \note Now that we use the cache we should be able to use the version that iterates over all parents instead of only checking the second parent, without it being too slow.
-    
     
     assert(hidEvent != NULL);
     if (hidEvent == NULL) return NULL;
@@ -37,6 +66,10 @@ IOHIDDeviceRef _Nullable HIDEventGetSendingDevice(HIDEvent *hidEvent) {
         senderID = IOHIDEventGetSenderID((__bridge IOHIDEventRef)hidEvent);
     }
     /// ^ Sometimes `- senderID` gives an unrecognized selector error. Only when I'm not starting the app via the debugger though. Weird. IOHIDEventGetSenderID() works in those cases. Even though `- senderID` just calls it. Really weird.
+    
+    return getSendingDeviceWithSenderID(senderID);
+}
+IOHIDDeviceRef _Nullable getSendingDeviceWithSenderID(uint64_t senderID) {
     
     if (_hidDeviceCache == nil) {
         _hidDeviceCache = [NSMutableDictionary dictionary];
@@ -52,7 +85,7 @@ IOHIDDeviceRef _Nullable HIDEventGetSendingDevice(HIDEvent *hidEvent) {
         return (__bridge IOHIDDeviceRef)iohidDeviceFromCache;
     }
     
-    IOHIDDeviceRef iohidDevice = HIDEventCopySendingReliable(hidEvent);
+    IOHIDDeviceRef iohidDevice = copySendingDevice_Reliable(senderID);
     assert(iohidDevice != NULL);
     
     if (iohidDevice != NULL) {
@@ -61,16 +94,15 @@ IOHIDDeviceRef _Nullable HIDEventGetSendingDevice(HIDEvent *hidEvent) {
     }
     
     return iohidDevice;
-    
 }
 
-IOHIDDeviceRef HIDEventCopySendingDeviceFaster(HIDEvent *hidEvent) {
+IOHIDDeviceRef copySendingDevice_Faster(uint64_t senderID) {
     /// This gets the second parent of the registryEntry that sent the hidEvent. If that doesn't work, it returns NULL.
     /// This is still super slow because IOHIDDeviceCreate() is super slow
+    /// -> Just use _Reliable instead. Once a device is cached, it's plenty fast anyways.
+    
     
     /// Get IOService
-    uint64_t senderID = hidEvent.senderID;
-    
     CFMutableDictionaryRef idMatching = IORegistryEntryIDMatching(senderID);
     io_service_t service = IOServiceGetMatchingService(kIOMasterPortDefault, idMatching);
     
@@ -87,12 +119,11 @@ IOHIDDeviceRef HIDEventCopySendingDeviceFaster(HIDEvent *hidEvent) {
     return iohidDevice;
 }
 
-IOHIDDeviceRef HIDEventCopySendingReliable(HIDEvent *hidEvent) {
+IOHIDDeviceRef copySendingDevice_Reliable(uint64_t senderID) {
     /// This iterates all parents of the service which send the hidEvent until it finds one that it can convert to and IOHIDDevice.
     /// Calling IOHIDDeviceCreate() on all these non-hid device is super slow unfortunately.
     
     /// Get IOService
-    uint64_t senderID = hidEvent.senderID;
     CFMutableDictionaryRef idMatching = IORegistryEntryIDMatching(senderID);
     io_service_t service = IOServiceGetMatchingService(kIOMasterPortDefault, idMatching);
     
@@ -103,10 +134,12 @@ IOHIDDeviceRef HIDEventCopySendingReliable(HIDEvent *hidEvent) {
         return (iohidDevice == NULL); /// Keep going while device not found
     }];
     
+    assert(iohidDevice != NULL);
+    
     return iohidDevice;
 }
 
-/// Other helper functions
+#pragma mark - Timestamps
 
 CFTimeInterval CGEventGetTimestampInSeconds(CGEventRef event) {
     /// Gets timestamp in seconds from CGEvent. More accurate and less volatile than calling CACurrentMediaTime() in the eventTapCallback.

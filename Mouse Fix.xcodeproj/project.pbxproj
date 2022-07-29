@@ -35,6 +35,7 @@
 		4F3E067E26A2F97D000C9E06 /* URLMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3E067D26A2F97D000C9E06 /* URLMenuItem.m */; };
 		4F44FF042606D73D00926A5E /* SharedMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* SharedMessagePort.m */; };
 		4F44FF052606D73D00926A5E /* SharedMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* SharedMessagePort.m */; };
+		4F5C2F802885C5D0001B9B8A /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C2F7F2885C5D0001B9B8A /* State.swift */; };
 		4F5F3EEE2756DB0A00C350C0 /* RemapsOverrider_old_.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5F3EED2756DB0A00C350C0 /* RemapsOverrider_old_.swift */; };
 		4F5F3EF12756EC0400C350C0 /* RemapsOverrider.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5F3EF02756EC0400C350C0 /* RemapsOverrider.m */; };
 		4F5F3EF32756F1DB00C350C0 /* ScrollModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5F3EF22756F1DB00C350C0 /* ScrollModifiers.swift */; };
@@ -343,6 +344,7 @@
 		4F3E067D26A2F97D000C9E06 /* URLMenuItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = URLMenuItem.m; sourceTree = "<group>"; };
 		4F44FF022606D73D00926A5E /* SharedMessagePort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharedMessagePort.h; sourceTree = "<group>"; };
 		4F44FF032606D73D00926A5E /* SharedMessagePort.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SharedMessagePort.m; sourceTree = "<group>"; };
+		4F5C2F7F2885C5D0001B9B8A /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
 		4F5F3EED2756DB0A00C350C0 /* RemapsOverrider_old_.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemapsOverrider_old_.swift; sourceTree = "<group>"; };
 		4F5F3EEF2756DD1200C350C0 /* RemapsOverrider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapsOverrider.h; sourceTree = "<group>"; };
 		4F5F3EF02756EC0400C350C0 /* RemapsOverrider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapsOverrider.m; sourceTree = "<group>"; };
@@ -1392,16 +1394,17 @@
 		4FF6660C25F2C93A00689B77 /* Config */ = {
 			isa = PBXGroup;
 			children = (
+				4F5C2F7F2885C5D0001B9B8A /* State.swift */,
 				4FF6660D25F2C93A00689B77 /* Config.h */,
 				4FF6660E25F2C93A00689B77 /* Config.m */,
 				4FA83A2D268288D900F3A31B /* PointerConfig.swift */,
 				4FD860CB266EF55A004F76C8 /* ScrollConfig.swift */,
-				4F09BF57288355170080A5F8 /* PollingRateMeasurer.swift */,
-				4F616D6027BDCD56004A6A72 /* ScrollConfigTesting.md */,
-				4FE7A0DE28677AD600C33B37 /* Gain Curve Math.tex */,
 				4FD0A71027B295F600FFCD12 /* OtherConfig.swift */,
+				4F09BF57288355170080A5F8 /* PollingRateMeasurer.swift */,
 				4FFAD8EF28677F94005DD496 /* PointerConfigObjC.h */,
 				4FD860DA266EFD64004F76C8 /* ScrollConfigObjC.h */,
+				4F616D6027BDCD56004A6A72 /* ScrollConfigTesting.md */,
+				4FE7A0DE28677AD600C33B37 /* Gain Curve Math.tex */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -2285,6 +2288,7 @@
 				4FD860CC266EF55A004F76C8 /* ScrollConfig.swift in Sources */,
 				4F8FC140275DC81900887A0C /* PrefixSwift.swift in Sources */,
 				4F2CC58727B8D2300084AACE /* HybridCurves.swift in Sources */,
+				4F5C2F802885C5D0001B9B8A /* State.swift in Sources */,
 				4F8A8DAD287EEF6200786BCC /* IOHIDAccelerationTableBridge.mm in Sources */,
 				4F3A40CB266C44D100436821 /* DisplayLink.m in Sources */,
 				4FF6669925F2C93A00689B77 /* VectorSubPixelator.m in Sources */,
