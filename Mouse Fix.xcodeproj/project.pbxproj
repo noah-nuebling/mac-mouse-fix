@@ -177,6 +177,11 @@
 		4FF666A725F2C93A00689B77 /* Device.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6667A25F2C93A00689B77 /* Device.m */; };
 		4FF666A825F2C93A00689B77 /* DeviceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6667D25F2C93A00689B77 /* DeviceManager.m */; };
 		4FF666A925F2C93A00689B77 /* HelperUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6668025F2C93A00689B77 /* HelperUtility.m */; };
+		4FF8C89A28955491007EC31F /* ClickCycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF8C89928955490007EC31F /* ClickCycle.swift */; };
+		4FF8C89E28955DC4007EC31F /* CoolTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF8C89D28955DC4007EC31F /* CoolTimer.swift */; };
+		4FF8C89F28955DC4007EC31F /* CoolTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF8C89D28955DC4007EC31F /* CoolTimer.swift */; };
+		4FF8C8A128956DDD007EC31F /* ButtonModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF8C8A028956DDD007EC31F /* ButtonModifiers.swift */; };
+		4FF8C8A32895AACB007EC31F /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF8C8A22895AACB007EC31F /* Buttons.swift */; };
 		4FF93059288026FC0007CCA7 /* PolynomialCappedAccelerationCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF93058288026FC0007CCA7 /* PolynomialCappedAccelerationCurve.swift */; };
 		4FF9306228806E4F0007CCA7 /* PolyFitObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF9306128806E4F0007CCA7 /* PolyFitObjC.m */; };
 		4FF93063288076600007CCA7 /* PolyFit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FF9305D288060100007CCA7 /* PolyFit.cpp */; };
@@ -627,6 +632,10 @@
 		4FF6667D25F2C93A00689B77 /* DeviceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceManager.m; sourceTree = "<group>"; };
 		4FF6667F25F2C93A00689B77 /* HelperUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelperUtility.h; sourceTree = "<group>"; };
 		4FF6668025F2C93A00689B77 /* HelperUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelperUtility.m; sourceTree = "<group>"; };
+		4FF8C89928955490007EC31F /* ClickCycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClickCycle.swift; sourceTree = "<group>"; };
+		4FF8C89D28955DC4007EC31F /* CoolTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoolTimer.swift; sourceTree = "<group>"; };
+		4FF8C8A028956DDD007EC31F /* ButtonModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonModifiers.swift; sourceTree = "<group>"; };
+		4FF8C8A22895AACB007EC31F /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		4FF93058288026FC0007CCA7 /* PolynomialCappedAccelerationCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolynomialCappedAccelerationCurve.swift; sourceTree = "<group>"; };
 		4FF9305D288060100007CCA7 /* PolyFit.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PolyFit.cpp; sourceTree = "<group>"; };
 		4FF9305E288060100007CCA7 /* PolyFit.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PolyFit.hpp; sourceTree = "<group>"; };
@@ -1224,6 +1233,7 @@
 				4FF6653D25F2C7B000689B77 /* NSArray+Additions.m */,
 				4FF6653925F2C7B000689B77 /* NSMutableDictionary+Additions.h */,
 				4FF6654025F2C7B000689B77 /* NSMutableDictionary+Additions.m */,
+				4FF8C89D28955DC4007EC31F /* CoolTimer.swift */,
 				4FD860C2266EEA94004F76C8 /* Unused */,
 			);
 			path = Utility;
@@ -1462,6 +1472,9 @@
 				4FF6661E25F2C93A00689B77 /* ButtonInputReceiver.m */,
 				4FF6661C25F2C93A00689B77 /* ButtonTriggerGenerator.h */,
 				4FF6661925F2C93A00689B77 /* ButtonTriggerGenerator.m */,
+				4FF8C8A22895AACB007EC31F /* Buttons.swift */,
+				4FF8C89928955490007EC31F /* ClickCycle.swift */,
+				4FF8C8A028956DDD007EC31F /* ButtonModifiers.swift */,
 				4FF6661D25F2C93A00689B77 /* ButtonTriggerHandler.h */,
 				4FF6661A25F2C93A00689B77 /* ButtonTriggerHandler.m */,
 				4F1B83042606E68300AEAF37 /* ButtonLandscapeAssessor.h */,
@@ -2181,6 +2194,7 @@
 				4FEC9668278BBDC600548604 /* NSColor+Additions.m in Sources */,
 				4FF6660025F2C92700689B77 /* Hyperlink.m in Sources */,
 				4FF6654C25F2C7B000689B77 /* Queue.m in Sources */,
+				4FF8C89E28955DC4007EC31F /* CoolTimer.swift in Sources */,
 				4FF665ED25F2C92700689B77 /* MFSegmentedControl.m in Sources */,
 				4F3E067E26A2F97D000C9E06 /* URLMenuItem.m in Sources */,
 				4FF6660225F2C92700689B77 /* ClickableImageView.m in Sources */,
@@ -2240,6 +2254,7 @@
 				4FF6654D25F2C7B000689B77 /* SharedUtility.m in Sources */,
 				4FF6668225F2C93A00689B77 /* Config.m in Sources */,
 				4FFBC5A8266977CA001D389B /* DoubleExponentialSmoother.swift in Sources */,
+				4FF8C8A128956DDD007EC31F /* ButtonModifiers.swift in Sources */,
 				4FF6669625F2C93A00689B77 /* Actions.m in Sources */,
 				4FF0254E27AFF90800923107 /* ModifiedDragOutputThreeFingerSwipe.m in Sources */,
 				4F44FF042606D73D00926A5E /* SharedMessagePort.m in Sources */,
@@ -2297,6 +2312,7 @@
 				4F1AFE972670EBA900ECA424 /* DragCurve.swift in Sources */,
 				4FF6669125F2C93A00689B77 /* ScrollUtility.m in Sources */,
 				4FF666A825F2C93A00689B77 /* DeviceManager.m in Sources */,
+				4FF8C89F28955DC4007EC31F /* CoolTimer.swift in Sources */,
 				4FF6669B25F2C93A00689B77 /* AppDelegate.m in Sources */,
 				4F9E78D02685E30C002C2309 /* GestureScrollSimulator.m in Sources */,
 				4FD66E0827BB553800F67559 /* CGEventHIDEventBridge.m in Sources */,
@@ -2318,7 +2334,9 @@
 				4FA83A29268271E200F3A31B /* PointerSpeed.m in Sources */,
 				4FF6654B25F2C7B000689B77 /* Queue.m in Sources */,
 				4F9C9B6B268A2D6F0083DED0 /* CircularBuffer.m in Sources */,
+				4FF8C8A32895AACB007EC31F /* Buttons.swift in Sources */,
 				4FF0255427B007FC00923107 /* ModifiedDragOutputFakeDrag.m in Sources */,
+				4FF8C89A28955491007EC31F /* ClickCycle.swift in Sources */,
 				4FF9306228806E4F0007CCA7 /* PolyFitObjC.m in Sources */,
 				4FA83A2E268288D900F3A31B /* PointerConfig.swift in Sources */,
 				4FF6668625F2C93A00689B77 /* ButtonTriggerGenerator.m in Sources */,

@@ -123,13 +123,13 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         NSUInteger buttonNumber = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
         if (buttonNumber != 1 && buttonNumber != 2) { /// Don't print left and right click cause that'll clog the logs
             DDLogDebug(@"Received CG Button Input - %@", [NSEvent eventWithCGEvent:event]);
-            // ^ This crashes sometimes.
-            // I think it's because the timeout events can't be translated to NSEvent
-            //  I usually see it crash with the message "Invalid parameter not satisfying: _type > 0 && _type <= kCGSLastEventType", so I it seems there are some events with weird types being passed to this function, I don't know why that would happen though, because it should only receive normal mouse down and mouse up events.
-            // I used to speculate that it's connected to attaching / deatching devices, but I don't remember why.
-            // I feel like it might be connected to inserting events but I'm not sure why
-            // I saw this error in some log messages which people sent me. I feel like it might be interfering with logging other important stuff because maybe the eventTap will break or the program will crash when this error occurs. Not sure thought. See the logs in GH Issue #103, for an example. They contain the error and I think that might have prevented logging of device re-attachment.
-            // TODO: Investigate when and why exactly this crashes (when you have time)
+            /// ^ This crashes sometimes.
+            /// I think it's because the timeout events can't be translated to NSEvent
+            ///  I usually see it crash with the message "Invalid parameter not satisfying: _type > 0 && _type <= kCGSLastEventType", so I it seems there are some events with weird types being passed to this function, I don't know why that would happen though, because it should only receive normal mouse down and mouse up events.
+            /// I used to speculate that it's connected to attaching / deatching devices, but I don't remember why.
+            /// I feel like it might be connected to inserting events but I'm not sure why
+            /// I saw this error in some log messages which people sent me. I feel like it might be interfering with logging other important stuff because maybe the eventTap will break or the program will crash when this error occurs. Not sure thought. See the logs in GH Issue #103, for an example. They contain the error and I think that might have prevented logging of device re-attachment.
+            /// TODO: Investigate when and why exactly this crashes (when you have time)
         }
     } @catch (NSException *exception) {
         DDLogDebug(@"Received CG Button Input which can't be printed normally - Exception while printing: %@", exception);

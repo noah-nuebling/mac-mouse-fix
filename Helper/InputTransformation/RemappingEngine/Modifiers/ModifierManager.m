@@ -125,6 +125,7 @@ os_signpost_id_t _log_id;
 
 NSArray *_prevButtonModifiers;
 /// Analyzing this with `os_signpost` reveals it is called 3 times per button click - we should look into optimizing this.
+///     Edit: Why `mightHave`? Do we really need to test again if they actually changed?
 + (void)handleButtonModifiersMightHaveChangedWithDevice:(Device *)device {
     
     NSNumber *devID = device.uniqueID;

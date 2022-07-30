@@ -25,27 +25,27 @@
 ///     Should normally pass `[Utility Transform + effectiveRemapsMethod]` I think other stuff will break if we use sth else.
 + (void)assessMappingLandscapeWithButton:(NSNumber *)button
                                    level:(NSNumber *)level
-                remapsActingOnThisButton:(NSDictionary *)remapsActingOnThisButton
+         modificationsActingOnThisButton:(NSDictionary *)modificationsActingOnThisButton
                                   remaps:(NSDictionary *)remaps
                            thisClickDoBe:(BOOL *)clickActionOfThisLevelExists
                             thisDownDoBe:(BOOL *)effectForMouseDownStateOfThisLevelExists
                              greaterDoBe:(BOOL *)effectOfGreaterLevelExists {
     
-    *clickActionOfThisLevelExists = remapsActingOnThisButton[button][level][kMFButtonTriggerDurationClick] != nil;
-    *effectForMouseDownStateOfThisLevelExists = effectExistsForMouseDownState(button, level, remaps, remapsActingOnThisButton);
-    *effectOfGreaterLevelExists = effectOfGreaterLevelExistsFor(button, level, remaps, remapsActingOnThisButton);
+    *clickActionOfThisLevelExists = modificationsActingOnThisButton[button][level][kMFButtonTriggerDurationClick] != nil;
+    *effectForMouseDownStateOfThisLevelExists = effectExistsForMouseDownState(button, level, remaps, modificationsActingOnThisButton);
+    *effectOfGreaterLevelExists = effectOfGreaterLevelExistsFor(button, level, remaps, modificationsActingOnThisButton);
 }
 
 #pragma mark Helper functions for Main Assess Button Landscape Function
 
-static BOOL effectExistsForMouseDownState(NSNumber *button, NSNumber *level, NSDictionary *remaps, NSDictionary *remapsActingOnThisButton) {
-    BOOL holdActionExists = remapsActingOnThisButton[button][level][kMFButtonTriggerDurationHold] != nil;
-    BOOL usedAsModifier = isPartOfModificationPrecondition(button, level, remaps);
+static BOOL effectExistsForMouseDownState(NSNumber *button, NSNumber *level, NSDictionary *remaps, NSDictionary *modificationsActingOnThisButton) {
+    BOOL holdActionExists = modificationsActingOnThisButton[button][level][kMFButtonTriggerDurationHold] != nil;
+    BOOL usedAsModifier = isModifier(button, level, remaps);
     
     return holdActionExists || usedAsModifier;
 }
-static BOOL isPartOfModificationPrecondition(NSNumber *button, NSNumber *level, NSDictionary *remaps) {
-    // TODO: Check if this still works after modification precondition refactor
+static BOOL isModifier(NSNumber *button, NSNumber *level, NSDictionary *remaps) {
+    /// TODO: Check if this still works after modification precondition refactor
         /// Debugged this, now it seems to work fine
     
     /// ^ I feel like, now that the button preconditions are ordered, we might wanna check if the sequence of buttons in the activeModifiers are the start (or the whole) of a sequence of buttons in some modification precondition. So if there is button Sequence in some button precondition that can still be reached based on the current state. (Right now we're just checking if the `button` is any part of any modification precondition's button sequence) But I guess if you consider that the user can let go of buttons, then any buttonSequence can "still be reached". And if we don't consider letting go of buttons (which probably doesn't make sense?) then it would be much more involved to determine this stuff.... So I think the current solution is probably the most practical.
@@ -63,10 +63,10 @@ static BOOL isPartOfModificationPrecondition(NSNumber *button, NSNumber *level, 
     return NO;
 }
 
-static BOOL effectOfGreaterLevelExistsFor(NSNumber *button, NSNumber *level, NSDictionary *remaps, NSDictionary *remapsActingOnThisButton) {
+static BOOL effectOfGreaterLevelExistsFor(NSNumber *button, NSNumber *level, NSDictionary *remaps, NSDictionary *modificationsActingOnThisButton) {
     
     // Check if effective remaps of a higher level exist for this button
-    for (NSNumber *thisLevel in ((NSDictionary *)remapsActingOnThisButton[button]).allKeys) {
+    for (NSNumber *thisLevel in ((NSDictionary *)modificationsActingOnThisButton[button]).allKeys) {
         if (thisLevel.intValue > level.intValue) {
             return YES;
         }
@@ -114,7 +114,7 @@ static BOOL modificationPreconditionButtonComponentOfGreaterLevelExistsForButton
     BOOL effectOfGreaterLevelExists;
     [self assessMappingLandscapeWithButton:button
                                      level:level
-                  remapsActingOnThisButton:remapsActingOnThisButton
+                  modificationsActingOnThisButton:remapsActingOnThisButton
                                     remaps:remaps
                              thisClickDoBe:&clickActionOfThisLevelExists
                               thisDownDoBe:&effectForMouseDownStateOfThisLevelExists
@@ -138,17 +138,17 @@ static BOOL modificationPreconditionButtonComponentOfGreaterLevelExistsForButton
 ///         -> I guess it's because we don't care about most of the arguments which have to be provided to `assessMappingLandscapeWithButton:`
 ///             For example we don't care about clickLevel and to use `assessMappingLandscapeWithButton:` we'd have to call it for each clickLevel and stuff.
 ///     Noah from even more in future: Maybe we should refactor the code for  `MFEventPassThroughEvaluation` and call this function from ButtonTriggerGenerator directly? As it is we're passing the `MFEventPassThroughEvaluation` through like 3 classes which is a little ugly.
-+ (BOOL)effectExistsForButton:(NSNumber *)button remaps:(NSDictionary *)remaps effectiveRemaps:(NSDictionary *)effectiveRemaps {
++ (BOOL)effectExistsForButton:(NSNumber *)button remaps:(NSDictionary *)remaps modificationsActingOnButton:(NSDictionary *)modificationsActingOnButton {
     
-    // Check if there is a direct effect for button
-    BOOL hasDirectEffect = effectiveRemaps[button] != nil;
+    /// Check if there is a direct effect for button
+    BOOL hasDirectEffect = modificationsActingOnButton[button] != nil;
     if (hasDirectEffect) {
         return YES;
     }
-    // Check if button has effect as modifier
-    //      Noah from future: Maybe we should only check for button preconds with a higher clickLevel than current?
-    //          -> But maybe that wouldn't make a diff because clickLevel is reset when `buttonCouldStillBeUsedThisClickCycle:` returns true? (I think)
-    //          (I feel like we probs thought this through when we wrote it I just don't understand it anymore)
+    /// Check if button has effect as modifier
+    ///      Noah from future: Maybe we should only check for button preconds with a higher clickLevel than current?
+    ///          -> But maybe that wouldn't make a diff because clickLevel is reset when `buttonCouldStillBeUsedThisClickCycle:` returns true? (I think)
+    ///          (I feel like we probs thought this through when we wrote it I just don't understand it anymore)
     for (NSDictionary *modificationPrecondition in remaps.allKeys) {
         if ([SharedUtility button:button isPartOfModificationPrecondition:modificationPrecondition]) {
             return YES;

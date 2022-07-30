@@ -28,5 +28,6 @@
 #import "IOHIDAccelerationTableBridge.hpp"
 #import "EventUtility.h"
 #import "GlobalEventTapThread.h"
+#import "DeviceManager.h"
 
 //#import <CocoaLumberjack/CocoaLumberjack.h> /// Importing CocoaLumberjack/Swift with CocoaPods breaks my project. Can't use macros when importing this.
