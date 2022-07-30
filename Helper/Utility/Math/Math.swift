@@ -191,7 +191,7 @@ import CocoaLumberjackSwift
         self.init(start: lower, end: upper)
     }
     @objc convenience init(_ a: Double, _ b: Double) {
-        self.init(lower: a, upper: b)
+        self.init(start: a, end: b)
     }
     
     @objc func copy(with zone: NSZone? = nil) -> Any {

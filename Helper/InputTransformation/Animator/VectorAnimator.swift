@@ -20,7 +20,7 @@ import QuartzCore
     
     typealias UntypedAnimatorCallback = Any
     typealias AnimatorCallback = (_ animationValueDelta: Vector, _ phase: MFAnimationCallbackPhase, _ subCurve: MFMomentumHint) -> ()
-    typealias StopCallback = (_ lastPhase: MFAnimationPhase) -> ()
+//    typealias StopCallback = (_ lastPhase: MFAnimationPhase) -> ()
     typealias StartParamCalculationCallback = (_ valueLeft: Vector, _ isRunning: Bool, _ animationCurve: Curve?) -> MFAnimatorStartParams
     /// ^ When starting the animator, we usually want to get the value that the animator still wants to scroll (`animationValueLeft`), and add that to the new value. The specific logic can differ a lot though, so we can't just hardcode this into `Animator`
     ///     But to avoid race-conditions, we can't just externally execute this, so we to pass in a callback that can execute custom logic to get the start params right before the animator is started
@@ -51,7 +51,7 @@ import QuartzCore
             return IOHIDEventPhaseBits(kIOHIDEventPhaseBegan)
         case kMFAnimationCallbackPhaseContinue:
             return IOHIDEventPhaseBits(kIOHIDEventPhaseChanged)
-        case kMFAnimationCallbackPhaseEnd:
+        case kMFAnimationCallbackPhaseEnd, kMFAnimationCallbackPhaseCanceled:
             return IOHIDEventPhaseBits(kIOHIDEventPhaseEnded)
         default:
             fatalError()
@@ -245,6 +245,8 @@ import QuartzCore
             
             thisAnimationHasProducedDeltas = false
             
+            lastMomentumHint = kMFMomentumHintNone /// Not totally sure if makes sense?
+            
         } else {
             
             /// Signal running Start
@@ -293,15 +295,24 @@ import QuartzCore
 //        DDLogDebug("AnimationValueInterval at start: \(value)")
     }
     
-    /// Stop
+    /// Cancel
     
-    @objc func stop() {
+    @objc func cancel() {
         displayLink.dispatchQueue.async {
+            let hadProducedDeltas = self.thisAnimationHasProducedDeltas
+            let wasRunning = self.isRunning_Unsafe /// This check would be obsolete if we just set `self.thisAnimationHasProducedDeltas = false` when stopping. But maybe that has other side effects that we don't want?
             self.stop_Unsafe()
+            if hadProducedDeltas && wasRunning {
+                if let callback = self.callback as? AnimatorCallback {
+                    callback(Vector(x: 0, y: 0), kMFAnimationCallbackPhaseCanceled, self.lastMomentumHint)
+                }
+            }
         }
     }
     
-    @objc func stop_FromDisplayLinkedThread() {
+    /// Stop
+    
+    private func stop_FromDisplayLinkedThread() {
         /// Trying to stop from displayLinkThread causes deadlock. So we need to wait until the displayLinkThread has finished its iteration and then stop ASAP.
         ///     The best way we found to stop ASAP is to simply enqueu async on the displayLink's dispatchQueue
         
@@ -310,7 +321,7 @@ import QuartzCore
         }
     }
     
-    fileprivate func stop_Unsafe() {
+    private func stop_Unsafe() {
         
         /// Debug
         DDLogDebug("STOPPING ANIMATOR")
@@ -322,41 +333,43 @@ import QuartzCore
         isFirstDisplayLinkCallback_AfterRunningStart = false
         isLastDisplayLinkCallback = false
         
-        if self.onStopCallback != nil {
-            self.onStopCallback!()
-            self.onStopCallback = nil
-            
-        }
+//        if self.onStopCallback != nil {
+//            self.onStopCallback!()
+//            self.onStopCallback = nil
+//
+//        }
     }
+
+    /// TODO: Delete the onStopCallback stuff
     
-    @objc func onStop_SynchronouslyFromAnimationQueue(callback: @escaping () -> ()) {
-        /// The default `onStop(callback:)` dispatches to self.queue asynchronously.
-        /// It can be used from self.queue, but, if used from self.queue, the callback will only become active after all the other items in the queue are finished, which is not always what we want.
-        /// Use this function to synchronously install the onStop callback.
-        /// This function should only be called from self.queue
-        
-        assert(self.isRunning_Unsafe)
-        
-        onStop_Unsafe(callback: callback, doImmediatelyIfNotRunning: false)
-    }
-    
-    @objc func onStop(callback: @escaping () -> ()) {
-        
-        displayLink.dispatchQueue.async {
-            self.onStop_Unsafe(callback: callback, doImmediatelyIfNotRunning: false)
-        }
-    }
-    
-    fileprivate func onStop_Unsafe(callback: @escaping () -> (), doImmediatelyIfNotRunning: Bool) {
-        /// Not thread safe. Use `onStop` unless you're already running on displayLink.dispatchQueue
-        /// Do `callback` once the Animator stops or immediately if the animator isn't running and `waitTillNextStop` is false
-        
-        if (doImmediatelyIfNotRunning && !self.isRunning_Unsafe) {
-            callback()
-        } else {
-            self.onStopCallback = callback
-        }
-    }
+//    @objc func onStop_SynchronouslyFromAnimationQueue(callback: @escaping () -> ()) {
+//        /// The default `onStop(callback:)` dispatches to self.queue asynchronously.
+//        /// It can be used from self.queue, but, if used from self.queue, the callback will only become active after all the other items in the queue are finished, which is not always what we want.
+//        /// Use this function to synchronously install the onStop callback.
+//        /// This function should only be called from self.queue
+//
+//        assert(self.isRunning_Unsafe)
+//
+//        onStop_Unsafe(callback: callback, doImmediatelyIfNotRunning: false)
+//    }
+//
+//    @objc func onStop(callback: @escaping () -> ()) {
+//
+//        displayLink.dispatchQueue.async {
+//            self.onStop_Unsafe(callback: callback, doImmediatelyIfNotRunning: false)
+//        }
+//    }
+//
+//    fileprivate func onStop_Unsafe(callback: @escaping () -> (), doImmediatelyIfNotRunning: Bool) {
+//        /// Not thread safe. Use `onStop` unless you're already running on displayLink.dispatchQueue
+//        /// Do `callback` once the Animator stops or immediately if the animator isn't running and `waitTillNextStop` is false
+//
+//        if (doImmediatelyIfNotRunning && !self.isRunning_Unsafe) {
+//            callback()
+//        } else {
+//            self.onStopCallback = callback
+//        }
+//    }
     
     /// DisplayLink callback
     /// This will be called whenever the display refreshes while the displayLink is running
@@ -502,21 +515,22 @@ import QuartzCore
             /// Subclass hook.
             ///     PixelatedAnimator overrides this to do its thing
             
-            self.subclassHook(callback, animationValueDelta, animationTimeDelta, momentumHint)
+            subclassHook(callback, animationValueDelta, animationTimeDelta, momentumHint)
             
             /// Update `last` time and value and phase
-            
-            self.lastFrameTime = frameTime
-            self.lastAnimationValue = animationValue
-            self.lastAnimationTimeUnit = animationTimeUnit
+            lastFrameTime = frameTime
+            lastAnimationValue = animationValue
+            lastAnimationTimeUnit = animationTimeUnit
+            lastMomentumHint = momentumHint
             
             /// Stop animation if phase is  `end`
             if isLastDisplayLinkCallback {
-                self.stop_FromDisplayLinkedThread()
+                stop_FromDisplayLinkedThread()
                 return
             }
             
             /// Update isFirstCallback state
+            ///     Why do we do this after stopping animation, and the update to `last` values before?
             isFirstDisplayLinkCallback_AfterColdStart = false
             isFirstDisplayLinkCallback_AfterRunningStart = false
         }

@@ -32,7 +32,8 @@ typedef enum {
     kMFAnimationCallbackPhaseStart = 0,
     kMFAnimationCallbackPhaseContinue = 1,
     kMFAnimationCallbackPhaseEnd = 2, /// Deltas will always be zero for this phase
-    kMFAnimationCallbackPhaseNone = 3,
+    kMFAnimationCallbackPhaseCanceled = 3, /// Passed after stop() is called on the animator. Deltas will be zero.
+    kMFAnimationCallbackPhaseNone = 4,
 } MFAnimationCallbackPhase;
 
 #pragma mark - Hybrid curves

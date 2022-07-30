@@ -92,8 +92,7 @@ static CFTimeInterval _lastScrollAnalysisResultTimeStamp;
 
 + (void)resetState {
     /// Untested
-    
-    [_animator stop];
+    [_animator cancel];
     [GestureScrollSimulator stopMomentumScroll];
     [ScrollAnalyzer resetState];
 }
@@ -243,11 +242,13 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         }
         
         /// Update modfications
-        
-        _modifications = [ScrollModifiers currentModificationsWithEvent:event];
+        MFScrollModificationResult newMods = [ScrollModifiers currentModificationsWithEvent:event];
+        if (![ScrollModifiers scrollModsAreEqual:newMods other:_modifications]) {
+            [Scroll resetState];
+            _modifications = newMods;
+        }
         
         /// Update scrollConfig
-        
         _scrollConfig = [ScrollConfig copyOfConfig];
         
 #pragma mark Override config
@@ -446,10 +447,13 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         
         /// Send scroll event directly - without the animator. Will scroll all of pxToScrollForThisTick at once.
         
-        sendScroll(pxToScrollForThisTick, scrollDirection, NO, kMFAnimationCallbackPhaseNone, kMFMomentumHintNone);
+        sendScroll(pxToScrollForThisTick, scrollDirection, NO, kMFAnimationCallbackPhaseNone, kMFMomentumHintNone, _scrollConfig);
         
     } else {
         /// Send scroll events through animator, spread out over time.
+        
+        /// Create config-copy for animation-callback-block
+        ScrollConfig *configCopyForBlock = [_scrollConfig copy];
         
         /// Start animation
         
@@ -533,12 +537,15 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             /// Extract 1d delta from vec
             double distanceDelta = magnitudeOfVector(distanceDeltaVec);
             
-            /// Validate
+            /// Get reference to copy of config specific for this block
+            ///     Use this instead of the global _scrollConfig to avoid race conditions
+            ScrollConfig *config = configCopyForBlock;
             
+            /// Validate
             assert(distanceDeltaVec.x == 0 || distanceDeltaVec.y == 0);
             
             if (distanceDelta == 0) {
-                assert(animationPhase == kMFAnimationCallbackPhaseEnd);
+                assert(animationPhase == kMFAnimationCallbackPhaseEnd || animationPhase == kMFAnimationCallbackPhaseCanceled);
             }
             
             /// Debug
@@ -549,7 +556,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             DDLogDebug(@"in-animator - delta %f, animationPhase: %d, momentumHint: %d", distanceDelta, animationPhase, momentumHint);
             
             /// Send scroll
-            sendScroll(distanceDelta, scrollDirection, YES, animationPhase, momentumHint);
+            sendScroll(distanceDelta, scrollDirection, YES, animationPhase, momentumHint, config);
             
         }];
     }
@@ -557,7 +564,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     CFRelease(event);
 }
 
-static void sendScroll(int64_t px, MFDirection scrollDirection, BOOL gesture, MFAnimationCallbackPhase animationPhase, MFMomentumHint momentumHint) {
+static void sendScroll(int64_t px, MFDirection scrollDirection, BOOL gesture, MFAnimationCallbackPhase animationPhase, MFMomentumHint momentumHint, ScrollConfig *config) {
     
     /// Get x and y deltas
     
@@ -602,7 +609,7 @@ static void sendScroll(int64_t px, MFDirection scrollDirection, BOOL gesture, MF
     
     /// Send event
     
-    sendOutputEvents(dx, dy, outputType, animationPhase, momentumHint);
+    sendOutputEvents(dx, dy, outputType, animationPhase, momentumHint, config);
 }
 
 /// Define output types
@@ -619,13 +626,18 @@ typedef enum {
 
 /// Output
 
-static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputType, MFAnimationCallbackPhase animatorPhase, MFMomentumHint momentumHint) {
+static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputType, MFAnimationCallbackPhase animatorPhase, MFMomentumHint momentumHint, ScrollConfig *config) {
     
     /// Init eventPhase
     
     IOHIDEventPhaseBits eventPhase = kIOHIDEventPhaseUndefined;
     if (animatorPhase != kMFAnimationCallbackPhaseNone) {
         eventPhase = [VectorAnimator IOHIDPhaseWithAnimationCallbackPhase:animatorPhase];
+    }
+    
+    /// Debug
+    if (animatorPhase == kMFAnimationCallbackPhaseCanceled) {
+        
     }
     
     /// Validate
@@ -640,10 +652,10 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         
         /// --- GestureScroll ---
         
-        if (!_scrollConfig.animationCurveParams.sendMomentumScrolls) {
+        if (!config.animationCurveParams.sendMomentumScrolls) {
             
             /// Post event
-            [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:eventPhase];
+            [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:eventPhase autoMomentumScroll:YES];
             
             /// Suppress momentumScroll
             if (eventPhase == kIOHIDEventPhaseEnded) {
@@ -703,10 +715,10 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
                     /// Get momentum phase
                     if (animatorPhase == kMFAnimationCallbackPhaseContinue) {
                         momentumPhase = kCGMomentumScrollPhaseContinue;
-                    } else if (animatorPhase == kMFAnimationCallbackPhaseEnd) {
+                    } else if (animatorPhase == kMFAnimationCallbackPhaseEnd || animatorPhase == kMFAnimationCallbackPhaseCanceled) {
                         momentumPhase = kCGMomentumScrollPhaseEnd;
                     } else {
-//                        assert(false);
+                        assert(false);
                         DDLogDebug(@"\nHybrid event - Assert fail >:(");
                     }
                 } else {
@@ -716,20 +728,25 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
                 /// Send momentum event
                 [GestureScrollSimulator postMomentumScrollDirectlyWithDeltaX:dx deltaY:dy momentumPhase:momentumPhase];
                 
-                
                 /// Debug
                 DDLogDebug(@"\nHybrid event - momentum: (%lld, %lld, %d)", dx, dy, momentumPhase);
             }
             
             /// Update lastMomentumHint
             lastMomentumHint = momentumHint;
-            if (animatorPhase == kMFAnimationCallbackPhaseEnd)
+            if (animatorPhase == kMFAnimationCallbackPhaseEnd || animatorPhase == kMFAnimationCallbackPhaseCanceled) {
+                DDLogDebug(@"HNGG reset lastMomentumHint");
                 lastMomentumHint = kMFMomentumHintNone;
+            }
         }
         
     } else if (outputType == kMFScrollOutputTypeZoom) {
         
         /// --- Zoom ---
+        
+        /// Debug
+//        [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:kIOHIDEventPhaseEnded];
+//        [GestureScrollSimulator stopMomentumScroll];
         
         double eventDelta = (dx + dy)/800.0; /// This works because, if dx != 0 -> dy == 0, and the other way around.
         

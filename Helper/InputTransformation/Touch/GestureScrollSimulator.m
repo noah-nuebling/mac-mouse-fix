@@ -79,13 +79,6 @@ static dispatch_queue_t _queue; /// Use this queue for interface functions to av
  \note For more info on which delta values and which phases to use, see the documentation for `postGestureScrollEventWithGestureDeltaX:deltaY:phase:momentumPhase:scrollDeltaConversionFunction:scrollPointDeltaConversionFunction:`. In contrast to the aforementioned function, you shouldn't need to call this function with kIOHIDEventPhaseUndefined.
 */
 
-+ (void)postGestureScrollEventWithDeltaX:(int64_t)dx deltaY:(int64_t)dy phase:(IOHIDEventPhaseBits)phase {
-    
-    /// Convenience function that sets autoMomentumScroll = YES
-    
-    [self postGestureScrollEventWithDeltaX:dx deltaY:dy phase:phase autoMomentumScroll:YES];
-}
-
 + (void)postGestureScrollEventWithDeltaX:(int64_t)dx deltaY:(int64_t)dy phase:(IOHIDEventPhaseBits)phase autoMomentumScroll:(BOOL)autoMomentumScroll {
     
     /// Schedule event to be posted on _queue and return immediately
@@ -287,26 +280,26 @@ static void (^_momentumScrollCallback)(void);
     if (_momentumAnimator.isRunning) {
         
         /// Stop our animator
-        [_momentumAnimator stop];
+        [_momentumAnimator cancel];
         
-        /// Debug
-        DDLogDebug(@"... Sending momentumScroll stop event");
-        
-        /// Get event for location
-        CGEventRef event = CGEventCreate(NULL);
-        
-        /// Get location from event
-        CGPoint location = CGEventGetLocation(event);
-        
-        /// Send kCGMomentumScrollPhaseEnd event.
-        ///  This will stop scrolling in apps like Xcode which implement their own momentum scroll algorithm
-        Vector zeroVector = (Vector){ .x = 0.0, .y = 0.0 };
-        [GestureScrollSimulator postGestureScrollEventWithGestureVector:zeroVector
-                                                       scrollVectorLine:zeroVector
-                                                      scrollVectorPoint:zeroVector
-                                                                  phase:kIOHIDEventPhaseUndefined
-                                                          momentumPhase:kCGMomentumScrollPhaseEnd
-                                                               location:location];
+//        /// Debug
+//        DDLogDebug(@"... Sending momentumScroll stop event");
+//
+//        /// Get event for location
+//        CGEventRef event = CGEventCreate(NULL);
+//
+//        /// Get location from event
+//        CGPoint location = CGEventGetLocation(event);
+//
+//        /// Send kCGMomentumScrollPhaseEnd event.
+//        ///  This will stop scrolling in apps like Xcode which implement their own momentum scroll algorithm
+//        Vector zeroVector = (Vector){ .x = 0.0, .y = 0.0 };
+//        [GestureScrollSimulator postGestureScrollEventWithGestureVector:zeroVector
+//                                                       scrollVectorLine:zeroVector
+//                                                      scrollVectorPoint:zeroVector
+//                                                                  phase:kIOHIDEventPhaseUndefined
+//                                                          momentumPhase:kCGMomentumScrollPhaseEnd
+//                                                               location:location];
     } else {
         /// Debug
         DDLogDebug(@"Not stopping because momentumScroll insn't running");
@@ -331,7 +324,7 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
     if (OtherConfig.mouseMovingMaxIntervalLarge < timeSinceLastInput
         || timeSinceLastInput == DBL_MAX) { /// This should never be true at this point, because it's only set to DBL_MAX when phase == kIOHIDEventPhaseBegan
         DDLogDebug(@"Not sending momentum scroll - timeSinceLastInput: %f", timeSinceLastInput);
-        _momentumScrollCallback();
+        if (_momentumScrollCallback != NULL) _momentumScrollCallback();
         [GestureScrollSimulator stopMomentumScroll];
         return;
     }
@@ -369,7 +362,7 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
         /// Stop momentumScroll immediately, if the initial Speed is too small
         if (initialSpeed <= stopSpeed) {
             DDLogDebug(@"Not starting momentum scroll - initialSpeed smaller stopSpeed: i: %f, s: %f", initialSpeed, stopSpeed);
-            _momentumScrollCallback();
+            if (_momentumScrollCallback != NULL) _momentumScrollCallback();
             [GestureScrollSimulator stopMomentumScroll];
             p[@"doStart"] = @(NO);
             return p;
@@ -411,7 +404,6 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
         /// Call momentumScrollStart callback
         
         if (animationPhase == kMFAnimationCallbackPhaseStart) {
-            
             if (_momentumScrollCallback != NULL) _momentumScrollCallback();
         }
         
@@ -424,6 +416,8 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
         } else if (animationPhase == kMFAnimationCallbackPhaseContinue) {
             momentumPhase = kCGMomentumScrollPhaseContinue;
         } else if (animationPhase == kMFAnimationCallbackPhaseEnd) {
+            momentumPhase = kCGMomentumScrollPhaseEnd;
+        } else if (animationPhase == kMFAnimationCallbackPhaseCanceled) {
             momentumPhase = kCGMomentumScrollPhaseEnd;
         } else {
             assert(false);

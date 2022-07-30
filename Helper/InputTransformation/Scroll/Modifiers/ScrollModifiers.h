@@ -29,6 +29,7 @@ typedef struct {
     MFScrollEffectModification effectMod;
 } MFScrollModificationResult;
 
+/// `scrollModsAreEqual` function defined elsewhere
 
 /// v For the old Objc implementation of ScrollModifers
 

@@ -123,4 +123,10 @@ import CocoaLumberjackSwift
             self.activeModifications = activeModifications;
         }
     }
+    
+    /// Utility
+    @objc static func scrollModsAreEqual(_ mods1: MFScrollModificationResult, other mods2: MFScrollModificationResult) -> Bool {
+        return mods1.effectMod == mods2.effectMod && mods1.inputMod == mods2.inputMod
+    }
+    
 }

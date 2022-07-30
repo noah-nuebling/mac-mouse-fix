@@ -134,18 +134,21 @@ class PointerConfig: NSObject {
         let lowSensMap = CombinedLinearFunction(yValues:    [0.5, 1.25, 1.875, 2.0,  3.0])
         let highSensMap = CombinedLinearFunction(yValues:   [7.0, 13.0, 18.0,  22.0, 30.0])
         let curveMap = CombinedLinearFunction(yValues:      [2.0, 2.25, 2.0,   2.75, 2.58])
+        let speedMetaMap = CombinedLinearFunction(yValues: [0.0, 0.25, 0.40, 0.75, 1.0])
         /// Complex settings maps
         let lowSensMap2 = CombinedLinearFunction(yValues:    [0.5, 1.0, 2.0, 3.0, 4.0])
         let highSensMap2 = CombinedLinearFunction(yValues:   [6.0, 22.0, 70.0])
         let curveMap2 = CombinedLinearFunction(yValues:      [1.0, 2.0, 3.0])
         /// Unaccelerated map
         let lowSensMap3 = CombinedLinearFunction(yValues: [2.0, 3.0, 4.0])
+        /// Meta map
         
         /// Get curve params from user params
         if !u_complexSettings { /// Simple settings
-            s0 = lowSensMap.evaluate(atX: u_speed)
-            s1 = highSensMap.evaluate(atX: u_speed)
-            n = curveMap.evaluate(atX: u_speed)
+            let speed = speedMetaMap.evaluate(atX: u_speed)
+            s0 = lowSensMap.evaluate(atX: speed)
+            s1 = highSensMap.evaluate(atX: speed)
+            n = curveMap.evaluate(atX: speed)
             if n > 3.0 { n = 3.0 }
         } else if u_turnOffAcceleration { /// No accel
             s0 = lowSensMap3.evaluate(atX: u_unacceleratedSens)

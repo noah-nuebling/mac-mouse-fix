@@ -149,7 +149,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
         if (animatorPhase == kMFAnimationCallbackPhaseEnd) {
             
              if (_smoothingAnimatorShouldStartMomentumScroll) {
-                 [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded];
+                 [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded autoMomentumScroll:YES];
              }
             
             _smoothingAnimatorShouldStartMomentumScroll = false;
@@ -157,7 +157,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
             return;
         }
             
-        [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaVec.x deltaY:deltaVec.y phase:eventPhase];
+        [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaVec.x deltaY:deltaVec.y phase:eventPhase autoMomentumScroll:YES];
         
         eventPhase = kIOHIDEventPhaseChanged;
         
@@ -187,7 +187,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
         _smoothingAnimatorShouldStartMomentumScroll = YES;
         
     } else { /// Start momentumScroll directly
-        [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded];
+        [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded autoMomentumScroll:YES];
     }
     
     /// Wait until momentumScroll has been started
