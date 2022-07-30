@@ -141,6 +141,7 @@ static void handleButtonModifiersHaveChangedWithDevice(Device *device) {
 }
 
 #pragma mark Helper
+
 static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device * _Nonnull device) {
     
     /// Get active modifications and initialize any which are modifier driven
@@ -220,27 +221,31 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
     /// Make sure to pass in devID, otherwise this method (in its current form) won't do anything
     
     if (devID != nil) {
-        /// Notify all active button modifiers that they have had an effect
+        /// Notify active *modifiers* that they have had an effect
         for (NSDictionary *buttonPrecondDict in activeModifiers[kMFModificationPreconditionKeyButtons]) {
             NSNumber *precondButtonNumber = buttonPrecondDict[kMFButtonModificationPreconditionKeyButtonNumber];
             [ButtonTriggerGenerator handleButtonHasHadEffectAsModifierWithDevice:devID button:precondButtonNumber];
+            /// ^ I think we might only have to notify the last button in the sequence (instead of all of them), because all previous buttons should already have been zombified or sth due to consecutive button presses
         }
-        /// ^ I think we might only have to notify the last button in the sequence (instead of all of them), because all previous buttons should already have been zombified or sth due to consecutive button presses
+        /// Notify other *modifications* that this modification has had an effect
+        
+        
     }
 }
 
 #pragma mark - --- Trigger driven modification
 
-// Explanation: Modification of most triggers is *trigger driven*.
-//      That means only once the trigger comes in, we'll check for active modifiers and then apply those to the incoming trigger.
-//      But sometimes its not feasible to always listen for triggers (for example in the case of modified drags, for performance reasons)
-//      In those cases we'll use *modifier driven* modification.
-//      That means we listen for changes to the active modifiers and when they match a modifications' precondition, we'll initialize the modification components which are modifier driven.
-//      Then, when they do send their first trigger, they'll call modifierDrivenModificationHasBeenUsedWithDevice which will in turn notify the modifying buttons that they've had an effect
-// \discussion If you pass in an a CGEvent via the `event` argument, the returned keyboard modifiers will be more up-to-date. This is sometimes necessary to get correct data when calling this right after the keyboard modifiers have changed.
-// Analyzing with os_signpost reveals this is called 9 times per button click and takes around 20% of the time.
-//      That's over a third of the time which is used by our code (I think) - We should look into optimizing this (if we have too much time - the program is plenty fast). Maybe caching the values or calling it less, or making it faster.
-// \discussion If you pass in -1 for the `devID`, this function will try to find some device that has buttons pressed and use that to get the active modifiers and write id of the device it found into the `devID` argument. We never expect the user to use several mice at once, so this should work fine. If no device with any pressed buttons can be found, we return nil in the `devIDPtr`.
+/// Explanation: Modification of most triggers is *trigger driven*.
+///      That means only once the trigger comes in, we'll check for active modifiers and then apply those to the incoming trigger.
+///      But sometimes its not feasible to always listen for triggers (for example in the case of modified drags, for performance reasons, you don't want to listen to mouseMoved events all the time)
+///      In those cases we'll use *modifier driven* modification.
+///      That means we listen for changes to the active modifiers and when they match a modifications' precondition, we'll initialize the modification components which are modifier driven.
+///      Then, when they do ((send their first trigger))?, they'll call `modifierDrivenModificationHasBeenUsedWithDevice` which will in turn notify the modifying buttons that they've had an effect
+///         ( ^ Edit: I don't think the line above is still correct. I think instead, for both triggerDriven and modifierDriven modification, `handleModifiersHaveHadEffectWithDevice` is called once they first have an effect)
+/// \discussion If you pass in an a CGEvent via the `event` argument, the returned keyboard modifiers will be more up-to-date. This is sometimes necessary to get correct data when calling this right after the keyboard modifiers have changed.
+/// \discussion Analyzing with os_signpost reveals this is called 9 times per button click and takes around 20% of the time.
+///      That's over a third of the time which is used by our code (I think) - We should look into optimizing this (if we have too much time - the program is plenty fast). Maybe caching the values or calling it less, or making it faster.
+/// \discussion If you pass in a pointer to nil for the `devID`, this function will try to find some device that has buttons pressed and use that to get the active modifiers and write id of the device it found into the `devID` argument. We never expect the user to use several mice at once, so this should work fine. If no device with any pressed buttons can be found, `devIDPtr` will be a pointer to nil upon return.
 
 + (NSDictionary *)getActiveModifiersForDevice:(NSNumber **)devIDPtr filterButton:(NSNumber *)filteredButton event:(CGEventRef)event {
     
@@ -268,10 +273,10 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
         }];
         [btn removeObjectsAtIndexes:filterIndexes];
     }
-    // ^ filteredButton is used by `handleButtonTriggerWithButton:trigger:level:device:` to remove modification state caused by the button causing the current input trigger.
-        // Don't fully understand this but I think a button shouldn't modify its own triggers.
-        // You can't even produce a mouse down trigger without activating the button as a modifier... Just doesn't make sense.
-    // Edit: But if we make sure that a button can never define a button modification on itself, then shouldn't it not matter if we filter the buttons out or not?
+    /// ^ filteredButton is used by `handleButtonTriggerWithButton:trigger:level:device:` to remove modification state caused by the button causing the current input trigger.
+        /// Don't fully understand this but I think a button shouldn't modify its own triggers.
+        /// You can't even produce a mouse down trigger without activating the button as a modifier... Just doesn't make sense.
+    /// Edit: But if we make sure that a button can never define a button modification on itself, then shouldn't it not matter if we filter the buttons out or not?
     
     if (kb != 0) {
         outDict[kMFModificationPreconditionKeyKeyboard] = @(kb);
@@ -299,6 +304,7 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
     /// Ignore caps lock. Otherwise modfifications won't work normally when caps lock is enabled.
     ///     Maybe we need to ignore caps lock in other places, too make this work properly but I don't think so
     ///         We should probably remove this once we update RemapsOverrider to work with subset matches and stuff
+    ///         TODO: Remove this now.
     
     CGEventFlags modifierFlags = CGEventGetFlags(event) & mask;
     

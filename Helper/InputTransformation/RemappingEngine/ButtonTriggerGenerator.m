@@ -24,16 +24,16 @@
 
 #pragma mark - Definition of private helper class `Button State`
 
-// Instaces of this helper class describe the state of a single button on an input device
-// The `_state` class variable of `ButtonInputParser` (renamed to ButtonTriggerGenerator) is a collection of `ButtonState` instances
+/// Instaces of this helper class describe the state of a single button on an input device
+/// The `_state` class variable of `ButtonInputParser` (renamed to ButtonTriggerGenerator) is a collection of `ButtonState` instances
 @interface ButtonState : NSObject
 - (instancetype)init NS_UNAVAILABLE;
 @property NSTimer *holdTimer;
 @property NSTimer *levelTimer;
 @property BOOL isZombified;
-@property int64_t clickLevel; // TODO: Making this nonatomic might lead to problems, should think about this again (But it's necessary to override setters)
-@property BOOL isPressed; // NSEvent.pressedMouseButtons doesn't react fast enought (led to problems in `getActiveButtonModifiersForDevice`), so we're keeping track of pressed mouse buttons manually
-@property (readonly) CFTimeInterval pressedAtTimeStamp; // Keep track of when a button's been pressed to obtain press order in `getActiveButtonModifiersForDevice`
+@property int64_t clickLevel; /// TODO: Making this nonatomic might lead to problems, should think about this again (But it's necessary to override setters)
+@property BOOL isPressed; /// NSEvent.pressedMouseButtons doesn't react fast enought (led to problems in `getActiveButtonModifiersForDevice`), so we're keeping track of pressed mouse buttons manually
+@property (readonly) CFTimeInterval pressedAtTimeStamp; /// Keep track of when a button's been pressed to obtain press order in `getActiveButtonModifiersForDevice`
 @property (readonly) Device *device;
 @end
 @implementation ButtonState
@@ -70,7 +70,7 @@
         _pressedAtTimeStamp = CACurrentMediaTime();
         _isPressed = isPressed;
     }
-    if (!isPressed) { // Whenever isPressed becomes true, clickLevel is also modified, so we don't need to notify for modifier change in that case
+    if (!isPressed) { /// Whenever isPressed becomes true, clickLevel is also modified, so we don't need to notify for modifier change in that case
         [ModifierManager handleButtonModifiersMightHaveChangedWithDevice:self.device];
     }
 }
@@ -88,7 +88,8 @@
 
 #pragma mark - Class vars
 
-/*
+/**
+ __Dict structure__
  deviceID:
     buttonNumber:
         ButtonState instance
@@ -107,14 +108,14 @@ static NSMutableDictionary *_state;
     
     DDLogDebug(@"PARSING BUTTON INPUT - btn: %@, trigger %@", btn, @(triggerType));
     
-    // Declare passThroughEval (return value)
+    /// Declare passThroughEval (return value)
     MFEventPassThroughEvaluation passThroughEval;
     
-    // Gather info from params
+    /// Gather info from params
     NSNumber *devID = device.uniqueID;
     ButtonState *bs = _state[devID][btn];
     
-    // If no entry exists in _state for the incoming device and button, create one
+    /// If no entry exists in _state for the incoming device and button, create one
     if (bs == nil) {
         if (_state[devID] == nil) {
             _state[devID] = [NSMutableDictionary dictionary];
@@ -124,35 +125,34 @@ static NSMutableDictionary *_state;
     }
     
     if (triggerType == kMFButtonInputTypeButtonDown && bs.clickLevel == 0) {
-        // The button might have switched -> Neuter all other buttons of current device
+        /// The button might have switched -> Neuter all other buttons of current device
         neuterAllButtonsOnDeviceExcept(devID, btn);
     }
     
     if (triggerType == kMFButtonInputTypeButtonDown) {
         
-        // Mouse down
+        /// Mouse down
         
-        // Restart Timers
+        /// Restart Timers
         NSDictionary *timerInfo = @{
             @"devID": devID,
             @"btn": btn
         };
-        [bs.holdTimer invalidate]; // Probs unnecessary cause it gets killed by mouse up anyways
+        [bs.holdTimer invalidate]; /// Probs unnecessary cause it gets killed by mouse up anyways
         [bs.levelTimer invalidate];
         bs.holdTimer = [NSTimer scheduledTimerWithTimeInterval:0.25
                                                         target:self
                                                       selector:@selector(holdTimerCallback:)
                                                       userInfo:timerInfo
                                                        repeats:NO];
-        bs.levelTimer = [NSTimer scheduledTimerWithTimeInterval:0.25 //NSEvent.doubleClickInterval // The possible doubleClickIntervall
-                         // values (configurable in System Preferences) are either too long or too short. I prefer 0.25
+        bs.levelTimer = [NSTimer scheduledTimerWithTimeInterval:0.25 /// System values (configure in System Preferences, access via NSEvent.doubleClickInterval) are either too long or too short. I prefer 0.25
                                                          target:self
                                                        selector:@selector(levelTimerCallback:)
                                                        userInfo:timerInfo
                                                         repeats:NO];
         
-        // Check if zombified
-        // Zombification should only occur during mouse down state, and then be removed with the consequent mouse up event
+        /// Check if zombified
+        /// Zombification should only occur during mouse down state, and then be removed with the consequent mouse up event
         if (bs.isZombified) {
             NSDictionary *debugInfo = @{
                 @"devID": devID,
@@ -166,39 +166,39 @@ static NSMutableDictionary *_state;
             @throw [NSException exceptionWithName:@"ZombifiedDuringMouseUpStateException" reason:exceptionString userInfo:nil];
         }
         
-        // Update bs
+        /// Update bs
         bs.isPressed = YES;
         bs.clickLevel += 1;
         
-        // If new clickLevel and any following clickLevels can't lead to any effects, cycle back to the first click level
+        /// If new clickLevel and any following clickLevels can't lead to any effects, cycle back to the first click level
         if (![ButtonLandscapeAssessor buttonCouldStillBeUsedThisClickCycle:devID button:btn level:@(bs.clickLevel)]) {
             bs.clickLevel = 1;
         }
         
-        // Send trigger
+        /// Send trigger
         passThroughEval = [ButtonTriggerHandler handleButtonTriggerWithButton:btn triggerType:kMFActionTriggerTypeButtonDown clickLevel:@(bs.clickLevel) device:devID];
         
     } else {
         
-        // Mouse up
+        /// Mouse up
         
-        // Reset button state if zombified
+        /// Reset button state if zombified
         if (bs.isZombified) {
             resetStateWithDevice(devID, btn);
         }
         
-        // Send trigger
+        /// Send trigger
         passThroughEval = [ButtonTriggerHandler handleButtonTriggerWithButton:btn triggerType:kMFActionTriggerTypeButtonUp clickLevel:@(bs.clickLevel) device:devID];
         
-        // Update bs
+        /// Update bs
         bs.isPressed = NO;
         
-        // Kill hold timer. This is only necessary if the hold timer zombified I think.
+        /// Kill hold timer. This is only necessary if the hold timer zombified I think.
         [bs.holdTimer invalidate];
 
     }
     
-    // Return
+    /// Return
     return passThroughEval;
 }
 
@@ -248,7 +248,7 @@ static void resetStateWithDevice(NSNumber *devID, NSNumber *btn) {
     bs.isZombified = NO;
     
 }
-// Don't think we'll need this
+/// Don't think we'll need this
 static void resetAllState() {
     for (NSNumber *devKey in _state) {
         NSDictionary *dev = _state[devKey];
@@ -260,8 +260,8 @@ static void resetAllState() {
 
 #pragma mark Zombify
 
-// Zombification is kinda like a frozen mouse down state. No more triggers are sent and on the next mouse up event, state will be fully reset. But clickLevel won't be reset when zombifying.
-// With the click level not being reset the button can still be used as a modifier for other triggers while it's held down.
+/// Zombification is kinda like a frozen mouse down state. No more triggers are sent and on the next mouse up event, state will be fully reset. But clickLevel won't be reset when zombifying.
+/// With the click level not being reset the button can still be used as a modifier for other triggers while it's held down.
 static void zombifyWithDevice(NSNumber *devID, NSNumber *btn) {
     
 //    DDLogDebug(@"ZOMBIFYING - devID: %@, btn: %@", devID, btn);
@@ -312,12 +312,12 @@ static void neuterAllButtonsOnDeviceExcept(NSNumber *devID, NSNumber *exceptedBt
     /// Get device state
     NSMutableDictionary *devState = _state[devID];;
     if (devState == nil || devState.count == 0) return outArray; // Not sure if necessary
-    // Get state and order by press time
+    /// Get state and order by press time
     NSArray *buttonsOrderedByPressTime = [devState keysSortedByValueUsingComparator:^NSComparisonResult(ButtonState *_Nonnull bs1, ButtonState *_Nonnull bs2) {
         return [@(bs1.pressedAtTimeStamp) compare:@(bs2.pressedAtTimeStamp)];
     }];
     
-    // Fill out array
+    /// Fill out array
     for (NSNumber *buttonNumber in buttonsOrderedByPressTime) {
         ButtonState *bs = devState[buttonNumber];
         BOOL isActive = bs.isPressed && (bs.clickLevel != 0);
