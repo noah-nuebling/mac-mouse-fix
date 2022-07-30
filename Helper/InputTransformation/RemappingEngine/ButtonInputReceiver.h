@@ -34,16 +34,6 @@ typedef enum {
     kMFActionTriggerTypeLevelTimerExpired = 3,
 } MFActionTriggerType;
 
-typedef enum {
-    kMFClickCyclePhaseNone = -1,
-    kMFClickCyclePhaseButtonDown = 0,
-    kMFClickCyclePhaseButtonUp = 1,
-    kMFClickCyclePhaseHoldTimerExpired = 2,
-    kMFClickCyclePhaseLevelTimerExpired = 3,
-    kMFClickCyclePhaseCanceled = 4,
-    kMFClickCyclePhaseLonesomeButtonUp = 5,
-} ClickCyclePhase;
-
 //typedef enum {
 //    kMFUIActionTriggerTypeClick = 0,
 //    kMFUIActionTriggerTypeHold = 1,

@@ -44,11 +44,11 @@ class ButtonModifiers: NSObject {
 
     private var state = Dictionary<ButtonStateKey, ButtonState>()
     
-    @objc func handleClick(device: Device, button: ButtonNumber, clickLevel: ClickLevel, downNotUp mouseDown: Bool) {
+    @objc func update(device: Device, button: ButtonNumber, clickLevel: ClickLevel, downNotUp mouseDown: Bool) {
         
         let key = ButtonStateKey(device, button)
         let oldState = state[key]
-        let pressTime = mouseDown ? CACurrentMediaTime() : (oldState?.pressTime ?? 0) /// Not sure if necessary to keep old pressTime
+        let pressTime = mouseDown ? CACurrentMediaTime() : (oldState?.pressTime ?? 0) /// Not sure if necessary to ever keep old pressTime
         let newState = ButtonState(device: device,
                                    button: button,
                                    clickLevel: clickLevel,
@@ -59,6 +59,10 @@ class ButtonModifiers: NSObject {
         
         state[key] = newState
         ModifierManager.handleButtonModifiersMightHaveChanged(with: device)
+    }
+    
+    @objc func kill(device: Device, button: ButtonNumber) {
+        update(device: device, button: button, clickLevel: -1, downNotUp: false)
     }
     
     @objc func getActiveButtonModifiersForDevice(devIDPtr: UnsafeMutablePointer<NSNumber?>) -> [[String: Int]] {

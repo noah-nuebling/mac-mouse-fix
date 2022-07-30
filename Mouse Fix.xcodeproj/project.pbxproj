@@ -1440,6 +1440,7 @@
 			isa = PBXGroup;
 			children = (
 				4FF6663C25F2C93A00689B77 /* TransformationManager */,
+				4FF6661525F2C93A00689B77 /* Modifiers */,
 				4FF6661825F2C93A00689B77 /* RemappingEngine */,
 				4FF6661F25F2C93A00689B77 /* Scroll */,
 				4FF6663625F2C93A00689B77 /* Drag */,
@@ -1470,16 +1471,15 @@
 			children = (
 				4FF6661B25F2C93A00689B77 /* ButtonInputReceiver.h */,
 				4FF6661E25F2C93A00689B77 /* ButtonInputReceiver.m */,
-				4FF6661C25F2C93A00689B77 /* ButtonTriggerGenerator.h */,
-				4FF6661925F2C93A00689B77 /* ButtonTriggerGenerator.m */,
 				4FF8C8A22895AACB007EC31F /* Buttons.swift */,
 				4FF8C89928955490007EC31F /* ClickCycle.swift */,
 				4FF8C8A028956DDD007EC31F /* ButtonModifiers.swift */,
+				4FF6661C25F2C93A00689B77 /* ButtonTriggerGenerator.h */,
+				4FF6661925F2C93A00689B77 /* ButtonTriggerGenerator.m */,
 				4FF6661D25F2C93A00689B77 /* ButtonTriggerHandler.h */,
 				4FF6661A25F2C93A00689B77 /* ButtonTriggerHandler.m */,
 				4F1B83042606E68300AEAF37 /* ButtonLandscapeAssessor.h */,
 				4F1B83052606E68300AEAF37 /* ButtonLandscapeAssessor.m */,
-				4FF6661525F2C93A00689B77 /* Modifiers */,
 			);
 			path = RemappingEngine;
 			sourceTree = "<group>";

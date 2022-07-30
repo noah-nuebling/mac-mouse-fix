@@ -115,7 +115,7 @@ static void executeClickOrHoldActionIfItExists(NSString * _Nonnull duration,
                                                NSNumber * _Nonnull button,
                                                NSNumber * _Nonnull level,
                                                NSDictionary *modifiersActingOnThisButton,
-                                               NSDictionary *remapsForModifiersActingOnThisButton,
+                                               NSDictionary *modificationsForModifiersActingOnThisButton,
                                                NSDictionary *modificationsActingOnThisButton) {
     
     NSArray *effectiveActionArray = modificationsActingOnThisButton[button][level][duration];
@@ -132,7 +132,9 @@ static void executeClickOrHoldActionIfItExists(NSString * _Nonnull duration,
         /// Notify triggering button
         [ButtonTriggerGenerator handleButtonHasHadDirectEffectWithDevice:devID button:button];
         /// Notify modifying buttons if executed action depends on active modification
-        NSArray *actionArrayFromActiveModification = remapsForModifiersActingOnThisButton[button][level][duration];
+        ///     Edit: This doesn't make sense on two levels. 1. Calling handleModifiersHaveHadEffect shouldn't do anything because we're processing button input, so any other modifying button's state has already been reset when this button came in. 2. This logic stems from when we still had simple overriding of the modificiations. Where we just took the modifications for the empty precondition E and overrode them with the modifications for the activeModifiers A. When that was still the case, `actionArrayFromActiveModification` told us whether the action we just executed stemmed from E or A. Now that we use complex overriding, this `actionArrayFromActiveModification` doesn't tell us anything useful, as it's currently defined.
+        ///     TODO: Remove the `actionStemsFromModification` check and maybe `handleModifiersHaveHadEffectWithDevice:` too
+        NSArray *actionArrayFromActiveModification = modificationsForModifiersActingOnThisButton[button][level][duration];
         BOOL actionStemsFromModification = [effectiveActionArray isEqual:actionArrayFromActiveModification];
         if (actionStemsFromModification) {
             [ModifierManager handleModifiersHaveHadEffectWithDevice:devID activeModifiers:modifiersActingOnThisButton];
