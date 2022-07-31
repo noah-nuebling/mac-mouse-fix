@@ -21,6 +21,7 @@ import Cocoa
 @objc class CoolTimer: NSObject {
 
     @objc static func scheduledTimer(timeInterval: TimeInterval, repeats: Bool, block: @escaping (Timer) -> ()) -> Timer {
+        /// Note: Remember to schedule timers from the main thread! Otherwise they won't work.
         
         let blockKeeper = BlockKeeper()
         blockKeeper.block = block

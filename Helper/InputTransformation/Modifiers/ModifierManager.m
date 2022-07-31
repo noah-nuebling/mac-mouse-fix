@@ -129,7 +129,7 @@ NSArray *_prevButtonModifiers;
 + (void)handleButtonModifiersMightHaveChangedWithDevice:(Device *)device {
     
     NSNumber *devID = device.uniqueID;
-    NSArray *buttonModifiers = [Buttons.modifiers getActiveButtonModifiersWithDevIDPtr:&devID];
+    NSArray *buttonModifiers = [Buttons getActiveButtonModifiersWithDevIDPtr:&devID];
     if (![buttonModifiers isEqual:_prevButtonModifiers]) {
         handleButtonModifiersHaveChangedWithDevice(device);
     }
@@ -266,7 +266,7 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
     
     CGEventFlags kb = [self getActiveKeyboardModifiersWithEvent:event];
     NSNumber *devID = (*devicePtr).uniqueID;
-    NSMutableArray *btn = [Buttons.modifiers getActiveButtonModifiersWithDevIDPtr:&devID].mutableCopy;
+    NSMutableArray *btn = [Buttons getActiveButtonModifiersWithDevIDPtr:&devID].mutableCopy;
     
     if (filteredButton != nil && btn.count != 0) {
         NSIndexSet *filterIndexes = [btn indexesOfObjectsPassingTest:^BOOL(NSDictionary *_Nonnull dict, NSUInteger idx, BOOL * _Nonnull stop) {

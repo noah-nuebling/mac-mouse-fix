@@ -7,6 +7,11 @@
 // --------------------------------------------------------------------------
 //
 
+/// Module for Buttons.swift
+
+/// Threading:
+///     This should only be used by Buttons.swift. Use buttons.swfits dispatchQueue to protect resources.
+
 import Cocoa
 
 struct ButtonStateKey: Hashable {
@@ -37,15 +42,15 @@ private struct ButtonState: Equatable {
     var clickLevel: ClickLevel
     var isPressed: Bool
     var pressTime: CFTimeInterval
-//    var isZombified: Bool
 }
 
 class ButtonModifiers: NSObject {
 
     private var state = Dictionary<ButtonStateKey, ButtonState>()
     
-    @objc func update(device: Device, button: ButtonNumber, clickLevel: ClickLevel, downNotUp mouseDown: Bool) {
+    func update(device: Device, button: ButtonNumber, clickLevel: ClickLevel, downNotUp mouseDown: Bool) {
         
+        /// Update state
         let key = ButtonStateKey(device, button)
         let oldState = state[key]
         let pressTime = mouseDown ? CACurrentMediaTime() : (oldState?.pressTime ?? 0) /// Not sure if necessary to ever keep old pressTime
@@ -55,23 +60,17 @@ class ButtonModifiers: NSObject {
                                    isPressed: mouseDown,
                                    pressTime: pressTime)
         
+        state[key] = newState
+        
+        /// Validate
         assert(oldState != newState)
         
-        state[key] = newState
+        /// Notify change
         ModifierManager.handleButtonModifiersMightHaveChanged(with: device)
     }
     
-    @objc func kill(device: Device, button: ButtonNumber) {
-        update(device: device, button: button, clickLevel: -1, downNotUp: false)
-    }
-    
-    @objc func getActiveButtonModifiers(devIDPtr: UnsafeMutablePointer<NSNumber?>) -> [[String: Int]] {
-        /// Objc compatibility wrapper
-        
-        var devID = devIDPtr.pointee
-        let result = getActiveButtonModifiersForDevice(devID: &devID)
-        devIDPtr.pointee = devID
-        return result
+    func kill(device: Device, button: ButtonNumber) {
+        state.removeValue(forKey: ButtonStateKey(device, button))
     }
     
     func getActiveButtonModifiersForDevice(devID: inout NSNumber?) -> [[String: Int]] {

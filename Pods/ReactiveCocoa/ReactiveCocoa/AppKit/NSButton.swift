@@ -34,7 +34,7 @@ extension Reactive where Base: NSButton {
 	}
 
 	/// Sets the button's state
-	public var state: BindingTarget<NSControl.StateValue> {
+	public var lastState: BindingTarget<NSControl.StateValue> {
 		return makeBindingTarget { $0.state = $1 }
 	}
 	#else
@@ -44,7 +44,7 @@ extension Reactive where Base: NSButton {
 	}
 
 	/// Sets the button's state
-	public var state: BindingTarget<Int> {
+	public var lastState: BindingTarget<Int> {
 		return makeBindingTarget { $0.state = $1 }
 	}
 	#endif

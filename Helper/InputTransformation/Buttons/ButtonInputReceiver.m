@@ -162,7 +162,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 //    MFEventPassThroughEvaluation eval = [ButtonTriggerGenerator parseInputWithButton:@(buttonNumber) triggerType:triggertType inputDevice:dev];
     /// Pass to new rewritten buttonInput processing
     BOOL mouseDown = pr != 0;
-    MFEventPassThroughEvaluation eval = [Buttons handleInputWithDevice:dev button:@(buttonNumber) downNotUp:mouseDown];
+    MFEventPassThroughEvaluation eval = [Buttons handleInputWithDevice:dev button:@(buttonNumber) downNotUp:mouseDown event: event];
     
     /// Event passThrough
     if (eval == kMFEventPassThroughRefusal) {

@@ -65,7 +65,7 @@ static BOOL isModifier(NSNumber *button, NSNumber *level, NSDictionary *remaps) 
 
 static BOOL effectOfGreaterLevelExistsFor(NSNumber *button, NSNumber *level, NSDictionary *remaps, NSDictionary *modificationsActingOnThisButton) {
     
-    // Check if effective remaps of a higher level exist for this button
+    /// Check if effective remaps of a higher level exist for this button
     for (NSNumber *thisLevel in ((NSDictionary *)modificationsActingOnThisButton[button]).allKeys) {
         if (thisLevel.intValue > level.intValue) {
             return YES;
@@ -103,6 +103,9 @@ static BOOL modificationPreconditionButtonComponentOfGreaterLevelExistsForButton
 
 /// Used by `ButtonTriggerGenerator` to reset the click cycle, if we know the button can't be used this click cycle anyways.
 ///     Later in the control chain - in ButtonTriggerHandler - the assessMappingLandscapeWithButton:... method is called again. This is probably redundant, as we could just store the result of the first call somehow. But if it's fast enough, who cares
+///
+///     Edit: Currently refactoring ButtonInput processing. As far as I can tell, this is only used once (even before the refactor)
+
 + (BOOL)buttonCouldStillBeUsedThisClickCycle:(Device *)device button:(NSNumber *)button level:(NSNumber *)level {
     
     NSDictionary *remaps = TransformationManager.remaps;
@@ -114,7 +117,7 @@ static BOOL modificationPreconditionButtonComponentOfGreaterLevelExistsForButton
     BOOL effectOfGreaterLevelExists;
     [self assessMappingLandscapeWithButton:button
                                      level:level
-                  modificationsActingOnThisButton:remapsActingOnThisButton
+           modificationsActingOnThisButton:remapsActingOnThisButton
                                     remaps:remaps
                              thisClickDoBe:&clickActionOfThisLevelExists
                               thisDownDoBe:&effectForMouseDownStateOfThisLevelExists
