@@ -97,12 +97,12 @@ void handleRelocation() {
     NSArray *args = @[kMFAccompliceModeReloadHelper];
     [SharedUtility launchCLT:accompliceURL withArgs:args];
 }
-void uninstallCompletely() {
+void uninstallCompletely(void) {
     DDLogInfo(@"Uninstalling Mac Mouse Fix completely...");
     removeResidue();
     disableHelper();
 }
-void removeResidue() {
+void removeResidue(void) {
     DDLogInfo(@"Removing Mac Mouse Fix resdiue");
     // Delete Application Support Folder
     [NSFileManager.defaultManager trashItemAtURL:Objects.MFApplicationSupportFolderURL resultingItemURL:nil error:nil];
@@ -114,7 +114,7 @@ void removeResidue() {
     NSURL *logsDirectoryURL = [NSURL fileURLWithPath:logsDirectoryPath isDirectory:YES];
     [NSFileManager.defaultManager trashItemAtURL:logsDirectoryURL resultingItemURL:nil error:nil];
 }
-void disableHelper() { // Kill this process
+void disableHelper(void) { // Kill this process
     DDLogInfo(@"Removing helper from launchd (Byeeeee)");
     // Remove from launchd
     [SharedUtility launchCLT:[NSURL fileURLWithPath:kMFLaunchctlPath] withArgs:@[@"remove", kMFLaunchdHelperIdentifier]]; // This kills as well I think

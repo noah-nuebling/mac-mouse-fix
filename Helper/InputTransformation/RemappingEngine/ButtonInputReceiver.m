@@ -16,6 +16,7 @@
 #import "TransformationUtility.h"
 #import "HelperUtility.h"
 #import "GestureScrollSimulator.h"
+#import "Mac_Mouse_Fix_Helper-Swift.h"
 
 
 @implementation ButtonInputReceiver
@@ -158,7 +159,10 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     Device *dev = lastInputFromRelevantDevice[@"dev"];
     
     /// Pass to ButtonTriggerGenerator
-    MFEventPassThroughEvaluation eval = [ButtonTriggerGenerator parseInputWithButton:@(buttonNumber) triggerType:triggertType inputDevice:dev];
+//    MFEventPassThroughEvaluation eval = [ButtonTriggerGenerator parseInputWithButton:@(buttonNumber) triggerType:triggertType inputDevice:dev];
+    /// Pass to new rewritten buttonInput processing
+    BOOL mouseDown = pr != 0;
+    MFEventPassThroughEvaluation eval = [Buttons handleInputWithDevice:dev button:@(buttonNumber) downNotUp:mouseDown];
     
     /// Event passThrough
     if (eval == kMFEventPassThroughRefusal) {

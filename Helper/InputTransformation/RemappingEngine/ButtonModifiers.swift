@@ -65,7 +65,7 @@ class ButtonModifiers: NSObject {
         update(device: device, button: button, clickLevel: -1, downNotUp: false)
     }
     
-    @objc func getActiveButtonModifiersForDevice(devIDPtr: UnsafeMutablePointer<NSNumber?>) -> [[String: Int]] {
+    @objc func getActiveButtonModifiers(devIDPtr: UnsafeMutablePointer<NSNumber?>) -> [[String: Int]] {
         /// Objc compatibility wrapper
         
         var devID = devIDPtr.pointee

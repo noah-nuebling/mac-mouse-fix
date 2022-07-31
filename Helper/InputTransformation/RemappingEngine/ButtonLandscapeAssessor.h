@@ -8,6 +8,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Device.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -21,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
                              greaterDoBe:(BOOL *)effectOfGreaterLevelExists;
 
 + (BOOL)effectExistsForButton:(NSNumber *)button remaps:(NSDictionary *)remaps modificationsActingOnButton:(NSDictionary *)effectiveRemaps;
-+ (BOOL)buttonCouldStillBeUsedThisClickCycle:(NSNumber *)devID button:(NSNumber *)button level:(NSNumber *)level;
++ (BOOL)buttonCouldStillBeUsedThisClickCycle:(Device *)device button:(NSNumber *)button level:(NSNumber *)level;
 
 @end
 

@@ -12,12 +12,12 @@
 
 @interface ButtonTriggerGenerator : NSObject
 
-+ (MFEventPassThroughEvaluation)parseInputWithButton:(NSNumber *)btn triggerType:(MFButtonInputType)type inputDevice:(Device *)device;
-
-+ (void)handleButtonHasHadDirectEffectWithDevice:(NSNumber *)devID button:(NSNumber *)btn;
-+ (void)handleButtonHasHadEffectAsModifierWithDevice:(NSNumber *)devID button:(NSNumber *)btn;
-
-+ (NSArray *)getActiveButtonModifiersForDevice:(NSNumber *_Nullable *_Nonnull)devIDPtr;
+//+ (MFEventPassThroughEvaluation)parseInputWithButton:(NSNumber *)btn triggerType:(MFButtonInputType)type inputDevice:(Device *)device;
+//
+//+ (void)handleButtonHasHadDirectEffectWithDevice:(NSNumber *)devID button:(NSNumber *)btn;
+//+ (void)handleButtonHasHadEffectAsModifierWithDevice:(NSNumber *)devID button:(NSNumber *)btn;
+//
+//+ (NSArray *)getActiveButtonModifiersForDevice:(NSNumber *_Nullable *_Nonnull)devIDPtr;
 
 @end
 

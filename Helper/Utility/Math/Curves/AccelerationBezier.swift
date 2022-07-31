@@ -109,7 +109,7 @@ class AccelerationBezier: Bezier {
 //            DDLogDebug("Curve traceee:\n\(super.trace(nOfSamples: 100))")
             /// ^ This causes dozens of different, extremely weird crashes when setting nOfSamples to large values like 100 or 1000. No idea what's going on.
             
-            super.evaluate(at: x, epsilon: epsilon) /// For debug stepping
+//            super.evaluate(at: x, epsilon: epsilon) /// For debug stepping
             
         }
         

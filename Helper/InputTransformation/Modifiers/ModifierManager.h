@@ -17,14 +17,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)load_Manual;
 
-+ (NSDictionary *)getActiveModifiersForDevice:(NSNumber *_Nullable *_Nullable)devIDPtr filterButton:(NSNumber * _Nullable)filteredButton event:(CGEventRef _Nullable) event;
++ (NSDictionary *)getActiveModifiersForDevice:(Device *_Nullable *_Nullable)devicePtr filterButton:(NSNumber * _Nullable)filteredButton event:(CGEventRef _Nullable) event;
 
-+ (NSDictionary *)getActiveModifiersForDevice:(NSNumber *_Nullable *_Nullable)devIDPtr filterButton:(NSNumber * _Nullable)filteredButton event:(CGEventRef _Nullable)event despiteAddMode:(BOOL)despiteAddMode;
++ (NSDictionary *)getActiveModifiersForDevice:(Device *_Nullable *_Nullable)devicePtr filterButton:(NSNumber * _Nullable)filteredButton event:(CGEventRef _Nullable)event despiteAddMode:(BOOL)despiteAddMode;
 
 + (void)handleButtonModifiersMightHaveChangedWithDevice:(Device *)device;
 
-+ (void)handleModifiersHaveHadEffectWithDevice:(NSNumber *_Nullable)devID;
-+ (void)handleModifiersHaveHadEffectWithDevice:(NSNumber *_Nullable)devID activeModifiers:(NSDictionary *)activeModifiers;
++ (void)handleModifiersHaveHadEffectWithDevice:(Device *_Nullable)device;
++ (void)handleModifiersHaveHadEffectWithDevice:(Device *_Nullable)device activeModifiers:(NSDictionary *)activeModifiers;
 
 @end
 

@@ -28,8 +28,8 @@ import CocoaLumberjackSwift
         
         /// Get currently active scroll remaps
         
-        var modifyingDeviceID: NSNumber? = nil;
-        let activeModifiers = ModifierManager.getActiveModifiers(forDevice: &modifyingDeviceID, filterButton: nil, event: event)
+        var modifyingDevice: Device? = nil;
+        let activeModifiers = ModifierManager.getActiveModifiers(for: &modifyingDevice, filterButton: nil, event: event)
         let baseRemaps = TransformationManager.remaps();
         
         /// Debug
@@ -79,8 +79,8 @@ import CocoaLumberjackSwift
                 
                 var payload = modifiedScrollDict
                 payload.removeValue(forKey: kMFModifiedScrollDictKeyEffectModificationType)
-                var devID: NSNumber? = nil
-                payload[kMFRemapsKeyModificationPrecondition] = NSMutableDictionary(dictionary: ModifierManager .getActiveModifiers(forDevice: &devID, filterButton: nil, event: event, despiteAddMode: true))
+                var device: Device? = nil
+                payload[kMFRemapsKeyModificationPrecondition] = NSMutableDictionary(dictionary: ModifierManager .getActiveModifiers(for: &device, filterButton: nil, event: event, despiteAddMode: true))
                 /// ^ Need to cast to mutable, otherwise Swift will make it immutable and mainApp will crash trying to build this payload into its remapArray
                 TransformationManager.concludeAddMode(withPayload: payload)
                 
@@ -92,7 +92,7 @@ import CocoaLumberjackSwift
         /// Feedback
         let resultIsEmpty = result.inputMod == emptyResult.inputMod && result.effectMod == emptyResult.effectMod
         if !resultIsEmpty {
-            ModifierManager.handleModifiersHaveHadEffect(withDevice: modifyingDeviceID, activeModifiers: activeModifiers)
+            ModifierManager.handleModifiersHaveHadEffect(with: modifyingDevice, activeModifiers: activeModifiers)
             ModifiedDrag.modifiedScrollHasBeenUsed()
         }
         

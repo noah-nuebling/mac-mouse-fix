@@ -279,7 +279,7 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
         
         /// Notify other modules
         
-        [ModifierManager handleModifiersHaveHadEffectWithDevice:_drag.modifiedDevice.uniqueID];
+        [ModifierManager handleModifiersHaveHadEffectWithDevice:_drag.modifiedDevice];
         [_drag.outputPlugin handleBecameInUse];
     }
 }

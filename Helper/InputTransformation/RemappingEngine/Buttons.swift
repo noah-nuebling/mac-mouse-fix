@@ -11,16 +11,16 @@ import Cocoa
 
 @objc class Buttons: NSObject {
 
-    static let clickCycle = ClickCycle()
-    static let modifiers = ButtonModifiers()
+    @objc static let clickCycle = ClickCycle()
+    @objc static let modifiers = ButtonModifiers()
     
-    @objc static func handleButtonInputWithButton(device: Device, button: NSNumber, downNotUp mouseDown: Bool) -> MFEventPassThroughEvaluation {
+    @objc static func handleInput(device: Device, button: NSNumber, downNotUp mouseDown: Bool) -> MFEventPassThroughEvaluation {
         
         /// Get modifications
         
         let remaps = TransformationManager.remaps()
-        var devID: NSNumber? = device.uniqueID()
-        let modifiers = ModifierManager.getActiveModifiers(forDevice: &devID, filterButton: button, event: nil)
+        var deviceOpt: Device? = device
+        let modifiers = ModifierManager.getActiveModifiers(for: &deviceOpt, filterButton: button, event: nil)
         /// ^ We wouldn't need to filter button if we changed the order of updating modifiers and sending triggers depending on mouseDown or mouseUp
         let modifications = RemapsOverrider.effectiveRemapsMethod()(remaps, modifiers)
         
@@ -104,7 +104,7 @@ import Cocoa
             self.handleButtonHasHadDirectEffect(device: device, button: button)
             
             /// Notify modifiers (Probably unnecessary, because the only modifiers that can be "deactivated" are buttons. And since there's only one clickCycle the other buttons should already be zombified)
-            ModifierManager.handleModifiersHaveHadEffect(withDevice: device.uniqueID(), activeModifiers: modifiers)
+            ModifierManager.handleModifiersHaveHadEffect(with: device, activeModifiers: modifiers)
         }
 
         return kMFEventPassThroughRefusal

@@ -103,10 +103,10 @@ static BOOL modificationPreconditionButtonComponentOfGreaterLevelExistsForButton
 
 /// Used by `ButtonTriggerGenerator` to reset the click cycle, if we know the button can't be used this click cycle anyways.
 ///     Later in the control chain - in ButtonTriggerHandler - the assessMappingLandscapeWithButton:... method is called again. This is probably redundant, as we could just store the result of the first call somehow. But if it's fast enough, who cares
-+ (BOOL)buttonCouldStillBeUsedThisClickCycle:(NSNumber *)devID button:(NSNumber *)button level:(NSNumber *)level {
++ (BOOL)buttonCouldStillBeUsedThisClickCycle:(Device *)device button:(NSNumber *)button level:(NSNumber *)level {
     
     NSDictionary *remaps = TransformationManager.remaps;
-    NSDictionary *modifiersActingOnThisButton = [ModifierManager getActiveModifiersForDevice:&devID filterButton:button event:nil];
+    NSDictionary *modifiersActingOnThisButton = [ModifierManager getActiveModifiersForDevice:&device filterButton:button event:nil];
     NSDictionary *remapsActingOnThisButton = RemapsOverrider.effectiveRemapsMethod(remaps, modifiersActingOnThisButton);
     
     BOOL clickActionOfThisLevelExists;

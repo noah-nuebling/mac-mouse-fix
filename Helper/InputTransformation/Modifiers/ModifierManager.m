@@ -95,8 +95,8 @@ void getActiveModifiersForDeviceWithPressedButtons(CGEventRef event, NSDictionar
     for (int i = 0; i < devices.count; i++) {
         BOOL isLast = devices.count-1 == i;
         Device *thisDevice = devices[i];
-        NSNumber *devID;
-        NSDictionary *activeModifiersForThisDevice = [ModifierManager getActiveModifiersForDevice:&devID filterButton:nil event:event];
+        Device *d;
+        NSDictionary *activeModifiersForThisDevice = [ModifierManager getActiveModifiersForDevice:&d filterButton:nil event:event];
         if (activeModifiersForThisDevice[kMFModificationPreconditionKeyButtons] != nil || isLast) {
             *activeModifiers = activeModifiersForThisDevice;
             *device = thisDevice;
@@ -129,15 +129,14 @@ NSArray *_prevButtonModifiers;
 + (void)handleButtonModifiersMightHaveChangedWithDevice:(Device *)device {
     
     NSNumber *devID = device.uniqueID;
-    NSArray *buttonModifiers = [ButtonTriggerGenerator getActiveButtonModifiersForDevice:&devID];
+    NSArray *buttonModifiers = [Buttons.modifiers getActiveButtonModifiersWithDevIDPtr:&devID];
     if (![buttonModifiers isEqual:_prevButtonModifiers]) {
         handleButtonModifiersHaveChangedWithDevice(device);
     }
     _prevButtonModifiers = buttonModifiers;
 }
 static void handleButtonModifiersHaveChangedWithDevice(Device *device) {
-    NSNumber *devID = device.uniqueID;
-    NSDictionary *activeModifiers = [ModifierManager getActiveModifiersForDevice:&devID filterButton:nil event:nil];
+    NSDictionary *activeModifiers = [ModifierManager getActiveModifiersForDevice:&device filterButton:nil event:nil];
     reactToModifierChange(activeModifiers, device);
 }
 
@@ -191,8 +190,8 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
                 ///     See TransformationManager.m -> AddMode for context.
                 if ([modifiedDragEffect[kMFModifiedDragDictKeyType] isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
                     modifiedDragEffect = modifiedDragEffect.mutableCopy; /// Make actually mutable
-                    NSNumber *devID;
-                    modifiedDragEffect[kMFRemapsKeyModificationPrecondition] = [ModifierManager getActiveModifiersForDevice:&devID filterButton:nil event:nil despiteAddMode:YES]; /// Add activeModifiers
+                    Device *d;
+                    modifiedDragEffect[kMFRemapsKeyModificationPrecondition] = [ModifierManager getActiveModifiersForDevice:&d filterButton:nil event:nil despiteAddMode:YES]; /// Add activeModifiers
                 }
                 
                 /// Determine usage threshold based on other active modifications
@@ -211,21 +210,21 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
 
 #pragma mark Send Feedback
 
-+ (void)handleModifiersHaveHadEffectWithDevice:(NSNumber *)devID {
++ (void)handleModifiersHaveHadEffectWithDevice:(Device *)device {
     /// Convenience wrapper for `handleModifiersHaveHadEffect:activeModifiers:` if you don't have access to `activeModifiers`
     
-    NSDictionary *activeModifiers = [self getActiveModifiersForDevice:&devID filterButton:nil event:nil despiteAddMode:YES];
+    NSDictionary *activeModifiers = [self getActiveModifiersForDevice:&device filterButton:nil event:nil despiteAddMode:YES];
     /// ^ Using despiteAddMode: YES bc it works
-    [ModifierManager handleModifiersHaveHadEffectWithDevice:devID activeModifiers:activeModifiers];
+    [ModifierManager handleModifiersHaveHadEffectWithDevice:device activeModifiers:activeModifiers];
 }
-+ (void)handleModifiersHaveHadEffectWithDevice:(NSNumber *)devID activeModifiers:(NSDictionary *)activeModifiers {
++ (void)handleModifiersHaveHadEffectWithDevice:(Device *)device activeModifiers:(NSDictionary *)activeModifiers {
     /// Make sure to pass in devID, otherwise this method (in its current form) won't do anything
     
-    if (devID != nil) {
+    if (device != nil) {
         /// Notify active *modifiers* that they have had an effect
         for (NSDictionary *buttonPrecondDict in activeModifiers[kMFModificationPreconditionKeyButtons]) {
             NSNumber *precondButtonNumber = buttonPrecondDict[kMFButtonModificationPreconditionKeyButtonNumber];
-            [ButtonTriggerGenerator handleButtonHasHadEffectAsModifierWithDevice:devID button:precondButtonNumber];
+            [Buttons handleButtonHasHadEffectAsModifierWithDevice:device button:precondButtonNumber];
             /// ^ I think we might only have to notify the last button in the sequence (instead of all of them), because all previous buttons should already have been zombified or sth due to consecutive button presses
         }
         /// Notify other *modifications* that this modification has had an effect
@@ -248,12 +247,12 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
 ///      That's over a third of the time which is used by our code (I think) - We should look into optimizing this (if we have too much time - the program is plenty fast). Maybe caching the values or calling it less, or making it faster.
 /// \discussion If you pass in a pointer to nil for the `devID`, this function will try to find some device that has buttons pressed and use that to get the active modifiers and write id of the device it found into the `devID` argument. We never expect the user to use several mice at once, so this should work fine. If no device with any pressed buttons can be found, `devIDPtr` will be a pointer to nil upon return.
 
-+ (NSDictionary *)getActiveModifiersForDevice:(NSNumber **)devIDPtr filterButton:(NSNumber *)filteredButton event:(CGEventRef)event {
++ (NSDictionary *)getActiveModifiersForDevice:(Device **)devicePtr filterButton:(NSNumber *)filteredButton event:(CGEventRef)event {
     
-    return [self getActiveModifiersForDevice:devIDPtr filterButton:filteredButton event:event despiteAddMode:NO];
+    return [self getActiveModifiersForDevice:devicePtr filterButton:filteredButton event:event despiteAddMode:NO];
 }
 
-+ (NSDictionary *)getActiveModifiersForDevice:(NSNumber **)devIDPtr filterButton:(NSNumber *)filteredButton event:(CGEventRef)event despiteAddMode:(BOOL)despiteAddMode {
++ (NSDictionary *)getActiveModifiersForDevice:(Device **)devicePtr filterButton:(NSNumber *)filteredButton event:(CGEventRef)event despiteAddMode:(BOOL)despiteAddMode {
     
 //    DDLogDebug(@"ActiveModifiers requested by: %s\n", SharedUtility.callerInfo.UTF8String);
     
@@ -266,7 +265,8 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
     NSMutableDictionary *outDict = [NSMutableDictionary dictionary];
     
     CGEventFlags kb = [self getActiveKeyboardModifiersWithEvent:event];
-    NSMutableArray *btn = [ButtonTriggerGenerator getActiveButtonModifiersForDevice:devIDPtr].mutableCopy;
+    NSNumber *devID = (*devicePtr).uniqueID;
+    NSMutableArray *btn = [Buttons.modifiers getActiveButtonModifiersWithDevIDPtr:&devID].mutableCopy;
     
     if (filteredButton != nil && btn.count != 0) {
         NSIndexSet *filterIndexes = [btn indexesOfObjectsPassingTest:^BOOL(NSDictionary *_Nonnull dict, NSUInteger idx, BOOL * _Nonnull stop) {
