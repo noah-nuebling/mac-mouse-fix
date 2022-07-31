@@ -128,8 +128,7 @@ NSArray *_prevButtonModifiers;
 ///     Edit: Why `mightHave`? Do we really need to test again if they actually changed?
 + (void)handleButtonModifiersMightHaveChangedWithDevice:(Device *)device {
     
-    NSNumber *devID = device.uniqueID;
-    NSArray *buttonModifiers = [Buttons getActiveButtonModifiersWithDevIDPtr:&devID];
+    NSArray *buttonModifiers = [Buttons getActiveButtonModifiersWithDevicePtr:&device];
     if (![buttonModifiers isEqual:_prevButtonModifiers]) {
         handleButtonModifiersHaveChangedWithDevice(device);
     }
@@ -265,8 +264,7 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
     NSMutableDictionary *outDict = [NSMutableDictionary dictionary];
     
     CGEventFlags kb = [self getActiveKeyboardModifiersWithEvent:event];
-    NSNumber *devID = (*devicePtr).uniqueID;
-    NSMutableArray *btn = [Buttons getActiveButtonModifiersWithDevIDPtr:&devID].mutableCopy;
+    NSMutableArray *btn = [Buttons getActiveButtonModifiersWithDevicePtr:devicePtr].mutableCopy;
     
     if (filteredButton != nil && btn.count != 0) {
         NSIndexSet *filterIndexes = [btn indexesOfObjectsPassingTest:^BOOL(NSDictionary *_Nonnull dict, NSUInteger idx, BOOL * _Nonnull stop) {

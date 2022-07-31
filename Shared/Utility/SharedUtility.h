@@ -54,8 +54,8 @@ int8_t sign(double x);
 
 /// Src: https://stackoverflow.com/a/14770282/10601702
 
-#define MIN(A,B)    ({ __typeof__(A) __a = (A); __typeof__(B) __b = (B); __a < __b ? __a : __b; })
-#define MAX(A,B)    ({ __typeof__(A) __a = (A); __typeof__(B) __b = (B); __a < __b ? __b : __a; })
+//#define MIN(A,B)    ({ __typeof__(A) __a = (A); __typeof__(B) __b = (B); __a < __b ? __a : __b; })
+//#define MAX(A,B)    ({ __typeof__(A) __a = (A); __typeof__(B) __b = (B); __a < __b ? __b : __a; })
 
 #define CLIP(x, low, high) ({\
 __typeof__(x) __x = (x); \

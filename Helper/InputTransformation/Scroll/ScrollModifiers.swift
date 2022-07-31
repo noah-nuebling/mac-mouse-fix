@@ -80,8 +80,9 @@ import CocoaLumberjackSwift
                 var payload = modifiedScrollDict
                 payload.removeValue(forKey: kMFModifiedScrollDictKeyEffectModificationType)
                 var device: Device? = nil
-                payload[kMFRemapsKeyModificationPrecondition] = NSMutableDictionary(dictionary: ModifierManager .getActiveModifiers(for: &device, filterButton: nil, event: event, despiteAddMode: true))
+                payload[kMFRemapsKeyModificationPrecondition] = NSMutableDictionary(dictionary: ModifierManager.getActiveModifiers(for: &device, filterButton: nil, event: event, despiteAddMode: true))
                 /// ^ Need to cast to mutable, otherwise Swift will make it immutable and mainApp will crash trying to build this payload into its remapArray
+                ModifierManager.handleModifiersHaveHadEffect(with: modifyingDevice)
                 TransformationManager.concludeAddMode(withPayload: payload)
                 
             default:

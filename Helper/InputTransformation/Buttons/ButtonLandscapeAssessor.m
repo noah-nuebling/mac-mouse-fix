@@ -65,38 +65,60 @@ static BOOL isModifier(NSNumber *button, NSNumber *level, NSDictionary *remaps) 
 
 static BOOL effectOfGreaterLevelExistsFor(NSNumber *button, NSNumber *level, NSDictionary *remaps, NSDictionary *modificationsActingOnThisButton) {
     
-    /// Check if effective remaps of a higher level exist for this button
-    for (NSNumber *thisLevel in ((NSDictionary *)modificationsActingOnThisButton[button]).allKeys) {
-        if (thisLevel.intValue > level.intValue) {
-            return YES;
-        }
-    }
-    // Check for modifications at a higher level
-    return modificationPreconditionButtonComponentOfGreaterLevelExistsForButton(button, level, remaps);
+    return maxLevelForButton(button, remaps, modificationsActingOnThisButton) > level.intValue;
 }
 
-static BOOL modificationPreconditionButtonComponentOfGreaterLevelExistsForButton(NSNumber *button, NSNumber *level, NSDictionary *remaps) {
+static NSInteger maxLevelForButton(NSNumber *button, NSDictionary *remaps, NSDictionary *modificationsActingOnThisButton) {
+    NSInteger a = maxLevelForButtonInModifications(button, modificationsActingOnThisButton);
+    NSInteger b = maxLevelForButtonInModificationPreconditions(button, remaps);
+    return MAX(a, b);
+}
+
+static NSInteger maxLevelForButtonInModifications(NSNumber *button, NSDictionary *modificationsActingOnThisButton) {
+     
+    /// Find greates level of any effect for `button` in modifications
+    /// Returns 0 if no effect is found for   `button` in modifications
     
-    /// Check if modification precondition exists such that at least one of its button components has the same button as the incoming button `button` and a level greater than the incoming level `level`
-    /// We (were) passing in `activeModifiers` even though we don't need it. Why is that? Hints towards us messing sth up in some refactor.
+    NSInteger maxLvl = 0;
+    
+    for (NSNumber *thisLevelNS in ((NSDictionary *)modificationsActingOnThisButton[button]).allKeys) {
+        NSInteger thisLevel = thisLevelNS.integerValue;
+        if (thisLevel > maxLvl) {
+            maxLvl = thisLevel;
+        }
+    }
+    
+    return maxLvl;
+}
+
+static NSInteger maxLevelForButtonInModificationPreconditions(NSNumber *button, NSDictionary *remaps) {
+    
+    /// Find greatest level of any buttonElement in any buttonSequence of any modificationPrecondition where the buttonNumber of the buttonElement is equal `button`
+    /// Returns 0 if no modificationPrecondition is found. (Otherwise the lowest level is 1)
+    
+    /// \discussion We (were) passing in `activeModifiers` even though we don't need it. Why is that? Hints towards us messing sth up in some refactor.
+    
+    NSInteger maxLvl = 0;
     
     for (NSDictionary *modificationPrecondition in remaps.allKeys) {
         
-        /// v This algorithm seems very convoluted for what it does. I think instead we could maybe just iterate through the button sequences of all modificationPreconditions until we find a button with a clickLevel higher than `level`. If we can't then we return `NO`, otherwise `YES
         /// Since button preconditions are ordered now, we maybe should check if there exists a modificationPreconditions' buttonSequence that can still be reached by adding `button` to the button sequence in the `activeModifiers`? Not sure though. I guess any sequence can be reached, by taking away some buttons first?
+        ///     Edit: I think we're taking that into account. We're checking all elements of the buttonSequence, no matter how they can be reached.
+        ///         TODO: remove this comment
         
         NSIndexSet *indexesContainingButton = [(NSArray *)modificationPrecondition[kMFModificationPreconditionKeyButtons] indexesOfObjectsPassingTest:^BOOL(NSDictionary *_Nonnull dict, NSUInteger idx, BOOL * _Nonnull stop) {
             return [dict[kMFButtonModificationPreconditionKeyButtonNumber] isEqualToNumber:button];
         }];
-        if (indexesContainingButton.count > 1) assert(false); /// Each button can only occur once in the sequence
+        if (indexesContainingButton.count > 1) assert(false);
         if (indexesContainingButton.count == 0) continue;
         
-        NSNumber *precondLvl = modificationPrecondition[kMFModificationPreconditionKeyButtons][indexesContainingButton.firstIndex][kMFButtonModificationPreconditionKeyClickLevel];
-        if (precondLvl.unsignedIntegerValue > level.unsignedIntegerValue) {
-            return YES;
+        NSNumber *precondLvlNS = modificationPrecondition[kMFModificationPreconditionKeyButtons][indexesContainingButton.firstIndex][kMFButtonModificationPreconditionKeyClickLevel];
+        NSUInteger precondLvl = precondLvlNS.unsignedIntegerValue;
+        if (precondLvl > maxLvl) {
+            maxLvl = precondLvl;
         }
     }
-    return NO;
+    return maxLvl;
 }
 
 #pragma mark - Other Landscape Assessment Functions
@@ -106,34 +128,39 @@ static BOOL modificationPreconditionButtonComponentOfGreaterLevelExistsForButton
 ///
 ///     Edit: Currently refactoring ButtonInput processing. As far as I can tell, this is only used once (even before the refactor)
 
-+ (BOOL)buttonCouldStillBeUsedThisClickCycle:(Device *)device button:(NSNumber *)button level:(NSNumber *)level {
+//+ (BOOL)buttonCouldStillBeUsedThisClickCycle:(Device *)device button:(NSNumber *)button level:(NSNumber *)level {
+//
+//    NSDictionary *remaps = TransformationManager.remaps;
+//    NSDictionary *modifiersActingOnThisButton = [ModifierManager getActiveModifiersForDevice:&device filterButton:button event:nil];
+//    NSDictionary *remapsActingOnThisButton = RemapsOverrider.effectiveRemapsMethod(remaps, modifiersActingOnThisButton);
+//
+//    BOOL clickActionOfThisLevelExists;
+//    BOOL effectForMouseDownStateOfThisLevelExists;
+//    BOOL effectOfGreaterLevelExists;
+//    [self assessMappingLandscapeWithButton:button
+//                                     level:level
+//           modificationsActingOnThisButton:remapsActingOnThisButton
+//                                    remaps:remaps
+//                             thisClickDoBe:&clickActionOfThisLevelExists
+//                              thisDownDoBe:&effectForMouseDownStateOfThisLevelExists
+//                               greaterDoBe:&effectOfGreaterLevelExists];
+////    NSDictionary *info = @{
+////        @"devID": devID,
+////        @"button": button,
+////        @"level": level,
+////        @"clickActionOfThisLevelExists": @(clickActionOfThisLevelExists),
+////        @"effectForMouseDownStateOfThisLevelExists": @(effectForMouseDownStateOfThisLevelExists),
+////        @"effectOfGreaterLevelExists": @(effectOfGreaterLevelExists),
+////        @"remaps": remaps,
+////    };
+////    DDLogDebug(@"CHECK IF EFFECT OF EQUAL OR GREATER LEVEL EXISTS - Info: %@", info);
+//
+//    return clickActionOfThisLevelExists || effectForMouseDownStateOfThisLevelExists || effectOfGreaterLevelExists;
+//}
+
++ (NSInteger)maxLevelForButton:(NSNumber *)button remaps:(NSDictionary *)remaps modificationsActingOnThisButton:(NSDictionary *)modificationsActingOnThisButton {
     
-    NSDictionary *remaps = TransformationManager.remaps;
-    NSDictionary *modifiersActingOnThisButton = [ModifierManager getActiveModifiersForDevice:&device filterButton:button event:nil];
-    NSDictionary *remapsActingOnThisButton = RemapsOverrider.effectiveRemapsMethod(remaps, modifiersActingOnThisButton);
-    
-    BOOL clickActionOfThisLevelExists;
-    BOOL effectForMouseDownStateOfThisLevelExists;
-    BOOL effectOfGreaterLevelExists;
-    [self assessMappingLandscapeWithButton:button
-                                     level:level
-           modificationsActingOnThisButton:remapsActingOnThisButton
-                                    remaps:remaps
-                             thisClickDoBe:&clickActionOfThisLevelExists
-                              thisDownDoBe:&effectForMouseDownStateOfThisLevelExists
-                               greaterDoBe:&effectOfGreaterLevelExists];
-//    NSDictionary *info = @{
-//        @"devID": devID,
-//        @"button": button,
-//        @"level": level,
-//        @"clickActionOfThisLevelExists": @(clickActionOfThisLevelExists),
-//        @"effectForMouseDownStateOfThisLevelExists": @(effectForMouseDownStateOfThisLevelExists),
-//        @"effectOfGreaterLevelExists": @(effectOfGreaterLevelExists),
-//        @"remaps": remaps,
-//    };
-//    DDLogDebug(@"CHECK IF EFFECT OF EQUAL OR GREATER LEVEL EXISTS - Info: %@", info);
-    
-    return clickActionOfThisLevelExists || effectForMouseDownStateOfThisLevelExists || effectOfGreaterLevelExists;
+    return maxLevelForButton(button, remaps, modificationsActingOnThisButton);
 }
 
 /// Used by `ButtonTriggerHandler` to determine `MFEventPassThroughEvaluation`

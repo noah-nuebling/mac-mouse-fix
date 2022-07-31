@@ -13,6 +13,7 @@
 ///     This should only be used by Buttons.swift. Use buttons.swfits dispatchQueue to protect resources.
 
 import Cocoa
+import CocoaLumberjackSwift
 
 struct ButtonStateKey: Hashable {
     
@@ -50,6 +51,9 @@ class ButtonModifiers: NSObject {
     
     func update(device: Device, button: ButtonNumber, clickLevel: ClickLevel, downNotUp mouseDown: Bool) {
         
+        /// Debug
+        DDLogDebug("buttonModifiers - update - lvl: \(clickLevel), mouseDown: \(mouseDown), btn: \(button), dev: \"\(device.name())\"")
+        
         /// Update state
         let key = ButtonStateKey(device, button)
         let oldState = state[key]
@@ -70,22 +74,27 @@ class ButtonModifiers: NSObject {
     }
     
     func kill(device: Device, button: ButtonNumber) {
+        
+        /// Debug
+        DDLogDebug("buttonModifiers - kill - btn: \(button), dev: \"\(device.name())\"")
+        
         state.removeValue(forKey: ButtonStateKey(device, button))
     }
     
-    func getActiveButtonModifiersForDevice(devID: inout NSNumber?) -> [[String: Int]] {
+    func getActiveButtonModifiersForDevice(device: inout Device?) -> [[String: Int]] {
         /// When passing in nil for the devID, this function will try to find a device with pressed buttons and use that. It will also write that device to the `devID` argument
         
         /// get device
-        if devID == nil {
-            devID = getAnyDeviceWithPressedButtons()?.uniqueID()
+        if device == nil {
+            device = getAnyDeviceWithPressedButtons()
         }
         
         /// Get result
-        let buttonStates = state.values
+        let buttonStates = Array(state.values)
+        
         let result: [[String: Int]] = buttonStates.filter { bs in
             let isActive = bs.isPressed && bs.clickLevel != 0
-            let isRightDevice = bs.device.uniqueID() == devID
+            let isRightDevice = bs.device == device /// Was accidentally comparing bs.device.uniqueID with device here and Swift didn't say anything?
             return isActive && isRightDevice
         }.sorted { bs1, bs2 in
             bs1.pressTime < bs2.pressTime
@@ -95,6 +104,9 @@ class ButtonModifiers: NSObject {
                 kMFButtonModificationPreconditionKeyClickLevel: bs.clickLevel
             ]
         }
+        
+        /// Debug
+        DDLogDebug("buttonModifiers - gotMods for dev: \"\(device?.name() ?? "?")\": \(result)")
         
         /// Return
         return result

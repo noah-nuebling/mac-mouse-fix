@@ -41,26 +41,27 @@ import CocoaLumberjackSwift
         /// ^ We wouldn't need to filter button if we changed the order of updating modifiers and sending triggers depending on mouseDown or mouseUp
         let modifications = RemapsOverrider.effectiveRemapsMethod()(remaps, modifiers)
         
-        
-        
         /// Decide passthrough
         let effectExists = ButtonLandscapeAssessor.effectExists(forButton: button, remaps: remaps, modificationsActingOnButton: modifications)
         if !effectExists {
             return kMFEventPassThroughApproval
         }
         
+        /// Get max clickLevel
+        ///     This recalculates some stuff from the main assessment. -> Consider restructuring
+        var maxClickLevel = 0
+        if mouseDown {
+            maxClickLevel = ButtonLandscapeAssessor.maxLevel(forButton: button, remaps: remaps, modificationsActingOnThisButton: modifications)
+        } /// On mouseUp, the clickCycle should ignore the maxClickLevel anyways
+        
         /// Dispatch through clickCycle
-        clickCycle.handleClick(device: device, button: ButtonNumber(truncating: button), downNotUp: mouseDown) { modifierPhase, clickLevel, device, buttonNumber in
+        clickCycle.handleClick(device: device, button: ButtonNumber(truncating: button), downNotUp: mouseDown, maxClickLevel: maxClickLevel) { modifierPhase, clickLevel, device, buttonNumber in
             
             ///
             /// Update modifiers
             ///
             
             self.modifiers.update(device: device, button: ButtonNumber(truncating: button), clickLevel: clickLevel, downNotUp: mouseDown)
-            
-            /// Debug
-            
-            DDLogDebug("modifierCallback - lvl: \(clickLevel), phase: \(modifierPhase), btn: \(buttonNumber), dev: \"\(device.name())\"")
             
         } triggerCallback: { triggerPhase, clickLevel, device, buttonNumber in
             
@@ -72,13 +73,7 @@ import CocoaLumberjackSwift
             
             DDLogDebug("triggerCallback - lvl: \(clickLevel), phase: \(triggerPhase), btn: \(buttonNumber), dev: \"\(device.name())\"")
             
-            /// Cycle back clickLevel
-            
-//            let clickCycleIsDone = !ButtonLandscapeAssessor.buttonCouldStillBeUsedThisClickCycle(device, button: button as NSNumber, level: clickLevel as NSNumber)
-            
-            
             /// Asses 'mappingLandscape'
-            
             var clickActionOfThisLevelExists: ObjCBool = false
             var effectForMouseDownStateOfThisLevelExists: ObjCBool = false
             var effectOfGreaterLevelExists: ObjCBool = false
@@ -185,11 +180,11 @@ import CocoaLumberjackSwift
     
     /// Interface for accessing submodules
     
-    @objc static func getActiveButtonModifiers(devIDPtr: UnsafeMutablePointer<NSNumber?>) -> [[String: Int]] {
+    @objc static func getActiveButtonModifiers(devicePtr: UnsafeMutablePointer<Device?>) -> [[String: Int]] {
         
-        var devID = devIDPtr.pointee
-        let result = modifiers.getActiveButtonModifiersForDevice(devID: &devID)
-        devIDPtr.pointee = devID
+        var device = devicePtr.pointee
+        let result = modifiers.getActiveButtonModifiersForDevice(device: &device)
+        devicePtr.pointee = device
         return result
     }
     
