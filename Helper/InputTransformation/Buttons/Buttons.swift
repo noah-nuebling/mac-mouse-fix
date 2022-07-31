@@ -74,7 +74,6 @@ import CocoaLumberjackSwift
             DDLogDebug("triggerCallback - lvl: \(clickLevel), phase: \(triggerPhase), btn: \(buttonNumber), dev: \"\(device.name())\"")
             
             /// Asses 'mappingLandscape'
-            
             var clickActionOfThisLevelExists: ObjCBool = false
             var effectForMouseDownStateOfThisLevelExists: ObjCBool = false
             var effectOfGreaterLevelExists: ObjCBool = false
