@@ -955,34 +955,6 @@
 			path = Old;
 			sourceTree = "<group>";
 		};
-		4F9E790F2686FBC7002C2309 /* Utility */ = {
-			isa = PBXGroup;
-			children = (
-				4FF6662B25F2C93A00689B77 /* ScrollUtility.h */,
-				4FF6662F25F2C93A00689B77 /* ScrollUtility.m */,
-			);
-			path = Utility;
-			sourceTree = "<group>";
-		};
-		4F9E79102686FBD3002C2309 /* Modifiers */ = {
-			isa = PBXGroup;
-			children = (
-				4FF6662925F2C93A00689B77 /* ScrollModifiers.h */,
-				4F5F3EF22756F1DB00C350C0 /* ScrollModifiers.swift */,
-				4FF6662E25F2C93A00689B77 /* ScrollModifiers_old_.m */,
-			);
-			path = Modifiers;
-			sourceTree = "<group>";
-		};
-		4F9E79112686FBE3002C2309 /* Analysis */ = {
-			isa = PBXGroup;
-			children = (
-				4FA994BC26678AC90007F003 /* ScrollAnalyzer.h */,
-				4FA994BD26678AC90007F003 /* ScrollAnalyzer.m */,
-			);
-			path = Analysis;
-			sourceTree = "<group>";
-		};
 		4FA1ACE025E85904007DB95B /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -1383,6 +1355,7 @@
 				4FF6667925F2C93A00689B77 /* Devices */,
 				4FF6661425F2C93A00689B77 /* InputTransformation */,
 				4FF6664725F2C93A00689B77 /* PointerSpeed */,
+				4FF9305C28805FC40007CCA7 /* Math */,
 				4FF6667E25F2C93A00689B77 /* Utility */,
 				4FF6660F25F2C93A00689B77 /* Resources */,
 				4FF6664D25F2C93A00689B77 /* SupportFiles */,
@@ -1439,7 +1412,7 @@
 			children = (
 				4FF6663C25F2C93A00689B77 /* TransformationManager */,
 				4FF6661525F2C93A00689B77 /* Modifiers */,
-				4FF6661825F2C93A00689B77 /* RemappingEngine */,
+				4FF6661825F2C93A00689B77 /* Buttons */,
 				4FF6661F25F2C93A00689B77 /* Scroll */,
 				4FF6663625F2C93A00689B77 /* Drag */,
 				4FF6663125F2C93A00689B77 /* Touch */,
@@ -1464,7 +1437,7 @@
 			path = Modifiers;
 			sourceTree = "<group>";
 		};
-		4FF6661825F2C93A00689B77 /* RemappingEngine */ = {
+		4FF6661825F2C93A00689B77 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
 				4FF6661B25F2C93A00689B77 /* ButtonInputReceiver.h */,
@@ -1472,14 +1445,11 @@
 				4FF8C8A22895AACB007EC31F /* Buttons.swift */,
 				4FF8C89928955490007EC31F /* ClickCycle.swift */,
 				4FF8C8A028956DDD007EC31F /* ButtonModifiers.swift */,
-				4FF6661C25F2C93A00689B77 /* ButtonTriggerGenerator.h */,
-				4FF6661925F2C93A00689B77 /* ButtonTriggerGenerator.m */,
-				4FF6661D25F2C93A00689B77 /* ButtonTriggerHandler.h */,
-				4FF6661A25F2C93A00689B77 /* ButtonTriggerHandler.m */,
 				4F1B83042606E68300AEAF37 /* ButtonLandscapeAssessor.h */,
 				4F1B83052606E68300AEAF37 /* ButtonLandscapeAssessor.m */,
+				4FF8C8A428960309007EC31F /* Old */,
 			);
-			path = RemappingEngine;
+			path = Buttons;
 			sourceTree = "<group>";
 		};
 		4FF6661F25F2C93A00689B77 /* Scroll */ = {
@@ -1487,9 +1457,12 @@
 			children = (
 				4FF6662C25F2C93A00689B77 /* Scroll.h */,
 				4FF6662125F2C93A00689B77 /* Scroll.m */,
-				4F9E79112686FBE3002C2309 /* Analysis */,
-				4F9E79102686FBD3002C2309 /* Modifiers */,
-				4F9E790F2686FBC7002C2309 /* Utility */,
+				4FA994BC26678AC90007F003 /* ScrollAnalyzer.h */,
+				4FA994BD26678AC90007F003 /* ScrollAnalyzer.m */,
+				4FF6662925F2C93A00689B77 /* ScrollModifiers.h */,
+				4F5F3EF22756F1DB00C350C0 /* ScrollModifiers.swift */,
+				4FF6662B25F2C93A00689B77 /* ScrollUtility.h */,
+				4FF6662F25F2C93A00689B77 /* ScrollUtility.m */,
 				4FF6662225F2C93A00689B77 /* Unused */,
 				4F3CDB272837D889000E28F0 /* ScrollNotes.md */,
 			);
@@ -1499,6 +1472,7 @@
 		4FF6662225F2C93A00689B77 /* Unused */ = {
 			isa = PBXGroup;
 			children = (
+				4FF6662E25F2C93A00689B77 /* ScrollModifiers_old_.m */,
 				4FF6662025F2C93A00689B77 /* SmoothScroll_old_.h */,
 				4FF6662D25F2C93A00689B77 /* SmoothScroll_old_.m */,
 				4FF6662A25F2C93A00689B77 /* RoughScroll_old_.h */,
@@ -1661,11 +1635,21 @@
 				4FC55E2F285E6BF800F2FCCF /* GlobalDefaults.swift */,
 				4FF6667F25F2C93A00689B77 /* HelperUtility.h */,
 				4FF6668025F2C93A00689B77 /* HelperUtility.m */,
-				4FF9305C28805FC40007CCA7 /* Math */,
 				4FF0BD56266ACE32003935EA /* VectorUtility.h */,
 				4FF0BD57266ACE32003935EA /* VectorUtility.m */,
 			);
 			path = Utility;
+			sourceTree = "<group>";
+		};
+		4FF8C8A428960309007EC31F /* Old */ = {
+			isa = PBXGroup;
+			children = (
+				4FF6661C25F2C93A00689B77 /* ButtonTriggerGenerator.h */,
+				4FF6661925F2C93A00689B77 /* ButtonTriggerGenerator.m */,
+				4FF6661D25F2C93A00689B77 /* ButtonTriggerHandler.h */,
+				4FF6661A25F2C93A00689B77 /* ButtonTriggerHandler.m */,
+			);
+			path = Old;
 			sourceTree = "<group>";
 		};
 		4FF9305C28805FC40007CCA7 /* Math */ = {
@@ -1692,8 +1676,8 @@
 				4F3A40AA266BBB6200436821 /* AccelerationBezier.swift */,
 				4F2CC58627B8D2300084AACE /* HybridCurves.swift */,
 				4F2CC58827B8DA8B0084AACE /* Line.swift */,
-				4FBDA14A27B225210030E4EA /* Unused */,
 				4F1D58182881D880002EB119 /* CombinedLinearCurve.swift */,
+				4FBDA14A27B225210030E4EA /* Unused */,
 			);
 			path = Curves;
 			sourceTree = "<group>";

@@ -17,16 +17,15 @@
 @implementation RemapsOverrider
 
 /// This class provides methods for obtaining combined remaps based on a remaps dict and some active modifiers.
-///     These *combined* remaps are also sometimes called *effective remaps* or *remaps for current modifiers*
+///     These *combined* remaps are also sometimes called *effective remaps* or *remaps for current modifiers*, "activeModifications", "modificationsActingOnButton", etc.
 ///     If this doesn't make sense, see an example of the remaps dict structure in TransformationManager.m
 
 /// MARK: Interface
 
 + (MFEffectiveRemapsMethod _Nonnull)effectiveRemapsMethod {
-    /// Primitive remaps overriding method. Siimply takes the base (with an empty modification precondition) remaps and overrides it with the remaps which have a modificationPrecondition of exactly `activeModifiers`
+
     /// Returns a block
     ///     - Which takes 2 arguments: `remaps` and `activeModifiers`
-    ///     - The block takes the default remaps (with an empty precondition) and overrides it with the remappings defined for a precondition of `activeModifiers`.
     
 //    return simpleOverride;
     return subsetOverride;
@@ -45,7 +44,9 @@
 /// MARK: Effective remaps methods
 
 static NSDictionary *simpleOverride(NSDictionary *remaps, NSDictionary *activeModifiers) {
-
+    
+    /// Primitive remaps overriding method. Siimply takes the base (with an empty modification precondition) remaps and overrides it with the remaps which have a modificationPrecondition of exactly `activeModifiers`
+    
     NSDictionary *effectiveRemaps = remaps[@{}];
     NSDictionary *remapsForActiveModifiers = remaps[activeModifiers];
     if ([activeModifiers isNotEqualTo:@{}]) {
@@ -62,7 +63,7 @@ static NSDictionary *subsetOverride(NSDictionary *remaps, NSDictionary *activeMo
     ///     Then It creates one new precond array for each triggerType and only puts in the preconds that have that triggerType in their modification
     ///     For each trigger-specific precond array it then filters out all the preconds that are a subset of another precond in that trigger-specific precond array
     ///     Then, for each trigger-specific precond array, it takes all the modification dicts of each precond and overrides them into each other in the order of their precond size, from small to large
-    /// I'm too lazy and stupid to describe why all this abstract stuff makes sense, but it leads the button and keyboard modifiers to always do the intuitive thing that you expect them to imo!
+    /// I'm too lazy and stupid to describe why all this abstract stuff makes sense, but it leads the button and keyboard modifiers to always do the intuitive thing that you expect them to!
     
     /// Treat simple case separately for optimization
     
