@@ -12,6 +12,33 @@ import CocoaLumberjackSwift
 
 @objc class Math: NSObject {
     
+    @objc class func intCycle(x: Int, lower: Int, upper: Int) -> Int {
+        return Int(cycle(x: Double(x), lower: Double(lower), upper: Double(upper)))
+    }
+    
+    @objc class func cycle(x: Double, lower: Double, upper: Double) -> Double {
+        /// Works similar to modulo.
+        ///     `cycle(x: a, lower: 0, upper: n) = mod(a, n+1)`
+        
+        /// Validate
+        assert(lower <= upper)
+        
+        /// Calculate
+        
+        if lower == upper { return lower }
+        
+        var x = x
+        let stride = upper - lower
+        
+        while upper < x {
+            x -= stride
+        }
+        while x < lower {
+            x += stride
+        }
+        return x
+    }
+    
     @objc class func bisect(searchRange: Interval, targetOutput: Double, epsilon: Double, function: (Double) -> Double) -> NSNumber? {
         /// This only works if 'function' is monotonically increasing (I think)
         /// (Returning NSNumber so we can make it nullable. the value is double)

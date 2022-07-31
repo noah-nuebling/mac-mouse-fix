@@ -59,6 +59,8 @@ class ClickCycle: NSObject {
     
     /// Ivars
     
+    var maxClickLevel = 99999
+    
     var lastState: ClickCycleActivation = .dead
     
     var lastClickLevel: Int = 0
@@ -115,7 +117,7 @@ class ClickCycle: NSObject {
         return self.lastDevice?.uniqueID() == device && self.lastButton == ButtonNumber(truncating: button)
     }
     
-    func handleClick(device: Device, button: ButtonNumber, downNotUp mouseDown: Bool, modifierCallback: @escaping ClickCycleModifierCallback, triggerCallback: @escaping ClickCycleTriggerCallback) {
+    func handleClick(device: Device, button: ButtonNumber, downNotUp mouseDown: Bool, maxClickLevel: Int, modifierCallback: @escaping ClickCycleModifierCallback, triggerCallback: @escaping ClickCycleTriggerCallback) {
         
         ///
         /// Update/gather state
@@ -133,7 +135,8 @@ class ClickCycle: NSObject {
             }
             /// Start new clickCycle / update state
             state = .alive
-            clickLevel = self.lastClickLevel + 1
+            clickLevel = Math.intCycle(x: self.lastClickLevel + 1, lower: 1, upper: maxClickLevel)
+//            clickLevel = self.lastClickLevel + 1
         } else {
             state = self.lastState
             clickLevel = self.lastClickLevel
@@ -148,6 +151,37 @@ class ClickCycle: NSObject {
         self.lastWasDown = mouseDown
         self.lastTriggerCallback = triggerCallback
         self.lastClickLevel = clickLevel
+        
+        ///
+        /// Start/reset timers
+        ///
+        
+//        DispatchQueue.main.sync { /// With the current setup we're already running on main, and this causes race conditions
+            if mouseDown {
+                /// mouseDown
+                self.upTimer.invalidate()
+                self.downTimer = CoolTimer.scheduledTimer(timeInterval: 0.25, repeats: false, block: { timer in
+                    self.buttonQueue.async {
+                        if self.lastState == .alive {
+                            triggerCallback(.hold, clickLevel, device, button)
+                        }
+                        self.kill()
+                    }
+                })
+            } else {
+                /// mouseUp
+                ///     In ButtonTriggerGenerator we started upTimer on mouseDown with timeInterval 0.25. Not sure why.
+                self.downTimer.invalidate()
+                self.upTimer = CoolTimer.scheduledTimer(timeInterval: 0.21, repeats: false, block: { timer in
+                    self.buttonQueue.async {
+                        if self.lastState == .alive {
+                            triggerCallback(.levelExpired, clickLevel, device, button)
+                        }
+                        self.kill()
+                    }
+                })
+            }
+//        }
         
         ///
         /// Handle zombification
@@ -201,32 +235,5 @@ class ClickCycle: NSObject {
         let immediatePhase: ClickCycleTriggerPhase = mouseDown ? .press : .release
         triggerCallback(immediatePhase, clickLevel, device, button)
         
-        /// Start/reset timers
-        DispatchQueue.main.async {
-            if mouseDown {
-                /// mouseDown
-                self.upTimer.invalidate()
-                self.downTimer = CoolTimer.scheduledTimer(timeInterval: 0.25, repeats: false, block: { timer in
-                    self.buttonQueue.async {
-                        if self.lastState == .alive {
-                            triggerCallback(.hold, clickLevel, device, button)
-                        }
-                        self.kill()
-                    }
-                })
-            } else {
-                /// mouseUp
-                ///     In ButtonTriggerGenerator we started upTimer on mouseDown with timeInterval 0.25. Not sure why.
-                self.downTimer.invalidate()
-                self.upTimer = CoolTimer.scheduledTimer(timeInterval: 0.21, repeats: false, block: { timer in
-                    self.buttonQueue.async {
-                        if self.lastState == .alive {
-                            triggerCallback(.levelExpired, clickLevel, device, button)
-                        }
-                        self.kill()
-                    }
-                })
-            }
-        }
     }
 }
