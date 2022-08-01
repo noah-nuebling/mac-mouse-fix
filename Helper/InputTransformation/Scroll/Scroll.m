@@ -41,7 +41,7 @@ static CGEventSourceRef _eventSource;
 
 static dispatch_queue_t _scrollQueue;
 
-static PixelatedVectorAnimator *_animator;
+static PixelatedAnimator *_animator;
 
 static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this to Config or some sort of OverrideManager class
 + (AXUIElementRef) systemWideAXUIElement {
@@ -84,7 +84,7 @@ static CFTimeInterval _lastScrollAnalysisResultTimeStamp;
     }
     
     /// Create animator
-    _animator = [[PixelatedVectorAnimator alloc] init];
+    _animator = [[PixelatedAnimator alloc] init];
     
     /// Create initial config instance
     _scrollConfig = [[ScrollConfig alloc] init];
@@ -632,7 +632,7 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
     
     IOHIDEventPhaseBits eventPhase = kIOHIDEventPhaseUndefined;
     if (animatorPhase != kMFAnimationCallbackPhaseNone) {
-        eventPhase = [VectorAnimator IOHIDPhaseWithAnimationCallbackPhase:animatorPhase];
+        eventPhase = [Animator IOHIDPhaseWithAnimationCallbackPhase:animatorPhase];
     }
     
     /// Debug

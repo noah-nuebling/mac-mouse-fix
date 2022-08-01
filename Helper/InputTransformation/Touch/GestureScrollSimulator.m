@@ -39,7 +39,7 @@ static double _pixelsPerLine = 10;
 
 static VectorSubPixelator *_scrollLinePixelator;
 
-static PixelatedVectorAnimator *_momentumAnimator;
+static PixelatedAnimator *_momentumAnimator;
 
 static dispatch_queue_t _queue; /// Use this queue for interface functions to avoid race conditions
 
@@ -58,7 +58,7 @@ static dispatch_queue_t _queue; /// Use this queue for interface functions to av
         
         /// Momentum scroll
         
-        _momentumAnimator = [[PixelatedVectorAnimator alloc] init];
+        _momentumAnimator = [[PixelatedAnimator alloc] init];
         
     }
 }

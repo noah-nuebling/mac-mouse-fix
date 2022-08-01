@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-// PixelatedVectorAnimator.swift
+// PixelatedAnimator.swift
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2022
 // Licensed under MIT
@@ -27,7 +27,7 @@
 import Cocoa
 import CocoaLumberjackSwift
 
-class PixelatedVectorAnimator: VectorAnimator {
+class PixelatedAnimator: Animator {
 
     /// Make stuff from superclass unavailable
     
@@ -150,7 +150,7 @@ class PixelatedVectorAnimator: VectorAnimator {
             /// Call callback
             
             if (!isEndAndNoPrecedingDeltas) { /// Skip `end` phase callbacks if there have been no deltas.
-                let phase = PixelatedVectorAnimator.callbackPhase(hasProducedDeltas: thisAnimationHasProducedDeltas, isLastCallback: isLastDisplayLinkCallback)
+                let phase = PixelatedAnimator.callbackPhase(hasProducedDeltas: thisAnimationHasProducedDeltas, isLastCallback: isLastDisplayLinkCallback)
                 callback(integerAnimationValueDelta, phase, momentumHint)
             }
             

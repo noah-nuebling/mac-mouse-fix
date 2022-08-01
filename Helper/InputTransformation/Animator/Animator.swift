@@ -1,6 +1,6 @@
 //
 // --------------------------------------------------------------------------
-// VectorAnimator.swift
+// Animator.swift
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2022
 // Licensed under MIT
@@ -25,14 +25,14 @@
 ///         The only advantage of the current `HybridCurve` approach that I can think of, is that having a constant scrolling speed at the start of the animation actually makes the animation speed stay totally constant if the user is moving the scrollwheel at a constant speed. This should make things feel more smooth and responsive. I don't know how you could replicate this property in the dynamic-system-based scrolling.
 ///
 
-/// Don't use this directly. Use the subclass `PixelatedVectorAnimator` For discussion see `PixelatedVectorAnimator`.
+/// Don't use this directly. Use the subclass `PixelatedAnimator` For discussion see `PixelatedAnimator`.
 
 import Foundation
 import CocoaLumberjackSwift
 import CoreVideo
 import QuartzCore
 
-@objc class VectorAnimator: NSObject {
+@objc class Animator: NSObject {
 
     /// Typedef
     
@@ -558,7 +558,7 @@ import QuartzCore
     
     func subclassHook(_ untypedCallback: Any, _ animationValueDelta: Vector, _ animationTimeDelta: CFTimeInterval, _ momentumHint: MFMomentumHint) {
         
-        /// This is unused. Probably doesn't work properly. The override in `PixelatedVectorAnimator` is the relevant thing.
+        /// This is unused. Probably doesn't work properly. The override in `PixelatedAnimator` is the relevant thing.
         
         /// Guard callback type
         
@@ -576,7 +576,7 @@ import QuartzCore
         assert(!isEndAndNoPrecedingDeltas)
         
         /// Call the callback
-        let phase = VectorAnimator.callbackPhase(hasProducedDeltas: thisAnimationHasProducedDeltas, isLastCallback: isLastDisplayLinkCallback)
+        let phase = Animator.callbackPhase(hasProducedDeltas: thisAnimationHasProducedDeltas, isLastCallback: isLastDisplayLinkCallback)
         callback(animationValueDelta, phase, momentumHint)
         
         /// Debug

@@ -27,7 +27,7 @@
 + (SubPixelator *)biasedPixelator {
     /// A biased pixelator becomes a floor or a ceil pixelator depending on whether it's first non-zero input is negative (floor) or positive (ceil)
     ///     That means it's first input will always result in a non-zero output.
-    ///     We're using this in PixelatedVectorAnimator. I can't remember why.
+    ///     We're using this in PixelatedAnimator. I can't remember why.
     
     return [[self alloc] initAsBiasedPixelator];
 }

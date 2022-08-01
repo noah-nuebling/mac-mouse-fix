@@ -53,7 +53,7 @@
 		4F8A8DBD287F203D00786BCC /* IOHIDAccelerationTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DBC287F203D00786BCC /* IOHIDAccelerationTable.cpp */; };
 		4F8A8DBF287F7BBA00786BCC /* NaturalAccelerationCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DBE287F7BBA00786BCC /* NaturalAccelerationCurve.swift */; };
 		4F8A8DC2287F967000786BCC /* TestAccelerationCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DC1287F967000786BCC /* TestAccelerationCurve.swift */; };
-		4F8B7E6727B4E32600598B65 /* VectorAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8B7E6627B4E32600598B65 /* VectorAnimator.swift */; };
+		4F8B7E6727B4E32600598B65 /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8B7E6627B4E32600598B65 /* Animator.swift */; };
 		4F8CE7012617738A00D70A76 /* AppTranslocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CE6FF2617738A00D70A76 /* AppTranslocationManager.m */; };
 		4F8CF95728686C0100BF5E55 /* PolynomialRegression.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CF94328686C0100BF5E55 /* PolynomialRegression.m */; };
 		4F8CF95B28686EA200BF5E55 /* DoublesMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CF94528686C0100BF5E55 /* DoublesMatrix.m */; };
@@ -66,7 +66,7 @@
 		4F94F61025E5EC2800D9F24A /* Mac_Mouse_FixUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60F25E5EC2800D9F24A /* Mac_Mouse_FixUITests.m */; };
 		4F94F73D25E6146C00D9F24A /* Mac Mouse Fix Helper.app in Copy Helper */ = {isa = PBXBuildFile; fileRef = 4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4F94F74C25E614B800D9F24A /* Mac Mouse Fix Accomplice in Copy Accomplice */ = {isa = PBXBuildFile; fileRef = 4F2FDF302315662400C7BE14 /* Mac Mouse Fix Accomplice */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		4F96060F27B4F92F004D6F6D /* PixelatedVectorAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F96060E27B4F92F004D6F6D /* PixelatedVectorAnimator.swift */; };
+		4F96060F27B4F92F004D6F6D /* PixelatedAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F96060E27B4F92F004D6F6D /* PixelatedAnimator.swift */; };
 		4F9C9B58268A29B70083DED0 /* RollingAverage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C9B57268A29B70083DED0 /* RollingAverage.swift */; };
 		4F9C9B60268A29FE0083DED0 /* Smoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C9B5F268A29FE0083DED0 /* Smoother.swift */; };
 		4F9C9B6B268A2D6F0083DED0 /* CircularBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C9B6A268A2D6F0083DED0 /* CircularBuffer.m */; };
@@ -97,6 +97,7 @@
 		4FD860CC266EF55A004F76C8 /* ScrollConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860CB266EF55A004F76C8 /* ScrollConfig.swift */; };
 		4FE40B96283A49DD00880BEF /* SharedUtilitySwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */; };
 		4FE40B97283A49DD00880BEF /* SharedUtilitySwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */; };
+		4FE6CBC428987E8B00B3E829 /* DynamicSystemAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE6CBC328987E8A00B3E829 /* DynamicSystemAnimator.swift */; };
 		4FEB660B279350F900E6A111 /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = 4FEB660A279350F900E6A111 /* CocoaLumberjack */; };
 		4FEB660D279350FD00E6A111 /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4FEB660C279350FD00E6A111 /* CocoaLumberjackSwift */; };
 		4FEB660F2793510300E6A111 /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = 4FEB660E2793510300E6A111 /* CocoaLumberjack */; };
@@ -381,7 +382,7 @@
 		4F8A8DBE287F7BBA00786BCC /* NaturalAccelerationCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaturalAccelerationCurve.swift; sourceTree = "<group>"; };
 		4F8A8DC0287F885D00786BCC /* Shorthands.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Shorthands.h; sourceTree = "<group>"; };
 		4F8A8DC1287F967000786BCC /* TestAccelerationCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAccelerationCurve.swift; sourceTree = "<group>"; };
-		4F8B7E6627B4E32600598B65 /* VectorAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorAnimator.swift; sourceTree = "<group>"; };
+		4F8B7E6627B4E32600598B65 /* Animator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
 		4F8CE6FF2617738A00D70A76 /* AppTranslocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppTranslocationManager.m; sourceTree = "<group>"; };
 		4F8CE7002617738A00D70A76 /* AppTranslocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppTranslocationManager.h; sourceTree = "<group>"; };
 		4F8CF93028686C0100BF5E55 /* license.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = license.md; sourceTree = "<group>"; };
@@ -416,7 +417,7 @@
 		4F94F60B25E5EC2800D9F24A /* Mac Mouse FixUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Mac Mouse FixUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F94F60F25E5EC2800D9F24A /* Mac_Mouse_FixUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Mac_Mouse_FixUITests.m; sourceTree = "<group>"; };
 		4F94F61125E5EC2800D9F24A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4F96060E27B4F92F004D6F6D /* PixelatedVectorAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelatedVectorAnimator.swift; sourceTree = "<group>"; };
+		4F96060E27B4F92F004D6F6D /* PixelatedAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelatedAnimator.swift; sourceTree = "<group>"; };
 		4F9C14AD27BAE773008A1479 /* HIDEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIDEvent.h; sourceTree = "<group>"; };
 		4F9C14AE27BAE802008A1479 /* HIDBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIDBase.h; sourceTree = "<group>"; };
 		4F9C14AF27BAEA71008A1479 /* HIDEventBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIDEventBase.h; sourceTree = "<group>"; };
@@ -480,6 +481,7 @@
 		4FD860DA266EFD64004F76C8 /* ScrollConfigObjC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollConfigObjC.h; sourceTree = "<group>"; };
 		4FDBC59A234F80C500A46517 /* Accomplice.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Accomplice.entitlements; sourceTree = "<group>"; };
 		4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedUtilitySwift.swift; sourceTree = "<group>"; };
+		4FE6CBC328987E8A00B3E829 /* DynamicSystemAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicSystemAnimator.swift; sourceTree = "<group>"; };
 		4FE7A0DE28677AD600C33B37 /* Gain Curve Math.tex */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Gain Curve Math.tex"; sourceTree = "<group>"; };
 		4FEB6617279376C200E6A111 /* SymbolicHotKeys Reference.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "SymbolicHotKeys Reference.txt"; sourceTree = "<group>"; };
 		4FEB6618279376C200E6A111 /* notes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = notes.md; sourceTree = "<group>"; };
@@ -778,8 +780,9 @@
 			children = (
 				4F3A40C9266C44D100436821 /* DisplayLink.h */,
 				4F3A40CA266C44D100436821 /* DisplayLink.m */,
-				4F8B7E6627B4E32600598B65 /* VectorAnimator.swift */,
-				4F96060E27B4F92F004D6F6D /* PixelatedVectorAnimator.swift */,
+				4F8B7E6627B4E32600598B65 /* Animator.swift */,
+				4F96060E27B4F92F004D6F6D /* PixelatedAnimator.swift */,
+				4FE6CBC328987E8A00B3E829 /* DynamicSystemAnimator.swift */,
 				4FD86058266DBF96004F76C8 /* AnimatorDeclarations.h */,
 			);
 			path = Animator;
@@ -2239,12 +2242,13 @@
 				4F44FF042606D73D00926A5E /* SharedMessagePort.m in Sources */,
 				4F8CF95728686C0100BF5E55 /* PolynomialRegression.m in Sources */,
 				4F5F3EEE2756DB0A00C350C0 /* RemapsOverrider_old_.swift in Sources */,
-				4F8B7E6727B4E32600598B65 /* VectorAnimator.swift in Sources */,
+				4F8B7E6727B4E32600598B65 /* Animator.swift in Sources */,
 				4FF6669325F2C93A00689B77 /* TouchSimulator.m in Sources */,
 				4F9E78E3268663B1002C2309 /* ExponentialSmoother.swift in Sources */,
 				4F3A40AB266BBB6200436821 /* AccelerationBezier.swift in Sources */,
 				4FF93063288076600007CCA7 /* PolyFit.cpp in Sources */,
 				4FD860AA266EC24E004F76C8 /* DerivedProperty.swift in Sources */,
+				4FE6CBC428987E8B00B3E829 /* DynamicSystemAnimator.swift in Sources */,
 				4FF6669725F2C93A00689B77 /* TransformationManager.m in Sources */,
 				4F1B83062606E68300AEAF37 /* ButtonLandscapeAssessor.m in Sources */,
 				4F8A8DBF287F7BBA00786BCC /* NaturalAccelerationCurve.swift in Sources */,
@@ -2294,7 +2298,7 @@
 				4F9E78D02685E30C002C2309 /* GestureScrollSimulator.m in Sources */,
 				4FD66E0827BB553800F67559 /* CGEventHIDEventBridge.m in Sources */,
 				4FF0BD58266ACE32003935EA /* VectorUtility.m in Sources */,
-				4F96060F27B4F92F004D6F6D /* PixelatedVectorAnimator.swift in Sources */,
+				4F96060F27B4F92F004D6F6D /* PixelatedAnimator.swift in Sources */,
 				4FF6654F25F2C7B000689B77 /* NSArray+Additions.m in Sources */,
 				4FF6654525F2C7B000689B77 /* Objects.m in Sources */,
 				4F5F3EF12756EC0400C350C0 /* RemapsOverrider.m in Sources */,
