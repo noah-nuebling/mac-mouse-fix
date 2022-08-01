@@ -17,7 +17,7 @@ import CocoaLumberjackSwift
     }
     
     @objc class func cycle(x: Double, lower: Double, upper: Double) -> Double {
-        /// Works similar to modulo.
+        /// Generalization of modulo.
         ///     `cycle(x: a, lower: 0, upper: n) = mod(a, n+1)`
         
         /// Validate
@@ -146,11 +146,11 @@ import CocoaLumberjackSwift
         
         assert(originInterval.contains(value))
         
-        // Normalize value between 0 and 1
+        /// Normalize value between 0 and 1
     
         let unitValue: Double = abs(value - originInterval.start) / originInterval.length
         
-        // Scale unitValue to targetRange
+        /// Scale unitValue to targetInterval
         
         return targetInterval.start + (unitValue * targetInterval.directedLength)
     }

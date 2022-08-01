@@ -12,7 +12,7 @@
 /// Thread safety:
 ///     All calls to this are expected to come from the dispatchQueue owned by Buttons.swift `buttonsQueue`. It will also protect its timer callbacks using `buttonQueue`.
 ///     So when using this:
-///         1. Make sure that you're running on buttonsQueue otherwise there might be race conditions
+///         1. Make sure that you're running on buttonsQueue when calling, otherwise there might be race conditions
 ///         2. The `modifierCallback` and `triggerCallback` are already protected when they arrive in `Buttons.swift`
 
 /// Behaviour
@@ -47,7 +47,6 @@ typealias ClickCycleModifierCallback = (ClickCycleModifierPhase, ClickLevel, Dev
 enum ClickCycleActivation {
     case alive
     case dead
-//    case zombified
 }
 
 /// Main class def
@@ -136,7 +135,6 @@ class ClickCycle: NSObject {
             /// Start new clickCycle / update state
             state = .alive
             clickLevel = Math.intCycle(x: self.lastClickLevel + 1, lower: 1, upper: maxClickLevel)
-//            clickLevel = self.lastClickLevel + 1
         } else {
             state = self.lastState
             clickLevel = self.lastClickLevel
@@ -144,7 +142,7 @@ class ClickCycle: NSObject {
         
         /// Update global state
         ///     Updating this up here to avoid race conditions. We could alternatively lock everything with `buttonQueue`, and then update this at the end.
-        ///     Then we could also use the global vars in here directly instead of making a local copy of the clickLeve and state.
+        ///     Then we could also use the global vars in here directly instead of making a local copy of the clickLevel and state.
         self.lastState = state
         self.lastDevice = device
         self.lastButton = button
@@ -156,7 +154,8 @@ class ClickCycle: NSObject {
         /// Start/reset timers
         ///
         
-//        DispatchQueue.main.sync { /// With the current setup we're already running on main, and this causes race conditions
+        assert(Thread.isMainThread) /// With the current setup we're already running on main (which is necessary for staring timers), and dispatching to main causes race conditions, so we're just asserting
+//        DispatchQueue.main.sync {
             if mouseDown {
                 /// mouseDown
                 self.upTimer.invalidate()
@@ -192,7 +191,7 @@ class ClickCycle: NSObject {
         
         /// Validate 1
         let lonelyRelease = !mouseDown && (state == .dead || buttonIsDifferent)
-        assert(lonelyRelease == (zombieEntry != nil))
+        assert(lonelyRelease == (zombieEntry != nil)) /// This means: Release outside of the current clickCycle happens exactly if the released button is zombified
         
         /// Validate 2
         let duplicates: [[ZombieEntry]] = Array(Dictionary(grouping: zombifiedButtons, by: { $0.button }).values)
@@ -231,9 +230,11 @@ class ClickCycle: NSObject {
         /// triggerCallback
         ///
         
-        /// Immediate callback
-        let immediatePhase: ClickCycleTriggerPhase = mouseDown ? .press : .release
-        triggerCallback(immediatePhase, clickLevel, device, button)
+        if mouseDown {
+            triggerCallback(.press, clickLevel, device, button)
+        } else {
+            triggerCallback(.release, clickLevel, device, button)
+        }
         
     }
 }

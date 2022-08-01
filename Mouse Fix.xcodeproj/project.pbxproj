@@ -112,7 +112,6 @@
 		4FF0BD4B266A8B7E003935EA /* Bezier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD4A266A8B7E003935EA /* Bezier.swift */; };
 		4FF0BD51266AC10C003935EA /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD50266AC10C003935EA /* Math.swift */; };
 		4FF0BD58266ACE32003935EA /* VectorUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD57266ACE32003935EA /* VectorUtility.m */; };
-		4FF0BD5F266ADFE5003935EA /* MathObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD5E266ADFE5003935EA /* MathObjc.m */; };
 		4FF6654125F2C7B000689B77 /* default_launchd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6652E25F2C7B000689B77 /* default_launchd.plist */; };
 		4FF6654225F2C7B000689B77 /* default_launchd.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6652E25F2C7B000689B77 /* default_launchd.plist */; };
 		4FF6654325F2C7B000689B77 /* HelperServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6652F25F2C7B000689B77 /* HelperServices.m */; };
@@ -501,7 +500,6 @@
 		4FF0BD56266ACE32003935EA /* VectorUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VectorUtility.h; sourceTree = "<group>"; };
 		4FF0BD57266ACE32003935EA /* VectorUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VectorUtility.m; sourceTree = "<group>"; };
 		4FF0BD5D266ADFE5003935EA /* MathObjc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MathObjc.h; sourceTree = "<group>"; };
-		4FF0BD5E266ADFE5003935EA /* MathObjc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MathObjc.m; sourceTree = "<group>"; };
 		4FF6652D25F2C7B000689B77 /* HelperServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelperServices.h; sourceTree = "<group>"; };
 		4FF6652E25F2C7B000689B77 /* default_launchd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = default_launchd.plist; sourceTree = "<group>"; };
 		4FF6652F25F2C7B000689B77 /* HelperServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelperServices.m; sourceTree = "<group>"; };
@@ -1415,9 +1413,9 @@
 				4FF6661825F2C93A00689B77 /* Buttons */,
 				4FF6661F25F2C93A00689B77 /* Scroll */,
 				4FF6663625F2C93A00689B77 /* Drag */,
+				4F3A40C8266C448500436821 /* Animator */,
 				4FF6663125F2C93A00689B77 /* Touch */,
 				4FF6663925F2C93A00689B77 /* Actions */,
-				4F3A40C8266C448500436821 /* Animator */,
 				4FFBC5B126697E8D001D389B /* Smoothing */,
 				4FBDA14927B2246B0030E4EA /* SubPixelator */,
 				4FF6663F25F2C93A00689B77 /* Utility */,
@@ -1428,11 +1426,11 @@
 		4FF6661525F2C93A00689B77 /* Modifiers */ = {
 			isa = PBXGroup;
 			children = (
+				4FF6661625F2C93A00689B77 /* ModifierManager.h */,
+				4FF6661725F2C93A00689B77 /* ModifierManager.m */,
 				4F5F3EEF2756DD1200C350C0 /* RemapsOverrider.h */,
 				4F5F3EF02756EC0400C350C0 /* RemapsOverrider.m */,
 				4F5F3EED2756DB0A00C350C0 /* RemapsOverrider_old_.swift */,
-				4FF6661625F2C93A00689B77 /* ModifierManager.h */,
-				4FF6661725F2C93A00689B77 /* ModifierManager.m */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -1657,7 +1655,6 @@
 			children = (
 				4FF0BD50266AC10C003935EA /* Math.swift */,
 				4FF0BD5D266ADFE5003935EA /* MathObjc.h */,
-				4FF0BD5E266ADFE5003935EA /* MathObjc.m */,
 				4FF937552669B043003A52EA /* Curves */,
 				4F77F7C628808D6000847D0E /* PolynomialRegression */,
 			);
@@ -2260,7 +2257,6 @@
 				4FF0255F27B013A100923107 /* PointerFreeze.m in Sources */,
 				4FF666A725F2C93A00689B77 /* Device.m in Sources */,
 				4FF6669C25F2C93A00689B77 /* PointerSpeedExperiments.m in Sources */,
-				4FF0BD5F266ADFE5003935EA /* MathObjc.m in Sources */,
 				4F3A40B1266BBC5000436821 /* Curve.swift in Sources */,
 				4FF6668425F2C93A00689B77 /* MessagePort_Helper.m in Sources */,
 				4FF6669225F2C93A00689B77 /* RoughScroll_old_.m in Sources */,

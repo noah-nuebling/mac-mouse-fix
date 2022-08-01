@@ -163,7 +163,7 @@ import CocoaLumberjackSwift
         if self.clickCycle.isActiveFor(device: device.uniqueID(), button: button) {
             self.clickCycle.kill()
         }
-        self.modifiers.kill(device: device, button: ButtonNumber(truncating: button))
+        self.modifiers.kill(device: device, button: ButtonNumber(truncating: button)) /// Not sure abt this
     }
     
     @objc static func handleButtonHasHadEffectAsModifier(device: Device, button: NSNumber) {

@@ -212,8 +212,8 @@ void postGestureScrollEvent_Unsafe(int64_t dx, int64_t dy, IOHIDEventPhaseBits p
 #pragma mark - Direct momentum scroll interface
 
 + (void)postMomentumScrollDirectlyWithDeltaX:(double)dx
-                                   deltaY:(double)dy
-                            momentumPhase:(CGMomentumScrollPhase)momentumPhase {
+                                      deltaY:(double)dy
+                               momentumPhase:(CGMomentumScrollPhase)momentumPhase {
     
     dispatch_async(_queue, ^{
         

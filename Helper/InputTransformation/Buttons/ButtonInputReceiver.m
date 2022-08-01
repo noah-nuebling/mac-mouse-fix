@@ -28,7 +28,7 @@ static CFMachPortRef _eventTap;
     _eventSource = CGEventSourceCreate(kCGEventSourceStatePrivate);
     registerInputCallback();
     _buttonInputsFromRelevantDevices = [Queue queue];
-    _buttonParseBlacklist = @[@(1),@(2)]; // Ignore inputs from left and right mouse buttons
+    _buttonParseBlacklist = @[@(1),@(2)]; /// Ignore inputs from left and right mouse buttons
 }
 
 + (void)decide {
@@ -42,7 +42,7 @@ static CFMachPortRef _eventTap;
 }
 
 + (void)start {
-    _buttonInputsFromRelevantDevices = [Queue queue]; // Not sure if resetting here necessary
+    _buttonInputsFromRelevantDevices = [Queue queue]; /// Not sure if resetting here necessary
     CGEventTapEnable(_eventTap, true);
 }
 + (void)stop {
@@ -105,7 +105,7 @@ static Queue<NSDictionary *> *_buttonInputsFromRelevantDevices;
 + (BOOL)allRelevantButtonInputsHaveBeenProcessed {
     return [_buttonInputsFromRelevantDevices isEmpty];
 }
-NSArray *_buttonParseBlacklist; // Don't send inputs from these buttons to ButtonInputParser
+NSArray *_buttonParseBlacklist; /// Don't send inputs from these buttons to ButtonInputParser
 
 static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     

@@ -11,7 +11,7 @@
 /// The cubic polynomial curve `f(x) = (ax + (bx)^2 + (cx)^3 + (dx)^4) / x` that the Apple Driver generates when using parametric acceleration feels better / more predictable to me.
 /// You can see how we configured the parameters for that curve in PointerConfig.swift. Basically we made it pass through two keyPoints `p0` and `p1` and had it curve down so the slope (aka derivative) reached 0 at the second keypoint. So we bascally had a cap and made it smoothly curve into the cap.
 /// The problem is that there is only one fixed curvature that satisfies this and it's not very high. Now we want to try higher curvatures.
-///     (We could've almost made it more curved using the Driver Curve, using `d`, but it's not possible, because `d^4` can't become negative, so it can't make the curve slop down, only up.)
+///     (We could've almost made it more curved using the Driver Curve, using 4th coefficient `d`, but it's not possible, because `d^4` can't become negative, so it can't make the curve slop down, only up. See IOQuarticFunction / IOHIDScrollFilter or whatever they were called for context)
 //
 /// So now we want to create polynomial functions of arbitrary degrees that smoothly curve into the cap. So we can increase the curvature by increasing the degree.
 ///
@@ -32,7 +32,7 @@
 ///  The only method I found that works is regression inside of Desmos or numpy.polyfit(). I tried using numpy from Swift. there is a lib called NumPy-iOS which does exactly what we want but it doesn't support macOS. So I gave up on making degree >= 4 work.
 ///  -> However we tested degree 4 by calculating the coefficients using numpy and inserting them manually and it doesn't feel that great. Still good but it gets a little floaty / hard to predict at that point.
 ///
-/// Note: For degree 1 or 2 you can just use the Apple Driver's built in Parametric curve function. So you don't need this class.
+/// Note: For degree 1 or 2 you could just use the Apple Driver's built in Parametric curve function. So you don't really need this class.
 ///
 ///  TODO: Clean up all the different regression functions that don't work.
 
@@ -81,17 +81,15 @@ import Foundation
         
         /// Use polynomial regression
         let coeffsNS = PolynomialRegression.regression(withXValues: xValues, yValues: yValues, polynomialDegree: UInt(n))
-        
-        
-        ///
+
+        /// Alternative methods for poly regression (None of them work better)
 //        let coeffsNS: [NSNumber] = PolyFit.fitWith(x: xValues, y: yValues, polynomialDegree: Int32(n))
-        //        self.coeffs = fit(points: allPoints, polynomialDegree: n)
+//        self.coeffs = fit(points: allPoints, polynomialDegree: n)
         
         /// Store coefficients
         self.coeffs = coeffsNS.map { nsNumber in nsNumber.doubleValue }
         
-        
-        /// Test
+        /// Testing
 //        self.coeffs = [0.0334005, 10.2645, -2.19908, 0.209393, -0.00747675]
     }
     

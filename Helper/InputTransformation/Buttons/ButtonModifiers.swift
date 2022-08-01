@@ -27,14 +27,14 @@ struct ButtonStateKey: Hashable {
         self.button = button
     }
     
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(self.device)
-        hasher.combine(self.button)
-    }
-
-    static func ==(lhs: ButtonStateKey, rhs: ButtonStateKey) -> Bool {
-        return lhs.device == rhs.device && lhs.button == rhs.button
-    }
+//    func hash(into hasher: inout Hasher) {
+//        hasher.combine(self.device)
+//        hasher.combine(self.button)
+//    }
+//
+//    static func ==(lhs: ButtonStateKey, rhs: ButtonStateKey) -> Bool {
+//        return lhs.device == rhs.device && lhs.button == rhs.button
+//    }
 }
 
 private struct ButtonState: Equatable {
