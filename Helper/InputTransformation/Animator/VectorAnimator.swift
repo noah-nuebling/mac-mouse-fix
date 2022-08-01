@@ -7,6 +7,24 @@
 // --------------------------------------------------------------------------
 //
 
+///
+/// Idea for **dynamic-system-based animations** (doesn't really belong in this class?)
+/// I really want to implement dynamic system-based-animations, becuase it sounds really cool and super fun to implement. (Also it might make some feel a little nicer / simplify our code while producing similar results - but not enough to really warrant spending time on it right now - but goddamn I really wanna do it!)
+///     I was inspired by this **amazing** video by t3ssel8r: https://www.youtube.com/watch?v=KPoeNZZ6H4s
+///     For the implementation, this document should be really useful: https://www.uml.edu/docs/Second-Theory_tcm18-190098.pdf
+///
+///     \note :
+///         If I understand correctly, spring animations are a subset of 2nd order dynamic system animations - just to help your intuition.
+///
+///     \discussion:
+///         We're already using differential equations for the animation with the `Drag` animation curve.
+///         But when looking at the differential equations governing Drag curves, we see that the force that's acting on the object is a function of the current speed. This makes it hard to specify a distance that the curve should scroll overall. However, that's the main constraint we have right now when using the animator in Scroll.m - the scroll distance.
+///         The way we solve this is to first scroll at a constant speed and then switch to the Drag equation at a dynamically chosen point in time, such that the overall scrolled distance between the constant-scrolling and the drag-scrolling is the one we specified beforehand (This is done in `HybridCurves.swift`)
+///         Now, looking at 2nd order dynamic systems, they are also described by differential equations, and they produce similarly smooth and natural feeling movement to a Drag equation. But in contrast to a drag system, in the dynamic system, the force that's acting on the object is (/can be) a function of the distance to the desired location. So we wouldn't have to do all this complicated switching from a constant scrolling speed to the Drag equation, because the dynamic system is defined from the ground up in terms of how far it should move. This makes it much more elegant for the constraints we want to put on the system!! (which is mainly scrolling distance)
+///
+///         The only advantage of the current `HybridCurve` approach that I can think of, is that having a constant scrolling speed at the start of the animation actually makes the animation speed stay totally constant if the user is moving the scrollwheel at a constant speed. This should make things feel more smooth and responsive. I don't know how you could replicate this property in the dynamic-system-based scrolling.
+///
+
 /// Don't use this directly. Use the subclass `PixelatedVectorAnimator` For discussion see `PixelatedVectorAnimator`.
 
 import Foundation
@@ -401,7 +419,7 @@ import QuartzCore
                 
                 /// Set animation start time
                 
-                /// Pull time of last frame out of butt
+                /// Pull time of last frame time out of butt
                 lastFrameTime = frameTime - timeInfo.nominalTimeBetweenFrames
                 
                 /// Set animation start time to hypothetical last frame
