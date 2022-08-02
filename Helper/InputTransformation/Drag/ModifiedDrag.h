@@ -73,8 +73,9 @@ typedef struct {
 + (CGEventTapProxy)tapProxy;
 + (void)initializeDragWithModifiedDragDict:(NSDictionary *)dict onDevice:(Device *)dev;
 
-+ (void)modifiedScrollHasBeenUsed;
+//+ (void)modifiedScrollHasBeenUsed;
 //+ (void)suspend;
++ (void)cancelAndReInitialize;
 + (void)deactivate;
 + (void)deactivateWithCancel:(BOOL)cancel;
 

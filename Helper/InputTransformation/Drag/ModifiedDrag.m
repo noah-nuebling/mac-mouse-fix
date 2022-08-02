@@ -151,11 +151,12 @@ static CGEventTapProxy _tapProxy;
         } else {
             assert(false);
         }
+        
+        /// Link with plugin
         [p initializeWithDragState:&_drag];
         _drag.outputPlugin = p;
         
         /// Init dynamic parts of _drag
-        
         initDragState();
     });
 }
@@ -165,6 +166,8 @@ void initDragState(void) {
     _drag.origin = getRoundedPointerLocation();
     _drag.originOffset = (Vector){0};
     _drag.activationState = kMFModifiedInputActivationStateInitialized;
+    
+    [_drag.outputPlugin initializeWithDragState:&_drag]; /// We just want to reset the plugin state here. The plugin will already hold ref to _drag. So this is not super pretty/semantic
     
     CGEventTapEnable(_drag.eventTap, true);
     DDLogDebug(@"\nEnabled drag eventTap");
@@ -279,7 +282,9 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
         
         /// Notify other modules
         
-        [ModifierManager handleModifiersHaveHadEffectWithDevice:_drag.modifiedDevice];
+        [ModifierManager handleModificationHasBeenUsedWithDevice:_drag.modifiedDevice];
+        [OutputCoordinator handleTouchSimulationStartedFromDriver:kTouchDriverModifiedDrag];
+        
         [_drag.outputPlugin handleBecameInUse];
     }
 }
@@ -299,10 +304,17 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
     _drag.firstCallback = false;
 }
 
++ (void)cancelAndReInitialize {
+    
+    dispatch_async(_drag.queue, ^{
+        deactivate_Unsafe(true);
+        initDragState();
+    });
+}
+
 + (void)deactivate {
     
 //    DDLogDebug(@"Deactivated modifiedDrag. Caller: %@", [SharedUtility callerInfo]);
-    
     [self deactivateWithCancel:false];
 }
 
@@ -310,40 +322,44 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
     
     dispatch_async(_drag.queue, ^{
         /// ^ Do everything on the dragQueue to ensure correct order of operations with the processing of the events from the eventTap.
-        
-        /// Debug
-        DDLogDebug(@"modifiedDrag deactivate with state: %@", [self modifiedDragStateDescription:_drag]);
-        
-        /// Handle state == none
-        ///     Return immediately
-        if (_drag.activationState == kMFModifiedInputActivationStateNone) return;
-        
-        /// Handle state == In use
-        ///     Notify plugin
-        if (_drag.activationState == kMFModifiedInputActivationStateInUse) {
-            [_drag.outputPlugin handleDeactivationWhileInUseWithCancel:cancel];
-        }
-        
-        /// Set state == none
-        _drag.activationState = kMFModifiedInputActivationStateNone;
-        
-        /// Disable eventTap
-        CGEventTapEnable(_drag.eventTap, false);
-        
-        /// Debug
-        DDLogDebug(@"\nmodifiedDrag disabled drag eventTap. Caller info: %@", [SharedUtility callerInfo]);
+        deactivate_Unsafe(cancel);
     });
+}
+
+void deactivate_Unsafe(BOOL cancel) {
+    
+    /// Debug
+    DDLogDebug(@"modifiedDrag deactivate with state: %@", [ModifiedDrag modifiedDragStateDescription:_drag]);
+    
+    /// Handle state == none
+    ///     Return immediately
+    if (_drag.activationState == kMFModifiedInputActivationStateNone) return;
+    
+    /// Handle state == In use
+    ///     Notify plugin
+    if (_drag.activationState == kMFModifiedInputActivationStateInUse) {
+        [_drag.outputPlugin handleDeactivationWhileInUseWithCancel:cancel];
+    }
+    
+    /// Set state == none
+    _drag.activationState = kMFModifiedInputActivationStateNone;
+    
+    /// Disable eventTap
+    CGEventTapEnable(_drag.eventTap, false);
+    
+    /// Debug
+    DDLogDebug(@"\nmodifiedDrag disabled drag eventTap. Caller info: %@", [SharedUtility callerInfo]);
 }
                    
 /// Handle interference with ModifiedScroll
 ///     I'm not confident this is an adequate solution.
                    
-+ (void)modifiedScrollHasBeenUsed {
-    /// It's easy to accidentally drag while trying to click and scroll. And some modifiedDrag effects can interfere with modifiedScroll effects. We built this cool ModifiedDrag `suspend()` method which effectively restarts modifiedDrag. This is cool and feels nice and has a few usability benefits, but also leads to a bunch of bugs and race conditions in its current form, so were just using `deactivate()`
-    if (_drag.activationState == kMFModifiedInputActivationStateInUse) { /// This check should probably also be performed on the _drag.queue
-        [self deactivateWithCancel:YES];
-    }
-}
+//+ (void)modifiedScrollHasBeenUsed {
+//    /// It's easy to accidentally drag while trying to click and scroll. And some modifiedDrag effects can interfere with modifiedScroll effects. We built this cool ModifiedDrag `suspend()` method which effectively restarts modifiedDrag. This is cool and feels nice and has a few usability benefits, but also leads to a bunch of bugs and race conditions in its current form, so were just using `deactivate()`
+//    if (_drag.activationState == kMFModifiedInputActivationStateInUse) { /// This check should probably also be performed on the _drag.queue
+//        [self deactivateWithCancel:YES];
+//    }
+//}
     
 //+ (void)suspend {
 //    /// Deactivate and re-initialize

@@ -259,6 +259,10 @@ static void (^_momentumScrollCallback)(void);
 
 /// Stop momentum scroll
 
++ (void)cancelMomentumScroll {
+    [self stopMomentumScroll];
+}
+
 + (void)stopMomentumScroll {
     
     DDLogDebug(@"momentumScroll stop request. Caller: %@", [SharedUtility callerInfo]);
@@ -329,17 +333,16 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
         return;
     }
     
-    /// Start animator
-    
-//    [_momentumAnimator startWithDuration:duration valueInterval:distanceInterval animationCurve:animationCurve
-//                       integerCallback:^(NSInteger pointDelta, double timeDelta, MFAnimationPhase animationPhase) {
+    /// Notify other touch drivers
+
+    [OutputCoordinator handleTouchSimulationWillStartFromDriver:kTouchDriverGestureScrollSimulator];
     
     /// Init animator
     
     [_momentumAnimator resetSubPixelator];
     [_momentumAnimator linkToMainScreen];
     
-    /// Init animator
+    /// Start animator
     
     [_momentumAnimator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(Vector valueLeft, BOOL isRunning, Curve * _Nullable curve) {
         

@@ -145,7 +145,7 @@ import CocoaLumberjackSwift
             
             /// Notify modifiers
             ///     (Probably unnecessary, because the only modifiers that can be "deactivated" are buttons. And since there's only one clickCycle, any buttons modifying the current one should already be zombified)
-//            ModifierManager.handleModifiersHaveHadEffect(with: device, activeModifiers: modifiers)
+            ModifierManager.handleModificationHasBeenUsed(with: device, activeModifiers: modifiers)
         }
 
         return kMFEventPassThroughRefusal

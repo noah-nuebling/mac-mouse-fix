@@ -18,8 +18,10 @@ NS_ASSUME_NONNULL_BEGIN
 + (AXUIElementRef) systemWideAXUIElement;
 
 + (void)load_Manual;
-+ (void)resetState;
 + (void)decide;
+
++ (void)resetState;
++ (void)cancelAndReInitialize;
 
 + (void)appSwitcherModificationHasBeenDeactivated;
 

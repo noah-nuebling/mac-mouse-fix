@@ -209,15 +209,15 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
 
 #pragma mark Send Feedback
 
-+ (void)handleModifiersHaveHadEffectWithDevice:(Device *)device {
++ (void)handleModificationHasBeenUsedWithDevice:(Device *)device {
     /// Convenience wrapper for `handleModifiersHaveHadEffect:activeModifiers:` if you don't have access to `activeModifiers`
     
     NSDictionary *activeModifiers = [self getActiveModifiersForDevice:&device filterButton:nil event:nil despiteAddMode:YES];
     /// ^ Using despiteAddMode: YES bc it works
-    [ModifierManager handleModifiersHaveHadEffectWithDevice:device activeModifiers:activeModifiers];
+    [ModifierManager handleModificationHasBeenUsedWithDevice:device activeModifiers:activeModifiers];
 }
-+ (void)handleModifiersHaveHadEffectWithDevice:(Device *)device activeModifiers:(NSDictionary *)activeModifiers {
-    /// Make sure to pass in devID, otherwise this method (in its current form) won't do anything
++ (void)handleModificationHasBeenUsedWithDevice:(Device *)device activeModifiers:(NSDictionary *)activeModifiers {
+    /// Make sure to pass in device, otherwise this method (in its current form) won't do anything
     
     if (device != nil) {
         /// Notify active *modifiers* that they have had an effect
@@ -226,9 +226,6 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
             [Buttons handleButtonHasHadEffectAsModifierWithDevice:device button:precondButtonNumber];
             /// ^ I think we might only have to notify the last button in the sequence (instead of all of them), because all previous buttons should already have been zombified or sth due to consecutive button presses
         }
-        /// Notify other *modifications* that this modification has had an effect
-        
-        
     }
 }
 

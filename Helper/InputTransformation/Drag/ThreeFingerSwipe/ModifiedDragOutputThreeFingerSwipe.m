@@ -25,7 +25,6 @@ static int16_t _nOfSpaces = 1;
 /// Interface funcs
 
 + (void)initializeWithDragState:(ModifiedDragState *)dragStateRef {
-    
     _drag = dragStateRef;
 }
 

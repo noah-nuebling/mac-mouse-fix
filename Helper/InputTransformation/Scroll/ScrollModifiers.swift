@@ -82,7 +82,7 @@ import CocoaLumberjackSwift
                 var device: Device? = nil
                 payload[kMFRemapsKeyModificationPrecondition] = NSMutableDictionary(dictionary: ModifierManager.getActiveModifiers(for: &device, filterButton: nil, event: event, despiteAddMode: true))
                 /// ^ Need to cast to mutable, otherwise Swift will make it immutable and mainApp will crash trying to build this payload into its remapArray
-                ModifierManager.handleModifiersHaveHadEffect(with: modifyingDevice)
+                ModifierManager.handleModificationHasBeenUsed(with: modifyingDevice)
                 TransformationManager.concludeAddMode(withPayload: payload)
                 
             default:
@@ -93,8 +93,7 @@ import CocoaLumberjackSwift
         /// Feedback
         let resultIsEmpty = result.inputMod == emptyResult.inputMod && result.effectMod == emptyResult.effectMod
         if !resultIsEmpty {
-            ModifierManager.handleModifiersHaveHadEffect(with: modifyingDevice, activeModifiers: activeModifiers)
-            ModifiedDrag.modifiedScrollHasBeenUsed()
+            ModifierManager.handleModificationHasBeenUsed(with: modifyingDevice, activeModifiers: activeModifiers)
         }
         
         /// Debiug

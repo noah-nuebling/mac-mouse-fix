@@ -23,8 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)handleButtonModifiersMightHaveChangedWithDevice:(Device *)device;
 
-+ (void)handleModifiersHaveHadEffectWithDevice:(Device *_Nullable)device;
-+ (void)handleModifiersHaveHadEffectWithDevice:(Device *_Nullable)device activeModifiers:(NSDictionary *)activeModifiers;
++ (void)handleModificationHasBeenUsedWithDevice:(Device *_Nullable)device;
++ (void)handleModificationHasBeenUsedWithDevice:(Device *_Nullable)device activeModifiers:(NSDictionary *)activeModifiers;
 
 @end
 

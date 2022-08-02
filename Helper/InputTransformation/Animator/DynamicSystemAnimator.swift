@@ -29,6 +29,7 @@
 ///         Conclusion (for now): Using this from the start would've simplified things, but it'll likely be slightly worse than the current implementation and bringing it up to par when it comes to threadsafety might be hard and tedious (Or maybe we only need to calculate the params for the start function on the queue? That's an obvious thing I can't think of). But it was fun to implement and play around with the silly spring animations. April fools update?
 ///
 ///         TODO: ^ Give the caller of the start function the ability to execute on the dispatch queue like in Animator.swift
+///         TODO: Make stable (see t3ssel8r video)
 
 import Foundation
 
