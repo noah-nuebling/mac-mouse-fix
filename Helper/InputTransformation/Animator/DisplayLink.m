@@ -247,6 +247,14 @@ typedef enum {
 //    });
 //}
 
+- (BOOL)isRunning {
+    BOOL __block result = NO;
+    dispatch_sync(_displayLinkQueue, ^{
+        result = [self isRunning_Unsafe];
+    });
+    return result;
+}
+
 - (BOOL)isRunning_Unsafe {
     
     return _requestedState;

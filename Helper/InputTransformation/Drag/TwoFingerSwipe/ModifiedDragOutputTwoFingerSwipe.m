@@ -22,6 +22,7 @@
 static ModifiedDragState *_drag;
 
 static PixelatedAnimator *_smoothingAnimator;
+//static DynamicSystemAnimator *_smoothingAnimator;
 static BOOL _smoothingAnimatorShouldStartMomentumScroll = NO;
 static dispatch_group_t _momentumScrollWaitGroup;
 
@@ -36,6 +37,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
     ///         Maybe you could just introduce a delay between the last two events? I feel like the lack of that delay causes most of the erratic behaviour.
     
     _smoothingAnimator = [[PixelatedAnimator alloc] init];
+//    _smoothingAnimator = [[DynamicSystemAnimator alloc] initWithSpeed:3 damping:1.0 initialResponser:1.0 stopTolerance:1.0];
     
     /// Setup smoothingGroup
     ///     It allows us to wait until the _smoothingAnimator is done.
@@ -94,27 +96,53 @@ static dispatch_group_t _momentumScrollWaitGroup;
     /// Values that the block should copy instead of reference
     IOHIDEventPhaseBits firstCallback = _drag->firstCallback;
     
+    /// Start cool dynamic system animator
+    
+//    if (firstCallback) {
+//        eventPhase = kIOHIDEventPhaseBegan;
+//    }
+//    [_smoothingAnimator animateWithDistance:(Vector){ .x = deltaX*twoFingerScale, .y = deltaY*twoFingerScale} callback:^(Vector deltaVec, MFAnimationCallbackPhase animatorPhase, MFMomentumHint momentumHint) {
+//
+//        /// Debug
+//
+//
+//        if (animatorPhase == kMFAnimationCallbackPhaseEnd) {
+//
+//             if (_smoothingAnimatorShouldStartMomentumScroll) {
+//                 [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded autoMomentumScroll:YES];
+//             }
+//
+//            _smoothingAnimatorShouldStartMomentumScroll = false;
+//
+//            return;
+//        }
+//
+//        [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaVec.x deltaY:deltaVec.y phase:eventPhase autoMomentumScroll:YES];
+//
+//        eventPhase = kIOHIDEventPhaseChanged;
+//    }];
+    
     /// Start animator
     [_smoothingAnimator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(Vector valueLeft, BOOL isRunning, Curve * _Nullable curve) {
-        
+
         NSMutableDictionary *p = [NSMutableDictionary dictionary];
-        
+
         Vector currentVec = { .x = deltaX*twoFingerScale, .y = deltaY*twoFingerScale };
         Vector combinedVec = addedVectors(currentVec, valueLeft);
-        
+
         if (firstCallback) eventPhase = kIOHIDEventPhaseBegan;
-        
+
         /// Debug
-        
+
         static double lastTs = 0;
         double ts = CACurrentMediaTime();
         double tsDiff = ts - lastTs;
         lastTs = ts;
-        
+
         DDLogDebug(@"Time since last baseAnimator start: %f", tsDiff * 1000);
-        
+
         /// Get return values
-        
+
         if (magnitudeOfVector(combinedVec) == 0.0) {
             DDLogWarn(@"Not starting baseAnimator since combinedMagnitude is 0.0");
             p[@"doStart"] = @NO;
@@ -123,44 +151,44 @@ static dispatch_group_t _momentumScrollWaitGroup;
             p[@"duration"] = @(3.0/60); // @(0.00001); // @(0.04);
             p[@"curve"] = ScrollConfig.linearCurve;
         }
-        
+
         /// Debug
-        
+
         static Vector scrollDeltaSum = { .x = 0, .y = 0};
         scrollDeltaSum.x += fabs(currentVec.x);
         scrollDeltaSum.y += fabs(currentVec.y);
         DDLogDebug(@"Delta sum pre-animator: (%f, %f)", scrollDeltaSum.x, scrollDeltaSum.y);
         DDLogDebug(@"Value left pre-animator: (%f, %f)", valueLeft.x, valueLeft.y);
-        
+
         /// Return
-        
+
         return p;
-        
+
     } integerCallback:^(Vector deltaVec, MFAnimationCallbackPhase animatorPhase, MFMomentumHint subCurve) {
-        
+
         /// Debug
-        
+
 //        static double scrollDeltaSummm = 0;
 //        scrollDeltaSummm += fabs(valueDeltaD);
 //        DDLogDebug(@"Delta sum in-animator: %f", scrollDeltaSummm);
-        
+
 //        DDLogDebug(@"\n twoFingerDragSmoother - delta: (%f, %f), phase: %d", deltaVec.x, deltaVec.y, animatorPhase);
-        
+
         if (animatorPhase == kMFAnimationCallbackPhaseEnd) {
-            
+
              if (_smoothingAnimatorShouldStartMomentumScroll) {
                  [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded autoMomentumScroll:YES];
              }
-            
+
             _smoothingAnimatorShouldStartMomentumScroll = false;
-            
+
             return;
         }
-            
+
         [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaVec.x deltaY:deltaVec.y phase:eventPhase autoMomentumScroll:YES];
-        
+
         eventPhase = kIOHIDEventPhaseChanged;
-        
+
     }];
 }
 

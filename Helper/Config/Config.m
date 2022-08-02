@@ -35,13 +35,13 @@ static NSString*_configFilePath;
 #pragma mark - Interface
 
 + (void)load_Manual {
-    // Get config file path
+    /// Get config file path
     NSURL *applicationSupportURL = [NSFileManager.defaultManager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
     NSString *configFilePathRelative = [NSString stringWithFormat:@"%@/config.plist", kMFBundleIDApp];
     _configFilePath = [applicationSupportURL URLByAppendingPathComponent:configFilePathRelative].path;
-    // Load config
+    /// Load config
     [self reactToConfigFileChange];
-    // Setup stuff
+    /// Setup stuff
     setupFSEventStreamCallback();
 }
 

@@ -15,11 +15,16 @@ NS_ASSUME_NONNULL_BEGIN
 /// Typedefs
 
 typedef struct {
-    CFTimeInterval now; /// When displayLinkCallback() is called
-    CFTimeInterval lastFrame; /// When the last frame was displayed
-    CFTimeInterval outFrame; /// When the currently processed frame will be displayed
-    CFTimeInterval timeBetweenFrames; /// The latest frame period reported by the displayLink
-    CFTimeInterval nominalTimeBetweenFrames; /// The frame period target
+    /// When displayLinkCallback() is called
+    CFTimeInterval now;
+    /// When the last frame was displayed
+    CFTimeInterval lastFrame;
+    /// When the currently processed frame will be displayed
+    CFTimeInterval outFrame;
+    /// The latest frame period reported by the displayLink
+    CFTimeInterval timeBetweenFrames;
+    /// The frame period target
+    CFTimeInterval nominalTimeBetweenFrames;
 } DisplayLinkCallbackTimeInfo;
 
 typedef void(^DisplayLinkCallback)(DisplayLinkCallbackTimeInfo timeInfo);
@@ -38,6 +43,7 @@ typedef void(^DisplayLinkCallback)(DisplayLinkCallbackTimeInfo timeInfo);
 
 - (void)start_UnsafeWithCallback:(DisplayLinkCallback)callback;
 - (void)stop_Unsafe;
+- (BOOL)isRunning;
 - (BOOL)isRunning_Unsafe;
 
 - (CFTimeInterval)timeBetweenFrames;
