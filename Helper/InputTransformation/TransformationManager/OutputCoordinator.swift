@@ -11,11 +11,16 @@ import Foundation
 import CocoaLumberjackSwift
 
 @objc class OutputCoordinator: NSObject {
+
+    @Atomic static var someoneIsSuspending = false
     
     @objc static func suspendTouchDrivers(fromDriver driver: TouchDriver) -> DriverUnsuspender? {
         /// This call should be synchronous. So it should only return, once it's cleaned up all the state from the other touch drivers. So that means the functions that this calls (`cancelAndReInitialize`) should be synchronous in this sense as well.
         ///     Other way to put this: `cancelAndReInitialize` needs prevent any output being generated before returning
         
+        /// Prevent deadlocks
+        if someoneIsSuspending { return {} } /// You can't suspend - you'll be suspended!
+        someoneIsSuspending = true
         
         /// Cancel and then restart other touch simulation drivers
         
@@ -37,6 +42,8 @@ import CocoaLumberjackSwift
 //            DDLogDebug("Canceling momentum")
             GestureScrollSimulator.suspendMomentumScroll()
         }
+        
+        someoneIsSuspending = false
         
         return unsuspendDrag
     }

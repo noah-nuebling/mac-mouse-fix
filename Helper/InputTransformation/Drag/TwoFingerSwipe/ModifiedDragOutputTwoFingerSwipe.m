@@ -60,7 +60,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
     ///     Edit:
     ///         Thought: I think we should remove the initializeWithDragState: method from the protocol entirely
     ///             All of the momentumScroll stopping interaction between scroll and drag I still have to think about.
-//    [GestureScrollSimulator stopMomentumScroll];
+    [GestureScrollSimulator stopMomentumScroll];
 }
 
 + (void)handleBecameInUse {

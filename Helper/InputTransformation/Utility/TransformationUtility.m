@@ -91,6 +91,10 @@ BOOL directionChanged(MFDirection direction1, MFDirection direction2) {
 
 + (void)makeCursorSettable {
     
+    /// Only do this once
+    static BOOL cursorIsSettable = NO;
+    if (cursorIsSettable) return;
+    
     /// Declare func
     CGSConnectionID _CGSDefaultConnection(void);
     /// Call func -> Get connection
@@ -99,6 +103,9 @@ BOOL directionChanged(MFDirection direction1, MFDirection direction2) {
     ///     _CGSDefaultConnection() works fine so far though
     /// Make cursor settable!
     CGSSetConnectionProperty(cid, cid, (__bridge CFStringRef)@"SetsCursorInBackground", kCFBooleanTrue);
+    
+    /// Note that cursor is now settable
+    cursorIsSettable = YES;
 }
 
 + (void)hideMousePointer:(BOOL)B {
@@ -111,30 +118,23 @@ BOOL directionChanged(MFDirection direction1, MFDirection direction2) {
         
     if (B) {
         
-        /// Hide till mouse moves
-        
-        
-//        CGSObscureCursor(cid);
-//        [NSCursor setHiddenUntilMouseMoves:YES];
-        
-        /// Hide unconditionally
+        DDLogDebug(@"Hiding pointer");
         
 //        CGSHideCursor(cid);
         CGDisplayHideCursor(kCGDirectMainDisplay);
 //        [NSCursor hide];
         
     } else {
-
-        /// Simulate mouse moved event
         
-//        CGSRevealCursor(cid);
-//        [NSCursor setHiddenUntilMouseMoves:NO];
-        
-        /// Unhide unconditionally
+        DDLogDebug(@"UNHiding pointer");
         
 //        CGSShowCursor(cid);
-        CGDisplayShowCursor(kCGDirectMainDisplay);
-        [NSCursor unhide];
+        CGDisplayShowCursor(kCGDirectMainDisplay); /// Do it twice for good measure.
+        CGError result = CGDisplayShowCursor(kCGDirectMainDisplay);
+        if (result != kCGErrorSuccess) {
+            DDLogDebug(@"Unhiding pointer failed. CGError: %d", result);
+        }
+//        [NSCursor unhide];
         
     }
 }

@@ -131,13 +131,15 @@ static int64_t _lastEventDelta;
             [PointerFreeze drawPuppetCursor:YES fresh:YES];
             
             /// Hide cursor
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 0.02), _queue, ^{
-                /// The puppetCursor will only be drawn after a delay, while hiding the mouse pointer is really fast.
-                ///     This leads to a little flicker when the puppetCursor is not yet drawn, but the real cursor is already hidden.
-                ///     Not sure why this happens. But adding a delay of 0.02 before hiding makes it look seamless.
-                
-                [TransformationUtility hideMousePointer:YES];
-            });
+            [TransformationUtility hideMousePointer:YES];
+            
+            usleep(USEC_PER_SEC * 0.02);
+            /// The puppetCursor will only be drawn after a delay, while hiding the mouse pointer is really fast.
+            ///     This leads to a little flicker when the puppetCursor is not yet drawn, but the real cursor is already hidden.
+            ///     Not sure why this happens. But adding a delay of 0.02 before hiding makes it look seamless.
+            ///     Edit: dispatch_after caused race conditions, so we're sleeping instead. Might be bad for performance because we're using dispatch_sync above
+            
+            [TransformationUtility hideMousePointer:YES];
         }
     });
 }
@@ -207,17 +209,19 @@ CGEventRef _Nullable mouseMovedCallback(CGEventTapProxy proxy, CGEventType type,
     
     /// Record timestamp
     CFTimeInterval timeSinceLastEvent = CACurrentMediaTime() - _lastEventTimestamp;
-    BOOL pointerIsMoving = (timeSinceLastEvent < OtherConfig.mouseMovingMaxIntervalSmall) && _lastEventDelta > 0;
-    
-    /// Debug
-    
-    DDLogDebug(@"PointerFreeze - UNfreezing");
-    DDLogDebug(@"PointerFreeze - pointerIsMoving: %d - time: %f, delta: %lld", pointerIsMoving, timeSinceLastEvent, _lastEventDelta);
     
     /// Lock
     ///     Not sure whether to use sync or async here
     
     dispatch_async(_queue, ^{
+        
+        /// Process timestamp
+        BOOL pointerIsMoving = (timeSinceLastEvent < OtherConfig.mouseMovingMaxIntervalSmall) && _lastEventDelta > 0;
+        
+        /// Debug
+        /// Doing this outside the queue led to race conditions (I think?)
+        DDLogDebug(@"PointerFreeze - UNfreezing");
+        DDLogDebug(@"PointerFreeze - pointerIsMoving: %d - time: %f, delta: %lld", pointerIsMoving, timeSinceLastEvent, _lastEventDelta);
         
         /// Disable eventTap
         /// Think about the order of getting pos, unfreezing, and disabling event tap. -> I think it doesn't matter since everything is locked.
