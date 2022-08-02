@@ -219,7 +219,7 @@ import QuartzCore
         
         /// Validate
         
-        assert(!durationRaw.isNaN && durationRaw.isFinite)
+        assert(!durationRaw.isNaN && durationRaw.isFinite && durationRaw >= 0)
         
         /// Store args
         
@@ -322,7 +322,7 @@ import QuartzCore
     private func stop_Unsafe() {
         
         /// Debug
-        DDLogDebug("STOPPING ANIMATOR")
+        DDLogDebug("AnimationCallback STOP")
         
         /// Do stuff
         displayLink.stop_Unsafe()
@@ -374,168 +374,172 @@ import QuartzCore
     /// Its purpose is calling self.callback. Everything else it does is to figure out arguments for self.callback
     
     @objc func displayLinkCallback(_ timeInfo: DisplayLinkCallbackTimeInfo) {
-        
-        displayLink.dispatchQueue.sync { /// Use sync so this is actually executed on the high-priority display-linked thread
             
-            /// Debug
-        
-            if isFirstDisplayLinkCallback_AfterRunningStart || isFirstDisplayLinkCallback_AfterColdStart {
-                DDLogDebug("inside-animator - start")
-            }
-            
-            DDLogDebug("\nAnimation value total: (\(animationValueTotal.x), \(animationValueTotal.y)), left: (\(animationValueLeft_Unsafe.x), \(animationValueLeft_Unsafe.y))")
-            
-            DDLogDebug("HNGG AnimationCallback with state - isFirstCold: \(isFirstDisplayLinkCallback_AfterColdStart), isFirstRunning: \(isFirstDisplayLinkCallback_AfterRunningStart)")
-                        
-            /// Guard nil
-            
-            guard let callback = self.callback else {
-                fatalError("Invalid state - callback can't be nil during running animation")
-            }
-            guard let animationCurve = self.animationCurve else {
-                fatalError("Invalid state - animationCurve can't be nil during running animation")
-            }
-            
-            /// Get time when frame will be displayed
-            var frameTime = timeInfo.outFrame
-            
-            if isFirstDisplayLinkCallback_AfterColdStart {
-                
-                /// Set animation start time
-                
-                /// Pull time of last frame time out of butt
-                lastFrameTime = frameTime - timeInfo.nominalTimeBetweenFrames
-                
-                /// Set animation start time to hypothetical last frame
-                ///     This is so that the first timeDelta is the same size as all the others (instead of 0)
-                animationStartTime = lastFrameTime
-                
-                /// Reset lastAnimationTimeUnit
-                ///     Might be better to reset this somewhere else
-                lastAnimationTimeUnit = -1
-                
-                /// Reset lastSubCurve
-                ///     Might be better to reset this in start and/or stop
-//                lastSubCurve = kMFHybridSubCurveNone
-            }
-            
-            if isFirstDisplayLinkCallback_AfterColdStart || isFirstDisplayLinkCallback_AfterRunningStart {
-                
-                /// Round duration to a multiple of timeBetweenFrames
-                ///     This is so that the last timeDelta is the same size as all the others
-                ///     Doing this in start() would be easier but leads to deadlocks
-                
-                self.animationDuration = TransformationUtility.roundUp(animationDurationRaw, toMultiple: displayLink.nominalTimeBetweenFrames())
-            }
-            
-            /// Set phase to end
-            ///     If the last callback was the last delta callback
-            ///     We know that the delta is going to be (0,0) so most of the work below is redundant in this case
-            if self.lastFrameTime >= self.animationEndTime {
-                isLastDisplayLinkCallback = true
-            }
-            
-            /// Check if animation time is up
-            
-            let closerToEndTimeThanNextFrame = abs(frameTime - self.animationEndTime) < abs(frameTime+timeInfo.timeBetweenFrames - self.animationEndTime)
-            let pastEndTime = animationEndTime <= frameTime
-            
-            if closerToEndTimeThanNextFrame || pastEndTime {
-                /// This is probably the last delta callback -> make sure we scroll exactly animationValueTotal
-                frameTime = animationEndTime /// This is so we scroll exactly animationValueTotal
-            }
-            
-            /// Debug
-//            DDLogDebug("Time delta in-animator: \(frameTime - lastFrameTime) \nanimationEndTime: \(self.animationEndTime), frameTime: \(frameTime)\n animationStartTime \(self.animationStartTime), animationDuration: \(self.animationDuration)")
-            
-            /// Get normalized time
-            let animationTimeUnit: Double = Math.scale(value: frameTime, from: animationTimeInterval, to: .unitInterval)
-            
-            /// Get normalized animation value from animation curve
-            let animationValueUnit: Double = animationCurve.evaluate(at: animationTimeUnit)
-            
-            /// Get momentumHint
-            
-            var momentumHint: MFMomentumHint = kMFMomentumHintNone
-            
-            if let hybridCurve = animationCurve as? HybridCurve {
-                
-                /// Get subcurve
-                var subCurve = hybridCurve.subCurve(at: animationTimeUnit)
-                /// Set subCurve to base
-                ///     We only want to set the curve to drag if all of the pixels to be scrolled for the frame come from the DragCurve
-                if lastAnimationTimeUnit != -1 {
-                    let lastSubCurve = hybridCurve.subCurve(at: lastAnimationTimeUnit)
-                    /// ^ Can't use `lastSubCurve` instance prop because it would never change
-                    if lastSubCurve == kMFHybridSubCurveBase {
-                        subCurve = kMFHybridSubCurveBase
-                    }
-                }
-                
-                /// Do get momentumHint
-                
-                let timeSinceAnimationStart = frameTime - animationStartTime
-                let minBaseCurveTime = ScrollConfig().consecutiveScrollTickIntervalMax
-                if timeSinceAnimationStart < minBaseCurveTime {
-                    
-                    /// Make the first x ms of the animation always kMFMomentumHintGesture
-                    ///     This is so that:
-                    ///         - ... the first event of the scroll is always sent with gestureScrolls instead of momentumScrolls in Scroll.m. Otherwise apps like Xcode won't react at all (they ignore the deltas in momentumScrolls).
-                    ///         - ... to decrease the transitions into momentumScroll in Scroll.m. Due to Apple bug, this transition causes a stuttery jump in apps like Xcode
-                    ///     `minBaseCurveTime`:
-                    ///         - tested values between 100 and 300 ms and they all worked. Settled on 150 for now. Edit: Using consecutiveScrollTickIntervalMax (which is 160 ms)
-                    ///         - Put minBaseCurveTime into ScrollConfig?
-                    
-                    momentumHint = kMFMomentumHintGesture
-                    
-                } else {
-                    if subCurve == kMFHybridSubCurveBase {
-                        momentumHint = kMFMomentumHintGesture
-                    } else if subCurve == kMFHybridSubCurveDrag {
-                        momentumHint = kMFMomentumHintMomentum
-                    } else {
-                        assert(false)
-                    }
-                }
-            }
-            
-            /// Get actual animation value
-            var animationValue = Vector(x: 0, y: 0)
-            
-            if animationValueTotal.x != 0 {
-                animationValue.x = Math.scale(value: animationValueUnit, from: .unitInterval, to: animationValueIntervalX)
-            }
-            if animationValueTotal.y != 0 {
-                animationValue.y = Math.scale(value: animationValueUnit, from: .unitInterval, to: animationValueIntervalY)
-            }
-            
-            /// Get change since last frame aka `delta`
-            
-            let animationTimeDelta: CFTimeInterval = frameTime - self.lastFrameTime
-            let animationValueDelta: Vector = subtractedVectors(animationValue, lastAnimationValue)
-            
-            /// Subclass hook.
-            ///     PixelatedAnimator overrides this to do its thing
-            
-            subclassHook(callback, animationValueDelta, animationTimeDelta, momentumHint)
-            
-            /// Update `last` time and value and phase
-            lastFrameTime = frameTime
-            lastAnimationValue = animationValue
-            lastAnimationTimeUnit = animationTimeUnit
-            lastMomentumHint = momentumHint
-            
-            /// Stop animation if phase is  `end`
-            if isLastDisplayLinkCallback {
-                stop_FromDisplayLinkedThread()
-                return
-            }
-            
-            /// Update isFirstCallback state
-            ///     Why do we do this after stopping animation, and the update to `last` values before?
-            isFirstDisplayLinkCallback_AfterColdStart = false
-            isFirstDisplayLinkCallback_AfterRunningStart = false
+        /// Race conditions
+        ///     We're trying to prevent callback calls after stopping in displayLink, but somehow this still happens. Edit: Might have fixed it by moving the queue dispatch into displayLink
+        if !self.isRunning_Unsafe {
+            return;
         }
+        
+        /// Debug
+        
+        if isFirstDisplayLinkCallback_AfterRunningStart || isFirstDisplayLinkCallback_AfterColdStart {
+            DDLogDebug("inside-animator - start")
+        }
+        
+        DDLogDebug("\nAnimation value total: (\(animationValueTotal.x), \(animationValueTotal.y)), left: (\(animationValueLeft_Unsafe.x), \(animationValueLeft_Unsafe.y))")
+        
+        DDLogDebug("HNGG AnimationCallback with state - isFirstCold: \(isFirstDisplayLinkCallback_AfterColdStart), isFirstRunning: \(isFirstDisplayLinkCallback_AfterRunningStart)")
+        
+        /// Guard nil
+        
+        guard let callback = self.callback else {
+            fatalError("Invalid state - callback can't be nil during running animation")
+        }
+        guard let animationCurve = self.animationCurve else {
+            fatalError("Invalid state - animationCurve can't be nil during running animation")
+        }
+        
+        /// Get time when frame will be displayed
+        var frameTime = timeInfo.outFrame
+        
+        if isFirstDisplayLinkCallback_AfterColdStart {
+            
+            /// Set animation start time
+            
+            /// Pull time of last frame time out of butt
+            lastFrameTime = frameTime - timeInfo.nominalTimeBetweenFrames
+            
+            /// Set animation start time to hypothetical last frame
+            ///     This is so that the first timeDelta is the same size as all the others (instead of 0)
+            animationStartTime = lastFrameTime
+            
+            /// Reset lastAnimationTimeUnit
+            ///     Might be better to reset this somewhere else
+            lastAnimationTimeUnit = -1
+            
+            /// Reset lastSubCurve
+            ///     Might be better to reset this in start and/or stop
+            //                lastSubCurve = kMFHybridSubCurveNone
+        }
+        
+        if isFirstDisplayLinkCallback_AfterColdStart || isFirstDisplayLinkCallback_AfterRunningStart {
+            
+            /// Round duration to a multiple of timeBetweenFrames
+            ///     This is so that the last timeDelta is the same size as all the others
+            ///     Doing this in start() would be easier but leads to deadlocks
+            
+            self.animationDuration = TransformationUtility.roundUp(animationDurationRaw, toMultiple: displayLink.nominalTimeBetweenFrames())
+            assert(self.animationDuration >= 0)
+        }
+        
+        /// Set phase to end
+        ///     If the last callback was the last delta callback
+        ///     We know that the delta is going to be (0,0) so most of the work below is redundant in this case
+        if self.lastFrameTime >= self.animationEndTime {
+            isLastDisplayLinkCallback = true
+        }
+        
+        /// Check if animation time is up
+        
+        let closerToEndTimeThanNextFrame = abs(frameTime - self.animationEndTime) < abs(frameTime+timeInfo.timeBetweenFrames - self.animationEndTime)
+        let pastEndTime = animationEndTime <= frameTime
+        
+        if closerToEndTimeThanNextFrame || pastEndTime {
+            /// This is probably the last delta callback -> make sure we scroll exactly animationValueTotal
+            frameTime = animationEndTime /// This is so we scroll exactly animationValueTotal
+        }
+        
+        /// Debug
+        //            DDLogDebug("Time delta in-animator: \(frameTime - lastFrameTime) \nanimationEndTime: \(self.animationEndTime), frameTime: \(frameTime)\n animationStartTime \(self.animationStartTime), animationDuration: \(self.animationDuration)")
+        
+        /// Get normalized time
+        let animationTimeUnit: Double = Math.scale(value: frameTime, from: animationTimeInterval, to: .unitInterval)
+        
+        /// Get normalized animation value from animation curve
+        let animationValueUnit: Double = animationCurve.evaluate(at: animationTimeUnit)
+        
+        /// Get momentumHint
+        
+        var momentumHint: MFMomentumHint = kMFMomentumHintNone
+        
+        if let hybridCurve = animationCurve as? HybridCurve {
+            
+            /// Get subcurve
+            var subCurve = hybridCurve.subCurve(at: animationTimeUnit)
+            /// Set subCurve to base
+            ///     We only want to set the curve to drag if all of the pixels to be scrolled for the frame come from the DragCurve
+            if lastAnimationTimeUnit != -1 {
+                let lastSubCurve = hybridCurve.subCurve(at: lastAnimationTimeUnit)
+                /// ^ Can't use `lastSubCurve` instance prop because it would never change
+                if lastSubCurve == kMFHybridSubCurveBase {
+                    subCurve = kMFHybridSubCurveBase
+                }
+            }
+            
+            /// Do get momentumHint
+            
+            let timeSinceAnimationStart = frameTime - animationStartTime
+            let minBaseCurveTime = ScrollConfig().consecutiveScrollTickIntervalMax
+            if timeSinceAnimationStart < minBaseCurveTime {
+                
+                /// Make the first x ms of the animation always kMFMomentumHintGesture
+                ///     This is so that:
+                ///         - ... the first event of the scroll is always sent with gestureScrolls instead of momentumScrolls in Scroll.m. Otherwise apps like Xcode won't react at all (they ignore the deltas in momentumScrolls).
+                ///         - ... to decrease the transitions into momentumScroll in Scroll.m. Due to Apple bug, this transition causes a stuttery jump in apps like Xcode
+                ///     `minBaseCurveTime`:
+                ///         - tested values between 100 and 300 ms and they all worked. Settled on 150 for now. Edit: Using consecutiveScrollTickIntervalMax (which is 160 ms)
+                ///         - Put minBaseCurveTime into ScrollConfig?
+                
+                momentumHint = kMFMomentumHintGesture
+                
+            } else {
+                if subCurve == kMFHybridSubCurveBase {
+                    momentumHint = kMFMomentumHintGesture
+                } else if subCurve == kMFHybridSubCurveDrag {
+                    momentumHint = kMFMomentumHintMomentum
+                } else {
+                    assert(false)
+                }
+            }
+        }
+        
+        /// Get actual animation value
+        var animationValue = Vector(x: 0, y: 0)
+        
+        if animationValueTotal.x != 0 {
+            animationValue.x = Math.scale(value: animationValueUnit, from: .unitInterval, to: animationValueIntervalX)
+        }
+        if animationValueTotal.y != 0 {
+            animationValue.y = Math.scale(value: animationValueUnit, from: .unitInterval, to: animationValueIntervalY)
+        }
+        
+        /// Get change since last frame aka `delta`
+        
+        let animationTimeDelta: CFTimeInterval = frameTime - self.lastFrameTime
+        let animationValueDelta: Vector = subtractedVectors(animationValue, lastAnimationValue)
+        
+        /// Subclass hook.
+        ///     PixelatedAnimator overrides this to do its thing
+        
+        subclassHook(callback, animationValueDelta, animationTimeDelta, momentumHint)
+        
+        /// Update `last` time and value and phase
+        lastFrameTime = frameTime
+        lastAnimationValue = animationValue
+        lastAnimationTimeUnit = animationTimeUnit
+        lastMomentumHint = momentumHint
+        
+        /// Stop animation if phase is  `end`
+        if isLastDisplayLinkCallback {
+            stop_FromDisplayLinkedThread()
+            return
+        }
+        
+        /// Update isFirstCallback state
+        ///     Why do we do this after stopping animation, and the update to `last` values before?
+        isFirstDisplayLinkCallback_AfterColdStart = false
+        isFirstDisplayLinkCallback_AfterRunningStart = false
     }
     
     /// Subclass overridable

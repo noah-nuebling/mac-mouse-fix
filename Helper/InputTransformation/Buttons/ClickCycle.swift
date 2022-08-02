@@ -195,6 +195,7 @@ class ClickCycle: NSObject {
             /// Release outside of the current clickCycle should happen exactly if the released button is zombified.
             /// This is sometimes false when the program starts while a button is already held
             assert(false)
+            return /// Ignore in release build
         }
         
         /// Validate 2

@@ -15,36 +15,37 @@ import CocoaLumberjackSwift
     @Atomic static var someoneIsSuspending = false
     
     @objc static func suspendTouchDrivers(fromDriver driver: TouchDriver) -> DriverUnsuspender? {
-        /// This call should be synchronous. So it should only return, once it's cleaned up all the state from the other touch drivers. So that means the functions that this calls (`cancelAndReInitialize`) should be synchronous in this sense as well.
-        ///     Other way to put this: `cancelAndReInitialize` needs prevent any output being generated before returning
+        /// Temporarily disable other modules that drive touch events other than the caller.
+        ///     Guarantee: Other modules completely stop sending touch events *before* this function returns
+        ///     This means the suspend() functions that will be called on the other modules must have this property as well.
+        ///
+        /// \discussion: This is neccessary because things get messy when several modules try to send touch events at the same time. Especially when they are all trying to send the same type of event the order of event phases will get messed up and the system will be confused.
         
         /// Prevent deadlocks
         if someoneIsSuspending { return {} } /// You can't suspend - you'll be suspended!
         someoneIsSuspending = true
+        defer { someoneIsSuspending = false }
         
-        /// Cancel and then restart other touch simulation drivers
+        /// Declare unsuspender
+        var unsuspender: (() -> ())? = nil
         
+        /// Hack? But works fine. Otherwise deadlocks in `ModifiedDragOutputTwoFingerSwipe` and `Scroll.m`
         if driver == kTouchDriverGestureScrollSimulator {
-            /// Hack? Otherwise deadlocks in `ModifiedDragOutputTwoFingerSwipe` and `Scroll.m`
             return {}
         }
         
+        /// Suspend other touch simulation drivers
         if driver != kTouchDriverScroll {
-            DDLogDebug("Canceling scroll")
             Scroll.suspend()
         }
-        var unsuspendDrag: (() -> ())? = nil
         if driver != kTouchDriverModifiedDrag {
-            DDLogDebug("Canceling drag")
-            unsuspendDrag = ModifiedDrag.suspend()
+            unsuspender = ModifiedDrag.suspend()
         }
         if driver != kTouchDriverGestureScrollSimulator {
-//            DDLogDebug("Canceling momentum")
             GestureScrollSimulator.suspendMomentumScroll()
         }
         
-        someoneIsSuspending = false
-        
-        return unsuspendDrag
+        /// Return
+        return unsuspender
     }
 }

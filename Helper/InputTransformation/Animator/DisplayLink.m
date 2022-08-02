@@ -405,20 +405,25 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     /// Get self
     DisplayLink *self = (__bridge DisplayLink *)displayLinkContext;
         
-    /// Debug
-    DDLogDebug(@"Callback displayLinkkk %@", [DisplayLink identifierForDisplayLink:displayLink]);
-    
-    /// Check requestedState
-    if (self->_requestedState == kMFDisplayLinkRequestedStateStopped) {
-        DDLogDebug(@"displayLinkkk callback called after requested stop. Returning");
-        return kCVReturnSuccess;
-    }
-    
-    /// Parse timestamps
-    DisplayLinkCallbackTimeInfo timeInfo = parseTimeStamps(inNow, inOutputTime);
-    
-    /// Call block
-    self.callback(timeInfo);
+    dispatch_sync(self.dispatchQueue, ^{ /// Use sync so this is actually executed on the high-priority display-linked thread
+        
+        /// Dispatch-sync-ing here is an experiment. Move it back to the callback if this fails
+        
+        /// Debug
+        DDLogDebug(@"Callback displayLinkkk %@", [DisplayLink identifierForDisplayLink:displayLink]);
+        
+        /// Parse timestamps
+        DisplayLinkCallbackTimeInfo timeInfo = parseTimeStamps(inNow, inOutputTime);
+        
+        /// Check requestedState
+        if (self->_requestedState == kMFDisplayLinkRequestedStateStopped) {
+            DDLogDebug(@"displayLinkkk callback called after requested stop. Returning");
+            return;
+        }
+        
+        /// Call block
+        self.callback(timeInfo);
+    });
     
     /// Return
     return kCVReturnSuccess;
