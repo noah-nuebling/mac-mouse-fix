@@ -16,4 +16,6 @@ typedef enum {
     kTouchDriverGestureScrollSimulator
 } TouchDriver;
 
+typedef void(^DriverUnsuspender)(void);
+
 #endif /* OutputCoordinator_h */

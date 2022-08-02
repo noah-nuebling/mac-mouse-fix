@@ -62,9 +62,7 @@ static NSMutableDictionary *_configWithAppOverridesApplied;
 
 + (void)reactToConfigFileChange {
     fillConfigFromFile();
-//    _configFileChanged = YES; // Remove _configFileChanged, if commenting this out didn't break anything
-    [Config applyOverridesForAppUnderMousePointer_Force:YES]; // Doing this to force update of internal state, even the active app hastn't chaged
-//    _configFileChanged = NO;
+    loadOverridesForApp(@""); /// Force update of internal state, (even the active app hastn't changed)
     [TransformationManager loadRemapsFromConfig];
     [ScrollConfig deleteCache];
 }
@@ -89,46 +87,29 @@ static void fillConfigFromFile() {
     }
 }
 
-/// Modify the helpers internal parameters according to _config and the currently active app.
-/// Used to apply appOverrides (`force == NO`), and after loading new config from file. (`force == YES`)
-/// \param force If NO, then it will only update the internal state, if the app currenly under the cursor is different to the one when this function was last called.
-/// \returns YES, if internal parameters did update. NO otherwise.
-/// ... wtf was I thinking when writing this, why didn't I write 2 functions?
-// TODO: Look into using kCGMouseEventWindowUnderMousePointer to get the window under the mouse pointer
-+ (BOOL)applyOverridesForAppUnderMousePointer_Force:(BOOL)force {
-
-    // Get app under mouse pointer
-    NSString *bundleIDOfCurrentApp;
-    if (!force) {
-        
-        CGPoint mouseLocation = getPointerLocation();
-
-        AXUIElementRef elementUnderMousePointer;
-        AXUIElementCopyElementAtPosition(Scroll.systemWideAXUIElement, mouseLocation.x, mouseLocation.y, &elementUnderMousePointer);
-        pid_t elementUnderMousePointerPID;
-        AXUIElementGetPid(elementUnderMousePointer, &elementUnderMousePointerPID);
-        NSRunningApplication *appUnderMousePointer = [NSRunningApplication runningApplicationWithProcessIdentifier:elementUnderMousePointerPID];
-        
-        if (elementUnderMousePointer != nil) {
-            CFRelease(elementUnderMousePointer); // Using `@try { ... }` instead of `if (x != nil) { ... }` here results in a crash if elementUnderMousePointer is nil for some reason (Might be because it was running in debug configureation or something, or probably I just don't know how `@try` really works)
-        }
-        bundleIDOfCurrentApp = appUnderMousePointer.bundleIdentifier;
-    }
-
-    if (bundleIDOfCurrentApp == nil) {
-        // TODO: Make this work for command line executables
-//        return NO; // Switching app override settings doesn't apply immediately if we return here
-    }
++ (BOOL)loadOverridesForAppUnderMousePointer {
+    /// Returns yes when it's made a change
+    /// TODO: Add compatibility for command line executables
+    /// TODO: Look into using kCGMouseEventWindowUnderMousePointer to get the window under the mouse pointer
     
-    // Set internal state
-    if ([_bundleIDOfAppWhichCausesAppOverride isEqual:bundleIDOfCurrentApp] == NO || force) {
-//        if (bundleIDOfCurrentApp) {
-//            DDLogInfo(@"Setting Override For App %@", bundleIDOfCurrentApp);
-//        }
-        _bundleIDOfAppWhichCausesAppOverride = bundleIDOfCurrentApp;
-        loadAppOverridesForApp(bundleIDOfCurrentApp);
-//        [Config updateScrollParameters];
-        [Scroll resetState]; // Not entirely sure if necessary
+    /// Get app under mouse pointer
+        
+    CGPoint mouseLocation = getPointerLocation();
+
+    AXUIElementRef elementUnderMousePointer;
+    AXUIElementCopyElementAtPosition(Scroll.systemWideAXUIElement, mouseLocation.x, mouseLocation.y, &elementUnderMousePointer);
+    pid_t elementUnderMousePointerPID;
+    AXUIElementGetPid(elementUnderMousePointer, &elementUnderMousePointerPID);
+    NSRunningApplication *appUnderMousePointer = [NSRunningApplication runningApplicationWithProcessIdentifier:elementUnderMousePointerPID];
+    
+    if (elementUnderMousePointer != nil) {
+        CFRelease(elementUnderMousePointer); /// Using `@try { ... }` instead of `if (x != nil) { ... }` here results in a crash if elementUnderMousePointer is nil for some reason (Might be because it was running in debug configureation or something, or probably I just don't know how `@try` really works)
+    }
+    NSString *bundleID = appUnderMousePointer.bundleIdentifier;
+    
+    /// Set internal state
+    if (![_bundleIDOfAppWhichCausesAppOverride isEqual:bundleID]) {
+        loadOverridesForApp(bundleID);
         return YES;
     }
     
@@ -136,12 +117,16 @@ static void fillConfigFromFile() {
 }
 
 /// Applies AppOverrides from app with `bundleIdentifier` to `_config` and writes the result into `_configWithAppOverridesApplied`.
-static void loadAppOverridesForApp(NSString *bundleIdentifier) {
-     // get AppOverrides for scrolled app
+static void loadOverridesForApp(NSString *bundleID) {
+    
+    /// Store app
+    _bundleIDOfAppWhichCausesAppOverride = bundleID;
+    
+    /// Get overrides for app
     NSDictionary *overrides = [_config objectForKey:kMFConfigKeyAppOverrides];
     NSDictionary *overridesForThisApp;
     for (NSString *b in overrides.allKeys) {
-        if ([bundleIdentifier isEqualToString:b]) {
+        if ([bundleID isEqualToString:b]) {
                 overridesForThisApp = [[overrides objectForKey: b] objectForKey:@"Root"];
         }
     }

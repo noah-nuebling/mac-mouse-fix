@@ -18,7 +18,7 @@ id config(NSString *keyPath);
 + (NSMutableDictionary *)configWithAppOverridesApplied;
 
 + (void)reactToConfigFileChange;
-+ (BOOL)applyOverridesForAppUnderMousePointer_Force:(BOOL)force;
++ (BOOL)loadOverridesForAppUnderMousePointer;
 + (void)repairConfigFile:(NSString *)info;
 
 

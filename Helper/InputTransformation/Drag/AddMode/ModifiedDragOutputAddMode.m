@@ -47,6 +47,7 @@ static NSDictionary *_addModePayload; /// Payload to send to the mainApp. Only u
     [TransformationManager disableAddModeWithPayload:_addModePayload];
 }
 
-
++ (void)suspend {}
++ (void)unsuspend {}
 
 @end

@@ -41,6 +41,9 @@ typedef struct {
     MFModifiedInputActivationState activationState;
     Device *modifiedDevice;
     
+    CFTimeInterval initTime;
+    Boolean isSuspended;
+    
     CGPoint origin;
     Vector originOffset;
     CGPoint usageOrigin; /// Point at which the modified drag changed its activationState to inUse
@@ -60,6 +63,8 @@ typedef struct {
 + (void)handleBecameInUse;
 + (void)handleMouseInputWhileInUseWithDeltaX:(double)deltaX deltaY:(double)deltaY event:(CGEventRef)event;
 + (void)handleDeactivationWhileInUseWithCancel:(BOOL)cancel;
++ (void)suspend;
++ (void)unsuspend;
 
 @end
 
@@ -74,12 +79,15 @@ typedef struct {
 + (void)initializeDragWithModifiedDragDict:(NSDictionary *)dict onDevice:(Device *)dev;
 
 //+ (void)modifiedScrollHasBeenUsed;
-//+ (void)suspend;
-+ (void)cancelAndReInitialize;
+
++ (void (^ _Nullable)(void))suspend;
 + (void)deactivate;
 + (void)deactivateWithCancel:(BOOL)cancel;
 
 //+ (void)handleMouseInputWithDeltaX:(int64_t)deltaX deltaY:(int64_t)deltaY event:(CGEventRef _Nullable)event;
+
+
+CGPoint getRoundedPointerLocation(); /// Making this public for testing. Remove.
 @end
 
 NS_ASSUME_NONNULL_END

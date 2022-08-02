@@ -136,8 +136,8 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
         // TODO: Look into using `+ initialize` instead of `+ load`. The way we have things set up there are like a bajillion entry points to the program (one for every `+ load` function) which is kinda sucky. Might be better to have just one entry point to the program and then start everything that needs to be started with `+ start` functions and let `+ initialize` do the rest
         [ButtonInputReceiver load_Manual];
         [DeviceManager load_Manual];
-        [Config load_Manual];
         [Scroll load_Manual];
+        [Config load_Manual];
         [ModifiedDrag load_Manual];
         [ModifierManager load_Manual];
         

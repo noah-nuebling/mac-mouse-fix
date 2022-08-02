@@ -191,7 +191,11 @@ class ClickCycle: NSObject {
         
         /// Validate 1
         let lonelyRelease = !mouseDown && (state == .dead || buttonIsDifferent)
-        assert(lonelyRelease == (zombieEntry != nil)) /// This means: Release outside of the current clickCycle happens exactly if the released button is zombified
+        if lonelyRelease != (zombieEntry != nil) {
+            /// Release outside of the current clickCycle should happen exactly if the released button is zombified.
+            /// This is sometimes false when the program starts while a button is already held
+            assert(false)
+        }
         
         /// Validate 2
         let duplicates: [[ZombieEntry]] = Array(Dictionary(grouping: zombifiedButtons, by: { $0.button }).values)

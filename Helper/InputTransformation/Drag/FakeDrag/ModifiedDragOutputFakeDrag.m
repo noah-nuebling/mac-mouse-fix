@@ -51,4 +51,7 @@ static MFMouseButtonNumber _fakeDragButtonNumber; /// Button number. Only used w
     [TransformationUtility postMouseButton:_fakeDragButtonNumber down:NO];
 }
 
++ (void)suspend {}
++ (void)unsuspend {}
+
 @end

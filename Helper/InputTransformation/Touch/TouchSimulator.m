@@ -112,11 +112,17 @@ double _dockSwipeOriginOffset = 0.0;
 double _dockSwipeLastDelta = 0.0;
 + (void)postDockSwipeEventWithDelta:(double)d type:(MFDockSwipeType)type phase:(IOHIDEventPhaseBits)phase {
     
+    /// TODO: Clean this up and make it send double events at the end to combat stuck bug. (Before the drivers were doing this but that leads to interference)
+    
     /// Debug
     
 //    DDLogDebug(@"FLAVOR: \n%@\n%@\n%@", [HelperUtility binaryRepresentation:kIOHIDEventFieldDockSwipeFlavor], [HelperUtility binaryRepresentation:123], [HelperUtility binaryRepresentation:165]);
         
 //    DDLogDebug(@"Request to send dockswipe");
+    
+    if (phase == kIOHIDEventPhaseCancelled) {
+        
+    }
     
     int valFor41 = 33231;
     int vertInvert = 1;

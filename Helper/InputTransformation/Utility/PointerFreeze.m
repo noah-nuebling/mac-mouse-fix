@@ -70,7 +70,8 @@ static int64_t _lastEventDelta;
         }
         
         /// Setup eventTap
-        _eventTap = [TransformationUtility createEventTapWithLocation:kCGHIDEventTap mask:CGEventMaskBit(kCGEventMouseMoved) | CGEventMaskBit(kCGEventLeftMouseDragged) | CGEventMaskBit(kCGEventRightMouseDragged) | CGEventMaskBit(kCGEventOtherMouseDragged) option:kCGEventTapOptionListenOnly placement:kCGHeadInsertEventTap callback:mouseMovedCallback runLoop:GlobalEventTapThread.runLoop];
+        ///     Using a listenOnly tap would be more appropriate but they sometimes behave weirdly
+        _eventTap = [TransformationUtility createEventTapWithLocation:kCGHIDEventTap mask:CGEventMaskBit(kCGEventMouseMoved) | CGEventMaskBit(kCGEventLeftMouseDragged) | CGEventMaskBit(kCGEventRightMouseDragged) | CGEventMaskBit(kCGEventOtherMouseDragged) option:kCGEventTapOptionDefault placement:kCGHeadInsertEventTap callback:mouseMovedCallback runLoop:GlobalEventTapThread.runLoop];
     }
 }
 
@@ -199,7 +200,7 @@ CGEventRef _Nullable mouseMovedCallback(CGEventTapProxy proxy, CGEventType type,
         
     });
 
-   return NULL;
+   return event;
 }
 
 + (void)unfreeze {

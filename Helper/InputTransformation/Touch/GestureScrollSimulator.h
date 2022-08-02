@@ -7,8 +7,8 @@
 // --------------------------------------------------------------------------
 //
 
-#import <Mac_Mouse_Fix_Helper-Swift.h>
 #import <Foundation/Foundation.h>
+#import <CoreGraphics/CGEvent.h>
 #import "IOHIDEventTypes.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)afterStartingMomentumScroll:(void (^ _Nullable)(void))callback;
 + (void)stopMomentumScroll;
++ (void)suspendMomentumScroll;
 
 @end
 

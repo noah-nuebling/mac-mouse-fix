@@ -60,7 +60,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
     ///     Edit:
     ///         Thought: I think we should remove the initializeWithDragState: method from the protocol entirely
     ///             All of the momentumScroll stopping interaction between scroll and drag I still have to think about.
-    [GestureScrollSimulator stopMomentumScroll];
+//    [GestureScrollSimulator stopMomentumScroll];
 }
 
 + (void)handleBecameInUse {
@@ -194,6 +194,22 @@ static dispatch_group_t _momentumScrollWaitGroup;
 
 + (void)handleDeactivationWhileInUseWithCancel:(BOOL)cancelation {
     
+    /// Handle cancelation
+    
+    if (cancelation) {
+        if (_smoothingAnimator.isRunning) {
+            [_smoothingAnimator cancel];
+        }
+        [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded autoMomentumScroll:YES];
+        [GestureScrollSimulator suspendMomentumScroll];
+        
+        [PointerFreeze unfreeze];
+
+        return;
+    }
+    
+    /// Handle non-cancelation
+    
     /// Setup waiting for momentumScroll
     
     DDLogDebug(@"Entering _momentumScrollWaitGroup");
@@ -252,6 +268,27 @@ static dispatch_group_t _momentumScrollWaitGroup;
     /// Unfreeze dispatch point
     
     [PointerFreeze unfreeze];
+}
+
++ (void)suspend {
+//    [PointerFreeze unfreeze];
+}
+
++ (void)unsuspend {
+    
+//    /// Convert and add vectors to get current pointer location
+//    Vector usageOrigin = { .x = _drag->usageOrigin.x, .y = _drag->usageOrigin.y };
+//    Vector pointerPosVec = addedVectors(usageOrigin, _drag->originOffset);
+//    CGPoint pointerPos = CGPointMake(pointerPosVec.x, pointerPosVec.y);
+//
+//    pointerPos = getRoundedPointerLocation();
+//
+//    /// Freeze pointer
+//    if (OtherConfig.freezePointerDuringModifiedDrag) {
+//        [PointerFreeze freezePointerAtPosition:pointerPos];
+//    } else {
+//        [PointerFreeze freezeEventDispatchPointAtPosition:pointerPos];
+//    }
 }
 
 @end

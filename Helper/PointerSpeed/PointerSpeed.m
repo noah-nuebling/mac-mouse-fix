@@ -102,7 +102,7 @@ extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHI
     assert(success);
     
     /// Set mouse acceleration on the driver
-    success = success && setAccelToTableBasedCurve(points, serviceClient);
+    success = success && setAccelToTableBasedCurve(points, serviceClient); /// TODO: This fails sometimes randomly, try again
     assert(success);
     
     CFRelease(serviceClient);

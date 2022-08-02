@@ -51,8 +51,10 @@ import QuartzCore
             return IOHIDEventPhaseBits(kIOHIDEventPhaseBegan)
         case kMFAnimationCallbackPhaseContinue:
             return IOHIDEventPhaseBits(kIOHIDEventPhaseChanged)
-        case kMFAnimationCallbackPhaseEnd, kMFAnimationCallbackPhaseCanceled:
+        case kMFAnimationCallbackPhaseEnd:
             return IOHIDEventPhaseBits(kIOHIDEventPhaseEnded)
+        case kMFAnimationCallbackPhaseCanceled:
+            return IOHIDEventPhaseBits(kIOHIDEventPhaseCancelled)
         default:
             fatalError()
         }
@@ -376,6 +378,10 @@ import QuartzCore
         displayLink.dispatchQueue.sync { /// Use sync so this is actually executed on the high-priority display-linked thread
             
             /// Debug
+        
+            if isFirstDisplayLinkCallback_AfterRunningStart || isFirstDisplayLinkCallback_AfterColdStart {
+                DDLogDebug("inside-animator - start")
+            }
             
             DDLogDebug("\nAnimation value total: (\(animationValueTotal.x), \(animationValueTotal.y)), left: (\(animationValueLeft_Unsafe.x), \(animationValueLeft_Unsafe.y))")
             

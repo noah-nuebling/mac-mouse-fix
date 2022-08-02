@@ -41,7 +41,8 @@ static VectorSubPixelator *_scrollLinePixelator;
 
 static PixelatedAnimator *_momentumAnimator;
 
-static dispatch_queue_t _queue; /// Use this queue for interface functions to avoid race conditions
+static dispatch_queue_t _momentumQueue;
+/// ^ This class doesn't only act as an output module (aka event sender) but also as an output driver for momentumScroll events. For its role as a driver, it needs a dispatchQueue. Consider factoring the autoMomentumScroll stuff out of this class for clear separation.
 
 + (void)initialize
 {
@@ -50,7 +51,7 @@ static dispatch_queue_t _queue; /// Use this queue for interface functions to av
         /// Init dispatch queue
         
         dispatch_queue_attr_t attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INTERACTIVE, -1);
-        _queue = dispatch_queue_create("com.nuebling.mac-mouse-fix.gesture-scroll", attr);
+        _momentumQueue = dispatch_queue_create("com.nuebling.mac-mouse-fix.gesture-scroll", attr);
         
         /// Init Pixelators
         
@@ -81,14 +82,6 @@ static dispatch_queue_t _queue; /// Use this queue for interface functions to av
 
 + (void)postGestureScrollEventWithDeltaX:(int64_t)dx deltaY:(int64_t)dy phase:(IOHIDEventPhaseBits)phase autoMomentumScroll:(BOOL)autoMomentumScroll {
     
-    /// Schedule event to be posted on _queue and return immediately
-    
-    dispatch_async(_queue, ^{
-        postGestureScrollEvent_Unsafe(dx, dy, phase, autoMomentumScroll);
-    });
-}
-
-void postGestureScrollEvent_Unsafe(int64_t dx, int64_t dy, IOHIDEventPhaseBits phase, Boolean autoMomentumScroll) {
     /// This function doesn't dispatch to _queue. It should only be called if you're already on _queue. Otherwise there will be race conditions with the other functions that execute on _queue.
     /// `autoMomentumScroll` should always be true, except if you are going to post momentumScrolls manually using `+ postMomentumScrollEvent`
     
@@ -214,8 +207,6 @@ void postGestureScrollEvent_Unsafe(int64_t dx, int64_t dy, IOHIDEventPhaseBits p
 + (void)postMomentumScrollDirectlyWithDeltaX:(double)dx
                                       deltaY:(double)dy
                                momentumPhase:(CGMomentumScrollPhase)momentumPhase {
-    
-    dispatch_async(_queue, ^{
         
         CGPoint loc = getPointerLocation();
         
@@ -229,7 +220,6 @@ void postGestureScrollEvent_Unsafe(int64_t dx, int64_t dy, IOHIDEventPhaseBits p
                                                                   phase:kIOHIDEventPhaseUndefined
                                                           momentumPhase:momentumPhase
                                                                location:loc];
-    });
 }
 
 #pragma mark - Auto momentum scroll
@@ -244,7 +234,7 @@ static void (^_momentumScrollCallback)(void);
     ///     This is only used by `ModifiedDrag`.
     ///     It probably shouldn't be sued by other classes, because of its specific behaviour and because, other classes might override eachothers callbacks, which would lead to really bad issues in ModifiedDrag
     
-    dispatch_async(_queue, ^{
+    dispatch_async(_momentumQueue, ^{
         
         if (_momentumAnimator.isRunning && callback != NULL) {
             /// ^ `&& callback != NULL` is a hack to make ModifiedDragOutputTwoFingerSwipe work properly. I'm not sure what I'm doing.
@@ -259,60 +249,34 @@ static void (^_momentumScrollCallback)(void);
 
 /// Stop momentum scroll
 
-+ (void)cancelMomentumScroll {
-    [self stopMomentumScroll];
++ (void)suspendMomentumScroll {
+    dispatch_sync(_momentumQueue, ^{
+        [self stopMomentumScroll_Unsafe];
+    });
 }
 
 + (void)stopMomentumScroll {
     
     DDLogDebug(@"momentumScroll stop request. Caller: %@", [SharedUtility callerInfo]);
     
-    dispatch_async(_queue, ^{
+    dispatch_async(_momentumQueue, ^{
         [self stopMomentumScroll_Unsafe];
     });
 }
 
 + (void)stopMomentumScroll_Unsafe {
-    /// Only use this when you know you're already running on _queue
-    
-    /// Debug
-    
-//    DDLogDebug(@"momentumScroll stop request. Caller: %@", [SharedUtility callerInfo]);
-    
-    /// Stop
-    
-    if (_momentumAnimator.isRunning) {
-        
-        /// Stop our animator
-        [_momentumAnimator cancel];
-        
-//        /// Debug
-//        DDLogDebug(@"... Sending momentumScroll stop event");
-//
-//        /// Get event for location
-//        CGEventRef event = CGEventCreate(NULL);
-//
-//        /// Get location from event
-//        CGPoint location = CGEventGetLocation(event);
-//
-//        /// Send kCGMomentumScrollPhaseEnd event.
-//        ///  This will stop scrolling in apps like Xcode which implement their own momentum scroll algorithm
-//        Vector zeroVector = (Vector){ .x = 0.0, .y = 0.0 };
-//        [GestureScrollSimulator postGestureScrollEventWithGestureVector:zeroVector
-//                                                       scrollVectorLine:zeroVector
-//                                                      scrollVectorPoint:zeroVector
-//                                                                  phase:kIOHIDEventPhaseUndefined
-//                                                          momentumPhase:kCGMomentumScrollPhaseEnd
-//                                                               location:location];
-    } else {
-        /// Debug
-        DDLogDebug(@"Not stopping because momentumScroll insn't running");
-    }
+    [_momentumAnimator cancel];
 }
 
 /// Momentum scroll main
 
 static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, double stopSpeed, double dragCoefficient, double dragExponent) {
+    dispatch_sync(_momentumQueue, ^{
+        startMomentumScroll_Unsafe(timeSinceLastInput, exitVelocity, stopSpeed, dragCoefficient, dragExponent);
+    });
+}
+
+static void startMomentumScroll_Unsafe(double timeSinceLastInput, Vector exitVelocity, double stopSpeed, double dragCoefficient, double dragExponent) {
     
     ///Debug
     
@@ -335,7 +299,7 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
     
     /// Notify other touch drivers
 
-    [OutputCoordinator handleTouchSimulationWillStartFromDriver:kTouchDriverGestureScrollSimulator];
+    [OutputCoordinator suspendTouchDriversFromDriver:kTouchDriverGestureScrollSimulator];
     
     /// Init animator
     

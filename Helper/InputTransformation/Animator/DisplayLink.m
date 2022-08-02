@@ -406,7 +406,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     DisplayLink *self = (__bridge DisplayLink *)displayLinkContext;
         
     /// Debug
-    DDLogDebug(@"displayLinkkk %@ callback Invoked", [DisplayLink identifierForDisplayLink:displayLink]);
+    DDLogDebug(@"Callback displayLinkkk %@", [DisplayLink identifierForDisplayLink:displayLink]);
     
     /// Check requestedState
     if (self->_requestedState == kMFDisplayLinkRequestedStateStopped) {

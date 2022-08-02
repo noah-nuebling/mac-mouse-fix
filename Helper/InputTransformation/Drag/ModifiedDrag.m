@@ -85,7 +85,7 @@ static CGEventTapProxy _tapProxy;
     ///     This allows us to process events in the right order
     ///     When the eventTap and the deactivate function are driven by different threads or whatever then the deactivation can happen before we've processed all the events. This allows us to avoid that issue
     dispatch_queue_attr_t attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INTERACTIVE, -1);
-    _drag.queue = dispatch_queue_create("com.nuebling.mac-mouse-fix.helper.drag", attr);
+    _drag.queue = dispatch_queue_create("com.nuebling.mac-mouse-fix.helper.momentum-scroll", attr);
     
     /// Set usage threshold
     _drag.usageThreshold = 7; // 20, 5
@@ -138,6 +138,7 @@ static CGEventTapProxy _tapProxy;
         _drag.modifiedDevice = dev;
         _drag.type = type;
         _drag.dict = dict;
+        _drag.initTime = CACurrentMediaTime();
         
         id<ModifiedDragOutputPlugin> p;
         if ([type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
@@ -157,15 +158,16 @@ static CGEventTapProxy _tapProxy;
         _drag.outputPlugin = p;
         
         /// Init dynamic parts of _drag
-        initDragState();
+        initDragState_Unsafe();
     });
 }
 
-void initDragState(void) {
+void initDragState_Unsafe(void) {
     
     _drag.origin = getRoundedPointerLocation();
     _drag.originOffset = (Vector){0};
     _drag.activationState = kMFModifiedInputActivationStateInitialized;
+    _drag.isSuspended = NO;
     
     [_drag.outputPlugin initializeWithDragState:&_drag]; /// We just want to reset the plugin state here. The plugin will already hold ref to _drag. So this is not super pretty/semantic
     
@@ -228,6 +230,12 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
         _drag.originOffset.x += dx;
         _drag.originOffset.y += dy;
         
+        /// Suspension
+        if (_drag.isSuspended) return;
+        
+        /// Debug
+        DDLogDebug(@"ModifiedDrag handling mouseMoved");
+        
         /// Call further handler functions depending on current state
         
         MFModifiedInputActivationState st = _drag.activationState;
@@ -283,7 +291,7 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
         /// Notify other modules
         
         [ModifierManager handleModificationHasBeenUsedWithDevice:_drag.modifiedDevice];
-        [OutputCoordinator handleTouchSimulationStartedFromDriver:kTouchDriverModifiedDrag];
+        [OutputCoordinator suspendTouchDriversFromDriver:kTouchDriverModifiedDrag];
         
         [_drag.outputPlugin handleBecameInUse];
     }
@@ -304,12 +312,32 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
     _drag.firstCallback = false;
 }
 
-+ (void)cancelAndReInitialize {
++ (void (^ _Nullable)(void))suspend {
     
-    dispatch_async(_drag.queue, ^{
-        deactivate_Unsafe(true);
-        initDragState();
+    void (^ __block unsuspend)(void);
+    unsuspend = nil;
+    ModifiedDragState *drag = &_drag; /// So the block references the gobal value instead of copying
+    
+    dispatch_sync(_drag.queue, ^{
+        if ((*drag).activationState != kMFModifiedInputActivationStateInUse) return;
+        DDLogDebug(@"Suspending ModifiedDrag");
+        deactivate_Unsafe(YES);
+        (*drag).isSuspended = YES;
+        [(*drag).outputPlugin suspend];
+        CFTimeInterval ogTime = (*drag).initTime;
+        unsuspend = ^{
+            dispatch_async((*drag).queue, ^{
+                if (ogTime == (*drag).initTime && (*drag).isSuspended) { /// So we don't unsuspend a different drag than the one we suspended
+                    NSLog(@"UNSuspending ModifiedDrag");
+                    (*drag).isSuspended = NO;
+                    initDragState_Unsafe();
+                    [(*drag).outputPlugin unsuspend];
+                }
+            });
+        };
     });
+    
+    return unsuspend;
 }
 
 + (void)deactivate {
@@ -330,6 +358,9 @@ void deactivate_Unsafe(BOOL cancel) {
     
     /// Debug
     DDLogDebug(@"modifiedDrag deactivate with state: %@", [ModifiedDrag modifiedDragStateDescription:_drag]);
+    
+    /// Disable supension
+    _drag.isSuspended = NO;
     
     /// Handle state == none
     ///     Return immediately
@@ -375,7 +406,7 @@ void deactivate_Unsafe(BOOL cancel) {
 
 /// Get rounded pointer location
 
-static CGPoint getRoundedPointerLocation() {
+CGPoint getRoundedPointerLocation() {
     /// Convenience wrapper for getRoundedPointerLocationWithEvent()
     
     CGEventRef event = CGEventCreate(NULL);

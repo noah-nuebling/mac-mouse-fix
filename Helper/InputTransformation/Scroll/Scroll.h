@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)decide;
 
 + (void)resetState;
-+ (void)cancelAndReInitialize;
++ (void)suspend;
 
 + (void)appSwitcherModificationHasBeenDeactivated;
 
