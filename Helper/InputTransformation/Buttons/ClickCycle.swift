@@ -15,11 +15,11 @@
 ///         1. Make sure that you're running on buttonsQueue when calling, otherwise there might be race conditions
 ///         2. The `modifierCallback` and `triggerCallback` are already protected when they arrive in `Buttons.swift`
 
-/// Behaviour
 
 
 /// Imports
 import Cocoa
+import CocoaLumberjackSwift
 
 enum ClickCycleTriggerPhase: Int {
     case none = -1
@@ -90,7 +90,7 @@ class ClickCycle: NSObject {
         lastDevice = nil
         lastButton = -1
         lastTriggerCallback = {_,_,_,_ in }
-        DispatchQueue.main.async { /// timers have to be interacted with from mainThread. Does this threading make sense?
+        SharedUtilitySwift.doOnMain { /// Timers have to be interacted with from mainThread. Does this threading make sense?
             self.downTimer.invalidate()
             self.upTimer.invalidate()
         }
@@ -100,8 +100,18 @@ class ClickCycle: NSObject {
         if self.lastState != .alive { return }
         if self.lastWasDown {
             self.zombifiedButtons.append((device: self.lastDevice!, button: self.lastButton, clickLevel: self.lastClickLevel, fromHold: !self.downTimer.isValid))
+            /// Debug
+            DDLogDebug("Zombies: \(self.zombifiedButtons)")
+            /// Validate
+            let duplicates: [[ZombieEntry]] = Array(Dictionary(grouping: zombifiedButtons, by: { $0.button }).values)
+            for duplicateButtonArray in duplicates {
+                assert(duplicateButtonArray.count == 1) /// This means: Each button occurs at most once in `zombifiedButtons`
+            }
         }
         initState()
+    }
+    internal func strangle() { /// Is he okay?
+        
     }
     
     func forceKill() {
@@ -128,6 +138,7 @@ class ClickCycle: NSObject {
         var state: ClickCycleActivation
         
         if mouseDown {
+            
             /// Switch over to new clickCycle if button changes
             if self.lastState == .alive && buttonIsDifferent {
                 self.kill()
@@ -135,9 +146,51 @@ class ClickCycle: NSObject {
             /// Start new clickCycle / update state
             state = .alive
             clickLevel = Math.intCycle(x: self.lastClickLevel + 1, lower: 1, upper: maxClickLevel)
-        } else {
+            
+        } else if !buttonIsDifferent { /// MouseUp + same button
+            
             state = self.lastState
             clickLevel = self.lastClickLevel
+            
+        } else { /// Mouse up + different button
+            
+            ///
+            /// Handle zombification
+            ///
+            
+            /// Find entry for current button
+            let zombieEntry: ZombieEntry? = zombifiedButtons.first { $0.button == button }
+            
+            /// Validate 1
+            if zombieEntry == nil {
+                /// Release outside of the current clickCycle should happen exactly if the released button is zombified.
+                /// This is sometimes false when the program starts while a button is already held, or when the modifications change so that this button all of a sudden has effects once it's released
+                assert(true)
+                return /// Ignore in release build
+            }
+            
+            /// Validate 2
+            let duplicates: [[ZombieEntry]] = Array(Dictionary(grouping: zombifiedButtons, by: { $0.button }).values)
+            for duplicateButtonArray in duplicates {
+                assert(duplicateButtonArray.count == 1) /// This means: Each button occurs at most once in `zombifiedButtons`
+            }
+            
+            /// Do stuff
+            if let zombieEntry = zombieEntry {
+                
+                /// Send trigger callback
+                let phase: ClickCycleTriggerPhase = zombieEntry.fromHold ? .zombieReleaseFromHold : .zombieRelease
+                triggerCallback(phase, zombieEntry.clickLevel, zombieEntry.device, zombieEntry.button)
+                
+                /// Send modifier callback
+                modifierCallback(.release, zombieEntry.clickLevel, zombieEntry.device, zombieEntry.button)
+                
+                /// Remove zombieEntry
+                zombifiedButtons = zombifiedButtons.filter { $0 != zombieEntry }
+            }
+            
+            /// Return
+            return
         }
         
         /// Update global state
@@ -149,6 +202,15 @@ class ClickCycle: NSObject {
         self.lastWasDown = mouseDown
         self.lastTriggerCallback = triggerCallback
         self.lastClickLevel = clickLevel
+        
+        /// Handle mouseUp fromHold
+        ///     Unused right now because we make all fromHold triggers zombies
+        if !mouseDown && !buttonIsDifferent && !self.downTimer.isValid {
+            modifierCallback(.release, clickLevel, device, button)
+            triggerCallback(.releaseFromHold, clickLevel, device, button)
+            self.kill()
+            return
+        }
         
         ///
         /// Start/reset timers
@@ -164,14 +226,11 @@ class ClickCycle: NSObject {
                         if self.lastState == .alive {
                             triggerCallback(.hold, clickLevel, device, button)
                         }
-                        self.kill()
+                        self.kill() /// Killing here makes all fromHold triggers zombies. But that's okay.
                     }
                 })
-            } else {
-                /// mouseUp
-                ///     In ButtonTriggerGenerator we started upTimer on mouseDown with timeInterval 0.25. Not sure why.
-                self.downTimer.invalidate()
-                self.upTimer = CoolTimer.scheduledTimer(timeInterval: 0.21, repeats: false, block: { timer in
+                /// Not sure whether to start started upTimer on mouseDown or up
+                self.upTimer = CoolTimer.scheduledTimer(timeInterval: 0.25, repeats: false, block: { timer in
                     self.buttonQueue.async {
                         if self.lastState == .alive {
                             triggerCallback(.levelExpired, clickLevel, device, button)
@@ -179,47 +238,12 @@ class ClickCycle: NSObject {
                         self.kill()
                     }
                 })
+            } else {
+                /// mouseUp
+                self.downTimer.invalidate()
+
             }
 //        }
-        
-        ///
-        /// Handle zombification
-        ///
-        
-        /// Find entry for current button
-        let zombieEntry: ZombieEntry? = zombifiedButtons.first { $0.button == button }
-        
-        /// Validate 1
-        let lonelyRelease = !mouseDown && (state == .dead || buttonIsDifferent)
-        if lonelyRelease != (zombieEntry != nil) {
-            /// Release outside of the current clickCycle should happen exactly if the released button is zombified.
-            /// This is sometimes false when the program starts while a button is already held
-            assert(false)
-            return /// Ignore in release build
-        }
-        
-        /// Validate 2
-        let duplicates: [[ZombieEntry]] = Array(Dictionary(grouping: zombifiedButtons, by: { $0.button }).values)
-        for duplicateButtonArray in duplicates {
-            assert(duplicateButtonArray.count == 1) /// This means: Each button occurs at most once in `zombifiedButtons`
-        }
-        
-        /// Do stuff
-        if let zombieEntry = zombieEntry {
-            
-            /// Send trigger callback
-            let phase: ClickCycleTriggerPhase = zombieEntry.fromHold ? .zombieReleaseFromHold : .zombieRelease
-            triggerCallback(phase, zombieEntry.clickLevel, zombieEntry.device, zombieEntry.button)
-            
-            /// Send modifier callback
-            modifierCallback(.release, zombieEntry.clickLevel, zombieEntry.device, zombieEntry.button)
-            
-            /// Remove zombieEntry
-            zombifiedButtons = zombifiedButtons.filter { $0 != zombieEntry }
-            
-            /// Return
-            return
-        }
         
         ///
         /// modifierCallback

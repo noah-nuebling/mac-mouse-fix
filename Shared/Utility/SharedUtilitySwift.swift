@@ -12,6 +12,16 @@ import CocoaLumberjackSwift
 
 @objc class SharedUtilitySwift: NSObject {
 
+    @objc static func doOnMain(_ block: () -> ()) {
+        if Thread.isMainThread {
+            block()
+        } else {
+            DispatchQueue.main.sync {
+                block()
+            }
+        }
+    }
+    
     static func clip<T: Comparable>(_ value: T, betweenLow low: T, high: T) -> T { /// Might want to move this to Math.swift
         if value < low { return low }
         if value > high { return high }

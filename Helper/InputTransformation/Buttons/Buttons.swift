@@ -7,8 +7,7 @@
 // --------------------------------------------------------------------------
 //
 
-/// TODO: Use the queue to make things thread safe.
-///     (I don't think it matters though, because all the interaction with this class are naturally spaced out in time, so there's a very low chance of race conditions)
+/// I'm not sure the DispatchQueue is neccesary, because all the interaction with this class are naturally spaced out in time, so there's a very low chance of race conditions)
 
 import Cocoa
 import CocoaLumberjackSwift
@@ -31,7 +30,9 @@ import CocoaLumberjackSwift
     
     @objc static func handleInput(device: Device, button: NSNumber, downNotUp mouseDown: Bool, event: CGEvent) -> MFEventPassThroughEvaluation {
         
-        /// Init
+        var passThroughEvaluation = kMFEventPassThroughRefusal
+            
+            /// Init
         if !isInitialized { coolInitialize() }
         
         /// Get modifications
@@ -43,7 +44,11 @@ import CocoaLumberjackSwift
         
         /// Decide passthrough
         let effectExists = ButtonLandscapeAssessor.effectExists(forButton: button, remaps: remaps, modificationsActingOnButton: modifications)
-        if !effectExists {
+        let isZombie = !mouseDown && clickCycle.zombifiedButtons.reduce(false, { (partialResult, zombieEntry) in
+            return partialResult || (zombieEntry.device == device && NSNumber(value: zombieEntry.button) == button as NSNumber)
+        }) /// This is a little convoluted unreadable
+        if !effectExists && !isZombie { /// We could also check if an effect exists by checking maxClickLevel == 0
+            passThroughEvaluation = kMFEventPassThroughApproval
             return kMFEventPassThroughApproval
         }
         
@@ -140,25 +145,28 @@ import CocoaLumberjackSwift
             ///     In case of the zombified triggers it would be especially unnecessary, because the currently active clickCycle would be unrelated to the incoming trigger
             
             if triggerPhase == .press || triggerPhase == .release {
-                self.handleButtonHasHadDirectEffect(device: device, button: button)
+                self.handleButtonHasHadDirectEffect_Unsafe(device: device, button: button)
             }
             
             /// Notify modifiers
             ///     (Probably unnecessary, because the only modifiers that can be "deactivated" are buttons. And since there's only one clickCycle, any buttons modifying the current one should already be zombified)
             ModifierManager.handleModificationHasBeenUsed(with: device, activeModifiers: modifiers)
         }
-
-        return kMFEventPassThroughRefusal
+        
+        return passThroughEvaluation
     }
+    
     
     /// Effect feedback
     
     @objc static func handleButtonHasHadDirectEffect(device: Device, button: NSNumber) {
-        
+        handleButtonHasHadDirectEffect_Unsafe(device: device, button: button)
+    }
+    
+    @objc static func handleButtonHasHadDirectEffect_Unsafe(device: Device, button: NSNumber) {
         /// Validate
         /// Might wanna `assert(clickCycleIsActive)`
         assert(isInitialized)
-        
         /// Do stuff
         if self.clickCycle.isActiveFor(device: device.uniqueID(), button: button) {
             self.clickCycle.kill()
@@ -167,11 +175,13 @@ import CocoaLumberjackSwift
     }
     
     @objc static func handleButtonHasHadEffectAsModifier(device: Device, button: NSNumber) {
-        
+        handleButtonHasHadEffectAsModifier_Unsafe(device: device, button: button)
+    }
+    
+    @objc static func handleButtonHasHadEffectAsModifier_Unsafe(device: Device, button: NSNumber) {
         /// Validate
         /// Might wanna `assert(buttonIsHeld)`
         assert(isInitialized)
-        
         /// Do stuff
         if self.clickCycle.isActiveFor(device: device.uniqueID(), button: button) {
             self.clickCycle.kill()
@@ -180,10 +190,10 @@ import CocoaLumberjackSwift
     
     /// Interface for accessing submodules
     
-    @objc static func getActiveButtonModifiers(devicePtr: UnsafeMutablePointer<Device?>) -> [[String: Int]] {
-        
+    @objc static func getActiveButtonModifiers_Unsafe(devicePtr: UnsafeMutablePointer<Device?>) -> [[String: Int]] {
+        var result: [[String: Int]] = []
         var device = devicePtr.pointee
-        let result = modifiers.getActiveButtonModifiersForDevice(device: &device)
+        result = modifiers.getActiveButtonModifiersForDevice(device: &device)
         devicePtr.pointee = device
         return result
     }

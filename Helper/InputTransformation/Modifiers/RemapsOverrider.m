@@ -68,7 +68,6 @@ static NSDictionary *subsetOverride(NSDictionary *remaps, NSDictionary *activeMo
     /// Treat simple case separately for optimization
     
     if ([activeModifiers isEqual: @{}]) {
-//        DDLogDebug(@"activeFlags in subsetOverride: %@", [SharedUtility binaryRepresentation:0]); /// Debug
         return remaps[@{}];
     }
     
@@ -140,7 +139,7 @@ static NSDictionary *subsetOverride(NSDictionary *remaps, NSDictionary *activeMo
             [dragPreconds addObject:precond];
         }
         BOOL precondHasNumberKey = NO;
-        for (NSObject *key in precond.allKeys) {
+        for (NSObject *key in mod.allKeys) {
             if ([key isKindOfClass:NSNumber.class]) {
                 precondHasNumberKey = YES;
                 break;
