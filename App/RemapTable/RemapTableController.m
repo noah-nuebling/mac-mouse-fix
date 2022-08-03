@@ -493,12 +493,12 @@ static void setBorderColor(RemapTableController *object) {
 #pragma mark - Data source
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-    // Get data for this row
+    /// Get data for this row
     NSDictionary *rowDict = self.groupedDataModel[row];
-    // Create deep copy of row.
-    //  `getTriggerCellWithRowDict` is written badly and needs to manipulate some values nested in rowDict.
-    //  I we don't deep copy, the changes to rowDict will reflect into self.dataModel and be written to file causing corruption.
-    //      (The fact that rowDict is NSDictionary not NSMutableDictionary doesn't help, cause the stuff being manipulated is nested)
+    /// Create deep copy of row.
+    ///  `getTriggerCellWithRowDict` is written badly and needs to manipulate some values nested in rowDict.
+    ///  I we don't deep copy, the changes to rowDict will reflect into self.dataModel and be written to file causing corruption.
+    ///      (The fact that rowDict is NSDictionary not NSMutableDictionary doesn't help, cause the stuff being manipulated is nested)
     rowDict = (NSDictionary *)[SharedUtility deepCopyOf:rowDict];
     
     if ([rowDict isEqual:RemapTableUtility.buttonGroupRowDict]) {
@@ -527,35 +527,43 @@ static void setBorderColor(RemapTableController *object) {
     /// Calculate trigger cell text height
     NSDictionary *rowDict = self.groupedDataModel[row];
     
+    /// Case 1 - group row
     if ([rowDict isEqual:RemapTableUtility.buttonGroupRowDict]) {
         NSTableCellView *buttonGroupCell = [self.tableView makeViewWithIdentifier:@"buttonGroupCell" owner:self];
         return buttonGroupCell.frame.size.height;
-    }
-    
-    rowDict = (NSDictionary *)[SharedUtility deepCopyOf:rowDict];
-    NSTableCellView *view = [RemapTableTranslator getTriggerCellWithRowDict:rowDict];
-    /// ^ These lines are copied from `tableView:viewForTableColumn:row:`. Should change this cause copied code is bad.
-    NSTextField *textField = view.subviews[0];
-    NSMutableAttributedString *string = textField.effectiveAttributedStringValue.mutableCopy;
-    
-    CGFloat wdth = textField.bounds.size.width; /// 326 for some reason, in IB it's 323
-    /// TODO: ^ Test method from [Utility_App actualTextViewWidth]
-    CGFloat textHeight = [string heightAtWidth:wdth];
-    
-    /// Get top and bottom margins around text from IB template
-    NSTableCellView *templateView = [self.tableView makeViewWithIdentifier:@"triggerCell" owner:nil];
-    NSTextField *templateTextField = templateView.subviews[0];
-    CGFloat templateViewHeight = templateView.bounds.size.height;
-    CGFloat templateTextFieldHeight = templateTextField.bounds.size.height;
-    double margin = templateViewHeight - templateTextFieldHeight;
-    
-    /// Add margins and text height to get result
-    CGFloat result = textHeight + margin;
-    if (result == templateViewHeight) {
-        return result;
-    } else {
-        DDLogDebug(@"Height of row %ld is non-standard - Template: %f, Actual: %f", (long)row, templateViewHeight, result);
-        return result;
+    } else { /// Case 2 - normal row
+        /// \discussion Getting height has proven very difficult because there are errors in the methods for calculating textField size or attributedString size.
+        ///     An alternative to consider is to just force layout of the view and then measure that. (Like is done in the rewritten UI a lot.)
+        ///     03.08.2022 This is still broken. When entering `Button 4 + Click and Scroll Button 3` the end of the line is cut off.
+        ///     TODO: ^ Test method from [Utility_App actualTextViewWidth]
+        ///         ... But we're dealing with an NSTextField not an NSTextView?
+        ///     TODO: Implement auto row height!. That should fix all our worries. See https://developer.apple.com/forums/thread/126767.
+        
+        rowDict = (NSDictionary *)[SharedUtility deepCopyOf:rowDict];
+        NSTableCellView *view = [RemapTableTranslator getTriggerCellWithRowDict:rowDict];
+        /// ^ These lines are copied from `tableView:viewForTableColumn:row:`. Should change this cause copied code is bad. Edit: This doesn't seem to be true anymore. I can't see copied text.
+        NSTextField *textField = view.subviews[0];
+        NSMutableAttributedString *string = textField.effectiveAttributedStringValue.mutableCopy;
+        
+        CGFloat fieldWidth = textField.bounds.size.width; /// 326 for some reason, in IB it's 323
+//        CGFloat fieldWdth = [Utility_App actualTextFieldWidth:textField]; /// So far this doesn't seem to make a difference to just calling `.bounds.size.width`
+        CGFloat textHeight = [string heightAtWidth:fieldWidth];
+        
+        /// Get top and bottom margins around text from IB template
+        NSTableCellView *templateView = [self.tableView makeViewWithIdentifier:@"triggerCell" owner:nil];
+        NSTextField *templateTextField = templateView.subviews[0];
+        CGFloat templateViewHeight = templateView.bounds.size.height;
+        CGFloat templateTextFieldHeight = templateTextField.bounds.size.height;
+        double vMargin = templateViewHeight - templateTextFieldHeight;
+        
+        /// Add margins and text height to get result
+        CGFloat result = textHeight + vMargin;
+        if (result == templateViewHeight) {
+            return result;
+        } else {
+            DDLogDebug(@"Height of row %ld is non-standard - Template: %f, Actual: %f", (long)row, templateViewHeight, result);
+            return result;
+        }
     }
 }
 

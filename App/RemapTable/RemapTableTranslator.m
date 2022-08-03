@@ -705,16 +705,16 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         NSString *trRaw = [NSString stringWithFormat:@"%@%@", levelStr, durationStr]; // Append buttonStr later depending on whether there are button preconds
         NSString *trToolRaw = [NSString stringWithFormat:@"%@%@%@", levelStr, durationStr, mainButtonStrTool];
         
-        // Turn into attributedString and highlight button substrings
+        /// Turn into attributedString and highlight button substrings
         tr = [[NSAttributedString alloc] initWithString:trRaw];
         trTool = [[NSAttributedString alloc] initWithString:trToolRaw];
 //        tr = [tr attributedStringBySettingSecondaryButtonTextColorForSubstring:buttonStr];
 //        trTool = [trTool attributedStringBySettingSecondaryButtonTextColorForSubstring:buttonStrTool];
         
     } else if ([triggerType isEqual: @"_drag"] || [triggerType isEqual: @"_scroll"]) {
-        // We need part of the modification precondition to form the main trigger string here.
-        //  E.g. if our precondition for a modified drag is single click button 3, followed by double click button 4, we want the string to be "Click Middle Button + Double Click and Drag Button 4", where the "Click Middle Button + " substring follows the format of a regular modification precondition string (we compute those further down) but the "Double Click and Drag Button 4" substring, which is also called the "trigger string" follows a different format which we compute here.
-        // Get button strings from last button precond, or, if no button preconds exist, get keyboard modifier string
+        /// We need part of the modification precondition to form the main trigger string here.
+        ///  E.g. if our precondition for a modified drag is single click button 3, followed by double click button 4, we want the string to be "Click Middle Button + Double Click and Drag Button 4", where the "Click Middle Button + " substring follows the format of a regular modification precondition string (we compute those further down) but the "Double Click and Drag Button 4" substring, which is also called the "trigger string" follows a different format which we compute here.
+        /// Get button strings from last button precond, or, if no button preconds exist, get keyboard modifier string
         NSString *levelStr = @"";
         NSString *clickStr = @"";
         mainButtonStr = @"";

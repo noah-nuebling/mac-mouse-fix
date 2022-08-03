@@ -75,8 +75,10 @@
     CGFloat  actualPageWidth = textView.bounds.size.width - padding * 2;
     return actualPageWidth;
 }
-//+ (CGFloat)actualTextFieldWidth:(NSTextField *)textField {
-//    // Don't know how to make this work
-//}
++ (CGFloat)actualTextFieldWidth:(NSTextField *)textField {
+    /// Don't know how to make this work
+//    [textField sizeToFit]; /// This is wrong, we don't want fittingSize
+//    return textField.frame.size.width;
+}
 
 @end
