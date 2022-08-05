@@ -160,7 +160,7 @@
 <h3 id="dropped-support-for-older-macos-versions">Dropped support for older macOS versions</h3>
 <p>Unfortunately, Apple only lets you develop for macOS 10.13 <strong>High Sierra and later</strong> when developing from macOS 13 Ventura.</p>
 <p>So the <strong>minimum supported version</strong> has increased from 10.11 El Capitan to 10.13 High Sierra.</p>
-<p>I’m sorry :|</p>
+<p>I’m sorry about this. But there’s a cool emoji in the next section?</p>
 <h3 id="bug-fixes">Bug fixes 🐞</h3>
 <ul>
 <li>Fixed a crash in ‘<strong>App-specific settings</strong>’ when trying to add an app without a ‘Bundle ID’. Might help with GitHub Issues <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/289">#289</a> and <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/241">#241</a>.</li>
