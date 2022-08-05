@@ -192,10 +192,12 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     int64_t scrollPhase      = CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase);
     int64_t scrollDeltaAxis1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1);
     int64_t scrollDeltaAxis2 = CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2);
+    int64_t drawingTabletId = CGEventGetIntegerValueField(event, kCGTabletEventDeviceID);
     if (isPixelBased != 0
         || scrollDeltaAxis1 == 0
         || scrollDeltaAxis2 != 0 // Ignore horizontal scroll-events
-        || scrollPhase != 0) { // Adding scrollphase here is untested
+        || scrollPhase != 0 // Adding scrollphase here is untested
+        || drawingTabletId != 0) { /// Untested as well
         return event;
     }
     
