@@ -156,7 +156,7 @@
 </head>
 <body>
 <h3 id="ventura-support">Ventura support!</h3>
-<p>Mac Mouse Fix now fully supports macOS 13 Ventura.</p>
+<p>Mac Mouse Fix now fully supports macOS 13 Ventura. Special thanks to <span class="citation" data-cites="chamburr">[@chamburr]</span>(https://github.com/chamburr) who helped with Ventura support in <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/297">#297</a>.</p>
 <h3 id="dropped-support-for-older-macos-versions">Dropped support for older macOS versions</h3>
 <p>Unfortunately, Apple only lets you develop for macOS 10.13 <strong>High Sierra and later</strong> when developing from macOS 13 Ventura.</p>
 <p>So the <strong>minimum supported version</strong> has increased from 10.11 El Capitan to 10.13 High Sierra.</p>
@@ -165,7 +165,7 @@
 <ul>
 <li>Fixed a crash in ‘<strong>App-specific settings</strong>’ when trying to add an app without a ‘Bundle ID’. Might help with GitHub Issues <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/289">#289</a> and <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/241">#241</a>.</li>
 <li>Fixed an issue where Mac Mouse Fix changes the scrolling behaviour of some <strong>drawing tablets</strong>. See GitHub Issue <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/249">#249</a>.</li>
-<li>Fixed an issue where <strong>keyboard shortcuts</strong> including the ‘A’ key couldn’t be recorded. Fixes GitHub Issues <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/298">#298</a> and <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/275">#275</a>.</li>
+<li>Fixed an issue where <strong>keyboard shortcuts</strong> including the ‘A’ key couldn’t be recorded. Fixes GitHub Issue <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/275">#275</a>.</li>
 <li>Fixed an issue where some button remappings wouldn’t work properly when using a non-standard keyboard layout.</li>
 <li>Other small fixes and visual improvements.</li>
 </ul>
