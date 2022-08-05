@@ -15,6 +15,9 @@
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];
     
+    /// Save graphics context so we can undo clipping
+    [NSGraphicsContext saveGraphicsState];
+    
     /// Clip for background drawing
     NSRect clippingRect = NSInsetRect(dirtyRect, 0, 0); /// Don't Clip side borders (Since 2.2.0 or so we changed the table inset, so this isn't necessary any more.)
     clippingRect.size.height -= 1; /// Clip bottom border
@@ -36,26 +39,34 @@
     /// Draw background
     [backgroundColor setFill];
     NSRectFill(dirtyRect);
-        
     
-    if (NO) { /// Don't need to draw border manually when using horizontal grid
+    /// Undo clipping
+    [NSGraphicsContext restoreGraphicsState];
+    
+    if (@available(macOS 13, *)) {
+        /// Before Ventura, we just made the tableView have a "Horizontal Grid" in IB and that drew a line under the groupRow.
+        /// But in Ventura Beta, that doesn't seem to work anymore. There's no more line under the groupRow.
+        /// So now we're drawing the bottom border manually!
+    
+        /// Get drawing rect
+        ///     Make it one px too wide and then clip top and sides to just end up drawing a line.
+        NSRect borderRect = NSInsetRect(dirtyRect, -1, 0);
         
-        // Clip for border drawing
-        NSRect clippingRect = NSInsetRect(dirtyRect, 1, 0); // Clip side borders
-        clippingRect.size.height -= 1; // Clip top border
+        /// Clip for border drawing
+        clippingRect = dirtyRect;
+        clippingRect = NSInsetRect(dirtyRect, 0, 0); /// Clip side borders 
+        clippingRect.size.height -= 1; /// Clip top border
         clippingRect.origin.y += 1;
         NSRectClip(clippingRect);
         
-        // Get border color
+        /// Get border color
         NSColor *gridColor;
         if (@available(macOS 10.14, *)) {
-             gridColor = NSColor.separatorColor;
+            gridColor = NSColor.separatorColor;
         } else {
-            gridColor = AppDelegate.instance.remapsTable.gridColor; // Should be same as NSColor.gridColor
+            gridColor = AppDelegate.instance.remapsTable.gridColor; /// Should be same as NSColor.gridColor
         }
-        
-        // Draw border
-        NSBezierPath *borderPath = [NSBezierPath bezierPathWithRect:dirtyRect];
+        NSBezierPath *borderPath = [NSBezierPath bezierPathWithRect:borderRect];
         borderPath.lineWidth = 2;
         [gridColor setStroke];
         [borderPath stroke];
