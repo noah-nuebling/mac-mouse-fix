@@ -28,8 +28,6 @@ enum ClickCycleTriggerPhase: Int {
     case levelExpired = 2
     case release = 3
     case releaseFromHold = 4
-    case zombieRelease = 5
-    case zombieReleaseFromHold = 6
 };
 
 enum ClickCycleModifierPhase: Int {
@@ -41,229 +39,194 @@ enum ClickCycleModifierPhase: Int {
 /// Typedefs
 typealias ButtonNumber = Int
 typealias ClickLevel = Int
-typealias ClickCycleTriggerCallback = (ClickCycleTriggerPhase, ClickLevel, Device, ButtonNumber) -> ()
+typealias UnconditionalReleaseCallback = (() -> ())
+typealias ClickCycleTriggerCallback = (ClickCycleTriggerPhase, ClickLevel, Device, ButtonNumber, inout UnconditionalReleaseCallback?) -> ()
 typealias ClickCycleModifierCallback = (ClickCycleModifierPhase, ClickLevel, Device, ButtonNumber) -> ()
 
-enum ClickCycleActivation {
-    case alive
-    case dead
+fileprivate enum ButtonPressState {
+    case down
+    case up
+    case held
 }
+fileprivate struct ClickCycleState: Hashable {
+    var device: Device
+    var button: ButtonNumber
+    var pressState: ButtonPressState
+    var clickLevel: ClickLevel
+    var isAlive: Bool { clickLevel > 0 }
+    var downTimer = Timer()
+    var upTimer = Timer()
+}
+typealias ReleaseCallbackKey = ButtonStateKey
 
 /// Main class def
 class ClickCycle: NSObject {
     
     /// Threading
-    
     let buttonQueue: DispatchQueue
     
-    /// Ivars
-    
+    /// Config
     var maxClickLevel = 99999
     
-    var lastState: ClickCycleActivation = .dead
-    
-    var lastClickLevel: Int = 0
-    var lastDevice: Device? = nil
-    var lastButton: ButtonNumber = -1
-    var lastWasDown: Bool = false
-    
-    var downTimer = Timer()
-    var upTimer = Timer()
-    
-    var lastTriggerCallback: ClickCycleTriggerCallback = {_,_,_,_ in }
-    
-    typealias ZombieEntry = (device: Device, button: ButtonNumber, clickLevel: ClickLevel, fromHold: Bool)
-    var zombifiedButtons: [ZombieEntry] = []
-    
-    /// Init
-    required init(buttonQueue: DispatchQueue) {
-        self.buttonQueue = buttonQueue
-        super.init()
-        initState()
-    }
-    
-    /// Resetting state
-    
-    private func initState() {
-        lastState = .dead
-        lastClickLevel = 0
-        lastDevice = nil
-        lastButton = -1
-        lastTriggerCallback = {_,_,_,_ in }
-        SharedUtilitySwift.doOnMain { /// Timers have to be interacted with from mainThread. Does this threading make sense?
-            self.downTimer.invalidate()
-            self.upTimer.invalidate()
-        }
-    }
-    
+    /// State
+    fileprivate var state: ClickCycleState? = nil
     func kill() {
-        if self.lastState != .alive { return }
-        if self.lastWasDown {
-            self.zombifiedButtons.append((device: self.lastDevice!, button: self.lastButton, clickLevel: self.lastClickLevel, fromHold: !self.downTimer.isValid))
-            /// Debug
-            DDLogDebug("Zombies: \(self.zombifiedButtons)")
-            /// Validate
-            let duplicates: [[ZombieEntry]] = Array(Dictionary(grouping: zombifiedButtons, by: { $0.button }).values)
-            for duplicateButtonArray in duplicates {
-                assert(duplicateButtonArray.count == 1) /// This means: Each button occurs at most once in `zombifiedButtons`
-            }
-        }
-        initState()
+        DDLogDebug("triggerCallback - kill")
+        state?.downTimer.invalidate()
+        state?.upTimer.invalidate()
+        state = nil
     }
-    internal func strangle() { /// Is he okay?
-        
-    }
-    
     func forceKill() {
         /// Kill and then send release message immediately
         ///     TODO: Implement
         assert(false)
     }
     
+    /// Release callbacks
+    ///     Clients can register a callback that will *always* be triggered on release, even if the buttton in question doesn't belong to the current click cycle
+    fileprivate var releaseCallbacks: [ReleaseCallbackKey: UnconditionalReleaseCallback] = [:]
+    public func waitingForRelease(device: Device, button: ButtonNumber) -> Bool {
+        return releaseCallbacks[.init(device, button)] != nil
+    }
+    
+    /// Init
+    required init(buttonQueue: DispatchQueue) {
+        self.buttonQueue = buttonQueue
+        super.init()
+        
+        kill()
+    }
+    
     /// Main interface
     
     func isActiveFor(device: NSNumber, button: NSNumber) -> Bool {
-        return self.lastDevice?.uniqueID() == device && self.lastButton == ButtonNumber(truncating: button)
+        guard let state = state else { return false }
+        return state.device.uniqueID() == device && state.button == ButtonNumber(truncating: button)
     }
     
     func handleClick(device: Device, button: ButtonNumber, downNotUp mouseDown: Bool, maxClickLevel: Int, modifierCallback: @escaping ClickCycleModifierCallback, triggerCallback: @escaping ClickCycleTriggerCallback) {
         
         ///
-        /// Update/gather state
+        /// Update state
         ///
-        
-        let buttonIsDifferent = self.lastDevice != device || self.lastButton != button
-        
-        let clickLevel: ClickLevel
-        var state: ClickCycleActivation
         
         if mouseDown {
             
-            /// Switch over to new clickCycle if button changes
-            if self.lastState == .alive && buttonIsDifferent {
-                self.kill()
-            }
-            /// Start new clickCycle / update state
-            state = .alive
-            clickLevel = Math.intCycle(x: self.lastClickLevel + 1, lower: 1, upper: maxClickLevel)
-            
-        } else if !buttonIsDifferent { /// MouseUp + same button
-            
-            state = self.lastState
-            clickLevel = self.lastClickLevel
-            
-        } else { /// Mouse up + different button
-            
-            ///
-            /// Handle zombification
-            ///
-            
-            /// Find entry for current button
-            let zombieEntry: ZombieEntry? = zombifiedButtons.first { $0.button == button }
-            
-            /// Validate 1
-            if zombieEntry == nil {
-                /// Release outside of the current clickCycle should happen exactly if the released button is zombified.
-                /// This is sometimes false when the program starts while a button is already held, or when the modifications change so that this button all of a sudden has effects once it's released
-                assert(true)
-                return /// Ignore in release build
+            /// Gather state
+            let cycleIsDead = (state == nil)
+            var buttonIsDifferent = false
+            if !cycleIsDead {
+                buttonIsDifferent = button != state!.button || device != state!.device
             }
             
-            /// Validate 2
-            let duplicates: [[ZombieEntry]] = Array(Dictionary(grouping: zombifiedButtons, by: { $0.button }).values)
-            for duplicateButtonArray in duplicates {
-                assert(duplicateButtonArray.count == 1) /// This means: Each button occurs at most once in `zombifiedButtons`
+            /// Restart cycle
+            if cycleIsDead || buttonIsDifferent {
+                kill()
+                state = ClickCycleState(device: device, button: button, pressState: .down, clickLevel: 0)
             }
             
-            /// Do stuff
-            if let zombieEntry = zombieEntry {
-                
-                /// Send trigger callback
-                let phase: ClickCycleTriggerPhase = zombieEntry.fromHold ? .zombieReleaseFromHold : .zombieRelease
-                triggerCallback(phase, zombieEntry.clickLevel, zombieEntry.device, zombieEntry.button)
-                
-                /// Send modifier callback
-                modifierCallback(.release, zombieEntry.clickLevel, zombieEntry.device, zombieEntry.button)
-                
-                /// Remove zombieEntry
-                zombifiedButtons = zombifiedButtons.filter { $0 != zombieEntry }
-            }
-            
-            /// Return
-            return
-        }
-        
-        /// Update global state
-        ///     Updating this up here to avoid race conditions. We could alternatively lock everything with `buttonQueue`, and then update this at the end.
-        ///     Then we could also use the global vars in here directly instead of making a local copy of the clickLevel and state.
-        self.lastState = state
-        self.lastDevice = device
-        self.lastButton = button
-        self.lastWasDown = mouseDown
-        self.lastTriggerCallback = triggerCallback
-        self.lastClickLevel = clickLevel
-        
-        /// Handle mouseUp fromHold
-        ///     Unused right now because we make all fromHold triggers zombies
-        if !mouseDown && !buttonIsDifferent && !self.downTimer.isValid {
-            modifierCallback(.release, clickLevel, device, button)
-            triggerCallback(.releaseFromHold, clickLevel, device, button)
-            self.kill()
-            return
+            /// Update cycle
+            state!.clickLevel = Math.intCycle(x: state!.clickLevel + 1, lower: 1, upper: maxClickLevel)
         }
         
         ///
-        /// Start/reset timers
+        /// unconditionalReleaseCallback
         ///
         
-        assert(Thread.isMainThread) /// With the current setup we're already running on main (which is necessary for staring timers), and dispatching to main causes race conditions, so we're just asserting
-//        DispatchQueue.main.sync {
-            if mouseDown {
-                /// mouseDown
-                self.upTimer.invalidate()
-                self.downTimer = CoolTimer.scheduledTimer(timeInterval: 0.25, repeats: false, block: { timer in
-                    self.buttonQueue.async {
-                        if self.lastState == .alive {
-                            triggerCallback(.hold, clickLevel, device, button)
-                        }
-                        self.kill() /// Killing here makes all fromHold triggers zombies. But that's okay.
-                    }
-                })
-                /// Not sure whether to start started upTimer on mouseDown or up
-                self.upTimer = CoolTimer.scheduledTimer(timeInterval: 0.25, repeats: false, block: { timer in
-                    self.buttonQueue.async {
-                        if self.lastState == .alive {
-                            triggerCallback(.levelExpired, clickLevel, device, button)
-                        }
-                        self.kill()
-                    }
-                })
-            } else {
-                /// mouseUp
-                self.downTimer.invalidate()
-
+        if !mouseDown {
+            let key = ReleaseCallbackKey(device, button)
+            if let callback = releaseCallbacks[key] {
+                callback()
+                releaseCallbacks.removeValue(forKey: key)
+                
             }
-//        }
-        
+        }
         ///
         /// modifierCallback
         ///
         
         if mouseDown {
-            modifierCallback(.press, clickLevel, device, button)
+            modifierCallback(.press, state!.clickLevel, device, button)
         } else {
-            modifierCallback(.release, clickLevel, device, button)
+            modifierCallback(.release, -1, device, button)
         }
         
-        ///
-        /// triggerCallback
-        ///
+        let lonelyRelease = !mouseDown && (state == nil || state!.device != device || state!.button != button) /// Release outside of clickCycle it belongs to
         
-        if mouseDown {
-            triggerCallback(.press, clickLevel, device, button)
-        } else {
-            triggerCallback(.release, clickLevel, device, button)
+        if !lonelyRelease {
+            
+            ///
+            /// triggerCallback
+            ///
+            
+            let releaseFromHold = !mouseDown && state?.pressState == .held
+            if mouseDown {
+                var releaseCallback: UnconditionalReleaseCallback? = nil
+                triggerCallback(.press, state!.clickLevel, device, button, &releaseCallback)
+                if let c = releaseCallback { releaseCallbacks[.init(device, button)] = c }
+            } else {
+                let trigger: ClickCycleTriggerPhase = releaseFromHold ? .releaseFromHold : .release
+                callTriggerCallback(triggerCallback, trigger, state!.clickLevel, device, button)
+            }
+            
+            ///
+            /// Kill after releaseFromHold
+            ///
+            if releaseFromHold {
+                kill()
+                return
+            }
+        
+            /// Check active clickCycle
+            ///     (triggerCallback could've killed it)
+            
+            if state == nil {
+                return
+            }
+            
+            ///
+            /// Start/reset timers
+            ///
+            /// Consider using DispatchSourceTimer instead
+            
+            assert(Thread.isMainThread) /// With the current setup we're already running on main (which is necessary for staring timers), and dispatching to main causes race conditions, so we're just asserting.
+            if mouseDown {
+                /// mouseDown
+                state!.upTimer.invalidate()
+                state!.downTimer = CoolTimer.scheduledTimer(timeInterval: 0.25, repeats: false, block: { timer in
+                    self.buttonQueue.async {
+                        /// Callback
+                        var releaseCallback: UnconditionalReleaseCallback? = nil
+                        triggerCallback(.hold, self.state!.clickLevel, device, button, &releaseCallback)
+                        if let c = releaseCallback {
+                            self.releaseCallbacks[.init(device, button)] = c
+                        }
+                        /// Update state
+                        self.state?.pressState = .held
+                        self.state?.upTimer.invalidate()
+                    }
+                })
+                /// Not sure whether to start started upTimer on mouseDown or up
+                state!.upTimer = CoolTimer.scheduledTimer(timeInterval: 0.26, repeats: false, block: { timer in
+                    self.buttonQueue.async {
+                        if self.state == nil { return } /// Guard race conditions. Not totally sure why this happens.
+                        self.callTriggerCallback(triggerCallback, ClickCycleTriggerPhase.levelExpired, self.state!.clickLevel, device, button)
+                        self.kill()
+                    }
+                })
+            } else {
+                /// mouseUp
+                state!.downTimer.invalidate()
+            }
         }
-        
+    }
+    
+    /// Helper
+    
+    private func callTriggerCallback(_ triggerCallback: ClickCycleTriggerCallback, _ trigger: ClickCycleTriggerPhase, _ clickLevel: ClickLevel, _ device: Device, _ button: ButtonNumber) {
+        /// Convenience function - Calls triggerCallback and ignores the last `releaseCallback` argument
+        var garbage: UnconditionalReleaseCallback? = nil
+        triggerCallback(trigger, clickLevel, device, button, &garbage)
+        assert(garbage == nil)
     }
 }

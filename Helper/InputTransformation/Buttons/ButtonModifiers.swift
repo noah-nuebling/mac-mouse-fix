@@ -26,15 +26,6 @@ struct ButtonStateKey: Hashable {
         self.device = device
         self.button = button
     }
-    
-//    func hash(into hasher: inout Hasher) {
-//        hasher.combine(self.device)
-//        hasher.combine(self.button)
-//    }
-//
-//    static func ==(lhs: ButtonStateKey, rhs: ButtonStateKey) -> Bool {
-//        return lhs.device == rhs.device && lhs.button == rhs.button
-//    }
 }
 
 private struct ButtonState: Equatable {
@@ -55,19 +46,23 @@ class ButtonModifiers: NSObject {
         DDLogDebug("buttonModifiers - update - lvl: \(clickLevel), mouseDown: \(mouseDown), btn: \(button), dev: \"\(device.name())\"")
         
         /// Update state
-        let key = ButtonStateKey(device, button)
-        let oldState = state[key]
-        let pressTime = mouseDown ? CACurrentMediaTime() : (oldState?.pressTime ?? 0) /// Not sure if necessary to ever keep old pressTime
-        let newState = ButtonState(device: device,
-                                   button: button,
-                                   clickLevel: clickLevel,
-                                   isPressed: mouseDown,
-                                   pressTime: pressTime)
-        
-        state[key] = newState
-        
-        /// Validate
-        assert(oldState != newState)
+        if mouseDown {
+            let key = ButtonStateKey(device, button)
+            let oldState = state[key]
+            let pressTime = mouseDown ? CACurrentMediaTime() : (oldState?.pressTime ?? 0) /// Not sure if necessary to ever keep old pressTime
+            let newState = ButtonState(device: device,
+                                       button: button,
+                                       clickLevel: clickLevel,
+                                       isPressed: mouseDown,
+                                       pressTime: pressTime)
+            
+            state[key] = newState
+            /// Validate
+            assert(oldState != newState)
+            
+        } else {
+            state.removeValue(forKey: ButtonStateKey(device, button))
+        }
         
         /// Notify change
         ModifierManager.handleButtonModifiersMightHaveChanged(with: device)

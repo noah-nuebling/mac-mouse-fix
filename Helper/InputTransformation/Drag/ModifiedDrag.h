@@ -63,7 +63,7 @@ typedef struct {
 + (void)handleBecameInUse;
 + (void)handleMouseInputWhileInUseWithDeltaX:(double)deltaX deltaY:(double)deltaY event:(CGEventRef)event;
 + (void)handleDeactivationWhileInUseWithCancel:(BOOL)cancel;
-+ (void)suspend;
++ (void)suspend; /// See OutputCoordinator
 + (void)unsuspend;
 
 @end

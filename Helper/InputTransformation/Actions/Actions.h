@@ -12,9 +12,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef enum {
+    kMFActionPhaseStart,
+    kMFActionPhaseEnd,
+    kMFActionPhaseCombined,
+} MFActionPhase;
+
 @interface Actions : NSObject
 
-+ (void)executeActionArray:(NSArray *)actionArray;
++ (void)executeActionArray:(NSArray *)actionArray phase:(MFActionPhase)phase;
 
 @end
 

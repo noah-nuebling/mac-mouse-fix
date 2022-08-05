@@ -62,6 +62,7 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
     
     /// CGEvent bridging test
     ///     Conclusion: objc version of cgevent has no properties, no ivars and no interesting methods
+    ///     Also see code built on this: [SharedUtility dumpClassInfo];
     
     id objcEvent = (__bridge id)event;
     

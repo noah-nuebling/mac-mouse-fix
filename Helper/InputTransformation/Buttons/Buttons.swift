@@ -7,7 +7,8 @@
 // --------------------------------------------------------------------------
 //
 
-/// I'm not sure the DispatchQueue is neccesary, because all the interaction with this class are naturally spaced out in time, so there's a very low chance of race conditions)
+/// TODO?: Use dispatchQueue.
+///     I'm not sure the DispatchQueue is neccesary, because all the interaction with this class are naturally spaced out in time, so there's a very low chance of race conditions)
 
 import Cocoa
 import CocoaLumberjackSwift
@@ -37,17 +38,15 @@ import CocoaLumberjackSwift
         
         /// Get modifications
         let remaps = TransformationManager.remaps() /// This is apparently super slow because Swift needs to convert the dict. Much slower than all the redundant buttonLandscapeAssessor calculations.
-        var deviceOpt: Device? = device
-        let modifiers = ModifierManager.getActiveModifiers(for: &deviceOpt, filterButton: button, event: event)
+        var deviceAsOptional = device as Device?
+        let modifiers = ModifierManager.getActiveModifiers(for: &deviceAsOptional, filterButton: button, event: event)
         /// ^ We wouldn't need to filter button if we changed the order of updating modifiers and sending triggers depending on mouseDown or mouseUp
         let modifications = RemapsOverrider.effectiveRemapsMethod()(remaps, modifiers)
         
         /// Decide passthrough
         let effectExists = ButtonLandscapeAssessor.effectExists(forButton: button, remaps: remaps, modificationsActingOnButton: modifications)
-        let isZombie = !mouseDown && clickCycle.zombifiedButtons.reduce(false, { (partialResult, zombieEntry) in
-            return partialResult || (zombieEntry.device == device && NSNumber(value: zombieEntry.button) == button as NSNumber)
-        }) /// This is a little convoluted unreadable
-        if !effectExists && !isZombie { /// We could also check if an effect exists by checking maxClickLevel == 0
+        let waitingForRelease = clickCycle.waitingForRelease(device: device, button: ButtonNumber(truncating: button))
+        if !effectExists && !waitingForRelease { /// We could also check if an effect exists by checking maxClickLevel == 0
             passThroughEvaluation = kMFEventPassThroughApproval
             return kMFEventPassThroughApproval
         }
@@ -60,22 +59,25 @@ import CocoaLumberjackSwift
         } /// On mouseUp, the clickCycle should ignore the maxClickLevel anyways
         
         /// Dispatch through clickCycle
-        clickCycle.handleClick(device: device, button: ButtonNumber(truncating: button), downNotUp: mouseDown, maxClickLevel: maxClickLevel) { modifierPhase, clickLevel, device, buttonNumber in
+        clickCycle.handleClick(device: device, button: ButtonNumber(truncating: button), downNotUp: mouseDown, maxClickLevel: maxClickLevel,
+                               modifierCallback: { modifierPhase, clickLevel, device, buttonNumber in
             
             ///
             /// Update modifiers
-            ///
-            
+            /// TODO: Consider merging this with the main callback and using the `releaseCallback` to make it work properly
+                
             self.modifiers.update(device: device, button: ButtonNumber(truncating: button), clickLevel: clickLevel, downNotUp: mouseDown)
             
-        } triggerCallback: { triggerPhase, clickLevel, device, buttonNumber in
+            /// Debug
+            DDLogDebug("modifierCallback - lvl: \(clickLevel), phase: \(modifierPhase), btn: \(buttonNumber), dev: \"\(device.name())\"")
+            
+        }, triggerCallback: { triggerPhase, clickLevel, device, buttonNumber, releaseCallback in
             
             ///
             /// Send triggers
             ///
             
             /// Debug
-            
             DDLogDebug("triggerCallback - lvl: \(clickLevel), phase: \(triggerPhase), btn: \(buttonNumber), dev: \"\(device.name())\"")
             
             /// Asses 'mappingLandscape'
@@ -86,31 +88,25 @@ import CocoaLumberjackSwift
             ButtonLandscapeAssessor.assessMappingLandscape(withButton: button as NSNumber, level: clickLevel as NSNumber, modificationsActingOnThisButton: modifications, remaps: remaps, thisClickDoBe: &clickActionOfThisLevelExists, thisDownDoBe: &effectForMouseDownStateOfThisLevelExists, greaterDoBe: &effectOfGreaterLevelExists)
             
             /// Create trigger -> action map based on mappingLandscape
-            ///     The idea about the zombieRelease is that we still want to finish what we started, but not start anything new. So we still send the `end` triggers, but not the `combined` triggers when the release is zombified
+            ///     The idea about the releaseCallback is that we still want to finish what we started, but not start anything new if the clickCycle is killed
             
-            var map: [ClickCycleTriggerPhase: (String, String)] = [:]
+            var map: [ClickCycleTriggerPhase: (String, MFActionPhase)] = [:]
             
             /// Map for click actions
             if clickActionOfThisLevelExists.boolValue {
                 if effectOfGreaterLevelExists.boolValue {
-                    map[.levelExpired]          = ("click", "combined")
+                    map[.levelExpired]          = ("click", kMFActionPhaseCombined)
                 } else if effectForMouseDownStateOfThisLevelExists.boolValue {
-                    map[.release]               = ("click", "combined")
-                    map[.releaseFromHold]       = ("click", "combined")
+                    map[.release]               = ("click", kMFActionPhaseCombined)
+                    map[.releaseFromHold]       = ("click", kMFActionPhaseCombined)
                 } else {
-                    map[.press]                 = ("click", "start")
-                    map[.release]               = ("click", "end")
-                    map[.releaseFromHold]       = ("click", "end")
-                    map[.zombieRelease]         = ("click", "end")
-                    map[.zombieReleaseFromHold] = ("click", "end")
+                    map[.press]                 = ("click", kMFActionPhaseStart)
                 }
             }
             
             /// Map for hold actions
             if effectForMouseDownStateOfThisLevelExists.boolValue {
-                map[.hold]                  = ("hold", "start")
-                map[.releaseFromHold]       = ("hold", "end")
-                map[.zombieReleaseFromHold] = ("hold", "end")
+                map[.hold]                  = ("hold", kMFActionPhaseStart)
             }
             
             /// Get action for current trigger
@@ -135,23 +131,28 @@ import CocoaLumberjackSwift
             }
             
             /// Execute actionArray
-            if startOrEnd == "start" || startOrEnd == "combined" {
-                /// TODO: Make the `Action` class take `startOrEnd` param
-                Actions.executeActionArray(actionArray)
+            if startOrEnd == kMFActionPhaseCombined {
+                Actions.executeActionArray(actionArray, phase: kMFActionPhaseCombined)
+            } else if startOrEnd == kMFActionPhaseStart {
+                Actions.executeActionArray(actionArray, phase: kMFActionPhaseStart)
+                releaseCallback = {
+                    DDLogDebug("triggerCallback - unconditionalRelease button \(button)")
+                    Actions.executeActionArray(actionArray, phase: kMFActionPhaseEnd)
+                }
             }
             
             /// Notify triggering button
-            ///     This only necessary for .press and .release, because in all other cases, we already know that the clickCycle has already been killed.
-            ///     In case of the zombified triggers it would be especially unnecessary, because the currently active clickCycle would be unrelated to the incoming trigger
+            ///     This not necessary for levelExpired and .releaseFromHold, because we already know that the clickCycle has beend killed
+            ///     -> Might be better to make this an assert
             
-            if triggerPhase == .press || triggerPhase == .release {
+            if triggerPhase != .levelExpired && triggerPhase != .releaseFromHold {
                 self.handleButtonHasHadDirectEffect_Unsafe(device: device, button: button)
             }
             
             /// Notify modifiers
             ///     (Probably unnecessary, because the only modifiers that can be "deactivated" are buttons. And since there's only one clickCycle, any buttons modifying the current one should already be zombified)
             ModifierManager.handleModificationHasBeenUsed(with: device, activeModifiers: modifiers)
-        }
+        })
         
         return passThroughEvaluation
     }

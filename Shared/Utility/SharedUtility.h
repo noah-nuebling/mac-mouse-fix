@@ -30,6 +30,7 @@ void *offsetPointer(void *ptr, int byteOffset);
 + (BOOL)runningHelper;
 + (BOOL)runningAccomplice;
 
++ (NSString *)dumpClassInfo:(Class)class;
 + (NSString *)launchCLT:(NSURL *)executableURL withArguments:(NSArray<NSString *> *)arguments error:(NSError ** _Nullable)error;
 + (void)launchCLT:(NSURL *)commandLineTool withArgs:(NSArray <NSString *> *)arguments;
 + (FSEventStreamRef)scheduleFSEventStreamOnPaths:(NSArray<NSString *> *)urls withCallback:(FSEventStreamCallback)callback;

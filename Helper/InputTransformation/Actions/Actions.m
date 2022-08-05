@@ -22,10 +22,14 @@
 
 @implementation Actions
 
-+ (void)executeActionArray:(NSArray *)actionArray {
++ (void)executeActionArray:(NSArray *)actionArray phase:(MFActionPhase)phase {
     
-    DDLogDebug(@"Executing action array: %@", actionArray);
+    DDLogDebug(@"Executing action array: %@, phase: %@", actionArray, @(phase));
     
+    if (phase == kMFActionPhaseEnd) {
+        return; /// TODO: Actually implement actions with different phases
+    }
+               
     for (NSDictionary *actionDict in actionArray) {
         
         MFStringConstant actionType = actionDict[kMFActionDictKeyType];

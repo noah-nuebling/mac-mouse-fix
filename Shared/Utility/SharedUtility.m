@@ -13,8 +13,75 @@
 #import "Config.h"
 #import "SharedUtility.h"
 @import AppKit.NSScreen;
+#import <objc/runtime.h>
 
 @implementation SharedUtility
+
+#pragma mark - Investigate private classes
+
++ (NSString *)dumpClassInfo:(Class)class {
+    /// See this article to understand type encodings: https://nshipster.com/type-encodings/l
+    
+    
+    /// Properties
+    unsigned int nProperties;
+    objc_property_t *propertyList = class_copyPropertyList(class, &nProperties);
+    
+    unsigned int nIvars;
+    Ivar *ivarList = class_copyIvarList(class, &nIvars);
+    
+    unsigned int nMethods;
+    Method *methodList = class_copyMethodList(class, &nMethods);
+    
+    unsigned int nClassMethods;
+    Method *classMethodList = class_copyMethodList(object_getClass(class), &nClassMethods);
+    
+    /// Get strings
+    
+    /// Name
+    const char *className = class_getName(class);
+    
+    /// Properties
+    NSMutableArray *properties = [NSMutableArray array];
+    for (int i = 0; i < nProperties; i++) {
+        objc_property_t m = propertyList[i];
+        const char *name = property_getName(m);
+        [properties addObject:@(name)];
+    }
+    
+    /// Ivars
+    NSMutableArray *ivars = [NSMutableArray array];
+    for (int i = 0; i < nIvars; i++) {
+        Ivar m = ivarList[i];
+        const char *name = ivar_getName(m);
+        [ivars addObject:@(name)];
+    }
+    
+    /// Methods
+    NSMutableArray *methods = [NSMutableArray array];
+    for (int i = 0; i < nMethods; i++) {
+        Method m = methodList[i];
+        struct objc_method_description *d = method_getDescription(m);
+        [methods addObject:[NSString stringWithFormat: @"%@ | type: \'%@\'", @(sel_getName(d->name)), @(d->types)]];
+    }
+    
+    /// Class Methods
+    NSMutableArray *classMethods = [NSMutableArray array];
+    for (int i = 0; i < nClassMethods; i++) {
+        Method m = classMethodList[i];
+        struct objc_method_description *d = method_getDescription(m);
+        [classMethods addObject:[NSString stringWithFormat: @"%@ | type: \'%@\'", @(sel_getName(d->name)), @(d->types)]];
+    }
+    
+    /// Free
+    free(propertyList);
+    free(ivarList);
+    free(methodList);
+    free(classMethodList);
+    
+    /// Return string
+    return [NSString stringWithFormat:@"Info on class %@ - properties: %@, ivars: %@, methods: %@, classMethods: %@", @(className), properties, ivars, methods, classMethods];
+}
 
 #pragma mark - Check if this is a prerelease version
 
