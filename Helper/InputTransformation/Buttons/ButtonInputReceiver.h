@@ -10,7 +10,7 @@
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
 #import "IOKit/hid/IOHIDManager.h"
-#import "MFDevice.h"
+#import "Device.h"
 #import "Constants.h"
 
 
@@ -46,7 +46,7 @@ typedef enum {
 
 + (void)insertFakeEventWithButton:(MFMouseButtonNumber)button isMouseDown:(BOOL)isMouseDown;
 
-+ (void)handleHIDButtonInputFromRelevantDeviceOccured:(MFDevice *)dev button:(NSNumber *)btn stemsFromDeviceSeize:(BOOL)stemsFromSeize;
++ (void)handleHIDButtonInputFromRelevantDeviceOccured:(Device *)dev button:(NSNumber *)btn stemsFromDeviceSeize:(BOOL)stemsFromSeize;
 + (BOOL)allRelevantButtonInputsHaveBeenProcessed;
 
 @end

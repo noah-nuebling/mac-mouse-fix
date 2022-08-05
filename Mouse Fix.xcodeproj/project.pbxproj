@@ -34,6 +34,7 @@
 		4F854D7C2789146900B46E9D /* NSMenu+NSMenu_Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F854D7B2789146900B46E9D /* NSMenu+NSMenu_Additions.m */; };
 		4F854D7E2789266A00B46E9D /* sfsymbols.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F854D7D2789266A00B46E9D /* sfsymbols.xcassets */; };
 		4F8CE7012617738A00D70A76 /* AppTranslocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CE6FF2617738A00D70A76 /* AppTranslocationManager.m */; };
+		4F8F10D0289D6C7B00743B8F /* Device.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6667A25F2C93A00689B77 /* Device.m */; };
 		4F92A708260F4BF000529D1F /* MFTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F92A707260F4BF000529D1F /* MFTableView.m */; };
 		4F92A72D260F6C7800529D1F /* NSView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F92A72C260F6C7800529D1F /* NSView+Additions.m */; };
 		4F92A73A260F73C600529D1F /* KeyCaptureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F92A71D260F667F00529D1F /* KeyCaptureView.m */; };
@@ -116,7 +117,6 @@
 		4FF666A225F2C93A00689B77 /* TouchEvents.c in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6667125F2C93A00689B77 /* TouchEvents.c */; };
 		4FF666A325F2C93A00689B77 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6667225F2C93A00689B77 /* LICENSE */; };
 		4FF666A425F2C93A00689B77 /* NoahsTouchEventAnalysis in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6667325F2C93A00689B77 /* NoahsTouchEventAnalysis */; };
-		4FF666A725F2C93A00689B77 /* MFDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6667A25F2C93A00689B77 /* MFDevice.m */; };
 		4FF666A825F2C93A00689B77 /* DeviceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6667D25F2C93A00689B77 /* DeviceManager.m */; };
 		4FF666A925F2C93A00689B77 /* Utility_Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6668025F2C93A00689B77 /* Utility_Helper.m */; };
 /* End PBXBuildFile section */
@@ -415,9 +415,9 @@
 		4FF6667525F2C93A00689B77 /* IOHIDEventData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOHIDEventData.h; sourceTree = "<group>"; };
 		4FF6667625F2C93A00689B77 /* IOHIDEventTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOHIDEventTypes.h; sourceTree = "<group>"; };
 		4FF6667825F2C93A00689B77 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4FF6667A25F2C93A00689B77 /* MFDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MFDevice.m; sourceTree = "<group>"; };
+		4FF6667A25F2C93A00689B77 /* Device.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Device.m; sourceTree = "<group>"; };
 		4FF6667B25F2C93A00689B77 /* DeviceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceManager.h; sourceTree = "<group>"; };
-		4FF6667C25F2C93A00689B77 /* MFDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MFDevice.h; sourceTree = "<group>"; };
+		4FF6667C25F2C93A00689B77 /* Device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Device.h; sourceTree = "<group>"; };
 		4FF6667D25F2C93A00689B77 /* DeviceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceManager.m; sourceTree = "<group>"; };
 		4FF6667F25F2C93A00689B77 /* Utility_Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility_Helper.h; sourceTree = "<group>"; };
 		4FF6668025F2C93A00689B77 /* Utility_Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility_Helper.m; sourceTree = "<group>"; };
@@ -1141,8 +1141,8 @@
 			children = (
 				4FF6667B25F2C93A00689B77 /* DeviceManager.h */,
 				4FF6667D25F2C93A00689B77 /* DeviceManager.m */,
-				4FF6667C25F2C93A00689B77 /* MFDevice.h */,
-				4FF6667A25F2C93A00689B77 /* MFDevice.m */,
+				4FF6667C25F2C93A00689B77 /* Device.h */,
+				4FF6667A25F2C93A00689B77 /* Device.m */,
 			);
 			path = Devices;
 			sourceTree = "<group>";
@@ -1500,7 +1500,6 @@
 				4FF6668F25F2C93A00689B77 /* SmoothScroll.m in Sources */,
 				4FF6669A25F2C93A00689B77 /* Utility_Transformation.m in Sources */,
 				4FF6669D25F2C93A00689B77 /* AccessibilityCheck.m in Sources */,
-				4FF666A725F2C93A00689B77 /* MFDevice.m in Sources */,
 				4FF6669C25F2C93A00689B77 /* PointerSpeed.m in Sources */,
 				4FF6668425F2C93A00689B77 /* MessagePort_Helper.m in Sources */,
 				4FF6669225F2C93A00689B77 /* RoughScroll.m in Sources */,
@@ -1511,6 +1510,7 @@
 				4FF6669525F2C93A00689B77 /* ModifiedDrag.m in Sources */,
 				4FF6668825F2C93A00689B77 /* ButtonInputReceiver.m in Sources */,
 				4FF6669025F2C93A00689B77 /* ScrollModifiers.m in Sources */,
+				4F8F10D0289D6C7B00743B8F /* Device.m in Sources */,
 				4FF6655125F2C7B000689B77 /* NSMutableDictionary+Additions.m in Sources */,
 				4FF6668525F2C93A00689B77 /* ModifierManager.m in Sources */,
 				4FF6669925F2C93A00689B77 /* VectorSubPixelator.m in Sources */,

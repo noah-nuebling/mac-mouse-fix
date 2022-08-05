@@ -30,18 +30,18 @@
 #import <IOKit/hidsystem/IOHIDServiceClient.h>
 #import <IOKit/hidsystem/IOHIDEventSystemClient.h>
 
-
+#import "Device.h"
 
 @implementation DeviceManager
 
 # pragma mark - Global vars
 static IOHIDManagerRef _HIDManager;
-static NSMutableArray<MFDevice *> *_attachedDevices;
+static NSMutableArray<Device *> *_attachedDevices;
 
 + (BOOL)devicesAreAttached {
     return _attachedDevices.count > 0;
 }
-+ (NSArray<MFDevice *> *)attachedDevices {
++ (NSArray<Device *> *)attachedDevices {
     return _attachedDevices;
 }
 
@@ -130,13 +130,13 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
     if (devicePassesFiltering(device)) {
         
         
-        MFDevice *newMFDevice = [MFDevice deviceWithIOHIDDevice:device];
-        [_attachedDevices addObject:newMFDevice];
+        Device *newDevice = [Device deviceForIOHIDDevice:device];
+        [_attachedDevices addObject:newDevice];
         
         [ScrollControl decide];
         [ButtonInputReceiver decide];
         
-        NSLog(@"New matching IOHIDDevice passed filtering and corresponding MFDevice was attached to device manager:\n%@", newMFDevice);
+        NSLog(@"New matching IOHIDDevice passed filtering and corresponding Device was attached to device manager:\n%@", newDevice);
         
         // Testing PointerSpeed
         //[PointerSpeed setSensitivityViaIORegTo:1000 device:device];
@@ -154,8 +154,8 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
 
 static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
     
-    MFDevice *removedMFDevice = [MFDevice deviceWithIOHIDDevice:device];
-    [_attachedDevices removeObject:removedMFDevice]; // This might do nothing if this device wasn't contained in _attachedDevice (that's if it didn't pass filtering in `handleDeviceMatching()`)
+    Device *removedDevice = [Device deviceForIOHIDDevice:device];
+    [_attachedDevices removeObject:removedDevice]; // This might do nothing if this device wasn't contained in _attachedDevice (that's if it didn't pass filtering in `handleDeviceMatching()`)
     
     // If there aren't any relevant devices attached, then we might want to turn off some parts of the program.
     [ScrollControl decide];

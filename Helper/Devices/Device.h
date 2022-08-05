@@ -12,22 +12,23 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MFDevice : NSObject
+@interface Device : NSObject
 
 @property (atomic, assign, readonly, nonnull) IOHIDDeviceRef IOHIDDevice;
 @property (atomic, assign, readonly) BOOL isSeized;
 
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
-+ (MFDevice *)deviceWithIOHIDDevice:(IOHIDDeviceRef)IOHIDDevice;
+
++ (Device *)deviceForIOHIDDevice:(IOHIDDeviceRef)IOHIDDevice;
 
 - (NSNumber *)uniqueID;
 - (NSString *)name;
 - (NSString *)description;
 
 
-- (void)receiveOnlyButtonInput;
-- (void)receiveAxisInputAndDoSeizeDevice:(BOOL)exclusive;
+//- (void)receiveOnlyButtonInput;
+//- (void)receiveAxisInputAndDoSeizeDevice:(BOOL)exclusive;
 
 @end
 

@@ -36,7 +36,7 @@ struct ModifiedDragState {
     MFStringConstant type;
 
     MFModifiedInputActivationState activationState;
-    MFDevice *modifiedDevice;
+    Device *modifiedDevice;
     
     CGPoint origin;
     MFVector originOffset;
@@ -108,7 +108,7 @@ int16_t _nOfSpaces = 1;
     }
 }
 
-+ (void)initializeDragWithModifiedDragDict:(NSDictionary *)dict onDevice:(MFDevice *)dev {
++ (void)initializeDragWithModifiedDragDict:(NSDictionary *)dict onDevice:(Device *)dev {
     
     // Get values from dict
     MFStringConstant type = dict[kMFModifiedDragDictKeyType];
@@ -141,7 +141,8 @@ int16_t _nOfSpaces = 1;
     if (inputIsPointerMovement) {
         CGEventTapEnable(_drag.eventTap, true);
     } else {
-        [dev receiveAxisInputAndDoSeizeDevice:NO];
+        assert(false);
+//        [dev receiveAxisInputAndDoSeizeDevice:NO];
     }
 }
 
@@ -186,12 +187,13 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY) {
     // Activate the modified drag if the mouse has been moved far enough from the point where the drag started
     if (MAX(fabs(ofs.x), fabs(ofs.y)) > _drag.usageThreshold) {
         
-        MFDevice *dev = _drag.modifiedDevice;
+        Device *dev = _drag.modifiedDevice;
         if (inputIsPointerMovement) {
             [NSCursor.closedHandCursor push]; // Doesn't work for some reason
         } else {
             if ([_drag.type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) { // Only seize when drag scrolling // TODO: Would be cleaner to call this further down where we check for kMFModifiedDragVariantTwoFingerSwipe anyways. Does that work too?
-                [dev receiveAxisInputAndDoSeizeDevice:YES];
+//                [dev receiveAxisInputAndDoSeizeDevice:YES];
+                assert(false);
             }
         }
         _drag.activationState = kMFModifiedInputActivationStateInUse; // Activate modified drag input!
@@ -352,7 +354,8 @@ static void disableMouseTracking() {
         CGEventTapEnable(_drag.eventTap, false);
         [NSCursor.closedHandCursor pop];
     } else {
-        [_drag.modifiedDevice receiveOnlyButtonInput];
+//        [_drag.modifiedDevice receiveOnlyButtonInput];
+        assert(false);
     }
 }
 

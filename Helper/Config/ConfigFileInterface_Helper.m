@@ -202,21 +202,32 @@ static void loadAppOverridesForApp(NSString *bundleIdentifier) {
  */
 static void setupFSEventStreamCallback() {
     
+    CFArrayRef pathsToWatch;
+    void *callbackInfo = NULL; /// Could put stream-specific data here.
+    if (@available(macOS 13, *)) { /// The old code causes a crash on Ventura (specifically trying to log the cfPath using DDLogInfo)
+        NSArray *pathsToWatchNS = @[_configFilePath];
+        pathsToWatch = (__bridge_retained CFArrayRef)pathsToWatchNS; /// `__bridge_retained` -> we need to release this manually
+    } else {
+        CFStringRef cfPath = (__bridge CFStringRef)_configFilePath.copy; /// Why are we copying this?
+        CFStringRef cfArray[1] = {cfPath};
+        pathsToWatch = CFArrayCreate(NULL, (const void **)cfArray, 1, NULL);
+    }
+    NSLog(@"pathsToWatch : %@", (__bridge NSArray *)pathsToWatch);
     
-    CFStringRef cfPath = (__bridge CFStringRef)_configFilePath.copy;
-    CFStringRef cfArray[1] = {cfPath};
-    CFArrayRef pathsToWatch = CFArrayCreate(NULL, (const void **)cfArray, 1, NULL);
-    void *callbackInfo = NULL; // could put stream-sp ecific data here.
-    
-    NSLog(@"pathsToWatch : %@", cfPath);
-    
+    /// Create eventStream
     CFAbsoluteTime latency = 0.3;
     FSEventStreamRef remapsFileEventStream = FSEventStreamCreate(kCFAllocatorDefault, &Handle_FSEventStreamCallback, callbackInfo, pathsToWatch, kFSEventStreamEventIdSinceNow, latency, kFSEventStreamCreateFlagFileEvents ^ kFSEventStreamCreateFlagUseCFTypes);
     
+    /// Start eventStream
     FSEventStreamScheduleWithRunLoop(remapsFileEventStream, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
     BOOL EventStreamStarted = FSEventStreamStart(remapsFileEventStream);
     NSLog(@"EventStreamStarted: %d", EventStreamStarted);
+    
+    /// Release stuff
+    ///     We might be leaking a bunch of things here in this class but it doesn't matter since it's only run once when the app starts up
+    CFRelease(pathsToWatch);
 }
+
 void Handle_FSEventStreamCallback (ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents, void *eventPaths, const FSEventStreamEventFlags *eventFlags, const FSEventStreamEventId *eventIds) {
     
     NSLog(@"config.plist changed (FSMonitor)");
