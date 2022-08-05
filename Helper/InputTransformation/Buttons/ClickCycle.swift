@@ -53,7 +53,7 @@ fileprivate struct ClickCycleState: Hashable {
     var button: ButtonNumber
     var pressState: ButtonPressState
     var clickLevel: ClickLevel
-    var isAlive: Bool { clickLevel > 0 }
+//    var isAlive: Bool { clickLevel > 0 }
     var downTimer = Timer()
     var upTimer = Timer()
 }
@@ -179,10 +179,9 @@ class ClickCycle: NSObject {
         
             /// Check active clickCycle
             ///     (triggerCallback could've killed it)
+            ///     \note: Sometimes there are raceconditions, and the state only becomes nil after this statement. That's why we simply use state? below instead of state!
             
-            if state == nil {
-                return
-            }
+            if state == nil { return }
             
             ///
             /// Start/reset timers
@@ -192,8 +191,8 @@ class ClickCycle: NSObject {
             assert(Thread.isMainThread) /// With the current setup we're already running on main (which is necessary for staring timers), and dispatching to main causes race conditions, so we're just asserting.
             if mouseDown {
                 /// mouseDown
-                state!.upTimer.invalidate()
-                state!.downTimer = CoolTimer.scheduledTimer(timeInterval: 0.25, repeats: false, block: { timer in
+                state?.upTimer.invalidate()
+                state?.downTimer = CoolTimer.scheduledTimer(timeInterval: 0.25, repeats: false, block: { timer in
                     self.buttonQueue.async {
                         /// Callback
                         var releaseCallback: UnconditionalReleaseCallback? = nil
@@ -207,7 +206,7 @@ class ClickCycle: NSObject {
                     }
                 })
                 /// Not sure whether to start started upTimer on mouseDown or up
-                state!.upTimer = CoolTimer.scheduledTimer(timeInterval: 0.26, repeats: false, block: { timer in
+                state?.upTimer = CoolTimer.scheduledTimer(timeInterval: 0.26, repeats: false, block: { timer in
                     self.buttonQueue.async {
                         if self.state == nil { return } /// Guard race conditions. Not totally sure why this happens.
                         self.callTriggerCallback(triggerCallback, ClickCycleTriggerPhase.levelExpired, self.state!.clickLevel, device, button)
@@ -216,7 +215,7 @@ class ClickCycle: NSObject {
                 })
             } else {
                 /// mouseUp
-                state!.downTimer.invalidate()
+                state?.downTimer.invalidate()
             }
         }
     }

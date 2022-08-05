@@ -33,6 +33,8 @@ import CocoaLumberjackSwift
         
         var passThroughEvaluation = kMFEventPassThroughRefusal
             
+        /// TODO: We shouldn't have to calculate this stuff on every button press. Maybe only  once per clickCycle. It's probably not a bottleneck at all though since it's doing very low-level stuff. 
+        
             /// Init
         if !isInitialized { coolInitialize() }
         
