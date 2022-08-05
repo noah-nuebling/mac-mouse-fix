@@ -209,9 +209,9 @@ static void attachIOHIDDevice(IOHIDDeviceRef device) {
     [_attachedDevices addObject:newDevice];
     
     /// Set pointer sensitivity and acceleration for device
-    /// Not using this yet, as it's still buggy and not implemented in the UI
-    DDLogDebug(@"Setting PointerSpeed for device: %@", newDevice.description);
-    [PointerSpeed setForDevice:newDevice.IOHIDDevice];
+    ///     Edit: Seems that parametric curves are always set under Ventura, so we can't use tableBased curves :/ And in its current form this code will always crash. See PointerSpeed for more details.
+//    DDLogDebug(@"Setting PointerSpeed for device: %@", newDevice.description);
+//    [PointerSpeed setForDevice:newDevice.IOHIDDevice];
     
     ///
     if ((NO)) { /// Polling rate measurer is unused so far and has a strange bug where it sometimes receives an event long after it's disabled and then crashes.

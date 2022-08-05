@@ -109,8 +109,8 @@ NSArray *_buttonParseBlacklist; /// Don't send inputs from these buttons to Butt
 
 static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
-    // Re-enable on timeout
-    // Maybe it would be better to do the heavy lifting on a background queue, so this never times out, but this is easier, and it times out quite rarely anyways so this should be fine.
+    /// Re-enable on timeout
+    /// Maybe it would be better to do the heavy lifting on a background queue, so this never times out, but this is easier, and it times out quite rarely anyways so this should be fine.
     if (type == kCGEventTapDisabledByTimeout) {
         DDLogInfo(@"ButtonInputReceiver eventTap timed out. Re-enabling.");
         CGEventTapEnable(_eventTap, true);

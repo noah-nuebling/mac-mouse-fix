@@ -17,43 +17,17 @@
 #import "SharedUtility.h"
 #import <Cocoa/Cocoa.h>
 
-// TODO: Consider refactoring
-//  - There is device specific state scattered around the program (I can think of the the ButtonStates in ButtonTriggerGenerator, as well as the ModifedDragStates in ModiferManager). This state should probably be owned by MFDevice instances instead.
-//  - This class is cluttered up with code using the IOHID framework, intended to capture mouse moved input while preventing the mouse pointer from moving. This is used for ModifiedDrags which stop the mouse pointer from moving. We should probably move this code to some other class, which MFDevice's can own instances of, to make stuff less cluttered.
-//  - I've since found another way to stop the mouse pointer (See PointerFreeze class). So most of the stuff in this class is obsolete. Trying to seize the device using IOKit is super buggy and leads to weird crashes and broken mouse down state and many other issues.
+/// TODO: Consider refactoring
+///  - There is device specific state scattered around the program (I can think of the the ButtonStates in ButtonTriggerGenerator, as well as the ModifedDragStates in ModiferManager). This state should probably be owned by MFDevice instances instead.
+///  - This class is cluttered up with code using the IOHID framework, intended to capture mouse moved input while preventing the mouse pointer from moving. This is used for ModifiedDrags which stop the mouse pointer from moving. We should probably move this code to some other class, which MFDevice's can own instances of, to make stuff less cluttered.
+///  - I've since found another way to stop the mouse pointer (See PointerFreeze class). So most of the stuff in this class is obsolete. Trying to seize the device using IOKit is super buggy and leads to weird crashes and broken mouse down state and many other issues.
+///     TODO: Clean this up and remove all the unused stuff
 
 @implementation Device
 
 NSMutableDictionary *_deviceCache = nil;
 
-static uint64_t IOHIDDeviceGetRegistryID(IOHIDDeviceRef  _Nonnull device) {
-    /// TODO: Put this in some utility class
-    io_service_t service = IOHIDDeviceGetService(device);
-    uint64_t deviceID;
-    IORegistryEntryGetRegistryEntryID(service, &deviceID);
-    return deviceID;
-}
-
-+ (Device *)deviceForIOHIDDevice:(IOHIDDeviceRef)device {
-    
-    /// TODO: Delete this
-    /// Move functionality to DeviceManager.
-    /// This `_deviceCache` is redundant with `_attachedDevices` array in deviceManager.
-    /// Goal: We wanna get an attached `Device` instance based on an incoming CGEvent - see `CGEventGetSendingDevice()`
-    
-    if (_deviceCache == nil) {
-        _deviceCache = [NSMutableDictionary dictionary];
-    }
-    uint64_t deviceID = IOHIDDeviceGetRegistryID(device);
-    Device *deviceFromCache = _deviceCache[@(deviceID)];
-    
-    if (deviceFromCache == nil) {
-        Device *newDevice = [[Device alloc] initWithIOHIDDevice:device];
-        _deviceCache[@(deviceID)] = newDevice;
-    }
-    
-    return _deviceCache[@(deviceID)];
-}
+#pragma mark - Init
 
 /// Create instances with this function
 /// DeviceManager calls this for each relevant device it finds
@@ -61,219 +35,71 @@ static uint64_t IOHIDDeviceGetRegistryID(IOHIDDeviceRef  _Nonnull device) {
 - (Device *)initWithIOHIDDevice:(IOHIDDeviceRef)IOHIDDevice {
     self = [super init];
     if (self) {
+        
+        /// Set state
         _IOHIDDevice = IOHIDDevice;
         _isSeized = NO;
         
-        NSDictionary *buttonMatchDict = @{
-            @(kIOHIDElementUsagePageKey): @(kHIDPage_Button)
-        };
+        /// Open device
+        ///     This seems to be necessary in the Ventura Beta.
+        ///     See https://github.com/noah-nuebling/mac-mouse-fix/issues/297. And thanks to @chamburr!!
+        IOReturn ret = IOHIDDeviceOpen(self.IOHIDDevice, kIOHIDOptionsTypeNone);
+        if (ret) {
+            DDLogInfo(@"Error opening device. Code: %x", ret);
+        }
+        
+        /// Set values of interest for callback
+        NSDictionary *buttonMatchDict = @{ @(kIOHIDElementUsagePageKey): @(kHIDPage_Button) };
         IOHIDDeviceSetInputValueMatching(_IOHIDDevice, (__bridge CFDictionaryRef)buttonMatchDict);
-        registerInputCallbackForDevice(self);
+        
+        /// Register callback
+        IOHIDDeviceScheduleWithRunLoop(IOHIDDevice, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
+        IOHIDDeviceRegisterInputValueCallback(IOHIDDevice, &handleInput, (__bridge void * _Nullable)(self));
     }
     return self;
 }
 
-#pragma mark - Capture input using IOHID
+#pragma mark - Input callbacks
 
-static void registerInputCallbackForDevice(Device *device) {
-    IOHIDDeviceScheduleWithRunLoop(device.IOHIDDevice, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
-    IOHIDDeviceRegisterInputValueCallback(device.IOHIDDevice, &handleInput, (__bridge void * _Nullable)(device));
-}
-
-- (void)openWithOption:(IOOptionBits)options {
-    IOReturn ret = IOHIDDeviceOpen(self.IOHIDDevice, options);
-//    IOReturn ret = IOHIDDeviceOpen(self.IOHIDDevice, 0); // Ignoring options for testing purposes
-    if (ret) {
-        DDLogInfo(@"Error opening device. Code: %x", ret);
-    }
-}
-
-- (NSNumber *)uniqueID {
-    return (__bridge NSNumber *)IOHIDDeviceGetProperty(_IOHIDDevice, CFSTR(kIOHIDUniqueIDKey));
-}
-
-
-// Copied this from `IOHIDDevice.c`
-// Only using this for `closeWithOption:`
-typedef struct __IOHIDDevice
-{
-    CFRuntimeBase                   cfBase;   // base CFType information
-
-    io_service_t                    service;
-    IOHIDDeviceDeviceInterface**    deviceInterface;
-    IOCFPlugInInterface **          plugInInterface;
-    CFMutableDictionaryRef          properties;
-    CFMutableSetRef                 elements;
-    CFStringRef                     rootKey;
-    CFStringRef                     UUIDKey;
-    IONotificationPortRef           notificationPort;
-    io_object_t                     notification;
-    CFTypeRef                       asyncEventSource;
-    CFRunLoopRef                    runLoop;
-    CFStringRef                     runLoopMode;
-    
-    IOHIDQueueRef                   queue;
-    CFArrayRef                      inputMatchingMultiple;
-    Boolean                         loadProperties;
-    Boolean                         isDirty;
-    
-    // For thread safety reasons, to add or remove an  element, first make a copy,
-    // then modify that copy, then replace the original
-    CFMutableArrayRef               removalCallbackArray;
-    CFMutableArrayRef               reportCallbackArray;
-    CFMutableArrayRef               inputCallbackArray;
-} __IOHIDDevice, *__IOHIDDeviceRef;
-
-//static void printIOHIDDeviceState(IOHIDeviceRef dev) {
-//    DDLogInfo(@"IOHID DEVICE STATE - service: %@, deviceInterface: %@, plugInInterface: %@, props: %@, elements: %@, rootKey: %@, UUIDKey: %@, notifPort:");
+//- (void)openWithOption:(IOOptionBits)options {
+//    IOReturn ret = IOHIDDeviceOpen(self.IOHIDDevice, options);
+////    IOReturn ret = IOHIDDeviceOpen(self.IOHIDDevice, 0); // Ignoring options for testing purposes
+//    if (ret) {
+//        DDLogInfo(@"Error opening device. Code: %x", ret);
+//    }
 //}
 
-// I think the `option` doesn't make any difference when closing a device I think. It definitely doesn't help with the CFData zombie bug
-- (void)closeWithOption:(IOOptionBits)option {
-//    CFRetain(self.IOHIDDevice); // Retaining doesn't fix it though...
-//    IOReturn ret = IOHIDDeviceClose(self.IOHIDDevice, option); // Closing seems to create zombies, which leads to crashes.
-    IOReturn ret = (*self.IOHIDDevice->deviceInterface)->close(self.IOHIDDevice->deviceInterface, option); // This is some of what IOHIDDeviceClose() does. Might help with zombies. I got this from `IOHIDDevice.c`. Seems like it fixes the zombies issue!! :O
-    if (ret) {
-        DDLogInfo(@"Error closing device. Code: %x", ret);
-        CFRelease(self.IOHIDDevice);
-    }
-}
-
-/// Seizing device is the only way I found for preventing the mouse pointer from moving while modifiedDrag actions are active.
-/// Unfortunately this fails sometimes and does weird stuff like not properly disabling or crashing the app
-/// Closing devices seems to deallocate something (Xcode zombies analysis says its CFData, but idk what it is or what it represents etc.) which will later lead to crashes. CFRetain ing devices before closing them doesn't seem to help.
-/// I also think this leads to other weird issues e.g. I couldn't stop dragging an element once until I logged out. We create fake events and reinsert them into the event stream from within `MFDevice::handleInput()` if the device is seized, I think that caused it somehow.
-- (void)seize:(BOOL)B {
-    
-//    if (B) {
-//        DDLogDebug(@"SEIZE DEVICE");
-//    } else {
-//        DDLogDebug(@"UNSEIZE DEVICE");
-//    }
-    
-    if (_isSeized == B) {
-        return;
-    }
-    
-    // Close dev
-    if (B) {
-        [self closeWithOption:0];
-    } else {
-        [self closeWithOption:kIOHIDOptionsTypeSeizeDevice];
-    }
-    
-    // Open dev
-    if (B) {
-        [self openWithOption:kIOHIDOptionsTypeSeizeDevice];
-        dealWithAutomaticButtonUpEventsFromDeviceSeize(self);
-    } else {
-        [self openWithOption:0];
-        
-        // Trying to fix an issue where the first event after unseizing doesn't arrive in ButtonInputReceiver for some reason
-        // Solution idea 1: Tried to "initialize" IOHIDDevice after unseizing by calling functions `IOHIDDeviceGetReportWithCallback`, `IOHIDDeviceCopyMatchingElements`, `IOHIDDeviceScheduleWithRunLoop`
-        // -> Didn't work
-        // Solution idea 2: Inserting the first event after unseizing into the CG Event Stream artificially.
-        // -> Doesn't really work, because we have to translate the HID Value callbacks values into CGEvents manually - leads to problems if HID values which we are not listening to / don't know how to translate to a CGEvent change (then the next event would be sent twice, once real and once inserted)
-        // Solution idea 3: We only seize the device once the mouse pointer moves while a modified drag is active
-        // -> This stops problems from occuring in most cases but not all
-        //Solution idea 3: Try to initialize by setting a value
-        
-        CFArrayRef allElems = IOHIDDeviceCopyMatchingElements(self.IOHIDDevice, NULL, 0);
-        IOHIDElementRef firstElem = (IOHIDElementRef)CFArrayGetValueAtIndex(allElems, 0);
-        CFRelease(allElems);
-        IOHIDValueRef newVal = IOHIDValueCreateWithIntegerValue(kCFAllocatorDefault, firstElem, mach_absolute_time(), 0);
-        IOHIDDeviceSetValue(self.IOHIDDevice, firstElem, newVal);
-        CFRelease(newVal);
-        
-    }
-    
-    _isSeized = B;
-    
-}
-
-/// When a device is seized, button up events are sent for all pressed buttons by the system.
-/// We want to tell ButtonInputReceiver where those events came from by calling `handleButtonInputFromRelevantDeviceOccured` for each currently pressed button, with the `stemsFromDeviceSeize` parameter set to `YES`
-static void dealWithAutomaticButtonUpEventsFromDeviceSeize(Device *dev) {
-    //NSUInteger pressedButtons = NSEvent.pressedMouseButtons; // This seems to only see buttons as pressed if a mousedown CGEvent for that button has been sent or sth
-    NSArray *pressedButtons = getPressedButtons(dev);
-    int buttonNum = 0;
-    for (NSNumber *k in pressedButtons) {
-        BOOL isPressed = k.intValue == 1;
-        if (isPressed) {
-            DDLogInfo(@"IS PRESSED WHILE SEIZING: %d", buttonNum);
-            [ButtonInputReceiver handleHIDButtonInputFromRelevantDeviceOccured:dev button:@(buttonNum+1) stemsFromDeviceSeize:YES];
-        }
-        buttonNum++;
-    }
-}
-static NSArray *getPressedButtons(Device *dev) {
-    
-    NSMutableArray *outArr = [NSMutableArray array];
-    
-    NSDictionary *match = @{
-        @(kIOHIDElementUsagePageKey): @(kHIDPage_Button),
-        //@(kIOHIDElementTypeKey): @(kIOHIDElementTypeInput_Button),
-    };
-    CFArrayRef elems = IOHIDDeviceCopyMatchingElements(dev.IOHIDDevice, (__bridge CFDictionaryRef)match, 0);
-    
-    for (int i = 0; i < CFArrayGetCount(elems); i++) {
-        IOHIDElementRef elem = (IOHIDElementRef)CFArrayGetValueAtIndex(elems, i);
-        IOHIDValueRef value;
-        IOHIDDeviceGetValue(dev.IOHIDDevice, elem, &value);
-        [outArr addObject:@(IOHIDValueGetIntegerValue(value))];
-    }
-    
-    CFRelease(elems);
-    
-//    NSUInteger outBitmask = 0;
+//static NSArray *getPressedButtons(Device *dev) {
 //
-//    for (int i = 0; i < outArr.count; i++) {
-//        if ([outArr[i] isEqual:@(1)]) {
-//            outBitmask |= 1<<i;
-//        }
+//    NSMutableArray *outArr = [NSMutableArray array];
+//
+//    NSDictionary *match = @{
+//        @(kIOHIDElementUsagePageKey): @(kHIDPage_Button),
+//        //@(kIOHIDElementTypeKey): @(kIOHIDElementTypeInput_Button),
+//    };
+//    CFArrayRef elems = IOHIDDeviceCopyMatchingElements(dev.IOHIDDevice, (__bridge CFDictionaryRef)match, 0);
+//
+//    for (int i = 0; i < CFArrayGetCount(elems); i++) {
+//        IOHIDElementRef elem = (IOHIDElementRef)CFArrayGetValueAtIndex(elems, i);
+//        IOHIDValueRef value;
+//        IOHIDDeviceGetValue(dev.IOHIDDevice, elem, &value);
+//        [outArr addObject:@(IOHIDValueGetIntegerValue(value))];
 //    }
-    
-    return outArr;
-}
-
-- (void)receiveOnlyButtonInput {
-    /// TODO: This is unused now -> Clean up
-    
-    //DDLogDebug(@"RECEIVE ONLY BUTTON INPUT");
-    
-    [self seize:NO];
-    
-    NSDictionary *buttonMatchDict = @{
-        @(kIOHIDElementUsagePageKey): @(kHIDPage_Button),
-    };
-    IOHIDDeviceSetInputValueMatching(_IOHIDDevice, (__bridge CFDictionaryRef)buttonMatchDict);
-}
+//
+//    CFRelease(elems);
+//
+////    NSUInteger outBitmask = 0;
+////
+////    for (int i = 0; i < outArr.count; i++) {
+////        if ([outArr[i] isEqual:@(1)]) {
+////            outBitmask |= 1<<i;
+////        }
+////    }
+//
+//    return outArr;
+//}
 
 
-- (void)receiveAxisInputAndDoSeizeDevice:(BOOL)seize {
-    /// TODO: This is unused. Other functions in this class, too. -> Clean this up.
-    
-    //DDLogDebug(@"RECEIVE AXIS INPUT ON TOP OF BUTTON INPUT");
-    
-    [self seize:seize];
-    
-    NSDictionary *buttonMatchDict = @{
-        @(kIOHIDElementUsagePageKey): @(kHIDPage_Button)
-    };
-    NSDictionary *xAxisMatchDict = @{
-        @(kIOHIDElementUsagePageKey): @(kHIDPage_GenericDesktop),
-        @(kIOHIDElementUsageKey): @(kHIDUsage_GD_X),
-    };
-    NSDictionary *yAxisMatchDict = @{
-        @(kIOHIDElementUsagePageKey): @(kHIDPage_GenericDesktop),
-        @(kIOHIDElementUsageKey): @(kHIDUsage_GD_Y),
-    };
-    
-    NSArray *matchDictArray = @[buttonMatchDict, xAxisMatchDict, yAxisMatchDict];
-    
-    IOHIDDeviceSetInputValueMatchingMultiple(_IOHIDDevice, (__bridge CFArrayRef)matchDictArray);
-    
-}
 
 /// The CGEvent function which we use to intercept and manipulate incoming button events (`ButtonInputReceiver_CG::handleInput()`)  cannot gain any information about which devices is causing input, and it can therefore also not filter out input form certain devices. We use functions from the IOHID Framework (`MFDevice::handleInput()`) to solve this problem.
 ///
@@ -301,71 +127,49 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
     
     BOOL isButton = usagePage == 9;
     
-    if (isButton) {
+    assert(isButton);
         
-        MFMouseButtonNumber button = usage;
-        
-        [ButtonInputReceiver handleHIDButtonInputFromRelevantDeviceOccured:sendingDev button:@(button) stemsFromDeviceSeize:NO];
-        
-        int64_t pressure = IOHIDValueGetIntegerValue(value);
-        
-        if (button != 1 && button != 2) { /// Don't print left and right click as to not clog up the logs
-//            DDLogDebug(@"Received HID Button Input - btn: %d, pressure: %lld", button, pressure);
-        }
-        /// Stop momentumScroll on LMB click
-        ///     ButtonInputReceiver tries to filter out LMB and RMB events as early as possible, so it's better to do this here
-        if (button == 1 && pressure != 0) {
-            [GestureScrollSimulator stopMomentumScroll];
-        }
-        
-        /// Post fake button input events, if the device is seized
-
-        if (sendingDev.isSeized) {
-            //DDLogDebug(@"BUTTON INP COMES FORM SEIZED");
-            [ButtonInputReceiver insertFakeEventWithButton:button isMouseDown:pressure!=0];
-            
-        }
-    } else {
+    MFMouseButtonNumber button = usage;
     
-//        BOOL isXAxis = usagePage == kHIDPage_GenericDesktop && usage == kHIDUsage_GD_X;
-//        BOOL isYAxis = usagePage == kHIDPage_GenericDesktop && usage == kHIDUsage_GD_Y;
-//
-//        if (isXAxis || isYAxis) {
-//
-//            MFAxis axis = isXAxis ? kMFAxisHorizontal : kMFAxisVertical;
-//
-//            if (axis == kMFAxisVertical) {
-//                _previousDeltaY = IOHIDValueGetIntegerValue(value); // Vertical axis delta value seems to always be sent before horizontal axis delta
-//            } else {
-//                int64_t currentDeltaX = IOHIDValueGetIntegerValue(value);
-//
-//                if (currentDeltaX != 0 || _previousDeltaY != 0) {
-//
-//                    [ModifiedDrag handleMouseInputWithDeltaX:currentDeltaX deltaY:_previousDeltaY event:nil];
-//
-//    //                dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{ // Multithreading in hopes of preventing some issues which I assume are caused by the hid callback (this function) being processed after the CG callback when the system is under load sometimes. Not sure if the multithreading helps though.
-//    //                    [ModifyingActions handleMouseInputWithDeltaX:currentDeltaX deltaY:_previousDeltaY];
-//    //                });
-//                }
-//            }
-//        }
+    [ButtonInputReceiver handleHIDButtonInputFromRelevantDeviceOccured:sendingDev button:@(button) stemsFromDeviceSeize:NO];
+    
+    int64_t pressure = IOHIDValueGetIntegerValue(value);
+    
+    if (button != 1 && button != 2) { /// Don't print left and right click as to not clog up the logs
+//            DDLogDebug(@"Received HID Button Input - btn: %d, pressure: %lld", button, pressure);
+    }
+    /// Stop momentumScroll on LMB click
+    ///     ButtonInputReceiver tries to filter out LMB and RMB events as early as possible, so it's better to do this here
+    if (button == 1 && pressure != 0) {
+        [GestureScrollSimulator stopMomentumScroll];
+    }
+    
+    /// Post fake button input events, if the device is seized
+
+    if (sendingDev.isSeized) {
+        //DDLogDebug(@"BUTTON INP COMES FORM SEIZED");
+        [ButtonInputReceiver insertFakeEventWithButton:button isMouseDown:pressure!=0];
+        
     }
 }
 
+#pragma mark - Properties + override NSObject methods
 
-#pragma mark - Default functions
+- (NSNumber *)uniqueID {
+    return (__bridge NSNumber *)IOHIDDeviceGetProperty(_IOHIDDevice, CFSTR(kIOHIDUniqueIDKey));
+}
 
 - (BOOL)isEqualToDevice:(Device *)device {
     return CFEqual(self.IOHIDDevice, device.IOHIDDevice);
 }
 - (BOOL)isEqual:(Device *)other {
     
-    if (other == self) { // This checks for pointer equality
+    if (other == self) { /// Check for pointer equality
         return YES;
-//    } else if (![super isEqual:other]) { // This is from the template idk what it does but it doesn't work
+//    } else if (![super isEqual:other]) { /// This is from the template idk what it does but it doesn't work
 //        return NO;
 //    }
-    } else if (![other isKindOfClass:self.class]) { //  Checks for class equality
+    } else if (![other isKindOfClass:self.class]) { ///  Check for class equality
         return NO;
     } else {
         return [self isEqualToDevice:other];;
@@ -374,7 +178,7 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
 
 - (NSUInteger)hash {
 //    return CFHash(_IOHIDDevice) << 1;
-    return (NSUInteger)self;
+    return (NSUInteger)self; /// TODO: Are we sure just using the self pointer as hash is a good idea? Maybe use uniqueID instead?
 }
 
 - (NSString *)name {
@@ -413,10 +217,76 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
         return outString;
     } @catch (NSException *exception) {
         DDLogInfo(@"Exception while getting MFDevice description: %@", exception);
-        // After waking computer from sleep I just had a EXC_BAD_ACCESS exception. The debugger says the MFDevice is still allocated in debugger (I can look at all its properties and of the IOHIDDevice as well)) but the "properties" dict of the IOHIDDevice is a NULL pointer for some reason. Really strange. I don't know how to handle this situation, crashing is proabably better than to keep going in this weird state.
+        /// After waking computer from sleep I just had a EXC_BAD_ACCESS exception. The debugger says the MFDevice is still allocated in debugger (I can look at all its properties and of the IOHIDDevice as well)) but the "properties" dict of the IOHIDDevice is a NULL pointer for some reason. Really strange. I don't know how to handle this situation, crashing is proabably better than to keep going in this weird state.
         DDLogInfo(@"Rethrowing exception because crashing the app is probably best in this situation.");
         @throw exception;
     }
 }
+
+#pragma mark - Old stuff that's interesting
+
+/// Copied this from `IOHIDDevice.c`
+/// Only used this for `closeWithOption:`
+/// -> Now unused after we're not seizing devices anymore
+typedef struct __IOHIDDevice
+{
+    CFRuntimeBase                   cfBase;   // base CFType information
+
+    io_service_t                    service;
+    IOHIDDeviceDeviceInterface**    deviceInterface;
+    IOCFPlugInInterface **          plugInInterface;
+    CFMutableDictionaryRef          properties;
+    CFMutableSetRef                 elements;
+    CFStringRef                     rootKey;
+    CFStringRef                     UUIDKey;
+    IONotificationPortRef           notificationPort;
+    io_object_t                     notification;
+    CFTypeRef                       asyncEventSource;
+    CFRunLoopRef                    runLoop;
+    CFStringRef                     runLoopMode;
+    
+    IOHIDQueueRef                   queue;
+    CFArrayRef                      inputMatchingMultiple;
+    Boolean                         loadProperties;
+    Boolean                         isDirty;
+    
+    // For thread safety reasons, to add or remove an  element, first make a copy,
+    // then modify that copy, then replace the original
+    CFMutableArrayRef               removalCallbackArray;
+    CFMutableArrayRef               reportCallbackArray;
+    CFMutableArrayRef               inputCallbackArray;
+} __IOHIDDevice, *__IOHIDDeviceRef;
+
+#pragma mark - Doesn't belong here
+
+static uint64_t IOHIDDeviceGetRegistryID(IOHIDDeviceRef  _Nonnull device) {
+    /// TODO: Put this in some utility class
+    io_service_t service = IOHIDDeviceGetService(device);
+    uint64_t deviceID;
+    IORegistryEntryGetRegistryEntryID(service, &deviceID);
+    return deviceID;
+}
+
++ (Device *)deviceForIOHIDDevice:(IOHIDDeviceRef)device {
+    
+    /// TODO: Delete this
+    /// Move functionality to DeviceManager.
+    /// This `_deviceCache` is redundant with `_attachedDevices` array in deviceManager.
+    /// Goal: We wanna get an attached `Device` instance based on an incoming CGEvent - see `CGEventGetSendingDevice()`
+    
+    if (_deviceCache == nil) {
+        _deviceCache = [NSMutableDictionary dictionary];
+    }
+    uint64_t deviceID = IOHIDDeviceGetRegistryID(device);
+    Device *deviceFromCache = _deviceCache[@(deviceID)];
+    
+    if (deviceFromCache == nil) {
+        Device *newDevice = [[Device alloc] initWithIOHIDDevice:device];
+        _deviceCache[@(deviceID)] = newDevice;
+    }
+    
+    return _deviceCache[@(deviceID)];
+}
+
 
 @end

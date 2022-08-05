@@ -102,7 +102,8 @@ extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHI
     assert(success);
     
     /// Set mouse acceleration on the driver
-    success = success && setAccelToTableBasedCurve(points, serviceClient); /// TODO: This fails sometimes randomly, try again
+    /// TODO: This fails sometimes randomly - try again in a loop or sth
+    success = success && setAccelToTableBasedCurve(points, serviceClient);
     assert(success);
     
     CFRelease(serviceClient);
@@ -299,6 +300,7 @@ static Boolean parametricCurvesAreSet(IOHIDServiceClientRef serviceClient) {
 static Boolean setTableCurves(CFDataRef curves, IOHIDServiceClientRef serviceClient) {
     
     if (parametricCurvesAreSet(serviceClient)) {
+        /// TODO: This is always true under Ventura! Change code to make it work anyways (Might not be able use tableBased curves ://///)
         DDLogError(@"Trying to set tableBasedCurve but parametricCurve is already set. This has no effect.");
         return false;
     }
