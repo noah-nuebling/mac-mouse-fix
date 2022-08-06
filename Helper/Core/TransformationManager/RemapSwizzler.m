@@ -30,12 +30,12 @@
 ///     The main reason is this:
 ///         When there's a `modificationPrecondition` P which is a subset of the `activeModifiers`A, but isn't exactly equal A, then we still want to activate the `modification` M that belongs to P.
 ///         This is why we need the RemapSwizzler instead of just querying the remaps dict directly.
-///         See `subSetOverride()` for the implementation of that.
+///         See `subsetSwizzler()` for the implementation of that.
 ///
 ///     But there's a second important usecase:
-///     During **addMode**, we need to change this map from modifiers -> triggers -> effects, such that any combination of trigger T and modifiers M that the user can input, is mapped to `addModeFeedback_T_M`. But this would mean combinatoric explosion if we wanted to store that all in the remaps dict in TransformationManger. (I know cool words) So we came up with this weird solution:
+///     During **addMode**, we need to change this map from modifiers -> triggers -> effects, such that any combination of trigger T and modifiers M that the user can input, is mapped to `addModeFeedback_T_M`. But this would mean c o m b i n a t o r i c | e x p l o s i o n if we wanted to store that all in the remaps dict in TransformationManger.So we came up with this weird solution:
 ///         Basically the TransformationManager creates a map from noModifiers -> anyTrigger -> addModeFeedback, as a dictionary, which isn't that large because there aren't that many triggers, and then we swizzle up that map in **RemapSwizzler** so it becomes the full anyModifier -> anyTrigger -> addModeFeedback map!
-///         See `addModeOverride()` for the implementation of that.
+///         See `addModeSwizzler()` for the implementation of that.
 
 @implementation RemapSwizzler
 
