@@ -36,6 +36,9 @@
 @property (weak) IBOutlet NSSlider *scrollStepSizeSlider;
 @property (weak) IBOutlet NSButton *invertScrollCheckBox;
 
+@property (weak) IBOutlet NSBox *preferenceBox;
+
+
 @end
 
 @implementation AppDelegate
@@ -150,6 +153,12 @@ static NSDictionary *sideButtonActions;
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
     
     DDLogInfo(@"Mac Mouse Fix finished launching");
+    
+    /// Do weird tweaks for Ventura
+    ///     Pre-big sur also looks weird but in a different way. See https://github.com/noah-nuebling/mac-mouse-fix/issues/269
+    if (@available(macOS 13, *)) {
+        self.preferenceBox.contentView.frame = NSInsetRect(self.preferenceBox.contentView.frame, -1, 0);
+    }
     
     /// Load UI
     
@@ -273,18 +282,21 @@ NSTimer *removeAccOverlayTimer;
 }
 - (void)enableUI:(BOOL)enb {
     
+    /// Get state
     self.enableMouseFixCheckBox.state = enb;
     
+    /// Get superview of all the controls we want to disable
     NSView *baseView = [self.window.contentView subviewsWithIdentifier:@"baseView"][0];
     NSBox *preferenceBox = (NSBox *)[baseView subviewsWithIdentifier:@"preferenceBox"][0]; /// Should use outlets instead of this
     
-    
+    /// Iterate through and enable everything
     NSArray<NSView *> *recursiveSubviews = [preferenceBox.contentView nestedSubviews];
     for (NSObject *v in recursiveSubviews) {
         if ([[v class] isSubclassOfClass:[NSControl class]]) {
             [(NSControl *)v setEnabled:enb];
         }
     }
+    /// Forgot what this does
     if (enb) {
         [self disableScrollSettings:@(_scrollEnableCheckBox.state)];
     }

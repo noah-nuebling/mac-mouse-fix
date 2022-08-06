@@ -33,8 +33,6 @@
 #import "SharedUtility.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 
-
-
 @implementation DeviceManager
 
 # pragma mark - Vars and properties
@@ -167,8 +165,8 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
 
 static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
     
-    Device *removedMFDevice = [Device deviceForIOHIDDevice:device];
-    [_attachedDevices removeObject:removedMFDevice]; /// This might do nothing if this device wasn't contained in _attachedDevice (that's if it didn't pass filtering in `handleDeviceMatching()`)
+    Device *removedDevice = [Device deviceForIOHIDDevice:device];
+    [_attachedDevices removeObject:removedDevice]; // This might do nothing if this device wasn't contained in _attachedDevice (that's if it didn't pass filtering in `handleDeviceMatching()`)
     
     /// Notifiy other objects
     ///     If there aren't any relevant devices attached, then we might want to turn off some parts of the program.

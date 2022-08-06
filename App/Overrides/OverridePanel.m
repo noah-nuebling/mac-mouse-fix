@@ -27,6 +27,7 @@
 #import "AppDelegate.h"
 #import "Constants.h"
 #import "WannabePrefixHeader.h"
+#import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
 
 @interface OverridePanel ()
 
@@ -146,7 +147,11 @@ NSDictionary *_columnIdentifierToKeyPath;
     openPanel.canChooseDirectories = NO;
     openPanel.canCreateDirectories = NO; // Doesn't work
     openPanel.allowsMultipleSelection = YES; // Doesn't work :/
-    openPanel.allowedFileTypes = @[@"com.apple.application"];
+    if (@available(macOS 13, *)) {
+        openPanel.allowedContentTypes = @[[UTType typeWithIdentifier:@"com.apple.application"]];
+    } else {
+        openPanel.allowedFileTypes = @[@"com.apple.application"];
+    }
     openPanel.prompt = @"Choose";
     
     NSString *applicationsFolderPath = NSSearchPathForDirectoriesInDomains(NSApplicationDirectory, NSLocalDomainMask, YES).firstObject;
@@ -163,7 +168,11 @@ NSDictionary *_columnIdentifierToKeyPath;
         // Loop through all the files and process them.
         for (NSURL *fileURL in urls) {
             NSString* bundleID = [NSBundle bundleWithURL:fileURL].bundleIdentifier;
-            [bundleIDs addObject:bundleID];
+            if (bundleID != nil) { /// Some apps just dont' have bundle IDs. TODO: Handle this more gracefully.
+                [bundleIDs addObject:bundleID];
+            } else {
+                NSLog(@"Error in app specific settings: User selected an app without a bundle ID.");
+            }
         }
         [self addAppsToTableWithBundleIDs:bundleIDs atRow:0];
     }];
@@ -246,8 +255,10 @@ NSDictionary *_columnIdentifierToKeyPath;
     BOOL containsURL = [pasteboard.types containsObject:@"public.file-url"];
     NSDictionary *options = @{NSPasteboardURLReadingContentsConformToTypesKey : @[@"com.apple.application-bundle"]};
     BOOL containsApp = [pasteboard canReadObjectForClasses:@[NSURL.self] options:options];
-    
     NSArray<NSString *> *draggedBundleIDs = bundleIDsFromPasteboard(pasteboard);
+    if (draggedBundleIDs.count == 0) {
+        containsApp = NO; /// Guard: some apps don't have bundle IDs
+    }
     
     NSDictionary *draggedBundleIDsSorted = sortByAlreadyInTable(draggedBundleIDs);
     BOOL allAppsAlreadyInTable = (((NSArray *)draggedBundleIDsSorted[@"notInTable"]).count == 0);
