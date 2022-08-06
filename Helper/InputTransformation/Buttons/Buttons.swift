@@ -18,7 +18,12 @@ import CocoaLumberjackSwift
     /// Ivars
     static var queue: DispatchQueue = DispatchQueue(label: "com.nuebling.mac-mouse-fix.buttons", qos: .userInteractive, attributes: [], autoreleaseFrequency: .inherit, target: nil)
     static private var clickCycle = ClickCycle(buttonQueue: DispatchQueue(label: "replace this"))
-    static private var modifiers = ButtonModifiers()
+    static private var modifierManager = ButtonModifiers()
+    
+    /// Vars that we only update once per clickCycle
+    static var modifiers: [AnyHashable: Any] = [:]
+    static var modifications: [AnyHashable: Any] = [:]
+    static var maxClickLevel: Int = -1
     
     /// Init
     private static var isInitialized = false
@@ -27,53 +32,58 @@ import CocoaLumberjackSwift
         clickCycle = ClickCycle(buttonQueue: queue)
     }
     
-    /// Main interface
+    /// Handling input
     
     @objc static func handleInput(device: Device, button: NSNumber, downNotUp mouseDown: Bool, event: CGEvent) -> MFEventPassThroughEvaluation {
         
         var passThroughEvaluation = kMFEventPassThroughRefusal
-            
-        /// TODO: We shouldn't have to calculate this stuff on every button press. Maybe only  once per clickCycle. It's probably not a bottleneck at all though since it's doing very low-level stuff. 
         
             /// Init
         if !isInitialized { coolInitialize() }
         
-        /// Get modifications
-        let remaps = TransformationManager.remaps() /// This is apparently super slow because Swift needs to convert the dict. Much slower than all the redundant buttonLandscapeAssessor calculations.
-        var deviceAsOptional = device as Device?
-        let modifiers = ModifierManager.getActiveModifiers(for: &deviceAsOptional, filterButton: button, event: event)
-        /// ^ We wouldn't need to filter button if we changed the order of updating modifiers and sending triggers depending on mouseDown or mouseUp
-        let modifications = RemapsOverrider.effectiveRemapsMethod()(remaps, modifiers)
+        /// Get remaps
+        let remaps = TransformationManager.remaps()
+        
+        /// Update stuff when clickCycle starts
+        
+        let clickCycleIsActive = clickCycle.isActiveFor(device: device.uniqueID(), button: button)
+        if mouseDown && !clickCycleIsActive {
+            
+            /// Update active device
+            State.updateActiveDevice(event: event)
+            
+            /// Update modifications
+            let remaps = TransformationManager.remaps() /// This is apparently super slow because Swift needs to convert the dict. Much slower than all the redundant buttonLandscapeAssessor calculations.
+            self.modifiers = ModifierManager.getActiveModifiers(for: State.activeDevice!, filterButton: nil, event: event)
+            /// ^ TODO: I don't think we need to filter the button here.
+            self.modifications = RemapsOverrider.effectiveRemapsMethod()(remaps, modifiers)
+            
+            /// Get max clickLevel
+            self.maxClickLevel = 0
+            if mouseDown {
+                self.maxClickLevel = ButtonLandscapeAssessor.maxLevel(forButton: button, remaps: remaps, modificationsActingOnThisButton: modifications)
+            }
+            
+        }
         
         /// Decide passthrough
-        let effectExists = ButtonLandscapeAssessor.effectExists(forButton: button, remaps: remaps, modificationsActingOnButton: modifications)
-        let waitingForRelease = clickCycle.waitingForRelease(device: device, button: ButtonNumber(truncating: button))
-        if !effectExists && !waitingForRelease { /// We could also check if an effect exists by checking maxClickLevel == 0
-            passThroughEvaluation = kMFEventPassThroughApproval
+        if self.maxClickLevel == 0 {
             return kMFEventPassThroughApproval
         }
         
-        /// Get max clickLevel
-        ///     This recalculates some stuff from the main assessment. -> Consider restructuring
-        var maxClickLevel = 0
-        if mouseDown {
-            maxClickLevel = ButtonLandscapeAssessor.maxLevel(forButton: button, remaps: remaps, modificationsActingOnThisButton: modifications)
-        } /// On mouseUp, the clickCycle should ignore the maxClickLevel anyways
-        
         /// Dispatch through clickCycle
         clickCycle.handleClick(device: device, button: ButtonNumber(truncating: button), downNotUp: mouseDown, maxClickLevel: maxClickLevel,
-                               modifierCallback: { modifierPhase, clickLevel, device, buttonNumber in
-            
+                               triggerCallback: { triggerPhase, clickLevel, device, buttonNumber, onRelease in
             ///
             /// Update modifiers
-            /// TODO: Consider merging this with the main callback and using the `releaseCallback` to make it work properly
-                
-            self.modifiers.update(device: device, button: ButtonNumber(truncating: button), clickLevel: clickLevel, downNotUp: mouseDown)
+            ///
             
-            /// Debug
-            DDLogDebug("modifierCallback - lvl: \(clickLevel), phase: \(modifierPhase), btn: \(buttonNumber), dev: \"\(device.name())\"")
-            
-        }, triggerCallback: { triggerPhase, clickLevel, device, buttonNumber, releaseCallback in
+            if triggerPhase == .press {
+                self.modifierManager.update(device: device, button: ButtonNumber(truncating: button), clickLevel: clickLevel, downNotUp: true)
+                onRelease.append {
+                    self.modifierManager.update(device: device, button: ButtonNumber(truncating: button), clickLevel: clickLevel, downNotUp: false)
+                }
+            }
             
             ///
             /// Send triggers
@@ -83,6 +93,8 @@ import CocoaLumberjackSwift
             DDLogDebug("triggerCallback - lvl: \(clickLevel), phase: \(triggerPhase), btn: \(buttonNumber), dev: \"\(device.name())\"")
             
             /// Asses 'mappingLandscape'
+            ///     In theory we only have to do this on mouse down, because on mouse up the clickLevel doesn't change, and so no params for `assessMappingLandscape()` change
+            
             var clickActionOfThisLevelExists: ObjCBool = false
             var effectForMouseDownStateOfThisLevelExists: ObjCBool = false
             var effectOfGreaterLevelExists: ObjCBool = false
@@ -90,7 +102,6 @@ import CocoaLumberjackSwift
             ButtonLandscapeAssessor.assessMappingLandscape(withButton: button as NSNumber, level: clickLevel as NSNumber, modificationsActingOnThisButton: modifications, remaps: remaps, thisClickDoBe: &clickActionOfThisLevelExists, thisDownDoBe: &effectForMouseDownStateOfThisLevelExists, greaterDoBe: &effectOfGreaterLevelExists)
             
             /// Create trigger -> action map based on mappingLandscape
-            ///     The idea about the releaseCallback is that we still want to finish what we started, but not start anything new if the clickCycle is killed
             
             var map: [ClickCycleTriggerPhase: (String, MFActionPhase)] = [:]
             
@@ -127,8 +138,7 @@ import CocoaLumberjackSwift
             
             /// Add modifiers to actionArray for addMode. See TransformationManager -> AddMode for context
             if actionArray[0][kMFActionDictKeyType] as! String == kMFActionDictTypeAddModeFeedback {
-                var deviceOptional: Device? = device
-                let realModifiers = ModifierManager.getActiveModifiers(for: &deviceOptional, filterButton: button as NSNumber, event: nil, despiteAddMode: true)
+                let realModifiers = ModifierManager.getActiveModifiers(for: device, filterButton: button as NSNumber, event: nil, despiteAddMode: true)
                 actionArray[0][kMFRemapsKeyModificationPrecondition] = realModifiers
             }
             
@@ -137,7 +147,7 @@ import CocoaLumberjackSwift
                 Actions.executeActionArray(actionArray, phase: kMFActionPhaseCombined)
             } else if startOrEnd == kMFActionPhaseStart {
                 Actions.executeActionArray(actionArray, phase: kMFActionPhaseStart)
-                releaseCallback = {
+                onRelease.append {
                     DDLogDebug("triggerCallback - unconditionalRelease button \(button)")
                     Actions.executeActionArray(actionArray, phase: kMFActionPhaseEnd)
                 }
@@ -153,7 +163,7 @@ import CocoaLumberjackSwift
             
             /// Notify modifiers
             ///     (Probably unnecessary, because the only modifiers that can be "deactivated" are buttons. And since there's only one clickCycle, any buttons modifying the current one should already be zombified)
-            ModifierManager.handleModificationHasBeenUsed(with: device, activeModifiers: modifiers)
+            ModifierManager.handleModificationHasBeenUsed(with: device, activeModifiers: self.modifiers)
         })
         
         return passThroughEvaluation
@@ -174,7 +184,7 @@ import CocoaLumberjackSwift
         if self.clickCycle.isActiveFor(device: device.uniqueID(), button: button) {
             self.clickCycle.kill()
         }
-        self.modifiers.kill(device: device, button: ButtonNumber(truncating: button)) /// Not sure abt this
+        self.modifierManager.kill(device: device, button: ButtonNumber(truncating: button)) /// Not sure abt this
     }
     
     @objc static func handleButtonHasHadEffectAsModifier(device: Device, button: NSNumber) {
@@ -193,12 +203,8 @@ import CocoaLumberjackSwift
     
     /// Interface for accessing submodules
     
-    @objc static func getActiveButtonModifiers_Unsafe(devicePtr: UnsafeMutablePointer<Device?>) -> [[String: Int]] {
-        var result: [[String: Int]] = []
-        var device = devicePtr.pointee
-        result = modifiers.getActiveButtonModifiersForDevice(device: &device)
-        devicePtr.pointee = device
-        return result
+    @objc static func getActiveButtonModifiers_Unsafe(device: Device) -> [[String: Int]] {
+        return modifierManager.getActiveButtonModifiersForDevice(device: device)
     }
     
 }

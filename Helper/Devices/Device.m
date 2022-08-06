@@ -25,32 +25,34 @@
 
 @implementation Device
 
-NSMutableDictionary *_deviceCache = nil;
-
 #pragma mark - Init
 
 /// Create instances with this function
 /// DeviceManager calls this for each relevant device it finds
+
++ (Device *)deviceWithIOHIDDevice:(IOHIDDeviceRef)iohidDevice {
+    Device *device = [[Device alloc] initWithIOHIDDevice:iohidDevice];
+    return device;
+}
 
 - (Device *)initWithIOHIDDevice:(IOHIDDeviceRef)IOHIDDevice {
     self = [super init];
     if (self) {
         
         /// Set state
-        _IOHIDDevice = IOHIDDevice;
-        _isSeized = NO;
+        _iohidDevice = IOHIDDevice;
         
         /// Open device
         ///     This seems to be necessary in the Ventura Beta.
         ///     See https://github.com/noah-nuebling/mac-mouse-fix/issues/297. And thanks to @chamburr!!
-        IOReturn ret = IOHIDDeviceOpen(self.IOHIDDevice, kIOHIDOptionsTypeNone);
+        IOReturn ret = IOHIDDeviceOpen(self.iohidDevice, kIOHIDOptionsTypeNone);
         if (ret) {
             DDLogInfo(@"Error opening device. Code: %x", ret);
         }
         
         /// Set values of interest for callback
         NSDictionary *buttonMatchDict = @{ @(kIOHIDElementUsagePageKey): @(kHIDPage_Button) };
-        IOHIDDeviceSetInputValueMatching(_IOHIDDevice, (__bridge CFDictionaryRef)buttonMatchDict);
+        IOHIDDeviceSetInputValueMatching(_iohidDevice, (__bridge CFDictionaryRef)buttonMatchDict);
         
         /// Register callback
         IOHIDDeviceScheduleWithRunLoop(IOHIDDevice, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
@@ -119,48 +121,41 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
     
     Device *sendingDev = (__bridge Device *)context;
     
+    /// Get elements
     IOHIDElementRef elem = IOHIDValueGetElement(value);
     uint32_t usage = IOHIDElementGetUsage(elem);
     uint32_t usagePage = IOHIDElementGetUsagePage(elem);
-    
-    DDLogDebug(@"Received HID input - usagePage: %d usage: %d value: %ld from device: %@", usagePage, usage, (long)IOHIDValueGetIntegerValue(value), sendingDev.name);
-    
+    /// Get info
     BOOL isButton = usagePage == 9;
-    
     assert(isButton);
-        
     MFMouseButtonNumber button = usage;
     
-    [ButtonInputReceiver handleHIDButtonInputFromRelevantDeviceOccured:sendingDev button:@(button) stemsFromDeviceSeize:NO];
+    /// Debug
+    DDLogDebug(@"Received HID input - usagePage: %d usage: %d value: %ld from device: %@", usagePage, usage, (long)IOHIDValueGetIntegerValue(value), sendingDev.name);
     
-    int64_t pressure = IOHIDValueGetIntegerValue(value);
+    /// Notify ButtonInputReceiver
+    [ButtonInputReceiver handleHIDButtonInputFromRelevantDeviceOccured:sendingDev button:@(button)];
     
-    if (button != 1 && button != 2) { /// Don't print left and right click as to not clog up the logs
-//            DDLogDebug(@"Received HID Button Input - btn: %d, pressure: %lld", button, pressure);
-    }
     /// Stop momentumScroll on LMB click
     ///     ButtonInputReceiver tries to filter out LMB and RMB events as early as possible, so it's better to do this here
+    int64_t pressure = IOHIDValueGetIntegerValue(value);
     if (button == 1 && pressure != 0) {
         [GestureScrollSimulator stopMomentumScroll];
-    }
-    
-    /// Post fake button input events, if the device is seized
-
-    if (sendingDev.isSeized) {
-        //DDLogDebug(@"BUTTON INP COMES FORM SEIZED");
-        [ButtonInputReceiver insertFakeEventWithButton:button isMouseDown:pressure!=0];
-        
     }
 }
 
 #pragma mark - Properties + override NSObject methods
 
 - (NSNumber *)uniqueID {
-    return (__bridge NSNumber *)IOHIDDeviceGetProperty(_IOHIDDevice, CFSTR(kIOHIDUniqueIDKey));
+    return (__bridge NSNumber *)IOHIDDeviceGetProperty(_iohidDevice, CFSTR(kIOHIDUniqueIDKey));
 }
 
+- (BOOL)wrapsIOHIDDevice:(IOHIDDeviceRef)iohidDevice {
+    NSNumber *otherID = (__bridge NSNumber *)IOHIDDeviceGetProperty(iohidDevice, CFSTR(kIOHIDUniqueIDKey));
+    return [self.uniqueID isEqual:otherID];
+}
 - (BOOL)isEqualToDevice:(Device *)device {
-    return CFEqual(self.IOHIDDevice, device.IOHIDDevice);
+    return CFEqual(self.iohidDevice, device.iohidDevice);
 }
 - (BOOL)isEqual:(Device *)other {
     
@@ -183,7 +178,7 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
 
 - (NSString *)name {
     
-    IOHIDDeviceRef device = self.IOHIDDevice;
+    IOHIDDeviceRef device = self.iohidDevice;
     NSString *product = IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductKey));
     NSString *manufacturer = IOHIDDeviceGetProperty(device, CFSTR(kIOHIDManufacturerKey));
     
@@ -194,7 +189,7 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
 - (NSString *)description {
     
     @try {
-        IOHIDDeviceRef device = self.IOHIDDevice;
+        IOHIDDeviceRef device = self.iohidDevice;
         
         NSString *product = IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductKey));
         NSString *manufacturer = IOHIDDeviceGetProperty(device, CFSTR(kIOHIDManufacturerKey));
@@ -266,27 +261,5 @@ static uint64_t IOHIDDeviceGetRegistryID(IOHIDDeviceRef  _Nonnull device) {
     IORegistryEntryGetRegistryEntryID(service, &deviceID);
     return deviceID;
 }
-
-+ (Device *)deviceForIOHIDDevice:(IOHIDDeviceRef)device {
-    
-    /// TODO: Delete this
-    /// Move functionality to DeviceManager.
-    /// This `_deviceCache` is redundant with `_attachedDevices` array in deviceManager.
-    /// Goal: We wanna get an attached `Device` instance based on an incoming CGEvent - see `CGEventGetSendingDevice()`
-    
-    if (_deviceCache == nil) {
-        _deviceCache = [NSMutableDictionary dictionary];
-    }
-    uint64_t deviceID = IOHIDDeviceGetRegistryID(device);
-    Device *deviceFromCache = _deviceCache[@(deviceID)];
-    
-    if (deviceFromCache == nil) {
-        Device *newDevice = [[Device alloc] initWithIOHIDDevice:device];
-        _deviceCache[@(deviceID)] = newDevice;
-    }
-    
-    return _deviceCache[@(deviceID)];
-}
-
 
 @end

@@ -76,13 +76,10 @@ class ButtonModifiers: NSObject {
         state.removeValue(forKey: ButtonStateKey(device, button))
     }
     
-    func getActiveButtonModifiersForDevice(device: inout Device?) -> [[String: Int]] {
+    func getActiveButtonModifiersForDevice(device: Device) -> [[String: Int]] {
         /// When passing in nil for the devID, this function will try to find a device with pressed buttons and use that. It will also write that device to the `devID` argument
         
         /// get device
-        if device == nil {
-            device = getAnyDeviceWithPressedButtons()
-        }
         
         /// Get result
         let buttonStates = Array(state.values)
@@ -101,23 +98,23 @@ class ButtonModifiers: NSObject {
         }
         
         /// Debug
-        DDLogDebug("buttonModifiers - gotMods for dev: \"\(device?.name() ?? "?")\": \(result)")
+        DDLogDebug("buttonModifiers - gotMods for dev: \"\(device.name())\": \(result)")
         
         /// Return
         return result
     }
     
-    func getAnyDeviceWithPressedButtons() -> Device? {
-        /// Get the first device we find that has any pressed buttons
-        
-        for device: Device in DeviceManager.attachedDevices() {
-            for bs: ButtonState in state.values {
-                if bs.device == device && bs.isPressed {
-                    return device
-                }
-            }
-        }
-        return nil
-    }
+//    func getAnyDeviceWithPressedButtons() -> Device? {
+//        /// Get the first device we find that has any pressed buttons
+//        
+//        for device: Device in DeviceManager.attachedDevices() {
+//            for bs: ButtonState in state.values {
+//                if bs.device == device && bs.isPressed {
+//                    return device
+//                }
+//            }
+//        }
+//        return nil
+//    }
     
 }

@@ -69,11 +69,11 @@ static void registerInputCallback() {
     
     DDLogInfo(@"Inserting event");
     
-    // Create event
+    /// Create event
     CGEventType mouseEventType = [SharedUtility CGEventTypeForButtonNumber:button isMouseDown:isMouseDown];
     CGPoint mouseLoc = getPointerLocation();
     CGEventRef fakeEvent = CGEventCreateMouseEvent(NULL, mouseEventType, mouseLoc, [SharedUtility CGMouseButtonFromMFMouseButtonNumber:button]);    
-    // Insert event
+    /// Insert event
     CGEventRef ret = eventTapCallback(0, CGEventGetType(fakeEvent), fakeEvent, nil);
     CFRelease(fakeEvent);
     if (ret) {
@@ -81,31 +81,27 @@ static void registerInputCallback() {
     }
 }
 
-/// _buttonInputsFromRelevantDevices is a queue with one entry for each unhandled button input coming from a relevant device
+/// `_buttonInputsFromRelevantDevices` is a queue with one entry for each unhandled button input coming from a relevant device
 /// Instances of Device insert values into this queue  when they receive input from the IOHIDDevice which they own.
-/// Input from the IOHIDDevice will always occur shortly before `ButtonInputReceiver_CG::handleIput()`. (Pretty sure)
-/// This allows `ButtonInputReceiver_CG::handleIput()` to gain information about the nature of the incoming event, especially the device it stems from.
+/// Input from the IOHIDDevice will always occur shortly before `ButtonInputReceiver->eventTapCallback()`. (Pretty sure)
+/// This allows `ButtonInputReceiver->eventTapCallback()` to gain information about the nature of the incoming event, especially the device it stems from.
 ///     It also allows us to filter out input from devices which aren't relevant
-///         (Because don't create an Device instance for irrelevant devices, and so they can't insert their events into _buttonInputsFromRelevantDevices)
-///         (All Device instances for relevant devices can be found in DeviceManager.relevantDevices).
+///         (Because we don't create an Device instance for irrelevant devices, and so they can't insert their events into `_buttonInputsFromRelevantDevices`)
+///         (All Device instances for relevant devices can be found in DeviceManager.attachedDevices).
 static Queue<NSDictionary *> *_buttonInputsFromRelevantDevices;
 
-/// @param stemsFromSeize
-/// When an IOHIDDevice device is seized, the system will automatically send fake mouse up CG events for each of its pressed buttons.
-/// So when seizing, Device objects will call this function once for each pressed button, with the stemsFromSeize parameter set to YES.
-/// This way `handleInput()` knows whats up when these fake mouse up events occur.
-+ (void)handleHIDButtonInputFromRelevantDeviceOccured:(Device *)dev button:(NSNumber *)btn stemsFromDeviceSeize:(BOOL)stemsFromSeize {
-    if ([_buttonParseBlacklist containsObject:btn] && !stemsFromSeize) return;
++ (void)handleHIDButtonInputFromRelevantDeviceOccured:(Device *)dev button:(NSNumber *)btn {
+    if ([_buttonParseBlacklist containsObject:btn]) return;
     if (!CGEventTapIsEnabled(_eventTap)) return;
     
     [_buttonInputsFromRelevantDevices enqueue: @{
-        @"dev": dev,
-        @"stemsFromSeize": @(stemsFromSeize),
+        @"dev": dev, /// TODO: Now that this has only 1 value – make it not a dict
     }];
 }
 + (BOOL)allRelevantButtonInputsHaveBeenProcessed {
     return [_buttonInputsFromRelevantDevices isEmpty];
 }
+
 NSArray *_buttonParseBlacklist; /// Don't send inputs from these buttons to ButtonInputParser
 
 static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
@@ -137,35 +133,26 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         DDLogDebug(@"Received CG Button Input which can't be printed normally - Exception while printing: %@", exception);
     }
     
-    /// Process input
+    ///
+    /// Main logic
+    ///
     
+    /// Get data from relevant-input-queue
     if ([_buttonInputsFromRelevantDevices isEmpty]) return event;
-    
     NSDictionary *lastInputFromRelevantDevice = [_buttonInputsFromRelevantDevices dequeue];
-    
-    if (((NSNumber *)lastInputFromRelevantDevice[@"stemsFromSeize"]).boolValue) {
-        /// @Note This whole seizing mechanism was intended to stop the cursor from moving, but it caused tons of issues. We're now using CGWarpMouseCursor() to stop the cursor and it's much better. We should remove the seizing code.
-        return nil;
-    }
-    
-    /// Get buttonNumber and mouseUp/mouseDown
-    NSUInteger buttonNumber = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
-    long long pr = CGEventGetIntegerValueField(event, kCGMouseEventPressure);
-    MFButtonInputType triggertType = pr == 0 ? kMFButtonInputTypeButtonUp : kMFButtonInputTypeButtonDown;
-    
-    /// Filter out primary and secondary mouse button from being passed on to ButtonTriggerGenerator
-    if ([_buttonParseBlacklist containsObject:@(buttonNumber)]) return event;
-    
-    /// Get dev
     Device *dev = lastInputFromRelevantDevice[@"dev"];
     
-    /// Pass to ButtonTriggerGenerator
-//    MFEventPassThroughEvaluation eval = [ButtonTriggerGenerator parseInputWithButton:@(buttonNumber) triggerType:triggertType inputDevice:dev];
-    /// Pass to new rewritten buttonInput processing
+    /// Get info from cgEvent
+    NSUInteger buttonNumber = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
+    long long pr = CGEventGetIntegerValueField(event, kCGMouseEventPressure);
     BOOL mouseDown = pr != 0;
-    MFEventPassThroughEvaluation eval = [Buttons handleInputWithDevice:dev button:@(buttonNumber) downNotUp:mouseDown event: event];
     
-    /// Event passThrough
+    /// Filter buttons
+    if ([_buttonParseBlacklist containsObject:@(buttonNumber)]) return event;
+    
+    /// Pass to buttonInput processor
+    MFEventPassThroughEvaluation eval = [Buttons handleInputWithDevice:dev button:@(buttonNumber) downNotUp:mouseDown event: event];
+    /// Let events pass through
     if (eval == kMFEventPassThroughRefusal) {
         return nil;
     } else {

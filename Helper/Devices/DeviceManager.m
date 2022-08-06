@@ -84,8 +84,17 @@ static NSMutableArray<Device *> *_attachedDevices;
     /// Meant to be called when the app closes
     
     for (Device *device in _attachedDevices) {
-        [PointerSpeed deconfigureDevice:device.IOHIDDevice];
+        [PointerSpeed deconfigureDevice:device.iohidDevice];
     }
+}
+
++ (Device * _Nullable)attachedDeviceWithIOHIDDevice:(IOHIDDeviceRef)iohidDevice {
+    for (Device *device in _attachedDevices) {
+        if ([device wrapsIOHIDDevice:iohidDevice]) {
+            return device;
+        }
+    }
+    return nil;
 }
 
 # pragma mark - Setup callbacks
@@ -165,7 +174,7 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
 
 static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
     
-    Device *removedDevice = [Device deviceForIOHIDDevice:device];
+    Device *removedDevice = [Device deviceWithIOHIDDevice:device];
     [_attachedDevices removeObject:removedDevice]; // This might do nothing if this device wasn't contained in _attachedDevice (that's if it didn't pass filtering in `handleDeviceMatching()`)
     
     /// Notifiy other objects
@@ -201,7 +210,7 @@ static void attachIOHIDDevice(IOHIDDeviceRef device) {
     /// Helper function for handleDeviceMatching()
     
     /// Create Device instance
-    Device *newDevice = [Device deviceForIOHIDDevice:device];
+    Device *newDevice = [Device deviceWithIOHIDDevice:device];
     
     /// Add to attachedDevices list
     [_attachedDevices addObject:newDevice];

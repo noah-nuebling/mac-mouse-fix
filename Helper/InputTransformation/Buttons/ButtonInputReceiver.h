@@ -46,7 +46,7 @@ typedef enum {
 
 + (void)insertFakeEventWithButton:(MFMouseButtonNumber)button isMouseDown:(BOOL)isMouseDown;
 
-+ (void)handleHIDButtonInputFromRelevantDeviceOccured:(Device *)dev button:(NSNumber *)btn stemsFromDeviceSeize:(BOOL)stemsFromSeize;
++ (void)handleHIDButtonInputFromRelevantDeviceOccured:(Device *)dev button:(NSNumber *)btn;
 + (BOOL)allRelevantButtonInputsHaveBeenProcessed;
 
 @end

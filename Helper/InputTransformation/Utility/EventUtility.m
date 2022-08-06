@@ -26,18 +26,6 @@ NSMutableDictionary *_hidDeviceCache = nil;
 IOHIDDeviceRef _Nullable CGEventGetSendingDevice(CGEventRef cgEvent) {
     /// Sometimes CGEventGetHIDEvent() doesn't work. I observed this in the `PollingRateMeasurer` where it doesn't work for mouseDragged events. (Only mouseMoved). This works for `mouseDragged` events as well! -> Use this instead of `HIDEventGetSendingDevice()` as long as `CGEventGetHIDEvent()` isn't reliable.
     
-    /// Testing
-//    HIDEvent *hidEvent = CGEventGetHIDEvent(cgEvent);
-//    uint64_t hidSenderID = hidEvent.senderID;
-//    NSMutableArray *potentialIDs = [NSMutableArray array];
-//    for (int i = 0; i < 256; i++) {
-//        int64_t field = CGEventGetIntegerValueField(cgEvent, i);
-//        uint64_t potentialID;
-//        memcpy(&potentialID, &field, sizeof(int64_t));
-//        [potentialIDs addObject:@[@(i), @(potentialID)]];
-//    }
-//    DDLogDebug(@"SenderID: %llu, Potential IDs: %@", hidSenderID, potentialIDs);
-    
     /// Main Logic
     int64_t senderFieldValue = CGEventGetIntegerValueField(cgEvent, 87);
     uint64_t senderID;
@@ -46,14 +34,12 @@ IOHIDDeviceRef _Nullable CGEventGetSendingDevice(CGEventRef cgEvent) {
     if (senderID == 0) {
         assert(false);
     }
-    
     return getSendingDeviceWithSenderID(senderID);
 }
 
 IOHIDDeviceRef _Nullable HIDEventGetSendingDevice(HIDEvent *hidEvent) {
     /// This version uses a cache to avoid calling IOHIDDeviceCreate() (which is super slow) over and over.
     ///     \note Do we need to reset the cache at certain points?
-    ///     \note Now that we use the cache we should be able to use the version that iterates over all parents instead of only checking the second parent, without it being too slow.
     
     assert(hidEvent != NULL);
     if (hidEvent == NULL) return NULL;
@@ -69,7 +55,9 @@ IOHIDDeviceRef _Nullable HIDEventGetSendingDevice(HIDEvent *hidEvent) {
     
     return getSendingDeviceWithSenderID(senderID);
 }
+
 IOHIDDeviceRef _Nullable getSendingDeviceWithSenderID(uint64_t senderID) {
+    
     
     if (_hidDeviceCache == nil) {
         _hidDeviceCache = [NSMutableDictionary dictionary];
@@ -78,20 +66,13 @@ IOHIDDeviceRef _Nullable getSendingDeviceWithSenderID(uint64_t senderID) {
     id iohidDeviceFromCache = _hidDeviceCache[@(senderID)];
     
     if (iohidDeviceFromCache != nil) {
-        
-//        CFIndex retainCount = CFGetRetainCount((__bridge CFTypeRef)(iohidDeviceFromCache));
-//        DDLogDebug(@"cache retainCount: %ld", (long)retainCount);
-        
         return (__bridge IOHIDDeviceRef)iohidDeviceFromCache;
     }
     
     IOHIDDeviceRef iohidDevice = copySendingDevice_Reliable(senderID);
     assert(iohidDevice != NULL);
     
-    if (iohidDevice != NULL) {
-//        CFRetain(iohidDevice);
-        _hidDeviceCache[@(senderID)] = (__bridge_transfer id _Nullable)(iohidDevice);
-    }
+    _hidDeviceCache[@(senderID)] = (__bridge_transfer id _Nullable)(iohidDevice);
     
     return iohidDevice;
 }
@@ -99,7 +80,7 @@ IOHIDDeviceRef _Nullable getSendingDeviceWithSenderID(uint64_t senderID) {
 IOHIDDeviceRef copySendingDevice_Faster(uint64_t senderID) {
     /// This gets the second parent of the registryEntry that sent the hidEvent. If that doesn't work, it returns NULL.
     /// This is still super slow because IOHIDDeviceCreate() is super slow
-    /// -> Just use _Reliable instead. Once a device is cached, it's plenty fast anyways.
+    /// -> Just use `_Reliable` instead. Once a device is cached, it's plenty fast anyways.
     
     
     /// Get IOService

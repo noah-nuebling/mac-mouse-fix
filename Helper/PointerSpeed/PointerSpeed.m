@@ -47,7 +47,7 @@ extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHI
     /// The CursorSense source code makes me think that happens after the computer wakes up from sleep or after a new display has been attached and etc. but more testing is needed. We might not need this at all.
     
     for (Device *device in DeviceManager.attachedDevices) {
-        [self setForDevice:device.IOHIDDevice];
+        [self setForDevice:device.iohidDevice];
     }
     
 }

@@ -250,6 +250,9 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         /// Disable suspension
         _isSuspended = NO;
         
+        /// Update active device
+        [State updateActiveDeviceWithEvent:event];
+        
         /// Update application Overrides
         [ScrollUtility updateMouseDidMoveWithEvent:event];
         if (!ScrollUtility.mouseDidMove) {

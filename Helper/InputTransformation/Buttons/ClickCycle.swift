@@ -9,6 +9,13 @@
 
 /// Module for Buttons.swift
 
+/// Terminology & explanations:
+///     This class is called `ClickCycle`, but when we talk about the abstract concept of a `clickCycle` that denotes a series of button pressed and button released inputs by the user that the user perceives as being part of one continuous action. Maybe a better name would've been `clickGesture` or something.
+///     So a clickCycle always starts on buttonPressed input, where that input is the first in a series of consecutive clicks. And where a series of consecutive clicks of length 2 would generally be called a double click. A click cycle can end (aka be killed) in different ways. See the code for more details.
+///
+///     The `ClickCycle` class is used to track an abstract clickCycle and analyze it. Perhaps most importantly, it tracks state transitions not only to button pressed and button released states but also to more abstract states: `button held down` and `level expired`. Then it can notify the client of these state transitions and the client can do cool stuff with that.
+///     This is not everything to know about this class.
+
 /// Thread safety:
 ///     All calls to this are expected to come from the dispatchQueue owned by Buttons.swift `buttonsQueue`. It will also protect its timer callbacks using `buttonQueue`.
 ///     So when using this:
@@ -40,7 +47,7 @@ enum ClickCycleModifierPhase: Int {
 typealias ButtonNumber = Int
 typealias ClickLevel = Int
 typealias UnconditionalReleaseCallback = (() -> ())
-typealias ClickCycleTriggerCallback = (ClickCycleTriggerPhase, ClickLevel, Device, ButtonNumber, inout UnconditionalReleaseCallback?) -> ()
+typealias ClickCycleTriggerCallback = (ClickCycleTriggerPhase, ClickLevel, Device, ButtonNumber, inout [UnconditionalReleaseCallback]) -> ()
 typealias ClickCycleModifierCallback = (ClickCycleModifierPhase, ClickLevel, Device, ButtonNumber) -> ()
 
 fileprivate enum ButtonPressState {
@@ -83,8 +90,8 @@ class ClickCycle: NSObject {
     }
     
     /// Release callbacks
-    ///     Clients can register a callback that will *always* be triggered on release, even if the buttton in question doesn't belong to the current click cycle
-    fileprivate var releaseCallbacks: [ReleaseCallbackKey: UnconditionalReleaseCallback] = [:]
+    ///     Clients can register a callback that will *always* be triggered when a button is released, even if the release event doesn't belong to the active click cycle
+    fileprivate var releaseCallbacks: [ReleaseCallbackKey: [UnconditionalReleaseCallback]] = [:]
     public func waitingForRelease(device: Device, button: ButtonNumber) -> Bool {
         return releaseCallbacks[.init(device, button)] != nil
     }
@@ -104,7 +111,20 @@ class ClickCycle: NSObject {
         return state.device.uniqueID() == device && state.button == ButtonNumber(truncating: button)
     }
     
-    func handleClick(device: Device, button: ButtonNumber, downNotUp mouseDown: Bool, maxClickLevel: Int, modifierCallback: @escaping ClickCycleModifierCallback, triggerCallback: @escaping ClickCycleTriggerCallback) {
+    func handleClick(device: Device, button: ButtonNumber, downNotUp mouseDown: Bool, maxClickLevel: Int, triggerCallback: @escaping ClickCycleTriggerCallback) {
+        
+        ///
+        /// Call unconditionalReleaseCallbacks
+        ///
+        
+        if !mouseDown {
+            let k = ReleaseCallbackKey(device, button)
+            if let callbacks = releaseCallbacks[k] {
+                for c in callbacks { c() }
+                releaseCallbacks.removeValue(forKey: k)
+                
+            }
+        }
         
         ///
         /// Update state
@@ -129,49 +149,31 @@ class ClickCycle: NSObject {
             state!.clickLevel = Math.intCycle(x: state!.clickLevel + 1, lower: 1, upper: maxClickLevel)
         }
         
-        ///
-        /// unconditionalReleaseCallback
-        ///
-        
-        if !mouseDown {
-            let key = ReleaseCallbackKey(device, button)
-            if let callback = releaseCallbacks[key] {
-                callback()
-                releaseCallbacks.removeValue(forKey: key)
-                
-            }
-        }
-        ///
-        /// modifierCallback
-        ///
-        
-        if mouseDown {
-            modifierCallback(.press, state!.clickLevel, device, button)
-        } else {
-            modifierCallback(.release, -1, device, button)
-        }
-        
-        let lonelyRelease = !mouseDown && (state == nil || state!.device != device || state!.button != button) /// Release outside of clickCycle it belongs to
+        /// Check: release outside of clickCycle it belongs to
+        let lonelyRelease = !mouseDown && (state == nil || state!.device != device || state!.button != button)
         
         if !lonelyRelease {
+            
+            
+            /// Check: release after being held for an extended time
+            let releaseFromHold = !mouseDown && state?.pressState == .held
             
             ///
             /// triggerCallback
             ///
             
-            let releaseFromHold = !mouseDown && state?.pressState == .held
             if mouseDown {
-                var releaseCallback: UnconditionalReleaseCallback? = nil
-                triggerCallback(.press, state!.clickLevel, device, button, &releaseCallback)
-                if let c = releaseCallback { releaseCallbacks[.init(device, button)] = c }
-            } else {
+                var c: [UnconditionalReleaseCallback] = []
+                triggerCallback(.press, state!.clickLevel, device, button, &c)
+                if !c.isEmpty {
+                    releaseCallbacks[.init(device, button)] = c /// We can just override because the old releaseCallbacks must've been called already
+                }
+            } else { /// mouseUp
                 let trigger: ClickCycleTriggerPhase = releaseFromHold ? .releaseFromHold : .release
                 callTriggerCallback(triggerCallback, trigger, state!.clickLevel, device, button)
             }
             
-            ///
             /// Kill after releaseFromHold
-            ///
             if releaseFromHold {
                 kill()
                 return
@@ -188,16 +190,16 @@ class ClickCycle: NSObject {
             ///
             /// Consider using DispatchSourceTimer instead
             
-            assert(Thread.isMainThread) /// With the current setup we're already running on main (which is necessary for staring timers), and dispatching to main causes race conditions, so we're just asserting.
+            assert(Thread.isMainThread) /// We need to start timers from main. Dispatching to main caused race conditions.
             if mouseDown {
                 /// mouseDown
                 state?.upTimer.invalidate()
                 state?.downTimer = CoolTimer.scheduledTimer(timeInterval: 0.25, repeats: false, block: { timer in
                     self.buttonQueue.async {
                         /// Callback
-                        var releaseCallback: UnconditionalReleaseCallback? = nil
-                        triggerCallback(.hold, self.state!.clickLevel, device, button, &releaseCallback)
-                        if let c = releaseCallback {
+                        var c: [UnconditionalReleaseCallback] = []
+                        triggerCallback(.hold, self.state!.clickLevel, device, button, &c)
+                        if !c.isEmpty {
                             self.releaseCallbacks[.init(device, button)] = c
                         }
                         /// Update state
@@ -224,8 +226,8 @@ class ClickCycle: NSObject {
     
     private func callTriggerCallback(_ triggerCallback: ClickCycleTriggerCallback, _ trigger: ClickCycleTriggerPhase, _ clickLevel: ClickLevel, _ device: Device, _ button: ButtonNumber) {
         /// Convenience function - Calls triggerCallback and ignores the last `releaseCallback` argument
-        var garbage: UnconditionalReleaseCallback? = nil
+        var garbage: [UnconditionalReleaseCallback] = []
         triggerCallback(trigger, clickLevel, device, button, &garbage)
-        assert(garbage == nil)
+        assert(garbage.isEmpty)
     }
 }

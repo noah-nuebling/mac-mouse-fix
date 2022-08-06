@@ -10,13 +10,17 @@
 #import <Foundation/Foundation.h>
 #import "Device.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface DeviceManager : NSObject
 
 + (void)load_Manual;
 + (BOOL)devicesAreAttached;
 + (NSArray<Device *> *)attachedDevices;
 
++ (Device * _Nullable)attachedDeviceWithIOHIDDevice:(IOHIDDeviceRef)iohidDevice;
 + (void)deconfigureDevices;
 
 @end
 
+NS_ASSUME_NONNULL_END
