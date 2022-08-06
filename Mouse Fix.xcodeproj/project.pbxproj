@@ -833,6 +833,49 @@
 			path = PolynomialRegression;
 			sourceTree = "<group>";
 		};
+		4F7A1A70289F2517007D5B30 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				4FA911E4260D00CB00553CA8 /* RemapTable */,
+				4F46EAA625FB770D0003423A /* AddWindow */,
+				4F2A1FA726042ACB0067691A /* Notifications */,
+				4FF665DC25F2C92700689B77 /* Accessibility */,
+				4FF665CC25F2C92700689B77 /* MoreSheet */,
+				4FF665C625F2C92700689B77 /* Update */,
+				4FF665BF25F2C92700689B77 /* Overrides */,
+				4F7A1A71289F2533007D5B30 /* Utility */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		4F7A1A71289F2533007D5B30 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				4F7AB0522606692C0008055E /* UIStrings */,
+				4F1C51D8260543DD007F4930 /* NSTextField+Additions.h */,
+				4F1C51D9260543DD007F4930 /* NSTextField+Additions.m */,
+				4F79A8292605074000076A7E /* NSAttributedString+Additions.h */,
+				4F79A82A2605074000076A7E /* NSAttributedString+Additions.m */,
+				4FB5FE8A27AE563F0092C9B4 /* MFScrollView.h */,
+				4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */,
+				4FF665C425F2C92700689B77 /* MFSegmentedControl.h */,
+				4FF665C125F2C92700689B77 /* MFSegmentedControl.m */,
+				4FF665E625F2C92700689B77 /* ClickableImageView.h */,
+				4FF665EB25F2C92700689B77 /* ClickableImageView.m */,
+				4FF665EA25F2C92700689B77 /* Hyperlink.h */,
+				4FF665E725F2C92700689B77 /* Hyperlink.m */,
+				4F92A72B260F6C7800529D1F /* NSView+Additions.h */,
+				4F92A72C260F6C7800529D1F /* NSView+Additions.m */,
+				4F3E067C26A2F97D000C9E06 /* URLMenuItem.h */,
+				4F3E067D26A2F97D000C9E06 /* URLMenuItem.m */,
+				4F854D7A2789146900B46E9D /* NSMenu+NSMenu_Additions.h */,
+				4F854D7B2789146900B46E9D /* NSMenu+NSMenu_Additions.m */,
+				4FEC9666278BBDC600548604 /* NSColor+Additions.h */,
+				4FEC9667278BBDC600548604 /* NSColor+Additions.m */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
 		4F7AB0522606692C0008055E /* UIStrings */ = {
 			isa = PBXGroup;
 			children = (
@@ -1220,15 +1263,9 @@
 				4FF665DB25F2C92700689B77 /* AppDelegate.m */,
 				4FF665D925F2C92700689B77 /* MouseFix.xib */,
 				4F8CE6FE2617738A00D70A76 /* AppTranslocation */,
-				4FA911E4260D00CB00553CA8 /* RemapTable */,
-				4F46EAA625FB770D0003423A /* AddWindow */,
-				4F2A1FA726042ACB0067691A /* Notifications */,
-				4FF665DC25F2C92700689B77 /* Accessibility */,
-				4FF665C625F2C92700689B77 /* Update */,
-				4FF665CC25F2C92700689B77 /* MoreSheet */,
-				4FF665BF25F2C92700689B77 /* Overrides */,
 				4FF665D025F2C92700689B77 /* Config */,
 				4FF665D625F2C92700689B77 /* MessagePort */,
+				4F7A1A70289F2517007D5B30 /* UI */,
 				4FF665E525F2C92700689B77 /* Utility */,
 				4FF665D425F2C92700689B77 /* Resources */,
 				4FF665E125F2C92700689B77 /* SupportFiles */,
@@ -1319,29 +1356,8 @@
 			children = (
 				4F39BC48263B179200FDF692 /* AppState.h */,
 				4F39BC49263B179200FDF692 /* AppState.m */,
-				4F7AB0522606692C0008055E /* UIStrings */,
-				4F1C51D8260543DD007F4930 /* NSTextField+Additions.h */,
-				4F1C51D9260543DD007F4930 /* NSTextField+Additions.m */,
-				4F79A8292605074000076A7E /* NSAttributedString+Additions.h */,
-				4F79A82A2605074000076A7E /* NSAttributedString+Additions.m */,
-				4FB5FE8A27AE563F0092C9B4 /* MFScrollView.h */,
-				4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */,
-				4FF665C425F2C92700689B77 /* MFSegmentedControl.h */,
-				4FF665C125F2C92700689B77 /* MFSegmentedControl.m */,
-				4FF665E625F2C92700689B77 /* ClickableImageView.h */,
-				4FF665EB25F2C92700689B77 /* ClickableImageView.m */,
-				4FF665EA25F2C92700689B77 /* Hyperlink.h */,
-				4FF665E725F2C92700689B77 /* Hyperlink.m */,
-				4F92A72B260F6C7800529D1F /* NSView+Additions.h */,
-				4F92A72C260F6C7800529D1F /* NSView+Additions.m */,
 				4FF665E925F2C92700689B77 /* Utility_App.h */,
 				4FF665E825F2C92700689B77 /* Utility_App.m */,
-				4F3E067C26A2F97D000C9E06 /* URLMenuItem.h */,
-				4F3E067D26A2F97D000C9E06 /* URLMenuItem.m */,
-				4F854D7A2789146900B46E9D /* NSMenu+NSMenu_Additions.h */,
-				4F854D7B2789146900B46E9D /* NSMenu+NSMenu_Additions.m */,
-				4FEC9666278BBDC600548604 /* NSColor+Additions.h */,
-				4FEC9667278BBDC600548604 /* NSColor+Additions.m */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
