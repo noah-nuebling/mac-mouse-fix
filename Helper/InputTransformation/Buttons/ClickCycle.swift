@@ -166,7 +166,7 @@ class ClickCycle: NSObject {
                 var c: [UnconditionalReleaseCallback] = []
                 triggerCallback(.press, state!.clickLevel, device, button, &c)
                 if !c.isEmpty {
-                    releaseCallbacks[.init(device, button)] = c /// We can just override because the old releaseCallbacks must've been called already
+                    releaseCallbacks[.init(device, button), default: []].append(contentsOf: c)
                 }
             } else { /// mouseUp
                 let trigger: ClickCycleTriggerPhase = releaseFromHold ? .releaseFromHold : .release
@@ -200,7 +200,7 @@ class ClickCycle: NSObject {
                         var c: [UnconditionalReleaseCallback] = []
                         triggerCallback(.hold, self.state!.clickLevel, device, button, &c)
                         if !c.isEmpty {
-                            self.releaseCallbacks[.init(device, button)] = c
+                            self.releaseCallbacks[.init(device, button), default: []].append(contentsOf: c)
                         }
                         /// Update state
                         self.state?.pressState = .held

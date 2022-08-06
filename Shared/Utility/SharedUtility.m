@@ -303,7 +303,45 @@
 
 #pragma mark - Other
 
-+ (NSObject *)deepCopyOf:(NSObject *)object {
++ (id)deepMutableCopyOf:(id)object {
+    /// NSPropertyListSerialization fails because we're using NSNumber as dictionary keys. CFPropertyListCreateDeepCopy doesn't work either.
+    ///     So we're doing this manually...
+        
+    if ([object isKindOfClass:NSDictionary.class]) {
+        ///
+        /// Dict
+        ///
+        NSDictionary *og = (NSDictionary *)object;
+        NSMutableDictionary *new = [NSMutableDictionary dictionary];
+        [og enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull value, BOOL * _Nonnull stop) {
+            id newKey = [SharedUtility deepMutableCopyOf:key];
+            id newValue = [SharedUtility deepMutableCopyOf:value];
+            new[newKey] = newValue;
+        }];
+        return new;
+    } else if ([object isKindOfClass:NSArray.class]) {
+        ///
+        /// Array
+        ///
+        NSArray *og = (NSArray *)object;
+        NSMutableArray *new = [NSMutableArray array];
+        for (id element in og) {
+            [new addObject:[SharedUtility deepMutableCopyOf:element]];
+        }
+        return new;
+    } else {
+        ///
+        /// Leave node
+        ///
+        if ([object conformsToProtocol:@protocol(NSMutableCopying)]) {
+            return [object mutableCopy];
+        } else {
+            return object;
+        }
+    }
+}
+
++ (id)deepCopyOf:(id)object {
     return [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:object]];
 }
 

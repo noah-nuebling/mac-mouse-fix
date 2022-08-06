@@ -1,51 +1,86 @@
 //
 // --------------------------------------------------------------------------
-// RemapsOverrider.m
+// RemapSwizzler.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2021
 // Licensed under MIT
 // --------------------------------------------------------------------------
 //
 
-#import "RemapsOverrider.h"
+#import "RemapSwizzler.h"
 #import "ModifierManager.h"
 #import "DeviceManager.h"
 #import "TransformationManager.h"
 
 #import "SharedUtility.h"
 
-@implementation RemapsOverrider
-
 /// This class provides methods for obtaining combined remaps based on a remaps dict and some active modifiers.
 ///     These *combined* remaps are also sometimes called *effective remaps* or *remaps for current modifiers*, "activeModifications", "modificationsActingOnButton", etc.
 ///     If this doesn't make sense, see an example of the remaps dict structure in TransformationManager.m
 
+/// More rigorous explanation:
+///     The `remaps` dict in Transformation manager is a dict that is defined by the user in the UI and which represents a map from modifiers -> (triggers -> effects).
+///     Elements of the righthand side of this map, (which are themselves maps from (triggers -> effects)) are also often called a `modification`, and elements of the lefthand side are called the `modificationPrecondition`. The modifiers that the user is currently holding down are also called the `activeModifiers`.
+///
+///     The remaps dict could be considered a function r(modifiers) = modification.
+///     Now the **RemapSwizzler** provides functions that swizzle up an original remaps function R. They look like r'(R, modifiers) = modification.
+///
+///     Why do we need this? Why not just use the original function that the user defined directly and query the dictionary?
+///
+///     The main reason is this:
+///         When there's a `modificationPrecondition` P which is a subset of the `activeModifiers`A, but isn't exactly equal A, then we still want to activate the `modification` M that belongs to P.
+///         This is why we need the RemapSwizzler instead of just querying the remaps dict directly.
+///         See `subSetOverride()` for the implementation of that.
+///
+///     But there's a second important usecase:
+///     During **addMode**, we need to change this map from modifiers -> triggers -> effects, such that any combination of trigger T and modifiers M that the user can input, is mapped to `addModeFeedback_T_M`. But this would mean combinatoric explosion if we wanted to store that all in the remaps dict in TransformationManger. (I know cool words) So we came up with this weird solution:
+///         Basically the TransformationManager creates a map from noModifiers -> anyTrigger -> addModeFeedback, as a dictionary, which isn't that large because there aren't that many triggers, and then we swizzle up that map in **RemapSwizzler** so it becomes the full anyModifier -> anyTrigger -> addModeFeedback map!
+///         See `addModeOverride()` for the implementation of that.
+
+@implementation RemapSwizzler
+
 /// MARK: Interface
 
-+ (MFEffectiveRemapsMethod _Nonnull)effectiveRemapsMethod {
-
-    /// Returns a block
-    ///     - Which takes 2 arguments: `remaps` and `activeModifiers`
++ (NSDictionary *)swizzleRemaps:(NSDictionary *)remaps activeModifiers:(NSDictionary *)activeModifiers {
     
-//    return simpleOverride;
-    return subsetOverride;
+    if (TransformationManager.addModeIsEnabled) {
+        return addModeSwizzler(remaps, activeModifiers);
+    } else {
+        return subsetSwizzler(remaps, activeModifiers);
+    }
 }
 
-+ (NSDictionary  * _Nonnull)remapsForCurrentlyActiveModifiers {
-    /// Convenience method. Unused
+/// MARK: Swizzlers
+
+static NSDictionary *addModeSwizzler(NSDictionary *remaps, NSDictionary *activeModifierss) {
+
+    /// See `TransformationManager + enableAddMode` and top of this file for context.
     
-    NSDictionary *activeModifiers = [ModifierManager getActiveModifiersForDevice:nil filterButton:nil event:nil];
-    NSDictionary *remaps = TransformationManager.remaps;
+    NSMutableDictionary *modification = [SharedUtility deepMutableCopyOf:remaps[@{}]]; /// Deep copying so caller can store value without it changing after due to references
+    NSMutableDictionary *activeModifiers = [SharedUtility deepMutableCopyOf:(id)activeModifierss]; /// I think we deep mutable copy so the UI doesn't crash
     
-    return RemapsOverrider.effectiveRemapsMethod(remaps, activeModifiers);
+    if (activeModifiers.count > 0) { /// There need to be modifiers for drag and scroll triggers!
+        modification[kMFTriggerDrag][kMFRemapsKeyModificationPrecondition] = activeModifiers;
+        modification[kMFTriggerScroll][kMFRemapsKeyModificationPrecondition] = activeModifiers;
+    } else {
+        modification[kMFTriggerDrag] = nil;
+        modification[kMFTriggerScroll] = nil;
+    }
     
+    for (int btn = 1; btn <= kMFMaxButtonNumber; btn++) {
+        for (int lvl = 1; lvl <= 3; lvl++) {
+            for (NSString *dur in @[kMFButtonTriggerDurationClick, kMFButtonTriggerDurationHold]) {
+                modification[@(btn)][@(lvl)][dur][0][kMFRemapsKeyModificationPrecondition] = activeModifiers;
+            }
+        }
+    }
+    
+    return modification;
 }
 
-/// MARK: Effective remaps methods
-
-static NSDictionary *simpleOverride(NSDictionary *remaps, NSDictionary *activeModifiers) {
-    
-    /// Primitive remaps overriding method. Siimply takes the base (with an empty modification precondition) remaps and overrides it with the remaps which have a modificationPrecondition of exactly `activeModifiers`
+static NSDictionary *simpleSwizzler(NSDictionary *remaps, NSDictionary *activeModifiers) {
+    /// This is unused now.
+    /// Primitive remaps overriding method. Simply takes the base (with an empty modification precondition) remaps and overrides it with the remaps which have a modificationPrecondition of exactly `activeModifiers`
     
     NSDictionary *effectiveRemaps = remaps[@{}];
     NSDictionary *remapsForActiveModifiers = remaps[activeModifiers];
@@ -55,7 +90,7 @@ static NSDictionary *simpleOverride(NSDictionary *remaps, NSDictionary *activeMo
     return effectiveRemaps;
 }
 
-static NSDictionary *subsetOverride(NSDictionary *remaps, NSDictionary *activeModifiers) {
+static NSDictionary *subsetSwizzler(NSDictionary *remaps, NSDictionary *activeModifiers) {
     
     /// This allows combining modifiers
     /// Here's what it does

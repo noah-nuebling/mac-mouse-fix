@@ -16,7 +16,7 @@
 #import "SharedUtility.h"
 #import "HelperUtility.h"
 #import "CircularBuffer.h"
-#import "RemapsOverrider.h"
+#import "RemapSwizzler.h"
 #import "ScrollModifiers.h"
 #import "ModifierManager.h"
 #import "TransformationManager.h"

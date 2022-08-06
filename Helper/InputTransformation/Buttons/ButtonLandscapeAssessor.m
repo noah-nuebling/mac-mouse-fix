@@ -21,8 +21,8 @@
 /// Primarily used for `[ButtonTriggerHandler + handleButtonTriggerWithButton:...]` to help figure out when to fire clickEffects
 /// `activeModifiers` are the active modifiers including `button` (We've since removed this argument since we didn't use it)
 /// `activeModifiersActingOnThisButton` are the active modifiers with `button` filtered out
-/// `effectiveRemapsMethod` is a block taking `remaps` and `activeModifiersActingOnThisButton` and returning what the effective remaps acting on the button are.
-///     Should normally pass `[Utility Transform + effectiveRemapsMethod]` I think other stuff will break if we use sth else.
+/// `swizzler` is a block taking `remaps` and `activeModifiersActingOnThisButton` and returning what the effective remaps acting on the button are.
+///     Should normally pass `[Utility Transform + swizzler]` I think other stuff will break if we use sth else.
 + (void)assessMappingLandscapeWithButton:(NSNumber *)button
                                    level:(NSNumber *)level
          modificationsActingOnThisButton:(NSDictionary *)modificationsActingOnThisButton
@@ -132,7 +132,7 @@ static NSInteger maxLevelForButtonInModificationPreconditions(NSNumber *button, 
 //
 //    NSDictionary *remaps = TransformationManager.remaps;
 //    NSDictionary *modifiersActingOnThisButton = [ModifierManager getActiveModifiersForDevice:&device filterButton:button event:nil];
-//    NSDictionary *remapsActingOnThisButton = RemapsOverrider.effectiveRemapsMethod(remaps, modifiersActingOnThisButton);
+//    NSDictionary *remapsActingOnThisButton = RemapsOverrider.swizzler(remaps, modifiersActingOnThisButton);
 //
 //    BOOL clickActionOfThisLevelExists;
 //    BOOL effectForMouseDownStateOfThisLevelExists;

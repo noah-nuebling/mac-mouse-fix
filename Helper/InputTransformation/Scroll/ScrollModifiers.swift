@@ -29,13 +29,13 @@ import CocoaLumberjackSwift
         /// Get currently active scroll remaps
         
         let modifyingDevice: Device = State.activeDevice!;
-        let activeModifiers = ModifierManager.getActiveModifiers(for: modifyingDevice, filterButton: nil, event: event)
+        let activeModifiers = ModifierManager.getActiveModifiers(for: modifyingDevice, event: event)
         let baseRemaps = TransformationManager.remaps();
         
         /// Debug
 //        DDLogDebug("activeFlags in ScrollModifers: \(SharedUtility.binaryRepresentation((activeModifiers[kMFModificationPreconditionKeyKeyboard] as? NSNumber)?.uint32Value ?? 0))") /// This is unbelievably slow for some reason
         
-        self.activeModifications = RemapsOverrider.effectiveRemapsMethod()(baseRemaps, activeModifiers);
+        self.activeModifications = RemapSwizzler.swizzleRemaps(baseRemaps, activeModifiers: activeModifiers);
         
         guard let modifiedScrollDictUntyped = activeModifications[kMFTriggerScroll] else {
             return result; /// There are no active scroll modifications
@@ -76,14 +76,7 @@ import CocoaLumberjackSwift
             case kMFModifiedScrollEffectModificationTypeThreeFingerSwipeHorizontal:
                 result.effectMod = kMFScrollEffectModificationThreeFingerSwipeHorizontal
             case kMFModifiedScrollEffectModificationTypeAddModeFeedback:
-                
-                var payload = modifiedScrollDict
-                payload.removeValue(forKey: kMFModifiedScrollDictKeyEffectModificationType)
-                payload[kMFRemapsKeyModificationPrecondition] = NSMutableDictionary(dictionary: ModifierManager.getActiveModifiers(for: State.activeDevice!, filterButton: nil, event: event, despiteAddMode: true))
-                /// ^ Need to use NSMutableDictionary, otherwise Swift will make it immutable and mainApp will crash trying to build this payload into its remapArray
-                ModifierManager.handleModificationHasBeenUsed(with: modifyingDevice)
-                TransformationManager.concludeAddMode(withPayload: payload)
-                
+                result.effectMod = kMFScrollEffectModificationAddModeFeedback
             default:
                 fatalError("Unknown modifiedSrollDict type found in remaps")
             }
@@ -92,7 +85,16 @@ import CocoaLumberjackSwift
         /// Feedback
         let resultIsEmpty = result.inputMod == emptyResult.inputMod && result.effectMod == emptyResult.effectMod
         if !resultIsEmpty {
+            
+            /// Notify modifiers
             ModifierManager.handleModificationHasBeenUsed(with: modifyingDevice, activeModifiers: activeModifiers)
+            
+            /// Send addMode feedback
+            if result.effectMod == kMFScrollEffectModificationAddModeFeedback {
+                var payload = modifiedScrollDict
+                payload.removeValue(forKey: kMFModifiedScrollDictKeyEffectModificationType)
+                TransformationManager.concludeAddMode(withPayload: payload)
+            }
         }
         
         /// Debiug

@@ -54,9 +54,8 @@ import CocoaLumberjackSwift
             
             /// Update modifications
             let remaps = TransformationManager.remaps() /// This is apparently super slow because Swift needs to convert the dict. Much slower than all the redundant buttonLandscapeAssessor calculations.
-            self.modifiers = ModifierManager.getActiveModifiers(for: State.activeDevice!, filterButton: nil, event: event)
-            /// ^ TODO: I don't think we need to filter the button here.
-            self.modifications = RemapsOverrider.effectiveRemapsMethod()(remaps, modifiers)
+            self.modifiers = ModifierManager.getActiveModifiers(for: State.activeDevice!, event: event)
+            self.modifications = RemapSwizzler.swizzleRemaps(remaps, activeModifiers: modifiers)
             
             /// Get max clickLevel
             self.maxClickLevel = 0
@@ -133,14 +132,13 @@ import CocoaLumberjackSwift
                 let m3 = m2[duration],
                 var actionArray = m3 as? [[AnyHashable: Any]] /// Not nil -> a click/hold action does exist for this button + level + duration
             else {
-                return
+                return /// Return if there's no action array to send
             }
             
             /// Add modifiers to actionArray for addMode. See TransformationManager -> AddMode for context
-            if actionArray[0][kMFActionDictKeyType] as! String == kMFActionDictTypeAddModeFeedback {
-                let realModifiers = ModifierManager.getActiveModifiers(for: device, filterButton: button as NSNumber, event: nil, despiteAddMode: true)
-                actionArray[0][kMFRemapsKeyModificationPrecondition] = realModifiers
-            }
+//            if actionArray[0][kMFActionDictKeyType] as! String == kMFActionDictTypeAddModeFeedback {
+//                actionArray[0][kMFRemapsKeyModificationPrecondition] = self.modifiers
+//            }
             
             /// Execute actionArray
             if startOrEnd == kMFActionPhaseCombined {
@@ -154,12 +152,9 @@ import CocoaLumberjackSwift
             }
             
             /// Notify triggering button
-            ///     This not necessary for levelExpired and .releaseFromHold, because we already know that the clickCycle has beend killed
-            ///     -> Might be better to make this an assert
-            
-            if triggerPhase != .levelExpired && triggerPhase != .releaseFromHold {
-                self.handleButtonHasHadDirectEffect_Unsafe(device: device, button: button)
-            }
+            ///     For levelExpired and .releaseFromHold, we know that the clickCycle will be killed right after this callback.
+            ///     In that case it might not be necessary to notify the triggering button.
+            self.handleButtonHasHadDirectEffect_Unsafe(device: device, button: button)
             
             /// Notify modifiers
             ///     (Probably unnecessary, because the only modifiers that can be "deactivated" are buttons. And since there's only one clickCycle, any buttons modifying the current one should already be zombified)

@@ -68,8 +68,7 @@
 + (void)handleModificationHasBeenUsedWithDevice:(Device *)device {
     /// Convenience wrapper for `handleModifiersHaveHadEffect:activeModifiers:` if you don't have access to `activeModifiers`
     
-    NSDictionary *activeModifiers = [self getActiveModifiersForDevice:device filterButton:nil event:nil despiteAddMode:YES];
-    /// ^ Using despiteAddMode: YES bc it works
+    NSDictionary *activeModifiers = [self getActiveModifiersForDevice:device event:nil];
     [ModifierManager handleModificationHasBeenUsedWithDevice:device activeModifiers:activeModifiers];
 }
 + (void)handleModificationHasBeenUsedWithDevice:(Device *)device activeModifiers:(NSDictionary *)activeModifiers {
@@ -99,11 +98,10 @@ static void toggleModifierEventTapBasedOnRemaps(NSDictionary *remaps) {
         return;
     }
 
-    // If a modification collection exists such that it contains a proactive modification and its precondition contains a keyboard modifier, then activate the event tap.
+    /// If a modification collection exists such that it contains a proactive modification (aka modifierDriver modification) and its precondition contains a keyboard modifier, then activate the event tap.
     for (NSDictionary *modificationPrecondition in remaps) {
         NSDictionary *modificationCollection = remaps[modificationPrecondition];
         BOOL collectionContainsProactiveModification = modificationCollection[kMFTriggerDrag] != nil;
-            // ^ proactive modification === modifier driven modification !== trigger driven modification
         if (collectionContainsProactiveModification) {
             BOOL modificationDependsOnKeyboardModifier = modificationPrecondition[kMFModificationPreconditionKeyKeyboard] != nil;
             if (modificationDependsOnKeyboardModifier) {
@@ -123,7 +121,7 @@ CGEventRef _Nullable handleKeyboardModifiersHaveChanged(CGEventTapProxy proxy, C
     /// Get activeModifiers
     ///     Need to pass in event here as source for keyboard modifers, otherwise the returned kb-modifiers won't be up-to-date.
     ///     -> Idea: This might be because we're using a passive listener eventTap?
-    NSDictionary *activeModifiers = [ModifierManager getActiveModifiersForDevice:activeDevice filterButton:nil event:event];
+    NSDictionary *activeModifiers = [ModifierManager getActiveModifiersForDevice:activeDevice event:event];
     
     /// Do stuff
     reactToModifierChange(activeModifiers, activeDevice);
@@ -149,7 +147,7 @@ NSArray *_prevButtonModifiers;
     _prevButtonModifiers = buttonModifiers;
 }
 static void handleButtonModifiersHaveChangedWithDevice(Device *device) {
-    NSDictionary *activeModifiers = [ModifierManager getActiveModifiersForDevice:device filterButton:nil event:nil];
+    NSDictionary *activeModifiers = [ModifierManager getActiveModifiersForDevice:device event:nil];
     reactToModifierChange(activeModifiers, device);
 }
 
@@ -166,13 +164,13 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
 //    DDLogDebug(@"...CALLED BY %@", [SharedUtility getInfoOnCaller]);
     
     /// Get activeModifications
-    
-    NSDictionary *activeModifications = RemapsOverrider.effectiveRemapsMethod(TransformationManager.remaps, activeModifiers);
+    NSDictionary *activeModifications = [RemapSwizzler swizzleRemaps:TransformationManager.remaps activeModifiers:activeModifiers];
     
     /// Notify ScrollModifiers of modifierChange
     ///     It needs that to commit to an app in the app switcher when the user releases a button
+    ///     TODO: Make sure this always works, and not only when a ModifieDrag makes ModifierManager listen to modifierChanged events
     
-    [ScrollModifiers reactToModiferChangeWithActiveModifications: activeModifications];
+    [ScrollModifiers reactToModiferChangeWithActiveModifications:activeModifications];
     
     /// Kill old modifications
     
@@ -201,10 +199,10 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
                 
                 /// If addMode is active, add activeModifiers to modifiedDragDict
                 ///     See TransformationManager.m -> AddMode for context.
-                if ([modifiedDragEffect[kMFModifiedDragDictKeyType] isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
-                    modifiedDragEffect = modifiedDragEffect.mutableCopy; /// Make actually mutable
-                    modifiedDragEffect[kMFRemapsKeyModificationPrecondition] = [ModifierManager getActiveModifiersForDevice:device filterButton:nil event:nil despiteAddMode:YES]; /// Add activeModifiers
-                }
+//                if ([modifiedDragEffect[kMFModifiedDragDictKeyType] isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
+//                    modifiedDragEffect = modifiedDragEffect.mutableCopy; /// Make actually mutable
+//                    modifiedDragEffect[kMFRemapsKeyModificationPrecondition] = activeModifiers;
+//                }
                 
                 /// Determine usage threshold based on other active modifications
                 ///     It's easy to accidentally drag the mouse while trying to scroll so in that case we want a larger usageThreshold to avoid accidental drag activation
@@ -222,45 +220,20 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
 
 #pragma mark - Trigger driven modification
 
-///
-/// \discussion If you pass in an a CGEvent via the `event` argument, the returned keyboard modifiers will be more up-to-date. This is sometimes necessary to get correct data when calling this right after the keyboard modifiers have changed.
-/// \discussion Analyzing with `os_signpost` reveals this is called 9 times per button click and takes around 20% of the time.
-///     That's over a third of the time which is used by our code (I think) - We should look into optimizing this (if we have too much time - the program is plenty fast). Maybe caching the values or calling it less, or making it faster.
-/// \discussion If you pass in a pointer to nil for the `devID`, this function will try to find some device that has buttons pressed and use that to get the active modifiers and write id of the device it found into the `devID` argument. We never expect the user to use several mice at once, so this should work fine. If no device with any pressed buttons can be found, `devIDPtr` will be a pointer to nil upon return.
 
 #pragma mark Get Modifiers
 
-+ (NSDictionary *)getActiveModifiersForDevice:(Device *)device filterButton:(NSNumber *)filteredButton event:(CGEventRef)event {
-    
-    return [self getActiveModifiersForDevice:device filterButton:filteredButton event:event despiteAddMode:NO];
-}
++ (NSDictionary *)getActiveModifiersForDevice:(Device *)device event:(CGEventRef)event {
 
-+ (NSDictionary *)getActiveModifiersForDevice:(Device *)device filterButton:(NSNumber *)filteredButton event:(CGEventRef)event despiteAddMode:(BOOL)despiteAddMode {
-    
-    /// TODO: Remove the `filteredButton` feature. Shouldn't be needed now that we have Buttons.swift
-    
-    if (TransformationManager.addModeIsEnabled && !despiteAddMode) {
-        /// ^ AddMode needs to work no matter which modifiers are pressed, so we hack around things by lying and saying that no modifiers are pressed during addMode.
-        ///     To get the real modifiers despite addMode, pass in `YES` for `despiteAddMode`. You should only need this when fetching modifiers for the addMode payload to send back to the mainApp
-        return @{};
-    };
+    /// \discussion If you pass in an a CGEvent via the `event` argument, the returned keyboard modifiers will be more up-to-date. This is sometimes necessary to get correct data when calling this right after the keyboard modifiers have changed.
+    /// \discussion Analyzing with `os_signpost` reveals this is called 9 times per button click and takes around 20% of the time.
+    ///     That's over a third of the time which is used by our code (I think) - We should look into optimizing this (if we have too much time - the program is plenty fast). Maybe caching the values or calling it less, or making it faster.
     
     NSMutableDictionary *outDict = [NSMutableDictionary dictionary];
     
     CGEventFlags kb = [self getActiveKeyboardModifiersWithEvent:event];
-    NSMutableArray *btn = [Buttons getActiveButtonModifiers_UnsafeWithDevice:device].mutableCopy;
-    
-    if (filteredButton != nil && btn.count != 0) {
-        NSIndexSet *filterIndexes = [btn indexesOfObjectsPassingTest:^BOOL(NSDictionary *_Nonnull dict, NSUInteger idx, BOOL * _Nonnull stop) {
-            return [dict[kMFButtonModificationPreconditionKeyButtonNumber] isEqualToNumber:filteredButton];
-        }];
-        [btn removeObjectsAtIndexes:filterIndexes];
-    }
-    /// ^ filteredButton is used by `handleButtonTriggerWithButton:trigger:level:device:` to remove modification state caused by the button causing the current input trigger.
-        /// Don't fully understand this but I think a button shouldn't modify its own triggers.
-        /// You can't even produce a mouse down trigger without activating the button as a modifier... Just doesn't make sense.
-    /// Edit: But if we make sure that a button can never define a button modification on itself, then shouldn't it not matter if we filter the buttons out or not?
-    
+    NSArray *btn = [Buttons getActiveButtonModifiers_UnsafeWithDevice:device];
+        
     if (kb != 0) {
         outDict[kMFModificationPreconditionKeyKeyboard] = @(kb);
     }

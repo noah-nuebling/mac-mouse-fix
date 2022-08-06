@@ -587,8 +587,8 @@ static void getTriggerValues(int *btn1, int *lvl1, NSString **dur1, NSString **t
         *lvl1 = ((NSNumber *)trigger1[kMFButtonTriggerKeyClickLevel]).intValue;
         *dur1 = ((NSString *)trigger1[kMFButtonTriggerKeyDuration]);
     } else {
-        // Extract last element from button modification precondition and use that
-        // (This is why we need it mutable)
+        /// Extract last element from button modification precondition and use that
+        /// (This is why we need it mutable)
         NSMutableArray *buttonPreconds = ((NSArray *)tableEntryMutable1[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyButtons]).mutableCopy;
         NSDictionary *lastButtonPress = buttonPreconds.lastObject;
         [buttonPreconds removeLastObject];
@@ -606,9 +606,9 @@ static void getTriggerValues(int *btn1, int *lvl1, NSString **dur1, NSString **t
 - (void)initSorting {
     NSSortDescriptor *sd = [NSSortDescriptor sortDescriptorWithKey:nil ascending:YES comparator:^NSComparisonResult(NSDictionary * _Nonnull tableEntry1, NSDictionary * _Nonnull tableEntry2) {
         
-        // Create mutable deep copies so we don't mess table up accidentally
-        NSMutableDictionary *tableEntryMutable1 = (NSMutableDictionary *)[SharedUtility deepCopyOf:tableEntry1].mutableCopy;
-        NSMutableDictionary *tableEntryMutable2 = (NSMutableDictionary *)[SharedUtility deepCopyOf:tableEntry2].mutableCopy;
+        /// Create mutable deep copies so we don't mess table up accidentally
+        NSMutableDictionary *tableEntryMutable1 = (NSMutableDictionary *)[SharedUtility deepMutableCopyOf:tableEntry1];
+        NSMutableDictionary *tableEntryMutable2 = (NSMutableDictionary *)[SharedUtility deepMutableCopyOf:tableEntry2];
         
         // Get trigger info (button and level, duration, type)
         int btn1;

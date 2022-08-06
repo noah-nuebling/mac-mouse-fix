@@ -38,7 +38,7 @@
 		4F44FF052606D73D00926A5E /* SharedMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* SharedMessagePort.m */; };
 		4F5C2F802885C5D0001B9B8A /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C2F7F2885C5D0001B9B8A /* State.swift */; };
 		4F5F3EEE2756DB0A00C350C0 /* RemapsOverrider_old_.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5F3EED2756DB0A00C350C0 /* RemapsOverrider_old_.swift */; };
-		4F5F3EF12756EC0400C350C0 /* RemapsOverrider.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5F3EF02756EC0400C350C0 /* RemapsOverrider.m */; };
+		4F5F3EF12756EC0400C350C0 /* RemapSwizzler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5F3EF02756EC0400C350C0 /* RemapSwizzler.m */; };
 		4F5F3EF32756F1DB00C350C0 /* ScrollModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5F3EF22756F1DB00C350C0 /* ScrollModifiers.swift */; };
 		4F70ECAE267E442D00325A76 /* PointerSpeedExperiments2.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F70ECAD267E442D00325A76 /* PointerSpeedExperiments2.m */; };
 		4F70ECB7267E810900325A76 /* IOUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F70ECB6267E810900325A76 /* IOUtility.m */; };
@@ -352,8 +352,8 @@
 		4F44FF032606D73D00926A5E /* SharedMessagePort.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SharedMessagePort.m; sourceTree = "<group>"; };
 		4F5C2F7F2885C5D0001B9B8A /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
 		4F5F3EED2756DB0A00C350C0 /* RemapsOverrider_old_.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemapsOverrider_old_.swift; sourceTree = "<group>"; };
-		4F5F3EEF2756DD1200C350C0 /* RemapsOverrider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapsOverrider.h; sourceTree = "<group>"; };
-		4F5F3EF02756EC0400C350C0 /* RemapsOverrider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapsOverrider.m; sourceTree = "<group>"; };
+		4F5F3EEF2756DD1200C350C0 /* RemapSwizzler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapSwizzler.h; sourceTree = "<group>"; };
+		4F5F3EF02756EC0400C350C0 /* RemapSwizzler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapSwizzler.m; sourceTree = "<group>"; };
 		4F5F3EF22756F1DB00C350C0 /* ScrollModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollModifiers.swift; sourceTree = "<group>"; };
 		4F616D6027BDCD56004A6A72 /* ScrollConfigTesting.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ScrollConfigTesting.md; sourceTree = "<group>"; };
 		4F70ECAC267E442D00325A76 /* PointerSpeedExperiments2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerSpeedExperiments2.h; sourceTree = "<group>"; };
@@ -1434,9 +1434,6 @@
 			children = (
 				4FF6661625F2C93A00689B77 /* ModifierManager.h */,
 				4FF6661725F2C93A00689B77 /* ModifierManager.m */,
-				4F5F3EEF2756DD1200C350C0 /* RemapsOverrider.h */,
-				4F5F3EF02756EC0400C350C0 /* RemapsOverrider.m */,
-				4F5F3EED2756DB0A00C350C0 /* RemapsOverrider_old_.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -1528,6 +1525,9 @@
 			children = (
 				4FF6663E25F2C93A00689B77 /* TransformationManager.h */,
 				4FF6663D25F2C93A00689B77 /* TransformationManager.m */,
+				4F5F3EEF2756DD1200C350C0 /* RemapSwizzler.h */,
+				4F5F3EF02756EC0400C350C0 /* RemapSwizzler.m */,
+				4F5F3EED2756DB0A00C350C0 /* RemapsOverrider_old_.swift */,
 				4F02C71C2899448900ED0AA8 /* OutputCoordinator.swift */,
 				4F02C7202899453200ED0AA8 /* OutputCoordinator.h */,
 			);
@@ -2307,7 +2307,7 @@
 				4F96060F27B4F92F004D6F6D /* PixelatedAnimator.swift in Sources */,
 				4FF6654F25F2C7B000689B77 /* NSArray+Additions.m in Sources */,
 				4FF6654525F2C7B000689B77 /* Objects.m in Sources */,
-				4F5F3EF12756EC0400C350C0 /* RemapsOverrider.m in Sources */,
+				4F5F3EF12756EC0400C350C0 /* RemapSwizzler.m in Sources */,
 				4FD66E0B27BB9BAE00F67559 /* EventUtility.m in Sources */,
 				4FF666A925F2C93A00689B77 /* HelperUtility.m in Sources */,
 				4FCC03352757B181002E5A57 /* ScreenDrawer.swift in Sources */,

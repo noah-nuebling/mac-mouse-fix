@@ -71,12 +71,12 @@ static NSDictionary *_remaps;
             NSNumber *buttonNum = triggerDict[kMFButtonTriggerKeyButtonNumber];
             triggerKeyArray = @[buttonNum, level, duration];
         } else NSAssert(NO, @"");
-        // Get effect
-        id effect = tableEntry[kMFRemapsKeyEffect]; // This is always dict
+        /// Get effect
+        id effect = tableEntry[kMFRemapsKeyEffect]; /// This is always dict
         if ([trigger isKindOfClass:NSDictionary.class]) {
             effect = @[effect];
-            // ^ For some reason we built one shot effect handling code around _arrays_ of effects. So we need to wrap our effect in an array.
-            //  This doesn't make sense. We should clean this up at some point and remove the array.
+            /// ^ For some reason we built one shot effect handling code around _arrays_ of effects. So we need to wrap our effect in an array.
+            ///  This doesn't make sense. We should clean this up at some point and remove the array.
         }
         // Put it all together
         NSArray *keyArray = [@[modificationPrecondition] arrayByAddingObjectsFromArray:triggerKeyArray];
@@ -134,20 +134,17 @@ BOOL _addModeIsEnabled = NO;
     _addModeIsEnabled = YES;
     
     NSMutableDictionary *triggerToEffectDict = [NSMutableDictionary dictionary];
-    /// Fill out triggerToEffectDict_DemandsMods with all triggers that users can map to String based triggers (Only one - drag - atm)
-    ///     Edit: What are "String-based triggers"? Where does the scrollTrigger belong?
-    ///         Also making this distinction between triggers that need mods and ones that don't here and in this way seems unnecessary and confusing. Edit we removed it cause it was causing trouble implementing modifiedDrag addMode
     
     /// Drag trigger
     triggerToEffectDict[kMFTriggerDrag] = @{
         kMFModifiedDragDictKeyType: kMFModifiedDragTypeAddModeFeedback,
         kMFRemapsKeyTrigger: kMFTriggerDrag,
-    };
+    }.mutableCopy;
     /// Scroll trigger
     triggerToEffectDict[kMFTriggerScroll] = @{
         kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeAddModeFeedback,
         kMFRemapsKeyTrigger: kMFTriggerScroll,
-    };
+    }.mutableCopy;
     
     /// Button triggers (dict based)
     for (int btn = 1; btn <= kMFMaxButtonNumber; btn++) {
@@ -161,7 +158,7 @@ BOOL _addModeIsEnabled = NO;
                         kMFButtonTriggerKeyClickLevel: @(lvl),
                         kMFButtonTriggerKeyDuration: dur,
                     }
-                }.mutableCopy; /// The key `kMFRemapsKeyModificationPrecondition` and corresponding values are added to `addModeFeedbackDict` in the function `executeClickOrHoldActionIfItExists`. That's also why we need to make this mutable.
+                }.mutableCopy;
                 [triggerToEffectDict setObject:@[addModeFeedbackDict] forCoolKeyArray:@[@(btn),@(lvl),dur]];
                 ///  ^ We're wrapping `addModeFeedbackDict` in an array here because we started building helper with dicts of several effects in mind.
                 ///      This doesn't make sense though and we should remove it.

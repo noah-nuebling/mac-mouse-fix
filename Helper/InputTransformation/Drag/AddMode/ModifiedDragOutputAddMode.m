@@ -32,7 +32,8 @@ static NSDictionary *_addModePayload; /// Payload to send to the mainApp. Only u
 + (void)handleBecameInUse {
     
     if (_addModePayload != nil) {
-        [TransformationManager sendAddModeFeedbackWithPayload:_addModePayload];
+//        [TransformationManager sendAddModeFeedbackWithPayload:_addModePayload]; /// Remove this and make sendAddModeFeedbackWithPayload private.
+        [TransformationManager concludeAddModeWithPayload:_addModePayload];
     } else {
         @throw [NSException exceptionWithName:@"InvalidAddModeFeedbackPayload" reason:@"_drag.addModePayload is nil. Something went wrong!" userInfo:nil]; /// Throw exception to cause crash
     }

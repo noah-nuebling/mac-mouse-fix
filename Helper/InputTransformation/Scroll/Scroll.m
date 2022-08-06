@@ -364,6 +364,8 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             _scrollConfig.animationCurvePreset = kMFScrollAnimationCurvePresetTouchDriverLinear;
             
         } else if (_modifications.effectMod == kMFScrollEffectModificationNone) {
+        } else if (_modifications.effectMod == kMFScrollEffectModificationAddModeFeedback) {
+            /// We don't wanna scroll at all in this case but I don't think it makes a difference.
         } else {
             assert(false);
         }

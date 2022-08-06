@@ -151,7 +151,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     if ([_buttonParseBlacklist containsObject:@(buttonNumber)]) return event;
     
     /// Pass to buttonInput processor
-    MFEventPassThroughEvaluation eval = [Buttons handleInputWithDevice:dev button:@(buttonNumber) downNotUp:mouseDown event: event];
+    MFEventPassThroughEvaluation eval  = [Buttons handleInputWithDevice:dev button:@(buttonNumber) downNotUp:mouseDown event: event];
     /// Let events pass through
     if (eval == kMFEventPassThroughRefusal) {
         return nil;
