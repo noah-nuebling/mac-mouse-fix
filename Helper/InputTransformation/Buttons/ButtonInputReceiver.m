@@ -156,10 +156,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     /// Filter out primary and secondary mouse button from being passed on to ButtonTriggerGenerator
     if ([_buttonParseBlacklist containsObject:@(buttonNumber)]) return event;
     
-<<<<<<< HEAD
     /// Get dev
-=======
->>>>>>> master
     Device *dev = lastInputFromRelevantDevice[@"dev"];
     
     /// Pass to ButtonTriggerGenerator
