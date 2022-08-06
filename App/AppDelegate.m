@@ -143,9 +143,10 @@ static NSDictionary *sideButtonActions;
     NSLog(@"Mac Mouse Fix finished launching");
     
     /// Do weird tweaks for Ventura
+    ///     It seems that NSBox adds horizontal padding of 1 px around its contentView in Ventura (Beta). Here we compensate for that.
     ///     Pre-big sur also looks weird but in a different way. See https://github.com/noah-nuebling/mac-mouse-fix/issues/269
     if (@available(macOS 13, *)) {
-        self.preferenceBox.contentView.frame = NSInsetRect(self.preferenceBox.contentView.frame, -1, 0);
+        self.preferenceBox.contentViewMargins = NSMakeSize(-1, 0);
     }
     
     /// Load UI
