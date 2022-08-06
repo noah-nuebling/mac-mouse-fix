@@ -156,7 +156,7 @@
 </head>
 <body>
 <h3 id="ventura-support">Ventura support!</h3>
-<p>Mac Mouse Fix now fully supports macOS 13 Ventura. Special thanks to <span class="citation" data-cites="chamburr">[@chamburr]</span>(https://github.com/chamburr) who helped with Ventura support in <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/297">#297</a>.</p>
+<p>Mac Mouse Fix now fully supports macOS 13 Ventura. Special thanks to <a href="https://github.com/chamburr">chamburr</a> who helped with Ventura support in <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/297">#297</a>.</p>
 <h3 id="dropped-support-for-older-macos-versions">Dropped support for older macOS versions</h3>
 <p>Unfortunately, Apple only lets you develop <em>for</em> macOS 10.13 <strong>High Sierra and later</strong> when developing <em>from</em> macOS 13 Ventura.</p>
 <p>So the <strong>minimum supported version</strong> has increased from 10.11 El Capitan to 10.13 High Sierra.</p>
