@@ -90,7 +90,7 @@ static NSMutableDictionary *_swipeInfo;
 + (void)postMagnificationEventWithMagnification:(double)magnification phase:(IOHIDEventPhaseBits)phase {
     
     /// Using undocumented CGEventFields found through Calftrail TouchExtractor and through analyzing Calftrail TouchSynthesis to create a working magnification event from scratch
-    ///  This was the the start of this whole touch simulation thing
+    ///  This was the the start of this whole touch simulation thing!
     
     /// Debug
     

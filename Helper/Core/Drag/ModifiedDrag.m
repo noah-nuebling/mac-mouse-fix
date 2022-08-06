@@ -406,7 +406,7 @@ void deactivate_Unsafe(BOOL cancel) {
 
 /// Get rounded pointer location
 
-CGPoint getRoundedPointerLocation() {
+CGPoint getRoundedPointerLocation(void) {
     /// Convenience wrapper for getRoundedPointerLocationWithEvent()
     
     CGEventRef event = CGEventCreate(NULL);

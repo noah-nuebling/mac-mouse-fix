@@ -14,7 +14,6 @@
 ///     So a clickCycle always starts on buttonPressed input, where that input is the first in a series of consecutive clicks. And where a series of consecutive clicks of length 2 would generally be called a double click. A click cycle can end (aka be killed) in different ways. See the code for more details.
 ///
 ///     The `ClickCycle` class is used to track an abstract clickCycle and analyze it. Perhaps most importantly, it tracks state transitions not only to button pressed and button released states but also to more abstract states: `button held down` and `level expired`. Then it can notify the client of these state transitions and the client can do cool stuff with that.
-///     This is not everything to know about this class.
 
 /// Thread safety:
 ///     All calls to this are expected to come from the dispatchQueue owned by Buttons.swift `buttonsQueue`. It will also protect its timer callbacks using `buttonQueue`.

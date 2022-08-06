@@ -278,7 +278,7 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
 
 static void startMomentumScroll_Unsafe(double timeSinceLastInput, Vector exitVelocity, double stopSpeed, double dragCoefficient, double dragExponent) {
     
-    ///Debug
+    /// Debug
     
     DDLogDebug(@"momentumScroll start request");
     

@@ -1352,16 +1352,9 @@
 				4FF6665125F2C93A00689B77 /* main.m */,
 				4FF6660B25F2C93A00689B77 /* AppDelegate.h */,
 				4FF6664625F2C93A00689B77 /* AppDelegate.m */,
-				4F5C2F7F2885C5D0001B9B8A /* State.swift */,
 				4FF6664A25F2C93A00689B77 /* Accessibility */,
 				4FF6660825F2C93A00689B77 /* FileMonitor */,
-				4FF6660C25F2C93A00689B77 /* Config */,
-				4FF6661125F2C93A00689B77 /* MessagePort */,
-				4FF6667925F2C93A00689B77 /* Devices */,
-				4FF6661425F2C93A00689B77 /* InputTransformation */,
-				4FF6664725F2C93A00689B77 /* PointerSpeed */,
-				4FF9305C28805FC40007CCA7 /* Math */,
-				4FF6667E25F2C93A00689B77 /* Utility */,
+				4FF6661425F2C93A00689B77 /* Core */,
 				4FF6660F25F2C93A00689B77 /* Resources */,
 				4FF6664D25F2C93A00689B77 /* SupportFiles */,
 			);
@@ -1382,9 +1375,9 @@
 			children = (
 				4FF6660D25F2C93A00689B77 /* Config.h */,
 				4FF6660E25F2C93A00689B77 /* Config.m */,
-				4FA83A2D268288D900F3A31B /* PointerConfig.swift */,
 				4FD860CB266EF55A004F76C8 /* ScrollConfig.swift */,
 				4FD0A71027B295F600FFCD12 /* OtherConfig.swift */,
+				4FA83A2D268288D900F3A31B /* PointerConfig.swift */,
 				4F09BF57288355170080A5F8 /* PollingRateMeasurer.swift */,
 				4FFAD8EF28677F94005DD496 /* PointerConfigObjC.h */,
 				4FD860DA266EFD64004F76C8 /* ScrollConfigObjC.h */,
@@ -1411,10 +1404,13 @@
 			path = MessagePort;
 			sourceTree = "<group>";
 		};
-		4FF6661425F2C93A00689B77 /* InputTransformation */ = {
+		4FF6661425F2C93A00689B77 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				4F5C2F7F2885C5D0001B9B8A /* State.swift */,
+				4FF6660C25F2C93A00689B77 /* Config */,
 				4FF6663C25F2C93A00689B77 /* TransformationManager */,
+				4FF6667925F2C93A00689B77 /* Devices */,
 				4FF6661525F2C93A00689B77 /* Modifiers */,
 				4FF6661825F2C93A00689B77 /* Buttons */,
 				4FF6661F25F2C93A00689B77 /* Scroll */,
@@ -1424,9 +1420,12 @@
 				4FF6663925F2C93A00689B77 /* Actions */,
 				4FFBC5B126697E8D001D389B /* Smoothing */,
 				4FBDA14927B2246B0030E4EA /* SubPixelator */,
+				4FF6664725F2C93A00689B77 /* PointerSpeed */,
+				4FF6661125F2C93A00689B77 /* MessagePort */,
+				4FF9305C28805FC40007CCA7 /* Math */,
 				4FF6663F25F2C93A00689B77 /* Utility */,
 			);
-			path = InputTransformation;
+			path = Core;
 			sourceTree = "<group>";
 		};
 		4FF6661525F2C93A00689B77 /* Modifiers */ = {
@@ -1548,6 +1547,11 @@
 				4FBDA14E27B241CE0030E4EA /* GlobalEventTapThread.m */,
 				4FD66E0927BB9BAD00F67559 /* EventUtility.h */,
 				4FD66E0A27BB9BAE00F67559 /* EventUtility.m */,
+				4FC55E2F285E6BF800F2FCCF /* GlobalDefaults.swift */,
+				4FF6667F25F2C93A00689B77 /* HelperUtility.h */,
+				4FF6668025F2C93A00689B77 /* HelperUtility.m */,
+				4FF0BD56266ACE32003935EA /* VectorUtility.h */,
+				4FF0BD57266ACE32003935EA /* VectorUtility.m */,
 				4F9C14B527BAF202008A1479 /* IOKit */,
 			);
 			path = Utility;
@@ -1635,18 +1639,6 @@
 			path = Devices;
 			sourceTree = "<group>";
 		};
-		4FF6667E25F2C93A00689B77 /* Utility */ = {
-			isa = PBXGroup;
-			children = (
-				4FC55E2F285E6BF800F2FCCF /* GlobalDefaults.swift */,
-				4FF6667F25F2C93A00689B77 /* HelperUtility.h */,
-				4FF6668025F2C93A00689B77 /* HelperUtility.m */,
-				4FF0BD56266ACE32003935EA /* VectorUtility.h */,
-				4FF0BD57266ACE32003935EA /* VectorUtility.m */,
-			);
-			path = Utility;
-			sourceTree = "<group>";
-		};
 		4FF8C8A428960309007EC31F /* Old */ = {
 			isa = PBXGroup;
 			children = (
@@ -1661,8 +1653,8 @@
 		4FF9305C28805FC40007CCA7 /* Math */ = {
 			isa = PBXGroup;
 			children = (
-				4FF0BD50266AC10C003935EA /* Math.swift */,
 				4FF0BD5D266ADFE5003935EA /* MathObjc.h */,
+				4FF0BD50266AC10C003935EA /* Math.swift */,
 				4FF937552669B043003A52EA /* Curves */,
 				4F77F7C628808D6000847D0E /* PolynomialRegression */,
 			);

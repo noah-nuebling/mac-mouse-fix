@@ -53,7 +53,7 @@ import CocoaLumberjackSwift
             State.updateActiveDevice(event: event)
             
             /// Update modifications
-            let remaps = TransformationManager.remaps() /// This is apparently super slow because Swift needs to convert the dict. Much slower than all the redundant buttonLandscapeAssessor calculations.
+            let remaps = TransformationManager.remaps() /// This is apparently incredibly slow because Swift needs to convert the dict.
             self.modifiers = ModifierManager.getActiveModifiers(for: State.activeDevice!, event: event)
             self.modifications = RemapSwizzler.swizzleRemaps(remaps, activeModifiers: modifiers)
             

@@ -7,9 +7,9 @@
 // --------------------------------------------------------------------------
 //
 
-// TODO: Implement callback when frontmost application changes - change settings accordingly
-// Need this when application changes but mouse doesn't move (e.g. Command-Tab). Without this the app specific settings for the new app aren't applied
-// NSWorkspaceDidActivateApplicationNotification?
+/// TODO: Implement callback when frontmost application changes - change settings accordingly
+/// Need this when application changes but mouse doesn't move (e.g. Command-Tab). Without this the app specific settings for the new app aren't applied
+/// NSWorkspaceDidActivateApplicationNotification?
 
 #import "Config.h"
 #import "AppDelegate.h"
