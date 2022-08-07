@@ -50,8 +50,8 @@
         CGEventTapEnable(_keyboardModifierEventTap, false); // Disable eventTap first (Might prevent `_keyboardModifierEventTap` from always being called twice - Nope doesn't make a difference)
         toggleModifierEventTapBasedOnRemaps(TransformationManager.remaps);
         
-        // Re-toggle keyboard modifier callbacks whenever TransformationManager.remaps changes
-        // TODO:! Test if this works
+        /// Re-toggle keyboard modifier callbacks whenever TransformationManager.remaps changes
+        /// TODO:! Test if this works
         [NSNotificationCenter.defaultCenter addObserverForName:kMFNotifCenterNotificationNameRemapsChanged
                                                         object:nil
                                                          queue:nil
@@ -174,12 +174,12 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
     
     /// Kill old modifications
     
-    /// Kill the currently active modifiedDrag if it's differrent from the one that the one in activeModifications
+    /// Kill the currently active modifiedDrag if the modifiers have changed since it started.
     ///     (If there were other modifier driven effects than modifiedDrag in the future, we would also kill them here)
 
     BOOL modifiedDragIsStillUpToDate = NO;
     
-    if ([activeModifications[kMFTriggerDrag] isEqual: ModifiedDrag.dict]) {
+    if ([activeModifiers isEqual:ModifiedDrag.initialModifiers]) {
         modifiedDragIsStillUpToDate = YES;
     } else {
         [ModifiedDrag deactivate];
@@ -194,8 +194,8 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
         
         if (!modifiedDragIsStillUpToDate) {
         
-            NSMutableDictionary *modifiedDragEffect = activeModifications[kMFTriggerDrag]; /// Declared as NSMutableDictionary but probably not actually mutable at this point
-            if (modifiedDragEffect) {
+            NSMutableDictionary *modifiedDragEffectDict = activeModifications[kMFTriggerDrag]; /// Declared as NSMutableDictionary but probably not actually mutable at this point
+            if (modifiedDragEffectDict) {
                 
                 /// If addMode is active, add activeModifiers to modifiedDragDict
                 ///     See TransformationManager.m -> AddMode for context.
@@ -212,7 +212,7 @@ static void reactToModifierChange(NSDictionary *_Nonnull activeModifiers, Device
                 }
                 
                 /// Init modifiedDrag
-                [ModifiedDrag initializeDragWithModifiedDragDict:modifiedDragEffect onDevice:device];
+                [ModifiedDrag initializeDragWithDict:modifiedDragEffectDict initialModifiers:activeModifiers onDevice:device];
             }
         }
     }

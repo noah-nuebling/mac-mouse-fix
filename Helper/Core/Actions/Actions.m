@@ -189,7 +189,7 @@ static void postSymbolicHotkey(CGSSymbolicHotKey shk) {
     if (!oldBindingIsUsable) {
         
         /// Temporarily set a usable binding for our shk
-        unichar newKeyEquivalent = 65535; /// Not sure  this value matters
+        unichar newKeyEquivalent = 65535; /// Tried to put an 'ö' face but it didn't work
         CGKeyCode newKeyCode = (CGKeyCode)shk + 400; /// Keycodes on my keyboard go up to like 125, but we use 400 just to be safely out of reach for a real kb
         CGSModifierFlags newModifierFlags = 10485760; /// 0 Didn't work in my testing. This seems to be the 'empty' CGSModifierFlags value, used to signal that no modifiers are pressed. TODO: Test if this works
         CGError err = CGSSetSymbolicHotKeyValue(shk, newKeyEquivalent, newKeyCode, newModifierFlags);
@@ -314,7 +314,7 @@ BOOL getCharsForKeyCode(CGKeyCode keyCode, NSString **chars) {
     UInt16 keyAction = kUCKeyActionDisplay; /// Should maybe be using kUCKeyActionDown instead. Some SO poster said it works better.
     UInt32 modifierKeyState = 0; /// The keyEquivalent arg is not affected by modifier flags. It's always lower case despite Shift, etc... That's why we can just set this to 0.
     UInt32 keyboardType = LMGetKbdType(); 
-    OptionBits keyTranslateOptions = kUCKeyTranslateNoDeadKeysBit /*kUCKeyTranslateNoDeadKeysMask*/; /// Not sure what's correct
+    OptionBits keyTranslateOptions = kUCKeyTranslateNoDeadKeysBit /*kUCKeyTranslateNoDeadKeysMask*/; /// Not sure what's correct. Edit: Obv mask is not appropriate here.
     
     /// Declare return buffers
     

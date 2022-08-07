@@ -108,36 +108,32 @@ static CGEventTapProxy _tapProxy;
 
 /// Interface - start
 
-+ (NSDictionary *)dict { // TODO: What is this good for? Why didn't we need it in 2.0?
++ (NSDictionary *)initialModifiers {
     
     if (_drag.activationState == kMFModifiedInputActivationStateNone) {
         return nil;
     } else if (_drag.activationState == kMFModifiedInputActivationStateInitialized || _drag.activationState == kMFModifiedInputActivationStateInUse) {
-        return _drag.dict;
+        return _drag.initialModifiers;
     } else {
         assert(false);
     }
 }
 
-+ (void)initializeDragWithModifiedDragDict:(NSDictionary *)dict onDevice:(Device *)dev {
++ (void)initializeDragWithDict:(NSDictionary *)effectDict initialModifiers:(NSDictionary *)modifiers onDevice:(Device *)dev {
     
     dispatch_async(_drag.queue, ^{
         
         /// Debug
+        DDLogDebug(@"INITIALIZING MODIFIEDDRAG WITH previous type %@ activationState %d, newEffectDict: %@, modifiers: %@", _drag.type, _drag.activationState, effectDict, modifiers);
         
-        DDLogDebug(@"INITIALIZING MODIFIEDDRAG WITH previous type %@ activationState %d, dict: %@", _drag.type, _drag.activationState, dict); 
-        
-        /// Get value from dict
-        
-        MFStringConstant type = dict[kMFModifiedDragDictKeyType];
-        
-        /// Init _drag
+        /// Get type
+        MFStringConstant type = effectDict[kMFModifiedDragDictKeyType];
         
         /// Init static parts of _drag
-        
         _drag.modifiedDevice = dev;
         _drag.type = type;
-        _drag.dict = dict;
+        _drag.effectDict = effectDict;
+        _drag.initialModifiers = modifiers;
         _drag.initTime = CACurrentMediaTime();
         
         id<ModifiedDragOutputPlugin> p;
@@ -270,11 +266,9 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
     if (MAX(fabs(ofs.x), fabs(ofs.y)) > _drag.usageThreshold) {
         
         /// Debug
-        
         DDLogDebug(@"Modified Drag entered 'in use' state");
         
         /// Store state
-        
         _drag.usageOrigin = getRoundedPointerLocationWithEvent(event);
         
         if (fabs(ofs.x) < fabs(ofs.y)) {
@@ -284,16 +278,15 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
         }
         
         /// Update state
-        
         _drag.activationState = kMFModifiedInputActivationStateInUse;
         _drag.firstCallback = true;
         
-        /// Notify other modules
+        /// Notify output plugin
+        [_drag.outputPlugin handleBecameInUse];
         
+        /// Notify other modules
         [ModifierManager handleModificationHasBeenUsedWithDevice:_drag.modifiedDevice];
         [OutputCoordinator suspendTouchDriversFromDriver:kTouchDriverModifiedDrag];
-        
-        [_drag.outputPlugin handleBecameInUse];
     }
 }
 /// Only passing in event to obtain event location to get slightly better behaviour for fakeDrag

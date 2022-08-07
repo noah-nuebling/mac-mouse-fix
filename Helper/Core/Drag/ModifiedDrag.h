@@ -33,7 +33,8 @@ typedef struct {
     CFMachPortRef eventTap;
     int64_t usageThreshold;
     
-    NSDictionary *dict;
+    NSDictionary *effectDict;
+    NSDictionary *initialModifiers;
     
     MFStringConstant type;
     id<ModifiedDragOutputPlugin> outputPlugin;
@@ -74,9 +75,9 @@ typedef struct {
 
 + (void)load_Manual;
 
-+ (NSDictionary *)dict;
++ (NSDictionary *)initialModifiers;
 + (CGEventTapProxy)tapProxy;
-+ (void)initializeDragWithModifiedDragDict:(NSDictionary *)dict onDevice:(Device *)dev;
++ (void)initializeDragWithDict:(NSDictionary *)effectDict initialModifiers:(NSDictionary *)modifiers onDevice:(Device *)dev;
 
 //+ (void)modifiedScrollHasBeenUsed;
 
@@ -87,7 +88,7 @@ typedef struct {
 //+ (void)handleMouseInputWithDeltaX:(int64_t)deltaX deltaY:(int64_t)deltaY event:(CGEventRef _Nullable)event;
 
 
-CGPoint getRoundedPointerLocation(); /// Making this public for testing. Remove.
+CGPoint getRoundedPointerLocation(void); /// Making this public for testing. Remove.
 @end
 
 NS_ASSUME_NONNULL_END

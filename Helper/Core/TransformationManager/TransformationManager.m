@@ -41,7 +41,7 @@ static NSDictionary *_remaps;
 }
 
 /// The main app uses an array of dicts (aka a table) to represent the remaps in a way that is easy to present in a table view.
-/// The remaps are also stored to file in this format and therefore what ConfigFileInterface_App.config contains.
+/// The remaps are also stored to file in this format and therefore what `ConfigFileInterface_App.config` contains.
 /// The helper was made to handle a dictionary format which should be more effictient among other perks.
 /// This function takes the remaps in table format from config, then converts it to dict format and makes that available to all the other Input Transformation classes to base their behaviour off of through self.remaps.
 + (void)loadRemapsFromConfig {

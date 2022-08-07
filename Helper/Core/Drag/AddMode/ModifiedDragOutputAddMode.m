@@ -24,7 +24,7 @@ static NSDictionary *_addModePayload; /// Payload to send to the mainApp. Only u
     _drag = dragStateRef;
     
     /// Prepare payload to send to mainApp during AddMode. See TransformationManager -> AddMode for context
-    NSMutableDictionary *payload = _drag->dict.mutableCopy;
+    NSMutableDictionary *payload = _drag->effectDict.mutableCopy; /// Probably already mutable. See RemapSwizzler.
     [payload removeObjectForKey:kMFModifiedDragDictKeyType];
     _addModePayload = payload;
 }
