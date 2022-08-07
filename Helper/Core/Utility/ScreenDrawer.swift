@@ -70,7 +70,10 @@ import CocoaLumberjackSwift
         canvas.setFrame(screen.frame, display: false)
         
         /// Get frame for drawing image in canvas
-        let frameInCanvas = frameInScreen /// Don't need to use `convertFromScreen()` because the canvas window is exactly as large as the screen
+        let frameInCanvas = canvas.convertFromScreen(frameInScreen); /// Don't need to use `convertFromScreen()` because the canvas window is exactly as large as the screen?
+        
+        /// Debug
+        DDLogDebug("screennnn: \(screen)")
         
         /// Set frame to imageView
         view.frame = frameInCanvas
@@ -87,13 +90,21 @@ import CocoaLumberjackSwift
     }
     @objc func move(view: NSView, toOrigin newOrigin: NSPoint) {
         
-//        guard let canvas = canvas else { fatalError() }
+        ///
+        /// Validate
+        ///
         
+//        guard let canvas = canvas else { fatalError() }
         guard (view.superview!.isEqual(to: canvas.contentView)) else { fatalError() }
         /// ^ This crashes sometimes because view doesn't have a superview. This happens when scroll zooming and drag scrolling at the same time on the same button. Investigate.
         
-        /// Debug
-//        DDLogDebug("Moving puppet cursor to: \(newOrigin)")
+        /// Translate screen -> canvas
+        
+        let newOrigin = canvas.convertPoint(fromScreen: newOrigin);
+        
+        ///
+        /// Move
+        ///
         
         /// Sol 1
         /// This calls all sorts of autolayout stuff and is very slow. Can't manage to turn that off

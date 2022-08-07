@@ -376,7 +376,7 @@ void setSuppressionIntervalWithTimeInterval(CFTimeInterval interval) {
         /// Draw/move puppet cursor image
         if (fresh) {
             /// Draw puppetCursor
-            NSScreen *screenUnderMousePointer = [NSScreen screenUnderMousePointerWithEvent:NULL];
+            NSScreen *screenUnderMousePointer = [NSScreen screenUnderMousePointerWithEvent:NULL]; /// We could also use `_display`?
             [ScreenDrawer.shared drawWithView:_puppetCursorView atFrame:puppetImageFrameUnflipped onScreen:screenUnderMousePointer];
         } else {
             /// Reposition  puppet cursor!
