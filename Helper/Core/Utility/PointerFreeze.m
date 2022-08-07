@@ -130,15 +130,15 @@ static int64_t _lastEventDelta;
             /// Draw puppet cursor before hiding
             [PointerFreeze drawPuppetCursor:YES fresh:YES];
             
-            /// Hide cursor
-            [TransformationUtility hideMousePointer:YES];
-            
-            usleep(USEC_PER_SEC * 0.02);
-            /// The puppetCursor will only be drawn after a delay, while hiding the mouse pointer is really fast.
+            /// Wait
+            ///     The puppetCursor will only be drawn after a delay, while hiding the mouse pointer is really fast.
             ///     This leads to a little flicker when the puppetCursor is not yet drawn, but the real cursor is already hidden.
             ///     Not sure why this happens. But adding a delay of 0.02 before hiding makes it look seamless.
-            ///     Edit: dispatch_after caused race conditions, so we're sleeping instead. Might be bad for performance because we're using dispatch_sync above
+            ///     Edit: `dispatch_after` caused race conditions, so we're sleeping instead. Might be bad for performance because we're using dispatch_sync above
+            ///
+            usleep(USEC_PER_SEC * 0.01);
             
+            /// Hid cursor
             [TransformationUtility hideMousePointer:YES];
         }
     });
