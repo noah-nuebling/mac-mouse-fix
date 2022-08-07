@@ -517,7 +517,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             
             /// Get px that the animator still wants to scroll
             double pxLeftToScroll;
-            if (!isRunning || scrollAnalysisResult.scrollDirectionDidChange) {
+            if (/* !isRunning || */ scrollAnalysisResult.scrollDirectionDidChange) { /// Checking for isRunning here leads to lost input when the computer is slow
                 
                 /// Reset pxLeftToScroll
                 pxLeftToScroll = 0;
