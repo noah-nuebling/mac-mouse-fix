@@ -155,12 +155,12 @@
   </style>
 </head>
 <body>
-<h3 id="improvements-for-ventura">Improvements for Ventura!</h3>
+<h3 id="even-more-improvements-for-ventura">Even more improvements for Ventura!</h3>
 <ul>
-<li>Updated the UI for enabling Accessibility Permissions to reflect the new Ventura System Settings</li>
+<li>Updated the UI for granting Accessibility Permissions to reflect the new Ventura System Settings</li>
 <li>Mac Mouse Fix will now be displayed properly under Ventura’s new <strong>System Settings &gt; Login Items</strong> menu</li>
 <li>Mac Mouse Fix will react properly when it’s disabled under <strong>System Settings &gt; Login Items</strong></li>
-<li>Fixed a glitch where the Action Table would become too narrow when resizing the main window</li>
+<li>Fixed a glitch where the Action Table would become too narrow when resizing the main window under Ventura</li>
 </ul>
 </body>
 </html>
