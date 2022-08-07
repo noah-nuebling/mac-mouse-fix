@@ -6,7 +6,177 @@
     <description>Prereleases of Mac Mouse Fix</description>
     <language>en</language>
         <item>
-        <title>2.2.1 Beta available!</title>
+        <title>2.2.1 Beta 2 available!</title>
+        <pubDate>2022-08-07T17:04:24Z</pubDate>
+        <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
+        <description><![CDATA[
+            <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>-</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+
+  <style>
+
+      /* Following this tutorial: https://devilgate.org/blog/2012/07/02/tip-using-pandoc-to-create-truly-standalone-html-files/ */
+
+      :root {
+          font-size: 10px; /* 1 rem is this much */
+          padding: 0 0 0 0;
+      }
+
+      body {
+          background-color: transparent;
+          margin: 0 1.2rem 2.0rem 1.2rem;
+          padding: 0;
+          font-family: -apple-system;
+          font-size: 1.3rem;
+
+          line-height: 1.15em;
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+          line-height: 1.15em;
+      }
+
+      h1:after, h2:after {
+          content:' ';
+          display: block;
+          border: 0.5px solid rgba(0, 0, 0, 0.12);
+      }
+      h1:after {
+          margin: 0.6rem 0 0 0;
+      }
+      h2:after {
+          margin: 0.4rem 0 0 0;
+      }
+
+      h1 {
+          font-size: 2.2rem;
+          margin: 2.2rem 0 1.3rem -0.0rem;
+      }
+
+      h2 {
+          font-size: 1.7rem;
+          margin: 2.0rem 0 1.7rem -0.0rem;
+      }
+
+      h3 {
+          font-size: 1.3rem;
+          margin: 1.5rem 0 0.0rem -0.0rem;
+      }
+
+      p {
+          margin: 1.1rem 0 1.1rem 0;
+          font-size: 1.1rem;
+      }
+
+      ul {
+          padding: 0 0 0 1.5rem;
+          margin: 1.0rem 0 1.0rem 0.5rem;
+      }
+      ul ul {
+          margin: 0.6rem 0 -0.6rem 0;
+          padding: 0 0 0 2.1rem;
+      }
+
+      li {
+          padding: 0 0 0.6rem 0;
+
+          font-size: 1.1rem;
+      }
+      .annotation {
+          font-size: 1.1rem;
+      }
+      img {
+          max-width: 100%;
+          height: auto;
+          
+          border-radius: 1.0rem;
+          box-shadow: 0 0.2rem 0.4rem 0.0rem rgba(0, 0, 0, 0.15), 0 0.2rem 1.7rem 0.0rem rgba(0, 0, 0, 0.15);
+
+          display: block;
+          margin: 1.4rem auto 1.8rem auto;
+      }
+
+      hr {
+          height: 0px;
+          border: none;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+          border-color:rgba(0, 0, 0, 0.12);
+
+          margin: 1.7rem 0 1.7rem 0;
+      }
+
+      @media (prefers-color-scheme: light) {
+
+          h1 {
+              color: #272727;
+          }
+
+          a {
+              color: #0948be;
+          }
+      }
+
+      @media (prefers-color-scheme: dark) {
+
+          body {
+              background-color: #1e1e1e; 
+              /* ^ Sparkle background is still bright when we have `background-color: transparent` even with darkmode active. 
+                  This is the color of the text field background in Apple Mail on macOS 11 BigSur */
+
+              color: #D9D9D9; /* For headers */
+          }
+
+          li, p {
+              color:#FFFFFF;
+          }
+          a {
+              color: #3586FF;
+          }
+      }
+
+  </style>
+</head>
+<body>
+<h3 id="improvements-for-ventura">Improvements for Ventura!</h3>
+<ul>
+<li>Updated the UI for enabling Accessibility Permissions to reflect the new Ventura System Settings</li>
+<li>Mac Mouse Fix will now be displayed properly under Ventura’s new <a href="x-apple.systempreferences:com.apple.LoginItems-Settings.extension"><code>System Settings &gt; Login Items</code></a> menu</li>
+<li>Mac Mouse Fix will react properly when it’s disabled under <a href="x-apple.systempreferences:com.apple.LoginItems-Settings.extension"><code>System Settings &gt; Login Items</code></a></li>
+<li>Fixed a glitch where the Action Table would become too narrow when resizing the main window</li>
+</ul>
+</body>
+</html>
+
+        ]]>
+        </description>
+        <enclosure
+            url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.2.1-Beta-2/MacMouseFixApp.zip"
+            sparkle:version="7258"
+            sparkle:shortVersionString="2.2.1 Beta 2"
+            sparkle:edSignature="luLhTQ2rKxa4dLTm/Nf+StENPLzDlTKuMoqSlbhuslgwFovVhyWJg8pvvJR4yFnHaC0BX723dynoeQpGaRg5DQ==" length="5094571"
+            type="application/octet-stream"
+        />
+    </item>
+    <item>
+        <title>2.2.1 Beta 1 available!</title>
         <pubDate>2022-08-05T20:17:15Z</pubDate>
         <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
         <description><![CDATA[
@@ -156,7 +326,7 @@
 </head>
 <body>
 <h3 id="ventura-support">Ventura support!</h3>
-<p>Mac Mouse Fix now fully supports macOS 13 Ventura. Special thanks to <a href="https://github.com/chamburr">chamburr</a> who helped with Ventura support in <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/297">#297</a>.</p>
+<p>Mac Mouse Fix now fully supports macOS 13 Ventura. Special thanks to <a href="https://github.com/chamburr">chamburr</a> who helped with Ventura support in GitHub Issue <a href="https://github.com/noah-nuebling/mac-mouse-fix/issues/297">#297</a>.</p>
 <h3 id="dropped-support-for-older-macos-versions">Dropped support for older macOS versions</h3>
 <p>Unfortunately, Apple only lets you develop <em>for</em> macOS 10.13 <strong>High Sierra and later</strong> when developing <em>from</em> macOS 13 Ventura.</p>
 <p>So the <strong>minimum supported version</strong> has increased from 10.11 El Capitan to 10.13 High Sierra.</p>
@@ -177,7 +347,7 @@
         <enclosure
             url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.2.1-Beta-1/MacMouseFixApp.zip"
             sparkle:version="7054"
-            sparkle:shortVersionString="2.2.1 Beta"
+            sparkle:shortVersionString="2.2.1 Beta 1"
             sparkle:edSignature="n/pJ7YUwRZzTtMjX4U8d9ICdg8ZMShJpP0YzUeEPAkBRyTMXzSzwMgjwMuRkJh3AqjaY9FDGbryEp08S8NmFBQ==" length="5090587"
             type="application/octet-stream"
         />
@@ -335,14 +505,14 @@
 <p>Also check out the <strong>cool stuff</strong> introduced in <a href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.0.0">Mac Mouse Fix 2</a>!</p>
 <hr />
 <p>Mac Mouse Fix <strong>2.2.0</strong> features various usability improvements and bug fixes!</p>
-<h2 id="remapping-to-apple-exclusive-function-keys-is-better-now">Remapping to Apple-Exclusive function keys is better now</h2>
+<h3 id="remapping-to-apple-exclusive-function-keys-is-better-now">Remapping to Apple-Exclusive function keys is better now</h3>
 <p>The last update, 2.1.0, introduced a cool new feature that lets you remap your mouse buttons to any key on your keyboard - even function keys that are only found on Apple keyboards. 2.2.0 features further improvements and refinements to that feature:</p>
 <ul>
 <li>You can now hold Option (⌥) to remap to keys that are only found on Apple keyboards - even if you don’t have an Apple keyboard at hand.</li>
 <li>The function key symbols feature an improved appearance, making them fit in better with other text.</li>
 <li>The ability to remap to Caps Lock has been disabled. It did not work as expected.</li>
 </ul>
-<h2 id="add-remove-actions-more-easily">Add / remove Actions more easily</h2>
+<h3 id="add-remove-actions-more-easily">Add / remove Actions more easily</h3>
 <p>Some users had trouble figuring out that you can add and remove Actions from the Action Table. To make things easier to understand, 2.2.0 features the following changes and new features:</p>
 <ul>
 <li>You can now delete Actions by right-clicking them.
@@ -350,19 +520,19 @@
 <li>This should make it easier to discover the option to delete Actions.</li>
 <li>The right-click menu features a symbol of the ‘-’ button. This should help draw attention to the ‘-’ <em>button</em>, which should then draw attention to the ‘+’ button. This hopefully makes the option to <strong>add</strong> Actions more discoverable as well.</li>
 </ul></li>
-<li>You can now add Actions to the Action Table by right-clicking and an empty row.</li>
+<li>You can now add Actions to the Action Table by right-clicking an empty row.</li>
 <li>The ‘-’ button is now only active when an Action is selected. This should make it clearer that the ‘-’ button deletes the selected Action.</li>
 <li>The default window height has been increased so that there’s a visible empty row which can be right-clicked to add and Action.</li>
 <li>The ‘+’ and ‘-’ buttons have tooltips now.</li>
 </ul>
-<h2 id="click-and-drag-improvements">Click and Drag improvements</h2>
+<h3 id="click-and-drag-improvements">Click and Drag improvements</h3>
 <p>The threshold for activating Click and Drag has been increased from 5 pixels to 7 pixels. This makes it harder to accidentally activate Click and Drag, while still letting users switch Spaces etc. by using small, comfortable flicks. <!-- See [this comment](https://github.com/noah-nuebling/mac-mouse-fix/discussions/114#discussioncomment-1959404). --></p>
-<h2 id="other-ui-changes">Other UI changes</h2>
+<h3 id="other-ui-changes">Other UI changes</h3>
 <ul>
 <li>The appearance of the Action Table has been improved.</li>
 <li>Various other UI enhancements.</li>
 </ul>
-<h2 id="bug-fixes">Bug fixes</h2>
+<h3 id="bug-fixes">Bug fixes</h3>
 <ul>
 <li>Fixed an issue where the UI wasn’t greyed out when starting MMF while it was disabled.</li>
 <li>Removed hidden “Button 3 Click and Drag” option.

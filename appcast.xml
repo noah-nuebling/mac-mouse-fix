@@ -158,14 +158,14 @@
 <p>Also check out the <strong>cool stuff</strong> introduced in <a href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.0.0">Mac Mouse Fix 2</a>!</p>
 <hr />
 <p>Mac Mouse Fix <strong>2.2.0</strong> features various usability improvements and bug fixes!</p>
-<h2 id="remapping-to-apple-exclusive-function-keys-is-better-now">Remapping to Apple-Exclusive function keys is better now</h2>
+<h3 id="remapping-to-apple-exclusive-function-keys-is-better-now">Remapping to Apple-Exclusive function keys is better now</h3>
 <p>The last update, 2.1.0, introduced a cool new feature that lets you remap your mouse buttons to any key on your keyboard - even function keys that are only found on Apple keyboards. 2.2.0 features further improvements and refinements to that feature:</p>
 <ul>
 <li>You can now hold Option (⌥) to remap to keys that are only found on Apple keyboards - even if you don’t have an Apple keyboard at hand.</li>
 <li>The function key symbols feature an improved appearance, making them fit in better with other text.</li>
 <li>The ability to remap to Caps Lock has been disabled. It did not work as expected.</li>
 </ul>
-<h2 id="add-remove-actions-more-easily">Add / remove Actions more easily</h2>
+<h3 id="add-remove-actions-more-easily">Add / remove Actions more easily</h3>
 <p>Some users had trouble figuring out that you can add and remove Actions from the Action Table. To make things easier to understand, 2.2.0 features the following changes and new features:</p>
 <ul>
 <li>You can now delete Actions by right-clicking them.
@@ -173,19 +173,19 @@
 <li>This should make it easier to discover the option to delete Actions.</li>
 <li>The right-click menu features a symbol of the ‘-’ button. This should help draw attention to the ‘-’ <em>button</em>, which should then draw attention to the ‘+’ button. This hopefully makes the option to <strong>add</strong> Actions more discoverable as well.</li>
 </ul></li>
-<li>You can now add Actions to the Action Table by right-clicking and an empty row.</li>
+<li>You can now add Actions to the Action Table by right-clicking an empty row.</li>
 <li>The ‘-’ button is now only active when an Action is selected. This should make it clearer that the ‘-’ button deletes the selected Action.</li>
 <li>The default window height has been increased so that there’s a visible empty row which can be right-clicked to add and Action.</li>
 <li>The ‘+’ and ‘-’ buttons have tooltips now.</li>
 </ul>
-<h2 id="click-and-drag-improvements">Click and Drag improvements</h2>
+<h3 id="click-and-drag-improvements">Click and Drag improvements</h3>
 <p>The threshold for activating Click and Drag has been increased from 5 pixels to 7 pixels. This makes it harder to accidentally activate Click and Drag, while still letting users switch Spaces etc. by using small, comfortable flicks. <!-- See [this comment](https://github.com/noah-nuebling/mac-mouse-fix/discussions/114#discussioncomment-1959404). --></p>
-<h2 id="other-ui-changes">Other UI changes</h2>
+<h3 id="other-ui-changes">Other UI changes</h3>
 <ul>
 <li>The appearance of the Action Table has been improved.</li>
 <li>Various other UI enhancements.</li>
 </ul>
-<h2 id="bug-fixes">Bug fixes</h2>
+<h3 id="bug-fixes">Bug fixes</h3>
 <ul>
 <li>Fixed an issue where the UI wasn’t greyed out when starting MMF while it was disabled.</li>
 <li>Removed hidden “Button 3 Click and Drag” option.
