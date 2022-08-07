@@ -32,9 +32,9 @@
     
     if (@available(macOS 13, *)) {
         /// Disable and clean up legacy versions
-//        [self runPreviousVersionCleanup];
-//        [self removeHelperFromLaunchd];
-//        removeLaunchdPlist();
+        [self runPreviousVersionCleanup];
+        [self removeHelperFromLaunchd];
+        removeLaunchdPlist();
         /// Call core
         ///     Instead of respecting the 'enable' arg, we just toggle.
         if (helperIsActive_SM()) {
@@ -441,7 +441,7 @@ static NSError *makeWritable(NSString *itemPath) {
     NSLog(@"%lu other running Helper instances found", (unsigned long)instances.count);
         
     for (NSRunningApplication *instance in instances) {
-        [instance terminate]; // Consider using forceTerminate instead
+        [instance terminate]; /// Consider using forceTerminate instead
     }
     
 }
