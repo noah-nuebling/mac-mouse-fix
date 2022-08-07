@@ -36,12 +36,7 @@
         [self removeHelperFromLaunchd];
         removeLaunchdPlist();
         /// Call core
-        ///     Instead of respecting the 'enable' arg, we just toggle.
-        if (helperIsActive_SM()) {
-            enableHelper_SM(false, error);
-        } else {
-            enableHelper_SM(true, error);
-        }
+        enableHelper_SM(enable, error);
     } else {
         enableHelper_PList(enable);
     }
