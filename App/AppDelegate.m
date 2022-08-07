@@ -7,7 +7,7 @@
 // --------------------------------------------------------------------------
 //
 
-// implement checkbox functionality, setup AddingField mouse tracking and other minor stuff
+/// implement checkbox functionality, setup AddingField mouse tracking and other minor stuff
 
 #import <PreferencePanes/PreferencePanes.h>
 #import "AppDelegate.h"
@@ -48,26 +48,26 @@
 - (IBAction)enableCheckBox:(NSButton *)sender {
     
     BOOL beingEnabled = sender.state;
-    sender.state = !sender.state; // Prevent user from changing checkbox state directly. Instead, we'll do that through the `enableUI` method.
+    sender.state = !sender.state; /// Prevent user from changing checkbox state directly. Instead, we'll do that through the `enableUI` method.
     
     if (beingEnabled) {
         /// We won't enable the UI here directly. Instead, we'll do that from the `handleHelperEnabledMessage` method
-    } else { // Being disabled
+    } else { /// Being disabled
         [self enableUI:NO];
     }
     
     [HelperServices enableHelperAsUserAgent:beingEnabled];
-    // ^ We enable/disable the helper.
-    //  After enabling, the helper will send a message to the main app confirming that it has been enabled (received by `AppDelegate + handleHelperEnabledMessage`). Only when that message is received, will we change the state of the checkbox and the rest of the UI to enabled.
-    //  This should make the checkbox state more accurately reflect what's going on when something goes wrong with enabling the helper, making things less confusing to users who experience issues enabling MMF.
-    //  We only do this for enabling and not for disabling, because disabling always seems to work. Another reason we're not applying this for disabling is that it could lead to issues if the helper just crashes and doesn't send an "I'm being disabled" message before quitting. In that case the checkbox would just stay enabled.
+    /// ^ We enable/disable the helper.
+    ///  After enabling, the helper will send a message to the main app confirming that it has been enabled (received by `AppDelegate + handleHelperEnabledMessage`). Only when that message is received, will we change the state of the checkbox and the rest of the UI to enabled.
+    ///  This should make the checkbox state more accurately reflect what's going on when something goes wrong with enabling the helper, making things less confusing to users who experience issues enabling MMF.
+    ///  We only do this for enabling and not for disabling, because disabling always seems to work. Another reason we're not applying this for disabling is that it could lead to issues if the helper just crashes and doesn't send an "I'm being disabled" message before quitting. In that case the checkbox would just stay enabled.
 }
 + (void)handleHelperEnabledMessage {
     
     if (self.instance.UIDisabled) {
-        // Enable UI
+        /// Enable UI
         [self.instance enableUI:YES];
-        // Flash Notification
+        /// Flash Notification
 //        NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Mac Mouse Fix will stay enabled after you restart your Mac"];
 //        message = [message attributedStringBySettingFontSize:NSFont.smallSystemFontSize];
 //        [MFNotificationController attachNotificationWithMessage:message toWindow:AppDelegate.mainWindow forDuration:-1 alignment:kMFNotificationAlignmentBottomMiddle];
@@ -100,7 +100,7 @@
 
 #pragma mark - Init and Lifecycle
 
-// Define Globals
+/// Define Globals
 static NSDictionary *_scrollConfigurations;
 static NSDictionary *sideButtonActions;
 
@@ -108,7 +108,7 @@ static NSDictionary *sideButtonActions;
     
     if (self == [AppDelegate class]) {
         
-        [AppTranslocationManager removeTranslocation]; // Need to call this before MessagePort_App is initialized, otherwise stuff breaks if app is translocated
+        [AppTranslocationManager removeTranslocation]; /// Need to call this before MessagePort_App is initialized, otherwise stuff breaks if app is translocated
         [MessagePort_App load_Manual];
         
         _scrollConfigurations = @{ // This is unused
@@ -128,8 +128,6 @@ static NSDictionary *sideButtonActions;
                     @[@"swipeEvent", @"right"]
                 ]
         };
-        
-        //
     }
     
 }
@@ -151,7 +149,7 @@ static NSDictionary *sideButtonActions;
     
     /// Load UI
     
-    [self setUIToConfigFile];
+    [self updateUI];
     
     /// Update app-launch counters
     
@@ -175,23 +173,23 @@ static NSDictionary *sideButtonActions;
     setConfig(@"Other.lastLaunchedBundleVersion", @(currentBundleVersion));
     
     
-    BOOL firstAppLaunch = launchesOverall == 1; // App is launched for the first time
-    BOOL firstVersionLaunch = launchesOfCurrentBundleVersion == 1; // Last time that the app was launched was a different bundle version
+    BOOL firstAppLaunch = launchesOverall == 1; /// App is launched for the first time
+    BOOL firstVersionLaunch = launchesOfCurrentBundleVersion == 1; /// Last time that the app was launched was a different bundle version
     
-    // Configure Sparkle Updater
-    //  (See https://sparkle-project.org/documentation/customization/)
+    /// Configure Sparkle Updater
+    ///  (See https://sparkle-project.org/documentation/customization/)
     
-    // Some configuration is done via Info.plist, and seemingly can't be done from code
-    // Some more configuration is done from SparkleUpdaterController.m
+    /// Some configuration is done via Info.plist, and seemingly can't be done from code
+    /// Some more configuration is done from SparkleUpdaterController.m
     
     SUUpdater *up = SUUpdater.sharedUpdater;
     
     up.automaticallyChecksForUpdates = NO;
-    // ^ We set this to NO because we just always check when the app starts. That's simpler and it's how the old non-Sparkle updater did it so it's a little easier to deal with.
-    //   We also use the `updaterShouldPromptForPermissionToCheckForUpdates:` delegate method to make sure no Sparkle prompt occurs asking the user if they want automatic checks.
-    //   You could also disable this from Info.plist using `SUEnableAutomaticChecks` but that's unnecessary
+    /// ^ We set this to NO because we just always check when the app starts. That's simpler and it's how the old non-Sparkle updater did it so it's a little easier to deal with.
+    ///   We also use the `updaterShouldPromptForPermissionToCheckForUpdates:` delegate method to make sure no Sparkle prompt occurs asking the user if they want automatic checks.
+    ///   You could also disable this from Info.plist using `SUEnableAutomaticChecks` but that's unnecessary
     
-//    up.sendsSystemProfile = NO; // This is no by default
+//    up.sendsSystemProfile = NO; /// This is no by default
     up.automaticallyDownloadsUpdates = NO;
     
     BOOL checkForUpdates = [config(@"Other.checkForUpdates") boolValue];
@@ -199,24 +197,24 @@ static NSDictionary *sideButtonActions;
     BOOL checkForPrereleases = [config(@"Other.checkForPrereleases") boolValue];
     
     if (firstVersionLaunch && !appState().updaterDidRelaunchApplication) {
-        // TODO: Test if updaterDidRelaunchApplication works.
-        //  It will only work if `SparkleUpdaterDelegate - updaterDidRelaunchApplication:` is called before this
-        // The app (or this version of it) has probably been downloaded from the internet and is running for the first time.
-        //  -> Override check-for-prereleases setting
+        /// TODO: Test if updaterDidRelaunchApplication works.
+        ///  It will only work if `SparkleUpdaterDelegate - updaterDidRelaunchApplication:` is called before this
+        /// The app (or this version of it) has probably been downloaded from the internet and is running for the first time.
+        ///  -> Override check-for-prereleases setting
         if (SharedUtility.runningPreRelease) {
-            // If this is a pre-release version itself, we activate updates to pre-releases
+            /// If this is a pre-release version itself, we activate updates to pre-releases
             checkForPrereleases = YES;
         } else {
-            // If this is not a pre-release, then we'll *deactivate* updates to pre-releases
+            /// If this is not a pre-release, then we'll *deactivate* updates to pre-releases
             checkForPrereleases = NO;
         }
         setConfig(@"Other.checkForPrereleases", @(checkForPrereleases));
     }
     
-    // Write changes to we made to config through setConfig() to file. Also notifies helper app, which is probably unnecessary.
+    /// Write changes to we made to config through setConfig() to file. Also notifies helper app, which is probably unnecessary.
     commitConfig();
     
-    // Check for udates
+    /// Check for udates
     
     if (checkForUpdates) {
         
@@ -294,15 +292,14 @@ NSTimer *removeAccOverlayTimer;
     _scrollStepSizeSlider.enabled = enable.boolValue;
 }
 
-/// TODO: Rename to loadUIFromConfigFile - this is confusing
-- (void)setUIToConfigFile {
+- (void)updateUI {
     
     NSLog(@"Setting Enable Mac Mouse Fix checkbox to: %hhd", [HelperServices helperIsActive]);
     
 #pragma mark other
     /// enableCheckbox
     BOOL enable = HelperServices.helperIsActive;
-    _enableMouseFixCheckBox.state = enable ? 1 : 0;
+//    _enableMouseFixCheckBox.state = enable ? 1 : 0;
     [self enableUI:enable];
     
     [ConfigFileInterface_App loadConfigFromFile];
