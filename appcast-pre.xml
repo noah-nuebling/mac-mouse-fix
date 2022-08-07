@@ -158,8 +158,8 @@
 <h3 id="improvements-for-ventura">Improvements for Ventura!</h3>
 <ul>
 <li>Updated the UI for enabling Accessibility Permissions to reflect the new Ventura System Settings</li>
-<li>Mac Mouse Fix will now be displayed properly under Ventura’s new <a href="x-apple.systempreferences:com.apple.LoginItems-Settings.extension"><code>System Settings &gt; Login Items</code></a> menu</li>
-<li>Mac Mouse Fix will react properly when it’s disabled under <a href="x-apple.systempreferences:com.apple.LoginItems-Settings.extension"><code>System Settings &gt; Login Items</code></a></li>
+<li>Mac Mouse Fix will now be displayed properly under Ventura’s new <strong>System Settings &gt; Login Items</strong> menu</li>
+<li>Mac Mouse Fix will react properly when it’s disabled under <strong>System Settings &gt; Login Items</strong></li>
 <li>Fixed a glitch where the Action Table would become too narrow when resizing the main window</li>
 </ul>
 </body>
