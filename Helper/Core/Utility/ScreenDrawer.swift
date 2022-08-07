@@ -70,7 +70,7 @@ import CocoaLumberjackSwift
         canvas.setFrame(screen.frame, display: false)
         
         /// Get frame for drawing image in canvas
-        let frameInCanvas = canvas.convertFromScreen(frameInScreen); /// Don't need to use `convertFromScreen()` because the canvas window is exactly as large as the screen?
+        let frameInCanvas = canvas.convertFromScreen(frameInScreen); /// The canvas window is exactly as large as the screen, but it's origin might be different. ()
         
         /// Debug
         DDLogDebug("screennnn: \(screen)")
@@ -112,7 +112,7 @@ import CocoaLumberjackSwift
 //        view.setFrameOrigin(newOrigin)
         
         /// Sol 2
-        /// This is a little faster
+        /// This is a little faster, still seems to call autolayout stuff.
         
         view.wantsLayer = true
         let origin = view.frame.origin
