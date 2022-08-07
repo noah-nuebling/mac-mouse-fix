@@ -43,6 +43,8 @@
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>13</integer>
 		</dict>
 		<key>ReactiveCocoa.xcscheme_^#shared#^_</key>
 		<dict>
@@ -60,6 +62,8 @@
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>14</integer>
 		</dict>
 		<key>ReactiveSwift.xcscheme_^#shared#^_</key>
 		<dict>
