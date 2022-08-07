@@ -26,7 +26,7 @@
     }
 }
 
-+ (void)enableHelperAsUserAgent:(BOOL)enable {
++ (void)enableHelperAsUserAgent:(BOOL)enable error:(NSError *_Nullable*_Nullable)error {
     
     /// Register/unregister the helper as a User Agent with launchd so it runs in the background - also launches/terminates helper
     
@@ -38,9 +38,9 @@
         /// Call core
         ///     Instead of respecting the 'enable' arg, we just toggle.
         if (helperIsActive_SM()) {
-            enableHelper_SM(false);
+            enableHelper_SM(false, error);
         } else {
-            enableHelper_SM(true);
+            enableHelper_SM(true, error);
         }
     } else {
         enableHelper_PList(enable);
@@ -93,25 +93,22 @@ static BOOL helperIsActive_PList() {
     }
 }
 
-static void enableHelper_SM(BOOL enable) __API_AVAILABLE(macos(13)) {
+static void enableHelper_SM(BOOL enable, NSError * _Nullable * _Nullable error) __API_AVAILABLE(macos(13)) {
     
     /// Do the core (un)registering
     ///     `loginItemServiceWithIdentifier:` would be easiest but it breaks with multiple copies of the app installed.
-    
     SMAppService *service = [SMAppService agentServiceWithPlistName:@"sm_launchd.plist"];
-     
-    NSError *error;
     if (enable) {
-        BOOL success = [service registerAndReturnError:&error];
+        BOOL success = [service registerAndReturnError:error];
         if (!success){
-            NSLog(@"Failed to register Helper with error: %@", error);
+            NSLog(@"Failed to register Helper with error: %@", *error);
         } else {
             NSLog(@"Registered Helper!");
         }
     } else {
-        BOOL success = [service unregisterAndReturnError:&error];
+        BOOL success = [service unregisterAndReturnError:error];
         if (!success){
-            NSLog(@"Failed to UNregister Helper with error: %@", error);
+            NSLog(@"Failed to UNregister Helper with error: %@", *error);
         } else {
             NSLog(@"Unregistered Helper.");
         }

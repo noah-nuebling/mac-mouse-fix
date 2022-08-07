@@ -12,6 +12,27 @@
 
 @implementation NSAttributedString (Additions)
 
+#pragma mark Markdown
+
++ (NSAttributedString *)attributedStringWithMarkdown:(NSString *)md __API_AVAILABLE(macos(13)) {
+    
+    /// Create options object
+    NSAttributedStringMarkdownParsingOptions *options = [[NSAttributedStringMarkdownParsingOptions alloc] init];
+    
+    /// No idea what these do
+    options.allowsExtendedAttributes = NO;
+    options.appliesSourcePositionAttributes = NO;
+    
+    /// Make it respect linebreaks
+    options.interpretedSyntax = NSAttributedStringMarkdownInterpretedSyntaxInlineOnlyPreservingWhitespace;
+    
+    /// Create string
+    NSAttributedString *result = [[NSAttributedString alloc] initWithMarkdownString:md options:options baseURL:[NSURL URLWithString:@""] error:nil];
+    
+    /// Return result
+    return result;
+}
+
 #pragma mark Attributed string attributes
 
 - (NSAttributedString *)attributedStringByAddingStringAttributes:(NSDictionary<NSAttributedStringKey, id> *)attributes forRange:(NSRange)range {

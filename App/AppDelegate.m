@@ -56,11 +56,22 @@
         [self enableUI:NO];
     }
     
-    [HelperServices enableHelperAsUserAgent:beingEnabled];
+    NSError *error;
+    [HelperServices enableHelperAsUserAgent:beingEnabled error:&error];
     /// ^ We enable/disable the helper.
     ///  After enabling, the helper will send a message to the main app confirming that it has been enabled (received by `AppDelegate + handleHelperEnabledMessage`). Only when that message is received, will we change the state of the checkbox and the rest of the UI to enabled.
     ///  This should make the checkbox state more accurately reflect what's going on when something goes wrong with enabling the helper, making things less confusing to users who experience issues enabling MMF.
     ///  We only do this for enabling and not for disabling, because disabling always seems to work. Another reason we're not applying this for disabling is that it could lead to issues if the helper just crashes and doesn't send an "I'm being disabled" message before quitting. In that case the checkbox would just stay enabled.
+    
+    
+    /// Give user feedback if MMF is disabled in settings
+    if (@available(macOS 13, *)) {
+        if (error.code == 1) { /// Operation not permitted error
+            NSAttributedString *message = [NSAttributedString attributedStringWithMarkdown:@"Mac Mouse Fix was disabled in System Preferences.\nTo **enable** Mac Mouse Fix:\n\n1. Go to [System Settings > Login Items](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Allow **Mac Mouse Fix.app** in the Background"];
+            [MFNotificationController attachNotificationWithMessage:message toWindow:self.window forDuration:0.0];
+            
+        }
+    }
 }
 + (void)handleHelperEnabledMessage {
     

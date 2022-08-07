@@ -71,15 +71,16 @@ static int update(const char *installScript) {
     
     return 0;
 }
-void reloadHelper() {
-    // v Disabling helper is inconsistent without waiting
-    //      I think it's because NSFileManager gives wrong values for a short time after the app has been relocated (this is called as a result of the app being relocated)
+void reloadHelper(void) {
+    /// v Disabling helper is inconsistent without waiting
+    ///      I think it's because NSFileManager gives wrong values for a short time after the app has been relocated (this is called as a result of the app being relocated)
+    NSError *error;
     [NSThread sleepForTimeInterval:0.5];
     NSLog(@"Unloading Helper from launchd...");
-    [HelperServices enableHelperAsUserAgent:NO];
+    [HelperServices enableHelperAsUserAgent:NO error:&error];
     [NSThread sleepForTimeInterval:0.5]; // Waiting seems to help consistency
     NSLog(@"Reloading Helper into launchd...");
-    [HelperServices enableHelperAsUserAgent:YES];
+    [HelperServices enableHelperAsUserAgent:YES error:&error];
 }
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
