@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>Label</key>
-	<string>com.nuebling.mac-mouse-fix.helper</string>
+	<string>com.nuebling.mac-mouse-fix.helper-43210</string>
 	<key>BundleProgram</key>
 	<string>Contents/Library/LoginItems/Mac Mouse Fix Helper.app/Contents/MacOS/Mac Mouse Fix Helper</string>
 	<key>RunAtLoad</key>

@@ -58,15 +58,15 @@
 		4F8CE7012617738A00D70A76 /* AppTranslocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CE6FF2617738A00D70A76 /* AppTranslocationManager.m */; };
 		4F8CF95728686C0100BF5E55 /* PolynomialRegression.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CF94328686C0100BF5E55 /* PolynomialRegression.m */; };
 		4F8CF95B28686EA200BF5E55 /* DoublesMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CF94528686C0100BF5E55 /* DoublesMatrix.m */; };
+		4F8D2C5928A035EA0060F76F /* Mac Mouse Fix Helper.app in Copy Helper */ = {isa = PBXBuildFile; fileRef = 4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4F8FC13F275DC81900887A0C /* PrefixSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8FC13E275DC81900887A0C /* PrefixSwift.swift */; };
 		4F8FC140275DC81900887A0C /* PrefixSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8FC13E275DC81900887A0C /* PrefixSwift.swift */; };
+		4F9111F9289FF34D00D2DD8C /* sm_launchd.plist in Copy sm_launchd.plist */ = {isa = PBXBuildFile; fileRef = 4F9111F4289FF03200D2DD8C /* sm_launchd.plist */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4F92A708260F4BF000529D1F /* RemapTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F92A707260F4BF000529D1F /* RemapTableView.m */; };
-		4F9111F9289FF34D00D2DD8C /* sm_launchd.plist in Copy sm_launchd.plist */ = {isa = PBXBuildFile; fileRef = 4F9111F4289FF03200D2DD8C /* sm_launchd.plist */; };
 		4F92A72D260F6C7800529D1F /* NSView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F92A72C260F6C7800529D1F /* NSView+Additions.m */; };
 		4F92A73A260F73C600529D1F /* KeyCaptureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F92A71D260F667F00529D1F /* KeyCaptureView.m */; };
 		4F94F60525E5EC2800D9F24A /* Mac_Mouse_FixTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60425E5EC2800D9F24A /* Mac_Mouse_FixTests.m */; };
 		4F94F61025E5EC2800D9F24A /* Mac_Mouse_FixUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60F25E5EC2800D9F24A /* Mac_Mouse_FixUITests.m */; };
-		4F94F73D25E6146C00D9F24A /* Mac Mouse Fix Helper.app in Copy Helper */ = {isa = PBXBuildFile; fileRef = 4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4F94F74C25E614B800D9F24A /* Mac Mouse Fix Accomplice in Copy Accomplice */ = {isa = PBXBuildFile; fileRef = 4F2FDF302315662400C7BE14 /* Mac Mouse Fix Accomplice */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4F96060F27B4F92F004D6F6D /* PixelatedAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F96060E27B4F92F004D6F6D /* PixelatedAnimator.swift */; };
 		4F9C9B58268A29B70083DED0 /* RollingAverage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C9B57268A29B70083DED0 /* RollingAverage.swift */; };
@@ -275,7 +275,7 @@
 			dstPath = Contents/Library/LoginItems;
 			dstSubfolderSpec = 1;
 			files = (
-				4F94F73D25E6146C00D9F24A /* Mac Mouse Fix Helper.app in Copy Helper */,
+				4F8D2C5928A035EA0060F76F /* Mac Mouse Fix Helper.app in Copy Helper */,
 			);
 			name = "Copy Helper";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -419,9 +419,9 @@
 		4F8CF94628686C0100BF5E55 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4F8CF94728686C0100BF5E55 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		4F8FC13E275DC81900887A0C /* PrefixSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefixSwift.swift; sourceTree = "<group>"; };
+		4F9111F4289FF03200D2DD8C /* sm_launchd.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = sm_launchd.plist; sourceTree = "<group>"; };
 		4F92A706260F4BF000529D1F /* RemapTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapTableView.h; sourceTree = "<group>"; };
 		4F92A707260F4BF000529D1F /* RemapTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapTableView.m; sourceTree = "<group>"; };
-		4F9111F4289FF03200D2DD8C /* sm_launchd.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = sm_launchd.plist; sourceTree = "<group>"; };
 		4F92A71C260F667F00529D1F /* KeyCaptureView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyCaptureView.h; sourceTree = "<group>"; };
 		4F92A71D260F667F00529D1F /* KeyCaptureView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KeyCaptureView.m; sourceTree = "<group>"; };
 		4F92A72B260F6C7800529D1F /* NSView+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSView+Additions.h"; sourceTree = "<group>"; };
@@ -2490,7 +2490,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 6000;
 				DEVELOPMENT_TEAM = LM5Z78756B;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
@@ -2522,7 +2522,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 6000;
 				DEVELOPMENT_TEAM = LM5Z78756B;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",

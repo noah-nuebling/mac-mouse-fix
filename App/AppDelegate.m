@@ -68,7 +68,7 @@
     if (@available(macOS 13, *)) {
         if (error.code == 1) { /// Operation not permitted error
             NSAttributedString *message = [NSAttributedString attributedStringWithMarkdown:@"Mac Mouse Fix was **disabled** in System Settings.\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\'"];
-            [MFNotificationController attachNotificationWithMessage:message toWindow:self.window forDuration:0.0];
+            [ToastNotificationController attachNotificationWithMessage:message toWindow:self.window forDuration:0.0];
             
         }
     }
