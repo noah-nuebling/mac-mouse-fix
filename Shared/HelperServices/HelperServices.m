@@ -13,34 +13,130 @@
 #import "Objects.h"
 #import "SharedUtility.h"
 #import "SharedMessagePort.h"
+#import <ServiceManagement/ServiceManagement.h>
 
 @implementation HelperServices
 
-/// Register/unregister the helper as a User Agent with launchd so it runs in the background - also launches/terminates helper
-+ (void)enableHelperAsUserAgent:(BOOL)enable {
+#pragma mark - Main interface
+
++ (BOOL)helperIsActive {
+    if (@available(macOS 13, *)) {
+        return helperIsActive_SM();
+    } else {
+        return helperIsActive_PList();
+    }
+}
+
++ (void)enableHelperAsUserAgent:(BOOL)enable error:(NSError *_Nullable*_Nullable)error {
     
-    /// Repair/generate launchdPlist so that the following code works for sure
-    [self repairLaunchdPlist];
+    /// Register/unregister the helper as a User Agent with launchd so it runs in the background - also launches/terminates helper
     
-    /// If an old version of Mac Mouse Fix is still running and stuff, clean that up to prevent issues
-    [self runPreviousVersionCleanup];
-    
-    /**
-         Sometimes there's a weird bug where the main app won't recognize the helper as enabled even though it is. The code down below for enabling will then fail, when the user tries to check the enable checkbox.
-         So we're removing the helper from launchd before trying to enable to hopefully fix this. Edit: seems to fix it!
-         I'm pretty sure that if we didn't check for `launchdPathIsBundlePath` in `strangeHelperIsRegisteredWithLaunchd` this issue wouldn't have occured and we wouldn't need this workaround. But I'm not sure anymore why we do that so it's not smart to remove it.
-         Edit: I think the specific issue I saw only happens when there are two instances of MMF open at the same time.
-     */
-    if (enable) {
+    if (@available(macOS 13, *)) {
+        /// Disable and clean up legacy versions
+        [self runPreviousVersionCleanup];
         [self removeHelperFromLaunchd];
-        
-        /// Any Mac Mouse Fix Helper processes that were started by launchd should have been quit by now. But if there are Helpers which weren't started by launchd they will still be running which causes problems. Terminate them now.
-        [self terminateOtherHelperInstances];
+        removeLaunchdPlist();
+        /// Call core
+        enableHelper_SM(enable, error);
+    } else {
+        enableHelper_PList(enable);
+    }
+}
+
+
+
+#pragma mark - Core
+
+
+static BOOL helperIsActive_SM() __API_AVAILABLE(macos(13)) {
+    SMAppService *service = [SMAppService agentServiceWithPlistName:@"sm_launchd.plist"];
+    BOOL result = service.status == SMAppServiceStatusEnabled;
+    if (result) {
+        DDLogDebug(@"Helper found to be active");
+    } else {
+        DDLogDebug(@"Helper found to be inactive. Status: %ld", (long)service.status);
+    }
+    return result;
+}
+
+static BOOL helperIsActive_PList() {
+    
+    /// Get info from launchd
+    NSString *launchctlOutput = [HelperServices helperInfoFromLaunchd];
+    
+    /// Analyze info
+    
+    /// Check if label exists. This should always be found if the helper is registered with launchd. Or equavalently, if the output isn't "Could not find service "mouse.fix.helper" in domain for port"
+    NSString *labelSearchString = stringf(@"\"Label\" = \"%@\";", kMFLaunchdHelperIdentifier);
+    BOOL labelFound = [launchctlOutput rangeOfString: labelSearchString].location != NSNotFound;
+    
+    /// Check exit status. Not sure if useful
+    BOOL exitStatusIsZero = [launchctlOutput rangeOfString: @"\"LastExitStatus\" = 0;"].location != NSNotFound;
+    
+    if (HelperServices.strangeHelperIsRegisteredWithLaunchd) {
+        DDLogInfo(@"Found helper running somewhere else.");
+        return NO;
     }
     
-    /// Use the `launchctl` command-line-tool
-    ///     Note: Why don't we use `SharedUtility + launchCLT:withArgs:` here?
+    if (labelFound && exitStatusIsZero) { /// Why check for exit status here?
+        DDLogInfo(@"MOUSE REMAPOR FOUNDD AND ACTIVE");
+        return YES;
+    } else {
+        DDLogInfo(@"Helper is not active");
+        return NO;
+    }
+}
+
+static void enableHelper_SM(BOOL enable, NSError * _Nullable * _Nullable error) __API_AVAILABLE(macos(13)) {
     
+    /// Do the core (un)registering
+    ///     `loginItemServiceWithIdentifier:` would be easiest but it breaks with multiple copies of the app installed.
+    SMAppService *service = [SMAppService agentServiceWithPlistName:@"sm_launchd.plist"];
+    if (enable) {
+        BOOL success = [service registerAndReturnError:error];
+        if (!success){
+            DDLogError(@"Failed to register Helper with error: %@", *error);
+        } else {
+            DDLogInfo(@"Registered Helper!");
+        }
+    } else {
+        BOOL success = [service unregisterAndReturnError:error];
+        if (!success){
+            DDLogError(@"Failed to UNregister Helper with error: %@", *error);
+        } else {
+            DDLogInfo(@"Unregistered Helper.");
+        }
+    }
+}
+
+static void enableHelper_PList(BOOL enable) {
+    
+    /// This is the main function for the 'old method' where we were manually managing a plist file. Under Ventura we switched to a new framework
+    
+    /// Repair/generate launchdPlist so that the following code works for sure
+    [HelperServices repairLaunchdPlist];
+    
+    /// If an old version of Mac Mouse Fix is still running and stuff, clean that up to prevent issues
+    [HelperServices runPreviousVersionCleanup];
+    
+    /**
+     Sometimes there's a weird bug where the main app won't recognize the helper as enabled even though it is. The code down below for enabling will then fail, when the user tries to check the enable checkbox.
+     So we're removing the helper from launchd before trying to enable to hopefully fix this. Edit: seems to fix it!
+     I'm pretty sure that if we didn't check for `launchdPathIsBundlePath` in `strangeHelperIsRegisteredWithLaunchd` this issue wouldn't have occured and we wouldn't need this workaround. But I'm not sure anymore why we do that so it's not smart to remove it.
+     Edit: I think the specific issue I saw only happens when there are two instances of MMF open at the same time.
+     */
+    if (enable) {
+        [HelperServices removeHelperFromLaunchd];
+        
+        /// Any Mac Mouse Fix Helper processes that were started by launchd should have been quit by now. But if there are Helpers which weren't started by launchd they will still be running which causes problems. Terminate them now.
+        [HelperServices terminateOtherHelperInstances];
+    }
+    
+    /// Prepare strings for NSTask
+    
+    /// Path for the executable of the launchctl command-line-tool, which we use to control launchd
+    
+    /// Prepare arguments for the launchctl command-line-tool
     if (@available(macOS 10.13, *)) {
         NSTask *task = [[NSTask alloc] init];
         task.executableURL = [NSURL fileURLWithPath: kMFLaunchctlPath];
@@ -53,19 +149,20 @@
         task.standardOutput = pipe;
         NSError *error;
         task.terminationHandler = ^(NSTask *task) {
-            if (enable == NO) { /// Cleanup (delete launchdPlist) file after were done - We can't clean up immediately cause then launchctl will fail
-                cleanup();
+            if (enable == NO) { /// Cleanup (delete launchdPlist) file after were done // We can't clean up immediately cause then launchctl will fail
+                removeLaunchdPlist();
             }
             DDLogInfo(@"launchctl terminated with stdout/stderr: %@, error: %@", [NSString.alloc initWithData:pipe.fileHandleForReading.readDataToEndOfFile encoding:NSUTF8StringEncoding], error);
         };
         [task launchAndReturnError:&error];
         
-    } else { // Fallback on earlier versions
+    } else { /// Fallback on earlier versions
         NSString *OnOffArgumentOld = (enable) ? @"load": @"unload";
         [NSTask launchedTaskWithLaunchPath: kMFLaunchctlPath arguments: @[OnOffArgumentOld, Objects.launchdPlistURL.path]]; /// Can't clean up here easily cause there's no termination handler
     }
 }
-static void cleanup() {
+
+static void removeLaunchdPlist() {
     NSError *error;
     [NSFileManager.defaultManager removeItemAtURL:Objects.launchdPlistURL error:&error];
     if (error != nil) {
@@ -281,40 +378,10 @@ static NSError *makeWritable(NSString *itemPath) {
 
 + (NSString *)helperInfoFromLaunchd {
     
-    // Using NSTask to ask launchd about helper status
+    /// Using NSTask to ask launchd about helper status
     NSURL *launchctlURL = [NSURL fileURLWithPath: kMFLaunchctlPath];
     NSString * launchctlOutput = [SharedUtility launchCLT:launchctlURL withArguments:@[@"list", kMFLaunchdHelperIdentifier] error:nil];
     return launchctlOutput;
-}
-
-+ (BOOL)helperIsActive {
-    
-    // Get info from launchd
-    
-    NSString *launchctlOutput = [self helperInfoFromLaunchd];
-    
-    // Analyze info
-    
-    // Check if label exists. This should always be found if the helper is registered with launchd. Or equavalently, if the output isn't "Could not find service "mouse.fix.helper" in domain for port"
-    NSString *labelSearchString = stringf(@"\"Label\" = \"%@\";", kMFLaunchdHelperIdentifier);
-    BOOL labelFound = [launchctlOutput rangeOfString: labelSearchString].location != NSNotFound;
-    
-    // Check exit status. Not sure if useful
-    BOOL exitStatusIsZero = [launchctlOutput rangeOfString: @"\"LastExitStatus\" = 0;"].location != NSNotFound;
-    
-    if (self.strangeHelperIsRegisteredWithLaunchd) {
-        DDLogWarn(@"Found helper running somewhere else.");
-        return NO;
-    }
-    
-    if (labelFound && exitStatusIsZero) { // Why check for exit status here?
-        DDLogInfo(@"MOUSE REMAPOR FOUNDD AND ACTIVE");
-        return YES;
-    } else {
-        DDLogInfo(@"Helper is not active");
-        return NO;
-    }
-    
 }
 
 #pragma mark - Clean up legacy stuff
@@ -327,8 +394,8 @@ static NSError *makeWritable(NSString *itemPath) {
         [self removeHelperFromLaunchd];
     }
     
-    [self removeLegacyLaunchdPlist];
-    // ^ Could also do this in the if block but users have been having some weirdd issues after upgrading to the app version and I don't know why. I feel like this might make things slightly more robust.
+    [self removePrefpaneLaunchdPlist];
+    /// ^ Could also do this in the if block but users have been having some weirdd issues after upgrading to the app version and I don't know why. I feel like this might make things slightly more robust.
 }
 
 /// Check if helper is registered with launchd from some other location
@@ -364,7 +431,7 @@ static NSError *makeWritable(NSString *itemPath) {
     DDLogInfo(@"%lu other running Helper instances found", (unsigned long)instances.count);
         
     for (NSRunningApplication *instance in instances) {
-        [instance terminate]; // Consider using forceTerminate instead
+        [instance terminate]; /// Consider using forceTerminate instead
     }
     
 }
@@ -383,15 +450,16 @@ static NSError *makeWritable(NSString *itemPath) {
     }
 }
 
-/// Remove legacy launchd plist file if it exists
-/// The launchd plist file used to be at `~/Library/LaunchAgents/com.nuebling.mousefix.helper.plist` when the app was still a prefpane
-/// Now, with the app version, it's moved to `~/Library/LaunchAgents/com.nuebling.mac-mouse-fix.helper.plist`
-/// Having the old version still can lead to the old helper being started at startup, and I think other conflicts, too.
-+ (void)removeLegacyLaunchdPlist {
++ (void)removePrefpaneLaunchdPlist {
+        
+    /// Remove legacy launchd plist file if it exists
+    /// The launchd plist file used to be at `~/Library/LaunchAgents/com.nuebling.mousefix.helper.plist` when the app was still a prefpane
+    /// Now, with the app version, it's moved to `~/Library/LaunchAgents/com.nuebling.mac-mouse-fix.helper.plist`
+    /// Having the old version still can lead to the old helper being started at startup, and I think other conflicts, too.
     
     DDLogInfo(@"Removing legacy launchd plist");
     
-    // Find user library
+    /// Find user library
     NSArray<NSString *> *libraryPaths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
     assert(libraryPaths.count == 1);
     NSMutableString *libraryPath = libraryPaths.firstObject.mutableCopy;
@@ -422,7 +490,9 @@ static NSError *makeWritable(NSString *itemPath) {
     return executablePath;
 }
 
-// Example output of the `launchctl list mouse.fix.helper` command
+#pragma mark - Documentation & other
+
+/// Example output of the `launchctl list mouse.fix.helper` command
 
 /*
  {
@@ -444,7 +514,7 @@ static NSError *makeWritable(NSString *itemPath) {
  };
  */
 
-// Old stuff
+/// Old stuff
 
 /*
  //    NSString *prefPaneSearchString = @"/PreferencePanes/Mouse Fix.prefPane/Contents/Library/LoginItems/Mouse Fix Helper.app/Contents/MacOS/Mouse Fix Helper";

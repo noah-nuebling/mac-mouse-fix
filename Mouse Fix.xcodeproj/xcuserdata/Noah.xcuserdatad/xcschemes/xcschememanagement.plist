@@ -7,7 +7,7 @@
 		<key>Accomplice.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>6</integer>
+			<integer>7</integer>
 		</dict>
 		<key>App - Release.xcscheme_^#shared#^_</key>
 		<dict>
@@ -18,6 +18,11 @@
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
+		</dict>
+		<key>Helper - External Start.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
 		</dict>
 		<key>Helper - Launchd start.xcscheme_^#shared#^_</key>
 		<dict>

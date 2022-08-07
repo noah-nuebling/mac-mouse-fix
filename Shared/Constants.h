@@ -38,12 +38,15 @@ typedef enum {
 #define kMFAccompliceName   @"Mac Mouse Fix Accomplice"
 #define kMFHelperName       @"Mac Mouse Fix Helper.app"
 
-#define kMFLaunchdHelperIdentifier  @"mouse.fix.helper" // Should rename to `kMFLaunchdHelperLabel`
-    // ^ Keep this in sync with `Label` value in `default_launchd.plist`
-    // ^ The old value @"mouse.fix.helper" was also used with the old prefpane version which could lead to conflicts. See Mail beginning with 'I attached the system log. Happening with this version too'. < We moved back to the old `mouse.fix.helper` label
+#define kMFLaunchdHelperIdentifier  @"mouse.fix.helper" /// Should rename to `kMFLaunchdHelperLabel`
+/// ^ Keep this in sync with `Label` value in `default_launchd.plist`
+/// ^ The old value @"mouse.fix.helper" was also used with the old prefpane version which could lead to conflicts. See Mail beginning with 'I attached the system log. Happening with this version too'. Edit: We moved back to the old `mouse.fix.helper` label for the app version of Mac Mouse Fix. Reasoning:
+///      We meant to move the launchd label over to a new one to avoid conlicts when upgrading from the old prefpane, but I think it can actually lead to more complications. Also we'd fragment things, because the first few versions of the app version already shipped with the old "mouse.fix.helper" label.
 
-// #define kMFLaunchdHelperIdentifier  @"com.nuebling.mac-mouse-fix.helper"
-//      ^ We meant to move the launchd label over to a new one to avoid conlicts when upgrading from the old prefpane, but I think it can lead to more complications. Also we'd fragment things, because the first few versions of the app version already shipped with the old "mouse.fix.helper" label
+#define kMFLaunchdHelperIdentifierSM  @"com.nuebling.mac-mouse-fix.helper"
+///      We finally moved to this new label when moving to the new Service Management API for enabling the Helper as background task for Ventura.
+///      We experienced strange issues when using the old label, so we're giving this new one a try.
+///      Keep this in sync with `sm_launchd.plist`.
 
 #define kMFLaunchctlPath            @"/bin/launchctl"
 #define kMFXattrPath                @"/usr/bin/xattr"
