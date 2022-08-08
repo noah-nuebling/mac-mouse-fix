@@ -1,5 +1,5 @@
 //
-//  GlobalState.swift
+//  State.swift
 //  tabTestStoryboards
 //
 //  Created by Noah Nübling on 2/11/22.
@@ -10,10 +10,10 @@
 import Cocoa
 import ReactiveSwift
 
-class GlobalState: NSObject {
+class State: NSObject {
     
     /// Declare singleton instance
-    static let shared = GlobalState()
+    static let shared = State()
     
     /// Vars
     var appIsEnabled = MutableProperty(false)

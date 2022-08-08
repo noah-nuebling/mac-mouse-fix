@@ -12,7 +12,7 @@ import ReactiveCocoa
 class GeneralTabController: NSViewController {
     
     /// Convenience
-    var enabled: MutableProperty<Bool> { GlobalState.shared.appIsEnabled }
+    var enabled: MutableProperty<Bool> { State.shared.appIsEnabled }
     
     /// Config
     var showInMenubar: MutableProperty<Bool> = MutableProperty(false)
