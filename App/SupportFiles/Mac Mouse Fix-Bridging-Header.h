@@ -22,5 +22,8 @@
 #import "AnimatorDeclarations.h"
 #import "DisplayLink.h"
 #import "IOHIDEventTypes.h"
+#import "HelperServices.h"
+#import "NSAttributedString+Additions.h"
+#import "ToastNotificationController.h"
 
 #endif /* Mac_Mouse_Fix_Bridging_Header_h */

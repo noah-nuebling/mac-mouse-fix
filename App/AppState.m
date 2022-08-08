@@ -11,12 +11,12 @@
 
 @implementation AppState
 
-// Convenience function for accessing instance
+/// Convenience function for accessing instance
 AppState *appState() {
     return _instance;
 }
 
-// Init the class by creating a singleton instance
+/// Init the class by creating a singleton instance
 static AppState *_instance;
 + (void)initialize
 {
@@ -25,7 +25,7 @@ static AppState *_instance;
     }
 }
 
-// Init the instance
+/// Init the instance
 - (instancetype)init
 {
     self = [super init];

@@ -27,8 +27,7 @@
 
 @interface AppDelegate ()
 
-@property (strong) IBOutlet NSWindow *window;
-
+@property (weak) IBOutlet NSWindow *window;
 @property (weak) IBOutlet NSButton *enableMouseFixCheckBox;
 
 @property (weak) IBOutlet NSButton *scrollEnableCheckBox;

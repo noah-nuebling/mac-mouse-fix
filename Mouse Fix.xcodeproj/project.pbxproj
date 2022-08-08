@@ -61,7 +61,7 @@
 		4F8D2C5928A035EA0060F76F /* Mac Mouse Fix Helper.app in Copy Helper */ = {isa = PBXBuildFile; fileRef = 4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4F8FC13F275DC81900887A0C /* PrefixSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8FC13E275DC81900887A0C /* PrefixSwift.swift */; };
 		4F8FC140275DC81900887A0C /* PrefixSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8FC13E275DC81900887A0C /* PrefixSwift.swift */; };
-		4F909CF028A0C3B7009349A2 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909CEF28A0C3B6009349A2 /* State.swift */; };
+		4F909CF028A0C3B7009349A2 /* MainAppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909CEF28A0C3B6009349A2 /* MainAppState.swift */; };
 		4F909D2028A0C3D2009349A2 /* Main.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4F909CF328A0C3D2009349A2 /* Main.strings */; };
 		4F909D2128A0C3D2009349A2 /* GeneralTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909CF628A0C3D2009349A2 /* GeneralTabController.swift */; };
 		4F909D2228A0C3D2009349A2 /* ScrollTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909CF728A0C3D2009349A2 /* ScrollTabController.swift */; };
@@ -200,7 +200,6 @@
 		4FF665F525F2C92700689B77 /* ConfigInterface_App.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665D125F2C92700689B77 /* ConfigInterface_App.m */; };
 		4FF665F725F2C92700689B77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FF665D525F2C92700689B77 /* Assets.xcassets */; };
 		4FF665F825F2C92700689B77 /* MessagePort_App.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665D725F2C92700689B77 /* MessagePort_App.m */; };
-		4FF665F925F2C92700689B77 /* MouseFix.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FF665D925F2C92700689B77 /* MouseFix.xib */; };
 		4FF665FA25F2C92700689B77 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665DB25F2C92700689B77 /* AppDelegate.m */; };
 		4FF665FC25F2C92700689B77 /* AuthorizeAccessibilityView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FF665DF25F2C92700689B77 /* AuthorizeAccessibilityView.xib */; };
 		4FF665FD25F2C92700689B77 /* AuthorizeAccessibilityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665E025F2C92700689B77 /* AuthorizeAccessibilityView.m */; };
@@ -454,7 +453,7 @@
 		4F8CF94328686C0100BF5E55 /* PolynomialRegression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PolynomialRegression.m; sourceTree = "<group>"; };
 		4F8CF94528686C0100BF5E55 /* DoublesMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoublesMatrix.m; sourceTree = "<group>"; };
 		4F8FC13E275DC81900887A0C /* PrefixSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefixSwift.swift; sourceTree = "<group>"; };
-		4F909CEF28A0C3B6009349A2 /* State.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
+		4F909CEF28A0C3B6009349A2 /* MainAppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainAppState.swift; sourceTree = "<group>"; };
 		4F909CF428A0C3D2009349A2 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
 		4F909CF628A0C3D2009349A2 /* GeneralTabController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralTabController.swift; sourceTree = "<group>"; };
 		4F909CF728A0C3D2009349A2 /* ScrollTabController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollTabController.swift; sourceTree = "<group>"; };
@@ -1032,6 +1031,9 @@
 		4F909CF228A0C3D2009349A2 /* Main+TabView */ = {
 			isa = PBXGroup;
 			children = (
+				4FF665C525F2C92700689B77 /* AppDelegate.h */,
+				4FF665DB25F2C92700689B77 /* AppDelegate.m */,
+				4FF665D925F2C92700689B77 /* MouseFix.xib */,
 				4F909CF528A0C3D2009349A2 /* Tabs */,
 				4F909D0128A0C3D2009349A2 /* ViewController.h */,
 				4F909CFB28A0C3D2009349A2 /* ViewController.m */,
@@ -1474,10 +1476,9 @@
 		4FF665BE25F2C92700689B77 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				4FF665C525F2C92700689B77 /* AppDelegate.h */,
-				4FF665DB25F2C92700689B77 /* AppDelegate.m */,
-				4FF665D925F2C92700689B77 /* MouseFix.xib */,
-				4F909CEF28A0C3B6009349A2 /* State.swift */,
+				4F909CEF28A0C3B6009349A2 /* MainAppState.swift */,
+				4F39BC48263B179200FDF692 /* AppState.h */,
+				4F39BC49263B179200FDF692 /* AppState.m */,
 				4F7A1A70289F2517007D5B30 /* UI */,
 				4F8CE6FE2617738A00D70A76 /* AppTranslocation */,
 				4FF665D025F2C92700689B77 /* Config */,
@@ -1572,8 +1573,6 @@
 		4FF665E525F2C92700689B77 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
-				4F39BC48263B179200FDF692 /* AppState.h */,
-				4F39BC49263B179200FDF692 /* AppState.m */,
 				4FF665E925F2C92700689B77 /* Utility_App.h */,
 				4FF665E825F2C92700689B77 /* Utility_App.m */,
 			);
@@ -2153,7 +2152,6 @@
 				4F2F5DB225FB723D0037660A /* AddWindow.xib in Resources */,
 				4FF665F725F2C92700689B77 /* Assets.xcassets in Resources */,
 				4F909D3928A0C3D2009349A2 /* Localizable.strings in Resources */,
-				4FF665F925F2C92700689B77 /* MouseFix.xib in Resources */,
 				4F909D3328A0C3D2009349A2 /* Animating Constraints.md in Resources */,
 				4FF665EF25F2C92700689B77 /* ScrollOverridePanel.xib in Resources */,
 				4F909D2F28A0C3D2009349A2 /* MyTitlebarAccessoryViewController.xib in Resources */,
@@ -2383,7 +2381,7 @@
 				4F909D2C28A0C3D2009349A2 /* NSView+Extensions.swift in Sources */,
 				4FF665FA25F2C92700689B77 /* AppDelegate.m in Sources */,
 				4FF665F325F2C92700689B77 /* MoreSheet.m in Sources */,
-				4F909CF028A0C3B7009349A2 /* State.swift in Sources */,
+				4F909CF028A0C3B7009349A2 /* MainAppState.swift in Sources */,
 				4FEC9668278BBDC600548604 /* NSColor+Additions.m in Sources */,
 				4FA40CF628A0CCC600499E53 /* Math.swift in Sources */,
 				4FF6660025F2C92700689B77 /* Hyperlink.m in Sources */,

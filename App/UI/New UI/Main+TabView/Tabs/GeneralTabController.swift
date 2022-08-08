@@ -12,7 +12,7 @@ import ReactiveCocoa
 class GeneralTabController: NSViewController {
     
     /// Convenience
-    var enabled: MutableProperty<Bool> { State.shared.appIsEnabled }
+    var enabled: MutableProperty<Bool> { MainAppState.shared.appIsEnabled }
     
     /// Config
     var showInMenubar: MutableProperty<Bool> = MutableProperty(false)
@@ -65,6 +65,19 @@ class GeneralTabController: NSViewController {
         }
         
         /// Declare signals
+        
+        /// MMF enabled binding
+        ///     Should this be happending in the backend?
+        enabled.producer.startWithValues { enabled in
+            var error: NSError?
+            HelperServices.enableHelper(asUserAgent: enabled, error: &error)
+            if #available(macOS 13, *) {
+                if error?.code == 1 {
+                    let message = NSAttributedString(markdown: "Mac Mouse Fix was **disabled** in System Settings.\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\'")
+                    ToastNotificationController.attachNotification(withMessage: message, to: NSApp.mainWindow!, forDuration: 0.0)
+                }
+            }
+        }
         
         /// UI <-> data bindings
         

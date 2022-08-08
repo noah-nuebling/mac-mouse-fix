@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21219" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21219"/>
         <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -685,13 +685,14 @@
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
             <objects>
-                <windowController id="B8D-0N-5wS" customClass="ResizingTabWindowController" customModule="tabTestStoryboards" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" title="Mac Mouse Fix" separatorStyle="shadow" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" toolbarStyle="preference" id="IQv-IB-iLA" customClass="ResizingTabWindow" customModule="tabTestStoryboards" customModuleProvider="target">
+                <windowController id="B8D-0N-5wS" customClass="ResizingTabWindowController" customModule="Mac_Mouse_Fix" customModuleProvider="target" sceneMemberID="viewController">
+                    <window key="window" title="Mac Mouse Fix" separatorStyle="shadow" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" toolbarStyle="preference" id="IQv-IB-iLA" customClass="ResizingTabWindow" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
                         <connections>
+                            <binding destination="B8D-0N-5wS" name="representedFilename" keyPath="self.window" id="fHR-Hc-n64"/>
                             <outlet property="delegate" destination="B8D-0N-5wS" id="98r-iN-zZc"/>
                         </connections>
                     </window>
@@ -706,7 +707,7 @@
         <!--Tab View Controller-->
         <scene sceneID="9xX-fZ-tXt">
             <objects>
-                <tabViewController selectedTabViewItemIndex="0" tabStyle="toolbar" id="RJA-oq-Oo4" customClass="TabViewController" customModule="tabTestStoryboards" customModuleProvider="target" sceneMemberID="viewController">
+                <tabViewController selectedTabViewItemIndex="0" tabStyle="toolbar" id="RJA-oq-Oo4" customClass="TabViewController" customModule="Mac_Mouse_Fix" customModuleProvider="target" sceneMemberID="viewController">
                     <tabViewItems>
                         <tabViewItem label="General" identifier="general" image="gearshape" catalog="system" id="rIq-3r-6ck"/>
                         <tabViewItem label="Buttons" identifier="buttons" image="rectangle" catalog="system" id="Mjk-wy-Z7C"/>
@@ -738,12 +739,12 @@
         <!--General View Controller-->
         <scene sceneID="ep6-su-IgZ">
             <objects>
-                <viewController title="General" showSeguePresentationStyle="single" id="eLS-O0-A1x" userLabel="General View Controller" customClass="GeneralTabController" customModule="tabTestStoryboards" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="General" showSeguePresentationStyle="single" id="eLS-O0-A1x" userLabel="General View Controller" customClass="GeneralTabController" customModule="Mac_Mouse_Fix" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" misplaced="YES" id="As8-gY-gcx">
                         <rect key="frame" x="0.0" y="0.0" width="470" height="271"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="249.99998474121094" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6xF-Pl-4RE" userLabel="Master Stack" customClass="CollapsingStackView" customModule="tabTestStoryboards" customModuleProvider="target">
+                            <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="249.99998474121094" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6xF-Pl-4RE" userLabel="Master Stack" customClass="CollapsingStackView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                 <rect key="frame" x="30" y="20" width="293" height="231"/>
                                 <subviews>
                                     <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="1000" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0BS-nv-t3O" userLabel="Enable section">
@@ -788,7 +789,7 @@
                                             <real value="3.4028234663852886e+38"/>
                                         </customSpacing>
                                     </stackView>
-                                    <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="249.99998474121094" horizontalClippingResistancePriority="999" horizontalHuggingPriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gcq-dN-YnA" userLabel="Main Hidable Section" customClass="CollapsingStackView" customModule="tabTestStoryboards" customModuleProvider="target">
+                                    <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="249.99998474121094" horizontalClippingResistancePriority="999" horizontalHuggingPriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gcq-dN-YnA" userLabel="Main Hidable Section" customClass="CollapsingStackView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="293" height="181"/>
                                         <subviews>
                                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="zUc-6f-AlY" userLabel="Indent">
@@ -960,12 +961,12 @@
         <!--Scrolling View Controller-->
         <scene sceneID="Os1-9Q-CwG">
             <objects>
-                <viewController title="Enable v1" id="qcW-e9-BqR" userLabel="Scrolling View Controller" customClass="ScrollTabController" customModule="tabTestStoryboards" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Enable v1" id="qcW-e9-BqR" userLabel="Scrolling View Controller" customClass="ScrollTabController" customModule="Mac_Mouse_Fix" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" misplaced="YES" id="ApB-fm-Akb">
                         <rect key="frame" x="0.0" y="0.0" width="419" height="479"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="999" verticalStackHuggingPriority="249.99998474121094" horizontalHuggingPriority="999" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N4F-RB-d7a" userLabel="Master Stack" customClass="CollapsingStackView" customModule="tabTestStoryboards" customModuleProvider="target">
+                            <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="999" verticalStackHuggingPriority="249.99998474121094" horizontalHuggingPriority="999" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N4F-RB-d7a" userLabel="Master Stack" customClass="CollapsingStackView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                 <rect key="frame" x="30" y="20" width="350" height="439"/>
                                 <subviews>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OTl-Rd-e6e">
@@ -1076,7 +1077,7 @@
                                             <real value="3.4028234663852886e+38"/>
                                         </customSpacing>
                                     </stackView>
-                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="gW0-dC-uuV" userLabel="Precise Section Wrapper" customClass="NoClipWrapper" customModule="tabTestStoryboards" customModuleProvider="target">
+                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="gW0-dC-uuV" userLabel="Precise Section Wrapper" customClass="NoClipWrapper" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="203" width="350" height="82"/>
                                         <subviews>
                                             <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WGO-Zc-NYH" userLabel="Precise Section">
@@ -1189,7 +1190,7 @@
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
-                                                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QF5-am-Af9" customClass="ModCaptureTextField" customModule="tabTestStoryboards" customModuleProvider="target">
+                                                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QF5-am-Af9" customClass="ModCaptureTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                                                     <rect key="frame" x="13" y="5" width="75" height="5"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="75" id="gol-0r-D1D"/>
@@ -1200,7 +1201,7 @@
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
-                                                                <button translatesAutoresizingMaskIntoConstraints="NO" id="aST-ae-80H" customClass="ModCaptureDeleteButton" customModule="tabTestStoryboards" customModuleProvider="target">
+                                                                <button translatesAutoresizingMaskIntoConstraints="NO" id="aST-ae-80H" customClass="ModCaptureDeleteButton" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                                                     <rect key="frame" x="0.0" y="0.0" width="9" height="15"/>
                                                                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="xmark.circle.fill" catalog="system" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="Q7w-xW-wZs">
                                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1235,7 +1236,7 @@
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
-                                                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HZF-jc-NcN" customClass="ModCaptureTextField" customModule="tabTestStoryboards" customModuleProvider="target">
+                                                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HZF-jc-NcN" customClass="ModCaptureTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                                                     <rect key="frame" x="13" y="5" width="75" height="19"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="75" id="GzZ-q9-Ejv"/>
@@ -1246,7 +1247,7 @@
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
-                                                                <button translatesAutoresizingMaskIntoConstraints="NO" id="Qpy-8X-Aos" customClass="ModCaptureDeleteButton" customModule="tabTestStoryboards" customModuleProvider="target">
+                                                                <button translatesAutoresizingMaskIntoConstraints="NO" id="Qpy-8X-Aos" customClass="ModCaptureDeleteButton" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                                                     <rect key="frame" x="0.0" y="7" width="9" height="15"/>
                                                                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="xmark.circle.fill" catalog="system" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="TWb-x1-c1U">
                                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1281,7 +1282,7 @@
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
-                                                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Abk-fb-uRV" customClass="ModCaptureTextField" customModule="tabTestStoryboards" customModuleProvider="target">
+                                                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Abk-fb-uRV" customClass="ModCaptureTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                                                     <rect key="frame" x="13" y="5" width="75" height="19"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="75" id="Mio-SG-K5e"/>
@@ -1292,7 +1293,7 @@
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
-                                                                <button translatesAutoresizingMaskIntoConstraints="NO" id="I3L-q5-tw4" customClass="ModCaptureDeleteButton" customModule="tabTestStoryboards" customModuleProvider="target">
+                                                                <button translatesAutoresizingMaskIntoConstraints="NO" id="I3L-q5-tw4" customClass="ModCaptureDeleteButton" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                                                     <rect key="frame" x="0.0" y="7" width="9" height="15"/>
                                                                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="xmark.circle.fill" catalog="system" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="lem-6u-EIQ">
                                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1327,7 +1328,7 @@
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
-                                                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gqo-T2-Nmz" customClass="ModCaptureTextField" customModule="tabTestStoryboards" customModuleProvider="target">
+                                                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gqo-T2-Nmz" customClass="ModCaptureTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                                                     <rect key="frame" x="13" y="5" width="75" height="19"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="75" id="5Wt-UR-yRQ"/>
@@ -1338,7 +1339,7 @@
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
-                                                                <button translatesAutoresizingMaskIntoConstraints="NO" id="VJe-D7-Rvn" customClass="ModCaptureDeleteButton" customModule="tabTestStoryboards" customModuleProvider="target">
+                                                                <button translatesAutoresizingMaskIntoConstraints="NO" id="VJe-D7-Rvn" customClass="ModCaptureDeleteButton" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                                                     <rect key="frame" x="0.0" y="7" width="9" height="15"/>
                                                                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="xmark.circle.fill" catalog="system" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="8Xu-e9-OwA">
                                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1455,7 +1456,7 @@
         <!--Pointer View Controller-->
         <scene sceneID="cBw-Z2-DNT">
             <objects>
-                <viewController id="1dS-BH-DIv" userLabel="Pointer View Controller" customClass="PointerTabController" customModule="tabTestStoryboards" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="1dS-BH-DIv" userLabel="Pointer View Controller" customClass="PointerTabController" customModule="Mac_Mouse_Fix" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" horizontalHuggingPriority="1000" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a43-C7-qxY">
                         <rect key="frame" x="0.0" y="0.0" width="479" height="208"/>
                         <subviews>
@@ -1485,7 +1486,7 @@
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <stackView autoresizesSubviews="NO" distribution="fill" orientation="vertical" alignment="leading" spacing="7" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" translatesAutoresizingMaskIntoConstraints="NO" id="iFK-rA-4bs" userLabel="Acc Stack" customClass="CollapsingStackView" customModule="tabTestStoryboards" customModuleProvider="target">
+                                    <stackView autoresizesSubviews="NO" distribution="fill" orientation="vertical" alignment="leading" spacing="7" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" translatesAutoresizingMaskIntoConstraints="NO" id="iFK-rA-4bs" userLabel="Acc Stack" customClass="CollapsingStackView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                         <rect key="frame" x="166" y="20" width="251" height="55"/>
                                         <subviews>
                                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jfw-rP-c9y">
@@ -1563,7 +1564,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bMA-KL-0jb" customClass="SensitivityDisplay" customModule="tabTestStoryboards" customModuleProvider="target">
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bMA-KL-0jb" customClass="SensitivityDisplay" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                         <rect key="frame" x="365" y="104" width="52" height="34"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="46" id="6KG-At-OGS"/>

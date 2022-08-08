@@ -1,5 +1,5 @@
 //
-//  State.swift
+//  AppState.swift
 //  tabTestStoryboards
 //
 //  Created by Noah Nübling on 2/11/22.
@@ -10,16 +10,16 @@
 import Cocoa
 import ReactiveSwift
 
-class State: NSObject {
+@objc class MainAppState: NSObject {
     
     /// Declare singleton instance
-    static let shared = State()
+    @objc static let shared = MainAppState()
     
     /// Vars
     var appIsEnabled = MutableProperty(false)
     
     /// References
-    var window: ResizingTabWindow? {
+    @objc var window: ResizingTabWindow? {
         return NSApp.mainWindow as? ResizingTabWindow
     }
     
