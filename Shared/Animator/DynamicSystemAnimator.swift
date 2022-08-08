@@ -132,7 +132,8 @@ import Foundation
             self.isFirstCallback = true
             
             /// Configure displayLink
-            self.displayLink.linkToMainScreen_Unsafe()
+            ///     I feel like this somehow makes the animation more stuttery?
+//            self.displayLink.linkToMainScreen_Unsafe()
             
             /// Start displayLink
             self.displayLink.start_Unsafe { timeInfo in

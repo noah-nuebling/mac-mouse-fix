@@ -1042,8 +1042,8 @@
 				4F909CFA28A0C3D2009349A2 /* TabViewController.swift */,
 				4F909CFF28A0C3D2009349A2 /* TabViewControllerDisabling.swift */,
 				4F909CF928A0C3D2009349A2 /* TabItemControllerProtocol.swift */,
-				4F909D0028A0C3D2009349A2 /* ResizingTabWindowController.swift */,
 				4F909CFE28A0C3D2009349A2 /* ResizingTabWindow.swift */,
+				4F909D0028A0C3D2009349A2 /* ResizingTabWindowController.swift */,
 			);
 			path = "Main+TabView";
 			sourceTree = "<group>";

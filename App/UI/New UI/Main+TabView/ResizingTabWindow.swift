@@ -32,7 +32,7 @@ import CocoaLumberjackSwift
 //        Animate.with(animation) {
 //            self.reactiveAnimator().frame.set(newFrame)
 //        }
-//
+
         /// Start animator
         let ogFrame = self.frame
         animator.start(distance: 1.0) { value in
@@ -42,8 +42,54 @@ import CocoaLumberjackSwift
 
             /// Interpolate
             var result = SharedUtilitySwift.interpolateRects(value, ogFrame, newFrame);
-            result = NSIntegralRectWithOptions(result, .alignAllEdgesNearest); /// Trying to get rid of pixel jitter. Not quite there yet
-
+            
+            /// Remove jitter
+            ///     Nothing works. These ideas assume that the window frame coords are being rounded before being displayed, and that this rounding shifts the center of the window. But none of these approaches work. I think the jittering might come from somewhere else.
+            
+            /// Kill jitter attempt1
+//            let xRoundsDown = round(result.minX) < result.minX
+//            let minX: Double
+//            let maxX: Double
+//            let minY: Double
+//            let maxY: Double
+//            if xRoundsDown  {
+//                minX = floor(result.origin.x)
+//                maxX = ceil(result.maxX)
+//            } else {
+//                minX = ceil(result.origin.x)
+//                maxX = floor(result.maxX)
+//            }
+//            let yRoundsDown = round(result.minY) < result.minY
+//            if yRoundsDown {
+//                minY = floor(result.minY)
+//                maxY = ceil(result.maxY)
+//            } else {
+//                minY = ceil(result.minY)
+//                maxY = floor(result.maxY)
+//            }
+//            result = NSRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
+            
+            /// Kill jitter attempt3
+//            let resultIntegral = NSIntegralRectWithOptions(result, .alignAllEdgesNearest)
+//            let ogIntegral = NSIntegralRectWithOptions(ogFrame, .alignAllEdgesNearest)
+//            let dPeriod = result.width.remainder(dividingBy: 2) != ogIntegral.width.remainder(dividingBy: 2)
+//            if dPeriod {
+//                let roundedUp = resultIntegral.width > result.width
+//                let roundedDown = resultIntegral.width < result.width
+//                result = resultIntegral
+//                if roundedUp {
+//                    result = NSRect(x: result.minX, y: result.minY, width: result.width - 1, height: result.height)
+//                } else if roundedDown {
+//                    result = NSRect(x: result.minX, y: result.minY, width: result.width + 1, height: result.height)
+//                }
+//            }
+            
+            /// Kill jitter attempt2
+//            let dx = result.midX - ogFrame.midX
+//            let dy = result.midY - ogFrame.midY
+//            result.origin.x -= dx
+//            result.origin.y -= dy
+            
             /// Set frame (on main thread)
             DispatchQueue.main.async {
                 self.setValue(result, forKey: "frame") /// This seems faster than `self.setFrame(display:animate:)`
