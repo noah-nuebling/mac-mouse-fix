@@ -124,7 +124,7 @@ static int64_t _lastEventDelta;
             _puppetCursorPosition = origin;
             
             /// Get display under mouse pointer
-            CVReturn rt = [HelperUtility display:&_display atPoint:_origin];
+            CVReturn rt = [SharedUtility display:&_display atPoint:_origin];
             if (rt != kCVReturnSuccess) DDLogWarn(@"Couldn't get display under mouse pointer in PointerFreeze");
             
             /// Draw puppet cursor before hiding

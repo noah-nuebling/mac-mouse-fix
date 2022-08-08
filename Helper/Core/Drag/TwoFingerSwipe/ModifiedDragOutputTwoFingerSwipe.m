@@ -21,7 +21,7 @@
 
 static ModifiedDragState *_drag;
 
-static PixelatedAnimator *_smoothingAnimator;
+static TouchAnimator *_smoothingAnimator;
 //static DynamicSystemAnimator *_smoothingAnimator;
 static BOOL _smoothingAnimatorShouldStartMomentumScroll = NO;
 static dispatch_group_t _momentumScrollWaitGroup;
@@ -36,7 +36,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
     ///     Edit: Using the _smoothingAnimator forces us to use some very very error prone parallel code. I should seriously consider if this is the best approach.
     ///         Maybe you could just introduce a delay between the last two events? I feel like the lack of that delay causes most of the erratic behaviour.
     
-    _smoothingAnimator = [[PixelatedAnimator alloc] init];
+    _smoothingAnimator = [[TouchAnimator alloc] init];
 //    _smoothingAnimator = [[DynamicSystemAnimator alloc] initWithSpeed:3 damping:1.0 initialResponser:1.0 stopTolerance:1.0];
     
     /// Setup smoothingGroup

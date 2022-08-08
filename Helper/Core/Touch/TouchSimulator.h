@@ -8,16 +8,16 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MFIOKitImports.h"
+#import "MFHIDEventImports.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TouchSimulator : NSObject
 
 typedef enum {
-    kMFDockSwipeTypeHorizontal = 1, // Swipe between pages
-    kMFDockSwipeTypeVertical = 2, // Mission Control & App Expose
-    kMFDockSwipeTypePinch = 3, // Show Desktop & Launchpad
+    kMFDockSwipeTypeHorizontal = 1, /// Swipe between pages
+    kMFDockSwipeTypeVertical = 2, /// Mission Control & App Expose
+    kMFDockSwipeTypePinch = 3, /// Show Desktop & Launchpad
 } MFDockSwipeType;
 
 + (void)postNavigationSwipeEventWithDirection:(IOHIDSwipeMask)dir;

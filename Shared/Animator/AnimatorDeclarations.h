@@ -53,6 +53,6 @@ typedef enum {
 //    kMFMomentumHintGestureFromMomentum = 8,
     
 } MFMomentumHint;
-/// ^ When animating a HybridCurve with PixelatedAnimator, and the the Drag (second) subcurve of the HybridCurve is configured to behave like the Trackpad momentum scrolling curve, then the Drag Curve is well suited to be used to send momentumScroll events instead of normal gestureScroll events. This enables scroll bouncing and nicer swiping between pages. The MFMomentumHint suggests to the client of the animator when to send momentumScrollEvents and when to send gestureScrollEvents.
+/// ^ When animating a HybridCurve with TouchAnimator, and the the Drag (second) subcurve of the HybridCurve is configured to behave like the Trackpad momentum scrolling curve, then the Drag Curve is well suited to be used to send momentumScroll events instead of normal gestureScroll events. This enables scroll bouncing and nicer swiping between pages. The MFMomentumHint suggests to the client of the animator when to send momentumScrollEvents and when to send gestureScrollEvents.
 
 #endif /* Animator_h */

@@ -39,7 +39,7 @@ static double _pixelsPerLine = 10;
 
 static VectorSubPixelator *_scrollLinePixelator;
 
-static PixelatedAnimator *_momentumAnimator;
+static TouchAnimator *_momentumAnimator;
 
 static dispatch_queue_t _momentumQueue;
 /// ^ This class doesn't only act as an output module (aka event sender) but also as an output driver for momentumScroll events. For its role as a driver, it needs a dispatchQueue. Consider factoring the autoMomentumScroll stuff out of this class for clear separation.
@@ -59,7 +59,7 @@ static dispatch_queue_t _momentumQueue;
         
         /// Momentum scroll
         
-        _momentumAnimator = [[PixelatedAnimator alloc] init];
+        _momentumAnimator = [[TouchAnimator alloc] init];
         
     }
 }

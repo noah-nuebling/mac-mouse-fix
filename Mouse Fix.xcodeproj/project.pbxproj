@@ -54,7 +54,7 @@
 		4F8A8DBD287F203D00786BCC /* IOHIDAccelerationTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DBC287F203D00786BCC /* IOHIDAccelerationTable.cpp */; };
 		4F8A8DBF287F7BBA00786BCC /* NaturalAccelerationCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DBE287F7BBA00786BCC /* NaturalAccelerationCurve.swift */; };
 		4F8A8DC2287F967000786BCC /* TestAccelerationCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DC1287F967000786BCC /* TestAccelerationCurve.swift */; };
-		4F8B7E6727B4E32600598B65 /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8B7E6627B4E32600598B65 /* Animator.swift */; };
+		4F8B7E6727B4E32600598B65 /* TouchAnimatorBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8B7E6627B4E32600598B65 /* TouchAnimatorBase.swift */; };
 		4F8CE7012617738A00D70A76 /* AppTranslocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CE6FF2617738A00D70A76 /* AppTranslocationManager.m */; };
 		4F8CF95728686C0100BF5E55 /* PolynomialRegression.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CF94328686C0100BF5E55 /* PolynomialRegression.m */; };
 		4F8CF95B28686EA200BF5E55 /* DoublesMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CF94528686C0100BF5E55 /* DoublesMatrix.m */; };
@@ -106,7 +106,7 @@
 		4F94F60525E5EC2800D9F24A /* Mac_Mouse_FixTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60425E5EC2800D9F24A /* Mac_Mouse_FixTests.m */; };
 		4F94F61025E5EC2800D9F24A /* Mac_Mouse_FixUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94F60F25E5EC2800D9F24A /* Mac_Mouse_FixUITests.m */; };
 		4F94F74C25E614B800D9F24A /* Mac Mouse Fix Accomplice in Copy Accomplice */ = {isa = PBXBuildFile; fileRef = 4F2FDF302315662400C7BE14 /* Mac Mouse Fix Accomplice */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		4F96060F27B4F92F004D6F6D /* PixelatedAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F96060E27B4F92F004D6F6D /* PixelatedAnimator.swift */; };
+		4F96060F27B4F92F004D6F6D /* TouchAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F96060E27B4F92F004D6F6D /* TouchAnimator.swift */; };
 		4F9C9B58268A29B70083DED0 /* RollingAverage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C9B57268A29B70083DED0 /* RollingAverage.swift */; };
 		4F9C9B60268A29FE0083DED0 /* Smoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C9B5F268A29FE0083DED0 /* Smoother.swift */; };
 		4F9C9B6B268A2D6F0083DED0 /* CircularBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9C9B6A268A2D6F0083DED0 /* CircularBuffer.m */; };
@@ -133,6 +133,11 @@
 		4FA40D0328A0D0BB00499E53 /* PolynomialRegression.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CF94328686C0100BF5E55 /* PolynomialRegression.m */; };
 		4FA40D0428A0D0C000499E53 /* DoublesMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CF94528686C0100BF5E55 /* DoublesMatrix.m */; };
 		4FA40D0528A0D0D000499E53 /* PolyFit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FF9305D288060100007CCA7 /* PolyFit.cpp */; };
+		4FA40D0B28A0D87200499E53 /* DisplayLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A40CA266C44D100436821 /* DisplayLink.m */; };
+		4FA40D0E28A0D87200499E53 /* DynamicSystemAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE6CBC328987E8A00B3E829 /* DynamicSystemAnimator.swift */; };
+		4FA40D0F28A0D8EF00499E53 /* SubPixelator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6664025F2C93A00689B77 /* SubPixelator.m */; };
+		4FA40D1028A0D8F100499E53 /* VectorSubPixelator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6664125F2C93A00689B77 /* VectorSubPixelator.m */; };
+		4FA40D1228A10E1900499E53 /* NSScreen+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A40D9266C5BDF00436821 /* NSScreen+Additions.m */; };
 		4FA83A29268271E200F3A31B /* PointerSpeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA83A28268271E200F3A31B /* PointerSpeed.m */; };
 		4FA83A2E268288D900F3A31B /* PointerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA83A2D268288D900F3A31B /* PointerConfig.swift */; };
 		4FA994BE26678AC90007F003 /* ScrollAnalyzer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA994BD26678AC90007F003 /* ScrollAnalyzer.m */; };
@@ -439,7 +444,7 @@
 		4F8A8DBE287F7BBA00786BCC /* NaturalAccelerationCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaturalAccelerationCurve.swift; sourceTree = "<group>"; };
 		4F8A8DC0287F885D00786BCC /* Shorthands.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Shorthands.h; sourceTree = "<group>"; };
 		4F8A8DC1287F967000786BCC /* TestAccelerationCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAccelerationCurve.swift; sourceTree = "<group>"; };
-		4F8B7E6627B4E32600598B65 /* Animator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
+		4F8B7E6627B4E32600598B65 /* TouchAnimatorBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchAnimatorBase.swift; sourceTree = "<group>"; };
 		4F8CE6FF2617738A00D70A76 /* AppTranslocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppTranslocationManager.m; sourceTree = "<group>"; };
 		4F8CE7002617738A00D70A76 /* AppTranslocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppTranslocationManager.h; sourceTree = "<group>"; };
 		4F8CF93028686C0100BF5E55 /* license.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = license.md; sourceTree = "<group>"; };
@@ -503,7 +508,7 @@
 		4F94F60B25E5EC2800D9F24A /* Mac Mouse FixUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Mac Mouse FixUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F94F60F25E5EC2800D9F24A /* Mac_Mouse_FixUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Mac_Mouse_FixUITests.m; sourceTree = "<group>"; };
 		4F94F61125E5EC2800D9F24A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4F96060E27B4F92F004D6F6D /* PixelatedAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelatedAnimator.swift; sourceTree = "<group>"; };
+		4F96060E27B4F92F004D6F6D /* TouchAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchAnimator.swift; sourceTree = "<group>"; };
 		4F9C14AD27BAE773008A1479 /* HIDEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIDEvent.h; sourceTree = "<group>"; };
 		4F9C14AE27BAE802008A1479 /* HIDBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIDBase.h; sourceTree = "<group>"; };
 		4F9C14AF27BAEA71008A1479 /* HIDEventBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIDEventBase.h; sourceTree = "<group>"; };
@@ -512,7 +517,7 @@
 		4F9C14B227BAF1A2008A1479 /* HIDEventAccessors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIDEventAccessors.h; sourceTree = "<group>"; };
 		4F9C14B327BAF1A2008A1479 /* HIDEvent+HIDEventFields.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HIDEvent+HIDEventFields.h"; sourceTree = "<group>"; };
 		4F9C14B427BAF1A2008A1479 /* HIDEventAccessors_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIDEventAccessors_Private.h; sourceTree = "<group>"; };
-		4F9C14B627BAF21E008A1479 /* MFIOKitImports.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFIOKitImports.h; sourceTree = "<group>"; };
+		4F9C14B627BAF21E008A1479 /* MFHIDEventImports.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFHIDEventImports.h; sourceTree = "<group>"; };
 		4F9C14B727BAF8BF008A1479 /* HIDEventFields.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIDEventFields.h; sourceTree = "<group>"; };
 		4F9C14B927BAF989008A1479 /* IOHIDEventTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOHIDEventTypes.h; sourceTree = "<group>"; };
 		4F9C14BA27BAF9C8008A1479 /* IOHIDEventFieldDefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOHIDEventFieldDefs.h; sourceTree = "<group>"; };
@@ -870,8 +875,6 @@
 			children = (
 				4F3A40C9266C44D100436821 /* DisplayLink.h */,
 				4F3A40CA266C44D100436821 /* DisplayLink.m */,
-				4F8B7E6627B4E32600598B65 /* Animator.swift */,
-				4F96060E27B4F92F004D6F6D /* PixelatedAnimator.swift */,
 				4FE6CBC328987E8A00B3E829 /* DynamicSystemAnimator.swift */,
 				4FD86058266DBF96004F76C8 /* AnimatorDeclarations.h */,
 			);
@@ -1018,7 +1021,7 @@
 				4F909CF228A0C3D2009349A2 /* Main+TabView */,
 				4F909D0228A0C3D2009349A2 /* UIExtensions */,
 				4F909D0728A0C3D2009349A2 /* AppSpecific */,
-				4F909D0928A0C3D2009349A2 /* Animations */,
+				4F909D0928A0C3D2009349A2 /* UIAnimations */,
 				4F909D1328A0C3D2009349A2 /* CustomDataTypes */,
 				4F909D1528A0C3D2009349A2 /* Localization */,
 				4F909D1A28A0C3D2009349A2 /* CustomUIElements */,
@@ -1029,16 +1032,16 @@
 		4F909CF228A0C3D2009349A2 /* Main+TabView */ = {
 			isa = PBXGroup;
 			children = (
-				4F909CF328A0C3D2009349A2 /* Main.strings */,
 				4F909CF528A0C3D2009349A2 /* Tabs */,
-				4F909CF928A0C3D2009349A2 /* TabItemControllerProtocol.swift */,
-				4F909CFA28A0C3D2009349A2 /* TabViewController.swift */,
+				4F909D0128A0C3D2009349A2 /* ViewController.h */,
 				4F909CFB28A0C3D2009349A2 /* ViewController.m */,
 				4F909CFC28A0C3D2009349A2 /* Main.storyboard */,
-				4F909CFE28A0C3D2009349A2 /* ResizingTabWindow.swift */,
+				4F909CF328A0C3D2009349A2 /* Main.strings */,
+				4F909CFA28A0C3D2009349A2 /* TabViewController.swift */,
 				4F909CFF28A0C3D2009349A2 /* TabViewControllerDisabling.swift */,
+				4F909CF928A0C3D2009349A2 /* TabItemControllerProtocol.swift */,
 				4F909D0028A0C3D2009349A2 /* ResizingTabWindowController.swift */,
-				4F909D0128A0C3D2009349A2 /* ViewController.h */,
+				4F909CFE28A0C3D2009349A2 /* ResizingTabWindow.swift */,
 			);
 			path = "Main+TabView";
 			sourceTree = "<group>";
@@ -1072,11 +1075,11 @@
 			path = AppSpecific;
 			sourceTree = "<group>";
 		};
-		4F909D0928A0C3D2009349A2 /* Animations */ = {
+		4F909D0928A0C3D2009349A2 /* UIAnimations */ = {
 			isa = PBXGroup;
 			children = (
-				4F909D0A28A0C3D2009349A2 /* ReactiveAnimatorProxy.swift */,
 				4F909D0B28A0C3D2009349A2 /* NSAnimationManager.h */,
+				4F909D0A28A0C3D2009349A2 /* ReactiveAnimatorProxy.swift */,
 				4F909D0C28A0C3D2009349A2 /* CAAnimation+Extensions.swift */,
 				4F909D0D28A0C3D2009349A2 /* FadeAnimations.swift */,
 				4F909D0E28A0C3D2009349A2 /* Animating Constraints.md */,
@@ -1085,7 +1088,7 @@
 				4F909D1128A0C3D2009349A2 /* Collapse.swift */,
 				4F909D1228A0C3D2009349A2 /* ConstraintUtility.swift */,
 			);
-			path = Animations;
+			path = UIAnimations;
 			sourceTree = "<group>";
 		};
 		4F909D1328A0C3D2009349A2 /* CustomDataTypes */ = {
@@ -1143,6 +1146,8 @@
 		4F909D4228A0C4C2009349A2 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				4F3A40D8266C5BDF00436821 /* NSScreen+Additions.h */,
+				4F3A40D9266C5BDF00436821 /* NSScreen+Additions.m */,
 				4FF6653825F2C7B000689B77 /* NSArray+Additions.h */,
 				4FF6653D25F2C7B000689B77 /* NSArray+Additions.m */,
 				4FF6653925F2C7B000689B77 /* NSMutableDictionary+Additions.h */,
@@ -1174,7 +1179,7 @@
 		4F9C14B527BAF202008A1479 /* IOKit */ = {
 			isa = PBXGroup;
 			children = (
-				4F9C14B627BAF21E008A1479 /* MFIOKitImports.h */,
+				4F9C14B627BAF21E008A1479 /* MFHIDEventImports.h */,
 				4FD66E0627BB553800F67559 /* CGEventHIDEventBridge.h */,
 				4FD66E0727BB553800F67559 /* CGEventHIDEventBridge.m */,
 				4F70ECB5267E810900325A76 /* IOUtility.h */,
@@ -1209,6 +1214,15 @@
 				4F94F60E25E5EC2800D9F24A /* UITests */,
 			);
 			path = Tests;
+			sourceTree = "<group>";
+		};
+		4FA40D1128A0D9FB00499E53 /* External */ = {
+			isa = PBXGroup;
+			children = (
+				4F9C14B527BAF202008A1479 /* IOKit */,
+				4FF6665A25F2C93A00689B77 /* CGSInternal */,
+			);
+			path = External;
 			sourceTree = "<group>";
 		};
 		4FA83A2026823EE000F3A31B /* Experiments */ = {
@@ -1415,7 +1429,7 @@
 				4F3A40C8266C448500436821 /* Animator */,
 				4FF9305C28805FC40007CCA7 /* Math */,
 				4F909D4228A0C4C2009349A2 /* Extensions */,
-				4FF6665A25F2C93A00689B77 /* CGSInternal */,
+				4FA40D1128A0D9FB00499E53 /* External */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -1451,6 +1465,7 @@
 				4FF6653A25F2C7B000689B77 /* Queue.m */,
 				4FD860A9266EC24E004F76C8 /* DerivedProperty.swift */,
 				4FF8C89D28955DC4007EC31F /* CoolTimer.swift */,
+				4FBDA14927B2246B0030E4EA /* SubPixelator */,
 				4FD860C2266EEA94004F76C8 /* Unused */,
 			);
 			path = Utility;
@@ -1637,7 +1652,6 @@
 				4FF6663125F2C93A00689B77 /* Touch */,
 				4FF6663925F2C93A00689B77 /* Actions */,
 				4FFBC5B126697E8D001D389B /* Smoothing */,
-				4FBDA14927B2246B0030E4EA /* SubPixelator */,
 				4FF6664725F2C93A00689B77 /* PointerSpeed */,
 				4FF6661125F2C93A00689B77 /* MessagePort */,
 				4FF6663F25F2C93A00689B77 /* Utility */,
@@ -1705,6 +1719,8 @@
 		4FF6663125F2C93A00689B77 /* Touch */ = {
 			isa = PBXGroup;
 			children = (
+				4F8B7E6627B4E32600598B65 /* TouchAnimatorBase.swift */,
+				4F96060E27B4F92F004D6F6D /* TouchAnimator.swift */,
 				4FF6663525F2C93A00689B77 /* TouchSimulator.h */,
 				4FF6663325F2C93A00689B77 /* TouchSimulator.m */,
 				4F9E78CF2685E30C002C2309 /* GestureScrollSimulator.h */,
@@ -1758,8 +1774,6 @@
 				4FF0255D27B013A100923107 /* PointerFreeze.h */,
 				4FF0255E27B013A100923107 /* PointerFreeze.m */,
 				4FCC03322757A50C002E5A57 /* ScreenDrawer.swift */,
-				4F3A40D8266C5BDF00436821 /* NSScreen+Additions.h */,
-				4F3A40D9266C5BDF00436821 /* NSScreen+Additions.m */,
 				4FBDA14D27B241CE0030E4EA /* GlobalEventTapThread.h */,
 				4FBDA14E27B241CE0030E4EA /* GlobalEventTapThread.m */,
 				4FD66E0927BB9BAD00F67559 /* EventUtility.h */,
@@ -1767,7 +1781,6 @@
 				4FC55E2F285E6BF800F2FCCF /* GlobalDefaults.swift */,
 				4FF6667F25F2C93A00689B77 /* HelperUtility.h */,
 				4FF6668025F2C93A00689B77 /* HelperUtility.m */,
-				4F9C14B527BAF202008A1479 /* IOKit */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -2347,6 +2360,7 @@
 				4F909D2828A0C3D2009349A2 /* ResizingTabWindow.swift in Sources */,
 				4FA40CF728A0CCCA00499E53 /* Curve.swift in Sources */,
 				4FF6655225F2C7B000689B77 /* NSMutableDictionary+Additions.m in Sources */,
+				4FA40D0F28A0D8EF00499E53 /* SubPixelator.m in Sources */,
 				4F39BC4A263B179200FDF692 /* AppState.m in Sources */,
 				4FBC943B260F8AA60062F186 /* MASShortcut.m in Sources */,
 				4F909D3B28A0C3D2009349A2 /* ModCaptureDeleteButton.swift in Sources */,
@@ -2399,8 +2413,10 @@
 				4F909D2328A0C3D2009349A2 /* PointerTabController.swift in Sources */,
 				4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */,
 				4F44FF052606D73D00926A5E /* SharedMessagePort.m in Sources */,
+				4FA40D0B28A0D87200499E53 /* DisplayLink.m in Sources */,
 				4FAD391426702CD4000CF4FA /* DerivedProperty.swift in Sources */,
 				4F909D2928A0C3D2009349A2 /* TabViewControllerDisabling.swift in Sources */,
+				4FA40D0E28A0D87200499E53 /* DynamicSystemAnimator.swift in Sources */,
 				4FB4FA202611DD6000806DDD /* KeyCaptureScrollView.m in Sources */,
 				4F909D4728A0C4C2009349A2 /* Collection+Extensions.swift in Sources */,
 				4F909D2628A0C3D2009349A2 /* ViewController.m in Sources */,
@@ -2413,6 +2429,7 @@
 				4F909D4528A0C4C2009349A2 /* NSArray+Extensions.swift in Sources */,
 				4F37FAD825FDFDC5004C34C4 /* MFScrollView.m in Sources */,
 				4FF665F825F2C92700689B77 /* MessagePort_App.m in Sources */,
+				4FA40D1028A0D8F100499E53 /* VectorSubPixelator.m in Sources */,
 				4FA40D0228A0CE5B00499E53 /* VectorUtility.m in Sources */,
 				4F319CBB26252A2D004E5F63 /* ButtonGroupRowView.m in Sources */,
 				4F79A82B2605074000076A7E /* NSAttributedString+Additions.m in Sources */,
@@ -2428,6 +2445,7 @@
 				4F79C2EA260976950067B381 /* RemapTableTranslator.m in Sources */,
 				4F909D2128A0C3D2009349A2 /* GeneralTabController.swift in Sources */,
 				4FB4F9FE260FDBC800806DDD /* RemapTableUtility.m in Sources */,
+				4FA40D1228A10E1900499E53 /* NSScreen+Additions.m in Sources */,
 				4FF665FD25F2C92700689B77 /* AuthorizeAccessibilityView.m in Sources */,
 				4F854D7C2789146900B46E9D /* NSMenu+NSMenu_Additions.m in Sources */,
 				4F92A72D260F6C7800529D1F /* NSView+Additions.m in Sources */,
@@ -2473,7 +2491,7 @@
 				4F44FF042606D73D00926A5E /* SharedMessagePort.m in Sources */,
 				4F8CF95728686C0100BF5E55 /* PolynomialRegression.m in Sources */,
 				4F5F3EEE2756DB0A00C350C0 /* RemapsOverrider_old_.swift in Sources */,
-				4F8B7E6727B4E32600598B65 /* Animator.swift in Sources */,
+				4F8B7E6727B4E32600598B65 /* TouchAnimatorBase.swift in Sources */,
 				4FF6669325F2C93A00689B77 /* TouchSimulator.m in Sources */,
 				4F9E78E3268663B1002C2309 /* ExponentialSmoother.swift in Sources */,
 				4F3A40AB266BBB6200436821 /* AccelerationBezier.swift in Sources */,
@@ -2530,7 +2548,7 @@
 				4F9E78D02685E30C002C2309 /* GestureScrollSimulator.m in Sources */,
 				4FD66E0827BB553800F67559 /* CGEventHIDEventBridge.m in Sources */,
 				4FF0BD58266ACE32003935EA /* VectorUtility.m in Sources */,
-				4F96060F27B4F92F004D6F6D /* PixelatedAnimator.swift in Sources */,
+				4F96060F27B4F92F004D6F6D /* TouchAnimator.swift in Sources */,
 				4FF6654F25F2C7B000689B77 /* NSArray+Additions.m in Sources */,
 				4FF6654525F2C7B000689B77 /* Objects.m in Sources */,
 				4F5F3EF12756EC0400C350C0 /* RemapSwizzler.m in Sources */,

@@ -10,7 +10,7 @@
 
 import Cocoa
 import SnapKit
-import Accelerate.vecLib
+import CocoaLumberjackSwift
 
 class TabViewController: NSTabViewController {
     
@@ -203,15 +203,20 @@ class TabViewController: NSTabViewController {
         /// Animation
         ///
         
-        let animation = CASpringAnimation(speed: 3.5, damping: 1.1)
-        let durationPre = animation.settlingDuration * 0.6
-        animation.fromValue = currentWindowFrame
-        animation.toValue = newFrame
-        let duration = animation.settlingDuration * 0.6
-        assert(durationPre == duration) /// Proof: fromValue and toValue don't affect duration
+        let springSpeed = 3.5
+        let springDamping = 1.1
+        let animation = CASpringAnimation(speed: springSpeed, damping: springDamping)
+        
+        /// Get duration
+        /// Note: fromValue and toValue don't affect duration
+        let duration = animation.settlingDuration /* * 0.6*/
+        
         /// Get resize animation time (pre spring animations)
 //            let duration = window.animationResizeTime(newFrame)
 //            let duration = animation.duration
+        
+        /// Debug
+        DDLogDebug("Predicted window settling time: \(duration)")
         
         /// Set up resize completion callback
         if windowResizeTimer != nil {
@@ -227,15 +232,10 @@ class TabViewController: NSTabViewController {
         })
         
         /// Play resize animation
+        ///     NSAnimationManager doesn't work anymore for animating windowFrame under Ventura Beta, so we have to use this manual method
+        window.setFrame(newFrame, withSpringAnimation: animation)
         
-//            DispatchQueue.main.async {
-//                window.setFrame(newFrame, display: false, animate: true)
-        Animate.with(animation) {
-            window.reactiveAnimator().frame.set(newFrame)
-        }
-//            }
-        
-        return duration
+        return duration * 0.6 /// Hacky stuff to make the fade duration shorter
     }
     
     /// Helper functions

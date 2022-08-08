@@ -1,20 +1,20 @@
 //
 // --------------------------------------------------------------------------
-// Animator.swift
+// TouchAnimatorBase.swift
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2022
 // Licensed under MIT
 // --------------------------------------------------------------------------
 //
 
-/// Don't use this directly. Use the subclass `PixelatedAnimator` For discussion see `PixelatedAnimator`.
+/// Don't use this directly. Use the subclass `TouchAnimator` For discussion see `TouchAnimator`.
 
 import Foundation
 import CocoaLumberjackSwift
 import CoreVideo
 import QuartzCore
 
-@objc class Animator: NSObject {
+@objc class TouchAnimatorBase: NSObject {
 
     /// Typedef
     
@@ -215,7 +215,7 @@ import QuartzCore
         /// The use of 'Interval' in CFTimeInterval is kind of confusing, since its also used to spedify points in time (It's just a `Double`), and also it has nothing to do with our `Interval` class, which is much closer to an Interval in the Mathematical sense.
         /// Will be restarted if it's already running. No need to call stop before calling this.
         /// It's kind of unnecessary to be passing this a value interval, because we only use the length of it. Since the AnimatorCallback only receives valueDeltas each frame and no absolute values,  the location of the value interval doesn't matter.
-        /// We need to make `callback` and UntypedAnimatorCallback instead of a normal AnimatorCallback, so we can change the type of `callback` to PixelatedAnimatorCallback in the subclass PixelatedAnimator. That's because Swift is stinky. UntypedAnimatorCallback is @escaping
+        /// We need to make `callback` and UntypedAnimatorCallback instead of a normal AnimatorCallback, so we can change the type of `callback` to TouchAnimatorCallback in the subclass TouchAnimator. That's because Swift is stinky. UntypedAnimatorCallback is @escaping
         
         /// Validate
         
@@ -520,7 +520,7 @@ import QuartzCore
         let animationValueDelta: Vector = subtractedVectors(animationValue, lastAnimationValue)
         
         /// Subclass hook.
-        ///     PixelatedAnimator overrides this to do its thing
+        ///     TouchAnimator overrides this to do its thing
         
         subclassHook(callback, animationValueDelta, animationTimeDelta, momentumHint)
         
@@ -546,7 +546,7 @@ import QuartzCore
     
     func subclassHook(_ untypedCallback: Any, _ animationValueDelta: Vector, _ animationTimeDelta: CFTimeInterval, _ momentumHint: MFMomentumHint) {
         
-        /// This is unused. Probably doesn't work properly. The override in `PixelatedAnimator` is the relevant thing.
+        /// This is unused. Probably doesn't work properly. The override in `TouchAnimator` is the relevant thing.
         
         /// Guard callback type
         
@@ -564,7 +564,7 @@ import QuartzCore
         assert(!isEndAndNoPrecedingDeltas)
         
         /// Call the callback
-        let phase = Animator.callbackPhase(hasProducedDeltas: thisAnimationHasProducedDeltas, isLastCallback: isLastDisplayLinkCallback)
+        let phase = TouchAnimatorBase.callbackPhase(hasProducedDeltas: thisAnimationHasProducedDeltas, isLastCallback: isLastDisplayLinkCallback)
         callback(animationValueDelta, phase, momentumHint)
         
         /// Debug

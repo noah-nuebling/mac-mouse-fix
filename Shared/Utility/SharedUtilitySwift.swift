@@ -28,6 +28,15 @@ import CocoaLumberjackSwift
         return value
     }
     
+    @objc static func interpolateRects(_ t: Double, _ rect1: NSRect, _ rect2: NSRect) -> NSRect {
+        let x = Math.scale(value: t, from: .unitInterval, to: Interval(rect1.origin.x, rect2.origin.x), allowOutOfBounds: true)
+        let y = Math.scale(value: t, from: .unitInterval, to: Interval(rect1.origin.y, rect2.origin.y), allowOutOfBounds: true)
+        let width = Math.scale(value: t, from: .unitInterval, to: Interval(rect1.width, rect2.width), allowOutOfBounds: true)
+        let height = Math.scale(value: t, from: .unitInterval, to: Interval(rect1.height, rect2.height), allowOutOfBounds: true)
+        
+        return NSRect(x: x, y: y, width: width, height: height)
+    }
+    
     static func insecureCopy<T: NSCoding>(of original: T) throws -> T {
         
         // TODO: Move this to a more appropriate file

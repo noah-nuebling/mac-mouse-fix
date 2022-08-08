@@ -14,7 +14,7 @@ import Cocoa
     typealias Point = Vector
     
     @objc func evaluate(at x: Double) -> Double { fatalError() }
-    /// ^ Animator.swift expects this to pass through (0,0) and (1,1)
+    /// ^ TouchAnimatorBase.swift expects this to pass through (0,0) and (1,1)
     
     @objc func stringTrace(startX x0: Double, endX x1: Double, nOfSamples: Int) -> String {
         

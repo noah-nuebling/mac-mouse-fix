@@ -8,14 +8,14 @@
 //
 
 #import "NSScreen+Additions.h"
-#import "HelperUtility.h"
+#import "SharedUtility.h"
 
 @implementation NSScreen (Additions)
 
 + (NSScreen * _Nullable)screenUnderMousePointerWithEvent:(CGEventRef _Nullable)event {
     
     CGDirectDisplayID displayID;
-    [HelperUtility displayUnderMousePointer:&displayID withEvent:event];
+    [SharedUtility displayUnderMousePointer:&displayID withEvent:event];
     
     return [NSScreen screenWithDisplayID:displayID];
 }

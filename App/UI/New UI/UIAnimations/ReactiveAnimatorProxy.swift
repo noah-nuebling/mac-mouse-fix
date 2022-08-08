@@ -73,21 +73,24 @@ extension NSAnimatablePropertyContainer where Self: NSObject {
     func set(_ newValue: U) {
         switch type {
         case .normal:
+            
             /// Get animation from context
             var animation1 = CATransaction.value(forKey: "reactiveAnimatorPayload") as? CABasicAnimation /// Get animation from context (set in `Animate.with()`)
             if animation1 == nil { /// Fallback
                 animation1 = CABasicAnimation(name: .default, duration: 0.25)
             }
+            /// Make copy so we don't change the animation outside this scope
+            let animation = animation1!.copy() as! CABasicAnimation
+            
             /// Make animations round to integer to avoid jitter. This is useful for resize animations. But this breaks opacity animations.
-            let animation = animation1!.copy() as! CABasicAnimation /// Make copy so we don't change the animation outside this scope
             var doRoundToInt = false
+            if (newValue as? NSRect) != nil { doRoundToInt = true }
             if let current = current as? Double, let newValue = newValue as? Double {
                 let difference = abs(current - newValue)
                 if difference > 5 {
                     doRoundToInt = true
                 }
             }
-            if (newValue as? NSRect) != nil { doRoundToInt = true }
             if doRoundToInt {
                 animation.perform(.init(Selector(("setRoundsToInteger:"))), with: ObjCBool(true))
             }

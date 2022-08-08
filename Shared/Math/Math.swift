@@ -140,11 +140,13 @@ import CocoaLumberjackSwift
         }
     }
     
-    @objc class func scale(value: Double, from originInterval: Interval, to targetInterval: Interval) -> Double {
+    @objc class func scale(value: Double, from originInterval: Interval, to targetInterval: Interval, allowOutOfBounds: Bool = false) -> Double {
         /// Should probably move this into Interval
         /// Works as expected on Intervals with different directions
         
-        assert(originInterval.contains(value))
+        if !allowOutOfBounds {
+            assert(originInterval.contains(value))
+        }
         
         /// Normalize value between 0 and 1
     

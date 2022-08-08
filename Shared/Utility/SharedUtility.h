@@ -14,6 +14,7 @@
 // Import WannabePrefixHeader.h here so we don't have to manually include it in as many places (not sure if bad practise)
 #import "WannabePrefixHeader.h"
 #import "Shorthands.h"
+#import <CoreVideo/CoreVideo.h>
 
 #define stringf(format, ...) [NSString stringWithFormat:(format), ##__VA_ARGS__]
 
@@ -29,6 +30,9 @@ void *offsetPointer(void *ptr, int byteOffset);
 + (BOOL)runningMainApp;
 + (BOOL)runningHelper;
 + (BOOL)runningAccomplice;
+
++ (CVReturn)displayUnderMousePointer:(CGDirectDisplayID *)dspID withEvent:(CGEventRef _Nullable)event;
++ (CVReturn)display:(CGDirectDisplayID *)dspID atPoint:(CGPoint)point;
 
 + (NSString *)dumpClassInfo:(Class)class;
 + (NSString *)launchCLT:(NSURL *)executableURL withArguments:(NSArray<NSString *> *)arguments error:(NSError ** _Nullable)error;

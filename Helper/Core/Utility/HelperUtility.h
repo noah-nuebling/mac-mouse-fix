@@ -23,9 +23,5 @@ CGEventFlags getModifierFlagsWithEvent(CGEventRef flagEvent);
 CGPoint getPointerLocation(void);
 CGPoint getPointerLocationWithEvent(CGEventRef locEvent);
 
-/// Get display under mouse pointer
-+ (CVReturn)displayUnderMousePointer:(CGDirectDisplayID *)dspID withEvent:(CGEventRef)event;
-+ (CVReturn)display:(CGDirectDisplayID *)dspID atPoint:(CGPoint)point;
-
 @end
 

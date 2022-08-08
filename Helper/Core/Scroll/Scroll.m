@@ -29,7 +29,7 @@
 #import "EventUtility.h"
 
 @import IOKit;
-#import "MFIOKitImports.h"
+#import "MFHIDEventImports.h"
 #import "IOUtility.h"
 
 @implementation Scroll
@@ -41,7 +41,7 @@ static CGEventSourceRef _eventSource;
 
 static dispatch_queue_t _scrollQueue;
 
-static PixelatedAnimator *_animator;
+static TouchAnimator *_animator;
 
 static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this to Config or some sort of OverrideManager class
 + (AXUIElementRef) systemWideAXUIElement {
@@ -85,7 +85,7 @@ static BOOL _isSuspended = NO;
     }
     
     /// Create animator
-    _animator = [[PixelatedAnimator alloc] init];
+    _animator = [[TouchAnimator alloc] init];
     
     /// Create initial config instance
     _scrollConfig = [[ScrollConfig alloc] init];
@@ -376,7 +376,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         
             /// Get display under mouse pointer
             CGDirectDisplayID displayUnderMousePointer;
-            [HelperUtility displayUnderMousePointer:&displayUnderMousePointer withEvent:event];
+            [SharedUtility displayUnderMousePointer:&displayUnderMousePointer withEvent:event];
             
             /// Get display height/width
             size_t displayDimension;
@@ -679,7 +679,7 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
     
     IOHIDEventPhaseBits eventPhase = kIOHIDEventPhaseUndefined;
     if (animatorPhase != kMFAnimationCallbackPhaseNone) {
-        eventPhase = [Animator IOHIDPhaseWithAnimationCallbackPhase:animatorPhase];
+        eventPhase = [TouchAnimator IOHIDPhaseWithAnimationCallbackPhase:animatorPhase];
     }
     
     /// Debug

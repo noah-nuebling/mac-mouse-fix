@@ -10,7 +10,7 @@
 #import "WannabePrefixHeader.h"
 
 #import "EventUtility.h"
-#import "MFIOKitImports.h"
+#import "MFHIDEventImports.h"
 #import "IOUtility.h"
 #import "SharedUtility.h"
 #import "CGEventHIDEventBridge.h"

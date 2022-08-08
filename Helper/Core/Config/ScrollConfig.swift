@@ -475,7 +475,7 @@ import CocoaLumberjackSwift
     }
     
     @objc lazy var preciseAccelerationCurve: AccelerationBezier = { () -> AccelerationBezier in
-        ScrollConfig.accelerationCurveFromParams(pxPerTickBase: 3, /// 2 is better than 3 but that leads to weird asswert failures in PixelatedAnimator that I can't be bothered to fix
+        ScrollConfig.accelerationCurveFromParams(pxPerTickBase: 3, /// 2 is better than 3 but that leads to weird asswert failures in TouchAnimator that I can't be bothered to fix
                                                  pxPerTickEnd: 30,
                                                  accelerationHump: 0.0,
                                                  capHump: 0.0,

@@ -11,7 +11,7 @@
 #import <Cocoa/Cocoa.h>
 #import "WannabePrefixHeader.h"
 #import "NSScreen+Additions.h"
-#import "HelperUtility.h"
+#import "SharedUtility.h"
 
 @interface DisplayLink ()
 
@@ -310,7 +310,7 @@ typedef enum {
     [self setDisplay:NSScreen.mainScreen.displayID];
 }
 
-- (void)linkToDisplayUnderMousePointerWithEvent:(CGEventRef)event {
+- (void)linkToDisplayUnderMousePointerWithEvent:(CGEventRef _Nullable)event {
     /// TODO: Test if this new version works
     
     __block CVReturn result;
@@ -321,7 +321,7 @@ typedef enum {
         
         /// Get display under mouse pointer
         CGDirectDisplayID dsp;
-        rt = [HelperUtility displayUnderMousePointer:&dsp withEvent:event];
+        rt = [SharedUtility displayUnderMousePointer:&dsp withEvent:event];
         
         /// Premature return
         if (rt == kCVReturnError) {

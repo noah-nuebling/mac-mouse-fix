@@ -17,5 +17,10 @@
 #import "AnimatorDeclarations.h"
 #import "SharedUtility.h"
 #import "PolynomialRegression.h"
+#import "VectorSubPixelator.h"
+#import "SubPixelator.h"
+#import "AnimatorDeclarations.h"
+#import "DisplayLink.h"
+#import "IOHIDEventTypes.h"
 
 #endif /* Mac_Mouse_Fix_Bridging_Header_h */
