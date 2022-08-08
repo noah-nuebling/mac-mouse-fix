@@ -10,6 +10,15 @@ import CocoaLumberjackSwift
 
 @objc class ResizingTabWindow: NSWindow {
     
+    // MARK: Init
+    
+    override init(contentRect: NSRect, styleMask style: NSWindow.StyleMask, backing backingStoreType: NSWindow.BackingStoreType, defer flag: Bool) {
+        /// Init super
+        super.init(contentRect: contentRect, styleMask: style, backing: backingStoreType, defer: flag)
+        /// Disable fullscreen
+        self.collectionBehavior = .fullScreenNone /// We should probably disable the green button entirely
+    }
+    
     // MARK: Ivars
     
     @objc public var tabSwitchIsInProgress: Bool = false
@@ -70,7 +79,6 @@ import CocoaLumberjackSwift
 //            result = NSRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
             
             /// Kill jitter attempt3
-//            let resultIntegral = NSIntegralRectWithOptions(result, .alignAllEdgesNearest)
 //            let ogIntegral = NSIntegralRectWithOptions(ogFrame, .alignAllEdgesNearest)
 //            let dPeriod = result.width.remainder(dividingBy: 2) != ogIntegral.width.remainder(dividingBy: 2)
 //            if dPeriod {
@@ -90,6 +98,10 @@ import CocoaLumberjackSwift
 //            result.origin.x -= dx
 //            result.origin.y -= dy
             
+            /// Round rect
+            ///     Prevents moving around at end of animation
+            result = NSIntegralRectWithOptions(result, .alignAllEdgesNearest)
+    
             /// Set frame (on main thread)
             DispatchQueue.main.async {
                 self.setValue(result, forKey: "frame") /// This seems faster than `self.setFrame(display:animate:)`

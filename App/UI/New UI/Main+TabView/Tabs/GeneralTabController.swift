@@ -56,7 +56,8 @@ class GeneralTabController: NSViewController {
 
             let switchView = NSSwitch()
             
-            enableToggle.superview?.replaceSubview(enableToggle, with: switchView)
+            let superView = enableToggle.superview as! NSStackView
+            superView.replaceSubview(enableToggle, with: switchView)
             self.enableToggle = switchView
 
             self.enableToggle.setValue(state, forKey: "state")
