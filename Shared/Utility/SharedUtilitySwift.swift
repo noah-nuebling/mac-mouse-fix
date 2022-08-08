@@ -28,6 +28,39 @@ import CocoaLumberjackSwift
         return value
     }
     
+    static func insecureCopy<T: NSCoding>(of original: T) throws -> T {
+        
+        // TODO: Move this to a more appropriate file
+        
+        /// Approach 4
+        /// It seems theres a solution after all!!
+        ///     See https://developer.apple.com/forums/thread/107533
+        
+        if #available(macOS 10.13, *) {
+        
+            let data = try NSKeyedArchiver.archivedData(withRootObject: original, requiringSecureCoding: false)
+            
+            let unarchiver = try NSKeyedUnarchiver(forReadingFrom: data)
+            unarchiver.requiresSecureCoding = false
+            
+            let copy = unarchiver.decodeObject(forKey: NSKeyedArchiveRootObjectKey) as! T
+            
+            return copy
+            
+        } else { /// Fallback
+            
+            let data = NSKeyedArchiver.archivedData(withRootObject: original)
+            
+            let unarchiver = NSKeyedUnarchiver(forReadingWith: data)
+            unarchiver.requiresSecureCoding = false
+            
+            let copy = unarchiver.decodeObject(forKey: NSKeyedArchiveRootObjectKey) as! T
+            
+            return copy
+            
+        }
+    }
+    
     @objc static func shallowCopy(of object: NSObject) -> NSObject {
         /// Why is there no default "shallowCopy" method for objects?? Is this bad?
         /// Be careful not to mutate any properties in the copy because it's shallow (holds new references to the same old objects as the original)

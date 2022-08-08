@@ -15,6 +15,8 @@ target 'Mac Mouse Fix' do
 
   # Pods for Mac Mouse Fix
 
+  
+  
   target 'Mac Mouse FixTests' do
     inherit! :search_paths
     # Pods for testing
@@ -40,9 +42,9 @@ target 'Mac Mouse Fix Helper' do
 
   # Pods for Mac Mouse Fix Helper
 
-  pod 'ReactiveObjC', '~> 3.1'
-  pod 'ReactiveSwift', '~> 6.6'
-  pod 'ReactiveCocoa', '~> 11.2' # Not sure if necessary. Not included with ReactiveSwift but ReactiveObjC might include it.
+#  pod 'ReactiveObjC', '~> 3.1'
+#  pod 'ReactiveSwift', '~> 6.6'
+#  pod 'ReactiveCocoa', '~> 11.2' # Not sure if necessary. Not included with ReactiveSwift but ReactiveObjC might include it.
 
 end
 

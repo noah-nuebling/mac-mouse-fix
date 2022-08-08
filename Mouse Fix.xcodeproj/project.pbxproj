@@ -61,6 +61,44 @@
 		4F8D2C5928A035EA0060F76F /* Mac Mouse Fix Helper.app in Copy Helper */ = {isa = PBXBuildFile; fileRef = 4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4F8FC13F275DC81900887A0C /* PrefixSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8FC13E275DC81900887A0C /* PrefixSwift.swift */; };
 		4F8FC140275DC81900887A0C /* PrefixSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8FC13E275DC81900887A0C /* PrefixSwift.swift */; };
+		4F909CF028A0C3B7009349A2 /* GlobalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909CEF28A0C3B6009349A2 /* GlobalState.swift */; };
+		4F909D2028A0C3D2009349A2 /* Main.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4F909CF328A0C3D2009349A2 /* Main.strings */; };
+		4F909D2128A0C3D2009349A2 /* GeneralTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909CF628A0C3D2009349A2 /* GeneralTabController.swift */; };
+		4F909D2228A0C3D2009349A2 /* ScrollTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909CF728A0C3D2009349A2 /* ScrollTabController.swift */; };
+		4F909D2328A0C3D2009349A2 /* PointerTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909CF828A0C3D2009349A2 /* PointerTabController.swift */; };
+		4F909D2428A0C3D2009349A2 /* TabItemControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909CF928A0C3D2009349A2 /* TabItemControllerProtocol.swift */; };
+		4F909D2528A0C3D2009349A2 /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909CFA28A0C3D2009349A2 /* TabViewController.swift */; };
+		4F909D2628A0C3D2009349A2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F909CFB28A0C3D2009349A2 /* ViewController.m */; };
+		4F909D2728A0C3D2009349A2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F909CFC28A0C3D2009349A2 /* Main.storyboard */; };
+		4F909D2828A0C3D2009349A2 /* ResizingTabWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909CFE28A0C3D2009349A2 /* ResizingTabWindow.swift */; };
+		4F909D2928A0C3D2009349A2 /* TabViewControllerDisabling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909CFF28A0C3D2009349A2 /* TabViewControllerDisabling.swift */; };
+		4F909D2A28A0C3D2009349A2 /* ResizingTabWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0028A0C3D2009349A2 /* ResizingTabWindowController.swift */; };
+		4F909D2B28A0C3D2009349A2 /* NSPopUpButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0328A0C3D2009349A2 /* NSPopUpButton+Extensions.swift */; };
+		4F909D2C28A0C3D2009349A2 /* NSView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0428A0C3D2009349A2 /* NSView+Extensions.swift */; };
+		4F909D2D28A0C3D2009349A2 /* CoolNSTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0528A0C3D2009349A2 /* CoolNSTextField.swift */; };
+		4F909D2E28A0C3D2009349A2 /* NSControl+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0628A0C3D2009349A2 /* NSControl+Extensions.swift */; };
+		4F909D2F28A0C3D2009349A2 /* MyTitlebarAccessoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F909D0828A0C3D2009349A2 /* MyTitlebarAccessoryViewController.xib */; };
+		4F909D3028A0C3D2009349A2 /* ReactiveAnimatorProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0A28A0C3D2009349A2 /* ReactiveAnimatorProxy.swift */; };
+		4F909D3128A0C3D2009349A2 /* CAAnimation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0C28A0C3D2009349A2 /* CAAnimation+Extensions.swift */; };
+		4F909D3228A0C3D2009349A2 /* FadeAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0D28A0C3D2009349A2 /* FadeAnimations.swift */; };
+		4F909D3328A0C3D2009349A2 /* Animating Constraints.md in Resources */ = {isa = PBXBuildFile; fileRef = 4F909D0E28A0C3D2009349A2 /* Animating Constraints.md */; };
+		4F909D3428A0C3D2009349A2 /* Replace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0F28A0C3D2009349A2 /* Replace.swift */; };
+		4F909D3528A0C3D2009349A2 /* Animate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D1028A0C3D2009349A2 /* Animate.swift */; };
+		4F909D3628A0C3D2009349A2 /* Collapse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D1128A0C3D2009349A2 /* Collapse.swift */; };
+		4F909D3728A0C3D2009349A2 /* ConstraintUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D1228A0C3D2009349A2 /* ConstraintUtility.swift */; };
+		4F909D3828A0C3D2009349A2 /* ReactiveFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D1428A0C3D2009349A2 /* ReactiveFlags.swift */; };
+		4F909D3928A0C3D2009349A2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4F909D1728A0C3D2009349A2 /* Localizable.strings */; };
+		4F909D3A28A0C3D2009349A2 /* Localization How To.md in Resources */ = {isa = PBXBuildFile; fileRef = 4F909D1928A0C3D2009349A2 /* Localization How To.md */; };
+		4F909D3B28A0C3D2009349A2 /* ModCaptureDeleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D1C28A0C3D2009349A2 /* ModCaptureDeleteButton.swift */; };
+		4F909D3C28A0C3D2009349A2 /* ModCaptureFieldEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D1D28A0C3D2009349A2 /* ModCaptureFieldEditor.swift */; };
+		4F909D3D28A0C3D2009349A2 /* ModCaptureTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D1E28A0C3D2009349A2 /* ModCaptureTextField.swift */; };
+		4F909D3E28A0C3D2009349A2 /* SensitivityDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D1F28A0C3D2009349A2 /* SensitivityDisplay.swift */; };
+		4F909D4128A0C412009349A2 /* SwiftUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D4028A0C411009349A2 /* SwiftUITest.swift */; };
+		4F909D4528A0C4C2009349A2 /* NSArray+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D4328A0C4C2009349A2 /* NSArray+Extensions.swift */; };
+		4F909D4628A0C4C2009349A2 /* NSArray+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D4328A0C4C2009349A2 /* NSArray+Extensions.swift */; };
+		4F909D4728A0C4C2009349A2 /* Collection+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D4428A0C4C2009349A2 /* Collection+Extensions.swift */; };
+		4F909D4828A0C4C2009349A2 /* Collection+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D4428A0C4C2009349A2 /* Collection+Extensions.swift */; };
+		4F909D5128A0C6F3009349A2 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4F909D5028A0C6F3009349A2 /* SnapKit */; };
 		4F9111F9289FF34D00D2DD8C /* sm_launchd.plist in Copy sm_launchd.plist */ = {isa = PBXBuildFile; fileRef = 4F9111F4289FF03200D2DD8C /* sm_launchd.plist */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4F92A708260F4BF000529D1F /* RemapTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F92A707260F4BF000529D1F /* RemapTableView.m */; };
 		4F92A72D260F6C7800529D1F /* NSView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F92A72C260F6C7800529D1F /* NSView+Additions.m */; };
@@ -77,6 +115,24 @@
 		4F9E78C026855BCF002C2309 /* Concurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9E78BE26855BCF002C2309 /* Concurrency.swift */; };
 		4F9E78D02685E30C002C2309 /* GestureScrollSimulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9E78CE2685E30B002C2309 /* GestureScrollSimulator.m */; };
 		4F9E78E3268663B1002C2309 /* ExponentialSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9E78E2268663B1002C2309 /* ExponentialSmoother.swift */; };
+		4FA40CEF28A0CA0A00499E53 /* ReactiveSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4FA40CEE28A0CA0A00499E53 /* ReactiveSwift */; };
+		4FA40CF228A0CA3900499E53 /* ReactiveCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 4FA40CF128A0CA3900499E53 /* ReactiveCocoa */; };
+		4FA40CF628A0CCC600499E53 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD50266AC10C003935EA /* Math.swift */; };
+		4FA40CF728A0CCCA00499E53 /* Curve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A40B0266BBC5000436821 /* Curve.swift */; };
+		4FA40CF828A0CCCA00499E53 /* TestAccelerationCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DC1287F967000786BCC /* TestAccelerationCurve.swift */; };
+		4FA40CF928A0CCCA00499E53 /* Bezier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD4A266A8B7E003935EA /* Bezier.swift */; };
+		4FA40CFA28A0CCCA00499E53 /* PolynomialCappedAccelerationCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF93058288026FC0007CCA7 /* PolynomialCappedAccelerationCurve.swift */; };
+		4FA40CFB28A0CCCB00499E53 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CC58827B8DA8B0084AACE /* Line.swift */; };
+		4FA40CFC28A0CCCB00499E53 /* NaturalAccelerationCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DBE287F7BBA00786BCC /* NaturalAccelerationCurve.swift */; };
+		4FA40CFD28A0CCCB00499E53 /* AccelerationBezier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A40AA266BBB6200436821 /* AccelerationBezier.swift */; };
+		4FA40CFE28A0CCCB00499E53 /* HybridCurves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CC58627B8D2300084AACE /* HybridCurves.swift */; };
+		4FA40CFF28A0CCCB00499E53 /* DragCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1AFE962670EBA900ECA424 /* DragCurve.swift */; };
+		4FA40D0028A0CCCB00499E53 /* CombinedLinearCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1D58182881D880002EB119 /* CombinedLinearCurve.swift */; };
+		4FA40D0128A0CCDF00499E53 /* PolyFitObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF9306128806E4F0007CCA7 /* PolyFitObjC.m */; };
+		4FA40D0228A0CE5B00499E53 /* VectorUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD57266ACE32003935EA /* VectorUtility.m */; };
+		4FA40D0328A0D0BB00499E53 /* PolynomialRegression.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CF94328686C0100BF5E55 /* PolynomialRegression.m */; };
+		4FA40D0428A0D0C000499E53 /* DoublesMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CF94528686C0100BF5E55 /* DoublesMatrix.m */; };
+		4FA40D0528A0D0D000499E53 /* PolyFit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FF9305D288060100007CCA7 /* PolyFit.cpp */; };
 		4FA83A29268271E200F3A31B /* PointerSpeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA83A28268271E200F3A31B /* PointerSpeed.m */; };
 		4FA83A2E268288D900F3A31B /* PointerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA83A2D268288D900F3A31B /* PointerConfig.swift */; };
 		4FA994BE26678AC90007F003 /* ScrollAnalyzer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA994BD26678AC90007F003 /* ScrollAnalyzer.m */; };
@@ -192,20 +248,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		4F8CF94A28686C0100BF5E55 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4F8CF93428686C0100BF5E55 /* PolynomialRegression.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = CA80200A1AB9B747007CDF96;
-			remoteInfo = PolynomialRegression;
-		};
-		4F8CF94C28686C0100BF5E55 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4F8CF93428686C0100BF5E55 /* PolynomialRegression.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = CA8020231AB9B747007CDF96;
-			remoteInfo = PolynomialRegressionTests;
-		};
 		4F94F60125E5EC2800D9F24A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4FCECD7821092354001F1078 /* Project object */;
@@ -401,24 +443,52 @@
 		4F8CE6FF2617738A00D70A76 /* AppTranslocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppTranslocationManager.m; sourceTree = "<group>"; };
 		4F8CE7002617738A00D70A76 /* AppTranslocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppTranslocationManager.h; sourceTree = "<group>"; };
 		4F8CF93028686C0100BF5E55 /* license.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = license.md; sourceTree = "<group>"; };
-		4F8CF93228686C0100BF5E55 /* PolynomialRegressionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PolynomialRegressionTests.m; sourceTree = "<group>"; };
-		4F8CF93328686C0100BF5E55 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4F8CF93428686C0100BF5E55 /* PolynomialRegression.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = PolynomialRegression.xcodeproj; sourceTree = "<group>"; };
 		4F8CF93728686C0100BF5E55 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		4F8CF93928686C0100BF5E55 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4F8CF93A28686C0100BF5E55 /* PolynomialRegression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolynomialRegression.h; sourceTree = "<group>"; };
-		4F8CF93B28686C0100BF5E55 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		4F8CF93C28686C0100BF5E55 /* DoublesMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoublesMatrix.h; sourceTree = "<group>"; };
-		4F8CF93E28686C0100BF5E55 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		4F8CF94028686C0100BF5E55 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		4F8CF94128686C0100BF5E55 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		4F8CF94228686C0100BF5E55 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4F8CF94328686C0100BF5E55 /* PolynomialRegression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PolynomialRegression.m; sourceTree = "<group>"; };
-		4F8CF94428686C0100BF5E55 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		4F8CF94528686C0100BF5E55 /* DoublesMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoublesMatrix.m; sourceTree = "<group>"; };
-		4F8CF94628686C0100BF5E55 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4F8CF94728686C0100BF5E55 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		4F8FC13E275DC81900887A0C /* PrefixSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefixSwift.swift; sourceTree = "<group>"; };
+		4F909CEF28A0C3B6009349A2 /* GlobalState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalState.swift; sourceTree = "<group>"; };
+		4F909CF428A0C3D2009349A2 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
+		4F909CF628A0C3D2009349A2 /* GeneralTabController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralTabController.swift; sourceTree = "<group>"; };
+		4F909CF728A0C3D2009349A2 /* ScrollTabController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollTabController.swift; sourceTree = "<group>"; };
+		4F909CF828A0C3D2009349A2 /* PointerTabController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointerTabController.swift; sourceTree = "<group>"; };
+		4F909CF928A0C3D2009349A2 /* TabItemControllerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabItemControllerProtocol.swift; sourceTree = "<group>"; };
+		4F909CFA28A0C3D2009349A2 /* TabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabViewController.swift; sourceTree = "<group>"; };
+		4F909CFB28A0C3D2009349A2 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		4F909CFD28A0C3D2009349A2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		4F909CFE28A0C3D2009349A2 /* ResizingTabWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResizingTabWindow.swift; sourceTree = "<group>"; };
+		4F909CFF28A0C3D2009349A2 /* TabViewControllerDisabling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabViewControllerDisabling.swift; sourceTree = "<group>"; };
+		4F909D0028A0C3D2009349A2 /* ResizingTabWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResizingTabWindowController.swift; sourceTree = "<group>"; };
+		4F909D0128A0C3D2009349A2 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		4F909D0328A0C3D2009349A2 /* NSPopUpButton+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSPopUpButton+Extensions.swift"; sourceTree = "<group>"; };
+		4F909D0428A0C3D2009349A2 /* NSView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSView+Extensions.swift"; sourceTree = "<group>"; };
+		4F909D0528A0C3D2009349A2 /* CoolNSTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoolNSTextField.swift; sourceTree = "<group>"; };
+		4F909D0628A0C3D2009349A2 /* NSControl+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSControl+Extensions.swift"; sourceTree = "<group>"; };
+		4F909D0828A0C3D2009349A2 /* MyTitlebarAccessoryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyTitlebarAccessoryViewController.xib; sourceTree = "<group>"; };
+		4F909D0A28A0C3D2009349A2 /* ReactiveAnimatorProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactiveAnimatorProxy.swift; sourceTree = "<group>"; };
+		4F909D0B28A0C3D2009349A2 /* NSAnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSAnimationManager.h; sourceTree = "<group>"; };
+		4F909D0C28A0C3D2009349A2 /* CAAnimation+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CAAnimation+Extensions.swift"; sourceTree = "<group>"; };
+		4F909D0D28A0C3D2009349A2 /* FadeAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FadeAnimations.swift; sourceTree = "<group>"; };
+		4F909D0E28A0C3D2009349A2 /* Animating Constraints.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "Animating Constraints.md"; sourceTree = "<group>"; };
+		4F909D0F28A0C3D2009349A2 /* Replace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Replace.swift; sourceTree = "<group>"; };
+		4F909D1028A0C3D2009349A2 /* Animate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animate.swift; sourceTree = "<group>"; };
+		4F909D1128A0C3D2009349A2 /* Collapse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Collapse.swift; sourceTree = "<group>"; };
+		4F909D1228A0C3D2009349A2 /* ConstraintUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstraintUtility.swift; sourceTree = "<group>"; };
+		4F909D1428A0C3D2009349A2 /* ReactiveFlags.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactiveFlags.swift; sourceTree = "<group>"; };
+		4F909D1828A0C3D2009349A2 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		4F909D1928A0C3D2009349A2 /* Localization How To.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "Localization How To.md"; sourceTree = "<group>"; };
+		4F909D1C28A0C3D2009349A2 /* ModCaptureDeleteButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModCaptureDeleteButton.swift; sourceTree = "<group>"; };
+		4F909D1D28A0C3D2009349A2 /* ModCaptureFieldEditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModCaptureFieldEditor.swift; sourceTree = "<group>"; };
+		4F909D1E28A0C3D2009349A2 /* ModCaptureTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModCaptureTextField.swift; sourceTree = "<group>"; };
+		4F909D1F28A0C3D2009349A2 /* SensitivityDisplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SensitivityDisplay.swift; sourceTree = "<group>"; };
+		4F909D4028A0C411009349A2 /* SwiftUITest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftUITest.swift; sourceTree = "<group>"; };
+		4F909D4328A0C4C2009349A2 /* NSArray+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSArray+Extensions.swift"; sourceTree = "<group>"; };
+		4F909D4428A0C4C2009349A2 /* Collection+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Collection+Extensions.swift"; sourceTree = "<group>"; };
+		4F909D5428A0C818009349A2 /* ReactiveObjC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ReactiveObjC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F909D5728A0C81F009349A2 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ReactiveCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F909D5A28A0C824009349A2 /* ReactiveSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ReactiveSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F9111F4289FF03200D2DD8C /* sm_launchd.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = sm_launchd.plist; sourceTree = "<group>"; };
 		4F92A706260F4BF000529D1F /* RemapTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapTableView.h; sourceTree = "<group>"; };
 		4F92A707260F4BF000529D1F /* RemapTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapTableView.m; sourceTree = "<group>"; };
@@ -458,6 +528,7 @@
 		4F9E78CE2685E30B002C2309 /* GestureScrollSimulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GestureScrollSimulator.m; sourceTree = "<group>"; };
 		4F9E78CF2685E30C002C2309 /* GestureScrollSimulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GestureScrollSimulator.h; sourceTree = "<group>"; };
 		4F9E78E2268663B1002C2309 /* ExponentialSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExponentialSmoother.swift; sourceTree = "<group>"; };
+		4FA40CF528A0CBA600499E53 /* Mac Mouse Fix-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mac Mouse Fix-Bridging-Header.h"; sourceTree = "<group>"; };
 		4FA83A27268271E200F3A31B /* PointerSpeed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerSpeed.h; sourceTree = "<group>"; };
 		4FA83A28268271E200F3A31B /* PointerSpeed.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerSpeed.m; sourceTree = "<group>"; };
 		4FA83A2D268288D900F3A31B /* PointerConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointerConfig.swift; sourceTree = "<group>"; };
@@ -685,8 +756,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FEB66132793510C00E6A111 /* CocoaLumberjack in Frameworks */,
+				4FA40CF228A0CA3900499E53 /* ReactiveCocoa in Frameworks */,
+				4F909D5128A0C6F3009349A2 /* SnapKit in Frameworks */,
 				4F1793A925EEC92000E8309B /* ZipArchive.framework in Frameworks */,
 				4F39BC26263AC31600FDF692 /* Sparkle.framework in Frameworks */,
+				4FA40CEF28A0CA0A00499E53 /* ReactiveSwift in Frameworks */,
 				2D937827717D64CDBCC2C443 /* Pods_Mac_Mouse_Fix.framework in Frameworks */,
 				4FEB66152793510F00E6A111 /* CocoaLumberjackSwift in Frameworks */,
 			);
@@ -849,6 +923,7 @@
 		4F7A1A70289F2517007D5B30 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				4F909CF128A0C3D2009349A2 /* New UI */,
 				4FA911E4260D00CB00553CA8 /* RemapTable */,
 				4F46EAA625FB770D0003423A /* AddWindow */,
 				4F2A1FA726042ACB0067691A /* Notifications */,
@@ -920,50 +995,162 @@
 			isa = PBXGroup;
 			children = (
 				4F8CF93028686C0100BF5E55 /* license.md */,
-				4F8CF93128686C0100BF5E55 /* PolynomialRegressionTests */,
-				4F8CF93428686C0100BF5E55 /* PolynomialRegression.xcodeproj */,
 				4F8CF93728686C0100BF5E55 /* README.md */,
 				4F8CF93828686C0100BF5E55 /* PolynomialRegression */,
 			);
 			path = "iOS-Polynomial-Regression-master";
 			sourceTree = "<group>";
 		};
-		4F8CF93128686C0100BF5E55 /* PolynomialRegressionTests */ = {
-			isa = PBXGroup;
-			children = (
-				4F8CF93228686C0100BF5E55 /* PolynomialRegressionTests.m */,
-				4F8CF93328686C0100BF5E55 /* Info.plist */,
-			);
-			path = PolynomialRegressionTests;
-			sourceTree = "<group>";
-		};
-		4F8CF93528686C0100BF5E55 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4F8CF94B28686C0100BF5E55 /* PolynomialRegression.app */,
-				4F8CF94D28686C0100BF5E55 /* PolynomialRegressionTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		4F8CF93828686C0100BF5E55 /* PolynomialRegression */ = {
 			isa = PBXGroup;
 			children = (
-				4F8CF93928686C0100BF5E55 /* AppDelegate.h */,
 				4F8CF93A28686C0100BF5E55 /* PolynomialRegression.h */,
-				4F8CF93B28686C0100BF5E55 /* ViewController.m */,
-				4F8CF93C28686C0100BF5E55 /* DoublesMatrix.h */,
-				4F8CF93D28686C0100BF5E55 /* LaunchScreen.xib */,
-				4F8CF93F28686C0100BF5E55 /* Main.storyboard */,
-				4F8CF94128686C0100BF5E55 /* main.m */,
-				4F8CF94228686C0100BF5E55 /* Images.xcassets */,
 				4F8CF94328686C0100BF5E55 /* PolynomialRegression.m */,
-				4F8CF94428686C0100BF5E55 /* AppDelegate.m */,
+				4F8CF93C28686C0100BF5E55 /* DoublesMatrix.h */,
 				4F8CF94528686C0100BF5E55 /* DoublesMatrix.m */,
-				4F8CF94628686C0100BF5E55 /* Info.plist */,
-				4F8CF94728686C0100BF5E55 /* ViewController.h */,
 			);
 			path = PolynomialRegression;
+			sourceTree = "<group>";
+		};
+		4F909CF128A0C3D2009349A2 /* New UI */ = {
+			isa = PBXGroup;
+			children = (
+				4F909CF228A0C3D2009349A2 /* Main+TabView */,
+				4F909D0228A0C3D2009349A2 /* UIExtensions */,
+				4F909D0728A0C3D2009349A2 /* AppSpecific */,
+				4F909D0928A0C3D2009349A2 /* Animations */,
+				4F909D1328A0C3D2009349A2 /* CustomDataTypes */,
+				4F909D1528A0C3D2009349A2 /* Localization */,
+				4F909D1A28A0C3D2009349A2 /* CustomUIElements */,
+			);
+			path = "New UI";
+			sourceTree = "<group>";
+		};
+		4F909CF228A0C3D2009349A2 /* Main+TabView */ = {
+			isa = PBXGroup;
+			children = (
+				4F909CF328A0C3D2009349A2 /* Main.strings */,
+				4F909CF528A0C3D2009349A2 /* Tabs */,
+				4F909CF928A0C3D2009349A2 /* TabItemControllerProtocol.swift */,
+				4F909CFA28A0C3D2009349A2 /* TabViewController.swift */,
+				4F909CFB28A0C3D2009349A2 /* ViewController.m */,
+				4F909CFC28A0C3D2009349A2 /* Main.storyboard */,
+				4F909CFE28A0C3D2009349A2 /* ResizingTabWindow.swift */,
+				4F909CFF28A0C3D2009349A2 /* TabViewControllerDisabling.swift */,
+				4F909D0028A0C3D2009349A2 /* ResizingTabWindowController.swift */,
+				4F909D0128A0C3D2009349A2 /* ViewController.h */,
+			);
+			path = "Main+TabView";
+			sourceTree = "<group>";
+		};
+		4F909CF528A0C3D2009349A2 /* Tabs */ = {
+			isa = PBXGroup;
+			children = (
+				4F909CF628A0C3D2009349A2 /* GeneralTabController.swift */,
+				4F909CF728A0C3D2009349A2 /* ScrollTabController.swift */,
+				4F909CF828A0C3D2009349A2 /* PointerTabController.swift */,
+			);
+			path = Tabs;
+			sourceTree = "<group>";
+		};
+		4F909D0228A0C3D2009349A2 /* UIExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				4F909D0328A0C3D2009349A2 /* NSPopUpButton+Extensions.swift */,
+				4F909D0428A0C3D2009349A2 /* NSView+Extensions.swift */,
+				4F909D0528A0C3D2009349A2 /* CoolNSTextField.swift */,
+				4F909D0628A0C3D2009349A2 /* NSControl+Extensions.swift */,
+			);
+			path = UIExtensions;
+			sourceTree = "<group>";
+		};
+		4F909D0728A0C3D2009349A2 /* AppSpecific */ = {
+			isa = PBXGroup;
+			children = (
+				4F909D0828A0C3D2009349A2 /* MyTitlebarAccessoryViewController.xib */,
+			);
+			path = AppSpecific;
+			sourceTree = "<group>";
+		};
+		4F909D0928A0C3D2009349A2 /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				4F909D0A28A0C3D2009349A2 /* ReactiveAnimatorProxy.swift */,
+				4F909D0B28A0C3D2009349A2 /* NSAnimationManager.h */,
+				4F909D0C28A0C3D2009349A2 /* CAAnimation+Extensions.swift */,
+				4F909D0D28A0C3D2009349A2 /* FadeAnimations.swift */,
+				4F909D0E28A0C3D2009349A2 /* Animating Constraints.md */,
+				4F909D0F28A0C3D2009349A2 /* Replace.swift */,
+				4F909D1028A0C3D2009349A2 /* Animate.swift */,
+				4F909D1128A0C3D2009349A2 /* Collapse.swift */,
+				4F909D1228A0C3D2009349A2 /* ConstraintUtility.swift */,
+			);
+			path = Animations;
+			sourceTree = "<group>";
+		};
+		4F909D1328A0C3D2009349A2 /* CustomDataTypes */ = {
+			isa = PBXGroup;
+			children = (
+				4F909D1428A0C3D2009349A2 /* ReactiveFlags.swift */,
+			);
+			path = CustomDataTypes;
+			sourceTree = "<group>";
+		};
+		4F909D1528A0C3D2009349A2 /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				4F909D1628A0C3D2009349A2 /* German */,
+				4F909D1928A0C3D2009349A2 /* Localization How To.md */,
+			);
+			path = Localization;
+			sourceTree = "<group>";
+		};
+		4F909D1628A0C3D2009349A2 /* German */ = {
+			isa = PBXGroup;
+			children = (
+				4F909D1728A0C3D2009349A2 /* Localizable.strings */,
+			);
+			path = German;
+			sourceTree = "<group>";
+		};
+		4F909D1A28A0C3D2009349A2 /* CustomUIElements */ = {
+			isa = PBXGroup;
+			children = (
+				4F909D1B28A0C3D2009349A2 /* ModifierCaptureField */,
+				4F909D1F28A0C3D2009349A2 /* SensitivityDisplay.swift */,
+			);
+			path = CustomUIElements;
+			sourceTree = "<group>";
+		};
+		4F909D1B28A0C3D2009349A2 /* ModifierCaptureField */ = {
+			isa = PBXGroup;
+			children = (
+				4F909D1C28A0C3D2009349A2 /* ModCaptureDeleteButton.swift */,
+				4F909D1D28A0C3D2009349A2 /* ModCaptureFieldEditor.swift */,
+				4F909D1E28A0C3D2009349A2 /* ModCaptureTextField.swift */,
+			);
+			path = ModifierCaptureField;
+			sourceTree = "<group>";
+		};
+		4F909D3F28A0C411009349A2 /* Experiments */ = {
+			isa = PBXGroup;
+			children = (
+				4F909D4028A0C411009349A2 /* SwiftUITest.swift */,
+			);
+			path = Experiments;
+			sourceTree = "<group>";
+		};
+		4F909D4228A0C4C2009349A2 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4FF6653825F2C7B000689B77 /* NSArray+Additions.h */,
+				4FF6653D25F2C7B000689B77 /* NSArray+Additions.m */,
+				4FF6653925F2C7B000689B77 /* NSMutableDictionary+Additions.h */,
+				4FF6654025F2C7B000689B77 /* NSMutableDictionary+Additions.m */,
+				4F909D4328A0C4C2009349A2 /* NSArray+Extensions.swift */,
+				4F909D4428A0C4C2009349A2 /* Collection+Extensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		4F94F60325E5EC2800D9F24A /* AppTests */ = {
@@ -1225,6 +1412,9 @@
 				4FF6653025F2C7B000689B77 /* Objects */,
 				4F9E78BD26855B9B002C2309 /* SwiftConcurrency */,
 				4FF6653625F2C7B000689B77 /* Utility */,
+				4F3A40C8266C448500436821 /* Animator */,
+				4FF9305C28805FC40007CCA7 /* Math */,
+				4F909D4228A0C4C2009349A2 /* Extensions */,
 				4FF6665A25F2C93A00689B77 /* CGSInternal */,
 			);
 			path = Shared;
@@ -1260,10 +1450,6 @@
 				4FF6653F25F2C7B000689B77 /* Queue.h */,
 				4FF6653A25F2C7B000689B77 /* Queue.m */,
 				4FD860A9266EC24E004F76C8 /* DerivedProperty.swift */,
-				4FF6653825F2C7B000689B77 /* NSArray+Additions.h */,
-				4FF6653D25F2C7B000689B77 /* NSArray+Additions.m */,
-				4FF6653925F2C7B000689B77 /* NSMutableDictionary+Additions.h */,
-				4FF6654025F2C7B000689B77 /* NSMutableDictionary+Additions.m */,
 				4FF8C89D28955DC4007EC31F /* CoolTimer.swift */,
 				4FD860C2266EEA94004F76C8 /* Unused */,
 			);
@@ -1276,11 +1462,13 @@
 				4FF665C525F2C92700689B77 /* AppDelegate.h */,
 				4FF665DB25F2C92700689B77 /* AppDelegate.m */,
 				4FF665D925F2C92700689B77 /* MouseFix.xib */,
+				4F909CEF28A0C3B6009349A2 /* GlobalState.swift */,
 				4F8CE6FE2617738A00D70A76 /* AppTranslocation */,
 				4FF665D025F2C92700689B77 /* Config */,
 				4FF665D625F2C92700689B77 /* MessagePort */,
 				4F7A1A70289F2517007D5B30 /* UI */,
 				4FF665E525F2C92700689B77 /* Utility */,
+				4F909D3F28A0C411009349A2 /* Experiments */,
 				4FF665D425F2C92700689B77 /* Resources */,
 				4FF665E125F2C92700689B77 /* SupportFiles */,
 			);
@@ -1357,6 +1545,7 @@
 		4FF665E125F2C92700689B77 /* SupportFiles */ = {
 			isa = PBXGroup;
 			children = (
+				4FA40CF528A0CBA600499E53 /* Mac Mouse Fix-Bridging-Header.h */,
 				4FBC9442260F8AB10062F186 /* External */,
 				4FF665E225F2C92700689B77 /* App.entitlements */,
 				4FF665E325F2C92700689B77 /* main.m */,
@@ -1445,14 +1634,12 @@
 				4FF6661825F2C93A00689B77 /* Buttons */,
 				4FF6661F25F2C93A00689B77 /* Scroll */,
 				4FF6663625F2C93A00689B77 /* Drag */,
-				4F3A40C8266C448500436821 /* Animator */,
 				4FF6663125F2C93A00689B77 /* Touch */,
 				4FF6663925F2C93A00689B77 /* Actions */,
 				4FFBC5B126697E8D001D389B /* Smoothing */,
 				4FBDA14927B2246B0030E4EA /* SubPixelator */,
 				4FF6664725F2C93A00689B77 /* PointerSpeed */,
 				4FF6661125F2C93A00689B77 /* MessagePort */,
-				4FF9305C28805FC40007CCA7 /* Math */,
 				4FF6663F25F2C93A00689B77 /* Utility */,
 			);
 			path = Core;
@@ -1580,8 +1767,6 @@
 				4FC55E2F285E6BF800F2FCCF /* GlobalDefaults.swift */,
 				4FF6667F25F2C93A00689B77 /* HelperUtility.h */,
 				4FF6668025F2C93A00689B77 /* HelperUtility.m */,
-				4FF0BD56266ACE32003935EA /* VectorUtility.h */,
-				4FF0BD57266ACE32003935EA /* VectorUtility.m */,
 				4F9C14B527BAF202008A1479 /* IOKit */,
 			);
 			path = Utility;
@@ -1685,6 +1870,8 @@
 			children = (
 				4FF0BD5D266ADFE5003935EA /* MathObjc.h */,
 				4FF0BD50266AC10C003935EA /* Math.swift */,
+				4FF0BD56266ACE32003935EA /* VectorUtility.h */,
+				4FF0BD57266ACE32003935EA /* VectorUtility.m */,
 				4FF937552669B043003A52EA /* Curves */,
 				4F77F7C628808D6000847D0E /* PolynomialRegression */,
 			);
@@ -1699,8 +1886,8 @@
 				4F8A8DBE287F7BBA00786BCC /* NaturalAccelerationCurve.swift */,
 				4FF93058288026FC0007CCA7 /* PolynomialCappedAccelerationCurve.swift */,
 				4FF0BD4A266A8B7E003935EA /* Bezier.swift */,
-				4F1AFE962670EBA900ECA424 /* DragCurve.swift */,
 				4F3A40AA266BBB6200436821 /* AccelerationBezier.swift */,
+				4F1AFE962670EBA900ECA424 /* DragCurve.swift */,
 				4F2CC58627B8D2300084AACE /* HybridCurves.swift */,
 				4F2CC58827B8DA8B0084AACE /* Line.swift */,
 				4F1D58182881D880002EB119 /* CombinedLinearCurve.swift */,
@@ -1735,6 +1922,9 @@
 		E7721D8AA50A5B47737E0DD5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4F909D5A28A0C824009349A2 /* ReactiveSwift.framework */,
+				4F909D5728A0C81F009349A2 /* ReactiveCocoa.framework */,
+				4F909D5428A0C818009349A2 /* ReactiveObjC.framework */,
 				4F8A8DB8287EF76A00786BCC /* Foundation.framework */,
 				4F8A8DB6287EF76200786BCC /* QuartzCore.framework */,
 				4F8A8DB4287EF65800786BCC /* Metal.framework */,
@@ -1796,6 +1986,9 @@
 			packageProductDependencies = (
 				4FEB66122793510C00E6A111 /* CocoaLumberjack */,
 				4FEB66142793510F00E6A111 /* CocoaLumberjackSwift */,
+				4F909D5028A0C6F3009349A2 /* SnapKit */,
+				4FA40CEE28A0CA0A00499E53 /* ReactiveSwift */,
+				4FA40CF128A0CA3900499E53 /* ReactiveCocoa */,
 			);
 			productName = "Mac Mouse Fix";
 			productReference = 4F94F5EE25E5EC2500D9F24A /* Mac Mouse Fix.app */;
@@ -1848,7 +2041,6 @@
 				4FCECD7D21092354001F1078 /* Frameworks */,
 				4FCECD7E21092354001F1078 /* Resources */,
 				4FEEEC53263C164000C50193 /* Copy Version from Main App */,
-				424BDEAE55BF5688DA4028C7 /* [CP] Embed Pods Frameworks */,
 				4F9E5F0726742A20004E75F7 /* Embed Frameworks */,
 			);
 			buildRules = (
@@ -1910,19 +2102,17 @@
 				en,
 				Base,
 				English,
+				de,
 			);
 			mainGroup = 4FCECD7721092354001F1078;
 			packageReferences = (
 				4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */,
+				4F909D4F28A0C6F3009349A2 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				4FA40CED28A0CA0A00499E53 /* XCRemoteSwiftPackageReference "ReactiveSwift" */,
+				4FA40CF028A0CA3900499E53 /* XCRemoteSwiftPackageReference "ReactiveCocoa" */,
 			);
 			productRefGroup = 4FCECD8121092354001F1078 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 4F8CF93528686C0100BF5E55 /* Products */;
-					ProjectRef = 4F8CF93428686C0100BF5E55 /* PolynomialRegression.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				4F94F5ED25E5EC2500D9F24A /* Mac Mouse Fix */,
@@ -1934,38 +2124,27 @@
 		};
 /* End PBXProject section */
 
-/* Begin PBXReferenceProxy section */
-		4F8CF94B28686C0100BF5E55 /* PolynomialRegression.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = PolynomialRegression.app;
-			remoteRef = 4F8CF94A28686C0100BF5E55 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		4F8CF94D28686C0100BF5E55 /* PolynomialRegressionTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = PolynomialRegressionTests.xctest;
-			remoteRef = 4F8CF94C28686C0100BF5E55 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
-
 /* Begin PBXResourcesBuildPhase section */
 		4F94F5EC25E5EC2500D9F24A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				4FF6654225F2C7B000689B77 /* default_launchd.plist in Resources */,
+				4F909D2028A0C3D2009349A2 /* Main.strings in Resources */,
 				4FF665F425F2C92700689B77 /* MoreSheet.xib in Resources */,
+				4F909D2728A0C3D2009349A2 /* Main.storyboard in Resources */,
 				4F9E59972672A67F004E75F7 /* default_config.plist in Resources */,
 				4FF665FC25F2C92700689B77 /* AuthorizeAccessibilityView.xib in Resources */,
 				4F79A7EF26042E2E00076A7E /* ToastNotification.xib in Resources */,
 				4F854D7E2789266A00B46E9D /* sfsymbols.xcassets in Resources */,
 				4F2F5DB225FB723D0037660A /* AddWindow.xib in Resources */,
 				4FF665F725F2C92700689B77 /* Assets.xcassets in Resources */,
+				4F909D3928A0C3D2009349A2 /* Localizable.strings in Resources */,
 				4FF665F925F2C92700689B77 /* MouseFix.xib in Resources */,
+				4F909D3328A0C3D2009349A2 /* Animating Constraints.md in Resources */,
 				4FF665EF25F2C92700689B77 /* ScrollOverridePanel.xib in Resources */,
+				4F909D2F28A0C3D2009349A2 /* MyTitlebarAccessoryViewController.xib in Resources */,
+				4F909D3A28A0C3D2009349A2 /* Localization How To.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1998,28 +2177,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		424BDEAE55BF5688DA4028C7 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Mac Mouse Fix Helper/Pods-Mac Mouse Fix Helper-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/ReactiveCocoa/ReactiveCocoa.framework",
-				"${BUILT_PRODUCTS_DIR}/ReactiveObjC/ReactiveObjC.framework",
-				"${BUILT_PRODUCTS_DIR}/ReactiveSwift/ReactiveSwift.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveCocoa.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveObjC.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveSwift.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Mac Mouse Fix Helper/Pods-Mac Mouse Fix Helper-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		4F94F75125E614D500D9F24A /* Increment Build Number */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -2187,53 +2344,98 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F909D2828A0C3D2009349A2 /* ResizingTabWindow.swift in Sources */,
+				4FA40CF728A0CCCA00499E53 /* Curve.swift in Sources */,
 				4FF6655225F2C7B000689B77 /* NSMutableDictionary+Additions.m in Sources */,
 				4F39BC4A263B179200FDF692 /* AppState.m in Sources */,
 				4FBC943B260F8AA60062F186 /* MASShortcut.m in Sources */,
+				4F909D3B28A0C3D2009349A2 /* ModCaptureDeleteButton.swift in Sources */,
+				4FA40D0428A0D0C000499E53 /* DoublesMatrix.m in Sources */,
+				4FA40CFC28A0CCCB00499E53 /* NaturalAccelerationCurve.swift in Sources */,
 				4FF6654625F2C7B000689B77 /* Objects.m in Sources */,
+				4F909D2A28A0C3D2009349A2 /* ResizingTabWindowController.swift in Sources */,
 				4FF665EE25F2C92700689B77 /* OverridePanel.m in Sources */,
 				4FF665F525F2C92700689B77 /* ConfigInterface_App.m in Sources */,
+				4F909D2228A0C3D2009349A2 /* ScrollTabController.swift in Sources */,
 				4FF6654E25F2C7B000689B77 /* SharedUtility.m in Sources */,
 				4F8FC13F275DC81900887A0C /* PrefixSwift.swift in Sources */,
 				4F8CE7012617738A00D70A76 /* AppTranslocationManager.m in Sources */,
 				4FF665FE25F2C92700689B77 /* main.m in Sources */,
+				4F909D2528A0C3D2009349A2 /* TabViewController.swift in Sources */,
 				4F1B832D26081A5500AEAF37 /* CaptureNotificationCreator.m in Sources */,
+				4F909D3628A0C3D2009349A2 /* Collapse.swift in Sources */,
+				4F909D4128A0C412009349A2 /* SwiftUITest.swift in Sources */,
 				4FD82DDB260575B100664D6F /* ToastNotificationLabel.m in Sources */,
+				4F909D2C28A0C3D2009349A2 /* NSView+Extensions.swift in Sources */,
 				4FF665FA25F2C92700689B77 /* AppDelegate.m in Sources */,
 				4FF665F325F2C92700689B77 /* MoreSheet.m in Sources */,
+				4F909CF028A0C3B7009349A2 /* GlobalState.swift in Sources */,
 				4FEC9668278BBDC600548604 /* NSColor+Additions.m in Sources */,
+				4FA40CF628A0CCC600499E53 /* Math.swift in Sources */,
 				4FF6660025F2C92700689B77 /* Hyperlink.m in Sources */,
+				4F909D2428A0C3D2009349A2 /* TabItemControllerProtocol.swift in Sources */,
 				4FF6654C25F2C7B000689B77 /* Queue.m in Sources */,
 				4FF8C89E28955DC4007EC31F /* CoolTimer.swift in Sources */,
+				4F909D3428A0C3D2009349A2 /* Replace.swift in Sources */,
 				4FF665ED25F2C92700689B77 /* MFSegmentedControl.m in Sources */,
+				4FA40CFF28A0CCCB00499E53 /* DragCurve.swift in Sources */,
+				4FA40CFA28A0CCCA00499E53 /* PolynomialCappedAccelerationCurve.swift in Sources */,
+				4F909D3C28A0C3D2009349A2 /* ModCaptureFieldEditor.swift in Sources */,
 				4F3E067E26A2F97D000C9E06 /* URLMenuItem.m in Sources */,
+				4FA40D0128A0CCDF00499E53 /* PolyFitObjC.m in Sources */,
 				4FF6660225F2C92700689B77 /* ClickableImageView.m in Sources */,
 				4F79A81C2604317200076A7E /* ToastNotificationController.m in Sources */,
+				4F909D2E28A0C3D2009349A2 /* NSControl+Extensions.swift in Sources */,
 				4F39BC3B263AF2B000FDF692 /* SparkleUpdaterController.m in Sources */,
+				4FA40D0028A0CCCB00499E53 /* CombinedLinearCurve.swift in Sources */,
 				4F1C51DA260543DD007F4930 /* NSTextField+Additions.m in Sources */,
+				4F909D3128A0C3D2009349A2 /* CAAnimation+Extensions.swift in Sources */,
+				4FA40CFB28A0CCCB00499E53 /* Line.swift in Sources */,
 				4FE40B96283A49DD00880BEF /* SharedUtilitySwift.swift in Sources */,
+				4F909D3828A0C3D2009349A2 /* ReactiveFlags.swift in Sources */,
+				4F909D2B28A0C3D2009349A2 /* NSPopUpButton+Extensions.swift in Sources */,
 				4F2F5DA825FB6FFD0037660A /* AddWindowController.m in Sources */,
 				4FF6655025F2C7B000689B77 /* NSArray+Additions.m in Sources */,
+				4F909D2328A0C3D2009349A2 /* PointerTabController.swift in Sources */,
 				4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */,
 				4F44FF052606D73D00926A5E /* SharedMessagePort.m in Sources */,
 				4FAD391426702CD4000CF4FA /* DerivedProperty.swift in Sources */,
+				4F909D2928A0C3D2009349A2 /* TabViewControllerDisabling.swift in Sources */,
 				4FB4FA202611DD6000806DDD /* KeyCaptureScrollView.m in Sources */,
+				4F909D4728A0C4C2009349A2 /* Collection+Extensions.swift in Sources */,
+				4F909D2628A0C3D2009349A2 /* ViewController.m in Sources */,
+				4F909D3D28A0C3D2009349A2 /* ModCaptureTextField.swift in Sources */,
 				4F9E78BF26855BCF002C2309 /* Concurrency.swift in Sources */,
 				4F92A708260F4BF000529D1F /* RemapTableView.m in Sources */,
+				4FA40D0528A0D0D000499E53 /* PolyFit.cpp in Sources */,
+				4FA40CF928A0CCCA00499E53 /* Bezier.swift in Sources */,
+				4F909D3E28A0C3D2009349A2 /* SensitivityDisplay.swift in Sources */,
+				4F909D4528A0C4C2009349A2 /* NSArray+Extensions.swift in Sources */,
 				4F37FAD825FDFDC5004C34C4 /* MFScrollView.m in Sources */,
 				4FF665F825F2C92700689B77 /* MessagePort_App.m in Sources */,
+				4FA40D0228A0CE5B00499E53 /* VectorUtility.m in Sources */,
 				4F319CBB26252A2D004E5F63 /* ButtonGroupRowView.m in Sources */,
 				4F79A82B2605074000076A7E /* NSAttributedString+Additions.m in Sources */,
+				4FA40CFD28A0CCCB00499E53 /* AccelerationBezier.swift in Sources */,
+				4F909D3228A0C3D2009349A2 /* FadeAnimations.swift in Sources */,
 				4F7AB0552606698A0008055E /* UIStrings.m in Sources */,
+				4F909D3028A0C3D2009349A2 /* ReactiveAnimatorProxy.swift in Sources */,
+				4FA40CF828A0CCCA00499E53 /* TestAccelerationCurve.swift in Sources */,
+				4F909D3728A0C3D2009349A2 /* ConstraintUtility.swift in Sources */,
 				4FF6660125F2C92700689B77 /* Utility_App.m in Sources */,
 				4F79A83626051E4A00076A7E /* ToastNotification.m in Sources */,
+				4F909D2D28A0C3D2009349A2 /* CoolNSTextField.swift in Sources */,
 				4F79C2EA260976950067B381 /* RemapTableTranslator.m in Sources */,
+				4F909D2128A0C3D2009349A2 /* GeneralTabController.swift in Sources */,
 				4FB4F9FE260FDBC800806DDD /* RemapTableUtility.m in Sources */,
 				4FF665FD25F2C92700689B77 /* AuthorizeAccessibilityView.m in Sources */,
 				4F854D7C2789146900B46E9D /* NSMenu+NSMenu_Additions.m in Sources */,
 				4F92A72D260F6C7800529D1F /* NSView+Additions.m in Sources */,
 				4F92A73A260F73C600529D1F /* KeyCaptureView.m in Sources */,
 				4FF6654425F2C7B000689B77 /* HelperServices.m in Sources */,
+				4F909D3528A0C3D2009349A2 /* Animate.swift in Sources */,
+				4FA40D0328A0D0BB00499E53 /* PolynomialRegression.m in Sources */,
+				4FA40CFE28A0CCCB00499E53 /* HybridCurves.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2265,6 +2467,7 @@
 				4FF6668225F2C93A00689B77 /* Config.m in Sources */,
 				4FFBC5A8266977CA001D389B /* DoubleExponentialSmoother.swift in Sources */,
 				4FF8C8A128956DDD007EC31F /* ButtonModifiers.swift in Sources */,
+				4F909D4828A0C4C2009349A2 /* Collection+Extensions.swift in Sources */,
 				4FF6669625F2C93A00689B77 /* Actions.m in Sources */,
 				4FF0254E27AFF90800923107 /* ModifiedDragOutputThreeFingerSwipe.m in Sources */,
 				4F44FF042606D73D00926A5E /* SharedMessagePort.m in Sources */,
@@ -2335,6 +2538,7 @@
 				4FF666A925F2C93A00689B77 /* HelperUtility.m in Sources */,
 				4FCC03352757B181002E5A57 /* ScreenDrawer.swift in Sources */,
 				4FF6668B25F2C93A00689B77 /* CubicUnitBezier.m in Sources */,
+				4F909D4628A0C4C2009349A2 /* NSArray+Extensions.swift in Sources */,
 				4F9E78C026855BCF002C2309 /* Concurrency.swift in Sources */,
 				4FF93059288026FC0007CCA7 /* PolynomialCappedAccelerationCurve.swift in Sources */,
 				4F3A40DA266C5BDF00436821 /* NSScreen+Additions.m in Sources */,
@@ -2381,20 +2585,28 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		4F8CF93D28686C0100BF5E55 /* LaunchScreen.xib */ = {
+		4F909CF328A0C3D2009349A2 /* Main.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				4F8CF93E28686C0100BF5E55 /* Base */,
+				4F909CF428A0C3D2009349A2 /* de */,
 			);
-			name = LaunchScreen.xib;
+			name = Main.strings;
 			sourceTree = "<group>";
 		};
-		4F8CF93F28686C0100BF5E55 /* Main.storyboard */ = {
+		4F909CFC28A0C3D2009349A2 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				4F8CF94028686C0100BF5E55 /* Base */,
+				4F909CFD28A0C3D2009349A2 /* Base */,
 			);
 			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		4F909D1728A0C3D2009349A2 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4F909D1828A0C3D2009349A2 /* de */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 		4FF665D925F2C92700689B77 /* MouseFix.xib */ = {
@@ -2506,6 +2718,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "App/SupportFiles/Mac Mouse Fix-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -2537,6 +2750,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "App/SupportFiles/Mac Mouse Fix-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -2918,9 +3132,48 @@
 				minimumVersion = 3.7.2;
 			};
 		};
+		4F909D4F28A0C6F3009349A2 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		4FA40CED28A0CA0A00499E53 /* XCRemoteSwiftPackageReference "ReactiveSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveCocoa/ReactiveSwift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
+		4FA40CF028A0CA3900499E53 /* XCRemoteSwiftPackageReference "ReactiveCocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveCocoa/ReactiveCocoa";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		4F909D5028A0C6F3009349A2 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4F909D4F28A0C6F3009349A2 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		4FA40CEE28A0CA0A00499E53 /* ReactiveSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4FA40CED28A0CA0A00499E53 /* XCRemoteSwiftPackageReference "ReactiveSwift" */;
+			productName = ReactiveSwift;
+		};
+		4FA40CF128A0CA3900499E53 /* ReactiveCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4FA40CF028A0CA3900499E53 /* XCRemoteSwiftPackageReference "ReactiveCocoa" */;
+			productName = ReactiveCocoa;
+		};
 		4FEB660A279350F900E6A111 /* CocoaLumberjack */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
