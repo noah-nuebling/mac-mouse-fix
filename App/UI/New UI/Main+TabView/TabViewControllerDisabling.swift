@@ -21,7 +21,7 @@ extension TabViewController {
             || id == "about") {
             
             item.autovalidates = false
-            MainAppState.shared.appIsEnabled.producer.startWithValues { appIsEnabled in
+            ReactiveEnabler.shared.producer.startWithValues { appIsEnabled in
                 item.isEnabled = appIsEnabled
             }
         }
