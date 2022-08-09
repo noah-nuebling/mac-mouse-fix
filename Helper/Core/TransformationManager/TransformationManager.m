@@ -44,7 +44,7 @@ static NSDictionary *_remaps;
 /// The remaps are also stored to file in this format and therefore what `ConfigFileInterface_App.config` contains.
 /// The helper was made to handle a dictionary format which should be more effictient among other perks.
 /// This function takes the remaps in table format from config, then converts it to dict format and makes that available to all the other Input Transformation classes to base their behaviour off of through self.remaps.
-+ (void)loadRemapsFromConfig {
++ (void)reload {
     
     if (USE_TEST_REMAPS) {
         [self setRemaps:self.testRemaps]; return;
@@ -167,7 +167,7 @@ BOOL _addModeIsEnabled = NO;
 + (void)disableAddMode {
         
     _addModeIsEnabled = NO;
-    [self loadRemapsFromConfig];
+    [self reload];
 }
 
 + (void)disableAddModeWithPayload:(NSDictionary *)payload {

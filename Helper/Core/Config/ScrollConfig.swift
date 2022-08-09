@@ -23,7 +23,7 @@ import CocoaLumberjackSwift
     
     private(set) static var config = ScrollConfig() /// Singleton instance
     @objc static var copyOfConfig: ScrollConfig { config.copy() as! ScrollConfig }
-    @objc static func deleteCache() { /// This should be called when the underlying config (which mirrors the config file) changes
+    @objc static func reload() { /// This should be called when the underlying config (which mirrors the config file) changes
         config = ScrollConfig() /// All the property values are cached in `currentConfig`, because the properties are lazy. Replacing with a fresh object deletes this implicit cache.
     }
     
@@ -58,7 +58,7 @@ import CocoaLumberjackSwift
     
     // MARK: General
     
-    @objc lazy var smoothEnabled: Bool = true /* ScrollConfig.topLevel["smooth"] as! Bool */
+    @objc lazy var smoothEnabled: Bool = { topLevel["smooth"] as! Bool }()
     @objc lazy var disableAll: Bool = false /* topLevel["disableAll"] as! Bool */ /// This is currently unused. Could be used as a killswitch for all scrolling Interception
     
     // MARK: Invert Direction

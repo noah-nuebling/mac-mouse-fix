@@ -40,6 +40,11 @@ import CocoaLumberjackSwift
 
 class PointerConfig: NSObject {
 
+    /// Reload from config dict
+    @objc static func reload() {
+        // TODO: Delete caches (if you use any)
+    }
+    
     /// Get pointer settings from config
     
     @objc private static var config: NSDictionary {

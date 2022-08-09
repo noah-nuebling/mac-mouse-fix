@@ -11,6 +11,12 @@ import Cocoa
 
 @objc class OtherConfig: NSObject {
 
+    /// Reload from config dict
+    ///     Use this to delete cached values
+    @objc static func reload() {
+        
+    }
+    
     /// Advanced settings
     
     @objc static func freezePointerDuringModifiedDrag() -> Bool {

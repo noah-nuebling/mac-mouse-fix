@@ -64,14 +64,10 @@ class ConfigValue<T: NSObject>: NSObject, BindingTargetProvider, BindingSource {
     /// Storage
     var keyPath: String
     
-    /// State
-    var lastValue: NSObject?
-    
     /// init
     required init(configPath: String) {
         
         /// Set dummy values so that you can super.init()
-        lastValue = nil
         keyPath = ""
         producer = SignalProducer<T, Never>.init(value: T())
         
@@ -80,12 +76,10 @@ class ConfigValue<T: NSObject>: NSObject, BindingTargetProvider, BindingSource {
         
         /// Do real init
         
-        lastValue = nil
         keyPath = configPath
         
         /// Create signalProducer
         ///     Will send a signal whenever the value at `keyPath` in the config changes
-        
         let p1 = ReactiveConfig.shared.producer.map({ (newConfig: NSDictionary) -> T? in
             newConfig.object(forCoolKeyPath: configPath) as? T /// Notice that we're using coolKeyPaths
         })

@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (class, readonly) BOOL addModeIsEnabled;
 
-+ (void)loadRemapsFromConfig;
++ (void)reload;
 + (NSDictionary *)remaps;
 
 + (void)enableAddMode;

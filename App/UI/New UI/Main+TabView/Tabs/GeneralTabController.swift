@@ -75,7 +75,9 @@ class GeneralTabController: NSViewController {
             if #available(macOS 13, *) {
                 if error?.code == 1 {
                     let message = NSAttributedString(markdown: "Mac Mouse Fix was **disabled** in System Settings.\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\'")
-                    ToastNotificationController.attachNotification(withMessage: message, to: NSApp.mainWindow!, forDuration: 0.0)
+                    if let window = NSApp.mainWindow { /// When this is called right on app start, then there's no window
+                        ToastNotificationController.attachNotification(withMessage: message, to: window, forDuration: 0.0)
+                    }
                 }
             }
         }

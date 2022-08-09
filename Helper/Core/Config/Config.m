@@ -32,7 +32,7 @@ static NSDictionary *_stringToEventFlagMask;
 
 static NSString*_configFilePath;
 
-#pragma mark - Interface
+#pragma mark - Init
 
 + (void)load_Manual {
     /// Get config file path
@@ -45,11 +45,29 @@ static NSString*_configFilePath;
     setupFSEventStreamCallback();
 }
 
-// Convenience function for accessing config quicker
+#pragma mark - Convenience
 
 id config(NSString *keyPath) {
     return [Config.config valueForKeyPath:keyPath];
 }
+
+
+#pragma mark - React to changes & notify other modules
+
++ (void)reactToConfigFileChange {
+    
+    /// Update self
+    fillConfigFromFile();
+    loadOverridesForApp(@""); /// Force update of internal state, (even the active app hastn't changed)
+    
+    /// Notify other modules
+    [TransformationManager reload];
+    [ScrollConfig reload];
+    [PointerConfig reload];
+    [OtherConfig reload];
+}
+
+#pragma mark - Read from memory
 
 static NSMutableDictionary *_config; // TODO: Make this immutable. I think helper should never modifiy this except by reloading from file.
 + (NSMutableDictionary *)config {
@@ -60,12 +78,7 @@ static NSMutableDictionary *_configWithAppOverridesApplied;
     return _configWithAppOverridesApplied;
 }
 
-+ (void)reactToConfigFileChange {
-    fillConfigFromFile();
-    loadOverridesForApp(@""); /// Force update of internal state, (even the active app hastn't changed)
-    [TransformationManager loadRemapsFromConfig];
-    [ScrollConfig deleteCache];
-}
+#pragma mark - Load memory from file
 
 /// Load contents of config.plist file into this class' config property
 static void fillConfigFromFile() {
@@ -86,6 +99,8 @@ static void fillConfigFromFile() {
         }
     }
 }
+
+#pragma mark - Overrides
 
 + (BOOL)loadOverridesForAppUnderMousePointer {
     /// Returns yes when it's made a change
@@ -142,13 +157,16 @@ static void loadOverridesForApp(NSString *bundleID) {
     DDLogInfo(@"Should repair configdict.... (not implemented)");
 }
 
-/**
- We're setting up a File System Monitor so that manual edits to the main configuration file have an effect.
- This allows you to easily test configurations.
- 
- Secret trick to find the main configuration file: Open the Mac Mouse Fix app, and click on "More...". Then, hold Command and Shift while clicking the Mac Mouse Fix Icon in the top left.
- */
+#pragma mark - Listen to filesystem changes
+
 static void setupFSEventStreamCallback() {
+    
+    /**
+     We're setting up a File System Monitor so that manual edits to the main configuration file have an effect.
+     This allows you to easily test configurations.
+     
+     Secret trick to find the main configuration file: Open the Mac Mouse Fix app, and click on "More...". Then, hold Command and Shift while clicking the Mac Mouse Fix Icon in the top left.
+     */
     
     CFArrayRef pathsToWatch;
     void *callbackInfo = NULL; /// Could put stream-specific data here.
