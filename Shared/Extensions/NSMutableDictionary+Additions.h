@@ -11,11 +11,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NSMutableDictionary (Additions)
+@interface NSDictionary (Additions)
 - (NSObject * _Nullable)objectForCoolKeyPath:(NSString *)keyPath;
++ (NSMutableDictionary *)doDeepMutateDictionary:(NSDictionary *)dict;
+@end
+
+@interface NSMutableDictionary (Additions)
 - (void)setObject:(NSObject * _Nullable)object forCoolKeyPath:(NSString *)keyPath;
 - (void)setObject:(NSObject * _Nullable)object forCoolKeyArray:(NSArray *)keys;
-+ (NSMutableDictionary *)doDeepMutateDictionary:(NSDictionary *)dict;
 @end
 
 NS_ASSUME_NONNULL_END

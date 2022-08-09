@@ -299,16 +299,16 @@ NSDictionary *_columnIdentifierToKeyPath;
 - (void)addAppsToTableWithBundleIDs:(NSArray<NSString *> *)bundleIDs atRow:(NSInteger)row {
     
     NSMutableArray *newRows = [NSMutableArray array];
-    bundleIDs = [bundleIDs valueForKeyPath:@"@distinctUnionOfObjects.self"]; // Remove duplicates. This is only necessary when the user drags and drops in more than one app with the same bundleID.
+    bundleIDs = [bundleIDs valueForKeyPath:@"@distinctUnionOfObjects.self"]; /// Remove duplicates. This is only necessary when the user drags and drops in more than one app with the same bundleID.
     NSDictionary *bundleIDsSorted = sortByAlreadyInTable(bundleIDs);
     
     for (NSString *bundleID in bundleIDsSorted[@"notInTable"]) {
         NSMutableDictionary *newRow = [NSMutableDictionary dictionary];
-        // Fill out new row with bundle ID and default values
+        /// Fill out new row with bundle ID and default values
         newRow[@"AppColumnID"] = bundleID;
         for (NSString *columnID in _columnIdentifierToKeyPath) {
             NSString *keyPath = _columnIdentifierToKeyPath[columnID];
-            NSObject *defaultValue = [ConfigInterface_App.config objectForCoolKeyPath:keyPath]; // Could use valueForKeyPath as well, because there are no periods in the keys of the keyPath
+            NSObject *defaultValue = [ConfigInterface_App.config objectForCoolKeyPath:keyPath]; /// Could use valueForKeyPath as well, because there are no periods in the keys of the keyPath
             newRow[columnID] = defaultValue;
         }
         [newRows addObject:newRow];
@@ -342,21 +342,21 @@ NSMutableArray *_tableViewDataModel;
 - (void)writeTableViewDataModelToConfig {
     
     NSMutableSet *bundleIDsInTable = [NSMutableSet set];
-    // Write table data into config
+    /// Write table data into config
     int orderKey = 0;
     for (NSMutableDictionary *rowDict in _tableViewDataModel) {
         NSString *bundleID = rowDict[@"AppColumnID"];
         [bundleIDsInTable addObject:bundleID];
         NSString *bundleIDEscaped = [bundleID stringByReplacingOccurrencesOfString:@"." withString:@"\\."];
-        [rowDict removeObjectsForKeys:@[@"AppColumnID", @"orderKey"]]; // So we don't iterate over this in the loop below
-        // Write override values
+        [rowDict removeObjectsForKeys:@[@"AppColumnID", @"orderKey"]]; /// So we don't iterate over this in the loop below
+        /// Write override values
         for (NSString *columnID in rowDict) {
             NSObject *cellValue = rowDict[columnID];
             NSString *defaultKeyPath = _columnIdentifierToKeyPath[columnID];
             NSString *overrideKeyPath = [NSString stringWithFormat:@"AppOverrides.%@.Root.%@", bundleIDEscaped, defaultKeyPath];
             [ConfigInterface_App.config setObject:cellValue forCoolKeyPath:overrideKeyPath];
         }
-        // Write order key
+        /// Write order key
         NSString *orderKeyKeyPath = [NSString stringWithFormat:@"AppOverrides.%@.meta.scrollOverridePanelTableViewOrderKey", bundleIDEscaped];
         [ConfigInterface_App.config setObject:[NSNumber numberWithInt:orderKey] forCoolKeyPath:orderKeyKeyPath];
         orderKey += 1;

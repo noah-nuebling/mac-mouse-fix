@@ -158,6 +158,7 @@
 		4FD86089266E819A004F76C8 /* Pointers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD86088266E819A004F76C8 /* Pointers.swift */; };
 		4FD860AA266EC24E004F76C8 /* DerivedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860A9266EC24E004F76C8 /* DerivedProperty.swift */; };
 		4FD860CC266EF55A004F76C8 /* ScrollConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860CB266EF55A004F76C8 /* ScrollConfig.swift */; };
+		4FDC127628A2C6160076972E /* ReactiveConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDC127528A2C6160076972E /* ReactiveConfig.swift */; };
 		4FE40B96283A49DD00880BEF /* SharedUtilitySwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */; };
 		4FE40B97283A49DD00880BEF /* SharedUtilitySwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */; };
 		4FE6CBC428987E8B00B3E829 /* DynamicSystemAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE6CBC328987E8A00B3E829 /* DynamicSystemAnimator.swift */; };
@@ -571,6 +572,7 @@
 		4FD860CB266EF55A004F76C8 /* ScrollConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollConfig.swift; sourceTree = "<group>"; };
 		4FD860DA266EFD64004F76C8 /* ScrollConfigObjC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollConfigObjC.h; sourceTree = "<group>"; };
 		4FDBC59A234F80C500A46517 /* Accomplice.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Accomplice.entitlements; sourceTree = "<group>"; };
+		4FDC127528A2C6160076972E /* ReactiveConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveConfig.swift; sourceTree = "<group>"; };
 		4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedUtilitySwift.swift; sourceTree = "<group>"; };
 		4FE6CBC328987E8A00B3E829 /* DynamicSystemAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicSystemAnimator.swift; sourceTree = "<group>"; };
 		4FE7A0DE28677AD600C33B37 /* Gain Curve Math.tex */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Gain Curve Math.tex"; sourceTree = "<group>"; };
@@ -1526,6 +1528,7 @@
 				4F9E59962672A67E004E75F7 /* default_config.plist */,
 				4FF665D225F2C92700689B77 /* ConfigInterface_App.h */,
 				4FF665D125F2C92700689B77 /* ConfigInterface_App.m */,
+				4FDC127528A2C6160076972E /* ReactiveConfig.swift */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -2401,6 +2404,7 @@
 				4F39BC3B263AF2B000FDF692 /* SparkleUpdaterController.m in Sources */,
 				4FA40D0028A0CCCB00499E53 /* CombinedLinearCurve.swift in Sources */,
 				4F1C51DA260543DD007F4930 /* NSTextField+Additions.m in Sources */,
+				4FDC127628A2C6160076972E /* ReactiveConfig.swift in Sources */,
 				4F909D3128A0C3D2009349A2 /* CAAnimation+Extensions.swift in Sources */,
 				4FA40CFB28A0CCCB00499E53 /* Line.swift in Sources */,
 				4FE40B96283A49DD00880BEF /* SharedUtilitySwift.swift in Sources */,

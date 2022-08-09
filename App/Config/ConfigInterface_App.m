@@ -16,13 +16,14 @@
 #import "Objects.h"
 #import "Constants.h"
 #import "WannabePrefixHeader.h"
+#import "Mac Mouse Fix-Bridging-Header.h"
 
 @implementation ConfigInterface_App
 
 #pragma mark - Convenience
 
 /// Convenience function for accessing config
-id config(NSString *keyPath) {
+NSObject *config(NSString *keyPath) {
     return [ConfigInterface_App.config valueForKeyPath:keyPath];
 }
 /// Convenience function for modifying config
@@ -80,6 +81,8 @@ static NSURL *_defaultConfigURL; /// `default_config` aka `backup_config`
     [SharedMessagePort sendMessage:@"configFileChanged" withPayload:nil expectingReply:NO];
 }
 
+
+
 + (void)loadConfigFromFile {
     
     /// Load data from plist file at `_configURL` into `_config` class variable
@@ -98,6 +101,9 @@ static NSURL *_defaultConfigURL; /// `default_config` aka `backup_config`
     DDLogDebug(@"Loaded config from file: %@", configDict);
     
     self.config = configDict;
+    
+    /// Send reactive signal
+    
 }
 
 #pragma mark - Repair

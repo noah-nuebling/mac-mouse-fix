@@ -184,9 +184,9 @@ static NSDictionary *sideButtonActions;
     NSInteger launchesOverall;
     NSInteger launchesOfCurrentBundleVersion;
     
-    launchesOverall = [config(@"Other.launchesOverall") integerValue];
-    launchesOfCurrentBundleVersion = [config(@"Other.launchesOfCurrentBundleVersion") integerValue];
-    NSInteger lastLaunchedBundleVersion = [config(@"Other.lastLaunchedBundleVersion") integerValue];
+    launchesOverall = [(id)config(@"Other.launchesOverall") integerValue];
+    launchesOfCurrentBundleVersion = [(id)config(@"Other.launchesOfCurrentBundleVersion") integerValue];
+    NSInteger lastLaunchedBundleVersion = [(id)config(@"Other.lastLaunchedBundleVersion") integerValue];
     NSInteger currentBundleVersion = Utility_App.bundleVersion;
     
     launchesOverall += 1;
@@ -220,9 +220,9 @@ static NSDictionary *sideButtonActions;
 //    up.sendsSystemProfile = NO; /// This is no by default
     up.automaticallyDownloadsUpdates = NO;
     
-    BOOL checkForUpdates = [config(@"Other.checkForUpdates") boolValue];
+    BOOL checkForUpdates = [(id)config(@"Other.checkForUpdates") boolValue];
     
-    BOOL checkForPrereleases = [config(@"Other.checkForPrereleases") boolValue];
+    BOOL checkForPrereleases = [(id)config(@"Other.checkForPrereleases") boolValue];
     
     if (firstVersionLaunch && !appState().updaterDidRelaunchApplication) {
         /// TODO: Test if updaterDidRelaunchApplication works.

@@ -10,9 +10,9 @@
 #import "NSMutableDictionary+Additions.h"
 #import "NSArray+Additions.h"
 
-@implementation NSMutableDictionary (Additions)
+#pragma mark - Utiliy
 
-// Regex tester: https://regex101.com/
+/// Regex tester: https://regex101.com/
 static NSArray *coolKeyPathToKeyArray(NSString * _Nonnull keyPath) {
     NSString *regex = @"(?<!\\\\)\\."; // Matches all "." not preceded by "\" // Actual regex pattern: @"(?<!\\)\."
     NSString *tempSeparator = @"<;jas;jfds;lfjasdf THIS IS A TEMPORARY REPLACEMENT STRING>";
@@ -25,40 +25,24 @@ static NSArray *coolKeyPathToKeyArray(NSString * _Nonnull keyPath) {
     return keys;
 }
 
-/// Should function similar to `- setValue:forKeyPath:`
-/// Differences:
-/// Will create all dicts in the keyPath that don't exist, yet.
-/// If a key in the keyPath contains "." characters they can be escaped with "\.".
-/// All "\" will be removed from keys before parsing.
-///     -> For example he keyPath @"a\.bc.d\\\\\ef" will be treated as two keys: @"a.bc" and @"def"
+#pragma mark - Mutable dict
+
+@implementation NSMutableDictionary (Additions)
+
 - (void)setObject:(NSObject * _Nullable)object forCoolKeyPath:(NSString *)keyPath {
+    
+    /// Should function similar to `- setValue:forKeyPath:`
+    /// Differences:
+    /// Will create all dicts in the keyPath that don't exist, yet.
+    /// If a key in the keyPath contains "." characters they can be escaped with "\.".
+    /// All "\" will be removed from keys before parsing.
+    ///     -> For example he keyPath @"a\.bc.d\\\\\ef" will be treated as two keys: @"a.bc" and @"def"
     
     NSArray * keys = coolKeyPathToKeyArray(keyPath);
     
     [self setObject:object forCoolKeyArray:keys];
 }
 
-- (NSObject * _Nullable)objectForCoolKeyPath:(NSString *)keyPath {
-    
-    NSArray *keys = coolKeyPathToKeyArray(keyPath);
-    
-    if (keys == nil) {
-        return nil;
-    }
-    if (keys.count == 0) {
-        return nil;
-    }
-    NSMutableDictionary *thisNode = self;
-    for (NSString *key in keys) {
-        thisNode = thisNode[key];
-        if (thisNode == nil) {
-            return nil;
-        }
-    }
-    return thisNode;
-}
-
-/// Will create 
 - (void)setObject:(NSObject * _Nullable)object forCoolKeyArray:(NSArray *)keys {
     NSMutableDictionary *thisNode = self;
     for (NSString *key in keys) {
@@ -81,6 +65,32 @@ static NSArray *coolKeyPathToKeyArray(NSString * _Nonnull keyPath) {
             thisNode = (NSMutableDictionary *)newNextNode;
         }
     }
+}
+
+@end
+
+#pragma mark - Normal dict
+
+@implementation NSDictionary (Additions)
+
+- (NSObject * _Nullable)objectForCoolKeyPath:(NSString *)keyPath {
+    
+    NSArray *keys = coolKeyPathToKeyArray(keyPath);
+    
+    if (keys == nil) {
+        return nil;
+    }
+    if (keys.count == 0) {
+        return nil;
+    }
+    NSDictionary *thisNode = self;
+    for (NSString *key in keys) {
+        thisNode = thisNode[key];
+        if (thisNode == nil) {
+            return nil;
+        }
+    }
+    return thisNode;
 }
 
 + (NSMutableDictionary *)doDeepMutateDictionary:(NSDictionary *)dict {

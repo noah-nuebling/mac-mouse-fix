@@ -25,5 +25,7 @@
 #import "HelperServices.h"
 #import "NSAttributedString+Additions.h"
 #import "ToastNotificationController.h"
+#import "ConfigInterface_App.h"
+#import "NSMutableDictionary+Additions.h"
 
 #endif /* Mac_Mouse_Fix_Bridging_Header_h */

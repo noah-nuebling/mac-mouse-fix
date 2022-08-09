@@ -109,8 +109,8 @@ static MoreSheet *_instance;
     [self.versionLabel setStringValue:versionString];
     
     // Load checkbox state
-    self.checkForUpdateCheckBox.state = [config(@"Other.checkForUpdates") boolValue];
-    self.prereleaseCheckBox.state = [config(@"Other.checkForPrereleases") boolValue];
+    self.checkForUpdateCheckBox.state = [(id)config(@"Other.checkForUpdates") boolValue];
+    self.prereleaseCheckBox.state = [(id)config(@"Other.checkForPrereleases") boolValue];
     
     self.prereleaseCheckBox.enabled = self.checkForUpdateCheckBox.state;
 }

@@ -20,7 +20,7 @@ typedef enum {
 } MFConfigProblem;
 
 /// Convenience functions
-id config(NSString *keyPath);
+NSObject *config(NSString *keyPath);
 void setConfig(NSString *keyPath, NSObject *object);
 void commitConfig(void);
 
