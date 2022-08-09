@@ -48,6 +48,7 @@
 		4F79A83626051E4A00076A7E /* ToastNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A83526051E4A00076A7E /* ToastNotification.m */; };
 		4F79C2EA260976950067B381 /* RemapTableTranslator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79C2E9260976950067B381 /* RemapTableTranslator.m */; };
 		4F7AB0552606698A0008055E /* UIStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F7AB0542606698A0008055E /* UIStrings.m */; };
+		4F83D5D828A2EB30003F9429 /* ObjCTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F83D5D728A2EB30003F9429 /* ObjCTest.swift */; };
 		4F854D7C2789146900B46E9D /* NSMenu+NSMenu_Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F854D7B2789146900B46E9D /* NSMenu+NSMenu_Additions.m */; };
 		4F854D7E2789266A00B46E9D /* sfsymbols.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F854D7D2789266A00B46E9D /* sfsymbols.xcassets */; };
 		4F8A8DAD287EEF6200786BCC /* IOHIDAccelerationTableBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DAC287EEF6200786BCC /* IOHIDAccelerationTableBridge.mm */; };
@@ -431,6 +432,7 @@
 		4F79C2E9260976950067B381 /* RemapTableTranslator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapTableTranslator.m; sourceTree = "<group>"; };
 		4F7AB0532606698A0008055E /* UIStrings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIStrings.h; sourceTree = "<group>"; };
 		4F7AB0542606698A0008055E /* UIStrings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UIStrings.m; sourceTree = "<group>"; };
+		4F83D5D728A2EB30003F9429 /* ObjCTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjCTest.swift; sourceTree = "<group>"; };
 		4F854D7A2789146900B46E9D /* NSMenu+NSMenu_Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMenu+NSMenu_Additions.h"; sourceTree = "<group>"; };
 		4F854D7B2789146900B46E9D /* NSMenu+NSMenu_Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMenu+NSMenu_Additions.m"; sourceTree = "<group>"; };
 		4F854D7D2789266A00B46E9D /* sfsymbols.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = sfsymbols.xcassets; sourceTree = "<group>"; };
@@ -1529,6 +1531,7 @@
 				4FF665D225F2C92700689B77 /* ConfigInterface_App.h */,
 				4FF665D125F2C92700689B77 /* ConfigInterface_App.m */,
 				4FDC127528A2C6160076972E /* ReactiveConfig.swift */,
+				4F83D5D728A2EB30003F9429 /* ObjCTest.swift */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -2454,6 +2457,7 @@
 				4F92A73A260F73C600529D1F /* KeyCaptureView.m in Sources */,
 				4FF6654425F2C7B000689B77 /* HelperServices.m in Sources */,
 				4F909D3528A0C3D2009349A2 /* Animate.swift in Sources */,
+				4F83D5D828A2EB30003F9429 /* ObjCTest.swift in Sources */,
 				4FA40D0328A0D0BB00499E53 /* PolynomialRegression.m in Sources */,
 				4FA40CFE28A0CCCB00499E53 /* HybridCurves.swift in Sources */,
 			);

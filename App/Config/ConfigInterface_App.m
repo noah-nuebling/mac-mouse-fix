@@ -16,7 +16,7 @@
 #import "Objects.h"
 #import "Constants.h"
 #import "WannabePrefixHeader.h"
-#import "Mac Mouse Fix-Bridging-Header.h"
+#import "Mac_Mouse_Fix-Swift.h"
 
 @implementation ConfigInterface_App
 
@@ -79,6 +79,9 @@ static NSURL *_defaultConfigURL; /// `default_config` aka `backup_config`
     }
     DDLogInfo(@"Wrote config to file.");
     [SharedMessagePort sendMessage:@"configFileChanged" withPayload:nil expectingReply:NO];
+    
+    /// Send reactive signal
+    [ReactiveConfig.shared reactWithNewConfig:self.config];
 }
 
 
@@ -103,6 +106,7 @@ static NSURL *_defaultConfigURL; /// `default_config` aka `backup_config`
     self.config = configDict;
     
     /// Send reactive signal
+    [ReactiveConfig.shared reactWithNewConfig:configDict];
     
 }
 

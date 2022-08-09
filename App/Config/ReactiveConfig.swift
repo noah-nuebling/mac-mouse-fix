@@ -38,10 +38,10 @@ import ReactiveCocoa
         let (s, o) = Signal<NSDictionary, Never>.pipe()
         input = o
         signal = s
-        super.init()
     }
     
     /// Objc interface
+    
     @objc func react(newConfig: NSDictionary) {
         self.input.send(value: newConfig)
     }
@@ -51,15 +51,15 @@ import ReactiveCocoa
 // MARK: Config values
 /// Reactive interface for interacting with certain values in the config dict
 
-@objc class ConfigValue: NSObject, BindingTargetProvider, BindingSource {
+class ConfigValue<T: NSObject>: NSObject, BindingTargetProvider, BindingSource {
     
     /// Reactive
     
-    typealias Value = NSObject
-    var bindingTarget: ReactiveSwift.BindingTarget<NSObject> {
+    typealias Value = T
+    var bindingTarget: ReactiveSwift.BindingTarget<T> {
         return BindingTarget(lifetime: self.reactive.lifetime) { self.set($0) }
     }
-    var producer: ReactiveSwift.SignalProducer<NSObject, Never>
+    var producer: ReactiveSwift.SignalProducer<T, Never>
     
     /// Storage
     var keyPath: String
@@ -73,7 +73,7 @@ import ReactiveCocoa
         /// Set dummy values so that you can super.init()
         lastValue = nil
         keyPath = ""
-        producer = SignalProducer<NSObject, Never>.init(value: NSString())
+        producer = SignalProducer<T, Never>.init(value: T())
         
         /// Init super
         super.init()
@@ -86,26 +86,21 @@ import ReactiveCocoa
         /// Create signalProducer
         ///     Will send a signal whenever the value at `keyPath` in the config changes
         
-        let p1 = ReactiveConfig.shared.producer.map({ (newConfig: NSDictionary) -> NSObject? in
-            newConfig.object(forCoolKeyPath: configPath) /// Notice that we're using coolKeyPaths
+        let p1 = ReactiveConfig.shared.producer.map({ (newConfig: NSDictionary) -> T? in
+            newConfig.object(forCoolKeyPath: configPath) as? T /// Notice that we're using coolKeyPaths
         })
-        producer = p1.skipNil().filter({ value in
-            if value == self.lastValue { return false }
-            self.lastValue = value
-            return true
-        })
+        producer = p1.skipNil().skipRepeats()
         
 
     }
-    
     /// Core functions
     
-    func set(_ value: NSObject) {
+    func set(_ value: T) {
         setConfig(keyPath, value)
         commitConfig()
     }
-    func get() -> NSObject {
-        return config(keyPath)
+    func get() -> T? {
+        return config(keyPath) as? T
     }
 
 }
