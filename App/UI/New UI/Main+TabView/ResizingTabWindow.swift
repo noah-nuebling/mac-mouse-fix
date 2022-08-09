@@ -35,7 +35,7 @@ import CocoaLumberjackSwift
         let ogTime = CACurrentMediaTime()
         animator.stopCallback = {
             let stopTime = CACurrentMediaTime()
-            DDLogDebug("Window settling time: \(stopTime - ogTime)")
+            DDLogDebug("Actual window settling time: \(stopTime - ogTime)")
         }
         
 //        Animate.with(animation) {

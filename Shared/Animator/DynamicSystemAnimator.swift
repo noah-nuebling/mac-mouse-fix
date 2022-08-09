@@ -36,6 +36,7 @@
 ///         TODO: Make stable (see t3ssel8r video)
 
 import Foundation
+import CocoaLumberjackSwift
 
 @objc class DynamicSystemAnimator: NSObject {
     
@@ -57,11 +58,17 @@ import Foundation
     
     let epsilon: Double
     
+    /// Supersampling
+    ///     -> makes the animator run `sampleRate` updates per second. This makes the simulation more accurate.
+    ///     - Simulation accuracy caps out at a sampleRate of around 3000 on my M1 Air running 60 fps so I set it to 6000 to be sure.
+    ///     - Interesting: At a superSample of around `6000 * 100`, that takes a shitton of CPU, it looks like the anmation stops dropping frames!? Some bugs in the renderer maybe?
+    let sampleRate: Int = 6000 * 100 /// 6000 updates per second
+    
     /// State
     var target: Double
     var x0: Double /// Last displacement
     var x0_: Double /// Last velocity
-    var x0__: Double /// Last acceleration
+//    var x0__: Double /// Last acceleration
     var t0: CFTimeInterval /// Last step time
     
     var isFirstCallback: Bool
@@ -79,9 +86,11 @@ import Foundation
         self.init(stiffness: k, damping: c, mass: m, stopTolerance: stopTolerance)
     }
     
-    @objc required init(stiffness k: Double, damping c: Double, mass m: Double, stopTolerance: Double) {
+    @objc required init(stiffness k: Double, damping c: Double, mass m: Double = 1.0, stopTolerance: Double) {
+        
         /// Validate
         assert(stopTolerance > 0, "Will never stop if stopTolerance <= 0")
+        
         /// Constants
         self.k = k
         self.c = c
@@ -95,7 +104,7 @@ import Foundation
         target = 0
         x0 = 0
         x0_ = 0
-        x0__ = 0
+//        x0__ = 0
         t0 = 0
         isFirstCallback = false
         pixelator.reset()
@@ -112,7 +121,7 @@ import Foundation
             self.target = 0
             self.x0 = 0
             self.x0_ = 0
-            self.x0__ = 0
+//            self.x0__ = 0
             self.t0 = 0
             self.isFirstCallback = false
             self.pixelator.reset()
@@ -127,6 +136,9 @@ import Foundation
             ///     So the values don't grow to infinity and overflow
             self.x0 += distance
             self.target = self.x0 /// x will go from target to 0
+            
+            /// Reset velocity
+            self.x0_ = 0.0
             
             /// Update state
             self.isFirstCallback = true
@@ -150,23 +162,47 @@ import Foundation
         if t0 <= 0 { t0 = t - timeInfo.timeBetweenFrames }
         /// Get step delta
         let dt = t - t0
-  
+        
         /// Update
         
         /// Euler
         ///     Formula from https://en.wikipedia.org/wiki/Semi-implicit_Euler_method, expanded a little so we can use `x_` instead of `x0_`when calculating x
-        ///     This feels weird and too slow
+        ///     This feels weird and too slow. Definitely incorrect
 //        let x__ =   -(c*x0_ + k*x0)/m
 //        let x_  =   x0_ + dt * x__
 //        let x   =   x0 + dt * (c*x_ + k*x0 + m*x0__ + c*x_)/c
         
         /// Heuristic
-        let x__ =   -(c*x0_ + k*x0)/m
-        let x_  =   x0_ + dt * x__
-        let x   =   x0 + dt * x_
+        ///     Feels fine but too damped compared to normal CASpringAnimation
+        ///     I think this might be normal Euler method
+//        let x__ =   -(c*x0_ + k*x0)/m
+//        let x_  =   x0_ + dt * x__
+//        let x   =   x0 + dt * x_
+        
+        /// Inverted Euler
+        ///     Inspired by t3sselr video
+        ///     This plus superSampling did the trick!
+        var x: Double = -1
+        var x__: Double = -1
+        var x_: Double = -1
+        
+        let samples = Int(round(dt * Double(sampleRate)))
+        let dts = dt/Double(samples)
+        for _ in 0...samples {
+            x = x0 + dts * x0_
+            x__ = -(c*x0_ + k*x)/m
+            x_ = x0_ + dts * x__
+            
+            x0 = x
+            x0_ = x_
+        }
         
         /// Check end - based on distance to target & velocity
-        let isEnd = x <= epsilon && x_ <= epsilon
+        let isEnd = abs(x) <= epsilon && abs(x_) <= epsilon
+        
+        /// Debug
+        DDLogDebug("SpringAnimation state: \(x), \(x_), \(x__), samples: \(samples)")
+        DDLogDebug("SpringAnimation isEnding.")
         
         /// Call callback
         callback(target - x) /// Becaues x actually goes from target to 0
@@ -175,7 +211,7 @@ import Foundation
         t0 = t
         x0 = x
         x0_ = x_
-        x0__ = x__
+//        x0__ = x__
         isFirstCallback = false
         
         /// Stop

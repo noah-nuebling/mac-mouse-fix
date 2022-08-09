@@ -203,17 +203,16 @@ class TabViewController: NSTabViewController {
         /// Animation
         ///
         
-        let springSpeed = 3.5
+        let springSpeed = 3.75
         let springDamping = 1.0 /* 1.1 For more beautiful but slightly floaty animations*/
         let animation = CASpringAnimation(speed: springSpeed, damping: springDamping)
         
-        /// Get duration
+        /// Get durations
         /// Note: fromValue and toValue don't affect duration
-        let duration = animation.settlingDuration /* * 0.6*/
+        ///     Before spring animations we used to use window.animationResizeTime(newFrame)
+        let duration = animation.settlingDuration
         
-        /// Get resize animation time (pre spring animations)
-//            let duration = window.animationResizeTime(newFrame)
-//            let duration = animation.duration
+        let fadeDuration = duration * 0.75
         
         /// Debug
         DDLogDebug("Predicted window settling time: \(duration)")
@@ -235,7 +234,7 @@ class TabViewController: NSTabViewController {
         ///     NSAnimationManager doesn't work anymore for animating windowFrame under Ventura Beta, so we have to use this manual method
         window.setFrame(newFrame, withSpringAnimation: animation)
         
-        return duration * 0.6 /// Hacky stuff to make the fade duration shorter
+        return fadeDuration
     }
     
     /// Helper functions

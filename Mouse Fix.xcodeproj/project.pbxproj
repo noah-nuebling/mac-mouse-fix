@@ -1080,15 +1080,15 @@
 		4F909D0928A0C3D2009349A2 /* UIAnimations */ = {
 			isa = PBXGroup;
 			children = (
-				4F909D0B28A0C3D2009349A2 /* NSAnimationManager.h */,
-				4F909D0A28A0C3D2009349A2 /* ReactiveAnimatorProxy.swift */,
-				4F909D0C28A0C3D2009349A2 /* CAAnimation+Extensions.swift */,
-				4F909D0D28A0C3D2009349A2 /* FadeAnimations.swift */,
-				4F909D0E28A0C3D2009349A2 /* Animating Constraints.md */,
+				4F909D1128A0C3D2009349A2 /* Collapse.swift */,
 				4F909D0F28A0C3D2009349A2 /* Replace.swift */,
 				4F909D1028A0C3D2009349A2 /* Animate.swift */,
-				4F909D1128A0C3D2009349A2 /* Collapse.swift */,
+				4F909D0D28A0C3D2009349A2 /* FadeAnimations.swift */,
+				4F909D0A28A0C3D2009349A2 /* ReactiveAnimatorProxy.swift */,
+				4F909D0C28A0C3D2009349A2 /* CAAnimation+Extensions.swift */,
 				4F909D1228A0C3D2009349A2 /* ConstraintUtility.swift */,
+				4F909D0B28A0C3D2009349A2 /* NSAnimationManager.h */,
+				4F909D0E28A0C3D2009349A2 /* Animating Constraints.md */,
 			);
 			path = UIAnimations;
 			sourceTree = "<group>";
