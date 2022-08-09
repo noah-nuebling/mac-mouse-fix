@@ -362,7 +362,7 @@ NSMutableArray *_tableViewDataModel;
         orderKey += 1;
     }
     
-    // For all overrides for apps in the config, which aren't in the table, and which are installed - delete all values managed by the table from the config
+    /// For all overrides for apps in the config, which aren't in the table, and which are installed - delete all values managed by the table from the config
     
     NSMutableSet *bundleIDsInConfigAndInstalledButNotInTable = [NSMutableSet setWithArray:((NSDictionary *)[ConfigInterface_App.config valueForKeyPath:kMFConfigKeyAppOverrides]).allKeys]; // Get all bundle IDs in the config
     
@@ -373,12 +373,12 @@ NSMutableArray *_tableViewDataModel;
     
     for (NSString *bundleID in bundleIDsInConfigAndInstalledButNotInTable) {
         NSString *bundleIDEscaped = [bundleID stringByReplacingOccurrencesOfString:@"." withString:@"\\."];
-        // Delete override values
+        /// Delete override values
         for (NSString *rootKeyPath in _columnIdentifierToKeyPath.allValues) {
         NSString *overrideKeyPath = [NSString stringWithFormat:@"AppOverrides.%@.Root.%@", bundleIDEscaped, rootKeyPath];
         [ConfigInterface_App.config setObject:nil forCoolKeyPath:overrideKeyPath];
         }
-        // Delete orderKey
+        /// Delete orderKey
         NSString *orderKeyKeyPath = [NSString stringWithFormat:@"AppOverrides.%@.meta.scrollOverridePanelTableViewOrderKey", bundleIDEscaped];
         [ConfigInterface_App.config setObject:nil forCoolKeyPath:orderKeyKeyPath];
     }

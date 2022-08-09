@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ConfigInterface_App : NSObject
 
+/// Declarations
 typedef enum {
     kMFConfigProblemNone = 0,
     kMFConfigProblemIncompleteAppOverride = 1
@@ -23,8 +24,10 @@ id config(NSString *keyPath);
 void setConfig(NSString *keyPath, NSObject *object);
 void commitConfig(void);
 
+/// Storage
 @property (class,retain) NSMutableDictionary *config;
 
+/// Methods
 + (void)writeConfigToFileAndNotifyHelper;
 + (void)loadConfigFromFile;
 + (void)repairConfigWithProblem:(MFConfigProblem)problem info:(id _Nullable)info;

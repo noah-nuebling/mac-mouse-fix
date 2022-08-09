@@ -19,18 +19,22 @@
 
 @implementation ConfigInterface_App
 
-// Convenience function for accessing config
+#pragma mark - Convenience
+
+/// Convenience function for accessing config
 id config(NSString *keyPath) {
     return [ConfigInterface_App.config valueForKeyPath:keyPath];
 }
-// Convenience function for modifying config
+/// Convenience function for modifying config
 void setConfig(NSString *keyPath, NSObject *object) {
     [ConfigInterface_App.config setValue:object forKeyPath:keyPath];
 }
-// Convenience function for writing config to file and notifying the helper app
+/// Convenience function for writing config to file and notifying the helper app
 void commitConfig() {
     [ConfigInterface_App writeConfigToFileAndNotifyHelper];
 }
+
+#pragma mark - Storage
 
 static NSMutableDictionary *_config;
 + (NSMutableDictionary *)config {
@@ -39,51 +43,47 @@ static NSMutableDictionary *_config;
 + (void)setConfig:(NSMutableDictionary *)new {
     _config = new;
 }
-static NSURL *_defaultConfigURL; // default_config aka backup_config
+static NSURL *_defaultConfigURL; /// `default_config` aka `backup_config`
+
+#pragma mark - Init
 
 + (void)load {
     /// TODO: Should probably make this an initialize function so that config is guaranteed to be initialized before it's accessed.
     
-    // Get backup config url
+    /// Get backup config url
     NSString *defaultConfigPathRelative = @"Contents/Resources/default_config.plist";
     _defaultConfigURL = [Objects.mainAppBundle.bundleURL URLByAppendingPathComponent:defaultConfigPathRelative];
     
-    // Load config
+    /// Load config
     [self loadConfigFromFile];
 }
 
-/**
- Writes the _config dicitonary to the plist file at _configURL
- 
- Should only be called by functions named `- setConfigToUI`
- 
- \note For every window there should be @b one function `- setConfigToUI`
- \todo Learn documentation syntax
- */
+#pragma mark - Read and write from file
+
 + (void)writeConfigToFileAndNotifyHelper {
+    
+    /**
+     Writes the `_config` dicitonary to the plist file at `_configURL`
+     */
     
     NSError *serializeErr;
     NSData *configData = [NSPropertyListSerialization dataWithPropertyList:self.config format:NSPropertyListXMLFormat_v1_0 options:0 error:&serializeErr];
     if (serializeErr) {
         DDLogInfo(@"ERROR serializing configDictFromFile: %@", serializeErr);
     }
-    //    BOOL success = [configData writeToFile:configPath atomically:YES];
-    //    if (!success) {
-    //        DDLogInfo(@"ERROR writing configDictFromFile to file");
-    //    }
     NSError *writeErr;
     [configData writeToURL:Objects.configURL options:NSDataWritingAtomic error:&writeErr];
     if (writeErr) {
         DDLogInfo(@"ERROR writing configDictFromFile to file: %@", writeErr);
     }
     DDLogInfo(@"Wrote config to file.");
-//    DDLogInfo(@"config: %@", _config);
     [SharedMessagePort sendMessage:@"configFileChanged" withPayload:nil expectingReply:NO];
 }
 
-/// Load data from plist file at _configURL into _config class variable
-/// This only really needs to be called when ConfigFileInterface_App is loaded, but I use it in other places as well, to make the program behave better, when I manually edit the config file.
 + (void)loadConfigFromFile {
+    
+    /// Load data from plist file at `_configURL` into `_config` class variable
+    /// This only really needs to be called when `ConfigFileInterface_App` is loaded, but I use it in other places as well, to make the program behave better, when I manually edit the config file.
     
     [self repairConfigWithProblem:kMFConfigProblemNone info:nil];
     
@@ -100,21 +100,23 @@ static NSURL *_defaultConfigURL; // default_config aka backup_config
     self.config = configDict;
 }
 
-// TODO: Test if this still works
-/// Checks config for errors / incompatibilty and repairs it if necessary.
+#pragma mark - Repair
+
 + (void)repairConfigWithProblem:(MFConfigProblem)problem info:(id _Nullable)info {
     
-    // Create config file if none exists
+    /// Checks config for errors / incompatibilty and repairs it if necessary.
+    /// TODO: Test if this still works
+    /// TODO: Check whether all default (as opposed to override) values exist in config file. If they don't, then everything breaks. Maybe do this by comparing with default_config. Edit: Not sure this is feasible, also the comparing with default_config breaks if we want to have keys that are optional.
+    /// TODO: Consider moving/copying this function to helper, so it can repair stuff as well.
+    
+    /// Create config file if none exists
     
     if (![NSFileManager.defaultManager fileExistsAtPath:Objects.configURL.path]) {
         [NSFileManager.defaultManager createDirectoryAtURL:Objects.configURL.URLByDeletingLastPathComponent withIntermediateDirectories:YES attributes:nil error:nil];
         [self replaceCurrentConfigWithDefaultConfig];
     }
     
-    // TODO: Check whether all default (as opposed to override) values exist in config file. If they don't everything breaks. Maybe do this by comparing with default_config.
-    // TODO: Consider moving/copying this function to helper, so it can repair stuff as well.
-    
-    // Check if config version matches, if not, replace with default.
+    /// Check if config version matches, if not, replace with default.
     
     NSNumber *currentConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:Objects.configURL] valueForKeyPath:@"Other.configVersion"];
     NSNumber *defaultConfigVersion = [[NSDictionary dictionaryWithContentsOfURL:_defaultConfigURL] valueForKeyPath:@"Other.configVersion"];
@@ -122,44 +124,31 @@ static NSURL *_defaultConfigURL; // default_config aka backup_config
         [self replaceCurrentConfigWithDefaultConfig];
     }
     
-    // TODO: Check if this works
-    // Check all AppOverrides in config for the parameters specified in `keyPaths`. If one of the parameters doesn't exist, initialize it with the default value from config.
+    /// Repair incomplete App override
+    ///     Do this by simply copying over the values from the default config
+    ///     TODO: Check if this works
     
     if (problem == kMFConfigProblemIncompleteAppOverride) {
         NSAssert(info && [info isKindOfClass:[NSDictionary class]], @"Can't repair incomplete app override: invalid argument provided");
         
-        NSString *bundleID = info[@"bundleID"]; // Bundle ID of the app with the faulty override
+        NSString *bundleID = info[@"bundleID"]; /// Bundle ID of the app with the faulty override
         NSString *bundleIDEscaped = [bundleID stringByReplacingOccurrencesOfString:@"." withString:@"\\."];
-        NSArray *keyPathsToDefaultValues = info[@"relevantKeyPaths"]; // KeyPaths to the values of which at least one is missing
+        NSArray *keyPathsToDefaultValues = info[@"relevantKeyPaths"]; /// KeyPaths to the values of which at least one is missing
         for (NSString *defaultKP in keyPathsToDefaultValues) {
             NSString *overrideKP = [NSString stringWithFormat:@"AppOverrides.%@.Root.%@", bundleIDEscaped, defaultKP];
             if ([_config objectForCoolKeyPath:overrideKP] == nil) {
-                // If an override value doesn't exist at overrideKP, put default value at overrideKP.
+                /// If an override value doesn't exist at overrideKP, put default value at overrideKP.
                 [_config setObject:[_config objectForCoolKeyPath:defaultKP] forCoolKeyPath:overrideKP];
             }
         }
         [self writeConfigToFileAndNotifyHelper];
     }
-//        for (NSString *o in overrides) {
-//            NSString *keyPath = NSString stringWithFormat:@"AppOverrides.%"
-//        }
-//        NSMutableDictionary *repairedOverrides = [overrides mutableCopy];
-//        for (NSString *bundleID in overrides) {
-//            NSMutableDictionary *repairedOverride = [repairedOverrides[bundleID] mutableCopy];
-//            for (NSString *kp in keyPaths) {
-//                if ([repairedOverride valueForKeyPath:kp] == nil) {
-//                    NSObject *defaultVal = [_config valueForKeyPath:kp];
-//                    [repairedOverride setObject:defaultVal forCoolKeyPath:kp];
-//                }
-//            }
-//            repairedOverrides[bundleID] = repairedOverride;
-//        }
-//        _config[kMFConfigKeyAppOverrides] = repairedOverrides;
-//    }
 }
 
-/// Replaces the current config file which the helper app is reading from with the backup one and then terminates the helper. (Helper will restart automatically because of the KeepAlive attribute in its user agent config file.)
 + (void)replaceCurrentConfigWithDefaultConfig {
+    
+    /// Replaces the current config file which the helper app is reading from with the backup one and then terminates the helper. (Helper will restart automatically because of the KeepAlive attribute in its user agent config file.)
+    
     NSData *defaultData = [NSData dataWithContentsOfURL:_defaultConfigURL];
     [defaultData writeToURL:Objects.configURL atomically:YES];
     [SharedMessagePort sendMessage:@"terminate" withPayload:nil expectingReply:NO];
@@ -169,21 +158,18 @@ static NSURL *_defaultConfigURL; // default_config aka backup_config
 + (void)cleanConfig {
     NSMutableDictionary *appOverrides = _config[kMFConfigKeyAppOverrides];
     
-    // Delete overrides for uninstalled apps
-    // This might delete preinstalled overrides. So not doing that.
-//    for (NSString *bundleID in appOverrides.allKeys) {
-//        if (![Utility_App appIsInstalled:bundleID]) {
-//            appOverrides[bundleID] = nil;
-//        }
-//    }
+    /// Note: We don't delete overrides for uninstalled apps because this might delete preinstalled overrides
+    
     removeLeaflessSubDicts(appOverrides);
     
-    [self writeConfigToFileAndNotifyHelper]; // No need to notify the helper at the time of writing
+    [self writeConfigToFileAndNotifyHelper]; /// No need to notify the helper at the time of writing
 }
 
-// TODO: Implement cleaning function which deletes all overrides that don't change the default config. Adding and removing different apps in ScrollOverridePanel will accumulate dead entries. v is that what I meant?
-/// Delete all paths in the dictionary which don't lead to anything
 static void removeLeaflessSubDicts(NSMutableDictionary *dict) {
+    
+    /// Delete all paths in the dictionary which don't lead to anything
+    // TODO: Implement cleaning function which deletes all overrides that don't change the default config. Adding and removing different apps in ScrollOverridePanel will accumulate dead entries. v is that what I meant?
+    
     for (NSString *key in dict.allKeys) {
         NSObject *val = dict[key];
         if ([val isKindOfClass:[NSMutableDictionary class]]) {
