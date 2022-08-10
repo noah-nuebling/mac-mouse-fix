@@ -18,6 +18,8 @@
 		4F1B832D26081A5500AEAF37 /* CaptureNotificationCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B832C26081A5500AEAF37 /* CaptureNotificationCreator.m */; };
 		4F1C51DA260543DD007F4930 /* NSTextField+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C51D9260543DD007F4930 /* NSTextField+Additions.m */; };
 		4F1D58192881D880002EB119 /* CombinedLinearCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1D58182881D880002EB119 /* CombinedLinearCurve.swift */; };
+		4F1D7F4428A45FDC00253407 /* StatusBarItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F1D7F4328A45FDC00253407 /* StatusBarItem.xib */; };
+		4F1D7F4728A4639800253407 /* StatusBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1D7F4628A4639800253407 /* StatusBarItem.swift */; };
 		4F2CC58727B8D2300084AACE /* HybridCurves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CC58627B8D2300084AACE /* HybridCurves.swift */; };
 		4F2CC58927B8DA8B0084AACE /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CC58827B8DA8B0084AACE /* Line.swift */; };
 		4F2F5DA825FB6FFD0037660A /* AddWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F5DA725FB6FFD0037660A /* AddWindowController.m */; };
@@ -223,7 +225,6 @@
 		4FF6668925F2C93A00689B77 /* Scroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662125F2C93A00689B77 /* Scroll.m */; };
 		4FF6668A25F2C93A00689B77 /* SmoothScroll.m (old) in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6662325F2C93A00689B77 /* SmoothScroll.m (old) */; };
 		4FF6668B25F2C93A00689B77 /* CubicUnitBezier.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662425F2C93A00689B77 /* CubicUnitBezier.m */; };
-		4FF6668D25F2C93A00689B77 /* MomentumScroll.h (old) in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6662725F2C93A00689B77 /* MomentumScroll.h (old) */; };
 		4FF6668F25F2C93A00689B77 /* SmoothScroll_old_.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662D25F2C93A00689B77 /* SmoothScroll_old_.m */; };
 		4FF6669025F2C93A00689B77 /* ScrollModifiers_old_.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662E25F2C93A00689B77 /* ScrollModifiers_old_.m */; };
 		4FF6669125F2C93A00689B77 /* ScrollUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662F25F2C93A00689B77 /* ScrollUtility.m */; };
@@ -379,6 +380,8 @@
 		4F1C51D8260543DD007F4930 /* NSTextField+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSTextField+Additions.h"; sourceTree = "<group>"; };
 		4F1C51D9260543DD007F4930 /* NSTextField+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSTextField+Additions.m"; sourceTree = "<group>"; };
 		4F1D58182881D880002EB119 /* CombinedLinearCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombinedLinearCurve.swift; sourceTree = "<group>"; };
+		4F1D7F4328A45FDC00253407 /* StatusBarItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatusBarItem.xib; sourceTree = "<group>"; };
+		4F1D7F4628A4639800253407 /* StatusBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarItem.swift; sourceTree = "<group>"; };
 		4F2CC58627B8D2300084AACE /* HybridCurves.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HybridCurves.swift; sourceTree = "<group>"; };
 		4F2CC58827B8DA8B0084AACE /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		4F2F5DA625FB6FFD0037660A /* AddWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddWindowController.h; sourceTree = "<group>"; };
@@ -840,6 +843,15 @@
 				4F39BCE8263B7B1500FDF692 /* README.md */,
 			);
 			path = Frameworks;
+			sourceTree = "<group>";
+		};
+		4F1D7F4528A45FEA00253407 /* StatusBarItem */ = {
+			isa = PBXGroup;
+			children = (
+				4F1D7F4628A4639800253407 /* StatusBarItem.swift */,
+				4F1D7F4328A45FDC00253407 /* StatusBarItem.xib */,
+			);
+			path = StatusBarItem;
 			sourceTree = "<group>";
 		};
 		4F2A1FA726042ACB0067691A /* Notifications */ = {
@@ -1619,6 +1631,7 @@
 				4FF6664A25F2C93A00689B77 /* Accessibility */,
 				4FF6660825F2C93A00689B77 /* FileMonitor */,
 				4FF6661425F2C93A00689B77 /* Core */,
+				4F1D7F4528A45FEA00253407 /* StatusBarItem */,
 				4FF6660F25F2C93A00689B77 /* Resources */,
 				4FF6664D25F2C93A00689B77 /* SupportFiles */,
 			);
@@ -2209,10 +2222,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4FF6668D25F2C93A00689B77 /* MomentumScroll.h (old) in Resources */,
 				4FF6668325F2C93A00689B77 /* Assets.xcassets in Resources */,
 				4FF6668A25F2C93A00689B77 /* SmoothScroll.m (old) in Resources */,
 				4FF6654125F2C7B000689B77 /* default_launchd.plist in Resources */,
+				4F1D7F4428A45FDC00253407 /* StatusBarItem.xib in Resources */,
 				4FF6669E25F2C93A00689B77 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2522,6 +2535,7 @@
 				4FF6669625F2C93A00689B77 /* Actions.m in Sources */,
 				4FF0254E27AFF90800923107 /* ModifiedDragOutputThreeFingerSwipe.m in Sources */,
 				4F44FF042606D73D00926A5E /* SharedMessagePort.m in Sources */,
+				4F1D7F4728A4639800253407 /* StatusBarItem.swift in Sources */,
 				4F8CF95728686C0100BF5E55 /* PolynomialRegression.m in Sources */,
 				4F5F3EEE2756DB0A00C350C0 /* RemapsOverrider_old_.swift in Sources */,
 				4F8B7E6727B4E32600598B65 /* TouchAnimatorBase.swift in Sources */,

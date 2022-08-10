@@ -102,7 +102,6 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
     
     
     /// Setup termination handler
-
     struct sigaction action = {
         .sa_flags = SA_SIGINFO,
         .sa_mask = 0,
@@ -117,12 +116,12 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
     [SharedUtility setupBasicCocoaLumberjackLogging];
     DDLogInfo(@"Mac Mosue Fix begins logging excessively");
     
+    /// Init and load pre-check
     [PrefixSwift initGlobalStuff];
-    
     [MessagePort_Helper load_Manual];
     
+    /// Do the accessibility check
     Boolean accessibilityEnabled = [self check];
-    
     if (!accessibilityEnabled) {
         
         DDLogInfo(@"Accessibility Access Disabled");
@@ -133,8 +132,9 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
             
     } else {
         
-        // Using load_Manual instead of normal load, because creating an eventTap crashes the program, if we don't have accessibilty access (I think - I don't really remember)
-        // TODO: Look into using `+ initialize` instead of `+ load`. The way we have things set up there are like a bajillion entry points to the program (one for every `+ load` function) which is kinda sucky. Might be better to have just one entry point to the program and then start everything that needs to be started with `+ start` functions and let `+ initialize` do the rest
+        /// Init and load post-check
+        /// Using load_Manual instead of normal load, because creating an eventTap crashes the program, if we don't have accessibilty access (I think - I don't really remember)
+        /// TODO: Look into using `+ initialize` instead of `+ load`. The way we have things set up there are like a bajillion entry points to the program (one for every `+ load` function) which is kinda sucky. Might be better to have just one entry point to the program and then start everything that needs to be started with `+ start` functions and let `+ initialize` do the rest
         [ButtonInputReceiver load_Manual];
         [DeviceManager load_Manual];
         [Scroll load_Manual];
@@ -145,6 +145,9 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
         [ScreenDrawer.shared load_Manual];
         [PointerFreeze load_Manual];
         
+        [StatusBarItem load_Manual];
+        
+        /// Send message to main  app
         [SharedMessagePort sendMessage:@"helperEnabled" withPayload:nil expectingReply:NO];
     }
 }
