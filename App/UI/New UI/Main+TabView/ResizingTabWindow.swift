@@ -137,6 +137,8 @@ import CocoaLumberjackSwift
             assert(false)
         }
     }
+
+    
     
     // MARK: Old stuff
     

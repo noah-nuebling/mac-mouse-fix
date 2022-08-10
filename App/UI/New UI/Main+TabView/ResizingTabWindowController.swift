@@ -9,6 +9,7 @@ import Cocoa
 
 class ResizingTabWindowController: NSWindowController, NSWindowDelegate {
 
+    // MARK: Custom field editor
     /// Assign our custom modCaptureFieldEditor to modCaptureTextField instances
     
     var modCaptureFieldEditor: ModCaptureFieldEditor? = nil
@@ -26,13 +27,38 @@ class ResizingTabWindowController: NSWindowController, NSWindowDelegate {
         return modCaptureFieldEditor
     }
     
-//    func window(_ window: NSWindow, shouldPopUpDocumentPathMenu menu: NSMenu) -> Bool {
+    // MARK: Accessibility view
+    
+    private var removeAccessibilityViewTimer: Timer? = nil
+    func windowDidBecomeMain(_ notification: Notification) {
+        /// Ask helper if accessibility enabled
+        SharedMessagePort.sendMessage("checkAccessibility", withPayload: nil, expectingReply: false)
+        /// Dismiss accessibility view if no reply
+        removeAccessibilityViewTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { timer in
+            AuthorizeAccessibilityView.remove()
+        }
+    }
+    @objc public func handleAccessibilityDisabledMessage() {
+        AuthorizeAccessibilityView.add()
+        removeAccessibilityViewTimer?.invalidate()
+    }
+    
 //
-//        /// Trying to turn off the document path button. Doing it in window subclass instead
-//
-//        window.title = window.title
-//        window.setTitleWithRepresentedFilename("")
-//        window.standardWindowButton(.documentIconButton)?.image = nil
-//        return false
+//    NSTimer *removeAccOverlayTimer;
+//    - (void)removeAccOverlayTimerCallback {
+//        [AuthorizeAccessibilityView remove];
 //    }
+//    - (void)handleAccessibilityDisabledMessage {
+//        [AuthorizeAccessibilityView add];
+//        [removeAccOverlayTimer invalidate];
+//    }
+//    - (void)windowDidBecomeKey:(NSNotification *)notification {
+//        /// Ask helper if accessibility enabled
+//        [SharedMessagePort sendMessage:@"checkAccessibility" withPayload:nil expectingReply:NO];
+//        /// Use a delay to prevent jankyness when window becomes key while app is requesting accessibility. Use timer so it can be stopped once Helper sends "I still have no accessibility" message
+//        removeAccOverlayTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 repeats:NO block:^(NSTimer * _Nonnull timer) {
+//            [self removeAccOverlayTimerCallback];
+//        }];
+//    }
+
 }

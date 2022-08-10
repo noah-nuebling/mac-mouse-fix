@@ -124,37 +124,14 @@ static NSDictionary *sideButtonActions;
     
     if (self == [AppDelegate class]) {
         
-        // I think this is the entrypoint of the app
-        
-        // Setup CocoaLumberjack
+        /// Setup CocoaLumberjack
         [SharedUtility setupBasicCocoaLumberjackLogging];
         DDLogInfo(@"Main App starting up...");     
         
-        // Remove restart the app untranslocated if it's currently translocated
+        /// Remove restart the app untranslocated if it's currently translocated
         [AppTranslocationManager removeTranslocation]; // Need to call this before MessagePort_App is initialized, otherwise stuff breaks if app is translocated
-        // Start parts of the app that depend on the initialization we just did
+        /// Start parts of the app that depend on the initialization we just did
         [MessagePort_App load_Manual];
-        
-        // Do unnecessary stuff
-        // TODO: Remove the unused stuff below
-        
-        _scrollConfigurations = @{ // This is unused
-            @"Normal"   :   @[ @[@20,@80],  @130, @1.5],
-        };
-        
-        sideButtonActions =
-        @{
-            @1 :
-                @[
-                    @[@"symbolicHotKey", @79],
-                    @[@"symbolicHotKey", @81]
-                ],
-            @2  :
-                @[
-                    @[@"swipeEvent", @"left"],
-                    @[@"swipeEvent", @"right"]
-                ]
-        };
     }
     
 }
@@ -266,25 +243,6 @@ static NSDictionary *sideButtonActions;
     return NSTerminateNow;
 }
 
-NSTimer *removeAccOverlayTimer;
-- (void)removeAccOverlayTimerCallback {
-    [AuthorizeAccessibilityView remove];
-}
-- (void)handleAccessibilityDisabledMessage {
-    [AuthorizeAccessibilityView add];
-    [removeAccOverlayTimer invalidate];
-}
-- (void)windowDidBecomeKey:(NSNotification *)notification {
-    [SharedMessagePort sendMessage:@"checkAccessibility" withPayload:nil expectingReply:NO];
-    if (@available(macOS 10.12, *)) { // Use a delay to prevent jankyness when window becomes key while app is requesting accessibility. Use timer so it can be stopped once Helper sends "I still have no accessibility" message
-        removeAccOverlayTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 repeats:NO block:^(NSTimer * _Nonnull timer) {
-            [self removeAccOverlayTimerCallback];
-        }];
-    } else { // Fallback on earlier versions
-        removeAccOverlayTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(removeAccOverlayTimerCallback) userInfo:nil repeats:NO];
-    }
-}
-
 - (void)windowWillClose:(NSNotification *)notification {
 //    [UpdateWindow.instance close]; Can't find a way to close Sparkle Window
     [OverridePanel.instance close];
@@ -325,11 +283,17 @@ NSTimer *removeAccOverlayTimer;
     _scrollStepSizeSlider.enabled = enable.boolValue;
 }
 
+#pragma mark - Update UI
+
 - (void)updateUI {
     
     DDLogInfo(@"Setting Enable Mac Mouse Fix checkbox to: %hhd", [HelperServices helperIsActive]);
     
-#pragma mark other
+
+    ///
+    /// Other
+    ///
+    
     /// enableCheckbox
     BOOL enable = HelperServices.helperIsActive;
 //    _enableMouseFixCheckBox.state = enable ? 1 : 0;
@@ -337,11 +301,13 @@ NSTimer *removeAccOverlayTimer;
     
     [ConfigInterface_App loadConfigFromFile];
     
-# pragma mark scrollSettings
+    ///
+    /// Scroll settings
+    ///
     
     NSDictionary *scrollConfigFromFile = ConfigInterface_App.config[kMFConfigKeyScroll];
     
-    // Enabled checkbox
+    /// Enabled checkbox
     if ([scrollConfigFromFile[@"smooth"] boolValue] == 1) {
         _scrollEnableCheckBox.state = 1;
     }
@@ -349,12 +315,12 @@ NSTimer *removeAccOverlayTimer;
         _scrollEnableCheckBox.state = 0;
     }
     
-    // Invert checkbox
+    /// Invert checkbox
     _invertScrollCheckBox.state = [scrollConfigFromFile[@"direction"] integerValue] == -1 ? 1 : 0;
     
     NSString *activeScrollSmoothnessConfiguration = @"Normal";
     
-    // Slider
+    /// Slider
     double pxStepSizeRelativeToConfigRange;
     NSArray *range = _scrollConfigurations[activeScrollSmoothnessConfiguration][0];
     double lowerLm = [range[0] floatValue];

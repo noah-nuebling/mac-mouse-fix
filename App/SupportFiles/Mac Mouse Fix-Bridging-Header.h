@@ -29,5 +29,7 @@
 #import "NSMutableDictionary+Additions.h"
 #import "SparkleUpdaterController.h"
 #import "AppDelegate.h"
+#import "SharedMessagePort.h"
+#import "AuthorizeAccessibilityView.h"
 
 #endif /* Mac_Mouse_Fix_Bridging_Header_h */

@@ -157,7 +157,7 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
 }
 
 
-// Timer Callbacks
+/// Timer Callbacks
 
 + (void)sendAccessibilityMessageToMainApp {
     DDLogInfo(@"Sending accessibilty disabled message to main app");
@@ -168,12 +168,12 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
     
     if ([self check]) {
         
-        // Open app
+        /// Open app
         NSArray<NSRunningApplication *> *apps = [NSRunningApplication runningApplicationsWithBundleIdentifier:kMFBundleIDApp];
         for (NSRunningApplication *app in apps) {
             [app activateWithOptions:NSApplicationActivateIgnoringOtherApps];
         }
-        // Close this app (Will be restarted immediately by launchd)
+        /// Close this app (Will be restarted immediately by launchd)
         [NSApp terminate:NULL];
 //        [self load]; // TESTING - to make button capture notification work
 //        [_openMainAppTimer invalidate]; // TESTING

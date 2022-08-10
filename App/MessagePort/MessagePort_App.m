@@ -71,7 +71,7 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
     DDLogInfo(@"Main App Received Message: %@ with payload: %@", message, payload);
     
     if ([message isEqualToString:@"accessibilityDisabled"]) {
-        [(AppDelegate *)NSApp.delegate handleAccessibilityDisabledMessage]; // If App delegate is about to remove the acc overlay, stop that
+        [(ResizingTabWindowController *)MainAppState.shared.window.windowController handleAccessibilityDisabledMessage]; /// If App delegate is about to remove the acc overlay, stop that
     } else if ([message isEqualToString:@"addModeFeedback"]) {
         [AddWindowController handleReceivedAddModeFeedbackFromHelperWithPayload:(NSDictionary *)payload];
     } else if ([message isEqualToString:@"keyCaptureModeFeedback"]) {
