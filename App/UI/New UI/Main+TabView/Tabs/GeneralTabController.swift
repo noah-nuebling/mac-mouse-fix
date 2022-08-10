@@ -75,7 +75,7 @@ class GeneralTabController: NSViewController {
             self.enableToggle.intValue = self.enableToggle.intValue == 0 ? 1 : 0
             if doEnable {
                 do {
-                    try ReactiveEnabler.shared.enable()
+                    try EnabledState.shared.enable()
                 } catch {
                     if #available(macOS 13, *) {
                         if (error as NSError).code == 1 {
@@ -87,7 +87,7 @@ class GeneralTabController: NSViewController {
                     }
                 }
             } else {
-                ReactiveEnabler.shared.disable()
+                EnabledState.shared.disable()
             }
         }
         if usingSwitch, #available(macOS 10.15, *) {
@@ -101,15 +101,15 @@ class GeneralTabController: NSViewController {
         getBetaVersions <~ betaToggle.reactive.boolValues
         
         if usingSwitch, #available(macOS 10.15, *) {
-            (enableToggle as? NSSwitcherino)?.reactive.boolValue <~ ReactiveEnabler.shared
+            (enableToggle as? NSSwitcherino)?.reactive.boolValue <~ EnabledState.shared
         } else {
-            enableToggle.reactive.boolValue <~ ReactiveEnabler.shared
+            enableToggle.reactive.boolValue <~ EnabledState.shared
         }
         menuBarToggle.reactive.boolValue <~ showInMenubar
         updatesToggle.reactive.boolValue <~ checkForUpdates
         betaToggle.reactive.boolValue <~ getBetaVersions
         
-        mainHidableSection.reactive.isCollapsed <~ ReactiveEnabler.shared.producer.negate()
+        mainHidableSection.reactive.isCollapsed <~ EnabledState.shared.producer.negate()
         updatesExtraSection.reactive.isCollapsed <~ checkForUpdates.negate()
         
         /// Labels

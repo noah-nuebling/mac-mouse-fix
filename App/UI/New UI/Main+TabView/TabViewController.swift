@@ -204,7 +204,7 @@ class TabViewController: NSTabViewController {
         ///
         
         let springSpeed = 3.75
-        let springDamping = 1.0 /* 1.1 For more beautiful but slightly floaty animations*/
+        let springDamping = 1.1 /* 1.1 For more beautiful but slightly floaty animations*/
         let animation = CASpringAnimation(speed: springSpeed, damping: springDamping)
         
         /// Get durations

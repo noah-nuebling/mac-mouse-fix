@@ -61,8 +61,8 @@ import CocoaLumberjackSwift
     /// Supersampling
     ///     -> makes the animator run `sampleRate` updates per second. This makes the simulation more accurate.
     ///     - Simulation accuracy caps out at a sampleRate of around 3000 on my M1 Air running 60 fps so I set it to 6000 to be sure.
-    ///     - Interesting: At a superSample of around `6000 * 100`, that takes a shitton of CPU, it looks like the anmation stops dropping frames!? Some bugs in the renderer maybe?
-    let sampleRate: Int = 6000 * 100 /// 6000 updates per second
+    ///     - Interesting: At a superSample of around `6000 * 100`, that takes a lotta CPU, it looks like the anmation stops stuttering / dropping frames!? Some bugs in the renderer maybe?
+    let sampleRate: Int = 6000 * 100
     
     /// State
     var target: Double

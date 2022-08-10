@@ -80,7 +80,7 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
         [KeyCaptureView handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload isSystemDefinedEvent:YES];
     } else if ([message isEqualToString:@"helperEnabled"]) {
         [AppDelegate handleHelperEnabledMessage];
-        [ReactiveEnabler.shared reactToDidBecomeEnabled];
+        [EnabledState.shared reactToDidBecomeEnabled];
     }
     
     NSData *response = NULL;

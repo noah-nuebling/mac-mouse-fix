@@ -10,7 +10,7 @@
 import Cocoa
 import ReactiveSwift
 
-@objc class ReactiveEnabler: NSObject, BindingSource {
+@objc class EnabledState: NSObject, BindingSource {
     
     /// Binding source protocol
     var producer: SignalProducer<Bool, Never> {
@@ -20,7 +20,7 @@ import ReactiveSwift
     typealias Value = Bool
     
     /// Declare singleton instance
-    @objc static let shared = ReactiveEnabler()
+    @objc static let shared = EnabledState()
     
     /// Storage
     let signal: Signal<Bool, Never>
