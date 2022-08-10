@@ -24,6 +24,30 @@ class TabViewController: NSTabViewController {
     
     private var window: ResizingTabWindow? { self.view.window as? ResizingTabWindow }
 
+    /// Other interface
+    
+    @objc public func coolSelectTab(identifier: String) {
+        
+        /// There's a library method `self.tabView.selectTabViewItem(withIdentifier:)`
+        ///     but it doesn't change the selected toolbar button properly.
+        
+        guard let tb = MainAppState.shared.window?.toolbar else { return }
+        let tbv = SharedUtility.getPrivateValue(of: tb, forName: "_toolbarView")
+        let lvs = SharedUtility.getPrivateValue(of: tbv, forName: "_layoutViews") as? [NSView]
+        guard let lvs = lvs else { return }
+        
+        for v in lvs {
+            guard let item = SharedUtility.getPrivateValue(of: v, forName: "_item") as? NSToolbarItem else { return }
+                    if item.itemIdentifier.rawValue == identifier {
+                for sub in v.subviews {
+                    if let sub = sub as? NSButton {
+                        sub.performClick(nil)
+                    }
+                }
+            }
+        }
+    }
+    
     /// Helper
     
     func createUnselectedTabImageView() -> NSImageView {

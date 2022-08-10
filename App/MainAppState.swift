@@ -61,6 +61,14 @@ import ReactiveSwift
     @objc static let shared = MainAppState()
 
     /// References
+    
+    @objc var tabViewController: TabViewController {
+        let controller = NSApp.mainWindow?.contentViewController as! TabViewController
+        return controller
+    }
+    @objc var appDelegate: AppDelegate {
+        return NSApp.delegate as! AppDelegate
+    }
     @objc var window: ResizingTabWindow? {
         return NSApp.mainWindow as? ResizingTabWindow
     }

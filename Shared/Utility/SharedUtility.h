@@ -18,6 +18,11 @@
 
 #define stringf(format, ...) [NSString stringWithFormat:(format), ##__VA_ARGS__]
 
+/// Check if ptr is objc object
+///     Copied from https://opensource.apple.com/source/CF/CF-635/CFInternal.h
+#define CF_IS_TAGGED_OBJ(PTR)    ((uintptr_t)(PTR) & 0x1)
+extern inline bool _objc_isTaggedPointer(const void *ptr);     /// Copied from https://blog.timac.org/2016/1124-testing-if-an-arbitrary-pointer-is-a-valid-objective-c-object/
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SharedUtility : NSObject
@@ -34,7 +39,8 @@ void *offsetPointer(void *ptr, int byteOffset);
 + (CVReturn)displayUnderMousePointer:(CGDirectDisplayID *)dspID withEvent:(CGEventRef _Nullable)event;
 + (CVReturn)display:(CGDirectDisplayID *)dspID atPoint:(CGPoint)point;
 
-+ (NSString *)dumpClassInfo:(Class)class;
++ (id)getPrivateValueOf:(id)obj forName:(NSString *)name;
++ (NSString *)dumpClassInfo:(id)obj;
 + (NSString *)launchCLT:(NSURL *)executableURL withArguments:(NSArray<NSString *> *)arguments error:(NSError ** _Nullable)error;
 + (void)launchCLT:(NSURL *)commandLineTool withArgs:(NSArray <NSString *> *)arguments;
 + (FSEventStreamRef)scheduleFSEventStreamOnPaths:(NSArray<NSString *> *)urls withCallback:(FSEventStreamCallback)callback;

@@ -24,6 +24,7 @@
 #import <Sparkle/Sparkle.h>
 #import "SparkleUpdaterController.h"
 #import "NSAttributedString+Additions.h"
+#import "Mac_Mouse_Fix-Swift.h"
 
 @interface AppDelegate ()
 
@@ -83,6 +84,10 @@
 //        [Toast
 //        NotificationController attachNotificationWithMessage:message toWindow:AppDelegate.mainWindow forDuration:-1 alignment:kToastNotificationAlignmentBottomMiddle];
     }
+}
+
+- (IBAction)openAboutTab:(id)sender {
+    [MainAppState.shared.tabViewController coolSelectTabWithIdentifier:@"about"];
 }
 
 - (IBAction)openMoreSheet:(id)sender {

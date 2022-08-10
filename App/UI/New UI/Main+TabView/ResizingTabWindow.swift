@@ -24,6 +24,7 @@ import CocoaLumberjackSwift
     @objc public var tabSwitchIsInProgress: Bool = false
     /// ^ This is set by TabViewController
     
+    
     // MARK: Resizing interface
     
     func setFrame(_ newFrame: NSRect, withSpringAnimation animation: CASpringAnimation) {
@@ -121,6 +122,20 @@ import CocoaLumberjackSwift
     override func zoom(_ sender: Any?) {
         if tabSwitchIsInProgress { return } /// Prevent zoom during resize
         super.zoom(sender)
+    }
+    
+    override var representedURL: URL? {
+        
+        /// Override representedURL
+        ///     If we don't do this, the URL becomes some random value and the titlebar will turn into a path button. Setting to nil in init doesn't work either.
+        ///     (Having these issues under Ventura beta)
+        
+        get {
+            return nil
+        }
+        set {
+            assert(false)
+        }
     }
     
     // MARK: Old stuff

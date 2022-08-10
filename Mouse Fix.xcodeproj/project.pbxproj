@@ -163,6 +163,8 @@
 		4FDECCD928A3A37800DDEE91 /* ZipArchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FDECCD628A3A37800DDEE91 /* ZipArchive.framework */; };
 		4FDECCDA28A3A37800DDEE91 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FDECCD728A3A37800DDEE91 /* Sparkle.framework */; };
 		4FDECCDB28A3A37800DDEE91 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4FDECCD828A3A37800DDEE91 /* README.md */; };
+		4FDECCDE28A3E93100DDEE91 /* IsObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FDECCDD28A3E93100DDEE91 /* IsObjC.m */; };
+		4FDECCDF28A3E93100DDEE91 /* IsObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FDECCDD28A3E93100DDEE91 /* IsObjC.m */; };
 		4FE40B96283A49DD00880BEF /* SharedUtilitySwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */; };
 		4FE40B97283A49DD00880BEF /* SharedUtilitySwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */; };
 		4FE6CBC428987E8B00B3E829 /* DynamicSystemAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE6CBC328987E8A00B3E829 /* DynamicSystemAnimator.swift */; };
@@ -581,6 +583,8 @@
 		4FDECCD628A3A37800DDEE91 /* ZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ZipArchive.framework; sourceTree = "<group>"; };
 		4FDECCD728A3A37800DDEE91 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		4FDECCD828A3A37800DDEE91 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		4FDECCDC28A3E93100DDEE91 /* IsObjC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IsObjC.h; sourceTree = "<group>"; };
+		4FDECCDD28A3E93100DDEE91 /* IsObjC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IsObjC.m; sourceTree = "<group>"; };
 		4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedUtilitySwift.swift; sourceTree = "<group>"; };
 		4FE6CBC328987E8A00B3E829 /* DynamicSystemAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicSystemAnimator.swift; sourceTree = "<group>"; };
 		4FE7A0DE28677AD600C33B37 /* Gain Curve Math.tex */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Gain Curve Math.tex"; sourceTree = "<group>"; };
@@ -1486,6 +1490,8 @@
 				4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */,
 				4FF6653E25F2C7B000689B77 /* SharedUtility.h */,
 				4FF6653B25F2C7B000689B77 /* SharedUtility.m */,
+				4FDECCDC28A3E93100DDEE91 /* IsObjC.h */,
+				4FDECCDD28A3E93100DDEE91 /* IsObjC.m */,
 				4FF6653F25F2C7B000689B77 /* Queue.h */,
 				4FF6653A25F2C7B000689B77 /* Queue.m */,
 				4FD860A9266EC24E004F76C8 /* DerivedProperty.swift */,
@@ -2394,6 +2400,7 @@
 				4F909D2A28A0C3D2009349A2 /* ResizingTabWindowController.swift in Sources */,
 				4FF665EE25F2C92700689B77 /* OverridePanel.m in Sources */,
 				4FF665F525F2C92700689B77 /* ConfigInterface_App.m in Sources */,
+				4FDECCDE28A3E93100DDEE91 /* IsObjC.m in Sources */,
 				4F909D2228A0C3D2009349A2 /* ScrollTabController.swift in Sources */,
 				4FF6654E25F2C7B000689B77 /* SharedUtility.m in Sources */,
 				4F8FC13F275DC81900887A0C /* PrefixSwift.swift in Sources */,
@@ -2596,6 +2603,7 @@
 				4FF0255427B007FC00923107 /* ModifiedDragOutputFakeDrag.m in Sources */,
 				4FF8C89A28955491007EC31F /* ClickCycle.swift in Sources */,
 				4FF9306228806E4F0007CCA7 /* PolyFitObjC.m in Sources */,
+				4FDECCDF28A3E93100DDEE91 /* IsObjC.m in Sources */,
 				4FA83A2E268288D900F3A31B /* PointerConfig.swift in Sources */,
 				4FF6669425F2C93A00689B77 /* GestureScrollSimulator_old_.m in Sources */,
 				4F8A8DBD287F203D00786BCC /* IOHIDAccelerationTable.cpp in Sources */,

@@ -62,71 +62,167 @@
     }
 }
 
+#pragma mark - Use private classes
+
++ (id)getPrivateValueOf:(id)obj forName:(NSString *)name {
+    /// Look through all ivars and properties of `obj` and return the first value with name `name`
+    
+    id result;
+    id __strong * resultPtr = &result;
+    
+    iterateIvarsOn(obj, ^(Ivar ivar, BOOL *stop) {
+        
+        NSString *ivarName = @(ivar_getName(ivar));
+        
+        if ([name isEqual:ivarName]) {
+            
+            const char *typeEncoding = ivar_getTypeEncoding(ivar);
+            BOOL isObject = typeEncoding[0] == '@';
+            if (!isObject) return; /// Ignore everything except objects, because we don't need more rn
+            
+            id value = (id)object_getIvar(obj, ivar);
+            if (value == nil) return;
+            
+            *resultPtr = value;
+            
+            *stop = YES;
+        }
+    });
+    
+    /// TODO
+    /// TODO: Also iterate properties/propertyLikeMethods
+    
+    return result;
+}
+
 #pragma mark - Investigate private classes
 
-+ (NSString *)dumpClassInfo:(Class)class {
-    /// See this article to understand type encodings: https://nshipster.com/type-encodings/l
++ (NSString *)dumpClassInfo:(id)obj {
+    /// See this article to understand type encodings: https://nshipster.com/type-encodings/
     
+    Class class = [obj class];
+    
+    /// Name
+    const char *className = class_getName(class);
+    
+    
+    /// Properties
+    NSMutableArray *properties = [NSMutableArray array];
+    
+    iteratePropertiesOn(obj, ^(objc_property_t property, NSString *name, NSString *attributes, BOOL *stop) {
+        [properties addObject:name];
+    });
+
+    /// Ivars
+    NSMutableArray *ivars = [NSMutableArray array];
+    
+    iterateIvarsOn(obj, ^(Ivar ivar, BOOL *stop) {
+        
+        NSString *name = [@(ivar_getName(ivar)) copy];
+        [ivars addObject:name];
+    });
+
+    /// Methods
+    NSMutableArray *methods = [NSMutableArray array];
+    iterateMethodsOn(obj, ^(Method method, struct objc_method_description *description, BOOL *stop) {
+        
+        [methods addObject:[NSString stringWithFormat: @"%@ | type: \'%@\'", @(sel_getName(description->name)), @(description->types)]];
+    });
+
+    /// Class Methods
+    NSMutableArray *classMethods = [NSMutableArray array];
+    iterateMethodsOn([obj class], ^(Method method, struct objc_method_description *description, BOOL *stop) {
+        
+        [classMethods addObject:[NSString stringWithFormat: @"%@ | type: \'%@\'", @(sel_getName(description->name)), @(description->types)]];
+    });
+    
+
+    
+    /// Return string
+    return [NSString stringWithFormat:@"Info on class %@ - properties: %@, ivars: %@, methods: %@, classMethods: %@", @(className), properties, ivars, methods, classMethods];
+}
+
+#pragma mark - Core class accessor funcs
+
+static void iterateIvarsOn(id obj, void(^callback)(Ivar ivar, BOOL *stop)) {
+ 
+    Class class = [obj class];
+    
+    unsigned int nIvars;
+    Ivar *ivarList = class_copyIvarList(class, &nIvars);
+    
+    for (int i = 0; i < nIvars; i++) {
+        
+        Ivar m = ivarList[i];
+        BOOL shouldStop = NO;
+        callback(m, &shouldStop);
+        if (shouldStop) break;
+    }
+}
+
+static void iteratePropertyLikeMethods(id obj, void(^callback)(Method method, struct objc_method_description *description, id value, BOOL *stop)) {
+    
+    /// This can cause leaks. See https://stackoverflow.com/questions/7017281/performselector-may-cause-a-leak-because-its-selector-is-unknown
+    ///     -> I think the iterateIvars function can also cause leaks in the same way.
+    
+    iterateMethodsOn(obj, ^(Method method, struct objc_method_description *description, BOOL *stop) {
+        
+        /// Check if last char is `:` to see if method has arguments
+        SEL sel = description->name;
+        const char *name = sel_getName(sel);
+        unsigned long len = strlen(name);
+        char lastChar = name[len-1];
+        if (lastChar == ':') return;
+        id value = [obj performSelector:sel];
+        if (value == nil) return;
+        callback(method, description, value, stop);
+    });
+}
+
+static void iterateMethodsOn(id obj, void(^callback)(Method method, struct objc_method_description *description, BOOL *stop)) {
+    
+    /// To iterate class methods, pass in [obj class]
+    
+    Class class = [obj class];
+    
+    unsigned int nMethods;
+    Method *methodList = class_copyMethodList(class, &nMethods);
+    
+    for (int i = 0; i < nMethods; i++) {
+        
+        Method m = methodList[i];
+        struct objc_method_description *d = method_getDescription(m);
+        
+        BOOL shouldStop = NO;
+        callback(m, d, &shouldStop);
+        if (shouldStop) break;
+    }
+    
+    free(methodList);
+}
+
+static void iteratePropertiesOn(id obj, void(^callback)(objc_property_t property, NSString *name, NSString *attributes, BOOL *stop)) {
+    
+    Class class = [obj class];
     
     /// Properties
     unsigned int nProperties;
     objc_property_t *propertyList = class_copyPropertyList(class, &nProperties);
     
-    unsigned int nIvars;
-    Ivar *ivarList = class_copyIvarList(class, &nIvars);
-    
-    unsigned int nMethods;
-    Method *methodList = class_copyMethodList(class, &nMethods);
-    
-    unsigned int nClassMethods;
-    Method *classMethodList = class_copyMethodList(object_getClass(class), &nClassMethods);
-    
-    /// Get strings
-    
-    /// Name
-    const char *className = class_getName(class);
-    
-    /// Properties
-    NSMutableArray *properties = [NSMutableArray array];
     for (int i = 0; i < nProperties; i++) {
         objc_property_t m = propertyList[i];
         const char *name = property_getName(m);
-        [properties addObject:@(name)];
+        const char *attrs = property_getAttributes(m);
+        BOOL shouldStop = NO;
+        callback(m, @(name), @(attrs), &shouldStop);
+        if (shouldStop) break;
     }
     
-    /// Ivars
-    NSMutableArray *ivars = [NSMutableArray array];
-    for (int i = 0; i < nIvars; i++) {
-        Ivar m = ivarList[i];
-        const char *name = ivar_getName(m);
-        [ivars addObject:@(name)];
-    }
-    
-    /// Methods
-    NSMutableArray *methods = [NSMutableArray array];
-    for (int i = 0; i < nMethods; i++) {
-        Method m = methodList[i];
-        struct objc_method_description *d = method_getDescription(m);
-        [methods addObject:[NSString stringWithFormat: @"%@ | type: \'%@\'", @(sel_getName(d->name)), @(d->types)]];
-    }
-    
-    /// Class Methods
-    NSMutableArray *classMethods = [NSMutableArray array];
-    for (int i = 0; i < nClassMethods; i++) {
-        Method m = classMethodList[i];
-        struct objc_method_description *d = method_getDescription(m);
-        [classMethods addObject:[NSString stringWithFormat: @"%@ | type: \'%@\'", @(sel_getName(d->name)), @(d->types)]];
-    }
-    
-    /// Free
     free(propertyList);
-    free(ivarList);
-    free(methodList);
-    free(classMethodList);
-    
-    /// Return string
-    return [NSString stringWithFormat:@"Info on class %@ - properties: %@, ivars: %@, methods: %@, classMethods: %@", @(className), properties, ivars, methods, classMethods];
 }
+
+#pragma mark - Check if pointer is object
+
 
 #pragma mark - Check if this is a prerelease version
 
@@ -134,7 +230,7 @@
     
     BOOL runningPrerelease;
     
-    // This is a pretty crude way of checking whether this is a pre-release, but it should work for now
+    /// This is a pretty crude way of checking whether this is a pre-release, but it should work for now
 #if DEBUG 
     runningPrerelease = YES;
 #else

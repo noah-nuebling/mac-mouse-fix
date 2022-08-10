@@ -25,4 +25,14 @@ class ResizingTabWindowController: NSWindowController, NSWindowDelegate {
         
         return modCaptureFieldEditor
     }
+    
+//    func window(_ window: NSWindow, shouldPopUpDocumentPathMenu menu: NSMenu) -> Bool {
+//
+//        /// Trying to turn off the document path button. Doing it in window subclass instead
+//
+//        window.title = window.title
+//        window.setTitleWithRepresentedFilename("")
+//        window.standardWindowButton(.documentIconButton)?.image = nil
+//        return false
+//    }
 }

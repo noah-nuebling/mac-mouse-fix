@@ -419,12 +419,12 @@ Tips:
                         <items>
                             <menuItem title="Undo" keyEquivalent="z" id="kIC-0d-1oi">
                                 <connections>
-                                    <action selector="undo:" target="-1" id="Lx6-rw-LBZ"/>
+                                    <action selector="undo:" target="-1" id="FmP-xe-Yfn"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Redo" keyEquivalent="Z" id="ldi-RA-oco">
                                 <connections>
-                                    <action selector="redo:" target="-1" id="pfe-va-4gq"/>
+                                    <action selector="redo:" target="-1" id="WD7-5a-0RH"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="Sgx-g5-rCi"/>
