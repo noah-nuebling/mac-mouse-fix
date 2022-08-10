@@ -174,9 +174,9 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
             [app activateWithOptions:NSApplicationActivateIgnoringOtherApps];
         }
         /// Close this app (Will be restarted immediately by launchd)
-        [NSApp terminate:NULL];
-//        [self load]; // TESTING - to make button capture notification work
-//        [_openMainAppTimer invalidate]; // TESTING
+        [NSApp terminate:nil];
+//        [self load]; /// TESTING - to make button capture notification work
+//        [_openMainAppTimer invalidate]; /// TESTING
     }
 }
 

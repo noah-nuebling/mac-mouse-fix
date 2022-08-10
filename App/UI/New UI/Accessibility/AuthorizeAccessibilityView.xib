@@ -17,7 +17,7 @@
             <rect key="frame" x="0.0" y="0.0" width="579" height="289"/>
             <subviews>
                 <imageView toolTip="Hold Shift (⇧) and click this icon to reveal 'Mouse Fix Helper' in Finder" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fK8-8z-KQn" customClass="ClickableImageView">
-                    <rect key="frame" x="146" y="193" width="79" height="79"/>
+                    <rect key="frame" x="146" y="183" width="79" height="79"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="AppIconRound" id="5dq-HX-ncI"/>
                     <userDefinedRuntimeAttributes>
@@ -26,12 +26,12 @@
                     </userDefinedRuntimeAttributes>
                 </imageView>
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xsP-AA-VHR">
-                    <rect key="frame" x="354" y="195" width="75" height="75"/>
+                    <rect key="frame" x="354" y="185" width="75" height="75"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="UniversalAccess" id="Erm-4Z-KOe"/>
                 </imageView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3VE-AW-Zcd">
-                    <rect key="frame" x="73" y="165" width="432" height="20"/>
+                    <rect key="frame" x="73" y="155" width="432" height="20"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Grant Accessibility Access to Mac Mouse Fix Helper" id="OSk-Cl-izW">
                         <font key="font" metaFont="systemSemibold" size="13"/>
@@ -40,12 +40,12 @@
                     </textFieldCell>
                 </textField>
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qdi-fY-QB7">
-                    <rect key="frame" x="263" y="219" width="53" height="28"/>
+                    <rect key="frame" x="263" y="209" width="53" height="28"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="KeyIcon" id="lx6-2v-x2x"/>
                 </imageView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" verifyAmbiguity="off" translatesAutoresizingMaskIntoConstraints="NO" id="ehG-P7-Fzq" customClass="Hyperlink">
-                    <rect key="frame" x="149" y="66" width="282" height="14"/>
+                    <rect key="frame" x="149" y="56" width="282" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="Why does Mac Mouse Fix need Accessibility Access?" id="0lz-be-kpl">
                         <font key="font" metaFont="message" size="11"/>
@@ -57,7 +57,7 @@
                     </userDefinedRuntimeAttributes>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g4H-g7-Zd7" customClass="Hyperlink">
-                    <rect key="frame" x="270" y="48" width="38" height="14"/>
+                    <rect key="frame" x="270" y="38" width="38" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" alignment="center" title="Help" id="04N-yp-Qg1">
                         <font key="font" metaFont="message" size="11"/>
@@ -69,7 +69,7 @@
                     </userDefinedRuntimeAttributes>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6N2-6y-5iB">
-                    <rect key="frame" x="199" y="127" width="21" height="17"/>
+                    <rect key="frame" x="199" y="117" width="21" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="1." id="72q-sS-xMS">
                         <font key="font" metaFont="system"/>
@@ -78,7 +78,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" verifyAmbiguity="off" translatesAutoresizingMaskIntoConstraints="NO" id="xUD-oJ-hdN" customClass="Hyperlink">
-                    <rect key="frame" x="208" y="127" width="165" height="17"/>
+                    <rect key="frame" x="208" y="117" width="165" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Open Privacy Settings" id="9qp-gN-SZZ">
                         <font key="font" metaFont="message"/>
@@ -90,7 +90,7 @@
                     </userDefinedRuntimeAttributes>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8eQ-d3-USu">
-                    <rect key="frame" x="164" y="105" width="20" height="17"/>
+                    <rect key="frame" x="164" y="95" width="20" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="2." id="RIR-VN-l6s">
                         <font key="font" metaFont="system"/>
@@ -99,7 +99,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9kK-bF-abK">
-                    <rect key="frame" x="183" y="105" width="213" height="17"/>
+                    <rect key="frame" x="183" y="95" width="213" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Switch on 'Mac Mouse Fix Helper'" id="46z-Nd-nh4">
                         <font key="font" metaFont="system"/>
