@@ -65,7 +65,10 @@
 #pragma mark - Use private classes
 
 + (id)getPrivateValueOf:(id)obj forName:(NSString *)name {
+    
     /// Look through all ivars and properties of `obj` and return the first value with name `name`
+    /// -> Actually this only looks at ivars, and ignores values that aren't objects. Because that's all we need it for right now.
+    /// -> We use this for changing tabs programmatically in `coolSelectTab(identifier: String)`, so don't break it!
     
     id result;
     id __strong * resultPtr = &result;
@@ -88,9 +91,6 @@
             *stop = YES;
         }
     });
-    
-    /// TODO
-    /// TODO: Also iterate properties/propertyLikeMethods
     
     return result;
 }

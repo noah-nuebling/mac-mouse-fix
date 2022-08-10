@@ -29,7 +29,7 @@ class TabViewController: NSTabViewController {
     @objc public func coolSelectTab(identifier: String) {
         
         /// There's a library method `self.tabView.selectTabViewItem(withIdentifier:)`
-        ///     but it doesn't change the selected toolbar button properly.
+        ///     but it doesn't change the selected toolbar button properly, so we have to use horrible hacks.
         
         guard let tb = MainAppState.shared.window?.toolbar else { return }
         let tbv = SharedUtility.getPrivateValue(of: tb, forName: "_toolbarView")
