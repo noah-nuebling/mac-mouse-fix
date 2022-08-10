@@ -212,7 +212,7 @@ class TabViewController: NSTabViewController {
         ///     Before spring animations we used to use window.animationResizeTime(newFrame)
         let duration = animation.settlingDuration
         
-        let fadeDuration = duration * 0.75
+        let fadeDuration = duration * 1.0 /* 0.75 */
         
         /// Debug
         DDLogDebug("Predicted window settling time: \(duration)")

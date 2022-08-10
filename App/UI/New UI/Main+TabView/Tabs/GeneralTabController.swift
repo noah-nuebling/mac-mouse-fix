@@ -9,6 +9,7 @@ import Cocoa
 import ReactiveSwift
 import ReactiveCocoa
 import CocoaLumberjackSwift
+import Sparkle
 
 class GeneralTabController: NSViewController {
     
@@ -17,8 +18,8 @@ class GeneralTabController: NSViewController {
     
     /// Config
     var showInMenubar: MutableProperty<Bool> = MutableProperty(false)
-    var checkForUpdates: MutableProperty<Bool> = MutableProperty(false)
-    var getBetaVersions: MutableProperty<Bool> = MutableProperty(false)
+    var checkForUpdates = ConfigValue<Bool>(configPath: "Other.checkForUpdates")
+    var getBetaVersions = ConfigValue<Bool>(configPath: "Other.checkForPrereleases")
     
     /// Outlets
     
@@ -46,8 +47,6 @@ class GeneralTabController: NSViewController {
         
         /// Load data
         showInMenubar.value = false
-        checkForUpdates.value = false
-        getBetaVersions.value = false
         
         /// Replace enable checkBox with NSSwitch on newer macOS versions
         var usingSwitch = false
@@ -70,7 +69,8 @@ class GeneralTabController: NSViewController {
         
         /// Declare signals
         
-        /// UI <-> data bindings
+        /// enabledToggle <-> Helper enabledState
+        
         let onToggle = { doEnable in
             self.enableToggle.intValue = self.enableToggle.intValue == 0 ? 1 : 0
             if doEnable {
@@ -96,6 +96,8 @@ class GeneralTabController: NSViewController {
             enableToggle.reactive.boolValues.observeValues(onToggle)
         }
         
+        /// UI <-> data bindings
+        
         showInMenubar <~ menuBarToggle.reactive.boolValues
         checkForUpdates <~ updatesToggle.reactive.boolValues
         getBetaVersions <~ betaToggle.reactive.boolValues
@@ -110,7 +112,22 @@ class GeneralTabController: NSViewController {
         betaToggle.reactive.boolValue <~ getBetaVersions
         
         mainHidableSection.reactive.isCollapsed <~ EnabledState.shared.producer.negate()
-        updatesExtraSection.reactive.isCollapsed <~ checkForUpdates.negate()
+        updatesExtraSection.reactive.isCollapsed <~ checkForUpdates.producer.negate()
+        
+        /// Side effects
+        ///     Sparkle doesn't let you know if a version is skipped. We tried to use `SUUpdater.shared().checkForUpdates(nil)` instead of `checkForUpdatesInBackground()`, so that it also checks for __skipped versions__, but that's annoying.
+        
+        checkForUpdates.producer.skip(first: 1).startWithValues { doCheckUpdates in
+            if doCheckUpdates {
+                SUUpdater.shared().checkForUpdatesInBackground()
+            }
+        }
+        getBetaVersions.producer.skip(first: 1).startWithValues { doCheckBetas in
+            SparkleUpdaterController.enablePrereleaseChannel(doCheckBetas)
+            if doCheckBetas {
+                SUUpdater.shared().checkForUpdatesInBackground()
+            }
+        }
         
         /// Labels
         

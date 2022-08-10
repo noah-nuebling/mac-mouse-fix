@@ -226,7 +226,7 @@ static NSDictionary *sideButtonActions;
     
     if (firstVersionLaunch && !appState().updaterDidRelaunchApplication) {
         /// TODO: Test if updaterDidRelaunchApplication works.
-        ///  It will only work if `SparkleUpdaterDelegate - updaterDidRelaunchApplication:` is called before this
+        ///     It will only work if `SparkleUpdaterDelegate - updaterDidRelaunchApplication:` is called before this
         /// The app (or this version of it) has probably been downloaded from the internet and is running for the first time.
         ///  -> Override check-for-prereleases setting
         if (SharedUtility.runningPreRelease) {
@@ -234,7 +234,7 @@ static NSDictionary *sideButtonActions;
             checkForPrereleases = YES;
         } else {
             /// If this is not a pre-release, then we'll *deactivate* updates to pre-releases
-            checkForPrereleases = NO;
+//            checkForPrereleases = NO;
         }
         setConfig(@"Other.checkForPrereleases", @(checkForPrereleases));
     }

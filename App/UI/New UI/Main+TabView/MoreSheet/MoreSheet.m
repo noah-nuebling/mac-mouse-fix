@@ -41,19 +41,18 @@ static MoreSheet *_instance;
 # pragma mark - IBActions
 
 - (IBAction)checkForUpdateCheckBox:(NSButton *)sender {
-    setConfig(@"Other.skippedBundleVersion", @"0");
+//    setConfig(@"Other.skippedBundleVersion", @"0"); /// <
     [self updateConfigFileToUIState];
-    [self updateUI]; // So that prereleaseCheckBox gets disabled/enabled
+    [self updateUI]; /// So that prereleaseCheckBox gets disabled/enabled
     if (sender.state == 1) {
-        [SUUpdater.sharedUpdater checkForUpdatesInBackground];
-        
+        [SUUpdater.sharedUpdater checkForUpdatesInBackground]; /// <
     }
 }
 - (IBAction)prereleaseCheckBox:(NSButton *)sender {
     [self updateConfigFileToUIState];
-    [SparkleUpdaterController enablePrereleaseChannel:sender.state];
+    [SparkleUpdaterController enablePrereleaseChannel:sender.state]; /// <
     if (sender.state == 1) {  
-        [SUUpdater.sharedUpdater checkForUpdatesInBackground];
+        [SUUpdater.sharedUpdater checkForUpdatesInBackground]; /// <
     }
 }
 
@@ -102,13 +101,14 @@ static MoreSheet *_instance;
 
 - (void)updateUI {
     
-    // Load version label
+    /// Load version label
     NSString *versionString = [NSString stringWithFormat:@"Version %@ (%ld)",
                                (NSString *)Utility_App.bundleVersionShort,
                                (long)Utility_App.bundleVersion];
+    
     [self.versionLabel setStringValue:versionString];
     
-    // Load checkbox state
+    /// Load checkbox state
     self.checkForUpdateCheckBox.state = [(id)config(@"Other.checkForUpdates") boolValue];
     self.prereleaseCheckBox.state = [(id)config(@"Other.checkForPrereleases") boolValue];
     
