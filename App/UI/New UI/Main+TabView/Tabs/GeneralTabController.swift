@@ -114,15 +114,17 @@ class GeneralTabController: NSViewController {
         mainHidableSection.reactive.isCollapsed <~ EnabledState.shared.producer.negate()
         updatesExtraSection.reactive.isCollapsed <~ checkForUpdates.producer.negate()
         
-        /// Side effects
-        ///     Sparkle doesn't let you know if a version is skipped. We tried to use `SUUpdater.shared().checkForUpdates(nil)` instead of `checkForUpdatesInBackground()`, so that it also checks for __skipped versions__, but that's annoying.
+        /// Side effects: Sparkle
+        ///     See `applicationDidFinishLaunching` for context
         
         checkForUpdates.producer.skip(first: 1).startWithValues { doCheckUpdates in
+            UserDefaults.standard.removeObject(forKey: "SUSkippedVersion")
             if doCheckUpdates {
                 SUUpdater.shared().checkForUpdatesInBackground()
             }
         }
         getBetaVersions.producer.skip(first: 1).startWithValues { doCheckBetas in
+            UserDefaults.standard.removeObject(forKey: "SUSkippedVersion")
             SparkleUpdaterController.enablePrereleaseChannel(doCheckBetas)
             if doCheckBetas {
                 SUUpdater.shared().checkForUpdatesInBackground()
