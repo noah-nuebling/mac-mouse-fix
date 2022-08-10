@@ -127,7 +127,6 @@ class GeneralTabController: NSViewController {
 }
 
 // MARK: NSSwitcherino
-/// All this is is a switch that
 
 @available(macOS 10.15, *)
 extension Reactive where Base: NSSwitcherino {

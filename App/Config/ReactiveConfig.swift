@@ -51,7 +51,7 @@ import ReactiveCocoa
 // MARK: Config values
 /// Reactive interface for interacting with certain values in the config dict
 
-class ConfigValue<T: NSObject>: NSObject, BindingTargetProvider, BindingSource {
+class ConfigValue<T: Equatable>: NSObject, BindingTargetProvider, BindingSource {
     
     /// Reactive
     
@@ -59,7 +59,7 @@ class ConfigValue<T: NSObject>: NSObject, BindingTargetProvider, BindingSource {
     var bindingTarget: ReactiveSwift.BindingTarget<T> {
         return BindingTarget(lifetime: self.reactive.lifetime) { self.set($0) }
     }
-    var producer: ReactiveSwift.SignalProducer<T, Never>
+    var producer: SignalProducer<T, Never>
     
     /// Storage
     var keyPath: String
@@ -69,7 +69,7 @@ class ConfigValue<T: NSObject>: NSObject, BindingTargetProvider, BindingSource {
         
         /// Set dummy values so that you can super.init()
         keyPath = ""
-        producer = SignalProducer<T, Never>.init(value: T())
+        producer = Signal<T, Never>.init({ Observer, lifetime in }).producer
         
         /// Init super
         super.init()
@@ -90,7 +90,7 @@ class ConfigValue<T: NSObject>: NSObject, BindingTargetProvider, BindingSource {
     /// Core functions
     
     func set(_ value: T) {
-        setConfig(keyPath, value)
+        setConfig(keyPath, value as! NSObject)
         commitConfig()
     }
     func get() -> T? {

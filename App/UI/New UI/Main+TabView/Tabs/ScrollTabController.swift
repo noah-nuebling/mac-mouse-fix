@@ -15,7 +15,7 @@ class ScrollTabController: NSViewController {
     
     /// Config
     
-    var smooth = ConfigValue<NSNumber>(configPath: "Scroll.smooth")
+    var smooth = ConfigValue<Bool>(configPath: "Scroll.smooth")
     var inertia = MutableProperty(true)
     var naturalDirection = MutableProperty(false)
     var scrollSpeed = MutableProperty("medium")
@@ -56,14 +56,10 @@ class ScrollTabController: NSViewController {
         
         /// Smooth
         
-        smooth.bindingTarget <~ smoothToggle.reactive.boolValues.map{ NSNumber(booleanLiteral: $0) }
-        smoothToggle.reactive.boolValue <~ smooth.producer.map {
-            $0.boolValue
-        }
+        smooth.bindingTarget <~ smoothToggle.reactive.boolValues
+        smoothToggle.reactive.boolValue <~ smooth.producer
          
-        inertiaSection.reactive.isCollapsed <~ smooth.producer.map({
-            $0.boolValue
-        }).negate()
+        inertiaSection.reactive.isCollapsed <~ smooth.producer.negate()
         
         /// Inertia
         inertia.bindingTarget <~ inertiaToggle.reactive.boolValues
