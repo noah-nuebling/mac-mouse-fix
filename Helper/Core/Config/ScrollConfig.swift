@@ -35,30 +35,21 @@ import CocoaLumberjackSwift
         return Bezier(controlPoints: controlPoints, defaultEpsilon: 0.001) /// The default defaultEpsilon 0.08 makes the animations choppy
     }()
     
-    @objc static var stringToEventFlagMask: NSDictionary = ["command" : CGEventFlags.maskCommand,
-                                                            "control" : CGEventFlags.maskControl,
-                                                            "option" : CGEventFlags.maskAlternate,
-                                                            "shift" : CGEventFlags.maskShift]
+//    @objc static var stringToEventFlagMask: NSDictionary = ["command" : CGEventFlags.maskCommand,
+//                                                            "control" : CGEventFlags.maskControl,
+//                                                            "option" : CGEventFlags.maskAlternate,
+//                                                            "shift" : CGEventFlags.maskShift]
     
     // MARK: Convenience functions
     ///     For accessing top level dict and different sub-dicts
     
-    private var topLevel: NSDictionary {
-        Config.configWithAppOverridesApplied()[kMFConfigKeyScroll] as! NSDictionary
-    }
-    private var other: NSDictionary {
-        topLevel["other"] as! NSDictionary
-    }
-    private var smooth: NSDictionary {
-        topLevel["smoothParameters"] as! NSDictionary
-    }
-    private var mod: NSDictionary {
-        topLevel["modifierKeys"] as! NSDictionary
+    private func c(_ keyPath: String) -> NSObject? {
+        return (Config.configWithAppOverridesApplied()["Scroll"] as! NSDictionary).value(forKeyPath: keyPath) as! NSObject?
     }
     
     // MARK: General
     
-    @objc lazy var smoothEnabled: Bool = { topLevel["smooth"] as! Bool }()
+    @objc lazy var smoothEnabled: Bool = { c("smooth") as! Bool }()
     @objc lazy var disableAll: Bool = false /* topLevel["disableAll"] as! Bool */ /// This is currently unused. Could be used as a killswitch for all scrolling Interception
     
     // MARK: Invert Direction
@@ -494,13 +485,9 @@ import CocoaLumberjackSwift
     // MARK: Keyboard modifiers
     
     /// Event flag masks
-    @objc lazy var horizontalScrollModifierKeyMask = ScrollConfig.stringToEventFlagMask[mod["horizontalScrollModifierKey"] as! String] as! CGEventFlags
-    @objc lazy var magnificationScrollModifierKeyMask = ScrollConfig.stringToEventFlagMask[mod["magnificationScrollModifierKey"] as! String] as! CGEventFlags
+    @objc lazy var horizontalModifiers = CGEventFlags(rawValue: c("modifiers.horizontal") as! UInt64)
+    @objc lazy var zoomModifiers = CGEventFlags(rawValue: c("modifiers.zoom") as! UInt64)
     
-    /// Modifier enabled
-    @objc lazy var horizontalScrollModifierKeyEnabled = mod["horizontalScrollModifierKeyEnabled"] as! Bool
-    
-    @objc lazy var magnificationScrollModifierKeyEnabled = mod["magnificationScrollModifierKeyEnabled"] as! Bool
     
     // MARK: - Helper functions
     
