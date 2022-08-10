@@ -16,14 +16,15 @@ class ScrollTabController: NSViewController {
     /// Config
     
     var smooth = ConfigValue<Bool>(configPath: "Scroll.smooth")
-    var inertia = MutableProperty(true)
-    var naturalDirection = MutableProperty(false)
-    var scrollSpeed = MutableProperty("medium")
-    var precise = MutableProperty(false)
-    var horizontalMod: ReactiveFlags = ReactiveFlags([.shift, .control])
-    var zoomMod: ReactiveFlags = ReactiveFlags([])
-    var swiftMod: ReactiveFlags = ReactiveFlags([.command])
-    var preciseMod: ReactiveFlags = ReactiveFlags([.shift])
+    var inertia = ConfigValue<Bool>(configPath: "Scroll.inertia")
+    var naturalDirection = ConfigValue<Bool>(configPath: "Scroll.naturalDirection")
+    var scrollSpeed = ConfigValue<String>(configPath: "Scroll.speed")
+    var precise = ConfigValue<Bool>(configPath: "Scroll.precise")
+    var horizontalMod = ConfigValue<UInt>(configPath: "Scroll.modifiers.horizontal")
+    var zoomMod = ConfigValue<UInt>(configPath: "Scroll.modifiers.zoom")
+    var swiftMod = ConfigValue<UInt>(configPath: "Scroll.modifiers.swift")
+    var preciseMod = ConfigValue<UInt>(configPath: "Scroll.modifiers.precise")
+    /// Also see `ReactiveFlags` is this doesn't work
     
     /// Outlets
     
@@ -102,7 +103,7 @@ class ScrollTabController: NSViewController {
         macOSHintIndent.widthAnchor.constraint(equalToConstant: preciseSection.fittingSize.width).isActive = true
         let preciseSectionRetained: NSStackView? = self.preciseSection
         var testHintIsDisplaying = false
-        scrollSpeed.signal.observeValues { speed in
+        scrollSpeed.producer.skip(first: 1).startWithValues { speed in
             if speed == "system" && !testHintIsDisplaying {
                 self.preciseSection.animatedReplace(with: macOSHintIndent)
                 testHintIsDisplaying = true
@@ -114,15 +115,16 @@ class ScrollTabController: NSViewController {
         
         /// Keyboard modifiers
         
-        horizontalModField <~ horizontalMod
-        horizontalMod <~ horizontalModField
-        zoomModField <~ zoomMod
-        zoomMod <~ zoomModField
-        swiftModField <~ swiftMod
-        swiftMod <~ swiftModField
-        preciseModField <~ preciseMod
-        preciseMod <~ preciseModField
+        horizontalModField <~ horizontalMod.producer.map({ NSEvent.ModifierFlags(rawValue: $0) })
+        horizontalMod <~ horizontalModField.signal.map({ $0.rawValue })
+        zoomModField <~ zoomMod.producer.map({ NSEvent.ModifierFlags(rawValue: $0) })
+        zoomMod <~ zoomModField.signal.map({ $0.rawValue })
+        swiftModField <~ swiftMod.producer.map({ NSEvent.ModifierFlags(rawValue: $0) })
+        swiftMod <~ swiftModField.signal.map({ $0.rawValue })
+        preciseModField <~ preciseMod.producer.map({ NSEvent.ModifierFlags(rawValue: $0) })
+        preciseMod <~ preciseModField.signal.map({ $0.rawValue })
         
+        /// Keep these in sync with the `default_config`
         typealias Mods = NSEvent.ModifierFlags
         let defaultH: Mods = [.shift]
         let defaultZ: Mods = [.command]
@@ -130,36 +132,37 @@ class ScrollTabController: NSViewController {
         let defaultP: Mods = [.option]
         
         restoreDefaultModsButton.reactive.states.observeValues { state in
-            self.horizontalMod.value = defaultH
-            self.zoomMod.value = defaultZ
-            self.swiftMod.value = defaultS
-            self.preciseMod.value = defaultP
+            self.horizontalMod.set(defaultH.rawValue)
+            self.zoomMod.set(defaultZ.rawValue)
+            self.swiftMod.set(defaultS.rawValue)
+            self.preciseMod.set(defaultP.rawValue)
         }
         
-        let allFlags = SignalProducer<(String, NSEvent.ModifierFlags), Never>.merge(horizontalMod.flagss.map{ ("h", $0) }, zoomMod.flagss.map{ ("z", $0) }, swiftMod.flagss.map{ ("s", $0) }, preciseMod.flagss.map{ ("p", $0) })
+        let allFlags = SignalProducer<(String, UInt), Never>.merge(horizontalMod.producer.map{ ("h", $0) }, zoomMod.producer.map{ ("z", $0) }, swiftMod.producer.map{ ("s", $0) }, preciseMod.producer.map{ ("p", $0) })
+        
         allFlags.startWithValues { (src, flags) in
             
             DispatchQueue.main.async { /// Need to dispatch async to prevent weird crashes inside ReactiveSwift
                 
-                if self.horizontalMod.value == flags && src != "h" {
-                    self.horizontalMod.value = []
+                if self.horizontalMod.get() == flags && src != "h" {
+                    self.horizontalMod.set(0)
                 }
-                if self.zoomMod.value == flags && src != "z" {
-                    self.zoomMod.value = []
+                if self.zoomMod.get() == flags && src != "z" {
+                    self.zoomMod.set(0)
                 }
-                if self.swiftMod.value == flags && src != "s" {
-                    self.swiftMod.value = []
+                if self.swiftMod.get() == flags && src != "s" {
+                    self.swiftMod.set(0)
                 }
-                if self.preciseMod.value == flags && src != "p" {
-                    self.preciseMod.value = []
+                if self.preciseMod.get() == flags && src != "p" {
+                    self.preciseMod.set(0)
                 }
                 
                 var restoreDefaultsIsEnabled = true
                 
-                if self.horizontalMod.value == defaultH
-                    && self.zoomMod.value == defaultZ
-                    && self.swiftMod.value == defaultS
-                    && self.preciseMod.value == defaultP {
+                if self.horizontalMod.get() == defaultH.rawValue
+                    && self.zoomMod.get() == defaultZ.rawValue
+                    && self.swiftMod.get() == defaultS.rawValue
+                    && self.preciseMod.get() == defaultP.rawValue {
                     
                     restoreDefaultsIsEnabled = false
                 }

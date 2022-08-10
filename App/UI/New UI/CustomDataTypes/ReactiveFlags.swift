@@ -24,6 +24,8 @@ class ReactiveFlags: NSObject, BindingSource, BindingTargetProvider {
     typealias Error = Never
     var producer: SignalProducer<NSEvent.ModifierFlags, Never> { flagss }
     
+    /// Other interface
+    var signal: Signal<NSEvent.ModifierFlags, Never> { _signal }
     
     /// Wrapped value
     

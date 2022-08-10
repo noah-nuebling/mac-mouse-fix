@@ -25,9 +25,12 @@ import ReactiveCocoa
     var bindingTarget: BindingTarget<NSEvent.ModifierFlags> { content.flags }
     var producer: SignalProducer<NSEvent.ModifierFlags, Never> { content.flagss }
     
+    /// Other interface
+    var signal: Signal<NSEvent.ModifierFlags, Never> { content.signal }
+    
     /// Data model
     
-    var content: ReactiveFlags = ReactiveFlags(.init(rawValue: 0))
+    var content = ReactiveFlags(.init(rawValue: 0))
     
     /// Set cursor on hover
     

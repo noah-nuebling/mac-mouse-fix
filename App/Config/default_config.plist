@@ -2,6 +2,32 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Scroll</key>
+	<dict>
+		<key>disableAll (unused)</key>
+		<false/>
+		<key>inertia</key>
+		<true/>
+		<key>modifiers</key>
+		<dict>
+			<key>horizontal</key>
+			<integer>131072</integer>
+			<key>precise</key>
+			<integer>524288</integer>
+			<key>swift</key>
+			<integer>262144</integer>
+			<key>zoom</key>
+			<integer>1048576</integer>
+		</dict>
+		<key>naturalDirection</key>
+		<true/>
+		<key>precise</key>
+		<false/>
+		<key>smooth</key>
+		<true/>
+		<key>speed</key>
+		<string>medium</string>
+	</dict>
 	<key>AppOverrides</key>
 	<dict>
 		<key>com.adobe.Photoshop</key>
@@ -177,7 +203,7 @@
 		<key>checkForUpdates</key>
 		<true/>
 		<key>configVersion</key>
-		<integer>12</integer>
+		<integer>13</integer>
 		<key>launchesOverall</key>
 		<string>0</string>
 		<key>lastLaunchedBundleVersion</key>
@@ -341,57 +367,5 @@
 			<string>scrollTrigger</string>
 		</dict>
 	</array>
-	<key>Scroll</key>
-	<dict>
-		<key>disableAll (unused)</key>
-		<false/>
-		<key>modifierKeys</key>
-		<dict>
-			<key>horizontalScrollModifierKey</key>
-			<string>shift</string>
-			<key>horizontalScrollModifierKeyEnabled</key>
-			<true/>
-			<key>magnificationScrollModifierKey</key>
-			<string>command</string>
-			<key>magnificationScrollModifierKeyEnabled</key>
-			<true/>
-		</dict>
-		<key>naturalDirection</key>
-		<false/>
-		<key>other</key>
-		<dict>
-			<key>consecutiveScrollSwipeIntervalMax</key>
-			<real>0.35</real>
-			<key>consecutiveScrollTickIntervalMax</key>
-			<real>0.13</real>
-			<key>fastScrollExponentialBase</key>
-			<real>1.1</real>
-			<key>fastScrollFactor</key>
-			<real>1.1</real>
-			<key>fastScrollThreshold_inSwipes</key>
-			<integer>3</integer>
-			<key>scrollSwipeThreshold_inTicks</key>
-			<integer>2</integer>
-		</dict>
-		<key>roughParameters (unused)</key>
-		<dict/>
-		<key>smooth</key>
-		<true/>
-		<key>smoothParameters</key>
-		<dict>
-			<key>acceleration</key>
-			<real>1.11</real>
-			<key>friction</key>
-			<real>2.3</real>
-			<key>frictionDepth</key>
-			<integer>1</integer>
-			<key>msPerStep</key>
-			<integer>90</integer>
-			<key>onePixelScrollsLimit</key>
-			<integer>2</integer>
-			<key>pxPerStep</key>
-			<integer>40</integer>
-		</dict>
-	</dict>
 </dict>
 </plist>

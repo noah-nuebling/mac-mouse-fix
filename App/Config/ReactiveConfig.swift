@@ -41,7 +41,6 @@ import ReactiveCocoa
     }
     
     /// Objc interface
-    
     @objc func react(newConfig: NSDictionary) {
         self.input.send(value: newConfig)
     }
@@ -90,11 +89,12 @@ class ConfigValue<T: Equatable>: NSObject, BindingTargetProvider, BindingSource 
     /// Core functions
     
     func set(_ value: T) {
+        let oldValue = config(keyPath)
+        if oldValue == value as! NSObject { return }
         setConfig(keyPath, value as! NSObject)
         commitConfig()
     }
     func get() -> T? {
         return config(keyPath) as? T
     }
-
 }

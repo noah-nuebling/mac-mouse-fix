@@ -11,7 +11,7 @@
 /// Specifially I saw the following functions being called stepping through disassembly:
 ///     - First `currentAnimationManager` is called to get a a class instance (IIRC)
 ///     - Then, `setTargetValue:forObject:keyPath:animation:` is called which seems to be a wrapper for `setTargetValue:forObject:keyPath:animation:options:`
-/// Then I found this head on github:
+/// Then I found this header  on github:
 ///     https://github.com/cmsj/ApplePrivateHeaders/blob/7d0c0200eeb7c3e326fafd4bbd7b6786f8000730/macOS/11.3/System/Library/Frameworks/AppKit.framework/Versions/C/AppKit/NSAnimationManager.h
 /// Then I sorted the methods, and filled out some of the argument types and names as it made sense.
 ///
