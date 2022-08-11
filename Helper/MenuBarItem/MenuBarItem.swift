@@ -7,14 +7,20 @@
 // --------------------------------------------------------------------------
 //
 
+/// This uses non-reactive state management. It's so complicated even for this simple example!
+
 import Foundation
 
 @objc class MenuBarItem: NSObject {
     
-    static var instance: MenuBarItem? = nil
-    @IBOutlet var menu: NSMenu!
-    var statusItem: NSStatusItem? = nil
     var topLevelObjects: NSArray? = []
+    static var instance: MenuBarItem? = nil
+    
+    var statusItem: NSStatusItem? = nil
+    @IBOutlet var menu: NSMenu!
+    
+    @IBOutlet weak var disableScrollItem: NSMenuItem!
+    @IBOutlet weak var disableButtonsItem: NSMenuItem!
     
     @objc static func load_Manual() {
         instance = MenuBarItem()
@@ -37,12 +43,29 @@ import Foundation
     // MARK: Load from config
     
     @objc static func reload() {
-        let shouldShow = config("Other.showMenuBarItem") as? Bool
-        if shouldShow != nil, shouldShow! == true {
-            instance?.statusItem?.isVisible = true
+        
+        var shouldShow = config("Other.showMenuBarItem") as? Bool
+        if shouldShow == nil { shouldShow = false }
+        instance?.statusItem?.isVisible = shouldShow!
+        
+        if shouldShow! {
+            
+            var buttonsKilled = config("Other.buttonKillSwitch") as? Bool
+            if buttonsKilled == nil { buttonsKilled = false }
+            var scrollKilled = config("Other.scrollKillSwitch") as? Bool
+            if scrollKilled == nil { scrollKilled = false }
+            
+            instance?.disableButtonsItem.state = buttonsKilled! ? .on : .off
+            instance?.disableScrollItem.state = scrollKilled! ? .on : .off
+            
             return
+        } else {
+            
+            /// Disable all settings from the menuItem, if the menuItem is disabled
+            
+            setConfig("Other.scrollKillSwitch", false)
+            setConfig("Other.buttonKillSwitch", false)
         }
-        instance?.statusItem?.isVisible = false
     }
     
     // MARK: Actions
@@ -51,9 +74,19 @@ import Foundation
         HelperUtility.openMainApp()
     }
     
-    @IBAction func disableScroll(_ sender: Any) {
+    @IBAction func disableScroll(_ sender: NSMenuItem) {
+        
+        /// Toggle
+        sender.state = sender.state == .on ? .off : .on
+        /// Set to config
+        setConfig("Other.scrollKillSwitch", sender.state == .on) // TODO: Merge the two config managers now that the Helper want to write to config as well.
     }
     
-    @IBAction func disableButtons(_ sender: Any) {
+    @IBAction func disableButtons(_ sender: NSMenuItem) {
+        
+        /// Toggle
+        sender.state = sender.state == .on ? .off : .on
+        /// Set to config
+        setConfig("Other.buttonKillSwitch", sender.state == .on)
     }
 }

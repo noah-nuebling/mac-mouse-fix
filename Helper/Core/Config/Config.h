@@ -14,6 +14,7 @@
 + (void)load_Manual;
 
 id config(NSString *keyPath);
+void setConfig(NSString *keyPath, id value);
 + (NSMutableDictionary *)config; // Should we expose this? Isn't it enough to expose configWithAppOverridesApplied?
 + (NSMutableDictionary *)configWithAppOverridesApplied;
 

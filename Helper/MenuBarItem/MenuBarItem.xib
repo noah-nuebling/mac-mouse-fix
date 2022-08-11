@@ -7,6 +7,9 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MenuBarItem" customModule="Mac_Mouse_Fix_Helper" customModuleProvider="target">
             <connections>
+                <outlet property="disableButtonsItem" destination="IsJ-q8-i95" id="D1r-wv-CO6"/>
+                <outlet property="disableScroll" destination="KQ8-8Q-u6c" id="nAb-Hl-237"/>
+                <outlet property="disableScrollItem" destination="KQ8-8Q-u6c" id="u4c-JB-0AU"/>
                 <outlet property="menu" destination="5Wl-XF-cnf" id="Yr7-cv-QIK"/>
             </connections>
         </customObject>
@@ -21,13 +24,10 @@
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="Q9U-6U-NVu"/>
-                <menuItem title="Turn off Smooth Scrolling" id="KQ8-8Q-u6c">
+                <menuItem title="Turn off Smooth Scrolling" state="on" id="KQ8-8Q-u6c">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="disableScroll:" target="-2" id="I3h-Xe-0Lo"/>
-                    </connections>
                 </menuItem>
-                <menuItem title="Turn off Mouse Button Remappings" id="IsJ-q8-i95">
+                <menuItem title="Turn off Mouse Button Remappings" state="on" id="IsJ-q8-i95">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="disableButtons:" target="-2" id="wHN-dY-Bub"/>

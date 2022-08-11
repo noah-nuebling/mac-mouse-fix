@@ -50,6 +50,14 @@ static NSString*_configFilePath;
 id config(NSString *keyPath) {
     return [Config.config valueForKeyPath:keyPath];
 }
+void setConfig(NSString *keyPath, id value) {
+    /// This doesn't write to file. 
+    return [Config.config setValue:value forKeyPath:keyPath];
+}
+/// Convenience function for writing config to file and notifying the helper app
+void commitConfig() {
+    [ConfigInterface_App writeConfigToFileAndNotifyHelper];
+}
 
 
 #pragma mark - React to changes & notify other modules

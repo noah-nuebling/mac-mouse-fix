@@ -4,8 +4,6 @@
 <dict>
 	<key>Scroll</key>
 	<dict>
-		<key>disableAll (unused)</key>
-		<false/>
 		<key>inertia</key>
 		<true/>
 		<key>modifiers</key>
@@ -199,6 +197,10 @@
 	<key>Other</key>
 	<dict>
 		<key>showMenuBarItem</key>
+		<false/>
+		<key>buttonKillSwitch</key>
+		<false/>
+		<key>scrollKillSwitch</key>
 		<false/>
 		<key>checkForPrereleases</key>
 		<false/>
