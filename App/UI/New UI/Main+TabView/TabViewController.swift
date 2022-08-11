@@ -21,6 +21,7 @@ class TabViewController: NSTabViewController {
     private var deactivatedConstraints: [NSLayoutConstraint] = []
     private var injectedConstraints: [NSLayoutConstraint] = []
     private var unselectedTabImageView: NSImageView = NSImageView()
+    private var tabHasBeenSelected: Bool = false
     
     private var window: ResizingTabWindow? { self.view.window as? ResizingTabWindow }
 
@@ -48,6 +49,10 @@ class TabViewController: NSTabViewController {
         }
     }
     
+    @objc public func identifierOfSelectedTab() -> String? {
+        return self.tabView.selectedTabViewItem?.identifier as? String
+    }
+    
     /// Helper
     
     func createUnselectedTabImageView() -> NSImageView {
@@ -62,6 +67,19 @@ class TabViewController: NSTabViewController {
     }
     
     /// Life cycle
+    
+    override func viewWillAppear() {
+        
+        if let lastID = UserDefaults.standard.value(forKey: "autosave_tabID") as! String? {
+            coolSelectTab(identifier: lastID)
+        } else {
+            coolSelectTab(identifier: "general")
+        }
+    }
+    override func viewWillDisappear() {
+        let lastID = identifierOfSelectedTab()
+        UserDefaults.standard.setValue(lastID, forKey: "autosave_tabID")
+    }
     
     override func tabView(_ tabView: NSTabView, shouldSelect tabViewItem: NSTabViewItem?) -> Bool {
         /// shouldSelect
@@ -88,6 +106,7 @@ class TabViewController: NSTabViewController {
     }
     
     override func tabView(_ tabView: NSTabView, willSelect tabViewItem: NSTabViewItem?) {
+        
         /// willSelect
         
         /// Set resizeInProgress
@@ -139,7 +158,6 @@ class TabViewController: NSTabViewController {
         guard let tabViewItem = tabViewItem else { return }
         
         /// Constants
-        
         var fadeInCurve = CAMediaTimingFunction(controlPoints: 0.65, 0, 1, 1) /* strong ease in*/
         var fadeOutCurve = CAMediaTimingFunction(controlPoints: 0.25, 0.1, 0.25, 1) /* default */
         
@@ -173,6 +191,9 @@ class TabViewController: NSTabViewController {
             }
             
         }
+        
+        /// Update globals
+        tabHasBeenSelected = true
     }
     
     /// Resizes the window so that it fits the content of the tab.
@@ -193,18 +214,21 @@ class TabViewController: NSTabViewController {
             return 0
         }
 
+        /// Get current window frame
+        var currentWindowFrame = window.frame
+        
         /// Get new window frame
         let targetContentRect = NSRect(x: 0, y: 0, width: size.width, height: size.height)
-        let targetWindowFrame = window.frameRect(forContentRect: targetContentRect)
-        let currentWindowFrame = window.frame
+        var newFrameRect = window.frameRect(forContentRect: targetContentRect)
         
-        let heightDifference = targetWindowFrame.size.height - currentWindowFrame.size.height
-        let widthDifference = targetWindowFrame.size.width - currentWindowFrame.size.width
+        /// Shift newFrame
+        let heightDifference = newFrameRect.size.height - currentWindowFrame.size.height
+        let widthDifference = newFrameRect.size.width - currentWindowFrame.size.width
         
         let newOrigin = NSPoint(x: currentWindowFrame.origin.x - round(0.5 * widthDifference), /// Center horizontally
                                 y: currentWindowFrame.origin.y - heightDifference) /// Top edge stays in place
         
-        var newFrame = NSRect(origin: newOrigin, size: targetWindowFrame.size)
+        var newFrame = NSRect(origin: newOrigin, size: newFrameRect.size)
         
         /// Adjust frameOrigin so that
         ///   the window is fully on screen after resize, if it's fully on screen before resize
@@ -223,12 +247,25 @@ class TabViewController: NSTabViewController {
 //                if newFrame.maxY > s.maxY && oldFrame.maxY <= s.maxY { newFrame.origin.y = s.maxY - newFrame.height }
         }
         
+        /// Override animationStartPoint
+        /// Do special animation on first select (when app first starts)
+
+        if !tabHasBeenSelected {
+            let f = window.frame
+            let newF = f.insetBy(dx: f.width/4, dy: f.height/4)
+            window.setFrame(newF, display: true)
+            
+            DDLogDebug("TAB HAD NOOT")
+        } else {
+            DDLogDebug("TAB HADd")
+        }
+        
         ///
         /// Animation
         ///
         
         let springSpeed = 3.75
-        let springDamping = 1.1 /* 1.1 For more beautiful but slightly floaty animations*/
+        let springDamping = 1.1 /** 1.1 For more beautiful but slightly floaty animations*/
         let animation = CASpringAnimation(speed: springSpeed, damping: springDamping)
         
         /// Get durations
