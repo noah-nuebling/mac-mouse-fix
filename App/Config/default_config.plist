@@ -198,7 +198,7 @@
 	</dict>
 	<key>Other</key>
 	<dict>
-		<key>showInStatusBar</key>
+		<key>showMenuBarItem</key>
 		<false/>
 		<key>checkForPrereleases</key>
 		<false/>

@@ -65,6 +65,7 @@ id config(NSString *keyPath) {
     [ScrollConfig reload];
     [PointerConfig reload];
     [OtherConfig reload];
+    [MenuBarItem reload];
 }
 
 #pragma mark - Read from memory

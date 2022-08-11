@@ -424,7 +424,7 @@
                         <outlet property="mainHidableSection" destination="gcq-dN-YnA" id="WqF-CI-kdj"/>
                         <outlet property="mainView" destination="As8-gY-gcx" id="kXJ-31-AWr"/>
                         <outlet property="masterStack" destination="6xF-Pl-4RE" id="XjS-cn-sHP"/>
-                        <outlet property="statusBarToggle" destination="ncd-ap-KlE" id="rzr-sb-jGR"/>
+                        <outlet property="menuBarToggle" destination="ncd-ap-KlE" id="rzr-sb-jGR"/>
                         <outlet property="updatesExtraSection" destination="ojq-7M-UaO" id="gmK-EU-JI5"/>
                         <outlet property="updatesHint" destination="tvD-Xi-viR" id="yr8-2s-B5c"/>
                         <outlet property="updatesToggle" destination="QDk-6I-X23" id="XRU-LG-ajX"/>

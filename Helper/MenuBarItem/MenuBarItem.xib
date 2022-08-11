@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21219"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="StatusBarItem" customModule="Mac_Mouse_Fix_Helper" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="MenuBarItem" customModule="Mac_Mouse_Fix_Helper" customModuleProvider="target">
             <connections>
                 <outlet property="menu" destination="5Wl-XF-cnf" id="Yr7-cv-QIK"/>
             </connections>
