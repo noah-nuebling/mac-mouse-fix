@@ -11,6 +11,8 @@
 @import CoreVideo;
 
 @interface HelperUtility : NSObject
+
++ (void)openMainApp;
 //+ (CGEventRef)createEventWithValuesFromEvent:(CGEventRef)event;
 + (void)printEventFieldDifferencesBetween:(CGEventRef)event1 and:(CGEventRef)event2;
 + (NSString *)binaryRepresentation:(int64_t)value;

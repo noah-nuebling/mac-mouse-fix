@@ -172,10 +172,7 @@ CGEventRef _Nullable testCallback(CGEventTapProxy proxy, CGEventType type, CGEve
     if ([self check]) {
         
         /// Open app
-        NSArray<NSRunningApplication *> *apps = [NSRunningApplication runningApplicationsWithBundleIdentifier:kMFBundleIDApp];
-        for (NSRunningApplication *app in apps) {
-            [app activateWithOptions:NSApplicationActivateIgnoringOtherApps];
-        }
+        [self openMainApp];
         /// Close this app (Will be restarted immediately by launchd)
         [NSApp terminate:nil];
 //        [self load]; /// TESTING - to make button capture notification work

@@ -171,7 +171,7 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" customClass="ResizingTabWindowController" customModule="Mac_Mouse_Fix" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" title="Mac Mouse Fix" separatorStyle="shadow" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" tabbingMode="disallowed" toolbarStyle="preference" id="IQv-IB-iLA" customClass="ResizingTabWindow" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                    <window key="window" title="Mac Mouse Fix" separatorStyle="shadow" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" tabbingMode="disallowed" toolbarStyle="preference" id="IQv-IB-iLA" customClass="ResizingTabWindow" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowCollectionBehavior key="collectionBehavior" fullScreenNone="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>

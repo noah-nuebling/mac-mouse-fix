@@ -97,12 +97,12 @@ static NSURL *_lastValidHelperFRURL;
 + (void)getBundlesForMainApp:(NSBundle **)mainAppBundle helper:(NSBundle **)helperBundle {
     
     [self getOriginalBundlesForMainApp:mainAppBundle helper:helperBundle];
-     // ^ I thought this would be very robust, but this stuff fails after moving the app.
-      // NSBundle.mainBundle.bundleURL will still report the pre-move location for some reason.
+     /// ^ I thought this would be very robust, but this stuff fails after moving the app.
+      /// NSBundle.mainBundle.bundleURL will still report the pre-move location for some reason.
     
-    // v Attempt to fix
-    //  Store file reference URLs and fall back on last valid one if
-    //  the bundle obtained through the default method is invalid (that happens after the app is moved while helper is open)
+    /// v Attempt to fix
+    ///  Store file reference URLs and fall back on last valid one if
+    ///  the bundle obtained through the default method is invalid (that happens after the app is moved while helper is open)
     NSURL *mainAppFRURL = (*mainAppBundle).bundleURL.fileReferenceURL;
     NSURL *helperFRURL = (*helperBundle).bundleURL.fileReferenceURL;
     if (!mainAppFRURL || !helperFRURL) {

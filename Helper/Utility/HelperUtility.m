@@ -12,8 +12,25 @@
 #import "Constants.h"
 #import "TransformationUtility.h"
 #import "WannabePrefixHeader.h"
+#import "Objects.h"
 
 @implementation HelperUtility
+
++ (void)openMainApp {
+    
+    NSURL *bundleURL = Objects.mainAppBundle.bundleURL;
+    [NSWorkspace.sharedWorkspace openURL:bundleURL];
+    
+    return;
+    
+    /// Old method from `AccessiblityCheck.m`
+    
+    NSArray<NSRunningApplication *> *apps = [NSRunningApplication runningApplicationsWithBundleIdentifier:kMFBundleIDApp];
+    
+    for (NSRunningApplication *app in apps) {
+        [app activateWithOptions:NSApplicationActivateIgnoringOtherApps];
+    }
+}
 
 + (void)printEventFieldDifferencesBetween:(CGEventRef)event1 and:(CGEventRef)event2 {
     DDLogInfo(@"Field differences for event: %@, and event: %@", event1, event2);
