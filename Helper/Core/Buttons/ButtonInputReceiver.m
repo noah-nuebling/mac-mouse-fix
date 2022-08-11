@@ -50,36 +50,49 @@ static CFMachPortRef _eventTap;
 }
 
 static void registerInputCallback() {
+    
+    ///
     /// Register event Tap Callback
+    ///
+    
+    /// Declare events of interest
+    /// I think we need to also listen to lmb and rmb here (even though we don't use them for remapping) to keep some stuff in sync with the HID callbacks / `_buttonInputsFromRelevantDevices`. Not sure though.
+    
     CGEventMask mask =
     CGEventMaskBit(kCGEventOtherMouseDown) | CGEventMaskBit(kCGEventOtherMouseUp)
     | CGEventMaskBit(kCGEventLeftMouseDown) | CGEventMaskBit(kCGEventLeftMouseUp)
     | CGEventMaskBit(kCGEventRightMouseDown) | CGEventMaskBit(kCGEventRightMouseUp);
-    
-    /// ^ I think we need to also listen to lmb and rmb here (even though we don't use them for remapping) to keep some stuff in sync with the HID callbacks / _buttonInputsFromRelevantDevices. Not sure though.
 
+    /// Create tap
     _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
+    
+    /// Get source
     CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _eventTap, 0);
-    CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopDefaultMode);
+    
+    /// Add to runLoop
+    ///     Running on `GlobalEventTapThread`. Used to run on main. We made this change as a hotfix to the StatusBarItem only reacting to mouseHover if you click and then move mouse outside of the menu and then back in.
+    ///     This might have unforseen consequences. E.g. the stuff we call from the tap must dispatch to mainThread at some points, so this changes the threading model, and might introduce raceConditions
+
+    CFRunLoopAddSource(GlobalEventTapThread.runLoop, runLoopSource, kCFRunLoopDefaultMode);
     
     CFRelease(runLoopSource);
 }
 
-+ (void)insertFakeEventWithButton:(MFMouseButtonNumber)button isMouseDown:(BOOL)isMouseDown {
-    
-    DDLogInfo(@"Inserting event");
-    
-    /// Create event
-    CGEventType mouseEventType = [SharedUtility CGEventTypeForButtonNumber:button isMouseDown:isMouseDown];
-    CGPoint mouseLoc = getPointerLocation();
-    CGEventRef fakeEvent = CGEventCreateMouseEvent(NULL, mouseEventType, mouseLoc, [SharedUtility CGMouseButtonFromMFMouseButtonNumber:button]);    
-    /// Insert event
-    CGEventRef ret = eventTapCallback(0, CGEventGetType(fakeEvent), fakeEvent, nil);
-    CFRelease(fakeEvent);
-    if (ret) {
-        CGEventPost(kCGSessionEventTap, ret);
-    }
-}
+//+ (void)insertFakeEventWithButton:(MFMouseButtonNumber)button isMouseDown:(BOOL)isMouseDown {
+//    
+//    DDLogInfo(@"Inserting event");
+//    
+//    /// Create event
+//    CGEventType mouseEventType = [SharedUtility CGEventTypeForButtonNumber:button isMouseDown:isMouseDown];
+//    CGPoint mouseLoc = getPointerLocation();
+//    CGEventRef fakeEvent = CGEventCreateMouseEvent(NULL, mouseEventType, mouseLoc, [SharedUtility CGMouseButtonFromMFMouseButtonNumber:button]);    
+//    /// Insert event
+//    CGEventRef ret = eventTapCallback(0, CGEventGetType(fakeEvent), fakeEvent, nil);
+//    CFRelease(fakeEvent);
+//    if (ret) {
+//        CGEventPost(kCGSessionEventTap, ret);
+//    }
+//}
 
 /// `_buttonInputsFromRelevantDevices` is a queue with one entry for each unhandled button input coming from a relevant device
 /// Instances of Device insert values into this queue  when they receive input from the IOHIDDevice which they own.

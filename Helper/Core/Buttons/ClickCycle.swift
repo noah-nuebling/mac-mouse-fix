@@ -188,36 +188,39 @@ class ClickCycle: NSObject {
             /// Start/reset timers
             ///
             /// Consider using DispatchSourceTimer instead
+            /// We need to start timers from main. Dispatching to main caused race conditions.
             
-            assert(Thread.isMainThread) /// We need to start timers from main. Dispatching to main caused race conditions.
-            if mouseDown {
-                /// mouseDown
-                state?.upTimer.invalidate()
-                state?.downTimer = CoolTimer.scheduledTimer(timeInterval: 0.25, repeats: false, block: { timer in
-                    self.buttonQueue.async {
-                        /// Callback
-                        var c: [UnconditionalReleaseCallback] = []
-                        triggerCallback(.hold, self.state!.clickLevel, device, button, &c)
-                        if !c.isEmpty {
-                            self.releaseCallbacks[.init(device, button), default: []].append(contentsOf: c)
+            SharedUtilitySwift .doOnMain {
+                if mouseDown {
+                    /// mouseDown
+                    state?.upTimer.invalidate()
+                    state?.downTimer = CoolTimer.scheduledTimer(timeInterval: 0.25, repeats: false, block: { timer in
+                        self.buttonQueue.async {
+                            /// Callback
+                            var c: [UnconditionalReleaseCallback] = []
+                            triggerCallback(.hold, self.state!.clickLevel, device, button, &c)
+                            if !c.isEmpty {
+                                self.releaseCallbacks[.init(device, button), default: []].append(contentsOf: c)
+                            }
+                            /// Update state
+                            self.state?.pressState = .held
+                            self.state?.upTimer.invalidate()
                         }
-                        /// Update state
-                        self.state?.pressState = .held
-                        self.state?.upTimer.invalidate()
-                    }
-                })
-                /// Not sure whether to start started upTimer on mouseDown or up
-                state?.upTimer = CoolTimer.scheduledTimer(timeInterval: 0.26, repeats: false, block: { timer in
-                    self.buttonQueue.async {
-                        if self.state == nil { return } /// Guard race conditions. Not totally sure why this happens.
-                        self.callTriggerCallback(triggerCallback, ClickCycleTriggerPhase.levelExpired, self.state!.clickLevel, device, button)
-                        self.kill()
-                    }
-                })
-            } else {
-                /// mouseUp
-                state?.downTimer.invalidate()
+                    })
+                    /// Not sure whether to start started upTimer on mouseDown or up
+                    state?.upTimer = CoolTimer.scheduledTimer(timeInterval: 0.26, repeats: false, block: { timer in
+                        self.buttonQueue.async {
+                            if self.state == nil { return } /// Guard race conditions. Not totally sure why this happens.
+                            self.callTriggerCallback(triggerCallback, ClickCycleTriggerPhase.levelExpired, self.state!.clickLevel, device, button)
+                            self.kill()
+                        }
+                    })
+                } else {
+                    /// mouseUp
+                    state?.downTimer.invalidate()
+                }
             }
+            
         }
     }
     
