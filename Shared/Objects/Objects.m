@@ -61,7 +61,7 @@ static NSURL *_configURL;
 + (void)initialize {
     
     if (self == Objects.class) {
-        // Get appSupportURL & configURL
+        /// Get appSupportURL & configURL
         NSURL *applicationSupportURL = [NSFileManager.defaultManager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:NULL create:YES error:nil];
         _MFApplicationSupportFolderURL = [applicationSupportURL URLByAppendingPathComponent:self.mainAppBundle.bundleIdentifier];
         _configURL = [_MFApplicationSupportFolderURL URLByAppendingPathComponent:@"config.plist"];

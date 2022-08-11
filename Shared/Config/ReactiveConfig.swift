@@ -24,12 +24,12 @@ import ReactiveCocoa
     typealias Value = NSDictionary
     typealias Error = Never
     var producer: ReactiveSwift.SignalProducer<NSDictionary, Never> {
-        let currentConfig = ConfigInterface_App.config
+        let currentConfig = Config.shared().config
         return signal.producer.prefix(value: currentConfig)
     }
     
     /// Create signal
-    ///     `input.send()` should be called by `ConfigInterface_App`, whenever the config changes. Then you can observe changes to the config using `signal`.
+    ///     `input.send()` should be called by `Config`, whenever the config changes. Then you can observe changes to the config using `signal`.
     
     let input: Signal<NSDictionary, Never>.Observer
     let signal: Signal<NSDictionary, Never>

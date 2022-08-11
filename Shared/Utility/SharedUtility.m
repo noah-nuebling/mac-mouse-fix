@@ -9,7 +9,7 @@
 
 #import "SharedUtility.h"
 #import "Objects.h"
-#import "ConfigInterface_App.h"
+#import "Config.h"
 #import "Config.h"
 #import "SharedUtility.h"
 @import AppKit.NSScreen;
@@ -241,16 +241,17 @@ static void iteratePropertiesOn(id obj, void(^callback)(objc_property_t property
 }
 
 #pragma mark - Check which executable is running
+/// TODO: Maybe move this to `Objects.m`
 
-// Return YES if called by main app
+/// Return YES if called by main app
 + (BOOL)runningMainApp {
     return [NSBundle.mainBundle.bundleIdentifier isEqual:kMFBundleIDApp];
 }
-// Return YES if called by helper app
+/// Return YES if called by helper app
 + (BOOL)runningHelper {
     return [NSBundle.mainBundle.bundleIdentifier isEqual:kMFBundleIDHelper];
 }
-// Return YES if called by accomplice
+/// Return YES if called by accomplice
 + (BOOL)runningAccomplice {
     return [NSFileManager.defaultManager isExecutableFileAtPath:[NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:kMFAccompliceName]];
 }

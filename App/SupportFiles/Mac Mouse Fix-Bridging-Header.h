@@ -25,7 +25,7 @@
 #import "HelperServices.h"
 #import "NSAttributedString+Additions.h"
 #import "ToastNotificationController.h"
-#import "ConfigInterface_App.h"
+#import "Config.h"
 #import "NSMutableDictionary+Additions.h"
 #import "SparkleUpdaterController.h"
 #import "AppDelegate.h"

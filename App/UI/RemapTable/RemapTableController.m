@@ -8,7 +8,7 @@
 //
 
 #import "RemapTableController.h"
-#import "ConfigInterface_App.h"
+#import "Config.h"
 #import "Constants.h"
 #import "Utility_App.h"
 #import "NSArray+Additions.h"
@@ -60,12 +60,12 @@
 #pragma mark Interact with config
 
 - (void)loadDataModelFromConfig {
-    [ConfigInterface_App loadConfigFromFile]; // Not sure if necessary
-    self.dataModel = ConfigInterface_App.config[kMFConfigKeyRemaps];
+    [Config.shared loadConfigFromFile]; /// Not sure if necessary
+    self.dataModel = Config.shared.config[kMFConfigKeyRemaps];
 }
 - (void)writeDataModelToConfig {
-    [ConfigInterface_App.config setObject:self.dataModel forKey:kMFConfigKeyRemaps];
-    [ConfigInterface_App writeConfigToFileAndNotifyHelper];
+    setConfig(kMFConfigKeyRemaps, self.dataModel);
+    commitConfig();
 }
 
 /// Helper function for `handleEnterKeystrokeOptionSelected`

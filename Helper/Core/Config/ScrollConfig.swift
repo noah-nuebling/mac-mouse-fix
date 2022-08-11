@@ -44,7 +44,7 @@ import CocoaLumberjackSwift
     ///     For accessing top level dict and different sub-dicts
     
     private func c(_ keyPath: String) -> NSObject? {
-        return (Config.configWithAppOverridesApplied()["Scroll"] as! NSDictionary).value(forKeyPath: keyPath) as! NSObject?
+        return (Config.shared().configWithAppOverridesApplied["Scroll"] as! NSDictionary).value(forKeyPath: keyPath) as! NSObject?
     }
     
     // MARK: General

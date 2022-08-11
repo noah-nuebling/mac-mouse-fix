@@ -8,7 +8,7 @@
 //
 
 #import "ClickableImageView.h"
-#import "ConfigInterface_App.h"
+#import "Config.h"
 #import "NSArray+Additions.h"
 #import "Objects.h"
 

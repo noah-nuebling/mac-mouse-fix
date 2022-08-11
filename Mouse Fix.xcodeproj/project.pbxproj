@@ -50,7 +50,11 @@
 		4F79A83626051E4A00076A7E /* ToastNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A83526051E4A00076A7E /* ToastNotification.m */; };
 		4F79C2EA260976950067B381 /* RemapTableTranslator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79C2E9260976950067B381 /* RemapTableTranslator.m */; };
 		4F7AB0552606698A0008055E /* UIStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F7AB0542606698A0008055E /* UIStrings.m */; };
-		4F83D5D828A2EB30003F9429 /* ObjCTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F83D5D728A2EB30003F9429 /* ObjCTest.swift */; };
+		4F7F47C528A5A01600290BBD /* ReactiveConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDC127528A2C6160076972E /* ReactiveConfig.swift */; };
+		4F7F47CB28A5A03100290BBD /* ReactiveConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDC127528A2C6160076972E /* ReactiveConfig.swift */; };
+		4F7F47CE28A5B5EC00290BBD /* ReactiveSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4F7F47CD28A5B5EC00290BBD /* ReactiveSwift */; };
+		4F7F47D028A5B5F200290BBD /* ReactiveCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 4F7F47CF28A5B5F200290BBD /* ReactiveCocoa */; };
+		4F7F47D128A5B86900290BBD /* Config.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6660E25F2C93A00689B77 /* Config.m */; };
 		4F854D7C2789146900B46E9D /* NSMenu+NSMenu_Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F854D7B2789146900B46E9D /* NSMenu+NSMenu_Additions.m */; };
 		4F854D7E2789266A00B46E9D /* sfsymbols.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F854D7D2789266A00B46E9D /* sfsymbols.xcassets */; };
 		4F8A8DAD287EEF6200786BCC /* IOHIDAccelerationTableBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DAC287EEF6200786BCC /* IOHIDAccelerationTableBridge.mm */; };
@@ -161,7 +165,6 @@
 		4FD86089266E819A004F76C8 /* Pointers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD86088266E819A004F76C8 /* Pointers.swift */; };
 		4FD860AA266EC24E004F76C8 /* DerivedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860A9266EC24E004F76C8 /* DerivedProperty.swift */; };
 		4FD860CC266EF55A004F76C8 /* ScrollConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860CB266EF55A004F76C8 /* ScrollConfig.swift */; };
-		4FDC127628A2C6160076972E /* ReactiveConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDC127528A2C6160076972E /* ReactiveConfig.swift */; };
 		4FDECCD928A3A37800DDEE91 /* ZipArchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FDECCD628A3A37800DDEE91 /* ZipArchive.framework */; };
 		4FDECCDA28A3A37800DDEE91 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FDECCD728A3A37800DDEE91 /* Sparkle.framework */; };
 		4FDECCDB28A3A37800DDEE91 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4FDECCD828A3A37800DDEE91 /* README.md */; };
@@ -206,7 +209,6 @@
 		4FF665EF25F2C92700689B77 /* ScrollOverridePanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FF665C325F2C92700689B77 /* ScrollOverridePanel.xib */; };
 		4FF665F325F2C92700689B77 /* MoreSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665CD25F2C92700689B77 /* MoreSheet.m */; };
 		4FF665F425F2C92700689B77 /* MoreSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FF665CE25F2C92700689B77 /* MoreSheet.xib */; };
-		4FF665F525F2C92700689B77 /* ConfigInterface_App.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665D125F2C92700689B77 /* ConfigInterface_App.m */; };
 		4FF665F725F2C92700689B77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FF665D525F2C92700689B77 /* Assets.xcassets */; };
 		4FF665F825F2C92700689B77 /* MessagePort_App.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665D725F2C92700689B77 /* MessagePort_App.m */; };
 		4FF665FA25F2C92700689B77 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665DB25F2C92700689B77 /* AppDelegate.m */; };
@@ -440,7 +442,6 @@
 		4F79C2E9260976950067B381 /* RemapTableTranslator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapTableTranslator.m; sourceTree = "<group>"; };
 		4F7AB0532606698A0008055E /* UIStrings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIStrings.h; sourceTree = "<group>"; };
 		4F7AB0542606698A0008055E /* UIStrings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UIStrings.m; sourceTree = "<group>"; };
-		4F83D5D728A2EB30003F9429 /* ObjCTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjCTest.swift; sourceTree = "<group>"; };
 		4F854D7A2789146900B46E9D /* NSMenu+NSMenu_Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMenu+NSMenu_Additions.h"; sourceTree = "<group>"; };
 		4F854D7B2789146900B46E9D /* NSMenu+NSMenu_Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMenu+NSMenu_Additions.m"; sourceTree = "<group>"; };
 		4F854D7D2789266A00B46E9D /* sfsymbols.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = sfsymbols.xcassets; sourceTree = "<group>"; };
@@ -633,8 +634,6 @@
 		4FF665CD25F2C92700689B77 /* MoreSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreSheet.m; sourceTree = "<group>"; };
 		4FF665CE25F2C92700689B77 /* MoreSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MoreSheet.xib; sourceTree = "<group>"; };
 		4FF665CF25F2C92700689B77 /* MoreSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreSheet.h; sourceTree = "<group>"; };
-		4FF665D125F2C92700689B77 /* ConfigInterface_App.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigInterface_App.m; sourceTree = "<group>"; };
-		4FF665D225F2C92700689B77 /* ConfigInterface_App.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigInterface_App.h; sourceTree = "<group>"; };
 		4FF665D525F2C92700689B77 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4FF665D725F2C92700689B77 /* MessagePort_App.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagePort_App.m; sourceTree = "<group>"; };
 		4FF665D825F2C92700689B77 /* MessagePort_App.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagePort_App.h; sourceTree = "<group>"; };
@@ -810,6 +809,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FEB660F2793510300E6A111 /* CocoaLumberjack in Frameworks */,
+				4F7F47D028A5B5F200290BBD /* ReactiveCocoa in Frameworks */,
+				4F7F47CE28A5B5EC00290BBD /* ReactiveSwift in Frameworks */,
 				80457D1CE643F8D503131D96 /* Pods_Mac_Mouse_Fix_Helper.framework in Frameworks */,
 				4FEB66112793510800E6A111 /* CocoaLumberjackSwift in Frameworks */,
 			);
@@ -999,6 +1000,17 @@
 				4F7AB0542606698A0008055E /* UIStrings.m */,
 			);
 			path = UIStrings;
+			sourceTree = "<group>";
+		};
+		4F7F47C828A5A01C00290BBD /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				4F9E59962672A67E004E75F7 /* default_config.plist */,
+				4FF6660D25F2C93A00689B77 /* Config.h */,
+				4FF6660E25F2C93A00689B77 /* Config.m */,
+				4FDC127528A2C6160076972E /* ReactiveConfig.swift */,
+			);
+			path = Config;
 			sourceTree = "<group>";
 		};
 		4F8A8DBB287EFB4D00786BCC /* Extern */ = {
@@ -1467,6 +1479,7 @@
 				4FF6653025F2C7B000689B77 /* Objects */,
 				4F9E78BD26855B9B002C2309 /* SwiftConcurrency */,
 				4FF6653625F2C7B000689B77 /* Utility */,
+				4F7F47C828A5A01C00290BBD /* Config */,
 				4F3A40C8266C448500436821 /* Animator */,
 				4FF9305C28805FC40007CCA7 /* Math */,
 				4F909D4228A0C4C2009349A2 /* Extensions */,
@@ -1564,11 +1577,6 @@
 		4FF665D025F2C92700689B77 /* Config */ = {
 			isa = PBXGroup;
 			children = (
-				4F9E59962672A67E004E75F7 /* default_config.plist */,
-				4FF665D225F2C92700689B77 /* ConfigInterface_App.h */,
-				4FF665D125F2C92700689B77 /* ConfigInterface_App.m */,
-				4FDC127528A2C6160076972E /* ReactiveConfig.swift */,
-				4F83D5D728A2EB30003F9429 /* ObjCTest.swift */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -1651,8 +1659,6 @@
 		4FF6660C25F2C93A00689B77 /* Config */ = {
 			isa = PBXGroup;
 			children = (
-				4FF6660D25F2C93A00689B77 /* Config.h */,
-				4FF6660E25F2C93A00689B77 /* Config.m */,
 				4FD860CB266EF55A004F76C8 /* ScrollConfig.swift */,
 				4FA83A2D268288D900F3A31B /* PointerConfig.swift */,
 				4FD0A71027B295F600FFCD12 /* OtherConfig.swift */,
@@ -2107,6 +2113,8 @@
 			packageProductDependencies = (
 				4FEB660E2793510300E6A111 /* CocoaLumberjack */,
 				4FEB66102793510800E6A111 /* CocoaLumberjackSwift */,
+				4F7F47CD28A5B5EC00290BBD /* ReactiveSwift */,
+				4F7F47CF28A5B5F200290BBD /* ReactiveCocoa */,
 			);
 			productName = "Mouse Remap Helper";
 			productReference = 4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */;
@@ -2235,7 +2243,6 @@
 /* Begin PBXShellScriptBuildPhase section */
 		4F94F75125E614D500D9F24A /* Increment Build Number */ = {
 			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -2412,7 +2419,6 @@
 				4FF6654625F2C7B000689B77 /* Objects.m in Sources */,
 				4F909D2A28A0C3D2009349A2 /* ResizingTabWindowController.swift in Sources */,
 				4FF665EE25F2C92700689B77 /* OverridePanel.m in Sources */,
-				4FF665F525F2C92700689B77 /* ConfigInterface_App.m in Sources */,
 				4FDECCDE28A3E93100DDEE91 /* IsObjC.m in Sources */,
 				4F909D2228A0C3D2009349A2 /* ScrollTabController.swift in Sources */,
 				4FF6654E25F2C7B000689B77 /* SharedUtility.m in Sources */,
@@ -2438,6 +2444,7 @@
 				4FF665ED25F2C92700689B77 /* MFSegmentedControl.m in Sources */,
 				4FA40CFF28A0CCCB00499E53 /* DragCurve.swift in Sources */,
 				4FA40CFA28A0CCCA00499E53 /* PolynomialCappedAccelerationCurve.swift in Sources */,
+				4F7F47CB28A5A03100290BBD /* ReactiveConfig.swift in Sources */,
 				4F909D3C28A0C3D2009349A2 /* ModCaptureFieldEditor.swift in Sources */,
 				4F3E067E26A2F97D000C9E06 /* URLMenuItem.m in Sources */,
 				4FA40D0128A0CCDF00499E53 /* PolyFitObjC.m in Sources */,
@@ -2447,12 +2454,12 @@
 				4F39BC3B263AF2B000FDF692 /* SparkleUpdaterController.m in Sources */,
 				4FA40D0028A0CCCB00499E53 /* CombinedLinearCurve.swift in Sources */,
 				4F1C51DA260543DD007F4930 /* NSTextField+Additions.m in Sources */,
-				4FDC127628A2C6160076972E /* ReactiveConfig.swift in Sources */,
 				4F909D3128A0C3D2009349A2 /* CAAnimation+Extensions.swift in Sources */,
 				4FA40CFB28A0CCCB00499E53 /* Line.swift in Sources */,
 				4FE40B96283A49DD00880BEF /* SharedUtilitySwift.swift in Sources */,
 				4F909D3828A0C3D2009349A2 /* ReactiveFlags.swift in Sources */,
 				4F909D2B28A0C3D2009349A2 /* NSPopUpButton+Extensions.swift in Sources */,
+				4F7F47D128A5B86900290BBD /* Config.m in Sources */,
 				4F2F5DA825FB6FFD0037660A /* AddWindowController.m in Sources */,
 				4FF6655025F2C7B000689B77 /* NSArray+Additions.m in Sources */,
 				4F909D2328A0C3D2009349A2 /* PointerTabController.swift in Sources */,
@@ -2497,7 +2504,6 @@
 				4F92A73A260F73C600529D1F /* KeyCaptureView.m in Sources */,
 				4FF6654425F2C7B000689B77 /* HelperServices.m in Sources */,
 				4F909D3528A0C3D2009349A2 /* Animate.swift in Sources */,
-				4F83D5D828A2EB30003F9429 /* ObjCTest.swift in Sources */,
 				4FA40D0328A0D0BB00499E53 /* PolynomialRegression.m in Sources */,
 				4FA40CFE28A0CCCB00499E53 /* HybridCurves.swift in Sources */,
 			);
@@ -2615,6 +2621,7 @@
 				4F9C9B6B268A2D6F0083DED0 /* CircularBuffer.m in Sources */,
 				4FF8C8A32895AACB007EC31F /* Buttons.swift in Sources */,
 				4FF0255427B007FC00923107 /* ModifiedDragOutputFakeDrag.m in Sources */,
+				4F7F47C528A5A01600290BBD /* ReactiveConfig.swift in Sources */,
 				4FF8C89A28955491007EC31F /* ClickCycle.swift in Sources */,
 				4FF9306228806E4F0007CCA7 /* PolyFitObjC.m in Sources */,
 				4FDECCDF28A3E93100DDEE91 /* IsObjC.m in Sources */,
@@ -2773,6 +2780,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"IS_MAIN_APP=1",
+				);
 				INFOPLIST_FILE = App/SupportFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2805,6 +2816,10 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"IS_MAIN_APP=1",
 				);
 				INFOPLIST_FILE = App/SupportFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3071,6 +3086,10 @@
 					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks,
 					"$(PROJECT_DIR)/Frameworks",
 				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"IS_HELPER=1",
+				);
 				INFOPLIST_FILE = Helper/SupportFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3109,6 +3128,10 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/ApplicationServices.framework/Frameworks,
 					"$(PROJECT_DIR)/Frameworks",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"IS_HELPER=1",
 				);
 				INFOPLIST_FILE = Helper/SupportFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3225,6 +3248,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		4F7F47CD28A5B5EC00290BBD /* ReactiveSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4FA40CED28A0CA0A00499E53 /* XCRemoteSwiftPackageReference "ReactiveSwift" */;
+			productName = ReactiveSwift;
+		};
+		4F7F47CF28A5B5F200290BBD /* ReactiveCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4FA40CF028A0CA3900499E53 /* XCRemoteSwiftPackageReference "ReactiveCocoa" */;
+			productName = ReactiveCocoa;
+		};
 		4F909D5028A0C6F3009349A2 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4F909D4F28A0C6F3009349A2 /* XCRemoteSwiftPackageReference "SnapKit" */;

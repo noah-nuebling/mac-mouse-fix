@@ -262,7 +262,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         
         if (ScrollUtility.mouseDidMove || ScrollUtility.frontMostAppDidChange) {
             /// Set app overrides
-            BOOL didChange = [Config loadOverridesForAppUnderMousePointer];
+            BOOL didChange = [Config.shared loadOverridesForAppUnderMousePointer];
             if (didChange) {
                 resetState_Unsafe();
             }

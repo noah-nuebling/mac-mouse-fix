@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Objects : NSObject
+@interface Objects : NSObject /// Maybe rename to `Locator`
 + (NSBundle *)mainAppBundle;
 + (NSBundle *)helperBundle;
 + (NSBundle *)mainAppOriginalBundle;
@@ -20,7 +20,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSURL *)MFApplicationSupportFolderURL;
 + (NSURL *)configURL;
 + (NSURL *)launchdPlistURL;
-
 @end
 
 NS_ASSUME_NONNULL_END

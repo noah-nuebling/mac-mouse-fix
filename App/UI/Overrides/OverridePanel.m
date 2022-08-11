@@ -19,7 +19,7 @@
  */
 
 #import "OverridePanel.h"
-#import "ConfigInterface_App.h"
+#import "Config.h"
 #import "Utility_App.h"
 #import "NSMutableDictionary+Additions.h"
 #import <Foundation/Foundation.h>
@@ -64,36 +64,36 @@ NSDictionary *_columnIdentifierToKeyPath;
 
 - (void)begin {
     
-    // Define column-to-setting mapping
+    /// Define column-to-setting mapping
     _columnIdentifierToKeyPath = @{
         @"SmoothEnabledColumnID" : @"Scroll.smooth",
         @"MagnificationEnabledColumnID" : @"Scroll.modifierKeys.magnificationScrollModifierKeyEnabled",
         @"HorizontalEnabledColumnID" : @"Scroll.modifierKeys.horizontalScrollModifierKeyEnabled"
     };
     
-    // Load table
-    [ConfigInterface_App loadConfigFromFile];
+    /// Load table
+    [Config.shared loadConfigFromFile];
     [self loadTableViewDataModelFromConfig];
     [_tableView reloadData];
 
-    // Center window
+    /// Center window
     [self centerWindowOnMainWindow];
     
-    // Keep this window on top
+    /// Keep this window on top
     self.window.level = NSFloatingWindowLevel;
     
-    // Make window resizable
+    /// Make window resizable
     self.window.styleMask = self.window.styleMask | NSWindowStyleMaskResizable;
-    // Remove window buttons
+    /// Remove window buttons
     [self.window standardWindowButton:NSWindowCloseButton].hidden = YES;
     [self.window standardWindowButton:NSWindowMiniaturizeButton].hidden = YES;
     [self.window standardWindowButton:NSWindowZoomButton].hidden = YES;
     
-    // Make tableView drag and drop target
+    /// Make tableView drag and drop target
     NSString *fileURLUTI = @"public.file-url";
     [_tableView registerForDraggedTypes:@[fileURLUTI]]; // makes it accept apps
     
-    // Display window
+    /// Display window
     [Utility_App openWindowWithFadeAnimation:self.window fadeIn:YES fadeTime:0.1];
 }
 - (void)end {
@@ -118,7 +118,7 @@ NSDictionary *_columnIdentifierToKeyPath;
 
 - (void)setConfigFileToUI {
     [self writeTableViewDataModelToConfig];
-    [ConfigInterface_App writeConfigToFileAndNotifyHelper];
+    commitConfig();
     [self loadTableViewDataModelFromConfig];
     [_tableView reloadData];
 }
@@ -308,7 +308,7 @@ NSDictionary *_columnIdentifierToKeyPath;
         newRow[@"AppColumnID"] = bundleID;
         for (NSString *columnID in _columnIdentifierToKeyPath) {
             NSString *keyPath = _columnIdentifierToKeyPath[columnID];
-            NSObject *defaultValue = [ConfigInterface_App.config objectForCoolKeyPath:keyPath]; /// Could use valueForKeyPath as well, because there are no periods in the keys of the keyPath
+            NSObject *defaultValue = [Config.shared.config objectForCoolKeyPath:keyPath]; /// Could use valueForKeyPath as well, because there are no periods in the keys of the keyPath
             newRow[columnID] = defaultValue;
         }
         [newRows addObject:newRow];
@@ -354,17 +354,17 @@ NSMutableArray *_tableViewDataModel;
             NSObject *cellValue = rowDict[columnID];
             NSString *defaultKeyPath = _columnIdentifierToKeyPath[columnID];
             NSString *overrideKeyPath = [NSString stringWithFormat:@"AppOverrides.%@.Root.%@", bundleIDEscaped, defaultKeyPath];
-            [ConfigInterface_App.config setObject:cellValue forCoolKeyPath:overrideKeyPath];
+            [Config.shared.config setObject:cellValue forCoolKeyPath:overrideKeyPath];
         }
         /// Write order key
         NSString *orderKeyKeyPath = [NSString stringWithFormat:@"AppOverrides.%@.meta.scrollOverridePanelTableViewOrderKey", bundleIDEscaped];
-        [ConfigInterface_App.config setObject:[NSNumber numberWithInt:orderKey] forCoolKeyPath:orderKeyKeyPath];
+        [Config.shared.config setObject:[NSNumber numberWithInt:orderKey] forCoolKeyPath:orderKeyKeyPath];
         orderKey += 1;
     }
     
     /// For all overrides for apps in the config, which aren't in the table, and which are installed - delete all values managed by the table from the config
     
-    NSMutableSet *bundleIDsInConfigAndInstalledButNotInTable = [NSMutableSet setWithArray:((NSDictionary *)[ConfigInterface_App.config valueForKeyPath:kMFConfigKeyAppOverrides]).allKeys]; // Get all bundle IDs in the config
+    NSMutableSet *bundleIDsInConfigAndInstalledButNotInTable = [NSMutableSet setWithArray:((NSDictionary *)[Config.shared.config valueForKeyPath:kMFConfigKeyAppOverrides]).allKeys]; // Get all bundle IDs in the config
     
     bundleIDsInConfigAndInstalledButNotInTable = [bundleIDsInConfigAndInstalledButNotInTable filteredSetUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
         return [Utility_App appIsInstalled:evaluatedObject];
@@ -376,20 +376,20 @@ NSMutableArray *_tableViewDataModel;
         /// Delete override values
         for (NSString *rootKeyPath in _columnIdentifierToKeyPath.allValues) {
         NSString *overrideKeyPath = [NSString stringWithFormat:@"AppOverrides.%@.Root.%@", bundleIDEscaped, rootKeyPath];
-        [ConfigInterface_App.config setObject:nil forCoolKeyPath:overrideKeyPath];
+        [Config.shared.config setObject:nil forCoolKeyPath:overrideKeyPath];
         }
         /// Delete orderKey
         NSString *orderKeyKeyPath = [NSString stringWithFormat:@"AppOverrides.%@.meta.scrollOverridePanelTableViewOrderKey", bundleIDEscaped];
-        [ConfigInterface_App.config setObject:nil forCoolKeyPath:orderKeyKeyPath];
+        [Config.shared.config setObject:nil forCoolKeyPath:orderKeyKeyPath];
     }
     
-    [ConfigInterface_App cleanConfig];
-    [ConfigInterface_App writeConfigToFileAndNotifyHelper];
+    [Config.shared cleanConfig];
+    commitConfig();
 }
 
 - (void)loadTableViewDataModelFromConfig {
     _tableViewDataModel = [NSMutableArray array];
-    NSDictionary *config = ConfigInterface_App.config;
+    NSDictionary *config = Config.shared.config;
     if (!config) { // TODO: does this exception make sense? What is the consequence of it being thrown? Where is it caught? Should we just reload the config file instead? Can this even happen if ConfigFileInterface successfully loaded?
         NSException *configNotLoadedException = [NSException exceptionWithName:@"ConfigNotLoadedException" reason:@"ConfigFileInterface config property is nil" userInfo:nil];
         @throw configNotLoadedException;
@@ -400,12 +400,12 @@ NSMutableArray *_tableViewDataModel;
         DDLogInfo(@"No overrides found in config while generating scroll override table data model.");
         return;
     }
-    for (NSString *bundleID in overrides.allKeys) { // Every bundleID corresponds to one app/row
-        // Check if app exists on system
+    for (NSString *bundleID in overrides.allKeys) { /// Every bundleID corresponds to one app/row
+        /// Check if app exists on system
         if (![Utility_App appIsInstalled:bundleID]) {
             continue; // If not, skip this bundleID
         }
-        // Create rowDict for app with `bundleID` from data in config. Every key value pair in rowDict corresponds to a column. The key is the columnID and the value is the value for the column with `columnID` and the row of the app with `bundleID`
+        /// Create rowDict for app with `bundleID` from data in config. Every key value pair in rowDict corresponds to a column. The key is the columnID and the value is the value for the column with `columnID` and the row of the app with `bundleID`
         NSMutableDictionary *rowDict = [NSMutableDictionary dictionary];
         NSArray *columnIDs = _columnIdentifierToKeyPath.allKeys;
         for (NSString *columnID in columnIDs) {
@@ -413,28 +413,28 @@ NSMutableArray *_tableViewDataModel;
             NSObject *value = [overrides[bundleID][@"Root"] valueForKeyPath:keyPath];
             rowDict[columnID] = value; // If value is nil, no entry is added. (We use this fact in the allNil / someNil checks below)
         }
-        // Check existence / validity of generated rowDict
+        /// Check existence / validity of generated rowDict
         BOOL allNil = (rowDict.allValues.count == 0);
         BOOL someNil = (rowDict.allValues.count < columnIDs.count);
-        if (allNil) { // None of the values controlled by the table exist for this app in config
-            continue; // Don't add this app to the table
+        if (allNil) { /// None of the values controlled by the table exist for this app in config
+            continue; /// Don't add this app to the table
         }
-        if (someNil) { // Only some of the values controlled by the table don't exist in this AppOverride
-            // Fill out missing values with default ones
-            [ConfigInterface_App repairConfigWithProblem:kMFConfigProblemIncompleteAppOverride info:@{
+        if (someNil) { /// Only some of the values controlled by the table don't exist in this AppOverride
+            /// Fill out missing values with default ones
+            [Config.shared repairConfigWithProblem:kMFConfigProblemIncompleteAppOverride info:@{
                     @"bundleID": bundleID,
                     @"relevantKeyPaths": _columnIdentifierToKeyPath.allValues,
             }];
-            [self loadTableViewDataModelFromConfig]; // Restart the whole function. someNil will not occur next time because we filled out all the AppOverrides with some values missing.
+            [self loadTableViewDataModelFromConfig]; /// Restart the whole function. someNil will not occur next time because we filled out all the AppOverrides with some values missing.
             return;
         }
-        // Add everything thats not an override last, so the allNil check works properly
-        rowDict[@"AppColumnID"] = bundleID; // Not sure if the key `AppColumnID` makes sense here. Maybe it should be `bundleID` instead.
+        /// Add everything thats not an override last, so the allNil check works properly
+        rowDict[@"AppColumnID"] = bundleID; /// Not sure if the key `AppColumnID` makes sense here. Maybe it should be `bundleID` instead.
         rowDict[@"orderKey"] = overrides[bundleID][@"meta"][@"scrollOverridePanelTableViewOrderKey"];
         
         [_tableViewDataModel addObject:rowDict];
     }
-    // Sort _tableViewDataModel by orderKey
+    /// Sort `_tableViewDataModel` by orderKey
     NSSortDescriptor *sortDesc = [NSSortDescriptor sortDescriptorWithKey:@"orderKey" ascending:YES];
     [_tableViewDataModel sortUsingDescriptors:@[sortDesc]];
 }

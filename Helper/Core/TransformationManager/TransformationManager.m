@@ -50,7 +50,7 @@ static NSDictionary *_remaps;
         [self setRemaps:self.testRemaps]; return;
     }
     
-    NSArray *remapsTable = [Config.config objectForKey:kMFConfigKeyRemaps];
+    NSArray *remapsTable = [Config.shared.config objectForKey:kMFConfigKeyRemaps];
     
     // Convert remaps table to remaps dict
     NSMutableDictionary *remapsDict = [NSMutableDictionary dictionary];

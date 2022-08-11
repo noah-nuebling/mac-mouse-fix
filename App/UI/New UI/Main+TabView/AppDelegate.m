@@ -11,7 +11,7 @@
 
 #import <PreferencePanes/PreferencePanes.h>
 #import "AppDelegate.h"
-#import "ConfigInterface_App.h"
+#import "Config.h"
 #import "SharedMessagePort.h"
 #import "Utility_App.h"
 #import "AuthorizeAccessibilityView.h"
@@ -129,9 +129,11 @@ static NSDictionary *sideButtonActions;
         DDLogInfo(@"Main App starting up...");     
         
         /// Remove restart the app untranslocated if it's currently translocated
-        [AppTranslocationManager removeTranslocation]; // Need to call this before MessagePort_App is initialized, otherwise stuff breaks if app is translocated
+        [AppTranslocationManager removeTranslocation]; /// Need to call this before `MessagePort_App` is initialized, otherwise stuff breaks if app is translocated
         /// Start parts of the app that depend on the initialization we just did
         [MessagePort_App load_Manual];
+        /// Need to manually initConfig because it is shared with Helper, and helper uses `load_Manual`
+        [Config load_Manual];
     }
     
 }
@@ -302,13 +304,13 @@ static NSDictionary *sideButtonActions;
 //    _enableMouseFixCheckBox.state = enable ? 1 : 0;
     [self enableUI:enable];
     
-    [ConfigInterface_App loadConfigFromFile];
+    [Config.shared loadConfigFromFile];
     
     ///
     /// Scroll settings
     ///
     
-    NSDictionary *scrollConfigFromFile = ConfigInterface_App.config[kMFConfigKeyScroll];
+    NSDictionary *scrollConfigFromFile = Config.shared.config[kMFConfigKeyScroll];
     
     /// Enabled checkbox
     if ([scrollConfigFromFile[@"smooth"] boolValue] == 1) {
@@ -370,9 +372,9 @@ static NSDictionary *sideButtonActions;
     };
     
     
-    ConfigInterface_App.config = [[SharedUtility dictionaryWithOverridesAppliedFrom:scrollParametersFromUI to:ConfigInterface_App.config] mutableCopy];
+    Config.shared.config = [[SharedUtility dictionaryWithOverridesAppliedFrom:scrollParametersFromUI to:Config.shared.config] mutableCopy];
     
-    [ConfigInterface_App writeConfigToFileAndNotifyHelper];
+    commitConfig();
 }
 
 @end

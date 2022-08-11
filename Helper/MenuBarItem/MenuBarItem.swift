@@ -63,8 +63,8 @@ import Foundation
             
             /// Disable all settings from the menuItem, if the menuItem is disabled
             
-            setConfig("Other.scrollKillSwitch", false)
-            setConfig("Other.buttonKillSwitch", false)
+            setConfig("Other.scrollKillSwitch", false as NSObject)
+            setConfig("Other.buttonKillSwitch", false as NSObject)
         }
     }
     
@@ -79,7 +79,7 @@ import Foundation
         /// Toggle
         sender.state = sender.state == .on ? .off : .on
         /// Set to config
-        setConfig("Other.scrollKillSwitch", sender.state == .on) // TODO: Merge the two config managers now that the Helper want to write to config as well.
+        setConfig("Other.scrollKillSwitch", (sender.state == .on) as NSObject) // TODO: Merge the two config managers now that the Helper want to write to config as well.
     }
     
     @IBAction func disableButtons(_ sender: NSMenuItem) {
@@ -87,6 +87,6 @@ import Foundation
         /// Toggle
         sender.state = sender.state == .on ? .off : .on
         /// Set to config
-        setConfig("Other.buttonKillSwitch", sender.state == .on)
+        setConfig("Other.buttonKillSwitch", (sender.state == .on) as NSObject)
     }
 }
