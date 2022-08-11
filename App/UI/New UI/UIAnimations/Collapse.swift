@@ -34,11 +34,26 @@ public class NoClipWrapper: NSView {
 
 // MARK: - Convenience Interface
 
+private struct AssociatedKeysForReactive {
+    static var collapseIsInitialized = 1
+}
 extension Reactive where Base : NSView {
+    
     /// ReactiveSwift hook
     
     var isCollapsed: BindingTarget<Bool> {
-        return BindingTarget(object: base, keyPath: "isCollapsed")
+        return BindingTarget(lifetime: base.reactive.lifetime) { shouldCollapse in
+            
+            var inited = objc_getAssociatedObject(base, &AssociatedKeysForReactive.collapseIsInitialized) as? Bool
+            if inited == nil { inited = false }
+            
+            if !(inited!) { /// Don't play animation the first time. This is so that when this is bound to a UI toggle, the initial value doesn't cause an animation.
+                base.setCollapsedWithoutAnimation(shouldCollapse)
+                objc_setAssociatedObject(base, &AssociatedKeysForReactive.collapseIsInitialized, true, .OBJC_ASSOCIATION_RETAIN)
+            } else {
+                base.isCollapsed = shouldCollapse
+            }
+        }
     }
 }
 

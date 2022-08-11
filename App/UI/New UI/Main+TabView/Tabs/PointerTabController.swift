@@ -76,7 +76,7 @@ class PointerTabController: NSViewController {
         acceleration <~ accelerationPicker.reactive.selectedIdentifiers.map { $0!.rawValue }
         
         /// Setup prop -> hidableStack binding
-        accelerationHint.setCollapsedWithoutAnimation(acceleration.value != "system")
+//        accelerationHint.setCollapsedWithoutAnimation(acceleration.value != "system")
         accelerationHint.reactive.isCollapsed <~ acceleration.map({ acc in
             acc != "system"
         })

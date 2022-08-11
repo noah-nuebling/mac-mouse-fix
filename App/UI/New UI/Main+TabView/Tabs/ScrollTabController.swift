@@ -104,7 +104,7 @@ class ScrollTabController: NSViewController {
         macOSHintIndent.widthAnchor.constraint(equalToConstant: preciseSection.fittingSize.width).isActive = true
         let preciseSectionRetained: NSStackView? = self.preciseSection
         var testHintIsDisplaying = false
-        scrollSpeed.producer.skip(first: 1).startWithValues { speed in
+        scrollSpeed.producer.skip(first: 1).startWithValues { speed in /// Are we sure to `skip(first: 1)` here?
             if speed == "system" && !testHintIsDisplaying {
                 self.preciseSection.animatedReplace(with: macOSHintIndent)
                 testHintIsDisplaying = true
