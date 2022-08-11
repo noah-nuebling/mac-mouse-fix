@@ -55,9 +55,9 @@ void setConfig(NSString *keyPath, id value) {
     return [Config.config setValue:value forKeyPath:keyPath];
 }
 /// Convenience function for writing config to file and notifying the helper app
-void commitConfig() {
-    [ConfigInterface_App writeConfigToFileAndNotifyHelper];
-}
+//void commitConfig() {
+//    [ConfigInterface_App writeConfigToFileAndNotifyHelper];
+//}
 
 
 #pragma mark - React to changes & notify other modules
