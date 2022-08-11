@@ -50,7 +50,7 @@ class TabViewController: NSTabViewController {
         guard let tb = window?.toolbar else { return }
         let tbv = SharedUtility.getPrivateValue(of: tb, forName: "_toolbarView")
         let lvs = SharedUtility.getPrivateValue(of: tbv, forName: "_allItemViewers") as? [NSView]
-        /// ^ Might be better to use`_layoutViews` here
+        /// ^ Might be better to use`_layoutViews` vs `_allItemViewers` here
         guard let lvs = lvs else { return }
         
         for v in lvs {

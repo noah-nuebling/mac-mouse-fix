@@ -17,7 +17,7 @@ class GeneralTabController: NSViewController {
 //    var enabled: MutableProperty<Bool> { MainAppState.shared.appIsEnabled }
     
     /// Config
-    var showInMenubar: MutableProperty<Bool> = MutableProperty(false)
+    var showInStatusBar = ConfigValue<Bool>(configPath: "Other.showInStatusBar")
     var checkForUpdates = ConfigValue<Bool>(configPath: "Other.checkForUpdates")
     var getBetaVersions = ConfigValue<Bool>(configPath: "Other.checkForPrereleases")
     
@@ -29,7 +29,7 @@ class GeneralTabController: NSViewController {
     
     @IBOutlet weak var enableToggle: NSControl!
     
-    @IBOutlet weak var menuBarToggle: NSButton!
+    @IBOutlet weak var statusBarToggle: NSButton!
     
     @IBOutlet weak var updatesToggle: NSButton!
     @IBOutlet weak var betaToggle: NSButton!
@@ -44,9 +44,6 @@ class GeneralTabController: NSViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        /// Load data
-        showInMenubar.value = false
         
         /// Replace enable checkBox with NSSwitch on newer macOS versions
         var usingSwitch = false
@@ -98,7 +95,7 @@ class GeneralTabController: NSViewController {
         
         /// UI <-> data bindings
         
-        showInMenubar <~ menuBarToggle.reactive.boolValues
+        showInStatusBar <~ statusBarToggle.reactive.boolValues
         checkForUpdates <~ updatesToggle.reactive.boolValues
         getBetaVersions <~ betaToggle.reactive.boolValues
         
@@ -107,7 +104,7 @@ class GeneralTabController: NSViewController {
         } else {
             enableToggle.reactive.boolValue <~ EnabledState.shared
         }
-        menuBarToggle.reactive.boolValue <~ showInMenubar
+        statusBarToggle.reactive.boolValue <~ showInStatusBar
         updatesToggle.reactive.boolValue <~ checkForUpdates
         betaToggle.reactive.boolValue <~ getBetaVersions
         

@@ -198,6 +198,8 @@
 	</dict>
 	<key>Other</key>
 	<dict>
+		<key>showInStatusBar</key>
+		<false/>
 		<key>checkForPrereleases</key>
 		<false/>
 		<key>checkForUpdates</key>
