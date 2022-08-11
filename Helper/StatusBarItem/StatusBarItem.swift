@@ -15,11 +15,9 @@ import Foundation
     @objc static func load_Manual() {
         
         /// Setup statusbar item
-        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
 //        statusItem?.button?.title = "Mac Mouse Fix"
-        var image = NSImage(named: NSImage.Name("Icon Status Badge"))
-        image = Bundle.main.image(forResource: NSImage.Name("Icon Status Badge"))
-        let imageURL = Bundle.main.url(forResource: "Key", withExtension: ".png")
+        var image = NSImage(named: NSImage.Name("CoolStatusBarIcon"))
         statusItem?.button?.image = image
         
     }

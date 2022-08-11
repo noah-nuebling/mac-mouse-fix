@@ -20,6 +20,7 @@
 		4F1D58192881D880002EB119 /* CombinedLinearCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1D58182881D880002EB119 /* CombinedLinearCurve.swift */; };
 		4F1D7F4428A45FDC00253407 /* StatusBarItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F1D7F4328A45FDC00253407 /* StatusBarItem.xib */; };
 		4F1D7F4728A4639800253407 /* StatusBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1D7F4628A4639800253407 /* StatusBarItem.swift */; };
+		4F1D7F4D28A4813300253407 /* CoolCatalog.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F1D7F4C28A4813300253407 /* CoolCatalog.xcassets */; };
 		4F2CC58727B8D2300084AACE /* HybridCurves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CC58627B8D2300084AACE /* HybridCurves.swift */; };
 		4F2CC58927B8DA8B0084AACE /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CC58827B8DA8B0084AACE /* Line.swift */; };
 		4F2F5DA825FB6FFD0037660A /* AddWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F5DA725FB6FFD0037660A /* AddWindowController.m */; };
@@ -382,6 +383,7 @@
 		4F1D58182881D880002EB119 /* CombinedLinearCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombinedLinearCurve.swift; sourceTree = "<group>"; };
 		4F1D7F4328A45FDC00253407 /* StatusBarItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatusBarItem.xib; sourceTree = "<group>"; };
 		4F1D7F4628A4639800253407 /* StatusBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarItem.swift; sourceTree = "<group>"; };
+		4F1D7F4C28A4813300253407 /* CoolCatalog.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = CoolCatalog.xcassets; sourceTree = "<group>"; };
 		4F2CC58627B8D2300084AACE /* HybridCurves.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HybridCurves.swift; sourceTree = "<group>"; };
 		4F2CC58827B8DA8B0084AACE /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		4F2F5DA625FB6FFD0037660A /* AddWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddWindowController.h; sourceTree = "<group>"; };
@@ -1668,6 +1670,7 @@
 			isa = PBXGroup;
 			children = (
 				4FF6661025F2C93A00689B77 /* Assets.xcassets */,
+				4F1D7F4C28A4813300253407 /* CoolCatalog.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -2222,6 +2225,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F1D7F4D28A4813300253407 /* CoolCatalog.xcassets in Resources */,
 				4FF6668325F2C93A00689B77 /* Assets.xcassets in Resources */,
 				4FF6668A25F2C93A00689B77 /* SmoothScroll.m (old) in Resources */,
 				4FF6654125F2C7B000689B77 /* default_launchd.plist in Resources */,
