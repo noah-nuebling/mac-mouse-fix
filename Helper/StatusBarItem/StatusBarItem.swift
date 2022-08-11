@@ -23,7 +23,7 @@ import Foundation
     
     override func awakeFromNib() {
         /// Setup statusbar item
-        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
+        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         statusItem?.button?.title = "Mac Mouse Fix"
         let image = NSImage(named: NSImage.Name("CoolStatusBarIcon"))
         statusItem?.button?.image = image
