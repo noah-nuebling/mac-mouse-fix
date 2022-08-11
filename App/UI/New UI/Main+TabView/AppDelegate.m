@@ -146,9 +146,12 @@ static NSDictionary *sideButtonActions;
     
     /// Test titlebarAccessory
     ///     Trying to add accessoryView to titlebar. We want this for app specific settings. Doesn't work so far
-    NSTitlebarAccessoryViewController *viewController = [[NSTitlebarAccessoryViewController alloc] initWithNibName:@"MyTitlebarAccessoryViewController" bundle:nil];
-    viewController.layoutAttribute = NSLayoutAttributeRight;
-    [NSApp.mainWindow addTitlebarAccessoryViewController:viewController];
+    ///     \note This *is* successfully added when we open the main app through the StatusBarItem (using NSWorkspace and the bundle URL)
+    if ((NO)) {
+        NSTitlebarAccessoryViewController *viewController = [[NSTitlebarAccessoryViewController alloc] initWithNibName:@"MyTitlebarAccessoryViewController" bundle:nil];
+        viewController.layoutAttribute = NSLayoutAttributeRight;
+        [NSApp.mainWindow addTitlebarAccessoryViewController:viewController];
+    }
     
     /// Do weird tweaks for Ventura
     ///     It seems that NSBox adds horizontal padding of 1 px around its contentView in Ventura (Beta). Here we compensate for that.

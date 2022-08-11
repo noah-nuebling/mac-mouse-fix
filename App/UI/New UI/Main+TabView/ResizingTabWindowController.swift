@@ -9,6 +9,20 @@ import Cocoa
 
 class ResizingTabWindowController: NSWindowController, NSWindowDelegate {
 
+    
+    // MARK: Lifecycle
+    
+    override func windowDidLoad() {
+        
+        super.windowDidLoad()
+        let thewindow = window!
+        
+        /// Restore position
+        ///     src: https://developer.apple.com/forums/thread/679764
+        thewindow.setFrameUsingName("MyWindow")
+        self.windowFrameAutosaveName = "MyWindow"
+    }
+    
     // MARK: Custom field editor
     /// Assign our custom modCaptureFieldEditor to modCaptureTextField instances
     

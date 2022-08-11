@@ -24,7 +24,6 @@ import CocoaLumberjackSwift
     @objc public var tabSwitchIsInProgress: Bool = false
     /// ^ This is set by TabViewController
     
-    
     // MARK: Resizing interface
     
     func setFrame(_ newFrame: NSRect, withSpringAnimation animation: CASpringAnimation) {
