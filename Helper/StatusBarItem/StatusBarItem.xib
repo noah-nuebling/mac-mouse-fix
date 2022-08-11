@@ -24,7 +24,7 @@
                 <menuItem title="Turn off Smooth Scrolling" id="KQ8-8Q-u6c">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="DisableSmooth:" target="-2" id="Mw6-bb-zFg"/>
+                        <action selector="disableScroll:" target="-2" id="I3h-Xe-0Lo"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Turn off Mouse Button Remappings" id="IsJ-q8-i95">
