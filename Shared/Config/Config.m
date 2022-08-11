@@ -44,16 +44,31 @@
 #pragma mark - Init & singleton instance
 
 + (void)load_Manual {
+    
+    /// Create instance
     _instance = [[Config alloc] init];
+    
+    /// Setup stuff
+    ///     Can't do this in `[_instance init]` because the callchain accesses tries to access the `_instance` through `Config.shared`. (Might be fixable by making `handleConfigFileChangedMessage()` an instance method like everything else)
+    
+    if (SharedUtility.runningHelper) {
+        /// Load config
+        [Config handleConfigFileChangedMessage];
+        /// Setup stuff
+        [_instance setupFSEventStreamCallback];
+    } else {
+        /// Just load config
+        [_instance loadConfigFromFile];
+    }
+    
 }
 
 static Config *_instance;
-+ (instancetype)shared {
++ (Config *)shared {
     return _instance;
 }
 
-- (instancetype)init
-{
+- (instancetype)init {
     self = [super init];
     if (self) {
         /// Get config file path
@@ -64,16 +79,6 @@ static Config *_instance;
         /// Get default config url
         NSString *defaultConfigPathRelative = @"Contents/Resources/default_config.plist";
         _defaultConfigURL = [Objects.mainAppBundle.bundleURL URLByAppendingPathComponent:defaultConfigPathRelative];
-        
-        if (SharedUtility.runningHelper) {
-            /// Load config
-            [Config handleConfigFileChangedMessage];
-            /// Setup stuff
-            [self setupFSEventStreamCallback];
-        } else {
-            /// Just load config
-            [self loadConfigFromFile];
-        }
     }
     return self;
 }
@@ -82,7 +87,9 @@ static Config *_instance;
 
 NSObject *config(NSString *keyPath) {
     /// Convenience function for accessing config
-    return [Config.shared.config valueForKeyPath:keyPath];
+    NSMutableDictionary *config = Config.shared.config;
+    NSObject *result = [config valueForKeyPath:keyPath];
+    return result;
 }
 void setConfig(NSString *keyPath, NSObject *value) {
     /// Convenience function for modifying config
