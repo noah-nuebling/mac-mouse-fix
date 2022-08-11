@@ -52,8 +52,9 @@ class ScrollTabController: NSViewController {
     
     /// Setup
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func awakeFromNib() {
+//        super.viewDidLoad()
+        super.awakeFromNib()
         
         /// Smooth
         
@@ -142,7 +143,7 @@ class ScrollTabController: NSViewController {
         
         allFlags.startWithValues { (src, flags) in
             
-            DispatchQueue.main.async { /// Need to dispatch async to prevent weird crashes inside ReactiveSwift
+//            DispatchQueue.main.async { /// Need to dispatch async to prevent weird crashes inside ReactiveSwift
                 
                 if self.horizontalMod.get() == flags && src != "h" {
                     self.horizontalMod.set(0)
@@ -170,7 +171,7 @@ class ScrollTabController: NSViewController {
                 Animate.with(CABasicAnimation(name: .default, duration: 0.1)) {
                     self.restoreDefaultModsButton.reactiveAnimator().alphaValue.set(restoreDefaultsIsEnabled ? 1.0 : 0.0)
                 }
-            }
+//            }
         }
     }
 }

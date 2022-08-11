@@ -87,7 +87,7 @@
 }
 
 - (IBAction)openAboutTab:(id)sender {
-    [MainAppState.shared.tabViewController coolSelectTabWithIdentifier:@"about"];
+    [MainAppState.shared.tabViewController coolSelectTabWithIdentifier:@"about" window:nil];
 }
 
 - (IBAction)openMoreSheet:(id)sender {

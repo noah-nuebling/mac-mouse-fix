@@ -26,7 +26,14 @@ import CocoaLumberjackSwift
     
     // MARK: Resizing interface
     
-    func setFrame(_ newFrame: NSRect, withSpringAnimation animation: CASpringAnimation) {
+    func setFrame(_ newFrame: NSRect, withSpringAnimation animation: CASpringAnimation?) {
+        
+        /// Guard animation
+        
+        guard let animation = animation else {
+            setFrame(newFrame, display: false)
+            return
+        }
         
         /// Create animator
         let animator = DynamicSystemAnimator(fromAnimation: animation, stopTolerance: 0.003);

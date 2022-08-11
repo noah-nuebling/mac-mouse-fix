@@ -171,7 +171,7 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" customClass="ResizingTabWindowController" customModule="Mac_Mouse_Fix" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" title="Mac Mouse Fix" separatorStyle="shadow" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" tabbingMode="disallowed" toolbarStyle="preference" id="IQv-IB-iLA" customClass="ResizingTabWindow" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                    <window key="window" title="Mac Mouse Fix" separatorStyle="shadow" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" animationBehavior="default" tabbingMode="disallowed" toolbarStyle="preference" id="IQv-IB-iLA" customClass="ResizingTabWindow" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowCollectionBehavior key="collectionBehavior" fullScreenNone="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -195,12 +195,14 @@
             <objects>
                 <tabViewController selectedTabViewItemIndex="0" tabStyle="toolbar" id="RJA-oq-Oo4" customClass="TabViewController" customModule="Mac_Mouse_Fix" customModuleProvider="target" sceneMemberID="viewController">
                     <tabViewItems>
+                        <tabViewItem label="Initial" identifier="initial" id="g9N-Za-8Ss"/>
                         <tabViewItem label="General" identifier="general" image="gearshape" catalog="system" id="rIq-3r-6ck"/>
                         <tabViewItem label="Buttons" identifier="buttons" image="rectangle" catalog="system" id="Mjk-wy-Z7C"/>
                         <tabViewItem label="Scrolling" identifier="scrolling" image="arrow.up.and.down" catalog="system" id="jOM-dH-pdc"/>
                         <tabViewItem label="Pointer" identifier="pointer" image="cursorarrow" catalog="system" id="lLu-45-nE3"/>
                         <tabViewItem label="About" identifier="about" image="info.circle" catalog="system" id="wal-3r-ZZs"/>
                     </tabViewItems>
+                    <viewControllerTransitionOptions key="transitionOptions" allowUserInteraction="YES"/>
                     <tabView key="tabView" type="noTabsNoBorder" id="oqi-09-EfH">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -211,6 +213,7 @@
                     </tabView>
                     <connections>
                         <outlet property="tabView" destination="oqi-09-EfH" id="1rO-NB-pwr"/>
+                        <segue destination="bsO-Hw-2ui" kind="relationship" relationship="tabItems" id="OiV-lA-NY3"/>
                         <segue destination="eLS-O0-A1x" kind="relationship" relationship="tabItems" id="dQW-nT-h2b"/>
                         <segue destination="d9S-X9-qM1" kind="relationship" relationship="tabItems" id="rD6-Y3-OVe"/>
                         <segue destination="qcW-e9-BqR" kind="relationship" relationship="tabItems" id="8Vk-gd-khS"/>
@@ -227,20 +230,20 @@
             <objects>
                 <viewController title="General" showSeguePresentationStyle="single" id="eLS-O0-A1x" userLabel="General View Controller" customClass="GeneralTabController" customModule="Mac_Mouse_Fix" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" misplaced="YES" id="As8-gY-gcx">
-                        <rect key="frame" x="0.0" y="0.0" width="470" height="271"/>
+                        <rect key="frame" x="0.0" y="0.0" width="353" height="271"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="249.99998474121094" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6xF-Pl-4RE" userLabel="Master Stack" customClass="CollapsingStackView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                 <rect key="frame" x="30" y="20" width="293" height="231"/>
                                 <subviews>
-                                    <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="1000" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0BS-nv-t3O" userLabel="Enable section">
+                                    <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="1000" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0BS-nv-t3O" userLabel="Enable section">
                                         <rect key="frame" x="0.0" y="181" width="293" height="50"/>
                                         <subviews>
-                                            <customView ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D4U-Df-iCp" userLabel="Text center">
+                                            <customView horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="D4U-Df-iCp" userLabel="Text center">
                                                 <rect key="frame" x="0.0" y="0.0" width="211" height="50"/>
                                                 <subviews>
-                                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jTe-ie-zgb">
-                                                        <rect key="frame" x="-2" y="33" width="156" height="17"/>
+                                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="jTe-ie-zgb">
+                                                        <rect key="frame" x="-2" y="17" width="156" height="17"/>
                                                         <textFieldCell key="cell" controlSize="large" title="Enable Mac Mouse Fix" id="RV9-5T-rvb">
                                                             <font key="font" metaFont="systemBold" size="14"/>
                                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -250,10 +253,11 @@
                                                 </subviews>
                                                 <constraints>
                                                     <constraint firstItem="jTe-ie-zgb" firstAttribute="leading" secondItem="D4U-Df-iCp" secondAttribute="leading" id="Ix0-KA-VUt"/>
+                                                    <constraint firstAttribute="width" constant="211" id="JrY-6M-6zF"/>
                                                     <constraint firstItem="jTe-ie-zgb" firstAttribute="centerY" secondItem="D4U-Df-iCp" secondAttribute="centerY" id="uGN-Ra-aee"/>
                                                 </constraints>
                                             </customView>
-                                            <customView horizontalHuggingPriority="999" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XPG-bK-YqU" userLabel="Spacer">
+                                            <customView horizontalHuggingPriority="999" translatesAutoresizingMaskIntoConstraints="NO" id="XPG-bK-YqU" userLabel="Spacer">
                                                 <rect key="frame" x="219" y="0.0" width="50" height="50"/>
                                             </customView>
                                             <button verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="sZr-Bl-L7e" userLabel="Enabled Toggle">
@@ -266,7 +270,7 @@
                                         </subviews>
                                         <visibilityPriorities>
                                             <integer value="1000"/>
-                                            <integer value="1000"/>
+                                            <real value="500"/>
                                             <integer value="1000"/>
                                         </visibilityPriorities>
                                         <customSpacing>
@@ -669,7 +673,7 @@
                                                             <rect key="frame" x="0.0" y="40" width="100" height="30"/>
                                                             <subviews>
                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rFm-Yw-4A5">
-                                                                    <rect key="frame" x="0.0" y="16" width="100" height="14"/>
+                                                                    <rect key="frame" x="0.0" y="30" width="100" height="0.0"/>
                                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Scroll Horizontally" id="Jds-wI-1h1">
                                                                         <font key="font" metaFont="smallSystem"/>
                                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -677,7 +681,7 @@
                                                                     </textFieldCell>
                                                                 </textField>
                                                                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QF5-am-Af9" customClass="ModCaptureTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="13" y="5" width="75" height="5"/>
+                                                                    <rect key="frame" x="13" y="5" width="75" height="19"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="75" id="gol-0r-D1D"/>
                                                                     </constraints>
@@ -688,7 +692,7 @@
                                                                     </textFieldCell>
                                                                 </textField>
                                                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="aST-ae-80H" customClass="ModCaptureDeleteButton" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="9" height="15"/>
+                                                                    <rect key="frame" x="0.0" y="7" width="9" height="15"/>
                                                                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="xmark.circle.fill" catalog="system" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="Q7w-xW-wZs">
                                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                         <font key="font" metaFont="system"/>
@@ -1119,6 +1123,30 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                 <customObject id="xN7-0P-7Zw" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1116" y="1605.5"/>
+        </scene>
+        <!--Initial Tab Controller-->
+        <scene sceneID="R82-b2-ukC">
+            <objects>
+                <viewController title="Initial Tab Controller" id="bsO-Hw-2ui" sceneMemberID="viewController">
+                    <view key="view" id="gPA-kn-mzX" userLabel="MainView">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="Gd0-WW-Cha" userLabel="EmptyContentView">
+                                <rect key="frame" x="7" y="7" width="436" height="286"/>
+                            </customView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="Gd0-WW-Cha" firstAttribute="leading" secondItem="gPA-kn-mzX" secondAttribute="leading" constant="7" id="MJW-cu-gqT"/>
+                            <constraint firstItem="Gd0-WW-Cha" firstAttribute="top" secondItem="gPA-kn-mzX" secondAttribute="top" constant="7" id="P9c-uI-IRQ"/>
+                            <constraint firstAttribute="trailing" secondItem="Gd0-WW-Cha" secondAttribute="trailing" constant="7" id="lhj-Zh-JA0"/>
+                            <constraint firstAttribute="bottom" secondItem="Gd0-WW-Cha" secondAttribute="bottom" constant="7" id="m55-gL-ZG9"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <customObject id="JtQ-5Y-Zck" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-844" y="869"/>
         </scene>
     </scenes>
     <resources>

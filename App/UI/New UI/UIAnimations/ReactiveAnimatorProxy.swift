@@ -79,9 +79,13 @@ extension NSAnimatablePropertyContainer where Self: NSObject {
             if animation1 == nil { /// Fallback
                 animation1 = CABasicAnimation(name: .default, duration: 0.25)
             }
+            /// Guard 0 duration
+            if animation1!.duration == 0 {
+                base.setValue(newValue, forKeyPath: keyPath)
+                return
+            }
             /// Make copy so we don't change the animation outside this scope
             let animation = animation1!.copy() as! CABasicAnimation
-            
             /// Make animations round to integer to avoid jitter. This is useful for resize animations. But this breaks opacity animations.
             var doRoundToInt = false
             if (newValue as? NSRect) != nil { doRoundToInt = true }
