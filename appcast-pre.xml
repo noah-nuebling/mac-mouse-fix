@@ -156,6 +156,7 @@
 </head>
 <body>
 <h3 id="even-more-improvements-for-ventura">Even more improvements for Ventura!</h3>
+<p>Mac Mouse Fix will now feel fully native to Ventura.</p>
 <ul>
 <li>Updated the UI for granting Accessibility Permissions to reflect the new Ventura System Settings</li>
 <li>Mac Mouse Fix will now be displayed properly under Ventura’s new <strong>System Settings &gt; Login Items</strong> menu</li>
