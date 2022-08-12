@@ -40,6 +40,7 @@ import Foundation
     }
     
     override func awakeFromNib() {
+        
         /// Setup statusbar item
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         statusItem?.button?.title = "Mac Mouse Fix"
@@ -48,27 +49,17 @@ import Foundation
         statusItem?.menu = menu
         statusItem?.isVisible = false
         
-        /// Setup menu strings
-        if #available(macOS 13, *) {
-            /// TESTING. Make this available before macOS 13.
-            do {
-                /// Set markdown. (Doesn't seem to do anything)
-                scrollEnabledItem.attributedTitle = try NSAttributedString(markdown: "Smooth Scrolling & Keyboard Modifiers")
-                buttonsEnabledItem.attributedTitle = try NSAttributedString(markdown: "Mouse Buttons Remaps")
-            } catch {
-                fatalError()
-            }
-        } else {
-            scrollEnabledItem.title = "Turn off Smooth Scrolling"
-            buttonsEnabledItem.title = "Turn off Mouse Button Remaps"
-        }
-        
-        /// Setup group item
-        /// `.indentationLevel` doesn't work. Do indentation in IB instead
+        /// Setup group menu item
+        /// `.indentationLevel` doesn't work. Do indentation in IB autolayout instead
         appCompatItem.view = appCompatView
+        
+        /// Turn off group item
+//        menu.removeItem(appCompatItem)
+        
+        /// Setup hint menu item
         appCompatHintItem.view = appCompatHintView
         
-        /// Configure
+        /// Load state
         MenuBarItem.reload()
     }
     

@@ -25,16 +25,16 @@
                 <menuItem title="&lt;App Compat title&gt;" hidden="YES" id="MGH-3e-48B">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
-                <menuItem title="&lt;Enable Smooth Scrolling&gt;" state="on" indentationLevel="1" id="KQ8-8Q-u6c">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="disableScroll:" target="-2" id="RgH-C3-jva"/>
-                    </connections>
-                </menuItem>
-                <menuItem title="&lt;Enable Button Remaps&gt;" state="on" indentationLevel="1" id="IsJ-q8-i95">
+                <menuItem title="Mouse Button Remaps" state="on" indentationLevel="1" id="IsJ-q8-i95">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="disableButtons:" target="-2" id="wHN-dY-Bub"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Scroll Enhancements" state="on" indentationLevel="1" id="KQ8-8Q-u6c">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="disableScroll:" target="-2" id="RgH-C3-jva"/>
                     </connections>
                 </menuItem>
                 <menuItem title="&lt;App Compat hint&gt;" id="JFP-3w-VSr">
@@ -51,12 +51,12 @@
             <point key="canvasLocation" x="-11" y="44"/>
         </menu>
         <customView horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZfV-T8-S42">
-            <rect key="frame" x="0.0" y="0.0" width="239" height="26"/>
+            <rect key="frame" x="0.0" y="0.0" width="239" height="25"/>
             <subviews>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EHs-VF-a5A">
-                    <rect key="frame" x="11" y="5" width="220" height="16"/>
+                    <rect key="frame" x="11" y="7" width="220" height="14"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" title="App Compatibility" id="UrY-I2-S82">
-                        <font key="font" metaFont="system"/>
+                        <font key="font" metaFont="systemSemibold" size="11"/>
                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -64,9 +64,9 @@
             </subviews>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="EHs-VF-a5A" secondAttribute="trailing" constant="10" id="7U3-se-c2i"/>
-                <constraint firstAttribute="bottom" secondItem="EHs-VF-a5A" secondAttribute="bottom" constant="5" id="7ua-Ho-D8W"/>
+                <constraint firstAttribute="bottom" secondItem="EHs-VF-a5A" secondAttribute="bottom" constant="7" id="7ua-Ho-D8W"/>
                 <constraint firstItem="EHs-VF-a5A" firstAttribute="leading" secondItem="ZfV-T8-S42" secondAttribute="leading" constant="13" id="Bey-Fm-MCu"/>
-                <constraint firstItem="EHs-VF-a5A" firstAttribute="top" secondItem="ZfV-T8-S42" secondAttribute="top" constant="5" id="KmT-ib-eBA"/>
+                <constraint firstItem="EHs-VF-a5A" firstAttribute="top" secondItem="ZfV-T8-S42" secondAttribute="top" constant="7" id="KmT-ib-eBA"/>
             </constraints>
             <point key="canvasLocation" x="-188.5" y="-185.5"/>
         </customView>
@@ -79,7 +79,7 @@
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="216" id="eOK-Xe-cGg"/>
                     </constraints>
                     <textFieldCell key="cell" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Quickly disable Mac Mouse Fix features so you can work with apps that aren't compatible yet" id="qF8-UG-CW7">
-                        <font key="font" metaFont="system" size="11"/>
+                        <font key="font" metaFont="systemMedium" size="11"/>
                         <color key="textColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>

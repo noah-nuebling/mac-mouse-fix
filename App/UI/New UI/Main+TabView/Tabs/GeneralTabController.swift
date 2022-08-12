@@ -89,9 +89,9 @@ class GeneralTabController: NSViewController {
             }
         }
         if usingSwitch, #available(macOS 10.15, *) {
-            (enableToggle as? NSSwitcherino)?.reactive.boolValues.startWithValues(onToggle)
+            (enableToggle as? NSSwitcherino)?.reactive.boolValues.skip(first: 1).startWithValues(onToggle)
         } else {
-            enableToggle.reactive.boolValues.observeValues(onToggle)
+            enableToggle.reactive.boolValues.observeValues(onToggle) /// Why are we using observe here and startWithValues above?
         }
         
         /// UI <-> data bindings
