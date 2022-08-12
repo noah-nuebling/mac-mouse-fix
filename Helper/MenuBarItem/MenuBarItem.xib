@@ -22,25 +22,25 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <menu id="5Wl-XF-cnf">
             <items>
-                <menuItem title="&lt;App Compat title&gt;" id="MGH-3e-48B">
+                <menuItem title="&lt;App Compat title&gt;" hidden="YES" id="MGH-3e-48B">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
-                <menuItem title="&lt;App Compat hint&gt;" id="JFP-3w-VSr">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                </menuItem>
-                <menuItem title="&lt;Turn off Smooth Scrolling&gt;" state="on" indentationLevel="1" id="KQ8-8Q-u6c">
+                <menuItem title="&lt;Enable Smooth Scrolling&gt;" state="on" indentationLevel="1" id="KQ8-8Q-u6c">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="disableScroll:" target="-2" id="RgH-C3-jva"/>
                     </connections>
                 </menuItem>
-                <menuItem title="&lt;Turn off Mouse Button Remaps&gt;" state="on" indentationLevel="1" id="IsJ-q8-i95">
+                <menuItem title="&lt;Enable Button Remaps&gt;" state="on" indentationLevel="1" id="IsJ-q8-i95">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="disableButtons:" target="-2" id="wHN-dY-Bub"/>
                     </connections>
                 </menuItem>
-                <menuItem isSeparatorItem="YES" id="Q9U-6U-NVu"/>
+                <menuItem title="&lt;App Compat hint&gt;" id="JFP-3w-VSr">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="fRU-JH-yco"/>
                 <menuItem title="Open Mac Mouse Fix..." id="lb0-HS-5Kv">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
@@ -71,7 +71,7 @@
             <point key="canvasLocation" x="-188.5" y="-185.5"/>
         </customView>
         <customView horizontalCompressionResistancePriority="500" verticalCompressionResistancePriority="1000" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uBe-pX-jFr">
-            <rect key="frame" x="0.0" y="0.0" width="239" height="47"/>
+            <rect key="frame" x="0.0" y="0.0" width="257" height="52"/>
             <subviews>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="500" verticalCompressionResistancePriority="1000" ambiguous="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PO7-Ct-eDE">
                     <rect key="frame" x="11" y="5" width="220" height="42"/>
@@ -87,9 +87,9 @@
             </subviews>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="PO7-Ct-eDE" secondAttribute="bottom" constant="5" id="UFe-CG-SJn"/>
-                <constraint firstItem="PO7-Ct-eDE" firstAttribute="top" secondItem="uBe-pX-jFr" secondAttribute="top" id="rpX-hf-nhU"/>
+                <constraint firstItem="PO7-Ct-eDE" firstAttribute="top" secondItem="uBe-pX-jFr" secondAttribute="top" constant="5" id="rpX-hf-nhU"/>
                 <constraint firstAttribute="trailing" secondItem="PO7-Ct-eDE" secondAttribute="trailing" constant="10" id="tAZ-7I-8yR"/>
-                <constraint firstItem="PO7-Ct-eDE" firstAttribute="leading" secondItem="uBe-pX-jFr" secondAttribute="leading" constant="13" id="zRp-cd-E6S"/>
+                <constraint firstItem="PO7-Ct-eDE" firstAttribute="leading" secondItem="uBe-pX-jFr" secondAttribute="leading" constant="31" id="zRp-cd-E6S"/>
             </constraints>
             <point key="canvasLocation" x="108.5" y="-183"/>
         </customView>

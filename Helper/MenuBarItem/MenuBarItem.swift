@@ -120,4 +120,10 @@ import Foundation
         setConfig("Other.buttonKillSwitch", !(sender.state == .on) as NSObject)
         commitConfig()
     }
+    
+    @IBAction func checkUpdates(_ sender: Any) {
+        
+        /// Implement?
+    }
+    
 }
