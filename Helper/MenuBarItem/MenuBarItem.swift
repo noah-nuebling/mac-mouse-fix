@@ -25,8 +25,8 @@ import Foundation
     var statusItem: NSStatusItem? = nil
     @IBOutlet var menu: NSMenu!
     
-    @IBOutlet weak var disableScrollItem: NSMenuItem!
-    @IBOutlet weak var disableButtonsItem: NSMenuItem!
+    @IBOutlet weak var scrollEnabledItem: NSMenuItem!
+    @IBOutlet weak var buttonsEnabledItem: NSMenuItem!
     
     @IBOutlet weak var appCompatItem: NSMenuItem!
     @IBOutlet var appCompatView: NSView!
@@ -53,14 +53,14 @@ import Foundation
             /// TESTING. Make this available before macOS 13.
             do {
                 /// Set markdown. (Doesn't seem to do anything)
-                disableScrollItem.attributedTitle = try NSAttributedString(markdown: "Smooth Scrolling")
-                disableButtonsItem.attributedTitle = try NSAttributedString(markdown: "Mouse Buttons Remaps")
+                scrollEnabledItem.attributedTitle = try NSAttributedString(markdown: "Smooth Scrolling")
+                buttonsEnabledItem.attributedTitle = try NSAttributedString(markdown: "Mouse Buttons Remaps")
             } catch {
                 fatalError()
             }
         } else {
-            disableScrollItem.title = "Turn off Smooth Scrolling"
-            disableButtonsItem.title = "Turn off Mouse Button Remaps"
+            scrollEnabledItem.title = "Turn off Smooth Scrolling"
+            buttonsEnabledItem.title = "Turn off Mouse Button Remaps"
         }
         
         /// Setup group item
@@ -79,21 +79,25 @@ import Foundation
         let shouldShow = config("Other.showMenuBarItem") as? Bool ?? false
         instance?.statusItem?.isVisible = shouldShow
         
+        let buttonsKilled = config("Other.buttonKillSwitch") as? Bool ?? false
+        let scrollKilled = config("Other.scrollKillSwitch") as? Bool ?? false
+        
         if shouldShow {
             
-            let buttonsKilled = config("Other.buttonKillSwitch") as? Bool ?? false
-            let scrollKilled = config("Other.scrollKillSwitch") as? Bool ?? false
-            
-            instance?.disableButtonsItem.state = !buttonsKilled ? .on : .off
-            instance?.disableScrollItem.state = !scrollKilled ? .on : .off
+            instance?.buttonsEnabledItem.state = !buttonsKilled ? .on : .off
+            instance?.scrollEnabledItem.state = !scrollKilled ? .on : .off
             
             return
         } else {
             
             /// Disable all settings from the menuItem, if the menuItem is disabled
-            setConfig("Other.scrollKillSwitch", true as NSObject)
-            setConfig("Other.buttonKillSwitch", true as NSObject)
-            commitConfig()
+            /// Need to do the killed check to prevent infinite loops. (Not sure if true anymore). This would be easier if we just used the reactive ConfigValue instead.
+            
+            if (buttonsKilled || scrollKilled) {
+                setConfig("Other.scrollKillSwitch", false as NSObject)
+                setConfig("Other.buttonKillSwitch", false as NSObject)
+                commitConfig()
+            }
         }
     }
     

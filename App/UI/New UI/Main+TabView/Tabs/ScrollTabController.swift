@@ -50,11 +50,30 @@ class ScrollTabController: NSViewController {
     @IBOutlet weak var preciseModField: ModCaptureTextField!
     @IBOutlet weak var restoreDefaultModsButton: NSButton!
     
-    /// Setup
+    /// Did appear
+    
+    override func viewDidAppear() {
+        let isDisabled = config("Other.scrollKillSwitch") as? Bool ?? false
+        if isDisabled {
+            /// Turn off killSwitch
+            setConfig("Other.scrollKillSwitch", false as NSObject)
+            /// Show message to user
+            if #available(macOS 13, *) {
+                let message = NSAttributedString(coolMarkdown: "Smooth Scrolling **was disabled** from the Mac Mouse Fix Menu Bar Item. <Insert picture?>.\n Now it has been turned on again.")
+                ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: -1, alignment: kToastNotificationAlignmentBottomMiddle)
+            } else {
+                /// TODO: Make this work on older macOS
+            }
+        }
+    }
+    
+    /// Init
     
     override func awakeFromNib() {
-//        super.viewDidLoad()
         super.awakeFromNib()
+        
+        /// There was some reason we don't use viewDidLoad here. I think it had to do with preventing animations from playing when the app starts right into this tab or sth. But maybe it's just unnecessary.
+        
         
         /// Smooth
         

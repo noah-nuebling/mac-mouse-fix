@@ -41,7 +41,8 @@ class GeneralTabController: NSViewController {
     @IBOutlet weak var enabledHint: NSTextField!
     @IBOutlet weak var updatesHint: NSTextField!
     
-
+    /// Init
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
