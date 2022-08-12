@@ -110,9 +110,10 @@ void commitConfig() {
 }
 
 
-#pragma mark - React to changes & notify other modules
+#pragma mark - React
 
 + (void)handleConfigFileChangedMessage {
+    
     /// TODO: Rename. This is not just for handling the message from MessagePort
     
     /// Validate
@@ -126,6 +127,7 @@ void commitConfig() {
     /// Notify other modules
     [TransformationManager reload];
     [ScrollConfig reload];
+    [Scroll decide];
     [PointerConfig reload];
     [OtherConfig reload];
     [MenuBarItem reload];

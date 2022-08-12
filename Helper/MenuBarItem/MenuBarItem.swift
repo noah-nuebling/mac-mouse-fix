@@ -44,19 +44,16 @@ import Foundation
     
     @objc static func reload() {
         
-        var shouldShow = config("Other.showMenuBarItem") as? Bool
-        if shouldShow == nil { shouldShow = false }
-        instance?.statusItem?.isVisible = shouldShow!
+        var shouldShow = config("Other.showMenuBarItem") as? Bool ?? false
+        instance?.statusItem?.isVisible = shouldShow
         
-        if shouldShow! {
+        if shouldShow {
             
-            var buttonsKilled = config("Other.buttonKillSwitch") as? Bool
-            if buttonsKilled == nil { buttonsKilled = false }
-            var scrollKilled = config("Other.scrollKillSwitch") as? Bool
-            if scrollKilled == nil { scrollKilled = false }
+            var buttonsKilled = config("Other.buttonKillSwitch") as? Bool ?? false
+            var scrollKilled = config("Other.scrollKillSwitch") as? Bool ?? false
             
-            instance?.disableButtonsItem.state = buttonsKilled! ? .on : .off
-            instance?.disableScrollItem.state = scrollKilled! ? .on : .off
+            instance?.disableButtonsItem.state = buttonsKilled ? .on : .off
+            instance?.disableScrollItem.state = scrollKilled ? .on : .off
             
             return
         } else {

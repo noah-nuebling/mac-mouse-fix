@@ -21,10 +21,10 @@ import CocoaLumberjackSwift
     
     // MARK: Class functions
     
-    private(set) static var config = ScrollConfig() /// Singleton instance
-    @objc static var copyOfConfig: ScrollConfig { config.copy() as! ScrollConfig }
+    private(set) static var scrollConfig = ScrollConfig() /// Singleton instance
+    @objc static var copyOfConfig: ScrollConfig { scrollConfig.copy() as! ScrollConfig }
     @objc static func reload() { /// This should be called when the underlying config (which mirrors the config file) changes
-        config = ScrollConfig() /// All the property values are cached in `currentConfig`, because the properties are lazy. Replacing with a fresh object deletes this implicit cache.
+        scrollConfig = ScrollConfig() /// All the property values are cached in `currentConfig`, because the properties are lazy. Replacing with a fresh object deletes this implicit cache.
     }
     
     @objc static var linearCurve: Bezier = { () -> Bezier in
@@ -49,8 +49,9 @@ import CocoaLumberjackSwift
     
     // MARK: General
     
-    @objc lazy var smoothEnabled: Bool = { c("smooth") as! Bool }()
-    @objc lazy var disableAll: Bool = false /* topLevel["disableAll"] as! Bool */ /// This is currently unused. Could be used as a killswitch for all scrolling Interception
+    
+    @objc lazy var smoothEnabled: Bool = { c("smooth") as! Bool && !killSwitch }()
+    @objc private var killSwitch: Bool { config("Other.scrollKillSwitch") as? Bool ?? false } /// Not cached cause it's just used to calc the other vars
     
     // MARK: Invert Direction
     
@@ -278,7 +279,7 @@ import CocoaLumberjackSwift
     
     /// User settings
     
-    @objc lazy var useAppleAcceleration: Bool = false /// Ignore MMF acceleration algorithm and use values provided by macOS
+    @objc lazy var useAppleAcceleration: Bool = { false || killSwitch }() /// Ignore MMF acceleration algorithm and use values provided by macOS
     @objc lazy var scrollSensitivity: MFScrollSensitivity = kMFScrollSensitivityHigh
     @objc lazy var scrollAcceleration: MFScrollAcceleration = kMFScrollAccelerationHigh
     

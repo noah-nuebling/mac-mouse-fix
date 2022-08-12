@@ -1535,7 +1535,6 @@
 				4F909CEF28A0C3B6009349A2 /* MainAppState.swift */,
 				4F7A1A70289F2517007D5B30 /* UI */,
 				4F8CE6FE2617738A00D70A76 /* AppTranslocation */,
-				4FF665D025F2C92700689B77 /* Config */,
 				4FF665D625F2C92700689B77 /* MessagePort */,
 				4FF665E525F2C92700689B77 /* Utility */,
 				4F909D3F28A0C411009349A2 /* Experiments */,
@@ -1572,13 +1571,6 @@
 				4FF665CE25F2C92700689B77 /* MoreSheet.xib */,
 			);
 			path = MoreSheet;
-			sourceTree = "<group>";
-		};
-		4FF665D025F2C92700689B77 /* Config */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Config;
 			sourceTree = "<group>";
 		};
 		4FF665D425F2C92700689B77 /* Resources */ = {

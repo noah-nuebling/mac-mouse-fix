@@ -92,7 +92,12 @@ static BOOL _isSuspended = NO;
 }
 
 + (void)resetState {
-    dispatch_async(_scrollQueue, ^{ /// Not totally sure whether to use dispatch here?
+    dispatch_async(_scrollQueue, ^{
+        resetState_Unsafe();
+    });
+}
+void resetState_Sync(void) {
+    dispatch_sync(_scrollQueue, ^{
         resetState_Unsafe();
     });
 }
@@ -115,13 +120,15 @@ void resetState_Unsafe(void) {
     /// Whether to enable or enable scrolling interception
     ///     Call this whenever a value which the decision depends on changes
     
-    BOOL disableAll = ![DeviceManager devicesAreAttached];
+    BOOL disableAll = !DeviceManager.devicesAreAttached /*|| _scrollConfig.killSwitch*/; /// We decide we still want to invert scroll direction when `killSwitch` is active
     
     if (disableAll) {
         /// Disable scroll interception
+        resetState_Sync();
         if (_eventTap) {
             CGEventTapEnable(_eventTap, false);
         }
+        
     } else {
         /// Enable scroll interception
         CGEventTapEnable(_eventTap, true);
@@ -133,7 +140,31 @@ void resetState_Unsafe(void) {
 
 #pragma mark - Event tap
 
+static NSString *CGScrollWheelEventDescription(CGEventRef event) {
+    
+    /// Helper / debugging function
+    /// TODO: Move this to another file
+    
+    double d            = CGEventGetDoubleValueField(event, kCGScrollWheelEventDeltaAxis1);
+    double dPoint       = CGEventGetDoubleValueField(event, kCGScrollWheelEventPointDeltaAxis1);
+    double dFixed       = CGEventGetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1);
+    double dContinuous  = CGEventGetIntegerValueField(event, kCGScrollWheelEventIsContinuous);
+    double dCount       = CGEventGetDoubleValueField(event, kCGScrollWheelEventScrollCount);
+    double dInstant     = CGEventGetDoubleValueField(event, kCGScrollWheelEventInstantMouser);
+    double dPhase       = CGEventGetDoubleValueField(event, kCGScrollWheelEventScrollPhase);
+    double dMomPhase    = CGEventGetDoubleValueField(event, kCGScrollWheelEventMomentumPhase);
+    
+    NSString *description = [NSString stringWithFormat:@"d: %f dPoint: %f dFixed: %f isContinuous: %f count: %f instant: %f phase: %f momPhase: %f", d, dPoint, dFixed, dContinuous, dCount, dInstant, dPhase, dMomPhase];
+    
+    return description;
+}
+
 static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
+    
+    
+    /// Debug
+    
+//    DDLogDebug(@"SCROOOL EVENT – %@", CGScrollWheelEventDescription(event));
     
     /// Handle eventTapDisabled messages
     
@@ -268,12 +299,8 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             }
         }
         
-        /// Update modfications
-        MFScrollModificationResult newMods = [ScrollModifiers currentModificationsWithEvent:event];
-        if (![ScrollModifiers scrollModsAreEqual:newMods other:_modifications]) {
-            resetState_Unsafe();
-            _modifications = newMods;
-        }
+        /// Update scrollConfig
+        _scrollConfig = [ScrollConfig copyOfConfig];
         
         /// Notify other touch drivers
         DriverUnsuspender thisDriverUnsuspender = [OutputCoordinator suspendTouchDriversFromDriver:kTouchDriverScroll];
@@ -281,8 +308,12 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             unsuspendDrivers = thisDriverUnsuspender;
         }
         
-        /// Update scrollConfig
-        _scrollConfig = [ScrollConfig copyOfConfig];
+        /// Update modfications
+        MFScrollModificationResult newMods = [ScrollModifiers currentModificationsWithEvent:event];
+        if (![ScrollModifiers scrollModsAreEqual:newMods other:_modifications]) {
+            resetState_Unsafe();
+            _modifications = newMods;
+        }
         
 #pragma mark Override config
         
@@ -910,27 +941,36 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         
         if (dx+dy == 0) return;
         
+        /// Create base event
+        /// Mysterious: In the real events, `kCGScrollWheelEventIsContinuous` is false. But we have to set it true (through `kCGScrollEventUnitPixel`) to make the scroll distance match the real events.
         CGEventRef event = CGEventCreateScrollWheelEvent(NULL, kCGScrollEventUnitPixel, 1, 0);
-        
-        int64_t dyLine;
-        int64_t dxLine;
         
         /// Make line deltas 1/10 of pixel deltas
         ///     See CGEventSource pixelsPerLine - it's 10
-        //      TODO: Subpixelate line delta (instead of rounding)
-        dyLine = round(dy / 10);
-        dxLine = round(dx / 10);
+        //      TODO: Subpixelate line delta (instead of rounding). Edit: Actually in the real events they just seem to be `floor`ed, so we won't subpixelate
+        int64_t dyLine = dy / 10;
+        int64_t dxLine = dx / 10;
         
+        /// Make Line deltas at least 1
+        ///     This seems to be happening in the real events
+        if (llabs(dy) != 0 && llabs(dyLine) == 0) dyLine = sign(dy);
+        if (llabs(dx) != 0 && llabs(dxLine) == 0) dxLine = sign(dx);
+        
+        /// Set fields
+        ///  The fixed point fields are automatically set when we set the other fields
         CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1, dyLine);
         CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1, dy);
-        CGEventSetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1, dy);
         
         CGEventSetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2, dxLine);
         CGEventSetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis2, dx);
-        CGEventSetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis2, dx);
         
+        /// Debug
+//        DDLogDebug(@"SCROOOL OVONT – %@", CGScrollWheelEventDescription(event));
+        
+        /// Send
         CGEventPost(kCGSessionEventTap, event);
         
+        /// Release
         CFRelease(event);
         
     } else {
