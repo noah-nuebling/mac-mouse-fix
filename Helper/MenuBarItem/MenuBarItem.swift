@@ -53,7 +53,7 @@ import Foundation
             /// TESTING. Make this available before macOS 13.
             do {
                 /// Set markdown. (Doesn't seem to do anything)
-                scrollEnabledItem.attributedTitle = try NSAttributedString(markdown: "Smooth Scrolling")
+                scrollEnabledItem.attributedTitle = try NSAttributedString(markdown: "Smooth Scrolling & Keyboard Modifiers")
                 buttonsEnabledItem.attributedTitle = try NSAttributedString(markdown: "Mouse Buttons Remaps")
             } catch {
                 fatalError()

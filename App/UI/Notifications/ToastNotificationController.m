@@ -93,7 +93,7 @@ static double _toastAnimationOffset = 20;
     if (alignment == kToastNotificationAlignmentTopMiddle) {
         mainWindowTitleBarHeight = 17;
         topEdgeMargin = 5.0; /// 0.0 // -25.0
-        sideMargin = 5;
+        sideMargin = 2; /// In MMF 3 the views are so narrow that the notifications maybe should be allowed to spill out.
         _toastAnimationOffset = 20;
     } else if (alignment == kToastNotificationAlignmentBottomRight){
         bottomMargin = 10;
