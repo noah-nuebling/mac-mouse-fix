@@ -105,6 +105,8 @@ import Foundation
     
     @IBAction func disableScroll(_ sender: NSMenuItem) {
         
+        // TODO: Fix bug where scrolling freezes after turning smooth scroll back on
+        
         /// Toggle
         sender.state = sender.state == .on ? .off : .on
         /// Set to config
