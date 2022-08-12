@@ -52,6 +52,70 @@ static NSDictionary *_remaps;
         
     NSMutableDictionary *remapsDict = [NSMutableDictionary dictionary];
     
+    ///
+    /// Get keyboard mods from scroll screen
+    ///
+    
+    if ([(id)config(@"Other.scrollKillSwitch") boolValue]) { /// Disable keyboard mods when scrollKillSwitch is on
+        
+    } else {
+        NSDictionary *modifiers = (NSDictionary *)config(@"Scroll.modifiers");
+        
+        NSEventModifierFlags horizontal = [(id)config(@"Scroll.modifiers.horizontal") unsignedIntegerValue];
+        NSEventModifierFlags zoom = [(id)config(@"Scroll.modifiers.zoom") unsignedIntegerValue];
+        NSEventModifierFlags swift = [(id)config(@"Scroll.modifiers.swift") unsignedIntegerValue];
+        NSEventModifierFlags precise = [(id)config(@"Scroll.modifiers.precise") unsignedIntegerValue];
+        
+        if (horizontal) {
+            NSDictionary *precondition = @{
+                kMFModificationPreconditionKeyKeyboard: @(horizontal)
+            };
+            NSDictionary *effect = @{
+                kMFTriggerScroll: @{
+                    kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeHorizontalScroll
+                }
+            };
+            [remapsDict setObject:effect forKey:precondition];
+        }
+        if (zoom) {
+            NSDictionary *precondition = @{
+                kMFModificationPreconditionKeyKeyboard: @(zoom)
+            };
+            NSDictionary *effect = @{
+                kMFTriggerScroll: @{
+                    kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeZoom
+                }
+            };
+            [remapsDict setObject:effect forKey:precondition];
+        }
+        if (swift) {
+            NSDictionary *precondition = @{
+                kMFModificationPreconditionKeyKeyboard: @(swift)
+            };
+            NSDictionary *effect = @{
+                kMFTriggerScroll: @{
+                    kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypeQuickScroll
+                }
+            };
+            [remapsDict setObject:effect forKey:precondition];
+        }
+        if (precise) {
+            NSDictionary *precondition = @{
+                kMFModificationPreconditionKeyKeyboard: @(precise)
+            };
+            NSDictionary *effect = @{
+                kMFTriggerScroll: @{
+                    kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypePrecisionScroll
+                }
+            };
+            [remapsDict setObject:effect forKey:precondition];
+        }
+    }
+    
+    ///
+    /// Get values from action table (button remaps)
+    ///
+    
     if ([(id)config(@"Other.buttonKillSwitch") boolValue]) {
         /// TODO: Turn off button interception completely (generally when the remaps dict is empty)
     } else {
