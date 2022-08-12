@@ -59,6 +59,9 @@ import Foundation
         /// Setup hint menu item
         appCompatHintItem.view = appCompatHintView
         
+        /// Turn off hint
+        menu.removeItem(appCompatHintItem)
+        
         /// Load state
         MenuBarItem.reload()
     }
