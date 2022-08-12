@@ -19,7 +19,10 @@
 @property (weak, readonly) RemapTableController *remapTableController;
 
 + (AppDelegate *)instance;
-+ (NSWindow *)mainWindow;
-+ (void)handleHelperEnabledMessage;
-- (void)handleAccessibilityDisabledMessage;
+
+/// v Old MMF2 stuff that is handled differently now.
+
+//+ (NSWindow *)mainWindow;
+//+ (void)handleHelperEnabledMessage;
+//- (void)handleAccessibilityDisabledMessage;
 @end

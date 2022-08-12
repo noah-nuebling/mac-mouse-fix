@@ -28,6 +28,7 @@
 #import "Constants.h"
 #import "WannabePrefixHeader.h"
 #import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
+#import "Mac_Mouse_Fix-Swift.h"
 
 @interface OverridePanel ()
 
@@ -103,7 +104,7 @@ NSDictionary *_columnIdentifierToKeyPath;
 }
 
 - (void)centerWindowOnMainWindow {
-    NSPoint ctr = [Utility_App getCenterOfRect:AppDelegate.mainWindow.frame];
+    NSPoint ctr = [Utility_App getCenterOfRect:MainAppState.shared.window.frame];
     [Utility_App centerWindow:self.window atPoint:ctr];
 }
 - (void)windowDidLoad {

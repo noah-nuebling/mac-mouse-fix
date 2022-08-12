@@ -75,6 +75,8 @@
 }
 + (void)handleHelperEnabledMessage {
     
+    /// TODO: Remove. MMF2 stuff.
+    
     if (self.instance.UIDisabled) {
         /// Enable UI
         [self.instance enableUI:YES];
@@ -264,6 +266,8 @@ static NSDictionary *sideButtonActions;
     return !self.enableMouseFixCheckBox.state;
 }
 - (void)enableUI:(BOOL)enb {
+    
+    /// TODO: Remove. MMF2 stuff
     
     /// Get state
     self.enableMouseFixCheckBox.state = enb;

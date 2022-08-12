@@ -14,6 +14,7 @@
 #import "ToastNotificationController.h"
 #import "AppDelegate.h"
 #import "SharedUtility.h"
+#import "Mac_Mouse_Fix-Swift.h"
 
 @implementation CaptureNotificationCreator
 
@@ -68,7 +69,7 @@
             attrNotifString = [attrNotifString attributedStringByAddingBoldForSubstring:buttonString];
         }
         
-        [ToastNotificationController attachNotificationWithMessage:attrNotifString toWindow:AppDelegate.mainWindow forDuration:-1];
+        [ToastNotificationController attachNotificationWithMessage:attrNotifString toWindow:MainAppState.shared.window forDuration:-1];
     }
 }
 

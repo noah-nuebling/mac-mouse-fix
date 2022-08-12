@@ -21,7 +21,7 @@
 #import "ToastNotificationLabel.h"
 #import "NSAttributedString+Additions.h"
 #import "WannabePrefixHeader.h"
-#import "Mac Mouse Fix-Bridging-Header.h"
+#import "Mac_Mouse_Fix-Swift.h"
 
 @interface ToastNotificationController ()
 @property (unsafe_unretained) IBOutlet ToastNotificationLabel *label;
@@ -208,8 +208,8 @@ static double _toastAnimationOffset = 20;
         /// Check where mouse is located relative to other stuff
         
         /// Get mouse location in the main content views' coordinate system. Need this to do a hit-test later.
-        NSView *mainContentView = AppDelegate.mainWindow.contentView;
-        NSPoint locWindow = [AppDelegate.mainWindow convertRectFromScreen:(NSRect){.origin=loc}].origin; // convertPointFromScreen: only available in 10.12+
+        NSView *mainContentView = MainAppState.shared.window.contentView;
+        NSPoint locWindow = [MainAppState.shared.window convertRectFromScreen:(NSRect){.origin=loc}].origin; /// convertPointFromScreen: only available in 10.12+
         NSPoint locContentView = [mainContentView convertPoint:locWindow fromView:nil];
         
         BOOL locIsOverNotification = [NSWindow windowNumberAtPoint:NSEvent.mouseLocation belowWindowWithWindowNumber:0] == _instance.window.windowNumber; /// So notification isn't dismissed when we click on it. Not sure if necessary when we're using `locIsOverMainWindowContentView`.

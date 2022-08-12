@@ -14,6 +14,7 @@
 #import "SharedMessagePort.h"
 #import "NSView+Additions.h"
 #import "WannabePrefixHeader.h"
+#import "Mac_Mouse_Fix-Swift.h"
 
 @interface KeyCaptureView ()
 
@@ -54,7 +55,7 @@
     _cancelHandler = cancelHandler;
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        [AppDelegate.mainWindow makeFirstResponder:self];
+        [MainAppState.shared.window makeFirstResponder:self];
     });
     // ^ This view is being drawn by the tableView. Using dispatch_async makes it execute after the tableView is done drawing preventing a crash
     
@@ -124,7 +125,7 @@
         flags = ((NSNumber *)payload[@"flags"]).unsignedLongValue;
     }
     
-    [AppDelegate.mainWindow makeFirstResponder:nil]; /// Important to call this before capture handler, otherwise `resignFirstResponder:` (our teardown function) isn't called
+    [MainAppState.shared.window makeFirstResponder:nil]; /// Important to call this before capture handler, otherwise `resignFirstResponder:` (our teardown function) isn't called
     
     _captureHandler(keyCode, type, flags); /// This should undraw the view
 }
@@ -142,8 +143,8 @@
         _isCapturing = YES;
         
         // If the window goes to the background, resign key
-        [NSNotificationCenter.defaultCenter addObserverForName:NSWindowDidResignKeyNotification object:AppDelegate.mainWindow queue:nil usingBlock:^(NSNotification * _Nonnull note) {
-                    [AppDelegate.mainWindow makeFirstResponder:nil];
+        [NSNotificationCenter.defaultCenter addObserverForName:NSWindowDidResignKeyNotification object:MainAppState.shared.window queue:nil usingBlock:^(NSNotification * _Nonnull note) {
+                    [MainAppState.shared.window makeFirstResponder:nil];
         }];
         
         [SharedMessagePort sendMessage:@"enableKeyCaptureMode" withPayload:@"" expectingReply:NO];
@@ -167,8 +168,8 @@
             } else if (event.type == NSEventTypeKeyDown) {
 //                assert(!self->_isCapturing); // _isCapturing should be set to NO by `handleKeyCaptureModeFeedbackWithPayload:` before this is executed.
             } else if (event.type == NSEventTypeLeftMouseDown) {
-                // If the user clicks anything, resign key. -> To prevent weird states. E.g. where Mac Mouse Fix is disabled while the field is still up
-                [AppDelegate.mainWindow makeFirstResponder:nil];
+                /// If the user clicks anything, resign key. -> To prevent weird states. E.g. where Mac Mouse Fix is disabled while the field is still up
+                [MainAppState.shared.window makeFirstResponder:nil];
             }
             
             return nil;

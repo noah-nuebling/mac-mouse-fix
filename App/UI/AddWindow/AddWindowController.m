@@ -17,6 +17,7 @@
 #import "NSAttributedString+Additions.h"
 #import "UIStrings.h"
 #import "WannabePrefixHeader.h"
+#import "Mac_Mouse_Fix-Swift.h"
 
 @interface AddWindowController ()
 @property (weak) IBOutlet NSBox *addField;
@@ -64,10 +65,10 @@ static BOOL _pointerIsInsideAddField;
 // Interface
 
 + (void)begin {
-    [AppDelegate.mainWindow beginSheet:_instance.window completionHandler:nil];
+    [MainAppState.shared.window beginSheet:_instance.window completionHandler:nil];
 }
 + (void)end {
-    [AppDelegate.mainWindow endSheet:_instance.window];
+    [MainAppState.shared.window endSheet:_instance.window];
 }
 + (void)handleReceivedAddModeFeedbackFromHelperWithPayload:(NSDictionary *)payload {
     
