@@ -49,11 +49,11 @@
     _instance = [[Config alloc] init];
     
     /// Setup stuff
-    ///     Can't do this in `[_instance init]` because the callchain accesses tries to access the `_instance` through `Config.shared`. (Might be fixable by making `handleConfigFileChangedMessage()` an instance method like everything else)
+    ///     Can't do this in `[_instance init]` because the callchain accesses tries to access the `_instance` through `Config.shared`. (Might be fixable by making `handleConfigFileChange()` an instance method like everything else)
     
     if (SharedUtility.runningHelper) {
         /// Load config
-        [Config handleConfigFileChangedMessage];
+        [Config handleConfigFileChange];
         /// Setup stuff
         [_instance setupFSEventStreamCallback];
     } else {
@@ -99,32 +99,35 @@ void setConfig(NSString *keyPath, NSObject *value) {
 
 void commitConfig() {
     /// Convenience function for notifying other modules of the changed config (and writing to file)
-    if (SharedUtility.runningMainApp) {
-        [Config.shared writeConfigToFile];
-        [SharedMessagePort sendMessage:@"configFileChanged" withPayload:nil expectingReply:NO];
-        [ReactiveConfig.shared reactWithNewConfig:Config.shared.config];
-    } else if (SharedUtility.runningHelper) {
-        /// Write to file
-        [Config.shared writeConfigToFile];
-        /// Update helper state
-        [Config handleConfigFileChangedMessage];
-    } else {
-        assert(false);
-    }
+    
+    /// Write to file
+    [Config.shared writeConfigToFile];
+    
+    /// Notify other app (mainApp notifies helper, helper notifies mainApp
+    [SharedMessagePort sendMessage:@"configFileChanged" withPayload:nil expectingReply:NO];
+    
+    /// Update own state
+    [Config handleConfigFileChange];
 }
 
 
 #pragma mark - React
 
-+ (void)handleConfigFileChangedMessage {
++ (void)handleConfigFileChange {
     
-    /// TODO: Rename. This is not just for handling the message from MessagePort
+#if IS_MAIN_APP
     
-    /// Validate
-    assert(SharedUtility.runningHelper);
+    /// Update this class
+    [self.shared loadConfigFromFile];
+    
+    /// Notify other modules
+    [ReactiveConfig.shared reactWithNewConfig:Config.shared.config];
+
+#endif
     
 #if IS_HELPER
-    /// Update self
+    
+    /// Update this class
     [self.shared loadConfigFromFile];
     [self.shared loadOverridesForApp:@""]; /// Force update of internal state, (even the active app hastn't changed)
     
@@ -135,6 +138,7 @@ void commitConfig() {
     [PointerConfig reload];
     [OtherConfig reload];
     [MenuBarItem reload];
+
 #endif
 }
 
@@ -253,7 +257,7 @@ void Handle_FSEventStreamCallback (ConstFSEventStreamRef streamRef, void *client
     
     DDLogInfo(@"config.plist changed (FSMonitor)");
     
-    [Config handleConfigFileChangedMessage];
+    [Config handleConfigFileChange];
 }
 
 

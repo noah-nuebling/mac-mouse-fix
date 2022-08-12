@@ -81,6 +81,8 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
     } else if ([message isEqualToString:@"helperEnabled"]) {
         [AppDelegate handleHelperEnabledMessage];
         [EnabledState.shared reactToDidBecomeEnabled];
+    } else if ([message isEqualToString:@"configFileChanged"]) {
+        [Config handleConfigFileChange];
     }
     
     NSData *response = NULL;

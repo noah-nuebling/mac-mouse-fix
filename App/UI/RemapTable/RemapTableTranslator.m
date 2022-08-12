@@ -216,7 +216,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
         
         NSAttributedString *shortcutString = getShortcutString(effectDict, isKeyShortcut);
 
-        NSString *shortcutStringRaw = [shortcutString coolString];
+        NSString *shortcutStringRaw = [shortcutString stringWithAttachmentDescriptions];
         
         /// Create and insert new entry
         [oneShotEffectsTable insertObject:@{
@@ -260,7 +260,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
     };
     
             NSAttributedString *shortcutString = getShortcutString(actionDict, NO);
-            NSString *shortcutStringRaw = [shortcutString coolString];
+            NSString *shortcutStringRaw = [shortcutString stringWithAttachmentDescriptions];
             [submenu addObject:@{
                 @"uiAttributed": shortcutString,
                 @"tool": stringf(@"Works like pressing '%@' on an Apple keyboard", shortcutStringRaw),
@@ -368,7 +368,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
             NSDictionary *effectsMenuModelEntry = [RemapTableTranslator getEntryFromEffectTable:effectsTable withEffectDict:effectDict];
             name = effectsMenuModelEntry[@"ui"];
         if (name == nil) {
-            name = [effectsMenuModelEntry[@"uiAttributed"] coolString];
+            name = [effectsMenuModelEntry[@"uiAttributed"] stringWithAttachmentDescriptions];
         }
     }
     return name;
@@ -470,11 +470,11 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     
     if ([effectDict[@"drawKeyCaptureView"] isEqual:@YES]) { // This is not a real effectDict, but instead an instruction to draw a key capture view
         
-        // Create captureField
+        /// Create captureField
         
-        // Get MFKeystrokeCaptureCell instance from IB
+        /// Get MFKeystrokeCaptureCell instance from IB
         NSTableCellView *keyCaptureCell = [self.tableView makeViewWithIdentifier:@"keyCaptureCell" owner:self];
-        // Get capture field
+        /// Get capture field
         KeyCaptureView *keyStrokeCaptureField = (KeyCaptureView *)[keyCaptureCell nestedSubviewsWithIdentifier:@"keyCaptureView"][0];
         
         [keyStrokeCaptureField setupWithCaptureHandler:^(CGKeyCode keyCode, MFSystemDefinedEventType type, CGEventFlags flags) {

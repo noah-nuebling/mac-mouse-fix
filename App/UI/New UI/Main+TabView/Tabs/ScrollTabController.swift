@@ -53,14 +53,21 @@ class ScrollTabController: NSViewController {
     /// Did appear
     
     override func viewDidAppear() {
-        let isDisabled = config("Other.scrollKillSwitch") as? Bool ?? false
+        let isDisabled = config("Other.scrollKillSwitch") as! Bool /// From the debugger it seems you can only cast NSNumber to bool with as! not with as?. That weird??
         if isDisabled {
             /// Turn off killSwitch
             setConfig("Other.scrollKillSwitch", false as NSObject)
+            commitConfig()
             /// Show message to user
             if #available(macOS 13, *) {
-                let message = NSAttributedString(coolMarkdown: "Smooth Scrolling **was disabled** from the Mac Mouse Fix Menu Bar Item. <Insert picture?>.\n Now it has been turned on again.")
-                ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: -1, alignment: kToastNotificationAlignmentBottomMiddle)
+                
+                /// Build string
+                var message = NSAttributedString(coolMarkdown: "__Enabled__ Smooth Scrolling.\nIt __had been disabled__ from %@ in the Menu Bar.")
+                let symbolString = NSAttributedString(symbol: "CoolMenuBarIcon", hPadding: 0.0, vOffset: -6, fallback: "<Mac Mouse Fix Menu Bar Item>")
+                message = NSAttributedString(attributedFormat: message, args: [symbolString])
+                
+                /// Show message
+                ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: -1, alignment: kToastNotificationAlignmentTopMiddle)
             } else {
                 /// TODO: Make this work on older macOS
             }

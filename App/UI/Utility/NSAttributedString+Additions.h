@@ -14,11 +14,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSAttributedString (Additions)
 
++ (NSAttributedString *)stringWithAttributedFormat:(NSAttributedString *)format args:(NSArray<NSAttributedString *> *)args;
++ (NSAttributedString *)stringWithSymbol:(NSString * _Nonnull)symbolName hPadding:(CGFloat)hPadding vOffset:(CGFloat)baselineOffset fallback:(NSString * _Nonnull)fallbackString;
 + (NSAttributedString *)attributedStringWithCoolMarkdown:(NSString *)md __API_AVAILABLE(macos(13));
 
 - (NSAttributedString *)attributedStringByAddingBaseLineOffset:(CGFloat)offset;
 
-- (NSString *)coolString;
+- (NSString *)stringWithAttachmentDescriptions;
 
 - (NSAttributedString *)attributedStringByAddingFontTraits:(NSDictionary<NSFontDescriptorTraitKey, id> *)traits;
 - (NSAttributedString *)attributedStringByAddingWeight:(NSFontWeight)weight;

@@ -134,7 +134,7 @@
     }
     
     /// Get symbol and attach it to keyStr
-    NSAttributedString *keyStr = stringWithSymbol(symbolName, stringFallback);
+    NSAttributedString *keyStr = [self stringWithSymbol:symbolName fallback:stringFallback];
     NSString *flagsStr = [UIStrings getKeyboardModifierString:flags];
     return symbolStringWithModifierPrefix(flagsStr, keyStr);
 }
@@ -235,7 +235,7 @@ static CGSSymbolicHotKey _highestSymbolicHotKeyInCache = 0;
             }
             
             /// Get symbol and attach it to keyStr
-            keyStr = stringWithSymbol(symbolName, stringFallback);
+            keyStr = [self stringWithSymbol:symbolName fallback:stringFallback];
             
             /// Validate
             
@@ -257,13 +257,13 @@ static NSMutableAttributedString *symbolStringWithModifierPrefix(NSString *flags
     [result appendAttributedString:symbolStr];
     return result;
 }
-static NSAttributedString *stringWithSymbol(NSString *symbolName, NSString *fallbackString) {
-    NSImage *symbol = [NSImage imageNamed:symbolName];
-    NSTextAttachment *symbolAttachment = [[NSTextAttachment alloc] init];
-    symbol.accessibilityDescription = fallbackString;
-    symbolAttachment.image = symbol;
+
++ (NSAttributedString *)stringWithSymbol:(NSString *)symbolName fallback:(NSString *)fallbackString {
     
-    NSAttributedString *string = [NSAttributedString attributedStringWithAttachment:symbolAttachment];
+    NSAttributedString *string = [NSAttributedString stringWithSymbol:symbolName hPadding:0 vOffset:0 fallback:fallbackString];
+    
+    /// Set weight, baselineOffset, and fontSize
+    ///     This is probably very specific to displaying in the keyCaptureView. Might want to refactor and put core functionality into `NSAttributedString+Additions`
     
     string = [string attributedStringByAddingWeight:0.3];
     string = [string attributedStringByAddingBaseLineOffset:0.39];
@@ -276,6 +276,8 @@ static NSAttributedString *stringWithSymbol(NSString *symbolName, NSString *fall
     }
     
     string = [string attributedStringBySettingFontSize:11.4];
+    
+    /// Return
     
     return string;
 }

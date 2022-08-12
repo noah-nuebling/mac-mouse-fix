@@ -48,7 +48,7 @@ typedef enum {
 @property (strong, nonatomic, readonly) NSMutableDictionary *configWithAppOverridesApplied;
 
 /// React
-+ (void)handleConfigFileChangedMessage;
++ (void)handleConfigFileChange;
 
 
 @end

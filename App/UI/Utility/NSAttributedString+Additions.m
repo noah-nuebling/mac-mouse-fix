@@ -12,6 +12,112 @@
 
 @implementation NSAttributedString (Additions)
 
+#pragma mark Replace substring
+
++ (NSAttributedString *)stringWithFormat:(NSString *)format args:(NSArray<NSAttributedString *> *)args {
+        
+    /// Convert format to attributed
+    NSAttributedString *attributedFormat = [[NSAttributedString alloc] initWithString:format];
+
+    /// Call core method
+    return [self stringWithAttributedFormat:attributedFormat args:args];
+}
+
++ (NSAttributedString *)stringWithAttributedFormat:(NSAttributedString *)format args:(NSArray<NSAttributedString *> *)args {
+    
+    /// Replaces occurences of %@ in the attributedString with the args
+    ///     Also see lib function `initWithFormat:options:locale:`
+    
+    /// Early return
+    if (args.count == 0) return format;
+    
+    /// Get mutable copy
+    NSMutableAttributedString *mutableFormat = format.mutableCopy;
+    
+    /// Loop
+    int i = 0;
+    while (true) {
+        
+        /// Update replace range
+        NSRange replaceRange = [mutableFormat.string localizedStandardRangeOfString:@"%@"]; /// Not sure if the localized is necessary here?
+        if (replaceRange.location == NSNotFound) break;
+        
+        /// Replace
+        [mutableFormat replaceCharactersInRange:replaceRange withAttributedString:args[i]];
+        
+        /// Update array index
+        i++;
+        if (args.count <= i) break;
+    }
+    
+    return mutableFormat;
+}
+
+#pragma mark Padding
+
++ (NSAttributedString *)paddingStringWithWidth:(CGFloat)padding {
+    
+    /// Src: https://stackoverflow.com/a/56372833/10601702
+    /// `symbolAttachment.lineLayoutPadding` is available on newer macOS versions
+    /// This hasn't been working for me so far. See `stringWithSymbol:hPadding:vOffset:fallback:`
+        
+    /// Attempt 1
+    
+    NSAttributedString *paddingString = [[NSAttributedString alloc] initWithString:@"\u{200B}" attributes:@{
+        NSKernAttributeName: @(padding)
+    }];
+    
+    /// Attempt 2
+    
+//    unichar c[] = { NSAttachmentCharacter };
+//    NSString *nonprintableString = [NSString stringWithCharacters:c length:1];
+//    NSAttributedString *paddingString = [[NSAttributedString alloc] initWithString:nonprintableString attributes:@{
+//        NSKernAttributeName : @(20) /// spacing in points
+//    }];
+    
+    /// Attempt 3
+    
+//    NSTextAttachment *paddingAttachment = [[NSTextAttachment alloc] init];
+//    paddingAttachment.bounds = NSInsetRect(NSZeroRect, -10, -10);
+//    NSAttributedString *paddingString = [NSAttributedString attributedStringWithAttachment:paddingAttachment];
+    
+    return paddingString;
+}
+
+#pragma mark Symbols
+
++ (NSAttributedString *)stringWithSymbol:(NSString * _Nonnull)symbolName hPadding:(CGFloat)hPadding vOffset:(CGFloat)baselineOffset fallback:(NSString * _Nonnull)fallbackString {
+    
+    /// Get symbolString
+    /// Primarily used by `[UIStrings stringWithSymbol:fallback:]`
+    /// Larger vOffset displays higher on the screen
+        
+    /// Get image
+    NSImage *image = [NSImage imageNamed:symbolName];
+    image.accessibilityDescription = fallbackString;
+    
+    /// Get attachment
+    NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
+    attachment.image = image;
+    
+    /// Create main string
+    NSAttributedString *mainString = [NSAttributedString attributedStringWithAttachment:attachment];
+    
+    /// Add baseLineOffset
+    ///     Using `symbolAttachment.bounds` made the string not display in my testing.
+    mainString = [mainString attributedStringByAddingBaseLineOffset:baselineOffset];
+    
+    /// Add padding
+    ///     This doesn't work (trying to use from `ScrollTabController.swift` to display a `ToastNofification`. Maybe the notification overrides the attributes or something? However I think the vertical spacing in the notification changes when we set kerning. Weirddd.)
+    /// Using `paddingStringWithWidth:` to create separate padding strings didn't work either.
+    mainString = [mainString attributedStringByAddingStringAttributes:@{
+            NSKernAttributeName: @(hPadding)
+    } forRange:NSMakeRange(0, mainString.length)];
+    
+    /// Return
+    return mainString;
+}
+
 #pragma mark Markdown
 
 + (NSAttributedString *)attributedStringWithCoolMarkdown:(NSString *)md __API_AVAILABLE(macos(13)) {
@@ -37,10 +143,13 @@
     
 - (NSAttributedString *)attributedStringByAddingStringAttributes:(NSDictionary<NSAttributedStringKey, id> *)attributes forRange:(NSRange)range {
     
+    /// Create mutable copy
     NSMutableAttributedString *ret = self.mutableCopy;
     
+    /// Call lib method
     [ret addAttributes:attributes range:range];
     
+    /// Return
     return ret;
 }
 
@@ -467,8 +576,8 @@
 
 #pragma mark String fallback for attachments
 
-- (NSString *)coolString {
-    /// Enhance the string method to support fallback values for text attachments
+- (NSString *)stringWithAttachmentDescriptions {
+    /// NSStrings can't display attachments. This method inserts a description of the attachment where the attachment would be in the attributedString.
     ///     Can't override `- string` for some reason. Probably bc `- string` is already declared in another category or sth
     
     NSMutableString *result = [NSMutableString string];
