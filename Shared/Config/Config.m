@@ -103,9 +103,13 @@ void commitConfig() {
         [Config.shared writeConfigToFile];
         [SharedMessagePort sendMessage:@"configFileChanged" withPayload:nil expectingReply:NO];
         [ReactiveConfig.shared reactWithNewConfig:Config.shared.config];
-    } else {
+    } else if (SharedUtility.runningHelper) {
+        /// Write to file
         [Config.shared writeConfigToFile];
-        /// TODO: Do more stuff?
+        /// Update helper state
+        [Config handleConfigFileChangedMessage];
+    } else {
+        assert(false);
     }
 }
 

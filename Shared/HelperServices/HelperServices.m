@@ -29,6 +29,10 @@
 
 + (void)enableHelperAsUserAgent:(BOOL)enable error:(NSError *_Nullable*_Nullable)error {
     
+    /// Validate
+    
+    assert(!SharedUtility.runningHelper);
+    
     /// Register/unregister the helper as a User Agent with launchd so it runs in the background - also launches/terminates helper
     
     if (@available(macOS 13, *)) {
