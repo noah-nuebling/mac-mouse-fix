@@ -18,7 +18,7 @@
 			<integer>1048576</integer>
 		</dict>
 		<key>naturalDirection</key>
-		<true/>
+		<false/>
 		<key>precise</key>
 		<false/>
 		<key>smooth</key>
