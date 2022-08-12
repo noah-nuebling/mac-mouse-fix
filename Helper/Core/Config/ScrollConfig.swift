@@ -50,21 +50,23 @@ import CocoaLumberjackSwift
     // MARK: General
     
     
-    @objc lazy var smoothEnabled: Bool = { c("smooth") as! Bool && !killSwitch }()
-    @objc private var killSwitch: Bool { config("Other.scrollKillSwitch") as? Bool ?? false } /// Not cached cause it's just used to calc the other vars
+    @objc lazy var u_smoothEnabled: Bool = { c("smooth") as! Bool && !u_killSwitch }()
+    @objc private var u_killSwitch: Bool { config("Other.scrollKillSwitch") as? Bool ?? false } /// Not cached cause it's just used to calc the other vars
     
     // MARK: Invert Direction
     
     @objc func scrollInvert(event: CGEvent) -> MFScrollInversion {
         /// This can be used as a factor to invert things. kMFScrollInversionInverted is -1.
         
-        if self.semanticScrollInvertUser == self.semanticScrollInvertSystem(event) {
+        if self.u_direction == self.semanticScrollInvertSystem(event) {
             return kMFScrollInversionNonInverted
         } else {
             return kMFScrollInversionInverted
         }
     }
-    lazy private var semanticScrollInvertUser: MFSemanticScrollInversion = kMFSemanticScrollInversionNormal /* MFSemanticScrollInversion(ScrollConfig.topLevel["naturalDirection"] as! UInt32) */
+    lazy private var u_direction: MFSemanticScrollInversion = {
+        c("naturalDirection") as! Bool ? kMFSemanticScrollInversionNatural : kMFSemanticScrollInversionNormal
+    }()
     private func semanticScrollInvertSystem(_ event: CGEvent) -> MFSemanticScrollInversion {
         
         /// Accessing userDefaults is actually surprisingly slow, so we're using NSEvent.isDirectionInvertedFromDevice instead... but NSEvent(cgEvent:) is slow as well...
@@ -88,7 +90,7 @@ import CocoaLumberjackSwift
     @objc lazy var fastScrollThreshold_inSwipes: Int = { /// On the `fastScrollThreshold_inSwipes`th consecutive swipe, fast scrolling kicks in
         /*other["fastScrollThreshold_inSwipes"] as! Int*/
             
-        switch _animationCurvePreset {
+        switch u_animationCurvePreset {
         case kMFScrollAnimationCurvePresetHighInertia, kMFScrollAnimationCurvePresetQuickScroll:
             return 3
         default:
@@ -114,7 +116,7 @@ import CocoaLumberjackSwift
         
         /// Not sure this switch makes sense. Quick bandaid. Might wanna change.
         
-        switch _animationCurvePreset {
+        switch u_animationCurvePreset {
         case kMFScrollAnimationCurvePresetLowInertia, kMFScrollAnimationCurvePresetNoInertia, kMFScrollAnimationCurvePresetTouchDriver, kMFScrollAnimationCurvePresetTouchDriverLinear, kMFScrollAnimationCurvePresetPreciseScroll:
             return 350/1000
         case kMFScrollAnimationCurvePresetMediumInertia:
@@ -127,7 +129,7 @@ import CocoaLumberjackSwift
     }()
     
     @objc lazy var consecutiveScrollSwipeMinTickSpeed: Double = {
-        switch _animationCurvePreset {
+        switch u_animationCurvePreset {
         case kMFScrollAnimationCurvePresetHighInertia, kMFScrollAnimationCurvePresetQuickScroll:
             return 12.0
         default:
@@ -158,7 +160,7 @@ import CocoaLumberjackSwift
     ///     Needs to be > 1 for there to be any speedup
     
     @objc lazy var fastScrollSpeedup: Double = { /// Needs to be > 0 for there to be any speedup
-        switch _animationCurvePreset {
+        switch u_animationCurvePreset {
         case kMFScrollAnimationCurvePresetHighInertia, kMFScrollAnimationCurvePresetQuickScroll:
             return 7.0
         default:
@@ -170,14 +172,16 @@ import CocoaLumberjackSwift
     
     /// User setting
     
-    private lazy var _animationCurvePreset = kMFScrollAnimationCurvePresetHighInertia
+    private lazy var u_animationCurvePreset = {
+        return c("inertia") as! Bool ? kMFScrollAnimationCurvePresetHighInertia : kMFScrollAnimationCurvePresetLowInertia
+    }()
     
     @objc var animationCurvePreset: MFScrollAnimationCurvePreset {
         set {
-            _animationCurvePreset = newValue
-            self.animationCurveParams = self.animationCurveParams(forPreset: _animationCurvePreset)
+            u_animationCurvePreset = newValue
+            self.animationCurveParams = self.animationCurveParams(forPreset: u_animationCurvePreset)
         } get {
-            return _animationCurvePreset
+            return u_animationCurvePreset
         }
     }
     
@@ -279,9 +283,26 @@ import CocoaLumberjackSwift
     
     /// User settings
     
-    @objc lazy var useAppleAcceleration: Bool = { false || killSwitch }() /// Ignore MMF acceleration algorithm and use values provided by macOS
-    @objc lazy var scrollSensitivity: MFScrollSensitivity = kMFScrollSensitivityHigh
-    @objc lazy var scrollAcceleration: MFScrollAcceleration = kMFScrollAccelerationHigh
+    @objc lazy var u_speed: String = { c("speed") as! String }()
+    @objc lazy var u_precise: Bool = { c("precise") as! Bool }()
+    
+    @objc lazy var useAppleAcceleration: Bool = {
+        u_speed == "system" || u_killSwitch
+    }() /// Ignore MMF acceleration algorithm and use values provided by macOS
+    
+    @objc lazy var scrollSensitivity: MFScrollSensitivity = {
+        if u_precise { return kMFScrollSensitivityPrecise }
+        if u_speed == "low" { return kMFScrollSensitivityLow }
+        if u_speed == "medium" { return kMFScrollSensitivityMedium }
+        if u_speed == "high" { return kMFScrollSensitivityHigh }
+        return kMFScrollSensitivityMedium /// This should be unused. Should maybe add a "none" sensitivity
+    }()
+    @objc lazy var scrollAcceleration: MFScrollAcceleration = {
+        if u_speed == "low" { return kMFScrollAccelerationLow }
+        if u_speed == "medium" { return kMFScrollAccelerationMedium }
+        if u_speed == "high" { return kMFScrollAccelerationHigh }
+        return kMFScrollAccelerationMedium /// This should be unused. Should maybe add a "none" sensitivity
+    }()
     
     /// Stored property
     ///     This is used by Scroll.m to determine how to accelerate
@@ -462,7 +483,7 @@ import CocoaLumberjackSwift
         return self.standardAccelerationCurve(forSensitivity: self.scrollSensitivity,
                                               acceleration: self.scrollAcceleration,
                                               animationCurve: self.animationCurvePreset,
-                                              smoothEnabled: self.smoothEnabled,
+                                              smoothEnabled: self.u_smoothEnabled,
                                               screenSize: screenSize)
     }
     

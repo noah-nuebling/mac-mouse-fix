@@ -368,29 +368,29 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
 
         } else if (_modifications.effectMod == kMFScrollEffectModificationZoom) {
             
-            _scrollConfig.smoothEnabled = YES;
+            _scrollConfig.u_smoothEnabled = YES;
             /// Override animation curve
             _scrollConfig.animationCurvePreset = kMFScrollAnimationCurvePresetTouchDriver;
             
         } else if (_modifications.effectMod == kMFScrollEffectModificationRotate) {
             
-            _scrollConfig.smoothEnabled = YES;
+            _scrollConfig.u_smoothEnabled = YES;
             /// Override animation curve
             _scrollConfig.animationCurvePreset = kMFScrollAnimationCurvePresetTouchDriver;
             
         } else if (_modifications.effectMod == kMFScrollEffectModificationCommandTab) {
             
-            _scrollConfig.smoothEnabled = NO;
+            _scrollConfig.u_smoothEnabled = NO;
             
         } else if (_modifications.effectMod == kMFScrollEffectModificationThreeFingerSwipeHorizontal) {
             
-            _scrollConfig.smoothEnabled = YES;
+            _scrollConfig.u_smoothEnabled = YES;
             /// Override animation curve
             _scrollConfig.animationCurvePreset = kMFScrollAnimationCurvePresetTouchDriverLinear;
             
         } else if (_modifications.effectMod == kMFScrollEffectModificationFourFingerPinch) {
             
-            _scrollConfig.smoothEnabled = YES;
+            _scrollConfig.u_smoothEnabled = YES;
             /// Override animation curve
             _scrollConfig.animationCurvePreset = kMFScrollAnimationCurvePresetTouchDriverLinear;
             
@@ -514,7 +514,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         
         DDLogWarn(@"pxToScrollForThisTick is 0");
         
-    } else if (!_scrollConfig.smoothEnabled) {
+    } else if (!_scrollConfig.u_smoothEnabled) {
         
         /// Send scroll event directly - without the animator. Will scroll all of pxToScrollForThisTick at once.
         

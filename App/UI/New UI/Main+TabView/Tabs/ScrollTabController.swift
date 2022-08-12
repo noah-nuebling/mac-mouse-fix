@@ -24,6 +24,7 @@ class ScrollTabController: NSViewController {
     var zoomMod = ConfigValue<UInt>(configPath: "Scroll.modifiers.zoom")
     var swiftMod = ConfigValue<UInt>(configPath: "Scroll.modifiers.swift")
     var preciseMod = ConfigValue<UInt>(configPath: "Scroll.modifiers.precise")
+    
     /// Also see `ReactiveFlags` is this doesn't work
     
     /// Outlets
