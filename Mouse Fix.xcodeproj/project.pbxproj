@@ -55,6 +55,8 @@
 		4F7F47CE28A5B5EC00290BBD /* ReactiveSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4F7F47CD28A5B5EC00290BBD /* ReactiveSwift */; };
 		4F7F47D028A5B5F200290BBD /* ReactiveCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 4F7F47CF28A5B5F200290BBD /* ReactiveCocoa */; };
 		4F7F47D128A5B86900290BBD /* Config.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6660E25F2C93A00689B77 /* Config.m */; };
+		4F7F47D328A6EFC800290BBD /* SharedAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F7F47D228A6EFC800290BBD /* SharedAssets.xcassets */; };
+		4F7F47D428A6EFC800290BBD /* SharedAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F7F47D228A6EFC800290BBD /* SharedAssets.xcassets */; };
 		4F854D7C2789146900B46E9D /* NSMenu+NSMenu_Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F854D7B2789146900B46E9D /* NSMenu+NSMenu_Additions.m */; };
 		4F854D7E2789266A00B46E9D /* sfsymbols.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F854D7D2789266A00B46E9D /* sfsymbols.xcassets */; };
 		4F8A8DAD287EEF6200786BCC /* IOHIDAccelerationTableBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DAC287EEF6200786BCC /* IOHIDAccelerationTableBridge.mm */; };
@@ -442,6 +444,8 @@
 		4F79C2E9260976950067B381 /* RemapTableTranslator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapTableTranslator.m; sourceTree = "<group>"; };
 		4F7AB0532606698A0008055E /* UIStrings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIStrings.h; sourceTree = "<group>"; };
 		4F7AB0542606698A0008055E /* UIStrings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UIStrings.m; sourceTree = "<group>"; };
+		4F7F47D228A6EFC800290BBD /* SharedAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SharedAssets.xcassets; sourceTree = "<group>"; };
+		4F7F47D628A6F00300290BBD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F854D7A2789146900B46E9D /* NSMenu+NSMenu_Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMenu+NSMenu_Additions.h"; sourceTree = "<group>"; };
 		4F854D7B2789146900B46E9D /* NSMenu+NSMenu_Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMenu+NSMenu_Additions.m"; sourceTree = "<group>"; };
 		4F854D7D2789266A00B46E9D /* sfsymbols.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = sfsymbols.xcassets; sourceTree = "<group>"; };
@@ -1013,6 +1017,15 @@
 			path = Config;
 			sourceTree = "<group>";
 		};
+		4F7F47D528A6EFCF00290BBD /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4F7F47D228A6EFC800290BBD /* SharedAssets.xcassets */,
+				4F7F47D628A6F00300290BBD /* README.md */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		4F8A8DBB287EFB4D00786BCC /* Extern */ = {
 			isa = PBXGroup;
 			children = (
@@ -1484,6 +1497,7 @@
 				4FF9305C28805FC40007CCA7 /* Math */,
 				4F909D4228A0C4C2009349A2 /* Extensions */,
 				4FA40D1128A0D9FB00499E53 /* External */,
+				4F7F47D528A6EFCF00290BBD /* Resources */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -2195,6 +2209,7 @@
 				4F79A7EF26042E2E00076A7E /* ToastNotification.xib in Resources */,
 				4F854D7E2789266A00B46E9D /* sfsymbols.xcassets in Resources */,
 				4F2F5DB225FB723D0037660A /* AddWindow.xib in Resources */,
+				4F7F47D328A6EFC800290BBD /* SharedAssets.xcassets in Resources */,
 				4FF665F725F2C92700689B77 /* Assets.xcassets in Resources */,
 				4F909D3928A0C3D2009349A2 /* Localizable.strings in Resources */,
 				4F909D3328A0C3D2009349A2 /* Animating Constraints.md in Resources */,
@@ -2225,6 +2240,7 @@
 				4FF6668325F2C93A00689B77 /* Assets.xcassets in Resources */,
 				4FF6668A25F2C93A00689B77 /* SmoothScroll.m (old) in Resources */,
 				4FF6654125F2C7B000689B77 /* default_launchd.plist in Resources */,
+				4F7F47D428A6EFC800290BBD /* SharedAssets.xcassets in Resources */,
 				4F1D7F4428A45FDC00253407 /* MenuBarItem.xib in Resources */,
 				4FF6669E25F2C93A00689B77 /* MainMenu.xib in Resources */,
 			);
