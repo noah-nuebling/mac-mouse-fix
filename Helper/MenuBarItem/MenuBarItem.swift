@@ -9,6 +9,12 @@
 
 /// This uses non-reactive state management. It's so complicated even for this simple example!
 
+/**
+ Also see:
+ https://github.com/noah-nuebling/mac-mouse-fix/issues/190
+ 
+ */
+
 import Foundation
 
 @objc class MenuBarItem: NSObject {
@@ -36,6 +42,21 @@ import Foundation
         statusItem?.menu = menu
         statusItem?.isVisible = false
         
+        /// Setup menu strings
+        if #available(macOS 13, *) {
+            /// TESTING. Make this available before macOS 13.
+            do {
+                /// Set markdown. (Doesn't seem to do anything)
+                disableScrollItem.attributedTitle = try NSAttributedString(markdown: "Smooth Scrolling")
+                disableButtonsItem.attributedTitle = try NSAttributedString(markdown: "Mouse Buttons Remaps")
+            } catch {
+                fatalError()
+            }
+        } else {
+            disableScrollItem.title = "Turn off Smooth Scrolling"
+            disableButtonsItem.title = "Turn off Mouse Button Remaps"
+        }
+        
         /// Configure
         MenuBarItem.reload()
     }
@@ -44,23 +65,23 @@ import Foundation
     
     @objc static func reload() {
         
-        var shouldShow = config("Other.showMenuBarItem") as? Bool ?? false
+        let shouldShow = config("Other.showMenuBarItem") as? Bool ?? false
         instance?.statusItem?.isVisible = shouldShow
         
         if shouldShow {
             
-            var buttonsKilled = config("Other.buttonKillSwitch") as? Bool ?? false
-            var scrollKilled = config("Other.scrollKillSwitch") as? Bool ?? false
+            let buttonsKilled = config("Other.buttonKillSwitch") as? Bool ?? false
+            let scrollKilled = config("Other.scrollKillSwitch") as? Bool ?? false
             
-            instance?.disableButtonsItem.state = buttonsKilled ? .on : .off
-            instance?.disableScrollItem.state = scrollKilled ? .on : .off
+            instance?.disableButtonsItem.state = !buttonsKilled ? .on : .off
+            instance?.disableScrollItem.state = !scrollKilled ? .on : .off
             
             return
         } else {
             
             /// Disable all settings from the menuItem, if the menuItem is disabled
-            setConfig("Other.scrollKillSwitch", false as NSObject)
-            setConfig("Other.buttonKillSwitch", false as NSObject)
+            setConfig("Other.scrollKillSwitch", true as NSObject)
+            setConfig("Other.buttonKillSwitch", true as NSObject)
             commitConfig()
         }
     }
@@ -76,7 +97,7 @@ import Foundation
         /// Toggle
         sender.state = sender.state == .on ? .off : .on
         /// Set to config
-        setConfig("Other.scrollKillSwitch", (sender.state == .on) as NSObject)
+        setConfig("Other.scrollKillSwitch", !(sender.state == .on) as NSObject)
         commitConfig()
     }
     
@@ -85,7 +106,7 @@ import Foundation
         /// Toggle
         sender.state = sender.state == .on ? .off : .on
         /// Set to config
-        setConfig("Other.buttonKillSwitch", (sender.state == .on) as NSObject)
+        setConfig("Other.buttonKillSwitch", !(sender.state == .on) as NSObject)
         commitConfig()
     }
 }

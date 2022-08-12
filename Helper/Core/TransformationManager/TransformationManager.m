@@ -53,7 +53,7 @@ static NSDictionary *_remaps;
     NSMutableDictionary *remapsDict = [NSMutableDictionary dictionary];
     
     if ([(id)config(@"Other.buttonKillSwitch") boolValue]) {
-        
+        /// TODO: Turn off button interception completely (generally when the remaps dict is empty)
     } else {
         
         /// Convert remaps table to remaps dict

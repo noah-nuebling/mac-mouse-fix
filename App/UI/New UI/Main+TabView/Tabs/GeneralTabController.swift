@@ -76,7 +76,7 @@ class GeneralTabController: NSViewController {
                 } catch {
                     if #available(macOS 13, *) {
                         if (error as NSError).code == 1 {
-                            let message = NSAttributedString(markdown: "Mac Mouse Fix was **disabled** in System Settings.\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\'")
+                            let message = NSMutableAttributedString(coolMarkdown: "Mac Mouse Fix was **disabled** in System Settings.\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\'")
                             if let window = NSApp.mainWindow {
                                 ToastNotificationController.attachNotification(withMessage: message, to: window, forDuration: 0.0)
                             }

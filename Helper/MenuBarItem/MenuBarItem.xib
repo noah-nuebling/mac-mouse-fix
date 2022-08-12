@@ -24,13 +24,13 @@
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="Q9U-6U-NVu"/>
-                <menuItem title="Turn off Smooth Scrolling" state="on" id="KQ8-8Q-u6c">
+                <menuItem title="&lt;Turn off Smooth Scrolling&gt;" state="on" id="KQ8-8Q-u6c">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="disableScroll:" target="-2" id="RgH-C3-jva"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Turn off Mouse Button Remappings" state="on" id="IsJ-q8-i95">
+                <menuItem title="&lt;Turn off Mouse Button Remaps&gt;" state="on" id="IsJ-q8-i95">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="disableButtons:" target="-2" id="wHN-dY-Bub"/>

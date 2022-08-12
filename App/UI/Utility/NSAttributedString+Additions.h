@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSAttributedString (Additions)
 
-+ (NSAttributedString *)attributedStringWithMarkdown:(NSString *)md __API_AVAILABLE(macos(13));
++ (NSAttributedString *)attributedStringWithCoolMarkdown:(NSString *)md __API_AVAILABLE(macos(13));
 
 - (NSAttributedString *)attributedStringByAddingBaseLineOffset:(CGFloat)offset;
 
