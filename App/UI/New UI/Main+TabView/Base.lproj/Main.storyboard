@@ -234,10 +234,10 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="249.99998474121094" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6xF-Pl-4RE" userLabel="Master Stack" customClass="CollapsingStackView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                <rect key="frame" x="30" y="20" width="293" height="231"/>
+                                <rect key="frame" x="30" y="20" width="293" height="232"/>
                                 <subviews>
                                     <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="1000" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0BS-nv-t3O" userLabel="Enable section">
-                                        <rect key="frame" x="0.0" y="181" width="293" height="50"/>
+                                        <rect key="frame" x="0.0" y="182" width="293" height="50"/>
                                         <subviews>
                                             <customView horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="D4U-Df-iCp" userLabel="Text center">
                                                 <rect key="frame" x="0.0" y="0.0" width="211" height="50"/>
@@ -280,14 +280,14 @@
                                         </customSpacing>
                                     </stackView>
                                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="249.99998474121094" horizontalClippingResistancePriority="999" horizontalHuggingPriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gcq-dN-YnA" userLabel="Main Hidable Section" customClass="CollapsingStackView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="293" height="181"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="293" height="182"/>
                                         <subviews>
                                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="zUc-6f-AlY" userLabel="Indent">
-                                                <rect key="frame" x="0.0" y="163" width="124" height="18"/>
+                                                <rect key="frame" x="0.0" y="164" width="124" height="18"/>
                                                 <subviews>
                                                     <textField horizontalHuggingPriority="1000" verticalHuggingPriority="999" horizontalCompressionResistancePriority="1" translatesAutoresizingMaskIntoConstraints="NO" id="0gD-iB-vff">
                                                         <rect key="frame" x="-2" y="0.0" width="78" height="14"/>
-                                                        <textFieldCell key="cell" controlSize="small" selectable="YES" alignment="left" title="&lt;Enable Hint&gt;" id="bew-ni-FnZ">
+                                                        <textFieldCell key="cell" controlSize="small" alignment="left" title="&lt;Enable Hint&gt;" id="bew-ni-FnZ">
                                                             <font key="font" metaFont="smallSystem"/>
                                                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -302,10 +302,10 @@
                                                 </constraints>
                                             </customView>
                                             <customView verticalHuggingPriority="999" translatesAutoresizingMaskIntoConstraints="NO" id="FgF-8j-kMB" userLabel="Divider">
-                                                <rect key="frame" x="0.0" y="117" width="293" height="38"/>
+                                                <rect key="frame" x="0.0" y="139" width="293" height="17"/>
                                                 <subviews>
                                                     <box horizontalHuggingPriority="1000" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="3RY-sV-oKD">
-                                                        <rect key="frame" x="0.0" y="6" width="293" height="26"/>
+                                                        <rect key="frame" x="0.0" y="6" width="293" height="5"/>
                                                     </box>
                                                 </subviews>
                                                 <constraints>
@@ -316,12 +316,31 @@
                                                 </constraints>
                                             </customView>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ncd-ap-KlE">
-                                                <rect key="frame" x="-2" y="92" width="295" height="18"/>
+                                                <rect key="frame" x="-2" y="114" width="295" height="18"/>
                                                 <buttonCell key="cell" type="check" title="Show in Menu Bar" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ILO-GQ-vNk">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
                                             </button>
+                                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="YXt-2R-Wiy" userLabel="Indent">
+                                                <rect key="frame" x="0.0" y="93" width="103" height="14"/>
+                                                <subviews>
+                                                    <textField horizontalHuggingPriority="1000" verticalHuggingPriority="999" horizontalCompressionResistancePriority="1" translatesAutoresizingMaskIntoConstraints="NO" id="4ev-Ux-rgH">
+                                                        <rect key="frame" x="18" y="0.0" width="87" height="14"/>
+                                                        <textFieldCell key="cell" controlSize="small" alignment="left" title="&lt;MenuBarHint&gt;" id="I0n-tQ-TGG">
+                                                            <font key="font" metaFont="smallSystem"/>
+                                                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="4ev-Ux-rgH" firstAttribute="leading" secondItem="YXt-2R-Wiy" secondAttribute="leading" constant="20" symbolic="YES" id="IBO-Nq-ZhW"/>
+                                                    <constraint firstItem="4ev-Ux-rgH" firstAttribute="top" secondItem="YXt-2R-Wiy" secondAttribute="top" id="SQw-kj-vzU"/>
+                                                    <constraint firstAttribute="trailing" secondItem="4ev-Ux-rgH" secondAttribute="trailing" id="hKd-cT-47J"/>
+                                                    <constraint firstAttribute="bottom" secondItem="4ev-Ux-rgH" secondAttribute="bottom" id="pka-5D-enN"/>
+                                                </constraints>
+                                            </customView>
                                             <customView verticalHuggingPriority="999" translatesAutoresizingMaskIntoConstraints="NO" id="Xec-u6-Sj4" userLabel="Divider">
                                                 <rect key="frame" x="0.0" y="68" width="293" height="17"/>
                                                 <subviews>
@@ -390,8 +409,10 @@
                                             <integer value="1000"/>
                                             <integer value="1000"/>
                                             <integer value="1000"/>
+                                            <integer value="1000"/>
                                         </visibilityPriorities>
                                         <customSpacing>
+                                            <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>
@@ -425,6 +446,7 @@
                         <outlet property="mainHidableSection" destination="gcq-dN-YnA" id="WqF-CI-kdj"/>
                         <outlet property="mainView" destination="As8-gY-gcx" id="kXJ-31-AWr"/>
                         <outlet property="masterStack" destination="6xF-Pl-4RE" id="XjS-cn-sHP"/>
+                        <outlet property="menuBarHint" destination="4ev-Ux-rgH" id="NTE-J5-0CG"/>
                         <outlet property="menuBarToggle" destination="ncd-ap-KlE" id="rzr-sb-jGR"/>
                         <outlet property="updatesExtraSection" destination="ojq-7M-UaO" id="gmK-EU-JI5"/>
                         <outlet property="updatesHint" destination="tvD-Xi-viR" id="yr8-2s-B5c"/>

@@ -40,6 +40,7 @@ class GeneralTabController: NSViewController {
     
     @IBOutlet weak var enabledHint: NSTextField!
     @IBOutlet weak var updatesHint: NSTextField!
+    @IBOutlet weak var menuBarHint: NSTextField!
     
     /// Init
     
@@ -131,8 +132,9 @@ class GeneralTabController: NSViewController {
         
         /// Labels
         
-        enabledHint.stringValue = NSLocalizedString("Mac Mouse Fix will stay enabled after you\nclose it", comment: "")
+        enabledHint.stringValue = NSLocalizedString("Mac Mouse Fix will stay enabled after you close it", comment: "")
         updatesHint.stringValue = NSLocalizedString("You'll see new updates when you open this window", comment: "")
+        menuBarHint.stringValue = NSLocalizedString("Lets you quickly disable Scroll Enhancements and other features", comment: "")
         
 //        updatesHint.reactiveAnimator(type: .fade).stringValue <~ checkForUpdates.map { checkUpdates in
 //            return checkUpdates ?
