@@ -3,10 +3,13 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21219"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MenuBarItem" customModule="Mac_Mouse_Fix_Helper" customModuleProvider="target">
             <connections>
+                <outlet property="appCompatItem" destination="MGH-3e-48B" id="ahj-ea-0u2"/>
+                <outlet property="appCompatView" destination="ZfV-T8-S42" id="wjR-ng-Amg"/>
                 <outlet property="disableButtonsItem" destination="IsJ-q8-i95" id="D1r-wv-CO6"/>
                 <outlet property="disableScroll" destination="KQ8-8Q-u6c" id="nAb-Hl-237"/>
                 <outlet property="disableScrollItem" destination="KQ8-8Q-u6c" id="u4c-JB-0AU"/>
@@ -24,13 +27,16 @@
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="Q9U-6U-NVu"/>
-                <menuItem title="&lt;Turn off Smooth Scrolling&gt;" state="on" id="KQ8-8Q-u6c">
+                <menuItem title="&lt;App Compat header&gt;" id="MGH-3e-48B">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem title="&lt;Turn off Smooth Scrolling&gt;" state="on" indentationLevel="1" id="KQ8-8Q-u6c">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="disableScroll:" target="-2" id="RgH-C3-jva"/>
                     </connections>
                 </menuItem>
-                <menuItem title="&lt;Turn off Mouse Button Remaps&gt;" state="on" id="IsJ-q8-i95">
+                <menuItem title="&lt;Turn off Mouse Button Remaps&gt;" state="on" indentationLevel="1" id="IsJ-q8-i95">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="disableButtons:" target="-2" id="wHN-dY-Bub"/>
@@ -39,5 +45,36 @@
             </items>
             <point key="canvasLocation" x="-11" y="44"/>
         </menu>
+        <customView horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZfV-T8-S42">
+            <rect key="frame" x="0.0" y="0.0" width="239" height="75"/>
+            <subviews>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EHs-VF-a5A">
+                    <rect key="frame" x="11" y="52" width="220" height="16"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" title="App Compatibility" id="UrY-I2-S82">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="500" verticalCompressionResistancePriority="1000" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rym-jR-hMR">
+                    <rect key="frame" x="11" y="5" width="220" height="42"/>
+                    <textFieldCell key="cell" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Quickly disable Mac Mouse Fix features so you can work with apps that aren't compatible yet" id="dhU-lJ-lIm">
+                        <font key="font" metaFont="system" size="11"/>
+                        <color key="textColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="EHs-VF-a5A" secondAttribute="trailing" constant="10" id="7U3-se-c2i"/>
+                <constraint firstItem="EHs-VF-a5A" firstAttribute="leading" secondItem="ZfV-T8-S42" secondAttribute="leading" constant="13" id="Bey-Fm-MCu"/>
+                <constraint firstAttribute="trailing" secondItem="Rym-jR-hMR" secondAttribute="trailing" constant="10" id="FCm-w2-wra"/>
+                <constraint firstItem="EHs-VF-a5A" firstAttribute="top" secondItem="ZfV-T8-S42" secondAttribute="top" constant="5" id="KmT-ib-eBA"/>
+                <constraint firstItem="Rym-jR-hMR" firstAttribute="top" secondItem="EHs-VF-a5A" secondAttribute="bottom" constant="5" id="SaW-ev-jbb"/>
+                <constraint firstAttribute="bottom" secondItem="Rym-jR-hMR" secondAttribute="bottom" constant="5" id="p65-2i-Lor"/>
+                <constraint firstItem="Rym-jR-hMR" firstAttribute="leading" secondItem="ZfV-T8-S42" secondAttribute="leading" constant="13" id="rib-Ah-1Nx"/>
+            </constraints>
+            <point key="canvasLocation" x="1.5" y="-104.5"/>
+        </customView>
     </objects>
 </document>

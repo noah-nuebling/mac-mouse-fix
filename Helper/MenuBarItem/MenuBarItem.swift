@@ -28,6 +28,9 @@ import Foundation
     @IBOutlet weak var disableScrollItem: NSMenuItem!
     @IBOutlet weak var disableButtonsItem: NSMenuItem!
     
+    @IBOutlet weak var appCompatItem: NSMenuItem!
+    @IBOutlet var appCompatView: NSView!
+    
     @objc static func load_Manual() {
         instance = MenuBarItem()
         Bundle.main.loadNibNamed(NSNib.Name("MenuBarItem"), owner: instance, topLevelObjects: &(instance!.topLevelObjects))
@@ -56,6 +59,11 @@ import Foundation
             disableScrollItem.title = "Turn off Smooth Scrolling"
             disableButtonsItem.title = "Turn off Mouse Button Remaps"
         }
+        
+        /// Setup group item
+        /// `.indentationLevel` doesn't work. Do indentation in IB instead
+        appCompatItem.view = appCompatView
+        appCompatItem.isHidden = true /// Doesn't work?
         
         /// Configure
         MenuBarItem.reload()
