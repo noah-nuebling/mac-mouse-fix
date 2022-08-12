@@ -8,6 +8,8 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MenuBarItem" customModule="Mac_Mouse_Fix_Helper" customModuleProvider="target">
             <connections>
+                <outlet property="appCompatHintItem" destination="JFP-3w-VSr" id="VaX-uF-v0D"/>
+                <outlet property="appCompatHintView" destination="uBe-pX-jFr" id="Axy-NJ-NMj"/>
                 <outlet property="appCompatItem" destination="MGH-3e-48B" id="ahj-ea-0u2"/>
                 <outlet property="appCompatView" destination="ZfV-T8-S42" id="wjR-ng-Amg"/>
                 <outlet property="disableButtonsItem" destination="IsJ-q8-i95" id="D1r-wv-CO6"/>
@@ -20,14 +22,10 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <menu id="5Wl-XF-cnf">
             <items>
-                <menuItem title="Open Mac Mouse Fix..." id="lb0-HS-5Kv">
+                <menuItem title="&lt;App Compat title&gt;" id="MGH-3e-48B">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="openMMF:" target="-2" id="8UO-6A-hAp"/>
-                    </connections>
                 </menuItem>
-                <menuItem isSeparatorItem="YES" id="Q9U-6U-NVu"/>
-                <menuItem title="&lt;App Compat header&gt;" id="MGH-3e-48B">
+                <menuItem title="&lt;App Compat hint&gt;" id="JFP-3w-VSr">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
                 <menuItem title="&lt;Turn off Smooth Scrolling&gt;" state="on" indentationLevel="1" id="KQ8-8Q-u6c">
@@ -42,23 +40,45 @@
                         <action selector="disableButtons:" target="-2" id="wHN-dY-Bub"/>
                     </connections>
                 </menuItem>
+                <menuItem isSeparatorItem="YES" id="Q9U-6U-NVu"/>
+                <menuItem title="Open Mac Mouse Fix..." id="lb0-HS-5Kv">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="openMMF:" target="-2" id="8UO-6A-hAp"/>
+                    </connections>
+                </menuItem>
             </items>
             <point key="canvasLocation" x="-11" y="44"/>
         </menu>
         <customView horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZfV-T8-S42">
-            <rect key="frame" x="0.0" y="0.0" width="239" height="75"/>
+            <rect key="frame" x="0.0" y="0.0" width="239" height="26"/>
             <subviews>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EHs-VF-a5A">
-                    <rect key="frame" x="11" y="52" width="220" height="16"/>
+                    <rect key="frame" x="11" y="5" width="220" height="16"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" title="App Compatibility" id="UrY-I2-S82">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="500" verticalCompressionResistancePriority="1000" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rym-jR-hMR">
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="EHs-VF-a5A" secondAttribute="trailing" constant="10" id="7U3-se-c2i"/>
+                <constraint firstAttribute="bottom" secondItem="EHs-VF-a5A" secondAttribute="bottom" constant="5" id="7ua-Ho-D8W"/>
+                <constraint firstItem="EHs-VF-a5A" firstAttribute="leading" secondItem="ZfV-T8-S42" secondAttribute="leading" constant="13" id="Bey-Fm-MCu"/>
+                <constraint firstItem="EHs-VF-a5A" firstAttribute="top" secondItem="ZfV-T8-S42" secondAttribute="top" constant="5" id="KmT-ib-eBA"/>
+            </constraints>
+            <point key="canvasLocation" x="-188.5" y="-185.5"/>
+        </customView>
+        <customView horizontalCompressionResistancePriority="500" verticalCompressionResistancePriority="1000" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uBe-pX-jFr">
+            <rect key="frame" x="0.0" y="0.0" width="239" height="47"/>
+            <subviews>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="500" verticalCompressionResistancePriority="1000" ambiguous="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PO7-Ct-eDE">
                     <rect key="frame" x="11" y="5" width="220" height="42"/>
-                    <textFieldCell key="cell" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Quickly disable Mac Mouse Fix features so you can work with apps that aren't compatible yet" id="dhU-lJ-lIm">
+                    <constraints>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="216" id="eOK-Xe-cGg"/>
+                    </constraints>
+                    <textFieldCell key="cell" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Quickly disable Mac Mouse Fix features so you can work with apps that aren't compatible yet" id="qF8-UG-CW7">
                         <font key="font" metaFont="system" size="11"/>
                         <color key="textColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -66,15 +86,12 @@
                 </textField>
             </subviews>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="EHs-VF-a5A" secondAttribute="trailing" constant="10" id="7U3-se-c2i"/>
-                <constraint firstItem="EHs-VF-a5A" firstAttribute="leading" secondItem="ZfV-T8-S42" secondAttribute="leading" constant="13" id="Bey-Fm-MCu"/>
-                <constraint firstAttribute="trailing" secondItem="Rym-jR-hMR" secondAttribute="trailing" constant="10" id="FCm-w2-wra"/>
-                <constraint firstItem="EHs-VF-a5A" firstAttribute="top" secondItem="ZfV-T8-S42" secondAttribute="top" constant="5" id="KmT-ib-eBA"/>
-                <constraint firstItem="Rym-jR-hMR" firstAttribute="top" secondItem="EHs-VF-a5A" secondAttribute="bottom" constant="5" id="SaW-ev-jbb"/>
-                <constraint firstAttribute="bottom" secondItem="Rym-jR-hMR" secondAttribute="bottom" constant="5" id="p65-2i-Lor"/>
-                <constraint firstItem="Rym-jR-hMR" firstAttribute="leading" secondItem="ZfV-T8-S42" secondAttribute="leading" constant="13" id="rib-Ah-1Nx"/>
+                <constraint firstAttribute="bottom" secondItem="PO7-Ct-eDE" secondAttribute="bottom" constant="5" id="UFe-CG-SJn"/>
+                <constraint firstItem="PO7-Ct-eDE" firstAttribute="top" secondItem="uBe-pX-jFr" secondAttribute="top" id="rpX-hf-nhU"/>
+                <constraint firstAttribute="trailing" secondItem="PO7-Ct-eDE" secondAttribute="trailing" constant="10" id="tAZ-7I-8yR"/>
+                <constraint firstItem="PO7-Ct-eDE" firstAttribute="leading" secondItem="uBe-pX-jFr" secondAttribute="leading" constant="13" id="zRp-cd-E6S"/>
             </constraints>
-            <point key="canvasLocation" x="1.5" y="-104.5"/>
+            <point key="canvasLocation" x="108.5" y="-183"/>
         </customView>
     </objects>
 </document>

@@ -31,6 +31,9 @@ import Foundation
     @IBOutlet weak var appCompatItem: NSMenuItem!
     @IBOutlet var appCompatView: NSView!
     
+    @IBOutlet weak var appCompatHintItem: NSMenuItem!
+    @IBOutlet var appCompatHintView: NSView!
+    
     @objc static func load_Manual() {
         instance = MenuBarItem()
         Bundle.main.loadNibNamed(NSNib.Name("MenuBarItem"), owner: instance, topLevelObjects: &(instance!.topLevelObjects))
@@ -63,7 +66,7 @@ import Foundation
         /// Setup group item
         /// `.indentationLevel` doesn't work. Do indentation in IB instead
         appCompatItem.view = appCompatView
-        appCompatItem.isHidden = true /// Doesn't work?
+        appCompatHintItem.view = appCompatHintView
         
         /// Configure
         MenuBarItem.reload()
