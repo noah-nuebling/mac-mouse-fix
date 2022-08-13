@@ -364,7 +364,7 @@ static void setBorderColor(RemapTableController *object) {
 
 #pragma mark - IBActions
 
-- (IBAction)addRemoveControl:(NSSegmentedControl *)sender {
+- (IBAction)addRemoveControl:(NSSegmentedControl *)sender { /// TODO: Remove the addRemove controll stuff
     if (sender.selectedSegment == 0) {
         [self addButtonAction];
     } else {
@@ -376,8 +376,31 @@ static void setBorderColor(RemapTableController *object) {
         [self removeRow:selectedRow];
     }
 }
-- (IBAction)rightClickRemoveButton:(id)sender {
-    [self removeRow:self.tableView.clickedRow];
+- (IBAction)inRowRemoveButtonAction:(RemapTableButton *)sender {
+    
+    /// `tableView.clickedRow` worked on righ-click menus, but for the inline buttons it doesn't seem to.
+    
+    /// Get tableCell
+    NSTableCellView *cell = sender.host;
+    
+    /// Find index of tableCell
+    NSInteger result = -1;
+    for (int i = 0; i < self.tableView.numberOfRows; i++) {
+        NSTableCellView *c = [self.tableView viewAtColumn:0 row:i makeIfNecessary:NO];
+        if ([c isEqual:cell]) {
+            result = i;
+            break;
+        }
+    }
+    
+    /// Delete ref from button
+    ///     Maybe against retain cycles? Not sure if problem.
+    sender.host = nil;
+    
+    /// Remove row
+    if (result != -1) {
+        [self removeRow:result];
+    }
 }
 
 - (void)removeRow:(NSInteger)rowToRemove {
@@ -386,10 +409,10 @@ static void setBorderColor(RemapTableController *object) {
     /// Capture notifs
     NSSet<NSNumber *> *capturedButtonsBefore = [RemapTableUtility getCapturedButtons];
     
-    // Get base data model index corresponding to selected table index
+    /// Get base data model index corresponding to selected table index
     NSUInteger dataModelRowToRemove = [RemapTableUtility baseDataModelIndexFromGroupedDataModelIndex:rowToRemove withGroupedDataModel:self.groupedDataModel];
     
-    // Save rowDict to be removed for later
+    /// Save rowDict to be removed for later
     NSDictionary *removedRowDict = self.dataModel[dataModelRowToRemove];
     
     /// Remove object from data model at selected index, and write to file
@@ -397,7 +420,7 @@ static void setBorderColor(RemapTableController *object) {
     [mutableDataModel removeObjectAtIndex:dataModelRowToRemove];
     self.dataModel = (NSArray *)mutableDataModel;
     [self writeDataModelToConfig];
-    [self loadDataModelFromConfig]; // Not sure if necessary
+    [self loadDataModelFromConfig]; /// Not sure if necessary
     
     /// Remove rows from table with animation
     
@@ -426,19 +449,19 @@ static void setBorderColor(RemapTableController *object) {
 }
 
 - (void)addButtonAction {
-//    [AddWindowController begin];
+///    [AddWindowController begin];
 }
 
 #pragma mark Interface
 
 - (void)addRowWithHelperPayload:(NSDictionary *)payload {
     
-    // Capture notifs
+    /// Capture notifs
     NSSet<NSNumber *> *capturedButtonsBefore = [RemapTableUtility getCapturedButtons];
     
     NSMutableDictionary *rowDictToAdd = payload.mutableCopy;
-    // ((Check if payload is valid tableEntry))
-    // Check if already in table
+    /// ((Check if payload is valid tableEntry))
+    /// Check if already in table
     NSIndexSet *existingIndexes = [self.groupedDataModel indexesOfObjectsPassingTest:^BOOL(NSDictionary * _Nonnull tableEntry, NSUInteger idx, BOOL * _Nonnull stop) {
         BOOL triggerMatches = [tableEntry[kMFRemapsKeyTrigger] isEqualTo:rowDictToAdd[kMFRemapsKeyTrigger]];
         BOOL modificationPreconditionMatches = [tableEntry[kMFRemapsKeyModificationPrecondition] isEqualTo:rowDictToAdd[kMFRemapsKeyModificationPrecondition]];
@@ -447,19 +470,19 @@ static void setBorderColor(RemapTableController *object) {
     NSAssert(existingIndexes.count <= 1, @"Duplicate remap triggers found in table");
     NSIndexSet *toHighlightIndexSet;
     if (existingIndexes.count == 0) {
-        // Fill out effect in payload with first effect from effects table (to make behaviour appropriate when user doesn't choose any effect)
-        //      We could also consider removing the tableEntry, if the user just dismisses the popup menu without choosing an effect, instead of this.
+        /// Fill out effect in payload with first effect from effects table (to make behaviour appropriate when user doesn't choose any effect)
+        ///      We could also consider removing the tableEntry, if the user just dismisses the popup menu without choosing an effect, instead of this.
         rowDictToAdd[kMFRemapsKeyEffect] = [RemapTableTranslator getEffectsTableForRemapsTableEntry:rowDictToAdd][0][@"dict"];
-        // Add new row to data model
+        /// Add new row to data model
         self.dataModel = [self.dataModel arrayByAddingObject:rowDictToAdd];
-        // Sort data model
+        /// Sort data model
         [self sortDataModel];
         
-        // Display new row with animation and highlight by selecting it
+        /// Display new row with animation and highlight by selecting it
         NSUInteger insertedIndex = [self.groupedDataModel indexOfObject:rowDictToAdd];
         NSMutableIndexSet *toInsertWithAnimationIndexSet = [NSMutableIndexSet indexSetWithIndex:insertedIndex];
         toHighlightIndexSet = [NSIndexSet indexSetWithIndex:insertedIndex];
-        // Check if there are new group row we'd like to insert with animation, too
+        /// Check if there are new group row we'd like to insert with animation, too
         BOOL buttonIsNewlyTriggerInDataModel = YES;
         MFMouseButtonNumber triggerButtonForAddedRow = [RemapTableUtility triggerButtonForRow:rowDictToAdd];
         for (NSDictionary *rowDict in self.dataModel) {
@@ -470,26 +493,26 @@ static void setBorderColor(RemapTableController *object) {
                 break;
             }
         }
-        if (buttonIsNewlyTriggerInDataModel) { // There is a group row to add with animation
+        if (buttonIsNewlyTriggerInDataModel) { /// There is a group row to add with animation
             [toInsertWithAnimationIndexSet addIndex:insertedIndex-1];
         }
-        // Do insert with animation
+        /// Do insert with animation
         [self.tableView insertRowsAtIndexes:toInsertWithAnimationIndexSet withAnimation:NSTableViewAnimationSlideDown];
         
-        // Write new row to file (to make behaviour appropriate when user doesn't choose any effect)
+        /// Write new row to file (to make behaviour appropriate when user doesn't choose any effect)
         [self writeToConfig];
     } else {
         toHighlightIndexSet = existingIndexes;
     }
     [self.tableView selectRowIndexes:toHighlightIndexSet byExtendingSelection:NO];
     [self.tableView scrollRowToVisible:toHighlightIndexSet.firstIndex];
-    // Open the NSMenu on the newly created row's popup button
+    /// Open the NSMenu on the newly created row's popup button
     NSUInteger openPopupRow = toHighlightIndexSet.firstIndex;
     NSTableView *tv = self.tableView;
     NSPopUpButton * popUpButton = [RemapTableUtility getPopUpButtonAtRow:openPopupRow fromTableView:tv];
     [popUpButton performSelector:@selector(performClick:) withObject:nil afterDelay:0.2];
     
-    // Capture notifs
+    /// Capture notifs
     NSSet<NSNumber *> *capturedButtonsAfter =  [RemapTableUtility getCapturedButtons];
     [CaptureNotificationCreator showButtonCaptureNotificationWithBeforeSet:capturedButtonsBefore afterSet:capturedButtonsAfter];
     
@@ -526,7 +549,7 @@ static void setBorderColor(RemapTableController *object) {
     } else if ([tableColumn.identifier isEqualToString:@"trigger"]) {
         
         /// The trigger column should display the trigger as well as the modification precondition
-        return [RemapTableTranslator getTriggerCellWithRowDict:rowDict];
+        return [RemapTableTranslator getTriggerCellWithRowDict:rowDict row:row];
         
     } else if ([tableColumn.identifier isEqualToString:@"effect"]) {
         
@@ -561,7 +584,7 @@ static void setBorderColor(RemapTableController *object) {
         ///     TODO: Implement auto row height!. That should fix all our worries. See https://developer.apple.com/forums/thread/126767.
         
         rowDict = (NSDictionary *)[SharedUtility deepCopyOf:rowDict];
-        NSTableCellView *view = [RemapTableTranslator getTriggerCellWithRowDict:rowDict];
+        NSTableCellView *view = [RemapTableTranslator getTriggerCellWithRowDict:rowDict row:row];
         /// ^ These lines are copied from `tableView:viewForTableColumn:row:`. Should change this cause copied code is bad. Edit: This doesn't seem to be true anymore. I can't see copied text.
         NSTextField *textField = view.textField;
         NSMutableAttributedString *string = textField.effectiveAttributedStringValue.mutableCopy;
@@ -798,10 +821,10 @@ NSArray *groupedDataModel_FromLastGroupedDataModelAccess;
     return nil;
 
 //    return [self.tableView rowViewAtRow:row makeIfNecessary:YES];
-    // This line is involved in some weird `EXC_BAD_ACCESS (code=2` crash.
-    // The crash occurs seemingly at random when switching back and forth between different effects
-    // There seems to be an infinte loop in the stacktrace. Maybe.
-    // Crash doesn't seem to occur when returning `[NSTableRowView new]` or `nil` instead
+    /// This line is involved in some weird `EXC_BAD_ACCESS (code=2` crash.
+    /// The crash occurs seemingly at random when switching back and forth between different effects
+    /// There seems to be an infinte loop in the stacktrace. Maybe.
+    /// Crash doesn't seem to occur when returning `[NSTableRowView new]` or `nil` instead
 }
 
 /// Helper function for determining if a row is a group row

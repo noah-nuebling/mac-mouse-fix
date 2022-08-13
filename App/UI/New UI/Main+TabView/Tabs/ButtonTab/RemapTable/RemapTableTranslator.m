@@ -19,6 +19,7 @@
 #import "AppDelegate.h"
 #import "NSView+Additions.h"
 #import "RemapTableUtility.h"
+#import "Mac_Mouse_Fix-Swift.h"
 
 @interface RemapTableTranslator ()
 
@@ -552,7 +553,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
 #pragma mark - Create Trigger View
 
 
-+ (NSTableCellView *)getTriggerCellWithRowDict:(NSDictionary *)rowDict {
++ (NSTableCellView *)getTriggerCellWithRowDict:(NSDictionary *)rowDict row:(NSInteger)row {
     
     /// Create mutable copy
     /// Necessary for some of this hacky mess to work –– However, this is not a deep copy, so the `_dataModel` is still changed when we change some nested object. Watch out!
@@ -799,6 +800,10 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     NSTableCellView *triggerCell = [self.tableView makeViewWithIdentifier:@"triggerCell" owner:nil];
     triggerCell.textField.attributedStringValue = fullTriggerCellString;
     triggerCell.textField.toolTip = fullTriggerCellTooltipString.string;
+    RemapTableButton *deleteButton = (RemapTableButton *)[triggerCell subviewsWithIdentifier:@"deleteButton"][0];
+    deleteButton.host = triggerCell; /// Hope this doesn't cause retain cycles
+    deleteButton.action = @selector(inRowRemoveButtonAction:);
+    deleteButton.target = self.controller;
     return triggerCell;
     
 }

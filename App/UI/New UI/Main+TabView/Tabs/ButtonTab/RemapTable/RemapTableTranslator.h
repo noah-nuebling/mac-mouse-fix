@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 //+ (NSDictionary *)getEntryFromEffectsTable:(NSArray *)effectsTable withUIString:(NSString *)uiString;
 + (NSArray *)getEffectsTableForRemapsTableEntry:(NSDictionary *)tableEntry;
 
-+ (NSTableCellView *)getTriggerCellWithRowDict:(NSDictionary *)rowDict;
++ (NSTableCellView *)getTriggerCellWithRowDict:(NSDictionary *)rowDict row:(NSInteger)row;
 + (NSTableCellView *)getEffectCellWithRowDict:(NSDictionary *)rowDict row:(NSUInteger)row tableViewEnabled:(BOOL)tableViewEnabled;
 
 
