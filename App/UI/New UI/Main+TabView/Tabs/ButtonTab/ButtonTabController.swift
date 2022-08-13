@@ -38,10 +38,21 @@ import CocoaLumberjackSwift
     /// Init & lifecycle
     ///
     
-//    override init(nibName nibNameOrNil: NSNib.Name?, bundle nibBundleOrNil: Bundle?) {
-//
-//
-//    }
+    override init(nibName nibNameOrNil: NSNib.Name?, bundle nibBundleOrNil: Bundle?) {
+        
+        /// This init is never being called
+        assert(false)
+        
+        /// Set garbage values
+        pointerIsInsideAddField = false
+        trackingArea = NSTrackingArea()
+        
+        /// Init super
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        
+        /// Do actual init
+        initAddFieldStuff()
+    }
     required init?(coder: NSCoder) {
         
         /// Set garbage values
@@ -67,8 +78,8 @@ import CocoaLumberjackSwift
         super.viewDidAppear()
         
         /// Setup tracking area
-        trackingArea = NSTrackingArea(rect: self.addField.frame, options: [.mouseEnteredAndExited, .activeAlways, .enabledDuringMouseDrag], owner: self)
-        self.addField.superview?.addTrackingArea(trackingArea)
+        trackingArea = NSTrackingArea(rect: self.addField.bounds, options: [.mouseEnteredAndExited, .activeAlways, .enabledDuringMouseDrag], owner: self)
+        self.addField.addTrackingArea(trackingArea)
     }
     override func viewDidDisappear() {
         
@@ -104,7 +115,7 @@ import CocoaLumberjackSwift
     override func mouseEntered(with event: NSEvent) {
         pointerIsInsideAddField = true
         /// [AddViewController enableAddFieldHoverEffect:YES];
-        SharedMessagePort.sendMessage("enabledAddMode", withPayload: nil, expectingReply: false)
+        SharedMessagePort.sendMessage("enableAddMode", withPayload: nil, expectingReply: false)
     }
     override func mouseExited(with event: NSEvent) {
         pointerIsInsideAddField = false
@@ -121,7 +132,7 @@ import CocoaLumberjackSwift
         message = message.addingBold(forSubstring: "Primary Mouse Button")
         ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: -1)
     }
-    override func mouseDown(with event: NSEvent) {
+    override func rightMouseUp(with event: NSEvent) {
         if !pointerIsInsideAddField { return }
         var message = NSAttributedString(string: "Secondary Mouse Button can't be used. \nPlease try another button.")
         message = message.addingBold(forSubstring: "Secondary Mouse Button")
