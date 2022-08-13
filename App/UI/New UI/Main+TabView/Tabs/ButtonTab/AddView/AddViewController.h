@@ -11,9 +11,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AddViewController : NSViewController /*<NSWindowDelegate> */
-- (void)begin;
-- (void)end;
+@interface AddViewController : NSViewController /* <NSWindowDelegate> */
+//- (void)begin;
+//- (void)end;
 - (void)handleReceivedAddModeFeedbackFromHelperWithPayload:(NSDictionary *)payload;
 @end
 

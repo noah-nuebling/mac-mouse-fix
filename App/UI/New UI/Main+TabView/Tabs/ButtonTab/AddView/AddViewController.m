@@ -24,43 +24,65 @@
 @property (weak) IBOutlet NSImageView *plusIconView;
 @end
 
-@implementation AddViewController
-
-static AddViewController *_instance;
-static BOOL _pointerIsInsideAddField;
-/// Init
-+ (void)initialize {
-    /// This initialize function was apparently called twice (but weirdly only on some machines) leading to issues. See https://github.com/noah-nuebling/mac-mouse-fix/pull/80
-    /// I guess this is what the typical "if (self == [<ClassName> class])" checks are there to prevent.
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        _instance = [[AddViewController alloc] initWithWindowNibName:@"AddWindow"];
-        _pointerIsInsideAddField = NO;
-    });
+@implementation AddViewController: NSViewController {
+    BOOL _pointerIsInsideAddField;
+    NSTrackingArea *_trackingArea;
 }
+
+//static AddViewController *_instance;
+//static BOOL _pointerIsInsideAddField;
+///// Init
+//+ (void)initialize {
+//    /// This initialize function was apparently called twice (but weirdly only on some machines) leading to issues. See https://github.com/noah-nuebling/mac-mouse-fix/pull/80
+//    /// I guess this is what the typical "if (self == [<ClassName> class])" checks are there to prevent.
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//        _instance = [[AddViewController alloc] initWithWindowNibName:@"AddWindow"];
+//        _pointerIsInsideAddField = NO;
+//    });
+//}
+
+#pragma mark - Vars
+
+
 
 - (instancetype)init {
     self = [super init];
     if (self) {
-        /// TODO: Merge with initialize
+        
+        /// Validate: Not called twice
         assert(MainAppState.shared.addViewController == nil); /// Don't call twice.
+        
+        /// Store self into global state
         MainAppState.shared.addViewController = self;
+        
+        /// Init ivars
+        _pointerIsInsideAddField =
+        
     }
     return self;
 }
-- (void)windowDidLoad {
-    [super windowDidLoad];
+
+- (void)viewDidAppear {
+    [super viewDidAppear];
+ 
     /// Setup tracking area
-    NSTrackingArea *addTrackingArea = [[NSTrackingArea alloc] initWithRect:self.addField.frame options:NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways | NSTrackingEnabledDuringMouseDrag owner:self userInfo:nil];
-    /// (Well I can't use ad tracking cause I claim to be privacy focused on the website, but at least I can use add tracking! Hmu if you can think of a way to monetize that.)
-    [self.window.contentView addTrackingArea:addTrackingArea];
+    _trackingArea = [[NSTrackingArea alloc] initWithRect:self.addField.frame options:NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways | NSTrackingEnabledDuringMouseDrag owner:self userInfo:nil];
+    
+    [self.addField.superview addTrackingArea:_trackingArea];
+}
+- (void)viewDidDisappear {
+    
+    /// Tear down tracking area
+    [self.addView.superview removeTrackingArea:_trackingArea];
 }
 
-// UI callbacks
+/// UI callbacks
+///     TODO: Maybe think about race condition for the mouseEntered and mouseExited functions
 
-- (IBAction)cancelButton:(id)sender {
-    [AddViewController end];
-}
+//- (IBAction)cancelButton:(id)sender {
+//    [AddViewController end];
+//}
 - (void)mouseEntered:(NSEvent *)event {
     _pointerIsInsideAddField = YES;
     [AddViewController enableAddFieldHoverEffect:YES];
@@ -72,14 +94,14 @@ static BOOL _pointerIsInsideAddField;
     [SharedMessagePort sendMessage:@"disableAddMode" withPayload:nil expectingReply:NO];
 }
 
-// Interface
+/// Interface
 
-- (void)begin {
-    [MainAppState.shared.window beginSheet:_instance.window completionHandler:nil];
-}
-- (void)end {
-    [MainAppState.shared.window endSheet:_instance.window];
-}
+//- (void)begin {
+//    [MainAppState.shared.window beginSheet:_instance.window completionHandler:nil];
+//}
+//- (void)end {
+//    [MainAppState.shared.window endSheet:_instance.window];
+//}
 - (void)handleReceivedAddModeFeedbackFromHelperWithPayload:(NSDictionary *)payload {
     
     DDLogDebug(@"Received AddMode feedback with payload: %@", payload);
@@ -105,12 +127,12 @@ static BOOL _pointerIsInsideAddField;
     }
 }
 - (void)wrapUpAddModeFeedbackHandlingWithPayload:(NSDictionary * _Nonnull)payload andPlusIconViewCopy:(NSImageView *)plusIconViewCopy {
-    // Dismiss sheet
+    /// Dismiss sheet
     [self end];
-    // Send payload to RemapTableController
-    //      The payload is an almost finished remapsTable (aka RemapTableController.dataModel) entry with the kMFRemapsKeyEffect key missing
+    /// Send payload to RemapTableController
+    ///      The payload is an almost finished remapsTable (aka RemapTableController.dataModel) entry with the kMFRemapsKeyEffect key missing
     [((RemapTableController *)AppDelegate.instance.remapsTable.delegate) addRowWithHelperPayload:(NSDictionary *)payload];
-    // Reset plus image tint
+    /// Reset plus image tint
     if (@available(macOS 10.14, *)) {
         plusIconViewCopy.alphaValue = 0.0;
         [plusIconViewCopy removeFromSuperview];
@@ -119,7 +141,7 @@ static BOOL _pointerIsInsideAddField;
 }
 
 - (void)enableAddFieldHoverEffect:(BOOL)enable {
-    // None of this works
+    /// None of this works
     NSBox *af = _instance.addField;
     NSView *afSub = _instance.addField.subviews[0];
     if (enable) {
@@ -134,17 +156,17 @@ static BOOL _pointerIsInsideAddField;
 //        shadow.shadowBlurRadius = 10;
 //        afSub.shadow = shadow;
         
-        // Focus ring
+        /// Focus ring
         afSub.focusRingType = NSFocusRingTypeDefault;
         [afSub becomeFirstResponder];
         af.focusRingType = NSFocusRingTypeDefault;
         [af becomeFirstResponder];
     } else {
-        // Shadow
+        /// Shadow
         afSub.shadow = nil;
         afSub.layer.shadowOpacity = 0.0;
         afSub.layer.backgroundColor = nil;
-        // Focus ring
+        /// Focus ring
         [afSub resignFirstResponder];
         
     }

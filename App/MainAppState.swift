@@ -29,6 +29,9 @@ import ReactiveSwift
     @objc var window: ResizingTabWindow? {
         return NSApp.mainWindow as? ResizingTabWindow
     }
+    
+    /// References to specific views
+    ///     Are we sure we need this all these?? Seems a little messy to expose these globally
     @objc var remapTableController: RemapTableController? = nil
     @objc var remapTable: RemapTableView? { remapTableController?.view as? RemapTableView }
     @objc var addViewController: AddViewController? = nil

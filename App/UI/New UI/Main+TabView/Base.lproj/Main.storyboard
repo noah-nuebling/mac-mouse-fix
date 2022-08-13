@@ -435,10 +435,10 @@
             </objects>
             <point key="canvasLocation" x="-1629" y="1488"/>
         </scene>
-        <!--Buttons View Controller-->
+        <!--Button View Controller-->
         <scene sceneID="FLK-3Q-9Mg">
             <objects>
-                <viewController title="2" id="d9S-X9-qM1" userLabel="Buttons View Controller" sceneMemberID="viewController">
+                <viewController title="2" id="d9S-X9-qM1" userLabel="Button View Controller" customClass="ButtonTabController" customModule="Mac_Mouse_Fix" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" misplaced="YES" id="vcE-RL-ceY">
                         <rect key="frame" x="0.0" y="0.0" width="543" height="654"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -470,7 +470,7 @@
                                             <textField verticalHuggingPriority="1000" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="7En-Ho-Dyb">
                                                 <rect key="frame" x="-2" y="12" width="504" height="28"/>
                                                 <textFieldCell key="cell" alignment="center" id="N7H-9j-DIr">
-                                                    <font key="font" metaFont="system" size="11"/>
+                                                    <font key="font" metaFont="smallSystem"/>
                                                     <string key="title">Move the mouse pointer inside the '+' field, then click a mouse button to assign an action to it. 
 You can also Double Click, Click and Drag, and more.</string>
                                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -491,7 +491,7 @@ You can also Double Click, Click and Drag, and more.</string>
                                             <rect key="frame" x="0.0" y="0.0" width="500" height="370"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <tableView identifier="remapTable" verticalHuggingPriority="750" allowsExpansionToolTips="YES" tableStyle="plain" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="39" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" id="JEf-5U-AJf" customClass="RemapTableView">
+                                                <tableView identifier="remapTable" verticalHuggingPriority="750" misplaced="YES" allowsExpansionToolTips="YES" tableStyle="plain" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="39" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JEf-5U-AJf" customClass="RemapTableView">
                                                     <rect key="frame" x="0.0" y="0.0" width="500" height="370"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <size key="intercellSpacing" width="17" height="0.0"/>
@@ -610,7 +610,7 @@ You can also Double Click, Click and Drag, and more.</string>
                                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                                        <size key="minSize" width="189" height="19"/>
+                                                                                        <size key="minSize" width="187" height="19"/>
                                                                                         <size key="maxSize" width="302" height="10000000"/>
                                                                                         <attributedString key="textStorage">
                                                                                             <fragment content="Text go here">
@@ -648,6 +648,7 @@ You can also Double Click, Click and Drag, and more.</string>
                                                 </tableView>
                                             </subviews>
                                             <nil key="backgroundColor"/>
+                                            <edgeInsets key="contentInsets" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
                                         </clipView>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="450" id="Pd9-cJ-ARn"/>
@@ -720,11 +721,29 @@ You can also Double Click, Click and Drag, and more.</string>
                             <constraint firstItem="Qu8-7l-RFn" firstAttribute="top" secondItem="vcE-RL-ceY" secondAttribute="top" constant="20" id="n5j-lc-wYw"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="addField" destination="Pxm-4w-iO7" id="ncr-e0-lmY"/>
+                        <outlet property="addFieldController" destination="d6t-6H-FSq" id="LaT-PW-h0R"/>
+                        <outlet property="clipView" destination="Fkp-gm-SVn" id="Me9-e3-Cuy"/>
+                        <outlet property="optionsButton" destination="am9-X6-JrT" id="yk5-GW-6RT"/>
+                        <outlet property="plusIcon" destination="Jod-JU-J5j" id="7lx-UU-uJJ"/>
+                        <outlet property="restoreDefaultButton" destination="JHB-lg-H8e" id="urx-gI-o4v"/>
+                        <outlet property="scrollView" destination="OGV-uF-BjJ" id="IuP-Tf-IOQ"/>
+                        <outlet property="tableController" destination="sHV-yD-oIc" id="mBf-RE-lbd"/>
+                        <outlet property="tableView" destination="JEf-5U-AJf" id="v4Z-zS-YGu"/>
+                    </connections>
                 </viewController>
                 <customObject id="7uh-Xl-poI" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <customObject id="sHV-yD-oIc" customClass="RemapTableController">
                     <connections>
                         <outlet property="view" destination="JEf-5U-AJf" id="jQD-XG-Ikk"/>
+                    </connections>
+                </customObject>
+                <customObject id="d6t-6H-FSq" customClass="AddViewController">
+                    <connections>
+                        <outlet property="addField" destination="Pxm-4w-iO7" id="8NP-x6-VjU"/>
+                        <outlet property="plusIconView" destination="Jod-JU-J5j" id="1GQ-Zq-okr"/>
+                        <outlet property="view" destination="Pxm-4w-iO7" id="aea-ej-aWI"/>
                     </connections>
                 </customObject>
             </objects>

@@ -41,6 +41,7 @@
 		4F5F3EEE2756DB0A00C350C0 /* RemapsOverrider_old_.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5F3EED2756DB0A00C350C0 /* RemapsOverrider_old_.swift */; };
 		4F5F3EF12756EC0400C350C0 /* RemapSwizzler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5F3EF02756EC0400C350C0 /* RemapSwizzler.m */; };
 		4F5F3EF32756F1DB00C350C0 /* ScrollModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5F3EF22756F1DB00C350C0 /* ScrollModifiers.swift */; };
+		4F6F67A028A8141800C6C40F /* ButtonTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6F679F28A8141800C6C40F /* ButtonTabController.swift */; };
 		4F70ECAE267E442D00325A76 /* PointerSpeedExperiments2.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F70ECAD267E442D00325A76 /* PointerSpeedExperiments2.m */; };
 		4F70ECB7267E810900325A76 /* IOUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F70ECB6267E810900325A76 /* IOUtility.m */; };
 		4F79A7EF26042E2E00076A7E /* ToastNotification.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F79A7EE26042E2E00076A7E /* ToastNotification.xib */; };
@@ -427,13 +428,13 @@
 		4F5F3EF02756EC0400C350C0 /* RemapSwizzler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapSwizzler.m; sourceTree = "<group>"; };
 		4F5F3EF22756F1DB00C350C0 /* ScrollModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollModifiers.swift; sourceTree = "<group>"; };
 		4F616D6027BDCD56004A6A72 /* ScrollConfigTesting.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ScrollConfigTesting.md; sourceTree = "<group>"; };
+		4F6F679F28A8141800C6C40F /* ButtonTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTabController.swift; sourceTree = "<group>"; };
 		4F70ECAC267E442D00325A76 /* PointerSpeedExperiments2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerSpeedExperiments2.h; sourceTree = "<group>"; };
 		4F70ECAD267E442D00325A76 /* PointerSpeedExperiments2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerSpeedExperiments2.m; sourceTree = "<group>"; };
 		4F70ECB5267E810900325A76 /* IOUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOUtility.h; sourceTree = "<group>"; };
 		4F70ECB6267E810900325A76 /* IOUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IOUtility.m; sourceTree = "<group>"; };
 		4F74ADBF28A7E4DE00901D69 /* AddViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddViewController.h; sourceTree = "<group>"; };
 		4F74ADC028A7E4E100901D69 /* AddViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddViewController.m; sourceTree = "<group>"; };
-		4F74ADC128A7E4E300901D69 /* AddView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddView.xib; sourceTree = "<group>"; };
 		4F77F7C728808DAE00847D0E /* PolyFitNumPy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolyFitNumPy.swift; sourceTree = "<group>"; };
 		4F79A7EE26042E2E00076A7E /* ToastNotification.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToastNotification.xib; sourceTree = "<group>"; };
 		4F79A81A2604317200076A7E /* ToastNotificationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToastNotificationController.h; sourceTree = "<group>"; };
@@ -944,6 +945,16 @@
 			path = "AddWindow(old)";
 			sourceTree = "<group>";
 		};
+		4F6F67A128A8188000C6C40F /* ButtonTab */ = {
+			isa = PBXGroup;
+			children = (
+				4FA911E4260D00CB00553CA8 /* RemapTable */,
+				4FD35BFD28A7E49E00D16E5F /* AddView */,
+				4F6F679F28A8141800C6C40F /* ButtonTabController.swift */,
+			);
+			path = ButtonTab;
+			sourceTree = "<group>";
+		};
 		4F74ADC228A7E58500901D69 /* KeyCaptureView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1081,7 +1092,6 @@
 			children = (
 				4FE83F4028A7A66A00C5FC09 /* OldReference */,
 				4F909CF228A0C3D2009349A2 /* Main+TabView */,
-				4FA911E4260D00CB00553CA8 /* RemapTable */,
 				4FF665DC25F2C92700689B77 /* Accessibility */,
 				4F909D0228A0C3D2009349A2 /* UIExtensions */,
 				4F909D0728A0C3D2009349A2 /* AppSpecific */,
@@ -1114,6 +1124,7 @@
 			isa = PBXGroup;
 			children = (
 				4F909CF628A0C3D2009349A2 /* GeneralTabController.swift */,
+				4F6F67A128A8188000C6C40F /* ButtonTab */,
 				4F909CF728A0C3D2009349A2 /* ScrollTabController.swift */,
 				4F909CF828A0C3D2009349A2 /* PointerTabController.swift */,
 			);
@@ -1313,7 +1324,6 @@
 				4F319CBA26252A2D004E5F63 /* ButtonGroupRowView.m */,
 				4FB4F9FC260FDBC800806DDD /* RemapTableUtility.h */,
 				4FB4F9FD260FDBC800806DDD /* RemapTableUtility.m */,
-				4FD35BFD28A7E49E00D16E5F /* AddView */,
 				4F74ADC228A7E58500901D69 /* KeyCaptureView */,
 			);
 			path = RemapTable;
@@ -1407,7 +1417,6 @@
 			children = (
 				4F74ADBF28A7E4DE00901D69 /* AddViewController.h */,
 				4F74ADC028A7E4E100901D69 /* AddViewController.m */,
-				4F74ADC128A7E4E300901D69 /* AddView.xib */,
 			);
 			path = AddView;
 			sourceTree = "<group>";
@@ -2458,6 +2467,7 @@
 				4FF665EE25F2C92700689B77 /* OverridePanel.m in Sources */,
 				4FDECCDE28A3E93100DDEE91 /* IsObjC.m in Sources */,
 				4F909D2228A0C3D2009349A2 /* ScrollTabController.swift in Sources */,
+				4F6F67A028A8141800C6C40F /* ButtonTabController.swift in Sources */,
 				4FF6654E25F2C7B000689B77 /* SharedUtility.m in Sources */,
 				4F8FC13F275DC81900887A0C /* PrefixSwift.swift in Sources */,
 				4F8CE7012617738A00D70A76 /* AppTranslocationManager.m in Sources */,
