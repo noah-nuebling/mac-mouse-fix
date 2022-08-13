@@ -455,6 +455,8 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     return i;
 }
 
+#pragma mark - Create Effect View
+
 /// \discussion We only need the `row` parameter to insert data into the datamodel, which we shouldn't be doing from this function to begin with
 /// \discussion We need the `tableViewEnabled` parameter to enabled / disable contained popUpButtons depending on whether the table view is enabled
 ///         We used to use the function 'disableUI:' in App Delegate to recursively go over all controls and disable them. But disabling controls contained in the table view sometimes didn't work, when they weren't scrolled into view. (It worked when disableUI: was called in response to toggling the "Enabled Mac Mouse Fix" checkbox, but it didn't work when it was called in response to the app launching. I'm not sure why.)
@@ -547,9 +549,15 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     return triggerCell;
 }
 
+#pragma mark - Create Trigger View
+
+
 + (NSTableCellView *)getTriggerCellWithRowDict:(NSDictionary *)rowDict {
     
-    rowDict = rowDict.mutableCopy; /// This is necessary for some of this hacky mess to work –– However, this is not a deep copy, so the _dataModel is still changed when we change some nested object. Watch out!
+    /// Create mutable copy
+    /// Necessary for some of this hacky mess to work –– However, this is not a deep copy, so the `_dataModel` is still changed when we change some nested object. Watch out!
+    
+    rowDict = rowDict.mutableCopy;
     
     #pragma mark --- Get data ---
     

@@ -124,6 +124,8 @@
 		4F9E78C026855BCF002C2309 /* Concurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9E78BE26855BCF002C2309 /* Concurrency.swift */; };
 		4F9E78D02685E30C002C2309 /* GestureScrollSimulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9E78CE2685E30B002C2309 /* GestureScrollSimulator.m */; };
 		4F9E78E3268663B1002C2309 /* ExponentialSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9E78E2268663B1002C2309 /* ExponentialSmoother.swift */; };
+		4FA1FD7D28A8479000D1C8EE /* DeletableTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA1FD7C28A8479000D1C8EE /* DeletableTableCellView.swift */; };
+		4FA1FD7F28A847BF00D1C8EE /* DeletableTableCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FA1FD7E28A847BF00D1C8EE /* DeletableTableCellView.xib */; };
 		4FA40CEF28A0CA0A00499E53 /* ReactiveSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4FA40CEE28A0CA0A00499E53 /* ReactiveSwift */; };
 		4FA40CF228A0CA3900499E53 /* ReactiveCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 4FA40CF128A0CA3900499E53 /* ReactiveCocoa */; };
 		4FA40CF628A0CCC600499E53 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD50266AC10C003935EA /* Math.swift */; };
@@ -549,6 +551,8 @@
 		4F9E78CE2685E30B002C2309 /* GestureScrollSimulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GestureScrollSimulator.m; sourceTree = "<group>"; };
 		4F9E78CF2685E30C002C2309 /* GestureScrollSimulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GestureScrollSimulator.h; sourceTree = "<group>"; };
 		4F9E78E2268663B1002C2309 /* ExponentialSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExponentialSmoother.swift; sourceTree = "<group>"; };
+		4FA1FD7C28A8479000D1C8EE /* DeletableTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletableTableCellView.swift; sourceTree = "<group>"; };
+		4FA1FD7E28A847BF00D1C8EE /* DeletableTableCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeletableTableCellView.xib; sourceTree = "<group>"; };
 		4FA40CF528A0CBA600499E53 /* Mac Mouse Fix-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mac Mouse Fix-Bridging-Header.h"; sourceTree = "<group>"; };
 		4FA83A27268271E200F3A31B /* PointerSpeed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerSpeed.h; sourceTree = "<group>"; };
 		4FA83A28268271E200F3A31B /* PointerSpeed.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerSpeed.m; sourceTree = "<group>"; };
@@ -1319,6 +1323,8 @@
 				4F92A707260F4BF000529D1F /* RemapTableView.m */,
 				4F319CB926252A2D004E5F63 /* ButtonGroupRowView.h */,
 				4F319CBA26252A2D004E5F63 /* ButtonGroupRowView.m */,
+				4FA1FD7C28A8479000D1C8EE /* DeletableTableCellView.swift */,
+				4FA1FD7E28A847BF00D1C8EE /* DeletableTableCellView.xib */,
 				4FB4F9FC260FDBC800806DDD /* RemapTableUtility.h */,
 				4FB4F9FD260FDBC800806DDD /* RemapTableUtility.m */,
 				4F74ADC228A7E58500901D69 /* KeyCaptureView */,
@@ -2239,6 +2245,7 @@
 				4FF665F725F2C92700689B77 /* Assets.xcassets in Resources */,
 				4F909D3928A0C3D2009349A2 /* Localizable.strings in Resources */,
 				4F909D3328A0C3D2009349A2 /* Animating Constraints.md in Resources */,
+				4FA1FD7F28A847BF00D1C8EE /* DeletableTableCellView.xib in Resources */,
 				4FF665EF25F2C92700689B77 /* ScrollOverridePanel.xib in Resources */,
 				4F909D2F28A0C3D2009349A2 /* MyTitlebarAccessoryViewController.xib in Resources */,
 				4F909D3A28A0C3D2009349A2 /* Localization How To.md in Resources */,
@@ -2537,6 +2544,7 @@
 				4F92A72D260F6C7800529D1F /* NSView+Additions.m in Sources */,
 				4F92A73A260F73C600529D1F /* KeyCaptureView.m in Sources */,
 				4FF6654425F2C7B000689B77 /* HelperServices.m in Sources */,
+				4FA1FD7D28A8479000D1C8EE /* DeletableTableCellView.swift in Sources */,
 				4F909D3528A0C3D2009349A2 /* Animate.swift in Sources */,
 				4FA40D0328A0D0BB00499E53 /* PolynomialRegression.m in Sources */,
 				4FA40CFE28A0CCCB00499E53 /* HybridCurves.swift in Sources */,

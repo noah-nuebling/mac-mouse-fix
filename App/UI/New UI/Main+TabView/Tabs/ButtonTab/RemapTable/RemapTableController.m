@@ -504,8 +504,10 @@ static void setBorderColor(RemapTableController *object) {
 #pragma mark - Data source
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+    
     /// Get data for this row
     NSDictionary *rowDict = self.groupedDataModel[row];
+    
     /// Create deep copy of row.
     ///  `getTriggerCellWithRowDict` is written badly and needs to manipulate some values nested in rowDict.
     ///  I we don't deep copy, the changes to rowDict will reflect into self.dataModel and be written to file causing corruption.
@@ -513,17 +515,25 @@ static void setBorderColor(RemapTableController *object) {
     rowDict = (NSDictionary *)[SharedUtility deepCopyOf:rowDict];
     
     if ([rowDict isEqual:RemapTableUtility.buttonGroupRowDict]) {
+        
         MFMouseButtonNumber groupButtonNumber = [RemapTableUtility triggerButtonForRow:self.groupedDataModel[row+1]];
         NSTableCellView *buttonGroupCell = [self.tableView makeViewWithIdentifier:@"buttonGroupCell" owner:self];
 //        NSTextField *groupTextField = buttonGroupCell.textField; // If we link the textField via the textField prop, the tableView will override our text styling, so we're linking to it via the nextKeyView prop
         NSTextField *groupTextField = (NSTextField *)buttonGroupCell.nextKeyView;
         groupTextField.stringValue = stringf(@"  %@", [UIStrings getButtonString:groupButtonNumber]);
         return buttonGroupCell;
-    } else if ([tableColumn.identifier isEqualToString:@"trigger"]) { // The trigger column should display the trigger as well as the modification precondition
+        
+    } else if ([tableColumn.identifier isEqualToString:@"trigger"]) {
+        
+        /// The trigger column should display the trigger as well as the modification precondition
         return [RemapTableTranslator getTriggerCellWithRowDict:rowDict];
+        
     } else if ([tableColumn.identifier isEqualToString:@"effect"]) {
+        
         return [RemapTableTranslator getEffectCellWithRowDict:rowDict row:row tableViewEnabled:tableView.enabled];
+        
     } else {
+        
         @throw [NSException exceptionWithName:@"Unknown column identifier" reason:@"TableView is requesting data for a column with an unknown identifier" userInfo:@{@"requested data for column": tableColumn}];
         return nil;
     }
@@ -553,7 +563,7 @@ static void setBorderColor(RemapTableController *object) {
         rowDict = (NSDictionary *)[SharedUtility deepCopyOf:rowDict];
         NSTableCellView *view = [RemapTableTranslator getTriggerCellWithRowDict:rowDict];
         /// ^ These lines are copied from `tableView:viewForTableColumn:row:`. Should change this cause copied code is bad. Edit: This doesn't seem to be true anymore. I can't see copied text.
-        NSTextField *textField = view.subviews[0];
+        NSTextField *textField = view.textField;
         NSMutableAttributedString *string = textField.effectiveAttributedStringValue.mutableCopy;
         
         CGFloat fieldWidth = textField.bounds.size.width; /// 326 for some reason, in IB it's 323
