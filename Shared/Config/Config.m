@@ -58,7 +58,9 @@
         [_instance setupFSEventStreamCallback];
     } else {
         /// Just load config
-        [_instance loadConfigFromFile];
+//        [_instance loadConfigFromFile];
+        /// Load config
+        [Config handleConfigFileChange];
     }
     
 }
@@ -302,8 +304,8 @@ void Handle_FSEventStreamCallback (ConstFSEventStreamRef streamRef, void *client
     
     _config = configDict;
     
-    /// Send reactive signal
-    [ReactiveConfig.shared reactWithNewConfig:configDict];
+    /// Send reactive signal -> Disabled because callers of this function do that now
+//    [ReactiveConfig.shared reactWithNewConfig:configDict];
     
     /**
      Here's the old `fillConfigFromFile()` loading code from Helper. (This is the loading code for mainApp)
@@ -378,10 +380,20 @@ void Handle_FSEventStreamCallback (ConstFSEventStreamRef streamRef, void *client
     
     /// Replaces the current config file which the helper app is reading from with the backup one and then terminates the helper. (Helper will restart automatically because of the KeepAlive attribute in its user agent config file.)
     
+    assert(SharedUtility.runningMainApp);
+    
+    /// Overwrite `config.plist` with `default_config.plist`
     NSData *defaultData = [NSData dataWithContentsOfURL:_defaultConfigURL];
     [defaultData writeToURL:Objects.configURL atomically:YES];
+    
+    /// Update helper
+    ///     Why aren't we just sending a configFileChanged message?
     [SharedMessagePort sendMessage:@"terminate" withPayload:nil expectingReply:NO];
-    [self loadConfigFromFile];
+    
+    /// Update self (mainApp)
+//    [self loadConfigFromFile];
+    [Config handleConfigFileChange];
+    
 }
 
 - (void)cleanConfig {

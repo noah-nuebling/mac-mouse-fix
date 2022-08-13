@@ -42,7 +42,10 @@ import ReactiveCocoa
     
     /// Objc interface
     @objc func react(newConfig: NSDictionary) {
-        self.input.send(value: newConfig)
+        /// Need to async dispatch, to prevent recursive lock crash inside ReactiveSwift when we try to send this signaly recursively (so when an update to the config causes another update to the config). Just dispatching to main because I don't think the queue matters, and there's not DispatchQueue.current.
+        DispatchQueue.main.async {
+            self.input.send(value: newConfig)
+        }
     }
     
 }
