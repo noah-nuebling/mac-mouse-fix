@@ -157,7 +157,7 @@ Tips:
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <clipView key="contentView" drawsBackground="NO" id="S62-75-wtd">
                                                 <rect key="frame" x="0.0" y="0.0" width="538" height="333"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <autoresizingMask key="autoresizingMask"/>
                                                 <subviews>
                                                     <tableView identifier="remapTable" verticalHuggingPriority="750" allowsExpansionToolTips="YES" tableStyle="plain" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="39" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" id="zJh-jy-oKM" customClass="RemapTableView">
                                                         <rect key="frame" x="0.0" y="0.0" width="538" height="333"/>
@@ -271,14 +271,14 @@ Tips:
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                                                 <clipView key="contentView" focusRingType="exterior" drawsBackground="NO" id="2dn-db-91A">
                                                                                     <rect key="frame" x="0.0" y="0.0" width="211" height="20"/>
-                                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                                    <autoresizingMask key="autoresizingMask"/>
                                                                                     <subviews>
                                                                                         <textView identifier="keyCaptureView" focusRingType="exterior" editable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" verticallyResizable="NO" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="JcL-EN-Rma" customClass="KeyCaptureView">
                                                                                             <rect key="frame" x="0.0" y="0.0" width="206" height="19"/>
                                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                                            <size key="minSize" width="206" height="19"/>
+                                                                                            <size key="minSize" width="208" height="19"/>
                                                                                             <size key="maxSize" width="295" height="10000000"/>
                                                                                             <attributedString key="textStorage">
                                                                                                 <fragment content="Text go here">
@@ -508,7 +508,7 @@ Tips:
                     <attributedString key="attributedTitle"/>
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="rightClickRemoveButton:" target="p2C-Qy-mgp" id="iXn-iT-hRE"/>
+                        <action selector="inRowRemoveButtonAction:" target="p2C-Qy-mgp" id="iXn-iT-hRE"/>
                     </connections>
                 </menuItem>
             </items>
