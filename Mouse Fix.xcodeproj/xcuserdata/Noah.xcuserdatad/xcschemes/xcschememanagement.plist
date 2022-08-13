@@ -42,12 +42,12 @@
 		<key>Mac Mouse Fix Accomplice.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>8</integer>
+			<integer>25</integer>
 		</dict>
 		<key>Mac Mouse Fix Helper.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>9</integer>
+			<integer>26</integer>
 		</dict>
 	</dict>
 </dict>
