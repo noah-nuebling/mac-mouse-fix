@@ -7,6 +7,8 @@
 // --------------------------------------------------------------------------
 //
 
+/// TODO: Merge this into MainAppState.swift
+
 #import "AppState.h"
 
 @implementation AppState

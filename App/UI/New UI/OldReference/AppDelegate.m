@@ -111,10 +111,10 @@
 + (NSWindow *)mainWindow {
     return self.instance.window;
 }
-- (RemapTableController *)remapTableController {
-    RemapTableController *controller = (RemapTableController *)self.remapsTable.delegate;
-    return controller;
-}
+//- (RemapTableController *)remapTableController {
+//    RemapTableController *controller = (RemapTableController *)self.remapsTable.delegate;
+//    return controller;
+//}
 
 #pragma mark - Init and Lifecycle
 

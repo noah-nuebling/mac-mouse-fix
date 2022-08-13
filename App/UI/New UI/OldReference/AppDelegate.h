@@ -15,8 +15,8 @@
 #import "AppState.h"
 
 @interface AppDelegate : NSObject<NSApplicationDelegate, NSWindowDelegate>
-@property (weak, readwrite) IBOutlet RemapTableView *remapsTable; // 
-@property (weak, readonly) RemapTableController *remapTableController;
+//@property (weak, readwrite) IBOutlet RemapTableView *remapsTable; // 
+//@property (weak, readonly) RemapTableController *remapTableController;
 
 + (AppDelegate *)instance;
 

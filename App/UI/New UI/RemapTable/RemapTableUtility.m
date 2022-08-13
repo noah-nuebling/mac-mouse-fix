@@ -11,6 +11,7 @@
 #import "Constants.h"
 #import "AppDelegate.h"
 #import "SharedUtility.h"
+#import "Mac_Mouse_Fix-Swift.h"
 
 @implementation RemapTableUtility
 
@@ -85,23 +86,24 @@
 
 + (NSSet<NSNumber *> *)getCapturedButtons {
     
-    NSArray *dataModel = AppDelegate.instance.remapTableController.dataModel;
     
+    NSArray *dataModel = MainAppState.shared.remapTableController.dataModel;
+
     NSMutableSet<NSNumber *> *capturedButtons = [NSMutableSet set];
-    
+
     for (int b = 1; b <= kMFMaxButtonNumber; b++) {
-        
+
         /// Go through all preconds and corresponding modifications and check if button occurs anywhere
         for (NSDictionary *rowDict in dataModel) {
-            
+
             NSDictionary *modificationPrecondition = rowDict[kMFRemapsKeyModificationPrecondition];
             NSDictionary *trigger = rowDict[kMFRemapsKeyTrigger];
-            
+
             BOOL buttonIsTrigger = NO;
             if ([trigger isKindOfClass:NSDictionary.class]) { // Trigger is type button
                 buttonIsTrigger = [trigger[kMFButtonTriggerKeyButtonNumber] isEqual:@(b)];
             }
-            
+
             if (buttonIsTrigger) {
                 [capturedButtons addObject:@(b)];
                 goto nextButton;

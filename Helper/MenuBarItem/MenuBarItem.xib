@@ -57,7 +57,7 @@
             <rect key="frame" x="0.0" y="0.0" width="239" height="25"/>
             <subviews>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EHs-VF-a5A">
-                    <rect key="frame" x="11" y="7" width="220" height="15"/>
+                    <rect key="frame" x="11" y="6" width="220" height="15"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Enable for..." id="UrY-I2-S82">
                         <font key="font" metaFont="systemSemibold" size="12"/>
                         <color key="textColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -67,9 +67,9 @@
             </subviews>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="EHs-VF-a5A" secondAttribute="trailing" constant="10" id="7U3-se-c2i"/>
-                <constraint firstAttribute="bottom" secondItem="EHs-VF-a5A" secondAttribute="bottom" constant="7" id="7ua-Ho-D8W"/>
+                <constraint firstAttribute="bottom" secondItem="EHs-VF-a5A" secondAttribute="bottom" constant="6" id="7ua-Ho-D8W"/>
                 <constraint firstItem="EHs-VF-a5A" firstAttribute="leading" secondItem="ZfV-T8-S42" secondAttribute="leading" constant="13" id="Bey-Fm-MCu"/>
-                <constraint firstItem="EHs-VF-a5A" firstAttribute="top" secondItem="ZfV-T8-S42" secondAttribute="top" constant="7" id="KmT-ib-eBA"/>
+                <constraint firstItem="EHs-VF-a5A" firstAttribute="top" secondItem="ZfV-T8-S42" secondAttribute="top" constant="6" id="KmT-ib-eBA"/>
             </constraints>
             <point key="canvasLocation" x="-188.5" y="-185.5"/>
         </customView>

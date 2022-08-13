@@ -13,7 +13,7 @@
 #import "AppDelegate.h"
 #import "Constants.h"
 #import "RemapTableController.h"
-#import "AddWindowController.h"
+//#import "AddWindowController.h"
 #import "KeyCaptureView.h"
 #import "WannabePrefixHeader.h"
 #import "Mac_Mouse_Fix-Swift.h"
@@ -73,7 +73,7 @@ static CFDataRef didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDa
     if ([message isEqualToString:@"accessibilityDisabled"]) {
         [(ResizingTabWindowController *)MainAppState.shared.window.windowController handleAccessibilityDisabledMessage]; /// If App delegate is about to remove the acc overlay, stop that
     } else if ([message isEqualToString:@"addModeFeedback"]) {
-        [AddWindowController handleReceivedAddModeFeedbackFromHelperWithPayload:(NSDictionary *)payload];
+        [MainAppState.shared.addViewController handleReceivedAddModeFeedbackFromHelperWithPayload:(NSDictionary *)payload];
     } else if ([message isEqualToString:@"keyCaptureModeFeedback"]) {
         [KeyCaptureView handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload isSystemDefinedEvent:NO];
     } else if ([message isEqualToString:@"keyCaptureModeFeedbackWithSystemEvent"]) {

@@ -32,5 +32,6 @@
 #import "SharedMessagePort.h"
 #import "AuthorizeAccessibilityView.h"
 #import "UIStrings.h"
+#import "AddViewController.h"
 
 #endif /* Mac_Mouse_Fix_Bridging_Header_h */

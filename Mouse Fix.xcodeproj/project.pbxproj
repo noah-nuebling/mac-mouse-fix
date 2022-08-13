@@ -22,7 +22,6 @@
 		4F1D7F4728A4639800253407 /* MenuBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1D7F4628A4639800253407 /* MenuBarItem.swift */; };
 		4F2CC58727B8D2300084AACE /* HybridCurves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CC58627B8D2300084AACE /* HybridCurves.swift */; };
 		4F2CC58927B8DA8B0084AACE /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CC58827B8DA8B0084AACE /* Line.swift */; };
-		4F2F5DA825FB6FFD0037660A /* AddWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F5DA725FB6FFD0037660A /* AddWindowController.m */; };
 		4F2F5DB225FB723D0037660A /* AddWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F2F5DB125FB723D0037660A /* AddWindow.xib */; };
 		4F2FDF332315662500C7BE14 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2FDF322315662500C7BE14 /* main.m */; };
 		4F319CBB26252A2D004E5F63 /* ButtonGroupRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F319CBA26252A2D004E5F63 /* ButtonGroupRowView.m */; };
@@ -432,6 +431,9 @@
 		4F70ECAD267E442D00325A76 /* PointerSpeedExperiments2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerSpeedExperiments2.m; sourceTree = "<group>"; };
 		4F70ECB5267E810900325A76 /* IOUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOUtility.h; sourceTree = "<group>"; };
 		4F70ECB6267E810900325A76 /* IOUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IOUtility.m; sourceTree = "<group>"; };
+		4F74ADBF28A7E4DE00901D69 /* AddViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddViewController.h; sourceTree = "<group>"; };
+		4F74ADC028A7E4E100901D69 /* AddViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddViewController.m; sourceTree = "<group>"; };
+		4F74ADC128A7E4E300901D69 /* AddView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddView.xib; sourceTree = "<group>"; };
 		4F77F7C728808DAE00847D0E /* PolyFitNumPy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolyFitNumPy.swift; sourceTree = "<group>"; };
 		4F79A7EE26042E2E00076A7E /* ToastNotification.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToastNotification.xib; sourceTree = "<group>"; };
 		4F79A81A2604317200076A7E /* ToastNotificationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToastNotificationController.h; sourceTree = "<group>"; };
@@ -932,14 +934,25 @@
 			path = MessagePort;
 			sourceTree = "<group>";
 		};
-		4F46EAA625FB770D0003423A /* AddWindow */ = {
+		4F46EAA625FB770D0003423A /* AddWindow(old) */ = {
 			isa = PBXGroup;
 			children = (
 				4F2F5DA625FB6FFD0037660A /* AddWindowController.h */,
 				4F2F5DA725FB6FFD0037660A /* AddWindowController.m */,
 				4F2F5DB125FB723D0037660A /* AddWindow.xib */,
 			);
-			path = AddWindow;
+			path = "AddWindow(old)";
+			sourceTree = "<group>";
+		};
+		4F74ADC228A7E58500901D69 /* KeyCaptureView */ = {
+			isa = PBXGroup;
+			children = (
+				4F92A71C260F667F00529D1F /* KeyCaptureView.h */,
+				4F92A71D260F667F00529D1F /* KeyCaptureView.m */,
+				4FB4FA1E2611DD6000806DDD /* KeyCaptureScrollView.h */,
+				4FB4FA1F2611DD6000806DDD /* KeyCaptureScrollView.m */,
+			);
+			path = KeyCaptureView;
 			sourceTree = "<group>";
 		};
 		4F77F7C628808D6000847D0E /* PolynomialRegression */ = {
@@ -959,8 +972,6 @@
 			isa = PBXGroup;
 			children = (
 				4F909CF128A0C3D2009349A2 /* New UI */,
-				4FA911E4260D00CB00553CA8 /* RemapTable */,
-				4F46EAA625FB770D0003423A /* AddWindow */,
 				4F2A1FA726042ACB0067691A /* Notifications */,
 				4FF665C625F2C92700689B77 /* Update */,
 				4FF665BF25F2C92700689B77 /* Overrides */,
@@ -1068,7 +1079,9 @@
 		4F909CF128A0C3D2009349A2 /* New UI */ = {
 			isa = PBXGroup;
 			children = (
+				4FE83F4028A7A66A00C5FC09 /* OldReference */,
 				4F909CF228A0C3D2009349A2 /* Main+TabView */,
+				4FA911E4260D00CB00553CA8 /* RemapTable */,
 				4FF665DC25F2C92700689B77 /* Accessibility */,
 				4F909D0228A0C3D2009349A2 /* UIExtensions */,
 				4F909D0728A0C3D2009349A2 /* AppSpecific */,
@@ -1083,7 +1096,6 @@
 		4F909CF228A0C3D2009349A2 /* Main+TabView */ = {
 			isa = PBXGroup;
 			children = (
-				4FE83F4028A7A66A00C5FC09 /* OldReference */,
 				4F909CF528A0C3D2009349A2 /* Tabs */,
 				4F909D0128A0C3D2009349A2 /* ViewController.h */,
 				4F909CFB28A0C3D2009349A2 /* ViewController.m */,
@@ -1295,16 +1307,14 @@
 				4FCA07D525F3129B00BFE209 /* RemapTableController.m */,
 				4F79C2E8260976950067B381 /* RemapTableTranslator.h */,
 				4F79C2E9260976950067B381 /* RemapTableTranslator.m */,
-				4F92A71C260F667F00529D1F /* KeyCaptureView.h */,
-				4F92A71D260F667F00529D1F /* KeyCaptureView.m */,
-				4FB4FA1E2611DD6000806DDD /* KeyCaptureScrollView.h */,
-				4FB4FA1F2611DD6000806DDD /* KeyCaptureScrollView.m */,
-				4FB4F9FC260FDBC800806DDD /* RemapTableUtility.h */,
-				4FB4F9FD260FDBC800806DDD /* RemapTableUtility.m */,
 				4F92A706260F4BF000529D1F /* RemapTableView.h */,
 				4F92A707260F4BF000529D1F /* RemapTableView.m */,
 				4F319CB926252A2D004E5F63 /* ButtonGroupRowView.h */,
 				4F319CBA26252A2D004E5F63 /* ButtonGroupRowView.m */,
+				4FB4F9FC260FDBC800806DDD /* RemapTableUtility.h */,
+				4FB4F9FD260FDBC800806DDD /* RemapTableUtility.m */,
+				4FD35BFD28A7E49E00D16E5F /* AddView */,
+				4F74ADC228A7E58500901D69 /* KeyCaptureView */,
 			);
 			path = RemapTable;
 			sourceTree = "<group>";
@@ -1392,6 +1402,16 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		4FD35BFD28A7E49E00D16E5F /* AddView */ = {
+			isa = PBXGroup;
+			children = (
+				4F74ADBF28A7E4DE00901D69 /* AddViewController.h */,
+				4F74ADC028A7E4E100901D69 /* AddViewController.m */,
+				4F74ADC128A7E4E300901D69 /* AddView.xib */,
+			);
+			path = AddView;
+			sourceTree = "<group>";
+		};
 		4FD66E0C27BBB55200F67559 /* External */ = {
 			isa = PBXGroup;
 			children = (
@@ -1437,6 +1457,7 @@
 		4FE83F4028A7A66A00C5FC09 /* OldReference */ = {
 			isa = PBXGroup;
 			children = (
+				4F46EAA625FB770D0003423A /* AddWindow(old) */,
 				4FF665C525F2C92700689B77 /* AppDelegate.h */,
 				4FF665DB25F2C92700689B77 /* AppDelegate.m */,
 				4FF665CC25F2C92700689B77 /* MoreSheet */,
@@ -2476,7 +2497,6 @@
 				4F909D3828A0C3D2009349A2 /* ReactiveFlags.swift in Sources */,
 				4F909D2B28A0C3D2009349A2 /* NSPopUpButton+Extensions.swift in Sources */,
 				4F7F47D128A5B86900290BBD /* Config.m in Sources */,
-				4F2F5DA825FB6FFD0037660A /* AddWindowController.m in Sources */,
 				4FF6655025F2C7B000689B77 /* NSArray+Additions.m in Sources */,
 				4F909D2328A0C3D2009349A2 /* PointerTabController.swift in Sources */,
 				4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */,

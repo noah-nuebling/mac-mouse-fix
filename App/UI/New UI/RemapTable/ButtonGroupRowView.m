@@ -9,6 +9,7 @@
 
 #import "ButtonGroupRowView.h"
 #import "AppDelegate.h"
+#import "Mac_Mouse_Fix-Swift.h"
 
 @implementation ButtonGroupRowView
 
@@ -71,7 +72,7 @@
         if (@available(macOS 10.14, *)) {
             gridColor = NSColor.separatorColor;
         } else {
-            gridColor = AppDelegate.instance.remapsTable.gridColor; /// Should be same as NSColor.gridColor
+            gridColor = MainAppState.shared.remapTable.gridColor; /// Should be same as NSColor.gridColor
         }
         NSBezierPath *borderPath = [NSBezierPath bezierPathWithRect:borderRect];
         borderPath.lineWidth = 2;

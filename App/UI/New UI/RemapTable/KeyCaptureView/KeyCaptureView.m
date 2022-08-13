@@ -89,11 +89,11 @@
     
     /// Find keyCaptureField instance in remapsTable
     
-    NSTableView *remapsTable = AppDelegate.instance.remapsTable;
+    NSTableView *remapsTable = MainAppState.shared.remapTable;
     NSInteger effectColumn = [remapsTable columnWithIdentifier:@"effect"];
     NSMutableIndexSet *indexes = [NSMutableIndexSet new];
     for (int r = 0; r < remapsTable.numberOfRows; r++) {
-        NSView *effectView = [AppDelegate.instance.remapsTable viewAtColumn:effectColumn row:r makeIfNecessary:NO];
+        NSView *effectView = [MainAppState.shared.remapTable viewAtColumn:effectColumn row:r makeIfNecessary:NO];
         if ([effectView.identifier isEqual:@"keyCaptureCell"]) {
             [indexes addIndex:r];
         }
@@ -101,7 +101,7 @@
     assert(indexes.count <= 1);
     if (indexes.count == 0) return;
     
-    NSTableCellView *keyCaptureCell = [AppDelegate.instance.remapsTable viewAtColumn:effectColumn row:indexes.firstIndex makeIfNecessary:NO];
+    NSTableCellView *keyCaptureCell = [MainAppState.shared.remapTable viewAtColumn:effectColumn row:indexes.firstIndex makeIfNecessary:NO];
     KeyCaptureView *keyCaptureView = (KeyCaptureView *)[keyCaptureCell nestedSubviewsWithIdentifier:@"keyCaptureView"].firstObject;
     
     /// Send payload to found instance

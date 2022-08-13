@@ -13,7 +13,7 @@
 #import "Utility_App.h"
 #import "NSArray+Additions.h"
 #import "SharedUtility.h"
-#import "AddWindowController.h"
+//#import "AddWindowController.h"
 #import <Cocoa/Cocoa.h>
 #import "SharedUtility.h"
 #import "NSAttributedString+Additions.h"
@@ -32,7 +32,7 @@
 
 @interface RemapTableController ()
 @property NSTableView *tableView;
-@property (weak) IBOutlet MFSegmentedControl *addRemoveControl;
+@property (weak) IBOutlet MFSegmentedControl *addRemoveControl; /// TODO: Remove addRemoveControl
 
 @end
 
@@ -214,6 +214,17 @@
 }
 
 #pragma mark Lifecycle
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        /// Store self so other objects can access
+        assert(MainAppState.shared.remapTableController == nil); /// Should only be instantiated once.
+        MainAppState.shared.remapTableController = self;
+    }
+    return self;
+}
 
 - (void)awakeFromNib {
     /// Force Autohiding scrollers - to keep layout consistent (doesn't work)
@@ -415,7 +426,7 @@ static void setBorderColor(RemapTableController *object) {
 }
 
 - (void)addButtonAction {
-    [AddWindowController begin];
+//    [AddWindowController begin];
 }
 
 #pragma mark Interface

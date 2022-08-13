@@ -10,6 +10,32 @@
 import Cocoa
 import ReactiveSwift
 
+// MARK: Main State
+
+@objc class MainAppState: NSObject {
+    
+    /// Declare singleton instance
+    @objc static let shared = MainAppState()
+
+    /// References
+    
+    @objc var tabViewController: TabViewController {
+        let controller = NSApp.mainWindow?.contentViewController as! TabViewController
+        return controller
+    }
+    @objc var appDelegate: AppDelegate {
+        return NSApp.delegate as! AppDelegate
+    }
+    @objc var window: ResizingTabWindow? {
+        return NSApp.mainWindow as? ResizingTabWindow
+    }
+    @objc var remapTableController: RemapTableController? = nil
+    @objc var remapTable: RemapTableView? { remapTableController?.view as? RemapTableView }
+    @objc var addViewController: AddViewController? = nil
+}
+
+// MARK: Helper enabled state
+
 @objc class EnabledState: NSObject, BindingSource {
     
     /// Binding source protocol
@@ -53,23 +79,4 @@ import ReactiveSwift
         observer.send(value: true)
     }
     
-}
-
-@objc class MainAppState: NSObject {
-    
-    /// Declare singleton instance
-    @objc static let shared = MainAppState()
-
-    /// References
-    
-    @objc var tabViewController: TabViewController {
-        let controller = NSApp.mainWindow?.contentViewController as! TabViewController
-        return controller
-    }
-    @objc var appDelegate: AppDelegate {
-        return NSApp.delegate as! AppDelegate
-    }
-    @objc var window: ResizingTabWindow? {
-        return NSApp.mainWindow as? ResizingTabWindow
-    }
 }

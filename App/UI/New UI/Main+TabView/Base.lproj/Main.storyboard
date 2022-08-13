@@ -624,6 +624,10 @@
                                                             </prototypeCellViews>
                                                         </tableColumn>
                                                     </tableColumns>
+                                                    <connections>
+                                                        <outlet property="dataSource" destination="sHV-yD-oIc" id="dRh-LR-NFk"/>
+                                                        <outlet property="delegate" destination="sHV-yD-oIc" id="c9M-kd-lkD"/>
+                                                    </connections>
                                                 </tableView>
                                             </subviews>
                                             <nil key="backgroundColor"/>
@@ -655,6 +659,11 @@
                     </view>
                 </viewController>
                 <customObject id="7uh-Xl-poI" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <customObject id="sHV-yD-oIc" customClass="RemapTableController">
+                    <connections>
+                        <outlet property="view" destination="JEf-5U-AJf" id="jQD-XG-Ikk"/>
+                    </connections>
+                </customObject>
             </objects>
             <point key="canvasLocation" x="-835" y="1577.5"/>
         </scene>
