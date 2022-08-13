@@ -11,9 +11,9 @@ import Cocoa
 
 class CoolNSTextField: NSTextField {
     
-    // Mark: Custom init
+    // MARK: Custom init
     
-    convenience init(hintWithString hintString: String) {
+    convenience init(hintWithString hintString: String) { /// Wny is this not in a NSTextField extension?
         self.init(labelWithString: hintString)
         self.textColor = .secondaryLabelColor
         self.font = .systemFont(ofSize: NSFont.smallSystemFontSize)

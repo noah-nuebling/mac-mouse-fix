@@ -25,13 +25,13 @@
                 <menuItem title="&lt;App Compat title&gt;" hidden="YES" id="MGH-3e-48B">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
-                <menuItem title="Scroll Enhancements" state="on" indentationLevel="1" id="KQ8-8Q-u6c">
+                <menuItem title="Scrolling" state="on" indentationLevel="1" id="KQ8-8Q-u6c">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="disableScroll:" target="-2" id="RgH-C3-jva"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Mouse Button Remaps" state="on" indentationLevel="1" id="IsJ-q8-i95">
+                <menuItem title="Mouse Buttons" state="on" indentationLevel="1" id="IsJ-q8-i95">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="disableButtons:" target="-2" id="wHN-dY-Bub"/>
@@ -55,7 +55,7 @@
             <subviews>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EHs-VF-a5A">
                     <rect key="frame" x="11" y="7" width="220" height="14"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Quick Settings" id="UrY-I2-S82">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Enable for..." id="UrY-I2-S82">
                         <font key="font" metaFont="systemSemibold" size="11"/>
                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
