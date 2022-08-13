@@ -433,8 +433,6 @@
 		4F70ECAD267E442D00325A76 /* PointerSpeedExperiments2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerSpeedExperiments2.m; sourceTree = "<group>"; };
 		4F70ECB5267E810900325A76 /* IOUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOUtility.h; sourceTree = "<group>"; };
 		4F70ECB6267E810900325A76 /* IOUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IOUtility.m; sourceTree = "<group>"; };
-		4F74ADBF28A7E4DE00901D69 /* AddViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddViewController.h; sourceTree = "<group>"; };
-		4F74ADC028A7E4E100901D69 /* AddViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddViewController.m; sourceTree = "<group>"; };
 		4F77F7C728808DAE00847D0E /* PolyFitNumPy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolyFitNumPy.swift; sourceTree = "<group>"; };
 		4F79A7EE26042E2E00076A7E /* ToastNotification.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToastNotification.xib; sourceTree = "<group>"; };
 		4F79A81A2604317200076A7E /* ToastNotificationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToastNotificationController.h; sourceTree = "<group>"; };
@@ -949,7 +947,6 @@
 			isa = PBXGroup;
 			children = (
 				4FA911E4260D00CB00553CA8 /* RemapTable */,
-				4FD35BFD28A7E49E00D16E5F /* AddView */,
 				4F6F679F28A8141800C6C40F /* ButtonTabController.swift */,
 			);
 			path = ButtonTab;
@@ -1410,15 +1407,6 @@
 				4F94F60B25E5EC2800D9F24A /* Mac Mouse FixUITests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		4FD35BFD28A7E49E00D16E5F /* AddView */ = {
-			isa = PBXGroup;
-			children = (
-				4F74ADBF28A7E4DE00901D69 /* AddViewController.h */,
-				4F74ADC028A7E4E100901D69 /* AddViewController.m */,
-			);
-			path = AddView;
 			sourceTree = "<group>";
 		};
 		4FD66E0C27BBB55200F67559 /* External */ = {

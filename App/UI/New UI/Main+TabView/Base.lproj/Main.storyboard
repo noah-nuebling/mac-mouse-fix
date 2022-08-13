@@ -726,7 +726,7 @@ You can also Double Click, Click and Drag, and more.</string>
                         <outlet property="addFieldController" destination="d6t-6H-FSq" id="LaT-PW-h0R"/>
                         <outlet property="clipView" destination="Fkp-gm-SVn" id="Me9-e3-Cuy"/>
                         <outlet property="optionsButton" destination="am9-X6-JrT" id="yk5-GW-6RT"/>
-                        <outlet property="plusIcon" destination="Jod-JU-J5j" id="7lx-UU-uJJ"/>
+                        <outlet property="plusIconView" destination="Jod-JU-J5j" id="7lx-UU-uJJ"/>
                         <outlet property="restoreDefaultButton" destination="JHB-lg-H8e" id="urx-gI-o4v"/>
                         <outlet property="scrollView" destination="OGV-uF-BjJ" id="IuP-Tf-IOQ"/>
                         <outlet property="tableController" destination="sHV-yD-oIc" id="mBf-RE-lbd"/>
@@ -734,16 +734,16 @@ You can also Double Click, Click and Drag, and more.</string>
                     </connections>
                 </viewController>
                 <customObject id="7uh-Xl-poI" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-                <customObject id="sHV-yD-oIc" customClass="RemapTableController">
-                    <connections>
-                        <outlet property="view" destination="JEf-5U-AJf" id="jQD-XG-Ikk"/>
-                    </connections>
-                </customObject>
                 <customObject id="d6t-6H-FSq" customClass="AddViewController">
                     <connections>
                         <outlet property="addField" destination="Pxm-4w-iO7" id="8NP-x6-VjU"/>
                         <outlet property="plusIconView" destination="Jod-JU-J5j" id="1GQ-Zq-okr"/>
                         <outlet property="view" destination="Pxm-4w-iO7" id="aea-ej-aWI"/>
+                    </connections>
+                </customObject>
+                <customObject id="sHV-yD-oIc" customClass="RemapTableController">
+                    <connections>
+                        <outlet property="view" destination="JEf-5U-AJf" id="jQD-XG-Ikk"/>
                     </connections>
                 </customObject>
             </objects>
