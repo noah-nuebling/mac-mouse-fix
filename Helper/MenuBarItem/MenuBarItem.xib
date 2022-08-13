@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21219"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -25,16 +26,18 @@
                 <menuItem title="&lt;App Compat title&gt;" hidden="YES" id="MGH-3e-48B">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
-                <menuItem title="Scrolling" state="on" indentationLevel="1" id="KQ8-8Q-u6c">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="disableScroll:" target="-2" id="RgH-C3-jva"/>
-                    </connections>
-                </menuItem>
-                <menuItem title="Mouse Buttons" state="on" indentationLevel="1" id="IsJ-q8-i95">
+                <menuItem title="Buttons" state="on" indentationLevel="1" id="IsJ-q8-i95">
+                    <imageReference key="image" image="rectangle" catalog="system" symbolScale="medium" variableValue="1"/>
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="disableButtons:" target="-2" id="wHN-dY-Bub"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Scrolling" state="on" indentationLevel="1" id="KQ8-8Q-u6c">
+                    <imageReference key="image" image="arrow.up.and.down" catalog="system" symbolScale="default"/>
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="disableScroll:" target="-2" id="RgH-C3-jva"/>
                     </connections>
                 </menuItem>
                 <menuItem title="&lt;App Compat hint&gt;" id="JFP-3w-VSr">
@@ -54,10 +57,10 @@
             <rect key="frame" x="0.0" y="0.0" width="239" height="25"/>
             <subviews>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EHs-VF-a5A">
-                    <rect key="frame" x="11" y="7" width="220" height="14"/>
+                    <rect key="frame" x="11" y="7" width="220" height="15"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Enable for..." id="UrY-I2-S82">
-                        <font key="font" metaFont="systemSemibold" size="11"/>
-                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                        <font key="font" metaFont="systemSemibold" size="12"/>
+                        <color key="textColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
@@ -94,4 +97,8 @@
             <point key="canvasLocation" x="108.5" y="-183"/>
         </customView>
     </objects>
+    <resources>
+        <image name="arrow.up.and.down" catalog="system" width="11" height="15"/>
+        <image name="rectangle" catalog="system" width="18" height="14"/>
+    </resources>
 </document>

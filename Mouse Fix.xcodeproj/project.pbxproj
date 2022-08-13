@@ -1083,10 +1083,7 @@
 		4F909CF228A0C3D2009349A2 /* Main+TabView */ = {
 			isa = PBXGroup;
 			children = (
-				4FF665C525F2C92700689B77 /* AppDelegate.h */,
-				4FF665DB25F2C92700689B77 /* AppDelegate.m */,
-				4FF665CC25F2C92700689B77 /* MoreSheet */,
-				4FF665D925F2C92700689B77 /* MouseFix.xib */,
+				4FE83F4028A7A66A00C5FC09 /* OldReference */,
 				4F909CF528A0C3D2009349A2 /* Tabs */,
 				4F909D0128A0C3D2009349A2 /* ViewController.h */,
 				4F909CFB28A0C3D2009349A2 /* ViewController.m */,
@@ -1435,6 +1432,17 @@
 				4FDECCD828A3A37800DDEE91 /* README.md */,
 			);
 			path = Frameworks;
+			sourceTree = "<group>";
+		};
+		4FE83F4028A7A66A00C5FC09 /* OldReference */ = {
+			isa = PBXGroup;
+			children = (
+				4FF665C525F2C92700689B77 /* AppDelegate.h */,
+				4FF665DB25F2C92700689B77 /* AppDelegate.m */,
+				4FF665CC25F2C92700689B77 /* MoreSheet */,
+				4FF665D925F2C92700689B77 /* MouseFix.xib */,
+			);
+			path = OldReference;
 			sourceTree = "<group>";
 		};
 		4FEB6616279376C200E6A111 /* Notes */ = {
