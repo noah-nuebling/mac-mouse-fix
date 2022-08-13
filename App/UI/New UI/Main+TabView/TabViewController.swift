@@ -266,11 +266,15 @@ class TabViewController: NSTabViewController {
         var size: NSSize? = tabViewSizes[tabViewItem]
         if size == nil {
             let view = tabViewItem.view
-//            view?.superview?.layoutSubtreeIfNeeded()
+            view?.needsLayout = true
+            view?.layoutSubtreeIfNeeded() /// Seems like it's not needed sure if needed
             size = view?.frame.size
         }
         
-        self.adjustConstraintsForWindowResizing(tabViewItem)
+        self.adjustConstraintsForWindowResizing(tabViewItem, size!)
+        
+        tabViewItem.view?.needsLayout = true
+        tabViewItem.view?.layoutSubtreeIfNeeded()
         
         /* let tabView = self.tabView */ /// This is sometimes nil when switching to general tab. Weird.
         let window = self.window /* tabView.window */
@@ -310,9 +314,9 @@ class TabViewController: NSTabViewController {
             /// Right edge
             if newFrame.maxX > s.maxX && oldFrame.maxX <= s.maxX { newFrame.origin.x = s.maxX - newFrame.width }
             /// Bottom edge
-//                if newFrame.minY < s.minY && oldFrame.minY >= s.minY { newFrame.origin.y = s.minY }
+            if newFrame.minY < s.minY /*&& oldFrame.minY >= s.minY*/ { newFrame.origin.y = s.minY }
             /// Top edge
-//                if newFrame.maxY > s.maxY && oldFrame.maxY <= s.maxY { newFrame.origin.y = s.maxY - newFrame.height }
+//            if newFrame.maxY > s.maxY && oldFrame.maxY <= s.maxY { newFrame.origin.y = s.maxY - newFrame.height }
         }
         
         ///
@@ -383,12 +387,56 @@ class TabViewController: NSTabViewController {
         }
     }
     
-    fileprivate func adjustConstraintsForWindowResizing(_ tabViewItem: NSTabViewItem) {
+    fileprivate func adjustConstraintsForWindowResizing(_ tabViewItem: NSTabViewItem, _ targetSize: NSSize) {
         
         /// Temporarily change constraints so that the window resizing animation will work smoothly
         ///     Constraints can force a certain window size which will interfere with the window resizing animation we want to generate in resizeWindowToFit()
         
-        /// Deactivate edge constraints
+        ///
+        /// Insert new constraints
+        ///
+        
+        injectedConstraints = []
+        
+        /// Add in size constraints
+        ///     So it doesn't do weird stuff
+        ///     This is a little messy. And not sure if should be done here.
+        
+        let contentView = tabViewItem.view!
+        let contentWidth = contentView.widthAnchor.constraint(equalToConstant: targetSize.width)
+        let contentHeigth = contentView.heightAnchor.constraint(equalToConstant: targetSize.height)
+        contentWidth.isActive = true
+        contentHeigth.isActive = true
+        contentView.needsLayout = true
+        contentView.layoutSubtreeIfNeeded()
+        
+        let wrapperView = contentView.subviews[0]
+        let wrapWidth = wrapperView.widthAnchor.constraint(equalToConstant: wrapperView.frame.width)
+        let wrapHeight = wrapperView.heightAnchor.constraint(equalToConstant: wrapperView.frame.height)
+        
+        contentWidth.isActive = false
+        contentHeigth.isActive = false
+        wrapWidth.isActive = true
+        wrapHeight.isActive = true
+        
+        injectedConstraints.append(contentsOf: [wrapWidth, wrapHeight])
+        
+        /// Add in centering constraints
+        ///     For nice animation
+        
+        let centerXOffset = wrapperView.frame.midX - contentView.bounds.midX
+        let centerYOffset = wrapperView.frame.midY - contentView.bounds.midY
+        let centerX = wrapperView.centerXAnchor.constraint(equalTo: wrapperView.superview!.centerXAnchor, constant: -centerXOffset)
+        let centerY = wrapperView.centerYAnchor.constraint(equalTo: wrapperView.superview!.centerYAnchor, constant: -centerYOffset)
+        centerX.isActive = true
+        centerY.isActive = true
+        
+        /// Store injected constraints
+        injectedConstraints.append(contentsOf: [centerX, centerY])
+        
+        ///
+        /// Deactivate constraints
+        ///
         
         deactivatedConstraints = []
         for constraint in tabViewItem.view!.constraints {
@@ -398,17 +446,6 @@ class TabViewController: NSTabViewController {
                 deactivatedConstraints.append(constraint)
             }
         }
-        
-        /// Add in centering constraints
-        ///     For nice animation
-        
-        let wrapperView = tabViewItem.view!.subviews[0]
-        let centerX = wrapperView.centerXAnchor.constraint(equalTo: wrapperView.superview!.centerXAnchor)
-        let centerY = wrapperView.centerYAnchor.constraint(equalTo: wrapperView.superview!.centerYAnchor)
-        centerX.isActive = true
-        centerY.isActive = true
-        
-        injectedConstraints = [centerX, centerY]
     }
     
     fileprivate func isConstraintToRemove(_ constraint: NSLayoutConstraint, target targetTabViewItem: NSTabViewItem) -> Bool {

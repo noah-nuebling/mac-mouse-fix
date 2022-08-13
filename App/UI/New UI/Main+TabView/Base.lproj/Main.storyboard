@@ -433,7 +433,7 @@
                 </viewController>
                 <customObject id="Xyx-3e-X6a" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1629" y="1488"/>
+            <point key="canvasLocation" x="-1629.5" y="1487.5"/>
         </scene>
         <!--Button View Controller-->
         <scene sceneID="FLK-3Q-9Mg">
@@ -444,7 +444,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <stackView distribution="fill" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qu8-7l-RFn">
-                                <rect key="frame" x="23" y="0.0" width="500" height="636"/>
+                                <rect key="frame" x="30" y="0.0" width="500" height="636"/>
                                 <subviews>
                                     <box identifier="addField" borderType="bezel" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Pxm-4w-iO7" userLabel="AddBox">
                                         <rect key="frame" x="-3" y="462" width="506" height="176"/>
@@ -715,9 +715,9 @@ You can also Double Click, Click and Drag, and more.</string>
                             </stackView>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="Qu8-7l-RFn" secondAttribute="trailing" constant="23" id="UQy-95-moM"/>
+                            <constraint firstAttribute="trailing" secondItem="Qu8-7l-RFn" secondAttribute="trailing" constant="30" id="UQy-95-moM"/>
                             <constraint firstAttribute="bottom" secondItem="Qu8-7l-RFn" secondAttribute="bottom" id="WDc-aN-J0h"/>
-                            <constraint firstItem="Qu8-7l-RFn" firstAttribute="leading" secondItem="vcE-RL-ceY" secondAttribute="leading" constant="23" id="mgv-je-3M7"/>
+                            <constraint firstItem="Qu8-7l-RFn" firstAttribute="leading" secondItem="vcE-RL-ceY" secondAttribute="leading" constant="30" id="mgv-je-3M7"/>
                             <constraint firstItem="Qu8-7l-RFn" firstAttribute="top" secondItem="vcE-RL-ceY" secondAttribute="top" constant="20" id="n5j-lc-wYw"/>
                         </constraints>
                     </view>
