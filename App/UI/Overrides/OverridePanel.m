@@ -215,12 +215,25 @@ NSDictionary *_columnIdentifierToKeyPath;
             NSImage *appIcon;
             NSString *appName;
             if (![Utility_App appIsInstalled:bundleID]) {
-                // User should never see this. We don't want to load uninstalled apps into _tableViewDataModel to begin with.
+                /// User should never see this. We don't want to load uninstalled apps into _tableViewDataModel to begin with.
                 appIcon = [NSImage imageNamed:NSImageNameStopProgressFreestandingTemplate];
                 appName = [NSString stringWithFormat:@"Couldn't find app: %@", bundleID];
             } else {
                 appIcon = [NSWorkspace.sharedWorkspace iconForFile:appPath];
                 appName = [[NSBundle bundleWithPath:appPath] objectForInfoDictionaryKey:@"CFBundleName"];
+                
+                /// Fallbacks
+                ///     Starcraft has no name. See https://github.com/noah-nuebling/mac-mouse-fix/issues/241
+                if (appName == nil) {
+                    if (appPath != nil) {
+                        appName = [[NSURL fileURLWithPath:appPath] URLByDeletingPathExtension].lastPathComponent;
+                    }
+                }
+                if (appName == nil) {
+                    if (bundleID != nil) {
+                        appName = bundleID;
+                    }
+                }
             }
             
             appCell.textField.stringValue = appName;

@@ -7,6 +7,19 @@
 // --------------------------------------------------------------------------
 //
 
+/// Notes on availability
+///     HelperServices uses a new API for registering the Helper as UserAgent under macOS 13 Ventura. It's called `SMAppService`. It's not available pre-Ventura. To handle this we use Apple's availability APIs.
+///     Unfortunately there have been problems with the availability APIs. See https://github.com/noah-nuebling/mac-mouse-fix/issues/241.
+///     Below you can find my notes / stream of consciousness on trying to figure this out.
+///
+///     __General confusion__: Apple uses `API_AVAILABLE()` on ObjC and Swift interfaces . But we want to mark a static C function implementation for availability. This isn't documented anywhere I could find. But it does successfully give a warning when you try to call the C function outside an `if @available` block, and it let's you use `SMAppService` inside the marked function without an `if @available` block. So it really lets you think that it's not running the code pre Ventura and that everything is fine. Yet, apparently it tries to link the unavailable code on older versions and then crashes.
+///     Sidenote: Not sure where the underscore variant `__API_AVAILABLE` comes from.
+///     __Summary of Problem__: Users that don't use Ventura have experienced crashes that happen while trying to link `SMAppService`. (Which isn't available pre-Ventura).
+///     __Ideas for what's the problem__: 1. `__` underscores variant of the macro shouldn't be used and breaks things. 2. Availability macro doesn't work properly on C functions. 3. We STILL need to wrap code inside the `API_AVAILABLE`d function with `if @available` blocks. (Even though Xcode gives no warning against this)
+///     -> It's hard to know because I can't test older versions right now.
+///     Edit: Looked at `__API_AVAILABLE` and `API_AVAILABLE`, and I think they are probably identical.
+///     __Game plan__: Fix all the possible reasons we could come up with: 1. Use non-underscore variant. 2. Make all the unavailable function into objc methods (and make sure they are marked in the header too, if they appear there) 3. wrap everything in `if @available` blocks. Bing bam boom.
+
 #import <AppKit/AppKit.h>
 #import "HelperServices.h"
 #import "Constants.h"
@@ -21,7 +34,7 @@
 
 + (BOOL)helperIsActive {
     if (@available(macOS 13, *)) {
-        return helperIsActive_SM();
+        return [self helperIsActive_SM];
     } else {
         return helperIsActive_PList();
     }
@@ -41,7 +54,7 @@
         [self removeHelperFromLaunchd];
         removeLaunchdPlist();
         /// Call core
-        enableHelper_SM(enable, error);
+        [self enableHelper_SM:enable error:error];
     } else {
         enableHelper_PList(enable);
     }
@@ -52,15 +65,37 @@
 #pragma mark - Core
 
 
-static BOOL helperIsActive_SM() __API_AVAILABLE(macos(13)) {
-    SMAppService *service = [SMAppService agentServiceWithPlistName:@"sm_launchd.plist"];
-    BOOL result = service.status == SMAppServiceStatusEnabled;
-    if (result) {
-        DDLogDebug(@"Helper found to be active");
+
+/// helperIsActive_SM from version-3. Merge updates from version-2 and git said that "both modified". Doesn't look like both modified. But I'll leave this here for reference in case something breaks.
+// static BOOL helperIsActive_SM() __API_AVAILABLE(macos(13)) {
+    // SMAppService *service = [SMAppService agentServiceWithPlistName:@"sm_launchd.plist"];
+    // BOOL result = service.status == SMAppServiceStatusEnabled;
+    // if (result) {
+    //     DDLogDebug(@"Helper found to be active");
+    // } else {
+    //     DDLogDebug(@"Helper found to be inactive. Status: %ld", (long)service.status);
+    // }
+    // return result;
+
++ (BOOL)helperIsActive_SM API_AVAILABLE(macos(13)) {
+    
+    if (@available(macOS 13, *)) {
+        
+        SMAppService *service = [SMAppService agentServiceWithPlistName:@"sm_launchd.plist"];
+        BOOL result = service.status == SMAppServiceStatusEnabled;
+#if DEBUG
+        if (result) {
+            NSLog(@"Helper found to be active");
+        } else {
+            NSLog(@"Helper found to be inactive. Status: %ld", (long)service.status);
+        }
+#endif
+        return result;
     } else {
-        DDLogDebug(@"Helper found to be inactive. Status: %ld", (long)service.status);
+        /// Not running macOS 13
+        ///     This can never happen. Just crashing here so the compiler doesn't complain about missing returns.
+        exit(1);
     }
-    return result;
 }
 
 static BOOL helperIsActive_PList() {
@@ -91,35 +126,38 @@ static BOOL helperIsActive_PList() {
     }
 }
 
-static void enableHelper_SM(BOOL enable, NSError * _Nullable * _Nullable error) __API_AVAILABLE(macos(13)) {
++ (void) enableHelper_SM:(BOOL)enable error:(NSError * _Nullable * _Nullable)error API_AVAILABLE(macos(13)) {
     
     /// TODO: Dispatch this stuff to another thread. Xcode analysis on `registerAndReturnError:` says "This method should not be called on the main thread as it may lead to UI unresponsiveness"
     
-    /// Create error so that `*error` doesn't crash
-    if (error == NULL) {
-        NSError *e1 = [[NSError alloc] init];
-        NSError *__autoreleasing e2 = e1;
-        error = &e2;
-    }
-    
-    /// Do the core (un)registering
-    ///     `loginItemServiceWithIdentifier:` would be easiest but it breaks with multiple copies of the app installed.
-    SMAppService *service = [SMAppService agentServiceWithPlistName:@"sm_launchd.plist"];
-    if (enable) {
-        BOOL success = [service registerAndReturnError:error];
-        if (!success){
-            DDLogError(@"Failed to register Helper with error: %@", *error);
-        } else {
-            DDLogInfo(@"Registered Helper!");
+    if (@available(macOS 13, *)) {
+
+        /// Create error so that `*error` doesn't crash
+        if (error == NULL) {
+            NSError *e1 = [[NSError alloc] init];
+            NSError *__autoreleasing e2 = e1;
+            error = &e2;
         }
-    } else {
-        BOOL success = [service unregisterAndReturnError:error];
-        if (!success){
-            DDLogError(@"Failed to UNregister Helper with error: %@", *error);
+        
+        /// Do the core (un)registering
+        ///     `loginItemServiceWithIdentifier:` would be easiest but it breaks with multiple copies of the app installed.
+        SMAppService *service = [SMAppService agentServiceWithPlistName:@"sm_launchd.plist"];
+        if (enable) {
+            BOOL success = [service registerAndReturnError:error];
+            if (!success){
+                NSLog(@"Failed to register Helper with error: %@", *error);
+            } else {
+                NSLog(@"Registered Helper!");
+            }
         } else {
-            DDLogInfo(@"Unregistered Helper.");
+            BOOL success = [service unregisterAndReturnError:error];
+            if (!success){
+                NSLog(@"Failed to UNregister Helper with error: %@", *error);
+            } else {
+                NSLog(@"Unregistered Helper.");
+            }
         }
-    }
+    } /// End `if @available`
 }
 
 static void enableHelper_PList(BOOL enable) {
