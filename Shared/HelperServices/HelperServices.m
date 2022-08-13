@@ -109,9 +109,17 @@ static BOOL helperIsActive_PList() {
     }
 }
 
-+ (void) enableHelper_SM:(BOOL)enable error:(NSError * _Nullable * _Nullable)error API_AVAILABLE(macos(13)) {
++ (void)enableHelper_SM:(BOOL)enable error:(NSError * _Nullable * _Nullable)error API_AVAILABLE(macos(13)) {
+    /// TODO: Don't call `registerAndReturnError:`. Xcode complains about it.
     
     if (@available(macOS 13, *)) {
+        
+        /// Create error so that `*error` doesn't crash
+        if (error == NULL) {
+            NSError *e1 = [[NSError alloc] init];
+            NSError *__autoreleasing e2 = e1;
+            error = &e2;
+        }
         
         /// Do the core (un)registering
         ///     `loginItemServiceWithIdentifier:` would be easiest but it breaks with multiple copies of the app installed.
