@@ -153,11 +153,19 @@ import CocoaLumberjackSwift
             plusIconViewCopy?.alphaValue = 0.0
             plusIconViewCopy?.contentTintColor = .controlAccentColor
             NSAnimationContext.runAnimationGroup { ctx in
+                ctx.timingFunction = .init(name: .default)
                 ctx.duration = 0.2
                 plusIconViewCopy?.animator().alphaValue = 0.6
-                Thread.sleep(forTimeInterval: ctx.duration)
+                ctx.completionHandler = {
+                    /// Reset plus image tint
+                    if #available(macOS 10.14, *) {
+                        plusIconViewCopy?.alphaValue = 0.0
+                        plusIconViewCopy?.removeFromSuperview()
+                        self.plusIconView.alphaValue = 1.0
+                    }
+                }
             }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.0) {
                 self.wrapUpAddModeFeedbackHandling(payload: payload, plusIconViewCopy:plusIconViewCopy)
             }
         } else {
@@ -171,12 +179,6 @@ import CocoaLumberjackSwift
         ///     The payload is an almost finished remapsTable (aka RemapTableController.dataModel) entry with the kMFRemapsKeyEffect key missing
         tableController.addRow(withHelperPayload: payload as! [AnyHashable : Any])
         
-        /// Reset plus image tint
-        if #available(macOS 10.14, *) {
-            plusIconViewCopy?.alphaValue = 0.0
-            plusIconViewCopy?.removeFromSuperview()
-            plusIconView.alphaValue = 1.0
-        }
     }
     
 

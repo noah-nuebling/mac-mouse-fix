@@ -510,7 +510,8 @@ static void setBorderColor(RemapTableController *object) {
     NSUInteger openPopupRow = toHighlightIndexSet.firstIndex;
     NSTableView *tv = self.tableView;
     NSPopUpButton * popUpButton = [RemapTableUtility getPopUpButtonAtRow:openPopupRow fromTableView:tv];
-    [popUpButton performSelector:@selector(performClick:) withObject:nil afterDelay:0.2];
+    double delay = existingIndexes.count == 1 ? 0.0 : 0.2;
+    [popUpButton performSelector:@selector(performClick:) withObject:nil afterDelay:delay];
     
     /// Capture notifs
     NSSet<NSNumber *> *capturedButtonsAfter =  [RemapTableUtility getCapturedButtons];
