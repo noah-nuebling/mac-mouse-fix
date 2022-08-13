@@ -77,10 +77,11 @@ class ScrollTabController: NSViewController {
     
     /// Init
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        /// There was some reason we don't use viewDidLoad here. I think it had to do with preventing animations from playing when the app starts right into this tab or sth. But maybe it's just unnecessary.
+        /// There was some reason we don't use viewDidLoad here, and instead we use awakeFromNib. I think it had to do with preventing animations from playing when the app starts right into this tab or sth. But maybe it's just unnecessary.
+        /// Edit: The replacing between the macOSHint and the preciseSection broke when we used awakeFromNib. Not totally sure why. Let's hope viewDidLoad works after all.
         
         
         /// Smooth
@@ -113,12 +114,14 @@ class ScrollTabController: NSViewController {
         preciseHint.stringValue = "Scroll precisely by moving the scroll wheel slowly"
         
         /// Installl the macOSHint.
-        ///     We manually make the macOSHint width equal the preciseSection width, because if the width changes the window resizes from the left edge which looks shitty.
-        ///     This is a really shitty solution. Move this logic into CollapsableStackView (maybe rename to AnimatingStackView or sth).
+        ///     We manually make the macOSHint width equal the preciseSection width, because if the width changes the window resizes from the left edge which looks crappy.
+        ///     This is a really hacky solution. Move this logic into CollapsableStackView (maybe rename to AnimatingStackView or sth).
         ///         Make a method `register(switchableViews:forArrangedSubview:)` which calculates a size that fits all those views, and then you switch between them with `switchTo(view:)`.
         let macOSHint = CoolNSTextField(hintWithString: "Set Scroll Speed at\nSystem Settings > Mouse > Scroll Speed")
         macOSHint.translatesAutoresizingMaskIntoConstraints = false
+        macOSHint.setContentHuggingPriority(.required, for: .horizontal)
         macOSHint.setContentHuggingPriority(.required, for: .vertical)
+        macOSHint.cell?.wraps = true
         let macOSHintIndent = NSView()
         macOSHintIndent.translatesAutoresizingMaskIntoConstraints = false
         macOSHintIndent.addSubview(macOSHint)
@@ -128,16 +131,21 @@ class ScrollTabController: NSViewController {
         macOSHint.bottomAnchor.constraint(equalTo: macOSHintIndent.bottomAnchor).isActive = true
         preciseSection.needsLayout = true
         preciseSection.window?.layoutIfNeeded()
-        macOSHintIndent.widthAnchor.constraint(equalToConstant: preciseSection.fittingSize.width).isActive = true
+        let preciseWidth = preciseSection.fittingSize.width
+        macOSHintIndent.widthAnchor.constraint(equalToConstant: preciseWidth).isActive = true
         let preciseSectionRetained: NSStackView? = self.preciseSection
-        var testHintIsDisplaying = false
+        var macOSHintIsDisplaying = false
+        if scrollSpeed.get() == "system" {
+            self.preciseSection.unanimatedReplace(with: macOSHintIndent)
+            macOSHintIsDisplaying = true
+        }
         scrollSpeed.producer.skip(first: 1).startWithValues { speed in /// Are we sure to `skip(first: 1)` here?
-            if speed == "system" && !testHintIsDisplaying {
+            if speed == "system" && !macOSHintIsDisplaying {
                 self.preciseSection.animatedReplace(with: macOSHintIndent)
-                testHintIsDisplaying = true
-            } else if speed != "system" && testHintIsDisplaying{
+                macOSHintIsDisplaying = true
+            } else if speed != "system" && macOSHintIsDisplaying {
                 macOSHintIndent.animatedReplace(with: preciseSectionRetained!)
-                testHintIsDisplaying = false
+                macOSHintIsDisplaying = false
             }
         }
         

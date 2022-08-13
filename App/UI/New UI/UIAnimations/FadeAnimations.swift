@@ -44,5 +44,5 @@ private func doubleFadePropertyChange<P>(_ view: NSView,
         fatalError()
     }
     /// Replace
-    ReplaceAnimations.animate(ogView: view, replaceView: copiedView, hAnchor: .center, vAnchor: .center)
+    ReplaceAnimations.animate(ogView: view, replaceView: copiedView, hAnchor: .center, vAnchor: .center, doAnimate: true)
 }

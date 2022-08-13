@@ -20,7 +20,11 @@ extension NSView {
         /// Copy over all constraints from self to the new view
         ///    (Except height and width)
         
-        ReplaceAnimations.animate(ogView: self, replaceView: view, hAnchor: .leading, vAnchor: .center)
+        ReplaceAnimations.animate(ogView: self, replaceView: view, hAnchor: .leading, vAnchor: .center, doAnimate: true)
+    }
+    
+    func unanimatedReplace(with view: NSView) {
+        ReplaceAnimations.animate(ogView: self, replaceView: view, hAnchor: .leading, vAnchor: .center, doAnimate: false)
     }
 }
 
@@ -42,7 +46,7 @@ class ReplaceAnimations {
     
     /// Core function
 
-    static func animate(ogView: NSView, replaceView: NSView, hAnchor: MFHAnchor, vAnchor: MFVAnchor){
+    static func animate(ogView: NSView, replaceView: NSView, hAnchor: MFHAnchor, vAnchor: MFVAnchor, doAnimate: Bool){
         
         /// Parameter explanation:
         ///     The animation produces the following changes:
@@ -124,12 +128,15 @@ class ReplaceAnimations {
         var duration = getAnimationDuration(animationDistance: animationDistance)
         
         ///
-        /// Replace Create `wrapperView` for animating and replace `replaceView`
+        /// Create `wrapperView` for animating and replace `replaceView`
         ///
+        
+        /// We replace `replaceView` instead of `ogView` because we've already replaced `ogView` for measuring its size in the layout.
+        
         let wrapperView = NoClipWrapper()
         wrapperView.translatesAutoresizingMaskIntoConstraints = false
         wrapperView.wantsLayer = true
-        wrapperView.layer?.masksToBounds = false
+        wrapperView.layer?.masksToBounds = false /// Don't think is necessary for NoClipWrapper()
         var wrapperConstraints = transferSuperViewConstraints(fromView: replaceView, toView: wrapperView, transferSizeConstraints: false)
         let wrapperWidthConst = wrapperView.widthAnchor.constraint(equalToConstant: ogSize.width)
         let wrapperHeightConst = wrapperView.heightAnchor.constraint(equalToConstant: ogSize.height)
@@ -197,8 +204,13 @@ class ReplaceAnimations {
         ///
         /// Animate size of wrapperView
         ///
-//        let animation = CASpringAnimation(speed: 3.5, damping: 0.65)
-        let animation = CASpringAnimation(speed: 3.7, damping: 1.0)
+        let animation: CAAnimation
+        if doAnimate {
+            animation = CASpringAnimation(speed: 3.7, damping: 1.0)
+        } else {
+            animation = CABasicAnimation(name: .linear, duration: 0.0)
+        }
+        
         Animate.with(animation, changes: {
             wrapperWidthConst.reactiveAnimator().constant.set(replaceSize.width)
             wrapperHeightConst.reactiveAnimator().constant.set(replaceSize.height)
@@ -215,7 +227,7 @@ class ReplaceAnimations {
         ///
         
         /// Override duration because we're using spring animation now (clean this up)
-        duration = max(animation.settlingDuration * 0.55, 0.18)
+        duration = max(animation.duration * 0.55, 0.18)
         
         /// Set initial opacities
         ogImageView.alphaValue = 1.0

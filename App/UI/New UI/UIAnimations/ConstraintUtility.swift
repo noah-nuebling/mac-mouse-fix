@@ -50,7 +50,9 @@ func transferSuperViewConstraints(fromView srcView: NSView, toView dstView: NSVi
     
     var dstConstraints: [NSLayoutConstraint] = []
     for (cnst, srcIndex) in srcConstraints {
-        if !transferSizeConstraints && (cnst.firstAttribute == .width || cnst.firstAttribute == .height) { assert(false) }
+        if !transferSizeConstraints && (cnst.firstAttribute == .width || cnst.firstAttribute == .height) {
+//            assert(false)
+        }
         let newFirst = srcIndex == .firstItem ? dstView : cnst.firstItem
         let newSecond = srcIndex == .secondItem ? dstView : cnst.secondItem
         guard let newFirst = newFirst as? NSView, let newSecond = newSecond as? NSView? else { continue }
