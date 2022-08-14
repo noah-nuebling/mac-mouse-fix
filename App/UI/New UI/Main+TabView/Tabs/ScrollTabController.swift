@@ -63,7 +63,7 @@ class ScrollTabController: NSViewController {
             if #available(macOS 13, *) {
                 
                 /// Build string
-                var message = NSAttributedString(coolMarkdown: "Enabled Mac Mouse Fix for __Scrolling__.\nIt had been __disabled__ from %@ in the Menu Bar.")
+                var message = NSAttributedString(coolMarkdown: "Enabled Mac Mouse Fix for __Scrolling__.\nIt had been disabled from the Menu Bar %@")
                 let symbolString = NSAttributedString(symbol: "CoolMenuBarIcon", hPadding: 0.0, vOffset: -6, fallback: "<Mac Mouse Fix Menu Bar Item>")
                 message = NSAttributedString(attributedFormat: message, args: [symbolString])
                 

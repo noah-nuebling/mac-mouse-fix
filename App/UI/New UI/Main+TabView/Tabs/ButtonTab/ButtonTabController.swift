@@ -41,6 +41,8 @@ import CocoaLumberjackSwift
     @IBAction func openOptions(_ sender: Any) {
         ButtonOptionsViewController.add()
     }
+    
+    
     ///
     /// Init & lifecycle
     ///
@@ -99,6 +101,36 @@ import CocoaLumberjackSwift
     override func viewDidAppear() {
         super.viewDidAppear()
         /// This is called twice, awakeFromNib as well. Use init() or viewDidLoad() to do things once
+        
+        ///
+        /// Turn off killswitch
+        ///
+        
+        /// We do the exact same thing in the scrollTab
+        
+        let isDisabled = config("Other.buttonKillSwitch") as! Bool
+        
+        if isDisabled {
+            
+            /// Turn off killSwitch
+            setConfig("Other.buttonKillSwitch", false as NSObject)
+            commitConfig()
+            
+            /// Show message to user
+            if #available(macOS 13, *) {
+                
+                /// Build string
+                var message = NSAttributedString(coolMarkdown: "__Enabled__ Mac Mouse Fix for __Buttons__.\nIt had been disabled from the Menu Bar %@")
+                let symbolString = NSAttributedString(symbol: "CoolMenuBarIcon", hPadding: 0.0, vOffset: -6, fallback: "<Mac Mouse Fix Menu Bar Item>")
+                message = NSAttributedString(attributedFormat: message, args: [symbolString])
+                
+                /// Show message
+                ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: -1, alignment: kToastNotificationAlignmentTopMiddle)
+                
+            } else {
+                /// TODO: Make this work on older macOS
+            }
+        }
     }
     
     ///
