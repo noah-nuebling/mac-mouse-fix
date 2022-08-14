@@ -114,12 +114,12 @@ import CocoaLumberjackSwift
 
     override func mouseEntered(with event: NSEvent) {
         pointerIsInsideAddField = true
-        /// [AddViewController enableAddFieldHoverEffect:YES];
+        addFieldHoverEffect(enable: true)
         SharedMessagePort.sendMessage("enableAddMode", withPayload: nil, expectingReply: false)
     }
     override func mouseExited(with event: NSEvent) {
         pointerIsInsideAddField = false
-        /// [AddViewController enableAddFieldHoverEffect:NO];
+        addFieldHoverEffect(enable: false)
         SharedMessagePort .sendMessage("disableAddMode", withPayload: nil, expectingReply: false)
     }
     
@@ -227,6 +227,38 @@ import CocoaLumberjackSwift
 //
     
     /// Visual FX
+    
+    func addFieldHoverEffect(enable: Bool) {
+        /// Ideas: Draw focus ring or shadow
+        
+        if !enable {
+            NSAnimationContext.runAnimationGroup { ctx in
+                ctx.timingFunction = .init(name: .linear)
+                ctx.duration = 0.25
+                plusIconView.animator().shadow = nil
+            }
+            
+            
+        } else {
+            
+            let s = NSShadow()
+            s.shadowColor = .shadowColor
+            s.shadowOffset = .init(width: 0, height: -3)
+            s.shadowBlurRadius = 3
+            
+            plusIconView.wantsLayer = true
+            plusIconView.layer?.masksToBounds = false
+            plusIconView.superview?.wantsLayer = true
+            plusIconView.superview?.layer?.masksToBounds = false
+            //        addField.layer?.backgroundColor = .white
+            NSAnimationContext.runAnimationGroup { ctx in
+                ctx.timingFunction = .init(name: .default)
+                ctx.duration = 0.25
+                plusIconView.animator().shadow = s
+            }
+        }
+        
+    }
     
 //    - (void)enableAddFieldHoverEffect:(BOOL)enable {
 //        /// None of this works
