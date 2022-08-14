@@ -1,5 +1,9 @@
 # Localization How To
 
+## Also See
+
+- NotePlan [[MMF - i18n]]
+
 ## Basic guide
 
 - https://medium.com/@mds6058/localization-in-ios-and-how-to-make-it-not-suck-3adcbc3ec08f
