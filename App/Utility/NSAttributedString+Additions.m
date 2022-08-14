@@ -14,7 +14,7 @@
 
 #pragma mark Markdown
 
-+ (NSAttributedString *)attributedStringWithMarkdown:(NSString *)md __API_AVAILABLE(macos(13)) {
++ (NSAttributedString *)attributedStringWithMarkdown:(NSString *)md API_AVAILABLE(macos(13.0)) {
     
     /// Create options object
     NSAttributedStringMarkdownParsingOptions *options = [[NSAttributedStringMarkdownParsingOptions alloc] init];

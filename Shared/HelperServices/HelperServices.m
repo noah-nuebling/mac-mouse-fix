@@ -20,6 +20,8 @@
 ///     Edit: Looked at `__API_AVAILABLE` and `API_AVAILABLE`, and I think they are probably identical.
 ///     __Game plan__: Fix all the possible reasons we could come up with: 1. Use non-underscore variant. 2. Make all the unavailable function into objc methods (and make sure they are marked in the header too, if they appear there) 3. wrap everything in `if @available` blocks. Bing bam boom.
 
+///     Upate 14.08.2022 Still crashes for the dude. Made another change: All mentions of macOS 11, 12, 13 have been replaced with 11.0, 12.0, 13.0. Because all the examples on the internet write it like that. Let's see if that helps.
+
 #import <AppKit/AppKit.h>
 #import "HelperServices.h"
 #import "Constants.h"
@@ -32,7 +34,7 @@
 #pragma mark - Main interface
 
 + (BOOL)helperIsActive {
-    if (@available(macOS 13, *)) {
+    if (@available(macos 13.0, *)) {
         return [self helperIsActive_SM];
     } else {
         return helperIsActive_PList();
@@ -43,7 +45,7 @@
     
     /// Register/unregister the helper as a User Agent with launchd so it runs in the background - also launches/terminates helper
     
-    if (@available(macOS 13, *)) {
+    if (@available(macos 13.0, *)) {
         /// Disable and clean up legacy versions
         [self runPreviousVersionCleanup];
         [self removeHelperFromLaunchd];
@@ -60,9 +62,9 @@
 #pragma mark - Core
 
 
-+ (BOOL)helperIsActive_SM API_AVAILABLE(macos(13)) {
++ (BOOL)helperIsActive_SM API_AVAILABLE(macos(13.0)) {
     
-    if (@available(macOS 13, *)) {
+    if (@available(macos 13.0, *)) {
         
         SMAppService *service = [SMAppService agentServiceWithPlistName:@"sm_launchd.plist"];
         BOOL result = service.status == SMAppServiceStatusEnabled;
@@ -109,10 +111,10 @@ static BOOL helperIsActive_PList() {
     }
 }
 
-+ (void)enableHelper_SM:(BOOL)enable error:(NSError * _Nullable * _Nullable)error API_AVAILABLE(macos(13)) {
++ (void)enableHelper_SM:(BOOL)enable error:(NSError * _Nullable * _Nullable)error API_AVAILABLE(macos(13.0)) {
     /// TODO: Don't call `registerAndReturnError:`. Xcode complains about it.
     
-    if (@available(macOS 13, *)) {
+    if (@available(macos 13.0, *)) {
         
         /// Create error so that `*error` doesn't crash
         if (error == NULL) {

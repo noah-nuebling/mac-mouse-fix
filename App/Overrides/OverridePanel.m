@@ -146,7 +146,7 @@ NSDictionary *_columnIdentifierToKeyPath;
     openPanel.canChooseDirectories = NO;
     openPanel.canCreateDirectories = NO; // Doesn't work
     openPanel.allowsMultipleSelection = YES; // Doesn't work :/
-    if (@available(macOS 13, *)) {
+    if (@available(macos 13.0, *)) {
         openPanel.allowedContentTypes = @[[UTType typeWithIdentifier:@"com.apple.application"]];
     } else {
         openPanel.allowedFileTypes = @[@"com.apple.application"];
