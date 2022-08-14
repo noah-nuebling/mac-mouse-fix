@@ -152,6 +152,8 @@
 		4FA40D1228A10E1900499E53 /* NSScreen+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A40D9266C5BDF00436821 /* NSScreen+Additions.m */; };
 		4FA83A29268271E200F3A31B /* PointerSpeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA83A28268271E200F3A31B /* PointerSpeed.m */; };
 		4FA83A2E268288D900F3A31B /* PointerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA83A2D268288D900F3A31B /* PointerConfig.swift */; };
+		4FA8A30A28A9508C001E740F /* ButtonOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA8A30828A9508C001E740F /* ButtonOptionsViewController.swift */; };
+		4FA8A30B28A9508C001E740F /* ButtonOptionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FA8A30928A9508C001E740F /* ButtonOptionsViewController.xib */; };
 		4FA994BE26678AC90007F003 /* ScrollAnalyzer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA994BD26678AC90007F003 /* ScrollAnalyzer.m */; };
 		4FA9ABCC287B3B590049DE7D /* SharedMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* SharedMessagePort.m */; };
 		4FAD391426702CD4000CF4FA /* DerivedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860A9266EC24E004F76C8 /* DerivedProperty.swift */; };
@@ -559,6 +561,8 @@
 		4FA83A27268271E200F3A31B /* PointerSpeed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerSpeed.h; sourceTree = "<group>"; };
 		4FA83A28268271E200F3A31B /* PointerSpeed.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerSpeed.m; sourceTree = "<group>"; };
 		4FA83A2D268288D900F3A31B /* PointerConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointerConfig.swift; sourceTree = "<group>"; };
+		4FA8A30828A9508C001E740F /* ButtonOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonOptionsViewController.swift; sourceTree = "<group>"; };
+		4FA8A30928A9508C001E740F /* ButtonOptionsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ButtonOptionsViewController.xib; sourceTree = "<group>"; };
 		4FA994BC26678AC90007F003 /* ScrollAnalyzer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollAnalyzer.h; sourceTree = "<group>"; };
 		4FA994BD26678AC90007F003 /* ScrollAnalyzer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollAnalyzer.m; sourceTree = "<group>"; };
 		4FB4F9FC260FDBC800806DDD /* RemapTableUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapTableUtility.h; sourceTree = "<group>"; };
@@ -1315,6 +1319,15 @@
 			path = Experiments;
 			sourceTree = "<group>";
 		};
+		4FA8A30C28A9509E001E740F /* Options */ = {
+			isa = PBXGroup;
+			children = (
+				4FA8A30828A9508C001E740F /* ButtonOptionsViewController.swift */,
+				4FA8A30928A9508C001E740F /* ButtonOptionsViewController.xib */,
+			);
+			path = Options;
+			sourceTree = "<group>";
+		};
 		4FA911E4260D00CB00553CA8 /* RemapTable */ = {
 			isa = PBXGroup;
 			children = (
@@ -1330,6 +1343,7 @@
 				4FA1FD7E28A847BF00D1C8EE /* DeletableTableCellView.xib */,
 				4FB4F9FC260FDBC800806DDD /* RemapTableUtility.h */,
 				4FB4F9FD260FDBC800806DDD /* RemapTableUtility.m */,
+				4FA8A30C28A9509E001E740F /* Options */,
 				4F74ADC228A7E58500901D69 /* KeyCaptureView */,
 			);
 			path = RemapTable;
@@ -2252,6 +2266,7 @@
 				4FF665EF25F2C92700689B77 /* ScrollOverridePanel.xib in Resources */,
 				4F909D2F28A0C3D2009349A2 /* MyTitlebarAccessoryViewController.xib in Resources */,
 				4F909D3A28A0C3D2009349A2 /* Localization How To.md in Resources */,
+				4FA8A30B28A9508C001E740F /* ButtonOptionsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2524,6 +2539,7 @@
 				4FA40CF928A0CCCA00499E53 /* Bezier.swift in Sources */,
 				4F909D3E28A0C3D2009349A2 /* SensitivityDisplay.swift in Sources */,
 				4F909D4528A0C4C2009349A2 /* NSArray+Extensions.swift in Sources */,
+				4FA8A30A28A9508C001E740F /* ButtonOptionsViewController.swift in Sources */,
 				4F37FAD825FDFDC5004C34C4 /* MFScrollView.m in Sources */,
 				4FF665F825F2C92700689B77 /* MessagePort_App.m in Sources */,
 				4FA40D1028A0D8F100499E53 /* VectorSubPixelator.m in Sources */,

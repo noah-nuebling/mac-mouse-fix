@@ -35,6 +35,13 @@ import CocoaLumberjackSwift
     @IBOutlet weak var restoreDefaultButton: NSButton!
     
     ///
+    /// IBActions
+    ///
+    
+    @IBAction func openOptions(_ sender: Any) {
+        ButtonOptionsViewController.add()
+    }
+    ///
     /// Init & lifecycle
     ///
     

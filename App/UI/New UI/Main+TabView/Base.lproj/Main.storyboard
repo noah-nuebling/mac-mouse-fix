@@ -453,7 +453,7 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <imageView identifier="PlusIcon" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jod-JU-J5j">
-                                                    <rect key="frame" x="220" y="46.5" width="60" height="66.5"/>
+                                                    <rect key="frame" x="221" y="46.5" width="60" height="66.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="plus" catalog="system" id="EyU-is-YRF"/>
                                                     <color key="contentTintColor" white="0.0" alpha="0.43294701986754969" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -489,13 +489,13 @@ You can also Double Click, Click and Drag, and more.</string>
                                         </constraints>
                                     </customView>
                                     <scrollView verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" borderType="none" autohidesScrollers="YES" horizontalLineScroll="39" horizontalPageScroll="10" verticalLineScroll="39" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OGV-uF-BjJ" userLabel="TableScrollView" customClass="MFScrollView">
-                                        <rect key="frame" x="0.0" y="40" width="500" height="305"/>
+                                        <rect key="frame" x="0.0" y="45" width="500" height="300"/>
                                         <clipView key="contentView" ambiguous="YES" drawsBackground="NO" id="Fkp-gm-SVn">
-                                            <rect key="frame" x="0.0" y="0.0" width="500" height="305"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="500" height="300"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <tableView identifier="remapTable" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" allowsExpansionToolTips="YES" tableStyle="plain" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="39" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JEf-5U-AJf" customClass="RemapTableView">
-                                                    <rect key="frame" x="0.0" y="0.0" width="500" height="305"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="500" height="300"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <size key="intercellSpacing" width="17" height="0.0"/>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -685,24 +685,27 @@ You can also Double Click, Click and Drag, and more.</string>
                                         </scroller>
                                     </scrollView>
                                     <stackView distribution="equalSpacing" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z1h-11-Um4" userLabel="ButtonsStack">
-                                        <rect key="frame" x="0.0" y="0.0" width="500" height="32"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="500" height="37"/>
                                         <subviews>
                                             <button horizontalHuggingPriority="1000" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="am9-X6-JrT">
-                                                <rect key="frame" x="-7" y="5" width="93" height="32"/>
+                                                <rect key="frame" x="-7" y="7" width="93" height="32"/>
                                                 <buttonCell key="cell" type="push" title="Options..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Hur-83-2a2">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
+                                                    <connections>
+                                                        <action selector="openOptions:" target="d9S-X9-qM1" id="PCM-vg-X7d"/>
+                                                    </connections>
                                                 </buttonCell>
                                             </button>
                                             <button horizontalHuggingPriority="1000" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JHB-lg-H8e">
-                                                <rect key="frame" x="368" y="5" width="139" height="32"/>
+                                                <rect key="frame" x="368" y="7" width="139" height="32"/>
                                                 <buttonCell key="cell" type="push" title="Restore Default..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="lrw-Lp-nQ4">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
                                             </button>
                                         </subviews>
-                                        <edgeInsets key="edgeInsets" left="0.0" right="0.0" top="0.0" bottom="12"/>
+                                        <edgeInsets key="edgeInsets" left="0.0" right="0.0" top="3" bottom="14"/>
                                         <visibilityPriorities>
                                             <integer value="1000"/>
                                             <integer value="1000"/>

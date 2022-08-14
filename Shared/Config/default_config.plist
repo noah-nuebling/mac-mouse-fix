@@ -207,13 +207,15 @@
 		<key>checkForUpdates</key>
 		<true/>
 		<key>configVersion</key>
-		<integer>13</integer>
+		<integer>14</integer>
 		<key>launchesOverall</key>
 		<string>0</string>
 		<key>lastLaunchedBundleVersion</key>
 		<integer>0</integer>
 		<key>launchesOfCurrentBundleVersion</key>
 		<integer>0</integer>
+		<key>lockPointerDuringDrag</key>
+		<false/>
 	</dict>
 	<key>Pointer</key>
 	<dict>

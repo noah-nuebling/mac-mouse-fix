@@ -20,7 +20,7 @@ import Cocoa
     /// Advanced settings
     
     @objc static func freezePointerDuringModifiedDrag() -> Bool {
-        return false
+        return config("Other.lockPointerDuringDrag") as! Bool
     }
     @objc static var doubleClickThreshold: Double {
         return 0.01;
