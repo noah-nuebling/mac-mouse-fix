@@ -79,7 +79,8 @@ import CocoaLumberjackSwift
 
         /// Add trackingArea
         ///     Do we ever need to remove it?
-        trackingArea = NSTrackingArea(rect: self.addField.bounds, options: [.mouseEnteredAndExited, .activeAlways, .enabledDuringMouseDrag], owner: self)
+        trackingArea = NSTrackingArea(rect: self.addField.bounds, options: [.mouseEnteredAndExited, .activeInKeyWindow], owner: self)
+        
         self.addField.addTrackingArea(trackingArea)
         
         /// Fix hover animations
@@ -151,42 +152,17 @@ import CocoaLumberjackSwift
         
         DDLogDebug("Received AddMode feedback with payload: \(payload)")
         
-        /// tint plus icond to give visual feedback
-        var plusIconViewCopy: NSImageView? = nil
-        if #available(macOS 10.14, *) {
-            plusIconViewCopy = SharedUtility.deepCopy(of: plusIconView!) as! NSImageView?
-            plusIconView.superview?.addSubview(plusIconViewCopy!)
-            plusIconViewCopy?.alphaValue = 0.0
-            plusIconViewCopy?.contentTintColor = .controlAccentColor
-            NSAnimationContext.runAnimationGroup { ctx in
-                ctx.timingFunction = .init(name: .default)
-                ctx.duration = 0.2
-                plusIconViewCopy?.animator().alphaValue = 0.6
-                ctx.completionHandler = {
-                    /// Reset plus image tint
-                    if #available(macOS 10.14, *) {
-                        plusIconViewCopy?.alphaValue = 0.0
-                        plusIconViewCopy?.removeFromSuperview()
-                        self.plusIconView.alphaValue = 1.0
-                    }
-                }
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.0) {
-                self.wrapUpAddModeFeedbackHandling(payload: payload, plusIconViewCopy:plusIconViewCopy)
-            }
-        } else {
-            self.wrapUpAddModeFeedbackHandling(payload: payload, plusIconViewCopy:plusIconViewCopy)
-        }
+        self.wrapUpAddModeFeedbackHandling(payload: payload)
     }
     
-    @objc func wrapUpAddModeFeedbackHandling(payload: NSDictionary, plusIconViewCopy: NSImageView?) {
+    @objc func wrapUpAddModeFeedbackHandling(payload: NSDictionary) {
+        
+        /// Remove hover
+        addFieldHoverEffect(enable: false, playAcceptAnimation: true)
         
         /// Send payoad to tableController
         ///     The payload is an almost finished remapsTable (aka RemapTableController.dataModel) entry with the kMFRemapsKeyEffect key missing
         tableController.addRow(withHelperPayload: payload as! [AnyHashable : Any])
-        
-        /// Remove hover
-        addFieldHoverEffect(enable: false, playAcceptAnimation: true)
         
     }
     
@@ -273,8 +249,14 @@ import CocoaLumberjackSwift
                 if playAcceptAnimation {
                     Animate.with(CASpringAnimation(speed: 3.5, damping: 1.0)) {
                         plusIconView.reactiveAnimator().contentTintColor.set(NSColor.controlAccentColor)
+                    } onComplete: {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
+                            Animate.with(CASpringAnimation(speed: 3.5, damping: 1.3)) {
+                                self.plusIconView.reactiveAnimator().contentTintColor.set(NSColor.gray)
+                            }
+                        })
                     }
-                } else {
+                } else { /// Normal un-hovering
                     Animate.with(CASpringAnimation(speed: 3.5, damping: 1.3)) {
                         self.plusIconView.reactiveAnimator().contentTintColor.set(NSColor.gray)
                     }

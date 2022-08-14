@@ -68,17 +68,13 @@
 
 - (void)mouseDown:(NSEvent *)event {
     
-    NSPoint clickedPoint = [self convertPoint:event.locationInWindow fromView:nil];
-    NSInteger clickedRow = [self rowAtPoint:clickedPoint];
+    /// We used to do fancy selection logic here in MMF2, but it's all simpler in MMF2 and handeled elsewhere. See`addRowWithHelperPayload:`
+    ///     Other selection code like `tableView:shouldSelectRow:` should now also be obsolete, but it works so eh
     
-    if (clickedRow != -1) {
-        if (![self.delegate tableView:self shouldSelectRow:clickedRow]) {
-            /// Unselect currently selected row
-            [self deselectAll:nil];
-        }
-    }
+//    NSPoint clickedPoint = [self convertPoint:event.locationInWindow fromView:nil];
+//    NSInteger clickedRow = [self rowAtPoint:clickedPoint];
     
-    [super mouseDown:event];
+//    [super mouseDown:event];
 }
 
 @end

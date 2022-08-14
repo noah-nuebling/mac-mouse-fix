@@ -80,7 +80,7 @@
 
 - (IBAction)handleKeystrokeMenuItemSelected:(id)sender {
     
-    // Find table row for sender
+    /// Find table row for sender
     NSInteger rowOfSender = -1;
     
     NSMenuItem *item = (NSMenuItem *)sender;
@@ -96,19 +96,19 @@
     
     assert(rowOfSender != -1);
     
-    // Convert rowOfSender to base data model index
+    /// Convert rowOfSender to base data model index
     rowOfSender = [RemapTableUtility baseDataModelIndexFromGroupedDataModelIndex:rowOfSender withGroupedDataModel:self.groupedDataModel];
     
-    // Draw keystroke-capture-field
+    /// Draw keystroke-capture-field
     NSArray *dataModelWithCaptureCell = (NSArray *)[SharedUtility deepCopyOf:self.dataModel];
     dataModelWithCaptureCell[rowOfSender][kMFRemapsKeyEffect] = @{
         @"drawKeyCaptureView": @YES
     };
     [self reloadDataWithTemporaryDataModel:dataModelWithCaptureCell];
     
-    // ^ Changing the datamodel and redrawing the whole table to insert a temporary view for capturing keyboardShortcuts is a bit ugly I feel, but 'The tableView needs to own it's views' afaik so this is the only way.
-    //      We need to make sure we never write this rowDict to file, because that's probably gonna crash the helper or lead to unexpected behaviour.
-    //      Actually creating/inserting the captureView into the table is done in `getEffectCellWithRowDict:row:`
+    /// ^ Changing the datamodel and redrawing the whole table to insert a temporary view for capturing keyboardShortcuts is a bit ugly I feel, but 'The tableView needs to own it's views' afaik so this is the only way.
+    ///      We need to make sure we never write this rowDict to file, because that's probably gonna crash the helper or lead to unexpected behaviour.
+    ///      Actually creating/inserting the captureView into the table is done in `getEffectCellWithRowDict:row:`
     
 }
 
@@ -142,20 +142,27 @@
 - (void)writeToConfig {
     [self storeEffectsFromUIInDataModel];
     
-    // Write datamodel to file
+    /// Write datamodel to file
     [self writeDataModelToConfig];
 }
 
 /// Called when user clicks chooses most effects
 - (IBAction)updateTableAndWriteToConfig:(id _Nullable)sender {
 
+    /// Reload tableView so that
+    ///  - Trigger-cell tooltips update to newly chosen effect
+    ///  - NSMenus update to remove keyboard shortcuts that are unselected
+    ///  It's super inefficient to update everything but computer fast (We should pass this a specific row to update)
+    
     [self writeToConfig];
-
-    // Reload tableView so that
-    //  - Trigger-cell tooltips update to newly chosen effect
-    //  - NSMenus update to remove keyboard shortcuts that are unselected
-    //  It's super inefficient to update everything but computer fast (We should pass this a specific row to update)
-    [self.tableView reloadData];
+    
+    if ([sender isKindOfClass:RemapTableMenuItem.class]) {
+        NSTableCellView *host = ((RemapTableMenuItem *)sender).host;
+        NSInteger row = [RemapTableUtility rowOfCell:host inTableView:self.tableView];
+        [self.tableView reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:row] columnIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 1)]]; /// Some docs recommended `setNeedsDisplayInRect:` but this seems more robust
+    } else {
+        [self.tableView reloadData];
+    }
     
 }
 
@@ -207,8 +214,9 @@
     self.dataModel[clickedRowInBaseDataModel][kMFRemapsKeyEffect] = itemModel[@"dict"];
     
     /// Commit change
-    
     [self writeDataModelToConfig];
+    
+    /// Reload table
     [self.tableView reloadData];
     
 }
@@ -376,22 +384,13 @@ static void setBorderColor(RemapTableController *object) {
         [self removeRow:selectedRow];
     }
 }
+
 - (IBAction)inRowRemoveButtonAction:(RemapTableButton *)sender {
     
     /// `tableView.clickedRow` worked on righ-click menus, but for the inline buttons it doesn't seem to.
     
     /// Get tableCell
-    NSTableCellView *cell = sender.host;
-    
-    /// Find index of tableCell
-    NSInteger result = -1;
-    for (int i = 0; i < self.tableView.numberOfRows; i++) {
-        NSTableCellView *c = [self.tableView viewAtColumn:0 row:i makeIfNecessary:NO];
-        if ([c isEqual:cell]) {
-            result = i;
-            break;
-        }
-    }
+    NSInteger result = [RemapTableUtility rowOfCell:sender.host inTableView:self.tableView];
     
     /// Delete ref from button
     ///     Maybe against retain cycles? Not sure if problem.
@@ -452,12 +451,15 @@ static void setBorderColor(RemapTableController *object) {
 ///    [AddWindowController begin];
 }
 
-#pragma mark Interface
+#pragma mark AddMode Interface
 
 - (void)addRowWithHelperPayload:(NSDictionary *)payload {
     
     /// Capture notifs
     NSSet<NSNumber *> *capturedButtonsBefore = [RemapTableUtility getCapturedButtons];
+    
+    /// Make tableView key, so it's not greyed out
+    [self.tableView.window makeFirstResponder:self.tableView];
     
     NSMutableDictionary *rowDictToAdd = payload.mutableCopy;
     /// ((Check if payload is valid tableEntry))
@@ -506,6 +508,18 @@ static void setBorderColor(RemapTableController *object) {
     }
     [self.tableView selectRowIndexes:toHighlightIndexSet byExtendingSelection:NO];
     [self.tableView scrollRowToVisible:toHighlightIndexSet.firstIndex];
+    
+    /// Unselect rows when user clicks anywhere else
+    static id _clickMonitor = nil;
+    _clickMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:NSEventMaskLeftMouseDown handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
+        [self.tableView deselectAll:nil];
+        if (_clickMonitor != nil) {
+            [NSEvent removeMonitor:_clickMonitor];
+            _clickMonitor = nil;
+        }
+        return event;
+    }];
+    
     /// Open the NSMenu on the newly created row's popup button
     NSUInteger openPopupRow = toHighlightIndexSet.firstIndex;
     NSTableView *tv = self.tableView;
@@ -522,7 +536,6 @@ static void setBorderColor(RemapTableController *object) {
         //      This notification will not be interactable if we also open the popup button menu.
 //        [popUpButton performSelector:@selector(performClick:) withObject:nil afterDelay:0.2];
 //    }
-
 }
 
 #pragma mark - Data source

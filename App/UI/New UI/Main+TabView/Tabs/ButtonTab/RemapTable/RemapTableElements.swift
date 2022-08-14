@@ -13,3 +13,8 @@ import Cocoa
 
     @objc var host: NSTableCellView? = nil
 }
+
+@objc class RemapTableMenuItem: NSMenuItem {
+    
+    @objc var host: NSTableCellView? = nil
+}

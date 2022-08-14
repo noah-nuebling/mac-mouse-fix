@@ -12,7 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-// Were exposing most of this just so RemapTableTranslator can use it. Might not be the cleanest solution.
+/// Were exposing most of this just so RemapTableTranslator can use it. Might not be the cleanest solution.
 
 @interface RemapTableController :  NSViewController <NSTableViewDelegate>
 

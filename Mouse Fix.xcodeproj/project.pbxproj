@@ -125,7 +125,7 @@
 		4F9E78D02685E30C002C2309 /* GestureScrollSimulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9E78CE2685E30B002C2309 /* GestureScrollSimulator.m */; };
 		4F9E78E3268663B1002C2309 /* ExponentialSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9E78E2268663B1002C2309 /* ExponentialSmoother.swift */; };
 		4FA1FD7F28A847BF00D1C8EE /* DeletableTableCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FA1FD7E28A847BF00D1C8EE /* DeletableTableCellView.xib */; };
-		4FA1FD8128A85FD100D1C8EE /* RemapTableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA1FD8028A85FD100D1C8EE /* RemapTableButton.swift */; };
+		4FA1FD8128A85FD100D1C8EE /* RemapTableElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA1FD8028A85FD100D1C8EE /* RemapTableElements.swift */; };
 		4FA1FD8328A916B600D1C8EE /* NSShadow+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA1FD8228A916B600D1C8EE /* NSShadow+Extensions.swift */; };
 		4FA40CEF28A0CA0A00499E53 /* ReactiveSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4FA40CEE28A0CA0A00499E53 /* ReactiveSwift */; };
 		4FA40CF228A0CA3900499E53 /* ReactiveCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 4FA40CF128A0CA3900499E53 /* ReactiveCocoa */; };
@@ -553,7 +553,7 @@
 		4F9E78CF2685E30C002C2309 /* GestureScrollSimulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GestureScrollSimulator.h; sourceTree = "<group>"; };
 		4F9E78E2268663B1002C2309 /* ExponentialSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExponentialSmoother.swift; sourceTree = "<group>"; };
 		4FA1FD7E28A847BF00D1C8EE /* DeletableTableCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeletableTableCellView.xib; sourceTree = "<group>"; };
-		4FA1FD8028A85FD100D1C8EE /* RemapTableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemapTableButton.swift; sourceTree = "<group>"; };
+		4FA1FD8028A85FD100D1C8EE /* RemapTableElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemapTableElements.swift; sourceTree = "<group>"; };
 		4FA1FD8228A916B600D1C8EE /* NSShadow+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSShadow+Extensions.swift"; sourceTree = "<group>"; };
 		4FA40CF528A0CBA600499E53 /* Mac Mouse Fix-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mac Mouse Fix-Bridging-Header.h"; sourceTree = "<group>"; };
 		4FA83A27268271E200F3A31B /* PointerSpeed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerSpeed.h; sourceTree = "<group>"; };
@@ -1324,7 +1324,7 @@
 				4F79C2E9260976950067B381 /* RemapTableTranslator.m */,
 				4F92A706260F4BF000529D1F /* RemapTableView.h */,
 				4F92A707260F4BF000529D1F /* RemapTableView.m */,
-				4FA1FD8028A85FD100D1C8EE /* RemapTableButton.swift */,
+				4FA1FD8028A85FD100D1C8EE /* RemapTableElements.swift */,
 				4F319CB926252A2D004E5F63 /* ButtonGroupRowView.h */,
 				4F319CBA26252A2D004E5F63 /* ButtonGroupRowView.m */,
 				4FA1FD7E28A847BF00D1C8EE /* DeletableTableCellView.xib */,
@@ -2532,7 +2532,7 @@
 				4F79A82B2605074000076A7E /* NSAttributedString+Additions.m in Sources */,
 				4FA40CFD28A0CCCB00499E53 /* AccelerationBezier.swift in Sources */,
 				4F909D3228A0C3D2009349A2 /* FadeAnimations.swift in Sources */,
-				4FA1FD8128A85FD100D1C8EE /* RemapTableButton.swift in Sources */,
+				4FA1FD8128A85FD100D1C8EE /* RemapTableElements.swift in Sources */,
 				4F7AB0552606698A0008055E /* UIStrings.m in Sources */,
 				4F909D3028A0C3D2009349A2 /* ReactiveAnimatorProxy.swift in Sources */,
 				4FA40CF828A0CCCA00499E53 /* TestAccelerationCurve.swift in Sources */,

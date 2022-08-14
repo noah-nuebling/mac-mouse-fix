@@ -15,6 +15,25 @@
 
 @implementation RemapTableUtility
 
+#pragma mark - Row <-> Objects
+
++ (NSInteger)rowOfCell:(NSTableCellView *)cell inTableView:(NSTableView *)tv {
+    
+    /// Find row index of tableCell
+    NSInteger result = -1;
+    for (int i = 0; i < tv.numberOfRows; i++) {
+        for (int j = 0; j < tv.numberOfColumns; j++) {
+            NSTableCellView *c = [tv viewAtColumn:j row:i makeIfNecessary:NO];
+            if ([c isEqual:cell]) {
+                result = i;
+                break;
+            }
+        }
+    }
+    
+    return result;
+}
+
 + (MFMouseButtonNumber)triggerButtonForRow:(NSDictionary *)rowDict {
     
     id triggerGeneric = rowDict[kMFRemapsKeyTrigger];

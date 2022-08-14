@@ -407,12 +407,18 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     
 }
 
-+ (NSMenuItem *)menuItemFromDataModel:(NSDictionary *)itemModel enclosingMenu:(NSMenu *)enclosingMenu {
-    NSMenuItem *i;
++ (NSMenuItem *)menuItemFromDataModel:(NSDictionary *)itemModel enclosingMenu:(NSMenu *)enclosingMenu tableCell:(NSTableCellView *)tableCell {
+    
+    RemapTableMenuItem *i;
+    
     if ([itemModel[@"isSeparator"] isEqual: @YES]) {
-        i = (NSMenuItem *)NSMenuItem.separatorItem;
+        
+        i = (RemapTableMenuItem *)RemapTableMenuItem.separatorItem;
+        
     } else {
-        i = [[NSMenuItem alloc] init];
+        
+        i = [[RemapTableMenuItem alloc] init];
+        
         NSString *title = itemModel[@"ui"];
         if (title != nil) {
             i.title = title;
@@ -422,6 +428,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         i.action = @selector(updateTableAndWriteToConfig:);
         i.target = self.tableView.delegate;
         i.toolTip = itemModel[@"tool"];
+        i.host = tableCell;
         
         if ([itemModel[@"keyCaptureEntry"] isEqual:@YES]) {
             i.action = @selector(handleKeystrokeMenuItemSelected:);
@@ -444,7 +451,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         if (itemModel[@"submenu"] != nil) {
             NSMenu *m = [[NSMenu alloc] init];
             for (NSDictionary *submenuItemModel in itemModel[@"submenu"]) {
-                NSMenuItem *subI = [self menuItemFromDataModel:submenuItemModel enclosingMenu:m];
+                NSMenuItem *subI = [self menuItemFromDataModel:submenuItemModel enclosingMenu:m tableCell:tableCell];
                 subI.representedObject = submenuItemModel;
                 subI.action = @selector(submenuItemClicked:);
                 [m addItem:subI];
@@ -471,7 +478,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     
     NSDictionary *effectDict = rowDict[kMFRemapsKeyEffect];
     
-    if ([effectDict[@"drawKeyCaptureView"] isEqual:@YES]) { // This is not a real effectDict, but instead an instruction to draw a key capture view
+    if ([effectDict[@"drawKeyCaptureView"] isEqual:@YES]) { /// This is not a real effectDict, but instead an instruction to draw a key capture view
         
         /// Create captureField
         
@@ -530,7 +537,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         [popupButton removeAllItems];
         /// Iterate effects table and fill popupButton
         for (NSDictionary *effectTableEntry in effectTable) {
-            NSMenuItem *i = [self menuItemFromDataModel:effectTableEntry enclosingMenu:popupButton.menu];
+            NSMenuItem *i = [self menuItemFromDataModel:effectTableEntry enclosingMenu:popupButton.menu tableCell:triggerCell];
             [popupButton.menu addItem:i];
         }
         

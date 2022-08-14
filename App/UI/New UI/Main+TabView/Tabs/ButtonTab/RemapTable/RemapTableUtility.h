@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RemapTableUtility : NSObject
 
++ (NSInteger)rowOfCell:(NSTableCellView *)cell inTableView:(NSTableView *)tv;
 + (MFMouseButtonNumber)triggerButtonForRow:(NSDictionary *)rowDict;
 + (NSPopUpButton *)getPopUpButtonAtRow:(NSUInteger)popUpRow fromTableView:(NSTableView *)tv;
 + (NSDictionary *)buttonGroupRowDict;

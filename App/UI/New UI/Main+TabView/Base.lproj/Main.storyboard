@@ -444,16 +444,16 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <stackView distribution="fill" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qu8-7l-RFn">
-                                <rect key="frame" x="23" y="0.0" width="500" height="573"/>
+                                <rect key="frame" x="23" y="0.0" width="500" height="571"/>
                                 <subviews>
                                     <box identifier="addField" boxType="custom" borderType="line" cornerRadius="6" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Pxm-4w-iO7" userLabel="AddBox">
-                                        <rect key="frame" x="0.0" y="403" width="500" height="170"/>
+                                        <rect key="frame" x="0.0" y="401" width="500" height="170"/>
                                         <view key="contentView" id="B6d-Fk-sWp">
                                             <rect key="frame" x="1" y="1" width="498" height="168"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <imageView identifier="PlusIcon" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jod-JU-J5j">
-                                                    <rect key="frame" x="222" y="46.5" width="60" height="66.5"/>
+                                                    <rect key="frame" x="220" y="46.5" width="60" height="66.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="plus" catalog="system" id="EyU-is-YRF"/>
                                                     <color key="contentTintColor" white="0.0" alpha="0.43294701986754969" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -468,7 +468,7 @@
                                         <color key="fillColor" red="0.8901960784313725" green="0.8901960784313725" blue="0.90980392156862744" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </box>
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="OIq-v6-9Zy" userLabel="HintWrap">
-                                        <rect key="frame" x="0.0" y="355" width="500" height="40"/>
+                                        <rect key="frame" x="0.0" y="353" width="500" height="40"/>
                                         <subviews>
                                             <textField verticalHuggingPriority="1000" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="7En-Ho-Dyb">
                                                 <rect key="frame" x="-2" y="12" width="504" height="28"/>
@@ -489,13 +489,13 @@ You can also Double Click, Click and Drag, and more.</string>
                                         </constraints>
                                     </customView>
                                     <scrollView verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" borderType="none" autohidesScrollers="YES" horizontalLineScroll="39" horizontalPageScroll="10" verticalLineScroll="39" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OGV-uF-BjJ" userLabel="TableScrollView" customClass="MFScrollView">
-                                        <rect key="frame" x="0.0" y="40" width="500" height="307"/>
+                                        <rect key="frame" x="0.0" y="40" width="500" height="305"/>
                                         <clipView key="contentView" ambiguous="YES" drawsBackground="NO" id="Fkp-gm-SVn">
-                                            <rect key="frame" x="0.0" y="0.0" width="500" height="307"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="500" height="305"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <tableView identifier="remapTable" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" allowsExpansionToolTips="YES" tableStyle="plain" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="39" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JEf-5U-AJf" customClass="RemapTableView">
-                                                    <rect key="frame" x="0.0" y="0.0" width="500" height="307"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="500" height="305"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <size key="intercellSpacing" width="17" height="0.0"/>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -996,7 +996,7 @@ You can also Double Click, Click and Drag, and more.</string>
                                                             <rect key="frame" x="0.0" y="40" width="100" height="30"/>
                                                             <subviews>
                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rFm-Yw-4A5">
-                                                                    <rect key="frame" x="0.0" y="16" width="100" height="14"/>
+                                                                    <rect key="frame" x="0.0" y="30" width="100" height="0.0"/>
                                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Scroll Horizontally" id="Jds-wI-1h1">
                                                                         <font key="font" metaFont="smallSystem"/>
                                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1004,7 +1004,7 @@ You can also Double Click, Click and Drag, and more.</string>
                                                                     </textFieldCell>
                                                                 </textField>
                                                                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QF5-am-Af9" customClass="ModCaptureTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="13" y="5" width="75" height="5"/>
+                                                                    <rect key="frame" x="13" y="5" width="75" height="19"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="75" id="gol-0r-D1D"/>
                                                                     </constraints>
@@ -1015,7 +1015,7 @@ You can also Double Click, Click and Drag, and more.</string>
                                                                     </textFieldCell>
                                                                 </textField>
                                                                 <button translatesAutoresizingMaskIntoConstraints="NO" id="aST-ae-80H" customClass="ModCaptureDeleteButton" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="9" height="15"/>
+                                                                    <rect key="frame" x="0.0" y="7" width="9" height="15"/>
                                                                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="xmark.circle.fill" catalog="system" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="Q7w-xW-wZs">
                                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                         <font key="font" metaFont="system"/>
