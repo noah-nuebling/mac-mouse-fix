@@ -251,27 +251,45 @@ import CocoaLumberjackSwift
         
         if !enable {
             
-            var animation = CASpringAnimation(speed: 3.25, damping: 1.3)
+            
+            /// Animation curve
+            var animation = CASpringAnimation(speed: 2.25, damping: 1.0)
             
             if playAcceptAnimation {
-                animation = CASpringAnimation(speed: 3.75, damping: 0.4)
+                animation = CASpringAnimation(speed: 3.75, damping: 0.25, initialVelocity: -10)
             }
             
+            
+            /// Play animation
+            
             Animate.with(animation) {
-//                addField.reactiveAnimator().layer.transform.set(CATransform3DMakeScale(1.0, 1.0, 1.0))
+                addField.reactiveAnimator().layer.transform.set(CATransform3DIdentity)
                 addField.reactiveAnimator().shadow.set(NSShadow.clearShadow)
-
-                
             }
+            
+            /// Play tint animation
+            
+            if #available(macOS 10.14, *) {
+                if playAcceptAnimation {
+                    Animate.with(CASpringAnimation(speed: 3.5, damping: 1.0)) {
+                        plusIconView.reactiveAnimator().contentTintColor.set(NSColor.controlAccentColor)
+                    }
+                } else {
+                    Animate.with(CASpringAnimation(speed: 3.5, damping: 1.3)) {
+                        self.plusIconView.reactiveAnimator().contentTintColor.set(NSColor.gray)
+                    }
+                }
+            }
+            
             
         } else {
             
             /// Setup addField shadow
             
             let s = NSShadow()
-            s.shadowColor = .shadowColor.withAlphaComponent(0.2)
-            s.shadowOffset = .init(width: 0, height: -3)
-            s.shadowBlurRadius = 3
+            s.shadowColor = .shadowColor.withAlphaComponent(0.225)
+            s.shadowOffset = .init(width: 0, height: -2)
+            s.shadowBlurRadius = 1.5
             
             addField.wantsLayer = true
             addField.layer?.masksToBounds = false
@@ -282,7 +300,7 @@ import CocoaLumberjackSwift
             
             let t = NSShadow()
             t.shadowColor = .shadowColor.withAlphaComponent(0.5)
-            t.shadowOffset = .init(width: 0, height: -3)
+            t.shadowOffset = .init(width: 0, height: -1)
             t.shadowBlurRadius = /*3*/10
             
             plusIconView.wantsLayer = true
@@ -292,8 +310,8 @@ import CocoaLumberjackSwift
             
             /// Animate
             
-            Animate.with(CASpringAnimation(speed: 0.25/*3.5*/, damping: 1.3)) {
-//                addField.reactiveAnimator().layer.transform.set(CATransform3DMakeScale(1.02, 1.02, 1.0))
+            Animate.with(CASpringAnimation(speed: 3.75, damping: 1.0)) {
+                addField.reactiveAnimator().layer.transform.set(CATransform3DTranslate(CATransform3DMakeScale(1.005, 1.005, 1.0), 0.0, 1.0, 0.0))
                 addField.reactiveAnimator().shadow.set(s)
             }
             
@@ -305,37 +323,5 @@ import CocoaLumberjackSwift
         }
         
     }
-    
-//    - (void)enableAddFieldHoverEffect:(BOOL)enable {
-//        /// None of this works
-//        NSBox *af = _instance.addField;
-//        NSView *afSub = _instance.addField.subviews[0];
-//        if (enable) {
-//            afSub.wantsLayer = YES;
-//            af.wantsLayer = YES;
-//            af.layer.masksToBounds = NO;
-//
-//            // Shadow (doesn't work withough setting background color)
-//    //        NSShadow *shadow = [[NSShadow alloc] init];
-//    //        shadow.shadowColor = NSColor.blackColor;
-//    //        shadow.shadowOffset = NSZeroSize;
-//    //        shadow.shadowBlurRadius = 10;
-//    //        afSub.shadow = shadow;
-//
-//            /// Focus ring
-//            afSub.focusRingType = NSFocusRingTypeDefault;
-//            [afSub becomeFirstResponder];
-//            af.focusRingType = NSFocusRingTypeDefault;
-//            [af becomeFirstResponder];
-//        } else {
-//            /// Shadow
-//            afSub.shadow = nil;
-//            afSub.layer.shadowOpacity = 0.0;
-//            afSub.layer.backgroundColor = nil;
-//            /// Focus ring
-//            [afSub resignFirstResponder];
-//
-//        }
-//    }
     
 }
