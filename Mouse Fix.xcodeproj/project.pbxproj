@@ -126,6 +126,7 @@
 		4F9E78E3268663B1002C2309 /* ExponentialSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9E78E2268663B1002C2309 /* ExponentialSmoother.swift */; };
 		4FA1FD7F28A847BF00D1C8EE /* DeletableTableCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FA1FD7E28A847BF00D1C8EE /* DeletableTableCellView.xib */; };
 		4FA1FD8128A85FD100D1C8EE /* RemapTableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA1FD8028A85FD100D1C8EE /* RemapTableButton.swift */; };
+		4FA1FD8328A916B600D1C8EE /* NSShadow+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA1FD8228A916B600D1C8EE /* NSShadow+Extensions.swift */; };
 		4FA40CEF28A0CA0A00499E53 /* ReactiveSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4FA40CEE28A0CA0A00499E53 /* ReactiveSwift */; };
 		4FA40CF228A0CA3900499E53 /* ReactiveCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 4FA40CF128A0CA3900499E53 /* ReactiveCocoa */; };
 		4FA40CF628A0CCC600499E53 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD50266AC10C003935EA /* Math.swift */; };
@@ -553,6 +554,7 @@
 		4F9E78E2268663B1002C2309 /* ExponentialSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExponentialSmoother.swift; sourceTree = "<group>"; };
 		4FA1FD7E28A847BF00D1C8EE /* DeletableTableCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeletableTableCellView.xib; sourceTree = "<group>"; };
 		4FA1FD8028A85FD100D1C8EE /* RemapTableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemapTableButton.swift; sourceTree = "<group>"; };
+		4FA1FD8228A916B600D1C8EE /* NSShadow+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSShadow+Extensions.swift"; sourceTree = "<group>"; };
 		4FA40CF528A0CBA600499E53 /* Mac Mouse Fix-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mac Mouse Fix-Bridging-Header.h"; sourceTree = "<group>"; };
 		4FA83A27268271E200F3A31B /* PointerSpeed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerSpeed.h; sourceTree = "<group>"; };
 		4FA83A28268271E200F3A31B /* PointerSpeed.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerSpeed.m; sourceTree = "<group>"; };
@@ -996,8 +998,6 @@
 			isa = PBXGroup;
 			children = (
 				4F7AB0522606692C0008055E /* UIStrings */,
-				4F1C51D8260543DD007F4930 /* NSTextField+Additions.h */,
-				4F1C51D9260543DD007F4930 /* NSTextField+Additions.m */,
 				4F79A8292605074000076A7E /* NSAttributedString+Additions.h */,
 				4F79A82A2605074000076A7E /* NSAttributedString+Additions.m */,
 				4FB5FE8A27AE563F0092C9B4 /* MFScrollView.h */,
@@ -1008,14 +1008,8 @@
 				4FF665EB25F2C92700689B77 /* ClickableImageView.m */,
 				4FF665EA25F2C92700689B77 /* Hyperlink.h */,
 				4FF665E725F2C92700689B77 /* Hyperlink.m */,
-				4F92A72B260F6C7800529D1F /* NSView+Additions.h */,
-				4F92A72C260F6C7800529D1F /* NSView+Additions.m */,
 				4F3E067C26A2F97D000C9E06 /* URLMenuItem.h */,
 				4F3E067D26A2F97D000C9E06 /* URLMenuItem.m */,
-				4F854D7A2789146900B46E9D /* NSMenu+NSMenu_Additions.h */,
-				4F854D7B2789146900B46E9D /* NSMenu+NSMenu_Additions.m */,
-				4FEC9666278BBDC600548604 /* NSColor+Additions.h */,
-				4FEC9667278BBDC600548604 /* NSColor+Additions.m */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -1136,9 +1130,18 @@
 			isa = PBXGroup;
 			children = (
 				4F909D0328A0C3D2009349A2 /* NSPopUpButton+Extensions.swift */,
-				4F909D0428A0C3D2009349A2 /* NSView+Extensions.swift */,
 				4F909D0528A0C3D2009349A2 /* CoolNSTextField.swift */,
 				4F909D0628A0C3D2009349A2 /* NSControl+Extensions.swift */,
+				4F909D0428A0C3D2009349A2 /* NSView+Extensions.swift */,
+				4FA1FD8228A916B600D1C8EE /* NSShadow+Extensions.swift */,
+				4F92A72B260F6C7800529D1F /* NSView+Additions.h */,
+				4F92A72C260F6C7800529D1F /* NSView+Additions.m */,
+				4FEC9666278BBDC600548604 /* NSColor+Additions.h */,
+				4FEC9667278BBDC600548604 /* NSColor+Additions.m */,
+				4F854D7A2789146900B46E9D /* NSMenu+NSMenu_Additions.h */,
+				4F854D7B2789146900B46E9D /* NSMenu+NSMenu_Additions.m */,
+				4F1C51D8260543DD007F4930 /* NSTextField+Additions.h */,
+				4F1C51D9260543DD007F4930 /* NSTextField+Additions.m */,
 			);
 			path = UIExtensions;
 			sourceTree = "<group>";
@@ -2473,6 +2476,7 @@
 				4F909D4128A0C412009349A2 /* SwiftUITest.swift in Sources */,
 				4FD82DDB260575B100664D6F /* ToastNotificationLabel.m in Sources */,
 				4F909D2C28A0C3D2009349A2 /* NSView+Extensions.swift in Sources */,
+				4FA1FD8328A916B600D1C8EE /* NSShadow+Extensions.swift in Sources */,
 				4FF665FA25F2C92700689B77 /* AppDelegate.m in Sources */,
 				4FF665F325F2C92700689B77 /* MoreSheet.m in Sources */,
 				4F909CF028A0C3B7009349A2 /* MainAppState.swift in Sources */,

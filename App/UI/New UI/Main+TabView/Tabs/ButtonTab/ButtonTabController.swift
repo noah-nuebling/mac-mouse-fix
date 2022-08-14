@@ -74,17 +74,23 @@ import CocoaLumberjackSwift
 //
 //    }
     
-    override func viewDidAppear() {
-        super.viewDidAppear()
-        
-        /// Setup tracking area
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        /// Add trackingArea
+        ///     Do we ever need to remove it?
         trackingArea = NSTrackingArea(rect: self.addField.bounds, options: [.mouseEnteredAndExited, .activeAlways, .enabledDuringMouseDrag], owner: self)
         self.addField.addTrackingArea(trackingArea)
-    }
-    override func viewDidDisappear() {
         
-        /// Tear down tracking area
-        self.addField.superview?.removeTrackingArea(trackingArea)
+        /// Fix hover animations
+        ///     Need to set some shadow before (and not directly, synchronously before) the hover animation first plays. No idea why this works
+        addField.shadow = .clearShadow
+        plusIconView.shadow = .clearShadow
+    }
+    
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        /// This is called twice, awakeFromNib as well. Use init() or viewDidLoad() to do things once
     }
     
     ///
@@ -179,6 +185,9 @@ import CocoaLumberjackSwift
         ///     The payload is an almost finished remapsTable (aka RemapTableController.dataModel) entry with the kMFRemapsKeyEffect key missing
         tableController.addRow(withHelperPayload: payload as! [AnyHashable : Any])
         
+        /// Remove hover
+        addFieldHoverEffect(enable: false, playAcceptAnimation: true)
+        
     }
     
 
@@ -228,34 +237,71 @@ import CocoaLumberjackSwift
     
     /// Visual FX
     
-    func addFieldHoverEffect(enable: Bool) {
-        /// Ideas: Draw focus ring or shadow
+    func addFieldHoverEffect(enable: Bool, playAcceptAnimation: Bool = false) {
+        /// Ideas: Draw focus ring or shadow, or zoom
+        
+        /// Debug
+        
+        DDLogDebug("FIELD HOOVER: \(enable)")
+        
+        /// Init
+        addField.wantsLayer = true
+        addField.layer?.transform = CATransform3DIdentity
+        addField.setAnchorPoint(anchorPoint: .init(x: 0.5, y: 0.5))
         
         if !enable {
-            NSAnimationContext.runAnimationGroup { ctx in
-                ctx.timingFunction = .init(name: .linear)
-                ctx.duration = 0.25
-                plusIconView.animator().shadow = nil
+            
+            var animation = CASpringAnimation(speed: 3.25, damping: 1.3)
+            
+            if playAcceptAnimation {
+                animation = CASpringAnimation(speed: 3.75, damping: 0.4)
             }
             
+            Animate.with(animation) {
+//                addField.reactiveAnimator().layer.transform.set(CATransform3DMakeScale(1.0, 1.0, 1.0))
+                addField.reactiveAnimator().shadow.set(NSShadow.clearShadow)
+
+                
+            }
             
         } else {
             
+            /// Setup addField shadow
+            
             let s = NSShadow()
-            s.shadowColor = .shadowColor
+            s.shadowColor = .shadowColor.withAlphaComponent(0.2)
             s.shadowOffset = .init(width: 0, height: -3)
             s.shadowBlurRadius = 3
+            
+            addField.wantsLayer = true
+            addField.layer?.masksToBounds = false
+            addField.superview?.wantsLayer = true
+            addField.superview?.layer?.masksToBounds = false
+            
+            /// Setup plusIcon shadow
+            
+            let t = NSShadow()
+            t.shadowColor = .shadowColor.withAlphaComponent(0.5)
+            t.shadowOffset = .init(width: 0, height: -3)
+            t.shadowBlurRadius = /*3*/10
             
             plusIconView.wantsLayer = true
             plusIconView.layer?.masksToBounds = false
             plusIconView.superview?.wantsLayer = true
             plusIconView.superview?.layer?.masksToBounds = false
-            //        addField.layer?.backgroundColor = .white
-            NSAnimationContext.runAnimationGroup { ctx in
-                ctx.timingFunction = .init(name: .default)
-                ctx.duration = 0.25
-                plusIconView.animator().shadow = s
+            
+            /// Animate
+            
+            Animate.with(CASpringAnimation(speed: 0.25/*3.5*/, damping: 1.3)) {
+//                addField.reactiveAnimator().layer.transform.set(CATransform3DMakeScale(1.02, 1.02, 1.0))
+                addField.reactiveAnimator().shadow.set(s)
             }
+            
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05, execute: {
+//                Animate.with(CABasicAnimation(name: .default, duration: 0.25)) {
+//                    self.plusIconView.reactiveAnimator().shadow.set(t)
+//                }
+//            })
         }
         
     }

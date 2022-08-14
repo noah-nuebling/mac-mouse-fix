@@ -8,9 +8,33 @@
 //
 
 #import "NSColor+Additions.h"
+#import "Mac_Mouse_Fix-Swift.h"
+
+@implementation NSView (ColorAdditions)
+
+- (void)suspendTransparency {
+    
+    /// Idea for temporarily removing transparency:
+    ///     1. Make view contents invisible. Take screenshot of invisible view (only contains background) 2. set image as background image of the view.
+    ///     -> This way the view's appearance shouldn't change but any new changes to the *actual* background won't affect the view anymore.
+    ///     Problem: Can't set background image easily
+    
+    assert(false);
+}
+
+- (NSColor *)solidColorAtX:(NSInteger)x y:(NSInteger)y {
+    /// Not sure this is useful
+    
+    CGImageRef image = (__bridge CGImageRef)[self image];
+    NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithCGImage:image];
+    NSColor *color = [bitmap colorAtX:x y:y];
+    
+    return color;
+}
+
+@end
 
 @implementation NSColor (Additions)
-
 
 - (NSColor *)flippedColor {
     /// Color that looks like receive on neutral background but with an alpha of 1.0

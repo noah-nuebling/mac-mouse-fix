@@ -53,7 +53,7 @@ extension NSAnimatablePropertyContainer where Self: NSObject {
     private let type: AnimationType
     
     /// Convenience
-    private var current: U { base.value(forKeyPath: self.keyPath) as! U }
+    private var current: U? { base.value(forKeyPath: self.keyPath) as! U? }
     
     /// Init
     fileprivate init(base: Base, keyPath: String, type: AnimationType) {
@@ -74,18 +74,23 @@ extension NSAnimatablePropertyContainer where Self: NSObject {
         switch type {
         case .normal:
             
+            /// Note: Use setAnchorPoint before doing transforms
+            
             /// Get animation from context
             var animation1 = CATransaction.value(forKey: "reactiveAnimatorPayload") as? CABasicAnimation /// Get animation from context (set in `Animate.with()`)
             if animation1 == nil { /// Fallback
                 animation1 = CABasicAnimation(name: .default, duration: 0.25)
             }
+            
             /// Guard 0 duration
             if animation1!.duration == 0 {
                 base.setValue(newValue, forKeyPath: keyPath)
                 return
             }
+            
             /// Make copy so we don't change the animation outside this scope
             let animation = animation1!.copy() as! CABasicAnimation
+            
             /// Make animations round to integer to avoid jitter. This is useful for resize animations. But this breaks opacity animations.
             var doRoundToInt = false
             if (newValue as? NSRect) != nil { doRoundToInt = true }
@@ -98,14 +103,86 @@ extension NSAnimatablePropertyContainer where Self: NSObject {
             if doRoundToInt {
                 animation.perform(.init(Selector(("setRoundsToInteger:"))), with: ObjCBool(true))
             }
+            
             /// Do other stuff to avoid jitter (nothing works)
 //            animation.isAdditive = true
-//            animation.perform(.init("setDiscretizesTime:"), with: ObjCBool(true))
             
-            /// Pass animation to animationManager
-            if let animationManager = NSAnimationManager.current() {
+            /// Do the animation
+            
+            if let newValue = newValue as? NSShadow, let base = base as? NSView {
+                    
+                ///
+                /// Special case: shadows
+                ///
+                
+                /// Seems like you need to set a shadow before you play this animation for the first time, or it looks weird. Where 'before' means way before. Not during the same (runLoop cycle?) (rendering cycle?) that you call this the first time.
+                
+                if base.shadow == nil {
+//                    base.wantsLayer = true
+                    base.shadow = .clearShadow
+//                    base.updateLayer()
+//                    base.layer.shadow
+                    
+                }
+//                if base.shadow == .clearShadow {
+//                    base.layer.preset
+//                }
+                
+                /// Prevent animation from resetting after completion (not necessary for animationManager I think)
+                animation.fillMode = .forwards
+                animation.isRemovedOnCompletion = false
+                
+                /// Try to get the layerPresentation to sync up with the the frst time this animation plays. doesn't work
+                base.needsDisplay = true
+                base.displayIfNeeded()
+                base.layer?.setNeedsDisplay()
+                base.layer?.displayIfNeeded()
+                
+                let c = animation.copy() as! CABasicAnimation// newValue.shadowColor
+                let r = animation.copy() as! CABasicAnimation//newValue.shadowBlurRadius
+                let o = animation.copy() as! CABasicAnimation // newValue.shadowOffset
+                
+                c.fromValue = base.shadow?.shadowColor
+                c.toValue = newValue.shadowColor
+                
+                r.fromValue = base.shadow?.shadowBlurRadius
+                r.toValue = newValue.shadowBlurRadius
+                
+                o.fromValue = base.shadow?.shadowOffset
+                o.toValue = newValue.shadowOffset
+                
+                base.layer?.add(c, forKey: "shadowColor")
+                base.layer?.add(r, forKey: "shadowRadius")
+                base.layer?.add(o, forKey: "shadowOffset")
+
+                CATransaction.setCompletionBlock {
+                    base.shadow = newValue
+                    CATransaction.completionBlock()?()
+                }
+                
+            } else if let newValue = newValue as? CATransform3D, let base = base as? CALayer {
+                
+                /// Special case: transforms
+                ///     This makes the `scale()` NSView extension obsolete
+                
+                animation.fromValue = base.presentation()?.value(forKeyPath: "transform")
+                animation.toValue = newValue
+                
+                /// Prevent animation from resetting after completion (not necessary for animationManager I think)
+                animation.fillMode = .forwards
+                animation.isRemovedOnCompletion = false
+                
+                base.add(animation, forKey: "transform")
+                
+            } else if let animationManager = NSAnimationManager.current() {
+                
+                /// Default: Use animationManager
                 animationManager.setTargetValue(newValue, for: base, keyPath: keyPath, animation: animation)
+                
             } else { /// Fallback
+                
+                /// Fallback: Don't animate
+                
                 assert(false)
                 base.setValue(newValue, forKeyPath: keyPath) /// Fallback
             }

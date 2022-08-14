@@ -31,7 +31,7 @@
 + (NSAnimationManager *)currentAnimationManager;
 
 + (void)observeValueForKeyPath:(id)arg1 ofObject:(id)arg2 change:(id)arg3 context:(void*)arg4;
-+ (void)performAnimations:(id)arg1; /// What is arg? ... not an animationManager instance.
++ (void)performAnimations:(NSArray<CAAnimation *> *)animations; /// What is arg? ... not an animationManager instance. Probably CAAnimationsArray?
 
 /// Start animation
 - (void)setTargetValue:(id)targetValue forObject:(id)object keyPath:(NSString *)keyPath animation:(CAAnimation *)animation;

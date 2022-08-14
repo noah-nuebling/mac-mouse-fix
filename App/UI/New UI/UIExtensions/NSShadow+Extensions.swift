@@ -1,22 +1,21 @@
 //
 // --------------------------------------------------------------------------
-// NSColor+Additions.h
+// NSShadow+Extensions.swift
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
 // Created by Noah Nuebling in 2022
 // Licensed under MIT
 // --------------------------------------------------------------------------
 //
 
-#import <Cocoa/Cocoa.h>
+import Foundation
 
-NS_ASSUME_NONNULL_BEGIN
-
-@interface NSColor (Additions)
-
-- (NSColor *)flippedColor;
-- (NSColor *)solidColorWithBackground:(NSColor *)background;
-- (NSColor *)solidColor;
-
-@end
-
-NS_ASSUME_NONNULL_END
+extension NSShadow {
+    
+    static var clearShadow: NSShadow {
+        let s = NSShadow()
+        s.shadowColor = .clear
+        s.shadowOffset = .zero
+        s.shadowBlurRadius = 0.0
+        return s
+    }
+}
