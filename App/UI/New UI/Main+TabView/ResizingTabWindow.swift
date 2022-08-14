@@ -125,6 +125,11 @@ import CocoaLumberjackSwift
     
     // MARK: Overrides
     
+    override var isMovable: Bool {
+        get { super.isMovable && !tabSwitchIsInProgress }
+        set { super.isMovable = newValue }
+    }
+    
     override func zoom(_ sender: Any?) {
         if tabSwitchIsInProgress { return } /// Prevent zoom during resize
         super.zoom(sender)
