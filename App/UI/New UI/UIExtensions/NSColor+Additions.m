@@ -80,7 +80,9 @@
     CGFloat g_r = a * g_s + (1-a) * g_bg;
     CGFloat b_r = a * b_s + (1-a) * b_bg;
     
-    return [NSColor colorWithRed:r_r green:g_r blue:b_r alpha:1.0];
+    NSColor *result = [NSColor colorWithRed:r_r green:g_r blue:b_r alpha:1.0];
+    
+    return result;
 }
 
 @end

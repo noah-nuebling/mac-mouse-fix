@@ -83,6 +83,8 @@ import CocoaLumberjackSwift
 //
 //    }
     
+    var appearanceObservation: NSKeyValueObservation? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -96,6 +98,49 @@ import CocoaLumberjackSwift
         ///     Need to set some shadow before (and not directly, synchronously before) the hover animation first plays. No idea why this works
         addField.shadow = .clearShadow
         plusIconView.shadow = .clearShadow
+        
+        /// Make colors non-transparent
+        updateColors()
+        
+        /// Observe darkmode changes to update colors (we do the same thing in RemapTable)
+        if #available(macOS 10.14, *) {
+            appearanceObservation = NSApp.observe(\.effectiveAppearance) { nsApp, change in
+                self.updateColors()
+            }
+        }
+    }
+    
+    func updateColors() {
+        addField.wantsLayer = true
+        
+        /// We use non-transparent colors so the shadows don't bleed through
+        
+        /// Check darkmode
+        
+        var isDarkMode: Bool = false
+        if #available(macOS 10.14, *) {
+            isDarkMode = (NSApp.effectiveAppearance == .init(named: .darkAqua)!)
+        }
+        
+        /// Update fillColor
+        ///     This is reallly just quarternaryLabelColor but without transparency.
+        ///     I couldn't find a nicer way to remove transparency except hardcoding it. Our solidColor methods from NSColor+Additions.m didn't work properly. I suspect it's because the NSColor objects can represent different colors depending on which context they are drawn in.
+        ///     Possible nicer solution: I think the only dynamic way to remove transparency that will be reliable is to somehow render the view in the background and then take a screenhot
+        
+        if isDarkMode {
+            addField.fillColor = NSColor(red: 57/255, green: 57/255, blue: 57/255, alpha: 1.0)
+        } else {
+            addField.fillColor = NSColor(red: 227/255, green: 227/255, blue: 227/255, alpha: 1.0)
+        }
+        
+        /// Update borderColor
+        ///     This is really just .separatorColor without transparency
+        
+        if isDarkMode {
+            addField.borderColor = NSColor(red: 77/255, green: 77/255, blue: 77/255, alpha: 1.0)
+        } else {
+            addField.borderColor = NSColor(red: 198/255, green: 198/255, blue: 198/255, alpha: 1.0)
+        }
     }
     
     override func viewDidAppear() {
@@ -307,8 +352,13 @@ import CocoaLumberjackSwift
             
             /// Setup addField shadow
             
+            var isDarkMode: Bool = false
+            if #available(macOS 10.14, *) {
+                isDarkMode = (NSApp.effectiveAppearance == .init(named: .darkAqua)!)
+            }
+            
             let s = NSShadow()
-            s.shadowColor = .shadowColor.withAlphaComponent(0.225)
+            s.shadowColor = .shadowColor.withAlphaComponent(isDarkMode ? 0.75 : 0.225)
             s.shadowOffset = .init(width: 0, height: -2)
             s.shadowBlurRadius = 1.5
             

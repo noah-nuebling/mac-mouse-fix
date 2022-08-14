@@ -444,10 +444,10 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <stackView distribution="fill" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qu8-7l-RFn">
-                                <rect key="frame" x="23" y="0.0" width="500" height="567"/>
+                                <rect key="frame" x="23" y="0.0" width="500" height="561"/>
                                 <subviews>
                                     <box identifier="addField" boxType="custom" borderType="line" cornerRadius="6" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Pxm-4w-iO7" userLabel="AddBox">
-                                        <rect key="frame" x="0.0" y="397" width="500" height="170"/>
+                                        <rect key="frame" x="0.0" y="391" width="500" height="170"/>
                                         <view key="contentView" id="B6d-Fk-sWp">
                                             <rect key="frame" x="1" y="1" width="498" height="168"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -456,7 +456,7 @@
                                                     <rect key="frame" x="220" y="46.5" width="60" height="66.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="plus" catalog="system" id="EyU-is-YRF"/>
-                                                    <color key="contentTintColor" white="0.0" alpha="0.43294701986754969" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                    <color key="contentTintColor" name="systemGrayColor" catalog="System" colorSpace="catalog"/>
                                                     <symbolConfiguration key="symbolConfiguration" configurationType="pointSize" pointSize="15" scale="small" weight="regular"/>
                                                 </imageView>
                                             </subviews>
@@ -464,11 +464,11 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="170" id="asZ-jV-KrP"/>
                                         </constraints>
-                                        <color key="borderColor" red="0.80392156862745101" green="0.80392156862745101" blue="0.80392156862745101" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <color key="fillColor" red="0.8901960784313725" green="0.8901960784313725" blue="0.90980392156862744" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="borderColor" name="separatorColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="fillColor" name="quaternaryLabelColor" catalog="System" colorSpace="catalog"/>
                                     </box>
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="OIq-v6-9Zy" userLabel="HintWrap">
-                                        <rect key="frame" x="0.0" y="349" width="500" height="40"/>
+                                        <rect key="frame" x="0.0" y="343" width="500" height="40"/>
                                         <subviews>
                                             <textField verticalHuggingPriority="1000" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="7En-Ho-Dyb">
                                                 <rect key="frame" x="-2" y="12" width="504" height="28"/>
@@ -489,13 +489,13 @@ You can also Double Click, Click and Drag, and more.</string>
                                         </constraints>
                                     </customView>
                                     <scrollView verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" borderType="none" autohidesScrollers="YES" horizontalLineScroll="39" horizontalPageScroll="10" verticalLineScroll="39" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OGV-uF-BjJ" userLabel="TableScrollView" customClass="MFScrollView">
-                                        <rect key="frame" x="0.0" y="45" width="500" height="296"/>
+                                        <rect key="frame" x="0.0" y="45" width="500" height="290"/>
                                         <clipView key="contentView" ambiguous="YES" drawsBackground="NO" id="Fkp-gm-SVn">
-                                            <rect key="frame" x="0.0" y="0.0" width="500" height="296"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="500" height="290"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <tableView identifier="remapTable" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" allowsExpansionToolTips="YES" tableStyle="plain" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="39" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JEf-5U-AJf" customClass="RemapTableView">
-                                                    <rect key="frame" x="0.0" y="0.0" width="500" height="296"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="500" height="290"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <size key="intercellSpacing" width="17" height="0.0"/>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>

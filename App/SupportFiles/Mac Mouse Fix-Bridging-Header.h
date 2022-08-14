@@ -34,5 +34,6 @@
 #import "UIStrings.h"
 //#import "AddViewController.h"
 #import "MFScrollView.h"
+#import "NSColor+Additions.h"
 
 #endif /* Mac_Mouse_Fix_Bridging_Header_h */
