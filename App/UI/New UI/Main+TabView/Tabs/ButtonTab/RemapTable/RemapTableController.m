@@ -276,25 +276,26 @@
     [RemapTableTranslator initializeWithTableView:self.tableView];
     
     /// Callback on darkmode toggle
+    /// In MMF3, the table doesn't overlap with the box border anymore. So we don't need to remove transparency. So we don't need to update the color manually when darkmode toggles. So we don't need this functions.
+    ///     TODO: Remove keyValue observation! Not setBorderColor() though
     
-    if (@available(macOS 10.14, *)) {
-        [self observeValueForKeyPath:@"effectiveAppearance" ofObject:NSApp change:nil context:nil];
-        [NSApp addObserver:self forKeyPath:@"effectiveAppearance" options:NSKeyValueObservingOptionNew context:nil];
-    }
+//    if (@available(macOS 10.14, *)) {
+//        [self observeValueForKeyPath:@"effectiveAppearance" ofObject:NSApp change:nil context:nil];
+//        [NSApp addObserver:self forKeyPath:@"effectiveAppearance" options:NSKeyValueObservingOptionNew context:nil];
+//    }
     
     /// Init addRemoveControl state
     [self updateAddRemoveControl];
 }
 
 static void setBorderColor(RemapTableController *object) {
+    
+    
+    
     if (@available(macOS 10.14, *)) {
         /// Helper for viewDidLoad
         
-        
-        NSColor *background = object.tableView.backgroundColor;
-        object.scrollView.layer.borderColor = [NSColor.separatorColor solidColorWithBackground:background].CGColor;
-        /// ^ The rgb values we get from the separatorColor don't change when darkmode is toggled while MMF is running. (We need those rgb values to get the `solidColorWithBackground:`). I can't find a workaround. If we use `separatorColor` directly, the color does change when darkmode is toggled while MMF is running, but the colors are also wrong...
-        /// We want the color to be solid to prevent the border chaning color when overlapping with the grid of the table.
+        object.scrollView.layer.borderColor = NSColor.separatorColor.CGColor; /// This doesn't update properly when tolggling darkmode even though it's a system color. Could hardcode correct colors but not worth it
     } else {
         object.scrollView.layer.borderColor = NSColor.gridColor.CGColor;
     }
