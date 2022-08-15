@@ -18,7 +18,6 @@
 		4F1B832D26081A5500AEAF37 /* CaptureNotificationCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B832C26081A5500AEAF37 /* CaptureNotificationCreator.m */; };
 		4F1C51DA260543DD007F4930 /* NSTextField+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C51D9260543DD007F4930 /* NSTextField+Additions.m */; };
 		4F1D58192881D880002EB119 /* CombinedLinearCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1D58182881D880002EB119 /* CombinedLinearCurve.swift */; };
-		4F1D7F4428A45FDC00253407 /* MenuBarItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F1D7F4328A45FDC00253407 /* MenuBarItem.xib */; };
 		4F1D7F4728A4639800253407 /* MenuBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1D7F4628A4639800253407 /* MenuBarItem.swift */; };
 		4F2CC58727B8D2300084AACE /* HybridCurves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CC58627B8D2300084AACE /* HybridCurves.swift */; };
 		4F2CC58927B8DA8B0084AACE /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CC58827B8DA8B0084AACE /* Line.swift */; };
@@ -153,7 +152,6 @@
 		4FA83A29268271E200F3A31B /* PointerSpeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA83A28268271E200F3A31B /* PointerSpeed.m */; };
 		4FA83A2E268288D900F3A31B /* PointerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA83A2D268288D900F3A31B /* PointerConfig.swift */; };
 		4FA8A30A28A9508C001E740F /* ButtonOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA8A30828A9508C001E740F /* ButtonOptionsViewController.swift */; };
-		4FA8A30B28A9508C001E740F /* ButtonOptionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FA8A30928A9508C001E740F /* ButtonOptionsViewController.xib */; };
 		4FA994BE26678AC90007F003 /* ScrollAnalyzer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA994BD26678AC90007F003 /* ScrollAnalyzer.m */; };
 		4FA9ABCC287B3B590049DE7D /* SharedMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* SharedMessagePort.m */; };
 		4FAD391426702CD4000CF4FA /* DerivedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860A9266EC24E004F76C8 /* DerivedProperty.swift */; };
@@ -166,6 +164,9 @@
 		4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCA07D525F3129B00BFE209 /* RemapTableController.m */; };
 		4FCC03352757B181002E5A57 /* ScreenDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCC03322757A50C002E5A57 /* ScreenDrawer.swift */; };
 		4FD0A71127B295F600FFCD12 /* OtherConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD0A71027B295F600FFCD12 /* OtherConfig.swift */; };
+		4FD148C728AA416700FE688C /* MenuBarItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD148C928AA416700FE688C /* MenuBarItem.xib */; };
+		4FD148CC28AA423F00FE688C /* AuthorizeAccessibilityView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD148CE28AA423F00FE688C /* AuthorizeAccessibilityView.xib */; };
+		4FD148D128AA428000FE688C /* ButtonOptionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD148D328AA428000FE688C /* ButtonOptionsViewController.xib */; };
 		4FD66E0827BB553800F67559 /* CGEventHIDEventBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD66E0727BB553800F67559 /* CGEventHIDEventBridge.m */; };
 		4FD66E0B27BB9BAE00F67559 /* EventUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD66E0A27BB9BAE00F67559 /* EventUtility.m */; };
 		4FD82DDB260575B100664D6F /* ToastNotificationLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD82DDA260575B100664D6F /* ToastNotificationLabel.m */; };
@@ -219,7 +220,6 @@
 		4FF665F725F2C92700689B77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FF665D525F2C92700689B77 /* Assets.xcassets */; };
 		4FF665F825F2C92700689B77 /* MessagePort_App.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665D725F2C92700689B77 /* MessagePort_App.m */; };
 		4FF665FA25F2C92700689B77 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665DB25F2C92700689B77 /* AppDelegate.m */; };
-		4FF665FC25F2C92700689B77 /* AuthorizeAccessibilityView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FF665DF25F2C92700689B77 /* AuthorizeAccessibilityView.xib */; };
 		4FF665FD25F2C92700689B77 /* AuthorizeAccessibilityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665E025F2C92700689B77 /* AuthorizeAccessibilityView.m */; };
 		4FF665FE25F2C92700689B77 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665E325F2C92700689B77 /* main.m */; };
 		4FF6660025F2C92700689B77 /* Hyperlink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665E725F2C92700689B77 /* Hyperlink.m */; };
@@ -389,7 +389,6 @@
 		4F1C51D8260543DD007F4930 /* NSTextField+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSTextField+Additions.h"; sourceTree = "<group>"; };
 		4F1C51D9260543DD007F4930 /* NSTextField+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSTextField+Additions.m"; sourceTree = "<group>"; };
 		4F1D58182881D880002EB119 /* CombinedLinearCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombinedLinearCurve.swift; sourceTree = "<group>"; };
-		4F1D7F4328A45FDC00253407 /* MenuBarItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MenuBarItem.xib; sourceTree = "<group>"; };
 		4F1D7F4628A4639800253407 /* MenuBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarItem.swift; sourceTree = "<group>"; };
 		4F2CC58627B8D2300084AACE /* HybridCurves.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HybridCurves.swift; sourceTree = "<group>"; };
 		4F2CC58827B8DA8B0084AACE /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
@@ -562,7 +561,6 @@
 		4FA83A28268271E200F3A31B /* PointerSpeed.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerSpeed.m; sourceTree = "<group>"; };
 		4FA83A2D268288D900F3A31B /* PointerConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointerConfig.swift; sourceTree = "<group>"; };
 		4FA8A30828A9508C001E740F /* ButtonOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonOptionsViewController.swift; sourceTree = "<group>"; };
-		4FA8A30928A9508C001E740F /* ButtonOptionsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ButtonOptionsViewController.xib; sourceTree = "<group>"; };
 		4FA994BC26678AC90007F003 /* ScrollAnalyzer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollAnalyzer.h; sourceTree = "<group>"; };
 		4FA994BD26678AC90007F003 /* ScrollAnalyzer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollAnalyzer.m; sourceTree = "<group>"; };
 		4FAABC9F28A9AF8E0043ADD7 /* .bartycrouch.toml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .bartycrouch.toml; sourceTree = "<group>"; };
@@ -584,6 +582,12 @@
 		4FCC03322757A50C002E5A57 /* ScreenDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenDrawer.swift; sourceTree = "<group>"; };
 		4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mac Mouse Fix Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FD0A71027B295F600FFCD12 /* OtherConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherConfig.swift; sourceTree = "<group>"; };
+		4FD148C628AA414100FE688C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
+		4FD148C828AA416700FE688C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MenuBarItem.xib; sourceTree = "<group>"; };
+		4FD148CB28AA416C00FE688C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/MenuBarItem.strings; sourceTree = "<group>"; };
+		4FD148CD28AA423F00FE688C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AuthorizeAccessibilityView.xib; sourceTree = "<group>"; };
+		4FD148D028AA424300FE688C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/AuthorizeAccessibilityView.strings; sourceTree = "<group>"; };
+		4FD148D228AA428000FE688C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ButtonOptionsViewController.xib; sourceTree = "<group>"; };
 		4FD66E0627BB553800F67559 /* CGEventHIDEventBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CGEventHIDEventBridge.h; sourceTree = "<group>"; };
 		4FD66E0727BB553800F67559 /* CGEventHIDEventBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CGEventHIDEventBridge.m; sourceTree = "<group>"; };
 		4FD66E0927BB9BAD00F67559 /* EventUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventUtility.h; sourceTree = "<group>"; };
@@ -656,7 +660,6 @@
 		4FF665DA25F2C92700689B77 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MouseFix.xib; sourceTree = "<group>"; };
 		4FF665DB25F2C92700689B77 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		4FF665DE25F2C92700689B77 /* AuthorizeAccessibilityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthorizeAccessibilityView.h; sourceTree = "<group>"; };
-		4FF665DF25F2C92700689B77 /* AuthorizeAccessibilityView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AuthorizeAccessibilityView.xib; sourceTree = "<group>"; };
 		4FF665E025F2C92700689B77 /* AuthorizeAccessibilityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthorizeAccessibilityView.m; sourceTree = "<group>"; };
 		4FF665E225F2C92700689B77 /* App.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
 		4FF665E325F2C92700689B77 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -865,7 +868,7 @@
 		4F1D7F4528A45FEA00253407 /* MenuBarItem */ = {
 			isa = PBXGroup;
 			children = (
-				4F1D7F4328A45FDC00253407 /* MenuBarItem.xib */,
+				4FD148C928AA416700FE688C /* MenuBarItem.xib */,
 				4F1D7F4628A4639800253407 /* MenuBarItem.swift */,
 			);
 			path = MenuBarItem;
@@ -1326,7 +1329,7 @@
 			isa = PBXGroup;
 			children = (
 				4FA8A30828A9508C001E740F /* ButtonOptionsViewController.swift */,
-				4FA8A30928A9508C001E740F /* ButtonOptionsViewController.xib */,
+				4FD148D328AA428000FE688C /* ButtonOptionsViewController.xib */,
 			);
 			path = Options;
 			sourceTree = "<group>";
@@ -1669,7 +1672,7 @@
 			children = (
 				4FF665DE25F2C92700689B77 /* AuthorizeAccessibilityView.h */,
 				4FF665E025F2C92700689B77 /* AuthorizeAccessibilityView.m */,
-				4FF665DF25F2C92700689B77 /* AuthorizeAccessibilityView.xib */,
+				4FD148CE28AA423F00FE688C /* AuthorizeAccessibilityView.xib */,
 			);
 			path = Accessibility;
 			sourceTree = "<group>";
@@ -2263,7 +2266,7 @@
 				4FF665F425F2C92700689B77 /* MoreSheet.xib in Resources */,
 				4F909D2728A0C3D2009349A2 /* Main.storyboard in Resources */,
 				4F9E59972672A67F004E75F7 /* default_config.plist in Resources */,
-				4FF665FC25F2C92700689B77 /* AuthorizeAccessibilityView.xib in Resources */,
+				4FD148CC28AA423F00FE688C /* AuthorizeAccessibilityView.xib in Resources */,
 				4FDECCDB28A3A37800DDEE91 /* README.md in Resources */,
 				4F79A7EF26042E2E00076A7E /* ToastNotification.xib in Resources */,
 				4F854D7E2789266A00B46E9D /* sfsymbols.xcassets in Resources */,
@@ -2276,7 +2279,7 @@
 				4FF665EF25F2C92700689B77 /* ScrollOverridePanel.xib in Resources */,
 				4F909D2F28A0C3D2009349A2 /* MyTitlebarAccessoryViewController.xib in Resources */,
 				4F909D3A28A0C3D2009349A2 /* Localization How To.md in Resources */,
-				4FA8A30B28A9508C001E740F /* ButtonOptionsViewController.xib in Resources */,
+				4FD148D128AA428000FE688C /* ButtonOptionsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2302,7 +2305,7 @@
 				4FF6668A25F2C93A00689B77 /* SmoothScroll.m (old) in Resources */,
 				4FF6654125F2C7B000689B77 /* default_launchd.plist in Resources */,
 				4F7F47D428A6EFC800290BBD /* SharedAssets.xcassets in Resources */,
-				4F1D7F4428A45FDC00253407 /* MenuBarItem.xib in Resources */,
+				4FD148C728AA416700FE688C /* MenuBarItem.xib in Resources */,
 				4FF6669E25F2C93A00689B77 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2742,6 +2745,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				4F909CFD28A0C3D2009349A2 /* Base */,
+				4FD148C628AA414100FE688C /* de */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -2752,6 +2756,32 @@
 				4F909D1828A0C3D2009349A2 /* de */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		4FD148C928AA416700FE688C /* MenuBarItem.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4FD148C828AA416700FE688C /* Base */,
+				4FD148CB28AA416C00FE688C /* de */,
+			);
+			name = MenuBarItem.xib;
+			sourceTree = "<group>";
+		};
+		4FD148CE28AA423F00FE688C /* AuthorizeAccessibilityView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4FD148CD28AA423F00FE688C /* Base */,
+				4FD148D028AA424300FE688C /* de */,
+			);
+			name = AuthorizeAccessibilityView.xib;
+			sourceTree = "<group>";
+		};
+		4FD148D328AA428000FE688C /* ButtonOptionsViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4FD148D228AA428000FE688C /* Base */,
+			);
+			name = ButtonOptionsViewController.xib;
 			sourceTree = "<group>";
 		};
 		4FF665D925F2C92700689B77 /* MouseFix.xib */ = {
