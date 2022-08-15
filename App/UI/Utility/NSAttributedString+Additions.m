@@ -131,7 +131,7 @@
     return s;
 }
 
-+ (NSAttributedString *)attributedStringWithCoolMarkdown:(NSString *)md {
++ (NSAttributedString * _Nullable)attributedStringWithCoolMarkdown:(NSString *)md {
     
     if (@available(macOS 13.0, *)) {
         
@@ -538,8 +538,9 @@
 
 #pragma mark Fill out default attributes (to make size code work)
 
-/// Fill out default attributes, because layout code won't work if the string doesn't have a font and a textColor attribute on every character. See https://stackoverflow.com/questions/13621084/boundingrectwithsize-for-nsattributedstring-returning-wrong-size
 - (NSAttributedString *)attributedStringByFillingOutBase {
+
+    /// Fill out default attributes, because layout code won't work if the string doesn't have a font and a textColor attribute on every character. See https://stackoverflow.com/questions/13621084/boundingrectwithsize-for-nsattributedstring-returning-wrong-size
     
     NSFont *font = [NSFont systemFontOfSize:NSFont.systemFontSize];
     NSColor *color = NSColor.labelColor;

@@ -59,7 +59,7 @@
 "1TU-wL-skT.title" = "Widerrufen";
 
 /* Class = "NSMenuItem"; title = "View Guides or Ask the Community..."; ObjectID = "2Uv-W7-hzJ"; */
-"2Uv-W7-hzJ.title" = "Anleitungen Anschauen und die Community Fragen";
+"2Uv-W7-hzJ.title" = "Frag die Community & schau dir Guides an";
 
 /* Class = "NSMenuItem"; title = "Check for Updates..."; ObjectID = "3pt-ka-lxV"; */
 "3pt-ka-lxV.title" = "Nach Updates suchen...";
@@ -95,7 +95,7 @@
 "bIE-g7-3St.title" = "Hoch";
 
 /* Class = "NSMenuItem"; title = "Hide Mac Mouse Fix"; ObjectID = "Bnm-ze-Mca"; */
-"Bnm-ze-Mca.title" = "Kalender ausblenden";
+"Bnm-ze-Mca.title" = "Mac Mouse Fix ausblenden";
 
 /* Class = "NSViewController"; title = "<Initial Tab Controller>"; ObjectID = "bsO-Hw-2ui"; */
 "bsO-Hw-2ui.title" = "<>";
@@ -239,7 +239,7 @@
 "UeD-ND-tYj.title" = "Mac Mouse Fix beenden";
 
 /* Class = "NSTextFieldCell"; title = "Keyboard Modifers:"; ObjectID = "vbN-zN-z2V"; Note = "Scrolling > Keyboard Modifiers Label"; */
-"vbN-zN-z2V.title" = "Keyboard-Modifier:";
+"vbN-zN-z2V.title" = "Sondertasten:";
 
 /* Class = "NSTextFieldCell"; title = "<Text Cell>"; ObjectID = "WiZ-l0-Th5"; */
 "WiZ-l0-Th5.title" = "<>";

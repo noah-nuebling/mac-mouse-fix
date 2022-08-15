@@ -1,11 +1,26 @@
 /* First draft: Mac Mouse Fix will stay enabled after you close it */
-"enabled-toggle.hint" = "";
+"enabled-toggle.hint" = "Mac Mouse Fix bleibt eingeschaltet nachdem du es beendest";
 
 /* First draft: Lets you quickly disable Scroll Enhancements and other features */
-"menu-bar-toggle.hint" = "";
+"menu-bar-toggle.hint" = "<Noch nicht verwendet>";
 
 /* First draft: You'll see new updates when you open this window */
-"updates-toggle.hint" = "";
+"updates-toggle.hint" = "Du wirst Updates sehen wann immer du dieses Fenster öffnest";
 
 /* First draft: Mac Mouse Fix was **disabled** in System Settings.\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\' */
 "is-disabled-toast" = "Mac Mouse Fix wurde in den Systemeinstellungen **deaktiviert**.\nUm Mac Mouse Fix zu aktivieren:\n\n1. Öffne die [Anmeldeobjekte-Einstellungen](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Aktiviere \'Mac Mouse Fix.app\'";
+
+/* First draft: __Enabled__ Mac Mouse Fix for __Buttons__.\nIt had been disabled from the Menu Bar %@ || %@ will be replaced by the menubar icon */
+"button-revive-toast" = "Mac Mouse Fix __aktiviert__ für __Tasten__.\nEs war in der Menüleiste %@ deakiviert worden.";
+
+/* First draft: Enabled Mac Mouse Fix for __Scrolling__.\nIt had been disabled from the Menu Bar %@ || Where %@ will be replaced by the menubar icon. */
+"scroll-revive-toast" = "Mac Mouse Fix __aktiviert__ für __Scrollen__.\nEs war in der Menüleiste %@ deakiviert worden.";
+
+/* First draft: Set Scroll Speed at\nSystem Settings > Mouse > Scroll Speed */
+"macos-scroll-speed-hint" = "Stelle die Scroll-Geschwindigkeit ein unter\nSystemeinstellungen > Maus > Scrolltempo";
+
+/* First draft: Content tracks finger movement */
+"natural-scrolling-hint" = "Inhalte folgen Finger-Bewegung";
+
+/* First draft: Scroll precisely by moving the scroll wheel slowly */
+"precise-scrolling-hint" = "Scrolle präzise indem du das Scroll-Rad langsam bewegst";

@@ -165,7 +165,8 @@ import CocoaLumberjackSwift
             if #available(macOS 13, *) {
                 
                 /// Build string
-                var message = NSAttributedString(coolMarkdown: "__Enabled__ Mac Mouse Fix for __Buttons__.\nIt had been disabled from the Menu Bar %@")
+                var messageRaw = NSLocalizedString("button-revive-toast", comment: "First draft: __Enabled__ Mac Mouse Fix for __Buttons__.\nIt had been disabled from the Menu Bar %@ || %@ will be replaced by the menubar icon")
+                var message = NSAttributedString(coolMarkdown: messageRaw)!
                 let symbolString = NSAttributedString(symbol: "CoolMenuBarIcon", hPadding: 0.0, vOffset: -6, fallback: "<Mac Mouse Fix Menu Bar Item>")
                 message = NSAttributedString(attributedFormat: message, args: [symbolString])
                 

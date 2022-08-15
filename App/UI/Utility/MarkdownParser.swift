@@ -18,10 +18,12 @@ import Markdown
 
 @objc class MarkdownParser: NSObject {
  
-    @objc static func attributedString(markdown: String) -> NSAttributedString {
+    @objc static func attributedString(markdown: String) -> NSAttributedString? {
         
-        let document = Document(parsing: markdown, options: [])
+        let document = Document(parsing: markdown, source: URL(string: ""), options: [])
         print("THE DOC: \(document.debugDescription())")
+        
+        if document.isEmpty { return nil }
         
         var walker = ToAttributed()
         walker.visit(document)

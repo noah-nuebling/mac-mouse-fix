@@ -1,11 +1,26 @@
 /* First draft: Mac Mouse Fix will stay enabled after you close it */
-"enabled-toggle.hint" = "";
+"enabled-toggle.hint" = "Mac Mouse Fix will stay enabled after you close it";
 
 /* First draft: Lets you quickly disable Scroll Enhancements and other features */
-"menu-bar-toggle.hint" = "";
+"menu-bar-toggle.hint" = "<so far unused>";
 
 /* First draft: You'll see new updates when you open this window */
-"updates-toggle.hint" = "";
+"updates-toggle.hint" = "You'll see new updates when you open this window";
 
 /* First draft: Mac Mouse Fix was **disabled** in System Settings.\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\' */
 "is-disabled-toast" = "Mac Mouse Fix was **disabled** in System Settings.\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\'";
+
+/* First draft: __Enabled__ Mac Mouse Fix for __Buttons__.\nIt had been disabled from the Menu Bar %@ || %@ will be replaced by the menubar icon */
+"button-revive-toast" = "__Enabled__ Mac Mouse Fix for __Buttons__.\nIt had been disabled from the Menu Bar %@";
+
+/* First draft: Enabled Mac Mouse Fix for __Scrolling__.\nIt had been disabled from the Menu Bar %@ || Where %@ will be replaced by the menubar icon. */
+"scroll-revive-toast" = "Enabled Mac Mouse Fix for __Scrolling__.\nIt had been disabled from the Menu Bar %@";
+
+/* First draft: Set Scroll Speed at\nSystem Settings > Mouse > Scroll Speed */
+"macos-scroll-speed-hint" = "Set Scroll Speed at\nSystem Settings > Mouse > Scroll Speed";
+
+/* First draft: Content tracks finger movement */
+"natural-scrolling-hint" = "Content tracks finger movement";
+
+/* First draft: Scroll precisely by moving the scroll wheel slowly */
+"precise-scrolling-hint" = "Scroll precisely by moving the scroll wheel slowly";

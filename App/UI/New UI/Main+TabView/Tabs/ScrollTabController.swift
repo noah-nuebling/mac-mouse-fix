@@ -63,7 +63,9 @@ class ScrollTabController: NSViewController {
             if #available(macOS 13, *) {
                 
                 /// Build string
-                var message = NSAttributedString(coolMarkdown: "Enabled Mac Mouse Fix for __Scrolling__.\nIt had been disabled from the Menu Bar %@")
+                
+                var messageRaw = NSLocalizedString("scroll-revive-toast", comment: "First draft: Enabled Mac Mouse Fix for __Scrolling__.\nIt had been disabled from the Menu Bar %@ || Where %@ will be replaced by the menubar icon.")
+                var message = NSAttributedString(coolMarkdown: messageRaw)!
                 let symbolString = NSAttributedString(symbol: "CoolMenuBarIcon", hPadding: 0.0, vOffset: -6, fallback: "<Mac Mouse Fix Menu Bar Item>")
                 message = NSAttributedString(attributedFormat: message, args: [symbolString])
                 
@@ -98,7 +100,7 @@ class ScrollTabController: NSViewController {
         /// Natural direction
         naturalDirection.bindingTarget <~ naturalDirectionToggle.reactive.boolValues
         naturalDirectionToggle.reactive.boolValue <~ naturalDirection.producer
-        naturalDirectionHint.stringValue = "Content tracks finger movement"
+        naturalDirectionHint.stringValue = NSLocalizedString("natural-scrolling-hint", comment: "First draft: Content tracks finger movement")
         
         /// Scroll speed
         scrollSpeed.bindingTarget <~ scrollSpeedPicker.reactive.selectedIdentifiers.map({ identifier in
@@ -111,13 +113,13 @@ class ScrollTabController: NSViewController {
         /// Precise
         precise.bindingTarget <~ preciseToggle.reactive.boolValues
         preciseToggle.reactive.boolValue <~ precise.producer
-        preciseHint.stringValue = "Scroll precisely by moving the scroll wheel slowly"
+        preciseHint.stringValue = NSLocalizedString("precise-scrolling-hint", comment: "First draft: Scroll precisely by moving the scroll wheel slowly")
         
         /// Installl the macOSHint.
         ///     We manually make the macOSHint width equal the preciseSection width, because if the width changes the window resizes from the left edge which looks crappy.
         ///     This is a really hacky solution. Move this logic into CollapsableStackView (maybe rename to AnimatingStackView or sth).
         ///         Make a method `register(switchableViews:forArrangedSubview:)` which calculates a size that fits all those views, and then you switch between them with `switchTo(view:)`.
-        let macOSHint = CoolNSTextField(hintWithString: "Set Scroll Speed at\nSystem Settings > Mouse > Scroll Speed")
+        let macOSHint = CoolNSTextField(hintWithString: NSLocalizedString("macos-scroll-speed-hint", comment: "First draft: Set Scroll Speed at\nSystem Settings > Mouse > Scroll Speed"))
         macOSHint.translatesAutoresizingMaskIntoConstraints = false
         macOSHint.setContentHuggingPriority(.required, for: .horizontal)
         macOSHint.setContentHuggingPriority(.required, for: .vertical)
