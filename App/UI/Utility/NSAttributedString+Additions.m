@@ -9,6 +9,7 @@
 
 #import "NSAttributedString+Additions.h"
 #import <Cocoa/Cocoa.h>
+#import "Mac_Mouse_Fix-Swift.h"
 
 @implementation NSAttributedString (Additions)
 
@@ -120,23 +121,44 @@
 
 #pragma mark Markdown
 
-+ (NSAttributedString *)attributedStringWithCoolMarkdown:(NSString *)md __API_AVAILABLE(macos(13)) {
++ (NSAttributedString *)labelWithMarkdown:(NSString *)md {
+    return [self attributedStringWithCoolMarkdown:md];
+}
++ (NSAttributedString *)secondaryLabelWithMarkdown:(NSString *)md {
+    NSAttributedString *s = [self attributedStringWithCoolMarkdown:md];
+    s = [s attributedStringBySettingFontSize:11];
+    s = [s attributedStringBySettingSecondaryLabelColorForSubstring:s.string];
+    return s;
+}
+
++ (NSAttributedString *)attributedStringWithCoolMarkdown:(NSString *)md {
     
-    /// Create options object
-    NSAttributedStringMarkdownParsingOptions *options = [[NSAttributedStringMarkdownParsingOptions alloc] init];
-    
-    /// No idea what these do
-    options.allowsExtendedAttributes = NO;
-    options.appliesSourcePositionAttributes = NO;
-    
-    /// Make it respect linebreaks
-    options.interpretedSyntax = NSAttributedStringMarkdownInterpretedSyntaxInlineOnlyPreservingWhitespace;
-    
-    /// Create string
-    NSAttributedString *result = [[NSAttributedString alloc] initWithMarkdownString:md options:options baseURL:[NSURL URLWithString:@""] error:nil];
-    
-    /// Return result
-    return result;
+    if (@available(macOS 13.0, *), false) {
+        
+        /// Use library function
+        
+        /// Create options object
+        NSAttributedStringMarkdownParsingOptions *options = [[NSAttributedStringMarkdownParsingOptions alloc] init];
+        
+        /// No idea what these do
+        options.allowsExtendedAttributes = NO;
+        options.appliesSourcePositionAttributes = NO;
+        
+        /// Make it respect linebreaks
+        options.interpretedSyntax = NSAttributedStringMarkdownInterpretedSyntaxInlineOnlyPreservingWhitespace;
+        
+        /// Create string
+        NSAttributedString *result = [[NSAttributedString alloc] initWithMarkdownString:md options:options baseURL:[NSURL URLWithString:@""] error:nil];
+        
+        /// Return result
+        return result;
+        
+    } else {
+        
+        /// Fallback to custom function
+        
+        return [MarkdownParser attributedStringWithMarkdown:md];
+    }
 }
 
 #pragma mark Attributed string attributes
@@ -427,7 +449,7 @@
 
 #pragma mark Color
 
-- (NSAttributedString *)attributedStringBySettingSecondaryButtonTextColorForSubstring:(NSString *)subStr {
+- (NSAttributedString *)attributedStringBySettingSecondaryLabelColorForSubstring:(NSString *)subStr {
     
     NSMutableAttributedString *ret = self.mutableCopy;
     NSRange subRange = [self.string  rangeOfString:subStr];

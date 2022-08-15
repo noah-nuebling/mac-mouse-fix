@@ -791,7 +791,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     if (![btnMod isEqual:@""]) { /// Only display main button string in case there are button modifiers
         NSMutableAttributedString *trMutable = tr.mutableCopy;
         [trMutable appendAttributedString:[[NSAttributedString alloc] initWithString:mainButtonStr]];
-        tr = [trMutable attributedStringBySettingSecondaryButtonTextColorForSubstring:mainButtonStr];
+        tr = [trMutable attributedStringBySettingSecondaryLabelColorForSubstring:mainButtonStr];
     }
     
     /// Join all substrings to get result string

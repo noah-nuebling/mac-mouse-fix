@@ -10,7 +10,6 @@ import ReactiveSwift
 import ReactiveCocoa
 import CocoaLumberjackSwift
 import Sparkle
-import Down
 
 class GeneralTabController: NSViewController {
     
