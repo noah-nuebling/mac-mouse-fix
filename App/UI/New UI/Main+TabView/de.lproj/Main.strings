@@ -1,20 +1,11 @@
 /* Class = "NSTextFieldCell"; title = "Acceleration:"; ObjectID = "3a9-XG-oHg"; */
 "3a9-XG-oHg.title" = "Beschleunigung:";
 
-/* Class = "NSMenu"; title = "Main Menu"; ObjectID = "AYu-sK-qS6"; */
-"AYu-sK-qS6.title" = "";
-
 /* Class = "NSMenuItem"; title = "Medium"; ObjectID = "bJS-hB-0l3"; */
 "bJS-hB-0l3.title" = "Mittel";
 
-/* Class = "NSViewController"; title = "1"; ObjectID = "buH-zX-xXu"; */
-"buH-zX-xXu.title" = "";
-
 /* Class = "NSMenuItem"; title = "macOS"; ObjectID = "cnA-CV-nF3"; */
 "cnA-CV-nF3.title" = "macOS";
-
-/* Class = "NSViewController"; title = "2"; ObjectID = "d9S-X9-qM1"; */
-"d9S-X9-qM1.title" = "";
 
 /* Class = "NSTextFieldCell"; title = "Low"; ObjectID = "DNu-D4-tBY"; */
 "DNu-D4-tBY.title" = "Niedrig";
@@ -43,14 +34,8 @@
 /* Class = "NSMenuItem"; title = "Off"; ObjectID = "PdO-dH-G7Y"; */
 "PdO-dH-G7Y.title" = "Aus";
 
-/* Class = "NSViewController"; title = "Enable v1"; ObjectID = "qcW-e9-BqR"; */
-"qcW-e9-BqR.title" = "";
-
 /* Class = "NSTabViewItem"; label = "General"; ObjectID = "rIq-3r-6ck"; */
 "rIq-3r-6ck.label" = "Allgemein";
-
-/* Class = "NSButtonCell"; title = "0.6x"; ObjectID = "S55-uf-Xij"; */
-"S55-uf-Xij.title" = "";
 
 /* Class = "NSMenuItem"; title = "High"; ObjectID = "sef-RZ-SeL"; */
 "sef-RZ-SeL.title" = "Hoch";
@@ -67,11 +52,11 @@
 /* Class = "NSTextFieldCell"; title = "Medium"; ObjectID = "YDr-ez-VKk"; */
 "YDr-ez-VKk.title" = "Mittel";
 
-/* Class = "NSMenuItem"; title = "Undo"; ObjectID = "1TU-wL-skT"; */
-"1TU-wL-skT.title" = "";
-
 /* Class = "NSTextFieldCell"; title = "<Scroll precisely by moving the scroll wheel slowly>"; ObjectID = "1nK-vb-jNz"; */
 "1nK-vb-jNz.title" = "";
+
+/* Class = "NSMenuItem"; title = "Undo"; ObjectID = "1TU-wL-skT"; */
+"1TU-wL-skT.title" = "";
 
 /* Class = "NSMenuItem"; title = "View Guides or Ask the Community..."; ObjectID = "2Uv-W7-hzJ"; */
 "2Uv-W7-hzJ.title" = "";
@@ -85,11 +70,11 @@
 /* Class = "NSButtonCell"; title = "Precise Scrolling"; ObjectID = "4hf-tQ-y76"; */
 "4hf-tQ-y76.title" = "";
 
-/* Class = "NSMenuItem"; title = "Edit"; ObjectID = "6Yt-gG-Nf9"; */
-"6Yt-gG-Nf9.title" = "";
-
 /* Class = "NSMenuItem"; title = "Delete"; ObjectID = "6es-it-kDs"; */
 "6es-it-kDs.title" = "";
+
+/* Class = "NSMenuItem"; title = "Edit"; ObjectID = "6Yt-gG-Nf9"; */
+"6Yt-gG-Nf9.title" = "";
 
 /* Class = "NSTextFieldCell"; title = "Scroll Precisely"; ObjectID = "A6t-UZ-2DE"; */
 "A6t-UZ-2DE.title" = "";
@@ -97,8 +82,29 @@
 /* Class = "NSTextFieldCell"; title = "<Content tracks finger movement>"; ObjectID = "AHn-zX-g4d"; */
 "AHn-zX-g4d.title" = "";
 
+/* Class = "NSMenu"; title = "Main Menu"; ObjectID = "AYu-sK-qS6"; */
+"AYu-sK-qS6.title" = "";
+
+/* Class = "NSMenuItem"; title = "Bring All to Front"; ObjectID = "aZA-uL-uvx"; */
+"aZA-uL-uvx.title" = "";
+
+/* Class = "NSTextFieldCell"; title = "<Enable Hint>"; ObjectID = "bew-ni-FnZ"; */
+"bew-ni-FnZ.title" = "";
+
+/* Class = "NSMenuItem"; title = "High"; ObjectID = "bIE-g7-3St"; */
+"bIE-g7-3St.title" = "";
+
 /* Class = "NSMenuItem"; title = "Hide Mac Mouse Fix"; ObjectID = "Bnm-ze-Mca"; */
 "Bnm-ze-Mca.title" = "";
+
+/* Class = "NSViewController"; title = "Initial Tab Controller"; ObjectID = "bsO-Hw-2ui"; */
+"bsO-Hw-2ui.title" = "";
+
+/* Class = "NSViewController"; title = "1"; ObjectID = "buH-zX-xXu"; */
+"buH-zX-xXu.title" = "";
+
+/* Class = "NSViewController"; title = "2"; ObjectID = "d9S-X9-qM1"; */
+"d9S-X9-qM1.title" = "";
 
 /* Class = "NSMenu"; title = "Help"; ObjectID = "DVS-lH-VBH"; */
 "DVS-lH-VBH.title" = "";
@@ -109,107 +115,17 @@
 /* Class = "NSTextFieldCell"; title = "Scroll Swiftly"; ObjectID = "ENz-Ny-4ax"; */
 "ENz-Ny-4ax.title" = "";
 
-/* Class = "NSMenuItem"; title = "Low"; ObjectID = "FT8-zP-xsg"; */
-"FT8-zP-xsg.title" = "";
-
-/* Class = "NSMenuItem"; title = "Help"; ObjectID = "Fp4-bf-cbR"; */
-"Fp4-bf-cbR.title" = "";
-
-/* Class = "NSMenuItem"; title = "Services"; ObjectID = "Gr8-qh-oGd"; */
-"Gr8-qh-oGd.title" = "";
-
-/* Class = "NSTextFieldCell"; title = "Zoom In or Out"; ObjectID = "H4T-Rp-t33"; */
-"H4T-Rp-t33.title" = "";
-
-/* Class = "NSButtonCell"; title = "Options..."; ObjectID = "Hur-83-2a2"; */
-"Hur-83-2a2.title" = "";
-
-/* Class = "NSMenuItem"; title = "Redo"; ObjectID = "IJF-sN-Wfw"; */
-"IJF-sN-Wfw.title" = "";
-
-/* Class = "NSButtonCell"; title = "Show in Menu Bar"; ObjectID = "ILO-GQ-vNk"; */
-"ILO-GQ-vNk.title" = "";
-
-/* Class = "NSMenu"; title = "Window"; ObjectID = "InY-TB-ky6"; */
-"InY-TB-ky6.title" = "";
-
-/* Class = "NSTextFieldCell"; title = "Scroll Horizontally"; ObjectID = "Jds-wI-1h1"; */
-"Jds-wI-1h1.title" = "";
-
-/* Class = "NSMenu"; title = "Edit"; ObjectID = "LTC-zW-sTp"; */
-"LTC-zW-sTp.title" = "";
-
-/* Class = "NSButtonCell"; title = "Get Beta Versions"; ObjectID = "Mck-5W-5lv"; */
-"Mck-5W-5lv.title" = "";
-
-/* Class = "NSButtonCell"; title = "with Inertia"; ObjectID = "N65-aN-Hxp"; */
-"N65-aN-Hxp.title" = "";
-
-/* Class = "NSTextFieldCell"; title = "Move the mouse pointer inside the '+' field, then click a mouse button to assign an action to it. \nYou can also Double Click, Click and Drag, and more."; ObjectID = "N7H-9j-DIr"; */
-"N7H-9j-DIr.title" = "";
-
-/* Class = "NSMenuItem"; title = "Minimize"; ObjectID = "NdF-Gb-mOK"; */
-"NdF-Gb-mOK.title" = "";
-
-/* Class = "NSBox"; title = "Box"; ObjectID = "Pxm-4w-iO7"; */
-"Pxm-4w-iO7.title" = "";
-
-/* Class = "NSTextFieldCell"; title = "⌘⇧⌥⌃ + Triple Click and Drag Button 3"; ObjectID = "QKM-im-bk9"; */
-"QKM-im-bk9.title" = "";
-
-/* Class = "NSTextFieldCell"; title = "Enable Mac Mouse Fix"; ObjectID = "RV9-5T-rvb"; */
-"RV9-5T-rvb.title" = "";
-
-/* Class = "NSMenuItem"; title = "Hide Others"; ObjectID = "Rlr-89-4fc"; */
-"Rlr-89-4fc.title" = "";
-
-/* Class = "NSMenuItem"; title = "Close"; ObjectID = "S3S-2l-eNQ"; */
-"S3S-2l-eNQ.title" = "";
-
-/* Class = "NSMenuItem"; title = "Paste"; ObjectID = "S6k-al-LbR"; */
-"S6k-al-LbR.title" = "";
-
-/* Class = "NSTextFieldCell"; title = "<Scroll precisely by moving the scroll wheel slowly>"; ObjectID = "SaY-fF-d1s"; */
-"SaY-fF-d1s.title" = "";
-
-/* Class = "NSButtonCell"; title = "with Inertia"; ObjectID = "TRf-L3-wo2"; */
-"TRf-L3-wo2.title" = "";
-
-/* Class = "NSMenuItem"; title = "Quit Mac Mouse Fix"; ObjectID = "UeD-ND-tYj"; */
-"UeD-ND-tYj.title" = "";
-
-/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "WiZ-l0-Th5"; */
-"WiZ-l0-Th5.title" = "";
-
-/* Class = "NSMenu"; title = "Services"; ObjectID = "X8q-Nk-Fwr"; */
-"X8q-Nk-Fwr.title" = "";
-
-/* Class = "NSMenu"; title = "Mac Mouse Fix"; ObjectID = "Yyg-LD-A1v"; */
-"Yyg-LD-A1v.title" = "";
-
-/* Class = "NSMenuItem"; title = "Zoom"; ObjectID = "ZfY-xQ-tQl"; */
-"ZfY-xQ-tQl.title" = "";
-
-/* Class = "NSTextFieldCell"; title = "Button X"; ObjectID = "Zqs-Y4-U4Q"; */
-"Zqs-Y4-U4Q.title" = "";
-
-/* Class = "NSMenuItem"; title = "Bring All to Front"; ObjectID = "aZA-uL-uvx"; */
-"aZA-uL-uvx.title" = "";
-
-/* Class = "NSMenuItem"; title = "High"; ObjectID = "bIE-g7-3St"; */
-"bIE-g7-3St.title" = "";
-
-/* Class = "NSTextFieldCell"; title = "<Enable Hint>"; ObjectID = "bew-ni-FnZ"; */
-"bew-ni-FnZ.title" = "";
-
-/* Class = "NSViewController"; title = "Initial Tab Controller"; ObjectID = "bsO-Hw-2ui"; */
-"bsO-Hw-2ui.title" = "";
-
 /* Class = "NSMenuItem"; title = "Show All"; ObjectID = "fGs-UI-L0d"; */
 "fGs-UI-L0d.title" = "";
 
 /* Class = "NSMenuItem"; title = "Window"; ObjectID = "fNA-5s-U4d"; */
 "fNA-5s-U4d.title" = "";
+
+/* Class = "NSMenuItem"; title = "Help"; ObjectID = "Fp4-bf-cbR"; */
+"Fp4-bf-cbR.title" = "";
+
+/* Class = "NSMenuItem"; title = "Low"; ObjectID = "FT8-zP-xsg"; */
+"FT8-zP-xsg.title" = "";
 
 /* Class = "NSMenuItem"; title = "macOS"; ObjectID = "fW3-4Q-yB8"; */
 "fW3-4Q-yB8.title" = "";
@@ -226,11 +142,32 @@
 /* Class = "NSTableColumn"; headerCell.title = "Effect"; ObjectID = "gOt-GR-IbE"; */
 "gOt-GR-IbE.headerCell.title" = "";
 
+/* Class = "NSMenuItem"; title = "Services"; ObjectID = "Gr8-qh-oGd"; */
+"Gr8-qh-oGd.title" = "";
+
+/* Class = "NSTextFieldCell"; title = "Zoom In or Out"; ObjectID = "H4T-Rp-t33"; */
+"H4T-Rp-t33.title" = "";
+
 /* Class = "NSMenuItem"; title = "Mac Mouse Fix"; ObjectID = "hSC-BE-EZJ"; */
 "hSC-BE-EZJ.title" = "";
 
+/* Class = "NSButtonCell"; title = "Options..."; ObjectID = "Hur-83-2a2"; */
+"Hur-83-2a2.title" = "";
+
 /* Class = "NSMenuItem"; title = "Copy"; ObjectID = "iFe-4y-9Xa"; */
 "iFe-4y-9Xa.title" = "";
+
+/* Class = "NSMenuItem"; title = "Redo"; ObjectID = "IJF-sN-Wfw"; */
+"IJF-sN-Wfw.title" = "";
+
+/* Class = "NSButtonCell"; title = "Show in Menu Bar"; ObjectID = "ILO-GQ-vNk"; */
+"ILO-GQ-vNk.title" = "";
+
+/* Class = "NSMenu"; title = "Window"; ObjectID = "InY-TB-ky6"; */
+"InY-TB-ky6.title" = "";
+
+/* Class = "NSTextFieldCell"; title = "Scroll Horizontally"; ObjectID = "Jds-wI-1h1"; */
+"Jds-wI-1h1.title" = "";
 
 /* Class = "NSMenuItem"; title = "Click and Drag Button 3"; ObjectID = "kK6-b5-Rfd"; */
 "kK6-b5-Rfd.title" = "";
@@ -241,23 +178,86 @@
 /* Class = "NSButtonCell"; title = "Restore Default..."; ObjectID = "lrw-Lp-nQ4"; */
 "lrw-Lp-nQ4.title" = "";
 
+/* Class = "NSMenu"; title = "Edit"; ObjectID = "LTC-zW-sTp"; */
+"LTC-zW-sTp.title" = "";
+
+/* Class = "NSButtonCell"; title = "Get Beta Versions"; ObjectID = "Mck-5W-5lv"; */
+"Mck-5W-5lv.title" = "";
+
+/* Class = "NSButtonCell"; title = "with Inertia"; ObjectID = "N65-aN-Hxp"; */
+"N65-aN-Hxp.title" = "";
+
+/* Class = "NSTextFieldCell"; title = "Move the mouse pointer inside the '+' field, then click a mouse button to assign an action to it. \nYou can also Double Click, Click and Drag, and more."; ObjectID = "N7H-9j-DIr"; */
+"N7H-9j-DIr.title" = "";
+
+/* Class = "NSMenuItem"; title = "Minimize"; ObjectID = "NdF-Gb-mOK"; */
+"NdF-Gb-mOK.title" = "";
+
 /* Class = "NSTableColumn"; headerCell.title = "Trigger"; ObjectID = "o3B-zA-fJm"; */
 "o3B-zA-fJm.headerCell.title" = "";
 
 /* Class = "NSMenuItem"; title = "Select All"; ObjectID = "oEX-Tp-9Cv"; */
 "oEX-Tp-9Cv.title" = "";
 
+/* Class = "NSBox"; title = "Box"; ObjectID = "Pxm-4w-iO7"; */
+"Pxm-4w-iO7.title" = "";
+
+/* Class = "NSViewController"; title = "Enable v1"; ObjectID = "qcW-e9-BqR"; */
+"qcW-e9-BqR.title" = "";
+
+/* Class = "NSTextFieldCell"; title = "⌘⇧⌥⌃ + Triple Click and Drag Button 3"; ObjectID = "QKM-im-bk9"; */
+"QKM-im-bk9.title" = "";
+
 /* Class = "NSMenuItem"; title = "Cut"; ObjectID = "rFn-h3-0EN"; */
 "rFn-h3-0EN.title" = "";
+
+/* Class = "NSMenuItem"; title = "Hide Others"; ObjectID = "Rlr-89-4fc"; */
+"Rlr-89-4fc.title" = "";
+
+/* Class = "NSTextFieldCell"; title = "Enable Mac Mouse Fix"; ObjectID = "RV9-5T-rvb"; */
+"RV9-5T-rvb.title" = "";
+
+/* Class = "NSMenuItem"; title = "Close"; ObjectID = "S3S-2l-eNQ"; */
+"S3S-2l-eNQ.title" = "";
+
+/* Class = "NSButtonCell"; title = "0.6x"; ObjectID = "S55-uf-Xij"; */
+"S55-uf-Xij.title" = "";
+
+/* Class = "NSMenuItem"; title = "Paste"; ObjectID = "S6k-al-LbR"; */
+"S6k-al-LbR.title" = "";
+
+/* Class = "NSTextFieldCell"; title = "<Scroll precisely by moving the scroll wheel slowly>"; ObjectID = "SaY-fF-d1s"; */
+"SaY-fF-d1s.title" = "";
 
 /* Class = "NSButtonCell"; title = "Check for Updates"; ObjectID = "tdD-8Q-JB2"; */
 "tdD-8Q-JB2.title" = "";
 
+/* Class = "NSButtonCell"; title = "with Inertia"; ObjectID = "TRf-L3-wo2"; */
+"TRf-L3-wo2.title" = "";
+
 /* Class = "NSMenuItem"; title = "About Mac Mouse Fix"; ObjectID = "u9F-yq-WC3"; */
 "u9F-yq-WC3.title" = "";
 
+/* Class = "NSMenuItem"; title = "Quit Mac Mouse Fix"; ObjectID = "UeD-ND-tYj"; */
+"UeD-ND-tYj.title" = "";
+
 /* Class = "NSTextFieldCell"; title = "Keyboard Modifers:"; ObjectID = "vbN-zN-z2V"; */
 "vbN-zN-z2V.title" = "";
+
+/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "WiZ-l0-Th5"; */
+"WiZ-l0-Th5.title" = "";
+
+/* Class = "NSMenu"; title = "Services"; ObjectID = "X8q-Nk-Fwr"; */
+"X8q-Nk-Fwr.title" = "";
+
+/* Class = "NSMenu"; title = "Mac Mouse Fix"; ObjectID = "Yyg-LD-A1v"; */
+"Yyg-LD-A1v.title" = "";
+
+/* Class = "NSMenuItem"; title = "Zoom"; ObjectID = "ZfY-xQ-tQl"; */
+"ZfY-xQ-tQl.title" = "";
+
+/* Class = "NSTextFieldCell"; title = "Button X"; ObjectID = "Zqs-Y4-U4Q"; */
+"Zqs-Y4-U4Q.title" = "";
 
 /* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "zwX-Pv-OOK"; */
 "zwX-Pv-OOK.title" = "";
