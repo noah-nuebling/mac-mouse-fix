@@ -1,22 +1,22 @@
-/* Class = "NSTextFieldCell"; title = "Acceleration:"; ObjectID = "3a9-XG-oHg"; */
+/* Class = "NSTextFieldCell"; title = "Acceleration:"; ObjectID = "3a9-XG-oHg"; Note = "Pointer > Acceleration Label"; */
 "3a9-XG-oHg.title" = "Beschleunigung:";
 
-/* Class = "NSMenuItem"; title = "Medium"; ObjectID = "bJS-hB-0l3"; */
+/* Class = "NSMenuItem"; title = "Medium"; ObjectID = "bJS-hB-0l3"; Note = "Pointer > Acceleration > Medium Option"; */
 "bJS-hB-0l3.title" = "Mittel";
 
-/* Class = "NSMenuItem"; title = "macOS"; ObjectID = "cnA-CV-nF3"; */
+/* Class = "NSMenuItem"; title = "macOS"; ObjectID = "cnA-CV-nF3"; Note = "Pointer > Acceleration > macOS Option"; */
 "cnA-CV-nF3.title" = "macOS";
 
-/* Class = "NSTextFieldCell"; title = "Low"; ObjectID = "DNu-D4-tBY"; */
+/* Class = "NSTextFieldCell"; title = "Low"; ObjectID = "DNu-D4-tBY"; Note = "Pointer > Sensitivity Slider > Low Label"; */
 "DNu-D4-tBY.title" = "Niedrig";
 
-/* Class = "NSTextFieldCell"; title = "Set acceleration under \nSystem Preferences > Mouse > Tracking speed "; ObjectID = "DtT-YF-gUn"; */
+/* Class = "NSTextFieldCell"; title = "Set acceleration under \nSystem Preferences > Mouse > Tracking speed "; ObjectID = "DtT-YF-gUn"; Note = "Pointer > Acceleration > macOS Option > Hint"; */
 "DtT-YF-gUn.title" = "Stelle Beschleunigung unter\nSystemeinstellungen > Maus > Zeigerbewegung ein";
 
 /* Class = "NSViewController"; title = "General"; ObjectID = "eLS-O0-A1x"; */
 "eLS-O0-A1x.title" = "Allgemein";
 
-/* Class = "NSMenuItem"; title = "Low"; ObjectID = "hmb-DX-idO"; */
+/* Class = "NSMenuItem"; title = "Low"; ObjectID = "hmb-DX-idO"; Note = "Pointer > Acceleration > Low Option"; */
 "hmb-DX-idO.title" = "Niedrig";
 
 /* Class = "NSWindow"; title = "Mac Mouse Fix"; ObjectID = "IQv-IB-iLA"; */
@@ -31,25 +31,25 @@
 /* Class = "NSTabViewItem"; label = "Buttons"; ObjectID = "Mjk-wy-Z7C"; */
 "Mjk-wy-Z7C.label" = "Tasten";
 
-/* Class = "NSMenuItem"; title = "Off"; ObjectID = "PdO-dH-G7Y"; */
+/* Class = "NSMenuItem"; title = "Off"; ObjectID = "PdO-dH-G7Y"; Note = "Pointer > Acceleration > Off Option"; */
 "PdO-dH-G7Y.title" = "Aus";
 
 /* Class = "NSTabViewItem"; label = "General"; ObjectID = "rIq-3r-6ck"; */
 "rIq-3r-6ck.label" = "Allgemein";
 
-/* Class = "NSMenuItem"; title = "High"; ObjectID = "sef-RZ-SeL"; */
+/* Class = "NSMenuItem"; title = "High"; ObjectID = "sef-RZ-SeL"; Note = "Pointer > Acceleration > High Option"; */
 "sef-RZ-SeL.title" = "Hoch";
 
 /* Class = "NSTabViewItem"; label = "About"; ObjectID = "wal-3r-ZZs"; */
 "wal-3r-ZZs.label" = "Über";
 
-/* Class = "NSTextFieldCell"; title = "High"; ObjectID = "wJW-hQ-lUc"; */
+/* Class = "NSTextFieldCell"; title = "High"; ObjectID = "wJW-hQ-lUc"; Note = "Pointer > Sensitivity Slider > High Label"; */
 "wJW-hQ-lUc.title" = "Hoch";
 
-/* Class = "NSTextFieldCell"; title = "Sensitivity:"; ObjectID = "XAP-He-hda"; */
+/* Class = "NSTextFieldCell"; title = "Sensitivity:"; ObjectID = "XAP-He-hda"; Note = "Pointer > Sensitivity Label"; */
 "XAP-He-hda.title" = "Empfindlichkeit:";
 
-/* Class = "NSTextFieldCell"; title = "Medium"; ObjectID = "YDr-ez-VKk"; */
+/* Class = "NSTextFieldCell"; title = "Medium"; ObjectID = "YDr-ez-VKk"; Note = "Pointer > Sensitivity Slider > Medium Label"; */
 "YDr-ez-VKk.title" = "Mittel";
 
 /* Class = "NSTextFieldCell"; title = "<Scroll precisely by moving the scroll wheel slowly>"; ObjectID = "1nK-vb-jNz"; */
@@ -67,7 +67,7 @@
 /* Class = "NSMenuItem"; title = "Mission Control and Spaces"; ObjectID = "4Cx-DN-qX3"; */
 "4Cx-DN-qX3.title" = "";
 
-/* Class = "NSButtonCell"; title = "Precise Scrolling"; ObjectID = "4hf-tQ-y76"; */
+/* Class = "NSButtonCell"; title = "Precise Scrolling"; ObjectID = "4hf-tQ-y76"; Note = "Scrolling > Precise Scrolling Toggle"; */
 "4hf-tQ-y76.title" = "";
 
 /* Class = "NSMenuItem"; title = "Delete"; ObjectID = "6es-it-kDs"; */
@@ -79,7 +79,7 @@
 /* Class = "NSTextFieldCell"; title = "Scroll Precisely"; ObjectID = "A6t-UZ-2DE"; */
 "A6t-UZ-2DE.title" = "";
 
-/* Class = "NSTextFieldCell"; title = "<Content tracks finger movement>"; ObjectID = "AHn-zX-g4d"; */
+/* Class = "NSTextFieldCell"; title = "<Content tracks finger movement>"; ObjectID = "AHn-zX-g4d"; Note = "Scrolling > Smooth Scrolling Toggle"; */
 "AHn-zX-g4d.title" = "";
 
 /* Class = "NSMenu"; title = "Main Menu"; ObjectID = "AYu-sK-qS6"; */
@@ -91,7 +91,7 @@
 /* Class = "NSTextFieldCell"; title = "<Enable Hint>"; ObjectID = "bew-ni-FnZ"; */
 "bew-ni-FnZ.title" = "";
 
-/* Class = "NSMenuItem"; title = "High"; ObjectID = "bIE-g7-3St"; */
+/* Class = "NSMenuItem"; title = "High"; ObjectID = "bIE-g7-3St"; Note = "Scrolling > Scroll Speed > High Option"; */
 "bIE-g7-3St.title" = "";
 
 /* Class = "NSMenuItem"; title = "Hide Mac Mouse Fix"; ObjectID = "Bnm-ze-Mca"; */
@@ -109,7 +109,7 @@
 /* Class = "NSMenu"; title = "Help"; ObjectID = "DVS-lH-VBH"; */
 "DVS-lH-VBH.title" = "";
 
-/* Class = "NSMenuItem"; title = "Medium"; ObjectID = "E0q-4e-axc"; */
+/* Class = "NSMenuItem"; title = "Medium"; ObjectID = "E0q-4e-axc"; Note = "Scrolling > Scroll Speed > Medium Option"; */
 "E0q-4e-axc.title" = "";
 
 /* Class = "NSTextFieldCell"; title = "Scroll Swiftly"; ObjectID = "ENz-Ny-4ax"; */
@@ -124,10 +124,10 @@
 /* Class = "NSMenuItem"; title = "Help"; ObjectID = "Fp4-bf-cbR"; */
 "Fp4-bf-cbR.title" = "";
 
-/* Class = "NSMenuItem"; title = "Low"; ObjectID = "FT8-zP-xsg"; */
+/* Class = "NSMenuItem"; title = "Low"; ObjectID = "FT8-zP-xsg"; Note = "Scrolling > Scroll Speed > Low Option"; */
 "FT8-zP-xsg.title" = "";
 
-/* Class = "NSMenuItem"; title = "macOS"; ObjectID = "fW3-4Q-yB8"; */
+/* Class = "NSMenuItem"; title = "macOS"; ObjectID = "fW3-4Q-yB8"; Note = "Scrolling > Scroll Speed > macOS Option"; */
 "fW3-4Q-yB8.title" = "";
 
 /* Class = "NSButtonCell"; title = "Smooth Scrolling"; ObjectID = "g1O-zc-bnx"; */
@@ -136,7 +136,7 @@
 /* Class = "NSTabViewItem"; label = "Initial"; ObjectID = "g9N-Za-8Ss"; */
 "g9N-Za-8Ss.label" = "";
 
-/* Class = "NSButtonCell"; title = "Natural Scroll Direction"; ObjectID = "gK0-1z-Pjv"; */
+/* Class = "NSButtonCell"; title = "Natural Scroll Direction"; ObjectID = "gK0-1z-Pjv"; Note = "Scrolling > Natural Scroll Direction Toggle"; */
 "gK0-1z-Pjv.title" = "";
 
 /* Class = "NSTableColumn"; headerCell.title = "Effect"; ObjectID = "gOt-GR-IbE"; */
@@ -151,7 +151,7 @@
 /* Class = "NSMenuItem"; title = "Mac Mouse Fix"; ObjectID = "hSC-BE-EZJ"; */
 "hSC-BE-EZJ.title" = "";
 
-/* Class = "NSButtonCell"; title = "Options..."; ObjectID = "Hur-83-2a2"; */
+/* Class = "NSButtonCell"; title = "Options..."; ObjectID = "Hur-83-2a2"; Note = "Buttons > Options..."; */
 "Hur-83-2a2.title" = "";
 
 /* Class = "NSMenuItem"; title = "Copy"; ObjectID = "iFe-4y-9Xa"; */
@@ -160,7 +160,7 @@
 /* Class = "NSMenuItem"; title = "Redo"; ObjectID = "IJF-sN-Wfw"; */
 "IJF-sN-Wfw.title" = "";
 
-/* Class = "NSButtonCell"; title = "Show in Menu Bar"; ObjectID = "ILO-GQ-vNk"; */
+/* Class = "NSButtonCell"; title = "Show in Menu Bar"; ObjectID = "ILO-GQ-vNk"; Note = "General > Show in Menu Bar Toggle"; */
 "ILO-GQ-vNk.title" = "";
 
 /* Class = "NSMenu"; title = "Window"; ObjectID = "InY-TB-ky6"; */
@@ -172,7 +172,7 @@
 /* Class = "NSMenuItem"; title = "Click and Drag Button 3"; ObjectID = "kK6-b5-Rfd"; */
 "kK6-b5-Rfd.title" = "";
 
-/* Class = "NSTextFieldCell"; title = "Scroll Speed:"; ObjectID = "l7d-al-Y14"; */
+/* Class = "NSTextFieldCell"; title = "Scroll Speed:"; ObjectID = "l7d-al-Y14"; Note = "Scrolling > Scroll Speed Label"; */
 "l7d-al-Y14.title" = "";
 
 /* Class = "NSButtonCell"; title = "Restore Default..."; ObjectID = "lrw-Lp-nQ4"; */
@@ -181,13 +181,13 @@
 /* Class = "NSMenu"; title = "Edit"; ObjectID = "LTC-zW-sTp"; */
 "LTC-zW-sTp.title" = "";
 
-/* Class = "NSButtonCell"; title = "Get Beta Versions"; ObjectID = "Mck-5W-5lv"; */
+/* Class = "NSButtonCell"; title = "Get Beta Versions"; ObjectID = "Mck-5W-5lv"; Note = "General > Get Beta Versions Toggle"; */
 "Mck-5W-5lv.title" = "";
 
-/* Class = "NSButtonCell"; title = "with Inertia"; ObjectID = "N65-aN-Hxp"; */
+/* Class = "NSButtonCell"; title = "with Inertia"; ObjectID = "N65-aN-Hxp"; Note = "Scrolling > with Inertia Toggle"; */
 "N65-aN-Hxp.title" = "";
 
-/* Class = "NSTextFieldCell"; title = "Move the mouse pointer inside the '+' field, then click a mouse button to assign an action to it. \nYou can also Double Click, Click and Drag, and more."; ObjectID = "N7H-9j-DIr"; */
+/* Class = "NSTextFieldCell"; title = "Move the mouse pointer inside the '+' field, then click a mouse button to assign an action to it. \nYou can also Double Click, Click and Drag, and more."; ObjectID = "N7H-9j-DIr"; Note = "Buttons > Add Field Hint"; */
 "N7H-9j-DIr.title" = "";
 
 /* Class = "NSMenuItem"; title = "Minimize"; ObjectID = "NdF-Gb-mOK"; */
@@ -214,7 +214,7 @@
 /* Class = "NSMenuItem"; title = "Hide Others"; ObjectID = "Rlr-89-4fc"; */
 "Rlr-89-4fc.title" = "";
 
-/* Class = "NSTextFieldCell"; title = "Enable Mac Mouse Fix"; ObjectID = "RV9-5T-rvb"; */
+/* Class = "NSTextFieldCell"; title = "Enable Mac Mouse Fix"; ObjectID = "RV9-5T-rvb"; Note = "General > Enable Mac Mouse Fix Label"; */
 "RV9-5T-rvb.title" = "";
 
 /* Class = "NSMenuItem"; title = "Close"; ObjectID = "S3S-2l-eNQ"; */
@@ -229,7 +229,7 @@
 /* Class = "NSTextFieldCell"; title = "<Scroll precisely by moving the scroll wheel slowly>"; ObjectID = "SaY-fF-d1s"; */
 "SaY-fF-d1s.title" = "";
 
-/* Class = "NSButtonCell"; title = "Check for Updates"; ObjectID = "tdD-8Q-JB2"; */
+/* Class = "NSButtonCell"; title = "Check for Updates"; ObjectID = "tdD-8Q-JB2"; Note = "General > Check for Updates Toggle"; */
 "tdD-8Q-JB2.title" = "";
 
 /* Class = "NSButtonCell"; title = "with Inertia"; ObjectID = "TRf-L3-wo2"; */
@@ -241,7 +241,7 @@
 /* Class = "NSMenuItem"; title = "Quit Mac Mouse Fix"; ObjectID = "UeD-ND-tYj"; */
 "UeD-ND-tYj.title" = "";
 
-/* Class = "NSTextFieldCell"; title = "Keyboard Modifers:"; ObjectID = "vbN-zN-z2V"; */
+/* Class = "NSTextFieldCell"; title = "Keyboard Modifers:"; ObjectID = "vbN-zN-z2V"; Note = "Scrolling > Keyboard Modifiers Label"; */
 "vbN-zN-z2V.title" = "";
 
 /* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "WiZ-l0-Th5"; */

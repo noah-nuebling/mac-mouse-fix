@@ -70,7 +70,6 @@
 		4F8FC13F275DC81900887A0C /* PrefixSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8FC13E275DC81900887A0C /* PrefixSwift.swift */; };
 		4F8FC140275DC81900887A0C /* PrefixSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8FC13E275DC81900887A0C /* PrefixSwift.swift */; };
 		4F909CF028A0C3B7009349A2 /* MainAppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909CEF28A0C3B6009349A2 /* MainAppState.swift */; };
-		4F909D2028A0C3D2009349A2 /* Main.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4F909CF328A0C3D2009349A2 /* Main.strings */; };
 		4F909D2128A0C3D2009349A2 /* GeneralTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909CF628A0C3D2009349A2 /* GeneralTabController.swift */; };
 		4F909D2228A0C3D2009349A2 /* ScrollTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909CF728A0C3D2009349A2 /* ScrollTabController.swift */; };
 		4F909D2328A0C3D2009349A2 /* PointerTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909CF828A0C3D2009349A2 /* PointerTabController.swift */; };
@@ -476,7 +475,6 @@
 		4F8CF94528686C0100BF5E55 /* DoublesMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoublesMatrix.m; sourceTree = "<group>"; };
 		4F8FC13E275DC81900887A0C /* PrefixSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefixSwift.swift; sourceTree = "<group>"; };
 		4F909CEF28A0C3B6009349A2 /* MainAppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainAppState.swift; sourceTree = "<group>"; };
-		4F909CF428A0C3D2009349A2 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
 		4F909CF628A0C3D2009349A2 /* GeneralTabController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralTabController.swift; sourceTree = "<group>"; };
 		4F909CF728A0C3D2009349A2 /* ScrollTabController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollTabController.swift; sourceTree = "<group>"; };
 		4F909CF828A0C3D2009349A2 /* PointerTabController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointerTabController.swift; sourceTree = "<group>"; };
@@ -1118,7 +1116,6 @@
 				4F909D0128A0C3D2009349A2 /* ViewController.h */,
 				4F909CFB28A0C3D2009349A2 /* ViewController.m */,
 				4F909CFC28A0C3D2009349A2 /* Main.storyboard */,
-				4F909CF328A0C3D2009349A2 /* Main.strings */,
 				4F909CFA28A0C3D2009349A2 /* TabViewController.swift */,
 				4F909CFF28A0C3D2009349A2 /* TabViewControllerDisabling.swift */,
 				4F909CF928A0C3D2009349A2 /* TabItemControllerProtocol.swift */,
@@ -2257,7 +2254,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FF6654225F2C7B000689B77 /* default_launchd.plist in Resources */,
-				4F909D2028A0C3D2009349A2 /* Main.strings in Resources */,
 				4FF665F425F2C92700689B77 /* MoreSheet.xib in Resources */,
 				4F909D2728A0C3D2009349A2 /* Main.storyboard in Resources */,
 				4F9E59972672A67F004E75F7 /* default_config.plist in Resources */,
@@ -2747,14 +2743,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		4F909CF328A0C3D2009349A2 /* Main.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				4F909CF428A0C3D2009349A2 /* de */,
-			);
-			name = Main.strings;
-			sourceTree = "<group>";
-		};
 		4F909CFC28A0C3D2009349A2 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
