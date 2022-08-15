@@ -1,8 +1,8 @@
-/* Content: Mac Mouse Fix will stay enabled after you close it */
-"enabledToggle.hint" = "";
+/* First draft: Mac Mouse Fix will stay enabled after you close it */
+"enabled-toggle.hint" = "";
 
-/* Content: Lets you quickly disable Scroll Enhancements and other features */
-"menuBarToggle.hint" = "";
+/* First draft: Lets you quickly disable Scroll Enhancements and other features */
+"menu-bar-toggle.hint" = "";
 
-/* Content: You'll see new updates when you open this window */
-"updatesToggle.hint" = "";
+/* First draft: You'll see new updates when you open this window */
+"updates-toggle.hint" = "";

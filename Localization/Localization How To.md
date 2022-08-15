@@ -10,6 +10,7 @@
 - To test layout
     - In build scheme, set argument `-NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints YES`
     - In build scheme set pseudo language (e.g. double length)
+- NSLocalizedString() convention: Example: `NSLocalizedString("enabled-toggle.hint", comment: "First draft: Mac Mouse Fix will stay enabled after you close it")`
 
 ## Basic guide
 

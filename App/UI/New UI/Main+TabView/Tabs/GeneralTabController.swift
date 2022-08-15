@@ -132,9 +132,9 @@ class GeneralTabController: NSViewController {
         
         /// Labels
         
-        enabledHint.stringValue = NSLocalizedString("enabledToggle.hint", comment: "English: Mac Mouse Fix will stay enabled after you close it")
-        updatesHint.stringValue = NSLocalizedString("updatesToggle.hint", comment: "English: You'll see new updates when you open this window")
-//        menuBarHint.stringValue = NSLocalizedString("menuBarToggle.hint", comment: "English: Lets you quickly disable Scroll Enhancements and other features")
+        enabledHint.stringValue = NSLocalizedString("enabled-toggle.hint", comment: "First draft: Mac Mouse Fix will stay enabled after you close it")
+        updatesHint.stringValue = NSLocalizedString("updates-toggle.hint", comment: "First draft: You'll see new updates when you open this window")
+//        menuBarHint.stringValue = NSLocalizedString("menu-bar-toggle.hint", comment: "First draft: Lets you quickly disable Scroll Enhancements and other features")
         
     }
 }
