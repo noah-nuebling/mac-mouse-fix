@@ -4,6 +4,13 @@
 
 - NotePlan [[MMF - i18n]]
 
+## Memory helpers
+
+- Use `bartycrouch update -v` and `bartycrouch lint` from Terminal. These are also executed by a build script.
+- To test layout
+    - In build scheme, set argument `-NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints YES`
+    - In build scheme set pseudo language (e.g. double length)
+
 ## Basic guide
 
 - https://medium.com/@mds6058/localization-in-ios-and-how-to-make-it-not-suck-3adcbc3ec08f
@@ -24,8 +31,3 @@
         - Is a lot of hacky effort
 - 3. Maybe I could use Barty Crouch machine translations as a base and then just do the rest by hand
     - It uses Azure Translation. Should be free or extremely cheap but is a bit of work to set up. 
-
-## Test layout
-
-- In build scheme, set argument `-NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints YES`
-- In build scheme set pseudo language (e.g. double length)
