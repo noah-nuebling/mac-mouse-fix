@@ -33,6 +33,9 @@
                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <attributedString key="userComments">
+                        <fragment content="Locking the Mouse Pointer during 'Click and Drag' Gestures is &quot;Recommended for Trackball Mice&quot;"/>
+                    </attributedString>
                 </textField>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GPK-st-8lU">
                     <rect key="frame" x="315" y="13" width="66" height="32"/>
