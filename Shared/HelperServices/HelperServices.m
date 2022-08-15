@@ -20,7 +20,7 @@
 ///     Edit: Looked at `__API_AVAILABLE` and `API_AVAILABLE`, and I think they are probably identical.
 ///     __Game plan__: Fix all the possible reasons we could come up with: 1. Use non-underscore variant. 2. Make all the unavailable function into objc methods (and make sure they are marked in the header too, if they appear there) 3. wrap everything in `if @available` blocks. Bing bam boom.
 
-///     Upate 14.08.2022 Still crashes for the dude. Made another change: All mentions of macOS 11, 12, 13 have been replaced with 11.0, 12.0, 13.0. Because all the examples on the internet write it like that. Let's see if that helps.
+///     Upate 14.08.2022 Still crashes for the dude. Made another change: All mentions of macOS 11, 12, 13 have been replaced with 11.0, 12.0, 13.0. Because all the examples on the internet write it like that. Let's see if that helps. Edit: That fixed it! See https://github.com/noah-nuebling/mac-mouse-fix/issues/241
 
 #import <AppKit/AppKit.h>
 #import "HelperServices.h"
