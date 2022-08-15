@@ -12,7 +12,7 @@ ignoreKeys = ["#bartycrouch-ignore!", "#bc-ignore!", "#i!"]
 [update.code]
 codePaths = ["app", "helper", "accomplice"]
 subpathsToIgnore = [".git", "carthage", "pods", "build", ".build", "docs", "frameworks", "tests", "*/external", "*/SupportFiles", "*/iOS-Polynomial-Regression-master"]
-localizablePaths = ["."]
+localizablePaths = ["./Localization"]
 defaultToKeys = false
 additive = false
 unstripped = false
@@ -22,7 +22,7 @@ ignoreKeys = ["#bartycrouch-ignore!", "#bc-ignore!", "#i!"]
 [update.transform]
 codePaths = ["app", "helper", "accomplice"]
 subpathsToIgnore = [".git", "carthage", "pods", "build", ".build", "docs", "frameworks", "tests", "*/external", "*/SupportFiles", "*/iOS-Polynomial-Regression-master"]
-localizablePaths = ["."]
+localizablePaths = ["./Localization"]
 transformer = "foundation"
 supportedLanguageEnumPath = "."
 typeName = "BartyCrouch"

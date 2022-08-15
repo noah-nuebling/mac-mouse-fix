@@ -1193,18 +1193,10 @@
 		4F909D1528A0C3D2009349A2 /* Localization */ = {
 			isa = PBXGroup;
 			children = (
-				4F909D1628A0C3D2009349A2 /* German */,
+				4F909D1728A0C3D2009349A2 /* Localizable.strings */,
 				4F909D1928A0C3D2009349A2 /* Localization How To.md */,
 			);
 			path = Localization;
-			sourceTree = "<group>";
-		};
-		4F909D1628A0C3D2009349A2 /* German */ = {
-			isa = PBXGroup;
-			children = (
-				4F909D1728A0C3D2009349A2 /* Localizable.strings */,
-			);
-			path = German;
 			sourceTree = "<group>";
 		};
 		4F909D1A28A0C3D2009349A2 /* CustomUIElements */ = {
