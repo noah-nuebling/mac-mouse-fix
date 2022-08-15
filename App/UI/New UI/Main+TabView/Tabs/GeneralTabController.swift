@@ -80,9 +80,7 @@ class GeneralTabController: NSViewController {
                         if (error as NSError).code == 1 {
                             do {
                                 let messageRaw = NSLocalizedString("is-disabled-toast", comment: "First draft: Mac Mouse Fix was **disabled** in System Settings.\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\'")
-//                                let message = NSMutableAttributedString(coolMarkdown: messageRaw)
-//                                let message = NSMutableAttributedString.secondaryLabel(markdown: messageRaw)
-                                let message = MarkdownParser.attributedString(markdown: messageRaw)
+                                let message = NSMutableAttributedString(coolMarkdown: messageRaw)
                                 
                                 if let window = NSApp.mainWindow, let message = message {
                                     ToastNotificationController.attachNotification(withMessage: message, to: window, forDuration: -1.0)

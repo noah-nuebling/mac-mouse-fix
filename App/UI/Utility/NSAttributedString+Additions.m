@@ -133,7 +133,7 @@
 
 + (NSAttributedString *)attributedStringWithCoolMarkdown:(NSString *)md {
     
-    if (@available(macOS 13.0, *), false) {
+    if (@available(macOS 13.0, *)) {
         
         /// Use library function
         
@@ -545,14 +545,16 @@
     NSColor *color = NSColor.labelColor;
     NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
                                           font, NSFontAttributeName,
+                                          @(NSFontWeightMedium), NSFontWeightTrait, /// Just added this 15.08.2022 for MarkdownParser to look exactly like the lib method it's trying to replace. Hope it doesn't break anything else or look worse on older macOS. Shouldn't the default be regular?
                                           color, NSForegroundColorAttributeName,
                                           nil];
     
     return [self attributedStringByAddingStringAttributesAsBase:attributesDictionary];
 }
 
-/// Create string by adding values from `baseAttributes`, without overriding any of the attributes set for `self`
 - (NSAttributedString *)attributedStringByAddingStringAttributesAsBase:(NSDictionary<NSAttributedStringKey, id> *)baseAttributes {
+
+    /// Create string by adding values from `baseAttributes`, without overriding any of the attributes set for `self`
     
     NSMutableAttributedString *s = self.mutableCopy;
     
