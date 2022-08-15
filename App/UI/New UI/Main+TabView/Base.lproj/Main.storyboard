@@ -177,6 +177,9 @@
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
+                        <attributedString key="userComments">
+                            <fragment content="Mac Mouse Fix Window Title"/>
+                        </attributedString>
                         <connections>
                             <binding destination="B8D-0N-5wS" name="representedFilename" keyPath="self.window" id="fHR-Hc-n64"/>
                             <outlet property="delegate" destination="B8D-0N-5wS" id="98r-iN-zZc"/>
@@ -195,12 +198,32 @@
             <objects>
                 <tabViewController selectedTabViewItemIndex="0" tabStyle="toolbar" id="RJA-oq-Oo4" customClass="TabViewController" customModule="Mac_Mouse_Fix" customModuleProvider="target" sceneMemberID="viewController">
                     <tabViewItems>
-                        <tabViewItem label="Initial" identifier="initial" id="g9N-Za-8Ss"/>
-                        <tabViewItem label="General" identifier="general" image="gearshape" catalog="system" id="rIq-3r-6ck"/>
-                        <tabViewItem label="Buttons" identifier="buttons" image="rectangle" catalog="system" id="Mjk-wy-Z7C"/>
-                        <tabViewItem label="Scrolling" identifier="scrolling" image="arrow.up.and.down" catalog="system" id="jOM-dH-pdc"/>
-                        <tabViewItem label="Pointer" identifier="pointer" image="cursorarrow" catalog="system" id="lLu-45-nE3"/>
-                        <tabViewItem label="About" identifier="about" image="info.circle" catalog="system" id="wal-3r-ZZs"/>
+                        <tabViewItem label="&lt;Initial&gt;" identifier="initial" id="g9N-Za-8Ss"/>
+                        <tabViewItem label="General" identifier="general" image="gearshape" catalog="system" id="rIq-3r-6ck">
+                            <attributedString key="userComments">
+                                <fragment content="Toolbar &gt; General Tab Button"/>
+                            </attributedString>
+                        </tabViewItem>
+                        <tabViewItem label="Buttons" identifier="buttons" image="rectangle" catalog="system" id="Mjk-wy-Z7C">
+                            <attributedString key="userComments">
+                                <fragment content="Toolbar &gt; Buttons Tab Button"/>
+                            </attributedString>
+                        </tabViewItem>
+                        <tabViewItem label="Scrolling" identifier="scrolling" image="arrow.up.and.down" catalog="system" id="jOM-dH-pdc">
+                            <attributedString key="userComments">
+                                <fragment content="Toolbar &gt; Scrolling Tab Button"/>
+                            </attributedString>
+                        </tabViewItem>
+                        <tabViewItem label="Pointer" identifier="pointer" image="cursorarrow" catalog="system" id="lLu-45-nE3">
+                            <attributedString key="userComments">
+                                <fragment content="Toolbar &gt; Pointer Tab Button"/>
+                            </attributedString>
+                        </tabViewItem>
+                        <tabViewItem label="About" identifier="about" image="info.circle" catalog="system" id="wal-3r-ZZs">
+                            <attributedString key="userComments">
+                                <fragment content="Toolbar &gt; About Tab Button"/>
+                            </attributedString>
+                        </tabViewItem>
                     </tabViewItems>
                     <viewControllerTransitionOptions key="transitionOptions" allowUserInteraction="YES"/>
                     <tabView key="tabView" type="noTabsNoBorder" id="oqi-09-EfH">
@@ -433,6 +456,9 @@
                             <constraint firstItem="6xF-Pl-4RE" firstAttribute="top" secondItem="As8-gY-gcx" secondAttribute="top" constant="20" id="yqr-PW-XID"/>
                         </constraints>
                     </view>
+                    <attributedString key="userComments">
+                        <fragment content="General Tab Title"/>
+                    </attributedString>
                     <connections>
                         <outlet property="betaToggle" destination="fB0-6j-bId" id="iLt-Kc-JYB"/>
                         <outlet property="enableToggle" destination="sZr-Bl-L7e" id="tEG-rs-JxN"/>
@@ -453,16 +479,16 @@
         <!--Button View Controller-->
         <scene sceneID="FLK-3Q-9Mg">
             <objects>
-                <viewController title="2" id="d9S-X9-qM1" userLabel="Button View Controller" customClass="ButtonTabController" customModule="Mac_Mouse_Fix" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Buttons" id="d9S-X9-qM1" userLabel="Button View Controller" customClass="ButtonTabController" customModule="Mac_Mouse_Fix" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" misplaced="YES" id="vcE-RL-ceY">
                         <rect key="frame" x="0.0" y="0.0" width="560" height="687"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <stackView distribution="fill" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qu8-7l-RFn">
-                                <rect key="frame" x="23" y="0.0" width="500" height="553"/>
+                                <rect key="frame" x="23" y="0.0" width="500" height="546"/>
                                 <subviews>
-                                    <box identifier="addField" boxType="custom" borderType="line" cornerRadius="6" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Pxm-4w-iO7" userLabel="AddBox">
-                                        <rect key="frame" x="0.0" y="383" width="500" height="170"/>
+                                    <box identifier="addField" boxType="custom" borderType="line" cornerRadius="6" title="&lt;Box&gt;" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Pxm-4w-iO7" userLabel="AddBox">
+                                        <rect key="frame" x="0.0" y="376" width="500" height="170"/>
                                         <view key="contentView" id="B6d-Fk-sWp">
                                             <rect key="frame" x="1" y="1" width="498" height="168"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -483,7 +509,7 @@
                                         <color key="fillColor" name="quaternaryLabelColor" catalog="System" colorSpace="catalog"/>
                                     </box>
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="OIq-v6-9Zy" userLabel="HintWrap">
-                                        <rect key="frame" x="0.0" y="335" width="500" height="40"/>
+                                        <rect key="frame" x="0.0" y="328" width="500" height="40"/>
                                         <subviews>
                                             <textField verticalHuggingPriority="1000" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="7En-Ho-Dyb">
                                                 <rect key="frame" x="-2" y="12" width="504" height="28"/>
@@ -507,13 +533,13 @@ You can also Double Click, Click and Drag, and more.</string>
                                         </constraints>
                                     </customView>
                                     <scrollView verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" borderType="none" autohidesScrollers="YES" horizontalLineScroll="39" horizontalPageScroll="10" verticalLineScroll="39" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OGV-uF-BjJ" userLabel="TableScrollView" customClass="MFScrollView">
-                                        <rect key="frame" x="0.0" y="45" width="500" height="282"/>
+                                        <rect key="frame" x="0.0" y="45" width="500" height="275"/>
                                         <clipView key="contentView" ambiguous="YES" drawsBackground="NO" id="Fkp-gm-SVn">
-                                            <rect key="frame" x="0.0" y="0.0" width="500" height="282"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="500" height="275"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <tableView identifier="remapTable" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" allowsExpansionToolTips="YES" tableStyle="plain" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="39" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JEf-5U-AJf" customClass="RemapTableView">
-                                                    <rect key="frame" x="0.0" y="0.0" width="500" height="282"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="500" height="275"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <size key="intercellSpacing" width="17" height="0.0"/>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -521,11 +547,11 @@ You can also Double Click, Click and Drag, and more.</string>
                                                     <color key="gridColor" name="separatorColor" catalog="System" colorSpace="catalog"/>
                                                     <tableColumns>
                                                         <tableColumn identifier="trigger" width="267" minWidth="40" maxWidth="1000" id="o3B-zA-fJm">
-                                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Trigger">
+                                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="&lt;Trigger&gt;">
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                             </tableHeaderCell>
-                                                            <textFieldCell key="dataCell" lineBreakMode="truncatingHead" selectable="YES" editable="YES" title="Text Cell" id="WiZ-l0-Th5">
+                                                            <textFieldCell key="dataCell" lineBreakMode="truncatingHead" selectable="YES" editable="YES" title="&lt;Text Cell&gt;" id="WiZ-l0-Th5">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -537,8 +563,8 @@ You can also Double Click, Click and Drag, and more.</string>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="QCK-nA-0gO">
-                                                                            <rect key="frame" x="22" y="12" width="250" height="16"/>
-                                                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="⌘⇧⌥⌃ + Triple Click and Drag Button 3" id="QKM-im-bk9">
+                                                                            <rect key="frame" x="22" y="12" width="266" height="16"/>
+                                                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="&lt;⌘⇧⌥⌃ + Triple Click and Drag Button 3&gt;" id="QKM-im-bk9">
                                                                                 <font key="font" metaFont="system"/>
                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -576,7 +602,7 @@ You can also Double Click, Click and Drag, and more.</string>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AHZ-Kd-4Xf">
                                                                             <rect key="frame" x="-8" y="3" width="274" height="16"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="left" title="Button X" id="Zqs-Y4-U4Q">
+                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="left" title="&lt;Button X&gt;" id="Zqs-Y4-U4Q">
                                                                                 <font key="font" metaFont="systemSemibold" size="11"/>
                                                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -590,11 +616,11 @@ You can also Double Click, Click and Drag, and more.</string>
                                                             </prototypeCellViews>
                                                         </tableColumn>
                                                         <tableColumn identifier="effect" width="199" minWidth="40" maxWidth="1000" id="gOt-GR-IbE">
-                                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Effect">
+                                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="&lt;Effect&gt;">
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                             </tableHeaderCell>
-                                                            <textFieldCell key="dataCell" lineBreakMode="truncatingHead" selectable="YES" editable="YES" title="Text Cell" id="zwX-Pv-OOK">
+                                                            <textFieldCell key="dataCell" lineBreakMode="truncatingHead" selectable="YES" editable="YES" title="&lt;Text Cell&gt;" id="zwX-Pv-OOK">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -608,16 +634,16 @@ You can also Double Click, Click and Drag, and more.</string>
                                                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pw9-ZH-Tb7">
                                                                             <rect key="frame" x="0.0" y="6" width="200" height="25"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                                                            <popUpButtonCell key="cell" type="push" title="Mission Control and Spaces" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="4Cx-DN-qX3" id="Bar-EF-HdH">
+                                                                            <popUpButtonCell key="cell" type="push" title="&lt;Mission Control and Spaces&gt;" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="4Cx-DN-qX3" id="Bar-EF-HdH">
                                                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                                 <font key="font" metaFont="menu"/>
                                                                                 <menu key="menu" autoenablesItems="NO" id="yGv-Ql-qBG">
                                                                                     <items>
-                                                                                        <menuItem title="Mission Control and Spaces" state="on" id="4Cx-DN-qX3">
+                                                                                        <menuItem title="&lt;Mission Control and Spaces&gt;" state="on" id="4Cx-DN-qX3">
                                                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                                                         </menuItem>
                                                                                         <menuItem isSeparatorItem="YES" id="z3W-a5-6Xb"/>
-                                                                                        <menuItem title="Click and Drag Button 3" state="on" id="kK6-b5-Rfd">
+                                                                                        <menuItem title="&lt;Click and Drag Button 3&gt;" state="on" id="kK6-b5-Rfd">
                                                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                                                         </menuItem>
                                                                                     </items>
@@ -715,7 +741,7 @@ You can also Double Click, Click and Drag, and more.</string>
                                                     </connections>
                                                 </buttonCell>
                                                 <attributedString key="userComments">
-                                                    <fragment content="Buttons &gt; Options..."/>
+                                                    <fragment content="Buttons &gt; Options... Button"/>
                                                 </attributedString>
                                             </button>
                                             <button horizontalHuggingPriority="1000" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JHB-lg-H8e">
@@ -767,6 +793,9 @@ You can also Double Click, Click and Drag, and more.</string>
                             <constraint firstItem="Qu8-7l-RFn" firstAttribute="top" secondItem="vcE-RL-ceY" secondAttribute="top" constant="20" id="n5j-lc-wYw"/>
                         </constraints>
                     </view>
+                    <attributedString key="userComments">
+                        <fragment content="Buttons Tab Title"/>
+                    </attributedString>
                     <connections>
                         <outlet property="addField" destination="Pxm-4w-iO7" id="ncr-e0-lmY"/>
                         <outlet property="addFieldController" destination="d6t-6H-FSq" id="LaT-PW-h0R"/>
@@ -798,7 +827,7 @@ You can also Double Click, Click and Drag, and more.</string>
         <!--Scrolling View Controller-->
         <scene sceneID="Os1-9Q-CwG">
             <objects>
-                <viewController title="Enable v1" id="qcW-e9-BqR" userLabel="Scrolling View Controller" customClass="ScrollTabController" customModule="Mac_Mouse_Fix" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Scrolling" id="qcW-e9-BqR" userLabel="Scrolling View Controller" customClass="ScrollTabController" customModule="Mac_Mouse_Fix" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" misplaced="YES" id="ApB-fm-Akb">
                         <rect key="frame" x="0.0" y="0.0" width="419" height="479"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -812,6 +841,9 @@ You can also Double Click, Click and Drag, and more.</string>
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
+                                        <attributedString key="userComments">
+                                            <fragment content="Scrolling &gt; Smooth Scrolling Toggle"/>
+                                        </attributedString>
                                     </button>
                                     <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="enY-m0-Esm" userLabel="Indent">
                                         <rect key="frame" x="0.0" y="401" width="99" height="14"/>
@@ -823,7 +855,7 @@ You can also Double Click, Click and Drag, and more.</string>
                                                     <font key="font" metaFont="smallSystem"/>
                                                 </buttonCell>
                                                 <attributedString key="userComments">
-                                                    <fragment content="Scrolling &gt; with Inertia Toggle"/>
+                                                    <fragment content="Scrolling &gt; with Inertia Toggle (See what Apple uses for Trackpad marketing in your Language)"/>
                                                 </attributedString>
                                             </button>
                                         </subviews>
@@ -845,10 +877,10 @@ You can also Double Click, Click and Drag, and more.</string>
                                         <buttonCell key="cell" type="check" title="Natural Scroll Direction" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="gK0-1z-Pjv">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="system"/>
-                                            <attributedString key="userComments">
-                                                <fragment content="Scrolling &gt; Natural Scroll Direction Toggle"/>
-                                            </attributedString>
                                         </buttonCell>
+                                        <attributedString key="userComments">
+                                            <fragment content="Scrolling &gt; Natural Scroll Direction Toggle"/>
+                                        </attributedString>
                                     </button>
                                     <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K2b-ZE-JxN" userLabel="Indent">
                                         <rect key="frame" x="0.0" y="425" width="203" height="14"/>
@@ -861,7 +893,7 @@ You can also Double Click, Click and Drag, and more.</string>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                                 <attributedString key="userComments">
-                                                    <fragment content="Scrolling &gt; Smooth Scrolling Toggle"/>
+                                                    <fragment content="Scrolling &gt; Natural Scroll Direction &gt; Hint"/>
                                                 </attributedString>
                                             </textField>
                                         </subviews>
@@ -959,10 +991,10 @@ You can also Double Click, Click and Drag, and more.</string>
                                                         <buttonCell key="cell" type="check" title="Precise Scrolling" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="4hf-tQ-y76">
                                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                             <font key="font" metaFont="system"/>
-                                                            <attributedString key="userComments">
-                                                                <fragment content="Scrolling &gt; Precise Scrolling Toggle"/>
-                                                            </attributedString>
                                                         </buttonCell>
+                                                        <attributedString key="userComments">
+                                                            <fragment content="Scrolling &gt; Precise Scrolling Toggle"/>
+                                                        </attributedString>
                                                     </button>
                                                     <customView horizontalHuggingPriority="999" verticalHuggingPriority="999" translatesAutoresizingMaskIntoConstraints="NO" id="WnW-0I-ajJ" userLabel="Indent">
                                                         <rect key="frame" x="0.0" y="0.0" width="293" height="50"/>
@@ -1060,6 +1092,9 @@ You can also Double Click, Click and Drag, and more.</string>
                                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
+                                                                    <attributedString key="userComments">
+                                                                        <fragment content="Scrolling &gt; Keyboard Modifiers &gt; Scroll Horizontally Label"/>
+                                                                    </attributedString>
                                                                 </textField>
                                                                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QF5-am-Af9" customClass="ModCaptureTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                                                     <rect key="frame" x="13" y="5" width="75" height="5"/>
@@ -1106,6 +1141,9 @@ You can also Double Click, Click and Drag, and more.</string>
                                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
+                                                                    <attributedString key="userComments">
+                                                                        <fragment content="Scrolling &gt; Keyboard Modifiers &gt; Zoom In or Out Label"/>
+                                                                    </attributedString>
                                                                 </textField>
                                                                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HZF-jc-NcN" customClass="ModCaptureTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                                                     <rect key="frame" x="13" y="5" width="75" height="19"/>
@@ -1152,6 +1190,9 @@ You can also Double Click, Click and Drag, and more.</string>
                                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
+                                                                    <attributedString key="userComments">
+                                                                        <fragment content="Scrolling &gt; Keyboard Modifiers &gt; Scroll Swiftly Label"/>
+                                                                    </attributedString>
                                                                 </textField>
                                                                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Abk-fb-uRV" customClass="ModCaptureTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                                                     <rect key="frame" x="13" y="5" width="75" height="19"/>
@@ -1198,6 +1239,9 @@ You can also Double Click, Click and Drag, and more.</string>
                                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
+                                                                    <attributedString key="userComments">
+                                                                        <fragment content="Scrolling &gt; Keyboard Modifiers &gt; Scroll Precisely Label"/>
+                                                                    </attributedString>
                                                                 </textField>
                                                                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gqo-T2-Nmz" customClass="ModCaptureTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                                                     <rect key="frame" x="13" y="5" width="75" height="19"/>
@@ -1283,6 +1327,9 @@ You can also Double Click, Click and Drag, and more.</string>
                             <constraint firstItem="N4F-RB-d7a" firstAttribute="top" secondItem="ApB-fm-Akb" secondAttribute="top" constant="20" id="tCQ-7I-9JQ"/>
                         </constraints>
                     </view>
+                    <attributedString key="userComments">
+                        <fragment content="Scrolling Tab Title"/>
+                    </attributedString>
                     <connections>
                         <outlet property="horizontalModField" destination="QF5-am-Af9" id="dcY-ky-8EN"/>
                         <outlet property="inertiaSection" destination="enY-m0-Esm" id="Bgf-CS-IP4"/>
@@ -1302,32 +1349,13 @@ You can also Double Click, Click and Drag, and more.</string>
                     </connections>
                 </viewController>
                 <customObject id="lB6-fT-42m" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-                <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" id="MzT-EN-JSP" userLabel="Indent">
-                    <rect key="frame" x="0.0" y="0.0" width="99" height="14"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <subviews>
-                        <button horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="MzS-4Y-dHp">
-                            <rect key="frame" x="19" y="-1" width="80" height="16"/>
-                            <buttonCell key="cell" type="check" title="with Inertia" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="TRf-L3-wo2">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="smallSystem"/>
-                            </buttonCell>
-                        </button>
-                    </subviews>
-                    <constraints>
-                        <constraint firstItem="MzS-4Y-dHp" firstAttribute="top" secondItem="MzT-EN-JSP" secondAttribute="top" id="Aod-4g-Uxi"/>
-                        <constraint firstAttribute="trailing" secondItem="MzS-4Y-dHp" secondAttribute="trailing" id="Cgn-Lv-Kpx"/>
-                        <constraint firstAttribute="bottom" secondItem="MzS-4Y-dHp" secondAttribute="bottom" id="J9g-u7-cjD"/>
-                        <constraint firstItem="MzS-4Y-dHp" firstAttribute="leading" secondItem="MzT-EN-JSP" secondAttribute="leading" constant="20" symbolic="YES" id="WPz-Gq-Wjn"/>
-                    </constraints>
-                </customView>
             </objects>
             <point key="canvasLocation" x="-363" y="1658"/>
         </scene>
         <!--Pointer View Controller-->
         <scene sceneID="cBw-Z2-DNT">
             <objects>
-                <viewController id="1dS-BH-DIv" userLabel="Pointer View Controller" customClass="PointerTabController" customModule="Mac_Mouse_Fix" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Pointer" id="1dS-BH-DIv" userLabel="Pointer View Controller" customClass="PointerTabController" customModule="Mac_Mouse_Fix" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" horizontalHuggingPriority="1000" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a43-C7-qxY">
                         <rect key="frame" x="0.0" y="0.0" width="479" height="208"/>
                         <subviews>
@@ -1474,7 +1502,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                             <constraint firstAttribute="width" constant="46" id="6KG-At-OGS"/>
                                             <constraint firstAttribute="height" constant="27" id="JqY-hn-FCo"/>
                                         </constraints>
-                                        <buttonCell key="cell" type="bevel" title="0.6x" bezelStyle="regularSquare" alignment="center" state="on" borderStyle="border" inset="2" id="S55-uf-Xij">
+                                        <buttonCell key="cell" type="bevel" title="&lt;0.6x&gt;" bezelStyle="regularSquare" alignment="center" state="on" borderStyle="border" inset="2" id="S55-uf-Xij">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -1513,6 +1541,9 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                             <constraint firstAttribute="trailing" secondItem="Dgr-fy-Ff8" secondAttribute="trailing" id="RjW-at-h3h"/>
                         </constraints>
                     </view>
+                    <attributedString key="userComments">
+                        <fragment content="Pointer Tab Title"/>
+                    </attributedString>
                     <connections>
                         <outlet property="accelerationHint" destination="oEH-3x-3LO" id="7jJ-Xo-mfk"/>
                         <outlet property="accelerationPicker" destination="jfw-rP-c9y" id="QVv-Q8-URf"/>
@@ -1528,20 +1559,23 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
         <!--About View Controller-->
         <scene sceneID="3NB-Tm-GfZ">
             <objects>
-                <viewController title="1" id="buH-zX-xXu" userLabel="About View Controller" sceneMemberID="viewController">
+                <viewController title="About" id="buH-zX-xXu" userLabel="About View Controller" sceneMemberID="viewController">
                     <view key="view" id="YQs-BI-EjP">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </view>
+                    <attributedString key="userComments">
+                        <fragment content="About Tab Title"/>
+                    </attributedString>
                 </viewController>
                 <customObject id="xN7-0P-7Zw" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1116" y="1605.5"/>
         </scene>
-        <!--Initial Tab Controller-->
+        <!--<Initial Tab Controller>-->
         <scene sceneID="R82-b2-ukC">
             <objects>
-                <viewController title="Initial Tab Controller" id="bsO-Hw-2ui" sceneMemberID="viewController">
+                <viewController title="&lt;Initial Tab Controller&gt;" id="bsO-Hw-2ui" sceneMemberID="viewController">
                     <view key="view" id="gPA-kn-mzX" userLabel="MainView">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
