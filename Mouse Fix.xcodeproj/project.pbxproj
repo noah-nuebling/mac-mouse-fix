@@ -160,6 +160,14 @@
 		4FBC943B260F8AA60062F186 /* MASShortcut.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC9434260F8AA60062F186 /* MASShortcut.m */; };
 		4FBDA14F27B241CE0030E4EA /* GlobalEventTapThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBDA14E27B241CE0030E4EA /* GlobalEventTapThread.m */; };
 		4FC55E31285E6F1F00F2FCCF /* GlobalDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC55E2F285E6BF800F2FCCF /* GlobalDefaults.swift */; };
+		4FC8A7C628AAD8DD007DB982 /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = 4FC8A7C528AAD8DD007DB982 /* Down */; };
+		4FC8A7C828AADE17007DB982 /* NSMutableAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC8A7C728AADE17007DB982 /* NSMutableAttributedString+Extensions.swift */; };
+		4FC8A7C928AADE17007DB982 /* NSMutableAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC8A7C728AADE17007DB982 /* NSMutableAttributedString+Extensions.swift */; };
+		4FC8A7CB28AAE024007DB982 /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = 4FC8A7CA28AAE024007DB982 /* Down */; };
+		4FC8A7CD28AAF1BC007DB982 /* MarkdownParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC8A7CC28AAF1BC007DB982 /* MarkdownParser.swift */; };
+		4FC8A7CE28AAF1BC007DB982 /* MarkdownParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC8A7CC28AAF1BC007DB982 /* MarkdownParser.swift */; };
+		4FC8A7D128AAF2EA007DB982 /* Markdown in Frameworks */ = {isa = PBXBuildFile; productRef = 4FC8A7D028AAF2EA007DB982 /* Markdown */; };
+		4FC8A7D328AAF900007DB982 /* Markdown in Frameworks */ = {isa = PBXBuildFile; productRef = 4FC8A7D228AAF900007DB982 /* Markdown */; };
 		4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCA07D525F3129B00BFE209 /* RemapTableController.m */; };
 		4FCC03352757B181002E5A57 /* ScreenDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCC03322757A50C002E5A57 /* ScreenDrawer.swift */; };
 		4FD0A71127B295F600FFCD12 /* OtherConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD0A71027B295F600FFCD12 /* OtherConfig.swift */; };
@@ -576,6 +584,8 @@
 		4FBDA14E27B241CE0030E4EA /* GlobalEventTapThread.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GlobalEventTapThread.m; sourceTree = "<group>"; };
 		4FBE18BA2666EC4A002A6771 /* WannabePrefixHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WannabePrefixHeader.h; sourceTree = "<group>"; };
 		4FC55E2F285E6BF800F2FCCF /* GlobalDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalDefaults.swift; sourceTree = "<group>"; };
+		4FC8A7C728AADE17007DB982 /* NSMutableAttributedString+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+Extensions.swift"; sourceTree = "<group>"; };
+		4FC8A7CC28AAF1BC007DB982 /* MarkdownParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownParser.swift; sourceTree = "<group>"; };
 		4FCA07D425F3129B00BFE209 /* RemapTableController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapTableController.h; sourceTree = "<group>"; };
 		4FCA07D525F3129B00BFE209 /* RemapTableController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapTableController.m; sourceTree = "<group>"; };
 		4FCC03322757A50C002E5A57 /* ScreenDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenDrawer.swift; sourceTree = "<group>"; };
@@ -795,8 +805,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FC8A7C628AAD8DD007DB982 /* Down in Frameworks */,
 				4FDECCD928A3A37800DDEE91 /* ZipArchive.framework in Frameworks */,
 				4FEB66132793510C00E6A111 /* CocoaLumberjack in Frameworks */,
+				4FC8A7D128AAF2EA007DB982 /* Markdown in Frameworks */,
 				4FA40CF228A0CA3900499E53 /* ReactiveCocoa in Frameworks */,
 				4F909D5128A0C6F3009349A2 /* SnapKit in Frameworks */,
 				4F1793A925EEC92000E8309B /* ZipArchive.framework in Frameworks */,
@@ -830,6 +842,8 @@
 			files = (
 				4FEB660F2793510300E6A111 /* CocoaLumberjack in Frameworks */,
 				4F7F47D028A5B5F200290BBD /* ReactiveCocoa in Frameworks */,
+				4FC8A7CB28AAE024007DB982 /* Down in Frameworks */,
+				4FC8A7D328AAF900007DB982 /* Markdown in Frameworks */,
 				4F7F47CE28A5B5EC00290BBD /* ReactiveSwift in Frameworks */,
 				80457D1CE643F8D503131D96 /* Pods_Mac_Mouse_Fix_Helper.framework in Frameworks */,
 				4FEB66112793510800E6A111 /* CocoaLumberjackSwift in Frameworks */,
@@ -1012,6 +1026,8 @@
 				4F7AB0522606692C0008055E /* UIStrings */,
 				4F79A8292605074000076A7E /* NSAttributedString+Additions.h */,
 				4F79A82A2605074000076A7E /* NSAttributedString+Additions.m */,
+				4FC8A7C728AADE17007DB982 /* NSMutableAttributedString+Extensions.swift */,
+				4FC8A7CC28AAF1BC007DB982 /* MarkdownParser.swift */,
 				4FB5FE8A27AE563F0092C9B4 /* MFScrollView.h */,
 				4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */,
 				4FF665C425F2C92700689B77 /* MFSegmentedControl.h */,
@@ -2111,6 +2127,8 @@
 				4F909D5028A0C6F3009349A2 /* SnapKit */,
 				4FA40CEE28A0CA0A00499E53 /* ReactiveSwift */,
 				4FA40CF128A0CA3900499E53 /* ReactiveCocoa */,
+				4FC8A7C528AAD8DD007DB982 /* Down */,
+				4FC8A7D028AAF2EA007DB982 /* Markdown */,
 			);
 			productName = "Mac Mouse Fix";
 			productReference = 4F94F5EE25E5EC2500D9F24A /* Mac Mouse Fix.app */;
@@ -2176,6 +2194,8 @@
 				4FEB66102793510800E6A111 /* CocoaLumberjackSwift */,
 				4F7F47CD28A5B5EC00290BBD /* ReactiveSwift */,
 				4F7F47CF28A5B5F200290BBD /* ReactiveCocoa */,
+				4FC8A7CA28AAE024007DB982 /* Down */,
+				4FC8A7D228AAF900007DB982 /* Markdown */,
 			);
 			productName = "Mouse Remap Helper";
 			productReference = 4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */;
@@ -2234,6 +2254,8 @@
 				4F909D4F28A0C6F3009349A2 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				4FA40CED28A0CA0A00499E53 /* XCRemoteSwiftPackageReference "ReactiveSwift" */,
 				4FA40CF028A0CA3900499E53 /* XCRemoteSwiftPackageReference "ReactiveCocoa" */,
+				4FC8A7C428AAD8DD007DB982 /* XCRemoteSwiftPackageReference "Down" */,
+				4FC8A7CF28AAF2EA007DB982 /* XCRemoteSwiftPackageReference "swift-markdown" */,
 			);
 			productRefGroup = 4FCECD8121092354001F1078 /* Products */;
 			projectDirPath = "";
@@ -2560,6 +2582,7 @@
 				4F92A708260F4BF000529D1F /* RemapTableView.m in Sources */,
 				4FA40D0528A0D0D000499E53 /* PolyFit.cpp in Sources */,
 				4FA40CF928A0CCCA00499E53 /* Bezier.swift in Sources */,
+				4FC8A7CD28AAF1BC007DB982 /* MarkdownParser.swift in Sources */,
 				4F909D3E28A0C3D2009349A2 /* SensitivityDisplay.swift in Sources */,
 				4F909D4528A0C4C2009349A2 /* NSArray+Extensions.swift in Sources */,
 				4FA8A30A28A9508C001E740F /* ButtonOptionsViewController.swift in Sources */,
@@ -2576,6 +2599,7 @@
 				4F909D3028A0C3D2009349A2 /* ReactiveAnimatorProxy.swift in Sources */,
 				4FA40CF828A0CCCA00499E53 /* TestAccelerationCurve.swift in Sources */,
 				4F909D3728A0C3D2009349A2 /* ConstraintUtility.swift in Sources */,
+				4FC8A7C828AADE17007DB982 /* NSMutableAttributedString+Extensions.swift in Sources */,
 				4FF6660125F2C92700689B77 /* Utility_App.m in Sources */,
 				4F79A83626051E4A00076A7E /* ToastNotification.m in Sources */,
 				4F909D2D28A0C3D2009349A2 /* CoolNSTextField.swift in Sources */,
@@ -2617,7 +2641,9 @@
 				4F09BF58288355170080A5F8 /* PollingRateMeasurer.swift in Sources */,
 				4F9C9B58268A29B70083DED0 /* RollingAverage.swift in Sources */,
 				4FF0255727B0091700923107 /* ModifiedDragOutputAddMode.m in Sources */,
+				4FC8A7C928AADE17007DB982 /* NSMutableAttributedString+Extensions.swift in Sources */,
 				4FF0255127B0033000923107 /* ModifiedDragOutputTwoFingerSwipe.m in Sources */,
+				4FC8A7CE28AAF1BC007DB982 /* MarkdownParser.swift in Sources */,
 				4FF6654D25F2C7B000689B77 /* SharedUtility.m in Sources */,
 				4FF6668225F2C93A00689B77 /* Config.m in Sources */,
 				4FFBC5A8266977CA001D389B /* DoubleExponentialSmoother.swift in Sources */,
@@ -3337,6 +3363,22 @@
 				minimumVersion = 12.0.0;
 			};
 		};
+		4FC8A7C428AAD8DD007DB982 /* XCRemoteSwiftPackageReference "Down" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/johnxnguyen/Down";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		4FC8A7CF28AAF2EA007DB982 /* XCRemoteSwiftPackageReference "swift-markdown" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-markdown";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -3364,6 +3406,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4FA40CF028A0CA3900499E53 /* XCRemoteSwiftPackageReference "ReactiveCocoa" */;
 			productName = ReactiveCocoa;
+		};
+		4FC8A7C528AAD8DD007DB982 /* Down */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4FC8A7C428AAD8DD007DB982 /* XCRemoteSwiftPackageReference "Down" */;
+			productName = Down;
+		};
+		4FC8A7CA28AAE024007DB982 /* Down */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4FC8A7C428AAD8DD007DB982 /* XCRemoteSwiftPackageReference "Down" */;
+			productName = Down;
+		};
+		4FC8A7D028AAF2EA007DB982 /* Markdown */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4FC8A7CF28AAF2EA007DB982 /* XCRemoteSwiftPackageReference "swift-markdown" */;
+			productName = Markdown;
+		};
+		4FC8A7D228AAF900007DB982 /* Markdown */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4FC8A7CF28AAF2EA007DB982 /* XCRemoteSwiftPackageReference "swift-markdown" */;
+			productName = Markdown;
 		};
 		4FEB660A279350F900E6A111 /* CocoaLumberjack */ = {
 			isa = XCSwiftPackageProductDependency;

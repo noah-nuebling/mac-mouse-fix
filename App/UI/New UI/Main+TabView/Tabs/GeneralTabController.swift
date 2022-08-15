@@ -10,6 +10,7 @@ import ReactiveSwift
 import ReactiveCocoa
 import CocoaLumberjackSwift
 import Sparkle
+import Down
 
 class GeneralTabController: NSViewController {
     
@@ -78,10 +79,16 @@ class GeneralTabController: NSViewController {
                 } catch {
                     if #available(macOS 13, *) {
                         if (error as NSError).code == 1 {
-                            let message = NSMutableAttributedString(coolMarkdown: "Mac Mouse Fix was **disabled** in System Settings.\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\'")
-                            if let window = NSApp.mainWindow {
-                                ToastNotificationController.attachNotification(withMessage: message, to: window, forDuration: 0.0)
-                            }
+                            do {
+                                let messageRaw = NSLocalizedString("is-disabled-toast", comment: "First draft: Mac Mouse Fix was **disabled** in System Settings.\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\'")
+//                                let message = NSMutableAttributedString(coolMarkdown: messageRaw)
+//                                let message = NSMutableAttributedString.secondaryLabel(markdown: messageRaw)
+                                let message = MarkdownParser.attributedString(markdown: messageRaw)
+                                
+                                if let window = NSApp.mainWindow, let message = message {
+                                    ToastNotificationController.attachNotification(withMessage: message, to: window, forDuration: -1.0)
+                                }
+                            } catch {}
                         }
                     }
                 }

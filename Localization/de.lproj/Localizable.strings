@@ -6,3 +6,6 @@
 
 /* First draft: You'll see new updates when you open this window */
 "updates-toggle.hint" = "";
+
+/* First draft: Mac Mouse Fix was **disabled** in System Settings.\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\' */
+"is-disabled-toast" = "Mac Mouse Fix wurde in den Systemeinstellungen **deaktiviert**.\nUm Mac Mouse Fix zu aktivieren:\n\n1. Öffne die [Anmeldeobjekte-Einstellungen](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Aktiviere \'Mac Mouse Fix.app\'";
