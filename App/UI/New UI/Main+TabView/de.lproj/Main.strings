@@ -161,7 +161,7 @@
 "IJF-sN-Wfw.title" = "Wiederholen";
 
 /* Class = "NSButtonCell"; title = "Show in Menu Bar"; ObjectID = "ILO-GQ-vNk"; Note = "General > Show in Menu Bar Toggle"; */
-"ILO-GQ-vNk.title" = "In der Menü-Leiste anzeigen";
+"ILO-GQ-vNk.title" = "In der Menüleiste anzeigen";
 
 /* Class = "NSMenu"; title = "Window"; ObjectID = "InY-TB-ky6"; */
 "InY-TB-ky6.title" = "Fenster";
