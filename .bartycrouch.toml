@@ -3,7 +3,7 @@ tasks = ["interfaces", "code", "normalize", lint]
 
 [update.interfaces]
 paths = ["."]
-subpathsToIgnore = [".git", "carthage", "pods", "build", ".build", "docs"]
+subpathsToIgnore = [".git", "carthage", "pods", "build", ".build", "docs", "frameworks", "tests", "./*/external", "./*/SupportFiles", "./*/iOS-Polynomial-Regression-master"]
 defaultToBase = false
 ignoreEmptyStrings = false
 unstripped = false
@@ -11,7 +11,7 @@ ignoreKeys = ["#bartycrouch-ignore!", "#bc-ignore!", "#i!"]
 
 [update.code]
 codePaths = ["."]
-subpathsToIgnore = [".git", "carthage", "pods", "build", ".build", "docs"]
+subpathsToIgnore = [".git", "carthage", "pods", "build", ".build", "docs", "frameworks", "tests", "./*/external", "./*/SupportFiles", "./*/iOS-Polynomial-Regression-master"]
 localizablePaths = ["."]
 defaultToKeys = false
 additive = true
@@ -21,7 +21,7 @@ ignoreKeys = ["#bartycrouch-ignore!", "#bc-ignore!", "#i!"]
 
 [update.transform]
 codePaths = ["."]
-subpathsToIgnore = [".git", "carthage", "pods", "build", ".build", "docs"]
+subpathsToIgnore = [".git", "carthage", "pods", "build", ".build", "docs", "frameworks", "tests", "./*/external", "./*/SupportFiles", "./*/iOS-Polynomial-Regression-master"]
 localizablePaths = ["."]
 transformer = "foundation"
 supportedLanguageEnumPath = "."
@@ -31,7 +31,7 @@ separateWithEmptyLine = true
 
 [update.normalize]
 paths = ["."]
-subpathsToIgnore = [".git", "carthage", "pods", "build", ".build", "docs"]
+subpathsToIgnore = [".git", "carthage", "pods", "build", ".build", "docs", "frameworks", "tests", "./*/external", "./*/SupportFiles", "./*/iOS-Polynomial-Regression-master"]
 sourceLocale = "en"
 harmonizeWithSource = true
 sortByKeys = true
@@ -39,6 +39,6 @@ separateWithEmptyLine = true
 
 [lint]
 paths = ["."]
-subpathsToIgnore = [".git", "carthage", "pods", "build", ".build", "docs"]
+subpathsToIgnore = [".git", "carthage", "pods", "build", ".build", "docs", "frameworks", "tests", "./*/external", "./*/SupportFiles", "./*/iOS-Polynomial-Regression-master"]
 duplicateKeys = true
 emptyValues = true
