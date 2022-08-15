@@ -167,6 +167,8 @@
 		4FD148C728AA416700FE688C /* MenuBarItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD148C928AA416700FE688C /* MenuBarItem.xib */; };
 		4FD148CC28AA423F00FE688C /* AuthorizeAccessibilityView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD148CE28AA423F00FE688C /* AuthorizeAccessibilityView.xib */; };
 		4FD148D128AA428000FE688C /* ButtonOptionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD148D328AA428000FE688C /* ButtonOptionsViewController.xib */; };
+		4FD148D628AA43E900FE688C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD148D528AA43E900FE688C /* MainMenu.xib */; };
+		4FD148D828AA444100FE688C /* MouseFix.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD148D728AA444100FE688C /* MouseFix.xib */; };
 		4FD66E0827BB553800F67559 /* CGEventHIDEventBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD66E0727BB553800F67559 /* CGEventHIDEventBridge.m */; };
 		4FD66E0B27BB9BAE00F67559 /* EventUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD66E0A27BB9BAE00F67559 /* EventUtility.m */; };
 		4FD82DDB260575B100664D6F /* ToastNotificationLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD82DDA260575B100664D6F /* ToastNotificationLabel.m */; };
@@ -249,7 +251,6 @@
 		4FF6669B25F2C93A00689B77 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6664625F2C93A00689B77 /* AppDelegate.m */; };
 		4FF6669C25F2C93A00689B77 /* PointerSpeedExperiments.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6664925F2C93A00689B77 /* PointerSpeedExperiments.m */; };
 		4FF6669D25F2C93A00689B77 /* AccessibilityCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6664B25F2C93A00689B77 /* AccessibilityCheck.m */; };
-		4FF6669E25F2C93A00689B77 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6664F25F2C93A00689B77 /* MainMenu.xib */; };
 		4FF6669F25F2C93A00689B77 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6665125F2C93A00689B77 /* main.m */; };
 		4FF666A725F2C93A00689B77 /* Device.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6667A25F2C93A00689B77 /* Device.m */; };
 		4FF666A825F2C93A00689B77 /* DeviceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6667D25F2C93A00689B77 /* DeviceManager.m */; };
@@ -588,6 +589,8 @@
 		4FD148CD28AA423F00FE688C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AuthorizeAccessibilityView.xib; sourceTree = "<group>"; };
 		4FD148D028AA424300FE688C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/AuthorizeAccessibilityView.strings; sourceTree = "<group>"; };
 		4FD148D228AA428000FE688C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ButtonOptionsViewController.xib; sourceTree = "<group>"; };
+		4FD148D528AA43E900FE688C /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
+		4FD148D728AA444100FE688C /* MouseFix.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MouseFix.xib; sourceTree = "<group>"; };
 		4FD66E0627BB553800F67559 /* CGEventHIDEventBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CGEventHIDEventBridge.h; sourceTree = "<group>"; };
 		4FD66E0727BB553800F67559 /* CGEventHIDEventBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CGEventHIDEventBridge.m; sourceTree = "<group>"; };
 		4FD66E0927BB9BAD00F67559 /* EventUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventUtility.h; sourceTree = "<group>"; };
@@ -657,7 +660,6 @@
 		4FF665D525F2C92700689B77 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4FF665D725F2C92700689B77 /* MessagePort_App.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagePort_App.m; sourceTree = "<group>"; };
 		4FF665D825F2C92700689B77 /* MessagePort_App.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagePort_App.h; sourceTree = "<group>"; };
-		4FF665DA25F2C92700689B77 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MouseFix.xib; sourceTree = "<group>"; };
 		4FF665DB25F2C92700689B77 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		4FF665DE25F2C92700689B77 /* AuthorizeAccessibilityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthorizeAccessibilityView.h; sourceTree = "<group>"; };
 		4FF665E025F2C92700689B77 /* AuthorizeAccessibilityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthorizeAccessibilityView.m; sourceTree = "<group>"; };
@@ -724,7 +726,6 @@
 		4FF6664B25F2C93A00689B77 /* AccessibilityCheck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccessibilityCheck.m; sourceTree = "<group>"; };
 		4FF6664C25F2C93A00689B77 /* AccessibilityCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccessibilityCheck.h; sourceTree = "<group>"; };
 		4FF6664E25F2C93A00689B77 /* Helper.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Helper.entitlements; sourceTree = "<group>"; };
-		4FF6665025F2C93A00689B77 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		4FF6665125F2C93A00689B77 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4FF6665325F2C93A00689B77 /* CFRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CFRuntime.h; sourceTree = "<group>"; };
 		4FF6665925F2C93A00689B77 /* CGSPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSPrivate.h; sourceTree = "<group>"; };
@@ -1492,9 +1493,9 @@
 			children = (
 				4F46EAA625FB770D0003423A /* AddWindow(old) */,
 				4FF665C525F2C92700689B77 /* AppDelegate.h */,
+				4FD148D728AA444100FE688C /* MouseFix.xib */,
 				4FF665DB25F2C92700689B77 /* AppDelegate.m */,
 				4FF665CC25F2C92700689B77 /* MoreSheet */,
-				4FF665D925F2C92700689B77 /* MouseFix.xib */,
 			);
 			path = OldReference;
 			sourceTree = "<group>";
@@ -1927,9 +1928,9 @@
 		4FF6664D25F2C93A00689B77 /* SupportFiles */ = {
 			isa = PBXGroup;
 			children = (
+				4FD148D528AA43E900FE688C /* MainMenu.xib */,
 				4FFBC5A6266977CA001D389B /* Mac Mouse Fix Helper-Bridging-Header.h */,
 				4FF6664E25F2C93A00689B77 /* Helper.entitlements */,
-				4FF6664F25F2C93A00689B77 /* MainMenu.xib */,
 				4FF6665225F2C93A00689B77 /* External */,
 				4FF6667825F2C93A00689B77 /* Info.plist */,
 			);
@@ -2274,6 +2275,7 @@
 				4F7F47D328A6EFC800290BBD /* SharedAssets.xcassets in Resources */,
 				4FF665F725F2C92700689B77 /* Assets.xcassets in Resources */,
 				4F909D3928A0C3D2009349A2 /* Localizable.strings in Resources */,
+				4FD148D828AA444100FE688C /* MouseFix.xib in Resources */,
 				4F909D3328A0C3D2009349A2 /* Animating Constraints.md in Resources */,
 				4FA1FD7F28A847BF00D1C8EE /* DeletableTableCellView.xib in Resources */,
 				4FF665EF25F2C92700689B77 /* ScrollOverridePanel.xib in Resources */,
@@ -2306,7 +2308,7 @@
 				4FF6654125F2C7B000689B77 /* default_launchd.plist in Resources */,
 				4F7F47D428A6EFC800290BBD /* SharedAssets.xcassets in Resources */,
 				4FD148C728AA416700FE688C /* MenuBarItem.xib in Resources */,
-				4FF6669E25F2C93A00689B77 /* MainMenu.xib in Resources */,
+				4FD148D628AA43E900FE688C /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2782,22 +2784,6 @@
 				4FD148D228AA428000FE688C /* Base */,
 			);
 			name = ButtonOptionsViewController.xib;
-			sourceTree = "<group>";
-		};
-		4FF665D925F2C92700689B77 /* MouseFix.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				4FF665DA25F2C92700689B77 /* Base */,
-			);
-			name = MouseFix.xib;
-			sourceTree = "<group>";
-		};
-		4FF6664F25F2C93A00689B77 /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				4FF6665025F2C93A00689B77 /* Base */,
-			);
-			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
