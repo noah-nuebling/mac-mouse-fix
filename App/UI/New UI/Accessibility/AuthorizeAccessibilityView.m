@@ -61,9 +61,13 @@ AuthorizeAccessibilityView *_accViewController;
 
 - (IBAction)AuthorizeButton:(NSButton *)sender {
     
+    /// This is done in IB instead now.
+    
+    assert(false);
+    
     DDLogInfo(@"AuthorizeButton clicked");
     
-    // Open privacy prefpane
+    /// Open privacy prefpane
     
     NSString* urlString = @"x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility";
     [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:urlString]];

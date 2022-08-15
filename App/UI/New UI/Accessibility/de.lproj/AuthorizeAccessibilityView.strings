@@ -1,23 +1,23 @@
 /* Class = "NSTextFieldCell"; title = "Help"; ObjectID = "04N-yp-Qg1"; */
-"04N-yp-Qg1.title" = "Help";
+"04N-yp-Qg1.title" = "Hilfe";
 
 /* Class = "NSTextFieldCell"; title = "Why does Mac Mouse Fix need Accessibility Access?"; ObjectID = "0lz-be-kpl"; */
-"0lz-be-kpl.title" = "Why does Mac Mouse Fix need Accessibility Access?";
+"0lz-be-kpl.title" = "Wieso braucht Mac Mouse Fix Zugriff auf Bedienungshilfen?";
 
 /* Class = "NSTextFieldCell"; title = "Switch on 'Mac Mouse Fix Helper'"; ObjectID = "46z-Nd-nh4"; */
-"46z-Nd-nh4.title" = "Switch on 'Mac Mouse Fix Helper'";
+"46z-Nd-nh4.title" = "Schalte 'Mac Mouse Fix Helper' an";
 
 /* Class = "NSTextFieldCell"; title = "1."; ObjectID = "72q-sS-xMS"; */
 "72q-sS-xMS.title" = "1.";
 
-/* Class = "NSTextFieldCell"; title = "Open Privacy Settings"; ObjectID = "9qp-gN-SZZ"; */
-"9qp-gN-SZZ.title" = "Open Privacy Settings";
+/* Class = "NSTextFieldCell"; title = "Open Security Settings"; ObjectID = "9qp-gN-SZZ"; */
+"9qp-gN-SZZ.title" = "Öffne die Sicherheits-Einstellungen";
 
-/* Class = "NSImageView"; ibShadowedToolTip = "Hold Shift (⇧) and click this icon to reveal 'Mouse Fix Helper' in Finder"; ObjectID = "fK8-8z-KQn"; */
-"fK8-8z-KQn.ibShadowedToolTip" = "Hold Shift (⇧) and click this icon to reveal 'Mouse Fix Helper' in Finder";
+/* Class = "NSImageView"; ibShadowedToolTip = "Hold Shift (⇧) and click this icon to reveal 'Mac Mouse Fix Helper.app' in Finder"; ObjectID = "fK8-8z-KQn"; */
+"fK8-8z-KQn.ibShadowedToolTip" = "Halte Shift (⇧) und klicke dieses Icon um 'Mac Mouse Fix Helper.app' im Finder anzuzeigen";
 
-/* Class = "NSTextFieldCell"; title = "Grant Accessibility Access to Mac Mouse Fix Helper"; ObjectID = "OSk-Cl-izW"; */
-"OSk-Cl-izW.title" = "Grant Accessibility Access to Mac Mouse Fix Helper";
+/* Class = "NSTextFieldCell"; title = "Grant Accessibility Access to Mac Mouse Fix"; ObjectID = "OSk-Cl-izW"; */
+"OSk-Cl-izW.title" = "Erstatte Mac Mouse Fix Zugriff auf Bedienungshilfen";
 
 /* Class = "NSTextFieldCell"; title = "2."; ObjectID = "RIR-VN-l6s"; */
 "RIR-VN-l6s.title" = "2.";
