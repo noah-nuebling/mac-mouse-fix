@@ -32,7 +32,7 @@ separateWithEmptyLine = true
 [update.normalize]
 paths = ["app", "helper", "accomplice"]
 subpathsToIgnore = [".git", "carthage", "pods", "build", ".build", "docs", "frameworks", "tests", "*/external", "*/SupportFiles", "*/iOS-Polynomial-Regression-master"]
-sourceLocale = "de"
+sourceLocale = "en"
 harmonizeWithSource = true
 sortByKeys = true
 separateWithEmptyLine = true
