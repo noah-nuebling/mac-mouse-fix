@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RemapTableView : NSTableView
 
+- (void)coolDidLoad;
 - (void)updateSizeWithAnimation;
 
 @end

@@ -7,6 +7,8 @@
 // --------------------------------------------------------------------------
 //
 
+/// Auto-adjust width like this: https://stackoverflow.com/questions/35657740/automatically-adjust-width-of-a-view-based-nstableview-based-on-content
+
 #import "RemapTableView.h"
 #import "Mac_Mouse_Fix-Swift.h"
 
@@ -38,20 +40,15 @@
     return self;
 }
 
-
-- (NSLayoutConstraint *)heightConstraint {
+- (void)coolDidLoad {
+ 
+    /// This is called after the table has loaded all it's rows for the first time.
     
-    /// Can't find an init function that is called after the rows have been loaded , so we're using this instead.
-    
-    if (_heightConstraint ==  nil) {
-        _heightConstraint = [self.heightAnchor constraintEqualToConstant:self.intrinsicContentSize.height];
-        _heightConstraint.priority = 1000;
-        [_heightConstraint setActive:YES];
-    }
-    
-    return _heightConstraint;
+    /// Init height constraint
+    _heightConstraint = [self.heightAnchor constraintEqualToConstant:self.intrinsicContentSize.height];
+    _heightConstraint.priority = 1000;
+    [_heightConstraint setActive:YES];
 }
-
 
 /// (?) Need this to make keystroke capture field first responder
 /// See https://stackoverflow.com/questions/29986224/editable-nstextfield-in-nstableview
@@ -111,8 +108,6 @@
 }
 
 - (void)updateSizeWithAnimation {
-
-    int rowHeight = 30;
     
     [self setFrameSize:self.intrinsicContentSize]; /// THIS FIXES EVERYTHING I'M AN APE IN FRONT OF A TYPEWRITER
     
@@ -126,8 +121,7 @@
     [NSAnimationContext runAnimationGroup:^(NSAnimationContext * _Nonnull context) {
         context.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault];
         context.duration = 0.25;
-//        context.duration = 2.0;
-        [self heightConstraint].animator.constant = self.intrinsicContentSize.height;
+        _heightConstraint.animator.constant = self.intrinsicContentSize.height;
 
     }];
 

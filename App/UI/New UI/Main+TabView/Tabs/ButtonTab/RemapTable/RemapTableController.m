@@ -286,6 +286,9 @@
     
     /// Init addRemoveControl state
     [self updateAddRemoveControl];
+    
+    /// Let the table do further init
+    [(RemapTableView *)self.tableView coolDidLoad];
 }
 
 static void setBorderColor(RemapTableController *object) {
